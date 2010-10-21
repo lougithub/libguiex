@@ -1,0 +1,2 @@
+remove tinyxml from libguiex_core.
+use property style to define project file(*.uip)

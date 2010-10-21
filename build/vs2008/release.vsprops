@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="gb2312"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="release"
+	>
+	<Tool
+		Name="VCCLCompilerTool"
+		Optimization="3"
+		InlineFunctionExpansion="2"
+		PreprocessorDefinitions="NDEBUG=1"
+		RuntimeLibrary="2"
+		DebugInformationFormat="3"
+	/>
+	<Tool
+		Name="VCLinkerTool"
+		AdditionalOptions="/SAFESEH"
+		GenerateDebugInformation="true"
+		OptimizeReferences="1"
+		EnableCOMDATFolding="1"
+	/>
+</VisualStudioPropertySheet>

@@ -1,0 +1,58 @@
+/** 
+* @file guiwgtroot.h
+* @brief base class, for root widget
+* @author ken
+* @date 2009-09-29
+*/
+
+
+#ifndef __GUI_WIDGET_ROOT_20090929_H__
+#define __GUI_WIDGET_ROOT_20090929_H__
+
+//============================================================================//
+// include
+//============================================================================// 
+#include <libguiex_core\guiwidget.h>
+#include <libguiex_core\guiwidgetgenerator.h>
+
+//============================================================================//
+// class
+//============================================================================// 
+namespace guiex
+{
+
+	/**
+	* @class CGUIWgtStatic
+	* @brief base class for static widget
+	*/
+	class GUIEXPORT CGUIWidgetRoot : public CGUIWidget
+	{
+	public:
+		/**
+		* @brief constructor
+		*/
+		CGUIWidgetRoot( const CGUIString& rName, const CGUIString& rProjectName );
+
+		virtual void Open();
+
+	protected:
+		///initialize root
+		void	InitRoot();
+
+		/// render
+		virtual void RenderSelf(IGUIInterfaceRender* pRender);
+
+		//update dirty rect, same way for all widgets
+		//virtual void		PreUpdateDirtyRect();	
+
+
+	protected:
+		static CGUIString ms_strType;
+
+
+	};
+	GUI_WIDGET_GENERATOR_DECLARE(CGUIWidgetRoot);
+
+}//namespace guiex
+
+#endif //__GUI_WIDGET_ROOT_20090929_H__

@@ -1,0 +1,86 @@
+/** 
+* @file guiwgttabbutton.h
+* @brief tabbutton used in the system
+* @author ken
+* @date 2007-07-06
+*/
+
+
+
+#ifndef __GUI_WGTRADIOBUTTON_20070706_H__
+#define __GUI_WGTRADIOBUTTON_20070706_H__
+
+//============================================================================//
+// include
+//============================================================================// 
+#include "guiwgtcheckbutton.h"
+#include <libguiex_core\guiwidgetgenerator.h>
+
+
+
+//============================================================================//
+// class
+//============================================================================// 
+namespace guiex
+{
+	/**
+	* @class CGUIWgtTabButton
+	* @brief button class.
+	* used image name:
+	*		-BTN_NORMAL
+	*		-BTN_NORMAL_CHECKED
+	*		-BTN_HOVER
+	*		-BTN_HOVER_CHECKED
+	*		-BTN_DISABLE
+	*		-BTN_DISABLE_CHECKED
+	*		-BTN_PUSH
+	*		-BTN_PUSH_CHECKED
+	*/
+	class GUIEXPORT CGUIWgtTabButton : public CGUIWgtCheckButton
+	{
+	public:
+		/**
+		* @brief constructor
+		*/
+		CGUIWgtTabButton( const CGUIString& rName, const CGUIString& rProjectName );
+
+		/**
+		* @brief
+		* Return whether this tab button is selected or not
+		*/
+		bool IsSelected(void) const;
+
+		/** 
+		 * @brief update rect, which may different for different widget
+		 */
+		virtual void		UpdateDirtyRect();
+
+
+
+	protected:
+		/**
+		* @brief constructor
+		* for derived class
+		*/
+		CGUIWgtTabButton( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName );
+
+		/// initialize radio button
+		void InitTabButton();
+
+
+	protected:	//!< callback function
+		virtual uint32		OnMouseLeftClick( CGUIEventMouse* pEvent );
+
+	private:
+		static CGUIString	ms_strType;
+	};
+
+
+	GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtTabButton);
+
+}//namespace libguiex
+
+
+
+#endif //__GUI_WGTRADIOBUTTON_20070706_H__
+
