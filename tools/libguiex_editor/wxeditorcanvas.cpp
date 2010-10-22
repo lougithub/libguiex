@@ -407,7 +407,7 @@ void WxGLCanvas::HandleMouseMoved (int aMouseX, int aMouseY)
 
 	wxChar statusInfo [512];
 	bool bChanges = false;
-	float pixelDeltaX, pixelDeltaY ;
+	real pixelDeltaX, pixelDeltaY ;
 
 	// Copy parameters into members
 	m_mouseX = aMouseX ;
@@ -428,8 +428,8 @@ void WxGLCanvas::HandleMouseMoved (int aMouseX, int aMouseY)
 		wxSnprintf (statusInfo, 100, wxT("%s - dragging"), statusInfo) ;
 
 		// Calculate pixel differences with the previous mouse position.
-		pixelDeltaX = (float)(m_mouseX - m_previousMouseX) ;
-		pixelDeltaY = (float)(m_mouseY - m_previousMouseY) ;
+		pixelDeltaX = (real)(m_mouseX - m_previousMouseX) ;
+		pixelDeltaY = (real)(m_mouseY - m_previousMouseY) ;
 
 		if (m_hoveredResizePoint != RESIZE_POINT_NONE)
 		{	
@@ -498,7 +498,7 @@ void WxGLCanvas::HandleMouseMoved (int aMouseX, int aMouseY)
 		if (m_hoveredResizePoint == RESIZE_POINT_NONE)
 		{
 			// Didn't find resize point, try window
-			m_hoveredWindow = guiex::CGUIWidgetSystem::Instance()->GetWidgetUnderPoint(guiex::CGUIVector2((float)m_mouseX, (float)m_mouseY)) ;
+			m_hoveredWindow = guiex::CGUIWidgetSystem::Instance()->GetWidgetUnderPoint(guiex::CGUIVector2((real)m_mouseX, (real)m_mouseY)) ;
 		}
 	}
 

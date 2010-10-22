@@ -141,18 +141,18 @@ namespace guiex
 		void FromEulerAnglesZXY (const CGUIRadian& fYAngle, const CGUIRadian& fPAngle, const CGUIRadian& fRAngle);
 		void FromEulerAnglesZYX (const CGUIRadian& fYAngle, const CGUIRadian& fPAngle, const CGUIRadian& fRAngle);
 
-		inline bool ToEulerAnglesXYZ (float& rfYAngle, float& rfPAngle,	float& rfRAngle) const;
-		inline bool ToEulerAnglesXZY (float& rfYAngle, float& rfPAngle,	float& rfRAngle) const ;
-		inline bool ToEulerAnglesYXZ (float& rfYAngle, float& rfPAngle,	float& rfRAngle) const;
-		inline bool ToEulerAnglesYZX (float& rfYAngle, float& rfPAngle,	float& rfRAngle) const ;
-		inline bool ToEulerAnglesZXY (float& rfYAngle, float& rfPAngle,	float& rfRAngle) const;
-		inline bool ToEulerAnglesZYX (float& rfYAngle, float& rfPAngle,	float& rfRAngle) const;
-		inline void FromEulerAnglesXYZ (float fYAngle, float fPAngle, float fRAngle);
-		inline void FromEulerAnglesXZY (float fYAngle, float fPAngle, float fRAngle);
-		inline void FromEulerAnglesYXZ (float fYAngle, float fPAngle, float fRAngle) ;
-		inline void FromEulerAnglesYZX (float fYAngle, float fPAngle, float fRAngle);
-		inline void FromEulerAnglesZXY (float fYAngle, float fPAngle, float fRAngle);
-		inline void FromEulerAnglesZYX (float fYAngle, float fPAngle, float fRAngle);
+		inline bool ToEulerAnglesXYZ (real& rfYAngle, real& rfPAngle,	real& rfRAngle) const;
+		inline bool ToEulerAnglesXZY (real& rfYAngle, real& rfPAngle,	real& rfRAngle) const ;
+		inline bool ToEulerAnglesYXZ (real& rfYAngle, real& rfPAngle,	real& rfRAngle) const;
+		inline bool ToEulerAnglesYZX (real& rfYAngle, real& rfPAngle,	real& rfRAngle) const ;
+		inline bool ToEulerAnglesZXY (real& rfYAngle, real& rfPAngle,	real& rfRAngle) const;
+		inline bool ToEulerAnglesZYX (real& rfYAngle, real& rfPAngle,	real& rfRAngle) const;
+		inline void FromEulerAnglesXYZ (real fYAngle, real fPAngle, real fRAngle);
+		inline void FromEulerAnglesXZY (real fYAngle, real fPAngle, real fRAngle);
+		inline void FromEulerAnglesYXZ (real fYAngle, real fPAngle, real fRAngle) ;
+		inline void FromEulerAnglesYZX (real fYAngle, real fPAngle, real fRAngle);
+		inline void FromEulerAnglesZXY (real fYAngle, real fPAngle, real fRAngle);
+		inline void FromEulerAnglesZYX (real fYAngle, real fPAngle, real fRAngle);
 
 		// eigensolver, matrix must be symmetric
 		void EigenSolveSymmetric (real afEigenvalue[3],CGUIVector3 akEigenvector[3]) const;

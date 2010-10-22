@@ -164,7 +164,7 @@ namespace guiex
 	//-----------------------------------------------------------------------
 	real CGUIMath::UnitRandom ()
 	{
-		return float( rand() ) / float( RAND_MAX );
+		return real( rand() ) / real( RAND_MAX );
 	}
 
 	//-----------------------------------------------------------------------

@@ -142,10 +142,10 @@ namespace guiex
 		//set texture coordinate
 		SetTexCoordinate(pVertex, rTextureRect, eImageOperation);
 
-		float fLeft = rDestRect.m_fLeft;
-		float fRight = rDestRect.m_fRight;
-		float fBottom = rDestRect.m_fBottom;
-		float fTop = rDestRect.m_fTop;
+		real fLeft = rDestRect.m_fLeft;
+		real fRight = rDestRect.m_fRight;
+		real fBottom = rDestRect.m_fBottom;
+		real fTop = rDestRect.m_fTop;
 
 		long oglcolor_topleft = ColorToOpengl(rColor_topleft);
 		long oglcolor_bottomleft = ColorToOpengl(rColor_bottomleft);

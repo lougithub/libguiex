@@ -95,7 +95,7 @@ public:
 	/** 
 	* @brief get frame numbers per second
 	*/
-	float	GetFPS();
+	real	GetFPS();
 
 	/** 
 	* @brief call this in the begin of the section.
@@ -110,7 +110,7 @@ public:
 	/** 
 	* @brief get the rate of this section.
 	*/
-	float	GetRate(int32 nSectionNo);
+	real	GetRate(int32 nSectionNo);
 
 	/** 
 	* @brief get the millionsecond of the section.

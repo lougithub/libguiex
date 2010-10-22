@@ -192,8 +192,8 @@ namespace guiex
 		~CGUIMath();
 
 		static int IAbs (int iValue) { return ( iValue >= 0 ? iValue : -iValue ); }
-		static int ICeil (float fValue) { return int(ceil(fValue)); }
-		static int IFloor (float fValue) { return int(floor(fValue)); }
+		static int ICeil (real fValue) { return int(ceil(fValue)); }
+		static int IFloor (real fValue) { return int(floor(fValue)); }
 		static int ISign (int iValue);
 
 		static real Abs (real fValue) { return real(fabs(fValue)); }

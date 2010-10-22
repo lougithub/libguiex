@@ -547,7 +547,7 @@ namespace guiex
 		//	bottom = top + m_aListItems[i]->GetSize().GetHeight();
 
 		//	// account for current scrollbar value
-		//	float currPos = d_vertScrollbar->getScrollPosition();
+		//	real currPos = d_vertScrollbar->getScrollPosition();
 		//	top		-= currPos;
 		//	bottom	-= currPos;
 

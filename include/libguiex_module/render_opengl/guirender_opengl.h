@@ -248,9 +248,9 @@ namespace guiex
 
 		struct SVertex
 		{
-			float tex[2];
+			real tex[2];
 			long color;
-			float vertex[3];
+			real vertex[3];
 		};
 
 		enum	ERenderCommand

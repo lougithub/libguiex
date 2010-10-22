@@ -96,7 +96,7 @@ void	CWindowBox::MoveWindowPosition(int deltaX, int deltaY)
 	Reset();
 }
 //-----------------------------------------------------------------------
-void	CWindowBox::SetWindowSize(float deltaleft, float deltatop, float deltaright, float deltabottom)
+void	CWindowBox::SetWindowSize(real deltaleft, real deltatop, real deltaright, real deltabottom)
 {
 	guiex::CGUIRect aRect = m_pSelectWidget->GetRect();
 	aRect.m_fLeft += deltaleft;

@@ -88,7 +88,7 @@ namespace guiex
 		FromAxisAngle ( rkAxis, CGUIRadian(fRadians) );
 	}
 	//-----------------------------------------------------------------------
-	bool CGUIMatrix3::ToEulerAnglesXYZ (float& rfYAngle, float& rfPAngle,float& rfRAngle) const 
+	bool CGUIMatrix3::ToEulerAnglesXYZ (real& rfYAngle, real& rfPAngle,real& rfRAngle) const 
 	{
 			CGUIRadian y, p, r;
 			bool b = ToEulerAnglesXYZ(y,p,r);
@@ -98,7 +98,7 @@ namespace guiex
 			return b;
 	}
 	//-----------------------------------------------------------------------
-	bool CGUIMatrix3::ToEulerAnglesXZY (float& rfYAngle, float& rfPAngle,float& rfRAngle) const 
+	bool CGUIMatrix3::ToEulerAnglesXZY (real& rfYAngle, real& rfPAngle,real& rfRAngle) const 
 	{
 			CGUIRadian y, p, r;
 			bool b = ToEulerAnglesXZY(y,p,r);
@@ -108,7 +108,7 @@ namespace guiex
 			return b;
 	}
 	//-----------------------------------------------------------------------
-	bool CGUIMatrix3::ToEulerAnglesYXZ (float& rfYAngle, float& rfPAngle,float& rfRAngle) const 
+	bool CGUIMatrix3::ToEulerAnglesYXZ (real& rfYAngle, real& rfPAngle,real& rfRAngle) const 
 	{
 			CGUIRadian y, p, r;
 			bool b = ToEulerAnglesYXZ(y,p,r);
@@ -118,7 +118,7 @@ namespace guiex
 			return b;
 	}
 	//-----------------------------------------------------------------------
-	bool CGUIMatrix3::ToEulerAnglesYZX (float& rfYAngle, float& rfPAngle,float& rfRAngle) const 
+	bool CGUIMatrix3::ToEulerAnglesYZX (real& rfYAngle, real& rfPAngle,real& rfRAngle) const 
 	{
 			CGUIRadian y, p, r;
 			bool b = ToEulerAnglesYZX(y,p,r);
@@ -128,7 +128,7 @@ namespace guiex
 			return b;
 	}
 	//-----------------------------------------------------------------------
-	bool CGUIMatrix3::ToEulerAnglesZXY (float& rfYAngle, float& rfPAngle,float& rfRAngle) const 
+	bool CGUIMatrix3::ToEulerAnglesZXY (real& rfYAngle, real& rfPAngle,real& rfRAngle) const 
 	{
 			CGUIRadian y, p, r;
 			bool b = ToEulerAnglesZXY(y,p,r);
@@ -138,7 +138,7 @@ namespace guiex
 			return b;
 	}
 	//-----------------------------------------------------------------------
-	bool CGUIMatrix3::ToEulerAnglesZYX (float& rfYAngle, float& rfPAngle,float& rfRAngle) const
+	bool CGUIMatrix3::ToEulerAnglesZYX (real& rfYAngle, real& rfPAngle,real& rfRAngle) const
 	{
 			CGUIRadian y, p, r;
 			bool b = ToEulerAnglesZYX(y,p,r);
@@ -148,32 +148,32 @@ namespace guiex
 			return b;
 	}
 	//-----------------------------------------------------------------------
-	void CGUIMatrix3::FromEulerAnglesXYZ (float fYAngle, float fPAngle, float fRAngle) 
+	void CGUIMatrix3::FromEulerAnglesXYZ (real fYAngle, real fPAngle, real fRAngle) 
 	{
 		FromEulerAnglesXYZ ( CGUIRadian(fYAngle), CGUIRadian(fPAngle), CGUIRadian(fRAngle) );
 	}
 	//-----------------------------------------------------------------------
-	void CGUIMatrix3::FromEulerAnglesXZY (float fYAngle, float fPAngle, float fRAngle)
+	void CGUIMatrix3::FromEulerAnglesXZY (real fYAngle, real fPAngle, real fRAngle)
 	{
 		FromEulerAnglesXZY ( CGUIRadian(fYAngle), CGUIRadian(fPAngle), CGUIRadian(fRAngle) );
 	}
 	//-----------------------------------------------------------------------
-	void CGUIMatrix3::FromEulerAnglesYXZ (float fYAngle, float fPAngle, float fRAngle) 
+	void CGUIMatrix3::FromEulerAnglesYXZ (real fYAngle, real fPAngle, real fRAngle) 
 	{
 		FromEulerAnglesYXZ ( CGUIRadian(fYAngle), CGUIRadian(fPAngle), CGUIRadian(fRAngle) );
 	}
 	//-----------------------------------------------------------------------
-	void CGUIMatrix3::FromEulerAnglesYZX (float fYAngle, float fPAngle, float fRAngle) 
+	void CGUIMatrix3::FromEulerAnglesYZX (real fYAngle, real fPAngle, real fRAngle) 
 	{
 		FromEulerAnglesYZX ( CGUIRadian(fYAngle), CGUIRadian(fPAngle), CGUIRadian(fRAngle) );
 	}
 	//-----------------------------------------------------------------------
-	void CGUIMatrix3::FromEulerAnglesZXY (float fYAngle, float fPAngle, float fRAngle) 
+	void CGUIMatrix3::FromEulerAnglesZXY (real fYAngle, real fPAngle, real fRAngle) 
 	{
 		FromEulerAnglesZXY ( CGUIRadian(fYAngle), CGUIRadian(fPAngle), CGUIRadian(fRAngle) );
 	}
 	//-----------------------------------------------------------------------
-	void CGUIMatrix3::FromEulerAnglesZYX (float fYAngle, float fPAngle, float fRAngle) 
+	void CGUIMatrix3::FromEulerAnglesZYX (real fYAngle, real fPAngle, real fRAngle) 
 	{
 		FromEulerAnglesZYX ( CGUIRadian(fYAngle), CGUIRadian(fPAngle), CGUIRadian(fRAngle) );
 	}
@@ -1056,7 +1056,7 @@ namespace guiex
 			else
 			{
 				// angle is GUI_PI
-				float fHalfInverse;
+				real fHalfInverse;
 				if ( m[0][0] >= m[1][1] )
 				{
 					// r00 >= r11

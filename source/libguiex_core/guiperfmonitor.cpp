@@ -40,7 +40,7 @@ namespace guiex
 			return m_frameindex == 0;
 		}
 
-		float GetFPS()
+		real GetFPS()
 		{
 			return m_fRecentFPS;
 		}
@@ -66,7 +66,7 @@ namespace guiex
 			m_pSectionCnt[nSectionNo] += (*m_pGlobalTimer - m_pSectionBegin[nSectionNo]);
 		}
 
-		float GetRate(int32 nSectionNo)
+		real GetRate(int32 nSectionNo)
 		{
 			GUI_ASSERT( nSectionNo<m_nSectionNum, "wrong section number");
 
@@ -107,12 +107,12 @@ namespace guiex
 		CGUITimer*		m_pGlobalTimer;
 
 		char**			m_pSectionName;
-		float*			m_pSectionRate;
+		real*			m_pSectionRate;
 		unsigned*			m_pSectionMillionsec;
 		unsigned*			m_pSectionTimes;
 		unsigned*			m_pSectionLastTimes;
 		int32				m_frameindex;
-		float			m_fRecentFPS;
+		real			m_fRecentFPS;
 
 		int32				m_nFrameCnt;			///< frame count
 		int32				m_nSectionNum;			///< section number
@@ -146,9 +146,9 @@ namespace guiex
 		memset( m_pSectionCnt, 0, nSectionNum*sizeof(unsigned));
 
 		//section rate
-		m_pSectionRate = new float[nSectionNum];
+		m_pSectionRate = new real[nSectionNum];
 		GUI_ASSERT( m_pSectionRate, "error" );
-		memset( m_pSectionRate, 0, nSectionNum*sizeof(float));
+		memset( m_pSectionRate, 0, nSectionNum*sizeof(real));
 
 		//section times
 		m_pSectionTimes = new unsigned[nSectionNum];
@@ -224,12 +224,12 @@ namespace guiex
 			unsigned u32Elapse = *m_pGlobalTimer - *m_pLastCount;
 
 			//get fps
-			m_fRecentFPS = (float)m_nFrameCnt *1000 / (float)u32Elapse;
+			m_fRecentFPS = (real)m_nFrameCnt *1000 / (real)u32Elapse;
 
 			//update section information
 			for (int32 i=0;i<m_nSectionNum;++i)
 			{
-				m_pSectionRate[i] = (float)(m_pSectionCnt[i]) / (float)(u32Elapse);
+				m_pSectionRate[i] = (real)(m_pSectionCnt[i]) / (real)(u32Elapse);
 				m_pSectionMillionsec[i] = (unsigned)(m_pSectionCnt[i]);
 				m_pSectionLastTimes[i] = m_pSectionTimes[i];
 			}
@@ -316,7 +316,7 @@ namespace guiex
 		m_impl->FrameUpdate();
 	}
 	//--------------------------------------------------------------------------------------
-	float CPerfMonitor::GetFPS()
+	real CPerfMonitor::GetFPS()
 	{
 		GUI_ASSERT(m_impl,"CPerfMonitor hasn't been initialized");
 		return m_impl->GetFPS();
@@ -334,7 +334,7 @@ namespace guiex
 		m_impl->EndSection(nSectionNo);
 	}
 	//--------------------------------------------------------------------------------------
-	float CPerfMonitor::GetRate(int32 nSectionNo)
+	real CPerfMonitor::GetRate(int32 nSectionNo)
 	{
 		GUI_ASSERT(m_impl,"CPerfMonitor hasn't been initialized");
 		return m_impl->GetRate(nSectionNo);
