@@ -12,7 +12,6 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include "guiconfig.h"
 #include "guibase.h"
 
 //============================================================================//
@@ -21,7 +20,7 @@
 namespace guiex
 {
 	class CGUIProperty;
-}
+
 
 //============================================================================//
 // class
@@ -30,21 +29,20 @@ namespace guiex
 {
 	/**
 	* @class CGUIPropertyable
-	* @brief base class of propertyable object, such as size, rect and so on.
+	* @brief base class of "propertyable" object, such as size, rect and so on.
 	*/
 	class GUIEXPORT CGUIPropertyable
 	{
 	public:
-		CGUIPropertyable( uint32 uPropertyType );
+		/** 
+		* @brief default constructor
+		* @param uPropertyType type of this "propertyable" object
+		*/
+		CGUIPropertyable( );
 		virtual ~CGUIPropertyable();
 
-		virtual CGUIProperty* SaveToProperty( const CGUIString& rPropertyName ) const = 0;
+		virtual void SaveToProperty( CGUIProperty& rProperty ) const = 0;
 		virtual void LoadFromProperty( const CGUIProperty& rProperty ) = 0;
-
-		uint32 GetPropertyType();
-
-	private:
-		uint32 uPropertyType;
 	};
 }
 

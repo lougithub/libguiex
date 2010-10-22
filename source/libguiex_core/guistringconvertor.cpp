@@ -158,6 +158,21 @@ namespace guiex
 			StringToReal(aListString[1]));
 	}
 	//------------------------------------------------------------------------------
+	void CGUIStringConvertor::StringToSize( const CGUIString& rStringValue, CGUISize& rSize )
+	{
+		//string should have format as "width,height"
+		std::vector<CGUIString> aListString= StringToVector(rStringValue);
+		if( aListString.size() != 2 )
+		{
+			throw CGUIException(
+				"[CGUIStringConvertor::StringToSize]: string value format is wrong! <%s>",
+				rStringValue.c_str());
+		}
+
+		rSize.SetWidth( StringToReal(aListString[0]) );
+		rSize.SetHeight( StringToReal(aListString[1]) );
+	}
+	//------------------------------------------------------------------------------
 	CGUIString	CGUIStringConvertor::SizeToString( const CGUISize& rSize)
 	{
 		std::stringstream stream;

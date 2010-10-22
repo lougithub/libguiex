@@ -27,11 +27,54 @@ GUI_SINGLETON_IMPLEMENT_EX(CGUIPropertyManager);
 //------------------------------------------------------------------------------
 CGUIPropertyManager::CGUIPropertyManager()
 {
+	RegisterPropertyType( ePropertyType_Size, "SIZE" );
 }
 //------------------------------------------------------------------------------
 CGUIPropertyManager::~CGUIPropertyManager()
 {
 
+}
+//------------------------------------------------------------------------------
+void CGUIPropertyManager::RegisterPropertyType( uint32 uPropertyType, const CGUIString& rStringValue )
+{
+	TMapPropertyType2String::iterator itorFindType2String = m_mapPropertyType2String.find( uPropertyType );
+	if( itorFindType2String  != m_mapPropertyType2String.end() )
+	{
+		throw CGUIException( "[CGUIPropertyManager::RegisterPropertyType]: the property <%s:%d> has existed!",
+			rStringValue.c_str(), 
+			uPropertyType);
+	}
+	TMapString2PropertyType::iterator itorFindString2Type = m_mapString2PropertyType.find( rStringValue );
+	if( itorFindString2Type  != m_mapString2PropertyType.end() )
+	{
+		throw CGUIException( "[CGUIPropertyManager::RegisterPropertyType]: the property <%s:%d> has existed!",
+			rStringValue.c_str(), 
+			uPropertyType);
+	}
+	m_mapPropertyType2String.insert( std::make_pair( uPropertyType, rStringValue ));
+	m_mapString2PropertyType.insert( std::make_pair( rStringValue, uPropertyType ));
+}
+//------------------------------------------------------------------------------
+uint32 CGUIPropertyManager::StringToPropertyType( const CGUIString& rStringValue )
+{
+	TMapString2PropertyType::iterator itorFindString2Type = m_mapString2PropertyType.find( rStringValue );
+	if( itorFindString2Type  != m_mapString2PropertyType.end() )
+	{
+		throw CGUIException( "[CGUIPropertyManager::StringToPropertyType]: failed to find property type by string value <%s>",
+			rStringValue.c_str());
+	}
+	return itorFindString2Type->second;
+}
+//------------------------------------------------------------------------------
+const CGUIString& CGUIPropertyManager::PropertyTypeToString( uint32 uPropertyType )
+{
+	TMapPropertyType2String::iterator itorFindType2String = m_mapPropertyType2String.find( uPropertyType );
+	if( itorFindType2String  != m_mapPropertyType2String.end() )
+	{
+		throw CGUIException( "[CGUIPropertyManager::PropertyTypeToString]: failed to find string value by property type <%d>",
+			uPropertyType);
+	}
+	return itorFindType2String->second;
 }
 //------------------------------------------------------------------------------
 CGUIProperty*	CGUIPropertyManager::CreateProperty()

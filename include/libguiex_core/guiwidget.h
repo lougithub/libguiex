@@ -846,6 +846,8 @@ namespace guiex
 
 		CGUIWidget*	GetLastChild( );
 
+		void	RegisterPropertyableObject( const CGUIString& rName, uint32 uPropertyType, CGUIPropertyable* pPropertyableObj );
+
 
 	protected:
 
@@ -975,6 +977,11 @@ namespace guiex
 		/// for widget property support
 		///////////////////////////////////////////////////////////////////////
 		CGUIPropertySet		m_aPropertySet;
+		
+		typedef std::vector<CGUIPropertyable*>	TArrayPropertyableObjects;
+		TArrayPropertyableObjects		m_arrayPropertyableObjects;
+		typedef std::map< std::pair<CGUIString, uint32>, CGUIPropertyable* > TMapPropertyableObjects;
+		TMapPropertyableObjects			m_mapPropertyableObjects;
 	};
 
 

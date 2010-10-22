@@ -76,6 +76,7 @@ namespace guiex
 		* the format of string is "width,height"
 		*/
 		static CGUISize				StringToSize( const CGUIString& rStringValue );
+		static void					StringToSize( const CGUIString& rStringValue, CGUISize& rSize );
 
 		/**
 		* @brief convert CGUISize to string.

@@ -1257,6 +1257,22 @@ namespace guiex
 		m_aPropertySet.Clear();
 	}
 	//------------------------------------------------------------------------------
+	void	CGUIWidget::RegisterPropertyableObject( const CGUIString& rName, uint32 uPropertyType, CGUIPropertyable* pPropertyableObj )
+	{
+		GUI_ASSERT(pPropertyableObj, "invalid parameter");
+
+		std::pair<CGUIString, uint32> key = std::make_pair( rName, uPropertyType );
+		TMapPropertyableObjects::iterator itorFind = m_mapPropertyableObjects.find( key );
+		if( itorFind != m_mapPropertyableObjects )
+		{
+			throw CGUIException("[CGUIWidget::RegisterPropertyableObject]: propertyable object has existing [%s,%d]",
+				rName.c_str(),
+				uPropertyType);
+		}
+		m_mapPropertyableObjects.insert( key, pPropertyableObj );
+		m_arrayPropertyableObjects.push_back( pPropertyableObj );
+	}
+	//------------------------------------------------------------------------------
 	CGUIProperty*	CGUIWidget::GenerateProperty(const CGUIString& rName, const CGUIString& rType )
 	{
 		CGUIProperty* pProperty = NULL;
