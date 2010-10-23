@@ -13,13 +13,14 @@
 //============================================================================// 
 #include "guibase.h"
 #include "guivector2.h"
+#include "guipropertyable.h"
 
 //============================================================================//
 // declare
 //============================================================================// 
 namespace guiex
 {
-	class CGUISize;
+
 }
 
 
@@ -30,7 +31,7 @@ namespace guiex
 
 namespace guiex
 {
-	class GUIEXPORT CGUIRect
+	class GUIEXPORT CGUIRect : public CGUIPropertyable
 	{
 	public:
 		/**
@@ -182,12 +183,14 @@ namespace guiex
 		*/
 		const CGUIRect& operator*=(real scalar);
 
+		virtual void SaveToProperty( CGUIProperty& rProperty ) const;
+		virtual void LoadFromProperty( const CGUIProperty& rProperty );
 
 	public:
 		real	m_fTop;
 		real	m_fBottom;
-		real m_fLeft;
-		real m_fRight;
+		real	m_fLeft;
+		real	m_fRight;
 	};
 
 }	//namespace guiex

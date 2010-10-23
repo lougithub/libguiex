@@ -14,6 +14,7 @@
 #include "guibase.h"
 #include "guievent.h"
 #include "guirect.h"
+#include "guinode.h"
 #include "guicolorrect.h"
 #include "guistringex.h"
 #include "guistring.h"
@@ -22,6 +23,7 @@
 #include "guiproperty.h"
 #include "guiimage.h"
 #include "guiwidgetparameter.h"
+#include "guirenderrect.h"
 
 #include <bitset>
 #include <vector>
@@ -54,7 +56,7 @@ namespace guiex
 	* @class CGUIWidget
 	* @brief base class of widget 
 	*/
-	class GUIEXPORT CGUIWidget
+	class GUIEXPORT CGUIWidget : public CGUINode
 	{
 	public:
 		/**
@@ -542,6 +544,10 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////
 		// widget operation - position
 		////////////////////////////////////////////////////////////////////////////
+
+		//!< get render vector list
+		const CGUIRenderRect&	GetRenderRect();
+
 		/**
 		* @brief set whether position is relative
 		*/
@@ -576,6 +582,31 @@ namespace guiex
 		* @brief global coordinate to client coordinate
 		*/
 		void GlobalToClient( CGUIVector2& rPos );
+
+		/**
+		* @brief client coordinate to global coordinate
+		*/
+		void LocalToWorld( CGUIVector2& rPos );
+
+		/**
+		* @brief global coordinate to client coordinate
+		*/
+		void WorldToLocal( CGUIVector2& rPos );
+
+		/**
+		* @brief client coordinate to global coordinate
+		*/
+		void LocalToWorld( const CGUIRect& rRect, CGUIRenderRect& rRenderRect );
+
+		/**
+		* @brief parent coordinate to global coordinate
+		*/
+		void ParentToWorld( CGUIVector2& rPos );
+
+		/**
+		* @brief global coordinate to parent coordinate
+		*/
+		void WorldToParent( CGUIVector2& rPos );
 
 		const CGUIRect&				GetRect();								//get widget rect, global
 		void						SetRect(const CGUIRect& rRect);			//set widget rect, global
@@ -617,6 +648,8 @@ namespace guiex
 		void				SetRectDirty();		//set dirty flag for rect size and position
 
 	protected:
+		void				OnUpdatedFromParent(void);
+
 		void				ResetRectDirty()	//reset dirty flag
 		{
 			m_bRectDirtyFlag = false;
@@ -705,6 +738,19 @@ namespace guiex
 			const CGUIString& rName, 
 			const CGUIRect& rDestRect, 
 			real z,
+			const CGUIRect* pClipRect);
+
+		
+		/**
+		* @brief draw a image
+		* @param rDestRect in default format
+		* @param rClipRect in default format
+		*/
+		void	DrawImage(
+			IGUIInterfaceRender* pRender,
+			CGUIImage* pImage, 
+			const CGUIRenderRect& rRenderRect, 
+			real z, 
 			const CGUIRect* pClipRect);
 
 
@@ -847,6 +893,7 @@ namespace guiex
 		CGUIWidget*	GetLastChild( );
 
 		void	RegisterPropertyableObject( const CGUIString& rName, uint32 uPropertyType, CGUIPropertyable* pPropertyableObj );
+		CGUIPropertyable*	FindPropertyableObject( const CGUIString& rName, uint32 uPropertyType );
 
 
 	protected:
@@ -900,6 +947,7 @@ namespace guiex
 
 		bool			m_bRectDirtyFlag;
 
+		CGUIRenderRect		m_aRenderRect;		//!< contain render vertex and it's parameter
 
 		///////////////////////////////////////////////////////////////////////
 		/// widget callback function								
@@ -961,9 +1009,6 @@ namespace guiex
 		/// for widget tree											
 		///////////////////////////////////////////////////////////////////////
 		CGUIWidget*		m_pExclusiveChild;	//!< for exclusive child
-		CGUIWidget*		m_pParent;			//!< parent
-		CGUIWidget*		m_pChild;			//!< child
-		CGUIWidget*		m_pNextSibling;		//!< sibling
 
 
 		CGUIString		m_strType;			//!< widget type

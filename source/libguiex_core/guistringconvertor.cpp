@@ -116,7 +116,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIRect CGUIStringConvertor::StringToRect( const CGUIString& rStringValue )
 	{
-		//string should have format as "left, top, right,top"
+		//string should have format as "left, top, right,bottom"
 		std::vector<CGUIString> aListString= StringToVector(rStringValue);
 		if( aListString.size() != 4 )
 		{
@@ -130,6 +130,23 @@ namespace guiex
 			StringToReal(aListString[1]),
 			StringToReal(aListString[2]),
 			StringToReal(aListString[3]));
+	}
+	//------------------------------------------------------------------------------
+	void CGUIStringConvertor::StringToRect( const CGUIString& rStringValue, CGUIRect& rRect )
+	{
+		//string should have format as "left, top, right,bottom"
+		std::vector<CGUIString> aListString= StringToVector(rStringValue);
+		if( aListString.size() != 4 )
+		{
+			throw CGUIException(
+				"[CGUIStringConvertor::StringToRect]: string value format is wrong! <%s>",
+				rStringValue.c_str());
+		}
+
+		rRect.m_fLeft = StringToReal(aListString[0]);
+		rRect.m_fTop = StringToReal(aListString[1]);
+		rRect.m_fRight = StringToReal(aListString[2]); 
+		rRect.m_fBottom = StringToReal(aListString[3]);
 	}
 	//------------------------------------------------------------------------------
 	CGUIString	CGUIStringConvertor::RectToString( const CGUIRect& rRect)
@@ -169,8 +186,8 @@ namespace guiex
 				rStringValue.c_str());
 		}
 
-		rSize.SetWidth( StringToReal(aListString[0]) );
-		rSize.SetHeight( StringToReal(aListString[1]) );
+		rSize.m_fWidth = StringToReal(aListString[0]);
+		rSize.m_fHeight = StringToReal(aListString[1]);
 	}
 	//------------------------------------------------------------------------------
 	CGUIString	CGUIStringConvertor::SizeToString( const CGUISize& rSize)
@@ -206,6 +223,24 @@ namespace guiex
 		stream.fill(' ');
 		stream << rVector2.x<<','<<rVector2.y;
 		return stream.str();
+	}
+	//------------------------------------------------------------------------------
+	void CGUIStringConvertor::StringToColor( const CGUIString& rStringValue, CGUIColor& rColor )
+	{
+		//string should have format as "r,g,b,a"
+		std::vector<CGUIString> aListString= StringToVector(rStringValue);
+
+		if( aListString.size() != 4 )
+		{
+			throw CGUIException(
+				"[CGUIStringConvertor::StringToColor]: string value format is wrong! <%s>",
+				rStringValue.c_str());
+		}
+
+		rColor.SetColor( StringToReal(aListString[0]),
+						 StringToReal(aListString[1]),
+						 StringToReal(aListString[2]),
+						 StringToReal(aListString[3]));
 	}
 	//------------------------------------------------------------------------------
 	CGUIColor CGUIStringConvertor::StringToColor( const CGUIString& rStringValue )

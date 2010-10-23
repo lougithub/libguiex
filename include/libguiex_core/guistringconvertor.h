@@ -62,6 +62,7 @@ namespace guiex
 		* the format of string is "left, top,right,bottom"
 		*/
 		static CGUIRect				StringToRect( const CGUIString& rStringValue );
+		static void					StringToRect( const CGUIString& rStringValue, CGUIRect& rRect );
 
 		/**
 		* @brief convert CGUIRect to string.
@@ -102,6 +103,7 @@ namespace guiex
 		* the format of string is "r,g,b,a"
 		*/
 		static CGUIColor			StringToColor( const CGUIString& rStringValue );
+		static void					StringToColor( const CGUIString& rStringValue, CGUIColor& rColor );
 
 		/**
 		* @brief convert CGUIColor to string.

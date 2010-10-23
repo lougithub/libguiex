@@ -19,12 +19,13 @@
 namespace guiex 
 {
 	//-----------------------------------------------------------------------
-	CGUINode::CGUINode(const CGUIString& rName)
+	CGUINode::CGUINode( )
 		:m_bDirtyFlag(false)
-		,m_strName(rName)
 		,m_pParent(NULL)
 		,m_pChild(NULL)
 		,m_pNextSibling(NULL)
+		,mCachedInverseTransformOutOfDate(false)
+		,mCachedTransformOutOfDate(false)
 	{
 		m_pParent = 0;
 		m_aOrientation = m_aDerivedOrientation = CGUIQuaternion::IDENTITY;
@@ -40,11 +41,6 @@ namespace guiex
 	{
 	}    
 	//-----------------------------------------------------------------------
-	const CGUIString&	CGUINode::GetName() const
-	{
-		return m_strName;
-	}
-	//-----------------------------------------------------------------------
 	CGUINode* CGUINode::GetParent(void) const
 	{
 		return m_pParent;
@@ -59,7 +55,7 @@ namespace guiex
 	}
 
 	//-----------------------------------------------------------------------
-	CGUIMatrix4 CGUINode::getFullTransform(void) const
+	const CGUIMatrix4& CGUINode::getFullTransform(void)
 	{
 		if (mCachedTransformOutOfDate)
 		{
@@ -72,7 +68,18 @@ namespace guiex
 		return mCachedTransform;
 	}
 	//-----------------------------------------------------------------------
-	void CGUINode::updateFromParent(void) const
+	const CGUIMatrix4& CGUINode::getFullInverseTransform(void)
+	{
+		if (mCachedInverseTransformOutOfDate)
+		{
+			// Use derived values 
+			makeInverseTransform( getDerivedPosition(), getDerivedScale(), getDerivedOrientation(), mCachedInverseTransform); 
+			mCachedInverseTransformOutOfDate = false;
+		}
+		return mCachedInverseTransform;
+	}
+	//-----------------------------------------------------------------------
+	void CGUINode::updateFromParent(void)
 	{
 		if (m_pParent)
 		{
@@ -110,7 +117,11 @@ namespace guiex
 		}
 
 		mCachedTransformOutOfDate = true;
-
+		mCachedInverseTransformOutOfDate = true;
+	}
+	//-----------------------------------------------------------------------
+	void CGUINode::OnUpdatedFromParent()
+	{
 
 	}
 	//-----------------------------------------------------------------------
@@ -268,21 +279,21 @@ namespace guiex
 		SetDirtyFlag();
 	}
 	//-----------------------------------------------------------------------
-	const CGUIQuaternion & CGUINode::getDerivedOrientation(void) const
+	const CGUIQuaternion & CGUINode::getDerivedOrientation(void)
 	{
 		UpdateDirtyNode();
 
 		return m_aDerivedOrientation;
 	}
 	//-----------------------------------------------------------------------
-	const CGUIVector3 & CGUINode::getDerivedPosition(void) const
+	const CGUIVector3 & CGUINode::getDerivedPosition(void)
 	{
 		UpdateDirtyNode();
 
 		return m_aDerivedPosition;
 	}
 	//-----------------------------------------------------------------------
-	const CGUIVector3 & CGUINode::getDerivedScale(void) const
+	const CGUIVector3 & CGUINode::getDerivedScale(void)
 	{
 		return m_aDerivedScale;
 	}
@@ -388,18 +399,18 @@ namespace guiex
 		destMatrix.setTrans(invTranslate);
 	}
 	//-----------------------------------------------------------------------
-	void CGUINode::getWorldTransforms(CGUIMatrix4* xform) const
+	void CGUINode::getWorldTransforms(CGUIMatrix4* xform)
 	{
 		// Assumes up to date
 		*xform = getFullTransform();
 	}
 	//-----------------------------------------------------------------------
-	const CGUIQuaternion& CGUINode::getWorldOrientation(void) const
+	const CGUIQuaternion& CGUINode::getWorldOrientation(void)
 	{
 		return getDerivedOrientation();
 	}
 	//-----------------------------------------------------------------------
-	const CGUIVector3& CGUINode::getWorldPosition(void) const
+	const CGUIVector3& CGUINode::getWorldPosition(void)
 	{
 		return getDerivedPosition();
 	}
@@ -419,15 +430,15 @@ namespace guiex
 		}
 	}
 	//-----------------------------------------------------------------------
-	void		CGUINode::UpdateDirtyNode() const
+	void		CGUINode::UpdateDirtyNode()
 	{
 		if( m_bDirtyFlag)
 		{
 			//update dirty node
 			updateFromParent();
+			m_bDirtyFlag =	false;
 
-
-			m_bDirtyFlag = true;
+			OnUpdatedFromParent();
 		}
 	}
 	//------------------------------------------------------------------------------

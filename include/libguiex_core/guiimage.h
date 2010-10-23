@@ -27,6 +27,7 @@ namespace guiex
 	class CGUITexture;
 	class IGUIInterfaceRender;
 	class CGUIRect;
+	class CGUIRenderRect;
 }
 
 //============================================================================//
@@ -89,6 +90,14 @@ namespace guiex
 			const CGUIRect& rDestRect,
 			real z, 
 			const CGUIColor& rColor,
+			real fAlpha	);
+
+		/**
+		* @brief draw this texture with clip rect
+		*/
+		void	Draw(IGUIInterfaceRender* pRender,
+			const CGUIRenderRect& rRenderRect,
+			real z, 
 			real fAlpha	);
 
 		/**

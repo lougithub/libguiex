@@ -12,6 +12,7 @@
 //	include
 //============================================================================// 
 #include "guibase.h"
+#include "guipropertyable.h"
 
 
 //============================================================================//
@@ -32,7 +33,7 @@ namespace guiex
 	/** 
 	* @brief represent color value in this system
 	*/
-	class GUIEXPORT CGUIColor
+	class GUIEXPORT CGUIColor : public CGUIPropertyable
 	{
 	public:
 		/** 
@@ -86,13 +87,13 @@ namespace guiex
 
 
 		/** 
-		* @brief set value by ARGB
+		* @brief set value by color r,g,b,a
 		* @param fRed red value, from 0.0 to 1.0
 		* @param fGreen green value, from 0.0 to 1.0
 		* @param fBlue blue value, from 0.0 to 1.0
 		* @param fAlpha alpha value, from 0.0 to 1.0, default is 1.0f
 		*/
-		void SetARGB(real fRed, real fGreen, real fBlue, real fAlpha = 1.0f);
+		void SetColor(real fRed, real fGreen, real fBlue, real fAlpha = 1.0f);
 
 		/** 
 		* @brief set value by RGB
@@ -379,8 +380,8 @@ namespace guiex
 		*/
 		bool	operator>(const CGUIColor &rColor ) const;
 
-	protected:
-
+		virtual void SaveToProperty( CGUIProperty& rProperty ) const;
+		virtual void LoadFromProperty( const CGUIProperty& rProperty );
 
 
 	private:
@@ -413,7 +414,7 @@ namespace guiex
 		m_nARGB = argb;
 	}
 	//------------------------------------------------------------------------------ 
-	inline void 		CGUIColor::SetARGB(real fRed, real fGreen, real fBlue, real fAlpha/* = 1.0f*/)
+	inline void 		CGUIColor::SetColor(real fRed, real fGreen, real fBlue, real fAlpha/* = 1.0f*/)
 	{
 		m_nARGB = ((uint32(fAlpha*255.0f)&0xFF)<<24) + ((uint32(fRed*255.0f)&0xFF)<<16) + ((uint32(fGreen*255.0f)&0xFF)<<8) + (uint32(fBlue*255.0f)&0xFF);
 	}
@@ -571,7 +572,7 @@ namespace guiex
 	//------------------------------------------------------------------------------ 
 	inline CGUIColor& 	CGUIColor::operator+=(const CGUIColor& rColor)
 	{
-		SetARGB(
+		SetColor(
 			GetRed() + rColor.GetRed(),
 			GetGreen() + rColor.GetGreen(),
 			GetBlue() + rColor.GetBlue(),
@@ -583,7 +584,7 @@ namespace guiex
 	inline CGUIColor& 	CGUIColor::operator+=(GUIARGB argb)
 	{
 		CGUIColor aTempColor(argb);
-		SetARGB(
+		SetColor(
 			GetRed() + aTempColor.GetRed(),
 			GetGreen() + aTempColor.GetGreen(),
 			GetBlue() + aTempColor.GetBlue(),
@@ -610,7 +611,7 @@ namespace guiex
 	//------------------------------------------------------------------------------ 
 	inline CGUIColor& 	CGUIColor::operator-=(const CGUIColor& rColor)
 	{
-		SetARGB(
+		SetColor(
 			GetRed() - rColor.GetRed(),
 			GetGreen() - rColor.GetGreen(),
 			GetBlue() - rColor.GetBlue(),
@@ -621,7 +622,7 @@ namespace guiex
 	inline CGUIColor& 	CGUIColor::operator-=(GUIARGB argb)
 	{
 		CGUIColor aTempColor(argb);
-		SetARGB(
+		SetColor(
 			GetRed() - aTempColor.GetRed(),
 			GetGreen() - aTempColor.GetGreen(),
 			GetBlue() - aTempColor.GetBlue(),
@@ -640,7 +641,7 @@ namespace guiex
 	//------------------------------------------------------------------------------ 
 	inline CGUIColor& 	CGUIColor::operator*=(const real fValue)
 	{
-		SetARGB(
+		SetColor(
 			GetRed() * fValue,
 			GetGreen() * fValue,
 			GetBlue() * fValue,
@@ -667,7 +668,7 @@ namespace guiex
 	//------------------------------------------------------------------------------ 
 	inline CGUIColor& 	CGUIColor::operator*=(const CGUIColor& rColor)
 	{
-		SetARGB(
+		SetColor(
 			GetRed() * rColor.GetRed(),
 			GetGreen() * rColor.GetGreen(),
 			GetBlue() * rColor.GetBlue(),
@@ -678,7 +679,7 @@ namespace guiex
 	inline CGUIColor& 	CGUIColor::operator*=(GUIARGB argb)
 	{
 		CGUIColor aTempColor(argb);
-		SetARGB(
+		SetColor(
 			GetRed() * aTempColor.GetRed(),
 			GetGreen() * aTempColor.GetGreen(),
 			GetBlue() * aTempColor.GetBlue(),

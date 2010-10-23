@@ -78,6 +78,19 @@ namespace guiex
 			GUIARGB  rColor_bottomright);
 
 		/** 
+		* @brief add a texture into render list
+		*/
+		virtual	void	AddRenderTexture(	const CGUIRenderRect& rRenderRect, 
+			real z,
+			const CGUITextureImp* pTexture, 
+			const CGUIRect& rTextureRect, 
+			EImageOperation eImageOperation,
+			GUIARGB rColor_topleft,
+			GUIARGB rColor_topright,
+			GUIARGB rColor_bottomleft,
+			GUIARGB rColor_bottomright);
+
+		/** 
 		* @brief set a clip rect
 		*/
 		virtual	void	AddScissor( const CGUIRect& rClipRect);

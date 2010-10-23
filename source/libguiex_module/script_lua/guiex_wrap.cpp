@@ -2094,7 +2094,7 @@ static int _wrap_CGUIColor_SetARGB__SWIG_1(lua_State* L) {
   arg3 = (guiex::real)lua_tonumber(L, 3);
   arg4 = (guiex::real)lua_tonumber(L, 4);
   arg5 = (guiex::real)lua_tonumber(L, 5);
-  (arg1)->SetARGB(arg2,arg3,arg4,arg5);
+  (arg1)->SetColor(arg2,arg3,arg4,arg5);
   
   return SWIG_arg;
   
@@ -2126,7 +2126,7 @@ static int _wrap_CGUIColor_SetARGB__SWIG_2(lua_State* L) {
   arg2 = (guiex::real)lua_tonumber(L, 2);
   arg3 = (guiex::real)lua_tonumber(L, 3);
   arg4 = (guiex::real)lua_tonumber(L, 4);
-  (arg1)->SetARGB(arg2,arg3,arg4);
+  (arg1)->SetColor(arg2,arg3,arg4, 0.0f);
   
   return SWIG_arg;
   

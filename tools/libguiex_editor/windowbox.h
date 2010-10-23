@@ -106,7 +106,7 @@ public:
 	void	MoveWindowPosition(int deltaX, int deltaY);
 
 	//change window's size
-	void	SetWindowSize(real deltaleft, real deltatop, real deltaright, real deltabottom);
+	void	SetWindowSize(float deltaleft, float deltatop, float deltaright, float deltabottom);
 
 private:
 

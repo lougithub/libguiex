@@ -52,13 +52,10 @@ namespace guiex
 
 	public:
 		//!< constructor
-		CGUINode(const CGUIString& rName);
+		CGUINode( );
 
 		//!< destructor
 		virtual ~CGUINode();  
-
-		//!< get node name
-		const CGUIString&	GetName() const;
 
 		//!< Gets this node's parent (NULL if this is the root).
 		virtual CGUINode* GetParent(void) const;
@@ -159,9 +156,6 @@ namespace guiex
 		*/
 		virtual void scale(real x, real y, real z);
 
-
-
-
 		/** Moves the node along the cartesian axes.
 		@par This method moves the node by the supplied vector along the
 		world cartesian axes, i.e. along world x,y,z
@@ -256,15 +250,15 @@ namespace guiex
 
 		/** Gets the orientation of the node as derived from all parents.
 		*/
-		virtual const CGUIQuaternion & getDerivedOrientation(void) const;
+		virtual const CGUIQuaternion & getDerivedOrientation(void);
 
 		/** Gets the position of the node as derived from all parents.
 		*/
-		virtual const CGUIVector3 & getDerivedPosition(void) const;
+		virtual const CGUIVector3 & getDerivedPosition(void);
 
 		/** Gets the scaling factor of the node as derived from all parents.
 		*/
-		virtual const CGUIVector3 & getDerivedScale(void) const;
+		virtual const CGUIVector3 & getDerivedScale(void);
 
 
 
@@ -273,26 +267,29 @@ namespace guiex
 		for this node, including the effect of any parent node
 		transformations
 		*/
-		virtual CGUIMatrix4 getFullTransform(void) const;
+		virtual const CGUIMatrix4& getFullTransform(void);
+
+		//!< get the full inverse transform matrix of this node
+		virtual const CGUIMatrix4& getFullInverseTransform(void);
 
 		/** 
 		@remarks This is only used if the SceneManager chooses to render the node.
 		*/
-		void getWorldTransforms(CGUIMatrix4* xform) const;
+		void getWorldTransforms(CGUIMatrix4* xform);
 
 		/** Gets the world orientation of this node; this is used in order to
 		more efficiently update parameters to vertex & fragment programs, since inverting Quaterion
 		and Vector in order to derive object-space positions / directions for cameras and
 		lights is much more efficient than inverting a complete 4x4 matrix, and also 
 		eliminates problems introduced by scaling. */
-		const CGUIQuaternion& getWorldOrientation(void) const;
+		const CGUIQuaternion& getWorldOrientation(void);
 
 		/** Gets the world orientation of this node; this is used in order to
 		more efficiently update parameters to vertex & fragment programs, since inverting Quaterion
 		and Vector in order to derive object-space positions / directions for cameras and
 		lights is much more efficient than inverting a complete 4x4 matrix, and also 
 		eliminates problems introduced by scaling. */
-		const CGUIVector3& getWorldPosition(void) const;
+		const CGUIVector3& getWorldPosition(void);
 
 
 
@@ -306,7 +303,10 @@ namespace guiex
 		to update it's complete transformation based on it's parents
 		derived transform.
 		*/
-		virtual void updateFromParent(void) const;
+		virtual void updateFromParent(void);
+
+		//!< called when updated from parent
+		virtual void OnUpdatedFromParent();
 
 		/** Internal method for building a CGUIMatrix4 from orientation / scale / position. 
 		@remarks Transform is performed in the order rotate, scale, translation, i.e. translation is independent
@@ -335,7 +335,7 @@ namespace guiex
 		void	SetDirtyFlag();
 
 		//!< update if the node is dirty
-		void	UpdateDirtyNode() const;
+		void	UpdateDirtyNode();
 
 		/// set child
 		void	SetChild( const CGUINode* pNode);
@@ -344,15 +344,13 @@ namespace guiex
 		void	SetNextSibling( const CGUINode* pNode );
 
 	protected:
-		CGUIString		m_strName;			//!< node name
-
 		CGUIQuaternion	m_aOrientation;		//!< Stores the orientation of the node relative to it's parent.
 		CGUIVector3		m_aPosition;		//!< Stores the position/translation of the node relative to its parent.
 		CGUIVector3		m_aScale;			//!< Stores the scaling factor applied to this node
 		bool			m_bInheritScale;	//!< Stores whether this node inherits scale from it's parent
 
 
-		mutable bool	m_bDirtyFlag;		//!< dirty rect
+		bool			m_bDirtyFlag;		//!< dirty rect
 		CGUINode*		m_pParent;			//!< parent
 		CGUINode*		m_pChild;			//!< child
 		CGUINode*		m_pNextSibling;		//!< sibling
@@ -365,7 +363,7 @@ namespace guiex
 		This is updated when updateFromParent is called by the
 		SceneManager or the nodes parent.
 		*/
-		mutable CGUIQuaternion m_aDerivedOrientation;
+		CGUIQuaternion m_aDerivedOrientation;
 
 		/** Cached combined position.
 		@par
@@ -374,7 +372,7 @@ namespace guiex
 		This is updated when updateFromParent is called by the
 		SceneManager or the nodes parent.
 		*/
-		mutable CGUIVector3 m_aDerivedPosition;
+		CGUIVector3 m_aDerivedPosition;
 
 		/** Cached combined scale.
 		@par
@@ -383,11 +381,14 @@ namespace guiex
 		This is updated when updateFromParent is called by the
 		SceneManager or the nodes parent.
 		*/
-		mutable CGUIVector3 m_aDerivedScale;	
+		CGUIVector3 m_aDerivedScale;	
 		
 		
-		mutable CGUIMatrix4 mCachedTransform;		//!< Cached derived transform as a 4x4 matrix
-		mutable bool mCachedTransformOutOfDate;		//!< whether transform is out of data
+		bool mCachedTransformOutOfDate;		//!< whether transform is out of data
+		bool mCachedInverseTransformOutOfDate;		//!< whether transform is out of data
+
+		CGUIMatrix4 mCachedTransform;		//!< Cached derived transform as a 4x4 matrix
+		CGUIMatrix4 mCachedInverseTransform;		//!< Cached derived transform as a 4x4 matrix
 	};
 
 } //namespace

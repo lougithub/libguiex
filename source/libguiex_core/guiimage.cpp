@@ -20,6 +20,7 @@
 #include <libguiex_core\guiwidgetsystem.h>
 #include <libguiex_core\guiprojectinfo.h>
 #include <libguiex_core\guiprojectinfomanager.h>
+#include <libguiex_core\guirenderrect.h>
 
 //============================================================================//
 // function
@@ -231,7 +232,32 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	void	CGUIImage::Draw(IGUIInterfaceRender* pRender,
+		const CGUIRenderRect& rRenderRect,
+		real z, 
+		real fAlpha	)
+	{
+		if( !IsLoaded())
+		{
+			Load();
+		}
 
+		if( m_eImageType == eIT_COLOR )
+		{
+			CGUIColor aColor = m_aColor;
+			aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
+			pRender->AddRenderTexture( rRenderRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOperation,
+				aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB());
+		}
+		else
+		{
+			CGUIColor aColor(0xFFFFFFFF);
+			aColor.SetAlpha(fAlpha);
+			pRender->AddRenderTexture( rRenderRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOperation,
+				aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB());
+		}
+	}
+	//------------------------------------------------------------------------------
 
 }//namespace guiex
 

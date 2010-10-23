@@ -26,6 +26,7 @@ namespace guiex
 	class CGUIRect;
 	class CGUITextureImp;
 	class IGUIInterfaceFont;
+	class CGUIRenderRect;
 }
 
 
@@ -65,6 +66,20 @@ namespace guiex
 			GUIARGB rColor_bottomleft,
 			GUIARGB rColor_bottomright
 			) = 0;
+
+		/** 
+		* @brief add a texture into render list
+		* @param rTextureRect in texture co-ordinates.
+		*/
+		virtual	void	AddRenderTexture(	const CGUIRenderRect& rRenderRect, 
+			real z, 
+			const CGUITextureImp* pTexture, 
+			const CGUIRect& rTextureRect, 
+			EImageOperation eImageOperation,
+			GUIARGB rColor_topleft,
+			GUIARGB rColor_topright,
+			GUIARGB rColor_bottomleft,
+			GUIARGB rColor_bottomright) = 0;
 
 		/** 
 		* @brief set a clip rect

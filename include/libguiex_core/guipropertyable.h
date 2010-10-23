@@ -20,6 +20,7 @@
 namespace guiex
 {
 	class CGUIProperty;
+}
 
 
 //============================================================================//
@@ -44,6 +45,7 @@ namespace guiex
 		virtual void SaveToProperty( CGUIProperty& rProperty ) const = 0;
 		virtual void LoadFromProperty( const CGUIProperty& rProperty ) = 0;
 	};
-}
+	
+}	//namespace guiex
 
 #endif //__GUI_PROPERTYABLE_H_20101022__

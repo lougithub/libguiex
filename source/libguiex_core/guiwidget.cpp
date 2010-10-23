@@ -40,14 +40,12 @@ namespace guiex
 {
 	//------------------------------------------------------------------------------
 	CGUIWidget::CGUIWidget( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName )
-		:m_strName(rName)
+		:CGUINode()
+		,m_strName(rName)
 		,m_strOwnerProjectName(rProjectName)
 		,m_strWorkingProjectName(rProjectName)
 		,m_pWidgetGenerator(NULL)
 		,m_pExclusiveChild(NULL)
-		,m_pParent(NULL)
-		,m_pChild(NULL)
-		,m_pNextSibling(NULL)
 		,m_aBitFlag()
 		,m_aParamScale(CGUISize(1.0f,1.0f))
 		,m_aParamAlpha(1.0f)
@@ -81,7 +79,8 @@ namespace guiex
 		m_aBitFlag.set(eFLAG_MOUSE_CONSUMED);			//!< should this mouse consume mouse event
 		m_aBitFlag.set(eFLAG_HITABLE);					//!< could this widget be hitted
 
-
+		//register propertyable object
+		RegisterPropertyableObject( "SIZE", ePropertyType_Size, &m_aWidgetSize );
 	}
 	//------------------------------------------------------------------------------
 	CGUIWidget::~CGUIWidget( )
@@ -90,14 +89,14 @@ namespace guiex
 
 
 		//delete child
-		CGUIWidget* pChild = m_pChild;
+		CGUIWidget* pChild = GetChild();
 		CGUIWidget* pChildTmp = NULL;
 		while( pChild )
 		{
 			pChildTmp = pChild;
-			pChild = pChild->m_pNextSibling;
+			pChild = pChild->GetNextSibling();
 
-			if( CGUIWidgetSystem::Instance()->HasPage( pChildTmp ))
+			if( CGUIWidgetSystem::Instance()->HasPage( pChildTmp))
 			{
 				//it's child is another page
 				pChildTmp->SetParent(NULL);
@@ -131,14 +130,14 @@ namespace guiex
 		CGUIWidgetSystem::Instance()->SendEvent( &aEvent);
 
 		//open child if it is set to "open with parent"
-		CGUIWidget*	pWidget = m_pChild;
+		CGUIWidget*	pWidget = GetChild();
 		while(pWidget)
 		{
 			if( pWidget->GetFlag(eFLAG_OPEN_WITH_PARENT) && pWidget->IsOpen()==false)
 			{
 				pWidget->Open();
 			}
-			pWidget = pWidget->m_pNextSibling;
+			pWidget = pWidget->GetNextSibling();
 		}	
 	}
 	//------------------------------------------------------------------------------
@@ -159,14 +158,14 @@ namespace guiex
 		CGUIWidgetSystem::Instance()->SendEvent( &aEvent);
 
 		//close child
-		CGUIWidget* pWidget = m_pChild;
+		CGUIWidget* pWidget = GetChild();
 		while( pWidget )
 		{
 			if( pWidget->IsOpen() )
 			{
 				pWidget->Close();
 			}
-			pWidget = pWidget->m_pNextSibling;
+			pWidget = pWidget->GetNextSibling();
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -277,15 +276,15 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void		CGUIWidget::SetParent(CGUIWidget *pParent)
 	{
-		if( m_pParent == pParent )
+		if( GetParent() == pParent )
 		{
 			return;
 		}
 
 		//remove from old parent
-		if( m_pParent )
+		if( GetParent() )
 		{
-			m_pParent->RemoveChild(this);
+			GetParent()->RemoveChild(this);
 		}
 
 		//add to current parent
@@ -297,41 +296,41 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIWidget* CGUIWidget::GetParent() const
 	{
-		return m_pParent;
+		return static_cast<CGUIWidget*>(m_pParent);
 	}
 	//------------------------------------------------------------------------------
 	CGUIWidget *CGUIWidget::GetRoot()
 	{
 		CGUIWidget* pWidget = this;
-		while( pWidget->m_pParent )
+		while( pWidget->GetParent() )
 		{
-			pWidget = pWidget->m_pParent;
+			pWidget = pWidget->GetParent();
 		}
 		return pWidget;
 	}
 	//------------------------------------------------------------------------------
 	CGUIWidget*	CGUIWidget::GetChild( ) const
 	{
-		return m_pChild;
+		return static_cast<CGUIWidget*>(m_pChild);
 	}
 	//------------------------------------------------------------------------------
 	CGUIWidget*	CGUIWidget::GetChild( const CGUIString& rChildName ) const
 	{
-		CGUIWidget* pWidget = m_pChild;
+		CGUIWidget* pWidget = GetChild();
 		while( pWidget )
 		{
 			if( pWidget->GetName() == rChildName )
 			{
 				return pWidget;
 			}
-			pWidget = pWidget->m_pNextSibling;
+			pWidget = pWidget->GetNextSibling();
 		}
 		return NULL;
 	}
 	//------------------------------------------------------------------------------
 	CGUIWidget*	CGUIWidget::GetNextSibling( ) const
 	{
-		return m_pNextSibling;
+		return static_cast<CGUIWidget*>(m_pNextSibling);
 	}
 	//------------------------------------------------------------------------------
 	CGUIWidget*	CGUIWidget::GetExclusiveChild( ) const
@@ -343,86 +342,86 @@ namespace guiex
 	{
 		m_strWorkingProjectName = rWorkingProjName;
 
-		CGUIWidget* pWidget = m_pChild;
+		CGUIWidget* pWidget = GetChild();
 		while( pWidget )
 		{
 			pWidget->SetWorkingProjectName( rWorkingProjName );
-			pWidget = pWidget->m_pNextSibling;
+			pWidget = pWidget->GetNextSibling();
 		}
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWidget::MoveDown()
 	{
-		if( m_pParent )
+		if( GetParent() )
 		{
 			//check for only one child, or have been last one
-			if( !m_pParent->m_pChild->m_pNextSibling ||
-				m_pParent->m_pChild == this )
+			if( !GetParent()->GetChild()->GetNextSibling() ||
+				GetParent()->GetChild() == this )
 			{
 				return;
 			}
 
 			//check for second one
-			if( this == m_pParent->m_pChild->m_pNextSibling )
+			if( this == GetParent()->GetChild()->GetNextSibling() )
 			{
-				m_pParent->m_pChild->m_pNextSibling = this->m_pNextSibling;
-				this->m_pNextSibling = m_pParent->m_pChild;
-				m_pParent->m_pChild = this;
+				GetParent()->GetChild()->SetNextSibling( this->GetNextSibling() );
+				this->SetNextSibling( GetParent()->GetChild() );
+				GetParent()->SetChild( this );
 			}
 			else
 			{
 				//find my brother's brother
-				CGUIWidget* pWidget = m_pParent->m_pChild;
-				while( pWidget && pWidget->m_pNextSibling)
+				CGUIWidget* pWidget = GetParent()->GetChild();
+				while( pWidget && pWidget->GetNextSibling())
 				{
-					if( pWidget->m_pNextSibling->m_pNextSibling == this )
+					if( pWidget->GetNextSibling()->GetNextSibling() == this )
 					{
 						break;
 					}
-					pWidget = pWidget->m_pNextSibling;
+					pWidget = pWidget->GetNextSibling();
 				}
 				GUI_ASSERT( pWidget, "error");
-				pWidget->m_pNextSibling->m_pNextSibling = this->m_pNextSibling;
-				this->m_pNextSibling = pWidget->m_pNextSibling;
-				pWidget->m_pNextSibling = this;
+				pWidget->GetNextSibling()->SetNextSibling( this->GetNextSibling( ));
+				this->SetNextSibling( pWidget->GetNextSibling());
+				pWidget->SetNextSibling( this );
 			}
 		}
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWidget::MoveUp()
 	{
-		if( m_pParent )
+		if( GetParent() )
 		{
 			//check for only one child, or have topest
-			if( !m_pParent->m_pChild->m_pNextSibling ||
-				!this->m_pNextSibling )
+			if( !GetParent()->GetChild()->GetNextSibling() ||
+				!this->GetNextSibling() )
 			{
 				return;
 			}
 
 			//check for first
-			if( this == m_pParent->m_pChild )
+			if( this == GetParent()->GetChild() )
 			{
-				m_pParent->m_pChild = m_pParent->m_pChild->m_pNextSibling;
-				this->m_pNextSibling = m_pParent->m_pChild->m_pNextSibling;
-				m_pParent->m_pChild->m_pNextSibling = this;
+				GetParent()->SetChild( GetParent()->GetChild()->GetNextSibling());
+				this->SetNextSibling( GetParent()->GetChild()->GetNextSibling() );
+				GetParent()->GetChild()->SetNextSibling( this );
 			}
 			else
 			{
 				//find my brother
-				CGUIWidget* pWidget = m_pParent->m_pChild;
-				while( pWidget && pWidget->m_pNextSibling)
+				CGUIWidget* pWidget = GetParent()->GetChild();
+				while( pWidget && pWidget->GetNextSibling())
 				{
-					if( pWidget->m_pNextSibling == this )
+					if( pWidget->GetNextSibling() == this )
 					{
 						break;
 					}
-					pWidget = pWidget->m_pNextSibling;
+					pWidget = pWidget->GetNextSibling();
 				}
 				GUI_ASSERT( pWidget, "error");
-				pWidget->m_pNextSibling = this->m_pNextSibling;
-				this->m_pNextSibling = pWidget->m_pNextSibling->m_pNextSibling;
-				pWidget->m_pNextSibling->m_pNextSibling = this;
+				pWidget->SetNextSibling( this->GetNextSibling( ));
+				this->SetNextSibling( pWidget->GetNextSibling()->GetNextSibling());
+				pWidget->GetNextSibling()->SetNextSibling( this );
 
 			}
 		}
@@ -430,53 +429,53 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void	CGUIWidget::MoveToTop()
 	{
-		if( m_pParent )
+		if( GetParent() )
 		{
 			//check for only one child
-			if( !m_pParent->m_pChild->m_pNextSibling)
+			if( !GetParent()->GetChild()->GetNextSibling())
 			{
 				return;
 			}
 
 			//check for first
-			if( this == m_pParent->m_pChild )
+			if( this == GetParent()->GetChild() )
 			{
-				m_pParent->m_pChild = m_pParent->m_pChild->m_pNextSibling;
-				this->m_pNextSibling = NULL;
+				GetParent()->SetChild( GetParent()->GetChild()->GetNextSibling());
+				this->SetNextSibling( NULL );
 			}
 
 			//find this
-			CGUIWidget* pWidget = m_pParent->m_pChild;
+			CGUIWidget* pWidget = GetParent()->GetChild();
 
-			while( pWidget && pWidget->m_pNextSibling)
+			while( pWidget && pWidget->GetNextSibling())
 			{
-				if( pWidget->m_pNextSibling == this )
+				if( pWidget->GetNextSibling() == this )
 				{
 					break;
 				}
-				pWidget = pWidget->m_pNextSibling;
+				pWidget = pWidget->GetNextSibling();
 			}
 
-			if( !pWidget->m_pNextSibling )
+			if( !pWidget->GetNextSibling() )
 			{
 				//add to last
-				pWidget->m_pNextSibling = this;
+				pWidget->SetNextSibling( this );
 			}
 			else
 			{
 				//remove it first
-				pWidget->m_pNextSibling = this->m_pNextSibling;
-				this->m_pNextSibling = NULL;
+				pWidget->SetNextSibling( this->GetNextSibling() );
+				this->SetNextSibling( NULL );
 
 				//add to last
 				while( pWidget )
 				{
-					if( !pWidget->m_pNextSibling )
+					if( !pWidget->GetNextSibling() )
 					{
-						pWidget->m_pNextSibling = this;
+						pWidget->SetNextSibling( this );
 						return;
 					}
-					pWidget = pWidget->m_pNextSibling;
+					pWidget = pWidget->GetNextSibling();
 				}
 			}
 		}
@@ -485,27 +484,27 @@ namespace guiex
 	void	CGUIWidget::RemoveChild( CGUIWidget* pChild )
 	{
 		GUI_ASSERT( pChild, "invalid parameter");
-		GUI_ASSERT( pChild->m_pParent == this, "the child's parent isn't this!");
+		GUI_ASSERT( pChild->GetParent() == this, "the child's parent isn't this!");
 
-		if( pChild == m_pChild )
+		if( pChild == GetChild() )
 		{
-			m_pChild = m_pChild->m_pNextSibling;
+			SetChild( GetChild()->GetNextSibling());
 		}
 		else
 		{
 			bool bFind = false;
-			CGUIWidget* pParam = m_pChild;
-			while(pParam && pParam->m_pNextSibling)
+			CGUIWidget* pParam = GetChild();
+			while(pParam && pParam->GetNextSibling())
 			{
-				if( pParam->m_pNextSibling == pChild )
+				if( pParam->GetNextSibling() == pChild )
 				{
-					pParam->m_pNextSibling = pParam->m_pNextSibling->m_pNextSibling;
+					pParam->SetNextSibling( pParam->GetNextSibling()->GetNextSibling() );
 					bFind = true;
 					break;
 				}
 				else
 				{
-					pParam = pParam->m_pNextSibling;
+					pParam = pParam->GetNextSibling();
 				}
 			}
 			if( !bFind ) 
@@ -515,7 +514,7 @@ namespace guiex
 			}
 		}
 		pChild->m_pParent = NULL;
-		pChild->m_pNextSibling = NULL;
+		pChild->SetNextSibling( NULL );
 
 		//for exclusive child
 		if( pChild->GetFlag(eFLAG_EXCLUSIVE))
@@ -553,12 +552,12 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIWidget*	CGUIWidget::GetLastChild( )
 	{
-		CGUIWidget* pLastChild = m_pChild;
+		CGUIWidget* pLastChild = GetChild();
 		while( pLastChild )
 		{
-			if( pLastChild->m_pNextSibling )
+			if( pLastChild->GetNextSibling() )
 			{
-				pLastChild = pLastChild->m_pNextSibling;
+				pLastChild = pLastChild->GetNextSibling();
 			}
 			else
 			{
@@ -571,18 +570,18 @@ namespace guiex
 	void	CGUIWidget::AddChild( CGUIWidget* pChild )
 	{
 		GUI_ASSERT( pChild, "invalid parameter");
-		GUI_ASSERT( pChild->m_pParent == NULL, "the child has haven a parent!");
+		GUI_ASSERT( pChild->GetParent() == NULL, "the child has haven a parent!");
 
 		CGUIWidget* pLastChild = GetLastChild();
 		if( pLastChild )
 		{
-			pLastChild->m_pNextSibling = pChild;
+			pLastChild->SetNextSibling( pChild );
 		}
 		else
 		{
-			m_pChild = pChild;
+			SetChild( pChild );
 		}
-		pChild->m_pNextSibling = NULL;
+		pChild->SetNextSibling( NULL );
 		pChild->m_pParent = this;
 
 		//for exclusive child
@@ -646,9 +645,9 @@ namespace guiex
 		if( GetFlag(eFLAG_FOCUS_AGENCY))
 		{
 			//is a focus agency
-			if( m_pParent )
+			if( GetParent() )
 			{
-				return m_pParent->IsFocusable( );
+				return GetParent()->IsFocusable( );
 			}
 
 			throw CGUIException("[CGUIWidget::IsFocusable]: lack of parent! TYPE<%s>  NAME<%s>",
@@ -663,9 +662,9 @@ namespace guiex
 		if( bFocus && GetFlag(eFLAG_FOCUS_AGENCY))
 		{
 			//is a focus agency
-			if( m_pParent )
+			if( GetParent() )
 			{
-				m_pParent->SetFocus( bFocus);
+				GetParent()->SetFocus( bFocus);
 				return;
 			}
 			throw CGUIException("[CGUIWidget::SetFocus]: lack of parent! TYPE<%s>  NAME<%s>",
@@ -715,9 +714,9 @@ namespace guiex
 		if( GetFlag(eFLAG_FOCUS_AGENCY))
 		{
 			//is a focus agency
-			if( m_pParent )
+			if( GetParent() )
 			{
-				return m_pParent->IsFocus( );
+				return GetParent()->IsFocus( );
 			}
 			throw CGUIException("[CGUIWidget::IsFocus]: lack of parent! TYPE<%s>  NAME<%s>",
 				GetType().c_str(),GetName().c_str());
@@ -853,13 +852,84 @@ namespace guiex
 		rPos -= GetGlobalPosition();
 	}
 	//------------------------------------------------------------------------------
+	void CGUIWidget::LocalToWorld( const CGUIRect& rRect, CGUIRenderRect& rRenderRect )
+	{
+		CGUIVector2 aTmpPos;
+		//top-left
+		aTmpPos.x = rRect.m_fLeft;
+		aTmpPos.y = rRect.m_fTop;
+		LocalToWorld(aTmpPos);
+		rRenderRect.m_vecVertex[0].m_aVector.x = aTmpPos.x;
+		rRenderRect.m_vecVertex[0].m_aVector.y = aTmpPos.y;
+		//top-right
+		aTmpPos.x = rRect.m_fRight;
+		aTmpPos.y = rRect.m_fTop;
+		LocalToWorld(aTmpPos);
+		rRenderRect.m_vecVertex[1].m_aVector.x = aTmpPos.x;
+		rRenderRect.m_vecVertex[1].m_aVector.y = aTmpPos.y;
+		//bottom-right
+		aTmpPos.x = rRect.m_fRight;
+		aTmpPos.y = rRect.m_fBottom;
+		LocalToWorld(aTmpPos);
+		rRenderRect.m_vecVertex[2].m_aVector.x = aTmpPos.x;
+		rRenderRect.m_vecVertex[2].m_aVector.y = aTmpPos.y;
+		//bottom-left
+		aTmpPos.x = rRect.m_fLeft;
+		aTmpPos.y = rRect.m_fBottom;
+		LocalToWorld(aTmpPos);
+		rRenderRect.m_vecVertex[3].m_aVector.x = aTmpPos.x;
+		rRenderRect.m_vecVertex[3].m_aVector.y = aTmpPos.y;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::LocalToWorld( CGUIVector2& rPos )
+	{
+		const CGUIMatrix4& rWorldInverseMatrix = getFullTransform();
+		CGUIVector3	aPos(rPos.x,rPos.y,0.0f);
+		aPos = rWorldInverseMatrix*aPos;
+		rPos.x = aPos.x;
+		rPos.y = aPos.y;	
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::WorldToLocal( CGUIVector2& rPos )
+	{
+		const CGUIMatrix4& rWorldInverseMatrix = getFullInverseTransform();
+		CGUIVector3	aPos(rPos.x,rPos.y,0.0f);
+		aPos = rWorldInverseMatrix*aPos;
+		rPos.x = aPos.x;
+		rPos.y = aPos.y;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::ParentToWorld( CGUIVector2& rPos )
+	{
+		if(GetParent())
+		{
+			const CGUIMatrix4& rWorldInverseMatrix = GetParent()->getFullTransform();
+			CGUIVector3	aPos(rPos.x,rPos.y,0.0f);
+			aPos = rWorldInverseMatrix*aPos;
+			rPos.x = aPos.x;
+			rPos.y = aPos.y;	
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::WorldToParent( CGUIVector2& rPos )
+	{
+		if(GetParent())
+		{
+			const CGUIMatrix4& rWorldInverseMatrix = GetParent()->getFullInverseTransform();
+			CGUIVector3	aPos(rPos.x,rPos.y,0.0f);
+			aPos = rWorldInverseMatrix*aPos;
+			rPos.x = aPos.x;
+			rPos.y = aPos.y;
+		}
+	}
+	//------------------------------------------------------------------------------
 	CGUIWidget*		CGUIWidget::GetWidgetAtPoint(const CGUIVector2& rPos)
 	{
 		//check sibling
-		if( m_pNextSibling && 
+		if( GetNextSibling() && 
 			!(GetFlag(eFLAG_EXCLUSIVE) && IsDisable() == false && IsOpen() && IsVisible()))
 		{
-			CGUIWidget* pWidget = m_pNextSibling->GetWidgetAtPoint(rPos);
+			CGUIWidget* pWidget = GetNextSibling()->GetWidgetAtPoint(rPos);
 			if( pWidget &&(!pWidget->GetFlag(eFLAG_EXCLUSIVE) || pWidget->HitTest(rPos)))
 			{
 				//find one
@@ -872,7 +942,7 @@ namespace guiex
 		{
 			//check child
 			bool bIsChildExclusive = false;
-			if( m_pChild )
+			if( GetChild() )
 			{
 				CGUIWidget* pWidget = NULL;
 				if( m_pExclusiveChild &&  m_pExclusiveChild->IsDisable() == false && m_pExclusiveChild->IsOpen() && m_pExclusiveChild->IsVisible())
@@ -884,7 +954,7 @@ namespace guiex
 				else
 				{
 					//check normal child
-					pWidget = m_pChild->GetWidgetAtPoint(rPos);
+					pWidget = GetChild()->GetWidgetAtPoint(rPos);
 				}
 				if( pWidget &&(!pWidget->GetFlag(eFLAG_EXCLUSIVE) || pWidget->HitTest(rPos)))
 				{
@@ -1108,7 +1178,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	real	CGUIWidget::GetAlpha() 
 	{
-		if( GetFlag(eFLAG_INHERIT_ALPHA)&&m_pParent )
+		if( GetFlag(eFLAG_INHERIT_ALPHA)&&GetParent() )
 		{
 			return m_aParamAlpha.GetFinalValue();
 		}
@@ -1263,24 +1333,58 @@ namespace guiex
 
 		std::pair<CGUIString, uint32> key = std::make_pair( rName, uPropertyType );
 		TMapPropertyableObjects::iterator itorFind = m_mapPropertyableObjects.find( key );
-		if( itorFind != m_mapPropertyableObjects )
+		if( itorFind != m_mapPropertyableObjects.end() )
 		{
 			throw CGUIException("[CGUIWidget::RegisterPropertyableObject]: propertyable object has existing [%s,%d]",
 				rName.c_str(),
 				uPropertyType);
 		}
-		m_mapPropertyableObjects.insert( key, pPropertyableObj );
+		m_mapPropertyableObjects.insert( std::make_pair(key, pPropertyableObj ));
 		m_arrayPropertyableObjects.push_back( pPropertyableObj );
+	}
+	//------------------------------------------------------------------------------
+	CGUIPropertyable*	CGUIWidget::FindPropertyableObject( const CGUIString& rName, uint32 uPropertyType )
+	{
+		TMapPropertyableObjects::iterator itorFind = m_mapPropertyableObjects.find( std::make_pair( rName, uPropertyType ));
+		if( itorFind != m_mapPropertyableObjects.end() )
+		{
+			return itorFind->second;
+		}
+		else
+		{
+			return NULL;
+		}
 	}
 	//------------------------------------------------------------------------------
 	CGUIProperty*	CGUIWidget::GenerateProperty(const CGUIString& rName, const CGUIString& rType )
 	{
+		CGUIPropertyManager* pPropertyMgr = CGUIPropertyManager::Instance();
+
+		//uint32 uPropertyType = pPropertyMgr->StringToPropertyType( rType );
+		//CGUIPropertyable* pObj = FindPropertyableObject( rName, uPropertyType );
+		//if( pObj )
+		//{
+		//	CGUIProperty* pProperty = pPropertyMgr->CreateProperty( rName, rType );
+		//	try
+		//	{
+		//		pObj->SaveToProperty( *pProperty );
+		//	}
+		//	catch(const CGUIException& rErr )
+		//	{
+		//		pPropertyMgr->DestroyProperty( pProperty );
+		//		pProperty = NULL;
+		//		throw CGUIException( rErr.what() );
+		//	}
+
+		//	return pProperty;
+		//}
+			
 		CGUIProperty* pProperty = NULL;
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		if( rName == "LOCAL_POSITION" && rType == "VECTOR2")
 		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+			pProperty = pPropertyMgr->CreateProperty(
 				rName, 
 				rType, 
 				CGUIStringConvertor::Vector2ToString(GetLocalPosition()));
@@ -1288,7 +1392,7 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rName == "SIZE" && rType == "SIZE" )
 		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+			pProperty = pPropertyMgr->CreateProperty(
 				rName, 
 				rType, 
 				CGUIStringConvertor::SizeToString(GetSize()));
@@ -1296,7 +1400,7 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rName == "TAG_POINT" && rType == "VECTOR2" )
 		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+			pProperty = pPropertyMgr->CreateProperty(
 				rName, 
 				rType, 
 				CGUIStringConvertor::Vector2ToString(GetTagPoint()));
@@ -1304,7 +1408,7 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rName == "MAX_SIZE" && rType == "SIZE" )
 		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+			pProperty = pPropertyMgr->CreateProperty(
 				rName, 
 				rType, 
 				CGUIStringConvertor::SizeToString(GetMaximumSize()));
@@ -1312,7 +1416,7 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rName == "MIN_SIZE" && rType == "SIZE" )
 		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+			pProperty = pPropertyMgr->CreateProperty(
 				rName, 
 				rType, 
 				CGUIStringConvertor::SizeToString(GetMinimumSize()));
@@ -1323,7 +1427,7 @@ namespace guiex
 			CGUIImage* pImage = GetImage(rName);
 			if( pImage )
 			{
-				pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+				pProperty = pPropertyMgr->CreateProperty(
 					rName, 
 					rType, 
 					pImage->GetName());
@@ -1334,14 +1438,14 @@ namespace guiex
 		{
 			if( HasScriptCallbackFunc(rName) )
 			{
-				pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+				pProperty = pPropertyMgr->CreateProperty(
 					rName, 
 					rType, 
 					GetScriptCallbackFunc(rName));
 			}
 			else
 			{
-				pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+				pProperty = pPropertyMgr->CreateProperty(
 					rName, 
 					rType);
 			}
@@ -1349,7 +1453,7 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rName == "ALPHA" && rType == "REAL" )
 		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+			pProperty = pPropertyMgr->CreateProperty(
 				rName, 
 				rType, 
 				CGUIStringConvertor::RealToString(GetSelfAlpha()));
@@ -1357,7 +1461,7 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rName == "ACTIVABLE" && rType == "BOOL" )
 		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+			pProperty = pPropertyMgr->CreateProperty(
 				rName, 
 				rType, 
 				CGUIStringConvertor::BoolToString(IsSelfActivable()));
@@ -1365,7 +1469,7 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rName == "EXCLUSIVE" && rType == "BOOL" )
 		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+			pProperty = pPropertyMgr->CreateProperty(
 				rName, 
 				rType, 
 				CGUIStringConvertor::BoolToString(GetFlag(eFLAG_EXCLUSIVE)));
@@ -1373,7 +1477,7 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rName == "DISABLE" && rType == "BOOL" )
 		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+			pProperty = pPropertyMgr->CreateProperty(
 				rName, 
 				rType, 
 				CGUIStringConvertor::BoolToString(IsSelfDisable()));
@@ -1381,7 +1485,7 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rName == "OPEN_WITH_PARENT" && rType == "BOOL" )
 		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+			pProperty = pPropertyMgr->CreateProperty(
 				rName, 
 				rType, 
 				CGUIStringConvertor::BoolToString(GetFlag(eFLAG_OPEN_WITH_PARENT)));
@@ -1389,7 +1493,7 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rName == "EVENT_UPDATE" && rType == "BOOL" )
 		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+			pProperty = pPropertyMgr->CreateProperty(
 				rName, 
 				rType, 
 				CGUIStringConvertor::BoolToString(GetFlag(eFLAG_EVENT_UPDATE)));
@@ -1397,7 +1501,7 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rName == "MOVABLE" && rType == "BOOL" )
 		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+			pProperty = pPropertyMgr->CreateProperty(
 				rName, 
 				rType, 
 				CGUIStringConvertor::BoolToString(GetFlag(eFLAG_MOVABLE)));
@@ -1405,7 +1509,7 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rName == "HITABLE" && rType == "BOOL" )
 		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+			pProperty = pPropertyMgr->CreateProperty(
 				rName, 
 				rType, 
 				CGUIStringConvertor::BoolToString(GetFlag(eFLAG_HITABLE)));
@@ -1420,13 +1524,13 @@ namespace guiex
 		*/
 		else if( rName == "WIDGET_POSITION" && rType =="WIDGET_POSITION")
 		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty();
+			pProperty = pPropertyMgr->CreateProperty();
 			pProperty->SetName(rName);
 			pProperty->SetType(rType);
 
-			pProperty->AddProperty(CGUIPropertyManager::Instance()->CreateProperty("RELATIVE","BOOL",CGUIStringConvertor::BoolToString(IsPositionRelative())));
+			pProperty->AddProperty(pPropertyMgr->CreateProperty("RELATIVE","BOOL",CGUIStringConvertor::BoolToString(IsPositionRelative())));
 			CGUIVector2 aPos = IsPositionRelative() ? GetPositionRatio() : GetLocalPosition();
-			pProperty->AddProperty(CGUIPropertyManager::Instance()->CreateProperty("POSITION","VECTOR2",CGUIStringConvertor::Vector2ToString(aPos)));
+			pProperty->AddProperty(pPropertyMgr->CreateProperty("POSITION","VECTOR2",CGUIStringConvertor::Vector2ToString(aPos)));
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//property for position
@@ -1440,20 +1544,20 @@ namespace guiex
 		*/
 		else if( rName == "WIDGET_SIZE" && rType =="WIDGET_SIZE")
 		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty();
+			pProperty = pPropertyMgr->CreateProperty();
 			pProperty->SetName(rName);
 			pProperty->SetType(rType);
 
-			pProperty->AddProperty(CGUIPropertyManager::Instance()->CreateProperty("RELATIVE","BOOL",CGUIStringConvertor::BoolToString(IsSizeRelative())));
+			pProperty->AddProperty(pPropertyMgr->CreateProperty("RELATIVE","BOOL",CGUIStringConvertor::BoolToString(IsSizeRelative())));
 			CGUISize aSize = IsSizeRelative() ? GetSizeRatio() : GetSize();
-			pProperty->AddProperty(CGUIPropertyManager::Instance()->CreateProperty("SIZE","SIZE",CGUIStringConvertor::SizeToString(aSize)));
-			pProperty->AddProperty(CGUIPropertyManager::Instance()->CreateProperty("MAX_SIZE","SIZE",CGUIStringConvertor::SizeToString(GetMaximumSize())));
-			pProperty->AddProperty(CGUIPropertyManager::Instance()->CreateProperty("MIN_SIZE","SIZE",CGUIStringConvertor::SizeToString(GetMinimumSize())));
+			pProperty->AddProperty(pPropertyMgr->CreateProperty("SIZE","SIZE",CGUIStringConvertor::SizeToString(aSize)));
+			pProperty->AddProperty(pPropertyMgr->CreateProperty("MAX_SIZE","SIZE",CGUIStringConvertor::SizeToString(GetMaximumSize())));
+			pProperty->AddProperty(pPropertyMgr->CreateProperty("MIN_SIZE","SIZE",CGUIStringConvertor::SizeToString(GetMinimumSize())));
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rName == "RELATIVE_POS" && rType == "BOOL" )
 		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+			pProperty = pPropertyMgr->CreateProperty(
 				rName, 
 				rType, 
 				CGUIStringConvertor::BoolToString(IsPositionRelative()));
@@ -1461,7 +1565,7 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rName == "RELATIVE_SIZE" && rType == "BOOL" )
 		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+			pProperty = pPropertyMgr->CreateProperty(
 				rName, 
 				rType, 
 				CGUIStringConvertor::BoolToString(IsSizeRelative()));
@@ -1469,19 +1573,19 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rName == "TEXT_INFO" && rType == "STRING_INFO" )
 		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty();
+			pProperty = pPropertyMgr->CreateProperty();
 			pProperty->SetName(rName);
 			pProperty->SetType(rType);
 
 			const CGUIStringExInfo& rInfo = GetTextInfo();
-			pProperty->AddProperty(CGUIPropertyManager::Instance()->CreateProperty("SIZE","UINT",CGUIStringConvertor::UIntToString(rInfo.m_nFontSize)));
-			pProperty->AddProperty(CGUIPropertyManager::Instance()->CreateProperty("FONT_INDEX","UINT",CGUIStringConvertor::UIntToString(rInfo.m_nFontIdx)));
-			pProperty->AddProperty(CGUIPropertyManager::Instance()->CreateProperty("COLOR","COLOR",CGUIStringConvertor::ColorToString(rInfo.m_aColor)));
+			pProperty->AddProperty(pPropertyMgr->CreateProperty("SIZE","UINT",CGUIStringConvertor::UIntToString(rInfo.m_nFontSize)));
+			pProperty->AddProperty(pPropertyMgr->CreateProperty("FONT_INDEX","UINT",CGUIStringConvertor::UIntToString(rInfo.m_nFontIdx)));
+			pProperty->AddProperty(pPropertyMgr->CreateProperty("COLOR","COLOR",CGUIStringConvertor::ColorToString(rInfo.m_aColor)));
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rName == "TEXT" && rType == "STRING" )
 		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty();
+			pProperty = pPropertyMgr->CreateProperty();
 			pProperty->SetName(rName);
 			pProperty->SetType(rType);
 			CGUIString aStrText;
@@ -1491,7 +1595,7 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rName == "TEXT_ALIGNMENT_H" && rType == "ENUM" )
 		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty();
+			pProperty = pPropertyMgr->CreateProperty();
 			pProperty->SetName(rName);
 			pProperty->SetType(rType);
 			if( (m_uTextAlignment&GUI_TA_HORIZON_MASK) == GUI_TA_H_LEFT )
@@ -1514,7 +1618,7 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rName == "TEXT_ALIGNMENT_V" && rType == "ENUM" )
 		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty();
+			pProperty = pPropertyMgr->CreateProperty();
 			pProperty->SetName(rName);
 			pProperty->SetType(rType);
 			if( (m_uTextAlignment&GUI_TA_VERTICAL_MASK) == GUI_TA_V_UP )
@@ -1955,11 +2059,11 @@ namespace guiex
 		RenderSelf(pRender);
 
 		// render any child windows
-		CGUIWidget* pWidget = m_pChild;
+		CGUIWidget* pWidget = GetChild();
 		while( pWidget )
 		{
 			pWidget->Render(pRender);
-			pWidget = pWidget->m_pNextSibling;
+			pWidget = pWidget->GetNextSibling();
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -1975,11 +2079,11 @@ namespace guiex
 		UpdateSelf();
 
 		// render any child windows
-		CGUIWidget* pWidget = m_pChild;
+		CGUIWidget* pWidget = GetChild();
 		while( pWidget )
 		{
 			pWidget->Update();
-			pWidget = pWidget->m_pNextSibling;
+			pWidget = pWidget->GetNextSibling();
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -2130,7 +2234,20 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-
+	void	CGUIWidget::DrawImage(
+		IGUIInterfaceRender* pRender,
+		CGUIImage* pImage, 
+		const CGUIRenderRect& rRenderRect, 
+		real z, 
+		const CGUIRect* pClipRect)
+	{
+		if( pImage )
+		{
+			pRender->AddScissor(pClipRect?*pClipRect:CGUIWidgetSystem::Instance()->GetScreenRect());
+			pImage->Draw( pRender,rRenderRect,z,GetAlpha() );
+		}
+	}
+	//------------------------------------------------------------------------------
 
 
 
@@ -2141,7 +2258,7 @@ namespace guiex
 		return m_aWidgetRect;
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIWidget::SetRect(const CGUIRect& rRect)
+	void CGUIWidget::SetRect(const CGUIRect& rRect)
 	{
 		const CGUISize& rScale = GetScale();
 
@@ -2172,11 +2289,51 @@ namespace guiex
 		UpdateWidgetRect();
 		return m_aGlobalPos;
 	}
+
 	//------------------------------------------------------------------------------
-	void				CGUIWidget::SetGlobalPosition(const CGUIVector2&rPos)
+	void CGUIWidget::OnUpdatedFromParent(void)
+	{
+		CGUINode::OnUpdatedFromParent();
+
+		const CGUISize& rSize = GetSize();
+
+		real gap_left,gap_up,gap_right,gap_bottom;
+		gap_left = -m_aWidgetTagPoint.x*rSize.m_fWidth;
+		gap_right = (1-m_aWidgetTagPoint.x)*rSize.m_fWidth;
+		gap_up = -m_aWidgetTagPoint.y*rSize.m_fHeight;
+		gap_bottom = (1-m_aWidgetTagPoint.y)*rSize.m_fHeight;
+
+		const CGUIMatrix4& rWorldMatrix = getFullTransform();
+		CGUIVector3	aPos;
+
+		//top left
+		aPos = rWorldMatrix*CGUIVector3(gap_left, gap_up, 0.0f);
+		m_aRenderRect.m_vecVertex[0].m_aVector = CGUIVector3(aPos.x,aPos.y,aPos.z);
+
+		//top right
+		aPos = rWorldMatrix*CGUIVector3(gap_right, gap_up, 0.0f);
+		m_aRenderRect.m_vecVertex[1].m_aVector = CGUIVector3(aPos.x,aPos.y,aPos.z);
+
+		//bottom right
+		aPos = rWorldMatrix*CGUIVector3(gap_right, gap_bottom, 0.0f);
+		m_aRenderRect.m_vecVertex[2].m_aVector = CGUIVector3(aPos.x,aPos.y,aPos.z);
+		
+		//bottom left
+		aPos = rWorldMatrix*CGUIVector3(gap_left, gap_bottom, 0.0f);
+		m_aRenderRect.m_vecVertex[3].m_aVector = CGUIVector3(aPos.x,aPos.y,aPos.z);
+
+	}
+	//------------------------------------------------------------------------------
+	const CGUIRenderRect&	CGUIWidget::GetRenderRect()
+	{
+		UpdateDirtyNode();
+		return m_aRenderRect;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::SetGlobalPosition(const CGUIVector2 &rPos)
 	{
 		//for local position
-		CGUIVector2 aLocalPos = m_pParent?rPos - m_pParent->GetClientRect().GetPosition():rPos;
+		CGUIVector2 aLocalPos = GetParent()?rPos - GetParent()->GetClientRect().GetPosition():rPos;
 		SetLocalPosition(aLocalPos);
 	}
 	//------------------------------------------------------------------------------
@@ -2186,12 +2343,12 @@ namespace guiex
 		return m_aLocalPos;
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIWidget::SetLocalPosition(real x, real y)
+	void CGUIWidget::SetLocalPosition(real x, real y)
 	{
 		SetLocalPosition(CGUIVector2(x,y));
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIWidget::SetLocalPosition(const CGUIVector2&rPos)
+	void CGUIWidget::SetLocalPosition(const CGUIVector2&rPos)
 	{
 		if( GetFlag(eFLAG_PARENT_CLIENTRECT))
 		{	
@@ -2202,7 +2359,7 @@ namespace guiex
 			}
 
 			//for relative pos
-			const CGUISize rParentSize = m_pParent?m_pParent->GetClientRect().GetSize()/m_pParent->GetScale() : CGUIWidgetSystem::Instance()->GetScreenSize();
+			const CGUISize rParentSize = GetParent()?GetParent()->GetClientRect().GetSize()/GetParent()->GetScale() : CGUIWidgetSystem::Instance()->GetScreenSize();
 			CGUIVector2 aRelPos(m_aLocalPos.x/rParentSize.GetWidth(), m_aLocalPos.y/rParentSize.GetHeight());
 			if( m_aPosRatio != aRelPos )
 			{
@@ -2219,7 +2376,7 @@ namespace guiex
 			}
 
 			//for relative pos
-			const CGUISize& rParentSize = m_pParent?m_pParent->GetSize() : CGUIWidgetSystem::Instance()->GetScreenSize();
+			const CGUISize& rParentSize = GetParent()?GetParent()->GetSize() : CGUIWidgetSystem::Instance()->GetScreenSize();
 			CGUIVector2 aRelPos(m_aLocalPos.x/rParentSize.GetWidth(), m_aLocalPos.y/rParentSize.GetHeight());
 			if( m_aPosRatio != aRelPos )
 			{
@@ -2234,12 +2391,12 @@ namespace guiex
 		return m_aPosRatio;
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIWidget::SetPositionRatio(real x, real y)
+	void CGUIWidget::SetPositionRatio(real x, real y)
 	{
 		SetPositionRatio(CGUIVector2(x,y));
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIWidget::SetPositionRatio(const CGUIVector2&rPos)
+	void CGUIWidget::SetPositionRatio(const CGUIVector2&rPos)
 	{
 		//for relative pos
 		if( m_aPosRatio != rPos )
@@ -2252,13 +2409,13 @@ namespace guiex
 		CGUIVector2	aLocalPos;
 		if( GetFlag(eFLAG_PARENT_CLIENTRECT))
 		{
-			const CGUISize rParentSize = m_pParent?m_pParent->GetClientRect().GetSize()/m_pParent->GetScale() : CGUIWidgetSystem::Instance()->GetScreenSize();
+			const CGUISize rParentSize = GetParent()?GetParent()->GetClientRect().GetSize()/GetParent()->GetScale() : CGUIWidgetSystem::Instance()->GetScreenSize();
 			aLocalPos.x = rParentSize.GetWidth() * rPos.x; 
 			aLocalPos.y = rParentSize.GetHeight() * rPos.y;	
 		}
 		else
 		{
-			const CGUISize& rParentSize = m_pParent?m_pParent->GetSize() : CGUIWidgetSystem::Instance()->GetScreenSize();
+			const CGUISize& rParentSize = GetParent()?GetParent()->GetSize() : CGUIWidgetSystem::Instance()->GetScreenSize();
 			aLocalPos.x = rParentSize.GetWidth() * rPos.x; 
 			aLocalPos.y = rParentSize.GetHeight() * rPos.y;	
 		}
@@ -2275,7 +2432,7 @@ namespace guiex
 		return m_aWidgetTagPoint;
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIWidget::SetTagPoint(const CGUIVector2&rTagPoint)
+	void CGUIWidget::SetTagPoint(const CGUIVector2&rTagPoint)
 	{
 		if( m_aWidgetTagPoint != rTagPoint)
 		{
@@ -2284,7 +2441,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIWidget::SetTagPoint(real x, real y)
+	void CGUIWidget::SetTagPoint(real x, real y)
 	{
 		if( m_aWidgetTagPoint.x != x || m_aWidgetTagPoint.y != y )
 		{
@@ -2294,7 +2451,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIWidget::SetMaximumSize(const CGUISize& rSize)
+	void CGUIWidget::SetMaximumSize(const CGUISize& rSize)
 	{
 		m_aMaxSize = rSize;
 		SetSize( GetSize());
@@ -2305,7 +2462,7 @@ namespace guiex
 		return m_aMaxSize;
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIWidget::SetMinimumSize(const CGUISize& rSize)
+	void CGUIWidget::SetMinimumSize(const CGUISize& rSize)
 	{
 		m_aMinSize = rSize;
 		SetSize(GetSize());
@@ -2326,7 +2483,7 @@ namespace guiex
 		return m_aWidgetSize;
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIWidget::SetSize(const CGUISize&rSize)
+	void CGUIWidget::SetSize(const CGUISize&rSize)
 	{
 		bool bSet = false;
 
@@ -2368,7 +2525,7 @@ namespace guiex
 		}
 
 		//set size ratio
-		const CGUISize&	rParentSize = m_pParent ? m_pParent->GetSize():CGUIWidgetSystem::Instance()->GetScreenSize();
+		const CGUISize&	rParentSize = GetParent() ? GetParent()->GetSize():CGUIWidgetSystem::Instance()->GetScreenSize();
 		CGUISize aRelSize(1.f,1.f);
 		if( GUI_REAL_EQUAL(0,rParentSize.m_fWidth) || GUI_REAL_EQUAL(0,rParentSize.m_fHeight) )
 		{
@@ -2410,7 +2567,7 @@ namespace guiex
 		SetSize(rSize / GetScale());
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIWidget::SetRectSize(real width, real height)
+	void CGUIWidget::SetRectSize(real width, real height)
 	{
 		SetRectSize(CGUISize(width, height));
 	}
@@ -2420,7 +2577,7 @@ namespace guiex
 		return m_aSizeRatio;
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIWidget::SetSizeRatio(const CGUISize&rSize)
+	void CGUIWidget::SetSizeRatio(const CGUISize&rSize)
 	{
 		bool bSet = false;
 
@@ -2433,7 +2590,7 @@ namespace guiex
 		}
 
 		//set size
-		CGUISize	aSize = (m_pParent?m_pParent->GetSize() : CGUIWidgetSystem::Instance()->GetScreenSize()) * m_aSizeRatio;
+		CGUISize	aSize = (GetParent()?GetParent()->GetSize() : CGUIWidgetSystem::Instance()->GetScreenSize()) * m_aSizeRatio;
 		if( m_aWidgetSize != aSize )
 		{
 			m_aWidgetSize = aSize;
@@ -2454,22 +2611,22 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIWidget::SetRectDirty()
+	void CGUIWidget::SetRectDirty()
 	{
 		if( !m_bRectDirtyFlag )
 		{
 			m_bRectDirtyFlag = true;
 
-			CGUIWidget* pWidget = m_pChild;
+			CGUIWidget* pWidget = GetChild();
 			while( pWidget )
 			{
 				pWidget->SetRectDirty();
-				pWidget = pWidget->m_pNextSibling;
+				pWidget = pWidget->GetNextSibling();
 			}
 		}
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIWidget::PreUpdateDirtyRect_Imp(const CGUIRect& rParentRect, const CGUISize& rParentSize  )
+	void CGUIWidget::PreUpdateDirtyRect_Imp(const CGUIRect& rParentRect, const CGUISize& rParentSize  )
 	{
 
 		//update global rect
@@ -2525,7 +2682,7 @@ namespace guiex
 		}
 
 		//global pos
-		m_aGlobalPos = rParentRect.GetPosition() + m_aLocalPos*(m_pParent?m_pParent->GetScale():CGUISize(1.0f,1.0f));
+		m_aGlobalPos = rParentRect.GetPosition() + m_aLocalPos*(GetParent()?GetParent()->GetScale():CGUISize(1.0f,1.0f));
 
 		//global rect
 		m_aWidgetRect.SetSize(m_aWidgetSize * GetScale());
@@ -2534,23 +2691,23 @@ namespace guiex
 			m_aGlobalPos.y - m_aWidgetRect.GetSize().m_fHeight*m_aWidgetTagPoint.y));
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIWidget::PreUpdateDirtyRect()
+	void CGUIWidget::PreUpdateDirtyRect()
 	{
 		if( GetFlag(eFLAG_PARENT_CLIENTRECT))
 		{
-			const CGUIRect& rParentRect = m_pParent? m_pParent->GetClientRect() : CGUIWidgetSystem::Instance()->GetScreenRect();
-			const CGUISize rParentSize = m_pParent?m_pParent->GetClientRect().GetSize()/*/m_pParent->GetScale()*/ : CGUIWidgetSystem::Instance()->GetScreenSize();
+			const CGUIRect& rParentRect = GetParent()? GetParent()->GetClientRect() : CGUIWidgetSystem::Instance()->GetScreenRect();
+			const CGUISize rParentSize = GetParent()?GetParent()->GetClientRect().GetSize()/*/GetParent()->GetScale()*/ : CGUIWidgetSystem::Instance()->GetScreenSize();
 			PreUpdateDirtyRect_Imp(rParentRect, rParentSize);
 		}
 		else
 		{
-			const CGUIRect& rParentRect = m_pParent? m_pParent->GetRect() : CGUIWidgetSystem::Instance()->GetScreenRect();
-			const CGUISize& rParentSize = m_pParent?m_pParent->GetSize() : CGUIWidgetSystem::Instance()->GetScreenSize();
+			const CGUIRect& rParentRect = GetParent()? GetParent()->GetRect() : CGUIWidgetSystem::Instance()->GetScreenRect();
+			const CGUISize& rParentSize = GetParent()?GetParent()->GetSize() : CGUIWidgetSystem::Instance()->GetScreenSize();
 			PreUpdateDirtyRect_Imp(rParentRect,rParentSize);
 		}
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIWidget::UpdateDirtyRect()
+	void CGUIWidget::UpdateDirtyRect()
 	{
 		//client rect
 		m_aClientRect = m_aWidgetRect;
@@ -2559,24 +2716,24 @@ namespace guiex
 		m_aClientClipRect = m_aClientRect;
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIWidget::PostUpdateDirtyRect()
+	void CGUIWidget::PostUpdateDirtyRect()
 	{
 		if( GetFlag(eFLAG_PARENT_CLIENTRECT))
 		{
-			const CGUIRect& rParentRect = m_pParent? m_pParent->GetClientRect() : CGUIWidgetSystem::Instance()->GetScreenRect();
+			const CGUIRect& rParentRect = GetParent()? GetParent()->GetClientRect() : CGUIWidgetSystem::Instance()->GetScreenRect();
 
 			//update clip rect
-			const CGUIRect& rParentClipRect = m_pParent?m_pParent->GetClientClipRect():CGUIWidgetSystem::Instance()->GetScreenRect();
+			const CGUIRect& rParentClipRect = GetParent()?GetParent()->GetClientClipRect():CGUIWidgetSystem::Instance()->GetScreenRect();
 
 			m_aClipRect = rParentClipRect.GetIntersection(m_aWidgetRect);
 			m_aClientClipRect = rParentClipRect.GetIntersection(m_aClientClipRect);
 		}
 		else
 		{
-			const CGUIRect& rParentRect = m_pParent? m_pParent->GetRect() : CGUIWidgetSystem::Instance()->GetScreenRect();
+			const CGUIRect& rParentRect = GetParent()? GetParent()->GetRect() : CGUIWidgetSystem::Instance()->GetScreenRect();
 
 			//update clip rect
-			const CGUIRect& rParentClipRect = m_pParent?m_pParent->GetClipRect():CGUIWidgetSystem::Instance()->GetScreenRect();
+			const CGUIRect& rParentClipRect = GetParent()?GetParent()->GetClipRect():CGUIWidgetSystem::Instance()->GetScreenRect();
 
 			m_aClipRect = rParentClipRect.GetIntersection(m_aWidgetRect);
 			m_aClientClipRect = rParentClipRect.GetIntersection(m_aClientClipRect);

@@ -75,7 +75,7 @@ namespace guiex
 		CallbackFunction("OnSizeChange", pEvent);
 
 		//send parent's change event to child
-		CGUIWidget* pWidget = m_pChild;
+		CGUIWidget* pWidget = GetChild();
 		while( pWidget )
 		{
 			if( pWidget->IsOpen() && pWidget->GetFlag(eFLAG_EVENT_PARENTSIZECHANGE))
@@ -86,7 +86,7 @@ namespace guiex
 				aEvent.SetReceiver(pWidget);
 				CGUIWidgetSystem::Instance()->SendEvent( &aEvent );
 			}
-			pWidget = pWidget->m_pNextSibling;
+			pWidget = pWidget->GetNextSibling();
 		}
 
 		return 0;	
@@ -364,7 +364,7 @@ namespace guiex
 
 		//set active
 		CGUIWidget* pThis = this;
-		CGUIWidget* pParent = pThis->m_pParent;
+		CGUIWidget* pParent = pThis->GetParent();
 		while( pThis && pParent )
 		{
 			if( pThis->IsSelfActivable())
@@ -372,7 +372,7 @@ namespace guiex
 				pThis->MoveToTop();
 			}
 			pThis = pParent;
-			pParent = pThis->m_pParent;
+			pParent = pThis->GetParent();
 		}
 
 		return 0;
@@ -446,7 +446,7 @@ namespace guiex
 
 
 		//set child's scale
-		CGUIWidget* pWidget = m_pChild;
+		CGUIWidget* pWidget = GetChild();
 		while( pWidget )
 		{
 			if( pWidget->IsOpen() )
@@ -456,7 +456,7 @@ namespace guiex
 				aEvent.SetReceiver(pWidget);
 				CGUIWidgetSystem::Instance()->SendEvent( &aEvent );
 			}
-			pWidget = pWidget->m_pNextSibling;
+			pWidget = pWidget->GetNextSibling();
 		}
 
 		return 0;

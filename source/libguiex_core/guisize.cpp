@@ -9,6 +9,8 @@
 // include
 //============================================================================// 
 #include <libguiex_core\guisize.h>
+#include <libguiex_core\guiproperty.h>
+#include <libguiex_core\guistringconvertor.h>
 
 //============================================================================//
 // function
@@ -18,14 +20,14 @@ namespace guiex
 
 	//------------------------------------------------------------------------------
 	CGUISize::CGUISize()
-		:CGUIPropertyable( ePropertyType_Size )
+		:CGUIPropertyable( )
 		,m_fWidth(0.0f)
 		,m_fHeight(0.0f)
 	{
 	}
 	//------------------------------------------------------------------------------
 	CGUISize::CGUISize(real fWidth, real fHeight)
-		:CGUIPropertyable( ePropertyType_Size )
+		:CGUIPropertyable( )
 		,m_fWidth(fWidth)
 		,m_fHeight(fHeight)
 	{
@@ -69,8 +71,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	bool	CGUISize::IsEqual( const CGUISize& rSize ) const
 	{
-		if( GUI_REAL_EQUAL( m_fWidth, other.m_fWidth ) &&
-			GUI_REAL_EQUAL( m_fHeight, other.m_fHeight ))
+		if( GUI_REAL_EQUAL( m_fWidth, rSize.m_fWidth ) &&
+			GUI_REAL_EQUAL( m_fHeight, rSize.m_fHeight ))
 		{
 			return true;
 		}
@@ -190,12 +192,12 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUISize::SaveToProperty( CGUIProperty& rProperty ) const
 	{
-		rProperty.SetValue( guiex::CGUIStringConvertor::SizeToString( this ));
+		rProperty.SetValue( CGUIStringConvertor::SizeToString( *this ));
 	}
 	//------------------------------------------------------------------------------
 	void CGUISize::LoadFromProperty( const CGUIProperty& rProperty )
 	{
-		guiex::CGUIStringConvertor::StringToSize( rProperty.GetValue(), *this );
+		CGUIStringConvertor::StringToSize( rProperty.GetValue(), *this );
 	}
 	//------------------------------------------------------------------------------
 

@@ -142,7 +142,7 @@ namespace guiex
 			pImage = m_pImageNormal;
 		}
 
-		DrawImage( pRender, pImage, GetRect(), pRender->GetAndIncZ(),&GetClipRect());
+		DrawImage( pRender, pImage, GetRenderRect(), pRender->GetAndIncZ(),&GetClipRect());
 		if( m_bHovering && m_pImageHoverOverlay )
 		{
 			DrawImage( pRender, m_pImageHoverOverlay, GetRect(), pRender->GetAndIncZ(),&GetClipRect());
