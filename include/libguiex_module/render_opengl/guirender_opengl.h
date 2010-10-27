@@ -14,6 +14,7 @@
 //============================================================================// 
 #include <libguiex_core\guiinterfacerender.h>
 #include <libguiex_core\guirect.h>
+#include <libguiex_core\guimatrix4.h>
 #include <vector>
 #include <list>
 #include <set>
@@ -69,7 +70,8 @@ namespace guiex
 		/** 
 		* @brief add a texture into render list
 		*/
-		virtual	void	AddRenderTexture(	const CGUIRect& rDestRect, real z, 
+		virtual	void	AddRenderTexture(	const CGUIMatrix4& rWorldMatrix,
+			const CGUIRect& rDestRect, real z, 
 			const CGUITextureImp* pTexture, const CGUIRect& rTextureRect, 
 			EImageOperation eImageOperation,
 			GUIARGB  rColor_topleft,
@@ -80,48 +82,28 @@ namespace guiex
 		/** 
 		* @brief add a texture into render list
 		*/
-		virtual	void	AddRenderTexture(	const CGUIRenderRect& rRenderRect, 
-			real z,
-			const CGUITextureImp* pTexture, 
-			const CGUIRect& rTextureRect, 
-			EImageOperation eImageOperation,
-			GUIARGB rColor_topleft,
-			GUIARGB rColor_topright,
-			GUIARGB rColor_bottomleft,
-			GUIARGB rColor_bottomright);
+		virtual void	PushClipRect( const CGUIMatrix4& rMatrix, const CGUIRect& rClipRect );
+		virtual void	PopClipRect( );
 
-		/** 
-		* @brief set a clip rect
-		*/
-		virtual	void	AddScissor( const CGUIRect& rClipRect);
+		// setup states etc
+		virtual void	BeginRender(void);
+
+		// restore states
+		virtual void	EndRender(void);
+		
+		//virtual	void	AddRenderTexture(	const CGUIRenderRect& rRenderRect, 
+		//	const CGUITextureImp* pTexture, 
+		//	const CGUIRect& rTextureRect, 
+		//	EImageOperation eImageOperation,
+		//	GUIARGB rColor_topleft,
+		//	GUIARGB rColor_topright,
+		//	GUIARGB rColor_bottomleft,
+		//	GUIARGB rColor_bottomright);
 
 		/**
 		* @brief do final render for all texture in the render list
 		*/
 		virtual	void	DoRender(void);
-
-		/**
-		* @brief clear render queue
-		*/
-		virtual	void	ClearRenderList(void);
-
-		/**
-		* @brief Enable or disable the queueing of quads from this point on.
-		*	This only affects queueing.  If queueing is turned off, any calls to AddRenderTexture 
-		* will cause the quad to be rendered directly.  Note that disabling queueing will not cause 
-		* currently queued texture to be rendered, nor is the texture cleared - at any time the queue 
-		* can still be drawn by calling doRender, and the list can be cleared by calling clearRenderList.  
-		* Re-enabling the queue causes subsequent quads to be added as if queueing had never been disabled.
-		*/
-		virtual void	EnableRenderQueue(bool bEnable);
-
-
-		/**
-		* @brief Return whether queueing is enabled.
-		* @return true if queueing is enabled, false if queueing is disabled.
-		*/
-		virtual bool	IsRenderQueueEnabled(void) const;
-
 
 		/**
 		* @brief Creates a 'null' Texture object.
@@ -210,8 +192,6 @@ namespace guiex
 		*/
 		virtual void	SetWireFrame( bool bWireFrame);
 
-		virtual void	EnableScissor( bool bEnable );
-
 		/**
 		* @brief used to delete this object
 		*/
@@ -241,21 +221,20 @@ namespace guiex
 			GUIARGB  rColor_bottomleft,
 			GUIARGB  rColor_bottomright);
 
-		// setup states etc
-		void	BeginRender(void);
-
-		// restore states
-		void	EndRender(void);
-
-		// render buffer
-		void	RenderVBuffer(void);
-
 		// convert CGUIColor to opengl supported format
 		long	ColorToOpengl(GUIARGB col) const;
 
-		//allocate a node
-		struct STextureInfo;
-		STextureInfo*	AllocateNode();
+		void	makeGLMatrix(real gl_matrix[16], const CGUIMatrix4& m);
+
+
+		struct SClipRect
+		{
+			CGUIRect m_aClipRect;
+			real	m_gl_world_matrix[16];
+		};
+
+		void	UpdateStencil();
+		void	RenderRectForStencil( const SClipRect& rRect );
 
 	protected:
 
@@ -265,75 +244,32 @@ namespace guiex
 			long color;
 			real vertex[3];
 		};
-
-		enum	ERenderCommand
+		struct SVertexForStencil
 		{
-			eCommand_None = 0,			//
-			eCommand_SetTexture,		//<para1:texture id>
-			eCommand_SetScissor,		//<para1:x> <para2:y> <para3:width> <para4:height>
-			eCommand_DrawVertex,		//<para1:start position>	<para2: count>
-		};
-		struct SRenderCommand 
-		{
-			uint32	m_nID;
-			uint32	m_nPara1;
-			uint32	m_nPara2;
-			uint32	m_nPara3;
-			uint32	m_nPara4;
-		};
-		struct SClipRect 
-		{
-			GLint x;
-			GLint y;
-			GLint width;
-			GLint height;
-
-			SClipRect()
-				:x(0),y(0),width(0),height(0)
-			{
-
-			}
+			real vertex[3];
 		};
 
 		// set the texture's coordinate
 		void			SetTexCoordinate(SVertex* pTexture, const CGUIRect& tex, EImageOperation eImageOperation);
 
-		//allocate command node
-		SRenderCommand* AllocateCommandNode(ERenderCommand eCommand);
-		SRenderCommand* GetLastCommandNode();
-
-		//allocate vertex node
-		SVertex*		AllocateVertexNode(uint32 nNum);
-
 	protected:
-		static const int		VERTEX_PER_TEXTURE = 6;
-		static const int		OPENGL_RENDERER_VBUFF_CAPACITY = 1024;
-
-		
 		GLint			m_maxTextureSize;		//!< maximum supported texture size (in pixels).
-		bool			m_bQueueing;			//!< flag to control whether render texture by queue.
 
-		//command list
-		typedef			std::vector<SRenderCommand>	TListCommand;
-		TListCommand	m_vecCommand;
-		uint32			m_nCommandIdx;
-
-		//vertex list
-		typedef			std::vector<SVertex>	TListVertex;
-		TListVertex		m_vecVertex;
-		uint32			m_nVertexIdx;
+		//cache for system
+		static const int		VERTEX_PER_TEXTURE = 4;
+		SVertex			m_pVertex[VERTEX_PER_TEXTURE];
+		SVertexForStencil m_pVertexForStencil[VERTEX_PER_TEXTURE];
+		real			m_gl_matrix[16];
 
 		//texture list
 		typedef		std::set<CGUITextureImp*>	TSetTexture;
 		TSetTexture	m_setTexture;
 
-		ERenderCommand			m_eLastCommand;
-		SClipRect				m_aCurrentClipRect;
 		uint32					m_nCurrentTexture;
-		uint32					m_nCurrentVertexIdx;
+
+		std::vector<SClipRect>	m_arrayClipRects;
 
 		bool					m_bWireFrame;
-		bool					m_bEnableScissor;
 	};
 
 	GUI_INTERFACE_DECLARE();

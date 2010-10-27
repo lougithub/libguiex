@@ -157,6 +157,7 @@ namespace guiex
 		//register internal root widget
 		GUI_REGISTER_WIDGET_LIB(CGUIWidgetRoot);
 		m_pWgtRoot = GUI_CREATE_WIDGET("CGUIWidgetRoot", "__WIDGET_ROOT__auto__", "__PROJECT_ROOT_auto__");
+		m_pWgtRoot->Create();
 		m_pWgtRoot->Open();
 
 		m_bInitialized = true;
@@ -343,7 +344,7 @@ namespace guiex
 		return m_aInputProcessor.ProcessKeyboard(rKeyEvent);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidgetSystem::Update()
+	void	CGUIWidgetSystem::Update( real fDeltaTime )
 	{
 		//update time and frame
 		UpdateTime();
@@ -354,7 +355,7 @@ namespace guiex
 		//update page
 		if( m_pWgtRoot)
 		{
-			m_pWgtRoot->Update();
+			m_pWgtRoot->Update( fDeltaTime );
 		}
 
 		//update dlg
@@ -362,13 +363,13 @@ namespace guiex
 			itor != m_listOpenedDlg.end();
 			++itor)
 		{
-			(*itor)->Update();
+			(*itor)->Update( fDeltaTime );
 		}
 
 		//update popup widget
 		if( m_pPopupWidget )
 		{
-			m_pPopupWidget->Update();
+			m_pPopupWidget->Update( fDeltaTime );
 		}
 
 		RefreshGarbage();
@@ -419,9 +420,9 @@ namespace guiex
 		m_aScreenPos = m_aScreenRect.GetPosition();
 
 		//update page
-		if( m_pWgtRoot)
+		if( m_pWgtRoot )
 		{
-			m_pWgtRoot->SetRectDirty();
+			m_pWgtRoot->NEWRefresh();
 		}
 
 		//update dlg
@@ -429,13 +430,13 @@ namespace guiex
 			itor != m_listOpenedDlg.end();
 			++itor)
 		{
-			(*itor)->SetRectDirty();
+			(*itor)->NEWRefresh();
 		}
 
 		//update popup widget
 		if( m_pPopupWidget )
 		{
-			m_pPopupWidget->SetRectDirty();
+			m_pPopupWidget->NEWRefresh();
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -485,12 +486,10 @@ namespace guiex
 		IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
 		pRender->SetFontRender(pFont); 
 
-		//init render
-		pRender->ClearRenderList();
-		pRender->ResetZValue();
+		pRender->BeginRender();
 
-		////render widgets
-		pRender->EnableRenderQueue(true);
+		//init render
+		pRender->ResetZValue();
 
 		//render page
 		if( m_pWgtRoot )
@@ -515,8 +514,9 @@ namespace guiex
 		pRender->DoRender();
 
 		//render mouse
-		pRender->EnableRenderQueue(false);
 		CGUIMouseCursor::Instance()->Render(pRender);
+	
+		pRender->EndRender();
 	}
 	//------------------------------------------------------------------------------
 	void			CGUIWidgetSystem::OpenPage(CGUIWidget* pPage)
@@ -530,6 +530,7 @@ namespace guiex
 
 		pPage->SetParent( m_pWgtRoot );
 		pPage->Open();
+		pPage->NEWRefresh();
 
 		m_vOpenedPage.push_back(pPage);
 	}
@@ -581,7 +582,7 @@ namespace guiex
 		return m_vOpenedPage[nIdx];
 	}
 	//------------------------------------------------------------------------------
-	void			CGUIWidgetSystem::AddPage( CGUIWidget* pPage, const CGUIString& rConfigureFilename)
+	void			CGUIWidgetSystem::AddPage( CGUIWidget* pPage, const CGUIString& rProjectName)
 	{
 		GUI_ASSERT( pPage, "invalid parameter" );
 
@@ -594,13 +595,13 @@ namespace guiex
 			itor != m_vecPage.end();
 			++itor)
 		{
-			if( itor->second == rConfigureFilename && itor->first->GetProjectName() == pPage->GetProjectName() )
+			if( itor->second == rProjectName && itor->first->GetProjectName() == pPage->GetProjectName() )
 			{
-				throw CGUIException( "[CGUIWidgetSystem::AddPage]: the page's file name <%s> has existed!", rConfigureFilename.c_str());
+				throw CGUIException( "[CGUIWidgetSystem::AddPage]: the page's file name <%s> has existed!", rProjectName.c_str());
 			}
 		}
 
-		m_vecPage.push_back( std::make_pair(pPage, rConfigureFilename));
+		m_vecPage.push_back( std::make_pair(pPage, rProjectName));
 	}
 	//------------------------------------------------------------------------------
 	CGUIWidget*		CGUIWidgetSystem::GetPage( const CGUIString& rWidgetName, const CGUIString& rProjectName )

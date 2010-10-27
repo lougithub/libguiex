@@ -28,6 +28,7 @@ namespace guiex
 	class IGUIInterfaceRender;
 	class CGUIRect;
 	class CGUIRenderRect;
+	class CGUIMatrix4;
 }
 
 //============================================================================//
@@ -56,49 +57,30 @@ namespace guiex
 		*/
 		virtual ~CGUIImage();
 
-		/**
-		* @brief draw this texture with clip rect
-		* @param rDestRect
-		* @param rClipRect 
-		*/
-		void	Draw(
-			IGUIInterfaceRender* pRender,
+		void	Draw( IGUIInterfaceRender* pRender,
+			const CGUIMatrix4& rWorldMatrix,
 			const CGUIRect& rDestRect,
 			real z, 
 			const CGUIColorRect& rColorRect,
 			real fAlpha);
 
-		/**
-		* @brief draw this texture with clip rect
-		* @param rDestRect
-		* @param rClipRect 
-		*/
-		void	Draw(
-			IGUIInterfaceRender* pRender,
+		void	Draw(IGUIInterfaceRender* pRender,
+			const CGUIMatrix4& rWorldMatrix,
 			const CGUIRect& rDestRect,
 			real z, 
 			real fAlpha	);
 
-
-		/**
-		* @brief draw this texture with clip rect
-		* @param rDestRect
-		* @param rClipRect 
-		*/
-		void	Draw(
-			IGUIInterfaceRender* pRender,
+		void	Draw( IGUIInterfaceRender* pRender,
+			const CGUIMatrix4& rWorldMatrix,
 			const CGUIRect& rDestRect,
 			real z, 
 			const CGUIColor& rColor,
 			real fAlpha	);
 
-		/**
-		* @brief draw this texture with clip rect
-		*/
-		void	Draw(IGUIInterfaceRender* pRender,
-			const CGUIRenderRect& rRenderRect,
-			real z, 
-			real fAlpha	);
+		//void	Draw(IGUIInterfaceRender* pRender,
+		//	const CGUIRenderRect& rRenderRect,
+		//	real z, 
+		//	real fAlpha	);
 
 		/**
 		* @brief get image size

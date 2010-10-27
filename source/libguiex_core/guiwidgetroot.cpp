@@ -31,7 +31,8 @@ namespace guiex
 	void	CGUIWidgetRoot::InitRoot()
 	{
 		SetFocusable(false);
-		SetSizeRelative(true);
+		NewSetSizeType(eScreenValue_Percentage);
+		NEWSetSize( 1.0f, 1.0f );
 		SetSelfActivable(false);
 		m_aBitFlag.reset(eFLAG_MOUSE_CONSUMED);			//!< should this mouse consume mouse event
 		m_aBitFlag.reset(eFLAG_HITABLE);			
@@ -39,23 +40,21 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void	CGUIWidgetRoot::Open()
 	{
-		SetRectSize(CGUIWidgetSystem::Instance()->GetScreenSize());
-
+		NEWSetSize(CGUIWidgetSystem::Instance()->GetScreenSize());
 		CGUIWidget::Open();
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWidgetRoot::RenderSelf(IGUIInterfaceRender* pRender)
 	{
-		pRender->AddScissor(CGUIWidgetSystem::Instance()->GetScreenRect());
 	}
-	////------------------------------------------------------------------------------
-	//void	CGUIWidgetRoot::PreUpdateDirtyRect()
-	//{
-	//	GUI_ASSERT( GetParent() == NULL, "Root Widget shouldn't has parent" );
-	//	SetRectSize(CGUIWidgetSystem::Instance()->GetScreenSize());
-	//	
-	//	CGUIWidget::PreUpdateDirtyRect();
-	//}
+	//------------------------------------------------------------------------------
+	void	CGUIWidgetRoot::PushClipRect( IGUIInterfaceRender* pRender, const CGUIRect& rClipRect )
+	{
+	}
+	//------------------------------------------------------------------------------
+	void	CGUIWidgetRoot::PopClipRect( IGUIInterfaceRender* pRender )
+	{
+	}
 	//------------------------------------------------------------------------------
 
 }//namespace guiex

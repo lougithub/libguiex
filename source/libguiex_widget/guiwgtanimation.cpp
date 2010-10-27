@@ -53,7 +53,10 @@ namespace guiex
 		if( rAnimationName == "ANIMATION_DEFAULT" )
 		{
 			m_pAnimationCur = pAnimation;
-			SetSize(pAnimation->GetSize());
+			if( NEWGetSize().IsEqualZero() && pAnimation )
+			{
+				NEWSetPixelSize( pAnimation->GetSize() );
+			}
 		}
 		CGUIWidget::SetAnimation(rAnimationName,pAnimation);;
 	}
@@ -100,13 +103,20 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	void CGUIWgtAnimation::UpdateSelf( real fDeltaTime )
+	{
+		CGUIWidget::UpdateSelf( fDeltaTime );
+		if( m_pAnimationCur)
+		{
+			m_pAnimationCur->Update( fDeltaTime );
+		}
+	}
+	//------------------------------------------------------------------------------
 	void	CGUIWgtAnimation::RenderSelf(IGUIInterfaceRender* pRender)
 	{
 		if( m_pAnimationCur)
 		{
-			m_pAnimationCur->Update();
-			pRender->AddScissor( GetClipRect() );
-			m_pAnimationCur->Draw( pRender, GetRect(), pRender->GetAndIncZ(), GetAlpha() );
+			DrawAnimation( pRender,m_pAnimationCur, GetWidgetRect(), pRender->GetAndIncZ() );
 		}
 	}
 	//------------------------------------------------------------------------------

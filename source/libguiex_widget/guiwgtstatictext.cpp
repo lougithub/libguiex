@@ -72,7 +72,7 @@ namespace guiex
 			{
 				const SLineInfo& aLineInfo = *itor;
 
-				aDestRect.m_fBottom = aDestRect.m_fTop + aLineInfo.m_nLineHeight * GetScale().m_fHeight;
+				aDestRect.m_fBottom = aDestRect.m_fTop + aLineInfo.m_nLineHeight * GetDerivedScale().m_fHeight;
 
 				//no selection
 				DrawString( pRender, m_strText, aDestRect, GetTextAlignment(), &rStringClipRect, aLineInfo.m_nStartIdx, aLineInfo.m_nStartIdx+aLineInfo.m_nLength );
@@ -82,7 +82,7 @@ namespace guiex
 		}
 		else
 		{
-			DrawString( pRender, m_strText, GetClientRect(), GetTextAlignment(), &GetClipRect());
+			DrawString( pRender, m_strText, GetRenderRect(), GetTextAlignment());
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -197,11 +197,11 @@ namespace guiex
 		{
 			if( fTotalHeight > 0.f )
 			{
-				SetSize( GetSize().m_fWidth, fTotalHeight );
+				NEWSetPixelSize( NEWGetPixelSize().m_fWidth, fTotalHeight );
 			}
 			else
 			{
-				SetSize( GetSize().m_fWidth, rDefaultInfo.m_nFontSize );
+				NEWSetPixelSize( NEWGetPixelSize().m_fWidth, rDefaultInfo.m_nFontSize );
 			}
 		}
 	}

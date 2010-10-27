@@ -78,6 +78,8 @@ namespace guiex
 		/// render
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 
+		virtual void UpdateSelf( real fDeltaTime );
+
 	protected:
 		///initialize animation
 		void	InitAnimation();

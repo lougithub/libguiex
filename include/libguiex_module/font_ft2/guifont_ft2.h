@@ -82,17 +82,7 @@ namespace guiex
 		* @brief draw a character
 		*/
 		virtual void DrawCharacter(IGUIInterfaceRender* pRender, 
-			wchar_t charCode, 
-			const CGUIStringExInfo& rInfo,
-			const CGUIVector2& rPos,
-			const CGUISize& rScale,
-			real	fAlpha,
-			const CGUIRect* pClipRect= NULL);
-
-		/**
-		* @brief draw a character without setting clip rect
-		*/
-		virtual void DrawCharacterWithoutScissor(IGUIInterfaceRender* pRender, 
+			const CGUIMatrix4& rWorldMatrix,
 			wchar_t charCode, 
 			const CGUIStringExInfo& rInfo,
 			const CGUIVector2& rPos,
@@ -103,11 +93,11 @@ namespace guiex
 		* @brief draw string
 		*/
 		virtual void DrawString(IGUIInterfaceRender* pRender, 
+			const CGUIMatrix4& rWorldMatrix,
 			const CGUIStringEx& rString, 
 			const CGUIVector2& rPos,
 			const CGUISize& rScale,
 			real	fAlpha,
-			const CGUIRect* pClipRect = NULL,
 			int32 nStartPos = 0,
 			int32 nEndPos = -1);
 
@@ -115,12 +105,12 @@ namespace guiex
 		* @brief draw string
 		*/
 		virtual void DrawString(IGUIInterfaceRender* pRender, 
+			const CGUIMatrix4& rWorldMatrix,
 			const CGUIStringEx& rString, 
 			const CGUIRect&	rStringRect,
 			const uint8&	uTextAlignment,
 			const CGUISize& rScale,
 			real			fAlpha,
-			const CGUIRect* pClipRect = NULL,
 			int32 nStartPos = 0,
 			int32 nEndPos = -1);
 

@@ -11,7 +11,7 @@
 #include <libguiex_core\guias.h>
 #include <libguiex_core\guiwidget.h>
 #include <libguiex_core\guiwidgetsystem.h>
-
+#include <libguiex_core\guimath.h>
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------ 
@@ -28,7 +28,8 @@ namespace guiex
 		if( 0 != GUI_AS_REGISTER(CGUIAsAlpha)) {return -1;}
 		if( 0 != GUI_AS_REGISTER(CGUIAsScale)) {return -1;}
 		if( 0 != GUI_AS_REGISTER(CGUIAsPosition)) {return -1;}
-		
+		if( 0 != GUI_AS_REGISTER(CGUIAsRotation)) {return -1;}
+
 		return 0;
 	} 
  
@@ -41,11 +42,11 @@ namespace guiex
 	CGUIAs::CGUIAs(const char* pAsName, CGUIWidget* pReceiver)
 		:m_pReceiver(pReceiver)
 		,m_bRetired(false)
-		,m_nDelayTime(0)
+		,m_fTotalTime(0.1f)
+		,m_fElapsedTime(0.0f)
 		,m_strAsName(pAsName)
 		,m_pAsGenerator(NULL)
 	{
-		UpdateTimer();
 	}
 	//------------------------------------------------------------------------------
 	CGUIAs::~CGUIAs()
@@ -62,16 +63,6 @@ namespace guiex
 	const CGUIString&		CGUIAs::GetAsName() const
 	{
 		return m_strAsName;
-	}
-	//------------------------------------------------------------------------------
-	void		CGUIAs::UpdateTimer()
-	{
-		m_aTimer = CGUIWidgetSystem::Instance()->GetGlobalTimer();
-	}
-	//------------------------------------------------------------------------------
-	const CGUITimer & CGUIAs::GetTimer() const
-	{
-		return m_aTimer;
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIAs::Retire( bool bRetired )
@@ -94,14 +85,28 @@ namespace guiex
 		return m_pReceiver;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIAs::SetDelayTime(uint32 nDelayTime)
+	void	CGUIAs::SetTotalTime(real fTotalTime)
 	{
-		m_nDelayTime = nDelayTime;
+		if( fTotalTime <= 0.0f )
+		{
+			fTotalTime = 0.1f;
+		}
+		m_fTotalTime = fTotalTime;
 	}
 	//------------------------------------------------------------------------------
-	uint32	CGUIAs::GetDelayTime( ) const
+	real	CGUIAs::GetTotalTime( ) const
 	{
-		return m_nDelayTime;
+		return m_fTotalTime;
+	}
+	//------------------------------------------------------------------------------
+	void	CGUIAs::Update( real fDeltaTime )
+	{
+		m_fElapsedTime += fDeltaTime;
+		if( m_fElapsedTime >= m_fTotalTime )
+		{
+			m_fElapsedTime = m_fTotalTime;
+			Retire( true );
+		}
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIAs::PushSuccessor( CGUIAs* pAs)
@@ -146,47 +151,57 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIAsAlpha::CGUIAsAlpha(CGUIWidget* pReceiver)
 		:CGUIAs("CGUIAsAlpha", pReceiver)
-		,m_fStepValue(0.0f)
-		,m_fCurValue(0.0f)
-		,m_nFrames(0)
-		,m_nCurFrames(0)
-		,m_nDelaytime(0)
+		,m_fBeginValue(0.0f)
+		,m_fEndValue(0.0f)
 	{
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIAsAlpha::SetAlphaSequence(real fStartValue, real fEndValue, uint32 nFrames, uint32 nDelayTime)
+	void	CGUIAsAlpha::SetAlphaSequence(real fBeginValue, real fEndValue, real fTotalTime)
 	{	
-		GUI_ASSERT(nFrames>0, "invalid frame count" );
-
-		m_nFrames = nFrames;
-		m_nCurFrames = 0;
-
-		m_fStepValue = (fEndValue - fStartValue)/nFrames;
-
-		m_fCurValue = fStartValue-m_fStepValue;
-
-		m_nDelaytime = nDelayTime;
+		m_fBeginValue = fBeginValue;
+		m_fEndValue = fEndValue;
+		SetTotalTime( fTotalTime );
 	}
 	//------------------------------------------------------------------------------
-	uint32	CGUIAsAlpha::Process()
+	void	CGUIAsAlpha::Update( real fDeltaTime )
 	{
-		SetDelayTime(m_nDelaytime);	
-		if( m_nCurFrames <= m_nFrames)
-		{
-			m_fCurValue += m_fStepValue;
-			++m_nCurFrames;
-			GetReceiver()->SetSelfAlpha(m_fCurValue);
-		}
-		else
-		{
-			Retire(true);
-		}
-
-		return 0;
+		CGUIAs::Update( fDeltaTime );
+		
+		real fCurValue = CGUIMath::LinearTween( m_fElapsedTime / m_fTotalTime, m_fBeginValue, m_fEndValue );
+		GetReceiver()->SetAlpha(fCurValue);
 	}
 	//------------------------------------------------------------------------------
 
 
+
+	//*****************************************************************************
+	//	CGUIAsRotation
+	//*****************************************************************************
+	//------------------------------------------------------------------------------
+	GUI_AS_GENERATOR_IMPLEMENT( CGUIAsRotation );
+	//------------------------------------------------------------------------------
+	CGUIAsRotation::CGUIAsRotation(CGUIWidget* pReceiver)
+		:CGUIAs("CGUIAsRotation", pReceiver)
+		,m_fBeginValue(0.0f)
+		,m_fEndValue(0.0f)
+	{
+	}
+	//------------------------------------------------------------------------------
+	void	CGUIAsRotation::SetRotationSequence(real fBeginValue, real fEndValue, real fTotalTime)
+	{	
+		m_fBeginValue = fBeginValue;
+		m_fEndValue = fEndValue;
+		SetTotalTime( fTotalTime );
+	}
+	//------------------------------------------------------------------------------
+	void	CGUIAsRotation::Update( real fDeltaTime )
+	{
+		CGUIAs::Update( fDeltaTime );
+		
+		real fCurValue = CGUIMath::LinearTween( m_fElapsedTime / m_fTotalTime, m_fBeginValue, m_fEndValue );
+		GetReceiver()->SetRotation(fCurValue);
+	}
+	//------------------------------------------------------------------------------
 
 
 	//*****************************************************************************
@@ -197,41 +212,22 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIAsScale::CGUIAsScale(CGUIWidget* pReceiver)
 		:CGUIAs("CGUIAsScale", pReceiver)
-		,m_nFrames(0)
-		,m_nCurFrames(0)
-		,m_nDelaytime(0)
 	{
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIAsScale::SetScaleSequence(const CGUISize& fStartScale, const CGUISize& fEndScale, uint32 nFrames, uint32 nDelayTime)
+	void	CGUIAsScale::SetScaleSequence(const CGUISize& aBeginValue, const CGUISize& aEndValue, real fTotalTime )
 	{	
-		GUI_ASSERT(nFrames>0, "invalid frame count" );
-
-		m_nFrames = nFrames;
-		m_nCurFrames = 0;
-
-		m_fStepValue = (fEndScale - fStartScale)/static_cast<real>(nFrames);
-
-		m_fCurValue = fStartScale;
-
-		m_nDelaytime = nDelayTime;
+		m_aBeginValue = aBeginValue;
+		m_aEndValue = aEndValue;
+		SetTotalTime( fTotalTime );
 	}
 	//------------------------------------------------------------------------------
-	uint32	CGUIAsScale::Process()
+	void	CGUIAsScale::Update( real fDeltaTime )
 	{
-		SetDelayTime(m_nDelaytime);
-		if( m_nCurFrames < m_nFrames)
-		{
-			m_fCurValue += m_fStepValue;
-			++m_nCurFrames;
-			GetReceiver()->SetSelfScale(m_fCurValue);
-		}
-		else
-		{
-			Retire(true);
-		}
+		CGUIAs::Update( fDeltaTime );
 
-		return 0;
+		CGUISize aCurValue = CGUIMath::LinearTween( m_fElapsedTime / m_fTotalTime, m_aBeginValue, m_aEndValue );
+		GetReceiver()->SetScale(aCurValue);
 	}
 	//------------------------------------------------------------------------------
 
@@ -249,41 +245,22 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIAsPosition::CGUIAsPosition(CGUIWidget* pReceiver)
 		:CGUIAs("CGUIAsPosition", pReceiver)
-		,m_nFrames(0)
-		,m_nCurFrames(0)
-		,m_nDelaytime(0)
 	{
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIAsPosition::SetPositionSequence(const CGUIVector2& fStartPos, const CGUIVector2& fEndPos, uint32 nFrames, uint32 nDelayTime)
+	void	CGUIAsPosition::SetPositionSequence(const CGUIVector2& aBeginValue, const CGUIVector2& aEndValue, real fTotalTime )
 	{	
-		GUI_ASSERT(nFrames>0, "invalid frame count" );
-
-		m_nFrames = nFrames;
-		m_nCurFrames = 0;
-
-		m_fStepValue = (fEndPos - fStartPos)/(guiex::real)nFrames;
-
-		m_fCurValue = fStartPos;
-
-		m_nDelaytime = nDelayTime;
+		m_aBeginValue = aBeginValue;
+		m_aEndValue = aEndValue;
+		SetTotalTime( fTotalTime );
 	}
 	//------------------------------------------------------------------------------
-	uint32	CGUIAsPosition::Process()
+	void	CGUIAsPosition::Update( real fDeltaTime )
 	{
-		SetDelayTime(m_nDelaytime);
-		if( m_nCurFrames < m_nFrames)
-		{
-			m_fCurValue += m_fStepValue;
-			++m_nCurFrames;
-			GetReceiver()->SetLocalPosition(m_fCurValue);
-		}
-		else
-		{
-			Retire(true);
-		}
+		CGUIAs::Update( fDeltaTime );
 
-		return 0;
+		CGUIVector2 aCurValue = CGUIMath::LinearTween( m_fElapsedTime / m_fTotalTime, m_aBeginValue, m_aEndValue );
+		GetReceiver()->NEWSetPixelPosition(aCurValue);
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

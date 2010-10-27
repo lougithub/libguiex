@@ -59,7 +59,7 @@ namespace guiex
 			const CGUIString& rProjectName, 
 			const CGUIString& rFileName, 
 			const std::vector<CGUIRect>& rUVRects,
-			uint32 nInterval
+			real fInterval
 			);
 
 		/**
@@ -69,7 +69,7 @@ namespace guiex
 			const CGUIString& rName, 
 			const CGUIString& rProjectName, 
 			const std::vector<CGUIString>& rFileNames,  
-			uint32 nInterval
+			real fInterval
 			);
 
 	protected:

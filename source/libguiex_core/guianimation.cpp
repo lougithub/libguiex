@@ -18,6 +18,7 @@
 #include <libguiex_core\guiprojectinfomanager.h>
 #include <libguiex_core\guicolor.h>
 #include <libguiex_core\guiinterfacerender.h>
+#include <libguiex_core\guirenderrect.h>
 
 
 //============================================================================//
@@ -31,12 +32,13 @@ namespace guiex
 		const CGUIString& rProjectName, 
 		const CGUIString& rFileName, 
 		const std::vector<CGUIRect>& rUVRects,
-		uint32 nInterval )
+		real fInterval )
 		:CGUIResource( rName, rProjectName, "ANIMATION" )
-		,m_nInterval( nInterval )
 		,m_vecUVRects( rUVRects )
 		,m_vecFileNames( rUVRects.size(), rFileName )
 		,m_nFrame(0)
+		,m_fInterval( fInterval )
+		,m_fDeltaTime(0.0f)
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -44,12 +46,13 @@ namespace guiex
 		const CGUIString& rName, 
 		const CGUIString& rProjectName, 
 		const std::vector<CGUIString>& rFileNames,  
-		uint32 nInterval)
+		real fInterval)
 		:CGUIResource( rName, rProjectName, "ANIMATION" )
-		,m_nInterval( nInterval )
 		,m_vecFileNames( rFileNames )
 		,m_vecUVRects( rFileNames.size(), CGUIRect(0.f,0.f,1.f,1.f))
 		,m_nFrame(0)
+		,m_fInterval( fInterval )
+		,m_fDeltaTime(0.0f)
 	{
 
 	}
@@ -91,11 +94,16 @@ namespace guiex
 		m_nFrame = 0;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIAnimation::Update()
+	void	CGUIAnimation::Update( real fDeltaTime )
 	{
-		if( m_nInterval <= uint32(CGUIWidgetSystem::Instance()->GetGlobalTimer()-m_aTimer))
+		if( fDeltaTime < 0.0f )
 		{
-			m_aTimer = CGUIWidgetSystem::Instance()->GetGlobalTimer();
+			fDeltaTime = 0.0f;
+		}
+		m_fDeltaTime += fDeltaTime;
+		while( m_fDeltaTime >= m_fInterval )
+		{
+			m_fDeltaTime -= m_fInterval;
 			m_nFrame = (m_nFrame+1) % m_vecTextures.size();
 		}
 	}
@@ -118,8 +126,32 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIAnimation::Draw(
-		IGUIInterfaceRender* pRender,
+	//void	CGUIAnimation::Draw(IGUIInterfaceRender* pRender,
+	//	const CGUIRenderRect& rRenderRect,
+	//	real z, 
+	//	real fAlpha	)
+	//{
+	//	if( !IsLoaded())
+	//	{
+	//		Load();
+	//	}
+
+	//	CGUIColor aColor(0xFFFFFFFF);
+	//	aColor.SetAlpha(fAlpha);
+	//	pRender->AddRenderTexture( 
+	//		rRenderRect, 
+	//		z,
+	//		m_vecTextures[m_nFrame]->GetTextureImplement(),
+	//		m_vecUVRects[m_nFrame], 
+	//		IMAGE_NONE,
+	//		aColor.GetARGB(),
+	//		aColor.GetARGB(),
+	//		aColor.GetARGB(),
+	//		aColor.GetARGB());
+	//}
+	//------------------------------------------------------------------------------
+	void	CGUIAnimation::Draw( IGUIInterfaceRender* pRender,
+		const CGUIMatrix4& rWorldMatrix,
 		const CGUIRect& rDestRect,
 		real z, 
 		real fAlpha	)
@@ -131,7 +163,7 @@ namespace guiex
 
 		CGUIColor aColor(0xFFFFFFFF);
 		aColor.SetAlpha(fAlpha);
-		pRender->AddRenderTexture( 
+		pRender->AddRenderTexture( rWorldMatrix,
 			rDestRect, 
 			z,
 			m_vecTextures[m_nFrame]->GetTextureImplement(),

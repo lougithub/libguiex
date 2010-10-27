@@ -26,7 +26,7 @@ namespace guiex
 	class CGUIRect;
 	class CGUITextureImp;
 	class IGUIInterfaceFont;
-	class CGUIRenderRect;
+	class CGUIMatrix4;
 }
 
 
@@ -56,7 +56,8 @@ namespace guiex
 		* @brief add a texture into render list
 		* @param rTextureRect in texture co-ordinates.
 		*/
-		virtual	void	AddRenderTexture(	const CGUIRect& rDestRect, 
+		virtual	void	AddRenderTexture(	const CGUIMatrix4& rWorldMatrix,
+			const CGUIRect& rDestRect, 
 			real z, 
 			const CGUITextureImp* pTex, 
 			const CGUIRect& rTextureRect,
@@ -71,48 +72,29 @@ namespace guiex
 		* @brief add a texture into render list
 		* @param rTextureRect in texture co-ordinates.
 		*/
-		virtual	void	AddRenderTexture(	const CGUIRenderRect& rRenderRect, 
-			real z, 
-			const CGUITextureImp* pTexture, 
-			const CGUIRect& rTextureRect, 
-			EImageOperation eImageOperation,
-			GUIARGB rColor_topleft,
-			GUIARGB rColor_topright,
-			GUIARGB rColor_bottomleft,
-			GUIARGB rColor_bottomright) = 0;
+		//virtual	void	AddRenderTexture( const CGUIRenderRect& rRenderRect, 
+		//	real z, 
+		//	const CGUITextureImp* pTexture, 
+		//	const CGUIRect& rTextureRect, 
+		//	EImageOperation eImageOperation,
+		//	GUIARGB rColor_topleft,
+		//	GUIARGB rColor_topright,
+		//	GUIARGB rColor_bottomleft,
+		//	GUIARGB rColor_bottomright) = 0;
 
-		/** 
-		* @brief set a clip rect
-		*/
-		virtual	void	AddScissor( const CGUIRect& rClipRect) = 0;
-
+		virtual void	PushClipRect( const CGUIMatrix4& rMatrix, const CGUIRect& rClipRect ) = 0;
+		virtual void	PopClipRect( ) = 0;
+		
 		/**
 		* @brief do final render for all texture in the render list
 		*/
 		virtual	void	DoRender(void) = 0;
 
-		/**
-		* @brief clear render queue
-		*/
-		virtual	void	ClearRenderList(void) = 0;
+		// setup states etc
+		virtual void	BeginRender(void) = 0;
 
-		/**
-		* @brief Enable or disable the queueing of quads from this point on.
-		*	This only affects queueing.  If queueing is turned off, any calls to AddRenderTexture 
-		* will cause the quad to be rendered directly.  Note that disabling queueing will not cause 
-		* currently queued texture to be rendered, nor is the texture cleared - at any time the queue 
-		* can still be drawn by calling doRender, and the list can be cleared by calling clearRenderList.  
-		* Re-enabling the queue causes subsequent quads to be added as if queueing had never been disabled.
-		*/
-		virtual void	EnableRenderQueue(bool bEnable) = 0;
-
-
-		/**
-		* @brief Return whether queueing is enabled.
-		* @return true if queueing is enabled, false if queueing is disabled.
-		*/
-		virtual bool	IsRenderQueueEnabled(void) const = 0;
-
+		// restore states
+		virtual void	EndRender(void) = 0;
 
 		/**
 		* @brief Creates a 'null' Texture object.
@@ -186,8 +168,6 @@ namespace guiex
 		 * @brief toggle wire frame.
 		 */
 		virtual void	SetWireFrame( bool bWireFrame) = 0;
-
-		virtual void	EnableScissor( bool bEnable ) = 0;
 
 	public:
 		/**

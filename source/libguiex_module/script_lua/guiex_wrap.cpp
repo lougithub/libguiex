@@ -7,7 +7,7 @@
  * changes to this file unless you know what you are doing--modify the SWIG 
  * interface file instead. 
  * ----------------------------------------------------------------------------- */
-
+#if 0
 #define SWIGLUA
 
 
@@ -7938,29 +7938,6 @@ fail:
 }
 
 
-static int _wrap_CGUIWidget_GetRoot(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
-  guiex::CGUIWidget *result = 0 ;
-  
-  SWIG_check_num_args("GetRoot",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetRoot",1,"guiex::CGUIWidget *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
-    SWIG_fail_ptr("CGUIWidget_GetRoot",1,SWIGTYPE_p_guiex__CGUIWidget);
-  }
-  
-  result = (guiex::CGUIWidget *)(arg1)->GetRoot();
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIWidget,0); SWIG_arg++; 
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
 
 static int _wrap_CGUIWidget_GetChild__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
@@ -9401,7 +9378,7 @@ static int _wrap_CGUIWidget_Update(lua_State* L) {
     SWIG_fail_ptr("CGUIWidget_Update",1,SWIGTYPE_p_guiex__CGUIWidget);
   }
   
-  (arg1)->Update();
+  (arg1)->Update(0.f);
   
   return SWIG_arg;
   
@@ -9727,8 +9704,7 @@ static swig_lua_method swig_guiex_CGUIWidget_methods[] = {
     {"IsOpen", _wrap_CGUIWidget_IsOpen}, 
     {"MoveToTop", _wrap_CGUIWidget_MoveToTop}, 
     {"GetParent", _wrap_CGUIWidget_GetParent}, 
-    {"GetRoot", _wrap_CGUIWidget_GetRoot}, 
-    {"GetChild", _wrap_CGUIWidget_GetChild}, 
+     {"GetChild", _wrap_CGUIWidget_GetChild}, 
     {"GetNextSibling", _wrap_CGUIWidget_GetNextSibling}, 
     {"GetType", _wrap_CGUIWidget_GetType}, 
     {"GetName", _wrap_CGUIWidget_GetName}, 
@@ -12462,3 +12438,4 @@ void SWIG_init_user(lua_State* L)
   SWIG_Lua_dostring(L,SWIG_LUACODE);
 }
 
+#endif

@@ -456,9 +456,9 @@ namespace guiex
 		return fWidth;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtPopupMenu::UpdateSelf()
+	void	CGUIWgtPopupMenu::UpdateSelf( real fDeltaTime )
 	{
-		CGUIWidget::UpdateSelf();
+		CGUIWidget::UpdateSelf( fDeltaTime );
 
 		if( !IsFocus())
 		{

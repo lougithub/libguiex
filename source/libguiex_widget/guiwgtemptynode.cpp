@@ -38,7 +38,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void	CGUIWgtEmptyNode::InitEmptyNode()
 	{
-		SetSizeRelative(true);
+		NewSetSizeType(eScreenValue_Percentage);
+		NEWSetSize( 1.0f, 1.0f );
 		SetFocusable(false);
 		SetSelfActivable(false);
 		
@@ -48,11 +49,6 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void	CGUIWgtEmptyNode::Open()
 	{
-		if( GetParent())
-		{
-			SetRectSize(GetParent()->GetClientRect( ).GetSize());
-		}
-
 		CGUIWidget::Open();
 	}
 	//------------------------------------------------------------------------------

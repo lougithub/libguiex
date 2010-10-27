@@ -186,11 +186,11 @@ namespace guiex
 		{
 			if( m_pScrollbarVert->IsOpen() )
 			{
-				m_aClientClipRect.SetWidth(m_aWidgetRect.GetWidth() - m_pScrollbarVert->GetSize().GetWidth()*m_pScrollbarVert->GetScale().GetWidth());
+				m_aClientClipRect.SetWidth(m_aWidgetRect.GetWidth() - m_pScrollbarVert->GetSize().GetWidth()*m_pScrollbarVert->GetDerivedScale().GetWidth());
 			}
 			if( m_pScrollbarHorz->IsOpen() )
 			{
-				m_aClientClipRect.SetHeight(m_aWidgetRect.GetHeight() - m_pScrollbarHorz->GetSize().GetHeight()*m_pScrollbarHorz->GetScale().GetHeight());
+				m_aClientClipRect.SetHeight(m_aWidgetRect.GetHeight() - m_pScrollbarHorz->GetSize().GetHeight()*m_pScrollbarHorz->GetDerivedScale().GetHeight());
 			}
 		}
 
@@ -200,11 +200,11 @@ namespace guiex
 		CGUIVector2 aWorkPos(m_aClientRect.m_fLeft, m_aClientRect.m_fTop);
 		if ( m_pScrollbarHorz && m_pScrollbarHorz->IsOpen())
 		{
-			aWorkPos.x -=  m_pScrollbarHorz->GetCurrentPos()*GetScale().m_fWidth;
+			aWorkPos.x -=  m_pScrollbarHorz->GetCurrentPos()*GetDerivedScale().m_fWidth;
 		}
 		if ( m_pScrollbarVert && m_pScrollbarVert->IsOpen())
 		{
-			aWorkPos.y -= m_pScrollbarVert->GetCurrentPos()*GetScale().m_fHeight;
+			aWorkPos.y -= m_pScrollbarVert->GetCurrentPos()*GetDerivedScale().m_fHeight;
 		}
 		m_aClientRect.SetPosition(aWorkPos);
 	}
@@ -235,7 +235,7 @@ namespace guiex
 		if( m_aScrollClientRect != aScrollClientRect )
 		{
 			m_aScrollClientRect = aScrollClientRect;
-			SetRectDirty();
+//			SetRectDirty();
 		}
 		
 
@@ -256,7 +256,7 @@ namespace guiex
 				if( m_pScrollbarVert->IsOpen()==false  )
 				{
 					m_pScrollbarVert->Open();
-					SetRectDirty();
+					//SetRectDirty();
 				}
 			}
 			else
@@ -264,12 +264,12 @@ namespace guiex
 				if( nVertRange > 0 && m_pScrollbarVert->IsOpen()==false)
 				{
 					m_pScrollbarVert->Open();
-					SetRectDirty();
+					//SetRectDirty();
 				}
 				else if( nVertRange == 0 && m_pScrollbarVert->IsOpen() )
 				{
 					m_pScrollbarVert->Close();
-					SetRectDirty();
+					//SetRectDirty();
 				}
 			}
 
@@ -288,7 +288,7 @@ namespace guiex
 				if( m_pScrollbarHorz->IsOpen()==false )
 				{
 					m_pScrollbarHorz->Open();
-					SetRectDirty();
+					//SetRectDirty();
 				}
 			}
 			else
@@ -296,12 +296,12 @@ namespace guiex
 				if( nHorzRange > 0 && m_pScrollbarHorz->IsOpen()==false )
 				{
 					m_pScrollbarHorz->Open();
-					SetRectDirty();
+					//SetRectDirty();
 				}
 				else if( nHorzRange == 0 && m_pScrollbarHorz->IsOpen() )
 				{
 					m_pScrollbarHorz->Close();
-					SetRectDirty();
+					//SetRectDirty();
 				}
 			}
 
@@ -348,7 +348,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	uint32		CGUIWgtScrollPanel::OnScrollbarScroll( CGUIEventScrollbar* pEvent )
 	{
-		SetRectDirty();
+		//SetRectDirty();
 		return CGUIWidget::OnScrollbarScroll( pEvent);
 	}
 	//------------------------------------------------------------------------------

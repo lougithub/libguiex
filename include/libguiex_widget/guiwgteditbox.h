@@ -14,7 +14,7 @@
 //============================================================================// 
 #include <libguiex_core\guiwidget.h>
 #include <libguiex_core\guiwidgetgenerator.h>
-#include  <libguiex_core\guitimer.h>
+#include <libguiex_core\guitimer.h>
 #include "guiwgtedit.h"
 #include <vector>
 
@@ -50,7 +50,7 @@ namespace guiex
 		/**
 		* @brief update this widget, 
 		*/
-		virtual void	Update();
+		virtual void	Update( real fDeltaTime );
 
 		/** 
 		* @brief set widget text

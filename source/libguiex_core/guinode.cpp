@@ -20,20 +20,15 @@ namespace guiex
 {
 	//-----------------------------------------------------------------------
 	CGUINode::CGUINode( )
-		:m_bDirtyFlag(false)
-		,m_pParent(NULL)
+		:m_pParent(NULL)
 		,m_pChild(NULL)
 		,m_pNextSibling(NULL)
-		,mCachedInverseTransformOutOfDate(false)
-		,mCachedTransformOutOfDate(false)
 	{
 		m_pParent = 0;
 		m_aOrientation = m_aDerivedOrientation = CGUIQuaternion::IDENTITY;
 		m_aPosition = m_aDerivedPosition = CGUIVector3::ZERO;
 		m_aScale = m_aDerivedScale = CGUIVector3::UNIT_SCALE;
 		m_bInheritScale = true;
-
-		SetDirtyFlag();
 	}
 
 	//-----------------------------------------------------------------------
@@ -50,32 +45,16 @@ namespace guiex
 	void CGUINode::SetParent(CGUINode* parent)
 	{
 		m_pParent = parent;
-		// Request update from parent
-		SetDirtyFlag();
 	}
 
 	//-----------------------------------------------------------------------
 	const CGUIMatrix4& CGUINode::getFullTransform(void)
 	{
-		if (mCachedTransformOutOfDate)
-		{
-			// Use derived values 
-			makeTransform( 
-				getDerivedPosition(), getDerivedScale(), 
-				getDerivedOrientation(), mCachedTransform);
-			mCachedTransformOutOfDate = false;
-		}
 		return mCachedTransform;
 	}
 	//-----------------------------------------------------------------------
 	const CGUIMatrix4& CGUINode::getFullInverseTransform(void)
 	{
-		if (mCachedInverseTransformOutOfDate)
-		{
-			// Use derived values 
-			makeInverseTransform( getDerivedPosition(), getDerivedScale(), getDerivedOrientation(), mCachedInverseTransform); 
-			mCachedInverseTransformOutOfDate = false;
-		}
 		return mCachedInverseTransform;
 	}
 	//-----------------------------------------------------------------------
@@ -116,13 +95,8 @@ namespace guiex
 			m_aDerivedScale = m_aScale;
 		}
 
-		mCachedTransformOutOfDate = true;
-		mCachedInverseTransformOutOfDate = true;
-	}
-	//-----------------------------------------------------------------------
-	void CGUINode::OnUpdatedFromParent()
-	{
-
+		makeInverseTransform( getDerivedPosition(), getDerivedScale(), getDerivedOrientation(), mCachedInverseTransform); 
+		makeTransform( getDerivedPosition(), getDerivedScale(), getDerivedOrientation(), mCachedTransform);
 	}
 	//-----------------------------------------------------------------------
 	const CGUIQuaternion& CGUINode::getOrientation() const
@@ -134,7 +108,6 @@ namespace guiex
 	void CGUINode::setOrientation( const CGUIQuaternion & q )
 	{
 		m_aOrientation = q;
-		SetDirtyFlag();
 	}
 	//-----------------------------------------------------------------------
 	void CGUINode::setOrientation( real w, real x, real y, real z)
@@ -143,20 +116,17 @@ namespace guiex
 		m_aOrientation.x = x;
 		m_aOrientation.y = y;
 		m_aOrientation.z = z;
-		SetDirtyFlag();
 	}
 	//-----------------------------------------------------------------------
 	void CGUINode::resetOrientation(void)
 	{
 		m_aOrientation = CGUIQuaternion::IDENTITY;
-		SetDirtyFlag();
 	}
 
 	//-----------------------------------------------------------------------
 	void CGUINode::setPosition(const CGUIVector3& pos)
 	{
 		m_aPosition = pos;
-		SetDirtyFlag();
 	}
 
 
@@ -213,8 +183,6 @@ namespace guiex
 			m_aPosition += d;
 			break;
 		}
-		SetDirtyFlag();
-
 	}
 	//-----------------------------------------------------------------------
 	void CGUINode::translate(real x, real y, real z, ETransformSpace relativeTo)
@@ -276,20 +244,15 @@ namespace guiex
 			m_aOrientation = m_aOrientation * q;
 			break;
 		}
-		SetDirtyFlag();
 	}
 	//-----------------------------------------------------------------------
 	const CGUIQuaternion & CGUINode::getDerivedOrientation(void)
 	{
-		UpdateDirtyNode();
-
 		return m_aDerivedOrientation;
 	}
 	//-----------------------------------------------------------------------
 	const CGUIVector3 & CGUINode::getDerivedPosition(void)
 	{
-		UpdateDirtyNode();
-
 		return m_aDerivedPosition;
 	}
 	//-----------------------------------------------------------------------
@@ -301,7 +264,6 @@ namespace guiex
 	void CGUINode::setScale(const CGUIVector3& scale)
 	{
 		m_aScale = scale;
-		SetDirtyFlag();
 	}
 	//-----------------------------------------------------------------------
 	void CGUINode::setScale(real x, real y, real z)
@@ -309,7 +271,6 @@ namespace guiex
 		m_aScale.x = x;
 		m_aScale.y = y;
 		m_aScale.z = z;
-		SetDirtyFlag();
 	}
 	//-----------------------------------------------------------------------
 	const CGUIVector3 & CGUINode::getScale(void) const
@@ -320,7 +281,6 @@ namespace guiex
 	void CGUINode::setInheritScale(bool inherit)
 	{
 		m_bInheritScale = inherit;
-		SetDirtyFlag();
 	}
 	//-----------------------------------------------------------------------
 	bool CGUINode::getInheritScale(void) const
@@ -331,7 +291,6 @@ namespace guiex
 	void CGUINode::scale(const CGUIVector3& scale)
 	{
 		m_aScale = m_aScale * scale;
-		SetDirtyFlag();
 	}
 	//-----------------------------------------------------------------------
 	void CGUINode::scale(real x, real y, real z)
@@ -339,7 +298,6 @@ namespace guiex
 		m_aScale.x *= x;
 		m_aScale.y *= y;
 		m_aScale.z *= z;
-		SetDirtyFlag();
 	}
 	//-----------------------------------------------------------------------
 	void CGUINode::makeTransform(const CGUIVector3& position, const CGUIVector3& scale, 
@@ -413,33 +371,6 @@ namespace guiex
 	const CGUIVector3& CGUINode::getWorldPosition(void)
 	{
 		return getDerivedPosition();
-	}
-	//-----------------------------------------------------------------------
-	void		CGUINode::SetDirtyFlag()
-	{
-		if( !m_bDirtyFlag )
-		{
-			m_bDirtyFlag = true;
-
-			CGUINode* pNode = m_pChild;
-			while( pNode )
-			{
-				pNode->SetDirtyFlag();
-				pNode = pNode->m_pNextSibling;
-			}
-		}
-	}
-	//-----------------------------------------------------------------------
-	void		CGUINode::UpdateDirtyNode()
-	{
-		if( m_bDirtyFlag)
-		{
-			//update dirty node
-			updateFromParent();
-			m_bDirtyFlag =	false;
-
-			OnUpdatedFromParent();
-		}
 	}
 	//------------------------------------------------------------------------------
 	void	CGUINode::SetChild( const CGUINode* pNode)

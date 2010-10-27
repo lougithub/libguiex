@@ -157,10 +157,10 @@ namespace guiex
 				CGUIStringExInfo	aStringInfo = m_strText.GetDefaultInfo();
 				CGUIColor			aDefaultColor = aStringInfo.m_aColor;
 				uint32				nCurIdx = 0;
-				const CGUISize&		rScale = GetScale();
+				const CGUISize&		rScale = GetDerivedScale();
 
 				//set scissor
-				pRender->AddScissor(rStringClipRect);
+				//pRender->AddScissor(rStringClipRect);
 
 				//has selection
 				for( TLineList::iterator itor = m_aLineList.begin();
@@ -194,11 +194,11 @@ namespace guiex
 						{
 							//draw last <zzz>
 						}
-						pRender->GetFontRender()->DrawCharacterWithoutScissor(pRender, m_strText.GetCharacter(nCurIdx),aStringInfo,aPos,rScale, GetAlpha());
+						pRender->GetFontRender()->DrawCharacter(pRender, m_strText.GetCharacter(nCurIdx),aStringInfo,aPos,rScale, GetAlpha());
 						aPos.x+=m_vecStringSize[nCurIdx].m_fWidth*rScale.m_fWidth;
 					}
 
-					aPos.y += aLineInfo.m_nLineHeight*GetScale().m_fHeight;
+					aPos.y += aLineInfo.m_nLineHeight*GetDerivedScale().m_fHeight;
 				}
 			}
 			else
@@ -212,14 +212,14 @@ namespace guiex
 
 					//no selection
 					DrawString( pRender, m_strText, aPos, &rStringClipRect, aLineInfo.m_nStartIdx, aLineInfo.m_nStartIdx+aLineInfo.m_nLength );
-					aPos.y += aLineInfo.m_nLineHeight*GetScale().m_fHeight;
+					aPos.y += aLineInfo.m_nLineHeight*GetDerivedScale().m_fHeight;
 				}
 				
 			}
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtMultiEditBox::Update()
+	void	CGUIWgtMultiEditBox::Update( real fDeltaTime )
 	{
 		if( IsFocus())
 		{
@@ -231,7 +231,7 @@ namespace guiex
 			}
 		}
 
-		CGUIWidget::Update();
+		CGUIWidget::Update( fDeltaTime );
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWgtMultiEditBox::SetTextContent(const wchar_t* pText)
@@ -448,14 +448,14 @@ namespace guiex
 	void			CGUIWgtMultiEditBox::SetStringAreaRatio(const CGUIRect& rStringAreaRatio)
 	{
 		m_aStringAreaRatio = rStringAreaRatio;
-		SetRectDirty();
+//		SetRectDirty();
 	}
 	//------------------------------------------------------------------------------
 	void		CGUIWgtMultiEditBox::FormatText()
 	{
 		real fOldClientRectWidth = GetClientRect().GetWidth();
 		FormatText_Imp();
-		SetRectDirty();
+//		SetRectDirty();
 		UpdateScrollbars();
 		real fNewClientRectWidth = GetClientRect().GetWidth();
 
@@ -463,7 +463,7 @@ namespace guiex
 		{
 			//vertical scrollbar changed
 			FormatText_Imp();
-			SetRectDirty();
+//			SetRectDirty();
 		}
 	}
 	//------------------------------------------------------------------------------

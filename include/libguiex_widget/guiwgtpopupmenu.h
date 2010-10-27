@@ -209,7 +209,7 @@ namespace guiex
 		/**
 		* @brief update this widget only
 		*/
-		virtual void	UpdateSelf();
+		virtual void	UpdateSelf( real fDeltaTime );
 
 		///initialize 
 		void	InitPopupMenu();

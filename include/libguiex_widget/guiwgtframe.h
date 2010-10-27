@@ -219,19 +219,19 @@ namespace guiex
 		//!< get border width
 		real		GetBorderWidth(EBorderLocation eBorder)
 		{
-			return	m_aBorderInfo[eBorder].m_aSize.m_fWidth*GetScale().m_fWidth;
+			return	m_aBorderInfo[eBorder].m_aSize.m_fWidth*GetDerivedScale().m_fWidth;
 		}
 
 		//!< get border height
 		real		GetBorderHeight(EBorderLocation eBorder)
 		{
-			return	m_aBorderInfo[eBorder].m_aSize.m_fHeight*GetScale().m_fHeight;
+			return	m_aBorderInfo[eBorder].m_aSize.m_fHeight*GetDerivedScale().m_fHeight;
 		}
 
 		//!< get border size
 		CGUISize	GetBorderSize(EBorderLocation eBorder)
 		{
-			return	m_aBorderInfo[eBorder].m_aSize*GetScale();
+			return	m_aBorderInfo[eBorder].m_aSize*GetDerivedScale();
 		}
 
 	private:

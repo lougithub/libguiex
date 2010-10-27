@@ -292,7 +292,7 @@ namespace guiex
 
 			}
 
-			SetRectDirty();
+//			SetRectDirty();
 			UpdateScrollbars();
 		}
 	}
@@ -361,7 +361,7 @@ namespace guiex
 			UpdateItemPos();
 
 
-			SetRectDirty();
+//			SetRectDirty();
 			UpdateScrollbars();
 		}
 	}
@@ -390,7 +390,7 @@ namespace guiex
 				// if item is supposed to be deleted by us
 				CGUIWidgetSystem::Instance()->DestroyWidget(pItem);
 
-				SetRectDirty();
+//				SetRectDirty();
 				UpdateScrollbars();
 
 				if( m_pLastOperateItem  == pItem )
@@ -413,7 +413,7 @@ namespace guiex
 
 		}
 
-		SetRectDirty();
+//		SetRectDirty();
 		UpdateScrollbars();
 	}
 	//------------------------------------------------------------------------------

@@ -50,7 +50,7 @@ namespace guiex
 			eTS_WORLD		//!< Transform is relative to world space
 		};
 
-	public:
+	protected:
 		//!< constructor
 		CGUINode( );
 
@@ -291,8 +291,6 @@ namespace guiex
 		eliminates problems introduced by scaling. */
 		const CGUIVector3& getWorldPosition(void);
 
-
-
 	protected:
 
 		/// Only available internally - notification of parent.
@@ -304,9 +302,6 @@ namespace guiex
 		derived transform.
 		*/
 		virtual void updateFromParent(void);
-
-		//!< called when updated from parent
-		virtual void OnUpdatedFromParent();
 
 		/** Internal method for building a CGUIMatrix4 from orientation / scale / position. 
 		@remarks Transform is performed in the order rotate, scale, translation, i.e. translation is independent
@@ -329,14 +324,6 @@ namespace guiex
 			const CGUIQuaternion& orientation, 
 			CGUIMatrix4& destMatrix );
 
-
-
-		//!< set dirty flag
-		void	SetDirtyFlag();
-
-		//!< update if the node is dirty
-		void	UpdateDirtyNode();
-
 		/// set child
 		void	SetChild( const CGUINode* pNode);
 
@@ -350,11 +337,9 @@ namespace guiex
 		bool			m_bInheritScale;	//!< Stores whether this node inherits scale from it's parent
 
 
-		bool			m_bDirtyFlag;		//!< dirty rect
 		CGUINode*		m_pParent;			//!< parent
 		CGUINode*		m_pChild;			//!< child
 		CGUINode*		m_pNextSibling;		//!< sibling
-
 
 		/** Cached combined orientation.
 		@par
@@ -381,12 +366,8 @@ namespace guiex
 		This is updated when updateFromParent is called by the
 		SceneManager or the nodes parent.
 		*/
-		CGUIVector3 m_aDerivedScale;	
+		CGUIVector3 m_aDerivedScale;			
 		
-		
-		bool mCachedTransformOutOfDate;		//!< whether transform is out of data
-		bool mCachedInverseTransformOutOfDate;		//!< whether transform is out of data
-
 		CGUIMatrix4 mCachedTransform;		//!< Cached derived transform as a 4x4 matrix
 		CGUIMatrix4 mCachedInverseTransform;		//!< Cached derived transform as a 4x4 matrix
 	};

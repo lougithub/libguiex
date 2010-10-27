@@ -68,12 +68,12 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	real		CGUIMenuTextItem::GetHeight(void)
 	{
-		return GetSize().GetHeight()*GetScale().GetHeight();
+		return GetSize().GetHeight()*GetDerivedScale().GetHeight();
 	}
 	//------------------------------------------------------------------------------
 	real	CGUIMenuTextItem::GetWidth(void)
 	{
-		return GetSize().GetWidth()*GetScale().GetWidth();
+		return GetSize().GetWidth()*GetDerivedScale().GetWidth();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIMenuTextItem::RenderSelf(IGUIInterfaceRender* pRender)

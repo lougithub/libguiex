@@ -1050,7 +1050,7 @@ void WxMainFrame::OnToggleScissor(wxCommandEvent& evt)
 
 	if( guiex::CGUIInterfaceManager::Instance()->GetInterfaceRender())
 	{
-		guiex::CGUIInterfaceManager::Instance()->GetInterfaceRender()->EnableScissor(bIsChecked);
+		//guiex::CGUIInterfaceManager::Instance()->GetInterfaceRender()->EnableScissor(bIsChecked);
 	}
 }
 //------------------------------------------------------------------------------

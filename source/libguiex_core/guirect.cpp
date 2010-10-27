@@ -30,19 +30,19 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	CGUIRect::CGUIRect(real left, real top, real right, real bottom) :
-	m_fTop(top),
-		m_fBottom(bottom),
-		m_fLeft(left),
-		m_fRight(right)
+	CGUIRect::CGUIRect(real left, real top, real right, real bottom)
+		:m_fTop(top)
+		,m_fBottom(bottom)
+		,m_fLeft(left)
+		,m_fRight(right)
 	{
 	}
 	//------------------------------------------------------------------------------
-	CGUIRect::CGUIRect(CGUIVector2 pos, CGUISize sz) :
-	m_fTop(pos.y),
-		m_fBottom(pos.y + sz.m_fHeight),
-		m_fLeft(pos.x),
-		m_fRight(pos.x + sz.m_fWidth)
+	CGUIRect::CGUIRect( const CGUIVector2& pos, const CGUISize& sz) 
+		:m_fTop(pos.y)
+		,m_fBottom(pos.y + sz.m_fHeight)
+		,m_fLeft(pos.x)
+		,m_fRight(pos.x + sz.m_fWidth)
 	{
 	}
 	//------------------------------------------------------------------------------

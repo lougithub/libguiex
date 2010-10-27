@@ -49,7 +49,7 @@ namespace guiex
 		m_pIme = NULL;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtEdit::Update()
+	void	CGUIWgtEdit::Update( real fDeltaTime )
 	{
 		//get result string
 		if( m_pIme )
@@ -61,7 +61,7 @@ namespace guiex
 			}
 		}
 
-		CGUIWidget::Update();
+		CGUIWidget::Update( fDeltaTime );
 	}
 	//------------------------------------------------------------------------------
 	const wchar_t*	CGUIWgtEdit::GetResult() const

@@ -34,9 +34,9 @@ namespace guiex
 			const CGUIString& rProjectName, 
 			const CGUIString& rFileName, 
 			const std::vector<CGUIRect>& rUVRects,
-			uint32 nInterval)
+			real fInterval)
 	{
-		CGUIAnimation* pAnimation = new CGUIAnimation( rName, rProjectName, rFileName, rUVRects, nInterval );
+		CGUIAnimation* pAnimation = new CGUIAnimation( rName, rProjectName, rFileName, rUVRects, fInterval );
 		AddResource(pAnimation);
 		return pAnimation;
 	}
@@ -45,9 +45,9 @@ namespace guiex
 			const CGUIString& rName, 
 			const CGUIString& rProjectName, 
 			const std::vector<CGUIString>& rFileNames,  
-			uint32 nInterval)
+			real fInterval)
 	{
-		CGUIAnimation* pAnimation = new CGUIAnimation( rName, rProjectName, rFileNames, nInterval );
+		CGUIAnimation* pAnimation = new CGUIAnimation( rName, rProjectName, rFileNames, fInterval );
 		AddResource(pAnimation);
 		return pAnimation;
 	}

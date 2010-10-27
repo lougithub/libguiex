@@ -46,16 +46,16 @@ namespace guiex
 		if( rName == "BGIMAGE")
 		{
 			m_pImageBG = pImage;
-			if( GetSize().IsEqualZero() && m_pImageBG )
+			if( NEWGetSize().IsEqualZero() && m_pImageBG )
 			{
-				SetSize(m_pImageBG->GetSize());
+				NEWSetPixelSize(m_pImageBG->GetSize());
 			}
 		}
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWgtStaticImage::RenderSelf(IGUIInterfaceRender* pRender)
 	{
-		DrawImage( pRender, m_pImageBG, GetRect( ), pRender->GetAndIncZ(),&GetClipRect());
+		DrawImage( pRender, m_pImageBG, GetWidgetRect( ), pRender->GetAndIncZ());
 	}
 	//------------------------------------------------------------------------------
 	void				CGUIWgtStaticImage::SetCurrentImage( const CGUIString& rImageName)
@@ -67,7 +67,7 @@ namespace guiex
 		else
 		{
 			//error
-			throw CGUIException("[CGUIWgtStaticImage::SetCurrentImage]: failed to get animation by name <%s>!",rImageName.c_str());
+			throw CGUIException("[CGUIWgtStaticImage::SetCurrentImage]: failed to get image by name <%s>!",rImageName.c_str());
 		}
 	}
 	//------------------------------------------------------------------------------

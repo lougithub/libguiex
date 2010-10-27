@@ -391,9 +391,9 @@ namespace guiex
 	{
 		CGUIWidget::UpdateDirtyRect();
 
-		CGUISize aSizeTitleBar = m_aSizeTitleBar * GetScale();
-		CGUISize aSizeDecorate_0 = m_aSizeDecorate[0] * GetScale();
-		CGUISize aSizeDecorate_1 = m_aSizeDecorate[1] * GetScale();
+		CGUISize aSizeTitleBar = m_aSizeTitleBar * GetDerivedScale();
+		CGUISize aSizeDecorate_0 = m_aSizeDecorate[0] * GetDerivedScale();
+		CGUISize aSizeDecorate_1 = m_aSizeDecorate[1] * GetDerivedScale();
 
 		//update title bar rect
 		m_aTitleBarRect = m_aWidgetRect;

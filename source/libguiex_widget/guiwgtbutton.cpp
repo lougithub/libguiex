@@ -68,9 +68,9 @@ namespace guiex
 		if( rName == "BTN_NORMAL")
 		{
 			m_pImageNormal = pImage;
-			if( GetSize().IsEqualZero() && pImage )
+			if( NEWGetSize().IsEqualZero() && pImage )
 			{
-				SetSize(pImage->GetSize());
+				NEWSetPixelSize(pImage->GetSize());
 			}
 		}
 		else if( rName == "BTN_HOVER")
@@ -142,16 +142,16 @@ namespace guiex
 			pImage = m_pImageNormal;
 		}
 
-		DrawImage( pRender, pImage, GetRenderRect(), pRender->GetAndIncZ(),&GetClipRect());
+		DrawImage( pRender, pImage, GetRenderRect(), pRender->GetAndIncZ());
 		if( m_bHovering && m_pImageHoverOverlay )
 		{
-			DrawImage( pRender, m_pImageHoverOverlay, GetRect(), pRender->GetAndIncZ(),&GetClipRect());
+			DrawImage( pRender, m_pImageHoverOverlay, GetRenderRect(), pRender->GetAndIncZ());
 		}
 		
-		CGUIRect rDrawRect = GetClientRect();
-		rDrawRect.m_fTop += (m_aRelativePos.y*GetScale().m_fHeight);
-		rDrawRect.m_fLeft += (m_aRelativePos.x*GetScale().m_fWidth);
-		DrawString(pRender, *pString, rDrawRect, GetTextAlignment(), &GetClipRect());
+		//CGUIRect rDrawRect = GetClientRect();
+		//rDrawRect.m_fTop += (m_aRelativePos.y*GetDerivedScale().m_fHeight);
+		//rDrawRect.m_fLeft += (m_aRelativePos.x*GetDerivedScale().m_fWidth);
+		DrawString(pRender, *pString, GetRenderRect(), GetTextAlignment());
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWgtButton::SetTextContent(const wchar_t* pText)

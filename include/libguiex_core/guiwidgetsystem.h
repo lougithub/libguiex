@@ -91,7 +91,7 @@ namespace guiex
 		/**
 		* @brief Update system
 		*/
-		void	Update();
+		void	Update( real fDeltaTime );
 
 		/**
 		* @brief render system
@@ -188,7 +188,7 @@ namespace guiex
 		/**
 		* @brief add a page to map
 		*/
-		void			AddPage(  CGUIWidget* pPage, const CGUIString& rConfigureFilename = CGUIString());
+		void			AddPage(  CGUIWidget* pPage, const CGUIString& rProjectName = CGUIString());
 
 		/**
 		* @brief get a page by name

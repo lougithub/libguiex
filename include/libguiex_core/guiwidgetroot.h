@@ -39,12 +39,11 @@ namespace guiex
 		///initialize root
 		void	InitRoot();
 
+		virtual void PushClipRect( IGUIInterfaceRender* pRender, const CGUIRect& rClipRect );
+		virtual void PopClipRect( IGUIInterfaceRender* pRender );
+		
 		/// render
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
-
-		//update dirty rect, same way for all widgets
-		//virtual void		PreUpdateDirtyRect();	
-
 
 	protected:
 		static CGUIString ms_strType;

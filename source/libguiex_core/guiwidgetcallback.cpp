@@ -59,11 +59,6 @@ namespace guiex
 		//call callback function
 		CallbackFunction("OnParentSizeChange", pEvent);
 
-		if( IsPositionRelative() || IsSizeRelative())
-		{
-			UpdateSize();
-		}
-
 		return 0;	
 	}
 	//------------------------------------------------------------------------------
@@ -508,7 +503,7 @@ namespace guiex
 
 		if( pEvent->IsExpired() == false)
 		{
-			SetLocalPosition(pEvent->GetWidgetPos());
+			NEWSetPixelPosition(pEvent->GetWidgetPos());
 		}
 		if( GetFlag(eFLAG_MOUSE_CONSUMED))
 		{

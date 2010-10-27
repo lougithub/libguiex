@@ -26,6 +26,8 @@ namespace guiex
 	class IGUIInterfaceRender;
 	class CGUIRect;
 	class CGUITexture;
+	class CGUIRenderRect;
+	class CGUIMatrix4;
 }
 
 //============================================================================//
@@ -45,13 +47,18 @@ namespace guiex
 		/**
 		* @brief update the animation
 		*/
-		void	Update();
+		void	Update( real fDeltaTime );
 
-		void	Draw(
-			IGUIInterfaceRender* pRender,
+		void	Draw( IGUIInterfaceRender* pRender,
+			const CGUIMatrix4& rWorldMatrix,
 			const CGUIRect& rDestRect,
 			real z, 
 			real fAlpha	);
+
+		//void	Draw(IGUIInterfaceRender* pRender,
+		//	const CGUIRenderRect& rRenderRect,
+		//	real z, 
+		//	real fAlpha	);
 
 		CGUISize	GetSize();
 
@@ -67,7 +74,7 @@ namespace guiex
 			const CGUIString& rProjectName, 
 			const CGUIString& rFileName, 
 			const std::vector<CGUIRect>& rUVRects,
-			uint32 nInterval );
+			real fInterval );
 
 		/**
 		* @brief constructor
@@ -78,7 +85,7 @@ namespace guiex
 			const CGUIString& rName, 
 			const CGUIString& rProjectName, 
 			const std::vector<CGUIString>& rFileNames,  
-			uint32 nInterval);
+			real fInterval);
 
 		virtual int32	DoLoad();
 		virtual void	DoUnload();
@@ -88,13 +95,13 @@ namespace guiex
 		std::vector<CGUITexture*>			m_vecTextures;
 		std::vector<CGUIRect>				m_vecUVRects;
 
-		uint32								m_nInterval;
 
 		std::vector<CGUIString>				m_vecFileNames; //resource path
 
 
-		CGUITimer		m_aTimer;				//!< used by animation
-		uint32			m_nFrame;				//!< current frame
+		real		m_fInterval;
+		real		m_fDeltaTime;			//!< used by animation
+		uint32		m_nFrame;				//!< current frame
 	};
 
 }//namespace guiex

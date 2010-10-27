@@ -29,14 +29,9 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	IGUIRender_opengl::IGUIRender_opengl()
 		:m_maxTextureSize(0)
-		,m_bQueueing(true)
 	{
-		m_nCommandIdx = 0;
-		m_nVertexIdx = 0;
 		m_nCurrentTexture = -1;
-		m_eLastCommand = eCommand_None;
 		m_bWireFrame = false;
-		m_bEnableScissor = true;
 	}
 	//------------------------------------------------------------------------------
 	IGUIRender_opengl::~IGUIRender_opengl()
@@ -49,13 +44,7 @@ namespace guiex
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &m_maxTextureSize);
 
 		ResetZValue();
-
-		m_vecVertex.resize(OPENGL_RENDERER_VBUFF_CAPACITY);
-
-		m_nCommandIdx = 0;
-		m_nVertexIdx = 0;
 		m_nCurrentTexture = -1;
-		m_eLastCommand = eCommand_None;
 
 		return 0;
 	}
@@ -75,41 +64,8 @@ namespace guiex
 		m_bWireFrame = bWireFrame;
 	}
 	//------------------------------------------------------------------------------
-	void	IGUIRender_opengl::EnableScissor( bool bEnable)
-	{
-		m_bEnableScissor = bEnable;
-	}
-	//------------------------------------------------------------------------------
-	IGUIRender_opengl::SVertex* IGUIRender_opengl::AllocateVertexNode(uint32 nNum)
-	{
-		if( m_vecVertex.size() <= m_nVertexIdx+nNum )
-		{
-			m_vecVertex.resize(m_nVertexIdx + nNum + 100);
-		}
-		uint32 nIdx = m_nVertexIdx;
-		m_nVertexIdx += nNum;
-		return &m_vecVertex.front()+nIdx;
-	}
-	//------------------------------------------------------------------------------
-	IGUIRender_opengl::SRenderCommand* IGUIRender_opengl::GetLastCommandNode()
-	{
-		GUI_ASSERT( m_nCommandIdx>0, "[IGUIRender_opengl::GetLastCommandNode]: command list is empty");
-		return &m_vecCommand.front()+m_nCommandIdx-1;
-	}
-	//------------------------------------------------------------------------------
-	IGUIRender_opengl::SRenderCommand* IGUIRender_opengl::AllocateCommandNode(ERenderCommand eCommand)
-	{
-		if( m_vecCommand.size() <= m_nCommandIdx )
-		{
-			m_vecCommand.resize(m_nCommandIdx + 100);
-		}
-		SRenderCommand* pCommand = &m_vecCommand.front()+m_nCommandIdx++;
-		m_eLastCommand = eCommand;
-		pCommand->m_nID = eCommand;
-		return pCommand;
-	}
-	//------------------------------------------------------------------------------
-	void	IGUIRender_opengl::AddRenderTexture(const CGUIRect& rDestRect, real z, 
+	void	IGUIRender_opengl::AddRenderTexture(const CGUIMatrix4& rWorldMatrix,
+		const CGUIRect& rDestRect, real z, 
 		const CGUITextureImp* pTexture, const CGUIRect& rTextureRect, 
 		EImageOperation eImageOperation, 				
 		GUIARGB  rColor_topleft,
@@ -117,31 +73,22 @@ namespace guiex
 		GUIARGB  rColor_bottomleft,
 		GUIARGB  rColor_bottomright)
 	{
+		//set modelview matrix
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		makeGLMatrix( m_gl_matrix, rWorldMatrix );
+		glMultMatrixf( m_gl_matrix );
+
+
 		//check texture
 		if( ((CGUITexture_opengl*)pTexture)->GetOGLTexid() != m_nCurrentTexture )
 		{
 			m_nCurrentTexture = ((CGUITexture_opengl*)pTexture)->GetOGLTexid();
-			SRenderCommand* pCommand = AllocateCommandNode(eCommand_SetTexture);
-			pCommand->m_nPara1 = m_nCurrentTexture;
+			glBindTexture(GL_TEXTURE_2D, m_nCurrentTexture);
 		}
-
-		//set vertex
-		if( m_eLastCommand == eCommand_DrawVertex )
-		{
-			SRenderCommand* pCommand = GetLastCommandNode();
-			pCommand->m_nPara2 += 2;
-		}
-		else
-		{
-			SRenderCommand* pCommand = AllocateCommandNode(eCommand_DrawVertex);
-			pCommand->m_nPara1 = m_nVertexIdx;
-			pCommand->m_nPara2 = 2;
-		}
-
-		SVertex* pVertex = AllocateVertexNode(VERTEX_PER_TEXTURE);
 
 		//set texture coordinate
-		SetTexCoordinate(pVertex, rTextureRect, eImageOperation);
+		SetTexCoordinate(m_pVertex, rTextureRect, eImageOperation);
 
 		real fLeft = rDestRect.m_fLeft;
 		real fRight = rDestRect.m_fRight;
@@ -153,175 +100,138 @@ namespace guiex
 		long oglcolor_bottomright = ColorToOpengl(rColor_bottomright);
 		long oglcolor_topright = ColorToOpengl(rColor_topright);
 
-
 		//vert0
-		pVertex[0].vertex[0] = fLeft;
-		pVertex[0].vertex[1] = fTop;
-		pVertex[0].vertex[2] = z;
-		pVertex[0].color     = oglcolor_topleft;
+		m_pVertex[0].vertex[0] = fLeft;
+		m_pVertex[0].vertex[1] = fTop;
+		m_pVertex[0].vertex[2] = z;
+		m_pVertex[0].color     = oglcolor_topleft;
 
 		//vert1
-		pVertex[1].vertex[0] = fLeft;
-		pVertex[1].vertex[1] = fBottom;
-		pVertex[1].vertex[2] = z;
-		pVertex[1].color     = oglcolor_bottomleft;     
+		m_pVertex[1].vertex[0] = fLeft;
+		m_pVertex[1].vertex[1] = fBottom;
+		m_pVertex[1].vertex[2] = z;
+		m_pVertex[1].color     = oglcolor_bottomleft;     
 
 		//vert2
-		pVertex[2].vertex[0] = fRight;
-		pVertex[2].vertex[1] = fBottom;
-		pVertex[2].vertex[2] = z;
-		pVertex[2].color     = oglcolor_bottomright;
+		m_pVertex[2].vertex[0] = fRight;
+		m_pVertex[2].vertex[1] = fBottom;
+		m_pVertex[2].vertex[2] = z;
+		m_pVertex[2].color     = oglcolor_bottomright;
 
 		//vert3
-		pVertex[3].vertex[0] = fRight;
-		pVertex[3].vertex[1] = fTop;
-		pVertex[3].vertex[2] = z;
-		pVertex[3].color     = oglcolor_topright;      
+		m_pVertex[3].vertex[0] = fRight;
+		m_pVertex[3].vertex[1] = fTop;
+		m_pVertex[3].vertex[2] = z;
+		m_pVertex[3].color     = oglcolor_topright;      
 
-		//vert4
-		pVertex[4].vertex[0] = fLeft;
-		pVertex[4].vertex[1] = fTop;
-		pVertex[4].vertex[2] = z;
-		pVertex[4].color     = oglcolor_topleft;
-
-		//vert5
-		pVertex[5].vertex[0] = fRight;
-		pVertex[5].vertex[1] = fBottom;
-		pVertex[5].vertex[2] = z;
-		pVertex[5].color     = oglcolor_bottomright;
-
-
-		// if not queuing, render directly (as in, right now!)
-		if (!m_bQueueing)
-		{
-			BeginRender();
-			RenderVBuffer();
-			EndRender();
-		}
+		glDrawArrays( GL_POLYGON, 0, 4 );
 	}
-	//------------------------------------------------------------------------------
-	void	IGUIRender_opengl::AddRenderTexture(const CGUIRenderRect& rRenderRect, 
-		real z, 
-		const CGUITextureImp* pTexture, 
-		const CGUIRect& rTextureRect, 
-		EImageOperation eImageOperation,
-		GUIARGB rColor_topleft,
-		GUIARGB rColor_topright,
-		GUIARGB rColor_bottomleft,
-		GUIARGB rColor_bottomright)
+	
+	void	IGUIRender_opengl::PushClipRect( const CGUIMatrix4& rMatrix, const CGUIRect& rClipRect )
 	{
-		//check texture
-		if( ((CGUITexture_opengl*)pTexture)->GetOGLTexid() != m_nCurrentTexture )
-		{
-			m_nCurrentTexture = ((CGUITexture_opengl*)pTexture)->GetOGLTexid();
-			SRenderCommand* pCommand = AllocateCommandNode(eCommand_SetTexture);
-			pCommand->m_nPara1 = m_nCurrentTexture;
-		}
+		m_arrayClipRects.push_back( SClipRect() );
+		makeGLMatrix( m_arrayClipRects.back().m_gl_world_matrix, rMatrix );
+		m_arrayClipRects.back().m_aClipRect = rClipRect;
 
-		//set vertex
-		if( m_eLastCommand == eCommand_DrawVertex )
-		{
-			SRenderCommand* pCommand = GetLastCommandNode();
-			pCommand->m_nPara2 += 2;
-		}
-		else
-		{
-			SRenderCommand* pCommand = AllocateCommandNode(eCommand_DrawVertex);
-			pCommand->m_nPara1 = m_nVertexIdx;
-			pCommand->m_nPara2 = 2;
-		}
-
-		SVertex* pVertex = AllocateVertexNode(VERTEX_PER_TEXTURE);
-
-		//set texture coordinate
-		SetTexCoordinate(pVertex, rTextureRect, eImageOperation);
-
-		long oglcolor_topleft = ColorToOpengl(rColor_topleft);
-		long oglcolor_bottomleft = ColorToOpengl(rColor_bottomleft);
-		long oglcolor_bottomright = ColorToOpengl(rColor_bottomright);
-		long oglcolor_topright = ColorToOpengl(rColor_topright);
-
-
-		//vert0
-		pVertex[0].vertex[0] = rRenderRect.m_vecVertex[0].m_aVector.x;
-		pVertex[0].vertex[1] = rRenderRect.m_vecVertex[0].m_aVector.y;
-		pVertex[0].vertex[2] = z;
-		pVertex[0].color     = oglcolor_topleft;
-
-		//vert1
-		pVertex[1].vertex[0] = rRenderRect.m_vecVertex[3].m_aVector.x;
-		pVertex[1].vertex[1] = rRenderRect.m_vecVertex[3].m_aVector.y;
-		pVertex[1].vertex[2] = z;
-		pVertex[1].color     = oglcolor_bottomleft;     
-
-		//vert2
-		pVertex[2].vertex[0] = rRenderRect.m_vecVertex[2].m_aVector.x;
-		pVertex[2].vertex[1] = rRenderRect.m_vecVertex[2].m_aVector.y;
-		pVertex[2].vertex[2] = z;
-		pVertex[2].color     = oglcolor_bottomright;
-
-		//vert3
-		pVertex[3].vertex[0] = rRenderRect.m_vecVertex[1].m_aVector.x;
-		pVertex[3].vertex[1] = rRenderRect.m_vecVertex[1].m_aVector.y;
-		pVertex[3].vertex[2] = z;
-		pVertex[3].color     = oglcolor_topright;      
-
-		//vert4
-		pVertex[4].vertex[0] = rRenderRect.m_vecVertex[0].m_aVector.x;
-		pVertex[4].vertex[1] = rRenderRect.m_vecVertex[0].m_aVector.y;
-		pVertex[4].vertex[2] = z;
-		pVertex[4].color     = oglcolor_topleft;
-
-		//vert5
-		pVertex[5].vertex[0] = rRenderRect.m_vecVertex[2].m_aVector.x;
-		pVertex[5].vertex[1] = rRenderRect.m_vecVertex[2].m_aVector.y;
-		pVertex[5].vertex[2] = z;
-		pVertex[5].color     = oglcolor_bottomright;
-
-
-		// if not queuing, render directly (as in, right now!)
-		if (!m_bQueueing)
-		{
-			BeginRender();
-			RenderVBuffer();
-			EndRender();
-		}
+		UpdateStencil();
 	}
 	//------------------------------------------------------------------------------
-	void	IGUIRender_opengl::AddScissor( const CGUIRect& rClipRect)
-	{		
-		GLint nLeft = (GLint)(floor(rClipRect.m_fLeft) + 0.5f);
-		GLint nTop = (GLint)(floor(rClipRect.m_fTop) + 0.5f);
-		GLint nRight = (GLint)(ceil(rClipRect.m_fRight) + 0.5f);
-		GLint nBottom = (GLint)(ceil(rClipRect.m_fBottom) + 0.5f);
+	void	IGUIRender_opengl::PopClipRect( )
+	{
+		GUI_ASSERT( m_arrayClipRects.empty() == false, "no clip rect to pop" );
+		m_arrayClipRects.pop_back();
 
-		SClipRect aRect;
-		aRect.x = nLeft;
-		aRect.y = GLint(CGUIWidgetSystem::Instance()->GetScreenHeight() - nBottom);
-		aRect.width = nRight - nLeft;
-		aRect.height = nBottom - nTop;
-		if( aRect.x != m_aCurrentClipRect.x ||
-			aRect.y != m_aCurrentClipRect.y ||
-			aRect.width != m_aCurrentClipRect.width ||
-			aRect.height != m_aCurrentClipRect.height)
-		{
-			m_aCurrentClipRect = aRect;
-
-			//set scissor
-			SRenderCommand* pCommand = AllocateCommandNode(eCommand_SetScissor);
-			pCommand->m_nPara1 = m_aCurrentClipRect.x;
-			pCommand->m_nPara2 = m_aCurrentClipRect.y;
-			pCommand->m_nPara3 = m_aCurrentClipRect.width;
-			pCommand->m_nPara4 = m_aCurrentClipRect.height;
-
-			if( !m_bQueueing )
-			{
-				BeginRender();
-				RenderVBuffer();
-				EndRender();
-			}
-		}
+		UpdateStencil();
 	}
+		
+	//------------------------------------------------------------------------------
+	//void	IGUIRender_opengl::AddRenderTexture(const CGUIRenderRect& rRenderRect, 
+	//	real z, 
+	//	const CGUITextureImp* pTexture, 
+	//	const CGUIRect& rTextureRect, 
+	//	EImageOperation eImageOperation,
+	//	GUIARGB rColor_topleft,
+	//	GUIARGB rColor_topright,
+	//	GUIARGB rColor_bottomleft,
+	//	GUIARGB rColor_bottomright)
+	//{
+	//	//check texture
+	//	if( ((CGUITexture_opengl*)pTexture)->GetOGLTexid() != m_nCurrentTexture )
+	//	{
+	//		m_nCurrentTexture = ((CGUITexture_opengl*)pTexture)->GetOGLTexid();
+	//		SRenderCommand* pCommand = AllocateCommandNode(eCommand_SetTexture);
+	//		pCommand->m_nPara1 = m_nCurrentTexture;
+	//	}
+
+	//	//set vertex
+	//	if( m_eLastCommand == eCommand_DrawVertex )
+	//	{
+	//		SRenderCommand* pCommand = GetLastCommandNode();
+	//		pCommand->m_nPara2 += 2;
+	//	}
+	//	else
+	//	{
+	//		SRenderCommand* pCommand = AllocateCommandNode(eCommand_DrawVertex);
+	//		pCommand->m_nPara1 = m_nVertexIdx;
+	//		pCommand->m_nPara2 = 2;
+	//	}
+
+	//	SVertex* pVertex = AllocateVertexNode(VERTEX_PER_TEXTURE);
+
+	//	//set texture coordinate
+	//	SetTexCoordinate(pVertex, rTextureRect, eImageOperation);
+
+	//	long oglcolor_topleft = ColorToOpengl(rColor_topleft);
+	//	long oglcolor_bottomleft = ColorToOpengl(rColor_bottomleft);
+	//	long oglcolor_bottomright = ColorToOpengl(rColor_bottomright);
+	//	long oglcolor_topright = ColorToOpengl(rColor_topright);
+
+
+	//	//vert0
+	//	pVertex[0].vertex[0] = rRenderRect.m_vecVertex[0].m_aVector.x;
+	//	pVertex[0].vertex[1] = rRenderRect.m_vecVertex[0].m_aVector.y;
+	//	pVertex[0].vertex[2] = z;
+	//	pVertex[0].color     = oglcolor_topleft;
+
+	//	//vert1
+	//	pVertex[1].vertex[0] = rRenderRect.m_vecVertex[3].m_aVector.x;
+	//	pVertex[1].vertex[1] = rRenderRect.m_vecVertex[3].m_aVector.y;
+	//	pVertex[1].vertex[2] = z;
+	//	pVertex[1].color     = oglcolor_bottomleft;     
+
+	//	//vert2
+	//	pVertex[2].vertex[0] = rRenderRect.m_vecVertex[2].m_aVector.x;
+	//	pVertex[2].vertex[1] = rRenderRect.m_vecVertex[2].m_aVector.y;
+	//	pVertex[2].vertex[2] = z;
+	//	pVertex[2].color     = oglcolor_bottomright;
+
+	//	//vert3
+	//	pVertex[3].vertex[0] = rRenderRect.m_vecVertex[1].m_aVector.x;
+	//	pVertex[3].vertex[1] = rRenderRect.m_vecVertex[1].m_aVector.y;
+	//	pVertex[3].vertex[2] = z;
+	//	pVertex[3].color     = oglcolor_topright;      
+
+	//	//vert4
+	//	pVertex[4].vertex[0] = rRenderRect.m_vecVertex[0].m_aVector.x;
+	//	pVertex[4].vertex[1] = rRenderRect.m_vecVertex[0].m_aVector.y;
+	//	pVertex[4].vertex[2] = z;
+	//	pVertex[4].color     = oglcolor_topleft;
+
+	//	//vert5
+	//	pVertex[5].vertex[0] = rRenderRect.m_vecVertex[2].m_aVector.x;
+	//	pVertex[5].vertex[1] = rRenderRect.m_vecVertex[2].m_aVector.y;
+	//	pVertex[5].vertex[2] = z;
+	//	pVertex[5].color     = oglcolor_bottomright;
+
+
+	//	// if not queuing, render directly (as in, right now!)
+	//	if (!m_bQueueing)
+	//	{
+	//		BeginRender();
+	//		RenderVBuffer();
+	//		EndRender();
+	//	}
+	//}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl::BeginRender(void)
 	{
@@ -329,44 +239,49 @@ namespace guiex
 		glPushClientAttrib(GL_CLIENT_ALL_ATTRIB_BITS);
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 
-		//glPolygonMode(GL_FRONT, GL_FILL);
 		glPolygonMode(GL_FRONT_AND_BACK, m_bWireFrame ? GL_LINE : GL_FILL);
 
+		//update projection matrix
 		glMatrixMode(GL_PROJECTION);
 		glPushMatrix();
 		glLoadIdentity();
 		const CGUISize& rSize = CGUIWidgetSystem::Instance()->GetScreenSize();
 		gluOrtho2D(0.0, rSize.m_fWidth,rSize.m_fHeight,0.0 );
 
+		//update modelview matrix
 		glMatrixMode(GL_MODELVIEW);
 		glPushMatrix();
 		glLoadIdentity();	
 
+		//disable lighting
 		glDisable(GL_LIGHTING);
 		glDisable(GL_DEPTH_TEST);
 
+		//enable smooth shade
+		glShadeModel(GL_SMOOTH);
+
+		//set blend
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
 
+		//set texture
 		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 		glEnable(GL_TEXTURE_2D);
+		glDisable(GL_SCISSOR_TEST);
 
-		if( m_bEnableScissor )
-		{
-			glEnable(GL_SCISSOR_TEST);
-		}
-		else
-		{
-			glDisable(GL_SCISSOR_TEST);
-		}
+		glEnable( GL_STENCIL_TEST );	
+		glInterleavedArrays(GL_T2F_C4UB_V3F , 0, m_pVertex);
 
-		glInterleavedArrays(GL_T2F_C4UB_V3F , 0, &m_vecVertex.front());
+		m_nCurrentTexture = -1;
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl::EndRender(void)
 	{		
+		//restore model view matrix
 		glMatrixMode(GL_MODELVIEW);
 		glPopMatrix(); 
+
+		//restore projection matrix
 		glMatrixMode(GL_PROJECTION);
 		glPopMatrix(); 
 
@@ -375,42 +290,114 @@ namespace guiex
 		glPopAttrib();
 		glPopClientAttrib();
 
+		//reset current texture
 		m_nCurrentTexture = -1;
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengl::RenderVBuffer(void)
+	void	IGUIRender_opengl::UpdateStencil()
 	{
-		//do command
-		TListCommand::iterator itorEnd =  m_vecCommand.begin()+m_nCommandIdx;
-		for( TListCommand::iterator itor = m_vecCommand.begin();
-			itor != itorEnd;
-			++itor)
+		glInterleavedArrays(GL_V3F , 0, m_pVertexForStencil);
+		
+		//clear stencil buffer to 1 for all area visible now
+		glClearStencil( 0 );
+		glClear( GL_STENCIL_BUFFER_BIT );
+
+		// Set color mask and disable texture
+		glColorMask( false, false, false, false );		
+		glDisable( GL_TEXTURE_2D );
+
+		// Enable stencil buffer for "marking" the floor 
+		glEnable( GL_STENCIL_TEST );	
+
+		glStencilFunc( GL_EQUAL, 1, 1 );
+		glStencilOp( GL_ZERO, GL_ZERO, GL_KEEP );
+
+		//render clip rect to stencil buffer
+		for( std::vector<SClipRect>::iterator itor =  m_arrayClipRects.begin();
+			itor != m_arrayClipRects.end();
+			++itor )
 		{
-			const SRenderCommand& rCommand = *itor;
-			switch(rCommand.m_nID)
-			{
-			case eCommand_SetTexture:
-				glBindTexture(GL_TEXTURE_2D, rCommand.m_nPara1);
-				break;
-			case eCommand_SetScissor:
-				glScissor(rCommand.m_nPara1, rCommand.m_nPara2, rCommand.m_nPara3, rCommand.m_nPara4);
-				break;
-			case eCommand_DrawVertex:
-				glDrawArrays(GL_TRIANGLES, rCommand.m_nPara1, rCommand.m_nPara2*3);
-				break;
-			default:
-				throw CGUIException("[IGUIRender_dx9::RenderVBuffer]:unknown render command");
-			}
+			SClipRect& rClipRect = *itor;
+			RenderRectForStencil( rClipRect );
 		}
 
-		ClearRenderList();
+		//restore color and texture state
+		glColorMask( true, true, true, true );		
+		glEnable( GL_TEXTURE_2D );
+
+		//reset stencil state
+		glStencilFunc( GL_EQUAL, 1, 1 );
+		glStencilOp( GL_KEEP, GL_KEEP, GL_KEEP );
+
+		glInterleavedArrays(GL_T2F_C4UB_V3F , 0, m_pVertex);
 	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl::RenderRectForStencil( const SClipRect& rRect )
+	{
+		//set matrix
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		glMultMatrixf( rRect.m_gl_world_matrix );
+
+		float fLeft = rRect.m_aClipRect.m_fLeft;
+		float fRight = rRect.m_aClipRect.m_fRight;
+		float fBottom = rRect.m_aClipRect.m_fBottom;
+		float fTop = rRect.m_aClipRect.m_fTop;
+
+		//vert0
+		m_pVertexForStencil[0].vertex[0] = fLeft;
+		m_pVertexForStencil[0].vertex[1] = fTop;
+		m_pVertexForStencil[0].vertex[2] = 1.0f;
+
+		//vert1
+		m_pVertexForStencil[1].vertex[0] = fLeft;
+		m_pVertexForStencil[1].vertex[1] = fBottom;
+		m_pVertexForStencil[1].vertex[2] = 1.0f;
+
+		//vert2
+		m_pVertexForStencil[2].vertex[0] = fRight;
+		m_pVertexForStencil[2].vertex[1] = fBottom;
+		m_pVertexForStencil[2].vertex[2] = 1.0f;
+
+		//vert3
+		m_pVertexForStencil[3].vertex[0] = fRight;
+		m_pVertexForStencil[3].vertex[1] = fTop;
+		m_pVertexForStencil[3].vertex[2] = 1.0f;
+
+		glDrawArrays( GL_POLYGON, 0, 4 );
+	}
+	
+	//void IGUIRender_opengl::RenderVBuffer(void)
+	//{
+	//	//do command
+	//	TListCommand::iterator itorEnd =  m_vecCommand.begin()+m_nCommandIdx;
+	//	for( TListCommand::iterator itor = m_vecCommand.begin();
+	//		itor != itorEnd;
+	//		++itor)
+	//	{
+	//		const SRenderCommand& rCommand = *itor;
+	//		switch(rCommand.m_nID)
+	//		{
+	//		case eCommand_SetTexture:
+	//			glBindTexture(GL_TEXTURE_2D, rCommand.m_nPara1);
+	//			break;
+	//		case eCommand_SetScissor:
+	//			glScissor(rCommand.m_nPara1, rCommand.m_nPara2, rCommand.m_nPara3, rCommand.m_nPara4);
+	//			break;
+	//		case eCommand_DrawVertex:
+	//			glDrawArrays(GL_TRIANGLES, rCommand.m_nPara1, rCommand.m_nPara2*3);
+	//			break;
+	//		default:
+	//			throw CGUIException("[IGUIRender_dx9::RenderVBuffer]:unknown render command");
+	//		}
+	//	}
+
+	//	ClearRenderList();
+	//}
 	//------------------------------------------------------------------------------
 	void	IGUIRender_opengl::DoRender(void)
 	{
-		BeginRender();
-		RenderVBuffer();
-		EndRender();
+		//RenderVBuffer();
 	}
 	//------------------------------------------------------------------------------
 	void	IGUIRender_opengl::SetTexCoordinate(SVertex* pTexture, const CGUIRect& tex, EImageOperation eImageOperation)
@@ -433,14 +420,6 @@ namespace guiex
 			//vert3
 			pTexture[3].tex[0] = tex.m_fLeft;
 			pTexture[3].tex[1] = tex.m_fTop;
-
-			//vert4
-			pTexture[4].tex[0] = tex.m_fRight;
-			pTexture[4].tex[1] = tex.m_fTop;
-
-			//vert5
-			pTexture[5].tex[0] = tex.m_fLeft;
-			pTexture[5].tex[1] = tex.m_fBottom;
 			break;
 
 		case IMAGE_FLIPVERTICAL:
@@ -459,14 +438,6 @@ namespace guiex
 			//vert3
 			pTexture[3].tex[0] = tex.m_fRight;
 			pTexture[3].tex[1] = tex.m_fBottom;
-
-			//vert4
-			pTexture[4].tex[0] = tex.m_fLeft;
-			pTexture[4].tex[1] = tex.m_fBottom;
-
-			//vert5
-			pTexture[5].tex[0] = tex.m_fRight;
-			pTexture[5].tex[1] = tex.m_fTop;
 			break;
 
 		case IMAGE_ROTATE90CCW:
@@ -485,14 +456,6 @@ namespace guiex
 			//vert3
 			pTexture[3].tex[0] = tex.m_fRight;
 			pTexture[3].tex[1] = tex.m_fBottom;
-
-			//vert4
-			pTexture[4].tex[0] = tex.m_fRight;
-			pTexture[4].tex[1] = tex.m_fTop;
-
-			//vert5
-			pTexture[5].tex[0] = tex.m_fLeft;
-			pTexture[5].tex[1] = tex.m_fBottom;
 			break;
 
 		case IMAGE_ROTATE90CW:
@@ -511,14 +474,6 @@ namespace guiex
 			//vert3
 			pTexture[3].tex[0] = tex.m_fLeft;
 			pTexture[3].tex[1] = tex.m_fTop;
-
-			//vert4
-			pTexture[4].tex[0] = tex.m_fLeft;
-			pTexture[4].tex[1] = tex.m_fBottom;
-
-			//vert5
-			pTexture[5].tex[0] = tex.m_fRight;
-			pTexture[5].tex[1] = tex.m_fTop;
 			break;
 
 		case IMAGE_NONE:
@@ -538,33 +493,8 @@ namespace guiex
 			//vert3
 			pTexture[3].tex[0] = tex.m_fRight;
 			pTexture[3].tex[1] = tex.m_fTop;
-
-			//vert4
-			pTexture[4].tex[0] = tex.m_fLeft;
-			pTexture[4].tex[1] = tex.m_fTop;
-
-			//vert5
-			pTexture[5].tex[0] = tex.m_fRight;
-			pTexture[5].tex[1] = tex.m_fBottom;
 			break;
 		}
-	}
-	//------------------------------------------------------------------------------
-	void	IGUIRender_opengl::ClearRenderList(void)
-	{
-		m_nCommandIdx = 0;
-		m_nVertexIdx = 0;
-		m_eLastCommand = eCommand_None;
-	}
-	//------------------------------------------------------------------------------
-	void	IGUIRender_opengl::EnableRenderQueue(bool bEnable)
-	{
-		m_bQueueing = bEnable;
-	}
-	//------------------------------------------------------------------------------
-	bool	IGUIRender_opengl::IsRenderQueueEnabled(void) const
-	{
-		return m_bQueueing;
 	}
 	//------------------------------------------------------------------------------
 	CGUITextureImp*	IGUIRender_opengl::CreateTexture(void)
@@ -652,5 +582,17 @@ namespace guiex
 
 	}
 	//------------------------------------------------------------------------------
-
+	void IGUIRender_opengl::makeGLMatrix(real gl_matrix[16], const CGUIMatrix4& m)
+	{
+		size_t x = 0;
+		for (size_t i = 0; i < 4; i++)
+		{
+			for (size_t j = 0; j < 4; j++)
+			{
+				gl_matrix[x] = m[j][i];
+				x++;
+			}
+		}
+	}
+	//-----------------------------------------------------------------------------
 }//namespace guiex

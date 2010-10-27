@@ -47,7 +47,7 @@ namespace guiex
 		/**
 		* @brief Constructor
 		*/
-		CGUIRect(CGUIVector2 pos, CGUISize sz);
+		CGUIRect( const CGUIVector2& pos, const CGUISize& sz);
 
 		/**
 		* @brief copy Constructor
@@ -64,6 +64,8 @@ namespace guiex
 		* @brief Set rect value
 		*/
 		void	SetRect(const CGUIRect& rRect);
+		void	SetRect(real left, real top, real right, real bottom);
+		void	SetRect(const CGUIVector2& pos, const CGUISize& sz);
 
 		/**
 		* @brief get width of rect
@@ -245,6 +247,22 @@ namespace guiex
 		m_fRight = rRect.m_fRight;
 		m_fTop = rRect.m_fTop;
 		m_fBottom = rRect.m_fBottom;
+	}
+	//------------------------------------------------------------------------------
+	inline void	CGUIRect::SetRect(real left, real top, real right, real bottom)
+	{
+		m_fLeft = left;
+		m_fRight = right;
+		m_fTop = top;
+		m_fBottom = bottom;
+	}
+	//------------------------------------------------------------------------------
+	inline void	CGUIRect::SetRect( const CGUIVector2& pos, const CGUISize& sz) 
+	{
+		m_fTop = pos.y;
+		m_fBottom = pos.y + sz.m_fHeight;
+		m_fLeft = pos.x;
+		m_fRight = pos.x + sz.m_fWidth;
 	}
 	//------------------------------------------------------------------------------
 	inline bool	CGUIRect::operator==(const CGUIRect& rhs) const

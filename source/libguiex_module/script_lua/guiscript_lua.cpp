@@ -114,7 +114,7 @@ namespace guiex
 		}
 
 		//open library
-		luaopen_guiex( pState );
+		//luaopen_guiex( pState );
 
 		//init others
 		if(m_funcInitScript) 

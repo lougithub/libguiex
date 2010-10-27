@@ -472,39 +472,7 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	void IGUIFont_ft2::DrawCharacter(IGUIInterfaceRender* pRender, 
-		wchar_t charCode, 
-		const CGUIStringExInfo& rInfo,
-		const CGUIVector2& rPos,
-		const CGUISize& rScale,
-		real	fAlpha,
-		const CGUIRect* pClipRect)
-	{
-		CGUIFontData_ft2* pFontData = GetFont( rInfo.m_nFontIdx, charCode, rInfo.m_nFontSize);
-
-		if( pFontData->m_pTexture)
-		{
-			pRender->AddScissor(pClipRect?*pClipRect:CGUIWidgetSystem::Instance()->GetScreenRect());
-
-			CGUIRect aCharRect(
-				CGUIVector2((rPos.x+pFontData->m_nLeftBearing)*rScale.m_fWidth, (rPos.y+rInfo.m_nFontSize-pFontData->m_nTopBearing)*rScale.m_fHeight),
-				CGUISize(pFontData->m_nBitmapWidth*rScale.m_fWidth,pFontData->m_nBitmapHeight*rScale.m_fHeight));
-
-			CGUIColor aColor(rInfo.m_aColor);
-			aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
-			pRender->AddRenderTexture( 
-				aCharRect,
-				pRender->GetAndIncZ(), 
-				pFontData->m_pTexture->GetTextureImplement(),
-				pFontData->m_aUV, 
-				IMAGE_NONE,
-				aColor.GetARGB(),
-				aColor.GetARGB(),
-				aColor.GetARGB(),
-				aColor.GetARGB());
-		}
-	}
-	//------------------------------------------------------------------------------
-	void IGUIFont_ft2::DrawCharacterWithoutScissor(IGUIInterfaceRender* pRender, 
+		const CGUIMatrix4& rWorldMatrix,
 		wchar_t charCode, 
 		const CGUIStringExInfo& rInfo,
 		const CGUIVector2& rPos,
@@ -522,6 +490,7 @@ namespace guiex
 			CGUIColor aColor(rInfo.m_aColor);
 			aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
 			pRender->AddRenderTexture( 
+				rWorldMatrix,
 				aCharRect,
 				pRender->GetAndIncZ(), 
 				pFontData->m_pTexture->GetTextureImplement(),
@@ -535,12 +504,12 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	void IGUIFont_ft2::DrawString(IGUIInterfaceRender* pRender, 
-			const CGUIStringEx& rString, 
+		const CGUIMatrix4& rWorldMatrix,
+		const CGUIStringEx& rString, 
 			const CGUIRect&	rStringRect,
 			const uint8&	uTextAlignment,
 			const CGUISize& rScale,
 			real			fAlpha,
-			const CGUIRect* pClipRect,
 			int32 nStartPos,
 			int32 nEndPos)
 	{
@@ -586,9 +555,6 @@ namespace guiex
 			//for vertical center
 			aPos.y = rStringRect.m_fTop + (rStringRect.GetHeight() - fScaledStringHeight) / 2;
 		}
-
-		pRender->AddScissor(pClipRect ? *pClipRect : CGUIWidgetSystem::Instance()->GetScreenRect());
-
 		if( nEndPos < 0 || nEndPos >int32( rString.Size( )))
 		{
 			nEndPos = rString.Size();
@@ -609,6 +575,7 @@ namespace guiex
 				CGUIColor aColor(rInfo.m_aColor);
 				aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
 				pRender->AddRenderTexture( 
+					rWorldMatrix,
 					aCharRect,
 					pRender->GetAndIncZ(), 
 					pFontData->m_pTexture->GetTextureImplement(),
@@ -625,11 +592,11 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	void IGUIFont_ft2::DrawString(IGUIInterfaceRender* pRender, 
+		const CGUIMatrix4& rWorldMatrix,
 		const CGUIStringEx& rString, 
 		const CGUIVector2& rPos,
 		const CGUISize& rScale,
 		real fAlpha,
-		const CGUIRect* pClipRect,
 		int32 nStartPos,
 		int32 nEndPos)
 	{
@@ -639,8 +606,6 @@ namespace guiex
 			return;
 		}
 		CGUIVector2 aPos = rPos;
-
-		pRender->AddScissor(pClipRect?*pClipRect:CGUIWidgetSystem::Instance()->GetScreenRect());
 
 		if( nEndPos<0 || nEndPos>int32(rString.Size()))
 		{
@@ -662,6 +627,7 @@ namespace guiex
 				CGUIColor aColor(rInfo.m_aColor);
 				aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
 				pRender->AddRenderTexture( 
+					rWorldMatrix,
 					aCharRect,
 					pRender->GetAndIncZ(), 
 					pFontData->m_pTexture->GetTextureImplement(),
@@ -683,7 +649,6 @@ namespace guiex
 
 		return pFontData->m_aSize;
 	}
-	//------------------------------------------------------------------------------
 	//------------------------------------------------------------------------------
 
 }//guiex

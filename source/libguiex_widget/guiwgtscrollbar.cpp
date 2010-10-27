@@ -592,13 +592,13 @@ namespace guiex
 			case eSB_VERTICAL:
 				SetTagPoint(1.0f, 0.0f);
 				SetPositionRatio( CGUIVector2(1.0f, 0.0f));
-				SetRectSize( GetSize().GetWidth() * GetScale().GetWidth(), aClientArea.GetHeight());
+				SetRectSize( GetSize().GetWidth() * GetDerivedScale().GetWidth(), aClientArea.GetHeight());
 				break;
 
 			case eSB_HORIZONAL:
 				SetTagPoint(0.0f, 1.0f);
 				SetPositionRatio( CGUIVector2(0.0f, 1.0f));
-				SetRectSize( aClientArea.GetWidth(), GetSize().GetHeight() * GetScale().GetHeight());
+				SetRectSize( aClientArea.GetWidth(), GetSize().GetHeight() * GetDerivedScale().GetHeight());
 				break;
 			}
 		}

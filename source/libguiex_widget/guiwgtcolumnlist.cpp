@@ -415,7 +415,7 @@ namespace guiex
 
 			}
 
-			SetRectDirty();
+			//SetRectDirty();
 			UpdateScrollbars();
 		}
 	}
@@ -491,7 +491,7 @@ namespace guiex
 			UpdateItemPos();
 
 
-			SetRectDirty();
+			//SetRectDirty();
 			UpdateScrollbars();
 		}
 	}
@@ -520,7 +520,7 @@ namespace guiex
 				// if item is supposed to be deleted by us
 				CGUIWidgetSystem::Instance()->DestroyWidget(pItem);
 
-				SetRectDirty();
+//				SetRectDirty();
 				UpdateScrollbars();
 
 				if( m_pLastOperateItem  == pItem )
@@ -543,7 +543,7 @@ namespace guiex
 
 		}
 
-		SetRectDirty();
+//		SetRectDirty();
 		UpdateScrollbars();
 	}
 	//------------------------------------------------------------------------------
@@ -861,7 +861,7 @@ namespace guiex
 	{
 		UpdateDirtyRect_SC_Begin();
 
-		real fHeaderHeight = m_pHeader->GetSize().m_fHeight * m_pHeader->GetScale().m_fHeight;
+		real fHeaderHeight = m_pHeader->GetSize().m_fHeight * m_pHeader->GetDerivedScale().m_fHeight;
 		m_aClientRect.m_fTop += fHeaderHeight;
 		m_aClientClipRect.m_fTop += fHeaderHeight;
 
@@ -1011,7 +1011,7 @@ namespace guiex
 		pItem->SetWidth(GetSegmentWidthByIndex(rGrid.m_nColumn));
 		UpdateItemPos();
 
-		SetRectDirty();
+//		SetRectDirty();
 		UpdateScrollbars();
 
 		//// signal a change to the list contents

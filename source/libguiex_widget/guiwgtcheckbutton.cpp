@@ -72,9 +72,9 @@ namespace guiex
 		if( rName == "BTN_NORMAL")
 		{
 			m_pImageNormal = pImage;
-			if( GetSize().IsEqualZero() && pImage )
+			if( NEWGetPixelSize().IsEqualZero() && pImage )
 			{
-				SetSize(pImage->GetSize());
+				NEWSetPixelSize(pImage->GetSize());
 			}
 		}
 		else if( rName == "BTN_HOVER")
@@ -158,16 +158,16 @@ namespace guiex
 			}
 		}
 
-		DrawImage( pRender, pImage, GetRect(), pRender->GetAndIncZ(),&GetClipRect());
+		DrawImage( pRender, pImage, GetRect(), pRender->GetAndIncZ());
 
 		if( m_bChecked && m_pImageCheckedOverlay )
 		{
-			DrawImage( pRender, m_pImageCheckedOverlay, GetRect(), pRender->GetAndIncZ(),&GetClipRect());
+			DrawImage( pRender, m_pImageCheckedOverlay, GetRenderRect(), pRender->GetAndIncZ());
 		}
 
 		if( m_bHovering && m_pImageHoverOverlay )
 		{
-			DrawImage( pRender, m_pImageHoverOverlay, GetRect(), pRender->GetAndIncZ(),&GetClipRect());
+			DrawImage( pRender, m_pImageHoverOverlay, GetRenderRect(), pRender->GetAndIncZ());
 		}
 	}
 	//------------------------------------------------------------------------------

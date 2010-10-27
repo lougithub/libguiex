@@ -299,7 +299,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\\libguiex_module\\script_lua\guiex_wrap.cpp"
+				RelativePath="..\..\source\libguiex_module\script_lua\guiex_wrap.cpp"
 				>
 			</File>
 			<File

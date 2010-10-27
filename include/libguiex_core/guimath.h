@@ -385,12 +385,37 @@ namespace guiex
 		static const real GUI_Deg2Rad;
 		static const real GUI_Rad2Deg;
 
+
+
+		//interpolation functions
+		template<class T> 
+		static T LinearTween( real t, const T& begin, const T& end )
+		{
+			return  end* t + begin*(1-t);
+		}
+
+		template<class T>
+		static T QuadraticEaseIn( real t, const T& begin, const T& end )
+		{
+			return LinearTween( t*t, ,begin, end);
+		}
+
+		template<class T>
+		static T QuadraticEaseInOut( real t, const T& begin, const T& end )
+		{
+			T middle = (begin+end) / 2;
+			t = 2 * t;
+			if( t <= 1 )
+			{
+				return LinearTween( t*t, begin, middle);
+			}
+			else
+			{
+				t -= 1;
+				return LinearTween( t*t, middle, end);
+			}
+		}
 	};
-
-
-
-
-
 
 
 

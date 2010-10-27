@@ -311,7 +311,7 @@ namespace guiex
 				aEventDrag.SetEventId(eEVENT_DRAG_BEGIN );
 				aEventDrag.SetReceiver( pTargetWidget );
 				aEventDrag.SetButton( rMouseEvent.m_eButton );
-				aEventDrag.SetWidgetPos(pTargetWidget->GetLocalPosition());
+				aEventDrag.SetWidgetPos(pTargetWidget->NEWGetPixelPosition());
 				aEventDrag.SetMousePos(rMouseEvent.m_aMousePos);
 				CGUIWidgetSystem::Instance()->SendEvent(&aEventDrag);
 				bConsumed |= aEventDrag.IsConsumed();
@@ -319,7 +319,7 @@ namespace guiex
 				if( !aEventDrag.IsExpired())
 				{
 					//set drag tracker
-					BeginDrag( pTargetWidget, pTargetWidget->GetLocalPosition()-rMouseEvent.m_aMousePos, rMouseEvent.m_eButton);
+					BeginDrag( pTargetWidget, pTargetWidget->NEWGetPixelPosition()-rMouseEvent.m_aMousePos, rMouseEvent.m_eButton);
 				}
 			}
 			m_pMouseTracker->m_aButtonTrack[rMouseEvent.m_eButton].m_uLastDownEvent = aEventMouse.GetEventId();

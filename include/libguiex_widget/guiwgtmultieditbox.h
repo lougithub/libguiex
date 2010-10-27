@@ -50,7 +50,7 @@ namespace guiex
 		/**
 		* @brief update this widget, 
 		*/
-		virtual void	Update();
+		virtual void	Update( real fDeltaTime );
 
 		/** 
 		* @brief set widget text

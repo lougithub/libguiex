@@ -68,12 +68,12 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	real		CGUIListBoxTextItem::GetHeight(void)
 	{
-		return GetSize().GetHeight()*GetScale().GetHeight();
+		return GetSize().GetHeight()*GetDerivedScale().GetHeight();
 	}
 	//------------------------------------------------------------------------------
 	real	CGUIListBoxTextItem::GetWidth(void)
 	{
-		return GetSize().GetWidth()*GetScale().GetWidth();
+		return GetSize().GetWidth()*GetDerivedScale().GetWidth();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIListBoxTextItem::RenderSelf(IGUIInterfaceRender* pRender)

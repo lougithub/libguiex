@@ -28,8 +28,6 @@
 //============================================================================//
 
 
-
-
 //============================================================================//
 // declare
 //============================================================================//
@@ -105,23 +103,12 @@ namespace guiex
 		/**
 		* @brief set delay time
 		*/
-		void	SetDelayTime(uint32 nDelayTime);
+		void	SetTotalTime( real fTotalTime );
 
 		/**
-		* @brief get delay time
+		* @brief get total time
 		*/
-		uint32	GetDelayTime( ) const;
-
-		/**
-		* @brief update timer
-		*/
-		void	UpdateTimer();
-
-		/**
-		* @brief get timer
-		*/
-		const CGUITimer & GetTimer() const;
-
+		real	GetTotalTime( ) const;
 
 		/**
 		* @brief add a successor as
@@ -135,9 +122,9 @@ namespace guiex
 		CGUIAs*	PopSuccessor();
 
 		/**
-		* @brief process the as
+		* @brief Update the as
 		*/
-		virtual uint32	Process() = 0;
+		virtual void	Update( real fDeltaTime );
 
 		///is this as created by CGUIAsFactory
 		bool	IsCreateByFactory() const
@@ -153,11 +140,12 @@ namespace guiex
 		//!<get generator
 		const CGUIAsGenerator* GetGenerator() const;
 
-	private:
-		
+	protected:
+		real		m_fTotalTime;			//!<delay-time, to control when to process this as, millisecond
+		real		m_fElapsedTime;			
+
+	private:		
 		CGUIString	m_strAsName;			//!<name of this as
-		uint32		m_nDelayTime;			//!<delay-time, to control when to process this as, millisecond
-		CGUITimer	m_aTimer;				//!<timer, used for delay time
 		bool		m_bRetired;				//!<should this as be retired
 		CGUIWidget*	m_pReceiver;			//!<receiver
 		
@@ -190,20 +178,16 @@ namespace guiex
 		/** 
 		 * @brief set the parameter of action sequence
 		 */
-		void	SetAlphaSequence(real fStartValue, real fEndValue, uint32 nFrames, uint32 nDelayTime);
+		void	SetAlphaSequence( real fBeginValue, real fEndValue, real fTotalTime );
 
 		/**
-		* @brief process the event.
+		* @brief update the event.
 		*/
-		virtual uint32	Process();
+		virtual void	Update( real fDeltaTime );
 
 	protected:
-		real	m_fStepValue;
-		real	m_fCurValue;
-
-		uint32	m_nFrames;
-		uint32	m_nCurFrames;
-		uint32  m_nDelaytime;
+		real	m_fBeginValue;
+		real	m_fEndValue;
 	};
 	GUI_AS_GENERATOR_DECLARE( CGUIAsAlpha);
 
@@ -228,30 +212,56 @@ namespace guiex
 		/** 
 		* @brief set the parameter of action sequence
 		*/
-		void	SetScaleSequence(const CGUISize& fStartScale, const CGUISize& fEndScale, uint32 nFrames, uint32 nDelayTime);
+		void	SetScaleSequence(const CGUISize& aBeginValue, const CGUISize& aEndValue, real fTotalTime );
 
 		/**
-		* @brief process the event.
+		* @brief Update the event.
 		*/
-		virtual uint32	Process();
+		virtual void	Update( real fDeltaTime );
 
 	protected:
-		CGUISize	m_fStepValue;
-		CGUISize	m_fCurValue;
-
-		uint32	m_nFrames;
-		uint32	m_nCurFrames;
-		uint32  m_nDelaytime;
+		CGUISize	m_aBeginValue;
+		CGUISize	m_aEndValue;
 	};
 	GUI_AS_GENERATOR_DECLARE( CGUIAsScale);
 
 
+	//*****************************************************************************
+	//	CGUIAsRotation
+	//*****************************************************************************
+	/**
+	* @class CGUIAsRotation
+	* @brief the as, change rotation of widget
+	*/
+	class GUIEXPORT CGUIAsRotation : public CGUIAs
+	{
+	public:
+		/**
+		* @brief constructor
+		*/
+		CGUIAsRotation(CGUIWidget* pReceiver);
+
+		/** 
+		* @brief set the parameter of action sequence
+		*/
+		void	SetRotationSequence(real fBeginValue, real fEndValue, real fTotalTime);
+
+		/**
+		* @brief Update the event.
+		*/
+		virtual void	Update( real fDeltaTime );
+
+	protected:
+		real	m_fBeginValue;
+		real	m_fEndValue;
+	};
+	GUI_AS_GENERATOR_DECLARE( CGUIAsRotation);
 
 	//*****************************************************************************
 	//	CGUIAsPosition
 	//*****************************************************************************
 	/**
-	* @class CGUIAsScale
+	* @class CGUIAsPosition
 	* @brief the as, change scale of widget
 	*/
 	class GUIEXPORT CGUIAsPosition : public CGUIAs
@@ -265,20 +275,17 @@ namespace guiex
 		/** 
 		* @brief set the parameter of action sequence
 		*/
-		void	SetPositionSequence(const CGUIVector2& fStartPos, const CGUIVector2& fEndPos, uint32 nFrames, uint32 nDelayTime);
+		void	SetPositionSequence(const CGUIVector2& aBeginValue, const CGUIVector2& aEndValue, real fTotalTime );
 
 		/**
-		* @brief process the event.
+		* @brief Update the event.
 		*/
-		virtual uint32	Process();
+		virtual void	Update( real fDeltaTime );
 
 	protected:
-		CGUIVector2	m_fStepValue;
-		CGUIVector2	m_fCurValue;
+		CGUIVector2	m_aBeginValue;
+		CGUIVector2	m_aEndValue;
 
-		uint32	m_nFrames;
-		uint32	m_nCurFrames;
-		uint32  m_nDelaytime;
 	};
 	GUI_AS_GENERATOR_DECLARE( CGUIAsPosition);
 

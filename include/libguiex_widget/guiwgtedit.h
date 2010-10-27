@@ -54,7 +54,7 @@ namespace guiex
 		virtual void	Close();
 
 		/// update this widget
-		virtual void	Update();
+		virtual void	Update( real fDeltaTime );
 
 		/// set position of cursor
 		void	SetCursorPos( const CGUIVector2& rPos );

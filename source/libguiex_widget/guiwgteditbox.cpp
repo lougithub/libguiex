@@ -293,7 +293,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtEditBox::Update()
+	void	CGUIWgtEditBox::Update( real fDeltaTime )
 	{
 		if( IsFocus() )
 		{
@@ -316,13 +316,13 @@ namespace guiex
 			}
 		}
 
-		CGUIWidget::Update();
+		CGUIWidget::Update( fDeltaTime );
 	}
 	//------------------------------------------------------------------------------
 	void			CGUIWgtEditBox::SetStringAreaRatio(const CGUIRect& rStringAreaRatio)
 	{
 		m_aStringAreaRatio = rStringAreaRatio;
-		SetRectDirty();
+//		SetRectDirty();
 	}
 	//------------------------------------------------------------------------------
 	const CGUIRect&			CGUIWgtEditBox::GetStringAreaRatio( ) const
