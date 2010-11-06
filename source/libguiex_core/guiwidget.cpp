@@ -8,26 +8,26 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core\guiwidget.h>
-#include <libguiex_core\guiwidgetsystem.h>
-#include <libguiex_core\guievent.h>
-#include <libguiex_core\guirect.h>
-#include <libguiex_core\guiimagemanager.h>
-#include <libguiex_core\guianimationmanager.h>
-#include <libguiex_core\guiimage.h>
-#include <libguiex_core\guianimation.h>
-#include <libguiex_core\guiexception.h>
-#include <libguiex_core\guipropertymanager.h>
-#include <libguiex_core\guiinterfacemanager.h>
-#include <libguiex_core\guiinterfacerender.h>
-#include <libguiex_core\guiinterfacesound.h>
-#include <libguiex_core\guiinterfacescript.h>
-#include <libguiex_core\guiinterfacefont.h>
-#include <libguiex_core\guilogmsgmanager.h>
-#include <libguiex_core\guistringconvertor.h>
-#include <libguiex_core\guiperfmonitor.h>
-#include <libguiex_core\guias.h>
-#include <libguiex_core\guipropertyconvertor.h>
+#include <libguiex_core/guiwidget.h>
+#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guievent.h>
+#include <libguiex_core/guirect.h>
+#include <libguiex_core/guiimagemanager.h>
+#include <libguiex_core/guianimationmanager.h>
+#include <libguiex_core/guiimage.h>
+#include <libguiex_core/guianimation.h>
+#include <libguiex_core/guiexception.h>
+#include <libguiex_core/guipropertymanager.h>
+#include <libguiex_core/guiinterfacemanager.h>
+#include <libguiex_core/guiinterfacerender.h>
+#include <libguiex_core/guiinterfacesound.h>
+#include <libguiex_core/guiinterfacescript.h>
+#include <libguiex_core/guiinterfacefont.h>
+#include <libguiex_core/guilogmsgmanager.h>
+#include <libguiex_core/guistringconvertor.h>
+#include <libguiex_core/guiperfmonitor.h>
+#include <libguiex_core/guias.h>
+#include <libguiex_core/guipropertyconvertor.h>
 
 #include <algorithm>
 

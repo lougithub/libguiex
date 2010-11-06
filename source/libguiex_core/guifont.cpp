@@ -13,13 +13,13 @@
 //============================================================================//
 // include
 //============================================================================//
-#include <libguiex_core\guibase.h>
-#include <libguiex_core\guifont.h>
-#include <libguiex_core\guiinterfacefont.h>
-#include <libguiex_core\guiinterfacemanager.h>
-#include <libguiex_core\guiexception.h>
-#include <libguiex_core\guiprojectinfo.h>
-#include <libguiex_core\guiprojectinfomanager.h>
+#include <libguiex_core/guibase.h>
+#include <libguiex_core/guifont.h>
+#include <libguiex_core/guiinterfacefont.h>
+#include <libguiex_core/guiinterfacemanager.h>
+#include <libguiex_core/guiexception.h>
+#include <libguiex_core/guiprojectinfo.h>
+#include <libguiex_core/guiprojectinfomanager.h>
 
 
 

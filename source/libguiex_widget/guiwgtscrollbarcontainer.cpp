@@ -11,9 +11,9 @@
 //============================================================================// 
 #include <libguiex_widget\guiwgtscrollbarcontainer.h>
 #include <libguiex_widget\guiwgtscrollbar.h>
-#include <libguiex_core\guiinterfacerender.h>
-#include <libguiex_core\guiwidgetsystem.h>
-#include <libguiex_core\guiexception.h>
+#include <libguiex_core/guiinterfacerender.h>
+#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guiexception.h>
 
 //============================================================================//
 // function

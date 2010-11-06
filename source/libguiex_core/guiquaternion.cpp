@@ -9,10 +9,10 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core\guiquaternion.h>
-#include <libguiex_core\guimath.h>
-#include <libguiex_core\guimatrix3.h>
-#include <libguiex_core\guivector3.h>
+#include <libguiex_core/guiquaternion.h>
+#include <libguiex_core/guimath.h>
+#include <libguiex_core/guimatrix3.h>
+#include <libguiex_core/guivector3.h>
 
 
 

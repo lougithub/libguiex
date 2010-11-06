@@ -12,9 +12,9 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core\guiinterfacerender.h>
-#include <libguiex_core\guirect.h>
-#include <libguiex_core\guimatrix4.h>
+#include <libguiex_core/guiinterfacerender.h>
+#include <libguiex_core/guirect.h>
+#include <libguiex_core/guimatrix4.h>
 #include <vector>
 #include <list>
 #include <set>

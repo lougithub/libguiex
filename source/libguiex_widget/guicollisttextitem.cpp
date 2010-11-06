@@ -8,11 +8,11 @@
 // include 
 //============================================================================// 
 #include <libguiex_widget\guicollisttextitem.h>
-#include <libguiex_core\guiinterfacemanager.h>
-#include <libguiex_core\guiinterfacefont.h>
-#include <libguiex_core\guiinterfacerender.h>
-#include <libguiex_core\guiimagemanager.h>
-#include <libguiex_core\guiwidgetsystem.h>
+#include <libguiex_core/guiinterfacemanager.h>
+#include <libguiex_core/guiinterfacefont.h>
+#include <libguiex_core/guiinterfacerender.h>
+#include <libguiex_core/guiimagemanager.h>
+#include <libguiex_core/guiwidgetsystem.h>
 
 
 //============================================================================//

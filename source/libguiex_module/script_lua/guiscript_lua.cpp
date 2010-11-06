@@ -15,11 +15,11 @@
 #include <libguiex_module\script_lua\guiscript_lua.h>
 
 
-#include <libguiex_core\guiexception.h>
-#include <libguiex_core\guiinterfacemanager.h>
-#include <libguiex_core\guiinterfacefilesys.h>
-#include <libguiex_core\guievent.h>
-#include <libguiex_core\guiwidget.h>
+#include <libguiex_core/guiexception.h>
+#include <libguiex_core/guiinterfacemanager.h>
+#include <libguiex_core/guiinterfacefilesys.h>
+#include <libguiex_core/guievent.h>
+#include <libguiex_core/guiwidget.h>
 
 //////
 #include	<string.h>

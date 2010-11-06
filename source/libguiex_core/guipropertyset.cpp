@@ -8,11 +8,11 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core\guilogmsgmanager.h>
-#include <libguiex_core\guipropertyset.h>
-#include <libguiex_core\guiproperty.h>
-#include <libguiex_core\guipropertymanager.h>
-#include <libguiex_core\guiexception.h>
+#include <libguiex_core/guilogmsgmanager.h>
+#include <libguiex_core/guipropertyset.h>
+#include <libguiex_core/guiproperty.h>
+#include <libguiex_core/guipropertymanager.h>
+#include <libguiex_core/guiexception.h>
 #include <algorithm>
 
 

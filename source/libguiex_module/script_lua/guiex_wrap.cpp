@@ -1575,7 +1575,7 @@ typedef struct{} LANGUAGE_OBJ;
 }
 
 
-#include <libguiex_core\guiex.h>
+#include <libguiex_core/guiex.h>
 #include <libguiex_widget\guiwgt.h>
 
 

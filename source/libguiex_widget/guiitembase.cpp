@@ -9,7 +9,7 @@
 // include 
 //============================================================================// 
 #include <libguiex_widget\guiitembase.h>
-#include <libguiex_core\guiinterfacerender.h>
+#include <libguiex_core/guiinterfacerender.h>
 
 //============================================================================//
 // function

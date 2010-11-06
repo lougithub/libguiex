@@ -10,13 +10,13 @@
 // include 
 //============================================================================// 
 #include <libguiex_widget\guiwgtstatictext.h>
-#include <libguiex_core\guiinterfacerender.h>
-#include <libguiex_core\guiinterfacemanager.h>
-#include <libguiex_core\guiinterfacefont.h>
-#include <libguiex_core\guistringconvertor.h>
-#include <libguiex_core\guiproperty.h>
-#include <libguiex_core\guipropertymanager.h>
-#include <libguiex_core\guipropertyconvertor.h>
+#include <libguiex_core/guiinterfacerender.h>
+#include <libguiex_core/guiinterfacemanager.h>
+#include <libguiex_core/guiinterfacefont.h>
+#include <libguiex_core/guistringconvertor.h>
+#include <libguiex_core/guiproperty.h>
+#include <libguiex_core/guipropertymanager.h>
+#include <libguiex_core/guipropertyconvertor.h>
 
 //============================================================================//
 // function

@@ -11,7 +11,7 @@
 //============================================================================// 
 #include <libguiex_module\filesys_stdio\guifilesys_stdio.h>
 #include <fstream>
-#include <libguiex_core\guiwidgetsystem.h>
+#include <libguiex_core/guiwidgetsystem.h>
 #include <io.h>
 
 //============================================================================//

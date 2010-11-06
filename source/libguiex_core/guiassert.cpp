@@ -10,9 +10,9 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core\guiassert.h>
-#include <libguiex_core\guilogmsgmanager.h>
-#include <libguiex_core\guilogmsg.h>
+#include <libguiex_core/guiassert.h>
+#include <libguiex_core/guilogmsgmanager.h>
+#include <libguiex_core/guilogmsg.h>
 
 namespace guiex
 {

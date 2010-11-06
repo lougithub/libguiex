@@ -9,12 +9,12 @@
 // include
 //============================================================================// 
 #include <libguiex_module\render_opengl\guitexture_opengl.h>
-#include <libguiex_core\guiexception.h>
-#include <libguiex_core\guidatachunk.h>
-#include <libguiex_core\guiinterfacemanager.h>
-#include <libguiex_core\guiinterfacefilesys.h>
-#include <libguiex_core\guiinterfaceimageloader.h>
-#include <libguiex_core\guigarbagecollector.h>
+#include <libguiex_core/guiexception.h>
+#include <libguiex_core/guidatachunk.h>
+#include <libguiex_core/guiinterfacemanager.h>
+#include <libguiex_core/guiinterfacefilesys.h>
+#include <libguiex_core/guiinterfaceimageloader.h>
+#include <libguiex_core/guigarbagecollector.h>
 
 //============================================================================//
 // function

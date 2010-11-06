@@ -8,17 +8,17 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core\guianimation.h>
-#include <libguiex_core\guiwidgetsystem.h>
-#include <libguiex_core\guiresource.h>
-#include <libguiex_core\guitexture.h>
-#include <libguiex_core\guitexturemanager.h>
-#include <libguiex_core\guiexception.h>
-#include <libguiex_core\guiprojectinfo.h>
-#include <libguiex_core\guiprojectinfomanager.h>
-#include <libguiex_core\guicolor.h>
-#include <libguiex_core\guiinterfacerender.h>
-#include <libguiex_core\guirenderrect.h>
+#include <libguiex_core/guianimation.h>
+#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guiresource.h>
+#include <libguiex_core/guitexture.h>
+#include <libguiex_core/guitexturemanager.h>
+#include <libguiex_core/guiexception.h>
+#include <libguiex_core/guiprojectinfo.h>
+#include <libguiex_core/guiprojectinfomanager.h>
+#include <libguiex_core/guicolor.h>
+#include <libguiex_core/guiinterfacerender.h>
+#include <libguiex_core/guirenderrect.h>
 
 
 //============================================================================//

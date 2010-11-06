@@ -9,12 +9,12 @@
 //============================================================================// 
 #include <libguiex_widget\guiwgtpopupmenu.h>
 #include <libguiex_widget\guimenuitem.h>
-#include <libguiex_core\guiexception.h>
-#include <libguiex_core\guiinterfacemanager.h>
-#include <libguiex_core\guiinterfacerender.h>
-#include <libguiex_core\guiinterfacemouse.h>
-#include <libguiex_core\guiwidgetsystem.h>
-#include <libguiex_core\guistringconvertor.h>
+#include <libguiex_core/guiexception.h>
+#include <libguiex_core/guiinterfacemanager.h>
+#include <libguiex_core/guiinterfacerender.h>
+#include <libguiex_core/guiinterfacemouse.h>
+#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guistringconvertor.h>
 
 #include <algorithm>
 

@@ -11,10 +11,10 @@
 //============================================================================// 
 #include <libguiex_module\render_opengl\guirender_opengl.h>
 #include <libguiex_module\render_opengl\guitexture_opengl.h>
-#include <libguiex_core\guiexception.h>
-#include <libguiex_core\guicolorrect.h>
-#include <libguiex_core\guiwidgetsystem.h>
-#include <libguiex_core\guirenderrect.h>
+#include <libguiex_core/guiexception.h>
+#include <libguiex_core/guicolorrect.h>
+#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guirenderrect.h>
 
 
 

@@ -15,7 +15,7 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core\guiinterfacescript.h>
+#include <libguiex_core/guiinterfacescript.h>
 #include <map>
 
 

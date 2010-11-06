@@ -9,7 +9,7 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core\guilogmsgcallback.h>
+#include <libguiex_core/guilogmsgcallback.h>
 
 namespace guiex
 {

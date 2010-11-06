@@ -8,8 +8,8 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core\guiinterfacesound.h>
-#include <libguiex_core\guiinterfacemanager.h>
+#include <libguiex_core/guiinterfacesound.h>
+#include <libguiex_core/guiinterfacemanager.h>
 
 
 namespace guiex

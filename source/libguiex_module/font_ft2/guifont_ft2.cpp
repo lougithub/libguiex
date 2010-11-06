@@ -11,22 +11,22 @@
 // include
 //============================================================================// 
 #include <libguiex_module\font_ft2\guifont_ft2.h>
-#include <libguiex_core\guiexception.h>
-#include <libguiex_core\guilogmsgmanager.h>
-#include <libguiex_core\guiinterfacemanager.h>
-#include <libguiex_core\guiinterfacerender.h>
-#include <libguiex_core\guiimagemanager.h>
-#include <libguiex_core\guitextureimp.h>
-#include <libguiex_core\guitexture.h>
-#include <libguiex_core\guitexturemanager.h>
-#include <libguiex_core\guicolorrect.h>
-#include <libguiex_core\guisize.h>
-#include <libguiex_core\guivector2.h>
-#include <libguiex_core\guiwidgetsystem.h>
-#include <libguiex_core\guiinterfacefilesys.h>
-#include <libguiex_core\guiperfmonitor.h>
-#include <libguiex_core\guiprojectinfo.h>
-#include <libguiex_core\guiprojectinfomanager.h>
+#include <libguiex_core/guiexception.h>
+#include <libguiex_core/guilogmsgmanager.h>
+#include <libguiex_core/guiinterfacemanager.h>
+#include <libguiex_core/guiinterfacerender.h>
+#include <libguiex_core/guiimagemanager.h>
+#include <libguiex_core/guitextureimp.h>
+#include <libguiex_core/guitexture.h>
+#include <libguiex_core/guitexturemanager.h>
+#include <libguiex_core/guicolorrect.h>
+#include <libguiex_core/guisize.h>
+#include <libguiex_core/guivector2.h>
+#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guiinterfacefilesys.h>
+#include <libguiex_core/guiperfmonitor.h>
+#include <libguiex_core/guiprojectinfo.h>
+#include <libguiex_core/guiprojectinfomanager.h>
 
 
 #include <ft2build.h>

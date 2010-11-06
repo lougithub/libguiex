@@ -8,8 +8,8 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core\guirenderrect.h>
-#include <libguiex_core\guimath.h>
+#include <libguiex_core/guirenderrect.h>
+#include <libguiex_core/guimath.h>
 
 
 //============================================================================//

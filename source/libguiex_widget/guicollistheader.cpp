@@ -9,11 +9,11 @@
 // include 
 //============================================================================// 
 #include <libguiex_widget\guicollistheader.h>
-#include <libguiex_core\guiinterfacerender.h>
-#include <libguiex_core\guiexception.h>
+#include <libguiex_core/guiinterfacerender.h>
+#include <libguiex_core/guiexception.h>
 #include <libguiex_widget\guiwgtcolumnlist.h>
 #include <libguiex_widget\guicollistheadersegment.h>
-#include <libguiex_core\guiwidgetsystem.h>
+#include <libguiex_core/guiwidgetsystem.h>
 
 //============================================================================//
 // function

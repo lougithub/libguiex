@@ -11,7 +11,7 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core\guiinterfacemouse.h>
+#include <libguiex_core/guiinterfacemouse.h>
 #include <windows.h>
 
 

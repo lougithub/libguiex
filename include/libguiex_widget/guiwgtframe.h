@@ -12,8 +12,8 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core\guiwidget.h>
-#include <libguiex_core\guiwidgetgenerator.h>
+#include <libguiex_core/guiwidget.h>
+#include <libguiex_core/guiwidgetgenerator.h>
 
 //============================================================================//
 // class

@@ -9,7 +9,7 @@
 // include
 //============================================================================// 
 #include <libguiex_module\ime_winapi\guiime_winapi.h>
-#include <libguiex_core\guiex.h>
+#include <libguiex_core/guiex.h>
 
 
 //============================================================================//

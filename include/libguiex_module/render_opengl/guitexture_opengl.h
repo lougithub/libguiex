@@ -11,8 +11,8 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core\guitextureimp.h>
-#include <libguiex_core\guisize.h>
+#include <libguiex_core/guitextureimp.h>
+#include <libguiex_core/guisize.h>
 
 #if defined(__WIN32__) || defined(_WIN32)
 #include <windows.h>

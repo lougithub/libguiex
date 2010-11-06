@@ -9,7 +9,7 @@
 // include 
 //============================================================================// 
 
-#include <libguiex_core\guiinterfaceimageloader.h>
+#include <libguiex_core/guiinterfaceimageloader.h>
 
 //============================================================================//
 // function

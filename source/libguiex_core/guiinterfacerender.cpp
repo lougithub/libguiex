@@ -8,7 +8,7 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core\guiinterfacerender.h>
+#include <libguiex_core/guiinterfacerender.h>
 
 
 namespace guiex

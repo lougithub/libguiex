@@ -8,7 +8,7 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core\guiexception.h>
+#include <libguiex_core/guiexception.h>
 #include <stdio.h>
 #include <stdarg.h>
 

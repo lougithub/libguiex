@@ -9,15 +9,15 @@
 // include 
 //============================================================================// 
 #include <libguiex_widget\guiwgtmultieditbox.h>
-#include <libguiex_core\guiinterfacemanager.h>
-#include <libguiex_core\guiinterfacefont.h>
-#include <libguiex_core\guiinterfacerender.h>
-#include <libguiex_core\guiinterfacefont.h>
-#include <libguiex_core\guiinterfacekeyboard.h>
-#include <libguiex_core\guiwidgetsystem.h>
-#include <libguiex_core\guimousecursor.h>
-#include <libguiex_core\guiexception.h>
-#include <libguiex_core\guistringconvertor.h>
+#include <libguiex_core/guiinterfacemanager.h>
+#include <libguiex_core/guiinterfacefont.h>
+#include <libguiex_core/guiinterfacerender.h>
+#include <libguiex_core/guiinterfacefont.h>
+#include <libguiex_core/guiinterfacekeyboard.h>
+#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guimousecursor.h>
+#include <libguiex_core/guiexception.h>
+#include <libguiex_core/guistringconvertor.h>
 #include <numeric>
 #include <algorithm>
 

@@ -10,8 +10,8 @@
 // include 
 //============================================================================// 
 #include <libguiex_widget\guiwgtstaticimage.h>
-#include <libguiex_core\guiinterfacerender.h>
-#include <libguiex_core\guiexception.h>
+#include <libguiex_core/guiinterfacerender.h>
+#include <libguiex_core/guiexception.h>
 
 //============================================================================//
 // function

@@ -11,12 +11,12 @@
 //============================================================================// 
 #include <libguiex_widget\guiwgtcombobox.h>
 #include <libguiex_widget\guiwgtlistbox.h>
-#include <libguiex_core\guiinterfacerender.h>
-#include <libguiex_core\guievent.h>
-#include <libguiex_core\guiexception.h>
-#include <libguiex_core\guiwidgetsystem.h>
-#include <libguiex_core\guistringconvertor.h>
-#include <libguiex_core\guipropertymanager.h>
+#include <libguiex_core/guiinterfacerender.h>
+#include <libguiex_core/guievent.h>
+#include <libguiex_core/guiexception.h>
+#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guistringconvertor.h>
+#include <libguiex_core/guipropertymanager.h>
 
 
 //============================================================================//

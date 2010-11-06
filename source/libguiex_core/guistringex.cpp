@@ -10,9 +10,9 @@
 //============================================================================//
 // 	include
 //============================================================================// 
-#include <libguiex_core\guistringex.h>
-#include <libguiex_core\guistringconvertor.h>
-#include <libguiex_core\guiexception.h>
+#include <libguiex_core/guistringex.h>
+#include <libguiex_core/guistringconvertor.h>
+#include <libguiex_core/guiexception.h>
 
 
 //============================================================================//

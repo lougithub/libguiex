@@ -12,9 +12,9 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core\guiwidget.h>
-#include <libguiex_core\guiwidgetgenerator.h>
-#include  <libguiex_core\guitimer.h>
+#include <libguiex_core/guiwidget.h>
+#include <libguiex_core/guiwidgetgenerator.h>
+#include  <libguiex_core/guitimer.h>
 #include "guiwgtscrollbarcontainer.h"
 #include "guiwgtedit.h"
 #include <vector>

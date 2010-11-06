@@ -8,13 +8,13 @@
 //============================================================================//
 // include
 //============================================================================//
-#include <libguiex_core\guiprojectinfo.h>
-#include <libguiex_core\guiinterfacefilesys.h>
-#include <libguiex_core\guiinterfacemanager.h>
-#include <libguiex_core\guistring.h>
-#include <libguiex_core\guiexception.h>
-#include <libguiex_core\guiproperty.h>
-#include <libguiex_core\guipropertyset.h>
+#include <libguiex_core/guiprojectinfo.h>
+#include <libguiex_core/guiinterfacefilesys.h>
+#include <libguiex_core/guiinterfacemanager.h>
+#include <libguiex_core/guistring.h>
+#include <libguiex_core/guiexception.h>
+#include <libguiex_core/guiproperty.h>
+#include <libguiex_core/guipropertyset.h>
 
 
 //============================================================================//

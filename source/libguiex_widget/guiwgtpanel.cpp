@@ -11,10 +11,10 @@
 // include 
 //============================================================================// 
 #include <libguiex_widget\guiwgtpanel.h>
-#include <libguiex_core\guiinterfacerender.h>
-#include <libguiex_core\guiexception.h>
-#include <libguiex_core\guistringconvertor.h>
-#include <libguiex_core\guipropertymanager.h>
+#include <libguiex_core/guiinterfacerender.h>
+#include <libguiex_core/guiexception.h>
+#include <libguiex_core/guistringconvertor.h>
+#include <libguiex_core/guipropertymanager.h>
 
 
 //============================================================================//

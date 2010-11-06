@@ -8,11 +8,11 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core\guianimationmanager.h>
-#include <libguiex_core\guianimation.h>
-#include <libguiex_core\guiproperty.h>
-#include <libguiex_core\guistringconvertor.h>
-#include <libguiex_core\guiexception.h>
+#include <libguiex_core/guianimationmanager.h>
+#include <libguiex_core/guianimation.h>
+#include <libguiex_core/guiproperty.h>
+#include <libguiex_core/guistringconvertor.h>
+#include <libguiex_core/guiexception.h>
 
 //============================================================================//
 // function

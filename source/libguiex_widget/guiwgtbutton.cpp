@@ -9,12 +9,12 @@
 // include 
 //============================================================================// 
 #include <libguiex_widget\guiwgtbutton.h>
-#include <libguiex_core\guiinterfacerender.h>
-#include <libguiex_core\guiwidgetsystem.h>
-#include <libguiex_core\guiexception.h>
-#include <libguiex_core\guiproperty.h>
-#include <libguiex_core\guipropertyconvertor.h>
-#include <libguiex_core\guistringconvertor.h>
+#include <libguiex_core/guiinterfacerender.h>
+#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guiexception.h>
+#include <libguiex_core/guiproperty.h>
+#include <libguiex_core/guipropertyconvertor.h>
+#include <libguiex_core/guistringconvertor.h>
 
 //============================================================================//
 // function

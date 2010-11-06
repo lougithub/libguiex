@@ -9,7 +9,7 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core\guistringconvertor.h>
+#include <libguiex_core/guistringconvertor.h>
 
 #if GUI_STRING_CONV_USE_ICONV
 #	include <iconv.h>

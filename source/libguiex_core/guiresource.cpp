@@ -13,10 +13,10 @@
 //============================================================================//
 // include
 //============================================================================//
-#include <libguiex_core\guibase.h>
-#include <libguiex_core\guistring.h>
-#include <libguiex_core\guiexception.h>
-#include <libguiex_core\guiresource.h>
+#include <libguiex_core/guibase.h>
+#include <libguiex_core/guistring.h>
+#include <libguiex_core/guiexception.h>
+#include <libguiex_core/guiresource.h>
 
 
 

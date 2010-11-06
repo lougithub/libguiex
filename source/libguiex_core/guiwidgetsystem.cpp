@@ -9,36 +9,36 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core\guiwidgetsystem.h>
-#include <libguiex_core\guiwidget.h>
-#include <libguiex_core\guiwidgetfactory.h>
-#include <libguiex_core\guias.h>
-#include <libguiex_core\guievent.h>
-#include <libguiex_core\guiexception.h>
-#include <libguiex_core\guitimer.h>
-#include <libguiex_core\guilogmsgmanager.h>
-#include <libguiex_core\guimousecursor.h>
+#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guiwidget.h>
+#include <libguiex_core/guiwidgetfactory.h>
+#include <libguiex_core/guias.h>
+#include <libguiex_core/guievent.h>
+#include <libguiex_core/guiexception.h>
+#include <libguiex_core/guitimer.h>
+#include <libguiex_core/guilogmsgmanager.h>
+#include <libguiex_core/guimousecursor.h>
 
-#include <libguiex_core\guiimagemanager.h>
-#include <libguiex_core\guianimationmanager.h>
-#include <libguiex_core\guifontmanager.h>
-#include <libguiex_core\guitexturemanager.h>
+#include <libguiex_core/guiimagemanager.h>
+#include <libguiex_core/guianimationmanager.h>
+#include <libguiex_core/guifontmanager.h>
+#include <libguiex_core/guitexturemanager.h>
 
 
-#include <libguiex_core\guiinterfacemanager.h>
-#include <libguiex_core\guiinterfacemouse.h>
-#include <libguiex_core\guiinterfaceconfigfile.h>
-#include <libguiex_core\guiinterfacekeyboard.h>
-#include <libguiex_core\guiinterfacerender.h>
-#include <libguiex_core\guiinterfacefont.h>
-#include <libguiex_core\guiinterfacecommand.h>
-#include <libguiex_core\guiinterfacescript.h>
+#include <libguiex_core/guiinterfacemanager.h>
+#include <libguiex_core/guiinterfacemouse.h>
+#include <libguiex_core/guiinterfaceconfigfile.h>
+#include <libguiex_core/guiinterfacekeyboard.h>
+#include <libguiex_core/guiinterfacerender.h>
+#include <libguiex_core/guiinterfacefont.h>
+#include <libguiex_core/guiinterfacecommand.h>
+#include <libguiex_core/guiinterfacescript.h>
 
-#include <libguiex_core\guiperfmonitor.h>
+#include <libguiex_core/guiperfmonitor.h>
 
-#include <libguiex_core\guiwidgetroot.h>
-#include <libguiex_core\guiprojectinfo.h>
-#include <libguiex_core\guiprojectinfomanager.h>
+#include <libguiex_core/guiwidgetroot.h>
+#include <libguiex_core/guiprojectinfo.h>
+#include <libguiex_core/guiprojectinfomanager.h>
 
 #include <algorithm>
 

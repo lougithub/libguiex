@@ -9,9 +9,9 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core\guiwidgetutility.h>
-#include <libguiex_core\guiwidgetsystem.h>
-#include <libguiex_core\guiexception.h>
+#include <libguiex_core/guiwidgetutility.h>
+#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guiexception.h>
 #include <sstream>
 
 //============================================================================//

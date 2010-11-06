@@ -10,9 +10,9 @@
 //============================================================================// 
 #include <libguiex_module\imageloader_devil\guiimageloader_devil.h>
 #include <libguiex_module\imageloader_devil\guiimagedata_devil.h>
-#include <libguiex_core\guiexception.h>
-#include <libguiex_core\guiinterfacemanager.h>
-#include <libguiex_core\guiinterfacefilesys.h>
+#include <libguiex_core/guiexception.h>
+#include <libguiex_core/guiinterfacemanager.h>
+#include <libguiex_core/guiinterfacefilesys.h>
 
 
 #include <IL\il.h>

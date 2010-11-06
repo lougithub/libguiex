@@ -11,9 +11,9 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core\guiinterfacefont.h>
-#include <libguiex_core\guirect.h>
-#include <libguiex_core\guivector2.h>
+#include <libguiex_core/guiinterfacefont.h>
+#include <libguiex_core/guirect.h>
+#include <libguiex_core/guivector2.h>
 
 #include <map>
 

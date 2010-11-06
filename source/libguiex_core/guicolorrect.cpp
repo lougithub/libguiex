@@ -9,7 +9,7 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core\guicolorrect.h>
+#include <libguiex_core/guicolorrect.h>
 
 
 namespace guiex

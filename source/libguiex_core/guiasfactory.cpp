@@ -10,11 +10,11 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core\guiasfactory.h>
-#include <libguiex_core\guias.h>
-#include <libguiex_core\guiasgenerator.h>
-#include <libguiex_core\guiexception.h>
-#include <libguiex_core\guistring.h>
+#include <libguiex_core/guiasfactory.h>
+#include <libguiex_core/guias.h>
+#include <libguiex_core/guiasgenerator.h>
+#include <libguiex_core/guiexception.h>
+#include <libguiex_core/guistring.h>
 
 
 //------------------------------------------------------------------------------

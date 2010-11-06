@@ -10,8 +10,8 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core\guiinterfacecommand.h>
-#include <libguiex_core\guiinterfacemanager.h>
+#include <libguiex_core/guiinterfacecommand.h>
+#include <libguiex_core/guiinterfacemanager.h>
 
 
 namespace guiex

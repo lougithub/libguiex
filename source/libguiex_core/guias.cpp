@@ -8,10 +8,10 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core\guias.h>
-#include <libguiex_core\guiwidget.h>
-#include <libguiex_core\guiwidgetsystem.h>
-#include <libguiex_core\guimath.h>
+#include <libguiex_core/guias.h>
+#include <libguiex_core/guiwidget.h>
+#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guimath.h>
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------ 

@@ -14,7 +14,7 @@
 // include
 //============================================================================// 
 #include "guiwgtcheckbutton.h"
-#include <libguiex_core\guiwidgetgenerator.h>
+#include <libguiex_core/guiwidgetgenerator.h>
 
 
 

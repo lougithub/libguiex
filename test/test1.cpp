@@ -6,7 +6,7 @@
  * @date 2006-07-11
  */
 
-#include <libguiex_core\guiex.h>
+#include <libguiex_core/guiex.h>
 #include <libguiex_widget\guiwgt.h>
 
 guiex::CGUIWidget* SampleInit()

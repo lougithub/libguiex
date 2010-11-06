@@ -9,8 +9,8 @@
 // include 
 //============================================================================// 
 #include <libguiex_widget\guicollistheadersegment.h>
-#include <libguiex_core\guiinterfacerender.h>
-#include <libguiex_core\guiexception.h>
+#include <libguiex_core/guiinterfacerender.h>
+#include <libguiex_core/guiexception.h>
 
 //============================================================================//
 // function

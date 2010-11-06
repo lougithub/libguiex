@@ -8,11 +8,11 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core\guitexturemanager.h>
-#include <libguiex_core\guiimagemanager.h>
-#include <libguiex_core\guitexture.h>
-#include <libguiex_core\guiexception.h>
-#include <libguiex_core\guicolor.h>
+#include <libguiex_core/guitexturemanager.h>
+#include <libguiex_core/guiimagemanager.h>
+#include <libguiex_core/guitexture.h>
+#include <libguiex_core/guiexception.h>
+#include <libguiex_core/guicolor.h>
 #include <algorithm>
 
 //============================================================================//

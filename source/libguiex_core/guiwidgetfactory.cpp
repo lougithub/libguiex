@@ -10,11 +10,11 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core\guiwidgetfactory.h>
-#include <libguiex_core\guiwidgetgenerator.h>
-#include <libguiex_core\guiexception.h>
-#include <libguiex_core\guiwidget.h>
-#include <libguiex_core\guilogmsgmanager.h>
+#include <libguiex_core/guiwidgetfactory.h>
+#include <libguiex_core/guiwidgetgenerator.h>
+#include <libguiex_core/guiexception.h>
+#include <libguiex_core/guiwidget.h>
+#include <libguiex_core/guilogmsgmanager.h>
 
 //============================================================================//
 // function

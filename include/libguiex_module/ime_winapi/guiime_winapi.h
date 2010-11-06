@@ -11,7 +11,7 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core\guiinterfaceime.h>
+#include <libguiex_core/guiinterfaceime.h>
 #include <windows.h>
 #include <string>
 

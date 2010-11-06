@@ -12,7 +12,7 @@
 // include
 //============================================================================// 
 #include <libguiex_widget\guiwgtstatic.h>
-#include <libguiex_core\guiwidgetgenerator.h>
+#include <libguiex_core/guiwidgetgenerator.h>
 
 
 //============================================================================//

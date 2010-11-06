@@ -11,8 +11,8 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core\guiplane.h>
-#include <libguiex_core\guivector3.h>
+#include <libguiex_core/guiplane.h>
+#include <libguiex_core/guivector3.h>
 
 
 namespace guiex

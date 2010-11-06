@@ -8,8 +8,8 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core\guivector2.h>
-#include <libguiex_core\guimath.h>
+#include <libguiex_core/guivector2.h>
+#include <libguiex_core/guimath.h>
 
 //============================================================================//
 // function

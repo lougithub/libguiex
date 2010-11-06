@@ -13,11 +13,11 @@
 //============================================================================//
 // include
 //============================================================================//
-#include <libguiex_core\guiprojectutility.h>
-#include <libguiex_core\guiprojectinfo.h>
-#include <libguiex_core\guiprojectinfomanager.h>
-#include <libguiex_core\guiwidgetsystem.h>
-#include <libguiex_core\guiexception.h>
+#include <libguiex_core/guiprojectutility.h>
+#include <libguiex_core/guiprojectinfo.h>
+#include <libguiex_core/guiprojectinfomanager.h>
+#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guiexception.h>
 
 
 

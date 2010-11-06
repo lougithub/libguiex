@@ -8,10 +8,10 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core\guimath.h>
-#include <libguiex_core\guimatrix4.h>
-#include <libguiex_core\guivector3.h>
-#include <libguiex_core\guivector4.h>
+#include <libguiex_core/guimath.h>
+#include <libguiex_core/guimatrix4.h>
+#include <libguiex_core/guivector3.h>
+#include <libguiex_core/guivector4.h>
 
 namespace guiex
 {

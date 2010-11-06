@@ -8,14 +8,14 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core\guiimagemanager.h>
-#include <libguiex_core\guiimage.h>
-#include <libguiex_core\guiproperty.h>
-#include <libguiex_core\guistringconvertor.h>
-#include <libguiex_core\guiprojectinfo.h>
-#include <libguiex_core\guiprojectinfomanager.h>
-#include <libguiex_core\guiexception.h>
-#include <libguiex_core\guipropertyconvertor.h>
+#include <libguiex_core/guiimagemanager.h>
+#include <libguiex_core/guiimage.h>
+#include <libguiex_core/guiproperty.h>
+#include <libguiex_core/guistringconvertor.h>
+#include <libguiex_core/guiprojectinfo.h>
+#include <libguiex_core/guiprojectinfomanager.h>
+#include <libguiex_core/guiexception.h>
+#include <libguiex_core/guipropertyconvertor.h>
 #include <algorithm>
 
 //============================================================================//

@@ -8,8 +8,8 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core\guitimer.h>
-#include <libguiex_core\guiexception.h>
+#include <libguiex_core/guitimer.h>
+#include <libguiex_core/guiexception.h>
 
 
 //============================================================================//

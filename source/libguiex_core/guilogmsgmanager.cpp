@@ -8,9 +8,9 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core\guilogmsgmanager.h>
-#include <libguiex_core\guilogmsg.h>
-#include <libguiex_core\guiobjectmanager.h>
+#include <libguiex_core/guilogmsgmanager.h>
+#include <libguiex_core/guilogmsg.h>
+#include <libguiex_core/guiobjectmanager.h>
 
 
 //============================================================================//

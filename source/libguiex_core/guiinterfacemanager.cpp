@@ -9,10 +9,10 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core\guiinterfacemanager.h>
-#include <libguiex_core\guiinterface.h>
-#include <libguiex_core\guiexception.h>
-#include <libguiex_core\guilogmsgmanager.h>
+#include <libguiex_core/guiinterfacemanager.h>
+#include <libguiex_core/guiinterface.h>
+#include <libguiex_core/guiexception.h>
+#include <libguiex_core/guilogmsgmanager.h>
 
 
 //============================================================================//

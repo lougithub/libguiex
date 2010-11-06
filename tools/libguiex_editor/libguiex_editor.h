@@ -56,7 +56,7 @@
 
 
 //libguiex
-#include <libguiex_core\guiex.h>
+#include <libguiex_core/guiex.h>
 #include <libguiex_widget\guiwgt.h>
 
 //libguiex module

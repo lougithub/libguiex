@@ -8,10 +8,10 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core\guifontmanager.h>
-#include <libguiex_core\guifont.h>
-#include <libguiex_core\guistringconvertor.h>
-#include <libguiex_core\guiexception.h>
+#include <libguiex_core/guifontmanager.h>
+#include <libguiex_core/guifont.h>
+#include <libguiex_core/guistringconvertor.h>
+#include <libguiex_core/guiexception.h>
 
 //============================================================================//
 // function

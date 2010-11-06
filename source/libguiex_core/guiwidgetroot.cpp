@@ -8,9 +8,9 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core\guiwidgetroot.h>
-#include <libguiex_core\guiwidgetsystem.h>
-#include <libguiex_core\guiinterfacerender.h>
+#include <libguiex_core/guiwidgetroot.h>
+#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guiinterfacerender.h>
 
 //============================================================================//
 // function
