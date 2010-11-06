@@ -329,12 +329,12 @@ namespace guiex
 		/** 
 		* @brief set segment text info
 		*/
-		void	SetSegmentTextInfo(const CGUIStringExInfo& rInfo);
+		void	SetSegmentTextInfo(const CGUIStringInfo& rInfo);
 
 		/** 
 		* @brief get segment text info
 		*/
-		const CGUIStringExInfo&	GetSegmentTextInfo() const;
+		const CGUIStringInfo&	GetSegmentTextInfo() const;
 
 
 		/**
@@ -411,16 +411,10 @@ namespace guiex
 		/// render
 		virtual void		RenderSelf(IGUIInterfaceRender* pRender);
 
-		//update rect, which may different for different widget
-		virtual void		UpdateDirtyRect();		
-
 		/**
 		* @brief override the OnSetImage function
 		*/
 		virtual void		OnSetImage( const CGUIString& rName,CGUIImage* pImage );
-
-		//end-update dirty rect
-		virtual void		UpdateDirtyRect_SC_End();
 
 		///initialize check button
 		void				InitListBox();

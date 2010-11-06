@@ -24,6 +24,7 @@
 #include "guiimage.h"
 #include "guiwidgetparameter.h"
 #include "guirenderrect.h"
+#include "guitypes.h"
 
 #include <bitset>
 #include <vector>
@@ -41,13 +42,6 @@ namespace guiex
 	class CGUIAs;
 
 	typedef void (*CallbackEventFunc)(CGUIEvent* pEvent);
-
-	enum EScreenValue
-	{
-		eScreenValue_Pixel,
-		eScreenValue_Percentage,
-	};
-
 }
 
 
@@ -56,6 +50,30 @@ namespace guiex
 //============================================================================// 
 namespace guiex
 {
+	class CGUIWidgetPosition
+	{
+	public:
+		CGUIWidgetPosition()
+			:m_eType(eScreenValue_Pixel)
+		{
+		}
+		EScreenValue m_eType;
+		CGUIVector2 m_aValue;
+		CGUIVector2 m_aPixelValue;
+	};
+
+	class CGUIWidgetSize
+	{
+	public:
+		CGUIWidgetSize()
+			:m_eType(eScreenValue_Pixel)
+		{
+		}
+		EScreenValue m_eType;
+		CGUISize m_aValue;
+		CGUISize m_aPixelValue;
+	};
+
 	/**
 	* @class CGUIWidget
 	* @brief base class of widget 
@@ -229,12 +247,12 @@ namespace guiex
 		/** 
 		* @brief set widget text info
 		*/
-		virtual void SetTextInfo(const CGUIStringExInfo& rInfo);
+		virtual void SetTextInfo(const CGUIStringInfo& rInfo);
 
 		/** 
 		* @brief get widget text info
 		*/
-		virtual const CGUIStringExInfo& GetTextInfo( ) const;
+		virtual const CGUIStringInfo& GetTextInfo( ) const;
 
 		/**
 		* @brief get widget text value
@@ -249,12 +267,8 @@ namespace guiex
 		*/
 		enum
 		{
-			/******* status of widget ***************************/
-			//eFLAG_OPEN = 0,				///!< has this widget been opened
-			eFLAG_HIDE=0,					//!< is this widget hidden by parent
-
 			/******* ability of widget **************************/
-			eFLAG_INHERIT_ALPHA,
+			eFLAG_INHERIT_ALPHA = 0,
 			eFLAG_FOCUS_AGENCY,				//!< this widget is an agency of it's parent
 			eFLAG_FOCUSABLE,				//!< could this widget be set focus
 			eFLAG_HITABLE,					//!< could this widget be hitted
@@ -269,7 +283,7 @@ namespace guiex
 			eFLAG_EVENT_CLICK,				//!< could this widget generate click event
 			eFLAG_EVENT_DBCLICK,			//!< could this widget generate double click event
 			eFLAG_EVENT_MULTICLICK,			//!< could this widget generate multi click event
-			eFLAG_EVENT_UPDATE,				//!< could this widget generate update event
+			eFLAG_RESPONSE_UPDATE_EVENT,				//!< could this widget generate update event
 			eFLAG_EVENT_PARENTSIZECHANGE,	//!< could this widget receive parent change event
 
 			eFLAG_MAX,
@@ -279,10 +293,10 @@ namespace guiex
 		void SetSelfActivable(bool bActivable);
 
 		/// is this widget activable
-		bool IsSelfActivable() const;
+		bool IsActivable() const;
 
 		/// is this widget activable
-		bool IsActivable();
+		bool IsDerivedActivable();
 
 		/// set this widget focusable
 		void SetFocusable(bool bFocusable);
@@ -297,34 +311,22 @@ namespace guiex
 		bool IsFocus() const;
 
 		/// set this widget visible
-		void SetSelfVisible(bool bVisible);
+		void SetVisible(bool bVisible);
 
 		/// is this widget visible
-		bool IsSelfVisible( ) const;
+		bool IsVisible( ) const;
 
-		/// is this widget visible
-		bool IsVisible();
-
-		/**
-		* @brief hide this widget 
-		*/
-		void Hide( );
-
-		/**
-		* @brief show this widget 
-		*/
-		void Show( );
-
-
+		/// is this widget visible in screen
+		bool IsDerivedVisible();
 
 		///set this widget disable
-		void SetSelfDisable(bool bDisable);
+		void SetDisable(bool bDisable);
 
 		/// is this widget disable
-		bool IsSelfDisable( ) const;
+		bool IsDisable( ) const;
 
 		/// is this widget disable, the value will be affect by the parent's state
-		bool IsDisable();
+		bool IsDerivedDisable();
 
 
 		///set flag
@@ -343,7 +345,7 @@ namespace guiex
 		* @brief get the alpha which used to render this widget.
 		* this value will be affected by both this widget's alpha and inheritable flag.
 		*/
-		real GetAlpha() ;
+		real GetDerivedAlpha();
  
 
 		/// set scale 
@@ -383,7 +385,8 @@ namespace guiex
 		* it will render this widget and all children.
 		* @param pRender current render
 		*/
-		virtual void Render( IGUIInterfaceRender* pRender );
+		void Render( IGUIInterfaceRender* pRender );
+		void RenderExtraInfo(IGUIInterfaceRender* pRender);
 
 		/**
 		* @brief update this widget, 
@@ -447,7 +450,7 @@ namespace guiex
 		* @brief set property set of this widget, if this widget has gotten the 
 		* property, the old property will be destroyed.
 		*/
-		void SetPropertySet( const CGUIPropertySet& rProperty);
+		void SetPropertySet( const CGUIProperty& rProperty);
 
 		/**
 		* @brief set property of this widget, if this widget has exist, reset it.
@@ -463,7 +466,7 @@ namespace guiex
 		/**
 		* @brief get property of this widget
 		*/
-		const CGUIPropertySet& GetProperty() const;
+		const CGUIProperty& GetProperty() const;
 
 		/**
 		* @brief load widget config from property
@@ -473,12 +476,12 @@ namespace guiex
 		/**
 		* @brief load widget config from property
 		*/
-		virtual CGUIProperty* GenerateProperty(const CGUIString& rName, const CGUIString& rType );
+		virtual int32 GenerateProperty( CGUIProperty& rProperty );
 
 		/** 
 		 * @brief process property
 		 */
-		virtual void ProcessProperty( const CGUIProperty* pProperty);
+		virtual void ProcessProperty( const CGUIProperty& rProperty);
 
 		/** 
 		* @brief set widget parameter's value
@@ -520,7 +523,7 @@ namespace guiex
 		bool HasScriptCallbackFunc(const CGUIString& strEventName) const;
 
 		/// get script function value
-		CGUIString GetScriptCallbackFunc(const CGUIString& strEventName) const;
+		const CGUIString& GetScriptCallbackFunc(const CGUIString& strEventName) const;
 
 		/// add a global timer function
 		void RegisterGlobalTimerFunc( 
@@ -546,47 +549,36 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////
 
 		//get bound rect
-		const CGUIRenderRect& GetBound() const;
-		const CGUIRect& GetWidgetRect() const;
+		const CGUIRenderRect& GetRenderBound() const;
+		const CGUIRect& GetBoundArea() const;
+		const CGUIRect&	GetClientArea() const;
+		const CGUIRect&	GetClipArea() const;
 
-		const CGUISize& GetParentSize() const;
+		void ExpandBoundArea( real deltaleft, real deltatop, real deltaright, real deltabottom);
 
+		CGUISize GetParentSize() const;
 
-		struct SWidgetPosition
-		{
-			EScreenValue m_eType;
-			CGUIVector2 m_aValue;
-			CGUIVector2 m_aPixelValue;
-		};
-		void NEWSetPosition( real x, real y );	//set widget position relative to parent, from tag point to parent's top-left
-		void NEWSetPosition( const CGUIVector2&rPos );	//set widget position relative to parent, from tag point to parent's top-left
+		void NEWSetPosition( real x, real y );	//set widget position relative to parent, from anchor point to parent's top-left
+		void NEWSetPosition( const CGUIVector2&rPos );	//set widget position relative to parent, from anchor point to parent's top-left
 		const CGUIVector2&	NEWGetPosition() const; //get widget position in given value relative to parent
-		void NEWSetPixelPosition( const CGUIVector2& rPixelPos ); //set widget position in pixel format
-		const CGUIVector2&	NEWGetPixelPosition() const; //get widget position in pixel format
+		void SetPixelPosition( const CGUIVector2& rPixelPos ); //set widget position in pixel format
+		void SetPixelPosition( real x, real y ); //set widget position in pixel format
+		const CGUIVector2&	GetPixelPosition() const; //get widget position in pixel format
 
 		void NewSetPositionType( EScreenValue rValueType ); //set position type
 		EScreenValue NewGetPositionType( ) const; //get position type
 
-	
-		struct SWidgetSize
-		{
-			EScreenValue m_eType;
-			CGUISize m_aValue;
-			CGUISize m_aPixelValue;
-		};
 		void NEWSetSize( real width, real height );	//set widget size, according size value type
 		void NEWSetSize( const CGUISize& rSize );	//set widget size, according size value type
 		const CGUISize&	NEWGetSize() const; //get widget size by given size type
-		void NEWSetPixelSize( real width, real height ); //set widget size in pixel.
-		void NEWSetPixelSize( const CGUISize& rPixelSize ); //set widget size in pixel.
+		void SetPixelSize( real width, real height ); //set widget size in pixel.
+		void SetPixelSize( const CGUISize& rPixelSize ); //set widget size in pixel.
 		const CGUISize&	NEWGetPixelSize() const; //get widget size in pixel.
 
 		void NewSetSizeType( EScreenValue eValueType ); //set size type
 		EScreenValue NewGetSizeType( ) const; //get size type
 
-		void NEWRefresh( );
-		virtual void NEWRefreshImpl( );
-
+		void Refresh( );
 		void SetRotation(real rotation);
 		real GetRotation( ) const;
 		//void SetOrientation( real w, real x, real y, real z );
@@ -616,9 +608,19 @@ namespace guiex
 		*/
 		void WorldToParent( CGUIVector2& rPos );
 
-		const CGUIVector2&	GetTagPoint();								//get tag point, the value of it is from 0.0f to 1.0f
-		void				SetTagPoint(const CGUIVector2&rTagPoint);		//set tag point
-		void				SetTagPoint(real x, real y);				//set tag point
+		/**
+		* @brief parent coordinate to local coordinate
+		*/
+		void ParentToLocal( CGUIVector2& rPos );
+
+		/**
+		* @brief local coordinate to parent coordinate
+		*/
+		void LocalToParent( CGUIVector2& rPos );
+
+		const CGUIVector2&	GetAnchorPoint();								//get anchor point, the value of it is from 0.0f to 1.0f
+		void				SetAnchorPoint(const CGUIVector2&rAnchorPoint);		//set anchor point
+		void				SetAnchorPoint(real x, real y);				//set anchor point
 
 
 		void				SetMaximumSize(const CGUISize& rSize);		//set maximum size of this widget
@@ -644,10 +646,13 @@ namespace guiex
 		virtual void PushClipRect( IGUIInterfaceRender* pRender  );
 		virtual void PopClipRect( IGUIInterfaceRender* pRender );
 
+		virtual void RefreshImpl( );
+
 		/**
 		* @brief render this widget only
 		*/
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
+		virtual void RenderExtraSelfInfo(IGUIInterfaceRender* pRender);
 
 		/**
 		* @brief update this widget only
@@ -659,11 +664,19 @@ namespace guiex
 		 */
 		void			UpdateAs( real fDeltaTime );
 
+		void DrawRect( IGUIInterfaceRender* pRender,
+			const CGUIRect& rDestRect, 
+			real fLineWidth,
+			const CGUIColor& rColor );
+
+		void DrawCharacter(IGUIInterfaceRender* pRender, 
+			wchar_t charCode, 
+			const CGUIStringInfo& rInfo,
+			const CGUIVector2& rPos);
 		/**
 		* @brief draw a string
 		*/
-		void	CGUIWidget::DrawString(
-			IGUIInterfaceRender* pRender, 
+		void	CGUIWidget::DrawString( IGUIInterfaceRender* pRender, 
 			const CGUIStringEx& strText,
 			const CGUIRect& rDrawRect,
 			uint8 uTextAlignment,
@@ -679,40 +692,33 @@ namespace guiex
 
 		void	DrawImage( IGUIInterfaceRender* pRender,
 			CGUIImage* pImage, 
-			const CGUIRect& rDestRect, 
-			real z);
+			const CGUIRect& rDestRect);
 
 		void	DrawImage( IGUIInterfaceRender* pRender, 
 			const CGUIString& rName, 
-			const CGUIRect& rDestRect, 
-			real z);
+			const CGUIRect& rDestRect);
 
 		void	DrawAnimation( IGUIInterfaceRender* pRender,
 			CGUIAnimation* pAnimation, 
-			const CGUIRect& rDestRect, 
-			real z);
+			const CGUIRect& rDestRect);
 
 		/**
 		* @brief callback of set the image of widget.
 		*/
 		virtual void	OnSetImage( const CGUIString& rName, CGUIImage* pImage );
 
-
+	private:
+		void SetParentImpl( CGUIWidget* pParent );
 
 	protected://event
 		//declare friend event
-		//friend class CGUIEvent;
-#define ITEM_BEGIN_TOKEN friend class 
-#define ITEM_END_TOKEN ;
 		EVENT_ITEM_LIST();
-#undef ITEM_BEGIN_TOKEN
-#undef ITEM_END_TOKEN
 
 	protected:
 		/// callback function: for change alpha
 		virtual uint32		OnAlphaChange( CGUIEventAlpha* pEvent );
 		/// callback function: for change size
-		virtual uint32		OnSizeChange( CGUIEventSize* pEvent );
+		virtual uint32		OnSizeChanged( CGUIEventSize* pEvent );
 		virtual uint32		OnParentSizeChange( CGUIEventSize* pEvent );
 
 		/// callback function: for mouse event
@@ -808,7 +814,7 @@ namespace guiex
 		/// callback function: for relative changes
 		virtual uint32		OnAddChild( CGUIEventRelativeChange* pEvent );
 		virtual uint32		OnRemoveChild( CGUIEventRelativeChange* pEvent );
-		virtual uint32		OnChangeParent( CGUIEventRelativeChange* pEvent );
+		virtual uint32		OnParentChanged( CGUIEventRelativeChange* pEvent );
 
 	protected:
 		///widget generator
@@ -829,10 +835,6 @@ namespace guiex
 		void	AddChild( CGUIWidget* pWidget );
 
 		CGUIWidget*	GetLastChild( );
-
-		void	RegisterPropertyableObject( const CGUIString& rName, uint32 uPropertyType, CGUIPropertyable* pPropertyableObj );
-		CGUIPropertyable*	FindPropertyableObject( const CGUIString& rName, uint32 uPropertyType );
-
 
 	protected:
 
@@ -863,15 +865,15 @@ namespace guiex
 		///////////////////////////////////////////////////////////////////////
 		/// widget size and position								
 		///////////////////////////////////////////////////////////////////////
-		SWidgetPosition m_aWidgetPosition;
-		SWidgetSize m_aNEWWidgetSize;
+		CGUIWidgetPosition m_aWidgetPosition;
+		CGUIWidgetSize m_aWidgetSize;
 		CGUIQuaternion m_aQuaternion;
-		//CGUIRect m_aBounds;
+		CGUIVector2	m_aWidgetAnchorPoint;			//anchor point, the value is from 0.0f to 1.0f
 
-		CGUIRect		m_aWidgetRect;				//widget bound, local
-		CGUIRect		m_aClipRect;				//clip rect, local
+		CGUIRect		m_aBoundArea;				//widget bound, local
+		CGUIRect		m_aClientArea;				//client area, local
+		CGUIRect		m_aClipArea;				//client area, local
 
-		CGUIVector2		m_aWidgetTagPoint;			//tag point, the value is from 0.0f to 1.0f
 
 		CGUISize		m_aMaxSize;					//maximum size of widget,it doesn't work if the value is (0,0)
 		CGUISize		m_aMinSize;					//minimum size of widget,it doesn't work if the value is (0,0)
@@ -952,12 +954,7 @@ namespace guiex
 		///////////////////////////////////////////////////////////////////////
 		/// for widget property support
 		///////////////////////////////////////////////////////////////////////
-		CGUIPropertySet		m_aPropertySet;
-		
-		typedef std::vector<CGUIPropertyable*>	TArrayPropertyableObjects;
-		TArrayPropertyableObjects		m_arrayPropertyableObjects;
-		typedef std::map< std::pair<CGUIString, uint32>, CGUIPropertyable* > TMapPropertyableObjects;
-		TMapPropertyableObjects			m_mapPropertyableObjects;
+		CGUIProperty		m_aPropertySet;
 	};
 
 

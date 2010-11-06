@@ -12,8 +12,7 @@
 #include <libguiex_core\guirect.h>
 #include <libguiex_core\guisize.h>
 #include <libguiex_core\guivector2.h>
-#include <libguiex_core\guiproperty.h>
-#include <libguiex_core\guistringconvertor.h>
+
 
 //============================================================================//
 // function
@@ -147,19 +146,6 @@ namespace guiex
 
 		return *this;
 	}
-
-	//------------------------------------------------------------------------------
-	void CGUIRect::SaveToProperty( CGUIProperty& rProperty ) const
-	{
-		rProperty.SetValue( CGUIStringConvertor::RectToString( *this ));
-	}
-	//------------------------------------------------------------------------------
-	void CGUIRect::LoadFromProperty( const CGUIProperty& rProperty )
-	{
-		CGUIStringConvertor::StringToRect( rProperty.GetValue(), *this );
-	}
-	//------------------------------------------------------------------------------
-
 }	//namespace guiex
 
 

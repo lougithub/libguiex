@@ -41,7 +41,7 @@ namespace guiex
 		uint32 nSize = rString.Size();
 		for( int32 i=nStartPos; i<nEndPos; ++i )
 		{
-			const CGUIStringExInfo& rInfo = rString.GetInfo(i);
+			const CGUIStringInfo& rInfo = rString.GetInfo(i);
 			fWidth += GetCharacterSize( rInfo.m_nFontIdx, rString.GetCharacter(i), rInfo.m_nFontSize).m_fWidth;
 		}
 		return fWidth;

@@ -98,12 +98,12 @@ namespace guiex
 		/** 
 		* @brief set segment text info
 		*/
-		void	SetSegmentTextInfo(const CGUIStringExInfo& rInfo);
+		void	SetSegmentTextInfo(const CGUIStringInfo& rInfo);
 
 		/** 
 		* @brief get segment text info
 		*/
-		const CGUIStringExInfo&	GetSegmentTextInfo() const;
+		const CGUIStringInfo&	GetSegmentTextInfo() const;
 
 		/**
 		* @brief add a segment
@@ -170,7 +170,7 @@ namespace guiex
 		CGUIColListHeaderSegment*	m_pSortedSegment;		//sorted segment
 
 		CGUIString					m_strSegmentType;		//type of segment
-		CGUIStringExInfo			m_aSegmentTextInfo;		//text information of segment
+		CGUIStringInfo			m_aSegmentTextInfo;		//text information of segment
 		CGUISize					m_aSegmentDefaultSize;	//default size of segment
 
 	private:

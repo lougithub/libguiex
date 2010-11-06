@@ -54,8 +54,6 @@ namespace guiex
 		/// render
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 
-		virtual void PostUpdateDirtyRect();
-
 		/**
 		* @brief override the OnSetImage function
 		*/

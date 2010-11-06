@@ -144,7 +144,7 @@ namespace guiex
 	protected:	//!< callback function
 		virtual uint32		OnOpen( CGUIEventNotification* pEvent );
 		virtual uint32		OnScaleChange( CGUIEventNotification* pEvent );
-		virtual uint32		OnSizeChange( CGUIEventSize* pEvent );
+		virtual uint32		OnSizeChanged( CGUIEventSize* pEvent );
 
 		virtual uint32		OnScrollbarScroll( CGUIEventScrollbar* pEvent );
 

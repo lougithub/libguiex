@@ -41,7 +41,6 @@ namespace guiex
 	{
 		m_pImageBG= NULL;
 
-
 		SetFlag(eFLAG_EXCLUSIVE, true);
 		SetFlag(eFLAG_MOVABLE, true);
 		SetFlag(eFLAG_OPEN_WITH_PARENT, false);
@@ -58,26 +57,16 @@ namespace guiex
 		if( rName == "BGIMAGE")
 		{
 			m_pImageBG = pImage;
-			if( GetSize().IsEqualZero() && pImage )
+			if( pImage && NEWGetSize().IsEqualZero() )
 			{
-				SetSize(pImage->GetSize());
+				SetPixelSize(pImage->GetSize());
 			}
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtDialog::PostUpdateDirtyRect()
-	{
-		CGUIRect	aClientClipRect = m_aClientClipRect;
-
-		CGUIWidget::PostUpdateDirtyRect();
-
-		m_aClipRect = m_aWidgetRect;
-		m_aClientClipRect = aClientClipRect;
-	}
-	//------------------------------------------------------------------------------
 	void	CGUIWgtDialog::RenderSelf(IGUIInterfaceRender* pRender)
 	{
-		DrawImage( pRender, m_pImageBG, GetRect(), pRender->GetAndIncZ(), &GetClipRect());
+		DrawImage( pRender, m_pImageBG, GetBoundArea() );
 	}
 	//------------------------------------------------------------------------------
 	uint32		CGUIWgtDialog::OnOpen( CGUIEventNotification* pEvent )

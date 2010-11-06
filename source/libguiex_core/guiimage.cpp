@@ -174,7 +174,7 @@ namespace guiex
 		aColorRect.m_top_right.SetAlpha(aColorRect.m_top_right.GetAlpha()*fAlpha);
 		aColorRect.m_bottom_left.SetAlpha(aColorRect.m_bottom_left.GetAlpha()*fAlpha);
 		aColorRect.m_bottom_right.SetAlpha(aColorRect.m_bottom_right.GetAlpha()*fAlpha);
-		pRender->AddRenderTexture( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOperation,
+		pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOperation,
 			aColorRect.m_top_left.GetARGB(),aColorRect.m_top_right.GetARGB(),
 			aColorRect.m_bottom_left.GetARGB(),aColorRect.m_bottom_right.GetARGB());
 	}
@@ -194,14 +194,14 @@ namespace guiex
 		{
 			CGUIColor aColor = m_aColor;
 			aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
-			pRender->AddRenderTexture( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOperation,
+			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOperation,
 				aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB());
 		}
 		else
 		{
 			CGUIColor aColor(0xFFFFFFFF);
 			aColor.SetAlpha(fAlpha);
-			pRender->AddRenderTexture( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOperation,
+			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOperation,
 				aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB());
 		}
 	}
@@ -222,14 +222,14 @@ namespace guiex
 		{
 			CGUIColor aColor = m_aColor*rColor;
 			aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
-			pRender->AddRenderTexture( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOperation,
+			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOperation,
 				aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB());
 		}
 		else
 		{
 			CGUIColor aColor(rColor);
 			aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
-			pRender->AddRenderTexture( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOperation,
+			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOperation,
 				aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB());
 		}
 	}
@@ -248,14 +248,14 @@ namespace guiex
 	//	{
 	//		CGUIColor aColor = m_aColor;
 	//		aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
-	//		pRender->AddRenderTexture( rRenderRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOperation,
+	//		pRender->DrawTile( rRenderRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOperation,
 	//			aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB());
 	//	}
 	//	else
 	//	{
 	//		CGUIColor aColor(0xFFFFFFFF);
 	//		aColor.SetAlpha(fAlpha);
-	//		pRender->AddRenderTexture( rRenderRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOperation,
+	//		pRender->DrawTile( rRenderRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOperation,
 	//			aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB());
 	//	}
 	//}

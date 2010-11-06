@@ -60,7 +60,7 @@ namespace guiex
 		UpdateTextSize();
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIListBoxTextItem::SetTextInfo( const CGUIStringExInfo& rInfo)
+	void		CGUIListBoxTextItem::SetTextInfo( const CGUIStringInfo& rInfo)
 	{
 		CGUIListBoxItem::SetTextInfo(rInfo);
 		UpdateTextSize();

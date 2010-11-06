@@ -93,6 +93,7 @@ public:
 		ID_ToggleScissor,
 		ID_ToggleWireframe,
 		ID_SetBGColor,
+		ID_Refresh,
 
 
 
@@ -239,6 +240,7 @@ protected:
 	void OnToggleScissor(wxCommandEvent& evt);
 	void OnToggleWireframe(wxCommandEvent& evt);
 	void OnSetBGColor(wxCommandEvent& evt);
+	void OnRefresh(wxCommandEvent& evt);
 
 	void OnFullscreen(wxCommandEvent& evt);
 

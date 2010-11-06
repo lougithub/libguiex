@@ -153,12 +153,12 @@ namespace guiex
 		return GUI_INVALID;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIColListHeader::SetSegmentTextInfo(const CGUIStringExInfo& rInfo)
+	void	CGUIColListHeader::SetSegmentTextInfo(const CGUIStringInfo& rInfo)
 	{
 		m_aSegmentTextInfo = rInfo;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIStringExInfo&	CGUIColListHeader::GetSegmentTextInfo() const
+	const CGUIStringInfo&	CGUIColListHeader::GetSegmentTextInfo() const
 	{
 		return m_aSegmentTextInfo;
 	}

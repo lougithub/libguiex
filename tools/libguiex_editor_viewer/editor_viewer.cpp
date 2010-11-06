@@ -79,7 +79,10 @@ public:
 	virtual WXLRESULT MSWWindowProc(WXUINT message,
 		WXWPARAM wParam,
 		WXLPARAM lParam);
+
 protected:
+	guiex::CGUITimer m_aOldTimer;
+	guiex::CGUITimer m_aCurTimer;
 
 	DECLARE_EVENT_TABLE()
 };
@@ -261,8 +264,10 @@ void WxGLCanvas::OnIdle(wxIdleEvent & event)
 
 	try
 	{
-		guiex::CGUIWidgetSystem::Instance()->Update();
+		m_aCurTimer.UpdateTime();
+		guiex::CGUIWidgetSystem::Instance()->Update( (m_aCurTimer - m_aOldTimer) / 1000.f );
 		guiex::CGUIWidgetSystem::Instance()->Render();
+		m_aOldTimer = m_aCurTimer;
 	}
 	catch (guiex::CGUIBaseException& rError)
 	{
@@ -361,7 +366,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 						 const wxSize& size,
 						 long style)
 						 : wxFrame(parent, id, title, pos, size, style)
-						 ,m_aBGColor(200,200,200,255)
+						 ,m_aBGColor(128,128,128,255)
 						 ,m_pMouse(NULL)
 						 ,m_pKeyboard(NULL)
 						 ,m_pIme(NULL)

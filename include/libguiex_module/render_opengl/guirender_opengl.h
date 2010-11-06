@@ -67,10 +67,19 @@ namespace guiex
 		*/
 		virtual ~IGUIRender_opengl();
 
+		virtual void DrawRect(const CGUIMatrix4& rWorldMatrix,
+			const CGUIRect& rDestRect, 
+			real fLineWidth,
+			real z,
+			GUIARGB rColor_topleft,
+			GUIARGB rColor_topright,
+			GUIARGB rColor_bottomleft,
+			GUIARGB rColor_bottomright );
+
 		/** 
 		* @brief add a texture into render list
 		*/
-		virtual	void	AddRenderTexture(	const CGUIMatrix4& rWorldMatrix,
+		virtual	void	DrawTile(	const CGUIMatrix4& rWorldMatrix,
 			const CGUIRect& rDestRect, real z, 
 			const CGUITextureImp* pTexture, const CGUIRect& rTextureRect, 
 			EImageOperation eImageOperation,
@@ -90,20 +99,6 @@ namespace guiex
 
 		// restore states
 		virtual void	EndRender(void);
-		
-		//virtual	void	AddRenderTexture(	const CGUIRenderRect& rRenderRect, 
-		//	const CGUITextureImp* pTexture, 
-		//	const CGUIRect& rTextureRect, 
-		//	EImageOperation eImageOperation,
-		//	GUIARGB rColor_topleft,
-		//	GUIARGB rColor_topright,
-		//	GUIARGB rColor_bottomleft,
-		//	GUIARGB rColor_bottomright);
-
-		/**
-		* @brief do final render for all texture in the render list
-		*/
-		virtual	void	DoRender(void);
 
 		/**
 		* @brief Creates a 'null' Texture object.
@@ -248,6 +243,11 @@ namespace guiex
 		{
 			real vertex[3];
 		};
+		struct SVertexForLine
+		{
+			long color;
+			real vertex[3];
+		};
 
 		// set the texture's coordinate
 		void			SetTexCoordinate(SVertex* pTexture, const CGUIRect& tex, EImageOperation eImageOperation);
@@ -257,8 +257,11 @@ namespace guiex
 
 		//cache for system
 		static const int		VERTEX_PER_TEXTURE = 4;
+		static const int		VERTEX_FOR_LINE = 1024;
 		SVertex			m_pVertex[VERTEX_PER_TEXTURE];
 		SVertexForStencil m_pVertexForStencil[VERTEX_PER_TEXTURE];
+		SVertexForLine	m_pVertexForLine[VERTEX_FOR_LINE];
+
 		real			m_gl_matrix[16];
 
 		//texture list

@@ -474,9 +474,8 @@ namespace guiex
 	void IGUIFont_ft2::DrawCharacter(IGUIInterfaceRender* pRender, 
 		const CGUIMatrix4& rWorldMatrix,
 		wchar_t charCode, 
-		const CGUIStringExInfo& rInfo,
+		const CGUIStringInfo& rInfo,
 		const CGUIVector2& rPos,
-		const CGUISize& rScale,
 		real	fAlpha)
 	{
 		CGUIFontData_ft2* pFontData = GetFont( rInfo.m_nFontIdx, charCode, rInfo.m_nFontSize);
@@ -484,12 +483,12 @@ namespace guiex
 		if( pFontData->m_pTexture)
 		{
 			CGUIRect aCharRect(
-				CGUIVector2((rPos.x+pFontData->m_nLeftBearing)*rScale.m_fWidth, (rPos.y+rInfo.m_nFontSize-pFontData->m_nTopBearing)*rScale.m_fHeight),
-				CGUISize(pFontData->m_nBitmapWidth*rScale.m_fWidth,pFontData->m_nBitmapHeight*rScale.m_fHeight));
+				CGUIVector2(rPos.x+real(pFontData->m_nLeftBearing), rPos.y+real(rInfo.m_nFontSize-pFontData->m_nTopBearing)),
+				CGUISize(real(pFontData->m_nBitmapWidth),real(pFontData->m_nBitmapHeight)));
 
 			CGUIColor aColor(rInfo.m_aColor);
 			aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
-			pRender->AddRenderTexture( 
+			pRender->DrawTile( 
 				rWorldMatrix,
 				aCharRect,
 				pRender->GetAndIncZ(), 
@@ -508,7 +507,6 @@ namespace guiex
 		const CGUIStringEx& rString, 
 			const CGUIRect&	rStringRect,
 			const uint8&	uTextAlignment,
-			const CGUISize& rScale,
 			real			fAlpha,
 			int32 nStartPos,
 			int32 nEndPos)
@@ -521,15 +519,15 @@ namespace guiex
 
 		CGUIVector2 aPos;
 
-		real fScaledStringWidth = GetStringWidth(rString) * rScale.m_fWidth;
-		real fScaledStringHeight = rString.GetDefaultInfo().m_nFontSize * rScale.m_fHeight;
+		real fScaledStringWidth = GetStringWidth(rString);
+		real fScaledStringHeight = rString.GetDefaultInfo().m_nFontSize;
 
-		if(( uTextAlignment & GUI_TA_HORIZON_MASK) == GUI_TA_H_LEFT )
+		if(( uTextAlignment & GUI_TA_HORIZON_MASK) == eTextAlignment_Horz_Left )
 		{
 			//for horizon left
 			aPos.x = rStringRect.m_fLeft;
 		}
-		else if(( uTextAlignment & GUI_TA_HORIZON_MASK) == GUI_TA_H_RIGHT )
+		else if(( uTextAlignment & GUI_TA_HORIZON_MASK) == eTextAlignment_Horz_Right )
 		{
 			//for horizon right
 			aPos.x = rStringRect.m_fRight-fScaledStringWidth;
@@ -540,12 +538,12 @@ namespace guiex
 			aPos.x = rStringRect.m_fLeft+(rStringRect.GetWidth()-fScaledStringWidth)/2;
 		}
 
-		if(( uTextAlignment & GUI_TA_VERTICAL_MASK) == GUI_TA_V_UP )
+		if(( uTextAlignment & GUI_TA_VERTICAL_MASK) == eTextAlignment_Vert_Up )
 		{
 			//for vertical up
 			aPos.y = rStringRect.m_fTop;
 		}
-		else if(( uTextAlignment & GUI_TA_VERTICAL_MASK) == GUI_TA_V_DOWN )
+		else if(( uTextAlignment & GUI_TA_VERTICAL_MASK) == eTextAlignment_Vert_Down )
 		{
 			//for vertical down
 			aPos.y = rStringRect.m_fBottom - fScaledStringHeight;
@@ -562,19 +560,19 @@ namespace guiex
 
 		for( int32 i= nStartPos; i<nEndPos; ++i)
 		{
-			const CGUIStringExInfo& rInfo = rString.GetInfo(i);
+			const CGUIStringInfo& rInfo = rString.GetInfo(i);
 			CGUIFontData_ft2 * pFontData = GetFont(rInfo.m_nFontIdx, rString.GetCharacter(i), rInfo.m_nFontSize);
 
 			if( pFontData->m_pTexture)
 			{
 				CGUIRect aCharRect(
-					CGUIVector2(aPos.x+pFontData->m_nLeftBearing*rScale.m_fWidth, aPos.y+(rInfo.m_nFontSize-pFontData->m_nTopBearing)*rScale.m_fHeight),
-					CGUISize(pFontData->m_nBitmapWidth*rScale.m_fWidth,pFontData->m_nBitmapHeight*rScale.m_fHeight));
+					CGUIVector2(aPos.x+real(pFontData->m_nLeftBearing), aPos.y+real(rInfo.m_nFontSize-pFontData->m_nTopBearing)),
+					CGUISize(real(pFontData->m_nBitmapWidth),real(pFontData->m_nBitmapHeight)));
 
 				//dest area size
 				CGUIColor aColor(rInfo.m_aColor);
 				aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
-				pRender->AddRenderTexture( 
+				pRender->DrawTile( 
 					rWorldMatrix,
 					aCharRect,
 					pRender->GetAndIncZ(), 
@@ -587,7 +585,7 @@ namespace guiex
 					aColor.GetARGB());
 			}
 
-			aPos.x+=pFontData->m_aSize.m_fWidth*rScale.m_fWidth;
+			aPos.x+=pFontData->m_aSize.m_fWidth;
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -595,7 +593,6 @@ namespace guiex
 		const CGUIMatrix4& rWorldMatrix,
 		const CGUIStringEx& rString, 
 		const CGUIVector2& rPos,
-		const CGUISize& rScale,
 		real fAlpha,
 		int32 nStartPos,
 		int32 nEndPos)
@@ -614,19 +611,19 @@ namespace guiex
 
 		for( int32 i=nStartPos; i<nEndPos; ++i)
 		{
-			const CGUIStringExInfo& rInfo = rString.GetInfo(i);
+			const CGUIStringInfo& rInfo = rString.GetInfo(i);
 			CGUIFontData_ft2 * pFontData = GetFont(rInfo.m_nFontIdx, rString.GetCharacter(i), rInfo.m_nFontSize);
 
 			if( pFontData->m_pTexture)
 			{
 				CGUIRect aCharRect(
-					CGUIVector2(aPos.x+pFontData->m_nLeftBearing*rScale.m_fWidth, aPos.y+(rInfo.m_nFontSize-pFontData->m_nTopBearing)*rScale.m_fHeight),
-					CGUISize(pFontData->m_nBitmapWidth*rScale.m_fWidth,pFontData->m_nBitmapHeight*rScale.m_fHeight));
+					CGUIVector2(aPos.x+real(pFontData->m_nLeftBearing), aPos.y+real(rInfo.m_nFontSize-pFontData->m_nTopBearing)),
+					CGUISize(real(pFontData->m_nBitmapWidth),real(pFontData->m_nBitmapHeight)));
 
 				//dest area size
 				CGUIColor aColor(rInfo.m_aColor);
 				aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
-				pRender->AddRenderTexture( 
+				pRender->DrawTile( 
 					rWorldMatrix,
 					aCharRect,
 					pRender->GetAndIncZ(), 
@@ -639,7 +636,7 @@ namespace guiex
 					aColor.GetARGB());
 			}
 
-			aPos.x+=pFontData->m_aSize.m_fWidth*rScale.m_fWidth;
+			aPos.x+=pFontData->m_aSize.m_fWidth;
 		}
 	}
 	//------------------------------------------------------------------------------

@@ -11,8 +11,6 @@
 //============================================================================// 
 #include <libguiex_core\guicolor.h>
 #include <algorithm>
-#include <libguiex_core\guiproperty.h>
-#include <libguiex_core\guistringconvertor.h>
 
 
 
@@ -52,16 +50,6 @@ namespace guiex
 		return ((aColorARGB<<8) + ((aColorARGB>>24)&0xFF));
 	}
 	//------------------------------------------------------------------------------ 
-	void CGUIColor::SaveToProperty( CGUIProperty& rProperty ) const
-	{
-		rProperty.SetValue( CGUIStringConvertor::ColorToString( *this ));
-	}
-	//------------------------------------------------------------------------------
-	void CGUIColor::LoadFromProperty( const CGUIProperty& rProperty )
-	{
-		CGUIStringConvertor::StringToColor( rProperty.GetValue(), *this );
-	}
-	//------------------------------------------------------------------------------
 
 }//namespace guiex
 

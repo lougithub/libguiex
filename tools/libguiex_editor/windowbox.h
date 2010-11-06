@@ -74,7 +74,7 @@ public:
 	*/
 	const wxRect & GetPointRect(int anIndex) ;
 
-	const wxRect & GetTagRect();
+	const wxRect & GetAnchorRect();
 
 	const wxRect & GetClientRect();
 
@@ -115,7 +115,7 @@ private:
 
 	/** 8 rectangles with absolute and unclipped positions and sizes per point.*/
 	wxRect      m_resizePoints [NUM_RESIZE_POINTS] ;
-	wxRect		m_aTagRect;
+	wxRect		m_aAnchorRect;
 	wxRect		m_aClientRect;
 
 	/** Holds whether the boxed window is locked. When true, its position and size can not be changed.

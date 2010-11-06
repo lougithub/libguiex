@@ -38,43 +38,6 @@ namespace guiex
 	* @brief store property used for create widget.
 	* widget could load property and store them.
 	* the format of property is describe below
-	*
-	*
-	*-----string-----
-	*<property name="PARENT" type="STRING" value="sample_frame1" />
-	*
-	*-----rect-----
-	*<property name="CLIENT_AREA" type="RECT" value="10,10,50,50" />
-	*
-	*-----size-----
-	*<property name="SIZE" type="SIZE" value="800,600" />
-	*
-	*-----vector2-----
-	*<property name="LOCAL_POSITION" type="VECTOR2" value="200,100"/>
-	*
-	* -----image------
-	* <property name="BGIMAGE" type="IMAGE">
-	*		<property name="PATH" type="STRING" value="./data/sample.png"/>
-	*		<property name="UV" type="RECT" value="0,0,0.5,1" />
-	*		<property name="IMAGE_OPERATION" type="ENUM" value="IMAGE_NONE" />
-	*	</property>
-	*
-	*-----text------
-	*<property name="TEXT" type="TEXT">
-	*		<property name="SIZE"	type="NUMBER" value="22"/>
-	*		<property name="FONT_INDEX" type="NUMBER" value="0"/>
-	*		<property name="COLOR" type="COLOR" value="0.5,0.0,0.6"/>
-	*		<property name="CONTENT"	type="STRING" value="content"/>
-	*</property>
-	*
-	*-----sound-----
-	*<property name="OnOpen" type="SOUND" value="3" />
-	*
-	*-----script event------
-	*<property name="OnOpen" type="EVENT" value="btn_ok_onopen" />
-	*
-	*
-	*
 	* @exception CGUIException
 	*/
 	class GUIEXPORT CGUIProperty
@@ -83,7 +46,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIProperty();
+		CGUIProperty(const CGUIString& rName=CGUIString(), const CGUIString& rType=CGUIString(), const CGUIString& rValue=CGUIString() );
 
 		/**
 		* @brief destructor
@@ -91,59 +54,80 @@ namespace guiex
 		~CGUIProperty();
 
 		/// copy constructor
-		CGUIProperty(const CGUIProperty& rProperty );
+		CGUIProperty(const CGUIProperty& other );
 
 		/// assign operator
-		void operator=(const CGUIProperty& rProperty );
+		void operator=(const CGUIProperty& other );
+		bool operator==(const CGUIProperty& other ) const;
+
+		/// clear all sub property
+		void Clear();
 
 		/// set name of this property
-		void				SetName(const CGUIString& rName);
+		void SetName(const CGUIString& rName);
 
 		/// get name of this property
 		const CGUIString&	GetName() const;
 
 		/// set value of this property
-		void				SetValue(const CGUIString& rValue);
+		void SetValue(const CGUIString& rValue);
 
 		/// get value of this property
 		const CGUIString&	GetValue() const;
 
 		/// set type of this property
-		void				SetType(const CGUIString& rType);
+		void SetType(const CGUIString& rType);
 
 		/// get type of this property
-		const CGUIString&	GetType() const;
-
-		/// clone a property
-		CGUIProperty*		Clone( ) const;
+		uint32	GetType() const;
+		const CGUIString& GetTypeAsString() const;
 
 		/// add a sub-property
-		void				AddProperty(  CGUIProperty* pProperty );
-
-		/// add a property set as sub-property
-		void				AddPropertySet(const CGUIPropertySet& rPropertySet);
+		void AddProperty(  const CGUIProperty& rProperty );
+		void RemoveProperty( int32 nIdx );
+		void RemoveProperty( const CGUIProperty& rProperty );
+		void InsertProperty(  const CGUIProperty& rProperty, int32 nIndex );
 
 		/// get a sub-property num
-		uint32				GetPropertyNum( ) const;
+		uint32 GetPropertyNum( ) const;
+
+		int32 GetPropertyIndex( const CGUIString& rName ) const;
 
 		///get a sub-property by index
 		const CGUIProperty*	GetProperty( uint32 nIdx ) const;
 
+
 		///get a sub-property by name
 		const CGUIProperty*	GetProperty( const CGUIString& rName ) const;
+		CGUIProperty*	GetProperty( const CGUIString& rName );
 
 		///whether this sub-property contain this property
-		bool				HasProperty( const CGUIString& rName ) const;
+		bool HasProperty( const CGUIString& rName ) const;
+
+		void SetData( void* pData )
+		{
+			m_pExtraData = pData;
+		}
+
+		void* GetData( ) const
+		{
+			return m_pExtraData;
+		}
 
 
 	protected:
 
 	protected:
 		CGUIString		m_strName;		/// name of this property
-		CGUIString		m_strType;		/// type of this property
+		CGUIString		m_strType;		/// type of this property as a string value
+		uint32			m_uType;		/// type of this property as a enum value
 		CGUIString		m_strValue;		/// value of this property
 
-		CGUIPropertySet		m_setProperty;	/// sub-property of this property
+		typedef std::vector<CGUIProperty>	TSetProperty;
+		TSetProperty	m_setProperty;
+		//CGUIPropertySet		m_setProperty;	/// sub-property of this property
+
+		void*			m_pExtraData;
 
 	};
 

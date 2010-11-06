@@ -31,7 +31,7 @@ namespace guiex
 
 namespace guiex
 {
-	class GUIEXPORT CGUIRect : public CGUIPropertyable
+	class GUIEXPORT CGUIRect
 	{
 	public:
 		/**
@@ -184,9 +184,6 @@ namespace guiex
 		* @brief algorithm operator
 		*/
 		const CGUIRect& operator*=(real scalar);
-
-		virtual void SaveToProperty( CGUIProperty& rProperty ) const;
-		virtual void LoadFromProperty( const CGUIProperty& rProperty );
 
 	public:
 		real	m_fTop;

@@ -16,6 +16,7 @@
 #include <libguiex_core\guistringconvertor.h>
 #include <libguiex_core\guiproperty.h>
 #include <libguiex_core\guipropertymanager.h>
+#include <libguiex_core\guipropertyconvertor.h>
 
 //============================================================================//
 // function
@@ -63,8 +64,7 @@ namespace guiex
 		{
 			////////////////////////////////////////////////////////////////////////////
 			//render string
-			const CGUIRect& rStringClipRect = GetClientClipRect();
-			CGUIRect aDestRect = GetClientRect();
+			CGUIRect aDestRect = GetClientArea();
 			//
 			for( TLineList::iterator itor = m_aLineList.begin();
 				itor != m_aLineList.end();
@@ -75,14 +75,14 @@ namespace guiex
 				aDestRect.m_fBottom = aDestRect.m_fTop + aLineInfo.m_nLineHeight * GetDerivedScale().m_fHeight;
 
 				//no selection
-				DrawString( pRender, m_strText, aDestRect, GetTextAlignment(), &rStringClipRect, aLineInfo.m_nStartIdx, aLineInfo.m_nStartIdx+aLineInfo.m_nLength );
+				DrawString( pRender, m_strText, aDestRect, GetTextAlignment(), aLineInfo.m_nStartIdx, aLineInfo.m_nStartIdx+aLineInfo.m_nLength );
 				
 				aDestRect.m_fTop = aDestRect.m_fBottom;
 			}
 		}
 		else
 		{
-			DrawString( pRender, m_strText, GetRenderRect(), GetTextAlignment());
+			DrawString( pRender, m_strText, GetClientArea(), GetTextAlignment());
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -114,7 +114,7 @@ namespace guiex
 		UpdateStringContent();
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtStaticText::SetTextInfo( const CGUIStringExInfo& rInfo )
+	void	CGUIWgtStaticText::SetTextInfo( const CGUIStringInfo& rInfo )
 	{
 		CGUIWgtStatic::SetTextInfo( rInfo );
 
@@ -130,9 +130,9 @@ namespace guiex
 			return;
 		}
 			
-		const CGUIStringExInfo& rDefaultInfo = GetTextInfo();
+		const CGUIStringInfo& rDefaultInfo = GetTextInfo();
 
-		real		fLineMaxWidth = GetClientRect().GetWidth();
+		real		fLineMaxWidth = NEWGetPixelSize().GetWidth();
 		uint32		nLineWidth = 0;
 		SLineInfo	aLine;
 		aLine.m_nLength = 0;
@@ -197,61 +197,57 @@ namespace guiex
 		{
 			if( fTotalHeight > 0.f )
 			{
-				NEWSetPixelSize( NEWGetPixelSize().m_fWidth, fTotalHeight );
+				SetPixelSize( NEWGetPixelSize().m_fWidth, fTotalHeight );
 			}
 			else
 			{
-				NEWSetPixelSize( NEWGetPixelSize().m_fWidth, rDefaultInfo.m_nFontSize );
+				SetPixelSize( NEWGetPixelSize().m_fWidth, rDefaultInfo.m_nFontSize );
 			}
 		}
 	}
 	//------------------------------------------------------------------------------
-	CGUIProperty*	CGUIWgtStaticText::GenerateProperty(const CGUIString& rName, const CGUIString& rType )
+	int32 CGUIWgtStaticText::GenerateProperty( CGUIProperty& rProperty )
 	{
-		CGUIProperty* pProperty = NULL;
-
-		if( rName == "MULTILINE" && rType=="BOOL")
+		if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "multiline")
 		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
-				rName, 
-				rType, 
-				CGUIStringConvertor::BoolToString(IsMultiLine( )));
+			ValueToProperty( IsMultiLine(), rProperty);
 		}
-		else if( rName == "AUTOEXPAND_HEIGHT" && rType=="BOOL")
+		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "autoexpand_height" )
 		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
-				rName, 
-				rType, 
-				CGUIStringConvertor::BoolToString(IsAutoExpandHeight( )));
+			ValueToProperty( IsAutoExpandHeight(), rProperty);
 		}
-
-		return pProperty ? pProperty : CGUIWidget::GenerateProperty(rName, rType);
+		else
+		{
+			return CGUIWidget::GenerateProperty( rProperty );
+		}
+		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void			CGUIWgtStaticText::ProcessProperty( const CGUIProperty* pProperty)
+	void CGUIWgtStaticText::ProcessProperty( const CGUIProperty& rProperty )
 	{
-		CGUIWidget::ProcessProperty(pProperty);
-		
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//property for parent
-		/*
-		*<property name="SHOW_VERT_SCROLLBAR" type="BOOL" value="true" />
-		*/
-		if( pProperty->GetName() == "MULTILINE" && pProperty->GetType()=="BOOL")
+		if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "multiline")
 		{
-			SetMultiLine(CGUIStringConvertor::StringToBool(pProperty->GetValue()));
+			bool bValue;
+			PropertyToValue( rProperty, bValue);
+			SetMultiLine( bValue );
 		}
-		else if( pProperty->GetName() == "AUTOEXPAND_HEIGHT" && pProperty->GetType()=="BOOL")
+		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "autoexpand_height" )
 		{
-			SetAutoExpandHeight(CGUIStringConvertor::StringToBool(pProperty->GetValue()));
+			bool bValue;
+			PropertyToValue( rProperty, bValue);
+			SetAutoExpandHeight( bValue );
 		}
-
+		else
+		{
+			CGUIWidget::ProcessProperty( rProperty );
+		}
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWgtStaticText::OnSizeChange( CGUIEventSize* pEvent )
+	uint32		CGUIWgtStaticText::OnSizeChanged( CGUIEventSize* pEvent )
 	{
 		//UpdateStringContent();
-		return CGUIWidget::OnSizeChange(pEvent);
+		return CGUIWidget::OnSizeChanged(pEvent);
 	}
+	//------------------------------------------------------------------------------
 }//namespace guiex
 

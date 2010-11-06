@@ -36,14 +36,6 @@ namespace guiex
 		*/
 		CGUIWgtEmptyNode( const CGUIString& rName, const CGUIString& rProjectName );
 
-		/**
-		* @brief open this widget
-		*/
-		virtual void Open();
-
-	protected:	//!< callback function
-
-
 	protected:
 		/**
 		* @brief constructor
@@ -51,18 +43,11 @@ namespace guiex
 		*/
 		CGUIWgtEmptyNode( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName );
 
-		void	RenderSelf(IGUIInterfaceRender* pRender);
-
 		/// initialize empty node
 		void	InitEmptyNode();
 
-		//update dirty rect, same way for all widgets
-		//virtual void		PreUpdateDirtyRect();	
-
 	private:
 		static CGUIString	ms_strType;
-
-
 	};
 
 	GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtEmptyNode);

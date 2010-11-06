@@ -39,28 +39,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtTabControl::InitTabControl()
 	{
-
-	}
-	//------------------------------------------------------------------------------
-	void CGUIWgtTabControl::RenderSelf(IGUIInterfaceRender* pRender)
-	{
-		
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWgtTabControl::Open()
-	{
-		if( GetParent())
-		{
-			SetRectSize(GetParent()->GetClientRect().GetSize());
-		}
-
-		CGUIWidget::Open();
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWgtTabControl::PreUpdateDirtyRect()
-	{
-		SetRectSize(GetParent()->GetClientRect().GetSize());
-		CGUIWidget::PreUpdateDirtyRect();
+		NewSetSizeType(eScreenValue_Percentage);
+		NEWSetSize( 1.0f, 1.0f );
 	}
 	//------------------------------------------------------------------------------
 	void    CGUIWgtTabControl::SetSelectedTab(const CGUIString &name)
@@ -72,12 +52,12 @@ namespace guiex
 			if( pBtn->GetName() == name)
 			{
 				pBtn->SetCheck(true);
-				pBtn->GetChild()->Show();
+				pBtn->GetChild()->SetVisible( true );
 			}
 			else
 			{
 				pBtn->SetCheck(false);
-				pBtn->GetChild()->Hide();
+				pBtn->GetChild()->SetVisible( false );
 			}
 		}
 	}
@@ -92,12 +72,12 @@ namespace guiex
 			if( i == index)
 			{
 				pBtn->SetCheck(true);
-				pBtn->Show( );
+				pBtn->SetVisible( true );
 			}
 			else
 			{
 				pBtn->SetCheck(false);
-				pBtn->Hide( );
+				pBtn->SetVisible( false );
 			}
 		}
 	}

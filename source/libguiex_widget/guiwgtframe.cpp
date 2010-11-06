@@ -339,11 +339,11 @@ namespace guiex
 		if( HasTitlebar())
 		{
 			//draw title bar
-			DrawImage( pRender, m_pImageTitleBar, GetTitlebarRect(), pRender->GetAndIncZ(),&GetClipRect() );
+			DrawImage( pRender, m_pImageTitleBar, GetTitlebarRect() );
 			if( HasTitlebarDecorate())
 			{
-				DrawImage(pRender, m_pImageDecorate[0] , GetDecorateRect(0), pRender->GetAndIncZ(),&GetClipRect() );
-				DrawImage(pRender, m_pImageDecorate[1] , GetDecorateRect(1), pRender->GetAndIncZ(),&GetClipRect() );
+				DrawImage(pRender, m_pImageDecorate[0] , GetDecorateRect(0) );
+				DrawImage(pRender, m_pImageDecorate[1] , GetDecorateRect(1) );
 			}
 
 			//draw title
@@ -357,7 +357,7 @@ namespace guiex
 		{
 			for( int i=0; i<FRAME_BORDER_NONE; ++i)
 			{
-				DrawImage(pRender, m_aBorderInfo[i].m_pImageInfo, GetBorderRect(i), pRender->GetAndIncZ(),&GetClipRect() );
+				DrawImage(pRender, m_aBorderInfo[i].m_pImageInfo, GetBorderRect(i) );
 			}
 		}
 	}
@@ -593,7 +593,7 @@ namespace guiex
 	{
 		SetRectSize(m_aStartSize.GetWidth(), m_aStartSize.GetHeight() - deltaY);
 		CGUIVector2 pLocalPos = m_aStartPos;
-		pLocalPos.y += (m_aStartSize.m_fHeight - GetSize().m_fHeight )*(1.0f-GetTagPoint().y);
+		pLocalPos.y += (m_aStartSize.m_fHeight - GetSize().m_fHeight )*(1.0f-GetAnchorPoint().y);
 		SetLocalPosition(pLocalPos);
 	}
 	//------------------------------------------------------------------------------
@@ -601,7 +601,7 @@ namespace guiex
 	{
 		SetRectSize(m_aStartSize.GetWidth(), m_aStartSize.GetHeight()+deltaY);
 		CGUIVector2 pLocalPos = m_aStartPos;
-		pLocalPos.y += (GetSize().m_fHeight-m_aStartSize.m_fHeight)*GetTagPoint().y;
+		pLocalPos.y += (GetSize().m_fHeight-m_aStartSize.m_fHeight)*GetAnchorPoint().y;
 		SetLocalPosition(pLocalPos);
 	}
 	//------------------------------------------------------------------------------
@@ -609,7 +609,7 @@ namespace guiex
 	{
 		SetRectSize(m_aStartSize.GetWidth()-deltaX, m_aStartSize.GetHeight());
 		CGUIVector2 pLocalPos = m_aStartPos;
-		pLocalPos.x += (m_aStartSize.m_fWidth - GetSize().m_fWidth )*(1.0f-GetTagPoint().x);
+		pLocalPos.x += (m_aStartSize.m_fWidth - GetSize().m_fWidth )*(1.0f-GetAnchorPoint().x);
 		SetLocalPosition(pLocalPos);
 	}
 	//------------------------------------------------------------------------------
@@ -617,7 +617,7 @@ namespace guiex
 	{
 		SetRectSize(m_aStartSize.GetWidth()+deltaX, m_aStartSize.GetHeight());
 		CGUIVector2 pLocalPos = m_aStartPos;
-		pLocalPos.x += ( GetSize().m_fWidth-m_aStartSize.m_fWidth )*GetTagPoint().x;
+		pLocalPos.x += ( GetSize().m_fWidth-m_aStartSize.m_fWidth )*GetAnchorPoint().x;
 		SetLocalPosition(pLocalPos);
 	}
 	//------------------------------------------------------------------------------
@@ -625,8 +625,8 @@ namespace guiex
 	{
 		SetRectSize(m_aStartSize.GetWidth()-deltaX, m_aStartSize.GetHeight()-deltaY);
 		CGUIVector2 pLocalPos = m_aStartPos;
-		pLocalPos.x += (m_aStartSize.m_fWidth - GetSize().m_fWidth )*(1.0f-GetTagPoint().x);
-		pLocalPos.y += (m_aStartSize.m_fHeight - GetSize().m_fHeight )*(1.0f-GetTagPoint().y);
+		pLocalPos.x += (m_aStartSize.m_fWidth - GetSize().m_fWidth )*(1.0f-GetAnchorPoint().x);
+		pLocalPos.y += (m_aStartSize.m_fHeight - GetSize().m_fHeight )*(1.0f-GetAnchorPoint().y);
 		SetLocalPosition(pLocalPos);
 	}
 	//------------------------------------------------------------------------------
@@ -634,8 +634,8 @@ namespace guiex
 	{
 		SetRectSize(m_aStartSize.GetWidth()-deltaX, m_aStartSize.GetHeight()+deltaY);
 		CGUIVector2 pLocalPos = m_aStartPos;
-		pLocalPos.x += (m_aStartSize.m_fWidth - GetSize().m_fWidth )*(1.0f-GetTagPoint().x);
-		pLocalPos.y += ( GetSize().m_fHeight-m_aStartSize.m_fHeight )*GetTagPoint().y;
+		pLocalPos.x += (m_aStartSize.m_fWidth - GetSize().m_fWidth )*(1.0f-GetAnchorPoint().x);
+		pLocalPos.y += ( GetSize().m_fHeight-m_aStartSize.m_fHeight )*GetAnchorPoint().y;
 		SetLocalPosition(pLocalPos);
 	}
 	//------------------------------------------------------------------------------
@@ -643,8 +643,8 @@ namespace guiex
 	{
 		SetRectSize(m_aStartSize.GetWidth()+deltaX, m_aStartSize.GetHeight()-deltaY);
 		CGUIVector2 pLocalPos = m_aStartPos;
-		pLocalPos.x += ( GetSize().m_fWidth-m_aStartSize.m_fWidth )*GetTagPoint().x;
-		pLocalPos.y += (m_aStartSize.m_fHeight - GetSize().m_fHeight )*(1.0f-GetTagPoint().y);
+		pLocalPos.x += ( GetSize().m_fWidth-m_aStartSize.m_fWidth )*GetAnchorPoint().x;
+		pLocalPos.y += (m_aStartSize.m_fHeight - GetSize().m_fHeight )*(1.0f-GetAnchorPoint().y);
 		SetLocalPosition(pLocalPos);
 	}
 	//------------------------------------------------------------------------------
@@ -652,8 +652,8 @@ namespace guiex
 	{
 		SetRectSize(m_aStartSize.GetWidth()+deltaX, m_aStartSize.GetHeight()+deltaY);
 		CGUIVector2 pLocalPos = m_aStartPos;
-		pLocalPos.x += ( GetSize().m_fWidth-m_aStartSize.m_fWidth )*GetTagPoint().x;
-		pLocalPos.y += ( GetSize().m_fHeight-m_aStartSize.m_fHeight )*GetTagPoint().y;
+		pLocalPos.x += ( GetSize().m_fWidth-m_aStartSize.m_fWidth )*GetAnchorPoint().x;
+		pLocalPos.y += ( GetSize().m_fHeight-m_aStartSize.m_fHeight )*GetAnchorPoint().y;
 		SetLocalPosition(pLocalPos);
 	}
 	//------------------------------------------------------------------------------
@@ -842,115 +842,116 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIProperty*	CGUIWgtFrame::GenerateProperty(const CGUIString& rName, const CGUIString& rType )
 	{
-		CGUIProperty* pProperty = NULL;
-		
-		if( rName == "BORDER_TOPLEFT_DYNAMIC" && rType == "BOOL" )
-		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
-				rName, 
-				rType, 
-				CGUIStringConvertor::BoolToString(IsBorderDynamic(FRAME_BORDER_TOPLEFT)));
-		}
-		else if( rName == "BORDER_TOPRIGHT_DYNAMIC" && rType == "BOOL" )
-		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
-				rName, 
-				rType, 
-				CGUIStringConvertor::BoolToString(IsBorderDynamic(FRAME_BORDER_TOPRIGHT)));
-		}
-		else if( rName == "BORDER_BOTTOMRIGHT_DYNAMIC" && rType == "BOOL" )
-		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
-				rName, 
-				rType, 
-				CGUIStringConvertor::BoolToString(IsBorderDynamic(FRAME_BORDER_BOTTOMRIGHT)));
-		}
-		else if( rName == "BORDER_BOTTOMLEFT_DYNAMIC" && rType == "BOOL" )
-		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
-				rName, 
-				rType, 
-				CGUIStringConvertor::BoolToString(IsBorderDynamic(FRAME_BORDER_BOTTOMLEFT)));
-		}
-		else if( rName == "BORDER_TOP_DYNAMIC" && rType == "BOOL" )
-		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
-				rName, 
-				rType, 
-				CGUIStringConvertor::BoolToString(IsBorderDynamic(FRAME_BORDER_TOP)));
-		}
-		else if( rName == "BORDER_LEFT_DYNAMIC" && rType == "BOOL" )
-		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
-				rName, 
-				rType, 
-				CGUIStringConvertor::BoolToString(IsBorderDynamic(FRAME_BORDER_LEFT)));
-		}
-		else if( rName == "BORDER_BOTTOM_DYNAMIC" && rType == "BOOL" )
-		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
-				rName, 
-				rType, 
-				CGUIStringConvertor::BoolToString(IsBorderDynamic(FRAME_BORDER_BOTTOM)));
-		}
-		else if( rName == "BORDER_RIGHT_DYNAMIC" && rType == "BOOL" )
-		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
-				rName, 
-				rType, 
-				CGUIStringConvertor::BoolToString(IsBorderDynamic(FRAME_BORDER_RIGHT)));
-		}
+		//CGUIProperty* pProperty = NULL;
+		//
+		//if( rName == "BORDER_TOPLEFT_DYNAMIC" && rType == "BOOL" )
+		//{
+		//	pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+		//		rName, 
+		//		rType, 
+		//		CGUIStringConvertor::BoolToString(IsBorderDynamic(FRAME_BORDER_TOPLEFT)));
+		//}
+		//else if( rName == "BORDER_TOPRIGHT_DYNAMIC" && rType == "BOOL" )
+		//{
+		//	pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+		//		rName, 
+		//		rType, 
+		//		CGUIStringConvertor::BoolToString(IsBorderDynamic(FRAME_BORDER_TOPRIGHT)));
+		//}
+		//else if( rName == "BORDER_BOTTOMRIGHT_DYNAMIC" && rType == "BOOL" )
+		//{
+		//	pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+		//		rName, 
+		//		rType, 
+		//		CGUIStringConvertor::BoolToString(IsBorderDynamic(FRAME_BORDER_BOTTOMRIGHT)));
+		//}
+		//else if( rName == "BORDER_BOTTOMLEFT_DYNAMIC" && rType == "BOOL" )
+		//{
+		//	pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+		//		rName, 
+		//		rType, 
+		//		CGUIStringConvertor::BoolToString(IsBorderDynamic(FRAME_BORDER_BOTTOMLEFT)));
+		//}
+		//else if( rName == "BORDER_TOP_DYNAMIC" && rType == "BOOL" )
+		//{
+		//	pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+		//		rName, 
+		//		rType, 
+		//		CGUIStringConvertor::BoolToString(IsBorderDynamic(FRAME_BORDER_TOP)));
+		//}
+		//else if( rName == "BORDER_LEFT_DYNAMIC" && rType == "BOOL" )
+		//{
+		//	pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+		//		rName, 
+		//		rType, 
+		//		CGUIStringConvertor::BoolToString(IsBorderDynamic(FRAME_BORDER_LEFT)));
+		//}
+		//else if( rName == "BORDER_BOTTOM_DYNAMIC" && rType == "BOOL" )
+		//{
+		//	pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+		//		rName, 
+		//		rType, 
+		//		CGUIStringConvertor::BoolToString(IsBorderDynamic(FRAME_BORDER_BOTTOM)));
+		//}
+		//else if( rName == "BORDER_RIGHT_DYNAMIC" && rType == "BOOL" )
+		//{
+		//	pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+		//		rName, 
+		//		rType, 
+		//		CGUIStringConvertor::BoolToString(IsBorderDynamic(FRAME_BORDER_RIGHT)));
+		//}
 
-		return pProperty ? pProperty : CGUIWidget::GenerateProperty(rName, rType);
+		//return pProperty ? pProperty : CGUIWidget::GenerateProperty(rName, rType);
+		return NULL;
 	}
 	//------------------------------------------------------------------------------
 	void		CGUIWgtFrame::ProcessProperty( const CGUIProperty* pProperty)
 	{
-		CGUIWidget::ProcessProperty(pProperty);
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//property for dynamic or static
-		/*
-		*<property name="BORDER_TOPLEFT_DYNAMIC" type="BOOL" value="true" />
-		*<property name="BORDER_TOPRIGHT_DYNAMIC" type="BOOL" value="true" />
-		*<property name="BORDER_BOTTOMRIGHT_DYNAMIC" type="BOOL" value="true" />
-		*<property name="BORDER_BOTTOMLEFT_DYNAMIC" type="BOOL" value="true" />
-		*<property name="BORDER_TOP_DYNAMIC" type="BOOL" value="true" />
-		*<property name="BORDER_LEFT_DYNAMIC" type="BOOL" value="true" />
-		*<property name="BORDER_BOTTOM_DYNAMIC" type="BOOL" value="true" />
-		*<property name="BORDER_RIGHT_DYNAMIC" type="BOOL" value="true" />
-		*/
-		if( pProperty->GetName() == "BORDER_TOPLEFT_DYNAMIC" && pProperty->GetType()=="BOOL")
-		{
-			SetBorderDynamic(FRAME_BORDER_TOPLEFT,CGUIStringConvertor::StringToBool(pProperty->GetValue()));
-		}
-		else if( pProperty->GetName() == "BORDER_TOPRIGHT_DYNAMIC" && pProperty->GetType()=="BOOL")
-		{
-			SetBorderDynamic(FRAME_BORDER_TOPRIGHT,CGUIStringConvertor::StringToBool(pProperty->GetValue()));
-		}
-		else if( pProperty->GetName() == "BORDER_BOTTOMRIGHT_DYNAMIC" && pProperty->GetType()=="BOOL")
-		{
-			SetBorderDynamic(FRAME_BORDER_BOTTOMRIGHT,CGUIStringConvertor::StringToBool(pProperty->GetValue()));
-		}
-		else if( pProperty->GetName() == "BORDER_BOTTOMLEFT_DYNAMIC" && pProperty->GetType()=="BOOL")
-		{
-			SetBorderDynamic(FRAME_BORDER_BOTTOMLEFT,CGUIStringConvertor::StringToBool(pProperty->GetValue()));
-		}
-		else if( pProperty->GetName() == "BORDER_TOP_DYNAMIC" && pProperty->GetType()=="BOOL")
-		{
-			SetBorderDynamic(FRAME_BORDER_TOP,CGUIStringConvertor::StringToBool(pProperty->GetValue()));
-		}
-		else if( pProperty->GetName() == "BORDER_LEFT_DYNAMIC" && pProperty->GetType()=="BOOL")
-		{
-			SetBorderDynamic(FRAME_BORDER_LEFT,CGUIStringConvertor::StringToBool(pProperty->GetValue()));
-		}
-		else if( pProperty->GetName() == "BORDER_BOTTOM_DYNAMIC" && pProperty->GetType()=="BOOL")
-		{
-			SetBorderDynamic(FRAME_BORDER_BOTTOM,CGUIStringConvertor::StringToBool(pProperty->GetValue()));
-		}
-		else if( pProperty->GetName() == "BORDER_RIGHT_DYNAMIC" && pProperty->GetType()=="BOOL")
-		{
-			SetBorderDynamic(FRAME_BORDER_RIGHT,CGUIStringConvertor::StringToBool(pProperty->GetValue()));
-		}
+		//CGUIWidget::ProcessProperty(pProperty);
+		//////////////////////////////////////////////////////////////////////////////////////////////////////
+		////property for dynamic or static
+		///*
+		//*<property name="BORDER_TOPLEFT_DYNAMIC" type="BOOL" value="true" />
+		//*<property name="BORDER_TOPRIGHT_DYNAMIC" type="BOOL" value="true" />
+		//*<property name="BORDER_BOTTOMRIGHT_DYNAMIC" type="BOOL" value="true" />
+		//*<property name="BORDER_BOTTOMLEFT_DYNAMIC" type="BOOL" value="true" />
+		//*<property name="BORDER_TOP_DYNAMIC" type="BOOL" value="true" />
+		//*<property name="BORDER_LEFT_DYNAMIC" type="BOOL" value="true" />
+		//*<property name="BORDER_BOTTOM_DYNAMIC" type="BOOL" value="true" />
+		//*<property name="BORDER_RIGHT_DYNAMIC" type="BOOL" value="true" />
+		//*/
+		//if( pProperty->GetName() == "BORDER_TOPLEFT_DYNAMIC" && pProperty->GetType()=="BOOL")
+		//{
+		//	SetBorderDynamic(FRAME_BORDER_TOPLEFT,StringToValue(pProperty->GetValue()));
+		//}
+		//else if( pProperty->GetName() == "BORDER_TOPRIGHT_DYNAMIC" && pProperty->GetType()=="BOOL")
+		//{
+		//	SetBorderDynamic(FRAME_BORDER_TOPRIGHT,StringToValue(pProperty->GetValue()));
+		//}
+		//else if( pProperty->GetName() == "BORDER_BOTTOMRIGHT_DYNAMIC" && pProperty->GetType()=="BOOL")
+		//{
+		//	SetBorderDynamic(FRAME_BORDER_BOTTOMRIGHT,StringToValue(pProperty->GetValue()));
+		//}
+		//else if( pProperty->GetName() == "BORDER_BOTTOMLEFT_DYNAMIC" && pProperty->GetType()=="BOOL")
+		//{
+		//	SetBorderDynamic(FRAME_BORDER_BOTTOMLEFT,StringToValue(pProperty->GetValue()));
+		//}
+		//else if( pProperty->GetName() == "BORDER_TOP_DYNAMIC" && pProperty->GetType()=="BOOL")
+		//{
+		//	SetBorderDynamic(FRAME_BORDER_TOP,StringToValue(pProperty->GetValue()));
+		//}
+		//else if( pProperty->GetName() == "BORDER_LEFT_DYNAMIC" && pProperty->GetType()=="BOOL")
+		//{
+		//	SetBorderDynamic(FRAME_BORDER_LEFT,StringToValue(pProperty->GetValue()));
+		//}
+		//else if( pProperty->GetName() == "BORDER_BOTTOM_DYNAMIC" && pProperty->GetType()=="BOOL")
+		//{
+		//	SetBorderDynamic(FRAME_BORDER_BOTTOM,StringToValue(pProperty->GetValue()));
+		//}
+		//else if( pProperty->GetName() == "BORDER_RIGHT_DYNAMIC" && pProperty->GetType()=="BOOL")
+		//{
+		//	SetBorderDynamic(FRAME_BORDER_RIGHT,StringToValue(pProperty->GetValue()));
+		//}
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

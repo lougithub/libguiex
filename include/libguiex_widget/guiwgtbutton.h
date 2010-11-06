@@ -44,40 +44,29 @@ namespace guiex
 		*/
 		virtual int32 Create();
 
-		/**
-		* @brief create this widget
-		* @param pType should be one of following value
-		*		-NORMAL
-		*		-HOVER
-		*		-DISABLE
-		*		-PUSH
-		*/
-		void	SetBtnTextContent(const wchar_t* pText, const char* pType);
+		void SetBtnTextContent_Hover(const wchar_t* pText );
+		void SetBtnTextInfo_Hover(const CGUIStringInfo& rInfo );
+		void SetBtnTextContent_Disable(const wchar_t* pText );
+		void SetBtnTextInfo_Disable(const CGUIStringInfo& rInfo );
+		void SetBtnTextContent_Push(const wchar_t* pText );
+		void SetBtnTextInfo_Push(const CGUIStringInfo& rInfo );
 
-		/**
-		* @brief create this widget
-		*		-NORMAL
-		*		-HOVER
-		*		-DISABLE
-		*		-PUSH
-		*/
-		void	SetBtnTextInfo(const CGUIStringExInfo& rInfo, const char* pType);
+		virtual void SetTextContent(const wchar_t* pText);
 
-		virtual void	SetTextContent(const wchar_t* pText);
+		void SetStringOffset( const CGUIVector2& rPos);
 
-		void	SetRelativePos( const CGUIVector2& rPos);
-
-		const CGUIVector2&	GetRelativePos(  ) const;
+		const CGUIVector2& GetStringOffset(  ) const;
 
 		/**
 		* @brief load widget config from property
 		*/
-		virtual CGUIProperty*	GenerateProperty(const CGUIString& rName, const CGUIString& rType );
+		virtual int32 GenerateProperty( CGUIProperty& rProperty );
 
 		/** 
-		* @brief process property
-		*/
-		virtual void		ProcessProperty( const CGUIProperty* pProperty);
+		 * @brief process property
+		 */
+		virtual void ProcessProperty( const CGUIProperty& rProperty);
+
 
 	protected:
 		/**
@@ -91,6 +80,8 @@ namespace guiex
 
 		/// render
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
+
+		virtual void RefreshImpl();
 
 		/**
 		* @brief override the OnSetImage function
@@ -119,7 +110,8 @@ namespace guiex
 		CGUIStringEx		m_strTextDisable;	//for disable state
 		CGUIStringEx		m_strTextPush;		//for push state
 
-		CGUIVector2			m_aRelativePos;		//relative pos for button text
+		CGUIVector2			m_aTextOffset;		//relative pos for button text
+		CGUIRect			m_aStringArea;
 
 	private:
 		static CGUIString	ms_strType;

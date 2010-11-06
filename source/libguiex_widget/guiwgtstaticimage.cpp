@@ -48,14 +48,14 @@ namespace guiex
 			m_pImageBG = pImage;
 			if( NEWGetSize().IsEqualZero() && m_pImageBG )
 			{
-				NEWSetPixelSize(m_pImageBG->GetSize());
+				SetPixelSize(m_pImageBG->GetSize());
 			}
 		}
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWgtStaticImage::RenderSelf(IGUIInterfaceRender* pRender)
 	{
-		DrawImage( pRender, m_pImageBG, GetWidgetRect( ), pRender->GetAndIncZ());
+		DrawImage( pRender, m_pImageBG, GetBoundArea( ));
 	}
 	//------------------------------------------------------------------------------
 	void				CGUIWgtStaticImage::SetCurrentImage( const CGUIString& rImageName)

@@ -32,7 +32,7 @@ void CWindowBox::Reset ()
 	m_locked = false;
 	// Find the amount to convert from relative- to screen coordinates
 	// Do this by finding the parent of the element (until no parent)
-	const guiex::CGUIRect& winRc = m_pSelectWidget->GetRect();
+	const guiex::CGUIRect& winRc = m_pSelectWidget->GetBoundArea();
 
 	// Make boxes 3x3 and always in pixels
 	//int width = 7;
@@ -73,13 +73,13 @@ void CWindowBox::Reset ()
 
 	paddX -=1;
 	paddY -=1;
-	const guiex::CGUIVector2& rPoint = m_pSelectWidget->GetTagPoint();
-	m_aTagRect.x = winRc.m_fLeft + winRc.GetWidth()* rPoint.x-paddX;
-	m_aTagRect.y = winRc.m_fTop + winRc.GetHeight()* rPoint.y-paddY;
-	m_aTagRect.width = paddX * 2;
-	m_aTagRect.height = paddY * 2;
+	const guiex::CGUIVector2& rPoint = m_pSelectWidget->GetAnchorPoint();
+	m_aAnchorRect.x = winRc.m_fLeft + winRc.GetWidth()* rPoint.x-paddX;
+	m_aAnchorRect.y = winRc.m_fTop + winRc.GetHeight()* rPoint.y-paddY;
+	m_aAnchorRect.width = paddX * 2;
+	m_aAnchorRect.height = paddY * 2;
 
-	const guiex::CGUIRect& rClientRect = m_pSelectWidget->GetClientRect();
+	const guiex::CGUIRect& rClientRect = m_pSelectWidget->GetClientArea();
 	m_aClientRect.x = rClientRect.m_fLeft;
 	m_aClientRect.y = rClientRect.m_fTop;
 	m_aClientRect.width = rClientRect.GetWidth();
@@ -88,22 +88,18 @@ void CWindowBox::Reset ()
 //-----------------------------------------------------------------------
 void	CWindowBox::MoveWindowPosition(int deltaX, int deltaY)
 {
-	guiex::CGUIVector2 aPoint = m_pSelectWidget->GetGlobalPosition();
+	guiex::CGUIVector2 aPoint = m_pSelectWidget->GetPixelPosition();
 	aPoint.x += deltaX;
 	aPoint.y += deltaY;
-	m_pSelectWidget->SetGlobalPosition(aPoint);
+	m_pSelectWidget->SetPixelPosition(aPoint);
 
 	Reset();
 }
 //-----------------------------------------------------------------------
 void	CWindowBox::SetWindowSize(float deltaleft, float deltatop, float deltaright, float deltabottom)
 {
-	guiex::CGUIRect aRect = m_pSelectWidget->GetRect();
-	aRect.m_fLeft += deltaleft;
-	aRect.m_fTop += deltatop;
-	aRect.m_fRight += deltaright;
-	aRect.m_fBottom += deltabottom;
-	m_pSelectWidget->SetRect(aRect);
+	//TODO: do it later
+//	guiex::CGUIRect aRect = m_pSelectWidget->ExpandBoundArea( deltaleft, deltatop, deltaright, deltabottom );
 	Reset();
 }
 //-----------------------------------------------------------------------
@@ -123,9 +119,9 @@ const wxRect& CWindowBox::GetPointRect (int anIndex)
 	return m_resizePoints [anIndex];
 }
 //-----------------------------------------------------------------------
-const wxRect & CWindowBox::GetTagRect()
+const wxRect & CWindowBox::GetAnchorRect()
 {
-	return m_aTagRect;
+	return m_aAnchorRect;
 }
 const wxRect & CWindowBox::GetClientRect()
 {
@@ -134,8 +130,13 @@ const wxRect & CWindowBox::GetClientRect()
 //-----------------------------------------------------------------------
 wxRect CWindowBox::GetWindowRect () 
 {
-	const guiex::CGUIRect& rc = m_pSelectWidget->GetRect();
-	return wxRect (wxPoint((int)rc.m_fLeft, (int)rc.m_fTop), wxPoint((int)rc.m_fRight, (int)rc.m_fBottom));
+	const guiex::CGUIRect& rc = m_pSelectWidget->GetBoundArea();
+	guiex::CGUIVector2 aLeftTop(rc.m_fLeft, rc.m_fTop);
+	guiex::CGUIVector2 aBottomRight(rc.m_fRight, rc.m_fBottom );
+	m_pSelectWidget->LocalToWorld( aLeftTop );
+	m_pSelectWidget->LocalToWorld( aBottomRight );
+	return wxRect (wxPoint((int)aLeftTop.x, (int)aLeftTop.y), 
+		wxPoint((int)aBottomRight.x, (int)aBottomRight.y));
 }
 
 //-----------------------------------------------------------------------
@@ -159,6 +160,7 @@ int CWindowBox::GetPointAtPosition (wxPoint aPoint)
 //-----------------------------------------------------------------------
 void CWindowBox::SetNewWindowArea(wxRect newArea)
 {
+	//TODO: do it later
 	//m_pSelectWidget->SetRect(guiex::CGUIRect(newArea.x, newArea.y, newArea.x+newArea.width, newArea.y+newArea.height));
 
 	// Update the resizer positions
@@ -168,7 +170,8 @@ void CWindowBox::SetNewWindowArea(wxRect newArea)
 //-----------------------------------------------------------------------
 void CWindowBox::SetNewWindowPosition(wxPoint newPosition)
 {
-	m_pSelectWidget->SetGlobalPosition(guiex::CGUIVector2(newPosition.x, newPosition.y));
+	//TODO: do it later
+	//	m_pSelectWidget->SetGlobalPosition(guiex::CGUIVector2(newPosition.x, newPosition.y));
 
 	// Update the resizer positions
 	Reset();

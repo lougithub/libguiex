@@ -35,24 +35,25 @@ namespace guiex
 		CGUIWgtStaticText( const CGUIString& rName, const CGUIString& rProjectName );
 	
 		virtual int32 Create();
-		virtual void	SetTextContent(const wchar_t* pText);
-		virtual void	SetTextInfo(const CGUIStringExInfo& rInfo);
+		virtual void SetTextContent(const wchar_t* pText);
+		virtual void SetTextInfo(const CGUIStringInfo& rInfo);
 
-		void	SetMultiLine( bool bMultiLine );
-		bool	IsMultiLine( ) const;
+		void SetMultiLine( bool bMultiLine );
+		bool IsMultiLine( ) const;
 
-		void	SetAutoExpandHeight( bool bAutoExpand );
-		bool	IsAutoExpandHeight( ) const;
+		void SetAutoExpandHeight( bool bAutoExpand );
+		bool IsAutoExpandHeight( ) const;
 
 		/**
 		* @brief load widget config from property
 		*/
-		virtual CGUIProperty*	GenerateProperty(const CGUIString& rName, const CGUIString& rType );
+		virtual int32 GenerateProperty( CGUIProperty& rProperty );
 
-		/**
-		* @brief process property
-		*/
-		virtual void		ProcessProperty( const CGUIProperty* pProperty);
+		/** 
+		 * @brief process property
+		 */
+		virtual void ProcessProperty( const CGUIProperty& rProperty);
+
 
 	protected:
 		/**
@@ -62,15 +63,15 @@ namespace guiex
 		CGUIWgtStaticText( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName );
 
 		///initialize static
-		void	InitStaticText();
+		void InitStaticText();
 
 		/// render
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 
-		void		UpdateStringContent();
+		void UpdateStringContent();
 
 	protected:
-		virtual uint32		OnSizeChange( CGUIEventSize* pEvent );
+		virtual uint32 OnSizeChanged( CGUIEventSize* pEvent );
 
 
 	protected:

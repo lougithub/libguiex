@@ -79,7 +79,7 @@ namespace guiex
 		/**
 		* @brief set size of text
 		*/
-		virtual void		SetTextInfo( const CGUIStringExInfo& rInfo);
+		virtual void		SetTextInfo( const CGUIStringInfo& rInfo);
 
 		/**
 		* @brief load widget config from property

@@ -112,6 +112,7 @@ EVT_MENU(ID_VIEW_1280x800, WxMainFrame::On1280x800)
 EVT_MENU(ID_ToggleScissor, WxMainFrame::OnToggleScissor)
 EVT_MENU(ID_ToggleWireframe, WxMainFrame::OnToggleWireframe)
 EVT_MENU(ID_SetBGColor, WxMainFrame::OnSetBGColor)
+EVT_MENU(ID_Refresh, WxMainFrame::OnRefresh)
 
 
 EVT_KEY_DOWN(WxMainFrame::OnKeyDown)
@@ -674,9 +675,9 @@ void WxMainFrame::OnTreeItemWidgetView(wxCommandEvent& event)
 #if SHIPPING_PC_GAME
 	viewer_exe = "_Shipping_libguiex_editor_viewer.exe";
 #elif _DEBUG
-	viewer_exe = "_Debug_libguiex_editor_viewer.exe";
+	viewer_exe = "Debug_libguiex_viewer.exe";
 #else
-	viewer_exe = "_Release_libguiex_editor_viewer.exe";
+	viewer_exe = "Release_libguiex_viewer.exe";
 #endif
 
 	std::string strRunCommand = viewer_exe + " " + guiex::CGUIWidgetSystem::Instance()->GetDataPath() + " " +m_strCurrentProjectName + " " + strFilename.char_str(wxConvUTF8).data();
@@ -1062,6 +1063,12 @@ void WxMainFrame::OnToggleWireframe(wxCommandEvent& evt)
 	{
 		guiex::CGUIInterfaceManager::Instance()->GetInterfaceRender()->SetWireFrame(bIsChecked);
 	}
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnRefresh(wxCommandEvent& evt)
+{
+	guiex::CGUIWidgetSystem::Instance()->GetCurrentRootWidget()->Refresh();
+	Refresh();
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::OnSetBGColor(wxCommandEvent& evt)
@@ -1653,6 +1660,7 @@ void			WxMainFrame::CreateMenu()
     view_menu->Check(ID_ToggleScissor, true);
 	view_menu->Append(ID_ToggleWireframe, wxT("Toggle Wireframe"), wxT("enable or disable wireframe"), wxITEM_CHECK);
 	view_menu->Append(ID_SetBGColor, wxT("Set BG Color"), wxT("set background color"));
+	view_menu->Append(ID_Refresh, wxT("Refresh"), wxT("refresh widgets"));
 
 	//menu-about
 	wxMenu* help_menu = new wxMenu;

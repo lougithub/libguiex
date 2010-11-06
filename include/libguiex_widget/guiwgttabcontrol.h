@@ -44,12 +44,6 @@ namespace guiex
 		CGUIWgtTabControl( const CGUIString& rName, const CGUIString& rProjectName );
 
 		/**
-		* @brief open the widget
-		*/
-		virtual void	Open();
-
-
-		/**
 		* @brief Set the selected tab by the name of the tab button.
 		*/
 		void    SetSelectedTab(const CGUIString &name);
@@ -69,12 +63,6 @@ namespace guiex
 
 		/// initialize tab control
 		void InitTabControl();
-
-		/// render
-		virtual void RenderSelf(IGUIInterfaceRender* pRender);
-
-		//update dirty rect, same way for all widgets
-		virtual void		PreUpdateDirtyRect();	
 
 	protected:	//!< callback function
 		virtual uint32		OnAddChild( CGUIEventRelativeChange* pEvent );

@@ -138,7 +138,7 @@ namespace guiex
 
 	//	CGUIColor aColor(0xFFFFFFFF);
 	//	aColor.SetAlpha(fAlpha);
-	//	pRender->AddRenderTexture( 
+	//	pRender->DrawTile( 
 	//		rRenderRect, 
 	//		z,
 	//		m_vecTextures[m_nFrame]->GetTextureImplement(),
@@ -163,7 +163,7 @@ namespace guiex
 
 		CGUIColor aColor(0xFFFFFFFF);
 		aColor.SetAlpha(fAlpha);
-		pRender->AddRenderTexture( rWorldMatrix,
+		pRender->DrawTile( rWorldMatrix,
 			rDestRect, 
 			z,
 			m_vecTextures[m_nFrame]->GetTextureImplement(),

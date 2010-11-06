@@ -125,6 +125,7 @@ namespace guiex
 		,m_bInitialized(false)
 		,m_nNameGenerateIdx(0)
 		,m_bShouldRunScript(true)
+		,m_bDrawExtraInfo(false)
 	{
 		SetScreenSize(640,480);
 		m_aInputProcessor.SetSystem(this);
@@ -218,6 +219,16 @@ namespace guiex
 		m_aInputProcessor.Reset();
 		UnregisterAllUIEvent();
 		UngisterAllGlobalKey();
+	}
+	//------------------------------------------------------------------------------
+	void	CGUIWidgetSystem::SetDrawExtraInfo( bool bDraw )
+	{
+		m_bDrawExtraInfo = bDraw;
+	}
+	//------------------------------------------------------------------------------
+	bool	CGUIWidgetSystem::IsDrawExtraInfo() const
+	{
+		return m_bDrawExtraInfo;
 	}
 	//------------------------------------------------------------------------------
 	CGUIWidget*	CGUIWidgetSystem::LoadPage( const CGUIString& rFileName, const CGUIString& rProjectName)
@@ -422,7 +433,7 @@ namespace guiex
 		//update page
 		if( m_pWgtRoot )
 		{
-			m_pWgtRoot->NEWRefresh();
+			m_pWgtRoot->Refresh();
 		}
 
 		//update dlg
@@ -430,13 +441,13 @@ namespace guiex
 			itor != m_listOpenedDlg.end();
 			++itor)
 		{
-			(*itor)->NEWRefresh();
+			(*itor)->Refresh();
 		}
 
 		//update popup widget
 		if( m_pPopupWidget )
 		{
-			m_pPopupWidget->NEWRefresh();
+			m_pPopupWidget->Refresh();
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -486,17 +497,15 @@ namespace guiex
 		IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
 		pRender->SetFontRender(pFont); 
 
-		pRender->BeginRender();
-
 		//init render
 		pRender->ResetZValue();
 
+		pRender->BeginRender();
 		//render page
 		if( m_pWgtRoot )
 		{
 			m_pWgtRoot->Render(pRender);
 		}
-
 		//render dlg
 		for(TListDialog::iterator itor = m_listOpenedDlg.begin();
 			itor != m_listOpenedDlg.end();
@@ -504,18 +513,36 @@ namespace guiex
 		{
 			(*itor)->Render(pRender);
 		}
-
 		//update popup widget
 		if( m_pPopupWidget )
 		{
 			m_pPopupWidget->Render(pRender);
 		}
-
-		pRender->DoRender();
-
 		//render mouse
 		CGUIMouseCursor::Instance()->Render(pRender);
-	
+
+		if( IsDrawExtraInfo() )
+		{
+			//draw extra info
+			//render page
+			if( m_pWgtRoot )
+			{
+				m_pWgtRoot->RenderExtraInfo(pRender);
+			}
+			//render dlg
+			for(TListDialog::iterator itor = m_listOpenedDlg.begin();
+				itor != m_listOpenedDlg.end();
+				++itor)
+			{
+				(*itor)->RenderExtraInfo(pRender);
+			}
+			//update popup widget
+			if( m_pPopupWidget )
+			{
+				m_pPopupWidget->RenderExtraInfo(pRender);
+			}
+		}
+
 		pRender->EndRender();
 	}
 	//------------------------------------------------------------------------------
@@ -530,7 +557,7 @@ namespace guiex
 
 		pPage->SetParent( m_pWgtRoot );
 		pPage->Open();
-		pPage->NEWRefresh();
+		pPage->Refresh();
 
 		m_vOpenedPage.push_back(pPage);
 	}

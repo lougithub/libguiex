@@ -340,10 +340,10 @@ namespace guiex
 		return CGUIWidget::OnScaleChange(pEvent);
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWgtScrollPanel::OnSizeChange( CGUIEventSize* pEvent )
+	uint32		CGUIWgtScrollPanel::OnSizeChanged( CGUIEventSize* pEvent )
 	{
 		UpdateScrollbars();
-		return CGUIWidget::OnSizeChange(pEvent);
+		return CGUIWidget::OnSizeChanged(pEvent);
 	}
 	//------------------------------------------------------------------------------
 	uint32		CGUIWgtScrollPanel::OnScrollbarScroll( CGUIEventScrollbar* pEvent )
@@ -408,14 +408,14 @@ namespace guiex
 				rType, 
 				CGUIStringConvertor::BoolToString(IsHorzScrollbarAlwaysShown( )));
 		}
-		else if( rName == "VERTICAL_SCROLLBAR" && rType=="STRING")
+		else if( rName == "VERTICAL_SCROLLBAR" && rType=="CGUIString")
 		{
 			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
 				rName, 
 				rType, 
 				m_strVertScrollbarName);
 		}
-		else if( rName == "HORIZONAL_SCROLLBAR" && rType=="STRING")
+		else if( rName == "HORIZONAL_SCROLLBAR" && rType=="CGUIString")
 		{
 			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
 				rName, 
@@ -437,17 +437,17 @@ namespace guiex
 		*/
 		if( pProperty->GetName() == "SHOW_VERT_SCROLLBAR" && pProperty->GetType()=="BOOL")
 		{
-			ForceVertScrollbarShow(CGUIStringConvertor::StringToBool(pProperty->GetValue()));
+			ForceVertScrollbarShow(StringToValue(pProperty->GetValue()));
 		}
 		else if( pProperty->GetName() == "SHOW_HORZ_SCROLLBAR" && pProperty->GetType()=="BOOL")
 		{
-			ForceHorzScrollbarShow(CGUIStringConvertor::StringToBool(pProperty->GetValue()));
+			ForceHorzScrollbarShow(StringToValue(pProperty->GetValue()));
 		}
-		else if( pProperty->GetName() == "VERTICAL_SCROLLBAR" && pProperty->GetType()=="STRING")
+		else if( pProperty->GetName() == "VERTICAL_SCROLLBAR" && pProperty->GetType()=="CGUIString")
 		{
 			SetVerticalScrollbar(pProperty->GetValue());
 		}
-		else if( pProperty->GetName() == "HORIZONAL_SCROLLBAR" && pProperty->GetType()=="STRING")
+		else if( pProperty->GetName() == "HORIZONAL_SCROLLBAR" && pProperty->GetType()=="CGUIString")
 		{
 			SetHorizonalScrollbar(pProperty->GetValue());
 		}

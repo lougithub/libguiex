@@ -573,31 +573,31 @@ namespace guiex
 		MakeItemVisible(GetItemIndex(pItem));
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::UpdateDirtyRect()
-	{
-		CGUIWgtScrollbarContainer::UpdateDirtyRect_SC_Begin();
+	//void	CGUIWgtListBox::UpdateDirtyRect()
+	//{
+	//	CGUIWgtScrollbarContainer::UpdateDirtyRect_SC_Begin();
 
-		m_aClientRect.SetWidth(0.0f);
-		m_aClientRect.SetHeight(0.0f);
+	//	m_aClientRect.SetWidth(0.0f);
+	//	m_aClientRect.SetHeight(0.0f);
 
-		// loop through the items
-		uint32 itemCount = static_cast<uint32>(m_aListItems.size());
-		for (uint32 i = 0; i < itemCount; ++i)
-		{
-			if( m_aListItems[i]->GetWidth() > m_aClientRect.GetWidth())
-			{
-				m_aClientRect.SetWidth( m_aListItems[i]->GetWidth());
-			}
-			m_aClientRect.SetHeight(m_aClientRect.GetHeight() + m_aListItems[i]->GetHeight());
-		}
+	//	// loop through the items
+	//	uint32 itemCount = static_cast<uint32>(m_aListItems.size());
+	//	for (uint32 i = 0; i < itemCount; ++i)
+	//	{
+	//		if( m_aListItems[i]->GetWidth() > m_aClientRect.GetWidth())
+	//		{
+	//			m_aClientRect.SetWidth( m_aListItems[i]->GetWidth());
+	//		}
+	//		m_aClientRect.SetHeight(m_aClientRect.GetHeight() + m_aListItems[i]->GetHeight());
+	//	}
 
-		CGUIWgtScrollbarContainer::UpdateDirtyRect_SC_End();
-	}
+	//	CGUIWgtScrollbarContainer::UpdateDirtyRect_SC_End();
+	//}
 	//------------------------------------------------------------------------------
 	void CGUIWgtListBox::RenderSelf(IGUIInterfaceRender* pRender)
 	{
 		/// draw bg
-		DrawImage( pRender, m_pImageBG, GetRect(), pRender->GetAndIncZ(),&GetClipRect());
+		DrawImage( pRender, m_pImageBG, GetRect());
 	}
 	//------------------------------------------------------------------------------
 	bool CGUIWgtListBox::ClearAllSelections_impl(void)
@@ -915,7 +915,7 @@ namespace guiex
 		*/
 		if( pProperty->GetName() == "MULTI_SELECT" && pProperty->GetType()=="BOOL")
 		{
-			EnableMultiselect(CGUIStringConvertor::StringToBool(pProperty->GetValue()));
+			EnableMultiselect(StringToValue(pProperty->GetValue()));
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -925,7 +925,7 @@ namespace guiex
 		*/
 		else if( pProperty->GetName() == "SORT" && pProperty->GetType()=="BOOL")
 		{
-			SetSorting(CGUIStringConvertor::StringToBool(pProperty->GetValue()));
+			SetSorting(StringToValue(pProperty->GetValue()));
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////

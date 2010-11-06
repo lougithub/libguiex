@@ -8356,10 +8356,10 @@ static int _wrap_CGUIWidget_SetTagPoint__SWIG_0(lua_State* L) {
   guiex::real arg2 ;
   guiex::real arg3 ;
   
-  SWIG_check_num_args("SetTagPoint",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetTagPoint",1,"guiex::CGUIWidget *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("SetTagPoint",2,"guiex::real");
-  if(!lua_isnumber(L,3)) SWIG_fail_arg("SetTagPoint",3,"guiex::real");
+  SWIG_check_num_args("SetAnchorPoint",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetAnchorPoint",1,"guiex::CGUIWidget *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SetAnchorPoint",2,"guiex::real");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("SetAnchorPoint",3,"guiex::real");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
     SWIG_fail_ptr("CGUIWidget_SetTagPoint",1,SWIGTYPE_p_guiex__CGUIWidget);
@@ -8367,7 +8367,7 @@ static int _wrap_CGUIWidget_SetTagPoint__SWIG_0(lua_State* L) {
   
   arg2 = (guiex::real)lua_tonumber(L, 2);
   arg3 = (guiex::real)lua_tonumber(L, 3);
-  (arg1)->SetTagPoint(arg2,arg3);
+  (arg1)->SetAnchorPoint(arg2,arg3);
   
   return SWIG_arg;
   
@@ -8384,14 +8384,14 @@ static int _wrap_CGUIWidget_GetTagPoint(lua_State* L) {
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
   guiex::CGUIVector2 *result = 0 ;
   
-  SWIG_check_num_args("GetTagPoint",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetTagPoint",1,"guiex::CGUIWidget *");
+  SWIG_check_num_args("GetAnchorPoint",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetAnchorPoint",1,"guiex::CGUIWidget *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
     SWIG_fail_ptr("CGUIWidget_GetTagPoint",1,SWIGTYPE_p_guiex__CGUIWidget);
   }
   
-  result = (guiex::CGUIVector2 *) &(arg1)->GetTagPoint();
+  result = (guiex::CGUIVector2 *) &(arg1)->GetAnchorPoint();
   SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIVector2,0); SWIG_arg++; 
   return SWIG_arg;
   
@@ -8408,9 +8408,9 @@ static int _wrap_CGUIWidget_SetTagPoint__SWIG_1(lua_State* L) {
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
   guiex::CGUIVector2 *arg2 = 0 ;
   
-  SWIG_check_num_args("SetTagPoint",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetTagPoint",1,"guiex::CGUIWidget *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("SetTagPoint",2,"guiex::CGUIVector2 const &");
+  SWIG_check_num_args("SetAnchorPoint",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetAnchorPoint",1,"guiex::CGUIWidget *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("SetAnchorPoint",2,"guiex::CGUIVector2 const &");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
     SWIG_fail_ptr("CGUIWidget_SetTagPoint",1,SWIGTYPE_p_guiex__CGUIWidget);
@@ -8421,7 +8421,7 @@ static int _wrap_CGUIWidget_SetTagPoint__SWIG_1(lua_State* L) {
     SWIG_fail_ptr("CGUIWidget_SetTagPoint",2,SWIGTYPE_p_guiex__CGUIVector2);
   }
   
-  (arg1)->SetTagPoint((guiex::CGUIVector2 const &)*arg2);
+  (arg1)->SetAnchorPoint((guiex::CGUIVector2 const &)*arg2);
   
   return SWIG_arg;
   
@@ -8491,8 +8491,8 @@ static int _wrap_CGUIWidget_SetTagPoint(lua_State* L) {
   
   lua_pushstring(L,"Wrong arguments for overloaded function 'CGUIWidget_SetTagPoint'\n"
     "  Possible C/C++ prototypes are:\n"
-    "    SetTagPoint(guiex::CGUIWidget *,guiex::real,guiex::real)\n"
-    "    SetTagPoint(guiex::CGUIWidget *,guiex::CGUIVector2 const &)\n");
+    "    SetAnchorPoint(guiex::CGUIWidget *,guiex::real,guiex::real)\n"
+    "    SetAnchorPoint(guiex::CGUIWidget *,guiex::CGUIVector2 const &)\n");
   lua_error(L);return 0;
 }
 
@@ -9162,16 +9162,16 @@ static int _wrap_CGUIWidget_SetSelfDisable(lua_State* L) {
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
   bool arg2 ;
   
-  SWIG_check_num_args("SetSelfDisable",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetSelfDisable",1,"guiex::CGUIWidget *");
-  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetSelfDisable",2,"bool");
+  SWIG_check_num_args("SetDisable",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetDisable",1,"guiex::CGUIWidget *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetDisable",2,"bool");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
     SWIG_fail_ptr("CGUIWidget_SetSelfDisable",1,SWIGTYPE_p_guiex__CGUIWidget);
   }
   
   arg2 = (lua_toboolean(L, 2)!=0);
-  (arg1)->SetSelfDisable(arg2);
+  (arg1)->SetDisable(arg2);
   
   return SWIG_arg;
   
@@ -9188,14 +9188,14 @@ static int _wrap_CGUIWidget_IsSelfDisable(lua_State* L) {
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
   bool result;
   
-  SWIG_check_num_args("IsSelfDisable",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsSelfDisable",1,"guiex::CGUIWidget const *");
+  SWIG_check_num_args("IsDisable",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsDisable",1,"guiex::CGUIWidget const *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
     SWIG_fail_ptr("CGUIWidget_IsSelfDisable",1,SWIGTYPE_p_guiex__CGUIWidget);
   }
   
-  result = (bool)((guiex::CGUIWidget const *)arg1)->IsSelfDisable();
+  result = (bool)((guiex::CGUIWidget const *)arg1)->IsDisable();
   lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
   return SWIG_arg;
   
@@ -9212,14 +9212,14 @@ static int _wrap_CGUIWidget_IsDisable(lua_State* L) {
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
   bool result;
   
-  SWIG_check_num_args("IsDisable",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsDisable",1,"guiex::CGUIWidget *");
+  SWIG_check_num_args("IsDerivedDisable",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsDerivedDisable",1,"guiex::CGUIWidget *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
     SWIG_fail_ptr("CGUIWidget_IsDisable",1,SWIGTYPE_p_guiex__CGUIWidget);
   }
   
-  result = (bool)(arg1)->IsDisable();
+  result = (bool)(arg1)->IsDerivedDisable();
   lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
   return SWIG_arg;
   
@@ -9717,8 +9717,8 @@ static swig_lua_method swig_guiex_CGUIWidget_methods[] = {
     {"GetTextContentUTF8", _wrap_CGUIWidget_GetTextContentUTF8}, 
     {"SetValue", _wrap_CGUIWidget_SetValue}, 
     {"GetValue", _wrap_CGUIWidget_GetValue}, 
-    {"GetTagPoint", _wrap_CGUIWidget_GetTagPoint}, 
-    {"SetTagPoint", _wrap_CGUIWidget_SetTagPoint}, 
+    {"GetAnchorPoint", _wrap_CGUIWidget_GetTagPoint}, 
+    {"SetAnchorPoint", _wrap_CGUIWidget_SetTagPoint}, 
     {"SetLocalPosition", _wrap_CGUIWidget_SetLocalPosition}, 
     {"SetPositionRatio", _wrap_CGUIWidget_SetPositionRatio}, 
     {"GetLocalPosition", _wrap_CGUIWidget_GetLocalPosition}, 
@@ -9734,9 +9734,9 @@ static swig_lua_method swig_guiex_CGUIWidget_methods[] = {
     {"IsVisible", _wrap_CGUIWidget_IsVisible}, 
     {"Show", _wrap_CGUIWidget_Show}, 
     {"Hide", _wrap_CGUIWidget_Hide}, 
-    {"SetSelfDisable", _wrap_CGUIWidget_SetSelfDisable}, 
-    {"IsSelfDisable", _wrap_CGUIWidget_IsSelfDisable}, 
-    {"IsDisable", _wrap_CGUIWidget_IsDisable}, 
+    {"SetDisable", _wrap_CGUIWidget_SetSelfDisable}, 
+    {"IsDisable", _wrap_CGUIWidget_IsSelfDisable}, 
+    {"IsDerivedDisable", _wrap_CGUIWidget_IsDisable}, 
     {"SetSelfAlpha", _wrap_CGUIWidget_SetSelfAlpha}, 
     {"GetSelfAlpha", _wrap_CGUIWidget_GetSelfAlpha}, 
     {"GetAlpha", _wrap_CGUIWidget_GetAlpha}, 

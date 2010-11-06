@@ -18,9 +18,6 @@
 //============================================================================//
 // declare
 //============================================================================// 
-
-#define STRING_M2W(value)	wxConvUTF8.cMB2WC(value.c_str())
-
 class wxInvalidWordValidator : public wxValidator
 {
 public:
@@ -63,11 +60,8 @@ static	wxArrayString s_arrayImageArray;
 static	wxArrayString s_arrayTextAlignmentH;
 static	wxArrayString s_arrayTextAlignmentV;
 
-void	InitSheet()
-{
-}
 //------------------------------------------------------------------------------
-void		UpdateImageNameList()
+void UpdateImageNameList()
 {
 	s_arrayImageArray.Clear();
 	s_arrayImageArray.Add(_T(""));
@@ -81,36 +75,33 @@ void		UpdateImageNameList()
 	s_arrayImageArray.Sort();
 }
 //------------------------------------------------------------------------------
-void	LoadWidgetConfig( wxPropertyGridManager* pSheetMgr, const std::string& rType, guiex::CGUIWidget* pWidget )
+void LoadWidgetConfig( wxPropertyGridManager* pSheetMgr, const std::string& rType, guiex::CGUIWidget* pWidget )
 {
 	//get property set
-	const CProperty* pSet = CPropertyConfigMgr::Instance()->GetPropertySet(rType);
-	if( !pSet )
-	{
-		return;
-	}
+	const guiex::CGUIProperty& rSet = CPropertyConfigMgr::Instance()->GetPropertySet(rType);
 
 	int nPageIdx = pSheetMgr->GetSelectedPage( );
 
 	//process page
 	std::map<std::pair<std::string,std::string>, wxPGProperty*>	mapCategory;
-	for(unsigned int i=0; i<pSet->GetPropertyNum();++i)
+	for(unsigned int i=0; i<rSet.GetPropertyNum();++i)
 	{
-		const CProperty* pProp = pSet->GetProperty(i);
+		const guiex::CGUIProperty* pProp = rSet.GetProperty(i);
 			
-		SetPropertyPageByEvent(pSheetMgr, pProp->GetPage());
+		SetPropertyPageByEvent(pSheetMgr, CPropertyData::GetPropertyData(*pProp)->GetPage());
 
-		if( mapCategory.find( std::make_pair(pProp->GetPage(),pProp->GetCategory())) == mapCategory.end())
+		if( mapCategory.find( std::make_pair(CPropertyData::GetPropertyData(*pProp)->GetPage(),CPropertyData::GetPropertyData(*pProp)->GetCategory())) == mapCategory.end())
 		{
 			//add category
-			wxPGProperty* pPGProperty = pSheetMgr->Append(new wxPropertyCategory(wxConvUTF8.cMB2WC( pProp->GetCategory().c_str()), wxPG_LABEL));
+			wxPGProperty* pPGProperty = pSheetMgr->Append(new wxPropertyCategory(wxConvUTF8.cMB2WC( CPropertyData::GetPropertyData(*pProp)->GetCategory().c_str()), wxPG_LABEL));
 			wxASSERT(pPGProperty);
 
-			mapCategory.insert( std::make_pair(std::make_pair(pProp->GetPage(),pProp->GetCategory()), pPGProperty));
+			mapCategory.insert( std::make_pair(std::make_pair(CPropertyData::GetPropertyData(*pProp)->GetPage(),CPropertyData::GetPropertyData(*pProp)->GetCategory()), pPGProperty));
 		}
 
 		//add property
-		SetPropertyByType( pSheetMgr, pProp, mapCategory[std::make_pair(pProp->GetPage(),pProp->GetCategory())], pWidget );
+		wxPGProperty* pPGProp = mapCategory[std::make_pair(CPropertyData::GetPropertyData(*pProp)->GetPage(),CPropertyData::GetPropertyData(*pProp)->GetCategory())];
+		SetPropertyByType( pSheetMgr, pPGProp, pProp, pWidget );
 	}
 	
 	pSheetMgr->SelectPage(nPageIdx);
@@ -133,14 +124,15 @@ void			SetPropertyPageByEvent( wxPropertyGridManager* pSheetMgr, const std::stri
 	}
 }
 //------------------------------------------------------------------------------
-void GenerateGUIProperty( wxPropertyGridManager* pSheetMgr,guiex::CGUIPropertySet& rSet )
+void GenerateGUIProperty( wxPropertyGridManager* pSheetMgr,guiex::CGUIProperty& rSet )
 {
 	for ( wxPGVIterator it = pSheetMgr->GetVIterator(wxPG_ITERATE_PROPERTIES);
 		!it.AtEnd();
 		it.Next() )
 	{
-		guiex::CGUIProperty* pProp = GenerateGUIProperty(pSheetMgr, it.GetProperty());		
-		rSet.AddProperty(pProp);
+		guiex::CGUIProperty aProp;
+		GenerateGUIProperty(pSheetMgr, it.GetProperty(), aProp );		
+		rSet.AddProperty( aProp );
 	}
 }
 //------------------------------------------------------------------------------
@@ -150,42 +142,10 @@ guiex::CGUIWidget*	CreateWidget( wxPropertyGridManager* pSheetMgr, const char* s
 	try
 	{
 		pWidget = GUI_CREATE_WIDGET(strType, strName, GetMainFrame()->GetCurrentProjectName());
-		guiex::CGUIPropertySet aSet;
+		guiex::CGUIProperty aSet;
 		GenerateGUIProperty( pSheetMgr,aSet);
 
-		//sort property
-		guiex::CGUIPropertySet aNewSet;
-		if( pParent )
-		{
-			aSet.AddProperty(guiex::CGUIPropertyManager::Instance()->CreateProperty("PARENT","STRING",pParent->GetName().c_str()));
-		}
-		//image
-		std::vector<guiex::CGUIProperty*>	aImgVector;
-		for( unsigned i=0; i<aSet.GetSize(); ++i)
-		{
-			guiex::CGUIProperty* pProperty = aSet.GetProperty(i);
-			if( pProperty->GetType() == "IMAGE")
-			{
-				aImgVector.push_back(pProperty);
-			}
-		}
-		for( std::vector<guiex::CGUIProperty*>::iterator itor = aImgVector.begin();
-			itor != aImgVector.end();
-			++itor )
-		{
-			aNewSet.AddProperty((*itor)->Clone());
-			aSet.RemoveProperty(*itor);
-		}
-		//left
-		for( unsigned i=0; i<aSet.GetSize(); ++i)
-		{
-			guiex::CGUIProperty* pProperty = aSet.GetProperty(i);
-			aNewSet.AddProperty(pProperty->Clone());
-		}
-		//remove all from old set
-		aSet.Clear();
-
-		pWidget->SetPropertySet(aNewSet);
+		pWidget->SetPropertySet(aSet);
 		pWidget->LoadProperty();
 		pWidget->Create();
 	}
@@ -203,72 +163,31 @@ guiex::CGUIWidget*	CreateWidget( wxPropertyGridManager* pSheetMgr, const char* s
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //------------------------------------------------------------------------------
-void			SetPropertyByType( wxPropertyGridManager* pSheetMgr, const CProperty* pProp, wxPGProperty* pPGProperty, guiex::CGUIWidget* pWidget)
+void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGProperty, const guiex::CGUIProperty* pDefaultProp, guiex::CGUIWidget* pWidget )
 {
-	wxPGProperty* pPGTop = pSheetMgr->GetPropertyByName( STRING_M2W(pProp->GetName()));
+	wxPGProperty* pPGTop = pSheetMgr->GetPropertyByName( STRING_M2W(pDefaultProp->GetName()));
 	GUI_ASSERT( pPGTop || pPGProperty, "wrong parameter" );
-	
-	guiex::CGUIProperty* pGUIProperty = NULL;
-	
-	if( pWidget )
-	{
-		pGUIProperty = pWidget->GenerateProperty(pProp->GetName().c_str(), pProp->GetType().c_str());
-		if( pGUIProperty )
-		{
-			pWidget->SetProperty( *pGUIProperty );
-		}
-		//if( !pGUIProperty && pGUIProperty)
-		//{
-		//	wxString strError = wxString::Format( _T("Failed to Generate GUI Property <%s :: %s> for widget <%s :: %s>)"),
-		//		STRING_M2W(pProp->GetName()), 
-		//		wxConvUTF8.cMB2WC(pProp->GetType().c_str()),
-		//		wxConvUTF8.cMB2WC(pWidget->GetName().c_str()),
-		//		wxConvUTF8.cMB2WC(pWidget->GetType().c_str()));
-		//	wxMessageBox(strError, _T("Error"), wxICON_ERROR|wxCentre);
-		//}
-		//else
-		//{
-		//	pWidget->SetProperty( *pGUIProperty );
-		//}
-	}	
-	
 
+	guiex::CGUIProperty aProp( pDefaultProp->GetName(), pDefaultProp->GetTypeAsString());
+	aProp.SetData( pDefaultProp->GetData() );
+	if( 0 != pWidget->GenerateProperty( aProp ))
+	{
+		wxString strError = wxString::Format( _T("Failed to Generate GUI Property <%s :: %s> for widget <%s :: %s>)"),
+			STRING_M2W(aProp.GetName()), 
+			STRING_M2W(aProp.GetTypeAsString()),
+			STRING_M2W(pWidget->GetName()),
+			STRING_M2W(pWidget->GetType()));
+		wxMessageBox(strError, _T("Error"), wxICON_ERROR|wxCentre);
+		return;
+	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
-	//VECTOR2
-	if( pProp->GetType() == "VECTOR2" )
+	//CGUIVector2
+	if( aProp.GetType() == guiex::ePropertyType_Vector2 )
 	{
 		guiex::CGUIVector2 aValue;
-		if( pWidget )
-		{
-			if( pGUIProperty )
-			{
-				aValue = guiex::CGUIStringConvertor::StringToVector2(pGUIProperty->GetValue());
-			}
-		}
-		else
-		{
-			aValue = guiex::CGUIStringConvertor::StringToVector2(pProp->GetValue());
-		}
-			
+		guiex::PropertyToValue(aProp, aValue);
 
 		if( pPGTop )
 		{
@@ -276,58 +195,36 @@ void			SetPropertyByType( wxPropertyGridManager* pSheetMgr, const CProperty* pPr
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxGUIVector2Property( STRING_M2W(pProp->GetLabel()), STRING_M2W(pProp->GetName()), aValue));
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxGUIVector2Property( STRING_M2W(CPropertyData::GetPropertyData(aProp)->GetLabel()), STRING_M2W(aProp.GetName()), aValue));
 		}
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
-	//RECT
-	else if( pProp->GetType() == "RECT" )
+	//CGUIRect
+	else if( aProp.GetType() == guiex::ePropertyType_Rect )
 	{
 		guiex::CGUIRect aValue;
-		if( pWidget )
-		{
-			if( pGUIProperty )
-			{
-				aValue = guiex::CGUIStringConvertor::StringToRect(pGUIProperty->GetValue());
-			}
-		}
-		else
-		{
-			aValue = guiex::CGUIStringConvertor::StringToRect(pProp->GetValue());
-		}
+		guiex::PropertyToValue(aProp, aValue);
 			
-
 		if( pPGTop )
 		{
 			pPGTop->SetValue( CGUIRectToVariant(aValue));
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxGUIRectProperty( STRING_M2W(pProp->GetLabel()), STRING_M2W(pProp->GetName()), aValue));
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxGUIRectProperty( STRING_M2W(CPropertyData::GetPropertyData(aProp)->GetLabel()), STRING_M2W(aProp.GetName()), aValue));
 		}
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
-	//COLOR
-	else if( pProp->GetType() == "COLOR" )
+	//CGUIColor
+	else if( aProp.GetType() == guiex::ePropertyType_Color)
 	{
+		guiex::CGUIColor aColor;
+		guiex::PropertyToValue( aProp, aColor );
+
 		wxColour aValue;
-
-		if( pWidget )
-		{
-			if( pGUIProperty )
-			{
-				guiex::CGUIColor aColor = guiex::CGUIStringConvertor::StringToColor( pGUIProperty->GetValue() );
-				aValue = wxColour(aColor.GetRed()*255.f,aColor.GetGreen()*255.f,aColor.GetBlue()*255.f,aColor.GetAlpha()*255.f);
-			}
-		}
-		else
-		{
-			guiex::CGUIColor aColor = guiex::CGUIStringConvertor::StringToColor(pProp->GetValue());
-			aValue = wxColour(aColor.GetRed()*255.f,aColor.GetGreen()*255.f,aColor.GetBlue()*255.f,aColor.GetAlpha()*255.f);
-		}
-
+		aValue = wxColour(aColor.GetRed()*255.f,aColor.GetGreen()*255.f,aColor.GetBlue()*255.f,aColor.GetAlpha()*255.f);
 
 		if( pPGTop )
 		{
@@ -335,26 +232,15 @@ void			SetPropertyByType( wxPropertyGridManager* pSheetMgr, const CProperty* pPr
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxColourProperty(STRING_M2W(pProp->GetLabel()), STRING_M2W(pProp->GetName()), aValue));
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxColourProperty(STRING_M2W(CPropertyData::GetPropertyData(aProp)->GetLabel()), STRING_M2W(aProp.GetName()), aValue));
 		}
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
-	//SIZE
-	else if( pProp->GetType() == "SIZE" )
+	//CGUISize
+	else if( aProp.GetType() == guiex::ePropertyType_Size )
 	{
 		guiex::CGUISize aValue;
-		
-		if( pWidget )
-		{
-			if( pGUIProperty )
-			{
-				aValue = guiex::CGUIStringConvertor::StringToSize(pGUIProperty->GetValue());
-			}
-		}
-		else
-		{
-			aValue = guiex::CGUIStringConvertor::StringToSize(pProp->GetValue());
-		}
+		guiex::PropertyToValue(aProp, aValue);
 
 		if( pPGTop )
 		{
@@ -362,26 +248,15 @@ void			SetPropertyByType( wxPropertyGridManager* pSheetMgr, const CProperty* pPr
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxGUISizeProperty(STRING_M2W(pProp->GetLabel()), STRING_M2W(pProp->GetName()), aValue));
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxGUISizeProperty(STRING_M2W(CPropertyData::GetPropertyData(aProp)->GetLabel()), STRING_M2W(aProp.GetName()), aValue));
 		}
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
-	//STRING
-	else if( pProp->GetType() == "STRING" )
+	//CGUIString
+	else if( aProp.GetType() == guiex::ePropertyType_String )
 	{
 		wxString aValue;
-
-		if( pWidget )
-		{
-			if( pGUIProperty)
-			{
-				aValue = wxConvUTF8.cMB2WC(pGUIProperty->GetValue().c_str());
-			}
-		}
-		else
-		{
-			aValue = wxConvUTF8.cMB2WC(pProp->GetValue().c_str());
-		}
+		aValue = wxConvUTF8.cMB2WC(aProp.GetValue().c_str());
 
 		if( pPGTop )
 		{
@@ -389,26 +264,15 @@ void			SetPropertyByType( wxPropertyGridManager* pSheetMgr, const CProperty* pPr
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxStringProperty(STRING_M2W(pProp->GetLabel()), STRING_M2W(pProp->GetName()), aValue));
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxStringProperty(STRING_M2W(CPropertyData::GetPropertyData(aProp)->GetLabel()), STRING_M2W(aProp.GetName()), aValue));
 		}
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
-	//EVENT
-	else if( pProp->GetType() == "EVENT" )
+	//CGUIEvent
+	else if( aProp.GetType() == guiex::ePropertyType_Event )
 	{
 		wxString aValue;
-
-		if( pWidget )
-		{
-			if( pGUIProperty)
-			{
-				aValue = wxConvUTF8.cMB2WC(pGUIProperty->GetValue().c_str());
-			}
-		}
-		else
-		{
-			aValue = wxConvUTF8.cMB2WC(pProp->GetValue().c_str());
-		}
+		aValue = wxConvUTF8.cMB2WC(aProp.GetValue().c_str());
 
 		if( pPGTop )
 		{
@@ -416,120 +280,66 @@ void			SetPropertyByType( wxPropertyGridManager* pSheetMgr, const CProperty* pPr
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxStringProperty(STRING_M2W(pProp->GetLabel()), STRING_M2W(pProp->GetName()), aValue));
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxStringProperty(STRING_M2W(CPropertyData::GetPropertyData(aProp)->GetLabel()), STRING_M2W(aProp.GetName()), aValue));
 		}
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
-	//STRING_INFO
-	else if(  pProp->GetType() == "STRING_INFO" )
+	//CGUIStringInfo
+	else if(  aProp.GetType() == guiex::ePropertyType_StringInfo )
 	{
-		guiex::CGUIStringExInfo aValue;
-
-		if( pWidget )
-		{
-			if( pGUIProperty )
-			{
-				aValue.m_aColor = guiex::CGUIStringConvertor::StringToColor(pGUIProperty->GetProperty("COLOR")->GetValue());
-				aValue.m_nFontIdx = guiex::CGUIStringConvertor::StringToInt(pGUIProperty->GetProperty("FONT_INDEX")->GetValue());
-				aValue.m_nFontSize = guiex::CGUIStringConvertor::StringToUInt(pGUIProperty->GetProperty("SIZE")->GetValue());
-			}
-		}
-		else
-		{
-			aValue.m_nFontSize = guiex::CGUIStringConvertor::StringToUInt(pProp->GetProperty("SIZE")->GetValue());
-			aValue.m_nFontIdx = guiex::CGUIStringConvertor::StringToUInt(pProp->GetProperty("FONT_INDEX")->GetValue());
-			aValue.m_aColor = guiex::CGUIStringConvertor::StringToColor(pProp->GetProperty("COLOR")->GetValue().c_str());
-		}
+		guiex::CGUIStringInfo aValue;
+		guiex::PropertyToValue( aProp, aValue );
 
 		if( pPGTop )
 		{
-			pPGTop->SetValue( CGUIStringExInfoToVariant( aValue ));
+			pPGTop->SetValue( CGUIStringInfoToVariant( aValue ));
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxGUIStringInfoProperty(STRING_M2W(pProp->GetLabel()), STRING_M2W(pProp->GetName()), aValue));
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxGUIStringInfoProperty(STRING_M2W(CPropertyData::GetPropertyData(aProp)->GetLabel()), STRING_M2W(aProp.GetName()), aValue));
 		}
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
-	//WIDGET_POSITION
-	else if(  pProp->GetType() == "WIDGET_POSITION" )
+	//CGUIWidgetPosition
+	else if(  aProp.GetType() == guiex::ePropertyType_WidgetPosition )
 	{
-		SWidgetPosition aValue;
-
-		if( pWidget )
-		{
-			if( pGUIProperty )
-			{
-				aValue.m_bIsRelative = guiex::CGUIStringConvertor::StringToBool(pGUIProperty->GetProperty("RELATIVE")->GetValue());
-				aValue.m_aPosition = guiex::CGUIStringConvertor::StringToVector2(pGUIProperty->GetProperty("POSITION")->GetValue());
-			}
-		}
-		else
-		{
-			aValue.m_bIsRelative = guiex::CGUIStringConvertor::StringToBool(pProp->GetProperty("RELATIVE")->GetValue());
-			aValue.m_aPosition = guiex::CGUIStringConvertor::StringToVector2(pProp->GetProperty("POSITION")->GetValue());
-		}
+		guiex::CGUIWidgetPosition aValue;
+		guiex::PropertyToValue( aProp, aValue );
 
 		if( pPGTop )
 		{
-			pPGTop->SetValue( SWidgetPositionToVariant( aValue ));
+			pPGTop->SetValue( CGUIWidgetPositionToVariant( aValue ));
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxGUIWidgetPositionProperty(STRING_M2W(pProp->GetLabel()), STRING_M2W(pProp->GetName()), aValue));
+			pPGTop = pSheetMgr->Insert( 
+				pPGProperty, 
+				-1, 
+				new wxGUIWidgetPositionProperty(STRING_M2W(CPropertyData::GetPropertyData(aProp)->GetLabel()), STRING_M2W(aProp.GetName()), aValue));
 		}
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
-	//WIDGET_SIZE
-	else if(  pProp->GetType() == "WIDGET_SIZE" )
+	//CGUIWidgetSize
+	else if(  aProp.GetType() == guiex::ePropertyType_WidgetSize )
 	{
-		SWidgetSize aValue;
-
-		if( pWidget )
-		{
-			if( pGUIProperty )
-			{
-				aValue.m_bIsRelative = guiex::CGUIStringConvertor::StringToBool(pGUIProperty->GetProperty("RELATIVE")->GetValue());
-				aValue.m_aSize = guiex::CGUIStringConvertor::StringToSize(pGUIProperty->GetProperty("SIZE")->GetValue());
-				aValue.m_aMaxSize = guiex::CGUIStringConvertor::StringToSize(pGUIProperty->GetProperty("MAX_SIZE")->GetValue());
-				aValue.m_aMinSize = guiex::CGUIStringConvertor::StringToSize(pGUIProperty->GetProperty("MIN_SIZE")->GetValue());
-			}
-		}
-		else
-		{
-			aValue.m_bIsRelative = guiex::CGUIStringConvertor::StringToBool(pProp->GetProperty("RELATIVE")->GetValue());
-			aValue.m_aSize = guiex::CGUIStringConvertor::StringToSize(pProp->GetProperty("SIZE")->GetValue());
-			aValue.m_aMaxSize = guiex::CGUIStringConvertor::StringToSize(pProp->GetProperty("MAX_SIZE")->GetValue());
-			aValue.m_aMinSize = guiex::CGUIStringConvertor::StringToSize(pProp->GetProperty("MIN_SIZE")->GetValue());
-		}
+		guiex::CGUIWidgetSize aValue;
+		guiex::PropertyToValue( aProp, aValue );
 
 		if( pPGTop )
 		{
-			pPGTop->SetValue( SWidgetSizeToVariant( aValue ));
+			pPGTop->SetValue( CGUIWidgetSizeToVariant( aValue ));
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxGUIWidgetSizeProperty(STRING_M2W(pProp->GetLabel()), STRING_M2W(pProp->GetName()), aValue));
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxGUIWidgetSizeProperty(STRING_M2W(CPropertyData::GetPropertyData(aProp)->GetLabel()), STRING_M2W(aProp.GetName()), aValue));
 		}
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
 	//IMAGE
-	else if(  pProp->GetType() == "IMAGE" )
+	else if(  aProp.GetType() == guiex::ePropertyType_Image )
 	{			
 		wxString aValue;
-
-		if( pWidget )
-		{
-			if( pGUIProperty)
-			{
-				aValue = wxConvUTF8.cMB2WC(pGUIProperty->GetValue().c_str());
-			}
-		}
-		else
-		{
-			aValue = wxConvUTF8.cMB2WC(pProp->GetValue().c_str());
-		}
-
+		aValue = wxConvUTF8.cMB2WC(aProp.GetValue().c_str());
 
 		if( pPGTop )
 		{
@@ -537,28 +347,16 @@ void			SetPropertyByType( wxPropertyGridManager* pSheetMgr, const CProperty* pPr
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxEnumProperty(STRING_M2W(pProp->GetLabel()), STRING_M2W(pProp->GetName()),s_arrayImageArray));
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxEnumProperty(STRING_M2W(CPropertyData::GetPropertyData(aProp)->GetLabel()), STRING_M2W(aProp.GetName()),s_arrayImageArray));
 			pSheetMgr->SetPropertyValue(pPGTop, aValue);
 		}
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
 	//ENUM
-	else if(  pProp->GetType() == "ENUM" )
-	{			
-		wxString aValue;
-
-		if( pWidget )
-		{
-			if( pGUIProperty)
-			{
-				aValue = wxConvUTF8.cMB2WC(pGUIProperty->GetValue().c_str());
-			}
-		}
-		else
-		{
-			aValue = wxConvUTF8.cMB2WC(pProp->GetValue().c_str());
-		}
-
+	else if( aProp.GetType() == ePropertyType_ScreenValue )
+	{
+		guiex::EScreenValue aValue;
+		guiex::PropertyToValue( aProp, aValue );
 
 		if( pPGTop )
 		{
@@ -566,32 +364,65 @@ void			SetPropertyByType( wxPropertyGridManager* pSheetMgr, const CProperty* pPr
 		}
 		else
 		{
-			wxArrayString arrEnums;
-			for( unsigned i=0; i<pProp->GetEnums().size(); ++i )
-			{
-				arrEnums.Add( STRING_M2W( pProp->GetEnums()[i] ));
-			}
-			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxEnumProperty(STRING_M2W(pProp->GetLabel()), STRING_M2W(pProp->GetName()), arrEnums));
+			const wxArrayString& arrEnums = CPropertyConfigMgr::Instance()->GetEnumDefine(aProp.GetTypeAsString());
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxEnumProperty(STRING_M2W(CPropertyData::GetPropertyData(aProp)->GetLabel()), STRING_M2W(aProp.GetName()), arrEnums));
+			pSheetMgr->SetPropertyValue(pPGTop, aValue);
+		}
+	}
+	else if( aProp.GetType() == ePropertyType_TextAlignmentHorz )
+	{
+		guiex::ETextAlignmentHorz aValue;
+		guiex::PropertyToValue( aProp, aValue );
+
+		if( pPGTop )
+		{
+			pPGTop->SetValue(aValue);
+		}
+		else
+		{
+			const wxArrayString& arrEnums = CPropertyConfigMgr::Instance()->GetEnumDefine(aProp.GetTypeAsString());
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxEnumProperty(STRING_M2W(CPropertyData::GetPropertyData(aProp)->GetLabel()), STRING_M2W(aProp.GetName()), arrEnums));
+			pSheetMgr->SetPropertyValue(pPGTop, aValue);
+		}
+	}
+	else if( aProp.GetType() == ePropertyType_TextAlignmentVert )
+	{
+		guiex::ETextAlignmentVert aValue;
+		guiex::PropertyToValue( aProp, aValue );
+
+		if( pPGTop )
+		{
+			pPGTop->SetValue(aValue);
+		}
+		else
+		{
+			const wxArrayString& arrEnums = CPropertyConfigMgr::Instance()->GetEnumDefine(aProp.GetTypeAsString());
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxEnumProperty(STRING_M2W(CPropertyData::GetPropertyData(aProp)->GetLabel()), STRING_M2W(aProp.GetName()), arrEnums));
+			pSheetMgr->SetPropertyValue(pPGTop, aValue);
+		}
+	}
+	else if( aProp.GetType() == ePropertyType_ImageOperation )
+	{			
+		guiex::EImageOperation aValue;
+		guiex::PropertyToValue( aProp, aValue );
+
+		if( pPGTop )
+		{
+			pPGTop->SetValue(aValue);
+		}
+		else
+		{
+			const wxArrayString& arrEnums = CPropertyConfigMgr::Instance()->GetEnumDefine(aProp.GetTypeAsString());
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxEnumProperty(STRING_M2W(CPropertyData::GetPropertyData(aProp)->GetLabel()), STRING_M2W(aProp.GetName()), arrEnums));
 			pSheetMgr->SetPropertyValue(pPGTop, aValue);
 		}
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
-	//REAL
-	else if(  pProp->GetType() == "REAL" )
+	//real
+	else if(  aProp.GetType() == guiex::ePropertyType_Real )
 	{			
 		guiex::real aValue = 0.f;
-
-		if( pWidget )
-		{
-			if( pGUIProperty)
-			{
-				aValue = guiex::CGUIStringConvertor::StringToReal(pGUIProperty->GetValue());
-			}
-		}
-		else
-		{
-			aValue = guiex::CGUIStringConvertor::StringToReal(pProp->GetValue());
-		}
+		guiex::PropertyToValue( aProp, aValue );
 		
 		if( pPGTop )
 		{
@@ -599,26 +430,15 @@ void			SetPropertyByType( wxPropertyGridManager* pSheetMgr, const CProperty* pPr
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty,-1, new wxFloatProperty( STRING_M2W(pProp->GetLabel()), STRING_M2W(pProp->GetName()),aValue ) );
+			pPGTop = pSheetMgr->Insert( pPGProperty,-1, new wxFloatProperty( STRING_M2W(CPropertyData::GetPropertyData(aProp)->GetLabel()), STRING_M2W(aProp.GetName()),aValue ) );
 		}		
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
-	//UINT
-	else if(  pProp->GetType() == "UINT" )
+	//uint32
+	else if(  aProp.GetType() == guiex::ePropertyType_UInt32 )
 	{			
 		guiex::uint32 aValue = 0;
-
-		if( pWidget )
-		{
-			if( pGUIProperty)
-			{
-				aValue = guiex::CGUIStringConvertor::StringToUInt(pGUIProperty->GetValue());
-			}
-		}
-		else
-		{
-			aValue = guiex::CGUIStringConvertor::StringToUInt(pProp->GetValue());
-		}
+		guiex::PropertyToValue( aProp, aValue );
 		
 		if( pPGTop )
 		{
@@ -626,26 +446,15 @@ void			SetPropertyByType( wxPropertyGridManager* pSheetMgr, const CProperty* pPr
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty,-1, new wxIntProperty( STRING_M2W(pProp->GetLabel()), STRING_M2W(pProp->GetName()),aValue ) );
+			pPGTop = pSheetMgr->Insert( pPGProperty,-1, new wxIntProperty( STRING_M2W(CPropertyData::GetPropertyData(aProp)->GetLabel()), STRING_M2W(aProp.GetName()),aValue ) );
 		}		
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
-	//BOOL
-	else if(  pProp->GetType() == "BOOL" )
+	//bool
+	else if(  aProp.GetType() == guiex::ePropertyType_Bool )
 	{			
 		bool aValue = false;
-
-		if( pWidget )
-		{
-			if( pGUIProperty)
-			{
-				aValue = guiex::CGUIStringConvertor::StringToBool(pGUIProperty->GetValue());
-			}
-		}
-		else
-		{
-			aValue = guiex::CGUIStringConvertor::StringToBool(pProp->GetValue());
-		}
+		guiex::PropertyToValue( aProp, aValue );
 
 		if( pPGTop )
 		{
@@ -653,27 +462,16 @@ void			SetPropertyByType( wxPropertyGridManager* pSheetMgr, const CProperty* pPr
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty,-1, new wxBoolProperty( STRING_M2W(pProp->GetLabel()), STRING_M2W(pProp->GetName()),aValue ) );
+			pPGTop = pSheetMgr->Insert( pPGProperty,-1, new wxBoolProperty( STRING_M2W(CPropertyData::GetPropertyData(aProp)->GetLabel()), STRING_M2W(aProp.GetName()),aValue ) );
 			pSheetMgr->SetPropertyAttribute( pPGTop,wxPG_BOOL_USE_CHECKBOX,(long)1 );
 		}		
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
-	//UINT
-	else if(  pProp->GetType() == "UINT" )
+	//int32
+	else if(  aProp.GetType() == guiex::ePropertyType_Int32 )
 	{			
-		guiex::uint32 aValue = 0;
-		if( pWidget )
-		{
-			if( pGUIProperty)
-			{
-				aValue = guiex::CGUIStringConvertor::StringToUInt(pGUIProperty->GetValue());
-			}
-		}
-		else
-		{
-			aValue = guiex::CGUIStringConvertor::StringToUInt(pProp->GetValue());
-		}
-			
+		guiex::int32 aValue = 0;
+		guiex::PropertyToValue( aProp, aValue );
 
 		if( pPGTop )
 		{
@@ -681,178 +479,140 @@ void			SetPropertyByType( wxPropertyGridManager* pSheetMgr, const CProperty* pPr
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty,-1, new wxUIntProperty( STRING_M2W(pProp->GetLabel()), STRING_M2W(pProp->GetName()),aValue ) );
+			pPGTop = pSheetMgr->Insert( pPGProperty,-1, new wxUIntProperty( STRING_M2W(CPropertyData::GetPropertyData(aProp)->GetLabel()), STRING_M2W(aProp.GetName()),aValue ) );
 		}		
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
 	//unknown
 	else
 	{
-		std::string strError = std::string("unsupported property type:  ")+pProp->GetType();
+		std::string strError = std::string("unsupported property type:  ")+aProp.GetTypeAsString();
 		wxMessageBox(wxConvUTF8.cMB2WC(strError.c_str()), _T("Error"), wxICON_ERROR|wxCentre);
 	}
 
 	//set type as client data
 	if( pPGTop)
 	{
-		pSheetMgr->SetPropertyClientData( pPGTop, CPropertyConfigMgr::Instance()->GetTypePtr(pProp->GetType()));
+		pSheetMgr->SetPropertyClientData( pPGTop, CPropertyConfigMgr::Instance()->GetTypePtr(aProp.GetTypeAsString()));
 
-		if( pProp->IsMustExist())
+		if( CPropertyData::GetPropertyData(aProp)->IsMustExist())
 		{
 			pSheetMgr->SetPropertyTextColour( pPGTop, wxColour(255,0,0));
 		}
 	}
-
-	//release gui property
-	if( pGUIProperty )
-	{
-		guiex::CGUIPropertyManager::Instance()->DestroyProperty(pGUIProperty);
-	}
 }
 //------------------------------------------------------------------------------
-guiex::CGUIProperty*	GenerateGUIProperty( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGProperty )
+void GenerateGUIProperty( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGProperty, guiex::CGUIProperty& rProperty )
 {
 	std::string  strName = pSheetMgr->GetPropertyName(pPGProperty).char_str(wxConvUTF8).data();
 	std::string* pType = (std::string*)pSheetMgr->GetPropertyClientData( pPGProperty );
 	wxASSERT( pType );
+	
+	rProperty.SetName( strName );
+	rProperty.SetType( *pType );
 
-	guiex::CGUIProperty* pProperty = NULL;
-
 	//////////////////////////////////////////////////////////////////////////////////////
-	//VECTOR2
-	if( *pType == "VECTOR2" )
+	//CGUIVector2
+	if( rProperty.GetType() == guiex::ePropertyType_Vector2 )
 	{
-		guiex::CGUIVector2 aVector = CGUIVector2FromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
-		pProperty = guiex::CGUIPropertyManager::Instance()->CreateProperty( 
-			strName.c_str(), 
-			pType->c_str(), 
-			guiex::CGUIStringConvertor::Vector2ToString(aVector));
+		guiex::CGUIVector2 aValue = CGUIVector2FromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
+		guiex::ValueToProperty( aValue, rProperty );
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
-	//RECT
-	else if( *pType == "RECT" )
+	//CGUIRect
+	else if( rProperty.GetType() == guiex::ePropertyType_Rect )
 	{
-		guiex::CGUIRect aRect = CGUIRectFromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
-		pProperty = guiex::CGUIPropertyManager::Instance()->CreateProperty( 
-			strName.c_str(), 
-			pType->c_str(), 
-			guiex::CGUIStringConvertor::RectToString(aRect));
+		guiex::CGUIRect aValue = CGUIRectFromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
+		guiex::ValueToProperty( aValue, rProperty );
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
-	//REAL
-	else if( *pType == "REAL" )
+	//real
+	else if( rProperty.GetType() == guiex::ePropertyType_Real )
 	{
-		pProperty = guiex::CGUIPropertyManager::Instance()->CreateProperty( 
-			strName.c_str(), 
-			pType->c_str(), 
-			pSheetMgr->GetPropertyValueAsString( pPGProperty ).char_str(wxConvUTF8).data());
+		guiex::real aValue = pSheetMgr->GetPropertyValueAsDouble(pPGProperty);
+		guiex::ValueToProperty( aValue, rProperty );
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
-	//UINT
-	else if( *pType == "UINT" )
+	//uint32
+	else if( rProperty.GetType() == guiex::ePropertyType_UInt32 )
 	{
-		pProperty = guiex::CGUIPropertyManager::Instance()->CreateProperty( 
-			strName.c_str(), 
-			pType->c_str(), 
-			guiex::CGUIStringConvertor::UIntToString(pSheetMgr->GetPropertyValueAsInt(pPGProperty)));
+		guiex::uint32 aValue = pSheetMgr->GetPropertyValueAsInt(pPGProperty);
+		guiex::ValueToProperty( aValue, rProperty );
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
-	//BOOL
-	else if( *pType == "BOOL" )
+	//bool
+	else if( rProperty.GetType() == ePropertyType_Bool )
 	{
-		pProperty = guiex::CGUIPropertyManager::Instance()->CreateProperty( 
-			strName.c_str(), 
-			pType->c_str(), 
-			pSheetMgr->GetPropertyValueAsString( pPGProperty ).char_str(wxConvUTF8).data());
+		bool aValue = pSheetMgr->GetPropertyValueAsBool(pPGProperty);
+		guiex::ValueToProperty( aValue, rProperty );
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
-	//SIZE
-	else if( *pType == "SIZE" )
+	//CGUISize
+	else if( rProperty.GetType() == guiex::ePropertyType_Size )
 	{
-		guiex::CGUISize aSize = CGUISizeFromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
-		pProperty = guiex::CGUIPropertyManager::Instance()->CreateProperty( 
-			strName.c_str(), 
-			pType->c_str(), 
-			guiex::CGUIStringConvertor::SizeToString(aSize));
+		guiex::CGUISize aValue = CGUISizeFromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
+		guiex::ValueToProperty( aValue, rProperty );
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
-	//EVENT
-	else if( *pType == "EVENT" )
+	//CGUIEvent
+	else if( rProperty.GetType() == ePropertyType_Event )
 	{
-		pProperty = guiex::CGUIPropertyManager::Instance()->CreateProperty( 
-			strName.c_str(), 
-			pType->c_str(), 
-			pSheetMgr->GetPropertyValueAsString( pPGProperty ).char_str(wxConvUTF8).data());
+		guiex::CGUIString aValue = pSheetMgr->GetPropertyValueAsString( pPGProperty ).char_str(wxConvUTF8).data();
+		rProperty.SetValue( aValue );
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
-	//STRING
-	else if( *pType == "STRING" )
+	//CGUIEvent
+	else if( rProperty.GetType() == ePropertyType_String )
 	{
-		pProperty = guiex::CGUIPropertyManager::Instance()->CreateProperty( 
-			strName.c_str(), 
-			pType->c_str(), 
-			pSheetMgr->GetPropertyValueAsString( pPGProperty ).char_str(wxConvUTF8).data());
+		guiex::CGUIString aValue = pSheetMgr->GetPropertyValueAsString( pPGProperty ).char_str(wxConvUTF8).data();
+		rProperty.SetValue( aValue );
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
-	//IMAGE
-	else if( *pType == "IMAGE" )
+	//CGUIEvent
+	else if( rProperty.GetType() == ePropertyType_Image )
 	{
-		pProperty = guiex::CGUIPropertyManager::Instance()->CreateProperty( 
-			strName.c_str(), 
-			pType->c_str(), 
-			pSheetMgr->GetPropertyValueAsString( pPGProperty ).char_str(wxConvUTF8).data());
+		guiex::CGUIString aValue = pSheetMgr->GetPropertyValueAsString( pPGProperty ).char_str(wxConvUTF8).data();
+		rProperty.SetValue( aValue );
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
-	//ENUM
-	else if( *pType == "ENUM" )
+	//enum
+	else if( rProperty.GetType() == ePropertyType_ImageOperation ||
+		rProperty.GetType() == ePropertyType_ScreenValue ||
+		rProperty.GetType() == ePropertyType_TextAlignmentVert ||
+		rProperty.GetType() == ePropertyType_TextAlignmentHorz )
 	{
-		pProperty = guiex::CGUIPropertyManager::Instance()->CreateProperty( 
-			strName.c_str(), 
-			pType->c_str(), 
-			pSheetMgr->GetPropertyValueAsString( pPGProperty ).char_str(wxConvUTF8).data());
+		guiex::CGUIString aValue = pSheetMgr->GetPropertyValueAsString( pPGProperty ).char_str(wxConvUTF8).data();
+		rProperty.SetValue( aValue );
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
-	//STRING_INFO
-	else if(  *pType == "STRING_INFO" )
+	//CGUIStringInfo
+	else if( rProperty.GetType() == ePropertyType_StringInfo )
 	{
-		guiex::CGUIStringExInfo aStringInfo = CGUIStringExInfoFromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
-		
-		pProperty = guiex:: CGUIPropertyManager::Instance()->CreateProperty(strName.c_str(), pType->c_str());
-		pProperty->AddProperty(guiex::CGUIPropertyManager::Instance()->CreateProperty("SIZE","UINT",guiex::CGUIStringConvertor::UIntToString(aStringInfo.m_nFontSize)));
-		pProperty->AddProperty(guiex::CGUIPropertyManager::Instance()->CreateProperty("FONT_INDEX","UINT",guiex::CGUIStringConvertor::UIntToString(aStringInfo.m_nFontIdx)));
-		pProperty->AddProperty(guiex::CGUIPropertyManager::Instance()->CreateProperty("COLOR","COLOR",guiex::CGUIStringConvertor::ColorToString(aStringInfo.m_aColor)));
+		guiex::CGUIStringInfo aValue= CGUIStringInfoFromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
+		guiex::ValueToProperty( aValue, rProperty );
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
-	//WIDGET_POSITION
-	else if(  *pType == "WIDGET_POSITION" )
+	//CGUIWidgetPosition
+	else if(  rProperty.GetType() == ePropertyType_WidgetPosition )
 	{
-		SWidgetPosition aWidgetPos = SWidgetPositionFromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
-		
-		pProperty = guiex:: CGUIPropertyManager::Instance()->CreateProperty(strName.c_str(), pType->c_str());
-		pProperty->AddProperty(guiex::CGUIPropertyManager::Instance()->CreateProperty("RELATIVE","BOOL",guiex::CGUIStringConvertor::BoolToString(aWidgetPos.m_bIsRelative)));
-		pProperty->AddProperty(guiex::CGUIPropertyManager::Instance()->CreateProperty("POSITION","VECTOR2",guiex::CGUIStringConvertor::Vector2ToString(aWidgetPos.m_aPosition)));
+		guiex::CGUIWidgetPosition aValue = CGUIWidgetPositionFromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
+		guiex::ValueToProperty( aValue, rProperty );
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
-	//WIDGET_SIZE
-	else if(  *pType == "WIDGET_SIZE" )
+	//CGUIWidgetSize
+	else if( rProperty.GetType() == ePropertyType_WidgetSize )
 	{
-		SWidgetSize aWidgetSize = SWidgetSizeFromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
-		
-		pProperty = guiex:: CGUIPropertyManager::Instance()->CreateProperty(strName.c_str(), pType->c_str());
-		pProperty->AddProperty(guiex::CGUIPropertyManager::Instance()->CreateProperty("RELATIVE","BOOL",guiex::CGUIStringConvertor::BoolToString(aWidgetSize.m_bIsRelative)));
-		pProperty->AddProperty(guiex::CGUIPropertyManager::Instance()->CreateProperty("SIZE","SIZE",guiex::CGUIStringConvertor::SizeToString(aWidgetSize.m_aSize)));
-		pProperty->AddProperty(guiex::CGUIPropertyManager::Instance()->CreateProperty("MAX_SIZE","SIZE",guiex::CGUIStringConvertor::SizeToString(aWidgetSize.m_aMaxSize)));
-		pProperty->AddProperty(guiex::CGUIPropertyManager::Instance()->CreateProperty("MIN_SIZE","SIZE",guiex::CGUIStringConvertor::SizeToString(aWidgetSize.m_aMinSize)));
+		guiex::CGUIWidgetSize aValue = CGUIWidgetSizeFromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
+		guiex::ValueToProperty( aValue, rProperty );
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
-	//COLOR
-	else if(  *pType == "COLOR" )
+	//CGUIColor
+	else if( rProperty.GetType() == ePropertyType_Color )
 	{
 		//COLOR
 		wxColour aWxColor = wxColourPropertyValueFromVariant(pSheetMgr->GetPropertyValue(pPGProperty)).m_colour;
-		guiex::CGUIColor aColor(aWxColor.Red() / 255.0, aWxColor.Green() / 255.0, aWxColor.Blue() / 255.0, aWxColor.Alpha() / 255.0 );
-		pProperty->AddProperty(guiex::CGUIPropertyManager::Instance()->CreateProperty("COLOR","COLOR",guiex::CGUIStringConvertor::ColorToString(aColor)));
-	
+		guiex::CGUIColor aValue(aWxColor.Red() / 255.0, aWxColor.Green() / 255.0, aWxColor.Blue() / 255.0, aWxColor.Alpha() / 255.0 );
+		guiex::ValueToProperty( aValue, rProperty );
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
 	//unknown
@@ -862,8 +622,6 @@ guiex::CGUIProperty*	GenerateGUIProperty( wxPropertyGridManager* pSheetMgr, wxPG
 		wxMessageBox(wxConvUTF8.cMB2WC(strError.c_str()), _T("Error"), wxICON_ERROR|wxCENTRE);
 		throw guiex::CGUIException("unsupported property type: <%s>", pType->c_str());
 	}
-
-	return pProperty;
 }
 //------------------------------------------------------------------------------
 

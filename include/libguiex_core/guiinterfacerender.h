@@ -52,11 +52,20 @@ namespace guiex
 		*/
 		virtual ~IGUIInterfaceRender();
 
+		virtual void DrawRect(const CGUIMatrix4& rWorldMatrix,
+			const CGUIRect& rDestRect, 
+			real fLineWidth,
+			real z,
+			GUIARGB rColor_topleft,
+			GUIARGB rColor_topright,
+			GUIARGB rColor_bottomleft,
+			GUIARGB rColor_bottomright ) = 0;
+
 		/** 
 		* @brief add a texture into render list
 		* @param rTextureRect in texture co-ordinates.
 		*/
-		virtual	void	AddRenderTexture(	const CGUIMatrix4& rWorldMatrix,
+		virtual	void	DrawTile(	const CGUIMatrix4& rWorldMatrix,
 			const CGUIRect& rDestRect, 
 			real z, 
 			const CGUITextureImp* pTex, 
@@ -68,27 +77,8 @@ namespace guiex
 			GUIARGB rColor_bottomright
 			) = 0;
 
-		/** 
-		* @brief add a texture into render list
-		* @param rTextureRect in texture co-ordinates.
-		*/
-		//virtual	void	AddRenderTexture( const CGUIRenderRect& rRenderRect, 
-		//	real z, 
-		//	const CGUITextureImp* pTexture, 
-		//	const CGUIRect& rTextureRect, 
-		//	EImageOperation eImageOperation,
-		//	GUIARGB rColor_topleft,
-		//	GUIARGB rColor_topright,
-		//	GUIARGB rColor_bottomleft,
-		//	GUIARGB rColor_bottomright) = 0;
-
 		virtual void	PushClipRect( const CGUIMatrix4& rMatrix, const CGUIRect& rClipRect ) = 0;
 		virtual void	PopClipRect( ) = 0;
-		
-		/**
-		* @brief do final render for all texture in the render list
-		*/
-		virtual	void	DoRender(void) = 0;
 
 		// setup states etc
 		virtual void	BeginRender(void) = 0;

@@ -260,7 +260,7 @@ namespace guiex
 		CGUIAs::Update( fDeltaTime );
 
 		CGUIVector2 aCurValue = CGUIMath::LinearTween( m_fElapsedTime / m_fTotalTime, m_aBeginValue, m_aEndValue );
-		GetReceiver()->NEWSetPixelPosition(aCurValue);
+		GetReceiver()->SetPixelPosition(aCurValue);
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

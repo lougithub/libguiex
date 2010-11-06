@@ -9,8 +9,6 @@
 // include
 //============================================================================// 
 #include <libguiex_core\guisize.h>
-#include <libguiex_core\guiproperty.h>
-#include <libguiex_core\guistringconvertor.h>
 
 //============================================================================//
 // function
@@ -20,15 +18,13 @@ namespace guiex
 
 	//------------------------------------------------------------------------------
 	CGUISize::CGUISize()
-		:CGUIPropertyable( )
-		,m_fWidth(0.0f)
+		:m_fWidth(0.0f)
 		,m_fHeight(0.0f)
 	{
 	}
 	//------------------------------------------------------------------------------
 	CGUISize::CGUISize(real fWidth, real fHeight)
-		:CGUIPropertyable( )
-		,m_fWidth(fWidth)
+		:m_fWidth(fWidth)
 		,m_fHeight(fHeight)
 	{
 	}
@@ -190,17 +186,7 @@ namespace guiex
 		return *this;
 	}
 	//------------------------------------------------------------------------------
-	void CGUISize::SaveToProperty( CGUIProperty& rProperty ) const
-	{
-		rProperty.SetValue( CGUIStringConvertor::SizeToString( *this ));
-	}
-	//------------------------------------------------------------------------------
-	void CGUISize::LoadFromProperty( const CGUIProperty& rProperty )
-	{
-		CGUIStringConvertor::StringToSize( rProperty.GetValue(), *this );
-	}
-	//------------------------------------------------------------------------------
-
+	
 }//namespace guiex
 
 

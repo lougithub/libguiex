@@ -95,7 +95,7 @@ protected:
 // -----------------------------------------------------------------------
 // wxGUIStringInfoProperty
 // -----------------------------------------------------------------------
-WX_PG_DECLARE_VARIANT_DATA(wxGUIStringInfoVariantData, CGUIStringExInfo, wxPG_NO_DECL)
+WX_PG_DECLARE_VARIANT_DATA(wxGUIStringInfoVariantData, CGUIStringInfo, wxPG_NO_DECL)
 
 class wxGUIStringInfoProperty : public wxPGProperty
 {
@@ -104,7 +104,7 @@ public:
 
     wxGUIStringInfoProperty( const wxString& label = wxPG_LABEL,
                         const wxString& name = wxPG_LABEL,
-                        const CGUIStringExInfo& value = CGUIStringExInfo() );
+                        const CGUIStringInfo& value = CGUIStringInfo() );
     virtual ~wxGUIStringInfoProperty();
 
     WX_PG_DECLARE_PARENTAL_METHODS()
@@ -116,18 +116,7 @@ protected:
 // -----------------------------------------------------------------------
 // wxGUIWidgetPositionProperty
 // -----------------------------------------------------------------------
-struct SWidgetPosition
-{
-	bool				m_bIsRelative;
-	guiex::CGUIVector2	m_aPosition;
-
-	SWidgetPosition()
-		:m_bIsRelative( true )
-	{
-	}
-};
-
-WX_PG_DECLARE_VARIANT_DATA(wxGUIWidgetPositionVariantData, SWidgetPosition, wxPG_NO_DECL)
+WX_PG_DECLARE_VARIANT_DATA(wxGUIWidgetPositionVariantData, CGUIWidgetPosition, wxPG_NO_DECL)
 
 class wxGUIWidgetPositionProperty : public wxPGProperty
 {
@@ -136,12 +125,13 @@ public:
 
     wxGUIWidgetPositionProperty( const wxString& label = wxPG_LABEL,
                         const wxString& name = wxPG_LABEL,
-                        const SWidgetPosition& value = SWidgetPosition() );
+                        const CGUIWidgetPosition& value = CGUIWidgetPosition());
     virtual ~wxGUIWidgetPositionProperty();
 
     WX_PG_DECLARE_PARENTAL_METHODS()
 
 protected:
+	wxArrayString m_arrEnums;
 };
 
 
@@ -151,20 +141,7 @@ protected:
 // -----------------------------------------------------------------------
 // wxGUIWidgetSizeProperty
 // -----------------------------------------------------------------------
-struct SWidgetSize
-{
-	bool				m_bIsRelative;
-	guiex::CGUISize		m_aSize;
-	guiex::CGUISize		m_aMaxSize;
-	guiex::CGUISize		m_aMinSize;
-
-	SWidgetSize()
-		:m_bIsRelative( true )
-	{
-	}
-};
-
-WX_PG_DECLARE_VARIANT_DATA(wxGUIWidgetSizeVariantData, SWidgetSize, wxPG_NO_DECL)
+WX_PG_DECLARE_VARIANT_DATA(wxGUIWidgetSizeVariantData, CGUIWidgetSize, wxPG_NO_DECL)
 
 class wxGUIWidgetSizeProperty : public wxPGProperty
 {
@@ -173,12 +150,13 @@ public:
 
     wxGUIWidgetSizeProperty( const wxString& label = wxPG_LABEL,
                         const wxString& name = wxPG_LABEL,
-                        const SWidgetSize& value = SWidgetSize() );
+						const CGUIWidgetSize& value = CGUIWidgetSize() );
     virtual ~wxGUIWidgetSizeProperty();
 
     WX_PG_DECLARE_PARENTAL_METHODS()
 
 protected:
+	wxArrayString m_arrEnums;
 };
 
 

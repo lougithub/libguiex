@@ -98,6 +98,9 @@ namespace guiex
 		*/
 		void	Render();
 
+		void	SetDrawExtraInfo( bool bDraw );
+		bool	IsDrawExtraInfo() const;
+
 		/**
 		* @brief get global time
 		*/
@@ -517,6 +520,8 @@ namespace guiex
 		char				m_szAnonymousName[32];
 		//index for name generating
 		//----------------------------------------------------------------------
+
+		bool				m_bDrawExtraInfo;
 
 		bool				m_bShouldRunScript;	//!< should system run script
 

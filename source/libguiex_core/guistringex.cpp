@@ -20,19 +20,19 @@
 //============================================================================// 
 namespace guiex
 {
-	CGUIStringExInfo::CGUIStringExInfo()
+	CGUIStringInfo::CGUIStringInfo()
 		:m_nFontIdx(0)
 		,m_nFontSize(16)
 	{
 
 	}
 	//------------------------------------------------------------------------------
-	CGUIStringExInfo::CGUIStringExInfo(const CGUIStringExInfo& rInfo)
+	CGUIStringInfo::CGUIStringInfo(const CGUIStringInfo& rInfo)
 	{
 		*this = rInfo;
 	}
 	//------------------------------------------------------------------------------
-	CGUIStringExInfo::CGUIStringExInfo(int16 nFontIdx,uint16 nFontSize,const CGUIColor& rColor)
+	CGUIStringInfo::CGUIStringInfo(int16 nFontIdx,uint16 nFontSize,const CGUIColor& rColor)
 		:m_nFontIdx(nFontIdx)
 		,m_nFontSize(nFontSize)
 		,m_aColor(rColor)
@@ -40,7 +40,7 @@ namespace guiex
 
 	}
 	//------------------------------------------------------------------------------
-	bool	CGUIStringExInfo::operator==(const CGUIStringExInfo& rInfo ) const
+	bool	CGUIStringInfo::operator==(const CGUIStringInfo& rInfo ) const
 	{
 		if( m_nFontIdx == rInfo.m_nFontIdx &&
 			m_nFontSize == rInfo.m_nFontSize &&
@@ -54,12 +54,12 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	bool	CGUIStringExInfo::operator!=(const CGUIStringExInfo& rInfo ) const
+	bool	CGUIStringInfo::operator!=(const CGUIStringInfo& rInfo ) const
 	{
 		return !(*this == rInfo);
 	}
 	//------------------------------------------------------------------------------
-	const CGUIStringExInfo&	CGUIStringExInfo::operator=(const CGUIStringExInfo& rInfo )
+	const CGUIStringInfo&	CGUIStringInfo::operator=(const CGUIStringInfo& rInfo )
 	{
 		m_nFontIdx = rInfo.m_nFontIdx;
 		m_nFontSize = rInfo.m_nFontSize;
@@ -93,20 +93,20 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIStringEx::CGUIStringEx(const CGUIString& rString, const char* pSrcCode )
 	{
-		CGUIStringConvertor::MultiByteToWideChar(rString, *this, pSrcCode);
+		MultiByteToWideChar(rString, *this, pSrcCode);
 	}
 	//------------------------------------------------------------------------------
 	CGUIStringEx::~CGUIStringEx()
 	{
 	}	
 	//------------------------------------------------------------------------------ 
-	void	CGUIStringEx::SetDefaultInfo(const CGUIStringExInfo* pInfo)
+	void	CGUIStringEx::SetDefaultInfo(const CGUIStringInfo* pInfo)
 	{
 		m_aDefaultInfo = *pInfo;
 		m_vecInfo.clear();
 	}
 	//------------------------------------------------------------------------------ 
-	const CGUIStringExInfo&	CGUIStringEx::GetDefaultInfo() const
+	const CGUIStringInfo&	CGUIStringEx::GetDefaultInfo() const
 	{
 		return m_aDefaultInfo;
 	}
@@ -146,7 +146,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------ 
-	void		CGUIStringEx::InsertStringInfo(uint32 idx, uint32 count, const CGUIStringExInfo* pInfo)
+	void		CGUIStringEx::InsertStringInfo(uint32 idx, uint32 count, const CGUIStringInfo* pInfo)
 	{
 		GUI_ASSERT(count, "invalid count");
 
@@ -191,7 +191,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------ 
-	void		CGUIStringEx::ReplaceStringInfo(uint32 idx, uint32 count, const CGUIStringExInfo* pInfo)
+	void		CGUIStringEx::ReplaceStringInfo(uint32 idx, uint32 count, const CGUIStringInfo* pInfo)
 	{
 		if( !pInfo)
 		{
@@ -214,7 +214,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------ 
-	void		CGUIStringEx::Replace(uint32 idx, wchar_t cChar,uint32 nCount, const CGUIStringExInfo* pInfo)
+	void		CGUIStringEx::Replace(uint32 idx, wchar_t cChar,uint32 nCount, const CGUIStringInfo* pInfo)
 	{
 		if( idx+nCount > Size() )
 		{
@@ -225,7 +225,7 @@ namespace guiex
 		ReplaceStringInfo(idx, nCount, pInfo);
 	}
 	//------------------------------------------------------------------------------ 
-	void		CGUIStringEx::Insert( uint32 idx, wchar_t cChar,uint32 nCount, const CGUIStringExInfo* pInfo)
+	void		CGUIStringEx::Insert( uint32 idx, wchar_t cChar,uint32 nCount, const CGUIStringInfo* pInfo)
 	{
 		if( idx > Size() )
 		{
@@ -236,7 +236,7 @@ namespace guiex
 		InsertStringInfo(idx, nCount, pInfo);
 	}
 	//------------------------------------------------------------------------------ 
-	void		CGUIStringEx::Insert( uint32 idx, const wchar_t* pChar, const CGUIStringExInfo* pInfo)
+	void		CGUIStringEx::Insert( uint32 idx, const wchar_t* pChar, const CGUIStringInfo* pInfo)
 	{
 		if( idx > Size())
 		{
@@ -247,7 +247,7 @@ namespace guiex
 		InsertStringInfo(idx, wcslen(pChar), pInfo);
 	}
 	//------------------------------------------------------------------------------ 
-	void		CGUIStringEx::Insert( uint32 idx, const wchar_t* pChar,uint32 nCount, const CGUIStringExInfo* pInfo )
+	void		CGUIStringEx::Insert( uint32 idx, const wchar_t* pChar,uint32 nCount, const CGUIStringInfo* pInfo )
 	{
 		if( idx > Size())
 		{
@@ -280,7 +280,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------ 
-	void		CGUIStringEx::Insert(uint32 idx, const CGUIString& rString, const CGUIStringExInfo* pInfo,const char* szCode )
+	void		CGUIStringEx::Insert(uint32 idx, const CGUIString& rString, const CGUIStringInfo* pInfo,const char* szCode )
 	{
 		CGUIStringEx aString(rString, szCode);
 		aString.SetDefaultInfo(pInfo);
@@ -299,17 +299,17 @@ namespace guiex
 		m_strContent.erase(m_strContent.begin() + beginIdx, m_strContent.begin()+endIdx);
 	}
 	//------------------------------------------------------------------------------ 
-	void		CGUIStringEx::Append(const wchar_t cChar,uint32 nCount, const CGUIStringExInfo* pInfo)
+	void		CGUIStringEx::Append(const wchar_t cChar,uint32 nCount, const CGUIStringInfo* pInfo)
 	{
 		Insert(Size(), cChar, nCount, pInfo);
 	}
 	//------------------------------------------------------------------------------ 
-	void		CGUIStringEx::Append(const wchar_t* pChar, const CGUIStringExInfo* pInfo)
+	void		CGUIStringEx::Append(const wchar_t* pChar, const CGUIStringInfo* pInfo)
 	{
 		Insert(Size(), pChar, pInfo);
 	}
 	//------------------------------------------------------------------------------ 
-	void		CGUIStringEx::Append(const wchar_t* pChar, uint32 nCount, const CGUIStringExInfo* pInfo )
+	void		CGUIStringEx::Append(const wchar_t* pChar, uint32 nCount, const CGUIStringInfo* pInfo )
 	{
 		Insert(Size(), pChar,nCount, pInfo);
 	}
@@ -360,7 +360,7 @@ namespace guiex
 		return m_strContent[idx];
 	}
 	//------------------------------------------------------------------------------ 
-	const CGUIStringExInfo&		CGUIStringEx::GetInfo(uint32 idx) const
+	const CGUIStringInfo&		CGUIStringEx::GetInfo(uint32 idx) const
 	{
 		if( m_vecInfo.empty())
 		{

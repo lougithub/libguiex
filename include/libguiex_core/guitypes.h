@@ -69,34 +69,6 @@ namespace guiex
 
 
 
-// used to do something regularly
-#define ITEM_END
-#define ITEM(item, next) ITEM_BEGIN_TOKEN item ITEM_END_TOKEN next
-#define MACRO_LIST1(x1) ITEM(x1, ITEM_END)
-#define MACRO_LIST2(x1,x2) ITEM(x2, MACRO_LIST1(x1))
-#define MACRO_LIST3(x1,x2,x3) ITEM(x3, MACRO_LIST2(x1,x2))
-#define MACRO_LIST4(x1,x2,x3,x4) ITEM(x4, MACRO_LIST3(x1,x2,x3))
-#define MACRO_LIST5(x1,x2,x3,x4,x5) ITEM(x5, MACRO_LIST4(x1,x2,x3,x4))
-#define MACRO_LIST6(x1,x2,x3,x4,x5,x6) ITEM(x6, MACRO_LIST5(x1,x2,x3,x4,x5))
-#define MACRO_LIST7(x1,x2,x3,x4,x5,x6,x7) ITEM(x7, MACRO_LIST6(x1,x2,x3,x4,x5,x6))
-#define MACRO_LIST8(x1,x2,x3,x4,x5,x6,x7,x8) ITEM(x8, MACRO_LIST7(x1,x2,x3,x4,x5,x6,x7))
-#define MACRO_LIST9(x1,x2,x3,x4,x5,x6,x7,x8,x9) ITEM(x9, MACRO_LIST8(x1,x2,x3,x4,x5,x6,x7,x8))
-#define MACRO_LIST10(x1,x2,x3,x4,x5,x6,x7,x8,x9,x10) ITEM(x10, MACRO_LIST9(x1,x2,x3,x4,x5,x6,x7,x8,x9))
-#define MACRO_LIST11(x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11) ITEM(x11, MACRO_LIST10(x1,x2,x3,x4,x5,x6,x7,x8,x9,x10))
-#define MACRO_LIST12(x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12) ITEM(x12, MACRO_LIST11(x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11))
-#define MACRO_LIST13(x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13) ITEM(x13, MACRO_LIST12(x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12))
-#define MACRO_LIST14(x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14) ITEM(x14, MACRO_LIST13(x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13))
-#define MACRO_LIST15(x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14,x15) ITEM(x15, MACRO_LIST14(x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14))
-#define MACRO_LIST16(x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14,x15,x16) ITEM(x16, MACRO_LIST15(x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14,x15))
-#define MACRO_LIST17(x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14,x15,x16,x17) ITEM(x17, MACRO_LIST16(x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14,x15,x16))
-#define MACRO_LIST18(x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14,x15,x16,x17,x18) ITEM(x18, MACRO_LIST17(x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14,x15,x16,x17))
-#define MACRO_LIST19(x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14,x15,x16,x17,x18,x19) ITEM(x19, MACRO_LIST18(x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14,x15,x16,x17,x18))
-#define MACRO_LIST20(x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14,x15,x16,x17,x18,x19,x20) ITEM(x20, MACRO_LIST19(x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14,x15,x16,x17,x18,x19))
-#define MACRO_LIST21(x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14,x15,x16,x17,x18,x19,x20,x21) ITEM(x21, MACRO_LIST20(x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13,x14,x15,x16,x17,x18,x19,x20))
-//usage
-//#define ITEM_LIST MACRO_LIST3(A, B, C)
-
-
 
 /**
 * @brief value of real delta, used for compare value of  real
@@ -133,31 +105,25 @@ namespace guiex
 
 namespace guiex
 {
-	/**
-	* @brief align mode
-	*/
-	enum EAlignMode
+	enum ETextAlignmentHorz
 	{
-		eAbsolute,								///the position and size is fixed
-		eRelative,								///the position and rsize is relative
-		eRelativePos_AbsoluteSize,	///the position is relative but size is absolute
-
-		__ALIGN_MODE_MAX__
+		eTextAlignment_Horz_Center = 0x00,
+		eTextAlignment_Horz_Left  = 0x01,
+		eTextAlignment_Horz_Right = 0x02,
+	};
+	enum ETextAlignmentVert
+	{
+		eTextAlignment_Vert_Center = 0x00,
+		eTextAlignment_Vert_Up = 0x10,
+		eTextAlignment_Vert_Down = 0x20,
 	};
 
-	const uint8 GUI_TA_H_LEFT  = 0x00;
-	const uint8 GUI_TA_H_RIGHT = 0x01;
-	const uint8 GUI_TA_H_CENTER = 0x02;
-	const uint8 GUI_TA_V_UP = 0x00;
-	const uint8 GUI_TA_V_DOWN = 0x10;
-	const uint8 GUI_TA_V_CENTER = 0x20;
-
-	const uint8 GUI_TA_CENTER = GUI_TA_H_CENTER | GUI_TA_V_CENTER;
+	const uint8 GUI_TA_CENTER = eTextAlignment_Horz_Center | eTextAlignment_Vert_Center;
 	const uint8 GUI_TA_HORIZON_MASK = 0x0F;
 	const uint8 GUI_TA_VERTICAL_MASK = 0xF0;
 
 	/**
-	* @brief image opration
+	* @brief image operation
 	*/
 	enum EImageOperation
 	{
@@ -168,6 +134,11 @@ namespace guiex
 		IMAGE_FLIPVERTICAL,		///!< flip image vertical
 	};
 
+	enum EScreenValue
+	{
+		eScreenValue_Pixel = 0,
+		eScreenValue_Percentage,
+	};
 
 	/**
 	* @brief pixel format

@@ -45,21 +45,6 @@ namespace guiex
 		*/
 		CGUIWgtPanel( const CGUIString& rName, const CGUIString& rProjectName );
 
-		/**
-		* @brief create this widget
-		*/
-		virtual int32 Create();
-
-		/**
-		* @brief load widget config from property
-		*/
-		virtual CGUIProperty*	GenerateProperty(const CGUIString& rName, const CGUIString& rType );
-
-		/**
-		* @brief process property
-		*/
-		virtual void		ProcessProperty( const CGUIProperty* pProperty);
-
 	protected:
 		/**
 		* @brief constructor
@@ -73,7 +58,7 @@ namespace guiex
 		///initialize check button
 		void	InitPanel();
 		
-		virtual void		UpdateDirtyRect();
+		virtual void		RefreshImpl();
 
 		/**
 		* @brief override the OnSetImage function
@@ -98,27 +83,23 @@ namespace guiex
 		//!< get border width
 		real		GetBorderWidth(EPanelBorderLocation eBorder)
 		{
-			return	m_aBorderInfo[eBorder].m_aSize.m_fWidth*GetDerivedScale().m_fWidth;
+			return	m_aBorderInfo[eBorder].m_aSize.m_fWidth;
 		}
 
 		//!< get border height
 		real		GetBorderHeight(EPanelBorderLocation eBorder)
 		{
-			return	m_aBorderInfo[eBorder].m_aSize.m_fHeight*GetDerivedScale().m_fHeight;
+			return	m_aBorderInfo[eBorder].m_aSize.m_fHeight;
 		}
 
 		//!< get border size
 		CGUISize	GetBorderSize(EPanelBorderLocation eBorder)
 		{
-			return	m_aBorderInfo[eBorder].m_aSize*GetDerivedScale();
+			return	m_aBorderInfo[eBorder].m_aSize;
 
 		}
-	protected:	//!< callback function
-
 
 	protected:
-
-
 		struct
 		{
 			CGUISize			m_aSize;

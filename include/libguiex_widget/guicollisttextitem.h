@@ -45,7 +45,7 @@ namespace guiex
 		//set text
 		virtual void		SetTextContent(const wchar_t* pText);
 		//set text size
-		virtual void		SetTextInfo( const CGUIStringExInfo& rInfo);
+		virtual void		SetTextInfo( const CGUIStringInfo& rInfo);
 
 
 		/**
@@ -53,7 +53,7 @@ namespace guiex
 		*/
 		static CGUIColListTextItem*	CreateTextItem(
 			const wchar_t* pText, 
-			const CGUIStringExInfo& rInfo,
+			const CGUIStringInfo& rInfo,
 			const CGUIString& rProjectName,
 			uint32 nItemID = 0, 
 			void* pItemData = NULL,

@@ -50,12 +50,6 @@ namespace guiex
 		*/
 		bool IsSelected(void) const;
 
-		/** 
-		 * @brief update rect, which may different for different widget
-		 */
-		virtual void		UpdateDirtyRect();
-
-
 
 	protected:
 		/**
@@ -67,6 +61,7 @@ namespace guiex
 		/// initialize radio button
 		void InitTabButton();
 
+		virtual void		RefreshImpl();
 
 	protected:	//!< callback function
 		virtual uint32		OnMouseLeftClick( CGUIEventMouse* pEvent );

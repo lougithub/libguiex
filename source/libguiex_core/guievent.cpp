@@ -323,9 +323,9 @@ namespace guiex
 	{
 		switch( GetEventId())
 		{
-		case eEVENT_CHANGE_SIZE:
+		case eEVENT_SIZE_CHANGE:
 			GUI_ASSERT( m_pReceiver,"havn't receiver" );
-			return m_pReceiver->OnSizeChange(this);
+			return m_pReceiver->OnSizeChanged(this);
 
 		case eEVENT_PARENT_CHANGE_SIZE:
 			return m_pReceiver->OnParentSizeChange(this);
@@ -482,9 +482,16 @@ namespace guiex
 		m_aPosition = rPos;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIVector2& CGUIEventMouse::GetPosition() const
+	const CGUIVector2& CGUIEventMouse::GetGlobalPosition() const
 	{
 		return m_aPosition;
+	}
+	//------------------------------------------------------------------------------
+	CGUIVector2 CGUIEventMouse::GetLocalPosition() const
+	{
+		CGUIVector2 aTempPos = m_aPosition;
+		m_pReceiver->WorldToLocal( aTempPos );
+		return aTempPos;
 	}
 	//------------------------------------------------------------------------------
 	void		CGUIEventMouse::SetSysKeys(uint32 uSyskeys)
@@ -643,14 +650,28 @@ namespace guiex
 		m_aMousePos = rPos;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIVector2& CGUIEventDrag::GetWidgetPos() const
+	CGUIVector2 CGUIEventDrag::GetWidgetGlobalPos() const
+	{
+		CGUIVector2 aTempPos = m_aMousePos;
+		m_pReceiver->LocalToWorld( aTempPos );
+		return aTempPos;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIVector2& CGUIEventDrag::GetWidgetLocalPos() const
 	{
 		return m_aWidgetPos;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIVector2& CGUIEventDrag::GetMousePos() const
+	const CGUIVector2& CGUIEventDrag::GetMouseGlobalPos() const
 	{
 		return m_aMousePos;
+	}
+	//------------------------------------------------------------------------------
+	CGUIVector2 CGUIEventDrag::GetMouseLocalPos() const
+	{
+		CGUIVector2 aTempPos = m_aMousePos;
+		m_pReceiver->WorldToLocal( aTempPos );
+		return aTempPos;
 	}
 	//------------------------------------------------------------------------------
 	void		CGUIEventDrag::SetButton( int32 nButton)
@@ -867,8 +888,8 @@ namespace guiex
 		case eEVENT_REMOVE_CHILD:
 			return m_pReceiver->OnRemoveChild(this);
 
-		case eEVENT_CHANGE_PARENT:
-			return m_pReceiver->OnChangeParent(this);
+		case eEVENT_PARENT_CHANGED:
+			return m_pReceiver->OnParentChanged(this);
 
 		default:
 			return GUI_INVALID;
@@ -880,7 +901,7 @@ namespace guiex
 		m_pRelative = pRelative;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIWidget*		CGUIEventRelativeChange::GetRelative( ) const
+	CGUIWidget*		CGUIEventRelativeChange::GetRelative( ) const
 	{
 		return m_pRelative;
 	}

@@ -47,10 +47,12 @@ namespace guiex
 		void InitScrollbarArrow();
 
 	protected:	//!< callback function
+		virtual uint32		OnParentChanged( CGUIEventRelativeChange* pEvent );
 		virtual uint32		OnMouseLeftDown( CGUIEventMouse* pEvent );
 
 	protected:
 		int		m_nArrowType;		/// arrow type
+		CGUIWgtScrollbar* m_pScrollbar;
 
 	private:
 		static CGUIString	ms_strType;
@@ -81,11 +83,13 @@ namespace guiex
 		void InitScrollbarSlide();
 
 	protected:	//!< callback function
+		virtual uint32		OnParentChanged( CGUIEventRelativeChange* pEvent );
 		virtual uint32		OnDragBegin( CGUIEventDrag* pEvent );
 		virtual uint32		OnDragProcess( CGUIEventDrag* pEvent );
 		virtual uint32		OnDragEnd( CGUIEventDrag* pEvent );
 
 	protected:
+		CGUIWgtScrollbar* m_pScrollbar;
 
 	private:
 		static CGUIString	ms_strType;
@@ -106,6 +110,7 @@ namespace guiex
 	CGUIWgtScrollbarArrow::CGUIWgtScrollbarArrow( const CGUIString& rName, const CGUIString& rProjectName, int nType )
 		:CGUIWgtButton(ms_strType, rName, rProjectName)
 		,m_nArrowType(nType)
+		,m_pScrollbar(NULL)
 	{
 		InitScrollbarArrow();
 	}
@@ -115,15 +120,25 @@ namespace guiex
 		SetFlag(eFLAG_FOCUS_AGENCY, true);
 	}
 	//------------------------------------------------------------------------------
+	uint32 CGUIWgtScrollbarArrow::OnParentChanged( CGUIEventRelativeChange* pEvent )
+	{
+		m_pScrollbar = static_cast<CGUIWgtScrollbar*>(pEvent->GetRelative());
+		return CGUIWgtButton::OnParentChanged(pEvent);
+	}
+	//------------------------------------------------------------------------------
 	uint32		CGUIWgtScrollbarArrow::OnMouseLeftDown( CGUIEventMouse* pEvent )
 	{
+		GUI_ASSERT( m_pScrollbar, "haven't parent" );
+
 		switch( m_nArrowType)
 		{
 		case 0:
-			static_cast<CGUIWgtScrollbar*>(GetParent())->DecreasePos();
+			m_pScrollbar->DecreasePos();
+			m_pScrollbar->GenerateNotifyEvent();
 			break;
 		case 1:
-			static_cast<CGUIWgtScrollbar*>(GetParent())->IncreasePos();
+			m_pScrollbar->IncreasePos();
+			m_pScrollbar->GenerateNotifyEvent();
 			break;
 		default:
 			throw CGUIException("[CGUIWgtScrollbarArrow::OnMouseLeftDown]: unknown scrollbar arrow type!");
@@ -141,6 +156,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIWgtScrollbarSlide::CGUIWgtScrollbarSlide( const CGUIString& rName, const CGUIString& rProjectName )
 		:CGUIWgtButton(ms_strType, rName, rProjectName)
+		,m_pScrollbar(NULL)
 	{
 		InitScrollbarSlide();
 	}
@@ -149,7 +165,12 @@ namespace guiex
 	{
 		SetFlag(eFLAG_MOVABLE, true);
 		SetFlag(eFLAG_FOCUS_AGENCY, true);
-
+	}
+	//------------------------------------------------------------------------------
+	uint32 CGUIWgtScrollbarSlide::OnParentChanged( CGUIEventRelativeChange* pEvent )
+	{
+		m_pScrollbar = static_cast<CGUIWgtScrollbar*>(pEvent->GetRelative());
+		return CGUIWgtButton::OnParentChanged(pEvent);
 	}
 	//------------------------------------------------------------------------------
 	uint32		CGUIWgtScrollbarSlide::OnDragBegin( CGUIEventDrag* pEvent )
@@ -160,17 +181,16 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	uint32		CGUIWgtScrollbarSlide::OnDragProcess( CGUIEventDrag* pEvent )
 	{
-		CGUIWgtScrollbar* pParent = static_cast<CGUIWgtScrollbar*>(GetParent());
-		GUI_ASSERT(pParent, "haven't parent");
+		GUI_ASSERT( m_pScrollbar, "haven't parent" );
 
-		CGUIRect	aSlideWorkArea = pParent->GetSlideArea();
-		CGUIVector2	aSlidePoint = GetLocalPosition( );
-		CGUIVector2	aWidgetPoint = pEvent->GetWidgetPos();
+		CGUIRect	aSlideWorkArea = m_pScrollbar->GetSlideArea();
+		CGUIVector2	aSlidePoint = GetPixelPosition( );
+		CGUIVector2	aWidgetPoint = pEvent->GetWidgetLocalPos();
 		CGUIVector2	aMovePos;		/// wanted position
-		CGUISize		aSlideSize = GetSize();
-		uint32		nCurScrollbarPos = 0;	/// the value of scrollbar
+		CGUISize aSlideSize = NEWGetPixelSize();
+		uint32 nCurScrollbarPos = 0;	/// the value of scrollbar
 
-		switch( pParent->GetScrollbarType() )
+		switch( m_pScrollbar->GetScrollbarType() )
 		{
 		case eSB_HORIZONAL:
 			aSlideWorkArea.m_fLeft += aSlideSize.m_fWidth / 2;
@@ -184,8 +204,8 @@ namespace guiex
 
 			//get value of scrollbar
 			nCurScrollbarPos = 
-				pParent->GetMinPos()+
-				GUI_FLOAT2UINT_ROUND((aMovePos.x -aSlideWorkArea.m_fLeft)  * pParent->GetRange() / aSlideWorkArea.GetWidth());
+				m_pScrollbar->GetMinPos()+
+				GUI_FLOAT2UINT_ROUND((aMovePos.x -aSlideWorkArea.m_fLeft)  * m_pScrollbar->GetRange() / aSlideWorkArea.GetWidth());
 			break;
 
 		case eSB_VERTICAL:
@@ -199,13 +219,13 @@ namespace guiex
 
 			//get value of scrollbar
 			nCurScrollbarPos = 
-				pParent->GetMinPos()+
-				GUI_FLOAT2UINT_ROUND((aMovePos.y-aSlideWorkArea.m_fTop) * pParent->GetRange() / aSlideWorkArea.GetHeight());
+				m_pScrollbar->GetMinPos()+
+				GUI_FLOAT2UINT_ROUND((aMovePos.y-aSlideWorkArea.m_fTop) * m_pScrollbar->GetRange() / aSlideWorkArea.GetHeight());
 			break;
 		}
 
 		// set current position of scrollbar
-		pParent->SetCurPosWithoutUpdate(nCurScrollbarPos);
+		m_pScrollbar->SetCurrentPos(nCurScrollbarPos);
 
 		// set slide position
 		pEvent->SetWidgetPos(aMovePos);
@@ -252,22 +272,22 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtScrollbar::InitScrollbar()
 	{
-		SetPositionRelative(true);
-		SetSizeRelative(false);
+		NewSetPositionType( eScreenValue_Percentage );
+		NewSetSizeType( eScreenValue_Pixel );
 
 		//create child
 		m_pArrow[0] = new CGUIWgtScrollbarArrow(GetName()+"_arrow_0__auto__", GetProjectName(), 0);
 		m_pArrow[0]->SetParent(this);
-		m_pArrow[0]->SetPositionRelative(true);
-		m_pArrow[0]->SetSizeRelative(false);
+		m_pArrow[0]->NewSetPositionType( eScreenValue_Percentage );
+		m_pArrow[0]->NewSetSizeType( eScreenValue_Pixel );
 		m_pArrow[1] = new CGUIWgtScrollbarArrow(GetName()+"_arrow_1__auto__", GetProjectName(), 1);
 		m_pArrow[1]->SetParent(this);
-		m_pArrow[1]->SetPositionRelative(true);
-		m_pArrow[1]->SetSizeRelative(false);
+		m_pArrow[1]->NewSetPositionType( eScreenValue_Percentage );
+		m_pArrow[1]->NewSetSizeType( eScreenValue_Pixel );
 		m_pSlide = new CGUIWgtScrollbarSlide(GetName()+"_slide__auto__", GetProjectName() );
 		m_pSlide->SetParent(this);
-		m_pSlide->SetPositionRelative(true);
-		m_pSlide->SetSizeRelative(false);
+		m_pSlide->NewSetPositionType( eScreenValue_Percentage );
+		m_pSlide->NewSetSizeType( eScreenValue_Pixel );
 
 		//flag
 		m_bAutoNotifyParent = false;
@@ -333,14 +353,18 @@ namespace guiex
 		if( rName == "SCROLLBAR_BG")
 		{
 			m_pImageBg = pImage;
-			if( GetSize().IsEqualZero() && pImage )
+			if( pImage && NEWGetSize().IsEqualZero() )
 			{
-				SetSize(pImage->GetSize());
+				SetPixelSize(pImage->GetSize());
 			}
 		}
 		else if( rName == "SCROLLBAR_ARROW_NORMAL_0") 
 		{
 			m_pArrow[0]->SetImage("BTN_NORMAL", pImage);
+			if( pImage && NEWGetSize().IsEqualZero() )
+			{
+				SetPixelSize(pImage->GetSize());
+			}
 		}
 		else if( rName == "SCROLLBAR_ARROW_HOVER_0")
 		{
@@ -429,10 +453,10 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void	CGUIWgtScrollbar::RenderSelf(IGUIInterfaceRender* pRender)
 	{
-		DrawImage( pRender, m_pImageBg, GetRect( ), pRender->GetAndIncZ(),&GetClipRect() );
+		DrawImage( pRender, m_pImageBg, GetBoundArea( ) );
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtScrollbar::UpdateValue()
+	void CGUIWgtScrollbar::GenerateNotifyEvent()
 	{
 		//send event to self
 		{
@@ -459,32 +483,48 @@ namespace guiex
 			CGUIWidgetSystem::Instance()->SendEvent( &aEvent);
 		}
 
+		//send event to host
+		if( m_pWgtHost )
+		{
+			CGUIEventScrollbar aEvent;
+			aEvent.SetEventId(eEVENT_SCROLLBAR_SCROLL);
+			aEvent.SetScrollbarType(m_eScrollbarType == eSB_VERTICAL);
+			aEvent.SetScrollbar(this);
+			aEvent.SetReceiver(m_pWgtHost);
+			aEvent.SetCurrentPos( m_nCurPos );
+			aEvent.SetRange( m_nMaxPos - m_nMinPos );
+			CGUIWidgetSystem::Instance()->SendEvent( &aEvent);
+		}
+	}
+	//------------------------------------------------------------------------------
+	void	CGUIWgtScrollbar::UpdateValue()
+	{
 		//enable or disable arrow
 		if( m_nCurPos <= m_nMinPos )
 		{
-			m_pArrow[0]->SetSelfDisable(true);
+			m_pArrow[0]->SetDisable(true);
 		}
 		else
 		{
-			m_pArrow[0]->SetSelfDisable(false);
+			m_pArrow[0]->SetDisable(false);
 		}
 		if( m_nCurPos >= m_nMaxPos )
 		{
-			m_pArrow[1]->SetSelfDisable(true);
+			m_pArrow[1]->SetDisable(true);
 		}
 		else
 		{
-			m_pArrow[1]->SetSelfDisable(false);
+			m_pArrow[1]->SetDisable(false);
 		}
 
 		//show or hide slide
 		if( m_nMinPos == m_nMaxPos )
 		{
-			m_pSlide->SetSelfVisible(false);
+			m_pSlide->SetVisible(false);
 		}
 		else
 		{
-			m_pSlide->SetSelfVisible(true);
+			m_pSlide->SetVisible(true);
 		}
 
 		//update position
@@ -494,7 +534,7 @@ namespace guiex
 		}
 
 		CGUIRect aSlideArea = GetSlideArea();
-		CGUISize aSlideSize = m_pSlide->GetSize();
+		CGUISize aSlideSize = m_pSlide->NEWGetPixelSize();
 		switch( m_eScrollbarType )
 		{
 			//for vertical scroll bar
@@ -503,7 +543,7 @@ namespace guiex
 				aSlideArea.m_fTop += aSlideSize.m_fHeight / 2;
 				aSlideArea.m_fBottom -= aSlideSize.m_fHeight / 2;
 				real fGap = (m_nCurPos -m_nMinPos) * aSlideArea.GetHeight()/GetRange();
-				m_pSlide->SetLocalPosition(
+				m_pSlide->SetPixelPosition(
 					aSlideArea.m_fLeft + aSlideArea.GetWidth()/2,
 					aSlideArea.m_fTop + fGap);
 			}
@@ -515,7 +555,7 @@ namespace guiex
 				aSlideArea.m_fLeft += aSlideSize.m_fWidth / 2;
 				aSlideArea.m_fRight -= aSlideSize.m_fWidth / 2;
 				real fGap = (m_nCurPos -m_nMinPos) * aSlideArea.GetWidth()/GetRange();
-				m_pSlide->SetLocalPosition(
+				m_pSlide->SetPixelPosition(
 					aSlideArea.m_fLeft + fGap,
 					aSlideArea.m_fTop + aSlideArea.GetHeight()/2);
 			}
@@ -525,10 +565,10 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIRect CGUIWgtScrollbar::GetSlideArea( )
 	{
-		CGUIRect aRect = GetRect();
+		CGUIRect aRect = GetBoundArea();
 		aRect.SetPosition(CGUIVector2(0.0f, 0.0f));
-		CGUISize aSize0 = m_pArrow[0]->GetSize();
-		CGUISize aSize1 = m_pArrow[1]->GetSize();
+		CGUISize aSize0 = m_pArrow[0]->NEWGetPixelSize();
+		CGUISize aSize1 = m_pArrow[1]->NEWGetPixelSize();
 		if( m_eScrollbarType == eSB_VERTICAL )
 		{
 			aRect.m_fTop += aSize0.GetHeight();
@@ -546,120 +586,60 @@ namespace guiex
 		return aRect;
 	}
 	//------------------------------------------------------------------------------
+	void	CGUIWgtScrollbar::RefreshImpl()
+	{
+		CGUIWidget::RefreshImpl();
+
+		UpdateScrollbar();
+	}
+	//------------------------------------------------------------------------------
 	void	CGUIWgtScrollbar::UpdateScrollbar()
 	{
-		if( IsOpen()==false || !GetParent() )
+		if( !GetParent() )
 		{
 			return;
 		}
 
+		//set children's pos
 		switch(m_eScrollbarType)
 		{
 		case eSB_VERTICAL:
-			//set children's pos
-			m_pArrow[0]->SetTagPoint(0.5f, 0.0f);
-			m_pArrow[0]->SetPositionRatio(0.5f, 0.0f);
-			m_pArrow[1]->SetTagPoint(0.5f, 1.0f);
-			m_pArrow[1]->SetPositionRatio(0.5f, 1.0f);
-			m_pSlide->SetTagPoint(0.5f, 0.5f);
+			m_pArrow[0]->SetAnchorPoint(0.5f, 0.0f);
+			m_pArrow[0]->NEWSetPosition(0.5f, 0.0f);
+			m_pArrow[1]->SetAnchorPoint(0.5f, 1.0f);
+			m_pArrow[1]->NEWSetPosition(0.5f, 1.0f);
+			m_pSlide->SetAnchorPoint(0.5f, 0.5f);
 			break;
 
 		case eSB_HORIZONAL:
-			//set self's pos
-			if( m_bAutoPosition )
-			{
-
-			}
-
-			//set children's pos
-			m_pArrow[0]->SetTagPoint(0.0f, 0.5f);
-			m_pArrow[0]->SetPositionRatio(0.0f, 0.5f);
-			m_pArrow[1]->SetTagPoint(1.0f, 0.5f);
-			m_pArrow[1]->SetPositionRatio(1.0f, 0.5f);
-			m_pSlide->SetTagPoint(0.5f, 0.5f);
+			m_pArrow[0]->SetAnchorPoint(0.0f, 0.5f);
+			m_pArrow[0]->NEWSetPosition(0.0f, 0.5f);
+			m_pArrow[1]->SetAnchorPoint(1.0f, 0.5f);
+			m_pArrow[1]->NEWSetPosition(1.0f, 0.5f);
+			m_pSlide->SetAnchorPoint(0.5f, 0.5f);
 			break;
 		}
 
+		//set self's pos
 		if( m_bAutoPosition )
 		{
-			//get client area of parent
-			CGUISize aClientArea = 
-				(m_bAutoPosition && GetParent()->GetFlag(eFLAG_SCROLLBAR_AUTOPOSITION)) ?
-				GetParent()->GetRect( ).GetSize() : this->GetSize();
-
 			switch(m_eScrollbarType)
 			{
 			case eSB_VERTICAL:
-				SetTagPoint(1.0f, 0.0f);
-				SetPositionRatio( CGUIVector2(1.0f, 0.0f));
-				SetRectSize( GetSize().GetWidth() * GetDerivedScale().GetWidth(), aClientArea.GetHeight());
+				SetAnchorPoint(1.0f, 0.0f);
+				NEWSetPosition( 1.0f, 0.0f );
+				NEWSetSize( NEWGetPixelSize().GetWidth(), GetParent()->NEWGetPixelSize().GetHeight() );
 				break;
 
 			case eSB_HORIZONAL:
-				SetTagPoint(0.0f, 1.0f);
-				SetPositionRatio( CGUIVector2(0.0f, 1.0f));
-				SetRectSize( aClientArea.GetWidth(), GetSize().GetHeight() * GetDerivedScale().GetHeight());
+				SetAnchorPoint(0.0f, 1.0f);
+				NEWSetPosition( 0.0f, 1.0f);
+				NEWSetSize( GetParent()->NEWGetPixelSize().GetWidth(), NEWGetPixelSize().GetHeight());
 				break;
 			}
 		}
 
 		UpdateValue();
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWgtScrollbar::SetValue(const CGUIString& rName, const CGUIString& rValue)
-	{
-		if( rName == "MaxPos")
-		{
-			SetMaxPos( CGUIStringConvertor::StringToUInt(rValue));
-		}
-		else if( rName == "MinPos")
-		{
-			SetMinPos( CGUIStringConvertor::StringToUInt(rValue));
-		}
-		else if( rName == "Range")
-		{
-			SetRange( CGUIStringConvertor::StringToUInt(rValue));
-		}
-		else if( rName == "CurrentPos")
-		{
-			SetCurrentPos( CGUIStringConvertor::StringToUInt(rValue));
-		}
-		else if( rName == "AutoPosition")
-		{
-			EnableAutoPosition( CGUIStringConvertor::StringToBool(rValue));
-		}
-		else
-		{
-			CGUIWidget::SetValue(rName, rValue);
-		}
-	}
-	//------------------------------------------------------------------------------
-	CGUIString	CGUIWgtScrollbar::GetValue(const CGUIString& rName) const
-	{
-		if( rName == "MaxPos")
-		{
-			return CGUIStringConvertor::UIntToString(GetMaxPos());
-		}
-		else	if( rName == "MinPos")
-		{
-			return CGUIStringConvertor::UIntToString(GetMinPos());
-		}
-		else	if( rName == "Range")
-		{
-			return CGUIStringConvertor::UIntToString(GetRange());
-		}
-		else	if( rName == "CurrentPos")
-		{
-			return CGUIStringConvertor::UIntToString(GetCurrentPos());
-		}
-		else if( rName == "AutoPosition")
-		{
-			return CGUIStringConvertor::BoolToString(IsAutoPosition());
-		}
-		else
-		{
-			return CGUIWidget::GetValue(rName);
-		}
 	}
 	//------------------------------------------------------------------------------
 	void			CGUIWgtScrollbar::SetPageSize(uint32 nPageSize)
@@ -720,55 +700,12 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void			CGUIWgtScrollbar::SetCurrentPos(uint32 nPos)
 	{
-		SetCurPosWithoutUpdate(nPos);
-
-		//update scrollbar value
-		UpdateValue();
-	}
-	//------------------------------------------------------------------------------
-	void		CGUIWgtScrollbar::SetCurPosWithoutUpdate(uint32 nPos)
-	{
 		m_nCurPos = nPos;
 		m_nCurPos = m_nCurPos>m_nMaxPos ? m_nMaxPos : m_nCurPos;
 		m_nCurPos = m_nCurPos<m_nMinPos ? m_nMinPos : m_nCurPos;
 
-		//send event to self
-		{
-			CGUIEventScrollbar aEvent;
-			aEvent.SetEventId(eEVENT_SCROLLBAR_SCROLL);
-			aEvent.SetScrollbarType(m_eScrollbarType == eSB_VERTICAL);
-			aEvent.SetScrollbar(this);
-			aEvent.SetReceiver(this);
-			aEvent.SetCurrentPos( m_nCurPos );
-			aEvent.SetRange( m_nMaxPos - m_nMinPos );
-			CGUIWidgetSystem::Instance()->SendEvent( &aEvent);
-		}	
-
-		//send event to parent
-		if( IsNotifyParent() && GetParent())
-		{
-			CGUIEventScrollbar aEvent;
-			aEvent.SetEventId(eEVENT_SCROLLBAR_SCROLL);
-			aEvent.SetScrollbarType(m_eScrollbarType == eSB_VERTICAL);
-			aEvent.SetScrollbar(this);
-			aEvent.SetReceiver(GetParent());
-			aEvent.SetCurrentPos( m_nCurPos );
-			aEvent.SetRange( m_nMaxPos - m_nMinPos );
-			CGUIWidgetSystem::Instance()->SendEvent( &aEvent);
-		}
-
-		//send event to host
-		if( m_pWgtHost )
-		{
-			CGUIEventScrollbar aEvent;
-			aEvent.SetEventId(eEVENT_SCROLLBAR_SCROLL);
-			aEvent.SetScrollbarType(m_eScrollbarType == eSB_VERTICAL);
-			aEvent.SetScrollbar(this);
-			aEvent.SetReceiver(m_pWgtHost);
-			aEvent.SetCurrentPos( m_nCurPos );
-			aEvent.SetRange( m_nMaxPos - m_nMinPos );
-			CGUIWidgetSystem::Instance()->SendEvent( &aEvent);
-		}
+		//update scrollbar value
+		UpdateValue();
 	}
 	//------------------------------------------------------------------------------
 	void			CGUIWgtScrollbar::IncreasePos()
@@ -825,9 +762,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	uint32		CGUIWgtScrollbar::OnMouseLeftDown( CGUIEventMouse* pEvent )
 	{
-		CGUIVector2		aMousePoint = pEvent->GetPosition();
-		GlobalToClient(aMousePoint);
-		CGUIVector2	aSlidePoint = m_pSlide->GetLocalPosition( );
+		CGUIVector2	aMousePoint = pEvent->GetLocalPosition();
+		CGUIVector2	aSlidePoint = m_pSlide->GetPixelPosition( );
 
 		switch( m_eScrollbarType )
 		{
@@ -862,67 +798,68 @@ namespace guiex
 		return CGUIWidget::OnScrollbarScroll( pEvent );
 	}
 	//------------------------------------------------------------------------------
-	CGUIProperty*	CGUIWgtScrollbar::GenerateProperty(const CGUIString& rName, const CGUIString& rType )
-	{
-		CGUIProperty* pProperty = NULL;
-		
-		if( rName == "RANGE" && rType == "UINT" )
-		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
-				rName, 
-				rType, 
-				CGUIStringConvertor::UIntToString(GetRange( )));
-		}		
-		else if( rName == "SCROLLBAR_TYPE" && rType=="ENUM")
-		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
-				rName, 
-				rType, 
-				GetScrollbarType() == eSB_VERTICAL ? "SB_VERTICAL" : "SB_HORIZONAL");
-		}
-		else if( rName == "AUTO_POSITION" && rType=="BOOL")
-		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
-				rName, 
-				rType, 
-				CGUIStringConvertor::BoolToString(IsAutoPosition( )));
-		}
-		return pProperty ? pProperty : CGUIWidget::GenerateProperty(rName, rType);
-	}
-	//------------------------------------------------------------------------------
-	void			CGUIWgtScrollbar::ProcessProperty( const CGUIProperty* pProperty)
-	{
-		CGUIWidget::ProcessProperty(pProperty);
+	//CGUIProperty*	CGUIWgtScrollbar::GenerateProperty(const CGUIString& rName, const CGUIString& rType )
+	//{
+		//CGUIProperty* pProperty = NULL;
+		//
+		//if( rName == "RANGE" && rType == "uint32" )
+		//{
+		//	pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+		//		rName, 
+		//		rType, 
+		//		CGUIStringConvertor::UInt32ToString(GetRange( )));
+		//}		
+		//else if( rName == "SCROLLBAR_TYPE" && rType=="ENUM")
+		//{
+		//	pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+		//		rName, 
+		//		rType, 
+		//		GetScrollbarType() == eSB_VERTICAL ? "SB_VERTICAL" : "SB_HORIZONAL");
+		//}
+		//else if( rName == "AUTO_POSITION" && rType=="BOOL")
+		//{
+		//	pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+		//		rName, 
+		//		rType, 
+		//		CGUIStringConvertor::BoolToString(IsAutoPosition( )));
+		//}
+		//return pProperty ? pProperty : CGUIWidget::GenerateProperty(rName, rType);
+	//	return NULL;
+	//}
+	////------------------------------------------------------------------------------
+	//void			CGUIWgtScrollbar::ProcessProperty( const CGUIProperty* pProperty)
+	//{
+		//CGUIWidget::ProcessProperty(pProperty);
 
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//property for parent
-		/*
-		*<property name="RANGE" type="UINT" value="20" />
-		*/
-		if( pProperty->GetName() == "RANGE" && pProperty->GetType()=="UINT")
-		{
-			SetRange(CGUIStringConvertor::StringToUInt(pProperty->GetValue()));
-		}
-		else if( pProperty->GetName() == "SCROLLBAR_TYPE" && pProperty->GetType()=="ENUM")
-		{
-			if( pProperty->GetValue() == "SB_VERTICAL" )
-			{
-				SetScrollbarType( eSB_VERTICAL );
-			}
-			else if( pProperty->GetValue() == "SB_HORIZONAL" )
-			{
-				SetScrollbarType( eSB_HORIZONAL );
-			}
-			else
-			{
-				throw CGUIException("[CGUIWgtScrollbar::ProcessProperty]: unknown scrollbar type <%s>!", pProperty->GetValue().c_str());
-			}
-		}
-		else if( pProperty->GetName() == "AUTO_POSITION" && pProperty->GetType()=="BOOL")
-		{
-			EnableAutoPosition(CGUIStringConvertor::StringToBool(pProperty->GetValue()));
-		}
-	}
+		//////////////////////////////////////////////////////////////////////////////////////////////////////
+		////property for parent
+		///*
+		//*<property name="RANGE" type="uint32" value="20" />
+		//*/
+		//if( pProperty->GetName() == "RANGE" && pProperty->GetType()=="uint32")
+		//{
+		//	SetRange(CGUIStringConvertor::StringToUInt32(pProperty->GetValue()));
+		//}
+		//else if( pProperty->GetName() == "SCROLLBAR_TYPE" && pProperty->GetType()=="ENUM")
+		//{
+		//	if( pProperty->GetValue() == "SB_VERTICAL" )
+		//	{
+		//		SetScrollbarType( eSB_VERTICAL );
+		//	}
+		//	else if( pProperty->GetValue() == "SB_HORIZONAL" )
+		//	{
+		//		SetScrollbarType( eSB_HORIZONAL );
+		//	}
+		//	else
+		//	{
+		//		throw CGUIException("[CGUIWgtScrollbar::ProcessProperty]: unknown scrollbar type <%s>!", pProperty->GetValue().c_str());
+		//	}
+		//}
+		//else if( pProperty->GetName() == "AUTO_POSITION" && pProperty->GetType()=="BOOL")
+		//{
+		//	EnableAutoPosition(StringToValue(pProperty->GetValue()));
+		//}
+	//}
 	//------------------------------------------------------------------------------
 
 

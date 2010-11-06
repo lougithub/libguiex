@@ -25,17 +25,17 @@
 namespace guiex
 {
 
-	class GUIEXPORT CGUIStringExInfo
+	class GUIEXPORT CGUIStringInfo
 	{	
 
 	public:
-		CGUIStringExInfo();
-		CGUIStringExInfo(int16 nFontIdx,uint16 nFontSize,const CGUIColor& rColor);
-		CGUIStringExInfo(const CGUIStringExInfo& rInfo);
+		CGUIStringInfo();
+		CGUIStringInfo(int16 nFontIdx,uint16 nFontSize,const CGUIColor& rColor);
+		CGUIStringInfo(const CGUIStringInfo& rInfo);
 
-		bool					operator==(const CGUIStringExInfo& rInfo ) const;
-		bool					operator!=(const CGUIStringExInfo& rInfo ) const;
-		const CGUIStringExInfo&	operator=(const CGUIStringExInfo& rInfo );
+		bool					operator==(const CGUIStringInfo& rInfo ) const;
+		bool					operator!=(const CGUIStringInfo& rInfo ) const;
+		const CGUIStringInfo&	operator=(const CGUIStringInfo& rInfo );
 
 	public:
 		int16		m_nFontIdx;
@@ -86,12 +86,12 @@ namespace guiex
 		/**
 		* @brief set string default info
 		*/
-		void	SetDefaultInfo(const CGUIStringExInfo* pInfo);
+		void	SetDefaultInfo(const CGUIStringInfo* pInfo);
 
 		/**
 		* @brief get string default info
 		*/
-		const CGUIStringExInfo&	GetDefaultInfo() const;
+		const CGUIStringInfo&	GetDefaultInfo() const;
 
 		/**
 		* @brief set string content
@@ -122,7 +122,7 @@ namespace guiex
 		/**
 		*@brief get a character by index
 		*/
-		const CGUIStringExInfo&		GetInfo(uint32 idx) const;
+		const CGUIStringInfo&		GetInfo(uint32 idx) const;
 
 		/**
 		* @brief return true if string is empty
@@ -137,17 +137,17 @@ namespace guiex
 		/**
 		* @brief insert a character
 		*/
-		void		Insert( uint32 idx, wchar_t cChar,uint32 nCount, const CGUIStringExInfo* pInfo = NULL);
+		void		Insert( uint32 idx, wchar_t cChar,uint32 nCount, const CGUIStringInfo* pInfo = NULL);
 
 		/**
 		* @brief insert a wchar_t array
 		*/
-		void		Insert( uint32 idx, const wchar_t* pChar, const CGUIStringExInfo* pInfo = NULL);
+		void		Insert( uint32 idx, const wchar_t* pChar, const CGUIStringInfo* pInfo = NULL);
 
 		/**
 		* @brief insert a wchar_t array
 		*/
-		void		Insert( uint32 idx, const wchar_t* pChar,uint32 nCount, const CGUIStringExInfo* pInfo = NULL);
+		void		Insert( uint32 idx, const wchar_t* pChar,uint32 nCount, const CGUIStringInfo* pInfo = NULL);
 
 		/**
 		* @brief insert a string
@@ -158,12 +158,12 @@ namespace guiex
 		* @brief insert a string
 		* @param pInfo if it is NULL, it will use default info
 		*/
-		void		Insert(uint32 idx, const CGUIString& rString, const CGUIStringExInfo* pInfo = NULL, const char* szCode = NULL );
+		void		Insert(uint32 idx, const CGUIString& rString, const CGUIStringInfo* pInfo = NULL, const char* szCode = NULL );
 
 		/**
 		* @brief replace character
 		*/
-		void		Replace(uint32 idx, wchar_t cChar,uint32 nCount, const CGUIStringExInfo* pInfo = NULL);
+		void		Replace(uint32 idx, wchar_t cChar,uint32 nCount, const CGUIStringInfo* pInfo = NULL);
 
 		/**
 		* @brief erase string
@@ -174,17 +174,17 @@ namespace guiex
 		/**
 		* @brief append character
 		*/
-		void		Append(const wchar_t cChar,uint32 nCount, const CGUIStringExInfo* pInfo = NULL);
+		void		Append(const wchar_t cChar,uint32 nCount, const CGUIStringInfo* pInfo = NULL);
 
 		/**
 		* @brief add a wchar_t array
 		*/
-		void		Append(const wchar_t* pChar, const CGUIStringExInfo* pInfo = NULL);
+		void		Append(const wchar_t* pChar, const CGUIStringInfo* pInfo = NULL);
 
 		/**
 		* @brief add a wchar_t array
 		*/
-		void		Append(const wchar_t* pChar, uint32 nCount, const CGUIStringExInfo* pInfo = NULL);
+		void		Append(const wchar_t* pChar, uint32 nCount, const CGUIStringInfo* pInfo = NULL);
 
 		/**
 		* @brief assign
@@ -194,7 +194,7 @@ namespace guiex
 		/**
 		* @brief assign
 		*/
-		void		Assign(const wchar_t* pChar,const CGUIStringExInfo* pInfo = NULL);
+		void		Assign(const wchar_t* pChar,const CGUIStringInfo* pInfo = NULL);
 
 		/**
 		* @brief add a wchar_t array
@@ -228,13 +228,13 @@ namespace guiex
 		* @brief insert string info, must be called after insert string content.
 		* @param pInfo if it is NULL, means insert a default string info
 		*/
-		void		InsertStringInfo(uint32 idx, uint32 count, const CGUIStringExInfo* pInfo);
+		void		InsertStringInfo(uint32 idx, uint32 count, const CGUIStringInfo* pInfo);
 
 		/**
 		* @brief replace string info
 		* @param pInfo if it is NULL, means not replace this info
 		*/
-		void		ReplaceStringInfo(uint32 idx, uint32 count, const CGUIStringExInfo* pInfo);
+		void		ReplaceStringInfo(uint32 idx, uint32 count, const CGUIStringInfo* pInfo);
 
 		/**
 		* @brief erase string info
@@ -242,10 +242,10 @@ namespace guiex
 		void		EraseStringInfo(uint32 beginIdx, uint32 endIdx);
 
 	protected:
-		CGUIStringExInfo							m_aDefaultInfo;	///< the default info of string, 
+		CGUIStringInfo							m_aDefaultInfo;	///< the default info of string, 
 																	///< if it's null, means this string only content character info, 
 																	///< and can't be
-		typedef	std::vector<CGUIStringExInfo>		TVecStringInfo;
+		typedef	std::vector<CGUIStringInfo>		TVecStringInfo;
 		TVecStringInfo								m_vecInfo;		///< the detail info of each character
 		std::wstring								m_strContent;	///< container which hold string.
 	};

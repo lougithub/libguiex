@@ -135,6 +135,8 @@ namespace guiex
 		* for derived class
 		*/
 		CGUIWgtEditBox( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName );
+	
+		virtual void RefreshImpl( );
 
 		/// render
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
@@ -146,13 +148,6 @@ namespace guiex
 		* @brief override the OnSetImage function
 		*/
 		virtual void	OnSetImage( const CGUIString& rName,CGUIImage* pImage );
-
-		/*
-		* @brief update rect, which may different for different widget
-		*/
-		virtual void		UpdateDirtyRect();
-
-
 
 	protected://string related function
 		/// get position of cursor 
@@ -248,6 +243,8 @@ namespace guiex
 
 		//---------------------------------------------------
 		CGUIRect	m_aStringAreaRatio;			//!< the ratio of string area, the (0,0,1,1) equal whole client area
+
+		CGUIRect	m_aStringAreaRect;
 
 	protected:
 		CGUIWgtEdit*	m_pEdit;			//!< edit control

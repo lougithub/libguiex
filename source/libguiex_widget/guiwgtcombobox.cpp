@@ -174,7 +174,7 @@ namespace guiex
 		}
 	}	
 	//------------------------------------------------------------------------------
-	void			CGUIWgtComboBox::SetTextInfo( const CGUIStringExInfo& rInfo)
+	void			CGUIWgtComboBox::SetTextInfo( const CGUIStringInfo& rInfo)
 	{
 		m_pDropList->SetTextInfo(rInfo);
 		CGUIWidget::SetTextInfo(rInfo);
@@ -185,7 +185,7 @@ namespace guiex
 		CGUIRect aClientArea = GetClientRect();
 
 		/// draw bg
-		DrawImage( pRender, m_pImageBG, GetRect(), pRender->GetAndIncZ(),&GetClipRect());
+		DrawImage( pRender, m_pImageBG, GetRect() );
 
 		/// draw item
 		if( m_pSelectedItem )
@@ -363,7 +363,7 @@ namespace guiex
 				rType, 
 				CGUIStringConvertor::BoolToString(IsSorting( )));
 		}
-		else if( rName == "TEXT_ITEM" && rType == "STRING" )
+		else if( rName == "TEXT_ITEM" && rType == "CGUIString" )
 		{
 			GUI_ASSERT(0, "not support now");
 			/*pProperty = CGUIPropertyManager::Instance()->CreateProperty(
@@ -396,15 +396,15 @@ namespace guiex
 		*/
 		else if( pProperty->GetName() == "SORT" && pProperty->GetType()=="BOOL")
 		{
-			SetSorting(CGUIStringConvertor::StringToBool(pProperty->GetValue()));
+			SetSorting(StringToValue(pProperty->GetValue()));
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//property for text item
 		/*
-		*<property name="TEXT_ITEM" type="STRING" value="abc" />
+		*<property name="TEXT_ITEM" type="CGUIString" value="abc" />
 		*/
-		else if( pProperty->GetName() == "TEXT_ITEM" && pProperty->GetType()=="STRING")
+		else if( pProperty->GetName() == "TEXT_ITEM" && pProperty->GetType()=="CGUIString")
 		{
 			CGUIStringEx aString;
 			CGUIStringConvertor::MultiByteToWideChar(pProperty->GetValue(), aString);

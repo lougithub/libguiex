@@ -18,6 +18,7 @@
 #include <libguiex_core\guiwidgetsystem.h>
 #include <libguiex_core\guiinterfacefilesys.h>
 #include <libguiex_core\guiinterfacemanager.h>
+#include <libguiex_core\guiinterfaceconfigfile.h>
 #include <libguiex_core\guiexception.h>
 
 
@@ -45,6 +46,7 @@ namespace guiex
 	int32	CGUIProjectInfoManager::LoadProjects( )
 	{
 		UnloadProjects();
+		IGUIInterfaceConfigFile* pConfigFile = CGUIInterfaceManager::Instance()->GetInterfaceConfigFile();
 
 		//get file interface
 		IGUIInterfaceFileSys* pFileSys = CGUIInterfaceManager::Instance()->GetInterfaceFileSys();
@@ -55,17 +57,18 @@ namespace guiex
 		std::vector<CGUIString> vecErrorList;
 		for( uint32 i=0; i<m_vecProjectFilePaths.size(); ++i )
 		{
-			CGUIProjectInfo* pProjectInfo = new CGUIProjectInfo;
-			if( 0 != pProjectInfo->ReadProjectFile( m_vecProjectFilePaths[i] ))
+			CGUIProjectInfo* pProjectInfo = pConfigFile->LoadProjectInfoFile( m_vecProjectFilePaths[i] );
+			if( !pProjectInfo )
 			{
+				//failed
 				vecErrorList.push_back(m_vecProjectFilePaths[i]);
-				delete pProjectInfo;
 			}
 			else
 			{
 				std::map<CGUIString, CGUIProjectInfo*>::iterator itor = m_mapProjectInfos.find( pProjectInfo->GetProjectFilename() );
 				if( itor != m_mapProjectInfos.end() )
 				{
+					DestroyProjectInfo( pProjectInfo );
 					throw CGUIException(
 						"[CGUIProjectInfoManager::LoadProjects]: has duplicated project <%s>", 
 						pProjectInfo->GetProjectFilename().c_str());
@@ -117,7 +120,7 @@ namespace guiex
 			itor != m_mapProjectInfos.end();
 			++itor)
 		{
-			delete itor->second;
+			DestroyProjectInfo( itor->second );
 		}	
 		m_mapProjectInfos.clear();
 
@@ -168,5 +171,14 @@ namespace guiex
 		return m_vecProjectFileNames;
 	}
 	//------------------------------------------------------------------------------
-
+	CGUIProjectInfo* CGUIProjectInfoManager::GenerateProjectInfo() const
+	{
+		return new CGUIProjectInfo;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIProjectInfoManager::DestroyProjectInfo( CGUIProjectInfo* pProjectInfo) const
+	{
+		delete pProjectInfo;
+	}
+	//------------------------------------------------------------------------------
 }

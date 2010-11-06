@@ -98,9 +98,8 @@ namespace guiex
 		virtual void DrawCharacter(IGUIInterfaceRender* pRender, 
 			const CGUIMatrix4& rWorldMatrix,
 			wchar_t charCode, 
-			const CGUIStringExInfo& rInfo,
+			const CGUIStringInfo& rInfo,
 			const CGUIVector2& rPos,
-			const CGUISize& rScale,
 			real	fAlpha) = 0;
 
 		/**
@@ -110,7 +109,6 @@ namespace guiex
 			const CGUIMatrix4& rWorldMatrix,
 			const CGUIStringEx& rString, 
 			const CGUIVector2& rPos,
-			const CGUISize& rScale,
 			real			fAlpha,
 			int32 nStartPos = 0,
 			int32 nEndPos = -1)=0;
@@ -123,7 +121,6 @@ namespace guiex
 			const CGUIStringEx& rString, 
 			const CGUIRect&	rStringRect,
 			const uint8&	uTextAlignment,
-			const CGUISize& rScale,
 			real			fAlpha,
 			int32 nStartPos = 0,
 			int32 nEndPos = -1)=0;

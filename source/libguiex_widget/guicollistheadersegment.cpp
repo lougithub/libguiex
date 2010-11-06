@@ -100,8 +100,8 @@ namespace guiex
 			pImage = m_pImageNormal;
 		}
 
-		DrawImage( pRender, pImage, GetRect(), pRender->GetAndIncZ(),&GetClipRect());
-		DrawString(pRender, GetText(), GetClientRect(), GetTextAlignment(), &GetClipRect());
+		DrawImage( pRender, pImage, GetRect(),);
+		DrawString(pRender, GetText(), GetClientRect(), GetTextAlignment());
 	}
 	//------------------------------------------------------------------------------
 

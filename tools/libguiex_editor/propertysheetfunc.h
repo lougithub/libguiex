@@ -29,24 +29,24 @@ class CProperty;
 
 
 //load widget config to property sheet
-extern void		LoadWidgetConfig( wxPropertyGridManager* pSheetMgr, const std::string& rType,guiex::CGUIWidget* pWidget = NULL );
+extern void LoadWidgetConfig( wxPropertyGridManager* pSheetMgr, const std::string& rType,guiex::CGUIWidget* pWidget = NULL );
 
 //Add Property to property sheet
-extern void		SetPropertyByType( wxPropertyGridManager* pSheetMgr, const CProperty* pProp, wxPGProperty* pPGProperty,guiex::CGUIWidget* pWidget);
+extern void	SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGProperty, const guiex::CGUIProperty* pDefaultProp, guiex::CGUIWidget* pWidget );
 
 //set property sheet by event category
-extern void		SetPropertyPageByEvent(wxPropertyGridManager* pSheetMgr, const std::string& rEvent );
+extern void	SetPropertyPageByEvent(wxPropertyGridManager* pSheetMgr, const std::string& rEvent );
 
 //generate gui property
-extern guiex::CGUIProperty*	GenerateGUIProperty( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGProperty );
+extern void	GenerateGUIProperty( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGProperty, guiex::CGUIProperty& rProperty );
 
 //generate gui property
-void GenerateGUIProperty( wxPropertyGridManager* pSheetMgr,guiex::CGUIPropertySet& rSet );
+extern void GenerateGUIProperty( wxPropertyGridManager* pSheetMgr, guiex::CGUIProperty& rSet );
 
 //create a widget from property sheet
-extern guiex::CGUIWidget*	CreateWidget( wxPropertyGridManager* pSheetMgr, const char* strType, const char* strName, guiex::CGUIWidget* pParent);
+extern guiex::CGUIWidget* CreateWidget( wxPropertyGridManager* pSheetMgr, const char* strType, const char* strName, guiex::CGUIWidget* pParent);
 
 //update image used in the system
-extern void		UpdateImageNameList();
+extern void	UpdateImageNameList();
 
 #endif	//__KEN_PROPERTYSHEETFUNC_20070928_H__

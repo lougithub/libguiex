@@ -62,12 +62,12 @@ namespace guiex
 		return 0;	
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnSizeChange( CGUIEventSize* pEvent )
+	uint32		CGUIWidget::OnSizeChanged( CGUIEventSize* pEvent )
 	{
-		//WIDGET_EVENT_TRACE("OnSizeChange");
+		//WIDGET_EVENT_TRACE("OnSizeChanged");
 
 		//call callback function
-		CallbackFunction("OnSizeChange", pEvent);
+		CallbackFunction("OnSizeChanged", pEvent);
 
 		//send parent's change event to child
 		CGUIWidget* pWidget = GetChild();
@@ -362,7 +362,7 @@ namespace guiex
 		CGUIWidget* pParent = pThis->GetParent();
 		while( pThis && pParent )
 		{
-			if( pThis->IsSelfActivable())
+			if( pThis->IsActivable())
 			{
 				pThis->MoveToTop();
 			}
@@ -503,7 +503,7 @@ namespace guiex
 
 		if( pEvent->IsExpired() == false)
 		{
-			NEWSetPixelPosition(pEvent->GetWidgetPos());
+			SetPixelPosition(pEvent->GetWidgetLocalPos());
 		}
 		if( GetFlag(eFLAG_MOUSE_CONSUMED))
 		{
@@ -769,12 +769,12 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnChangeParent( CGUIEventRelativeChange* pEvent )
+	uint32		CGUIWidget::OnParentChanged( CGUIEventRelativeChange* pEvent )
 	{
-		WIDGET_EVENT_TRACE("OnChangeParent");
+		WIDGET_EVENT_TRACE("OnParentChanged");
 
 		//call callback function
-		CallbackFunction("OnChangeParent", pEvent);
+		CallbackFunction("OnParentChanged", pEvent);
 
 		return 0;
 	}

@@ -74,7 +74,7 @@ namespace guiex
 			m_pImageNormal = pImage;
 			if( NEWGetPixelSize().IsEqualZero() && pImage )
 			{
-				NEWSetPixelSize(pImage->GetSize());
+				SetPixelSize(pImage->GetSize());
 			}
 		}
 		else if( rName == "BTN_HOVER")
@@ -121,7 +121,7 @@ namespace guiex
 
 		if( !m_bChecked )
 		{
-			if( IsDisable())
+			if( IsDerivedDisable())
 			{
 				pImage = m_pImageDisable ? m_pImageDisable : m_pImageNormal;
 			}
@@ -140,7 +140,7 @@ namespace guiex
 		}
 		else
 		{
-			if( IsDisable())
+			if( IsDerivedDisable())
 			{
 				pImage = m_pImageDisableChecked ? m_pImageDisableChecked : m_pImageNormalChecked ? m_pImageNormalChecked : m_pImageNormal;
 			}
@@ -158,16 +158,16 @@ namespace guiex
 			}
 		}
 
-		DrawImage( pRender, pImage, GetRect(), pRender->GetAndIncZ());
+		DrawImage( pRender, pImage, GetBoundArea());
 
 		if( m_bChecked && m_pImageCheckedOverlay )
 		{
-			DrawImage( pRender, m_pImageCheckedOverlay, GetRenderRect(), pRender->GetAndIncZ());
+			DrawImage( pRender, m_pImageCheckedOverlay, GetBoundArea());
 		}
 
 		if( m_bHovering && m_pImageHoverOverlay )
 		{
-			DrawImage( pRender, m_pImageHoverOverlay, GetRenderRect(), pRender->GetAndIncZ());
+			DrawImage( pRender, m_pImageHoverOverlay, GetBoundArea());
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -272,31 +272,32 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIProperty*	CGUIWgtCheckButton::GenerateProperty(const CGUIString& rName, const CGUIString& rType )
 	{
-		CGUIProperty* pProperty = NULL;
-		
-		if( rName == "CHECKED" && rType == "BOOL" )
-		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
-				rName, 
-				rType, 
-				CGUIStringConvertor::BoolToString(IsCheck( )));
-		}
+		//CGUIProperty* pProperty = NULL;
+		//
+		//if( rName == "CHECKED" && rType == "BOOL" )
+		//{
+		//	pProperty = CGUIPropertyManager::Instance()->CreateProperty(
+		//		rName, 
+		//		rType, 
+		//		CGUIStringConvertor::BoolToString(IsCheck( )));
+		//}
 
-		return pProperty ? pProperty : CGUIWidget::GenerateProperty(rName, rType);
+		//return pProperty ? pProperty : CGUIWidget::GenerateProperty(rName, rType);
+		return NULL;
 	}
 	//------------------------------------------------------------------------------
 	void		CGUIWgtCheckButton::ProcessProperty( const CGUIProperty* pProperty)
 	{
-		CGUIWidget::ProcessProperty(pProperty);
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//property for CHECKED
-		/*
-		*<property name="CHECKED" type="BOOL" value="true" />
-		*/
-		if( pProperty->GetName() == "CHECKED" && pProperty->GetType()=="BOOL")
-		{
-			SetCheck(CGUIStringConvertor::StringToBool(pProperty->GetValue()));
-		}
+		//CGUIWidget::ProcessProperty(pProperty);
+		//////////////////////////////////////////////////////////////////////////////////////////////////////
+		////property for CHECKED
+		///*
+		//*<property name="CHECKED" type="BOOL" value="true" />
+		//*/
+		//if( pProperty->GetName() == "CHECKED" && pProperty->GetType()=="BOOL")
+		//{
+		//	SetCheck(StringToValue(pProperty->GetValue()));
+		//}
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

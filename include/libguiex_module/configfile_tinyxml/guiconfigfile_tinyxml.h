@@ -20,7 +20,7 @@
 class TiXmlElement;
 namespace guiex
 {
-	class CGUIPropertySet;
+	class CGUIProperty;
 	class CGUIWidget;
 }
 
@@ -46,7 +46,7 @@ namespace guiex
 	public:
 		/**
 		* @brief read config file and generate widget system
-		* @return 0 for successful
+		* @return pointer of page root.
 		*/
 		virtual CGUIWidget*	LoadWidgetConfigFile(const CGUIString& rFileName, const CGUIString& rProjectName);
 
@@ -54,7 +54,13 @@ namespace guiex
 		* @brief read image config file
 		* @return 0 for successful
 		*/
-		virtual int32	LoadResourceConfigFile(const CGUIString& rFileName, const CGUIString& rProjectName );
+		virtual int32 LoadResourceConfigFile(const CGUIString& rFileName, const CGUIString& rProjectName );
+
+		/**
+		* @brief read project config file and generate project info.
+		* @return pointer of project info object.
+		*/
+		virtual CGUIProjectInfo* LoadProjectInfoFile( const CGUIString& rFileName );
 
 		/**
 		* @brief used to delete this object
@@ -79,13 +85,16 @@ namespace guiex
 		* @brief process the node of config file which is a xml file.
 		* @return 0 for success
 		*/
-		int32			ProcessNode( TiXmlElement* pNode, std::list<CGUIWidget*>& rWidgetSet );
+		int32 ProcessNode( TiXmlElement* pNode, std::list<CGUIWidget*>& rWidgetSet );
 
 		/**
 		* @brief process property, get sub property set of this property node
 		* @return 0 for success
 		*/
-		int32			ProcessProperty( TiXmlElement* pNode, CGUIPropertySet&	rPropSet );
+		int32 ProcessProperty( TiXmlElement* pNode, CGUIProperty&	rPropSet );
+
+		CGUIString DoGetFilename( const CGUIString& rPath );
+		CGUIString DoGetFileDir( const CGUIString& rPath ); 
 
 	};
 

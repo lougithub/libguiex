@@ -45,7 +45,7 @@ namespace guiex
 	//int32	CGUIMouseCursor::AddCursor(const CGUIString& rCursorName, 
 	//								  const CGUIString& rImageName, 
 	//								  const CGUIRect& rTexRect,
-	//								  const CGUIVector2& rTagPoint )
+	//								  const CGUIVector2& rAnchorPoint )
 	//{
 	//	TMapCursor::iterator itor = m_aMapCursor.find(rCursorName);
 	//
@@ -69,7 +69,7 @@ namespace guiex
 	//		return -1;
 	//	}
 	//	
-	//	m_aMapCursor.insert(std::make_pair(rCursorName, std::make_pair(pAnimation, rTagPoint)));
+	//	m_aMapCursor.insert(std::make_pair(rCursorName, std::make_pair(pAnimation, rAnchorPoint)));
 	//	return 0;
 	//}
 	////------------------------------------------------------------------------------
@@ -77,7 +77,7 @@ namespace guiex
 	//									const CGUIString& rImageName, 
 	//									const std::vector<CGUIRect>& rListTexRect, 
 	//									uint32 nInterval,
-	//									const CGUIVector2& rTagPoint  )
+	//									const CGUIVector2& rAnchorPoint  )
 	//{
 	//	TMapCursor::iterator itor = m_aMapCursor.find(rCursorName);
 	//
@@ -101,14 +101,14 @@ namespace guiex
 	//		return -1;
 	//	}
 	//	
-	//	m_aMapCursor.insert(std::make_pair(rCursorName, std::make_pair(pAnimation, rTagPoint)));
+	//	m_aMapCursor.insert(std::make_pair(rCursorName, std::make_pair(pAnimation, rAnchorPoint)));
 	//	return 0;
 	//}
 	////------------------------------------------------------------------------------
 	//int32	CGUIMouseCursor::AddCursor( const CGUIString& rCursorName, 
 	//									  const std::vector<CGUIString>& rListImageName,  
 	//									  uint32 nInterval,
-	//									  const CGUIVector2& rTagPoint)
+	//									  const CGUIVector2& rAnchorPoint)
 	//{
 	//	TMapCursor::iterator itor = m_aMapCursor.find(rCursorName);
 	//
@@ -132,7 +132,7 @@ namespace guiex
 	//		return -1;
 	//	}
 	//	
-	//	m_aMapCursor.insert(std::make_pair(rCursorName, std::make_pair(pAnimation, rTagPoint)));
+	//	m_aMapCursor.insert(std::make_pair(rCursorName, std::make_pair(pAnimation, rAnchorPoint)));
 	//	return 0;
 	//}
 	//------------------------------------------------------------------------------
@@ -155,7 +155,7 @@ namespace guiex
 	//		return -1;
 	//	}
 	//	
-	//	m_aMapCursor.insert(std::make_pair(rCursorName, std::make_pair(pAnimation, rTagPoint)));
+	//	m_aMapCursor.insert(std::make_pair(rCursorName, std::make_pair(pAnimation, rAnchorPoint)));
 	//	return 0;	
 	//}
 	//------------------------------------------------------------------------------

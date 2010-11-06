@@ -42,8 +42,9 @@ namespace guiex
 		m_pImageBg = NULL;
 		m_pImageFg = NULL;
 
-		m_nMaximumValue = 0;
-		m_aCurrentValue = 0;
+		m_fMaximumValue = 0.0f;
+		m_fCurrentValue = 0.0f;
+
 		SetFlag(eFLAG_OPEN_WITH_PARENT, true);
 	}
 	//------------------------------------------------------------------------------
@@ -66,7 +67,10 @@ namespace guiex
 		if( rName == "BACKGROUND_IMG")
 		{
 			m_pImageBg = pImage;
-			SetSize(pImage->GetSize());
+			if( pImage && NEWGetSize().IsEqualZero() )
+			{
+				SetPixelSize(pImage->GetSize());
+			}
 		}
 		else if( rName == "FOREGROUND_IMG")
 		{
@@ -76,73 +80,45 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void	CGUIWgtProgress::RenderSelf(IGUIInterfaceRender* pRender)
 	{
-		//rect of progress
-		CGUIRect aRect = GetRect();
-
 		//background image
-		DrawImage( pRender, m_pImageBg, aRect, pRender->GetAndIncZ(),&GetClipRect());
+		DrawImage( pRender, m_pImageBg, GetBoundArea());
 
 		//foreground image
-		if( m_nMaximumValue > 0 && m_aCurrentValue > 0)
+		if( m_fMaximumValue > 0.0f && m_fCurrentValue > 0.0f)
 		{
-			CGUIRect aRectFg(aRect);
-			aRectFg.SetSize(CGUISize( 
-				aRect.GetWidth() * (real(m_aCurrentValue)/m_nMaximumValue),
-				aRect.GetHeight()));
-			DrawImage( pRender, m_pImageFg, aRect, pRender->GetAndIncZ(),&aRectFg);
+			if( m_fMaximumValue > m_fCurrentValue )
+			{
+				CGUISize aRenderSize = GetBoundArea().GetSize();
+				aRenderSize.m_fWidth *= (m_fCurrentValue / m_fMaximumValue);
+				CGUIRect aRenderRect = GetBoundArea();
+				aRenderRect.SetSize( aRenderSize );
+				DrawImage( pRender, m_pImageFg, aRenderRect );
+			}
+			else
+			{
+				DrawImage( pRender, m_pImageFg, GetBoundArea());
+			}
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtProgress::SetValue(const CGUIString& rName, const CGUIString& rValue)
+	void CGUIWgtProgress::SetMaximumProgress( real fMaxmium )
 	{
-		if( rName == "MaximumValue")
-		{
-			SetMaximum( CGUIStringConvertor::StringToUInt(rValue));
-		}
-		else if( rName == "CurrentValue")
-		{
-			Update( CGUIStringConvertor::StringToUInt(rValue));
-		}
-		else
-		{
-			CGUIWidget::SetValue(rName, rValue);
-		}
+		m_fMaximumValue = fMaxmium;
 	}
 	//------------------------------------------------------------------------------
-	CGUIString	CGUIWgtProgress::GetValue(const CGUIString& rName) const
+	real CGUIWgtProgress::GetMaximumProgress() const
 	{
-		if( rName == "MaximumValue")
-		{
-			return CGUIStringConvertor::UIntToString(GetMaximum());
-		}
-		else if( rName == "CurrentValue")
-		{
-			return CGUIStringConvertor::UIntToString(GetCurrentValue());
-		}
-		else
-		{
-			return GetValue(rName);
-		}
+		return m_fMaximumValue;
 	}
 	//------------------------------------------------------------------------------
-	void			CGUIWgtProgress::SetMaximum( uint32 nMaxmium )
+	void CGUIWgtProgress::SetCurrentProgress( real fValue )
 	{
-		m_nMaximumValue = nMaxmium;
+		m_fCurrentValue = fValue;
 	}
 	//------------------------------------------------------------------------------
-	uint32	CGUIWgtProgress::GetMaximum() const
+	real CGUIWgtProgress::GetCurrentProgress( ) const
 	{
-		return m_nMaximumValue;
-	}
-	//------------------------------------------------------------------------------
-	void			CGUIWgtProgress::Update( uint32 nValue )
-	{
-		m_aCurrentValue = nValue;
-	}
-	//------------------------------------------------------------------------------
-	uint32 		CGUIWgtProgress::GetCurrentValue( ) const
-	{
-		return m_aCurrentValue;
+		return m_fCurrentValue;
 	}
 	//------------------------------------------------------------------------------
 

@@ -25,20 +25,23 @@
 //============================================================================//
 namespace guiex
 {
-#define EVENT_ITEM_LIST()	MACRO_LIST13(\
-					CGUIEventRelativeChange,\
-					CGUIEvent,\
-					CGUIEventAlpha,\
-					CGUIEventSize,\
-					CGUIEventMouse,\
-					CGUIEventNotification,\
-					CGUIEventDrag,\
-					CGUIEventScrollbar,\
-					CGUIEventTimer,\
-					CGUIEventKeyboard,\
-					CGUIEventListBox,\
-					CGUIEventComboBox,\
-					CGUIEventUI)
+#define EVENT_DECLARE( event )	friend class event;
+
+#define EVENT_ITEM_LIST()	\
+	EVENT_DECLARE( CGUIEvent )\
+	EVENT_DECLARE( CGUIEventRelativeChange )\
+	EVENT_DECLARE( CGUIEventAlpha )\
+	EVENT_DECLARE( CGUIEventSize )\
+	EVENT_DECLARE( CGUIEventMouse )\
+	EVENT_DECLARE( CGUIEventNotification )\
+	EVENT_DECLARE( CGUIEventDrag )\
+	EVENT_DECLARE( CGUIEventScrollbar )\
+	EVENT_DECLARE( CGUIEventTimer )\
+	EVENT_DECLARE( CGUIEventKeyboard )\
+	EVENT_DECLARE( CGUIEventListBox )\
+	EVENT_DECLARE( CGUIEventComboBox )\
+	EVENT_DECLARE( CGUIEventUI )
+
 }//namespace guiex
 
 //============================================================================//
@@ -50,14 +53,14 @@ namespace guiex
 	{
 		///when the size of widget is changed, this event will be sent
 		///CGUIEventSize
-		eEVENT_CHANGE_SIZE = 0,	
+		eEVENT_SIZE_CHANGE = 0,	
 		eEVENT_PARENT_CHANGE_SIZE,
 
 		///event for changing tree struct, such as adding or removing child
 		///CGUIEventRelativeChange
 		eEVENT_ADD_CHILD,
 		eEVENT_REMOVE_CHILD,
-		eEVENT_CHANGE_PARENT,
+		eEVENT_PARENT_CHANGED,
 
 		///when the alpha is changed, this event will be sent.
 		///CGUIEventAlpha
@@ -279,7 +282,7 @@ namespace guiex
 		///receiver
 		CGUIWidget*	m_pReceiver;
 
-		/// has this event been comsumed
+		/// has this event been consumed
 		bool		m_bConsumed;
 
 	private:
@@ -446,7 +449,7 @@ namespace guiex
 	//*****************************************************************************
 	/**
 	* @class CGUIEventSize
-	* @brief event for eEVENT_CHANGE_SIZE
+	* @brief event for eEVENT_SIZE_CHANGE
 	*/
 	class GUIEXPORT CGUIEventSize : public CGUIEvent
 	{
@@ -468,7 +471,7 @@ namespace guiex
 
 		/**
 		* @brief process the event.
-		* now it works for <eEVENT_CHANGE_SIZE>,
+		* now it works for <eEVENT_SIZE_CHANGE>,
 		*/
 		virtual uint32	Process();
 
@@ -554,14 +557,19 @@ namespace guiex
 		virtual uint32	Process();
 
 		/**
-		* @brief set mouse position
+		* @brief set mouse position, in global
 		*/
 		void		SetPosition( const CGUIVector2& rPos );
 
 		/**
 		* @brief get mouse position, in global
 		*/
-		const CGUIVector2& GetPosition() const;
+		const CGUIVector2& GetGlobalPosition() const;
+
+		/**
+		* @brief get mouse position, in global
+		*/
+		CGUIVector2 GetLocalPosition() const;
 
 		/**
 		* @brief set system key
@@ -698,29 +706,31 @@ namespace guiex
 		virtual uint32	Process();
 
 		/**
-		* @brief set widget position, global
+		* @brief set widget position, local
 		*/
-		void		SetWidgetPos( const CGUIVector2& rPos );
+		void SetWidgetPos( const CGUIVector2& rPos );
 
 		/**
 		* @brief set mouse position, global
 		*/
-		void		SetMousePos( const CGUIVector2& rPos );
+		void SetMousePos( const CGUIVector2& rPos );
 
 		/**
 		* @brief get widget position
 		*/
-		const CGUIVector2& GetWidgetPos() const;
+		CGUIVector2 GetWidgetGlobalPos() const;
+		const CGUIVector2& GetWidgetLocalPos() const;
 
 		/**
 		* @brief get mouse position
 		*/
-		const CGUIVector2& GetMousePos() const;
+		const CGUIVector2& GetMouseGlobalPos() const;
+		CGUIVector2 GetMouseLocalPos() const;
 
 		/**
 		* @brief set button
 		*/
-		void		SetButton( int32 nButton);
+		void SetButton( int32 nButton);
 
 		/**
 		* @brief get mouse button
@@ -728,14 +738,14 @@ namespace guiex
 		const int32 GetButton() const;
 
 		//!< has this event been consumed
-		bool	IsExpired();
+		bool IsExpired();
 
 		//!< set whether this event has been consumed
-		void	Expire(bool bExpired);
+		void Expire(bool bExpired);
 
 	protected:
-		CGUIVector2		m_aWidgetPos;		//!< holds current widget position.
-		CGUIVector2		m_aMousePos;		//!< holds current mouse position.
+		CGUIVector2		m_aWidgetPos;		//!< holds current widget position. local pos
+		CGUIVector2		m_aMousePos;		//!< holds current mouse position. global pos
 		int32			m_nButton;			//!< mouse button
 
 		bool			m_bExpired;			//!< whether this event is been expired
@@ -885,7 +895,7 @@ namespace guiex
 	* @brief event for 
 	*	-eEVENT_ADD_CHILD,
 	*	-eEVENT_REMOVE_CHILD,
-	*	-eEVENT_CHANGE_PARENT,
+	*	-eEVENT_PARENT_CHANGED,
 	*/
 	class GUIEXPORT CGUIEventRelativeChange: public CGUIEvent
 	{
@@ -905,7 +915,7 @@ namespace guiex
 		void				SetRelative( CGUIWidget* pRelative );
 
 		/// get extra data for this event
-		const CGUIWidget*	GetRelative( ) const;
+		CGUIWidget*	GetRelative( ) const;
 
 	protected:
 		CGUIWidget*			m_pRelative;	//maybe child or parent

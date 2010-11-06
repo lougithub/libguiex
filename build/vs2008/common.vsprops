@@ -9,6 +9,6 @@
 	>
 	<Tool
 		Name="VCCLCompilerTool"
-		AdditionalIncludeDirectories="..\..\include;..\..\external\tinyxml"
+		AdditionalIncludeDirectories="..\..\include"
 	/>
 </VisualStudioPropertySheet>

@@ -60,6 +60,9 @@ namespace guiex
 
 		void	ClearProjectLoadFlags( );
 
+		CGUIProjectInfo* GenerateProjectInfo() const;
+		void DestroyProjectInfo( CGUIProjectInfo* pProjectInfo) const;
+
 	protected:
 		//for singleton
 		CGUIProjectInfoManager();

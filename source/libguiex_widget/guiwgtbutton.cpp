@@ -13,7 +13,7 @@
 #include <libguiex_core\guiwidgetsystem.h>
 #include <libguiex_core\guiexception.h>
 #include <libguiex_core\guiproperty.h>
-#include <libguiex_core\guipropertymanager.h>
+#include <libguiex_core\guipropertyconvertor.h>
 #include <libguiex_core\guistringconvertor.h>
 
 //============================================================================//
@@ -28,7 +28,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIWgtButton::CGUIWgtButton(const CGUIString& rName, const CGUIString& rProjectName)
 		:CGUIWidget(ms_strType, rName, rProjectName)
-		,m_aRelativePos(0.f,0.f)
+		,m_aTextOffset(0.f,0.f)
 	{
 		InitButton();
 	}
@@ -68,9 +68,9 @@ namespace guiex
 		if( rName == "BTN_NORMAL")
 		{
 			m_pImageNormal = pImage;
-			if( NEWGetSize().IsEqualZero() && pImage )
+			if( pImage && NEWGetSize().IsEqualZero())
 			{
-				NEWSetPixelSize(pImage->GetSize());
+				SetPixelSize(pImage->GetSize());
 			}
 		}
 		else if( rName == "BTN_HOVER")
@@ -95,12 +95,36 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	void CGUIWgtButton::RefreshImpl()
+	{
+		CGUIWidget::RefreshImpl();
+
+		//update client area
+		m_aStringArea = GetBoundArea();
+		if( m_aTextOffset.x < m_aStringArea.GetWidth() )
+		{
+			m_aStringArea.m_fLeft += m_aTextOffset.x;
+		}
+		else
+		{
+			m_aStringArea.m_fLeft = m_aStringArea.m_fRight;
+		}
+		if( m_aTextOffset.y < m_aStringArea.GetHeight() )
+		{
+			m_aStringArea.m_fTop += m_aTextOffset.y;
+		}
+		else
+		{
+			m_aStringArea.m_fTop = m_aStringArea.m_fBottom;
+		}
+	}
+	//------------------------------------------------------------------------------
 	void	CGUIWgtButton::RenderSelf(IGUIInterfaceRender* pRender)
 	{
 		CGUIImage* pImage = NULL;
 		CGUIStringEx* pString = NULL;
 
-		if( IsDisable())
+		if( IsDerivedDisable())
 		{
 			if( !m_strTextDisable.Empty() )
 			{
@@ -142,16 +166,44 @@ namespace guiex
 			pImage = m_pImageNormal;
 		}
 
-		DrawImage( pRender, pImage, GetRenderRect(), pRender->GetAndIncZ());
+		DrawImage( pRender, pImage, GetBoundArea());
 		if( m_bHovering && m_pImageHoverOverlay )
 		{
-			DrawImage( pRender, m_pImageHoverOverlay, GetRenderRect(), pRender->GetAndIncZ());
+			DrawImage( pRender, m_pImageHoverOverlay, GetBoundArea());
 		}
 		
-		//CGUIRect rDrawRect = GetClientRect();
-		//rDrawRect.m_fTop += (m_aRelativePos.y*GetDerivedScale().m_fHeight);
-		//rDrawRect.m_fLeft += (m_aRelativePos.x*GetDerivedScale().m_fWidth);
-		DrawString(pRender, *pString, GetRenderRect(), GetTextAlignment());
+
+		DrawString(pRender, *pString, m_aStringArea, GetTextAlignment());
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtButton::SetBtnTextContent_Hover(const wchar_t* pText )
+	{
+		m_strTextHoving.SetContent(pText);
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtButton::SetBtnTextInfo_Hover(const CGUIStringInfo& rInfo )
+	{
+		m_strTextHoving.SetDefaultInfo(&rInfo);
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtButton::SetBtnTextContent_Disable(const wchar_t* pText )
+	{
+		m_strTextDisable.SetContent(pText);
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtButton::SetBtnTextInfo_Disable(const CGUIStringInfo& rInfo )
+	{
+		m_strTextDisable.SetDefaultInfo(&rInfo);
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtButton::SetBtnTextContent_Push(const wchar_t* pText )
+	{
+		m_strTextPush.SetContent(pText);
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtButton::SetBtnTextInfo_Push(const CGUIStringInfo& rInfo )
+	{
+		m_strTextPush.SetDefaultInfo(&rInfo);
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWgtButton::SetTextContent(const wchar_t* pText)
@@ -172,238 +224,108 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtButton::SetBtnTextContent(const wchar_t* pText, const char* pType)
+	void	CGUIWgtButton::SetStringOffset( const CGUIVector2& rPos)
 	{
-		GUI_ASSERT(pType, "invalid parameter");
-
-		if( CGUIString("NORMAL") == pType)
+		m_aTextOffset = rPos;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIVector2&	CGUIWgtButton::GetStringOffset(  ) const
+	{
+		return m_aTextOffset;
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUIWgtButton::GenerateProperty( CGUIProperty& rProperty )
+	{
+		if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo_hover" )
 		{
-			m_strText.SetContent(pText);
+			ValueToProperty( m_strTextHoving.GetDefaultInfo(), rProperty );
 		}
-		else if( CGUIString("HOVER") == pType)
+		else if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo_disable" )
 		{
-			m_strTextHoving.SetContent(pText);
+			ValueToProperty( m_strTextDisable.GetDefaultInfo(), rProperty );
 		}
-		else if( CGUIString("DISABLE") == pType)
+		else if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo_push" )
 		{
-			m_strTextDisable.SetContent(pText);
+			ValueToProperty( m_strTextPush.GetDefaultInfo(), rProperty );
 		}
-		else if( CGUIString("PUSH") == pType)
+		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text_hover" )
 		{
-			m_strTextPush.SetContent(pText);
+			CGUIString aStrText;
+			WideByteToMultiChar( m_strTextHoving.GetContent(), aStrText);
+			rProperty.SetValue(aStrText);
+		}
+		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text_push" )
+		{
+			CGUIString aStrText;
+			WideByteToMultiChar( m_strTextPush.GetContent(), aStrText);
+			rProperty.SetValue(aStrText);
+		}
+		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text_disable" )
+		{
+			CGUIString aStrText;
+			WideByteToMultiChar( m_strTextDisable.GetContent(), aStrText);
+			rProperty.SetValue(aStrText);
+		}
+		else if( rProperty.GetType() == ePropertyType_Vector2 && rProperty.GetName() == "text_offset" )
+		{
+			ValueToProperty( GetStringOffset(), rProperty );
 		}
 		else
 		{
-			throw CGUIException("unknown type of text! <%s>", pType);
+			return CGUIWidget::GenerateProperty( rProperty );
 		}
+		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtButton::SetBtnTextInfo(const CGUIStringExInfo& rInfo, const char* pType)
+	void CGUIWgtButton::ProcessProperty( const CGUIProperty& rProperty)
 	{
-		GUI_ASSERT(pType, "invalid parameter");
-		if( CGUIString("NORMAL") == pType)
-		{
-			m_strText.SetDefaultInfo(&rInfo);
-		}
-		else if( CGUIString("HOVER") == pType)
-		{
-			m_strTextHoving.SetDefaultInfo(&rInfo);
-		}
-		else if( CGUIString("DISABLE") == pType)
-		{
-			m_strTextDisable.SetDefaultInfo(&rInfo);
-		}
-		else if( CGUIString("PUSH") == pType)
-		{
-			m_strTextPush.SetDefaultInfo(&rInfo);
-		}
-		else
-		{
-			throw CGUIException("unknown type of text! <%s>", pType);
-		}
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWgtButton::SetRelativePos( const CGUIVector2& rPos)
-	{
-		m_aRelativePos = rPos;
-	}
-	//------------------------------------------------------------------------------
-	const CGUIVector2&	CGUIWgtButton::GetRelativePos(  ) const
-	{
-		return m_aRelativePos;
-	}
-	//------------------------------------------------------------------------------
-	CGUIProperty*	CGUIWgtButton::GenerateProperty(const CGUIString& rName, const CGUIString& rType )
-	{
-		CGUIProperty* pProperty = NULL;
-		
-		if( rName == "TEXT_INFO_HOVER" && rType == "STRING_INFO" )
-		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty();
-			pProperty->SetName(rName);
-			pProperty->SetType(rType);
-
-			const CGUIStringExInfo& rInfo = m_strTextHoving.GetDefaultInfo();
-			pProperty->AddProperty(CGUIPropertyManager::Instance()->CreateProperty("SIZE","UINT",CGUIStringConvertor::UIntToString(rInfo.m_nFontSize)));
-			pProperty->AddProperty(CGUIPropertyManager::Instance()->CreateProperty("FONT_INDEX","UINT",CGUIStringConvertor::UIntToString(rInfo.m_nFontIdx)));
-			pProperty->AddProperty(CGUIPropertyManager::Instance()->CreateProperty("COLOR","COLOR",CGUIStringConvertor::ColorToString(rInfo.m_aColor)));
-		}
-		if( rName == "TEXT_INFO_DISABLE" && rType == "STRING_INFO" )
-		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty();
-			pProperty->SetName(rName);
-			pProperty->SetType(rType);
-
-			const CGUIStringExInfo& rInfo = m_strTextDisable.GetDefaultInfo();
-			pProperty->AddProperty(CGUIPropertyManager::Instance()->CreateProperty("SIZE","UINT",CGUIStringConvertor::UIntToString(rInfo.m_nFontSize)));
-			pProperty->AddProperty(CGUIPropertyManager::Instance()->CreateProperty("FONT_INDEX","UINT",CGUIStringConvertor::UIntToString(rInfo.m_nFontIdx)));
-			pProperty->AddProperty(CGUIPropertyManager::Instance()->CreateProperty("COLOR","COLOR",CGUIStringConvertor::ColorToString(rInfo.m_aColor)));
-		}
-		if( rName == "TEXT_INFO_PUSH" && rType == "STRING_INFO" )
-		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty();
-			pProperty->SetName(rName);
-			pProperty->SetType(rType);
-
-			const CGUIStringExInfo& rInfo = m_strTextPush.GetDefaultInfo();
-			pProperty->AddProperty(CGUIPropertyManager::Instance()->CreateProperty("SIZE","UINT",CGUIStringConvertor::UIntToString(rInfo.m_nFontSize)));
-			pProperty->AddProperty(CGUIPropertyManager::Instance()->CreateProperty("FONT_INDEX","UINT",CGUIStringConvertor::UIntToString(rInfo.m_nFontIdx)));
-			pProperty->AddProperty(CGUIPropertyManager::Instance()->CreateProperty("COLOR","COLOR",CGUIStringConvertor::ColorToString(rInfo.m_aColor)));
-		}
-		else if( rName == "TEXT_NORMAL" && rType == "STRING" )
-		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty();
-			pProperty->SetName(rName);
-			pProperty->SetType(rType);
-			CGUIString aStrText;
-			CGUIStringConvertor::WideByteToMultiChar( m_strText.GetContent(), aStrText);
-			pProperty->SetValue(aStrText);
-		}
-		else if( rName == "TEXT_HOVER" && rType == "STRING" )
-		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty();
-			pProperty->SetName(rName);
-			pProperty->SetType(rType);
-			CGUIString aStrText;
-			CGUIStringConvertor::WideByteToMultiChar( m_strTextHoving.GetContent(), aStrText);
-			pProperty->SetValue(aStrText);
-		}
-		else if( rName == "TEXT_Push" && rType == "STRING" )
-		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty();
-			pProperty->SetName(rName);
-			pProperty->SetType(rType);
-			CGUIString aStrText;
-			CGUIStringConvertor::WideByteToMultiChar( m_strTextPush.GetContent(), aStrText);
-			pProperty->SetValue(aStrText);
-		}
-		else if( rName == "TEXT_DISABLE" && rType == "STRING" )
-		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty();
-			pProperty->SetName(rName);
-			pProperty->SetType(rType);
-			CGUIString aStrText;
-			CGUIStringConvertor::WideByteToMultiChar( m_strTextDisable.GetContent(), aStrText);
-			pProperty->SetValue(aStrText);
-		}
-		else if( rName == "RELATIVE_POSITION" && rType == "VECTOR2" )
-		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
-				rName, 
-				rType, 
-				CGUIStringConvertor::Vector2ToString(GetRelativePos()));
-		}
-		return pProperty ? pProperty : CGUIWidget::GenerateProperty(rName, rType);
-	}
-	//------------------------------------------------------------------------------
-	void			CGUIWgtButton::ProcessProperty( const CGUIProperty* pProperty)
-	{
-		CGUIWidget::ProcessProperty(pProperty);
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//property for text
-		/*
-		*<property name="TEXT_INFO_NORMAL" type="STRING_INFO">
-		*		<property name="SIZE"	type="NUMBER" value="22"/>
-		*		<property name="FONT_INDEX" type="NUMBER" value="0"/>
-		*		<property name="COLOR" type="COLOR" value="0.5,0.0,0.6,1.0"/>
-		*</property>
-		*<property name="TEXT_NORMAL" type="STRING">
-
-		*<property name="TEXT_INFO_HOVER" type="STRING_INFO">
-		*		<property name="SIZE"	type="NUMBER" value="22"/>
-		*		<property name="FONT_INDEX" type="NUMBER" value="0"/>
-		*		<property name="COLOR" type="COLOR" value="0.5,0.0,0.6,1.0"/>
-		*</property>
-		*<property name="TEXT_HOVER" type="STRING">
-
-		*<property name="TEXT_INFO_DISABLE" type="STRING_INFO">
-		*		<property name="SIZE"	type="NUMBER" value="22"/>
-		*		<property name="FONT_INDEX" type="NUMBER" value="0"/>
-		*		<property name="COLOR" type="COLOR" value="0.5,0.0,0.6,1.0"/>
-		*</property>
-		*<property name="TEXT_DISABLE" type="STRING">
-
-		*<property name="TEXT_INFO_PUSH" type="STRING_INFO">
-		*		<property name="SIZE"	type="NUMBER" value="22"/>
-		*		<property name="FONT_INDEX" type="NUMBER" value="0"/>
-		*		<property name="COLOR" type="COLOR" value="0.5,0.0,0.6,1.0"/>
-		*</property>
-		*<property name="TEXT_PUSH" type="STRING">
-		*/
-		if( pProperty->GetName() == "TEXT_INFO_HOVER" && pProperty->GetType()=="STRING_INFO")
+		if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo_hover")
 		{
-			const CGUIProperty* pPropertySize = pProperty->GetProperty("SIZE");
-			const CGUIProperty* pPropertyIdx = pProperty->GetProperty("FONT_INDEX");
-			const CGUIProperty* pPropertyColor = pProperty->GetProperty("COLOR");
-			CGUIStringExInfo aInfo;
-			aInfo.m_aColor = CGUIStringConvertor::StringToColor(pPropertyColor->GetValue());
-			aInfo.m_nFontIdx = CGUIStringConvertor::StringToInt(pPropertyIdx->GetValue());
-			aInfo.m_nFontSize = CGUIStringConvertor::StringToUInt(pPropertySize->GetValue());
-			SetBtnTextInfo(aInfo, "HOVER");
+			CGUIStringInfo aInfo;
+			PropertyToValue( rProperty, aInfo);
+			SetBtnTextInfo_Hover(aInfo);
 		}
-		else if( pProperty->GetName() == "TEXT_HOVER" && pProperty->GetType()=="STRING")
+		else if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo_push")
+		{
+			CGUIStringInfo aInfo;
+			PropertyToValue( rProperty, aInfo);
+			SetBtnTextInfo_Push(aInfo);
+		}
+		else if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo_disable")
+		{
+			CGUIStringInfo aInfo;
+			PropertyToValue( rProperty, aInfo);
+			SetBtnTextInfo_Disable(aInfo);
+		}
+		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text_hover")
 		{
 			CGUIStringEx aStrText;
-			CGUIStringConvertor::MultiByteToWideChar(pProperty->GetValue(), aStrText);
-			SetBtnTextContent(aStrText.GetContent(),"HOVER");
+			MultiByteToWideChar(rProperty.GetValue(), aStrText);
+			SetBtnTextContent_Hover(aStrText.GetContent());
 		}
-		else if( pProperty->GetName() == "TEXT_INFO_DISABLE" && pProperty->GetType()=="STRING_INFO")
-		{
-			const CGUIProperty* pPropertySize = pProperty->GetProperty("SIZE");
-			const CGUIProperty* pPropertyIdx = pProperty->GetProperty("FONT_INDEX");
-			const CGUIProperty* pPropertyColor = pProperty->GetProperty("COLOR");
-			CGUIStringExInfo aInfo;
-			aInfo.m_aColor = CGUIStringConvertor::StringToColor(pPropertyColor->GetValue());
-			aInfo.m_nFontIdx = CGUIStringConvertor::StringToInt(pPropertyIdx->GetValue());
-			aInfo.m_nFontSize = CGUIStringConvertor::StringToUInt(pPropertySize->GetValue());
-			SetBtnTextInfo(aInfo, "DISABLE");
-		}
-		else if( pProperty->GetName() == "TEXT_DISABLE" && pProperty->GetType()=="STRING")
+		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text_push")
 		{
 			CGUIStringEx aStrText;
-			CGUIStringConvertor::MultiByteToWideChar(pProperty->GetValue(), aStrText);
-			SetBtnTextContent(aStrText.GetContent(),"DISABLE");
+			MultiByteToWideChar(rProperty.GetValue(), aStrText);
+			SetBtnTextContent_Push(aStrText.GetContent());
 		}
-		else if( pProperty->GetName() == "TEXT_INFO_PUSH" && pProperty->GetType()=="STRING_INFO")
-		{
-			const CGUIProperty* pPropertySize = pProperty->GetProperty("SIZE");
-			const CGUIProperty* pPropertyIdx = pProperty->GetProperty("FONT_INDEX");
-			const CGUIProperty* pPropertyColor = pProperty->GetProperty("COLOR");
-			CGUIStringExInfo aInfo;
-			aInfo.m_aColor = CGUIStringConvertor::StringToColor(pPropertyColor->GetValue());
-			aInfo.m_nFontIdx = CGUIStringConvertor::StringToInt(pPropertyIdx->GetValue());
-			aInfo.m_nFontSize = CGUIStringConvertor::StringToUInt(pPropertySize->GetValue());
-			SetBtnTextInfo(aInfo, "PUSH");
-		}
-		else if( pProperty->GetName() == "TEXT_PUSH" && pProperty->GetType()=="STRING")
+		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text_disable")
 		{
 			CGUIStringEx aStrText;
-			CGUIStringConvertor::MultiByteToWideChar(pProperty->GetValue(), aStrText);
-			SetBtnTextContent(aStrText.GetContent(),"PUSH");
+			MultiByteToWideChar(rProperty.GetValue(), aStrText);
+			SetBtnTextContent_Disable(aStrText.GetContent());
 		}
-		else if( pProperty->GetName() == "RELATIVE_POSITION" && pProperty->GetType() == "VECTOR2" )
+		else if( rProperty.GetType() == ePropertyType_Vector2 && rProperty.GetName() == "text_offset")
 		{
-			SetRelativePos(CGUIStringConvertor::StringToVector2(pProperty->GetValue()));
+			CGUIVector2 aValue;
+			PropertyToValue( rProperty, aValue );
+			SetStringOffset( aValue );
+		}
+		else
+		{
+			CGUIWidget::ProcessProperty( rProperty );
 		}
 	}
 	//------------------------------------------------------------------------------

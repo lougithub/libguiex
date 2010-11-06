@@ -7,7 +7,7 @@
 	>
 	<Tool
 		Name="VCCLCompilerTool"
-		AdditionalIncludeDirectories="&quot;..\..\external\wxMSW-2.8.11\include&quot;;&quot;..\..\external\wxMSW-2.8.11\include\msvc&quot;;&quot;..\..\external\lua-5.1.4\src&quot;"
+		AdditionalIncludeDirectories="&quot;..\..\external\wxMSW-2.8.11\include&quot;;&quot;..\..\external\wxMSW-2.8.11\include\msvc&quot;;&quot;..\..\external\lua-5.1.4\src&quot;;..\..\external\tinyxml"
 	/>
 	<Tool
 		Name="VCLinkerTool"

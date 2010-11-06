@@ -1,506 +1,174 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <config>
-  <widget type="CGUIWidget">
-    <page name="Appearance">
-      <!--property name="LOCAL_POSITION" type="VECTOR2" value="0,0" category="Default"/-->
-      <!--property name="SIZE" type="SIZE" value="100,100"  category="Default"/-->
+    <enum>
+        <property name="EScreenValue" type="enum" value="eScreenValue_Pixel;eScreenValue_Percentage;"/>
+        <property name="ETextAlignmentHorz" type="enum" value="eTextAlignment_Horz_Center;eTextAlignment_Horz_Left;eTextAlignment_Horz_Right;"/>
+        <property name="ETextAlignmentVert" type="enum" value="eTextAlignment_Vert_Center;eTextAlignment_Vert_Up;eTextAlignment_Vert_Down;"/>
+    </enum>
 
-      <property name="WIDGET_POSITION" type="WIDGET_POSITION" category="Default">
-        <property name="RELATIVE"		type="BOOL" value="true"/>
-        <property name="POSITION"		type="VECTOR2" value="0,0"/>
-      </property>
+    <widget type="CGUIWidget">
+        <page name="Appearance">
+            <property name="position" type="CGUIWidgetPosition" category="Default">
+                <property name="type" type="EScreenValue" value="eScreenValue_Pixel"/>
+                <property name="value" type="CGUIVector2" value="0,0" />
+            </property>
 
-      <property name="WIDGET_SIZE" type="WIDGET_SIZE" category="Default">
-        <property name="RELATIVE"		type="BOOL" value="false"/>
-        <property name="SIZE"		type="SIZE" value="0,0"/>
-        <property name="MAX_SIZE" type="SIZE" value="0,0"  category="Default"/>
-        <property name="MIN_SIZE" type="SIZE" value="0,0"  category="Default"/>
-      </property>
+            <property name="size" type="CGUIWidgetSize" category="Default">
+                <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+                <property name="value" type="CGUISize" value="0,0" />
+            </property>
 
+            <property name="max_size" type="CGUISize" value="0,0" />
+            <property name="min_size" type="CGUISize" value="0,0" />
 
-      <property name="TAG_POINT" type="VECTOR2" value="0.0,0.0"  category="Default"/>
+            <property name="anchor" type="CGUIVector2" value="0.0,0.0"  category="Default"/>
 
-      <!--property name="RELATIVE_POS" type="BOOL" value="true"  category="Default"/-->
-      <!--property name="RELATIVE_SIZE" type="BOOL" value="false"  category="Default"/-->
+            <property name="alpha" type="real" value="1.0"  category="Default"/>
+            <property name="movable" type="bool" value="false"  category="Default"/>
+            <property name="visible" type="bool" value="true"  category="Default"/>
+            <property name="activable" type="bool" value="false"  category="Default"/>
+            <property name="hitable" type="bool" value="true"  category="Default"/>
+            <property name="disable" type="bool" value="false"  category="Default"/>
+            <property name="open_with_parent" type="bool" value="true"  category="Default"/>
+            <property name="response_update_event" type="bool" value="false"  category="Default"/>
+            <property name="textinfo" type="CGUIStringInfo" category="textinfo">
+                <property name="size"		type="uint16" value="16"/>
+                <property name="index" type="int16" value="0"/>
+                <property name="color" 		type="CGUIColor" value="1.0,1.0,1.0,1.0"/>
+            </property>
+            <property name="text"	type="CGUIString" value="" category="TextInfo"/>
+            <property name="text_alignment_horz"	type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center"  category="TextInfo"/>
+            <property name="text_alignment_vert"	type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" category="TextInfo"/>
+        </page>
 
-      <property name="ALPHA" type="REAL" value="1.0"  category="Default"/>
-      <property name="MOVABLE" type="BOOL" value="false"  category="Default"/>
-      <property name="VISIBLE" type="BOOL" value="true"  category="Default"/>
-      <property name="ACTIVABLE" type="BOOL" value="false"  category="Default"/>
-      <property name="HITABLE" type="BOOL" value="true"  category="Default"/>
-      <property name="DISABLE" type="BOOL" value="false"  category="Default"/>
+        <page name="CallbackEvent">      
+            <property name="OnLoad" type="CGUIEvent" value=""/>
+            <property name="OnOpen" type="CGUIEvent" value=""/>
+            <property name="OnClose" type="CGUIEvent" value=""/>
+            <property name="OnUpdate" type="CGUIEvent" value=""/>
 
-      <!--property name="EXCLUSIVE" type="BOOL" value="true"  category="Default"/-->
-      <property name="OPEN_WITH_PARENT" type="BOOL" value="true"  category="Default"/>
-      <property name="EVENT_UPDATE" type="BOOL" value="false"  category="Default"/>
+            <property name="OnParentSizeChange" type="CGUIEvent" value=""/>
+            <property name="OnAlphaChangeBefore" type="CGUIEvent" value=""/>
+            <property name="OnAlphaChangeAfter" type="CGUIEvent" value=""/>
+            <property name="OnSizeChangeBefore" type="CGUIEvent" value=""/>
+            <property name="OnSizeChangeAfter" type="CGUIEvent" value=""/>
 
+            <property name="OnActive" type="CGUIEvent" value=""/>
+            <property name="OnInactive" type="CGUIEvent" value=""/>
+            <property name="OnGetFocus" type="CGUIEvent" value=""/>
+            <property name="OnLostFocus" type="CGUIEvent" value=""/>
+            <property name="OnVisible" type="CGUIEvent" value=""/>
+            <property name="OnInvisible" type="CGUIEvent" value=""/>
+            <property name="OnScaleChange" type="CGUIEvent" value=""/>
+            <property name="OnEnable" type="CGUIEvent" value=""/>
+            <property name="OnDisable" type="CGUIEvent" value=""/>
+            <property name="OnKeyClicked" type="CGUIEvent" value=""/>
+            <property name="OnUIEvent" type="CGUIEvent" value=""/>
+            <property name="OnAddChild" type="CGUIEvent" value=""/>
+            <property name="OnRemoveChild" type="CGUIEvent" value=""/>
+            <property name="OnChangeParent" type="CGUIEvent" value=""/>
 
-      <property name="TEXT_INFO" type="STRING_INFO" category="TextInfo">
-        <property name="SIZE"		type="UINT" value="16"/>
-        <property name="FONT_INDEX" type="UINT" value="0"/>
-        <property name="COLOR" 		type="COLOR" value="1.0,1.0,1.0,1.0"/>
-      </property>
-      <property name="TEXT"	type="STRING" value="" category="TextInfo"/>
-      <property name="TEXT_ALIGNMENT_H"	type="ENUM" value="GUI_TA_H_CENTER" enum="GUI_TA_H_CENTER;GUI_TA_H_LEFT;GUI_TA_H_RIGHT;" category="TextInfo"/>
-      <property name="TEXT_ALIGNMENT_V"	type="ENUM" value="GUI_TA_V_CENTER" enum="GUI_TA_V_CENTER;GUI_TA_V_UP;GUI_TA_V_DOWN;" category="TextInfo"/>
-    </page>
+            <property name="OnScrollbarScroll" type="CGUIEvent" value=""/>    
 
-    <page name="CallbackEvent">      
-      <property name="OnLoad" type="EVENT" value=""/>
-      <property name="OnOpen" type="EVENT" value=""/>
-      <property name="OnClose" type="EVENT" value=""/>
-      <property name="OnUpdate" type="EVENT" value=""/>
+            <property name="OnMouseEnter" type="CGUIEvent" value="" category="Mouse"/>
+            <property name="OnMouseLeave" type="CGUIEvent" value="" category="Mouse"/>
+            <property name="OnMouseMove" type="CGUIEvent" value="" category="Mouse"/>
+            <property name="OnMouseLeftDown" type="CGUIEvent" value="" category="Mouse"/>
+            <property name="OnMouseLeftUp" type="CGUIEvent" value="" category="Mouse"/>
+            <property name="OnMouseLeftClick" type="CGUIEvent" value="" category="Mouse"/>
+            <property name="OnMouseLeftDbClick" type="CGUIEvent" value="" category="Mouse"/>
+            <property name="OnMouseLeftMultiClick" type="CGUIEvent" value="" category="Mouse"/>
+            <property name="OnMouseRightDown" type="CGUIEvent" value="" category="Mouse"/>
+            <property name="OnMouseRightUp" type="CGUIEvent" value="" category="Mouse"/>
+            <property name="OnMouseRightClick" type="CGUIEvent" value="" category="Mouse"/>
+            <property name="OnMouseRightDbClick" type="CGUIEvent" value="" category="Mouse"/>
+            <property name="OnMouseRightMultiClick" type="CGUIEvent" value="" category="Mouse"/>
+            <property name="OnMouseMiddleDown" type="CGUIEvent" value="" category="Mouse"/>
+            <property name="OnMouseMiddleUp" type="CGUIEvent" value="" category="Mouse"/>
+            <property name="OnMouseMiddleClick" type="CGUIEvent" value="" category="Mouse"/>
+            <property name="OnMouseMiddleDbClick" type="CGUIEvent" value="" category="Mouse"/>
+            <property name="OnMouseMiddleMultiClick" type="CGUIEvent" value="" category="Mouse"/>
+            <property name="OnMouseWheel" type="CGUIEvent" value="" category="Mouse"/>
+            <property name="OnDragBegin" type="CGUIEvent" value="" category="Mouse"/>
+            <property name="OnDragProcess" type="CGUIEvent" value="" category="Mouse"/>
+            <property name="OnDragEnd" type="CGUIEvent" value="" category="Mouse"/>   
 
-      <property name="OnParentSizeChange" type="EVENT" value=""/>
-      <property name="OnAlphaChangeBefore" type="EVENT" value=""/>
-      <property name="OnAlphaChangeAfter" type="EVENT" value=""/>
-      <property name="OnSizeChangeBefore" type="EVENT" value=""/>
-      <property name="OnSizeChangeAfter" type="EVENT" value=""/>
-            
-      <property name="OnActive" type="EVENT" value=""/>
-      <property name="OnInactive" type="EVENT" value=""/>
-      <property name="OnGetFocus" type="EVENT" value=""/>
-      <property name="OnLostFocus" type="EVENT" value=""/>
-      <property name="OnVisible" type="EVENT" value=""/>
-      <property name="OnInvisible" type="EVENT" value=""/>
-      <property name="OnScaleChange" type="EVENT" value=""/>
-      <property name="OnEnable" type="EVENT" value=""/>
-      <property name="OnDisable" type="EVENT" value=""/>
-      <property name="OnKeyClicked" type="EVENT" value=""/>
-      <property name="OnUIEvent" type="EVENT" value=""/>
-      <property name="OnAddChild" type="EVENT" value=""/>
-      <property name="OnRemoveChild" type="EVENT" value=""/>
-      <property name="OnChangeParent" type="EVENT" value=""/>
+            <property name="OnChecked" type="CGUIEvent" value="" category="Check"/>
+            <property name="OnUnchecked" type="CGUIEvent" value="" category="Check"/>
 
-      <property name="OnScrollbarScroll" type="EVENT" value=""/>    
-      
-      <property name="OnMouseEnter" type="EVENT" value="" category="Mouse"/>
-      <property name="OnMouseLeave" type="EVENT" value="" category="Mouse"/>
-      <property name="OnMouseMove" type="EVENT" value="" category="Mouse"/>
-      <property name="OnMouseLeftDown" type="EVENT" value="" category="Mouse"/>
-      <property name="OnMouseLeftUp" type="EVENT" value="" category="Mouse"/>
-      <property name="OnMouseLeftClick" type="EVENT" value="" category="Mouse"/>
-      <property name="OnMouseLeftDbClick" type="EVENT" value="" category="Mouse"/>
-      <property name="OnMouseLeftMultiClick" type="EVENT" value="" category="Mouse"/>
-      <property name="OnMouseRightDown" type="EVENT" value="" category="Mouse"/>
-      <property name="OnMouseRightUp" type="EVENT" value="" category="Mouse"/>
-      <property name="OnMouseRightClick" type="EVENT" value="" category="Mouse"/>
-      <property name="OnMouseRightDbClick" type="EVENT" value="" category="Mouse"/>
-      <property name="OnMouseRightMultiClick" type="EVENT" value="" category="Mouse"/>
-      <property name="OnMouseMiddleDown" type="EVENT" value="" category="Mouse"/>
-      <property name="OnMouseMiddleUp" type="EVENT" value="" category="Mouse"/>
-      <property name="OnMouseMiddleClick" type="EVENT" value="" category="Mouse"/>
-      <property name="OnMouseMiddleDbClick" type="EVENT" value="" category="Mouse"/>
-      <property name="OnMouseMiddleMultiClick" type="EVENT" value="" category="Mouse"/>
-      <property name="OnMouseWheel" type="EVENT" value="" category="Mouse"/>
-      <property name="OnDragBegin" type="EVENT" value="" category="Mouse"/>
-      <property name="OnDragProcess" type="EVENT" value="" category="Mouse"/>
-      <property name="OnDragEnd" type="EVENT" value="" category="Mouse"/>   
-      
-      <property name="OnChecked" type="EVENT" value="" category="Check"/>
-      <property name="OnUnchecked" type="EVENT" value="" category="Check"/>
+            <property name="OnKeyDown" type="CGUIEvent" value="" category="Keyboard"/>
+            <property name="OnKeyUp" type="CGUIEvent" value="" category="Keyboard"/>
+            <property name="OnKeyPressed" type="CGUIEvent" value="" category="Keyboard"/>
 
-      <property name="OnKeyDown" type="EVENT" value="" category="Keyboard"/>
-      <property name="OnKeyUp" type="EVENT" value="" category="Keyboard"/>
-      <property name="OnKeyPressed" type="EVENT" value="" category="Keyboard"/>
-
-    </page>
-  </widget>
+        </page>
+    </widget>
 
 
-  <widget type="CGUIWgtButton" inherit="CGUIWidget">
-    <page name="Appearance">
-      <property name="WIDGET_SIZE" type="WIDGET_SIZE" category="Default">
-        <property name="RELATIVE"		type="BOOL" value="false"/>
-        <property name="SIZE"		type="SIZE" value="148,46"/>
-        <property name="MAX_SIZE" type="SIZE" value="0,0"  category="Default"/>
-        <property name="MIN_SIZE" type="SIZE" value="0,0"  category="Default"/>
-      </property>
-      <property name="RELATIVE_POSITION" type="VECTOR2" value="0,-2" category="Button"/>
-      <property name="TEXT_HOVER"	type="STRING" value=""  category="Button"/>
-      <property name="TEXT_INFO_HOVER" type="STRING_INFO"  category="Button">
-        <property name="SIZE"		type="UINT" value="16"/>
-        <property name="FONT_INDEX" type="UINT" value="0"/>
-        <property name="COLOR" 		type="COLOR" value="1.0,1.0,1.0,1.0"/>
-      </property>
-      <property name="TEXT_PUSH"	type="STRING" value=""  category="Button"/>
-      <property name="TEXT_INFO_PUSH" type="STRING_INFO"  category="Button">
-        <property name="SIZE"		type="UINT" value="16"/>
-        <property name="FONT_INDEX" type="UINT" value="0"/>
-        <property name="COLOR" 		type="COLOR" value="1.0,1.0,1.0,1.0"/>
-      </property>
-      <property name="TEXT_DISABLE"	type="STRING" value=""  category="Button"/>
-      <property name="TEXT_INFO_DISABLE" type="STRING_INFO"  category="Button">
-        <property name="SIZE"		type="UINT" value="16"/>
-        <property name="FONT_INDEX" type="UINT" value="0"/>
-        <property name="COLOR" 		type="COLOR" value="1.0,1.0,1.0,1.0"/>
-      </property>
-    </page>
-    <page name="Image">
-      <property name="BTN_NORMAL" type="IMAGE" value="button_red_normal" must_exist="true"/>
-      <property name="BTN_HOVER" type="IMAGE" value="button_red_hover"/>
-      <property name="BTN_PUSH" type="IMAGE" value="button_red_push"/>
-      <property name="BTN_DISABLE" type="IMAGE" value="button_red_disable"/>
-      <property name="BTN_HOVER_OVERLAY" type="IMAGE" value=""/>
-      <property name="BTN_PUSH_OVERLAY" type="IMAGE" value=""/>
-    </page>
-  </widget>
+    <widget type="CGUIWgtButton" inherit="CGUIWidget">
+        <page name="Appearance">
+            <property name="text_hover"	type="CGUIString" value=""  category="Button"/>
+            <property name="textinfo_hover" type="CGUIStringInfo"  category="Button">
+                <property name="size"		type="uint16" value="16"/>
+                <property name="index" type="int16" value="0"/>
+                <property name="color" type="CGUIColor" value="1.0,1.0,1.0,1.0"/>
+            </property>
+            <property name="text_push"	type="CGUIString" value=""  category="Button"/>
+            <property name="textinfo_push" type="CGUIStringInfo"  category="Button">
+                <property name="size"		type="uint16" value="16"/>
+                <property name="index" type="int16" value="0"/>
+                <property name="color" 		type="CGUIColor" value="1.0,1.0,1.0,1.0"/>
+            </property>
+            <property name="text_disable"	type="CGUIString" value=""  category="Button"/>
+            <property name="textinfo_disable" type="CGUIStringInfo"  category="Button">
+                <property name="size"		type="uint16" value="16"/>
+                <property name="index" type="int16" value="0"/>
+                <property name="color" 		type="CGUIColor" value="1.0,1.0,1.0,1.0"/>
+            </property>
+            <property name="text_offset"	type="CGUIVector2" value="0,0"  category="Button"/>
+        </page>
+        <page name="Image">
+            <property name="BTN_NORMAL" type="CGUIImage" value="button_red_normal" must_exist="true"/>
+            <property name="BTN_HOVER" type="CGUIImage" value="button_red_hover"/>
+            <property name="BTN_PUSH" type="CGUIImage" value="button_red_push"/>
+            <property name="BTN_DISABLE" type="CGUIImage" value="button_red_disable"/>
+            <property name="BTN_HOVER_OVERLAY" type="CGUIImage" value=""/>
+            <property name="BTN_PUSH_OVERLAY" type="CGUIImage" value=""/>
+        </page>
+    </widget>
 
-  <widget type="CGUIWgtCheckButton" inherit="CGUIWidget">
-    <page name="Appearance">
-      <property name="CHECKED" type="BOOL" value="false"  category="CheckButton"/>
-    </page>
-    <page name="Image">
-      <property name="BTN_NORMAL" type="IMAGE" value="" must_exist="true"/>
-      <property name="BTN_HOVER" type="IMAGE" value=""/>
-      <property name="BTN_PUSH" type="IMAGE" value=""/>
-      <property name="BTN_DISABLE" type="IMAGE" value=""/>
-      <property name="BTN_NORMAL_CHECKED" type="IMAGE" value="" must_exist="true"/>
-      <property name="BTN_HOVER_CHECKED" type="IMAGE" value=""/>
-      <property name="BTN_DISABLE_CHECKED" type="IMAGE" value=""/>
-      <property name="BTN_PUSH_CHECKED" type="IMAGE" value=""/>
-    </page>
-  </widget>
+    <widget type="CGUIWgtStaticText" inherit="CGUIWidget">
+        <page name="Appearance">
+            <property name="multiline" type="bool" value="false" category="StaticText"/>
+            <property name="autoexpand_height" type="bool" value="false" category="StaticText"/>
+        </page>
+    </widget>
 
-  <widget type="CGUIWgtRadioButton" inherit="CGUIWidget">
-    <page name="Appearance">
-      <property name="CHECKED" type="BOOL" value="false"  category="RadioButton"/>
-    </page>
-    <page name="Image">
-      <property name="BTN_NORMAL" type="IMAGE" value="" must_exist="true"/>
-      <property name="BTN_HOVER" type="IMAGE" value=""/>
-      <property name="BTN_PUSH" type="IMAGE" value=""/>
-      <property name="BTN_DISABLE" type="IMAGE" value=""/>
-      <property name="BTN_NORMAL_CHECKED" type="IMAGE" value=""/>
-      <property name="BTN_HOVER_CHECKED" type="IMAGE" value=""/>
-      <property name="BTN_DISABLE_CHECKED" type="IMAGE" value=""/>
-      <property name="BTN_PUSH_CHECKED" type="IMAGE" value=""/>
-      <property name="BTN_HOVER_OVERLAY" type="IMAGE" value=""/>
-      <property name="BTN_CHECKED_OVERLAY" type="IMAGE" value=""/>
-    </page>
-  </widget>
+    <widget type="CGUIWgtStaticImage" inherit="CGUIWidget">
+        <page name="Appearance">
+        </page>
+        <page name="Image">
+            <property name="BGIMAGE" type="CGUIImage" value="" must_exist="true"/>
+        </page>
+    </widget>
 
-  <widget type="CGUIWgtFrame" inherit="CGUIWidget">
-    <page name="Appearance">
-      <property name="BORDER_TOPLEFT_DYNAMIC" type="BOOL" value="true" category="Frame"/>
-      <property name="BORDER_TOPRIGHT_DYNAMIC" type="BOOL" value="true"  category="Frame"/>
-      <property name="BORDER_BOTTOMRIGHT_DYNAMIC" type="BOOL" value="true"  category="Frame"/>
-      <property name="BORDER_BOTTOMLEFT_DYNAMIC" type="BOOL" value="true"  category="Frame"/>
-      <property name="BORDER_TOP_DYNAMIC" type="BOOL" value="true"  category="Frame"/>
-      <property name="BORDER_LEFT_DYNAMIC" type="BOOL" value="true"  category="Frame"/>
-      <property name="BORDER_BOTTOM_DYNAMIC" type="BOOL" value="true"  category="Frame"/>
-      <property name="BORDER_RIGHT_DYNAMIC" type="BOOL" value="true"  category="Frame"/>
-    </page>
-    <page name="Image">
-      <property name="FRAME_TITLEBAR_TOP" type="IMAGE" value=""/>
-      <property name="FRAME_TITLEBAR_BOTTOM" type="IMAGE" value=""/>
-      <property name="FRAME_TITLEBAR_LEFT" type="IMAGE" value=""/>
-      <property name="FRAME_TITLEBAR_RIGHT" type="IMAGE" value=""/>
-      <property name="FRAME_DECORATE_0" type="IMAGE" value=""/>
-      <property name="FRAME_DECORATE_1" type="IMAGE" value=""/>
-
-      <property name="FRAME_BORDER_TOP" type="IMAGE" value=""/>
-      <property name="FRAME_BORDER_BOTTOM" type="IMAGE" value=""/>
-      <property name="FRAME_BORDER_LEFT" type="IMAGE" value=""/>
-      <property name="FRAME_BORDER_RIGHT" type="IMAGE" value=""/>
-      <property name="FRAME_BORDER_TOPLEFT" type="IMAGE" value=""/>
-      <property name="FRAME_BORDER_TOPRIGHT" type="IMAGE" value=""/>
-      <property name="FRAME_BORDER_BOTTOMLEFT" type="IMAGE" value=""/>
-      <property name="FRAME_BORDER_BOTTOMRIGHT" type="IMAGE" value=""/>
-    </page>
-  </widget>
-
-  <widget type="CGUIWgtColumnList" inherit="CGUIWidget">
-    <page name="Appearance">
-    </page>
-    <page name="Image">
-      <property name="BGIMAGE" type="IMAGE" value=""  must_exist="true"/>
-      <property name="SELECTION_COLOR" type="IMAGE" value=""  must_exist="true"/>
-      <property name="COLUMN_HEADER_NORMAL" type="IMAGE" value="" />
-      <property name="COLUMN_HEADER_HOVER" type="IMAGE" value="" />
-      <property name="COLUMN_HEADER_PUSH" type="IMAGE" value="" />
-      <property name="SCROLLBAR_VERTIC_BG" type="IMAGE" value="" />
-      <property name="SCROLLBAR_VERTIC_ARROW_NORMAL_0" type="IMAGE" value=""  must_exist="true"/>
-      <property name="SCROLLBAR_VERTIC_ARROW_HOVER_0" type="IMAGE" value="" />
-      <property name="SCROLLBAR_VERTIC_ARROW_DISABLE_0" type="IMAGE" value="" />
-      <property name="SCROLLBAR_VERTIC_ARROW_PUSH_0" type="IMAGE" value="" />
-      <property name="SCROLLBAR_VERTIC_ARROW_NORMAL_1" type="IMAGE" value=""  must_exist="true"/>
-      <property name="SCROLLBAR_VERTIC_ARROW_HOVER_1" type="IMAGE" value="" />
-      <property name="SCROLLBAR_VERTIC_ARROW_DISABLE_1" type="IMAGE" value="" />
-      <property name="SCROLLBAR_VERTIC_ARROW_PUSH_1" type="IMAGE" value="" />
-      <property name="SCROLLBAR_VERTIC_SLIDE_NORMAL" type="IMAGE" value=""  must_exist="true"/>
-      <property name="SCROLLBAR_VERTIC_SLIDE_HOVER" type="IMAGE" value="" />
-      <property name="SCROLLBAR_VERTIC_SLIDE_DISABLE" type="IMAGE" value="" />
-      <property name="SCROLLBAR_VERTIC_SLIDE_PUSH" type="IMAGE" value="" />
-      <property name="SCROLLBAR_HORIZON_BG" type="IMAGE" value="" />
-      <property name="SCROLLBAR_HORIZON_ARROW_NORMAL_0" type="IMAGE" value=""  must_exist="true"/>
-      <property name="SCROLLBAR_HORIZON_ARROW_HOVER_0" type="IMAGE" value="" />
-      <property name="SCROLLBAR_HORIZON_ARROW_DISABLE_0" type="IMAGE" value="" />
-      <property name="SCROLLBAR_HORIZON_ARROW_PUSH_0" type="IMAGE" value="" />
-      <property name="SCROLLBAR_HORIZON_ARROW_NORMAL_1" type="IMAGE" value=""  must_exist="true"/>
-      <property name="SCROLLBAR_HORIZON_ARROW_HOVER_1" type="IMAGE" value="" />
-      <property name="SCROLLBAR_HORIZON_ARROW_DISABLE_1" type="IMAGE" value="" />
-      <property name="SCROLLBAR_HORIZON_ARROW_PUSH_1" type="IMAGE" value="" />
-      <property name="SCROLLBAR_HORIZON_SLIDE_NORMAL" type="IMAGE" value=""  must_exist="true"/>
-      <property name="SCROLLBAR_HORIZON_SLIDE_HOVER" type="IMAGE" value="" />
-      <property name="SCROLLBAR_HORIZON_SLIDE_DISABLE" type="IMAGE" value="" />
-      <property name="SCROLLBAR_HORIZON_SLIDE_PUSH" type="IMAGE" value="" />
-    </page>
-  </widget>
-
-  <widget type="CGUIWgtComboBox" inherit="CGUIWidget">
-    <page name="Appearance">
-      <property name="DROPLIST_SIZE" type="SIZE" value="0,0"  category="ComboBox"/>
-      <property name="SORT" type="BOOL" value="false"  category="ComboBox"/>
-    </page>
-    <page name="Image">
-      <property name="BGIMAGE" type="IMAGE" value=""  must_exist="true"/>
-      <property name="DROPLIST_BGIMAGE" type="IMAGE" value=""  must_exist="true"/>
-      <property name="DROPLIST_SELECTION_COLOR" type="IMAGE" value=""  must_exist="true"/>
-      <property name="SCROLLBAR_VERTIC_BG" type="IMAGE" value="" />
-      <property name="SCROLLBAR_VERTIC_ARROW_NORMAL_0" type="IMAGE" value=""  must_exist="true"/>
-      <property name="SCROLLBAR_VERTIC_ARROW_HOVER_0" type="IMAGE" value="" />
-      <property name="SCROLLBAR_VERTIC_ARROW_DISABLE_0" type="IMAGE" value="" />
-      <property name="SCROLLBAR_VERTIC_ARROW_PUSH_0" type="IMAGE" value="" />
-      <property name="SCROLLBAR_VERTIC_ARROW_NORMAL_1" type="IMAGE" value=""  must_exist="true"/>
-      <property name="SCROLLBAR_VERTIC_ARROW_HOVER_1" type="IMAGE" value="" />
-      <property name="SCROLLBAR_VERTIC_ARROW_DISABLE_1" type="IMAGE" value="" />
-      <property name="SCROLLBAR_VERTIC_ARROW_PUSH_1" type="IMAGE" value="" />
-      <property name="SCROLLBAR_VERTIC_SLIDE_NORMAL" type="IMAGE" value=""  must_exist="true"/>
-      <property name="SCROLLBAR_VERTIC_SLIDE_HOVER" type="IMAGE" value="" />
-      <property name="SCROLLBAR_VERTIC_SLIDE_DISABLE" type="IMAGE" value="" />
-      <property name="SCROLLBAR_VERTIC_SLIDE_PUSH" type="IMAGE" value="" />
-      <property name="SCROLLBAR_HORIZON_BG" type="IMAGE" value="" />
-      <property name="SCROLLBAR_HORIZON_ARROW_NORMAL_0" type="IMAGE" value=""  must_exist="true"/>
-      <property name="SCROLLBAR_HORIZON_ARROW_HOVER_0" type="IMAGE" value="" />
-      <property name="SCROLLBAR_HORIZON_ARROW_DISABLE_0" type="IMAGE" value="" />
-      <property name="SCROLLBAR_HORIZON_ARROW_PUSH_0" type="IMAGE" value="" />
-      <property name="SCROLLBAR_HORIZON_ARROW_NORMAL_1" type="IMAGE" value=""  must_exist="true"/>
-      <property name="SCROLLBAR_HORIZON_ARROW_HOVER_1" type="IMAGE" value="" />
-      <property name="SCROLLBAR_HORIZON_ARROW_DISABLE_1" type="IMAGE" value="" />
-      <property name="SCROLLBAR_HORIZON_ARROW_PUSH_1" type="IMAGE" value="" />
-      <property name="SCROLLBAR_HORIZON_SLIDE_NORMAL" type="IMAGE" value=""  must_exist="true"/>
-      <property name="SCROLLBAR_HORIZON_SLIDE_HOVER" type="IMAGE" value="" />
-      <property name="SCROLLBAR_HORIZON_SLIDE_DISABLE" type="IMAGE" value="" />
-      <property name="SCROLLBAR_HORIZON_SLIDE_PUSH" type="IMAGE" value="" />
-    </page>
-    <page name="CallbackEvent">
-      <property name="OnComboBoxSelected" type="EVENT" value=""/>
-    </page>
-  </widget>
-
-  <widget type="CGUIWgtDialog" inherit="CGUIWidget">
-    <page name="Appearance">
-    </page>
-    <page name="Image">
-      <property name="BGIMAGE" type="IMAGE" value=""  must_exist="true"/>
-    </page>
-  </widget>
-
-  <widget type="CGUIWgtEditBox" inherit="CGUIWidget">
-    <page name="Appearance">
-      <property name="WIDGET_SIZE" type="WIDGET_SIZE" category="Default">
-        <property name="RELATIVE"		type="BOOL" value="false"/>
-        <property name="SIZE"		type="SIZE" value="128,20"/>
-        <property name="MAX_SIZE" type="SIZE" value="0,0"/>
-        <property name="MIN_SIZE" type="SIZE" value="0,0"/>
-      </property>
-      <property name="STRING_AREA_RATIO" type="RECT" value="0,0,1,1"  category="EditBox"/>
-      <property name="MASK" type="BOOL" value="false"  category="EditBox"/>
-      <property name="MAX_TEXT_NUM" type="UINT" value="100"  category="EditBox"/>
-      <!--property name="MASK_CODE" type="STRING" value="*"  category="EditBox"/-->
-      <property name="READONLY" type="BOOL" value="false"  category="EditBox"/>
-      <property name="CURSOR_SIZE" type="SIZE" value="2,16"  category="EditBox"/>
-      <!--property name="STRING_AREA_RATIO" type="RECT" value="0.0,0.0,1.0,1.0"  category="EditBox"/-->
-    </page>
-    <page name="Image">
-      <property name="EDIT_BGFOCUS" type="IMAGE" value=""/>
-      <property name="EDIT_BG" type="IMAGE" value="edit_bg" must_exist="true"/>
-      <property name="EDIT_CURSOR" type="IMAGE" value="color_white" must_exist="true"/>
-    </page>
-  </widget>
-
-  <widget type="CGUIWgtEmptyNode" inherit="CGUIWidget">
-    <page name="Appearance">
-      <property name="WIDGET_SIZE" type="WIDGET_SIZE" category="Default">
-        <property name="RELATIVE"		type="BOOL" value="true"/>
-        <property name="SIZE"		type="SIZE" value="1,1"/>
-        <property name="MAX_SIZE" type="SIZE" value="0,0"  category="Default"/>
-        <property name="MIN_SIZE" type="SIZE" value="0,0"  category="Default"/>
-      </property>
-      <property name="HITABLE" type="BOOL" value="false"  category="Default"/>
-    </page>
-  </widget>
-
-  <widget type="CGUIWgtListBox" inherit="CGUIWidget">
-    <page name="Appearance">
-    </page>
-    <page name="Image">
-      <property name="BGIMAGE" type="IMAGE" value=""  must_exist="true"/>
-      <property name="SELECTION_COLOR" type="IMAGE" value=""  must_exist="true"/>
-      <property name="SCROLLBAR_VERTIC_BG" type="IMAGE" value=""  must_exist="true"/>
-      <property name="SCROLLBAR_VERTIC_ARROW_NORMAL_0" type="IMAGE" value=""  must_exist="true"/>
-      <property name="SCROLLBAR_VERTIC_ARROW_HOVER_0" type="IMAGE" value="" />
-      <property name="SCROLLBAR_VERTIC_ARROW_DISABLE_0" type="IMAGE" value="" />
-      <property name="SCROLLBAR_VERTIC_ARROW_PUSH_0" type="IMAGE" value="" />
-      <property name="SCROLLBAR_VERTIC_ARROW_NORMAL_1" type="IMAGE" value=""  must_exist="true"/>
-      <property name="SCROLLBAR_VERTIC_ARROW_HOVER_1" type="IMAGE" value="" />
-      <property name="SCROLLBAR_VERTIC_ARROW_DISABLE_1" type="IMAGE" value="" />
-      <property name="SCROLLBAR_VERTIC_ARROW_PUSH_1" type="IMAGE" value="" />
-      <property name="SCROLLBAR_VERTIC_SLIDE_NORMAL" type="IMAGE" value=""  must_exist="true"/>
-      <property name="SCROLLBAR_VERTIC_SLIDE_HOVER" type="IMAGE" value="" />
-      <property name="SCROLLBAR_VERTIC_SLIDE_DISABLE" type="IMAGE" value="" />
-      <property name="SCROLLBAR_VERTIC_SLIDE_PUSH" type="IMAGE" value="" />
-      <property name="SCROLLBAR_HORIZON_BG" type="IMAGE" value=""  must_exist="true"/>
-      <property name="SCROLLBAR_HORIZON_ARROW_NORMAL_0" type="IMAGE" value=""  must_exist="true"/>
-      <property name="SCROLLBAR_HORIZON_ARROW_HOVER_0" type="IMAGE" value="" />
-      <property name="SCROLLBAR_HORIZON_ARROW_DISABLE_0" type="IMAGE" value="" />
-      <property name="SCROLLBAR_HORIZON_ARROW_PUSH_0" type="IMAGE" value="" />
-      <property name="SCROLLBAR_HORIZON_ARROW_NORMAL_1" type="IMAGE" value=""  must_exist="true"/>
-      <property name="SCROLLBAR_HORIZON_ARROW_HOVER_1" type="IMAGE" value="" />
-      <property name="SCROLLBAR_HORIZON_ARROW_DISABLE_1" type="IMAGE" value="" />
-      <property name="SCROLLBAR_HORIZON_ARROW_PUSH_1" type="IMAGE" value="" />
-      <property name="SCROLLBAR_HORIZON_SLIDE_NORMAL" type="IMAGE" value=""  must_exist="true"/>
-      <property name="SCROLLBAR_HORIZON_SLIDE_HOVER" type="IMAGE" value="" />
-      <property name="SCROLLBAR_HORIZON_SLIDE_DISABLE" type="IMAGE" value="" />
-      <property name="SCROLLBAR_HORIZON_SLIDE_PUSH" type="IMAGE" value="" />
-    </page>
-
-    <page name="CallbackEvent">
-      <property name="OnListBoxSelected" type="EVENT" value=""/>
-      <property name="OnListBoxSelecteChanged" type="EVENT" value=""/>
-      <property name="OnListBoxLeftDbClick" type="EVENT" value=""/>
-      <property name="OnListBoxRightDbClick" type="EVENT" value=""/>
-      <property name="OnListBoxLeftClick" type="EVENT" value=""/>
-      <property name="OnListBoxRightClick" type="EVENT" value=""/>
-    </page>
-  </widget>
-
-  <widget type="CGUIMenu" inherit="CGUIWidget">
-    <page name="Appearance">
-    </page>
-    <page name="Image">
-    </page>
-  </widget>
-
-  <widget type="CGUIWgtMultiEditBox" inherit="CGUIWidget">
-    <page name="Appearance">
-    </page>
-    <page name="Image">
-      <property name="EDIT_BGFOCUS" type="IMAGE" value=""/>
-      <property name="EDIT_BG" type="IMAGE" value="" must_exist="true"/>
-      <property name="EDIT_CURSOR" type="IMAGE" value="" must_exist="true"/>
-    </page>
-  </widget>
-
-  <widget type="CGUIWgtPanel" inherit="CGUIWidget">
-    <page name="Appearance">
-    </page>
-    <page name="Image">
-      <property name="BGIMAGE" type="IMAGE" value="color_translucent" must_exist="true"/>
-      <property name="PANEL_BORDER_TOP" type="IMAGE" value="panel_border_top"/>
-      <property name="PANEL_BORDER_BOTTOM" type="IMAGE" value="panel_border_bottom"/>
-      <property name="PANEL_BORDER_LEFT" type="IMAGE" value="panel_border_left"/>
-      <property name="PANEL_BORDER_RIGHT" type="IMAGE" value="panel_border_right"/>
-      <property name="PANEL_BORDER_TOPLEFT" type="IMAGE" value="panel_border_topleft"/>
-      <property name="PANEL_BORDER_TOPRIGHT" type="IMAGE" value="panel_border_topright"/>
-      <property name="PANEL_BORDER_BOTTOMLEFT" type="IMAGE" value="panel_border_bottomleft"/>
-      <property name="PANEL_BORDER_BOTTOMRIGHT" type="IMAGE" value="panel_border_bottomright"/>
-    </page>
-  </widget>
-  
-  <widget type="CGUIWgtScrollPanel" inherit="CGUIWidget">
-    <page name="Appearance">
-      <property name="SHOW_VERT_SCROLLBAR" type="BOOL" value="true"  category="ScrollPanel"/>
-      <property name="SHOW_HORZ_SCROLLBAR" type="BOOL" value="true"  category="ScrollPanel"/>
-      <property name="VERTICAL_SCROLLBAR" type="STRING" value=""  category="ScrollPanel"/>
-      <property name="HORIZONAL_SCROLLBAR" type="STRING" value=""  category="ScrollPanel"/>
-    </page>
-    <page name="Image">
-      <property name="BGIMAGE" type="IMAGE" value="color_translucent"/>
-    </page>
-  </widget>
-  
-  <widget type="CGUIWgtProgress" inherit="CGUIWidget">
-    <page name="Appearance">
-    </page>
-    <page name="Image">
-      <property name="BACKGROUND_IMG" type="IMAGE" value="" must_exist="true"/>
-      <property name="FOREGROUND_IMG" type="IMAGE" value="" must_exist="true"/>
-    </page>
-  </widget>
-
-  <widget type="CGUIWgtScrollbar" inherit="CGUIWidget">
-    <page name="Appearance">
-      <property name="RANGE" type="UINT" value="0" category="Scrollbar"/>
-      <property name="SCROLLBAR_TYPE" type="ENUM" value="SB_VERTICAL" enum="SB_VERTICAL;SB_HORIZONAL;" category="Scrollbar"/>
-      <property name="AUTO_POSITION" type="BOOL" value="false" category="Scrollbar"/>
-    </page>
-    <page name="Image">
-      <property name="SCROLLBAR_BG" type="IMAGE" value=""/>
-      <property name="SCROLLBAR_ARROW_NORMAL_0" type="IMAGE" value="scrollbar_upbutton_up"/>
-      <property name="SCROLLBAR_ARROW_HOVER_0" type="IMAGE" value="scrollbar_upbutton_highlight"/>
-      <property name="SCROLLBAR_ARROW_DISABLE_0" type="IMAGE" value="scrollbar_upbutton_disable"/>
-      <property name="SCROLLBAR_ARROW_PUSH_0" type="IMAGE" value="scrollbar_upbutton_down"/>
-      <property name="SCROLLBAR_ARROW_HOVER_OVERLAY_0" type="IMAGE" value=""/>
-      <property name="SCROLLBAR_ARROW_PUSH_OVERLAY_0" type="IMAGE" value=""/>
-      <property name="SCROLLBAR_ARROW_NORMAL_1" type="IMAGE" value="scrollbar_downbutton_up"/>
-      <property name="SCROLLBAR_ARROW_HOVER_1" type="IMAGE" value="scrollbar_downbutton_highlight"/>
-      <property name="SCROLLBAR_ARROW_DISABLE_1" type="IMAGE" value="scrollbar_downbutton_disable"/>
-      <property name="SCROLLBAR_ARROW_PUSH_1" type="IMAGE" value="scrollbar_downbutton_down"/>
-      <property name="SCROLLBAR_ARROW_HOVER_OVERLAY_1" type="IMAGE" value=""/>
-      <property name="SCROLLBAR_ARROW_PUSH_OVERLAY_1" type="IMAGE" value=""/>
-      <property name="SCROLLBAR_SLIDE_NORMAL" type="IMAGE" value="scrollbar_knob"/>
-      <property name="SCROLLBAR_SLIDE_HOVER" type="IMAGE" value=""/>
-      <property name="SCROLLBAR_SLIDE_DISABLE" type="IMAGE" value=""/>
-      <property name="SCROLLBAR_SLIDE_PUSH" type="IMAGE" value=""/>
-      <property name="SCROLLBAR_SLIDE_HOVER_OVERLAY" type="IMAGE" value=""/>
-      <property name="SCROLLBAR_SLIDE_PUSH_OVERLAY" type="IMAGE" value=""/>
-    </page>
-  </widget>
-
-  <widget type="CGUIWgtStaticText" inherit="CGUIWidget">
-    <page name="Appearance">
-      <property name="MULTILINE" type="BOOL" value="false" category="StaticText"/>
-      <property name="AUTOEXPAND_HEIGHT" type="BOOL" value="false" category="StaticText"/>
-    </page>
-  </widget>
-
-  <widget type="CGUIWgtStaticImage" inherit="CGUIWidget">
-    <page name="Appearance">
-    </page>
-    <page name="Image">
-      <property name="BGIMAGE" type="IMAGE" value="" must_exist="true"/>
-    </page>
-  </widget>
-
-
-  <widget type="CGUIWgtTabControl" inherit="CGUIWidget">
-    <page name="Appearance">
-    </page>
-    <page name="Image">
-    </page>
-  </widget>
-
-  <widget type="CGUIWgtTabButton" inherit="CGUIWidget">
-    <page name="Appearance">
-    </page>
-    <page name="Image">
-      <property name="BTN_NORMAL" type="IMAGE" value="" must_exist="true"/>
-      <property name="BTN_HOVER" type="IMAGE" value=""/>
-      <property name="BTN_PUSH" type="IMAGE" value=""/>
-      <property name="BTN_DISABLE" type="IMAGE" value=""/>
-      <property name="BTN_NORMAL_CHECKED" type="IMAGE" value="" must_exist="true"/>
-      <property name="BTN_HOVER_CHECKED" type="IMAGE" value=""/>
-      <property name="BTN_DISABLE_CHECKED" type="IMAGE" value=""/>
-      <property name="BTN_PUSH_CHECKED" type="IMAGE" value=""/>
-    </page>
-  </widget>
+    <widget type="CGUIWgtPanel" inherit="CGUIWidget">
+        <page name="Appearance">
+        </page>
+        <page name="Image">
+            <property name="BGIMAGE" type="CGUIImage" value="color_translucent" must_exist="true"/>
+            <property name="PANEL_BORDER_TOP" type="CGUIImage" value="panel_border_top"/>
+            <property name="PANEL_BORDER_BOTTOM" type="CGUIImage" value="panel_border_bottom"/>
+            <property name="PANEL_BORDER_LEFT" type="CGUIImage" value="panel_border_left"/>
+            <property name="PANEL_BORDER_RIGHT" type="CGUIImage" value="panel_border_right"/>
+            <property name="PANEL_BORDER_TOPLEFT" type="CGUIImage" value="panel_border_topleft"/>
+            <property name="PANEL_BORDER_TOPRIGHT" type="CGUIImage" value="panel_border_topright"/>
+            <property name="PANEL_BORDER_BOTTOMLEFT" type="CGUIImage" value="panel_border_bottomleft"/>
+            <property name="PANEL_BORDER_BOTTOMRIGHT" type="CGUIImage" value="panel_border_bottomright"/>
+        </page>
+    </widget>
 
 </config>
-
-
 
 
 

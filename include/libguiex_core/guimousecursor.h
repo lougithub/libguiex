@@ -48,13 +48,13 @@ public:
 
 	///**
 	// * @brief add a image
-	// * @param rTagPoint the point which used to align the image.
+	// * @param rAnchorPoint the point which used to align the image.
 	// * it is a unified coordinate, from 0 to 1.
 	// */
 	//int32	AddCursor(const CGUIString& rCursorName, 
 	//	const CGUIString& rImageName, 
 	//	const CGUIRect& rTexRect = CGUIRect(0,0,1,1), 
-	//	const CGUIVector2& rTagPoint=CGUIVector2(0,0) );
+	//	const CGUIVector2& rAnchorPoint=CGUIVector2(0,0) );
 	//
 	///**
 	// * @brief add a animation, in this function, all frame are put in one image.
@@ -67,7 +67,7 @@ public:
 	//	const CGUIString& rImageName, 
 	//	const std::vector<CGUIRect>& rListTexRect, 
 	//	uint32 nInterval,
-	//	const CGUIVector2& rTagPoint=CGUIVector2(0,0));
+	//	const CGUIVector2& rAnchorPoint=CGUIVector2(0,0));
 
 	///**
 	// * @brief add a animation, in this function, the frame are put in different image.
@@ -77,7 +77,7 @@ public:
 	//int32	AddCursor( const CGUIString& rCursorName, 
 	//	const std::vector<CGUIString>& rListImageName,  
 	//	uint32 nInterval,
-	//	const CGUIVector2& rTagPoint=CGUIVector2(0,0));
+	//	const CGUIVector2& rAnchorPoint=CGUIVector2(0,0));
 
 	///**
 	// * @brief add a animation.

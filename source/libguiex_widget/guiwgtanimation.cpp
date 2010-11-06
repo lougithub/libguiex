@@ -40,7 +40,7 @@ namespace guiex
 		m_pAnimationCur = NULL;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtAnimation::InitAnimation()
+	void CGUIWgtAnimation::InitAnimation()
 	{
 		SetFocusable(false);
 
@@ -55,13 +55,13 @@ namespace guiex
 			m_pAnimationCur = pAnimation;
 			if( NEWGetSize().IsEqualZero() && pAnimation )
 			{
-				NEWSetPixelSize( pAnimation->GetSize() );
+				SetPixelSize( pAnimation->GetSize() );
 			}
 		}
 		CGUIWidget::SetAnimation(rAnimationName,pAnimation);;
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIWgtAnimation::SetCurrentAnimation( const CGUIString& rAnimationName)
+	void CGUIWgtAnimation::SetCurrentAnimation( const CGUIString& rAnimationName)
 	{
 		if( m_pAnimationCur = GetAnimation(rAnimationName))
 		{
@@ -74,12 +74,12 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	const CGUIString&			CGUIWgtAnimation::GetCurrentAnimation(  ) const
+	const CGUIString& CGUIWgtAnimation::GetCurrentAnimation(  ) const
 	{
 		return m_pAnimationName;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtAnimation::SetValue(const CGUIString& rName, const CGUIString& rValue)
+	void CGUIWgtAnimation::SetValue(const CGUIString& rName, const CGUIString& rValue)
 	{
 		if( rName == "Animation")
 		{
@@ -91,7 +91,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	CGUIString	CGUIWgtAnimation::GetValue(const CGUIString& rName) const
+	CGUIString CGUIWgtAnimation::GetValue(const CGUIString& rName) const
 	{
 		if( rName == "Animation")
 		{
@@ -112,11 +112,11 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtAnimation::RenderSelf(IGUIInterfaceRender* pRender)
+	void CGUIWgtAnimation::RenderSelf(IGUIInterfaceRender* pRender)
 	{
 		if( m_pAnimationCur)
 		{
-			DrawAnimation( pRender,m_pAnimationCur, GetWidgetRect(), pRender->GetAndIncZ() );
+			DrawAnimation( pRender,m_pAnimationCur, GetBoundArea());
 		}
 	}
 	//------------------------------------------------------------------------------

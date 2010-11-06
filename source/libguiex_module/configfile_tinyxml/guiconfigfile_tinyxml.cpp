@@ -11,6 +11,7 @@
 //============================================================================// 
 #include <libguiex_module\configfile_tinyxml\guiconfigfile_tinyxml.h>
 #include <libguiex_core\guiex.h>
+#include <libguiex_core\guipropertyconvertor.h>
 #include "tinyxml.h"
 
 //============================================================================//
@@ -29,18 +30,82 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	void	IGUIConfigFile_tinyxml::DeleteSelf()
+	void IGUIConfigFile_tinyxml::DeleteSelf()
 	{
 		delete this;
 	}
 	//------------------------------------------------------------------------------
-	int		IGUIConfigFile_tinyxml::DoInitialize(void* )
+	int	IGUIConfigFile_tinyxml::DoInitialize(void* )
 	{
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void	IGUIConfigFile_tinyxml::DoDestroy()
+	void IGUIConfigFile_tinyxml::DoDestroy()
 	{
+	}
+	//------------------------------------------------------------------------------
+	CGUIString IGUIConfigFile_tinyxml::DoGetFilename( const CGUIString& rPath ) 
+	{
+		char fname[_MAX_FNAME];
+		char fext[_MAX_EXT];
+		_splitpath( rPath.c_str(), NULL, NULL, fname, fext ); 
+		return CGUIString( fname ) + fext;
+	}
+	//------------------------------------------------------------------------------
+	CGUIString IGUIConfigFile_tinyxml::DoGetFileDir( const CGUIString& rPath ) 
+	{
+		char fdir[_MAX_DIR];
+		_splitpath( rPath.c_str(), NULL, fdir, NULL, NULL ); 
+		return CGUIString( fdir );
+	}
+	//------------------------------------------------------------------------------
+	CGUIProjectInfo* IGUIConfigFile_tinyxml::LoadProjectInfoFile( const CGUIString& rFileName )
+	{
+		///read file
+		IGUIInterfaceFileSys* pFileSys =  CGUIInterfaceManager::Instance()->GetInterfaceFileSys();
+		CGUIDataChunk aDataChunk;
+		if( 0 != pFileSys->ReadFile( rFileName, aDataChunk, IGUIInterfaceFileSys::eOpenMode_String ))
+		{
+			//failed
+			throw CGUIException("[IGUIConfigFile_tinyxml::LoadProjectInfoFile]: failed to read file <%s>!", rFileName.c_str());
+			return NULL;
+		}
+
+		///parse file
+		TiXmlDocument aDoc;
+		aDoc.Parse( (const char*)aDataChunk.GetDataPtr(), 0, TIXML_ENCODING_UTF8 );
+		if( aDoc.Error())
+		{
+			//failed to parse
+			throw CGUIException(
+				"[IGUIConfigFile_tinyxml::LoadResourceConfigFile]: failed to parse file <%s>!\n\n<%s>", 
+				rFileName.c_str(),
+				aDoc.ErrorDesc());
+			return NULL;
+		}
+
+		///get root node
+		TiXmlElement* pRootNode = aDoc.RootElement();
+		if( !pRootNode )
+		{
+			throw guiex::CGUIException("[IGUIConfigFile_tinyxml::LoadProjectInfoFile], failed to get root node from file <%s>!", rFileName.c_str());
+			return NULL;
+		}
+
+		CGUIProperty aProjectPropertySet;
+		int32 ret = ProcessProperty( pRootNode, aProjectPropertySet );
+		if( ret != 0 )
+		{
+			return NULL;
+		}
+
+		CGUIProjectInfo * pProjectInfo = CGUIProjectInfoManager::Instance()->GenerateProjectInfo();
+		if( 0 != pProjectInfo->LoadFromPropertySet( DoGetFilename(rFileName), DoGetFileDir(rFileName), aProjectPropertySet ))
+		{
+			CGUIProjectInfoManager::Instance()->DestroyProjectInfo( pProjectInfo );
+			return NULL;
+		}
+		return pProjectInfo;
 	}
 	//------------------------------------------------------------------------------
 	int32	IGUIConfigFile_tinyxml::LoadResourceConfigFile(const CGUIString& rFileName, const CGUIString& rProjectName )
@@ -54,7 +119,6 @@ namespace guiex
 			throw CGUIException("[IGUIConfigFile_tinyxml::LoadResourceConfigFile]: failed to read file <%s>!", rFileName.c_str());
 			return -1;
 		}
-
 
 		///parse file
 		TiXmlDocument aDoc;
@@ -85,21 +149,21 @@ namespace guiex
 			{
 				/*
 				<image>
-				<property name="btn_ok_hover" type="NAMED_IMAGE">
+				<property name="btn_ok_hover" type="CGUIImage">
 				...
 				...
 				</image>
 				*/
 
 				//create named image
-				CGUIPropertySet aPropertySet;
+				CGUIProperty aPropertySet;
 				int32 ret = ProcessProperty( pNode, aPropertySet );
 				if( ret != 0 )
 				{
 					return ret;
 				}
 
-				uint32 nSize = aPropertySet.GetSize();
+				uint32 nSize = aPropertySet.GetPropertyNum();
 				for( uint32 i=0; i<nSize; ++i )
 				{
 					const CGUIProperty* pProperty = aPropertySet.GetProperty(i);
@@ -117,27 +181,40 @@ namespace guiex
 				/*
 				<font>
 					<property name="0" type="FONT">
-						<property name="PATH" type="STRING" value="font/simfang.ttf"/>
+						<property name="PATH" type="CGUIString" value="font/simfang.ttf"/>
 					</property>
 				</font>
 
 				*/
 				//create font
-				CGUIPropertySet aPropertySet;
+				CGUIProperty aPropertySet;
 				int32 ret = ProcessProperty( pNode, aPropertySet );
 				if( ret != 0 )
 				{
 					return ret;
 				}
 
-				uint32 nSize = aPropertySet.GetSize();
+				uint32 nSize = aPropertySet.GetPropertyNum();
 				for( uint32 i=0; i<nSize; ++i )
 				{
 					const CGUIProperty* pProperty = aPropertySet.GetProperty(i);
 					CGUIString strName = pProperty->GetName();
-					CGUIString strPath = pProperty->GetProperty("PATH")->GetValue();
-					uint32 nIndex = CGUIStringConvertor::StringToUInt( pProperty->GetProperty("INDEX")->GetValue());
-					CGUIFontManager::Instance()->CreateGUIFont( strName, rProjectName, strPath, nIndex );
+					CGUIString strPath = pProperty->GetProperty("path")->GetValue();
+					const CGUIProperty* pIndexProp = pProperty->GetProperty("index");
+					if( !pIndexProp )
+					{
+						throw guiex::CGUIException(
+							"[IGUIConfigFile_tinyxml::LoadResourceConfigFile], invalid property <%s> in file <%s>!", 
+							pProperty->GetName().c_str(),
+							rFileName.c_str());
+						return -1;
+					}
+					else
+					{
+						uint32 nIndex = 0;
+						PropertyToValue( *pIndexProp, nIndex);
+						CGUIFontManager::Instance()->CreateGUIFont( strName, rProjectName, strPath, nIndex );
+					}
 				}
 			}
 			else
@@ -216,7 +293,7 @@ namespace guiex
 				}
 
 				/// load property for widget
-				CGUIPropertySet aPropertySet;
+				CGUIProperty aPropertySet;
 				int32 ret = ProcessProperty( pNode, aPropertySet );
 				if( ret != 0 )
 				{
@@ -254,7 +331,7 @@ namespace guiex
 				CGUIString strSetName = pNode->Attribute( "name" );
 
 				/// load property for set
-				CGUIPropertySet aPropertySet;
+				CGUIProperty aPropertySet;
 				int32 ret = ProcessProperty( pNode, aPropertySet );
 				if( ret != 0 )
 				{
@@ -326,7 +403,7 @@ namespace guiex
 		return pPageWidget;
 	}
 	//------------------------------------------------------------------------------
-	int32		IGUIConfigFile_tinyxml::ProcessProperty( TiXmlElement* pNode, CGUIPropertySet&	rPropSet )
+	int32		IGUIConfigFile_tinyxml::ProcessProperty( TiXmlElement* pNode, CGUIProperty&	rPropSet )
 	{
 		TiXmlElement* pPropertyNode = pNode->FirstChildElement();
 		while( pPropertyNode )
@@ -337,11 +414,11 @@ namespace guiex
 				eg. <reference name="SET_IMAGE_1"/>
 			 */
 				CGUIString strReferenceName = pPropertyNode->Attribute("name");
-				rPropSet.AddPropertySet(CGUIPropertyManager::Instance()->GetSet(strReferenceName));
+				rPropSet.AddProperty(CGUIPropertyManager::Instance()->GetSet(strReferenceName));
 			}
 			else if( CGUIString("property") == pPropertyNode->Value())
 			{
-				CGUIProperty *pProperty = CGUIPropertyManager::Instance()->CreateProperty();
+				CGUIProperty aProperty;
 
 				const char* pName = pPropertyNode->Attribute("name");
 				const char* pType = pPropertyNode->Attribute("type");
@@ -352,31 +429,29 @@ namespace guiex
 					throw CGUIException("[IGUIConfigFile_tinyxml::ProcessProperty]: property node lack attribute <name>!" );
 					return -1;
 				}
-				pProperty->SetName(pName);
+				aProperty.SetName(pName);
 
 				if( !pType )
 				{
 					throw CGUIException("[IGUIConfigFile_tinyxml::ProcessProperty]: property node lack attribute <type>!" );
 					return -1;
 				}
-				pProperty->SetType(pType);
+				aProperty.SetType(pType);
 
 				if( !pValue )
 				{
-					CGUIPropertySet aSubSet;
-					int32 ret = ProcessProperty( pPropertyNode, aSubSet );
+					int32 ret = ProcessProperty( pPropertyNode, aProperty );
 					if( ret != 0 )
 					{
 						return ret;
 					}
-					pProperty->AddPropertySet(aSubSet);
 				}
 				else
 				{
-					pProperty->SetValue(pValue);
+					aProperty.SetValue(pValue);
 				}
 
-				rPropSet.AddProperty( pProperty );
+				rPropSet.AddProperty( aProperty );
 			}
 			else
 			{

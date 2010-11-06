@@ -83,37 +83,16 @@ namespace guiex
 
 		static const CGUIString&	GetWidgetType();
 
-		/**
-		* @brief hit test
-		*/
-		//bool	HitTest( const CGUIVector2& rPos) ;
-
-		/**
-		* @brief set value
-		*	-MaxPos
-		*	-MinPos
-		*	-Range
-		*	-CurrentPos
-		*	-AutoPosition
-		*/
-		virtual void	SetValue(const CGUIString& rName, const CGUIString& rValue);
-
-		/**
-		* @brief get widget parameter's value
-		* for example: GetValue("alpha_local") will return "0.5"
-		*/
-		virtual CGUIString	GetValue(const CGUIString& rName) const;
-
-		/**
-		* @brief load widget config from property
-		*/
-		virtual CGUIProperty*	GenerateProperty(const CGUIString& rName, const CGUIString& rType );
+		///**
+		//* @brief load widget config from property
+		//*/
+		//virtual CGUIProperty*	GenerateProperty(const CGUIString& rName, const CGUIString& rType );
 
 
-		/**
-		* @brief process property
-		*/
-		virtual void		ProcessProperty( const CGUIProperty* pProperty);
+		///**
+		//* @brief process property
+		//*/
+		//virtual void		ProcessProperty( const CGUIProperty* pProperty);
 
 
 		///////////////////////////////////////////////////////////
@@ -189,17 +168,18 @@ namespace guiex
 		//render scrollbar
 		virtual void	RenderSelf(IGUIInterfaceRender* pRender);
 
+		virtual void	RefreshImpl();
+
 		/// update scrollbar's position and size when parent changes size or others
 		void			UpdateScrollbar();
 
 		/// update scrollbar by value
 		void			UpdateValue();
 
+		void			GenerateNotifyEvent();
+
 		/// get rect of area where slide could stay.it's a local rect
 		CGUIRect		GetSlideArea( );
-
-		/// internal use, set current position but won't update the scrollbar
-		void			SetCurPosWithoutUpdate(uint32 nPos);
 
 		/// get bg size
 		CGUISize		GetBGSize();

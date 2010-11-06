@@ -21,7 +21,21 @@
 // function
 //============================================================================// 
 
+int GetTypeIndexInEnum( guiex::EScreenValue eValue, const wxArrayString& arrEnums )
+{
+	guiex::CGUIString strValue;
+	guiex::ValueToString( eValue, strValue );
+	for( int i=0; i<arrEnums.size(); ++i )
+	{
+		if( arrEnums[i] == STRING_M2W( strValue ))
+		{
+			return i;
+		}
+	}
 
+	throw guiex::CGUIException("unknown EScreenValue : <%d>", eValue);
+	return 0;
+}
 
 
 // -----------------------------------------------------------------------
@@ -180,19 +194,19 @@ void wxGUIRectProperty::ChildChanged( wxVariant& thisValue, int childIndex, wxVa
 // wxGUIStringInfoProperty
 // -----------------------------------------------------------------------
 
-WX_PG_IMPLEMENT_VARIANT_DATA(wxGUIStringInfoVariantData, CGUIStringExInfo)
+WX_PG_IMPLEMENT_VARIANT_DATA(wxGUIStringInfoVariantData, CGUIStringInfo)
 
 WX_PG_IMPLEMENT_PROPERTY_CLASS(wxGUIStringInfoProperty,wxPGProperty,
-                               CGUIStringExInfo,const CGUIStringExInfo&,TextCtrl)
+                               CGUIStringInfo,const CGUIStringInfo&,TextCtrl)
 
 
 wxGUIStringInfoProperty::wxGUIStringInfoProperty( const wxString& label,
                                                   const wxString& name,
-                                                  const CGUIStringExInfo& value)
+                                                  const CGUIStringInfo& value)
     : wxPGProperty(label,name)
 {
 	//ChangeFlag(wxPG_PROP_READONLY, true);
-    SetValue( CGUIStringExInfoToVariant(value) );
+    SetValue( CGUIStringInfoToVariant(value) );
 	AddPrivateChild( new wxUIntProperty(wxT("size"), wxT("SIZE"), value.m_nFontSize) );
 	AddPrivateChild( new wxUIntProperty(wxT("index"), wxT("FONT_INDEX"),value.m_nFontIdx) );
 
@@ -210,7 +224,7 @@ void wxGUIStringInfoProperty::RefreshChildren()
 		return;
 	}
 
-    CGUIStringExInfo& string_info = CGUIStringExInfoFromVariant(m_value);
+    CGUIStringInfo& string_info = CGUIStringInfoFromVariant(m_value);
 	Item(0)->SetValue( string_info.m_nFontSize );
 	Item(1)->SetValue( string_info.m_nFontIdx);
 
@@ -223,7 +237,7 @@ void wxGUIStringInfoProperty::RefreshChildren()
 
 void wxGUIStringInfoProperty::ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const
 {
-    CGUIStringExInfo& string_info = CGUIStringExInfoFromVariant(thisValue);
+    CGUIStringInfo& string_info = CGUIStringInfoFromVariant(thisValue);
     switch ( childIndex )
     {
 	case 0: string_info.m_nFontSize = childValue.GetInteger(); break;
@@ -244,24 +258,28 @@ void wxGUIStringInfoProperty::ChildChanged( wxVariant& thisValue, int childIndex
 // wxGUIWidgetPositionProperty
 // -----------------------------------------------------------------------
 
-WX_PG_IMPLEMENT_VARIANT_DATA(wxGUIWidgetPositionVariantData, SWidgetPosition)
+WX_PG_IMPLEMENT_VARIANT_DATA(wxGUIWidgetPositionVariantData, CGUIWidgetPosition)
 
 WX_PG_IMPLEMENT_PROPERTY_CLASS(wxGUIWidgetPositionProperty,wxPGProperty,
-                               SWidgetPosition,const SWidgetPosition&,TextCtrl)
+                               CGUIWidgetPosition,const CGUIWidgetPosition&,TextCtrl)
 
 
 wxGUIWidgetPositionProperty::wxGUIWidgetPositionProperty( const wxString& label,
                                                   const wxString& name,
-                                                  const SWidgetPosition& value)
+                                                  const CGUIWidgetPosition& value)
     : wxPGProperty(label,name)
 {
 	//ChangeFlag(wxPG_PROP_READONLY, true);
-    SetValue( SWidgetPositionToVariant(value) );
-	AddPrivateChild( new wxBoolProperty(wxT("relative"), wxT("RELATIVE"), value.m_bIsRelative) );
-	AddPrivateChild( new wxGUIVector2Property(wxT("position"), wxT("POSITION"),value.m_aPosition) );
+    SetValue( CGUIWidgetPositionToVariant(value) );
+	m_arrEnums = CPropertyConfigMgr::Instance()->GetEnumDefine("EScreenValue");
+	AddPrivateChild( new wxEnumProperty(wxT("type"), wxT("type"), m_arrEnums/*, 0, GetTypeIndexInEnum( value.m_eType, m_arrEnums )*/ ) );
+	AddPrivateChild( new wxGUIVector2Property(wxT("value"), wxT("value"),value.m_aValue) );
+
+	RefreshChildren();
 }
 
 wxGUIWidgetPositionProperty::~wxGUIWidgetPositionProperty() { }
+
 
 void wxGUIWidgetPositionProperty::RefreshChildren()
 {
@@ -270,18 +288,22 @@ void wxGUIWidgetPositionProperty::RefreshChildren()
 		return;
 	}
 
-    SWidgetPosition& widget_pos = SWidgetPositionFromVariant(m_value);
-	Item(0)->SetValue( widget_pos.m_bIsRelative );
-	Item(1)->SetValue( CGUIVector2ToVariant(widget_pos.m_aPosition));
+    CGUIWidgetPosition& widget_pos = CGUIWidgetPositionFromVariant(m_value);
+	Item(0)->SetValue( GetTypeIndexInEnum( widget_pos.m_eType, m_arrEnums ) );
+	Item(1)->SetValue( CGUIVector2ToVariant(widget_pos.m_aValue));
 }
 
 void wxGUIWidgetPositionProperty::ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const
 {
-    SWidgetPosition& widget_pos = SWidgetPositionFromVariant(thisValue);
+    CGUIWidgetPosition& widget_pos = CGUIWidgetPositionFromVariant(thisValue);
     switch ( childIndex )
     {
-	case 0: widget_pos.m_bIsRelative = childValue.GetBool(); break;
-	case 1: widget_pos.m_aPosition = CGUIVector2FromVariant( childValue ); break;
+	case 0:
+		guiex::StringToValue( wxConvUTF8.cWC2MB( childValue.GetType().c_str()).data(), widget_pos.m_eType );
+		break;
+	case 1: 
+		widget_pos.m_aValue= CGUIVector2FromVariant( childValue ); 
+		break;
     }
 }
 
@@ -294,23 +316,24 @@ void wxGUIWidgetPositionProperty::ChildChanged( wxVariant& thisValue, int childI
 // wxGUIWidgetSizeProperty
 // -----------------------------------------------------------------------
 
-WX_PG_IMPLEMENT_VARIANT_DATA(wxGUIWidgetSizeVariantData, SWidgetSize)
+WX_PG_IMPLEMENT_VARIANT_DATA(wxGUIWidgetSizeVariantData, CGUIWidgetSize)
 
 WX_PG_IMPLEMENT_PROPERTY_CLASS(wxGUIWidgetSizeProperty,wxPGProperty,
-                               SWidgetSize,const SWidgetSize&,TextCtrl)
+                               CGUIWidgetSize,const CGUIWidgetSize&,TextCtrl)
 
 
 wxGUIWidgetSizeProperty::wxGUIWidgetSizeProperty( const wxString& label,
                                                   const wxString& name,
-                                                  const SWidgetSize& value)
+												  const CGUIWidgetSize& value)
     : wxPGProperty(label,name)
 {
 	//ChangeFlag(wxPG_PROP_READONLY, true);
-    SetValue( SWidgetSizeToVariant(value) );
-	AddPrivateChild( new wxBoolProperty(wxT("relative"), wxT("RELATIVE"), value.m_bIsRelative) );
-	AddPrivateChild( new wxGUISizeProperty(wxT("Size"), wxT("SIZE"),value.m_aSize) );
-	AddPrivateChild( new wxGUISizeProperty(wxT("MaxSize"), wxT("SIZE"),value.m_aMaxSize) );
-	AddPrivateChild( new wxGUISizeProperty(wxT("MinSize"), wxT("SIZE"),value.m_aMinSize) );
+    SetValue( CGUIWidgetSizeToVariant(value) );
+	m_arrEnums = CPropertyConfigMgr::Instance()->GetEnumDefine("EScreenValue");
+	AddPrivateChild( new wxEnumProperty(wxT("type"), wxT("type"), m_arrEnums/*, 0, GetTypeIndexInEnum( value.m_eType, m_arrEnums )*/ ) );
+	AddPrivateChild( new wxGUISizeProperty(wxT("size"), wxT("size"),value.m_aValue) );
+
+	RefreshChildren();
 }
 
 wxGUIWidgetSizeProperty::~wxGUIWidgetSizeProperty() { }
@@ -322,22 +345,22 @@ void wxGUIWidgetSizeProperty::RefreshChildren()
 		return;
 	}
 
-    SWidgetSize& widget_size = SWidgetSizeFromVariant(m_value);
-	Item(0)->SetValue( widget_size.m_bIsRelative );
-	Item(1)->SetValue( CGUISizeToVariant(widget_size.m_aSize));
-	Item(2)->SetValue( CGUISizeToVariant(widget_size.m_aMaxSize));
-	Item(3)->SetValue( CGUISizeToVariant(widget_size.m_aMinSize));
+    CGUIWidgetSize& widget_size = CGUIWidgetSizeFromVariant(m_value);
+	Item(0)->SetValue( GetTypeIndexInEnum( widget_size.m_eType, m_arrEnums ) );
+	Item(1)->SetValue( CGUISizeToVariant(widget_size.m_aValue));
 }
 
 void wxGUIWidgetSizeProperty::ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const
 {
-    SWidgetSize& widget_size = SWidgetSizeFromVariant(thisValue);
+    CGUIWidgetSize& widget_size = CGUIWidgetSizeFromVariant(thisValue);
     switch ( childIndex )
     {
-	case 0: widget_size.m_bIsRelative = childValue.GetBool(); break;
-	case 1: widget_size.m_aSize = CGUISizeFromVariant( childValue ); break;
-	case 2: widget_size.m_aMaxSize = CGUISizeFromVariant( childValue ); break;
-	case 3: widget_size.m_aMinSize = CGUISizeFromVariant( childValue ); break;
+	case 0: 
+		guiex::StringToValue( wxConvUTF8.cWC2MB( childValue.GetType().c_str()).data(), widget_size.m_eType );
+		break;
+	case 1: 
+		widget_size.m_aValue = CGUISizeFromVariant( childValue ); 
+		break;
     }
 }
 
@@ -367,11 +390,11 @@ void			WxWidgetPropertySheet::ResetContent()
 //------------------------------------------------------------------------------
 void			WxWidgetPropertySheet::UpdateWidgetSizeAndPos()
 {
-	const CProperty* pSet = CPropertyConfigMgr::Instance()->GetPropertySet(m_pPropWidget->GetType());
-	const CProperty* pPropSize = pSet->GetProperty("WIDGET_SIZE");
-	SetPropertyByType( this, pPropSize, NULL, m_pPropWidget );
-	const CProperty* pPropPos = pSet->GetProperty("WIDGET_POSITION");
-	SetPropertyByType( this, pPropPos, NULL, m_pPropWidget );
+	const guiex::CGUIProperty& rSet = CPropertyConfigMgr::Instance()->GetPropertySet(m_pPropWidget->GetType());
+	const guiex::CGUIProperty* pPropSize = rSet.GetProperty("size");
+	SetPropertyByType( this, NULL, pPropSize, m_pPropWidget );
+	const guiex::CGUIProperty* pPropPos = rSet.GetProperty("position");
+	SetPropertyByType( this, NULL, pPropPos, m_pPropWidget );
 
 	Refresh();
 }
@@ -393,14 +416,15 @@ int			WxWidgetPropertySheet::OnPropertyChanged( wxPropertyGridEvent& event )
 		return -1;
 	}
 
-	guiex::CGUIProperty* pGuiProperty = GenerateGUIProperty(this, pPGTop);
-	wxASSERT( pGuiProperty );
+	guiex::CGUIProperty aGuiProperty;
+	GenerateGUIProperty(this, pPGTop, aGuiProperty);
 
 	int nHasError = 0;
 	try
 	{ 
-		m_pPropWidget->SetProperty( *pGuiProperty );
-		m_pPropWidget->ProcessProperty(pGuiProperty);
+		m_pPropWidget->SetProperty( aGuiProperty );
+		m_pPropWidget->ProcessProperty(aGuiProperty);
+		m_pPropWidget->Refresh();
 	}
 	catch(guiex::CGUIBaseException& rError)
 	{
@@ -413,7 +437,6 @@ int			WxWidgetPropertySheet::OnPropertyChanged( wxPropertyGridEvent& event )
 		nHasError = -1;
 	}
 
-	guiex::CGUIPropertyManager::Instance()->DestroyProperty( pGuiProperty );
 	return nHasError;
 }
 //------------------------------------------------------------------------------
@@ -435,9 +458,5 @@ void			WxWidgetPropertySheet::SetPropGridWidget(guiex::CGUIWidget* pWidget)
 	}
 }
 //------------------------------------------------------------------------------
-
-
-
-
 
 

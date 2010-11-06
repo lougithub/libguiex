@@ -107,12 +107,12 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void	CGUIItemBase::SetItemInfo(
 		const wchar_t* pText, 
-		const CGUIStringExInfo& rInfo,
+		const CGUIStringInfo& rInfo,
 		uint32 nItemID,
 		void* pItemData ,
 		bool bDisable)	
 	{
-		SetSelfDisable(bDisable);
+		SetDisable(bDisable);
 		SetID(nItemID);
 		SetUserData(pItemData);
 		SetTextInfo(rInfo);
@@ -124,7 +124,7 @@ namespace guiex
 		///draw selection color if selected
 		if( IsSelected())
 		{
-			DrawImage( pRender, m_pImageSelection, GetRect( ), pRender->GetAndIncZ(),&GetClipRect());
+			DrawImage( pRender, m_pImageSelection, GetRect( ) );
 		}
 	}
 	//------------------------------------------------------------------------------

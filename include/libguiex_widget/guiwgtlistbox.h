@@ -96,13 +96,10 @@ namespace guiex
 		*/
 		virtual CGUIString	GetValue(const CGUIString& rName) const;
 
-
 		/**
 		* @brief process property
 		*/
 		virtual void		ProcessProperty( const CGUIProperty* pProperty);
-
-
 
 		////////////////////////////////////////////////////////////////////////////////
 		// list box related function
@@ -283,9 +280,6 @@ namespace guiex
 
 		/// render
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
-
-		//update rect, which may different for different widget
-		virtual void		UpdateDirtyRect();		
 
 		/**
 		* @brief override the OnSetImage function

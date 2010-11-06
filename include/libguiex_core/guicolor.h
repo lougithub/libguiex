@@ -12,7 +12,6 @@
 //	include
 //============================================================================// 
 #include "guibase.h"
-#include "guipropertyable.h"
 
 
 //============================================================================//
@@ -33,7 +32,7 @@ namespace guiex
 	/** 
 	* @brief represent color value in this system
 	*/
-	class GUIEXPORT CGUIColor : public CGUIPropertyable
+	class GUIEXPORT CGUIColor
 	{
 	public:
 		/** 
@@ -379,10 +378,6 @@ namespace guiex
 		* @brief greater-than operator
 		*/
 		bool	operator>(const CGUIColor &rColor ) const;
-
-		virtual void SaveToProperty( CGUIProperty& rProperty ) const;
-		virtual void LoadFromProperty( const CGUIProperty& rProperty );
-
 
 	private:
 		GUIARGB	m_nARGB;	///< color

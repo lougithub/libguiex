@@ -64,7 +64,67 @@ namespace guiex
 		m_bWireFrame = bWireFrame;
 	}
 	//------------------------------------------------------------------------------
-	void	IGUIRender_opengl::AddRenderTexture(const CGUIMatrix4& rWorldMatrix,
+	void IGUIRender_opengl::DrawRect(const CGUIMatrix4& rWorldMatrix,
+		const CGUIRect& rDestRect, 
+		real fLineWidth,
+		real z,
+		GUIARGB rColor_topleft,
+		GUIARGB rColor_topright,
+		GUIARGB rColor_bottomleft,
+		GUIARGB rColor_bottomright )
+	{
+		glInterleavedArrays(GL_C4UB_V3F , 0, m_pVertexForLine);
+		glDisable(GL_TEXTURE_2D);
+		glLineWidth( fLineWidth );
+
+
+		//set modelview matrix
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		makeGLMatrix( m_gl_matrix, rWorldMatrix );
+		glMultMatrixf( m_gl_matrix );
+
+		real fLeft = rDestRect.m_fLeft;
+		real fRight = rDestRect.m_fRight;
+		real fBottom = rDestRect.m_fBottom;
+		real fTop = rDestRect.m_fTop;
+
+		long oglcolor_topleft = ColorToOpengl(rColor_topleft);
+		long oglcolor_bottomleft = ColorToOpengl(rColor_bottomleft);
+		long oglcolor_bottomright = ColorToOpengl(rColor_bottomright);
+		long oglcolor_topright = ColorToOpengl(rColor_topright);
+
+		//vert0
+		m_pVertexForLine[0].vertex[0] = fLeft;
+		m_pVertexForLine[0].vertex[1] = fTop;
+		m_pVertexForLine[0].vertex[2] = z;
+		m_pVertexForLine[0].color     = oglcolor_topleft;
+
+		//vert1
+		m_pVertexForLine[1].vertex[0] = fLeft;
+		m_pVertexForLine[1].vertex[1] = fBottom;
+		m_pVertexForLine[1].vertex[2] = z;
+		m_pVertexForLine[1].color     = oglcolor_bottomleft;     
+
+		//vert2
+		m_pVertexForLine[2].vertex[0] = fRight;
+		m_pVertexForLine[2].vertex[1] = fBottom;
+		m_pVertexForLine[2].vertex[2] = z;
+		m_pVertexForLine[2].color     = oglcolor_bottomright;
+
+		//vert3
+		m_pVertexForLine[3].vertex[0] = fRight;
+		m_pVertexForLine[3].vertex[1] = fTop;
+		m_pVertexForLine[3].vertex[2] = z;
+		m_pVertexForLine[3].color     = oglcolor_topright;      
+
+		glDrawArrays( GL_LINE_LOOP , 0, 4 );
+
+		glEnable(GL_TEXTURE_2D);
+		glInterleavedArrays(GL_T2F_C4UB_V3F , 0, m_pVertex);
+	}
+	//------------------------------------------------------------------------------
+	void	IGUIRender_opengl::DrawTile(const CGUIMatrix4& rWorldMatrix,
 		const CGUIRect& rDestRect, real z, 
 		const CGUITextureImp* pTexture, const CGUIRect& rTextureRect, 
 		EImageOperation eImageOperation, 				
@@ -78,7 +138,6 @@ namespace guiex
 		glLoadIdentity();
 		makeGLMatrix( m_gl_matrix, rWorldMatrix );
 		glMultMatrixf( m_gl_matrix );
-
 
 		//check texture
 		if( ((CGUITexture_opengl*)pTexture)->GetOGLTexid() != m_nCurrentTexture )
@@ -143,95 +202,6 @@ namespace guiex
 
 		UpdateStencil();
 	}
-		
-	//------------------------------------------------------------------------------
-	//void	IGUIRender_opengl::AddRenderTexture(const CGUIRenderRect& rRenderRect, 
-	//	real z, 
-	//	const CGUITextureImp* pTexture, 
-	//	const CGUIRect& rTextureRect, 
-	//	EImageOperation eImageOperation,
-	//	GUIARGB rColor_topleft,
-	//	GUIARGB rColor_topright,
-	//	GUIARGB rColor_bottomleft,
-	//	GUIARGB rColor_bottomright)
-	//{
-	//	//check texture
-	//	if( ((CGUITexture_opengl*)pTexture)->GetOGLTexid() != m_nCurrentTexture )
-	//	{
-	//		m_nCurrentTexture = ((CGUITexture_opengl*)pTexture)->GetOGLTexid();
-	//		SRenderCommand* pCommand = AllocateCommandNode(eCommand_SetTexture);
-	//		pCommand->m_nPara1 = m_nCurrentTexture;
-	//	}
-
-	//	//set vertex
-	//	if( m_eLastCommand == eCommand_DrawVertex )
-	//	{
-	//		SRenderCommand* pCommand = GetLastCommandNode();
-	//		pCommand->m_nPara2 += 2;
-	//	}
-	//	else
-	//	{
-	//		SRenderCommand* pCommand = AllocateCommandNode(eCommand_DrawVertex);
-	//		pCommand->m_nPara1 = m_nVertexIdx;
-	//		pCommand->m_nPara2 = 2;
-	//	}
-
-	//	SVertex* pVertex = AllocateVertexNode(VERTEX_PER_TEXTURE);
-
-	//	//set texture coordinate
-	//	SetTexCoordinate(pVertex, rTextureRect, eImageOperation);
-
-	//	long oglcolor_topleft = ColorToOpengl(rColor_topleft);
-	//	long oglcolor_bottomleft = ColorToOpengl(rColor_bottomleft);
-	//	long oglcolor_bottomright = ColorToOpengl(rColor_bottomright);
-	//	long oglcolor_topright = ColorToOpengl(rColor_topright);
-
-
-	//	//vert0
-	//	pVertex[0].vertex[0] = rRenderRect.m_vecVertex[0].m_aVector.x;
-	//	pVertex[0].vertex[1] = rRenderRect.m_vecVertex[0].m_aVector.y;
-	//	pVertex[0].vertex[2] = z;
-	//	pVertex[0].color     = oglcolor_topleft;
-
-	//	//vert1
-	//	pVertex[1].vertex[0] = rRenderRect.m_vecVertex[3].m_aVector.x;
-	//	pVertex[1].vertex[1] = rRenderRect.m_vecVertex[3].m_aVector.y;
-	//	pVertex[1].vertex[2] = z;
-	//	pVertex[1].color     = oglcolor_bottomleft;     
-
-	//	//vert2
-	//	pVertex[2].vertex[0] = rRenderRect.m_vecVertex[2].m_aVector.x;
-	//	pVertex[2].vertex[1] = rRenderRect.m_vecVertex[2].m_aVector.y;
-	//	pVertex[2].vertex[2] = z;
-	//	pVertex[2].color     = oglcolor_bottomright;
-
-	//	//vert3
-	//	pVertex[3].vertex[0] = rRenderRect.m_vecVertex[1].m_aVector.x;
-	//	pVertex[3].vertex[1] = rRenderRect.m_vecVertex[1].m_aVector.y;
-	//	pVertex[3].vertex[2] = z;
-	//	pVertex[3].color     = oglcolor_topright;      
-
-	//	//vert4
-	//	pVertex[4].vertex[0] = rRenderRect.m_vecVertex[0].m_aVector.x;
-	//	pVertex[4].vertex[1] = rRenderRect.m_vecVertex[0].m_aVector.y;
-	//	pVertex[4].vertex[2] = z;
-	//	pVertex[4].color     = oglcolor_topleft;
-
-	//	//vert5
-	//	pVertex[5].vertex[0] = rRenderRect.m_vecVertex[2].m_aVector.x;
-	//	pVertex[5].vertex[1] = rRenderRect.m_vecVertex[2].m_aVector.y;
-	//	pVertex[5].vertex[2] = z;
-	//	pVertex[5].color     = oglcolor_bottomright;
-
-
-	//	// if not queuing, render directly (as in, right now!)
-	//	if (!m_bQueueing)
-	//	{
-	//		BeginRender();
-	//		RenderVBuffer();
-	//		EndRender();
-	//	}
-	//}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl::BeginRender(void)
 	{
@@ -259,6 +229,9 @@ namespace guiex
 
 		//enable smooth shade
 		glShadeModel(GL_SMOOTH);
+
+		glEnable(GL_POINT_SMOOTH);
+		glEnable(GL_LINE_SMOOTH);
 
 		//set blend
 		glEnable(GL_BLEND);
@@ -394,11 +367,6 @@ namespace guiex
 
 	//	ClearRenderList();
 	//}
-	//------------------------------------------------------------------------------
-	void	IGUIRender_opengl::DoRender(void)
-	{
-		//RenderVBuffer();
-	}
 	//------------------------------------------------------------------------------
 	void	IGUIRender_opengl::SetTexCoordinate(SVertex* pTexture, const CGUIRect& tex, EImageOperation eImageOperation)
 	{

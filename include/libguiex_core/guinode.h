@@ -325,7 +325,7 @@ namespace guiex
 			CGUIMatrix4& destMatrix );
 
 		/// set child
-		void	SetChild( const CGUINode* pNode);
+		void	setChild( const CGUINode* pNode);
 
 		/// set next sibling
 		void	SetNextSibling( const CGUINode* pNode );

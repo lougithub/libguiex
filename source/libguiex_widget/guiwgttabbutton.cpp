@@ -40,14 +40,19 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtTabButton::UpdateDirtyRect()
+	void		CGUIWgtTabButton::RefreshImpl()
 	{
+		CGUIWgtCheckButton::RefreshImpl();
+
 		//client rect
-		m_aClientRect = GetParent()->GetClientRect();
-		m_aClientRect.m_fTop += m_aWidgetRect.GetHeight();
+		CGUIVector2 aParentPos = GetParent()->GetClientArea().GetPosition();
+		ParentToLocal( aParentPos );
+		m_aClientArea.SetPosition( aParentPos );
+		m_aClientArea.SetSize( GetParent()->GetClipArea().GetSize() );
+		m_aClientArea.m_fTop += NEWGetPixelSize().GetHeight();
 
 		//clip rect for client
-		m_aClientClipRect = m_aClientRect;
+		m_aClipArea = m_aClientArea;
 	}
 	//------------------------------------------------------------------------------
 	bool CGUIWgtTabButton::IsSelected(void) const
@@ -63,27 +68,42 @@ namespace guiex
 			if( GetParent())
 			{
 				//uncheck other radiobutton
-				CGUIWidget* pWidget = GetParent()->GetChild();
-				while( pWidget)
+				CGUIWidget* pTempTabBtn = GetParent()->GetChild();
+				while( pTempTabBtn)
 				{
-					if( pWidget != this &&
-						pWidget->GetType() == GetType() )
+					if( pTempTabBtn->GetType() == GetType() )
 					{
-						CGUIEventNotification aRadioEvent;
-						aRadioEvent.SetEventId(eEVENT_UNCHECKED);
-						aRadioEvent.SetReceiver(pWidget);
-						CGUIWidgetSystem::Instance()->SendEvent( &aRadioEvent);
-						pWidget->GetChild()->Hide( );
-					}
-					pWidget = pWidget->GetNextSibling();
-				}
+						if( pTempTabBtn != this )
+						{
+							//send event
+							CGUIEventNotification aCheckEvent;
+							aCheckEvent.SetEventId(eEVENT_UNCHECKED);
+							aCheckEvent.SetReceiver(pTempTabBtn);
+							CGUIWidgetSystem::Instance()->SendEvent( &aCheckEvent);
 
-				//send onchecked event
-				CGUIEventNotification aRadioEvent;
-				aRadioEvent.SetEventId(eEVENT_CHECKED);
-				aRadioEvent.SetReceiver(this);
-				CGUIWidgetSystem::Instance()->SendEvent( &aRadioEvent);
-				this->GetChild()->Show( );
+							//hide child
+							if( pTempTabBtn->GetChild() )
+							{
+								pTempTabBtn->GetChild()->SetVisible( false );
+							}
+						}
+						else
+						{
+							//send onchecked event
+							CGUIEventNotification aCheckEvent;
+							aCheckEvent.SetEventId(eEVENT_CHECKED);
+							aCheckEvent.SetReceiver(this);
+							CGUIWidgetSystem::Instance()->SendEvent( &aCheckEvent);
+
+							//show child
+							if( this->GetChild() )
+							{
+								this->GetChild()->SetVisible( true );
+							}
+						}
+					}
+					pTempTabBtn = pTempTabBtn->GetNextSibling();
+				}
 			}
 		}
 

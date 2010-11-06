@@ -6,14 +6,8 @@
 */
 
 
-
-
-
-
 #ifndef	__KEN_GUIEXPROJECTINFO_20091022_H__
 #define __KEN_GUIEXPROJECTINFO_20091022_H__
-
-
 
 
 
@@ -29,9 +23,10 @@
 //============================================================================//
 // declare
 //============================================================================//
-
-
-
+namespace guiex
+{
+	class CGUIProperty;
+}
 
 
 //============================================================================//
@@ -61,7 +56,10 @@ namespace guiex
 		* @brief read config file
 		* @return 0 for success, others for failed
 		*/
-		int32		ReadProjectFile( const CGUIString& rFileName);
+		int32		LoadFromPropertySet( 
+			const CGUIString& rProjectFileName, 
+			const CGUIString& rProjectFilePath, 
+			const CGUIProperty& aPropertySet );
 
 		/** 
 		* @brief get project file path

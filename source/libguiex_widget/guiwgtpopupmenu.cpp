@@ -363,7 +363,7 @@ namespace guiex
 	void CGUIWgtPopupMenu::RenderSelf(IGUIInterfaceRender* pRender)
 	{
 		/// draw bg
-		DrawImage( pRender, m_pImageBG, GetRect(), pRender->GetAndIncZ(),&GetClipRect());
+		DrawImage( pRender, m_pImageBG, GetRect());
 	}
 	//------------------------------------------------------------------------------
 	bool CGUIWgtPopupMenu::ClearAllSelections_impl(void)
@@ -543,15 +543,15 @@ namespace guiex
 		*/
 		if( pProperty->GetName() == "SORT" && pProperty->GetType()=="BOOL")
 		{
-			SetSorting(CGUIStringConvertor::StringToBool(pProperty->GetValue()));
+			SetSorting(StringToValue(pProperty->GetValue()));
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//property for text item
 		/*
-		*<property name="TEXT_ITEM" type="STRING" value="abc" />
+		*<property name="TEXT_ITEM" type="CGUIString" value="abc" />
 		*/
-		else if( pProperty->GetName() == "TEXT_ITEM" && pProperty->GetType()=="STRING")
+		else if( pProperty->GetName() == "TEXT_ITEM" && pProperty->GetType()=="CGUIString")
 		{
 			CGUIStringEx aString;
 			CGUIStringConvertor::MultiByteToWideChar(pProperty->GetValue(), aString);

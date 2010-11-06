@@ -39,8 +39,6 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIWgtScrollbarContainer::~CGUIWgtScrollbarContainer(  )
 	{
-		//delete m_pScrollbarVert;
-		//delete m_pScrollbarHorz;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtScrollbarContainer::InitScrollbarContainer()
@@ -52,16 +50,18 @@ namespace guiex
 		m_pScrollbarVert = static_cast<CGUIWgtScrollbar*>(GUI_CREATE_WIDGET("CGUIWgtScrollbar", GetName()+"_scrollbar_vert__auto__", GetProjectName()));
 		m_pScrollbarVert->SetParent(this);
 		m_pScrollbarVert->SetFlag(eFLAG_FOCUS_AGENCY, true);
-		m_pScrollbarVert->SetFlag(eFLAG_OPEN_WITH_PARENT, false);
+		m_pScrollbarVert->SetFlag(eFLAG_OPEN_WITH_PARENT, true);
 		m_pScrollbarVert->EnableNotifyParent(true);
 		m_pScrollbarVert->EnableAutoPosition(true);
+		m_pScrollbarVert->SetScrollbarType(eSB_VERTICAL);
 
 		m_pScrollbarHorz = static_cast<CGUIWgtScrollbar*>(GUI_CREATE_WIDGET("CGUIWgtScrollbar", GetName()+"_scrollbar_hort__auto__", GetProjectName()));
 		m_pScrollbarHorz->SetParent(this);
 		m_pScrollbarHorz->SetFlag(eFLAG_FOCUS_AGENCY, true);
-		m_pScrollbarHorz->SetFlag(eFLAG_OPEN_WITH_PARENT, false);
+		m_pScrollbarHorz->SetFlag(eFLAG_OPEN_WITH_PARENT, true);
 		m_pScrollbarHorz->EnableNotifyParent(true);
 		m_pScrollbarHorz->EnableAutoPosition(true);
+		m_pScrollbarHorz->SetScrollbarType(eSB_HORIZONAL);
 
 		//set flag
 		SetFocusable(true);
@@ -205,10 +205,8 @@ namespace guiex
 		if (m_bForceVertScroll != bSetting)
 		{
 			m_bForceVertScroll = bSetting;
-
 			UpdateScrollbars();
 		}
-
 	}
 	//------------------------------------------------------------------------------
 	bool	CGUIWgtScrollbarContainer::IsHorzScrollbarAlwaysShown(void) const
@@ -221,158 +219,124 @@ namespace guiex
 		if (m_bForceHorzScroll != bSetting)
 		{
 			m_bForceHorzScroll = bSetting;
-
 			UpdateScrollbars();
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtScrollbarContainer::UpdateDirtyRect()
+	void	CGUIWgtScrollbarContainer::RefreshImpl()
 	{
-		GUI_FORCE_ASSERT("can't call function here, use PreUpdateDirtyRect() and PostUpdateDirtyRect() instead of this function");
+		CGUIWidget::RefreshImpl();
+
+		UpdateScrollbars();
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtScrollbarContainer::UpdateDirtyRect_SC_Begin()
+	void	CGUIWgtScrollbarContainer::UpdateClientArea(void)
 	{
-		CGUIWidget::UpdateDirtyRect();
+		//calculate client and clip area
+		/*
+		* usage:	GetClientArea(): the area where the client widget can render, maybe 
+		*			bigger than container bounds.
+		*			GetClipArea(): the area where the client can show, 
+		*			clip)area = bound_area - scrollbar_area
+		*/
+		//client area size
+		CGUISize aClientAreaSize = GetBoundArea().GetSize();
+		real fVertScrollbarWidth = m_pScrollbarVert->NEWGetPixelSize().GetWidth();
+		if( aClientAreaSize.GetWidth() < fVertScrollbarWidth )
+		{
+			aClientAreaSize.SetWidth( 0.0f );
+		}
+		else
+		{
+			aClientAreaSize.SetWidth(aClientAreaSize.GetWidth() - fVertScrollbarWidth);
+		}
+		real fHorzScrollbarHeight = m_pScrollbarHorz->NEWGetPixelSize().GetHeight();
+		if( aClientAreaSize.GetHeight() < fHorzScrollbarHeight )
+		{
+			aClientAreaSize.SetHeight( 0.0f );
+		}
+		else
+		{
+			aClientAreaSize.SetHeight( aClientAreaSize.GetHeight() - fHorzScrollbarHeight );
+		}
 
-		//clip rect for client
-		if( m_pScrollbarVert->IsOpen() )
-		{
-			m_aClientClipRect.SetWidth(m_aWidgetRect.GetWidth() - m_pScrollbarVert->GetSize().GetWidth()*m_pScrollbarVert->GetDerivedScale().GetWidth());
-		}
-		if( m_pScrollbarHorz->IsOpen() )
-		{
-			m_aClientClipRect.SetHeight(m_aWidgetRect.GetHeight() - m_pScrollbarHorz->GetSize().GetHeight()*m_pScrollbarHorz->GetDerivedScale().GetHeight());
-		}
-	}
-	//------------------------------------------------------------------------------
-	void		CGUIWgtScrollbarContainer::UpdateDirtyRect_SC_End()
-	{
-		//client rect
-		CGUIVector2 aWorkPos(m_aClientRect.m_fLeft, m_aClientRect.m_fTop);
-		if (m_pScrollbarHorz->IsOpen())
-		{
-			aWorkPos.x -=  m_pScrollbarHorz->GetCurrentPos()*GetDerivedScale().m_fWidth;
-		}
-		if ( m_pScrollbarVert->IsOpen())
-		{
-			aWorkPos.y -= m_pScrollbarVert->GetCurrentPos()*GetDerivedScale().m_fHeight;
-		}
-		m_aClientRect.SetPosition(aWorkPos);
+		//client area position
+		CGUIVector2 aClientAreaPos = GetBoundArea().GetPosition();
+		aClientAreaPos.x -=  m_pScrollbarHorz->GetCurrentPos();
+		aClientAreaPos.y -= m_pScrollbarVert->GetCurrentPos();
 
+		m_aClipArea.SetSize( aClientAreaSize );
+		m_aClientArea.SetPosition( aClientAreaPos );
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWgtScrollbarContainer::UpdateScrollbars(void)
 	{
-		if( IsOpen()==false)
-		{
-			if( m_pScrollbarVert->IsOpen()  )
-			{
-				m_pScrollbarVert->Close();
-			}
-			if( m_pScrollbarHorz->IsOpen()  )
-			{
-				m_pScrollbarHorz->Close();
-			}
-			return;
-		}
+		UpdateClientArea();
 
-		const CGUISize& rClientClipSize = GetClientClipRect().GetSize();
-		const CGUISize&		rPageSize = GetClientRect().GetSize();
+		//update scrollbar's size
+		m_pScrollbarVert->SetPixelSize(
+			m_pScrollbarVert->NEWGetPixelSize().GetWidth(),
+			NEWGetPixelSize().GetHeight());
+		m_pScrollbarHorz->SetPixelSize(
+			NEWGetPixelSize().GetWidth(),
+			m_pScrollbarHorz->NEWGetPixelSize().GetHeight());
 
 		uint32 nVertRange = 
-			static_cast<uint32>(rPageSize.m_fHeight>rClientClipSize.GetHeight()?rPageSize.m_fHeight-rClientClipSize.GetHeight():0);
+			static_cast<uint32>(GetClientArea().GetHeight()>GetClipArea().GetHeight()?GetClientArea().GetHeight()-GetClipArea().GetHeight():0);
 		uint32 nHorzRange = 
-			static_cast<uint32>(rPageSize.m_fWidth>rClientClipSize.GetWidth()?rPageSize.m_fWidth-rClientClipSize.GetWidth():0);
+			static_cast<uint32>(GetClientArea().GetWidth()>GetClipArea().GetWidth()?GetClientArea().GetWidth()-GetClipArea().GetWidth():0);
 
 
 		// for vertical scrollbar
 		if( m_bForceVertScroll )
 		{
-			if( m_pScrollbarVert->IsOpen()==false  )
+			if( m_pScrollbarVert->IsVisible() ==false  )
 			{
-				m_pScrollbarVert->Open();
-//				SetRectDirty();
+				m_pScrollbarVert->SetVisible( true );
 			}
 		}
 		else
 		{
-			if( nVertRange > 0 && m_pScrollbarVert->IsOpen()==false)
+			if( nVertRange > 0 && m_pScrollbarVert->IsVisible()==false)
 			{
-				m_pScrollbarVert->Open();
-//				SetRectDirty();
+				m_pScrollbarVert->SetVisible( true);
 			}
-			else if( nVertRange == 0 && m_pScrollbarVert->IsOpen() )
+			else if( nVertRange == 0 && m_pScrollbarVert->IsVisible() == true )
 			{
-				m_pScrollbarVert->Close();
-//				SetRectDirty();
+				m_pScrollbarVert->SetVisible( false);
 			}
 		}
 
 		// for horizontal scrollbar
 		if( m_bForceHorzScroll )
 		{
-			if( m_pScrollbarHorz->IsOpen()==false )
+			if( m_pScrollbarHorz->IsVisible()==false )
 			{
-				m_pScrollbarHorz->Open();
-//				SetRectDirty();
+				m_pScrollbarHorz->SetVisible(true);
 			}
 		}
 		else
 		{
-			if( nHorzRange > 0 && m_pScrollbarHorz->IsOpen()==false )
+			if( nHorzRange > 0 && m_pScrollbarHorz->IsVisible()==false )
 			{
-				m_pScrollbarHorz->Open();
-//				SetRectDirty();
+				m_pScrollbarHorz->SetVisible(true);
 			}
-			else if( nHorzRange == 0 && m_pScrollbarHorz->IsOpen() )
+			else if( nHorzRange == 0 && m_pScrollbarHorz->IsVisible() == true )
 			{
-				m_pScrollbarHorz->Close();
-//				SetRectDirty();
+				m_pScrollbarHorz->SetVisible( false);
 			}
 		}
 
-		nVertRange = static_cast<uint32>(
-			GetClientRect().GetHeight()>GetClientClipRect().GetHeight()?
-			GetClientRect().GetHeight()-GetClientClipRect().GetHeight():
-			0);
-		nHorzRange = static_cast<uint32>(
-			GetClientRect().GetWidth()>GetClientClipRect().GetWidth()?
-			GetClientRect().GetWidth()-GetClientClipRect().GetWidth():
-			0);
-
-
 		m_pScrollbarVert->SetRange(nVertRange);
-		m_pScrollbarVert->SetPageSize(static_cast<uint32>(GetClientClipRect().GetHeight()));
+		m_pScrollbarVert->SetPageSize(static_cast<uint32>(GetClipArea().GetHeight()));
 
 		m_pScrollbarHorz->SetRange(nHorzRange);
-		m_pScrollbarHorz->SetPageSize(static_cast<uint32>(GetClientClipRect().GetWidth()));
-	}
-	//------------------------------------------------------------------------------
-
-
-	//------------------------------------------------------------------------------
-	uint32		CGUIWgtScrollbarContainer::OnOpen( CGUIEventNotification* pEvent )
-	{
-		UpdateScrollbars();
-		return CGUIWidget::OnOpen( pEvent);
-	}
-	//------------------------------------------------------------------------------
-	uint32		CGUIWgtScrollbarContainer::OnScaleChange( CGUIEventNotification* pEvent )
-	{
-		UpdateScrollbars();
-		return CGUIWidget::OnScaleChange(pEvent);
-	}
-	//------------------------------------------------------------------------------
-	uint32		CGUIWgtScrollbarContainer::OnSizeChange( CGUIEventSize* pEvent )
-	{
-		UpdateScrollbars();
-		return CGUIWidget::OnSizeChange(pEvent);
+		m_pScrollbarHorz->SetPageSize(static_cast<uint32>(GetClipArea().GetWidth()));
 	}
 	//------------------------------------------------------------------------------
 	uint32		CGUIWgtScrollbarContainer::OnScrollbarScroll( CGUIEventScrollbar* pEvent )
 	{
-//		SetRectDirty();
+		UpdateScrollbars();
 		return CGUIWidget::OnScrollbarScroll( pEvent);
 	}
 	//------------------------------------------------------------------------------

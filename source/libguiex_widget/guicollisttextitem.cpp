@@ -60,7 +60,7 @@ namespace guiex
 		UpdateTextSize();
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIColListTextItem::SetTextInfo( const CGUIStringExInfo& rInfo)
+	void		CGUIColListTextItem::SetTextInfo( const CGUIStringInfo& rInfo)
 	{
 		CGUIColListItem::SetTextInfo(rInfo);
 		UpdateTextSize();
@@ -78,14 +78,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIColListTextItem*	CGUIColListTextItem::CreateTextItem(
 		const wchar_t* pText, 
-		const CGUIStringExInfo& rInfo,
+		const CGUIStringInfo& rInfo,
 		const CGUIString& rProjectName,
 		uint32 nItemID,
 		void* pItemData ,
 		bool bDisable)	
 	{
 		CGUIColListTextItem * pItem = static_cast<CGUIColListTextItem *>(GUI_CREATE_WIDGET("CGUIColListTextItem", CGUIString("collistitem_")+CGUIWidgetSystem::Instance()->GenerateAnonymousName(), rProjectName));
-		pItem->SetSelfDisable(bDisable);
+		pItem->SetDisable(bDisable);
 		pItem->SetID(nItemID);
 		pItem->SetUserData(pItemData);
 		pItem->SetTextInfo(rInfo);

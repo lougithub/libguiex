@@ -176,7 +176,7 @@ namespace guiex
 		//header
 		m_pHeader = static_cast<CGUIColListHeader*>(GUI_CREATE_WIDGET( "CGUIColListHeader", GetName()+"_header",GetProjectName()) );
 		m_pHeader->SetParent(this);
-		m_pHeader->SetTagPoint(0.0f, 0.0f);
+		m_pHeader->SetAnchorPoint(0.0f, 0.0f);
 		m_pHeader->SetLocalPosition(0.0f,0.0f);
 
 		//set flag
@@ -706,7 +706,7 @@ namespace guiex
 	void CGUIWgtColumnList::RenderSelf(IGUIInterfaceRender* pRender)
 	{
 		/// draw bg
-		DrawImage( pRender, m_pImageBG, GetRect(), pRender->GetAndIncZ(),&GetClipRect());
+		DrawImage( pRender, m_pImageBG, GetRect());
 	}
 	//------------------------------------------------------------------------------
 	bool CGUIWgtColumnList::ClearAllSelections_impl(void)
@@ -857,31 +857,31 @@ namespace guiex
 		return fHeight;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtColumnList::UpdateDirtyRect()
-	{
-		UpdateDirtyRect_SC_Begin();
+	//void	CGUIWgtColumnList::UpdateDirtyRect()
+	//{
+	//	UpdateDirtyRect_SC_Begin();
 
-		real fHeaderHeight = m_pHeader->GetSize().m_fHeight * m_pHeader->GetDerivedScale().m_fHeight;
-		m_aClientRect.m_fTop += fHeaderHeight;
-		m_aClientClipRect.m_fTop += fHeaderHeight;
+	//	real fHeaderHeight = m_pHeader->GetSize().m_fHeight * m_pHeader->GetDerivedScale().m_fHeight;
+	//	m_aClientRect.m_fTop += fHeaderHeight;
+	//	m_aClientClipRect.m_fTop += fHeaderHeight;
 
 
-		m_aClientRect.SetWidth(0.0f);
-		m_aClientRect.SetHeight(0.0f);
+	//	m_aClientRect.SetWidth(0.0f);
+	//	m_aClientRect.SetHeight(0.0f);
 
-		// loop through the items
-		uint32 itemCount = static_cast<uint32>(m_aListItems.size());
-		for (TListRow::iterator itor = m_aListRows.begin();
-			itor != m_aListRows.end();
-			++itor )
-		{
-			m_aClientRect.SetHeight(m_aClientRect.GetHeight() + GetRowHeight(*itor));
-		}
-		m_aClientRect.SetWidth(GetSegmentTotalWidth());
+	//	// loop through the items
+	//	uint32 itemCount = static_cast<uint32>(m_aListItems.size());
+	//	for (TListRow::iterator itor = m_aListRows.begin();
+	//		itor != m_aListRows.end();
+	//		++itor )
+	//	{
+	//		m_aClientRect.SetHeight(m_aClientRect.GetHeight() + GetRowHeight(*itor));
+	//	}
+	//	m_aClientRect.SetWidth(GetSegmentTotalWidth());
 
-		UpdateDirtyRect_SC_End();
+	//	UpdateDirtyRect_SC_End();
 
-	}
+	//}
 	//------------------------------------------------------------------------------
 	void	CGUIWgtColumnList::UpdateDirtyRect_SC_End()
 	{
@@ -890,12 +890,12 @@ namespace guiex
 		m_pHeader->SetLocalPosition(m_aClientRect.m_fLeft - aOldX, 0.0f);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtColumnList::SetSegmentTextInfo(const CGUIStringExInfo& rInfo)
+	void	CGUIWgtColumnList::SetSegmentTextInfo(const CGUIStringInfo& rInfo)
 	{
 		m_pHeader->SetSegmentTextInfo(rInfo);
 	}
 	//------------------------------------------------------------------------------
-	const CGUIStringExInfo&	CGUIWgtColumnList::GetSegmentTextInfo() const
+	const CGUIStringInfo&	CGUIWgtColumnList::GetSegmentTextInfo() const
 	{
 		return m_pHeader->GetSegmentTextInfo();
 	}
@@ -1247,7 +1247,7 @@ namespace guiex
 		*/
 		if( pProperty->GetName() == "MULTI_SELECT" && pProperty->GetType()=="BOOL")
 		{
-			EnableMultiselect(CGUIStringConvertor::StringToBool(pProperty->GetValue()));
+			EnableMultiselect(StringToValue(pProperty->GetValue()));
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1257,15 +1257,15 @@ namespace guiex
 		*/
 		else if( pProperty->GetName() == "SORT" && pProperty->GetType()=="BOOL")
 		{
-			SetSorting(CGUIStringConvertor::StringToBool(pProperty->GetValue()));
+			SetSorting(StringToValue(pProperty->GetValue()));
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//property for text item
 		/*
-		*<property name="TEXT_ITEM" type="STRING" value="abc" />
+		*<property name="TEXT_ITEM" type="CGUIString" value="abc" />
 		*/
-		else if( pProperty->GetName() == "TEXT_ITEM" && pProperty->GetType()=="STRING")
+		else if( pProperty->GetName() == "TEXT_ITEM" && pProperty->GetType()=="CGUIString")
 		{
 			CGUIStringEx aString;
 			CGUIStringConvertor::MultiByteToWideChar(pProperty->GetValue(), aString);

@@ -118,6 +118,7 @@ public:
 		ID_VIEW_1024x786,
 		ID_VIEW_1280x800,
 		ID_VIEW_Refresh,
+		ID_ToggleRenderExtraInfo,
 		ID_ToggleScissor,
 		ID_ToggleWireframe,
 		ID_SetBGColor,
@@ -132,6 +133,7 @@ protected:
 
 	void OnToggleScissor(wxCommandEvent& evt);
 	void OnToggleWireframe(wxCommandEvent& evt);
+	void OnToggleRenderExtraInfo(wxCommandEvent& evt);
 	void OnSetBGColor(wxCommandEvent& evt);
 
 	void OnFullscreen(wxCommandEvent& evt);
@@ -179,7 +181,7 @@ bool WxMainApp::OnInit()
 		wxID_ANY,
 		wxT("liguiex test"),
 		wxDefaultPosition,
-		wxSize( 1024, 768));
+		wxSize( 800, 600));
 	SetTopWindow(frame);
 	frame->Show();
 
@@ -349,6 +351,7 @@ EVT_MENU(ID_VIEW_1024x786, WxMainFrame::On1024x786)
 EVT_MENU(ID_VIEW_1280x800, WxMainFrame::On1280x800)
 EVT_MENU(ID_VIEW_Refresh, WxMainFrame::OnRefresh)
 EVT_MENU(ID_ToggleScissor, WxMainFrame::OnToggleScissor)
+EVT_MENU(ID_ToggleRenderExtraInfo, WxMainFrame::OnToggleRenderExtraInfo)
 EVT_MENU(ID_ToggleWireframe, WxMainFrame::OnToggleWireframe)
 EVT_MENU(ID_SetBGColor, WxMainFrame::OnSetBGColor)
 END_EVENT_TABLE()
@@ -362,7 +365,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 						 const wxSize& size,
 						 long style)
 						 : wxFrame(parent, id, title, pos, size, style)
-						 ,m_aBGColor(0,0,0,255)
+						 ,m_aBGColor(128,128,128,255)
 						 ,m_pMouse(NULL)
 						 ,m_pKeyboard(NULL)
 						 ,m_pIme(NULL)
@@ -386,6 +389,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 	view_menu->Append(ID_ToggleScissor, wxT("Toggle Scissor"), wxT("enable or disable scissor"), wxITEM_CHECK);
 	view_menu->Check(ID_ToggleScissor, true);
 	view_menu->Append(ID_ToggleWireframe, wxT("Toggle Wireframe"), wxT("enable or disable wireframe"), wxITEM_CHECK);
+	view_menu->Append(ID_ToggleRenderExtraInfo, wxT("Toggle Render Extra Info"), wxT("enable or disable render extra info"), wxITEM_CHECK);
 	view_menu->Append(ID_SetBGColor, wxT("Set BG Color"), wxT("set background color"));
 	view_menu->Append(ID_VIEW_Refresh, wxT("Refresh"), wxT("refresh."));
 	//menu-about
@@ -518,12 +522,9 @@ bool		WxMainFrame::GetUIInfo( bool bTryCommandLine)
 		{
 			arrayArgs = wxCmdLineParser::ConvertStringToArgs(cmdLine);
 		}
-		if( arrayArgs.size() ==4 )
+		if( arrayArgs.size() >= 2 )
 		{
 			m_strUIDataPath = arrayArgs[1].char_str(wxConvUTF8).data();
-			m_strUIProjectFilename = arrayArgs[2].char_str(wxConvUTF8).data();
-			//m_strUIPageFilename = arrayArgs[3].char_str(wxConvUTF8).data();
-			return true;
 		}
 	}
 
@@ -583,7 +584,7 @@ void WxMainFrame::On1280x800(wxCommandEvent& evt)
 //------------------------------------------------------------------------------
 void WxMainFrame::OnRefresh(wxCommandEvent& evt)
 {
-	guiex::CGUIWidgetSystem::Instance()->GetCurrentRootWidget()->NEWRefresh();
+	guiex::CGUIWidgetSystem::Instance()->GetCurrentRootWidget()->Refresh();
 	Refresh();
 }
 //------------------------------------------------------------------------------
@@ -631,6 +632,16 @@ void WxMainFrame::OnToggleWireframe(wxCommandEvent& evt)
 	if( guiex::CGUIInterfaceManager::Instance()->GetInterfaceRender())
 	{
 		guiex::CGUIInterfaceManager::Instance()->GetInterfaceRender()->SetWireFrame(bIsChecked);
+	}
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnToggleRenderExtraInfo(wxCommandEvent& evt)
+{
+	bool bIsChecked = evt.IsChecked();
+
+	if( guiex::CGUIInterfaceManager::Instance()->GetInterfaceRender())
+	{
+		guiex::CGUIWidgetSystem::Instance()->SetDrawExtraInfo(bIsChecked);
 	}
 }
 //------------------------------------------------------------------------------

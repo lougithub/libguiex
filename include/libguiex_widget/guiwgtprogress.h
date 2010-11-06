@@ -42,35 +42,24 @@ namespace guiex
 		virtual int32 Create();
 
 		/**
-		* @brief set value
-		*/
-		virtual void	SetValue(const CGUIString& rName, const CGUIString& rValue);
-
-		/**
-		* @brief get widget parameter's value
-		* for example: GetValue("alpha_local") will return "0.5"
-		*/
-		virtual CGUIString	GetValue(const CGUIString& rName) const;
-
-		/**
 		* @brief set maximum value of progress
 		*/
-		void			SetMaximum( uint32 nMaxmium );
+		void SetMaximumProgress( real nMaxmium );
 
 		/**
 		* @brief get maximum value of progress
 		*/
-		uint32	GetMaximum() const;
+		real GetMaximumProgress() const;
 
 		/**
 		* @brief set current value of progress
 		*/
-		void			Update( uint32 nValue );
+		void SetCurrentProgress( real fValue );
 
 		/**
 		* @brief set current value of progress
 		*/
-		uint32 		GetCurrentValue( ) const;
+		real GetCurrentProgress( ) const;
 
 
 	protected:
@@ -89,7 +78,7 @@ namespace guiex
 		/**
 		* @brief override the OnSetImage function
 		*/
-		virtual void	OnSetImage( const CGUIString& rName,CGUIImage* pImage );
+		virtual void OnSetImage( const CGUIString& rName,CGUIImage* pImage );
 
 	protected:	//!< callback function
 
@@ -98,8 +87,8 @@ namespace guiex
 		CGUIImage*	m_pImageBg;		///< background
 		CGUIImage*	m_pImageFg;		///< foreground
 
-		uint32			m_nMaximumValue;			///< maximum value of progress
-		uint32			m_aCurrentValue;			///< current value of progress
+		real			m_fMaximumValue;			///< maximum value of progress
+		real			m_fCurrentValue;			///< current value of progress
 
 	private:
 		static CGUIString	ms_strType;

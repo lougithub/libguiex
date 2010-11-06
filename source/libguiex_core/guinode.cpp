@@ -373,7 +373,7 @@ namespace guiex
 		return getDerivedPosition();
 	}
 	//------------------------------------------------------------------------------
-	void	CGUINode::SetChild( const CGUINode* pNode)
+	void	CGUINode::setChild( const CGUINode* pNode)
 	{
 		m_pChild = (CGUINode*)(pNode);
 	}

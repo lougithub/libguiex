@@ -13,14 +13,18 @@
 // include
 //============================================================================// 
 #include "guibase.h"
-
+#include "guiexception.h"
+#include "guiproperty.h"
+#include "guipropertymanager.h"
+#include "guistringconvertor.h"
+#include "guivector2.h"
+#include "guisize.h"
+#include "guiwidget.h"
 
 //============================================================================//
 // declare
 //============================================================================// 
-namespace guiex
-{
-}
+
 
 
 //============================================================================//
@@ -29,23 +33,42 @@ namespace guiex
 namespace guiex
 {
 
-	/**
-	* @class CGUIPropertyConvertor
-	* @brief utility class, convertor between property and other values
-	*/
-	class GUIEXPORT CGUIPropertyConvertor
+	//------------------------------------------------------------------------------
+	template< class ValueType >
+	void PropertyToValue( const CGUIProperty& rProperty, ValueType& rValue)
 	{
-		///**
-		//* @brief convert property to CGUIVector2.
-		//*/
-		//static	void		PropertyToVector2( const CGUIProperty* pProperty, CGUIVector2& rVector2 );
+		StringToValue( rProperty.GetValue(), rValue );
+	}
 
-		///**
-		//* @brief convert CGUIVector2 to property.
-		//*/
-		//static void			Vector2ToProperty( const CGUIVector2& rVector2, CGUIProperty* pProperty);
-	};
+	template< class ValueType >
+	void ValueToProperty( const ValueType& rValue, CGUIProperty& rProperty )
+	{
+		CGUIString strValue;
+		ValueToString( rValue, strValue );
+		rProperty.SetValue( strValue );
+	}
 
+
+
+	//------------------------------------------------------------------------------
+	//CGUIWidgetPosition
+	template<  >
+	void PropertyToValue<CGUIWidgetPosition>( const CGUIProperty& rProperty, CGUIWidgetPosition& rValue);
+	template<  >
+	void ValueToProperty<CGUIWidgetPosition>( const CGUIWidgetPosition& rValue, CGUIProperty& rProperty );
+	//------------------------------------------------------------------------------
+	//CGUIWidgetSize
+	template<  >
+	void PropertyToValue<CGUIWidgetSize>( const CGUIProperty& rProperty, CGUIWidgetSize& rValue);
+	template<  >
+	void ValueToProperty<CGUIWidgetSize>( const CGUIWidgetSize& rValue, CGUIProperty& rProperty );
+	//------------------------------------------------------------------------------
+	//CGUIStringInfo
+	template<  >
+	void PropertyToValue<CGUIStringInfo>( const CGUIProperty& rProperty, CGUIStringInfo& rValue);
+	template<  >
+	void ValueToProperty<CGUIStringInfo>( const CGUIStringInfo& rValue, CGUIProperty& rProperty );
+	//------------------------------------------------------------------------------
 }
 
 

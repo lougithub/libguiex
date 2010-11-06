@@ -24,201 +24,10 @@
 //============================================================================//
 // function
 //============================================================================// 
-
-//------------------------------------------------------------------------------
-CProperty::CProperty()
-:m_bMustExist(false)
+const CPropertyData* CPropertyData::GetPropertyData( const guiex::CGUIProperty& rProperty )
 {
+	return reinterpret_cast<CPropertyData*>( rProperty.GetData() );
 }
-//------------------------------------------------------------------------------
-CProperty::~CProperty()
-{
-	Clear();
-}
-//------------------------------------------------------------------------------
-void	CProperty::Clear( )
-{
-	m_setProperty.clear();
-}
-//------------------------------------------------------------------------------
-void					CProperty::SetName(const std::string& rName)
-{
-	m_strName = rName;
-}
-//------------------------------------------------------------------------------
-const std::string&	CProperty::GetName() const
-{
-	return m_strName;
-}
-//------------------------------------------------------------------------------
-void					CProperty::SetLabel(const std::string& rLabel)
-{
-	m_strLabel = rLabel;
-}
-//------------------------------------------------------------------------------
-const std::string&	CProperty::GetLabel() const
-{
-	return m_strLabel;
-}
-//------------------------------------------------------------------------------
-void					CProperty::SetValue(const std::string& rValue)
-{
-	m_strValue = rValue;
-}
-//------------------------------------------------------------------------------
-const std::string&	CProperty::GetValue() const
-{
-	return m_strValue;
-}
-//------------------------------------------------------------------------------
-void					CProperty::SetType(const std::string& rType)
-{
-	m_strType = rType;
-}
-//------------------------------------------------------------------------------
-const std::string&	CProperty::GetType() const
-{
-	return m_strType;
-}
-//------------------------------------------------------------------------------
-void				CProperty::SetCategory( const std::string& rCategory)
-{
-	m_strCategories = rCategory;
-}
-//------------------------------------------------------------------------------
-const std::string&			CProperty::GetCategory() const
-{
-	return m_strCategories;
-}
-//------------------------------------------------------------------------------
-void				CProperty::SetPage(const std::string& rPage)
-{
-	m_strPage = rPage;
-}
-//------------------------------------------------------------------------------
-const std::string&		CProperty::GetPage() const
-{
-	return m_strPage;
-}
-//------------------------------------------------------------------------------
-void	CProperty::SetEnums(const std::vector<std::string>& rEnum)
-{
-	m_vecEnums = rEnum ;
-}
-//------------------------------------------------------------------------------
-const std::vector<std::string>&		CProperty::GetEnums() const
-{
-	return m_vecEnums;
-}
-//------------------------------------------------------------------------------
-void			CProperty::SetMustExist(bool bMustExist)
-{
-	m_bMustExist = bMustExist;
-}
-//------------------------------------------------------------------------------
-bool			CProperty::IsMustExist() const
-{
-	return m_bMustExist;
-}
-//------------------------------------------------------------------------------
-void				CProperty::AddProperty( const CProperty& rProperty )
-{
-	assert( HasProperty(rProperty.GetName() ) == false);
-	m_setProperty.push_back(rProperty);
-}
-//------------------------------------------------------------------------------
-void				CProperty::InsertProperty(  const CProperty& rProperty, guiex::int32 nIndex )
-{
-	assert( HasProperty(rProperty.GetName() ) == false);
-	if( nIndex < 0 || guiex::uint32(nIndex) >= m_setProperty.size())
-	{
-		m_setProperty.push_back(rProperty);
-	}
-	else
-	{
-		m_setProperty.insert(m_setProperty.begin() + nIndex, rProperty);
-	}
-}
-//------------------------------------------------------------------------------
-unsigned int		CProperty::GetPropertyNum( ) const
-{
-	return static_cast<unsigned int>(m_setProperty.size());
-}
-//------------------------------------------------------------------------------
-const CProperty*	CProperty::GetProperty( unsigned int nIdx ) const
-{
-	if( nIdx >= m_setProperty.size())
-	{
-		wxMessageBox(_T("the index of property is overflowed"), _T("error"), wxICON_ERROR|wxCENTRE);
-		wxASSERT(0);
-		return NULL;
-	}
-
-	return &m_setProperty[nIdx];
-}
-//------------------------------------------------------------------------------
-const CProperty*	CProperty::GetProperty( const std::string& rName ) const
-{
-	for( TSetProperty::const_iterator itor = m_setProperty.begin();
-		itor != m_setProperty.end();
-		++itor)
-	{
-		if( (*itor).GetName() == rName )
-		{
-			return &(*itor);
-		}
-	}
-
-	return NULL;
-}
-//------------------------------------------------------------------------------
-bool			CProperty::HasProperty( const std::string& rName ) const
-{
-	for( TSetProperty::const_iterator itor = m_setProperty.begin();
-		itor != m_setProperty.end();
-		++itor)
-	{
-		if( (*itor).GetName() == rName )
-		{
-			return true;
-		}
-	}
-	return false;
-}
-//------------------------------------------------------------------------------
-int32				CProperty::GetPropertyIndex( const std::string& rName ) const
-{
-	for( uint32 i=0; i<m_setProperty.size(); ++i)
-	{
-		if( m_setProperty[i].GetName() == rName )
-		{
-			return int32(i);
-		}
-	}
-	wxMessageBox(_T("failed to find property"), _T("error"), wxICON_ERROR|wxCENTRE);
-	wxASSERT(0);
-	return -1;
-}
-//------------------------------------------------------------------------------
-void		CProperty::RemoveProperty( const std::string& rName )
-{
-	for( TSetProperty::const_iterator itor = m_setProperty.begin();
-		itor != m_setProperty.end();
-		++itor)
-	{
-		if( (*itor).GetName() == rName )
-		{
-			m_setProperty.erase(itor);
-			return;
-		}
-	}
-
-	wxMessageBox(_T("failed to remove property"), _T("error"), wxICON_ERROR|wxCENTRE);
-	wxASSERT(0);
-}
-//------------------------------------------------------------------------------
-
-
 
 
 //------------------------------------------------------------------------------
@@ -234,13 +43,15 @@ CPropertyConfigMgr::~CPropertyConfigMgr()
 void	CPropertyConfigMgr::Clear()
 {
 	m_mapPropertySet.clear();
-	for( TSetType::iterator itor=m_mapType.begin();
-		itor != m_mapType.end();
+	m_mapType.clear();
+
+	for( std::vector<CPropertyData*>::iterator itor=m_arrayPropertyDataCache.begin();
+		itor != m_arrayPropertyDataCache.end();
 		++itor)
 	{
-		delete itor->second;
+		delete *itor;
 	}
-	m_mapType.clear();
+	m_arrayPropertyDataCache.clear();
 }
 //------------------------------------------------------------------------------
 CPropertyConfigMgr* CPropertyConfigMgr::Instance()
@@ -249,7 +60,7 @@ CPropertyConfigMgr* CPropertyConfigMgr::Instance()
 	return &s_mgr;
 }
 //------------------------------------------------------------------------------
-void	CPropertyConfigMgr::RegisterSet( const std::string& rSetName, const CProperty& rPropertySet )
+void	CPropertyConfigMgr::RegisterSet( const std::string& rSetName, const guiex::CGUIProperty& rPropertySet )
 {
 	if( m_mapPropertySet.find(rSetName) != m_mapPropertySet.end())
 	{
@@ -260,12 +71,23 @@ void	CPropertyConfigMgr::RegisterSet( const std::string& rSetName, const CProper
 	m_mapPropertySet.insert( std::make_pair(rSetName,rPropertySet) );
 }
 //------------------------------------------------------------------------------
-const std::map<std::string, CProperty>& 	CPropertyConfigMgr::GetPropertySetMap( ) const
+void	CPropertyConfigMgr::RegisterEnumDefine( const guiex::CGUIString& rEnumName, const wxArrayString& rEnumValue )
+{
+	if( m_mapEnums.find(rEnumName) != m_mapEnums.end())
+	{
+		std::string strError = std::string("[CPropertyConfigMgr::RegisterSet] the property <")+rEnumName+"> has existed!";
+		wxMessageBox(wxConvUTF8.cMB2WC(strError.c_str()), _T("Error"), wxICON_ERROR | wxCENTRE );
+		wxASSERT(0);
+	}
+	m_mapEnums.insert( std::make_pair(rEnumName,rEnumValue) );
+}
+//------------------------------------------------------------------------------
+const CPropertyConfigMgr::TMapPropertySet& 	CPropertyConfigMgr::GetPropertySetMap( ) const
 {
 	return m_mapPropertySet;
 }
 //------------------------------------------------------------------------------
-const  CProperty*	CPropertyConfigMgr::GetPropertySet(const std::string& rSetName ) const
+const  guiex::CGUIProperty&	CPropertyConfigMgr::GetPropertySet(const std::string& rSetName ) const
 {
 	TMapPropertySet::const_iterator itor = m_mapPropertySet.find(rSetName);
 	if( itor == m_mapPropertySet.end())
@@ -273,9 +95,20 @@ const  CProperty*	CPropertyConfigMgr::GetPropertySet(const std::string& rSetName
 		std::string strError = std::string("[CPropertyConfigMgr::GetPropertySet] the property <")+rSetName+"> doesn't exist!";
 		wxMessageBox(wxConvUTF8.cMB2WC(strError.c_str()), _T("Error"), wxICON_ERROR | wxCENTRE );
 		wxASSERT(0);
-		return NULL;
 	}
-	return &itor->second;
+	return itor->second;
+}
+//------------------------------------------------------------------------------
+const  wxArrayString&	CPropertyConfigMgr::GetEnumDefine( const guiex::CGUIString& rEnumName ) const
+{
+	TEnumMap::const_iterator itor = m_mapEnums.find(rEnumName);
+	if( itor == m_mapEnums.end())
+	{
+		std::string strError = std::string("[CPropertyConfigMgr::GetEnumDefine] the enum <")+rEnumName+"> doesn't exist!";
+		wxMessageBox(wxConvUTF8.cMB2WC(strError.c_str()), _T("Error"), wxICON_ERROR | wxCENTRE );
+		wxASSERT(0);
+	}
+	return itor->second;
 }
 //------------------------------------------------------------------------------
 std::string*	CPropertyConfigMgr::GetTypePtr( const std::string& rType )
@@ -326,7 +159,16 @@ int		CPropertyConfigMgr::ReadPropertyConfig(const std::string& rFileName)
 	TiXmlElement* pNode = pRootNode->FirstChildElement();
 	while( pNode )
 	{
-		if( std::string("widget") == pNode->Value())
+		if( std::string("enum") == pNode->Value())
+		{
+			if( 0 != ProcessEnumNode(pNode) )
+			{
+				wxMessageBox(_T("Failed to load property config file!"), _T("Error"), wxICON_ERROR, GetMainFrame() );
+				wxASSERT(0);
+				return -1;
+			}
+		}
+		else if( std::string("widget") == pNode->Value())
 		{
 			if( 0 != ProcessWidgetNode(pNode) )
 			{
@@ -346,6 +188,46 @@ int		CPropertyConfigMgr::ReadPropertyConfig(const std::string& rFileName)
 	return 0;
 }
 //------------------------------------------------------------------------------
+int		CPropertyConfigMgr::ProcessEnumNode(TiXmlElement* pWidgetNode)
+{
+	//process sub node
+	TiXmlElement* pNode = pWidgetNode->FirstChildElement();
+	while( pNode )
+	{
+		const char* szName = pNode->Attribute( "name" );
+		const char* szType = pNode->Attribute( "type" );
+		const char* szValue = pNode->Attribute( "value" );
+		if( !szName || !szType || !szValue)
+		{
+			return -1;
+		}
+
+		if( std::string("enum") != szType )
+		{
+			return -1;
+		};
+
+		wxArrayString vecEnum;
+		std::string strEnum = szValue;
+		std::string::size_type nStartPos = 0;
+		std::string::size_type nEndPos = strEnum.find(";", nStartPos);
+		while( nEndPos != std::string::npos )
+		{
+			std::string aEnum = strEnum.substr( nStartPos, nEndPos-nStartPos );
+			vecEnum.push_back( wxConvUTF8.cMB2WC( aEnum.c_str()).data());
+			nStartPos = nEndPos + 1;
+			nEndPos = strEnum.find(";", nStartPos);
+		}
+
+		//register it to map
+		RegisterEnumDefine(szName, vecEnum);
+
+		pNode = pNode->NextSiblingElement();
+	}
+
+	return 0;
+}
+//------------------------------------------------------------------------------
 int		CPropertyConfigMgr::ProcessWidgetNode(TiXmlElement* pWidgetNode)
 {
 	//	<widget type="CGUIWgtButton" inherit="CGUIWidget">
@@ -355,18 +237,12 @@ int		CPropertyConfigMgr::ProcessWidgetNode(TiXmlElement* pWidgetNode)
 		return -1;
 	}
 
-	CProperty aPropSet;
+	guiex::CGUIProperty aPropSet;
 	const char* szInherit = pWidgetNode->Attribute("inherit");
 	if( szInherit )
 	{
 		//this config is inherited from other property config
-		const CProperty* pSet = GetPropertySet(szInherit);
-		if( !pSet )
-		{
-			return -1;
-		}
-
-		aPropSet = *pSet;
+		aPropSet = GetPropertySet(szInherit);
 	}
 
 	//process sub node
@@ -382,7 +258,7 @@ int		CPropertyConfigMgr::ProcessWidgetNode(TiXmlElement* pWidgetNode)
 			}
 			
 			//process property node
-			if( 0 != ProcessPropertyNode(szPage, &aPropSet, pNode))
+			if( 0 != ProcessPropertyNode(szPage, aPropSet, pNode))
 			{
 				return -1;
 			}
@@ -398,7 +274,7 @@ int		CPropertyConfigMgr::ProcessWidgetNode(TiXmlElement* pWidgetNode)
 	return 0;
 }
 //------------------------------------------------------------------------------
-int		CPropertyConfigMgr::ProcessPropertyNode(const std::string& rPage, CProperty* pPropertySet, TiXmlElement* pNode)
+int		CPropertyConfigMgr::ProcessPropertyNode(const std::string& rPage, CGUIProperty& rPropertySet, TiXmlElement* pNode)
 {
 	TiXmlElement* pPropertyNode = pNode->FirstChildElement();
 	while( pPropertyNode )
@@ -410,7 +286,6 @@ int		CPropertyConfigMgr::ProcessPropertyNode(const std::string& rPage, CProperty
 			const char* pType = pPropertyNode->Attribute("type");
 			const char* pValue = pPropertyNode->Attribute("value");
 			const char* pLabel = pPropertyNode->Attribute("label");
-			const char* pEnum = pPropertyNode->Attribute("enum");
 			const char* pMustExist = pPropertyNode->Attribute("must_exist");
 			if( !pName || !pType)
 			{	
@@ -421,63 +296,50 @@ int		CPropertyConfigMgr::ProcessPropertyNode(const std::string& rPage, CProperty
 
 			int32 nPropertyIndex = -1;
 			//remove old property
-			if( pPropertySet->HasProperty(pName) )
+			if( rPropertySet.HasProperty(pName) )
 			{
-				nPropertyIndex = pPropertySet->GetPropertyIndex(pName);
-				pPropertySet->RemoveProperty(pName);
+				nPropertyIndex = rPropertySet.GetPropertyIndex(pName);
+				rPropertySet.RemoveProperty( nPropertyIndex );
 			}
 
-			CProperty aProperty;
-
-			//set info
-			aProperty.SetPage(rPage);
-			aProperty.SetName(pName);
-			aProperty.SetType(pType);
-			aProperty.SetLabel(pLabel?pLabel:pName);
-			aProperty.SetCategory(pCategory ? pCategory : "Default" );
-
-			if( pEnum )
-			{
-				std::vector< std::string> vecEnums;
-				std::string strEnum = pEnum;
-				std::string::size_type nStartPos = 0;
-				std::string::size_type nEndPos = strEnum.find(";", nStartPos);
-				while( nEndPos != std::string::npos )
-				{
-					vecEnums.push_back( strEnum.substr( nStartPos, nEndPos-nStartPos ));
-					nStartPos = nEndPos + 1;
-					nEndPos = strEnum.find(";", nStartPos);
-				}
-				aProperty.SetEnums( vecEnums );
-			}
-			if( pMustExist )
-			{
-				if( strcmp(pMustExist,"true") == 0)
-				{
-					aProperty.SetMustExist(true);
-				}
-				else
-				{
-					aProperty.SetMustExist(false);
-				}
-			}
-			else
-			{
-				aProperty.SetMustExist(false);
-			}
-
+			guiex::CGUIProperty aProperty(pName, pType);
 			if( pValue )
 			{
 				aProperty.SetValue(pValue);
 			}
 
+			//set info
+			CPropertyData* pData = new CPropertyData;
+			m_arrayPropertyDataCache.push_back( pData );
+			aProperty.SetData(pData);
+
+			pData->SetPage(rPage);
+			pData->SetLabel(pLabel?pLabel:pName);
+			pData->SetCategory(pCategory ? pCategory : "Default" );
+
+			if( pMustExist )
+			{
+				if( strcmp(pMustExist,"true") == 0)
+				{
+					pData->SetMustExist(true);
+				}
+				else
+				{
+					pData->SetMustExist(false);
+				}
+			}
+			else
+			{
+				pData->SetMustExist(false);
+			}
+
 			//process child
-			if( ProcessPropertyNode( rPage, &aProperty, pPropertyNode ) != 0 )
+			if( ProcessPropertyNode( rPage, aProperty, pPropertyNode ) != 0 )
 			{
 				return -1;
 			}
 
-			pPropertySet->InsertProperty(aProperty, nPropertyIndex);
+			rPropertySet.InsertProperty(aProperty, nPropertyIndex);
 		}
 		else
 		{
@@ -490,19 +352,5 @@ int		CPropertyConfigMgr::ProcessPropertyNode(const std::string& rPage, CProperty
 	return 0;
 }
 //------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

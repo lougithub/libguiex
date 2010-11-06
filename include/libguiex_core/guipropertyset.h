@@ -29,67 +29,82 @@ namespace guiex
 //============================================================================// 
 namespace guiex
 {
-	/**
-	* @class CGUIPropertySet
-	* @brief a property set
-	* @exception CGUIException
-	*/
-	class GUIEXPORT CGUIPropertySet
-	{
-	public:
-		/**
-		* @brief constructor
-		*/
-		CGUIPropertySet();
+	///**
+	//* @class CGUIPropertySet
+	//* @brief a property set
+	//* @exception CGUIException
+	//*/
+	//class GUIEXPORT CGUIPropertySet
+	//{
+	//public:
+	//	/**
+	//	* @brief constructor
+	//	*/
+	//	CGUIPropertySet();
 
-		/**
-		* @brief destructor
-		*/
-		~CGUIPropertySet();
+	//	/**
+	//	* @brief destructor
+	//	*/
+	//	~CGUIPropertySet();
 
-		/// copy constructor
-		CGUIPropertySet(const CGUIPropertySet& rPropertySet );
+	//	/// copy constructor
+	//	CGUIPropertySet(const CGUIPropertySet& rPropertySet );
 
-		/// assign operator
-		void operator=(const CGUIPropertySet& rPropertySet );
+	//	/// assign operator
+	//	void operator=(const CGUIPropertySet& rPropertySet );
 
-		/// get property size
-		uint32	GetSize() const;
+	//	/// get property size
+	//	uint32	GetSize() const;
 
-		/// clear all property
-		void			Clear();
+	//	/// clear all property
+	//	void			Clear();
 
-		/// get property by index
-		const CGUIProperty*	GetProperty(uint32 nIdx) const;
+	//	/// get property by index
+	//	const CGUIProperty*	GetProperty(uint32 nIdx) const;
 
-		/// get property by index
-		CGUIProperty*	GetProperty(uint32 nIdx);
+	//	/// get property by index
+	//	CGUIProperty*	GetProperty(uint32 nIdx);
 
-		/// get property by name
-		const CGUIProperty*	GetProperty(const CGUIString& rName) const;
+	//	/// get property by name
+	//	const CGUIProperty*	GetProperty(const CGUIString& rName) const;
 
-		/// get property by name
-		CGUIProperty*	GetProperty(const CGUIString& rName);
+	//	/// get property by name
+	//	CGUIProperty*	GetProperty(const CGUIString& rName);
+
+	//	int32		GetPropertyIndex( const CGUIString& rName ) const;
 
 
-		/// whether this set contains the property which has this name
-		bool		HasProperty(const CGUIString& rName) const;
+	//	/// whether this set contains the property which has this name
+	//	bool		HasProperty(const CGUIString& rName) const;
 
-		/// add a property to list
-		void		AddProperty(CGUIProperty* pProperty);
+	//	/// add a property to list
+	//	void		AddProperty(CGUIProperty* pProperty);
+	//	
+	//	void		AddProperty(const CGUIString& rName, const CGUIString& rType, const CGUIString& rValue);
 
-		/// add a property set to list
-		void		AddPropertySet(const CGUIPropertySet& rPropertySet);
+	//	/// add a property set to list
+	//	void		AddPropertySet(const CGUIPropertySet& rPropertySet);
 
-		/// remove a property from list
-		void		RemoveProperty(const CGUIProperty* pProperty);
+	//	/// remove a property from list
+	//	void		RemoveProperty(const CGUIProperty* pProperty);
 
-	protected:
+	//	void				SetData( void* pData )
+	//	{
+	//		m_pExtraData = pData;
+	//	}
 
-	protected:
-		typedef std::vector<CGUIProperty*>	TSetProperty;
-		TSetProperty	m_setProperty;	
-	};
+	//	void*				GetData( )
+	//	{
+	//		return m_pExtraData;
+	//	}
+
+	//protected:
+
+	//protected:
+	//	typedef std::vector<CGUIProperty*>	TSetProperty;
+	//	TSetProperty	m_setProperty;	
+	//	void*			m_pExtraData;
+	//};
 
 }//namespace guiex
 

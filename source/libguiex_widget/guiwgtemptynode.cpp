@@ -47,15 +47,5 @@ namespace guiex
 		m_aBitFlag.reset(eFLAG_HITABLE);			
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtEmptyNode::Open()
-	{
-		CGUIWidget::Open();
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWgtEmptyNode::RenderSelf(IGUIInterfaceRender* pRender)
-	{
-
-	}
-	//------------------------------------------------------------------------------
 }//namespace guiex
 

@@ -10,9 +10,6 @@
 // include 
 //============================================================================// 
 #include <libguiex_core\guistringconvertor.h>
-#include <libguiex_core\guiwidgetsystem.h>
-#include <libguiex_core\guiexception.h>
-#include <sstream>
 
 #if GUI_STRING_CONV_USE_ICONV
 #	include <iconv.h>
@@ -28,80 +25,15 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	bool CGUIStringConvertor::StringToBool( const CGUIString& rStringValue )
-	{
-		if( rStringValue == "true")
-		{
-			return true;
-		}
-		else if (  rStringValue == "false")
-		{
-			return false;
-		}
-		else
-		{
-			throw CGUIException(
-				"[CGUIStringConvertor::StringToBool]: string value format is wrong! <%s>",
-				rStringValue.c_str());
-		}
-	}
-	//------------------------------------------------------------------------------
-	CGUIString CGUIStringConvertor::BoolToString( bool bValue )
-	{
-		return bValue?"true":"false";
-	}
-	//------------------------------------------------------------------------------
-	uint32 CGUIStringConvertor::StringToUInt( const CGUIString& rStringValue )
-	{
-		return static_cast<uint32>(strtoul(rStringValue.c_str(), 0, 10));
-	}
-	//------------------------------------------------------------------------------
-	CGUIString CGUIStringConvertor::UIntToString( uint32 nValue  )
-	{
-		std::stringstream stream;
-		stream.width(0);
-		stream.fill(' ');
-		stream << nValue;
-		return stream.str();
-	}
-	//------------------------------------------------------------------------------
-	uint32 CGUIStringConvertor::StringToInt( const CGUIString& rStringValue )
-	{
-		return static_cast<uint32>(strtol(rStringValue.c_str(), 0, 10));
-	}
-	//------------------------------------------------------------------------------
-	CGUIString CGUIStringConvertor::IntToString( int32 nValue )
-	{
-		std::stringstream stream;
-		stream.width(0);
-		stream.fill(' ');
-		stream << nValue;
-		return stream.str();
-	}
-	//------------------------------------------------------------------------------
-	real CGUIStringConvertor::StringToReal( const CGUIString& rStringValue )
-	{
-		return static_cast<real>(atof(rStringValue.c_str()));
-	}
-	//------------------------------------------------------------------------------
-	CGUIString CGUIStringConvertor::RealToString( real fValue )
-	{
-		std::stringstream stream;
-		stream.width(0);
-		stream.fill(' ');
-		stream << fValue;
-		return stream.str();
-	}
-	//------------------------------------------------------------------------------
-	static std::vector<CGUIString>	StringToVector(const CGUIString& rStringValue )
+	std::vector<CGUIString>	StringToVector(const CGUIString& rString )
 	{
 		std::vector<CGUIString> aListString;
 		CGUIString::size_type idx = 0;
 
-		while( idx < rStringValue.size())
+		while( idx < rString.size())
 		{
-			CGUIString::size_type ret = rStringValue.find_first_of(",", idx);
-			aListString.push_back(rStringValue.substr(idx, ret));
+			CGUIString::size_type ret = rString.find_first_of(",", idx);
+			aListString.push_back(rString.substr(idx, ret));
 			if( ret == CGUIString::npos )
 			{
 				break;
@@ -114,254 +46,12 @@ namespace guiex
 		return aListString;
 	}
 	//------------------------------------------------------------------------------
-	CGUIRect CGUIStringConvertor::StringToRect( const CGUIString& rStringValue )
-	{
-		//string should have format as "left, top, right,bottom"
-		std::vector<CGUIString> aListString= StringToVector(rStringValue);
-		if( aListString.size() != 4 )
-		{
-			throw CGUIException(
-				"[CGUIStringConvertor::StringToRect]: string value format is wrong! <%s>",
-				rStringValue.c_str());
-		}
 
-		return CGUIRect( 
-			StringToReal(aListString[0]),
-			StringToReal(aListString[1]),
-			StringToReal(aListString[2]),
-			StringToReal(aListString[3]));
-	}
-	//------------------------------------------------------------------------------
-	void CGUIStringConvertor::StringToRect( const CGUIString& rStringValue, CGUIRect& rRect )
-	{
-		//string should have format as "left, top, right,bottom"
-		std::vector<CGUIString> aListString= StringToVector(rStringValue);
-		if( aListString.size() != 4 )
-		{
-			throw CGUIException(
-				"[CGUIStringConvertor::StringToRect]: string value format is wrong! <%s>",
-				rStringValue.c_str());
-		}
 
-		rRect.m_fLeft = StringToReal(aListString[0]);
-		rRect.m_fTop = StringToReal(aListString[1]);
-		rRect.m_fRight = StringToReal(aListString[2]); 
-		rRect.m_fBottom = StringToReal(aListString[3]);
-	}
-	//------------------------------------------------------------------------------
-	CGUIString	CGUIStringConvertor::RectToString( const CGUIRect& rRect)
-	{
-		std::stringstream stream;
-		stream.width(0);
-		stream.fill(' ');
-		stream << rRect.m_fLeft<<','<<rRect.m_fTop<<','<<rRect.m_fRight<<','<<rRect.m_fBottom;
-		return stream.str();
-	}
-	//------------------------------------------------------------------------------
-	CGUISize CGUIStringConvertor::StringToSize( const CGUIString& rStringValue )
-	{
-		//string should have format as "width,height"
-		std::vector<CGUIString> aListString= StringToVector(rStringValue);
 
-		if( aListString.size() != 2 )
-		{
-			throw CGUIException(
-				"[CGUIStringConvertor::StringToSize]: string value format is wrong! <%s>",
-				rStringValue.c_str());
-		}
 
-		return CGUISize( 
-			StringToReal(aListString[0]),
-			StringToReal(aListString[1]));
-	}
 	//------------------------------------------------------------------------------
-	void CGUIStringConvertor::StringToSize( const CGUIString& rStringValue, CGUISize& rSize )
-	{
-		//string should have format as "width,height"
-		std::vector<CGUIString> aListString= StringToVector(rStringValue);
-		if( aListString.size() != 2 )
-		{
-			throw CGUIException(
-				"[CGUIStringConvertor::StringToSize]: string value format is wrong! <%s>",
-				rStringValue.c_str());
-		}
-
-		rSize.m_fWidth = StringToReal(aListString[0]);
-		rSize.m_fHeight = StringToReal(aListString[1]);
-	}
-	//------------------------------------------------------------------------------
-	CGUIString	CGUIStringConvertor::SizeToString( const CGUISize& rSize)
-	{
-		std::stringstream stream;
-		stream.width(0);
-		stream.fill(' ');
-		stream << rSize.m_fWidth<<','<<rSize.m_fHeight;
-		return stream.str();
-	}
-	//------------------------------------------------------------------------------
-	CGUIVector2 CGUIStringConvertor::StringToVector2( const CGUIString& rStringValue )
-	{
-		//string should have format as "x,y"
-		std::vector<CGUIString> aListString= StringToVector(rStringValue);
-
-		if( aListString.size() != 2 )
-		{
-			throw CGUIException(
-				"[CGUIStringConvertor::StringToVector2]: string value format is wrong! <%s>",
-				rStringValue.c_str());
-		}
-
-		return CGUIVector2( 
-			StringToReal(aListString[0]),
-			StringToReal(aListString[1]));
-	}
-	//------------------------------------------------------------------------------
-	CGUIString	CGUIStringConvertor::Vector2ToString( const CGUIVector2& rVector2)
-	{
-		std::stringstream stream;
-		stream.width(0);
-		stream.fill(' ');
-		stream << rVector2.x<<','<<rVector2.y;
-		return stream.str();
-	}
-	//------------------------------------------------------------------------------
-	void CGUIStringConvertor::StringToColor( const CGUIString& rStringValue, CGUIColor& rColor )
-	{
-		//string should have format as "r,g,b,a"
-		std::vector<CGUIString> aListString= StringToVector(rStringValue);
-
-		if( aListString.size() != 4 )
-		{
-			throw CGUIException(
-				"[CGUIStringConvertor::StringToColor]: string value format is wrong! <%s>",
-				rStringValue.c_str());
-		}
-
-		rColor.SetColor( StringToReal(aListString[0]),
-						 StringToReal(aListString[1]),
-						 StringToReal(aListString[2]),
-						 StringToReal(aListString[3]));
-	}
-	//------------------------------------------------------------------------------
-	CGUIColor CGUIStringConvertor::StringToColor( const CGUIString& rStringValue )
-	{
-		//string should have format as "r,g,b,a"
-		std::vector<CGUIString> aListString= StringToVector(rStringValue);
-
-		if( aListString.size() != 4 )
-		{
-			throw CGUIException(
-				"[CGUIStringConvertor::StringToColor]: string value format is wrong! <%s>",
-				rStringValue.c_str());
-		}
-
-		return CGUIColor( 
-			StringToReal(aListString[0]),
-			StringToReal(aListString[1]),
-			StringToReal(aListString[2]),
-			StringToReal(aListString[3]));
-	}
-	//------------------------------------------------------------------------------
-	CGUIString	CGUIStringConvertor::ColorToString( const CGUIColor& rColor)
-	{
-		std::stringstream stream;
-		stream.width(0);
-		stream.fill(' ');
-		stream << rColor.GetRed()<<','<<rColor.GetGreen()<<','<<rColor.GetBlue()<<','<<rColor.GetAlpha();
-		return stream.str();
-	}
-	//------------------------------------------------------------------------------
-	EImageOperation CGUIStringConvertor::StringToImageOperation( const CGUIString& rStringValue )
-	{
-		if( rStringValue == "IMAGE_NONE" )
-		{
-			return IMAGE_NONE;
-		}
-		else if( rStringValue == "IMAGE_ROTATE90CW" )
-		{
-			return IMAGE_ROTATE90CW;
-		}
-		else if( rStringValue == "IMAGE_ROTATE90CCW" )
-		{
-			return IMAGE_ROTATE90CCW;
-		}
-		else if( rStringValue == "IMAGE_FLIPHORIZON" )
-		{
-			return IMAGE_FLIPHORIZON;
-		}
-		else if( rStringValue == "IMAGE_FLIPVERTICAL" )
-		{
-			return IMAGE_FLIPVERTICAL;
-		}
-		else
-		{
-			throw CGUIException(
-				"[CGUIStringConvertor::StringToImageOperation]: string value format is wrong! <%s>",
-				rStringValue.c_str());
-		}
-	}
-	//------------------------------------------------------------------------------
-	CGUIString	CGUIStringConvertor::ImageOperationToString( EImageOperation eOperation)
-	{
-		switch(eOperation)
-		{
-		case IMAGE_NONE:
-			return CGUIString("IMAGE_NONE");
-		case IMAGE_ROTATE90CW:
-			return CGUIString("IMAGE_ROTATE90CW");
-		case IMAGE_ROTATE90CCW:
-			return CGUIString("IMAGE_ROTATE90CCW");
-		case IMAGE_FLIPHORIZON:
-			return CGUIString("IMAGE_FLIPHORIZON");
-		case IMAGE_FLIPVERTICAL:
-			return CGUIString("IMAGE_FLIPVERTICAL");
-		default:
-			throw CGUIException(
-				"[CGUIStringConvertor::ImageOperationToString]: unknown image operation <%d>",
-				eOperation);
-		}
-	}
-	//------------------------------------------------------------------------------
-	EAlignMode CGUIStringConvertor::StringToAlignMode( const CGUIString& rStringValue )
-	{
-		if( rStringValue == "eAbsolute" )
-		{
-			return eAbsolute;
-		}
-		else if( rStringValue == "eRelative" )
-		{
-			return eRelative;
-		}
-		else if( rStringValue == "eRelativePos_AbsoluteSize" )
-		{
-			return eRelativePos_AbsoluteSize;
-		}
-		else
-		{
-			throw CGUIException(
-				"[CGUIStringConvertor::StringToImageOperation]: string value format is wrong! <%s>",
-				rStringValue.c_str());
-		}
-	}
-	//------------------------------------------------------------------------------
-	CGUIString	CGUIStringConvertor::AlignModeToString( EAlignMode eAlignMode)
-	{
-		switch(eAlignMode)
-		{
-		case eAbsolute:
-			return CGUIString("eAbsolute");
-		case eRelative:
-			return CGUIString("eRelative");
-		case eRelativePos_AbsoluteSize:
-			return CGUIString("eRelativePos_AbsoluteSize");
-		default:
-			throw CGUIException(
-				"[CGUIStringConvertor::ImageOperationToString]: unknown image operation <%d>",
-				eAlignMode);
-		}
-	}
-	//------------------------------------------------------------------------------
-	int			CGUIStringConvertor::WideByteToMultiChar( const CGUIStringEx& rSrc, CGUIString& rDst,  const char* szFromCode )
+	int WideByteToMultiChar( const CGUIStringEx& rSrc, CGUIString& rDst,  const char* szFromCode )
 	{
 		if( rSrc.Empty())
 		{
@@ -374,7 +64,7 @@ namespace guiex
 		if( cd == (iconv_t)-1 )
 		{
 			throw CGUIException(
-				"[CGUIStringConvertor::WideByteToMultiChar]: failed to open iconv, errno is %d",
+				"[WideByteToMultiChar]: failed to open iconv, errno is %d",
 				errno);
 			return -1;
 		}
@@ -430,15 +120,15 @@ namespace guiex
 			{
 			case EILSEQ:
 				throw CGUIException(
-					"[CGUIStringConvertor::WideByteToMultiChar]: failed to iconv, errno is EILSEQ");
+					"[WideByteToMultiChar]: failed to iconv, errno is EILSEQ");
 				return -1;
 			case EINVAL:
 				throw CGUIException(
-					"[CGUIStringConvertor::WideByteToMultiChar]: failed to iconv, errno is EINVAL");
+					"[WideByteToMultiChar]: failed to iconv, errno is EINVAL");
 				return -1;
 			default:
 				throw CGUIException(
-					"[CGUIStringConvertor::WideByteToMultiChar]: failed to iconv, errno is %d",
+					"[WideByteToMultiChar]: failed to iconv, errno is %d",
 					errno);
 				return -1;
 			}
@@ -449,7 +139,7 @@ namespace guiex
 		if( ret == -1 )
 		{
 			throw CGUIException(
-				"[CGUIStringConvertor::WideByteToMultiChar]: failed to close iconv, errno is %d",
+				"[WideByteToMultiChar]: failed to close iconv, errno is %d",
 				errno);
 			return -1;
 		}
@@ -468,7 +158,7 @@ namespace guiex
 		else
 		{
 			throw CGUIException(
-				"[CGUIStringConvertor::WideByteToMultiChar]: not supported multi byte code <%s>",
+				"[WideByteToMultiChar]: not supported multi byte code <%s>",
 				pMultiByteCode );
 			return -1;
 		}
@@ -478,7 +168,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int		CGUIStringConvertor::MultiByteToWideChar( const CGUIString& rSrc, CGUIStringEx& rDst, const char* szFromCode)
+	int MultiByteToWideChar( const CGUIString& rSrc, CGUIStringEx& rDst, const char* szFromCode)
 	{
 		if( rSrc.empty())
 		{
@@ -491,7 +181,7 @@ namespace guiex
 		if( cd == (iconv_t)-1 )
 		{
 			throw CGUIException(
-				"[CGUIStringConvertor::MultiByteToWideChar]: failed to open iconv, errno is %d",
+				"[MultiByteToWideChar]: failed to open iconv, errno is %d",
 				errno);
 			return -1;
 		}
@@ -547,15 +237,15 @@ namespace guiex
 			{
 			case EILSEQ:
 				throw CGUIException(
-					"[CGUIStringConvertor::MultiByteToWideChar]: failed to iconv, errno is EILSEQ");
+					"[MultiByteToWideChar]: failed to iconv, errno is EILSEQ");
 				return -1;
 			case EINVAL:
 				throw CGUIException(
-					"[CGUIStringConvertor::MultiByteToWideChar]: failed to iconv, errno is EINVAL");
+					"[MultiByteToWideChar]: failed to iconv, errno is EINVAL");
 				return -1;
 			default:
 				throw CGUIException(
-					"[CGUIStringConvertor::MultiByteToWideChar]: failed to iconv, errno is %d",
+					"[MultiByteToWideChar]: failed to iconv, errno is %d",
 					errno);
 				return -1;
 			}
@@ -566,7 +256,7 @@ namespace guiex
 		if( ret == -1 )
 		{
 			throw CGUIException(
-				"[CGUIStringConvertor::MultiByteToWideChar]: failed to close iconv, errno is %d",
+				"[MultiByteToWideChar]: failed to close iconv, errno is %d",
 				errno);
 			return -1;
 		}
@@ -584,7 +274,7 @@ namespace guiex
 		else
 		{
 			throw CGUIException(
-				"[CGUIStringConvertor::MultiByteToWideChar]: not supported multi byte code <%s>",
+				"[MultiByteToWideChar]: not supported multi byte code <%s>",
 				pMultiByteCode );
 			return -1;
 		}
@@ -595,6 +285,477 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
+	//convert for bool
+	template< >
+	int32 StringToValue<bool>( const CGUIString& rString, bool& rValue)
+	{
+		if( rString == "true")
+		{
+			rValue = true;
+			return 0;
+		}
+		else if (  rString == "false")
+		{
+			rValue = false;
+			return 0;
+		}
+		else
+		{
+			throw CGUIException(
+				"[StringToValue[bool]]: string value format is wrong! <%s>",
+				rString.c_str());
+			return -1;
+		}
+	}
+
+	template< >
+	int32 ValueToString<bool>( const bool& rValue, CGUIString& rString)
+	{
+		rString = rValue?"true":"false";
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	//convert for uint32
+	template< >
+	int32 StringToValue<uint32>( const CGUIString& rString, uint32& rValue)
+	{
+		rValue = static_cast<uint32>(strtoul(rString.c_str(), 0, 10));
+
+		return 0;
+	}
+
+	template< >
+	int32 ValueToString<uint32>( const uint32& rValue, CGUIString& rString )
+	{
+		std::stringstream stream;
+		stream.width(0);
+		stream.fill(' ');
+		stream << rValue;
+		rString = stream.str();
+
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	//convert for int32
+	template<  >
+	int32 StringToValue<int32>( const CGUIString& rString, int32& rValue)
+	{
+		rValue = static_cast<int32>(strtol(rString.c_str(), 0, 10));
+
+		return 0;
+	}
+
+	template<  >
+	int32 ValueToString<int32>( const int32& rValue, CGUIString& rString )
+	{
+		std::stringstream stream;
+		stream.width(0);
+		stream.fill(' ');
+		stream << rValue;
+		rString = stream.str();
+
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	//convert for uint16
+	template<  >
+	int32 StringToValue<uint16>( const CGUIString& rString, uint16& rValue)
+	{
+		rValue = static_cast<uint16>(strtoul(rString.c_str(), 0, 10));
+
+		return 0;
+	}
+
+	template<  >
+	int32 ValueToString<uint16>( const uint16& rValue, CGUIString& rString )
+	{
+		std::stringstream stream;
+		stream.width(0);
+		stream.fill(' ');
+		stream << rValue;
+		rString = stream.str();
+
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	//convert for int16
+	template<  >
+	int32 StringToValue<int16>( const CGUIString& rString, int16& rValue)
+	{
+		rValue = static_cast<int16>(strtol(rString.c_str(), 0, 10));
+
+		return 0;
+	}
+
+	template<  >
+	int32 ValueToString<int16>( const int16& rValue, CGUIString& rString )
+	{
+		std::stringstream stream;
+		stream.width(0);
+		stream.fill(' ');
+		stream << rValue;
+		rString = stream.str();
+
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	//convert for real
+	template<  >
+	int32 StringToValue<real>( const CGUIString& rString, real& rValue)
+	{
+		rValue = static_cast<real>(strtod(rString.c_str(), 0));
+
+		return 0;
+	}
+
+	template<  >
+	int32 ValueToString<real>( const real& rValue, CGUIString& rString )
+	{
+		std::stringstream stream;
+		stream.width(0);
+		stream.fill(' ');
+		stream << rValue;
+		rString = stream.str();
+
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	//convert for CGUIRect
+	template<  >
+	int32 StringToValue<CGUIRect>( const CGUIString& rString, CGUIRect& rValue)
+	{
+		//string should have format as "left, top, right,bottom"
+		std::vector<CGUIString> aListString= StringToVector(rString);
+		if( aListString.size() != 4 )
+		{
+			throw CGUIException(
+				"[StringToValue[CGUIRect]]: string value format is wrong! <%s>",
+				rString.c_str());
+			return -1;
+		}
+
+		StringToValue( aListString[0], rValue.m_fLeft );
+		StringToValue( aListString[1], rValue.m_fTop );
+		StringToValue( aListString[2], rValue.m_fRight );
+		StringToValue( aListString[3], rValue.m_fBottom );
+		return 0;
+	}
+
+	template<  >
+	int32 ValueToString<CGUIRect>( const CGUIRect& rValue, CGUIString& rString )
+	{
+		std::stringstream stream;
+		stream.width(0);
+		stream.fill(' ');
+		stream << rValue.m_fLeft<<','<<rValue.m_fTop<<','<<rValue.m_fRight<<','<<rValue.m_fBottom;
+		rString = stream.str();
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	//convert for CGUISize
+	template<  >
+	int32 StringToValue<CGUISize>( const CGUIString& rString, CGUISize& rValue)
+	{
+		//string should have format as "width,height"
+		std::vector<CGUIString> aListString= StringToVector(rString);
+
+		if( aListString.size() != 2 )
+		{
+			throw CGUIException(
+				"[StringToValue[CGUISize]]: string value format is wrong! <%s>",
+				rString.c_str());
+			return -1;
+		}
+
+		StringToValue( aListString[0], rValue.m_fWidth );
+		StringToValue( aListString[1], rValue.m_fHeight );
+		return 0;
+	}
+
+	template<  >
+	int32 ValueToString<CGUISize>( const CGUISize& rValue, CGUIString& rString )
+	{
+		std::stringstream stream;
+		stream.width(0);
+		stream.fill(' ');
+		stream << rValue.m_fWidth<<','<<rValue.m_fHeight;
+		rString = stream.str();
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	//convert for CGUIVector2
+	template<  >
+	int32 StringToValue<CGUIVector2>( const CGUIString& rString, CGUIVector2& rValue)
+	{
+		//string should have format as "x,y"
+		std::vector<CGUIString> aListString= StringToVector(rString);
+
+		if( aListString.size() != 2 )
+		{
+			throw CGUIException(
+				"[StringToValue[StringToValue]]: string value format is wrong! <%s>",
+				rString.c_str());
+			return -1;
+		}
+
+		StringToValue(aListString[0], rValue.x);
+		StringToValue(aListString[1], rValue.y);
+		return 0;
+	}
+
+	template<  >
+	int32 ValueToString<CGUIVector2>( const CGUIVector2& rValue, CGUIString& rString )
+	{
+		std::stringstream stream;
+		stream.width(0);
+		stream.fill(' ');
+		stream << rValue.x<<','<<rValue.y;
+		rString = stream.str();
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	//convert for CGUIColor
+	template<  >
+	int32 StringToValue<CGUIColor>( const CGUIString& rString, CGUIColor& rValue)
+	{
+		//string should have format as "r,g,b,a"
+		std::vector<CGUIString> aListString= StringToVector(rString);
+
+		if( aListString.size() != 4 )
+		{
+			throw CGUIException(
+				"[StringToValue[CGUIColor]]: string value format is wrong! <%s>",
+				rString.c_str());
+			return -1;
+		}
+
+		real fColor;
+		StringToValue(aListString[0], fColor );
+		rValue.SetRed( fColor );
+		StringToValue(aListString[1], fColor );
+		rValue.SetGreen( fColor );
+		StringToValue(aListString[2], fColor );
+		rValue.SetBlue( fColor );
+		StringToValue(aListString[3], fColor );
+		rValue.SetAlpha( fColor );
+		return 0;
+	}
+
+	template<  >
+	int32 ValueToString<CGUIColor>( const CGUIColor& rValue, CGUIString& rString )
+	{
+		std::stringstream stream;
+		stream.width(0);
+		stream.fill(' ');
+		stream << rValue.GetRed()<<','<<rValue.GetGreen()<<','<<rValue.GetBlue()<<','<<rValue.GetAlpha();
+		rString = stream.str();
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	//convert for EImageOperation
+	template<  >
+	int32 StringToValue<EImageOperation>( const CGUIString& rString, EImageOperation& rValue)
+	{
+		if( rString == "IMAGE_NONE" )
+		{
+			rValue = IMAGE_NONE;
+		}
+		else if( rString == "IMAGE_ROTATE90CW" )
+		{
+			rValue = IMAGE_ROTATE90CW;
+		}
+		else if( rString == "IMAGE_ROTATE90CCW" )
+		{
+			rValue = IMAGE_ROTATE90CCW;
+		}
+		else if( rString == "IMAGE_FLIPHORIZON" )
+		{
+			rValue = IMAGE_FLIPHORIZON;
+		}
+		else if( rString == "IMAGE_FLIPVERTICAL" )
+		{
+			rValue = IMAGE_FLIPVERTICAL;
+		}
+		else
+		{
+			throw CGUIException(
+				"[StringToValue[EImageOperation]]: string value format is wrong! <%s>",
+				rString.c_str());
+			return -1;
+		}
+		return 0;
+	}
+
+	template<  >
+	int32 ValueToString<EImageOperation>( const EImageOperation& rValue, CGUIString& rString )
+	{
+		switch(rValue)
+		{
+		case IMAGE_NONE:
+			rString = CGUIString("IMAGE_NONE");
+			break;
+		case IMAGE_ROTATE90CW:
+			rString =  CGUIString("IMAGE_ROTATE90CW");
+			break;
+		case IMAGE_ROTATE90CCW:
+			rString =  CGUIString("IMAGE_ROTATE90CCW");
+			break;
+		case IMAGE_FLIPHORIZON:
+			rString =  CGUIString("IMAGE_FLIPHORIZON");
+			break;
+		case IMAGE_FLIPVERTICAL:
+			rString =  CGUIString("IMAGE_FLIPVERTICAL");
+			break;
+		default:
+			throw CGUIException(
+				"[ValueToString[EImageOperation]]: unknown image operation <%d>",
+				rValue);
+			return -1;
+		}
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	//convert for EScreenValue
+	template<  >
+	int32 StringToValue<EScreenValue>( const CGUIString& rString, EScreenValue& rValue)
+	{
+		if( rString == "eScreenValue_Pixel" )
+		{
+			rValue = eScreenValue_Pixel;
+		}
+		else if( rString == "eScreenValue_Percentage" )
+		{
+			rValue = eScreenValue_Percentage;
+		}
+		else
+		{
+			throw CGUIException(
+				"[StringToValue[EScreenValue]]: string value format is wrong! <%s>",
+				rString.c_str());
+			return -1;
+		}
+		return 0;
+	}
+
+	template<  >
+	int32 ValueToString<EScreenValue>( const EScreenValue& rValue, CGUIString& rString )
+	{
+		switch(rValue)
+		{
+		case eScreenValue_Pixel:
+			rString = CGUIString("eScreenValue_Pixel");
+			break;
+		case eScreenValue_Percentage:
+			rString = CGUIString("eScreenValue_Percentage");
+			break;
+		default:
+			throw CGUIException(
+				"[ValueToString[EScreenValue]]: unknown image operation <%d>",
+				rValue);
+			return -1;
+		}
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	//convert for ETextAlignmentHorz
+	template<  >
+	int32 StringToValue<ETextAlignmentHorz>( const CGUIString& rString, ETextAlignmentHorz& rValue)
+	{
+		if( rString == "eTextAlignment_Horz_Left" )
+		{
+			rValue = eTextAlignment_Horz_Left;
+		}
+		else if( rString == "eTextAlignment_Horz_Right" )
+		{
+			rValue = eTextAlignment_Horz_Right;
+		}
+		else if( rString == "eTextAlignment_Horz_Center" )
+		{
+			rValue = eTextAlignment_Horz_Center;
+		}
+		else
+		{
+			throw CGUIException(
+				"[StringToValue[ETextAlignmentHorz]]: string value format is wrong! <%s>",
+				rString.c_str());
+			return -1;
+		}
+		return 0;
+	}
+
+	template<  >
+	int32 ValueToString<ETextAlignmentHorz>( const ETextAlignmentHorz& rValue, CGUIString& rString )
+	{
+		switch(rValue)
+		{
+		case eTextAlignment_Horz_Left:
+			rString = CGUIString("eTextAlignment_Horz_Left");
+			break;
+		case eTextAlignment_Horz_Right:
+			rString = CGUIString("eTextAlignment_Horz_Right");
+			break;
+		case eTextAlignment_Horz_Center:
+			rString = CGUIString("eTextAlignment_Horz_Center");
+			break;
+		default:
+			throw CGUIException(
+				"[ValueToString[ETextAlignmentHorz]]: unknown ETextAlignmentHorz enum <%d>",
+				rValue);
+			return -1;
+		}
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	//convert for ETextAlignmentVert
+	template<  >
+	int32 StringToValue<ETextAlignmentVert>( const CGUIString& rString, ETextAlignmentVert& rValue)
+	{
+		if( rString == "eTextAlignment_Vert_Up" )
+		{
+			rValue = eTextAlignment_Vert_Up;
+		}
+		else if( rString == "eTextAlignment_Vert_Down" )
+		{
+			rValue = eTextAlignment_Vert_Down;
+		}
+		else if( rString == "eTextAlignment_Vert_Center" )
+		{
+			rValue = eTextAlignment_Vert_Center;
+		}
+		else
+		{
+			throw CGUIException(
+				"[StringToValue[ETextAlignmentVert]]: string value format is wrong! <%s>",
+				rString.c_str());
+			return -1;
+		}
+		return 0;
+	}
+
+	template<  >
+	int32 ValueToString<ETextAlignmentVert>( const ETextAlignmentVert& rValue, CGUIString& rString )
+	{
+		switch(rValue)
+		{
+		case eTextAlignment_Vert_Up:
+			rString = CGUIString("eTextAlignment_Vert_Up");
+			break;
+		case eTextAlignment_Vert_Down:
+			rString = CGUIString("eTextAlignment_Vert_Down");
+			break;
+		case eTextAlignment_Vert_Center:
+			rString = CGUIString("eTextAlignment_Vert_Center");
+			break;
+		default:
+			throw CGUIException(
+				"[ValueToString[ETextAlignmentVert]]: unknown ETextAlignmentVert enum <%d>",
+				rValue);
+			return -1;
+		}
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+
 
 }//namespace guiex
  

@@ -73,14 +73,14 @@ namespace guiex
 		/**
 		* @brief create a named image by property
 		*
-		*<property name="btn_ok_hover" type="NAMED_IMAGE">
-		*		<property name="PATH" type="STRING" value="./data/sample.png"/>
-		*		<property name="UV" type="RECT" value="0,0,0.5,1" />
-		*		<property name="IMAGE_OPERATION" type="ENUM" value="IMAGE_NONE" />
+		*<property name="btn_ok_hover" type="CGUIImage">
+		*		<property name="path" type="CGUIString" value="./data/sample.png"/>
+		*		<property name="uv" type="CGUIRect" value="0,0,0.5,1" />
+		*		<property name="operation" type="EImageOperation" value="IMAGE_NONE" />
 		*</property>
 		*
-		*<property name="btn_ok_hover" type="NAMED_IMAGE">
-		*		<property name="COLOR" type="COLOR" value="0.5,0.0,0.6"/>
+		*<property name="btn_ok_hover" type="CGUIImage">
+		*		<property name="color" type="CGUIColor" value="0.5,0.0,0.6"/>
 		*</property>
 		*
 		*/

@@ -32,8 +32,10 @@ namespace guiex
 	* @class CGUIWgtScrollbarContainer
 	* @brief scrollbar container class.
 	* used image name.
-	* usage:	m_aClientRect: the area where the client widget can render
-	*			m_aClientClipRect: the area where the client can show
+	* usage:	GetClientArea(): the area where the client widget can render, maybe 
+	*			bigger than container bounds.
+	*			GetClipArea(): the area where the client can show, 
+	*			clip)area = bound_area - scrollbar_area
 	*
 	* - SCROLLBAR_VERTIC_BG
 	* - SCROLLBAR_VERTIC_ARROW_NORMAL_0
@@ -117,17 +119,12 @@ namespace guiex
 		/// render
 		virtual void	RenderSelf(IGUIInterfaceRender* pRender);
 
-		//use PreUpdateDirtyRect() and PostUpdateDirtyRect() instead of this function
-		virtual void	UpdateDirtyRect();
-
-		//begin-update dirty rect
-		virtual void			UpdateDirtyRect_SC_Begin();
-
-		//end-update dirty rect
-		virtual void			UpdateDirtyRect_SC_End();
+		virtual void	RefreshImpl();
 
 		//get actual page size
 		void			UpdateScrollbars(void);
+		
+		virtual void	UpdateClientArea(void);
 
 		/**
 		* @brief override the OnSetImage function
@@ -135,10 +132,6 @@ namespace guiex
 		virtual void	OnSetImage( const CGUIString& rName,CGUIImage* pImage );
 
 	protected:	//!< callback function
-		virtual uint32		OnOpen( CGUIEventNotification* pEvent );
-		virtual uint32		OnScaleChange( CGUIEventNotification* pEvent );
-		virtual uint32		OnSizeChange( CGUIEventSize* pEvent );
-
 		virtual uint32		OnScrollbarScroll( CGUIEventScrollbar* pEvent );
 
 

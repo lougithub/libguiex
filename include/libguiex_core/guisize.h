@@ -12,7 +12,6 @@
 // include
 //============================================================================// 
 #include "guibase.h"
-#include "guipropertyable.h"
 
 //============================================================================//
 // class
@@ -23,7 +22,7 @@ namespace guiex
 	/**
 	* @brief class that hold the size of object.
 	*/
-	class GUIEXPORT CGUISize : public CGUIPropertyable
+	class GUIEXPORT CGUISize 
 	{
 	public:
 		/**
@@ -151,9 +150,6 @@ namespace guiex
 		* @brief algorithm operator
 		*/
 		CGUISize& operator/=(const CGUISize& other);
-
-		virtual void SaveToProperty( CGUIProperty& rProperty ) const;
-		virtual void LoadFromProperty( const CGUIProperty& rProperty );
 
 	public:
 		real m_fWidth;

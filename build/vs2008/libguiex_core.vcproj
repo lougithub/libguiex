@@ -339,10 +339,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guipropertyable.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\source\libguiex_core\guipropertyconvertor.cpp"
 				>
 			</File>
@@ -662,10 +658,6 @@
 			</File>
 			<File
 				RelativePath="..\..\include\libguiex_core\guiproperty.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\include\libguiex_core\guipropertyable.h"
 				>
 			</File>
 			<File
