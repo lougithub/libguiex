@@ -21,11 +21,9 @@
 #include "guitimer.h"
 #include "guicolorrect.h"
 #include "guiproperty.h"
-#include "guiimage.h"
 #include "guiwidgetparameter.h"
 #include "guirenderrect.h"
 #include "guitypes.h"
-
 #include <bitset>
 #include <vector>
 #include <map>

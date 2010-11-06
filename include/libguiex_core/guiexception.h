@@ -21,55 +21,52 @@
 //============================================================================// 
 namespace guiex
 {	
-/**
- * @class CGUIBaseException
- * @brief base class of exception, used for guiex system..
- */
-class GUIEXPORT CGUIBaseException : public std::exception
-{
-public:
-	CGUIBaseException( );
-	CGUIBaseException( const CGUIString& rError );
-  virtual const char *what( ) const;
-
-protected:
-	CGUIString	m_strError;
-};
-
-/**
- * @class CGUIException
- * @brief common exception, used for guiex system..
- */
-class GUIEXPORT CGUIException : public CGUIBaseException
-{
-public:
-   CGUIException( const CGUIString& rError );
-
-   CGUIException( const char *format, ... );
-};
-
-/**
- * @class CGUIException_Script
- * @brief exception caused by parse script
- */
-class GUIEXPORT CGUIException_Script : public CGUIBaseException
-{
-public:
-   CGUIException_Script( const CGUIString& rError );
-
-   CGUIException_Script( const char *format, ... );
-};
-
-//============================================================================//
-// function
-//============================================================================// 
-/**
- * @brief throw a exception
- */
-GUIEXPORT void ThrowException(const CGUIString& rError);
-
-
-
+	/**
+	 * @class CGUIBaseException
+	 * @brief base class of exception, used for guiex system..
+	 */
+	class GUIEXPORT CGUIBaseException : public std::exception
+	{
+	public:
+		CGUIBaseException() throw() {}
+		CGUIBaseException( const char* szError ) throw();
+		~CGUIBaseException() throw(){};
+		virtual const char *what( ) const throw();
+		
+	protected:
+		CGUIString	m_strError;
+	};
+	
+	/**
+	 * @class CGUIException
+	 * @brief common exception, used for guiex system..
+	 */
+	class GUIEXPORT CGUIException : public CGUIBaseException
+	{
+	public:
+		CGUIException( const char *format, ... ) throw();
+	};
+	
+	/**
+	 * @class CGUIException_Script
+	 * @brief exception caused by parse script
+	 */
+	class GUIEXPORT CGUIException_Script : public CGUIBaseException
+	{
+	public:
+		CGUIException_Script( const char *format, ... ) throw();
+	};
+	
+	//============================================================================//
+	// function
+	//============================================================================// 
+	/**
+	 * @brief throw a exception
+	 */
+	GUIEXPORT void ThrowException(const char* szError);
+	
+	
+	
 }//namespace guiex
 
 #endif //__GUI_EXCEPTION_H_20060526__

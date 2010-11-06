@@ -871,8 +871,8 @@ namespace guiex
 		/// get name of this ui event
 		const CGUIString&	GetUIName( ) const;
 
-		void			SetArg(INT nIndex, const CGUIString& rArg );
-		const CGUIString&	GetArg(INT nIndex) const;
+		void			SetArg(int nIndex, const CGUIString& rArg );
+		const CGUIString&	GetArg(int nIndex) const;
 
 	protected:
 		void*			m_pExtraData;

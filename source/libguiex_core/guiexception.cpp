@@ -25,81 +25,61 @@
 //============================================================================// 
 namespace guiex
 {
-//------------------------------------------------------------------------------
-CGUIBaseException::CGUIBaseException( )
-:std::exception()
-{
-}
-//------------------------------------------------------------------------------
-CGUIBaseException::CGUIBaseException( const CGUIString& rError )
-:std::exception()
-,m_strError(rError)
-{
-}
-//------------------------------------------------------------------------------
-const char * CGUIBaseException::what( ) const
-{
-	return m_strError.c_str();
-}
-//------------------------------------------------------------------------------
-
-//------------------------------------------------------------------------------
-CGUIException::CGUIException( const CGUIString& rError )
-:CGUIBaseException(rError)
-{
-#if GUI_EXCEPTION_ASSERT
-#	ifdef WIN32
-	if (IsDebuggerPresent()) 
+	//------------------------------------------------------------------------------
+	void ThrowException(const char* szError)
 	{
-		GUI_FORCE_ASSERT(m_strError.c_str());
+		throw CGUIException(szError);
 	}
-#	endif
-#endif
-}
-//------------------------------------------------------------------------------
-CGUIException::CGUIException( const char *format, ... )
-{
-	char szBuffer[4097];
-	va_list argp;
-	va_start (argp, format);
-	::vsnprintf( szBuffer, 4096, format, argp );
-	m_strError = szBuffer;
-	va_end(argp);
-
-#if GUI_EXCEPTION_ASSERT
-#	ifdef WIN32
-	if (IsDebuggerPresent()) 
-	{
-		GUI_FORCE_ASSERT(m_strError.c_str());
-	}
-#	endif
-#endif
-}
-
-//------------------------------------------------------------------------------
-void ThrowException(const CGUIString& rError)
-{
-	throw CGUIException(rError);
-}
-//------------------------------------------------------------------------------
-
-
-
-//------------------------------------------------------------------------------
-CGUIException_Script::CGUIException_Script( const CGUIString& rError )
-:CGUIBaseException(rError)
-{
+	//------------------------------------------------------------------------------
 	
-}
-//------------------------------------------------------------------------------
-CGUIException_Script::CGUIException_Script( const char *format, ... )
-{
-	char szBuffer[4097];
-	va_list argp;
-	va_start (argp, format);
-	::vsnprintf( szBuffer, 4096, format, argp );
-	m_strError = szBuffer;
-	va_end(argp);
-}
-//------------------------------------------------------------------------------
+	
+	//------------------------------------------------------------------------------
+	CGUIBaseException::CGUIBaseException( const char* szError ) throw()
+	:std::exception()
+	,m_strError(szError)
+	{
+	}
+	//------------------------------------------------------------------------------
+	const char * CGUIBaseException::what( ) const throw()
+	{
+		return m_strError.c_str();
+	}
+	//------------------------------------------------------------------------------
+	
+	
+	//------------------------------------------------------------------------------
+	CGUIException::CGUIException( const char *format, ... ) throw()
+	{
+		char szBuffer[4097];
+		va_list argp;
+		va_start (argp, format);
+		::vsnprintf( szBuffer, 4096, format, argp );
+		m_strError = szBuffer;
+		va_end(argp);
+		
+#if GUI_EXCEPTION_ASSERT
+#	ifdef WIN32
+		if (IsDebuggerPresent()) 
+		{
+			GUI_FORCE_ASSERT(m_strError.c_str());
+		}
+#	endif
+#endif
+	}
+	
+	//------------------------------------------------------------------------------
+
+	
+	
+	//------------------------------------------------------------------------------
+	CGUIException_Script::CGUIException_Script( const char *format, ... ) throw()
+	{
+		char szBuffer[4097];
+		va_list argp;
+		va_start (argp, format);
+		::vsnprintf( szBuffer, 4096, format, argp );
+		m_strError = szBuffer;
+		va_end(argp);
+	}
+	//------------------------------------------------------------------------------
 }//namespace guiex

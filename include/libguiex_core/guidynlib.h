@@ -16,6 +16,8 @@
 #	include <windows.h>
 #elif defined(__linux__)
 #   include <dlfcn.h>
+#elif defined(__APPLE__) && defined(__MACH__)
+#   include <dlfcn.h>
 #else
 #	error "unknown platform"
 #endif
@@ -38,6 +40,12 @@ namespace guiex
 #    define GUI_DYNLIB_GETSYM( a, b ) dlsym( a, b )
 #    define GUI_DYNLIB_UNLOAD( a ) dlclose( a )
 #    define GUI_DYNLIB_ERROR( ) dlerror( )
+#elif defined(__APPLE__) && defined(__MACH__)
+#    define GUI_DYNLIB_HANDLE void*
+#    define GUI_DYNLIB_LOAD( a ) dlopen( a, RTLD_LAZY )
+#    define GUI_DYNLIB_GETSYM( a, b ) dlsym( a, b )
+#    define GUI_DYNLIB_UNLOAD( a ) dlclose( a )
+#    define GUI_DYNLIB_ERROR( ) dlerror( )	
 #else
 #	error "unknown platform"
 #endif

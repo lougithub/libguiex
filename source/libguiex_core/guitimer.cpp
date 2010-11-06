@@ -71,10 +71,6 @@ namespace guiex
 
 		return newTicks>GUI_TIMER_MILLISEC_MAX ? GUI_TIMER_MILLISEC_MAX :static_cast<int32>(newTicks);
 	}
-
-
-
-
 #elif defined(__linux__)
 	//------------------------------------------------------------------------------
 	CGUITimer::CGUITimer()
@@ -115,7 +111,46 @@ namespace guiex
 
 		return nMicroseconds;
 	}
-
+#elif defined(__APPLE__) && defined(__MACH__)
+	//------------------------------------------------------------------------------
+	CGUITimer::CGUITimer()
+	{
+	}
+	//------------------------------------------------------------------------------
+	CGUITimer::CGUITimer(const CGUITimer& rTimer)
+	:m_aTimeVal(rTimer.m_aTimeVal)
+	{
+	}
+	//------------------------------------------------------------------------------
+	void	CGUITimer::Assign( const CGUITimer& rTimer )
+	{
+		if( this != &rTimer)
+		{
+			m_aTimeVal = rTimer.m_aTimeVal;
+		}
+	}
+	//------------------------------------------------------------------------------
+	CGUITimer CGUITimer::operator=(const CGUITimer& rTimer)
+	{
+		if( this != &rTimer)
+		{
+			m_aTimeVal = rTimer.m_aTimeVal;
+		}
+		return *this;
+	}
+	//------------------------------------------------------------------------------
+	void	CGUITimer::UpdateTime()
+	{
+		gettimeofday(&m_aTimeVal,NULL);
+	}
+	//------------------------------------------------------------------------------
+	int32	CGUITimer::operator-(const CGUITimer& rTimer)
+	{
+		int32 nMicroseconds = 1000 * ( m_aTimeVal.tv_sec - rTimer.tv_sec ) 
+		+ (_tend.tv_usec - m_tstart.tv_usec)/1000;
+		
+		return nMicroseconds;
+	}
 #else
 #	error "unknown platform"
 #endif

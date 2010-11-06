@@ -17,6 +17,8 @@
 #	include <windows.h>
 #elif defined(__linux__)
 #	include <sys/time.h>
+#elif defined(__APPLE__) && defined(__MACH__)
+#	include <sys/time.h>
 #else
 #	error "unknown platform"
 #endif
@@ -80,6 +82,8 @@ namespace guiex
 		static bool				m_sbInit;
 		LARGE_INTEGER			m_aTimeCounter;
 #elif defined(__linux__)
+		timeval m_aTimeVal;
+#elif defined(__APPLE__) && defined(__MACH__)
 		timeval m_aTimeVal;
 #else
 #	error "unknown platform"

@@ -54,7 +54,7 @@ namespace guiex
 		,m_pReceiver(NULL)
 		,m_strEventType(pEventName)
 		//,m_pEventGenerator(NULL)
-		,m_bConsumed(FALSE)
+		,m_bConsumed(false)
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -808,7 +808,7 @@ namespace guiex
 		m_uEventId = eEVENT_UI;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIEventUI::SetArg(INT nIndex, const CGUIString& rArg )
+	void	CGUIEventUI::SetArg(int nIndex, const CGUIString& rArg )
 	{
 		if( nIndex >= MAX_UIEVENT_ARGS )
 		{
@@ -818,7 +818,7 @@ namespace guiex
 		m_pArgs[nIndex] = rArg;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIString&	CGUIEventUI::GetArg(INT nIndex) const
+	const CGUIString&	CGUIEventUI::GetArg(int nIndex) const
 	{
 		if( nIndex >= MAX_UIEVENT_ARGS )
 		{

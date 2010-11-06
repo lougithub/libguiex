@@ -9,6 +9,161 @@
 /* Begin PBXBuildFile section */
 		AA747D9F0F9514B9006C5449 /* libguiex_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AA747D9E0F9514B9006C5449 /* libguiex_Prefix.pch */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
+		FF8FAC061285A4F200D7DF5A /* guitimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEEF12858CB200C0BCB4 /* guitimer.cpp */; };
+		FF8FAC071285A4FC00D7DF5A /* guitimer.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE6212858C9D00C0BCB4 /* guitimer.h */; };
+		FFACE03F1285943A00C0BCB4 /* guianimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEB112858CB200C0BCB4 /* guianimation.cpp */; };
+		FFACE0401285943A00C0BCB4 /* guianimationmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEB212858CB200C0BCB4 /* guianimationmanager.cpp */; };
+		FFACE0411285943A00C0BCB4 /* guias.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEB312858CB200C0BCB4 /* guias.cpp */; };
+		FFACE0421285943A00C0BCB4 /* guiasfactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEB412858CB200C0BCB4 /* guiasfactory.cpp */; };
+		FFACE0431285943A00C0BCB4 /* guiasgenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEB512858CB200C0BCB4 /* guiasgenerator.cpp */; };
+		FFACE0441285943A00C0BCB4 /* guiassert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEB612858CB200C0BCB4 /* guiassert.cpp */; };
+		FFACE0451285943A00C0BCB4 /* guicleanup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEB712858CB200C0BCB4 /* guicleanup.cpp */; };
+		FFACE0461285943A00C0BCB4 /* guicolor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEB812858CB200C0BCB4 /* guicolor.cpp */; };
+		FFACE0471285943A00C0BCB4 /* guicolorrect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEB912858CB200C0BCB4 /* guicolorrect.cpp */; };
+		FFACE0481285943A00C0BCB4 /* guidebug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEBA12858CB200C0BCB4 /* guidebug.cpp */; };
+		FFACE0491285943A00C0BCB4 /* guievent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEBB12858CB200C0BCB4 /* guievent.cpp */; };
+		FFACE04A1285943A00C0BCB4 /* guiexception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEBC12858CB200C0BCB4 /* guiexception.cpp */; };
+		FFACE04B1285943A00C0BCB4 /* guifont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEBD12858CB200C0BCB4 /* guifont.cpp */; };
+		FFACE04C1285943A00C0BCB4 /* guifontmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEBE12858CB200C0BCB4 /* guifontmanager.cpp */; };
+		FFACE04D1285943A00C0BCB4 /* guiimage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEBF12858CB200C0BCB4 /* guiimage.cpp */; };
+		FFACE04E1285943A00C0BCB4 /* guiimagedata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEC012858CB200C0BCB4 /* guiimagedata.cpp */; };
+		FFACE04F1285943A00C0BCB4 /* guiimagemanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEC112858CB200C0BCB4 /* guiimagemanager.cpp */; };
+		FFACE0501285943A00C0BCB4 /* guiinputprocessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEC212858CB200C0BCB4 /* guiinputprocessor.cpp */; };
+		FFACE0511285943A00C0BCB4 /* guiinterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEC312858CB200C0BCB4 /* guiinterface.cpp */; };
+		FFACE0521285943A00C0BCB4 /* guiinterfacecommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEC412858CB200C0BCB4 /* guiinterfacecommand.cpp */; };
+		FFACE0531285943A00C0BCB4 /* guiinterfaceconfigfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEC512858CB200C0BCB4 /* guiinterfaceconfigfile.cpp */; };
+		FFACE0541285943A00C0BCB4 /* guiinterfacefilesys.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEC612858CB200C0BCB4 /* guiinterfacefilesys.cpp */; };
+		FFACE0551285943A00C0BCB4 /* guiinterfacefont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEC712858CB200C0BCB4 /* guiinterfacefont.cpp */; };
+		FFACE0561285943A00C0BCB4 /* guiinterfaceimageloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEC812858CB200C0BCB4 /* guiinterfaceimageloader.cpp */; };
+		FFACE0571285943A00C0BCB4 /* guiinterfaceime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEC912858CB200C0BCB4 /* guiinterfaceime.cpp */; };
+		FFACE0581285943A00C0BCB4 /* guiinterfacekeyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDECA12858CB200C0BCB4 /* guiinterfacekeyboard.cpp */; };
+		FFACE0591285943A00C0BCB4 /* guiinterfacemanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDECB12858CB200C0BCB4 /* guiinterfacemanager.cpp */; };
+		FFACE05A1285943A00C0BCB4 /* guiinterfacemouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDECC12858CB200C0BCB4 /* guiinterfacemouse.cpp */; };
+		FFACE05B1285943A00C0BCB4 /* guiinterfacerender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDECD12858CB200C0BCB4 /* guiinterfacerender.cpp */; };
+		FFACE05C1285943A00C0BCB4 /* guiinterfacescript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDECE12858CB200C0BCB4 /* guiinterfacescript.cpp */; };
+		FFACE05D1285943A00C0BCB4 /* guiinterfacesound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDECF12858CB200C0BCB4 /* guiinterfacesound.cpp */; };
+		FFACE05E1285943A00C0BCB4 /* guilogmsg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDED012858CB200C0BCB4 /* guilogmsg.cpp */; };
+		FFACE05F1285943A00C0BCB4 /* guilogmsgcallback.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDED112858CB200C0BCB4 /* guilogmsgcallback.cpp */; };
+		FFACE0601285943A00C0BCB4 /* guilogmsgmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDED212858CB200C0BCB4 /* guilogmsgmanager.cpp */; };
+		FFACE0611285943A00C0BCB4 /* guilogmsgrecord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDED312858CB200C0BCB4 /* guilogmsgrecord.cpp */; };
+		FFACE0621285943A00C0BCB4 /* guimath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDED412858CB200C0BCB4 /* guimath.cpp */; };
+		FFACE0631285943A00C0BCB4 /* guimatrix3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDED512858CB200C0BCB4 /* guimatrix3.cpp */; };
+		FFACE0641285943A00C0BCB4 /* guimatrix4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDED612858CB200C0BCB4 /* guimatrix4.cpp */; };
+		FFACE0651285943A00C0BCB4 /* guimousecursor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDED712858CB200C0BCB4 /* guimousecursor.cpp */; };
+		FFACE0661285943A00C0BCB4 /* guinode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDED812858CB200C0BCB4 /* guinode.cpp */; };
+		FFACE0671285943A00C0BCB4 /* guiobjectmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDED912858CB200C0BCB4 /* guiobjectmanager.cpp */; };
+		FFACE0681285943A00C0BCB4 /* guiobjectmanagerbase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEDA12858CB200C0BCB4 /* guiobjectmanagerbase.cpp */; };
+		FFACE0691285943A00C0BCB4 /* guiperfmonitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEDB12858CB200C0BCB4 /* guiperfmonitor.cpp */; };
+		FFACE06A1285943A00C0BCB4 /* guiplane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEDC12858CB200C0BCB4 /* guiplane.cpp */; };
+		FFACE06B1285943A00C0BCB4 /* guiprojectinfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEDD12858CB200C0BCB4 /* guiprojectinfo.cpp */; };
+		FFACE06C1285943A00C0BCB4 /* guiprojectinfomanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEDE12858CB200C0BCB4 /* guiprojectinfomanager.cpp */; };
+		FFACE06D1285943A00C0BCB4 /* guiprojectutility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEDF12858CB200C0BCB4 /* guiprojectutility.cpp */; };
+		FFACE06E1285943A00C0BCB4 /* guiproperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEE012858CB200C0BCB4 /* guiproperty.cpp */; };
+		FFACE0701285943A00C0BCB4 /* guipropertyconvertor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEE212858CB200C0BCB4 /* guipropertyconvertor.cpp */; };
+		FFACE0711285943A00C0BCB4 /* guipropertymanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEE312858CB200C0BCB4 /* guipropertymanager.cpp */; };
+		FFACE0731285943A00C0BCB4 /* guiquaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEE512858CB200C0BCB4 /* guiquaternion.cpp */; };
+		FFACE0741285943A00C0BCB4 /* guirect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEE612858CB200C0BCB4 /* guirect.cpp */; };
+		FFACE0751285943A00C0BCB4 /* guirenderrect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEE712858CB200C0BCB4 /* guirenderrect.cpp */; };
+		FFACE0761285943A00C0BCB4 /* guiresource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEE812858CB200C0BCB4 /* guiresource.cpp */; };
+		FFACE0771285943A00C0BCB4 /* guisize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEE912858CB200C0BCB4 /* guisize.cpp */; };
+		FFACE0781285943A00C0BCB4 /* guistringconvertor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEEA12858CB200C0BCB4 /* guistringconvertor.cpp */; };
+		FFACE0791285943A00C0BCB4 /* guistringex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEEB12858CB200C0BCB4 /* guistringex.cpp */; };
+		FFACE07A1285943A00C0BCB4 /* guitexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEEC12858CB200C0BCB4 /* guitexture.cpp */; };
+		FFACE07B1285943A00C0BCB4 /* guitextureimp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEED12858CB200C0BCB4 /* guitextureimp.cpp */; };
+		FFACE07C1285943A00C0BCB4 /* guitexturemanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEEE12858CB200C0BCB4 /* guitexturemanager.cpp */; };
+		FFACE07E1285943A00C0BCB4 /* guiutility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEF012858CB200C0BCB4 /* guiutility.cpp */; };
+		FFACE07F1285943A00C0BCB4 /* guivector2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEF112858CB200C0BCB4 /* guivector2.cpp */; };
+		FFACE0801285943A00C0BCB4 /* guivector3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEF212858CB200C0BCB4 /* guivector3.cpp */; };
+		FFACE0811285943A00C0BCB4 /* guivector4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEF312858CB200C0BCB4 /* guivector4.cpp */; };
+		FFACE0821285943A00C0BCB4 /* guiwidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEF412858CB200C0BCB4 /* guiwidget.cpp */; };
+		FFACE0831285943A00C0BCB4 /* guiwidgetcallback.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEF512858CB200C0BCB4 /* guiwidgetcallback.cpp */; };
+		FFACE0841285943A00C0BCB4 /* guiwidgetfactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEF612858CB200C0BCB4 /* guiwidgetfactory.cpp */; };
+		FFACE0851285943A00C0BCB4 /* guiwidgetgenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEF712858CB200C0BCB4 /* guiwidgetgenerator.cpp */; };
+		FFACE0861285943A00C0BCB4 /* guiwidgetroot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEF812858CB200C0BCB4 /* guiwidgetroot.cpp */; };
+		FFACE0871285943A00C0BCB4 /* guiwidgetsystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEF912858CB200C0BCB4 /* guiwidgetsystem.cpp */; };
+		FFACE0881285943A00C0BCB4 /* guiwidgetutility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEFA12858CB200C0BCB4 /* guiwidgetutility.cpp */; };
+		FFACE16C128594DB00C0BCB4 /* guianimation.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE1A12858C9D00C0BCB4 /* guianimation.h */; };
+		FFACE16D128594DB00C0BCB4 /* guianimationmanager.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE1B12858C9D00C0BCB4 /* guianimationmanager.h */; };
+		FFACE16E128594DB00C0BCB4 /* guias.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE1C12858C9D00C0BCB4 /* guias.h */; };
+		FFACE16F128594DB00C0BCB4 /* guiasfactory.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE1D12858C9D00C0BCB4 /* guiasfactory.h */; };
+		FFACE170128594DB00C0BCB4 /* guiasgenerator.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE1E12858C9D00C0BCB4 /* guiasgenerator.h */; };
+		FFACE171128594DB00C0BCB4 /* guiassert.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE1F12858C9D00C0BCB4 /* guiassert.h */; };
+		FFACE172128594DB00C0BCB4 /* guibase.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE2012858C9D00C0BCB4 /* guibase.h */; };
+		FFACE173128594DB00C0BCB4 /* guicleanup.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE2112858C9D00C0BCB4 /* guicleanup.h */; };
+		FFACE174128594DB00C0BCB4 /* guicolor.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE2212858C9D00C0BCB4 /* guicolor.h */; };
+		FFACE175128594DB00C0BCB4 /* guicolorrect.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE2312858C9D00C0BCB4 /* guicolorrect.h */; };
+		FFACE176128594DB00C0BCB4 /* guiconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE2412858C9D00C0BCB4 /* guiconfig.h */; };
+		FFACE177128594DB00C0BCB4 /* guidatachunk.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE2512858C9D00C0BCB4 /* guidatachunk.h */; };
+		FFACE178128594DB00C0BCB4 /* guidynlib.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE2612858C9D00C0BCB4 /* guidynlib.h */; };
+		FFACE179128594DB00C0BCB4 /* guievent.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE2712858C9D00C0BCB4 /* guievent.h */; };
+		FFACE17A128594DB00C0BCB4 /* guiex.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE2812858C9D00C0BCB4 /* guiex.h */; };
+		FFACE17B128594DB00C0BCB4 /* guiexception.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE2912858C9D00C0BCB4 /* guiexception.h */; };
+		FFACE17C128594DB00C0BCB4 /* guifont.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE2A12858C9D00C0BCB4 /* guifont.h */; };
+		FFACE17D128594DB00C0BCB4 /* guifontmanager.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE2B12858C9D00C0BCB4 /* guifontmanager.h */; };
+		FFACE17E128594DB00C0BCB4 /* guigarbagecollector.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE2C12858C9D00C0BCB4 /* guigarbagecollector.h */; };
+		FFACE17F128594DB00C0BCB4 /* guiimage.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE2D12858C9D00C0BCB4 /* guiimage.h */; };
+		FFACE180128594DB00C0BCB4 /* guiimagedata.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE2E12858C9D00C0BCB4 /* guiimagedata.h */; };
+		FFACE181128594DB00C0BCB4 /* guiimagemanager.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE2F12858C9D00C0BCB4 /* guiimagemanager.h */; };
+		FFACE182128594DB00C0BCB4 /* guiinputprocessor.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE3012858C9D00C0BCB4 /* guiinputprocessor.h */; };
+		FFACE183128594DB00C0BCB4 /* guiinterface.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE3112858C9D00C0BCB4 /* guiinterface.h */; };
+		FFACE184128594DB00C0BCB4 /* guiinterfacecommand.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE3212858C9D00C0BCB4 /* guiinterfacecommand.h */; };
+		FFACE185128594DB00C0BCB4 /* guiinterfaceconfigfile.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE3312858C9D00C0BCB4 /* guiinterfaceconfigfile.h */; };
+		FFACE186128594DB00C0BCB4 /* guiinterfacefilesys.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE3412858C9D00C0BCB4 /* guiinterfacefilesys.h */; };
+		FFACE187128594DB00C0BCB4 /* guiinterfacefont.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE3512858C9D00C0BCB4 /* guiinterfacefont.h */; };
+		FFACE188128594DB00C0BCB4 /* guiinterfaceimageloader.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE3612858C9D00C0BCB4 /* guiinterfaceimageloader.h */; };
+		FFACE189128594DB00C0BCB4 /* guiinterfaceime.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE3712858C9D00C0BCB4 /* guiinterfaceime.h */; };
+		FFACE18A128594DB00C0BCB4 /* guiinterfacekeyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE3812858C9D00C0BCB4 /* guiinterfacekeyboard.h */; };
+		FFACE18B128594DB00C0BCB4 /* guiinterfacemanager.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE3912858C9D00C0BCB4 /* guiinterfacemanager.h */; };
+		FFACE18C128594DB00C0BCB4 /* guiinterfacemouse.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE3A12858C9D00C0BCB4 /* guiinterfacemouse.h */; };
+		FFACE18D128594DB00C0BCB4 /* guiinterfaceparser.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE3B12858C9D00C0BCB4 /* guiinterfaceparser.h */; };
+		FFACE18E128594DB00C0BCB4 /* guiinterfacerender.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE3C12858C9D00C0BCB4 /* guiinterfacerender.h */; };
+		FFACE18F128594DB00C0BCB4 /* guiinterfacescript.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE3D12858C9D00C0BCB4 /* guiinterfacescript.h */; };
+		FFACE190128594DB00C0BCB4 /* guiinterfacesound.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE3E12858C9D00C0BCB4 /* guiinterfacesound.h */; };
+		FFACE191128594DB00C0BCB4 /* guilogmsg.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE3F12858C9D00C0BCB4 /* guilogmsg.h */; };
+		FFACE192128594DB00C0BCB4 /* guilogmsgcallback.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE4012858C9D00C0BCB4 /* guilogmsgcallback.h */; };
+		FFACE193128594DB00C0BCB4 /* guilogmsgmanager.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE4112858C9D00C0BCB4 /* guilogmsgmanager.h */; };
+		FFACE194128594DB00C0BCB4 /* guilogmsgrecord.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE4212858C9D00C0BCB4 /* guilogmsgrecord.h */; };
+		FFACE195128594DB00C0BCB4 /* guimath.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE4312858C9D00C0BCB4 /* guimath.h */; };
+		FFACE196128594DB00C0BCB4 /* guimatrix3.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE4412858C9D00C0BCB4 /* guimatrix3.h */; };
+		FFACE197128594DB00C0BCB4 /* guimatrix4.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE4512858C9D00C0BCB4 /* guimatrix4.h */; };
+		FFACE198128594DB00C0BCB4 /* guimousecursor.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE4612858C9D00C0BCB4 /* guimousecursor.h */; };
+		FFACE199128594DB00C0BCB4 /* guinode.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE4712858C9D00C0BCB4 /* guinode.h */; };
+		FFACE19A128594DB00C0BCB4 /* guiobjectmanager.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE4812858C9D00C0BCB4 /* guiobjectmanager.h */; };
+		FFACE19B128594DB00C0BCB4 /* guiobjectmanagerbase.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE4912858C9D00C0BCB4 /* guiobjectmanagerbase.h */; };
+		FFACE19C128594DB00C0BCB4 /* guiperfmonitor.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE4A12858C9D00C0BCB4 /* guiperfmonitor.h */; };
+		FFACE19D128594DB00C0BCB4 /* guiplane.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE4B12858C9D00C0BCB4 /* guiplane.h */; };
+		FFACE19E128594DB00C0BCB4 /* guiprojectinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE4C12858C9D00C0BCB4 /* guiprojectinfo.h */; };
+		FFACE19F128594DB00C0BCB4 /* guiprojectinfomanager.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE4D12858C9D00C0BCB4 /* guiprojectinfomanager.h */; };
+		FFACE1A0128594DB00C0BCB4 /* guiprojectutility.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE4E12858C9D00C0BCB4 /* guiprojectutility.h */; };
+		FFACE1A1128594DB00C0BCB4 /* guiproperty.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE4F12858C9D00C0BCB4 /* guiproperty.h */; };
+		FFACE1A3128594DB00C0BCB4 /* guipropertyconvertor.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE5112858C9D00C0BCB4 /* guipropertyconvertor.h */; };
+		FFACE1A4128594DB00C0BCB4 /* guipropertymanager.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE5212858C9D00C0BCB4 /* guipropertymanager.h */; };
+		FFACE1A6128594DB00C0BCB4 /* guiquaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE5412858C9D00C0BCB4 /* guiquaternion.h */; };
+		FFACE1A7128594DB00C0BCB4 /* guirect.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE5512858C9D00C0BCB4 /* guirect.h */; };
+		FFACE1A8128594DB00C0BCB4 /* guirenderrect.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE5612858C9D00C0BCB4 /* guirenderrect.h */; };
+		FFACE1A9128594DB00C0BCB4 /* guiresource.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE5712858C9D00C0BCB4 /* guiresource.h */; };
+		FFACE1AA128594DB00C0BCB4 /* guiresourcemanager.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE5812858C9D00C0BCB4 /* guiresourcemanager.h */; };
+		FFACE1AB128594DB00C0BCB4 /* guisingleton.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE5912858C9D00C0BCB4 /* guisingleton.h */; };
+		FFACE1AC128594DB00C0BCB4 /* guisingleton.inl in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE5A12858C9D00C0BCB4 /* guisingleton.inl */; };
+		FFACE1AD128594DB00C0BCB4 /* guisize.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE5B12858C9D00C0BCB4 /* guisize.h */; };
+		FFACE1AE128594DB00C0BCB4 /* guistring.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE5C12858C9D00C0BCB4 /* guistring.h */; };
+		FFACE1AF128594DB00C0BCB4 /* guistringconvertor.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE5D12858C9D00C0BCB4 /* guistringconvertor.h */; };
+		FFACE1B0128594DB00C0BCB4 /* guistringex.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE5E12858C9D00C0BCB4 /* guistringex.h */; };
+		FFACE1B1128594DB00C0BCB4 /* guitexture.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE5F12858C9D00C0BCB4 /* guitexture.h */; };
+		FFACE1B2128594DB00C0BCB4 /* guitextureimp.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE6012858C9D00C0BCB4 /* guitextureimp.h */; };
+		FFACE1B3128594DB00C0BCB4 /* guitexturemanager.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE6112858C9D00C0BCB4 /* guitexturemanager.h */; };
+		FFACE1B5128594DB00C0BCB4 /* guitypes.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE6312858C9D00C0BCB4 /* guitypes.h */; };
+		FFACE1B6128594DB00C0BCB4 /* guiutility.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE6412858C9D00C0BCB4 /* guiutility.h */; };
+		FFACE1B7128594DB00C0BCB4 /* guivector2.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE6512858C9D00C0BCB4 /* guivector2.h */; };
+		FFACE1B8128594DB00C0BCB4 /* guivector3.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE6612858C9D00C0BCB4 /* guivector3.h */; };
+		FFACE1B9128594DB00C0BCB4 /* guivector4.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE6712858C9D00C0BCB4 /* guivector4.h */; };
+		FFACE1BA128594DB00C0BCB4 /* guiwidget.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE6812858C9D00C0BCB4 /* guiwidget.h */; };
+		FFACE1BB128594DB00C0BCB4 /* guiwidgetfactory.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE6912858C9D00C0BCB4 /* guiwidgetfactory.h */; };
+		FFACE1BC128594DB00C0BCB4 /* guiwidgetgenerator.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE6A12858C9D00C0BCB4 /* guiwidgetgenerator.h */; };
+		FFACE1BD128594DB00C0BCB4 /* guiwidgetparameter.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE6B12858C9D00C0BCB4 /* guiwidgetparameter.h */; };
+		FFACE1BE128594DB00C0BCB4 /* guiwidgetroot.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE6C12858C9D00C0BCB4 /* guiwidgetroot.h */; };
+		FFACE1BF128594DB00C0BCB4 /* guiwidgetsystem.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE6D12858C9D00C0BCB4 /* guiwidgetsystem.h */; };
+		FFACE1C0128594DB00C0BCB4 /* guiwidgetutility.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE6E12858C9D00C0BCB4 /* guiwidgetutility.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,10 +262,8 @@
 		FFACDE4D12858C9D00C0BCB4 /* guiprojectinfomanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiprojectinfomanager.h; sourceTree = "<group>"; };
 		FFACDE4E12858C9D00C0BCB4 /* guiprojectutility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiprojectutility.h; sourceTree = "<group>"; };
 		FFACDE4F12858C9D00C0BCB4 /* guiproperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiproperty.h; sourceTree = "<group>"; };
-		FFACDE5012858C9D00C0BCB4 /* guipropertyable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guipropertyable.h; sourceTree = "<group>"; };
 		FFACDE5112858C9D00C0BCB4 /* guipropertyconvertor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guipropertyconvertor.h; sourceTree = "<group>"; };
 		FFACDE5212858C9D00C0BCB4 /* guipropertymanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guipropertymanager.h; sourceTree = "<group>"; };
-		FFACDE5312858C9D00C0BCB4 /* guipropertyset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guipropertyset.h; sourceTree = "<group>"; };
 		FFACDE5412858C9D00C0BCB4 /* guiquaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiquaternion.h; sourceTree = "<group>"; };
 		FFACDE5512858C9D00C0BCB4 /* guirect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guirect.h; sourceTree = "<group>"; };
 		FFACDE5612858C9D00C0BCB4 /* guirenderrect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guirenderrect.h; sourceTree = "<group>"; };
@@ -221,10 +374,8 @@
 		FFACDEDE12858CB200C0BCB4 /* guiprojectinfomanager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiprojectinfomanager.cpp; sourceTree = "<group>"; };
 		FFACDEDF12858CB200C0BCB4 /* guiprojectutility.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiprojectutility.cpp; sourceTree = "<group>"; };
 		FFACDEE012858CB200C0BCB4 /* guiproperty.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiproperty.cpp; sourceTree = "<group>"; };
-		FFACDEE112858CB200C0BCB4 /* guipropertyable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guipropertyable.cpp; sourceTree = "<group>"; };
 		FFACDEE212858CB200C0BCB4 /* guipropertyconvertor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guipropertyconvertor.cpp; sourceTree = "<group>"; };
 		FFACDEE312858CB200C0BCB4 /* guipropertymanager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guipropertymanager.cpp; sourceTree = "<group>"; };
-		FFACDEE412858CB200C0BCB4 /* guipropertyset.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guipropertyset.cpp; sourceTree = "<group>"; };
 		FFACDEE512858CB200C0BCB4 /* guiquaternion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiquaternion.cpp; sourceTree = "<group>"; };
 		FFACDEE612858CB200C0BCB4 /* guirect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guirect.cpp; sourceTree = "<group>"; };
 		FFACDEE712858CB200C0BCB4 /* guirenderrect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guirenderrect.cpp; sourceTree = "<group>"; };
@@ -433,10 +584,8 @@
 				FFACDE4D12858C9D00C0BCB4 /* guiprojectinfomanager.h */,
 				FFACDE4E12858C9D00C0BCB4 /* guiprojectutility.h */,
 				FFACDE4F12858C9D00C0BCB4 /* guiproperty.h */,
-				FFACDE5012858C9D00C0BCB4 /* guipropertyable.h */,
 				FFACDE5112858C9D00C0BCB4 /* guipropertyconvertor.h */,
 				FFACDE5212858C9D00C0BCB4 /* guipropertymanager.h */,
-				FFACDE5312858C9D00C0BCB4 /* guipropertyset.h */,
 				FFACDE5412858C9D00C0BCB4 /* guiquaternion.h */,
 				FFACDE5512858C9D00C0BCB4 /* guirect.h */,
 				FFACDE5612858C9D00C0BCB4 /* guirenderrect.h */,
@@ -571,10 +720,8 @@
 				FFACDEDE12858CB200C0BCB4 /* guiprojectinfomanager.cpp */,
 				FFACDEDF12858CB200C0BCB4 /* guiprojectutility.cpp */,
 				FFACDEE012858CB200C0BCB4 /* guiproperty.cpp */,
-				FFACDEE112858CB200C0BCB4 /* guipropertyable.cpp */,
 				FFACDEE212858CB200C0BCB4 /* guipropertyconvertor.cpp */,
 				FFACDEE312858CB200C0BCB4 /* guipropertymanager.cpp */,
-				FFACDEE412858CB200C0BCB4 /* guipropertyset.cpp */,
 				FFACDEE512858CB200C0BCB4 /* guiquaternion.cpp */,
 				FFACDEE612858CB200C0BCB4 /* guirect.cpp */,
 				FFACDEE712858CB200C0BCB4 /* guirenderrect.cpp */,
@@ -657,6 +804,89 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF8FAC071285A4FC00D7DF5A /* guitimer.h in Headers */,
+				FFACE16C128594DB00C0BCB4 /* guianimation.h in Headers */,
+				FFACE16D128594DB00C0BCB4 /* guianimationmanager.h in Headers */,
+				FFACE16E128594DB00C0BCB4 /* guias.h in Headers */,
+				FFACE16F128594DB00C0BCB4 /* guiasfactory.h in Headers */,
+				FFACE170128594DB00C0BCB4 /* guiasgenerator.h in Headers */,
+				FFACE171128594DB00C0BCB4 /* guiassert.h in Headers */,
+				FFACE172128594DB00C0BCB4 /* guibase.h in Headers */,
+				FFACE173128594DB00C0BCB4 /* guicleanup.h in Headers */,
+				FFACE174128594DB00C0BCB4 /* guicolor.h in Headers */,
+				FFACE175128594DB00C0BCB4 /* guicolorrect.h in Headers */,
+				FFACE176128594DB00C0BCB4 /* guiconfig.h in Headers */,
+				FFACE177128594DB00C0BCB4 /* guidatachunk.h in Headers */,
+				FFACE178128594DB00C0BCB4 /* guidynlib.h in Headers */,
+				FFACE179128594DB00C0BCB4 /* guievent.h in Headers */,
+				FFACE17A128594DB00C0BCB4 /* guiex.h in Headers */,
+				FFACE17B128594DB00C0BCB4 /* guiexception.h in Headers */,
+				FFACE17C128594DB00C0BCB4 /* guifont.h in Headers */,
+				FFACE17D128594DB00C0BCB4 /* guifontmanager.h in Headers */,
+				FFACE17E128594DB00C0BCB4 /* guigarbagecollector.h in Headers */,
+				FFACE17F128594DB00C0BCB4 /* guiimage.h in Headers */,
+				FFACE180128594DB00C0BCB4 /* guiimagedata.h in Headers */,
+				FFACE181128594DB00C0BCB4 /* guiimagemanager.h in Headers */,
+				FFACE182128594DB00C0BCB4 /* guiinputprocessor.h in Headers */,
+				FFACE183128594DB00C0BCB4 /* guiinterface.h in Headers */,
+				FFACE184128594DB00C0BCB4 /* guiinterfacecommand.h in Headers */,
+				FFACE185128594DB00C0BCB4 /* guiinterfaceconfigfile.h in Headers */,
+				FFACE186128594DB00C0BCB4 /* guiinterfacefilesys.h in Headers */,
+				FFACE187128594DB00C0BCB4 /* guiinterfacefont.h in Headers */,
+				FFACE188128594DB00C0BCB4 /* guiinterfaceimageloader.h in Headers */,
+				FFACE189128594DB00C0BCB4 /* guiinterfaceime.h in Headers */,
+				FFACE18A128594DB00C0BCB4 /* guiinterfacekeyboard.h in Headers */,
+				FFACE18B128594DB00C0BCB4 /* guiinterfacemanager.h in Headers */,
+				FFACE18C128594DB00C0BCB4 /* guiinterfacemouse.h in Headers */,
+				FFACE18D128594DB00C0BCB4 /* guiinterfaceparser.h in Headers */,
+				FFACE18E128594DB00C0BCB4 /* guiinterfacerender.h in Headers */,
+				FFACE18F128594DB00C0BCB4 /* guiinterfacescript.h in Headers */,
+				FFACE190128594DB00C0BCB4 /* guiinterfacesound.h in Headers */,
+				FFACE191128594DB00C0BCB4 /* guilogmsg.h in Headers */,
+				FFACE192128594DB00C0BCB4 /* guilogmsgcallback.h in Headers */,
+				FFACE193128594DB00C0BCB4 /* guilogmsgmanager.h in Headers */,
+				FFACE194128594DB00C0BCB4 /* guilogmsgrecord.h in Headers */,
+				FFACE195128594DB00C0BCB4 /* guimath.h in Headers */,
+				FFACE196128594DB00C0BCB4 /* guimatrix3.h in Headers */,
+				FFACE197128594DB00C0BCB4 /* guimatrix4.h in Headers */,
+				FFACE198128594DB00C0BCB4 /* guimousecursor.h in Headers */,
+				FFACE199128594DB00C0BCB4 /* guinode.h in Headers */,
+				FFACE19A128594DB00C0BCB4 /* guiobjectmanager.h in Headers */,
+				FFACE19B128594DB00C0BCB4 /* guiobjectmanagerbase.h in Headers */,
+				FFACE19C128594DB00C0BCB4 /* guiperfmonitor.h in Headers */,
+				FFACE19D128594DB00C0BCB4 /* guiplane.h in Headers */,
+				FFACE19E128594DB00C0BCB4 /* guiprojectinfo.h in Headers */,
+				FFACE19F128594DB00C0BCB4 /* guiprojectinfomanager.h in Headers */,
+				FFACE1A0128594DB00C0BCB4 /* guiprojectutility.h in Headers */,
+				FFACE1A1128594DB00C0BCB4 /* guiproperty.h in Headers */,
+				FFACE1A3128594DB00C0BCB4 /* guipropertyconvertor.h in Headers */,
+				FFACE1A4128594DB00C0BCB4 /* guipropertymanager.h in Headers */,
+				FFACE1A6128594DB00C0BCB4 /* guiquaternion.h in Headers */,
+				FFACE1A7128594DB00C0BCB4 /* guirect.h in Headers */,
+				FFACE1A8128594DB00C0BCB4 /* guirenderrect.h in Headers */,
+				FFACE1A9128594DB00C0BCB4 /* guiresource.h in Headers */,
+				FFACE1AA128594DB00C0BCB4 /* guiresourcemanager.h in Headers */,
+				FFACE1AB128594DB00C0BCB4 /* guisingleton.h in Headers */,
+				FFACE1AC128594DB00C0BCB4 /* guisingleton.inl in Headers */,
+				FFACE1AD128594DB00C0BCB4 /* guisize.h in Headers */,
+				FFACE1AE128594DB00C0BCB4 /* guistring.h in Headers */,
+				FFACE1AF128594DB00C0BCB4 /* guistringconvertor.h in Headers */,
+				FFACE1B0128594DB00C0BCB4 /* guistringex.h in Headers */,
+				FFACE1B1128594DB00C0BCB4 /* guitexture.h in Headers */,
+				FFACE1B2128594DB00C0BCB4 /* guitextureimp.h in Headers */,
+				FFACE1B3128594DB00C0BCB4 /* guitexturemanager.h in Headers */,
+				FFACE1B5128594DB00C0BCB4 /* guitypes.h in Headers */,
+				FFACE1B6128594DB00C0BCB4 /* guiutility.h in Headers */,
+				FFACE1B7128594DB00C0BCB4 /* guivector2.h in Headers */,
+				FFACE1B8128594DB00C0BCB4 /* guivector3.h in Headers */,
+				FFACE1B9128594DB00C0BCB4 /* guivector4.h in Headers */,
+				FFACE1BA128594DB00C0BCB4 /* guiwidget.h in Headers */,
+				FFACE1BB128594DB00C0BCB4 /* guiwidgetfactory.h in Headers */,
+				FFACE1BC128594DB00C0BCB4 /* guiwidgetgenerator.h in Headers */,
+				FFACE1BD128594DB00C0BCB4 /* guiwidgetparameter.h in Headers */,
+				FFACE1BE128594DB00C0BCB4 /* guiwidgetroot.h in Headers */,
+				FFACE1BF128594DB00C0BCB4 /* guiwidgetsystem.h in Headers */,
+				FFACE1C0128594DB00C0BCB4 /* guiwidgetutility.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -790,6 +1020,78 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF8FAC061285A4F200D7DF5A /* guitimer.cpp in Sources */,
+				FFACE03F1285943A00C0BCB4 /* guianimation.cpp in Sources */,
+				FFACE0401285943A00C0BCB4 /* guianimationmanager.cpp in Sources */,
+				FFACE0411285943A00C0BCB4 /* guias.cpp in Sources */,
+				FFACE0421285943A00C0BCB4 /* guiasfactory.cpp in Sources */,
+				FFACE0431285943A00C0BCB4 /* guiasgenerator.cpp in Sources */,
+				FFACE0441285943A00C0BCB4 /* guiassert.cpp in Sources */,
+				FFACE0451285943A00C0BCB4 /* guicleanup.cpp in Sources */,
+				FFACE0461285943A00C0BCB4 /* guicolor.cpp in Sources */,
+				FFACE0471285943A00C0BCB4 /* guicolorrect.cpp in Sources */,
+				FFACE0481285943A00C0BCB4 /* guidebug.cpp in Sources */,
+				FFACE0491285943A00C0BCB4 /* guievent.cpp in Sources */,
+				FFACE04A1285943A00C0BCB4 /* guiexception.cpp in Sources */,
+				FFACE04B1285943A00C0BCB4 /* guifont.cpp in Sources */,
+				FFACE04C1285943A00C0BCB4 /* guifontmanager.cpp in Sources */,
+				FFACE04D1285943A00C0BCB4 /* guiimage.cpp in Sources */,
+				FFACE04E1285943A00C0BCB4 /* guiimagedata.cpp in Sources */,
+				FFACE04F1285943A00C0BCB4 /* guiimagemanager.cpp in Sources */,
+				FFACE0501285943A00C0BCB4 /* guiinputprocessor.cpp in Sources */,
+				FFACE0511285943A00C0BCB4 /* guiinterface.cpp in Sources */,
+				FFACE0521285943A00C0BCB4 /* guiinterfacecommand.cpp in Sources */,
+				FFACE0531285943A00C0BCB4 /* guiinterfaceconfigfile.cpp in Sources */,
+				FFACE0541285943A00C0BCB4 /* guiinterfacefilesys.cpp in Sources */,
+				FFACE0551285943A00C0BCB4 /* guiinterfacefont.cpp in Sources */,
+				FFACE0561285943A00C0BCB4 /* guiinterfaceimageloader.cpp in Sources */,
+				FFACE0571285943A00C0BCB4 /* guiinterfaceime.cpp in Sources */,
+				FFACE0581285943A00C0BCB4 /* guiinterfacekeyboard.cpp in Sources */,
+				FFACE0591285943A00C0BCB4 /* guiinterfacemanager.cpp in Sources */,
+				FFACE05A1285943A00C0BCB4 /* guiinterfacemouse.cpp in Sources */,
+				FFACE05B1285943A00C0BCB4 /* guiinterfacerender.cpp in Sources */,
+				FFACE05C1285943A00C0BCB4 /* guiinterfacescript.cpp in Sources */,
+				FFACE05D1285943A00C0BCB4 /* guiinterfacesound.cpp in Sources */,
+				FFACE05E1285943A00C0BCB4 /* guilogmsg.cpp in Sources */,
+				FFACE05F1285943A00C0BCB4 /* guilogmsgcallback.cpp in Sources */,
+				FFACE0601285943A00C0BCB4 /* guilogmsgmanager.cpp in Sources */,
+				FFACE0611285943A00C0BCB4 /* guilogmsgrecord.cpp in Sources */,
+				FFACE0621285943A00C0BCB4 /* guimath.cpp in Sources */,
+				FFACE0631285943A00C0BCB4 /* guimatrix3.cpp in Sources */,
+				FFACE0641285943A00C0BCB4 /* guimatrix4.cpp in Sources */,
+				FFACE0651285943A00C0BCB4 /* guimousecursor.cpp in Sources */,
+				FFACE0661285943A00C0BCB4 /* guinode.cpp in Sources */,
+				FFACE0671285943A00C0BCB4 /* guiobjectmanager.cpp in Sources */,
+				FFACE0681285943A00C0BCB4 /* guiobjectmanagerbase.cpp in Sources */,
+				FFACE0691285943A00C0BCB4 /* guiperfmonitor.cpp in Sources */,
+				FFACE06A1285943A00C0BCB4 /* guiplane.cpp in Sources */,
+				FFACE06B1285943A00C0BCB4 /* guiprojectinfo.cpp in Sources */,
+				FFACE06C1285943A00C0BCB4 /* guiprojectinfomanager.cpp in Sources */,
+				FFACE06D1285943A00C0BCB4 /* guiprojectutility.cpp in Sources */,
+				FFACE06E1285943A00C0BCB4 /* guiproperty.cpp in Sources */,
+				FFACE0701285943A00C0BCB4 /* guipropertyconvertor.cpp in Sources */,
+				FFACE0711285943A00C0BCB4 /* guipropertymanager.cpp in Sources */,
+				FFACE0731285943A00C0BCB4 /* guiquaternion.cpp in Sources */,
+				FFACE0741285943A00C0BCB4 /* guirect.cpp in Sources */,
+				FFACE0751285943A00C0BCB4 /* guirenderrect.cpp in Sources */,
+				FFACE0761285943A00C0BCB4 /* guiresource.cpp in Sources */,
+				FFACE0771285943A00C0BCB4 /* guisize.cpp in Sources */,
+				FFACE0781285943A00C0BCB4 /* guistringconvertor.cpp in Sources */,
+				FFACE0791285943A00C0BCB4 /* guistringex.cpp in Sources */,
+				FFACE07A1285943A00C0BCB4 /* guitexture.cpp in Sources */,
+				FFACE07B1285943A00C0BCB4 /* guitextureimp.cpp in Sources */,
+				FFACE07C1285943A00C0BCB4 /* guitexturemanager.cpp in Sources */,
+				FFACE07E1285943A00C0BCB4 /* guiutility.cpp in Sources */,
+				FFACE07F1285943A00C0BCB4 /* guivector2.cpp in Sources */,
+				FFACE0801285943A00C0BCB4 /* guivector3.cpp in Sources */,
+				FFACE0811285943A00C0BCB4 /* guivector4.cpp in Sources */,
+				FFACE0821285943A00C0BCB4 /* guiwidget.cpp in Sources */,
+				FFACE0831285943A00C0BCB4 /* guiwidgetcallback.cpp in Sources */,
+				FFACE0841285943A00C0BCB4 /* guiwidgetfactory.cpp in Sources */,
+				FFACE0851285943A00C0BCB4 /* guiwidgetgenerator.cpp in Sources */,
+				FFACE0861285943A00C0BCB4 /* guiwidgetroot.cpp in Sources */,
+				FFACE0871285943A00C0BCB4 /* guiwidgetsystem.cpp in Sources */,
+				FFACE0881285943A00C0BCB4 /* guiwidgetutility.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -873,14 +1175,17 @@
 		1DEB922308733DC00010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../include";
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
 				SDKROOT = iphoneos4.1;
+				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../include";
 			};
 			name = Debug;
 		};

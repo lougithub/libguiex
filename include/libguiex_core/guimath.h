@@ -397,7 +397,7 @@ namespace guiex
 		template<class T>
 		static T QuadraticEaseIn( real t, const T& begin, const T& end )
 		{
-			return LinearTween( t*t, ,begin, end);
+			return LinearTween( t*t,begin, end);
 		}
 
 		template<class T>

@@ -113,7 +113,7 @@ namespace guiex
 		char *obuf,
 		size_t obuf_sz)
 	{
-		u_char c;
+		unsigned char c;
 		char textver[16 + 1];
 
 		// We can fit 16 bytes output in text mode per line, 4 chars per byte.
@@ -133,7 +133,7 @@ namespace guiex
 
 			for (j = 0 ; j < 16; j++)
 			{
-				c = (u_char) buffer[(i << 4) + j];    // or, buffer[i*16+j]
+				c = (unsigned char) buffer[(i << 4) + j];    // or, buffer[i*16+j]
 				sprintf (obuf,"%02x ",c);
 				obuf += 3;
 				if (j == 7)
@@ -158,7 +158,7 @@ namespace guiex
 		{
 			for (i = 0 ; i < size % 16; i++)
 			{
-				c = (u_char) buffer[size - size % 16 + i];
+				c = (unsigned char) buffer[size - size % 16 + i];
 				sprintf (obuf,"%02x ",c);
 				obuf += 3;
 				if (i == 7)
@@ -189,7 +189,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	uint32 CGUIUtility::Log2 (uint32 num)
 	{
-		u_long log = 0;
+		unsigned long log = 0;
 
 		for (; num > 0; ++log)
 			num >>= 1;
