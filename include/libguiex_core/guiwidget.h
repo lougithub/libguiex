@@ -674,14 +674,14 @@ namespace guiex
 		/**
 		* @brief draw a string
 		*/
-		void	CGUIWidget::DrawString( IGUIInterfaceRender* pRender, 
+		void	DrawString( IGUIInterfaceRender* pRender, 
 			const CGUIStringEx& strText,
 			const CGUIRect& rDrawRect,
 			uint8 uTextAlignment,
 			int32 nStartPos = 0,
 			int32 nEndPos = -1);
 
-		void	CGUIWidget::DrawString(
+		void	DrawString(
 			IGUIInterfaceRender* pRender, 
 			const CGUIStringEx& strText,
 			const CGUIVector2& rPos,

@@ -25,7 +25,7 @@ namespace guiex
 	 * @brief a quick way to get widget's parameter,
 	 * <the final value> equal <base value> * <parent's final value>
 	 */
-	template <class T>
+	template <typename T>
 	class	CGUIWidgetParamBase
 	{
 	public:
@@ -65,7 +65,7 @@ namespace guiex
 	* the operator is multiply,
 	* <the final value> equal <base value> * <parent's final value>
 	*/
-	template <class T>
+	template <typename T>
 	class	CGUIWidgetParamMultiply : public CGUIWidgetParamBase<T>
 	{
 	public:
@@ -82,7 +82,7 @@ namespace guiex
 	* the operator is OR,
 	* <the final value> equal <base value> * <parent's final value>
 	*/
-	template <class T>
+	template <typename T>
 	class	CGUIWidgetParamOR : public CGUIWidgetParamBase<T>
 	{
 	public:
@@ -98,7 +98,7 @@ namespace guiex
 	* the operator is AND,
 	* <the final value> equal <base value> * <parent's final value>
 	*/
-	template <class T>
+	template <typename T>
 	class	CGUIWidgetParamAND : public CGUIWidgetParamBase<T>
 	{
 	public:
@@ -114,7 +114,7 @@ namespace guiex
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	template <class T>
+	template <typename T>
 	inline CGUIWidgetParamBase<T>::CGUIWidgetParamBase(const T& aSelfValue)
 	:m_pParent(NULL)
 	,m_pChild(NULL)
@@ -125,26 +125,26 @@ namespace guiex
 
 	}
 	//------------------------------------------------------------------------------
-	template <class T>
+	template <typename T>
 	inline CGUIWidgetParamBase<T>::~CGUIWidgetParamBase()
 	{
 
 	}
 	//------------------------------------------------------------------------------
-	template <class T>
+	template <typename T>
 	inline void		CGUIWidgetParamBase<T>::SetSelfValue( const T& aSelfValue)
 	{
 		m_aSelfValue = aSelfValue;
 		SetDirtyFlag();
 	}
 	//------------------------------------------------------------------------------
-	template <class T>
+	template <typename T>
 	inline const T &	CGUIWidgetParamBase<T>::GetSelfValue( ) const
 	{
 		return m_aSelfValue;
 	}
 	//------------------------------------------------------------------------------
-	template <class T>
+	template <typename T>
 	inline void		CGUIWidgetParamBase<T>::SetDirtyFlag()
 	{
 		if( !m_bDirtyFlag)
@@ -160,7 +160,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	template <class T>
+	template <typename T>
 	inline void		CGUIWidgetParamBase<T>::AddChild(CGUIWidgetParamBase<T>* pChild)
 	{
 		GUI_ASSERT( pChild, "invalid parameter");
@@ -173,7 +173,7 @@ namespace guiex
 		pChild->SetDirtyFlag();
 	}
 	//------------------------------------------------------------------------------
-	template <class T>
+	template <typename T>
 	inline void		CGUIWidgetParamBase<T>::RemoveChild(CGUIWidgetParamBase<T>* pChild)
 	{
 		GUI_ASSERT( pChild, "invalid parameter");
@@ -215,30 +215,30 @@ namespace guiex
 
 
 	//------------------------------------------------------------------------------
-	template <class T>
+	template <typename T>
 	inline CGUIWidgetParamMultiply<T>::CGUIWidgetParamMultiply(const T& aSelfValue)
 		:CGUIWidgetParamBase<T>(aSelfValue)
 	{
 
 	}
 	//------------------------------------------------------------------------------
-	template <class T>
+	template <typename T>
 	inline const T &	CGUIWidgetParamMultiply<T>::GetFinalValue( )
 	{
-		if( m_bDirtyFlag)
+		if( this->m_bDirtyFlag)
 		{
 			//dirty
-			if( m_pParent)
+			if( this->m_pParent)
 			{
-				m_aFinalValue = m_pParent->GetFinalValue() * m_aSelfValue;
+				this->m_aFinalValue = this->m_pParent->GetFinalValue() * this->m_aSelfValue;
 			}
 			else
 			{
-				m_aFinalValue = m_aSelfValue;
+				this->m_aFinalValue = this->m_aSelfValue;
 			}
-			ResetDirtyFlag();
+			this->ResetDirtyFlag();
 		}
-		return m_aFinalValue;
+		return this->m_aFinalValue;
 	}
 	//------------------------------------------------------------------------------
 
@@ -256,20 +256,20 @@ namespace guiex
 	template <class T>
 	inline const T &	CGUIWidgetParamOR<T>::GetFinalValue( )
 	{
-		if( m_bDirtyFlag)
+		if( this->m_bDirtyFlag)
 		{
 			//dirty
-			if( m_pParent)
+			if( this->m_pParent)
 			{
-				m_aFinalValue = (m_pParent->GetFinalValue() || m_aSelfValue);
+				this->m_aFinalValue = (this->m_pParent->GetFinalValue() || this->m_aSelfValue);
 			}
 			else
 			{
-				m_aFinalValue = m_aSelfValue;
+				this->m_aFinalValue = this->m_aSelfValue;
 			}
-			ResetDirtyFlag();
+			this->ResetDirtyFlag();
 		}
-		return m_aFinalValue;
+		return this->m_aFinalValue;
 	}
 	//------------------------------------------------------------------------------
 
@@ -285,20 +285,20 @@ namespace guiex
 	template <class T>
 	inline const T &	CGUIWidgetParamAND<T>::GetFinalValue( )
 	{
-		if( m_bDirtyFlag)
+		if( this->m_bDirtyFlag)
 		{
 			//dirty
-			if( m_pParent)
+			if( this->m_pParent)
 			{
-				m_aFinalValue = (m_pParent->GetFinalValue() && m_aSelfValue);
+				this->m_aFinalValue = (this->m_pParent->GetFinalValue() && this->m_aSelfValue);
 			}
 			else
 			{
-				m_aFinalValue = m_aSelfValue;
+				this->m_aFinalValue = this->m_aSelfValue;
 			}
-			ResetDirtyFlag();
+			this->ResetDirtyFlag();
 		}
-		return m_aFinalValue;
+		return this->m_aFinalValue;
 	}
 	//------------------------------------------------------------------------------
 }

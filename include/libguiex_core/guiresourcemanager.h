@@ -21,7 +21,7 @@
 // include
 //============================================================================//
 #include "guibase.h"
-#include "guistring.h"
+#include "guiexception.h"
 #include <map>
 #include <vector>
 
@@ -113,7 +113,7 @@ namespace guiex
 	template< class TResType >
 	inline TResType* CGUIResourceManager<TResType>::FindResource( const CGUIString& rResName )
 	{
-		TMapResource::iterator itor = m_mapResource.find( rResName );
+		typename TMapResource::iterator itor = m_mapResource.find( rResName );
 		if( itor != m_mapResource.end())
 		{
 			return itor->second;
@@ -127,7 +127,7 @@ namespace guiex
 	template< class TResType >
 	inline void		CGUIResourceManager<TResType>::ReleaseResource( const CGUIString& rResName )
 	{
-		TMapResource::iterator itor = m_mapResource.find( rResName );
+		typename TMapResource::iterator itor = m_mapResource.find( rResName );
 		if( itor != m_mapResource.end())
 		{
 			delete itor->second;
@@ -142,7 +142,7 @@ namespace guiex
 	template< class TResType >
 	inline void CGUIResourceManager<TResType>::ReleaseAllResources( )
 	{
-		for( TMapResource::iterator itor = m_mapResource.begin();
+		for( typename TMapResource::iterator itor = m_mapResource.begin();
 			itor != m_mapResource.end();
 			++itor )
 		{
@@ -154,7 +154,7 @@ namespace guiex
 	template< class TResType >
 	inline void CGUIResourceManager<TResType>::UnloadAllResources( )
 	{
-		for( TMapResource::iterator itor = m_mapResource.begin();
+		for( typename TMapResource::iterator itor = m_mapResource.begin();
 			itor != m_mapResource.end();
 			++itor )
 		{
@@ -165,7 +165,7 @@ namespace guiex
 	template< class TResType >
 	inline void CGUIResourceManager<TResType>::LoadAllResources( )
 	{
-		for( TMapResource::iterator itor = m_mapResource.begin();
+		for( typename TMapResource::iterator itor = m_mapResource.begin();
 			itor != m_mapResource.end();
 			++itor )
 		{
@@ -177,7 +177,7 @@ namespace guiex
 	inline void CGUIResourceManager<TResType>::ReleaseProjectResources( const CGUIString& rProjectName )
 	{
 		std::vector< CGUIString > vecReleaseRes;
-		for( TMapResource::iterator itor = m_mapResource.begin();
+		for( typename TMapResource::iterator itor = m_mapResource.begin();
 			itor != m_mapResource.end();
 			++itor )
 		{
@@ -191,7 +191,7 @@ namespace guiex
 			itor != vecReleaseRes.end();
 			++itor )
 		{
-			TMapResource::iterator itorMap = m_mapResource.find( *itor );
+			typename TMapResource::iterator itorMap = m_mapResource.find( *itor );
 			delete itorMap->second;
 			m_mapResource.erase( itorMap );
 		}

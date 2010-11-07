@@ -41,7 +41,7 @@ namespace guiex
 		,m_hEventLog(NULL)
 		,m_hConsole(NULL)
 #else
-#error "unknown platform"
+
 #endif
 	{
 		m_aConditionalValues.m_bIsSet  = false;
@@ -61,7 +61,7 @@ namespace guiex
 		FreeConsole( );
 		m_hConsole = NULL;
 #else
-#error "unknown platform"
+
 #endif
 
 		Close();
@@ -163,7 +163,7 @@ namespace guiex
 			m_hEventLog = NULL;
 		}
 #else
-#error "unknown platform"
+
 #endif
 	}
 	//------------------------------------------------------------------------------
@@ -232,7 +232,7 @@ namespace guiex
 			// Obtain a handle to the event source.
 			HANDLE m_hEventLog = ::RegisterEventSourceA (0,event_source_name);
 #else
-#error "unknown platform"
+
 #endif
 		}
 
@@ -830,7 +830,7 @@ namespace guiex
 
 		::ReportEventA(m_hEventLog,event_type, 0, 0, 0, 1, 0, msgs, 0);
 #else
-#error "unknown platform"
+
 #endif //#ifdef WIN32
 	}
 	//------------------------------------------------------------------------------

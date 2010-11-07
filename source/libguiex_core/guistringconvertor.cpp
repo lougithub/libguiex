@@ -75,7 +75,7 @@ namespace guiex
 		size_t	outbytesleft = buf_size;
 		char*	dst = (char*)(new char[buf_size]);
 		char*	pOutBuf = NULL;
-		const char*	pInBuf = (const char*)rSrc.GetContent();
+		char*	pInBuf = (char*)rSrc.GetContent();
 
 		bool	bError = false;
 
@@ -192,7 +192,7 @@ namespace guiex
 		size_t	outbytesleft = buf_size;
 		char*	dst = (char*)(new wchar_t[buf_size]);
 		char*	pOutBuf = NULL;
-		const char*	pInBuf = rSrc.c_str();
+		char*	pInBuf = (char*)(rSrc.c_str());
 
 		bool	bError = false;
 

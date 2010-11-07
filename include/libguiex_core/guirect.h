@@ -13,7 +13,7 @@
 //============================================================================// 
 #include "guibase.h"
 #include "guivector2.h"
-#include "guipropertyable.h"
+#include <algorithm>
 
 //============================================================================//
 // declare
@@ -312,19 +312,19 @@ namespace guiex
 	inline CGUIRect CGUIRect::operator+(const CGUIRect& rRect) const
 	{
 		return CGUIRect(
-			__min( m_fLeft, rRect.m_fLeft ),
-			__min( m_fTop, rRect.m_fTop ),
-			__max( m_fRight, rRect.m_fRight ),
-			__max( m_fBottom, rRect.m_fBottom ));
+						std::min( m_fLeft, rRect.m_fLeft ),
+						std::min( m_fTop, rRect.m_fTop ),
+						std::max( m_fRight, rRect.m_fRight ),
+						std::max( m_fBottom, rRect.m_fBottom ));
 	}
 	//------------------------------------------------------------------------------ 
 	inline const CGUIRect& CGUIRect::operator+=(const CGUIRect& rRect)
 	{
 		this->SetRect(CGUIRect(
-			__min( m_fLeft, rRect.m_fLeft ),
-			__min( m_fTop, rRect.m_fTop ),
-			__max( m_fRight, rRect.m_fRight ),
-			__max( m_fBottom, rRect.m_fBottom )));
+							   std::min( m_fLeft, rRect.m_fLeft ),
+							   std::min( m_fTop, rRect.m_fTop ),
+							   std::max( m_fRight, rRect.m_fRight ),
+							   std::max( m_fBottom, rRect.m_fBottom )));
 		return *this;
 	}
 	//------------------------------------------------------------------------------ 

@@ -147,8 +147,8 @@
 /*************************************************************************
 	iconv
 *************************************************************************/
-#define GUI_STRING_CONV_USE_ICONV	0
-#define GUI_STRING_CONV_USE_MSC		1
+#define GUI_STRING_CONV_USE_ICONV	1
+#define GUI_STRING_CONV_USE_MSC		0
 
 
 #endif //__GUI_CONFIG_20060322_H__

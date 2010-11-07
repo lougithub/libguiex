@@ -144,10 +144,10 @@ namespace guiex
 		gettimeofday(&m_aTimeVal,NULL);
 	}
 	//------------------------------------------------------------------------------
-	int32	CGUITimer::operator-(const CGUITimer& rTimer)
+	int32	CGUITimer::operator-(const CGUITimer& rTimer) const
 	{
-		int32 nMicroseconds = 1000 * ( m_aTimeVal.tv_sec - rTimer.tv_sec ) 
-		+ (_tend.tv_usec - m_tstart.tv_usec)/1000;
+		int32 nMicroseconds = 1000 * ( m_aTimeVal.tv_sec - rTimer.m_aTimeVal.tv_sec ) 
+		+ (m_aTimeVal.tv_usec - rTimer.m_aTimeVal.tv_usec)/1000;
 		
 		return nMicroseconds;
 	}
