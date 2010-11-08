@@ -40,7 +40,6 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void	CGUIWidgetRoot::Open()
 	{
-		NEWSetSize(CGUIWidgetSystem::Instance()->GetScreenSize());
 		CGUIWidget::Open();
 	}
 	//------------------------------------------------------------------------------
