@@ -31,11 +31,11 @@ namespace guiex
 	void	CGUIWidgetRoot::InitRoot()
 	{
 		SetFocusable(false);
-		NewSetSizeType(eScreenValue_Percentage);
+		SetSizeType(eScreenValue_Percentage);
 		NEWSetSize( 1.0f, 1.0f );
 		SetSelfActivable(false);
-		m_aBitFlag.reset(eFLAG_MOUSE_CONSUMED);			//!< should this mouse consume mouse event
-		m_aBitFlag.reset(eFLAG_HITABLE);			
+		SetMouseConsumed(false);
+		SetHitable( false );		
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWidgetRoot::Open()

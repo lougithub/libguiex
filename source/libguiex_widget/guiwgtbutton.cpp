@@ -15,6 +15,7 @@
 #include <libguiex_core/guiproperty.h>
 #include <libguiex_core/guipropertyconvertor.h>
 #include <libguiex_core/guistringconvertor.h>
+#include <libguiex_core/guiimage.h>
 
 //============================================================================//
 // function
@@ -54,8 +55,7 @@ namespace guiex
 
 		SetFocusable(true);
 		SetSelfActivable(false);
-		SetFlag(eFLAG_EVENT_CLICK, true);
-		SetFlag(eFLAG_OPEN_WITH_PARENT, true);
+		SetGenerateClickEvent( true );
 	}
 	//------------------------------------------------------------------------------
 	int32 CGUIWgtButton::Create()
@@ -95,9 +95,9 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtButton::RefreshImpl()
+	void CGUIWgtButton::RefreshSelf()
 	{
-		CGUIWidget::RefreshImpl();
+		CGUIWidget::RefreshSelf();
 
 		//update client area
 		m_aStringArea = GetBoundArea();

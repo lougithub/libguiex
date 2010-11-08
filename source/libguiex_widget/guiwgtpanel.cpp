@@ -15,6 +15,7 @@
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guistringconvertor.h>
 #include <libguiex_core/guipropertymanager.h>
+#include <libguiex_core/guiimage.h>
 
 
 //============================================================================//
@@ -44,13 +45,8 @@ namespace guiex
 		m_pImageBG = NULL;
 
 		//flag
-		SetFlag(eFLAG_MOVABLE, false);
 		SetFocusable(false);
 		SetSelfActivable(false);
-		SetFlag(eFLAG_EVENT_CLICK, true);
-		SetFlag(eFLAG_EVENT_DBCLICK, true);
-		SetFlag(eFLAG_SCROLLBAR_AUTOPOSITION, true);
-		SetFlag(eFLAG_OPEN_WITH_PARENT, true);
 
 		for( int i=0; i<PANEL_BORDER_NONE; ++i)
 		{
@@ -174,9 +170,9 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtPanel::RefreshImpl()
+	void		CGUIWgtPanel::RefreshSelf()
 	{
-		CGUIWidget::RefreshImpl();
+		CGUIWidget::RefreshSelf();
 
 		//client rect
 		m_aClientArea.m_fTop +=  GetBorderHeight(PANEL_BORDER_TOP);

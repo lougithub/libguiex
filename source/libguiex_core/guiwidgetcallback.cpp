@@ -94,7 +94,7 @@ namespace guiex
 		//call callback function
 		CallbackFunction("OnMouseEnter", pEvent);
 
-		if( GetFlag(eFLAG_MOUSE_CONSUMED))
+		if( IsMouseConsumed())
 		{
 			pEvent->Consume( true );
 		}
@@ -108,7 +108,7 @@ namespace guiex
 
 		//call callback function
 		CallbackFunction("OnMouseLeave", pEvent);
-		if( GetFlag(eFLAG_MOUSE_CONSUMED))
+		if( IsMouseConsumed())
 		{
 			pEvent->Consume( true );
 		}
@@ -132,7 +132,7 @@ namespace guiex
 
 		//call callback function
 		CallbackFunction("OnMouseLeftDown", pEvent);
-		if( GetFlag(eFLAG_MOUSE_CONSUMED))
+		if( IsMouseConsumed())
 		{
 			pEvent->Consume( true );
 		}
@@ -146,7 +146,7 @@ namespace guiex
 
 		//call callback function
 		CallbackFunction("OnMouseLeftUp", pEvent);
-		if( GetFlag(eFLAG_MOUSE_CONSUMED))
+		if( IsMouseConsumed())
 		{
 			pEvent->Consume( true );
 		}
@@ -160,7 +160,7 @@ namespace guiex
 
 		//call callback function
 		CallbackFunction("OnMouseLeftClick", pEvent);
-		if( GetFlag(eFLAG_MOUSE_CONSUMED))
+		if( IsMouseConsumed())
 		{
 			pEvent->Consume( true );
 		}
@@ -174,7 +174,7 @@ namespace guiex
 
 		//call callback function
 		CallbackFunction("OnMouseLeftDbClick", pEvent);
-		if( GetFlag(eFLAG_MOUSE_CONSUMED))
+		if( IsMouseConsumed())
 		{
 			pEvent->Consume( true );
 		}
@@ -188,7 +188,7 @@ namespace guiex
 
 		//call callback function
 		CallbackFunction("OnMouseLeftMultiClick", pEvent);
-		if( GetFlag(eFLAG_MOUSE_CONSUMED))
+		if( IsMouseConsumed())
 		{
 			pEvent->Consume( true );
 		}
@@ -202,7 +202,7 @@ namespace guiex
 
 		//call callback function
 		CallbackFunction("OnMouseRightDown", pEvent);
-		if( GetFlag(eFLAG_MOUSE_CONSUMED))
+		if( IsMouseConsumed())
 		{
 			pEvent->Consume( true );
 		}
@@ -216,7 +216,7 @@ namespace guiex
 
 		//call callback function
 		CallbackFunction("OnMouseRightUp", pEvent);
-		if( GetFlag(eFLAG_MOUSE_CONSUMED))
+		if( IsMouseConsumed())
 		{
 			pEvent->Consume( true );
 		}
@@ -230,7 +230,7 @@ namespace guiex
 
 		//call callback function
 		CallbackFunction("OnMouseRightClick", pEvent);
-		if( GetFlag(eFLAG_MOUSE_CONSUMED))
+		if( IsMouseConsumed())
 		{
 			pEvent->Consume( true );
 		}
@@ -244,7 +244,7 @@ namespace guiex
 
 		//call callback function
 		CallbackFunction("OnMouseRightDbClick", pEvent);
-		if( GetFlag(eFLAG_MOUSE_CONSUMED))
+		if( IsMouseConsumed())
 		{
 			pEvent->Consume( true );
 		}
@@ -258,7 +258,7 @@ namespace guiex
 
 		//call callback function
 		CallbackFunction("OnMouseRightMultiClick", pEvent);
-		if( GetFlag(eFLAG_MOUSE_CONSUMED))
+		if( IsMouseConsumed())
 		{
 			pEvent->Consume( true );
 		}
@@ -272,7 +272,7 @@ namespace guiex
 
 		//call callback function
 		CallbackFunction("OnMouseMiddleDown", pEvent);
-		if( GetFlag(eFLAG_MOUSE_CONSUMED))
+		if( IsMouseConsumed())
 		{
 			pEvent->Consume( true );
 		}
@@ -286,7 +286,7 @@ namespace guiex
 
 		//call callback function
 		CallbackFunction("OnMouseMiddleUp", pEvent);
-		if( GetFlag(eFLAG_MOUSE_CONSUMED))
+		if( IsMouseConsumed())
 		{
 			pEvent->Consume( true );
 		}
@@ -300,7 +300,7 @@ namespace guiex
 
 		//call callback function
 		CallbackFunction("OnMouseMiddleClick", pEvent);
-		if( GetFlag(eFLAG_MOUSE_CONSUMED))
+		if( IsMouseConsumed())
 		{
 			pEvent->Consume( true );
 		}
@@ -314,7 +314,7 @@ namespace guiex
 
 		//call callback function
 		CallbackFunction("OnMouseMiddleDbClick", pEvent);
-		if( GetFlag(eFLAG_MOUSE_CONSUMED))
+		if( IsMouseConsumed())
 		{
 			pEvent->Consume( true );
 		}
@@ -328,7 +328,7 @@ namespace guiex
 
 		//call callback function
 		CallbackFunction("OnMouseMiddleMultiClick", pEvent);
-		if( GetFlag(eFLAG_MOUSE_CONSUMED))
+		if( IsMouseConsumed())
 		{
 			pEvent->Consume( true );
 		}
@@ -342,7 +342,7 @@ namespace guiex
 
 		//call callback function
 		CallbackFunction("OnMouseWheel", pEvent);
-		if( GetFlag(eFLAG_MOUSE_CONSUMED))
+		if( IsMouseConsumed())
 		{
 			pEvent->Consume( true );
 		}
@@ -488,7 +488,7 @@ namespace guiex
 
 		//call callback function
 		CallbackFunction("OnDragBegin", pEvent);
-		if( GetFlag(eFLAG_MOUSE_CONSUMED))
+		if( IsMouseConsumed())
 		{
 			pEvent->Consume( true );
 		}
@@ -505,7 +505,7 @@ namespace guiex
 		{
 			SetPixelPosition(pEvent->GetWidgetLocalPos());
 		}
-		if( GetFlag(eFLAG_MOUSE_CONSUMED))
+		if( IsMouseConsumed())
 		{
 			pEvent->Consume( true );
 		}
@@ -519,7 +519,7 @@ namespace guiex
 
 		//call callback function
 		CallbackFunction("OnDragEnd", pEvent);
-		if( GetFlag(eFLAG_MOUSE_CONSUMED))
+		if( IsMouseConsumed())
 		{
 			pEvent->Consume( true );
 		}

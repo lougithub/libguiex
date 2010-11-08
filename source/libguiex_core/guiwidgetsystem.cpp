@@ -126,6 +126,8 @@ namespace guiex
 		,m_nNameGenerateIdx(0)
 		,m_bShouldRunScript(true)
 		,m_bDrawExtraInfo(false)
+		,m_fGlobalTimer(0.0f)
+		,m_fTimerForFrame(0.0f)
 	{
 		SetScreenSize(640,480);
 		m_aInputProcessor.SetSystem(this);
@@ -358,7 +360,7 @@ namespace guiex
 	void	CGUIWidgetSystem::Update( real fDeltaTime )
 	{
 		//update time and frame
-		UpdateTime();
+		UpdateTime( fDeltaTime );
 
 		//execute command if it exist
 		ProcessCommand();
@@ -409,9 +411,9 @@ namespace guiex
 #endif	//GUI_PERFORMANCE_ON
 	}
 	//------------------------------------------------------------------------------
-	const CGUITimer&	CGUIWidgetSystem::GetGlobalTimer() const
+	real CGUIWidgetSystem::GetGlobalTimer() const
 	{
-		return m_aGlobalTimer;
+		return m_fGlobalTimer;
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWidgetSystem::SetScreenSize( uint32 width, uint32 height)
@@ -845,15 +847,15 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void			CGUIWidgetSystem::UpdateTime()
+	void			CGUIWidgetSystem::UpdateTime(real fDeltaTime)
 	{
-		m_aGlobalTimer.UpdateTime();
+		m_fGlobalTimer += fDeltaTime;
 
 		//calculate frmae
 		++m_aFrame;
-		if( m_aGlobalTimer - m_aTimerForFrame >= 1000 )
+		if( m_fGlobalTimer - m_fTimerForFrame >= 1000 )
 		{
-			m_aTimerForFrame = m_aGlobalTimer;
+			m_fTimerForFrame = m_fGlobalTimer;
 			m_nFps = m_aFrame;
 			//GUI_TRACE( GUI_FORMAT( "\n--- FRAME %d --- \n",  m_aFrame));
 			m_aFrame = 0;

@@ -60,8 +60,7 @@ namespace guiex
 
 		//set flag
 		SetFocusable(true);
-		SetFlag(eFLAG_EVENT_DBCLICK, true);
-		SetFlag(eFLAG_MOVABLE, false);
+		SetGenerateClickEvent(true);
 	}
 	//------------------------------------------------------------------------------
 	int32 CGUIWgtListBox::Create()

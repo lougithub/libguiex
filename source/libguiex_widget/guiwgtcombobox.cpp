@@ -136,7 +136,7 @@ namespace guiex
 		//create drop list
 		m_pDropList = new CGUIWgtComboBoxDropList(GetName()+"_DropList__auto__", GetProjectName());
 		m_pDropList->SetParent( this);
-		m_pDropList->SetFlag(eFLAG_OPEN_WITH_PARENT, false);
+		m_pDropList->SetOpenWithParent( false );
 	}
 	//------------------------------------------------------------------------------
 	int32 CGUIWgtComboBox::Create()

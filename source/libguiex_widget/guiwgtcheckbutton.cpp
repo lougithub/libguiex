@@ -15,6 +15,7 @@
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guistringconvertor.h>
 #include <libguiex_core/guipropertymanager.h>
+#include <libguiex_core/guiimage.h>
 
 //============================================================================//
 // function
@@ -55,8 +56,7 @@ namespace guiex
 		m_pImageCheckedOverlay = NULL;
 		m_pImageHoverOverlay = NULL;
 
-		SetFlag(eFLAG_EVENT_CLICK, true);
-		SetFlag(eFLAG_OPEN_WITH_PARENT, true);
+		SetGenerateClickEvent( true );
 		SetFocusable(true);
 		SetSelfActivable(false);
 

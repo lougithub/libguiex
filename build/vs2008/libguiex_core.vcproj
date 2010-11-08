@@ -347,10 +347,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guipropertyset.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\source\libguiex_core\guiquaternion.cpp"
 				>
 			</File>
@@ -666,10 +662,6 @@
 			</File>
 			<File
 				RelativePath="..\..\include\libguiex_core\guipropertymanager.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\include\libguiex_core\guipropertyset.h"
 				>
 			</File>
 			<File

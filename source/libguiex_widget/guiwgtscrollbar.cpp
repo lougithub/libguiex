@@ -16,6 +16,7 @@
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guiproperty.h>
 #include <libguiex_core/guipropertymanager.h>
+#include <libguiex_core/guiimage.h>
 
 
 //============================================================================//
@@ -117,7 +118,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtScrollbarArrow::InitScrollbarArrow()
 	{
-		SetFlag(eFLAG_FOCUS_AGENCY, true);
+		SetFocusAgency( true );
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtScrollbarArrow::OnParentChanged( CGUIEventRelativeChange* pEvent )
@@ -163,8 +164,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtScrollbarSlide::InitScrollbarSlide()
 	{
-		SetFlag(eFLAG_MOVABLE, true);
-		SetFlag(eFLAG_FOCUS_AGENCY, true);
+		SetMovable(true);
+		SetFocusAgency( true );
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtScrollbarSlide::OnParentChanged( CGUIEventRelativeChange* pEvent )
@@ -273,21 +274,21 @@ namespace guiex
 	void CGUIWgtScrollbar::InitScrollbar()
 	{
 		NewSetPositionType( eScreenValue_Percentage );
-		NewSetSizeType( eScreenValue_Pixel );
+		SetSizeType( eScreenValue_Pixel );
 
 		//create child
 		m_pArrow[0] = new CGUIWgtScrollbarArrow(GetName()+"_arrow_0__auto__", GetProjectName(), 0);
 		m_pArrow[0]->SetParent(this);
 		m_pArrow[0]->NewSetPositionType( eScreenValue_Percentage );
-		m_pArrow[0]->NewSetSizeType( eScreenValue_Pixel );
+		m_pArrow[0]->SetSizeType( eScreenValue_Pixel );
 		m_pArrow[1] = new CGUIWgtScrollbarArrow(GetName()+"_arrow_1__auto__", GetProjectName(), 1);
 		m_pArrow[1]->SetParent(this);
 		m_pArrow[1]->NewSetPositionType( eScreenValue_Percentage );
-		m_pArrow[1]->NewSetSizeType( eScreenValue_Pixel );
+		m_pArrow[1]->SetSizeType( eScreenValue_Pixel );
 		m_pSlide = new CGUIWgtScrollbarSlide(GetName()+"_slide__auto__", GetProjectName() );
 		m_pSlide->SetParent(this);
 		m_pSlide->NewSetPositionType( eScreenValue_Percentage );
-		m_pSlide->NewSetSizeType( eScreenValue_Pixel );
+		m_pSlide->SetSizeType( eScreenValue_Pixel );
 
 		//flag
 		m_bAutoNotifyParent = false;
@@ -304,13 +305,10 @@ namespace guiex
 		//image
 		m_pImageBg = NULL;
 
-		SetFlag(eFLAG_MOVABLE, false);
 		SetFocusable(true);
 		SetSelfActivable(false);
 		SetFlag(eFLAG_EVENT_PARENTSIZECHANGE, true);
-		SetFlag(eFLAG_EVENT_DBCLICK, true);
-		SetFlag(eFLAG_PARENT_CLIENTRECT, false);
-
+		SetGenerateClickEvent(true);
 	}
 	//------------------------------------------------------------------------------
 	const CGUIString&	CGUIWgtScrollbar::GetWidgetType()
@@ -586,9 +584,9 @@ namespace guiex
 		return aRect;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtScrollbar::RefreshImpl()
+	void	CGUIWgtScrollbar::RefreshSelf()
 	{
-		CGUIWidget::RefreshImpl();
+		CGUIWidget::RefreshSelf();
 
 		UpdateScrollbar();
 	}

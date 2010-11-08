@@ -54,7 +54,6 @@
 
 //property
 #include "guiproperty.h"
-#include "guipropertyset.h"
 #include "guipropertyconvertor.h"
 #include "guipropertymanager.h"
 

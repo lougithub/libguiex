@@ -14,6 +14,7 @@
 #include <libguiex_core/guiinterfacerender.h>
 #include <libguiex_core/guiwidgetsystem.h>
 #include <libguiex_core/guiexception.h>
+#include <libguiex_core/guiimage.h>
 
 //============================================================================//
 // function
@@ -41,9 +42,9 @@ namespace guiex
 	{
 		m_pImageBG= NULL;
 
-		SetFlag(eFLAG_EXCLUSIVE, true);
-		SetFlag(eFLAG_MOVABLE, true);
-		SetFlag(eFLAG_OPEN_WITH_PARENT, false);
+		SetExclusive( true );
+		SetMovable( true );
+		SetOpenWithParent( false );
 	}	
 
 	//------------------------------------------------------------------------------

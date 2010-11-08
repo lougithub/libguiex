@@ -181,8 +181,7 @@ namespace guiex
 
 		//set flag
 		SetFocusable(true);
-		SetFlag(eFLAG_EVENT_DBCLICK, true);
-		SetFlag(eFLAG_MOVABLE, false);
+		SetGenerateDBClickEvent(true);
 	}
 	//------------------------------------------------------------------------------
 	int32 CGUIWgtColumnList::Create()

@@ -61,7 +61,7 @@ namespace guiex
 		/// initialize radio button
 		void InitTabButton();
 
-		virtual void		RefreshImpl();
+		virtual void		RefreshSelf();
 
 	protected:	//!< callback function
 		virtual uint32		OnMouseLeftClick( CGUIEventMouse* pEvent );

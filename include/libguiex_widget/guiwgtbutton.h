@@ -81,7 +81,7 @@ namespace guiex
 		/// render
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 
-		virtual void RefreshImpl();
+		virtual void RefreshSelf();
 
 		/**
 		* @brief override the OnSetImage function

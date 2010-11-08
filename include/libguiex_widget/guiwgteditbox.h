@@ -14,7 +14,6 @@
 //============================================================================// 
 #include <libguiex_core/guiwidget.h>
 #include <libguiex_core/guiwidgetgenerator.h>
-#include <libguiex_core/guitimer.h>
 #include "guiwgtedit.h"
 #include <vector>
 
@@ -47,25 +46,20 @@ namespace guiex
 		 */
 		virtual ~CGUIWgtEditBox( );
 
-		/**
-		* @brief update this widget, 
-		*/
-		virtual void	Update( real fDeltaTime );
-
 		/** 
 		* @brief set widget text
 		*/
-		virtual void	SetTextContent(const wchar_t* pText);
+		virtual void SetTextContent(const wchar_t* pText);
 
 		/**
 		* @brief load widget config from property
 		*/
-		virtual CGUIProperty*	GenerateProperty(const CGUIString& rName, const CGUIString& rType );
+		virtual CGUIProperty* GenerateProperty(const CGUIString& rName, const CGUIString& rType );
 
 		/**
 		* @brief process property
 		*/
-		virtual void		ProcessProperty( const CGUIProperty* pProperty);
+		virtual void ProcessProperty( const CGUIProperty* pProperty);
 
 		/**
 		* @brief Set the current position of the carat.
@@ -73,61 +67,60 @@ namespace guiex
 		* If the value specified is greater than the number of characters in the Editbox or is negative, 
 		* the cursor is positioned at the end of the text.
 		*/
-		void			SetCursorIndex(int32 nPos);
+		void SetCursorIndex(int32 nPos);
 
 		/** 
 		* @brief set text masked
 		*/
-		void			SetTextMasked(bool bMask);
+		void SetTextMasked(bool bMask);
 
 		/** 
 		* @brief is text masked
 		*/
-		bool			IsTextMasked() const;
+		bool IsTextMasked() const;
 
 
 		/** 
 		* @brief is text masked
 		*/
-		void			SetMaskCode(wchar_t wMaskCode);
+		void SetMaskCode(wchar_t wMaskCode);
 
 		/** 
 		* @brief is text masked
 		*/
-		wchar_t			GetTextMasked() const;
+		wchar_t GetTextMasked() const;
 
 
 		/** 
 		* @brief set text readonly
 		*/
-		void			SetReadOnly(bool bRead);
+		void SetReadOnly(bool bRead);
 
 		/** 
 		* @brief is text readonly
 		*/
-		bool			IsReadOnly() const;
+		bool IsReadOnly() const;
 
 		/** 
 		* @brief set string area ratio
 		*/
-		void			SetStringAreaRatio(const CGUIRect& rStringAreaRatio);
+		void SetStringAreaRatio(const CGUIRect& rStringAreaRatio);
 
 		/** 
 		* @brief get string area ratio
 		*/
-		const CGUIRect&			GetStringAreaRatio( ) const;
+		const CGUIRect& GetStringAreaRatio( ) const;
 
 		/** 
 		* @brief set selected text color
 		*/
-		void			SetSelectedTextColor( const CGUIColor& rColor);
+		void SetSelectedTextColor( const CGUIColor& rColor);
 
-		const CGUISize&			GetCursorSize() const;
+		void SetCursorSize( const CGUISize& rSize );
+		const CGUISize& GetCursorSize() const;
 
-		void					SetCursorSize( const CGUISize& rSize );
-
-		void			SetMaxTextNum( uint32 num);
-		uint32 			GetMaxTextNum( ) const;
+		void SetMaxTextNum( uint32 num);
+		uint32 GetMaxTextNum( ) const;
 
 	protected:
 		/**
@@ -136,18 +129,23 @@ namespace guiex
 		*/
 		CGUIWgtEditBox( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName );
 	
-		virtual void RefreshImpl( );
+		virtual void RefreshSelf( );
 
 		/// render
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 
+		/**
+		* @brief update this widget, 
+		*/
+		virtual void UpdateSelf( real fDeltaTime );
+
 		/// initialize editbox
-		void		InitEditbox();
+		void InitEditbox();
 
 		/**
 		* @brief override the OnSetImage function
 		*/
-		virtual void	OnSetImage( const CGUIString& rName,CGUIImage* pImage );
+		virtual void OnSetImage( const CGUIString& rName,CGUIImage* pImage );
 
 	protected://string related function
 		/// get position of cursor 
@@ -227,13 +225,6 @@ namespace guiex
 		bool		m_bDraging;					//!< true when a selection is being dragged.
 		uint32		m_nDragAnchorIdx;			//!< Selection index for drag selection anchor point.
 		CGUIColor	m_aSelectedTextColor;		//!< selected text color
-
-		//---------------------------------------------------
-		//cursor
-		int32		m_nBlinkSpeed;				//!< blink speed, in millisecond
-		CGUITimer	m_aCursorTimer;				//!< used by cursor
-		bool		m_bShowCursor;				//!< used by cursor
-		CGUISize	m_aCursorSize;				//!< size of cursor
 
 		//---------------------------------------------------
 		//image

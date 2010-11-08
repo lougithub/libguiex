@@ -105,11 +105,12 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtAnimation::UpdateSelf( real fDeltaTime )
 	{
-		CGUIWidget::UpdateSelf( fDeltaTime );
 		if( m_pAnimationCur)
 		{
 			m_pAnimationCur->Update( fDeltaTime );
 		}
+
+		CGUIWidget::UpdateSelf( fDeltaTime );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtAnimation::RenderSelf(IGUIInterfaceRender* pRender)

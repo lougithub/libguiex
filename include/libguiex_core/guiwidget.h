@@ -265,23 +265,7 @@ namespace guiex
 		*/
 		enum
 		{
-			/******* ability of widget **************************/
-			eFLAG_INHERIT_ALPHA = 0,
-			eFLAG_FOCUS_AGENCY,				//!< this widget is an agency of it's parent
-			eFLAG_FOCUSABLE,				//!< could this widget be set focus
-			eFLAG_HITABLE,					//!< could this widget be hitted
-			eFLAG_MOVABLE,					//!< could this widget be dragged by mouse
-			eFLAG_EXCLUSIVE,				//!< is this widget a exclusive widget		
-			eFLAG_SCROLLBAR_AUTOPOSITION,	//!< could this widget auto-position scroll bar
-			eFLAG_OPEN_WITH_PARENT,			//!< should this widget be opened with parent's open
-			eFLAG_PARENT_CLIENTRECT,		//!< use parent client rect or whole rect as a client rect
-			eFLAG_MOUSE_CONSUMED,			//!< should this mouse consume mouse event
-
 			/******* whether receive this kind of event *********/
-			eFLAG_EVENT_CLICK,				//!< could this widget generate click event
-			eFLAG_EVENT_DBCLICK,			//!< could this widget generate double click event
-			eFLAG_EVENT_MULTICLICK,			//!< could this widget generate multi click event
-			eFLAG_RESPONSE_UPDATE_EVENT,				//!< could this widget generate update event
 			eFLAG_EVENT_PARENTSIZECHANGE,	//!< could this widget receive parent change event
 
 			eFLAG_MAX,
@@ -295,12 +279,6 @@ namespace guiex
 
 		/// is this widget activable
 		bool IsDerivedActivable();
-
-		/// set this widget focusable
-		void SetFocusable(bool bFocusable);
-
-		/// is this widget focusable
-		bool IsFocusable() const;
 
 		/// set this widget focus
 		void SetFocus(bool bFocus);
@@ -573,7 +551,7 @@ namespace guiex
 		void SetPixelSize( const CGUISize& rPixelSize ); //set widget size in pixel.
 		const CGUISize&	NEWGetPixelSize() const; //get widget size in pixel.
 
-		void NewSetSizeType( EScreenValue eValueType ); //set size type
+		void SetSizeType( EScreenValue eValueType ); //set size type
 		EScreenValue NewGetSizeType( ) const; //get size type
 
 		void Refresh( );
@@ -626,7 +604,43 @@ namespace guiex
 		void				SetMinimumSize(const CGUISize& rSize);		//set minimum size of this widget
 		const CGUISize&		GetMinimumSize() const;						//get minimum size of this widget
 
-	protected:
+		void SetOpenWithParent( bool bFlag ); 
+		bool IsOpenWithParent( ) const;
+
+		void SetInheritAlpha( bool bFlag ); 
+		bool IsInheritAlpha( ) const;
+
+		void SetFocusAgency( bool bFlag ); 
+		bool IsFocusAgency( ) const;
+
+		void SetFocusable( bool bFlag ); 
+		bool IsFocusable( ) const;
+		bool IsDerivedFocusable( ) const;
+
+		void SetMovable( bool bFlag ); 
+		bool IsMovable( ) const;
+
+		void SetExclusive( bool bFlag ); 
+		bool IsExclusive( ) const;
+
+		void SetHitable( bool bFlag ); 
+		bool IsHitable( ) const;
+
+		void SetMouseConsumed( bool bFlag ); 
+		bool IsMouseConsumed( ) const;
+
+		void SetResponseUpdateEvent( bool bFlag ); 
+		bool IsResponseUpdateEvent( ) const;
+
+		void SetGenerateClickEvent( bool bFlag ); 
+		bool IsGenerateClickEvent( ) const;
+
+		void SetGenerateDBClickEvent( bool bFlag ); 
+		bool IsGenerateDBClickEvent( ) const;
+
+		void SetGenerateMultiClickEvent( bool bFlag ); 
+		bool IsGenerateMultiClickEvent( ) const;
+
 	protected:
 		/// for global function defined in c++
 		void	CallGlobalFunction(const CGUIString& strEventName, CGUIEvent* pEvent);
@@ -644,7 +658,7 @@ namespace guiex
 		virtual void PushClipRect( IGUIInterfaceRender* pRender  );
 		virtual void PopClipRect( IGUIInterfaceRender* pRender );
 
-		virtual void RefreshImpl( );
+		virtual void RefreshSelf( );
 
 		/**
 		* @brief render this widget only
@@ -655,12 +669,12 @@ namespace guiex
 		/**
 		* @brief update this widget only
 		*/
-		virtual void	UpdateSelf( real fDeltaTime );
+		virtual void UpdateSelf( real fDeltaTime );
 
 		/** 
 		 * @brief update action sequence
 		 */
-		void			UpdateAs( real fDeltaTime );
+		void UpdateAs( real fDeltaTime );
 
 		void DrawRect( IGUIInterfaceRender* pRender,
 			const CGUIRect& rDestRect, 
@@ -889,7 +903,21 @@ namespace guiex
 		typedef std::map<CGUIString,CGUIString> TMapScriptFunc;
 		TMapScriptFunc m_mapScriptFunc;		//!<event's script callback function
 
-
+		///////////////////////////////////////////////////////////////////////
+		/// flag
+		///////////////////////////////////////////////////////////////////////
+		bool m_bOpenWithParent;
+		bool m_bInheritAlpha;
+		bool m_bIsFocusAgency;
+		bool m_bIsFocusable;
+		bool m_bIsMovable;
+		bool m_bIsExclusive;
+		bool m_bIsHitable;
+		bool m_bIsMouseConsumed;
+		bool m_bIsResponseUpdateEvent; 
+		bool m_bIsGenerateClickEvent; 
+		bool m_bIsGenerateDBClickEvent; 
+		bool m_bIsGenerateMultiClickEvent; 
 		///////////////////////////////////////////////////////////////////////
 		/// sound
 		///////////////////////////////////////////////////////////////////////

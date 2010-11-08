@@ -11,7 +11,7 @@
 //============================================================================// 
 #include <libguiex_core/guiutility.h>
 #include <string.h>
-#if defined(__WIN32__) || defined(_WIN32)
+#if defined(GUIEX_PLATFORM_WIN32)
 #include <windows.h>
 #endif
 #include <stdio.h>
@@ -33,7 +33,7 @@ namespace guiex
 			return NULL;
 		}
 
-#if defined(__WIN32__) || defined(_WIN32)
+#if defined(GUIEX_PLATFORM_WIN32)
 		// Emulate Unix.  Win32 does NOT support all the UNIX versions
 		// below, so DO we need this ifdef.
 		static const char *day_of_week_name[] =
@@ -77,7 +77,7 @@ namespace guiex
 			(int32) local.wSecond,
 			(int32) (local.wMilliseconds * 1000));
 		return &date_and_time[15 + (return_pointer_to_first_digit != 0)];
-#elif defined(__linux__)
+#elif defined(GUIEX_PLATFORM_LINUX)
 		char timebuf[26]; // This magic number is based on the ctime(3c) man page.
 		ACE_Time_Value cur_time = gettimeofday ();
 		time_t secs = cur_time.sec ();

@@ -168,7 +168,7 @@ namespace guiex
 		//render scrollbar
 		virtual void	RenderSelf(IGUIInterfaceRender* pRender);
 
-		virtual void	RefreshImpl();
+		virtual void	RefreshSelf();
 
 		/// update scrollbar's position and size when parent changes size or others
 		void			UpdateScrollbar();

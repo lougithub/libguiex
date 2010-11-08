@@ -27,6 +27,15 @@
 // define
 //============================================================================// 
 
+#if defined( __WIN32__ ) || defined( _WIN32 ) || defined(WIN32)
+#define GUIEX_PLATFORM_WIN32
+#elif defined(__linux__)
+#define GUIEX_PLATFORM_LINUX
+#elif defined(__APPLE__) && defined(__MACH__)
+#define GUIEX_PLATFORM_MAC
+#endif
+
+
 /*************************************************************************
 	Dynamic Library import / export control conditional
 	Define GUIEX_GENERATE_DLL to export symbols
@@ -34,7 +43,7 @@
 	none define for use it as a static library
 *************************************************************************/
 
-#if defined( __WIN32__ ) || defined( _WIN32 ) || defined(WIN32)
+#if defined( GUIEX_PLATFORM_WIN32 )
 #	if defined(GUIEX_GENERATE_DLL)
 #		define GUIEXPORT		__declspec( dllexport )
 #		define GUI_DLL	1
@@ -117,7 +126,7 @@
 /*************************************************************************
 	double click time
 *************************************************************************/
-#define GUI_DBCLICK_TIME 250
+#define GUI_DBCLICK_TIME 0.250f
 
 /*************************************************************************
 	default edit box mask
@@ -147,8 +156,21 @@
 /*************************************************************************
 	iconv
 *************************************************************************/
+#if defined(GUIEX_PLATFORM_WIN32)
+#define GUI_STRING_CONV_USE_ICONV	0
+#define GUI_STRING_CONV_USE_MSC		1
+#elif defined(GUIEX_PLATFORM_LINUX)
 #define GUI_STRING_CONV_USE_ICONV	1
 #define GUI_STRING_CONV_USE_MSC		0
+#elif defined(GUIEX_PLATFORM_MAC)
+#define GUI_STRING_CONV_USE_ICONV	1
+#define GUI_STRING_CONV_USE_MSC		0
+#else
+#	error "unknown platform"
+#endif
+
+
+
 
 
 #endif //__GUI_CONFIG_20060322_H__

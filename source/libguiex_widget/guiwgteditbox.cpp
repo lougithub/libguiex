@@ -57,8 +57,6 @@ namespace guiex
 		SetFocusable(true);
 		SetSelfActivable(false);
 		m_nMaxString = 100;		///< max number of string
-		m_nBlinkSpeed = 500;		///< blink speed, in millisecond
-		m_bShowCursor = true;
 		m_nCursorIdx = 0;			///< cursor's position in edited string, the first is 0.
 		m_fTextWidthRel = 0.0f;
 		m_bMaskText = false;
@@ -112,12 +110,12 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	const CGUISize&			CGUIWgtEditBox::GetCursorSize() const
 	{
-		return m_aCursorSize;
+		return m_pEdit->GetCursorSize();
 	}
 	//------------------------------------------------------------------------------
 	void					CGUIWgtEditBox::SetCursorSize( const CGUISize& rSize )
 	{
-		m_aCursorSize = rSize;
+		m_pEdit->SetCursorSize(rSize);
 	}
 	//------------------------------------------------------------------------------
 	void			CGUIWgtEditBox::SetMaxTextNum( uint32 num)
@@ -201,9 +199,9 @@ namespace guiex
 		return m_wMaskCodePoint;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtEditBox::RefreshImpl( )
+	void CGUIWgtEditBox::RefreshSelf( )
 	{
-		CGUIWidget::RefreshImpl();
+		CGUIWidget::RefreshSelf();
 
 		m_aStringAreaRect.m_fLeft = GetBoundArea().m_fLeft+(NEWGetPixelSize().GetWidth()*m_aStringAreaRatio.m_fLeft);
 		m_aStringAreaRect.m_fRight = GetBoundArea().m_fLeft+(NEWGetPixelSize().GetWidth()*m_aStringAreaRatio.m_fRight);
@@ -229,20 +227,12 @@ namespace guiex
 		//render cursor
 		if( m_pCursor && IsFocus() )
 		{
-			//calculate
-			if( CGUIWidgetSystem::Instance()->GetGlobalTimer() - m_aCursorTimer >= m_nBlinkSpeed )
-			{
-				m_aCursorTimer = CGUIWidgetSystem::Instance()->GetGlobalTimer();
-				m_bShowCursor = !m_bShowCursor;
-			}
-
 			//render
-			if( m_bShowCursor )
+			if( m_pEdit->IsShowCursor() )
 			{
 				DrawImage( pRender, m_pCursor, GetCursorRect());
 			}
 		}
-
 
 		//render string
 		CGUIVector2	aPos = GetBoundArea().GetPosition();
@@ -294,7 +284,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtEditBox::Update( real fDeltaTime )
+	void	CGUIWgtEditBox::UpdateSelf( real fDeltaTime )
 	{
 		if( IsFocus() )
 		{
@@ -317,13 +307,12 @@ namespace guiex
 			}
 		}
 
-		CGUIWidget::Update( fDeltaTime );
+		CGUIWidget::UpdateSelf( fDeltaTime );
 	}
 	//------------------------------------------------------------------------------
 	void			CGUIWgtEditBox::SetStringAreaRatio(const CGUIRect& rStringAreaRatio)
 	{
 		m_aStringAreaRatio = rStringAreaRatio;
-//		SetRectDirty();
 	}
 	//------------------------------------------------------------------------------
 	const CGUIRect&			CGUIWgtEditBox::GetStringAreaRatio( ) const
@@ -380,15 +369,15 @@ namespace guiex
 		real fHeight = 0.0f;
 
 		CGUIVector2 aPos = m_aStringAreaRect.GetPosition();
-		aPos.x = aPos.x+fWidth+m_fTextWidthRel-m_aCursorSize.m_fWidth/2;
-		aPos.y = aPos.y + fHeight + (m_aStringAreaRect.GetHeight() - ( m_aCursorSize.m_fHeight + GetTextInfo().m_nFontSize )/2 );
+		aPos.x = aPos.x+fWidth+m_fTextWidthRel-m_pEdit->GetCursorSize().m_fWidth/2;
+		aPos.y = aPos.y + fHeight + (m_aStringAreaRect.GetHeight() - ( m_pEdit->GetCursorSize().m_fHeight + GetTextInfo().m_nFontSize )/2 );
 
 		return aPos;
 	}
 	//------------------------------------------------------------------------------
 	CGUIRect	CGUIWgtEditBox::GetCursorRect()
 	{
-		return CGUIRect(GetCursorPos(), m_aCursorSize);
+		return CGUIRect(GetCursorPos(), m_pEdit->GetCursorSize());
 	}
 	//------------------------------------------------------------------------------
 	real		CGUIWgtEditBox::GetStringWidth(int32 nBeginPos, int32 nEndPos) const
@@ -434,7 +423,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void				CGUIWgtEditBox::UpdateStringPos()
 	{
-		real fStringWidth = GetStringWidth(0, m_nCursorIdx)+m_aCursorSize.GetWidth();
+		real fStringWidth = GetStringWidth(0, m_nCursorIdx)+m_pEdit->GetCursorSize().GetWidth();
 		real fClientWidth = m_aStringAreaRect.GetWidth();
 		m_fTextWidthRel = (fClientWidth - fStringWidth)<0.0f?fClientWidth - fStringWidth:0.0f;
 	}
@@ -447,8 +436,7 @@ namespace guiex
 		}
 
 		m_nCursorIdx = nPos;
-		m_aCursorTimer = CGUIWidgetSystem::Instance()->GetGlobalTimer();
-		m_bShowCursor = true;
+		m_pEdit->ResetShowCursor();
 
 		//set cursor position for edit
 		m_pEdit->SetCursorPos(GetCursorPos());

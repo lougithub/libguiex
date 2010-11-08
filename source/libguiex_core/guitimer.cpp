@@ -17,7 +17,7 @@
 //============================================================================// 
 namespace guiex
 {
-#if defined(__WIN32__) || defined(_WIN32)
+#if defined(GUIEX_PLATFORM_WIN32)
 	LARGE_INTEGER CGUITimer::m_aFrequency;
 	bool CGUITimer::m_sbInit = false;
 	//------------------------------------------------------------------------------
@@ -71,7 +71,7 @@ namespace guiex
 
 		return newTicks>GUI_TIMER_MILLISEC_MAX ? GUI_TIMER_MILLISEC_MAX :static_cast<int32>(newTicks);
 	}
-#elif defined(__linux__)
+#elif defined(GUIEX_PLATFORM_LINUX)
 	//------------------------------------------------------------------------------
 	CGUITimer::CGUITimer()
 	{
@@ -106,12 +106,12 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int32	CGUITimer::operator-(const CGUITimer& rTimer)
 	{
-		int32 nMicroseconds = 1000 * ( m_aTimeVal.tv_sec - rTimer.tv_sec ) 
-			+ (_tend.tv_usec - m_tstart.tv_usec)/1000;
+		int32 nMicroseconds = 1000 * ( m_aTimeVal.tv_sec - rTimer.m_aTimeVal.tv_sec ) 
+			+ (m_aTimeVal.tv_usec - rTimer.m_aTimeVal.tv_usec)/1000;
 
 		return nMicroseconds;
 	}
-#elif defined(__APPLE__) && defined(__MACH__)
+#elif defined(GUIEX_PLATFORM_MAC)
 	//------------------------------------------------------------------------------
 	CGUITimer::CGUITimer()
 	{

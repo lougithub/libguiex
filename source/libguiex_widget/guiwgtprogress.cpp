@@ -14,6 +14,7 @@
 #include <libguiex_core/guiwidgetsystem.h>
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guistringconvertor.h>
+#include <libguiex_core/guiimage.h>
 
 //============================================================================//
 // function
@@ -44,8 +45,6 @@ namespace guiex
 
 		m_fMaximumValue = 0.0f;
 		m_fCurrentValue = 0.0f;
-
-		SetFlag(eFLAG_OPEN_WITH_PARENT, true);
 	}
 	//------------------------------------------------------------------------------
 	int32 CGUIWgtProgress::Create()

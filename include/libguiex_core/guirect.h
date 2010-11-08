@@ -312,19 +312,19 @@ namespace guiex
 	inline CGUIRect CGUIRect::operator+(const CGUIRect& rRect) const
 	{
 		return CGUIRect(
-						std::min( m_fLeft, rRect.m_fLeft ),
-						std::min( m_fTop, rRect.m_fTop ),
-						std::max( m_fRight, rRect.m_fRight ),
-						std::max( m_fBottom, rRect.m_fBottom ));
+			m_fLeft<rRect.m_fLeft ? m_fLeft : rRect.m_fLeft,
+			m_fTop<rRect.m_fTop ? m_fTop : rRect.m_fTop,
+			m_fRight>rRect.m_fRight ? m_fRight : rRect.m_fRight,
+			m_fBottom>rRect.m_fBottom ? m_fBottom: rRect.m_fBottom );
 	}
 	//------------------------------------------------------------------------------ 
 	inline const CGUIRect& CGUIRect::operator+=(const CGUIRect& rRect)
 	{
 		this->SetRect(CGUIRect(
-							   std::min( m_fLeft, rRect.m_fLeft ),
-							   std::min( m_fTop, rRect.m_fTop ),
-							   std::max( m_fRight, rRect.m_fRight ),
-							   std::max( m_fBottom, rRect.m_fBottom )));
+			m_fLeft<rRect.m_fLeft ? m_fLeft : rRect.m_fLeft,
+			m_fTop<rRect.m_fTop ? m_fTop : rRect.m_fTop,
+			m_fRight>rRect.m_fRight ? m_fRight : rRect.m_fRight,
+			m_fBottom>rRect.m_fBottom ? m_fBottom: rRect.m_fBottom));
 		return *this;
 	}
 	//------------------------------------------------------------------------------ 

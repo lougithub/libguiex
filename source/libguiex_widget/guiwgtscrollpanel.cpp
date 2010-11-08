@@ -54,9 +54,7 @@ namespace guiex
 
 		//set flag
 		SetFocusable(true);
-		SetFlag(eFLAG_EVENT_CLICK, false);
-		SetFlag(eFLAG_OPEN_WITH_PARENT, true);
-		SetFlag(eFLAG_SCROLLBAR_AUTOPOSITION, true);
+		SetGenerateClickEvent( true );
 	}
 	//------------------------------------------------------------------------------
 	int32 CGUIWgtScrollPanel::Create()
@@ -66,8 +64,8 @@ namespace guiex
 			//create scrollbar
 			m_pScrollbarVert = static_cast<CGUIWgtScrollbar*>(GUI_CREATE_WIDGET("CGUIWgtScrollbar", GetName()+"_scrollbar_vert__auto__", GetProjectName()));
 			m_pScrollbarVert->SetParent(this);
-			m_pScrollbarVert->SetFlag(eFLAG_FOCUS_AGENCY, true);
-			m_pScrollbarVert->SetFlag(eFLAG_OPEN_WITH_PARENT, false);
+			m_pScrollbarVert->SetFocusAgency( true );
+			m_pScrollbarVert->SetOpenWithParent( false );
 			m_pScrollbarVert->EnableNotifyParent(true);
 			m_pScrollbarVert->EnableAutoPosition(true);
 			m_pScrollbarVert->SetScrollbarType( eSB_VERTICAL );
@@ -87,8 +85,8 @@ namespace guiex
 			
 			m_pScrollbarHorz = static_cast<CGUIWgtScrollbar*>(GUI_CREATE_WIDGET("CGUIWgtScrollbar", GetName()+"_scrollbar_hort__auto__", GetProjectName()));
 			m_pScrollbarHorz->SetParent(this);
-			m_pScrollbarHorz->SetFlag(eFLAG_FOCUS_AGENCY, true);
-			m_pScrollbarHorz->SetFlag(eFLAG_OPEN_WITH_PARENT, false);
+			m_pScrollbarHorz->SetFocusAgency( true );
+			m_pScrollbarHorz->SetOpenWithParent( false );
 			m_pScrollbarHorz->EnableNotifyParent(true);
 			m_pScrollbarHorz->EnableAutoPosition(true);
 			m_pScrollbarHorz->SetScrollbarType( eSB_HORIZONAL );

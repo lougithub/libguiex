@@ -182,7 +182,7 @@ guiex::CGUIWidget* SampleInit()
 	pWidget_tabbutton->SetParent( pWidget_tabcontroll );
 	pWidget_tabbutton->SetImage( "BTN_NORMAL", "button_hilight_square" );
 	pWidget_tabbutton->SetImage( "BTN_NORMAL_CHECKED", "checkbutton_glow_checked" );
-	pWidget_tabbutton->NewSetSizeType( guiex::eScreenValue_Percentage );
+	pWidget_tabbutton->SetSizeType( guiex::eScreenValue_Percentage );
 	pWidget_tabbutton->NewSetPositionType( guiex::eScreenValue_Percentage );
 	pWidget_tabbutton->NEWSetSize( 0.33f,0.1f );
 	pWidget_tabbutton->NEWSetPosition( 0, 0 );
@@ -191,7 +191,7 @@ guiex::CGUIWidget* SampleInit()
 	guiex::CGUIWidget* pWidget_panel1= GUI_CREATE_WIDGET("CGUIWgtPanel", "panel1", "testproject");
 	pWidget_panel1->SetParent( pWidget_tabbutton );
 	pWidget_panel1->SetImage( "BGIMAGE", "color_white" );
-	pWidget_panel1->NewSetSizeType( guiex::eScreenValue_Percentage );
+	pWidget_panel1->SetSizeType( guiex::eScreenValue_Percentage );
 	pWidget_panel1->NEWSetSize( 1.0f, 0.5f);
 	pWidget_panel1->SetColor(guiex::CGUIColor(1,0,0,1));
 	pWidget_panel1->Create();
@@ -200,7 +200,7 @@ guiex::CGUIWidget* SampleInit()
 	pWidget_tabbutton2->SetParent( pWidget_tabcontroll );
 	pWidget_tabbutton2->SetImage( "BTN_NORMAL", "button_hilight_square" );
 	pWidget_tabbutton2->SetImage( "BTN_NORMAL_CHECKED", "checkbutton_glow_checked" );
-	pWidget_tabbutton2->NewSetSizeType( guiex::eScreenValue_Percentage );
+	pWidget_tabbutton2->SetSizeType( guiex::eScreenValue_Percentage );
 	pWidget_tabbutton2->NewSetPositionType( guiex::eScreenValue_Percentage );
 	pWidget_tabbutton2->NEWSetSize( 0.33f, 0.1f );
 	pWidget_tabbutton2->NEWSetPosition( 0.33f, 0 );
@@ -209,7 +209,7 @@ guiex::CGUIWidget* SampleInit()
 	guiex::CGUIWidget* pWidget_panel2= GUI_CREATE_WIDGET("CGUIWgtPanel", "panel2", "testproject");
 	pWidget_panel2->SetParent( pWidget_tabbutton2 );
 	pWidget_panel2->SetImage( "BGIMAGE", "color_white" );
-	pWidget_panel2->NewSetSizeType( guiex::eScreenValue_Percentage );
+	pWidget_panel2->SetSizeType( guiex::eScreenValue_Percentage );
 	pWidget_panel2->NEWSetSize( 1.0f, 0.5f);
 	pWidget_panel2->SetColor(guiex::CGUIColor(0,1,0,1));
 	pWidget_panel2->Create();
@@ -218,7 +218,7 @@ guiex::CGUIWidget* SampleInit()
 	pWidget_tabbutton3->SetParent( pWidget_tabcontroll );
 	pWidget_tabbutton3->SetImage( "BTN_NORMAL", "button_hilight_square" );
 	pWidget_tabbutton3->SetImage( "BTN_NORMAL_CHECKED", "checkbutton_glow_checked" );
-	pWidget_tabbutton3->NewSetSizeType( guiex::eScreenValue_Percentage );
+	pWidget_tabbutton3->SetSizeType( guiex::eScreenValue_Percentage );
 	pWidget_tabbutton3->NewSetPositionType( guiex::eScreenValue_Percentage );
 	pWidget_tabbutton3->NEWSetSize( 0.33f, 0.1f );
 	pWidget_tabbutton3->NEWSetPosition( 0.66f, 0 );
@@ -227,7 +227,7 @@ guiex::CGUIWidget* SampleInit()
 	guiex::CGUIWidget* pWidget_panel3= GUI_CREATE_WIDGET("CGUIWgtPanel", "panel3", "testproject");
 	pWidget_panel3->SetParent( pWidget_tabbutton3 );
 	pWidget_panel3->SetImage( "BGIMAGE", "color_white" );
-	pWidget_panel3->NewSetSizeType( guiex::eScreenValue_Percentage );
+	pWidget_panel3->SetSizeType( guiex::eScreenValue_Percentage );
 	pWidget_panel3->NEWSetSize( 1.0f, 0.5f);
 	pWidget_panel3->SetColor(guiex::CGUIColor(0,0,1,1));
 	pWidget_panel3->Create();

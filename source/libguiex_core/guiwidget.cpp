@@ -60,23 +60,21 @@ namespace guiex
 		,m_aColor(1.0f,1.0f,1.0f,1.0f)
 		,m_uTextAlignment(GUI_TA_CENTER)
 		,m_fRotation(0.0f)
+		,m_bOpenWithParent(true)
+		,m_bInheritAlpha(true)
+		,m_bIsFocusAgency(false)
+		,m_bIsFocusable(true)
+		,m_bIsMovable(false)
+		,m_bIsExclusive(false)
+		,m_bIsHitable(true)
+		,m_bIsMouseConsumed(true)
+		,m_bIsResponseUpdateEvent(false)
+		,m_bIsGenerateClickEvent(false)
+		,m_bIsGenerateDBClickEvent(false)
+		,m_bIsGenerateMultiClickEvent(false)
 	{
 		//set flag
-		m_aBitFlag.set(eFLAG_INHERIT_ALPHA);			//inherit alpha from parent
-		m_aBitFlag.reset(eFLAG_FOCUS_AGENCY);			//is this widget a focus agency of it's parent
-		m_aBitFlag.set(eFLAG_FOCUSABLE);				//could be set focus
-		m_aBitFlag.reset(eFLAG_MOVABLE);				//not movable
-		m_aBitFlag.reset(eFLAG_EVENT_CLICK);			//disable click event
-		m_aBitFlag.reset(eFLAG_EVENT_DBCLICK);			//disable double click event
-		m_aBitFlag.reset(eFLAG_EVENT_MULTICLICK);		//disable multi click event
-		m_aBitFlag.reset(eFLAG_RESPONSE_UPDATE_EVENT);			//disable update event
-		m_aBitFlag.reset(eFLAG_EXCLUSIVE);				//make this widget not a exclusive widget.
-		m_aBitFlag.reset(eFLAG_SCROLLBAR_AUTOPOSITION);	//make this widget unable to position scrollbar automatically
 		m_aBitFlag.reset(eFLAG_EVENT_PARENTSIZECHANGE);	//could this widget receive parent change event
-		m_aBitFlag.set(eFLAG_OPEN_WITH_PARENT);			// should this widget be opened with parent's open
-		m_aBitFlag.set(eFLAG_PARENT_CLIENTRECT);		// use parent client rect or whole rect as a client rect
-		m_aBitFlag.set(eFLAG_MOUSE_CONSUMED);			//!< should this mouse consume mouse event
-		m_aBitFlag.set(eFLAG_HITABLE);					//!< could this widget be hitted
 
 		//init data
 		m_aWidgetPosition.m_eType = eScreenValue_Pixel;
@@ -133,7 +131,7 @@ namespace guiex
 		CGUIWidget*	pWidget = GetChild();
 		while(pWidget)
 		{
-			if( pWidget->GetFlag(eFLAG_OPEN_WITH_PARENT) && pWidget->IsOpen()==false)
+			if( pWidget->IsOpenWithParent() && pWidget->IsOpen()==false)
 			{
 				pWidget->Open();
 			}
@@ -524,7 +522,7 @@ namespace guiex
 		pChild->SetNextSibling( NULL );
 
 		//for exclusive child
-		if( pChild->GetFlag(eFLAG_EXCLUSIVE))
+		if( pChild->IsExclusive())
 		{
 			GUI_ASSERT( pChild == m_pExclusiveChild, "error for remove exclusive child");
 			m_pExclusiveChild = NULL;
@@ -584,7 +582,7 @@ namespace guiex
 		pChild->SetParentImpl( this );
 
 		//for exclusive child
-		if( pChild->GetFlag(eFLAG_EXCLUSIVE))
+		if( pChild->IsExclusive())
 		{
 			GUI_ASSERT(m_pExclusiveChild==NULL, "there has been a exclusive child");
 			m_pExclusiveChild = pChild;
@@ -622,31 +620,9 @@ namespace guiex
 		return m_aParamActivable.GetFinalValue();
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::SetFocusable(bool bFocusable)
-	{
-		bFocusable ? m_aBitFlag.set(eFLAG_FOCUSABLE) : m_aBitFlag.reset(eFLAG_FOCUSABLE);
-	}
-	//------------------------------------------------------------------------------
-	bool	CGUIWidget::IsFocusable() const
-	{
-		if( GetFlag(eFLAG_FOCUS_AGENCY))
-		{
-			//is a focus agency
-			if( GetParent() )
-			{
-				return GetParent()->IsFocusable( );
-			}
-
-			throw CGUIException("[CGUIWidget::IsFocusable]: lack of parent! TYPE<%s>  NAME<%s>",
-				GetType().c_str(),GetName().c_str());
-		}
-
-		return m_aBitFlag.test(eFLAG_FOCUSABLE);
-	}
-	//------------------------------------------------------------------------------
 	void	CGUIWidget::SetFocus(bool bFocus)
 	{
-		if( bFocus && GetFlag(eFLAG_FOCUS_AGENCY))
+		if( bFocus && IsFocusAgency())
 		{
 			//is a focus agency
 			if( GetParent() )
@@ -698,7 +674,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	bool	CGUIWidget::IsFocus() const
 	{
-		if( GetFlag(eFLAG_FOCUS_AGENCY))
+		if( IsFocusAgency() )
 		{
 			//is a focus agency
 			if( GetParent() )
@@ -877,10 +853,10 @@ namespace guiex
 	{
 		//check sibling
 		if( GetNextSibling() && 
-			!(GetFlag(eFLAG_EXCLUSIVE) && IsDerivedDisable() == false && IsOpen() && IsDerivedVisible()))
+			!(IsExclusive() && IsDerivedDisable() == false && IsOpen() && IsDerivedVisible()))
 		{
 			CGUIWidget* pWidget = GetNextSibling()->GetWidgetAtPoint(rPos);
-			if( pWidget &&(!pWidget->GetFlag(eFLAG_EXCLUSIVE) || pWidget->HitTest(rPos)))
+			if( pWidget &&(!pWidget->IsExclusive() || pWidget->HitTest(rPos)))
 			{
 				//find one
 				return pWidget;
@@ -906,7 +882,7 @@ namespace guiex
 					//check normal child
 					pWidget = GetChild()->GetWidgetAtPoint(rPos);
 				}
-				if( pWidget &&(!pWidget->GetFlag(eFLAG_EXCLUSIVE) || pWidget->HitTest(rPos)))
+				if( pWidget &&(!pWidget->IsExclusive() || pWidget->HitTest(rPos)))
 				{
 					//find one
 					return pWidget;
@@ -926,7 +902,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	bool	CGUIWidget::HitTest( const CGUIVector2& rPos)
 	{
-		if( GetFlag(eFLAG_HITABLE) )
+		if( IsHitable() )
 		{
 			return m_aBound.IsPointInRect(rPos);
 		}
@@ -1127,7 +1103,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	real	CGUIWidget::GetDerivedAlpha() 
 	{
-		if( GetFlag(eFLAG_INHERIT_ALPHA) && GetParent() )
+		if( IsInheritAlpha() && GetParent() )
 		{
 			return m_aParamAlpha.GetFinalValue();
 		}
@@ -1339,7 +1315,7 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "EXCLUSIVE" )
 		{
-			ValueToProperty( GetFlag(eFLAG_EXCLUSIVE), rProperty);
+			ValueToProperty( IsExclusive(), rProperty);
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "DISABLE" )
@@ -1349,17 +1325,17 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "open_with_parent" )
 		{
-			ValueToProperty( GetFlag(eFLAG_OPEN_WITH_PARENT), rProperty);
+			ValueToProperty( IsOpenWithParent(), rProperty);
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "response_update_event" )
 		{
-			ValueToProperty( GetFlag(eFLAG_RESPONSE_UPDATE_EVENT), rProperty);
+			ValueToProperty( IsResponseUpdateEvent(), rProperty);
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "movable" )
 		{
-			ValueToProperty( GetFlag(eFLAG_MOVABLE), rProperty);
+			ValueToProperty( IsMovable(), rProperty);
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "visible" )
@@ -1374,7 +1350,7 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "hitable" )
 		{
-			ValueToProperty( GetFlag(eFLAG_HITABLE), rProperty);
+			ValueToProperty( IsHitable(), rProperty);
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo" )
@@ -1535,7 +1511,7 @@ namespace guiex
 		{
 			bool bValue = false;
 			PropertyToValue(rProperty, bValue );
-			SetFlag( eFLAG_MOVABLE, bValue );
+			SetMovable(bValue);
 		}
 		else if(  rProperty.GetType()== ePropertyType_Bool &&  rProperty.GetName()=="visible" )
 		{
@@ -1553,7 +1529,7 @@ namespace guiex
 		{
 			bool bValue = false;
 			PropertyToValue(rProperty, bValue );
-			SetFlag( eFLAG_HITABLE, bValue );
+			SetHitable( bValue );
 		}
 		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="activable" )
 		{
@@ -1565,19 +1541,19 @@ namespace guiex
 		{
 			bool bValue = false;
 			PropertyToValue(rProperty, bValue );
-			SetFlag( eFLAG_EXCLUSIVE, bValue );
+			SetExclusive( bValue );
 		}
 		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="open_with_parent" )
 		{
 			bool bValue = false;
 			PropertyToValue(rProperty, bValue );
-			SetFlag( eFLAG_OPEN_WITH_PARENT, bValue );
+			SetOpenWithParent( bValue );
 		}
 		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="response_update_event" )
 		{
 			bool bValue = false;
 			PropertyToValue(rProperty, bValue );
-			SetFlag( eFLAG_RESPONSE_UPDATE_EVENT, bValue );
+			SetResponseUpdateEvent(bValue );
 		}
 		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="EVENT_PARENTSIZECHANGE" )
 		{
@@ -1589,13 +1565,13 @@ namespace guiex
 		{
 			bool bValue = false;
 			PropertyToValue(rProperty, bValue );
-			SetFlag( eFLAG_EVENT_CLICK, bValue );
+			SetGenerateClickEvent( bValue );
 		}		
 		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="EVENT_DBCLICK" )
 		{
 			bool bValue = false;
 			PropertyToValue(rProperty, bValue );
-			SetFlag( eFLAG_EVENT_DBCLICK, bValue );
+			SetGenerateDBClickEvent( bValue );
 		}
 		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName() == "DISABLE" )
 		{
@@ -1774,7 +1750,7 @@ namespace guiex
 		UpdateAs( fDeltaTime );
 
 		//call update event
-		if( GetFlag(eFLAG_RESPONSE_UPDATE_EVENT))
+		if( IsResponseUpdateEvent() )
 		{
 			CGUIEventNotification aEvent;
 			aEvent.SetEventId(eEVENT_UPDATE);
@@ -2101,7 +2077,7 @@ namespace guiex
 		return m_aWidgetSize.m_aPixelValue;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWidget::NewSetSizeType( EScreenValue eValueType )
+	void CGUIWidget::SetSizeType( EScreenValue eValueType )
 	{
 		if( eValueType != m_aWidgetSize.m_eType )
 		{
@@ -2126,7 +2102,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWidget::Refresh( )
 	{
-		RefreshImpl();
+		RefreshSelf();
 
 		CGUIWidget*	pWidget = GetChild();
 		while(pWidget)
@@ -2136,7 +2112,7 @@ namespace guiex
 		}	
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWidget::RefreshImpl()
+	void CGUIWidget::RefreshSelf()
 	{
 		//get parent info
 		CGUISize aParentPixelSize = GetParentSize();
@@ -2201,8 +2177,141 @@ namespace guiex
 		LocalToWorld( m_aBoundArea, m_aBound );
 	}
 	//------------------------------------------------------------------------------
-
-
+	void CGUIWidget::SetOpenWithParent( bool bFlag )
+	{
+		m_bOpenWithParent = bFlag;
+	}
 	//------------------------------------------------------------------------------
+	bool CGUIWidget::IsOpenWithParent( ) const
+	{
+		return m_bOpenWithParent;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::SetInheritAlpha( bool bFlag )
+	{
+		m_bInheritAlpha = bFlag;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWidget::IsInheritAlpha( ) const
+	{
+		return m_bInheritAlpha;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::SetFocusAgency( bool bFlag )
+	{
+		m_bIsFocusAgency = bFlag;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWidget::IsFocusAgency( ) const
+	{
+		return m_bIsFocusAgency;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::SetFocusable( bool bFlag )
+	{
+		m_bIsFocusable = bFlag;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWidget::IsFocusable( ) const
+	{
+		return m_bIsFocusable;
+	}
+	//------------------------------------------------------------------------------
+	bool	CGUIWidget::IsDerivedFocusable() const
+	{
+		if( IsFocusAgency())
+		{
+			//is a focus agency
+			if( GetParent() )
+			{
+				return GetParent()->IsDerivedFocusable( );
+			}
 
+			throw CGUIException("[CGUIWidget::IsDerivedFocusable]: lack of parent! TYPE<%s>  NAME<%s>",
+				GetType().c_str(),GetName().c_str());
+		}
+
+		return IsFocusable();
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::SetMovable( bool bFlag )
+	{
+		m_bIsMovable = bFlag;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWidget::IsMovable( ) const
+	{
+		return m_bIsMovable;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::SetExclusive( bool bFlag )
+	{
+		m_bIsExclusive = bFlag;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWidget::IsExclusive( ) const
+	{
+		return m_bIsExclusive;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::SetHitable( bool bFlag )
+	{
+		m_bIsHitable = bFlag;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWidget::IsHitable( ) const
+	{
+		return m_bIsHitable;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::SetMouseConsumed( bool bFlag )
+	{
+		m_bIsMouseConsumed = bFlag;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWidget::IsMouseConsumed( ) const
+	{
+		return m_bIsMouseConsumed;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::SetResponseUpdateEvent( bool bFlag )
+	{
+		m_bIsResponseUpdateEvent = bFlag;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWidget::IsResponseUpdateEvent( ) const
+	{
+		return m_bIsResponseUpdateEvent;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::SetGenerateClickEvent( bool bFlag )
+	{
+		m_bIsGenerateClickEvent = bFlag;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWidget::IsGenerateClickEvent( ) const
+	{
+		return m_bIsGenerateClickEvent;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::SetGenerateDBClickEvent( bool bFlag )
+	{
+		m_bIsGenerateDBClickEvent = bFlag;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWidget::IsGenerateDBClickEvent( ) const
+	{
+		return m_bIsGenerateDBClickEvent;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::SetGenerateMultiClickEvent( bool bFlag )
+	{
+		m_bIsGenerateMultiClickEvent = bFlag;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWidget::IsGenerateMultiClickEvent( ) const
+	{
+		return m_bIsGenerateMultiClickEvent; 
+	}
+	//------------------------------------------------------------------------------
 }//namespace guiex

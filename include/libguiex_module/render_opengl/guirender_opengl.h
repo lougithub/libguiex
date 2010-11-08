@@ -20,7 +20,7 @@
 #include <set>
 
 
-#if defined(__WIN32__) || defined(_WIN32)
+#if defined(GUIEX_PLATFORM_WIN32)
 #include <windows.h>
 #endif
 

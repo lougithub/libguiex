@@ -26,30 +26,45 @@ namespace guiex
 		InitEdit();
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtEdit::InitEdit()
+	void CGUIWgtEdit::InitEdit()
 	{
 		SetFocusable(false);
+		SetSizeType(eScreenValue_Percentage);
+		NEWSetSize( 1.0f, 1.0f );
+		SetSelfActivable(false);
+		SetOpenWithParent(false);
+		SetMouseConsumed(false);
+		SetHitable( false );	
+
 		m_pIme = NULL;
+
+		m_fBlinkSpeed = 0.5f;		///< blink speed, in second
+		m_bShowCursor = true;
+		m_aCursorShowTime = 0.0f;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtEdit::RenderSelf(IGUIInterfaceRender* pRender)
+	void CGUIWgtEdit::RenderSelf(IGUIInterfaceRender* pRender)
 	{
 
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtEdit::Open()
+	void CGUIWgtEdit::Open()
 	{
 		m_pIme = CGUIInterfaceManager::Instance()->GetInterfaceIme();
 		m_pIme->OpenIme();
+
+		CGUIWidget::Open();
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtEdit::Close()
+	void CGUIWgtEdit::Close()
 	{
 		m_pIme->CloseIme();
 		m_pIme = NULL;
+
+		CGUIWidget::Close();
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtEdit::Update( real fDeltaTime )
+	void CGUIWgtEdit::UpdateSelf( real fDeltaTime )
 	{
 		//get result string
 		if( m_pIme )
@@ -61,7 +76,15 @@ namespace guiex
 			}
 		}
 
-		CGUIWidget::Update( fDeltaTime );
+		//update cursor show time
+		m_aCursorShowTime += fDeltaTime;
+		if( m_aCursorShowTime >= m_fBlinkSpeed )
+		{
+			m_aCursorShowTime = 0.0f;
+			m_bShowCursor = !m_bShowCursor;
+		}
+
+		CGUIWidget::UpdateSelf( fDeltaTime );
 	}
 	//------------------------------------------------------------------------------
 	const wchar_t*	CGUIWgtEdit::GetResult() const
@@ -69,12 +92,12 @@ namespace guiex
 		return m_strResult.c_str();
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtEdit::ClearResult()
+	void CGUIWgtEdit::ClearResult()
 	{
 		m_strResult.clear();
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtEdit::SetCursorPos( const CGUIVector2& rPos )
+	void CGUIWgtEdit::SetCursorPos( const CGUIVector2& rPos )
 	{
 		if( m_pIme )
 		{
@@ -82,4 +105,26 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	const CGUISize& CGUIWgtEdit::GetCursorSize() const
+	{
+		return m_aCursorSize;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtEdit::SetCursorSize( const CGUISize& rSize )
+	{
+		m_aCursorSize = rSize;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWgtEdit::IsShowCursor() const
+	{
+		return m_bShowCursor;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtEdit::ResetShowCursor() 
+	{
+		m_aCursorShowTime = 0.0f;
+		m_bShowCursor = true;
+	}
+	//------------------------------------------------------------------------------
+
 }//namespace guiex

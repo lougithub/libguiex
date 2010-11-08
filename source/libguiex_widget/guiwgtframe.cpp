@@ -87,10 +87,8 @@ namespace guiex
 
 		SetFocusable(false);
 		SetSelfActivable(true);
-		SetFlag(eFLAG_MOVABLE, true);
-		SetFlag(eFLAG_EVENT_DBCLICK, true);
-		//SetFlag(eFLAG_OPEN_WITH_PARENT, false);
-
+		SetMovable(true);
+		SetGenerateDBClickEvent(true);
 	}
 	//------------------------------------------------------------------------------
 	void		CGUIWgtFrame::OnSetImage( const CGUIString& rName, CGUIImage* pImage)

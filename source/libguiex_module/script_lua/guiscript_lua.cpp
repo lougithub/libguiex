@@ -191,7 +191,7 @@ namespace guiex
 		{
 			CGUIString msg = CGUIString("(IGUIScript_lua::ExecuteFile) Unable to execute script file: ")+"\n"+lua_tostring(L,-1)+"\n";
 			lua_pop(L,1);
-			throw CGUIException_Script( msg );
+			throw CGUIException_Script( msg.c_str() );
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -207,7 +207,7 @@ namespace guiex
 		{
 			CGUIString msg = CGUIString("(IGUIScript_lua::ExecuteBuffer) Unable to execute script buffer: ")+"\n"+lua_tostring(L,-1)+"\n";
 			lua_pop(L,1);
-			throw CGUIException_Script( msg );
+			throw CGUIException_Script( msg.c_str() );
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -223,7 +223,7 @@ namespace guiex
 		{
 			CGUIString msg = CGUIString("(IGUIScript_lua::ExecuteString) Unable to execute script string: ")+pString+"\n"+lua_tostring(L,-1)+"\n";
 			lua_pop(L,1);
-			throw CGUIException_Script( msg );
+			throw CGUIException_Script( msg.c_str() );
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -263,7 +263,7 @@ namespace guiex
 			CGUIString msg = CGUIString("(IGUIScript_lua::ExecuteFunction) Unable to execute script function: ")+
 				pFunName+"\n"+lua_tostring(L,-1)+"\n";
 			lua_pop(L,1);
-			throw CGUIException_Script( msg );
+			throw CGUIException_Script( msg.c_str() );
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -320,7 +320,7 @@ namespace guiex
 			CGUIString msg = CGUIString("(IGUIScript_lua::ExecuteFunction) Unable to execute script function: ")+
 				pFunName+"\n"+lua_tostring(L,-1)+"\n";
 			lua_pop(L,1);
-			throw CGUIException_Script( msg );
+			throw CGUIException_Script( msg.c_str() );
 		}
 
 		int nNewTop = lua_gettop(L);
@@ -367,7 +367,7 @@ namespace guiex
 			CGUIString msg = CGUIString("(IGUIScript_lua::ExecuteFunction) Unable to execute script function: ")+
 				pFunName+"\n"+lua_tostring(L,-1)+"\n";
 			lua_pop(L,1);
-			throw CGUIException_Script( msg );
+			throw CGUIException_Script( msg.c_str() );
 		}
 
 		int nNewTop = lua_gettop(L);

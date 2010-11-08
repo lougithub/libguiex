@@ -105,6 +105,9 @@ namespace guiex
 		*/
 		void	ForceHorzScrollbar(bool bShow);
 
+		void SetScrollbarAutoPosition( bool bFlag ); 
+		bool IsScrollbarAutoPosition( ) const;
+
 
 	protected:
 		/**
@@ -119,7 +122,7 @@ namespace guiex
 		/// render
 		virtual void	RenderSelf(IGUIInterfaceRender* pRender);
 
-		virtual void	RefreshImpl();
+		virtual void	RefreshSelf();
 
 		//get actual page size
 		void			UpdateScrollbars(void);
@@ -141,6 +144,8 @@ namespace guiex
 		CGUIWgtScrollbar*		m_pScrollbarHorz;		//!< horizontal scroll-bar widget
 		bool					m_bForceVertScroll;		//!< true if vertical scrollbar should always be displayed
 		bool					m_bForceHorzScroll;		//!< true if horizontal scrollbar should always be displayed
+
+		bool m_bIsScrollbarAutoPosition;
 
 	private:
 		static CGUIString	ms_strType;

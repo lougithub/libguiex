@@ -58,8 +58,6 @@ namespace guiex
 
 		SetFocusable(true);
 		m_nMaxString = 100;		///< max number of string
-		m_nBlinkSpeed = 500;		///< blink speed, in millisecond
-		m_bShowCursor = true;
 		m_nCursorIdx = 0;			///< cursor's position in edited string, the first is 0.
 		m_nCursorLine = 0;
 		m_bReadOnly = false;
@@ -107,9 +105,9 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtMultiEditBox::RefreshImpl()
+	void CGUIWgtMultiEditBox::RefreshSelf()
 	{
-		CGUIWgtScrollbarContainer::RefreshImpl();
+		CGUIWgtScrollbarContainer::RefreshSelf();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtMultiEditBox::UpdateClientArea(void)
@@ -148,15 +146,8 @@ namespace guiex
 		//render cursor
 		if( m_pCursor && IsFocus() )
 		{
-			//calculate
-			if( CGUIWidgetSystem::Instance()->GetGlobalTimer() - m_aCursorTimer >= m_nBlinkSpeed )
-			{
-				m_aCursorTimer = CGUIWidgetSystem::Instance()->GetGlobalTimer();
-				m_bShowCursor = !m_bShowCursor;
-			}
-
 			//render
-			if( m_bShowCursor )
+			if( m_pEdit->IsShowCursor() )
 			{
 				DrawImage( pRender, m_pCursor, GetCursorRect());
 			}
@@ -243,7 +234,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtMultiEditBox::Update( real fDeltaTime )
+	void	CGUIWgtMultiEditBox::UpdateSelf( real fDeltaTime )
 	{
 		if( IsFocus())
 		{
@@ -255,7 +246,7 @@ namespace guiex
 			}
 		}
 
-		CGUIWidget::Update( fDeltaTime );
+		CGUIWidget::UpdateSelf( fDeltaTime );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtMultiEditBox::SetTextContent(const wchar_t* pText)
@@ -316,12 +307,12 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	const CGUISize&	CGUIWgtMultiEditBox::GetCursorSize() const
 	{
-		return m_aCursorSize;
+		return m_pEdit->GetCursorSize();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtMultiEditBox::SetCursorSize( const CGUISize& rSize )
 	{
-		m_aCursorSize = rSize;
+		m_pEdit->SetCursorSize(rSize);
 	}
 	//------------------------------------------------------------------------------
 	CGUIVector2	CGUIWgtMultiEditBox::GetCursorPos()
@@ -349,15 +340,15 @@ namespace guiex
 		}
 
 		CGUIVector2 aPos = GetClientArea( ).GetPosition();
-		aPos.x = aPos.x+fWidth;//-m_aCursorSize.GetWidth()/2;
-		aPos.y = aPos.y + fHeight - m_aCursorSize.GetHeight();
+		aPos.x = aPos.x+fWidth;
+		aPos.y = aPos.y + fHeight - m_pEdit->GetCursorSize().GetHeight();
 
 		return aPos;
 	}
 	//------------------------------------------------------------------------------
 	CGUIRect	CGUIWgtMultiEditBox::GetCursorRect()
 	{
-		return CGUIRect(GetCursorPos(), m_aCursorSize);
+		return CGUIRect(GetCursorPos(), m_pEdit->GetCursorSize());
 	}
 	//------------------------------------------------------------------------------
 	real		CGUIWgtMultiEditBox::GetStringWidth(int32 nBeginPos, int32 nEndPos) const

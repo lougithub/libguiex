@@ -40,9 +40,9 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtTabButton::RefreshImpl()
+	void		CGUIWgtTabButton::RefreshSelf()
 	{
-		CGUIWgtCheckButton::RefreshImpl();
+		CGUIWgtCheckButton::RefreshSelf();
 
 		//client rect
 		CGUIVector2 aParentPos = GetParent()->GetClientArea().GetPosition();

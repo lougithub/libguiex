@@ -13,7 +13,7 @@
 
 #if GUI_STRING_CONV_USE_ICONV
 #	include <iconv.h>
-#	pragma comment( lib, "libiconv.lib" )
+#	include <errno.h>
 #elif  GUI_STRING_CONV_USE_MSC
 #else
 #	error "no support for MultiByteToWideChar() function"

@@ -59,8 +59,7 @@ namespace guiex
 
 		//set flag
 		SetFocusable(true);
-		SetFlag(eFLAG_EVENT_DBCLICK, true);
-		SetFlag(eFLAG_MOVABLE, false);
+		SetGenerateClickEvent(true);
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWgtPopupMenu::SetMenuPos( bool bByMousePos, real x, real y )

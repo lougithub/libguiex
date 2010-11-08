@@ -13,11 +13,11 @@
 //============================================================================// 
 #include "guibase.h"
 
-#if defined(__WIN32__) || defined(_WIN32)
+#if defined(GUIEX_PLATFORM_WIN32)
 #	include <windows.h>
-#elif defined(__linux__)
+#elif defined(GUIEX_PLATFORM_LINUX)
 #	include <sys/time.h>
-#elif defined(__APPLE__) && defined(__MACH__)
+#elif defined(GUIEX_PLATFORM_MAC)
 #	include <sys/time.h>
 #else
 #	error "unknown platform"
@@ -77,13 +77,13 @@ namespace guiex
 
 
 	protected:
-#if defined(__WIN32__) || defined(_WIN32)
+#if defined(GUIEX_PLATFORM_WIN32)
 		static LARGE_INTEGER	m_aFrequency;
 		static bool				m_sbInit;
 		LARGE_INTEGER			m_aTimeCounter;
-#elif defined(__linux__)
+#elif defined(GUIEX_PLATFORM_LINUX)
 		timeval m_aTimeVal;
-#elif defined(__APPLE__) && defined(__MACH__)
+#elif defined(GUIEX_PLATFORM_MAC)
 		timeval m_aTimeVal;
 #else
 #	error "unknown platform"

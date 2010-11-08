@@ -53,11 +53,14 @@ namespace guiex
 		/// close this widget
 		virtual void	Close();
 
-		/// update this widget
-		virtual void	Update( real fDeltaTime );
-
 		/// set position of cursor
 		void	SetCursorPos( const CGUIVector2& rPos );
+
+		void SetCursorSize( const CGUISize& rSize );
+		const CGUISize& GetCursorSize() const;
+
+		bool IsShowCursor() const;
+		void ResetShowCursor();
 
 	protected:
 		///initialize
@@ -66,13 +69,22 @@ namespace guiex
 		/// render
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 
+		/// update this widget
+		virtual void UpdateSelf( real fDeltaTime );
 
 	protected:	//!< callback function
 
 	protected:
-		std::wstring		m_strResult;	///result string
+		std::wstring m_strResult;	///result string
 
-		IGUIInterfaceIme	*	m_pIme;	///interface of ime
+		IGUIInterfaceIme *m_pIme;	///interface of ime
+
+		//---------------------------------------------------
+		//cursor
+		real		m_fBlinkSpeed;				//!< blink speed, in millisecond
+		real		m_aCursorShowTime;			//!< used by cursor
+		bool		m_bShowCursor;				//!< used by cursor
+		CGUISize	m_aCursorSize;				//!< size of cursor
 
 	private:
 		static CGUIString	ms_strType;

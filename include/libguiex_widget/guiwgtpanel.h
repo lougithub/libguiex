@@ -58,7 +58,7 @@ namespace guiex
 		///initialize check button
 		void	InitPanel();
 		
-		virtual void		RefreshImpl();
+		virtual void		RefreshSelf();
 
 		/**
 		* @brief override the OnSetImage function

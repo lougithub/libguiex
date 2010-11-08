@@ -106,7 +106,7 @@ namespace guiex
 	protected:
 		CMouseTracker*	m_pMouseTracker;			///tracker used for mouse
 		CDragTracker*	m_pDragTracker;				///tracker used for drag
-		uint32			m_nDbClickTimeout;			///timeout of 
+		real			m_fDbClickTimeout;			///timeout of 
 
 		CGUIWidgetSystem*	m_pSystem;				//pointer of widget system
 

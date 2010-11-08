@@ -104,12 +104,12 @@ namespace guiex
 		/**
 		* @brief get global time
 		*/
-		const CGUITimer&	GetGlobalTimer() const;
+		real GetGlobalTimer() const;
 
 		/** 
 		* @brief set data path of the ui system, the path should end by "/" or "\"
 		*/
-		void				SetDataPath(const CGUIString& rDataPath);
+		void SetDataPath(const CGUIString& rDataPath);
 
 		/** 
 		* @brief get data path of the ui system, the path will end by "/" or "\"
@@ -412,7 +412,7 @@ namespace guiex
 		CGUIWidget*		GetCapturedInput() const;
 
 		/// update time and frame
-		void			UpdateTime();
+		void			UpdateTime(real fDeltaTime);
 
 		void			AddToGarbage( CGUIWidget* pWidget );
 		void			RefreshGarbage( );
@@ -459,8 +459,8 @@ namespace guiex
 
 		//----------------------------------------------------------------------
 		//time related
-		CGUITimer		m_aGlobalTimer;				///global time
-		CGUITimer		m_aTimerForFrame;			///time used to calculate frame
+		real			m_fGlobalTimer;				///global time
+		real			m_fTimerForFrame;			///time used to calculate frame
 		int32			m_aFrame;					///frame of system
 		int32			m_nFps;						///current fps
 		//----------------------------------------------------------------------

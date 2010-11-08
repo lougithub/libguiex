@@ -44,10 +44,9 @@ namespace guiex
 		m_nItemID = 0;
 		m_pImageSelection = NULL;
 
-		SetFlag(eFLAG_OPEN_WITH_PARENT, true);
-		SetFlag(eFLAG_EVENT_CLICK, true);
-		SetFlag(eFLAG_EVENT_DBCLICK, true);
-		SetFlag(eFLAG_FOCUS_AGENCY, true);
+		SetGenerateClickEvent( true );
+		SetGenerateDBClickEvent(true);
+		SetFocusAgency( true );
 	}
 	//------------------------------------------------------------------------------
 	uint32	CGUIItemBase::GetID(void) const

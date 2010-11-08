@@ -14,7 +14,6 @@
 //============================================================================// 
 #include <libguiex_core/guiwidget.h>
 #include <libguiex_core/guiwidgetgenerator.h>
-#include  <libguiex_core/guitimer.h>
 #include "guiwgtscrollbarcontainer.h"
 #include "guiwgtedit.h"
 #include <vector>
@@ -46,11 +45,6 @@ namespace guiex
 		 * @brief destructor
 		 */
 		virtual ~CGUIWgtMultiEditBox( );
-
-		/**
-		* @brief update this widget, 
-		*/
-		virtual void Update( real fDeltaTime );
 
 		/** 
 		* @brief set widget text
@@ -101,7 +95,12 @@ namespace guiex
 		/// render
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 
-		virtual void RefreshImpl();
+		/**
+		* @brief update this widget, 
+		*/
+		virtual void UpdateSelf( real fDeltaTime );
+
+		virtual void RefreshSelf();
 
 		virtual void UpdateClientArea(void);
 
@@ -191,13 +190,6 @@ namespace guiex
 		int32 m_nCursorLine; //!< the line where cursor is
 		std::vector<CGUISize> m_vecStringSize;//!< size of each string.
 		bool m_bReadOnly; //!< is text readonly
-
-		//---------------------------------------------------
-		//cursor
-		int32 m_nBlinkSpeed; //!< blink speed, in millisecond
-		CGUITimer m_aCursorTimer; //!< used by cursor
-		bool m_bShowCursor; //!< used by cursor
-		CGUISize m_aCursorSize; //!< size of cursor
 
 		//---------------------------------------------------
 		//select state

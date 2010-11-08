@@ -46,9 +46,6 @@ namespace guiex
 		m_pSortedSegment = NULL;
 
 		m_strSegmentType = "CGUIColListHeaderSegment";
-
-		SetFlag(eFLAG_PARENT_CLIENTRECT, false);
-
 	}
 	//------------------------------------------------------------------------------
 	uint32	CGUIColListHeader::GetSegmentCount(void) const
