@@ -38,7 +38,6 @@ namespace guiex
 		}
 
 		real fWidth = 0.0f;
-		uint32 nSize = rString.Size();
 		for( int32 i=nStartPos; i<nEndPos; ++i )
 		{
 			const CGUIStringInfo& rInfo = rString.GetInfo(i);

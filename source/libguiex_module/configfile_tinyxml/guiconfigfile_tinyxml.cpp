@@ -9,7 +9,7 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_module\configfile_tinyxml\guiconfigfile_tinyxml.h>
+#include <libguiex_module/configfile_tinyxml/guiconfigfile_tinyxml.h>
 #include <libguiex_core/guiex.h>
 #include <libguiex_core/guipropertyconvertor.h>
 #include "tinyxml.h"

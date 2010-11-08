@@ -9,8 +9,8 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_widget\guimenuitem.h>
-#include <libguiex_widget\guiwgtpopupmenu.h>
+#include <libguiex_widget/guimenuitem.h>
+#include <libguiex_widget/guiwgtpopupmenu.h>
 
 //============================================================================//
 // function

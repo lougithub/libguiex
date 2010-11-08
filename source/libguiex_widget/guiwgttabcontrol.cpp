@@ -9,8 +9,8 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_widget\guiwgttabcontrol.h>
-#include <libguiex_widget\guiwgttabbutton.h>
+#include <libguiex_widget/guiwgttabcontrol.h>
+#include <libguiex_widget/guiwgttabbutton.h>
 #include <libguiex_core/guiinterfacerender.h>
 #include <libguiex_core/guievent.h>
 #include <libguiex_core/guiwidgetsystem.h>

@@ -8,7 +8,7 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_widget\guiwgtbutton.h>
+#include <libguiex_widget/guiwgtbutton.h>
 #include <libguiex_core/guiinterfacerender.h>
 #include <libguiex_core/guiwidgetsystem.h>
 #include <libguiex_core/guiexception.h>

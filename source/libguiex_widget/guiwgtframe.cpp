@@ -9,7 +9,7 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_widget\guiwgtframe.h>
+#include <libguiex_widget/guiwgtframe.h>
 #include <libguiex_core/guiinterfacerender.h>
 #include <libguiex_core/guimousecursor.h>
 #include <libguiex_core/guievent.h>

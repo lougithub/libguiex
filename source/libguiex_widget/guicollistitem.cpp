@@ -8,8 +8,8 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_widget\guicollistitem.h>
-#include <libguiex_widget\guiwgtcolumnlist.h>
+#include <libguiex_widget/guicollistitem.h>
+#include <libguiex_widget/guiwgtcolumnlist.h>
 
 //============================================================================//
 // function

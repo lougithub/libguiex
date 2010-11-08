@@ -7,8 +7,8 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_widget\guiwgtpopupmenu.h>
-#include <libguiex_widget\guimenuitem.h>
+#include <libguiex_widget/guiwgtpopupmenu.h>
+#include <libguiex_widget/guimenuitem.h>
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guiinterfacemanager.h>
 #include <libguiex_core/guiinterfacerender.h>

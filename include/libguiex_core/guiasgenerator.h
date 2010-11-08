@@ -56,7 +56,7 @@ class GUIEXPORT asname##_Generator : public ::guiex::CGUIAsGenerator	\
 	}												\
 	asname*	CreateAs_##asname(CGUIWidget* pReceiver)\
 	{												\
-		return static_cast<::guiex::asname*>( ::guiex::CGUIAsFactory::Instance()->GenerateAs(#asname, pReceiver));\
+		return static_cast< ::guiex::asname* >( ::guiex::CGUIAsFactory::Instance()->GenerateAs(#asname, pReceiver));\
 	}
 
 #define GUI_USER_AS_GENERATOR_DECLARE(asname)		\

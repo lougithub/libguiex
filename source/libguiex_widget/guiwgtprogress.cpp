@@ -9,7 +9,7 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_widget\guiwgtprogress.h>
+#include <libguiex_widget/guiwgtprogress.h>
 #include <libguiex_core/guiinterfacerender.h>
 #include <libguiex_core/guiwidgetsystem.h>
 #include <libguiex_core/guiexception.h>

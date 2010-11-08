@@ -11,6 +11,7 @@
 //============================================================================//
 // include
 //============================================================================// 
+#if defined(GUIEX_PLATFORM_WIN32)
 #include "guiwgtframe.h"
 #include "guiwgtbutton.h"
 #include "guiwgtradiobutton.h"
@@ -39,6 +40,12 @@
 #include "guicollistheader.h"
 #include "guicollistheadersegment.h"
 #include "guicollisttextitem.h"
+#elif defined(GUIEX_PLATFORM_MAC)
+#include "guiwgtstaticimage.h"
+#else
+#	error "unknown platform"	
+#endif
+
 
 #include "guiwgtgeneratewidgets.h"
 

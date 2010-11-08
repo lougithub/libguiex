@@ -14,6 +14,7 @@
 #include <libguiex_core/guiutility.h>
 #include <libguiex_core/guilogmsgcallback.h>
 #include <libguiex_core/guilogmsgrecord.h>
+#include <ostream>
 
 //============================================================================//
 // function
@@ -445,7 +446,6 @@ namespace guiex
 				*fp++ = *format_str++;   // Copy in the %
 
 				// Initialization to satisfy VC6
-				uint32 tmp_indent = 0;
 				// Work through the format string to copy in the format
 				// from the caller. While it's going across, extract ints
 				// for '*' width/precision values from the argument list.
@@ -687,11 +687,11 @@ namespace guiex
 			sz = sprintf (msg_buf,"%s - ",text);
 		}
 
-		sz += sprintf (msg_buf + sz,"HEXDUMP %u bytes",size);
+		sz += sprintf (msg_buf + sz,"HEXDUMP %u bytes",uint32(size));
 
 		if (len < size)
 		{
-			sprintf (msg_buf + sz," (showing first %u bytes)",len);
+			sprintf (msg_buf + sz," (showing first %u bytes)",uint32(len));
 		}
 
 		// Now print out the formatted buffer.
@@ -841,7 +841,8 @@ namespace guiex
 			return;
 		}
 		std::ostream& s = *GetOstream();
-		s << rRecord.GetMsgData();
+		const char* pMsgData = rRecord.GetMsgData();
+		s << pMsgData;
 		s.flush ();
 	}
 	//------------------------------------------------------------------------------

@@ -770,12 +770,12 @@ namespace guiex
 			TMapWidget::iterator itor = m_aMapWidget.find( pWidget->GetProjectName());
 			if( itor  == m_aMapWidget.end())
 			{
-				throw CGUIException( "[CGUIWidgetSystem::DestroyWidget]: the widget <%s : %s> doesn't exist!", pWidget->GetProjectName(), pWidget->GetName());
+				throw CGUIException( "[CGUIWidgetSystem::DestroyWidget]: the widget <%s : %s> doesn't exist!", pWidget->GetProjectName().c_str(), pWidget->GetName().c_str());
 			}
 			std::map<CGUIString, CGUIWidget*>::iterator  itor_widget = itor->second.find(pWidget->GetName());
 			if( itor_widget  == itor->second.end())
 			{
-				throw CGUIException( "[CGUIWidgetSystem::DestroyWidget]: the widget <%s : %s> doesn't exist!", pWidget->GetProjectName(), pWidget->GetName());
+				throw CGUIException( "[CGUIWidgetSystem::DestroyWidget]: the widget <%s : %s> doesn't exist!", pWidget->GetProjectName().c_str(), pWidget->GetName().c_str());
 			}
 
 			//delete it
@@ -967,7 +967,7 @@ namespace guiex
 			}
 		}
 
-		throw CGUIException( "[CGUIWidgetSystem::CloseDialog]: failed to close dialog <%s : %s>.", pDlg->GetProjectName(), pDlg->GetName());
+		throw CGUIException( "[CGUIWidgetSystem::CloseDialog]: failed to close dialog <%s : %s>.", pDlg->GetProjectName().c_str(), pDlg->GetName().c_str());
 	}
 	//------------------------------------------------------------------------------
 	void			CGUIWidgetSystem::OpenPopupWidget(CGUIWidget* pWidget)

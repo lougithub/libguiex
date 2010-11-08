@@ -8,8 +8,8 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_widget\guilistboxitem.h>
-#include <libguiex_widget\guiwgtlistbox.h>
+#include <libguiex_widget/guilistboxitem.h>
+#include <libguiex_widget/guiwgtlistbox.h>
 
 //============================================================================//
 // function

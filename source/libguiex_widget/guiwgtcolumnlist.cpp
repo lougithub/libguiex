@@ -8,10 +8,10 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_widget\guiwgtcolumnlist.h>
-#include <libguiex_widget\guiwgtscrollbar.h>
-#include <libguiex_widget\guicollisttextitem.h>
-#include <libguiex_widget\guicollistheader.h>
+#include <libguiex_widget/guiwgtcolumnlist.h>
+#include <libguiex_widget/guiwgtscrollbar.h>
+#include <libguiex_widget/guicollisttextitem.h>
+#include <libguiex_widget/guicollistheader.h>
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guiinterfacerender.h>
 #include <libguiex_core/guiinterfacekeyboard.h>

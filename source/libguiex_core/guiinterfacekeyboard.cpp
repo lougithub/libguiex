@@ -42,7 +42,7 @@ namespace guiex
 	bool	IGUIInterfaceKeyboard::ChangeKeyState(EKeyCode eKey, EKeyState eState)
 	{
 		GUI_ASSERT( eKey >= KC_NONE && eKey < _KEY_CODE_MAX_,"wrong parameter" );
-		GUI_ASSERT( eState >= KEY_DOWN && eState < _KEY_CODE_MAX_,"wrong parameter" );
+		GUI_ASSERT( eState >= KEY_DOWN && eState < _KEY_STATE_MAX_,"wrong parameter" );
 
 		bool bConsumed = false;
 		if( eKey == KC_NONE )

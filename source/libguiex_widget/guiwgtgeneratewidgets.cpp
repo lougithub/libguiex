@@ -12,7 +12,7 @@
 //============================================================================// 
 #include <vector>
 #include <libguiex_core/guiwidgetgenerator.h>
-#include <libguiex_widget\guiwgt.h>
+#include <libguiex_widget/guiwgt.h>
 
 
 
@@ -23,6 +23,7 @@
 //============================================================================// 
 namespace guiex
 {
+#if defined( GUIEX_PLATFORM_WIN32)
 	GUI_WIDGET_ALLGENERATOR_IMPLEMENT_BEGIN( )
 	{
 		GUI_WIDGET_ALLGENERATOR_IMPLEMENT_ADD(CGUIWgtButton);
@@ -54,6 +55,15 @@ namespace guiex
 		//GUI_WIDGET_ALLGENERATOR_IMPLEMENT_ADD(CGUIColListTextItem);
 	}
 	GUI_WIDGET_ALLGENERATOR_IMPLEMENT_END( )
+#elif defined(GUIEX_PLATFORM_MAC)
+	GUI_WIDGET_ALLGENERATOR_IMPLEMENT_BEGIN( )
+	{
+			GUI_WIDGET_ALLGENERATOR_IMPLEMENT_ADD(CGUIWgtStaticImage);
+	}
+	GUI_WIDGET_ALLGENERATOR_IMPLEMENT_END( )
+#else
+#	error "unknown platform"	
+#endif
 
 }//namespace guiex
 

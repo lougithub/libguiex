@@ -40,6 +40,7 @@ namespace guiex
 		,m_fInterval( fInterval )
 		,m_fDeltaTime(0.0f)
 	{
+
 	}
 	//------------------------------------------------------------------------------
 	CGUIAnimation::CGUIAnimation(

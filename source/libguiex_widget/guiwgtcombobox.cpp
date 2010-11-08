@@ -9,8 +9,8 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_widget\guiwgtcombobox.h>
-#include <libguiex_widget\guiwgtlistbox.h>
+#include <libguiex_widget/guiwgtcombobox.h>
+#include <libguiex_widget/guiwgtlistbox.h>
 #include <libguiex_core/guiinterfacerender.h>
 #include <libguiex_core/guievent.h>
 #include <libguiex_core/guiexception.h>

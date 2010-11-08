@@ -7,7 +7,7 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_widget\guicollisttextitem.h>
+#include <libguiex_widget/guicollisttextitem.h>
 #include <libguiex_core/guiinterfacemanager.h>
 #include <libguiex_core/guiinterfacefont.h>
 #include <libguiex_core/guiinterfacerender.h>
