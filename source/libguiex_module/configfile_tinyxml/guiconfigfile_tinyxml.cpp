@@ -12,7 +12,14 @@
 #include <libguiex_module/configfile_tinyxml/guiconfigfile_tinyxml.h>
 #include <libguiex_core/guiex.h>
 #include <libguiex_core/guipropertyconvertor.h>
-#include "tinyxml.h"
+#include <tinyxml/tinyxml.h>
+
+#if defined( GUIEX_PLATFORM_WIN32 )
+#elif defined( GUIEX_PLATFORM_MAC )
+#include <libgen.h>
+#else
+#	error "unknown platform"		
+#endif
 
 //============================================================================//
 // function
@@ -46,17 +53,39 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString IGUIConfigFile_tinyxml::DoGetFilename( const CGUIString& rPath ) 
 	{
+#if defined( GUIEX_PLATFORM_WIN32 )
 		char fname[_MAX_FNAME];
 		char fext[_MAX_EXT];
 		_splitpath( rPath.c_str(), NULL, NULL, fname, fext ); 
 		return CGUIString( fname ) + fext;
+#elif defined( GUIEX_PLATFORM_MAC )
+		char* pBuf = new char[rPath.size()+1];
+		strcpy( pBuf, rPath.c_str() );
+		CGUIString aBaseName(basename( pBuf));
+		delete[] pBuf;
+		return aBaseName;
+#else
+#	error "unknown platform"		
+#endif
+						  
+
 	}
 	//------------------------------------------------------------------------------
 	CGUIString IGUIConfigFile_tinyxml::DoGetFileDir( const CGUIString& rPath ) 
 	{
+#if defined( GUIEX_PLATFORM_WIN32 )
 		char fdir[_MAX_DIR];
 		_splitpath( rPath.c_str(), NULL, fdir, NULL, NULL ); 
 		return CGUIString( fdir );
+#elif defined( GUIEX_PLATFORM_MAC )
+		char* pBuf = new char[rPath.size()+1];
+		strcpy( pBuf, rPath.c_str() );
+		CGUIString aDirName(dirname( pBuf));
+		delete[] pBuf;
+		return aDirName;
+#else
+#	error "unknown platform"		
+#endif
 	}
 	//------------------------------------------------------------------------------
 	CGUIProjectInfo* IGUIConfigFile_tinyxml::LoadProjectInfoFile( const CGUIString& rFileName )

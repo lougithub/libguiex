@@ -9,11 +9,16 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_module\filesys_stdio\guifilesys_stdio.h>
+#include <libguiex_module/filesys_stdio/guifilesys_stdio.h>
 #include <fstream>
 #include <libguiex_core/guiwidgetsystem.h>
-#include <io.h>
 
+#if defined(GUIEX_PLATFORM_WIN32)
+#include <io.h>
+#elif defined(GUIEX_PLATFORM_MAC)
+#else
+#error "unknown platform"	
+#endif
 //============================================================================//
 // function
 //============================================================================// 
@@ -85,6 +90,8 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
+	
+#if defined(GUIEX_PLATFORM_WIN32)	
 	static bool is_reserved_dir (const char *fn)
     {
         return (fn [0] == '.' && (fn [1] == 0 || (fn [1] == '.' && fn [2] == 0)));
@@ -137,6 +144,16 @@ namespace guiex
 			_findclose(lHandle);
 		}
 	}
+#elif defined(GUIEX_PLATFORM_MAC)
+	void IGUIFileSys_stdio::FindFiles( 
+									  const CGUIString& rPath,
+									  const CGUIString& rPatten,
+									  std::vector<CGUIString>& rArrayStrings )
+	{
+	}
+#else
+	#	error "unknown platform"	
+#endif
 	//------------------------------------------------------------------------------
 	void	IGUIFileSys_stdio::DeleteSelf()
 	{

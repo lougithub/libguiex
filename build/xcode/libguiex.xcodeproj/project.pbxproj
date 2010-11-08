@@ -16,6 +16,15 @@
 		FF04080412883F7E0053FF31 /* guiwgt.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE9512858C9D00C0BCB4 /* guiwgt.h */; };
 		FF04081E128840AC0053FF31 /* guiconfigfile_tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF04081D128840AC0053FF31 /* guiconfigfile_tinyxml.cpp */; };
 		FF040821128840D90053FF31 /* guiconfigfile_tinyxml.h in Headers */ = {isa = PBXBuildFile; fileRef = FF040820128840D90053FF31 /* guiconfigfile_tinyxml.h */; };
+		FF04084A128847C20053FF31 /* tinystr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF040843128847C20053FF31 /* tinystr.cpp */; };
+		FF04084B128847C20053FF31 /* tinystr.h in Headers */ = {isa = PBXBuildFile; fileRef = FF040844128847C20053FF31 /* tinystr.h */; };
+		FF04084C128847C20053FF31 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF040845128847C20053FF31 /* tinyxml.cpp */; };
+		FF04084D128847C20053FF31 /* tinyxml.h in Headers */ = {isa = PBXBuildFile; fileRef = FF040846128847C20053FF31 /* tinyxml.h */; };
+		FF04084E128847C20053FF31 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF040847128847C20053FF31 /* tinyxmlerror.cpp */; };
+		FF04084F128847C20053FF31 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF040848128847C20053FF31 /* tinyxmlparser.cpp */; };
+		FF040850128847C20053FF31 /* xmltest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF040849128847C20053FF31 /* xmltest.cpp */; };
+		FF04086B12884CF70053FF31 /* guifilesys_stdio.h in Headers */ = {isa = PBXBuildFile; fileRef = FF04086A12884CF70053FF31 /* guifilesys_stdio.h */; };
+		FF04086E12884D090053FF31 /* guifilesys_stdio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF04086D12884D090053FF31 /* guifilesys_stdio.cpp */; };
 		FF8FAC061285A4F200D7DF5A /* guitimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEEF12858CB200C0BCB4 /* guitimer.cpp */; };
 		FF8FAC071285A4FC00D7DF5A /* guitimer.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE6212858C9D00C0BCB4 /* guitimer.h */; };
 		FFACE03F1285943A00C0BCB4 /* guianimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEB112858CB200C0BCB4 /* guianimation.cpp */; };
@@ -174,6 +183,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		FF0408401288478F0053FF31 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF04083C128847780053FF31;
+			remoteInfo = tinyxml;
+		};
 		FFACDC4F12858B8600C0BCB4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
@@ -216,6 +232,16 @@
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FF04081D128840AC0053FF31 /* guiconfigfile_tinyxml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiconfigfile_tinyxml.cpp; sourceTree = "<group>"; };
 		FF040820128840D90053FF31 /* guiconfigfile_tinyxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiconfigfile_tinyxml.h; sourceTree = "<group>"; };
+		FF04083D128847780053FF31 /* libtinyxml.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libtinyxml.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF040843128847C20053FF31 /* tinystr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinystr.cpp; path = ../../external/tinyxml/tinystr.cpp; sourceTree = SOURCE_ROOT; };
+		FF040844128847C20053FF31 /* tinystr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tinystr.h; path = ../../external/tinyxml/tinystr.h; sourceTree = SOURCE_ROOT; };
+		FF040845128847C20053FF31 /* tinyxml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxml.cpp; path = ../../external/tinyxml/tinyxml.cpp; sourceTree = SOURCE_ROOT; };
+		FF040846128847C20053FF31 /* tinyxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tinyxml.h; path = ../../external/tinyxml/tinyxml.h; sourceTree = SOURCE_ROOT; };
+		FF040847128847C20053FF31 /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxmlerror.cpp; path = ../../external/tinyxml/tinyxmlerror.cpp; sourceTree = SOURCE_ROOT; };
+		FF040848128847C20053FF31 /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxmlparser.cpp; path = ../../external/tinyxml/tinyxmlparser.cpp; sourceTree = SOURCE_ROOT; };
+		FF040849128847C20053FF31 /* xmltest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xmltest.cpp; path = ../../external/tinyxml/xmltest.cpp; sourceTree = SOURCE_ROOT; };
+		FF04086A12884CF70053FF31 /* guifilesys_stdio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guifilesys_stdio.h; sourceTree = "<group>"; };
+		FF04086D12884D090053FF31 /* guifilesys_stdio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guifilesys_stdio.cpp; sourceTree = "<group>"; };
 		FFACDBFD12858B0000C0BCB4 /* liblibguiex_core.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibguiex_core.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFACDE1A12858C9D00C0BCB4 /* guianimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guianimation.h; sourceTree = "<group>"; };
 		FFACDE1B12858C9D00C0BCB4 /* guianimationmanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guianimationmanager.h; sourceTree = "<group>"; };
@@ -455,6 +481,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FF04083B128847780053FF31 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FFACDBFB12858B0000C0BCB4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -486,6 +519,7 @@
 				FFACDF6112858D1800C0BCB4 /* liblibguiex_widget.a */,
 				FFACDF6B12858D4E00C0BCB4 /* libliguiex_module_mac.a */,
 				FFACDF811285921E00C0BCB4 /* liblibguiex.a */,
+				FF04083D128847780053FF31 /* libtinyxml.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -512,6 +546,7 @@
 		08FB77AEFE84172EC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				FF040833128847090053FF31 /* external */,
 				FFACDEAF12858CB200C0BCB4 /* source */,
 				FFACDE1812858C9D00C0BCB4 /* include */,
 			);
@@ -529,6 +564,7 @@
 		FF040809128840070053FF31 /* libguiex_module */ = {
 			isa = PBXGroup;
 			children = (
+				FF04086912884CF70053FF31 /* filesys_stdio */,
 				FF04081F128840D90053FF31 /* configfile_tinyxml */,
 			);
 			name = libguiex_module;
@@ -537,6 +573,7 @@
 		FF04080A128840150053FF31 /* libguiex_module */ = {
 			isa = PBXGroup;
 			children = (
+				FF04086C12884D090053FF31 /* filesys_stdio */,
 				FF04081C128840AC0053FF31 /* configfile_tinyxml */,
 			);
 			name = libguiex_module;
@@ -558,6 +595,46 @@
 			);
 			name = configfile_tinyxml;
 			path = libguiex_module/configfile_tinyxml;
+			sourceTree = "<group>";
+		};
+		FF040833128847090053FF31 /* external */ = {
+			isa = PBXGroup;
+			children = (
+				FF040836128847250053FF31 /* tinyxml */,
+			);
+			name = external;
+			sourceTree = "<group>";
+		};
+		FF040836128847250053FF31 /* tinyxml */ = {
+			isa = PBXGroup;
+			children = (
+				FF040843128847C20053FF31 /* tinystr.cpp */,
+				FF040844128847C20053FF31 /* tinystr.h */,
+				FF040845128847C20053FF31 /* tinyxml.cpp */,
+				FF040846128847C20053FF31 /* tinyxml.h */,
+				FF040847128847C20053FF31 /* tinyxmlerror.cpp */,
+				FF040848128847C20053FF31 /* tinyxmlparser.cpp */,
+				FF040849128847C20053FF31 /* xmltest.cpp */,
+			);
+			name = tinyxml;
+			sourceTree = "<group>";
+		};
+		FF04086912884CF70053FF31 /* filesys_stdio */ = {
+			isa = PBXGroup;
+			children = (
+				FF04086A12884CF70053FF31 /* guifilesys_stdio.h */,
+			);
+			name = filesys_stdio;
+			path = libguiex_module/filesys_stdio;
+			sourceTree = "<group>";
+		};
+		FF04086C12884D090053FF31 /* filesys_stdio */ = {
+			isa = PBXGroup;
+			children = (
+				FF04086D12884D090053FF31 /* guifilesys_stdio.cpp */,
+			);
+			name = filesys_stdio;
+			path = libguiex_module/filesys_stdio;
 			sourceTree = "<group>";
 		};
 		FFACDE1812858C9D00C0BCB4 /* include */ = {
@@ -845,6 +922,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FF040839128847780053FF31 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF04084B128847C20053FF31 /* tinystr.h in Headers */,
+				FF04084D128847C20053FF31 /* tinyxml.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FFACDBF912858B0000C0BCB4 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -950,6 +1036,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF040821128840D90053FF31 /* guiconfigfile_tinyxml.h in Headers */,
+				FF04086B12884CF70053FF31 /* guifilesys_stdio.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -974,6 +1061,23 @@
 			name = "build all";
 			productName = libguiex;
 			productReference = FFACDF811285921E00C0BCB4 /* liblibguiex.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		FF04083C128847780053FF31 /* tinyxml */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF040842128847AE0053FF31 /* Build configuration list for PBXNativeTarget "tinyxml" */;
+			buildPhases = (
+				FF040839128847780053FF31 /* Headers */,
+				FF04083A128847780053FF31 /* Sources */,
+				FF04083B128847780053FF31 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = tinyxml;
+			productName = tinyxml;
+			productReference = FF04083D128847780053FF31 /* libtinyxml.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		FFACDBFC12858B0000C0BCB4 /* libguiex_core */ = {
@@ -1023,6 +1127,7 @@
 			);
 			dependencies = (
 				FFACDF6F12858D5300C0BCB4 /* PBXTargetDependency */,
+				FF0408411288478F0053FF31 /* PBXTargetDependency */,
 			);
 			name = libguiex_module;
 			productName = liguiex_module_mac;
@@ -1053,6 +1158,7 @@
 				FFACDBFC12858B0000C0BCB4 /* libguiex_core */,
 				FFACDF6012858D1800C0BCB4 /* libguiex_widget */,
 				FFACDF6A12858D4E00C0BCB4 /* libguiex_module */,
+				FF04083C128847780053FF31 /* tinyxml */,
 			);
 		};
 /* End PBXProject section */
@@ -1062,6 +1168,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF04083A128847780053FF31 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF04084A128847C20053FF31 /* tinystr.cpp in Sources */,
+				FF04084C128847C20053FF31 /* tinyxml.cpp in Sources */,
+				FF04084E128847C20053FF31 /* tinyxmlerror.cpp in Sources */,
+				FF04084F128847C20053FF31 /* tinyxmlparser.cpp in Sources */,
+				FF040850128847C20053FF31 /* xmltest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1158,12 +1276,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF04081E128840AC0053FF31 /* guiconfigfile_tinyxml.cpp in Sources */,
+				FF04086E12884D090053FF31 /* guifilesys_stdio.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		FF0408411288478F0053FF31 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FF04083C128847780053FF31 /* tinyxml */;
+			targetProxy = FF0408401288478F0053FF31 /* PBXContainerItemProxy */;
+		};
 		FFACDC5012858B8600C0BCB4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FFACDBFC12858B0000C0BCB4 /* libguiex_core */;
@@ -1233,11 +1357,14 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../include";
+				HEADER_SEARCH_PATHS = (
+					"${PROJECT_DIR}/../../external",
+					"${PROJECT_DIR}/../../include",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
 				SDKROOT = iphoneos4.1;
-				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/../../include";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
@@ -1251,6 +1378,31 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
 				SDKROOT = iphoneos4.1;
+			};
+			name = Release;
+		};
+		FF04083E128847780053FF31 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PREBINDING = NO;
+				PRODUCT_NAME = tinyxml;
+			};
+			name = Debug;
+		};
+		FF04083F128847780053FF31 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PREBINDING = NO;
+				PRODUCT_NAME = tinyxml;
+				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -1346,6 +1498,15 @@
 			buildConfigurations = (
 				1DEB922308733DC00010E9CD /* Debug */,
 				1DEB922408733DC00010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FF040842128847AE0053FF31 /* Build configuration list for PBXNativeTarget "tinyxml" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF04083E128847780053FF31 /* Debug */,
+				FF04083F128847780053FF31 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
