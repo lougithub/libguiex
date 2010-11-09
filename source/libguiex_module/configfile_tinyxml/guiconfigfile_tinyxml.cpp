@@ -12,7 +12,7 @@
 #include <libguiex_module/configfile_tinyxml/guiconfigfile_tinyxml.h>
 #include <libguiex_core/guiex.h>
 #include <libguiex_core/guipropertyconvertor.h>
-#include <tinyxml/tinyxml.h>
+#include <tinyxml.h>
 
 #if defined( GUIEX_PLATFORM_WIN32 )
 #elif defined( GUIEX_PLATFORM_MAC )

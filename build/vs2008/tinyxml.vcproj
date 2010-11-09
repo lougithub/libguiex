@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="test1"
-	ProjectGUID="{9DFB4025-B69A-47AE-9C83-3981A7F74EE1}"
-	RootNamespace="test1"
+	Name="tinyxml"
+	ProjectGUID="{546C24D6-BD58-45FC-B4FF-BAC2DE72FD4C}"
+	RootNamespace="tinyxml"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -18,8 +18,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			ConfigurationType="1"
-			InheritedPropertySheets=".\common.vsprops;.\debug.vsprops;.\exe.vsprops"
+			ConfigurationType="4"
+			InheritedPropertySheets=".\external_common.vsprops;.\debug.vsprops;.\lib.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
@@ -40,12 +40,11 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="wxbase28ud.lib"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
+				AdditionalIncludeDirectories="&quot;..\..\external\lua-5.1.4\src&quot;;&quot;..\..\external\freetype-2.4.3\include&quot;;&quot;..\..\external\DevIL-SDK-x86-1.7.8\include&quot;;..\..\external\tinyxml"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="4"
 			/>
@@ -59,18 +58,10 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="libluad.lib freetype243_D.lib wxmsw28ud_gl.lib wxmsw28ud_core.lib wxmsw28ud_aui.lib wxmsw28ud_xrc.lib wxmsw28ud_richtext.lib wxmsw28ud_qa.lib wxmsw28ud_media.lib wxmsw28ud_html.lib wxmsw28ud_adv.lib"
-				LinkIncremental="2"
-				GenerateDebugInformation="true"
-				SubSystem="2"
-				TargetMachine="1"
+				Name="VCLibrarianTool"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -82,16 +73,13 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			ConfigurationType="1"
-			InheritedPropertySheets=".\common.vsprops;.\release.vsprops;.\exe.vsprops"
+			ConfigurationType="4"
+			InheritedPropertySheets=".\external_common.vsprops;.\release.vsprops;.\lib.vsprops"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -114,11 +102,10 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="wxbase28u.lib"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
+				AdditionalIncludeDirectories="&quot;..\..\external\lua-5.1.4\src&quot;;&quot;..\..\external\freetype-2.4.3\include&quot;;&quot;..\..\external\DevIL-SDK-x86-1.7.8\include&quot;;..\..\external\tinyxml"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
@@ -132,21 +119,10 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				AdditionalOptions="/ignore:4099"
-				AdditionalDependencies="liblua.lib freetype243.lib wxmsw28u_gl.lib wxmsw28u_core.lib wxmsw28u_aui.lib wxmsw28u_xrc.lib wxmsw28u_richtext.lib wxmsw28u_qa.lib wxmsw28u_media.lib wxmsw28u_html.lib wxmsw28u_adv.lib"
-				LinkIncremental="1"
-				GenerateDebugInformation="true"
-				SubSystem="2"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
-				TargetMachine="1"
+				Name="VCLibrarianTool"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -158,9 +134,6 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
@@ -168,22 +141,40 @@
 	<References>
 	</References>
 	<Files>
-		<File
-			RelativePath="..\..\test\libguiex_test.rc"
+		<Filter
+			Name="Header Files"
+			Filter="h;hpp;hxx;hm;inl"
 			>
-		</File>
-		<File
-			RelativePath="..\..\test\resource.h"
+			<File
+				RelativePath="..\..\external\tinyxml\tinystr.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\external\tinyxml\tinyxml.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Source Files"
+			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
-		</File>
-		<File
-			RelativePath="..\..\test\test1.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\test\testcommon.cpp"
-			>
-		</File>
+			<File
+				RelativePath="..\..\external\tinyxml\tinystr.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\external\tinyxml\tinyxml.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\external\tinyxml\tinyxmlerror.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\external\tinyxml\tinyxmlparser.cpp"
+				>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

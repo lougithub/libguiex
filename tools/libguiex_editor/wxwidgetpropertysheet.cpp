@@ -25,7 +25,7 @@ int GetTypeIndexInEnum( guiex::EScreenValue eValue, const wxArrayString& arrEnum
 {
 	guiex::CGUIString strValue;
 	guiex::ValueToString( eValue, strValue );
-	for( int i=0; i<arrEnums.size(); ++i )
+	for( int i=0; i<int(arrEnums.size()); ++i )
 	{
 		if( arrEnums[i] == STRING_M2W( strValue ))
 		{
