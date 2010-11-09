@@ -1,12 +1,12 @@
 /** 
-* @file guitexture_opengl.h
+* @file guitexture_opengles.h
 * @brief use opengl to render gui
 * @author ken
-* @date 2006-07-06
+* @date 2010-11-09
 */
 
-#ifndef __GUI_TEXTURE_OPENGL_20060706_H__
-#define __GUI_TEXTURE_OPENGL_20060706_H__
+#ifndef __GUI_TEXTURE_OPENGLES_20101109_H__
+#define __GUI_TEXTURE_OPENGLES_20101109_H__
 
 //============================================================================//
 // include
@@ -14,14 +14,8 @@
 #include <libguiex_core/guitextureimp.h>
 #include <libguiex_core/guisize.h>
 
-#if defined(GUIEX_PLATFORM_WIN32)
-#include <windows.h>
-#endif
-
-#pragma pack(push,8)
-#include <GL/gl.h>
-#include <GL/glu.h>
-#pragma pack(pop)
+#include <OpenGLES/ES1/gl.h>
+#include <OpenGLES/ES1/glext.h>
 
 
 
@@ -30,7 +24,7 @@
 //============================================================================// 
 namespace guiex
 {
-	class IGUIRender_opengl;
+	class IGUIRender_opengles;
 }
 
 
@@ -42,23 +36,23 @@ namespace guiex
 namespace guiex
 {
 
-	class GUIEXPORT		CGUITexture_opengl : public CGUITextureImp
+	class GUIEXPORT CGUITexture_opengles : public CGUITextureImp
 	{
 	public:
 		/**
 		* @brief destructor
 		*/
-		virtual ~CGUITexture_opengl();
+		virtual ~CGUITexture_opengles();
 
 		/**
 		* @brief Returns the current pixel width of the texture
 		*/
-		virtual	uint16	GetWidth(void) const;
+		virtual	uint16 GetWidth(void) const;
 
 		/**
 		* @brief Returns the current pixel height of the texture
 		*/
-		virtual	uint16	GetHeight(void) const;
+		virtual	uint16 GetHeight(void) const;
 
 		/**
 		* @brief Returns the current buffer size of this texture
@@ -77,7 +71,7 @@ namespace guiex
 		* @exception throw CGUIException if failed.
 		* @return -1 for failed
 		*/
-		virtual int32	LoadFromFile(const CGUIString& filename );
+		virtual int32 LoadFromFile(const CGUIString& filename );
 
 
 		/**
@@ -86,24 +80,24 @@ namespace guiex
 		* @exception throw CGUIException if failed.
 		* @return -1 for failed
 		*/
-		virtual int32	LoadFromMemory(const void* buffPtr, int32 buffWidth, int32 buffHeight,EGuiPixelFormat ePixelFormat );
+		virtual int32 LoadFromMemory(const void* buffPtr, int32 buffWidth, int32 buffHeight,EGuiPixelFormat ePixelFormat );
 
 		/**
 		* @brief copy a sub_image to texture
 		*/
-		virtual void		CopySubImage(uint32 nX, uint32 nY, uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat, uint8* pBuffer);
+		virtual void CopySubImage(uint32 nX, uint32 nY, uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat, uint8* pBuffer);
 
 
 	protected:
-		void		SetOpenglTextureSize(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat);
-		GLuint		GetOGLTexid(void) const {return m_ogltexture;}
+		void SetOpenglTextureSize(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat);
+		GLuint GetOGLTexid(void) const {return m_ogltexture;}
 
 	protected:
-		friend class IGUIRender_opengl;
+		friend class IGUIRender_opengles;
 		/**
 		* @brief constructor
 		*/
-		CGUITexture_opengl(IGUIInterfaceRender* pRender);
+		CGUITexture_opengles(IGUIInterfaceRender* pRender);
 
 	protected:
 		GLuint 			m_ogltexture;		//!< The texture.
@@ -119,4 +113,4 @@ namespace guiex
 
 }//namespace guiex
 
-#endif //__GUI_TEXTURE_OPENGL_20060706_H__
+#endif //__GUI_TEXTURE_OPENGL_20101109_H__

@@ -1,14 +1,14 @@
 /** 
-* @file guitexture_opengl.cpp
+* @file guitexture_opengles.cpp
 * @brief use opengl to render gui
 * @author ken
-* @date 2006-07-06
+* @date 2010-11-09
 */
 
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_module\render_opengl\guitexture_opengl.h>
+#include <libguiex_module/render_opengles/guitexture_opengles.h>
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guidatachunk.h>
 #include <libguiex_core/guiinterfacemanager.h>
@@ -23,7 +23,7 @@ namespace guiex
 {
 
 	//------------------------------------------------------------------------------
-	CGUITexture_opengl::CGUITexture_opengl(IGUIInterfaceRender* pRender)
+	CGUITexture_opengles::CGUITexture_opengles(IGUIInterfaceRender* pRender)
 		:CGUITextureImp(pRender)
 		,m_nTextureWidth(0)
 		,m_nTextureHeight(0)
@@ -35,39 +35,42 @@ namespace guiex
 
 		// set some parameters for this texture.
 		glBindTexture(GL_TEXTURE_2D, m_ogltexture);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST/*GL_LINEAR*/);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST/*GL_LINEAR*/); 
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);	// GL_CLAMP_TO_EDGE
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);	// GL_CLAMP_TO_EDGE
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST/*GL_LINEAR*/);
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST/*GL_LINEAR*/); 
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);	// GL_CLAMP_TO_EDGE
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);	// GL_CLAMP_TO_EDGE
 		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	}
 	//------------------------------------------------------------------------------
-	CGUITexture_opengl::~CGUITexture_opengl()
+	CGUITexture_opengles::~CGUITexture_opengles()
 	{
 		// otherwise delete OGL texture associated with this object.
 		glDeleteTextures(1, &m_ogltexture);
 		m_ogltexture = 0;
 	}
 	//------------------------------------------------------------------------------
-	uint16	CGUITexture_opengl::GetWidth(void) const
+	uint16	CGUITexture_opengles::GetWidth(void) const
 	{
 		return m_nTextureWidth;
 	}
 	//------------------------------------------------------------------------------
-	uint16	CGUITexture_opengl::GetHeight(void) const
+	uint16	CGUITexture_opengles::GetHeight(void) const
 	{
 		return m_nTextureHeight;
 	}
 	//------------------------------------------------------------------------------
-	uint32 CGUITexture_opengl::GetBufferSize() const
+	uint32 CGUITexture_opengles::GetBufferSize() const
 	{
 		return static_cast<uint32>(m_nTextureWidth * m_nTextureHeight * m_nBytesPerPixel);
 	}
 	//------------------------------------------------------------------------------
-	uint32 CGUITexture_opengl::GetBuffer(uint8* pBuffer, uint32 nBufferSize, EGuiPixelFormat& rPixelFormat)
+	uint32 CGUITexture_opengles::GetBuffer(uint8* pBuffer, uint32 nBufferSize, EGuiPixelFormat& rPixelFormat)
 	{
 		GUI_ASSERT( pBuffer && nBufferSize == GetBufferSize(), "invalid parameter");
 
+		return -1;
+		//TODO: implement i later
+		/*
 		GLenum eFormat = 0;
 		switch(m_ePixelFormat)
 		{
@@ -81,7 +84,7 @@ namespace guiex
 		//	break;
 
 		default:
-			throw CGUIException("[CGUITexture_opengl::LoadFromMemory]: unsupported pixel format;");
+			throw CGUIException("[CGUITexture_opengles::LoadFromMemory]: unsupported pixel format;");
 		}
 
 		glBindTexture(GL_TEXTURE_2D, m_ogltexture);
@@ -90,21 +93,22 @@ namespace guiex
 		rPixelFormat = m_ePixelFormat;
 
 		return 0;
+		 */
 	}
 	//------------------------------------------------------------------------------
-	int32	CGUITexture_opengl::LoadFromFile(const CGUIString& filename )
+	int32	CGUITexture_opengles::LoadFromFile(const CGUIString& filename )
 	{
 		IGUIInterfaceImageLoader* pImageLoader = static_cast<IGUIInterfaceImageLoader*>(CGUIInterfaceManager::Instance()->GetInterface("IGUIImageLoader"));
 		if( !pImageLoader )
 		{
-			throw CGUIException("[CGUITexture_opengl::LoadFromFile]: - failed to get image loader!");
+			throw CGUIException("[CGUITexture_opengles::LoadFromFile]: - failed to get image loader!");
 			return -1;
 		}
 
 		CGUIAutoRelease<CGUIImageData> pImageData(pImageLoader->LoadFromFile( filename ));
 		if( !pImageData )
 		{
-			throw CGUIException("[CGUITexture_opengl::LoadFromFile]: - failed to Load image file <%s>!", filename.c_str());
+			throw CGUIException("[CGUITexture_opengles::LoadFromFile]: - failed to Load image file <%s>!", filename.c_str());
 			return -1;
 		}
 
@@ -113,7 +117,7 @@ namespace guiex
 		return ret;
 	}
 	//------------------------------------------------------------------------------
-	int32	CGUITexture_opengl::LoadFromMemory(const void* buffPtr, int32 buffWidth, int32 buffHeight, EGuiPixelFormat ePixelFormat/* = PF_RGBA_32*/)
+	int32	CGUITexture_opengles::LoadFromMemory(const void* buffPtr, int32 buffWidth, int32 buffHeight, EGuiPixelFormat ePixelFormat/* = PF_RGBA_32*/)
 	{
 		glBindTexture(GL_TEXTURE_2D, m_ogltexture);
 
@@ -133,7 +137,7 @@ namespace guiex
 		//	break;
 
 		default:
-			throw CGUIException("[CGUITexture_opengl::LoadFromMemory]: unsupported pixel format;");
+			throw CGUIException("[CGUITexture_opengles::LoadFromMemory]: unsupported pixel format;");
 		}
 
 		m_nTextureWidth  = static_cast<uint16>(buffWidth);
@@ -142,7 +146,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUITexture_opengl::CopySubImage(uint32 nX, uint32 nY, uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat, uint8* pBuffer)
+	void	CGUITexture_opengles::CopySubImage(uint32 nX, uint32 nY, uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat, uint8* pBuffer)
 	{
 		glBindTexture( GL_TEXTURE_2D, m_ogltexture );
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -170,20 +174,20 @@ namespace guiex
 		//	break;
 
 		default:
-			throw CGUIException("[CGUITexture_opengl::CopySubImage]: unsupported pixel format;");
+			throw CGUIException("[CGUITexture_opengles::CopySubImage]: unsupported pixel format;");
 		}
 			
 		glTexSubImage2D(GL_TEXTURE_2D, 0,nX,nY,nWidth, nHeight,GL_RGBA, GL_UNSIGNED_BYTE,pBuffer);
 
 		if( glGetError( ) != GL_NO_ERROR)
 		{
-			throw CGUIException("[CGUITexture_opengl::CopySubImage]: failed to run function <glTexSubImage2D>, error code <%d>;",glGetError());
+			throw CGUIException("[CGUITexture_opengles::CopySubImage]: failed to run function <glTexSubImage2D>, error code <%d>;",glGetError());
 		}
 
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUITexture_opengl::SetOpenglTextureSize(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat)
+	void	CGUITexture_opengles::SetOpenglTextureSize(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat)
 	{
 		glBindTexture(GL_TEXTURE_2D, m_ogltexture);
 
@@ -208,7 +212,7 @@ namespace guiex
 		//	break;
 
 		default:
-			throw CGUIException("[CGUITexture_opengl::LoadFromMemory]: unsupported pixel format;");
+			throw CGUIException("[CGUITexture_opengles::LoadFromMemory]: unsupported pixel format;");
 		}
 
 		// delete buffer

@@ -1,13 +1,13 @@
 /** 
-* @file guirender_opengl.h
+* @file guirender_opengles.h
 * @brief use opengl to render gui
 * @author ken
-* @date 2006-07-06
+* @date 2010-11-09
 */
 
 
-#ifndef __GUI_RENDER_OPENGL_20060706_H__
-#define __GUI_RENDER_OPENGL_20060706_H__
+#ifndef __GUI_RENDER_OPENGLES_20101109_H__
+#define __GUI_RENDER_OPENGLES_20101109_H__
 
 //============================================================================//
 // include
@@ -20,16 +20,8 @@
 #include <set>
 
 
-#if defined(GUIEX_PLATFORM_WIN32)
-#include <windows.h>
-#endif
-
-#pragma pack(push,8)
-#include <GL/gl.h>
-#include <GL/glu.h>
-#pragma pack(pop)
-
-
+#include <OpenGLES/ES1/gl.h>
+#include <OpenGLES/ES1/glext.h>
 
 
 //============================================================================//
@@ -42,7 +34,7 @@
 //============================================================================// 
 namespace guiex
 {
-	class CGUITexture_opengl;
+	class CGUITexture_opengles;
 	class CGUIColor;
 }
 
@@ -54,18 +46,18 @@ namespace guiex
 //============================================================================// 
 namespace guiex
 {
-	class GUIEXPORT IGUIRender_opengl : public IGUIInterfaceRender
+	class GUIEXPORT IGUIRender_opengles : public IGUIInterfaceRender
 	{
 	public:
 		/**
 		* @brief constructor
 		*/
-		IGUIRender_opengl();
+		IGUIRender_opengles();
 
 		/**
 		* @brief destructor
 		*/
-		virtual ~IGUIRender_opengl();
+		virtual ~IGUIRender_opengles();
 
 		virtual void DrawRect(const CGUIMatrix4& rWorldMatrix,
 			const CGUIRect& rDestRect, 
@@ -233,11 +225,11 @@ namespace guiex
 
 	protected:
 
-		struct SVertex
+		struct SVertexForTile
 		{
-			real tex[2];
-			long color;
 			real vertex[3];
+			long color;
+			real tex[2];
 		};
 		struct SVertexForStencil
 		{
@@ -245,12 +237,12 @@ namespace guiex
 		};
 		struct SVertexForLine
 		{
+			real vertex[3];		
 			long color;
-			real vertex[3];
 		};
 
 		// set the texture's coordinate
-		void			SetTexCoordinate(SVertex* pTexture, const CGUIRect& tex, EImageOperation eImageOperation);
+		void			SetTexCoordinate(SVertexForTile* pTexture, const CGUIRect& tex, EImageOperation eImageOperation);
 
 	protected:
 		GLint			m_maxTextureSize;		//!< maximum supported texture size (in pixels).
@@ -258,10 +250,11 @@ namespace guiex
 		//cache for system
 		static const int		VERTEX_PER_TEXTURE = 4;
 		static const int		VERTEX_FOR_LINE = 1024;
-		SVertex			m_pVertex[VERTEX_PER_TEXTURE];
+		
+		SVertexForTile	m_pVertex[VERTEX_PER_TEXTURE];
 		SVertexForStencil m_pVertexForStencil[VERTEX_PER_TEXTURE];
 		SVertexForLine	m_pVertexForLine[VERTEX_FOR_LINE];
-
+		
 		real			m_gl_matrix[16];
 
 		//texture list
@@ -279,6 +272,6 @@ namespace guiex
 
 }//namespace guiex
 
-#endif //__GUI_RENDER_OPENGL_20060706_H__
+#endif //__GUI_RENDER_OPENGLES_20101109_H__
 
 

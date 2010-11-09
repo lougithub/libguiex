@@ -25,6 +25,10 @@
 		FF040850128847C20053FF31 /* xmltest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF040849128847C20053FF31 /* xmltest.cpp */; };
 		FF04086B12884CF70053FF31 /* guifilesys_stdio.h in Headers */ = {isa = PBXBuildFile; fileRef = FF04086A12884CF70053FF31 /* guifilesys_stdio.h */; };
 		FF04086E12884D090053FF31 /* guifilesys_stdio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF04086D12884D090053FF31 /* guifilesys_stdio.cpp */; };
+		FF1B89601289972D006584D3 /* guirender_opengles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF1B895E1289972D006584D3 /* guirender_opengles.cpp */; };
+		FF1B89611289972D006584D3 /* guitexture_opengles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF1B895F1289972D006584D3 /* guitexture_opengles.cpp */; };
+		FF1B896512899741006584D3 /* guirender_opengles.h in Headers */ = {isa = PBXBuildFile; fileRef = FF1B896312899741006584D3 /* guirender_opengles.h */; };
+		FF1B896612899741006584D3 /* guitexture_opengles.h in Headers */ = {isa = PBXBuildFile; fileRef = FF1B896412899741006584D3 /* guitexture_opengles.h */; };
 		FF5D3E3E128985C200BABB9B /* hello_ipad.m in Sources */ = {isa = PBXBuildFile; fileRef = FF5D3E3D128985C200BABB9B /* hello_ipad.m */; };
 		FF8FAC061285A4F200D7DF5A /* guitimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEEF12858CB200C0BCB4 /* guitimer.cpp */; };
 		FF8FAC071285A4FC00D7DF5A /* guitimer.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE6212858C9D00C0BCB4 /* guitimer.h */; };
@@ -273,6 +277,10 @@
 		FF04086D12884D090053FF31 /* guifilesys_stdio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guifilesys_stdio.cpp; sourceTree = "<group>"; };
 		FF0FC57312897F15004B195F /* hello_ipad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hello_ipad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF1B894312898BE0006584D3 /* hello_ipad-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "hello_ipad-Info.plist"; path = "../../test/hello_ipad/hello_ipad-Info.plist"; sourceTree = SOURCE_ROOT; };
+		FF1B895E1289972D006584D3 /* guirender_opengles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guirender_opengles.cpp; sourceTree = "<group>"; };
+		FF1B895F1289972D006584D3 /* guitexture_opengles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guitexture_opengles.cpp; sourceTree = "<group>"; };
+		FF1B896312899741006584D3 /* guirender_opengles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guirender_opengles.h; sourceTree = "<group>"; };
+		FF1B896412899741006584D3 /* guitexture_opengles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guitexture_opengles.h; sourceTree = "<group>"; };
 		FF5D3E3C128985C200BABB9B /* hello_ipad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = hello_ipad.h; path = ../../test/hello_ipad/hello_ipad.h; sourceTree = SOURCE_ROOT; };
 		FF5D3E3D128985C200BABB9B /* hello_ipad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = hello_ipad.m; path = ../../test/hello_ipad/hello_ipad.m; sourceTree = SOURCE_ROOT; };
 		FFACDBFD12858B0000C0BCB4 /* liblibguiex_core.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibguiex_core.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -568,7 +576,6 @@
 		0867D691FE84028FC02AAC07 /* libguiex */ = {
 			isa = PBXGroup;
 			children = (
-				FF5D3E371289823D00BABB9B /* test */,
 				08FB77AEFE84172EC02AAC07 /* Classes */,
 				32C88DFF0371C24200C91783 /* Other Sources */,
 				0867D69AFE84028FC02AAC07 /* Frameworks */,
@@ -588,6 +595,7 @@
 		08FB77AEFE84172EC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				FF5D3E371289823D00BABB9B /* test */,
 				FF040833128847090053FF31 /* external */,
 				FFACDEAF12858CB200C0BCB4 /* source */,
 				FFACDE1812858C9D00C0BCB4 /* include */,
@@ -606,6 +614,7 @@
 		FF040809128840070053FF31 /* libguiex_module */ = {
 			isa = PBXGroup;
 			children = (
+				FF1B896212899741006584D3 /* render_opengles */,
 				FF04086912884CF70053FF31 /* filesys_stdio */,
 				FF04081F128840D90053FF31 /* configfile_tinyxml */,
 			);
@@ -615,6 +624,7 @@
 		FF04080A128840150053FF31 /* libguiex_module */ = {
 			isa = PBXGroup;
 			children = (
+				FF1B895D1289972D006584D3 /* render_opengles */,
 				FF04086C12884D090053FF31 /* filesys_stdio */,
 				FF04081C128840AC0053FF31 /* configfile_tinyxml */,
 			);
@@ -677,6 +687,26 @@
 			);
 			name = filesys_stdio;
 			path = libguiex_module/filesys_stdio;
+			sourceTree = "<group>";
+		};
+		FF1B895D1289972D006584D3 /* render_opengles */ = {
+			isa = PBXGroup;
+			children = (
+				FF1B895E1289972D006584D3 /* guirender_opengles.cpp */,
+				FF1B895F1289972D006584D3 /* guitexture_opengles.cpp */,
+			);
+			name = render_opengles;
+			path = libguiex_module/render_opengles;
+			sourceTree = "<group>";
+		};
+		FF1B896212899741006584D3 /* render_opengles */ = {
+			isa = PBXGroup;
+			children = (
+				FF1B896312899741006584D3 /* guirender_opengles.h */,
+				FF1B896412899741006584D3 /* guitexture_opengles.h */,
+			);
+			name = render_opengles;
+			path = libguiex_module/render_opengles;
 			sourceTree = "<group>";
 		};
 		FF5D3E371289823D00BABB9B /* test */ = {
@@ -1097,6 +1127,8 @@
 			files = (
 				FF040821128840D90053FF31 /* guiconfigfile_tinyxml.h in Headers */,
 				FF04086B12884CF70053FF31 /* guifilesys_stdio.h in Headers */,
+				FF1B896512899741006584D3 /* guirender_opengles.h in Headers */,
+				FF1B896612899741006584D3 /* guitexture_opengles.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1377,6 +1409,8 @@
 			files = (
 				FF04081E128840AC0053FF31 /* guiconfigfile_tinyxml.cpp in Sources */,
 				FF04086E12884D090053FF31 /* guifilesys_stdio.cpp in Sources */,
+				FF1B89601289972D006584D3 /* guirender_opengles.cpp in Sources */,
+				FF1B89611289972D006584D3 /* guitexture_opengles.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
