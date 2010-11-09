@@ -179,7 +179,7 @@ namespace guiex
 	//-----------------------------------------------------------------------
 	CGUIVector3 CGUIQuaternion::xAxis(void) const
 	{
-		real fTx  = 2.0f*x;
+		//real fTx  = 2.0f*x;
 		real fTy  = 2.0f*y;
 		real fTz  = 2.0f*z;
 		real fTwy = fTy*w;

@@ -76,9 +76,9 @@ namespace guiex
 		void FromAxes(const CGUIVector3& xAxis, const CGUIVector3& yAxis, const CGUIVector3& zAxis);
 
 		// assignment and comparison
-		inline CGUIMatrix3& operator= (const CGUIMatrix3& rkMatrix);
+		CGUIMatrix3& operator= (const CGUIMatrix3& rkMatrix);
 		bool operator== (const CGUIMatrix3& rkMatrix) const;
-		inline bool operator!= (const CGUIMatrix3& rkMatrix) const;
+		bool operator!= (const CGUIMatrix3& rkMatrix) const;
 
 		// arithmetic operations
 		CGUIMatrix3 operator+ (const CGUIMatrix3& rkMatrix) const;

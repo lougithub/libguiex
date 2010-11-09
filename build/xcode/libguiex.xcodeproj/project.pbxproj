@@ -25,6 +25,7 @@
 		FF040850128847C20053FF31 /* xmltest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF040849128847C20053FF31 /* xmltest.cpp */; };
 		FF04086B12884CF70053FF31 /* guifilesys_stdio.h in Headers */ = {isa = PBXBuildFile; fileRef = FF04086A12884CF70053FF31 /* guifilesys_stdio.h */; };
 		FF04086E12884D090053FF31 /* guifilesys_stdio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF04086D12884D090053FF31 /* guifilesys_stdio.cpp */; };
+		FF5D3E3E128985C200BABB9B /* hello_ipad.m in Sources */ = {isa = PBXBuildFile; fileRef = FF5D3E3D128985C200BABB9B /* hello_ipad.m */; };
 		FF8FAC061285A4F200D7DF5A /* guitimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEEF12858CB200C0BCB4 /* guitimer.cpp */; };
 		FF8FAC071285A4FC00D7DF5A /* guitimer.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE6212858C9D00C0BCB4 /* guitimer.h */; };
 		FFACE03F1285943A00C0BCB4 /* guianimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEB112858CB200C0BCB4 /* guianimation.cpp */; };
@@ -190,6 +191,34 @@
 			remoteGlobalIDString = FF04083C128847780053FF31;
 			remoteInfo = tinyxml;
 		};
+		FF0FC57912897F37004B195F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FFACDF6A12858D4E00C0BCB4;
+			remoteInfo = libguiex_module;
+		};
+		FF0FC57B12897F3C004B195F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FFACDF6012858D1800C0BCB4;
+			remoteInfo = libguiex_widget;
+		};
+		FF0FC57D12897F40004B195F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FFACDBFC12858B0000C0BCB4;
+			remoteInfo = libguiex_core;
+		};
+		FF0FC57F12897F48004B195F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF04083C128847780053FF31;
+			remoteInfo = tinyxml;
+		};
 		FFACDC4F12858B8600C0BCB4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
@@ -242,6 +271,10 @@
 		FF040849128847C20053FF31 /* xmltest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xmltest.cpp; path = ../../external/tinyxml/xmltest.cpp; sourceTree = SOURCE_ROOT; };
 		FF04086A12884CF70053FF31 /* guifilesys_stdio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guifilesys_stdio.h; sourceTree = "<group>"; };
 		FF04086D12884D090053FF31 /* guifilesys_stdio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guifilesys_stdio.cpp; sourceTree = "<group>"; };
+		FF0FC57312897F15004B195F /* hello_ipad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hello_ipad.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF1B894312898BE0006584D3 /* hello_ipad-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "hello_ipad-Info.plist"; path = "../../test/hello_ipad/hello_ipad-Info.plist"; sourceTree = SOURCE_ROOT; };
+		FF5D3E3C128985C200BABB9B /* hello_ipad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = hello_ipad.h; path = ../../test/hello_ipad/hello_ipad.h; sourceTree = SOURCE_ROOT; };
+		FF5D3E3D128985C200BABB9B /* hello_ipad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = hello_ipad.m; path = ../../test/hello_ipad/hello_ipad.m; sourceTree = SOURCE_ROOT; };
 		FFACDBFD12858B0000C0BCB4 /* liblibguiex_core.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibguiex_core.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFACDE1A12858C9D00C0BCB4 /* guianimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guianimation.h; sourceTree = "<group>"; };
 		FFACDE1B12858C9D00C0BCB4 /* guianimationmanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guianimationmanager.h; sourceTree = "<group>"; };
@@ -468,7 +501,7 @@
 		FFACDF5A12858CB200C0BCB4 /* guiwgttabbutton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiwgttabbutton.cpp; sourceTree = "<group>"; };
 		FFACDF5B12858CB200C0BCB4 /* guiwgttabcontrol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiwgttabcontrol.cpp; sourceTree = "<group>"; };
 		FFACDF6112858D1800C0BCB4 /* liblibguiex_widget.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibguiex_widget.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		FFACDF6B12858D4E00C0BCB4 /* libliguiex_module_mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libliguiex_module_mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFACDF6B12858D4E00C0BCB4 /* libliguiex_module.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libliguiex_module.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFACDF811285921E00C0BCB4 /* liblibguiex.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibguiex.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -482,6 +515,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		FF04083B128847780053FF31 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF0FC57112897F15004B195F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -517,9 +557,10 @@
 			children = (
 				FFACDBFD12858B0000C0BCB4 /* liblibguiex_core.a */,
 				FFACDF6112858D1800C0BCB4 /* liblibguiex_widget.a */,
-				FFACDF6B12858D4E00C0BCB4 /* libliguiex_module_mac.a */,
+				FFACDF6B12858D4E00C0BCB4 /* libliguiex_module.a */,
 				FFACDF811285921E00C0BCB4 /* liblibguiex.a */,
 				FF04083D128847780053FF31 /* libtinyxml.a */,
+				FF0FC57312897F15004B195F /* hello_ipad.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -527,6 +568,7 @@
 		0867D691FE84028FC02AAC07 /* libguiex */ = {
 			isa = PBXGroup;
 			children = (
+				FF5D3E371289823D00BABB9B /* test */,
 				08FB77AEFE84172EC02AAC07 /* Classes */,
 				32C88DFF0371C24200C91783 /* Other Sources */,
 				0867D69AFE84028FC02AAC07 /* Frameworks */,
@@ -635,6 +677,24 @@
 			);
 			name = filesys_stdio;
 			path = libguiex_module/filesys_stdio;
+			sourceTree = "<group>";
+		};
+		FF5D3E371289823D00BABB9B /* test */ = {
+			isa = PBXGroup;
+			children = (
+				FF5D3E381289824500BABB9B /* hello_ipad */,
+			);
+			name = test;
+			sourceTree = "<group>";
+		};
+		FF5D3E381289824500BABB9B /* hello_ipad */ = {
+			isa = PBXGroup;
+			children = (
+				FF1B894312898BE0006584D3 /* hello_ipad-Info.plist */,
+				FF5D3E3D128985C200BABB9B /* hello_ipad.m */,
+				FF5D3E3C128985C200BABB9B /* hello_ipad.h */,
+			);
+			name = hello_ipad;
 			sourceTree = "<group>";
 		};
 		FFACDE1812858C9D00C0BCB4 /* include */ = {
@@ -1080,6 +1140,27 @@
 			productReference = FF04083D128847780053FF31 /* libtinyxml.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		FF0FC57212897F15004B195F /* hello_ipad */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF0FC57812897F16004B195F /* Build configuration list for PBXNativeTarget "hello_ipad" */;
+			buildPhases = (
+				FF0FC56F12897F15004B195F /* Resources */,
+				FF0FC57012897F15004B195F /* Sources */,
+				FF0FC57112897F15004B195F /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FF0FC57A12897F37004B195F /* PBXTargetDependency */,
+				FF0FC57C12897F3C004B195F /* PBXTargetDependency */,
+				FF0FC57E12897F40004B195F /* PBXTargetDependency */,
+				FF0FC58012897F48004B195F /* PBXTargetDependency */,
+			);
+			name = hello_ipad;
+			productName = ebook_test;
+			productReference = FF0FC57312897F15004B195F /* hello_ipad.app */;
+			productType = "com.apple.product-type.application";
+		};
 		FFACDBFC12858B0000C0BCB4 /* libguiex_core */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FFACDC0012858B1E00C0BCB4 /* Build configuration list for PBXNativeTarget "libguiex_core" */;
@@ -1131,7 +1212,7 @@
 			);
 			name = libguiex_module;
 			productName = liguiex_module_mac;
-			productReference = FFACDF6B12858D4E00C0BCB4 /* libliguiex_module_mac.a */;
+			productReference = FFACDF6B12858D4E00C0BCB4 /* libliguiex_module.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -1159,9 +1240,20 @@
 				FFACDF6012858D1800C0BCB4 /* libguiex_widget */,
 				FFACDF6A12858D4E00C0BCB4 /* libguiex_module */,
 				FF04083C128847780053FF31 /* tinyxml */,
+				FF0FC57212897F15004B195F /* hello_ipad */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FF0FC56F12897F15004B195F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D2AAC07B0554694100DB518D /* Sources */ = {
@@ -1180,6 +1272,14 @@
 				FF04084E128847C20053FF31 /* tinyxmlerror.cpp in Sources */,
 				FF04084F128847C20053FF31 /* tinyxmlparser.cpp in Sources */,
 				FF040850128847C20053FF31 /* xmltest.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF0FC57012897F15004B195F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF5D3E3E128985C200BABB9B /* hello_ipad.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1288,6 +1388,26 @@
 			target = FF04083C128847780053FF31 /* tinyxml */;
 			targetProxy = FF0408401288478F0053FF31 /* PBXContainerItemProxy */;
 		};
+		FF0FC57A12897F37004B195F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FFACDF6A12858D4E00C0BCB4 /* libguiex_module */;
+			targetProxy = FF0FC57912897F37004B195F /* PBXContainerItemProxy */;
+		};
+		FF0FC57C12897F3C004B195F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FFACDF6012858D1800C0BCB4 /* libguiex_widget */;
+			targetProxy = FF0FC57B12897F3C004B195F /* PBXContainerItemProxy */;
+		};
+		FF0FC57E12897F40004B195F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FFACDBFC12858B0000C0BCB4 /* libguiex_core */;
+			targetProxy = FF0FC57D12897F40004B195F /* PBXContainerItemProxy */;
+		};
+		FF0FC58012897F48004B195F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FF04083C128847780053FF31 /* tinyxml */;
+			targetProxy = FF0FC57F12897F48004B195F /* PBXContainerItemProxy */;
+		};
 		FFACDC5012858B8600C0BCB4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FFACDBFC12858B0000C0BCB4 /* libguiex_core */;
@@ -1358,7 +1478,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"${PROJECT_DIR}/../../external",
+					"${PROJECT_DIR}/../../external/tinyxml",
 					"${PROJECT_DIR}/../../include",
 				);
 				OTHER_LDFLAGS = "-ObjC";
@@ -1402,6 +1522,55 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				PREBINDING = NO;
 				PRODUCT_NAME = tinyxml;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		FF0FC57612897F16004B195F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = "${PROJECT_DIR}/../../test/hello_ipad/hello_ipad-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = hello_ipad;
+				SDKROOT = iphoneos4.1;
+			};
+			name = Debug;
+		};
+		FF0FC57712897F16004B195F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = "hello_ipad-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ebook_test;
+				SDKROOT = iphoneos4.1;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -1464,7 +1633,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				PREBINDING = NO;
-				PRODUCT_NAME = liguiex_module_mac;
+				PRODUCT_NAME = liguiex_module;
 			};
 			name = Debug;
 		};
@@ -1507,6 +1676,15 @@
 			buildConfigurations = (
 				FF04083E128847780053FF31 /* Debug */,
 				FF04083F128847780053FF31 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FF0FC57812897F16004B195F /* Build configuration list for PBXNativeTarget "hello_ipad" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF0FC57612897F16004B195F /* Debug */,
+				FF0FC57712897F16004B195F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
