@@ -73,6 +73,26 @@ protected:
 
 
 // -----------------------------------------------------------------------
+// wxGUIVector3Property
+// -----------------------------------------------------------------------
+WX_PG_DECLARE_VARIANT_DATA(wxGUIVector3VariantData, CGUIVector3, wxPG_NO_DECL)
+
+class wxGUIVector3Property : public wxPGProperty
+{
+	WX_PG_DECLARE_PROPERTY_CLASS(wxGUIVector3Property)
+public:
+
+	wxGUIVector3Property( const wxString& label = wxPG_LABEL,
+		const wxString& name = wxPG_LABEL,
+		const CGUIVector3& value = CGUIVector3() );
+	virtual ~wxGUIVector3Property();
+
+	WX_PG_DECLARE_PARENTAL_METHODS()
+
+protected:
+};
+
+// -----------------------------------------------------------------------
 // wxGUIRectProperty
 // -----------------------------------------------------------------------
 WX_PG_DECLARE_VARIANT_DATA(wxGUIRectVariantData, CGUIRect, wxPG_NO_DECL)

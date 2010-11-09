@@ -514,6 +514,38 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
+	//convert for CGUIVector3
+	template<  >
+	int32 StringToValue<CGUIVector3>( const CGUIString& rString, CGUIVector3& rValue)
+	{
+		//string should have format as "x,y,z"
+		std::vector<CGUIString> aListString= StringToVector(rString);
+
+		if( aListString.size() != 3 )
+		{
+			throw CGUIException(
+				"[StringToValue[StringToValue]]: string value format is wrong! <%s>",
+				rString.c_str());
+			return -1;
+		}
+
+		StringToValue(aListString[0], rValue.x);
+		StringToValue(aListString[1], rValue.y);
+		StringToValue(aListString[2], rValue.z);
+		return 0;
+	}
+
+	template<  >
+	int32 ValueToString<CGUIVector3>( const CGUIVector3& rValue, CGUIString& rString )
+	{
+		std::stringstream stream;
+		stream.width(0);
+		stream.fill(' ');
+		stream << rValue.x<<','<<rValue.y<<','<<rValue.z;
+		rString = stream.str();
+		return 0;
+	}
+	//------------------------------------------------------------------------------
 	//convert for CGUIColor
 	template<  >
 	int32 StringToValue<CGUIColor>( const CGUIString& rString, CGUIColor& rValue)

@@ -66,7 +66,7 @@ guiex::CGUIWidget* SampleInit()
 	pWidget_button2->NEWSetPosition( 600, 200 );
 	pWidget_button2->SetTextContentUTF8("cancel");
 	pWidget_button2->SetTextColor(guiex::CGUIColor( 1,1,1,1));
-	pWidget_button2->SetRotation( 3.14f/7 );
+	pWidget_button2->SetRotation( 0,0,45 );
 	pWidget_button2->Create();
 
 	guiex::CGUIWidget* pWidget_checkbutton = GUI_CREATE_WIDGET("CGUIWgtCheckButton", "checkbutton", "testproject");
@@ -169,7 +169,7 @@ guiex::CGUIWidget* SampleInit()
 	pWidget_panel->NEWSetSize( 150, 200 );
 	pWidget_panel->NEWSetPosition( 700, 200 );
 	pWidget_panel->SetAnchorPoint( 0.5f, 0.5f );
-	pWidget_panel->SetRotation( 0.3f );
+	pWidget_panel->SetRotation( 0,0,70 );
 	pWidget_panel->Create();
 
 
@@ -259,7 +259,7 @@ guiex::CGUIWidget* SampleInit()
 		pWidget_panel->AddAs( pAsScale );
 
 		guiex::CGUIAsRotation* pAsRotation = static_cast<guiex::CGUIAsRotation*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsRotation", pWidget_panel ));
-		pAsRotation->SetRotationSequence( 3.1415f*1.0f, 0, 4 );
+		pAsRotation->SetRotationSequence( guiex::CGUIVector3(0,0,360*5), guiex::CGUIVector3(), 4 );
 		pWidget_panel->AddAs( pAsRotation );
 	}
 
@@ -274,7 +274,7 @@ guiex::CGUIWidget* SampleInit()
 
 	{
 		guiex::CGUIAsRotation* pAsRotation = static_cast<guiex::CGUIAsRotation*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsRotation", pWidget_staticimage ));
-		pAsRotation->SetRotationSequence( 3.1415f, 0, 4 );
+		pAsRotation->SetRotationSequence( guiex::CGUIVector3(0,0,360), guiex::CGUIVector3(), 4 );
 		pWidget_staticimage->AddAs( pAsRotation );
 	}
 
@@ -288,13 +288,13 @@ guiex::CGUIWidget* SampleInit()
 		pWidget_staticimage2->AddAs( pAsAlpha );
 
 		guiex::CGUIAsRotation* pAsRotation = static_cast<guiex::CGUIAsRotation*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsRotation", pWidget_staticimage2 ));
-		pAsRotation->SetRotationSequence( 3.1415f*1.0f, 0, 4 );
+		pAsRotation->SetRotationSequence( guiex::CGUIVector3(0,0,360*2), guiex::CGUIVector3(), 4 );
 		pWidget_staticimage2->AddAs( pAsRotation );
 	}
 
 	{
 		guiex::CGUIAsRotation* pAsRotation = static_cast<guiex::CGUIAsRotation*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsRotation", pWidget_statictext ));
-		pAsRotation->SetRotationSequence( 3.1415f*5.0f, 0, 1 );
+		pAsRotation->SetRotationSequence( guiex::CGUIVector3(0,0,360*5), guiex::CGUIVector3(), 1 );
 		pWidget_statictext->AddAs( pAsRotation );
 
 		guiex::CGUIAsAlpha* pAsAlpha = static_cast<guiex::CGUIAsAlpha*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsAlpha", pWidget_statictext ));

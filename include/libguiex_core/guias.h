@@ -14,6 +14,7 @@
 #include "guibase.h"
 #include "guistring.h"
 #include "guivector2.h"
+#include "guivector3.h"
 
 #include "guiasgenerator.h"
 #include "guiasfactory.h"
@@ -244,7 +245,7 @@ namespace guiex
 		/** 
 		* @brief set the parameter of action sequence
 		*/
-		void	SetRotationSequence(real fBeginValue, real fEndValue, real fTotalTime);
+		void	SetRotationSequence(const CGUIVector3& rBeginValue, const CGUIVector3& rEndValue, real fTotalTime);
 
 		/**
 		* @brief Update the event.
@@ -252,8 +253,8 @@ namespace guiex
 		virtual void	Update( real fDeltaTime );
 
 	protected:
-		real	m_fBeginValue;
-		real	m_fEndValue;
+		CGUIVector3	m_vBeginValue;
+		CGUIVector3	m_vEndValue;
 	};
 	GUI_AS_GENERATOR_DECLARE( CGUIAsRotation);
 

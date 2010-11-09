@@ -301,13 +301,6 @@ void WxGLCanvas::UpdateCanvasSize(const wxSize& rSize)
 {
 	SetCurrent();
 
-	glMatrixMode(GL_PROJECTION); //使投影矩阵堆栈成为当前堆栈 
-	glLoadIdentity(); //设为单位矩阵 
-	gluOrtho2D(0,rSize.x,rSize.y, 0); //定义二维正射投影矩阵 
-
-	glMatrixMode(GL_MODELVIEW); //使模型取景矩阵堆栈成为当前堆栈 
-	glLoadIdentity();									// Reset The Modelview Matrix
-
 	glViewport(0,0,rSize.x,rSize.y); //定义视口 
 
 }

@@ -287,12 +287,6 @@ void WxGLCanvas::OnSize(wxSizeEvent& event)
 
 	wxSize aSize = event.GetSize();
 
-	//glMatrixMode(GL_PROJECTION);		//使投影矩阵堆栈成为当前堆栈 
-	//glLoadIdentity();					//设为单位矩阵 
-	//gluOrtho2D(0,aSize.x,aSize.y, 0);	//定义二维正射投影矩阵 
-	//glMatrixMode(GL_MODELVIEW);			//使模型取景矩阵堆栈成为当前堆栈 
-	//glLoadIdentity();					// Reset The Modelview Matrix
-
 	SetCurrent();
 	glViewport(0,0,aSize.x,aSize.y);	//定义视口
 

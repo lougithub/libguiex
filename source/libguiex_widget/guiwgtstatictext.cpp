@@ -44,14 +44,18 @@ namespace guiex
 	void	CGUIWgtStaticText::InitStaticText()
 	{
 		m_bMultiLine = false;
-		m_bAutoExpandHeight = false;
-
 	}
 	//------------------------------------------------------------------------------
 	int32 CGUIWgtStaticText::Create()
 	{
 		UpdateStringContent();
 		return CGUIWgtStatic::Create();
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtStaticText::RefreshSelf( )
+	{
+		CGUIWgtStatic::RefreshSelf();
+		UpdateStringContent();
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWgtStaticText::RenderSelf(IGUIInterfaceRender* pRender)
@@ -95,16 +99,6 @@ namespace guiex
 	bool	CGUIWgtStaticText::IsMultiLine( ) const
 	{
 		return m_bMultiLine;
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWgtStaticText::SetAutoExpandHeight( bool bAutoExpand )
-	{
-		m_bAutoExpandHeight = bAutoExpand;
-	}
-	//------------------------------------------------------------------------------
-	bool	CGUIWgtStaticText::IsAutoExpandHeight( ) const
-	{
-		return m_bAutoExpandHeight;
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWgtStaticText::SetTextContent(const wchar_t* pText)
@@ -193,17 +187,6 @@ namespace guiex
 			fTotalHeight += aLine.m_nLineHeight;
 		}
 
-		if( m_bAutoExpandHeight )
-		{
-			if( fTotalHeight > 0.f )
-			{
-				SetPixelSize( NEWGetPixelSize().m_fWidth, fTotalHeight );
-			}
-			else
-			{
-				SetPixelSize( NEWGetPixelSize().m_fWidth, rDefaultInfo.m_nFontSize );
-			}
-		}
 	}
 	//------------------------------------------------------------------------------
 	int32 CGUIWgtStaticText::GenerateProperty( CGUIProperty& rProperty )
@@ -211,10 +194,6 @@ namespace guiex
 		if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "multiline")
 		{
 			ValueToProperty( IsMultiLine(), rProperty);
-		}
-		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "autoexpand_height" )
-		{
-			ValueToProperty( IsAutoExpandHeight(), rProperty);
 		}
 		else
 		{
@@ -231,12 +210,6 @@ namespace guiex
 			PropertyToValue( rProperty, bValue);
 			SetMultiLine( bValue );
 		}
-		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "autoexpand_height" )
-		{
-			bool bValue;
-			PropertyToValue( rProperty, bValue);
-			SetAutoExpandHeight( bValue );
-		}
 		else
 		{
 			CGUIWidget::ProcessProperty( rProperty );
@@ -245,7 +218,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	uint32		CGUIWgtStaticText::OnSizeChanged( CGUIEventSize* pEvent )
 	{
-		//UpdateStringContent();
+		UpdateStringContent();
 		return CGUIWidget::OnSizeChanged(pEvent);
 	}
 	//------------------------------------------------------------------------------

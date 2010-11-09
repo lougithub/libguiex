@@ -89,18 +89,21 @@ void LoadWidgetConfig( wxPropertyGridManager* pSheetMgr, const std::string& rTyp
 		const guiex::CGUIProperty* pProp = rSet.GetProperty(i);
 			
 		SetPropertyPageByEvent(pSheetMgr, CPropertyData::GetPropertyData(*pProp)->GetPage());
-
-		if( mapCategory.find( std::make_pair(CPropertyData::GetPropertyData(*pProp)->GetPage(),CPropertyData::GetPropertyData(*pProp)->GetCategory())) == mapCategory.end())
+		
+		std::string strPage = CPropertyData::GetPropertyData(*pProp)->GetPage();
+		std::string strCategory = CPropertyData::GetPropertyData(*pProp)->GetCategory();
+		if( mapCategory.find( std::make_pair(strPage,strCategory)) == mapCategory.end())
 		{
 			//add category
-			wxPGProperty* pPGProperty = pSheetMgr->Append(new wxPropertyCategory(wxConvUTF8.cMB2WC( CPropertyData::GetPropertyData(*pProp)->GetCategory().c_str()), wxPG_LABEL));
+			wxString strLabel = wxConvUTF8.cMB2WC( CPropertyData::GetPropertyData(*pProp)->GetCategory().c_str());
+			wxPGProperty* pPGProperty = pSheetMgr->Append(new wxPropertyCategory(strLabel, wxPG_LABEL));
 			wxASSERT(pPGProperty);
 
-			mapCategory.insert( std::make_pair(std::make_pair(CPropertyData::GetPropertyData(*pProp)->GetPage(),CPropertyData::GetPropertyData(*pProp)->GetCategory()), pPGProperty));
+			mapCategory.insert( std::make_pair(std::make_pair(strPage,strCategory), pPGProperty));
 		}
 
 		//add property
-		wxPGProperty* pPGProp = mapCategory[std::make_pair(CPropertyData::GetPropertyData(*pProp)->GetPage(),CPropertyData::GetPropertyData(*pProp)->GetCategory())];
+		wxPGProperty* pPGProp = mapCategory[std::make_pair(strPage,strCategory)];
 		SetPropertyByType( pSheetMgr, pPGProp, pProp, pWidget );
 	}
 	
@@ -196,6 +199,23 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 		else
 		{
 			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxGUIVector2Property( STRING_M2W(CPropertyData::GetPropertyData(aProp)->GetLabel()), STRING_M2W(aProp.GetName()), aValue));
+		}
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	//CGUIVector3
+	else if( aProp.GetType() == guiex::ePropertyType_Vector3 )
+	{
+		guiex::CGUIVector3 aValue;
+		guiex::PropertyToValue(aProp, aValue);
+
+		if( pPGTop )
+		{
+			pPGTop->SetValue( CGUIVector3ToVariant(aValue));
+		}
+		else
+		{
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxGUIVector3Property( STRING_M2W(CPropertyData::GetPropertyData(aProp)->GetLabel()), STRING_M2W(aProp.GetName()), aValue));
 		}
 	}
 
@@ -516,6 +536,13 @@ void GenerateGUIProperty( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPro
 	if( rProperty.GetType() == guiex::ePropertyType_Vector2 )
 	{
 		guiex::CGUIVector2 aValue = CGUIVector2FromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
+		guiex::ValueToProperty( aValue, rProperty );
+	}
+	//////////////////////////////////////////////////////////////////////////////////////
+	//CGUIVector3
+	else if( rProperty.GetType() == guiex::ePropertyType_Vector3 )
+	{
+		guiex::CGUIVector3 aValue = CGUIVector3FromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
 		guiex::ValueToProperty( aValue, rProperty );
 	}
 	//////////////////////////////////////////////////////////////////////////////////////

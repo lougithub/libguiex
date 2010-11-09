@@ -216,7 +216,12 @@ namespace guiex
 		glPushMatrix();
 		glLoadIdentity();
 		const CGUISize& rSize = CGUIWidgetSystem::Instance()->GetScreenSize();
+#if 0
 		gluOrtho2D(0.0, rSize.m_fWidth,rSize.m_fHeight,0.0 );
+#else
+		gluPerspective( 90, rSize.m_fWidth/rSize.m_fHeight, 0.1, 1000 );
+		gluLookAt( rSize.m_fWidth/2,rSize.m_fHeight/2,-rSize.m_fWidth/2,rSize.m_fWidth/2,rSize.m_fHeight/2,0, 0,-1,0);
+#endif
 
 		//update modelview matrix
 		glMatrixMode(GL_MODELVIEW);

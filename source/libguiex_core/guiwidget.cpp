@@ -59,7 +59,7 @@ namespace guiex
 		,m_bIsOpen( false )
 		,m_aColor(1.0f,1.0f,1.0f,1.0f)
 		,m_uTextAlignment(GUI_TA_CENTER)
-		,m_fRotation(0.0f)
+		,m_vRotation(0.0f,0.0f,0.0f)
 		,m_bOpenWithParent(true)
 		,m_bInheritAlpha(true)
 		,m_bIsFocusAgency(false)
@@ -1308,6 +1308,11 @@ namespace guiex
 			ValueToProperty( GetAlpha(), rProperty);
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
+		else if( rProperty.GetType() == ePropertyType_Vector3 && rProperty.GetName() == "rotation" )
+		{
+			ValueToProperty( GetRotation(), rProperty);
+		}
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "activable" )
 		{
 			ValueToProperty( IsActivable(), rProperty);
@@ -1503,6 +1508,15 @@ namespace guiex
 			real fAlpha = 0.f;
 			PropertyToValue( rProperty, fAlpha );
 			SetAlpha( fAlpha );
+		}
+
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//property for rotation
+		else if(  rProperty.GetType()== ePropertyType_Vector3 && rProperty.GetName()=="rotation" )
+		{
+			CGUIVector3 vRotation;
+			PropertyToValue( rProperty, vRotation );
+			SetRotation( vRotation );
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2090,14 +2104,21 @@ namespace guiex
 		return m_aWidgetSize.m_eType;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWidget::SetRotation(real rotation)
+	void CGUIWidget::SetRotation(real x, real y, real z)
 	{
-		m_fRotation = rotation;
+		m_vRotation.x = x;
+		m_vRotation.y = y;
+		m_vRotation.z = z;
 	}
 	//------------------------------------------------------------------------------
-	real CGUIWidget::GetRotation( ) const
+	void CGUIWidget::SetRotation(const CGUIVector3& rRotation)
 	{
-		return m_fRotation;
+		SetRotation(rRotation.x, rRotation.y, rRotation.z);
+	}
+	//------------------------------------------------------------------------------
+	const CGUIVector3& CGUIWidget::GetRotation( ) const
+	{
+		return m_vRotation;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::Refresh( )
@@ -2166,11 +2187,18 @@ namespace guiex
 			m_aWidgetPosition.m_aPixelValue.y - aParentOffsetPos.y,
 			0.0f);
 		const CGUISize& rScale = m_aParamScale.GetSelfValue( );
+		//pos
 		setPosition( aPos );
+		//scale
 		setScale( rScale.m_fWidth, rScale.m_fHeight, 1.0f );
-		real w = CGUIMath::Cos( m_fRotation/2 );
-		real z = CGUIMath::Sin( m_fRotation/2 );
-		setOrientation( w, 0.0f, 0.0f, z );
+		//rotation
+		//real w = CGUIMath::Cos( m_vRotation.z/2 );
+		//real z = CGUIMath::Sin( m_vRotation.z/2 );
+		//setOrientation( w, 0.0f, 0.0f, z );
+		CGUIMatrix3 aRotMat;
+		aRotMat.FromEulerAnglesXYZ( CGUIDegree(m_vRotation.x), CGUIDegree(m_vRotation.y), CGUIDegree(m_vRotation.z) );
+		setOrientation( CGUIQuaternion( aRotMat) );
+
 		updateFromParent( );
 
 		//refresh render rect

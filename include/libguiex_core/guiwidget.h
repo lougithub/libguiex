@@ -555,9 +555,13 @@ namespace guiex
 		EScreenValue NewGetSizeType( ) const; //get size type
 
 		void Refresh( );
-		void SetRotation(real rotation);
-		real GetRotation( ) const;
-		//void SetOrientation( real w, real x, real y, real z );
+
+		/**
+		 * in degree
+		 */
+		void SetRotation(real x, real y, real z);
+		void SetRotation(const CGUIVector3& rRotation);
+		const CGUIVector3& GetRotation( ) const;
 
 		/**
 		* @brief client coordinate to global coordinate
@@ -890,7 +894,7 @@ namespace guiex
 		CGUISize		m_aMaxSize;					//maximum size of widget,it doesn't work if the value is (0,0)
 		CGUISize		m_aMinSize;					//minimum size of widget,it doesn't work if the value is (0,0)
 
-		real			m_fRotation;
+		CGUIVector3		m_vRotation;
 
 		CGUIRenderRect		m_aBound;				//!< bound of this rect.
 

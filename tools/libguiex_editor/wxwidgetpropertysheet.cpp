@@ -131,6 +131,53 @@ void wxGUIVector2Property::ChildChanged( wxVariant& thisValue, int childIndex, w
 }
 
 
+// -----------------------------------------------------------------------
+// wxGUIVector3Property
+// -----------------------------------------------------------------------
+
+WX_PG_IMPLEMENT_VARIANT_DATA(wxGUIVector3VariantData, CGUIVector3)
+
+WX_PG_IMPLEMENT_PROPERTY_CLASS(wxGUIVector3Property,wxPGProperty,
+							   CGUIVector3,const CGUIVector3&,TextCtrl)
+
+
+wxGUIVector3Property::wxGUIVector3Property( const wxString& label,
+							   const wxString& name,
+							   const CGUIVector3& value)
+							   : wxPGProperty(label,name)
+{
+	//ChangeFlag(wxPG_PROP_READONLY, true);
+	SetValue( CGUIVector3ToVariant(value) );
+	AddPrivateChild( new wxFloatProperty(wxT("x"), wxT("X"),value.x) );
+	AddPrivateChild( new wxFloatProperty(wxT("y"), wxT("Y"),value.y) );
+	AddPrivateChild( new wxFloatProperty(wxT("z"), wxT("z"),value.z) );
+}
+
+wxGUIVector3Property::~wxGUIVector3Property() { }
+
+void wxGUIVector3Property::RefreshChildren()
+{
+	if ( !GetCount() )
+	{
+		return;
+	}
+
+	CGUIVector3& vector = CGUIVector3FromVariant(m_value);
+	Item(0)->SetValue( vector.x );
+	Item(1)->SetValue( vector.y);
+	Item(2)->SetValue( vector.z);
+}
+
+void wxGUIVector3Property::ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const
+{
+	CGUIVector3& vector = CGUIVector3FromVariant(thisValue);
+	switch ( childIndex )
+	{
+	case 0: vector.x = childValue.GetDouble(); break;
+	case 1: vector.y = childValue.GetDouble(); break;
+	case 2: vector.z = childValue.GetDouble(); break;
+	}
+}
 
 
 

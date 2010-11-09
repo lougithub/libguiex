@@ -43,10 +43,11 @@ void	IGUIInterfaceRender::IncreaseZValue(void)
 }
 //------------------------------------------------------------------------------
 real IGUIInterfaceRender::GetAndIncZ() 
-{ 
-	real oldZ = m_current_z ;
-	m_current_z -= ms_ZElementStep; 
-	return oldZ;
+{
+	return 0.0f;
+	//real oldZ = m_current_z ;
+	//m_current_z -= ms_ZElementStep; 
+	//return oldZ;
 }
 //------------------------------------------------------------------------------
 }//namespace guiex

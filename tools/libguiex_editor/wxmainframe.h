@@ -94,6 +94,7 @@ public:
 		ID_ToggleWireframe,
 		ID_SetBGColor,
 		ID_Refresh,
+		ID_ToggleExtraInfo,
 
 
 
@@ -238,6 +239,7 @@ protected:
 
 	void OnRunScript(wxCommandEvent& evt);
 	void OnToggleScissor(wxCommandEvent& evt);
+	void OnToggleExtraInfo(wxCommandEvent& evt);
 	void OnToggleWireframe(wxCommandEvent& evt);
 	void OnSetBGColor(wxCommandEvent& evt);
 	void OnRefresh(wxCommandEvent& evt);

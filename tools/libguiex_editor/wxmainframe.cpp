@@ -110,6 +110,7 @@ EVT_MENU(ID_VIEW_1024x786, WxMainFrame::On1024x786)
 EVT_UPDATE_UI(ID_VIEW_1280x800, WxMainFrame::OnUpdate1280x800)
 EVT_MENU(ID_VIEW_1280x800, WxMainFrame::On1280x800)
 EVT_MENU(ID_ToggleScissor, WxMainFrame::OnToggleScissor)
+EVT_MENU(ID_ToggleExtraInfo, WxMainFrame::OnToggleExtraInfo)
 EVT_MENU(ID_ToggleWireframe, WxMainFrame::OnToggleWireframe)
 EVT_MENU(ID_SetBGColor, WxMainFrame::OnSetBGColor)
 EVT_MENU(ID_Refresh, WxMainFrame::OnRefresh)
@@ -1055,6 +1056,16 @@ void WxMainFrame::OnToggleScissor(wxCommandEvent& evt)
 	}
 }
 //------------------------------------------------------------------------------
+void WxMainFrame::OnToggleExtraInfo(wxCommandEvent& evt)
+{
+	bool bIsChecked = evt.IsChecked();
+
+	if( guiex::CGUIInterfaceManager::Instance()->GetInterfaceRender())
+	{
+		guiex::CGUIWidgetSystem::Instance()->SetDrawExtraInfo(bIsChecked);
+	}
+}
+//------------------------------------------------------------------------------
 void WxMainFrame::OnToggleWireframe(wxCommandEvent& evt)
 {
 	bool bIsChecked = evt.IsChecked();
@@ -1661,6 +1672,7 @@ void			WxMainFrame::CreateMenu()
 	view_menu->Append(ID_ToggleWireframe, wxT("Toggle Wireframe"), wxT("enable or disable wireframe"), wxITEM_CHECK);
 	view_menu->Append(ID_SetBGColor, wxT("Set BG Color"), wxT("set background color"));
 	view_menu->Append(ID_Refresh, wxT("Refresh"), wxT("refresh widgets"));
+	view_menu->Append(ID_ToggleExtraInfo, wxT("render extra info"), wxT("enable or disable render extra info"), wxITEM_CHECK);
 
 	//menu-about
 	wxMenu* help_menu = new wxMenu;

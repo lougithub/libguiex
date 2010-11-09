@@ -41,9 +41,6 @@ namespace guiex
 		void SetMultiLine( bool bMultiLine );
 		bool IsMultiLine( ) const;
 
-		void SetAutoExpandHeight( bool bAutoExpand );
-		bool IsAutoExpandHeight( ) const;
-
 		/**
 		* @brief load widget config from property
 		*/
@@ -67,6 +64,8 @@ namespace guiex
 
 		/// render
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
+		
+		virtual void RefreshSelf( );
 
 		void UpdateStringContent();
 
@@ -88,7 +87,6 @@ namespace guiex
 		typedef std::vector<SLineInfo>   TLineList;  //!< Type for collection of LineInfos.
 		TLineList			m_aLineList;			//!< line list
 		bool				m_bMultiLine;
-		bool				m_bAutoExpandHeight;
 	
 	protected:
 		static		wchar_t		ms_wLineBreak;

@@ -185,15 +185,13 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIAsRotation::CGUIAsRotation(CGUIWidget* pReceiver)
 		:CGUIAs("CGUIAsRotation", pReceiver)
-		,m_fBeginValue(0.0f)
-		,m_fEndValue(0.0f)
 	{
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIAsRotation::SetRotationSequence(real fBeginValue, real fEndValue, real fTotalTime)
+	void	CGUIAsRotation::SetRotationSequence(const CGUIVector3& rBeginValue, const CGUIVector3& rEndValue, real fTotalTime)
 	{	
-		m_fBeginValue = fBeginValue;
-		m_fEndValue = fEndValue;
+		m_vBeginValue = rBeginValue;
+		m_vEndValue = rEndValue;
 		SetTotalTime( fTotalTime );
 	}
 	//------------------------------------------------------------------------------
@@ -201,8 +199,8 @@ namespace guiex
 	{
 		CGUIAs::Update( fDeltaTime );
 		
-		real fCurValue = CGUIMath::LinearTween( m_fElapsedTime / m_fTotalTime, m_fBeginValue, m_fEndValue );
-		GetReceiver()->SetRotation(fCurValue);
+		CGUIVector3 vCurValue = CGUIMath::LinearTween( m_fElapsedTime / m_fTotalTime, m_vBeginValue, m_vEndValue );
+		GetReceiver()->SetRotation(vCurValue);
 	}
 	//------------------------------------------------------------------------------
 
