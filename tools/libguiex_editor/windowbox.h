@@ -76,13 +76,11 @@ public:
 
 	const wxRect & GetAnchorRect();
 
-	const wxRect & GetClientRect();
-
 	/** Returns a GDI rectangle for the boxed Window.
 	*
 	* @return absolute GDI rectangle.
 	*/
-	wxRect GetWindowRect();
+	const wxRect &  GetWindowRect();
 
 	/** Applies a new rectangle to the boxed window, and then updates the box itself.*/
 	void SetNewWindowArea(wxRect newArea);
@@ -116,7 +114,7 @@ private:
 	/** 8 rectangles with absolute and unclipped positions and sizes per point.*/
 	wxRect      m_resizePoints [NUM_RESIZE_POINTS] ;
 	wxRect		m_aAnchorRect;
-	wxRect		m_aClientRect;
+	wxRect		m_aWindowsRect;
 
 	/** Holds whether the boxed window is locked. When true, its position and size can not be changed.
 	* in the future, each window should be wrapped in this box so that locking information can also be remembered,

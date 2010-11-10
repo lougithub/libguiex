@@ -154,24 +154,6 @@ void WxGLCanvas::DrawResizers()
 	// For each selected window, draw resize boxes
 	if( m_aWindowBox.GetWindow())
 	{
-		//draw client rect
-		{
-			const wxRect& winRc = m_aWindowBox.GetClientRect();
-			// green surrounding rectangle for the border (just draw over the filled rectangle)
-			glColor3f (1.0f, 1.0f, 0.0f);
-			glBegin(GL_LINE_LOOP);
-			x0 = winRc.x;
-			y0 = winRc.y;
-			x1 = winRc.GetRight();
-			y1 = winRc.GetBottom();
-
-			glVertex2f(x0, y0);
-			glVertex2f(x1, y0);
-			glVertex2f(x1, y1);
-			glVertex2f(x0, y1);
-			glEnd();	// GL_LINE_LOOP
-		}
-
 		{
 			// Draw a rectangle around the window. Don't use DrawRectangle because it fills
 			// the area. We don't want that, just lines.
@@ -300,9 +282,14 @@ void WxGLCanvas::OnSize(wxSizeEvent& event)
 void WxGLCanvas::UpdateCanvasSize(const wxSize& rSize)
 {
 	SetCurrent();
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluOrtho2D(0.0, rSize.GetWidth(),rSize.GetHeight(),0.0 );
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();	
 
 	glViewport(0,0,rSize.x,rSize.y); //定义视口 
-
 }
 //------------------------------------------------------------------------------
 void WxGLCanvas::OnEraseBackground(wxEraseEvent& WXUNUSED(event))

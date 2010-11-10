@@ -29,10 +29,21 @@ void CWindowBox::Reset ()
 		return;
 	}
 
+	const guiex::CGUIRect& rc = m_pSelectWidget->GetBoundArea();
+	guiex::CGUIVector2 aLeftTop(rc.m_fLeft, rc.m_fTop);
+	guiex::CGUIVector2 aBottomRight(rc.m_fRight, rc.m_fBottom );
+	m_pSelectWidget->LocalToWorld( aLeftTop );
+	m_pSelectWidget->LocalToWorld( aBottomRight );
+	m_aWindowsRect = wxRect(wxPoint((int)aLeftTop.x, (int)aLeftTop.y), 
+		wxPoint((int)aBottomRight.x, (int)aBottomRight.y));
+
 	m_locked = false;
 	// Find the amount to convert from relative- to screen coordinates
 	// Do this by finding the parent of the element (until no parent)
-	const guiex::CGUIRect& winRc = m_pSelectWidget->GetBoundArea();
+	guiex::CGUIRect boundRect( m_aWindowsRect.GetLeft(), 
+		m_aWindowsRect.GetTop(), 
+		m_aWindowsRect.GetRight(),
+		m_aWindowsRect.GetBottom());
 
 	// Make boxes 3x3 and always in pixels
 	//int width = 7;
@@ -41,29 +52,29 @@ void CWindowBox::Reset ()
 	int paddY = 3;
 
 	// Position the "TopLeft" resizer
-	m_resizePoints [RESIZE_POINT_WN].x = winRc.m_fLeft - paddX;
-	m_resizePoints [RESIZE_POINT_WN].y = winRc.m_fTop - paddY;
+	m_resizePoints [RESIZE_POINT_WN].x = boundRect.m_fLeft - paddX;
+	m_resizePoints [RESIZE_POINT_WN].y = boundRect.m_fTop - paddY;
 	// Position the "Top" resizer
-	m_resizePoints [RESIZE_POINT_N].x = winRc.m_fLeft + winRc.GetWidth() / 2 - paddX;
-	m_resizePoints [RESIZE_POINT_N].y = winRc.m_fTop - paddY;
+	m_resizePoints [RESIZE_POINT_N].x = boundRect.m_fLeft + boundRect.GetWidth() / 2 - paddX;
+	m_resizePoints [RESIZE_POINT_N].y = boundRect.m_fTop - paddY;
 	// Position the "TopRight" resizer
-	m_resizePoints [RESIZE_POINT_NE].x = winRc.m_fLeft + winRc.GetWidth() - paddX;
-	m_resizePoints [RESIZE_POINT_NE].y = winRc.m_fTop - paddY;
+	m_resizePoints [RESIZE_POINT_NE].x = boundRect.m_fLeft + boundRect.GetWidth() - paddX;
+	m_resizePoints [RESIZE_POINT_NE].y = boundRect.m_fTop - paddY;
 	// Position the "Right" resizer
-	m_resizePoints [RESIZE_POINT_E].x = winRc.m_fLeft + winRc.GetWidth() - paddX;
-	m_resizePoints [RESIZE_POINT_E].y = winRc.m_fTop + winRc.GetHeight() / 2 - paddY;
+	m_resizePoints [RESIZE_POINT_E].x = boundRect.m_fLeft + boundRect.GetWidth() - paddX;
+	m_resizePoints [RESIZE_POINT_E].y = boundRect.m_fTop + boundRect.GetHeight() / 2 - paddY;
 	// Position the "BottomRight" resizer
-	m_resizePoints [RESIZE_POINT_ES].x = winRc.m_fLeft + winRc.GetWidth() - paddX;
-	m_resizePoints [RESIZE_POINT_ES].y = winRc.m_fTop + winRc.GetHeight() - paddY;
+	m_resizePoints [RESIZE_POINT_ES].x = boundRect.m_fLeft + boundRect.GetWidth() - paddX;
+	m_resizePoints [RESIZE_POINT_ES].y = boundRect.m_fTop + boundRect.GetHeight() - paddY;
 	// Position the "Bottom" resizer
-	m_resizePoints [RESIZE_POINT_S].x = winRc.m_fLeft + winRc.GetWidth() / 2 - paddX;
-	m_resizePoints [RESIZE_POINT_S].y = winRc.m_fTop + winRc.GetHeight() - paddY;
+	m_resizePoints [RESIZE_POINT_S].x = boundRect.m_fLeft + boundRect.GetWidth() / 2 - paddX;
+	m_resizePoints [RESIZE_POINT_S].y = boundRect.m_fTop + boundRect.GetHeight() - paddY;
 	// Position the "BottomLeft" resizer
-	m_resizePoints [RESIZE_POINT_SW].x = winRc.m_fLeft - paddX;
-	m_resizePoints [RESIZE_POINT_SW].y = winRc.m_fTop + winRc.GetHeight() - paddY;
+	m_resizePoints [RESIZE_POINT_SW].x = boundRect.m_fLeft - paddX;
+	m_resizePoints [RESIZE_POINT_SW].y = boundRect.m_fTop + boundRect.GetHeight() - paddY;
 	// Position the "Left" resizer
-	m_resizePoints [RESIZE_POINT_W].x = winRc.m_fLeft - paddX;
-	m_resizePoints [RESIZE_POINT_W].y = winRc.m_fTop + winRc.GetHeight() / 2 - paddY;
+	m_resizePoints [RESIZE_POINT_W].x = boundRect.m_fLeft - paddX;
+	m_resizePoints [RESIZE_POINT_W].y = boundRect.m_fTop + boundRect.GetHeight() / 2 - paddY;
 
 	for (int i = 0; i < NUM_RESIZE_POINTS; ++i) 
 	{
@@ -74,16 +85,10 @@ void CWindowBox::Reset ()
 	paddX -=1;
 	paddY -=1;
 	const guiex::CGUIVector2& rPoint = m_pSelectWidget->GetAnchorPoint();
-	m_aAnchorRect.x = winRc.m_fLeft + winRc.GetWidth()* rPoint.x-paddX;
-	m_aAnchorRect.y = winRc.m_fTop + winRc.GetHeight()* rPoint.y-paddY;
+	m_aAnchorRect.x = boundRect.m_fLeft + boundRect.GetWidth()* rPoint.x-paddX;
+	m_aAnchorRect.y = boundRect.m_fTop + boundRect.GetHeight()* rPoint.y-paddY;
 	m_aAnchorRect.width = paddX * 2;
 	m_aAnchorRect.height = paddY * 2;
-
-	const guiex::CGUIRect& rClientRect = m_pSelectWidget->GetClientArea();
-	m_aClientRect.x = rClientRect.m_fLeft;
-	m_aClientRect.y = rClientRect.m_fTop;
-	m_aClientRect.width = rClientRect.GetWidth();
-	m_aClientRect.height = rClientRect.GetHeight();
 }
 //-----------------------------------------------------------------------
 void	CWindowBox::MoveWindowPosition(int deltaX, int deltaY)
@@ -123,20 +128,10 @@ const wxRect & CWindowBox::GetAnchorRect()
 {
 	return m_aAnchorRect;
 }
-const wxRect & CWindowBox::GetClientRect()
-{
-	return m_aClientRect;
-}
 //-----------------------------------------------------------------------
-wxRect CWindowBox::GetWindowRect () 
+const wxRect & CWindowBox::GetWindowRect () 
 {
-	const guiex::CGUIRect& rc = m_pSelectWidget->GetBoundArea();
-	guiex::CGUIVector2 aLeftTop(rc.m_fLeft, rc.m_fTop);
-	guiex::CGUIVector2 aBottomRight(rc.m_fRight, rc.m_fBottom );
-	m_pSelectWidget->LocalToWorld( aLeftTop );
-	m_pSelectWidget->LocalToWorld( aBottomRight );
-	return wxRect (wxPoint((int)aLeftTop.x, (int)aLeftTop.y), 
-		wxPoint((int)aBottomRight.x, (int)aBottomRight.y));
+	return m_aWindowsRect;
 }
 
 //-----------------------------------------------------------------------

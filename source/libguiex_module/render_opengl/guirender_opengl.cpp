@@ -216,7 +216,7 @@ namespace guiex
 		glPushMatrix();
 		glLoadIdentity();
 		const CGUISize& rSize = CGUIWidgetSystem::Instance()->GetScreenSize();
-#if 0
+#if 1
 		gluOrtho2D(0.0, rSize.m_fWidth,rSize.m_fHeight,0.0 );
 #else
 		gluPerspective( 90, rSize.m_fWidth/rSize.m_fHeight, 0.1, 1000 );
