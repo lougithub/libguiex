@@ -282,7 +282,8 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 
 		//register interface
 		GUI_REGISTER_INTERFACE_LIB( "IGUIRender", IGUIRender_opengl);
-		GUI_REGISTER_INTERFACE_LIB( "IGUIImageLoader", IGUIImageLoader_devil);
+		GUI_REGISTER_INTERFACE_LIB( "IGUIImageLoader", IGUIImageLoader_tga);
+		//GUI_REGISTER_INTERFACE_LIB( "IGUIImageLoader", IGUIImageLoader_devil);
 		GUI_REGISTER_INTERFACE_LIB( "IGUIFileSys", IGUIFileSys_stdio);
 		GUI_REGISTER_INTERFACE_LIB( "IGUIMouse", IGUIMouse_winapi);
 		GUI_REGISTER_INTERFACE_LIB( "IGUIFont", IGUIFont_ft2);

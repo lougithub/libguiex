@@ -59,12 +59,18 @@ namespace guiex
 		/**
 		* @brief set pixel format
 		*/
-		void	SetPixelFormat(EGuiPixelFormat ePixelFormat){m_ePixelFormat = ePixelFormat;}
+		void	SetPixelFormat(EGuiPixelFormat ePixelFormat)
+		{
+			m_ePixelFormat = ePixelFormat;
+		}
 
 		/**
 		* @brief get pixel format
 		*/
-		EGuiPixelFormat	GetPixelFormat(){return m_ePixelFormat;}
+		EGuiPixelFormat	GetPixelFormat()
+		{
+			return m_ePixelFormat;
+		}
 
 		/**
 		* @brief release this data
@@ -80,7 +86,7 @@ namespace guiex
 	private:
 		IGUIInterfaceImageLoader*		m_pLoader;
 
-		EGuiPixelFormat							m_ePixelFormat;
+		EGuiPixelFormat					m_ePixelFormat;
 	};
 
 }//namespace guiex

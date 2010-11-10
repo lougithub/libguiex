@@ -35,7 +35,7 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	int		IGUIImageLoader_devil::DoInitialize(void* )
+	int IGUIImageLoader_devil::DoInitialize(void* )
 	{
 		// Initialize DevIL.
 		ilInit();
@@ -43,7 +43,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void	IGUIImageLoader_devil::DoDestroy()
+	void IGUIImageLoader_devil::DoDestroy()
 	{
 		//shutdown DevIL
 		ilShutDown();

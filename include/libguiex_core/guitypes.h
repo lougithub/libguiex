@@ -148,6 +148,9 @@ namespace guiex
 		/// 2 byte pixel format, 1 byte luminance, 1 byte alpha
 		GUI_PF_LA_16 = 0,
 
+		/// 3 byte pixel format
+		GUI_PF_RGB_24,
+
 		/// 4 byte pixel format
 		GUI_PF_RGBA_32,
 

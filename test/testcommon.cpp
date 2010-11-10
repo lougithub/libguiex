@@ -30,6 +30,7 @@
 //libguiex module
 #include <libguiex_module\render_opengl\guirender_opengl.h>
 #include <libguiex_module\imageloader_devil\guiimageloader_devil.h>
+#include <libguiex_module\imageloader_tga\guiimageloader_tga.h>
 #include <libguiex_module\keyboard_winapi\guikeyboard_winapi.h>
 #include <libguiex_module\mouse_winapi\guimouse_winapi.h>
 #include <libguiex_module\font_ft2\guifont_ft2.h>
@@ -451,7 +452,8 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 
 		//register interface
 		GUI_REGISTER_INTERFACE_LIB( "IGUIRender", IGUIRender_opengl);
-		GUI_REGISTER_INTERFACE_LIB( "IGUIImageLoader", IGUIImageLoader_devil);
+		//GUI_REGISTER_INTERFACE_LIB( "IGUIImageLoader", IGUIImageLoader_devil);
+		GUI_REGISTER_INTERFACE_LIB( "IGUIImageLoader", IGUIImageLoader_tga);
 		GUI_REGISTER_INTERFACE_LIB( "IGUIFileSys", IGUIFileSys_stdio);
 		GUI_REGISTER_INTERFACE_LIB( "IGUIMouse", IGUIMouse_winapi);
 		GUI_REGISTER_INTERFACE_LIB( "IGUIFont", IGUIFont_ft2);

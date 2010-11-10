@@ -315,6 +315,26 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="imageloader_tga"
+			>
+			<File
+				RelativePath="..\..\source\libguiex_module\imageloader_tga\guiimagedata_tga.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\libguiex_module\imageloader_tga\guiimagedata_tga.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\libguiex_module\imageloader_tga\guiimageloader_tga.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\libguiex_module\imageloader_tga\guiimageloader_tga.h"
+				>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>
