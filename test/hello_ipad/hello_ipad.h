@@ -7,11 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import "GLView.h"
+#import <QuartzCore/QuartzCore.h>
+
+#import "ApplicationEngine.h"
+
+@interface GLView : UIView {
+@private
+    IApplicationEngine* m_pEngine;
+    EAGLContext* m_context;
+    float m_timestamp;
+}
+
+- (void) drawView: (CADisplayLink*) displayLink;
+- (void) didRotate: (NSNotification*) notification;
+@end
+
 
 @interface AppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *m_window;
-	//GLView *m_view;
+	GLView *m_view;
 }
-
 @end

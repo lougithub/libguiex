@@ -16,6 +16,13 @@
 #if defined(GUIEX_PLATFORM_WIN32)
 #include <io.h>
 #elif defined(GUIEX_PLATFORM_MAC)
+#include <stdio.h>  
+#include <dirent.h>  
+#include <string.h>  
+#include <sys/stat.h>  
+#include <sys/param.h>  
+#include <sys/types.h>  
+#include <unistd.h> 
 #else
 #error "unknown platform"	
 #endif
@@ -99,13 +106,13 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void IGUIFileSys_stdio::FindFiles( 
 		const CGUIString& rPath,
-		const CGUIString& rPatten,
+		const CGUIString& rSuffix,
 		std::vector<CGUIString>& rArrayStrings )
 	{
 		//get file list
 		long lHandle = 0, res = 0;
 		struct _finddata_t tagData;
-		CGUIString	strFullPath = CGUIWidgetSystem::Instance()->GetDataPath() + rPath + rPatten;
+		CGUIString	strFullPath = CGUIWidgetSystem::Instance()->GetDataPath() + rPath + rSuffix;
 		lHandle = _findfirst(strFullPath.c_str(), &tagData);
 		while (lHandle != -1 && res != -1)
 		{
@@ -134,7 +141,7 @@ namespace guiex
 			{
 				// recurse
 				CGUIString strNewPath = rPath + tagData.name + "\\";
-				FindFiles(strNewPath, rPatten, rArrayStrings);
+				FindFiles(strNewPath, rSuffix, rArrayStrings);
 			}
 			res = _findnext( lHandle, &tagData );
 		}
@@ -144,12 +151,49 @@ namespace guiex
 			_findclose(lHandle);
 		}
 	}
+	//------------------------------------------------------------------------------
 #elif defined(GUIEX_PLATFORM_MAC)
-	void IGUIFileSys_stdio::FindFiles( 
-									  const CGUIString& rPath,
-									  const CGUIString& rPatten,
+	void IGUIFileSys_stdio::FindFiles( const CGUIString& rPath,
+									  const CGUIString& rSuffix,
 									  std::vector<CGUIString>& rArrayStrings )
-	{
+	{	
+		DIR *dp = NULL; 
+		struct dirent *entry = NULL; 
+		struct stat statbuf; 
+		
+		CGUIString	strFullPath = CGUIWidgetSystem::Instance()->GetDataPath() + rPath;
+		if((dp = opendir(strFullPath.c_str())) == NULL) 
+		{  
+			return; 
+		}  
+		while((entry = readdir(dp)) != NULL)
+		{ 
+			stat(entry->d_name,&statbuf); 
+			if(S_ISDIR(statbuf.st_mode)) 
+			{ 
+				if(strcmp( ".",entry->d_name) == 0 ||strcmp( "..",entry->d_name) == 0) 
+				{
+					continue; 
+				}
+				
+				FindFiles( strFullPath + entry->d_name + "/", rSuffix, rArrayStrings );
+			}
+			else
+			{ 
+				//is a file 
+				CGUIString strFilename(entry->d_name);
+				if( strFilename.size() > rSuffix.size() )
+				{
+					if( strFilename.rfind( rSuffix ) == strFilename.size() - rSuffix.size() )
+					{
+						//is a file
+						CGUIString strResult = rPath + entry->d_name;
+						rArrayStrings.push_back(strResult);	
+					}
+				}
+			} 
+		} 
+        closedir(dp); 
 	}
 #else
 	#	error "unknown platform"	

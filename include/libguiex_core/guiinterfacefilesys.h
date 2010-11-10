@@ -71,7 +71,7 @@ namespace guiex
 
 		virtual void FindFiles( 
 			const CGUIString& rPath,
-			const CGUIString& rPatten,
+			const CGUIString& rSuffix,
 			std::vector<CGUIString>& rArrayStrings ) = 0;
 
 

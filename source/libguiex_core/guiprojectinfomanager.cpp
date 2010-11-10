@@ -50,7 +50,7 @@ namespace guiex
 
 		//get file interface
 		IGUIInterfaceFileSys* pFileSys = CGUIInterfaceManager::Instance()->GetInterfaceFileSys();
-		pFileSys->FindFiles( ".\\", "*.uip", m_vecProjectFilePaths );
+		pFileSys->FindFiles( "./", "*.uip", m_vecProjectFilePaths );
 
 
 		//load all projects
