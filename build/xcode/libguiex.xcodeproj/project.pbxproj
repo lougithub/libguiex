@@ -13,13 +13,10 @@
 		FF034ECE128ACFD100950825 /* guiimageloader_tga.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF034ECC128ACFD100950825 /* guiimageloader_tga.cpp */; };
 		FF034ED3128ACFE100950825 /* guiimagedata_tga.h in Headers */ = {isa = PBXBuildFile; fileRef = FF034ED1128ACFE100950825 /* guiimagedata_tga.h */; };
 		FF034ED4128ACFE100950825 /* guiimageloader_tga.h in Headers */ = {isa = PBXBuildFile; fileRef = FF034ED2128ACFE100950825 /* guiimageloader_tga.h */; };
-		FF034FF3128AF59200950825 /* ApplicationEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = FF034FF1128AF59200950825 /* ApplicationEngine.h */; };
-		FF034FF4128AF59200950825 /* ApplicationEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF034FF2128AF59200950825 /* ApplicationEngine.mm */; };
 		FF035033128AF91B00950825 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF035032128AF91B00950825 /* QuartzCore.framework */; };
 		FF035037128AF93300950825 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF035036128AF93300950825 /* OpenGLES.framework */; };
 		FF03503D128AF94500950825 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF03503C128AF94500950825 /* CoreGraphics.framework */; };
 		FF035043128AF95400950825 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF035042128AF95400950825 /* UIKit.framework */; };
-		FF03504D128AFA3D00950825 /* ApplicationEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF034FF2128AF59200950825 /* ApplicationEngine.mm */; };
 		FF0350CF128AFC3300950825 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 		FF0407F112883DEB0053FF31 /* guiwgtstaticimage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDF5812858CB200C0BCB4 /* guiwgtstaticimage.cpp */; };
 		FF0407F212883E030053FF31 /* guiwgtstaticimage.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDEAB12858C9D00C0BCB4 /* guiwgtstaticimage.h */; };
@@ -41,6 +38,7 @@
 		FF1B89611289972D006584D3 /* guitexture_opengles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF1B895F1289972D006584D3 /* guitexture_opengles.cpp */; };
 		FF1B896512899741006584D3 /* guirender_opengles.h in Headers */ = {isa = PBXBuildFile; fileRef = FF1B896312899741006584D3 /* guirender_opengles.h */; };
 		FF1B896612899741006584D3 /* guitexture_opengles.h in Headers */ = {isa = PBXBuildFile; fileRef = FF1B896412899741006584D3 /* guitexture_opengles.h */; };
+		FF4D26D9128B015700AF3030 /* ApplicationEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF4D26D8128B015700AF3030 /* ApplicationEngine.mm */; };
 		FF5D3E3E128985C200BABB9B /* hello_ipad.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF5D3E3D128985C200BABB9B /* hello_ipad.mm */; };
 		FF8FAC061285A4F200D7DF5A /* guitimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEEF12858CB200C0BCB4 /* guitimer.cpp */; };
 		FF8FAC071285A4FC00D7DF5A /* guitimer.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE6212858C9D00C0BCB4 /* guitimer.h */; };
@@ -279,8 +277,6 @@
 		FF034ECC128ACFD100950825 /* guiimageloader_tga.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiimageloader_tga.cpp; sourceTree = "<group>"; };
 		FF034ED1128ACFE100950825 /* guiimagedata_tga.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiimagedata_tga.h; sourceTree = "<group>"; };
 		FF034ED2128ACFE100950825 /* guiimageloader_tga.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiimageloader_tga.h; sourceTree = "<group>"; };
-		FF034FF1128AF59200950825 /* ApplicationEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationEngine.h; sourceTree = "<group>"; };
-		FF034FF2128AF59200950825 /* ApplicationEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ApplicationEngine.mm; sourceTree = "<group>"; };
 		FF035032128AF91B00950825 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		FF035036128AF93300950825 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		FF03503C128AF94500950825 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -303,6 +299,8 @@
 		FF1B895F1289972D006584D3 /* guitexture_opengles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guitexture_opengles.cpp; sourceTree = "<group>"; };
 		FF1B896312899741006584D3 /* guirender_opengles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guirender_opengles.h; sourceTree = "<group>"; };
 		FF1B896412899741006584D3 /* guitexture_opengles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guitexture_opengles.h; sourceTree = "<group>"; };
+		FF4D26D7128B015700AF3030 /* ApplicationEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ApplicationEngine.h; path = ../../test/hello_ipad/ApplicationEngine.h; sourceTree = SOURCE_ROOT; };
+		FF4D26D8128B015700AF3030 /* ApplicationEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ApplicationEngine.mm; path = ../../test/hello_ipad/ApplicationEngine.mm; sourceTree = SOURCE_ROOT; };
 		FF5D3E3C128985C200BABB9B /* hello_ipad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = hello_ipad.h; path = ../../test/hello_ipad/hello_ipad.h; sourceTree = SOURCE_ROOT; };
 		FF5D3E3D128985C200BABB9B /* hello_ipad.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = hello_ipad.mm; path = ../../test/hello_ipad/hello_ipad.mm; sourceTree = SOURCE_ROOT; };
 		FFACDBFD12858B0000C0BCB4 /* liblibguiex_core.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibguiex_core.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -773,11 +771,11 @@
 		FF5D3E381289824500BABB9B /* hello_ipad */ = {
 			isa = PBXGroup;
 			children = (
+				FF4D26D7128B015700AF3030 /* ApplicationEngine.h */,
+				FF4D26D8128B015700AF3030 /* ApplicationEngine.mm */,
 				FF1B894312898BE0006584D3 /* hello_ipad-Info.plist */,
 				FF5D3E3C128985C200BABB9B /* hello_ipad.h */,
-				FF034FF1128AF59200950825 /* ApplicationEngine.h */,
 				FF5D3E3D128985C200BABB9B /* hello_ipad.mm */,
-				FF034FF2128AF59200950825 /* ApplicationEngine.mm */,
 			);
 			name = hello_ipad;
 			sourceTree = "<group>";
@@ -1186,7 +1184,6 @@
 				FF1B896612899741006584D3 /* guitexture_opengles.h in Headers */,
 				FF034ED3128ACFE100950825 /* guiimagedata_tga.h in Headers */,
 				FF034ED4128ACFE100950825 /* guiimageloader_tga.h in Headers */,
-				FF034FF3128AF59200950825 /* ApplicationEngine.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1369,8 +1366,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF03504D128AFA3D00950825 /* ApplicationEngine.mm in Sources */,
 				FF5D3E3E128985C200BABB9B /* hello_ipad.mm in Sources */,
+				FF4D26D9128B015700AF3030 /* ApplicationEngine.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1472,7 +1469,6 @@
 				FF1B89611289972D006584D3 /* guitexture_opengles.cpp in Sources */,
 				FF034ECD128ACFD100950825 /* guiimagedata_tga.cpp in Sources */,
 				FF034ECE128ACFD100950825 /* guiimageloader_tga.cpp in Sources */,
-				FF034FF4128AF59200950825 /* ApplicationEngine.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
