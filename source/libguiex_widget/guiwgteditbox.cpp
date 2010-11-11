@@ -84,7 +84,7 @@ namespace guiex
 		if( rName == "EDIT_BG")
 		{
 			m_pBG = pImage;
-			if( NEWGetSize().IsEqualZero() && pImage )
+			if( GetSize().IsEqualZero() && pImage )
 			{
 				SetPixelSize(pImage->GetSize());
 			}
@@ -203,10 +203,10 @@ namespace guiex
 	{
 		CGUIWidget::RefreshSelf();
 
-		m_aStringAreaRect.m_fLeft = GetBoundArea().m_fLeft+(NEWGetPixelSize().GetWidth()*m_aStringAreaRatio.m_fLeft);
-		m_aStringAreaRect.m_fRight = GetBoundArea().m_fLeft+(NEWGetPixelSize().GetWidth()*m_aStringAreaRatio.m_fRight);
-		m_aStringAreaRect.m_fTop = GetBoundArea().m_fTop+(NEWGetPixelSize().GetHeight()*m_aStringAreaRatio.m_fTop);
-		m_aStringAreaRect.m_fBottom = GetBoundArea().m_fTop+(NEWGetPixelSize().GetHeight()*m_aStringAreaRatio.m_fBottom);
+		m_aStringAreaRect.m_fLeft = GetBoundArea().m_fLeft+(GetPixelSize().GetWidth()*m_aStringAreaRatio.m_fLeft);
+		m_aStringAreaRect.m_fRight = GetBoundArea().m_fLeft+(GetPixelSize().GetWidth()*m_aStringAreaRatio.m_fRight);
+		m_aStringAreaRect.m_fTop = GetBoundArea().m_fTop+(GetPixelSize().GetHeight()*m_aStringAreaRatio.m_fTop);
+		m_aStringAreaRect.m_fBottom = GetBoundArea().m_fTop+(GetPixelSize().GetHeight()*m_aStringAreaRatio.m_fBottom);
 
 	}
 	//------------------------------------------------------------------------------

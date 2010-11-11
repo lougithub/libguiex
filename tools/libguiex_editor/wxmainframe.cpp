@@ -163,7 +163,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 				 //,m_pNoteBook_Config(NULL)
 				 ,m_pNoteBook_Canvas(NULL)
 				 ,m_aScreenSize(800, 600)
-				 ,m_aBGColor(0,0,0,255)
+				 ,m_aBGColor(128,128,128,255)
 {
 	// tell wxAuiManager to manage this frame
 	m_mgr.SetManagedWindow(this);
@@ -583,7 +583,7 @@ wxAuiNotebook* WxMainFrame::CreateCanvasNotebook()
 		wxSize(430,200),
 		wxAUI_NB_DEFAULT_STYLE/* | wxAUI_NB_WINDOWLIST_BUTTON | wxAUI_NB_SCROLL_BUTTONS*/);
 	ctrl->SetBackgroundColour( *wxLIGHT_GREY );
-
+	ctrl->SetNextHandler(this);
 	return ctrl;
 }
 //------------------------------------------------------------------------------
@@ -1455,7 +1455,7 @@ void WxMainFrame::RenderFile( const std::string& rFileName )
 
 	m_pCanvas = new WxEditorCanvasContainer(m_pNoteBook_Canvas, strAbsFileName);
 	m_pNoteBook_Canvas->AddPage( m_pCanvas, wxConvUTF8.cMB2WC(rFileName.c_str()), true );
-
+	m_pCanvas->SetNextHandler( m_pNoteBook_Canvas );
 	//for load font
 	guiex::CGUIFontManager::Instance()->LoadAllResources();
 

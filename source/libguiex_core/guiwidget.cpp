@@ -1268,6 +1268,11 @@ namespace guiex
 			ValueToProperty( m_aWidgetAnchorPoint, rProperty );
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
+		else if(  rProperty.GetType()== ePropertyType_Size && rProperty.GetName() == "scale" )
+		{
+			ValueToProperty( GetScale(), rProperty );
+		}
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Size && rProperty.GetName() == "max_size" )
 		{
 			ValueToProperty( m_aMaxSize, rProperty );
@@ -1475,16 +1480,20 @@ namespace guiex
 				RegisterScriptCallbackFunc( rProperty.GetName(), rProperty.GetValue());
 			}
 		}
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//property for relative size
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//property for anchor point
 		else if(  rProperty.GetType()== ePropertyType_Vector2 && rProperty.GetName() == "anchor" )
 		{
-			PropertyToValue( rProperty, m_aWidgetAnchorPoint );
+			CGUIVector2 aValue;
+			PropertyToValue( rProperty, aValue );
+			SetAnchorPoint( aValue );
 		}
-
+		//property for scale
+		else if(  rProperty.GetType()== ePropertyType_Size && rProperty.GetName() == "scale" )
+		{
+			CGUISize aValue;
+			PropertyToValue( rProperty, aValue );
+			SetScale( aValue );
+		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//property for size
 		////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1941,7 +1950,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWidget::NEWSetPosition( real x, real y )
+	void CGUIWidget::SetPosition( real x, real y )
 	{
 		m_aWidgetPosition.m_aValue.x = x;
 		m_aWidgetPosition.m_aValue.y = y;
@@ -1963,12 +1972,12 @@ namespace guiex
 		}
 	};
 	//------------------------------------------------------------------------------
-	void CGUIWidget::NEWSetPosition( const CGUIVector2& rPos )
+	void CGUIWidget::SetPosition( const CGUIVector2& rPos )
 	{
-		NEWSetPosition( rPos.x, rPos.y );
+		SetPosition( rPos.x, rPos.y );
 	}
 	//------------------------------------------------------------------------------
-	const CGUIVector2&	CGUIWidget::NEWGetPosition() const
+	const CGUIVector2&	CGUIWidget::GetPosition() const
 	{
 		return m_aWidgetPosition.m_aValue;
 	}
@@ -1985,7 +1994,8 @@ namespace guiex
 		case eScreenValue_Percentage:
 			{
 				CGUISize aParentPixelSize = GetParentSize();
-				m_aWidgetPosition.m_aValue = m_aWidgetPosition.m_aPixelValue * aParentPixelSize;
+				m_aWidgetPosition.m_aValue.x = m_aWidgetPosition.m_aPixelValue.x / aParentPixelSize.m_fWidth;
+				m_aWidgetPosition.m_aValue.y = m_aWidgetPosition.m_aPixelValue.y / aParentPixelSize.m_fHeight;
 			}
 			break;
 		default:
@@ -2004,7 +2014,7 @@ namespace guiex
 		return m_aWidgetPosition.m_aPixelValue;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWidget::NewSetPositionType( EScreenValue eValueType )
+	void CGUIWidget::SetPositionType( EScreenValue eValueType )
 	{
 		if( eValueType != m_aWidgetPosition.m_eType )
 		{
@@ -2017,7 +2027,7 @@ namespace guiex
 		return m_aWidgetPosition.m_eType;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWidget::NEWSetSize( real width, real height )
+	void CGUIWidget::SetSize( real width, real height )
 	{
 		m_aWidgetSize.m_aValue.m_fWidth = width;
 		m_aWidgetSize.m_aValue.m_fHeight = height;
@@ -2044,12 +2054,12 @@ namespace guiex
 		CGUIWidgetSystem::Instance()->SendEvent( &aEvent);
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWidget::NEWSetSize( const CGUISize& rSize )
+	void CGUIWidget::SetSize( const CGUISize& rSize )
 	{
-		NEWSetSize(rSize.m_fWidth, rSize.m_fHeight);
+		SetSize(rSize.m_fWidth, rSize.m_fHeight);
 	}
 	//------------------------------------------------------------------------------
-	const CGUISize&	CGUIWidget::NEWGetSize() const
+	const CGUISize&	CGUIWidget::GetSize() const
 	{
 		return m_aWidgetSize.m_aValue;
 	}
@@ -2067,7 +2077,8 @@ namespace guiex
 		case eScreenValue_Percentage:
 			{
 				CGUISize aParentPixelSize = GetParentSize();
-				m_aWidgetSize.m_aValue = m_aWidgetSize.m_aPixelValue * aParentPixelSize;
+				m_aWidgetSize.m_aValue.m_fWidth = m_aWidgetSize.m_aPixelValue.m_fWidth / aParentPixelSize.m_fWidth;
+				m_aWidgetSize.m_aValue.m_fHeight = m_aWidgetSize.m_aPixelValue.m_fHeight / aParentPixelSize.m_fHeight;
 			}
 			break;
 		default:
@@ -2086,7 +2097,7 @@ namespace guiex
 		SetPixelSize( rPixelSize.m_fWidth, rPixelSize.m_fHeight );
 	}
 	//------------------------------------------------------------------------------
-	const CGUISize&	CGUIWidget::NEWGetPixelSize() const
+	const CGUISize&	CGUIWidget::GetPixelSize() const
 	{
 		return m_aWidgetSize.m_aPixelValue;
 	}
@@ -2099,7 +2110,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	EScreenValue CGUIWidget::NewGetSizeType( ) const
+	EScreenValue CGUIWidget::GetSizeType( ) const
 	{
 		return m_aWidgetSize.m_eType;
 	}

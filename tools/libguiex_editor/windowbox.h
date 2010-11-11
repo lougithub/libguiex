@@ -82,12 +82,6 @@ public:
 	*/
 	const wxRect &  GetWindowRect();
 
-	/** Applies a new rectangle to the boxed window, and then updates the box itself.*/
-	void SetNewWindowArea(wxRect newArea);
-
-	/** Applies a new position to the boxed window, and then updates the box itself.*/
-	void SetNewWindowPosition(wxPoint newPosition);
-
 	/** Locks or unlocks the boxed window from allowing its properties to be changed.*/
 	void Lock(bool lock = true)
 	{

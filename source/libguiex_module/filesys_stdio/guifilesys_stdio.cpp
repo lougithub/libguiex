@@ -112,7 +112,7 @@ namespace guiex
 		//get file list
 		long lHandle = 0, res = 0;
 		struct _finddata_t tagData;
-		CGUIString	strFullPath = CGUIWidgetSystem::Instance()->GetDataPath() + rPath + rSuffix;
+		CGUIString	strFullPath = CGUIWidgetSystem::Instance()->GetDataPath() + rPath + "*" + rSuffix;
 		lHandle = _findfirst(strFullPath.c_str(), &tagData);
 		while (lHandle != -1 && res != -1)
 		{

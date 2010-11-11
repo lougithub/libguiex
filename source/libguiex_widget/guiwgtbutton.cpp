@@ -68,7 +68,7 @@ namespace guiex
 		if( rName == "BTN_NORMAL")
 		{
 			m_pImageNormal = pImage;
-			if( pImage && NEWGetSize().IsEqualZero())
+			if( pImage && GetSize().IsEqualZero())
 			{
 				SetPixelSize(pImage->GetSize());
 			}

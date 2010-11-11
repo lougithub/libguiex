@@ -66,7 +66,7 @@ namespace guiex
 		if( rName == "BACKGROUND_IMG")
 		{
 			m_pImageBg = pImage;
-			if( pImage && NEWGetSize().IsEqualZero() )
+			if( pImage && GetSize().IsEqualZero() )
 			{
 				SetPixelSize(pImage->GetSize());
 			}

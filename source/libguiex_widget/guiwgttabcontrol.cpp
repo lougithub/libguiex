@@ -40,7 +40,7 @@ namespace guiex
 	void CGUIWgtTabControl::InitTabControl()
 	{
 		SetSizeType(eScreenValue_Percentage);
-		NEWSetSize( 1.0f, 1.0f );
+		SetSize( 1.0f, 1.0f );
 	}
 	//------------------------------------------------------------------------------
 	void    CGUIWgtTabControl::SetSelectedTab(const CGUIString &name)

@@ -534,25 +534,25 @@ namespace guiex
 
 		CGUISize GetParentSize() const;
 
-		void NEWSetPosition( real x, real y );	//set widget position relative to parent, from anchor point to parent's top-left
-		void NEWSetPosition( const CGUIVector2&rPos );	//set widget position relative to parent, from anchor point to parent's top-left
-		const CGUIVector2&	NEWGetPosition() const; //get widget position in given value relative to parent
+		void SetPosition( real x, real y );	//set widget position relative to parent, from anchor point to parent's top-left
+		void SetPosition( const CGUIVector2&rPos );	//set widget position relative to parent, from anchor point to parent's top-left
+		const CGUIVector2&	GetPosition() const; //get widget position in given value relative to parent
 		void SetPixelPosition( const CGUIVector2& rPixelPos ); //set widget position in pixel format
 		void SetPixelPosition( real x, real y ); //set widget position in pixel format
 		const CGUIVector2&	GetPixelPosition() const; //get widget position in pixel format
 
-		void NewSetPositionType( EScreenValue rValueType ); //set position type
-		EScreenValue NewGetPositionType( ) const; //get position type
+		void SetPositionType( EScreenValue rValueType ); //set position type
+		EScreenValue GetPositionType( ) const; //get position type
 
-		void NEWSetSize( real width, real height );	//set widget size, according size value type
-		void NEWSetSize( const CGUISize& rSize );	//set widget size, according size value type
-		const CGUISize&	NEWGetSize() const; //get widget size by given size type
+		void SetSize( real width, real height );	//set widget size, according size value type
+		void SetSize( const CGUISize& rSize );	//set widget size, according size value type
+		const CGUISize&	GetSize() const; //get widget size by given size type
 		void SetPixelSize( real width, real height ); //set widget size in pixel.
 		void SetPixelSize( const CGUISize& rPixelSize ); //set widget size in pixel.
-		const CGUISize&	NEWGetPixelSize() const; //get widget size in pixel.
+		const CGUISize&	GetPixelSize() const; //get widget size in pixel.
 
 		void SetSizeType( EScreenValue eValueType ); //set size type
-		EScreenValue NewGetSizeType( ) const; //get size type
+		EScreenValue GetSizeType( ) const; //get size type
 
 		void Refresh( );
 

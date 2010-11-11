@@ -126,7 +126,7 @@ namespace guiex
 			
 		const CGUIStringInfo& rDefaultInfo = GetTextInfo();
 
-		real		fLineMaxWidth = NEWGetPixelSize().GetWidth();
+		real		fLineMaxWidth = GetPixelSize().GetWidth();
 		uint32		nLineWidth = 0;
 		SLineInfo	aLine;
 		aLine.m_nLength = 0;

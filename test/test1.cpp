@@ -13,16 +13,16 @@ guiex::CGUIWidget* SampleInit()
 {
 	guiex::CGUIWidget* pWidgetRoot = GUI_CREATE_WIDGET("CGUIWgtEmptyNode", "page", "testproject");
 	pWidgetRoot->SetAnchorPoint( 0.5f, 0.5f );
-	pWidgetRoot->NewSetPositionType( guiex::eScreenValue_Percentage );
-	pWidgetRoot->NEWSetPosition( 0.5f,0.5f );
+	pWidgetRoot->SetPositionType( guiex::eScreenValue_Percentage );
+	pWidgetRoot->SetPosition( 0.5f,0.5f );
 	pWidgetRoot->Create();
 
 	guiex::CGUIWidget* pWidget_staticimage = GUI_CREATE_WIDGET("CGUIWgtStaticImage", "staticimage_0", "testproject");
 	pWidget_staticimage->SetParent( pWidgetRoot );
 	pWidget_staticimage->SetImage( "color_white", "color_white" );
 	pWidget_staticimage->SetValue( "Image", "color_white" );
-	pWidget_staticimage->NEWSetSize( 50, 50 );
-	pWidget_staticimage->NEWSetPosition( 100, 100 );
+	pWidget_staticimage->SetSize( 50, 50 );
+	pWidget_staticimage->SetPosition( 100, 100 );
 	pWidget_staticimage->SetAnchorPoint( 0.5, 0.5 );
 	pWidget_staticimage->Create();
 
@@ -31,15 +31,15 @@ guiex::CGUIWidget* SampleInit()
 	pWidget_staticimage2->SetImage( "checkbutton_glow_checked", "checkbutton_glow_checked" );
 	pWidget_staticimage2->SetValue( "Image", "checkbutton_glow_checked" );
 	pWidget_staticimage2->SetAnchorPoint( 0.5, 0.5 );
-	pWidget_staticimage2->NEWSetSize( 25, 25 );
-	pWidget_staticimage2->NEWSetPosition( 25, 25 );
+	pWidget_staticimage2->SetSize( 25, 25 );
+	pWidget_staticimage2->SetPosition( 25, 25 );
 	pWidget_staticimage2->Create();
 
 	guiex::CGUIWidget* pWidget_statictext = GUI_CREATE_WIDGET("CGUIWgtStaticText", "staticText_1", "testproject");
 	pWidget_statictext->SetParent( pWidgetRoot );
 	pWidget_statictext->SetAnchorPoint( 0.5, 0.5 );
-	pWidget_statictext->NEWSetSize( 250, 25 );
-	pWidget_statictext->NEWSetPosition( 300, 300 );
+	pWidget_statictext->SetSize( 250, 25 );
+	pWidget_statictext->SetPosition( 300, 300 );
 	pWidget_statictext->SetTextContentUTF8("hello libguiex");
 	pWidget_statictext->SetTextColor(guiex::CGUIColor( 1,0,0,1));
 	pWidget_statictext->Create();
@@ -51,7 +51,7 @@ guiex::CGUIWidget* SampleInit()
 	pWidget_button->SetImage( "BTN_PUSH", "button_blue_push" );
 	pWidget_button->SetImage( "BTN_DISABLE", "button_blue_disable" );
 	pWidget_button->SetAnchorPoint( 0.5, 0.5 );
-	pWidget_button->NEWSetPosition( 400, 200 );
+	pWidget_button->SetPosition( 400, 200 );
 	pWidget_button->SetTextContentUTF8("ok");
 	pWidget_button->SetTextColor(guiex::CGUIColor( 1,1,1,1));
 	pWidget_button->Create();
@@ -63,7 +63,7 @@ guiex::CGUIWidget* SampleInit()
 	pWidget_button2->SetImage( "BTN_PUSH", "button_blue_push" );
 	pWidget_button2->SetImage( "BTN_DISABLE", "button_blue_disable" );
 	pWidget_button2->SetAnchorPoint( 0.5, 0.5 );
-	pWidget_button2->NEWSetPosition( 600, 200 );
+	pWidget_button2->SetPosition( 600, 200 );
 	pWidget_button2->SetTextContentUTF8("cancel");
 	pWidget_button2->SetTextColor(guiex::CGUIColor( 1,1,1,1));
 	pWidget_button2->SetRotation( 0,0,45 );
@@ -73,18 +73,18 @@ guiex::CGUIWidget* SampleInit()
 	pWidget_checkbutton->SetParent( pWidgetRoot );
 	pWidget_checkbutton->SetImage( "BTN_NORMAL", "button_hilight_square" );
 	pWidget_checkbutton->SetImage( "BTN_NORMAL_CHECKED", "checkbutton_glow_checked" );
-	pWidget_checkbutton->NEWSetSize( 20, 20 );
+	pWidget_checkbutton->SetSize( 20, 20 );
 	pWidget_checkbutton->SetAnchorPoint( 0.5, 0.5 );
-	pWidget_checkbutton->NEWSetPosition( 400, 300 );
+	pWidget_checkbutton->SetPosition( 400, 300 );
 	pWidget_checkbutton->Create();
 
 	guiex::CGUIWidget* pWidget_checkbutton2 = GUI_CREATE_WIDGET("CGUIWgtCheckButton", "checkbutton2", "testproject");
 	pWidget_checkbutton2->SetParent( pWidgetRoot );
 	pWidget_checkbutton2->SetImage( "BTN_NORMAL", "button_hilight_square" );
 	pWidget_checkbutton2->SetImage( "BTN_NORMAL_CHECKED", "checkbutton_glow_checked" );
-	pWidget_checkbutton2->NEWSetSize( 20, 20 );
+	pWidget_checkbutton2->SetSize( 20, 20 );
 	pWidget_checkbutton2->SetAnchorPoint( 0.5, 0.5 );
-	pWidget_checkbutton2->NEWSetPosition( 450, 300 );
+	pWidget_checkbutton2->SetPosition( 450, 300 );
 	pWidget_checkbutton2->Create();
 
 	guiex::CGUIWidget* pWidgetRadioGroup = GUI_CREATE_WIDGET("CGUIWgtEmptyNode", "radiogroup", "testproject");
@@ -95,18 +95,18 @@ guiex::CGUIWidget* SampleInit()
 	pWidget_radiobutton->SetParent( pWidgetRadioGroup );
 	pWidget_radiobutton->SetImage( "BTN_NORMAL", "button_hilight_square" );
 	pWidget_radiobutton->SetImage( "BTN_NORMAL_CHECKED", "checkbutton_glow_checked" );
-	pWidget_radiobutton->NEWSetSize( 20, 20 );
+	pWidget_radiobutton->SetSize( 20, 20 );
 	pWidget_radiobutton->SetAnchorPoint( 0.5, 0.5 );
-	pWidget_radiobutton->NEWSetPosition( 400, 350 );
+	pWidget_radiobutton->SetPosition( 400, 350 );
 	pWidget_radiobutton->Create();
 
 	guiex::CGUIWidget* pWidget_radiobutton2 = GUI_CREATE_WIDGET("CGUIWgtRadioButton", "radiobutton2", "testproject");
 	pWidget_radiobutton2->SetParent( pWidgetRadioGroup );
 	pWidget_radiobutton2->SetImage( "BTN_NORMAL", "button_hilight_square" );
 	pWidget_radiobutton2->SetImage( "BTN_NORMAL_CHECKED", "checkbutton_glow_checked" );
-	pWidget_radiobutton2->NEWSetSize( 20, 20 );
+	pWidget_radiobutton2->SetSize( 20, 20 );
 	pWidget_radiobutton2->SetAnchorPoint( 0.5, 0.5 );
-	pWidget_radiobutton2->NEWSetPosition( 450, 350 );
+	pWidget_radiobutton2->SetPosition( 450, 350 );
 	pWidget_radiobutton2->Create();
 
 
@@ -114,9 +114,9 @@ guiex::CGUIWidget* SampleInit()
 	pWidget_editbox->SetParent( pWidgetRoot );
 	pWidget_editbox->SetImage( "EDIT_BG", "edit_bg" );
 	pWidget_editbox->SetImage( "EDIT_CURSOR", "color_white" );
-	pWidget_editbox->NEWSetSize( 150, 25 );
+	pWidget_editbox->SetSize( 150, 25 );
 	pWidget_editbox->SetAnchorPoint( 0.5, 0.5 );
-	pWidget_editbox->NEWSetPosition( 400, 400 );
+	pWidget_editbox->SetPosition( 400, 400 );
 	pWidget_editbox->SetCursorSize( guiex::CGUISize(2,20));
 	pWidget_editbox->Create();
 
@@ -148,9 +148,9 @@ guiex::CGUIWidget* SampleInit()
 	pWidget_multieditbox->SetImage( "SCROLLBAR_HORIZON_SLIDE_NORMAL", "scrollbar_knob" );
 	//pWidget_multieditbox->ForceVertScrollbar( true );
 	//pWidget_multieditbox->ForceHorzScrollbar( true );
-	pWidget_multieditbox->NEWSetSize( 150, 50 );
+	pWidget_multieditbox->SetSize( 150, 50 );
 	pWidget_multieditbox->SetAnchorPoint( 0.5, 0.5 );
-	pWidget_multieditbox->NEWSetPosition( 400, 500 );
+	pWidget_multieditbox->SetPosition( 400, 500 );
 	pWidget_multieditbox->SetCursorSize( guiex::CGUISize(2,20));
 	pWidget_multieditbox->Create();
 
@@ -166,8 +166,8 @@ guiex::CGUIWidget* SampleInit()
 	pWidget_panel->SetImage( "PANEL_BORDER_TOPRIGHT", "panel_border_topright" );
 	pWidget_panel->SetImage( "PANEL_BORDER_BOTTOMLEFT", "panel_border_bottomleft" );
 	pWidget_panel->SetImage( "PANEL_BORDER_BOTTOMRIGHT", "panel_border_bottomright" );
-	pWidget_panel->NEWSetSize( 150, 200 );
-	pWidget_panel->NEWSetPosition( 700, 200 );
+	pWidget_panel->SetSize( 150, 200 );
+	pWidget_panel->SetPosition( 700, 200 );
 	pWidget_panel->SetAnchorPoint( 0.5f, 0.5f );
 	pWidget_panel->SetRotation( 0,0,70 );
 	pWidget_panel->Create();
@@ -183,16 +183,16 @@ guiex::CGUIWidget* SampleInit()
 	pWidget_tabbutton->SetImage( "BTN_NORMAL", "button_hilight_square" );
 	pWidget_tabbutton->SetImage( "BTN_NORMAL_CHECKED", "checkbutton_glow_checked" );
 	pWidget_tabbutton->SetSizeType( guiex::eScreenValue_Percentage );
-	pWidget_tabbutton->NewSetPositionType( guiex::eScreenValue_Percentage );
-	pWidget_tabbutton->NEWSetSize( 0.33f,0.1f );
-	pWidget_tabbutton->NEWSetPosition( 0, 0 );
+	pWidget_tabbutton->SetPositionType( guiex::eScreenValue_Percentage );
+	pWidget_tabbutton->SetSize( 0.33f,0.1f );
+	pWidget_tabbutton->SetPosition( 0, 0 );
 	pWidget_tabbutton->Create();
 
 	guiex::CGUIWidget* pWidget_panel1= GUI_CREATE_WIDGET("CGUIWgtPanel", "panel1", "testproject");
 	pWidget_panel1->SetParent( pWidget_tabbutton );
 	pWidget_panel1->SetImage( "BGIMAGE", "color_white" );
 	pWidget_panel1->SetSizeType( guiex::eScreenValue_Percentage );
-	pWidget_panel1->NEWSetSize( 1.0f, 0.5f);
+	pWidget_panel1->SetSize( 1.0f, 0.5f);
 	pWidget_panel1->SetColor(guiex::CGUIColor(1,0,0,1));
 	pWidget_panel1->Create();
 
@@ -201,16 +201,16 @@ guiex::CGUIWidget* SampleInit()
 	pWidget_tabbutton2->SetImage( "BTN_NORMAL", "button_hilight_square" );
 	pWidget_tabbutton2->SetImage( "BTN_NORMAL_CHECKED", "checkbutton_glow_checked" );
 	pWidget_tabbutton2->SetSizeType( guiex::eScreenValue_Percentage );
-	pWidget_tabbutton2->NewSetPositionType( guiex::eScreenValue_Percentage );
-	pWidget_tabbutton2->NEWSetSize( 0.33f, 0.1f );
-	pWidget_tabbutton2->NEWSetPosition( 0.33f, 0 );
+	pWidget_tabbutton2->SetPositionType( guiex::eScreenValue_Percentage );
+	pWidget_tabbutton2->SetSize( 0.33f, 0.1f );
+	pWidget_tabbutton2->SetPosition( 0.33f, 0 );
 	pWidget_tabbutton2->Create();
 
 	guiex::CGUIWidget* pWidget_panel2= GUI_CREATE_WIDGET("CGUIWgtPanel", "panel2", "testproject");
 	pWidget_panel2->SetParent( pWidget_tabbutton2 );
 	pWidget_panel2->SetImage( "BGIMAGE", "color_white" );
 	pWidget_panel2->SetSizeType( guiex::eScreenValue_Percentage );
-	pWidget_panel2->NEWSetSize( 1.0f, 0.5f);
+	pWidget_panel2->SetSize( 1.0f, 0.5f);
 	pWidget_panel2->SetColor(guiex::CGUIColor(0,1,0,1));
 	pWidget_panel2->Create();
 
@@ -219,16 +219,16 @@ guiex::CGUIWidget* SampleInit()
 	pWidget_tabbutton3->SetImage( "BTN_NORMAL", "button_hilight_square" );
 	pWidget_tabbutton3->SetImage( "BTN_NORMAL_CHECKED", "checkbutton_glow_checked" );
 	pWidget_tabbutton3->SetSizeType( guiex::eScreenValue_Percentage );
-	pWidget_tabbutton3->NewSetPositionType( guiex::eScreenValue_Percentage );
-	pWidget_tabbutton3->NEWSetSize( 0.33f, 0.1f );
-	pWidget_tabbutton3->NEWSetPosition( 0.66f, 0 );
+	pWidget_tabbutton3->SetPositionType( guiex::eScreenValue_Percentage );
+	pWidget_tabbutton3->SetSize( 0.33f, 0.1f );
+	pWidget_tabbutton3->SetPosition( 0.66f, 0 );
 	pWidget_tabbutton3->Create();
 
 	guiex::CGUIWidget* pWidget_panel3= GUI_CREATE_WIDGET("CGUIWgtPanel", "panel3", "testproject");
 	pWidget_panel3->SetParent( pWidget_tabbutton3 );
 	pWidget_panel3->SetImage( "BGIMAGE", "color_white" );
 	pWidget_panel3->SetSizeType( guiex::eScreenValue_Percentage );
-	pWidget_panel3->NEWSetSize( 1.0f, 0.5f);
+	pWidget_panel3->SetSize( 1.0f, 0.5f);
 	pWidget_panel3->SetColor(guiex::CGUIColor(0,0,1,1));
 	pWidget_panel3->Create();
 
@@ -237,10 +237,10 @@ guiex::CGUIWidget* SampleInit()
 	pWidget_progress->SetParent( pWidgetRoot );
 	pWidget_progress->SetImage( "BACKGROUND_IMG", "color_white" );
 	pWidget_progress->SetImage( "FOREGROUND_IMG", "panel_bg_grade_green" );
-	pWidget_progress->NEWSetSize( 200, 25);
+	pWidget_progress->SetSize( 200, 25);
 	pWidget_progress->SetMaximumProgress( 100 );
 	pWidget_progress->SetCurrentProgress( 50 );
-	pWidget_progress->NEWSetPosition( 500,500 );
+	pWidget_progress->SetPosition( 500,500 );
 
 	pWidget_progress->Create();
 

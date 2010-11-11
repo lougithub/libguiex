@@ -47,7 +47,7 @@ namespace guiex
 		if( rName == "BGIMAGE")
 		{
 			m_pImageBG = pImage;
-			if( NEWGetSize().IsEqualZero() && m_pImageBG )
+			if( GetSize().IsEqualZero() && m_pImageBG )
 			{
 				SetPixelSize(m_pImageBG->GetSize());
 			}

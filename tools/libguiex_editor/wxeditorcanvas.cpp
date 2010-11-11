@@ -41,6 +41,7 @@ WxEditorCanvasContainer::WxEditorCanvasContainer( wxWindow *parent, const std::s
 	wxSize aCanvasSize( guiex::CGUIWidgetSystem::Instance()->GetScreenWidth(), guiex::CGUIWidgetSystem::Instance()->GetScreenHeight());
 	m_pCanvas = new WxGLCanvas(this, wxID_ANY, wxDefaultPosition, aCanvasSize);
 	m_pCanvas->InitializeCanvas();
+	m_pCanvas->SetNextHandler(  this );
 }
 //------------------------------------------------------------------------------
 void	WxEditorCanvasContainer::UpdateWindowBox()
@@ -218,7 +219,7 @@ void WxGLCanvas::DrawResizers()
 			const wxRect& winRc = m_aWindowBox.GetAnchorRect();
 			// green surrounding rectangle for the border (just draw over the filled rectangle)
 			glColor3f (0.0f, 1.0f, 0.0f);
-			glBegin(GL_LINE_LOOP);
+			glBegin(GL_QUADS);
 			x0 = winRc.x;
 			y0 = winRc.y;
 			x1 = winRc.GetRight();

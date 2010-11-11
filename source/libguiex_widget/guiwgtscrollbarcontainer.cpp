@@ -237,7 +237,7 @@ namespace guiex
 		*/
 		//client area size
 		CGUISize aClientAreaSize = GetBoundArea().GetSize();
-		real fVertScrollbarWidth = m_pScrollbarVert->NEWGetPixelSize().GetWidth();
+		real fVertScrollbarWidth = m_pScrollbarVert->GetPixelSize().GetWidth();
 		if( aClientAreaSize.GetWidth() < fVertScrollbarWidth )
 		{
 			aClientAreaSize.SetWidth( 0.0f );
@@ -246,7 +246,7 @@ namespace guiex
 		{
 			aClientAreaSize.SetWidth(aClientAreaSize.GetWidth() - fVertScrollbarWidth);
 		}
-		real fHorzScrollbarHeight = m_pScrollbarHorz->NEWGetPixelSize().GetHeight();
+		real fHorzScrollbarHeight = m_pScrollbarHorz->GetPixelSize().GetHeight();
 		if( aClientAreaSize.GetHeight() < fHorzScrollbarHeight )
 		{
 			aClientAreaSize.SetHeight( 0.0f );
@@ -271,11 +271,11 @@ namespace guiex
 
 		//update scrollbar's size
 		m_pScrollbarVert->SetPixelSize(
-			m_pScrollbarVert->NEWGetPixelSize().GetWidth(),
-			NEWGetPixelSize().GetHeight());
+			m_pScrollbarVert->GetPixelSize().GetWidth(),
+			GetPixelSize().GetHeight());
 		m_pScrollbarHorz->SetPixelSize(
-			NEWGetPixelSize().GetWidth(),
-			m_pScrollbarHorz->NEWGetPixelSize().GetHeight());
+			GetPixelSize().GetWidth(),
+			m_pScrollbarHorz->GetPixelSize().GetHeight());
 
 		uint32 nVertRange = 
 			static_cast<uint32>(GetClientArea().GetHeight()>GetClipArea().GetHeight()?GetClientArea().GetHeight()-GetClipArea().GetHeight():0);

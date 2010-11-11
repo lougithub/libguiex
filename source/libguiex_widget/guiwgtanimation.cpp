@@ -53,7 +53,7 @@ namespace guiex
 		if( rAnimationName == "ANIMATION_DEFAULT" )
 		{
 			m_pAnimationCur = pAnimation;
-			if( NEWGetSize().IsEqualZero() && pAnimation )
+			if( GetSize().IsEqualZero() && pAnimation )
 			{
 				SetPixelSize( pAnimation->GetSize() );
 			}

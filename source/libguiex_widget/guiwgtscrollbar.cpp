@@ -188,7 +188,7 @@ namespace guiex
 		CGUIVector2	aSlidePoint = GetPixelPosition( );
 		CGUIVector2	aWidgetPoint = pEvent->GetWidgetLocalPos();
 		CGUIVector2	aMovePos;		/// wanted position
-		CGUISize aSlideSize = NEWGetPixelSize();
+		CGUISize aSlideSize = GetPixelSize();
 		uint32 nCurScrollbarPos = 0;	/// the value of scrollbar
 
 		switch( m_pScrollbar->GetScrollbarType() )
@@ -273,21 +273,21 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtScrollbar::InitScrollbar()
 	{
-		NewSetPositionType( eScreenValue_Percentage );
+		SetPositionType( eScreenValue_Percentage );
 		SetSizeType( eScreenValue_Pixel );
 
 		//create child
 		m_pArrow[0] = new CGUIWgtScrollbarArrow(GetName()+"_arrow_0__auto__", GetProjectName(), 0);
 		m_pArrow[0]->SetParent(this);
-		m_pArrow[0]->NewSetPositionType( eScreenValue_Percentage );
+		m_pArrow[0]->SetPositionType( eScreenValue_Percentage );
 		m_pArrow[0]->SetSizeType( eScreenValue_Pixel );
 		m_pArrow[1] = new CGUIWgtScrollbarArrow(GetName()+"_arrow_1__auto__", GetProjectName(), 1);
 		m_pArrow[1]->SetParent(this);
-		m_pArrow[1]->NewSetPositionType( eScreenValue_Percentage );
+		m_pArrow[1]->SetPositionType( eScreenValue_Percentage );
 		m_pArrow[1]->SetSizeType( eScreenValue_Pixel );
 		m_pSlide = new CGUIWgtScrollbarSlide(GetName()+"_slide__auto__", GetProjectName() );
 		m_pSlide->SetParent(this);
-		m_pSlide->NewSetPositionType( eScreenValue_Percentage );
+		m_pSlide->SetPositionType( eScreenValue_Percentage );
 		m_pSlide->SetSizeType( eScreenValue_Pixel );
 
 		//flag
@@ -351,7 +351,7 @@ namespace guiex
 		if( rName == "SCROLLBAR_BG")
 		{
 			m_pImageBg = pImage;
-			if( pImage && NEWGetSize().IsEqualZero() )
+			if( pImage && GetSize().IsEqualZero() )
 			{
 				SetPixelSize(pImage->GetSize());
 			}
@@ -359,7 +359,7 @@ namespace guiex
 		else if( rName == "SCROLLBAR_ARROW_NORMAL_0") 
 		{
 			m_pArrow[0]->SetImage("BTN_NORMAL", pImage);
-			if( pImage && NEWGetSize().IsEqualZero() )
+			if( pImage && GetSize().IsEqualZero() )
 			{
 				SetPixelSize(pImage->GetSize());
 			}
@@ -532,7 +532,7 @@ namespace guiex
 		}
 
 		CGUIRect aSlideArea = GetSlideArea();
-		CGUISize aSlideSize = m_pSlide->NEWGetPixelSize();
+		CGUISize aSlideSize = m_pSlide->GetPixelSize();
 		switch( m_eScrollbarType )
 		{
 			//for vertical scroll bar
@@ -565,8 +565,8 @@ namespace guiex
 	{
 		CGUIRect aRect = GetBoundArea();
 		aRect.SetPosition(CGUIVector2(0.0f, 0.0f));
-		CGUISize aSize0 = m_pArrow[0]->NEWGetPixelSize();
-		CGUISize aSize1 = m_pArrow[1]->NEWGetPixelSize();
+		CGUISize aSize0 = m_pArrow[0]->GetPixelSize();
+		CGUISize aSize1 = m_pArrow[1]->GetPixelSize();
 		if( m_eScrollbarType == eSB_VERTICAL )
 		{
 			aRect.m_fTop += aSize0.GetHeight();
@@ -603,17 +603,17 @@ namespace guiex
 		{
 		case eSB_VERTICAL:
 			m_pArrow[0]->SetAnchorPoint(0.5f, 0.0f);
-			m_pArrow[0]->NEWSetPosition(0.5f, 0.0f);
+			m_pArrow[0]->SetPosition(0.5f, 0.0f);
 			m_pArrow[1]->SetAnchorPoint(0.5f, 1.0f);
-			m_pArrow[1]->NEWSetPosition(0.5f, 1.0f);
+			m_pArrow[1]->SetPosition(0.5f, 1.0f);
 			m_pSlide->SetAnchorPoint(0.5f, 0.5f);
 			break;
 
 		case eSB_HORIZONAL:
 			m_pArrow[0]->SetAnchorPoint(0.0f, 0.5f);
-			m_pArrow[0]->NEWSetPosition(0.0f, 0.5f);
+			m_pArrow[0]->SetPosition(0.0f, 0.5f);
 			m_pArrow[1]->SetAnchorPoint(1.0f, 0.5f);
-			m_pArrow[1]->NEWSetPosition(1.0f, 0.5f);
+			m_pArrow[1]->SetPosition(1.0f, 0.5f);
 			m_pSlide->SetAnchorPoint(0.5f, 0.5f);
 			break;
 		}
@@ -625,14 +625,14 @@ namespace guiex
 			{
 			case eSB_VERTICAL:
 				SetAnchorPoint(1.0f, 0.0f);
-				NEWSetPosition( 1.0f, 0.0f );
-				NEWSetSize( NEWGetPixelSize().GetWidth(), GetParent()->NEWGetPixelSize().GetHeight() );
+				SetPosition( 1.0f, 0.0f );
+				SetSize( GetPixelSize().GetWidth(), GetParent()->GetPixelSize().GetHeight() );
 				break;
 
 			case eSB_HORIZONAL:
 				SetAnchorPoint(0.0f, 1.0f);
-				NEWSetPosition( 0.0f, 1.0f);
-				NEWSetSize( GetParent()->NEWGetPixelSize().GetWidth(), NEWGetPixelSize().GetHeight());
+				SetPosition( 0.0f, 1.0f);
+				SetSize( GetParent()->GetPixelSize().GetWidth(), GetPixelSize().GetHeight());
 				break;
 			}
 		}

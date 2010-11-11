@@ -49,7 +49,7 @@ namespace guiex
 		ParentToLocal( aParentPos );
 		m_aClientArea.SetPosition( aParentPos );
 		m_aClientArea.SetSize( GetParent()->GetClipArea().GetSize() );
-		m_aClientArea.m_fTop += NEWGetPixelSize().GetHeight();
+		m_aClientArea.m_fTop += GetPixelSize().GetHeight();
 
 		//clip rect for client
 		m_aClipArea = m_aClientArea;

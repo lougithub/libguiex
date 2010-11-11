@@ -39,7 +39,7 @@ namespace guiex
 	void	CGUIWgtEmptyNode::InitEmptyNode()
 	{
 		SetSizeType(eScreenValue_Percentage);
-		NEWSetSize( 1.0f, 1.0f );
+		SetSize( 1.0f, 1.0f );
 		SetFocusable(false);
 		SetSelfActivable(false);
 		

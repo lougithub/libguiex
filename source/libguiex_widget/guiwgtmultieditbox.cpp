@@ -82,7 +82,7 @@ namespace guiex
 		if( rName == "EDIT_BG")
 		{
 			m_pBG = pImage;
-			if( NEWGetSize().IsEqualZero() && pImage )
+			if( GetSize().IsEqualZero() && pImage )
 			{
 				SetPixelSize(pImage->GetSize());
 			}

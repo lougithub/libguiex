@@ -40,10 +40,35 @@ CLibGuiexEngine::~CLibGuiexEngine()
 
 void CLibGuiexEngine::Initialize( int width, int height, const char* szDataPath )
 {
+    guiex::CGUIWidgetSystem::Instance()->Initialize();
+    guiex::CGUIAssert::SetWarningCB(EditorWarningCB, NULL);
+    guiex::CGUIWidgetSystem::Instance()->SetScreenSize(aSize.x,aSize.y);
+    guiex::CGUIWidgetSystem::Instance()->SetDataPath(szDataPath);
+
+    //register interface
+    GUI_REGISTER_INTERFACE_LIB( "IGUIRender", IGUIRender_opengl);
+    GUI_REGISTER_INTERFACE_LIB( "IGUIImageLoader", IGUIImageLoader_tga);
+    GUI_REGISTER_INTERFACE_LIB( "IGUIFileSys", IGUIFileSys_stdio);
+    //GUI_REGISTER_INTERFACE_LIB( "IGUIMouse", IGUIMouse_winapi);
+    //GUI_REGISTER_INTERFACE_LIB( "IGUIFont", IGUIFont_ft2);
+    //GUI_REGISTER_INTERFACE_LIB( "IGUIKeyboard", IGUIKeyboard_winapi);
+    GUI_REGISTER_INTERFACE_LIB( "IGUIConfigFile", IGUIConfigFile_tinyxml);
+    //GUI_REGISTER_INTERFACE_LIB_ARG( "IGUIScript", IGUIScript_lua, FuncInitScript);
+    //GUI_REGISTER_INTERFACE_LIB_ARG( "IGUIIme", IGUIIme_winapi, pCanvas->GetHandle());
+
+    //register widget
+    guiex::CGUIWidgetGenerator** pGenerator = guiex::GetAllGenerators();
+    while(*pGenerator)
+    {
+        guiex::CGUIWidgetFactory::Instance()->RegisterGenerator( *pGenerator);
+        pGenerator ++;
+    }
 }
 
 void CLibGuiexEngine::Update( float deltaTime )
 {
+    guiex::CGUIWidgetSystem::Instance()->Update( deltaTime );
+    guiex::CGUIWidgetSystem::Instance()->Render();
 }
 
 void CLibGuiexEngine::OnRotate( DeviceOrientation newOrientation )

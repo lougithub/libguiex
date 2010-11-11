@@ -21,7 +21,7 @@
 // function
 //============================================================================// 
 
-int GetTypeIndexInEnum( guiex::EScreenValue eValue, const wxArrayString& arrEnums )
+int GetTypeIndexInScreenValueEnum( guiex::EScreenValue eValue, const wxArrayString& arrEnums )
 {
 	guiex::CGUIString strValue;
 	guiex::ValueToString( eValue, strValue );
@@ -36,7 +36,6 @@ int GetTypeIndexInEnum( guiex::EScreenValue eValue, const wxArrayString& arrEnum
 	throw guiex::CGUIException("unknown EScreenValue : <%d>", eValue);
 	return 0;
 }
-
 
 // -----------------------------------------------------------------------
 // wxGUISizeProperty
@@ -319,7 +318,7 @@ wxGUIWidgetPositionProperty::wxGUIWidgetPositionProperty( const wxString& label,
 	//ChangeFlag(wxPG_PROP_READONLY, true);
     SetValue( CGUIWidgetPositionToVariant(value) );
 	m_arrEnums = CPropertyConfigMgr::Instance()->GetEnumDefine("EScreenValue");
-	AddPrivateChild( new wxEnumProperty(wxT("type"), wxT("type"), m_arrEnums/*, 0, GetTypeIndexInEnum( value.m_eType, m_arrEnums )*/ ) );
+	AddPrivateChild( new wxEnumProperty(wxT("type"), wxT("type"), m_arrEnums ) );
 	AddPrivateChild( new wxGUIVector2Property(wxT("value"), wxT("value"),value.m_aValue) );
 
 	RefreshChildren();
@@ -336,7 +335,7 @@ void wxGUIWidgetPositionProperty::RefreshChildren()
 	}
 
     CGUIWidgetPosition& widget_pos = CGUIWidgetPositionFromVariant(m_value);
-	Item(0)->SetValue( GetTypeIndexInEnum( widget_pos.m_eType, m_arrEnums ) );
+	Item(0)->SetValue( GetTypeIndexInScreenValueEnum( widget_pos.m_eType, m_arrEnums ) );
 	Item(1)->SetValue( CGUIVector2ToVariant(widget_pos.m_aValue));
 }
 
@@ -346,7 +345,7 @@ void wxGUIWidgetPositionProperty::ChildChanged( wxVariant& thisValue, int childI
     switch ( childIndex )
     {
 	case 0:
-		guiex::StringToValue( wxConvUTF8.cWC2MB( childValue.GetType().c_str()).data(), widget_pos.m_eType );
+		guiex::StringToValue( wxConvUTF8.cWC2MB( m_arrEnums[childValue.GetLong()].c_str()).data(), widget_pos.m_eType );
 		break;
 	case 1: 
 		widget_pos.m_aValue= CGUIVector2FromVariant( childValue ); 
@@ -377,7 +376,7 @@ wxGUIWidgetSizeProperty::wxGUIWidgetSizeProperty( const wxString& label,
 	//ChangeFlag(wxPG_PROP_READONLY, true);
     SetValue( CGUIWidgetSizeToVariant(value) );
 	m_arrEnums = CPropertyConfigMgr::Instance()->GetEnumDefine("EScreenValue");
-	AddPrivateChild( new wxEnumProperty(wxT("type"), wxT("type"), m_arrEnums/*, 0, GetTypeIndexInEnum( value.m_eType, m_arrEnums )*/ ) );
+	AddPrivateChild( new wxEnumProperty(wxT("type"), wxT("type"), m_arrEnums) );
 	AddPrivateChild( new wxGUISizeProperty(wxT("size"), wxT("size"),value.m_aValue) );
 
 	RefreshChildren();
@@ -393,7 +392,7 @@ void wxGUIWidgetSizeProperty::RefreshChildren()
 	}
 
     CGUIWidgetSize& widget_size = CGUIWidgetSizeFromVariant(m_value);
-	Item(0)->SetValue( GetTypeIndexInEnum( widget_size.m_eType, m_arrEnums ) );
+	Item(0)->SetValue( GetTypeIndexInScreenValueEnum( widget_size.m_eType, m_arrEnums ) );
 	Item(1)->SetValue( CGUISizeToVariant(widget_size.m_aValue));
 }
 
@@ -403,7 +402,7 @@ void wxGUIWidgetSizeProperty::ChildChanged( wxVariant& thisValue, int childIndex
     switch ( childIndex )
     {
 	case 0: 
-		guiex::StringToValue( wxConvUTF8.cWC2MB( childValue.GetType().c_str()).data(), widget_size.m_eType );
+		guiex::StringToValue( wxConvUTF8.cWC2MB( m_arrEnums[childValue.GetLong()].c_str()).data(), widget_size.m_eType );
 		break;
 	case 1: 
 		widget_size.m_aValue = CGUISizeFromVariant( childValue ); 
@@ -472,6 +471,7 @@ int			WxWidgetPropertySheet::OnPropertyChanged( wxPropertyGridEvent& event )
 		m_pPropWidget->SetProperty( aGuiProperty );
 		m_pPropWidget->ProcessProperty(aGuiProperty);
 		m_pPropWidget->Refresh();
+		LoadWidgetConfig( this, m_pPropWidget->GetType(), m_pPropWidget );
 	}
 	catch(guiex::CGUIBaseException& rError)
 	{
