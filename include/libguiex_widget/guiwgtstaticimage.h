@@ -38,7 +38,7 @@ namespace guiex
 		* @brief set widget parameter's value
 		* for example: SetValue("alpha", "0.5")
 		*/
-		virtual void	SetValue(const CGUIString& rName, const CGUIString& rValue);
+		virtual void SetValue(const CGUIString& rName, const CGUIString& rValue);
 
 		/**
 		* @brief get widget parameter's value
@@ -49,12 +49,12 @@ namespace guiex
 		/**
 		* @brief select a image to show
 		*/
-		void				SetCurrentImage( const CGUIString& rImageName);
+		void SetCurrentImage( const CGUIString& rImageName);
 
 		/**
 		* @brief get image name which is showing now
 		*/
-		const CGUIString&			GetCurrentImage(  ) const;
+		const CGUIString& GetCurrentImage(  ) const;
 
 	protected:
 		/**
@@ -67,12 +67,12 @@ namespace guiex
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 
 		///initialize check button
-		void	InitStaticImage();
+		void InitStaticImage();
 
 		/**
 		* @brief override the OnSetImage function
 		*/
-		virtual void	OnSetImage( const CGUIString& rName,CGUIImage* pImage );
+		virtual void OnSetImage( const CGUIString& rName,CGUIImage* pImage );
 
 	protected:
 		CGUIImage*		m_pImageBG;

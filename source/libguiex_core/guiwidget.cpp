@@ -2022,7 +2022,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	EScreenValue CGUIWidget::NewGetPositionType( ) const
+	EScreenValue CGUIWidget::GetPositionType( ) const
 	{
 		return m_aWidgetPosition.m_eType;
 	}

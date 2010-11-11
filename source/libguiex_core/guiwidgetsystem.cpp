@@ -503,6 +503,7 @@ namespace guiex
 		pRender->ResetZValue();
 
 		pRender->BeginRender();
+		
 		//render page
 		if( m_pWgtRoot )
 		{

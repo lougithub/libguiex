@@ -45,6 +45,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void	CGUIWidgetRoot::RenderSelf(IGUIInterfaceRender* pRender)
 	{
+
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWidgetRoot::PushClipRect( IGUIInterfaceRender* pRender, const CGUIRect& rClipRect )

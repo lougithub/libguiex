@@ -195,6 +195,13 @@
 		FFACE1BE128594DB00C0BCB4 /* guiwidgetroot.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE6C12858C9D00C0BCB4 /* guiwidgetroot.h */; };
 		FFACE1BF128594DB00C0BCB4 /* guiwidgetsystem.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE6D12858C9D00C0BCB4 /* guiwidgetsystem.h */; };
 		FFACE1C0128594DB00C0BCB4 /* guiwidgetutility.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE6E12858C9D00C0BCB4 /* guiwidgetutility.h */; };
+		FFF2E7D8128C277100D69E33 /* liblibguiex_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FFACDBFD12858B0000C0BCB4 /* liblibguiex_core.a */; };
+		FFF2E7D9128C277100D69E33 /* liblibguiex_widget.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FFACDF6112858D1800C0BCB4 /* liblibguiex_widget.a */; };
+		FFF2E7DA128C277100D69E33 /* libliguiex_module.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FFACDF6B12858D4E00C0BCB4 /* libliguiex_module.a */; };
+		FFF2E7DB128C277100D69E33 /* libtinyxml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF04083D128847780053FF31 /* libtinyxml.a */; };
+		FFF2E7E0128C27CD00D69E33 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FFF2E7DF128C27CD00D69E33 /* libiconv.dylib */; };
+		FFF2E7EF128C28F800D69E33 /* guiwgtstatic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDF5712858CB200C0BCB4 /* guiwgtstatic.cpp */; };
+		FFF654DF128C4A9800C8EB42 /* BLUEGRAD64.tga in Resources */ = {isa = PBXBuildFile; fileRef = FFF654DE128C4A9800C8EB42 /* BLUEGRAD64.tga */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -531,6 +538,8 @@
 		FFACDF6112858D1800C0BCB4 /* liblibguiex_widget.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibguiex_widget.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFACDF6B12858D4E00C0BCB4 /* libliguiex_module.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libliguiex_module.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFACDF811285921E00C0BCB4 /* liblibguiex.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibguiex.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFF2E7DF128C27CD00D69E33 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
+		FFF654DE128C4A9800C8EB42 /* BLUEGRAD64.tga */ = {isa = PBXFileReference; lastKnownFileType = file; name = BLUEGRAD64.tga; path = ../../data/hello_ipad/resource/image/BLUEGRAD64.tga; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -558,6 +567,11 @@
 				FF035037128AF93300950825 /* OpenGLES.framework in Frameworks */,
 				FF03503D128AF94500950825 /* CoreGraphics.framework in Frameworks */,
 				FF035043128AF95400950825 /* UIKit.framework in Frameworks */,
+				FFF2E7D8128C277100D69E33 /* liblibguiex_core.a in Frameworks */,
+				FFF2E7D9128C277100D69E33 /* liblibguiex_widget.a in Frameworks */,
+				FFF2E7DA128C277100D69E33 /* libliguiex_module.a in Frameworks */,
+				FFF2E7DB128C277100D69E33 /* libtinyxml.a in Frameworks */,
+				FFF2E7E0128C27CD00D69E33 /* libiconv.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -601,10 +615,12 @@
 		0867D691FE84028FC02AAC07 /* libguiex */ = {
 			isa = PBXGroup;
 			children = (
+				FFF654DD128C4A5F00C8EB42 /* Data */,
 				08FB77AEFE84172EC02AAC07 /* Classes */,
 				32C88DFF0371C24200C91783 /* Other Sources */,
 				0867D69AFE84028FC02AAC07 /* Frameworks */,
 				034768DFFF38A50411DB9C8B /* Products */,
+				FFF2E7DF128C27CD00D69E33 /* libiconv.dylib */,
 			);
 			name = libguiex;
 			sourceTree = "<group>";
@@ -1054,6 +1070,14 @@
 			path = libguiex_widget;
 			sourceTree = "<group>";
 		};
+		FFF654DD128C4A5F00C8EB42 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				FFF654DE128C4A9800C8EB42 /* BLUEGRAD64.tga */,
+			);
+			name = Data;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1337,6 +1361,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFF654DF128C4A9800C8EB42 /* BLUEGRAD64.tga in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1454,6 +1479,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFF2E7EF128C28F800D69E33 /* guiwgtstatic.cpp in Sources */,
 				FF0407F412883E3F0053FF31 /* guiwgtgeneratewidgets.cpp in Sources */,
 				FF0407F112883DEB0053FF31 /* guiwgtstaticimage.cpp in Sources */,
 			);
@@ -1566,6 +1592,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_ENABLE_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;

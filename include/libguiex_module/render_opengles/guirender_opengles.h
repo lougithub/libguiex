@@ -220,9 +220,11 @@ namespace guiex
 			real	m_gl_world_matrix[16];
 		};
 
-		void	UpdateStencil();
-		void	RenderRectForStencil( const SClipRect& rRect );
+		void UpdateStencil();
+		void RenderRectForStencil( const SClipRect& rRect );
 
+		void TestOpenglError( const char* info );
+		
 	protected:
 
 		struct SVertexForTile

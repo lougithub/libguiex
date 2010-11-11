@@ -125,7 +125,7 @@ namespace guiex
 		{
 		case GUI_PF_RGBA_32:
 		case GUI_PF_ARGB_32:
-			glTexImage2D(GL_TEXTURE_2D, 0, 4, buffWidth, buffHeight, 0, GL_RGBA ,GL_UNSIGNED_BYTE, buffPtr);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, buffWidth, buffHeight, 0, GL_RGBA ,GL_UNSIGNED_BYTE, buffPtr);
 			m_nBytesPerPixel = 4;
 			m_ePixelFormat = GUI_PF_RGBA_32;
 			break;
@@ -139,7 +139,6 @@ namespace guiex
 		default:
 			throw CGUIException("[CGUITexture_opengles::LoadFromMemory]: unsupported pixel format;");
 		}
-
 		m_nTextureWidth  = static_cast<uint16>(buffWidth);
 		m_nTextureHeight = static_cast<uint16>(buffHeight);
 

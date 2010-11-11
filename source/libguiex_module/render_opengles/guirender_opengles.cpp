@@ -40,6 +40,34 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int IGUIRender_opengles::DoInitialize(void* )
 	{
+		TestOpenglError("init 1");
+		
+		// Create the framebuffer object and attach the color buffer.
+		GLuint framebuffer;
+		GLuint renderbuffer;
+		glGenRenderbuffersOES(1, &renderbuffer);
+		glBindRenderbufferOES(GL_RENDERBUFFER_OES, renderbuffer);		
+		glGenFramebuffersOES(1, &framebuffer);
+		glBindFramebufferOES(GL_FRAMEBUFFER_OES, framebuffer);
+		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES,
+									 GL_COLOR_ATTACHMENT0_OES,
+									 GL_RENDERBUFFER_OES,
+									 renderbuffer);
+		glBindRenderbufferOES(GL_RENDERBUFFER_OES, renderbuffer);				
+		
+		// Initialize the projection matrix.
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		const CGUISize& rSize = CGUIWidgetSystem::Instance()->GetScreenSize();
+		glOrthof(0.0, rSize.m_fWidth,rSize.m_fHeight,0.0,-1, 1 );
+		
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		
+		glViewport(0, 0, rSize.m_fWidth,rSize.m_fHeight);
+		
+		TestOpenglError("init 2");
+		
 		// get the maximum available texture size.
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &m_maxTextureSize);
 
@@ -75,7 +103,7 @@ namespace guiex
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glEnableClientState(GL_COLOR_ARRAY);
 		
-		//glInterleavedArrays(GL_T2F_C4UB_V3F , 0, m_pVertex);
+		TestOpenglError("init 3");
 		
 		ResetZValue();
 		m_nCurrentTexture = -1;
@@ -107,6 +135,8 @@ namespace guiex
 		GUIARGB rColor_bottomleft,
 		GUIARGB rColor_bottomright )
 	{
+		TestOpenglError("drawrect 1");
+		
 		glLineWidth( fLineWidth );
 
 		//set modelview matrix
@@ -154,10 +184,12 @@ namespace guiex
 
 		glVertexPointer(3, GL_FLOAT, sizeof(SVertexForLine), &m_pVertexForLine[0].vertex[0]);
 		glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(SVertexForLine), &m_pVertexForLine[0].color);
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+		glDrawArrays(GL_LINE_STRIP, 0, 4);
 		
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glDisableClientState(GL_COLOR_ARRAY);	
+		
+		TestOpenglError("drawrect 2");
 	}
 	//------------------------------------------------------------------------------
 	void	IGUIRender_opengles::DrawTile(const CGUIMatrix4& rWorldMatrix,
@@ -169,6 +201,8 @@ namespace guiex
 		GUIARGB  rColor_bottomleft,
 		GUIARGB  rColor_bottomright)
 	{
+		TestOpenglError("tt 1");
+		
 		//set modelview matrix
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
@@ -209,15 +243,15 @@ namespace guiex
 
 		//vert2
 		m_pVertex[2].vertex[0] = fRight;
-		m_pVertex[2].vertex[1] = fBottom;
+		m_pVertex[2].vertex[1] = fTop;
 		m_pVertex[2].vertex[2] = z;
-		m_pVertex[2].color     = oglcolor_bottomright;
+		m_pVertex[2].color     = oglcolor_topright;
 
 		//vert3
 		m_pVertex[3].vertex[0] = fRight;
-		m_pVertex[3].vertex[1] = fTop;
+		m_pVertex[3].vertex[1] = fBottom;
 		m_pVertex[3].vertex[2] = z;
-		m_pVertex[3].color     = oglcolor_topright;      
+		m_pVertex[3].color     = oglcolor_bottomright;      
 
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -232,6 +266,7 @@ namespace guiex
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_COLOR_ARRAY);
 		
+		TestOpenglError("drawtile 2");
 	}
 	
 	void	IGUIRender_opengles::PushClipRect( const CGUIMatrix4& rMatrix, const CGUIRect& rClipRect )
@@ -253,24 +288,28 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::BeginRender(void)
 	{
+		TestOpenglError("begin 1");
+		
+		glClearColor(0.5f, 0.5f, 0.5f, 1);
+		glClear(GL_COLOR_BUFFER_BIT);
+		
 		//update projection matrix
 		glMatrixMode(GL_PROJECTION);
 		glPushMatrix();
-		glLoadIdentity();
-		const CGUISize& rSize = CGUIWidgetSystem::Instance()->GetScreenSize();
-		glOrthof(0.0, rSize.m_fWidth,rSize.m_fHeight,0.0,-1, 1 );
-
+		
 		//update modelview matrix
 		glMatrixMode(GL_MODELVIEW);
 		glPushMatrix();
-		glLoadIdentity();	
-
-
+		
 		m_nCurrentTexture = -1;
+		
+		TestOpenglError("begin 2");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::EndRender(void)
 	{		
+		TestOpenglError("end 1");
+		
 		//restore model view matrix
 		glMatrixMode(GL_MODELVIEW);
 		glPopMatrix(); 
@@ -281,18 +320,59 @@ namespace guiex
 
 		//reset current texture
 		m_nCurrentTexture = -1;
+		
+		TestOpenglError("end 2");
+	}
+	void IGUIRender_opengles::TestOpenglError( const char* info )
+	{
+		int errorcode = glGetError();
+		if( GL_NO_ERROR != errorcode )
+		{
+			printf("error find in opengles: <%s>  : ", info);
+			
+			switch( errorcode )
+			{
+				case GL_INVALID_ENUM:
+					printf("GL_INVALID_ENUM\n");
+					break;
+				case GL_INVALID_VALUE:
+					printf("GL_INVALID_VALUE\n");
+					break;
+				case GL_INVALID_OPERATION:
+					printf("GL_INVALID_OPERATION\n");
+					break;
+				case GL_STACK_OVERFLOW:
+					printf("GL_STACK_OVERFLOW\n");
+					break;
+				case GL_STACK_UNDERFLOW:
+					printf("GL_STACK_UNDERFLOW\n");
+					break;
+				case GL_OUT_OF_MEMORY:
+					printf("GL_OUT_OF_MEMORY\n");
+					break;			
+				default:
+					printf("unknown opengl error: 0x%x\n", errorcode);
+			}
+			
+			assert( GL_NO_ERROR == errorcode);
+		}
+		
 	}
 	//------------------------------------------------------------------------------
 	void	IGUIRender_opengles::UpdateStencil()
 	{
+		return;
+		
+		TestOpenglError("UpdateStencil 1");
+		
 		//clear stencil buffer to 1 for all area visible now
 		glClearStencil( 0 );
 		glClear( GL_STENCIL_BUFFER_BIT );
-
+		
 		// Set color mask and disable texture
 		glColorMask( false, false, false, false );		
 		glDisable( GL_TEXTURE_2D );
-
+		
 		// Enable stencil buffer for "marking" the floor 
 		glEnable( GL_STENCIL_TEST );	
 
@@ -315,10 +395,14 @@ namespace guiex
 		//reset stencil state
 		glStencilFunc( GL_EQUAL, 1, 1 );
 		glStencilOp( GL_KEEP, GL_KEEP, GL_KEEP );
+		TestOpenglError("UpdateStencil 2");
+		
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::RenderRectForStencil( const SClipRect& rRect )
 	{
+		TestOpenglError("RenderRectForStencil 1");
+		
 		//set matrix
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
@@ -355,6 +439,8 @@ namespace guiex
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 		
 		glDisableClientState(GL_VERTEX_ARRAY);
+		
+		TestOpenglError("RenderRectForStencil 2");
 	}
 	//------------------------------------------------------------------------------
 	void	IGUIRender_opengles::SetTexCoordinate(SVertexForTile* pTexture, const CGUIRect& tex, EImageOperation eImageOperation)
@@ -456,8 +542,10 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUITextureImp*	IGUIRender_opengles::CreateTexture(void)
 	{
+		TestOpenglError("IGUIRender_opengles 1");
 		CGUITexture_opengles* pTexture = new CGUITexture_opengles(this);
 		m_setTexture.insert(pTexture);
+		TestOpenglError("IGUIRender_opengles 2");
 		return pTexture;
 	}
 	//------------------------------------------------------------------------------
@@ -471,6 +559,8 @@ namespace guiex
 			return NULL;
 		}
 		m_setTexture.insert(pTexture);
+		
+		TestOpenglError("IGUIRender_opengles 3");
 		return pTexture;
 	}
 	//------------------------------------------------------------------------------
@@ -479,6 +569,8 @@ namespace guiex
 		CGUITexture_opengles* pTexture = new CGUITexture_opengles(this);
 		pTexture->SetOpenglTextureSize(nWidth,nHeight,ePixelFormat);
 		m_setTexture.insert(pTexture);
+		
+		TestOpenglError("IGUIRender_opengles 4");
 		return pTexture;
 	}
 	//------------------------------------------------------------------------------

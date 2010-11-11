@@ -8,7 +8,7 @@
 
 #import "hello_ipad.h"
 #import <UIKit/UIKit.h>
-#import <OpenGLES/ES2/gl.h>
+#import <OpenGLES/ES1/glext.h>
 
 @implementation AppDelegate
 
@@ -102,15 +102,14 @@
 		
 		m_pEngine = CreateApplicationEngine();
 		
-		[m_context 
-		 renderbufferStorage:GL_RENDERBUFFER
-		 fromDrawable:eaglLayer];
-		
         int width = CGRectGetWidth(frame);
         int height = CGRectGetHeight(frame);
 		NSString* bundlePath =[[NSBundle mainBundle] resourcePath];
         m_pEngine->Initialize(width, height, [bundlePath UTF8String]);
-        
+		[m_context 
+		 renderbufferStorage:GL_RENDERBUFFER_OES
+		 fromDrawable:eaglLayer];
+		
         [self drawView: nil];
         m_timestamp = CACurrentMediaTime();
         
@@ -141,7 +140,7 @@
     
 	m_pEngine->Update( elapsedSeconds );
 	
-	[m_context presentRenderbuffer:GL_RENDERBUFFER];
+	[m_context presentRenderbuffer:GL_RENDERBUFFER_OES];
 }
 
 - (void) touchesBegan: (NSSet*) touches withEvent: (UIEvent*) event
