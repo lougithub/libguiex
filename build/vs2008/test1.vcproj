@@ -169,19 +169,19 @@
 	</References>
 	<Files>
 		<File
-			RelativePath="..\..\test\libguiex_test.rc"
+			RelativePath="..\..\test\wxTestCommon\libguiex_test.rc"
 			>
 		</File>
 		<File
-			RelativePath="..\..\test\resource.h"
+			RelativePath="..\..\test\wxTestCommon\resource.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\test\test1.cpp"
+			RelativePath="..\..\test\test1\test1.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\test\testcommon.cpp"
+			RelativePath="..\..\test\wxTestCommon\testcommon.cpp"
 			>
 		</File>
 	</Files>

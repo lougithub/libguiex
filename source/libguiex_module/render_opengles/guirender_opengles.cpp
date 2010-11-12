@@ -323,6 +323,7 @@ namespace guiex
 		
 		TestOpenglError("end 2");
 	}
+	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::TestOpenglError( const char* info )
 	{
 		int errorcode = glGetError();

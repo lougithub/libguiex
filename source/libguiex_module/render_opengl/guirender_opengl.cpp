@@ -59,6 +59,42 @@ namespace guiex
 		DestroyAllTexture();
 	}
 	//------------------------------------------------------------------------------
+	void IGUIRender_opengl::TestOpenglError( const char* info )
+	{
+		int errorcode = glGetError();
+		if( GL_NO_ERROR != errorcode )
+		{
+			printf("error find in opengles: <%s>  : ", info);
+
+			switch( errorcode )
+			{
+			case GL_INVALID_ENUM:
+				printf("GL_INVALID_ENUM\n");
+				break;
+			case GL_INVALID_VALUE:
+				printf("GL_INVALID_VALUE\n");
+				break;
+			case GL_INVALID_OPERATION:
+				printf("GL_INVALID_OPERATION\n");
+				break;
+			case GL_STACK_OVERFLOW:
+				printf("GL_STACK_OVERFLOW\n");
+				break;
+			case GL_STACK_UNDERFLOW:
+				printf("GL_STACK_UNDERFLOW\n");
+				break;
+			case GL_OUT_OF_MEMORY:
+				printf("GL_OUT_OF_MEMORY\n");
+				break;			
+			default:
+				printf("unknown opengl error: 0x%x\n", errorcode);
+			}
+
+			assert( GL_NO_ERROR == errorcode);
+		}
+
+	}
+	//------------------------------------------------------------------------------
 	void	IGUIRender_opengl::SetWireFrame( bool bWireFrame)
 	{
 		m_bWireFrame = bWireFrame;
@@ -73,6 +109,8 @@ namespace guiex
 		GUIARGB rColor_bottomleft,
 		GUIARGB rColor_bottomright )
 	{
+		TestOpenglError("DrawRect 1");
+
 		glInterleavedArrays(GL_C4UB_V3F , 0, m_pVertexForLine);
 		glDisable(GL_TEXTURE_2D);
 		glLineWidth( fLineWidth );
@@ -122,6 +160,8 @@ namespace guiex
 
 		glEnable(GL_TEXTURE_2D);
 		glInterleavedArrays(GL_T2F_C4UB_V3F , 0, m_pVertex);
+
+		TestOpenglError("DrawRect 2");
 	}
 	//------------------------------------------------------------------------------
 	void	IGUIRender_opengl::DrawTile(const CGUIMatrix4& rWorldMatrix,
@@ -133,6 +173,8 @@ namespace guiex
 		GUIARGB  rColor_bottomleft,
 		GUIARGB  rColor_bottomright)
 	{
+		TestOpenglError("DrawTile 1");
+
 		//set modelview matrix
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
@@ -184,6 +226,8 @@ namespace guiex
 		m_pVertex[3].color     = oglcolor_topright;      
 
 		glDrawArrays( GL_POLYGON, 0, 4 );
+
+		TestOpenglError("DrawTile 2");
 	}
 	
 	void	IGUIRender_opengl::PushClipRect( const CGUIMatrix4& rMatrix, const CGUIRect& rClipRect )
@@ -205,6 +249,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl::BeginRender(void)
 	{
+		TestOpenglError("BeginRender 1");
+
 		//save current attributes
 		glPushClientAttrib(GL_CLIENT_ALL_ATTRIB_BITS);
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
@@ -251,10 +297,14 @@ namespace guiex
 		glInterleavedArrays(GL_T2F_C4UB_V3F , 0, m_pVertex);
 
 		m_nCurrentTexture = -1;
+
+		TestOpenglError("BeginRender 2");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl::EndRender(void)
 	{		
+		TestOpenglError("EndRender 1");
+
 		//restore model view matrix
 		glMatrixMode(GL_MODELVIEW);
 		glPopMatrix(); 
@@ -270,10 +320,14 @@ namespace guiex
 
 		//reset current texture
 		m_nCurrentTexture = -1;
+
+		TestOpenglError("EndRender 2");
 	}
 	//------------------------------------------------------------------------------
 	void	IGUIRender_opengl::UpdateStencil()
 	{
+		TestOpenglError("UpdateStencil 1");
+
 		glInterleavedArrays(GL_V3F , 0, m_pVertexForStencil);
 		
 		//clear stencil buffer to 1 for all area visible now
@@ -308,10 +362,14 @@ namespace guiex
 		glStencilOp( GL_KEEP, GL_KEEP, GL_KEEP );
 
 		glInterleavedArrays(GL_T2F_C4UB_V3F , 0, m_pVertex);
+
+		TestOpenglError("UpdateStencil 2");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl::RenderRectForStencil( const SClipRect& rRect )
 	{
+		TestOpenglError("RenderRectForStencil 1");
+
 		//set matrix
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
@@ -343,35 +401,9 @@ namespace guiex
 		m_pVertexForStencil[3].vertex[2] = 1.0f;
 
 		glDrawArrays( GL_POLYGON, 0, 4 );
-	}
-	
-	//void IGUIRender_opengl::RenderVBuffer(void)
-	//{
-	//	//do command
-	//	TListCommand::iterator itorEnd =  m_vecCommand.begin()+m_nCommandIdx;
-	//	for( TListCommand::iterator itor = m_vecCommand.begin();
-	//		itor != itorEnd;
-	//		++itor)
-	//	{
-	//		const SRenderCommand& rCommand = *itor;
-	//		switch(rCommand.m_nID)
-	//		{
-	//		case eCommand_SetTexture:
-	//			glBindTexture(GL_TEXTURE_2D, rCommand.m_nPara1);
-	//			break;
-	//		case eCommand_SetScissor:
-	//			glScissor(rCommand.m_nPara1, rCommand.m_nPara2, rCommand.m_nPara3, rCommand.m_nPara4);
-	//			break;
-	//		case eCommand_DrawVertex:
-	//			glDrawArrays(GL_TRIANGLES, rCommand.m_nPara1, rCommand.m_nPara2*3);
-	//			break;
-	//		default:
-	//			throw CGUIException("[IGUIRender_dx9::RenderVBuffer]:unknown render command");
-	//		}
-	//	}
 
-	//	ClearRenderList();
-	//}
+		TestOpenglError("RenderRectForStencil 2");
+	}
 	//------------------------------------------------------------------------------
 	void	IGUIRender_opengl::SetTexCoordinate(SVertex* pTexture, const CGUIRect& tex, EImageOperation eImageOperation)
 	{

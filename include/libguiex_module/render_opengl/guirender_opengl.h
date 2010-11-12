@@ -83,22 +83,22 @@ namespace guiex
 			const CGUIRect& rDestRect, real z, 
 			const CGUITextureImp* pTexture, const CGUIRect& rTextureRect, 
 			EImageOperation eImageOperation,
-			GUIARGB  rColor_topleft,
-			GUIARGB  rColor_topright,
-			GUIARGB  rColor_bottomleft,
-			GUIARGB  rColor_bottomright);
+			GUIARGB rColor_topleft,
+			GUIARGB rColor_topright,
+			GUIARGB rColor_bottomleft,
+			GUIARGB rColor_bottomright);
 
 		/** 
 		* @brief add a texture into render list
 		*/
-		virtual void	PushClipRect( const CGUIMatrix4& rMatrix, const CGUIRect& rClipRect );
-		virtual void	PopClipRect( );
+		virtual void PushClipRect( const CGUIMatrix4& rMatrix, const CGUIRect& rClipRect );
+		virtual void PopClipRect( );
 
 		// setup states etc
-		virtual void	BeginRender(void);
+		virtual void BeginRender(void);
 
 		// restore states
-		virtual void	EndRender(void);
+		virtual void EndRender(void);
 
 		/**
 		* @brief Creates a 'null' Texture object.
@@ -141,56 +141,56 @@ namespace guiex
 		* @brief Destroy the given Texture object.
 		* @param texture pointer to the Texture object to be destroyed
 		*/
-		virtual	void		DestroyTexture(CGUITextureImp* texture);
+		virtual	void DestroyTexture(CGUITextureImp* texture);
 
 		/**
 		* @brief Destroy all textures
 		*/
-		virtual	void		DestroyAllTexture();
+		virtual	void DestroyAllTexture();
 
 		/**
 		* @brief Return the current width of the display in pixels
 		* @return real value equal to the current width of the display in pixels.
 		*/
-		virtual uint16	GetWidth(void) const;
+		virtual uint16 GetWidth(void) const;
 
 
 		/**
 		* @brief Return the current height of the display in pixels
 		* @return real value equal to the current height of the display in pixels.
 		*/
-		virtual uint16	GetHeight(void) const;
+		virtual uint16 GetHeight(void) const;
 
 
 		/**
 		* @brief Return the maximum texture size available
 		* @return Size of the maximum supported texture in pixels (textures are always assumed to be square)
 		*/
-		virtual	uint32	GetMaxTextureSize(void) const;
+		virtual	uint32 GetMaxTextureSize(void) const;
 
 
 		/**
 		* @brief Return the horizontal display resolution dpi
 		* @return horizontal resolution of the display in dpi.
 		*/
-		virtual	uint32	GetHorzScreenDPI(void) const;
+		virtual	uint32 GetHorzScreenDPI(void) const;
 
 
 		/**
 		* @brief Return the vertical display resolution dpi
 		* @return vertical resolution of the display in dpi.
 		*/
-		virtual	uint32	GetVertScreenDPI(void) const;
+		virtual	uint32 GetVertScreenDPI(void) const;
 
 		/** 
 		* @brief toggle wire frame.
 		*/
-		virtual void	SetWireFrame( bool bWireFrame);
+		virtual void SetWireFrame( bool bWireFrame);
 
 		/**
 		* @brief used to delete this object
 		*/
-		virtual void	DeleteSelf();
+		virtual void DeleteSelf();
 
 	protected:
 		/** 
@@ -208,7 +208,7 @@ namespace guiex
 		/**
 		* @brief render a texture directly to the display
 		*/
-		void	RenderTextureDirect(const CGUIRect& rDestRect, real z, 
+		void RenderTextureDirect(const CGUIRect& rDestRect, real z, 
 			const CGUITextureImp* pTexture, const CGUIRect& rTextureRect, 
 			EImageOperation eImageOperation, 
 			GUIARGB  rColor_topleft,
@@ -217,9 +217,9 @@ namespace guiex
 			GUIARGB  rColor_bottomright);
 
 		// convert CGUIColor to opengl supported format
-		long	ColorToOpengl(GUIARGB col) const;
+		long ColorToOpengl(GUIARGB col) const;
 
-		void	makeGLMatrix(real gl_matrix[16], const CGUIMatrix4& m);
+		void makeGLMatrix(real gl_matrix[16], const CGUIMatrix4& m);
 
 
 		struct SClipRect
@@ -228,8 +228,10 @@ namespace guiex
 			real	m_gl_world_matrix[16];
 		};
 
-		void	UpdateStencil();
-		void	RenderRectForStencil( const SClipRect& rRect );
+		void UpdateStencil();
+		void RenderRectForStencil( const SClipRect& rRect );
+
+		void TestOpenglError( const char* info );
 
 	protected:
 
@@ -250,7 +252,7 @@ namespace guiex
 		};
 
 		// set the texture's coordinate
-		void			SetTexCoordinate(SVertex* pTexture, const CGUIRect& tex, EImageOperation eImageOperation);
+		void SetTexCoordinate(SVertex* pTexture, const CGUIRect& tex, EImageOperation eImageOperation);
 
 	protected:
 		GLint			m_maxTextureSize;		//!< maximum supported texture size (in pixels).
