@@ -151,6 +151,8 @@ namespace guiex
 		*/
 		CGUIRect&	ConstrainSize(const CGUISize& max_sz, const CGUISize& min_sz);
 
+		bool	IsEqual( const CGUIRect& rhs ) const;
+
 		/** 
 		* @brief compare operator
 		*/
@@ -260,6 +262,14 @@ namespace guiex
 		m_fBottom = pos.y + sz.m_fHeight;
 		m_fLeft = pos.x;
 		m_fRight = pos.x + sz.m_fWidth;
+	}
+	//------------------------------------------------------------------------------
+	inline bool CGUIRect::IsEqual( const CGUIRect& rhs ) const
+	{
+		return (GUI_REAL_EQUAL(m_fLeft , rhs.m_fLeft) && 
+			GUI_REAL_EQUAL(m_fRight , rhs.m_fRight) && 
+			GUI_REAL_EQUAL(m_fTop , rhs.m_fTop) &&
+			GUI_REAL_EQUAL(m_fBottom , rhs.m_fBottom));
 	}
 	//------------------------------------------------------------------------------
 	inline bool	CGUIRect::operator==(const CGUIRect& rhs) const

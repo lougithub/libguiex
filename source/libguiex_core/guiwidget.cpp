@@ -807,6 +807,19 @@ namespace guiex
 		rPos.y = aPos.y;
 	}
 	//------------------------------------------------------------------------------
+	void CGUIWidget::LocalToWorld( CGUIVector3& rPos )
+	{
+		const CGUIMatrix4& rWorldMatrix = getFullTransform();
+		rPos = rWorldMatrix*rPos;
+
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::WorldToLocal( CGUIVector3& rPos )
+	{
+		const CGUIMatrix4& rWorldInverseMatrix = getFullInverseTransform();
+		rPos = rWorldInverseMatrix*rPos;
+	}
+	//------------------------------------------------------------------------------
 	void CGUIWidget::ParentToWorld( CGUIVector2& rPos )
 	{
 		if(GetParent())
@@ -1889,16 +1902,26 @@ namespace guiex
 	{
 		return m_aClientArea;
 	}
-//------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------
 	const CGUIRect&	CGUIWidget::GetBoundArea() const
 	{
 		return m_aBoundArea;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIRenderRect&	CGUIWidget::GetRenderBound() const
-	{
-		return m_aBound;
-	}
+	//void CGUIWidget::SetBoundArea( const CGUIRect& rBoundsRect )
+	//{
+	//	m_aBoundArea = rBoundsRect;
+
+	//	//set size
+	//	SetPixelSize( m_aBoundArea.GetSize() );
+
+	//	////set position
+	//	//CGUIVector2 aOffsetPos( -m_aWidgetSize.m_aPixelValue.m_fWidth*m_aWidgetAnchorPoint.x,
+	//	//	-m_aWidgetSize.m_aPixelValue.m_fHeight*m_aWidgetAnchorPoint.y );
+	//	//m_aBoundArea.SetRect( aOffsetPos, m_aWidgetSize.m_aPixelValue );
+	//	//m_aWidgetSize.m_aPixelValue = rBoundsRect.GetSize();
+
+	//}
 	//------------------------------------------------------------------------------
 	const CGUIVector2&	CGUIWidget::GetAnchorPoint()
 	{

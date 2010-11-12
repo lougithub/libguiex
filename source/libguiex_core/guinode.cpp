@@ -63,26 +63,24 @@ namespace guiex
 		if (m_pParent)
 		{
 			// Combine orientation with that of parent
-			CGUIQuaternion mParentQ = m_pParent->getDerivedOrientation();
-			m_aDerivedOrientation = mParentQ * m_aOrientation;
-
-			// Change position vector based on parent's orientation & scale
-			m_aDerivedPosition = mParentQ * (m_aPosition * m_pParent->getDerivedScale());
+			CGUIQuaternion parentOrientation = m_pParent->getDerivedOrientation();
+			m_aDerivedOrientation = parentOrientation * m_aOrientation;
 
 			// Update scale
+			CGUIVector3 parentScale = m_pParent->getDerivedScale();
 			if (m_bInheritScale)
 			{
 				// Scale own position by parent scale
-				CGUIVector3 parentScale = m_pParent->getDerivedScale();
-				// Set own scale, NB just combine as equivalent axes, no shearing
 				m_aDerivedScale = m_aScale * parentScale;
-
 			}
 			else
 			{
 				// No inheritence
 				m_aDerivedScale = m_aScale;
 			}
+
+			// Change position vector based on parent's orientation & scale
+			m_aDerivedPosition = parentOrientation * (m_aPosition * parentScale);
 
 			// Add altered position vector to parents
 			m_aDerivedPosition += m_pParent->getDerivedPosition();
@@ -95,8 +93,8 @@ namespace guiex
 			m_aDerivedScale = m_aScale;
 		}
 
-		makeInverseTransform( getDerivedPosition(), getDerivedScale(), getDerivedOrientation(), mCachedInverseTransform); 
 		makeTransform( getDerivedPosition(), getDerivedScale(), getDerivedOrientation(), mCachedTransform);
+		mCachedInverseTransform = mCachedTransform.inverse();
 	}
 	//-----------------------------------------------------------------------
 	const CGUIQuaternion& CGUINode::getOrientation() const
@@ -320,41 +318,6 @@ namespace guiex
 
 		destMatrix = rot3x3 * scale3x3;
 		destMatrix.setTrans(position);
-	}
-	//-----------------------------------------------------------------------
-	void CGUINode::makeInverseTransform(const CGUIVector3& position, const CGUIVector3& scale, 
-		const CGUIQuaternion& orientation, CGUIMatrix4& destMatrix)
-	{
-		destMatrix = CGUIMatrix4::IDENTITY;
-
-		// Invert the parameters
-		CGUIVector3 invTranslate = -position;
-		CGUIVector3 invScale;
-		invScale.x = 1 / scale.x;
-		invScale.y = 1 / scale.y;
-		invScale.z = 1 / scale.z;
-
-		CGUIQuaternion invRot = orientation.Inverse();
-
-		// Because we're inverting, order is translation, rotation, scale
-		// So make translation relative to scale & rotation
-		invTranslate.x *= invScale.x; // scale
-		invTranslate.y *= invScale.y; // scale
-		invTranslate.z *= invScale.z; // scale
-		invTranslate = invRot * invTranslate; // rotate
-
-		// Next, make a 3x3 rotation matrix and apply inverse scale
-		CGUIMatrix3 rot3x3, scale3x3;
-		invRot.ToRotationMatrix(rot3x3);
-		scale3x3 = CGUIMatrix3::ZERO;
-		scale3x3[0][0] = invScale.x;
-		scale3x3[1][1] = invScale.y;
-		scale3x3[2][2] = invScale.z;
-
-		// Set up final matrix with scale & rotation
-		destMatrix = scale3x3 * rot3x3;
-
-		destMatrix.setTrans(invTranslate);
 	}
 	//-----------------------------------------------------------------------
 	void CGUINode::getWorldTransforms(CGUIMatrix4* xform)

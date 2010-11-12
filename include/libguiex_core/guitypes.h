@@ -158,6 +158,13 @@ namespace guiex
 		GUI_PF_ARGB_32,
 	};
 
+	enum ELinearType
+	{
+		eLinearType_Normal = 0,
+		eLinearType_EaseIn,
+		eLinearType_EaseInOut,
+	};
+
 }//namespace guiex
 
 #endif //__GUI_TYPES_20060322_H__

@@ -33,14 +33,14 @@ namespace guiex
 #define GUI_AS_REGISTER(asname)	\
 	::guiex::CGUIAsFactory::Instance()->RegisterGenerator( #asname, ::guiex::asname##_Generator::GenerateSelf())
 
-#define GUI_AS_GENERATE( asname, widget )	\
-	(::guiex::asname*)( ::guiex::CGUIAsFactory::Instance()->GenerateAs(#asname, widget))
+#define GUI_AS_GENERATE( asname )	\
+	(::guiex::asname*)( ::guiex::CGUIAsFactory::Instance()->GenerateAs(#asname))
 
 #define GUI_USER_AS_REGISTER(asname)	\
 	::guiex::CGUIAsFactory::Instance()->RegisterGenerator( #asname, asname##_Generator::GenerateSelf())
 
-#define GUI_USER_AS_GENERATE( asname, widget )	\
-	static_cast<asname*>( ::guiex::CGUIAsFactory::Instance()->GenerateEvent(#asname, widget))
+#define GUI_USER_AS_GENERATE( asname )	\
+	static_cast<asname*>( ::guiex::CGUIAsFactory::Instance()->GenerateEvent(#asname))
 
 
 
@@ -62,29 +62,29 @@ namespace guiex
 		* @brief register generator
 		* @return 0 for successful, vice versa
 		*/
-		int		RegisterGenerator(const CGUIString& rName, CGUIAsGenerator* pGenerator );
+		int RegisterGenerator(const CGUIString& rName, CGUIAsGenerator* pGenerator );
 
 		/**
 		* @brief unregister generator
 		* @return 0 for successful, vice versa
 		*/
-		int		UnregisterGenerator(const CGUIString& rName);
+		int UnregisterGenerator(const CGUIString& rName);
 
 		/**
 		* @brief unregister all generator
 		*/
-		void	UnregisterAllGenerator();
+		void UnregisterAllGenerator();
 
 
 		/**
 		* @brief create a as by name
 		*/
-		CGUIAs*	GenerateAs(const CGUIString& rName, CGUIWidget* pReceiver);
+		CGUIAs*	GenerateAs(const CGUIString& rName);
 
 		/**
 		* @brief destroy as
 		*/
-		int		DestroyAs(CGUIAs*	pEvent);
+		int	DestroyAs(CGUIAs*	pEvent);
 
 
 	protected:

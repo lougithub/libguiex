@@ -263,10 +263,15 @@ namespace guiex
 		glLoadIdentity();
 		const CGUISize& rSize = CGUIWidgetSystem::Instance()->GetScreenSize();
 #if 1
-		gluOrtho2D(0.0, rSize.m_fWidth,rSize.m_fHeight,0.0 );
+		glOrtho(0.0, rSize.m_fWidth,rSize.m_fHeight,0.0, -100000,100000 );
 #else
-		gluPerspective( 90, rSize.m_fWidth/rSize.m_fHeight, 0.1, 1000 );
-		gluLookAt( rSize.m_fWidth/2,rSize.m_fHeight/2,-rSize.m_fWidth/2,rSize.m_fWidth/2,rSize.m_fHeight/2,0, 0,-1,0);
+		real fPerspectiveDegree = 45;
+		gluPerspective( fPerspectiveDegree, rSize.m_fWidth/rSize.m_fHeight, 0.1, 100000 );
+		real fZDistance = rSize.m_fHeight/2 / CGUIMath::Tan( CGUIDegree(fPerspectiveDegree/2));
+		gluLookAt( 
+			rSize.m_fWidth/2,rSize.m_fHeight/2,-fZDistance,
+			rSize.m_fWidth/2,rSize.m_fHeight/2,0, 
+			0,-1,0);
 #endif
 
 		//update modelview matrix

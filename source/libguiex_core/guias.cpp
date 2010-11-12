@@ -40,13 +40,14 @@ namespace guiex
 	//*****************************************************************************
 
 	//------------------------------------------------------------------------------
-	CGUIAs::CGUIAs(const char* pAsName, CGUIWidget* pReceiver)
-		:m_pReceiver(pReceiver)
+	CGUIAs::CGUIAs(const char* pAsName)
+		:m_pReceiver(NULL)
 		,m_bRetired(false)
 		,m_fTotalTime(0.1f)
 		,m_fElapsedTime(0.0f)
 		,m_strAsName(pAsName)
 		,m_pAsGenerator(NULL)
+		,m_bLooping(false)
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -61,22 +62,32 @@ namespace guiex
 		m_listSuccessor.clear();
 	}
 	//------------------------------------------------------------------------------
-	const CGUIString&		CGUIAs::GetAsName() const
+	const CGUIString& CGUIAs::GetAsName() const
 	{
 		return m_strAsName;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIAs::Retire( bool bRetired )
+	void CGUIAs::Retire( bool bRetired )
 	{
 		m_bRetired = bRetired;
 	}
 	//------------------------------------------------------------------------------
-	bool	CGUIAs::IsRetired()
+	bool CGUIAs::IsRetired()
 	{
 		return m_bRetired;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIAs::SetReceiver(CGUIWidget* pReceiver)
+	void CGUIAs::SetLooping( bool bLooping )
+	{
+		m_bLooping = bLooping;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIAs::IsLooping()
+	{
+		return m_bLooping;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAs::SetReceiver(CGUIWidget* pReceiver)
 	{
 		m_pReceiver = pReceiver;
 	}
@@ -86,7 +97,7 @@ namespace guiex
 		return m_pReceiver;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIAs::SetTotalTime(real fTotalTime)
+	void CGUIAs::SetTotalTime(real fTotalTime)
 	{
 		if( fTotalTime <= 0.0f )
 		{
@@ -95,22 +106,29 @@ namespace guiex
 		m_fTotalTime = fTotalTime;
 	}
 	//------------------------------------------------------------------------------
-	real	CGUIAs::GetTotalTime( ) const
+	real CGUIAs::GetTotalTime( ) const
 	{
 		return m_fTotalTime;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIAs::Update( real fDeltaTime )
+	void CGUIAs::Update( real fDeltaTime )
 	{
 		m_fElapsedTime += fDeltaTime;
 		if( m_fElapsedTime >= m_fTotalTime )
 		{
-			m_fElapsedTime = m_fTotalTime;
-			Retire( true );
+			if( IsLooping() )
+			{
+				m_fElapsedTime = m_fElapsedTime - m_fTotalTime;
+			}
+			else
+			{
+				m_fElapsedTime = m_fTotalTime;
+				Retire( true );
+			}
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIAs::PushSuccessor( CGUIAs* pAs)
+	void CGUIAs::PushSuccessor( CGUIAs* pAs)
 	{
 		GUI_ASSERT(pAs, "wrong parameter");
 		m_listSuccessor.push_back(pAs);
@@ -130,7 +148,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIAs::SetGenerator( const CGUIAsGenerator* pGenerator)
+	void CGUIAs::SetGenerator( const CGUIAsGenerator* pGenerator)
 	{
 		m_pAsGenerator = pGenerator;
 	}
@@ -152,21 +170,21 @@ namespace guiex
 	
 	
 	//------------------------------------------------------------------------------
-	CGUIAsAlpha::CGUIAsAlpha(CGUIWidget* pReceiver)
-		:CGUIAs("CGUIAsAlpha", pReceiver)
+	CGUIAsAlpha::CGUIAsAlpha( )
+		:CGUIAs("CGUIAsAlpha" )
 		,m_fBeginValue(0.0f)
 		,m_fEndValue(0.0f)
 	{
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIAsAlpha::SetAlphaSequence(real fBeginValue, real fEndValue, real fTotalTime)
+	void CGUIAsAlpha::SetAlphaSequence(real fBeginValue, real fEndValue, real fTotalTime)
 	{	
 		m_fBeginValue = fBeginValue;
 		m_fEndValue = fEndValue;
 		SetTotalTime( fTotalTime );
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIAsAlpha::Update( real fDeltaTime )
+	void CGUIAsAlpha::Update( real fDeltaTime )
 	{
 		CGUIAs::Update( fDeltaTime );
 		
@@ -183,19 +201,19 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_AS_GENERATOR_IMPLEMENT( CGUIAsRotation );
 	//------------------------------------------------------------------------------
-	CGUIAsRotation::CGUIAsRotation(CGUIWidget* pReceiver)
-		:CGUIAs("CGUIAsRotation", pReceiver)
+	CGUIAsRotation::CGUIAsRotation()
+		:CGUIAs("CGUIAsRotation")
 	{
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIAsRotation::SetRotationSequence(const CGUIVector3& rBeginValue, const CGUIVector3& rEndValue, real fTotalTime)
+	void CGUIAsRotation::SetRotationSequence(const CGUIVector3& rBeginValue, const CGUIVector3& rEndValue, real fTotalTime)
 	{	
 		m_vBeginValue = rBeginValue;
 		m_vEndValue = rEndValue;
 		SetTotalTime( fTotalTime );
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIAsRotation::Update( real fDeltaTime )
+	void CGUIAsRotation::Update( real fDeltaTime )
 	{
 		CGUIAs::Update( fDeltaTime );
 		
@@ -211,19 +229,19 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_AS_GENERATOR_IMPLEMENT( CGUIAsScale );
 	//------------------------------------------------------------------------------
-	CGUIAsScale::CGUIAsScale(CGUIWidget* pReceiver)
-		:CGUIAs("CGUIAsScale", pReceiver)
+	CGUIAsScale::CGUIAsScale()
+		:CGUIAs("CGUIAsScale")
 	{
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIAsScale::SetScaleSequence(const CGUISize& aBeginValue, const CGUISize& aEndValue, real fTotalTime )
+	void CGUIAsScale::SetScaleSequence(const CGUISize& aBeginValue, const CGUISize& aEndValue, real fTotalTime )
 	{	
 		m_aBeginValue = aBeginValue;
 		m_aEndValue = aEndValue;
 		SetTotalTime( fTotalTime );
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIAsScale::Update( real fDeltaTime )
+	void CGUIAsScale::Update( real fDeltaTime )
 	{
 		CGUIAs::Update( fDeltaTime );
 
@@ -232,31 +250,25 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 
-
-
-
-
-
-
 	//*****************************************************************************
 	//	CGUIAsPosition
 	//*****************************************************************************
 	//------------------------------------------------------------------------------
 	GUI_AS_GENERATOR_IMPLEMENT( CGUIAsPosition );
 	//------------------------------------------------------------------------------
-	CGUIAsPosition::CGUIAsPosition(CGUIWidget* pReceiver)
-		:CGUIAs("CGUIAsPosition", pReceiver)
+	CGUIAsPosition::CGUIAsPosition()
+		:CGUIAs("CGUIAsPosition")
 	{
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIAsPosition::SetPositionSequence(const CGUIVector2& aBeginValue, const CGUIVector2& aEndValue, real fTotalTime )
+	void CGUIAsPosition::SetPositionSequence(const CGUIVector2& aBeginValue, const CGUIVector2& aEndValue, real fTotalTime )
 	{	
 		m_aBeginValue = aBeginValue;
 		m_aEndValue = aEndValue;
 		SetTotalTime( fTotalTime );
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIAsPosition::Update( real fDeltaTime )
+	void CGUIAsPosition::Update( real fDeltaTime )
 	{
 		CGUIAs::Update( fDeltaTime );
 

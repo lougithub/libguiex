@@ -86,7 +86,7 @@ namespace guiex
 		m_mapGenerator.clear();
 	}
 	//------------------------------------------------------------------------------
-	CGUIAs*	CGUIAsFactory::GenerateAs(const CGUIString& rName, CGUIWidget* pReceiver)
+	CGUIAs*	CGUIAsFactory::GenerateAs(const CGUIString& rName)
 	{
 		TMapGenerator::iterator itor = m_mapGenerator.find( rName );
 		if( itor == m_mapGenerator.end())
@@ -98,7 +98,7 @@ namespace guiex
 		}
 		else
 		{
-			CGUIAs* pAs = (*itor).second->GenerateAs(pReceiver);
+			CGUIAs* pAs = (*itor).second->GenerateAs( );
 			if( !pAs )
 			{
 				throw CGUIException(

@@ -109,24 +109,30 @@ void CWindowBox::Reset ()
 //-----------------------------------------------------------------------
 void	CWindowBox::MoveWindowPosition(int deltaX, int deltaY)
 {
-	guiex::CGUIVector2 aOldPoint = m_pSelectWidget->GetPixelPosition();
-	m_pSelectWidget->LocalToWorld(aOldPoint);
-	guiex::CGUIVector2 aNewPoint = aOldPoint + guiex::CGUIVector2(deltaX, deltaY);
-	m_pSelectWidget->WorldToLocal( aNewPoint );
-	m_pSelectWidget->SetPixelPosition(aNewPoint);
+	guiex::CGUIVector2 aLocalOldPoint = m_pSelectWidget->GetPixelPosition();
+	guiex::CGUIVector3 aWorldOldPoint( aLocalOldPoint.x, aLocalOldPoint.y, 0.0f );
+	m_pSelectWidget->GetParent()->LocalToWorld(aWorldOldPoint);
+
+	guiex::CGUIVector3 aTestPoint = aWorldOldPoint;
+	m_pSelectWidget->GetParent()->WorldToLocal(aTestPoint);
+
+	guiex::CGUIVector3 aWorldNewPoint = aWorldOldPoint + guiex::CGUIVector3(deltaX, deltaY, 0.0f);
+	guiex::CGUIVector3 aLocalNewPoint = aWorldNewPoint;
+	m_pSelectWidget->GetParent()->WorldToLocal( aLocalNewPoint );
+	m_pSelectWidget->SetPixelPosition(aLocalNewPoint.x, aLocalNewPoint.y);
 	m_pSelectWidget->Refresh();
 	Reset();
 }
 //-----------------------------------------------------------------------
 void	CWindowBox::SetWindowSize(float deltaleft, float deltatop, float deltaright, float deltabottom)
 {
-	//guiex::CGUIVector2 aZeroPoint;
-	//m_pSelectWidget->WorldToLocal( aZeroPoint );
-	//guiex::CGUIVector2 aDeltaPoint( deltaleft+deltaright, deltatop+deltabottom );
-	//m_pSelectWidget->WorldToLocal( aDeltaPoint );
-	//CGUISize aPixelSize = m_pSelectWidget->GetPixelSize();
-	//aPixelSize.m_fWidth 
-	//	guiex::CGUIRect aRect = m_pSelectWidget->ExpandBoundArea( deltaleft, deltatop, deltaright, deltabottom );
+	guiex::CGUIRect aBoundRect = m_pSelectWidget->GetBoundArea();
+	aBoundRect.m_fLeft += deltaleft;
+	aBoundRect.m_fTop += deltatop;
+	aBoundRect.m_fRight += deltaright;
+	aBoundRect.m_fBottom += deltabottom;
+	m_pSelectWidget->SetPixelSize(aBoundRect.GetSize());
+	m_pSelectWidget->Refresh();
 	Reset();
 }
 //-----------------------------------------------------------------------

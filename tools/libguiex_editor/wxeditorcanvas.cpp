@@ -285,7 +285,18 @@ void WxGLCanvas::UpdateCanvasSize(const wxSize& rSize)
 	SetCurrent();
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
+
+#if 1
 	gluOrtho2D(0.0, rSize.GetWidth(),rSize.GetHeight(),0.0 );
+#else
+	real fPerspectiveDegree = 45;
+	gluPerspective( fPerspectiveDegree, rSize.GetWidth()/rSize.GetHeight(), 0.1, 100000 );
+	real fZDistance = rSize.GetHeight()/2 / guiex::CGUIMath::Tan( CGUIDegree(fPerspectiveDegree/2));
+	gluLookAt( 
+		rSize.GetWidth()/2,rSize.GetHeight()/2,-fZDistance,
+		rSize.GetWidth()/2,rSize.GetHeight()/2,0, 
+		0,-1,0);
+#endif
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();	
@@ -546,6 +557,8 @@ void WxGLCanvas::OnMouseLeftDown(wxMouseEvent& event)
 
 	// Save this state for during mouse movements
 	m_mousePressed = true;
+
+	SetFocus( );
 }
 //------------------------------------------------------------------------------
 void WxGLCanvas::OnMouseLeftUp(wxMouseEvent& event)

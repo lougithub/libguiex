@@ -542,26 +542,12 @@ bool		WxMainFrame::GetUIInfo( bool bTryCommandLine)
 	{
 		arrayProjects.Add( wxConvUTF8.cMB2WC( vecProjects[i].c_str()));
 	}
-	wxSingleChoiceDialog aChoiceDlg( this, _T("select project"), _T("select project files"), arrayProjects );
+	wxSingleChoiceDialog aChoiceDlg( this, _T("select resource"), _T("select resource project"), arrayProjects );
 	if( aChoiceDlg.ShowModal() != wxID_OK )
 	{
 		return false;
 	}
 	m_strUIProjectFilename = vecProjects[aChoiceDlg.GetSelection()];
-
-	////chose page file
-	//const std::vector<guiex::CGUIString>& vecPages = guiex::CGUIProjectInfoManager::Instance()->GetProjectInfo(m_strUIProjectFilename)->GetWidgetFiles();
-	//wxArrayString arrayPages;
-	//for( unsigned i=0; i<vecPages.size(); ++i )
-	//{
-	//	arrayPages.Add( wxConvUTF8.cMB2WC( vecPages[i].c_str()));
-	//}
-	//wxSingleChoiceDialog aPageChoiceDlg( this, _T("select project"), _T("select project files"), arrayPages );
-	//if( aPageChoiceDlg.ShowModal() != wxID_OK )
-	//{
-	//	return false;
-	//}
-	//m_strUIPageFilename = vecPages[aPageChoiceDlg.GetSelection()];
 
 	return true;
 }

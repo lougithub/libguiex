@@ -69,7 +69,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIAs(const char* pAsName, CGUIWidget* pReceiver);
+		CGUIAs( const char* pAsName );
 
 		/**
 		* @brief destructor
@@ -79,22 +79,25 @@ namespace guiex
 		/**
 		* @brief get as name
 		*/
-		const CGUIString&		GetAsName() const;
+		const CGUIString& GetAsName() const;
 
 		/**
 		* @brief set the flag after this as has been processed.
 		*/
-		void	Retire( bool bRetired );
+		void Retire( bool bRetired );
 
 		/**
 		* @brief whether the as is retired.
 		*/
-		bool	IsRetired();
+		bool IsRetired();
+
+		void SetLooping( bool bLooping );
+		bool IsLooping();
 
 		/**
 		* @brief set widget which receives this as
 		*/
-		void	SetReceiver(CGUIWidget* pReceiver);
+		void SetReceiver(CGUIWidget* pReceiver);
 
 		/**
 		* @brief Get widget which receives this as
@@ -104,17 +107,17 @@ namespace guiex
 		/**
 		* @brief set delay time
 		*/
-		void	SetTotalTime( real fTotalTime );
+		void SetTotalTime( real fTotalTime );
 
 		/**
 		* @brief get total time
 		*/
-		real	GetTotalTime( ) const;
+		real GetTotalTime( ) const;
 
 		/**
 		* @brief add a successor as
 		*/
-		void		PushSuccessor( CGUIAs* pAs);
+		void PushSuccessor( CGUIAs* pAs);
 
 		/**
 		* @brief get successor, 
@@ -125,10 +128,10 @@ namespace guiex
 		/**
 		* @brief Update the as
 		*/
-		virtual void	Update( real fDeltaTime );
+		virtual void Update( real fDeltaTime );
 
 		///is this as created by CGUIAsFactory
-		bool	IsCreateByFactory() const
+		bool IsCreateByFactory() const
 		{
 			return m_pAsGenerator!=NULL;
 		}
@@ -137,28 +140,52 @@ namespace guiex
 		///widget generator
 		friend class CGUIAsFactory;
 		//!<set generator
-		void	SetGenerator( const CGUIAsGenerator* pGenerator);
+		void SetGenerator( const CGUIAsGenerator* pGenerator);
 		//!<get generator
 		const CGUIAsGenerator* GetGenerator() const;
 
 	protected:
-		real		m_fTotalTime;			//!<delay-time, to control when to process this as, millisecond
-		real		m_fElapsedTime;			
+		real m_fTotalTime;			//!<delay-time, to control when to process this as, millisecond
+		real m_fElapsedTime;			
 
 	private:		
-		CGUIString	m_strAsName;			//!<name of this as
-		bool		m_bRetired;				//!<should this as be retired
-		CGUIWidget*	m_pReceiver;			//!<receiver
+		CGUIString m_strAsName;			//!<name of this as
+		bool m_bRetired;				//!<should this as be retired
+		bool m_bLooping;
+		CGUIWidget*	m_pReceiver;		//!<receiver
 		
 		typedef std::list<CGUIAs*> TListSuccessor;
 		TListSuccessor m_listSuccessor;		//!<successor
 
 	private:
-		const CGUIAsGenerator*	m_pAsGenerator;	//!<generator which used to create as
+		const CGUIAsGenerator* m_pAsGenerator;	//!<generator which used to create as
 	};
 
 
+	template< class T >
+	class CGUIAsLinearBase : public CGUIAs
+	{
+		/**
+		* @brief constructor
+		*/
+		CGUIAsLinearBase( const char* pAsName )
+			:CGUIAs( pAsName )
+			,m_eLinearType( eLinearType_Normal )
+		{
+		}
 
+		ELinearType GetLinearType( ) const
+		{
+			return m_eLinearType;
+		}
+		void GetLinearType( ELinearType eType ) const
+		{
+			m_eLinearType = eType;
+		}
+
+	protected:
+		ELinearType	m_eLinearType;
+	};
 
 
 	//*****************************************************************************
@@ -174,21 +201,21 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIAsAlpha(CGUIWidget* pReceiver);
+		CGUIAsAlpha();
 
 		/** 
 		 * @brief set the parameter of action sequence
 		 */
-		void	SetAlphaSequence( real fBeginValue, real fEndValue, real fTotalTime );
+		void SetAlphaSequence( real fBeginValue, real fEndValue, real fTotalTime );
 
 		/**
 		* @brief update the event.
 		*/
-		virtual void	Update( real fDeltaTime );
+		virtual void Update( real fDeltaTime );
 
 	protected:
-		real	m_fBeginValue;
-		real	m_fEndValue;
+		real m_fBeginValue;
+		real m_fEndValue;
 	};
 	GUI_AS_GENERATOR_DECLARE( CGUIAsAlpha);
 
@@ -208,21 +235,21 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIAsScale(CGUIWidget* pReceiver);
+		CGUIAsScale();
 
 		/** 
 		* @brief set the parameter of action sequence
 		*/
-		void	SetScaleSequence(const CGUISize& aBeginValue, const CGUISize& aEndValue, real fTotalTime );
+		void SetScaleSequence(const CGUISize& aBeginValue, const CGUISize& aEndValue, real fTotalTime );
 
 		/**
 		* @brief Update the event.
 		*/
-		virtual void	Update( real fDeltaTime );
+		virtual void Update( real fDeltaTime );
 
 	protected:
-		CGUISize	m_aBeginValue;
-		CGUISize	m_aEndValue;
+		CGUISize m_aBeginValue;
+		CGUISize m_aEndValue;
 	};
 	GUI_AS_GENERATOR_DECLARE( CGUIAsScale);
 
@@ -240,17 +267,17 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIAsRotation(CGUIWidget* pReceiver);
+		CGUIAsRotation();
 
 		/** 
 		* @brief set the parameter of action sequence
 		*/
-		void	SetRotationSequence(const CGUIVector3& rBeginValue, const CGUIVector3& rEndValue, real fTotalTime);
+		void SetRotationSequence(const CGUIVector3& rBeginValue, const CGUIVector3& rEndValue, real fTotalTime);
 
 		/**
 		* @brief Update the event.
 		*/
-		virtual void	Update( real fDeltaTime );
+		virtual void Update( real fDeltaTime );
 
 	protected:
 		CGUIVector3	m_vBeginValue;
@@ -271,17 +298,17 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIAsPosition(CGUIWidget* pReceiver);
+		CGUIAsPosition();
 
 		/** 
 		* @brief set the parameter of action sequence
 		*/
-		void	SetPositionSequence(const CGUIVector2& aBeginValue, const CGUIVector2& aEndValue, real fTotalTime );
+		void SetPositionSequence(const CGUIVector2& aBeginValue, const CGUIVector2& aEndValue, real fTotalTime );
 
 		/**
 		* @brief Update the event.
 		*/
-		virtual void	Update( real fDeltaTime );
+		virtual void Update( real fDeltaTime );
 
 	protected:
 		CGUIVector2	m_aBeginValue;
@@ -291,11 +318,6 @@ namespace guiex
 	GUI_AS_GENERATOR_DECLARE( CGUIAsPosition);
 
 }//namespace guiex
-
-
-
-
-
 
 #endif //__GUI_AS_20071121_H__
 

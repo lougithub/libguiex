@@ -23,14 +23,14 @@
 class GUIEXPORT asname##_Generator : public ::guiex::CGUIAsGenerator	\
 	{														\
 	public:													\
-	virtual ::guiex::CGUIAs*	GenerateAs(CGUIWidget* pReceiver) const;			\
+	virtual ::guiex::CGUIAs*	GenerateAs() const;			\
 	virtual void DestroyAs(const ::guiex::CGUIAs* pAS) const;\
 	static asname##_Generator* GenerateSelf();					\
 	virtual void DestroySelf();							\
 	protected:												\
 	asname##_Generator();										\
 	};														\
-	GUIEXPORT	asname*	CreateAs_##asname(CGUIWidget* pReceiver);
+	GUIEXPORT	asname*	CreateAs_##asname();
 
 
 #define GUI_AS_GENERATOR_IMPLEMENT(asname)	\
@@ -38,9 +38,9 @@ class GUIEXPORT asname##_Generator : public ::guiex::CGUIAsGenerator	\
 	:CGUIAsGenerator(#asname)							\
 	{														\
 	}														\
-	::guiex::CGUIAs* asname##_Generator::GenerateAs(CGUIWidget* pReceiver) const			\
+	::guiex::CGUIAs* asname##_Generator::GenerateAs( ) const			\
 	{														\
-	return new asname(pReceiver);									\
+	return new asname();									\
 	}														\
 	void asname##_Generator::DestroyAs(const ::guiex::CGUIAs* pAS) const\
 	{														\
@@ -54,16 +54,16 @@ class GUIEXPORT asname##_Generator : public ::guiex::CGUIAsGenerator	\
 	{														\
 	delete this;									\
 	}												\
-	asname*	CreateAs_##asname(CGUIWidget* pReceiver)\
+	asname*	CreateAs_##asname()\
 	{												\
-		return static_cast< ::guiex::asname* >( ::guiex::CGUIAsFactory::Instance()->GenerateAs(#asname, pReceiver));\
+		return static_cast< ::guiex::asname* >( ::guiex::CGUIAsFactory::Instance()->GenerateAs(#asname));\
 	}
 
 #define GUI_USER_AS_GENERATOR_DECLARE(asname)		\
 class asname##_Generator : public ::guiex::CGUIAsGenerator	\
 	{														\
 	public:													\
-	virtual ::guiex::CGUIAs*	GenerateAs(CGUIWidget* pReceiver) const;			\
+	virtual ::guiex::CGUIAs*	GenerateAs() const;			\
 	virtual void DestroyAs(const ::guiex::CGUIAs* pAS) const;\
 	static asname##_Generator* GenerateSelf();					\
 	virtual void DestroySelf();							\
@@ -76,9 +76,9 @@ class asname##_Generator : public ::guiex::CGUIAsGenerator	\
 	:CGUIAsGenerator(#asname)							\
 	{														\
 	}														\
-	::guiex::CGUIAs* asname##_Generator::GenerateAs(CGUIWidget* pReceiver) const			\
+	::guiex::CGUIAs* asname##_Generator::GenerateAs() const			\
 	{														\
-	return new asname(pReceiver);									\
+	return new asname();									\
 	}														\
 	void asname##_Generator::DestroyAs(const ::guiex::CGUIAs* pAS) const\
 	{														\
@@ -127,7 +127,7 @@ namespace guiex
 		* @brief generate a as
 		* @return pointer of the as, return NULL for failed to generate it
 		*/
-		virtual CGUIAs*	GenerateAs(CGUIWidget* pReceiver) const=0;
+		virtual CGUIAs*	GenerateAs( ) const=0;
 
 		/**
 		* @brief destroy as

@@ -524,13 +524,11 @@ namespace guiex
 		// widget operation - position
 		////////////////////////////////////////////////////////////////////////////
 
-		//get bound rect
-		const CGUIRenderRect& GetRenderBound() const;
 		const CGUIRect& GetBoundArea() const;
+		//void SetBoundArea( const CGUIRect& rBoundsRect );
+
 		const CGUIRect&	GetClientArea() const;
 		const CGUIRect&	GetClipArea() const;
-
-		void ExpandBoundArea( real deltaleft, real deltatop, real deltaright, real deltabottom);
 
 		CGUISize GetParentSize() const;
 
@@ -563,40 +561,19 @@ namespace guiex
 		void SetRotation(const CGUIVector3& rRotation);
 		const CGUIVector3& GetRotation( ) const;
 
-		/**
-		* @brief client coordinate to global coordinate
-		*/
 		void LocalToWorld( CGUIVector2& rPos );
-
-		/**
-		* @brief global coordinate to client coordinate
-		*/
 		void WorldToLocal( CGUIVector2& rPos );
 
-		/**
-		* @brief client coordinate to global coordinate
-		*/
-		void LocalToWorld( const CGUIRect& rRect, CGUIRenderRect& rRenderRect );
+		void LocalToWorld( CGUIVector3& rPos );
+		void WorldToLocal( CGUIVector3& rPos );
 
-		/**
-		* @brief parent coordinate to global coordinate
-		*/
 		void ParentToWorld( CGUIVector2& rPos );
-
-		/**
-		* @brief global coordinate to parent coordinate
-		*/
 		void WorldToParent( CGUIVector2& rPos );
 
-		/**
-		* @brief parent coordinate to local coordinate
-		*/
 		void ParentToLocal( CGUIVector2& rPos );
-
-		/**
-		* @brief local coordinate to parent coordinate
-		*/
 		void LocalToParent( CGUIVector2& rPos );
+
+		void LocalToWorld( const CGUIRect& rRect, CGUIRenderRect& rRenderRect );
 
 		const CGUIVector2&	GetAnchorPoint();								//get anchor point, the value of it is from 0.0f to 1.0f
 		void				SetAnchorPoint(const CGUIVector2&rAnchorPoint);		//set anchor point
