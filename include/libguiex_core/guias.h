@@ -21,6 +21,7 @@
 
 #include "guitimer.h"
 #include "guisize.h"
+#include "guimath.h"
 #include <list>
 
 
@@ -165,6 +166,7 @@ namespace guiex
 	template< class T >
 	class CGUIAsLinearBase : public CGUIAs
 	{
+	public:
 		/**
 		* @brief constructor
 		*/
@@ -178,13 +180,46 @@ namespace guiex
 		{
 			return m_eLinearType;
 		}
-		void GetLinearType( ELinearType eType ) const
+		void SetLinearType( ELinearType eType )
 		{
 			m_eLinearType = eType;
 		}
 
-	protected:
+		void SetLinearValue( const T& rBeginValue, const T& rEndValue, real fTotalTime )
+		{
+			m_aBeginValue = rBeginValue;
+			m_aEndValue = rEndValue;
+			m_aCurValue = m_aBeginValue;
+			SetTotalTime( fTotalTime );
+		}
+
+		virtual void Update( real fDeltaTime )
+		{
+			CGUIAs::Update( fDeltaTime );
+			m_aCurValue = CGUIMath::LinearTween( m_fElapsedTime / m_fTotalTime, m_aBeginValue, m_aEndValue );
+		}
+
+		const T& GetBeginValue() const
+		{
+			return m_aBeginValue
+		}
+
+		const T& GetEndValue() const
+		{
+			return m_aEndValue;
+		}
+
+		const T& GetCurrentValue() const
+		{
+			return m_aCurValue;
+		}
+
+	private:
 		ELinearType	m_eLinearType;
+
+		T m_aBeginValue;
+		T m_aEndValue;
+		T m_aCurValue;
 	};
 
 
@@ -195,7 +230,7 @@ namespace guiex
 	* @class CGUIAsAlpha
 	* @brief the as, change alpha of widget
 	*/
-	class GUIEXPORT CGUIAsAlpha : public CGUIAs
+	class GUIEXPORT CGUIAsAlpha : public CGUIAsLinearBase<real>
 	{
 	public:
 		/**
@@ -203,19 +238,13 @@ namespace guiex
 		*/
 		CGUIAsAlpha();
 
-		/** 
-		 * @brief set the parameter of action sequence
-		 */
-		void SetAlphaSequence( real fBeginValue, real fEndValue, real fTotalTime );
-
 		/**
 		* @brief update the event.
 		*/
 		virtual void Update( real fDeltaTime );
 
+
 	protected:
-		real m_fBeginValue;
-		real m_fEndValue;
 	};
 	GUI_AS_GENERATOR_DECLARE( CGUIAsAlpha);
 
@@ -229,7 +258,7 @@ namespace guiex
 	* @class CGUIAsScale
 	* @brief the as, change scale of widget
 	*/
-	class GUIEXPORT CGUIAsScale : public CGUIAs
+	class GUIEXPORT CGUIAsScale : public CGUIAsLinearBase<CGUISize>
 	{
 	public:
 		/**
@@ -237,19 +266,12 @@ namespace guiex
 		*/
 		CGUIAsScale();
 
-		/** 
-		* @brief set the parameter of action sequence
-		*/
-		void SetScaleSequence(const CGUISize& aBeginValue, const CGUISize& aEndValue, real fTotalTime );
-
 		/**
 		* @brief Update the event.
 		*/
 		virtual void Update( real fDeltaTime );
 
 	protected:
-		CGUISize m_aBeginValue;
-		CGUISize m_aEndValue;
 	};
 	GUI_AS_GENERATOR_DECLARE( CGUIAsScale);
 
@@ -261,7 +283,7 @@ namespace guiex
 	* @class CGUIAsRotation
 	* @brief the as, change rotation of widget
 	*/
-	class GUIEXPORT CGUIAsRotation : public CGUIAs
+	class GUIEXPORT CGUIAsRotation : public CGUIAsLinearBase<CGUIVector3>
 	{
 	public:
 		/**
@@ -269,19 +291,12 @@ namespace guiex
 		*/
 		CGUIAsRotation();
 
-		/** 
-		* @brief set the parameter of action sequence
-		*/
-		void SetRotationSequence(const CGUIVector3& rBeginValue, const CGUIVector3& rEndValue, real fTotalTime);
-
 		/**
 		* @brief Update the event.
 		*/
 		virtual void Update( real fDeltaTime );
 
 	protected:
-		CGUIVector3	m_vBeginValue;
-		CGUIVector3	m_vEndValue;
 	};
 	GUI_AS_GENERATOR_DECLARE( CGUIAsRotation);
 
@@ -292,7 +307,7 @@ namespace guiex
 	* @class CGUIAsPosition
 	* @brief the as, change scale of widget
 	*/
-	class GUIEXPORT CGUIAsPosition : public CGUIAs
+	class GUIEXPORT CGUIAsPosition : public CGUIAsLinearBase<CGUIVector2>
 	{
 	public:
 		/**
@@ -300,20 +315,12 @@ namespace guiex
 		*/
 		CGUIAsPosition();
 
-		/** 
-		* @brief set the parameter of action sequence
-		*/
-		void SetPositionSequence(const CGUIVector2& aBeginValue, const CGUIVector2& aEndValue, real fTotalTime );
-
 		/**
 		* @brief Update the event.
 		*/
 		virtual void Update( real fDeltaTime );
 
 	protected:
-		CGUIVector2	m_aBeginValue;
-		CGUIVector2	m_aEndValue;
-
 	};
 	GUI_AS_GENERATOR_DECLARE( CGUIAsPosition);
 

@@ -171,25 +171,15 @@ namespace guiex
 	
 	//------------------------------------------------------------------------------
 	CGUIAsAlpha::CGUIAsAlpha( )
-		:CGUIAs("CGUIAsAlpha" )
-		,m_fBeginValue(0.0f)
-		,m_fEndValue(0.0f)
+		:CGUIAsLinearBase("CGUIAsAlpha" )
 	{
-	}
-	//------------------------------------------------------------------------------
-	void CGUIAsAlpha::SetAlphaSequence(real fBeginValue, real fEndValue, real fTotalTime)
-	{	
-		m_fBeginValue = fBeginValue;
-		m_fEndValue = fEndValue;
-		SetTotalTime( fTotalTime );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIAsAlpha::Update( real fDeltaTime )
 	{
-		CGUIAs::Update( fDeltaTime );
-		
-		real fCurValue = CGUIMath::LinearTween( m_fElapsedTime / m_fTotalTime, m_fBeginValue, m_fEndValue );
-		GetReceiver()->SetAlpha(fCurValue);
+		CGUIAsLinearBase::Update( fDeltaTime );
+		GUI_ASSERT( GetReceiver(), "no receiver");
+		GetReceiver()->SetAlpha(GetCurrentValue());
 	}
 	//------------------------------------------------------------------------------
 
@@ -202,23 +192,15 @@ namespace guiex
 	GUI_AS_GENERATOR_IMPLEMENT( CGUIAsRotation );
 	//------------------------------------------------------------------------------
 	CGUIAsRotation::CGUIAsRotation()
-		:CGUIAs("CGUIAsRotation")
+		:CGUIAsLinearBase("CGUIAsRotation")
 	{
-	}
-	//------------------------------------------------------------------------------
-	void CGUIAsRotation::SetRotationSequence(const CGUIVector3& rBeginValue, const CGUIVector3& rEndValue, real fTotalTime)
-	{	
-		m_vBeginValue = rBeginValue;
-		m_vEndValue = rEndValue;
-		SetTotalTime( fTotalTime );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIAsRotation::Update( real fDeltaTime )
 	{
-		CGUIAs::Update( fDeltaTime );
-		
-		CGUIVector3 vCurValue = CGUIMath::LinearTween( m_fElapsedTime / m_fTotalTime, m_vBeginValue, m_vEndValue );
-		GetReceiver()->SetRotation(vCurValue);
+		CGUIAsLinearBase::Update( fDeltaTime );
+		GUI_ASSERT( GetReceiver(), "no receiver");
+		GetReceiver()->SetRotation(GetCurrentValue());
 	}
 	//------------------------------------------------------------------------------
 
@@ -230,23 +212,15 @@ namespace guiex
 	GUI_AS_GENERATOR_IMPLEMENT( CGUIAsScale );
 	//------------------------------------------------------------------------------
 	CGUIAsScale::CGUIAsScale()
-		:CGUIAs("CGUIAsScale")
+		:CGUIAsLinearBase("CGUIAsScale")
 	{
-	}
-	//------------------------------------------------------------------------------
-	void CGUIAsScale::SetScaleSequence(const CGUISize& aBeginValue, const CGUISize& aEndValue, real fTotalTime )
-	{	
-		m_aBeginValue = aBeginValue;
-		m_aEndValue = aEndValue;
-		SetTotalTime( fTotalTime );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIAsScale::Update( real fDeltaTime )
 	{
-		CGUIAs::Update( fDeltaTime );
-
-		CGUISize aCurValue = CGUIMath::LinearTween( m_fElapsedTime / m_fTotalTime, m_aBeginValue, m_aEndValue );
-		GetReceiver()->SetScale(aCurValue);
+		CGUIAsLinearBase::Update( fDeltaTime );
+		GUI_ASSERT( GetReceiver(), "no receiver");
+		GetReceiver()->SetScale(GetCurrentValue());
 	}
 	//------------------------------------------------------------------------------
 
@@ -257,23 +231,15 @@ namespace guiex
 	GUI_AS_GENERATOR_IMPLEMENT( CGUIAsPosition );
 	//------------------------------------------------------------------------------
 	CGUIAsPosition::CGUIAsPosition()
-		:CGUIAs("CGUIAsPosition")
+		:CGUIAsLinearBase("CGUIAsPosition")
 	{
-	}
-	//------------------------------------------------------------------------------
-	void CGUIAsPosition::SetPositionSequence(const CGUIVector2& aBeginValue, const CGUIVector2& aEndValue, real fTotalTime )
-	{	
-		m_aBeginValue = aBeginValue;
-		m_aEndValue = aEndValue;
-		SetTotalTime( fTotalTime );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIAsPosition::Update( real fDeltaTime )
 	{
-		CGUIAs::Update( fDeltaTime );
-
-		CGUIVector2 aCurValue = CGUIMath::LinearTween( m_fElapsedTime / m_fTotalTime, m_aBeginValue, m_aEndValue );
-		GetReceiver()->SetPixelPosition(aCurValue);
+		CGUIAsLinearBase::Update( fDeltaTime );
+		GUI_ASSERT( GetReceiver(), "no receiver");
+		GetReceiver()->SetPixelPosition(GetCurrentValue());
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex
