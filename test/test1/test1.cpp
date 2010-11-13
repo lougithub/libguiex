@@ -9,7 +9,7 @@
 #include <libguiex_core/guiex.h>
 #include <libguiex_widget/guiwgt.h>
 
-guiex::CGUIWidget* SampleInit()
+guiex::CGUIWidget* SampleInitialize()
 {
 	guiex::CGUIWidget* pWidgetRoot = GUI_CREATE_WIDGET("CGUIWgtEmptyNode", "page", "testproject");
 	pWidgetRoot->SetAnchorPoint( 0.5f, 0.5f );
@@ -322,4 +322,14 @@ guiex::CGUIWidget* SampleInit()
 	}
 
 	return pWidgetRoot;
+}
+
+void SampleUpdate( float fDeltaTime)
+{
+
+}
+
+void SampleDestroy()
+{
+
 }

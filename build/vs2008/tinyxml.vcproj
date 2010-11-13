@@ -40,7 +40,6 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\..\external\lua-5.1.4\src&quot;;&quot;..\..\external\freetype-2.4.3\include&quot;;&quot;..\..\external\DevIL-SDK-x86-1.7.8\include&quot;;..\..\external\tinyxml"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -102,7 +101,6 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;..\..\external\lua-5.1.4\src&quot;;&quot;..\..\external\freetype-2.4.3\include&quot;;&quot;..\..\external\DevIL-SDK-x86-1.7.8\include&quot;;..\..\external\tinyxml"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"

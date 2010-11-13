@@ -53,7 +53,9 @@ extern "C" {
 }
 #endif //#ifdef __cplusplus
 
-extern guiex::CGUIWidget* SampleInit();
+extern guiex::CGUIWidget* SampleInitialize();
+extern void SampleDestroy();
+extern void SampleUpdate( float fDeltaTime);
 
 //============================================================================//
 // class
@@ -263,8 +265,10 @@ void WxGLCanvas::OnIdle(wxIdleEvent & event)
 		if( g_bStarted )
 		{
 			g_aCurTimer.UpdateTime();
-			guiex::CGUIWidgetSystem::Instance()->Update( (g_aCurTimer - g_aOldTimer) / 1000.f );
+			float fDeltaTime = (g_aCurTimer - g_aOldTimer) / 1000.f;
+			guiex::CGUIWidgetSystem::Instance()->Update( fDeltaTime );
 			guiex::CGUIWidgetSystem::Instance()->Render();
+			SampleUpdate( fDeltaTime);
 			g_aOldTimer = g_aCurTimer;
 		}
 	}
@@ -482,7 +486,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 			guiex::CGUIWidgetSystem::Instance()->SetDataPath(m_strUIDataPath);
 			guiex::CGUIProjectInfoManager::Instance()->LoadProjects();
 			guiex::CGUIProjectUtility::LoadResource(m_strUIProjectFilename);
-			guiex::CGUIWidget* pWidget = SampleInit();
+			guiex::CGUIWidget* pWidget = SampleInitialize();
 			guiex::CGUIWidgetSystem::Instance()->AddPage(pWidget);
 			guiex::CGUIWidgetSystem::Instance()->OpenPage(pWidget);
 			g_aOldTimer.UpdateTime();
@@ -506,6 +510,7 @@ WxMainFrame::~WxMainFrame()
 
 	//release libguiex system
 	guiex::CGUIWidgetSystem::Instance()->Release();
+	SampleDestroy();
 }
 //------------------------------------------------------------------------------
 bool		WxMainFrame::GetUIInfo( bool bTryCommandLine)
