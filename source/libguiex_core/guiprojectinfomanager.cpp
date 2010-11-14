@@ -151,12 +151,13 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	const CGUIString&	CGUIProjectInfoManager::GetProjectFilePath( const CGUIString& rProjectName ) const
+	CGUIString	CGUIProjectInfoManager::GetProjectFilePath( const CGUIString& rProjectName ) const
 	{
 		CGUIProjectInfo * pProjectInfo = GetProjectInfo( rProjectName );
 		if( !pProjectInfo )
 		{
-			throw CGUIException("[CGUIProjectInfoManager::GetProjectFilePath]: failed to get project info by name %s", rProjectName.c_str());
+			return CGUIString();
+			//throw CGUIException("[CGUIProjectInfoManager::GetProjectFilePath]: failed to get project info by name %s", rProjectName.c_str());
 		}
 		return pProjectInfo->GetProjectFilePath();
 	}

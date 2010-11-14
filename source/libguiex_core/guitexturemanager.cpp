@@ -79,7 +79,7 @@ namespace guiex
 			m_pDefaultTexture = new CGUITexture;
 			m_pDefaultTexture->SetTextureType(eTT_Default);
 			GUIARGB argb = 0xFFFFFFFF;
-			if( 0 != m_pDefaultTexture->CreateTextureByMemory(&argb,1,1,GUI_PF_ARGB_32))
+			if( 0 != m_pDefaultTexture->CreateTextureByMemory(&argb,1,1,GUI_PF_RGBA_32))
 			{
 				throw CGUIException("[CGUITextureManager::CreateDefaultTexture]: failed to load texture from memory!");
 				return NULL;

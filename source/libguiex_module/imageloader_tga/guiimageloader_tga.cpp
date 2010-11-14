@@ -155,9 +155,15 @@ namespace guiex
 		memcpy( tmpBuff, pFileData, tga.imageSize);
 
 		// Byte Swapping Optimized By Steve Thomas
+		//for(uint32 cswap = 0; cswap < (int)tga.imageSize; cswap += tga.bytesPerPixel)
+		//{
+		//	tmpBuff[cswap] ^= tmpBuff[cswap+2] ^= tmpBuff[cswap] ^= tmpBuff[cswap+2];
+		//}
 		for(uint32 cswap = 0; cswap < (int)tga.imageSize; cswap += tga.bytesPerPixel)
 		{
-			tmpBuff[cswap] ^= tmpBuff[cswap+2] ^= tmpBuff[cswap] ^= tmpBuff[cswap+2];
+			uint8 temp = tmpBuff[cswap+0];
+			tmpBuff[cswap+0] = tmpBuff[cswap+2];
+			tmpBuff[cswap+2] = temp;
 		}
 		return pImageData;
 	}

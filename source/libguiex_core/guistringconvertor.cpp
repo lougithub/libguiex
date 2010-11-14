@@ -85,7 +85,7 @@ namespace guiex
 			outbytesleft = buf_size;
 
 			size_t retbytes = iconv(cd, &pInBuf, &inbytesleft, &pOutBuf, &outbytesleft);
-			int errno_save = errno;
+			//int errno_save = errno;
 
 			if (dst != pOutBuf)  
 			{
@@ -202,7 +202,7 @@ namespace guiex
 			outbytesleft = buf_size*sizeof(wchar_t);
 			
 			size_t retbytes = iconv(cd, &pInBuf, &inbytesleft, &pOutBuf, &outbytesleft);
-			int errno_save = errno;
+			//int errno_save = errno;
 
 			if (dst != pOutBuf)  
 			{

@@ -121,6 +121,44 @@ namespace guiex
 		DestroyAllTexture();
 	}
 	//------------------------------------------------------------------------------
+	void IGUIRender_opengles::BeginRender(void)
+	{
+		TestOpenglError("begin 1");
+		
+		glClearColor(0.5f, 0.5f, 0.5f, 1);
+		glClear(GL_COLOR_BUFFER_BIT);
+		
+		//update projection matrix
+		glMatrixMode(GL_PROJECTION);
+		glPushMatrix();
+		
+		//update modelview matrix
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+		
+		m_nCurrentTexture = -1;
+		
+		TestOpenglError("begin 2");
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengles::EndRender(void)
+	{		
+		TestOpenglError("end 1");
+		
+		//restore model view matrix
+		glMatrixMode(GL_MODELVIEW);
+		glPopMatrix(); 
+		
+		//restore projection matrix
+		glMatrixMode(GL_PROJECTION);
+		glPopMatrix(); 
+		
+		//reset current texture
+		m_nCurrentTexture = -1;
+		
+		TestOpenglError("end 2");
+	}	
+	//------------------------------------------------------------------------------
 	void	IGUIRender_opengles::SetWireFrame( bool bWireFrame)
 	{
 		m_bWireFrame = bWireFrame;
@@ -184,7 +222,7 @@ namespace guiex
 
 		glVertexPointer(3, GL_FLOAT, sizeof(SVertexForLine), &m_pVertexForLine[0].vertex[0]);
 		glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(SVertexForLine), &m_pVertexForLine[0].color);
-		glDrawArrays(GL_LINE_STRIP, 0, 4);
+		glDrawArrays(GL_LINE_LOOP, 0, 4);
 		
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glDisableClientState(GL_COLOR_ARRAY);	
@@ -284,44 +322,6 @@ namespace guiex
 		m_arrayClipRects.pop_back();
 
 		UpdateStencil();
-	}
-	//------------------------------------------------------------------------------
-	void IGUIRender_opengles::BeginRender(void)
-	{
-		TestOpenglError("begin 1");
-		
-		glClearColor(0.5f, 0.5f, 0.5f, 1);
-		glClear(GL_COLOR_BUFFER_BIT);
-		
-		//update projection matrix
-		glMatrixMode(GL_PROJECTION);
-		glPushMatrix();
-		
-		//update modelview matrix
-		glMatrixMode(GL_MODELVIEW);
-		glPushMatrix();
-		
-		m_nCurrentTexture = -1;
-		
-		TestOpenglError("begin 2");
-	}
-	//------------------------------------------------------------------------------
-	void IGUIRender_opengles::EndRender(void)
-	{		
-		TestOpenglError("end 1");
-		
-		//restore model view matrix
-		glMatrixMode(GL_MODELVIEW);
-		glPopMatrix(); 
-
-		//restore projection matrix
-		glMatrixMode(GL_PROJECTION);
-		glPopMatrix(); 
-
-		//reset current texture
-		m_nCurrentTexture = -1;
-		
-		TestOpenglError("end 2");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::TestOpenglError( const char* info )
@@ -459,11 +459,11 @@ namespace guiex
 
 			//vert2
 			pTexture[2].tex[0] = tex.m_fLeft;
-			pTexture[2].tex[1] = tex.m_fBottom;
+			pTexture[2].tex[1] = tex.m_fTop;
 
 			//vert3
 			pTexture[3].tex[0] = tex.m_fLeft;
-			pTexture[3].tex[1] = tex.m_fTop;
+			pTexture[3].tex[1] = tex.m_fBottom;
 			break;
 
 		case IMAGE_FLIPVERTICAL:
@@ -477,11 +477,11 @@ namespace guiex
 
 			//vert2
 			pTexture[2].tex[0] = tex.m_fRight;
-			pTexture[2].tex[1] = tex.m_fTop;
+			pTexture[2].tex[1] = tex.m_fBottom;
 
 			//vert3
 			pTexture[3].tex[0] = tex.m_fRight;
-			pTexture[3].tex[1] = tex.m_fBottom;
+			pTexture[3].tex[1] = tex.m_fTop;
 			break;
 
 		case IMAGE_ROTATE90CCW:
@@ -494,11 +494,11 @@ namespace guiex
 			pTexture[1].tex[1] = tex.m_fTop;
 
 			//vert2
-			pTexture[2].tex[0] = tex.m_fLeft;
+			pTexture[2].tex[0] = tex.m_fRight;
 			pTexture[2].tex[1] = tex.m_fBottom;
 
 			//vert3
-			pTexture[3].tex[0] = tex.m_fRight;
+			pTexture[3].tex[0] = tex.m_fLeft;
 			pTexture[3].tex[1] = tex.m_fBottom;
 			break;
 
@@ -512,11 +512,11 @@ namespace guiex
 			pTexture[1].tex[1] = tex.m_fBottom;
 
 			//vert2
-			pTexture[2].tex[0] = tex.m_fRight;
+			pTexture[2].tex[0] = tex.m_fLeft;
 			pTexture[2].tex[1] = tex.m_fTop;
 
 			//vert3
-			pTexture[3].tex[0] = tex.m_fLeft;
+			pTexture[3].tex[0] = tex.m_fRight;
 			pTexture[3].tex[1] = tex.m_fTop;
 			break;
 
@@ -532,11 +532,11 @@ namespace guiex
 
 			//vert2
 			pTexture[2].tex[0] = tex.m_fRight;
-			pTexture[2].tex[1] = tex.m_fBottom;
+			pTexture[2].tex[1] = tex.m_fTop;
 
 			//vert3
 			pTexture[3].tex[0] = tex.m_fRight;
-			pTexture[3].tex[1] = tex.m_fTop;
+			pTexture[3].tex[1] = tex.m_fBottom;
 			break;
 		}
 	}

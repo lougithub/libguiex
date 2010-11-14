@@ -86,8 +86,24 @@ void CLibGuiexEngine::Initialize( int width, int height, const char* szDataPath 
 }
 
 void CLibGuiexEngine::InitWidgets()
-{
-	guiex::CGUIImageManager::Instance()->CreateImage( "red_color","hello_ipad",guiex::CGUIColor(1.0f,0.0f,0.0f,1.0f ));
+{	
+	guiex::IGUIInterfaceFileSys* pFileSys = guiex::CGUIInterfaceManager::Instance()->GetInterfaceFileSys();
+	std::vector<guiex::CGUIString> aArrayFiles;
+	pFileSys->FindFiles( "/", ".tga", aArrayFiles );
+	if( aArrayFiles.size() > 0 )
+	{
+		printf("load image %s\n", aArrayFiles[0].c_str());
+		guiex::CGUIImageManager::Instance()->CreateImage( "red_color","hello_ipad","/UI-PaperDoll-Slot-Ammo.tga");
+	}
+	else
+	{
+		printf("not found");
+		guiex::CGUIImageManager::Instance()->CreateImage( "red_color","hello_ipad",guiex::CGUIColor(1.0f,0.0f,0.0f,1.0f ));
+	}
+			
+			   
+	
+//	guiex::CGUIImageManager::Instance()->CreateImage( "red_color","hello_ipad",guiex::CGUIColor(1.0f,0.0f,0.0f,1.0f ));
 	guiex::CGUIImageManager::Instance()->CreateImage( "blue_color","hello_ipad",guiex::CGUIColor(0.0f,0.0f,1.0f,1.0f ));
 
 	guiex::CGUIWidget* pWidget_staticimage = GUI_CREATE_WIDGET("CGUIWgtStaticImage", "staticimage_0", "hello_ipad");
@@ -107,6 +123,25 @@ void CLibGuiexEngine::InitWidgets()
 	pWidget_staticimage2->SetAnchorPoint( 0.5, 0.5 );
 	pWidget_staticimage2->SetRotation( 0.0f, 0.0f, 45.0f );
 	pWidget_staticimage2->Create();	
+	
+	{
+		guiex::CGUIAsScale* pAsScale = static_cast<guiex::CGUIAsScale*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsScale" ));
+		pAsScale->SetLinearValue( guiex::CGUISize(0.1,0.1), guiex::CGUISize(1,1), 1 );
+		pAsScale->SetReceiver( pWidget_staticimage );
+		pAsScale->SetLooping( true );
+		pAsScale->SetLinearType(guiex::eLinearType_EaseIn);
+		pWidget_staticimage->AddAs( pAsScale );	
+	}
+	
+	{
+		guiex::CGUIAsAlpha* pAsAlpha = static_cast<guiex::CGUIAsAlpha*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsAlpha" ));
+		pAsAlpha->SetLinearValue( 0, 1, 1 );
+		pAsAlpha->SetReceiver( pWidget_staticimage2 );
+		//pAsAlpha->SetLooping( true );
+		pAsAlpha->SetLinearType(guiex::eLinearType_EaseInOut);
+		pWidget_staticimage2->AddAs( pAsAlpha );
+	}
+	
 	
 	guiex::CGUIWidgetSystem::Instance()->AddPage(pWidget_staticimage);
 	guiex::CGUIWidgetSystem::Instance()->OpenPage(pWidget_staticimage); 

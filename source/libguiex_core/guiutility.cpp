@@ -78,32 +78,38 @@ namespace guiex
 			(int32) (local.wMilliseconds * 1000));
 		return &date_and_time[15 + (return_pointer_to_first_digit != 0)];
 #elif defined(GUIEX_PLATFORM_LINUX)
-		char timebuf[26]; // This magic number is based on the ctime(3c) man page.
-		ACE_Time_Value cur_time = gettimeofday ();
-		time_t secs = cur_time.sec ();
-
-		ctime_r (&secs,
-			timebuf,
-			sizeof timebuf);
+		long now;
+		char timebuf[40];
+		now=(long)time((time_t *)0);
+		ctime_r (&now,timebuf);
+		
 		// date_and_timelen > sizeof timebuf!
-		strsncpy (date_and_time,
-			timebuf,
-			date_and_timelen);
+		strncpy (date_and_time,timebuf,date_and_timelen);
 		char yeartmp[5];
-		strsncpy (yeartmp,
-			&date_and_time[20],
-			5);
+		strncpy (yeartmp,&date_and_time[20],5);
 		char timetmp[9];
-		strsncpy (timetmp,
-			&date_and_time[11],
-			9);
-		sprintf (&date_and_time[11],
-			("%s %s.%06ld"),
-			yeartmp,
-			timetmp,
-			cur_time.usec ());
+		strncpy (timetmp,&date_and_time[11],9);
+		sprintf (&date_and_time[11], ("%s %s.%06ld"),yeartmp,timetmp,cur_time.usec ());
 		date_and_time[33] = '\0';
 		return &date_and_time[15 + (return_pointer_to_first_digit != 0)];
+#elif defined( GUIEX_PLATFORM_MAC)
+		GUI_ASSERT(0,"not implement yet");
+		long now;
+		char timebuf[40];
+		now=(long)time((time_t *)0);
+		ctime_r (&now,timebuf);
+		
+		// date_and_timelen > sizeof timebuf!
+		strncpy (date_and_time,timebuf,date_and_timelen);
+		char yeartmp[5];
+		strncpy (yeartmp,&date_and_time[20],5);
+		char timetmp[9];
+		strncpy (timetmp,&date_and_time[11],9);
+		sprintf (&date_and_time[11], ("%s %s.%06ld"),yeartmp,timetmp,now );
+		date_and_time[33] = '\0';
+		return &date_and_time[15 + (return_pointer_to_first_digit != 0)];
+#else
+#	error "unknown platform"
 #endif /* WIN32 */
 		//------------------------------------------------------------------------------
 	}

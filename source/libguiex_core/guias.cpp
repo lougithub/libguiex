@@ -171,13 +171,13 @@ namespace guiex
 	
 	//------------------------------------------------------------------------------
 	CGUIAsAlpha::CGUIAsAlpha( )
-		:CGUIAsLinearBase("CGUIAsAlpha" )
+		:CGUIAsLinearBase<real>("CGUIAsAlpha" )
 	{
 	}
 	//------------------------------------------------------------------------------
 	void CGUIAsAlpha::Update( real fDeltaTime )
 	{
-		CGUIAsLinearBase::Update( fDeltaTime );
+		CGUIAsLinearBase<real>::Update( fDeltaTime );
 		GUI_ASSERT( GetReceiver(), "no receiver");
 		GetReceiver()->SetAlpha(GetCurrentValue());
 	}
@@ -192,13 +192,13 @@ namespace guiex
 	GUI_AS_GENERATOR_IMPLEMENT( CGUIAsRotation );
 	//------------------------------------------------------------------------------
 	CGUIAsRotation::CGUIAsRotation()
-		:CGUIAsLinearBase("CGUIAsRotation")
+		:CGUIAsLinearBase<CGUIVector3>("CGUIAsRotation")
 	{
 	}
 	//------------------------------------------------------------------------------
 	void CGUIAsRotation::Update( real fDeltaTime )
 	{
-		CGUIAsLinearBase::Update( fDeltaTime );
+		CGUIAsLinearBase<CGUIVector3>::Update( fDeltaTime );
 		GUI_ASSERT( GetReceiver(), "no receiver");
 		GetReceiver()->SetRotation(GetCurrentValue());
 	}
@@ -212,13 +212,13 @@ namespace guiex
 	GUI_AS_GENERATOR_IMPLEMENT( CGUIAsScale );
 	//------------------------------------------------------------------------------
 	CGUIAsScale::CGUIAsScale()
-		:CGUIAsLinearBase("CGUIAsScale")
+		:CGUIAsLinearBase<CGUISize>("CGUIAsScale")
 	{
 	}
 	//------------------------------------------------------------------------------
 	void CGUIAsScale::Update( real fDeltaTime )
 	{
-		CGUIAsLinearBase::Update( fDeltaTime );
+		CGUIAsLinearBase<CGUISize>::Update( fDeltaTime );
 		GUI_ASSERT( GetReceiver(), "no receiver");
 		GetReceiver()->SetScale(GetCurrentValue());
 	}
@@ -231,13 +231,13 @@ namespace guiex
 	GUI_AS_GENERATOR_IMPLEMENT( CGUIAsPosition );
 	//------------------------------------------------------------------------------
 	CGUIAsPosition::CGUIAsPosition()
-		:CGUIAsLinearBase("CGUIAsPosition")
+		:CGUIAsLinearBase<CGUIVector2>("CGUIAsPosition")
 	{
 	}
 	//------------------------------------------------------------------------------
 	void CGUIAsPosition::Update( real fDeltaTime )
 	{
-		CGUIAsLinearBase::Update( fDeltaTime );
+		CGUIAsLinearBase<CGUIVector2>::Update( fDeltaTime );
 		GUI_ASSERT( GetReceiver(), "no receiver");
 		GetReceiver()->SetPixelPosition(GetCurrentValue());
 	}

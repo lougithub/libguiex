@@ -166,6 +166,7 @@ namespace guiex
 		{  
 			return; 
 		}  
+		chdir(strFullPath.c_str());
 		while((entry = readdir(dp)) != NULL)
 		{ 
 			stat(entry->d_name,&statbuf); 
@@ -176,7 +177,7 @@ namespace guiex
 					continue; 
 				}
 				
-				FindFiles( strFullPath + entry->d_name + "/", rSuffix, rArrayStrings );
+				FindFiles( rPath + entry->d_name + "/", rSuffix, rArrayStrings );
 			}
 			else
 			{ 
@@ -193,6 +194,7 @@ namespace guiex
 				}
 			} 
 		} 
+		chdir("..");
         closedir(dp); 
 	}
 #else

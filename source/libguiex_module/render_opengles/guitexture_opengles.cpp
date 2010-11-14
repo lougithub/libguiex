@@ -35,10 +35,10 @@ namespace guiex
 
 		// set some parameters for this texture.
 		glBindTexture(GL_TEXTURE_2D, m_ogltexture);
-		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST/*GL_LINEAR*/);
-		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST/*GL_LINEAR*/); 
-		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);	// GL_CLAMP_TO_EDGE
-		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);	// GL_CLAMP_TO_EDGE
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); 
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	}
 	//------------------------------------------------------------------------------
@@ -124,18 +124,18 @@ namespace guiex
 		switch(ePixelFormat)
 		{
 		case GUI_PF_RGBA_32:
-		case GUI_PF_ARGB_32:
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, buffWidth, buffHeight, 0, GL_RGBA ,GL_UNSIGNED_BYTE, buffPtr);
 			m_nBytesPerPixel = 4;
 			m_ePixelFormat = GUI_PF_RGBA_32;
 			break;
+				
 
 		//case GUI_PF_LA_16:
 		//	glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, buffWidth, buffHeight, 0, GL_LUMINANCE_ALPHA ,GL_UNSIGNED_BYTE, buffPtr);
 		//	m_nBytesPerPixel = 2;
 		//	m_ePixelFormat = GUI_PF_LA_16;
 		//	break;
-
+		case GUI_PF_ARGB_32:	
 		default:
 			throw CGUIException("[CGUITexture_opengles::LoadFromMemory]: unsupported pixel format;");
 		}

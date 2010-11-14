@@ -201,7 +201,7 @@ namespace guiex
 
 		const T& GetBeginValue() const
 		{
-			return m_aBeginValue
+			return m_aBeginValue;
 		}
 
 		const T& GetEndValue() const

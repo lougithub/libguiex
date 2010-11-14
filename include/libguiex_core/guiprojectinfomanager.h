@@ -54,7 +54,7 @@ namespace guiex
 		* @param rProjectFile the filename of projects, for example <test.uip>
 		*/
 		CGUIProjectInfo*	GetProjectInfo( const CGUIString& rProjectName ) const;
-		const CGUIString&	GetProjectFilePath( const CGUIString& rProjectName ) const;
+		CGUIString	GetProjectFilePath( const CGUIString& rProjectName ) const;
 		const std::vector<CGUIString>&	GetProjectFilePaths( ) const;
 		const std::vector<CGUIString>&	GetProjectFileNames( ) const;
 
