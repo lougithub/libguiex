@@ -40,6 +40,7 @@ public:
 
 	static size_t format_hexdump (const char *buffer,size_t size,char *obuf,size_t obuf_sz);
 
+	static CGUIString GenerateWidgetName();
 };
 
 

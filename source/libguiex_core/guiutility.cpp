@@ -203,5 +203,13 @@ namespace guiex
 		return log;
 	}
 	//------------------------------------------------------------------------------
+	CGUIString CGUIUtility::GenerateWidgetName()
+	{
+		static int nNameCount = 0;
+		char buf[32];
+		snprintf( buf,32, "widgetname_%d", nNameCount++ );
+		return buf;
+	}
+	//------------------------------------------------------------------------------
 
 }//namespace guiex

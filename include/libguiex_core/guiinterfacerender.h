@@ -27,6 +27,7 @@ namespace guiex
 	class CGUITextureImp;
 	class IGUIInterfaceFont;
 	class CGUIMatrix4;
+	class CGUIVector2;
 }
 
 
@@ -65,7 +66,7 @@ namespace guiex
 		* @brief add a texture into render list
 		* @param rTextureRect in texture co-ordinates.
 		*/
-		virtual	void	DrawTile(	const CGUIMatrix4& rWorldMatrix,
+		virtual	void DrawTile(	const CGUIMatrix4& rWorldMatrix,
 			const CGUIRect& rDestRect, 
 			real z, 
 			const CGUITextureImp* pTex, 
@@ -77,14 +78,22 @@ namespace guiex
 			GUIARGB rColor_bottomright
 			) = 0;
 
-		virtual void	PushClipRect( const CGUIMatrix4& rMatrix, const CGUIRect& rClipRect ) = 0;
-		virtual void	PopClipRect( ) = 0;
+		virtual void DrawLine(const CGUIMatrix4& rWorldMatrix,
+			const CGUIVector2 &rBegin, 
+			const CGUIVector2 &rEnd, 
+			real fLineWidth,
+			real z,
+			GUIARGB rColor_begin,
+			GUIARGB rColor_end) = 0;
+
+		virtual void PushClipRect( const CGUIMatrix4& rMatrix, const CGUIRect& rClipRect ) = 0;
+		virtual void PopClipRect( ) = 0;
 
 		// setup states etc
-		virtual void	BeginRender(void) = 0;
+		virtual void BeginRender(void) = 0;
 
 		// restore states
-		virtual void	EndRender(void) = 0;
+		virtual void EndRender(void) = 0;
 
 		/**
 		* @brief Creates a 'null' Texture object.
@@ -127,37 +136,39 @@ namespace guiex
 		* @brief Destroy the given Texture object.
 		* @param texture pointer to the Texture object to be destroyed
 		*/
-		virtual	void		DestroyTexture(CGUITextureImp* texture) = 0;
+		virtual	void DestroyTexture(CGUITextureImp* texture) = 0;
 
 		/**
 		* @brief Destroy all textures
 		*/
-		virtual	void		DestroyAllTexture() = 0;
+		virtual	void DestroyAllTexture() = 0;
 
 		/**
 		* @brief Return the current width of the display in pixels
 		* @return real value equal to the current width of the display in pixels.
 		*/
-		virtual uint16		GetWidth(void) const	= 0;
+		virtual uint16 GetWidth(void) const	= 0;
 
 
 		/**
 		* @brief Return the current height of the display in pixels
 		* @return real value equal to the current height of the display in pixels.
 		*/
-		virtual uint16		GetHeight(void) const	= 0;
+		virtual uint16 GetHeight(void) const	= 0;
 
 
 		/**
 		* @brief Return the maximum texture size available
 		* @return Size of the maximum supported texture in pixels (textures are always assumed to be square)
 		*/
-		virtual	uint32	GetMaxTextureSize(void) const	= 0;
+		virtual	uint32 GetMaxTextureSize(void) const	= 0;
 
 		/** 
 		 * @brief toggle wire frame.
 		 */
-		virtual void	SetWireFrame( bool bWireFrame) = 0;
+		virtual void SetWireFrame( bool bWireFrame) = 0;
+
+		virtual void EnableClip( bool bEnable ) = 0;
 
 	public:
 		/**

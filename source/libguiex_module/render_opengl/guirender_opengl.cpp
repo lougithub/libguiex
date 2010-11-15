@@ -29,6 +29,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	IGUIRender_opengl::IGUIRender_opengl()
 		:m_maxTextureSize(0)
+		,m_bEnableClip(false)
 	{
 		m_nCurrentTexture = -1;
 		m_bWireFrame = false;
@@ -42,9 +43,19 @@ namespace guiex
 	{
 		// get the maximum available texture size.
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &m_maxTextureSize);
+		
+		glGetIntegerv( GL_STENCIL_BITS, &m_nStencilBits);
+		m_nMaxStencilRef = (1<<m_nStencilBits) - 1;
+		if( m_nMaxStencilRef < 2 )
+		{
+			return -1;
+		}
+
+		makeGLMatrix( m_aWholeScreenRect.m_gl_world_matrix, CGUIMatrix4::IDENTITY );
 
 		ResetZValue();
 		m_nCurrentTexture = -1;
+		m_nCurrentStencilRef = 0;
 
 		return 0;
 	}
@@ -57,6 +68,97 @@ namespace guiex
 	void IGUIRender_opengl::DoDestroy()
 	{
 		DestroyAllTexture();
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl::BeginRender(void)
+	{
+		TestOpenglError("BeginRender 1");
+
+		//save current attributes
+		glPushClientAttrib(GL_CLIENT_ALL_ATTRIB_BITS);
+		glPushAttrib(GL_ALL_ATTRIB_BITS);
+
+		glPolygonMode(GL_FRONT_AND_BACK, m_bWireFrame ? GL_LINE : GL_FILL);
+
+		//update projection matrix
+		glMatrixMode(GL_PROJECTION);
+		glPushMatrix();
+		glLoadIdentity();
+		const CGUISize& rSize = CGUIWidgetSystem::Instance()->GetScreenSize();
+#if 1
+		glOrtho(0.0, rSize.m_fWidth,rSize.m_fHeight,0.0, -100000,100000 );
+#else
+		real fPerspectiveDegree = 45;
+		gluPerspective( fPerspectiveDegree, rSize.m_fWidth/rSize.m_fHeight, 0.1, 100000 );
+		real fZDistance = rSize.m_fHeight/2 / CGUIMath::Tan( CGUIDegree(fPerspectiveDegree/2));
+		gluLookAt( 
+			rSize.m_fWidth/2,rSize.m_fHeight/2,-fZDistance,
+			rSize.m_fWidth/2,rSize.m_fHeight/2,0, 
+			0,-1,0);
+#endif
+
+		//update modelview matrix
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+		glLoadIdentity();	
+
+		//disable lighting
+		glDisable(GL_LIGHTING);
+		glDisable(GL_DEPTH_TEST);
+
+		//enable smooth shade
+		glShadeModel(GL_SMOOTH);
+
+		glEnable(GL_POINT_SMOOTH);
+		glEnable(GL_LINE_SMOOTH);
+
+		//set blend
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
+
+		//set texture
+		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+		glEnable(GL_TEXTURE_2D);
+		glDisable(GL_SCISSOR_TEST);
+
+		if( m_bEnableClip )
+		{
+			glEnable( GL_STENCIL_TEST );	
+		}
+		else
+		{
+			glDisable( GL_STENCIL_TEST );	
+			m_aWholeScreenRect.m_aClipRect.SetSize( rSize );
+		}
+		glInterleavedArrays(GL_T2F_C4UB_V3F , 0, m_pVertex);
+
+		m_nCurrentTexture = -1;
+		m_nCurrentStencilRef = 0;
+
+		TestOpenglError("BeginRender 2");
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl::EndRender(void)
+	{		
+		TestOpenglError("EndRender 1");
+
+		//restore model view matrix
+		glMatrixMode(GL_MODELVIEW);
+		glPopMatrix(); 
+
+		//restore projection matrix
+		glMatrixMode(GL_PROJECTION);
+		glPopMatrix(); 
+
+
+		//restore former attributes
+		glPopAttrib();
+		glPopClientAttrib();
+
+		//reset current texture
+		m_nCurrentTexture = -1;
+
+		TestOpenglError("EndRender 2");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl::TestOpenglError( const char* info )
@@ -164,6 +266,50 @@ namespace guiex
 		TestOpenglError("DrawRect 2");
 	}
 	//------------------------------------------------------------------------------
+	void IGUIRender_opengl::DrawLine(const CGUIMatrix4& rWorldMatrix,
+		const CGUIVector2 &rBegin, 
+		const CGUIVector2 &rEnd, 
+		real fLineWidth,
+		real z,
+		GUIARGB rColor_begin,
+		GUIARGB rColor_end )
+	{
+		TestOpenglError("DrawLine 1");
+
+		glInterleavedArrays(GL_C4UB_V3F , 0, m_pVertexForLine);
+		glDisable(GL_TEXTURE_2D);
+		glLineWidth( fLineWidth );
+
+
+		//set modelview matrix
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		makeGLMatrix( m_gl_matrix, rWorldMatrix );
+		glMultMatrixf( m_gl_matrix );
+
+		long oglcolor_begin = ColorToOpengl(rColor_begin);
+		long oglcolor_end= ColorToOpengl(rColor_end);
+
+		//vert0
+		m_pVertexForLine[0].vertex[0] = rBegin.x;
+		m_pVertexForLine[0].vertex[1] = rBegin.y;
+		m_pVertexForLine[0].vertex[2] = z;
+		m_pVertexForLine[0].color     = rColor_begin;
+
+		//vert1
+		m_pVertexForLine[1].vertex[0] = rEnd.x;
+		m_pVertexForLine[1].vertex[1] = rEnd.y;
+		m_pVertexForLine[1].vertex[2] = z;
+		m_pVertexForLine[1].color     = rColor_end;     
+
+		glDrawArrays( GL_LINES , 0, 2 );
+
+		glEnable(GL_TEXTURE_2D);
+		glInterleavedArrays(GL_T2F_C4UB_V3F , 0, m_pVertex);
+
+		TestOpenglError("DrawLine 2");
+	}
+	//------------------------------------------------------------------------------
 	void	IGUIRender_opengl::DrawTile(const CGUIMatrix4& rWorldMatrix,
 		const CGUIRect& rDestRect, real z, 
 		const CGUITextureImp* pTexture, const CGUIRect& rTextureRect, 
@@ -215,17 +361,17 @@ namespace guiex
 
 		//vert2
 		m_pVertex[2].vertex[0] = fRight;
-		m_pVertex[2].vertex[1] = fBottom;
+		m_pVertex[2].vertex[1] = fTop;
 		m_pVertex[2].vertex[2] = z;
-		m_pVertex[2].color     = oglcolor_bottomright;
+		m_pVertex[2].color     = oglcolor_topright;
 
 		//vert3
 		m_pVertex[3].vertex[0] = fRight;
-		m_pVertex[3].vertex[1] = fTop;
+		m_pVertex[3].vertex[1] = fBottom;
 		m_pVertex[3].vertex[2] = z;
-		m_pVertex[3].color     = oglcolor_topright;      
+		m_pVertex[3].color     = oglcolor_bottomright;      
 
-		glDrawArrays( GL_POLYGON, 0, 4 );
+		glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
 		TestOpenglError("DrawTile 2");
 	}
@@ -247,88 +393,6 @@ namespace guiex
 		UpdateStencil();
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengl::BeginRender(void)
-	{
-		TestOpenglError("BeginRender 1");
-
-		//save current attributes
-		glPushClientAttrib(GL_CLIENT_ALL_ATTRIB_BITS);
-		glPushAttrib(GL_ALL_ATTRIB_BITS);
-
-		glPolygonMode(GL_FRONT_AND_BACK, m_bWireFrame ? GL_LINE : GL_FILL);
-
-		//update projection matrix
-		glMatrixMode(GL_PROJECTION);
-		glPushMatrix();
-		glLoadIdentity();
-		const CGUISize& rSize = CGUIWidgetSystem::Instance()->GetScreenSize();
-#if 1
-		glOrtho(0.0, rSize.m_fWidth,rSize.m_fHeight,0.0, -100000,100000 );
-#else
-		real fPerspectiveDegree = 45;
-		gluPerspective( fPerspectiveDegree, rSize.m_fWidth/rSize.m_fHeight, 0.1, 100000 );
-		real fZDistance = rSize.m_fHeight/2 / CGUIMath::Tan( CGUIDegree(fPerspectiveDegree/2));
-		gluLookAt( 
-			rSize.m_fWidth/2,rSize.m_fHeight/2,-fZDistance,
-			rSize.m_fWidth/2,rSize.m_fHeight/2,0, 
-			0,-1,0);
-#endif
-
-		//update modelview matrix
-		glMatrixMode(GL_MODELVIEW);
-		glPushMatrix();
-		glLoadIdentity();	
-
-		//disable lighting
-		glDisable(GL_LIGHTING);
-		glDisable(GL_DEPTH_TEST);
-
-		//enable smooth shade
-		glShadeModel(GL_SMOOTH);
-
-		glEnable(GL_POINT_SMOOTH);
-		glEnable(GL_LINE_SMOOTH);
-
-		//set blend
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
-
-		//set texture
-		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-		glEnable(GL_TEXTURE_2D);
-		glDisable(GL_SCISSOR_TEST);
-
-		glEnable( GL_STENCIL_TEST );	
-		glInterleavedArrays(GL_T2F_C4UB_V3F , 0, m_pVertex);
-
-		m_nCurrentTexture = -1;
-
-		TestOpenglError("BeginRender 2");
-	}
-	//------------------------------------------------------------------------------
-	void IGUIRender_opengl::EndRender(void)
-	{		
-		TestOpenglError("EndRender 1");
-
-		//restore model view matrix
-		glMatrixMode(GL_MODELVIEW);
-		glPopMatrix(); 
-
-		//restore projection matrix
-		glMatrixMode(GL_PROJECTION);
-		glPopMatrix(); 
-
-
-		//restore former attributes
-		glPopAttrib();
-		glPopClientAttrib();
-
-		//reset current texture
-		m_nCurrentTexture = -1;
-
-		TestOpenglError("EndRender 2");
-	}
-	//------------------------------------------------------------------------------
 	void	IGUIRender_opengl::UpdateStencil()
 	{
 		TestOpenglError("UpdateStencil 1");
@@ -338,16 +402,14 @@ namespace guiex
 		//clear stencil buffer to 1 for all area visible now
 		glClearStencil( 0 );
 		glClear( GL_STENCIL_BUFFER_BIT );
+		m_nCurrentStencilRef = 0;
 
 		// Set color mask and disable texture
 		glColorMask( false, false, false, false );		
 		glDisable( GL_TEXTURE_2D );
 
-		// Enable stencil buffer for "marking" the floor 
-		glEnable( GL_STENCIL_TEST );	
-
-		glStencilFunc( GL_EQUAL, 1, 1 );
-		glStencilOp( GL_ZERO, GL_ZERO, GL_KEEP );
+		glStencilFunc( GL_EQUAL, m_nCurrentStencilRef, m_nCurrentStencilRef );
+		glStencilOp( GL_ZERO, GL_ZERO, GL_INCR );
 
 		//render clip rect to stencil buffer
 		for( std::vector<SClipRect>::iterator itor =  m_arrayClipRects.begin();
@@ -356,6 +418,18 @@ namespace guiex
 		{
 			SClipRect& rClipRect = *itor;
 			RenderRectForStencil( rClipRect );
+
+			++m_nCurrentStencilRef;
+			if( m_nCurrentStencilRef == m_nMaxStencilRef-1 )
+			{
+				//reach max
+				glStencilFunc( GL_EQUAL, m_nCurrentStencilRef, m_nCurrentStencilRef );
+				glStencilOp( GL_ZERO, GL_ZERO, GL_INVERT );
+
+				RenderRectForStencil( m_aWholeScreenRect );
+				m_nCurrentStencilRef = 1;
+			}
+			glStencilFunc( GL_EQUAL, m_nCurrentStencilRef, m_nCurrentStencilRef );
 		}
 
 		//restore color and texture state
@@ -363,7 +437,7 @@ namespace guiex
 		glEnable( GL_TEXTURE_2D );
 
 		//reset stencil state
-		glStencilFunc( GL_EQUAL, 1, 1 );
+		glStencilFunc( GL_EQUAL, m_nCurrentStencilRef, m_nCurrentStencilRef );
 		glStencilOp( GL_KEEP, GL_KEEP, GL_KEEP );
 
 		glInterleavedArrays(GL_T2F_C4UB_V3F , 0, m_pVertex);
@@ -397,15 +471,15 @@ namespace guiex
 
 		//vert2
 		m_pVertexForStencil[2].vertex[0] = fRight;
-		m_pVertexForStencil[2].vertex[1] = fBottom;
+		m_pVertexForStencil[2].vertex[1] = fTop;
 		m_pVertexForStencil[2].vertex[2] = 1.0f;
 
 		//vert3
 		m_pVertexForStencil[3].vertex[0] = fRight;
-		m_pVertexForStencil[3].vertex[1] = fTop;
+		m_pVertexForStencil[3].vertex[1] = fBottom;
 		m_pVertexForStencil[3].vertex[2] = 1.0f;
 
-		glDrawArrays( GL_POLYGON, 0, 4 );
+		glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
 		TestOpenglError("RenderRectForStencil 2");
 	}
@@ -425,11 +499,11 @@ namespace guiex
 
 			//vert2
 			pTexture[2].tex[0] = tex.m_fLeft;
-			pTexture[2].tex[1] = tex.m_fBottom;
+			pTexture[2].tex[1] = tex.m_fTop;
 
 			//vert3
 			pTexture[3].tex[0] = tex.m_fLeft;
-			pTexture[3].tex[1] = tex.m_fTop;
+			pTexture[3].tex[1] = tex.m_fBottom;
 			break;
 
 		case IMAGE_FLIPVERTICAL:
@@ -443,11 +517,11 @@ namespace guiex
 
 			//vert2
 			pTexture[2].tex[0] = tex.m_fRight;
-			pTexture[2].tex[1] = tex.m_fTop;
+			pTexture[2].tex[1] = tex.m_fBottom;
 
 			//vert3
 			pTexture[3].tex[0] = tex.m_fRight;
-			pTexture[3].tex[1] = tex.m_fBottom;
+			pTexture[3].tex[1] = tex.m_fTop;
 			break;
 
 		case IMAGE_ROTATE90CCW:
@@ -460,11 +534,11 @@ namespace guiex
 			pTexture[1].tex[1] = tex.m_fTop;
 
 			//vert2
-			pTexture[2].tex[0] = tex.m_fLeft;
+			pTexture[2].tex[0] = tex.m_fRight;
 			pTexture[2].tex[1] = tex.m_fBottom;
 
 			//vert3
-			pTexture[3].tex[0] = tex.m_fRight;
+			pTexture[3].tex[0] = tex.m_fLeft;
 			pTexture[3].tex[1] = tex.m_fBottom;
 			break;
 
@@ -478,11 +552,11 @@ namespace guiex
 			pTexture[1].tex[1] = tex.m_fBottom;
 
 			//vert2
-			pTexture[2].tex[0] = tex.m_fRight;
+			pTexture[2].tex[0] = tex.m_fLeft;
 			pTexture[2].tex[1] = tex.m_fTop;
 
 			//vert3
-			pTexture[3].tex[0] = tex.m_fLeft;
+			pTexture[3].tex[0] = tex.m_fRight;
 			pTexture[3].tex[1] = tex.m_fTop;
 			break;
 
@@ -498,11 +572,11 @@ namespace guiex
 
 			//vert2
 			pTexture[2].tex[0] = tex.m_fRight;
-			pTexture[2].tex[1] = tex.m_fBottom;
+			pTexture[2].tex[1] = tex.m_fTop;
 
 			//vert3
 			pTexture[3].tex[0] = tex.m_fRight;
-			pTexture[3].tex[1] = tex.m_fTop;
+			pTexture[3].tex[1] = tex.m_fBottom;
 			break;
 		}
 	}
@@ -605,4 +679,10 @@ namespace guiex
 		}
 	}
 	//-----------------------------------------------------------------------------
+	void IGUIRender_opengl::EnableClip( bool bEnable )
+	{
+		m_bEnableClip = bEnable;
+	}
+	//-----------------------------------------------------------------------------
+
 }//namespace guiex

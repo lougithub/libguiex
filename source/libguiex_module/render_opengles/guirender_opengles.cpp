@@ -230,6 +230,51 @@ namespace guiex
 		TestOpenglError("drawrect 2");
 	}
 	//------------------------------------------------------------------------------
+	void IGUIRender_opengles::DrawLine(const CGUIMatrix4& rWorldMatrix,
+		const CGUIVector2 &rBegin, 
+		const CGUIVector2 &rEnd, 
+		real fLineWidth,
+		real z,
+		GUIARGB rColor_begin,
+		GUIARGB rColor_end )
+	{
+		TestOpenglError("drawline 1");
+		glLineWidth( fLineWidth );
+
+		//set modelview matrix
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		makeGLMatrix( m_gl_matrix, rWorldMatrix );
+		glMultMatrixf( m_gl_matrix );
+
+		long oglcolor_topleft = ColorToOpengl(rColor_begin);
+		long oglcolor_bottomleft = ColorToOpengl(rColor_end);
+
+		//vert0
+		m_pVertexForLine[0].vertex[0] = rBegin.x;
+		m_pVertexForLine[0].vertex[1] = rBegin.y;
+		m_pVertexForLine[0].vertex[2] = z;
+		m_pVertexForLine[0].color     = oglcolor_topleft;
+
+		//vert1
+		m_pVertexForLine[1].vertex[0] = rEnd.x;
+		m_pVertexForLine[1].vertex[1] = rEnd.y;
+		m_pVertexForLine[1].vertex[2] = z;
+		m_pVertexForLine[1].color     = oglcolor_bottomleft;     
+
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glEnableClientState(GL_COLOR_ARRAY);
+
+		glVertexPointer(3, GL_FLOAT, sizeof(SVertexForLine), &m_pVertexForLine[0].vertex[0]);
+		glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(SVertexForLine), &m_pVertexForLine[0].color);
+		glDrawArrays(GL_LINES, 0, 2);
+
+		glDisableClientState(GL_VERTEX_ARRAY);
+		glDisableClientState(GL_COLOR_ARRAY);	
+
+		TestOpenglError("drawline 2");
+	}
+	//------------------------------------------------------------------------------
 	void	IGUIRender_opengles::DrawTile(const CGUIMatrix4& rWorldMatrix,
 		const CGUIRect& rDestRect, real z, 
 		const CGUITextureImp* pTexture, const CGUIRect& rTextureRect, 
@@ -426,12 +471,12 @@ namespace guiex
 
 		//vert2
 		m_pVertexForStencil[2].vertex[0] = fRight;
-		m_pVertexForStencil[2].vertex[1] = fBottom;
+		m_pVertexForStencil[2].vertex[1] = fTop;
 		m_pVertexForStencil[2].vertex[2] = 1.0f;
 
 		//vert3
 		m_pVertexForStencil[3].vertex[0] = fRight;
-		m_pVertexForStencil[3].vertex[1] = fTop;
+		m_pVertexForStencil[3].vertex[1] = fBottom;
 		m_pVertexForStencil[3].vertex[2] = 1.0f;
 
 		glEnableClientState(GL_VERTEX_ARRAY);	
@@ -560,8 +605,6 @@ namespace guiex
 			return NULL;
 		}
 		m_setTexture.insert(pTexture);
-		
-		TestOpenglError("IGUIRender_opengles 3");
 		return pTexture;
 	}
 	//------------------------------------------------------------------------------
@@ -570,8 +613,6 @@ namespace guiex
 		CGUITexture_opengles* pTexture = new CGUITexture_opengles(this);
 		pTexture->SetOpenglTextureSize(nWidth,nHeight,ePixelFormat);
 		m_setTexture.insert(pTexture);
-		
-		TestOpenglError("IGUIRender_opengles 4");
 		return pTexture;
 	}
 	//------------------------------------------------------------------------------

@@ -106,6 +106,8 @@
 #include "guiprojectinfomanager.h"
 #include "guiprojectUtility.h"
 
+#include "guiUtility.h"
+#include "guiinterpolation.h"
 
 #endif //__GUI_EX_20060323_H__
 

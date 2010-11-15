@@ -158,11 +158,11 @@ namespace guiex
 		GUI_PF_ARGB_32,
 	};
 
-	enum ELinearType
+	enum EInterpolationType
 	{
-		eLinearType_Normal = 0,
-		eLinearType_EaseIn,
-		eLinearType_EaseInOut,
+		eInterpolationType_Normal = 0,
+		eInterpolationType_EaseIn,
+		eInterpolationType_EaseInOut,
 	};
 
 }//namespace guiex

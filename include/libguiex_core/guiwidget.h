@@ -561,6 +561,8 @@ namespace guiex
 		void SetRotation(const CGUIVector3& rRotation);
 		const CGUIVector3& GetRotation( ) const;
 
+		const CGUIMatrix4& GetFullTransform(void);
+
 		void LocalToWorld( CGUIVector2& rPos );
 		void WorldToLocal( CGUIVector2& rPos );
 

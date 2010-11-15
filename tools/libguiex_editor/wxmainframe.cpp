@@ -1053,7 +1053,7 @@ void WxMainFrame::OnToggleScissor(wxCommandEvent& evt)
 
 	if( guiex::CGUIInterfaceManager::Instance()->GetInterfaceRender())
 	{
-		//guiex::CGUIInterfaceManager::Instance()->GetInterfaceRender()->EnableScissor(bIsChecked);
+		guiex::CGUIInterfaceManager::Instance()->GetInterfaceRender()->EnableClip(bIsChecked);
 	}
 }
 //------------------------------------------------------------------------------
@@ -1669,7 +1669,6 @@ void			WxMainFrame::CreateMenu()
 	view_menu->Append(ID_VIEW_1024x786, wxT("1280 x 800"), wxT("Convenience resizer for 1280 x 800."));
 	view_menu->AppendSeparator();
 	view_menu->Append(ID_ToggleScissor, wxT("Toggle Scissor"), wxT("enable or disable scissor"), wxITEM_CHECK);
-    view_menu->Check(ID_ToggleScissor, true);
 	view_menu->Append(ID_ToggleWireframe, wxT("Toggle Wireframe"), wxT("enable or disable wireframe"), wxITEM_CHECK);
 	view_menu->Append(ID_SetBGColor, wxT("Set BG Color"), wxT("set background color"));
 	view_menu->Append(ID_Refresh, wxT("Refresh"), wxT("refresh widgets"));

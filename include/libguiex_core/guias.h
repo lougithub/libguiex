@@ -15,6 +15,7 @@
 #include "guistring.h"
 #include "guivector2.h"
 #include "guivector3.h"
+#include "guicolor.h"
 
 #include "guiasgenerator.h"
 #include "guiasfactory.h"
@@ -22,7 +23,10 @@
 #include "guitimer.h"
 #include "guisize.h"
 #include "guimath.h"
+#include "guiinterpolation.h"
+
 #include <list>
+#include <vector>
 
 
 //============================================================================//
@@ -98,7 +102,7 @@ namespace guiex
 		/**
 		* @brief set widget which receives this as
 		*/
-		void SetReceiver(CGUIWidget* pReceiver);
+		virtual void SetReceiver(CGUIWidget* pReceiver);
 
 		/**
 		* @brief Get widget which receives this as
@@ -172,17 +176,17 @@ namespace guiex
 		*/
 		CGUIAsLinearBase( const char* pAsName )
 			:CGUIAs( pAsName )
-			,m_eLinearType( eLinearType_Normal )
+			,m_eInterpolationType( eInterpolationType_Normal )
 		{
 		}
 
-		ELinearType GetLinearType( ) const
+		EInterpolationType GetLinearType( ) const
 		{
-			return m_eLinearType;
+			return m_eInterpolationType;
 		}
-		void SetLinearType( ELinearType eType )
+		void SetLinearType( EInterpolationType eType )
 		{
-			m_eLinearType = eType;
+			m_eInterpolationType = eType;
 		}
 
 		void SetLinearValue( const T& rBeginValue, const T& rEndValue, real fTotalTime )
@@ -196,7 +200,7 @@ namespace guiex
 		virtual void Update( real fDeltaTime )
 		{
 			CGUIAs::Update( fDeltaTime );
-			m_aCurValue = CGUIMath::LinearTween( m_fElapsedTime / m_fTotalTime, m_aBeginValue, m_aEndValue );
+			m_aCurValue = LinearTween( m_fElapsedTime / m_fTotalTime, m_aBeginValue, m_aEndValue );
 		}
 
 		const T& GetBeginValue() const
@@ -215,7 +219,7 @@ namespace guiex
 		}
 
 	private:
-		ELinearType	m_eLinearType;
+		EInterpolationType	m_eInterpolationType;
 
 		T m_aBeginValue;
 		T m_aEndValue;
@@ -323,6 +327,69 @@ namespace guiex
 	protected:
 	};
 	GUI_AS_GENERATOR_DECLARE( CGUIAsPosition);
+
+
+	//*****************************************************************************
+	//	CGUIAsColor
+	//*****************************************************************************
+	/**
+	* @class CGUIAsColor
+	* @brief the as, change color of widget
+	*/
+	class GUIEXPORT CGUIAsColor : public CGUIAsLinearBase<CGUIColor>
+	{
+	public:
+		/**
+		* @brief constructor
+		*/
+		CGUIAsColor();
+
+		/**
+		* @brief Update the event.
+		*/
+		virtual void Update( real fDeltaTime );
+
+	protected:
+	};
+	GUI_AS_GENERATOR_DECLARE( CGUIAsColor);
+
+
+
+	//*****************************************************************************
+	//	CGUIAsContainer
+	//*****************************************************************************
+	/**
+	* @class CGUIAsContainer
+	* @brief maintain several as.
+	*/
+	class GUIEXPORT CGUIAsContainer : public CGUIAs
+	{
+	public:
+		/**
+		* @brief constructor
+		*/
+		CGUIAsContainer();
+
+		/**
+		* @brief Update the event.
+		*/
+		virtual void Update( real fDeltaTime );
+
+		virtual void SetReceiver(CGUIWidget* pReceiver);
+
+		void AddAs( CGUIAs* pAs, real fBeginTime );
+	
+	protected:
+
+	protected:
+		struct SAsInfo
+		{
+			CGUIAs* m_pAs;
+			real m_fBeginTime;
+		};
+		std::vector<SAsInfo> m_vAsList;//the as in this list should be sorted by begin time
+	};
+	GUI_AS_GENERATOR_DECLARE( CGUIAsContainer);
 
 }//namespace guiex
 

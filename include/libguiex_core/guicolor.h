@@ -82,7 +82,7 @@ namespace guiex
 		* @brief set color value by ARGB
 		* @param GUIARGB color value,color value with 4-bytes number
 		*/
-		void	SetARGB(GUIARGB argb);
+		void SetARGB(GUIARGB argb);
 
 
 		/** 
@@ -105,7 +105,7 @@ namespace guiex
 		* @brief get alpha factor
 		* @return alpha factor, from 0.0 to 1.0
 		*/
-		real	GetAlpha() const;
+		real GetAlpha() const;
 
 		/** 
 		* @brief set alpha
@@ -117,7 +117,7 @@ namespace guiex
 		* @brief get red factor of RGB
 		* @return red factor, from 0.0 to 1.0
 		*/
-		real	GetRed() const;
+		real GetRed() const;
 
 		/** 
 		* @brief set red factor of RGB
@@ -129,7 +129,7 @@ namespace guiex
 		* @brief get green factor of RGB
 		* @return green factor, from 0.0 to 1.0
 		*/
-		real	GetGreen() const;
+		real GetGreen() const;
 
 		/** 
 		* @brief set green factor of RGB
@@ -141,7 +141,7 @@ namespace guiex
 		* @brief get blue factor of RGB
 		* @return blue factor, from 0.0 to 1.0
 		*/
-		real	GetBlue() const;
+		real GetBlue() const;
 
 		/** 
 		* @brief set blue factor of RGB
@@ -152,12 +152,12 @@ namespace guiex
 		/** 
 		* @brief invert color.
 		*/
-		void	InvertColor(void);
+		void InvertColor(void);
 
 		/**
 		* @brief invert color and alpha
 		*/
-		void	InvertColorWithAlpha(void);
+		void InvertColorWithAlpha(void);
 
 		/** 
 		* @brief assign operator
@@ -360,24 +360,24 @@ namespace guiex
 		* @param rColor reference of CGUIColor
 		* @return true for equalization
 		*/
-		bool	operator==(const CGUIColor &rColor ) const;
+		bool operator==(const CGUIColor &rColor ) const;
 
 		/** 
 		* @brief compare operator
 		* @param rColor reference of CGUIColor
 		* @return true for not equalization
 		*/
-		bool	operator!=(const CGUIColor &rColor ) const;
+		bool operator!=(const CGUIColor &rColor ) const;
 
 		/** 
 		* @brief less-than operator
 		*/
-		bool	operator<(const CGUIColor &rColor ) const;
+		bool operator<(const CGUIColor &rColor ) const;
 
 		/** 
 		* @brief greater-than operator
 		*/
-		bool	operator>(const CGUIColor &rColor ) const;
+		bool operator>(const CGUIColor &rColor ) const;
 
 	private:
 		GUIARGB	m_nARGB;	///< color

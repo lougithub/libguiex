@@ -789,6 +789,11 @@ namespace guiex
 		rRenderRect.m_vecVertex[3].m_aVector.y = aTmpPos.y;
 	}
 	//------------------------------------------------------------------------------
+	const CGUIMatrix4& CGUIWidget::GetFullTransform(void)
+	{
+		return getFullTransform();
+	}
+	//------------------------------------------------------------------------------
 	void CGUIWidget::LocalToWorld( CGUIVector2& rPos )
 	{
 		const CGUIMatrix4& rWorldMatrix = getFullTransform();

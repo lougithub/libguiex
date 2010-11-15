@@ -80,13 +80,23 @@ namespace guiex
 		* @brief add a texture into render list
 		*/
 		virtual	void	DrawTile(	const CGUIMatrix4& rWorldMatrix,
-			const CGUIRect& rDestRect, real z, 
-			const CGUITextureImp* pTexture, const CGUIRect& rTextureRect, 
+			const CGUIRect& rDestRect,
+			real z, 
+			const CGUITextureImp* pTexture, 
+			const CGUIRect& rTextureRect, 
 			EImageOperation eImageOperation,
 			GUIARGB rColor_topleft,
 			GUIARGB rColor_topright,
 			GUIARGB rColor_bottomleft,
 			GUIARGB rColor_bottomright);
+
+		virtual void DrawLine(const CGUIMatrix4& rWorldMatrix,
+			const CGUIVector2 &rBegin, 
+			const CGUIVector2 &rEnd, 
+			real fLineWidth,
+			real z,
+			GUIARGB rColor_begin,
+			GUIARGB rColor_end);
 
 		/** 
 		* @brief add a texture into render list
@@ -192,6 +202,8 @@ namespace guiex
 		*/
 		virtual void DeleteSelf();
 
+		virtual void EnableClip( bool bEnable );
+
 	protected:
 		/** 
 		* @brief initialize render
@@ -270,11 +282,17 @@ namespace guiex
 		typedef		std::set<CGUITextureImp*>	TSetTexture;
 		TSetTexture	m_setTexture;
 
-		uint32					m_nCurrentTexture;
+		uint32		 m_nCurrentTexture;
 
 		std::vector<SClipRect>	m_arrayClipRects;
 
-		bool					m_bWireFrame;
+		bool		 m_bWireFrame;
+
+		bool		m_bEnableClip;
+		int			m_nStencilBits;
+		int			m_nMaxStencilRef;
+		int			m_nCurrentStencilRef;
+		SClipRect	m_aWholeScreenRect;
 	};
 
 	GUI_INTERFACE_DECLARE();

@@ -13,6 +13,7 @@
 #include <libguiex_core/guiwidgetsystem.h>
 #include <libguiex_core/guimath.h>
 
+
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------ 
@@ -30,6 +31,8 @@ namespace guiex
 		if( 0 != GUI_AS_REGISTER(CGUIAsScale)) {return -1;}
 		if( 0 != GUI_AS_REGISTER(CGUIAsPosition)) {return -1;}
 		if( 0 != GUI_AS_REGISTER(CGUIAsRotation)) {return -1;}
+		if( 0 != GUI_AS_REGISTER(CGUIAsColor)) {return -1;}
+		if( 0 != GUI_AS_REGISTER(CGUIAsContainer)) {return -1;}
 
 		return 0;
 	} 
@@ -240,6 +243,121 @@ namespace guiex
 		CGUIAsLinearBase<CGUIVector2>::Update( fDeltaTime );
 		GUI_ASSERT( GetReceiver(), "no receiver");
 		GetReceiver()->SetPixelPosition(GetCurrentValue());
+	}
+	//------------------------------------------------------------------------------
+
+
+	//*****************************************************************************
+	//	CGUIAsColor
+	//*****************************************************************************
+	//------------------------------------------------------------------------------
+	GUI_AS_GENERATOR_IMPLEMENT( CGUIAsColor );
+	//------------------------------------------------------------------------------
+	CGUIAsColor::CGUIAsColor()
+		:CGUIAsLinearBase<CGUIColor>("CGUIAsColor")
+	{
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsColor::Update( real fDeltaTime )
+	{
+		CGUIAsLinearBase<CGUIColor>::Update( fDeltaTime );
+		GUI_ASSERT( GetReceiver(), "no receiver");
+		GetReceiver()->SetColor(GetCurrentValue());
+	}
+	//------------------------------------------------------------------------------
+
+
+
+	//*****************************************************************************
+	//	CGUIAsContainer
+	//*****************************************************************************
+	//------------------------------------------------------------------------------
+	GUI_AS_GENERATOR_IMPLEMENT( CGUIAsContainer );
+	//------------------------------------------------------------------------------
+	CGUIAsContainer::CGUIAsContainer()
+		:CGUIAs("CGUIAsContainer")
+	{
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsContainer::SetReceiver(CGUIWidget* pReceiver)
+	{
+		CGUIAs::SetReceiver( pReceiver );
+
+		for( std::vector<SAsInfo>::iterator itor = m_vAsList.begin();
+			itor != m_vAsList.end();
+			++itor )
+		{
+			SAsInfo& rInfo = *itor;
+			rInfo.m_pAs->SetReceiver( GetReceiver() );
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsContainer::Update( real fDeltaTime )
+	{
+		CGUIAs::Update( fDeltaTime );
+
+		for( std::vector<SAsInfo>::iterator itor = m_vAsList.begin();
+			itor != m_vAsList.end();
+			++itor )
+		{
+			const SAsInfo& rInfo = *itor;
+			if( rInfo.m_fBeginTime > m_fElapsedTime )
+			{
+				//update done
+				break;
+			}
+
+			if( rInfo.m_fBeginTime + rInfo.m_pAs->GetTotalTime() < m_fElapsedTime )
+			{
+				continue;
+			}
+
+			rInfo.m_pAs->Update( fDeltaTime );
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsContainer::AddAs( CGUIAs* pAs, real fBeginTime )
+	{
+		SAsInfo aAsInfo;
+		aAsInfo.m_fBeginTime = fBeginTime;
+		aAsInfo.m_pAs = pAs;
+		aAsInfo.m_pAs->SetReceiver( GetReceiver() );
+
+
+		//insert
+		bool bInserted = false;
+		for( std::vector<SAsInfo>::iterator itor = m_vAsList.begin();
+			itor != m_vAsList.end();
+			++itor )
+		{
+			const SAsInfo& rInfo = *itor;
+			if( rInfo.m_fBeginTime >= fBeginTime )
+			{
+				m_vAsList.insert( itor, rInfo );
+				bInserted = true;
+				break;
+			}
+		}
+		if( !bInserted )
+		{
+			//last one
+			m_vAsList.push_back( aAsInfo );
+		}
+
+		//update time
+		real fTotalTime = 0.0f;
+		for( std::vector<SAsInfo>::iterator itor = m_vAsList.begin();
+			itor != m_vAsList.end();
+			++itor )
+		{
+			const SAsInfo& rInfo = *itor;
+			real fAsEndTime = rInfo.m_fBeginTime + rInfo.m_pAs->GetTotalTime();
+			if( fAsEndTime > fTotalTime )
+			{
+				fTotalTime = fAsEndTime;
+			}
+		}
+		SetTotalTime( fTotalTime );
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

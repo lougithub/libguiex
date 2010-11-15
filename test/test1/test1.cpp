@@ -32,7 +32,7 @@ guiex::CGUIWidget* SampleInitialize()
 	pWidget_staticimage2->SetValue( "Image", "checkbutton_glow_checked" );
 	pWidget_staticimage2->SetAnchorPoint( 0.5, 0.5 );
 	pWidget_staticimage2->SetSize( 25, 25 );
-	pWidget_staticimage2->SetPosition( 25, 25 );
+	pWidget_staticimage2->SetPosition( 0, 0 );
 	pWidget_staticimage2->Create();
 
 	guiex::CGUIWidget* pWidget_statictext = GUI_CREATE_WIDGET("CGUIWgtStaticText", "staticText_1", "testproject");
@@ -258,7 +258,7 @@ guiex::CGUIWidget* SampleInitialize()
 		guiex::CGUIAsScale* pAsScale = static_cast<guiex::CGUIAsScale*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsScale" ));
 		pAsScale->SetLinearValue( guiex::CGUISize(0.2f,0.2f), guiex::CGUISize(1,1), 4 );
 		pAsScale->SetReceiver( pWidget_panel );
-		pAsScale->SetLinearType( guiex::eLinearType_EaseInOut );
+		pAsScale->SetLinearType( guiex::eInterpolationType_EaseInOut );
 		pWidget_panel->AddAs( pAsScale );
 
 		guiex::CGUIAsRotation* pAsRotation = static_cast<guiex::CGUIAsRotation*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsRotation" ));
@@ -271,12 +271,34 @@ guiex::CGUIWidget* SampleInitialize()
 		guiex::CGUIAsPosition* pAsPos1 = static_cast<guiex::CGUIAsPosition*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsPosition" ));
 		pAsPos1->SetLinearValue( guiex::CGUIVector2(0,0), guiex::CGUIVector2(500,500), 3 );
 		pAsPos1->SetReceiver( pWidget_staticimage );
+
 		guiex::CGUIAsPosition* pAsPos2 = static_cast<guiex::CGUIAsPosition*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsPosition" ));
 		pAsPos2->SetLinearValue( guiex::CGUIVector2(500,500), guiex::CGUIVector2(100,500), 2 );
 		pAsPos2->SetReceiver( pWidget_staticimage );
-
 		pAsPos1->PushSuccessor(pAsPos2);
+		
 		pWidget_staticimage->AddAs( pAsPos1 );
+	}
+
+	{
+		guiex::CGUIAsContainer* pAsContainer = static_cast<guiex::CGUIAsContainer*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsContainer" ));
+		guiex::CGUIAsColor* pAsColor = NULL;
+
+		pAsColor = static_cast<guiex::CGUIAsColor*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsColor" ));
+		pAsColor->SetLinearValue( guiex::CGUIColor(1,0,0, 1), guiex::CGUIColor(0,1,0,1), 2 );
+		pAsContainer->AddAs( pAsColor, 0 );
+
+		pAsColor = static_cast<guiex::CGUIAsColor*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsColor" ));
+		pAsColor->SetLinearValue( guiex::CGUIColor(0,1,0, 1), guiex::CGUIColor(0,0,1,1), 2 );
+		pAsContainer->AddAs( pAsColor, 2 );
+
+		pAsColor = static_cast<guiex::CGUIAsColor*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsColor" ));
+		pAsColor->SetLinearValue( guiex::CGUIColor(0,0,1, 1), guiex::CGUIColor(1,0,0,1), 2 );
+		pAsContainer->AddAs( pAsColor, 4 );
+
+		pAsContainer->SetReceiver( pWidget_staticimage );
+		pAsContainer->SetLooping( true );
+		pWidget_staticimage->AddAs( pAsContainer );
 	}
 
 	{

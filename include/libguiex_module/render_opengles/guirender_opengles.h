@@ -80,6 +80,14 @@ namespace guiex
 			GUIARGB  rColor_bottomleft,
 			GUIARGB  rColor_bottomright);
 
+		virtual void DrawLine(const CGUIMatrix4& rWorldMatrix,
+			const CGUIVector2 &rBegin, 
+			const CGUIVector2 &rEnd, 
+			real fLineWidth,
+			real z,
+			GUIARGB rColor_begin,
+			GUIARGB rColor_end);
+
 		/** 
 		* @brief add a texture into render list
 		*/

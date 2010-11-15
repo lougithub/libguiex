@@ -271,6 +271,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\source\libguiex_core\guiinterpolation.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\source\libguiex_core\guilogmsg.cpp"
 				>
 			</File>
@@ -586,6 +590,10 @@
 			</File>
 			<File
 				RelativePath="..\..\include\libguiex_core\guiinterfacesound.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\libguiex_core\guiinterpolation.h"
 				>
 			</File>
 			<File
