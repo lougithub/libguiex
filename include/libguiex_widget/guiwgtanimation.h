@@ -34,7 +34,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIWgtAnimation( const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtAnimation( const CGUIString& rName, const CGUIString& rSceneName );
 
 		/**
 		* @brief destructor
@@ -73,7 +73,7 @@ namespace guiex
 		* @brief constructor
 		* for derived class
 		*/
-		CGUIWgtAnimation( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtAnimation( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
 		/// render
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);

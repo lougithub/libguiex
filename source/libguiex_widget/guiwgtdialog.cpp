@@ -26,14 +26,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString CGUIWgtDialog::ms_strType = "CGUIWgtDialog";
 	//------------------------------------------------------------------------------
-	CGUIWgtDialog::CGUIWgtDialog(const CGUIString& rName, const CGUIString& rProjectName)
-		:CGUIWidget(ms_strType, rName, rProjectName)
+	CGUIWgtDialog::CGUIWgtDialog(const CGUIString& rName, const CGUIString& rSceneName)
+		:CGUIWidget(ms_strType, rName, rSceneName)
 	{
 		InitDialog();
 	}
 	//------------------------------------------------------------------------------
-	CGUIWgtDialog::CGUIWgtDialog( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWidget(rType, rName, rProjectName)
+	CGUIWgtDialog::CGUIWgtDialog( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWidget(rType, rName, rSceneName)
 	{
 		InitDialog();
 	}

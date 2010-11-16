@@ -52,7 +52,7 @@ namespace guiex
 		*/
 		CGUIFont*	CreateGUIFont(
 			const CGUIString& rName, 
-			const CGUIString& rProjectName, 
+			const CGUIString& rSceneName, 
 			const CGUIString& rPath, 
 			uint32 nFontIndex
 			);

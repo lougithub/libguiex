@@ -43,7 +43,7 @@ namespace guiex
 		/**
 		* @brief base class constructor
 		*/
-		CGUIColListHeader( const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIColListHeader( const CGUIString& rName, const CGUIString& rSceneName );
 
 		/**
 		* @brief base class destructor
@@ -145,7 +145,7 @@ namespace guiex
 		* @brief constructor
 		* for derived class
 		*/
-		CGUIColListHeader( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIColListHeader( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
 		//init item
 		void	InitColListHeader();

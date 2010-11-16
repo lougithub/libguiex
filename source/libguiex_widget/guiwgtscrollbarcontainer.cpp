@@ -25,14 +25,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString CGUIWgtScrollbarContainer::ms_strType = "CGUIWgtScrollbarContainer";
 	//------------------------------------------------------------------------------
-	CGUIWgtScrollbarContainer::CGUIWgtScrollbarContainer(const CGUIString& rName, const CGUIString& rProjectName)
-		:CGUIWidget(ms_strType, rName, rProjectName)
+	CGUIWgtScrollbarContainer::CGUIWgtScrollbarContainer(const CGUIString& rName, const CGUIString& rSceneName)
+		:CGUIWidget(ms_strType, rName, rSceneName)
 	{
 		InitScrollbarContainer();
 	}
 	//------------------------------------------------------------------------------
-	CGUIWgtScrollbarContainer::CGUIWgtScrollbarContainer( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWidget(rType, rName, rProjectName)
+	CGUIWgtScrollbarContainer::CGUIWgtScrollbarContainer( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWidget(rType, rName, rSceneName)
 	{
 		InitScrollbarContainer();
 	}
@@ -47,14 +47,14 @@ namespace guiex
 		m_bForceHorzScroll = false;
 
 		//create scrollbar
-		m_pScrollbarVert = static_cast<CGUIWgtScrollbar*>(GUI_CREATE_WIDGET("CGUIWgtScrollbar", GetName()+"_scrollbar_vert__auto__", GetProjectName()));
+		m_pScrollbarVert = static_cast<CGUIWgtScrollbar*>(GUI_CREATE_WIDGET("CGUIWgtScrollbar", GetName()+"_scrollbar_vert__auto__", GetSceneName()));
 		m_pScrollbarVert->SetParent(this);
 		m_pScrollbarVert->SetFocusAgency( true );
 		m_pScrollbarVert->EnableNotifyParent(true);
 		m_pScrollbarVert->EnableAutoPosition(true);
 		m_pScrollbarVert->SetScrollbarType(eSB_VERTICAL);
 
-		m_pScrollbarHorz = static_cast<CGUIWgtScrollbar*>(GUI_CREATE_WIDGET("CGUIWgtScrollbar", GetName()+"_scrollbar_hort__auto__", GetProjectName()));
+		m_pScrollbarHorz = static_cast<CGUIWgtScrollbar*>(GUI_CREATE_WIDGET("CGUIWgtScrollbar", GetName()+"_scrollbar_hort__auto__", GetSceneName()));
 		m_pScrollbarHorz->SetParent(this);
 		m_pScrollbarHorz->SetFocusAgency( true );
 		m_pScrollbarHorz->EnableNotifyParent(true);

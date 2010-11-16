@@ -31,14 +31,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString CGUIWgtEditBox::ms_strType = "CGUIWgtEditBox";
 	//------------------------------------------------------------------------------
-	CGUIWgtEditBox::CGUIWgtEditBox(const CGUIString& rName, const CGUIString& rProjectName)
-		:CGUIWidget(ms_strType, rName, rProjectName)
+	CGUIWgtEditBox::CGUIWgtEditBox(const CGUIString& rName, const CGUIString& rSceneName)
+		:CGUIWidget(ms_strType, rName, rSceneName)
 	{
 		InitEditbox();
 	}
 	//------------------------------------------------------------------------------
-	CGUIWgtEditBox::CGUIWgtEditBox( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWidget(rType, rName, rProjectName)
+	CGUIWgtEditBox::CGUIWgtEditBox( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWidget(rType, rName, rSceneName)
 	{
 		InitEditbox();
 	}
@@ -51,7 +51,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtEditBox::InitEditbox()
 	{
-		m_pEdit = new CGUIWgtEdit(GetName()+"__EDIT__auto__", GetProjectName());
+		m_pEdit = new CGUIWgtEdit(GetName()+"__EDIT__auto__", GetSceneName());
 		m_pEdit->SetParent(this);
 
 		SetFocusable(true);

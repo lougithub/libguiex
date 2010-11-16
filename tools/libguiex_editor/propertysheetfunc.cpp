@@ -144,7 +144,7 @@ guiex::CGUIWidget*	CreateWidget( wxPropertyGridManager* pSheetMgr, const char* s
 	guiex::CGUIWidget* pWidget = NULL;
 	try
 	{
-		pWidget = GUI_CREATE_WIDGET(strType, strName, GetMainFrame()->GetCurrentProjectName());
+		pWidget = GUI_CREATE_WIDGET(strType, strName, GetMainFrame()->GetCurrentSceneName());
 		guiex::CGUIProperty aSet;
 		GenerateGUIProperty( pSheetMgr,aSet);
 

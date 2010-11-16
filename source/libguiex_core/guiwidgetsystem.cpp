@@ -37,8 +37,8 @@
 #include <libguiex_core/guiperfmonitor.h>
 
 #include <libguiex_core/guiwidgetroot.h>
-#include <libguiex_core/guiprojectinfo.h>
-#include <libguiex_core/guiprojectinfomanager.h>
+#include <libguiex_core/guisceneinfo.h>
+#include <libguiex_core/guisceneinfomanager.h>
 
 #include <algorithm>
 
@@ -54,14 +54,14 @@ namespace guiex
 		return CGUIWidgetSystem::Instance();
 	}
 	//------------------------------------------------------------------------------
-	GUIEXPORT	CGUIWidget* GetWidget(const CGUIString& rWidgetName, const CGUIString& rProjectName)
+	GUIEXPORT	CGUIWidget* GetWidget(const CGUIString& rWidgetName, const CGUIString& rSceneName)
 	{
-		return CGUIWidgetSystem::Instance()->GetWidget(rWidgetName, rProjectName);
+		return CGUIWidgetSystem::Instance()->GetWidget(rWidgetName, rSceneName);
 	}
 	//------------------------------------------------------------------------------
-	GUIEXPORT CGUIWidget*	LoadDynamicPage( const CGUIString& rPageFileName, const CGUIString& rPageProjectName, const CGUIString& rWorkingProjectName )
+	GUIEXPORT CGUIWidget*	LoadDynamicPage( const CGUIString& rPageFileName, const CGUIString& rPageSceneName, const CGUIString& rWorkingSceneName )
 	{
-		return CGUIWidgetSystem::Instance()->LoadDynamicPage(rPageFileName, rPageProjectName, rWorkingProjectName);
+		return CGUIWidgetSystem::Instance()->LoadDynamicPage(rPageFileName, rPageSceneName, rWorkingSceneName);
 	}
 	//------------------------------------------------------------------------------
 	GUIEXPORT	void			OpenDialog(CGUIWidget* pDlg)
@@ -159,7 +159,7 @@ namespace guiex
 
 		//register internal root widget
 		GUI_REGISTER_WIDGET_LIB(CGUIWidgetRoot);
-		m_pWgtRoot = GUI_CREATE_WIDGET("CGUIWidgetRoot", "__WIDGET_ROOT__auto__", "__PROJECT_ROOT_auto__");
+		m_pWgtRoot = GUI_CREATE_WIDGET("CGUIWidgetRoot", "__WIDGET_ROOT__auto__", "__SCENE_ROOT_auto__");
 		m_pWgtRoot->Create();
 		m_pWgtRoot->Open();
 
@@ -233,15 +233,15 @@ namespace guiex
 		return m_bDrawExtraInfo;
 	}
 	//------------------------------------------------------------------------------
-	CGUIWidget*	CGUIWidgetSystem::LoadPage( const CGUIString& rFileName, const CGUIString& rProjectName)
+	CGUIWidget*	CGUIWidgetSystem::LoadPage( const CGUIString& rFileName, const CGUIString& rSceneName)
 	{
-		CGUIString strRelPath = CGUIProjectInfoManager::Instance()->GetProjectFilePath( rProjectName ) + rFileName;
+		CGUIString strRelPath = CGUISceneInfoManager::Instance()->GetSceneFileRootPath( rSceneName ) + rFileName;
 		IGUIInterfaceConfigFile* pConfigFile = CGUIInterfaceManager::Instance()->GetInterfaceConfigFile();
 		if( !pConfigFile )
 		{
 			throw CGUIException("[CGUIWidgetSystem::LoadPage]: failed to get interface <IGUIConfigFile>!");
 		}
-		CGUIWidget* pWidget = pConfigFile->LoadWidgetConfigFile(strRelPath, rProjectName);
+		CGUIWidget* pWidget = pConfigFile->LoadWidgetConfigFile(strRelPath, rSceneName);
 		if( !pWidget )
 		{
 			return NULL;
@@ -252,46 +252,46 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIWidget*	CGUIWidgetSystem::LoadDynamicPage( 
 		const CGUIString& rPageFileName,
-		const CGUIString& rPageProjectName,
-		const CGUIString& rWorkingProjectName )
+		const CGUIString& rPageSceneName,
+		const CGUIString& rWorkingSceneName )
 	{
-		CGUIString strRelPath = CGUIProjectInfoManager::Instance()->GetProjectFilePath( rPageProjectName ) + rPageFileName;
+		CGUIString strRelPath = CGUISceneInfoManager::Instance()->GetSceneFileRootPath( rPageSceneName ) + rPageFileName;
 		IGUIInterfaceConfigFile* pConfigFile = CGUIInterfaceManager::Instance()->GetInterfaceConfigFile();
 		if( !pConfigFile )
 		{
 			throw CGUIException("[CGUIWidgetSystem::LoadDynamicPage]: failed to get interface <IGUIConfigFile>!");
 		}
-		CGUIString strDynamicProjectName = 	rPageProjectName + GenerateAnonymousName();
-		CGUIWidget* pWidget = pConfigFile->LoadWidgetConfigFile(strRelPath, strDynamicProjectName);
+		CGUIString strDynamicSceneName = 	rPageSceneName + GenerateAnonymousName();
+		CGUIWidget* pWidget = pConfigFile->LoadWidgetConfigFile(strRelPath, strDynamicSceneName);
 		if( !pWidget )
 		{
 			return NULL;
 		}
-		pWidget->SetWorkingProjectName(rWorkingProjectName);
+		pWidget->SetWorkingSceneName(rWorkingSceneName);
 		AddPage(  pWidget, rPageFileName );
 		m_setDynamicPageList.insert( pWidget );
 		return pWidget;
 	}
 	//------------------------------------------------------------------------------
-	int32	CGUIWidgetSystem::LoadResource( const CGUIString& rFileName, const CGUIString& rProjectName)
+	int32	CGUIWidgetSystem::LoadResource( const CGUIString& rFileName, const CGUIString& rSceneName)
 	{
 		IGUIInterfaceConfigFile* pConfigFile = CGUIInterfaceManager::Instance()->GetInterfaceConfigFile();
 		if( !pConfigFile )
 		{
 			throw CGUIException("[CGUIWidgetSystem::LoadResourceConfigFile]: failed to get interface <IGUIConfigFile>!");
 		}
-		if( 0 != pConfigFile->LoadResourceConfigFile(rFileName, rProjectName) )
+		if( 0 != pConfigFile->LoadResourceConfigFile(rFileName, rSceneName) )
 		{
-			throw CGUIException("[CGUIWidgetSystem::LoadResourceConfigFile]: failed to load config file <%s : %s>!", rProjectName.c_str(), rFileName.c_str());
+			throw CGUIException("[CGUIWidgetSystem::LoadResourceConfigFile]: failed to load config file <%s : %s>!", rSceneName.c_str(), rFileName.c_str());
 		}
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidgetSystem::FreeResource( const CGUIString& rProjectName )
+	void	CGUIWidgetSystem::FreeResource( const CGUIString& rSceneName )
 	{
-		CGUIImageManager::Instance()->ReleaseProjectResources(rProjectName);
-		CGUIAnimationManager::Instance()->ReleaseProjectResources(rProjectName);
-		CGUIFontManager::Instance()->ReleaseProjectResources(rProjectName);
+		CGUIImageManager::Instance()->ReleaseSceneResources(rSceneName);
+		CGUIAnimationManager::Instance()->ReleaseSceneResources(rSceneName);
+		CGUIFontManager::Instance()->ReleaseSceneResources(rSceneName);
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWidgetSystem::UnloadAllResource(  )
@@ -309,7 +309,7 @@ namespace guiex
 		CGUIAnimationManager::Instance()->ReleaseAllResources( );
 		CGUIFontManager::Instance()->ReleaseAllResources( );
 		
-		CGUIProjectInfoManager::Instance()->ClearProjectLoadFlags();
+		CGUISceneInfoManager::Instance()->ClearSceneResourceLoadFlags();
 
 		//CGUITextureManager::Instance()->DestroyAllTextureImplement();
 	}
@@ -612,12 +612,12 @@ namespace guiex
 		return m_vOpenedPage[nIdx];
 	}
 	//------------------------------------------------------------------------------
-	void			CGUIWidgetSystem::AddPage( CGUIWidget* pPage, const CGUIString& rProjectName)
+	void			CGUIWidgetSystem::AddPage( CGUIWidget* pPage, const CGUIString& rSceneName)
 	{
 		GUI_ASSERT( pPage, "invalid parameter" );
 
 		//check
-		if( HasPage( pPage->GetName(), pPage->GetProjectName()))
+		if( HasPage( pPage->GetName(), pPage->GetSceneName()))
 		{
 			throw CGUIException( "[CGUIWidgetSystem::AddPage]: the page name <%s> has existed!", pPage->GetName().c_str());
 		}
@@ -625,38 +625,38 @@ namespace guiex
 			itor != m_vecPage.end();
 			++itor)
 		{
-			if( itor->second == rProjectName && itor->first->GetProjectName() == pPage->GetProjectName() )
+			if( itor->second == rSceneName && itor->first->GetSceneName() == pPage->GetSceneName() )
 			{
-				throw CGUIException( "[CGUIWidgetSystem::AddPage]: the page's file name <%s> has existed!", rProjectName.c_str());
+				throw CGUIException( "[CGUIWidgetSystem::AddPage]: the page's file name <%s> has existed!", rSceneName.c_str());
 			}
 		}
 
-		m_vecPage.push_back( std::make_pair(pPage, rProjectName));
+		m_vecPage.push_back( std::make_pair(pPage, rSceneName));
 	}
 	//------------------------------------------------------------------------------
-	CGUIWidget*		CGUIWidgetSystem::GetPage( const CGUIString& rWidgetName, const CGUIString& rProjectName )
+	CGUIWidget*		CGUIWidgetSystem::GetPage( const CGUIString& rWidgetName, const CGUIString& rSceneName )
 	{
 		for( TVecPage::iterator itor = m_vecPage.begin();
 			itor != m_vecPage.end();
 			++itor)
 		{
-			if( itor->first->GetName() == rWidgetName && itor->first->GetProjectName() == rProjectName )
+			if( itor->first->GetName() == rWidgetName && itor->first->GetSceneName() == rSceneName )
 			{
 				return (*itor).first;
 			}
 		}
 
-		throw CGUIException( "[CGUIWidgetSystem::GetPage]: failed to get page whose name is <%s : %s>!", rProjectName.c_str(), rWidgetName.c_str());
+		throw CGUIException( "[CGUIWidgetSystem::GetPage]: failed to get page whose name is <%s : %s>!", rSceneName.c_str(), rWidgetName.c_str());
 		return NULL;
 	}
 	//------------------------------------------------------------------------------
-	CGUIWidget*		CGUIWidgetSystem::GetPageByFilename( const CGUIString& rFilename, const CGUIString& rProjectName )
+	CGUIWidget*		CGUIWidgetSystem::GetPageByFilename( const CGUIString& rFilename, const CGUIString& rSceneName )
 	{
 		for( TVecPage::iterator itor = m_vecPage.begin();
 			itor != m_vecPage.end();
 			++itor)
 		{
-			if( itor->first->GetProjectName() == rProjectName && itor->second == rFilename )
+			if( itor->first->GetSceneName() == rSceneName && itor->second == rFilename )
 			{
 				return (*itor).first;
 			}
@@ -696,13 +696,13 @@ namespace guiex
 		DestroyWidget(pPage);
 	}
 	//------------------------------------------------------------------------------
-	bool			CGUIWidgetSystem::HasPage(const CGUIString& rWidgetName, const CGUIString& rProjectName) const
+	bool			CGUIWidgetSystem::HasPage(const CGUIString& rWidgetName, const CGUIString& rSceneName) const
 	{
 		for( TVecPage::const_iterator itor = m_vecPage.begin();
 			itor != m_vecPage.end();
 			++itor)
 		{
-			if( (*itor).first->GetName() == rWidgetName && (*itor).first->GetProjectName() == rProjectName )
+			if( (*itor).first->GetName() == rWidgetName && (*itor).first->GetSceneName() == rSceneName )
 			{
 				return true;
 			}
@@ -723,31 +723,31 @@ namespace guiex
 		return false;
 	}
 	//------------------------------------------------------------------------------
-	CGUIWidget* CGUIWidgetSystem::CreateWidget( const CGUIString& rType, const CGUIString& rWidgetName, const CGUIString& rProjectName )
+	CGUIWidget* CGUIWidgetSystem::CreateWidget( const CGUIString& rType, const CGUIString& rWidgetName, const CGUIString& rSceneName )
 	{
 		CGUIWidget* pWidget = NULL;
 
-		if( !rWidgetName.empty() && !rProjectName.empty() )
+		if( !rWidgetName.empty() && !rSceneName.empty() )
 		{
 			//check whether this widget has exist
-			TMapWidget::iterator itor = m_aMapWidget.find( rProjectName );
+			TMapWidget::iterator itor = m_aMapWidget.find( rSceneName );
 			std::map<CGUIString, CGUIWidget*>* pWidgetMap = NULL;
 			if( itor != m_aMapWidget.end())
 			{
 				if( itor->second.find( rWidgetName ) != itor->second.end())
 				{
-					throw CGUIException( "[CGUIWidgetSystem::CreateWidget]: the widget [%s : %s] has existed!", rProjectName.c_str(), rWidgetName.c_str());
+					throw CGUIException( "[CGUIWidgetSystem::CreateWidget]: the widget [%s : %s] has existed!", rSceneName.c_str(), rWidgetName.c_str());
 				}
 				pWidgetMap = &itor->second;
 			}
 			else
 			{
-				//add project
-				itor = m_aMapWidget.insert( std::make_pair( rProjectName, std::map<CGUIString, CGUIWidget*>())).first;
+				//add scene
+				itor = m_aMapWidget.insert( std::make_pair( rSceneName, std::map<CGUIString, CGUIWidget*>())).first;
 				pWidgetMap = &itor->second;
 			}
 
-			pWidget = CGUIWidgetFactory::Instance()->CreateWidget( rType, rWidgetName, rProjectName );
+			pWidget = CGUIWidgetFactory::Instance()->CreateWidget( rType, rWidgetName, rSceneName );
 			pWidgetMap->insert(std::make_pair(rWidgetName, pWidget));
 		}
 		else
@@ -765,18 +765,18 @@ namespace guiex
 			throw CGUIException( "[CGUIWidgetSystem::DestroyWidget]: Invalid parameter");
 		}
 
-		if( !pWidget->GetName().empty() && !pWidget->GetProjectName().empty())
+		if( !pWidget->GetName().empty() && !pWidget->GetSceneName().empty())
 		{
 			//check
-			TMapWidget::iterator itor = m_aMapWidget.find( pWidget->GetProjectName());
+			TMapWidget::iterator itor = m_aMapWidget.find( pWidget->GetSceneName());
 			if( itor  == m_aMapWidget.end())
 			{
-				throw CGUIException( "[CGUIWidgetSystem::DestroyWidget]: the widget <%s : %s> doesn't exist!", pWidget->GetProjectName().c_str(), pWidget->GetName().c_str());
+				throw CGUIException( "[CGUIWidgetSystem::DestroyWidget]: the widget <%s : %s> doesn't exist!", pWidget->GetSceneName().c_str(), pWidget->GetName().c_str());
 			}
 			std::map<CGUIString, CGUIWidget*>::iterator  itor_widget = itor->second.find(pWidget->GetName());
 			if( itor_widget  == itor->second.end())
 			{
-				throw CGUIException( "[CGUIWidgetSystem::DestroyWidget]: the widget <%s : %s> doesn't exist!", pWidget->GetProjectName().c_str(), pWidget->GetName().c_str());
+				throw CGUIException( "[CGUIWidgetSystem::DestroyWidget]: the widget <%s : %s> doesn't exist!", pWidget->GetSceneName().c_str(), pWidget->GetName().c_str());
 			}
 
 			//delete it
@@ -797,9 +797,9 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	CGUIWidget* CGUIWidgetSystem::GetWidget(  const CGUIString& rWidgetName, const CGUIString& rProjectName )
+	CGUIWidget* CGUIWidgetSystem::GetWidget(  const CGUIString& rWidgetName, const CGUIString& rSceneName )
 	{
-		TMapWidget::iterator itor = m_aMapWidget.find(rProjectName);
+		TMapWidget::iterator itor = m_aMapWidget.find(rSceneName);
 		if( itor != m_aMapWidget.end())
 		{
 			std::map<CGUIString, CGUIWidget*>::iterator itor_widget = itor->second.find( rWidgetName );
@@ -809,13 +809,13 @@ namespace guiex
 			}
 		}
 
-		throw CGUIException("[CGUIWidgetSystem::GetWidget]: failed to get widget by name [%s : %s]",rProjectName.c_str(), rWidgetName.c_str());
+		throw CGUIException("[CGUIWidgetSystem::GetWidget]: failed to get widget by name [%s : %s]",rSceneName.c_str(), rWidgetName.c_str());
 		return NULL;
 	}
 	//------------------------------------------------------------------------------
-	bool			CGUIWidgetSystem::HasWidget(  const CGUIString& rWidgetName, const CGUIString& rProjectName )
+	bool			CGUIWidgetSystem::HasWidget(  const CGUIString& rWidgetName, const CGUIString& rSceneName )
 	{
-		TMapWidget::iterator itor = m_aMapWidget.find(rProjectName);
+		TMapWidget::iterator itor = m_aMapWidget.find(rSceneName);
 		if( itor != m_aMapWidget.end())
 		{
 			std::map<CGUIString, CGUIWidget*>::iterator itor_widget = itor->second.find( rWidgetName );
@@ -912,7 +912,7 @@ namespace guiex
 
 		if( !HasPage( pDlg ))
 		{
-			throw CGUIException( "[CGUIWidgetSystem::OpenDialog]: the dialog <%s:%s> isn't a page", pDlg->GetProjectName().c_str(), pDlg->GetName().c_str());
+			throw CGUIException( "[CGUIWidgetSystem::OpenDialog]: the dialog <%s:%s> isn't a page", pDlg->GetSceneName().c_str(), pDlg->GetName().c_str());
 		}
 
 		pDlg->SetParent( NULL );
@@ -923,14 +923,14 @@ namespace guiex
 		{
 			if( (*itor) == pDlg)
 			{
-				throw CGUIException( "[CGUIWidgetSystem::OpenDialog]: failed to open dialog<%s:%s>, it has opened!", pDlg->GetProjectName().c_str(), pDlg->GetName().c_str());
+				throw CGUIException( "[CGUIWidgetSystem::OpenDialog]: failed to open dialog<%s:%s>, it has opened!", pDlg->GetSceneName().c_str(), pDlg->GetName().c_str());
 			}
 		}
 
 		m_listOpenedDlg.push_back(pDlg);
 		pDlg->Open();
 
-		GUI_TRACE( GUI_FORMAT("OpenDialog <%s : %s> \n", pDlg->GetProjectName().c_str(), pDlg->GetName().c_str()));
+		GUI_TRACE( GUI_FORMAT("OpenDialog <%s : %s> \n", pDlg->GetSceneName().c_str(), pDlg->GetName().c_str()));
 	}
 	//------------------------------------------------------------------------------
 	CGUIWidget*		CGUIWidgetSystem::GetTopestDialog( ) const 
@@ -968,7 +968,7 @@ namespace guiex
 			}
 		}
 
-		throw CGUIException( "[CGUIWidgetSystem::CloseDialog]: failed to close dialog <%s : %s>.", pDlg->GetProjectName().c_str(), pDlg->GetName().c_str());
+		throw CGUIException( "[CGUIWidgetSystem::CloseDialog]: failed to close dialog <%s : %s>.", pDlg->GetSceneName().c_str(), pDlg->GetName().c_str());
 	}
 	//------------------------------------------------------------------------------
 	void			CGUIWidgetSystem::OpenPopupWidget(CGUIWidget* pWidget)

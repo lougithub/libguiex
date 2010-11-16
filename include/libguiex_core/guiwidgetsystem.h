@@ -43,14 +43,14 @@ namespace guiex
 //============================================================================//
 // define
 //============================================================================// 
-#define GUI_CREATE_WIDGET(type, widgetname, projectname)		\
-	::guiex::CGUIWidgetSystem::Instance()->CreateWidget(type,widgetname, projectname)
+#define GUI_CREATE_WIDGET(type, widgetname, scenename)		\
+	::guiex::CGUIWidgetSystem::Instance()->CreateWidget(type,widgetname, scenename)
 
 #define GUI_DESTROY_WIDGET(widget)		\
 	::guiex::CGUIWidgetSystem::Instance()->DestroyWidget(widget)
 
-#define GUI_GET_WIDGET(widgetname, projectname)		\
-	::guiex::CGUIWidgetSystem::Instance()->GetWidget(widgetname, projectname)
+#define GUI_GET_WIDGET(widgetname, scenename)		\
+	::guiex::CGUIWidgetSystem::Instance()->GetWidget(widgetname, scenename)
 
 
 #define GUI_WIDGET_SYSTEM( )		\
@@ -121,7 +121,7 @@ namespace guiex
 		* @brief create a widget by type and name
 		* @return pointer of created widget
 		*/
-		CGUIWidget*		CreateWidget( const CGUIString& rType, const CGUIString& rWidgetName, const CGUIString& rProjectName );
+		CGUIWidget*		CreateWidget( const CGUIString& rType, const CGUIString& rWidgetName, const CGUIString& rSceneName );
 
 		/**
 		* @brief destroy widget
@@ -132,13 +132,13 @@ namespace guiex
 		* @brief get widget by given name
 		* @return return NULL for error
 		*/
-		CGUIWidget*		GetWidget(  const CGUIString& rWidgetName, const CGUIString& rProjectName );
+		CGUIWidget*		GetWidget(  const CGUIString& rWidgetName, const CGUIString& rSceneName );
 
 		/**
 		* @brief has widget which has given name
 		* @return return true for has, vice versa
 		*/
-		bool			HasWidget(  const CGUIString& rWidgetName, const CGUIString& rProjectName );
+		bool			HasWidget(  const CGUIString& rWidgetName, const CGUIString& rSceneName );
 
 		/**
 		* @brief generate a anonymous name
@@ -191,22 +191,22 @@ namespace guiex
 		/**
 		* @brief add a page to map
 		*/
-		void			AddPage(  CGUIWidget* pPage, const CGUIString& rProjectName = CGUIString());
+		void			AddPage(  CGUIWidget* pPage, const CGUIString& rSceneName = CGUIString());
 
 		/**
 		* @brief get a page by name
 		*/
-		CGUIWidget*		GetPage( const CGUIString& rWidgetName, const CGUIString& rProjectName );
+		CGUIWidget*		GetPage( const CGUIString& rWidgetName, const CGUIString& rSceneName );
 
 		/**
 		* @brief get a page page's configure file name
 		*/
-		CGUIWidget*		GetPageByFilename( const CGUIString& rFilename, const CGUIString& rProjectName );
+		CGUIWidget*		GetPageByFilename( const CGUIString& rFilename, const CGUIString& rSceneName );
 
 		/**
 		* @brief is there a page whose name is given name
 		*/
-		bool			HasPage(const CGUIString& rWidgetName, const CGUIString& rProjectName) const;
+		bool			HasPage(const CGUIString& rWidgetName, const CGUIString& rSceneName) const;
 
 		/**
 		* @brief is there a page whose ptr is same as given page
@@ -353,23 +353,23 @@ namespace guiex
 		/**
 		* @brief read config file
 		*/
-		CGUIWidget*	LoadDynamicPage( const CGUIString& rPageFileName, const CGUIString& rPageProjectName, const CGUIString& rWorkingProjectName );
+		CGUIWidget*	LoadDynamicPage( const CGUIString& rPageFileName, const CGUIString& rPageSceneName, const CGUIString& rWorkingSceneName );
 
 		/**
 		* @brief read config file
 		*/
-		CGUIWidget*	LoadPage( const CGUIString& rFileName, const CGUIString& rProjectName);
+		CGUIWidget*	LoadPage( const CGUIString& rFileName, const CGUIString& rSceneName);
 
 		/**
 		* @brief read resource config file
 		*/
-		int32	LoadResource( const CGUIString& rFileName, const CGUIString& rProjectName);
+		int32	LoadResource( const CGUIString& rFileName, const CGUIString& rSceneName);
 
 		/**
-		* @brief free resource by project name, 
+		* @brief free resource by scene name, 
 		* only free named image now.
 		*/
-		void	FreeResource( const CGUIString& rProjectName );
+		void	FreeResource( const CGUIString& rSceneName );
 
 		/**
 		*/
@@ -378,7 +378,7 @@ namespace guiex
 		void	UnloadAllResource();
 
 		/**
-		* @brief free resource by project name, 
+		* @brief free resource by scene name, 
 		* only free named image now.
 		*/
 		void	FreeAllResources(  );
@@ -469,7 +469,7 @@ namespace guiex
 
 		//----------------------------------------------------------------------
 		//widget list
-		typedef std::map<CGUIString , std::map<CGUIString, CGUIWidget*> >		TMapWidget;	//project name, widget name, widget
+		typedef std::map<CGUIString , std::map<CGUIString, CGUIWidget*> >		TMapWidget;	//scene name, widget name, widget
 		TMapWidget		m_aMapWidget;				///contain all widget create by system which has name
 		//----------------------------------------------------------------------
 
@@ -551,15 +551,15 @@ namespace guiex
 	*/
 	GUIEXPORT	CGUIWidgetSystem* GetWidgetSystem();
 
-	GUIEXPORT CGUIWidget*		GetWidget(  const CGUIString& rWidgetName, const CGUIString& rProjectName );
+	GUIEXPORT CGUIWidget*		GetWidget(  const CGUIString& rWidgetName, const CGUIString& rSceneName );
 
-	GUIEXPORT CGUIWidget*		LoadDynamicPage( const CGUIString& rPageFileName, const CGUIString& rPageProjectName, const CGUIString& rWorkingProjectName );
+	GUIEXPORT CGUIWidget*		LoadDynamicPage( const CGUIString& rPageFileName, const CGUIString& rPageSceneName, const CGUIString& rWorkingSceneName );
 	GUIEXPORT	void			OpenDialog(CGUIWidget* pDlg);
 	GUIEXPORT	void			CloseDialog(CGUIWidget* pDlg);
 
 	GUIEXPORT	void			OpenPage( CGUIWidget* pPage );
 	GUIEXPORT	void			ClosePage( CGUIWidget* pPage );
-	//GUIEXPORT	void			OpenPageByFileName(const CGUIString& rFileName, const CGUIString& rPageProjectName );
+	//GUIEXPORT	void			OpenPageByFileName(const CGUIString& rFileName, const CGUIString& rPageSceneName );
 
 	GUIEXPORT	void			SendUIEvent(const CGUIString& rUIEventName,
 		const CGUIString& rArg1 = CGUIString(),

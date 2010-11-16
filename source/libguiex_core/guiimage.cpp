@@ -18,8 +18,8 @@
 #include <libguiex_core/guirect.h>
 #include <libguiex_core/guiperfmonitor.h>
 #include <libguiex_core/guiwidgetsystem.h>
-#include <libguiex_core/guiprojectinfo.h>
-#include <libguiex_core/guiprojectinfomanager.h>
+#include <libguiex_core/guisceneinfo.h>
+#include <libguiex_core/guisceneinfomanager.h>
 #include <libguiex_core/guirenderrect.h>
 
 //============================================================================//
@@ -30,9 +30,9 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIImage::CGUIImage( 
 		const CGUIString& rName, 
-		const CGUIString& rProjectName, 
+		const CGUIString& rSceneName, 
 		const CGUIColor& rColor )
-		:CGUIResource( rName, rProjectName, "IMAGE" )
+		:CGUIResource( rName, rSceneName, "IMAGE" )
 		,m_pTexture(NULL)
 		,m_eImageOperation(IMAGE_NONE)
 		,m_eImageType( eIT_COLOR )
@@ -44,12 +44,12 @@ namespace guiex
 
 	CGUIImage::CGUIImage( 
 		const CGUIString& rName,
-		const CGUIString& rProjectName, 
+		const CGUIString& rSceneName, 
 		const void* buffPtr, 
 		int32 buffWidth, 
 		int32 buffHeight, 
 		EGuiPixelFormat ePixelFormat /*= GUI_PF_ARGB_32*/ )
-		:CGUIResource( rName, rProjectName, "IMAGE" )
+		:CGUIResource( rName, rSceneName, "IMAGE" )
 		,m_pTexture(NULL)
 		,m_eImageOperation(IMAGE_NONE)
 		,m_eImageType( eIT_MEM )
@@ -64,11 +64,11 @@ namespace guiex
 
 	CGUIImage::CGUIImage( 		
 		const CGUIString& rName,
-		const CGUIString& rProjectName, 
+		const CGUIString& rSceneName, 
 		const CGUIString& rPath,
 		const CGUIRect& rUVRect,
 		EImageOperation	eImageOperation)
-		:CGUIResource( rName, rProjectName, "IMAGE" )
+		:CGUIResource( rName, rSceneName, "IMAGE" )
 		,m_pTexture(NULL)
 		,m_eImageOperation(eImageOperation)
 		,m_eImageType( eIT_FILE )
@@ -89,7 +89,7 @@ namespace guiex
 		if( m_eImageType == eIT_FILE )
 		{
 			//get full path
-			CGUIString strFullPath = CGUIProjectInfoManager::Instance()->GetProjectFilePath( m_strProjectName ) + m_strPath;
+			CGUIString strFullPath = CGUISceneInfoManager::Instance()->GetSceneFileRootPath( m_strSceneName ) + m_strPath;
 			m_pTexture = CGUITextureManager::Instance()->CreateTexture(strFullPath);
 
 			if( !m_pTexture )

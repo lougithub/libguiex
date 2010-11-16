@@ -27,14 +27,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString CGUIWgtCheckButton::ms_strType = "CGUIWgtCheckButton";
 	//------------------------------------------------------------------------------
-	CGUIWgtCheckButton::CGUIWgtCheckButton(const CGUIString& rName, const CGUIString& rProjectName)
-		:CGUIWidget(ms_strType, rName, rProjectName)
+	CGUIWgtCheckButton::CGUIWgtCheckButton(const CGUIString& rName, const CGUIString& rSceneName)
+		:CGUIWidget(ms_strType, rName, rSceneName)
 	{
 		InitCheckButton();
 	}
 	//------------------------------------------------------------------------------
-	CGUIWgtCheckButton::CGUIWgtCheckButton( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWidget(rType, rName, rProjectName)
+	CGUIWgtCheckButton::CGUIWgtCheckButton( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWidget(rType, rName, rSceneName)
 	{
 		InitCheckButton();
 	}

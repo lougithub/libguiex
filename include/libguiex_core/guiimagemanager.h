@@ -56,7 +56,7 @@ namespace guiex
 		*/
 		CGUIImage*	CreateImage(
 			const CGUIString& rName,
-			const CGUIString& rProjectName,
+			const CGUIString& rSceneName,
 			const CGUIString& rPath, 
 			const CGUIRect& rUVRect=CGUIRect(0.0f,0.0f,1.0f,1.0f), 
 			EImageOperation eImageOperation = IMAGE_NONE);
@@ -66,7 +66,7 @@ namespace guiex
 		*/
 		CGUIImage*	CreateImage( 
 			const CGUIString& rName,
-			const CGUIString& rProjectName,
+			const CGUIString& rSceneName,
 			const CGUIColor& rColor );
 
 
@@ -86,7 +86,7 @@ namespace guiex
 		*/
 		CGUIImage*	CreateImage(
 			const CGUIString& rName,
-			const CGUIString& rProjectName,
+			const CGUIString& rSceneName,
 			const CGUIProperty& rProperty );
 
 		/**
@@ -94,7 +94,7 @@ namespace guiex
 		 */
 		CGUIImage*	CreateImage(
 			const CGUIString& rName,
-			const CGUIString& rProjectName,
+			const CGUIString& rSceneName,
 			const void* buffPtr, 
 			int32 buffWidth, 
 			int32 buffHeight, 

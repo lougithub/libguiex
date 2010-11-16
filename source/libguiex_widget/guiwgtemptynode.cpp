@@ -24,14 +24,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString CGUIWgtEmptyNode::ms_strType = "CGUIWgtEmptyNode";
 	//------------------------------------------------------------------------------
-	CGUIWgtEmptyNode::CGUIWgtEmptyNode(const CGUIString& rName, const CGUIString& rProjectName)
-		:CGUIWidget(ms_strType, rName, rProjectName)
+	CGUIWgtEmptyNode::CGUIWgtEmptyNode(const CGUIString& rName, const CGUIString& rSceneName)
+		:CGUIWidget(ms_strType, rName, rSceneName)
 	{
 		InitEmptyNode();
 	}
 	//------------------------------------------------------------------------------
-	CGUIWgtEmptyNode::CGUIWgtEmptyNode( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWidget(rType, rName, rProjectName)
+	CGUIWgtEmptyNode::CGUIWgtEmptyNode( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWidget(rType, rName, rSceneName)
 	{
 		InitEmptyNode();
 	}

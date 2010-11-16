@@ -30,11 +30,11 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIFont*	CGUIFontManager::CreateGUIFont(
 			const CGUIString& rName, 
-			const CGUIString& rProjectName, 
+			const CGUIString& rSceneName, 
 			const CGUIString& rPath, 
 			uint32 nFontIndex)
 	{
-		CGUIFont* pFont = new CGUIFont( rName, rProjectName, rPath, nFontIndex );
+		CGUIFont* pFont = new CGUIFont( rName, rSceneName, rPath, nFontIndex );
 		AddResource(pFont);
 		return pFont;
 	}

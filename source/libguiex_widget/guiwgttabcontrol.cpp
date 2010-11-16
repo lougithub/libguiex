@@ -25,14 +25,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString CGUIWgtTabControl::ms_strType = "CGUIWgtTabControl";
 	//------------------------------------------------------------------------------
-	CGUIWgtTabControl::CGUIWgtTabControl(const CGUIString& rName, const CGUIString& rProjectName)
-		:CGUIWidget(ms_strType, rName, rProjectName)
+	CGUIWgtTabControl::CGUIWgtTabControl(const CGUIString& rName, const CGUIString& rSceneName)
+		:CGUIWidget(ms_strType, rName, rSceneName)
 	{
 		InitTabControl();
 	}
 	//------------------------------------------------------------------------------
-	CGUIWgtTabControl::CGUIWgtTabControl( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWidget(rType, rName, rProjectName)
+	CGUIWgtTabControl::CGUIWgtTabControl( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWidget(rType, rName, rSceneName)
 	{
 		InitTabControl();
 	}

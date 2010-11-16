@@ -46,15 +46,15 @@ public:
 
 	void	ParseCache( const std::string& rCacheFile );
 
-	void	AddCache( const std::string& rProject, const std::string& rPath );	
+	void	AddCache( const std::string& rScene, const std::string& rPath );	
 
 	void	SetPathsBaseId(wxWindowID baseId)
 	{
 		m_nPathBaseId = baseId;
 	}
-	void	SetProjectsBaseId(wxWindowID baseId)
+	void	SetScenesBaseId(wxWindowID baseId)
 	{
-		m_nProjectBaseId = baseId;
+		m_nSceneBaseId = baseId;
 	}
 
 	void	SetMaxCacheSize( unsigned nSize )
@@ -70,13 +70,13 @@ protected:
 public:
 	std::string	m_strCacheFile;
 
-	std::vector<std::pair< std::string, std::string> >	m_projectHistory;	//<project, path>
+	std::vector<std::pair< std::string, std::string> >	m_sceneHistory;	//<Scene, path>
 	std::vector<std::string>	m_pathHistory;
 
 	wxWindowID	m_nPathBaseId;
-	wxWindowID	m_nProjectBaseId;
+	wxWindowID	m_nSceneBaseId;
 	wxMenu		*m_pPathMenu;
-	wxMenu		*m_pProjectMenu;
+	wxMenu		*m_pSceneMenu;
 
 	unsigned			m_nMaxSize;
 

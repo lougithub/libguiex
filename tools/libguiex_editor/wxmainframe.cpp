@@ -121,7 +121,7 @@ EVT_KEY_DOWN(WxMainFrame::OnKeyDown)
 EVT_CLOSE(WxMainFrame::OnCloseWindow)
 
 EVT_MENU_RANGE( ID_RecentPathsBaseId, ID_RecentPathsEndId, WxMainFrame::OnRecentPaths )
-EVT_MENU_RANGE( ID_RecentProjectsBaseId, ID_RecentProjectsEndId, WxMainFrame::OnRecentProjects )
+EVT_MENU_RANGE( ID_RecentScenesBaseId, ID_RecentScenesEndId, WxMainFrame::OnRecentScenes )
 
 
 //file tree
@@ -153,7 +153,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 				 const wxSize& size,
 				 long style)
 				 : wxFrame(parent, id, title, pos, size, style)
-				 ,m_bIsProjectOpened(false)
+				 ,m_bIsSceneOpened(false)
 				 ,m_pCanvas(NULL)
 				 ,m_pPropGridMan(NULL)
 				 ,m_pOutput(NULL)
@@ -243,14 +243,14 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 	//	Left().Layer(1).Position(1));
 
 	m_mgr.AddPane(m_pTreeCtrl_File, wxAuiPaneInfo().BestSize(150,600).
-		Name(wxT("Project")).Caption(wxT("Project")).
+		Name(wxT("Scene")).Caption(wxT("Scene")).
 		Left().Layer(1).Position(1));
 
 	m_mgr.AddPane(m_pTreeCtrl_Widget, wxAuiPaneInfo().BestSize(150,600).
 		Name(wxT("Widget")).Caption(wxT("Widget")).
 		Left().Layer(1).Position(2));
 
-	//m_pNoteBook_Config->AddPage(m_pTreeCtrl_File, _T("Project"));
+	//m_pNoteBook_Config->AddPage(m_pTreeCtrl_File, _T("Scene"));
 	//m_pNoteBook_Config->AddPage(m_pTreeCtrl_Widget, _T("Widget"));	
 
 	m_mgr.AddPane(pGridPanel, wxAuiPaneInfo().BestSize(250,600).
@@ -313,7 +313,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 WxMainFrame::~WxMainFrame()
 {
 	CloseCanvas();
-	CloseProject();
+	CloseScene();
 	m_mgr.UnInit();	
 	
 	//release libguiex system
@@ -432,7 +432,7 @@ void			WxMainFrame::ResetFileTreeCtrl()
 {
 	m_pTreeCtrl_File->DeleteAllItems();
 
-	wxTreeItemId root = m_pTreeCtrl_File->AddRoot(wxT("Project"), 0);
+	wxTreeItemId root = m_pTreeCtrl_File->AddRoot(wxT("Scene"), 0);
 
 	m_pTreeCtrl_File->AppendItem(root, wxConvUTF8.cMB2WC(TITLE_WIDGET_CONFIG), 0);
 	m_pTreeCtrl_File->AppendItem(root, wxConvUTF8.cMB2WC(TITLE_SCRIPT), 0);
@@ -601,13 +601,13 @@ wxAuiNotebook* WxMainFrame::CreateCanvasNotebook()
 //	return ctrl;
 //}
 //------------------------------------------------------------------------------
-int		WxMainFrame::OpenProject( const guiex::CGUIProjectInfo* pProjectInfo )
+int		WxMainFrame::OpenScene( const guiex::CGUISceneInfo* pSceneInfo )
 {
-	m_strCurrentProjectName = pProjectInfo->GetProjectFilename();
-	OutputString( std::string("Open Project File: ") + m_strCurrentProjectName );
+	m_strCurrentSceneName = pSceneInfo->GetSceneFilename();
+	OutputString( std::string("Open Scene File: ") + m_strCurrentSceneName );
 
 	//add widget file to tree
-	const std::vector<CGUIString>& rWidgetFiles = pProjectInfo->GetWidgetFiles();
+	const std::vector<CGUIString>& rWidgetFiles = pSceneInfo->GetWidgetFiles();
 	for( unsigned i=0; i<rWidgetFiles.size(); ++i )
 	{
 		AddToFileTreeCtrl(rWidgetFiles[i], TITLE_WIDGET_CONFIG);
@@ -615,7 +615,7 @@ int		WxMainFrame::OpenProject( const guiex::CGUIProjectInfo* pProjectInfo )
 	}
 
 	//add script file to tree
-	const std::vector<CGUIString>& rScriptFiles = pProjectInfo->GetScriptFiles();
+	const std::vector<CGUIString>& rScriptFiles = pSceneInfo->GetScriptFiles();
 	for( unsigned i=0; i<rScriptFiles.size(); ++i )
 	{
 		AddToFileTreeCtrl(rScriptFiles[i], TITLE_SCRIPT);
@@ -623,7 +623,7 @@ int		WxMainFrame::OpenProject( const guiex::CGUIProjectInfo* pProjectInfo )
 	}
 
 	//add resource list file to tree
-	const std::vector<CGUIString>& rResourceFiles = pProjectInfo->GetResourceFiles();
+	const std::vector<CGUIString>& rResourceFiles = pSceneInfo->GetResourceFiles();
 	for( unsigned i=0; i<rResourceFiles.size(); ++i )
 	{
 		AddToFileTreeCtrl(rResourceFiles[i], TITLE_RESOURCE_CONFIG);
@@ -631,7 +631,7 @@ int		WxMainFrame::OpenProject( const guiex::CGUIProjectInfo* pProjectInfo )
 
 
 	//load resource file
-	if( 0 != guiex::CGUIProjectUtility::LoadResource(m_strCurrentProjectName))
+	if( 0 != guiex::CGUISceneUtility::LoadResource(m_strCurrentSceneName))
 	{
 		return -1;
 	}
@@ -639,16 +639,16 @@ int		WxMainFrame::OpenProject( const guiex::CGUIProjectInfo* pProjectInfo )
 	//update image list
 	UpdateImageNameList();
 
-	m_bIsProjectOpened = true;
+	m_bIsSceneOpened = true;
 
 	return 0;
 }
 //------------------------------------------------------------------------------
-void	WxMainFrame::CloseProject( )
+void	WxMainFrame::CloseScene( )
 {
-	if( m_bIsProjectOpened )
+	if( m_bIsSceneOpened )
 	{
-		OutputString( "Close Project...");
+		OutputString( "Close Scene...");
 
 		ResetFileTreeCtrl();
 		ResetWidgetTreeCtrl();
@@ -656,9 +656,9 @@ void	WxMainFrame::CloseProject( )
 		CloseCanvas();
 
 		guiex::CGUIWidgetSystem::Instance()->FreeAllResources();
-		guiex::CGUIProjectInfoManager::Instance()->UnloadProjects();
+		guiex::CGUISceneInfoManager::Instance()->UnloadScenes();
 
-		m_bIsProjectOpened = false;
+		m_bIsSceneOpened = false;
 	}
 }
 //------------------------------------------------------------------------------
@@ -682,7 +682,7 @@ void WxMainFrame::OnTreeItemWidgetView(wxCommandEvent& event)
 	viewer_exe = "Release_libguiex_viewer.exe";
 #endif
 
-	std::string strRunCommand = viewer_exe + " " + guiex::CGUIWidgetSystem::Instance()->GetDataPath() + " " +m_strCurrentProjectName + " " + strFilename.char_str(wxConvUTF8).data();
+	std::string strRunCommand = viewer_exe + " " + guiex::CGUIWidgetSystem::Instance()->GetDataPath() + " " +m_strCurrentSceneName + " " + strFilename.char_str(wxConvUTF8).data();
 	wxExecute(wxConvUTF8.cMB2WC(strRunCommand.c_str()), wxEXEC_ASYNC);
 }
 //------------------------------------------------------------------------------
@@ -857,13 +857,13 @@ void WxMainFrame::OnClose(wxCommandEvent& evt)
 {
 	if( SaveFileProcess(-1))
 	{
-		CloseProject();
+		CloseScene();
 	}
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::OnUpdateClose(wxUpdateUIEvent& event)
 {
-	event.Enable(m_bIsProjectOpened);
+	event.Enable(m_bIsSceneOpened);
 }
 //------------------------------------------------------------------------------
 CSaveFileBase* WxMainFrame::GetSaveFilePtr( const wxWindow* pWindows )
@@ -899,7 +899,7 @@ void WxMainFrame::OnSave(wxCommandEvent& evt)
 //------------------------------------------------------------------------------
 void WxMainFrame::OnUpdateSave(wxUpdateUIEvent& event)
 {
-	if( m_bIsProjectOpened && m_pNoteBook_Canvas && m_pNoteBook_Canvas->GetSelection() >=0 )
+	if( m_bIsSceneOpened && m_pNoteBook_Canvas && m_pNoteBook_Canvas->GetSelection() >=0 )
 	{
 		event.Enable(true);
 	}
@@ -930,7 +930,7 @@ void WxMainFrame::OnSaveAs(wxCommandEvent& evt)
 //------------------------------------------------------------------------------
 void WxMainFrame::OnUpdateSaveAs(wxUpdateUIEvent& event)
 {
-	if( m_bIsProjectOpened && m_pNoteBook_Canvas && m_pNoteBook_Canvas->GetSelection() >=0 )
+	if( m_bIsSceneOpened && m_pNoteBook_Canvas && m_pNoteBook_Canvas->GetSelection() >=0 )
 	{
 		event.Enable(true);
 	}
@@ -1223,7 +1223,7 @@ void WxMainFrame::OnSaveAll(wxCommandEvent& evt)
 //------------------------------------------------------------------------------
 void WxMainFrame::OnUpdateSaveAll(wxUpdateUIEvent& event)
 {
-	event.Enable(m_bIsProjectOpened);
+	event.Enable(m_bIsSceneOpened);
 
 }
 
@@ -1234,7 +1234,7 @@ void WxMainFrame::OnRecentPaths( wxCommandEvent& In )
 		//cancel
 		return;
 	}
-	CloseProject();
+	CloseScene();
 
 	unsigned nFileIdx = In.GetId() - ID_RecentPathsBaseId;
 
@@ -1242,9 +1242,9 @@ void WxMainFrame::OnRecentPaths( wxCommandEvent& In )
 	guiex::CGUIWidgetSystem::Instance()->SetDataPath(strPath);
 	try
 	{
-		if( 0 != guiex::CGUIProjectInfoManager::Instance()->LoadProjects())
+		if( 0 != guiex::CGUISceneInfoManager::Instance()->LoadScenes())
 		{
-			wxMessageBox( _T("failed to load projects"), _T("error"), wxICON_ERROR|wxCENTRE);
+			wxMessageBox( _T("failed to load scenes"), _T("error"), wxICON_ERROR|wxCENTRE);
 			return;
 		}
 	}
@@ -1254,58 +1254,58 @@ void WxMainFrame::OnRecentPaths( wxCommandEvent& In )
 		return;
 	}
 
-	//chose project
-	const std::vector<guiex::CGUIString>& vecProjects = guiex::CGUIProjectInfoManager::Instance()->GetProjectFileNames( );
-	wxArrayString arrayProjects;
-	for( unsigned i=0; i<vecProjects.size(); ++i )
+	//chose scene
+	const std::vector<guiex::CGUIString>& vecScenes = guiex::CGUISceneInfoManager::Instance()->GetSceneFileNames( );
+	wxArrayString arrayScenes;
+	for( unsigned i=0; i<vecScenes.size(); ++i )
 	{
-		arrayProjects.Add( wxConvUTF8.cMB2WC( vecProjects[i].c_str()));
+		arrayScenes.Add( wxConvUTF8.cMB2WC( vecScenes[i].c_str()));
 	}
-	wxSingleChoiceDialog aChoiceDlg( this, _T("select project"), _T("select project files"), arrayProjects );
+	wxSingleChoiceDialog aChoiceDlg( this, _T("select scene"), _T("select scene files"), arrayScenes );
 	if( aChoiceDlg.ShowModal() != wxID_OK )
 	{
 		return;
 	}
-	guiex::CGUIString strProjectFileName = vecProjects[aChoiceDlg.GetSelection()];
+	guiex::CGUIString strSceneFileName = vecScenes[aChoiceDlg.GetSelection()];
 
-	//get project info
-	const guiex::CGUIProjectInfo* pProjectInfo = guiex::CGUIProjectInfoManager::Instance()->GetProjectInfo( strProjectFileName );
-	if( pProjectInfo->IsDependenciesLoaded())
+	//get scene info
+	const guiex::CGUISceneInfo* pSceneInfo = guiex::CGUISceneInfoManager::Instance()->GetSceneInfo( strSceneFileName );
+	if( pSceneInfo->IsDependenciesLoaded())
 	{
-		if( 0 != OpenProject(pProjectInfo))
+		if( 0 != OpenScene(pSceneInfo))
 		{
-			wxMessageBox( _T("failed to open project"), _T("error"), wxICON_ERROR|wxCENTRE);
-			CloseProject();
+			wxMessageBox( _T("failed to open scene"), _T("error"), wxICON_ERROR|wxCENTRE);
+			CloseScene();
 			return;
 		}
 	}
 	else
 	{
-		wxMessageBox( _T("some dependent project of this project hasn't been loaded"), _T("error"), wxICON_ERROR|wxCENTRE);
+		wxMessageBox( _T("some dependent scene of this scene hasn't been loaded"), _T("error"), wxICON_ERROR|wxCENTRE);
 		return;
 	}
 
-	CToolCache::Instance()->AddCache( strProjectFileName, strPath );
+	CToolCache::Instance()->AddCache( strSceneFileName, strPath );
 }
 //------------------------------------------------------------------------------
-void WxMainFrame::OnRecentProjects( wxCommandEvent& In )
+void WxMainFrame::OnRecentScenes( wxCommandEvent& In )
 {
 	if( SaveFileProcess(-1) == false)
 	{
 		//cancel
 		return;
 	}
-	CloseProject();
+	CloseScene();
 
-	unsigned nFileIdx = In.GetId() - ID_RecentProjectsBaseId;
+	unsigned nFileIdx = In.GetId() - ID_RecentScenesBaseId;
 
-	std::pair< std::string, std::string>	strProject = CToolCache::Instance()->m_projectHistory[nFileIdx];
-	guiex::CGUIWidgetSystem::Instance()->SetDataPath(strProject.second);
+	std::pair< std::string, std::string>	strScene = CToolCache::Instance()->m_sceneHistory[nFileIdx];
+	guiex::CGUIWidgetSystem::Instance()->SetDataPath(strScene.second);
 	try
 	{
-		if( 0 != guiex::CGUIProjectInfoManager::Instance()->LoadProjects())
+		if( 0 != guiex::CGUISceneInfoManager::Instance()->LoadScenes())
 		{
-			wxMessageBox( _T("failed to load projects"), _T("error"), wxICON_ERROR|wxCENTRE);
+			wxMessageBox( _T("failed to load scenes"), _T("error"), wxICON_ERROR|wxCENTRE);
 			return;
 		}
 	}
@@ -1315,25 +1315,25 @@ void WxMainFrame::OnRecentProjects( wxCommandEvent& In )
 		return;
 	}
 
-	//get project info
-	const guiex::CGUIProjectInfo* pProjectInfo = guiex::CGUIProjectInfoManager::Instance()->GetProjectInfo( strProject.first );
-	if( !pProjectInfo )
+	//get scene info
+	const guiex::CGUISceneInfo* pSceneInfo = guiex::CGUISceneInfoManager::Instance()->GetSceneInfo( strScene.first );
+	if( !pSceneInfo )
 	{
-		wxMessageBox( _T("failed to load project"), _T("error"), wxICON_ERROR|wxCENTRE);
+		wxMessageBox( _T("failed to load scene"), _T("error"), wxICON_ERROR|wxCENTRE);
 		return;
 	}
-	else if( pProjectInfo->IsDependenciesLoaded())
+	else if( pSceneInfo->IsDependenciesLoaded())
 	{
-		if( 0 != OpenProject(pProjectInfo))
+		if( 0 != OpenScene(pSceneInfo))
 		{
-			wxMessageBox( _T("failed to open project"), _T("error"), wxICON_ERROR|wxCENTRE);
-			CloseProject();
+			wxMessageBox( _T("failed to open scene"), _T("error"), wxICON_ERROR|wxCENTRE);
+			CloseScene();
 			return;
 		}
 	}
 	else
 	{
-		wxMessageBox( _T("some dependent project of this project hasn't been loaded"), _T("error"), wxICON_ERROR|wxCENTRE);
+		wxMessageBox( _T("some dependent scene of this scene hasn't been loaded"), _T("error"), wxICON_ERROR|wxCENTRE);
 		return;
 	}
 }
@@ -1358,7 +1358,7 @@ void WxMainFrame::OnNewWidgetFile(wxCommandEvent& evt)
 //------------------------------------------------------------------------------
 void WxMainFrame::OnUpdateNewWidgetFile(wxUpdateUIEvent& event)
 {
-	event.Enable(m_bIsProjectOpened);
+	event.Enable(m_bIsSceneOpened);
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
@@ -1376,16 +1376,16 @@ void WxMainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 		return;
 	}
 
-	CloseProject();
+	CloseScene();
 
 	std::string strDataPath = (aDlg.GetPath() + wxT("\\")).char_str(wxConvUTF8).data();
 	guiex::CGUIWidgetSystem::Instance()->SetDataPath(strDataPath);
 
 	try
 	{
-		if( 0 != guiex::CGUIProjectInfoManager::Instance()->LoadProjects())
+		if( 0 != guiex::CGUISceneInfoManager::Instance()->LoadScenes())
 		{
-			wxMessageBox( _T("failed to load projects"), _T("error"), wxICON_ERROR|wxCENTRE);
+			wxMessageBox( _T("failed to load scenes"), _T("error"), wxICON_ERROR|wxCENTRE);
 			return;
 		}
 	}
@@ -1395,38 +1395,38 @@ void WxMainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 		return;
 	}
 	
-	//chose project
-	const std::vector<guiex::CGUIString>& vecProjects = guiex::CGUIProjectInfoManager::Instance()->GetProjectFileNames( );
-	wxArrayString arrayProjects;
-	for( unsigned i=0; i<vecProjects.size(); ++i )
+	//chose scene
+	const std::vector<guiex::CGUIString>& vecScenes = guiex::CGUISceneInfoManager::Instance()->GetSceneFileNames( );
+	wxArrayString arrayScenes;
+	for( unsigned i=0; i<vecScenes.size(); ++i )
 	{
-		arrayProjects.Add( wxConvUTF8.cMB2WC( vecProjects[i].c_str()));
+		arrayScenes.Add( wxConvUTF8.cMB2WC( vecScenes[i].c_str()));
 	}
-	wxSingleChoiceDialog aChoiceDlg( this, _T("select project"), _T("select project files"), arrayProjects );
+	wxSingleChoiceDialog aChoiceDlg( this, _T("select scene"), _T("select scene files"), arrayScenes );
 	if( aChoiceDlg.ShowModal() != wxID_OK )
 	{
 		return;
 	}
-	guiex::CGUIString strProjectFileName = vecProjects[aChoiceDlg.GetSelection()];
+	guiex::CGUIString strSceneFileName = vecScenes[aChoiceDlg.GetSelection()];
 
-	//get project info
-	const guiex::CGUIProjectInfo* pProjectInfo = guiex::CGUIProjectInfoManager::Instance()->GetProjectInfo( strProjectFileName );
-	if( pProjectInfo->IsDependenciesLoaded())
+	//get scene info
+	const guiex::CGUISceneInfo* pSceneInfo = guiex::CGUISceneInfoManager::Instance()->GetSceneInfo( strSceneFileName );
+	if( pSceneInfo->IsDependenciesLoaded())
 	{
-		if( 0 != OpenProject(pProjectInfo))
+		if( 0 != OpenScene(pSceneInfo))
 		{
-			wxMessageBox( _T("failed to open project"), _T("error"), wxICON_ERROR|wxCENTRE);
-			CloseProject();
+			wxMessageBox( _T("failed to open scene"), _T("error"), wxICON_ERROR|wxCENTRE);
+			CloseScene();
 			return;
 		}
 	}
 	else
 	{
-		wxMessageBox( _T("some dependent project of this project hasn't been loaded"), _T("error"), wxICON_ERROR|wxCENTRE);
+		wxMessageBox( _T("some dependent scene of this scene hasn't been loaded"), _T("error"), wxICON_ERROR|wxCENTRE);
 		return;
 	}
 
-	CToolCache::Instance()->AddCache( strProjectFileName, strDataPath );
+	CToolCache::Instance()->AddCache( strSceneFileName, strDataPath );
 }
 //------------------------------------------------------------------------------
 void	WxMainFrame::CloseCanvas()
@@ -1446,11 +1446,11 @@ void	WxMainFrame::CloseCanvas()
 void WxMainFrame::RenderFile( const std::string& rFileName )
 {
 	CloseCanvas();
-	guiex::CGUIProjectInfo* pProjectInfo = guiex::CGUIProjectInfoManager::Instance()->GetProjectInfo(m_strCurrentProjectName);
+	guiex::CGUISceneInfo* pSceneInfo = guiex::CGUISceneInfoManager::Instance()->GetSceneInfo(m_strCurrentSceneName);
 
 	std::string strAbsFileName = 
 		guiex::CGUIWidgetSystem::Instance()->GetDataPath() +
-		pProjectInfo->GetProjectFilePath() +
+		pSceneInfo->GetSceneFileRootPath() +
 		rFileName;
 
 	m_pCanvas = new WxEditorCanvasContainer(m_pNoteBook_Canvas, strAbsFileName);
@@ -1462,7 +1462,7 @@ void WxMainFrame::RenderFile( const std::string& rFileName )
 	try
 	{
 		//load xml widget by libguiex
-		guiex::CGUIWidget* pWidget = guiex::CGUIWidgetSystem::Instance()->LoadPage( rFileName, m_strCurrentProjectName);
+		guiex::CGUIWidget* pWidget = guiex::CGUIWidgetSystem::Instance()->LoadPage( rFileName, m_strCurrentSceneName);
 		if( pWidget )
 		{
 			guiex::CGUIWidgetSystem::Instance()->OpenPage(pWidget);
@@ -1484,9 +1484,9 @@ void WxMainFrame::RenderFile( const std::string& rFileName )
 //------------------------------------------------------------------------------
 void	WxMainFrame::EditFileExternal( const std::string& rFileName )
 {
-	guiex::CGUIProjectInfo* pProjectInfo = guiex::CGUIProjectInfoManager::Instance()->GetProjectInfo(m_strCurrentProjectName);
+	guiex::CGUISceneInfo* pSceneInfo = guiex::CGUISceneInfoManager::Instance()->GetSceneInfo(m_strCurrentSceneName);
 
-	std::string strAbsPath = guiex::CGUIWidgetSystem::Instance()->GetDataPath() + pProjectInfo->GetProjectFilePath();
+	std::string strAbsPath = guiex::CGUIWidgetSystem::Instance()->GetDataPath() + pSceneInfo->GetSceneFileRootPath();
 	std::string strAbsFileName = strAbsPath + rFileName;
 
 	::ShellExecute( 
@@ -1500,11 +1500,11 @@ void	WxMainFrame::EditFileExternal( const std::string& rFileName )
 //------------------------------------------------------------------------------
 void	WxMainFrame::EditFile( const std::string& rFileName, EFileType eFileType )
 {
-	guiex::CGUIProjectInfo* pProjectInfo = guiex::CGUIProjectInfoManager::Instance()->GetProjectInfo(m_strCurrentProjectName);
+	guiex::CGUISceneInfo* pSceneInfo = guiex::CGUISceneInfoManager::Instance()->GetSceneInfo(m_strCurrentSceneName);
 
 	std::string strAbsPath = 
 		guiex::CGUIWidgetSystem::Instance()->GetDataPath() +
-		pProjectInfo->GetProjectFilePath() +
+		pSceneInfo->GetSceneFileRootPath() +
 		rFileName;
 
 	//check
@@ -1632,7 +1632,7 @@ void			WxMainFrame::CreateMenu()
 	CToolCache::Instance()->ParseCache(wxGetApp().GetBaseDir() + ".\\libguiex_editor_cache.xml");
 	CToolCache::Instance()->SetMaxCacheSize(10);
 	CToolCache::Instance()->SetPathsBaseId(ID_RecentPathsBaseId);
-	CToolCache::Instance()->SetProjectsBaseId(ID_RecentProjectsBaseId);
+	CToolCache::Instance()->SetScenesBaseId(ID_RecentScenesBaseId);
 	CToolCache::Instance()->UpdateMenu();
 
 	wxMenuBar* mb = new wxMenuBar;
@@ -1647,7 +1647,7 @@ void			WxMainFrame::CreateMenu()
 	file_menu->AppendSeparator();
 	file_menu->Append(ID_Close, _("Close"));
 	file_menu->AppendSeparator();
-	file_menu->Append(ID_RecentProjects, _("Recent Projects"), CToolCache::Instance()->m_pProjectMenu);
+	file_menu->Append(ID_RecentScenes, _("Recent Scenes"), CToolCache::Instance()->m_pSceneMenu);
 	file_menu->Append(ID_RecentPaths, _("Recent Paths"), CToolCache::Instance()->m_pPathMenu);
 	file_menu->AppendSeparator();
 	file_menu->Append(ID_Exit, _("Exit"));

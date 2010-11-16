@@ -30,14 +30,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString CGUIWgtListBox::ms_strType = "CGUIWgtListBox";
 	//------------------------------------------------------------------------------
-	CGUIWgtListBox::CGUIWgtListBox( const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWgtScrollbarContainer(ms_strType, rName, rProjectName)
+	CGUIWgtListBox::CGUIWgtListBox( const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWgtScrollbarContainer(ms_strType, rName, rSceneName)
 	{
 		InitListBox();
 	}
 	//------------------------------------------------------------------------------
-	CGUIWgtListBox::CGUIWgtListBox( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWgtScrollbarContainer(rType, rName, rProjectName)
+	CGUIWgtListBox::CGUIWgtListBox( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWgtScrollbarContainer(rType, rName, rSceneName)
 	{
 		InitListBox();
 	}
@@ -262,7 +262,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIListBoxItem* CGUIWgtListBox::CreateItem_Imp(const wchar_t* pText)
 	{
-		CGUIListBoxItem * pItem = static_cast<CGUIListBoxItem*>(GUI_CREATE_WIDGET(m_strItemType.c_str(), CGUIString("listitem_")+CGUIWidgetSystem::Instance()->GenerateAnonymousName(), GetProjectName()));
+		CGUIListBoxItem * pItem = static_cast<CGUIListBoxItem*>(GUI_CREATE_WIDGET(m_strItemType.c_str(), CGUIString("listitem_")+CGUIWidgetSystem::Instance()->GenerateAnonymousName(), GetSceneName()));
 		pItem->SetItemInfo(pText, GetTextInfo());
 		return pItem;
 	}

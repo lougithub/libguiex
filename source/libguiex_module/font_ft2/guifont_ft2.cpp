@@ -25,8 +25,8 @@
 #include <libguiex_core/guiwidgetsystem.h>
 #include <libguiex_core/guiinterfacefilesys.h>
 #include <libguiex_core/guiperfmonitor.h>
-#include <libguiex_core/guiprojectinfo.h>
-#include <libguiex_core/guiprojectinfomanager.h>
+#include <libguiex_core/guisceneinfo.h>
+#include <libguiex_core/guisceneinfomanager.h>
 
 
 #include <ft2build.h>

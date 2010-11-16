@@ -41,7 +41,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIWgtScrollbarArrow( const CGUIString& rName,const CGUIString& rProjectName, int nType );
+		CGUIWgtScrollbarArrow( const CGUIString& rName,const CGUIString& rSceneName, int nType );
 
 	protected:
 		///initialize
@@ -77,7 +77,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIWgtScrollbarSlide( const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtScrollbarSlide( const CGUIString& rName, const CGUIString& rSceneName );
 
 	protected:
 		///initialize
@@ -108,8 +108,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString CGUIWgtScrollbarArrow::ms_strType = "CGUIWgtScrollbarArrow";
 	//------------------------------------------------------------------------------
-	CGUIWgtScrollbarArrow::CGUIWgtScrollbarArrow( const CGUIString& rName, const CGUIString& rProjectName, int nType )
-		:CGUIWgtButton(ms_strType, rName, rProjectName)
+	CGUIWgtScrollbarArrow::CGUIWgtScrollbarArrow( const CGUIString& rName, const CGUIString& rSceneName, int nType )
+		:CGUIWgtButton(ms_strType, rName, rSceneName)
 		,m_nArrowType(nType)
 		,m_pScrollbar(NULL)
 	{
@@ -155,8 +155,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString CGUIWgtScrollbarSlide::ms_strType = "CGUIWgtScrollbarSlide";
 	//------------------------------------------------------------------------------
-	CGUIWgtScrollbarSlide::CGUIWgtScrollbarSlide( const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWgtButton(ms_strType, rName, rProjectName)
+	CGUIWgtScrollbarSlide::CGUIWgtScrollbarSlide( const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWgtButton(ms_strType, rName, rSceneName)
 		,m_pScrollbar(NULL)
 	{
 		InitScrollbarSlide();
@@ -249,14 +249,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString CGUIWgtScrollbar::ms_strType = "CGUIWgtScrollbar";
 	//------------------------------------------------------------------------------
-	CGUIWgtScrollbar::CGUIWgtScrollbar(const CGUIString& rName, const CGUIString& rProjectName)
-		:CGUIWidget(ms_strType, rName, rProjectName)
+	CGUIWgtScrollbar::CGUIWgtScrollbar(const CGUIString& rName, const CGUIString& rSceneName)
+		:CGUIWidget(ms_strType, rName, rSceneName)
 	{
 		InitScrollbar();
 	}
 	//------------------------------------------------------------------------------
-	CGUIWgtScrollbar::CGUIWgtScrollbar( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWidget(rType, rName, rProjectName)
+	CGUIWgtScrollbar::CGUIWgtScrollbar( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWidget(rType, rName, rSceneName)
 	{
 		InitScrollbar();
 	}
@@ -277,15 +277,15 @@ namespace guiex
 		SetSizeType( eScreenValue_Pixel );
 
 		//create child
-		m_pArrow[0] = new CGUIWgtScrollbarArrow(GetName()+"_arrow_0__auto__", GetProjectName(), 0);
+		m_pArrow[0] = new CGUIWgtScrollbarArrow(GetName()+"_arrow_0__auto__", GetSceneName(), 0);
 		m_pArrow[0]->SetParent(this);
 		m_pArrow[0]->SetPositionType( eScreenValue_Percentage );
 		m_pArrow[0]->SetSizeType( eScreenValue_Pixel );
-		m_pArrow[1] = new CGUIWgtScrollbarArrow(GetName()+"_arrow_1__auto__", GetProjectName(), 1);
+		m_pArrow[1] = new CGUIWgtScrollbarArrow(GetName()+"_arrow_1__auto__", GetSceneName(), 1);
 		m_pArrow[1]->SetParent(this);
 		m_pArrow[1]->SetPositionType( eScreenValue_Percentage );
 		m_pArrow[1]->SetSizeType( eScreenValue_Pixel );
-		m_pSlide = new CGUIWgtScrollbarSlide(GetName()+"_slide__auto__", GetProjectName() );
+		m_pSlide = new CGUIWgtScrollbarSlide(GetName()+"_slide__auto__", GetSceneName() );
 		m_pSlide->SetParent(this);
 		m_pSlide->SetPositionType( eScreenValue_Percentage );
 		m_pSlide->SetSizeType( eScreenValue_Pixel );

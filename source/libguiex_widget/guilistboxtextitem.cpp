@@ -26,14 +26,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString CGUIListBoxTextItem::ms_strType = "CGUIListBoxTextItem";
 	//------------------------------------------------------------------------------
-	CGUIListBoxTextItem::CGUIListBoxTextItem( const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIListBoxItem(ms_strType, rName, rProjectName)
+	CGUIListBoxTextItem::CGUIListBoxTextItem( const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIListBoxItem(ms_strType, rName, rSceneName)
 	{
 		InitTextItem();
 	}
 	//------------------------------------------------------------------------------
-	CGUIListBoxTextItem::CGUIListBoxTextItem( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIListBoxItem(rType, rName, rProjectName)
+	CGUIListBoxTextItem::CGUIListBoxTextItem( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIListBoxItem(rType, rName, rSceneName)
 	{
 		InitTextItem();
 	}

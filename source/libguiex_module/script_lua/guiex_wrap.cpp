@@ -8112,19 +8112,19 @@ fail:
 }
 
 
-static int _wrap_CGUIWidget_GetProjectName(lua_State* L) {
+static int _wrap_CGUIWidget_GetSceneName(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
   guiex::CGUIString *result = 0 ;
   
-  SWIG_check_num_args("GetProjectName",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetProjectName",1,"guiex::CGUIWidget const *");
+  SWIG_check_num_args("GetSceneName",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetSceneName",1,"guiex::CGUIWidget const *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
-    SWIG_fail_ptr("CGUIWidget_GetProjectName",1,SWIGTYPE_p_guiex__CGUIWidget);
+    SWIG_fail_ptr("CGUIWidget_GetSceneName",1,SWIGTYPE_p_guiex__CGUIWidget);
   }
   
-  result = (guiex::CGUIString *) &((guiex::CGUIWidget const *)arg1)->GetProjectName();
+  result = (guiex::CGUIString *) &((guiex::CGUIWidget const *)arg1)->GetSceneName();
   lua_pushlstring(L,result->data(),result->size()); SWIG_arg++;
   return SWIG_arg;
   
@@ -9708,7 +9708,7 @@ static swig_lua_method swig_guiex_CGUIWidget_methods[] = {
     {"GetNextSibling", _wrap_CGUIWidget_GetNextSibling}, 
     {"GetType", _wrap_CGUIWidget_GetType}, 
     {"GetName", _wrap_CGUIWidget_GetName}, 
-    {"GetProjectName", _wrap_CGUIWidget_GetProjectName}, 
+    {"GetSceneName", _wrap_CGUIWidget_GetSceneName}, 
     {"SetUserData", _wrap_CGUIWidget_SetUserData}, 
     {"GetUserData", _wrap_CGUIWidget_GetUserData}, 
     {"SetTextColor", _wrap_CGUIWidget_SetTextColor}, 

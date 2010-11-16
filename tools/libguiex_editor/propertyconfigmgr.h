@@ -91,7 +91,7 @@ public:
 	~CPropertyConfigMgr();
 
 	/** 
-	* @brief get singleton of project config object
+	* @brief get singleton of Scene config object
 	*/
 	static CPropertyConfigMgr* Instance();
 

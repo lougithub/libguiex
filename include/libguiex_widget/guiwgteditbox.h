@@ -39,7 +39,7 @@ namespace guiex
 		* @brief constructor
 		* for derived class
 		*/
-		CGUIWgtEditBox( const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtEditBox( const CGUIString& rName, const CGUIString& rSceneName );
 
 		/** 
 		 * @brief destructor
@@ -127,7 +127,7 @@ namespace guiex
 		* @brief constructor
 		* for derived class
 		*/
-		CGUIWgtEditBox( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtEditBox( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 	
 		virtual void RefreshSelf( );
 

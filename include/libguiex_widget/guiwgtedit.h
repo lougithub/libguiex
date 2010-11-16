@@ -39,7 +39,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIWgtEdit( const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtEdit( const CGUIString& rName, const CGUIString& rSceneName );
 
 		/// get result string
 		const wchar_t*	GetResult() const;

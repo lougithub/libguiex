@@ -150,7 +150,7 @@ int		CPropertyConfigMgr::ReadPropertyConfig(const std::string& rFileName)
 	if( !pRootNode )
 	{
 		wxChar buf[1024];
-		wxSnprintf( buf, 1024, _T("Failed to read project file! \n\n%s"), _T("can't get root node"));
+		wxSnprintf( buf, 1024, _T("Failed to read Scene file! \n\n%s"), _T("can't get root node"));
 		wxMessageBox(buf, _T("Error"), wxICON_ERROR, GetMainFrame() );
 		return -1;
 	}

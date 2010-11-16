@@ -24,14 +24,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString CGUIWgtTabButton::ms_strType = "CGUIWgtTabButton";
 	//------------------------------------------------------------------------------
-	CGUIWgtTabButton::CGUIWgtTabButton(const CGUIString& rName, const CGUIString& rProjectName)
-		:CGUIWgtCheckButton(ms_strType, rName, rProjectName)
+	CGUIWgtTabButton::CGUIWgtTabButton(const CGUIString& rName, const CGUIString& rSceneName)
+		:CGUIWgtCheckButton(ms_strType, rName, rSceneName)
 	{
 		InitTabButton();
 	}
 	//------------------------------------------------------------------------------
-	CGUIWgtTabButton::CGUIWgtTabButton( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWgtCheckButton(rType, rName, rProjectName)
+	CGUIWgtTabButton::CGUIWgtTabButton( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWgtCheckButton(rType, rName, rSceneName)
 	{
 		InitTabButton();
 	}

@@ -37,7 +37,7 @@ namespace guiex
 		/**
 		* @brief base class constructor
 		*/
-		CGUIColListItem( const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIColListItem( const CGUIString& rName, const CGUIString& rSceneName );
 
 		/**
 		* @brief base class destructor
@@ -66,7 +66,7 @@ namespace guiex
 		* @brief constructor
 		* for derived class
 		*/
-		CGUIColListItem( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIColListItem( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
 		//init item
 		void	InitListboxItem();

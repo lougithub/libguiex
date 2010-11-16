@@ -21,14 +21,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString CGUIColListItem::ms_strType = "CGUIColListItem";
 	//------------------------------------------------------------------------------
-	CGUIColListItem::CGUIColListItem( const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIItemBase(ms_strType, rName, rProjectName)
+	CGUIColListItem::CGUIColListItem( const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIItemBase(ms_strType, rName, rSceneName)
 	{
 		InitListboxItem();
 	}
 	//------------------------------------------------------------------------------
-	CGUIColListItem::CGUIColListItem( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIItemBase(rType, rName, rProjectName)
+	CGUIColListItem::CGUIColListItem( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIItemBase(rType, rName, rSceneName)
 	{
 		InitListboxItem();
 	}

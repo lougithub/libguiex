@@ -155,7 +155,7 @@ public:
 	guiex::IGUIKeyboard_winapi*		m_pKeyboard;
 	guiex::IGUIIme_winapi*			m_pIme;
 	std::string	m_strUIDataPath;
-	std::string	m_strUIProjectFilename;
+	std::string	m_strUISceneFilename;
 	//std::string	m_strUIPageFilename;
 
 	DECLARE_EVENT_TABLE()
@@ -483,12 +483,12 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 		}
 
 
-		//get project info
+		//get scene info
 		if(  GetUIInfo( true ))
 		{	
 			guiex::CGUIWidgetSystem::Instance()->SetDataPath(m_strUIDataPath);
-			guiex::CGUIProjectInfoManager::Instance()->LoadProjects();
-			guiex::CGUIProjectUtility::LoadResource(m_strUIProjectFilename);
+			guiex::CGUISceneInfoManager::Instance()->LoadScenes();
+			guiex::CGUISceneUtility::LoadResource(m_strUISceneFilename);
 			guiex::CGUIWidget* pWidget = SampleInitialize();
 			guiex::CGUIWidgetSystem::Instance()->AddPage(pWidget);
 			guiex::CGUIWidgetSystem::Instance()->OpenPage(pWidget);
@@ -541,21 +541,21 @@ bool		WxMainFrame::GetUIInfo( bool bTryCommandLine)
 	}
 	m_strUIDataPath = (aDlg.GetPath() + wxT("\\")).char_str(wxConvUTF8).data();
 
-	//chose project
+	//chose scene
 	guiex::CGUIWidgetSystem::Instance()->SetDataPath(m_strUIDataPath);
-	guiex::CGUIProjectInfoManager::Instance()->LoadProjects();
-	const std::vector<guiex::CGUIString>& vecProjects = guiex::CGUIProjectInfoManager::Instance()->GetProjectFileNames( );
-	wxArrayString arrayProjects;
-	for( unsigned i=0; i<vecProjects.size(); ++i )
+	guiex::CGUISceneInfoManager::Instance()->LoadScenes();
+	const std::vector<guiex::CGUIString>& vecScenes = guiex::CGUISceneInfoManager::Instance()->GetSceneFileNames( );
+	wxArrayString arrayScenes;
+	for( unsigned i=0; i<vecScenes.size(); ++i )
 	{
-		arrayProjects.Add( wxConvUTF8.cMB2WC( vecProjects[i].c_str()));
+		arrayScenes.Add( wxConvUTF8.cMB2WC( vecScenes[i].c_str()));
 	}
-	wxSingleChoiceDialog aChoiceDlg( this, _T("select resource"), _T("select resource project"), arrayProjects );
+	wxSingleChoiceDialog aChoiceDlg( this, _T("select resource"), _T("select resource scene"), arrayScenes );
 	if( aChoiceDlg.ShowModal() != wxID_OK )
 	{
 		return false;
 	}
-	m_strUIProjectFilename = vecProjects[aChoiceDlg.GetSelection()];
+	m_strUISceneFilename = vecScenes[aChoiceDlg.GetSelection()];
 
 	return true;
 }

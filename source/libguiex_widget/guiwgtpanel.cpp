@@ -28,14 +28,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString CGUIWgtPanel::ms_strType = "CGUIWgtPanel";
 	//------------------------------------------------------------------------------
-	CGUIWgtPanel::CGUIWgtPanel(const CGUIString& rName, const CGUIString& rProjectName)
-		:CGUIWidget(ms_strType, rName, rProjectName)
+	CGUIWgtPanel::CGUIWgtPanel(const CGUIString& rName, const CGUIString& rSceneName)
+		:CGUIWidget(ms_strType, rName, rSceneName)
 	{
 		InitPanel();
 	}
 	//------------------------------------------------------------------------------
-	CGUIWgtPanel::CGUIWgtPanel( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWidget(rType, rName, rProjectName)
+	CGUIWgtPanel::CGUIWgtPanel( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWidget(rType, rName, rSceneName)
 	{
 		InitPanel();
 	}

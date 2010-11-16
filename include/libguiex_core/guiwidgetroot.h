@@ -31,7 +31,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIWidgetRoot( const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWidgetRoot( const CGUIString& rName, const CGUIString& rSceneName );
 
 		virtual void Open();
 

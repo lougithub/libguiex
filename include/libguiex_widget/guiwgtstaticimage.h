@@ -32,7 +32,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIWgtStaticImage( const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtStaticImage( const CGUIString& rName, const CGUIString& rSceneName );
 
 		/** 
 		* @brief set widget parameter's value
@@ -61,7 +61,7 @@ namespace guiex
 		* @brief constructor
 		* for derived class
 		*/
-		CGUIWgtStaticImage( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtStaticImage( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
 		/// render
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);

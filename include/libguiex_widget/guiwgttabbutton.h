@@ -42,7 +42,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIWgtTabButton( const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtTabButton( const CGUIString& rName, const CGUIString& rSceneName );
 
 		/**
 		* @brief
@@ -56,7 +56,7 @@ namespace guiex
 		* @brief constructor
 		* for derived class
 		*/
-		CGUIWgtTabButton( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtTabButton( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
 		/// initialize radio button
 		void InitTabButton();

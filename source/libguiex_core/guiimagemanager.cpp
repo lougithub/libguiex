@@ -12,8 +12,8 @@
 #include <libguiex_core/guiimage.h>
 #include <libguiex_core/guiproperty.h>
 #include <libguiex_core/guistringconvertor.h>
-#include <libguiex_core/guiprojectinfo.h>
-#include <libguiex_core/guiprojectinfomanager.h>
+#include <libguiex_core/guisceneinfo.h>
+#include <libguiex_core/guisceneinfomanager.h>
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guipropertyconvertor.h>
 #include <algorithm>
@@ -35,42 +35,42 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIImage*	CGUIImageManager::CreateImage(
 		const CGUIString& rName,
-		const CGUIString& rProjectName,
+		const CGUIString& rSceneName,
 		const CGUIString& rPath, 
 		const CGUIRect& rUVRect, 
 		EImageOperation eImageOperation)
 	{
-		CGUIImage* pImage = new CGUIImage( rName, rProjectName, rPath, rUVRect, eImageOperation );
+		CGUIImage* pImage = new CGUIImage( rName, rSceneName, rPath, rUVRect, eImageOperation );
 		AddResource(pImage);
 		return pImage;
 	}
 	//------------------------------------------------------------------------------
 	CGUIImage*	CGUIImageManager::CreateImage( 
 		const CGUIString& rName,
-		const CGUIString& rProjectName,
+		const CGUIString& rSceneName,
 		const CGUIColor& rColor )
 	{
-		CGUIImage* pImage = new CGUIImage( rName, rProjectName, rColor );
+		CGUIImage* pImage = new CGUIImage( rName, rSceneName, rColor );
 		AddResource(pImage);
 		return pImage;
 	}
 	//------------------------------------------------------------------------------
 	CGUIImage*	CGUIImageManager::CreateImage(
 		const CGUIString& rName,
-		const CGUIString& rProjectName,
+		const CGUIString& rSceneName,
 		const void* buffPtr, 
 		int32 buffWidth, 
 		int32 buffHeight, 
 		EGuiPixelFormat ePixelFormat )
 	{
-		CGUIImage* pImage = new CGUIImage( rName, rProjectName, buffPtr, buffWidth, buffHeight, ePixelFormat  );
+		CGUIImage* pImage = new CGUIImage( rName, rSceneName, buffPtr, buffWidth, buffHeight, ePixelFormat  );
 		AddResource(pImage);
 		return pImage;
 	}
 		//------------------------------------------------------------------------------
 	CGUIImage*	CGUIImageManager::CreateImage(
 		const CGUIString& rName,
-		const CGUIString& rProjectName,
+		const CGUIString& rSceneName,
 		const CGUIProperty& rProperty )
 	{
 		/**
@@ -110,7 +110,7 @@ namespace guiex
 
 			return( CreateImage( 
 				rName,
-				rProjectName,
+				rSceneName,
 				pPptPath->GetValue(),
 				aUVRect,
 				eImageOperation));
@@ -128,7 +128,7 @@ namespace guiex
 			PropertyToValue( *pPptColor, aColor );
 			return( CreateImage( 
 				rName,
-				rProjectName,
+				rSceneName,
 				aColor));
 		}
 		else

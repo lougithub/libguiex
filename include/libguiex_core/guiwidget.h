@@ -82,7 +82,7 @@ namespace guiex
 		/**
 		* @brief default constructor
 		*/
-		CGUIWidget(const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName  );
+		CGUIWidget(const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName  );
 
 		/**
 		* @brief default destructor
@@ -159,19 +159,19 @@ namespace guiex
 			return m_strName;
 		}
 
-		//!< get project name
-		const CGUIString& GetProjectName( ) const
+		//!< get scene name
+		const CGUIString& GetSceneName( ) const
 		{
-			return m_strOwnerProjectName;
+			return m_strOwnerSceneName;
 		}
 
-		//!< set working projname for this widget and all of it's child
-		void SetWorkingProjectName(const CGUIString& rWorkingProjName);
+		//!< set working scene name for this widget and all of it's child
+		void SetWorkingSceneName(const CGUIString& rWorkingProjName);
 
-		//!< get working project name
-		const CGUIString& GetWorkingProjectName( ) const
+		//!< get working scene name
+		const CGUIString& GetWorkingSceneName( ) const
 		{
-			return m_strWorkingProjectName;
+			return m_strWorkingSceneName;
 		}
 
 		/**
@@ -954,9 +954,9 @@ namespace guiex
 
 
 		CGUIString		m_strType;			//!< widget type
-		CGUIString		m_strName;			//!< widget name, should be a unique name in same project
-		CGUIString		m_strOwnerProjectName;		//!< project name, should be a unique name
-		CGUIString		m_strWorkingProjectName;	//!< working project name, should be a unique name
+		CGUIString		m_strName;			//!< widget name, should be a unique name in same scene
+		CGUIString		m_strOwnerSceneName;		//!< scene name, should be a unique name
+		CGUIString		m_strWorkingSceneName;	//!< working scene name, should be a unique name
 
 		void*			m_pUserData;		//!< user data, used by user.
 

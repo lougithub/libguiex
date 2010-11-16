@@ -39,7 +39,7 @@ namespace guiex
 		* @brief constructor
 		* for derived class
 		*/
-		CGUIWgtMultiEditBox( const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtMultiEditBox( const CGUIString& rName, const CGUIString& rSceneName );
 
 		/** 
 		 * @brief destructor
@@ -90,7 +90,7 @@ namespace guiex
 		* @brief constructor
 		* for derived class
 		*/
-		CGUIWgtMultiEditBox( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtMultiEditBox( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
 		/// render
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);

@@ -37,7 +37,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIWgtButton( const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtButton( const CGUIString& rName, const CGUIString& rSceneName );
 
 		/**
 		* @brief create this widget
@@ -73,7 +73,7 @@ namespace guiex
 		* @brief constructor
 		* for derived class
 		*/
-		CGUIWgtButton( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtButton( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
 		///initialize
 		void InitButton();

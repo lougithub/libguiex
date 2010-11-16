@@ -41,7 +41,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIWgtTabControl( const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtTabControl( const CGUIString& rName, const CGUIString& rSceneName );
 
 		/**
 		* @brief Set the selected tab by the name of the tab button.
@@ -59,7 +59,7 @@ namespace guiex
 		* @brief constructor
 		* for derived class
 		*/
-		CGUIWgtTabControl( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtTabControl( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
 		/// initialize tab control
 		void InitTabControl();

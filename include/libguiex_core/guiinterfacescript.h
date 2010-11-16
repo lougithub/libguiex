@@ -45,9 +45,9 @@ namespace guiex
 
 		virtual void	SetExternalData(void* pData) = 0;
 
-		virtual void CreateScript( const CGUIString& rProjectName ) = 0;
-		virtual bool HasScript( const CGUIString& rProjectName ) = 0;
-		virtual void DestroyScript( const CGUIString& rProjectName ) = 0;
+		virtual void CreateScript( const CGUIString& rSceneName ) = 0;
+		virtual bool HasScript( const CGUIString& rSceneName ) = 0;
+		virtual void DestroyScript( const CGUIString& rSceneName ) = 0;
 		virtual void DestroyAllScript( ) = 0;
 
 		/** 
@@ -55,17 +55,17 @@ namespace guiex
 		* 
 		* @param filename filename of the script file
 		*/
-		virtual	void	ExecuteFile(const CGUIString& filename, const CGUIString& rProjectName) = 0;
+		virtual	void	ExecuteFile(const CGUIString& filename, const CGUIString& rSceneName) = 0;
 
 		/** 
 		* @brief execute a memory buffer which contain script
 		*/
-		virtual	void	ExecuteBuffer(void * pBuffer, int32 nBufferSize, const CGUIString& rProjectName) = 0;
+		virtual	void	ExecuteBuffer(void * pBuffer, int32 nBufferSize, const CGUIString& rSceneName) = 0;
 
 		/** 
 		* @brief execute a string which contain script
 		*/
-		virtual	void	ExecuteString(const char * pString, const CGUIString& rProjectName) = 0;
+		virtual	void	ExecuteString(const char * pString, const CGUIString& rSceneName) = 0;
 
 		virtual void	RegisterWidget( const CGUIWidget* pWidget) = 0;
 
@@ -75,7 +75,7 @@ namespace guiex
 		* 
 		* @param rEventName event name
 		*/
-		virtual void 	ExecuteEventHandler(const CGUIString& rEventName, CGUIEvent* pEvent, const CGUIString& rProjectName)=0;
+		virtual void 	ExecuteEventHandler(const CGUIString& rEventName, CGUIEvent* pEvent, const CGUIString& rSceneName)=0;
 	};
 
 

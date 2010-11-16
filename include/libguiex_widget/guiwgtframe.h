@@ -43,7 +43,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIWgtFrame( const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtFrame( const CGUIString& rName, const CGUIString& rSceneName );
 
 		/**
 		* @brief create this widget
@@ -126,7 +126,7 @@ namespace guiex
 		* @brief constructor
 		* for derived class
 		*/
-		CGUIWgtFrame( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtFrame( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
 		///initialize frame
 		void				InitFrame();

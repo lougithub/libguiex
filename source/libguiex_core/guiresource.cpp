@@ -30,9 +30,9 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	CGUIResource::CGUIResource(const CGUIString& rName, const CGUIString& rProjectName, const CGUIString& rResourceType)
+	CGUIResource::CGUIResource(const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rResourceType)
 		:m_strName(rName)
-		,m_strProjectName(rProjectName)
+		,m_strSceneName(rSceneName)
 		,m_eIsLoaded(LOADSTATE_Unloaded)
 		,m_strResourceType(rResourceType)
 	{
@@ -52,7 +52,7 @@ namespace guiex
 		if( ret != 0 )
 		{
 			throw CGUIException( "[CGUIResource::Load]: failed to load resource <%s: %s>",
-				m_strProjectName.c_str(),
+				m_strSceneName.c_str(),
 				m_strName.c_str());
 			return ret;
 		}
@@ -81,9 +81,9 @@ namespace guiex
 		return m_strName;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIString&	CGUIResource::GetProjectName() const
+	const CGUIString&	CGUIResource::GetSceneName() const
 	{
-		return m_strProjectName;
+		return m_strSceneName;
 	}
 	//------------------------------------------------------------------------------
 	const CGUIString&	CGUIResource::GetResourceType() const

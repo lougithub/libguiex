@@ -165,7 +165,7 @@ void WxWizardCreateWidget::OnWizardPageChanging(wxWizardEvent& event)
 			wxMessageBox(_T("the widget name is empty!"), _T("Warning"),wxICON_WARNING | wxOK, this);
 			event.Veto();
 		}
-		else if (guiex::CGUIWidgetSystem::Instance()->HasWidget(wxConvUTF8.cWC2MB( m_pEditName->GetValue().c_str()).data(), GetMainFrame()->GetCurrentProjectName()))
+		else if (guiex::CGUIWidgetSystem::Instance()->HasWidget(wxConvUTF8.cWC2MB( m_pEditName->GetValue().c_str()).data(), GetMainFrame()->GetCurrentSceneName()))
 		{
 			wxMessageBox(_T("the widget name has existed!"), _T("Warning"),wxICON_WARNING | wxOK, this);
 			event.Veto();

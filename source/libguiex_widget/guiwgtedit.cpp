@@ -20,8 +20,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString CGUIWgtEdit::ms_strType = "CGUIWgtEdit";
 	//------------------------------------------------------------------------------
-	CGUIWgtEdit::CGUIWgtEdit(const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWidget(ms_strType, rName, rProjectName)
+	CGUIWgtEdit::CGUIWgtEdit(const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWidget(ms_strType, rName, rSceneName)
 	{
 		InitEdit();
 	}

@@ -58,7 +58,7 @@ namespace guiex
 		const std::map< CGUIString, TResType* >&	GetResourceMap() const;
 
 		void		ReleaseAllResources( );
-		void		ReleaseProjectResources( const CGUIString& rProjectName );
+		void		ReleaseSceneResources( const CGUIString& rSceneName );
 		void		ReleaseResource( const CGUIString& rResName );
 
 		void		LoadAllResources( );
@@ -174,14 +174,14 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	template< class TResType >
-	inline void CGUIResourceManager<TResType>::ReleaseProjectResources( const CGUIString& rProjectName )
+	inline void CGUIResourceManager<TResType>::ReleaseSceneResources( const CGUIString& rSceneName )
 	{
 		std::vector< CGUIString > vecReleaseRes;
 		for( typename TMapResource::iterator itor = m_mapResource.begin();
 			itor != m_mapResource.end();
 			++itor )
 		{
-			if( itor->second->GetProjectName() == rProjectName )
+			if( itor->second->GetSceneName() == rSceneName )
 			{
 				vecReleaseRes.push_back( itor->first );
 			}

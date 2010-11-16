@@ -72,7 +72,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIWgtScrollbarContainer( const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtScrollbarContainer( const CGUIString& rName, const CGUIString& rSceneName );
 
 		/**
 		* @brief destructor
@@ -114,7 +114,7 @@ namespace guiex
 		* @brief constructor
 		* for derived class
 		*/
-		CGUIWgtScrollbarContainer( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtScrollbarContainer( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
 		///initialize
 		void			InitScrollbarContainer();

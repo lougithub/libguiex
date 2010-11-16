@@ -31,23 +31,23 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIAnimation*	CGUIAnimationManager::CreateAnimation(
 			const CGUIString& rName, 
-			const CGUIString& rProjectName, 
+			const CGUIString& rSceneName, 
 			const CGUIString& rFileName, 
 			const std::vector<CGUIRect>& rUVRects,
 			real fInterval)
 	{
-		CGUIAnimation* pAnimation = new CGUIAnimation( rName, rProjectName, rFileName, rUVRects, fInterval );
+		CGUIAnimation* pAnimation = new CGUIAnimation( rName, rSceneName, rFileName, rUVRects, fInterval );
 		AddResource(pAnimation);
 		return pAnimation;
 	}
 	//------------------------------------------------------------------------------
 	CGUIAnimation*	CGUIAnimationManager::CreateAnimation( 
 			const CGUIString& rName, 
-			const CGUIString& rProjectName, 
+			const CGUIString& rSceneName, 
 			const std::vector<CGUIString>& rFileNames,  
 			real fInterval)
 	{
-		CGUIAnimation* pAnimation = new CGUIAnimation( rName, rProjectName, rFileNames, fInterval );
+		CGUIAnimation* pAnimation = new CGUIAnimation( rName, rSceneName, rFileNames, fInterval );
 		AddResource(pAnimation);
 		return pAnimation;
 	}

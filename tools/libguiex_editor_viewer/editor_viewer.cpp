@@ -151,7 +151,7 @@ public:
 	guiex::IGUIKeyboard_winapi*		m_pKeyboard;
 	guiex::IGUIIme_winapi*			m_pIme;
 	std::string	m_strUIDataPath;
-	std::string	m_strUIProjectFilename;
+	std::string	m_strUISceneFilename;
 	std::string	m_strUIPageFilename;
 
 	DECLARE_EVENT_TABLE()
@@ -473,13 +473,13 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 		}
 
 
-		//get project info
+		//get scene info
 		if(  GetUIInfo( true ))
 		{	
 			guiex::CGUIWidgetSystem::Instance()->SetDataPath(m_strUIDataPath);
-			guiex::CGUIProjectInfoManager::Instance()->LoadProjects();
-			guiex::CGUIProjectUtility::LoadResource(m_strUIProjectFilename);
-			guiex::CGUIWidget* pWidget = guiex::CGUIWidgetSystem::Instance()->LoadPage( m_strUIPageFilename, m_strUIProjectFilename);
+			guiex::CGUISceneInfoManager::Instance()->LoadScenes();
+			guiex::CGUISceneUtility::LoadResource(m_strUISceneFilename);
+			guiex::CGUIWidget* pWidget = guiex::CGUIWidgetSystem::Instance()->LoadPage( m_strUIPageFilename, m_strUISceneFilename);
 			guiex::CGUIWidgetSystem::Instance()->OpenPage(pWidget);
 		}
 	}
@@ -515,7 +515,7 @@ bool		WxMainFrame::GetUIInfo( bool bTryCommandLine)
 		if( arrayArgs.size() ==4 )
 		{
 			m_strUIDataPath = arrayArgs[1].char_str(wxConvUTF8).data();
-			m_strUIProjectFilename = arrayArgs[2].char_str(wxConvUTF8).data();
+			m_strUISceneFilename = arrayArgs[2].char_str(wxConvUTF8).data();
 			m_strUIPageFilename = arrayArgs[3].char_str(wxConvUTF8).data();
 			return true;
 		}
@@ -530,30 +530,30 @@ bool		WxMainFrame::GetUIInfo( bool bTryCommandLine)
 	}
 	m_strUIDataPath = (aDlg.GetPath() + wxT("\\")).char_str(wxConvUTF8).data();
 
-	//chose project
+	//chose scene
 	guiex::CGUIWidgetSystem::Instance()->SetDataPath(m_strUIDataPath);
-	guiex::CGUIProjectInfoManager::Instance()->LoadProjects();
-	const std::vector<guiex::CGUIString>& vecProjects = guiex::CGUIProjectInfoManager::Instance()->GetProjectFileNames( );
-	wxArrayString arrayProjects;
-	for( unsigned i=0; i<vecProjects.size(); ++i )
+	guiex::CGUISceneInfoManager::Instance()->LoadScenes();
+	const std::vector<guiex::CGUIString>& vecScenes = guiex::CGUISceneInfoManager::Instance()->GetSceneFileNames( );
+	wxArrayString arrayScenes;
+	for( unsigned i=0; i<vecScenes.size(); ++i )
 	{
-		arrayProjects.Add( wxConvUTF8.cMB2WC( vecProjects[i].c_str()));
+		arrayScenes.Add( wxConvUTF8.cMB2WC( vecScenes[i].c_str()));
 	}
-	wxSingleChoiceDialog aChoiceDlg( this, _T("select project"), _T("select project files"), arrayProjects );
+	wxSingleChoiceDialog aChoiceDlg( this, _T("select scene"), _T("select scene files"), arrayScenes );
 	if( aChoiceDlg.ShowModal() != wxID_OK )
 	{
 		return false;
 	}
-	m_strUIProjectFilename = vecProjects[aChoiceDlg.GetSelection()];
+	m_strUISceneFilename = vecScenes[aChoiceDlg.GetSelection()];
 
 	//chose page file
-	const std::vector<guiex::CGUIString>& vecPages = guiex::CGUIProjectInfoManager::Instance()->GetProjectInfo(m_strUIProjectFilename)->GetWidgetFiles();
+	const std::vector<guiex::CGUIString>& vecPages = guiex::CGUISceneInfoManager::Instance()->GetSceneInfo(m_strUISceneFilename)->GetWidgetFiles();
 	wxArrayString arrayPages;
 	for( unsigned i=0; i<vecPages.size(); ++i )
 	{
 		arrayPages.Add( wxConvUTF8.cMB2WC( vecPages[i].c_str()));
 	}
-	wxSingleChoiceDialog aPageChoiceDlg( this, _T("select project"), _T("select project files"), arrayPages );
+	wxSingleChoiceDialog aPageChoiceDlg( this, _T("select scene"), _T("select scene files"), arrayPages );
 	if( aPageChoiceDlg.ShowModal() != wxID_OK )
 	{
 		return false;
@@ -633,9 +633,9 @@ void WxMainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 		try
 		{
 			guiex::CGUIWidgetSystem::Instance()->SetDataPath(m_strUIDataPath);
-			guiex::CGUIProjectInfoManager::Instance()->LoadProjects();
-			guiex::CGUIProjectUtility::LoadResource(m_strUIProjectFilename);
-			guiex::CGUIWidget* pWidget = guiex::CGUIWidgetSystem::Instance()->LoadPage( m_strUIPageFilename, m_strUIProjectFilename);
+			guiex::CGUISceneInfoManager::Instance()->LoadScenes();
+			guiex::CGUISceneUtility::LoadResource(m_strUISceneFilename);
+			guiex::CGUIWidget* pWidget = guiex::CGUIWidgetSystem::Instance()->LoadPage( m_strUIPageFilename, m_strUISceneFilename);
 			guiex::CGUIWidgetSystem::Instance()->OpenPage(pWidget);
 
 		}

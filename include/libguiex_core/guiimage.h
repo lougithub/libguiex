@@ -93,12 +93,12 @@ namespace guiex
 		*/
 		CGUIImage( 
 			const CGUIString& rName, 
-			const CGUIString& rProjectName, 
+			const CGUIString& rSceneName, 
 			const CGUIColor& rColor );
 
 		CGUIImage( 
 			const CGUIString& rName,
-			const CGUIString& rProjectName, 
+			const CGUIString& rSceneName, 
 			const void* buffPtr, 
 			int32 buffWidth, 
 			int32 buffHeight, 
@@ -106,7 +106,7 @@ namespace guiex
 
 		CGUIImage( 		
 			const CGUIString& rName,
-			const CGUIString& rProjectName, 
+			const CGUIString& rSceneName, 
 			const CGUIString& rPath,
 			const CGUIRect& rUVRect,
 			EImageOperation	eImageOperation);

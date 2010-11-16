@@ -27,15 +27,15 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString CGUIWgtButton::ms_strType = "CGUIWgtButton";
 	//------------------------------------------------------------------------------
-	CGUIWgtButton::CGUIWgtButton(const CGUIString& rName, const CGUIString& rProjectName)
-		:CGUIWidget(ms_strType, rName, rProjectName)
+	CGUIWgtButton::CGUIWgtButton(const CGUIString& rName, const CGUIString& rSceneName)
+		:CGUIWidget(ms_strType, rName, rSceneName)
 		,m_aTextOffset(0.f,0.f)
 	{
 		InitButton();
 	}
 	//------------------------------------------------------------------------------
-	CGUIWgtButton::CGUIWgtButton( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWidget(rType, rName, rProjectName)
+	CGUIWgtButton::CGUIWgtButton( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWidget(rType, rName, rSceneName)
 	{
 		InitButton();
 	}

@@ -14,8 +14,8 @@
 #include <libguiex_core/guitexture.h>
 #include <libguiex_core/guitexturemanager.h>
 #include <libguiex_core/guiexception.h>
-#include <libguiex_core/guiprojectinfo.h>
-#include <libguiex_core/guiprojectinfomanager.h>
+#include <libguiex_core/guisceneinfo.h>
+#include <libguiex_core/guisceneinfomanager.h>
 #include <libguiex_core/guicolor.h>
 #include <libguiex_core/guiinterfacerender.h>
 #include <libguiex_core/guirenderrect.h>
@@ -29,11 +29,11 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIAnimation::CGUIAnimation( 
 		const CGUIString& rName, 
-		const CGUIString& rProjectName, 
+		const CGUIString& rSceneName, 
 		const CGUIString& rFileName, 
 		const std::vector<CGUIRect>& rUVRects,
 		real fInterval )
-		:CGUIResource( rName, rProjectName, "ANIMATION" )
+		:CGUIResource( rName, rSceneName, "ANIMATION" )
 		,m_vecUVRects( rUVRects )
 		,m_vecFileNames( rUVRects.size(), rFileName )
 		,m_nFrame(0)
@@ -45,10 +45,10 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIAnimation::CGUIAnimation(
 		const CGUIString& rName, 
-		const CGUIString& rProjectName, 
+		const CGUIString& rSceneName, 
 		const std::vector<CGUIString>& rFileNames,  
 		real fInterval)
-		:CGUIResource( rName, rProjectName, "ANIMATION" )
+		:CGUIResource( rName, rSceneName, "ANIMATION" )
 		,m_vecFileNames( rFileNames )
 		,m_vecUVRects( rFileNames.size(), CGUIRect(0.f,0.f,1.f,1.f))
 		,m_nFrame(0)
@@ -66,7 +66,7 @@ namespace guiex
 	int32	CGUIAnimation::DoLoad()
 	{
 		//get full path
-		CGUIString strPrePath = CGUIProjectInfoManager::Instance()->GetProjectFilePath( m_strProjectName );
+		CGUIString strPrePath = CGUISceneInfoManager::Instance()->GetSceneFileRootPath( m_strSceneName );
 
 		//load texture
 		for( uint32 i=0; i<m_vecFileNames.size(); ++i )

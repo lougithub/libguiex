@@ -29,7 +29,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIColListTextItem( const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIColListTextItem( const CGUIString& rName, const CGUIString& rSceneName );
 
 		/**
 		* @brief destructor
@@ -54,7 +54,7 @@ namespace guiex
 		static CGUIColListTextItem*	CreateTextItem(
 			const wchar_t* pText, 
 			const CGUIStringInfo& rInfo,
-			const CGUIString& rProjectName,
+			const CGUIString& rSceneName,
 			uint32 nItemID = 0, 
 			void* pItemData = NULL,
 			bool bDisable = false);
@@ -66,7 +66,7 @@ namespace guiex
 		* @brief constructor
 		* for derived class
 		*/
-		CGUIColListTextItem( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIColListTextItem( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
 		//init item
 		void	InitTextItem();

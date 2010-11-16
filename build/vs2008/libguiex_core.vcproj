@@ -167,6 +167,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\source\libguiex_core\guiasmanager.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\source\libguiex_core\guiassert.cpp"
 				>
 			</File>
@@ -327,18 +331,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiprojectinfo.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\libguiex_core\guiprojectinfomanager.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\libguiex_core\guiprojectutility.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\source\libguiex_core\guiproperty.cpp"
 				>
 			</File>
@@ -364,6 +356,18 @@
 			</File>
 			<File
 				RelativePath="..\..\source\libguiex_core\guiresource.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\libguiex_core\guisceneinfo.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\libguiex_core\guisceneinfomanager.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\libguiex_core\guisceneutility.cpp"
 				>
 			</File>
 			<File
@@ -462,6 +466,10 @@
 			</File>
 			<File
 				RelativePath="..\..\include\libguiex_core\guiasgenerator.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\libguiex_core\guiasmanager.h"
 				>
 			</File>
 			<File
@@ -649,18 +657,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiprojectinfo.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\include\libguiex_core\guiprojectinfomanager.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\include\libguiex_core\guiprojectutility.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\include\libguiex_core\guiproperty.h"
 				>
 			</File>
@@ -690,6 +686,18 @@
 			</File>
 			<File
 				RelativePath="..\..\include\libguiex_core\guiresourcemanager.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\libguiex_core\guisceneinfo.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\libguiex_core\guisceneinfomanager.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\libguiex_core\guisceneutility.h"
 				>
 			</File>
 			<File

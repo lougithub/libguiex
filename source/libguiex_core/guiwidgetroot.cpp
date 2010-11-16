@@ -22,8 +22,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString CGUIWidgetRoot::ms_strType = "CGUIWidgetRoot";
 	//------------------------------------------------------------------------------
-	CGUIWidgetRoot::CGUIWidgetRoot(const CGUIString& rName, const CGUIString& rProjectName)
-		:CGUIWidget(ms_strType, rName, rProjectName)
+	CGUIWidgetRoot::CGUIWidgetRoot(const CGUIString& rName, const CGUIString& rSceneName)
+		:CGUIWidget(ms_strType, rName, rSceneName)
 	{
 		InitRoot();
 	}

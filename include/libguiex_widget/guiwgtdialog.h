@@ -33,7 +33,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIWgtDialog( const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtDialog( const CGUIString& rName, const CGUIString& rSceneName );
 
 		/**
 		* @brief create this widget
@@ -46,7 +46,7 @@ namespace guiex
 		* @brief constructor
 		* for derived class
 		*/
-		CGUIWgtDialog( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtDialog( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
 		///initialize
 		void InitDialog();

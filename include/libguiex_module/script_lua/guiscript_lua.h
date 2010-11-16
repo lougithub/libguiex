@@ -47,9 +47,9 @@ namespace guiex
 
 		virtual void	SetExternalData(void* pData);
 
-		virtual void CreateScript( const CGUIString& rProjectName );
-		virtual bool HasScript( const CGUIString& rProjectName );
-		virtual void DestroyScript( const CGUIString& rProjectName );
+		virtual void CreateScript( const CGUIString& rSceneName );
+		virtual bool HasScript( const CGUIString& rSceneName );
+		virtual void DestroyScript( const CGUIString& rSceneName );
 		virtual void DestroyAllScript( );
 
 		/** 
@@ -57,23 +57,23 @@ namespace guiex
 		* 
 		* @param filename filename of the script file
 		*/
-		virtual	void	ExecuteFile(const CGUIString& filename, const CGUIString& rProjectName);
+		virtual	void	ExecuteFile(const CGUIString& filename, const CGUIString& rSceneName);
 
 		/** 
 		* @brief execute a memory buffer which contain script
 		* 
 		*/
-		virtual	void	ExecuteBuffer(void * pBuffer, int32 nBufferSize, const CGUIString& rProjectName);
+		virtual	void	ExecuteBuffer(void * pBuffer, int32 nBufferSize, const CGUIString& rSceneName);
 
 		/** 
 		* @brief execute script from string
 		*/
-		virtual	void	ExecuteString(const char * pString, const CGUIString& rProjectName);
+		virtual	void	ExecuteString(const char * pString, const CGUIString& rSceneName);
 
 		/** 
 		* @brief execute a event handle
 		*/
-		virtual void 	ExecuteEventHandler(const CGUIString& rEventName, CGUIEvent* pEvent, const CGUIString& rProjectName);
+		virtual void 	ExecuteEventHandler(const CGUIString& rEventName, CGUIEvent* pEvent, const CGUIString& rSceneName);
 
 		virtual void	RegisterWidget( const CGUIWidget* pWidget );
 
@@ -87,7 +87,7 @@ namespace guiex
 		* @brief get lua_State used in this module
 		* @return lua_State
 		*/
-		void*		GetLuaState( const CGUIString& rProjectName );
+		void*		GetLuaState( const CGUIString& rSceneName );
 
 		/**
 		* @brief execute script function with given parameter.

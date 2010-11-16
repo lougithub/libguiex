@@ -22,7 +22,7 @@
 namespace guiex
 {
 	class CGUIWidget;
-	class CGUIProjectInfo;
+	class CGUISceneInfo;
 }
 
 //============================================================================//
@@ -49,22 +49,22 @@ namespace guiex
 
 	public:
 		/**
-		* @brief read project config file and generate project info.
-		* @return pointer of project info object.
+		* @brief read scene config file and generate scene info.
+		* @return pointer of scene info object.
 		*/
-		virtual CGUIProjectInfo* LoadProjectInfoFile( const CGUIString& rFileName ) = 0;
+		virtual CGUISceneInfo* LoadSceneInfoFile( const CGUIString& rFileName ) = 0;
 
 		/**
 		* @brief read config file and generate widget system
 		* @return the root widget, return NULL for error, or there isn't any widget
 		*/
-		virtual CGUIWidget*	LoadWidgetConfigFile(const CGUIString& rFileName, const CGUIString& rProjectName) = 0;
+		virtual CGUIWidget*	LoadWidgetConfigFile(const CGUIString& rFileName, const CGUIString& rSceneName) = 0;
 
 		/**
 		* @brief read resource config file
 		* @return 0 for successful
 		*/
-		virtual int32 LoadResourceConfigFile(const CGUIString& rFileName, const CGUIString& m_strProjectName ) = 0;
+		virtual int32 LoadResourceConfigFile(const CGUIString& rFileName, const CGUIString& m_strSceneName ) = 0;
 	};
 }//namespace guiex
 

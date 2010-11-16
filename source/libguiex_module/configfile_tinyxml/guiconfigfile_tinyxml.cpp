@@ -88,7 +88,7 @@ namespace guiex
 #endif
 	}
 	//------------------------------------------------------------------------------
-	CGUIProjectInfo* IGUIConfigFile_tinyxml::LoadProjectInfoFile( const CGUIString& rFileName )
+	CGUISceneInfo* IGUIConfigFile_tinyxml::LoadSceneInfoFile( const CGUIString& rFileName )
 	{
 		///read file
 		IGUIInterfaceFileSys* pFileSys =  CGUIInterfaceManager::Instance()->GetInterfaceFileSys();
@@ -96,7 +96,7 @@ namespace guiex
 		if( 0 != pFileSys->ReadFile( rFileName, aDataChunk, IGUIInterfaceFileSys::eOpenMode_String ))
 		{
 			//failed
-			throw CGUIException("[IGUIConfigFile_tinyxml::LoadProjectInfoFile]: failed to read file <%s>!", rFileName.c_str());
+			throw CGUIException("[IGUIConfigFile_tinyxml::LoadSceneInfoFile]: failed to read file <%s>!", rFileName.c_str());
 			return NULL;
 		}
 
@@ -117,27 +117,27 @@ namespace guiex
 		TiXmlElement* pRootNode = aDoc.RootElement();
 		if( !pRootNode )
 		{
-			throw guiex::CGUIException("[IGUIConfigFile_tinyxml::LoadProjectInfoFile], failed to get root node from file <%s>!", rFileName.c_str());
+			throw guiex::CGUIException("[IGUIConfigFile_tinyxml::LoadSceneInfoFile], failed to get root node from file <%s>!", rFileName.c_str());
 			return NULL;
 		}
 
-		CGUIProperty aProjectPropertySet;
-		int32 ret = ProcessProperty( pRootNode, aProjectPropertySet );
+		CGUIProperty aScenePropertySet;
+		int32 ret = ProcessProperty( pRootNode, aScenePropertySet );
 		if( ret != 0 )
 		{
 			return NULL;
 		}
 
-		CGUIProjectInfo * pProjectInfo = CGUIProjectInfoManager::Instance()->GenerateProjectInfo();
-		if( 0 != pProjectInfo->LoadFromPropertySet( DoGetFilename(rFileName), DoGetFileDir(rFileName), aProjectPropertySet ))
+		CGUISceneInfo * pSceneInfo = CGUISceneInfoManager::Instance()->GenerateSceneInfo();
+		if( 0 != pSceneInfo->LoadFromPropertySet( DoGetFilename(rFileName), DoGetFileDir(rFileName), aScenePropertySet ))
 		{
-			CGUIProjectInfoManager::Instance()->DestroyProjectInfo( pProjectInfo );
+			CGUISceneInfoManager::Instance()->DestroySceneInfo( pSceneInfo );
 			return NULL;
 		}
-		return pProjectInfo;
+		return pSceneInfo;
 	}
 	//------------------------------------------------------------------------------
-	int32	IGUIConfigFile_tinyxml::LoadResourceConfigFile(const CGUIString& rFileName, const CGUIString& rProjectName )
+	int32	IGUIConfigFile_tinyxml::LoadResourceConfigFile(const CGUIString& rFileName, const CGUIString& rSceneName )
 	{
 		///read file
 		IGUIInterfaceFileSys* pFileSys =  CGUIInterfaceManager::Instance()->GetInterfaceFileSys();
@@ -196,7 +196,7 @@ namespace guiex
 				for( uint32 i=0; i<nSize; ++i )
 				{
 					const CGUIProperty* pProperty = aPropertySet.GetProperty(i);
-					if( !CGUIImageManager::Instance()->CreateImage(pProperty->GetName(), rProjectName, *pProperty) )
+					if( !CGUIImageManager::Instance()->CreateImage(pProperty->GetName(), rSceneName, *pProperty) )
 					{
 						throw guiex::CGUIException(
 							"[IGUIConfigFile_tinyxml::LoadResourceConfigFile], failed to create image with name <%s>!", 
@@ -242,7 +242,7 @@ namespace guiex
 					{
 						uint32 nIndex = 0;
 						PropertyToValue( *pIndexProp, nIndex);
-						CGUIFontManager::Instance()->CreateGUIFont( strName, rProjectName, strPath, nIndex );
+						CGUIFontManager::Instance()->CreateGUIFont( strName, rSceneName, strPath, nIndex );
 					}
 				}
 			}
@@ -260,7 +260,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	CGUIWidget*	IGUIConfigFile_tinyxml::LoadWidgetConfigFile(const CGUIString& rFileName, const CGUIString& rProjectName)
+	CGUIWidget*	IGUIConfigFile_tinyxml::LoadWidgetConfigFile(const CGUIString& rFileName, const CGUIString& rSceneName)
 	{
 		///read file
 		IGUIInterfaceFileSys* pFileSys = CGUIInterfaceManager::Instance()->GetInterfaceFileSys();;
@@ -311,7 +311,7 @@ namespace guiex
 				/// create widget
 				CGUIString strWidgetType = pNode->Attribute( "type" );
 				CGUIString strWidgetName = pNode->Attribute( "name" );
-				CGUIWidget* pWidget = GUI_CREATE_WIDGET(strWidgetType, strWidgetName, rProjectName);
+				CGUIWidget* pWidget = GUI_CREATE_WIDGET(strWidgetType, strWidgetName, rSceneName);
 				if( !pWidget )
 				{
 					throw CGUIException(
@@ -382,11 +382,11 @@ namespace guiex
 					if( guiex::CGUIWidgetSystem::Instance()->ShouldRunScript())
 					{
 						// create script
-						pScript->CreateScript( rProjectName );
+						pScript->CreateScript( rSceneName );
 
 						// load script
-						CGUIString strPath = CGUIProjectInfoManager::Instance()->GetProjectFilePath( rProjectName ) + strValue;
-						pScript->ExecuteFile(strPath, rProjectName);
+						CGUIString strPath = CGUISceneInfoManager::Instance()->GetSceneFileRootPath( rSceneName ) + strValue;
+						pScript->ExecuteFile(strPath, rSceneName);
 					}
 				}
 				else
@@ -410,7 +410,7 @@ namespace guiex
 			pNode = pNode->NextSiblingElement();
 		}
 
-		bool bHasScript = pScript->HasScript(rProjectName);
+		bool bHasScript = pScript->HasScript(rSceneName);
 		for( std::list<CGUIWidget*>::iterator itor = aWidgetList.begin();
 			itor != aWidgetList.end();
 			itor++)

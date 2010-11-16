@@ -74,9 +74,9 @@ public:
 		ID_RecentPaths,
 		ID_RecentPathsBaseId,
 		ID_RecentPathsEndId = ID_RecentPathsBaseId+10-1,
-		ID_RecentProjects,
-		ID_RecentProjectsBaseId,
-		ID_RecentProjectsEndId = ID_RecentProjectsBaseId+10-1,
+		ID_RecentScenes,
+		ID_RecentScenesBaseId,
+		ID_RecentScenesEndId = ID_RecentScenesBaseId+10-1,
 
 		//edit
 		ID_CreateWidget,
@@ -135,9 +135,9 @@ public:
 		return m_aBGColor;
 	}
 
-	const guiex::CGUIString& GetCurrentProjectName() const
+	const guiex::CGUIString& GetCurrentSceneName() const
 	{
-		return m_strCurrentProjectName;
+		return m_strCurrentSceneName;
 	}
 
 protected:
@@ -166,15 +166,15 @@ protected:
 	void			LoadPropConfigByWidget( );
 
 	/** 
-	 * @brief open project
+	 * @brief open scene
 	 * @return 0 for success
 	 */
-	int		OpenProject(const guiex::CGUIProjectInfo* pProjectInfo );
+	int		OpenScene(const guiex::CGUISceneInfo* pSceneInfo );
 
 	/** 
-	* @brief close project
+	* @brief close scene
 	*/
-	void	CloseProject( );
+	void	CloseScene( );
 
 	/** 
 	 * @brief render given file
@@ -261,7 +261,7 @@ protected:
 	void OnUpdateCreateWidget(wxUpdateUIEvent& event);
 
 	void OnRecentPaths( wxCommandEvent& In );
-	void OnRecentProjects( wxCommandEvent& In );
+	void OnRecentScenes( wxCommandEvent& In );
 
 
 
@@ -307,10 +307,10 @@ protected:
 
 	WxWidgetPropertySheet*	m_pPropGridMan;
 
-	bool					m_bIsProjectOpened;
+	bool					m_bIsSceneOpened;
 
 	wxSize					m_aScreenSize;			//!< screen size
-	guiex::CGUIString		m_strCurrentProjectName;
+	guiex::CGUIString		m_strCurrentSceneName;
 	wxColor					m_aBGColor;
 
 	DECLARE_EVENT_TABLE()

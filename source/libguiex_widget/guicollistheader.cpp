@@ -25,14 +25,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString CGUIColListHeader::ms_strType = "CGUIColListHeader";
 	//------------------------------------------------------------------------------
-	CGUIColListHeader::CGUIColListHeader( const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWidget(ms_strType, rName, rProjectName)
+	CGUIColListHeader::CGUIColListHeader( const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWidget(ms_strType, rName, rSceneName)
 	{
 		InitColListHeader();
 	}
 	//------------------------------------------------------------------------------
-	CGUIColListHeader::CGUIColListHeader( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWidget(rType, rName, rProjectName)
+	CGUIColListHeader::CGUIColListHeader( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWidget(rType, rName, rSceneName)
 	{
 		InitColListHeader();
 	}
@@ -209,7 +209,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void	CGUIColListHeader::AddSegment( const wchar_t* pText, uint32 nId )
 	{
-		CGUIColListHeaderSegment * pSegment = static_cast<CGUIColListHeaderSegment*>(GUI_CREATE_WIDGET(m_strSegmentType.c_str(), CGUIString("segment_")+CGUIWidgetSystem::Instance()->GenerateAnonymousName(), GetProjectName()));
+		CGUIColListHeaderSegment * pSegment = static_cast<CGUIColListHeaderSegment*>(GUI_CREATE_WIDGET(m_strSegmentType.c_str(), CGUIString("segment_")+CGUIWidgetSystem::Instance()->GenerateAnonymousName(), GetSceneName()));
 		pSegment->SetParent(this);
 		m_vecSegment.push_back(pSegment);
 		pSegment->SetTextContent(pText);

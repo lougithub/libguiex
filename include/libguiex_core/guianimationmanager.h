@@ -56,7 +56,7 @@ namespace guiex
 		*/
 		CGUIAnimation*	CreateAnimation(
 			const CGUIString& rName, 
-			const CGUIString& rProjectName, 
+			const CGUIString& rSceneName, 
 			const CGUIString& rFileName, 
 			const std::vector<CGUIRect>& rUVRects,
 			real fInterval
@@ -67,7 +67,7 @@ namespace guiex
 		*/
 		CGUIAnimation*	CreateAnimation( 
 			const CGUIString& rName, 
-			const CGUIString& rProjectName, 
+			const CGUIString& rSceneName, 
 			const std::vector<CGUIString>& rFileNames,  
 			real fInterval
 			);

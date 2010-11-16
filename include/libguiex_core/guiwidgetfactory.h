@@ -142,7 +142,7 @@ namespace guiex
 		* @return pointer of widget, NULL for failed to find this widget
 		* @exception CGUIException
 		*/
-		CGUIWidget* CreateWidget(const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWidget* CreateWidget(const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
 		/**
 		* @brief destroy widget

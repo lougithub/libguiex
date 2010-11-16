@@ -22,14 +22,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString CGUIMenuItem::ms_strType = "CGUIMenuItem";
 	//------------------------------------------------------------------------------
-	CGUIMenuItem::CGUIMenuItem( const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIItemBase(ms_strType, rName, rProjectName)
+	CGUIMenuItem::CGUIMenuItem( const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIItemBase(ms_strType, rName, rSceneName)
 	{
 		InitMenuItem();
 	}
 	//------------------------------------------------------------------------------
-	CGUIMenuItem::CGUIMenuItem( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIItemBase(rType, rName, rProjectName)
+	CGUIMenuItem::CGUIMenuItem( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIItemBase(rType, rName, rSceneName)
 	{
 		InitMenuItem();
 	}

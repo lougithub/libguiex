@@ -34,7 +34,7 @@ namespace guiex
 		* @brief constructor
 		* for derived class
 		*/
-		CGUIWgtStatic( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtStatic( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
 
 	protected:

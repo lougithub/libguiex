@@ -42,7 +42,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIWgtCheckButton( const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtCheckButton( const CGUIString& rName, const CGUIString& rSceneName );
 
 		/**
 		* @brief create this widget
@@ -88,7 +88,7 @@ namespace guiex
 		* @brief constructor
 		* for derived class
 		*/
-		CGUIWgtCheckButton( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtCheckButton( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
 		/// render
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);

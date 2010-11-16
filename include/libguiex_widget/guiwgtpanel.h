@@ -43,14 +43,14 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIWgtPanel( const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtPanel( const CGUIString& rName, const CGUIString& rSceneName );
 
 	protected:
 		/**
 		* @brief constructor
 		* for derived class
 		*/
-		CGUIWgtPanel( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtPanel( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
 		/// render
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);

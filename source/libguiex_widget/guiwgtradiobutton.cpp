@@ -24,14 +24,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString CGUIWgtRadioButton::ms_strType = "CGUIWgtRadioButton";
 	//------------------------------------------------------------------------------
-	CGUIWgtRadioButton::CGUIWgtRadioButton(const CGUIString& rName, const CGUIString& rProjectName)
-		:CGUIWgtCheckButton(ms_strType, rName, rProjectName)
+	CGUIWgtRadioButton::CGUIWgtRadioButton(const CGUIString& rName, const CGUIString& rSceneName)
+		:CGUIWgtCheckButton(ms_strType, rName, rSceneName)
 	{
 		InitRadioButton();
 	}
 	//------------------------------------------------------------------------------
-	CGUIWgtRadioButton::CGUIWgtRadioButton( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWgtCheckButton(rType, rName, rProjectName)
+	CGUIWgtRadioButton::CGUIWgtRadioButton( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWgtCheckButton(rType, rName, rSceneName)
 	{
 		InitRadioButton();
 	}

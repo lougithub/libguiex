@@ -42,11 +42,11 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIWidget::CGUIWidget( const CGUIString& rType, 
 		const CGUIString& rName, 
-		const CGUIString& rProjectName )
+		const CGUIString& rSceneName )
 		:CGUINode()
 		,m_strName(rName)
-		,m_strOwnerProjectName(rProjectName)
-		,m_strWorkingProjectName(rProjectName)
+		,m_strOwnerSceneName(rSceneName)
+		,m_strWorkingSceneName(rSceneName)
 		,m_pWidgetGenerator(NULL)
 		,m_pExclusiveChild(NULL)
 		,m_aBitFlag()
@@ -343,14 +343,14 @@ namespace guiex
 		return m_pExclusiveChild;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::SetWorkingProjectName(const CGUIString& rWorkingProjName)
+	void	CGUIWidget::SetWorkingSceneName(const CGUIString& rWorkingProjName)
 	{
-		m_strWorkingProjectName = rWorkingProjName;
+		m_strWorkingSceneName = rWorkingProjName;
 
 		CGUIWidget* pWidget = GetChild();
 		while( pWidget )
 		{
-			pWidget->SetWorkingProjectName( rWorkingProjName );
+			pWidget->SetWorkingSceneName( rWorkingProjName );
 			pWidget = pWidget->GetNextSibling();
 		}
 	}
@@ -1046,7 +1046,7 @@ namespace guiex
 			{
 				//get script interface
 				guiex::IGUIInterfaceScript* pScript = CGUIInterfaceManager::Instance()->GetInterfaceScript();
-				pScript->ExecuteEventHandler( itor->second, pEvent, GetWorkingProjectName());
+				pScript->ExecuteEventHandler( itor->second, pEvent, GetWorkingSceneName());
 			}
 		}
 
@@ -1421,7 +1421,7 @@ namespace guiex
 		//property for parent
 		if(rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "parent")
 		{
-			CGUIWidget* pParent = CGUIWidgetSystem::Instance()->GetWidget( rProperty.GetValue(), GetProjectName());
+			CGUIWidget* pParent = CGUIWidgetSystem::Instance()->GetWidget( rProperty.GetValue(), GetSceneName());
 			SetParent( pParent);
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////

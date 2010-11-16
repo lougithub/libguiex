@@ -26,14 +26,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString CGUIWgtProgress::ms_strType = "CGUIWgtProgress";
 	//------------------------------------------------------------------------------
-	CGUIWgtProgress::CGUIWgtProgress(const CGUIString& rName, const CGUIString& rProjectName)
-		:CGUIWidget(ms_strType, rName, rProjectName)
+	CGUIWgtProgress::CGUIWgtProgress(const CGUIString& rName, const CGUIString& rSceneName)
+		:CGUIWidget(ms_strType, rName, rSceneName)
 	{
 		InitProgress();
 	}
 	//------------------------------------------------------------------------------
-	CGUIWgtProgress::CGUIWgtProgress( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWidget(rType, rName, rProjectName)
+	CGUIWgtProgress::CGUIWgtProgress( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWidget(rType, rName, rSceneName)
 	{
 		InitProgress();
 	}

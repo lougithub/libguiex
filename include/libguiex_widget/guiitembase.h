@@ -35,7 +35,7 @@ namespace guiex
 		/**
 		* @brief base class constructor
 		*/
-		CGUIItemBase( const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIItemBase( const CGUIString& rName, const CGUIString& rSceneName );
 
 		/**
 		* @brief base class destructor
@@ -121,7 +121,7 @@ namespace guiex
 		* @brief constructor
 		* for derived class
 		*/
-		CGUIItemBase( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIItemBase( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
 		//init item
 		void	InitItemBase();

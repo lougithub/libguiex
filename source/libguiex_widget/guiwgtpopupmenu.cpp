@@ -29,14 +29,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString CGUIWgtPopupMenu::ms_strType = "CGUIWgtPopupMenu";
 	//------------------------------------------------------------------------------
-	CGUIWgtPopupMenu::CGUIWgtPopupMenu( const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWidget(ms_strType, rName, rProjectName)
+	CGUIWgtPopupMenu::CGUIWgtPopupMenu( const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWidget(ms_strType, rName, rSceneName)
 	{
 		InitPopupMenu();
 	}
 	//------------------------------------------------------------------------------
-	CGUIWgtPopupMenu::CGUIWgtPopupMenu( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWidget(rType, rName, rProjectName)
+	CGUIWgtPopupMenu::CGUIWgtPopupMenu( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWidget(rType, rName, rSceneName)
 	{
 		InitPopupMenu();
 	}
@@ -191,7 +191,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIMenuItem* CGUIWgtPopupMenu::CreateItem_Imp(const wchar_t* pText)
 	{
-		CGUIMenuItem * pItem = static_cast<CGUIMenuItem*>(GUI_CREATE_WIDGET(m_strItemType.c_str(), CGUIString("menuitem_")+CGUIWidgetSystem::Instance()->GenerateAnonymousName(), GetProjectName()));
+		CGUIMenuItem * pItem = static_cast<CGUIMenuItem*>(GUI_CREATE_WIDGET(m_strItemType.c_str(), CGUIString("menuitem_")+CGUIWidgetSystem::Instance()->GenerateAnonymousName(), GetSceneName()));
 		pItem->SetItemInfo(pText, GetTextInfo());
 		return pItem;
 	}

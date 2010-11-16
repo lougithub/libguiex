@@ -145,14 +145,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString CGUIWgtColumnList::ms_strType = "CGUIWgtColumnList";
 	//------------------------------------------------------------------------------
-	CGUIWgtColumnList::CGUIWgtColumnList( const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWgtScrollbarContainer(ms_strType, rName, rProjectName)
+	CGUIWgtColumnList::CGUIWgtColumnList( const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWgtScrollbarContainer(ms_strType, rName, rSceneName)
 	{
 		InitListBox();
 	}
 	//------------------------------------------------------------------------------
-	CGUIWgtColumnList::CGUIWgtColumnList( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWgtScrollbarContainer(rType, rName, rProjectName)
+	CGUIWgtColumnList::CGUIWgtColumnList( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWgtScrollbarContainer(rType, rName, rSceneName)
 	{
 		InitListBox();
 	}
@@ -174,7 +174,7 @@ namespace guiex
 		m_strItemType = "CGUIColListTextItem";
 
 		//header
-		m_pHeader = static_cast<CGUIColListHeader*>(GUI_CREATE_WIDGET( "CGUIColListHeader", GetName()+"_header",GetProjectName()) );
+		m_pHeader = static_cast<CGUIColListHeader*>(GUI_CREATE_WIDGET( "CGUIColListHeader", GetName()+"_header",GetSceneName()) );
 		m_pHeader->SetParent(this);
 		m_pHeader->SetAnchorPoint(0.0f, 0.0f);
 		m_pHeader->SetLocalPosition(0.0f,0.0f);
@@ -421,7 +421,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void	CGUIWgtColumnList::AddItem( const wchar_t* pText )
 	{
-		CGUIColListTextItem* pItem= CGUIColListTextItem::CreateTextItem(pText, GetTextInfo(), GetProjectName());
+		CGUIColListTextItem* pItem= CGUIColListTextItem::CreateTextItem(pText, GetTextInfo(), GetSceneName());
 		pItem->SetSelectionImage( m_pImageSelection );
 		AddItem( pItem );
 	}
@@ -437,7 +437,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIColListItem*	CGUIWgtColumnList::CreateItem_Imp(const wchar_t* pText)
 	{
-		CGUIColListItem * pItem = static_cast<CGUIColListItem*>(GUI_CREATE_WIDGET(m_strItemType.c_str(), CGUIWidgetSystem::Instance()->GenerateAnonymousName(), GetProjectName()));
+		CGUIColListItem * pItem = static_cast<CGUIColListItem*>(GUI_CREATE_WIDGET(m_strItemType.c_str(), CGUIWidgetSystem::Instance()->GenerateAnonymousName(), GetSceneName()));
 		pItem->SetItemInfo(pText, GetSegmentTextInfo());
 		return pItem;
 	}
@@ -449,14 +449,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void	CGUIWgtColumnList::InsertItem( const wchar_t* pText, const CGUIColListItem* pPosition)
 	{
-		CGUIColListTextItem* pItem= CGUIColListTextItem::CreateTextItem(pText,GetTextInfo(), GetProjectName());
+		CGUIColListTextItem* pItem= CGUIColListTextItem::CreateTextItem(pText,GetTextInfo(), GetSceneName());
 		pItem->SetSelectionImage( m_pImageSelection );
 		InsertItem( pItem, pPosition);
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWgtColumnList::InsertItem( const wchar_t* pText, uint32 nIndex )
 	{
-		CGUIColListTextItem* pItem= CGUIColListTextItem::CreateTextItem(pText,GetTextInfo(), GetProjectName());
+		CGUIColListTextItem* pItem= CGUIColListTextItem::CreateTextItem(pText,GetTextInfo(), GetSceneName());
 		pItem->SetSelectionImage( m_pImageSelection );
 		InsertItem( pItem, GetItemFromIndex(nIndex));
 	}
@@ -1020,7 +1020,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void	CGUIWgtColumnList::SetItem(const wchar_t* pText, const SGridRef& rGrid)
 	{
-		CGUIColListTextItem* pItem= CGUIColListTextItem::CreateTextItem(pText, GetTextInfo(), GetProjectName());
+		CGUIColListTextItem* pItem= CGUIColListTextItem::CreateTextItem(pText, GetTextInfo(), GetSceneName());
 		pItem->SetSelectionImage( m_pImageSelection );
 		SetItem( pItem, rGrid );
 	}

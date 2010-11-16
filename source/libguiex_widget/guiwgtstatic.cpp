@@ -16,8 +16,8 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	CGUIWgtStatic::CGUIWgtStatic( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWidget(rType, rName, rProjectName)
+	CGUIWgtStatic::CGUIWgtStatic( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWidget(rType, rName, rSceneName)
 	{
 		InitStatic();
 	}

@@ -43,7 +43,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIWgtPopupMenu( const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtPopupMenu( const CGUIString& rName, const CGUIString& rSceneName );
 
 		/**
 		* @brief destructor
@@ -201,7 +201,7 @@ namespace guiex
 		/**
 		* @brief constructor as a base class
 		*/
-		CGUIWgtPopupMenu( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtPopupMenu( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
 		/// render
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);

@@ -23,14 +23,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString CGUIWgtAnimation::ms_strType = "CGUIWgtAnimation";
 	//------------------------------------------------------------------------------
-	CGUIWgtAnimation::CGUIWgtAnimation( const CGUIString& rName, const CGUIString& rProjectName  )
-		:CGUIWidget(ms_strType, rName, rProjectName)
+	CGUIWgtAnimation::CGUIWgtAnimation( const CGUIString& rName, const CGUIString& rSceneName  )
+		:CGUIWidget(ms_strType, rName, rSceneName)
 	{
 		InitAnimation();
 	}
 	//------------------------------------------------------------------------------
-	CGUIWgtAnimation::CGUIWgtAnimation( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWidget(rType, rName, rProjectName)
+	CGUIWgtAnimation::CGUIWgtAnimation( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWidget(rType, rName, rSceneName)
 	{
 		InitAnimation();
 	}

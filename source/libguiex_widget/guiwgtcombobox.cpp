@@ -28,7 +28,7 @@ namespace guiex
 	{
 	public:
 		/// constructor
-		CGUIWgtComboBoxDropList(const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtComboBoxDropList(const CGUIString& rName, const CGUIString& rSceneName );
 
 	protected:
 		///initialize
@@ -57,8 +57,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString	CGUIWgtComboBoxDropList::ms_strType = "CGUIWgtComboBoxDropList";
 	//------------------------------------------------------------------------------
-	CGUIWgtComboBoxDropList::CGUIWgtComboBoxDropList(const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWgtListBox(ms_strType,rName, rProjectName )
+	CGUIWgtComboBoxDropList::CGUIWgtComboBoxDropList(const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWgtListBox(ms_strType,rName, rSceneName )
 	{
 		InitComboBoxDropList();
 	}
@@ -109,14 +109,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString CGUIWgtComboBox::ms_strType = "CGUIWgtComboBox";
 	//------------------------------------------------------------------------------
-	CGUIWgtComboBox::CGUIWgtComboBox( const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWidget(ms_strType, rName, rProjectName)
+	CGUIWgtComboBox::CGUIWgtComboBox( const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWidget(ms_strType, rName, rSceneName)
 	{
 		InitComboBox();
 	}
 	//------------------------------------------------------------------------------
-	CGUIWgtComboBox::CGUIWgtComboBox( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWidget(rType, rName, rProjectName)
+	CGUIWgtComboBox::CGUIWgtComboBox( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWidget(rType, rName, rSceneName)
 	{
 		InitComboBox();
 	}
@@ -134,7 +134,7 @@ namespace guiex
 		m_pSelectedItem = NULL;
 
 		//create drop list
-		m_pDropList = new CGUIWgtComboBoxDropList(GetName()+"_DropList__auto__", GetProjectName());
+		m_pDropList = new CGUIWgtComboBoxDropList(GetName()+"_DropList__auto__", GetSceneName());
 		m_pDropList->SetParent( this);
 		m_pDropList->SetOpenWithParent( false );
 	}

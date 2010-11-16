@@ -101,10 +101,10 @@
 //exception
 #include "guiexception.h"
 
-//project info
-#include "guiprojectinfo.h"
-#include "guiprojectinfomanager.h"
-#include "guiprojectUtility.h"
+//scene info
+#include "guisceneinfo.h"
+#include "guisceneinfomanager.h"
+#include "guisceneUtility.h"
 
 #include "guiUtility.h"
 #include "guiinterpolation.h"

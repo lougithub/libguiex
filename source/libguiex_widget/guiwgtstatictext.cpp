@@ -29,14 +29,14 @@ namespace guiex
 	CGUIString CGUIWgtStaticText::ms_strType = "CGUIWgtStaticText";
 	wchar_t		CGUIWgtStaticText::ms_wLineBreak = L'\n';
 	//------------------------------------------------------------------------------
-	CGUIWgtStaticText::CGUIWgtStaticText( const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWgtStatic(ms_strType, rName, rProjectName)
+	CGUIWgtStaticText::CGUIWgtStaticText( const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWgtStatic(ms_strType, rName, rSceneName)
 	{
 		InitStaticText();
 	}
 	//------------------------------------------------------------------------------
-	CGUIWgtStaticText::CGUIWgtStaticText( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWgtStatic(rType, rName, rProjectName)
+	CGUIWgtStaticText::CGUIWgtStaticText( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWgtStatic(rType, rName, rSceneName)
 	{
 		InitStaticText();
 	}

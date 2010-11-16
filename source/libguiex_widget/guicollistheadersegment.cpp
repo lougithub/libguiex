@@ -22,14 +22,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString CGUIColListHeaderSegment::ms_strType = "CGUIColListHeaderSegment";
 	//------------------------------------------------------------------------------
-	CGUIColListHeaderSegment::CGUIColListHeaderSegment( const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWidget(ms_strType, rName, rProjectName)
+	CGUIColListHeaderSegment::CGUIColListHeaderSegment( const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWidget(ms_strType, rName, rSceneName)
 	{
 		InitColListHeaderSegment();
 	}
 	//------------------------------------------------------------------------------
-	CGUIColListHeaderSegment::CGUIColListHeaderSegment( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWidget(rType, rName, rProjectName)
+	CGUIColListHeaderSegment::CGUIColListHeaderSegment( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWidget(rType, rName, rSceneName)
 	{
 		InitColListHeaderSegment();
 	}

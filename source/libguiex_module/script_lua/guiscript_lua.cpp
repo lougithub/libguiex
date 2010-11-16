@@ -78,9 +78,9 @@ namespace guiex
 		DestroyAllScript();
 	}
 	//------------------------------------------------------------------------------
-	void IGUIScript_lua::CreateScript( const CGUIString& rProjectName )
+	void IGUIScript_lua::CreateScript( const CGUIString& rSceneName )
 	{
-		if( HasScript( rProjectName ))
+		if( HasScript( rSceneName ))
 		{
 			return;
 		}
@@ -88,7 +88,7 @@ namespace guiex
 		lua_State *pState = lua_open();
 		if( !pState )
 		{
-			throw CGUIException_Script( "[IGUIScript_lua::CreateScript]: failed to create script for project <%s>!", rProjectName.c_str() );
+			throw CGUIException_Script( "[IGUIScript_lua::CreateScript]: failed to create script for scene <%s>!", rSceneName.c_str() );
 		}
 
 		// init all standard libraries
@@ -122,12 +122,12 @@ namespace guiex
 			m_funcInitScript( pState );
 		}
 
-		m_mapLuaState.insert( std::make_pair( rProjectName, pState ));
+		m_mapLuaState.insert( std::make_pair( rSceneName, pState ));
 	}
 	//------------------------------------------------------------------------------
-	void IGUIScript_lua::DestroyScript( const CGUIString& rProjectName )
+	void IGUIScript_lua::DestroyScript( const CGUIString& rSceneName )
 	{
-		std::map<CGUIString, void*>::iterator itor =  m_mapLuaState.find( rProjectName );
+		std::map<CGUIString, void*>::iterator itor =  m_mapLuaState.find( rSceneName );
 		if( itor != m_mapLuaState.end())
 		{
 			lua_close((lua_State*)(itor->second));
@@ -146,9 +146,9 @@ namespace guiex
 		m_mapLuaState.clear();
 	}
 	//------------------------------------------------------------------------------
-	bool IGUIScript_lua::HasScript( const CGUIString& rProjectName )
+	bool IGUIScript_lua::HasScript( const CGUIString& rSceneName )
 	{
-		return m_mapLuaState.find( rProjectName ) != m_mapLuaState.end();
+		return m_mapLuaState.find( rSceneName ) != m_mapLuaState.end();
 	}
 	//------------------------------------------------------------------------------
 	void	IGUIScript_lua::DeleteSelf()
@@ -156,23 +156,23 @@ namespace guiex
 		delete this;
 	}
 	//------------------------------------------------------------------------------
-	void*	IGUIScript_lua::GetLuaState(const CGUIString& rProjectName)
+	void*	IGUIScript_lua::GetLuaState(const CGUIString& rSceneName)
 	{
-		std::map<CGUIString, void*>::iterator itor =  m_mapLuaState.find( rProjectName );
+		std::map<CGUIString, void*>::iterator itor =  m_mapLuaState.find( rSceneName );
 		if( itor != m_mapLuaState.end())
 		{
 			return itor->second;
 		}
 		else
 		{
-			throw CGUIException_Script( "[IGUIScript_lua::GetLuaState]: failed to get script by project name <%s>!", rProjectName.c_str() );
+			throw CGUIException_Script( "[IGUIScript_lua::GetLuaState]: failed to get script by scene name <%s>!", rSceneName.c_str() );
 			return NULL;
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	IGUIScript_lua::ExecuteFile(const CGUIString& filename, const CGUIString& rProjectName)
+	void	IGUIScript_lua::ExecuteFile(const CGUIString& filename, const CGUIString& rSceneName)
 	{
-		lua_State* L = (lua_State*)GetLuaState(rProjectName);
+		lua_State* L = (lua_State*)GetLuaState(rSceneName);
 
 		IGUIInterfaceFileSys* pFileSys = CGUIInterfaceManager::Instance()->GetInterfaceFileSys();
 		CGUIDataChunk aDataChunk;
@@ -195,9 +195,9 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	IGUIScript_lua::ExecuteBuffer(void * pBuffer, int32 nBufferSize, const CGUIString& rProjectName)
+	void	IGUIScript_lua::ExecuteBuffer(void * pBuffer, int32 nBufferSize, const CGUIString& rSceneName)
 	{
-		lua_State* L = (lua_State*)GetLuaState(rProjectName);
+		lua_State* L = (lua_State*)GetLuaState(rSceneName);
 
 		// load code into lua and call it
 		int error =	luaL_loadbuffer(L,(const char*)pBuffer,nBufferSize,"script from buffer") || lua_pcall(L,0,0,0);
@@ -211,9 +211,9 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	IGUIScript_lua::ExecuteString(const char * pString, const CGUIString& rProjectName)
+	void	IGUIScript_lua::ExecuteString(const char * pString, const CGUIString& rSceneName)
 	{
-		lua_State* L = (lua_State*)GetLuaState(rProjectName);
+		lua_State* L = (lua_State*)GetLuaState(rSceneName);
 
 		// load code into lua and call it
 		int error =	luaL_loadbuffer(L,pString,strlen(pString),"script from string") || lua_pcall(L,0,0,0);
@@ -230,9 +230,9 @@ namespace guiex
 	void	 IGUIScript_lua::ExecuteEventHandler(
 		const CGUIString& rEventName, 
 		CGUIEvent* pEvent,
-		const CGUIString& rProjectName)
+		const CGUIString& rSceneName)
 	{
-		lua_State* L = (lua_State*)GetLuaState(rProjectName);
+		lua_State* L = (lua_State*)GetLuaState(rSceneName);
 		ExecuteFunction( 
 			rEventName, 
 			pEvent->GetReceiver(),  "guiex::" + pEvent->GetReceiver()->GetType() + " *",
@@ -376,7 +376,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void	IGUIScript_lua::RegisterWidget( const CGUIWidget* pWidget )
 	{
-		lua_State* L = (lua_State*)GetLuaState(pWidget->GetProjectName());
+		lua_State* L = (lua_State*)GetLuaState(pWidget->GetSceneName());
 
 		lua_pushstring( L, pWidget->GetName().c_str());
 

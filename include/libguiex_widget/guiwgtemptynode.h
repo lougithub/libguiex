@@ -34,14 +34,14 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIWgtEmptyNode( const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtEmptyNode( const CGUIString& rName, const CGUIString& rSceneName );
 
 	protected:
 		/**
 		* @brief constructor
 		* for derived class
 		*/
-		CGUIWgtEmptyNode( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtEmptyNode( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
 		/// initialize empty node
 		void	InitEmptyNode();

@@ -39,14 +39,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString CGUIWgtFrame::ms_strType = "CGUIWgtFrame";
 	//------------------------------------------------------------------------------
-	CGUIWgtFrame::CGUIWgtFrame( const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWidget(ms_strType, rName, rProjectName)
+	CGUIWgtFrame::CGUIWgtFrame( const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWidget(ms_strType, rName, rSceneName)
 	{
 		InitFrame();
 	}
 	//------------------------------------------------------------------------------
-	CGUIWgtFrame::CGUIWgtFrame( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWidget(rType, rName, rProjectName)
+	CGUIWgtFrame::CGUIWgtFrame( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWidget(rType, rName, rSceneName)
 	{
 		InitFrame();
 	}

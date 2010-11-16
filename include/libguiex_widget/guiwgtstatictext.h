@@ -32,7 +32,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIWgtStaticText( const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtStaticText( const CGUIString& rName, const CGUIString& rSceneName );
 	
 		virtual int32 Create();
 		virtual void SetTextContent(const wchar_t* pText);
@@ -57,7 +57,7 @@ namespace guiex
 		* @brief constructor
 		* for derived class
 		*/
-		CGUIWgtStaticText( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtStaticText( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
 		///initialize static
 		void InitStaticText();

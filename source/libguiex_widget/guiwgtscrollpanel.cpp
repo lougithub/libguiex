@@ -28,8 +28,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString CGUIWgtScrollPanel::ms_strType = "CGUIWgtScrollPanel";
 	//------------------------------------------------------------------------------
-	CGUIWgtScrollPanel::CGUIWgtScrollPanel(const CGUIString& rName, const CGUIString& rProjectName)
-		:CGUIWidget(ms_strType, rName, rProjectName)
+	CGUIWgtScrollPanel::CGUIWgtScrollPanel(const CGUIString& rName, const CGUIString& rSceneName)
+		:CGUIWidget(ms_strType, rName, rSceneName)
 	{
 		InitScrollPanel();
 	}
@@ -62,7 +62,7 @@ namespace guiex
 		if( m_UseSelfCreatedScrollbar )
 		{
 			//create scrollbar
-			m_pScrollbarVert = static_cast<CGUIWgtScrollbar*>(GUI_CREATE_WIDGET("CGUIWgtScrollbar", GetName()+"_scrollbar_vert__auto__", GetProjectName()));
+			m_pScrollbarVert = static_cast<CGUIWgtScrollbar*>(GUI_CREATE_WIDGET("CGUIWgtScrollbar", GetName()+"_scrollbar_vert__auto__", GetSceneName()));
 			m_pScrollbarVert->SetParent(this);
 			m_pScrollbarVert->SetFocusAgency( true );
 			m_pScrollbarVert->SetOpenWithParent( false );
@@ -83,7 +83,7 @@ namespace guiex
 			m_pScrollbarVert->SetImage("SCROLLBAR_SLIDE_DISABLE", GetImage("SCROLLBAR_VERTIC_SLIDE_DISABLE"));
 			m_pScrollbarVert->SetImage("SCROLLBAR_SLIDE_PUSH", GetImage("SCROLLBAR_VERTIC_SLIDE_PUSH"));
 			
-			m_pScrollbarHorz = static_cast<CGUIWgtScrollbar*>(GUI_CREATE_WIDGET("CGUIWgtScrollbar", GetName()+"_scrollbar_hort__auto__", GetProjectName()));
+			m_pScrollbarHorz = static_cast<CGUIWgtScrollbar*>(GUI_CREATE_WIDGET("CGUIWgtScrollbar", GetName()+"_scrollbar_hort__auto__", GetSceneName()));
 			m_pScrollbarHorz->SetParent(this);
 			m_pScrollbarHorz->SetFocusAgency( true );
 			m_pScrollbarHorz->SetOpenWithParent( false );
@@ -358,9 +358,9 @@ namespace guiex
 			m_pScrollbarVert->SetScrollbarHost(NULL);
 			m_pScrollbarVert = NULL;
 		}
-		if( CGUIWidgetSystem::Instance()->HasWidget(m_strVertScrollbarName, GetProjectName()) )
+		if( CGUIWidgetSystem::Instance()->HasWidget(m_strVertScrollbarName, GetSceneName()) )
 		{
-			CGUIWidget* pWidget = CGUIWidgetSystem::Instance()->GetWidget(m_strVertScrollbarName, GetProjectName());
+			CGUIWidget* pWidget = CGUIWidgetSystem::Instance()->GetWidget(m_strVertScrollbarName, GetSceneName());
 			if( pWidget->GetType() == CGUIWgtScrollbar::GetWidgetType())
 			{
 				m_pScrollbarVert = (CGUIWgtScrollbar*)pWidget;
@@ -377,9 +377,9 @@ namespace guiex
 			m_pScrollbarHorz->SetScrollbarHost(NULL);
 			m_pScrollbarHorz = NULL;
 		}
-		if( CGUIWidgetSystem::Instance()->HasWidget(m_strHorzScrollbarName, GetProjectName()) )
+		if( CGUIWidgetSystem::Instance()->HasWidget(m_strHorzScrollbarName, GetSceneName()) )
 		{
-			CGUIWidget* pWidget = CGUIWidgetSystem::Instance()->GetWidget(m_strHorzScrollbarName,GetProjectName());
+			CGUIWidget* pWidget = CGUIWidgetSystem::Instance()->GetWidget(m_strHorzScrollbarName,GetSceneName());
 			if( pWidget->GetType() == CGUIWgtScrollbar::GetWidgetType())
 			{
 				m_pScrollbarHorz = (CGUIWgtScrollbar*)pWidget;

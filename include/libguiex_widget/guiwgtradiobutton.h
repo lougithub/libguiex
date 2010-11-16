@@ -42,7 +42,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIWgtRadioButton( const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtRadioButton( const CGUIString& rName, const CGUIString& rSceneName );
 
 		static CGUIWgtRadioButton*	FromWidget( CGUIWidget* pWidget );
 
@@ -51,7 +51,7 @@ namespace guiex
 		* @brief constructor
 		* for derived class
 		*/
-		CGUIWgtRadioButton( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtRadioButton( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
 		/// initialize radio button
 		void InitRadioButton();

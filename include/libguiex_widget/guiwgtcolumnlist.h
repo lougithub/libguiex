@@ -96,7 +96,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIWgtColumnList( const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtColumnList( const CGUIString& rName, const CGUIString& rSceneName );
 
 		/**
 		* @brief destructor
@@ -406,7 +406,7 @@ namespace guiex
 		/**
 		* @brief constructor as a base class
 		*/
-		CGUIWgtColumnList( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtColumnList( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
 		/// render
 		virtual void		RenderSelf(IGUIInterfaceRender* pRender);

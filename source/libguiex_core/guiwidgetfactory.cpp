@@ -282,7 +282,7 @@ namespace guiex
 		m_mapGenerator.clear();
 	}
 //------------------------------------------------------------------------------
-	CGUIWidget* CGUIWidgetFactory::CreateWidget(const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName )
+	CGUIWidget* CGUIWidgetFactory::CreateWidget(const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
 	{
 		GUI_TRACE( GUI_FORMAT( "[CGUIWidgetFactory::CreateWidget]:    Create widget <%s> from generator <%s>\n",
 			rName.c_str(), rType.c_str()));
@@ -297,7 +297,7 @@ namespace guiex
 		}
 		else
 		{
-			CGUIWidget* pWidget = (*itor).second->GenerateWidget( rName, rProjectName);
+			CGUIWidget* pWidget = (*itor).second->GenerateWidget( rName, rSceneName);
 			if( !pWidget )
 			{
 				throw CGUIException(

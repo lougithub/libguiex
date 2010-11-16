@@ -48,19 +48,19 @@ namespace guiex
 		* @brief read config file and generate widget system
 		* @return pointer of page root.
 		*/
-		virtual CGUIWidget*	LoadWidgetConfigFile(const CGUIString& rFileName, const CGUIString& rProjectName);
+		virtual CGUIWidget*	LoadWidgetConfigFile(const CGUIString& rFileName, const CGUIString& rSceneName);
 
 		/**
 		* @brief read image config file
 		* @return 0 for successful
 		*/
-		virtual int32 LoadResourceConfigFile(const CGUIString& rFileName, const CGUIString& rProjectName );
+		virtual int32 LoadResourceConfigFile(const CGUIString& rFileName, const CGUIString& rSceneName );
 
 		/**
-		* @brief read project config file and generate project info.
-		* @return pointer of project info object.
+		* @brief read scene config file and generate scene info.
+		* @return pointer of scene info object.
 		*/
-		virtual CGUIProjectInfo* LoadProjectInfoFile( const CGUIString& rFileName );
+		virtual CGUISceneInfo* LoadSceneInfoFile( const CGUIString& rFileName );
 
 		/**
 		* @brief used to delete this object

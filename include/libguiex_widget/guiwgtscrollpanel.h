@@ -72,7 +72,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIWgtScrollPanel( const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtScrollPanel( const CGUIString& rName, const CGUIString& rSceneName );
 
 		/**
 		* @brief destructor

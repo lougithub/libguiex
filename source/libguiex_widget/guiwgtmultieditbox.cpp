@@ -33,14 +33,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	wchar_t CGUIWgtMultiEditBox::ms_wLineBreak = L'\n';
 	//------------------------------------------------------------------------------
-	CGUIWgtMultiEditBox::CGUIWgtMultiEditBox(const CGUIString& rName, const CGUIString& rProjectName)
-		:CGUIWgtScrollbarContainer(ms_strType, rName, rProjectName)
+	CGUIWgtMultiEditBox::CGUIWgtMultiEditBox(const CGUIString& rName, const CGUIString& rSceneName)
+		:CGUIWgtScrollbarContainer(ms_strType, rName, rSceneName)
 	{
 		InitMultiEditbox();
 	}
 	//------------------------------------------------------------------------------
-	CGUIWgtMultiEditBox::CGUIWgtMultiEditBox( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWgtScrollbarContainer(rType, rName, rProjectName)
+	CGUIWgtMultiEditBox::CGUIWgtMultiEditBox( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWgtScrollbarContainer(rType, rName, rSceneName)
 	{
 		InitMultiEditbox();
 	}
@@ -53,7 +53,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtMultiEditBox::InitMultiEditbox()
 	{
-		m_pEdit = new CGUIWgtEdit(GetName()+"__EDIT__auto__", GetProjectName());
+		m_pEdit = new CGUIWgtEdit(GetName()+"__EDIT__auto__", GetSceneName());
 		m_pEdit->SetParent(this);
 
 		SetFocusable(true);

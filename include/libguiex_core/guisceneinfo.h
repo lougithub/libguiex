@@ -1,13 +1,13 @@
 /** 
-* @file guiprojectinfo.h
+* @file guisceneinfo.h
 * @brief 
 * @author Lou Guoliang (louguoliang@gmail.com)
 * @date 2009-10-22
 */
 
 
-#ifndef	__KEN_GUIEXPROJECTINFO_20091022_H__
-#define __KEN_GUIEXPROJECTINFO_20091022_H__
+#ifndef	__KEN_SCENEINFO_20091022_H__
+#define __KEN_SCENEINFO_20091022_H__
 
 
 
@@ -34,7 +34,7 @@ namespace guiex
 //============================================================================// 
 namespace guiex
 {
-	class GUIEXPORT CGUIProjectInfo
+	class GUIEXPORT CGUISceneInfo
 	{
 	public:
 		struct SFontInfo
@@ -44,8 +44,8 @@ namespace guiex
 		};
 
 	public:
-		CGUIProjectInfo();
-		~CGUIProjectInfo();
+		CGUISceneInfo();
+		~CGUISceneInfo();
 
 		/** 
 		* @brief reset data
@@ -57,22 +57,22 @@ namespace guiex
 		* @return 0 for success, others for failed
 		*/
 		int32		LoadFromPropertySet( 
-			const CGUIString& rProjectFileName, 
-			const CGUIString& rProjectFilePath, 
+			const CGUIString& rSceneFileName, 
+			const CGUIString& rSceneFilePath, 
 			const CGUIProperty& aPropertySet );
 
 		/** 
-		* @brief get project file path
+		* @brief get scene file path
 		*/
-		const CGUIString&		GetProjectFilePath() const;
+		const CGUIString&		GetSceneFileRootPath() const;
 
 		/** 
-		* @brief get project file name
+		* @brief get scene file name
 		*/
-		const CGUIString&		GetProjectFilename() const;
+		const CGUIString&		GetSceneFilename() const;
 
 		/** 
-		* @brief get project title
+		* @brief get scene title
 		*/
 		const CGUIString&		GetTitle() const;
 
@@ -95,8 +95,8 @@ namespace guiex
 		void	SetResourceLoaded( bool bLoaded );
 
 	protected:
-		CGUIString	m_strProjectFilePath;		//!< path of project file
-		CGUIString	m_strProjectFilename;		//!< name of project file
+		CGUIString	m_strSceneFilePath;		//!< path of scene file
+		CGUIString	m_strSceneFilename;		//!< name of scene file
 
 		//files
 		std::vector<CGUIString>	m_vecWidgetFiles;			//widget file info
@@ -104,15 +104,15 @@ namespace guiex
 		std::vector<CGUIString>	m_vecResourceFiles;			//resource file list
 		std::vector<SFontInfo>	m_vecFontInfos;				//font info
 
-		std::vector<CGUIString>	m_vecDependencies;			//dependent projects
+		std::vector<CGUIString>	m_vecDependencies;			//dependent scenes
 		bool					m_bDependenciesLoaded;		//whether the dependencies has been loaded
 		
-		bool					m_bResourceLoaded;			//whether the resource of this project has been loaded
+		bool					m_bResourceLoaded;			//whether the resource of this scene has been loaded
 
-		CGUIString				m_strTitle;			//title of this project
+		CGUIString				m_strTitle;			//title of this scene
 	};
 }		//namespace guiex
 
 
-#endif //__KEN_GUIEXPROJECTINFO_20091022_H__
+#endif //__KEN_SCENEINFO_20091022_H__
 

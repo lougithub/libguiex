@@ -41,7 +41,7 @@ namespace guiex
 	class GUIEXPORT CGUIResource
 	{
 	public:
-		CGUIResource(const CGUIString& rName, const CGUIString& rProjectName, const CGUIString& rResourceType);
+		CGUIResource(const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rResourceType);
 		virtual ~CGUIResource();
 
 		int32	Load();
@@ -49,7 +49,7 @@ namespace guiex
 		bool	IsLoaded() const;
 
 		const CGUIString&	GetName() const;
-		const CGUIString&	GetProjectName() const;
+		const CGUIString&	GetSceneName() const;
 		const CGUIString&	GetResourceType() const;
 
 	protected:
@@ -65,7 +65,7 @@ namespace guiex
 		ELoadState	m_eIsLoaded;
 
 		CGUIString	m_strName;
-		CGUIString	m_strProjectName;
+		CGUIString	m_strSceneName;
 		CGUIString	m_strResourceType;
 	};
 }

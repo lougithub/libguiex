@@ -24,7 +24,7 @@ namespace guiex
 	class GUIEXPORT widget##_Generator : public guiex::CGUIWidgetGenerator	\
 	{														\
 	public:													\
-		virtual CGUIWidget*	GenerateWidget(const CGUIString& rName, const CGUIString& rProjectName) const;			\
+		virtual CGUIWidget*	GenerateWidget(const CGUIString& rName, const CGUIString& rSceneName) const;			\
 		virtual void DestroyWidget(const CGUIWidget* pWidget) const;\
 		static widget##_Generator* GenerateSelf();					\
 		virtual void DestroySelf();							\
@@ -38,9 +38,9 @@ namespace guiex
 	:CGUIWidgetGenerator(#widget)							\
 	{														\
 	}														\
-	CGUIWidget* widget##_Generator::GenerateWidget(const CGUIString& rName, const CGUIString& rProjectName) const			\
+	CGUIWidget* widget##_Generator::GenerateWidget(const CGUIString& rName, const CGUIString& rSceneName) const			\
 	{														\
-		return new widget(rName, rProjectName);									\
+		return new widget(rName, rSceneName);									\
 	}														\
 	void widget##_Generator::DestroyWidget(const CGUIWidget* pWidget) const\
 	{														\
@@ -112,7 +112,7 @@ public:
 	 * @param unique name of the widget
 	 * @return pointer of the widget, return NULL for failed to generate it
 	 */
-	virtual CGUIWidget*	GenerateWidget( const CGUIString& m_strName, const CGUIString& rProjectName) const=0;
+	virtual CGUIWidget*	GenerateWidget( const CGUIString& m_strName, const CGUIString& rSceneName) const=0;
 
 	/**
 	 * @brief destroy widget

@@ -56,7 +56,7 @@ int 	WxEditorCanvasContainer::SaveFileAs(const std::string& rNewFileName)
 //------------------------------------------------------------------------------
 void	WxEditorCanvasContainer::SetSelectedWidget( const std::string& rWidget )
 {
-	guiex::CGUIWidget* pWidget = guiex::CGUIWidgetSystem::Instance()->GetWidget( rWidget.c_str(), GetMainFrame()->GetCurrentProjectName());
+	guiex::CGUIWidget* pWidget = guiex::CGUIWidgetSystem::Instance()->GetWidget( rWidget.c_str(), GetMainFrame()->GetCurrentSceneName());
 	SetSelectedWidget(pWidget);
 }
 //------------------------------------------------------------------------------

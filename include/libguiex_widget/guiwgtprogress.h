@@ -34,7 +34,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIWgtProgress( const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtProgress( const CGUIString& rName, const CGUIString& rSceneName );
 
 		/**
 		* @brief create this widget
@@ -67,7 +67,7 @@ namespace guiex
 		* @brief constructor
 		* for derived class
 		*/
-		CGUIWgtProgress( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName );
+		CGUIWgtProgress( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
 		///initialize
 		void InitProgress();

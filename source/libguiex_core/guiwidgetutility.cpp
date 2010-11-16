@@ -44,9 +44,9 @@ namespace guiex
 		return stream.str();
 	}
 	//------------------------------------------------------------------------------
-	CGUIString	CGUIWidgetUtility::GetWidgetInfo( const CGUIString& rWidgetName, const CGUIString& rProjectName ) 
+	CGUIString	CGUIWidgetUtility::GetWidgetInfo( const CGUIString& rWidgetName, const CGUIString& rSceneName ) 
 	{
-		return GetWidgetInfo(CGUIWidgetSystem::Instance()->GetWidget(rWidgetName, rProjectName));
+		return GetWidgetInfo(CGUIWidgetSystem::Instance()->GetWidget(rWidgetName, rSceneName));
 	}
 	//------------------------------------------------------------------------------
 	static void		GetWidgetTreeInfo_Imp( 
@@ -79,9 +79,9 @@ namespace guiex
 		return stream.str();
 	}
 	//------------------------------------------------------------------------------
-	CGUIString	CGUIWidgetUtility::GetWidgetTreeInfo( const CGUIString& rWidgetName, const CGUIString& rProjectName ) 
+	CGUIString	CGUIWidgetUtility::GetWidgetTreeInfo( const CGUIString& rWidgetName, const CGUIString& rSceneName ) 
 	{
-		return GetWidgetTreeInfo(CGUIWidgetSystem::Instance()->GetWidget(rWidgetName, rProjectName));
+		return GetWidgetTreeInfo(CGUIWidgetSystem::Instance()->GetWidget(rWidgetName, rSceneName));
 	}
 	//------------------------------------------------------------------------------
 	//------------------------------------------------------------------------------

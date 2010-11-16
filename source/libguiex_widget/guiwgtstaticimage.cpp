@@ -24,14 +24,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString CGUIWgtStaticImage::ms_strType = "CGUIWgtStaticImage";
 	//------------------------------------------------------------------------------
-	CGUIWgtStaticImage::CGUIWgtStaticImage( const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWgtStatic(ms_strType, rName, rProjectName)
+	CGUIWgtStaticImage::CGUIWgtStaticImage( const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWgtStatic(ms_strType, rName, rSceneName)
 	{
 		InitStaticImage();
 	}
 	//------------------------------------------------------------------------------
-	CGUIWgtStaticImage::CGUIWgtStaticImage( const CGUIString& rType, const CGUIString& rName, const CGUIString& rProjectName )
-		:CGUIWgtStatic(rType, rName, rProjectName)
+	CGUIWgtStaticImage::CGUIWgtStaticImage( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWgtStatic(rType, rName, rSceneName)
 	{
 		InitStaticImage();
 	}
