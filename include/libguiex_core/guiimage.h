@@ -57,35 +57,30 @@ namespace guiex
 		*/
 		virtual ~CGUIImage();
 
-		void	Draw( IGUIInterfaceRender* pRender,
+		void Draw( IGUIInterfaceRender* pRender,
 			const CGUIMatrix4& rWorldMatrix,
 			const CGUIRect& rDestRect,
 			real z, 
 			const CGUIColorRect& rColorRect,
-			real fAlpha);
+			real fAlpha) const;
 
-		void	Draw(IGUIInterfaceRender* pRender,
+		void Draw(IGUIInterfaceRender* pRender,
 			const CGUIMatrix4& rWorldMatrix,
 			const CGUIRect& rDestRect,
 			real z, 
-			real fAlpha	);
+			real fAlpha	) const;
 
-		void	Draw( IGUIInterfaceRender* pRender,
+		void Draw( IGUIInterfaceRender* pRender,
 			const CGUIMatrix4& rWorldMatrix,
 			const CGUIRect& rDestRect,
 			real z, 
 			const CGUIColor& rColor,
-			real fAlpha	);
-
-		//void	Draw(IGUIInterfaceRender* pRender,
-		//	const CGUIRenderRect& rRenderRect,
-		//	real z, 
-		//	real fAlpha	);
+			real fAlpha	) const;
 
 		/**
 		* @brief get image size
 		*/
-		CGUISize		GetSize();
+		CGUISize GetSize() const;
 
 	protected:
 		/**
@@ -111,13 +106,13 @@ namespace guiex
 			const CGUIRect& rUVRect,
 			EImageOperation	eImageOperation);
 
-		virtual int32	DoLoad();
+		virtual int32	DoLoad() const;
 		virtual void	DoUnload();
 
 
 	private:
 		//parameter about texture
-		CGUITexture*	m_pTexture;		//!< texture
+		mutable CGUITexture* m_pTexture;		//!< texture
 		CGUIRect		m_aUVRect;		//!< UV of texture
 		EImageOperation	m_eImageOperation;	//!<
 

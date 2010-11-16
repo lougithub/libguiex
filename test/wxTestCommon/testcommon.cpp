@@ -511,9 +511,16 @@ WxMainFrame::~WxMainFrame()
 {
 	m_mgr.UnInit();	
 
-	//release libguiex system
-	guiex::CGUIWidgetSystem::Instance()->Release();
-	SampleDestroy();
+	try
+	{
+		//release libguiex system
+		guiex::CGUIWidgetSystem::Instance()->Release();
+		SampleDestroy();
+	}
+	catch (guiex::CGUIBaseException& rError)
+	{
+		MessageBoxA(NULL, rError.what(), "error", MB_OK);
+	}
 }
 //------------------------------------------------------------------------------
 bool		WxMainFrame::GetUIInfo( bool bTryCommandLine)

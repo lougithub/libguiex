@@ -35,6 +35,7 @@ namespace guiex
 		,m_strSceneName(rSceneName)
 		,m_eIsLoaded(LOADSTATE_Unloaded)
 		,m_strResourceType(rResourceType)
+		,m_nReferenceCount(0)
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -42,7 +43,27 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	int32	CGUIResource::Load()
+	void CGUIResource::RefRetain() const
+	{
+		++m_nReferenceCount;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIResource::RefRelease() const
+	{
+		if( m_nReferenceCount == 0)
+		{
+			throw CGUIException( "invalid reference counter for resource <%s:%s:%s>", GetName().c_str(), GetResourceType().c_str(),GetSceneName().c_str() );
+			return;
+		}
+		--m_nReferenceCount;
+	}
+	//------------------------------------------------------------------------------
+	uint32 CGUIResource::GetRefCount() const
+	{
+		return m_nReferenceCount;
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUIResource::Load() const
 	{
 		if( m_eIsLoaded ==  LOADSTATE_Loaded)
 		{

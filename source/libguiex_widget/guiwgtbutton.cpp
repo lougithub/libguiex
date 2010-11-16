@@ -63,7 +63,7 @@ namespace guiex
 		return CGUIWidget::Create();
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtButton::OnSetImage( const CGUIString& rName,CGUIImage* pImage )
+	void		CGUIWgtButton::OnSetImage( const CGUIString& rName, const CGUIImage* pImage )
 	{
 		if( rName == "BTN_NORMAL")
 		{
@@ -121,7 +121,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void	CGUIWgtButton::RenderSelf(IGUIInterfaceRender* pRender)
 	{
-		CGUIImage* pImage = NULL;
+		const CGUIImage* pImage = NULL;
 		CGUIStringEx* pString = NULL;
 
 		if( IsDerivedDisable())

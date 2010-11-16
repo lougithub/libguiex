@@ -54,7 +54,7 @@ namespace guiex
 		/**
 		* @brief create a animation by single image;
 		*/
-		CGUIAnimation*	CreateAnimation(
+		const CGUIAnimation*	CreateAnimation(
 			const CGUIString& rName, 
 			const CGUIString& rSceneName, 
 			const CGUIString& rFileName, 
@@ -65,12 +65,18 @@ namespace guiex
 		/**
 		* @brief create a animation by multible images
 		*/
-		CGUIAnimation*	CreateAnimation( 
+		const CGUIAnimation*	CreateAnimation( 
 			const CGUIString& rName, 
 			const CGUIString& rSceneName, 
 			const std::vector<CGUIString>& rFileNames,  
 			real fInterval
 			);
+
+		CGUIAnimation* AllocateResource( const CGUIString& rResName );
+
+		int32 DeallocateResource( CGUIAnimation* pAnimation );
+
+
 
 	protected:
 		//declare for singleton

@@ -79,7 +79,7 @@ namespace guiex
 		m_pCursor = NULL;
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtEditBox::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
+	void CGUIWgtEditBox::OnSetImage( const CGUIString& rName, const CGUIImage* pImage )
 	{
 		if( rName == "EDIT_BG")
 		{
@@ -103,42 +103,42 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void			CGUIWgtEditBox::SetSelectedTextColor( const CGUIColor& rColor)
+	void CGUIWgtEditBox::SetSelectedTextColor( const CGUIColor& rColor)
 	{
 		m_aSelectedTextColor = rColor;
 	}
 	//------------------------------------------------------------------------------
-	const CGUISize&			CGUIWgtEditBox::GetCursorSize() const
+	const CGUISize&	 CGUIWgtEditBox::GetCursorSize() const
 	{
 		return m_pEdit->GetCursorSize();
 	}
 	//------------------------------------------------------------------------------
-	void					CGUIWgtEditBox::SetCursorSize( const CGUISize& rSize )
+	void CGUIWgtEditBox::SetCursorSize( const CGUISize& rSize )
 	{
 		m_pEdit->SetCursorSize(rSize);
 	}
 	//------------------------------------------------------------------------------
-	void			CGUIWgtEditBox::SetMaxTextNum( uint32 num)
+	void CGUIWgtEditBox::SetMaxTextNum( uint32 num)
 	{
 		m_nMaxString = num;
 	}
 	//------------------------------------------------------------------------------
-	uint32 			CGUIWgtEditBox::GetMaxTextNum( ) const
+	uint32 CGUIWgtEditBox::GetMaxTextNum( ) const
 	{
 		return m_nMaxString;
 	}
 	//------------------------------------------------------------------------------
-	void			CGUIWgtEditBox::SetReadOnly(bool bRead)
+	void CGUIWgtEditBox::SetReadOnly(bool bRead)
 	{
 		m_bReadOnly = bRead;
 	}
 	//------------------------------------------------------------------------------
-	bool			CGUIWgtEditBox::IsReadOnly() const
+	bool CGUIWgtEditBox::IsReadOnly() const
 	{
 		return m_bReadOnly;
 	}
 	//------------------------------------------------------------------------------
-	void			CGUIWgtEditBox::SetTextMasked(bool bMask)
+	void CGUIWgtEditBox::SetTextMasked(bool bMask)
 	{
 		if( bMask != m_bMaskText)
 		{
@@ -167,12 +167,12 @@ namespace guiex
 	
 	}
 	//------------------------------------------------------------------------------
-	bool			CGUIWgtEditBox::IsTextMasked() const
+	bool CGUIWgtEditBox::IsTextMasked() const
 	{
 		return m_bMaskText;
 	}
 	//------------------------------------------------------------------------------
-	void			CGUIWgtEditBox::SetMaskCode(wchar_t wMaskCode)
+	void CGUIWgtEditBox::SetMaskCode(wchar_t wMaskCode)
 	{
 		if( m_wMaskCodePoint != wMaskCode )
 		{
@@ -194,7 +194,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	wchar_t			CGUIWgtEditBox::GetTextMasked() const
+	wchar_t CGUIWgtEditBox::GetTextMasked() const
 	{
 		return m_wMaskCodePoint;
 	}
@@ -210,7 +210,7 @@ namespace guiex
 
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtEditBox::RenderSelf(IGUIInterfaceRender* pRender)
+	void CGUIWgtEditBox::RenderSelf(IGUIInterfaceRender* pRender)
 	{
 		//render bg
 		if( m_pBG )
@@ -284,7 +284,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtEditBox::UpdateSelf( real fDeltaTime )
+	void CGUIWgtEditBox::UpdateSelf( real fDeltaTime )
 	{
 		if( IsFocus() )
 		{
@@ -310,24 +310,24 @@ namespace guiex
 		CGUIWidget::UpdateSelf( fDeltaTime );
 	}
 	//------------------------------------------------------------------------------
-	void			CGUIWgtEditBox::SetStringAreaRatio(const CGUIRect& rStringAreaRatio)
+	void CGUIWgtEditBox::SetStringAreaRatio(const CGUIRect& rStringAreaRatio)
 	{
 		m_aStringAreaRatio = rStringAreaRatio;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIRect&			CGUIWgtEditBox::GetStringAreaRatio( ) const
+	const CGUIRect& CGUIWgtEditBox::GetStringAreaRatio( ) const
 	{
 		return m_aStringAreaRatio;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtEditBox::SetTextContent(const wchar_t* pText)
+	void CGUIWgtEditBox::SetTextContent(const wchar_t* pText)
 	{
 		ClearSelection();
 		DeleteString(0, -1);
 		InsertString(pText);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtEditBox::InsertString(const wchar_t* pChar)
+	void CGUIWgtEditBox::InsertString(const wchar_t* pChar)
 	{
 		IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
 
@@ -375,12 +375,12 @@ namespace guiex
 		return aPos;
 	}
 	//------------------------------------------------------------------------------
-	CGUIRect	CGUIWgtEditBox::GetCursorRect()
+	CGUIRect CGUIWgtEditBox::GetCursorRect()
 	{
 		return CGUIRect(GetCursorPos(), m_pEdit->GetCursorSize());
 	}
 	//------------------------------------------------------------------------------
-	real		CGUIWgtEditBox::GetStringWidth(int32 nBeginPos, int32 nEndPos) const
+	real CGUIWgtEditBox::GetStringWidth(int32 nBeginPos, int32 nEndPos) const
 	{
 		nBeginPos = static_cast<int32>(nBeginPos<0?0:nBeginPos);
 		nEndPos = static_cast<int32>(nEndPos<0?m_strText.Size():nEndPos);
@@ -392,7 +392,7 @@ namespace guiex
 		return std::accumulate(m_vecStringWidth.begin()+nBeginPos, m_vecStringWidth.begin()+nEndPos, 0.0f);
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtEditBox::DeleteString( int32 nBeginPos, int32 nEndPos)
+	void CGUIWgtEditBox::DeleteString( int32 nBeginPos, int32 nEndPos)
 	{
 		nBeginPos = static_cast<int32>(nBeginPos<0?0:nBeginPos);
 		nEndPos = static_cast<int32>(nEndPos<0?m_strText.Size():nEndPos);
@@ -421,14 +421,14 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIWgtEditBox::UpdateStringPos()
+	void CGUIWgtEditBox::UpdateStringPos()
 	{
 		real fStringWidth = GetStringWidth(0, m_nCursorIdx)+m_pEdit->GetCursorSize().GetWidth();
 		real fClientWidth = m_aStringAreaRect.GetWidth();
 		m_fTextWidthRel = (fClientWidth - fStringWidth)<0.0f?fClientWidth - fStringWidth:0.0f;
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIWgtEditBox::SetCursorIndex( int32 nPos )
+	void CGUIWgtEditBox::SetCursorIndex( int32 nPos )
 	{
 		if( nPos<0 || nPos>int32(m_strText.Size()))
 		{
@@ -445,7 +445,7 @@ namespace guiex
 		UpdateStringPos();
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWgtEditBox::GetTextIndexFromPos( const CGUIVector2& rPos)
+	uint32 CGUIWgtEditBox::GetTextIndexFromPos( const CGUIVector2& rPos)
 	{
 		real fStringWidth = m_fTextWidthRel+m_aStringAreaRect.m_fLeft;
 		int32 nIdx = -1;
@@ -473,7 +473,7 @@ namespace guiex
 		return nIdx;
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtEditBox::ClearSelection()
+	void CGUIWgtEditBox::ClearSelection()
 	{
 		// perform action only if required.
 		if (GetSelectionLength() != 0)
@@ -482,12 +482,12 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWgtEditBox::GetSelectionLength(void) const
+	uint32 CGUIWgtEditBox::GetSelectionLength(void) const
 	{
 		return m_nSelectionEnd - m_nSelectionStart;
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtEditBox::EraseSelectedText( )
+	void CGUIWgtEditBox::EraseSelectedText( )
 	{
 		if (GetSelectionLength() != 0)
 		{
@@ -498,7 +498,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtEditBox::SetSelection(uint32 start_pos, uint32 end_pos)
+	void CGUIWgtEditBox::SetSelection(uint32 start_pos, uint32 end_pos)
 	{
 		if (start_pos > m_strText.Size())
 		{
@@ -531,7 +531,7 @@ namespace guiex
 
 
 	//------------------------------------------------------------------------------
-	void				CGUIWgtEditBox::OnKeyPressed_Left(CGUIEventKeyboard* pEvent)
+	void CGUIWgtEditBox::OnKeyPressed_Left(CGUIEventKeyboard* pEvent)
 	{
 		if( m_nCursorIdx > 0 )
 		{
@@ -547,7 +547,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIWgtEditBox::OnKeyPressed_Right(CGUIEventKeyboard* pEvent)
+	void CGUIWgtEditBox::OnKeyPressed_Right(CGUIEventKeyboard* pEvent)
 	{
 		if( m_nCursorIdx < m_strText.Size())
 		{
@@ -563,7 +563,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIWgtEditBox::OnKeyPressed_Delete(CGUIEventKeyboard* pEvent)
+	void CGUIWgtEditBox::OnKeyPressed_Delete(CGUIEventKeyboard* pEvent)
 	{
 		if( !IsReadOnly())
 		{
@@ -580,7 +580,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIWgtEditBox::OnKeyPressed_Back(CGUIEventKeyboard* pEvent)
+	void CGUIWgtEditBox::OnKeyPressed_Back(CGUIEventKeyboard* pEvent)
 	{
 		if( !IsReadOnly())
 		{
@@ -597,7 +597,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIWgtEditBox::OnKeyPressed_Home(CGUIEventKeyboard* pEvent)
+	void CGUIWgtEditBox::OnKeyPressed_Home(CGUIEventKeyboard* pEvent)
 	{
 		SetCursorIndex(0);
 		if (pEvent->GetKeyboardInterface()->IsKeyPressed(KC_SHIFT))
@@ -610,7 +610,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIWgtEditBox::OnKeyPressed_End(CGUIEventKeyboard* pEvent)
+	void CGUIWgtEditBox::OnKeyPressed_End(CGUIEventKeyboard* pEvent)
 	{
 		SetCursorIndex(m_strText.Size());
 		if (pEvent->GetKeyboardInterface()->IsKeyPressed(KC_SHIFT))
@@ -623,19 +623,19 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWgtEditBox::OnGetFocus( CGUIEventNotification* pEvent )
+	uint32 CGUIWgtEditBox::OnGetFocus( CGUIEventNotification* pEvent )
 	{
 		m_pEdit->Open();
 		return CGUIWidget::OnGetFocus(pEvent);
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWgtEditBox::OnLostFocus( CGUIEventNotification* pEvent )
+	uint32 CGUIWgtEditBox::OnLostFocus( CGUIEventNotification* pEvent )
 	{
 		m_pEdit->Close();
 		return CGUIWidget::OnLostFocus(pEvent);
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWgtEditBox::OnKeyPressed( CGUIEventKeyboard* pEvent )
+	uint32 CGUIWgtEditBox::OnKeyPressed( CGUIEventKeyboard* pEvent )
 	{
 		switch( pEvent->GetKeyCode())
 		{
@@ -684,7 +684,7 @@ namespace guiex
 		return CGUIWidget::OnKeyPressed(pEvent);
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWgtEditBox::OnMouseLeftDown( CGUIEventMouse* pEvent )
+	uint32 CGUIWgtEditBox::OnMouseLeftDown( CGUIEventMouse* pEvent )
 	{
 		const CGUIVector2& rMouseLocalPos = pEvent->GetLocalPosition();
 
@@ -701,14 +701,14 @@ namespace guiex
 		return CGUIWidget::OnMouseLeftDown(pEvent);
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWgtEditBox::OnMouseLeftUp( CGUIEventMouse* pEvent )
+	uint32 CGUIWgtEditBox::OnMouseLeftUp( CGUIEventMouse* pEvent )
 	{
 		m_bDraging = false;
 
 		return CGUIWidget::OnMouseLeftUp(pEvent);
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWgtEditBox::OnMouseMove( CGUIEventMouse* pEvent )
+	uint32 CGUIWgtEditBox::OnMouseMove( CGUIEventMouse* pEvent )
 	{
 		const CGUIVector2& rMouseLocalPos = pEvent->GetLocalPosition();
 
@@ -732,7 +732,7 @@ namespace guiex
 		return CGUIWidget::OnMouseMove(pEvent);
 	}
 	//------------------------------------------------------------------------------
-	CGUIProperty*	CGUIWgtEditBox::GenerateProperty(const CGUIString& rName, const CGUIString& rType )
+	CGUIProperty* CGUIWgtEditBox::GenerateProperty(const CGUIString& rName, const CGUIString& rType )
 	{
 		//CGUIProperty* pProperty = NULL;
 		//
@@ -782,7 +782,7 @@ namespace guiex
 		return NULL;
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtEditBox::ProcessProperty( const CGUIProperty* pProperty)
+	void CGUIWgtEditBox::ProcessProperty( const CGUIProperty* pProperty)
 	{
 		//CGUIWidget::ProcessProperty(pProperty);
 

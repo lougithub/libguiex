@@ -72,11 +72,11 @@ namespace guiex
 		/**
 		* @brief override the OnSetImage function
 		*/
-		virtual void OnSetImage( const CGUIString& rName,CGUIImage* pImage );
+		virtual void OnSetImage( const CGUIString& rName, const CGUIImage* pImage );
 
 	protected:
-		CGUIImage*		m_pImageBG;
-		CGUIString		m_strImageName;
+		const CGUIImage* m_pImageBG;
+		CGUIString m_strImageName;
 
 	protected:
 		static CGUIString ms_strType;

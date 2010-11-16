@@ -47,8 +47,7 @@ namespace guiex
 		m_pAnimationName = "ANIMATION_DEFAULT";
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtAnimation::SetAnimation(const CGUIString& rAnimationName, 
-		CGUIAnimation* pAnimation)
+	void CGUIWgtAnimation::SetAnimation(const CGUIString& rAnimationName, CGUIAnimation* pAnimation)
 	{
 		if( rAnimationName == "ANIMATION_DEFAULT" )
 		{

@@ -78,20 +78,20 @@ namespace guiex
 		/**
 		* @brief override the OnSetImage function
 		*/
-		virtual void OnSetImage( const CGUIString& rName,CGUIImage* pImage );
+		virtual void OnSetImage( const CGUIString& rName, const CGUIImage* pImage );
 
 	protected:	//!< callback function
 
 
 	protected:
-		CGUIImage*	m_pImageBg;		///< background
-		CGUIImage*	m_pImageFg;		///< foreground
+		const CGUIImage* m_pImageBg;		///< background
+		const CGUIImage* m_pImageFg;		///< foreground
 
-		real			m_fMaximumValue;			///< maximum value of progress
-		real			m_fCurrentValue;			///< current value of progress
+		real m_fMaximumValue;			///< maximum value of progress
+		real m_fCurrentValue;			///< current value of progress
 
 	private:
-		static CGUIString	ms_strType;
+		static CGUIString ms_strType;
 	};
 
 

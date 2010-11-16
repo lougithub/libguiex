@@ -1131,17 +1131,18 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
+	void	CGUIWidget::OnSetImage( const CGUIString& rName, const CGUIImage* pImage )
 	{
 
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::SetImage( const CGUIString& rName, CGUIImage* pImage )
+	void	CGUIWidget::DoSetImage( const CGUIString& rName, const CGUIImage* pImage )
 	{
 		//clear old one
 		TMapImage::iterator itor = m_aMapImage.find(rName );
 		if( itor != m_aMapImage.end())
 		{
+			CGUIImageManager::Instance()->DeallocateResource( itor->second );
 			m_aMapImage.erase( itor );
 		}
 
@@ -1152,16 +1153,16 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	CGUIImage*	CGUIWidget::SetImage( const CGUIString& rName, const CGUIString& rImageName )
+	const CGUIImage*	CGUIWidget::SetImage( const CGUIString& rName, const CGUIString& rImageName )
 	{
 		//find image
-		CGUIImage* pImage = CGUIImageManager::Instance()->FindResource( rImageName );
+		const CGUIImage* pImage = CGUIImageManager::Instance()->AllocateResource( rImageName );
 		if( !pImage )
 		{
 			throw CGUIException( "failed to get image by name <%s>", rImageName.c_str());
 			return NULL;
 		};
-		SetImage(rName, pImage);
+		DoSetImage(rName, pImage);
 		return pImage;
 	}
 	//------------------------------------------------------------------------------
@@ -1179,8 +1180,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIAnimation* CGUIWidget::SetAnimation( const CGUIString& rName, const CGUIString& rAnimationName )
 	{
-		//find image
-		CGUIAnimation* pAnimation = CGUIAnimationManager::Instance()->FindResource( rAnimationName );
+		//find animation
+		CGUIAnimation* pAnimation = CGUIAnimationManager::Instance()->AllocateResource( rAnimationName );
 		if( !pAnimation )
 		{
 			throw CGUIException( "failed to get animation by name <%s>", rAnimationName.c_str());
@@ -1190,7 +1191,7 @@ namespace guiex
 		return pAnimation;
 	}
 	//------------------------------------------------------------------------------
-	CGUIAnimation*	CGUIWidget::GetAnimation( const CGUIString& rAnimationName)
+	CGUIAnimation* CGUIWidget::GetAnimation( const CGUIString& rAnimationName)
 	{
 		TMapAnimation::iterator itor = m_aMapAnimation.find(rAnimationName);
 		if( itor != m_aMapAnimation.end())
@@ -1203,12 +1204,12 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	bool		CGUIWidget::HasImage( const CGUIString& rName )
+	bool CGUIWidget::HasImage( const CGUIString& rName )
 	{
 		return m_aMapImage.find(rName ) != m_aMapImage.end();
 	}
 	//------------------------------------------------------------------------------
-	CGUIImage*	CGUIWidget::GetImage( const CGUIString& rName )
+	const CGUIImage* CGUIWidget::GetImage( const CGUIString& rName )
 	{
 		TMapImage::iterator itor=  m_aMapImage.find(rName);
 		if( itor == m_aMapImage.end())
@@ -1221,12 +1222,24 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::DestroyAllResource( )
+	void CGUIWidget::DestroyAllResource( )
 	{
 		//release image
+		for( TMapImage::iterator itor = m_aMapImage.begin();
+			itor != m_aMapImage.end();
+			++itor)
+		{
+			CGUIImageManager::Instance()->DeallocateResource( itor->second );
+		}
 		m_aMapImage.clear();
 
 		//release animation
+		for( TMapAnimation::iterator itor = m_aMapAnimation.begin();
+			itor != m_aMapAnimation.end();
+			++itor)
+		{
+			CGUIAnimationManager::Instance()->DeallocateResource( itor->second );
+		}
 		m_aMapAnimation.clear();
 
 		//release as
@@ -1239,14 +1252,14 @@ namespace guiex
 		m_listAs.clear();
 	}
 	//------------------------------------------------------------------------------
-	void			CGUIWidget::SetPropertySet( const CGUIProperty&	rProperty)
+	void CGUIWidget::SetPropertySet( const CGUIProperty&	rProperty)
 	{
 		ClearProperty();
 
 		m_aPropertySet = rProperty;
 	}
 	//------------------------------------------------------------------------------
-	void			CGUIWidget::SetProperty( const CGUIProperty&	rProperty)
+	void CGUIWidget::SetProperty( const CGUIProperty&	rProperty)
 	{
 		if( m_aPropertySet.HasProperty(rProperty.GetName()))
 		{
@@ -1263,12 +1276,12 @@ namespace guiex
 		return m_aPropertySet;
 	}
 	//------------------------------------------------------------------------------
-	void			CGUIWidget::ClearProperty()
+	void CGUIWidget::ClearProperty()
 	{
 		m_aPropertySet.Clear();
 	}
 	//------------------------------------------------------------------------------
-	int32	CGUIWidget::GenerateProperty( CGUIProperty& rProperty )
+	int32 CGUIWidget::GenerateProperty( CGUIProperty& rProperty )
 	{
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		if( rProperty.GetType() == ePropertyType_WidgetPosition && rProperty.GetName() == "position")
@@ -1303,7 +1316,7 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Image  )
 		{
-			CGUIImage* pImage = GetImage(rProperty.GetName());
+			const CGUIImage* pImage = GetImage(rProperty.GetName());
 			if( pImage )
 			{
 				rProperty.SetValue( pImage->GetName() );
@@ -1440,13 +1453,12 @@ namespace guiex
 		{
 			if(!rProperty.GetValue().empty())
 			{
-				CGUIImage* pImg = CGUIImageManager::Instance()->FindResource(rProperty.GetValue());
-				SetImage( rProperty.GetName(), pImg);
+				SetImage( rProperty.GetName(), rProperty.GetValue());
 			}
 			else
 			{
 				//clear image
-				SetImage( rProperty.GetName(), NULL);
+				DoSetImage( rProperty.GetName(), NULL);
 			}
 		}
 
@@ -1854,7 +1866,7 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWidget::DrawImage(IGUIInterfaceRender* pRender, 
-		CGUIImage* pImage, 
+		const CGUIImage* pImage, 
 		const CGUIRect& rDestRect)
 	{
 		if( pImage )
@@ -1873,7 +1885,7 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWidget::DrawAnimation(IGUIInterfaceRender* pRender, 
-		CGUIAnimation* pAnimation, 
+		const CGUIAnimation* pAnimation, 
 		const CGUIRect& rDestRect)
 	{
 		if( pAnimation )

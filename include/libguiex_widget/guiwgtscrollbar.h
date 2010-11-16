@@ -187,7 +187,7 @@ namespace guiex
 		/**
 		* @brief override the OnSetImage function
 		*/
-		virtual void	OnSetImage( const CGUIString& rName,CGUIImage* pImage );
+		virtual void	OnSetImage( const CGUIString& rName, const CGUIImage* pImage );
 
 	protected:	//!< callback function
 		virtual uint32		OnOpen( CGUIEventNotification* pEvent );
@@ -209,7 +209,7 @@ namespace guiex
 		bool				m_bAutoNotifyParent;///whether notify parent when scrollbar value change
 
 		//image
-		CGUIImage*			m_pImageBg;		///background
+		const CGUIImage* m_pImageBg;		///background
 
 		//child
 		friend	class CGUIWgtScrollbarSlide;

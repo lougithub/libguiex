@@ -43,24 +43,18 @@ namespace guiex
 		*/
 		virtual ~CGUIAnimation( );
 
-
 		/**
 		* @brief update the animation
 		*/
-		void	Update( real fDeltaTime );
+		void Update( real fDeltaTime );
 
-		void	Draw( IGUIInterfaceRender* pRender,
+		void Draw( IGUIInterfaceRender* pRender,
 			const CGUIMatrix4& rWorldMatrix,
 			const CGUIRect& rDestRect,
 			real z, 
-			real fAlpha	);
+			real fAlpha	) const;
 
-		//void	Draw(IGUIInterfaceRender* pRender,
-		//	const CGUIRenderRect& rRenderRect,
-		//	real z, 
-		//	real fAlpha	);
-
-		CGUISize	GetSize();
+		CGUISize GetSize( ) const;
 
 	protected:
 		/**
@@ -87,21 +81,26 @@ namespace guiex
 			const std::vector<CGUIString>& rFileNames,  
 			real fInterval);
 
-		virtual int32	DoLoad();
-		virtual void	DoUnload();
+		virtual int32 DoLoad() const;
+		virtual void DoUnload();
 
 	protected:
 		friend class CGUIAnimationManager;
-		std::vector<CGUITexture*>			m_vecTextures;
-		std::vector<CGUIRect>				m_vecUVRects;
+		mutable std::vector<CGUITexture*> m_vecTextures;
+		std::vector<CGUIRect> m_vecUVRects;
 
-
-		std::vector<CGUIString>				m_vecFileNames; //resource path
-
+		std::vector<CGUIString>	m_vecFileNames; //resource path
 
 		real		m_fInterval;
 		real		m_fDeltaTime;			//!< used by animation
 		uint32		m_nFrame;				//!< current frame
+
+		enum EUVAnimType
+		{
+			eUVAnimType_SingleFile = 0,
+			eUVAnimType_MultiFile,
+		};
+		EUVAnimType eUVAnimType;
 	};
 
 }//namespace guiex

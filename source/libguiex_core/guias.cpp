@@ -43,12 +43,13 @@ namespace guiex
 	//*****************************************************************************
 
 	//------------------------------------------------------------------------------
-	CGUIAs::CGUIAs(const char* pAsName)
-		:m_pReceiver(NULL)
+	CGUIAs::CGUIAs( const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName )
+		:CGUIResource( rAsName, rSceneName, "AS" )
+		,m_pReceiver(NULL)
 		,m_bRetired(false)
 		,m_fTotalTime(0.1f)
 		,m_fElapsedTime(0.0f)
-		,m_strAsName(pAsName)
+		,m_strAsType(rAsType)
 		,m_pAsGenerator(NULL)
 		,m_bLooping(false)
 	{
@@ -63,11 +64,13 @@ namespace guiex
 			CGUIAsFactory::Instance()->DestroyAs(*itor);
 		}
 		m_listSuccessor.clear();
+
+		Unload();
 	}
 	//------------------------------------------------------------------------------
-	const CGUIString& CGUIAs::GetAsName() const
+	const CGUIString& CGUIAs::GetType() const
 	{
-		return m_strAsName;
+		return m_strAsType;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIAs::Retire( bool bRetired )
@@ -161,7 +164,16 @@ namespace guiex
 		return m_pAsGenerator;
 	}
 	//------------------------------------------------------------------------------
+	int32 CGUIAs::DoLoad() const
+	{
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAs::DoUnload()
+	{
 
+	}
+	//------------------------------------------------------------------------------
 
 
 
@@ -173,8 +185,8 @@ namespace guiex
 	
 	
 	//------------------------------------------------------------------------------
-	CGUIAsAlpha::CGUIAsAlpha( )
-		:CGUIAsLinearBase<real>("CGUIAsAlpha" )
+	CGUIAsAlpha::CGUIAsAlpha( const CGUIString& rAsName, const CGUIString& rSceneName )
+		:CGUIAsLinearBase<real>("CGUIAsAlpha" , rAsName, rSceneName )
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -194,8 +206,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_AS_GENERATOR_IMPLEMENT( CGUIAsRotation );
 	//------------------------------------------------------------------------------
-	CGUIAsRotation::CGUIAsRotation()
-		:CGUIAsLinearBase<CGUIVector3>("CGUIAsRotation")
+	CGUIAsRotation::CGUIAsRotation(const CGUIString& rAsName, const CGUIString& rSceneName)
+		:CGUIAsLinearBase<CGUIVector3>("CGUIAsRotation", rAsName, rSceneName )
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -214,8 +226,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_AS_GENERATOR_IMPLEMENT( CGUIAsScale );
 	//------------------------------------------------------------------------------
-	CGUIAsScale::CGUIAsScale()
-		:CGUIAsLinearBase<CGUISize>("CGUIAsScale")
+	CGUIAsScale::CGUIAsScale(const CGUIString& rAsName, const CGUIString& rSceneName)
+		:CGUIAsLinearBase<CGUISize>("CGUIAsScale", rAsName, rSceneName )
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -233,8 +245,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_AS_GENERATOR_IMPLEMENT( CGUIAsPosition );
 	//------------------------------------------------------------------------------
-	CGUIAsPosition::CGUIAsPosition()
-		:CGUIAsLinearBase<CGUIVector2>("CGUIAsPosition")
+	CGUIAsPosition::CGUIAsPosition(const CGUIString& rAsName, const CGUIString& rSceneName)
+		:CGUIAsLinearBase<CGUIVector2>("CGUIAsPosition", rAsName, rSceneName )
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -253,8 +265,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_AS_GENERATOR_IMPLEMENT( CGUIAsColor );
 	//------------------------------------------------------------------------------
-	CGUIAsColor::CGUIAsColor()
-		:CGUIAsLinearBase<CGUIColor>("CGUIAsColor")
+	CGUIAsColor::CGUIAsColor(const CGUIString& rAsName, const CGUIString& rSceneName)
+		:CGUIAsLinearBase<CGUIColor>("CGUIAsColor", rAsName, rSceneName )
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -274,8 +286,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_AS_GENERATOR_IMPLEMENT( CGUIAsContainer );
 	//------------------------------------------------------------------------------
-	CGUIAsContainer::CGUIAsContainer()
-		:CGUIAs("CGUIAsContainer")
+	CGUIAsContainer::CGUIAsContainer(const CGUIString& rAsName, const CGUIString& rSceneName)
+		:CGUIAs("CGUIAsContainer", rAsName, rSceneName)
 	{
 	}
 	//------------------------------------------------------------------------------

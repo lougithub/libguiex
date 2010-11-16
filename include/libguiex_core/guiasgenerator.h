@@ -19,76 +19,76 @@
 //============================================================================//
 // define
 //============================================================================// 
-#define GUI_AS_GENERATOR_DECLARE(asname)		\
-class GUIEXPORT asname##_Generator : public ::guiex::CGUIAsGenerator	\
+#define GUI_AS_GENERATOR_DECLARE(asType)		\
+class GUIEXPORT asType##_Generator : public ::guiex::CGUIAsGenerator	\
 	{														\
 	public:													\
-	virtual ::guiex::CGUIAs*	GenerateAs() const;			\
+	virtual ::guiex::CGUIAs*	GenerateAs(const CGUIString& rAsName, const CGUIString& rSceneName) const;			\
 	virtual void DestroyAs(const ::guiex::CGUIAs* pAS) const;\
-	static asname##_Generator* GenerateSelf();					\
+	static asType##_Generator* GenerateSelf();					\
 	virtual void DestroySelf();							\
 	protected:												\
-	asname##_Generator();										\
+	asType##_Generator();										\
 	};														\
-	GUIEXPORT	asname*	CreateAs_##asname();
+	GUIEXPORT	asType*	CreateAs_##asType(const CGUIString& rAsName, const CGUIString& rSceneName);
 
 
-#define GUI_AS_GENERATOR_IMPLEMENT(asname)	\
-	asname##_Generator::asname##_Generator()									\
-	:CGUIAsGenerator(#asname)							\
+#define GUI_AS_GENERATOR_IMPLEMENT(asType)	\
+	asType##_Generator::asType##_Generator()									\
+	:CGUIAsGenerator(#asType)							\
 	{														\
 	}														\
-	::guiex::CGUIAs* asname##_Generator::GenerateAs( ) const			\
+	::guiex::CGUIAs* asType##_Generator::GenerateAs( const CGUIString& rAsName, const CGUIString& rSceneName ) const			\
 	{														\
-	return new asname();									\
+	return new asType(rAsName, rSceneName);									\
 	}														\
-	void asname##_Generator::DestroyAs(const ::guiex::CGUIAs* pAS) const\
+	void asType##_Generator::DestroyAs(const ::guiex::CGUIAs* pAS) const\
 	{														\
 	delete pAS;										\
 	}														\
-	asname##_Generator* asname##_Generator::GenerateSelf()					\
+	asType##_Generator* asType##_Generator::GenerateSelf()					\
 	{														\
-	return new asname##_Generator;								\
+	return new asType##_Generator;								\
 	}														\
-	void asname##_Generator::DestroySelf()							\
+	void asType##_Generator::DestroySelf()							\
 	{														\
 	delete this;									\
 	}												\
-	asname*	CreateAs_##asname()\
+	asType*	CreateAs_##asType(const CGUIString& rAsName, const CGUIString& rSceneName)\
 	{												\
-		return static_cast< ::guiex::asname* >( ::guiex::CGUIAsFactory::Instance()->GenerateAs(#asname));\
+		return static_cast< ::guiex::asType* >( ::guiex::CGUIAsFactory::Instance()->GenerateAs(#asType, rAsName, rSceneName));\
 	}
 
-#define GUI_USER_AS_GENERATOR_DECLARE(asname)		\
-class asname##_Generator : public ::guiex::CGUIAsGenerator	\
+#define GUI_USER_AS_GENERATOR_DECLARE(asType)		\
+class asType##_Generator : public ::guiex::CGUIAsGenerator	\
 	{														\
 	public:													\
 	virtual ::guiex::CGUIAs*	GenerateAs() const;			\
 	virtual void DestroyAs(const ::guiex::CGUIAs* pAS) const;\
-	static asname##_Generator* GenerateSelf();					\
+	static asType##_Generator* GenerateSelf();					\
 	virtual void DestroySelf();							\
 	protected:												\
-	asname##_Generator();										\
+	asType##_Generator();										\
 	};														
 
-#define GUI_USER_AS_GENERATOR_IMPLEMENT(asname)	\
-	asname##_Generator::asname##_Generator()									\
-	:CGUIAsGenerator(#asname)							\
+#define GUI_USER_AS_GENERATOR_IMPLEMENT(asType)	\
+	asType##_Generator::asType##_Generator()									\
+	:CGUIAsGenerator(#asType)							\
 	{														\
 	}														\
-	::guiex::CGUIAs* asname##_Generator::GenerateAs() const			\
+	::guiex::CGUIAs* asType##_Generator::GenerateAs() const			\
 	{														\
-	return new asname();									\
+	return new asType();									\
 	}														\
-	void asname##_Generator::DestroyAs(const ::guiex::CGUIAs* pAS) const\
+	void asType##_Generator::DestroyAs(const ::guiex::CGUIAs* pAS) const\
 	{														\
 	delete pAS;										\
 	}														\
-	asname##_Generator* asname##_Generator::GenerateSelf()					\
+	asType##_Generator* asType##_Generator::GenerateSelf()					\
 	{														\
-	return new asname##_Generator;								\
+	return new asType##_Generator;								\
 	}														\
-	void asname##_Generator::DestroySelf()							\
+	void asType##_Generator::DestroySelf()							\
 	{														\
 	delete this;									\
 	}		
@@ -127,7 +127,7 @@ namespace guiex
 		* @brief generate a as
 		* @return pointer of the as, return NULL for failed to generate it
 		*/
-		virtual CGUIAs*	GenerateAs( ) const=0;
+		virtual CGUIAs*	GenerateAs( const CGUIString& rAsName, const CGUIString& rSceneName ) const=0;
 
 		/**
 		* @brief destroy as

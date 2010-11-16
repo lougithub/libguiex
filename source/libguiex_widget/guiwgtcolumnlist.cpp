@@ -201,7 +201,7 @@ namespace guiex
 		return CGUIWidget::Create();
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtColumnList::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
+	void CGUIWgtColumnList::OnSetImage( const CGUIString& rName, const CGUIImage* pImage )
 	{
 		if( rName == "BGIMAGE")
 		{

@@ -381,7 +381,7 @@ namespace guiex
 		* @brief free resource by scene name, 
 		* only free named image now.
 		*/
-		void	FreeAllResources(  );
+		void	ReleaseAllResources(  );
 
 		//!< set whether should system run script
 		void	SetRunScript( bool bShouldRun );

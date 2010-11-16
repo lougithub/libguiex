@@ -91,7 +91,7 @@ namespace guiex
 		SetGenerateDBClickEvent(true);
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtFrame::OnSetImage( const CGUIString& rName, CGUIImage* pImage)
+	void		CGUIWgtFrame::OnSetImage( const CGUIString& rName, const CGUIImage* pImage)
 	{
 		if( rName == "FRAME_TITLEBAR_TOP")
 		{

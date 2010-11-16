@@ -42,7 +42,7 @@ namespace guiex
 		m_strImageName = "BGIMAGE";
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtStaticImage::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
+	void CGUIWgtStaticImage::OnSetImage( const CGUIString& rName, const CGUIImage* pImage )
 	{
 		if( rName == "BGIMAGE")
 		{
@@ -59,7 +59,7 @@ namespace guiex
 		DrawImage( pRender, m_pImageBG, GetBoundArea( ));
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIWgtStaticImage::SetCurrentImage( const CGUIString& rImageName)
+	void CGUIWgtStaticImage::SetCurrentImage( const CGUIString& rImageName)
 	{
 		if( m_pImageBG = GetImage(rImageName))
 		{
@@ -72,7 +72,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	const CGUIString&			CGUIWgtStaticImage::GetCurrentImage(  ) const
+	const CGUIString& CGUIWgtStaticImage::GetCurrentImage(  ) const
 	{
 		return m_strImageName;
 	}
@@ -89,7 +89,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	CGUIString	CGUIWgtStaticImage::GetValue(const CGUIString& rName) const
+	CGUIString CGUIWgtStaticImage::GetValue(const CGUIString& rName) const
 	{
 		if( rName == "Image")
 		{

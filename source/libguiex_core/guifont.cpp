@@ -48,7 +48,7 @@ namespace guiex
 		Unload();
 	}
 	//------------------------------------------------------------------------------
-	int32	CGUIFont::DoLoad()
+	int32	CGUIFont::DoLoad() const
 	{
 		IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
 		if( !pFont )

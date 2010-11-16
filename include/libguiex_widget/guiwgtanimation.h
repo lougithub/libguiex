@@ -50,7 +50,7 @@ namespace guiex
 		* @brief set widget parameter's value
 		* for example: SetValue("alpha", "0.5")
 		*/
-		virtual void	SetValue(const CGUIString& rName, const CGUIString& rValue);
+		virtual void SetValue(const CGUIString& rName, const CGUIString& rValue);
 
 		/**
 		* @brief get widget parameter's value
@@ -61,12 +61,12 @@ namespace guiex
 		/**
 		* @brief select a animation to play
 		*/
-		void				SetCurrentAnimation( const CGUIString& rAnimationName);
+		void SetCurrentAnimation( const CGUIString& rAnimationName);
 
 		/**
 		* @brief get animation name which is playing now
 		*/
-		const CGUIString&			GetCurrentAnimation(  ) const;
+		const CGUIString& GetCurrentAnimation(  ) const;
 
 	protected:
 		/**
@@ -82,11 +82,11 @@ namespace guiex
 
 	protected:
 		///initialize animation
-		void	InitAnimation();
+		void InitAnimation();
 
 	protected:
-		CGUIAnimation*		m_pAnimationCur;
-		CGUIString				m_pAnimationName;
+		CGUIAnimation* m_pAnimationCur;
+		CGUIString m_pAnimationName;
 
 	protected:
 		static CGUIString ms_strType;

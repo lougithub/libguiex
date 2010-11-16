@@ -65,7 +65,7 @@ void UpdateImageNameList()
 {
 	s_arrayImageArray.Clear();
 	s_arrayImageArray.Add(_T(""));
-	const std::map<guiex::CGUIString, guiex::CGUIImage*>& rMapImageList = guiex::CGUIImageManager::Instance()->GetResourceMap();
+	const std::map<guiex::CGUIString, guiex::CGUIImage*>& rMapImageList = guiex::CGUIImageManager::Instance()->GetRegisterResourceMap();
 	for( std::map<guiex::CGUIString,guiex::CGUIImage*>::const_iterator itor = rMapImageList.begin();
 		itor != rMapImageList.end();
 		++itor)

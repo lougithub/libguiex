@@ -50,13 +50,15 @@ namespace guiex
 		/**
 		* @brief create a font
 		*/
-		CGUIFont*	CreateGUIFont(
+		const CGUIFont*	CreateGUIFont(
 			const CGUIString& rName, 
 			const CGUIString& rSceneName, 
 			const CGUIString& rPath, 
 			uint32 nFontIndex
 			);
 
+	protected:
+		virtual	void DoDestroyResource( void* pRes ); 
 
 	protected:
 		//declare for singleton

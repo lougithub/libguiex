@@ -28,16 +28,21 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	CGUIFont*	CGUIFontManager::CreateGUIFont(
+	const CGUIFont*	CGUIFontManager::CreateGUIFont(
 			const CGUIString& rName, 
 			const CGUIString& rSceneName, 
 			const CGUIString& rPath, 
 			uint32 nFontIndex)
 	{
 		CGUIFont* pFont = new CGUIFont( rName, rSceneName, rPath, nFontIndex );
-		AddResource(pFont);
+		RegisterResource(pFont);
 		return pFont;
 	}
 	//------------------------------------------------------------------------------
-
+	void CGUIFontManager::DoDestroyResource( void* pRes )
+	{
+		CGUIFont * pFont = reinterpret_cast<CGUIFont*>(pRes);
+		delete pRes;
+	}
+	//------------------------------------------------------------------------------
 }//namespace guiex

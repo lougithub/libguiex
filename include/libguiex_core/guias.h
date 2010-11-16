@@ -20,6 +20,8 @@
 #include "guiasgenerator.h"
 #include "guiasfactory.h"
 
+#include "guiresource.h"
+
 #include "guitimer.h"
 #include "guisize.h"
 #include "guimath.h"
@@ -68,13 +70,13 @@ namespace guiex
 	* @class CGUIAs
 	* @brief base class of widget as.
 	*/
-	class GUIEXPORT CGUIAs
+	class GUIEXPORT CGUIAs  : public CGUIResource
 	{
 	public:
 		/**
 		* @brief constructor
 		*/
-		CGUIAs( const char* pAsName );
+		CGUIAs( const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName );
 
 		/**
 		* @brief destructor
@@ -82,9 +84,9 @@ namespace guiex
 		virtual ~CGUIAs();
 
 		/**
-		* @brief get as name
+		* @brief get as type
 		*/
-		const CGUIString& GetAsName() const;
+		const CGUIString& GetType() const;
 
 		/**
 		* @brief set the flag after this as has been processed.
@@ -149,12 +151,16 @@ namespace guiex
 		//!<get generator
 		const CGUIAsGenerator* GetGenerator() const;
 
+		virtual int32	DoLoad() const;
+		virtual void	DoUnload();
+
+
 	protected:
 		real m_fTotalTime;			//!<delay-time, to control when to process this as, millisecond
 		real m_fElapsedTime;			
 
 	private:		
-		CGUIString m_strAsName;			//!<name of this as
+		CGUIString m_strAsType;			//!<type of this as
 		bool m_bRetired;				//!<should this as be retired
 		bool m_bLooping;
 		CGUIWidget*	m_pReceiver;		//!<receiver
@@ -174,8 +180,8 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIAsLinearBase( const char* pAsName )
-			:CGUIAs( pAsName )
+		CGUIAsLinearBase( const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName )
+			:CGUIAs( rAsType,  rAsType, rSceneName )
 			,m_eInterpolationType( eInterpolationType_Normal )
 		{
 		}
@@ -240,7 +246,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIAsAlpha();
+		CGUIAsAlpha(const CGUIString& rAsName, const CGUIString& rSceneName);
 
 		/**
 		* @brief update the event.
@@ -268,7 +274,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIAsScale();
+		CGUIAsScale(const CGUIString& rAsName, const CGUIString& rSceneName);
 
 		/**
 		* @brief Update the event.
@@ -293,7 +299,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIAsRotation();
+		CGUIAsRotation(const CGUIString& rAsName, const CGUIString& rSceneName);
 
 		/**
 		* @brief Update the event.
@@ -317,7 +323,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIAsPosition();
+		CGUIAsPosition(const CGUIString& rAsName, const CGUIString& rSceneName);
 
 		/**
 		* @brief Update the event.
@@ -342,7 +348,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIAsColor();
+		CGUIAsColor(const CGUIString& rAsName, const CGUIString& rSceneName);
 
 		/**
 		* @brief Update the event.
@@ -368,7 +374,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		CGUIAsContainer();
+		CGUIAsContainer(const CGUIString& rAsName, const CGUIString& rSceneName);
 
 		/**
 		* @brief Update the event.

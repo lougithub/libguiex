@@ -54,7 +54,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtPanel::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
+	void		CGUIWgtPanel::OnSetImage( const CGUIString& rName, const CGUIImage* pImage )
 	{
 		if( rName == "BGIMAGE")
 		{

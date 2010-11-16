@@ -56,14 +56,14 @@ namespace guiex
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 
 		///initialize check button
-		void	InitPanel();
+		void InitPanel();
 		
-		virtual void		RefreshSelf();
+		virtual void RefreshSelf();
 
 		/**
 		* @brief override the OnSetImage function
 		*/
-		virtual void	OnSetImage( const CGUIString& rName,CGUIImage* pImage );
+		virtual void OnSetImage( const CGUIString& rName, const CGUIImage* pImage );
 
 		const CGUIRect&	GetBorderRect(int32 eBorder);
 
@@ -81,19 +81,19 @@ namespace guiex
 		};
 
 		//!< get border width
-		real		GetBorderWidth(EPanelBorderLocation eBorder)
+		real GetBorderWidth(EPanelBorderLocation eBorder)
 		{
 			return	m_aBorderInfo[eBorder].m_aSize.m_fWidth;
 		}
 
 		//!< get border height
-		real		GetBorderHeight(EPanelBorderLocation eBorder)
+		real GetBorderHeight(EPanelBorderLocation eBorder)
 		{
 			return	m_aBorderInfo[eBorder].m_aSize.m_fHeight;
 		}
 
 		//!< get border size
-		CGUISize	GetBorderSize(EPanelBorderLocation eBorder)
+		CGUISize GetBorderSize(EPanelBorderLocation eBorder)
 		{
 			return	m_aBorderInfo[eBorder].m_aSize;
 
@@ -102,12 +102,12 @@ namespace guiex
 	protected:
 		struct
 		{
-			CGUISize			m_aSize;
-			CGUIImage*			m_pImageInfo;
-			CGUIRect			m_aRenderRect;
+			CGUISize m_aSize;
+			const CGUIImage* m_pImageInfo;
+			CGUIRect m_aRenderRect;
 		} m_aBorderInfo[PANEL_BORDER_NONE];
 
-		CGUIImage*	m_pImageBG;
+		const CGUIImage* m_pImageBG;
 
 		bool		m_bAutoResize;
 

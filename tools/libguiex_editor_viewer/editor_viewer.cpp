@@ -626,7 +626,7 @@ void WxMainFrame::OnToggleWireframe(wxCommandEvent& evt)
 void WxMainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 {
 	guiex::CGUIWidgetSystem::Instance()->FreeAllWidgets();
-	guiex::CGUIWidgetSystem::Instance()->FreeAllResources();
+	guiex::CGUIWidgetSystem::Instance()->ReleaseAllResources();
 
 	if( GetUIInfo(false))
 	{

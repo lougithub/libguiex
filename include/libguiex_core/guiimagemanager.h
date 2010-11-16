@@ -54,7 +54,7 @@ namespace guiex
 		/**
 		* @brief create a image by image path;
 		*/
-		CGUIImage*	CreateImage(
+		const CGUIImage*	CreateImage(
 			const CGUIString& rName,
 			const CGUIString& rSceneName,
 			const CGUIString& rPath, 
@@ -64,7 +64,7 @@ namespace guiex
 		/**
 		* @brief create a image with given color
 		*/
-		CGUIImage*	CreateImage( 
+		const CGUIImage*	CreateImage( 
 			const CGUIString& rName,
 			const CGUIString& rSceneName,
 			const CGUIColor& rColor );
@@ -84,7 +84,7 @@ namespace guiex
 		*</property>
 		*
 		*/
-		CGUIImage*	CreateImage(
+		const CGUIImage*	CreateImage(
 			const CGUIString& rName,
 			const CGUIString& rSceneName,
 			const CGUIProperty& rProperty );
@@ -92,13 +92,17 @@ namespace guiex
 		/**
 		 * create image from memory
 		 */
-		CGUIImage*	CreateImage(
+		const CGUIImage*	CreateImage(
 			const CGUIString& rName,
 			const CGUIString& rSceneName,
 			const void* buffPtr, 
 			int32 buffWidth, 
 			int32 buffHeight, 
 			EGuiPixelFormat ePixelFormat );
+
+		const CGUIImage* AllocateResource( const CGUIString& rResName ) const;
+		int32 DeallocateResource( const CGUIImage* pImage );
+
 
 	protected:
 		//declare for singleton

@@ -68,7 +68,7 @@ namespace guiex
 			const CGUIString& rPath,
 			uint32	nFontIndex);
 
-		virtual int32	DoLoad();
+		virtual int32	DoLoad() const;
 		virtual void	DoUnload();
 
 

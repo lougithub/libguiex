@@ -86,7 +86,7 @@ namespace guiex
 		/**
 		* @brief override the OnSetImage function
 		*/
-		virtual void	OnSetImage( const CGUIString& rName,CGUIImage* pImage );
+		virtual void	OnSetImage( const CGUIString& rName, const CGUIImage* pImage );
 
 	protected:	//!< callback function
 		virtual uint32		OnMouseEnter( CGUIEventMouse* pEvent );
@@ -99,12 +99,12 @@ namespace guiex
 		bool	m_bHovering;
 		bool	m_bPushing;
 
-		CGUIImage*	m_pImageNormal;
-		CGUIImage*	m_pImageHovering;
-		CGUIImage*	m_pImageDisable;
-		CGUIImage*	m_pImagePush;
-		CGUIImage*	m_pImageHoverOverlay;
-		CGUIImage*	m_pImagePushOverlay;
+		const CGUIImage* m_pImageNormal;
+		const CGUIImage* m_pImageHovering;
+		const CGUIImage* m_pImageDisable;
+		const CGUIImage* m_pImagePush;
+		const CGUIImage* m_pImageHoverOverlay;
+		const CGUIImage* m_pImagePushOverlay;
 
 		CGUIStringEx		m_strTextHoving;	//for hover state
 		CGUIStringEx		m_strTextDisable;	//for disable state

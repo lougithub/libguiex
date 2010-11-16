@@ -39,6 +39,7 @@ namespace guiex
 		,m_nFrame(0)
 		,m_fInterval( fInterval )
 		,m_fDeltaTime(0.0f)
+		,eUVAnimType(eUVAnimType_SingleFile)
 	{
 
 	}
@@ -54,6 +55,7 @@ namespace guiex
 		,m_nFrame(0)
 		,m_fInterval( fInterval )
 		,m_fDeltaTime(0.0f)
+		,eUVAnimType(eUVAnimType_MultiFile)
 	{
 
 	}
@@ -63,7 +65,7 @@ namespace guiex
 		Unload();
 	}
 	//------------------------------------------------------------------------------
-	int32	CGUIAnimation::DoLoad()
+	int32 CGUIAnimation::DoLoad() const
 	{
 		//get full path
 		CGUIString strPrePath = CGUISceneInfoManager::Instance()->GetSceneFileRootPath( m_strSceneName );
@@ -80,12 +82,11 @@ namespace guiex
 			}
 			m_vecTextures.push_back( pTexture );
 		}
-		m_nFrame = 0;
 
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIAnimation::DoUnload()
+	void CGUIAnimation::DoUnload()
 	{
 		for( uint32 i=0; i<m_vecTextures.size(); ++i )
 		{
@@ -95,7 +96,7 @@ namespace guiex
 		m_nFrame = 0;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIAnimation::Update( real fDeltaTime )
+	void CGUIAnimation::Update( real fDeltaTime )
 	{
 		if( fDeltaTime < 0.0f )
 		{
@@ -109,7 +110,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	CGUISize	CGUIAnimation::GetSize()
+	CGUISize CGUIAnimation::GetSize() const
 	{
 		if( !IsLoaded())
 		{
@@ -127,35 +128,11 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	//void	CGUIAnimation::Draw(IGUIInterfaceRender* pRender,
-	//	const CGUIRenderRect& rRenderRect,
-	//	real z, 
-	//	real fAlpha	)
-	//{
-	//	if( !IsLoaded())
-	//	{
-	//		Load();
-	//	}
-
-	//	CGUIColor aColor(0xFFFFFFFF);
-	//	aColor.SetAlpha(fAlpha);
-	//	pRender->DrawTile( 
-	//		rRenderRect, 
-	//		z,
-	//		m_vecTextures[m_nFrame]->GetTextureImplement(),
-	//		m_vecUVRects[m_nFrame], 
-	//		IMAGE_NONE,
-	//		aColor.GetARGB(),
-	//		aColor.GetARGB(),
-	//		aColor.GetARGB(),
-	//		aColor.GetARGB());
-	//}
-	//------------------------------------------------------------------------------
-	void	CGUIAnimation::Draw( IGUIInterfaceRender* pRender,
+	void CGUIAnimation::Draw( IGUIInterfaceRender* pRender,
 		const CGUIMatrix4& rWorldMatrix,
 		const CGUIRect& rDestRect,
 		real z, 
-		real fAlpha	)
+		real fAlpha	) const
 	{
 		if( !IsLoaded())
 		{

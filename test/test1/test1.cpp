@@ -248,31 +248,31 @@ guiex::CGUIWidget* SampleInitialize()
 
 
 	{
-		guiex::CGUIAsAlpha* pAsAlpha = static_cast<guiex::CGUIAsAlpha*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsAlpha" ));
+		guiex::CGUIAsAlpha* pAsAlpha = static_cast<guiex::CGUIAsAlpha*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsAlpha", "asname","testscene" ));
 		pAsAlpha->SetLinearValue( 0, 1, 2 );
 		pAsAlpha->SetReceiver( pWidgetRoot );
 		pWidgetRoot->AddAs( pAsAlpha );
 	}
 
 	{
-		guiex::CGUIAsScale* pAsScale = static_cast<guiex::CGUIAsScale*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsScale" ));
+		guiex::CGUIAsScale* pAsScale = static_cast<guiex::CGUIAsScale*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsScale", "asname","testscene" ));
 		pAsScale->SetLinearValue( guiex::CGUISize(0.2f,0.2f), guiex::CGUISize(1,1), 4 );
 		pAsScale->SetReceiver( pWidget_panel );
 		pAsScale->SetLinearType( guiex::eInterpolationType_EaseInOut );
 		pWidget_panel->AddAs( pAsScale );
 
-		guiex::CGUIAsRotation* pAsRotation = static_cast<guiex::CGUIAsRotation*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsRotation" ));
+		guiex::CGUIAsRotation* pAsRotation = static_cast<guiex::CGUIAsRotation*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsRotation", "asname","testscene" ));
 		pAsRotation->SetLinearValue( guiex::CGUIVector3(0,0,360*5), guiex::CGUIVector3(), 4 );
 		pAsRotation->SetReceiver( pWidget_panel );
 		pWidget_panel->AddAs( pAsRotation );
 	}
 
 	{
-		guiex::CGUIAsPosition* pAsPos1 = static_cast<guiex::CGUIAsPosition*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsPosition" ));
+		guiex::CGUIAsPosition* pAsPos1 = static_cast<guiex::CGUIAsPosition*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsPosition", "asname","testscene" ));
 		pAsPos1->SetLinearValue( guiex::CGUIVector2(0,0), guiex::CGUIVector2(500,500), 3 );
 		pAsPos1->SetReceiver( pWidget_staticimage );
 
-		guiex::CGUIAsPosition* pAsPos2 = static_cast<guiex::CGUIAsPosition*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsPosition" ));
+		guiex::CGUIAsPosition* pAsPos2 = static_cast<guiex::CGUIAsPosition*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsPosition", "asname","testscene" ));
 		pAsPos2->SetLinearValue( guiex::CGUIVector2(500,500), guiex::CGUIVector2(100,500), 2 );
 		pAsPos2->SetReceiver( pWidget_staticimage );
 		pAsPos1->PushSuccessor(pAsPos2);
@@ -281,18 +281,18 @@ guiex::CGUIWidget* SampleInitialize()
 	}
 
 	{
-		guiex::CGUIAsContainer* pAsContainer = static_cast<guiex::CGUIAsContainer*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsContainer" ));
+		guiex::CGUIAsContainer* pAsContainer = static_cast<guiex::CGUIAsContainer*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsContainer", "asname","testscene" ));
 		guiex::CGUIAsColor* pAsColor = NULL;
 
-		pAsColor = static_cast<guiex::CGUIAsColor*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsColor" ));
+		pAsColor = static_cast<guiex::CGUIAsColor*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsColor", "asname","testscene" ));
 		pAsColor->SetLinearValue( guiex::CGUIColor(1,0,0, 1), guiex::CGUIColor(0,1,0,1), 2 );
 		pAsContainer->AddAs( pAsColor, 0 );
 
-		pAsColor = static_cast<guiex::CGUIAsColor*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsColor" ));
+		pAsColor = static_cast<guiex::CGUIAsColor*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsColor", "asname","testscene" ));
 		pAsColor->SetLinearValue( guiex::CGUIColor(0,1,0, 1), guiex::CGUIColor(0,0,1,1), 2 );
 		pAsContainer->AddAs( pAsColor, 2 );
 
-		pAsColor = static_cast<guiex::CGUIAsColor*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsColor" ));
+		pAsColor = static_cast<guiex::CGUIAsColor*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsColor", "asname","testscene" ));
 		pAsColor->SetLinearValue( guiex::CGUIColor(0,0,1, 1), guiex::CGUIColor(1,0,0,1), 2 );
 		pAsContainer->AddAs( pAsColor, 4 );
 
@@ -302,7 +302,7 @@ guiex::CGUIWidget* SampleInitialize()
 	}
 
 	{
-		guiex::CGUIAsRotation* pAsRotation = static_cast<guiex::CGUIAsRotation*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsRotation" ));
+		guiex::CGUIAsRotation* pAsRotation = static_cast<guiex::CGUIAsRotation*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsRotation", "asname","testscene" ));
 		pAsRotation->SetLinearValue( guiex::CGUIVector3(0,0,360), guiex::CGUIVector3(), 4 );
 		pAsRotation->SetReceiver( pWidget_staticimage );
 		pAsRotation->SetLooping( true );
@@ -310,34 +310,34 @@ guiex::CGUIWidget* SampleInitialize()
 	}
 
 	{
-		guiex::CGUIAsScale* pAsScale = static_cast<guiex::CGUIAsScale*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsScale" ));
+		guiex::CGUIAsScale* pAsScale = static_cast<guiex::CGUIAsScale*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsScale", "asname","testscene" ));
 		pAsScale->SetLinearValue( guiex::CGUISize(5,5), guiex::CGUISize(1,1), 6 );
 		pAsScale->SetReceiver( pWidget_staticimage2 );
 		pWidget_staticimage2->AddAs( pAsScale );
 
-		guiex::CGUIAsAlpha* pAsAlpha = static_cast<guiex::CGUIAsAlpha*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsAlpha" ));
+		guiex::CGUIAsAlpha* pAsAlpha = static_cast<guiex::CGUIAsAlpha*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsAlpha", "asname","testscene" ));
 		pAsAlpha->SetLinearValue( 0, 1, 3 );
 		pAsAlpha->SetReceiver( pWidget_staticimage2 );
 		pWidget_staticimage2->AddAs( pAsAlpha );
 
-		guiex::CGUIAsRotation* pAsRotation = static_cast<guiex::CGUIAsRotation*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsRotation" ));
+		guiex::CGUIAsRotation* pAsRotation = static_cast<guiex::CGUIAsRotation*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsRotation", "asname","testscene" ));
 		pAsRotation->SetLinearValue( guiex::CGUIVector3(0,0,360*2), guiex::CGUIVector3(), 4 );
 		pAsRotation->SetReceiver( pWidget_staticimage2 );
 		pWidget_staticimage2->AddAs( pAsRotation );
 	}
 
 	{
-		guiex::CGUIAsRotation* pAsRotation = static_cast<guiex::CGUIAsRotation*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsRotation" ));
+		guiex::CGUIAsRotation* pAsRotation = static_cast<guiex::CGUIAsRotation*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsRotation", "asname","testscene" ));
 		pAsRotation->SetLinearValue( guiex::CGUIVector3(0,0,360*5), guiex::CGUIVector3(), 1 );
 		pAsRotation->SetReceiver( pWidget_statictext );
 		pWidget_statictext->AddAs( pAsRotation );
 
-		guiex::CGUIAsAlpha* pAsAlpha = static_cast<guiex::CGUIAsAlpha*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsAlpha" ));
+		guiex::CGUIAsAlpha* pAsAlpha = static_cast<guiex::CGUIAsAlpha*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsAlpha", "asname","testscene" ));
 		pAsAlpha->SetLinearValue( 0, 1, 1 );
 		pAsAlpha->SetReceiver( pWidget_statictext );
 		pWidget_statictext->AddAs( pAsAlpha );
 		
-		guiex::CGUIAsScale* pAsScale = static_cast<guiex::CGUIAsScale*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsScale" ));
+		guiex::CGUIAsScale* pAsScale = static_cast<guiex::CGUIAsScale*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsScale", "asname","testscene" ));
 		pAsScale->SetLinearValue( guiex::CGUISize(0,0), guiex::CGUISize(2,2), 1 );
 		pAsScale->SetReceiver( pWidget_statictext );
 		pWidget_statictext->AddAs( pAsScale );

@@ -86,24 +86,24 @@ namespace guiex
 		m_mapGenerator.clear();
 	}
 	//------------------------------------------------------------------------------
-	CGUIAs*	CGUIAsFactory::GenerateAs(const CGUIString& rName)
+	CGUIAs*	CGUIAsFactory::GenerateAs(const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName)
 	{
-		TMapGenerator::iterator itor = m_mapGenerator.find( rName );
+		TMapGenerator::iterator itor = m_mapGenerator.find( rAsType );
 		if( itor == m_mapGenerator.end())
 		{
 			throw CGUIException(
 				"[CGUIAsFactory::GenerateAs] failed to find as generator <%s>",
-				rName.c_str());
+				rAsType.c_str());
 			return NULL;			
 		}
 		else
 		{
-			CGUIAs* pAs = (*itor).second->GenerateAs( );
+			CGUIAs* pAs = (*itor).second->GenerateAs( rAsName, rSceneName );
 			if( !pAs )
 			{
 				throw CGUIException(
 					"[CGUIAsFactory::GenerateAs] failed to create as <%s>",
-					rName.c_str());
+					rAsType.c_str());
 				return NULL;
 			}
 			else

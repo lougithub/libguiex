@@ -67,7 +67,7 @@ namespace guiex
 		return CGUIWidget::Create();
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtCheckButton::OnSetImage( const CGUIString& rName,CGUIImage* pImage )
+	void		CGUIWgtCheckButton::OnSetImage( const CGUIString& rName, const CGUIImage* pImage )
 	{
 		if( rName == "BTN_NORMAL")
 		{
@@ -117,7 +117,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void	CGUIWgtCheckButton::RenderSelf(IGUIInterfaceRender* pRender)
 	{
-		CGUIImage* pImage = NULL;
+		const CGUIImage* pImage = NULL;
 
 		if( !m_bChecked )
 		{

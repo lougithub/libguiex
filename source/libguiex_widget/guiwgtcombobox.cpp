@@ -153,7 +153,7 @@ namespace guiex
 		return CGUIWidget::Create();
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtComboBox::OnSetImage( const CGUIString& rName, CGUIImage* pImage)
+	void	CGUIWgtComboBox::OnSetImage( const CGUIString& rName, const CGUIImage* pImage)
 	{
 		if( rName == "BGIMAGE")
 		{

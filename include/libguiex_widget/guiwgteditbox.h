@@ -145,7 +145,7 @@ namespace guiex
 		/**
 		* @brief override the OnSetImage function
 		*/
-		virtual void OnSetImage( const CGUIString& rName,CGUIImage* pImage );
+		virtual void OnSetImage( const CGUIString& rName, const CGUIImage* pImage );
 
 	protected://string related function
 		/// get position of cursor 
@@ -228,9 +228,9 @@ namespace guiex
 
 		//---------------------------------------------------
 		//image
-		CGUIImage*	m_pBG;						//!< bg image
-		CGUIImage*	m_pBGFocus;					//!< bg image rendered when this widget is focusable
-		CGUIImage*	m_pCursor;					//!< cursor 
+		const CGUIImage*	m_pBG;						//!< bg image
+		const CGUIImage*	m_pBGFocus;					//!< bg image rendered when this widget is focusable
+		const CGUIImage*	m_pCursor;					//!< cursor 
 
 		//---------------------------------------------------
 		CGUIRect	m_aStringAreaRatio;			//!< the ratio of string area, the (0,0,1,1) equal whole client area

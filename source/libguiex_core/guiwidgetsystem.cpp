@@ -191,7 +191,7 @@ namespace guiex
 		GUI_ASSERT(m_aMapWidget.empty(), "shouldn't has any widget in map");
 
 		//release resource
-		FreeAllResources();
+		ReleaseAllResources();
 
 		//unregister  generator and module
 		CGUIWidgetFactory::Instance()->UnregisterAllGenerator();
@@ -289,9 +289,9 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void	CGUIWidgetSystem::FreeResource( const CGUIString& rSceneName )
 	{
-		CGUIImageManager::Instance()->ReleaseSceneResources(rSceneName);
-		CGUIAnimationManager::Instance()->ReleaseSceneResources(rSceneName);
-		CGUIFontManager::Instance()->ReleaseSceneResources(rSceneName);
+		CGUIImageManager::Instance()->ReleaseResourcesByScene(rSceneName);
+		CGUIAnimationManager::Instance()->ReleaseResourcesByScene(rSceneName);
+		CGUIFontManager::Instance()->ReleaseResourcesByScene(rSceneName);
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWidgetSystem::UnloadAllResource(  )
@@ -303,7 +303,7 @@ namespace guiex
 		//CGUITextureManager::Instance()->DestroyAllTextureImplement();
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidgetSystem::FreeAllResources(  )
+	void	CGUIWidgetSystem::ReleaseAllResources(  )
 	{
 		CGUIImageManager::Instance()->ReleaseAllResources( );
 		CGUIAnimationManager::Instance()->ReleaseAllResources( );

@@ -99,7 +99,7 @@ namespace guiex
 		/**
 		* @brief override the OnSetImage function
 		*/
-		virtual void	OnSetImage( const CGUIString& rName,CGUIImage* pImage );
+		virtual void	OnSetImage( const CGUIString& rName, const CGUIImage* pImage );
 
 	protected:	//!< callback function
 		virtual uint32		OnMouseEnter( CGUIEventMouse* pEvent );
@@ -115,16 +115,16 @@ namespace guiex
 		bool	m_bPushing;		///whether button is pushed
 		bool	m_bChecked;		///whether button is checked
 
-		CGUIImage*	m_pImageNormal;
-		CGUIImage*	m_pImageHovering;
-		CGUIImage*	m_pImageDisable;
-		CGUIImage*	m_pImagePush;
-		CGUIImage*	m_pImageNormalChecked;
-		CGUIImage*	m_pImageHoveringChecked;
-		CGUIImage*	m_pImageDisableChecked;
-		CGUIImage*	m_pImagePushChecked;
-		CGUIImage*	m_pImageHoverOverlay;
-		CGUIImage*	m_pImageCheckedOverlay;
+		const CGUIImage* m_pImageNormal;
+		const CGUIImage* m_pImageHovering;
+		const CGUIImage* m_pImageDisable;
+		const CGUIImage *m_pImagePush;
+		const CGUIImage* m_pImageNormalChecked;
+		const CGUIImage* m_pImageHoveringChecked;
+		const CGUIImage* m_pImageDisableChecked;
+		const CGUIImage* m_pImagePushChecked;
+		const CGUIImage* m_pImageHoverOverlay;
+		const CGUIImage* m_pImageCheckedOverlay;
 
 	private:
 		static CGUIString	ms_strType;

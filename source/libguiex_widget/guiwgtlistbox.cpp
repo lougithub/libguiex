@@ -77,7 +77,7 @@ namespace guiex
 		return CGUIWidget::Create();
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtListBox::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
+	void CGUIWgtListBox::OnSetImage( const CGUIString& rName, const CGUIImage* pImage )
 	{
 		if( rName == "BGIMAGE")
 		{

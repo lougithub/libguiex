@@ -378,15 +378,9 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////
 		/**
 		* @brief set the image of widget.
-		* @param pImage must be created by CGUIImageManager
-		*/
-		void SetImage( const CGUIString& rName, CGUIImage* pImage );
-
-		/**
-		* @brief set the image of widget.
 		* @param rImageName name of the image
 		*/
-		CGUIImage* SetImage( const CGUIString& rName, const CGUIString& rImageName );
+		const CGUIImage* SetImage( const CGUIString& rName, const CGUIString& rImageName );
 
 		/**
 		* @brief has the image been load.
@@ -397,7 +391,7 @@ namespace guiex
 		* @brief get image info
 		* @return NULL for failed to find image by given name
 		*/
-		CGUIImage* GetImage( const CGUIString& rName );
+		const CGUIImage* GetImage( const CGUIString& rName );
 
 		/**
 		* @brief add an  animation
@@ -659,6 +653,8 @@ namespace guiex
 		 */
 		void UpdateAs( real fDeltaTime );
 
+		void DoSetImage( const CGUIString& rName, const CGUIImage* pImage );
+
 		void DrawRect( IGUIInterfaceRender* pRender,
 			const CGUIRect& rDestRect, 
 			real fLineWidth,
@@ -686,7 +682,7 @@ namespace guiex
 			int32 nEndPos = -1);
 
 		void	DrawImage( IGUIInterfaceRender* pRender,
-			CGUIImage* pImage, 
+			const CGUIImage* pImage, 
 			const CGUIRect& rDestRect);
 
 		void	DrawImage( IGUIInterfaceRender* pRender, 
@@ -694,13 +690,13 @@ namespace guiex
 			const CGUIRect& rDestRect);
 
 		void	DrawAnimation( IGUIInterfaceRender* pRender,
-			CGUIAnimation* pAnimation, 
+			const CGUIAnimation* pAnimation, 
 			const CGUIRect& rDestRect);
 
 		/**
 		* @brief callback of set the image of widget.
 		*/
-		virtual void	OnSetImage( const CGUIString& rName, CGUIImage* pImage );
+		virtual void	OnSetImage( const CGUIString& rName, const CGUIImage* pImage );
 
 	private:
 		void SetParentImpl( CGUIWidget* pParent );
@@ -932,7 +928,7 @@ namespace guiex
 		///////////////////////////////////////////////////////////////////////
 		/// for image and animation											
 		///////////////////////////////////////////////////////////////////////
-		typedef std::map<CGUIString, CGUIImage*>	TMapImage;
+		typedef std::map<CGUIString, const CGUIImage*>	TMapImage;
 		TMapImage	m_aMapImage;	//!< image info map, key is image name used in ui system
 
 		typedef std::map<CGUIString, CGUIAnimation*>	TMapAnimation;

@@ -53,7 +53,7 @@ namespace guiex
 		return CGUIWidget::Create();
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtDialog::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
+	void CGUIWgtDialog::OnSetImage( const CGUIString& rName, const CGUIImage* pImage )
 	{
 		if( rName == "BGIMAGE")
 		{
@@ -65,7 +65,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtDialog::RenderSelf(IGUIInterfaceRender* pRender)
+	void CGUIWgtDialog::RenderSelf(IGUIInterfaceRender* pRender)
 	{
 		DrawImage( pRender, m_pImageBG, GetBoundArea() );
 	}

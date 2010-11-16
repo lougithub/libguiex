@@ -655,7 +655,7 @@ void	WxMainFrame::CloseScene( )
 
 		CloseCanvas();
 
-		guiex::CGUIWidgetSystem::Instance()->FreeAllResources();
+		guiex::CGUIWidgetSystem::Instance()->ReleaseAllResources();
 		guiex::CGUISceneInfoManager::Instance()->UnloadScenes();
 
 		m_bIsSceneOpened = false;
@@ -1456,8 +1456,8 @@ void WxMainFrame::RenderFile( const std::string& rFileName )
 	m_pCanvas = new WxEditorCanvasContainer(m_pNoteBook_Canvas, strAbsFileName);
 	m_pNoteBook_Canvas->AddPage( m_pCanvas, wxConvUTF8.cMB2WC(rFileName.c_str()), true );
 	m_pCanvas->SetNextHandler( m_pNoteBook_Canvas );
-	//for load font
-	guiex::CGUIFontManager::Instance()->LoadAllResources();
+	////for load font
+	//guiex::CGUIFontManager::Instance()->LoadAllResources();
 
 	try
 	{

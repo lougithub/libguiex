@@ -311,12 +311,12 @@ namespace guiex
 		SetGenerateClickEvent(true);
 	}
 	//------------------------------------------------------------------------------
-	const CGUIString&	CGUIWgtScrollbar::GetWidgetType()
+	const CGUIString& CGUIWgtScrollbar::GetWidgetType()
 	{
 		return ms_strType;
 	}
 	//------------------------------------------------------------------------------
-	CGUIWgtScrollbar*	CGUIWgtScrollbar::FromWidget( CGUIWidget* pWidget )
+	CGUIWgtScrollbar* CGUIWgtScrollbar::FromWidget( CGUIWidget* pWidget )
 	{
 		if( !pWidget )
 		{
@@ -329,24 +329,24 @@ namespace guiex
 		return dynamic_cast<CGUIWgtScrollbar *>(pWidget);
 	}
 	//------------------------------------------------------------------------------
-	void			CGUIWgtScrollbar::SetScrollbarHost( CGUIWidget* pWgtHost )
+	void CGUIWgtScrollbar::SetScrollbarHost( CGUIWidget* pWgtHost )
 	{
 		m_pWgtHost = pWgtHost;
 	}
 	//------------------------------------------------------------------------------
-	void			CGUIWgtScrollbar::SetScrollbarType( EScrollbarType eScrollbarType )
+	void CGUIWgtScrollbar::SetScrollbarType( EScrollbarType eScrollbarType )
 	{
 		m_eScrollbarType = eScrollbarType;
 
 		UpdateScrollbar();
 	}
 	//------------------------------------------------------------------------------
-	EScrollbarType	CGUIWgtScrollbar::GetScrollbarType( ) const
+	EScrollbarType CGUIWgtScrollbar::GetScrollbarType( ) const
 	{
 		return m_eScrollbarType;
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtScrollbar::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
+	void CGUIWgtScrollbar::OnSetImage( const CGUIString& rName, const CGUIImage* pImage )
 	{
 		if( rName == "SCROLLBAR_BG")
 		{
@@ -449,7 +449,7 @@ namespace guiex
 		return result;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtScrollbar::RenderSelf(IGUIInterfaceRender* pRender)
+	void CGUIWgtScrollbar::RenderSelf(IGUIInterfaceRender* pRender)
 	{
 		DrawImage( pRender, m_pImageBg, GetBoundArea( ) );
 	}
@@ -495,7 +495,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtScrollbar::UpdateValue()
+	void CGUIWgtScrollbar::UpdateValue()
 	{
 		//enable or disable arrow
 		if( m_nCurPos <= m_nMinPos )

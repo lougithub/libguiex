@@ -264,7 +264,7 @@ namespace guiex
 
 
 	//------------------------------------------------------------------------------
-	void	CGUIColListHeader::OnSetImage( const CGUIString& rName,CGUIImage* pImage )
+	void	CGUIColListHeader::OnSetImage( const CGUIString& rName, const CGUIImage* pImage )
 	{
 
 	}

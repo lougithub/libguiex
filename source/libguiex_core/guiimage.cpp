@@ -82,7 +82,7 @@ namespace guiex
 		Unload();
 	}
 	//------------------------------------------------------------------------------
-	int32	CGUIImage::DoLoad()
+	int32	CGUIImage::DoLoad() const
 	{
 		GUI_ASSERT( m_pTexture==NULL, "the texture has existed");
 
@@ -122,7 +122,6 @@ namespace guiex
 			return -1;
 		}
 
-		m_aUVRect.SetRect( m_aUVRect );
 		return 0;
 	}
 	//------------------------------------------------------------------------------
@@ -135,7 +134,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	CGUISize CGUIImage::GetSize()
+	CGUISize CGUIImage::GetSize() const
 	{
 		if( !IsLoaded())
 		{
@@ -162,7 +161,7 @@ namespace guiex
 		const CGUIRect& rDestRect,
 		real z, 
 		const CGUIColorRect& rColorRect,
-		real fAlpha	)
+		real fAlpha	) const
 	{
 		if( !IsLoaded())
 		{
@@ -183,7 +182,7 @@ namespace guiex
 		const CGUIMatrix4& rWorldMatrix,
 		const CGUIRect& rDestRect,
 		real z, 
-		real fAlpha)
+		real fAlpha) const
 	{
 		if( !IsLoaded())
 		{
@@ -211,7 +210,7 @@ namespace guiex
 		const CGUIRect& rDestRect,
 		real z, 
 		const CGUIColor& rColor,
-		real fAlpha)
+		real fAlpha) const
 	{
 		if( !IsLoaded())
 		{
@@ -233,32 +232,6 @@ namespace guiex
 				aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB());
 		}
 	}
-	//------------------------------------------------------------------------------
-	//void	CGUIImage::Draw(IGUIInterfaceRender* pRender,
-	//	const CGUIRenderRect& rRenderRect,
-	//	real z, 
-	//	real fAlpha	)
-	//{
-	//	if( !IsLoaded())
-	//	{
-	//		Load();
-	//	}
-
-	//	if( m_eImageType == eIT_COLOR )
-	//	{
-	//		CGUIColor aColor = m_aColor;
-	//		aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
-	//		pRender->DrawTile( rRenderRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOperation,
-	//			aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB());
-	//	}
-	//	else
-	//	{
-	//		CGUIColor aColor(0xFFFFFFFF);
-	//		aColor.SetAlpha(fAlpha);
-	//		pRender->DrawTile( rRenderRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOperation,
-	//			aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB());
-	//	}
-	//}
 	//------------------------------------------------------------------------------
 
 }//namespace guiex
