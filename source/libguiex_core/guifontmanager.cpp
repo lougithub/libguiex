@@ -39,10 +39,4 @@ namespace guiex
 		return pFont;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIFontManager::DoDestroyResource( void* pRes )
-	{
-		CGUIFont * pFont = reinterpret_cast<CGUIFont*>(pRes);
-		delete pRes;
-	}
-	//------------------------------------------------------------------------------
 }//namespace guiex

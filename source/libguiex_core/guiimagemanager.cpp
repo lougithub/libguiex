@@ -41,7 +41,6 @@ namespace guiex
 		EImageOperation eImageOperation)
 	{
 		CGUIImage* pImage = new CGUIImage( rName, rSceneName, rPath, rUVRect, eImageOperation );
-		pImage->RefRetain();
 		RegisterResource(pImage);
 		return pImage;
 	}
@@ -52,7 +51,6 @@ namespace guiex
 		const CGUIColor& rColor )
 	{
 		CGUIImage* pImage = new CGUIImage( rName, rSceneName, rColor );
-		pImage->RefRetain();
 		RegisterResource(pImage);
 		return pImage;
 	}
@@ -153,7 +151,7 @@ namespace guiex
 		GUI_ASSERT( pImage, "invalid parameter" );
 
 		pImage->RefRelease();
-		if( pImage->GetRefCount() <= 1 )
+		if( pImage->GetRefCount() == 0 )
 		{
 			throw CGUIException( "[CGUIImageManager::DeallocateResource]: invalid reference count [%d] for resource: <%s:%s:%s>", 
 				pImage->GetRefCount(),

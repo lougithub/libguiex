@@ -58,9 +58,6 @@ namespace guiex
 			);
 
 	protected:
-		virtual	void DoDestroyResource( void* pRes ); 
-
-	protected:
 		//declare for singleton
 		GUI_SINGLETON_DECLARE_EX(CGUIFontManager);
 	};

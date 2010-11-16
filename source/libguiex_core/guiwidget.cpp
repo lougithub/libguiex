@@ -1136,7 +1136,7 @@ namespace guiex
 
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::DoSetImage( const CGUIString& rName, const CGUIImage* pImage )
+	void	CGUIWidget::SetImage( const CGUIString& rName, const CGUIImage* pImage )
 	{
 		//clear old one
 		TMapImage::iterator itor = m_aMapImage.find(rName );
@@ -1149,6 +1149,7 @@ namespace guiex
 		OnSetImage( rName, pImage );
 		if( pImage )
 		{
+			pImage->RefRetain();
 			m_aMapImage.insert( std::make_pair( rName, pImage));
 		}
 	}
@@ -1162,7 +1163,8 @@ namespace guiex
 			throw CGUIException( "failed to get image by name <%s>", rImageName.c_str());
 			return NULL;
 		};
-		DoSetImage(rName, pImage);
+		SetImage(rName, pImage);
+		pImage->RefRelease();
 		return pImage;
 	}
 	//------------------------------------------------------------------------------
@@ -1458,7 +1460,7 @@ namespace guiex
 			else
 			{
 				//clear image
-				DoSetImage( rProperty.GetName(), NULL);
+				SetImage( rProperty.GetName(), NULL);
 			}
 		}
 

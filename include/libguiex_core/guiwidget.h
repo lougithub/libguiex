@@ -382,6 +382,8 @@ namespace guiex
 		*/
 		const CGUIImage* SetImage( const CGUIString& rName, const CGUIString& rImageName );
 
+		void SetImage( const CGUIString& rName, const CGUIImage* pImage );
+
 		/**
 		* @brief has the image been load.
 		*/
@@ -652,8 +654,6 @@ namespace guiex
 		 * @brief update action sequence
 		 */
 		void UpdateAs( real fDeltaTime );
-
-		void DoSetImage( const CGUIString& rName, const CGUIImage* pImage );
 
 		void DrawRect( IGUIInterfaceRender* pRender,
 			const CGUIRect& rDestRect, 

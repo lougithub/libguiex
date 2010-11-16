@@ -103,12 +103,15 @@ namespace guiex
 	template< class TResType >
 	inline int32 CGUIResourceManager<TResType>::RegisterResource( TResType* pRes )
 	{
+		GUI_ASSERT( pRes, "invalid parameter" );
+
 		if( m_mapResource.find( pRes->GetName()) != m_mapResource.end())
 		{
 			throw CGUIException( "the resource <%s> has existed", pRes->GetName().c_str());
 			return -1;
 		}
 
+		pRes->RefRetain();
 		m_mapResource.insert( std::make_pair( pRes->GetName(), pRes));
 		return 0;
 	}

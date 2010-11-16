@@ -52,7 +52,7 @@ namespace guiex
 	{
 		if( m_nReferenceCount == 0)
 		{
-			throw CGUIException( "invalid reference counter for resource <%s:%s:%s>", GetName().c_str(), GetResourceType().c_str(),GetSceneName().c_str() );
+			throw CGUIException( "[CGUIResource::RefRelease]:invalid reference count for resource <%s:%s:%s>", GetName().c_str(), GetResourceType().c_str(),GetSceneName().c_str() );
 			return;
 		}
 		--m_nReferenceCount;
