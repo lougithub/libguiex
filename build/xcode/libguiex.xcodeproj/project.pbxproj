@@ -38,7 +38,16 @@
 		FF1B89611289972D006584D3 /* guitexture_opengles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF1B895F1289972D006584D3 /* guitexture_opengles.cpp */; };
 		FF1B896512899741006584D3 /* guirender_opengles.h in Headers */ = {isa = PBXBuildFile; fileRef = FF1B896312899741006584D3 /* guirender_opengles.h */; };
 		FF1B896612899741006584D3 /* guitexture_opengles.h in Headers */ = {isa = PBXBuildFile; fileRef = FF1B896412899741006584D3 /* guitexture_opengles.h */; };
-		FF23B32312901CC40041D7BA /* UI-PaperDoll-Slot-Ammo.tga in Resources */ = {isa = PBXBuildFile; fileRef = FF23B32212901CC40041D7BA /* UI-PaperDoll-Slot-Ammo.tga */; };
+		FF4010F31292C56E00A9755A /* guiasmanager.h in Headers */ = {isa = PBXBuildFile; fileRef = FF4010F21292C56E00A9755A /* guiasmanager.h */; };
+		FF4010F71292C5A100A9755A /* guisceneinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = FF4010F41292C5A100A9755A /* guisceneinfo.h */; };
+		FF4010F81292C5A100A9755A /* guisceneinfomanager.h in Headers */ = {isa = PBXBuildFile; fileRef = FF4010F51292C5A100A9755A /* guisceneinfomanager.h */; };
+		FF4010F91292C5A100A9755A /* guisceneutility.h in Headers */ = {isa = PBXBuildFile; fileRef = FF4010F61292C5A100A9755A /* guisceneutility.h */; };
+		FF4010FB1292C5B100A9755A /* guiasmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF4010FA1292C5B100A9755A /* guiasmanager.cpp */; };
+		FF4010FF1292C5BE00A9755A /* guisceneinfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF4010FC1292C5BE00A9755A /* guisceneinfo.cpp */; };
+		FF4011001292C5BE00A9755A /* guisceneinfomanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF4010FD1292C5BE00A9755A /* guisceneinfomanager.cpp */; };
+		FF4011011292C5BE00A9755A /* guisceneutility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF4010FE1292C5BE00A9755A /* guisceneutility.cpp */; };
+		FF40112F1292C84F00A9755A /* guiinterpolation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF40112E1292C84F00A9755A /* guiinterpolation.cpp */; };
+		FF4011311292C86400A9755A /* guiinterpolation.h in Headers */ = {isa = PBXBuildFile; fileRef = FF4011301292C86400A9755A /* guiinterpolation.h */; };
 		FF8FAC061285A4F200D7DF5A /* guitimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEEF12858CB200C0BCB4 /* guitimer.cpp */; };
 		FF8FAC071285A4FC00D7DF5A /* guitimer.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE6212858C9D00C0BCB4 /* guitimer.h */; };
 		FFACE03F1285943A00C0BCB4 /* guianimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEB112858CB200C0BCB4 /* guianimation.cpp */; };
@@ -85,9 +94,6 @@
 		FFACE0681285943A00C0BCB4 /* guiobjectmanagerbase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEDA12858CB200C0BCB4 /* guiobjectmanagerbase.cpp */; };
 		FFACE0691285943A00C0BCB4 /* guiperfmonitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEDB12858CB200C0BCB4 /* guiperfmonitor.cpp */; };
 		FFACE06A1285943A00C0BCB4 /* guiplane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEDC12858CB200C0BCB4 /* guiplane.cpp */; };
-		FFACE06B1285943A00C0BCB4 /* guiprojectinfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEDD12858CB200C0BCB4 /* guiprojectinfo.cpp */; };
-		FFACE06C1285943A00C0BCB4 /* guiprojectinfomanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEDE12858CB200C0BCB4 /* guiprojectinfomanager.cpp */; };
-		FFACE06D1285943A00C0BCB4 /* guiprojectutility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEDF12858CB200C0BCB4 /* guiprojectutility.cpp */; };
 		FFACE06E1285943A00C0BCB4 /* guiproperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEE012858CB200C0BCB4 /* guiproperty.cpp */; };
 		FFACE0701285943A00C0BCB4 /* guipropertyconvertor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEE212858CB200C0BCB4 /* guipropertyconvertor.cpp */; };
 		FFACE0711285943A00C0BCB4 /* guipropertymanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEE312858CB200C0BCB4 /* guipropertymanager.cpp */; };
@@ -162,9 +168,6 @@
 		FFACE19B128594DB00C0BCB4 /* guiobjectmanagerbase.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE4912858C9D00C0BCB4 /* guiobjectmanagerbase.h */; };
 		FFACE19C128594DB00C0BCB4 /* guiperfmonitor.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE4A12858C9D00C0BCB4 /* guiperfmonitor.h */; };
 		FFACE19D128594DB00C0BCB4 /* guiplane.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE4B12858C9D00C0BCB4 /* guiplane.h */; };
-		FFACE19E128594DB00C0BCB4 /* guiprojectinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE4C12858C9D00C0BCB4 /* guiprojectinfo.h */; };
-		FFACE19F128594DB00C0BCB4 /* guiprojectinfomanager.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE4D12858C9D00C0BCB4 /* guiprojectinfomanager.h */; };
-		FFACE1A0128594DB00C0BCB4 /* guiprojectutility.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE4E12858C9D00C0BCB4 /* guiprojectutility.h */; };
 		FFACE1A1128594DB00C0BCB4 /* guiproperty.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE4F12858C9D00C0BCB4 /* guiproperty.h */; };
 		FFACE1A3128594DB00C0BCB4 /* guipropertyconvertor.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE5112858C9D00C0BCB4 /* guipropertyconvertor.h */; };
 		FFACE1A4128594DB00C0BCB4 /* guipropertymanager.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE5212858C9D00C0BCB4 /* guipropertymanager.h */; };
@@ -265,7 +268,6 @@
 		FFBDE1E6128EBA19003A1CA1 /* b2RevoluteJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = FFBDE16D128EBA19003A1CA1 /* b2RevoluteJoint.h */; };
 		FFBDE1E7128EBA19003A1CA1 /* b2WeldJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFBDE16E128EBA19003A1CA1 /* b2WeldJoint.cpp */; };
 		FFBDE1E8128EBA19003A1CA1 /* b2WeldJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = FFBDE16F128EBA19003A1CA1 /* b2WeldJoint.h */; };
-		FFCC0373128FE77500C24226 /* image in Resources */ = {isa = PBXBuildFile; fileRef = FFCC036F128FE77500C24226 /* image */; };
 		FFF2E7D8128C277100D69E33 /* liblibguiex_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FFACDBFD12858B0000C0BCB4 /* liblibguiex_core.a */; };
 		FFF2E7D9128C277100D69E33 /* liblibguiex_widget.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FFACDF6112858D1800C0BCB4 /* liblibguiex_widget.a */; };
 		FFF2E7DA128C277100D69E33 /* libliguiex_module.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FFACDF6B12858D4E00C0BCB4 /* libliguiex_module.a */; };
@@ -327,13 +329,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		FF58E7E6128FE8AB00C561D1 /* CopyFiles */ = {
+		FF4711B91292DE5F00D267F9 /* Resource */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = "";
+			dstPath = Users/louguoliang/Code/libguiex_googlecode/data/data_helloipad;
 			dstSubfolderSpec = 7;
 			files = (
 			);
+			name = Resource;
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -370,7 +373,16 @@
 		FF1B895F1289972D006584D3 /* guitexture_opengles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guitexture_opengles.cpp; sourceTree = "<group>"; };
 		FF1B896312899741006584D3 /* guirender_opengles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guirender_opengles.h; sourceTree = "<group>"; };
 		FF1B896412899741006584D3 /* guitexture_opengles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guitexture_opengles.h; sourceTree = "<group>"; };
-		FF23B32212901CC40041D7BA /* UI-PaperDoll-Slot-Ammo.tga */ = {isa = PBXFileReference; lastKnownFileType = file; name = "UI-PaperDoll-Slot-Ammo.tga"; path = "../../data/UI/tdg_paperdoll/image/UI-PaperDoll-Slot-Ammo.tga"; sourceTree = SOURCE_ROOT; };
+		FF4010F21292C56E00A9755A /* guiasmanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiasmanager.h; sourceTree = "<group>"; };
+		FF4010F41292C5A100A9755A /* guisceneinfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guisceneinfo.h; sourceTree = "<group>"; };
+		FF4010F51292C5A100A9755A /* guisceneinfomanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guisceneinfomanager.h; sourceTree = "<group>"; };
+		FF4010F61292C5A100A9755A /* guisceneutility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guisceneutility.h; sourceTree = "<group>"; };
+		FF4010FA1292C5B100A9755A /* guiasmanager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiasmanager.cpp; sourceTree = "<group>"; };
+		FF4010FC1292C5BE00A9755A /* guisceneinfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guisceneinfo.cpp; sourceTree = "<group>"; };
+		FF4010FD1292C5BE00A9755A /* guisceneinfomanager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guisceneinfomanager.cpp; sourceTree = "<group>"; };
+		FF4010FE1292C5BE00A9755A /* guisceneutility.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guisceneutility.cpp; sourceTree = "<group>"; };
+		FF40112E1292C84F00A9755A /* guiinterpolation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiinterpolation.cpp; sourceTree = "<group>"; };
+		FF4011301292C86400A9755A /* guiinterpolation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiinterpolation.h; sourceTree = "<group>"; };
 		FFACDBFD12858B0000C0BCB4 /* liblibguiex_core.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibguiex_core.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFACDE1A12858C9D00C0BCB4 /* guianimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guianimation.h; sourceTree = "<group>"; };
 		FFACDE1B12858C9D00C0BCB4 /* guianimationmanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guianimationmanager.h; sourceTree = "<group>"; };
@@ -422,9 +434,6 @@
 		FFACDE4912858C9D00C0BCB4 /* guiobjectmanagerbase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiobjectmanagerbase.h; sourceTree = "<group>"; };
 		FFACDE4A12858C9D00C0BCB4 /* guiperfmonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiperfmonitor.h; sourceTree = "<group>"; };
 		FFACDE4B12858C9D00C0BCB4 /* guiplane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiplane.h; sourceTree = "<group>"; };
-		FFACDE4C12858C9D00C0BCB4 /* guiprojectinfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiprojectinfo.h; sourceTree = "<group>"; };
-		FFACDE4D12858C9D00C0BCB4 /* guiprojectinfomanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiprojectinfomanager.h; sourceTree = "<group>"; };
-		FFACDE4E12858C9D00C0BCB4 /* guiprojectutility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiprojectutility.h; sourceTree = "<group>"; };
 		FFACDE4F12858C9D00C0BCB4 /* guiproperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiproperty.h; sourceTree = "<group>"; };
 		FFACDE5112858C9D00C0BCB4 /* guipropertyconvertor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guipropertyconvertor.h; sourceTree = "<group>"; };
 		FFACDE5212858C9D00C0BCB4 /* guipropertymanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guipropertymanager.h; sourceTree = "<group>"; };
@@ -534,9 +543,6 @@
 		FFACDEDA12858CB200C0BCB4 /* guiobjectmanagerbase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiobjectmanagerbase.cpp; sourceTree = "<group>"; };
 		FFACDEDB12858CB200C0BCB4 /* guiperfmonitor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiperfmonitor.cpp; sourceTree = "<group>"; };
 		FFACDEDC12858CB200C0BCB4 /* guiplane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiplane.cpp; sourceTree = "<group>"; };
-		FFACDEDD12858CB200C0BCB4 /* guiprojectinfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiprojectinfo.cpp; sourceTree = "<group>"; };
-		FFACDEDE12858CB200C0BCB4 /* guiprojectinfomanager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiprojectinfomanager.cpp; sourceTree = "<group>"; };
-		FFACDEDF12858CB200C0BCB4 /* guiprojectutility.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiprojectutility.cpp; sourceTree = "<group>"; };
 		FFACDEE012858CB200C0BCB4 /* guiproperty.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiproperty.cpp; sourceTree = "<group>"; };
 		FFACDEE212858CB200C0BCB4 /* guipropertyconvertor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guipropertyconvertor.cpp; sourceTree = "<group>"; };
 		FFACDEE312858CB200C0BCB4 /* guipropertymanager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guipropertymanager.cpp; sourceTree = "<group>"; };
@@ -670,7 +676,6 @@
 		FFBDE16D128EBA19003A1CA1 /* b2RevoluteJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2RevoluteJoint.h; sourceTree = "<group>"; };
 		FFBDE16E128EBA19003A1CA1 /* b2WeldJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2WeldJoint.cpp; sourceTree = "<group>"; };
 		FFBDE16F128EBA19003A1CA1 /* b2WeldJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2WeldJoint.h; sourceTree = "<group>"; };
-		FFCC036F128FE77500C24226 /* image */ = {isa = PBXFileReference; lastKnownFileType = folder; name = image; path = ../../data/UI/tdg_bag/image; sourceTree = SOURCE_ROOT; };
 		FFF2E7DF128C27CD00D69E33 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -746,8 +751,6 @@
 		0867D691FE84028FC02AAC07 /* libguiex */ = {
 			isa = PBXGroup;
 			children = (
-				FF23B32212901CC40041D7BA /* UI-PaperDoll-Slot-Ammo.tga */,
-				FFCC036F128FE77500C24226 /* image */,
 				FFF654DD128C4A5F00C8EB42 /* Data */,
 				08FB77AEFE84172EC02AAC07 /* Classes */,
 				32C88DFF0371C24200C91783 /* Other Sources */,
@@ -944,6 +947,11 @@
 		FFACDE1912858C9D00C0BCB4 /* libguiex_core */ = {
 			isa = PBXGroup;
 			children = (
+				FF4011301292C86400A9755A /* guiinterpolation.h */,
+				FF4010F41292C5A100A9755A /* guisceneinfo.h */,
+				FF4010F51292C5A100A9755A /* guisceneinfomanager.h */,
+				FF4010F61292C5A100A9755A /* guisceneutility.h */,
+				FF4010F21292C56E00A9755A /* guiasmanager.h */,
 				FFACDE1A12858C9D00C0BCB4 /* guianimation.h */,
 				FFACDE1B12858C9D00C0BCB4 /* guianimationmanager.h */,
 				FFACDE1C12858C9D00C0BCB4 /* guias.h */,
@@ -994,9 +1002,6 @@
 				FFACDE4912858C9D00C0BCB4 /* guiobjectmanagerbase.h */,
 				FFACDE4A12858C9D00C0BCB4 /* guiperfmonitor.h */,
 				FFACDE4B12858C9D00C0BCB4 /* guiplane.h */,
-				FFACDE4C12858C9D00C0BCB4 /* guiprojectinfo.h */,
-				FFACDE4D12858C9D00C0BCB4 /* guiprojectinfomanager.h */,
-				FFACDE4E12858C9D00C0BCB4 /* guiprojectutility.h */,
 				FFACDE4F12858C9D00C0BCB4 /* guiproperty.h */,
 				FFACDE5112858C9D00C0BCB4 /* guipropertyconvertor.h */,
 				FFACDE5212858C9D00C0BCB4 /* guipropertymanager.h */,
@@ -1087,6 +1092,11 @@
 		FFACDEB012858CB200C0BCB4 /* libguiex_core */ = {
 			isa = PBXGroup;
 			children = (
+				FF40112E1292C84F00A9755A /* guiinterpolation.cpp */,
+				FF4010FC1292C5BE00A9755A /* guisceneinfo.cpp */,
+				FF4010FD1292C5BE00A9755A /* guisceneinfomanager.cpp */,
+				FF4010FE1292C5BE00A9755A /* guisceneutility.cpp */,
+				FF4010FA1292C5B100A9755A /* guiasmanager.cpp */,
 				FFACDEB112858CB200C0BCB4 /* guianimation.cpp */,
 				FFACDEB212858CB200C0BCB4 /* guianimationmanager.cpp */,
 				FFACDEB312858CB200C0BCB4 /* guias.cpp */,
@@ -1131,9 +1141,6 @@
 				FFACDEDA12858CB200C0BCB4 /* guiobjectmanagerbase.cpp */,
 				FFACDEDB12858CB200C0BCB4 /* guiperfmonitor.cpp */,
 				FFACDEDC12858CB200C0BCB4 /* guiplane.cpp */,
-				FFACDEDD12858CB200C0BCB4 /* guiprojectinfo.cpp */,
-				FFACDEDE12858CB200C0BCB4 /* guiprojectinfomanager.cpp */,
-				FFACDEDF12858CB200C0BCB4 /* guiprojectutility.cpp */,
 				FFACDEE012858CB200C0BCB4 /* guiproperty.cpp */,
 				FFACDEE212858CB200C0BCB4 /* guipropertyconvertor.cpp */,
 				FFACDEE312858CB200C0BCB4 /* guipropertymanager.cpp */,
@@ -1413,9 +1420,6 @@
 				FFACE19B128594DB00C0BCB4 /* guiobjectmanagerbase.h in Headers */,
 				FFACE19C128594DB00C0BCB4 /* guiperfmonitor.h in Headers */,
 				FFACE19D128594DB00C0BCB4 /* guiplane.h in Headers */,
-				FFACE19E128594DB00C0BCB4 /* guiprojectinfo.h in Headers */,
-				FFACE19F128594DB00C0BCB4 /* guiprojectinfomanager.h in Headers */,
-				FFACE1A0128594DB00C0BCB4 /* guiprojectutility.h in Headers */,
 				FFACE1A1128594DB00C0BCB4 /* guiproperty.h in Headers */,
 				FFACE1A3128594DB00C0BCB4 /* guipropertyconvertor.h in Headers */,
 				FFACE1A4128594DB00C0BCB4 /* guipropertymanager.h in Headers */,
@@ -1445,6 +1449,11 @@
 				FFACE1BE128594DB00C0BCB4 /* guiwidgetroot.h in Headers */,
 				FFACE1BF128594DB00C0BCB4 /* guiwidgetsystem.h in Headers */,
 				FFACE1C0128594DB00C0BCB4 /* guiwidgetutility.h in Headers */,
+				FF4010F31292C56E00A9755A /* guiasmanager.h in Headers */,
+				FF4010F71292C5A100A9755A /* guisceneinfo.h in Headers */,
+				FF4010F81292C5A100A9755A /* guisceneinfomanager.h in Headers */,
+				FF4010F91292C5A100A9755A /* guisceneutility.h in Headers */,
+				FF4011311292C86400A9755A /* guiinterpolation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1538,8 +1547,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FF0FC57812897F16004B195F /* Build configuration list for PBXNativeTarget "hello_ipad" */;
 			buildPhases = (
-				FF0FC56F12897F15004B195F /* Resources */,
-				FF58E7E6128FE8AB00C561D1 /* CopyFiles */,
+				FF4711B91292DE5F00D267F9 /* Resource */,
 				FF0FC57012897F15004B195F /* Sources */,
 				FF0FC57112897F15004B195F /* Frameworks */,
 			);
@@ -1657,18 +1665,6 @@
 		};
 /* End PBXProject section */
 
-/* Begin PBXResourcesBuildPhase section */
-		FF0FC56F12897F15004B195F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FFCC0373128FE77500C24226 /* image in Resources */,
-				FF23B32312901CC40041D7BA /* UI-PaperDoll-Slot-Ammo.tga in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		FF04083A128847780053FF31 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -1740,9 +1736,6 @@
 				FFACE0681285943A00C0BCB4 /* guiobjectmanagerbase.cpp in Sources */,
 				FFACE0691285943A00C0BCB4 /* guiperfmonitor.cpp in Sources */,
 				FFACE06A1285943A00C0BCB4 /* guiplane.cpp in Sources */,
-				FFACE06B1285943A00C0BCB4 /* guiprojectinfo.cpp in Sources */,
-				FFACE06C1285943A00C0BCB4 /* guiprojectinfomanager.cpp in Sources */,
-				FFACE06D1285943A00C0BCB4 /* guiprojectutility.cpp in Sources */,
 				FFACE06E1285943A00C0BCB4 /* guiproperty.cpp in Sources */,
 				FFACE0701285943A00C0BCB4 /* guipropertyconvertor.cpp in Sources */,
 				FFACE0711285943A00C0BCB4 /* guipropertymanager.cpp in Sources */,
@@ -1767,6 +1760,11 @@
 				FFACE0861285943A00C0BCB4 /* guiwidgetroot.cpp in Sources */,
 				FFACE0871285943A00C0BCB4 /* guiwidgetsystem.cpp in Sources */,
 				FFACE0881285943A00C0BCB4 /* guiwidgetutility.cpp in Sources */,
+				FF4010FB1292C5B100A9755A /* guiasmanager.cpp in Sources */,
+				FF4010FF1292C5BE00A9755A /* guisceneinfo.cpp in Sources */,
+				FF4011001292C5BE00A9755A /* guisceneinfomanager.cpp in Sources */,
+				FF4011011292C5BE00A9755A /* guisceneutility.cpp in Sources */,
+				FF40112F1292C84F00A9755A /* guiinterpolation.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

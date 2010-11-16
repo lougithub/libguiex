@@ -16,6 +16,7 @@
 #include "guiexception.h"
 #include <map>
 #include <set>
+#include <vector>
 
 
 //============================================================================//
@@ -240,7 +241,7 @@ namespace guiex
 			}
 		}
 
-		for( std::vector< TResType* >::iterator itor = vecReleaseRes.begin();
+		for( typename std::vector< TResType* >::iterator itor = vecReleaseRes.begin();
 			itor != vecReleaseRes.end();
 			++itor )
 		{
@@ -275,7 +276,7 @@ namespace guiex
 	template< class TResType >
 	inline void CGUIResourceManager<TResType>::AddToAllocatePool( TResType* pRes )
 	{
-		TSetResource::const_iterator itorFind = m_setAllocatePool.find( pRes );
+		typename TSetResource::const_iterator itorFind = m_setAllocatePool.find( pRes );
 		if( itorFind != m_setAllocatePool.end() )
 		{
 			//not found
@@ -290,7 +291,7 @@ namespace guiex
 	template< class TResType >
 	inline int32 CGUIResourceManager<TResType>::ReleaseAllocateResource( TResType* pRes )
 	{
-		TSetResource::const_iterator itorFind = m_setAllocatePool.find( pRes );
+		typename TSetResource::const_iterator itorFind = m_setAllocatePool.find( pRes );
 		if( itorFind == m_setAllocatePool.end() )
 		{
 			//not found
@@ -310,7 +311,7 @@ namespace guiex
 	{
 		if( pRes->GetRefCount() != 0 )
 		{
-			throw CGUIException( "resource reference is still in using[%d]: <%s:%s:%s>", 
+			throw CGUIException( "[CGUIResourceManager::DoDestroyResource]:resource reference is still in using[%d]: <%s:%s:%s>", 
 				pRes->GetRefCount(),
 				pRes->GetName().c_str(), 
 				pRes->GetResourceType().c_str(),

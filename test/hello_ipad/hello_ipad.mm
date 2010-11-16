@@ -174,7 +174,12 @@
 	
 	[self drawView:nil];
 }
-- (void)dealloc {
+
+- (void)dealloc 
+{
+	NSLog( @"==== destroy engine" );
+	DestroyApplicationEngine( m_pEngine );
+	
 	if( [EAGLContext currentContext] == m_context )
 	{
 		[EAGLContext setCurrentContext:nil];

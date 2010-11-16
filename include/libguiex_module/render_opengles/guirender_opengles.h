@@ -191,6 +191,9 @@ namespace guiex
 		* @brief used to delete this object
 		*/
 		virtual void	DeleteSelf();
+		
+		virtual void EnableClip( bool bEnable ){}
+
 
 	protected:
 		/** 

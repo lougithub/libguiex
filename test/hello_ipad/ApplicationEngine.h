@@ -33,5 +33,6 @@ struct IApplicationEngine
 };
 
 IApplicationEngine* CreateApplicationEngine();
+void DestroyApplicationEngine( IApplicationEngine* pEngine );
 
 #endif //_APPLICATIONENGINE_20101110_H__

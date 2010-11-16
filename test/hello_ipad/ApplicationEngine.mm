@@ -46,6 +46,11 @@ struct IApplicationEngine* CreateApplicationEngine()
 	return new CLibGuiexEngine;
 }
 
+void DestroyApplicationEngine( IApplicationEngine* pEngine )
+{
+	delete pEngine;
+}
+
 CLibGuiexEngine::CLibGuiexEngine()
 {
     guiex::CGUIWidgetSystem::Instance()->Initialize();	
@@ -87,28 +92,23 @@ void CLibGuiexEngine::Initialize( int width, int height, const char* szDataPath 
 
 void CLibGuiexEngine::InitWidgets()
 {	
-	guiex::IGUIInterfaceFileSys* pFileSys = guiex::CGUIInterfaceManager::Instance()->GetInterfaceFileSys();
-	std::vector<guiex::CGUIString> aArrayFiles;
-	pFileSys->FindFiles( "/", ".tga", aArrayFiles );
-	if( aArrayFiles.size() > 0 )
+	if( 0 != guiex::CGUISceneInfoManager::Instance()->LoadScenes())
 	{
-		printf("load image %s\n", aArrayFiles[0].c_str());
-		guiex::CGUIImageManager::Instance()->CreateImage( "red_color","hello_ipad","/UI-PaperDoll-Slot-Ammo.tga");
+		return;
 	}
-	else
-	{
-		printf("not found");
-		guiex::CGUIImageManager::Instance()->CreateImage( "red_color","hello_ipad",guiex::CGUIColor(1.0f,0.0f,0.0f,1.0f ));
-	}
-			
-			   
 	
-//	guiex::CGUIImageManager::Instance()->CreateImage( "red_color","hello_ipad",guiex::CGUIColor(1.0f,0.0f,0.0f,1.0f ));
-	guiex::CGUIImageManager::Instance()->CreateImage( "blue_color","hello_ipad",guiex::CGUIColor(0.0f,0.0f,1.0f,1.0f ));
-
+	for( int i=0; i<guiex::CGUISceneInfoManager::Instance()->GetSceneFilePaths().size(); ++i )
+	{
+		printf("scene: %s\n", guiex::CGUISceneInfoManager::Instance()->GetSceneFilePaths()[i].c_str());
+	}
+	
+	if( 0 != guiex::CGUISceneUtility::LoadResource( "resource.uip" ))
+	{
+		return;
+	}			   
+	
 	guiex::CGUIWidget* pWidget_staticimage = GUI_CREATE_WIDGET("CGUIWgtStaticImage", "staticimage_0", "hello_ipad");
-	pWidget_staticimage->SetImage( "red_color", "red_color" );
-	pWidget_staticimage->SetValue( "Image", "red_color" );
+	pWidget_staticimage->SetImage( "BGIMAGE", "bg_blue" );
 	pWidget_staticimage->SetSize( 200, 200 );
 	pWidget_staticimage->SetPosition( 200, 200 );
 	pWidget_staticimage->SetAnchorPoint( 0.5, 0.5 );
@@ -116,29 +116,28 @@ void CLibGuiexEngine::InitWidgets()
 	
 	guiex::CGUIWidget* pWidget_staticimage2 = GUI_CREATE_WIDGET("CGUIWgtStaticImage", "staticimage_2", "hello_ipad");
 	pWidget_staticimage2->SetParent( pWidget_staticimage );
-	pWidget_staticimage2->SetImage( "blue_color", "blue_color" );
-	pWidget_staticimage2->SetValue( "Image", "blue_color" );
+	pWidget_staticimage2->SetImage( "BGIMAGE", "bg_blue" );
 	pWidget_staticimage2->SetSize( 100, 100 );
-	pWidget_staticimage2->SetPosition( 100, 100 );
+	pWidget_staticimage2->SetPosition( 0, 0 );
 	pWidget_staticimage2->SetAnchorPoint( 0.5, 0.5 );
 	pWidget_staticimage2->SetRotation( 0.0f, 0.0f, 45.0f );
 	pWidget_staticimage2->Create();	
 	
 	{
-		guiex::CGUIAsScale* pAsScale = static_cast<guiex::CGUIAsScale*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsScale" ));
+		guiex::CGUIAsScale* pAsScale = static_cast<guiex::CGUIAsScale*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsScale", "asname", "hello_ipad" ));
 		pAsScale->SetLinearValue( guiex::CGUISize(0.1,0.1), guiex::CGUISize(1,1), 1 );
 		pAsScale->SetReceiver( pWidget_staticimage );
-		pAsScale->SetLooping( true );
-		pAsScale->SetLinearType(guiex::eLinearType_EaseIn);
+		//pAsScale->SetLooping( true );
+		pAsScale->SetLinearType(guiex::eInterpolationType_EaseIn);
 		pWidget_staticimage->AddAs( pAsScale );	
 	}
 	
 	{
-		guiex::CGUIAsAlpha* pAsAlpha = static_cast<guiex::CGUIAsAlpha*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsAlpha" ));
+		guiex::CGUIAsAlpha* pAsAlpha = static_cast<guiex::CGUIAsAlpha*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsAlpha", "asname", "hello_ipad" ));
 		pAsAlpha->SetLinearValue( 0, 1, 1 );
 		pAsAlpha->SetReceiver( pWidget_staticimage2 );
 		//pAsAlpha->SetLooping( true );
-		pAsAlpha->SetLinearType(guiex::eLinearType_EaseInOut);
+		pAsAlpha->SetLinearType(guiex::eInterpolationType_EaseInOut);
 		pWidget_staticimage2->AddAs( pAsAlpha );
 	}
 	

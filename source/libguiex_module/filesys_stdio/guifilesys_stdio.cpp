@@ -176,7 +176,7 @@ namespace guiex
 				{
 					continue; 
 				}
-				
+			
 				FindFiles( rPath + entry->d_name + "/", rSuffix, rArrayStrings );
 			}
 			else
