@@ -31,16 +31,10 @@ namespace guiex
 // define
 //============================================================================// 
 #define GUI_AS_REGISTER(astype)	\
-	::guiex::CGUIAsFactory::Instance()->RegisterGenerator( #astype, ::guiex::astype##_Generator::GenerateSelf())
+	::guiex::CGUIAsFactory::Instance()->RegisterGenerator( #astype, ::guiex::astype::astype##_Generator::GenerateSelf())
 
 #define GUI_AS_GENERATE( astype, asname, asscenetype )	\
 	(::guiex::astype*)( ::guiex::CGUIAsFactory::Instance()->GenerateAs(#astype, #asname, #asscenetype))
-
-#define GUI_USER_AS_REGISTER(astype)	\
-	::guiex::CGUIAsFactory::Instance()->RegisterGenerator( #astype, astype##_Generator::GenerateSelf())
-
-#define GUI_USER_AS_GENERATE( astype, asname, asscenetype )	\
-	static_cast<astype*>( ::guiex::CGUIAsFactory::Instance()->GenerateEvent(#astype, #asname, #asscenetype))
 
 
 

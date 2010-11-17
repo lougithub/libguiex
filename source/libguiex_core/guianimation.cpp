@@ -32,7 +32,8 @@ namespace guiex
 		const CGUIString& rSceneName, 
 		const CGUIString& rFileName, 
 		const std::vector<CGUIRect>& rUVRects,
-		real fInterval )
+		real fInterval,
+		const CGUISize& rSize )
 		:CGUIResource( rName, rSceneName, "ANIMATION" )
 		,m_vecUVRects( rUVRects )
 		,m_vecFileNames( rUVRects.size(), rFileName )
@@ -48,7 +49,8 @@ namespace guiex
 		const CGUIString& rName, 
 		const CGUIString& rSceneName, 
 		const std::vector<CGUIString>& rFileNames,  
-		real fInterval)
+		real fInterval,
+		const CGUISize& rSize )
 		:CGUIResource( rName, rSceneName, "ANIMATION" )
 		,m_vecFileNames( rFileNames )
 		,m_vecUVRects( rFileNames.size(), CGUIRect(0.f,0.f,1.f,1.f))
@@ -110,22 +112,27 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	CGUISize CGUIAnimation::GetSize() const
+	const CGUISize& CGUIAnimation::GetSize() const
 	{
-		if( !IsLoaded())
+		if( !m_aAnimationSize.IsEqualZero())
 		{
-			Load();
-		}
+			if( !IsLoaded())
+			{
+				Load();
+			}
 
-		if( m_vecTextures.empty())
-		{
-			return CGUISize();
+			if( m_vecTextures.empty())
+			{
+				m_aAnimationSize.SetValue( 0.0f, 0.0f );
+			}
+			else
+			{
+				m_aAnimationSize.SetValue(
+					m_vecTextures[0]->GetWidth() * m_vecUVRects[0].GetWidth(),
+					m_vecTextures[0]->GetHeight() * m_vecUVRects[0].GetHeight() );
+			}
 		}
-		else
-		{
-			CGUISize aTexSize = m_vecUVRects[0].GetSize();
-			return CGUISize( m_vecTextures[0]->GetWidth() * aTexSize.m_fWidth, m_vecTextures[0]->GetHeight() * aTexSize.m_fHeight);
-		}
+		return m_aAnimationSize;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIAnimation::Draw( IGUIInterfaceRender* pRender,

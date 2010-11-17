@@ -29,25 +29,62 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	const CGUIAnimation*	CGUIAnimationManager::CreateAnimation(
+	int32 CGUIAnimationManager::RegisterAnimation(
+		const CGUIString& rName, 
+		const CGUIString& rSceneName, 
+		const CGUIString& rFileName, 
+		const std::vector<CGUIRect>& rUVRects,
+		real fInterval,
+		const CGUISize& rSize )
+	{
+		CGUIAnimation* pAnimation = DoCreateAnimation(
+			rName,
+			rSceneName,
+			rFileName, 
+			rUVRects,
+			fInterval,
+			rSize );
+		RegisterResource( pAnimation );
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUIAnimationManager::RegisterAnimation( 
+		const CGUIString& rName, 
+		const CGUIString& rSceneName, 
+		const std::vector<CGUIString>& rFileNames,  
+		real fInterval,
+		const CGUISize& rSize )
+	{
+		CGUIAnimation* pAnimation = DoCreateAnimation(
+			rName,
+			rSceneName,
+			rFileNames, 
+			fInterval,
+			rSize );
+		RegisterResource( pAnimation );
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	CGUIAnimation* CGUIAnimationManager::DoCreateAnimation(
 			const CGUIString& rName, 
 			const CGUIString& rSceneName, 
 			const CGUIString& rFileName, 
 			const std::vector<CGUIRect>& rUVRects,
-			real fInterval)
+			real fInterval,
+			const CGUISize& rSize )
 	{
-		CGUIAnimation* pAnimation = new CGUIAnimation( rName, rSceneName, rFileName, rUVRects, fInterval );
-		RegisterResource(pAnimation);
+		CGUIAnimation* pAnimation = new CGUIAnimation( rName, rSceneName, rFileName, rUVRects, fInterval, rSize );
 		return pAnimation;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIAnimation*	CGUIAnimationManager::CreateAnimation( 
+	CGUIAnimation* CGUIAnimationManager::DoCreateAnimation( 
 			const CGUIString& rName, 
 			const CGUIString& rSceneName, 
 			const std::vector<CGUIString>& rFileNames,  
-			real fInterval)
+			real fInterval,
+			const CGUISize& rSize )
 	{
-		CGUIAnimation* pAnimation = new CGUIAnimation( rName, rSceneName, rFileNames, fInterval );
+		CGUIAnimation* pAnimation = new CGUIAnimation( rName, rSceneName, rFileNames, fInterval, rSize );
 		RegisterResource(pAnimation);
 		return pAnimation;
 	}
@@ -57,20 +94,67 @@ namespace guiex
 		const CGUIAnimation* pTemplate = GetResource( rResName );
 		if( !pTemplate )
 		{
+			throw CGUIException( 
+				"[CGUIAnimationManager::AllocateResource]: failed to get image by name <%s>",
+				rResName.c_str());
 			return NULL;
 		}
 
 		CGUIAnimation* pAnimation = NULL;
 		if( pTemplate->eUVAnimType == CGUIAnimation::eUVAnimType_MultiFile )
 		{
-			pAnimation = new CGUIAnimation( pTemplate->GetName() + "_clone", pTemplate->GetSceneName(), pTemplate->m_vecFileNames, pTemplate->m_fInterval );
-
+			pAnimation = DoCreateAnimation(
+				"",
+				"",
+				pTemplate->m_vecFileNames, 
+				pTemplate->m_fInterval,
+				pTemplate->GetSize() );
 		}
 		else
 		{
-			GUI_ASSERT( pTemplate->m_vecFileNames.size() > 0, "invalid animation parameter" );
-			pAnimation = new CGUIAnimation( pTemplate->GetName() + "_clone", pTemplate->GetSceneName(), pTemplate->m_vecFileNames[0], pTemplate->m_vecUVRects, pTemplate->m_fInterval );
+			pAnimation = DoCreateAnimation(
+				"",
+				"",
+				pTemplate->m_vecFileNames[0], 
+				pTemplate->m_vecUVRects,
+				pTemplate->m_fInterval,
+				pTemplate->GetSize() );
 		}
+		pAnimation->RefRetain();
+		AddToAllocatePool( pAnimation );
+		return pAnimation;
+	}
+	//------------------------------------------------------------------------------
+	CGUIAnimation* CGUIAnimationManager::AllocateResource(
+		const CGUIString& rFileName, 
+		const std::vector<CGUIRect>& rUVRects,
+		real fInterval,
+		const CGUISize& rSize )
+	{
+		CGUIAnimation* pAnimation = DoCreateAnimation(
+			"",
+			"",
+			rFileName, 
+			rUVRects, 
+			fInterval,
+			rSize );
+		pAnimation->RefRetain();
+		AddToAllocatePool( pAnimation );
+		return pAnimation;
+	}
+	//------------------------------------------------------------------------------
+	CGUIAnimation* CGUIAnimationManager::AllocateResource( 
+		const std::vector<CGUIString>& rFileNames,  
+		real fInterval,
+		const CGUISize& rSize )
+	{
+		CGUIAnimation* pAnimation = DoCreateAnimation(
+			"",
+			"",
+			rFileNames, 
+			fInterval,
+			rSize );
+		pAnimation->RefRetain();
 		AddToAllocatePool( pAnimation );
 		return pAnimation;
 	}

@@ -54,29 +54,62 @@ namespace guiex
 		/**
 		* @brief create a animation by single image;
 		*/
-		const CGUIAnimation*	CreateAnimation(
+		int32 RegisterAnimation(
 			const CGUIString& rName, 
 			const CGUIString& rSceneName, 
 			const CGUIString& rFileName, 
 			const std::vector<CGUIRect>& rUVRects,
-			real fInterval
+			real fInterval,
+			const CGUISize& rSize = CGUISize(0,0)
 			);
 
 		/**
 		* @brief create a animation by multible images
 		*/
-		const CGUIAnimation*	CreateAnimation( 
+		int32 RegisterAnimation( 
 			const CGUIString& rName, 
 			const CGUIString& rSceneName, 
 			const std::vector<CGUIString>& rFileNames,  
-			real fInterval
+			real fInterval,
+			const CGUISize& rSize = CGUISize(0,0)
 			);
 
-		CGUIAnimation* AllocateResource( const CGUIString& rResName );
 
+		CGUIAnimation* AllocateResource( const CGUIString& rResName );
+		CGUIAnimation* AllocateResource(
+			const CGUIString& rFileName, 
+			const std::vector<CGUIRect>& rUVRects,
+			real fInterval,
+			const CGUISize& rSize = CGUISize(0,0)
+			);
+		CGUIAnimation* AllocateResource( 
+			const std::vector<CGUIString>& rFileNames,  
+			real fInterval,
+			const CGUISize& rSize = CGUISize(0,0)
+			);
 		int32 DeallocateResource( CGUIAnimation* pAnimation );
 
+	protected:
+		/**
+		* @brief create a animation by single image;
+		*/
+		CGUIAnimation* DoCreateAnimation(
+			const CGUIString& rName, 
+			const CGUIString& rSceneName, 
+			const CGUIString& rFileName, 
+			const std::vector<CGUIRect>& rUVRects,
+			real fInterval,
+			const CGUISize& rSize );
 
+		/**
+		* @brief create a animation by multible images
+		*/
+		CGUIAnimation* DoCreateAnimation( 
+			const CGUIString& rName, 
+			const CGUIString& rSceneName, 
+			const std::vector<CGUIString>& rFileNames,  
+			real fInterval,
+			const CGUISize& rSize );
 
 	protected:
 		//declare for singleton

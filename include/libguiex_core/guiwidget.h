@@ -382,6 +382,7 @@ namespace guiex
 		*/
 		CGUIImage* SetImage( const CGUIString& rName, const CGUIString& rImageName );
 
+		///< this will retain the reference count of image
 		void SetImage( const CGUIString& rName, CGUIImage* pImage );
 
 		/**
@@ -409,6 +410,22 @@ namespace guiex
 		* @brief get an animation by name
 		*/
 		CGUIAnimation* GetAnimation( const CGUIString& rAnimationName);
+
+		CGUIAs* SetAs( const CGUIString& rName, const CGUIString& rAsName );
+
+		///< this will retain the reference count of image
+		void SetAs( const CGUIString& rName, CGUIAs* pAs );
+
+		/**
+		* @brief has the as been add to this widget.
+		*/
+		bool HasAs( const CGUIString& rName );
+
+		/**
+		* @brief get as
+		* @return NULL for failed to find as by given name
+		*/
+		CGUIAs* GetAs( const CGUIString& rName );
 
 		/**
 		* @brief destroy all image and animation
@@ -696,7 +713,7 @@ namespace guiex
 		/**
 		* @brief callback of set the image of widget.
 		*/
-		virtual void	OnSetImage( const CGUIString& rName, CGUIImage* pImage );
+		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage );
 
 	private:
 		void SetParentImpl( CGUIWidget* pParent );
@@ -934,6 +951,8 @@ namespace guiex
 		typedef std::map<CGUIString, CGUIAnimation*>	TMapAnimation;
 		TMapAnimation	m_aMapAnimation;	//!< animation map, key is animation name used in ui system
 
+		typedef std::map<CGUIString, CGUIAs*>	TMapAs;
+		TMapAs	m_aMapAs;	//!< As map, key is as name used in ui system
 
 
 		///////////////////////////////////////////////////////////////////////

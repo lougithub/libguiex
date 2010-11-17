@@ -52,21 +52,27 @@ namespace guiex
 		*/
 		virtual ~CGUIAsManager();
 
-		/**
-		* @brief create a as by given property
-		*/
-		const CGUIAs* CreateAs( 
+		int32 RegisterAs( 
 			const CGUIString& rName,
 			const CGUIString& rSceneName,
 			const CGUIProperty& rProperty );
 
+		CGUIAs* AllocateResource( const CGUIString& rResName );
+		CGUIAs* AllocateResourceByType( const CGUIString& rAsType );
+		int32 DeallocateResource( CGUIAs* pRes );
+
+	protected:
+		/**
+		* @brief create a as by given property
+		*/
+		CGUIAs* DoCreateAs( 
+			const CGUIString& rName,
+			const CGUIString& rSceneName,
+			const CGUIProperty& rProperty );
 
 	protected:
 		virtual	void DoDestroyResource( CGUIAs* pRes ); 
 
-	protected:
-		typedef std::map< CGUIString, CGUIAs* >	TMapAs;
-		TMapAs m_mapAs;
 
 	protected:
 		//declare for singleton

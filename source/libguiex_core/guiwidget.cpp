@@ -28,6 +28,7 @@
 #include <libguiex_core/guiperfmonitor.h>
 #include <libguiex_core/guias.h>
 #include <libguiex_core/guipropertyconvertor.h>
+#include <libguiex_core/guiasmanager.h>
 
 #include <algorithm>
 
@@ -1174,10 +1175,14 @@ namespace guiex
 		if( itor != m_aMapAnimation.end())
 		{
 			//remove old one
+			CGUIAnimationManager::Instance()->DeallocateResource( itor->second );
 			m_aMapAnimation.erase(itor);
 		}
-
-		m_aMapAnimation.insert(std::make_pair(rName,pAnimation));
+		if( pAnimation )
+		{
+			pAnimation->RefRetain();
+			m_aMapAnimation.insert(std::make_pair(rName,pAnimation));
+		}
 	}
 	//------------------------------------------------------------------------------
 	CGUIAnimation* CGUIWidget::SetAnimation( const CGUIString& rName, const CGUIString& rAnimationName )
@@ -1190,6 +1195,7 @@ namespace guiex
 			return NULL;
 		};
 		SetAnimation(rName, pAnimation);
+		CGUIAnimationManager::Instance()->DeallocateResource( pAnimation );
 		return pAnimation;
 	}
 	//------------------------------------------------------------------------------
@@ -1197,6 +1203,54 @@ namespace guiex
 	{
 		TMapAnimation::iterator itor = m_aMapAnimation.find(rAnimationName);
 		if( itor != m_aMapAnimation.end())
+		{
+			return itor->second;
+		}
+		else
+		{
+			return NULL;
+		}
+	}
+	//------------------------------------------------------------------------------
+	CGUIAs* CGUIWidget::SetAs( const CGUIString& rName, const CGUIString& rAsName )
+	{
+		//find as
+		CGUIAs* pAs = CGUIAsManager::Instance()->AllocateResource( rAsName );
+		if( !pAs )
+		{
+			throw CGUIException( "failed to get as by name <%s>", rAsName.c_str());
+			return NULL;
+		};
+		SetAs(rName, pAs);
+		CGUIAsManager::Instance()->DeallocateResource( pAs );
+		return pAs;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::SetAs( const CGUIString& rName, CGUIAs* pAs )
+	{
+		TMapAs::iterator itor = m_aMapAs.find(rName);
+		if( itor != m_aMapAs.end())
+		{
+			//remove old one
+			CGUIAsManager::Instance()->DeallocateResource( itor->second );
+			m_aMapAs.erase(itor);
+		}
+		if( pAs )
+		{
+			pAs->RefRetain();
+			m_aMapAs.insert(std::make_pair(rName,pAs));
+		}
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWidget::HasAs( const CGUIString& rName )
+	{
+		return m_aMapAs.find(rName ) != m_aMapAs.end();
+	}
+	//------------------------------------------------------------------------------
+	CGUIAs* CGUIWidget::GetAs( const CGUIString& rName )
+	{
+		TMapAs::iterator itor = m_aMapAs.find(rName);
+		if( itor != m_aMapAs.end())
 		{
 			return itor->second;
 		}

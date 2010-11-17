@@ -28,14 +28,44 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	const CGUIAs* CGUIAsManager::CreateAs( const CGUIString& rName, const CGUIString& rSceneName, const CGUIProperty& rProperty )
+	int32 CGUIAsManager::RegisterAs( 
+		const CGUIString& rName,
+		const CGUIString& rSceneName,
+		const CGUIProperty& rProperty )
+	{
+		CGUIAs* pAs = DoCreateAs( rName, rSceneName, rProperty); 
+		RegisterResource( pAs );
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	CGUIAs* CGUIAsManager::DoCreateAs( const CGUIString& rName, const CGUIString& rSceneName, const CGUIProperty& rProperty )
 	{
 		CGUIAs* pAs = NULL;
 
 		//TODO...
-
-		RegisterResource(pAs);
 		return pAs;
+	}
+	//------------------------------------------------------------------------------
+	CGUIAs* CGUIAsManager::AllocateResource( const CGUIString& rResName )
+	{
+		return NULL;
+	}
+	//------------------------------------------------------------------------------
+	CGUIAs* CGUIAsManager::AllocateResourceByType( const CGUIString& rAsType )
+	{
+		return NULL;
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUIAsManager::DeallocateResource( CGUIAs* pRes )
+	{
+		GUI_ASSERT( pRes, "invalid parameter" );
+
+		pRes->RefRelease();
+		if( pRes->GetRefCount() == 0 )
+		{
+			return ReleaseAllocateResource( pRes );
+		}
+		return 0;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIAsManager::DoDestroyResource( CGUIAs * pRes )

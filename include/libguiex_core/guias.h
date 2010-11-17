@@ -74,11 +74,6 @@ namespace guiex
 	{
 	public:
 		/**
-		* @brief constructor
-		*/
-		CGUIAs( const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName );
-
-		/**
 		* @brief destructor
 		*/
 		virtual ~CGUIAs();
@@ -144,6 +139,18 @@ namespace guiex
 		}
 
 	protected:
+		/**
+		* @brief constructor
+		*/
+		CGUIAs( const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName );
+	
+	private:
+		friend class CGUIAsManager;
+		//disable =
+		CGUIAs( const CGUIAs&  );
+		const CGUIAs& operator=(const CGUIAs& );
+
+	protected:
 		///widget generator
 		friend class CGUIAsFactory;
 		//!<set generator
@@ -176,7 +183,7 @@ namespace guiex
 	template< class T >
 	class CGUIAsLinearBase : public CGUIAs
 	{
-	public:
+	protected:
 		/**
 		* @brief constructor
 		*/
@@ -186,6 +193,7 @@ namespace guiex
 		{
 		}
 
+	public:
 		EInterpolationType GetLinearType( ) const
 		{
 			return m_eInterpolationType;
@@ -242,21 +250,20 @@ namespace guiex
 	*/
 	class GUIEXPORT CGUIAsAlpha : public CGUIAsLinearBase<real>
 	{
-	public:
+	protected:
 		/**
 		* @brief constructor
 		*/
 		CGUIAsAlpha(const CGUIString& rAsName, const CGUIString& rSceneName);
 
+	public:
 		/**
 		* @brief update the event.
 		*/
 		virtual void Update( real fDeltaTime );
 
-
-	protected:
+		GUI_AS_GENERATOR_DECLARE( CGUIAsAlpha);
 	};
-	GUI_AS_GENERATOR_DECLARE( CGUIAsAlpha);
 
 
 
@@ -270,20 +277,20 @@ namespace guiex
 	*/
 	class GUIEXPORT CGUIAsScale : public CGUIAsLinearBase<CGUISize>
 	{
-	public:
+	protected:
 		/**
 		* @brief constructor
 		*/
 		CGUIAsScale(const CGUIString& rAsName, const CGUIString& rSceneName);
 
+	public:
 		/**
 		* @brief Update the event.
 		*/
 		virtual void Update( real fDeltaTime );
 
-	protected:
+		GUI_AS_GENERATOR_DECLARE( CGUIAsScale);
 	};
-	GUI_AS_GENERATOR_DECLARE( CGUIAsScale);
 
 
 	//*****************************************************************************
@@ -295,20 +302,20 @@ namespace guiex
 	*/
 	class GUIEXPORT CGUIAsRotation : public CGUIAsLinearBase<CGUIVector3>
 	{
-	public:
+	protected:
 		/**
 		* @brief constructor
 		*/
 		CGUIAsRotation(const CGUIString& rAsName, const CGUIString& rSceneName);
 
+	public:
 		/**
 		* @brief Update the event.
 		*/
 		virtual void Update( real fDeltaTime );
 
-	protected:
+		GUI_AS_GENERATOR_DECLARE( CGUIAsRotation);
 	};
-	GUI_AS_GENERATOR_DECLARE( CGUIAsRotation);
 
 	//*****************************************************************************
 	//	CGUIAsPosition
@@ -319,20 +326,20 @@ namespace guiex
 	*/
 	class GUIEXPORT CGUIAsPosition : public CGUIAsLinearBase<CGUIVector2>
 	{
-	public:
+	protected:
 		/**
 		* @brief constructor
 		*/
 		CGUIAsPosition(const CGUIString& rAsName, const CGUIString& rSceneName);
 
+	public:
 		/**
 		* @brief Update the event.
 		*/
 		virtual void Update( real fDeltaTime );
 
-	protected:
+		GUI_AS_GENERATOR_DECLARE( CGUIAsPosition);
 	};
-	GUI_AS_GENERATOR_DECLARE( CGUIAsPosition);
 
 
 	//*****************************************************************************
@@ -344,20 +351,20 @@ namespace guiex
 	*/
 	class GUIEXPORT CGUIAsColor : public CGUIAsLinearBase<CGUIColor>
 	{
-	public:
+	protected:
 		/**
 		* @brief constructor
 		*/
 		CGUIAsColor(const CGUIString& rAsName, const CGUIString& rSceneName);
 
+	public:
 		/**
 		* @brief Update the event.
 		*/
 		virtual void Update( real fDeltaTime );
 
-	protected:
+		GUI_AS_GENERATOR_DECLARE( CGUIAsColor);
 	};
-	GUI_AS_GENERATOR_DECLARE( CGUIAsColor);
 
 
 
@@ -370,12 +377,13 @@ namespace guiex
 	*/
 	class GUIEXPORT CGUIAsContainer : public CGUIAs
 	{
-	public:
+	protected:
 		/**
 		* @brief constructor
 		*/
 		CGUIAsContainer(const CGUIString& rAsName, const CGUIString& rSceneName);
 
+	public:
 		/**
 		* @brief Update the event.
 		*/
@@ -384,8 +392,6 @@ namespace guiex
 		virtual void SetReceiver(CGUIWidget* pReceiver);
 
 		void AddAs( CGUIAs* pAs, real fBeginTime );
-	
-	protected:
 
 	protected:
 		struct SAsInfo
@@ -394,8 +400,9 @@ namespace guiex
 			real m_fBeginTime;
 		};
 		std::vector<SAsInfo> m_vAsList;//the as in this list should be sorted by begin time
+		
+		GUI_AS_GENERATOR_DECLARE( CGUIAsContainer);
 	};
-	GUI_AS_GENERATOR_DECLARE( CGUIAsContainer);
 
 }//namespace guiex
 

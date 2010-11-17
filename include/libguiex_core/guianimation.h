@@ -54,7 +54,7 @@ namespace guiex
 			real z, 
 			real fAlpha	) const;
 
-		CGUISize GetSize( ) const;
+		const CGUISize& GetSize( ) const;
 
 	protected:
 		/**
@@ -68,7 +68,8 @@ namespace guiex
 			const CGUIString& rSceneName, 
 			const CGUIString& rFileName, 
 			const std::vector<CGUIRect>& rUVRects,
-			real fInterval );
+			real fInterval,
+			const CGUISize& rSize);
 
 		/**
 		* @brief constructor
@@ -79,7 +80,8 @@ namespace guiex
 			const CGUIString& rName, 
 			const CGUIString& rSceneName, 
 			const std::vector<CGUIString>& rFileNames,  
-			real fInterval);
+			real fInterval,
+			const CGUISize& rSize);
 
 		virtual int32 DoLoad() const;
 		virtual void DoUnload();
@@ -101,6 +103,8 @@ namespace guiex
 			eUVAnimType_MultiFile,
 		};
 		EUVAnimType eUVAnimType;
+
+		mutable CGUISize m_aAnimationSize;
 	};
 
 }//namespace guiex
