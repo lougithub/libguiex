@@ -123,15 +123,15 @@ namespace guiex
 	const uint8 GUI_TA_VERTICAL_MASK = 0xF0;
 
 	/**
-	* @brief image operation
+	* @brief image orientation
 	*/
-	enum EImageOperation
+	enum EImageOrientation
 	{
-		IMAGE_NONE,				///!< none operation
-		IMAGE_ROTATE90CW,		///!< rotate image for 90 CW
-		IMAGE_ROTATE90CCW,		///!< rotate image for 90 CCW
-		IMAGE_FLIPHORIZON,		///!< flip image horizon
-		IMAGE_FLIPVERTICAL,		///!< flip image vertical
+		eImageOrientation_Normal,		///!< none operation
+		eImageOrientation_90CW,			///!< rotate image for 90 CW
+		eImageOrientation_90CCW,		///!< rotate image for 90 CCW
+		eImageOrientation_FlipHorizon,	///!< flip image horizon
+		eImageOrientation_FlipVertical,	///!< flip image vertical
 	};
 
 	enum EScreenValue

@@ -132,11 +132,11 @@ namespace guiex
 	template<  >
 	int32 ValueToString<CGUIColor>( const CGUIColor& rValue, CGUIString& rString );
 	//------------------------------------------------------------------------------
-	//convert for EImageOperation
+	//convert for EImageOrientation
 	template<  >
-	int32 StringToValue<EImageOperation>( const CGUIString& rString, EImageOperation& rValue);
+	int32 StringToValue<EImageOrientation>( const CGUIString& rString, EImageOrientation& rValue);
 	template<  >
-	int32 ValueToString<EImageOperation>( const EImageOperation& rValue, CGUIString& rString );
+	int32 ValueToString<EImageOrientation>( const EImageOrientation& rValue, CGUIString& rString );
 	//------------------------------------------------------------------------------
 	//convert for EScreenValue
 	template<  >

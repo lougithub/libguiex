@@ -11731,11 +11731,11 @@ static swig_lua_var_info swig_variables[] = {
 };
 
 static swig_lua_const_info swig_constants[] = {
-{ SWIG_LUA_INT,     (char *)"IMAGE_NONE", (long) guiex::IMAGE_NONE, 0, 0, 0},
-{ SWIG_LUA_INT,     (char *)"IMAGE_ROTATE90CW", (long) guiex::IMAGE_ROTATE90CW, 0, 0, 0},
-{ SWIG_LUA_INT,     (char *)"IMAGE_ROTATE90CCW", (long) guiex::IMAGE_ROTATE90CCW, 0, 0, 0},
-{ SWIG_LUA_INT,     (char *)"IMAGE_FLIPHORIZON", (long) guiex::IMAGE_FLIPHORIZON, 0, 0, 0},
-{ SWIG_LUA_INT,     (char *)"IMAGE_FLIPVERTICAL", (long) guiex::IMAGE_FLIPVERTICAL, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"eImageOrientation_Normal", (long) guiex::eImageOrientation_Normal, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"eImageOrientation_90CW", (long) guiex::eImageOrientation_90CW, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"eImageOrientation_90CCW", (long) guiex::eImageOrientation_90CCW, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"eImageOrientation_FlipHorizon", (long) guiex::eImageOrientation_FlipHorizon, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"eImageOrientation_FlipVertical", (long) guiex::eImageOrientation_FlipVertical, 0, 0, 0},
 { SWIG_LUA_INT,     (char *)"GUI_LM_SHUTDOWN", (long) guiex::GUI_LM_SHUTDOWN, 0, 0, 0},
 { SWIG_LUA_INT,     (char *)"GUI_LM_TRACE", (long) guiex::GUI_LM_TRACE, 0, 0, 0},
 { SWIG_LUA_INT,     (char *)"GUI_LM_DEBUG", (long) guiex::GUI_LM_DEBUG, 0, 0, 0},

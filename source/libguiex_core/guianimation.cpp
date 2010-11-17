@@ -146,7 +146,7 @@ namespace guiex
 			z,
 			m_vecTextures[m_nFrame]->GetTextureImplement(),
 			m_vecUVRects[m_nFrame], 
-			IMAGE_NONE,
+			eImageOrientation_Normal,
 			aColor.GetARGB(),
 			aColor.GetARGB(),
 			aColor.GetARGB(),

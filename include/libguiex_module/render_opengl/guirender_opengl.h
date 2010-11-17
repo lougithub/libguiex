@@ -84,7 +84,7 @@ namespace guiex
 			real z, 
 			const CGUITextureImp* pTexture, 
 			const CGUIRect& rTextureRect, 
-			EImageOperation eImageOperation,
+			EImageOrientation eImageOrientation,
 			GUIARGB rColor_topleft,
 			GUIARGB rColor_topright,
 			GUIARGB rColor_bottomleft,
@@ -222,7 +222,7 @@ namespace guiex
 		*/
 		void RenderTextureDirect(const CGUIRect& rDestRect, real z, 
 			const CGUITextureImp* pTexture, const CGUIRect& rTextureRect, 
-			EImageOperation eImageOperation, 
+			EImageOrientation eImageOrientation, 
 			GUIARGB  rColor_topleft,
 			GUIARGB  rColor_topright,
 			GUIARGB  rColor_bottomleft,
@@ -264,7 +264,7 @@ namespace guiex
 		};
 
 		// set the texture's coordinate
-		void SetTexCoordinate(SVertex* pTexture, const CGUIRect& tex, EImageOperation eImageOperation);
+		void SetTexCoordinate(SVertex* pTexture, const CGUIRect& tex, EImageOrientation eImageOrientation);
 
 	protected:
 		GLint			m_maxTextureSize;		//!< maximum supported texture size (in pixels).

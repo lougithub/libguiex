@@ -18,6 +18,12 @@ guiex::CGUIWidget* g_pWidgetRoot = NULL;
 
 #define METER2PIXEL(meter)	((meter)*10.0f)
 
+
+const char* GetSampleSceneName()
+{
+	return "common.uip";
+}
+
 void CreateBox2dSample_hellobox2d()
 {
 	//create static body
@@ -33,8 +39,7 @@ void CreateBox2dSample_hellobox2d()
 	guiex::CGUIWidget* pWidget_staticbody= GUI_CREATE_WIDGET("CGUIWgtStaticImage", guiex::CGUIUtility::GenerateWidgetName(), "testproject");
 	{
 		pWidget_staticbody->SetParent( g_pWidgetRoot );
-		pWidget_staticbody->SetImage( "color_white", "color_white" );
-		pWidget_staticbody->SetValue( "Image", "color_white" );
+		pWidget_staticbody->SetImage( "BGIMAGE", "color_white" );
 		const b2Fixture* pFixtureList = groundBody->GetFixtureList();
 		b2Vec2 vExtents = pFixtureList->GetAABB().GetExtents();
 		pWidget_staticbody->SetSize( METER2PIXEL(vExtents.x*2), METER2PIXEL(vExtents.y*2) );
@@ -63,8 +68,7 @@ void CreateBox2dSample_hellobox2d()
 	guiex::CGUIWidget* pWidget_dynamicbody = GUI_CREATE_WIDGET("CGUIWgtStaticImage", guiex::CGUIUtility::GenerateWidgetName(), "testproject");
 	{
 		pWidget_dynamicbody->SetParent( g_pWidgetRoot );
-		pWidget_dynamicbody->SetImage( "color_white", "color_white" );
-		pWidget_dynamicbody->SetValue( "Image", "color_white" );
+		pWidget_dynamicbody->SetImage( "BGIMAGE", "color_white" );
 		const b2Fixture* pFixtureList = g_body->GetFixtureList();
 		b2Vec2 vExtents = pFixtureList->GetAABB().GetExtents();
 		//pWidget_dynamicbody->SetSize( METER2PIXEL(vExtents.x*2), METER2PIXEL(vExtents.y*2) );
@@ -92,8 +96,7 @@ void CreateBox2dSample_joints()
 	guiex::CGUIWidget* pWidget_staticbody= GUI_CREATE_WIDGET("CGUIWgtStaticImage", guiex::CGUIUtility::GenerateWidgetName(), "testproject");
 	{
 		pWidget_staticbody->SetParent( g_pWidgetRoot );
-		pWidget_staticbody->SetImage( "color_white", "color_white" );
-		pWidget_staticbody->SetValue( "Image", "color_white" );
+		pWidget_staticbody->SetImage( "BGIMAGE", "color_white" );
 		const b2Fixture* pFixtureList = groundBody->GetFixtureList();
 		b2Vec2 vExtents = pFixtureList->GetAABB().GetExtents();
 		pWidget_staticbody->SetSize( METER2PIXEL(vExtents.x*2), METER2PIXEL(vExtents.y*2) );
@@ -121,8 +124,7 @@ void CreateBox2dSample_joints()
 	guiex::CGUIWidget* pWidget_dynamicbody = GUI_CREATE_WIDGET("CGUIWgtStaticImage", guiex::CGUIUtility::GenerateWidgetName(), "testproject");
 	{
 		pWidget_dynamicbody->SetParent( g_pWidgetRoot );
-		pWidget_dynamicbody->SetImage( "color_white", "color_white" );
-		pWidget_dynamicbody->SetValue( "Image", "color_white" );
+		pWidget_dynamicbody->SetImage( "BGIMAGE", "color_white" );
 		const b2Fixture* pFixtureList = g_body2->GetFixtureList();
 		b2Vec2 vExtents = pFixtureList->GetAABB().GetExtents();
 		//pWidget_dynamicbody->SetSize( METER2PIXEL(vExtents.x*2), METER2PIXEL(vExtents.y*2) );

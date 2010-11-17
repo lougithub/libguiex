@@ -196,7 +196,7 @@ namespace guiex
 				for( uint32 i=0; i<nSize; ++i )
 				{
 					const CGUIProperty* pProperty = aPropertySet.GetProperty(i);
-					if( !CGUIImageManager::Instance()->CreateImage(pProperty->GetName(), rSceneName, *pProperty) )
+					if( 0 != CGUIImageManager::Instance()->RegisterImage(pProperty->GetName(), rSceneName, *pProperty) )
 					{
 						throw guiex::CGUIException(
 							"[IGUIConfigFile_tinyxml::LoadResourceConfigFile], failed to create image with name <%s>!", 

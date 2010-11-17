@@ -45,6 +45,10 @@ namespace guiex
 		*/
 		void	SetSize( const CGUISize& rSize);
 
+		/**
+		* @brief set width and height
+		*/
+		void	SetValue( real fWidth, real fHeight );
 
 		/**
 		* @brief set width

@@ -80,7 +80,7 @@ namespace guiex
 		/**
 		* @brief get image size
 		*/
-		CGUISize GetSize() const;
+		const CGUISize& GetSize() const;
 
 	protected:
 		/**
@@ -89,7 +89,8 @@ namespace guiex
 		CGUIImage( 
 			const CGUIString& rName, 
 			const CGUIString& rSceneName, 
-			const CGUIColor& rColor );
+			const CGUIColor& rColor,
+			const CGUISize& rSize = CGUISize());
 
 		CGUIImage( 
 			const CGUIString& rName,
@@ -97,14 +98,16 @@ namespace guiex
 			const void* buffPtr, 
 			int32 buffWidth, 
 			int32 buffHeight, 
-			EGuiPixelFormat ePixelFormat );
+			EGuiPixelFormat ePixelFormat,
+			const CGUISize& rSize = CGUISize() );
 
 		CGUIImage( 		
 			const CGUIString& rName,
 			const CGUIString& rSceneName, 
 			const CGUIString& rPath,
 			const CGUIRect& rUVRect,
-			EImageOperation	eImageOperation);
+			EImageOrientation	eImageOrientation,
+			const CGUISize& rSize = CGUISize());
 
 		virtual int32	DoLoad() const;
 		virtual void	DoUnload();
@@ -113,8 +116,8 @@ namespace guiex
 	private:
 		//parameter about texture
 		mutable CGUITexture* m_pTexture;		//!< texture
-		CGUIRect		m_aUVRect;		//!< UV of texture
-		EImageOperation	m_eImageOperation;	//!<
+		CGUIRect m_aUVRect;		//!< UV of texture
+		EImageOrientation	m_eImageOrientation;	//!<
 
 		/** 
 		* @brief the image type, means where the image load from
@@ -128,15 +131,13 @@ namespace guiex
 		EImageType		m_eImageType;
 
 		CGUIString		m_strPath;		//!< for eIT_FILE
-
 		CGUIColor		m_aColor;		//!< for eIT_COLOR
-
 		const void*		m_pBuffPtr;		//!< for eIT_MEM
 		int32			m_nBuffWidth;
 		int32			m_nBuffHeight; 
 		EGuiPixelFormat m_ePixelFormat;
 
-		//uint16			m_nRefCount;	//!< reference count
+		mutable CGUISize m_aImageSize;
 	};
 
 }//namespace guiex

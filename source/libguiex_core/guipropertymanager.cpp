@@ -49,7 +49,7 @@ namespace guiex
 
 		RegisterPropertyType( ePropertyType_TextAlignmentHorz, "ETextAlignmentHorz" );
 		RegisterPropertyType( ePropertyType_TextAlignmentVert, "ETextAlignmentVert" );
-		RegisterPropertyType( ePropertyType_ImageOperation, "EImageOperation" );
+		RegisterPropertyType( ePropertyType_ImageOrientation, "EImageOrientation" );
 		RegisterPropertyType( ePropertyType_ScreenValue, "EScreenValue" );
 	}
 	//------------------------------------------------------------------------------

@@ -56,7 +56,7 @@ namespace guiex
 		ePropertyType_ScreenValue,
 		ePropertyType_TextAlignmentHorz,
 		ePropertyType_TextAlignmentVert,
-		ePropertyType_ImageOperation,
+		ePropertyType_ImageOrientation,
 		
 
 

@@ -53,6 +53,7 @@ extern "C" {
 }
 #endif //#ifdef __cplusplus
 
+extern const char* GetSampleSceneName();
 extern guiex::CGUIWidget* SampleInitialize();
 extern void SampleDestroy();
 extern void SampleUpdate( float fDeltaTime);
@@ -525,44 +526,55 @@ WxMainFrame::~WxMainFrame()
 //------------------------------------------------------------------------------
 bool		WxMainFrame::GetUIInfo( bool bTryCommandLine)
 {
-	if( bTryCommandLine )
-	{
-		wxArrayString arrayArgs;
-		const wxChar *cmdLine = ::GetCommandLine();
-		if ( cmdLine )
-		{
-			arrayArgs = wxCmdLineParser::ConvertStringToArgs(cmdLine);
-		}
-		if( arrayArgs.size() >= 2 )
-		{
-			m_strUIDataPath = arrayArgs[1].char_str(wxConvUTF8).data();
-		}
-	}
+	//if( bTryCommandLine )
+	//{
+	//	wxArrayString arrayArgs;
+	//	const wxChar *cmdLine = ::GetCommandLine();
+	//	if ( cmdLine )
+	//	{
+	//		arrayArgs = wxCmdLineParser::ConvertStringToArgs(cmdLine);
+	//	}
+	//	if( arrayArgs.size() >= 2 )
+	//	{
+	//		m_strUIDataPath = arrayArgs[1].char_str(wxConvUTF8).data();
+	//	}
+	//}
 
 
 	//chose data path
-	wxDirDialog aDlg( this, _T("Choose a libguiex root path"), wxConvUTF8.cMB2WC( m_strUIDataPath.c_str()));
-	if( wxID_OK != aDlg.ShowModal())
-	{
-		return false;
-	}
-	m_strUIDataPath = (aDlg.GetPath() + wxT("\\")).char_str(wxConvUTF8).data();
+	//wxDirDialog aDlg( this, _T("Choose a libguiex root path"), wxConvUTF8.cMB2WC( m_strUIDataPath.c_str()));
+	//if( wxID_OK != aDlg.ShowModal())
+	//{
+	//	return false;
+	//}
+	//m_strUIDataPath = (aDlg.GetPath() + wxT("\\")).char_str(wxConvUTF8).data();
+	
+
+	//get base dir
+	wxString strDir;
+	wxSplitPath(wxGetFullModuleName(), &strDir, NULL, NULL);
+	m_strUIDataPath = guiex::CGUIString(wxConvUTF8.cWC2MB(strDir).data()) + "/../../data/test/";
 
 	//chose scene
 	guiex::CGUIWidgetSystem::Instance()->SetDataPath(m_strUIDataPath);
 	guiex::CGUISceneInfoManager::Instance()->LoadScenes();
-	const std::vector<guiex::CGUIString>& vecScenes = guiex::CGUISceneInfoManager::Instance()->GetSceneFileNames( );
-	wxArrayString arrayScenes;
-	for( unsigned i=0; i<vecScenes.size(); ++i )
+	//const std::vector<guiex::CGUIString>& vecScenes = guiex::CGUISceneInfoManager::Instance()->GetSceneFileNames( );
+	//wxArrayString arrayScenes;
+	//for( unsigned i=0; i<vecScenes.size(); ++i )
+	//{
+	//	arrayScenes.Add( wxConvUTF8.cMB2WC( vecScenes[i].c_str()));
+	//}
+	//wxSingleChoiceDialog aChoiceDlg( this, _T("select resource"), _T("select resource scene"), arrayScenes );
+	//if( aChoiceDlg.ShowModal() != wxID_OK )
+	//{
+	//	return false;
+	//}
+	m_strUISceneFilename = GetSampleSceneName();
+	if( guiex::CGUISceneInfoManager::Instance()->GetSceneInfo(m_strUISceneFilename) == NULL )
 	{
-		arrayScenes.Add( wxConvUTF8.cMB2WC( vecScenes[i].c_str()));
-	}
-	wxSingleChoiceDialog aChoiceDlg( this, _T("select resource"), _T("select resource scene"), arrayScenes );
-	if( aChoiceDlg.ShowModal() != wxID_OK )
-	{
+		wxMessageBox(_("libguiex test"), _("failed to find scene"), wxOK, this);
 		return false;
 	}
-	m_strUISceneFilename = vecScenes[aChoiceDlg.GetSelection()];
 
 	return true;
 }

@@ -9,6 +9,11 @@
 #include <libguiex_core/guiex.h>
 #include <libguiex_widget/guiwgt.h>
 
+const char* GetSampleSceneName()
+{
+	return "common.uip";
+}
+
 guiex::CGUIWidget* SampleInitialize()
 {
 	guiex::CGUIWidget* pWidgetRoot = GUI_CREATE_WIDGET("CGUIWgtEmptyNode", "page", "testscene");
@@ -19,8 +24,7 @@ guiex::CGUIWidget* SampleInitialize()
 
 	guiex::CGUIWidget* pWidget_staticimage = GUI_CREATE_WIDGET("CGUIWgtStaticImage", "staticimage_0", "testscene");
 	pWidget_staticimage->SetParent( pWidgetRoot );
-	pWidget_staticimage->SetImage( "color_white", "color_white" );
-	pWidget_staticimage->SetValue( "Image", "color_white" );
+	pWidget_staticimage->SetImage( "BGIMAGE", "color_white" );
 	pWidget_staticimage->SetSize( 50, 50 );
 	pWidget_staticimage->SetPosition( 100, 100 );
 	pWidget_staticimage->SetAnchorPoint( 0.5, 0.5 );
@@ -28,8 +32,7 @@ guiex::CGUIWidget* SampleInitialize()
 
 	guiex::CGUIWidget* pWidget_staticimage2 = GUI_CREATE_WIDGET("CGUIWgtStaticImage", "staticimage_1", "testscene");
 	pWidget_staticimage2->SetParent( pWidget_staticimage );
-	pWidget_staticimage2->SetImage( "checkbutton_glow_checked", "checkbutton_glow_checked" );
-	pWidget_staticimage2->SetValue( "Image", "checkbutton_glow_checked" );
+	pWidget_staticimage2->SetImage( "BGIMAGE", "checkbutton_glow_checked" );
 	pWidget_staticimage2->SetAnchorPoint( 0.5, 0.5 );
 	pWidget_staticimage2->SetSize( 25, 25 );
 	pWidget_staticimage2->SetPosition( 0, 0 );

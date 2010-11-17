@@ -40,6 +40,12 @@ namespace guiex
 		m_fHeight = rSize.m_fHeight;
 	}
 	//------------------------------------------------------------------------------
+	void	CGUISize::SetValue( real fWidth, real fHeight )
+	{
+		m_fWidth = fWidth;
+		m_fHeight = fHeight;
+	}
+	//------------------------------------------------------------------------------
 	void	CGUISize::SetWidth( real fWidth)
 	{
 		m_fWidth = fWidth;
@@ -62,7 +68,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	bool	CGUISize::IsEqualZero() const
 	{
-		return GUI_REAL_EQUAL(0, m_fWidth * m_fHeight );
+		return ( GUI_REAL_EQUAL( m_fWidth, 0.0f ) && GUI_REAL_EQUAL( m_fHeight, 0.0f ));
 	}
 	//------------------------------------------------------------------------------
 	bool	CGUISize::IsEqual( const CGUISize& rSize ) const

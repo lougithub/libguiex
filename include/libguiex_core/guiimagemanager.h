@@ -52,56 +52,108 @@ namespace guiex
 		virtual ~CGUIImageManager();
 
 		/**
-		* @brief create a image by image path;
+		* @brief register a named image by property
 		*/
-		const CGUIImage*	CreateImage(
+		int32 RegisterImage( 
+			const CGUIString& rName,
+			const CGUIString& rSceneName,
+			const CGUIProperty& rProperty);
+
+		int32 RegisterImage(
 			const CGUIString& rName,
 			const CGUIString& rSceneName,
 			const CGUIString& rPath, 
 			const CGUIRect& rUVRect=CGUIRect(0.0f,0.0f,1.0f,1.0f), 
-			EImageOperation eImageOperation = IMAGE_NONE);
+			EImageOrientation eImageOrientation = eImageOrientation_Normal,
+			const CGUISize& rSize = CGUISize(0,0));
 
-		/**
-		* @brief create a image with given color
-		*/
-		const CGUIImage*	CreateImage( 
+		int32 RegisterImage( 
 			const CGUIString& rName,
 			const CGUIString& rSceneName,
-			const CGUIColor& rColor );
+			const CGUIColor& rColor,
+			const CGUISize& rSize = CGUISize(0,0));
 
-
-		/**
-		* @brief create a named image by property
-		*
-		*<property name="btn_ok_hover" type="CGUIImage">
-		*		<property name="path" type="CGUIString" value="./data/sample.png"/>
-		*		<property name="uv" type="CGUIRect" value="0,0,0.5,1" />
-		*		<property name="operation" type="EImageOperation" value="IMAGE_NONE" />
-		*</property>
-		*
-		*<property name="btn_ok_hover" type="CGUIImage">
-		*		<property name="color" type="CGUIColor" value="0.5,0.0,0.6"/>
-		*</property>
-		*
-		*/
-		const CGUIImage*	CreateImage(
-			const CGUIString& rName,
-			const CGUIString& rSceneName,
-			const CGUIProperty& rProperty );
-
-		/**
-		 * create image from memory
-		 */
-		const CGUIImage*	CreateImage(
+		int32 RegisterImage(
 			const CGUIString& rName,
 			const CGUIString& rSceneName,
 			const void* buffPtr, 
 			int32 buffWidth, 
 			int32 buffHeight, 
-			EGuiPixelFormat ePixelFormat );
+			EGuiPixelFormat ePixelFormat,
+			const CGUISize& rSize = CGUISize(0,0));
 
-		const CGUIImage* AllocateResource( const CGUIString& rResName ) const;
+		const CGUIImage* AllocateResource( const CGUIString& rImageName ) const;
+
+		const CGUIImage* AllocateResource( 			
+			const CGUIString& rName,
+			const CGUIString& rSceneName,
+			const CGUIProperty& rProperty ) const;
+
+		const CGUIImage* AllocateResource( 			
+			const CGUIString& rName,
+			const CGUIString& rSceneName,
+			const CGUIString& rPath, 
+			const CGUIRect& rUVRect=CGUIRect(0.0f,0.0f,1.0f,1.0f), 
+			EImageOrientation eImageOrientation = eImageOrientation_Normal,
+			const CGUISize& rSize = CGUISize(0,0) ) const;
+
+		const CGUIImage* AllocateResource( 			
+			const CGUIString& rName,
+			const CGUIString& rSceneName,
+			const CGUIColor& rColor,
+			const CGUISize& rSize = CGUISize(0,0) ) const;
+
+		const CGUIImage* AllocateResource( 			
+			const CGUIString& rName,
+			const CGUIString& rSceneName,
+			const void* buffPtr, 
+			int32 buffWidth, 
+			int32 buffHeight, 
+			EGuiPixelFormat ePixelFormat,
+			const CGUISize& rSize = CGUISize() ) const;
+
 		int32 DeallocateResource( const CGUIImage* pImage );
+
+	protected:
+		/**
+		* @brief create a image by property;
+		*/
+		CGUIImage* DoCreateImage( 
+			const CGUIString& rName,
+			const CGUIString& rSceneName,
+			const CGUIProperty& rProperty) const;
+
+		/**
+		* @brief create a image by image path;
+		*/
+		CGUIImage* DoCreateImage(
+			const CGUIString& rName,
+			const CGUIString& rSceneName,
+			const CGUIString& rPath, 
+			const CGUIRect& rUVRect, 
+			EImageOrientation eImageOrientation,
+			const CGUISize& rSize) const;
+
+		/**
+		* @brief create a image with given color
+		*/
+		CGUIImage* DoCreateImage( 
+			const CGUIString& rName,
+			const CGUIString& rSceneName,
+			const CGUIColor& rColor,
+			const CGUISize& rSize) const;
+
+		/**
+		 * create image from memory
+		 */
+		CGUIImage* DoCreateImage(
+			const CGUIString& rName,
+			const CGUIString& rSceneName,
+			const void* buffPtr, 
+			int32 buffWidth, 
+			int32 buffHeight, 
+			EGuiPixelFormat ePixelFormat,
+			const CGUISize& rSize) const;
 
 
 	protected:

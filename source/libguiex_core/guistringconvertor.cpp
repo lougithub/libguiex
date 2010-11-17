@@ -584,34 +584,34 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	//convert for EImageOperation
+	//convert for EImageOrientation
 	template<  >
-	int32 StringToValue<EImageOperation>( const CGUIString& rString, EImageOperation& rValue)
+	int32 StringToValue<EImageOrientation>( const CGUIString& rString, EImageOrientation& rValue)
 	{
-		if( rString == "IMAGE_NONE" )
+		if( rString == "eImageOrientation_Normal" )
 		{
-			rValue = IMAGE_NONE;
+			rValue = eImageOrientation_Normal;
 		}
-		else if( rString == "IMAGE_ROTATE90CW" )
+		else if( rString == "eImageOrientation_90CW" )
 		{
-			rValue = IMAGE_ROTATE90CW;
+			rValue = eImageOrientation_90CW;
 		}
-		else if( rString == "IMAGE_ROTATE90CCW" )
+		else if( rString == "eImageOrientation_90CCW" )
 		{
-			rValue = IMAGE_ROTATE90CCW;
+			rValue = eImageOrientation_90CCW;
 		}
-		else if( rString == "IMAGE_FLIPHORIZON" )
+		else if( rString == "eImageOrientation_FlipHorizon" )
 		{
-			rValue = IMAGE_FLIPHORIZON;
+			rValue = eImageOrientation_FlipHorizon;
 		}
-		else if( rString == "IMAGE_FLIPVERTICAL" )
+		else if( rString == "eImageOrientation_FlipVertical" )
 		{
-			rValue = IMAGE_FLIPVERTICAL;
+			rValue = eImageOrientation_FlipVertical;
 		}
 		else
 		{
 			throw CGUIException(
-				"[StringToValue[EImageOperation]]: string value format is wrong! <%s>",
+				"[StringToValue[EImageOrientation]]: string value format is wrong! <%s>",
 				rString.c_str());
 			return -1;
 		}
@@ -619,28 +619,28 @@ namespace guiex
 	}
 
 	template<  >
-	int32 ValueToString<EImageOperation>( const EImageOperation& rValue, CGUIString& rString )
+	int32 ValueToString<EImageOrientation>( const EImageOrientation& rValue, CGUIString& rString )
 	{
 		switch(rValue)
 		{
-		case IMAGE_NONE:
-			rString = CGUIString("IMAGE_NONE");
+		case eImageOrientation_Normal:
+			rString = CGUIString("eImageOrientation_Normal");
 			break;
-		case IMAGE_ROTATE90CW:
-			rString =  CGUIString("IMAGE_ROTATE90CW");
+		case eImageOrientation_90CW:
+			rString =  CGUIString("eImageOrientation_90CW");
 			break;
-		case IMAGE_ROTATE90CCW:
-			rString =  CGUIString("IMAGE_ROTATE90CCW");
+		case eImageOrientation_90CCW:
+			rString =  CGUIString("eImageOrientation_90CCW");
 			break;
-		case IMAGE_FLIPHORIZON:
-			rString =  CGUIString("IMAGE_FLIPHORIZON");
+		case eImageOrientation_FlipHorizon:
+			rString =  CGUIString("eImageOrientation_FlipHorizon");
 			break;
-		case IMAGE_FLIPVERTICAL:
-			rString =  CGUIString("IMAGE_FLIPVERTICAL");
+		case eImageOrientation_FlipVertical:
+			rString =  CGUIString("eImageOrientation_FlipVertical");
 			break;
 		default:
 			throw CGUIException(
-				"[ValueToString[EImageOperation]]: unknown image operation <%d>",
+				"[ValueToString[EImageOrientation]]: unknown image orientation <%d>",
 				rValue);
 			return -1;
 		}
@@ -682,7 +682,7 @@ namespace guiex
 			break;
 		default:
 			throw CGUIException(
-				"[ValueToString[EScreenValue]]: unknown image operation <%d>",
+				"[ValueToString[EScreenValue]]: unknown image orientation <%d>",
 				rValue);
 			return -1;
 		}

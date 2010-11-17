@@ -168,20 +168,24 @@
 	<References>
 	</References>
 	<Files>
-		<File
-			RelativePath="..\..\test\wxTestCommon\libguiex_test.rc"
+		<Filter
+			Name="Common"
 			>
-		</File>
-		<File
-			RelativePath="..\..\test\wxTestCommon\resource.h"
-			>
-		</File>
+			<File
+				RelativePath="..\..\test\wxTestCommon\libguiex_test.rc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\test\wxTestCommon\resource.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\test\wxTestCommon\testcommon.cpp"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath="..\..\test\test1\test1.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\test\wxTestCommon\testcommon.cpp"
 			>
 		</File>
 	</Files>

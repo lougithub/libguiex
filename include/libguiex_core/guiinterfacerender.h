@@ -71,7 +71,7 @@ namespace guiex
 			real z, 
 			const CGUITextureImp* pTex, 
 			const CGUIRect& rTextureRect,
-			EImageOperation eImageOperation,
+			EImageOrientation eImageOrientation,
 			GUIARGB rColor_topleft,
 			GUIARGB rColor_topright,
 			GUIARGB rColor_bottomleft,

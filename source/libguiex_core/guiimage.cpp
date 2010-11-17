@@ -31,49 +31,53 @@ namespace guiex
 	CGUIImage::CGUIImage( 
 		const CGUIString& rName, 
 		const CGUIString& rSceneName, 
-		const CGUIColor& rColor )
+		const CGUIColor& rColor,
+		const CGUISize& rSize )
 		:CGUIResource( rName, rSceneName, "IMAGE" )
 		,m_pTexture(NULL)
-		,m_eImageOperation(IMAGE_NONE)
+		,m_eImageOrientation(eImageOrientation_Normal)
 		,m_eImageType( eIT_COLOR )
 		,m_aColor( rColor )
 		,m_aUVRect(CGUIRect(0.f,0.f,1.f,1.f))
+		,m_aImageSize( rSize )
 	{
 	}
 	//------------------------------------------------------------------------------
-
 	CGUIImage::CGUIImage( 
 		const CGUIString& rName,
 		const CGUIString& rSceneName, 
 		const void* buffPtr, 
 		int32 buffWidth, 
 		int32 buffHeight, 
-		EGuiPixelFormat ePixelFormat /*= GUI_PF_ARGB_32*/ )
+		EGuiPixelFormat ePixelFormat,
+		const CGUISize& rSize )
 		:CGUIResource( rName, rSceneName, "IMAGE" )
 		,m_pTexture(NULL)
-		,m_eImageOperation(IMAGE_NONE)
+		,m_eImageOrientation(eImageOrientation_Normal)
 		,m_eImageType( eIT_MEM )
 		,m_pBuffPtr(buffPtr)
 		,m_nBuffWidth(buffWidth)
 		,m_nBuffHeight(buffHeight)
 		,m_ePixelFormat(ePixelFormat)
 		,m_aUVRect(CGUIRect(0.f,0.f,1.f,1.f))
+		,m_aImageSize( rSize )
 	{
 	}
 	//------------------------------------------------------------------------------
-
 	CGUIImage::CGUIImage( 		
 		const CGUIString& rName,
 		const CGUIString& rSceneName, 
 		const CGUIString& rPath,
 		const CGUIRect& rUVRect,
-		EImageOperation	eImageOperation)
+		EImageOrientation	eImageOrientation,
+		const CGUISize& rSize )
 		:CGUIResource( rName, rSceneName, "IMAGE" )
 		,m_pTexture(NULL)
-		,m_eImageOperation(eImageOperation)
+		,m_eImageOrientation(eImageOrientation)
 		,m_eImageType( eIT_FILE )
 		,m_strPath( rPath )
-		,m_aUVRect(rUVRect)
+		,m_aUVRect( rUVRect )
+		,m_aImageSize( rSize )
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -134,26 +138,37 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	CGUISize CGUIImage::GetSize() const
+	const CGUISize& CGUIImage::GetSize() const
 	{
-		if( !IsLoaded())
+		if( !m_aImageSize.IsEqualZero())
 		{
-			Load();
+			if( !IsLoaded())
+			{
+				Load();
+			}
+
+			CGUISize aTexSize = m_aUVRect.GetSize();
+			switch(m_eImageOrientation)
+			{
+			case eImageOrientation_90CW:		///!< rotate image for 90 CW
+			case eImageOrientation_90CCW:		///!< rotate image for 90 CCW
+				m_aImageSize.SetValue( 
+					m_pTexture->GetHeight() * aTexSize.m_fHeight, 
+					m_pTexture->GetWidth() * aTexSize.m_fWidth);
+				break;
+
+			case eImageOrientation_Normal:			///!< none Orientation
+			case eImageOrientation_FlipHorizon:		///!< flip image horizon
+			case eImageOrientation_FlipVertical:	///!< flip image vertical
+			default:
+				m_aImageSize.SetValue( 
+					m_pTexture->GetWidth() * aTexSize.m_fWidth, 
+					m_pTexture->GetHeight() * aTexSize.m_fHeight);
+				break;
+			}
 		}
 
-		CGUISize aTexSize = m_aUVRect.GetSize();
-		switch(m_eImageOperation)
-		{
-		case IMAGE_ROTATE90CW:		///!< rotate image for 90 CW
-		case IMAGE_ROTATE90CCW:		///!< rotate image for 90 CCW
-			return CGUISize( m_pTexture->GetHeight() * aTexSize.m_fHeight, m_pTexture->GetWidth() * aTexSize.m_fWidth);
-
-		case IMAGE_NONE:			///!< none operation
-		case IMAGE_FLIPHORIZON:		///!< flip image horizon
-		case IMAGE_FLIPVERTICAL:	///!< flip image vertical
-		default:
-			return CGUISize( m_pTexture->GetWidth() * aTexSize.m_fWidth, m_pTexture->GetHeight() * aTexSize.m_fHeight);
-		}
+		return m_aImageSize;
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIImage::Draw(IGUIInterfaceRender* pRender,
@@ -173,7 +188,7 @@ namespace guiex
 		aColorRect.m_top_right.SetAlpha(aColorRect.m_top_right.GetAlpha()*fAlpha);
 		aColorRect.m_bottom_left.SetAlpha(aColorRect.m_bottom_left.GetAlpha()*fAlpha);
 		aColorRect.m_bottom_right.SetAlpha(aColorRect.m_bottom_right.GetAlpha()*fAlpha);
-		pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOperation,
+		pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,
 			aColorRect.m_top_left.GetARGB(),aColorRect.m_top_right.GetARGB(),
 			aColorRect.m_bottom_left.GetARGB(),aColorRect.m_bottom_right.GetARGB());
 	}
@@ -193,14 +208,14 @@ namespace guiex
 		{
 			CGUIColor aColor = m_aColor;
 			aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
-			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOperation,
+			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,
 				aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB());
 		}
 		else
 		{
 			CGUIColor aColor(0xFFFFFFFF);
 			aColor.SetAlpha(fAlpha);
-			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOperation,
+			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,
 				aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB());
 		}
 	}
@@ -221,14 +236,14 @@ namespace guiex
 		{
 			CGUIColor aColor = m_aColor*rColor;
 			aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
-			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOperation,
+			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,
 				aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB());
 		}
 		else
 		{
 			CGUIColor aColor(rColor);
 			aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
-			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOperation,
+			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,
 				aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB());
 		}
 	}

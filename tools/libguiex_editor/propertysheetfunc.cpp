@@ -421,9 +421,9 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 			pSheetMgr->SetPropertyValue(pPGTop, aValue);
 		}
 	}
-	else if( aProp.GetType() == ePropertyType_ImageOperation )
+	else if( aProp.GetType() == ePropertyType_ImageOrientation )
 	{			
-		guiex::EImageOperation aValue;
+		guiex::EImageOrientation aValue;
 		guiex::PropertyToValue( aProp, aValue );
 
 		if( pPGTop )
@@ -603,7 +603,7 @@ void GenerateGUIProperty( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPro
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
 	//enum
-	else if( rProperty.GetType() == ePropertyType_ImageOperation ||
+	else if( rProperty.GetType() == ePropertyType_ImageOrientation ||
 		rProperty.GetType() == ePropertyType_ScreenValue ||
 		rProperty.GetType() == ePropertyType_TextAlignmentVert ||
 		rProperty.GetType() == ePropertyType_TextAlignmentHorz )
