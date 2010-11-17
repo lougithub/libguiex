@@ -1131,12 +1131,12 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::OnSetImage( const CGUIString& rName, const CGUIImage* pImage )
+	void	CGUIWidget::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
 
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::SetImage( const CGUIString& rName, const CGUIImage* pImage )
+	void	CGUIWidget::SetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
 		//clear old one
 		TMapImage::iterator itor = m_aMapImage.find(rName );
@@ -1154,17 +1154,17 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	const CGUIImage*	CGUIWidget::SetImage( const CGUIString& rName, const CGUIString& rImageName )
+	CGUIImage*	CGUIWidget::SetImage( const CGUIString& rName, const CGUIString& rImageName )
 	{
 		//find image
-		const CGUIImage* pImage = CGUIImageManager::Instance()->AllocateResource( rImageName );
+		CGUIImage* pImage = CGUIImageManager::Instance()->AllocateResource( rImageName );
 		if( !pImage )
 		{
 			throw CGUIException( "failed to get image by name <%s>", rImageName.c_str());
 			return NULL;
 		};
 		SetImage(rName, pImage);
-		pImage->RefRelease();
+		CGUIImageManager::Instance()->DeallocateResource( pImage );
 		return pImage;
 	}
 	//------------------------------------------------------------------------------
@@ -1211,7 +1211,7 @@ namespace guiex
 		return m_aMapImage.find(rName ) != m_aMapImage.end();
 	}
 	//------------------------------------------------------------------------------
-	const CGUIImage* CGUIWidget::GetImage( const CGUIString& rName )
+	CGUIImage* CGUIWidget::GetImage( const CGUIString& rName )
 	{
 		TMapImage::iterator itor=  m_aMapImage.find(rName);
 		if( itor == m_aMapImage.end())
@@ -1318,7 +1318,7 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Image  )
 		{
-			const CGUIImage* pImage = GetImage(rProperty.GetName());
+			CGUIImage* pImage = GetImage(rProperty.GetName());
 			if( pImage )
 			{
 				rProperty.SetValue( pImage->GetName() );

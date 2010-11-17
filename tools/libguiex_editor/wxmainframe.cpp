@@ -281,18 +281,18 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 		guiex::CGUIWidgetSystem::Instance()->SetScreenSize(m_aScreenSize.x, m_aScreenSize.y);
 
 		//register interface
-		GUI_REGISTER_INTERFACE_LIB( "IGUIRender", IGUIRender_opengl);
-		GUI_REGISTER_INTERFACE_LIB( "IGUIImageLoader", IGUIImageLoader_tga);
-		//GUI_REGISTER_INTERFACE_LIB( "IGUIImageLoader", IGUIImageLoader_devil);
-		GUI_REGISTER_INTERFACE_LIB( "IGUIFileSys", IGUIFileSys_stdio);
-		GUI_REGISTER_INTERFACE_LIB( "IGUIMouse", IGUIMouse_winapi);
-		GUI_REGISTER_INTERFACE_LIB( "IGUIFont", IGUIFont_ft2);
-		GUI_REGISTER_INTERFACE_LIB( "IGUIKeyboard", IGUIKeyboard_winapi);
-		GUI_REGISTER_INTERFACE_LIB( "IGUIConfigFile", IGUIConfigFile_tinyxml);
-		//GUI_REGISTER_INTERFACE_LIB( "IGUICommand", LIBGUIEX_COMMAND_TCP_DLL);
-		//GUI_REGISTER_INTERFACE_LIB( "IGUISound", LIBGUIEX_SOUND_OPENAL_DLL);
-		GUI_REGISTER_INTERFACE_LIB( "IGUIScript", IGUIScript_lua);
-		GUI_REGISTER_INTERFACE_LIB_ARG( "IGUIIme", IGUIIme_winapi, (HWND*)GetHandle());
+		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl);
+		GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_tga);
+		//GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_devil);
+		GUI_REGISTER_INTERFACE_LIB( IGUIFileSys_stdio);
+		GUI_REGISTER_INTERFACE_LIB( IGUIMouse_winapi);
+		GUI_REGISTER_INTERFACE_LIB( IGUIFont_ft2);
+		GUI_REGISTER_INTERFACE_LIB( IGUIKeyboard_winapi);
+		GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
+		//GUI_REGISTER_INTERFACE_LIB( LIBGUIEX_COMMAND_TCP_DLL);
+		//GUI_REGISTER_INTERFACE_LIB( LIBGUIEX_SOUND_OPENAL_DLL);
+		GUI_REGISTER_INTERFACE_LIB( IGUIScript_lua);
+		GUI_REGISTER_INTERFACE_LIB_ARG( IGUIIme_winapi, (HWND*)GetHandle());
 
 		//register widget
 		guiex::CGUIWidgetGenerator** pGenerator = guiex::GetAllGenerators();

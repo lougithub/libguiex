@@ -1,14 +1,13 @@
 /** 
-* @file guiinterfacecommand.h
-* @brief command from out of application, use script
-* to control ui system
+* @file guiinterfacestringconv.h
+* @brief used to convert string between different code
 * @author ken
-* @date 2006-09-26
+* @date 2010-11-17
 */
 
 
-#ifndef __GUI_INTERFACE_COMMAND_H_20060926__
-#define __GUI_INTERFACE_COMMAND_H_20060926__
+#ifndef __GUI_INTERFACE_STRINGCONV_H_20101117__
+#define __GUI_INTERFACE_STRINGCONV_H_20101117__
 
 //============================================================================//
 // include
@@ -16,6 +15,7 @@
 #include "guibase.h"
 #include "guiinterface.h"
 #include "guistring.h"
+#include "guistringex.h"
 
 
 //============================================================================//
@@ -25,37 +25,37 @@ namespace guiex
 {
 
 	/**
-	* @class IGUIInterfaceCommand
-	* @brief script command from out of gui system
+	* @class IGUIInterfaceStringConv
+	* @brief used to convert string between different code
 	*/
-	class GUIEXPORT IGUIInterfaceCommand : public IGUIInterface
+	class GUIEXPORT IGUIInterfaceStringConv : public IGUIInterface
 	{
 	public:
 		/** 
 		* @brief constructor
 		*/
-		IGUIInterfaceCommand();
+		IGUIInterfaceStringConv();
 
 		/** 
 		* @brief destructor
 		*/
-		virtual ~IGUIInterfaceCommand();
+		virtual ~IGUIInterfaceStringConv();
 
 
 	public:
 		/**
-		* @brief receive command
+		* @brief convert utf8 to utf16
+		* @return zero for success
 		*/
-		virtual	const char* Receive( ) = 0;
+		virtual int Utf8ToUtf16( const CGUIString& rSrc, CGUIStringEx& rDst ) = 0;
 
 		/**
-		* @brief send output
+		* @brief convert utf16 to utf8
+		* @return zero for success
 		*/
-		virtual	void Send( const CGUIString& rOutput ) = 0;
-
+		virtual int Utf16ToUtf8( const CGUIStringEx& rSrc, CGUIString& rDst ) = 0;
 	};
 }//namespace guiex
-
 
 //============================================================================//
 // function
@@ -65,9 +65,9 @@ namespace guiex
 	/**
 	* @brief get command interface
 	*/
-	GUIEXPORT IGUIInterfaceCommand*	GetInterface_Command( );
+	GUIEXPORT IGUIInterfaceStringConv*	GetInterface_StringConv( );
 
 }//namespace guiex
 
-#endif //__GUI_INTERFACE_COMMAND_H_20060926__
+#endif //__GUI_INTERFACE_STRINGCONV_H_20101117__
 

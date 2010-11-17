@@ -82,37 +82,29 @@ namespace guiex
 			EGuiPixelFormat ePixelFormat,
 			const CGUISize& rSize = CGUISize(0,0));
 
-		const CGUIImage* AllocateResource( const CGUIString& rImageName ) const;
+		CGUIImage* AllocateResource( const CGUIString& rImageName ) const;
 
-		const CGUIImage* AllocateResource( 			
-			const CGUIString& rName,
-			const CGUIString& rSceneName,
+		CGUIImage* AllocateResource( 			
 			const CGUIProperty& rProperty ) const;
 
-		const CGUIImage* AllocateResource( 			
-			const CGUIString& rName,
-			const CGUIString& rSceneName,
+		CGUIImage* AllocateResource( 			
 			const CGUIString& rPath, 
-			const CGUIRect& rUVRect=CGUIRect(0.0f,0.0f,1.0f,1.0f), 
+			const CGUIRect& rUVRect, 
 			EImageOrientation eImageOrientation = eImageOrientation_Normal,
 			const CGUISize& rSize = CGUISize(0,0) ) const;
 
-		const CGUIImage* AllocateResource( 			
-			const CGUIString& rName,
-			const CGUIString& rSceneName,
+		CGUIImage* AllocateResource( 			
 			const CGUIColor& rColor,
 			const CGUISize& rSize = CGUISize(0,0) ) const;
 
-		const CGUIImage* AllocateResource( 			
-			const CGUIString& rName,
-			const CGUIString& rSceneName,
+		CGUIImage* AllocateResource( 			
 			const void* buffPtr, 
 			int32 buffWidth, 
 			int32 buffHeight, 
 			EGuiPixelFormat ePixelFormat,
 			const CGUISize& rSize = CGUISize() ) const;
 
-		int32 DeallocateResource( const CGUIImage* pImage );
+		int32 DeallocateResource( CGUIImage* pImage );
 
 	protected:
 		/**

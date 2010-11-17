@@ -70,6 +70,7 @@
 #include <libguiex_module\configfile_tinyxml\guiconfigfile_tinyxml.h>
 #include <libguiex_module\script_lua\guiscript_lua.h>
 #include <libguiex_module\ime_winapi\guiime_winapi.h>
+#include <libguiex_module\stringconv_winapi\guistringconv_winapi.h>
 
 
 

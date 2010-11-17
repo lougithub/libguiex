@@ -335,6 +335,18 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="stringconv_winapi"
+			>
+			<File
+				RelativePath="..\..\source\libguiex_module\stringconv_winapi\guistringconv_winapi.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\libguiex_module\stringconv_winapi\guistringconv_winapi.h"
+				>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

@@ -63,7 +63,7 @@ namespace guiex
 		/** 
 		* @brief constructor.
 		*/
-		IGUIInterface();
+		IGUIInterface( const CGUIString& rModuleName );
 
 		/** 
 		* @brief destructor
@@ -75,17 +75,19 @@ namespace guiex
 		* @param pData user data used by interface,
 		* @return 0 for successful
 		*/
-		int		Initialize(void* pUserData = NULL);
+		int Initialize(void* pUserData = NULL);
 
 		/** 
 		* @brief destroy interface.
 		*/
-		void	Destroy();
+		void Destroy();
 
 		/**
 		* @brief delete self, used by CGUIInterfaceManager
 		*/
-		virtual void	DeleteSelf() = 0;
+		virtual void DeleteSelf() = 0;
+
+		const CGUIString& GetModuleName( ) const;
 
 	protected:
 		/** 
@@ -97,7 +99,10 @@ namespace guiex
 		/** 
 		* @brief implement destruct
 		*/
-		virtual void	DoDestroy() = 0;
+		virtual void DoDestroy() = 0;
+
+	private:
+		CGUIString m_strModuleName;
 
 	private:
 		bool	m_bInitialize;	///< flag: has this interface been initialized

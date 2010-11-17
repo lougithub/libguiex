@@ -20,6 +20,7 @@ namespace guiex
 
 	//------------------------------------------------------------------------------
 	IGUIInterfaceKeyboard::IGUIInterfaceKeyboard( )
+		:IGUIInterface("IGUIKeyboard")
 	{
 		Reset();
 	}

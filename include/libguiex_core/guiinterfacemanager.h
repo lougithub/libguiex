@@ -37,6 +37,8 @@ namespace guiex
 	class IGUIInterfaceSound;
 	class IGUIInterfaceCommand;
 	class IGUIInterfaceIme;
+	class IGUIInterfaceStringConv;
+	
 }
 
 
@@ -44,24 +46,24 @@ namespace guiex
 // define
 //============================================================================// 
 
-#define GUI_REGISTER_INTERFACE_LIB(interfacename, classname)	\
+#define GUI_REGISTER_INTERFACE_LIB(classname)	\
 {	\
 	::guiex::classname* pInterface = new ::guiex::classname;	\
 	if( 0 != pInterface->Initialize(NULL))						\
-{															\
-	throw ::guiex::CGUIException( "Failed to initialize interface <%s>", interfacename);	\
-}															\
-	::guiex::CGUIInterfaceManager::Instance()->RegisterInterface(interfacename, pInterface);	\
+	{															\
+		throw ::guiex::CGUIException( "Failed to initialize interface <%s>", pInterface->GetModuleName().c_str());	\
+	}															\
+	::guiex::CGUIInterfaceManager::Instance()->RegisterInterface(pInterface->GetModuleName(), pInterface);	\
 }
 
-#define GUI_REGISTER_INTERFACE_LIB_ARG(interfacename, classname, arg)	\
+#define GUI_REGISTER_INTERFACE_LIB_ARG( classname, arg )	\
 {	\
 	::guiex::classname* pInterface = new ::guiex::classname;	\
 	if( 0 != pInterface->Initialize(arg))						\
-{															\
-	throw ::guiex::CGUIException( "Failed to initialize interface <%s>", interfacename);	\
-}															\
-	::guiex::CGUIInterfaceManager::Instance()->RegisterInterface(interfacename, pInterface);	\
+	{															\
+		throw ::guiex::CGUIException( "Failed to initialize interface <%s>", pInterface->GetModuleName().c_str());	\
+	}															\
+	::guiex::CGUIInterfaceManager::Instance()->RegisterInterface(pInterface->GetModuleName(), pInterface);	\
 }
 
 #define GUI_REGISTER_INTERFACE_DLL(interfacename, dllname)	\
@@ -182,6 +184,10 @@ namespace guiex
 		{
 			return m_pInterfaceIme;
 		}
+		IGUIInterfaceStringConv* GetInterfaceStringConv()
+		{
+			return m_pInterfaceStringConv;
+		}
 
 	protected:
 		//for singleton use
@@ -212,6 +218,7 @@ namespace guiex
 		IGUIInterfaceSound*			m_pInterfaceSound;
 		IGUIInterfaceCommand*		m_pInterfaceCommand;
 		IGUIInterfaceIme*			m_pInterfaceIme;
+		IGUIInterfaceStringConv*	m_pInterfaceStringConv;
 
 	public:
 		//declare for singleton

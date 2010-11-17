@@ -51,7 +51,7 @@ namespace guiex
 		,m_pInterfaceSound(NULL)
 		,m_pInterfaceCommand(NULL)
 		,m_pInterfaceIme(NULL)
-
+		,m_pInterfaceStringConv(NULL)
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -114,8 +114,10 @@ namespace guiex
 		{
 			m_pInterfaceIme = (IGUIInterfaceIme*)rInterfaceData.m_pInterface;
 		}
-
-
+		else if( rInterface == "IGUIStringConv" )
+		{
+			m_pInterfaceStringConv = (IGUIInterfaceStringConv*)rInterfaceData.m_pInterface;
+		}
 		return 0;
 	}
 	//------------------------------------------------------------------------------

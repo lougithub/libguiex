@@ -53,7 +53,7 @@ namespace guiex
 		return CGUIWidget::Create();
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtDialog::OnSetImage( const CGUIString& rName, const CGUIImage* pImage )
+	void CGUIWgtDialog::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
 		if( rName == "BGIMAGE")
 		{

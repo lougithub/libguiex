@@ -75,7 +75,7 @@ namespace guiex
 		return CGUIWidget::Create();
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtScrollbarContainer::OnSetImage( const CGUIString& rName, const CGUIImage* pImage )
+	void		CGUIWgtScrollbarContainer::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
 		if( rName == "SCROLLBAR_VERTIC_BG")
 		{

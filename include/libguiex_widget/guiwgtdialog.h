@@ -57,7 +57,7 @@ namespace guiex
 		/**
 		* @brief override the OnSetImage function
 		*/
-		virtual void	OnSetImage( const CGUIString& rName, const CGUIImage* pImage );
+		virtual void	OnSetImage( const CGUIString& rName, CGUIImage* pImage );
 
 	protected:	//!< callback function
 		uint32	OnOpen( CGUIEventNotification* pEvent );

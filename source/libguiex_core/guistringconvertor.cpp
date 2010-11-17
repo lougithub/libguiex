@@ -10,14 +10,8 @@
 // include 
 //============================================================================// 
 #include <libguiex_core/guistringconvertor.h>
-
-#if GUI_STRING_CONV_USE_ICONV
-#	include <iconv.h>
-#	include <errno.h>
-#elif  GUI_STRING_CONV_USE_MSC
-#else
-#	error "no support for MultiByteToWideChar() function"
-#endif
+#include <libguiex_core/guiinterfacemanager.h>
+#include <libguiex_core/guiinterfacestringconv.h>
 
 //============================================================================//
 // function
@@ -53,225 +47,29 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int WideByteToMultiChar( const CGUIStringEx& rSrc, CGUIString& rDst,  const char* szFromCode )
 	{
-		if( rSrc.Empty())
-		{
-			return 0;
-		}
-
-#if GUI_STRING_CONV_USE_ICONV
-		//open iconv
-		iconv_t cd = iconv_open (szFromCode?szFromCode:CGUIWidgetSystem::Instance()->GetDefaultCode(), "UTF-16LE");
-		if( cd == (iconv_t)-1 )
-		{
-			throw CGUIException(
-				"[WideByteToMultiChar]: failed to open iconv, errno is %d",
-				errno);
-			return -1;
-		}
-
-		//convert
-		size_t	buf_size = rSrc.Size()*4+1;
-		size_t	inbytesleft = rSrc.Size()*2;
-		size_t	outbytesleft = buf_size;
-		char*	dst = (char*)(new char[buf_size]);
-		char*	pOutBuf = NULL;
-		char*	pInBuf = (char*)rSrc.GetContent();
-
-		bool	bError = false;
-
-		while(inbytesleft > 0) 
-		{
-			pOutBuf = dst;
-			outbytesleft = buf_size;
-
-			size_t retbytes = iconv(cd, &pInBuf, &inbytesleft, &pOutBuf, &outbytesleft);
-			//int errno_save = errno;
-
-			if (dst != pOutBuf)  
-			{
-				// we have something to write
-				rDst.append(dst, (pOutBuf-dst));
-			} 
-
-			//check ret
-			if( retbytes == -1 )
-			{
-				if( errno == E2BIG )
-				{
-					continue;
-				}
-				else
-				{
-					bError = true;
-					break;
-				}
-			}
-			else
-			{
-				//success
-				break;
-			}
-		}
-
-		delete[] dst;
-		if( bError)
-		{
-			switch(errno)
-			{
-			case EILSEQ:
-				throw CGUIException(
-					"[WideByteToMultiChar]: failed to iconv, errno is EILSEQ");
-				return -1;
-			case EINVAL:
-				throw CGUIException(
-					"[WideByteToMultiChar]: failed to iconv, errno is EINVAL");
-				return -1;
-			default:
-				throw CGUIException(
-					"[WideByteToMultiChar]: failed to iconv, errno is %d",
-					errno);
-				return -1;
-			}
-		}
-
-		//close iconv
-		int ret = iconv_close(cd);
-		if( ret == -1 )
-		{
-			throw CGUIException(
-				"[WideByteToMultiChar]: failed to close iconv, errno is %d",
-				errno);
-			return -1;
-		}
-
-#elif GUI_STRING_CONV_USE_MSC
 		const char* pMultiByteCode = szFromCode ? szFromCode:CGUIWidgetSystem::Instance()->GetDefaultCode();
-		if( strcmp( pMultiByteCode, "UTF-8" ) == 0 )
-		{
-			//utf8
-			size_t	buf_size = (rSrc.Size()+1)*4;
-			char*	dst = (char*)(new char[buf_size]);
-			::WideCharToMultiByte(CP_UTF8,0,rSrc.GetContent(),-1,dst,buf_size, NULL, NULL );
-			rDst.append(dst);
-			delete[] dst;
-		}
-		else
+		if( strcmp( pMultiByteCode, "UTF-8" ) != 0 )
 		{
 			throw CGUIException(
 				"[WideByteToMultiChar]: not supported multi byte code <%s>",
 				pMultiByteCode );
 			return -1;
 		}
-#else
-#	error "no support for MultiByteToWideChar() function"
-#endif
-		return 0;
+
+		IGUIInterfaceStringConv* pStringConv = CGUIInterfaceManager::Instance()->GetInterfaceStringConv();
+		if( !pStringConv )
+		{
+			throw CGUIException(
+				"[WideByteToMultiChar]: not found interface to convert string code");
+			return -1;
+		}
+		return pStringConv->Utf16ToUtf8( rSrc, rDst );
 	}
 	//------------------------------------------------------------------------------
 	int MultiByteToWideChar( const CGUIString& rSrc, CGUIStringEx& rDst, const char* szFromCode)
 	{
-		if( rSrc.empty())
-		{
-			return 0;
-		}
-
-#if GUI_STRING_CONV_USE_ICONV
-		//open iconv
-		iconv_t cd = iconv_open ("UTF-16LE", szFromCode?szFromCode:CGUIWidgetSystem::Instance()->GetDefaultCode());
-		if( cd == (iconv_t)-1 )
-		{
-			throw CGUIException(
-				"[MultiByteToWideChar]: failed to open iconv, errno is %d",
-				errno);
-			return -1;
-		}
-
-		//convert
-		size_t	buf_size = rSrc.size()+4;
-		size_t	inbytesleft = rSrc.size();
-		size_t	outbytesleft = buf_size;
-		char*	dst = (char*)(new wchar_t[buf_size]);
-		char*	pOutBuf = NULL;
-		char*	pInBuf = (char*)(rSrc.c_str());
-
-		bool	bError = false;
-
-		while(inbytesleft > 0) 
-		{
-			pOutBuf = dst;
-			outbytesleft = buf_size*sizeof(wchar_t);
-			
-			size_t retbytes = iconv(cd, &pInBuf, &inbytesleft, &pOutBuf, &outbytesleft);
-			//int errno_save = errno;
-
-			if (dst != pOutBuf)  
-			{
-				// we have something to write
-				rDst.Append((wchar_t*)dst, (pOutBuf-dst)/sizeof(wchar_t));
-			} 
-
-			//check ret
-			if( retbytes == -1 )
-			{
-				if( errno == E2BIG )
-				{
-					continue;
-				}
-				else
-				{
-					bError = true;
-					break;
-				}
-			}
-			else
-			{
-				//success
-				break;
-			}
-		}
-
-		delete[] dst;
-		if( bError)
-		{
-			switch(errno)
-			{
-			case EILSEQ:
-				throw CGUIException(
-					"[MultiByteToWideChar]: failed to iconv, errno is EILSEQ");
-				return -1;
-			case EINVAL:
-				throw CGUIException(
-					"[MultiByteToWideChar]: failed to iconv, errno is EINVAL");
-				return -1;
-			default:
-				throw CGUIException(
-					"[MultiByteToWideChar]: failed to iconv, errno is %d",
-					errno);
-				return -1;
-			}
-		}
-
-		//close iconv
-		int ret = iconv_close(cd);
-		if( ret == -1 )
-		{
-			throw CGUIException(
-				"[MultiByteToWideChar]: failed to close iconv, errno is %d",
-				errno);
-			return -1;
-		}
-#elif GUI_STRING_CONV_USE_MSC
 		const char* pMultiByteCode = szFromCode ? szFromCode:CGUIWidgetSystem::Instance()->GetDefaultCode();
-		if( strcmp( pMultiByteCode, "UTF-8" ) == 0 )
-		{
-			//utf8
-			size_t	buf_size = rSrc.size()+1;
-			wchar_t*	dst = new wchar_t[buf_size];
-			::MultiByteToWideChar(CP_UTF8,0,rSrc.c_str(),-1,dst,buf_size);
-			rDst.Append(dst);
-			delete[] dst;
-		}
-		else
+		if( strcmp( pMultiByteCode, "UTF-8" ) != 0 )
 		{
 			throw CGUIException(
 				"[MultiByteToWideChar]: not supported multi byte code <%s>",
@@ -279,10 +77,14 @@ namespace guiex
 			return -1;
 		}
 
-#else
-#	error "no support for MultiByteToWideChar() function"
-#endif
-		return 0;
+		IGUIInterfaceStringConv* pStringConv = CGUIInterfaceManager::Instance()->GetInterfaceStringConv();
+		if( !pStringConv )
+		{
+			throw CGUIException(
+				"[MultiByteToWideChar]: not found interface to convert string code");
+			return -1;
+		}
+		return pStringConv->Utf8ToUtf16( rSrc, rDst );
 	}
 	//------------------------------------------------------------------------------
 	//convert for bool

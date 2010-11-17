@@ -1,9 +1,9 @@
 /** 
- * @file guiinterfaceimageloader.cpp
- * @brief interface to load image from file or memory.
- * @author ken
- * @date 2006-07-13
- */
+* @file guiinterfaceimageloader.cpp
+* @brief interface to load image from file or memory.
+* @author ken
+* @date 2006-07-13
+*/
 
 //============================================================================//
 // include 
@@ -16,14 +16,15 @@
 //============================================================================// 
 namespace guiex
 {
-//------------------------------------------------------------------------------
-IGUIInterfaceImageLoader::IGUIInterfaceImageLoader()
-{
-}
-//------------------------------------------------------------------------------
-IGUIInterfaceImageLoader::~IGUIInterfaceImageLoader()
-{
-}
-//------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------
+	IGUIInterfaceImageLoader::IGUIInterfaceImageLoader()
+		:IGUIInterface("IGUIImageLoader")
+	{
+	}
+	//------------------------------------------------------------------------------
+	IGUIInterfaceImageLoader::~IGUIInterfaceImageLoader()
+	{
+	}
+	//------------------------------------------------------------------------------
 
 }//namespace guiex

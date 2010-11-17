@@ -380,9 +380,9 @@ namespace guiex
 		* @brief set the image of widget.
 		* @param rImageName name of the image
 		*/
-		const CGUIImage* SetImage( const CGUIString& rName, const CGUIString& rImageName );
+		CGUIImage* SetImage( const CGUIString& rName, const CGUIString& rImageName );
 
-		void SetImage( const CGUIString& rName, const CGUIImage* pImage );
+		void SetImage( const CGUIString& rName, CGUIImage* pImage );
 
 		/**
 		* @brief has the image been load.
@@ -393,7 +393,7 @@ namespace guiex
 		* @brief get image info
 		* @return NULL for failed to find image by given name
 		*/
-		const CGUIImage* GetImage( const CGUIString& rName );
+		CGUIImage* GetImage( const CGUIString& rName );
 
 		/**
 		* @brief add an  animation
@@ -696,7 +696,7 @@ namespace guiex
 		/**
 		* @brief callback of set the image of widget.
 		*/
-		virtual void	OnSetImage( const CGUIString& rName, const CGUIImage* pImage );
+		virtual void	OnSetImage( const CGUIString& rName, CGUIImage* pImage );
 
 	private:
 		void SetParentImpl( CGUIWidget* pParent );
@@ -928,7 +928,7 @@ namespace guiex
 		///////////////////////////////////////////////////////////////////////
 		/// for image and animation											
 		///////////////////////////////////////////////////////////////////////
-		typedef std::map<CGUIString, const CGUIImage*>	TMapImage;
+		typedef std::map<CGUIString, CGUIImage*>	TMapImage;
 		TMapImage	m_aMapImage;	//!< image info map, key is image name used in ui system
 
 		typedef std::map<CGUIString, CGUIAnimation*>	TMapAnimation;

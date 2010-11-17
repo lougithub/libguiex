@@ -1,16 +1,15 @@
 /** 
-* @file guiinterfacecommand.cpp
-* @brief command from out of application, use script
-* to control ui system
+* @file guiinterfacestringconv.cpp
+* @brief used to conver string between different code
 * @author ken
-* @date 2006-09-26
+* @date 2010-11-17
 */
 
 
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core/guiinterfacecommand.h>
+#include <libguiex_core/guiinterfacestringconv.h>
 #include <libguiex_core/guiinterfacemanager.h>
 
 //============================================================================//
@@ -20,17 +19,17 @@ namespace guiex
 {
 
 	//------------------------------------------------------------------------------
-	GUIEXPORT IGUIInterfaceCommand*	GetInterface_Command( )
+	GUIEXPORT IGUIInterfaceStringConv*	GetInterface_StringConv( )
 	{
-		return CGUIInterfaceManager::Instance()->GetInterfaceCommand();
+		return CGUIInterfaceManager::Instance()->GetInterfaceStringConv();
 	}
 	//------------------------------------------------------------------------------
-	IGUIInterfaceCommand::IGUIInterfaceCommand( )
-		:IGUIInterface("IGUICommand")
+	IGUIInterfaceStringConv::IGUIInterfaceStringConv( )
+		:IGUIInterface("IGUIStringConv")
 	{
 	}
 	//------------------------------------------------------------------------------
-	IGUIInterfaceCommand::~IGUIInterfaceCommand()
+	IGUIInterfaceStringConv::~IGUIInterfaceStringConv()
 	{
 	}
 	//------------------------------------------------------------------------------

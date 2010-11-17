@@ -171,7 +171,7 @@ namespace guiex
 		/**
 		* @brief override the OnSetImage function
 		*/
-		virtual void	OnSetImage( const CGUIString& rName, const CGUIImage* pImage );
+		virtual void	OnSetImage( const CGUIString& rName, CGUIImage* pImage );
 
 	protected:
 		uint32	m_nID;		///id of the segment

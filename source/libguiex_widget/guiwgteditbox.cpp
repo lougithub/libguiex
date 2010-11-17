@@ -79,7 +79,7 @@ namespace guiex
 		m_pCursor = NULL;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtEditBox::OnSetImage( const CGUIString& rName, const CGUIImage* pImage )
+	void CGUIWgtEditBox::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
 		if( rName == "EDIT_BG")
 		{

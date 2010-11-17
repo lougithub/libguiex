@@ -17,9 +17,9 @@
 
 namespace guiex
 {
-
 	//------------------------------------------------------------------------------
 	IGUIInterfaceMouse::IGUIInterfaceMouse( )
+		:IGUIInterface("IGUIMouse")
 	{
 		Reset();
 	}
@@ -29,7 +29,7 @@ namespace guiex
 
 	}
 	//--------------------------------------------------------------------------------------
-	void		IGUIInterfaceMouse::Reset()
+	void IGUIInterfaceMouse::Reset()
 	{
 
 		m_aContext.m_fWheelChange = 0.0f;
@@ -39,12 +39,12 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------ 
-	bool			IGUIInterfaceMouse::ProcessMouseEvent( const SMouseEvent& rEvent )
+	bool IGUIInterfaceMouse::ProcessMouseEvent( const SMouseEvent& rEvent )
 	{
 		return CGUIWidgetSystem::Instance()->ProcessMouseInput( rEvent );
 	}
 	//--------------------------------------------------------------------------------------
-	bool	IGUIInterfaceMouse::ChangeButtonState( EMouseButton eButton,  EMouseState eState )
+	bool IGUIInterfaceMouse::ChangeButtonState( EMouseButton eButton,  EMouseState eState )
 	{
 		GUI_ASSERT( eButton > MOUSE_NONE && eButton < _MOUSE_BUTTON_MAX_,"wrong parameter" );
 		GUI_ASSERT( eState >= 0 && eState < _MOUSE_STATE_MAX_,"wrong parameter" );
@@ -69,14 +69,14 @@ namespace guiex
 		return bConsumed;
 	}
 	//--------------------------------------------------------------------------------------
-	bool	IGUIInterfaceMouse::ChangeMousePos( const CGUIVector2& rPos )
+	bool IGUIInterfaceMouse::ChangeMousePos( const CGUIVector2& rPos )
 	{
 		m_aContext.m_aPosCur = rPos;
 
 		return ProcessMouseEvent(SMouseEvent( MOUSE_EVENT_MOVE,MOUSE_NONE, m_aContext.m_aPosCur.x, m_aContext.m_aPosCur.y));
 	}
 	//--------------------------------------------------------------------------------------
-	bool	IGUIInterfaceMouse::ChangeWheel( real fWheelChange )
+	bool IGUIInterfaceMouse::ChangeWheel( real fWheelChange )
 	{
 		m_aContext.m_fWheelChange = fWheelChange;
 
@@ -89,22 +89,22 @@ namespace guiex
 		return m_aContext.m_eMouseStateCur[eButton];
 	}
 	//--------------------------------------------------------------------------------------
-	const CGUIVector2&		IGUIInterfaceMouse::GetPosition() const
+	const CGUIVector2& IGUIInterfaceMouse::GetPosition() const
 	{
 		return m_aContext.m_aPosCur;
 	}
 	//--------------------------------------------------------------------------------------
-	real	IGUIInterfaceMouse::GetWheelChange( ) const
+	real IGUIInterfaceMouse::GetWheelChange( ) const
 	{
 		return m_aContext.m_fWheelChange;
 	}
 	//--------------------------------------------------------------------------------------
-	void		IGUIInterfaceMouse::PreUpdate( )
+	void IGUIInterfaceMouse::PreUpdate( )
 	{
 
 	}
 	//--------------------------------------------------------------------------------------
-	void		IGUIInterfaceMouse::PostUpdate( )
+	void IGUIInterfaceMouse::PostUpdate( )
 	{
 		m_aContext.m_fWheelChange = 0.0f;
 	}

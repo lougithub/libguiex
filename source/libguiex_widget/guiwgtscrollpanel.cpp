@@ -129,7 +129,7 @@ namespace guiex
 		return m_UseSelfCreatedScrollbar;
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtScrollPanel::OnSetImage( const CGUIString& rName, const CGUIImage* pImage )
+	void		CGUIWgtScrollPanel::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
 	{		
 		if( rName == "BGIMAGE")
 		{

@@ -37,6 +37,7 @@
 #include <libguiex_module\configfile_tinyxml\guiconfigfile_tinyxml.h>
 #include <libguiex_module\script_lua\guiscript_lua.h>
 #include <libguiex_module\ime_winapi\guiime_winapi.h>
+#include <libguiex_module\stringconv_winapi\guistringconv_winapi.h>
 
 #include <fstream>
 
@@ -449,15 +450,16 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 		guiex::CGUIWidgetSystem::Instance()->SetScreenSize(1024, 768);
 
 		//register interface
-		GUI_REGISTER_INTERFACE_LIB( "IGUIRender", IGUIRender_opengl);
-		GUI_REGISTER_INTERFACE_LIB( "IGUIImageLoader", IGUIImageLoader_devil);
-		GUI_REGISTER_INTERFACE_LIB( "IGUIFileSys", IGUIFileSys_stdio);
-		GUI_REGISTER_INTERFACE_LIB( "IGUIMouse", IGUIMouse_winapi);
-		GUI_REGISTER_INTERFACE_LIB( "IGUIFont", IGUIFont_ft2);
-		GUI_REGISTER_INTERFACE_LIB( "IGUIKeyboard", IGUIKeyboard_winapi);
-		GUI_REGISTER_INTERFACE_LIB( "IGUIConfigFile", IGUIConfigFile_tinyxml);
-		GUI_REGISTER_INTERFACE_LIB_ARG( "IGUIScript", IGUIScript_lua, FuncInitScript);
-		GUI_REGISTER_INTERFACE_LIB_ARG( "IGUIIme", IGUIIme_winapi, pCanvas->GetHandle());
+		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl );
+		GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_devil);
+		GUI_REGISTER_INTERFACE_LIB( IGUIFileSys_stdio);
+		GUI_REGISTER_INTERFACE_LIB( IGUIMouse_winapi);
+		GUI_REGISTER_INTERFACE_LIB( IGUIFont_ft2);
+		GUI_REGISTER_INTERFACE_LIB( IGUIKeyboard_winapi);
+		GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
+		GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_Winapi);
+		GUI_REGISTER_INTERFACE_LIB_ARG( IGUIScript_lua, FuncInitScript);
+		GUI_REGISTER_INTERFACE_LIB_ARG( IGUIIme_winapi, pCanvas->GetHandle());
 
 		m_pMouse = (guiex::IGUIMouse_winapi*)guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse();
 		m_pKeyboard = (guiex::IGUIKeyboard_winapi*)guiex::CGUIInterfaceManager::Instance()->GetInterfaceKeyboard();

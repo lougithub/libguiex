@@ -154,27 +154,6 @@
 #define GUI_MOUSE_EVENT_MAX 20
 
 
-
-/*************************************************************************
-	iconv
-*************************************************************************/
-#if defined(GUIEX_PLATFORM_WIN32)
-#define GUI_STRING_CONV_USE_ICONV	0
-#define GUI_STRING_CONV_USE_MSC		1
-#elif defined(GUIEX_PLATFORM_LINUX)
-#define GUI_STRING_CONV_USE_ICONV	1
-#define GUI_STRING_CONV_USE_MSC		0
-#elif defined(GUIEX_PLATFORM_MAC)
-#define GUI_STRING_CONV_USE_ICONV	1
-#define GUI_STRING_CONV_USE_MSC		0
-#else
-#	error "unknown platform"
-#endif
-
-
-
-
-
 #endif //__GUI_CONFIG_20060322_H__
 
 

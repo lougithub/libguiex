@@ -101,7 +101,7 @@ namespace guiex
 		return CGUIWidget::Create();
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtPopupMenu::OnSetImage( const CGUIString& rName, const CGUIImage* pImage )
+	void CGUIWgtPopupMenu::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
 		if( rName == "BGIMAGE")
 		{

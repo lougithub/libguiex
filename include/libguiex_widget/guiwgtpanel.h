@@ -63,7 +63,7 @@ namespace guiex
 		/**
 		* @brief override the OnSetImage function
 		*/
-		virtual void OnSetImage( const CGUIString& rName, const CGUIImage* pImage );
+		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage );
 
 		const CGUIRect&	GetBorderRect(int32 eBorder);
 

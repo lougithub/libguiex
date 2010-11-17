@@ -19,6 +19,7 @@ namespace guiex
 
 //------------------------------------------------------------------------------
 	IGUIInterfaceFont::IGUIInterfaceFont()
+		:IGUIInterface("IGUIFont")
 	{
 
 	}

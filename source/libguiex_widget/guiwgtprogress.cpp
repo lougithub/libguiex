@@ -61,7 +61,7 @@ namespace guiex
 		return CGUIWidget::Create();
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtProgress::OnSetImage( const CGUIString& rName, const CGUIImage* pImage )
+	void CGUIWgtProgress::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
 		if( rName == "BACKGROUND_IMG")
 		{

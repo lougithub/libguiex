@@ -42,7 +42,7 @@ namespace guiex
 		m_strImageName = "BGIMAGE";
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtStaticImage::OnSetImage( const CGUIString& rName, const CGUIImage* pImage )
+	void CGUIWgtStaticImage::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
 		if( rName == "BGIMAGE")
 		{

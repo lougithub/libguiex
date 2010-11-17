@@ -19,6 +19,7 @@ namespace guiex
 {
 	//------------------------------------------------------------------------------
 	IGUIInterfaceScript::IGUIInterfaceScript( )
+		:IGUIInterface("IGUIScript")
 	{
 
 	}

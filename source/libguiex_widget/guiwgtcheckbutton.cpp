@@ -67,7 +67,7 @@ namespace guiex
 		return CGUIWidget::Create();
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtCheckButton::OnSetImage( const CGUIString& rName, const CGUIImage* pImage )
+	void		CGUIWgtCheckButton::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
 		if( rName == "BTN_NORMAL")
 		{

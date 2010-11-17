@@ -52,7 +52,7 @@ namespace guiex
 	protected:
 		virtual	void DoDestroyResource( TResType* pRes ); 
 
-		const TResType* GetResource( const CGUIString& rResName ) const;
+		TResType* GetResource( const CGUIString& rResName ) const;
 
 		void LoadAllResources( );
 
@@ -63,7 +63,6 @@ namespace guiex
 		void ReleaseAllRegisterResources( );
 
 		int32 ReleaseAllocateResource( TResType* pRes );
-		void ReleaseAllocateResourcesByScene( const CGUIString& rSceneName );
 		void ReleaseAllAllocateResources( );
 
 	protected:
@@ -118,7 +117,7 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	template< class TResType >
-	inline const TResType* CGUIResourceManager<TResType>::GetResource( const CGUIString& rResName ) const
+	inline TResType* CGUIResourceManager<TResType>::GetResource( const CGUIString& rResName ) const
 	{
 		typename TMapResource::const_iterator itor = m_mapResource.find( rResName );
 		if( itor != m_mapResource.end())
@@ -161,7 +160,6 @@ namespace guiex
 	inline void CGUIResourceManager<TResType>::ReleaseResourcesByScene( const CGUIString& rSceneName )
 	{
 		ReleaseRegisterResourcesByScene( rSceneName );
-		ReleaseAllocateResourcesByScene( rSceneName );
 	}
 	//------------------------------------------------------------------------------
 	template< class TResType >
@@ -227,31 +225,6 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	template< class TResType >
-	inline void CGUIResourceManager<TResType>::ReleaseAllocateResourcesByScene( const CGUIString& rSceneName )
-	{
-		std::vector< TResType* > vecReleaseRes;
-		for( typename TSetResource::iterator itor = m_setAllocatePool.begin();
-			itor != m_setAllocatePool.end();
-			++itor )
-		{
-			TResType* pRes = *itor;
-			if( pRes->GetSceneName() == rSceneName )
-			{
-				vecReleaseRes.push_back( pRes );
-			}
-		}
-
-		for( typename std::vector< TResType* >::iterator itor = vecReleaseRes.begin();
-			itor != vecReleaseRes.end();
-			++itor )
-		{
-			typename TSetResource::iterator itorSet = m_setAllocatePool.find( *itor );
-			DoDestroyResource( *itorSet );
-			m_setAllocatePool.erase( *itorSet );
-		}
-	}
-	//------------------------------------------------------------------------------
-	template< class TResType >
 	inline void CGUIResourceManager<TResType>::ReleaseRegisterResourcesByScene( const CGUIString& rSceneName )
 	{
 		std::vector< CGUIString > vecReleaseRes;
@@ -295,9 +268,7 @@ namespace guiex
 		if( itorFind == m_setAllocatePool.end() )
 		{
 			//not found
-			throw CGUIException("[CGUIResourceManager::ReleaseAllocateResource]: failed to remove resource <%s:%s> from allocate pool", 
-				pRes->GetName().c_str(),
-				pRes->GetResourceType().c_str());
+			throw CGUIException("[CGUIResourceManager::ReleaseAllocateResource]: failed to remove resource <%s:%s> from allocate pool" );
 			return -1;
 		}
 

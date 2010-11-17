@@ -63,7 +63,7 @@ namespace guiex
 		return CGUIWidget::Create();
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIColListHeaderSegment::OnSetImage( const CGUIString& rName, const CGUIImage* pImage )
+	void	CGUIColListHeaderSegment::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
 		if( rName == "COLUMN_HEADER_NORMAL")
 		{

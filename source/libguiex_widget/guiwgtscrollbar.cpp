@@ -346,7 +346,7 @@ namespace guiex
 		return m_eScrollbarType;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtScrollbar::OnSetImage( const CGUIString& rName, const CGUIImage* pImage )
+	void CGUIWgtScrollbar::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
 		if( rName == "SCROLLBAR_BG")
 		{

@@ -220,9 +220,9 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIImage* CGUIImageManager::AllocateResource( const CGUIString& rResName ) const
+	CGUIImage* CGUIImageManager::AllocateResource( const CGUIString& rResName ) const
 	{
-		const CGUIImage* pImage = CGUIResourceManager<CGUIImage>::GetResource( rResName );
+		CGUIImage* pImage = CGUIResourceManager<CGUIImage>::GetResource( rResName );
 		if( !pImage )
 		{
 			throw CGUIException( 
@@ -234,30 +234,26 @@ namespace guiex
 		return pImage;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIImage* CGUIImageManager::AllocateResource( 			
-		const CGUIString& rName,
-		const CGUIString& rSceneName,
+	CGUIImage* CGUIImageManager::AllocateResource( 			
 		const CGUIProperty& rProperty ) const
 	{
 		CGUIImage* pImage = DoCreateImage(
-			rName,
-			rSceneName,
+			"",
+			"",
 			rProperty );
 		pImage->RefRetain();
 		return pImage;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIImage* CGUIImageManager::AllocateResource( 			
-		const CGUIString& rName,
-		const CGUIString& rSceneName,
+	CGUIImage* CGUIImageManager::AllocateResource( 			
 		const CGUIString& rPath, 
 		const CGUIRect& rUVRect, 
 		EImageOrientation eImageOrientation,
 		const CGUISize& rSize ) const
 	{
 		CGUIImage* pImage = DoCreateImage(
-			rName,
-			rSceneName,
+			"",
+			"",
 			rPath, 
 			rUVRect, 
 			eImageOrientation,
@@ -266,24 +262,20 @@ namespace guiex
 		return pImage;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIImage* CGUIImageManager::AllocateResource( 			
-		const CGUIString& rName,
-		const CGUIString& rSceneName,
+	CGUIImage* CGUIImageManager::AllocateResource( 			
 		const CGUIColor& rColor,
 		const CGUISize& rSize ) const
 	{
 		CGUIImage* pImage = DoCreateImage(
-			rName,
-			rSceneName,
+			"",
+			"",
 			rColor,
 			rSize );
 		pImage->RefRetain();
 		return pImage;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIImage* CGUIImageManager::AllocateResource( 			
-		const CGUIString& rName,
-		const CGUIString& rSceneName,
+	CGUIImage* CGUIImageManager::AllocateResource( 			
 		const void* buffPtr, 
 		int32 buffWidth, 
 		int32 buffHeight, 
@@ -291,8 +283,8 @@ namespace guiex
 		const CGUISize& rSize ) const
 	{
 		CGUIImage* pImage = DoCreateImage(
-			rName,
-			rSceneName,
+			"",
+			"",
 			buffPtr, 
 			buffWidth, 
 			buffHeight, 
@@ -302,18 +294,29 @@ namespace guiex
 		return pImage;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIImageManager::DeallocateResource( const CGUIImage* pImage )
+	int32 CGUIImageManager::DeallocateResource( CGUIImage* pImage )
 	{
 		GUI_ASSERT( pImage, "invalid parameter" );
 
 		pImage->RefRelease();
 		if( pImage->GetRefCount() == 0 )
 		{
-			throw CGUIException( "[CGUIImageManager::DeallocateResource]: invalid reference count [%d] for resource: <%s:%s:%s>", 
-				pImage->GetRefCount(),
-				pImage->GetName().c_str(), 
-				pImage->GetResourceType().c_str(),
-				pImage->GetSceneName().c_str() );
+			if( pImage->GetName() == "" &&
+				pImage->GetSceneName() == "" )
+			{
+				//this image is not registered as a named image, free it
+				return ReleaseAllocateResource( pImage );
+			}
+			else
+			{
+				//named image's reference count shouldn't be zero, which is retained by register function
+				throw CGUIException(
+					"[CGUIImageManager::DeallocateResource]: invalid reference count [%d] for resource: <%s:%s:%s>", 
+					pImage->GetRefCount(),
+					pImage->GetName().c_str(), 
+					pImage->GetResourceType().c_str(),
+					pImage->GetSceneName().c_str() );
+			}
 		}
 		return 0;
 	}

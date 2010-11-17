@@ -1,58 +1,65 @@
 /** 
- * @file guiinterface.cpp
- * @brief interface class
- * @author ken
- * @date 2006-04-04
- */
+* @file guiinterface.cpp
+* @brief interface class
+* @author ken
+* @date 2006-04-04
+*/
 
 //============================================================================//
 // include
 //============================================================================// 
 #include <libguiex_core/guiinterface.h>
 
-
-namespace guiex
-{
 //============================================================================//
 // function
 //============================================================================// 
-IGUIInterface::IGUIInterface()
-:m_bInitialize(false)
+namespace guiex
 {
-}
-//------------------------------------------------------------------------------
-IGUIInterface::~IGUIInterface()
-{
-}
-//------------------------------------------------------------------------------
-int IGUIInterface::Initialize(void* pUserData)
-{
-	if( m_bInitialize )
+
+	IGUIInterface::IGUIInterface(const CGUIString& rModuleName)
+		:m_bInitialize(false)
+		,m_strModuleName(rModuleName)
 	{
-		return 0;
 	}
-	else
+	//------------------------------------------------------------------------------
+	IGUIInterface::~IGUIInterface()
 	{
-		if( 0 != DoInitialize(pUserData))
+	}
+	//------------------------------------------------------------------------------
+	int IGUIInterface::Initialize(void* pUserData)
+	{
+		if( m_bInitialize )
 		{
-			DoDestroy();
-			return -1;
+			return 0;
 		}
 		else
 		{
-			m_bInitialize = true;
-			return 0;
+			if( 0 != DoInitialize(pUserData))
+			{
+				DoDestroy();
+				return -1;
+			}
+			else
+			{
+				m_bInitialize = true;
+				return 0;
+			}
 		}
 	}
-}
-//------------------------------------------------------------------------------ 
-void IGUIInterface::Destroy()
-{
-	if( m_bInitialize )
+	//------------------------------------------------------------------------------ 
+	void IGUIInterface::Destroy()
 	{
-		DoDestroy();
-		m_bInitialize = false;
+		if( m_bInitialize )
+		{
+			DoDestroy();
+			m_bInitialize = false;
+		}
 	}
-}
+	//------------------------------------------------------------------------------ 
+	const CGUIString& IGUIInterface::GetModuleName( ) const
+	{
+		return m_strModuleName;
+	}
+	//------------------------------------------------------------------------------ 
 
 }//namespace guiex
