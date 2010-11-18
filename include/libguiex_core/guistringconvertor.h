@@ -49,6 +49,14 @@ namespace guiex
 		return -1;
 	}
 
+	template< class ValueType >
+	CGUIString GetValueType(  )
+	{
+		throw CGUIException(
+			"[GetValueType]: unknown value type");
+		return CGUIString;
+	}
+
 	extern std::vector<CGUIString>	StringToVector(const CGUIString& rString );
 
 	/**
@@ -71,90 +79,128 @@ namespace guiex
 	int32 StringToValue<bool>( const CGUIString& rString, bool& rValue);
 	template< >
 	int32 ValueToString<bool>( const bool& rValue, CGUIString& rString );
-	//------------------------------------------------------------------------------
+	template< >
+	CGUIString GetValueType<bool>( );
+		//------------------------------------------------------------------------------
 	//convert for uint32
 	template< >
 	int32 StringToValue<uint32>( const CGUIString& rString, uint32& rValue);
 	template< >
 	int32 ValueToString<uint32>( const uint32& rValue, CGUIString& rString );
+	template< >
+	CGUIString GetValueType<uint32>( );
 	//------------------------------------------------------------------------------
 	//convert for int32
 	template<  >
 	int32 StringToValue<int32>( const CGUIString& rString, int32& rValue);
 	template<  >
 	int32 ValueToString<int32>( const int32& rValue, CGUIString& rString );
+	template< >
+	CGUIString GetValueType<int32>( );
 	//------------------------------------------------------------------------------
 	//convert for uint16
 	template<  >
 	int32 StringToValue<uint16>( const CGUIString& rString, uint16& rValue);
 	template<  >
 	int32 ValueToString<uint16>( const uint16& rValue, CGUIString& rString );
+	template< >
+	CGUIString GetValueType<uint16>( );
 	//------------------------------------------------------------------------------
 	//convert for int16
 	template<  >
 	int32 StringToValue<int16>( const CGUIString& rString, int16& rValue);
 	template<  >
 	int32 ValueToString<int16>( const int16& rValue, CGUIString& rString );
+	template< >
+	CGUIString GetValueType<int16>( );
 	//------------------------------------------------------------------------------
 	//convert for real
 	template<  >
 	int32 StringToValue<real>( const CGUIString& rString, real& rValue);
 	template<  >
 	int32 ValueToString<real>( const real& rValue, CGUIString& rString );
+	template< >
+	CGUIString GetValueType<real>( );
 	//------------------------------------------------------------------------------
 	//convert for CGUIRect
 	template<  >
 	int32 StringToValue<CGUIRect>( const CGUIString& rString, CGUIRect& rValue);
 	template<  >
 	int32 ValueToString<CGUIRect>( const CGUIRect& rValue, CGUIString& rString );
+	template< >
+	CGUIString GetValueType<CGUIRect>( );
 	//------------------------------------------------------------------------------
 	//convert for CGUISize
 	template<  >
 	int32 StringToValue<CGUISize>( const CGUIString& rString, CGUISize& rValue);
 	template<  >
 	int32 ValueToString<CGUISize>( const CGUISize& rValue, CGUIString& rString );
+	template< >
+	CGUIString GetValueType<CGUISize>( );
 	//------------------------------------------------------------------------------
 	//convert for CGUIVector2
 	template<  >
 	int32 StringToValue<CGUIVector2>( const CGUIString& rString, CGUIVector2& rValue);
 	template<  >
 	int32 ValueToString<CGUIVector2>( const CGUIVector2& rValue, CGUIString& rString );
+	template< >
+	CGUIString GetValueType<CGUIVector2>( );
 	//------------------------------------------------------------------------------
 	//convert for CGUIVector3
 	template<  >
 	int32 StringToValue<CGUIVector3>( const CGUIString& rString, CGUIVector3& rValue);
 	template<  >
 	int32 ValueToString<CGUIVector3>( const CGUIVector3& rValue, CGUIString& rString );
+	template< >
+	CGUIString GetValueType<CGUIVector3>( );
 	//------------------------------------------------------------------------------
 	//convert for CGUIColor
 	template<  >
 	int32 StringToValue<CGUIColor>( const CGUIString& rString, CGUIColor& rValue);
 	template<  >
 	int32 ValueToString<CGUIColor>( const CGUIColor& rValue, CGUIString& rString );
+	template< >
+	CGUIString GetValueType<CGUIColor>( );
 	//------------------------------------------------------------------------------
 	//convert for EImageOrientation
 	template<  >
 	int32 StringToValue<EImageOrientation>( const CGUIString& rString, EImageOrientation& rValue);
 	template<  >
 	int32 ValueToString<EImageOrientation>( const EImageOrientation& rValue, CGUIString& rString );
+	template< >
+	CGUIString GetValueType<EImageOrientation>( );
 	//------------------------------------------------------------------------------
 	//convert for EScreenValue
 	template<  >
 	int32 StringToValue<EScreenValue>( const CGUIString& rString, EScreenValue& rValue);
 	template<  >
 	int32 ValueToString<EScreenValue>( const EScreenValue& rValue, CGUIString& rString );
+	template< >
+	CGUIString GetValueType<EScreenValue>( );
 	//------------------------------------------------------------------------------
 	//convert for ETextAlignmentHorz
 	template<  >
 	int32 StringToValue<ETextAlignmentHorz>( const CGUIString& rString, ETextAlignmentHorz& rValue);
 	template<  >
 	int32 ValueToString<ETextAlignmentHorz>( const ETextAlignmentHorz& rValue, CGUIString& rString );
+	template< >
+	CGUIString GetValueType<ETextAlignmentHorz>( );
 	//------------------------------------------------------------------------------
 	//convert for ETextAlignmentVert
 	template<  >
 	int32 StringToValue<ETextAlignmentVert>( const CGUIString& rString, ETextAlignmentVert& rValue);
 	template<  >
 	int32 ValueToString<ETextAlignmentVert>( const ETextAlignmentVert& rValue, CGUIString& rString );
+	template< >
+	CGUIString GetValueType<ETextAlignmentVert>( );
+	//------------------------------------------------------------------------------
+	//convert for EInterpolationType
+	template<  >
+	int32 StringToValue<EInterpolationType>( const CGUIString& rString, EInterpolationType& rValue);
+	template<  >
+	int32 ValueToString<EInterpolationType>( const EInterpolationType& rValue, CGUIString& rString );
+	template< >
+	CGUIString GetValueType<EInterpolationType>( );
 	//------------------------------------------------------------------------------
 
 }	//namespace guiex

@@ -21,6 +21,7 @@
 //============================================================================// 
 #define GUI_AS_GENERATOR_DECLARE(asType)		\
 public:	\
+	static const char* StaticGetAsType();\
 	friend class asType##_Generator;			\
 	class asType##_Generator : public ::guiex::CGUIAsGenerator	\
 	{														\
@@ -35,6 +36,8 @@ public:	\
 
 
 #define GUI_AS_GENERATOR_IMPLEMENT(asType)	\
+	const char* asType::StaticGetAsType()	\
+	{return #asType;}	\
 	asType::asType##_Generator::asType##_Generator()									\
 	:CGUIAsGenerator(#asType)							\
 	{														\

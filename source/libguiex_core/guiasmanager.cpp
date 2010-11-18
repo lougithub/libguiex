@@ -46,14 +46,36 @@ namespace guiex
 		return pAs;
 	}
 	//------------------------------------------------------------------------------
+	CGUIAs* CGUIAsManager::DoCreateAs( 
+		const CGUIString& rName,
+		const CGUIString& rSceneName,
+		const CGUIString& rAsType )
+	{
+		guiex::CGUIAs* pAs = guiex::CGUIAsFactory::Instance()->GenerateAs( rAsType, rName, rSceneName );
+		return pAs;
+	}
+	//------------------------------------------------------------------------------
 	CGUIAs* CGUIAsManager::AllocateResource( const CGUIString& rResName )
 	{
-		return NULL;
+		CGUIAs* pAs = CGUIResourceManager<CGUIAs>::GetResource( rResName );
+		if( !pAs )
+		{
+			throw CGUIException( 
+				"[CGUIAsManager::AllocateResource]: failed to get as by name <%s>",
+				rResName.c_str());
+			return NULL;
+		}
+		pAs->RefRetain();
+		AddToAllocatePool( pAs );
+		return pAs;
 	}
 	//------------------------------------------------------------------------------
 	CGUIAs* CGUIAsManager::AllocateResourceByType( const CGUIString& rAsType )
 	{
-		return NULL;
+		CGUIAs* pAs = DoCreateAs( "", "", rAsType );
+		pAs->RefRetain();
+		AddToAllocatePool( pAs );
+		return pAs;
 	}
 	//------------------------------------------------------------------------------
 	int32 CGUIAsManager::DeallocateResource( CGUIAs* pRes )

@@ -53,6 +53,15 @@ namespace guiex
 		ePropertyType_Image,
 		ePropertyType_Font,
 
+		ePropertyType_As,
+		ePropertyType_AsColor,
+		ePropertyType_AsScale,
+		ePropertyType_AsPosition,
+		ePropertyType_AsRotation,
+		ePropertyType_AsAlpha,
+		ePropertyType_AsContainer,
+		ePropertyType_AsContainerItemInfo,
+
 		ePropertyType_ScreenValue,
 		ePropertyType_TextAlignmentHorz,
 		ePropertyType_TextAlignmentVert,

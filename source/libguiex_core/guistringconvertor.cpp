@@ -89,6 +89,11 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	//convert for bool
 	template< >
+	CGUIString GetValueType<bool>( )
+	{
+		return "bool";
+	}
+	template< >
 	int32 StringToValue<bool>( const CGUIString& rString, bool& rValue)
 	{
 		if( rString == "true")
@@ -119,6 +124,11 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	//convert for uint32
 	template< >
+	CGUIString GetValueType<uint32>( )
+	{
+		return "uint32";
+	}
+	template< >
 	int32 StringToValue<uint32>( const CGUIString& rString, uint32& rValue)
 	{
 		rValue = static_cast<uint32>(strtoul(rString.c_str(), 0, 10));
@@ -139,6 +149,11 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	//convert for int32
+	template< >
+	CGUIString GetValueType<int32>( )
+	{
+		return "int32";
+	}
 	template<  >
 	int32 StringToValue<int32>( const CGUIString& rString, int32& rValue)
 	{
@@ -160,6 +175,11 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	//convert for uint16
+	template< >
+	CGUIString GetValueType<uint16>( )
+	{
+		return "uint16";
+	}
 	template<  >
 	int32 StringToValue<uint16>( const CGUIString& rString, uint16& rValue)
 	{
@@ -181,6 +201,11 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	//convert for int16
+	template< >
+	CGUIString GetValueType<int16>( )
+	{
+		return "int16";
+	}
 	template<  >
 	int32 StringToValue<int16>( const CGUIString& rString, int16& rValue)
 	{
@@ -202,6 +227,11 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	//convert for real
+	template< >
+	CGUIString GetValueType<real>( )
+	{
+		return "real";
+	}
 	template<  >
 	int32 StringToValue<real>( const CGUIString& rString, real& rValue)
 	{
@@ -223,6 +253,11 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	//convert for CGUIRect
+	template< >
+	CGUIString GetValueType<CGUIRect>( )
+	{
+		return "CGUIRect";
+	}
 	template<  >
 	int32 StringToValue<CGUIRect>( const CGUIString& rString, CGUIRect& rValue)
 	{
@@ -255,6 +290,11 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	//convert for CGUISize
+	template< >
+	CGUIString GetValueType<CGUISize>( )
+	{
+		return "CGUISize";
+	}
 	template<  >
 	int32 StringToValue<CGUISize>( const CGUIString& rString, CGUISize& rValue)
 	{
@@ -286,6 +326,11 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	//convert for CGUIVector2
+	template< >
+	CGUIString GetValueType<CGUIVector2>( )
+	{
+		return "CGUIVector2";
+	}
 	template<  >
 	int32 StringToValue<CGUIVector2>( const CGUIString& rString, CGUIVector2& rValue)
 	{
@@ -317,6 +362,11 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	//convert for CGUIVector3
+	template< >
+	CGUIString GetValueType<CGUIVector3>( )
+	{
+		return "CGUIVector3";
+	}
 	template<  >
 	int32 StringToValue<CGUIVector3>( const CGUIString& rString, CGUIVector3& rValue)
 	{
@@ -349,6 +399,11 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	//convert for CGUIColor
+	template< >
+	CGUIString GetValueType<CGUIColor>( )
+	{
+		return "CGUIColor";
+	}
 	template<  >
 	int32 StringToValue<CGUIColor>( const CGUIString& rString, CGUIColor& rValue)
 	{
@@ -387,6 +442,11 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	//convert for EImageOrientation
+	template< >
+	CGUIString GetValueType<EImageOrientation>( )
+	{
+		return "EImageOrientation";
+	}
 	template<  >
 	int32 StringToValue<EImageOrientation>( const CGUIString& rString, EImageOrientation& rValue)
 	{
@@ -450,6 +510,11 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	//convert for EScreenValue
+	template< >
+	CGUIString GetValueType<EScreenValue>( )
+	{
+		return "EScreenValue";
+	}
 	template<  >
 	int32 StringToValue<EScreenValue>( const CGUIString& rString, EScreenValue& rValue)
 	{
@@ -492,6 +557,11 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	//convert for ETextAlignmentHorz
+	template< >
+	CGUIString GetValueType<ETextAlignmentHorz>( )
+	{
+		return "ETextAlignmentHorz";
+	}
 	template<  >
 	int32 StringToValue<ETextAlignmentHorz>( const CGUIString& rString, ETextAlignmentHorz& rValue)
 	{
@@ -541,6 +611,11 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	//convert for ETextAlignmentVert
+	template< >
+	CGUIString GetValueType<ETextAlignmentVert>( )
+	{
+		return "ETextAlignmentVert";
+	}
 	template<  >
 	int32 StringToValue<ETextAlignmentVert>( const CGUIString& rString, ETextAlignmentVert& rValue)
 	{
@@ -583,6 +658,60 @@ namespace guiex
 		default:
 			throw CGUIException(
 				"[ValueToString[ETextAlignmentVert]]: unknown ETextAlignmentVert enum <%d>",
+				rValue);
+			return -1;
+		}
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	//convert for EInterpolationType
+	template< >
+	CGUIString GetValueType<EInterpolationType>( )
+	{
+		return "EInterpolationType";
+	}
+	template<  >
+	int32 StringToValue<EInterpolationType>( const CGUIString& rString, EInterpolationType& rValue)
+	{
+		if( rString == "eInterpolationType_Linear" )
+		{
+			rValue = eInterpolationType_Linear;
+		}
+		else if( rString == "eInterpolationType_EaseIn" )
+		{
+			rValue = eInterpolationType_EaseIn;
+		}
+		else if( rString == "eInterpolationType_EaseInOut" )
+		{
+			rValue = eInterpolationType_EaseInOut;
+		}
+		else
+		{
+			throw CGUIException(
+				"[StringToValue[EInterpolationType]]: string value format is wrong! <%s>",
+				rString.c_str());
+			return -1;
+		}
+		return 0;
+	}
+
+	template<  >
+	int32 ValueToString<EInterpolationType>( const EInterpolationType& rValue, CGUIString& rString )
+	{
+		switch(rValue)
+		{
+		case eInterpolationType_Linear:
+			rString = CGUIString("eInterpolationType_Linear");
+			break;
+		case eInterpolationType_EaseIn:
+			rString = CGUIString("eInterpolationType_EaseIn");
+			break;
+		case eInterpolationType_EaseInOut:
+			rString = CGUIString("eInterpolationType_EaseInOut");
+			break;
+		default:
+			throw CGUIException(
+				"[ValueToString[EInterpolationType]]: unknown EInterpolationType enum <%d>",
 				rValue);
 			return -1;
 		}

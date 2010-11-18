@@ -94,6 +94,7 @@
 
 //as
 #include "guias.h"
+#include "guiasmanager.h"
 
 //singleton
 #include "guisingleton.h"

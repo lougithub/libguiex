@@ -33,10 +33,6 @@ namespace guiex
 #define GUI_AS_REGISTER(astype)	\
 	::guiex::CGUIAsFactory::Instance()->RegisterGenerator( #astype, ::guiex::astype::astype##_Generator::GenerateSelf())
 
-#define GUI_AS_GENERATE( astype, asname, asscenetype )	\
-	(::guiex::astype*)( ::guiex::CGUIAsFactory::Instance()->GenerateAs(#astype, #asname, #asscenetype))
-
-
 
 //============================================================================//
 // class
@@ -69,7 +65,7 @@ namespace guiex
 		*/
 		void UnregisterAllGenerator();
 
-
+	protected:
 		/**
 		* @brief create a as by name
 		*/
@@ -78,7 +74,7 @@ namespace guiex
 		/**
 		* @brief destroy as
 		*/
-		int	DestroyAs(CGUIAs*	pEvent);
+		int	DestroyAs( CGUIAs* pEvent );
 
 
 	protected:
@@ -86,9 +82,10 @@ namespace guiex
 		~CGUIAsFactory();
 
 	protected:
+		friend class CGUIAsManager;
+
 		typedef std::map<CGUIString,CGUIAsGenerator *> TMapGenerator;
 		TMapGenerator m_mapGenerator;
-
 
 		//for use singleton
 		GUI_SINGLETON_DECLARE_EX(CGUIAsFactory);

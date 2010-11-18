@@ -1303,7 +1303,7 @@ namespace guiex
 			itor != m_listAs.end();
 			++itor)
 		{
-			CGUIAsFactory::Instance()->DestroyAs(*itor);
+			CGUIAsManager::Instance()->DeallocateResource( *itor );
 		}
 		m_listAs.clear();
 	}
@@ -1781,6 +1781,7 @@ namespace guiex
 	void	CGUIWidget::AddAs( CGUIAs* pAs)
 	{
 		GUI_ASSERT(pAs->IsCreateByFactory(), "the as isn't created by factory");
+		pAs->RefRetain();
 		m_listAs.push_back(pAs);
 	}
 	//------------------------------------------------------------------------------
@@ -1806,7 +1807,7 @@ namespace guiex
 				{
 					pSuccessor->GetReceiver()->AddAs(pSuccessor);
 				}
-				CGUIAsFactory::Instance()->DestroyAs(pAs);
+				CGUIAsManager::Instance()->DeallocateResource( pAs );
 			}
 			else
 			{

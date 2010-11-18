@@ -61,6 +61,14 @@ namespace guiex
 		CGUIAs* AllocateResourceByType( const CGUIString& rAsType );
 		int32 DeallocateResource( CGUIAs* pRes );
 
+		template<class T>
+		T* AllocateResourceByTypeChecked( const CGUIString& rAsType )
+		{
+			CGUIAs* pAs = AllocateResourceByType( rAsType );
+			GUI_ASSERT( pAs->GetType() == T::StaticGetAsType(), "wrong As type" );
+			return static_cast<T*>( pAs );
+		}
+
 	protected:
 		/**
 		* @brief create a as by given property
@@ -69,6 +77,11 @@ namespace guiex
 			const CGUIString& rName,
 			const CGUIString& rSceneName,
 			const CGUIProperty& rProperty );
+
+		CGUIAs* DoCreateAs( 
+			const CGUIString& rName,
+			const CGUIString& rSceneName,
+			const CGUIString& rAsType );
 
 	protected:
 		virtual	void DoDestroyResource( CGUIAs* pRes ); 

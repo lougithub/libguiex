@@ -160,7 +160,7 @@ namespace guiex
 
 	enum EInterpolationType
 	{
-		eInterpolationType_Normal = 0,
+		eInterpolationType_Linear = 0,
 		eInterpolationType_EaseIn,
 		eInterpolationType_EaseInOut,
 	};

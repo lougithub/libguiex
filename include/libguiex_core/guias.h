@@ -22,6 +22,9 @@
 
 #include "guiresource.h"
 
+#include "guiproperty.h"
+#include "guipropertyconvertor.h"
+
 #include "guitimer.h"
 #include "guisize.h"
 #include "guimath.h"
@@ -78,6 +81,9 @@ namespace guiex
 		*/
 		virtual ~CGUIAs();
 
+		virtual int32 ProcessProperty( const CGUIProperty& rProperty );
+		virtual int32 GenerateProperty( CGUIProperty& rProperty );
+
 		/**
 		* @brief get as type
 		*/
@@ -117,6 +123,16 @@ namespace guiex
 		real GetTotalTime( ) const;
 
 		/**
+		* @brief set delay time
+		*/
+		void SetElapsedTime( real fElapsedTime );
+
+		/**
+		* @brief get elapsed time
+		*/
+		real GetElapsedTime( ) const;
+
+		/**
 		* @brief add a successor as
 		*/
 		void PushSuccessor( CGUIAs* pAs);
@@ -129,8 +145,9 @@ namespace guiex
 
 		/**
 		* @brief Update the as
+		* @return the left time that is not processed
 		*/
-		virtual void Update( real fDeltaTime );
+		virtual real Update( real fDeltaTime );
 
 		///is this as created by CGUIAsFactory
 		bool IsCreateByFactory() const
@@ -161,8 +178,7 @@ namespace guiex
 		virtual int32	DoLoad() const;
 		virtual void	DoUnload();
 
-
-	protected:
+	private:
 		real m_fTotalTime;			//!<delay-time, to control when to process this as, millisecond
 		real m_fElapsedTime;			
 
@@ -180,30 +196,32 @@ namespace guiex
 	};
 
 
+
+
 	template< class T >
-	class CGUIAsLinearBase : public CGUIAs
+	class CGUIInterpolationBase : public CGUIAs
 	{
 	protected:
 		/**
 		* @brief constructor
 		*/
-		CGUIAsLinearBase( const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName )
+		CGUIInterpolationBase( const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName )
 			:CGUIAs( rAsType,  rAsType, rSceneName )
-			,m_eInterpolationType( eInterpolationType_Normal )
+			,m_eInterpolationType( eInterpolationType_Linear )
 		{
 		}
 
 	public:
-		EInterpolationType GetLinearType( ) const
+		EInterpolationType GetInterpolationType( ) const
 		{
 			return m_eInterpolationType;
 		}
-		void SetLinearType( EInterpolationType eType )
+		void SetInterpolationType( EInterpolationType eType )
 		{
 			m_eInterpolationType = eType;
 		}
 
-		void SetLinearValue( const T& rBeginValue, const T& rEndValue, real fTotalTime )
+		void SetInterpolationValue( const T& rBeginValue, const T& rEndValue, real fTotalTime )
 		{
 			m_aBeginValue = rBeginValue;
 			m_aEndValue = rEndValue;
@@ -211,15 +229,26 @@ namespace guiex
 			SetTotalTime( fTotalTime );
 		}
 
-		virtual void Update( real fDeltaTime )
+		virtual real Update( real fDeltaTime )
 		{
-			CGUIAs::Update( fDeltaTime );
-			m_aCurValue = LinearTween( m_fElapsedTime / m_fTotalTime, m_aBeginValue, m_aEndValue );
+			real fLeftTime = CGUIAs::Update( fDeltaTime );
+			m_aCurValue = LinearTween( GetElapsedTime() / GetTotalTime(), m_aBeginValue, m_aEndValue );
+			return fLeftTime;
+		}
+
+		void SetBeginValue( const T& rValue )
+		{
+			m_aBeginValue = rValue;
 		}
 
 		const T& GetBeginValue() const
 		{
 			return m_aBeginValue;
+		}
+
+		void SetEndValue( const T& rValue )
+		{
+			m_aEndValue = rValue;
 		}
 
 		const T& GetEndValue() const
@@ -232,11 +261,112 @@ namespace guiex
 			return m_aCurValue;
 		}
 
+		virtual int32 ProcessProperty( const CGUIProperty& rProperty )
+		{
+			/*
+			*<property name="asname" type="CGUIAsColor">
+			*		<property name="loop" type="bool" value="false"/>
+			*		<property name="total_time" type="real" value="10" />
+			*		<property name="elapsed_time" type="real" value="5" />
+			*		<property name="interpolation" type="EInterpolationType" value="0,0,0" />
+			*		<property name="begin_value" type="CGUIVector3" value="0,0,0" />
+			*		<property name="end_value" type="CGUIVector3" value="0,0,0" />
+			*</property>
+			*/
+			int32 ret = CGUIAs::ProcessProperty( rProperty );
+			if( ret != 0 )
+			{
+				return ret;
+			}
+
+			{
+				EInterpolationType eValue = eInterpolationType_Linear;
+				const CGUIProperty* pPPtInterpolationType = rProperty.GetProperty("interpolation");
+				if( pPPtInterpolationType )
+				{
+					PropertyToValue( *pPPtInterpolationType, eValue );
+				}
+				SetInterpolationType( eValue );
+			}
+
+			{
+				const CGUIProperty* pPPtBeginValue = rProperty.GetProperty("begin_value");
+				if( !pPPtBeginValue )
+				{
+					throw CGUIException(
+						"[CGUIInterpolationBase::ProcessProperty]: invalid property: <%s> <%s>", 
+						rProperty.GetName().c_str(), 
+						rProperty.GetTypeAsString().c_str());
+					return -1;
+				}
+				T aBeginValue;
+				PropertyToValue( *pPPtBeginValue, aBeginValue );
+				SetBeginValue( aBeginValue );
+			}
+
+			{
+				const CGUIProperty* pPPtEndValue = rProperty.GetProperty("end_value");
+				if( !pPPtEndValue )
+				{
+					throw CGUIException(
+						"[CGUIInterpolationBase::ProcessProperty]: invalid property: <%s> <%s>", 
+						rProperty.GetName().c_str(), 
+						rProperty.GetTypeAsString().c_str());
+					return -1;
+				}
+				T aEndValue;
+				PropertyToValue( *pPPtEndValue, aEndValue );
+				SetEndValue( aEndValue );
+			}
+
+			return 0;
+		}
+
+		virtual int32 GenerateProperty( CGUIProperty& rProperty )
+		{
+			/*
+			*<property name="asname" type="CGUIAsColor">
+			*		<property name="loop" type="bool" value="false"/>
+			*		<property name="total_time" type="real" value="10" />
+			*		<property name="elapsed_time" type="real" value="5" />
+			*
+			*		<property name="interpolation" type="EInterpolationType" value="0,0,0" />
+			*		<property name="begin_value" type="CGUIVector3" value="0,0,0" />
+			*		<property name="end_value" type="CGUIVector3" value="0,0,0" />
+			*</property>
+			*/
+			int32 ret = CGUIAs::GenerateProperty( rProperty );
+			if( ret != 0 )
+			{
+				return ret;
+			}
+
+			{
+				CGUIProperty aProperty( "interpolation", "EInterpolationType" );
+				ValueToProperty( GetInterpolationType(), aProperty );
+				rProperty.AddProperty( aProperty );
+			}
+
+			{
+				CGUIProperty aProperty( "begin_value", GetValueType<T>() );
+				ValueToProperty( GetBeginValue(), aProperty );
+				rProperty.AddProperty( aProperty );
+			}
+
+			{
+				CGUIProperty aProperty( "end_value", GetValueType<T>() );
+				ValueToProperty( GetEndValue(), aProperty );
+				rProperty.AddProperty( aProperty );
+			}
+			return 0;
+		}
+
 	private:
 		EInterpolationType	m_eInterpolationType;
 
 		T m_aBeginValue;
 		T m_aEndValue;
+
 		T m_aCurValue;
 	};
 
@@ -248,7 +378,7 @@ namespace guiex
 	* @class CGUIAsAlpha
 	* @brief the as, change alpha of widget
 	*/
-	class GUIEXPORT CGUIAsAlpha : public CGUIAsLinearBase<real>
+	class GUIEXPORT CGUIAsAlpha : public CGUIInterpolationBase<real>
 	{
 	protected:
 		/**
@@ -260,7 +390,7 @@ namespace guiex
 		/**
 		* @brief update the event.
 		*/
-		virtual void Update( real fDeltaTime );
+		virtual real Update( real fDeltaTime );
 
 		GUI_AS_GENERATOR_DECLARE( CGUIAsAlpha);
 	};
@@ -275,7 +405,7 @@ namespace guiex
 	* @class CGUIAsScale
 	* @brief the as, change scale of widget
 	*/
-	class GUIEXPORT CGUIAsScale : public CGUIAsLinearBase<CGUISize>
+	class GUIEXPORT CGUIAsScale : public CGUIInterpolationBase<CGUISize>
 	{
 	protected:
 		/**
@@ -287,7 +417,7 @@ namespace guiex
 		/**
 		* @brief Update the event.
 		*/
-		virtual void Update( real fDeltaTime );
+		virtual real Update( real fDeltaTime );
 
 		GUI_AS_GENERATOR_DECLARE( CGUIAsScale);
 	};
@@ -300,7 +430,7 @@ namespace guiex
 	* @class CGUIAsRotation
 	* @brief the as, change rotation of widget
 	*/
-	class GUIEXPORT CGUIAsRotation : public CGUIAsLinearBase<CGUIVector3>
+	class GUIEXPORT CGUIAsRotation : public CGUIInterpolationBase<CGUIVector3>
 	{
 	protected:
 		/**
@@ -312,7 +442,7 @@ namespace guiex
 		/**
 		* @brief Update the event.
 		*/
-		virtual void Update( real fDeltaTime );
+		virtual real Update( real fDeltaTime );
 
 		GUI_AS_GENERATOR_DECLARE( CGUIAsRotation);
 	};
@@ -324,7 +454,7 @@ namespace guiex
 	* @class CGUIAsPosition
 	* @brief the as, change scale of widget
 	*/
-	class GUIEXPORT CGUIAsPosition : public CGUIAsLinearBase<CGUIVector2>
+	class GUIEXPORT CGUIAsPosition : public CGUIInterpolationBase<CGUIVector2>
 	{
 	protected:
 		/**
@@ -336,7 +466,7 @@ namespace guiex
 		/**
 		* @brief Update the event.
 		*/
-		virtual void Update( real fDeltaTime );
+		virtual real Update( real fDeltaTime );
 
 		GUI_AS_GENERATOR_DECLARE( CGUIAsPosition);
 	};
@@ -349,7 +479,7 @@ namespace guiex
 	* @class CGUIAsColor
 	* @brief the as, change color of widget
 	*/
-	class GUIEXPORT CGUIAsColor : public CGUIAsLinearBase<CGUIColor>
+	class GUIEXPORT CGUIAsColor : public CGUIInterpolationBase<CGUIColor>
 	{
 	protected:
 		/**
@@ -361,7 +491,7 @@ namespace guiex
 		/**
 		* @brief Update the event.
 		*/
-		virtual void Update( real fDeltaTime );
+		virtual real Update( real fDeltaTime );
 
 		GUI_AS_GENERATOR_DECLARE( CGUIAsColor);
 	};
@@ -371,6 +501,20 @@ namespace guiex
 	//*****************************************************************************
 	//	CGUIAsContainer
 	//*****************************************************************************
+	
+	class CGUIAsContainItemInfo
+	{
+	public:
+		CGUIAs* m_pAs;
+		real m_fBeginTime;
+
+		CGUIAsContainItemInfo()
+			:m_pAs( NULL )
+			,m_fBeginTime( 0.0f )
+		{
+
+		}
+	};
 	/**
 	* @class CGUIAsContainer
 	* @brief maintain several as.
@@ -382,24 +526,24 @@ namespace guiex
 		* @brief constructor
 		*/
 		CGUIAsContainer(const CGUIString& rAsName, const CGUIString& rSceneName);
+		virtual ~CGUIAsContainer( );
 
 	public:
+		virtual int32 ProcessProperty( const CGUIProperty& rProperty );
+		virtual int32 GenerateProperty( CGUIProperty& rProperty );
+
 		/**
 		* @brief Update the event.
 		*/
-		virtual void Update( real fDeltaTime );
+		virtual real Update( real fDeltaTime );
 
 		virtual void SetReceiver(CGUIWidget* pReceiver);
 
-		void AddAs( CGUIAs* pAs, real fBeginTime );
+		void AddItem( CGUIAsContainItemInfo& rItemInfo );
 
 	protected:
-		struct SAsInfo
-		{
-			CGUIAs* m_pAs;
-			real m_fBeginTime;
-		};
-		std::vector<SAsInfo> m_vAsList;//the as in this list should be sorted by begin time
+		typedef std::vector<CGUIAsContainItemInfo> TAsList;
+		TAsList m_vAsList;//the as in this list should be sorted by begin time
 		
 		GUI_AS_GENERATOR_DECLARE( CGUIAsContainer);
 	};

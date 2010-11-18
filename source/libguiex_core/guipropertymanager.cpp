@@ -51,6 +51,15 @@ namespace guiex
 		RegisterPropertyType( ePropertyType_TextAlignmentVert, "ETextAlignmentVert" );
 		RegisterPropertyType( ePropertyType_ImageOrientation, "EImageOrientation" );
 		RegisterPropertyType( ePropertyType_ScreenValue, "EScreenValue" );
+
+		RegisterPropertyType( ePropertyType_As, "CGUIAs" );
+		RegisterPropertyType( ePropertyType_AsColor, "CGUIAsColor" );
+		RegisterPropertyType( ePropertyType_AsScale, "CGUIAsScale" );
+		RegisterPropertyType( ePropertyType_AsPosition, "CGUIAsPosition" );
+		RegisterPropertyType( ePropertyType_AsRotation, "CGUIAsRotation" );
+		RegisterPropertyType( ePropertyType_AsAlpha, "CGUIAsAlpha" );
+		RegisterPropertyType( ePropertyType_AsContainer, "CGUIAsContainer" );
+		RegisterPropertyType( ePropertyType_AsContainerItemInfo, "CGUIAsContainerItemInfo" );
 	}
 	//------------------------------------------------------------------------------
 	CGUIPropertyManager::~CGUIPropertyManager()
