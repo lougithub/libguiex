@@ -94,7 +94,7 @@ namespace guiex
 	{
 		if( pRes->GetRefCount() != 0 )
 		{
-			throw CGUIException( "resource refrence is still in using[%d]: <%s:%s:%s>", 
+			throw CGUIException( "resource reference is still in using[%d]: <%s:%s:%s>", 
 				pRes->GetRefCount(),
 				pRes->GetName().c_str(), 
 				pRes->GetResourceType().c_str(),

@@ -34,35 +34,22 @@ namespace guiex
 	*/
 	class GUIEXPORT CGUIFontData : public CGUIResource
 	{	
+	public:
+		virtual ~CGUIFontData();
+
+		uint32 GetFontIndex() const;
+
+	protected:
+		CGUIFontData( const CGUIString& rName, const CGUIString& rSceneName, uint32 nFontIndex );
+
 	protected:
 		friend class CGUIFontManager;
 		//disable =
 		CGUIFontData( const CGUIFontData&  );
 		const CGUIFontData& operator=(const CGUIFontData& );
 
-	public:
-		/**
-		* @brief destructor;
-		*/
-		virtual ~CGUIFontData();
-
 	protected:
-		/**
-		* @brief constructor
-		*/
-		CGUIFontData( 		
-			const CGUIString& rName,
-			const CGUIString& rSceneName, 
-			const CGUIString& rPath,
-			uint32	nFontIndex);
-
-		virtual int32	DoLoad() const;
-		virtual void	DoUnload();
-
-
-	private:
-		uint32	m_nFontIndex;
-		CGUIString m_strPath;
+		uint32 m_nFontIndex;
 	};
 }
 

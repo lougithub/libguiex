@@ -27,8 +27,7 @@
 namespace guiex
 {
 	class CGUIImage;
-	class CGUIFont_ft2;
-	class CGUIFontData_ft2;
+	class CGUIFontData2_ft2;
 	class CFontFace;
 }
 
@@ -57,6 +56,9 @@ namespace guiex
 		* @brief destructor
 		*/
 		virtual ~IGUIFont_ft2();
+
+		virtual CGUIFontData* CreateFontData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nFontIndex );
+		virtual void DestroyFontData( CGUIFontData* pData );
 
 		//!<
 		virtual void ReleaseAllResource();
@@ -137,21 +139,24 @@ namespace guiex
 		* @brief get font by given parameter, if failed to find it,
 		* create this font.
 		*/
-		CGUIFontData_ft2* GetFont( int32 nFontFaceIdx, wchar_t charCode,uint32 nSize );
+		CGUIFontData2_ft2* GetFont( int32 nFontFaceIdx, wchar_t charCode,uint32 nSize );
 
 		/// load font from file
-		CGUIFontData_ft2* LoadFont(CFontFace* pFontFace, CGUIFont_ft2* pFont,wchar_t charCode,uint32 nSize);
+		CGUIFontData2_ft2* LoadFont(CFontFace* pFontFace, CGUIFontData2_ft2* pFont,wchar_t charCode,uint32 nSize);
 
 		/**
 		* @brief get kerning between two character
 		*/
 		int32 GetKerningGap(int32 nFontFaceIdx, 
-			CGUIFontData_ft2* pLeftData, 
-			CGUIFontData_ft2* pRightData,
+			CGUIFontData2_ft2* pLeftData, 
+			CGUIFontData2_ft2* pRightData,
 			uint32 nSize);
 
 	protected:
 		void* m_pFtLib;
+
+		typedef std::vector<CGUIFontData2_ft2*> TVecFontData;
+		TVecFontData m_arrayFontDatas;
 
 		//map for font face
 		typedef std::map<int32, CFontFace*> TMapFace;

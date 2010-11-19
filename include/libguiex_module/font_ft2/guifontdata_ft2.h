@@ -25,18 +25,20 @@
 
 namespace guiex
 {
-	/**
-	* @class IGUIFont_ft2
-	* @brief use libfreetype2 as font engine,
-	* support all font file type that libfreetye2 supports
-	*/
 	class GUIEXPORT CGUIFontData_ft2 : public CGUIFontData
 	{
+	public:
+		virtual ~CGUIFontData_ft2();
+
 	protected:
 		friend class IGUIFont_ft2;
+		CGUIFontData_ft2( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nFontIndex );
+	
+		virtual int32 DoLoad() const;
+		virtual void DoUnload();
 
-	public:
-
+	protected:
+		CGUIString m_strPath;
 	};
 
 }//namespace guiex

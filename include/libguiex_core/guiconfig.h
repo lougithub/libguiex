@@ -153,6 +153,10 @@
 ///how many event the mouse support at one frame
 #define GUI_MOUSE_EVENT_MAX 20
 
+/*************************************************************************
+	font
+*************************************************************************/
+#define GUI_FONT_MAX_NUM (32)
 
 #endif //__GUI_CONFIG_20060322_H__
 

@@ -27,13 +27,13 @@ namespace guiex
 {
 
 	//------------------------------------------------------------------------------
-	CGUIFontData::CGUIFontData( const CGUIString& rName,
+	CGUIFontData::CGUIFontData( 
+		const CGUIString& rName,
 		const CGUIString& rSceneName, 
 		const CGUIString& rPath,
 		uint32	nFontIndex)
 		:CGUIResource( rName, rSceneName, "FONT" )
 		,m_nFontIndex( nFontIndex )
-		,m_strPath(rPath)
 	{
 		Load();
 	}
@@ -43,35 +43,9 @@ namespace guiex
 		Unload();
 	}
 	//------------------------------------------------------------------------------
-	int32	CGUIFontData::DoLoad() const
+	uint32 CGUIFontData::GetFontIndex() const
 	{
-		IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
-		if( !pFont )
-		{
-			throw CGUIException( "[CGUIFontData::DoLoad]: failed to get font interface" );
-			return -1;
-		}
-
-		//get full path
-		CGUIString strFullPath = CGUISceneInfoManager::Instance()->GetScenePath( m_strSceneName ) + m_strPath;
-		if( 0 != pFont->LoadFontFace( strFullPath, m_nFontIndex ))
-		{
-			throw CGUIException( "[CGUIFontData::DoLoad]: failed to get load font from path <%s>", strFullPath.c_str() );
-			return -1;
-		}
-
-		return 0;
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIFontData::DoUnload()
-	{
-		IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
-		if( !pFont )
-		{
-			throw CGUIException( "[CGUIFontData::DoUnload]: failed to get font interface" );
-			return;
-		}
-		pFont->UnloadFontFace( m_nFontIndex );
+		return m_nFontIndex;
 	}
 	//------------------------------------------------------------------------------
 

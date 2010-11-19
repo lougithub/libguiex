@@ -41,6 +41,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIResource::~CGUIResource()
 	{
+		if( m_eIsLoaded != LOADSTATE_Unloaded )
+		{
+			throw CGUIException( 
+				"[CGUIResource::~CGUIResource]:resource <%s:%s:%s> hasn't been unloaded", 
+				GetName().c_str(), 
+				GetResourceType().c_str(),
+				GetSceneName().c_str() );
+		}
 	}
 	//------------------------------------------------------------------------------
 	void CGUIResource::RefRetain() const

@@ -28,6 +28,7 @@ namespace guiex
 	class CGUIRect;
 	class IGUIInterfaceRender;
 	class CGUIMatrix4;
+	class CGUIFontData;
 }
 
 
@@ -53,6 +54,9 @@ namespace guiex
 		* @brief destructor
 		*/
 		virtual ~IGUIInterfaceFont();
+
+		virtual CGUIFontData* CreateFontData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nFontIndex ) = 0;
+		virtual void DestroyFontData( CGUIFontData* pData ) = 0;
 
 		/**
 		* @brief get string width
