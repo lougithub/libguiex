@@ -142,10 +142,7 @@ namespace guiex
 	{
 		if( !m_aImageSize.IsEqualZero())
 		{
-			if( !IsLoaded())
-			{
-				Load();
-			}
+			Load();
 
 			CGUISize aTexSize = m_aUVRect.GetSize();
 			switch(m_eImageOrientation)
@@ -178,10 +175,7 @@ namespace guiex
 		const CGUIColorRect& rColorRect,
 		real fAlpha	) const
 	{
-		if( !IsLoaded())
-		{
-			Load();
-		}
+		Load();
 
 		CGUIColorRect aColorRect = rColorRect;
 		aColorRect.m_top_left.SetAlpha(aColorRect.m_top_left.GetAlpha()*fAlpha);
@@ -199,10 +193,7 @@ namespace guiex
 		real z, 
 		real fAlpha) const
 	{
-		if( !IsLoaded())
-		{
-			Load();
-		}
+		Load();
 
 		if( m_eImageType == eIT_COLOR )
 		{
@@ -227,10 +218,7 @@ namespace guiex
 		const CGUIColor& rColor,
 		real fAlpha) const
 	{
-		if( !IsLoaded())
-		{
-			Load();
-		}
+		Load();
 
 		if( m_eImageType == eIT_COLOR )
 		{

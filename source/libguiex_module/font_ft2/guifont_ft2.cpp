@@ -29,6 +29,8 @@
 #include <libguiex_core/guisceneinfo.h>
 #include <libguiex_core/guisceneinfomanager.h>
 
+#include <algorithm>
+
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -39,76 +41,6 @@
 #define GUI_FT2_TEXTURE_SIZE	512
 
 //============================================================================//
-// class
-//============================================================================// 
-namespace guiex
-{
-	/**
-	* @class CFontFace 
-	*/
-	class CFontFace
-	{
-	public:
-		~CFontFace();
-
-		FT_Face		m_aFtFace;
-
-		typedef std::map<uint32, CGUIFontData2_ft2*> TMapSizeFont;
-		TMapSizeFont	m_mapFont;
-	};
-
-
-	/**
-	* @class CGUIFont_ft2 
-	* @brief contain all size of font used by system
-	*/
-	class CGUIFont_ft2
-	{
-	public:
-		/// constructor
-		CGUIFont_ft2();
-		~CGUIFont_ft2();
-
-
-	public:
-		typedef	std::vector<CGUITexture*>	TVecTexture;
-		TVecTexture		m_vecTexture;
-		uint32			m_nX,m_nY;	//start pos of current free texture area
-
-		typedef std::map<wchar_t, CGUIFontData2_ft2*> TMapFontData;
-		TMapFontData	m_mapFontData;
-	};
-
-
-	/**
-	* @class CGUIFontData2_ft2 
-	* @brief data of a specified font and specified size
-	*/
-	class  CGUIFontData2_ft2
-	{
-	public:
-		CGUIFontData2_ft2();
-		~CGUIFontData2_ft2();
-
-	public:
-		CGUITexture*	m_pTexture;
-		CGUIRect		m_aUV;
-
-
-		uint32			m_nGlyphIdx;		//index of glyph
-		int32			m_nBitmapWidth;		//size of bitmap
-		int32			m_nBitmapHeight;	//size of bitmap
-		int32			m_nLeftBearing;		//left bearing of font
-		int32			m_nBottomBearing;	//bottom bearing of font
-		int32			m_nTopBearing;		//top bearing of font
-		CGUISize		m_aSize;			//size of font
-	};	
-
-
-}//namespace guiex
-
-
-//============================================================================//
 // function
 //============================================================================// 
 namespace guiex
@@ -116,68 +48,22 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_INTERFACE_IMPLEMENT(IGUIFont_ft2);
 	//------------------------------------------------------------------------------
-	CGUIFont_ft2::CGUIFont_ft2()
-	{
-		m_nX = m_nY = 0;
-	}
-	//------------------------------------------------------------------------------
-	CGUIFont_ft2::~CGUIFont_ft2()
-	{
-		//release font data
-		while(m_mapFontData.empty() == false)
-		{
-			delete m_mapFontData.begin()->second;
-			m_mapFontData.erase(m_mapFontData.begin());
-		}
-
-		//clear texture
-		while(!m_vecTexture.empty())
-		{
-			CGUITextureManager::Instance()->DestroyTexture(m_vecTexture.front());
-			m_vecTexture.erase(m_vecTexture.begin());
-		}
-	}
-	//------------------------------------------------------------------------------
-	CFontFace::~CFontFace()
-	{
-		while( m_mapFont.empty() == false)
-		{
-			delete m_mapFont.begin()->second;
-			m_mapFont.erase(m_mapFont.begin());
-		}
-	}
-	//------------------------------------------------------------------------------
-	CGUIFontData2_ft2::CGUIFontData2_ft2()
-		:m_pTexture(NULL)
-		,m_nLeftBearing(0)
-		,m_nBottomBearing(0)
-	{
-	}
-	//------------------------------------------------------------------------------
-	CGUIFontData2_ft2::~CGUIFontData2_ft2()
-	{
-		m_pTexture = NULL;
-	}
-	//------------------------------------------------------------------------------
-
-
-
-
-
-	//------------------------------------------------------------------------------
 	IGUIFont_ft2::IGUIFont_ft2()
 		:m_pFtLib(NULL)
 		,m_bEnableKerning(false)
 	{
-
 	}
 	//------------------------------------------------------------------------------
 	IGUIFont_ft2::~IGUIFont_ft2()
 	{
-
 	}
 	//------------------------------------------------------------------------------
-	void	IGUIFont_ft2::DeleteSelf()
+	FT_Library& IGUIFont_ft2::GetFTLibrary()
+	{
+		return m_pFtLib;
+	}
+	//------------------------------------------------------------------------------
+	void IGUIFont_ft2::DeleteSelf()
 	{
 		delete this;
 	}
@@ -185,34 +71,22 @@ namespace guiex
 	int IGUIFont_ft2::DoInitialize(void* )
 	{
 		//initialize library
-		if ( FT_Init_FreeType( (FT_Library*)(&m_pFtLib )))
+		if ( FT_Init_FreeType( &m_pFtLib ))
 		{
 			throw CGUIException("[IGUIFont_ft2::DoInitialize]:Could not init FreeType library!");
 		}
 
 		//init datas
 		m_arrayFontDatas.resize( GUI_FONT_MAX_NUM, NULL );
-
 		return 0;
 	}
 	//------------------------------------------------------------------------------
 	void IGUIFont_ft2::DoDestroy()
 	{
-		ReleaseAllResource();
-
 		//free library
 		if(m_pFtLib)
 		{
-			FT_Done_FreeType(FT_Library(m_pFtLib));
-		}
-	}
-	//------------------------------------------------------------------------------
-	void	IGUIFont_ft2::ReleaseAllResource()
-	{
-		//free font face
-		while( m_mapFace.empty() == false )
-		{
-			UnloadFontFace(m_mapFace.begin()->first);
+			FT_Done_FreeType( FT_Library( m_pFtLib ) );
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -221,91 +95,30 @@ namespace guiex
 		m_bEnableKerning = bEnable;
 	}
 	//------------------------------------------------------------------------------
-	int32	IGUIFont_ft2::LoadFontFace( const CGUIString& rFilePathName, int32 nFontFaceIdx )
-	{
-		GUI_TRACE(GUI_FORMAT( "[IGUIFont_ft2::LoadFontFace]:\n   Load Font Face <%d> from File <%s>",
-			nFontFaceIdx,rFilePathName.c_str()));
-
-		if( m_mapFace.find(nFontFaceIdx) != m_mapFace.end())
-		{
-			throw CGUIException("[IGUIFont_ft2::LoadFontFace]:The Font <%d> has been loaded!", nFontFaceIdx );
-		}
-
-		//load
-#if 1
-		FT_Face aFace;
-		CGUIString strFullPath = GUI_WIDGET_SYSTEM()->GetDataPath() + rFilePathName;
-		FT_Error ret = FT_New_Face( FT_Library(m_pFtLib),strFullPath.c_str(), 0, &aFace );
-		if(  ret != 0 )
-		{
-			throw CGUIException("[IGUIFont_ft2::LoadFontFace]:Could not get font face from file <%s>!",
-				rFilePathName.c_str());
-		}
-#else
-		IGUIInterfaceFileSys* pFileSys = GUI_GET_INTERFACE(IGUIInterfaceFileSys, "IGUIFileSys");
-		CGUIDataChunk aDataChunk;
-		if( 0 != pFileSys->ReadFile( rFilePathName, aDataChunk ))
-		{
-			throw CGUIException("[IGUIFont_ft2::LoadFontFace]:Could not get font face from file <%s>!",
-				rFilePathName.c_str());
-		}
-		FT_Face aFace;
-		FT_Error ret = FT_New_Memory_Face( FT_Library(m_pFtLib),aDataChunk.GetDataPtr(),aDataChunk.GetSize(), 0, &aFace );
-		if(  ret != 0 )
-		{
-			throw CGUIException("[IGUIFont_ft2::LoadFontFace]:Could not get font face from file <%s>!",
-				rFilePathName.c_str());
-		}
-#endif
-
-		//add to map
-		CFontFace* pFace = new CFontFace;
-		pFace->m_aFtFace = aFace;
-		m_mapFace.insert(std::make_pair(nFontFaceIdx, pFace));
-
-		return 0;
-	}
-	//------------------------------------------------------------------------------
-	int32		IGUIFont_ft2::UnloadFontFace( int32 nFontFaceIdx )
-	{
-		GUI_TRACE(GUI_FORMAT( "[IGUIFont_ft2::UnloadFontFace]:\n   Unload Font Face <%d>",
-			nFontFaceIdx));
-
-		TMapFace::iterator itor = m_mapFace.find(nFontFaceIdx);
-		if( itor == m_mapFace.end())
-		{
-			//throw CGUIException("[IGUIFont_ft2::UnloadFontFace]:The Font <%d> hasn't been loaded!", nFontFaceIdx );
-			return 0;
-		}
-
-		//unload
-		FT_Done_Face( itor->second->m_aFtFace );
-		delete itor->second;
-		m_mapFace.erase(itor);
-
-		return 0;
-	}
-	//------------------------------------------------------------------------------
-	CGUIFontData2_ft2* IGUIFont_ft2::LoadFont(CFontFace* pFontFace,CGUIFont_ft2* pFont,wchar_t charCode,uint32 nSize)
+	CGUIFontData_ft2::CGUICharData_ft2* IGUIFont_ft2::LoadFont( 
+		CGUIFontData_ft2* pFontFace, 
+		CGUIFontData_ft2::CGUICharsData_ft2* pFont,
+		wchar_t charCode,
+		uint32 nSize)
 	{
 		if( charCode == L'\n')
 		{
 			//line break
-			CGUIFontData2_ft2 *pFontData = new CGUIFontData2_ft2;	
-			pFontData->m_pTexture = NULL;
-			pFontData->m_nBitmapWidth = 0;
-			pFontData->m_nBitmapHeight = 0;
-			pFontData->m_nLeftBearing = 0;
-			pFontData->m_nBottomBearing = 0;
-			pFontData->m_nTopBearing = 0;
-			pFontData->m_aSize.m_fWidth = 0;
-			pFontData->m_aSize.m_fHeight = real(nSize);
-			pFontData->m_nGlyphIdx = 0;
+			CGUIFontData_ft2::CGUICharData_ft2 *pCharData = new CGUIFontData_ft2::CGUICharData_ft2;	
+			pCharData->m_pTexture = NULL;
+			pCharData->m_nBitmapWidth = 0;
+			pCharData->m_nBitmapHeight = 0;
+			pCharData->m_nLeftBearing = 0;
+			pCharData->m_nBottomBearing = 0;
+			pCharData->m_nTopBearing = 0;
+			pCharData->m_aSize.m_fWidth = 0;
+			pCharData->m_aSize.m_fHeight = real(nSize);
+			pCharData->m_nGlyphIdx = 0;
 
 			//add to map
-			pFont->m_mapFontData.insert(std::make_pair(charCode, pFontData));
+			pFont->m_mapCharsData.insert(std::make_pair(charCode, pCharData));
 
-			return pFontData;
+			return pCharData;
 		}
 		else
 		{
@@ -337,22 +150,21 @@ namespace guiex
 			}
 #endif
 
-
 			FT_Bitmap bitmap = pFontFace->m_aFtFace->glyph->bitmap;
 			FT_GlyphSlot slot = pFontFace->m_aFtFace->glyph;
 
 			//get information
-			CGUIFontData2_ft2 *pFontData = new CGUIFontData2_ft2;	
-			pFontData->m_nBitmapWidth = bitmap.width;
-			pFontData->m_nBitmapHeight = bitmap.rows;
-			int textureWidth = CGUITexture::ConvertToTextureSize(pFontData->m_nBitmapWidth);
-			int textureHeight = CGUITexture::ConvertToTextureSize(pFontData->m_nBitmapHeight);
-			pFontData->m_nLeftBearing = slot->bitmap_left;
-			pFontData->m_nBottomBearing = -( bitmap.rows - slot->bitmap_top );
-			pFontData->m_nTopBearing = slot->bitmap_top;
-			pFontData->m_aSize.m_fWidth = real(slot->advance.x>>6);
-			pFontData->m_aSize.m_fHeight = real(nSize);
-			pFontData->m_nGlyphIdx = uGlyphIdx;
+			CGUIFontData_ft2::CGUICharData_ft2 *pCharData = new CGUIFontData_ft2::CGUICharData_ft2;	
+			pCharData->m_nBitmapWidth = bitmap.width;
+			pCharData->m_nBitmapHeight = bitmap.rows;
+			int textureWidth = CGUITexture::ConvertToTextureSize(pCharData->m_nBitmapWidth);
+			int textureHeight = CGUITexture::ConvertToTextureSize(pCharData->m_nBitmapHeight);
+			pCharData->m_nLeftBearing = slot->bitmap_left;
+			pCharData->m_nBottomBearing = -( bitmap.rows - slot->bitmap_top );
+			pCharData->m_nTopBearing = slot->bitmap_top;
+			pCharData->m_aSize.m_fWidth = real(slot->advance.x>>6);
+			pCharData->m_aSize.m_fHeight = real(nSize);
+			pCharData->m_nGlyphIdx = uGlyphIdx;
 
 			//get texture
 			if( pFont->m_nX + nSize >= GUI_FT2_TEXTURE_SIZE)
@@ -366,7 +178,7 @@ namespace guiex
 				CGUITexture* pNewTexture = CGUITextureManager::Instance()->CreateTexture(GUI_FT2_TEXTURE_SIZE,GUI_FT2_TEXTURE_SIZE,GUI_PF_ARGB_32);
 				pFont->m_vecTexture.push_back(pNewTexture);
 			}
-			pFontData->m_pTexture = pFont->m_vecTexture.back();
+			pCharData->m_pTexture = pFont->m_vecTexture.back();
 
 			//copy data
 			//get image data
@@ -383,9 +195,9 @@ namespace guiex
 					*pBufferDst++ = *pBufferSrc++;
 				}	
 			}
-			pFontData->m_pTexture->CopySubImage(pFont->m_nX,pFont->m_nY,bitmap.width,bitmap.rows,GUI_PF_ARGB_32,pImageData );
+			pCharData->m_pTexture->CopySubImage(pFont->m_nX,pFont->m_nY,bitmap.width,bitmap.rows,GUI_PF_ARGB_32,pImageData );
 			delete[] pImageData;
-			pFontData->m_aUV = CGUIRect(
+			pCharData->m_aUV = CGUIRect(
 				real(pFont->m_nX) / GUI_FT2_TEXTURE_SIZE,
 				real(pFont->m_nY) / GUI_FT2_TEXTURE_SIZE,
 				real(pFont->m_nX+bitmap.width) / GUI_FT2_TEXTURE_SIZE,
@@ -395,56 +207,58 @@ namespace guiex
 
 
 			//add to map
-			pFont->m_mapFontData.insert(std::make_pair(charCode, pFontData));
+			pFont->m_mapCharsData.insert(std::make_pair(charCode, pCharData));
 
-			return pFontData;
+			return pCharData;
 		}
 
 	}
 	//------------------------------------------------------------------------------
-	CGUIFontData2_ft2* IGUIFont_ft2::GetFont( int32 nFontFaceIdx, wchar_t charCode,uint32 nSize )
+	CGUIFontData_ft2::CGUICharData_ft2* IGUIFont_ft2::GetFont( uint32 nFontFaceIdx, wchar_t charCode, uint32 nSize )
 	{ 
 		//get font face
-		TMapFace::iterator itor = m_mapFace.find( nFontFaceIdx );
-		if( itor == m_mapFace.end())
+		GUI_ASSERT( nFontFaceIdx < m_arrayFontDatas.size(), "invalid font face index" );
+		CGUIFontData_ft2* pFontData = m_arrayFontDatas[nFontFaceIdx];
+		if( !pFontData )
 		{
 			throw CGUIException("[IGUIFont_ft2::GetFont]:The Font which index is <%d> hasn't been loaded!", nFontFaceIdx );
 		}
+		pFontData->Load();
 
 		//get font
-		CGUIFont_ft2* pFont = NULL;
-		CFontFace* pFontFace = itor->second;
-		CFontFace::TMapSizeFont::iterator itorFont =  pFontFace->m_mapFont.find(nSize);
-		if(itorFont == pFontFace->m_mapFont.end())
+		CGUIFontData_ft2::CGUICharsData_ft2* pSizeChars = NULL;
+		CGUIFontData_ft2::TMapSizeChars::iterator itorSizeChars = pFontData->m_mapSizeChars.find (nSize );
+		if( itorSizeChars == pFontData->m_mapSizeChars.end() )
 		{
 			//this font hasn't been loaded
-			pFont = new CGUIFont_ft2;
+			pSizeChars = new CGUIFontData_ft2::CGUICharsData_ft2;
 
 			//add to map
-			pFontFace->m_mapFont.insert(std::make_pair(nSize, pFont));
+			pFontData->m_mapSizeChars.insert( std::make_pair( nSize, pSizeChars ));
 		}
 		else
 		{
 			//has load this font
-			pFont = itorFont->second;
+			pSizeChars = itorSizeChars->second;
 		}
 
 		//get font
-		CGUIFont_ft2::TMapFontData::iterator itorFontData = pFont->m_mapFontData.find(charCode);
-		if( itorFontData != pFont->m_mapFontData.end())
+		CGUIFontData_ft2::CGUICharsData_ft2::TMapCharData::iterator itorCharData = pSizeChars->m_mapCharsData.find(charCode);
+		if( itorCharData != pSizeChars->m_mapCharsData.end() )
 		{
 			//bingo! got this font data
-			return itorFontData->second;
+			return itorCharData->second;
 		}
 		else
 		{
-			return LoadFont(pFontFace, pFont,charCode,nSize );
+			return LoadFont( pFontData, pSizeChars, charCode, nSize );
 		}
 	}
 	//------------------------------------------------------------------------------
-	int32	IGUIFont_ft2::GetKerningGap(int32 nFontFaceIdx, 
-		CGUIFontData2_ft2* pLeftData, 
-		CGUIFontData2_ft2* pRightData,
+	int32	IGUIFont_ft2::GetKerningGap(
+		uint32 nFontFaceIdx, 
+		CGUIFontData_ft2::CGUICharData_ft2* pLeftData, 
+		CGUIFontData_ft2::CGUICharData_ft2* pRightData,
 		uint32 nSize)
 	{
 		if( !pLeftData || !pRightData)
@@ -453,20 +267,22 @@ namespace guiex
 		}
 
 		//get font face
-		TMapFace::iterator itor = m_mapFace.find( nFontFaceIdx );
-		if( itor == m_mapFace.end())
+		GUI_ASSERT( nFontFaceIdx < m_arrayFontDatas.size(), "invalid font face index" );
+		CGUIFontData_ft2* pFontData = m_arrayFontDatas[nFontFaceIdx];
+		if( !pFontData )
 		{
 			throw CGUIException("[IGUIFont_ft2::GetKerningGap]:The Font which index is <%d> hasn't been loaded!", nFontFaceIdx );
 		}
+		pFontData->Load();
 
 		//set size
-		if( FT_Set_Pixel_Sizes( itor->second->m_aFtFace, nSize, nSize) )
+		if( FT_Set_Pixel_Sizes( pFontData->m_aFtFace, nSize, nSize) )
 		{
 			throw CGUIException("[IGUIFont_ft2::GetKerningGap]:Failed to set pixel size!");
 		}
 
 		FT_Vector  kerning;
-		if( FT_Get_Kerning( itor->second->m_aFtFace, pLeftData->m_nGlyphIdx,pRightData->m_nGlyphIdx,FT_KERNING_DEFAULT , &kerning ))
+		if( FT_Get_Kerning( pFontData->m_aFtFace, pLeftData->m_nGlyphIdx,pRightData->m_nGlyphIdx,FT_KERNING_DEFAULT , &kerning ))
 		{
 			throw CGUIException("[IGUIFont_ft2::GetKerningGap]:Failed to get kerning!");
 		}
@@ -475,20 +291,21 @@ namespace guiex
 
 	}
 	//------------------------------------------------------------------------------
-	void IGUIFont_ft2::DrawCharacter(IGUIInterfaceRender* pRender, 
+	void IGUIFont_ft2::DrawCharacter(
+		IGUIInterfaceRender* pRender, 
 		const CGUIMatrix4& rWorldMatrix,
 		wchar_t charCode, 
 		const CGUIStringInfo& rInfo,
 		const CGUIVector2& rPos,
-		real	fAlpha)
+		real fAlpha)
 	{
-		CGUIFontData2_ft2* pFontData = GetFont( rInfo.m_nFontIdx, charCode, rInfo.m_nFontSize);
+		CGUIFontData_ft2::CGUICharData_ft2* pCharData = GetFont( rInfo.m_nFontIdx, charCode, rInfo.m_nFontSize);
 
-		if( pFontData->m_pTexture)
+		if( pCharData->m_pTexture)
 		{
 			CGUIRect aCharRect(
-				CGUIVector2(rPos.x+real(pFontData->m_nLeftBearing), rPos.y+real(rInfo.m_nFontSize-pFontData->m_nTopBearing)),
-				CGUISize(real(pFontData->m_nBitmapWidth),real(pFontData->m_nBitmapHeight)));
+				CGUIVector2(rPos.x+real(pCharData->m_nLeftBearing), rPos.y+real(rInfo.m_nFontSize-pCharData->m_nTopBearing)),
+				CGUISize(real(pCharData->m_nBitmapWidth),real(pCharData->m_nBitmapHeight)));
 
 			CGUIColor aColor(rInfo.m_aColor);
 			aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
@@ -496,8 +313,8 @@ namespace guiex
 				rWorldMatrix,
 				aCharRect,
 				pRender->GetAndIncZ(), 
-				pFontData->m_pTexture->GetTextureImplement(),
-				pFontData->m_aUV, 
+				pCharData->m_pTexture->GetTextureImplement(),
+				pCharData->m_aUV, 
 				eImageOrientation_Normal,
 				aColor.GetARGB(),
 				aColor.GetARGB(),
@@ -566,13 +383,13 @@ namespace guiex
 		for( int32 i= nStartPos; i<nEndPos; ++i)
 		{
 
-			CGUIFontData2_ft2 * pFontData = GetFont(rInfo.m_nFontIdx, rString.m_strContent[i], rInfo.m_nFontSize);
+			CGUIFontData_ft2::CGUICharData_ft2 * pCharData = GetFont(rInfo.m_nFontIdx, rString.m_strContent[i], rInfo.m_nFontSize);
 
-			if( pFontData->m_pTexture)
+			if( pCharData->m_pTexture)
 			{
 				CGUIRect aCharRect(
-					CGUIVector2(aPos.x+real(pFontData->m_nLeftBearing), aPos.y+real(rInfo.m_nFontSize-pFontData->m_nTopBearing)),
-					CGUISize(real(pFontData->m_nBitmapWidth),real(pFontData->m_nBitmapHeight)));
+					CGUIVector2(aPos.x+real(pCharData->m_nLeftBearing), aPos.y+real(rInfo.m_nFontSize-pCharData->m_nTopBearing)),
+					CGUISize(real(pCharData->m_nBitmapWidth),real(pCharData->m_nBitmapHeight)));
 
 				//dest area size
 				CGUIColor aColor(rInfo.m_aColor);
@@ -581,8 +398,8 @@ namespace guiex
 					rWorldMatrix,
 					aCharRect,
 					pRender->GetAndIncZ(), 
-					pFontData->m_pTexture->GetTextureImplement(),
-					pFontData->m_aUV, 
+					pCharData->m_pTexture->GetTextureImplement(),
+					pCharData->m_aUV, 
 					eImageOrientation_Normal,
 					aColor.GetARGB(),
 					aColor.GetARGB(),
@@ -590,7 +407,7 @@ namespace guiex
 					aColor.GetARGB());
 			}
 
-			aPos.x+=pFontData->m_aSize.m_fWidth;
+			aPos.x+=pCharData->m_aSize.m_fWidth;
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -617,13 +434,13 @@ namespace guiex
 		const CGUIStringInfo& rInfo = rString.m_aStringInfo;
 		for( int32 i=nStartPos; i<nEndPos; ++i)
 		{
-			CGUIFontData2_ft2 * pFontData = GetFont(rInfo.m_nFontIdx, rString.m_strContent[i], rInfo.m_nFontSize);
+			CGUIFontData_ft2::CGUICharData_ft2 * pCharData = GetFont(rInfo.m_nFontIdx, rString.m_strContent[i], rInfo.m_nFontSize);
 
-			if( pFontData->m_pTexture)
+			if( pCharData->m_pTexture)
 			{
 				CGUIRect aCharRect(
-					CGUIVector2(aPos.x+real(pFontData->m_nLeftBearing), aPos.y+real(rInfo.m_nFontSize-pFontData->m_nTopBearing)),
-					CGUISize(real(pFontData->m_nBitmapWidth),real(pFontData->m_nBitmapHeight)));
+					CGUIVector2(aPos.x+real(pCharData->m_nLeftBearing), aPos.y+real(rInfo.m_nFontSize-pCharData->m_nTopBearing)),
+					CGUISize(real(pCharData->m_nBitmapWidth),real(pCharData->m_nBitmapHeight)));
 
 				//dest area size
 				CGUIColor aColor(rInfo.m_aColor);
@@ -632,8 +449,8 @@ namespace guiex
 					rWorldMatrix,
 					aCharRect,
 					pRender->GetAndIncZ(), 
-					pFontData->m_pTexture->GetTextureImplement(),
-					pFontData->m_aUV, 
+					pCharData->m_pTexture->GetTextureImplement(),
+					pCharData->m_aUV, 
 					eImageOrientation_Normal,
 					aColor.GetARGB(),
 					aColor.GetARGB(),
@@ -641,20 +458,20 @@ namespace guiex
 					aColor.GetARGB());
 			}
 
-			aPos.x+=pFontData->m_aSize.m_fWidth;
+			aPos.x+=pCharData->m_aSize.m_fWidth;
 		}
 	}
 	//------------------------------------------------------------------------------
 	const CGUISize& IGUIFont_ft2::GetCharacterSize(int32 nFontFaceIdx,wchar_t charCode,uint32 nSize)
 	{
-		CGUIFontData2_ft2* pFontData = GetFont( nFontFaceIdx, charCode, nSize);
+		CGUIFontData_ft2::CGUICharData_ft2* pCharData = GetFont( nFontFaceIdx, charCode, nSize);
 
-		return pFontData->m_aSize;
+		return pCharData->m_aSize;
 	}
 	//------------------------------------------------------------------------------
 	CGUIFontData* IGUIFont_ft2::CreateFontData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nFontIndex )
 	{
-		GUI_ASSERT( nFontIndex < m_arrayFontDatas.size() );
+		GUI_ASSERT( nFontIndex < m_arrayFontDatas.size(), "invalid font face index" );
 
 		if( m_arrayFontDatas[nFontIndex] != NULL )
 		{
@@ -673,7 +490,7 @@ namespace guiex
 		{
 			throw CGUIException(
 				"[IGUIFont_ft2::DestroyFontData]: the font<%s:%s> doesn't existing", 
-				pData->GetName.c_str(),
+				pData->GetName().c_str(),
 				pData->GetSceneName().c_str());
 			return;
 		}

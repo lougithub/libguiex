@@ -116,10 +116,7 @@ namespace guiex
 	{
 		if( !m_aAnimationSize.IsEqualZero())
 		{
-			if( !IsLoaded())
-			{
-				Load();
-			}
+			Load();
 
 			if( m_vecTextures.empty())
 			{
@@ -141,10 +138,7 @@ namespace guiex
 		real z, 
 		real fAlpha	) const
 	{
-		if( !IsLoaded())
-		{
-			Load();
-		}
+		Load();
 
 		CGUIColor aColor(0xFFFFFFFF);
 		aColor.SetAlpha(fAlpha);

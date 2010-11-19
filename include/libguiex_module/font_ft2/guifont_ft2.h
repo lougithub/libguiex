@@ -14,12 +14,10 @@
 #include <libguiex_core/guiinterfacefont.h>
 #include <libguiex_core/guirect.h>
 #include <libguiex_core/guivector2.h>
+#include "guifontdata_ft2.h"
 
 #include <map>
-
-
-
-
+#include <vector>
 
 //============================================================================//
 // declare
@@ -27,8 +25,6 @@
 namespace guiex
 {
 	class CGUIImage;
-	class CGUIFontData2_ft2;
-	class CFontFace;
 }
 
 
@@ -60,20 +56,6 @@ namespace guiex
 		virtual CGUIFontData* CreateFontData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nFontIndex );
 		virtual void DestroyFontData( CGUIFontData* pData );
 
-		//!<
-		virtual void ReleaseAllResource();
-
-		/**
-		* @brief load font face from file
-		* @return 0 for successful, vice versa
-		*/
-		virtual int32 LoadFontFace( const CGUIString& rFilePathName, int32 nFontFaceIdx );
-
-		/**
-		* @brief unload font face
-		*/
-		virtual int32 UnloadFontFace( int32 nFontFaceIdx );
-
 		/**
 		* @brief enable kerning
 		*/
@@ -82,7 +64,8 @@ namespace guiex
 		/**
 		* @brief draw a character
 		*/
-		virtual void DrawCharacter(IGUIInterfaceRender* pRender, 
+		virtual void DrawCharacter(
+			IGUIInterfaceRender* pRender, 
 			const CGUIMatrix4& rWorldMatrix,
 			wchar_t charCode, 
 			const CGUIStringInfo& rInfo,
@@ -92,7 +75,8 @@ namespace guiex
 		/**
 		* @brief draw string
 		*/
-		virtual void DrawString(IGUIInterfaceRender* pRender, 
+		virtual void DrawString(
+			IGUIInterfaceRender* pRender, 
 			const CGUIMatrix4& rWorldMatrix,
 			const CGUIStringEx& rString, 
 			const CGUIVector2& rPos,
@@ -103,7 +87,8 @@ namespace guiex
 		/**
 		* @brief draw string
 		*/
-		virtual void DrawString(IGUIInterfaceRender* pRender, 
+		virtual void DrawString(
+			IGUIInterfaceRender* pRender, 
 			const CGUIMatrix4& rWorldMatrix,
 			const CGUIStringEx& rString, 
 			const CGUIRect&	rStringRect,
@@ -112,55 +97,39 @@ namespace guiex
 			int32 nStartPos = 0,
 			int32 nEndPos = -1);
 
-		/**
-		* @brief get string size
-		*/
 		virtual const CGUISize& GetCharacterSize(int32 nFontFaceIdx, wchar_t charCode, uint32 nSize);
 
-		/**
-		* @brief used to delete this object
-		*/
 		virtual void DeleteSelf();
 
-	protected:
-		/** 
-		* @brief initialize render
-		* @return 0 for success
-		*/
-		virtual int DoInitialize(void* );
+		FT_Library& GetFTLibrary();
 
-		/** 
-		* @brief destroy render
-		* @return 0 for success
-		*/
+	protected:
+		virtual int DoInitialize(void* );
 		virtual void DoDestroy();
 
 		/**
 		* @brief get font by given parameter, if failed to find it,
 		* create this font.
 		*/
-		CGUIFontData2_ft2* GetFont( int32 nFontFaceIdx, wchar_t charCode,uint32 nSize );
+		CGUIFontData_ft2::CGUICharData_ft2* GetFont( uint32 nFontFaceIdx, wchar_t charCode,uint32 nSize );
 
 		/// load font from file
-		CGUIFontData2_ft2* LoadFont(CFontFace* pFontFace, CGUIFontData2_ft2* pFont,wchar_t charCode,uint32 nSize);
+		CGUIFontData_ft2::CGUICharData_ft2* LoadFont( CGUIFontData_ft2* pFontFace, CGUIFontData_ft2::CGUICharsData_ft2* pFont,wchar_t charCode,uint32 nSize);
 
 		/**
 		* @brief get kerning between two character
 		*/
-		int32 GetKerningGap(int32 nFontFaceIdx, 
-			CGUIFontData2_ft2* pLeftData, 
-			CGUIFontData2_ft2* pRightData,
+		int32 GetKerningGap(
+			uint32 nFontFaceIdx, 
+			CGUIFontData_ft2::CGUICharData_ft2* pLeftData, 
+			CGUIFontData_ft2::CGUICharData_ft2* pRightData,
 			uint32 nSize);
 
 	protected:
-		void* m_pFtLib;
+		FT_Library m_pFtLib;
 
-		typedef std::vector<CGUIFontData2_ft2*> TVecFontData;
+		typedef std::vector<CGUIFontData_ft2*> TVecFontData;
 		TVecFontData m_arrayFontDatas;
-
-		//map for font face
-		typedef std::map<int32, CFontFace*> TMapFace;
-		TMapFace m_mapFace;
 
 		bool m_bEnableKerning;	/// flag whether enable kerning
 	};

@@ -68,23 +68,6 @@ namespace guiex
 		*/
 		virtual const CGUISize& GetCharacterSize(int32 nFontFaceIdx, wchar_t charCode, uint32 nSize) = 0;
 
-		//!< release all used resource, such as texture and image
-		virtual void ReleaseAllResource() = 0;
-
-
-		/**
-		* @brief load font face from file
-		* @param nIdx index of font face. this interface should support
-		* more than one font face.
-		* @return 0 for successful, vice versa
-		*/
-		virtual int32 LoadFontFace( const CGUIString& rFilePathName, int32 nIdx ) = 0;
-
-		/**
-		* @brief unload font face
-		*/
-		virtual int32 UnloadFontFace( int32 nIdx ) = 0;
-
 		/**
 		* @brief enable kerning
 		*/
