@@ -45,7 +45,7 @@ namespace guiex
 		RegisterPropertyType( ePropertyType_Sound, "CGUISound" );
 		RegisterPropertyType( ePropertyType_WidgetPosition, "CGUIWidgetPosition" );		
 		RegisterPropertyType( ePropertyType_WidgetSize, "CGUIWidgetSize" );		
-		RegisterPropertyType( ePropertyType_Font, "CGUIFont" );		
+		RegisterPropertyType( ePropertyType_Font, "CGUIFontData" );		
 
 		RegisterPropertyType( ePropertyType_TextAlignmentHorz, "ETextAlignmentHorz" );
 		RegisterPropertyType( ePropertyType_TextAlignmentVert, "ETextAlignmentVert" );

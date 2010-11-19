@@ -42,27 +42,27 @@
 namespace guiex
 {
 	/**
-	* @class CGUIFong
+	* @class CGUIFontData
 	*/
-	class GUIEXPORT CGUIFont : public CGUIResource
+	class GUIEXPORT CGUIFontData : public CGUIResource
 	{	
 	protected:
 		friend class CGUIFontManager;
 		//disable =
-		CGUIFont( const CGUIFont&  );
-		const CGUIFont& operator=(const CGUIFont& );
+		CGUIFontData( const CGUIFontData&  );
+		const CGUIFontData& operator=(const CGUIFontData& );
 
 	public:
 		/**
 		* @brief destructor;
 		*/
-		virtual ~CGUIFont();
+		virtual ~CGUIFontData();
 
 	protected:
 		/**
 		* @brief constructor
 		*/
-		CGUIFont( 		
+		CGUIFontData( 		
 			const CGUIString& rName,
 			const CGUIString& rSceneName, 
 			const CGUIString& rPath,

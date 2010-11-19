@@ -34,7 +34,7 @@ namespace guiex
 	* @brief image manager
 	* 
 	*/
-	class GUIEXPORT CGUIFontManager : public CGUIResourceManager <CGUIFont>
+	class GUIEXPORT CGUIFontManager : public CGUIResourceManager <CGUIFontData>
 	{
 	public:
 		/**
@@ -50,7 +50,7 @@ namespace guiex
 		/**
 		* @brief create a font
 		*/
-		const CGUIFont*	CreateGUIFont(
+		const CGUIFontData*	CreateGUIFont(
 			const CGUIString& rName, 
 			const CGUIString& rSceneName, 
 			const CGUIString& rPath, 
