@@ -199,7 +199,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guifont.cpp"
+				RelativePath="..\..\source\libguiex_core\guifontdata.cpp"
 				>
 			</File>
 			<File
@@ -521,7 +521,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guifont.h"
+				RelativePath="..\..\include\libguiex_core\guifontdata.h"
 				>
 			</File>
 			<File
