@@ -57,9 +57,23 @@ private:
 //============================================================================// 
 //------------------------------------------------------------------------------
 static	wxArrayString s_arrayImageArray;
+static	wxArrayString s_arrayAsArray;
 static	wxArrayString s_arrayTextAlignmentH;
 static	wxArrayString s_arrayTextAlignmentV;
 
+void	UpdateAsNameList()
+{
+	s_arrayAsArray.Clear();
+	s_arrayAsArray.Add(_T(""));
+	const std::map<guiex::CGUIString, guiex::CGUIAs*>& rMapAsList = guiex::CGUIAsManager::Instance()->GetRegisterResourceMap();
+	for( std::map<guiex::CGUIString,guiex::CGUIAs*>::const_iterator itor = rMapAsList.begin();
+		itor != rMapAsList.end();
+		++itor)
+	{
+		s_arrayAsArray.Add(wxConvUTF8.cMB2WC( itor->first.c_str()).data());
+	}
+	s_arrayAsArray.Sort();
+}
 //------------------------------------------------------------------------------
 void UpdateImageNameList()
 {
@@ -372,6 +386,23 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 		}
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
+	//AS
+	else if(  aProp.GetType() == guiex::ePropertyType_As )
+	{			
+		wxString aValue;
+		aValue = wxConvUTF8.cMB2WC(aProp.GetValue().c_str());
+
+		if( pPGTop )
+		{
+			pPGTop->SetValue(aValue);
+		}
+		else
+		{
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxEnumProperty(STRING_M2W(CPropertyData::GetPropertyData(aProp)->GetLabel()), STRING_M2W(aProp.GetName()),s_arrayAsArray));
+			pSheetMgr->SetPropertyValue(pPGTop, aValue);
+		}
+	}
+	//////////////////////////////////////////////////////////////////////////////////////
 	//ENUM
 	else if( aProp.GetType() == ePropertyType_ScreenValue )
 	{
@@ -595,8 +626,15 @@ void GenerateGUIProperty( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPro
 		rProperty.SetValue( aValue );
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
-	//CGUIEvent
+	//CGUIImage
 	else if( rProperty.GetType() == ePropertyType_Image )
+	{
+		guiex::CGUIString aValue = pSheetMgr->GetPropertyValueAsString( pPGProperty ).char_str(wxConvUTF8).data();
+		rProperty.SetValue( aValue );
+	}
+	//////////////////////////////////////////////////////////////////////////////////////
+	//CGUIAs
+	else if( rProperty.GetType() == ePropertyType_As )
 	{
 		guiex::CGUIString aValue = pSheetMgr->GetPropertyValueAsString( pPGProperty ).char_str(wxConvUTF8).data();
 		rProperty.SetValue( aValue );

@@ -49,4 +49,7 @@ extern guiex::CGUIWidget* CreateWidget( wxPropertyGridManager* pSheetMgr, const 
 //update image used in the system
 extern void	UpdateImageNameList();
 
+//update as used in the system
+extern void	UpdateAsNameList();
+
 #endif	//__KEN_PROPERTYSHEETFUNC_20070928_H__

@@ -289,6 +289,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 		GUI_REGISTER_INTERFACE_LIB( IGUIFont_ft2);
 		GUI_REGISTER_INTERFACE_LIB( IGUIKeyboard_winapi);
 		GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
+		GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_Winapi);
 		//GUI_REGISTER_INTERFACE_LIB( LIBGUIEX_COMMAND_TCP_DLL);
 		//GUI_REGISTER_INTERFACE_LIB( LIBGUIEX_SOUND_OPENAL_DLL);
 		GUI_REGISTER_INTERFACE_LIB( IGUIScript_lua);
@@ -638,6 +639,9 @@ int		WxMainFrame::OpenScene( const guiex::CGUISceneInfo* pSceneInfo )
 
 	//update image list
 	UpdateImageNameList();
+
+	//update as list
+	UpdateAsNameList();
 
 	m_bIsSceneOpened = true;
 

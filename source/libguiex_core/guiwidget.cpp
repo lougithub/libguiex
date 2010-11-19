@@ -76,6 +76,7 @@ namespace guiex
 		,m_bIsGenerateClickEvent(false)
 		,m_bIsGenerateDBClickEvent(false)
 		,m_bIsGenerateMultiClickEvent(false)
+		,m_bIsAutoPlayAs(false)
 	{
 		//set flag
 		m_aBitFlag.reset(eFLAG_EVENT_PARENTSIZECHANGE);	//could this widget receive parent change event
@@ -777,7 +778,17 @@ namespace guiex
 		return m_aBitFlag.test( nFlag );
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::SetDisable(bool bDisable)
+	void CGUIWidget::SetAutoPlayAs( bool bEnable )
+	{
+		m_bIsAutoPlayAs = bEnable;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWidget::IsAutoPlayAs( ) const
+	{
+		return m_bIsAutoPlayAs;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::SetDisable(bool bDisable)
 	{
 		if( bDisable != IsDisable() )
 		{
@@ -1269,7 +1280,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	CGUIAs* CGUIWidget::SetAs( const CGUIString& rName, const CGUIString& rAsName, bool bPlaying )
+	CGUIAs* CGUIWidget::SetAs( const CGUIString& rName, const CGUIString& rAsName )
 	{
 		//find as
 		CGUIAs* pAs = CGUIAsManager::Instance()->AllocateResource( rAsName );
@@ -1278,13 +1289,13 @@ namespace guiex
 			throw CGUIException( "failed to get as by name <%s>", rAsName.c_str());
 			return NULL;
 		};
-		SetAs( rName, pAs, bPlaying );
+		SetAs( rName, pAs );
 		CGUIAsManager::Instance()->DeallocateResource( pAs );
 		return pAs;
 	}
 	//------------------------------------------------------------------------------
 	///< this will retain the reference count of image
-	void CGUIWidget::SetAs( const CGUIString& rName, CGUIAs* pAs, bool bPlaying )
+	void CGUIWidget::SetAs( const CGUIString& rName, CGUIAs* pAs )
 	{
 		TMapAs::iterator itor = m_aMapAs.find(rName);
 		if( itor != m_aMapAs.end())
@@ -1298,7 +1309,7 @@ namespace guiex
 			pAs->RefRetain();
 			m_aMapAs.insert(std::make_pair(rName,pAs));
 
-			if( bPlaying )
+			if( m_bIsAutoPlayAs )
 			{
 				PlayAs( pAs );
 			}
@@ -1619,6 +1630,19 @@ namespace guiex
 			}
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
+		else if( rProperty.GetType() == ePropertyType_As  )
+		{
+			CGUIAs* pAs = GetAs(rProperty.GetName());
+			if( pAs )
+			{
+				rProperty.SetValue( pAs->GetName() );
+			}
+			else
+			{
+				rProperty.SetValue( "" );
+			}
+		}
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Real && rProperty.GetName() == "alpha" )
 		{
 			ValueToProperty( GetAlpha(), rProperty);
@@ -1741,7 +1765,20 @@ namespace guiex
 				SetImage( rProperty.GetName(), NULL);
 			}
 		}
-
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		/// load as
+		else if( rProperty.GetType() == ePropertyType_As )
+		{
+			if( !rProperty.GetValue().empty() )
+			{
+				SetAs( rProperty.GetName(), rProperty.GetValue());
+			}
+			else
+			{
+				//clear as
+				SetAs( rProperty.GetName(), NULL);
+			}
+		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//property for text
 		else if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo" )

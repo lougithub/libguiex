@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <libguiex_project>
+	<property name="widget_file" type="CGUIString" value="dialog_ok.xml" />
 	<property name="resource_file" type="CGUIString" value="resource.xml" />
 </libguiex_project>
 

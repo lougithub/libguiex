@@ -146,6 +146,9 @@ namespace guiex
 			eFLAG_MAX,
 		};
 
+		void SetAutoPlayAs( bool bEnable );
+		bool IsAutoPlayAs( ) const;
+
 		void SetActivable(bool bActivable);
 		bool IsActivable() const;
 		bool IsDerivedActivable();
@@ -196,8 +199,8 @@ namespace guiex
 		CGUIAnimation* SetAnimation( const CGUIString& rName, const CGUIString& rAnimationName );
 		CGUIAnimation* GetAnimation( const CGUIString& rAnimationName);
 
-		CGUIAs* SetAs( const CGUIString& rName, const CGUIString& rAsName, bool bPlaying = false );
-		void SetAs( const CGUIString& rName, CGUIAs* pAs, bool bPlaying = false );
+		CGUIAs* SetAs( const CGUIString& rName, const CGUIString& rAsName );
+		void SetAs( const CGUIString& rName, CGUIAs* pAs );
 		bool HasAs( const CGUIString& rName );
 		CGUIAs* GetAs( const CGUIString& rName );
 
@@ -528,6 +531,7 @@ namespace guiex
 		/// flag
 		///////////////////////////////////////////////////////////////////////
 		bool m_bOpenWithParent;
+		bool m_bIsAutoPlayAs;
 		bool m_bInheritAlpha;
 		bool m_bIsFocusAgency;
 		bool m_bIsFocusable;

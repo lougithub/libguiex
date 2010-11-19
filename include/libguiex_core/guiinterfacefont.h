@@ -54,24 +54,18 @@ namespace guiex
 		*/
 		virtual ~IGUIInterfaceFont();
 
-
 		/**
 		* @brief get string width
 		*/
-		real GetStringWidth(
-			const CGUIStringEx& rString,
-			int32 nStartPos = 0,
-			int32 nEndPos = -1);
+		real GetStringWidth( const CGUIStringEx& rString, int32 nStartPos = 0, int32 nEndPos = -1);
 
 		/**
 		* @brief get string size
 		*/
-		virtual const CGUISize& GetCharacterSize(int32 nFontFaceIdx,
-			wchar_t charCode,
-			uint32 nSize) = 0;
+		virtual const CGUISize& GetCharacterSize(int32 nFontFaceIdx, wchar_t charCode, uint32 nSize) = 0;
 
 		//!< release all used resource, such as texture and image
-		virtual void	ReleaseAllResource() = 0;
+		virtual void ReleaseAllResource() = 0;
 
 
 		/**
@@ -80,17 +74,17 @@ namespace guiex
 		* more than one font face.
 		* @return 0 for successful, vice versa
 		*/
-		virtual int32			LoadFontFace( const CGUIString& rFilePathName, int32 nIdx ) = 0;
+		virtual int32 LoadFontFace( const CGUIString& rFilePathName, int32 nIdx ) = 0;
 
 		/**
 		* @brief unload font face
 		*/
-		virtual int32			UnloadFontFace( int32 nIdx ) = 0;
+		virtual int32 UnloadFontFace( int32 nIdx ) = 0;
 
 		/**
 		* @brief enable kerning
 		*/
-		virtual void			EnableKerning( bool bEnable ) = 0;
+		virtual void EnableKerning( bool bEnable ) = 0;
 
 		/**
 		* @brief draw a character
@@ -100,7 +94,7 @@ namespace guiex
 			wchar_t charCode, 
 			const CGUIStringInfo& rInfo,
 			const CGUIVector2& rPos,
-			real	fAlpha) = 0;
+			real fAlpha) = 0;
 
 		/**
 		* @brief draw string
@@ -109,7 +103,7 @@ namespace guiex
 			const CGUIMatrix4& rWorldMatrix,
 			const CGUIStringEx& rString, 
 			const CGUIVector2& rPos,
-			real			fAlpha,
+			real fAlpha,
 			int32 nStartPos = 0,
 			int32 nEndPos = -1)=0;
 
@@ -120,8 +114,8 @@ namespace guiex
 			const CGUIMatrix4& rWorldMatrix,
 			const CGUIStringEx& rString, 
 			const CGUIRect&	rStringRect,
-			const uint8&	uTextAlignment,
-			real			fAlpha,
+			const uint8& uTextAlignment,
+			real fAlpha,
 			int32 nStartPos = 0,
 			int32 nEndPos = -1)=0;
 	};

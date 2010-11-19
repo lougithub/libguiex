@@ -42,6 +42,8 @@
             <property name="text"	type="CGUIString" value="" category="TextInfo"/>
             <property name="text_alignment_horz"	type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center"  category="TextInfo"/>
             <property name="text_alignment_vert"	type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" category="TextInfo"/>
+
+            <property name="default_as" type="CGUIAs" value=""/>
         </page>
 
         <page name="CallbackEvent">      
