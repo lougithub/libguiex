@@ -41,7 +41,7 @@ namespace guiex
 namespace guiex
 {
 	/**
-	* @class IGUIFong_ft2
+	* @class IGUIFont_ft2
 	* @brief use libfreetype2 as font engine,
 	* support all font file type that libfreetye2 supports
 	*/

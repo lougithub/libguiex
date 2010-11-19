@@ -67,7 +67,6 @@
 #include "guiresourcemanager.h"
 #include "guiimage.h"
 #include "guiimagemanager.h"
-#include "guifont.h"
 #include "guifontmanager.h"
 #include "guianimation.h"
 #include "guianimationmanager.h"

@@ -1,21 +1,13 @@
 /** 
-* @file guifont.h
+* @file guifontdata.h
 * @brief 
 * @author Lou Guoliang (louguoliang@gmail.com)
 * @date 2009-10-27
 */
 
 
-
-
-
-
-#ifndef	__KEN_GUIFONT_20091027_H__
-#define	__KEN_GUIFONT_20091027_H__
-
-
-
-
+#ifndef	__KEN_GUIFONTDATA_20091027_H__
+#define	__KEN_GUIFONTDATA_20091027_H__
 
 //============================================================================//
 // include
@@ -25,13 +17,9 @@
 #include "guiresource.h"
 
 
-
-
 //============================================================================//
 // declare
 //============================================================================//
-
-
 
 
 
@@ -79,6 +67,4 @@ namespace guiex
 }
 
 
-
-
-#endif //__KEN_GUIFONT_20091027_H__
+#endif //__KEN_GUIFONTDATA_20091027_H__

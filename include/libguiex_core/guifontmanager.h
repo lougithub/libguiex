@@ -14,7 +14,7 @@
 #include "guibase.h"
 #include "guistring.h"
 #include "guisingleton.h"
-#include "guifont.h"
+#include "guifontdata.h"
 #include "guiresourcemanager.h"
 #include <set>
 #include <map>
