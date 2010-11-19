@@ -35,7 +35,7 @@ namespace guiex
 		CGUIWgtStaticText( const CGUIString& rName, const CGUIString& rSceneName );
 	
 		virtual int32 Create();
-		virtual void SetTextContent(const wchar_t* pText);
+		virtual void SetTextContent(const CGUIStringW& rText);
 		virtual void SetTextInfo(const CGUIStringInfo& rInfo);
 
 		void SetMultiLine( bool bMultiLine );

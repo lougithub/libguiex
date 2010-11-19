@@ -60,7 +60,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void	CGUIWgtStaticText::RenderSelf(IGUIInterfaceRender* pRender)
 	{	
-		if( m_strText.Empty())
+		if( m_strText.m_strContent.empty())
 		{
 			return;
 		}
@@ -101,9 +101,9 @@ namespace guiex
 		return m_bMultiLine;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtStaticText::SetTextContent(const wchar_t* pText)
+	void	CGUIWgtStaticText::SetTextContent(const CGUIStringW& rText)
 	{
-		CGUIWgtStatic::SetTextContent( pText );
+		CGUIWgtStatic::SetTextContent( rText );
 
 		UpdateStringContent();
 	}
@@ -132,14 +132,13 @@ namespace guiex
 		aLine.m_nLength = 0;
 		aLine.m_nStartIdx = 0; 
 		aLine.m_nLineHeight = rDefaultInfo.m_nFontSize; 
-		const wchar_t*	pContent = m_strText.GetContent();
 
 		IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
 
 		real	fTotalHeight = 0.f;
-		for( uint32 i=0; i<m_strText.Size(); ++i)
+		for( uint32 i=0; i<m_strText.m_strContent.size(); ++i)
 		{
-			if( pContent[i] == ms_wLineBreak )
+			if( m_strText.m_strContent[i] == ms_wLineBreak )
 			{
 				//line break
 				++aLine.m_nLength;
@@ -154,9 +153,9 @@ namespace guiex
 			else
 			{
 				CGUISize aWordSize = pFont->GetCharacterSize(
-					m_strText.GetInfo(i).m_nFontIdx,
-					m_strText.GetCharacter(i), 
-					m_strText.GetInfo(i).m_nFontSize);
+					m_strText.m_aStringInfo.m_nFontIdx,
+					m_strText.m_strContent[i], 
+					m_strText.m_aStringInfo.m_nFontSize);
 				
 				if( nLineWidth + aWordSize.m_fWidth > fLineMaxWidth)
 				{

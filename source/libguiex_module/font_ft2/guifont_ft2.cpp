@@ -511,7 +511,7 @@ namespace guiex
 			int32 nStartPos,
 			int32 nEndPos)
 	{
-		if( rString.Empty())
+		if( rString.m_strContent.empty())
 		{
 			//empty string
 			return;
@@ -520,7 +520,7 @@ namespace guiex
 		CGUIVector2 aPos;
 
 		real fScaledStringWidth = GetStringWidth(rString);
-		real fScaledStringHeight = rString.GetDefaultInfo().m_nFontSize;
+		real fScaledStringHeight = rString.GetStringInfo().m_nFontSize;
 
 		if(( uTextAlignment & GUI_TA_HORIZON_MASK) == eTextAlignment_Horz_Left )
 		{
@@ -553,15 +553,16 @@ namespace guiex
 			//for vertical center
 			aPos.y = rStringRect.m_fTop + (rStringRect.GetHeight() - fScaledStringHeight) / 2;
 		}
-		if( nEndPos < 0 || nEndPos >int32( rString.Size( )))
+		if( nEndPos < 0 || nEndPos >int32( rString.m_strContent.size()))
 		{
-			nEndPos = rString.Size();
+			nEndPos = rString.m_strContent.size();
 		}
 
+		const CGUIStringInfo& rInfo = rString.m_aStringInfo;
 		for( int32 i= nStartPos; i<nEndPos; ++i)
 		{
-			const CGUIStringInfo& rInfo = rString.GetInfo(i);
-			CGUIFontData_ft2 * pFontData = GetFont(rInfo.m_nFontIdx, rString.GetCharacter(i), rInfo.m_nFontSize);
+
+			CGUIFontData_ft2 * pFontData = GetFont(rInfo.m_nFontIdx, rString.m_strContent[i], rInfo.m_nFontSize);
 
 			if( pFontData->m_pTexture)
 			{
@@ -597,22 +598,22 @@ namespace guiex
 		int32 nStartPos,
 		int32 nEndPos)
 	{
-		if( rString.Empty())
+		if( rString.m_strContent.empty())
 		{
 			//empty string
 			return;
 		}
 		CGUIVector2 aPos = rPos;
 
-		if( nEndPos<0 || nEndPos>int32(rString.Size()))
+		if( nEndPos<0 || nEndPos>int32(rString.m_strContent.size()))
 		{
-			nEndPos = rString.Size();
+			nEndPos = rString.m_strContent.size();
 		}
 
+		const CGUIStringInfo& rInfo = rString.m_aStringInfo;
 		for( int32 i=nStartPos; i<nEndPos; ++i)
 		{
-			const CGUIStringInfo& rInfo = rString.GetInfo(i);
-			CGUIFontData_ft2 * pFontData = GetFont(rInfo.m_nFontIdx, rString.GetCharacter(i), rInfo.m_nFontSize);
+			CGUIFontData_ft2 * pFontData = GetFont(rInfo.m_nFontIdx, rString.m_strContent[i], rInfo.m_nFontSize);
 
 			if( pFontData->m_pTexture)
 			{

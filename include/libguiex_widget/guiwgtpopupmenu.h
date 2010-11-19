@@ -119,7 +119,7 @@ namespace guiex
 		/**
 		* @brief Add a default text item.
 		*/
-		void	AddItem( const wchar_t* pText );
+		void	AddItem( const CGUIStringW& rText );
 
 		/** 
 		* @brief Insert an item into the popup menu after a specified item already in the list.
@@ -137,13 +137,13 @@ namespace guiex
 		* @brief Insert an item into the popup menu after a specified item already in the list.
 		* Note that if the list is sorted, the item may not end up in the requested position.
 		*/
-		void	InsertItem( const wchar_t* pText, const CGUIMenuItem* pPosition);
+		void	InsertItem( const CGUIStringW& rText, const CGUIMenuItem* pPosition);
 
 		/** 
 		* @brief Insert an item into the popup menu after a specified item already in the list.
 		* Note that if the list is sorted, the item may not end up in the requested position.
 		*/
-		void	InsertItem( const wchar_t* pText, uint32 nIndex );
+		void	InsertItem( const CGUIStringW& rText, uint32 nIndex );
 
 		/** 
 		* @brief Removes the given item from the popup menu. 
@@ -179,7 +179,7 @@ namespace guiex
 		*  will not include this item.  If it isNULL, the search will begin from the first item in the list.
 		*/
 		CGUIMenuItem*	FindItemWithText(
-			const wchar_t* pText, const CGUIMenuItem* pStartItem = NULL);
+			const CGUIStringW& rText, const CGUIMenuItem* pStartItem = NULL);
 
 		/**
 		* @brief Return whether the specified CGUIMenuItem is in the List
@@ -251,7 +251,7 @@ namespace guiex
 		virtual void	OnSetImage( const CGUIString& rName, CGUIImage* pImage );
 
 		//create a item
-		CGUIMenuItem* CreateItem_Imp(const wchar_t* pText);
+		CGUIMenuItem* CreateItem_Imp(const CGUIStringW& rText);
 
 
 	protected:	//!< callback function

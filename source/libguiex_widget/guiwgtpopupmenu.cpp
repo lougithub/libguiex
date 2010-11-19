@@ -189,14 +189,14 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	CGUIMenuItem* CGUIWgtPopupMenu::CreateItem_Imp(const wchar_t* pText)
+	CGUIMenuItem* CGUIWgtPopupMenu::CreateItem_Imp(const CGUIStringW& rText)
 	{
 		CGUIMenuItem * pItem = static_cast<CGUIMenuItem*>(GUI_CREATE_WIDGET(m_strItemType.c_str(), CGUIString("menuitem_")+CGUIWidgetSystem::Instance()->GenerateAnonymousName(), GetSceneName()));
 		pItem->SetItemInfo(pText, GetTextInfo());
 		return pItem;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtPopupMenu::AddItem( const wchar_t* pText )
+	void	CGUIWgtPopupMenu::AddItem( const CGUIStringW& rText )
 	{
 		CGUIMenuItem* pItem= CreateItem_Imp(pText);
 		pItem->SetSelectionImage( m_pImageSelection );
@@ -217,14 +217,14 @@ namespace guiex
 		InsertItem( pItem, GetItemFromIndex(nIndex));
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtPopupMenu::InsertItem( const wchar_t* pText, const CGUIMenuItem* pPosition)
+	void	CGUIWgtPopupMenu::InsertItem( const CGUIStringW& rText, const CGUIMenuItem* pPosition)
 	{
 		CGUIMenuItem* pItem= CreateItem_Imp(pText);
 		pItem->SetSelectionImage( m_pImageSelection );
 		InsertItem( pItem, pPosition);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtPopupMenu::InsertItem( const wchar_t* pText, uint32 nIndex )
+	void	CGUIWgtPopupMenu::InsertItem( const CGUIStringW& rText, uint32 nIndex )
 	{
 		CGUIMenuItem* pItem= CreateItem_Imp(pText);
 		pItem->SetSelectionImage( m_pImageSelection );
@@ -312,7 +312,7 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	CGUIMenuItem*	CGUIWgtPopupMenu::FindItemWithText(
-		const wchar_t* pText, const CGUIMenuItem* pStartItem)
+		const CGUIStringW& rText, const CGUIMenuItem* pStartItem)
 	{
 		size_t index = (pStartItem == NULL) ? 0 : (GetItemIndex(pStartItem) + 1);
 

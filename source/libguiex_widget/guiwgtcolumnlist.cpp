@@ -419,7 +419,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtColumnList::AddItem( const wchar_t* pText )
+	void	CGUIWgtColumnList::AddItem( const CGUIStringW& rText )
 	{
 		CGUIColListTextItem* pItem= CGUIColListTextItem::CreateTextItem(pText, GetTextInfo(), GetSceneName());
 		pItem->SetSelectionImage( m_pImageSelection );
@@ -435,7 +435,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	CGUIColListItem*	CGUIWgtColumnList::CreateItem_Imp(const wchar_t* pText)
+	CGUIColListItem*	CGUIWgtColumnList::CreateItem_Imp(const CGUIStringW& rText)
 	{
 		CGUIColListItem * pItem = static_cast<CGUIColListItem*>(GUI_CREATE_WIDGET(m_strItemType.c_str(), CGUIWidgetSystem::Instance()->GenerateAnonymousName(), GetSceneName()));
 		pItem->SetItemInfo(pText, GetSegmentTextInfo());
@@ -447,14 +447,14 @@ namespace guiex
 		InsertItem( pItem, GetItemFromIndex(nIndex));
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtColumnList::InsertItem( const wchar_t* pText, const CGUIColListItem* pPosition)
+	void	CGUIWgtColumnList::InsertItem( const CGUIStringW& rText, const CGUIColListItem* pPosition)
 	{
 		CGUIColListTextItem* pItem= CGUIColListTextItem::CreateTextItem(pText,GetTextInfo(), GetSceneName());
 		pItem->SetSelectionImage( m_pImageSelection );
 		InsertItem( pItem, pPosition);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtColumnList::InsertItem( const wchar_t* pText, uint32 nIndex )
+	void	CGUIWgtColumnList::InsertItem( const CGUIStringW& rText, uint32 nIndex )
 	{
 		CGUIColListTextItem* pItem= CGUIColListTextItem::CreateTextItem(pText,GetTextInfo(), GetSceneName());
 		pItem->SetSelectionImage( m_pImageSelection );
@@ -605,7 +605,7 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	CGUIColListItem*	CGUIWgtColumnList::FindItemWithText(
-		const wchar_t* pText, const CGUIColListItem* pStartItem)
+		const CGUIStringW& rText, const CGUIColListItem* pStartItem)
 	{
 		size_t index = (pStartItem == NULL) ? 0 : (GetItemIndex(pStartItem) + 1);
 
@@ -899,7 +899,7 @@ namespace guiex
 		return m_pHeader->GetSegmentTextInfo();
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtColumnList::AddSegment( const wchar_t* pText, uint32 nId )
+	void	CGUIWgtColumnList::AddSegment( const CGUIStringW& rText, uint32 nId )
 	{
 		m_pHeader->AddSegment(pText, nId);
 	}
@@ -1018,7 +1018,7 @@ namespace guiex
 		//onListContentsChanged(args);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtColumnList::SetItem(const wchar_t* pText, const SGridRef& rGrid)
+	void	CGUIWgtColumnList::SetItem(const CGUIStringW& rText, const SGridRef& rGrid)
 	{
 		CGUIColListTextItem* pItem= CGUIColListTextItem::CreateTextItem(pText, GetTextInfo(), GetSceneName());
 		pItem->SetSelectionImage( m_pImageSelection );

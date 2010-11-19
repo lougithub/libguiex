@@ -49,7 +49,7 @@ namespace guiex
 		/** 
 		* @brief set widget text
 		*/
-		virtual void SetTextContent(const wchar_t* pText);
+		virtual void SetTextContent(const CGUIStringW& rText);
 
 		/**
 		* @brief load widget config from property
@@ -173,7 +173,7 @@ namespace guiex
 
 
 		/// insert a string
-		void				InsertString(const wchar_t* pChar);
+		void				InsertString( const CGUIStringW& rText );
 
 		/// delete string
 		void				DeleteString( int32 nBeginPos, int32 nEndPos);

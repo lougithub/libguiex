@@ -72,7 +72,7 @@ namespace guiex
 		/**
 		* @brief get the segment by given text content.
 		*/
-		CGUIColListHeaderSegment*	GetSegmentByText(const wchar_t* pText) const;
+		CGUIColListHeaderSegment*	GetSegmentByText(const CGUIStringW& rText) const;
 
 		/**
 		* @brief Set the column to be used as the sort key.
@@ -108,7 +108,7 @@ namespace guiex
 		/**
 		* @brief add a segment
 		*/
-		void	AddSegment( const wchar_t* pText, uint32 nId );
+		void	AddSegment( const CGUIStringW& rText, uint32 nId );
 
 		/**
 		* @brief set default size of segment

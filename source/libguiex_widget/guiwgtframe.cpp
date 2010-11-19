@@ -345,7 +345,7 @@ namespace guiex
 			}
 
 			//draw title
-			if( !GetText().Empty())
+			if( !GetText().m_strContent.empty())
 			{
 				DrawString(pRender, GetText(), GetTitlebarRect(), GetTextAlignment(), &GetClipRect());
 			}

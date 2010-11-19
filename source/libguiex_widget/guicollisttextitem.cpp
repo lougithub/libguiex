@@ -50,11 +50,11 @@ namespace guiex
 	{
 		IGUIInterfaceFont* pInterfaceFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
 
-		//SetSize(pInterfaceFont->GetStringWidth( m_strText ), m_strText.GetDefaultInfo()->m_nFontSize);
-		SetSize(GetSize().m_fWidth, m_strText.GetDefaultInfo().m_nFontSize);
+		//SetSize(pInterfaceFont->GetStringWidth( m_strText ), m_strText.GetStringInfo()->m_nFontSize);
+		SetSize(GetSize().m_fWidth, m_strText.GetStringInfo().m_nFontSize);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIColListTextItem::SetTextContent(const wchar_t* pText)
+	void	CGUIColListTextItem::SetTextContent(const CGUIStringW& rText)
 	{
 		CGUIColListItem::SetTextContent(pText);
 		UpdateTextSize();
@@ -77,7 +77,7 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	CGUIColListTextItem*	CGUIColListTextItem::CreateTextItem(
-		const wchar_t* pText, 
+		const CGUIStringW& rText, 
 		const CGUIStringInfo& rInfo,
 		const CGUIString& rSceneName,
 		uint32 nItemID,

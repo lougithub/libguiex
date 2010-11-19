@@ -265,7 +265,7 @@ namespace guiex
 		m_pDropList->AddItem(pItem);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtComboBox::AddItem( const wchar_t* pText )
+	void	CGUIWgtComboBox::AddItem( const CGUIStringW& rText )
 	{
 		m_pDropList->AddItem(pText);
 	}
@@ -280,12 +280,12 @@ namespace guiex
 		m_pDropList->InsertItem(pItem,nIndex);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtComboBox::InsertItem( const wchar_t* pText, const CGUIListBoxItem* pPosition)
+	void	CGUIWgtComboBox::InsertItem( const CGUIStringW& rText, const CGUIListBoxItem* pPosition)
 	{
 		m_pDropList->InsertItem(pText,pPosition);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtComboBox::InsertItem( const wchar_t* pText, uint32 nIndex )
+	void	CGUIWgtComboBox::InsertItem( const CGUIStringW& rText, uint32 nIndex )
 	{
 		m_pDropList->InsertItem(pText,nIndex);
 	}

@@ -64,14 +64,14 @@ namespace guiex
 	* @param szFromCode the default will use the global code which was set before.
 	* @return zero for success
 	*/
-	extern int MultiByteToWideChar( const CGUIString& rSrc, CGUIStringEx& rDst, const char* szFromCode = NULL );
+	extern int MultiByteToWideChar( const CGUIString& rSrc, CGUIStringW& rDst, const char* szFromCode = NULL );
 
 	/**
 	* @brief convert wide byte to multi char
 	* @param szFromCode the default will use the global code which was set before.
 	* @return zero for success
 	*/
-	extern int WideByteToMultiChar( const CGUIStringEx& rSrc, CGUIString& rDst,  const char* szFromCode = NULL );
+	extern int WideByteToMultiChar( const CGUIStringW& rSrc, CGUIString& rDst,  const char* szFromCode = NULL );
 
 	//------------------------------------------------------------------------------
 	//convert for bool

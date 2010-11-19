@@ -44,14 +44,14 @@ namespace guiex
 		*/
 		virtual int32 Create();
 
-		void SetBtnTextContent_Hover(const wchar_t* pText );
+		void SetBtnTextContent_Hover( const CGUIStringW& rText );
 		void SetBtnTextInfo_Hover(const CGUIStringInfo& rInfo );
-		void SetBtnTextContent_Disable(const wchar_t* pText );
+		void SetBtnTextContent_Disable( const CGUIStringW& rText );
 		void SetBtnTextInfo_Disable(const CGUIStringInfo& rInfo );
-		void SetBtnTextContent_Push(const wchar_t* pText );
+		void SetBtnTextContent_Push( const CGUIStringW& rText );
 		void SetBtnTextInfo_Push(const CGUIStringInfo& rInfo );
 
-		virtual void SetTextContent(const wchar_t* pText);
+		virtual void SetTextContent(const CGUIStringW& rText);
 
 		void SetStringOffset( const CGUIVector2& rPos);
 

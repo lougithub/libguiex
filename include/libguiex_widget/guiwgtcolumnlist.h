@@ -193,7 +193,7 @@ namespace guiex
 		/**
 		* @brief Add a default text item.
 		*/
-		void	AddItem( const wchar_t* pText );
+		void	AddItem( const CGUIStringW& rText );
 
 		/** 
 		* @brief Insert an item into the list box after a specified item already in the list.
@@ -211,13 +211,13 @@ namespace guiex
 		* @brief Insert an item into the list box after a specified item already in the list.
 		* Note that if the list is sorted, the item may not end up in the requested position.
 		*/
-		void	InsertItem( const wchar_t* pText, const CGUIColListItem* pPosition);
+		void	InsertItem( const CGUIStringW& rText, const CGUIColListItem* pPosition);
 
 		/** 
 		* @brief Insert an item into the list box after a specified item already in the list.
 		* Note that if the list is sorted, the item may not end up in the requested position.
 		*/
-		void	InsertItem( const wchar_t* pText, uint32 nIndex );
+		void	InsertItem( const CGUIStringW& rText, uint32 nIndex );
 
 		/** 
 		* @brief Removes the given item from the list box. 
@@ -269,7 +269,7 @@ namespace guiex
 		*  will not include this item.  If it isNULL, the search will begin from the first item in the list.
 		*/
 		CGUIColListItem*	FindItemWithText(
-			const wchar_t* pText, const CGUIColListItem* pStartItem = NULL);
+			const CGUIStringW& rText, const CGUIColListItem* pStartItem = NULL);
 
 		/**
 		* @brief Return whether the specified CGUIColListItem is in the List
@@ -340,7 +340,7 @@ namespace guiex
 		/**
 		* @brief add a segment
 		*/
-		void	AddSegment( const wchar_t* pText, uint32 nId );
+		void	AddSegment( const CGUIStringW& rText, uint32 nId );
 
 		/**
 		* @brief set default size of segment
@@ -380,7 +380,7 @@ namespace guiex
 		/**
 		* @brief set the item for column list
 		*/
-		void	SetItem(const wchar_t* pText, const SGridRef& rGrid);
+		void	SetItem(const CGUIStringW& rText, const SGridRef& rGrid);
 
 
 	protected:
@@ -451,7 +451,7 @@ namespace guiex
 		void				AddChild_Imp(CGUIColListItem* pItem);
 
 		//create a item
-		CGUIColListItem*	CreateItem_Imp(const wchar_t* pText);
+		CGUIColListItem*	CreateItem_Imp(const CGUIStringW& rText);
 
 		//get row height
 		real				GetRowHeight( const SListRow& rRow ) const;

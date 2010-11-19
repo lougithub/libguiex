@@ -208,44 +208,42 @@ namespace guiex
 		return m_strTooltipText;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::SetTooltipText(const CGUIStringEx& rText)
+	void CGUIWidget::SetTooltipText(const CGUIStringEx& rText)
 	{
 		m_strTooltipText = rText;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::SetTextColor(const CGUIColor& rColor)
+	void CGUIWidget::SetTextColor(const CGUIColor& rColor)
 	{
-		CGUIStringInfo aInfo = m_strText.GetDefaultInfo( );
-		aInfo.m_aColor = rColor;
-		m_strText.SetDefaultInfo(&aInfo);
+		m_strText.m_aStringInfo.m_aColor = rColor;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::SetTextContent( const wchar_t* pText )
+	void CGUIWidget::SetTextContent( const CGUIStringW& rStringW )
 	{
-		m_strText.SetContent(pText);
+		m_strText.m_strContent = rStringW;
 	}
 	//------------------------------------------------------------------------------
-	const wchar_t*	CGUIWidget::GetTextContent() const
+	const CGUIStringW& CGUIWidget::GetTextContent() const
 	{
-		return m_strText.GetContent();
+		return m_strText.m_strContent;
 	}
 	//------------------------------------------------------------------------------
-	bool	CGUIWidget::IsTextContentEmpty( ) const
+	bool CGUIWidget::IsTextContentEmpty( ) const
 	{
-		return m_strText.Empty();
+		return m_strText.m_strContent.empty();
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::SetTextContentUTF8( const CGUIString& rString)
+	void CGUIWidget::SetTextContentUTF8( const CGUIString& rString)
 	{
-		CGUIStringEx strTemp;
+		CGUIStringW strTemp;
 		MultiByteToWideChar( rString, strTemp);
-		SetTextContent( strTemp.GetContent());
+		SetTextContent( strTemp );
 	}
 	//------------------------------------------------------------------------------
 	CGUIString	CGUIWidget::GetTextContentUTF8() const
 	{
 		CGUIString aContentUTF8;
-		WideByteToMultiChar( m_strText, aContentUTF8 );
+		WideByteToMultiChar( m_strText.m_strContent, aContentUTF8 );
 		return aContentUTF8;
 	}
 	//------------------------------------------------------------------------------
@@ -259,19 +257,19 @@ namespace guiex
 		return m_uTextAlignment;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIStringEx&		CGUIWidget::GetText() const
+	const CGUIStringEx&	CGUIWidget::GetText() const
 	{
 		return m_strText;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::SetTextInfo(const CGUIStringInfo& rInfo)
+	void CGUIWidget::SetTextInfo(const CGUIStringInfo& rInfo)
 	{
-		m_strText.SetDefaultInfo(&rInfo);
+		m_strText.m_aStringInfo = rInfo;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIStringInfo&		CGUIWidget::GetTextInfo( ) const
+	const CGUIStringInfo& CGUIWidget::GetTextInfo( ) const
 	{
-		return m_strText.GetDefaultInfo();
+		return m_strText.m_aStringInfo;
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWidget::SetGenerator( const CGUIWidgetGenerator* pGenerator)
@@ -1754,9 +1752,9 @@ namespace guiex
 		}
 		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text" )
 		{
-			CGUIStringEx aStrText;
-			MultiByteToWideChar(rProperty.GetValue(), aStrText);
-			SetTextContent(aStrText.GetContent());
+			CGUIStringW aStrText;
+			MultiByteToWideChar( rProperty.GetValue(), aStrText );
+			SetTextContent( aStrText );
 		}
 		else if( rProperty.GetType() == ePropertyType_TextAlignmentHorz && rProperty.GetName() == "text_alignment_horz" )
 		{

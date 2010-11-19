@@ -33,16 +33,16 @@ namespace guiex
 		int32 nStartPos /*= 0*/,
 		int32 nEndPos/* = -1*/)
 	{
-		if( nEndPos<0 || nEndPos>int32(rString.Size()))
+		if( nEndPos<0 || nEndPos>int32(rString.m_strContent.size()))
 		{
-			nEndPos = rString.Size();
+			nEndPos = rString.GetContent().size();
 		}
 
 		real fWidth = 0.0f;
+		const CGUIStringInfo& rInfo = rString.m_aStringInfo;
 		for( int32 i=nStartPos; i<nEndPos; ++i )
 		{
-			const CGUIStringInfo& rInfo = rString.GetInfo(i);
-			fWidth += GetCharacterSize( rInfo.m_nFontIdx, rString.GetCharacter(i), rInfo.m_nFontSize).m_fWidth;
+			fWidth += GetCharacterSize( rInfo.m_nFontIdx, rString.m_strContent[i], rInfo.m_nFontSize).m_fWidth;
 		}
 		return fWidth;
 	}

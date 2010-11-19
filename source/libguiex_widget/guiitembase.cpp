@@ -105,7 +105,7 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIItemBase::SetItemInfo(
-		const wchar_t* pText, 
+		const CGUIStringW& rText, 
 		const CGUIStringInfo& rInfo,
 		uint32 nItemID,
 		void* pItemData ,

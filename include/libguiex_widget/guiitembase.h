@@ -107,7 +107,7 @@ namespace guiex
 
 		//set item information
 		virtual void	SetItemInfo(
-			const wchar_t* pText, 
+			const CGUIStringW& rText, 
 			const CGUIStringInfo& rInfo,
 			uint32 nItemID = 0, 
 			void* pItemData = NULL,

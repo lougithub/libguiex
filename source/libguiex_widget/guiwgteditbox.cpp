@@ -146,22 +146,25 @@ namespace guiex
 			if( bMask )
 			{
 				m_strMaskText = m_strText;
-				m_strMaskText.Replace(0,m_wMaskCodePoint, m_strMaskText.Size());
+				m_strMaskText.m_strContent.replace( 0, 1, m_strMaskText.m_strContent.size(), m_wMaskCodePoint);
 			}
 			else
 			{
-				m_strMaskText.Clear();
+				m_strMaskText.m_strContent.clear();
 			}
 
-			CGUIStringEx* pString = m_bMaskText?&m_strMaskText:&m_strText;
-			uint32 nSize = pString->Size();
+			CGUIStringEx* pString = m_bMaskText ? &m_strMaskText : &m_strText;
+			uint32 nSize = pString->m_strContent.size();
 			IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
 			m_vecStringWidth.clear();
 			for( uint32 i=0; i<nSize; ++i)
 			{
 				m_vecStringWidth.insert(
 					m_vecStringWidth.begin()+i, 
-					uint32(pFont->GetCharacterSize(pString->GetInfo(i).m_nFontIdx,pString->GetCharacter(i), pString->GetInfo(i).m_nFontSize).m_fWidth));
+					uint32(pFont->GetCharacterSize(
+						pString->m_aStringInfo.m_nFontIdx,
+						pString->m_strContent[i], 
+						pString->m_aStringInfo.m_nFontSize).m_fWidth));
 			}
 		}
 	
@@ -179,16 +182,16 @@ namespace guiex
 			m_wMaskCodePoint = wMaskCode;
 			if( m_bMaskText )
 			{
-				m_strMaskText.Replace(0,m_wMaskCodePoint, m_strMaskText.Size());
+				m_strMaskText.m_strContent.replace(0,1, m_strMaskText.m_strContent.size(), m_wMaskCodePoint );
 
-				uint32 nSize = m_strMaskText.Size();
+				uint32 nSize = m_strMaskText.m_strContent.size();
 				IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
 				m_vecStringWidth.clear();
 				for( uint32 i=0; i<nSize; ++i)
 				{
 					m_vecStringWidth.insert(
 						m_vecStringWidth.begin()+i,
-						uint32(pFont->GetCharacterSize(m_strMaskText.GetInfo(i).m_nFontIdx,m_strMaskText.GetCharacter(i), m_strMaskText.GetInfo(i).m_nFontSize).m_fWidth));
+						uint32(pFont->GetCharacterSize(m_strMaskText.m_aStringInfo.m_nFontIdx,m_strMaskText.m_strContent[i], m_strMaskText.m_aStringInfo.m_nFontSize).m_fWidth));
 				}
 			}
 		}
@@ -237,7 +240,7 @@ namespace guiex
 		//render string
 		CGUIVector2	aPos = GetBoundArea().GetPosition();
 		aPos.x += m_fTextWidthRel;
-		if( !m_strText.Empty())
+		if( !m_strText.m_strContent.empty())
 		{
 			CGUIStringEx* pRenderString = m_bMaskText?&m_strMaskText:&m_strText;
 
@@ -261,17 +264,15 @@ namespace guiex
 				aPos.x += std::accumulate(m_vecStringWidth.begin(), m_vecStringWidth.begin()+m_nSelectionStart, 0.0f);
 
 				//draw second selected section
-				CGUIStringInfo	aStringInfo = pRenderString->GetDefaultInfo();
-				CGUIColor aDefaultColor = aStringInfo.m_aColor;
-				aStringInfo.m_aColor = m_aSelectedTextColor;
-				pRenderString->SetDefaultInfo( &aStringInfo);
+				CGUIColor aDefaultColor = pRenderString->m_aStringInfo.m_aColor;
+				
+				pRenderString->m_aStringInfo.m_aColor = m_aSelectedTextColor;
 				DrawString( pRender, *pRenderString, aPos, m_nSelectionStart, m_nSelectionEnd);
 				aPos.x += std::accumulate(m_vecStringWidth.begin()+m_nSelectionStart, m_vecStringWidth.begin()+m_nSelectionEnd, 0.0f);
 
 				//draw last not selected section
-				aStringInfo.m_aColor = aDefaultColor;
-				pRenderString->SetDefaultInfo( &aStringInfo);
-				DrawString( pRender, *pRenderString,aPos, m_nSelectionEnd, pRenderString->Size());
+				pRenderString->m_aStringInfo.m_aColor = aDefaultColor;
+				DrawString( pRender, *pRenderString, aPos, m_nSelectionEnd, pRenderString->m_strContent.size());
 			}
 			else
 			{
@@ -320,43 +321,43 @@ namespace guiex
 		return m_aStringAreaRatio;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtEditBox::SetTextContent(const wchar_t* pText)
+	void CGUIWgtEditBox::SetTextContent( const CGUIStringW& rText )
 	{
-		ClearSelection();
-		DeleteString(0, -1);
-		InsertString(pText);
+		ClearSelection( );
+		DeleteString( 0, -1 );
+		InsertString( rText );
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtEditBox::InsertString(const wchar_t* pChar)
+	void CGUIWgtEditBox::InsertString( const CGUIStringW& rText )
 	{
 		IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
 
-		uint32 len = wcslen(pChar);
+		uint32 len = rText.size();
 		if( len == 0 )
 		{
 			//nothing added
 			return;
 		}
-		if( m_strText.Size() + wcslen(pChar) > m_nMaxString )
+		if( m_strText.m_strContent.size() + len > m_nMaxString )
 		{
 			//reach max number of string
 			return;
 		}
 
 		//insert string
-		m_strText.Insert(m_nCursorIdx, pChar );
+		m_strText.m_strContent.insert( m_nCursorIdx, rText );
 		if(m_bMaskText)
 		{
-			m_strMaskText.Insert( m_nCursorIdx, m_wMaskCodePoint,len );
+			m_strMaskText.m_strContent.insert( m_nCursorIdx, m_wMaskCodePoint,len );
 		}
 
 		//string width
-		CGUIStringEx* pString = m_bMaskText?&m_strMaskText:&m_strText;
+		CGUIStringEx* pString = m_bMaskText ? &m_strMaskText : &m_strText;
 		for( uint32 i=0; i<len; ++i)
 		{
 			m_vecStringWidth.insert(
 				m_vecStringWidth.begin()+m_nCursorIdx+i, 
-				uint32(pFont->GetCharacterSize(pString->GetInfo(m_nCursorIdx+i).m_nFontIdx,pString->GetCharacter(m_nCursorIdx+i), pString->GetInfo(m_nCursorIdx+i).m_nFontSize).m_fWidth));
+				uint32(pFont->GetCharacterSize(pString->m_aStringInfo.m_nFontIdx,pString->m_strContent[m_nCursorIdx+i], pString->m_aStringInfo.m_nFontSize).m_fWidth));
 		}
 
 		//cursor id
@@ -383,8 +384,8 @@ namespace guiex
 	real CGUIWgtEditBox::GetStringWidth(int32 nBeginPos, int32 nEndPos) const
 	{
 		nBeginPos = static_cast<int32>(nBeginPos<0?0:nBeginPos);
-		nEndPos = static_cast<int32>(nEndPos<0?m_strText.Size():nEndPos);
-		nEndPos = static_cast<int32>(nEndPos>static_cast<int32>(m_strText.Size())?m_strText.Size():nEndPos);
+		nEndPos = static_cast<int32>(nEndPos<0?m_strText.m_strContent.size():nEndPos);
+		nEndPos = static_cast<int32>(nEndPos>static_cast<int32>(m_strText.m_strContent.size())?m_strText.m_strContent.size():nEndPos);
 		if( nBeginPos >= nEndPos)
 		{
 			return 0.0f;
@@ -395,18 +396,18 @@ namespace guiex
 	void CGUIWgtEditBox::DeleteString( int32 nBeginPos, int32 nEndPos)
 	{
 		nBeginPos = static_cast<int32>(nBeginPos<0?0:nBeginPos);
-		nEndPos = static_cast<int32>(nEndPos<0?m_strText.Size():nEndPos);
-		nEndPos = static_cast<int32>(nEndPos>static_cast<int32>(m_strText.Size())?m_strText.Size():nEndPos);
+		nEndPos = static_cast<int32>(nEndPos<0?m_strText.m_strContent.size():nEndPos);
+		nEndPos = static_cast<int32>(nEndPos>static_cast<int32>(m_strText.m_strContent.size())?m_strText.m_strContent.size():nEndPos);
 		if( nBeginPos >= nEndPos)
 		{
 			return;
 		}
 
 		//erase string
-		m_strText.Erase( nBeginPos, nEndPos);
+		m_strText.m_strContent.erase( nBeginPos, nEndPos);
 		if(m_bMaskText)
 		{
-			m_strMaskText.Erase( nBeginPos, nEndPos);
+			m_strMaskText.m_strContent.erase( nBeginPos, nEndPos);
 		}
 		m_vecStringWidth.erase( m_vecStringWidth.begin()+nBeginPos, m_vecStringWidth.begin()+nEndPos);
 
@@ -430,9 +431,9 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtEditBox::SetCursorIndex( int32 nPos )
 	{
-		if( nPos<0 || nPos>int32(m_strText.Size()))
+		if( nPos<0 || nPos>int32(m_strText.m_strContent.size()))
 		{
-			nPos = m_strText.Size();
+			nPos = m_strText.m_strContent.size();
 		}
 
 		m_nCursorIdx = nPos;
@@ -462,7 +463,7 @@ namespace guiex
 		if( nIdx == -1)
 		{
 			//at the end of string
-			nIdx = m_strText.Size();
+			nIdx = m_strText.m_strContent.size();
 		}
 		else if( (fStringWidth - rPos.x) <= (m_vecStringWidth[nIdx]/2))
 		{
@@ -500,14 +501,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtEditBox::SetSelection(uint32 start_pos, uint32 end_pos)
 	{
-		if (start_pos > m_strText.Size())
+		if (start_pos > m_strText.m_strContent.size())
 		{
-			start_pos = m_strText.Size();
+			start_pos = m_strText.m_strContent.size();
 		}
 
-		if (end_pos > m_strText.Size())
+		if (end_pos > m_strText.m_strContent.size())
 		{
-			end_pos = m_strText.Size();
+			end_pos = m_strText.m_strContent.size();
 		}
 
 		// ensure start is before end
@@ -549,7 +550,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtEditBox::OnKeyPressed_Right(CGUIEventKeyboard* pEvent)
 	{
-		if( m_nCursorIdx < m_strText.Size())
+		if( m_nCursorIdx < m_strText.m_strContent.size())
 		{
 			SetCursorIndex(m_nCursorIdx+1);
 		}
@@ -612,7 +613,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtEditBox::OnKeyPressed_End(CGUIEventKeyboard* pEvent)
 	{
-		SetCursorIndex(m_strText.Size());
+		SetCursorIndex(m_strText.m_strContent.size());
 		if (pEvent->GetKeyboardInterface()->IsKeyPressed(KC_SHIFT))
 		{
 			SetSelection(m_nCursorIdx, m_nDragAnchorIdx);	

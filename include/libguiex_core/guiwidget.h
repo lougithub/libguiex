@@ -118,8 +118,8 @@ namespace guiex
 		void SetTooltipText(const CGUIStringEx& rText);
 
 		virtual void SetTextColor(const CGUIColor& rColor);
-		virtual void SetTextContent(const wchar_t* pText);
-		virtual const wchar_t* GetTextContent() const;
+		virtual void SetTextContent(const CGUIStringW& rStringW);
+		virtual const CGUIStringW& GetTextContent() const;
 		virtual bool IsTextContentEmpty( ) const;
 		void SetTextContentUTF8( const CGUIString& rString);
 		CGUIString GetTextContentUTF8() const;

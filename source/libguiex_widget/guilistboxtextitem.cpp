@@ -51,10 +51,10 @@ namespace guiex
 	{
 		IGUIInterfaceFont* pInterfaceFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
 
-		SetSize(pInterfaceFont->GetStringWidth( m_strText ), m_strText.GetDefaultInfo().m_nFontSize);
+		SetSize(pInterfaceFont->GetStringWidth( m_strText ), m_strText.GetStringInfo().m_nFontSize);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIListBoxTextItem::SetTextContent(const wchar_t* pText)
+	void	CGUIListBoxTextItem::SetTextContent(const CGUIStringW& rText)
 	{
 		CGUIListBoxItem::SetTextContent(pText);
 		UpdateTextSize();

@@ -22,6 +22,7 @@
 namespace guiex
 {
 	typedef std::string CGUIString;
+	typedef std::wstring CGUIStringW;
 }
  
 #endif //__GUI_STRING_20060407_H__

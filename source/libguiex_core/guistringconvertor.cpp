@@ -45,7 +45,7 @@ namespace guiex
 
 
 	//------------------------------------------------------------------------------
-	int WideByteToMultiChar( const CGUIStringEx& rSrc, CGUIString& rDst,  const char* szFromCode )
+	int WideByteToMultiChar( const CGUIStringW& rSrc, CGUIString& rDst,  const char* szFromCode )
 	{
 		const char* pMultiByteCode = szFromCode ? szFromCode:CGUIWidgetSystem::Instance()->GetDefaultCode();
 		if( strcmp( pMultiByteCode, "UTF-8" ) != 0 )
@@ -66,7 +66,7 @@ namespace guiex
 		return pStringConv->Utf16ToUtf8( rSrc, rDst );
 	}
 	//------------------------------------------------------------------------------
-	int MultiByteToWideChar( const CGUIString& rSrc, CGUIStringEx& rDst, const char* szFromCode)
+	int MultiByteToWideChar( const CGUIString& rSrc, CGUIStringW& rDst, const char* szFromCode)
 	{
 		const char* pMultiByteCode = szFromCode ? szFromCode:CGUIWidgetSystem::Instance()->GetDefaultCode();
 		if( strcmp( pMultiByteCode, "UTF-8" ) != 0 )

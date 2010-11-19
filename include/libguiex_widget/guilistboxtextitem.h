@@ -43,7 +43,7 @@ namespace guiex
 		virtual	real		GetWidth(void);
 
 		//set text
-		virtual void		SetTextContent(const wchar_t* pText);
+		virtual void		SetTextContent(const CGUIStringW& rText);
 		//set text size
 		virtual void		SetTextInfo( const CGUIStringInfo& rInfo);
 

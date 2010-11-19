@@ -43,7 +43,7 @@ namespace guiex
 		virtual	real		GetWidth(void);
 
 		//set text
-		virtual void		SetTextContent(const wchar_t* pText);
+		virtual void		SetTextContent(const CGUIStringW& rText);
 		//set text size
 		virtual void		SetTextInfo( const CGUIStringInfo& rInfo);
 
@@ -52,7 +52,7 @@ namespace guiex
 		* @brief create a text item
 		*/
 		static CGUIColListTextItem*	CreateTextItem(
-			const wchar_t* pText, 
+			const CGUIStringW& rText, 
 			const CGUIStringInfo& rInfo,
 			const CGUIString& rSceneName,
 			uint32 nItemID = 0, 

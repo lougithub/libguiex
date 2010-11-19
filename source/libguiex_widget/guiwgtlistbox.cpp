@@ -260,7 +260,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	CGUIListBoxItem* CGUIWgtListBox::CreateItem_Imp(const wchar_t* pText)
+	CGUIListBoxItem* CGUIWgtListBox::CreateItem_Imp(const CGUIStringW& rText)
 	{
 		CGUIListBoxItem * pItem = static_cast<CGUIListBoxItem*>(GUI_CREATE_WIDGET(m_strItemType.c_str(), CGUIString("listitem_")+CGUIWidgetSystem::Instance()->GenerateAnonymousName(), GetSceneName()));
 		pItem->SetItemInfo(pText, GetTextInfo());
@@ -296,7 +296,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::AddItem( const wchar_t* pText )
+	void	CGUIWgtListBox::AddItem( const CGUIStringW& rText )
 	{
 		CGUIListBoxItem* pItem= CreateItem_Imp(pText);
 		pItem->SetSelectionImage( m_pImageSelection );
@@ -317,14 +317,14 @@ namespace guiex
 		InsertItem( pItem, GetItemFromIndex(nIndex));
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::InsertItem( const wchar_t* pText, const CGUIListBoxItem* pPosition)
+	void	CGUIWgtListBox::InsertItem( const CGUIStringW& rText, const CGUIListBoxItem* pPosition)
 	{
 		CGUIListBoxItem* pItem= CreateItem_Imp(pText);
 		pItem->SetSelectionImage( m_pImageSelection );
 		InsertItem( pItem, pPosition);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::InsertItem( const wchar_t* pText, uint32 nIndex )
+	void	CGUIWgtListBox::InsertItem( const CGUIStringW& rText, uint32 nIndex )
 	{
 		CGUIListBoxItem* pItem= CreateItem_Imp(pText);
 		pItem->SetSelectionImage( m_pImageSelection );
@@ -475,7 +475,7 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	CGUIListBoxItem*	CGUIWgtListBox::FindItemWithText(
-		const wchar_t* pText, const CGUIListBoxItem* pStartItem)
+		const CGUIStringW& rText, const CGUIListBoxItem* pStartItem)
 	{
 		size_t index = (pStartItem == NULL) ? 0 : (GetItemIndex(pStartItem) + 1);
 

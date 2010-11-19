@@ -79,7 +79,7 @@ namespace guiex
 		return NULL;
 	}
 	//------------------------------------------------------------------------------
-	CGUIColListHeaderSegment*	CGUIColListHeader::GetSegmentByText(const wchar_t* pText) const
+	CGUIColListHeaderSegment*	CGUIColListHeader::GetSegmentByText(const CGUIStringW& rText) const
 	{
 		for( TVecSegment::const_iterator itor = m_vecSegment.begin();
 			itor != m_vecSegment.end(); 
@@ -207,7 +207,7 @@ namespace guiex
 		return aPos;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIColListHeader::AddSegment( const wchar_t* pText, uint32 nId )
+	void	CGUIColListHeader::AddSegment( const CGUIStringW& rText, uint32 nId )
 	{
 		CGUIColListHeaderSegment * pSegment = static_cast<CGUIColListHeaderSegment*>(GUI_CREATE_WIDGET(m_strSegmentType.c_str(), CGUIString("segment_")+CGUIWidgetSystem::Instance()->GenerateAnonymousName(), GetSceneName()));
 		pSegment->SetParent(this);

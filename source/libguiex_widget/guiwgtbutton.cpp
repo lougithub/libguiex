@@ -126,7 +126,7 @@ namespace guiex
 
 		if( IsDerivedDisable())
 		{
-			if( !m_strTextDisable.Empty() )
+			if( !m_strTextDisable.m_strContent.empty() )
 			{
 				pString = &m_strTextDisable;
 			}
@@ -138,7 +138,7 @@ namespace guiex
 		}
 		else if( m_bHovering && m_bPushing )
 		{
-			if( !m_strTextPush.Empty() )
+			if( !m_strTextPush.m_strContent.empty() )
 			{
 				pString = &m_strTextPush;
 			}
@@ -150,7 +150,7 @@ namespace guiex
 		}
 		else if( m_bHovering )
 		{
-			if( !m_strTextHoving.Empty() )
+			if( !m_strTextHoving.m_strContent.empty() )
 			{
 				pString = &m_strTextHoving;
 			}
@@ -176,51 +176,51 @@ namespace guiex
 		DrawString(pRender, *pString, m_aStringArea, GetTextAlignment());
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtButton::SetBtnTextContent_Hover(const wchar_t* pText )
+	void CGUIWgtButton::SetBtnTextContent_Hover( const CGUIStringW& rText )
 	{
-		m_strTextHoving.SetContent(pText);
+		m_strTextHoving.m_strContent = rText;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtButton::SetBtnTextInfo_Hover(const CGUIStringInfo& rInfo )
 	{
-		m_strTextHoving.SetDefaultInfo(&rInfo);
+		m_strTextHoving.m_aStringInfo = rInfo;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtButton::SetBtnTextContent_Disable(const wchar_t* pText )
+	void CGUIWgtButton::SetBtnTextContent_Disable( const CGUIStringW& rText )
 	{
-		m_strTextDisable.SetContent(pText);
+		m_strTextDisable.m_strContent = rText;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtButton::SetBtnTextInfo_Disable(const CGUIStringInfo& rInfo )
 	{
-		m_strTextDisable.SetDefaultInfo(&rInfo);
+		m_strTextDisable.m_aStringInfo = rInfo;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtButton::SetBtnTextContent_Push(const wchar_t* pText )
+	void CGUIWgtButton::SetBtnTextContent_Push( const CGUIStringW& rText )
 	{
-		m_strTextPush.SetContent(pText);
+		m_strTextPush.m_strContent = rText;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtButton::SetBtnTextInfo_Push(const CGUIStringInfo& rInfo )
 	{
-		m_strTextPush.SetDefaultInfo(&rInfo);
+		m_strTextPush.m_aStringInfo = rInfo;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtButton::SetTextContent(const wchar_t* pText)
+	void	CGUIWgtButton::SetTextContent(const CGUIStringW& rText)
 	{
-		CGUIWidget::SetTextContent( pText );
+		CGUIWidget::SetTextContent( rText );
 
-		if( !m_strTextHoving.Empty())
+		if( !m_strTextHoving.m_strContent.empty())
 		{
-			m_strTextHoving.SetContent(pText);
+			m_strTextHoving.m_strContent = rText;
 		}
-		if( !m_strTextDisable.Empty())
+		if( !m_strTextDisable.m_strContent.empty())
 		{
-			m_strTextDisable.SetContent(pText);
+			m_strTextDisable.m_strContent = rText;
 		}
-		if( !m_strTextPush.Empty())
+		if( !m_strTextPush.m_strContent.empty())
 		{
-			m_strTextPush.SetContent(pText);
+			m_strTextPush.m_strContent = rText;
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -238,15 +238,15 @@ namespace guiex
 	{
 		if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo_hover" )
 		{
-			ValueToProperty( m_strTextHoving.GetDefaultInfo(), rProperty );
+			ValueToProperty( m_strTextHoving.GetStringInfo(), rProperty );
 		}
 		else if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo_disable" )
 		{
-			ValueToProperty( m_strTextDisable.GetDefaultInfo(), rProperty );
+			ValueToProperty( m_strTextDisable.GetStringInfo(), rProperty );
 		}
 		else if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo_push" )
 		{
-			ValueToProperty( m_strTextPush.GetDefaultInfo(), rProperty );
+			ValueToProperty( m_strTextPush.GetStringInfo(), rProperty );
 		}
 		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text_hover" )
 		{
@@ -302,19 +302,19 @@ namespace guiex
 		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text_hover")
 		{
 			CGUIStringEx aStrText;
-			MultiByteToWideChar(rProperty.GetValue(), aStrText);
+			MultiByteToWideChar(rProperty.GetValue(), aStrText.m_strContent);
 			SetBtnTextContent_Hover(aStrText.GetContent());
 		}
 		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text_push")
 		{
 			CGUIStringEx aStrText;
-			MultiByteToWideChar(rProperty.GetValue(), aStrText);
+			MultiByteToWideChar(rProperty.GetValue(), aStrText.m_strContent);
 			SetBtnTextContent_Push(aStrText.GetContent());
 		}
 		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text_disable")
 		{
 			CGUIStringEx aStrText;
-			MultiByteToWideChar(rProperty.GetValue(), aStrText);
+			MultiByteToWideChar(rProperty.GetValue(), aStrText.m_strContent);
 			SetBtnTextContent_Disable(aStrText.GetContent());
 		}
 		else if( rProperty.GetType() == ePropertyType_Vector2 && rProperty.GetName() == "text_offset")

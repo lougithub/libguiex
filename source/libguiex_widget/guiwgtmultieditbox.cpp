@@ -156,7 +156,7 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////
 		//render string
 		CGUIVector2 aPos = GetClientArea().GetPosition();
-		if( !m_strText.Empty())
+		if( !m_strText.m_strContent.empty())
 		{
 			pRender->PushClipRect(getFullTransform(), GetClipArea());
 
@@ -171,7 +171,7 @@ namespace guiex
 				*/
 
 				int16				nDrawState = 0;	//0 == draw first <xxx>, 1 == draw second <yyy>, 2 == draw last <zzz> 
-				CGUIStringInfo		aStringInfo = m_strText.GetDefaultInfo();
+				CGUIStringInfo		aStringInfo = m_strText.GetStringInfo();
 				CGUIColor			aDefaultColor = aStringInfo.m_aColor;
 				uint32				nCurIdx = 0;
 
@@ -207,7 +207,7 @@ namespace guiex
 						{
 							//draw last <zzz>
 						}
-						DrawCharacter(pRender, m_strText.GetCharacter(nCurIdx),aStringInfo,aPos);
+						DrawCharacter(pRender, m_strText.m_strContent[nCurIdx],aStringInfo,aPos);
 						aPos.x+=m_vecStringSize[nCurIdx].m_fWidth;
 					}
 
@@ -249,10 +249,10 @@ namespace guiex
 		CGUIWidget::UpdateSelf( fDeltaTime );
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtMultiEditBox::SetTextContent(const wchar_t* pText)
+	void CGUIWgtMultiEditBox::SetTextContent(const CGUIStringW& rText)
 	{
 		DeleteString(0, -1);
-		InsertString(pText);
+		InsertString( rText );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtMultiEditBox::SetSelectedTextColor( const CGUIColor& rColor)
@@ -270,32 +270,32 @@ namespace guiex
 		return m_bReadOnly;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtMultiEditBox::InsertString(const wchar_t* pChar)
+	void	CGUIWgtMultiEditBox::InsertString( const CGUIStringW& rText )
 	{
 		IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
 
-		uint32 len = wcslen(pChar);
-		if( m_strText.Size() + wcslen(pChar) > m_nMaxString-1 )
+		uint32 len = rText.size();
+		if( m_strText.m_strContent.size() + len > m_nMaxString-1 )
 		{
 			//reach max number of string
 			return;
 		}
 
-		if( m_strText.Empty())
+		if( m_strText.m_strContent.empty())
 		{
 			//add a line break at last if the string is empty
-			m_strText.Append(ms_wLineBreak, 1);
+			m_strText.m_strContent.append( 1, ms_wLineBreak );
 			m_vecStringSize.insert(
 				m_vecStringSize.begin(), 
-				pFont->GetCharacterSize(m_strText.GetDefaultInfo().m_nFontIdx,ms_wLineBreak, m_strText.GetDefaultInfo().m_nFontSize));
+				pFont->GetCharacterSize(m_strText.GetStringInfo().m_nFontIdx,ms_wLineBreak, m_strText.GetStringInfo().m_nFontSize));
 		}
 
-		m_strText.Insert(m_nCursorIdx, pChar );
+		m_strText.m_strContent.insert(m_nCursorIdx, rText );
 		for( size_t i=0; i<len; ++i)
 		{
 			m_vecStringSize.insert(
 				m_vecStringSize.begin()+m_nCursorIdx+i, 
-				pFont->GetCharacterSize(m_strText.GetDefaultInfo().m_nFontIdx,pChar[i], m_strText.GetDefaultInfo().m_nFontSize));
+				pFont->GetCharacterSize(m_strText.m_aStringInfo.m_nFontIdx,rText[i], m_strText.m_aStringInfo.m_nFontSize));
 		}
 
 		//format text
@@ -336,7 +336,7 @@ namespace guiex
 		}
 		else
 		{
-			fHeight = m_strText.GetDefaultInfo().m_nFontSize;
+			fHeight = m_strText.GetStringInfo().m_nFontSize;
 		}
 
 		CGUIVector2 aPos = GetClientArea( ).GetPosition();
@@ -354,8 +354,8 @@ namespace guiex
 	real		CGUIWgtMultiEditBox::GetStringWidth(int32 nBeginPos, int32 nEndPos) const
 	{
 		nBeginPos = static_cast<int32>(nBeginPos<0?0:nBeginPos);
-		nEndPos = static_cast<int32>(nEndPos<0?m_strText.Size():nEndPos);
-		nEndPos = static_cast<int32>(nEndPos>static_cast<int32>(m_strText.Size())?m_strText.Size():nEndPos);
+		nEndPos = static_cast<int32>(nEndPos<0?m_strText.m_strContent.size():nEndPos);
+		nEndPos = static_cast<int32>(nEndPos>static_cast<int32>(m_strText.m_strContent.size())?m_strText.m_strContent.size():nEndPos);
 		if( nBeginPos >= nEndPos)
 		{
 			return 0.0f;
@@ -372,13 +372,13 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void		CGUIWgtMultiEditBox::DeleteString( int32 nBeginPos, int32 nEndPos)
 	{
-		if( m_strText.Empty())
+		if( m_strText.m_strContent.empty())
 		{
 			return;
 		}
 
 		nBeginPos = static_cast<int32>(nBeginPos<0?0:nBeginPos);
-		uint32 nTextSize = m_strText.Size()-1;
+		uint32 nTextSize = m_strText.m_strContent.size()-1;
 		nEndPos = static_cast<int32>(nEndPos<0?nTextSize:nEndPos);
 		nEndPos = static_cast<int32>(nEndPos>static_cast<int32>(nTextSize)?nTextSize:nEndPos);
 		if( nBeginPos >= nEndPos)
@@ -387,7 +387,7 @@ namespace guiex
 		}
 
 		//erase string
-		m_strText.Erase( nBeginPos, nEndPos);
+		m_strText.m_strContent.erase( nBeginPos, nEndPos);
 		m_vecStringSize.erase( m_vecStringSize.begin()+nBeginPos, m_vecStringSize.begin()+nEndPos);
 
 
@@ -411,13 +411,13 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtMultiEditBox::SetCursorIndex( int32 nIdx, int32 nForceLineIdx )
 	{
-		if( m_strText.Empty())
+		if( m_strText.m_strContent.empty())
 		{
 			nIdx = 0;
 		}
 		else
 		{
-			uint32 nTextSize = m_strText.Size()-1;
+			uint32 nTextSize = m_strText.m_strContent.size()-1;
 			nIdx = static_cast<int32>(nIdx <0?nTextSize:nIdx);
 			nIdx = static_cast<int32>(nIdx > static_cast<int32>(nTextSize)?nTextSize:nIdx);
 		}
@@ -471,11 +471,10 @@ namespace guiex
 		aLine.m_nLength = 0;
 		aLine.m_nStartIdx = 0; 
 		aLine.m_nLineHeight = GetTextInfo().m_nFontSize; 
-		const wchar_t*	pContent = m_strText.GetContent();
 
 		for( uint32 i=0; i<m_vecStringSize.size(); ++i)
 		{
-			if( pContent[i] == ms_wLineBreak )
+			if( m_strText.m_strContent[i] == ms_wLineBreak )
 			{
 				//line break
 				++aLine.m_nLength;
@@ -533,14 +532,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtMultiEditBox::SetSelection(uint32 start_pos, uint32 end_pos)
 	{
-		if( m_strText.Empty())
+		if( m_strText.m_strContent.empty())
 		{
 			start_pos = 0;
 			end_pos = 0;
 		}
 		else
 		{
-			uint32 nTextSize = m_strText.Size()-1;
+			uint32 nTextSize = m_strText.m_strContent.size()-1;
 			if (start_pos > nTextSize)
 			{
 				start_pos = nTextSize;
@@ -583,7 +582,7 @@ namespace guiex
 		{
 			return 0;
 		}
-		else if( index >= m_strText.Size())
+		else if( index >= m_strText.m_strContent.size())
 		{
 			return m_aLineList.size()-1;
 		}
@@ -667,7 +666,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtMultiEditBox::OnKeyPressed_Left(CGUIEventKeyboard* pEvent)
 	{
-		if( m_strText.Empty())
+		if( m_strText.m_strContent.empty())
 			return;
 
 		if( m_nCursorIdx > 0 )
@@ -687,10 +686,10 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtMultiEditBox::OnKeyPressed_Right(CGUIEventKeyboard* pEvent)
 	{
-		if( m_strText.Empty())
+		if( m_strText.m_strContent.empty())
 			return;
 
-		if( uint32(m_nCursorIdx) < m_strText.Size()-1)
+		if( uint32(m_nCursorIdx) < m_strText.m_strContent.size()-1)
 		{
 			SetCursorIndex(m_nCursorIdx+1);
 		}
@@ -808,7 +807,7 @@ namespace guiex
 		if( !m_aLineList.empty())
 		{
 			const SLineInfo& rLineInfo = m_aLineList[m_nCursorLine];
-			if( m_strText.GetCharacter(rLineInfo.m_nStartIdx + rLineInfo.m_nLength-1) == ms_wLineBreak)
+			if( m_strText.m_strContent[rLineInfo.m_nStartIdx + rLineInfo.m_nLength-1] == ms_wLineBreak)
 			{
 				SetCursorIndex(rLineInfo.m_nStartIdx + rLineInfo.m_nLength-1, m_nCursorLine);
 			}
@@ -836,7 +835,7 @@ namespace guiex
 			EraseSelectedText();
 
 			// if there is room
-			if (m_strText.Size() < m_nMaxString)
+			if (m_strText.m_strContent.size() < m_nMaxString)
 			{
 				InsertString(L"\n");
 			}

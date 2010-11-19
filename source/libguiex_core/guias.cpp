@@ -584,9 +584,8 @@ namespace guiex
 				}
 
 			}
-
-			return 0;
 		}
+		return 0;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIAsContainer::SetReceiver(CGUIWidget* pReceiver)
