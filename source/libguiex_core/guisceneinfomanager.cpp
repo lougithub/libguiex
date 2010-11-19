@@ -43,14 +43,18 @@ namespace guiex
 		UnloadScenes();
 	}
 	//------------------------------------------------------------------------------
-	int32	CGUISceneInfoManager::LoadScenes( )
+	/*
+	* @param rSceneRootPath root path of all scenes.
+	* @param rSuffix suffix of project file.
+	*/
+	int32 CGUISceneInfoManager::LoadScenes( const CGUIString& rSceneRootPath, const CGUIString& rSuffix )
 	{
 		UnloadScenes();
 		IGUIInterfaceConfigFile* pConfigFile = CGUIInterfaceManager::Instance()->GetInterfaceConfigFile();
 
 		//get file interface
 		IGUIInterfaceFileSys* pFileSys = CGUIInterfaceManager::Instance()->GetInterfaceFileSys();
-		pFileSys->FindFiles( "/", ".uip", m_vecSceneFilePaths );
+		pFileSys->FindFiles( rSceneRootPath, rSuffix, m_vecSceneFilePaths );
 
 
 		//load all scenes
@@ -128,6 +132,10 @@ namespace guiex
 		m_vecSceneFileNames.clear();
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief 
+	* @param rSceneFile the filename of scenes, for example <test.uip>
+	*/
 	CGUISceneInfo*	CGUISceneInfoManager::GetSceneInfo( const CGUIString& rSceneName ) const
 	{
 		std::map<CGUIString, CGUISceneInfo*>::const_iterator itor = m_mapSceneInfos.find( rSceneName );
@@ -151,15 +159,15 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	CGUIString	CGUISceneInfoManager::GetSceneFileRootPath( const CGUIString& rSceneName ) const
+	CGUIString	CGUISceneInfoManager::GetScenePath( const CGUIString& rSceneName ) const
 	{
 		CGUISceneInfo * pSceneInfo = GetSceneInfo( rSceneName );
 		if( !pSceneInfo )
 		{
 			return CGUIString();
-			//throw CGUIException("[CGUISceneInfoManager::GetSceneFileRootPath]: failed to get scene info by name %s", rSceneName.c_str());
+			//throw CGUIException("[CGUISceneInfoManager::GetScenePath]: failed to get scene info by name %s", rSceneName.c_str());
 		}
-		return pSceneInfo->GetSceneFileRootPath();
+		return pSceneInfo->GetScenePath();
 	}
 	//------------------------------------------------------------------------------
 	const std::vector<CGUIString>&	CGUISceneInfoManager::GetSceneFilePaths( ) const

@@ -1450,7 +1450,7 @@ void WxMainFrame::RenderFile( const std::string& rFileName )
 
 	std::string strAbsFileName = 
 		guiex::CGUIWidgetSystem::Instance()->GetDataPath() +
-		pSceneInfo->GetSceneFileRootPath() +
+		pSceneInfo->GetScenePath() +
 		rFileName;
 
 	m_pCanvas = new WxEditorCanvasContainer(m_pNoteBook_Canvas, strAbsFileName);
@@ -1486,7 +1486,7 @@ void	WxMainFrame::EditFileExternal( const std::string& rFileName )
 {
 	guiex::CGUISceneInfo* pSceneInfo = guiex::CGUISceneInfoManager::Instance()->GetSceneInfo(m_strCurrentSceneName);
 
-	std::string strAbsPath = guiex::CGUIWidgetSystem::Instance()->GetDataPath() + pSceneInfo->GetSceneFileRootPath();
+	std::string strAbsPath = guiex::CGUIWidgetSystem::Instance()->GetDataPath() + pSceneInfo->GetScenePath();
 	std::string strAbsFileName = strAbsPath + rFileName;
 
 	::ShellExecute( 
@@ -1504,7 +1504,7 @@ void	WxMainFrame::EditFile( const std::string& rFileName, EFileType eFileType )
 
 	std::string strAbsPath = 
 		guiex::CGUIWidgetSystem::Instance()->GetDataPath() +
-		pSceneInfo->GetSceneFileRootPath() +
+		pSceneInfo->GetScenePath() +
 		rFileName;
 
 	//check

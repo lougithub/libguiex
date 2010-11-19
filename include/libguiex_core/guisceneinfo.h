@@ -64,7 +64,7 @@ namespace guiex
 		/** 
 		* @brief get scene file path
 		*/
-		const CGUIString&		GetSceneFileRootPath() const;
+		const CGUIString&		GetScenePath() const;
 
 		/** 
 		* @brief get scene file name

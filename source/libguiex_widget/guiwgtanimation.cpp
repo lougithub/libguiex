@@ -78,30 +78,6 @@ namespace guiex
 		return m_pAnimationName;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtAnimation::SetValue(const CGUIString& rName, const CGUIString& rValue)
-	{
-		if( rName == "Animation")
-		{
-			SetCurrentAnimation(rValue);
-		}
-		else
-		{
-			CGUIWidget::SetValue(rName, rValue);
-		}
-	}
-	//------------------------------------------------------------------------------
-	CGUIString CGUIWgtAnimation::GetValue(const CGUIString& rName) const
-	{
-		if( rName == "Animation")
-		{
-			return GetCurrentAnimation();
-		}
-		else
-		{
-			return CGUIWidget::GetValue(rName);
-		}
-	}
-	//------------------------------------------------------------------------------
 	void CGUIWgtAnimation::UpdateSelf( real fDeltaTime )
 	{
 		if( m_pAnimationCur)

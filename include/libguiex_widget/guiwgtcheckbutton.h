@@ -61,17 +61,6 @@ namespace guiex
 		bool	IsCheck() const;
 
 		/**
-		* @brief set value
-		*/
-		virtual void	SetValue(const CGUIString& rName, const CGUIString& rValue);
-
-		/**
-		* @brief get widget parameter's value
-		* for example: GetValue("alpha_local") will return "0.5"
-		*/
-		virtual CGUIString	GetValue(const CGUIString& rName) const;
-
-		/**
 		* @brief load widget config from property
 		*/
 		virtual CGUIProperty*	GenerateProperty(const CGUIString& rName, const CGUIString& rType );

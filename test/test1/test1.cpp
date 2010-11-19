@@ -253,7 +253,7 @@ guiex::CGUIWidget* SampleInitialize()
 		guiex::CGUIAsAlpha* pAsAlpha = pAsManager->AllocateResourceByTypeChecked<guiex::CGUIAsAlpha>("CGUIAsAlpha" );
 		pAsAlpha->SetInterpolationValue( 0, 1, 2 );
 		pAsAlpha->SetReceiver( pWidgetRoot );
-		pWidgetRoot->AddAs( pAsAlpha );
+		pWidgetRoot->PlayAs( pAsAlpha );
 		pAsAlpha->RefRelease();
 	}
 
@@ -262,13 +262,13 @@ guiex::CGUIWidget* SampleInitialize()
 		pAsScale->SetInterpolationValue( guiex::CGUISize(0.2f,0.2f), guiex::CGUISize(1,1), 4 );
 		pAsScale->SetReceiver( pWidget_panel );
 		pAsScale->SetInterpolationType( guiex::eInterpolationType_EaseInOut );
-		pWidget_panel->AddAs( pAsScale );
+		pWidget_panel->PlayAs( pAsScale );
 		pAsScale->RefRelease();
 
 		guiex::CGUIAsRotation* pAsRotation = pAsManager->AllocateResourceByTypeChecked<guiex::CGUIAsRotation>("CGUIAsRotation" );
 		pAsRotation->SetInterpolationValue( guiex::CGUIVector3(0,0,360*5), guiex::CGUIVector3(), 4 );
 		pAsRotation->SetReceiver( pWidget_panel );
-		pWidget_panel->AddAs( pAsRotation );
+		pWidget_panel->PlayAs( pAsRotation );
 		pAsRotation->RefRelease();
 	}
 
@@ -276,7 +276,7 @@ guiex::CGUIWidget* SampleInitialize()
 		guiex::CGUIAsPosition* pAsPos1 = pAsManager->AllocateResourceByTypeChecked<guiex::CGUIAsPosition>("CGUIAsPosition" );
 		pAsPos1->SetInterpolationValue( guiex::CGUIVector2(0,0), guiex::CGUIVector2(500,500), 3 );
 		pAsPos1->SetReceiver( pWidget_staticimage );
-		pWidget_staticimage->AddAs( pAsPos1 );
+		pWidget_staticimage->PlayAs( pAsPos1 );
 		pAsPos1->RefRelease();
 
 		guiex::CGUIAsPosition* pAsPos2 = pAsManager->AllocateResourceByTypeChecked<guiex::CGUIAsPosition>("CGUIAsPosition" );
@@ -316,7 +316,7 @@ guiex::CGUIWidget* SampleInitialize()
 
 		pAsContainer->SetReceiver( pWidget_staticimage );
 		pAsContainer->SetLooping( true );
-		pWidget_staticimage->AddAs( pAsContainer );
+		pWidget_staticimage->PlayAs( pAsContainer );
 		pAsContainer->RefRelease();
 	}
 
@@ -325,7 +325,7 @@ guiex::CGUIWidget* SampleInitialize()
 		pAsRotation->SetInterpolationValue( guiex::CGUIVector3(0,0,360), guiex::CGUIVector3(), 4 );
 		pAsRotation->SetReceiver( pWidget_staticimage );
 		pAsRotation->SetLooping( true );
-		pWidget_staticimage->AddAs( pAsRotation );
+		pWidget_staticimage->PlayAs( pAsRotation );
 		pAsRotation->RefRelease();
 	}
 
@@ -333,19 +333,19 @@ guiex::CGUIWidget* SampleInitialize()
 		guiex::CGUIAsScale* pAsScale = pAsManager->AllocateResourceByTypeChecked<guiex::CGUIAsScale>("CGUIAsScale" );
 		pAsScale->SetInterpolationValue( guiex::CGUISize(5,5), guiex::CGUISize(1,1), 6 );
 		pAsScale->SetReceiver( pWidget_staticimage2 );
-		pWidget_staticimage2->AddAs( pAsScale );
+		pWidget_staticimage2->PlayAs( pAsScale );
 		pAsScale->RefRelease();
 
 		guiex::CGUIAsAlpha* pAsAlpha = pAsManager->AllocateResourceByTypeChecked<guiex::CGUIAsAlpha>("CGUIAsAlpha" );
 		pAsAlpha->SetInterpolationValue( 0, 1, 3 );
 		pAsAlpha->SetReceiver( pWidget_staticimage2 );
-		pWidget_staticimage2->AddAs( pAsAlpha );
+		pWidget_staticimage2->PlayAs( pAsAlpha );
 		pAsAlpha->RefRelease();
 
 		guiex::CGUIAsRotation* pAsRotation = pAsManager->AllocateResourceByTypeChecked<guiex::CGUIAsRotation>("CGUIAsRotation" );
 		pAsRotation->SetInterpolationValue( guiex::CGUIVector3(0,0,360*2), guiex::CGUIVector3(), 4 );
 		pAsRotation->SetReceiver( pWidget_staticimage2 );
-		pWidget_staticimage2->AddAs( pAsRotation );
+		pWidget_staticimage2->PlayAs( pAsRotation );
 		pAsRotation->RefRelease();
 	}
 
@@ -353,19 +353,19 @@ guiex::CGUIWidget* SampleInitialize()
 		guiex::CGUIAsRotation* pAsRotation = pAsManager->AllocateResourceByTypeChecked<guiex::CGUIAsRotation>("CGUIAsRotation" );
 		pAsRotation->SetInterpolationValue( guiex::CGUIVector3(0,0,360*5), guiex::CGUIVector3(), 1 );
 		pAsRotation->SetReceiver( pWidget_statictext );
-		pWidget_statictext->AddAs( pAsRotation );
+		pWidget_statictext->PlayAs( pAsRotation );
 		pAsRotation->RefRelease();
 
 		guiex::CGUIAsAlpha* pAsAlpha = pAsManager->AllocateResourceByTypeChecked<guiex::CGUIAsAlpha>("CGUIAsAlpha" );
 		pAsAlpha->SetInterpolationValue( 0, 1, 1 );
 		pAsAlpha->SetReceiver( pWidget_statictext );
-		pWidget_statictext->AddAs( pAsAlpha );
+		pWidget_statictext->PlayAs( pAsAlpha );
 		pAsAlpha->RefRelease();
 
 		guiex::CGUIAsScale* pAsScale = pAsManager->AllocateResourceByTypeChecked<guiex::CGUIAsScale>("CGUIAsScale" );
 		pAsScale->SetInterpolationValue( guiex::CGUISize(0,0), guiex::CGUISize(2,2), 1 );
 		pAsScale->SetReceiver( pWidget_statictext );
-		pWidget_statictext->AddAs( pAsScale );
+		pWidget_statictext->PlayAs( pAsScale );
 		pAsScale->RefRelease();
 	}
 

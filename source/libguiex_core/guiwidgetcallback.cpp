@@ -336,7 +336,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int32		CGUIWidget::OnMouseWheel( CGUIEventMouse* pEvent )
+	uint32		CGUIWidget::OnMouseWheel( CGUIEventMouse* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnMouseWheel");
 

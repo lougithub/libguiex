@@ -22,12 +22,18 @@ namespace guiex
 {
 	GUI_SINGLETON_IMPLEMENT_EX(CGUITextureManager );
 	//------------------------------------------------------------------------------
+	/**
+	* @brief constructor
+	*/
 	CGUITextureManager::CGUITextureManager()
 		:m_pDefaultTexture(NULL)
 	{
 
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief destructor;
+	*/
 	CGUITextureManager::~CGUITextureManager()
 	{
 		CGUIImageManager::DestroyInstance();
@@ -46,7 +52,10 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	CGUITexture*	CGUITextureManager::CreateTexture(const CGUIString& rImageName)
+	/**
+	* @brief create a texture by image path;
+	*/
+	CGUITexture* CGUITextureManager::CreateTexture(const CGUIString& rImageName)
 	{
 		TMapTexture::iterator itorFind = m_aMapTexture.find(rImageName);
 		if( itorFind == m_aMapTexture.end())
@@ -72,7 +81,10 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	CGUITexture*	CGUITextureManager::CreateDefaultTexture()
+	/**
+	* @brief create a default texture
+	*/
+	CGUITexture* CGUITextureManager::CreateDefaultTexture()
 	{
 		if( !m_pDefaultTexture)
 		{
@@ -90,7 +102,13 @@ namespace guiex
 		return m_pDefaultTexture;
 	}
 	//------------------------------------------------------------------------------
-	CGUITexture*	CGUITextureManager::CreateTexture(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat)
+	/**
+	* @brief create a texture by size
+	*/
+	CGUITexture* CGUITextureManager::CreateTexture(
+		uint32 nWidth, 
+		uint32 nHeight, 
+		EGuiPixelFormat ePixelFormat)
 	{
 		CGUITexture* pTexture = new CGUITexture;
 		pTexture->SetTextureType(eTT_Memory);
@@ -105,7 +123,11 @@ namespace guiex
 		return pTexture;
 	}
 	//------------------------------------------------------------------------------
-	CGUITexture*	CGUITextureManager::CreateTexture(const void* buffPtr, 
+	/**
+	* @brief create a texture from given memory
+	*/
+	CGUITexture* CGUITextureManager::CreateTexture(
+		const void* buffPtr, 
 		int32 buffWidth, 
 		int32 buffHeight, 
 		EGuiPixelFormat ePixelFormat)
@@ -123,7 +145,10 @@ namespace guiex
 		return pTexture;
 	}
 	//------------------------------------------------------------------------------
-	int32	CGUITextureManager::DestroyTexture(CGUITexture* pTexture)
+	/**
+	* @brief destroy a texture
+	*/
+	int32 CGUITextureManager::DestroyTexture(CGUITexture* pTexture)
 	{
 		switch( pTexture->GetTextureType())
 		{
@@ -193,7 +218,13 @@ namespace guiex
 		return -1;
 	}
 	//------------------------------------------------------------------------------
-	int32			CGUITextureManager::CreateAllTextureImplement()
+	/**
+	* @brief (re)create all texture implements,
+	* usually the texture implement should be created manually when a new
+	* render is loaded.
+	* @return 0 for success
+	*/
+	int32 CGUITextureManager::CreateAllTextureImplement()
 	{
 		//default texture
 		if( m_pDefaultTexture )
@@ -231,7 +262,12 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void			CGUITextureManager::DestroyAllTextureImplement()
+	/**
+	* @brief destroy all texture implements
+	* usually the texture implement should be destroyed manually when a 
+	* render is unloaded and readily to load a new render
+	*/
+	void CGUITextureManager::DestroyAllTextureImplement()
 	{
 		//default texture
 		if( m_pDefaultTexture )
@@ -256,7 +292,11 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	int32			CGUITextureManager::DumpAllTextureImplement()
+	/**
+	* @brief dump all texture to memory
+	* @return 0 for success
+	*/
+	int32 CGUITextureManager::DumpAllTextureImplement()
 	{
 		//default texture
 		if( m_pDefaultTexture )
@@ -294,7 +334,11 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int32			CGUITextureManager::LoadAllTextureImplement()
+	/**
+	* @brief load all texture from memory
+	* @return 0 for success
+	*/
+	int32 CGUITextureManager::LoadAllTextureImplement()
 	{
 		//default texture
 		if( m_pDefaultTexture )

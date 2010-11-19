@@ -33,7 +33,7 @@ namespace guiex
 		SetFocusable(false);
 		SetSizeType(eScreenValue_Percentage);
 		SetSize( 1.0f, 1.0f );
-		SetSelfActivable(false);
+		SetActivable(false);
 		SetMouseConsumed(false);
 		SetHitable( false );		
 	}

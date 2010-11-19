@@ -70,7 +70,7 @@ namespace guiex
 	int32 CGUIAnimation::DoLoad() const
 	{
 		//get full path
-		CGUIString strPrePath = CGUISceneInfoManager::Instance()->GetSceneFileRootPath( m_strSceneName );
+		CGUIString strPrePath = CGUISceneInfoManager::Instance()->GetScenePath( m_strSceneName );
 
 		//load texture
 		for( uint32 i=0; i<m_vecFileNames.size(); ++i )

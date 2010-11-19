@@ -54,7 +54,7 @@ namespace guiex
 		
 
 		SetFocusable(true);
-		SetSelfActivable(false);
+		SetActivable(false);
 		SetGenerateClickEvent( true );
 	}
 	//------------------------------------------------------------------------------

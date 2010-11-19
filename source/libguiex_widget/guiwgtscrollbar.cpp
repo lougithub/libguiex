@@ -306,7 +306,7 @@ namespace guiex
 		m_pImageBg = NULL;
 
 		SetFocusable(true);
-		SetSelfActivable(false);
+		SetActivable(false);
 		SetFlag(eFLAG_EVENT_PARENTSIZECHANGE, true);
 		SetGenerateClickEvent(true);
 	}

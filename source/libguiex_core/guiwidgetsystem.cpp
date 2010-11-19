@@ -235,7 +235,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIWidget*	CGUIWidgetSystem::LoadPage( const CGUIString& rFileName, const CGUIString& rSceneName)
 	{
-		CGUIString strRelPath = CGUISceneInfoManager::Instance()->GetSceneFileRootPath( rSceneName ) + rFileName;
+		CGUIString strRelPath = CGUISceneInfoManager::Instance()->GetScenePath( rSceneName ) + rFileName;
 		IGUIInterfaceConfigFile* pConfigFile = CGUIInterfaceManager::Instance()->GetInterfaceConfigFile();
 		if( !pConfigFile )
 		{
@@ -255,7 +255,7 @@ namespace guiex
 		const CGUIString& rPageSceneName,
 		const CGUIString& rWorkingSceneName )
 	{
-		CGUIString strRelPath = CGUISceneInfoManager::Instance()->GetSceneFileRootPath( rPageSceneName ) + rPageFileName;
+		CGUIString strRelPath = CGUISceneInfoManager::Instance()->GetScenePath( rPageSceneName ) + rPageFileName;
 		IGUIInterfaceConfigFile* pConfigFile = CGUIInterfaceManager::Instance()->GetInterfaceConfigFile();
 		if( !pConfigFile )
 		{
@@ -310,8 +310,6 @@ namespace guiex
 		CGUIFontManager::Instance()->ReleaseAllResources( );
 		
 		CGUISceneInfoManager::Instance()->ClearSceneResourceLoadFlags();
-
-		//CGUITextureManager::Instance()->DestroyAllTextureImplement();
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWidgetSystem::FreeAllWidgets(  )

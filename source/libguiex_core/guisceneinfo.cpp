@@ -68,7 +68,7 @@ namespace guiex
 		m_bResourceLoaded = bLoaded;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIString&		CGUISceneInfo::GetSceneFileRootPath() const
+	const CGUIString&		CGUISceneInfo::GetScenePath() const
 	{
 		return m_strSceneFilePath;
 	}

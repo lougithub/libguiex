@@ -37,19 +37,15 @@ namespace guiex
 	class GUIEXPORT CGUISceneInfoManager
 	{
 	public:
-		int32	LoadScenes( );
-		void	UnloadScenes( );
+		int32 LoadScenes( const CGUIString& rSceneRootPath = "\\", const CGUIString& rSuffix = ".uip" );
+		void UnloadScenes( );
 
-		/**
-		* @brief 
-		* @param rSceneFile the filename of scenes, for example <test.uip>
-		*/
-		CGUISceneInfo*	GetSceneInfo( const CGUIString& rSceneName ) const;
-		CGUIString	GetSceneFileRootPath( const CGUIString& rSceneName ) const;
-		const std::vector<CGUIString>&	GetSceneFilePaths( ) const;
-		const std::vector<CGUIString>&	GetSceneFileNames( ) const;
+		CGUISceneInfo* GetSceneInfo( const CGUIString& rSceneName ) const;
+		CGUIString GetScenePath( const CGUIString& rSceneName ) const;
+		const std::vector<CGUIString>& GetSceneFilePaths( ) const;
+		const std::vector<CGUIString>& GetSceneFileNames( ) const;
 
-		void	ClearSceneResourceLoadFlags( );
+		void ClearSceneResourceLoadFlags( );
 
 		CGUISceneInfo* GenerateSceneInfo() const;
 		void DestroySceneInfo( CGUISceneInfo* pSceneInfo) const;

@@ -55,7 +55,7 @@ namespace guiex
 		m_pEdit->SetParent(this);
 
 		SetFocusable(true);
-		SetSelfActivable(false);
+		SetActivable(false);
 		m_nMaxString = 100;		///< max number of string
 		m_nCursorIdx = 0;			///< cursor's position in edited string, the first is 0.
 		m_fTextWidthRel = 0.0f;

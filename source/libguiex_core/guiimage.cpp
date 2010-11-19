@@ -93,7 +93,7 @@ namespace guiex
 		if( m_eImageType == eIT_FILE )
 		{
 			//get full path
-			CGUIString strFullPath = CGUISceneInfoManager::Instance()->GetSceneFileRootPath( m_strSceneName ) + m_strPath;
+			CGUIString strFullPath = CGUISceneInfoManager::Instance()->GetScenePath( m_strSceneName ) + m_strPath;
 			m_pTexture = CGUITextureManager::Instance()->CreateTexture(strFullPath);
 
 			if( !m_pTexture )

@@ -34,13 +34,16 @@
 
 //------------------------------------------------------------------------------
 
- 
+
 //============================================================================//
 // function
 //============================================================================// 
 namespace guiex
 {
 	//------------------------------------------------------------------------------
+	/**
+	* @brief default constructor
+	*/
 	CGUIWidget::CGUIWidget( const CGUIString& rType, 
 		const CGUIString& rName, 
 		const CGUIString& rSceneName )
@@ -82,6 +85,9 @@ namespace guiex
 		m_aWidgetSize.m_eType = eScreenValue_Pixel;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief default destructor
+	*/
 	CGUIWidget::~CGUIWidget( )
 	{
 		DestroyAllResource();
@@ -107,13 +113,20 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief create this widget
+	* @return return 0 for success.
+	*/
 	int32 CGUIWidget::Create()
 	{
 		Refresh();
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::Open()
+	/**
+	* @brief open the widget
+	*/
+	void CGUIWidget::Open()
 	{
 		//open self
 		if( IsOpen())
@@ -140,7 +153,11 @@ namespace guiex
 		}	
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::Close()
+	/**
+	* @brief close the widget
+	* now just send a close event and make this widget invisible
+	*/
+	void CGUIWidget::Close()
 	{
 		//close self
 		if( !IsOpen())
@@ -168,6 +185,9 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief open the widget
+	*/
 	bool CGUIWidget::IsOpen() const
 	{
 		return m_bIsOpen;
@@ -181,15 +201,6 @@ namespace guiex
 	void*	CGUIWidget::GetUserData() const
 	{
 		return m_pUserData;
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWidget::SetValue(const CGUIString& rName, const CGUIString& rValue)
-	{
-	}
-	//------------------------------------------------------------------------------
-	CGUIString	CGUIWidget::GetValue(const CGUIString& rName) const
-	{
-		return CGUIString();
 	}
 	//------------------------------------------------------------------------------
 	const CGUIStringEx&	CGUIWidget::GetTooltipText(void) const
@@ -286,6 +297,9 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief set parent
+	*/
 	void CGUIWidget::SetParent(CGUIWidget *pParent)
 	{
 		if( GetParent() == pParent )
@@ -310,16 +324,25 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief get parent
+	*/
 	CGUIWidget* CGUIWidget::GetParent() const
 	{
 		return static_cast<CGUIWidget*>(m_pParent);
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief get child
+	*/
 	CGUIWidget*	CGUIWidget::GetChild( ) const
 	{
 		return static_cast<CGUIWidget*>(m_pChild);
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief get child by given name
+	*/
 	CGUIWidget*	CGUIWidget::GetChild( const CGUIString& rChildName ) const
 	{
 		CGUIWidget* pWidget = GetChild();
@@ -334,17 +357,19 @@ namespace guiex
 		return NULL;
 	}
 	//------------------------------------------------------------------------------
+	/// get next sibling
 	CGUIWidget*	CGUIWidget::GetNextSibling( ) const
 	{
 		return static_cast<CGUIWidget*>(m_pNextSibling);
 	}
 	//------------------------------------------------------------------------------
+	//get exclusive child
 	CGUIWidget*	CGUIWidget::GetExclusiveChild( ) const
 	{
 		return m_pExclusiveChild;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::SetWorkingSceneName(const CGUIString& rWorkingProjName)
+	void CGUIWidget::SetWorkingSceneName(const CGUIString& rWorkingProjName)
 	{
 		m_strWorkingSceneName = rWorkingProjName;
 
@@ -356,6 +381,14 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	const CGUIString& CGUIWidget::GetWorkingSceneName( ) const
+	{
+		return m_strWorkingSceneName;
+	}
+	//------------------------------------------------------------------------------
+	/**
+	* @brief move down this widget between his sibling
+	*/
 	void	CGUIWidget::MoveDown()
 	{
 		if( GetParent() )
@@ -394,6 +427,9 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief move up this widget between his sibling
+	*/
 	void	CGUIWidget::MoveUp()
 	{
 		if( GetParent() )
@@ -433,7 +469,11 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::MoveToTop()
+	/**
+	* @brief move this widget to the top between
+	* his sibling.
+	*/
+	void CGUIWidget::MoveToTop()
 	{
 		if( GetParent() )
 		{
@@ -487,7 +527,10 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::RemoveChild( CGUIWidget* pChild )
+	/**
+	* @brief remove child 
+	*/
+	void CGUIWidget::RemoveChild( CGUIWidget* pChild )
 	{
 		GUI_ASSERT( pChild, "invalid parameter");
 		GUI_ASSERT( pChild->GetParent() == this, "the child's parent isn't this!");
@@ -563,7 +606,10 @@ namespace guiex
 		return NULL;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::AddChild( CGUIWidget* pChild )
+	/**
+	* @brief add child 
+	*/
+	void CGUIWidget::AddChild( CGUIWidget* pChild )
 	{
 		GUI_ASSERT( pChild, "invalid parameter");
 		GUI_ASSERT( pChild->GetParent() == NULL, "the child has haven a parent!");
@@ -606,7 +652,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::SetSelfActivable(bool bActivable)
+	void	CGUIWidget::SetActivable(bool bActivable)
 	{
 		m_aParamActivable.SetSelfValue(bActivable);
 	}
@@ -756,6 +802,7 @@ namespace guiex
 		return m_aParamDisable.GetSelfValue();
 	}
 	//------------------------------------------------------------------------------
+	/// is this widget disable, the value will be affect by the parent's state
 	bool	CGUIWidget::IsDerivedDisable()
 	{
 		return m_aParamDisable.GetFinalValue();
@@ -868,6 +915,9 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief give the child which is pinted
+	*/
 	CGUIWidget*		CGUIWidget::GetWidgetAtPoint(const CGUIVector2& rPos)
 	{
 		//check sibling
@@ -881,7 +931,6 @@ namespace guiex
 				return pWidget;
 			}
 		}
-
 
 		if( IsDerivedDisable() == false && IsOpen() && IsDerivedVisible()) 
 		{
@@ -908,7 +957,6 @@ namespace guiex
 				}
 			}
 
-
 			//check self
 			if( !bIsChildExclusive && HitTest(rPos) )
 			{
@@ -919,7 +967,11 @@ namespace guiex
 		return NULL;
 	}
 	//------------------------------------------------------------------------------
-	bool	CGUIWidget::HitTest( const CGUIVector2& rPos)
+	/**
+	* @brief test whether the point is in this widget
+	* @param rPos in pixel format
+	*/
+	bool CGUIWidget::HitTest( const CGUIVector2& rPos)
 	{
 		if( IsHitable() )
 		{
@@ -986,16 +1038,16 @@ namespace guiex
 		return itor->second;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::UnregisterGlobalTimerFunc(const CGUIString& strEventName)
+	void	CGUIWidget::UnregisterNativeTimerFunc(const CGUIString& strEventName)
 	{
 		TMapTimer::iterator itor1 = m_aMapTimer.find(strEventName);
-		TMapGlobalFunc::iterator itor2 = m_mapGlobalFunc.find(strEventName);
-		if( itor1 == m_aMapTimer.end() || itor2 == m_mapGlobalFunc.end())
+		TMapGlobalFunc::iterator itor2 = m_mapNativeFunc.find(strEventName);
+		if( itor1 == m_aMapTimer.end() || itor2 == m_mapNativeFunc.end())
 		{
-			throw CGUIException("[CGUIWidget::UnregisterGlobalTimerFunc]: failed to find event <%s>!", strEventName.c_str());
+			throw CGUIException("[CGUIWidget::UnregisterNativeTimerFunc]: failed to find event <%s>!", strEventName.c_str());
 		}
 		m_aMapTimer.erase(itor1);
-		m_mapGlobalFunc.erase(itor2);
+		m_mapNativeFunc.erase(itor2);
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWidget::UnregisterScriptTimerFunc(const CGUIString& strEventName)
@@ -1019,19 +1071,19 @@ namespace guiex
 		m_mapScriptFunc.insert( std::make_pair(strEventName, strFunc));
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::RegisterGlobalTimerFunc( 		
+	void	CGUIWidget::RegisterNativeTimerFunc( 		
 		real rWaitingTime, 
 		const CGUIString& strEventName,  
 		void (*pFunc)(CGUIEventTimer*) )
 	{
 		m_aMapTimer.insert( std::make_pair(strEventName, STimer(rWaitingTime)));
-		m_mapGlobalFunc.insert( std::make_pair(strEventName, reinterpret_cast<CallbackEventFunc>(pFunc)));
+		m_mapNativeFunc.insert( std::make_pair(strEventName, reinterpret_cast<CallbackEventFunc>(pFunc)));
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWidget::CallGlobalFunction(const CGUIString& strEventName, CGUIEvent* pEvent)
 	{
-		TMapGlobalFunc::iterator itor = m_mapGlobalFunc.find(strEventName);
-		if( itor != m_mapGlobalFunc.end())
+		TMapGlobalFunc::iterator itor = m_mapNativeFunc.find(strEventName);
+		if( itor != m_mapNativeFunc.end())
 		{
 			(*(itor->second))(pEvent);
 		}
@@ -1120,6 +1172,10 @@ namespace guiex
 		return m_aParamAlpha.GetSelfValue();
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief get the alpha which used to render this widget.
+	* this value will be affected by both this widget's alpha and inheritable flag.
+	*/
 	real	CGUIWidget::GetDerivedAlpha() 
 	{
 		if( IsInheritAlpha() && GetParent() )
@@ -1132,6 +1188,9 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief callback of set the image of widget.
+	*/
 	void	CGUIWidget::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
 
@@ -1212,7 +1271,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	CGUIAs* CGUIWidget::SetAs( const CGUIString& rName, const CGUIString& rAsName )
+	CGUIAs* CGUIWidget::SetAs( const CGUIString& rName, const CGUIString& rAsName, bool bPlaying )
 	{
 		//find as
 		CGUIAs* pAs = CGUIAsManager::Instance()->AllocateResource( rAsName );
@@ -1221,12 +1280,13 @@ namespace guiex
 			throw CGUIException( "failed to get as by name <%s>", rAsName.c_str());
 			return NULL;
 		};
-		SetAs(rName, pAs);
+		SetAs( rName, pAs, bPlaying );
 		CGUIAsManager::Instance()->DeallocateResource( pAs );
 		return pAs;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWidget::SetAs( const CGUIString& rName, CGUIAs* pAs )
+	///< this will retain the reference count of image
+	void CGUIWidget::SetAs( const CGUIString& rName, CGUIAs* pAs, bool bPlaying )
 	{
 		TMapAs::iterator itor = m_aMapAs.find(rName);
 		if( itor != m_aMapAs.end())
@@ -1239,14 +1299,26 @@ namespace guiex
 		{
 			pAs->RefRetain();
 			m_aMapAs.insert(std::make_pair(rName,pAs));
+
+			if( bPlaying )
+			{
+				PlayAs( pAs );
+			}
 		}
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief has the as been add to this widget.
+	*/
 	bool CGUIWidget::HasAs( const CGUIString& rName )
 	{
 		return m_aMapAs.find(rName ) != m_aMapAs.end();
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief get as
+	* @return NULL for failed to find as by given name
+	*/
 	CGUIAs* CGUIWidget::GetAs( const CGUIString& rName )
 	{
 		TMapAs::iterator itor = m_aMapAs.find(rName);
@@ -1257,6 +1329,136 @@ namespace guiex
 		else
 		{
 			return NULL;
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::PlayAs( const CGUIString& rName )
+	{
+		CGUIAs* pAs = GetAs( rName );
+		if( !pAs )
+		{
+			throw CGUIException(
+				"[CGUIWidget::PlayAs]: failed to play as <%s>",
+				rName.c_str() );
+			return;
+		}
+		PlayAs( pAs );
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWidget::IsAsPlaying( const CGUIString& rName )
+	{
+		CGUIAs* pAs = GetAs( rName );
+		if( !pAs )
+		{
+			throw CGUIException(
+				"[CGUIWidget::IsAsPlaying]: failed to check whether as <%s> is playing",
+				rName.c_str() );
+			return false;
+		}
+		return IsAsPlaying(pAs);
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::StopAs( const CGUIString& rName )
+	{
+		CGUIAs* pAs = GetAs( rName );
+		if( !pAs )
+		{
+			throw CGUIException(
+				"[CGUIWidget::StopAs]: failed to stop as <%s>",
+				rName.c_str() );
+			return;
+		}
+		StopAs( pAs );
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::StopAll( )
+	{
+		for( TListAs::iterator itor = m_listAsPlaying.begin();
+			itor != m_listAsPlaying.end();
+			++itor )
+		{
+			CGUIAsManager::Instance()->DeallocateResource( *itor );
+		}
+		m_listAsPlaying.clear();
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::PlayAs( CGUIAs* pAs )
+	{
+		TListAs::iterator itor = std::find( 
+			m_listAsPlaying.begin(), 
+			m_listAsPlaying.end(), 
+			pAs );
+		if( itor == m_listAsPlaying.end() )
+		{
+			pAs->SetElapsedTime( 0.0f );
+			pAs->RefRetain();
+			m_listAsPlaying.push_back( pAs );
+		}
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWidget::IsAsPlaying( CGUIAs* pAs )
+	{
+		TListAs::iterator itor = std::find( 
+			m_listAsPlaying.begin(), 
+			m_listAsPlaying.end(), 
+			pAs );
+		if( itor == m_listAsPlaying.end() )
+		{
+			return false;
+		}
+		return true;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::StopAs( CGUIAs* pAs )
+	{
+		TListAs::iterator itor = std::find( 
+			m_listAsPlaying.begin(), 
+			m_listAsPlaying.end(), 
+			pAs );
+		if( itor != m_listAsPlaying.end() )
+		{
+			CGUIAsManager::Instance()->DeallocateResource( pAs );
+			m_listAsPlaying.erase( itor );
+		}
+	}
+	//------------------------------------------------------------------------------
+	void	CGUIWidget::UpdateAsSelf( real fDeltaTime )
+	{
+		TListAs	listAsBuffer;
+		bool bIsAsPlaying = !m_listAsPlaying.empty();
+
+		while( !m_listAsPlaying.empty())
+		{
+			//pop as
+			CGUIAs *pAs = m_listAsPlaying.back();
+			m_listAsPlaying.pop_back();
+
+			//process event
+			pAs->Update( fDeltaTime );
+
+			if( pAs->IsRetired())
+			{
+				//the as has retired, push his successor
+				CGUIAs* pSuccessor = NULL;
+				while( pSuccessor = pAs->PopSuccessor())
+				{
+					pSuccessor->GetReceiver()->PlayAs(pSuccessor);
+				}
+				CGUIAsManager::Instance()->DeallocateResource( pAs );
+			}
+			else
+			{
+				//process this event again
+				listAsBuffer.push_back(pAs);
+			}
+		}
+
+		//swap list
+		m_listAsPlaying.swap(listAsBuffer);
+
+		if( bIsAsPlaying )
+		{
+			Refresh();
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -1278,6 +1480,9 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief destroy all image and animation
+	*/
 	void CGUIWidget::DestroyAllResource( )
 	{
 		//release image
@@ -1299,23 +1504,38 @@ namespace guiex
 		m_aMapAnimation.clear();
 
 		//release as
-		for( TListAs::iterator itor = m_listAs.begin();
-			itor != m_listAs.end();
+		for( TMapAs::iterator itor = m_aMapAs.begin();
+			itor != m_aMapAs.end();
+			++itor)
+		{
+			CGUIAsManager::Instance()->DeallocateResource( itor->second );
+		}
+		m_aMapAs.clear();
+		for( TListAs::iterator itor = m_listAsPlaying.begin();
+			itor != m_listAsPlaying.end();
 			++itor)
 		{
 			CGUIAsManager::Instance()->DeallocateResource( *itor );
 		}
-		m_listAs.clear();
+		m_listAsPlaying.clear();
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWidget::SetPropertySet( const CGUIProperty&	rProperty)
+	/**
+	* @brief set property set of this widget, if this widget has gotten the 
+	* property, the old property will be destroyed.
+	*/
+	void CGUIWidget::SetProperty( const CGUIProperty&	rProperty)
 	{
 		ClearProperty();
 
 		m_aPropertySet = rProperty;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWidget::SetProperty( const CGUIProperty&	rProperty)
+	/**
+	* @brief set property of this widget, if this widget has exist, reset it.
+	* if,this widget hasn't this property, add it
+	*/
+	void CGUIWidget::InsertProperty( const CGUIProperty& rProperty)
 	{
 		if( m_aPropertySet.HasProperty(rProperty.GetName()))
 		{
@@ -1327,11 +1547,17 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief get property of this widget
+	*/
 	const CGUIProperty&	CGUIWidget::GetProperty() const
 	{
 		return m_aPropertySet;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief clear current property
+	*/
 	void CGUIWidget::ClearProperty()
 	{
 		m_aPropertySet.Clear();
@@ -1644,7 +1870,7 @@ namespace guiex
 		{
 			bool bValue = false;
 			PropertyToValue(rProperty, bValue );
-			SetSelfActivable( bValue );
+			SetActivable( bValue );
 		}
 		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="EXCLUSIVE" )
 		{
@@ -1734,6 +1960,11 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief render this widget, 
+	* it will render this widget and all children.
+	* @param pRender current render
+	*/
 	void	CGUIWidget::Render(IGUIInterfaceRender* pRender)
 	{
 		// don't do anything if window is not visible or closed
@@ -1758,7 +1989,13 @@ namespace guiex
 		PopClipRect( pRender );
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::Update( real fDeltaTime )
+
+	/**
+	* @brief update this widget, 
+	* it will update this widget and all children.
+	* @param pRender current render
+	*/
+	void CGUIWidget::Update( real fDeltaTime )
 	{
 		// don't do anything if window is closed
 		if (IsOpen()==false ) 
@@ -1778,53 +2015,9 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::AddAs( CGUIAs* pAs)
-	{
-		GUI_ASSERT(pAs->IsCreateByFactory(), "the as isn't created by factory");
-		pAs->RefRetain();
-		m_listAs.push_back(pAs);
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWidget::UpdateAs( real fDeltaTime )
-	{
-		TListAs	listAsBuffer;
-		bool bHasAs = !m_listAs.empty();
-
-		while( !m_listAs.empty())
-		{
-			//pop as
-			CGUIAs *pAs = m_listAs.back();
-			m_listAs.pop_back();
-
-			//process event
-			pAs->Update( fDeltaTime );
-
-			if( pAs->IsRetired())
-			{
-				//the as has retired, push his successor
-				CGUIAs* pSuccessor = NULL;
-				while( pSuccessor = pAs->PopSuccessor())
-				{
-					pSuccessor->GetReceiver()->AddAs(pSuccessor);
-				}
-				CGUIAsManager::Instance()->DeallocateResource( pAs );
-			}
-			else
-			{
-				//process this event again
-				listAsBuffer.push_back(pAs);
-			}
-		}
-
-		//swap list
-		m_listAs.swap(listAsBuffer);
-		
-		if( bHasAs )
-		{
-			Refresh();
-		}
-	}
-	//------------------------------------------------------------------------------
+	/**
+	* @brief render this widget only
+	*/
 	void	CGUIWidget::RenderSelf(IGUIInterfaceRender* pRender)
 	{
 	}
@@ -1833,7 +2026,7 @@ namespace guiex
 	{
 		//draw bound
 		DrawRect( pRender, GetBoundArea(), 3.0f, CGUIColor( 0.f,1.f,0.f,1.f) );
-		
+
 		//draw client area
 		DrawRect( pRender, GetBoundArea(), 1.0f, CGUIColor( 1.f,0.f,0.f,1.f) );
 	}
@@ -1854,10 +2047,13 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief update this widget only
+	*/
 	void	CGUIWidget::UpdateSelf( real fDeltaTime )
 	{
 		//update action sequence
-		UpdateAs( fDeltaTime );
+		UpdateAsSelf( fDeltaTime );
 
 		//call update event
 		if( IsResponseUpdateEvent() )
@@ -1901,6 +2097,9 @@ namespace guiex
 		pRender->GetFontRender()->DrawCharacter(pRender,getFullTransform(), charCode, rInfo, rPos, GetDerivedAlpha());
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief draw a string
+	*/
 	void	CGUIWidget::DrawString(
 		IGUIInterfaceRender* pRender, 
 		const CGUIStringEx& strText, 
@@ -1982,21 +2181,6 @@ namespace guiex
 		return m_aBoundArea;
 	}
 	//------------------------------------------------------------------------------
-	//void CGUIWidget::SetBoundArea( const CGUIRect& rBoundsRect )
-	//{
-	//	m_aBoundArea = rBoundsRect;
-
-	//	//set size
-	//	SetPixelSize( m_aBoundArea.GetSize() );
-
-	//	////set position
-	//	//CGUIVector2 aOffsetPos( -m_aWidgetSize.m_aPixelValue.m_fWidth*m_aWidgetAnchorPoint.x,
-	//	//	-m_aWidgetSize.m_aPixelValue.m_fHeight*m_aWidgetAnchorPoint.y );
-	//	//m_aBoundArea.SetRect( aOffsetPos, m_aWidgetSize.m_aPixelValue );
-	//	//m_aWidgetSize.m_aPixelValue = rBoundsRect.GetSize();
-
-	//}
-	//------------------------------------------------------------------------------
 	const CGUIVector2&	CGUIWidget::GetAnchorPoint()
 	{
 		return m_aWidgetAnchorPoint;
@@ -2047,6 +2231,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	//set widget position relative to parent, from anchor point to parent's top-left
 	void CGUIWidget::SetPosition( real x, real y )
 	{
 		m_aWidgetPosition.m_aValue.x = x;
@@ -2069,16 +2254,19 @@ namespace guiex
 		}
 	};
 	//------------------------------------------------------------------------------
+	//set widget position relative to parent, from anchor point to parent's top-left
 	void CGUIWidget::SetPosition( const CGUIVector2& rPos )
 	{
 		SetPosition( rPos.x, rPos.y );
 	}
 	//------------------------------------------------------------------------------
+	//get widget position in given value relative to parent
 	const CGUIVector2&	CGUIWidget::GetPosition() const
 	{
 		return m_aWidgetPosition.m_aValue;
 	}
 	//------------------------------------------------------------------------------
+	//set widget position in pixel format
 	void CGUIWidget::SetPixelPosition( real x, real y )
 	{
 		m_aWidgetPosition.m_aPixelValue.x = x;
@@ -2101,16 +2289,19 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	//set widget position in pixel format
 	void CGUIWidget::SetPixelPosition( const CGUIVector2& rPixelPos)
 	{
 		SetPixelPosition( rPixelPos.x, rPixelPos.y );
 	}
 	//------------------------------------------------------------------------------
+	//get widget position in pixel format
 	const CGUIVector2&	CGUIWidget::GetPixelPosition() const
 	{
 		return m_aWidgetPosition.m_aPixelValue;
 	}
 	//------------------------------------------------------------------------------
+	//set position type
 	void CGUIWidget::SetPositionType( EScreenValue eValueType )
 	{
 		if( eValueType != m_aWidgetPosition.m_eType )
@@ -2119,11 +2310,13 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	//get position type
 	EScreenValue CGUIWidget::GetPositionType( ) const
 	{
 		return m_aWidgetPosition.m_eType;
 	}
 	//------------------------------------------------------------------------------
+	//set widget size, according size value type
 	void CGUIWidget::SetSize( real width, real height )
 	{
 		m_aWidgetSize.m_aValue.m_fWidth = width;
@@ -2151,16 +2344,19 @@ namespace guiex
 		CGUIWidgetSystem::Instance()->SendEvent( &aEvent);
 	}
 	//------------------------------------------------------------------------------
+	//set widget size, according size value type
 	void CGUIWidget::SetSize( const CGUISize& rSize )
 	{
 		SetSize(rSize.m_fWidth, rSize.m_fHeight);
 	}
 	//------------------------------------------------------------------------------
+	//get widget size by given size type
 	const CGUISize&	CGUIWidget::GetSize() const
 	{
 		return m_aWidgetSize.m_aValue;
 	}
 	//------------------------------------------------------------------------------
+	//set widget size in pixel.
 	void CGUIWidget::SetPixelSize( real width, real height )
 	{
 		m_aWidgetSize.m_aPixelValue.m_fWidth = width;
@@ -2189,16 +2385,19 @@ namespace guiex
 		CGUIWidgetSystem::Instance()->SendEvent( &aEvent);
 	}
 	//------------------------------------------------------------------------------
+	//set widget size in pixel.
 	void CGUIWidget::SetPixelSize( const CGUISize& rPixelSize )
 	{
 		SetPixelSize( rPixelSize.m_fWidth, rPixelSize.m_fHeight );
 	}
 	//------------------------------------------------------------------------------
+	//get widget size in pixel.
 	const CGUISize&	CGUIWidget::GetPixelSize() const
 	{
 		return m_aWidgetSize.m_aPixelValue;
 	}
 	//------------------------------------------------------------------------------
+	//set size type
 	void CGUIWidget::SetSizeType( EScreenValue eValueType )
 	{
 		if( eValueType != m_aWidgetSize.m_eType )
@@ -2207,11 +2406,15 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	//get size type
 	EScreenValue CGUIWidget::GetSizeType( ) const
 	{
 		return m_aWidgetSize.m_eType;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* in degree
+	*/
 	void CGUIWidget::SetRotation(real x, real y, real z)
 	{
 		m_vRotation.x = x;
@@ -2287,7 +2490,7 @@ namespace guiex
 		{
 			aParentOffsetPos.x = GetParent()->m_aWidgetSize.m_aPixelValue.m_fWidth*GetParent()->m_aWidgetAnchorPoint.x;
 			aParentOffsetPos.y = GetParent()->m_aWidgetSize.m_aPixelValue.m_fHeight*GetParent()->m_aWidgetAnchorPoint.y;
-		
+
 			aParentOffsetPos.x -= (GetParent()->GetClientArea().m_fLeft - GetParent()->GetBoundArea().m_fLeft);
 			aParentOffsetPos.y -= (GetParent()->GetClientArea().m_fTop - GetParent()->GetBoundArea().m_fTop);
 		}
@@ -2448,6 +2651,32 @@ namespace guiex
 	bool CGUIWidget::IsGenerateMultiClickEvent( ) const
 	{
 		return m_bIsGenerateMultiClickEvent; 
+	}
+	//------------------------------------------------------------------------------
+	const CGUIColor& CGUIWidget::GetColor() const
+	{
+		return m_aColor;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::SetColor(const CGUIColor& rColor )
+	{
+		m_aColor = rColor;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIString& CGUIWidget::GetName() const
+	{
+		return m_strName;
+	}
+	//------------------------------------------------------------------------------
+	//!< get scene name
+	const CGUIString& CGUIWidget::GetSceneName( ) const
+	{
+		return m_strOwnerSceneName;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIString& CGUIWidget::GetType() const
+	{
+		return m_strType;
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

@@ -25,7 +25,7 @@ namespace guiex
 	void	CGUIWgtStatic::InitStatic()
 	{
 		SetFocusable(false);
-		SetSelfActivable(false);
+		SetActivable(false);
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

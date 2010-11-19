@@ -77,30 +77,6 @@ namespace guiex
 		return m_strImageName;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtStaticImage::SetValue(const CGUIString& rName, const CGUIString& rValue)
-	{
-		if( rName == "Image")
-		{
-			SetCurrentImage(rValue);
-		}
-		else
-		{
-			CGUIWidget::SetValue(rName, rValue);
-		}
-	}
-	//------------------------------------------------------------------------------
-	CGUIString CGUIWgtStaticImage::GetValue(const CGUIString& rName) const
-	{
-		if( rName == "Image")
-		{
-			return GetCurrentImage();
-		}
-		else
-		{
-			return CGUIWidget::GetValue(rName);
-		}
-	}
-	//------------------------------------------------------------------------------
 
 
 }//namespace guiex

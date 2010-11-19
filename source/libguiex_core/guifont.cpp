@@ -58,7 +58,7 @@ namespace guiex
 		}
 
 		//get full path
-		CGUIString strFullPath = CGUISceneInfoManager::Instance()->GetSceneFileRootPath( m_strSceneName ) + m_strPath;
+		CGUIString strFullPath = CGUISceneInfoManager::Instance()->GetScenePath( m_strSceneName ) + m_strPath;
 		if( 0 != pFont->LoadFontFace( strFullPath, m_nFontIndex ))
 		{
 			throw CGUIException( "[CGUIFont::DoLoad]: failed to get load font from path <%s>", strFullPath.c_str() );

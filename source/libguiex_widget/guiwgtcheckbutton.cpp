@@ -58,7 +58,7 @@ namespace guiex
 
 		SetGenerateClickEvent( true );
 		SetFocusable(true);
-		SetSelfActivable(false);
+		SetActivable(false);
 
 	}
 	//------------------------------------------------------------------------------
@@ -179,30 +179,6 @@ namespace guiex
 	bool	CGUIWgtCheckButton::IsCheck() const
 	{
 		return m_bChecked;
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWgtCheckButton::SetValue(const CGUIString& rName, const CGUIString& rValue)
-	{
-		if( rName == "Checked")
-		{
-			SetCheck(rValue=="true"?true:false);
-		}
-		else
-		{
-			CGUIWidget::SetValue(rName, rValue);
-		}
-	}
-	//------------------------------------------------------------------------------
-	CGUIString	CGUIWgtCheckButton::GetValue(const CGUIString& rName) const
-	{
-		if( rName == "Checked")
-		{
-			return IsCheck()==true?"true":"false";
-		}
-		else
-		{
-			return CGUIWidget::GetValue(rName);
-		}
 	}
 	//------------------------------------------------------------------------------
 	CGUIWgtCheckButton*	CGUIWgtCheckButton::FromWidget( CGUIWidget* pWidget )

@@ -46,7 +46,7 @@ namespace guiex
 
 		//flag
 		SetFocusable(false);
-		SetSelfActivable(false);
+		SetActivable(false);
 
 		for( int i=0; i<PANEL_BORDER_NONE; ++i)
 		{

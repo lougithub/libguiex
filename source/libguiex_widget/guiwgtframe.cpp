@@ -86,7 +86,7 @@ namespace guiex
 		m_pImageDecorate[1] = NULL;
 
 		SetFocusable(false);
-		SetSelfActivable(true);
+		SetActivable(true);
 		SetMovable(true);
 		SetGenerateDBClickEvent(true);
 	}

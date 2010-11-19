@@ -39,75 +39,20 @@ namespace guiex
 	class GUIEXPORT CGUITextureManager
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUITextureManager();
-
-		/**
-		* @brief destructor;
-		*/
 		~CGUITextureManager();
 
-		/**
-		* @brief create a texture by image path;
-		*/
-		CGUITexture*	CreateTexture(const CGUIString& rImageName);
+		CGUITexture* CreateTexture(const CGUIString& rImageName);
+		CGUITexture* CreateTexture( uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat );
+		CGUITexture* CreateTexture( const void* buffPtr, int32 buffWidth, int32 buffHeight, EGuiPixelFormat ePixelFormat );
+		CGUITexture* CreateDefaultTexture();
+		int32 DestroyTexture(CGUITexture* pTexture);
 
+		int32 CreateAllTextureImplement();
+		void DestroyAllTextureImplement();
 
-		/**
-		* @brief create a texture by size
-		*/
-		CGUITexture*	CreateTexture(uint32 nWidth, uint32 nHeight,EGuiPixelFormat ePixelFormat);
-
-		/**
-		* @brief create a texture from given memory
-		*/
-		CGUITexture*	CreateTexture(
-			const void* buffPtr, 
-			int32 buffWidth, 
-			int32 buffHeight, 
-			EGuiPixelFormat ePixelFormat);
-
-		/**
-		* @brief create a default texture
-		*/
-		CGUITexture*	CreateDefaultTexture();
-
-		/**
-		* @brief destroy a texture
-		*/
-		int32			DestroyTexture(CGUITexture* pTexture);
-
-
-
-
-		/**
-		* @brief (re)create all texture implements,
-		* usually the texture implement should be created manually when a new
-		* render is loaded.
-		* @return 0 for success
-		*/
-		int32			CreateAllTextureImplement();
-
-		/**
-		* @brief destroy all texture implements
-		* usually the texture implement should be destroyed manually when a 
-		* render is unloaded and readily to load a new render
-		*/
-		void			DestroyAllTextureImplement();
-
-		/**
-		* @brief dump all texture to memory
-		* @return 0 for success
-		*/
-		int32			DumpAllTextureImplement();
-
-		/**
-		* @brief load all texture from memory
-		* @return 0 for success
-		*/
-		int32			LoadAllTextureImplement();
+		int32 DumpAllTextureImplement();
+		int32 LoadAllTextureImplement();
 
 	protected:
 		enum ETextureType
@@ -123,7 +68,7 @@ namespace guiex
 		typedef std::set<CGUITexture*> TSetTexture;
 		TSetTexture	m_aSetTexture;		/// contain all texture which load from memory.
 
-		CGUITexture*	m_pDefaultTexture;	///default texture, which has a white color
+		CGUITexture* m_pDefaultTexture;	///default texture, which has a white color
 
 		//declare for singleton
 		GUI_SINGLETON_DECLARE_EX(CGUITextureManager);

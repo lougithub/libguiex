@@ -468,7 +468,7 @@ int			WxWidgetPropertySheet::OnPropertyChanged( wxPropertyGridEvent& event )
 	int nHasError = 0;
 	try
 	{ 
-		m_pPropWidget->SetProperty( aGuiProperty );
+		m_pPropWidget->InsertProperty( aGuiProperty );
 		m_pPropWidget->ProcessProperty(aGuiProperty);
 		m_pPropWidget->Refresh();
 		LoadWidgetConfig( this, m_pPropWidget->GetType(), m_pPropWidget );

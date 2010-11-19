@@ -48,7 +48,7 @@ namespace guiex
 		const std::vector<CGUIString>& rResourceFiles = pSceneInfo->GetResourceFiles( );
 		for( uint32 i=0; i<rResourceFiles.size(); ++i )
 		{
-			CGUIString strResourceFilePath = pSceneInfo->GetSceneFileRootPath() + rResourceFiles[i];	
+			CGUIString strResourceFilePath = pSceneInfo->GetScenePath() + rResourceFiles[i];	
 			if( 0 != CGUIWidgetSystem::Instance()->LoadResource(strResourceFilePath, strSceneName))
 			{
 				throw CGUIException( "[CGUISceneUtility::LoadResource] failed to load resource by scene name <%s : %s>",strResourceFilePath.c_str(), strSceneName.c_str());

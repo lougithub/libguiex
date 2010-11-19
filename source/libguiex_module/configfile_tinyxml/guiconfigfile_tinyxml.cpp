@@ -330,7 +330,7 @@ namespace guiex
 				}
 
 				/// set property to widget
-				pWidget->SetPropertySet( aPropertySet );
+				pWidget->SetProperty( aPropertySet );
 				aWidgetList.push_back( pWidget );
 
 				if( !pPageWidget  )
@@ -385,7 +385,7 @@ namespace guiex
 						pScript->CreateScript( rSceneName );
 
 						// load script
-						CGUIString strPath = CGUISceneInfoManager::Instance()->GetSceneFileRootPath( rSceneName ) + strValue;
+						CGUIString strPath = CGUISceneInfoManager::Instance()->GetScenePath( rSceneName ) + strValue;
 						pScript->ExecuteFile(strPath, rSceneName);
 					}
 				}

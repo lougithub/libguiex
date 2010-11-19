@@ -46,18 +46,6 @@ namespace guiex
 		*/
 		virtual void SetAnimation(const CGUIString& rAnimationName, CGUIAnimation* pAnimation);
 
-		/** 
-		* @brief set widget parameter's value
-		* for example: SetValue("alpha", "0.5")
-		*/
-		virtual void SetValue(const CGUIString& rName, const CGUIString& rValue);
-
-		/**
-		* @brief get widget parameter's value
-		* for example: GetValue("alpha_local") will return "0.5"
-		*/
-		virtual CGUIString	GetValue(const CGUIString& rName) const;
-
 		/**
 		* @brief select a animation to play
 		*/
