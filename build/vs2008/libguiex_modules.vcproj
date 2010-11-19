@@ -172,7 +172,7 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="font_ft2"
+			Name="fontrender_ft2"
 			>
 			<File
 				RelativePath="..\..\source\\libguiex_module\\font_ft2\guifont_ft2.cpp"
@@ -180,6 +180,14 @@
 			</File>
 			<File
 				RelativePath="..\..\include\\libguiex_module\\font_ft2\guifont_ft2.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\libguiex_module\font_ft2\guifontrender_ft2.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\libguiex_module\font_ft2\guifontrender_ft2.h"
 				>
 			</File>
 		</Filter>
