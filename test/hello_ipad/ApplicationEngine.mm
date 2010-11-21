@@ -69,13 +69,13 @@ void CLibGuiexEngine::Initialize( int width, int height, const char* szDataPath 
     guiex::CGUIWidgetSystem::Instance()->SetDrawExtraInfo(true);
 	
     //register interface
-    GUI_REGISTER_INTERFACE_LIB( "IGUIRender", IGUIRender_opengles);
-    GUI_REGISTER_INTERFACE_LIB( "IGUIImageLoader", IGUIImageLoader_tga);
-    GUI_REGISTER_INTERFACE_LIB( "IGUIFileSys", IGUIFileSys_stdio);
+    GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengles);
+    GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_tga);
+    GUI_REGISTER_INTERFACE_LIB( IGUIFileSys_stdio);
     //GUI_REGISTER_INTERFACE_LIB( "IGUIMouse", IGUIMouse_winapi);
     //GUI_REGISTER_INTERFACE_LIB( "IGUIFont", IGUIFont_ft2);
     //GUI_REGISTER_INTERFACE_LIB( "IGUIKeyboard", IGUIKeyboard_winapi);
-    GUI_REGISTER_INTERFACE_LIB( "IGUIConfigFile", IGUIConfigFile_tinyxml);
+    GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
     //GUI_REGISTER_INTERFACE_LIB_ARG( "IGUIScript", IGUIScript_lua, FuncInitScript);
     //GUI_REGISTER_INTERFACE_LIB_ARG( "IGUIIme", IGUIIme_winapi, pCanvas->GetHandle());
 	
@@ -124,21 +124,23 @@ void CLibGuiexEngine::InitWidgets()
 	pWidget_staticimage2->Create();	
 	
 	{
-		guiex::CGUIAsScale* pAsScale = static_cast<guiex::CGUIAsScale*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsScale", "asname", "hello_ipad" ));
-		pAsScale->SetLinearValue( guiex::CGUISize(0.1,0.1), guiex::CGUISize(1,1), 1 );
+		guiex::CGUIAsScale* pAsScale = guiex::CGUIAsManager::Instance()->AllocateResourceByTypeChecked<guiex::CGUIAsScale>("CGUIAsScale");
+		pAsScale->SetInterpolationValue( guiex::CGUISize(0.1,0.1), guiex::CGUISize(1,1), 1 );
 		pAsScale->SetReceiver( pWidget_staticimage );
 		//pAsScale->SetLooping( true );
-		pAsScale->SetLinearType(guiex::eInterpolationType_EaseIn);
-		pWidget_staticimage->AddAs( pAsScale );	
+		pAsScale->SetInterpolationType(guiex::eInterpolationType_EaseIn);
+		pWidget_staticimage->PlayAs( pAsScale );	
+		pAsScale->RefRelease();
 	}
 	
 	{
-		guiex::CGUIAsAlpha* pAsAlpha = static_cast<guiex::CGUIAsAlpha*>(guiex::CGUIAsFactory::Instance()->GenerateAs("CGUIAsAlpha", "asname", "hello_ipad" ));
-		pAsAlpha->SetLinearValue( 0, 1, 1 );
+		guiex::CGUIAsAlpha* pAsAlpha = guiex::CGUIAsManager::Instance()->AllocateResourceByTypeChecked<guiex::CGUIAsAlpha>("CGUIAsAlpha" );
+		pAsAlpha->SetInterpolationValue( 0, 1, 1 );
 		pAsAlpha->SetReceiver( pWidget_staticimage2 );
 		//pAsAlpha->SetLooping( true );
-		pAsAlpha->SetLinearType(guiex::eInterpolationType_EaseInOut);
-		pWidget_staticimage2->AddAs( pAsAlpha );
+		pAsAlpha->SetInterpolationType(guiex::eInterpolationType_EaseInOut);
+		pWidget_staticimage2->PlayAs( pAsAlpha );
+		pAsAlpha->RefRelease();
 	}
 	
 	

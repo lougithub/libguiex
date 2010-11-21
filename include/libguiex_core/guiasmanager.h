@@ -12,6 +12,7 @@
 // include
 //============================================================================// 
 #include "guibase.h"
+#include "guias.h"
 #include "guistring.h"
 #include "guisingleton.h"
 #include "guiimage.h"

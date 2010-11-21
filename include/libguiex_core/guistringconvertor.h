@@ -54,7 +54,7 @@ namespace guiex
 	{
 		throw CGUIException(
 			"[GetValueType]: unknown value type");
-		return CGUIString;
+		return CGUIString();
 	}
 
 	extern std::vector<CGUIString>	StringToVector(const CGUIString& rString );

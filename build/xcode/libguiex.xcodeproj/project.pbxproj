@@ -62,7 +62,6 @@
 		FFACE0481285943A00C0BCB4 /* guidebug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEBA12858CB200C0BCB4 /* guidebug.cpp */; };
 		FFACE0491285943A00C0BCB4 /* guievent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEBB12858CB200C0BCB4 /* guievent.cpp */; };
 		FFACE04A1285943A00C0BCB4 /* guiexception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEBC12858CB200C0BCB4 /* guiexception.cpp */; };
-		FFACE04B1285943A00C0BCB4 /* guifont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEBD12858CB200C0BCB4 /* guifont.cpp */; };
 		FFACE04C1285943A00C0BCB4 /* guifontmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEBE12858CB200C0BCB4 /* guifontmanager.cpp */; };
 		FFACE04D1285943A00C0BCB4 /* guiimage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEBF12858CB200C0BCB4 /* guiimage.cpp */; };
 		FFACE04E1285943A00C0BCB4 /* guiimagedata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDEC012858CB200C0BCB4 /* guiimagedata.cpp */; };
@@ -268,6 +267,9 @@
 		FFBDE1E6128EBA19003A1CA1 /* b2RevoluteJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = FFBDE16D128EBA19003A1CA1 /* b2RevoluteJoint.h */; };
 		FFBDE1E7128EBA19003A1CA1 /* b2WeldJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFBDE16E128EBA19003A1CA1 /* b2WeldJoint.cpp */; };
 		FFBDE1E8128EBA19003A1CA1 /* b2WeldJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = FFBDE16F128EBA19003A1CA1 /* b2WeldJoint.h */; };
+		FFE5ED8A12992CB40053457A /* guifontdata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFE5ED8912992CB40053457A /* guifontdata.cpp */; };
+		FFE5ED8C12992CE20053457A /* guifontdata.h in Headers */ = {isa = PBXBuildFile; fileRef = FFE5ED8B12992CE20053457A /* guifontdata.h */; };
+		FFE5ED8E12992CF40053457A /* guiinterfacestringconv.h in Headers */ = {isa = PBXBuildFile; fileRef = FFE5ED8D12992CF40053457A /* guiinterfacestringconv.h */; };
 		FFF2E7D8128C277100D69E33 /* liblibguiex_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FFACDBFD12858B0000C0BCB4 /* liblibguiex_core.a */; };
 		FFF2E7D9128C277100D69E33 /* liblibguiex_widget.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FFACDF6112858D1800C0BCB4 /* liblibguiex_widget.a */; };
 		FFF2E7DA128C277100D69E33 /* libliguiex_module.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FFACDF6B12858D4E00C0BCB4 /* libliguiex_module.a */; };
@@ -511,7 +513,6 @@
 		FFACDEBA12858CB200C0BCB4 /* guidebug.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guidebug.cpp; sourceTree = "<group>"; };
 		FFACDEBB12858CB200C0BCB4 /* guievent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guievent.cpp; sourceTree = "<group>"; };
 		FFACDEBC12858CB200C0BCB4 /* guiexception.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiexception.cpp; sourceTree = "<group>"; };
-		FFACDEBD12858CB200C0BCB4 /* guifont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guifont.cpp; sourceTree = "<group>"; };
 		FFACDEBE12858CB200C0BCB4 /* guifontmanager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guifontmanager.cpp; sourceTree = "<group>"; };
 		FFACDEBF12858CB200C0BCB4 /* guiimage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiimage.cpp; sourceTree = "<group>"; };
 		FFACDEC012858CB200C0BCB4 /* guiimagedata.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiimagedata.cpp; sourceTree = "<group>"; };
@@ -676,6 +677,9 @@
 		FFBDE16D128EBA19003A1CA1 /* b2RevoluteJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2RevoluteJoint.h; sourceTree = "<group>"; };
 		FFBDE16E128EBA19003A1CA1 /* b2WeldJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2WeldJoint.cpp; sourceTree = "<group>"; };
 		FFBDE16F128EBA19003A1CA1 /* b2WeldJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2WeldJoint.h; sourceTree = "<group>"; };
+		FFE5ED8912992CB40053457A /* guifontdata.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guifontdata.cpp; sourceTree = "<group>"; };
+		FFE5ED8B12992CE20053457A /* guifontdata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guifontdata.h; sourceTree = "<group>"; };
+		FFE5ED8D12992CF40053457A /* guiinterfacestringconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiinterfacestringconv.h; sourceTree = "<group>"; };
 		FFF2E7DF128C27CD00D69E33 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -947,6 +951,8 @@
 		FFACDE1912858C9D00C0BCB4 /* libguiex_core */ = {
 			isa = PBXGroup;
 			children = (
+				FFE5ED8D12992CF40053457A /* guiinterfacestringconv.h */,
+				FFE5ED8B12992CE20053457A /* guifontdata.h */,
 				FF4011301292C86400A9755A /* guiinterpolation.h */,
 				FF4010F41292C5A100A9755A /* guisceneinfo.h */,
 				FF4010F51292C5A100A9755A /* guisceneinfomanager.h */,
@@ -1092,6 +1098,7 @@
 		FFACDEB012858CB200C0BCB4 /* libguiex_core */ = {
 			isa = PBXGroup;
 			children = (
+				FFE5ED8912992CB40053457A /* guifontdata.cpp */,
 				FF40112E1292C84F00A9755A /* guiinterpolation.cpp */,
 				FF4010FC1292C5BE00A9755A /* guisceneinfo.cpp */,
 				FF4010FD1292C5BE00A9755A /* guisceneinfomanager.cpp */,
@@ -1109,7 +1116,6 @@
 				FFACDEBA12858CB200C0BCB4 /* guidebug.cpp */,
 				FFACDEBB12858CB200C0BCB4 /* guievent.cpp */,
 				FFACDEBC12858CB200C0BCB4 /* guiexception.cpp */,
-				FFACDEBD12858CB200C0BCB4 /* guifont.cpp */,
 				FFACDEBE12858CB200C0BCB4 /* guifontmanager.cpp */,
 				FFACDEBF12858CB200C0BCB4 /* guiimage.cpp */,
 				FFACDEC012858CB200C0BCB4 /* guiimagedata.cpp */,
@@ -1454,6 +1460,8 @@
 				FF4010F81292C5A100A9755A /* guisceneinfomanager.h in Headers */,
 				FF4010F91292C5A100A9755A /* guisceneutility.h in Headers */,
 				FF4011311292C86400A9755A /* guiinterpolation.h in Headers */,
+				FFE5ED8C12992CE20053457A /* guifontdata.h in Headers */,
+				FFE5ED8E12992CF40053457A /* guiinterfacestringconv.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1704,7 +1712,6 @@
 				FFACE0481285943A00C0BCB4 /* guidebug.cpp in Sources */,
 				FFACE0491285943A00C0BCB4 /* guievent.cpp in Sources */,
 				FFACE04A1285943A00C0BCB4 /* guiexception.cpp in Sources */,
-				FFACE04B1285943A00C0BCB4 /* guifont.cpp in Sources */,
 				FFACE04C1285943A00C0BCB4 /* guifontmanager.cpp in Sources */,
 				FFACE04D1285943A00C0BCB4 /* guiimage.cpp in Sources */,
 				FFACE04E1285943A00C0BCB4 /* guiimagedata.cpp in Sources */,
@@ -1765,6 +1772,7 @@
 				FF4011001292C5BE00A9755A /* guisceneinfomanager.cpp in Sources */,
 				FF4011011292C5BE00A9755A /* guisceneutility.cpp in Sources */,
 				FF40112F1292C84F00A9755A /* guiinterpolation.cpp in Sources */,
+				FFE5ED8A12992CB40053457A /* guifontdata.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

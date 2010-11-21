@@ -278,7 +278,7 @@ namespace guiex
 	void	IGUIRender_opengles::DrawTile(const CGUIMatrix4& rWorldMatrix,
 		const CGUIRect& rDestRect, real z, 
 		const CGUITextureImp* pTexture, const CGUIRect& rTextureRect, 
-		EImageOperation eImageOperation, 				
+		EImageOrientation eImageOrientation, 				
 		GUIARGB  rColor_topleft,
 		GUIARGB  rColor_topright,
 		GUIARGB  rColor_bottomleft,
@@ -300,7 +300,7 @@ namespace guiex
 		}
 
 		//set texture coordinate
-		SetTexCoordinate(m_pVertex, rTextureRect, eImageOperation);
+		SetTexCoordinate(m_pVertex, rTextureRect, eImageOrientation);
 
 		real fLeft = rDestRect.m_fLeft;
 		real fRight = rDestRect.m_fRight;
@@ -489,11 +489,11 @@ namespace guiex
 		TestOpenglError("RenderRectForStencil 2");
 	}
 	//------------------------------------------------------------------------------
-	void	IGUIRender_opengles::SetTexCoordinate(SVertexForTile* pTexture, const CGUIRect& tex, EImageOperation eImageOperation)
+	void	IGUIRender_opengles::SetTexCoordinate(SVertexForTile* pTexture, const CGUIRect& tex, EImageOrientation eImageOrientation)
 	{
-		switch(eImageOperation)
+		switch(eImageOrientation)
 		{
-		case IMAGE_FLIPHORIZON:
+		case eImageOrientation_FlipHorizon:
 			//vert0
 			pTexture[0].tex[0] = tex.m_fRight;
 			pTexture[0].tex[1] = tex.m_fTop;
@@ -511,7 +511,7 @@ namespace guiex
 			pTexture[3].tex[1] = tex.m_fBottom;
 			break;
 
-		case IMAGE_FLIPVERTICAL:
+		case eImageOrientation_FlipVertical:
 			//vert0
 			pTexture[0].tex[0] = tex.m_fLeft;
 			pTexture[0].tex[1] = tex.m_fBottom;
@@ -529,7 +529,7 @@ namespace guiex
 			pTexture[3].tex[1] = tex.m_fTop;
 			break;
 
-		case IMAGE_ROTATE90CCW:
+		case eImageOrientation_90CCW:
 			//vert0
 			pTexture[0].tex[0] = tex.m_fRight;
 			pTexture[0].tex[1] = tex.m_fTop;
@@ -547,7 +547,7 @@ namespace guiex
 			pTexture[3].tex[1] = tex.m_fBottom;
 			break;
 
-		case IMAGE_ROTATE90CW:
+		case eImageOrientation_90CW:
 			//vert0
 			pTexture[0].tex[0] = tex.m_fLeft;
 			pTexture[0].tex[1] = tex.m_fBottom;
@@ -565,7 +565,7 @@ namespace guiex
 			pTexture[3].tex[1] = tex.m_fTop;
 			break;
 
-		case IMAGE_NONE:
+		case eImageOrientation_Normal:
 		default:
 			//vert0
 			pTexture[0].tex[0] = tex.m_fLeft;
