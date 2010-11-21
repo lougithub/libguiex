@@ -278,11 +278,11 @@ namespace guiex
 		IGUIInterfaceConfigFile* pConfigFile = CGUIInterfaceManager::Instance()->GetInterfaceConfigFile();
 		if( !pConfigFile )
 		{
-			throw CGUIException("[CGUIWidgetSystem::LoadResourceConfigFile]: failed to get interface <IGUIConfigFile>!");
+			throw CGUIException("[CGUIWidgetSystem::LoadResource]: failed to get interface <IGUIConfigFile>!");
 		}
 		if( 0 != pConfigFile->LoadResourceConfigFile(rFileName, rSceneName) )
 		{
-			throw CGUIException("[CGUIWidgetSystem::LoadResourceConfigFile]: failed to load config file <%s : %s>!", rSceneName.c_str(), rFileName.c_str());
+			throw CGUIException("[CGUIWidgetSystem::LoadResource]: failed to load config file <%s : %s>!", rSceneName.c_str(), rFileName.c_str());
 		}
 		return 0;
 	}

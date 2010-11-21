@@ -16,11 +16,12 @@
 //libguiex module
 //#include <libguiex_module/keyboard_winapi\guikeyboard_winapi.h>
 //#include <libguiex_module/mouse_winapi\guimouse_winapi.h>
-//#include <libguiex_module/font_ft2\guifont_ft2.h>
+#include <libguiex_module/font_cocoa/guifont_cocoa.h>
 #include <libguiex_module/imageloader_tga/guiimageloader_tga.h>
-#include <libguiex_module/filesys_stdio/guifilesys_stdio.h>
+#include <libguiex_module/filesys_cocoa/guifilesys_cocoa.h>
 #include <libguiex_module/configfile_tinyxml/guiconfigfile_tinyxml.h>
 #include <libguiex_module/render_opengles/guirender_opengles.h>
+#include <libguiex_module/stringconv_cocoa/guistringconv_cocoa.h>
 //#include <libguiex_module/script_lua\guiscript_lua.h>
 //#include <libguiex_module/ime_winapi\guiime_winapi.h>
 
@@ -65,19 +66,19 @@ void CLibGuiexEngine::Initialize( int width, int height, const char* szDataPath 
 {
     //guiex::CGUIAssert::SetWarningCB(EditorWarningCB, NULL);
     guiex::CGUIWidgetSystem::Instance()->SetScreenSize(width,height);
-    guiex::CGUIWidgetSystem::Instance()->SetDataPath(szDataPath);
-    guiex::CGUIWidgetSystem::Instance()->SetDrawExtraInfo(true);
+    guiex::CGUIWidgetSystem::Instance()->SetDataPath(guiex::CGUIString(szDataPath) + "/");
+    //guiex::CGUIWidgetSystem::Instance()->SetDrawExtraInfo(true);
 	
     //register interface
     GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengles);
     GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_tga);
-    GUI_REGISTER_INTERFACE_LIB( IGUIFileSys_stdio);
+	GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_cocoa);   
+	GUI_REGISTER_INTERFACE_LIB( IGUIFileSys_cocoa);
     //GUI_REGISTER_INTERFACE_LIB( "IGUIMouse", IGUIMouse_winapi);
-    //GUI_REGISTER_INTERFACE_LIB( "IGUIFont", IGUIFont_ft2);
+    GUI_REGISTER_INTERFACE_LIB( IGUIFont_cocoa);
     //GUI_REGISTER_INTERFACE_LIB( "IGUIKeyboard", IGUIKeyboard_winapi);
     GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
     //GUI_REGISTER_INTERFACE_LIB_ARG( "IGUIScript", IGUIScript_lua, FuncInitScript);
-    //GUI_REGISTER_INTERFACE_LIB_ARG( "IGUIIme", IGUIIme_winapi, pCanvas->GetHandle());
 	
     //register widget
     guiex::CGUIWidgetGenerator** pGenerator = guiex::GetAllGenerators();
@@ -92,7 +93,7 @@ void CLibGuiexEngine::Initialize( int width, int height, const char* szDataPath 
 
 void CLibGuiexEngine::InitWidgets()
 {	
-	if( 0 != guiex::CGUISceneInfoManager::Instance()->LoadScenes())
+	if( 0 != guiex::CGUISceneInfoManager::Instance()->LoadScenes("test/", ".uip"))
 	{
 		return;
 	}
@@ -102,11 +103,14 @@ void CLibGuiexEngine::InitWidgets()
 		printf("scene: %s\n", guiex::CGUISceneInfoManager::Instance()->GetSceneFilePaths()[i].c_str());
 	}
 	
-	if( 0 != guiex::CGUISceneUtility::LoadResource( "resource.uip" ))
+	if( 0 != guiex::CGUISceneUtility::LoadResource( "common.uip" ))
 	{
 		return;
-	}			   
+	}		
 	
+	guiex::CGUIWidget* pWidget = guiex::CGUIWidgetSystem::Instance()->LoadPage( "dialog_ok.xml", "common.uip");
+	guiex::CGUIWidgetSystem::Instance()->OpenPage(pWidget);	
+/*	
 	guiex::CGUIWidget* pWidget_staticimage = GUI_CREATE_WIDGET("CGUIWgtStaticImage", "staticimage_0", "hello_ipad");
 	pWidget_staticimage->SetImage( "BGIMAGE", "bg_blue" );
 	pWidget_staticimage->SetSize( 200, 200 );
@@ -146,6 +150,7 @@ void CLibGuiexEngine::InitWidgets()
 	
 	guiex::CGUIWidgetSystem::Instance()->AddPage(pWidget_staticimage);
 	guiex::CGUIWidgetSystem::Instance()->OpenPage(pWidget_staticimage); 
+ */
 }
 
 

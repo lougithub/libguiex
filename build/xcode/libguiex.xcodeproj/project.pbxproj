@@ -32,8 +32,6 @@
 		FF04084E128847C20053FF31 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF040847128847C20053FF31 /* tinyxmlerror.cpp */; };
 		FF04084F128847C20053FF31 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF040848128847C20053FF31 /* tinyxmlparser.cpp */; };
 		FF040850128847C20053FF31 /* xmltest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF040849128847C20053FF31 /* xmltest.cpp */; };
-		FF04086B12884CF70053FF31 /* guifilesys_stdio.h in Headers */ = {isa = PBXBuildFile; fileRef = FF04086A12884CF70053FF31 /* guifilesys_stdio.h */; };
-		FF04086E12884D090053FF31 /* guifilesys_stdio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF04086D12884D090053FF31 /* guifilesys_stdio.cpp */; };
 		FF1B89601289972D006584D3 /* guirender_opengles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF1B895E1289972D006584D3 /* guirender_opengles.cpp */; };
 		FF1B89611289972D006584D3 /* guitexture_opengles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF1B895F1289972D006584D3 /* guitexture_opengles.cpp */; };
 		FF1B896512899741006584D3 /* guirender_opengles.h in Headers */ = {isa = PBXBuildFile; fileRef = FF1B896312899741006584D3 /* guirender_opengles.h */; };
@@ -267,9 +265,25 @@
 		FFBDE1E6128EBA19003A1CA1 /* b2RevoluteJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = FFBDE16D128EBA19003A1CA1 /* b2RevoluteJoint.h */; };
 		FFBDE1E7128EBA19003A1CA1 /* b2WeldJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFBDE16E128EBA19003A1CA1 /* b2WeldJoint.cpp */; };
 		FFBDE1E8128EBA19003A1CA1 /* b2WeldJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = FFBDE16F128EBA19003A1CA1 /* b2WeldJoint.h */; };
+		FFE4948F129945E9002F0BA6 /* guifilesys_cocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = FFE4948E129945E9002F0BA6 /* guifilesys_cocoa.mm */; };
+		FFE4949212994601002F0BA6 /* guifilesys_cocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = FFE4949112994601002F0BA6 /* guifilesys_cocoa.h */; };
+		FFE494F312995BC6002F0BA6 /* guiinterfacestringconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFE494F212995BC6002F0BA6 /* guiinterfacestringconv.cpp */; };
+		FFE4952A12995E52002F0BA6 /* test in Resources */ = {isa = PBXBuildFile; fileRef = FFE5EDFB129944390053457A /* test */; };
 		FFE5ED8A12992CB40053457A /* guifontdata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFE5ED8912992CB40053457A /* guifontdata.cpp */; };
 		FFE5ED8C12992CE20053457A /* guifontdata.h in Headers */ = {isa = PBXBuildFile; fileRef = FFE5ED8B12992CE20053457A /* guifontdata.h */; };
 		FFE5ED8E12992CF40053457A /* guiinterfacestringconv.h in Headers */ = {isa = PBXBuildFile; fileRef = FFE5ED8D12992CF40053457A /* guiinterfacestringconv.h */; };
+		FFE5EDBD1299311C0053457A /* guistringconv_cocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = FFE5EDBC1299311C0053457A /* guistringconv_cocoa.mm */; };
+		FFE5EDC01299313A0053457A /* guistringconv_cocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = FFE5EDBF1299313A0053457A /* guistringconv_cocoa.h */; };
+		FFEAA4B612996A94001639D3 /* guifont_cocoa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFEAA4B412996A94001639D3 /* guifont_cocoa.cpp */; };
+		FFEAA4B712996A94001639D3 /* guifontdata_cocoa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFEAA4B512996A94001639D3 /* guifontdata_cocoa.cpp */; };
+		FFEAA4BB12996AA4001639D3 /* guifont_cocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = FFEAA4B912996AA4001639D3 /* guifont_cocoa.h */; };
+		FFEAA4BC12996AA4001639D3 /* guifontdata_cocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = FFEAA4BA12996AA4001639D3 /* guifontdata_cocoa.h */; };
+		FFEAA4EB12996E2B001639D3 /* guiwgtpanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDF5012858CB200C0BCB4 /* guiwgtpanel.cpp */; };
+		FFEAA4EC12996E38001639D3 /* guiwgtbutton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDF4412858CB200C0BCB4 /* guiwgtbutton.cpp */; };
+		FFEAA4ED12996E4B001639D3 /* guiwgtbutton.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDE9712858C9D00C0BCB4 /* guiwgtbutton.h */; };
+		FFEAA4EE12996E4B001639D3 /* guiwgtpanel.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDEA312858C9D00C0BCB4 /* guiwgtpanel.h */; };
+		FFEAA4FC12996EE1001639D3 /* guiwgtstatictext.h in Headers */ = {isa = PBXBuildFile; fileRef = FFACDEAC12858C9D00C0BCB4 /* guiwgtstatictext.h */; };
+		FFEAA4FD12996EEE001639D3 /* guiwgtstatictext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFACDF5912858CB200C0BCB4 /* guiwgtstatictext.cpp */; };
 		FFF2E7D8128C277100D69E33 /* liblibguiex_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FFACDBFD12858B0000C0BCB4 /* liblibguiex_core.a */; };
 		FFF2E7D9128C277100D69E33 /* liblibguiex_widget.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FFACDF6112858D1800C0BCB4 /* liblibguiex_widget.a */; };
 		FFF2E7DA128C277100D69E33 /* libliguiex_module.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FFACDF6B12858D4E00C0BCB4 /* libliguiex_module.a */; };
@@ -330,19 +344,6 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		FF4711B91292DE5F00D267F9 /* Resource */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = Users/louguoliang/Code/libguiex_googlecode/data/data_helloipad;
-			dstSubfolderSpec = 7;
-			files = (
-			);
-			name = Resource;
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FF030683128EDE96009C3ED4 /* ApplicationEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationEngine.h; sourceTree = "<group>"; };
@@ -368,8 +369,6 @@
 		FF040847128847C20053FF31 /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxmlerror.cpp; path = ../../external/tinyxml/tinyxmlerror.cpp; sourceTree = SOURCE_ROOT; };
 		FF040848128847C20053FF31 /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxmlparser.cpp; path = ../../external/tinyxml/tinyxmlparser.cpp; sourceTree = SOURCE_ROOT; };
 		FF040849128847C20053FF31 /* xmltest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xmltest.cpp; path = ../../external/tinyxml/xmltest.cpp; sourceTree = SOURCE_ROOT; };
-		FF04086A12884CF70053FF31 /* guifilesys_stdio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guifilesys_stdio.h; sourceTree = "<group>"; };
-		FF04086D12884D090053FF31 /* guifilesys_stdio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guifilesys_stdio.cpp; sourceTree = "<group>"; };
 		FF0FC57312897F15004B195F /* hello_ipad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hello_ipad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF1B895E1289972D006584D3 /* guirender_opengles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guirender_opengles.cpp; sourceTree = "<group>"; };
 		FF1B895F1289972D006584D3 /* guitexture_opengles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guitexture_opengles.cpp; sourceTree = "<group>"; };
@@ -677,9 +676,19 @@
 		FFBDE16D128EBA19003A1CA1 /* b2RevoluteJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2RevoluteJoint.h; sourceTree = "<group>"; };
 		FFBDE16E128EBA19003A1CA1 /* b2WeldJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2WeldJoint.cpp; sourceTree = "<group>"; };
 		FFBDE16F128EBA19003A1CA1 /* b2WeldJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2WeldJoint.h; sourceTree = "<group>"; };
+		FFE4948E129945E9002F0BA6 /* guifilesys_cocoa.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = guifilesys_cocoa.mm; sourceTree = "<group>"; };
+		FFE4949112994601002F0BA6 /* guifilesys_cocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guifilesys_cocoa.h; sourceTree = "<group>"; };
+		FFE494F212995BC6002F0BA6 /* guiinterfacestringconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiinterfacestringconv.cpp; sourceTree = "<group>"; };
 		FFE5ED8912992CB40053457A /* guifontdata.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guifontdata.cpp; sourceTree = "<group>"; };
 		FFE5ED8B12992CE20053457A /* guifontdata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guifontdata.h; sourceTree = "<group>"; };
 		FFE5ED8D12992CF40053457A /* guiinterfacestringconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiinterfacestringconv.h; sourceTree = "<group>"; };
+		FFE5EDBC1299311C0053457A /* guistringconv_cocoa.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = guistringconv_cocoa.mm; sourceTree = "<group>"; };
+		FFE5EDBF1299313A0053457A /* guistringconv_cocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guistringconv_cocoa.h; sourceTree = "<group>"; };
+		FFE5EDFB129944390053457A /* test */ = {isa = PBXFileReference; lastKnownFileType = folder; name = test; path = ../../data/test; sourceTree = SOURCE_ROOT; };
+		FFEAA4B412996A94001639D3 /* guifont_cocoa.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guifont_cocoa.cpp; sourceTree = "<group>"; };
+		FFEAA4B512996A94001639D3 /* guifontdata_cocoa.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guifontdata_cocoa.cpp; sourceTree = "<group>"; };
+		FFEAA4B912996AA4001639D3 /* guifont_cocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guifont_cocoa.h; sourceTree = "<group>"; };
+		FFEAA4BA12996AA4001639D3 /* guifontdata_cocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guifontdata_cocoa.h; sourceTree = "<group>"; };
 		FFF2E7DF128C27CD00D69E33 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -839,9 +848,11 @@
 		FF040809128840070053FF31 /* libguiex_module */ = {
 			isa = PBXGroup;
 			children = (
+				FFEAA4B812996AA4001639D3 /* font_cocoa */,
+				FFE4949012994601002F0BA6 /* filesys_cocoa */,
+				FFE5EDBE1299313A0053457A /* stringconv_cocoa */,
 				FF034ED0128ACFE100950825 /* imageloader_tga */,
 				FF1B896212899741006584D3 /* render_opengles */,
-				FF04086912884CF70053FF31 /* filesys_stdio */,
 				FF04081F128840D90053FF31 /* configfile_tinyxml */,
 			);
 			name = libguiex_module;
@@ -850,9 +861,11 @@
 		FF04080A128840150053FF31 /* libguiex_module */ = {
 			isa = PBXGroup;
 			children = (
+				FFEAA4B312996A94001639D3 /* font_cocoa */,
+				FFE4948D129945E9002F0BA6 /* filesys_cocoa */,
+				FFE5EDBB1299311C0053457A /* stringconv_cocoa */,
 				FF034ECA128ACFD100950825 /* imageloader_tga */,
 				FF1B895D1289972D006584D3 /* render_opengles */,
-				FF04086C12884D090053FF31 /* filesys_stdio */,
 				FF04081C128840AC0053FF31 /* configfile_tinyxml */,
 			);
 			name = libguiex_module;
@@ -897,24 +910,6 @@
 				FF040849128847C20053FF31 /* xmltest.cpp */,
 			);
 			name = tinyxml;
-			sourceTree = "<group>";
-		};
-		FF04086912884CF70053FF31 /* filesys_stdio */ = {
-			isa = PBXGroup;
-			children = (
-				FF04086A12884CF70053FF31 /* guifilesys_stdio.h */,
-			);
-			name = filesys_stdio;
-			path = libguiex_module/filesys_stdio;
-			sourceTree = "<group>";
-		};
-		FF04086C12884D090053FF31 /* filesys_stdio */ = {
-			isa = PBXGroup;
-			children = (
-				FF04086D12884D090053FF31 /* guifilesys_stdio.cpp */,
-			);
-			name = filesys_stdio;
-			path = libguiex_module/filesys_stdio;
 			sourceTree = "<group>";
 		};
 		FF1B895D1289972D006584D3 /* render_opengles */ = {
@@ -1098,6 +1093,7 @@
 		FFACDEB012858CB200C0BCB4 /* libguiex_core */ = {
 			isa = PBXGroup;
 			children = (
+				FFE494F212995BC6002F0BA6 /* guiinterfacestringconv.cpp */,
 				FFE5ED8912992CB40053457A /* guifontdata.cpp */,
 				FF40112E1292C84F00A9755A /* guiinterpolation.cpp */,
 				FF4010FC1292C5BE00A9755A /* guisceneinfo.cpp */,
@@ -1352,9 +1348,66 @@
 			path = Joints;
 			sourceTree = "<group>";
 		};
+		FFE4948D129945E9002F0BA6 /* filesys_cocoa */ = {
+			isa = PBXGroup;
+			children = (
+				FFE4948E129945E9002F0BA6 /* guifilesys_cocoa.mm */,
+			);
+			name = filesys_cocoa;
+			path = libguiex_module/filesys_cocoa;
+			sourceTree = "<group>";
+		};
+		FFE4949012994601002F0BA6 /* filesys_cocoa */ = {
+			isa = PBXGroup;
+			children = (
+				FFE4949112994601002F0BA6 /* guifilesys_cocoa.h */,
+			);
+			name = filesys_cocoa;
+			path = libguiex_module/filesys_cocoa;
+			sourceTree = "<group>";
+		};
+		FFE5EDBB1299311C0053457A /* stringconv_cocoa */ = {
+			isa = PBXGroup;
+			children = (
+				FFE5EDBC1299311C0053457A /* guistringconv_cocoa.mm */,
+			);
+			name = stringconv_cocoa;
+			path = libguiex_module/stringconv_cocoa;
+			sourceTree = "<group>";
+		};
+		FFE5EDBE1299313A0053457A /* stringconv_cocoa */ = {
+			isa = PBXGroup;
+			children = (
+				FFE5EDBF1299313A0053457A /* guistringconv_cocoa.h */,
+			);
+			name = stringconv_cocoa;
+			path = libguiex_module/stringconv_cocoa;
+			sourceTree = "<group>";
+		};
+		FFEAA4B312996A94001639D3 /* font_cocoa */ = {
+			isa = PBXGroup;
+			children = (
+				FFEAA4B412996A94001639D3 /* guifont_cocoa.cpp */,
+				FFEAA4B512996A94001639D3 /* guifontdata_cocoa.cpp */,
+			);
+			name = font_cocoa;
+			path = libguiex_module/font_cocoa;
+			sourceTree = "<group>";
+		};
+		FFEAA4B812996AA4001639D3 /* font_cocoa */ = {
+			isa = PBXGroup;
+			children = (
+				FFEAA4B912996AA4001639D3 /* guifont_cocoa.h */,
+				FFEAA4BA12996AA4001639D3 /* guifontdata_cocoa.h */,
+			);
+			name = font_cocoa;
+			path = libguiex_module/font_cocoa;
+			sourceTree = "<group>";
+		};
 		FFF654DD128C4A5F00C8EB42 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				FFE5EDFB129944390053457A /* test */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -1469,6 +1522,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFEAA4FC12996EE1001639D3 /* guiwgtstatictext.h in Headers */,
+				FFEAA4ED12996E4B001639D3 /* guiwgtbutton.h in Headers */,
+				FFEAA4EE12996E4B001639D3 /* guiwgtpanel.h in Headers */,
 				FF04080412883F7E0053FF31 /* guiwgt.h in Headers */,
 				FF0407F312883E240053FF31 /* guiwgtgeneratewidgets.h in Headers */,
 				FF0407F212883E030053FF31 /* guiwgtstaticimage.h in Headers */,
@@ -1480,11 +1536,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF040821128840D90053FF31 /* guiconfigfile_tinyxml.h in Headers */,
-				FF04086B12884CF70053FF31 /* guifilesys_stdio.h in Headers */,
 				FF1B896512899741006584D3 /* guirender_opengles.h in Headers */,
 				FF1B896612899741006584D3 /* guitexture_opengles.h in Headers */,
 				FF034ED3128ACFE100950825 /* guiimagedata_tga.h in Headers */,
 				FF034ED4128ACFE100950825 /* guiimageloader_tga.h in Headers */,
+				FFE5EDC01299313A0053457A /* guistringconv_cocoa.h in Headers */,
+				FFE4949212994601002F0BA6 /* guifilesys_cocoa.h in Headers */,
+				FFEAA4BB12996AA4001639D3 /* guifont_cocoa.h in Headers */,
+				FFEAA4BC12996AA4001639D3 /* guifontdata_cocoa.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1555,7 +1614,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FF0FC57812897F16004B195F /* Build configuration list for PBXNativeTarget "hello_ipad" */;
 			buildPhases = (
-				FF4711B91292DE5F00D267F9 /* Resource */,
+				FFE4952F12995E58002F0BA6 /* Resources */,
 				FF0FC57012897F15004B195F /* Sources */,
 				FF0FC57112897F15004B195F /* Frameworks */,
 			);
@@ -1673,6 +1732,17 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		FFE4952F12995E58002F0BA6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FFE4952A12995E52002F0BA6 /* test in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		FF04083A128847780053FF31 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -1773,6 +1843,7 @@
 				FF4011011292C5BE00A9755A /* guisceneutility.cpp in Sources */,
 				FF40112F1292C84F00A9755A /* guiinterpolation.cpp in Sources */,
 				FFE5ED8A12992CB40053457A /* guifontdata.cpp in Sources */,
+				FFE494F312995BC6002F0BA6 /* guiinterfacestringconv.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1780,6 +1851,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFEAA4FD12996EEE001639D3 /* guiwgtstatictext.cpp in Sources */,
+				FFEAA4EC12996E38001639D3 /* guiwgtbutton.cpp in Sources */,
+				FFEAA4EB12996E2B001639D3 /* guiwgtpanel.cpp in Sources */,
 				FFF2E7EF128C28F800D69E33 /* guiwgtstatic.cpp in Sources */,
 				FF0407F412883E3F0053FF31 /* guiwgtgeneratewidgets.cpp in Sources */,
 				FF0407F112883DEB0053FF31 /* guiwgtstaticimage.cpp in Sources */,
@@ -1791,11 +1865,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF04081E128840AC0053FF31 /* guiconfigfile_tinyxml.cpp in Sources */,
-				FF04086E12884D090053FF31 /* guifilesys_stdio.cpp in Sources */,
 				FF1B89601289972D006584D3 /* guirender_opengles.cpp in Sources */,
 				FF1B89611289972D006584D3 /* guitexture_opengles.cpp in Sources */,
 				FF034ECD128ACFD100950825 /* guiimagedata_tga.cpp in Sources */,
 				FF034ECE128ACFD100950825 /* guiimageloader_tga.cpp in Sources */,
+				FFE5EDBD1299311C0053457A /* guistringconv_cocoa.mm in Sources */,
+				FFE4948F129945E9002F0BA6 /* guifilesys_cocoa.mm in Sources */,
+				FFEAA4B612996A94001639D3 /* guifont_cocoa.cpp in Sources */,
+				FFEAA4B712996A94001639D3 /* guifontdata_cocoa.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

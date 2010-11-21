@@ -81,6 +81,7 @@ namespace guiex
 		char* pBuf = new char[rPath.size()+1];
 		strcpy( pBuf, rPath.c_str() );
 		CGUIString aDirName(dirname( pBuf));
+		aDirName += "/";
 		delete[] pBuf;
 		return aDirName;
 #else
@@ -379,11 +380,12 @@ namespace guiex
 				CGUIString strValue = pNode->Attribute( "value" );
 				if( strType == "SCRIPT" )
 				{
-					if( guiex::CGUIWidgetSystem::Instance()->ShouldRunScript())
+					if( pScript &&
+					   guiex::CGUIWidgetSystem::Instance()->ShouldRunScript())
 					{
 						// create script
 						pScript->CreateScript( rSceneName );
-
+						
 						// load script
 						CGUIString strPath = CGUISceneInfoManager::Instance()->GetScenePath( rSceneName ) + strValue;
 						pScript->ExecuteFile(strPath, rSceneName);
@@ -409,8 +411,14 @@ namespace guiex
 
 			pNode = pNode->NextSiblingElement();
 		}
-
-		bool bHasScript = pScript->HasScript(rSceneName);
+		
+		bool bHasScript = false;
+		if( pScript &&
+		   guiex::CGUIWidgetSystem::Instance()->ShouldRunScript())
+		{
+			bHasScript = pScript->HasScript(rSceneName);
+		}
+		
 		for( std::list<CGUIWidget*>::iterator itor = aWidgetList.begin();
 			itor != aWidgetList.end();
 			itor++)

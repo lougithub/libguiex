@@ -42,6 +42,9 @@
 #include "guicollisttextitem.h"
 #elif defined(GUIEX_PLATFORM_MAC)
 #include "guiwgtstaticimage.h"
+#include "guiwgtstatictext.h"
+#include "guiwgtpanel.h"
+#include "guiwgtbutton.h"
 #else
 #	error "unknown platform"	
 #endif
