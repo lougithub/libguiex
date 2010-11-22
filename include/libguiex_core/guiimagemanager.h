@@ -55,7 +55,6 @@ namespace guiex
 		* @brief register a named image by property
 		*/
 		int32 RegisterImage( 
-			const CGUIString& rName,
 			const CGUIString& rSceneName,
 			const CGUIProperty& rProperty);
 
@@ -84,8 +83,8 @@ namespace guiex
 
 		CGUIImage* AllocateResource( const CGUIString& rImageName ) const;
 
-		CGUIImage* AllocateResource( 			
-			const CGUIProperty& rProperty ) const;
+		//CGUIImage* AllocateResource( 			
+		//	const CGUIProperty& rProperty ) const;
 
 		CGUIImage* AllocateResource( 			
 			const CGUIString& rPath, 
@@ -111,7 +110,6 @@ namespace guiex
 		* @brief create a image by property;
 		*/
 		CGUIImage* DoCreateImage( 
-			const CGUIString& rName,
 			const CGUIString& rSceneName,
 			const CGUIProperty& rProperty) const;
 

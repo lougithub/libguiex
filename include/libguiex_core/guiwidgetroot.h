@@ -33,8 +33,6 @@ namespace guiex
 		*/
 		CGUIWidgetRoot( const CGUIString& rName, const CGUIString& rSceneName );
 
-		virtual void Open();
-
 	protected:
 		///initialize root
 		void	InitRoot();

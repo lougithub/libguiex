@@ -53,14 +53,14 @@ namespace guiex
 		m_pImagePush = NULL;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIColListHeaderSegment::Create()
+	void CGUIColListHeaderSegment::Create()
 	{
 		if( !m_pImageNormal )
 		{
 			throw CGUIException("[CGUIColListHeaderSegment::Create]: the image <BTN_NORMAL> hasn't been found!");
 		}
 
-		return CGUIWidget::Create();
+		CGUIWidget::Create();
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIColListHeaderSegment::OnSetImage( const CGUIString& rName, CGUIImage* pImage )

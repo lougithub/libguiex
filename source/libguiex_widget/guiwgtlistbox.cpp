@@ -63,7 +63,7 @@ namespace guiex
 		SetGenerateClickEvent(true);
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIWgtListBox::Create()
+	void CGUIWgtListBox::Create()
 	{
 		if( !m_pImageBG )
 		{
@@ -74,7 +74,7 @@ namespace guiex
 			throw CGUIException("[CGUIWgtCheckButton::Create]: the image <SELECTION_COLOR> hasn't been found!");
 		}
 
-		return CGUIWidget::Create();
+		CGUIWidget::Create();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtListBox::OnSetImage( const CGUIString& rName, CGUIImage* pImage )

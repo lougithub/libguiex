@@ -66,13 +66,13 @@ namespace guiex
 		SetGenerateClickEvent( true );
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIWgtScrollbarContainer::Create()
+	void CGUIWgtScrollbarContainer::Create()
 	{
 		//create scrollbar
 		m_pScrollbarHorz->Create();
 		m_pScrollbarVert->Create();
 
-		return CGUIWidget::Create();
+		CGUIWidget::Create();
 	}
 	//------------------------------------------------------------------------------
 	void		CGUIWgtScrollbarContainer::OnSetImage( const CGUIString& rName, CGUIImage* pImage )

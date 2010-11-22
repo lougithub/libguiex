@@ -46,12 +46,6 @@ namespace guiex
 		SetMovable( true );
 		SetOpenWithParent( false );
 	}	
-
-	//------------------------------------------------------------------------------
-	int32 CGUIWgtDialog::Create()
-	{
-		return CGUIWidget::Create();
-	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtDialog::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
 	{

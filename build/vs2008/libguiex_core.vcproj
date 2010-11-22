@@ -509,6 +509,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\include\libguiex_core\guienumtype.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\include\libguiex_core\guievent.h"
 				>
 			</File>

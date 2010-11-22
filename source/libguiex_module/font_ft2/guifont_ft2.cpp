@@ -205,7 +205,6 @@ namespace guiex
 
 			pFont->m_nX += bitmap.width;
 
-
 			//add to map
 			pFont->m_mapCharsData.insert(std::make_pair(charCode, pCharData));
 

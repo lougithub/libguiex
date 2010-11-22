@@ -184,7 +184,7 @@ namespace guiex
 		SetGenerateDBClickEvent(true);
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIWgtColumnList::Create()
+	void CGUIWgtColumnList::Create()
 	{
 		if( !m_pImageBG )
 		{
@@ -197,8 +197,7 @@ namespace guiex
 
 		m_pHeader->Create();
 
-
-		return CGUIWidget::Create();
+		CGUIWidget::Create();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtColumnList::OnSetImage( const CGUIString& rName, CGUIImage* pImage )

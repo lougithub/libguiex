@@ -45,32 +45,27 @@ namespace guiex
 		CGUIWgtCheckButton( const CGUIString& rName, const CGUIString& rSceneName );
 
 		/**
-		* @brief create this widget
-		*/
-		virtual int32 Create();
-
-		/**
 		* @brief set widget to check state
 		* @notice this function won't generate OnCheck event
 		*/
-		virtual void	SetCheck(bool bChecked);
+		virtual void SetCheck(bool bChecked);
 
 		/**
 		* @brief get state of checkbutton
 		*/
-		bool	IsCheck() const;
+		bool IsCheck() const;
 
 		/**
 		* @brief load widget config from property
 		*/
-		virtual CGUIProperty*	GenerateProperty(const CGUIString& rName, const CGUIString& rType );
+		virtual CGUIProperty* GenerateProperty(const CGUIString& rName, const CGUIString& rType );
 
 		/**
 		* @brief load widget config from property
 		*/
-		virtual void			ProcessProperty( const CGUIProperty* pProperty);
+		virtual void ProcessProperty( const CGUIProperty* pProperty);
 
-		static CGUIWgtCheckButton*	FromWidget( CGUIWidget* pWidget );
+		static CGUIWgtCheckButton* FromWidget( CGUIWidget* pWidget );
 
 	protected:
 		/**
@@ -83,12 +78,12 @@ namespace guiex
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 
 		///initialize check button
-		void	InitCheckButton();
+		void InitCheckButton();
 
 		/**
 		* @brief override the OnSetImage function
 		*/
-		virtual void	OnSetImage( const CGUIString& rName, CGUIImage* pImage );
+		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage );
 
 	protected:	//!< callback function
 		virtual uint32		OnMouseEnter( CGUIEventMouse* pEvent );

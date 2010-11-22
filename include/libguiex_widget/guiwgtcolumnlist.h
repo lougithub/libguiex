@@ -106,24 +106,24 @@ namespace guiex
 		/**
 		* @brief create this widget
 		*/
-		virtual int32 Create();
+		virtual void Create(); 
 
 		/**
 		* @brief set value
 		*/
-		virtual void	SetValue(const CGUIString& rName, const CGUIString& rValue);
+		virtual void SetValue(const CGUIString& rName, const CGUIString& rValue);
 
 		/**
 		* @brief get widget parameter's value
 		* for example: GetValue("alpha_local") will return "0.5"
 		*/
-		virtual CGUIString	GetValue(const CGUIString& rName) const;
+		virtual CGUIString GetValue(const CGUIString& rName) const;
 
 
 		/**
 		* @brief load widget config from property
 		*/
-		virtual void			ProcessProperty( const CGUIProperty* pProperty);
+		virtual void ProcessProperty( const CGUIProperty* pProperty);
 
 
 		////////////////////////////////////////////////////////////////////////////////
@@ -142,7 +142,7 @@ namespace guiex
 		/**
 		*brief Return a pointer to the first selected item.
 		*/
-		CGUIColListItem*	GetFirstSelectedItem(void) const;
+		CGUIColListItem* GetFirstSelectedItem(void) const;
 
 		/**
 		* @brief get the next selected item.
@@ -162,105 +162,105 @@ namespace guiex
 		*		- true to select the item, 
 		*		- false to de-select the item.
 		*/
-		void	SetItemSelected(CGUIColListItem* pItem, bool bSelected);
+		void SetItemSelected(CGUIColListItem* pItem, bool bSelected);
 
 		/**
 		* @brief Set the select state of an attached CGUIColListItem.
 		*/
-		void	SetItemSelected(uint32 nItemIndex, bool bSelected);
+		void SetItemSelected(uint32 nItemIndex, bool bSelected);
 
 		/**
 		* @brief Clear the selected state for all items.
 		*/
-		void	ClearAllSelections(void);
+		void ClearAllSelections(void);
 
 		/**
 		*	@brief get the item at position by given index
 		*/
-		CGUIColListItem*	GetItemFromIndex(uint32 nIndex) const;
+		CGUIColListItem* GetItemFromIndex(uint32 nIndex) const;
 
 
 		/**
 		* @brief Return the index of CGUIColListItem item
 		*/
-		uint32	GetItemIndex(const CGUIColListItem* pItem) const;
+		uint32 GetItemIndex(const CGUIColListItem* pItem) const;
 
 		/**
 		* @brief Add the given CGUIColListItem to the list.
 		*/
-		void	AddItem(CGUIColListItem* pItem);
+		void AddItem(CGUIColListItem* pItem);
 
 		/**
 		* @brief Add a default text item.
 		*/
-		void	AddItem( const CGUIStringW& rText );
+		void AddItem( const CGUIStringW& rText );
 
 		/** 
 		* @brief Insert an item into the list box after a specified item already in the list.
 		* Note that if the list is sorted, the item may not end up in the requested position.
 		*/
-		void	InsertItem(CGUIColListItem* pItem, const CGUIColListItem* pPosition);
+		void InsertItem(CGUIColListItem* pItem, const CGUIColListItem* pPosition);
 
 		/** 
 		* @brief Insert an item into the list box after a specified item already in the list.
 		* Note that if the list is sorted, the item may not end up in the requested position.
 		*/
-		void	InsertItem(CGUIColListItem* pItem, uint32 nIndex );
+		void InsertItem(CGUIColListItem* pItem, uint32 nIndex );
 
 		/** 
 		* @brief Insert an item into the list box after a specified item already in the list.
 		* Note that if the list is sorted, the item may not end up in the requested position.
 		*/
-		void	InsertItem( const CGUIStringW& rText, const CGUIColListItem* pPosition);
+		void InsertItem( const CGUIStringW& rText, const CGUIColListItem* pPosition);
 
 		/** 
 		* @brief Insert an item into the list box after a specified item already in the list.
 		* Note that if the list is sorted, the item may not end up in the requested position.
 		*/
-		void	InsertItem( const CGUIStringW& rText, uint32 nIndex );
+		void InsertItem( const CGUIStringW& rText, uint32 nIndex );
 
 		/** 
 		* @brief Removes the given item from the list box. 
 		* If the item is has the auto delete state set, the item will be deleted.
 		*/
-		void	RemoveItem( CGUIColListItem* pItem);
+		void RemoveItem( CGUIColListItem* pItem);
 
 		/** 
 		* @brief Removes the given item from the list box. 
 		* If the item is has the auto delete state set, the item will be deleted.
 		*/
-		void	RemoveItem( uint32 nIndex);
+		void RemoveItem( uint32 nIndex);
 
 		/**
 		* @brief Remove all items from the list.
 		*/
-		void	ClearList(void);
+		void ClearList(void);
 
 
 		/**
 		* @brief Set whether the list should allow multiple selections or just a single selection
 		*/
-		void	EnableMultiselect(bool bEnable);
+		void EnableMultiselect(bool bEnable);
 
 		/**
 		* @brief return whether multi-select is enabled
 		*/
-		bool	IsMultiselectEnabled(void) const;
+		bool IsMultiselectEnabled(void) const;
 
 		/**
 		* @brief return whether tooltips is enabled
 		*/
-		bool	IsItemTooltipsEnabled(void) const;
+		bool IsItemTooltipsEnabled(void) const;
 
 		/**
 		* @brief Set whether the tooptips should be shown
 		*/
-		void	EnableItemTooltips(bool bEnable);
+		void EnableItemTooltips(bool bEnable);
 
 		/**
 		* @brief return whether the string at index position index is selected
 		*/
-		bool	IsItemSelected(uint32 nIndex) const;
+		bool IsItemSelected(uint32 nIndex) const;
 
 		/**
 		* @brief Search the list for an item with the specified text
@@ -268,33 +268,33 @@ namespace guiex
 		* @param pStartItem indicated where the search is to begin, the search
 		*  will not include this item.  If it isNULL, the search will begin from the first item in the list.
 		*/
-		CGUIColListItem*	FindItemWithText(
+		CGUIColListItem* FindItemWithText(
 			const CGUIStringW& rText, const CGUIColListItem* pStartItem = NULL);
 
 		/**
 		* @brief Return whether the specified CGUIColListItem is in the List
 		*/
-		bool	IsListboxItemInList(const CGUIColListItem* pItem) const;
+		bool IsListboxItemInList(const CGUIColListItem* pItem) const;
 
 		/**
 		* @brief Set whether the list should be sorted.
 		*/
-		void	SetSorting(bool bSorting);
+		void SetSorting(bool bSorting);
 
 		/**
 		* @brief Get whether the list should be sorted.
 		*/
-		bool 	IsSorting() const;
+		bool  IsSorting() const;
 
 		/**
 		* @brief make the specified item visible
 		*/
-		void	MakeItemVisible(uint32 nItemIndex);
+		void MakeItemVisible(uint32 nItemIndex);
 
 		/**
 		* @brief make the specified item visible
 		*/
-		void	MakeItemVisible(const CGUIColListItem* pItem);
+		void MakeItemVisible(const CGUIColListItem* pItem);
 
 
 
@@ -409,97 +409,97 @@ namespace guiex
 		CGUIWgtColumnList( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
 		/// render
-		virtual void		RenderSelf(IGUIInterfaceRender* pRender);
+		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 
 		/**
 		* @brief override the OnSetImage function
 		*/
-		virtual void		OnSetImage( const CGUIString& rName, CGUIImage* pImage );
+		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage );
 
 		///initialize check button
-		void				InitListBox();
+		void InitListBox();
 
 		/// get item under point, return null if there isn't item
-		CGUIColListItem*	GetItemUnderPoint(const CGUIVector2& rPos);
+		CGUIColListItem* GetItemUnderPoint(const CGUIVector2& rPos);
 
 		/**
 		* @brief clear all selected item and don't send event for selected item change
 		* @return true if selected item changes
 		*/
-		bool				ClearAllSelections_impl(void);
+		bool ClearAllSelections_impl(void);
 
 		/**
 		* @brief remove all item without send event.
 		* @return true if any item was removed
 		*/
-		bool				ClearList_impl(void);
+		bool ClearList_impl(void);
 
 		///update item size when it changed
-		void				UpdateItemPos();
+		void UpdateItemPos();
 
 		/**
 		* @brief get total height of items
 		*/
-		real				GetTotalItemsHeight() const;
+		real GetTotalItemsHeight() const;
 
 		/**
 		* @brief get widest width of items
 		*/
-		real				GetWidestItemsWidth() const;
+		real GetWidestItemsWidth() const;
 
 		//add a child
-		void				AddChild_Imp(CGUIColListItem* pItem);
+		void AddChild_Imp(CGUIColListItem* pItem);
 
 		//create a item
 		CGUIColListItem*	CreateItem_Imp(const CGUIStringW& rText);
 
 		//get row height
-		real				GetRowHeight( const SListRow& rRow ) const;
+		real GetRowHeight( const SListRow& rRow ) const;
 
 
 	protected:	//!< callback function
-		virtual uint32		OnMouseMove( CGUIEventMouse* pEvent );
-		virtual uint32		OnMouseLeftDown( CGUIEventMouse* pEvent );
-		virtual uint32		OnMouseLeftUp( CGUIEventMouse* pEvent );
-		virtual uint32		OnMouseRightDown( CGUIEventMouse* pEvent );
-		virtual uint32		OnMouseRightUp( CGUIEventMouse* pEvent );
+		virtual uint32 OnMouseMove( CGUIEventMouse* pEvent );
+		virtual uint32 OnMouseLeftDown( CGUIEventMouse* pEvent );
+		virtual uint32 OnMouseLeftUp( CGUIEventMouse* pEvent );
+		virtual uint32 OnMouseRightDown( CGUIEventMouse* pEvent );
+		virtual uint32 OnMouseRightUp( CGUIEventMouse* pEvent );
 
 		friend class CGUIColListItem;
-		virtual void		ProcessMouseLeftDown(CGUIColListItem* pItem, CGUIEventMouse* pEvent);
-		virtual void		ProcessMouseLeftUp(CGUIColListItem* pItem, CGUIEventMouse* pEvent);
-		virtual void		ProcessMouseRightDown(CGUIColListItem* pItem, CGUIEventMouse* pEvent);
-		virtual void		ProcessMouseRightUp(CGUIColListItem* pItem, CGUIEventMouse* pEvent);
-		virtual void		ProcessMouseLeftClick(CGUIColListItem* pItem, CGUIEventMouse* pEvent);
-		virtual void		ProcessMouseRightClick(CGUIColListItem* pItem, CGUIEventMouse* pEvent);
-		virtual void		ProcessMouseLeftDbClick(CGUIColListItem* pItem, CGUIEventMouse* pEvent);
-		virtual void		ProcessMouseRightDbClick(CGUIColListItem* pItem, CGUIEventMouse* pEvent);
-		virtual void		ProcessMouseMove(CGUIColListItem* pItem, CGUIEventMouse* pEvent);
+		virtual void ProcessMouseLeftDown(CGUIColListItem* pItem, CGUIEventMouse* pEvent);
+		virtual void ProcessMouseLeftUp(CGUIColListItem* pItem, CGUIEventMouse* pEvent);
+		virtual void ProcessMouseRightDown(CGUIColListItem* pItem, CGUIEventMouse* pEvent);
+		virtual void ProcessMouseRightUp(CGUIColListItem* pItem, CGUIEventMouse* pEvent);
+		virtual void ProcessMouseLeftClick(CGUIColListItem* pItem, CGUIEventMouse* pEvent);
+		virtual void ProcessMouseRightClick(CGUIColListItem* pItem, CGUIEventMouse* pEvent);
+		virtual void ProcessMouseLeftDbClick(CGUIColListItem* pItem, CGUIEventMouse* pEvent);
+		virtual void ProcessMouseRightDbClick(CGUIColListItem* pItem, CGUIEventMouse* pEvent);
+		virtual void ProcessMouseMove(CGUIColListItem* pItem, CGUIEventMouse* pEvent);
 
 	protected:
 		typedef std::vector<CGUIColListItem*>	TListItem;
 		TListItem	m_aListItems;			//!< list of items in the list box.
 		//TListboxItem*	m_aLastSelected;	//!< holds pointer to the last selected item (used in range selections)
 
-		bool	m_bSorted;						//!< true if list is sorted
-		bool	m_bMultiselect;					//!< true if multi-select is enabled
-		bool	m_bItemTooltips;				//!< true if each item should have an individual tooltip
+		bool m_bSorted;						//!< true if list is sorted
+		bool m_bMultiselect;					//!< true if multi-select is enabled
+		bool m_bItemTooltips;				//!< true if each item should have an individual tooltip
 
-		CGUISize			m_aWorkAreaSize;			///size of work area
+		CGUISize m_aWorkAreaSize;			///size of work area
 
-		CGUIImage*			m_pImageBG;					/// image for listbox's background
-		CGUIImage*			m_pImageSelection;			/// image for listbox's selection color
+		CGUIImage* m_pImageBG;					/// image for listbox's background
+		CGUIImage* m_pImageSelection;			/// image for listbox's selection color
 
-		CGUIColListItem*	m_pLastOperateItem;			/// the last item which is been operated.for multiselect
+		CGUIColListItem* m_pLastOperateItem;			/// the last item which is been operated.for multiselect
 		
 
 		typedef std::vector<SListRow>		TListRow;
-		TListRow		m_aListRows;			//!< list of rows in the list box.
+		TListRow m_aListRows;			//!< list of rows in the list box.
 		
 
 
 		CGUIColListHeader*	m_pHeader;			/// header of column list
 
-		CGUIString			m_strItemType;		/// type of item
+		CGUIString m_strItemType;		/// type of item
 
 	private:
 		static CGUIString	ms_strType;

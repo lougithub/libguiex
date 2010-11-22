@@ -39,20 +39,22 @@ namespace guiex
 		RegisterPropertyType( ePropertyType_Vector2, "CGUIVector2" );
 		RegisterPropertyType( ePropertyType_Vector3, "CGUIVector3" );
 		RegisterPropertyType( ePropertyType_Color, "CGUIColor" );
-		RegisterPropertyType( ePropertyType_Image, "CGUIImage" );
 		RegisterPropertyType( ePropertyType_StringInfo, "CGUIStringInfo" );
 		RegisterPropertyType( ePropertyType_Event, "CGUIEvent" );
 		RegisterPropertyType( ePropertyType_Sound, "CGUISound" );
 		RegisterPropertyType( ePropertyType_WidgetPosition, "CGUIWidgetPosition" );		
 		RegisterPropertyType( ePropertyType_WidgetSize, "CGUIWidgetSize" );		
-		RegisterPropertyType( ePropertyType_Font, "CGUIFont" );		
 
 		RegisterPropertyType( ePropertyType_TextAlignmentHorz, "ETextAlignmentHorz" );
 		RegisterPropertyType( ePropertyType_TextAlignmentVert, "ETextAlignmentVert" );
 		RegisterPropertyType( ePropertyType_ImageOrientation, "EImageOrientation" );
 		RegisterPropertyType( ePropertyType_ScreenValue, "EScreenValue" );
 
+		RegisterPropertyType( ePropertyType_Font, "CGUIFont" );		
+		RegisterPropertyType( ePropertyType_Image, "CGUIImage" );
 		RegisterPropertyType( ePropertyType_As, "CGUIAs" );
+		RegisterPropertyType( ePropertyType_Animation, "CGUIAnimation" );
+
 		RegisterPropertyType( ePropertyType_AsColor, "CGUIAsColor" );
 		RegisterPropertyType( ePropertyType_AsScale, "CGUIAsScale" );
 		RegisterPropertyType( ePropertyType_AsPosition, "CGUIAsPosition" );
@@ -60,6 +62,10 @@ namespace guiex
 		RegisterPropertyType( ePropertyType_AsAlpha, "CGUIAsAlpha" );
 		RegisterPropertyType( ePropertyType_AsContainer, "CGUIAsContainer" );
 		RegisterPropertyType( ePropertyType_AsContainerItemInfo, "CGUIAsContainerItemInfo" );
+
+		RegisterPropertyType( ePropertyType_Widget, "CGUIWidget" );
+		RegisterPropertyType( ePropertyType_Set, "set" );
+		RegisterPropertyType( ePropertyType_Script, "CGUIScript" );
 	}
 	//------------------------------------------------------------------------------
 	CGUIPropertyManager::~CGUIPropertyManager()

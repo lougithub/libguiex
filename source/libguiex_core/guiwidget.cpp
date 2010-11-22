@@ -61,6 +61,7 @@ namespace guiex
 		,m_aParamActivable(false)
 		,m_strType(rType)
 		,m_bIsOpen( false )
+		,m_bIsCreate( false )
 		,m_aColor(1.0f,1.0f,1.0f,1.0f)
 		,m_uTextAlignment(GUI_TA_CENTER)
 		,m_vRotation(0.0f,0.0f,0.0f)
@@ -118,10 +119,49 @@ namespace guiex
 	* @brief create this widget
 	* @return return 0 for success.
 	*/
-	int32 CGUIWidget::Create()
+	void CGUIWidget::Create()
 	{
+		//create self
+		if( IsCreate())
+		{
+			throw CGUIException(
+				"[CGUIWidget::Create]: the widget has been created. TYPE<%s>  NAME<%s>",
+				GetType().c_str(), 
+				GetName().c_str());
+		}
+		m_bIsCreate = true;
+
 		Refresh();
-		return 0;
+
+		//register to script
+		bool bHasScript = false;
+		guiex::IGUIInterfaceScript* pInterfaceScript = CGUIInterfaceManager::Instance()->GetInterfaceScript();
+		if( pInterfaceScript &&
+			guiex::CGUIWidgetSystem::Instance()->ShouldRunScript())
+		{
+			bHasScript = pInterfaceScript->HasScript( GetSceneName() );
+		}
+		if( bHasScript )
+		{
+			pInterfaceScript->RegisterWidget( this );
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::NotifyLoaded()
+	{
+		//notify self
+		CGUIEventNotification aEvent;
+		aEvent.SetEventId(eEVENT_LOAD);
+		aEvent.SetReceiver(this);
+		CGUIWidgetSystem::Instance()->SendEvent( &aEvent);
+
+		//children's
+		CGUIWidget*	pWidget = GetChild();
+		while(pWidget)
+		{
+			pWidget->NotifyLoaded();
+			pWidget = pWidget->GetNextSibling();
+		}	
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -194,12 +234,17 @@ namespace guiex
 		return m_bIsOpen;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::SetUserData(void*	pData)
+	bool CGUIWidget::IsCreate() const
+	{
+		return m_bIsCreate;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::SetUserData(void*	pData)
 	{
 		m_pUserData = pData;
 	}
 	//------------------------------------------------------------------------------
-	void*	CGUIWidget::GetUserData() const
+	void* CGUIWidget::GetUserData() const
 	{
 		return m_pUserData;
 	}
@@ -248,7 +293,7 @@ namespace guiex
 		return aContentUTF8;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::SetTextAlignment( uint8 uAlignment)
+	void CGUIWidget::SetTextAlignment( uint8 uAlignment)
 	{
 		m_uTextAlignment = uAlignment;
 	}

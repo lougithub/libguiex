@@ -138,7 +138,11 @@ namespace guiex
 
 	}
 	//------------------------------------------------------------------------------
-	int		CGUIWidgetSystem::Initialize()
+	/**
+	* @brief initialize system
+	* @return 0 for success, vice versa
+	*/
+	int CGUIWidgetSystem::Initialize()
 	{
 		GUI_TRACE( "[CGUIWidgetSystem::Initialize]: \n" );
 
@@ -168,14 +172,17 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWidgetSystem::Release()
+	/**
+	* @brief release system
+	*/
+	void CGUIWidgetSystem::Release()
 	{
 		//release performance monitor if necessary
 #if	GUI_PERFORMANCE_ON 
 		PERFMON_EXIT();
 #endif	//GUI_PERFORMANCE_ON
 
-		
+
 		//mouse cursor
 		CGUIMouseCursor::DestroyInstance();
 
@@ -204,16 +211,22 @@ namespace guiex
 		CGUIInterfaceManager::Instance()->UnregisterAllInterface();
 
 		m_bInitialized = false;
-	
+
 		CGUIObjectManager::Instance()->UnregisterAll();
 	}
 	//------------------------------------------------------------------------------
-	bool	CGUIWidgetSystem::IsInitialized() const
+	/** 
+	* @brief has system been initialized
+	*/
+	bool CGUIWidgetSystem::IsInitialized() const
 	{
 		return m_bInitialized;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidgetSystem::Reset()
+	/**
+	* @brief reset system
+	*/
+	void CGUIWidgetSystem::Reset()
 	{
 		m_bShouldRunScript = true;
 		m_nNameGenerateIdx = 0;
@@ -223,7 +236,7 @@ namespace guiex
 		UngisterAllGlobalKey();
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidgetSystem::SetDrawExtraInfo( bool bDraw )
+	void CGUIWidgetSystem::SetDrawExtraInfo( bool bDraw )
 	{
 		m_bDrawExtraInfo = bDraw;
 	}
@@ -233,68 +246,272 @@ namespace guiex
 		return m_bDrawExtraInfo;
 	}
 	//------------------------------------------------------------------------------
-	CGUIWidget*	CGUIWidgetSystem::LoadPage( const CGUIString& rFileName, const CGUIString& rSceneName)
+	/**
+	* @brief read config file
+	*/
+	CGUIWidget*	CGUIWidgetSystem::LoadPage( const CGUIString& rFileName, const CGUIString& rSceneName )
 	{
+		//load file
 		CGUIString strRelPath = CGUISceneInfoManager::Instance()->GetScenePath( rSceneName ) + rFileName;
-		IGUIInterfaceConfigFile* pConfigFile = CGUIInterfaceManager::Instance()->GetInterfaceConfigFile();
-		if( !pConfigFile )
+		if( 0 != LoadConfigFile( strRelPath, rSceneName, rFileName ))
 		{
-			throw CGUIException("[CGUIWidgetSystem::LoadPage]: failed to get interface <IGUIConfigFile>!");
-		}
-		CGUIWidget* pWidget = pConfigFile->LoadWidgetConfigFile(strRelPath, rSceneName);
-		if( !pWidget )
-		{
+			throw CGUIException(
+				"[CGUIWidgetSystem::LoadPage]: failed to load config file <%s>!",
+				strRelPath.c_str());
 			return NULL;
 		}
-		AddPage(  pWidget, rFileName);
-		return pWidget;
+
+		//get page
+		CGUIWidget* pPageWidget = GetPageByFilename( rFileName, rSceneName );
+		if( !pPageWidget )
+		{
+			throw CGUIException( "[CGUIWidgetSystem::LoadPage]: failed to get page!" );
+			return NULL;
+		}
+		pPageWidget->NotifyLoaded();
+
+		return pPageWidget;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief read config file
+	*/
 	CGUIWidget*	CGUIWidgetSystem::LoadDynamicPage( 
 		const CGUIString& rPageFileName,
 		const CGUIString& rPageSceneName,
 		const CGUIString& rWorkingSceneName )
 	{
+		//load file
 		CGUIString strRelPath = CGUISceneInfoManager::Instance()->GetScenePath( rPageSceneName ) + rPageFileName;
-		IGUIInterfaceConfigFile* pConfigFile = CGUIInterfaceManager::Instance()->GetInterfaceConfigFile();
-		if( !pConfigFile )
+		CGUIString strDynamicSceneName = rPageSceneName + GenerateAnonymousName();
+		if( 0 != LoadConfigFile( strRelPath, strDynamicSceneName, rPageFileName ))
 		{
-			throw CGUIException("[CGUIWidgetSystem::LoadDynamicPage]: failed to get interface <IGUIConfigFile>!");
-		}
-		CGUIString strDynamicSceneName = 	rPageSceneName + GenerateAnonymousName();
-		CGUIWidget* pWidget = pConfigFile->LoadWidgetConfigFile(strRelPath, strDynamicSceneName);
-		if( !pWidget )
-		{
+			throw CGUIException(
+				"[CGUIWidgetSystem::LoadDynamicPage]: failed to load config file <%s>!",
+				strRelPath.c_str());
 			return NULL;
 		}
-		pWidget->SetWorkingSceneName(rWorkingSceneName);
-		AddPage(  pWidget, rPageFileName );
-		m_setDynamicPageList.insert( pWidget );
-		return pWidget;
+
+		//get page
+		CGUIWidget* pPageWidget = GetPage( rPageFileName, strDynamicSceneName );
+		if( !pPageWidget )
+		{
+			throw CGUIException( "[CGUIWidgetSystem::LoadDynamicPage]: failed to get page!" );
+			return NULL;
+		}
+		pPageWidget->SetWorkingSceneName(rWorkingSceneName);
+		m_setDynamicPageList.insert( pPageWidget );
+		pPageWidget->NotifyLoaded();
+		return pPageWidget;
 	}
 	//------------------------------------------------------------------------------
-	int32	CGUIWidgetSystem::LoadResource( const CGUIString& rFileName, const CGUIString& rSceneName)
+	/**
+	* @brief read config file and load datas
+	*/
+	int32 CGUIWidgetSystem::LoadConfigFile( const CGUIString& rPath, const CGUIString& rSceneName, const CGUIString& rFileName)
 	{
+		//get interface of config file
 		IGUIInterfaceConfigFile* pConfigFile = CGUIInterfaceManager::Instance()->GetInterfaceConfigFile();
 		if( !pConfigFile )
 		{
 			throw CGUIException("[CGUIWidgetSystem::LoadResource]: failed to get interface <IGUIConfigFile>!");
 		}
-		if( 0 != pConfigFile->LoadResourceConfigFile(rFileName, rSceneName) )
+
+		//get property set
+		CGUIProperty aPropertySet;
+		if( 0 != pConfigFile->LoadConfigFile(rPath, aPropertySet) )
 		{
-			throw CGUIException("[CGUIWidgetSystem::LoadResource]: failed to load config file <%s : %s>!", rSceneName.c_str(), rFileName.c_str());
+			throw CGUIException(
+				"[CGUIWidgetSystem::LoadResource]: failed to load config file <%s : %s>!", 
+				rSceneName.c_str(), 
+				rPath.c_str());
+		}
+
+		//parse it
+		uint32 nSize = aPropertySet.GetPropertyNum();
+		for( uint32 i=0; i<nSize; ++i )
+		{
+			const CGUIProperty* pProperty = aPropertySet.GetProperty(i);
+			switch( pProperty->GetType() )
+			{
+			case ePropertyType_Widget:
+				if( 0 != DoLoadConfig_Widget( pProperty, rSceneName, rFileName ))
+				{
+					return -1;
+				}
+				break;
+
+			case ePropertyType_Set:
+				if( 0 != DoLoadConfig_Set( pProperty, rSceneName ))
+				{
+					return -1;
+				}
+				break;
+
+			case ePropertyType_Script:
+				if( 0 != DoLoadConfig_Script( pProperty, rSceneName ))
+				{
+					return -1;
+				}
+				break;
+
+			case ePropertyType_Image:
+				if( 0 != DoLoadConfig_Image( pProperty, rSceneName ))
+				{
+					return -1;
+				}
+				break;
+
+			case ePropertyType_Animation:
+				if( 0 != DoLoadConfig_Animation( pProperty, rSceneName ))
+				{
+					return -1;
+				}
+				break;
+
+			case ePropertyType_Font:
+				if( 0 != DoLoadConfig_Font( pProperty, rSceneName ))
+				{
+					return -1;
+				}
+				break;
+
+			case ePropertyType_As:
+				if( 0 != DoLoadConfig_As( pProperty, rSceneName ))
+				{
+					return -1;
+				}
+				break;
+
+			default:
+				{
+					throw guiex::CGUIException(
+						"[CGUIWidgetSystem::LoadConfigFile], unknown property type <%s:%s:%s>", 
+						pProperty->GetName().c_str(),
+						pProperty->GetTypeAsString().c_str(),
+						pProperty->GetValue().c_str());
+				}
+				return -1;
+			}
 		}
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidgetSystem::FreeResource( const CGUIString& rSceneName )
+	int32 CGUIWidgetSystem::DoLoadConfig_Widget( const CGUIProperty* pPropertySet, const CGUIString& rSceneName, const CGUIString& rFileName )
+	{
+		/// create widget
+		const CGUIString& strWidgetType = pPropertySet->GetValue( );
+		const CGUIString& strWidgetName = pPropertySet->GetName( );
+		CGUIWidget* pWidget = CGUIWidgetSystem::Instance()->CreateWidget(strWidgetType, strWidgetName, rSceneName);
+		if( !pWidget )
+		{
+			throw CGUIException(
+				"[CGUIWidgetSystem::DoLoadConfig_Widget]: failed to create widget <%s:%s>!",
+				strWidgetType.c_str(),
+				strWidgetName.c_str());
+			return -1;
+		}
+		/// set property to widget
+		pWidget->SetProperty( *pPropertySet );
+		pWidget->LoadProperty();
+		pWidget->Create();
+
+		if( pWidget->GetParent() == NULL )
+		{
+			AddPage( pWidget, rFileName );
+		}
+
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUIWidgetSystem::DoLoadConfig_Set( const CGUIProperty* pPropertySet, const CGUIString& rSceneName )
+	{
+		const CGUIString& strSetName = pPropertySet->GetName( );
+		//register set
+		CGUIPropertyManager::Instance()->RegisterSet( strSetName, *pPropertySet );
+
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUIWidgetSystem::DoLoadConfig_Script( const CGUIProperty* pPropertySet, const CGUIString& rSceneName )
+	{
+		const CGUIString& strRelativePath = pPropertySet->GetValue();
+		guiex::IGUIInterfaceScript* pInterfaceScript = CGUIInterfaceManager::Instance()->GetInterfaceScript();
+		if( pInterfaceScript &&
+			guiex::CGUIWidgetSystem::Instance()->ShouldRunScript())
+		{
+			// create script
+			pInterfaceScript->CreateScript( rSceneName );
+
+			// load script
+			CGUIString strPath = CGUISceneInfoManager::Instance()->GetScenePath( rSceneName ) + strRelativePath;
+			pInterfaceScript->ExecuteFile(strPath, rSceneName);
+		}
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUIWidgetSystem::DoLoadConfig_Image( const CGUIProperty* pPropertySet, const CGUIString& rSceneName )
+	{
+		if( 0 != CGUIImageManager::Instance()->RegisterImage( rSceneName, *pPropertySet ) )
+		{
+			throw guiex::CGUIException(
+				"[IGUIConfigFile_tinyxml::DoLoadResourceImage], failed to create image with name <%s:%s:%s>!", 
+				pPropertySet->GetName().c_str(),
+				pPropertySet->GetTypeAsString().c_str(),
+				pPropertySet->GetValue().c_str());
+			return -1;
+		}
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUIWidgetSystem::DoLoadConfig_Animation( const CGUIProperty* pPropertySet, const CGUIString& rSceneName )
+	{
+		if( 0 != CGUIAnimationManager::Instance()->RegisterAnimation( rSceneName, *pPropertySet ) )
+		{
+			throw guiex::CGUIException(
+				"[CGUIWidgetSystem::DoLoadConfig_Animation], failed to create Animation with name <%s:%s:%s>!", 
+				pPropertySet->GetName().c_str(),
+				pPropertySet->GetTypeAsString().c_str(),
+				pPropertySet->GetValue().c_str());
+			return -1;
+		}
+
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUIWidgetSystem::DoLoadConfig_Font( const CGUIProperty* pPropertySet, const CGUIString& rSceneName )
+	{
+		if( 0 != CGUIFontManager::Instance()->RegisterFont( rSceneName, *pPropertySet ) )
+		{
+			throw guiex::CGUIException(
+				"[CGUIWidgetSystem::DoLoadConfig_Font], failed to create font with name <%s:%s:%s>!", 
+				pPropertySet->GetName().c_str(),
+				pPropertySet->GetTypeAsString().c_str(),
+				pPropertySet->GetValue().c_str());
+			return -1;
+		}
+
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUIWidgetSystem::DoLoadConfig_As( const CGUIProperty* pPropertySet, const CGUIString& rSceneName )
+	{
+
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	/**
+	* @brief free resource by scene name, 
+	* only free named image now.
+	*/
+	void CGUIWidgetSystem::FreeResource( const CGUIString& rSceneName )
 	{
 		CGUIImageManager::Instance()->ReleaseResourcesByScene(rSceneName);
 		CGUIAnimationManager::Instance()->ReleaseResourcesByScene(rSceneName);
 		CGUIFontManager::Instance()->ReleaseResourcesByScene(rSceneName);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidgetSystem::UnloadAllResource(  )
+	void CGUIWidgetSystem::UnloadAllResource(  )
 	{
 		CGUIImageManager::Instance()->UnloadAllResources( );
 		CGUIAnimationManager::Instance()->UnloadAllResources( );
@@ -303,12 +520,16 @@ namespace guiex
 		//CGUITextureManager::Instance()->DestroyAllTextureImplement();
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidgetSystem::ReleaseAllResources(  )
+	/**
+	* @brief free resource by scene name, 
+	* only free named image now.
+	*/
+	void CGUIWidgetSystem::ReleaseAllResources(  )
 	{
 		CGUIImageManager::Instance()->ReleaseAllResources( );
 		CGUIAnimationManager::Instance()->ReleaseAllResources( );
 		CGUIFontManager::Instance()->ReleaseAllResources( );
-		
+
 		CGUISceneInfoManager::Instance()->ClearSceneResourceLoadFlags();
 	}
 	//------------------------------------------------------------------------------
@@ -326,36 +547,49 @@ namespace guiex
 		//destroy all page
 		while(m_vecPage.empty() == false )
 		{
-			CGUIWidget* pPage = (*m_vecPage.begin()).first;
+			CGUIWidget* pPage = m_vecPage[0].m_pPage;
 			pPage->SetParent(NULL);
 			DeletePage(pPage);
 		}
-				
+
 		IGUIInterfaceScript*	pScript = CGUIInterfaceManager::Instance()->GetInterfaceScript();
 		pScript->DestroyAllScript();
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidgetSystem::SetRunScript( bool bShouldRun )
+	//!< set whether should system run script
+	void CGUIWidgetSystem::SetRunScript( bool bShouldRun )
 	{
 		m_bShouldRunScript = bShouldRun;
 	}
 	//------------------------------------------------------------------------------
-	bool	CGUIWidgetSystem::ShouldRunScript() const
+	//!< return should system run script
+	bool CGUIWidgetSystem::ShouldRunScript() const
 	{
 		return m_bShouldRunScript;
 	}
 	//------------------------------------------------------------------------------
-	bool	CGUIWidgetSystem::ProcessMouseInput(const IGUIInterfaceMouse::SMouseEvent& rMouseEvent)
+	/**
+	* @brief process mouse and generate relative event
+	* @return whether this mouse event has been processed
+	*/
+	bool CGUIWidgetSystem::ProcessMouseInput(const IGUIInterfaceMouse::SMouseEvent& rMouseEvent)
 	{
 		return m_aInputProcessor.ProcessMouse(rMouseEvent);
 	}
 	//------------------------------------------------------------------------------
-	bool	CGUIWidgetSystem::ProcessKeyboardInput( const IGUIInterfaceKeyboard::SKeyEvent& rKeyEvent )
+	/**
+	* @brief process keyboard and generate relative event
+	* @return whether this keyboard event has been processed
+	*/
+	bool CGUIWidgetSystem::ProcessKeyboardInput( const IGUIInterfaceKeyboard::SKeyEvent& rKeyEvent )
 	{
 		return m_aInputProcessor.ProcessKeyboard(rKeyEvent);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidgetSystem::Update( real fDeltaTime )
+	/**
+	* @brief Update system
+	*/
+	void CGUIWidgetSystem::Update( real fDeltaTime )
 	{
 		//update time and frame
 		UpdateTime( fDeltaTime );
@@ -409,12 +643,18 @@ namespace guiex
 #endif	//GUI_PERFORMANCE_ON
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief get global time
+	*/
 	real CGUIWidgetSystem::GetGlobalTimer() const
 	{
 		return m_fGlobalTimer;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidgetSystem::SetScreenSize( uint32 width, uint32 height)
+	/**
+	* @brief set the size of screen
+	*/
+	void CGUIWidgetSystem::SetScreenSize( uint32 width, uint32 height)
 	{
 		if( width == GUI_SCREEN_WIDTH && height == GUI_SCREEN_HEIGHT )
 		{
@@ -451,6 +691,9 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief get the size of screen, in default
+	*/
 	const CGUISize& CGUIWidgetSystem::GetScreenSize( ) const
 	{
 		return m_aScreenSize;
@@ -466,32 +709,50 @@ namespace guiex
 		return uint32(m_aScreenSize.m_fHeight+0.5f);
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief get the position of screen, in default
+	*/
 	const CGUIVector2& CGUIWidgetSystem::GetScreenPos( ) const
 	{
 		return m_aScreenPos;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief get the rect of screen, in default
+	*/
 	const CGUIRect& CGUIWidgetSystem::GetScreenRect( ) const
 	{
 		return m_aScreenRect;
 	}
 	//------------------------------------------------------------------------------
-	int32			CGUIWidgetSystem::GetFPS() const
+	/**
+	* @brief get fps of system
+	*/
+	int32 CGUIWidgetSystem::GetFPS() const
 	{
 		return m_nFps;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidgetSystem::SetFocusWidget(CGUIWidget* pWidget)
+	/**
+	* @brief set widget which has focus
+	*/
+	void CGUIWidgetSystem::SetFocusWidget(CGUIWidget* pWidget)
 	{
 		m_pWgtFocus = pWidget;
 	}
 	//------------------------------------------------------------------------------
+	/** 
+	* @brief get widget which has focus
+	*/
 	CGUIWidget*	CGUIWidgetSystem::GetFocusWidget()
 	{
 		return m_pWgtFocus;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidgetSystem::Render()
+	/**
+	* @brief render system
+	*/
+	void CGUIWidgetSystem::Render()
 	{
 		IGUIInterfaceRender* pRender = CGUIInterfaceManager::Instance()->GetInterfaceRender();
 		IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
@@ -501,7 +762,7 @@ namespace guiex
 		pRender->ResetZValue();
 
 		pRender->BeginRender();
-		
+
 		//render page
 		if( m_pWgtRoot )
 		{
@@ -547,7 +808,10 @@ namespace guiex
 		pRender->EndRender();
 	}
 	//------------------------------------------------------------------------------
-	void			CGUIWidgetSystem::OpenPage(CGUIWidget* pPage)
+	/**
+	* @brief open a page
+	*/
+	void CGUIWidgetSystem::OpenPage(CGUIWidget* pPage)
 	{
 		GUI_ASSERT( pPage, "invalid parameter" );
 
@@ -563,7 +827,10 @@ namespace guiex
 		m_vOpenedPage.push_back(pPage);
 	}
 	//------------------------------------------------------------------------------
-	void			CGUIWidgetSystem::ClosePage(CGUIWidget* pPage)
+	/**
+	* @brief close a page
+	*/
+	void CGUIWidgetSystem::ClosePage(CGUIWidget* pPage)
 	{
 		GUI_ASSERT( pPage, "invalid parameter" );
 
@@ -594,12 +861,14 @@ namespace guiex
 		return;
 	}
 	//------------------------------------------------------------------------------
-	uint32			CGUIWidgetSystem::GetOpenedPageNum() const
+	///< get opened page num, which should be opened by method OpenPage()
+	uint32 CGUIWidgetSystem::GetOpenedPageNum() const
 	{
 		return m_vOpenedPage.size();
 	}
 	//------------------------------------------------------------------------------
-	CGUIWidget*		CGUIWidgetSystem::GetOpenedPageByIndex( uint32 nIdx )
+	///< get opened page by index
+	CGUIWidget*	CGUIWidgetSystem::GetOpenedPageByIndex( uint32 nIdx )
 	{
 		if( nIdx >= m_vOpenedPage.size())
 		{
@@ -610,7 +879,10 @@ namespace guiex
 		return m_vOpenedPage[nIdx];
 	}
 	//------------------------------------------------------------------------------
-	void			CGUIWidgetSystem::AddPage( CGUIWidget* pPage, const CGUIString& rSceneName)
+	/**
+	* @brief add a page to map
+	*/
+	void CGUIWidgetSystem::AddPage( CGUIWidget* pPage, const CGUIString& rConfigFileName)
 	{
 		GUI_ASSERT( pPage, "invalid parameter" );
 
@@ -623,24 +895,34 @@ namespace guiex
 			itor != m_vecPage.end();
 			++itor)
 		{
-			if( itor->second == rSceneName && itor->first->GetSceneName() == pPage->GetSceneName() )
+			const SPageInfo& rPageInfo = *itor;
+			if( rPageInfo.m_strConfigFileName == rConfigFileName && 
+				rPageInfo.m_pPage->GetSceneName() == pPage->GetSceneName() )
 			{
-				throw CGUIException( "[CGUIWidgetSystem::AddPage]: the page's file name <%s> has existed!", rSceneName.c_str());
+				throw CGUIException( "[CGUIWidgetSystem::AddPage]: the page's file name <%s> has existed!", rConfigFileName.c_str());
 			}
 		}
 
-		m_vecPage.push_back( std::make_pair(pPage, rSceneName));
+		SPageInfo aInfo;
+		aInfo.m_pPage = pPage;
+		aInfo.m_strConfigFileName = rConfigFileName;
+		m_vecPage.push_back( aInfo );
 	}
 	//------------------------------------------------------------------------------
-	CGUIWidget*		CGUIWidgetSystem::GetPage( const CGUIString& rWidgetName, const CGUIString& rSceneName )
+	/**
+	* @brief get a page by name
+	*/
+	CGUIWidget* CGUIWidgetSystem::GetPage( const CGUIString& rWidgetName, const CGUIString& rSceneName )
 	{
 		for( TVecPage::iterator itor = m_vecPage.begin();
 			itor != m_vecPage.end();
 			++itor)
 		{
-			if( itor->first->GetName() == rWidgetName && itor->first->GetSceneName() == rSceneName )
+			const SPageInfo& rPageInfo = *itor;
+			if( rPageInfo.m_pPage->GetName() == rWidgetName && 
+				rPageInfo.m_pPage->GetSceneName() == rSceneName )
 			{
-				return (*itor).first;
+				return rPageInfo.m_pPage;
 			}
 		}
 
@@ -648,15 +930,20 @@ namespace guiex
 		return NULL;
 	}
 	//------------------------------------------------------------------------------
-	CGUIWidget*		CGUIWidgetSystem::GetPageByFilename( const CGUIString& rFilename, const CGUIString& rSceneName )
+	/**
+	* @brief get a page page's configure file name
+	*/
+	CGUIWidget* CGUIWidgetSystem::GetPageByFilename( const CGUIString& rFilename, const CGUIString& rSceneName )
 	{
 		for( TVecPage::iterator itor = m_vecPage.begin();
 			itor != m_vecPage.end();
 			++itor)
 		{
-			if( itor->first->GetSceneName() == rSceneName && itor->second == rFilename )
+			SPageInfo& rPageInfo = *itor;
+			if( rPageInfo.m_pPage->GetSceneName() == rSceneName && 
+				rPageInfo.m_strConfigFileName == rFilename )
 			{
-				return (*itor).first;
+				return rPageInfo.m_pPage;
 			}
 		}
 
@@ -664,14 +951,18 @@ namespace guiex
 		return NULL;
 	}
 	//------------------------------------------------------------------------------
-	void			CGUIWidgetSystem::DeletePage( CGUIWidget* pPage)
+	/**
+	* @brief delete specify page
+	*/
+	void CGUIWidgetSystem::DeletePage( CGUIWidget* pPage)
 	{
 		GUI_ASSERT( pPage, "invalid parameter");
 
 		TVecPage::iterator itor = m_vecPage.begin();
 		for( ; itor != m_vecPage.end(); ++itor)
 		{
-			if( (*itor ).first == pPage )
+			SPageInfo& rPageInfo = *itor;
+			if( rPageInfo.m_pPage == pPage )
 			{
 				break;
 			}
@@ -694,13 +985,18 @@ namespace guiex
 		DestroyWidget(pPage);
 	}
 	//------------------------------------------------------------------------------
-	bool			CGUIWidgetSystem::HasPage(const CGUIString& rWidgetName, const CGUIString& rSceneName) const
+	/**
+	* @brief is there a page whose name is given name
+	*/
+	bool CGUIWidgetSystem::HasPage(const CGUIString& rWidgetName, const CGUIString& rSceneName) const
 	{
 		for( TVecPage::const_iterator itor = m_vecPage.begin();
 			itor != m_vecPage.end();
 			++itor)
 		{
-			if( (*itor).first->GetName() == rWidgetName && (*itor).first->GetSceneName() == rSceneName )
+			const SPageInfo& rPageInfo = *itor;
+			if( rPageInfo.m_pPage->GetName() == rWidgetName &&
+				rPageInfo.m_pPage->GetSceneName() == rSceneName )
 			{
 				return true;
 			}
@@ -708,12 +1004,13 @@ namespace guiex
 		return false;
 	}
 	//------------------------------------------------------------------------------
-	bool			CGUIWidgetSystem::HasPage(CGUIWidget* pPage) const
+	bool CGUIWidgetSystem::HasPage(CGUIWidget* pPage) const
 	{
 		TVecPage::const_iterator itor = m_vecPage.begin();
 		for( ; itor != m_vecPage.end(); ++itor)
 		{
-			if( (*itor ).first == pPage )
+			const SPageInfo& rPageInfo = *itor;
+			if( rPageInfo.m_pPage == pPage )
 			{
 				return true;
 			}
@@ -721,6 +1018,10 @@ namespace guiex
 		return false;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief create a widget by type and name
+	* @return pointer of created widget
+	*/
 	CGUIWidget* CGUIWidgetSystem::CreateWidget( const CGUIString& rType, const CGUIString& rWidgetName, const CGUIString& rSceneName )
 	{
 		CGUIWidget* pWidget = NULL;
@@ -756,7 +1057,10 @@ namespace guiex
 		return pWidget;
 	}
 	//------------------------------------------------------------------------------
-	void					CGUIWidgetSystem::DestroyWidget(CGUIWidget* pWidget)
+	/**
+	* @brief destroy widget
+	*/
+	void CGUIWidgetSystem::DestroyWidget(CGUIWidget* pWidget)
 	{
 		if( !pWidget )
 		{
@@ -795,6 +1099,10 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief get widget by given name
+	* @return return NULL for error
+	*/
 	CGUIWidget* CGUIWidgetSystem::GetWidget(  const CGUIString& rWidgetName, const CGUIString& rSceneName )
 	{
 		TMapWidget::iterator itor = m_aMapWidget.find(rSceneName);
@@ -811,7 +1119,11 @@ namespace guiex
 		return NULL;
 	}
 	//------------------------------------------------------------------------------
-	bool			CGUIWidgetSystem::HasWidget(  const CGUIString& rWidgetName, const CGUIString& rSceneName )
+	/**
+	* @brief has widget which has given name
+	* @return return true for has, vice versa
+	*/
+	bool CGUIWidgetSystem::HasWidget(  const CGUIString& rWidgetName, const CGUIString& rSceneName )
 	{
 		TMapWidget::iterator itor = m_aMapWidget.find(rSceneName);
 		if( itor != m_aMapWidget.end())
@@ -826,12 +1138,22 @@ namespace guiex
 		return false;
 	}
 	//------------------------------------------------------------------------------
-	const char*		CGUIWidgetSystem::GenerateAnonymousName()
+	/**
+	* @brief generate a anonymous name
+	* @return return a string
+	*/
+	const char* CGUIWidgetSystem::GenerateAnonymousName()
 	{
 		snprintf( m_szAnonymousName, 32, "%d__auto__", m_nNameGenerateIdx++ );
 		return m_szAnonymousName;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief get widget by position.
+	* if the widget is disabled or invisible, this widget will be skipped
+	* @return return the widget where the point hits,
+	* NULL if there hasn't any point.
+	*/
 	CGUIWidget*	CGUIWidgetSystem::GetWidgetUnderPoint(const CGUIVector2& rPos)
 	{
 		//capture input
@@ -882,7 +1204,8 @@ namespace guiex
 		m_vecPageGarbage.clear();
 	}
 	//------------------------------------------------------------------------------
-	void			CGUIWidgetSystem::ProcessCommand()
+	///process command
+	void CGUIWidgetSystem::ProcessCommand()
 	{
 		//IGUIInterfaceCommand* pCommand =  CGUIInterfaceManager::Instance()->GetInterfaceCommand();
 		//if( pCommand )
@@ -903,7 +1226,10 @@ namespace guiex
 		//}
 	}
 	//------------------------------------------------------------------------------
-	void			CGUIWidgetSystem::OpenDialog(CGUIWidget* pDlg)
+	/** 
+	* @brief open modal dialog
+	*/
+	void CGUIWidgetSystem::OpenDialog(CGUIWidget* pDlg)
 	{
 		GUI_ASSERT(pDlg, "invalid parameter");
 		GUI_ASSERT( pDlg->GetParent() == false, "the modal dialog shouldn't have a parent");
@@ -931,7 +1257,10 @@ namespace guiex
 		GUI_TRACE( GUI_FORMAT("OpenDialog <%s : %s> \n", pDlg->GetSceneName().c_str(), pDlg->GetName().c_str()));
 	}
 	//------------------------------------------------------------------------------
-	CGUIWidget*		CGUIWidgetSystem::GetTopestDialog( ) const 
+	/** 
+	* @brief get current modal dialog
+	*/
+	CGUIWidget*	CGUIWidgetSystem::GetTopestDialog( ) const 
 	{
 		if(m_listOpenedDlg.empty())
 		{
@@ -943,6 +1272,9 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	/** 
+	* @brief close modal dialog
+	*/
 	void			CGUIWidgetSystem::CloseDialog(CGUIWidget* pDlg)
 	{
 		GUI_ASSERT(pDlg, "invalid parameter");
@@ -969,7 +1301,10 @@ namespace guiex
 		throw CGUIException( "[CGUIWidgetSystem::CloseDialog]: failed to close dialog <%s : %s>.", pDlg->GetSceneName().c_str(), pDlg->GetName().c_str());
 	}
 	//------------------------------------------------------------------------------
-	void			CGUIWidgetSystem::OpenPopupWidget(CGUIWidget* pWidget)
+	/** 
+	* @brief open popup widget
+	*/
+	void CGUIWidgetSystem::OpenPopupWidget(CGUIWidget* pWidget)
 	{
 		GUI_ASSERT(pWidget, "invalid parameter");
 
@@ -984,12 +1319,18 @@ namespace guiex
 		GUI_TRACE( GUI_FORMAT("OpenPopupWidget <%s> \n", pWidget->GetName().c_str()));
 	}
 	//------------------------------------------------------------------------------
-	CGUIWidget*		CGUIWidgetSystem::GetCurrentPopupWidget( ) const
+	/** 
+	* @brief get current modal dialog
+	*/
+	CGUIWidget* CGUIWidgetSystem::GetCurrentPopupWidget( ) const
 	{
 		return m_pPopupWidget;
 	}
 	//------------------------------------------------------------------------------
-	void			CGUIWidgetSystem::ClosePopupWidget(CGUIWidget* pWidget)
+	/** 
+	* @brief close modal dialog
+	*/
+	void CGUIWidgetSystem::ClosePopupWidget(CGUIWidget* pWidget)
 	{
 		GUI_ASSERT(pWidget, "invalid parameter");
 
@@ -1006,7 +1347,11 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	CGUIWidget*		CGUIWidgetSystem::GetCurrentRootWidget( ) const
+
+	/** 
+	* @brief get current root widget, will be a dialog if there has or a page
+	*/
+	CGUIWidget*	CGUIWidgetSystem::GetCurrentRootWidget( ) const
 	{
 		CGUIWidget* pDlgRoot = NULL;
 		if( pDlgRoot = GetCurrentPopupWidget())
@@ -1044,7 +1389,11 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidgetSystem::RegisterUIEvent( const CGUIString& rEventName, CGUIWidget* pWidget)
+	/**
+	* @brief register a event for this Widget.this widget should unregister
+	* the event manually.
+	*/
+	void CGUIWidgetSystem::RegisterUIEvent( const CGUIString& rEventName, CGUIWidget* pWidget)
 	{
 		GUI_ASSERT( pWidget, "invalid parameter");
 
@@ -1061,7 +1410,10 @@ namespace guiex
 		return;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidgetSystem::UnregisterUIEvent( const CGUIString& rEventName, CGUIWidget* pWidget)
+	/**
+	* @brief unregister a event for this Widget.
+	*/
+	void CGUIWidgetSystem::UnregisterUIEvent( const CGUIString& rEventName, CGUIWidget* pWidget)
 	{
 		GUI_ASSERT( pWidget, "invalid parameter");
 
@@ -1082,7 +1434,10 @@ namespace guiex
 		return;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidgetSystem::UnregisterUIEvent( CGUIWidget* pWidget)
+	/**
+	* @brief unregister a event for this Widget.
+	*/
+	void CGUIWidgetSystem::UnregisterUIEvent( CGUIWidget* pWidget)
 	{
 		GUI_ASSERT( pWidget, "invalid parameter");
 
@@ -1100,7 +1455,11 @@ namespace guiex
 		return;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidgetSystem::SendUIEvent( CGUIEventUI* pEvent )
+	/**
+	* @brief send a ui event.if there is no widget registered for this event, it
+	* will be ignored.
+	*/
+	void CGUIWidgetSystem::SendUIEvent( CGUIEventUI* pEvent )
 	{
 		GUI_ASSERT( pEvent->GetReceiver() == NULL, "invalid parameter");
 
@@ -1131,17 +1490,28 @@ namespace guiex
 		pEvent->Process();
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidgetSystem::UnregisterAllUIEvent( )
+	/**
+	* @brief unregister all ui event
+	*/
+	void CGUIWidgetSystem::UnregisterAllUIEvent( )
 	{
 		m_mapUIEvent.clear();
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidgetSystem::RegisterGlobalKeyReceiver( CGUIWidget* pReceiver, CGUIWidget* pRoot)
+	/**
+	* @brief register global key
+	* @param pReceiver the widget which will receive the global key event
+	* @pRoot the root widget of this receiver, is a root of page or a root of dialog
+	*/
+	void CGUIWidgetSystem::RegisterGlobalKeyReceiver( CGUIWidget* pReceiver, CGUIWidget* pRoot)
 	{
 		m_vecGlobalKeyObj.push_back(std::make_pair(pReceiver, pRoot));
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidgetSystem::UngisterGlobalKeyByRoot( CGUIWidget* pRoot)
+	/** 
+	* @brief remove key event by root widget
+	*/
+	void CGUIWidgetSystem::UngisterGlobalKeyByRoot( CGUIWidget* pRoot)
 	{
 		for( uint32 i=0;i<m_vecGlobalKeyObj.size();)
 		{
@@ -1156,12 +1526,19 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidgetSystem::UngisterAllGlobalKey( )
+	/** 
+	* @brief remove all key event
+	*/
+	void CGUIWidgetSystem::UngisterAllGlobalKey( )
 	{
 		m_vecGlobalKeyObj.clear();
 	}
 	//------------------------------------------------------------------------------
-	bool	CGUIWidgetSystem::ProcessGlobalKeyEvent(CGUIEventKeyboard* pEvent)
+	/** 
+	* @brief process the global key event
+	* @return whether this event is comsumed
+	*/
+	bool CGUIWidgetSystem::ProcessGlobalKeyEvent(CGUIEventKeyboard* pEvent)
 	{
 		CGUIWidget* pRoot = GetCurrentRootWidget();
 		if( !pRoot)
@@ -1191,24 +1568,20 @@ namespace guiex
 		return pEvent->IsConsumed();
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIWidgetSystem::SetDataPath(const CGUIString& rDataPath)
+	/** 
+	* @brief set data path of the ui system, the path should end by "/" or "\"
+	*/
+	void CGUIWidgetSystem::SetDataPath(const CGUIString& rDataPath)
 	{
 		m_strDataPath = rDataPath;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIString&	CGUIWidgetSystem::GetDataPath() const
+	/** 
+	* @brief get data path of the ui system, the path will end by "/" or "\"
+	*/
+	const CGUIString& CGUIWidgetSystem::GetDataPath() const
 	{
 		return m_strDataPath;
-	}
-	//------------------------------------------------------------------------------
-	void				CGUIWidgetSystem::SetDefaultCode(const char* pDataPath)
-	{
-		m_strDefaultCode = pDataPath;
-	}
-	//------------------------------------------------------------------------------
-	const char*			CGUIWidgetSystem::GetDefaultCode() const
-	{
-		return m_strDefaultCode.c_str();
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

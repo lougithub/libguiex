@@ -52,8 +52,9 @@ namespace guiex
 
 		ePropertyType_Image,
 		ePropertyType_Font,
-
+		ePropertyType_Animation,
 		ePropertyType_As,
+
 		ePropertyType_AsColor,
 		ePropertyType_AsScale,
 		ePropertyType_AsPosition,
@@ -66,8 +67,10 @@ namespace guiex
 		ePropertyType_TextAlignmentHorz,
 		ePropertyType_TextAlignmentVert,
 		ePropertyType_ImageOrientation,
-		
 
+		ePropertyType_Set,
+		ePropertyType_Widget,
+		ePropertyType_Script,
 
 		ePropertyType_UserDefine = 1000,
 	};

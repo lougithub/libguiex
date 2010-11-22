@@ -54,7 +54,6 @@ namespace guiex
 		virtual ~CGUIAsManager();
 
 		int32 RegisterAs( 
-			const CGUIString& rName,
 			const CGUIString& rSceneName,
 			const CGUIProperty& rProperty );
 
@@ -75,7 +74,6 @@ namespace guiex
 		* @brief create a as by given property
 		*/
 		CGUIAs* DoCreateAs( 
-			const CGUIString& rName,
 			const CGUIString& rSceneName,
 			const CGUIProperty& rProperty );
 

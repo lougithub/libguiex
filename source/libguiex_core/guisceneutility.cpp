@@ -44,12 +44,12 @@ namespace guiex
 			//has been loaded
 			return 0;
 		}
-			//load this scene
+		//load this scene
 		const std::vector<CGUIString>& rResourceFiles = pSceneInfo->GetResourceFiles( );
 		for( uint32 i=0; i<rResourceFiles.size(); ++i )
 		{
 			CGUIString strResourceFilePath = pSceneInfo->GetScenePath() + rResourceFiles[i];	
-			if( 0 != CGUIWidgetSystem::Instance()->LoadResource(strResourceFilePath, strSceneName))
+			if( 0 != CGUIWidgetSystem::Instance()->LoadConfigFile(strResourceFilePath, strSceneName, rResourceFiles[i]))
 			{
 				throw CGUIException( "[CGUISceneUtility::LoadResource] failed to load resource by scene name <%s : %s>",strResourceFilePath.c_str(), strSceneName.c_str());
 				return -1;

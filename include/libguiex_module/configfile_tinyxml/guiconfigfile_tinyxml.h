@@ -33,69 +33,20 @@ namespace guiex
 	class GUIEXPORT IGUIConfigFile_tinyxml : public IGUIInterfaceConfigFile
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		IGUIConfigFile_tinyxml();
-
-		/**
-		* @brief destructor
-		*/
 		virtual ~IGUIConfigFile_tinyxml();
 
 	public:
-		/**
-		* @brief read config file and generate widget system
-		* @return pointer of page root.
-		*/
-		virtual CGUIWidget*	LoadWidgetConfigFile(const CGUIString& rFileName, const CGUIString& rSceneName);
+		virtual int32 LoadConfigFile( const CGUIString& rFileName, CGUIProperty& rPropertySet );
 
-		/**
-		* @brief read image config file
-		* @return 0 for successful
-		*/
-		virtual int32 LoadResourceConfigFile(const CGUIString& rFileName, const CGUIString& rSceneName );
-
-		/**
-		* @brief read scene config file and generate scene info.
-		* @return pointer of scene info object.
-		*/
-		virtual CGUISceneInfo* LoadSceneInfoFile( const CGUIString& rFileName );
-
-		/**
-		* @brief used to delete this object
-		*/
-		virtual void	DeleteSelf();
+		virtual void DeleteSelf();
 
 	protected:
-		/** 
-		* @brief initialize render
-		* @return 0 for success
-		*/
 		virtual int DoInitialize(void* );
-
-		/** 
-		* @brief destroy render
-		* @return 0 for success
-		*/
 		virtual void DoDestroy();
 
 	protected:
-		/**
-		* @brief process the node of config file which is a xml file.
-		* @return 0 for success
-		*/
-		int32 ProcessNode( TiXmlElement* pNode, std::list<CGUIWidget*>& rWidgetSet );
-
-		/**
-		* @brief process property, get sub property set of this property node
-		* @return 0 for success
-		*/
-		int32 ProcessProperty( TiXmlElement* pNode, CGUIProperty&	rPropSet );
-
-		CGUIString DoGetFilename( const CGUIString& rPath );
-		CGUIString DoGetFileDir( const CGUIString& rPath ); 
-
+		int32 ProcessProperty( TiXmlElement* pNode, CGUIProperty& rPropSet );
 	};
 
 	GUI_INTERFACE_DECLARE();

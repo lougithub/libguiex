@@ -35,12 +35,6 @@ namespace guiex
 		*/
 		CGUIWgtDialog( const CGUIString& rName, const CGUIString& rSceneName );
 
-		/**
-		* @brief create this widget
-		*/
-		virtual int32 Create();
-
-
 	protected:
 		/**
 		* @brief constructor

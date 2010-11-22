@@ -82,7 +82,10 @@ namespace guiex
 		CGUIWidget(const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName  );
 		virtual ~CGUIWidget();
 
-		virtual int32 Create();
+		virtual void Create();
+		bool IsCreate() const;
+
+		void NotifyLoaded();
 
 		virtual void Open();
 		bool IsOpen() const;
@@ -498,6 +501,7 @@ namespace guiex
 		CGUIColor m_aColor;
 
 		bool m_bIsOpen;	///widget state
+		bool m_bIsCreate; ///widget state
 
 		///////////////////////////////////////////////////////////////////////
 		/// widget size and position								

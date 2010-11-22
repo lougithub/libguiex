@@ -1,14 +1,10 @@
 <?xml version="1.0" ?>
 <guiex>
-    <font>
         <property name="base_font" type="CGUIFont" >
             <property name="path" type="CGUIString" value="font/MONACO.TTF"/>
             <property name="index" type="int16" value="0"/>
         </property>
-    </font>
 
-
-    <image>
 		<property name="color_white" type="CGUIImage">
 			<property name="color" type="CGUIColor" value="1,1,1,1"/>
 			<property name="size" type="CGUISize" value="1,1"/>
@@ -180,7 +176,9 @@
 			<property  name="path" type="CGUIString" value="image/Common-Input-Border.tga" />
 			<property name="uv" type="CGUIRect" value="0,0,1,0.625" />
 		</property>
-    </image>
+
+
+
 </guiex>
 
 

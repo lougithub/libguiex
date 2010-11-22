@@ -38,11 +38,6 @@ namespace guiex
 		SetHitable( false );		
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidgetRoot::Open()
-	{
-		CGUIWidget::Open();
-	}
-	//------------------------------------------------------------------------------
 	void	CGUIWidgetRoot::RenderSelf(IGUIInterfaceRender* pRender)
 	{
 

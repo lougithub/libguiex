@@ -139,7 +139,7 @@ namespace guiex
 		m_pDropList->SetOpenWithParent( false );
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIWgtComboBox::Create()
+	void CGUIWgtComboBox::Create()
 	{
 		if( !m_pImageBG )
 		{
@@ -150,7 +150,7 @@ namespace guiex
 		m_pDropList->SetLocalPosition( 0.0f, GetSize().GetHeight());
 		m_pDropList->Create();
 
-		return CGUIWidget::Create();
+		CGUIWidget::Create();
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWgtComboBox::OnSetImage( const CGUIString& rName, const CGUIImage* pImage)

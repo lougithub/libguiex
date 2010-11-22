@@ -82,7 +82,7 @@ namespace guiex
 		/**
 		* @brief create this widget
 		*/
-		virtual int32 Create();
+		virtual void Create();
 
 	public:
 		/** 

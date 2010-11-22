@@ -47,7 +47,7 @@ namespace guiex
 		m_fCurrentValue = 0.0f;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIWgtProgress::Create()
+	void CGUIWgtProgress::Create()
 	{
 		if( !m_pImageBg )
 		{
@@ -58,7 +58,7 @@ namespace guiex
 			throw CGUIException("[CGUIWgtProgress::Create]: the image <FOREGROUND_IMG> hasn't been found!");
 		}
 
-		return CGUIWidget::Create();
+		CGUIWidget::Create();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtProgress::OnSetImage( const CGUIString& rName, CGUIImage* pImage )

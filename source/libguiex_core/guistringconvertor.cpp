@@ -47,15 +47,6 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int WideByteToMultiChar( const CGUIStringW& rSrc, CGUIString& rDst,  const char* szFromCode )
 	{
-		const char* pMultiByteCode = szFromCode ? szFromCode:CGUIWidgetSystem::Instance()->GetDefaultCode();
-		if( strcmp( pMultiByteCode, "UTF-8" ) != 0 )
-		{
-			throw CGUIException(
-				"[WideByteToMultiChar]: not supported multi byte code <%s>",
-				pMultiByteCode );
-			return -1;
-		}
-
 		IGUIInterfaceStringConv* pStringConv = CGUIInterfaceManager::Instance()->GetInterfaceStringConv();
 		if( !pStringConv )
 		{
@@ -68,15 +59,6 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int MultiByteToWideChar( const CGUIString& rSrc, CGUIStringW& rDst, const char* szFromCode)
 	{
-		const char* pMultiByteCode = szFromCode ? szFromCode:CGUIWidgetSystem::Instance()->GetDefaultCode();
-		if( strcmp( pMultiByteCode, "UTF-8" ) != 0 )
-		{
-			throw CGUIException(
-				"[MultiByteToWideChar]: not supported multi byte code <%s>",
-				pMultiByteCode );
-			return -1;
-		}
-
 		IGUIInterfaceStringConv* pStringConv = CGUIInterfaceManager::Instance()->GetInterfaceStringConv();
 		if( !pStringConv )
 		{

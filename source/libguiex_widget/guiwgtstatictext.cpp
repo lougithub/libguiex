@@ -46,10 +46,10 @@ namespace guiex
 		m_bMultiLine = false;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIWgtStaticText::Create()
+	void CGUIWgtStaticText::Create()
 	{
 		UpdateStringContent();
-		return CGUIWgtStatic::Create();
+		CGUIWgtStatic::Create();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtStaticText::RefreshSelf( )

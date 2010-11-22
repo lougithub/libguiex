@@ -1,29 +1,31 @@
 <guiex>
-    <widget type="CGUIWgtPanel" name="panel_dialog_ok">
+    <property name="set_name" type="set" value="set" />
+    <property name="panel_dialog_ok" type="CGUIWidget" value="CGUIWgtPanel">
         <property name="BGIMAGE" type="CGUIImage" value="dialog_bg" />
-        <property name="hitable" type="bool" value="true" />
-        <property name="response_update_event" type="bool" value="false" />
-        <property name="activable" type="bool" value="false" />
-        <property name="PANEL_BORDER_TOPLEFT" type="CGUIImage" value="dialog_border_topleft" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
             <property name="value" type="CGUIVector2" value="0.5,0.5" />
         </property>
-        <property name="rotation" type="CGUIVector3" value="0,0,0" />
-        <property name="PANEL_BORDER_BOTTOMRIGHT" type="CGUIImage" value="dialog_border_bottomright" />
-        <property name="visible" type="bool" value="true" />
         <property name="PANEL_BORDER_LEFT" type="CGUIImage" value="dialog_border_left" />
-        <property name="movable" type="bool" value="false" />
-        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
         <property name="PANEL_BORDER_RIGHT" type="CGUIImage" value="dialog_border_right" />
-        <property name="alpha" type="real" value="1" />
-        <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
-        <property name="open_with_parent" type="bool" value="true" />
         <property name="textinfo" type="CGUIStringInfo">
             <property name="size" type="uint16" value="16" />
             <property name="index" type="int16" value="0" />
             <property name="color" type="CGUIColor" value="1,1,1,1" />
         </property>
+        <property name="disable" type="bool" value="false" />
+        <property name="hitable" type="bool" value="true" />
+        <property name="response_update_event" type="bool" value="false" />
+        <property name="activable" type="bool" value="false" />
+        <property name="PANEL_BORDER_TOPLEFT" type="CGUIImage" value="dialog_border_topleft" />
+        <property name="rotation" type="CGUIVector3" value="0,0,0" />
+        <property name="PANEL_BORDER_BOTTOMRIGHT" type="CGUIImage" value="dialog_border_bottomright" />
+        <property name="visible" type="bool" value="true" />
+        <property name="movable" type="bool" value="false" />
+        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
+        <property name="alpha" type="real" value="1" />
+        <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
+        <property name="open_with_parent" type="bool" value="true" />
         <property name="PANEL_BORDER_BOTTOM" type="CGUIImage" value="dialog_border_bottom" />
         <property name="PANEL_BORDER_TOPRIGHT" type="CGUIImage" value="dialog_border_topright" />
         <property name="size" type="CGUIWidgetSize">
@@ -32,10 +34,9 @@
         </property>
         <property name="PANEL_BORDER_TOP" type="CGUIImage" value="dialog_border_top" />
         <property name="PANEL_BORDER_BOTTOMLEFT" type="CGUIImage" value="dialog_border_bottomleft" />
-        <property name="disable" type="bool" value="false" />
         <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-    </widget>
-    <widget type="CGUIWgtStaticText" name="dlg_text_content">
+    </property>
+    <property name="dlg_text_content" type="CGUIWidget" value="CGUIWgtStaticText">
         <property name="parent" type="CGUIString" value="panel_dialog_ok" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
@@ -63,12 +64,14 @@
         <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
         <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
         <property name="multiline" type="bool" value="true" />
-    </widget>
-    <widget type="CGUIWgtButton" name="dlg_button_ok">
+    </property>
+    <property name="dlg_button_ok" type="CGUIWidget" value="CGUIWgtButton">
         <property name="parent" type="CGUIString" value="panel_dialog_ok" />
         <property name="BTN_NORMAL" type="CGUIImage" value="button_blue_normal" />
-        <property name="BTN_HOVER" type="CGUIImage" value="button_blue_hover" />
         <property name="visible" type="bool" value="true" />
+        <property name="hitable" type="bool" value="true" />
+        <property name="response_update_event" type="bool" value="false" />
+        <property name="BTN_HOVER" type="CGUIImage" value="button_blue_hover" />
         <property name="disable" type="bool" value="false" />
         <property name="anchor" type="CGUIVector2" value="0.5,0" />
         <property name="alpha" type="real" value="1" />
@@ -84,9 +87,7 @@
         <property name="movable" type="bool" value="false" />
         <property name="BTN_PUSH" type="CGUIImage" value="button_blue_push" />
         <property name="BTN_DISABLE" type="CGUIImage" value="button_blue_disable" />
-        <property name="hitable" type="bool" value="true" />
         <property name="open_with_parent" type="bool" value="true" />
-        <property name="response_update_event" type="bool" value="false" />
         <property name="textinfo" type="CGUIStringInfo">
             <property name="size" type="uint16" value="16" />
             <property name="index" type="int16" value="0" />
@@ -112,5 +113,5 @@
             <property name="color" type="CGUIColor" value="1,1,1,1" />
         </property>
         <property name="rotation" type="CGUIVector3" value="0,0,0" />
-    </widget>
+    </property>
 </guiex>

@@ -69,7 +69,6 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	CGUIImage* CGUIImageManager::DoCreateImage(
-		const CGUIString& rName,
 		const CGUIString& rSceneName,
 		const CGUIProperty& rProperty ) const
 	{
@@ -121,7 +120,7 @@ namespace guiex
 				PropertyToValue( *pSize, aSize );
 			}
 
-			return DoCreateImage( rName, rSceneName, pPptPath->GetValue(), aUVRect, eImageOrientation, aSize);
+			return DoCreateImage( rProperty.GetName(), rSceneName, pPptPath->GetValue(), aUVRect, eImageOrientation, aSize);
 		}
 		else if(rProperty.HasProperty("color"))
 		{
@@ -143,7 +142,7 @@ namespace guiex
 
 			CGUIColor aColor;
 			PropertyToValue( *pPptColor, aColor );
-			return DoCreateImage( rName, rSceneName, aColor, aSize);
+			return DoCreateImage( rProperty.GetName(), rSceneName, aColor, aSize);
 		}
 		else
 		{
@@ -153,12 +152,10 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	int32 CGUIImageManager::RegisterImage( 
-		const CGUIString& rName,
 		const CGUIString& rSceneName,
 		const CGUIProperty& rProperty)
 	{
 		CGUIImage* pImage = DoCreateImage(
-			rName,
 			rSceneName,
 			rProperty );
 		RegisterResource( pImage );
@@ -234,16 +231,15 @@ namespace guiex
 		return pImage;
 	}
 	//------------------------------------------------------------------------------
-	CGUIImage* CGUIImageManager::AllocateResource( 			
-		const CGUIProperty& rProperty ) const
-	{
-		CGUIImage* pImage = DoCreateImage(
-			"",
-			"",
-			rProperty );
-		pImage->RefRetain();
-		return pImage;
-	}
+	//CGUIImage* CGUIImageManager::AllocateResource( 			
+	//	const CGUIProperty& rProperty ) const
+	//{
+	//	CGUIImage* pImage = DoCreateImage(
+	//		"",
+	//		rProperty );
+	//	pImage->RefRetain();
+	//	return pImage;
+	//}
 	//------------------------------------------------------------------------------
 	CGUIImage* CGUIImageManager::AllocateResource( 			
 		const CGUIString& rPath, 

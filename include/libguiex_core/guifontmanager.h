@@ -23,6 +23,10 @@
 //============================================================================//
 // declare
 //============================================================================// 
+namespace guiex
+{
+	class CGUIProperty;
+}
 
 //============================================================================//
 // class
@@ -47,18 +51,18 @@ namespace guiex
 		*/
 		virtual ~CGUIFontManager();
 
-		/**
-		* @brief create a font
-		*/
-		int32 CreateGUIFont(
-			const CGUIString& rName, 
-			const CGUIString& rSceneName, 
-			const CGUIString& rPath, 
-			uint32 nFontIndex
-			);
+		int32 RegisterFont( 
+			const CGUIString& rSceneName,
+			const CGUIProperty& rProperty);
 
 	protected:
 		virtual	void DoDestroyResource( CGUIFontData* pRes ); 
+		
+		CGUIFontData* DoCreateFont(
+			const CGUIString& rName, 
+			const CGUIString& rSceneName, 
+			const CGUIString& rPath, 
+			uint32 nFontIndex );
 
 	protected:
 		//declare for singleton

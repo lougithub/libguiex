@@ -13,6 +13,7 @@
 //============================================================================// 
 #include "guiconfig.h"
 #include "guitypes.h"
+#include "guienumtype.h"
 #include "guiassert.h"
 #include "guistring.h"
 

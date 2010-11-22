@@ -19,10 +19,13 @@
 #include <libguiex_core/guiinterfacefilesys.h>
 #include <libguiex_core/guiinterfacemanager.h>
 #include <libguiex_core/guiinterfaceconfigfile.h>
+#include <libguiex_core/guiproperty.h>
 #include <libguiex_core/guiexception.h>
 
 
-
+#if defined( GUIEX_PLATFORM_MAC )
+#include <libgen.h>
+#endif
 
 
 //============================================================================//
@@ -43,6 +46,85 @@ namespace guiex
 		UnloadScenes();
 	}
 	//------------------------------------------------------------------------------
+	CGUIString CGUISceneInfoManager::DoGetFilename( const CGUIString& rPath ) 
+	{
+#if defined( GUIEX_PLATFORM_WIN32 )
+		char fname[_MAX_FNAME];
+		char fext[_MAX_EXT];
+		_splitpath( rPath.c_str(), NULL, NULL, fname, fext ); 
+		return CGUIString( fname ) + fext;
+#elif defined( GUIEX_PLATFORM_MAC )
+		char* pBuf = new char[rPath.size()+1];
+		strcpy( pBuf, rPath.c_str() );
+		CGUIString aBaseName(basename( pBuf));
+		delete[] pBuf;
+		return aBaseName;
+#else
+#	error "unknown platform"		
+#endif
+	}
+	//------------------------------------------------------------------------------
+	CGUIString CGUISceneInfoManager::DoGetFileDir( const CGUIString& rPath ) 
+	{
+#if defined( GUIEX_PLATFORM_WIN32 )
+		char fdir[_MAX_DIR];
+		_splitpath( rPath.c_str(), NULL, fdir, NULL, NULL ); 
+		return CGUIString( fdir );
+#elif defined( GUIEX_PLATFORM_MAC )
+		char* pBuf = new char[rPath.size()+1];
+		strcpy( pBuf, rPath.c_str() );
+		CGUIString aDirName(dirname( pBuf));
+		aDirName += "/";
+		delete[] pBuf;
+		return aDirName;
+#else
+#	error "unknown platform"		
+#endif
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUISceneInfoManager::DoLoadScene( const CGUIString& rSceneFilePath )
+	{
+		//get interface of config file
+		IGUIInterfaceConfigFile* pConfigFile = CGUIInterfaceManager::Instance()->GetInterfaceConfigFile();
+		if( !pConfigFile )
+		{
+			throw CGUIException( "[CGUISceneInfoManager::DoLoadScene]: failed to get config file interface." );
+			return -1;
+		}
+
+		//get property set
+		CGUIProperty aPropertySet;
+		if( 0 != pConfigFile->LoadConfigFile( rSceneFilePath, aPropertySet ))
+		{
+			throw CGUIException( 
+				"[CGUISceneInfoManager::DoLoadScene]: failed to read scene info config file <%s>.",
+				rSceneFilePath.c_str() );
+			return -1;
+		}
+
+		//parse scene info
+		CGUISceneInfo * pSceneInfo = GenerateSceneInfo();
+		if( 0 != pSceneInfo->LoadFromPropertySet( DoGetFilename(rSceneFilePath), DoGetFileDir(rSceneFilePath), aPropertySet ))
+		{
+			DestroySceneInfo( pSceneInfo );
+			return -1;
+		}
+
+		std::map<CGUIString, CGUISceneInfo*>::iterator itor = m_mapSceneInfos.find( pSceneInfo->GetSceneFilename() );
+		if( itor != m_mapSceneInfos.end() )
+		{
+			DestroySceneInfo( pSceneInfo );
+			throw CGUIException(
+				"[CGUISceneInfoManager::DoLoadScene]: has duplicated scene <%s>", 
+				pSceneInfo->GetSceneFilename().c_str());
+			return -1;
+		}
+		m_mapSceneInfos.insert( std::make_pair( pSceneInfo->GetSceneFilename(), pSceneInfo));
+		m_vecSceneFileNames.push_back( pSceneInfo->GetSceneFilename() );
+
+		return 0;
+	}
+	//------------------------------------------------------------------------------
 	/*
 	* @param rSceneRootPath root path of all scenes.
 	* @param rSuffix suffix of project file.
@@ -50,52 +132,19 @@ namespace guiex
 	int32 CGUISceneInfoManager::LoadScenes( const CGUIString& rSceneRootPath, const CGUIString& rSuffix )
 	{
 		UnloadScenes();
-		IGUIInterfaceConfigFile* pConfigFile = CGUIInterfaceManager::Instance()->GetInterfaceConfigFile();
 
 		//get file interface
 		IGUIInterfaceFileSys* pFileSys = CGUIInterfaceManager::Instance()->GetInterfaceFileSys();
 		pFileSys->FindFiles( rSceneRootPath, rSuffix, m_vecSceneFilePaths );
 
-
 		//load all scenes
 		std::vector<CGUIString> vecErrorList;
 		for( uint32 i=0; i<m_vecSceneFilePaths.size(); ++i )
 		{
-			CGUISceneInfo* pSceneInfo = pConfigFile->LoadSceneInfoFile( m_vecSceneFilePaths[i] );
-			if( !pSceneInfo )
+			if( 0 != DoLoadScene( m_vecSceneFilePaths[i] ))
 			{
-				//failed
-				vecErrorList.push_back(m_vecSceneFilePaths[i]);
+				return -1;
 			}
-			else
-			{
-				std::map<CGUIString, CGUISceneInfo*>::iterator itor = m_mapSceneInfos.find( pSceneInfo->GetSceneFilename() );
-				if( itor != m_mapSceneInfos.end() )
-				{
-					DestroySceneInfo( pSceneInfo );
-					throw CGUIException(
-						"[CGUISceneInfoManager::LoadScenes]: has duplicated scene <%s>", 
-						pSceneInfo->GetSceneFilename().c_str());
-					return -1;
-				}
-				m_mapSceneInfos.insert( std::make_pair( pSceneInfo->GetSceneFilename(), pSceneInfo));
-				m_vecSceneFileNames.push_back( pSceneInfo->GetSceneFilename() );
-			}
-		}
-
-		//check error's
-		if(!vecErrorList.empty())
-		{
-			CGUIString errorList;
-			for( uint32 i=0; i<vecErrorList.size(); ++i )
-			{
-				errorList += vecErrorList[i];
-				errorList += "\n";
-			}
-			throw CGUIException(
-				"[CGUISceneInfoManager::LoadScenes]: failed to load scene file <%s>", 
-				errorList.c_str());
-			return -1;
 		}
 
 		//check dependencies

@@ -39,11 +39,6 @@ namespace guiex
 		*/
 		CGUIWgtButton( const CGUIString& rName, const CGUIString& rSceneName );
 
-		/**
-		* @brief create this widget
-		*/
-		virtual int32 Create();
-
 		void SetBtnTextContent_Hover( const CGUIStringW& rText );
 		void SetBtnTextInfo_Hover(const CGUIStringInfo& rInfo );
 		void SetBtnTextContent_Disable( const CGUIStringW& rText );

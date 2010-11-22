@@ -55,6 +55,9 @@ namespace guiex
 		CGUISceneInfoManager();
 		~CGUISceneInfoManager();
 
+		int32 DoLoadScene( const CGUIString& rSceneFilePath );
+		CGUIString DoGetFilename( const CGUIString& rPath );
+		CGUIString DoGetFileDir( const CGUIString& rPath ); 
 	protected:
 		std::map<CGUIString, CGUISceneInfo*>	m_mapSceneInfos;	//
 		std::vector<CGUIString>					m_vecSceneFilePaths;	//absolute file path

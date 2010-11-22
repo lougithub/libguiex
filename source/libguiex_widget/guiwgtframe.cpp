@@ -296,7 +296,7 @@ namespace guiex
 
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIWgtFrame::Create()
+	void CGUIWgtFrame::Create()
 	{
 		if( m_eTitlebarType != TITLEBAR_NONE)
 		{
@@ -316,7 +316,7 @@ namespace guiex
 			}
 		}
 
-		return CGUIWidget::Create();
+		CGUIWidget::Create();
 	}
 	//------------------------------------------------------------------------------
 	bool	CGUIWgtFrame::HitTest( const CGUIVector2& rPos) 

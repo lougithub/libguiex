@@ -16,7 +16,6 @@
 
 namespace guiex
 {
-
 	//------------------------------------------------------------------------------
 	IGUIInterfaceConfigFile::IGUIInterfaceConfigFile( )
 		:IGUIInterface("IGUIConfigFile")

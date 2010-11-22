@@ -21,8 +21,7 @@
 //============================================================================// 
 namespace guiex
 {
-	class CGUIWidget;
-	class CGUISceneInfo;
+	class CGUIProperty;
 }
 
 //============================================================================//
@@ -48,23 +47,7 @@ namespace guiex
 		virtual ~IGUIInterfaceConfigFile();
 
 	public:
-		/**
-		* @brief read scene config file and generate scene info.
-		* @return pointer of scene info object.
-		*/
-		virtual CGUISceneInfo* LoadSceneInfoFile( const CGUIString& rFileName ) = 0;
-
-		/**
-		* @brief read config file and generate widget system
-		* @return the root widget, return NULL for error, or there isn't any widget
-		*/
-		virtual CGUIWidget*	LoadWidgetConfigFile(const CGUIString& rFileName, const CGUIString& rSceneName) = 0;
-
-		/**
-		* @brief read resource config file
-		* @return 0 for successful
-		*/
-		virtual int32 LoadResourceConfigFile(const CGUIString& rFileName, const CGUIString& m_strSceneName ) = 0;
+		virtual int32 LoadConfigFile( const CGUIString& rFileName, CGUIProperty& rPropertySet ) = 0;
 	};
 }//namespace guiex
 

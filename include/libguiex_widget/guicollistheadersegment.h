@@ -49,12 +49,10 @@ namespace guiex
 		*/
 		virtual ~CGUIColListHeaderSegment(void);
 
-
 		/**
 		* @brief create this widget
 		*/
-		virtual int32 Create();
-
+		virtual void Create();
 
 		/**
 		* @brief set segment's id

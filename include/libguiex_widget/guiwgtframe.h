@@ -48,7 +48,7 @@ namespace guiex
 		/**
 		* @brief create this widget
 		*/
-		virtual int32 Create();
+		virtual void Create();
 
 		/**
 		* @brief whether this frame has title bar.

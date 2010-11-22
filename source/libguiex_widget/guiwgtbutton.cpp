@@ -58,12 +58,7 @@ namespace guiex
 		SetGenerateClickEvent( true );
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIWgtButton::Create()
-	{
-		return CGUIWidget::Create();
-	}
-	//------------------------------------------------------------------------------
-	void		CGUIWgtButton::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
+	void CGUIWgtButton::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
 		if( rName == "BTN_NORMAL")
 		{

@@ -57,7 +57,7 @@ namespace guiex
 		SetGenerateClickEvent( true );
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIWgtScrollPanel::Create()
+	void CGUIWgtScrollPanel::Create()
 	{
 		if( m_UseSelfCreatedScrollbar )
 		{
@@ -116,7 +116,7 @@ namespace guiex
 			m_pScrollbarVert->Create();
 		}
 
-		return CGUIWidget::Create();
+		CGUIWidget::Create();
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWgtScrollPanel::UseSelfCreatedScrollbar( bool bSelfCreated )

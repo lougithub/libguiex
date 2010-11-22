@@ -606,11 +606,14 @@ int	WxGLCanvas::SaveToFile( const std::string& rFilename)
 	TiXmlElement* pRootNode = aDoc.RootElement();
 	wxASSERT(pRootNode);
 	TiXmlElement* pFindNode = NULL;
-	TiXmlElement* pNode = pRootNode->FirstChildElement("widget");
+	TiXmlElement* pNode = pRootNode->FirstChildElement("property");
 	while( pNode )
 	{
-		TiXmlElement* pNextNode = pNode->NextSiblingElement("widget");
-		pRootNode->RemoveChild(pNode);
+		TiXmlElement* pNextNode = pNode->NextSiblingElement("property");
+		if( std::string(pNode->Attribute("type")) == "CGUIWidget" )
+		{
+			pRootNode->RemoveChild(pNode);
+		}
 		pNode = pNextNode;
 	}
 
@@ -654,9 +657,10 @@ int WxGLCanvas::SaveWidgetNodeToDoc( guiex::CGUIWidget* pWidget, TiXmlDocument& 
 	//save widget to doc
 	TiXmlElement* pWidgetNode = NULL;
 	//insert a widget
-	TiXmlElement aNewNode("widget");
-	aNewNode.SetAttribute("type", pWidget->GetType().c_str());
+	TiXmlElement aNewNode("property");
 	aNewNode.SetAttribute("name", pWidget->GetName().c_str());
+	aNewNode.SetAttribute("type", "CGUIWidget");
+	aNewNode.SetAttribute("value", pWidget->GetType().c_str());
 
 	if( guiex::CGUIWidgetSystem::Instance()->HasPage( pWidget))
 	{
@@ -664,7 +668,7 @@ int WxGLCanvas::SaveWidgetNodeToDoc( guiex::CGUIWidget* pWidget, TiXmlDocument& 
 	}
 	else
 	{
-		TiXmlElement* pParentNode = GetElementByName(_T("widget"), wxConvUTF8.cMB2WC(pWidget->GetParent()->GetName().c_str()).data(), pRootNode);
+		TiXmlElement* pParentNode = GetElementByName(_T("property"), wxConvUTF8.cMB2WC(pWidget->GetParent()->GetName().c_str()).data(), pRootNode);
 		wxASSERT(pParentNode);
 		pWidgetNode = (TiXmlElement*)pRootNode->InsertEndChild(aNewNode);
 	}

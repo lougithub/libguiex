@@ -30,6 +30,17 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	int32 CGUIAnimationManager::RegisterAnimation(
+		const CGUIString& rSceneName, 
+		const CGUIProperty& rProperty )
+	{
+		CGUIAnimation* pAnimation = DoCreateAnimation(
+			rSceneName,
+			rProperty);
+		RegisterResource( pAnimation );
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUIAnimationManager::RegisterAnimation(
 		const CGUIString& rName, 
 		const CGUIString& rSceneName, 
 		const CGUIString& rFileName, 
@@ -63,6 +74,14 @@ namespace guiex
 			rSize );
 		RegisterResource( pAnimation );
 		return 0;
+	}
+	//------------------------------------------------------------------------------
+	CGUIAnimation* CGUIAnimationManager::DoCreateAnimation(
+		const CGUIString& rSceneName, 
+		const CGUIProperty& rProperty )
+	{
+		GUI_ASSERT(0, "not implementation");
+		return NULL;
 	}
 	//------------------------------------------------------------------------------
 	CGUIAnimation* CGUIAnimationManager::DoCreateAnimation(

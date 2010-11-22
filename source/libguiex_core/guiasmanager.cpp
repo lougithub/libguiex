@@ -29,16 +29,17 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	int32 CGUIAsManager::RegisterAs( 
-		const CGUIString& rName,
 		const CGUIString& rSceneName,
 		const CGUIProperty& rProperty )
 	{
-		CGUIAs* pAs = DoCreateAs( rName, rSceneName, rProperty); 
+		CGUIAs* pAs = DoCreateAs( rSceneName, rProperty); 
 		RegisterResource( pAs );
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	CGUIAs* CGUIAsManager::DoCreateAs( const CGUIString& rName, const CGUIString& rSceneName, const CGUIProperty& rProperty )
+	CGUIAs* CGUIAsManager::DoCreateAs( 
+		const CGUIString& rSceneName, 
+		const CGUIProperty& rProperty )
 	{
 		CGUIAs* pAs = NULL;
 

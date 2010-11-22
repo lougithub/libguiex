@@ -50,6 +50,10 @@ namespace guiex
 		* @brief destructor;
 		*/
 		virtual ~CGUIAnimationManager();
+		
+		int32 RegisterAnimation(
+			const CGUIString& rSceneName, 
+			const CGUIProperty& rProperty );
 
 		/**
 		* @brief create a animation by single image;
@@ -60,8 +64,7 @@ namespace guiex
 			const CGUIString& rFileName, 
 			const std::vector<CGUIRect>& rUVRects,
 			real fInterval,
-			const CGUISize& rSize = CGUISize(0,0)
-			);
+			const CGUISize& rSize = CGUISize(0,0));
 
 		/**
 		* @brief create a animation by multible images
@@ -71,8 +74,7 @@ namespace guiex
 			const CGUIString& rSceneName, 
 			const std::vector<CGUIString>& rFileNames,  
 			real fInterval,
-			const CGUISize& rSize = CGUISize(0,0)
-			);
+			const CGUISize& rSize = CGUISize(0,0));
 
 
 		CGUIAnimation* AllocateResource( const CGUIString& rResName );
@@ -85,11 +87,15 @@ namespace guiex
 		CGUIAnimation* AllocateResource( 
 			const std::vector<CGUIString>& rFileNames,  
 			real fInterval,
-			const CGUISize& rSize = CGUISize(0,0)
-			);
+			const CGUISize& rSize = CGUISize(0,0));
+
 		int32 DeallocateResource( CGUIAnimation* pAnimation );
 
 	protected:
+		CGUIAnimation* DoCreateAnimation(
+			const CGUIString& rSceneName, 
+			const CGUIProperty& rProperty );
+
 		/**
 		* @brief create a animation by single image;
 		*/
