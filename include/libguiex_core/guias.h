@@ -540,7 +540,8 @@ namespace guiex
 		virtual void SetReceiver(CGUIWidget* pReceiver);
 
 		void AddItem( CGUIAsContainItemInfo& rItemInfo );
-
+		void AddItem( CGUIAs* pAs, real fBeginTime );
+		
 	protected:
 		typedef std::vector<CGUIAsContainItemInfo> TAsList;
 		TAsList m_vAsList;//the as in this list should be sorted by begin time

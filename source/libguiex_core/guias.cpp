@@ -620,11 +620,20 @@ namespace guiex
 			{
 				continue;
 			}
-
-			rInfo.m_pAs->Update( fDeltaTime );
+			
+			rInfo.m_pAs->SetElapsedTime( GetElapsedTime() - rInfo.m_fBeginTime );
+			rInfo.m_pAs->Update( 0.0f );
 		}
 
 		return fLeftTime;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsContainer::AddItem( CGUIAs* pAs, real fBeginTime )
+	{
+		CGUIAsContainItemInfo aInfo;
+		aInfo.m_pAs = pAs;
+		aInfo.m_fBeginTime = fBeginTime;
+		AddItem( aInfo );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIAsContainer::AddItem( CGUIAsContainItemInfo& rItemInfo )

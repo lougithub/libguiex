@@ -8,8 +8,8 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_module\stringconv_iconv\guistringconv_iconv.h>
-#include <windows.h>
+#include <libguiex_module/stringconv_iconv/guistringconv_iconv.h>
+#include <libguiex_core/guiexception.h>
 
 
 //============================================================================//
@@ -28,11 +28,23 @@ namespace guiex
 	IGUIStringConv_iconv::~IGUIStringConv_iconv()
 	{
 	}
+	
 	//------------------------------------------------------------------------------
-	int IGUIStringConv_iconv::Utf8ToUtf16( const CGUIString& rSrc, CGUIStringEx& rDst )
+	int	IGUIStringConv_iconv::DoInitialize(void* pUserData)
+	{
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	void IGUIStringConv_iconv::DoDestroy()
+	{
+		
+	}	
+	//------------------------------------------------------------------------------
+	int IGUIStringConv_iconv::Utf8ToUtf16( const CGUIString& rSrc, CGUIStringW& rDst )
 	{
 		if( rSrc.empty())
 		{
+			rDst.clear();
 			return 0;
 		}
 
@@ -62,12 +74,11 @@ namespace guiex
 			outbytesleft = buf_size*sizeof(wchar_t);
 
 			size_t retbytes = iconv(cd, &pInBuf, &inbytesleft, &pOutBuf, &outbytesleft);
-			//int errno_save = errno;
 
 			if (dst != pOutBuf)  
 			{
 				// we have something to write
-				rDst.Append((wchar_t*)dst, (pOutBuf-dst)/sizeof(wchar_t));
+				rDst.append((wchar_t*)dst, (pOutBuf-dst)/sizeof(wchar_t));
 			} 
 
 			//check ret
@@ -124,10 +135,11 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int IGUIStringConv_iconv::Utf16ToUtf8( const CGUIStringEx& rSrc, CGUIString& rDst )
+	int IGUIStringConv_iconv::Utf16ToUtf8( const CGUIStringW& rSrc, CGUIString& rDst )
 	{
-		if( rSrc.Empty())
+		if( rSrc.empty())
 		{
+			rDst.clear();
 			return 0;
 		}
 
@@ -142,12 +154,12 @@ namespace guiex
 		}
 
 		//convert
-		size_t	buf_size = rSrc.Size()*4+1;
-		size_t	inbytesleft = rSrc.Size()*2;
+		size_t	buf_size = rSrc.size()*4+1;
+		size_t	inbytesleft = rSrc.size()*2;
 		size_t	outbytesleft = buf_size;
 		char*	dst = (char*)(new char[buf_size]);
 		char*	pOutBuf = NULL;
-		char*	pInBuf = (char*)rSrc.GetContent();
+		char*	pInBuf = (char*)rSrc.c_str();
 
 		bool	bError = false;
 
@@ -219,4 +231,9 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
+	void	IGUIStringConv_iconv::DeleteSelf()
+	{
+		delete this;
+	}
+	//------------------------------------------------------------------------------	
 }

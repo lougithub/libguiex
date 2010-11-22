@@ -51,15 +51,7 @@ namespace guiex
 		virtual void DeleteSelf();
 
 	protected:
-		/** 
-		* @brief implement initialization
-		* @return 0 for successful
-		*/
 		virtual int	DoInitialize(void* pUserData);
-
-		/** 
-		* @brief implement destruct
-		*/
 		virtual void DoDestroy();
 	};
 

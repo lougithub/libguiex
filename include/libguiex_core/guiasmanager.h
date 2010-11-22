@@ -62,9 +62,9 @@ namespace guiex
 		int32 DeallocateResource( CGUIAs* pRes );
 
 		template<class T>
-		T* AllocateResourceByTypeChecked( const CGUIString& rAsType )
+		T* AllocateResourceByTypeChecked( /*const CGUIString& rAsType*/ )
 		{
-			CGUIAs* pAs = AllocateResourceByType( rAsType );
+			CGUIAs* pAs = AllocateResourceByType( T::StaticGetAsType() );
 			GUI_ASSERT( pAs->GetType() == T::StaticGetAsType(), "wrong As type" );
 			return static_cast<T*>( pAs );
 		}

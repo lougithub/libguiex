@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FF030690128EDE96009C3ED4 /* ApplicationEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF030684128EDE96009C3ED4 /* ApplicationEngine.mm */; };
 		FF030692128EDE96009C3ED4 /* hello_ipad.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF030687128EDE96009C3ED4 /* hello_ipad.mm */; };
 		FF034ECD128ACFD100950825 /* guiimagedata_tga.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF034ECB128ACFD100950825 /* guiimagedata_tga.cpp */; };
 		FF034ECE128ACFD100950825 /* guiimageloader_tga.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF034ECC128ACFD100950825 /* guiimageloader_tga.cpp */; };
@@ -265,6 +264,9 @@
 		FFBDE1E6128EBA19003A1CA1 /* b2RevoluteJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = FFBDE16D128EBA19003A1CA1 /* b2RevoluteJoint.h */; };
 		FFBDE1E7128EBA19003A1CA1 /* b2WeldJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFBDE16E128EBA19003A1CA1 /* b2WeldJoint.cpp */; };
 		FFBDE1E8128EBA19003A1CA1 /* b2WeldJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = FFBDE16F128EBA19003A1CA1 /* b2WeldJoint.h */; };
+		FFBDF2CD129A8A3200B74F3C /* ApplicationEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = FFBDF2CC129A8A3200B74F3C /* ApplicationEngine.mm */; };
+		FFCA3893129AA6320003698F /* guistringconv_iconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFCA3892129AA6320003698F /* guistringconv_iconv.cpp */; };
+		FFCA3896129AA6490003698F /* guistringconv_iconv.h in Headers */ = {isa = PBXBuildFile; fileRef = FFCA3895129AA6490003698F /* guistringconv_iconv.h */; };
 		FFE4948F129945E9002F0BA6 /* guifilesys_cocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = FFE4948E129945E9002F0BA6 /* guifilesys_cocoa.mm */; };
 		FFE4949212994601002F0BA6 /* guifilesys_cocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = FFE4949112994601002F0BA6 /* guifilesys_cocoa.h */; };
 		FFE494F312995BC6002F0BA6 /* guiinterfacestringconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFE494F212995BC6002F0BA6 /* guiinterfacestringconv.cpp */; };
@@ -347,7 +349,6 @@
 /* Begin PBXFileReference section */
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FF030683128EDE96009C3ED4 /* ApplicationEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationEngine.h; sourceTree = "<group>"; };
-		FF030684128EDE96009C3ED4 /* ApplicationEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ApplicationEngine.mm; sourceTree = "<group>"; };
 		FF030685128EDE96009C3ED4 /* hello_ipad-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "hello_ipad-Info.plist"; sourceTree = "<group>"; };
 		FF030686128EDE96009C3ED4 /* hello_ipad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hello_ipad.h; sourceTree = "<group>"; };
 		FF030687128EDE96009C3ED4 /* hello_ipad.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = hello_ipad.mm; sourceTree = "<group>"; };
@@ -676,6 +677,9 @@
 		FFBDE16D128EBA19003A1CA1 /* b2RevoluteJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2RevoluteJoint.h; sourceTree = "<group>"; };
 		FFBDE16E128EBA19003A1CA1 /* b2WeldJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2WeldJoint.cpp; sourceTree = "<group>"; };
 		FFBDE16F128EBA19003A1CA1 /* b2WeldJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2WeldJoint.h; sourceTree = "<group>"; };
+		FFBDF2CC129A8A3200B74F3C /* ApplicationEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ApplicationEngine.mm; sourceTree = "<group>"; };
+		FFCA3892129AA6320003698F /* guistringconv_iconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guistringconv_iconv.cpp; sourceTree = "<group>"; };
+		FFCA3895129AA6490003698F /* guistringconv_iconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guistringconv_iconv.h; sourceTree = "<group>"; };
 		FFE4948E129945E9002F0BA6 /* guifilesys_cocoa.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = guifilesys_cocoa.mm; sourceTree = "<group>"; };
 		FFE4949112994601002F0BA6 /* guifilesys_cocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guifilesys_cocoa.h; sourceTree = "<group>"; };
 		FFE494F212995BC6002F0BA6 /* guiinterfacestringconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiinterfacestringconv.cpp; sourceTree = "<group>"; };
@@ -816,8 +820,8 @@
 		FF030682128EDE96009C3ED4 /* hello_ipad */ = {
 			isa = PBXGroup;
 			children = (
+				FFBDF2CC129A8A3200B74F3C /* ApplicationEngine.mm */,
 				FF030683128EDE96009C3ED4 /* ApplicationEngine.h */,
-				FF030684128EDE96009C3ED4 /* ApplicationEngine.mm */,
 				FF030685128EDE96009C3ED4 /* hello_ipad-Info.plist */,
 				FF030686128EDE96009C3ED4 /* hello_ipad.h */,
 				FF030687128EDE96009C3ED4 /* hello_ipad.mm */,
@@ -848,6 +852,7 @@
 		FF040809128840070053FF31 /* libguiex_module */ = {
 			isa = PBXGroup;
 			children = (
+				FFCA3894129AA6490003698F /* stringconv_iconv */,
 				FFEAA4B812996AA4001639D3 /* font_cocoa */,
 				FFE4949012994601002F0BA6 /* filesys_cocoa */,
 				FFE5EDBE1299313A0053457A /* stringconv_cocoa */,
@@ -861,6 +866,7 @@
 		FF04080A128840150053FF31 /* libguiex_module */ = {
 			isa = PBXGroup;
 			children = (
+				FFCA3891129AA6320003698F /* stringconv_iconv */,
 				FFEAA4B312996A94001639D3 /* font_cocoa */,
 				FFE4948D129945E9002F0BA6 /* filesys_cocoa */,
 				FFE5EDBB1299311C0053457A /* stringconv_cocoa */,
@@ -1348,6 +1354,24 @@
 			path = Joints;
 			sourceTree = "<group>";
 		};
+		FFCA3891129AA6320003698F /* stringconv_iconv */ = {
+			isa = PBXGroup;
+			children = (
+				FFCA3892129AA6320003698F /* guistringconv_iconv.cpp */,
+			);
+			name = stringconv_iconv;
+			path = libguiex_module/stringconv_iconv;
+			sourceTree = "<group>";
+		};
+		FFCA3894129AA6490003698F /* stringconv_iconv */ = {
+			isa = PBXGroup;
+			children = (
+				FFCA3895129AA6490003698F /* guistringconv_iconv.h */,
+			);
+			name = stringconv_iconv;
+			path = libguiex_module/stringconv_iconv;
+			sourceTree = "<group>";
+		};
 		FFE4948D129945E9002F0BA6 /* filesys_cocoa */ = {
 			isa = PBXGroup;
 			children = (
@@ -1544,6 +1568,7 @@
 				FFE4949212994601002F0BA6 /* guifilesys_cocoa.h in Headers */,
 				FFEAA4BB12996AA4001639D3 /* guifont_cocoa.h in Headers */,
 				FFEAA4BC12996AA4001639D3 /* guifontdata_cocoa.h in Headers */,
+				FFCA3896129AA6490003698F /* guistringconv_iconv.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1615,6 +1640,7 @@
 			buildConfigurationList = FF0FC57812897F16004B195F /* Build configuration list for PBXNativeTarget "hello_ipad" */;
 			buildPhases = (
 				FFE4952F12995E58002F0BA6 /* Resources */,
+				FFCA385B129AA3890003698F /* Rez */,
 				FF0FC57012897F15004B195F /* Sources */,
 				FF0FC57112897F15004B195F /* Frameworks */,
 			);
@@ -1743,6 +1769,16 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXRezBuildPhase section */
+		FFCA385B129AA3890003698F /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXRezBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		FF04083A128847780053FF31 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -1760,8 +1796,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF030690128EDE96009C3ED4 /* ApplicationEngine.mm in Sources */,
 				FF030692128EDE96009C3ED4 /* hello_ipad.mm in Sources */,
+				FFBDF2CD129A8A3200B74F3C /* ApplicationEngine.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1873,6 +1909,7 @@
 				FFE4948F129945E9002F0BA6 /* guifilesys_cocoa.mm in Sources */,
 				FFEAA4B612996A94001639D3 /* guifont_cocoa.cpp in Sources */,
 				FFEAA4B712996A94001639D3 /* guifontdata_cocoa.cpp in Sources */,
+				FFCA3893129AA6320003698F /* guistringconv_iconv.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
