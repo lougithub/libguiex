@@ -403,8 +403,11 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	// create canvas
-	int wx_gl_attribs[] = {WX_GL_RGBA, WX_GL_DOUBLEBUFFER, WX_GL_DEPTH_SIZE, 24, 0};
-
+	int wx_gl_attribs[] = {
+		WX_GL_RGBA, WX_GL_DOUBLEBUFFER, 
+		WX_GL_DEPTH_SIZE, 24, 
+		WX_GL_STENCIL_SIZE, 8,
+		0};
 	WxGLCanvas* pCanvas = new WxGLCanvas(this, wx_gl_attribs);
 
 

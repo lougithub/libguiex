@@ -78,6 +78,7 @@ namespace guiex
 		,m_bIsGenerateDBClickEvent(false)
 		,m_bIsGenerateMultiClickEvent(false)
 		,m_bIsAutoPlayAs(false)
+		,m_bIsClipChildren(false)
 	{
 		//set flag
 		m_aBitFlag.reset(eFLAG_EVENT_PARENTSIZECHANGE);	//could this widget receive parent change event
@@ -833,6 +834,16 @@ namespace guiex
 		return m_bIsAutoPlayAs;
 	}
 	//------------------------------------------------------------------------------
+	void CGUIWidget::SetClipChildren( bool bClip )
+	{
+		m_bIsClipChildren = bClip;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWidget::IsClipChildren( ) const
+	{
+		return m_bIsClipChildren;
+	}
+	//------------------------------------------------------------------------------
 	void CGUIWidget::SetDisable(bool bDisable)
 	{
 		if( bDisable != IsDisable() )
@@ -1176,7 +1187,7 @@ namespace guiex
 		CallScriptFunction(strEventName, pEvent);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::SetScale( const CGUISize& rSize )
+	void CGUIWidget::SetScale( const CGUISize& rSize )
 	{
 		if(m_aParamScale.GetSelfValue() != rSize )
 		{
@@ -1197,17 +1208,17 @@ namespace guiex
 
 	}
 	//------------------------------------------------------------------------------
-	const CGUISize &  CGUIWidget::GetScale( ) const
+	const CGUISize & CGUIWidget::GetScale( ) const
 	{
 		return m_aParamScale.GetSelfValue();
 	}
 	//------------------------------------------------------------------------------
-	const CGUISize &	CGUIWidget::GetDerivedScale()
+	const CGUISize & CGUIWidget::GetDerivedScale()
 	{
 		return m_aParamScale.GetFinalValue();
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::SetAlpha(real fAlpha)
+	void CGUIWidget::SetAlpha(real fAlpha)
 	{
 		if( GetAlpha() != fAlpha )
 		{
@@ -1221,7 +1232,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	real	CGUIWidget::GetAlpha()  const
+	real CGUIWidget::GetAlpha()  const
 	{
 		return m_aParamAlpha.GetSelfValue();
 	}
@@ -1230,7 +1241,7 @@ namespace guiex
 	* @brief get the alpha which used to render this widget.
 	* this value will be affected by both this widget's alpha and inheritable flag.
 	*/
-	real	CGUIWidget::GetDerivedAlpha() 
+	real CGUIWidget::GetDerivedAlpha() 
 	{
 		if( IsInheritAlpha() && GetParent() )
 		{
@@ -1245,7 +1256,7 @@ namespace guiex
 	/**
 	* @brief callback of set the image of widget.
 	*/
-	void	CGUIWidget::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
+	void CGUIWidget::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
 
 	}
@@ -1743,6 +1754,11 @@ namespace guiex
 			ValueToProperty( IsHitable(), rProperty);
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
+		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "clip_children" )
+		{
+			ValueToProperty( IsClipChildren(), rProperty);
+		}
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo" )
 		{
 			ValueToProperty( GetTextInfo(), rProperty);
@@ -1946,6 +1962,12 @@ namespace guiex
 			PropertyToValue(rProperty, bValue );
 			SetHitable( bValue );
 		}
+		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="clip_children" )
+		{
+			bool bValue = false;
+			PropertyToValue(rProperty, bValue );
+			SetClipChildren( bValue );
+		}
 		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="activable" )
 		{
 			bool bValue = false;
@@ -2053,10 +2075,10 @@ namespace guiex
 			return;
 		}
 
-		PushClipRect( pRender );
-
 		// perform render for 'this' Window
 		RenderSelf(pRender);
+
+		PushClipRect( pRender );
 
 		// render any child windows
 		CGUIWidget* pWidget = GetChild();
@@ -2111,17 +2133,17 @@ namespace guiex
 		DrawRect( pRender, GetBoundArea(), 1.0f, CGUIColor( 1.f,0.f,0.f,1.f) );
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::PushClipRect( IGUIInterfaceRender* pRender )
+	void CGUIWidget::PushClipRect( IGUIInterfaceRender* pRender )
 	{
-		if( GetParent() )
+		if( IsClipChildren() )
 		{
-			pRender->PushClipRect( GetParent()->getFullTransform(), GetParent()->GetClipArea() );
+			pRender->PushClipRect( getFullTransform(), GetClipArea() );
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::PopClipRect( IGUIInterfaceRender* pRender )
+	void CGUIWidget::PopClipRect( IGUIInterfaceRender* pRender )
 	{
-		if( GetParent() )
+		if( IsClipChildren() )
 		{
 			pRender->PopClipRect( );
 		}
@@ -2130,7 +2152,7 @@ namespace guiex
 	/**
 	* @brief update this widget only
 	*/
-	void	CGUIWidget::UpdateSelf( real fDeltaTime )
+	void CGUIWidget::UpdateSelf( real fDeltaTime )
 	{
 		//update action sequence
 		UpdateAsSelf( fDeltaTime );

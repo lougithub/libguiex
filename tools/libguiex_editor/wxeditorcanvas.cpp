@@ -39,7 +39,12 @@ WxEditorCanvasContainer::WxEditorCanvasContainer( wxWindow *parent, const std::s
 
 	//create canvas
 	wxSize aCanvasSize( guiex::CGUIWidgetSystem::Instance()->GetScreenWidth(), guiex::CGUIWidgetSystem::Instance()->GetScreenHeight());
-	m_pCanvas = new WxGLCanvas(this, wxID_ANY, wxDefaultPosition, aCanvasSize);
+	int wx_gl_attribs[] = {
+		WX_GL_RGBA, WX_GL_DOUBLEBUFFER, 
+		WX_GL_DEPTH_SIZE, 24, 
+		WX_GL_STENCIL_SIZE, 8,
+		0};
+	m_pCanvas = new WxGLCanvas(this, wx_gl_attribs, wxID_ANY, wxDefaultPosition, aCanvasSize);
 	m_pCanvas->InitializeCanvas();
 	m_pCanvas->SetNextHandler(  this );
 }
@@ -104,7 +109,7 @@ END_EVENT_TABLE()
 
 
 //------------------------------------------------------------------------------
-WxGLCanvas::WxGLCanvas(wxWindow *parent, wxWindowID id,
+WxGLCanvas::WxGLCanvas(wxWindow *parent, int* args, wxWindowID id,
 					   const wxPoint& pos, const wxSize& size, long style, const wxString& name)
 					   : wxGLCanvas(parent, (wxGLCanvas*) NULL, id, pos, size, style|wxFULL_REPAINT_ON_RESIZE , name )
 					   ,m_timer(this, 100)

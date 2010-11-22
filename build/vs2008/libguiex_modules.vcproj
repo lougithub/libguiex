@@ -355,6 +355,26 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="font_dummy"
+			>
+			<File
+				RelativePath="..\..\source\libguiex_module\font_dummy\guifont_dummy.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\libguiex_module\font_dummy\guifont_dummy.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\libguiex_module\font_dummy\guifontdata_dummy.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\libguiex_module\font_dummy\guifontdata_dummy.h"
+				>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

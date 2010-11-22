@@ -5,16 +5,8 @@
  * @date 2009-10-16
  */
 
-
-
-
-
-
 #ifndef __LIBGUIEX_EDITOR_20091016_H__
 #define __LIBGUIEX_EDITOR_20091016_H__
-
-
-
 
 
 //============================================================================//
@@ -66,6 +58,7 @@
 #include <libguiex_module\keyboard_winapi\guikeyboard_winapi.h>
 #include <libguiex_module\mouse_winapi\guimouse_winapi.h>
 #include <libguiex_module\font_ft2\guifont_ft2.h>
+#include <libguiex_module\font_dummy\guifont_dummy.h>
 #include <libguiex_module\filesys_stdio\guifilesys_stdio.h>
 #include <libguiex_module\configfile_tinyxml\guiconfigfile_tinyxml.h>
 #include <libguiex_module\script_lua\guiscript_lua.h>

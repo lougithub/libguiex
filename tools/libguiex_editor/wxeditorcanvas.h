@@ -85,7 +85,8 @@ class WxGLCanvas : public wxGLCanvas
 	friend class WxEditorCanvasContainer;
 
 public:
-	WxGLCanvas( wxWindow *parent, wxWindowID id = wxID_ANY,
+	WxGLCanvas( wxWindow *parent, int* args,
+		wxWindowID id = wxID_ANY,
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = 0, const wxString& name = _T("EditorCanvas") );

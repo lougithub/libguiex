@@ -28,6 +28,7 @@ guiex::CGUIWidget* SampleInitialize()
 	pWidget_staticimage->SetSize( 50, 50 );
 	pWidget_staticimage->SetPosition( 100, 100 );
 	pWidget_staticimage->SetAnchorPoint( 0.5, 0.5 );
+	pWidget_staticimage->SetClipChildren( true );
 	pWidget_staticimage->Create();
 
 	guiex::CGUIWidget* pWidget_staticimage2 = GUI_CREATE_WIDGET("CGUIWgtStaticImage", "staticimage_1", "testscene");

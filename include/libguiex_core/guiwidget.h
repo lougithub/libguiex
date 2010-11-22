@@ -152,6 +152,9 @@ namespace guiex
 		void SetAutoPlayAs( bool bEnable );
 		bool IsAutoPlayAs( ) const;
 
+		void SetClipChildren( bool bClip );
+		bool IsClipChildren( ) const;
+
 		void SetActivable(bool bActivable);
 		bool IsActivable() const;
 		bool IsDerivedActivable();
@@ -536,6 +539,7 @@ namespace guiex
 		///////////////////////////////////////////////////////////////////////
 		bool m_bOpenWithParent;
 		bool m_bIsAutoPlayAs;
+		bool m_bIsClipChildren;
 		bool m_bInheritAlpha;
 		bool m_bIsFocusAgency;
 		bool m_bIsFocusable;
