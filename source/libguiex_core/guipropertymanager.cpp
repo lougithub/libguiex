@@ -49,6 +49,8 @@ namespace guiex
 		RegisterPropertyType( ePropertyType_TextAlignmentVert, "ETextAlignmentVert" );
 		RegisterPropertyType( ePropertyType_ImageOrientation, "EImageOrientation" );
 		RegisterPropertyType( ePropertyType_ScreenValue, "EScreenValue" );
+		RegisterPropertyType( ePropertyType_Interpolation, "EInterpolationType" );
+		
 
 		RegisterPropertyType( ePropertyType_Font, "CGUIFont" );		
 		RegisterPropertyType( ePropertyType_Image, "CGUIImage" );
@@ -66,6 +68,11 @@ namespace guiex
 		RegisterPropertyType( ePropertyType_Widget, "CGUIWidget" );
 		RegisterPropertyType( ePropertyType_Set, "set" );
 		RegisterPropertyType( ePropertyType_Script, "CGUIScript" );
+		
+		RegisterPropertyType( ePropertyType_FontDefine, "CGUIFontDefine" );
+		RegisterPropertyType( ePropertyType_ImageDefine, "CGUIImageDefine" );
+		RegisterPropertyType( ePropertyType_AnimationDefine, "CGUIAnimationDefine" );
+		RegisterPropertyType( ePropertyType_AsDefine, "CGUIAsDefine" );
 	}
 	//------------------------------------------------------------------------------
 	CGUIPropertyManager::~CGUIPropertyManager()

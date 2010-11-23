@@ -83,6 +83,7 @@ namespace guiex
 
 		virtual int32 ProcessProperty( const CGUIProperty& rProperty );
 		virtual int32 GenerateProperty( CGUIProperty& rProperty );
+		virtual CGUIAs* Clone( ) const;
 
 		/**
 		* @brief get as type
@@ -161,6 +162,7 @@ namespace guiex
 		*/
 		CGUIAs( const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName );
 	
+
 	private:
 		friend class CGUIAsManager;
 		//disable =
@@ -179,18 +181,16 @@ namespace guiex
 		virtual void	DoUnload();
 
 	private:
-		real m_fTotalTime;			//!<delay-time, to control when to process this as, millisecond
+		real m_fTotalTime; //!<delay-time, to control when to process this as, millisecond
 		real m_fElapsedTime;			
-
-	private:		
-		CGUIString m_strAsType;			//!<type of this as
-		bool m_bRetired;				//!<should this as be retired
 		bool m_bLooping;
-		CGUIWidget*	m_pReceiver;		//!<receiver
-		
-		typedef std::list<CGUIAs*> TListSuccessor;
-		TListSuccessor m_listSuccessor;		//!<successor
+		bool m_bRetired; //!<should this as be retired
+		CGUIWidget*	m_pReceiver; //!<receiver
 
+		typedef std::list<CGUIAs*> TListSuccessor;
+		TListSuccessor m_listSuccessor; //!<successor
+
+		CGUIString m_strAsType; //!<type of this as
 	private:
 		const CGUIAsGenerator* m_pAsGenerator;	//!<generator which used to create as
 	};
@@ -256,9 +256,24 @@ namespace guiex
 			return m_aEndValue;
 		}
 
+		void SetCurrentValue( const T& rValue )
+		{
+			m_aCurValue = rValue;
+		}
+
 		const T& GetCurrentValue() const
 		{
 			return m_aCurValue;
+		}
+
+		virtual CGUIAs* Clone( ) const
+		{
+			CGUIInterpolationBase<T>* pCloneAs = static_cast< CGUIInterpolationBase<T>* >(CGUIAs::Clone());
+			pCloneAs->SetBeginValue( m_aBeginValue );
+			pCloneAs->SetEndValue( m_aEndValue );
+			pCloneAs->SetCurrentValue( m_aCurValue );
+
+			return pCloneAs;
 		}
 
 		virtual int32 ProcessProperty( const CGUIProperty& rProperty )
@@ -360,6 +375,7 @@ namespace guiex
 			}
 			return 0;
 		}
+
 
 	private:
 		EInterpolationType	m_eInterpolationType;
@@ -515,6 +531,7 @@ namespace guiex
 
 		}
 	};
+
 	/**
 	* @class CGUIAsContainer
 	* @brief maintain several as.
@@ -522,19 +539,15 @@ namespace guiex
 	class GUIEXPORT CGUIAsContainer : public CGUIAs
 	{
 	protected:
-		/**
-		* @brief constructor
-		*/
+
 		CGUIAsContainer(const CGUIString& rAsName, const CGUIString& rSceneName);
 		virtual ~CGUIAsContainer( );
 
 	public:
 		virtual int32 ProcessProperty( const CGUIProperty& rProperty );
 		virtual int32 GenerateProperty( CGUIProperty& rProperty );
+		virtual CGUIAs* Clone( ) const;
 
-		/**
-		* @brief Update the event.
-		*/
 		virtual real Update( real fDeltaTime );
 
 		virtual void SetReceiver(CGUIWidget* pReceiver);
@@ -542,7 +555,7 @@ namespace guiex
 		void AddItem( CGUIAsContainItemInfo& rItemInfo );
 		void AddItem( CGUIAs* pAs, real fBeginTime );
 		
-	protected:
+	private:
 		typedef std::vector<CGUIAsContainItemInfo> TAsList;
 		TAsList m_vAsList;//the as in this list should be sorted by begin time
 		

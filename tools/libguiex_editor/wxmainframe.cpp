@@ -633,8 +633,16 @@ int		WxMainFrame::OpenScene( const guiex::CGUISceneInfo* pSceneInfo )
 
 
 	//load resource file
-	if( 0 != guiex::CGUISceneUtility::LoadResource(m_strCurrentSceneName))
+	try
+	{	
+		if( 0 != guiex::CGUISceneUtility::LoadResource(m_strCurrentSceneName))
+		{
+			return -1;
+		}
+	}
+	catch (guiex::CGUIBaseException& rError)
 	{
+		wxMessageBox( wxConvUTF8.cMB2WC(rError.what()).data(), _T("error"), wxICON_ERROR|wxCENTRE);
 		return -1;
 	}
 

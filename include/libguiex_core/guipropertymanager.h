@@ -67,10 +67,17 @@ namespace guiex
 		ePropertyType_TextAlignmentHorz,
 		ePropertyType_TextAlignmentVert,
 		ePropertyType_ImageOrientation,
+		ePropertyType_Interpolation,
 
 		ePropertyType_Set,
 		ePropertyType_Widget,
 		ePropertyType_Script,
+
+		ePropertyType_FontDefine,
+		ePropertyType_ImageDefine,
+		ePropertyType_AnimationDefine,
+		ePropertyType_AsDefine,
+
 
 		ePropertyType_UserDefine = 1000,
 	};

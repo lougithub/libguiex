@@ -66,6 +66,26 @@ namespace guiex
 		Unload();
 	}
 	//------------------------------------------------------------------------------
+	CGUIAs* CGUIAs::Clone( ) const
+	{
+		CGUIAs* pCloneAs = CGUIAsManager::Instance()->AllocateResourceByType( GetType() );
+		pCloneAs->SetTotalTime( m_fTotalTime );
+		pCloneAs->SetElapsedTime( m_fElapsedTime );
+		pCloneAs->SetLooping( m_bLooping );
+		pCloneAs->SetReceiver( m_pReceiver );
+		pCloneAs->Retire( m_bRetired );
+
+		for( TListSuccessor::const_iterator itor = m_listSuccessor.begin();
+			itor != m_listSuccessor.end();
+			++itor)
+		{
+			CGUIAs* pCloneSuccessor = (*itor)->Clone();
+			pCloneAs->PushSuccessor( pCloneSuccessor );
+			CGUIAsManager::Instance()->DeallocateResource( pCloneSuccessor );
+		}
+		return pCloneAs;
+	}
+	//------------------------------------------------------------------------------
 	int32 CGUIAs::ProcessProperty( const CGUIProperty& rProperty )
 	{
 		/*
@@ -453,7 +473,7 @@ namespace guiex
 
 				//item
 				{
-					const CGUIProperty* pPptAs = rProperty.GetProperty("item");
+					const CGUIProperty* pPptAs = pProperty->GetProperty("item");
 					if( !pPptAs )
 					{
 						throw CGUIException(
@@ -466,7 +486,7 @@ namespace guiex
 					if( pPptAs->GetType() == ePropertyType_As )
 					{
 						//allocate as by name
-						CGUIAs* pAs = CGUIAsManager::Instance()->AllocateResource( pPptAs->GetName() );
+						CGUIAs* pAs = CGUIAsManager::Instance()->AllocateResource( pPptAs->GetValue() );
 						if( !pAs )
 						{
 							throw CGUIException(
@@ -477,10 +497,10 @@ namespace guiex
 						}
 						aItemInfo.m_pAs = pAs;
 					}
-					else
+					else if( pPptAs->GetType() == ePropertyType_AsDefine )
 					{
 						//allocate as by type
-						CGUIAs* pAs = CGUIAsManager::Instance()->AllocateResourceByType( pPptAs->GetTypeAsString() );
+						CGUIAs* pAs = CGUIAsManager::Instance()->AllocateResourceByType( pPptAs->GetValue() );
 						if( !pAs )
 						{
 							throw CGUIException(
@@ -500,17 +520,22 @@ namespace guiex
 						}
 						aItemInfo.m_pAs = pAs;
 					}
+					else
+					{
+						throw CGUIException(
+							"[CGUIAsContainer::ProcessProperty]: invalid property: <%s> <%s> <%s>", 
+							rProperty.GetName().c_str(), 
+							rProperty.GetTypeAsString().c_str(),
+							rProperty.GetValue().c_str());
+						return -1;
+					}
 				}
 				AddItem( aItemInfo );
 				aItemInfo.m_pAs->RefRelease();
 			}
 			else
 			{
-				throw CGUIException(
-					"[CGUIAsContainer::ProcessProperty]: invalid property: <%s> <%s>", 
-					rProperty.GetName().c_str(), 
-					rProperty.GetTypeAsString().c_str());
-				return -1;
+				continue;
 			}
 		}
 
@@ -525,18 +550,18 @@ namespace guiex
 		*		<property name="total_time" type="real" value="10" />
 		*		<property name="elapsed_time" type="real" value="5" />
 		*
-		*		<property name="item_info" type="CGUIAsContainItemInfo"/>
+		*		<property name="item_info" type="CGUIAsContainerItemInfo"/>
 		*			<property name="begin_time" type="real" value="5"/>
 		*			<property name="item" type="CGUIAs" value="temp_as"/>
 		*		</property>
 		*		
-		*		<property name="item_info" type="CGUIAsContainItemInfo"/>
+		*		<property name="item_info" type="CGUIAsContainerItemInfo">
 		*			<property name="begin_time" type="real" value="5"/>
-		*			<property name="item" type="CGUIAsColor""/>
+		*			<property name="item" type="CGUIAsColor">
 		*				<property name="loop" type="bool" value="false"/>
 		*				<property name="total_time" type="real" value="10" />
 		*				<property name="elapsed_time" type="real" value="5" />
-		*				<property name="interpolation" type="EInterpolationType" value="0,0,0" />
+		*				<property name="interpolation" type="EInterpolationType" value="eInterpolationType_EaseInOut" />
 		*				<property name="begin_value" type="CGUIVector3" value="0,0,0" />
 		*				<property name="end_value" type="CGUIVector3" value="0,0,0" />
 		*		</property>
@@ -582,7 +607,6 @@ namespace guiex
 					}
 					aItemInfoProperty.AddProperty( aProperty );
 				}
-
 			}
 		}
 		return 0;
@@ -668,6 +692,24 @@ namespace guiex
 		{
 			SetTotalTime( rItemInfo.m_pAs->GetTotalTime() + rItemInfo.m_fBeginTime );
 		}
+	}
+	//------------------------------------------------------------------------------
+	CGUIAs* CGUIAsContainer::Clone( ) const
+	{
+		CGUIAsContainer* pCloneAs = static_cast< CGUIAsContainer* >(CGUIAs::Clone());
+
+		for( TAsList::const_iterator itor = m_vAsList.begin();
+			itor != m_vAsList.end();
+			++itor )
+		{
+			CGUIAsContainItemInfo aCloneInfo;
+			aCloneInfo.m_fBeginTime = (*itor).m_fBeginTime;
+			aCloneInfo.m_pAs = (*itor).m_pAs->Clone();
+			pCloneAs->AddItem( aCloneInfo );
+			CGUIAsManager::Instance()->DeallocateResource( aCloneInfo.m_pAs );
+		}
+
+		return pCloneAs;
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

@@ -22,6 +22,7 @@
 #include <libguiex_core/guiimagemanager.h>
 #include <libguiex_core/guianimationmanager.h>
 #include <libguiex_core/guifontmanager.h>
+#include <libguiex_core/guiasmanager.h>
 #include <libguiex_core/guitexturemanager.h>
 
 
@@ -355,28 +356,28 @@ namespace guiex
 				}
 				break;
 
-			case ePropertyType_Image:
+			case ePropertyType_ImageDefine:
 				if( 0 != DoLoadConfig_Image( pProperty, rSceneName ))
 				{
 					return -1;
 				}
 				break;
 
-			case ePropertyType_Animation:
+			case ePropertyType_AnimationDefine:
 				if( 0 != DoLoadConfig_Animation( pProperty, rSceneName ))
 				{
 					return -1;
 				}
 				break;
 
-			case ePropertyType_Font:
+			case ePropertyType_FontDefine:
 				if( 0 != DoLoadConfig_Font( pProperty, rSceneName ))
 				{
 					return -1;
 				}
 				break;
 
-			case ePropertyType_As:
+			case ePropertyType_AsDefine:
 				if( 0 != DoLoadConfig_As( pProperty, rSceneName ))
 				{
 					return -1;
@@ -496,6 +497,15 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int32 CGUIWidgetSystem::DoLoadConfig_As( const CGUIProperty* pPropertySet, const CGUIString& rSceneName )
 	{
+		if( 0 != CGUIAsManager::Instance()->RegisterAs( rSceneName, *pPropertySet ) )
+		{
+			throw guiex::CGUIException(
+				"[CGUIWidgetSystem::DoLoadConfig_As], failed to create font with name <%s:%s:%s>!", 
+				pPropertySet->GetName().c_str(),
+				pPropertySet->GetTypeAsString().c_str(),
+				pPropertySet->GetValue().c_str());
+			return -1;
+		}
 
 		return 0;
 	}
@@ -509,6 +519,7 @@ namespace guiex
 		CGUIImageManager::Instance()->ReleaseResourcesByScene(rSceneName);
 		CGUIAnimationManager::Instance()->ReleaseResourcesByScene(rSceneName);
 		CGUIFontManager::Instance()->ReleaseResourcesByScene(rSceneName);
+		CGUIAsManager::Instance()->ReleaseResourcesByScene(rSceneName);
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidgetSystem::UnloadAllResource(  )
@@ -516,6 +527,7 @@ namespace guiex
 		CGUIImageManager::Instance()->UnloadAllResources( );
 		CGUIAnimationManager::Instance()->UnloadAllResources( );
 		CGUIFontManager::Instance()->UnloadAllResources( );
+		CGUIAsManager::Instance()->UnloadAllResources( );
 
 		//CGUITextureManager::Instance()->DestroyAllTextureImplement();
 	}
@@ -529,6 +541,7 @@ namespace guiex
 		CGUIImageManager::Instance()->ReleaseAllResources( );
 		CGUIAnimationManager::Instance()->ReleaseAllResources( );
 		CGUIFontManager::Instance()->ReleaseAllResources( );
+		CGUIAsManager::Instance()->ReleaseAllResources( );
 
 		CGUISceneInfoManager::Instance()->ClearSceneResourceLoadFlags();
 	}

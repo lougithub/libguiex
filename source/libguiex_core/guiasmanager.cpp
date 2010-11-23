@@ -41,9 +41,16 @@ namespace guiex
 		const CGUIString& rSceneName, 
 		const CGUIProperty& rProperty )
 	{
-		CGUIAs* pAs = NULL;
-
-		//TODO...
+		CGUIAs* pAs = CGUIAsFactory::Instance()->GenerateAs( rProperty.GetValue(), rProperty.GetName(), rSceneName);
+		if( 0 != pAs->ProcessProperty( rProperty ))
+		{
+			throw CGUIException(
+				"[CGUIAsManager::DoCreateAs]: invalid property: <%s> <%s> <%s>", 
+				rProperty.GetName().c_str(), 
+				rProperty.GetTypeAsString().c_str(),
+				rProperty.GetValue().c_str());
+			return NULL;
+		}
 		return pAs;
 	}
 	//------------------------------------------------------------------------------
@@ -66,9 +73,12 @@ namespace guiex
 				rResName.c_str());
 			return NULL;
 		}
-		pAs->RefRetain();
-		AddToAllocatePool( pAs );
-		return pAs;
+		CGUIAs* pCloneAs = pAs->Clone();
+
+		//AddToAllocatePool( pCloneAs );
+		//it has been added to pool by function AllocateResourceByType
+
+		return pCloneAs;
 	}
 	//------------------------------------------------------------------------------
 	CGUIAs* CGUIAsManager::AllocateResourceByType( const CGUIString& rAsType )
