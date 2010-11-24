@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\..\external\lua-5.1.4\src&quot;;&quot;..\..\external\freetype-2.4.3\include&quot;;&quot;..\..\external\DevIL-SDK-x86-1.7.8\include&quot;;..\..\external\tinyxml"
+				AdditionalIncludeDirectories="..\..\external\lua\src;&quot;..\..\external\freetype-2.4.3\include&quot;;&quot;..\..\external\DevIL-SDK-x86-1.7.8\include&quot;;..\..\external\tinyxml"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -104,7 +104,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;..\..\external\lua-5.1.4\src&quot;;&quot;..\..\external\freetype-2.4.3\include&quot;;&quot;..\..\external\DevIL-SDK-x86-1.7.8\include&quot;;..\..\external\tinyxml"
+				AdditionalIncludeDirectories="&quot;..\..\external\lua\src&quot;;&quot;..\..\external\freetype-2.4.3\include&quot;;&quot;..\..\external\DevIL-SDK-x86-1.7.8\include&quot;;..\..\external\tinyxml"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -188,26 +188,6 @@
 			</File>
 			<File
 				RelativePath="..\..\include\libguiex_module\font_ft2\guifontdata_ft2.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="imageloader_devil"
-			>
-			<File
-				RelativePath="..\..\source\\libguiex_module\\imageloader_devil\guiimagedata_devil.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\include\\libguiex_module\\imageloader_devil\guiimagedata_devil.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\\libguiex_module\\imageloader_devil\guiimageloader_devil.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\include\\libguiex_module\\imageloader_devil\guiimageloader_devil.h"
 				>
 			</File>
 		</Filter>

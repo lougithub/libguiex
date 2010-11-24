@@ -53,7 +53,6 @@
 
 //libguiex module
 #include <libguiex_module\render_opengl\guirender_opengl.h>
-#include <libguiex_module\imageloader_devil\guiimageloader_devil.h>
 #include <libguiex_module\imageloader_tga\guiimageloader_tga.h>
 #include <libguiex_module\keyboard_winapi\guikeyboard_winapi.h>
 #include <libguiex_module\mouse_winapi\guimouse_winapi.h>
