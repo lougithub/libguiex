@@ -94,52 +94,17 @@ namespace guiex
 	class GUIEXPORT CGUIInterfaceManager
 	{
 	public:
-		/**
-		* @brief register interface
-		* this function is located in the dll,if the value is NULL,the default
-		* name is GetGenerator_<rInterface>
-		* @return 
-		*		- 0 for success
-		*		- -1 for failed
-		* @exception CGUIException
-		*/
-		int	RegisterInterface(const CGUIString& rInterface, 
-			const CGUIString& rModuleName, 
-			void* pUserData = NULL);
+		//for singleton use
+		CGUIInterfaceManager();
+		~CGUIInterfaceManager();
 
-		/**
-		* @brief register interface
-		* @exception CGUIException
-		*/
+		static CGUIInterfaceManager* Instance();
+
+		int	RegisterInterface(const CGUIString& rInterface, const CGUIString& rModuleName, void* pUserData = NULL);
 		int	RegisterInterface(const CGUIString& rInterface, IGUIInterface* pInterface );
-
-		/**
-		* @brief ungister a interface
-		* @param rName the name of a interface
-		* @return 
-		*		- 0 for success
-		*		- -1 for failed
-		* @exception CGUIException
-		*/
 		int UnregisterInterface(const CGUIString& rInterface );
-
-		/**
-		* @brief unregister all interface
-		*/
 		void UnregisterAllInterface();
-
-		/**
-		* @brief get pointer of interface
-		* @return NULL for failed
-		* @exception CGUIException
-		*/
 		IGUIInterface* GetInterface(const CGUIString& rInterface );
-
-
-		/**
-		* @brief judge wheather has this kind of interface
-		* @return true for has this interface, false for havn't this interface
-		*/
 		bool HasInterface(const CGUIString& rInterface );
 
 	public:
@@ -190,17 +155,12 @@ namespace guiex
 		}
 
 	protected:
-		//for singleton use
-		CGUIInterfaceManager();
-		~CGUIInterfaceManager();
-
-
 		struct SInterface
 		{
 			IGUIInterface*		m_pInterface;
 			GUI_DYNLIB_HANDLE	m_hHandle;
 		};
-		int32	DoRegisterInterface( const CGUIString& rInterface, const SInterface& rInterfaceData );
+		int32 DoRegisterInterface( const CGUIString& rInterface, const SInterface& rInterfaceData );
 
 	private:
 
@@ -220,13 +180,9 @@ namespace guiex
 		IGUIInterfaceIme*			m_pInterfaceIme;
 		IGUIInterfaceStringConv*	m_pInterfaceStringConv;
 
-	public:
-		//declare for singleton
-		GUI_SINGLETON_DECLARE_EX(CGUIInterfaceManager );
+	private:
+		static CGUIInterfaceManager* m_pSingleton;
 	};
-
-	//implement for singleton
-	//GUI_SINGLETON_IMPLEMENT(CGUIInterfaceManager, CGUIInterfaceManager );
 
 }//namespace guiex
 

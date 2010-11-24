@@ -22,14 +22,23 @@
 //============================================================================// 
 namespace guiex
 {
-	GUI_SINGLETON_IMPLEMENT_EX(CGUIFontManager );
+	//------------------------------------------------------------------------------
+	CGUIFontManager * CGUIFontManager::m_pSingleton = NULL; 
 	//------------------------------------------------------------------------------
 	CGUIFontManager::CGUIFontManager()
 	{
+		GUI_ASSERT( !m_pSingleton, "[CGUIFontManager::CGUIFontManager]:instance has been created" ); 
+		m_pSingleton = this; 
 	}
 	//------------------------------------------------------------------------------
 	CGUIFontManager::~CGUIFontManager()
 	{
+		m_pSingleton = NULL; 
+	}
+	//------------------------------------------------------------------------------
+	CGUIFontManager* CGUIFontManager::Instance()
+	{
+		return m_pSingleton; 
 	}
 	//------------------------------------------------------------------------------
 	int32 CGUIFontManager::RegisterFont( 

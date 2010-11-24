@@ -43,15 +43,10 @@ namespace guiex
 	class GUIEXPORT CGUIAsManager : public CGUIResourceManager <CGUIAs>
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUIAsManager();
-
-		/**
-		* @brief destructor;
-		*/
 		virtual ~CGUIAsManager();
+
+		static CGUIAsManager* Instance(); 
 
 		int32 RegisterAs( 
 			const CGUIString& rSceneName,
@@ -70,9 +65,6 @@ namespace guiex
 		}
 
 	protected:
-		/**
-		* @brief create a as by given property
-		*/
 		CGUIAs* DoCreateAs( 
 			const CGUIString& rSceneName,
 			const CGUIProperty& rProperty );
@@ -82,13 +74,10 @@ namespace guiex
 			const CGUIString& rSceneName,
 			const CGUIString& rAsType );
 
-	protected:
 		virtual	void DoDestroyResource( CGUIAs* pRes ); 
 
-
-	protected:
-		//declare for singleton
-		GUI_SINGLETON_DECLARE_EX(CGUIAsManager);
+	private:
+		static CGUIAsManager* m_pSingleton;
 	};
 
 }//namespace guiex

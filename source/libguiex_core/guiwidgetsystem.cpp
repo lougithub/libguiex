@@ -50,32 +50,32 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	GUIEXPORT	CGUIWidgetSystem* GetWidgetSystem()
+	GUIEXPORT CGUIWidgetSystem* GetWidgetSystem()
 	{
 		return CGUIWidgetSystem::Instance();
 	}
 	//------------------------------------------------------------------------------
-	GUIEXPORT	CGUIWidget* GetWidget(const CGUIString& rWidgetName, const CGUIString& rSceneName)
+	GUIEXPORT CGUIWidget* GetWidget(const CGUIString& rWidgetName, const CGUIString& rSceneName)
 	{
 		return CGUIWidgetSystem::Instance()->GetWidget(rWidgetName, rSceneName);
 	}
 	//------------------------------------------------------------------------------
-	GUIEXPORT CGUIWidget*	LoadDynamicPage( const CGUIString& rPageFileName, const CGUIString& rPageSceneName, const CGUIString& rWorkingSceneName )
+	GUIEXPORT CGUIWidget* LoadDynamicPage( const CGUIString& rPageFileName, const CGUIString& rPageSceneName, const CGUIString& rWorkingSceneName )
 	{
 		return CGUIWidgetSystem::Instance()->LoadDynamicPage(rPageFileName, rPageSceneName, rWorkingSceneName);
 	}
 	//------------------------------------------------------------------------------
-	GUIEXPORT	void			OpenDialog(CGUIWidget* pDlg)
+	GUIEXPORT void OpenDialog(CGUIWidget* pDlg)
 	{
 		return CGUIWidgetSystem::Instance()->OpenDialog( pDlg );
 	}
 	//------------------------------------------------------------------------------
-	GUIEXPORT	void			CloseDialog(CGUIWidget* pDlg)
+	GUIEXPORT void CloseDialog(CGUIWidget* pDlg)
 	{
 		return CGUIWidgetSystem::Instance()->CloseDialog( pDlg );
 	}
 	//------------------------------------------------------------------------------
-	GUIEXPORT	void			SendUIEvent(const CGUIString& rUIEventName,
+	GUIEXPORT void SendUIEvent(const CGUIString& rUIEventName,
 		const CGUIString& rArg1,
 		const CGUIString& rArg2,
 		const CGUIString& rArg3,
@@ -100,22 +100,22 @@ namespace guiex
 		CGUIWidgetSystem::Instance()->SendUIEvent( &aUIEvent );
 	}
 	//------------------------------------------------------------------------------
-	GUIEXPORT	void			OpenPage( CGUIWidget* pPage )
+	GUIEXPORT	void OpenPage( CGUIWidget* pPage )
 	{
 		return CGUIWidgetSystem::Instance()->OpenPage( pPage );
 	}
 	//------------------------------------------------------------------------------
-	GUIEXPORT	void			ClosePage( CGUIWidget* pPage )
+	GUIEXPORT	void ClosePage( CGUIWidget* pPage )
 	{
 		return CGUIWidgetSystem::Instance()->ClosePage( pPage );
 	}
 	//------------------------------------------------------------------------------
 
 	//------------------------------------------------------------------------------
-	GUI_SINGLETON_IMPLEMENT_EX(CGUIWidgetSystem);	
+	CGUIWidgetSystem * CGUIWidgetSystem::m_pSingleton = NULL; 
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidgetSystem::GUI_SCREEN_WIDTH = 0;
-	uint32		CGUIWidgetSystem::GUI_SCREEN_HEIGHT = 0;
+	uint32 CGUIWidgetSystem::GUI_SCREEN_WIDTH = 0;
+	uint32 CGUIWidgetSystem::GUI_SCREEN_HEIGHT = 0;
 	//------------------------------------------------------------------------------
 	CGUIWidgetSystem::CGUIWidgetSystem()
 		:m_pWgtRoot(NULL)
@@ -129,14 +129,39 @@ namespace guiex
 		,m_bDrawExtraInfo(false)
 		,m_fGlobalTimer(0.0f)
 		,m_fTimerForFrame(0.0f)
+		,m_pImageManager( NULL )
+		,m_pAnimationManager( NULL )
+		,m_pAsManager( NULL )
+		,m_pFontManager( NULL )
+		,m_pTextureManager( NULL )
+		,m_pInterfaceManager( NULL )
+		,m_pMouseCursor( NULL )
+		,m_pPropertyManager( NULL )
+		,m_pWidgetFactory( NULL )
+		,m_pSceneInfoManager( NULL )
+		,m_pAsFactory( NULL )
+		,m_pLogMsgManager( NULL )
 	{
+		GUI_ASSERT( !m_pSingleton, "[CGUIWidgetSystem::CGUIWidgetSystem]:instance has been created" ); 
+		m_pSingleton = this; 
+
 		SetScreenSize(640,480);
 		m_aInputProcessor.SetSystem(this);
 	}
 	//------------------------------------------------------------------------------
 	CGUIWidgetSystem::~CGUIWidgetSystem()
 	{
+		if( IsInitialized() )
+		{
+			Release();
+		}
 
+		m_pSingleton = NULL;
+	}
+	//------------------------------------------------------------------------------
+	CGUIWidgetSystem* CGUIWidgetSystem::Instance()
+	{
+		return m_pSingleton;
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -145,6 +170,20 @@ namespace guiex
 	*/
 	int CGUIWidgetSystem::Initialize()
 	{
+		//init singleton classes
+		m_pLogMsgManager = new CGUILogMsgManager;
+		m_pImageManager = new CGUIImageManager;
+		m_pAnimationManager = new CGUIAnimationManager;
+		m_pAsManager = new CGUIAsManager;
+		m_pFontManager = new CGUIFontManager;
+		m_pTextureManager = new CGUITextureManager;
+		m_pInterfaceManager = new CGUIInterfaceManager;
+		m_pMouseCursor = new CGUIMouseCursor;
+		m_pPropertyManager = new CGUIPropertyManager;
+		m_pWidgetFactory = new CGUIWidgetFactory;
+		m_pSceneInfoManager = new CGUISceneInfoManager;
+		m_pAsFactory = new CGUIAsFactory;
+
 		GUI_TRACE( "[CGUIWidgetSystem::Initialize]: \n" );
 
 		//register as
@@ -178,14 +217,11 @@ namespace guiex
 	*/
 	void CGUIWidgetSystem::Release()
 	{
+		GUI_ASSERT( m_bInitialized==true, "system has been released" );
 		//release performance monitor if necessary
 #if	GUI_PERFORMANCE_ON 
 		PERFMON_EXIT();
 #endif	//GUI_PERFORMANCE_ON
-
-
-		//mouse cursor
-		CGUIMouseCursor::DestroyInstance();
 
 		//release all widgets
 		FreeAllWidgets();
@@ -210,6 +246,32 @@ namespace guiex
 
 		//release interface
 		CGUIInterfaceManager::Instance()->UnregisterAllInterface();
+
+		//destroy singleton instance
+		delete m_pMouseCursor;
+		m_pMouseCursor = NULL;
+		delete m_pAnimationManager;
+		m_pAnimationManager = NULL;
+		delete m_pAsManager;
+		m_pAsManager = NULL;
+		delete m_pFontManager;
+		m_pFontManager = NULL;
+		delete m_pImageManager;
+		m_pImageManager = NULL;
+		delete m_pInterfaceManager;
+		m_pInterfaceManager = NULL;
+		delete m_pPropertyManager;
+		m_pPropertyManager = NULL;
+		delete m_pSceneInfoManager;
+		m_pSceneInfoManager = NULL;
+		delete m_pWidgetFactory;
+		m_pWidgetFactory = NULL;
+		delete m_pAsFactory;
+		m_pAsFactory = NULL;
+		delete m_pLogMsgManager;
+		m_pLogMsgManager = NULL;
+		delete m_pTextureManager;
+		m_pTextureManager = NULL;
 
 		m_bInitialized = false;
 

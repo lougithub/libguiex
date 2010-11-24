@@ -42,6 +42,8 @@ namespace guiex
 		CGUITextureManager();
 		~CGUITextureManager();
 
+		static CGUITextureManager* Instance(); 
+
 		CGUITexture* CreateTexture(const CGUIString& rImageName);
 		CGUITexture* CreateTexture( uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat );
 		CGUITexture* CreateTexture( const void* buffPtr, int32 buffWidth, int32 buffHeight, EGuiPixelFormat ePixelFormat );
@@ -70,8 +72,8 @@ namespace guiex
 
 		CGUITexture* m_pDefaultTexture;	///default texture, which has a white color
 
-		//declare for singleton
-		GUI_SINGLETON_DECLARE_EX(CGUITextureManager);
+	private:
+		static CGUITextureManager* m_pSingleton;
 	};
 
 }//namespace guiex

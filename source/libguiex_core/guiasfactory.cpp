@@ -27,17 +27,30 @@
 //============================================================================// 
 namespace guiex
 {
-	GUI_SINGLETON_IMPLEMENT_EX(CGUIAsFactory);
+	//------------------------------------------------------------------------------
+	CGUIAsFactory * CGUIAsFactory::m_pSingleton = NULL; 
 	//------------------------------------------------------------------------------
 	CGUIAsFactory::CGUIAsFactory()
 	{
+		GUI_ASSERT( !m_pSingleton, "[CGUIAsFactory::CGUIAsFactory]:instance has been created" ); 
+		m_pSingleton = this; 
 	}
 	//------------------------------------------------------------------------------
 	CGUIAsFactory::~CGUIAsFactory()
 	{ 
+		m_pSingleton = NULL;
 	}
 	//------------------------------------------------------------------------------
-	int		CGUIAsFactory::RegisterGenerator(const CGUIString& rName, CGUIAsGenerator* pGenerator )
+	CGUIAsFactory* CGUIAsFactory::Instance()
+	{
+		return m_pSingleton;
+	}
+	//------------------------------------------------------------------------------
+	/**
+	* @brief register generator
+	* @return 0 for successful, vice versa
+	*/
+	int	CGUIAsFactory::RegisterGenerator(const CGUIString& rName, CGUIAsGenerator* pGenerator )
 	{
 		GUI_ASSERT(pGenerator,"havn't as generator");
 
@@ -57,7 +70,11 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	int		CGUIAsFactory::UnregisterGenerator(const CGUIString& rName)
+	/**
+	* @brief unregister generator
+	* @return 0 for successful, vice versa
+	*/
+	int CGUIAsFactory::UnregisterGenerator(const CGUIString& rName)
 	{
 		TMapGenerator::iterator itor = m_mapGenerator.find( rName );
 		if( itor == m_mapGenerator.end() )
@@ -74,7 +91,10 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIAsFactory::UnregisterAllGenerator()
+	/**
+	* @brief unregister all generator
+	*/
+	void CGUIAsFactory::UnregisterAllGenerator()
 	{
 		TMapGenerator::iterator itorEnd2 = m_mapGenerator.end();
 		for( TMapGenerator::iterator itor = m_mapGenerator.begin();
@@ -86,6 +106,9 @@ namespace guiex
 		m_mapGenerator.clear();
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief create a as by name
+	*/
 	CGUIAs*	CGUIAsFactory::GenerateAs(const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName)
 	{
 		TMapGenerator::iterator itor = m_mapGenerator.find( rAsType );
@@ -114,7 +137,10 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	int	CGUIAsFactory::DestroyAs(CGUIAs*	pAs)
+	/**
+	* @brief destroy as
+	*/
+	int	CGUIAsFactory::DestroyAs(CGUIAs* pAs)
 	{
 		GUI_ASSERT(pAs,"wrong parameter");
 		const CGUIAsGenerator* pGenerator = pAs->GetGenerator();

@@ -41,19 +41,11 @@ namespace guiex
 	class GUIEXPORT CGUIImageManager : public CGUIResourceManager <CGUIImage>
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUIImageManager();
-
-		/**
-		* @brief destructor;
-		*/
 		virtual ~CGUIImageManager();
 
-		/**
-		* @brief register a named image by property
-		*/
+		static CGUIImageManager* Instance(); 
+
 		int32 RegisterImage( 
 			const CGUIString& rSceneName,
 			const CGUIProperty& rProperty);
@@ -83,9 +75,6 @@ namespace guiex
 
 		CGUIImage* AllocateResource( const CGUIString& rImageName ) const;
 
-		//CGUIImage* AllocateResource( 			
-		//	const CGUIProperty& rProperty ) const;
-
 		CGUIImage* AllocateResource( 			
 			const CGUIString& rPath, 
 			const CGUIRect& rUVRect, 
@@ -106,16 +95,10 @@ namespace guiex
 		int32 DeallocateResource( CGUIImage* pImage );
 
 	protected:
-		/**
-		* @brief create a image by property;
-		*/
 		CGUIImage* DoCreateImage( 
 			const CGUIString& rSceneName,
 			const CGUIProperty& rProperty) const;
 
-		/**
-		* @brief create a image by image path;
-		*/
 		CGUIImage* DoCreateImage(
 			const CGUIString& rName,
 			const CGUIString& rSceneName,
@@ -124,18 +107,12 @@ namespace guiex
 			EImageOrientation eImageOrientation,
 			const CGUISize& rSize) const;
 
-		/**
-		* @brief create a image with given color
-		*/
 		CGUIImage* DoCreateImage( 
 			const CGUIString& rName,
 			const CGUIString& rSceneName,
 			const CGUIColor& rColor,
 			const CGUISize& rSize) const;
 
-		/**
-		 * create image from memory
-		 */
 		CGUIImage* DoCreateImage(
 			const CGUIString& rName,
 			const CGUIString& rSceneName,
@@ -145,10 +122,8 @@ namespace guiex
 			EGuiPixelFormat ePixelFormat,
 			const CGUISize& rSize) const;
 
-
-	protected:
-		//declare for singleton
-		GUI_SINGLETON_DECLARE_EX(CGUIImageManager);
+	private:
+		static CGUIImageManager* m_pSingleton;
 	};
 
 }//namespace guiex

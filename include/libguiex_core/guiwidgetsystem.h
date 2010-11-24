@@ -35,6 +35,19 @@ namespace guiex
 	class CGUIWidget;
 	class CGUIEventKeyboard;
 	class CGUIProperty;
+
+	class CGUIImageManager;
+	class CGUIAnimationManager;
+	class CGUIAsManager;
+	class CGUIFontManager;
+	class CGUITextureManager;
+	class CGUIInterfaceManager;
+	class CGUIMouseCursor;
+	class CGUIPropertyManager;
+	class CGUIWidgetFactory;
+	class CGUIAsFactory;
+	class CGUISceneInfoManager;
+	class CGUILogMsgManager;
 }
 
 //============================================================================//
@@ -72,6 +85,11 @@ namespace guiex
 	class GUIEXPORT CGUIWidgetSystem
 	{
 	public:
+		CGUIWidgetSystem();
+		~CGUIWidgetSystem();
+
+		static CGUIWidgetSystem* Instance();
+
 		int Initialize();
 		void Release();
 		bool IsInitialized() const;
@@ -170,6 +188,66 @@ namespace guiex
 
 		int32 LoadConfigFile( const CGUIString& rPath, const CGUIString& rSceneName, const CGUIString& rFileName );
 
+		CGUIImageManager* GetImageManager()
+		{
+			return m_pImageManager;
+		}
+
+		CGUIAnimationManager* GetAnimationManager()
+		{
+			return m_pAnimationManager;
+		}
+		
+		CGUIAsManager* GetAsManager()
+		{
+			return m_pAsManager;
+		}
+
+		CGUIFontManager* GetFontManager()
+		{
+			return m_pFontManager;
+		}
+
+		CGUITextureManager* GetTextureManager()
+		{
+			return m_pTextureManager;
+		}
+
+		CGUIInterfaceManager* GetInterfaceManager()
+		{
+			return m_pInterfaceManager;
+		}
+
+		CGUIMouseCursor* GetMouseCursor()
+		{
+			return m_pMouseCursor;
+		}
+
+		CGUIPropertyManager* GetPropertyManager()
+		{
+			return m_pPropertyManager;
+		}
+		
+		CGUIWidgetFactory* GetWidgetFactory()
+		{
+			return m_pWidgetFactory;
+		}
+
+		CGUISceneInfoManager* GetSceneInfoManager()
+		{
+			return m_pSceneInfoManager;
+		}
+
+		CGUIAsFactory* GetAsFactory()
+		{
+			return m_pAsFactory;
+		}
+
+		CGUILogMsgManager* GetLogMsgManager()
+		{
+			return m_pLogMsgManager;
+		}
+
 	protected:
 		friend class CGUIWidget;
 		friend class CGUIInputProcessor;
@@ -198,10 +276,6 @@ namespace guiex
 		static uint32 GUI_SCREEN_HEIGHT; //!< size of screen, in pixel
 
 	protected:
-		///constructor and destructor, for singleton use.
-		CGUIWidgetSystem();
-		~CGUIWidgetSystem();
-
 		void Reset();
 
 	private:
@@ -272,7 +346,7 @@ namespace guiex
 		//----------------------------------------------------------------------
 		//global key event
 		/*receiver*/	/*root of this receiver*/
-		typedef std::vector<std::pair<CGUIWidget*, CGUIWidget*> >	TGlobalKeyObj;
+		typedef std::vector<std::pair<CGUIWidget*, CGUIWidget*> > TGlobalKeyObj;
 		TGlobalKeyObj m_vecGlobalKeyObj;
 		//global key event
 		//----------------------------------------------------------------------
@@ -289,19 +363,28 @@ namespace guiex
 
 		bool m_bDrawExtraInfo;
 
-		bool m_bShouldRunScript;	//!< should system run script
+		bool m_bShouldRunScript; //!< should system run script
+
+		//single classes
+		CGUIImageManager *m_pImageManager;
+		CGUIAnimationManager *m_pAnimationManager;
+		CGUIAsManager *m_pAsManager;
+		CGUIFontManager *m_pFontManager;
+		CGUITextureManager *m_pTextureManager;
+		CGUIInterfaceManager* m_pInterfaceManager;
+		CGUIMouseCursor* m_pMouseCursor;
+		CGUIPropertyManager* m_pPropertyManager;
+		CGUIWidgetFactory* m_pWidgetFactory;
+		CGUISceneInfoManager* m_pSceneInfoManager;
+		CGUIAsFactory* m_pAsFactory;
+		CGUILogMsgManager* m_pLogMsgManager;
 
 	private:
 		bool m_bInitialized;
 
-
 	private:
-		//declare for singleton
-		GUI_SINGLETON_DECLARE_EX(CGUIWidgetSystem);	
+		static CGUIWidgetSystem* m_pSingleton;
 	};
-
-	//implement for singleton
-	//GUI_SINGLETON_IMPLEMENT(CGUIWidgetSystem, GUI_WIDGET_SYSTEM );
 
 }//namespace guiex
 
@@ -325,7 +408,6 @@ namespace guiex
 
 	GUIEXPORT void OpenPage( CGUIWidget* pPage );
 	GUIEXPORT void ClosePage( CGUIWidget* pPage );
-	//GUIEXPORT	void OpenPageByFileName(const CGUIString& rFileName, const CGUIString& rPageSceneName );
 
 	GUIEXPORT void SendUIEvent(const CGUIString& rUIEventName,
 		const CGUIString& rArg1 = CGUIString(),

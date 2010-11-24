@@ -35,15 +35,24 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	GUI_SINGLETON_IMPLEMENT_EX(CGUISceneInfoManager );
+	CGUISceneInfoManager* CGUISceneInfoManager::m_pSingleton = NULL;
 	//------------------------------------------------------------------------------
 	CGUISceneInfoManager::CGUISceneInfoManager()
 	{
+		GUI_ASSERT( !m_pSingleton, "[CGUISceneInfoManager::CGUISceneInfoManager]:instance has been created" ); 
+		m_pSingleton = this; 
 	}
 	//------------------------------------------------------------------------------
 	CGUISceneInfoManager::~CGUISceneInfoManager()
 	{
 		UnloadScenes();
+
+		m_pSingleton = NULL; 
+	}
+	//------------------------------------------------------------------------------
+	CGUISceneInfoManager* CGUISceneInfoManager::Instance()
+	{
+		return m_pSingleton;
 	}
 	//------------------------------------------------------------------------------
 	CGUIString CGUISceneInfoManager::DoGetFilename( const CGUIString& rPath ) 

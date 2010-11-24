@@ -41,23 +41,16 @@ namespace guiex
 	class GUIEXPORT CGUIAnimationManager : public CGUIResourceManager <CGUIAnimation>
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
-		CGUIAnimationManager();
 
-		/**
-		* @brief destructor;
-		*/
+		CGUIAnimationManager();
 		virtual ~CGUIAnimationManager();
 		
+		static CGUIAnimationManager* Instance(); 
+
 		int32 RegisterAnimation(
 			const CGUIString& rSceneName, 
 			const CGUIProperty& rProperty );
 
-		/**
-		* @brief create a animation by single image;
-		*/
 		int32 RegisterAnimation(
 			const CGUIString& rName, 
 			const CGUIString& rSceneName, 
@@ -66,16 +59,12 @@ namespace guiex
 			real fInterval,
 			const CGUISize& rSize = CGUISize(0,0));
 
-		/**
-		* @brief create a animation by multible images
-		*/
 		int32 RegisterAnimation( 
 			const CGUIString& rName, 
 			const CGUIString& rSceneName, 
 			const std::vector<CGUIString>& rFileNames,  
 			real fInterval,
 			const CGUISize& rSize = CGUISize(0,0));
-
 
 		CGUIAnimation* AllocateResource( const CGUIString& rResName );
 		CGUIAnimation* AllocateResource(
@@ -96,9 +85,6 @@ namespace guiex
 			const CGUIString& rSceneName, 
 			const CGUIProperty& rProperty );
 
-		/**
-		* @brief create a animation by single image;
-		*/
 		CGUIAnimation* DoCreateAnimation(
 			const CGUIString& rName, 
 			const CGUIString& rSceneName, 
@@ -107,9 +93,6 @@ namespace guiex
 			real fInterval,
 			const CGUISize& rSize );
 
-		/**
-		* @brief create a animation by multible images
-		*/
 		CGUIAnimation* DoCreateAnimation( 
 			const CGUIString& rName, 
 			const CGUIString& rSceneName, 
@@ -117,9 +100,8 @@ namespace guiex
 			real fInterval,
 			const CGUISize& rSize );
 
-	protected:
-		//declare for singleton
-		GUI_SINGLETON_DECLARE_EX(CGUIAnimationManager);
+	private:
+		static CGUIAnimationManager* m_pSingleton;
 	};
 
 }//namespace guiex

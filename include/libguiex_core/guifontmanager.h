@@ -41,15 +41,10 @@ namespace guiex
 	class GUIEXPORT CGUIFontManager : public CGUIResourceManager <CGUIFontData>
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUIFontManager();
-
-		/**
-		* @brief destructor;
-		*/
 		virtual ~CGUIFontManager();
+
+		static CGUIFontManager* Instance(); 
 
 		int32 RegisterFont( 
 			const CGUIString& rSceneName,
@@ -64,9 +59,8 @@ namespace guiex
 			const CGUIString& rPath, 
 			uint32 nFontIndex );
 
-	protected:
-		//declare for singleton
-		GUI_SINGLETON_DECLARE_EX(CGUIFontManager);
+	private:
+		static CGUIFontManager* m_pSingleton;
 	};
 
 }//namespace guiex

@@ -450,11 +450,12 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 	//initialize guiex system
 	try
 	{
+		guiex::CGUIWidgetSystem* pGUISystem = new guiex::CGUIWidgetSystem;
+		guiex::CGUIWidgetSystem::Instance()->Initialize();
 		GUI_LOG->Open( "gui editor",guiex::CGUILogMsg::FLAG_TIMESTAMP_LITE	|guiex::CGUILogMsg::FLAG_OSTREAM | guiex::CGUILogMsg::FLAG_MSG_CALLBACK);
 		GUI_LOG->SetPriorityMask(guiex::GUI_LM_DEBUG	| guiex::GUI_LM_TRACE	|guiex::GUI_LM_WARNING|guiex::GUI_LM_ERROR);
 		GUI_LOG->SetOstream( new std::ofstream( "libguiex_test.log", std::ios_base::out | std::ios_base::trunc ), true );
 		GUI_LOG->SetCallbackMsg( &g_MsgCallback );
-		guiex::CGUIWidgetSystem::Instance()->Initialize();
 		guiex::CGUIAssert::SetWarningCB(EditorWarningCB, NULL);
 		guiex::CGUIWidgetSystem::Instance()->SetScreenSize(1024, 768);
 
@@ -502,6 +503,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 		MessageBoxA(NULL, rError.what(), "error", MB_OK);
 
 		guiex::CGUIWidgetSystem::Instance()->Release();
+		delete guiex::CGUIWidgetSystem::Instance();
 	}
 
 	SetClientSize( 1024, 786 );
@@ -516,6 +518,7 @@ WxMainFrame::~WxMainFrame()
 	{
 		//release libguiex system
 		guiex::CGUIWidgetSystem::Instance()->Release();
+		delete guiex::CGUIWidgetSystem::Instance();
 		SampleDestroy();
 	}
 	catch (guiex::CGUIBaseException& rError)

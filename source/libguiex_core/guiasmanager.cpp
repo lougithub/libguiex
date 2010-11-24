@@ -18,14 +18,23 @@
 //============================================================================// 
 namespace guiex
 {
-	GUI_SINGLETON_IMPLEMENT_EX(CGUIAsManager );
+	//------------------------------------------------------------------------------
+	CGUIAsManager * CGUIAsManager::m_pSingleton = NULL; 
 	//------------------------------------------------------------------------------
 	CGUIAsManager::CGUIAsManager()
 	{
+		GUI_ASSERT( !m_pSingleton, "[CGUIAsManager::CGUIAsManager]:instance has been created" ); 
+		m_pSingleton = this; 
 	}
 	//------------------------------------------------------------------------------
 	CGUIAsManager::~CGUIAsManager()
 	{
+		m_pSingleton = NULL; 
+	}
+	//------------------------------------------------------------------------------
+	CGUIAsManager* CGUIAsManager::Instance()
+	{
+		return m_pSingleton; 
 	}
 	//------------------------------------------------------------------------------
 	int32 CGUIAsManager::RegisterAs( 

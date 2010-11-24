@@ -23,14 +23,23 @@
 //============================================================================// 
 namespace guiex
 {
-	GUI_SINGLETON_IMPLEMENT_EX(CGUIImageManager );
+	//------------------------------------------------------------------------------
+	CGUIImageManager * CGUIImageManager::m_pSingleton = NULL; 
 	//------------------------------------------------------------------------------
 	CGUIImageManager::CGUIImageManager()
 	{
+		GUI_ASSERT( !m_pSingleton, "[CGUIImageManager::CGUIImageManage]:instance has been created" ); 
+		m_pSingleton = this; 
 	}
 	//------------------------------------------------------------------------------
 	CGUIImageManager::~CGUIImageManager()
 	{
+		m_pSingleton = NULL; 
+	}
+	//------------------------------------------------------------------------------
+	CGUIImageManager* CGUIImageManager::Instance()
+	{
+		return m_pSingleton;
 	}
 	//------------------------------------------------------------------------------
 	CGUIImage* CGUIImageManager::DoCreateImage(

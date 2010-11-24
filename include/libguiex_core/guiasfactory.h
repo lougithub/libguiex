@@ -48,38 +48,18 @@ namespace guiex
 	class GUIEXPORT CGUIAsFactory
 	{
 	public:
-		/**
-		* @brief register generator
-		* @return 0 for successful, vice versa
-		*/
+		CGUIAsFactory();
+		~CGUIAsFactory();
+
+		static CGUIAsFactory* Instance();
+
 		int RegisterGenerator(const CGUIString& rName, CGUIAsGenerator* pGenerator );
-
-		/**
-		* @brief unregister generator
-		* @return 0 for successful, vice versa
-		*/
 		int UnregisterGenerator(const CGUIString& rName);
-
-		/**
-		* @brief unregister all generator
-		*/
 		void UnregisterAllGenerator();
 
 	protected:
-		/**
-		* @brief create a as by name
-		*/
 		CGUIAs*	GenerateAs(const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName);
-
-		/**
-		* @brief destroy as
-		*/
 		int	DestroyAs( CGUIAs* pEvent );
-
-
-	protected:
-		CGUIAsFactory();
-		~CGUIAsFactory();
 
 	protected:
 		friend class CGUIAsManager;
@@ -87,8 +67,8 @@ namespace guiex
 		typedef std::map<CGUIString,CGUIAsGenerator *> TMapGenerator;
 		TMapGenerator m_mapGenerator;
 
-		//for use singleton
-		GUI_SINGLETON_DECLARE_EX(CGUIAsFactory);
+	private:
+		static CGUIAsFactory* m_pSingleton;
 	};
 
 

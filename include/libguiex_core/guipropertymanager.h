@@ -90,7 +90,6 @@ namespace guiex
 
 namespace guiex
 {
-
 	/**
 	* @class CGUIPropertyManager
 	* @brief manager of property,it is a singleton class
@@ -99,19 +98,13 @@ namespace guiex
 	class GUIEXPORT CGUIPropertyManager
 	{
 	public:
-		/**
-		* @brief register a property set
-		*/
+		CGUIPropertyManager();
+		~CGUIPropertyManager();
+
+		static CGUIPropertyManager* Instance();
+
 		void RegisterSet( const CGUIString& rSetName, const CGUIProperty& rPropertySet );
-
-		/**
-		* @brief unregister a property set
-		*/
 		void UnregisterSet( const CGUIString& rSetName );
-
-		/**
-		* @brief get a property set
-		*/
 		const CGUIProperty&	GetSet(const CGUIString& rSetName ) const;
 
 		void RegisterPropertyType( uint32 uPropertyType, const CGUIString& rStringValue );
@@ -119,26 +112,17 @@ namespace guiex
 		const CGUIString& PropertyTypeToString( uint32 uPropertyType );
 
 	protected:
-		CGUIPropertyManager();
-		~CGUIPropertyManager();
-
-	protected:
 		typedef std::map<CGUIString, CGUIProperty>	TMapPropertySet;
-		TMapPropertySet		m_mapPropertySet;			/// set of property
+		TMapPropertySet m_mapPropertySet; /// set of property
 
-		typedef std::map<uint32, CGUIString>			TMapPropertyType2String;
-		typedef std::map<CGUIString, uint32>			TMapString2PropertyType;
+		typedef std::map<uint32, CGUIString> TMapPropertyType2String;
+		typedef std::map<CGUIString, uint32> TMapString2PropertyType;
 		TMapPropertyType2String	m_mapPropertyType2String;
 		TMapString2PropertyType	m_mapString2PropertyType;
 
-		//for use singleton
-		GUI_SINGLETON_DECLARE_EX(CGUIPropertyManager);
+	private:
+		static CGUIPropertyManager* m_pSingleton;
 	};
-
-
-	//for use singleton
-	//GUI_SINGLETON_IMPLEMENT(CGUIPropertyManager, GUI_PROPERTY_MANAGER);
-
 
 }//namespace guiex
 

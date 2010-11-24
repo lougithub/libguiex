@@ -20,9 +20,8 @@
 //============================================================================// 
 namespace guiex
 {
-
 	//------------------------------------------------------------------------------
-	GUIEXPORT int	RegisterInterface(const CGUIString& rInterface, 
+	GUIEXPORT int RegisterInterface(const CGUIString& rInterface, 
 		const CGUIString& rModuleName )
 	{
 		return CGUIInterfaceManager::Instance()->RegisterInterface( rInterface, rModuleName );
@@ -38,7 +37,10 @@ namespace guiex
 		return CGUIInterfaceManager::Instance()->GetInterface(rInterface);
 	}
 	//------------------------------------------------------------------------------
-	GUI_SINGLETON_IMPLEMENT_EX(CGUIInterfaceManager );
+
+
+	//------------------------------------------------------------------------------
+	CGUIInterfaceManager * CGUIInterfaceManager::m_pSingleton = NULL; 
 	//------------------------------------------------------------------------------
 	CGUIInterfaceManager::CGUIInterfaceManager()
 		:m_pInterfaceRender(NULL)
@@ -53,12 +55,20 @@ namespace guiex
 		,m_pInterfaceIme(NULL)
 		,m_pInterfaceStringConv(NULL)
 	{
+		GUI_ASSERT( !m_pSingleton, "[CGUIInterfaceManager::CGUIInterfaceManager]:instance has been created" ); 
+		m_pSingleton = this; 
 	}
 	//------------------------------------------------------------------------------
 	CGUIInterfaceManager::~CGUIInterfaceManager()
 	{
 		//unregister all interface
 		UnregisterAllInterface();
+		m_pSingleton = NULL; 
+	}
+	//------------------------------------------------------------------------------
+	CGUIInterfaceManager* CGUIInterfaceManager::Instance()
+	{
+		return m_pSingleton; 
 	}
 	//------------------------------------------------------------------------------
 	int32	CGUIInterfaceManager::DoRegisterInterface( const CGUIString& rInterface, const SInterface& rInterfaceData )
@@ -121,6 +131,15 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief register interface
+	* this function is located in the dll,if the value is NULL,the default
+	* name is GetGenerator_<rInterface>
+	* @return 
+	*		- 0 for success
+	*		- -1 for failed
+	* @exception CGUIException
+	*/
 	int	CGUIInterfaceManager::RegisterInterface(const CGUIString& rInterface, 
 		const CGUIString& rModuleName, 
 		void* pUserData )
@@ -179,6 +198,10 @@ namespace guiex
 		return -1;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief register interface
+	* @exception CGUIException
+	*/
 	int	CGUIInterfaceManager::RegisterInterface( const CGUIString& rInterface, IGUIInterface* pInterface )
 	{
 		GUI_TRACE( GUI_FORMAT( "[CGUIInterfaceManager::RegisterInterface]:\n    Register interface <%s>\n\n",
@@ -192,6 +215,14 @@ namespace guiex
 		return DoRegisterInterface( rInterface, aInterface );
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief ungister a interface
+	* @param rName the name of a interface
+	* @return 
+	*		- 0 for success
+	*		- -1 for failed
+	* @exception CGUIException
+	*/
 	int CGUIInterfaceManager::UnregisterInterface(const CGUIString& rInterface )
 	{
 		GUI_TRACE( GUI_FORMAT( "[CGUIInterfaceManager::UnregisterInterface]:\n    Unregister interface <%s>\n\n",
@@ -262,6 +293,10 @@ namespace guiex
 		return -1;
 	}
 	//------------------------------------------------------------------------------
+
+	/**
+	* @brief unregister all interface
+	*/
 	void CGUIInterfaceManager::UnregisterAllInterface()
 	{
 		TMapInterface::iterator itorEnd2 = m_mapInterface.end();
@@ -291,6 +326,12 @@ namespace guiex
 		m_pInterfaceIme = NULL;
 	}
 	//------------------------------------------------------------------------------
+
+	/**
+	* @brief get pointer of interface
+	* @return NULL for failed
+	* @exception CGUIException
+	*/
 	IGUIInterface* CGUIInterfaceManager::GetInterface(const CGUIString& rInterface )
 	{
 		TMapInterface::iterator itor = m_mapInterface.find( rInterface );
@@ -307,6 +348,10 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief judge wheather has this kind of interface
+	* @return true for has this interface, false for havn't this interface
+	*/
 	bool CGUIInterfaceManager::HasInterface(const CGUIString& rInterface )
 	{
 		if( m_mapInterface.find( rInterface ) == m_mapInterface.end() )

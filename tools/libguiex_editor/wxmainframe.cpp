@@ -268,13 +268,13 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 	//initialize guiex system
 	try
 	{
+		guiex::CGUIWidgetSystem* pGUISystem = new guiex::CGUIWidgetSystem;
+		guiex::CGUIWidgetSystem::Instance()->Initialize();
 #ifdef NDEBUG
 #else
 		GUI_LOG->Open( "gui editor",guiex::CGUILogMsg::FLAG_TIMESTAMP_LITE	/*|guiex::CGUILogMsg::FLAG_STDERR*/);
 		GUI_LOG->SetPriorityMask(guiex::GUI_LM_DEBUG	| guiex::GUI_LM_TRACE	|guiex::GUI_LM_WARNING|guiex::GUI_LM_ERROR);
 #endif
-
-		guiex::CGUIWidgetSystem::Instance()->Initialize();
 		//guiex::CGUIWidgetSystem::Instance()->SetRunScript(GetMenuBar()->GetMenu(GetMenuBar()->FindMenu(_T("Edit")))->IsChecked(ID_RunScript));
 		guiex::CGUIWidgetSystem::Instance()->SetRunScript(false);
 		guiex::CGUIAssert::SetWarningCB(EditorWarningCB, NULL);
@@ -308,6 +308,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 		wxMessageBox( wxConvUTF8.cMB2WC(rError.what()).data(), _T("error"), wxICON_ERROR|wxCENTRE);
 
 		guiex::CGUIWidgetSystem::Instance()->Release();
+		delete guiex::CGUIWidgetSystem::Instance();
 	}
 }
 //------------------------------------------------------------------------------
@@ -319,6 +320,7 @@ WxMainFrame::~WxMainFrame()
 	
 	//release libguiex system
 	guiex::CGUIWidgetSystem::Instance()->Release();
+	delete guiex::CGUIWidgetSystem::Instance();
 }
 //------------------------------------------------------------------------------
 WxOutputPanel*	WxMainFrame::CreateOutput()

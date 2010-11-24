@@ -20,7 +20,8 @@
 //============================================================================// 
 namespace guiex
 {
-	GUI_SINGLETON_IMPLEMENT_EX(CGUITextureManager );
+	//------------------------------------------------------------------------------
+	CGUITextureManager * CGUITextureManager::m_pSingleton = NULL; 
 	//------------------------------------------------------------------------------
 	/**
 	* @brief constructor
@@ -28,7 +29,8 @@ namespace guiex
 	CGUITextureManager::CGUITextureManager()
 		:m_pDefaultTexture(NULL)
 	{
-
+		GUI_ASSERT( !m_pSingleton, "[CGUITextureManager::CGUITextureManager]:instance has been created" ); 
+		m_pSingleton = this; 
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -36,8 +38,6 @@ namespace guiex
 	*/
 	CGUITextureManager::~CGUITextureManager()
 	{
-		CGUIImageManager::DestroyInstance();
-
 		if( m_pDefaultTexture )
 		{
 			throw CGUIException("[CGUITextureManager::~CGUITextureManager]: default texture havn't been released!");
@@ -50,6 +50,13 @@ namespace guiex
 		{
 			throw CGUIException("[CGUITextureManager::~CGUITextureManager]: texture load from memoryhavn't been released!");
 		}
+
+		m_pSingleton = NULL; 
+	}
+	//------------------------------------------------------------------------------
+	CGUITextureManager* CGUITextureManager::Instance()
+	{
+		return m_pSingleton; 
 	}
 	//------------------------------------------------------------------------------
 	/**

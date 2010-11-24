@@ -1,10 +1,10 @@
 /** 
- * @file guiwidgetfactory.cpp
- * @brief factory of widget, used to 
- * generate and destory widget
- * @author ken
- * @date 2006-06-07
- */
+* @file guiwidgetfactory.cpp
+* @brief factory of widget, used to 
+* generate and destory widget
+* @author ken
+* @date 2006-06-07
+*/
 
 
 //============================================================================//
@@ -21,28 +21,31 @@
 //============================================================================// 
 namespace guiex
 {
-	GUI_SINGLETON_IMPLEMENT_EX(CGUIWidgetFactory );
 	//------------------------------------------------------------------------------
-	GUIEXPORT	CGUIWidgetFactory* GetWidgetFactory()
+	GUIEXPORT CGUIWidgetFactory* GetWidgetFactory()
 	{
 		return CGUIWidgetFactory::Instance();
 	}
 	//------------------------------------------------------------------------------
-	GUIEXPORT	int32 RegisterWidgetGenerator(
-		const CGUIString& rWidgetType, 
-		const CGUIString& rModuleName)
+	GUIEXPORT int32 RegisterWidgetGenerator( const CGUIString& rWidgetType, const CGUIString& rModuleName)
 	{
 		return CGUIWidgetFactory::Instance()->RegisterGenerator( rWidgetType, rModuleName);
 	}
 	//------------------------------------------------------------------------------
-	GUIEXPORT	int32 UnregisterWidgetGenerator(
+	GUIEXPORT int32 UnregisterWidgetGenerator(
 		const CGUIString& rWidgetType)
 	{
 		return CGUIWidgetFactory::Instance()->UnregisterGenerator( rWidgetType);
 	}
 	//------------------------------------------------------------------------------
+	
+	//------------------------------------------------------------------------------
+	CGUIWidgetFactory * CGUIWidgetFactory::m_pSingleton = NULL; 
+	//------------------------------------------------------------------------------
 	CGUIWidgetFactory::CGUIWidgetFactory()
 	{
+		GUI_ASSERT( !m_pSingleton, "[CGUIWidgetFactory::CGUIWidgetFactory]:instance has been created" ); 
+		m_pSingleton = this; 
 	}
 	//------------------------------------------------------------------------------
 	CGUIWidgetFactory::~CGUIWidgetFactory()
@@ -52,9 +55,22 @@ namespace guiex
 
 		//unregister all module
 		UnregisterAllModule();
-	
+
+		m_pSingleton = NULL; 
 	}
-//------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------
+	CGUIWidgetFactory* CGUIWidgetFactory::Instance()
+	{
+		return m_pSingleton;
+	}
+	//------------------------------------------------------------------------------
+	/**
+	* @brief register module
+	* @return 
+	*		- 0 for success
+	*		- -1 for failed
+	* @exception CGUIException
+	*/
 	int32	CGUIWidgetFactory::RegisterModule( const CGUIString& rModuleName )
 	{
 		GUI_TRACE( GUI_FORMAT( "[CGUIWidgetFactory::RegisterModule]:	Register widget module <%s> \n",
@@ -66,8 +82,8 @@ namespace guiex
 			if (d_handle == NULL)
 			{
 				throw CGUIException(
-				"[CGUIWidgetFactory::RegisterModule] failed to load module <%s>",
-				rModuleName.c_str());
+					"[CGUIWidgetFactory::RegisterModule] failed to load module <%s>",
+					rModuleName.c_str());
 				return -1;
 			}
 			else
@@ -84,7 +100,14 @@ namespace guiex
 			return -1;
 		}		
 	}
-//------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------
+	/**
+	* @brief register module
+	* @return 
+	*		- 0 for success
+	*		- -1 for failed
+	* @exception CGUIException
+	*/
 	int32	CGUIWidgetFactory::UnregisterModule( const CGUIString& rModuleName )
 	{
 		GUI_TRACE( GUI_FORMAT( "[CGUIWidgetFactory::UnregisterModule]:    Unregister widget module <%s> \n",
@@ -105,7 +128,17 @@ namespace guiex
 			return 0;
 		}
 	}
-//------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------
+	/**
+	* @brief register all widget generator in this module
+	* @param pFunName string name of function which create all generator,
+	* this function is located in the dll,if the value is NULL,the default
+	* name is GetAllGenerator_<rModuleName>
+	* @return 
+	*		- 0 for success
+	*		- -1 for failed
+	* @exception CGUIException
+	*/
 	int32	CGUIWidgetFactory::RegisterAllGenerator(const CGUIString& rModuleName,const char* pFunName)
 	{
 		GUI_TRACE( GUI_FORMAT( "[CGUIWidgetFactory::RegisterAllGenerator]:    Register all widget generators from module <%s>\n",
@@ -132,7 +165,7 @@ namespace guiex
 		{
 			strFunName = "GetAllGenerators";
 		}
- 
+
 		//get function
 		FunRegisterAllWidgets pFunc = (FunRegisterAllWidgets)GUI_DYNLIB_GETSYM((*itor).second, strFunName.c_str());
 		if( !pFunc )
@@ -154,7 +187,17 @@ namespace guiex
 
 		return 0;
 	}
-//------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------
+	/**
+	* @brief register generator
+	* @param pFunName string name of function which create the generator,
+	* this function is located in the dll,if the value is NULL,the default
+	* name is GetGenerator_<rWidgetType>
+	* @return 
+	*		- 0 for success
+	*		- -1 for failed
+	* @exception CGUIException
+	*/
 	int32	CGUIWidgetFactory::RegisterGenerator(const CGUIString& rWidgetType, 
 		const CGUIString& rModuleName, 
 		const char* pFunName )
@@ -200,7 +243,10 @@ namespace guiex
 		//register generator
 		return RegisterGenerator( pFunc());
 	}
-//------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------
+	/**
+	* @brief unregister all module
+	*/ 
 	void CGUIWidgetFactory::UnregisterAllModule()
 	{
 		TMapModule::iterator itorEnd2 = m_mapModule.end();
@@ -212,7 +258,14 @@ namespace guiex
 		}
 		m_mapModule.clear();
 	}
-//------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------
+	/**
+	* @brief register generator
+	* @return 
+	*		- 0 for success
+	*		- -1 for failed
+	* @exception CGUIException
+	*/
 	int32	CGUIWidgetFactory::RegisterGenerator(CGUIWidgetGenerator* pGenerator)
 	{
 		GUI_ASSERT(pGenerator, "wrong parameter");
@@ -229,7 +282,15 @@ namespace guiex
 			return -1;
 		}		
 	}
-//------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------
+	/**
+	* @brief unregister a generator
+	* @param pGenerator the pointer of a generator
+	* @return 
+	*		- 0 for success
+	*		- -1 for failed
+	* @exception CGUIException
+	*/
 	int32	CGUIWidgetFactory::UnregisterGenerator(CGUIWidgetGenerator* pGenerator)
 	{
 		GUI_ASSERT(pGenerator, "wrong parameter");
@@ -247,7 +308,15 @@ namespace guiex
 			return 0;
 		}		
 	}
-//------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------
+	/**
+	* @brief ungister a generator
+	* @param rType the type of a generator
+	* @return 
+	*		- 0 for success
+	*		- -1 for failed
+	* @exception CGUIException
+	*/
 	int32 CGUIWidgetFactory::UnregisterGenerator(const CGUIString& rType )
 	{
 		GUI_TRACE( GUI_FORMAT( "[CGUIWidgetFactory::UnregisterGenerator]:    Unregister widget generator <%s>\n",
@@ -268,7 +337,11 @@ namespace guiex
 			return 0;
 		}	
 	}
-//------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------
+
+	/**
+	* @brief unregister all generator
+	*/
 	void CGUIWidgetFactory::UnregisterAllGenerator()
 	{
 		TMapGenerator::iterator itorEnd = m_mapGenerator.end();
@@ -281,7 +354,12 @@ namespace guiex
 		}
 		m_mapGenerator.clear();
 	}
-//------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------
+	/**
+	* @brief create a widget by widget name
+	* @return pointer of widget, NULL for failed to find this widget
+	* @exception CGUIException
+	*/
 	CGUIWidget* CGUIWidgetFactory::CreateWidget(const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
 	{
 		GUI_TRACE( GUI_FORMAT( "[CGUIWidgetFactory::CreateWidget]:    Create widget <%s> from generator <%s>\n",
@@ -312,7 +390,13 @@ namespace guiex
 			}
 		}
 	}
-//------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------
+	/**
+	* @brief destroy widget
+	* @return 
+	*	- 0 for success
+	*	- -1 for failed
+	*/
 	int32	CGUIWidgetFactory::DestoryWidget( CGUIWidget* pWidget)
 	{
 		GUI_ASSERT(pWidget, "wrong parameter");
@@ -329,7 +413,7 @@ namespace guiex
 			return 0;
 		}
 	}
-//------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------
 
 }//namespace guiex
 

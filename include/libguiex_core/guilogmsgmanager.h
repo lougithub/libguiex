@@ -61,6 +61,11 @@ namespace guiex
 	class GUIEXPORT CGUILogMsgManager
 	{
 	public:
+		CGUILogMsgManager();
+		~CGUILogMsgManager();
+
+		static CGUILogMsgManager* Instance();
+
 		/**
 		* @brief get default message.
 		*/
@@ -79,23 +84,14 @@ namespace guiex
 		/** 
 		* @brief clear default msg instance
 		*/
-		void	ClearDefaultMsg();
-
-	protected:
-		CGUILogMsgManager();
-		~CGUILogMsgManager();
+		void ClearDefaultMsg();
 
 	protected:
 		CGUILogMsg* m_pMsgInstance;
 
-		//declare for singleton
-		GUI_SINGLETON_DECLARE_EX(CGUILogMsgManager );
-
+	private:
+		static CGUILogMsgManager* m_pSingleton;
 	};
-
-	//implement for singleton
-	//GUI_SINGLETON_IMPLEMENT(CGUILogMsgManager, CGUILogMsgManager );
-
 }//namespace guiex
 
 

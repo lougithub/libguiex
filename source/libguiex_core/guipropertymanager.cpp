@@ -22,10 +22,14 @@
 //============================================================================// 
 namespace guiex
 {
-	GUI_SINGLETON_IMPLEMENT_EX(CGUIPropertyManager);
+	//------------------------------------------------------------------------------
+	CGUIPropertyManager * CGUIPropertyManager::m_pSingleton = NULL; 
 	//------------------------------------------------------------------------------
 	CGUIPropertyManager::CGUIPropertyManager()
 	{
+		GUI_ASSERT( !m_pSingleton, "[CGUIPropertyManager::CGUIPropertyManager]:instance has been created" ); 
+		m_pSingleton = this; 
+
 		RegisterPropertyType( ePropertyType_Bool, "bool" );
 		RegisterPropertyType( ePropertyType_Int32, "int32" );
 		RegisterPropertyType( ePropertyType_UInt32, "uint32" );
@@ -50,7 +54,7 @@ namespace guiex
 		RegisterPropertyType( ePropertyType_ImageOrientation, "EImageOrientation" );
 		RegisterPropertyType( ePropertyType_ScreenValue, "EScreenValue" );
 		RegisterPropertyType( ePropertyType_Interpolation, "EInterpolationType" );
-		
+
 
 		RegisterPropertyType( ePropertyType_Font, "CGUIFont" );		
 		RegisterPropertyType( ePropertyType_Image, "CGUIImage" );
@@ -68,7 +72,7 @@ namespace guiex
 		RegisterPropertyType( ePropertyType_Widget, "CGUIWidget" );
 		RegisterPropertyType( ePropertyType_Set, "set" );
 		RegisterPropertyType( ePropertyType_Script, "CGUIScript" );
-		
+
 		RegisterPropertyType( ePropertyType_FontDefine, "CGUIFontDefine" );
 		RegisterPropertyType( ePropertyType_ImageDefine, "CGUIImageDefine" );
 		RegisterPropertyType( ePropertyType_AnimationDefine, "CGUIAnimationDefine" );
@@ -77,7 +81,12 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIPropertyManager::~CGUIPropertyManager()
 	{
-
+		m_pSingleton = NULL; 
+	}
+	//------------------------------------------------------------------------------
+	CGUIPropertyManager* CGUIPropertyManager::Instance()
+	{
+		return m_pSingleton; 
 	}
 	//------------------------------------------------------------------------------
 	void CGUIPropertyManager::RegisterPropertyType( uint32 uPropertyType, const CGUIString& rStringValue )
@@ -123,6 +132,9 @@ namespace guiex
 		return itorFindType2String->second;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief register a property set
+	*/
 	void CGUIPropertyManager::RegisterSet( const CGUIString& rSetName, const CGUIProperty& rPropertySet )
 	{
 		if( m_mapPropertySet.find(rSetName) != m_mapPropertySet.end())
@@ -132,6 +144,9 @@ namespace guiex
 		m_mapPropertySet.insert( std::make_pair(rSetName,rPropertySet) );
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief unregister a property set
+	*/
 	void CGUIPropertyManager::UnregisterSet( const CGUIString& rSetName )
 	{
 		TMapPropertySet::iterator itor = m_mapPropertySet.find(rSetName);
@@ -142,6 +157,9 @@ namespace guiex
 		m_mapPropertySet.erase( itor );
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief get a property set
+	*/
 	const CGUIProperty& CGUIPropertyManager::GetSet(const CGUIString& rSetName ) const
 	{
 		TMapPropertySet::const_iterator itor = m_mapPropertySet.find(rSetName);

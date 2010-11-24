@@ -19,14 +19,23 @@
 //============================================================================// 
 namespace guiex
 {
-	GUI_SINGLETON_IMPLEMENT_EX(CGUIAnimationManager );
+	//------------------------------------------------------------------------------
+	CGUIAnimationManager * CGUIAnimationManager::m_pSingleton = NULL; 
 	//------------------------------------------------------------------------------
 	CGUIAnimationManager::CGUIAnimationManager()
 	{
+		GUI_ASSERT( !m_pSingleton, "[CGUIAnimationManager::CGUIAnimationManager]:instance has been created" ); 
+		m_pSingleton = this; 
 	}
 	//------------------------------------------------------------------------------
 	CGUIAnimationManager::~CGUIAnimationManager()
 	{
+		m_pSingleton = NULL; 
+	}
+	//------------------------------------------------------------------------------
+	CGUIAnimationManager* CGUIAnimationManager::Instance()
+	{
+		return m_pSingleton; 
 	}
 	//------------------------------------------------------------------------------
 	int32 CGUIAnimationManager::RegisterAnimation(

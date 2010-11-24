@@ -37,6 +37,11 @@ namespace guiex
 	class GUIEXPORT CGUISceneInfoManager
 	{
 	public:
+		CGUISceneInfoManager();
+		~CGUISceneInfoManager();
+
+		static CGUISceneInfoManager* Instance();
+
 		int32 LoadScenes( const CGUIString& rSceneRootPath = "\\", const CGUIString& rSuffix = ".uip" );
 		void UnloadScenes( );
 
@@ -51,10 +56,6 @@ namespace guiex
 		void DestroySceneInfo( CGUISceneInfo* pSceneInfo) const;
 
 	protected:
-		//for singleton
-		CGUISceneInfoManager();
-		~CGUISceneInfoManager();
-
 		int32 DoLoadScene( const CGUIString& rSceneFilePath );
 		CGUIString DoGetFilename( const CGUIString& rPath );
 		CGUIString DoGetFileDir( const CGUIString& rPath ); 
@@ -63,9 +64,8 @@ namespace guiex
 		std::vector<CGUIString>					m_vecSceneFilePaths;	//absolute file path
 		std::vector<CGUIString>					m_vecSceneFileNames;	//file name
 
-	public:
-		//declare for singleton
-		GUI_SINGLETON_DECLARE_EX(CGUISceneInfoManager);	
+	private:
+		static CGUISceneInfoManager* m_pSingleton;
 	};
 }		//namespace guiex
 
