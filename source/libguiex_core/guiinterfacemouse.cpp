@@ -41,7 +41,7 @@ namespace guiex
 	//------------------------------------------------------------------------------ 
 	bool IGUIInterfaceMouse::ProcessMouseEvent( const SMouseEvent& rEvent )
 	{
-		return CGUIWidgetSystem::Instance()->ProcessMouseInput( rEvent );
+		return CGUISystem::Instance()->ProcessMouseInput( rEvent );
 	}
 	//--------------------------------------------------------------------------------------
 	bool IGUIInterfaceMouse::ChangeButtonState( EMouseButton eButton,  EMouseState eState )

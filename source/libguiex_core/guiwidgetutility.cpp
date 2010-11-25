@@ -12,6 +12,7 @@
 #include <libguiex_core/guiwidgetutility.h>
 #include <libguiex_core/guiwidgetsystem.h>
 #include <libguiex_core/guiexception.h>
+#include <libguiex_core/guiwidgetmanager.h>
 #include <sstream>
 
 //============================================================================//
@@ -20,7 +21,7 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	CGUIString	CGUIWidgetUtility::GetWidgetInfo( const CGUIWidget* pWidget ) 
+	CGUIString CGUIWidgetUtility::GetWidgetInfo( const CGUIWidget* pWidget ) 
 	{
 		if( !pWidget )
 		{
@@ -44,23 +45,16 @@ namespace guiex
 		return stream.str();
 	}
 	//------------------------------------------------------------------------------
-	CGUIString	CGUIWidgetUtility::GetWidgetInfo( const CGUIString& rWidgetName, const CGUIString& rSceneName ) 
+	CGUIString CGUIWidgetUtility::GetWidgetInfo( const CGUIString& rWidgetName, const CGUIString& rSceneName ) 
 	{
-		return GetWidgetInfo(CGUIWidgetSystem::Instance()->GetWidget(rWidgetName, rSceneName));
+		return GetWidgetInfo( CGUIWidgetManager::Instance()->GetWidget(rWidgetName, rSceneName));
 	}
 	//------------------------------------------------------------------------------
-	static void		GetWidgetTreeInfo_Imp( 
+	static void	GetWidgetTreeInfo_Imp( 
 		const CGUIWidget* pWidget, 
 		std::stringstream& stream,  
 		const std::string& rPrefix )
 	{
-		//stream<<rPrefix<<CGUIWidgetUtility::GetWidgetInfo(pWidget).c_str()<<"\n";
-		//std::string nChildPrefix = rPrefix+"    ";
-		//uint32 nSize = pWidget->GetChildNum(); 
-		//for( uint32 i=0; i<nSize; ++i)
-		//{
-		//	GetWidgetTreeInfo_Imp(pWidget->GetChild(i), stream, nChildPrefix);
-		//}
 		stream<<rPrefix<<CGUIWidgetUtility::GetWidgetInfo(pWidget).c_str()<<"\n";
 		std::string nChildPrefix = rPrefix+"    ";
 		CGUIWidget* pChild = pWidget->GetChild();
@@ -81,9 +75,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIString	CGUIWidgetUtility::GetWidgetTreeInfo( const CGUIString& rWidgetName, const CGUIString& rSceneName ) 
 	{
-		return GetWidgetTreeInfo(CGUIWidgetSystem::Instance()->GetWidget(rWidgetName, rSceneName));
+		return GetWidgetTreeInfo(CGUIWidgetManager::Instance()->GetWidget(rWidgetName, rSceneName));
 	}
-	//------------------------------------------------------------------------------
 	//------------------------------------------------------------------------------
 
 }//namespace guiex

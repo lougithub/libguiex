@@ -262,11 +262,8 @@ namespace guiex
 		CGUIImage* m_pImageBG;					/// image for listbox's backbround
 
 	private:
-		static CGUIString	ms_strType;	/// type of this widget
+		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtComboBox);
 	};
-
-
-	GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtComboBox);
 
 }//namespace guiex
 

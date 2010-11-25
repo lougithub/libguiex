@@ -55,7 +55,7 @@ namespace guiex
 {
 	/**
 	* @brief register all as
-	* called by CGUIWidgetSystem
+	* called by CGUISystem
 	*/
 	extern int32 GUIRegisterAllAs();
 }

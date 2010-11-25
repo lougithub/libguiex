@@ -174,10 +174,9 @@ namespace guiex
 		CGUISize					m_aSegmentDefaultSize;	//default size of segment
 
 	private:
-		static CGUIString	ms_strType;
+		GUI_WIDGET_GENERATOR_DECLARE(CGUIColListHeader);
 	};
 
-	GUI_WIDGET_GENERATOR_DECLARE(CGUIColListHeader);
 
 }//namespace guiex
 

@@ -247,10 +247,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtScrollbar);
 	//------------------------------------------------------------------------------
-	CGUIString CGUIWgtScrollbar::ms_strType = "CGUIWgtScrollbar";
-	//------------------------------------------------------------------------------
 	CGUIWgtScrollbar::CGUIWgtScrollbar(const CGUIString& rName, const CGUIString& rSceneName)
-		:CGUIWidget(ms_strType, rName, rSceneName)
+		:CGUIWidget(StaticGetType(), rName, rSceneName)
 	{
 		InitScrollbar();
 	}
@@ -311,18 +309,13 @@ namespace guiex
 		SetGenerateClickEvent(true);
 	}
 	//------------------------------------------------------------------------------
-	const CGUIString& CGUIWgtScrollbar::GetWidgetType()
-	{
-		return ms_strType;
-	}
-	//------------------------------------------------------------------------------
 	CGUIWgtScrollbar* CGUIWgtScrollbar::FromWidget( CGUIWidget* pWidget )
 	{
 		if( !pWidget )
 		{
 			throw CGUIException("[CGUIWgtScrollbar::FromWidget]: the given widget is nil" );
 		}
-		if( pWidget->GetType() != ms_strType )
+		if( pWidget->GetType() != StaticGetType() )
 		{
 			throw CGUIException("[CGUIWgtScrollbar::FromWidget]: the real type of given widget is <%s>!", pWidget->GetType().c_str());
 		}
@@ -463,7 +456,7 @@ namespace guiex
 			aEvent.SetReceiver(this);
 			aEvent.SetCurrentPos( m_nCurPos );
 			aEvent.SetRange( m_nMaxPos - m_nMinPos );
-			CGUIWidgetSystem::Instance()->SendEvent( &aEvent);
+			CGUISystem::Instance()->SendEvent( &aEvent);
 		}
 
 		//send event to parent
@@ -476,7 +469,7 @@ namespace guiex
 			aEvent.SetReceiver(GetParent());
 			aEvent.SetCurrentPos( m_nCurPos );
 			aEvent.SetRange( m_nMaxPos - m_nMinPos );
-			CGUIWidgetSystem::Instance()->SendEvent( &aEvent);
+			CGUISystem::Instance()->SendEvent( &aEvent);
 		}
 
 		//send event to host
@@ -489,7 +482,7 @@ namespace guiex
 			aEvent.SetReceiver(m_pWgtHost);
 			aEvent.SetCurrentPos( m_nCurPos );
 			aEvent.SetRange( m_nMaxPos - m_nMinPos );
-			CGUIWidgetSystem::Instance()->SendEvent( &aEvent);
+			CGUISystem::Instance()->SendEvent( &aEvent);
 		}
 	}
 	//------------------------------------------------------------------------------

@@ -25,10 +25,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtCheckButton);
 	//------------------------------------------------------------------------------
-	CGUIString CGUIWgtCheckButton::ms_strType = "CGUIWgtCheckButton";
-	//------------------------------------------------------------------------------
 	CGUIWgtCheckButton::CGUIWgtCheckButton(const CGUIString& rName, const CGUIString& rSceneName)
-		:CGUIWidget(ms_strType, rName, rSceneName)
+		:CGUIWidget(StaticGetType(), rName, rSceneName)
 	{
 		InitCheckButton();
 	}
@@ -182,7 +180,7 @@ namespace guiex
 		{
 			throw CGUIException("[CGUIWgtCheckButton::FromWidget]: the given widget is nil" );
 		}
-		if( pWidget->GetType() != ms_strType )
+		if( pWidget->GetType() != StaticGetType() )
 		{
 			throw CGUIException("[CGUIWgtCheckButton::FromWidget]: the real type of given widget is <%s>!", pWidget->GetType().c_str());
 		}
@@ -222,7 +220,7 @@ namespace guiex
 		CGUIEventNotification aCheckEvent;
 		aCheckEvent.SetEventId((!m_bChecked)?eEVENT_CHECKED:eEVENT_UNCHECKED);
 		aCheckEvent.SetReceiver(this);
-		CGUIWidgetSystem::Instance()->SendEvent( &aCheckEvent);
+		CGUISystem::Instance()->SendEvent( &aCheckEvent);
 
 		return CGUIWidget::OnMouseLeftClick(pEvent);
 	}

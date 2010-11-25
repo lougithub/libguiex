@@ -19,10 +19,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIItemBase);
 	//------------------------------------------------------------------------------
-	CGUIString CGUIItemBase::ms_strType = "CGUIItemBase";
-	//------------------------------------------------------------------------------
 	CGUIItemBase::CGUIItemBase( const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIWidget(ms_strType, rName, rSceneName)
+		:CGUIWidget(StaticGetType(), rName, rSceneName)
 	{
 		InitItemBase();
 	}

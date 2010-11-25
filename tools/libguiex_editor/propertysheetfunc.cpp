@@ -172,7 +172,7 @@ guiex::CGUIWidget*	CreateWidget( wxPropertyGridManager* pSheetMgr, const char* s
 
 		if( pWidget )
 		{
-			GUI_DESTROY_WIDGET(pWidget);
+			CGUIWidgetManager::Instance()->DestroyWidget(pWidget);
 			pWidget = NULL;
 		}
 	}

@@ -105,7 +105,7 @@ namespace guiex
 		pRes->RefRelease();
 		if( pRes->GetRefCount() == 0 )
 		{
-			return ReleaseAllocateResource( pRes );
+			return ReleaseFromAllocatePool( pRes );
 		}
 		return 0;
 	}

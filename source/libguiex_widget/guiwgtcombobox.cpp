@@ -55,10 +55,8 @@ namespace guiex
 {
 
 	//------------------------------------------------------------------------------
-	CGUIString	CGUIWgtComboBoxDropList::ms_strType = "CGUIWgtComboBoxDropList";
-	//------------------------------------------------------------------------------
 	CGUIWgtComboBoxDropList::CGUIWgtComboBoxDropList(const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIWgtListBox(ms_strType,rName, rSceneName )
+		:CGUIWgtListBox(StaticGetType(),rName, rSceneName )
 	{
 		InitComboBoxDropList();
 	}
@@ -73,8 +71,8 @@ namespace guiex
 
 		CGUIWgtListBox::PostUpdateDirtyRect();
 
-		m_aClipRect = CGUIWidgetSystem::Instance()->GetScreenRect().GetIntersection(m_aWidgetRect);
-		m_aClientClipRect = CGUIWidgetSystem::Instance()->GetScreenRect().GetIntersection(aClientClipRect);
+		m_aClipRect = CGUISystem::Instance()->GetScreenRect().GetIntersection(m_aWidgetRect);
+		m_aClientClipRect = CGUISystem::Instance()->GetScreenRect().GetIntersection(aClientClipRect);
 	}
 	//------------------------------------------------------------------------------
 	uint32		CGUIWgtComboBoxDropList::OnLostFocus( CGUIEventNotification* pEvent )
@@ -221,7 +219,7 @@ namespace guiex
 		aEvent.SetEventId(eEVENT_COMBOBOX_SELECTED);
 		aEvent.SetReceiver(this);
 		aEvent.SetSelectedItemIdx( nIdx );
-		CGUIWidgetSystem::Instance()->SendEvent( &aEvent);
+		CGUISystem::Instance()->SendEvent( &aEvent);
 	}
 	//------------------------------------------------------------------------------
 	void			CGUIWgtComboBox::SetSelectedItem(uint32 nIdx )

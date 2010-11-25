@@ -23,10 +23,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIColListTextItem);
 	//------------------------------------------------------------------------------
-	CGUIString CGUIColListTextItem::ms_strType = "CGUIColListTextItem";
-	//------------------------------------------------------------------------------
 	CGUIColListTextItem::CGUIColListTextItem( const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIColListItem(ms_strType, rName, rSceneName)
+		:CGUIColListItem(StaticGetType(), rName, rSceneName)
 	{
 		InitTextItem();
 	}
@@ -84,12 +82,14 @@ namespace guiex
 		void* pItemData ,
 		bool bDisable)	
 	{
-		CGUIColListTextItem * pItem = static_cast<CGUIColListTextItem *>(GUI_CREATE_WIDGET("CGUIColListTextItem", CGUIString("collistitem_")+CGUIWidgetSystem::Instance()->GenerateAnonymousName(), rSceneName));
+		CGUIString strItemName = CGUIString("collistitem_")+CGUISystem::Instance()->GenerateAnonymousName();
+		CGUIColListTextItem * pItem = 
+			static_cast<CGUIColListTextItem *>(GUI_CREATE_WIDGET("CGUIColListTextItem", strItemName, rSceneName));
 		pItem->SetDisable(bDisable);
 		pItem->SetID(nItemID);
 		pItem->SetUserData(pItemData);
 		pItem->SetTextInfo(rInfo);
-		pItem->SetTextContent(pText);
+		pItem->SetTextContent(rText);
 		return pItem;
 	}
 	//------------------------------------------------------------------------------

@@ -84,7 +84,7 @@ namespace guiex
 		glMatrixMode(GL_PROJECTION);
 		glPushMatrix();
 		glLoadIdentity();
-		const CGUISize& rSize = CGUIWidgetSystem::Instance()->GetScreenSize();
+		const CGUISize& rSize = CGUISystem::Instance()->GetScreenSize();
 #if 1
 		glOrtho(0.0, rSize.m_fWidth,rSize.m_fHeight,0.0, -100000,100000 );
 #else

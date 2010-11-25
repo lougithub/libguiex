@@ -138,11 +138,8 @@ namespace guiex
 		CGUIImage*			m_pImageSelection;	//!< selection image 
 
 	private:
-		static CGUIString	ms_strType;
+		GUI_WIDGET_GENERATOR_DECLARE(CGUIItemBase);
 	};
-
-	GUI_WIDGET_GENERATOR_DECLARE(CGUIItemBase);
-
 }//namespace guiex
 
 #endif //__GUI_ITEMBASE_20070731_H__

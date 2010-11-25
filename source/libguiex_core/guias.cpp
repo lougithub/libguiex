@@ -234,7 +234,7 @@ namespace guiex
 			if( IsLooping() )
 			{
 				m_fElapsedTime = fLeftTime;
-				return Update( fLeftTime );
+				//return Update( fLeftTime );
 			}
 			else
 			{

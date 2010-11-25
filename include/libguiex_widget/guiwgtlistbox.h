@@ -361,10 +361,9 @@ namespace guiex
 		CGUIString			m_strItemType;				/// type of item, default is text item
 
 	private:
-		static CGUIString	ms_strType;
+		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtListBox);
 	};
 
-	GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtListBox);
 
 
 }//namespace guiex

@@ -24,10 +24,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtDialog);
 	//------------------------------------------------------------------------------
-	CGUIString CGUIWgtDialog::ms_strType = "CGUIWgtDialog";
-	//------------------------------------------------------------------------------
 	CGUIWgtDialog::CGUIWgtDialog(const CGUIString& rName, const CGUIString& rSceneName)
-		:CGUIWidget(ms_strType, rName, rSceneName)
+		:CGUIWidget(StaticGetType(), rName, rSceneName)
 	{
 		InitDialog();
 	}

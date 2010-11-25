@@ -29,12 +29,10 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtMultiEditBox);
 	//------------------------------------------------------------------------------
-	CGUIString CGUIWgtMultiEditBox::ms_strType = "CGUIWgtMultiEditBox";
-	//------------------------------------------------------------------------------
 	wchar_t CGUIWgtMultiEditBox::ms_wLineBreak = L'\n';
 	//------------------------------------------------------------------------------
 	CGUIWgtMultiEditBox::CGUIWgtMultiEditBox(const CGUIString& rName, const CGUIString& rSceneName)
-		:CGUIWgtScrollbarContainer(ms_strType, rName, rSceneName)
+		:CGUIWgtScrollbarContainer(StaticGetType(), rName, rSceneName)
 	{
 		InitMultiEditbox();
 	}

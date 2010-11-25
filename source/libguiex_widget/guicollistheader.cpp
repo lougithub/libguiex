@@ -23,10 +23,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIColListHeader);
 	//------------------------------------------------------------------------------
-	CGUIString CGUIColListHeader::ms_strType = "CGUIColListHeader";
-	//------------------------------------------------------------------------------
 	CGUIColListHeader::CGUIColListHeader( const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIWidget(ms_strType, rName, rSceneName)
+		:CGUIWidget(StaticGetType(), rName, rSceneName)
 	{
 		InitColListHeader();
 	}
@@ -209,7 +207,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void	CGUIColListHeader::AddSegment( const CGUIStringW& rText, uint32 nId )
 	{
-		CGUIColListHeaderSegment * pSegment = static_cast<CGUIColListHeaderSegment*>(GUI_CREATE_WIDGET(m_strSegmentType.c_str(), CGUIString("segment_")+CGUIWidgetSystem::Instance()->GenerateAnonymousName(), GetSceneName()));
+		CGUIColListHeaderSegment * pSegment = static_cast<CGUIColListHeaderSegment*>(GUI_CREATE_WIDGET(m_strSegmentType.c_str(), CGUIString("segment_")+CGUISystem::Instance()->GenerateAnonymousName(), GetSceneName()));
 		pSegment->SetParent(this);
 		m_vecSegment.push_back(pSegment);
 		pSegment->SetTextContent(pText);

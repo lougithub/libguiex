@@ -90,11 +90,10 @@ namespace guiex
 	
 	protected:
 		static		wchar_t		ms_wLineBreak;
-		static		CGUIString	ms_strType;
 
+		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtStaticText);
 	};
 
-	GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtStaticText);
 
 }//namespace guiex
 

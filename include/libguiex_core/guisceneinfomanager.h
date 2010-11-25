@@ -13,7 +13,6 @@
 // include
 //============================================================================//
 #include "guibase.h"
-#include "guisingleton.h"
 #include "guistring.h"
 #include <vector>
 #include <map>

@@ -22,10 +22,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtEmptyNode);
 	//------------------------------------------------------------------------------
-	CGUIString CGUIWgtEmptyNode::ms_strType = "CGUIWgtEmptyNode";
-	//------------------------------------------------------------------------------
 	CGUIWgtEmptyNode::CGUIWgtEmptyNode(const CGUIString& rName, const CGUIString& rSceneName)
-		:CGUIWidget(ms_strType, rName, rSceneName)
+		:CGUIWidget(StaticGetType(), rName, rSceneName)
 	{
 		InitEmptyNode();
 	}

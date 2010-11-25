@@ -26,7 +26,7 @@ namespace guiex
 	/** 
 	* @brief the state of key
 	*/
-	enum	EKeyState
+	enum EKeyState
 	{
 		KEY_DOWN = 0,
 		KEY_UP,
@@ -34,7 +34,7 @@ namespace guiex
 		_KEY_STATE_MAX_
 	};
 
-	enum	EKeyEvent
+	enum EKeyEvent
 	{
 		KEY_EVENT_DOWN,
 		KEY_EVENT_UP,
@@ -190,37 +190,37 @@ namespace guiex
 		/** 
 		* @brief destructor
 		*/
-		virtual					~IGUIInterfaceKeyboard();
+		virtual ~IGUIInterfaceKeyboard();
 
 		/**
 		* @brief reset context
 		*/
-		void			Reset();
+		void Reset();
 
 		///called when the state of key changed
-		bool			ChangeKeyState(EKeyCode eKey, EKeyState eState);
+		bool ChangeKeyState(EKeyCode eKey, EKeyState eState);
 
 		///has key been pressed until now
-		bool			IsKeyPressed(EKeyCode eKey) const;       
+		bool IsKeyPressed(EKeyCode eKey) const;       
 
 		///has key been pressed until now
-		bool			HasAnyKeyPressed() const;                      
+		bool HasAnyKeyPressed() const;                      
 
 		///get all key which is pressed
-		void			GetAllKeyPressed(std::vector<EKeyCode>& rKeys) const;          
+		void GetAllKeyPressed(std::vector<EKeyCode>& rKeys) const;          
 
 		///update key state before process keyboard
-		virtual void	PreUpdate();
+		virtual void PreUpdate();
 
 		///update key state after process keyboard
-		virtual void	PostUpdate();
+		virtual void PostUpdate();
 
 	protected:
 		/**
 		* @brief process keyboard event
 		* @return whether this event is consumed;
 		*/
-		bool			ProcessKeyEvent( const SKeyEvent& rEvent );
+		bool ProcessKeyEvent( const SKeyEvent& rEvent );
 
 	protected:
 		//key state
@@ -229,7 +229,7 @@ namespace guiex
 			bool m_bKeyDown[_KEY_CODE_MAX_];
 			int  m_nKeyPressedCounter;
 		};
-		SKeyContext			m_aContext;				///< key's context
+		SKeyContext	m_aContext;				///< key's context
 	};
 
 }//namespace guiex

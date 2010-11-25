@@ -191,10 +191,9 @@ namespace guiex
 		bool			m_bDragSizing;		//!< true when we are being sized.
 
 	private:
-		static CGUIString	ms_strType;
+		GUI_WIDGET_GENERATOR_DECLARE(CGUIColListHeaderSegment);
 	};
 
-	GUI_WIDGET_GENERATOR_DECLARE(CGUIColListHeaderSegment);
 
 }//namespace guiex
 

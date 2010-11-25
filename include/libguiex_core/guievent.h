@@ -190,7 +190,7 @@ namespace guiex
 {
 	/**
 	* @brief register all events
-	* called by CGUIWidgetSystem
+	* called by CGUISystem
 	*/
 	//extern int32 GUIRegisterAllEvents();
 }

@@ -26,11 +26,10 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtStaticText);
 	//------------------------------------------------------------------------------
-	CGUIString CGUIWgtStaticText::ms_strType = "CGUIWgtStaticText";
-	wchar_t		CGUIWgtStaticText::ms_wLineBreak = L'\n';
+	wchar_t CGUIWgtStaticText::ms_wLineBreak = L'\n';
 	//------------------------------------------------------------------------------
 	CGUIWgtStaticText::CGUIWgtStaticText( const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIWgtStatic(ms_strType, rName, rSceneName)
+		:CGUIWgtStatic( StaticGetType(), rName, rSceneName)
 	{
 		InitStaticText();
 	}

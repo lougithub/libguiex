@@ -19,10 +19,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIColListItem);
 	//------------------------------------------------------------------------------
-	CGUIString CGUIColListItem::ms_strType = "CGUIColListItem";
-	//------------------------------------------------------------------------------
 	CGUIColListItem::CGUIColListItem( const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIItemBase(ms_strType, rName, rSceneName)
+		:CGUIItemBase(StaticGetType(), rName, rSceneName)
 	{
 		InitListboxItem();
 	}

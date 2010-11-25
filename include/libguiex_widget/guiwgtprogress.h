@@ -91,12 +91,8 @@ namespace guiex
 		real m_fCurrentValue;			///< current value of progress
 
 	private:
-		static CGUIString ms_strType;
+		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtProgress);
 	};
-
-
-
-	GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtProgress);
 
 }//namespace libguiex
 

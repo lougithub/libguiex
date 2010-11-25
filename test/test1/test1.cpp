@@ -16,13 +16,15 @@ const char* GetSampleSceneName()
 
 guiex::CGUIWidget* SampleInitialize()
 {
-	guiex::CGUIWidget* pWidgetRoot = GUI_CREATE_WIDGET("CGUIWgtEmptyNode", "page", "testscene");
+	guiex::CGUIWgtEmptyNode* pWidgetRoot = 
+		guiex::CGUIWidgetManager::Instance()->CreateWidget<guiex::CGUIWgtEmptyNode>( "page", "testscene" );
 	pWidgetRoot->SetAnchorPoint( 0.5f, 0.5f );
 	pWidgetRoot->SetPositionType( guiex::eScreenValue_Percentage );
 	pWidgetRoot->SetPosition( 0.5f,0.5f );
 	pWidgetRoot->Create();
 
-	guiex::CGUIWidget* pWidget_staticimage = GUI_CREATE_WIDGET("CGUIWgtStaticImage", "staticimage_0", "testscene");
+	guiex::CGUIWgtStaticImage* pWidget_staticimage =  
+		guiex::CGUIWidgetManager::Instance()->CreateWidget<guiex::CGUIWgtStaticImage>( "staticimage_0", "testscene");
 	pWidget_staticimage->SetParent( pWidgetRoot );
 	pWidget_staticimage->SetImage( "BGIMAGE", "color_white" );
 	pWidget_staticimage->SetSize( 50, 50 );
@@ -31,7 +33,8 @@ guiex::CGUIWidget* SampleInitialize()
 	pWidget_staticimage->SetClipChildren( true );
 	pWidget_staticimage->Create();
 
-	guiex::CGUIWidget* pWidget_staticimage2 = GUI_CREATE_WIDGET("CGUIWgtStaticImage", "staticimage_1", "testscene");
+	guiex::CGUIWgtStaticImage* pWidget_staticimage2 = 
+		guiex::CGUIWidgetManager::Instance()->CreateWidget<guiex::CGUIWgtStaticImage>( "staticimage_1", "testscene");
 	pWidget_staticimage2->SetParent( pWidget_staticimage );
 	pWidget_staticimage2->SetImage( "BGIMAGE", "checkbutton_glow_checked" );
 	pWidget_staticimage2->SetAnchorPoint( 0.5, 0.5 );
@@ -39,7 +42,8 @@ guiex::CGUIWidget* SampleInitialize()
 	pWidget_staticimage2->SetPosition( 0, 0 );
 	pWidget_staticimage2->Create();
 
-	guiex::CGUIWidget* pWidget_statictext = GUI_CREATE_WIDGET("CGUIWgtStaticText", "staticText_1", "testscene");
+	guiex::CGUIWgtStaticText* pWidget_statictext = 
+		guiex::CGUIWidgetManager::Instance()->CreateWidget<guiex::CGUIWgtStaticText>( "staticText_1", "testscene");
 	pWidget_statictext->SetParent( pWidgetRoot );
 	pWidget_statictext->SetAnchorPoint( 0.5, 0.5 );
 	pWidget_statictext->SetSize( 250, 25 );
@@ -48,7 +52,8 @@ guiex::CGUIWidget* SampleInitialize()
 	pWidget_statictext->SetTextColor(guiex::CGUIColor( 1,0,0,1));
 	pWidget_statictext->Create();
 
-	guiex::CGUIWidget* pWidget_button = GUI_CREATE_WIDGET("CGUIWgtButton", "button", "testscene");
+	guiex::CGUIWgtButton* pWidget_button = 
+		guiex::CGUIWidgetManager::Instance()->CreateWidget<guiex::CGUIWgtButton>( "button", "testscene");
 	pWidget_button->SetParent( pWidgetRoot );
 	pWidget_button->SetImage( "BTN_NORMAL", "button_blue_normal" );
 	pWidget_button->SetImage( "BTN_HOVER", "button_blue_hover" );
@@ -60,7 +65,8 @@ guiex::CGUIWidget* SampleInitialize()
 	pWidget_button->SetTextColor(guiex::CGUIColor( 1,1,1,1));
 	pWidget_button->Create();
 
-	guiex::CGUIWidget* pWidget_button2 = GUI_CREATE_WIDGET("CGUIWgtButton", "button2", "testscene");
+	guiex::CGUIWgtButton* pWidget_button2 = 
+		guiex::CGUIWidgetManager::Instance()->CreateWidget<guiex::CGUIWgtButton>( "button2", "testscene");
 	pWidget_button2->SetParent( pWidgetRoot );
 	pWidget_button2->SetImage( "BTN_NORMAL", "button_blue_normal" );
 	pWidget_button2->SetImage( "BTN_HOVER", "button_blue_hover" );
@@ -73,7 +79,8 @@ guiex::CGUIWidget* SampleInitialize()
 	pWidget_button2->SetRotation( 0,0,45 );
 	pWidget_button2->Create();
 
-	guiex::CGUIWidget* pWidget_checkbutton = GUI_CREATE_WIDGET("CGUIWgtCheckButton", "checkbutton", "testscene");
+	guiex::CGUIWgtCheckButton* pWidget_checkbutton = 
+		guiex::CGUIWidgetManager::Instance()->CreateWidget<guiex::CGUIWgtCheckButton>( "checkbutton", "testscene");
 	pWidget_checkbutton->SetParent( pWidgetRoot );
 	pWidget_checkbutton->SetImage( "BTN_NORMAL", "button_hilight_square" );
 	pWidget_checkbutton->SetImage( "BTN_NORMAL_CHECKED", "checkbutton_glow_checked" );
@@ -82,7 +89,8 @@ guiex::CGUIWidget* SampleInitialize()
 	pWidget_checkbutton->SetPosition( 400, 300 );
 	pWidget_checkbutton->Create();
 
-	guiex::CGUIWidget* pWidget_checkbutton2 = GUI_CREATE_WIDGET("CGUIWgtCheckButton", "checkbutton2", "testscene");
+	guiex::CGUIWgtCheckButton* pWidget_checkbutton2 = 
+		guiex::CGUIWidgetManager::Instance()->CreateWidget<guiex::CGUIWgtCheckButton>( "checkbutton2", "testscene");
 	pWidget_checkbutton2->SetParent( pWidgetRoot );
 	pWidget_checkbutton2->SetImage( "BTN_NORMAL", "button_hilight_square" );
 	pWidget_checkbutton2->SetImage( "BTN_NORMAL_CHECKED", "checkbutton_glow_checked" );
@@ -91,11 +99,13 @@ guiex::CGUIWidget* SampleInitialize()
 	pWidget_checkbutton2->SetPosition( 450, 300 );
 	pWidget_checkbutton2->Create();
 
-	guiex::CGUIWidget* pWidgetRadioGroup = GUI_CREATE_WIDGET("CGUIWgtEmptyNode", "radiogroup", "testscene");
+	guiex::CGUIWgtEmptyNode* pWidgetRadioGroup = 
+		guiex::CGUIWidgetManager::Instance()->CreateWidget<guiex::CGUIWgtEmptyNode>( "radiogroup", "testscene");
 	pWidgetRadioGroup->SetParent( pWidgetRoot );
 	pWidgetRadioGroup->Create();
 
-	guiex::CGUIWidget* pWidget_radiobutton = GUI_CREATE_WIDGET("CGUIWgtRadioButton", "radiobutton", "testscene");
+	guiex::CGUIWgtRadioButton* pWidget_radiobutton = 
+		guiex::CGUIWidgetManager::Instance()->CreateWidget<guiex::CGUIWgtRadioButton>( "radiobutton", "testscene");
 	pWidget_radiobutton->SetParent( pWidgetRadioGroup );
 	pWidget_radiobutton->SetImage( "BTN_NORMAL", "button_hilight_square" );
 	pWidget_radiobutton->SetImage( "BTN_NORMAL_CHECKED", "checkbutton_glow_checked" );
@@ -104,7 +114,8 @@ guiex::CGUIWidget* SampleInitialize()
 	pWidget_radiobutton->SetPosition( 400, 350 );
 	pWidget_radiobutton->Create();
 
-	guiex::CGUIWidget* pWidget_radiobutton2 = GUI_CREATE_WIDGET("CGUIWgtRadioButton", "radiobutton2", "testscene");
+	guiex::CGUIWgtRadioButton* pWidget_radiobutton2 =
+		guiex::CGUIWidgetManager::Instance()->CreateWidget<guiex::CGUIWgtRadioButton>( "radiobutton2", "testscene");
 	pWidget_radiobutton2->SetParent( pWidgetRadioGroup );
 	pWidget_radiobutton2->SetImage( "BTN_NORMAL", "button_hilight_square" );
 	pWidget_radiobutton2->SetImage( "BTN_NORMAL_CHECKED", "checkbutton_glow_checked" );
@@ -114,7 +125,8 @@ guiex::CGUIWidget* SampleInitialize()
 	pWidget_radiobutton2->Create();
 
 
-	guiex::CGUIWgtEditBox* pWidget_editbox = static_cast<guiex::CGUIWgtEditBox*>(GUI_CREATE_WIDGET("CGUIWgtEditBox", "editbox", "testscene"));
+	guiex::CGUIWgtEditBox* pWidget_editbox = 
+		guiex::CGUIWidgetManager::Instance()->CreateWidget<guiex::CGUIWgtEditBox>( "editbox", "testscene");
 	pWidget_editbox->SetParent( pWidgetRoot );
 	pWidget_editbox->SetImage( "EDIT_BG", "edit_bg" );
 	pWidget_editbox->SetImage( "EDIT_CURSOR", "color_white" );
@@ -125,7 +137,8 @@ guiex::CGUIWidget* SampleInitialize()
 	pWidget_editbox->Create();
 
 
-	guiex::CGUIWgtMultiEditBox* pWidget_multieditbox = static_cast<guiex::CGUIWgtMultiEditBox*>(GUI_CREATE_WIDGET("CGUIWgtMultiEditBox", "multieditbox", "testscene"));
+	guiex::CGUIWgtMultiEditBox* pWidget_multieditbox = 
+		guiex::CGUIWidgetManager::Instance()->CreateWidget<guiex::CGUIWgtMultiEditBox>( "multieditbox", "testscene");
 	pWidget_multieditbox->SetParent( pWidgetRoot );
 	pWidget_multieditbox->SetImage( "EDIT_BG", "edit_bg" );
 	pWidget_multieditbox->SetImage( "EDIT_CURSOR", "color_white" );
@@ -159,7 +172,8 @@ guiex::CGUIWidget* SampleInitialize()
 	pWidget_multieditbox->Create();
 
 
-	guiex::CGUIWidget* pWidget_panel= GUI_CREATE_WIDGET("CGUIWgtPanel", "panel", "testscene");
+	guiex::CGUIWgtPanel* pWidget_panel= 
+		guiex::CGUIWidgetManager::Instance()->CreateWidget<guiex::CGUIWgtPanel>( "panel", "testscene");
 	pWidget_panel->SetParent( pWidgetRoot );
 	pWidget_panel->SetImage( "BGIMAGE", "panel_bg_grade_blue" );
 	pWidget_panel->SetImage( "PANEL_BORDER_TOP", "panel_border_top" );
@@ -177,12 +191,14 @@ guiex::CGUIWidget* SampleInitialize()
 	pWidget_panel->Create();
 
 
-	guiex::CGUIWidget* pWidget_tabcontroll= GUI_CREATE_WIDGET("CGUIWgtTabControl", "tabcontrol", "testscene");
+	guiex::CGUIWgtTabControl* pWidget_tabcontroll= 
+		guiex::CGUIWidgetManager::Instance()->CreateWidget<guiex::CGUIWgtTabControl>( "tabcontrol", "testscene");
 	pWidget_tabcontroll->SetParent( pWidget_panel );
 	pWidget_tabcontroll->Create();
 
 
-	guiex::CGUIWidget* pWidget_tabbutton = GUI_CREATE_WIDGET("CGUIWgtTabButton", "tabbutton", "testscene");
+	guiex::CGUIWgtTabButton* pWidget_tabbutton = 
+		guiex::CGUIWidgetManager::Instance()->CreateWidget<guiex::CGUIWgtTabButton>( "tabbutton", "testscene");
 	pWidget_tabbutton->SetParent( pWidget_tabcontroll );
 	pWidget_tabbutton->SetImage( "BTN_NORMAL", "button_hilight_square" );
 	pWidget_tabbutton->SetImage( "BTN_NORMAL_CHECKED", "checkbutton_glow_checked" );
@@ -192,7 +208,8 @@ guiex::CGUIWidget* SampleInitialize()
 	pWidget_tabbutton->SetPosition( 0, 0 );
 	pWidget_tabbutton->Create();
 
-	guiex::CGUIWidget* pWidget_panel1= GUI_CREATE_WIDGET("CGUIWgtPanel", "panel1", "testscene");
+	guiex::CGUIWgtPanel* pWidget_panel1= 
+		guiex::CGUIWidgetManager::Instance()->CreateWidget<guiex::CGUIWgtPanel>( "panel1", "testscene");
 	pWidget_panel1->SetParent( pWidget_tabbutton );
 	pWidget_panel1->SetImage( "BGIMAGE", "color_white" );
 	pWidget_panel1->SetSizeType( guiex::eScreenValue_Percentage );
@@ -200,7 +217,8 @@ guiex::CGUIWidget* SampleInitialize()
 	pWidget_panel1->SetColor(guiex::CGUIColor(1,0,0,1));
 	pWidget_panel1->Create();
 
-	guiex::CGUIWidget* pWidget_tabbutton2 = GUI_CREATE_WIDGET("CGUIWgtTabButton", "tabbutton2", "testscene");
+	guiex::CGUIWgtTabButton* pWidget_tabbutton2 = 
+		guiex::CGUIWidgetManager::Instance()->CreateWidget<guiex::CGUIWgtTabButton>( "tabbutton2", "testscene");
 	pWidget_tabbutton2->SetParent( pWidget_tabcontroll );
 	pWidget_tabbutton2->SetImage( "BTN_NORMAL", "button_hilight_square" );
 	pWidget_tabbutton2->SetImage( "BTN_NORMAL_CHECKED", "checkbutton_glow_checked" );
@@ -210,7 +228,8 @@ guiex::CGUIWidget* SampleInitialize()
 	pWidget_tabbutton2->SetPosition( 0.33f, 0 );
 	pWidget_tabbutton2->Create();
 
-	guiex::CGUIWidget* pWidget_panel2= GUI_CREATE_WIDGET("CGUIWgtPanel", "panel2", "testscene");
+	guiex::CGUIWgtPanel* pWidget_panel2=
+		guiex::CGUIWidgetManager::Instance()->CreateWidget<guiex::CGUIWgtPanel>( "panel2", "testscene");
 	pWidget_panel2->SetParent( pWidget_tabbutton2 );
 	pWidget_panel2->SetImage( "BGIMAGE", "color_white" );
 	pWidget_panel2->SetSizeType( guiex::eScreenValue_Percentage );
@@ -218,7 +237,8 @@ guiex::CGUIWidget* SampleInitialize()
 	pWidget_panel2->SetColor(guiex::CGUIColor(0,1,0,1));
 	pWidget_panel2->Create();
 
-	guiex::CGUIWidget* pWidget_tabbutton3 = GUI_CREATE_WIDGET("CGUIWgtTabButton", "tabbutton3", "testscene");
+	guiex::CGUIWgtTabButton* pWidget_tabbutton3 = 
+		guiex::CGUIWidgetManager::Instance()->CreateWidget<guiex::CGUIWgtTabButton>( "tabbutton3", "testscene");
 	pWidget_tabbutton3->SetParent( pWidget_tabcontroll );
 	pWidget_tabbutton3->SetImage( "BTN_NORMAL", "button_hilight_square" );
 	pWidget_tabbutton3->SetImage( "BTN_NORMAL_CHECKED", "checkbutton_glow_checked" );
@@ -228,7 +248,8 @@ guiex::CGUIWidget* SampleInitialize()
 	pWidget_tabbutton3->SetPosition( 0.66f, 0 );
 	pWidget_tabbutton3->Create();
 
-	guiex::CGUIWidget* pWidget_panel3= GUI_CREATE_WIDGET("CGUIWgtPanel", "panel3", "testscene");
+	guiex::CGUIWgtPanel* pWidget_panel3= 
+		guiex::CGUIWidgetManager::Instance()->CreateWidget<guiex::CGUIWgtPanel>( "panel3", "testscene");
 	pWidget_panel3->SetParent( pWidget_tabbutton3 );
 	pWidget_panel3->SetImage( "BGIMAGE", "color_white" );
 	pWidget_panel3->SetSizeType( guiex::eScreenValue_Percentage );
@@ -237,7 +258,8 @@ guiex::CGUIWidget* SampleInitialize()
 	pWidget_panel3->Create();
 
 
-	guiex::CGUIWgtProgress* pWidget_progress= static_cast<guiex::CGUIWgtProgress*>(GUI_CREATE_WIDGET("CGUIWgtProgress", "progress", "testscene"));
+	guiex::CGUIWgtProgress* pWidget_progress= 
+		guiex::CGUIWidgetManager::Instance()->CreateWidget<guiex::CGUIWgtProgress>( "progress", "testscene");
 	pWidget_progress->SetParent( pWidgetRoot );
 	pWidget_progress->SetImage( "BACKGROUND_IMG", "color_white" );
 	pWidget_progress->SetImage( "FOREGROUND_IMG", "panel_bg_grade_green" );
@@ -245,13 +267,22 @@ guiex::CGUIWidget* SampleInitialize()
 	pWidget_progress->SetMaximumProgress( 100 );
 	pWidget_progress->SetCurrentProgress( 50 );
 	pWidget_progress->SetPosition( 500,500 );
-
 	pWidget_progress->Create();
 
+	guiex::CGUIWgtStaticText* pWidget_frame = 
+		guiex::CGUIWidgetManager::Instance()->CreateWidget<guiex::CGUIWgtStaticText>( "frame", "testscene");
+	pWidget_frame->SetParent( pWidgetRoot );
+	pWidget_frame->SetAnchorPoint( 1, 0 );
+	pWidget_frame->SetSize( 250, 25 );
+	pWidget_frame->SetPositionType( guiex::eScreenValue_Percentage );
+	pWidget_frame->SetPosition( 1, 0.1 );
+	pWidget_frame->SetTextContentUTF8("frame = ???");
+	pWidget_frame->SetTextColor(guiex::CGUIColor( 1,1,0,1));
+	pWidget_frame->Create();
 
 	guiex::CGUIAsManager* pAsManager = guiex::CGUIAsManager::Instance();
 	{
-		guiex::CGUIAsAlpha* pAsAlpha = pAsManager->AllocateResourceByTypeChecked<guiex::CGUIAsAlpha>( );
+		guiex::CGUIAsAlpha* pAsAlpha = pAsManager->AllocateResource<guiex::CGUIAsAlpha>( );
 		pAsAlpha->SetInterpolationValue( 0, 1, 2 );
 		pAsAlpha->SetReceiver( pWidgetRoot );
 		pWidgetRoot->PlayAs( pAsAlpha );
@@ -259,14 +290,14 @@ guiex::CGUIWidget* SampleInitialize()
 	}
 
 	{
-		guiex::CGUIAsScale* pAsScale = pAsManager->AllocateResourceByTypeChecked<guiex::CGUIAsScale>( );
+		guiex::CGUIAsScale* pAsScale = pAsManager->AllocateResource<guiex::CGUIAsScale>( );
 		pAsScale->SetInterpolationValue( guiex::CGUISize(0.2f,0.2f), guiex::CGUISize(1,1), 4 );
 		pAsScale->SetReceiver( pWidget_panel );
 		pAsScale->SetInterpolationType( guiex::eInterpolationType_EaseInOut );
 		pWidget_panel->PlayAs( pAsScale );
 		pAsScale->RefRelease();
 
-		guiex::CGUIAsRotation* pAsRotation = pAsManager->AllocateResourceByTypeChecked<guiex::CGUIAsRotation>( );
+		guiex::CGUIAsRotation* pAsRotation = pAsManager->AllocateResource<guiex::CGUIAsRotation>( );
 		pAsRotation->SetInterpolationValue( guiex::CGUIVector3(0,0,360*5), guiex::CGUIVector3(), 4 );
 		pAsRotation->SetReceiver( pWidget_panel );
 		pWidget_panel->PlayAs( pAsRotation );
@@ -274,13 +305,13 @@ guiex::CGUIWidget* SampleInitialize()
 	}
 
 	{
-		guiex::CGUIAsPosition* pAsPos1 = pAsManager->AllocateResourceByTypeChecked<guiex::CGUIAsPosition>( );
+		guiex::CGUIAsPosition* pAsPos1 = pAsManager->AllocateResource<guiex::CGUIAsPosition>( );
 		pAsPos1->SetInterpolationValue( guiex::CGUIVector2(0,0), guiex::CGUIVector2(500,500), 3 );
 		pAsPos1->SetReceiver( pWidget_staticimage );
 		pWidget_staticimage->PlayAs( pAsPos1 );
 		pAsPos1->RefRelease();
 
-		guiex::CGUIAsPosition* pAsPos2 = pAsManager->AllocateResourceByTypeChecked<guiex::CGUIAsPosition>( );
+		guiex::CGUIAsPosition* pAsPos2 = pAsManager->AllocateResource<guiex::CGUIAsPosition>( );
 		pAsPos2->SetInterpolationValue( guiex::CGUIVector2(500,500), guiex::CGUIVector2(100,500), 2 );
 		pAsPos2->SetReceiver( pWidget_staticimage );
 		pAsPos1->PushSuccessor(pAsPos2);
@@ -290,25 +321,25 @@ guiex::CGUIWidget* SampleInitialize()
 	}
 
 	{
-		guiex::CGUIAsContainer* pAsContainer = pAsManager->AllocateResourceByTypeChecked<guiex::CGUIAsContainer>( );
+		guiex::CGUIAsContainer* pAsContainer = pAsManager->AllocateResource<guiex::CGUIAsContainer>( );
 		guiex::CGUIAsColor* pAsColor = NULL;
 		guiex::CGUIAsContainItemInfo aItem;
 
-		pAsColor = pAsManager->AllocateResourceByTypeChecked<guiex::CGUIAsColor>( );
+		pAsColor = pAsManager->AllocateResource<guiex::CGUIAsColor>( );
 		pAsColor->SetInterpolationValue( guiex::CGUIColor(1,0,0, 1), guiex::CGUIColor(0,1,0,1), 2 );
 		aItem.m_pAs = pAsColor;
 		aItem.m_fBeginTime = 0;
 		pAsContainer->AddItem( aItem );
 		pAsColor->RefRelease();
 
-		pAsColor = pAsManager->AllocateResourceByTypeChecked<guiex::CGUIAsColor>( );
+		pAsColor = pAsManager->AllocateResource<guiex::CGUIAsColor>( );
 		pAsColor->SetInterpolationValue( guiex::CGUIColor(0,1,0, 1), guiex::CGUIColor(0,0,1,1), 2 );
 		aItem.m_pAs = pAsColor;
 		aItem.m_fBeginTime = 2;
 		pAsContainer->AddItem( aItem );
 		pAsColor->RefRelease();
 
-		pAsColor = pAsManager->AllocateResourceByTypeChecked<guiex::CGUIAsColor>( );
+		pAsColor = pAsManager->AllocateResource<guiex::CGUIAsColor>( );
 		pAsColor->SetInterpolationValue( guiex::CGUIColor(0,0,1, 1), guiex::CGUIColor(1,0,0,1), 2 );
 		aItem.m_pAs = pAsColor;
 		aItem.m_fBeginTime = 4;
@@ -322,7 +353,7 @@ guiex::CGUIWidget* SampleInitialize()
 	}
 
 	{
-		guiex::CGUIAsRotation* pAsRotation = pAsManager->AllocateResourceByTypeChecked<guiex::CGUIAsRotation>( );
+		guiex::CGUIAsRotation* pAsRotation = pAsManager->AllocateResource<guiex::CGUIAsRotation>( );
 		pAsRotation->SetInterpolationValue( guiex::CGUIVector3(0,0,360), guiex::CGUIVector3(), 4 );
 		pAsRotation->SetReceiver( pWidget_staticimage );
 		pAsRotation->SetLooping( true );
@@ -331,19 +362,19 @@ guiex::CGUIWidget* SampleInitialize()
 	}
 
 	{
-		guiex::CGUIAsScale* pAsScale = pAsManager->AllocateResourceByTypeChecked<guiex::CGUIAsScale>( );
+		guiex::CGUIAsScale* pAsScale = pAsManager->AllocateResource<guiex::CGUIAsScale>( );
 		pAsScale->SetInterpolationValue( guiex::CGUISize(5,5), guiex::CGUISize(1,1), 6 );
 		pAsScale->SetReceiver( pWidget_staticimage2 );
 		pWidget_staticimage2->PlayAs( pAsScale );
 		pAsScale->RefRelease();
 
-		guiex::CGUIAsAlpha* pAsAlpha = pAsManager->AllocateResourceByTypeChecked<guiex::CGUIAsAlpha>( );
+		guiex::CGUIAsAlpha* pAsAlpha = pAsManager->AllocateResource<guiex::CGUIAsAlpha>( );
 		pAsAlpha->SetInterpolationValue( 0, 1, 3 );
 		pAsAlpha->SetReceiver( pWidget_staticimage2 );
 		pWidget_staticimage2->PlayAs( pAsAlpha );
 		pAsAlpha->RefRelease();
 
-		guiex::CGUIAsRotation* pAsRotation = pAsManager->AllocateResourceByTypeChecked<guiex::CGUIAsRotation>( );
+		guiex::CGUIAsRotation* pAsRotation = pAsManager->AllocateResource<guiex::CGUIAsRotation>( );
 		pAsRotation->SetInterpolationValue( guiex::CGUIVector3(0,0,360*2), guiex::CGUIVector3(), 4 );
 		pAsRotation->SetReceiver( pWidget_staticimage2 );
 		pWidget_staticimage2->PlayAs( pAsRotation );
@@ -351,19 +382,19 @@ guiex::CGUIWidget* SampleInitialize()
 	}
 
 	{
-		guiex::CGUIAsRotation* pAsRotation = pAsManager->AllocateResourceByTypeChecked<guiex::CGUIAsRotation>( );
+		guiex::CGUIAsRotation* pAsRotation = pAsManager->AllocateResource<guiex::CGUIAsRotation>( );
 		pAsRotation->SetInterpolationValue( guiex::CGUIVector3(0,0,360*5), guiex::CGUIVector3(), 1 );
 		pAsRotation->SetReceiver( pWidget_statictext );
 		pWidget_statictext->PlayAs( pAsRotation );
 		pAsRotation->RefRelease();
 
-		guiex::CGUIAsAlpha* pAsAlpha = pAsManager->AllocateResourceByTypeChecked<guiex::CGUIAsAlpha>( );
+		guiex::CGUIAsAlpha* pAsAlpha = pAsManager->AllocateResource<guiex::CGUIAsAlpha>( );
 		pAsAlpha->SetInterpolationValue( 0, 1, 1 );
 		pAsAlpha->SetReceiver( pWidget_statictext );
 		pWidget_statictext->PlayAs( pAsAlpha );
 		pAsAlpha->RefRelease();
 
-		guiex::CGUIAsScale* pAsScale = pAsManager->AllocateResourceByTypeChecked<guiex::CGUIAsScale>( );
+		guiex::CGUIAsScale* pAsScale = pAsManager->AllocateResource<guiex::CGUIAsScale>( );
 		pAsScale->SetInterpolationValue( guiex::CGUISize(0,0), guiex::CGUISize(2,2), 1 );
 		pAsScale->SetReceiver( pWidget_statictext );
 		pWidget_statictext->PlayAs( pAsScale );
@@ -375,7 +406,11 @@ guiex::CGUIWidget* SampleInitialize()
 
 void SampleUpdate( float fDeltaTime)
 {
-
+	guiex::CGUIWgtStaticText* pWidget = 
+		guiex::CGUIWidgetManager::Instance()->GetWidgetWithTypeCheck<guiex::CGUIWgtStaticText>( "frame", "testscene" );
+	char buf[512];
+	snprintf( buf, 512, "frame = %d", guiex::CGUISystem::Instance()->GetFPS() );
+	pWidget->SetTextContentUTF8( buf );
 }
 
 void SampleDestroy()

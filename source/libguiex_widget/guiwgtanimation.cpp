@@ -21,10 +21,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtAnimation);
 	//------------------------------------------------------------------------------
-	CGUIString CGUIWgtAnimation::ms_strType = "CGUIWgtAnimation";
-	//------------------------------------------------------------------------------
 	CGUIWgtAnimation::CGUIWgtAnimation( const CGUIString& rName, const CGUIString& rSceneName  )
-		:CGUIWidget(ms_strType, rName, rSceneName)
+		:CGUIWidget(StaticGetType(), rName, rSceneName)
 	{
 		InitAnimation();
 	}

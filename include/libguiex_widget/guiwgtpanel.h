@@ -112,12 +112,8 @@ namespace guiex
 		bool		m_bAutoResize;
 
 	private:
-		static CGUIString	ms_strType;
+		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtPanel);
 	};
-
-
-
-	GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtPanel);
 
 }//namespace libguiex
 

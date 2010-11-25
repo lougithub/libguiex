@@ -29,10 +29,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtEditBox);
 	//------------------------------------------------------------------------------
-	CGUIString CGUIWgtEditBox::ms_strType = "CGUIWgtEditBox";
-	//------------------------------------------------------------------------------
 	CGUIWgtEditBox::CGUIWgtEditBox(const CGUIString& rName, const CGUIString& rSceneName)
-		:CGUIWidget(ms_strType, rName, rSceneName)
+		:CGUIWidget(StaticGetType(), rName, rSceneName)
 	{
 		InitEditbox();
 	}

@@ -111,12 +111,11 @@ namespace guiex
 		const CGUIImage* m_pImageCheckedOverlay;
 
 	private:
-		static CGUIString	ms_strType;
+		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtCheckButton);
 	};
 
 
 
-	GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtCheckButton);
 
 }//namespace libguiex
 

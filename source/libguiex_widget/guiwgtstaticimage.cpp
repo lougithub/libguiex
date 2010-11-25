@@ -22,10 +22,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtStaticImage);
 	//------------------------------------------------------------------------------
-	CGUIString CGUIWgtStaticImage::ms_strType = "CGUIWgtStaticImage";
-	//------------------------------------------------------------------------------
 	CGUIWgtStaticImage::CGUIWgtStaticImage( const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIWgtStatic(ms_strType, rName, rSceneName)
+		:CGUIWgtStatic(StaticGetType(), rName, rSceneName)
 	{
 		InitStaticImage();
 	}

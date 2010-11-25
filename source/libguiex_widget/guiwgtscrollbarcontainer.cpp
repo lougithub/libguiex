@@ -13,6 +13,7 @@
 #include <libguiex_widget/guiwgtscrollbar.h>
 #include <libguiex_core/guiinterfacerender.h>
 #include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guiwidgetmanager.h>
 #include <libguiex_core/guiexception.h>
 
 //============================================================================//
@@ -23,10 +24,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtScrollbarContainer);
 	//------------------------------------------------------------------------------
-	CGUIString CGUIWgtScrollbarContainer::ms_strType = "CGUIWgtScrollbarContainer";
-	//------------------------------------------------------------------------------
 	CGUIWgtScrollbarContainer::CGUIWgtScrollbarContainer(const CGUIString& rName, const CGUIString& rSceneName)
-		:CGUIWidget(ms_strType, rName, rSceneName)
+		:CGUIWidget(StaticGetType(), rName, rSceneName)
 	{
 		InitScrollbarContainer();
 	}

@@ -26,10 +26,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtScrollPanel);
 	//------------------------------------------------------------------------------
-	CGUIString CGUIWgtScrollPanel::ms_strType = "CGUIWgtScrollPanel";
-	//------------------------------------------------------------------------------
 	CGUIWgtScrollPanel::CGUIWgtScrollPanel(const CGUIString& rName, const CGUIString& rSceneName)
-		:CGUIWidget(ms_strType, rName, rSceneName)
+		:CGUIWidget(StaticGetType(), rName, rSceneName)
 	{
 		InitScrollPanel();
 	}
@@ -358,10 +356,10 @@ namespace guiex
 			m_pScrollbarVert->SetScrollbarHost(NULL);
 			m_pScrollbarVert = NULL;
 		}
-		if( CGUIWidgetSystem::Instance()->HasWidget(m_strVertScrollbarName, GetSceneName()) )
+		if( CGUISystem::Instance()->HasWidget(m_strVertScrollbarName, GetSceneName()) )
 		{
-			CGUIWidget* pWidget = CGUIWidgetSystem::Instance()->GetWidget(m_strVertScrollbarName, GetSceneName());
-			if( pWidget->GetType() == CGUIWgtScrollbar::GetWidgetType())
+			CGUIWidget* pWidget = CGUISystem::Instance()->GetWidget(m_strVertScrollbarName, GetSceneName());
+			if( pWidget->GetType() == CGUIWgtScrollbar::StaticGetType())
 			{
 				m_pScrollbarVert = (CGUIWgtScrollbar*)pWidget;
 				m_pScrollbarVert->SetScrollbarHost( this );
@@ -377,10 +375,10 @@ namespace guiex
 			m_pScrollbarHorz->SetScrollbarHost(NULL);
 			m_pScrollbarHorz = NULL;
 		}
-		if( CGUIWidgetSystem::Instance()->HasWidget(m_strHorzScrollbarName, GetSceneName()) )
+		if( CGUISystem::Instance()->HasWidget(m_strHorzScrollbarName, GetSceneName()) )
 		{
-			CGUIWidget* pWidget = CGUIWidgetSystem::Instance()->GetWidget(m_strHorzScrollbarName,GetSceneName());
-			if( pWidget->GetType() == CGUIWgtScrollbar::GetWidgetType())
+			CGUIWidget* pWidget = CGUISystem::Instance()->GetWidget(m_strHorzScrollbarName,GetSceneName());
+			if( pWidget->GetType() == CGUIWgtScrollbar::StaticGetType())
 			{
 				m_pScrollbarHorz = (CGUIWgtScrollbar*)pWidget;
 				m_pScrollbarHorz->SetScrollbarHost( this );

@@ -22,10 +22,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtTabButton);
 	//------------------------------------------------------------------------------
-	CGUIString CGUIWgtTabButton::ms_strType = "CGUIWgtTabButton";
-	//------------------------------------------------------------------------------
 	CGUIWgtTabButton::CGUIWgtTabButton(const CGUIString& rName, const CGUIString& rSceneName)
-		:CGUIWgtCheckButton(ms_strType, rName, rSceneName)
+		:CGUIWgtCheckButton(StaticGetType(), rName, rSceneName)
 	{
 		InitTabButton();
 	}
@@ -79,7 +77,7 @@ namespace guiex
 							CGUIEventNotification aCheckEvent;
 							aCheckEvent.SetEventId(eEVENT_UNCHECKED);
 							aCheckEvent.SetReceiver(pTempTabBtn);
-							CGUIWidgetSystem::Instance()->SendEvent( &aCheckEvent);
+							CGUISystem::Instance()->SendEvent( &aCheckEvent);
 
 							//hide child
 							if( pTempTabBtn->GetChild() )
@@ -93,7 +91,7 @@ namespace guiex
 							CGUIEventNotification aCheckEvent;
 							aCheckEvent.SetEventId(eEVENT_CHECKED);
 							aCheckEvent.SetReceiver(this);
-							CGUIWidgetSystem::Instance()->SendEvent( &aCheckEvent);
+							CGUISystem::Instance()->SendEvent( &aCheckEvent);
 
 							//show child
 							if( this->GetChild() )

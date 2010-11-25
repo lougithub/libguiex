@@ -61,12 +61,9 @@ namespace guiex
 		const CGUIImage* m_pImageBG;
 
 	private:
-		static CGUIString	ms_strType;
+		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtDialog);
 	};
 
-
-
-	GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtDialog);
 
 }//namespace libguiex
 

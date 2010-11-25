@@ -77,11 +77,8 @@ namespace guiex
 		CGUIString m_pAnimationName;
 
 	protected:
-		static CGUIString ms_strType;
+		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtAnimation);
 	};
-
-
-	GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtAnimation);
 
 }//namespace guiex
 

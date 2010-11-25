@@ -81,8 +81,6 @@ namespace guiex
 		static CGUIWgtScrollbar*	FromWidget( CGUIWidget* pWidget );
 
 
-		static const CGUIString&	GetWidgetType();
-
 		///**
 		//* @brief load widget config from property
 		//*/
@@ -220,12 +218,8 @@ namespace guiex
 		CGUIWidget*					m_pWgtHost;
 
 	private:
-		static CGUIString	ms_strType;
+		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtScrollbar);
 	};
-
-
-
-	GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtScrollbar);
 
 }//namespace libguiex
 

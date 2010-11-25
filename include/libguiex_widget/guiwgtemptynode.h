@@ -47,10 +47,9 @@ namespace guiex
 		void	InitEmptyNode();
 
 	private:
-		static CGUIString	ms_strType;
+		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtEmptyNode);
 	};
 
-	GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtEmptyNode);
 
 }//namespace guiex
 

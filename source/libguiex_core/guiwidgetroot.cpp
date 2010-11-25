@@ -20,10 +20,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWidgetRoot);
 	//------------------------------------------------------------------------------
-	CGUIString CGUIWidgetRoot::ms_strType = "CGUIWidgetRoot";
-	//------------------------------------------------------------------------------
 	CGUIWidgetRoot::CGUIWidgetRoot(const CGUIString& rName, const CGUIString& rSceneName)
-		:CGUIWidget(ms_strType, rName, rSceneName)
+		:CGUIWidget(StaticGetType(), rName, rSceneName)
 	{
 		InitRoot();
 	}

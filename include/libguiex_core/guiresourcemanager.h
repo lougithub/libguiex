@@ -29,12 +29,23 @@
 //============================================================================//
 namespace guiex
 {
+	class GUIEXPORT CGUIResourceManagerBase
+	{
+	public:
+		CGUIResourceManagerBase();
+		virtual ~CGUIResourceManagerBase();
+
+		//virtual void ReleaseResourcesByScene( const CGUIString& rSceneName ) = 0;
+		virtual void UnloadAllResources( ) = 0;
+		virtual void ReleaseAllResources( ) = 0;
+	};
+
 	/**
 	* @class CGUIResourceManager
 	* 
 	*/
 	template< class TResType >
-	class GUIEXPORT CGUIResourceManager
+	class GUIEXPORT CGUIResourceManager : public CGUIResourceManagerBase
 	{
 	public:
 		CGUIResourceManager();
@@ -43,9 +54,9 @@ namespace guiex
 	public:
 		int32 RegisterResource( TResType* pRes );
 
-		void UnloadAllResources( );
-		void ReleaseAllResources( );
-		void ReleaseResourcesByScene( const CGUIString& rSceneName );
+		virtual void UnloadAllResources( );
+		virtual void ReleaseAllResources( );
+		//virtual void ReleaseResourcesByScene( const CGUIString& rSceneName );
 
 		const std::map< CGUIString, TResType* >& GetRegisterResourceMap() const;
 
@@ -53,17 +64,17 @@ namespace guiex
 		virtual	void DoDestroyResource( TResType* pRes ); 
 
 		TResType* GetResource( const CGUIString& rResName ) const;
-
 		void LoadAllResources( );
 
 		void AddToAllocatePool( TResType* pRes );
+		int32 ReleaseFromAllocatePool( TResType* pRes );
 
-		int32 ReleaseRegisterResource( const CGUIString& rResName );
-		void ReleaseRegisterResourcesByScene( const CGUIString& rSceneName );
+		//int32 ReleaseRegisterResource( const CGUIString& rResName );
+		//void ReleaseRegisterResourcesByScene( const CGUIString& rSceneName );
+
 		void ReleaseAllRegisterResources( );
-
-		int32 ReleaseAllocateResource( TResType* pRes );
 		void ReleaseAllAllocateResources( );
+
 
 	protected:
 		typedef std::map< CGUIString, TResType* > TMapResource;
@@ -130,24 +141,24 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	template< class TResType >
-	inline int32	CGUIResourceManager<TResType>::ReleaseRegisterResource( const CGUIString& rResName )
-	{
-		typename TMapResource::iterator itor = m_mapResource.find( rResName );
-		if( itor != m_mapResource.end())
-		{
-			TResType* pRes = itor->second;
-			pRes->RefRelease();
-			DoDestroyResource( pRes );
-			m_mapResource.erase( itor );
-			return 0;
-		}
-		else
-		{
-			throw CGUIException("[CGUIResourceManager::ReleaseRegisterResource]: failed to find resource by name <%s>", rResName.c_str());
-			return -1;
-		}
-	}
+	//template< class TResType >
+	//inline int32	CGUIResourceManager<TResType>::ReleaseRegisterResource( const CGUIString& rResName )
+	//{
+	//	typename TMapResource::iterator itor = m_mapResource.find( rResName );
+	//	if( itor != m_mapResource.end())
+	//	{
+	//		TResType* pRes = itor->second;
+	//		pRes->RefRelease();
+	//		DoDestroyResource( pRes );
+	//		m_mapResource.erase( itor );
+	//		return 0;
+	//	}
+	//	else
+	//	{
+	//		throw CGUIException("[CGUIResourceManager::ReleaseRegisterResource]: failed to find resource by name <%s>", rResName.c_str());
+	//		return -1;
+	//	}
+	//}
 	//------------------------------------------------------------------------------
 	template< class TResType >
 	inline void CGUIResourceManager<TResType>::ReleaseAllResources( )
@@ -156,11 +167,11 @@ namespace guiex
 		ReleaseAllAllocateResources();
 	}
 	//------------------------------------------------------------------------------
-	template< class TResType >
-	inline void CGUIResourceManager<TResType>::ReleaseResourcesByScene( const CGUIString& rSceneName )
-	{
-		ReleaseRegisterResourcesByScene( rSceneName );
-	}
+	//template< class TResType >
+	//inline void CGUIResourceManager<TResType>::ReleaseResourcesByScene( const CGUIString& rSceneName )
+	//{
+	//	ReleaseRegisterResourcesByScene( rSceneName );
+	//}
 	//------------------------------------------------------------------------------
 	template< class TResType >
 	inline void CGUIResourceManager<TResType>::ReleaseAllRegisterResources( )
@@ -224,27 +235,27 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	template< class TResType >
-	inline void CGUIResourceManager<TResType>::ReleaseRegisterResourcesByScene( const CGUIString& rSceneName )
-	{
-		std::vector< CGUIString > vecReleaseRes;
-		for( typename TMapResource::iterator itor = m_mapResource.begin();
-			itor != m_mapResource.end();
-			++itor )
-		{
-			if( itor->second->GetSceneName() == rSceneName )
-			{
-				vecReleaseRes.push_back( itor->first );
-			}
-		}
+	//template< class TResType >
+	//inline void CGUIResourceManager<TResType>::ReleaseRegisterResourcesByScene( const CGUIString& rSceneName )
+	//{
+	//	std::vector< CGUIString > vecReleaseRes;
+	//	for( typename TMapResource::iterator itor = m_mapResource.begin();
+	//		itor != m_mapResource.end();
+	//		++itor )
+	//	{
+	//		if( itor->second->GetSceneName() == rSceneName )
+	//		{
+	//			vecReleaseRes.push_back( itor->first );
+	//		}
+	//	}
 
-		for( std::vector< CGUIString >::iterator itor = vecReleaseRes.begin();
-			itor != vecReleaseRes.end();
-			++itor )
-		{
-			ReleaseRegisterResource( *itor );
-		}
-	}
+	//	for( std::vector< CGUIString >::iterator itor = vecReleaseRes.begin();
+	//		itor != vecReleaseRes.end();
+	//		++itor )
+	//	{
+	//		ReleaseRegisterResource( *itor );
+	//	}
+	//}
 	//------------------------------------------------------------------------------
 	template< class TResType >
 	inline void CGUIResourceManager<TResType>::AddToAllocatePool( TResType* pRes )
@@ -262,13 +273,13 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	template< class TResType >
-	inline int32 CGUIResourceManager<TResType>::ReleaseAllocateResource( TResType* pRes )
+	inline int32 CGUIResourceManager<TResType>::ReleaseFromAllocatePool( TResType* pRes )
 	{
 		typename TSetResource::const_iterator itorFind = m_setAllocatePool.find( pRes );
 		if( itorFind == m_setAllocatePool.end() )
 		{
 			//not found
-			throw CGUIException("[CGUIResourceManager::ReleaseAllocateResource]: failed to remove resource <%s:%s> from allocate pool" );
+			throw CGUIException("[CGUIResourceManager::ReleaseFromAllocatePool]: failed to remove resource <%s:%s> from allocate pool" );
 			return -1;
 		}
 

@@ -20,10 +20,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIColListHeaderSegment);
 	//------------------------------------------------------------------------------
-	CGUIString CGUIColListHeaderSegment::ms_strType = "CGUIColListHeaderSegment";
-	//------------------------------------------------------------------------------
 	CGUIColListHeaderSegment::CGUIColListHeaderSegment( const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIWidget(ms_strType, rName, rSceneName)
+		:CGUIWidget(StaticGetType(), rName, rSceneName)
 	{
 		InitColListHeaderSegment();
 	}

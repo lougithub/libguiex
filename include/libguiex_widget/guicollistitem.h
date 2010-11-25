@@ -74,15 +74,9 @@ namespace guiex
 		//render self
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 
-
-	protected:
-
-
 	private:
-		static CGUIString	ms_strType;
+		GUI_WIDGET_GENERATOR_DECLARE(CGUIColListItem);
 	};
-
-	GUI_WIDGET_GENERATOR_DECLARE(CGUIColListItem);
 
 }//namespace guiex
 

@@ -194,7 +194,7 @@ namespace guiex
 		pAnimation->RefRelease();
 		if( pAnimation->GetRefCount() == 0 )
 		{
-			return ReleaseAllocateResource( pAnimation );
+			return ReleaseFromAllocatePool( pAnimation );
 		}
 		return 0;
 	}

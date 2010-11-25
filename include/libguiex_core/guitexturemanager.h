@@ -13,7 +13,6 @@
 //============================================================================// 
 #include "guibase.h"
 #include "guistring.h"
-#include "guisingleton.h"
 #include <map>
 #include <set>
 

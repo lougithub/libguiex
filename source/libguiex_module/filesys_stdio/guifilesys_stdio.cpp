@@ -47,7 +47,7 @@ namespace guiex
 		CGUIDataChunk& rData,
 		EOpenMode eOpenMode)
 	{
-		CGUIString	strFileName = CGUIWidgetSystem::Instance()->GetDataPath()+rFileName;
+		CGUIString	strFileName = CGUISystem::Instance()->GetDataPath()+rFileName;
 
 		std::ifstream fin;
 		fin.open( strFileName.c_str(), std::ios::binary );
@@ -112,7 +112,7 @@ namespace guiex
 		//get file list
 		long lHandle = 0, res = 0;
 		struct _finddata_t tagData;
-		CGUIString	strFullPath = CGUIWidgetSystem::Instance()->GetDataPath() + rPath + "*" + rSuffix;
+		CGUIString	strFullPath = CGUISystem::Instance()->GetDataPath() + rPath + "*" + rSuffix;
 		lHandle = _findfirst(strFullPath.c_str(), &tagData);
 		while (lHandle != -1 && res != -1)
 		{
@@ -131,7 +131,7 @@ namespace guiex
 		}
 
 		// Now find directories
-		strFullPath = CGUIWidgetSystem::Instance()->GetDataPath() + rPath + "*";
+		strFullPath = CGUISystem::Instance()->GetDataPath() + rPath + "*";
 		lHandle = _findfirst(strFullPath.c_str (), &tagData);
 		res = 0;
 		while (lHandle != -1 && res != -1)
@@ -161,7 +161,7 @@ namespace guiex
 		struct dirent *entry = NULL; 
 		struct stat statbuf; 
 		
-		CGUIString	strFullPath = CGUIWidgetSystem::Instance()->GetDataPath() + rPath;
+		CGUIString	strFullPath = CGUISystem::Instance()->GetDataPath() + rPath;
 		if((dp = opendir(strFullPath.c_str())) == NULL) 
 		{  
 			return; 

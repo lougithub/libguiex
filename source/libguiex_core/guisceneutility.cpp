@@ -17,6 +17,8 @@
 #include <libguiex_core/guisceneinfo.h>
 #include <libguiex_core/guisceneinfomanager.h>
 #include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guiwidgetmanager.h>
+#include <libguiex_core/guiconfigfileloader.h>
 #include <libguiex_core/guiexception.h>
 
 
@@ -49,7 +51,7 @@ namespace guiex
 		for( uint32 i=0; i<rResourceFiles.size(); ++i )
 		{
 			CGUIString strResourceFilePath = pSceneInfo->GetScenePath() + rResourceFiles[i];	
-			if( 0 != CGUIWidgetSystem::Instance()->LoadConfigFile(strResourceFilePath, strSceneName, rResourceFiles[i]))
+			if( 0 != CGUIConfigFileLoader::LoadResourceConfigFile(strResourceFilePath, strSceneName, rResourceFiles[i]))
 			{
 				throw CGUIException( "[CGUISceneUtility::LoadResource] failed to load resource by scene name <%s : %s>",strResourceFilePath.c_str(), strSceneName.c_str());
 				return -1;
@@ -78,18 +80,18 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int32 CGUISceneUtility::LoadPages( const CGUIString& strSceneName)
 	{
-		guiex::CGUISceneInfo* pSceneInfo = guiex::CGUISceneInfoManager::Instance()->GetSceneInfo( strSceneName );
+		CGUISceneInfo* pSceneInfo = CGUISceneInfoManager::Instance()->GetSceneInfo( strSceneName );
 		if( !pSceneInfo )
 		{
 			throw CGUIException( "[CGUISceneUtility::LoadPages] failed to load resource by scene name <%s>", strSceneName.c_str());
 			return -1;
 		}
-		const std::vector<guiex::CGUIString>& vecPageFiles = pSceneInfo->GetWidgetFiles();
-		for( std::vector<guiex::CGUIString>::const_iterator itor = vecPageFiles.begin();
+		const std::vector<CGUIString>& vecPageFiles = pSceneInfo->GetWidgetFiles();
+		for( std::vector<CGUIString>::const_iterator itor = vecPageFiles.begin();
 			itor != vecPageFiles.end();
 			++itor)
 		{
-			if( !guiex::CGUIWidgetSystem::Instance()->LoadPage( *itor, strSceneName ))
+			if( !CGUIWidgetManager::Instance()->LoadPage( *itor, strSceneName ))
 			{
 				return -1;
 			}

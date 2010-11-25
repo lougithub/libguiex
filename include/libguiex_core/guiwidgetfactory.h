@@ -13,7 +13,6 @@
 // include
 //============================================================================// 
 #include "guibase.h"
-#include "guisingleton.h"
 #include "guistring.h"
 #include <map>
 #include "guidynlib.h"
@@ -39,7 +38,7 @@ namespace guiex
 //============================================================================// 
 
 #define GUI_REGISTER_WIDGET_LIB(widgetname)	\
-	::guiex::CGUIWidgetFactory::Instance()->RegisterGenerator(::guiex::widgetname##_Generator::GenerateSelf())
+	::guiex::CGUIWidgetFactory::Instance()->RegisterGenerator(::guiex::widgetname::widgetname##_Generator::GenerateSelf())
 
 
 #define GUI_REGISTER_WIDGET(widgetname, dllname)	\

@@ -187,6 +187,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\source\libguiex_core\guiconfigfileloader.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\source\libguiex_core\guidebug.cpp"
 				>
 			</File>
@@ -363,6 +367,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\source\libguiex_core\guiresourcemanager.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\source\libguiex_core\guisceneinfo.cpp"
 				>
 			</File>
@@ -435,6 +443,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\source\libguiex_core\guiwidgetmanager.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\source\libguiex_core\guiwidgetroot.cpp"
 				>
 			</File>
@@ -498,6 +510,10 @@
 			</File>
 			<File
 				RelativePath="..\..\include\libguiex_core\guiconfig.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\libguiex_core\guiconfigfileloader.h"
 				>
 			</File>
 			<File
@@ -782,6 +798,10 @@
 			</File>
 			<File
 				RelativePath="..\..\include\libguiex_core\guiwidgetgenerator.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\libguiex_core\guiwidgetmanager.h"
 				>
 			</File>
 			<File

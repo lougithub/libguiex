@@ -163,14 +163,9 @@ namespace guiex
 		CGUIImage*				m_pPanelBG;
 		CGUIRect				m_aScrollClientRect;				//client rect, in global dimension
 
-
 	private:
-		static CGUIString	ms_strType;
+		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtScrollPanel);
 	};
-
-
-
-	GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtScrollPanel);
 
 }//namespace libguiex
 

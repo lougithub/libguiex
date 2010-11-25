@@ -51,6 +51,7 @@
 #include "guiwidgetfactory.h"
 #include "guiwidgetsystem.h"
 #include "guiwidgetutility.h"
+#include "guiwidgetmanager.h"
 
 //property
 #include "guiproperty.h"
@@ -70,6 +71,8 @@
 #include "guifontmanager.h"
 #include "guianimation.h"
 #include "guianimationmanager.h"
+
+#include "guiconfigfileloader.h"
 
 
 //mouse
@@ -94,9 +97,6 @@
 //as
 #include "guias.h"
 #include "guiasmanager.h"
-
-//singleton
-#include "guisingleton.h"
 
 //exception
 #include "guiexception.h"

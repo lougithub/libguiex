@@ -502,12 +502,8 @@ namespace guiex
 		CGUIString m_strItemType;		/// type of item
 
 	private:
-		static CGUIString	ms_strType;
+		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtColumnList);
 	};
-
-	GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtColumnList);
-
-
 }//namespace guiex
 
 #endif //__GUI_WGTCOLUMNLIST_20070802_H__

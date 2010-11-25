@@ -1,5 +1,4 @@
 <guiex>
-    <property name="set_name" type="set" value="set" />
     <property name="panel_dialog_ok" type="CGUIWidget" value="CGUIWgtPanel">
         <property name="BGIMAGE" type="CGUIImage" value="dialog_bg" />
         <property name="disable" type="bool" value="false" />

@@ -267,8 +267,8 @@ void WxGLCanvas::OnIdle(wxIdleEvent & event)
 		{
 			g_aCurTimer.UpdateTime();
 			float fDeltaTime = (g_aCurTimer - g_aOldTimer) / 1000.f;
-			guiex::CGUIWidgetSystem::Instance()->Update( fDeltaTime );
-			guiex::CGUIWidgetSystem::Instance()->Render();
+			guiex::CGUISystem::Instance()->Update( fDeltaTime );
+			guiex::CGUISystem::Instance()->Render();
 			SampleUpdate( fDeltaTime);
 			g_aOldTimer = g_aCurTimer;
 		}
@@ -294,7 +294,7 @@ void WxGLCanvas::OnSize(wxSizeEvent& event)
 	SetCurrent();
 	glViewport(0,0,aSize.x,aSize.y);	//定义视口
 
-	guiex::CGUIWidgetSystem::Instance()->SetScreenSize(aSize.x,aSize.y);
+	guiex::CGUISystem::Instance()->SetScreenSize(aSize.x,aSize.y);
 }
 //------------------------------------------------------------------------------
 void WxGLCanvas::OnKeyDown( wxKeyEvent& event )
@@ -450,14 +450,14 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 	//initialize guiex system
 	try
 	{
-		guiex::CGUIWidgetSystem* pGUISystem = new guiex::CGUIWidgetSystem;
-		guiex::CGUIWidgetSystem::Instance()->Initialize();
+		guiex::CGUISystem* pGUISystem = new guiex::CGUISystem;
+		guiex::CGUISystem::Instance()->Initialize();
 		GUI_LOG->Open( "gui editor",guiex::CGUILogMsg::FLAG_TIMESTAMP_LITE	|guiex::CGUILogMsg::FLAG_OSTREAM | guiex::CGUILogMsg::FLAG_MSG_CALLBACK);
 		GUI_LOG->SetPriorityMask(guiex::GUI_LM_DEBUG	| guiex::GUI_LM_TRACE	|guiex::GUI_LM_WARNING|guiex::GUI_LM_ERROR);
 		GUI_LOG->SetOstream( new std::ofstream( "libguiex_test.log", std::ios_base::out | std::ios_base::trunc ), true );
 		GUI_LOG->SetCallbackMsg( &g_MsgCallback );
 		guiex::CGUIAssert::SetWarningCB(EditorWarningCB, NULL);
-		guiex::CGUIWidgetSystem::Instance()->SetScreenSize(1024, 768);
+		guiex::CGUISystem::Instance()->SetScreenSize(1024, 768);
 
 		//register interface
 		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl);
@@ -488,12 +488,12 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 		//get scene info
 		if(  GetUIInfo( true ))
 		{	
-			guiex::CGUIWidgetSystem::Instance()->SetDataPath(m_strUIDataPath);
+			guiex::CGUISystem::Instance()->SetDataPath(m_strUIDataPath);
 			guiex::CGUISceneInfoManager::Instance()->LoadScenes( "\\", ".uip" );
 			guiex::CGUISceneUtility::LoadResource(m_strUISceneFilename);
 			guiex::CGUIWidget* pWidget = SampleInitialize();
-			guiex::CGUIWidgetSystem::Instance()->AddPage(pWidget);
-			guiex::CGUIWidgetSystem::Instance()->OpenPage(pWidget);
+			guiex::CGUIWidgetManager::Instance()->AddPage(pWidget);
+			guiex::CGUISystem::Instance()->OpenPage(pWidget);
 			g_aOldTimer.UpdateTime();
 			g_bStarted = true;
 		}
@@ -502,8 +502,8 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 	{
 		MessageBoxA(NULL, rError.what(), "error", MB_OK);
 
-		guiex::CGUIWidgetSystem::Instance()->Release();
-		delete guiex::CGUIWidgetSystem::Instance();
+		guiex::CGUISystem::Instance()->Release();
+		delete guiex::CGUISystem::Instance();
 	}
 
 	SetClientSize( 1024, 786 );
@@ -517,8 +517,8 @@ WxMainFrame::~WxMainFrame()
 	try
 	{
 		//release libguiex system
-		guiex::CGUIWidgetSystem::Instance()->Release();
-		delete guiex::CGUIWidgetSystem::Instance();
+		guiex::CGUISystem::Instance()->Release();
+		delete guiex::CGUISystem::Instance();
 		SampleDestroy();
 	}
 	catch (guiex::CGUIBaseException& rError)
@@ -559,7 +559,7 @@ bool		WxMainFrame::GetUIInfo( bool bTryCommandLine)
 	m_strUIDataPath = guiex::CGUIString(wxConvUTF8.cWC2MB(strDir).data()) + "/../../data/test/";
 
 	//chose scene
-	guiex::CGUIWidgetSystem::Instance()->SetDataPath(m_strUIDataPath);
+	guiex::CGUISystem::Instance()->SetDataPath(m_strUIDataPath);
 	guiex::CGUISceneInfoManager::Instance()->LoadScenes();
 	//const std::vector<guiex::CGUIString>& vecScenes = guiex::CGUISceneInfoManager::Instance()->GetSceneFileNames( );
 	//wxArrayString arrayScenes;
@@ -596,7 +596,7 @@ void WxMainFrame::On1280x800(wxCommandEvent& evt)
 //------------------------------------------------------------------------------
 void WxMainFrame::OnRefresh(wxCommandEvent& evt)
 {
-	guiex::CGUIWidgetSystem::Instance()->GetCurrentRootWidget()->Refresh();
+	guiex::CGUISystem::Instance()->GetCurrentRootWidget()->Refresh();
 	Refresh();
 }
 //------------------------------------------------------------------------------
@@ -653,7 +653,7 @@ void WxMainFrame::OnToggleRenderExtraInfo(wxCommandEvent& evt)
 
 	if( guiex::CGUIInterfaceManager::Instance()->GetInterfaceRender())
 	{
-		guiex::CGUIWidgetSystem::Instance()->SetDrawExtraInfo(bIsChecked);
+		guiex::CGUISystem::Instance()->SetDrawExtraInfo(bIsChecked);
 	}
 }
 //------------------------------------------------------------------------------

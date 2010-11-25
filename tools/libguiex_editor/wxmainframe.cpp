@@ -268,17 +268,17 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 	//initialize guiex system
 	try
 	{
-		guiex::CGUIWidgetSystem* pGUISystem = new guiex::CGUIWidgetSystem;
-		guiex::CGUIWidgetSystem::Instance()->Initialize();
+		guiex::CGUISystem* pGUISystem = new guiex::CGUISystem;
+		guiex::CGUISystem::Instance()->Initialize();
 #ifdef NDEBUG
 #else
 		GUI_LOG->Open( "gui editor",guiex::CGUILogMsg::FLAG_TIMESTAMP_LITE	/*|guiex::CGUILogMsg::FLAG_STDERR*/);
 		GUI_LOG->SetPriorityMask(guiex::GUI_LM_DEBUG	| guiex::GUI_LM_TRACE	|guiex::GUI_LM_WARNING|guiex::GUI_LM_ERROR);
 #endif
-		//guiex::CGUIWidgetSystem::Instance()->SetRunScript(GetMenuBar()->GetMenu(GetMenuBar()->FindMenu(_T("Edit")))->IsChecked(ID_RunScript));
-		guiex::CGUIWidgetSystem::Instance()->SetRunScript(false);
+		//guiex::CGUISystem::Instance()->SetRunScript(GetMenuBar()->GetMenu(GetMenuBar()->FindMenu(_T("Edit")))->IsChecked(ID_RunScript));
+		guiex::CGUISystem::Instance()->SetRunScript(false);
 		guiex::CGUIAssert::SetWarningCB(EditorWarningCB, NULL);
-		guiex::CGUIWidgetSystem::Instance()->SetScreenSize(m_aScreenSize.x, m_aScreenSize.y);
+		guiex::CGUISystem::Instance()->SetScreenSize(m_aScreenSize.x, m_aScreenSize.y);
 
 		//register interface
 		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl);
@@ -307,8 +307,8 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 	{
 		wxMessageBox( wxConvUTF8.cMB2WC(rError.what()).data(), _T("error"), wxICON_ERROR|wxCENTRE);
 
-		guiex::CGUIWidgetSystem::Instance()->Release();
-		delete guiex::CGUIWidgetSystem::Instance();
+		guiex::CGUISystem::Instance()->Release();
+		delete guiex::CGUISystem::Instance();
 	}
 }
 //------------------------------------------------------------------------------
@@ -319,8 +319,8 @@ WxMainFrame::~WxMainFrame()
 	m_mgr.UnInit();	
 	
 	//release libguiex system
-	guiex::CGUIWidgetSystem::Instance()->Release();
-	delete guiex::CGUIWidgetSystem::Instance();
+	guiex::CGUISystem::Instance()->Release();
+	delete guiex::CGUISystem::Instance();
 }
 //------------------------------------------------------------------------------
 WxOutputPanel*	WxMainFrame::CreateOutput()
@@ -454,17 +454,17 @@ void			WxMainFrame::RefreshWidgetTreeCtrl()
 {
 	ResetWidgetTreeCtrl();
 	
-	if( !guiex::CGUIWidgetSystem::Instance()->IsInitialized())
+	if( !guiex::CGUISystem::Instance()->IsInitialized())
 	{
 		//no editable page now
 		return;
 	}
 
-	if( guiex::CGUIWidgetSystem::Instance()->GetOpenedPageNum() != 1 )
+	if( guiex::CGUISystem::Instance()->GetOpenedPageNum() != 1 )
 	{
 		return;
 	}
-	guiex::CGUIWidget* pWidgetRoot = guiex::CGUIWidgetSystem::Instance()->GetOpenedPageByIndex(0);
+	guiex::CGUIWidget* pWidgetRoot = guiex::CGUISystem::Instance()->GetOpenedPageByIndex(0);
 	if( !pWidgetRoot)
 	{
 		//no root widget
@@ -669,7 +669,7 @@ void	WxMainFrame::CloseScene( )
 
 		CloseCanvas();
 
-		guiex::CGUIWidgetSystem::Instance()->ReleaseAllResources();
+		guiex::CGUISystem::Instance()->ReleaseAllResources();
 		guiex::CGUISceneInfoManager::Instance()->UnloadScenes();
 
 		m_bIsSceneOpened = false;
@@ -696,7 +696,7 @@ void WxMainFrame::OnTreeItemWidgetView(wxCommandEvent& event)
 	viewer_exe = "Release_libguiex_viewer.exe";
 #endif
 
-	std::string strRunCommand = viewer_exe + " " + guiex::CGUIWidgetSystem::Instance()->GetDataPath() + " " +m_strCurrentSceneName + " " + strFilename.char_str(wxConvUTF8).data();
+	std::string strRunCommand = viewer_exe + " " + guiex::CGUISystem::Instance()->GetDataPath() + " " +m_strCurrentSceneName + " " + strFilename.char_str(wxConvUTF8).data();
 	wxExecute(wxConvUTF8.cMB2WC(strRunCommand.c_str()), wxEXEC_ASYNC);
 }
 //------------------------------------------------------------------------------
@@ -1017,12 +1017,12 @@ void WxMainFrame::OnDeleteWidget(wxCommandEvent& evt)
 		return;
 	}
 
-	if( guiex::CGUIWidgetSystem::Instance()->GetOpenedPageNum() !=0 &&
-		pWidget == guiex::CGUIWidgetSystem::Instance()->GetOpenedPageByIndex(0))
+	if( guiex::CGUISystem::Instance()->GetOpenedPageNum() !=0 &&
+		pWidget == guiex::CGUISystem::Instance()->GetOpenedPageByIndex(0))
 	{
 		//is page
-		guiex::CGUIWidgetSystem::Instance()->ClosePage(pWidget);
-		guiex::CGUIWidgetSystem::Instance()->DeletePage(pWidget);
+		guiex::CGUISystem::Instance()->ClosePage(pWidget);
+		guiex::CGUIWidgetManager::Instance()->DestroyPage(pWidget);
 	}
 	else
 	{
@@ -1030,7 +1030,7 @@ void WxMainFrame::OnDeleteWidget(wxCommandEvent& evt)
 		{
 			pWidget->Close();
 		}
-		guiex::CGUIWidgetSystem::Instance()->DestroyWidget(pWidget);
+		guiex::CGUIWidgetManager::Instance()->DestroyWidget(pWidget);
 	}
 
 	m_pCanvas->SetSelectedWidget(NULL);
@@ -1055,9 +1055,9 @@ void WxMainFrame::OnRunScript(wxCommandEvent& evt)
 {
 	bool bIsChecked = evt.IsChecked();
 
-	if( guiex::CGUIWidgetSystem::Instance()->IsInitialized())
+	if( guiex::CGUISystem::Instance()->IsInitialized())
 	{
-		guiex::CGUIWidgetSystem::Instance()->SetRunScript(bIsChecked);
+		guiex::CGUISystem::Instance()->SetRunScript(bIsChecked);
 	}
 }
 //------------------------------------------------------------------------------
@@ -1077,7 +1077,7 @@ void WxMainFrame::OnToggleExtraInfo(wxCommandEvent& evt)
 
 	if( guiex::CGUIInterfaceManager::Instance()->GetInterfaceRender())
 	{
-		guiex::CGUIWidgetSystem::Instance()->SetDrawExtraInfo(bIsChecked);
+		guiex::CGUISystem::Instance()->SetDrawExtraInfo(bIsChecked);
 	}
 }
 //------------------------------------------------------------------------------
@@ -1093,7 +1093,7 @@ void WxMainFrame::OnToggleWireframe(wxCommandEvent& evt)
 //------------------------------------------------------------------------------
 void WxMainFrame::OnRefresh(wxCommandEvent& evt)
 {
-	guiex::CGUIWidgetSystem::Instance()->GetCurrentRootWidget()->Refresh();
+	guiex::CGUISystem::Instance()->GetCurrentRootWidget()->Refresh();
 	Refresh();
 }
 //------------------------------------------------------------------------------
@@ -1114,12 +1114,12 @@ void WxMainFrame::OnFullscreen(wxCommandEvent& evt)
 //------------------------------------------------------------------------------
 void WxMainFrame::OnUpdate800x600(wxUpdateUIEvent& event)
 {
-	event.Enable( guiex::CGUIWidgetSystem::Instance()->IsInitialized());
+	event.Enable( guiex::CGUISystem::Instance()->IsInitialized());
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::On800x600(wxCommandEvent& evt)
 {
-	guiex::CGUIWidgetSystem::Instance()->SetScreenSize(800, 600);
+	guiex::CGUISystem::Instance()->SetScreenSize(800, 600);
 	if( m_pCanvas )
 	{
 		m_pCanvas->SetScreenSize(800, 600);
@@ -1145,11 +1145,10 @@ void WxMainFrame::OnCreateWidget(wxCommandEvent& evt)
 		return;
 	}
 
-	if( guiex::CGUIWidgetSystem::Instance()->GetOpenedPageNum() == 0 )
-		
+	if( guiex::CGUISystem::Instance()->GetOpenedPageNum() == 0 )
 	{
-		guiex::CGUIWidgetSystem::Instance()->AddPage( pWidget);
-		guiex::CGUIWidgetSystem::Instance()->OpenPage( pWidget);
+		guiex::CGUIWidgetManager::Instance()->AddPage( pWidget);
+		guiex::CGUISystem::Instance()->OpenPage( pWidget);
 	}
 	else if( m_pCanvas->GetSelectedWidget())
 	{
@@ -1169,7 +1168,7 @@ void WxMainFrame::OnUpdateCreateWidget(wxUpdateUIEvent& event)
 {
 	if( m_pCanvas )
 	{
-		if( guiex::CGUIWidgetSystem::Instance()->GetOpenedPageNum() == 0 ||
+		if( guiex::CGUISystem::Instance()->GetOpenedPageNum() == 0 ||
 			m_pCanvas->GetSelectedWidget())
 		{
 			event.Enable(true);
@@ -1181,12 +1180,12 @@ void WxMainFrame::OnUpdateCreateWidget(wxUpdateUIEvent& event)
 //------------------------------------------------------------------------------
 void WxMainFrame::OnUpdate1024x786(wxUpdateUIEvent& event)
 {
-	event.Enable( guiex::CGUIWidgetSystem::Instance()->IsInitialized());
+	event.Enable( guiex::CGUISystem::Instance()->IsInitialized());
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::On1024x786(wxCommandEvent& evt)
 {
-	guiex::CGUIWidgetSystem::Instance()->SetScreenSize(1024, 768);
+	guiex::CGUISystem::Instance()->SetScreenSize(1024, 768);
 
 	if( m_pCanvas )
 	{
@@ -1196,12 +1195,12 @@ void WxMainFrame::On1024x786(wxCommandEvent& evt)
 //------------------------------------------------------------------------------
 void WxMainFrame::OnUpdate1280x800(wxUpdateUIEvent& event)
 {
-	event.Enable( guiex::CGUIWidgetSystem::Instance()->IsInitialized());
+	event.Enable( guiex::CGUISystem::Instance()->IsInitialized());
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::On1280x800(wxCommandEvent& evt)
 {
-	guiex::CGUIWidgetSystem::Instance()->SetScreenSize(1280, 800);
+	guiex::CGUISystem::Instance()->SetScreenSize(1280, 800);
 
 	if( m_pCanvas )
 	{
@@ -1253,7 +1252,7 @@ void WxMainFrame::OnRecentPaths( wxCommandEvent& In )
 	unsigned nFileIdx = In.GetId() - ID_RecentPathsBaseId;
 
 	std::string	strPath = CToolCache::Instance()->m_pathHistory[nFileIdx];
-	guiex::CGUIWidgetSystem::Instance()->SetDataPath(strPath);
+	guiex::CGUISystem::Instance()->SetDataPath(strPath);
 	try
 	{
 		if( 0 != guiex::CGUISceneInfoManager::Instance()->LoadScenes())
@@ -1314,7 +1313,7 @@ void WxMainFrame::OnRecentScenes( wxCommandEvent& In )
 	unsigned nFileIdx = In.GetId() - ID_RecentScenesBaseId;
 
 	std::pair< std::string, std::string>	strScene = CToolCache::Instance()->m_sceneHistory[nFileIdx];
-	guiex::CGUIWidgetSystem::Instance()->SetDataPath(strScene.second);
+	guiex::CGUISystem::Instance()->SetDataPath(strScene.second);
 	try
 	{
 		if( 0 != guiex::CGUISceneInfoManager::Instance()->LoadScenes())
@@ -1383,7 +1382,7 @@ void WxMainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 		return;
 	}
 
-	guiex::CGUIString strPath = guiex::CGUIWidgetSystem::Instance()->GetDataPath();
+	guiex::CGUIString strPath = guiex::CGUISystem::Instance()->GetDataPath();
 	wxDirDialog aDlg( this, _T("Choose a libguiex root path"), wxConvUTF8.cMB2WC( strPath.c_str()));
 	if( wxID_OK != aDlg.ShowModal())
 	{
@@ -1393,7 +1392,7 @@ void WxMainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 	CloseScene();
 
 	std::string strDataPath = (aDlg.GetPath() + wxT("\\")).char_str(wxConvUTF8).data();
-	guiex::CGUIWidgetSystem::Instance()->SetDataPath(strDataPath);
+	guiex::CGUISystem::Instance()->SetDataPath(strDataPath);
 
 	try
 	{
@@ -1463,7 +1462,7 @@ void WxMainFrame::RenderFile( const std::string& rFileName )
 	guiex::CGUISceneInfo* pSceneInfo = guiex::CGUISceneInfoManager::Instance()->GetSceneInfo(m_strCurrentSceneName);
 
 	std::string strAbsFileName = 
-		guiex::CGUIWidgetSystem::Instance()->GetDataPath() +
+		guiex::CGUISystem::Instance()->GetDataPath() +
 		pSceneInfo->GetScenePath() +
 		rFileName;
 
@@ -1476,10 +1475,10 @@ void WxMainFrame::RenderFile( const std::string& rFileName )
 	try
 	{
 		//load xml widget by libguiex
-		guiex::CGUIWidget* pWidget = guiex::CGUIWidgetSystem::Instance()->LoadPage( rFileName, m_strCurrentSceneName);
+		guiex::CGUIWidget* pWidget = guiex::CGUIWidgetManager::Instance()->LoadPage( rFileName, m_strCurrentSceneName);
 		if( pWidget )
 		{
-			guiex::CGUIWidgetSystem::Instance()->OpenPage(pWidget);
+			guiex::CGUISystem::Instance()->OpenPage(pWidget);
 		}
 	}
 	catch (guiex::CGUIBaseException& rError)
@@ -1500,7 +1499,7 @@ void	WxMainFrame::EditFileExternal( const std::string& rFileName )
 {
 	guiex::CGUISceneInfo* pSceneInfo = guiex::CGUISceneInfoManager::Instance()->GetSceneInfo(m_strCurrentSceneName);
 
-	std::string strAbsPath = guiex::CGUIWidgetSystem::Instance()->GetDataPath() + pSceneInfo->GetScenePath();
+	std::string strAbsPath = guiex::CGUISystem::Instance()->GetDataPath() + pSceneInfo->GetScenePath();
 	std::string strAbsFileName = strAbsPath + rFileName;
 
 	::ShellExecute( 
@@ -1517,7 +1516,7 @@ void	WxMainFrame::EditFile( const std::string& rFileName, EFileType eFileType )
 	guiex::CGUISceneInfo* pSceneInfo = guiex::CGUISceneInfoManager::Instance()->GetSceneInfo(m_strCurrentSceneName);
 
 	std::string strAbsPath = 
-		guiex::CGUIWidgetSystem::Instance()->GetDataPath() +
+		guiex::CGUISystem::Instance()->GetDataPath() +
 		pSceneInfo->GetScenePath() +
 		rFileName;
 

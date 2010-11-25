@@ -23,10 +23,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtTabControl);
 	//------------------------------------------------------------------------------
-	CGUIString CGUIWgtTabControl::ms_strType = "CGUIWgtTabControl";
-	//------------------------------------------------------------------------------
 	CGUIWgtTabControl::CGUIWgtTabControl(const CGUIString& rName, const CGUIString& rSceneName)
-		:CGUIWidget(ms_strType, rName, rSceneName)
+		:CGUIWidget(StaticGetType(), rName, rSceneName)
 	{
 		InitTabControl();
 	}

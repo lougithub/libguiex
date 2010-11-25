@@ -27,10 +27,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtPopupMenu);
 	//------------------------------------------------------------------------------
-	CGUIString CGUIWgtPopupMenu::ms_strType = "CGUIWgtPopupMenu";
-	//------------------------------------------------------------------------------
 	CGUIWgtPopupMenu::CGUIWgtPopupMenu( const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIWidget(ms_strType, rName, rSceneName)
+		:CGUIWidget(StaticGetType(), rName, rSceneName)
 	{
 		InitPopupMenu();
 	}
@@ -69,7 +67,7 @@ namespace guiex
 			IGUIInterfaceMouse* pMouse = CGUIInterfaceManager::Instance()->GetInterfaceMouse();
 			CGUIVector2 aMousePos = pMouse->GetPosition();
 			const CGUISize& rMenuSize = GetSize();
-			const CGUISize& rScreenSize = CGUIWidgetSystem::Instance()->GetScreenSize();
+			const CGUISize& rScreenSize = CGUISystem::Instance()->GetScreenSize();
 
 			if( aMousePos.x+rMenuSize.m_fWidth > rScreenSize.m_fWidth )
 			{
@@ -191,14 +189,15 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIMenuItem* CGUIWgtPopupMenu::CreateItem_Imp(const CGUIStringW& rText)
 	{
-		CGUIMenuItem * pItem = static_cast<CGUIMenuItem*>(GUI_CREATE_WIDGET(m_strItemType.c_str(), CGUIString("menuitem_")+CGUIWidgetSystem::Instance()->GenerateAnonymousName(), GetSceneName()));
-		pItem->SetItemInfo(pText, GetTextInfo());
+		CGUIString strItemName = CGUIString("menuitem_")+CGUISystem::Instance()->GenerateAnonymousName();
+		CGUIMenuItem * pItem = static_cast<CGUIMenuItem*>(GUI_CREATE_WIDGET(m_strItemType.c_str(), strItemName, GetSceneName()));
+		pItem->SetItemInfo(rText, GetTextInfo());
 		return pItem;
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWgtPopupMenu::AddItem( const CGUIStringW& rText )
 	{
-		CGUIMenuItem* pItem= CreateItem_Imp(pText);
+		CGUIMenuItem* pItem= CreateItem_Imp(rText);
 		pItem->SetSelectionImage( m_pImageSelection );
 		AddItem( pItem );
 	}
@@ -283,7 +282,7 @@ namespace guiex
 				//}
 
 				// if item is supposed to be deleted by us
-				CGUIWidgetSystem::Instance()->DestroyWidget(pItem);
+				CGUISystem::Instance()->DestroyWidget(pItem);
 			}
 		}
 	}
@@ -418,7 +417,7 @@ namespace guiex
 			for (size_t i = 0; i < m_aListItems.size(); ++i)
 			{
 				RemoveChild(m_aListItems[i]);
-				CGUIWidgetSystem::Instance()->DestroyWidget(m_aListItems[i]);
+				CGUISystem::Instance()->DestroyWidget(m_aListItems[i]);
 			}
 
 			// clear out the list.
@@ -462,7 +461,7 @@ namespace guiex
 		if( !IsFocus())
 		{
 			//lost focus
-			CGUIWidgetSystem::Instance()->ClosePopupWidget(this);
+			CGUISystem::Instance()->ClosePopupWidget(this);
 		}
 	}	
 	//------------------------------------------------------------------------------
@@ -496,7 +495,7 @@ namespace guiex
 			aEventMouse.SetReceiver(pItem);
 			aEventMouse.SetPosition(pEvent->GetPosition());
 			aEventMouse.SetKeyboardInterface(pEvent->GetKeyboardInterface());
-			CGUIWidgetSystem::Instance()->SendEvent(&aEventMouse);
+			CGUISystem::Instance()->SendEvent(&aEventMouse);
 		}
 
 		return CGUIWidget::OnMouseMove(pEvent);
@@ -513,7 +512,7 @@ namespace guiex
 			aEventMouse.SetReceiver(pItem);
 			aEventMouse.SetPosition(pEvent->GetPosition());
 			aEventMouse.SetKeyboardInterface(pEvent->GetKeyboardInterface());
-			CGUIWidgetSystem::Instance()->SendEvent(&aEventMouse);
+			CGUISystem::Instance()->SendEvent(&aEventMouse);
 		}
 
 		return CGUIWidget::OnMouseLeftUp(pEvent);
@@ -522,7 +521,7 @@ namespace guiex
 	void		CGUIWgtPopupMenu::ProcessMouseLeftUp(CGUIMenuItem* pItem, CGUIEventMouse* pEvent)
 	{
 		ClearAllSelections_impl();
-		CGUIWidgetSystem::Instance()->ClosePopupWidget(this);
+		CGUISystem::Instance()->ClosePopupWidget(this);
 	}
 	//------------------------------------------------------------------------------
 	void		CGUIWgtPopupMenu::ProcessMouseMove(CGUIMenuItem* pItem, CGUIEventMouse* pEvent)

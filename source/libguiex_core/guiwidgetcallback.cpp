@@ -79,7 +79,7 @@ namespace guiex
 				aEvent.SetEventId(eEVENT_PARENT_CHANGE_SIZE);
 				aEvent.SetSize(pEvent->GetSize());
 				aEvent.SetReceiver(pWidget);
-				CGUIWidgetSystem::Instance()->SendEvent( &aEvent );
+				CGUISystem::Instance()->SendEvent( &aEvent );
 			}
 			pWidget = pWidget->GetNextSibling();
 		}
@@ -383,24 +383,23 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnGetFocus( CGUIEventNotification* pEvent )
+	uint32 CGUIWidget::OnGetFocus( CGUIEventNotification* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnGetFocus");
 
-		CGUIWidgetSystem::Instance()->SetFocusWidget(this);
+		CGUISystem::Instance()->SetFocusWidget(this);
 
 		//call callback function
 		CallbackFunction("OnGetFocus", pEvent);
 
-
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnLostFocus( CGUIEventNotification* pEvent )
+	uint32 CGUIWidget::OnLostFocus( CGUIEventNotification* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnLostFocus");
 
-		CGUIWidgetSystem::Instance()->SetFocusWidget(NULL);
+		CGUISystem::Instance()->SetFocusWidget(NULL);
 
 		//call callback function
 		CallbackFunction("OnInactive", pEvent);
@@ -449,7 +448,7 @@ namespace guiex
 				CGUIEventNotification aEvent;
 				aEvent.SetEventId(eEVENT_SCALE_CHANGE);
 				aEvent.SetReceiver(pWidget);
-				CGUIWidgetSystem::Instance()->SendEvent( &aEvent );
+				CGUISystem::Instance()->SendEvent( &aEvent );
 			}
 			pWidget = pWidget->GetNextSibling();
 		}

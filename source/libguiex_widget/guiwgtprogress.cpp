@@ -24,10 +24,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtProgress);
 	//------------------------------------------------------------------------------
-	CGUIString CGUIWgtProgress::ms_strType = "CGUIWgtProgress";
-	//------------------------------------------------------------------------------
 	CGUIWgtProgress::CGUIWgtProgress(const CGUIString& rName, const CGUIString& rSceneName)
-		:CGUIWidget(ms_strType, rName, rSceneName)
+		:CGUIWidget(StaticGetType(), rName, rSceneName)
 	{
 		InitProgress();
 	}

@@ -14,7 +14,6 @@
 #include "guibase.h"
 #include "guias.h"
 #include "guistring.h"
-#include "guisingleton.h"
 #include "guiimage.h"
 #include "guiresourcemanager.h"
 #include <set>
@@ -57,10 +56,10 @@ namespace guiex
 		int32 DeallocateResource( CGUIAs* pRes );
 
 		template<class T>
-		T* AllocateResourceByTypeChecked( /*const CGUIString& rAsType*/ )
+		T* AllocateResource(  )
 		{
-			CGUIAs* pAs = AllocateResourceByType( T::StaticGetAsType() );
-			GUI_ASSERT( pAs->GetType() == T::StaticGetAsType(), "wrong As type" );
+			CGUIAs* pAs = AllocateResourceByType( T::StaticGetType() );
+			GUI_ASSERT( pAs->GetType() == T::StaticGetType(), "wrong As type" );
 			return static_cast<T*>( pAs );
 		}
 

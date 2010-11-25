@@ -26,10 +26,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtPanel);
 	//------------------------------------------------------------------------------
-	CGUIString CGUIWgtPanel::ms_strType = "CGUIWgtPanel";
-	//------------------------------------------------------------------------------
 	CGUIWgtPanel::CGUIWgtPanel(const CGUIString& rName, const CGUIString& rSceneName)
-		:CGUIWidget(ms_strType, rName, rSceneName)
+		:CGUIWidget(StaticGetType(), rName, rSceneName)
 	{
 		InitPanel();
 	}

@@ -270,11 +270,8 @@ namespace guiex
 		CGUISize			m_aStartSize;				///< the start size of frame
 
 	protected:
-		static CGUIString ms_strType;
-
+		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtFrame);
 	};
-
-	GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtFrame);
 
 }//namespace guiex
 

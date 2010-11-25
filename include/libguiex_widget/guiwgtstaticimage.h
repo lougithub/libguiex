@@ -67,11 +67,9 @@ namespace guiex
 		CGUIString m_strImageName;
 
 	protected:
-		static CGUIString ms_strType;
-
+		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtStaticImage);
 	};
 
-	GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtStaticImage);
 
 }//namespace guiex
 

@@ -109,12 +109,8 @@ namespace guiex
 		CGUIRect			m_aStringArea;
 
 	private:
-		static CGUIString	ms_strType;
+		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtButton);
 	};
-
-
-
-	GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtButton);
 
 }//namespace libguiex
 

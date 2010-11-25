@@ -73,12 +73,8 @@ namespace guiex
 		TVecBtn			m_vecButtons;			//only tab button could become control's child
 
 	private:
-		static CGUIString	ms_strType;
+		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtTabControl);
 	};
-
-
-	GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtTabControl);
-
 }//namespace libguiex
 
 

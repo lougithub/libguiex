@@ -67,11 +67,8 @@ namespace guiex
 		virtual uint32		OnMouseLeftClick( CGUIEventMouse* pEvent );
 
 	private:
-		static CGUIString	ms_strType;
+		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtTabButton);
 	};
-
-
-	GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtTabButton);
 
 }//namespace libguiex
 

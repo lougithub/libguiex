@@ -14,7 +14,6 @@
 #include "guiconfig.h"
 #include "guitypes.h"
 #include "guilogmsg.h"
-#include "guisingleton.h"
 
 
 

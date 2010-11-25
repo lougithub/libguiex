@@ -28,10 +28,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtListBox);
 	//------------------------------------------------------------------------------
-	CGUIString CGUIWgtListBox::ms_strType = "CGUIWgtListBox";
-	//------------------------------------------------------------------------------
 	CGUIWgtListBox::CGUIWgtListBox( const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIWgtScrollbarContainer(ms_strType, rName, rSceneName)
+		:CGUIWgtScrollbarContainer(StaticGetType(), rName, rSceneName)
 	{
 		InitListBox();
 	}
@@ -203,7 +201,7 @@ namespace guiex
 					aEvent.SetEventId(eEVENT_LISTBOX_SELECTED);
 					aEvent.SetReceiver(this);
 					aEvent.SetSelectedItemIdx( nItemIndex );
-					CGUIWidgetSystem::Instance()->SendEvent( &aEvent);
+					CGUISystem::Instance()->SendEvent( &aEvent);
 				}
 
 				/// send event for selecte event at single select mode
@@ -212,7 +210,7 @@ namespace guiex
 					CGUIEventListBox aEvent;
 					aEvent.SetEventId(eEVENT_LISTBOX_SELECTCHANGED);
 					aEvent.SetReceiver(this);
-					CGUIWidgetSystem::Instance()->SendEvent( &aEvent);
+					CGUISystem::Instance()->SendEvent( &aEvent);
 				}
 			}
 
@@ -230,7 +228,7 @@ namespace guiex
 			CGUIEventListBox aEvent;
 			aEvent.SetEventId(eEVENT_LISTBOX_SELECTCHANGED);
 			aEvent.SetReceiver(this);
-			CGUIWidgetSystem::Instance()->SendEvent( &aEvent);
+			CGUISystem::Instance()->SendEvent( &aEvent);
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -262,8 +260,9 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIListBoxItem* CGUIWgtListBox::CreateItem_Imp(const CGUIStringW& rText)
 	{
-		CGUIListBoxItem * pItem = static_cast<CGUIListBoxItem*>(GUI_CREATE_WIDGET(m_strItemType.c_str(), CGUIString("listitem_")+CGUIWidgetSystem::Instance()->GenerateAnonymousName(), GetSceneName()));
-		pItem->SetItemInfo(pText, GetTextInfo());
+		CGUIString strItemName = CGUIString("listitem_")+CGUISystem::Instance()->GenerateAnonymousName();
+		CGUIListBoxItem * pItem = static_cast<CGUIListBoxItem*>(GUI_CREATE_WIDGET(m_strItemType.c_str(), strItemName, GetSceneName()));
+		pItem->SetItemInfo(rText, GetTextInfo());
 		return pItem;
 	}
 	//------------------------------------------------------------------------------
@@ -387,7 +386,7 @@ namespace guiex
 				//}
 
 				// if item is supposed to be deleted by us
-				CGUIWidgetSystem::Instance()->DestroyWidget(pItem);
+				CGUISystem::Instance()->DestroyWidget(pItem);
 
 //				SetRectDirty();
 				UpdateScrollbars();
@@ -441,7 +440,7 @@ namespace guiex
 				CGUIEventListBox aEvent;
 				aEvent.SetEventId(eEVENT_LISTBOX_SELECTCHANGED);
 				aEvent.SetReceiver(this);
-				CGUIWidgetSystem::Instance()->SendEvent( &aEvent);
+				CGUISystem::Instance()->SendEvent( &aEvent);
 			}
 		}
 
@@ -639,7 +638,7 @@ namespace guiex
 			for (size_t i = 0; i < m_aListItems.size(); ++i)
 			{
 				RemoveChild(m_aListItems[i]);
-				CGUIWidgetSystem::Instance()->DestroyWidget(m_aListItems[i]);
+				CGUISystem::Instance()->DestroyWidget(m_aListItems[i]);
 			}
 
 			// clear out the list.
@@ -710,7 +709,7 @@ namespace guiex
 			aEventMouse.SetReceiver(pItem);
 			aEventMouse.SetPosition(pEvent->GetPosition());
 			aEventMouse.SetKeyboardInterface(pEvent->GetKeyboardInterface());
-			CGUIWidgetSystem::Instance()->SendEvent(&aEventMouse);
+			CGUISystem::Instance()->SendEvent(&aEventMouse);
 		}
 
 		return CGUIWidget::OnMouseMove(pEvent);
@@ -727,7 +726,7 @@ namespace guiex
 			aEventMouse.SetReceiver(pItem);
 			aEventMouse.SetPosition(pEvent->GetPosition());
 			aEventMouse.SetKeyboardInterface(pEvent->GetKeyboardInterface());
-			CGUIWidgetSystem::Instance()->SendEvent(&aEventMouse);
+			CGUISystem::Instance()->SendEvent(&aEventMouse);
 		}
 
 		return CGUIWidget::OnMouseLeftDown(pEvent);
@@ -744,7 +743,7 @@ namespace guiex
 			aEventMouse.SetReceiver(pItem);
 			aEventMouse.SetPosition(pEvent->GetPosition());
 			aEventMouse.SetKeyboardInterface(pEvent->GetKeyboardInterface());
-			CGUIWidgetSystem::Instance()->SendEvent(&aEventMouse);
+			CGUISystem::Instance()->SendEvent(&aEventMouse);
 		}
 
 		return CGUIWidget::OnMouseLeftUp(pEvent);
@@ -761,7 +760,7 @@ namespace guiex
 			aEventMouse.SetReceiver(pItem);
 			aEventMouse.SetPosition(pEvent->GetPosition());
 			aEventMouse.SetKeyboardInterface(pEvent->GetKeyboardInterface());
-			CGUIWidgetSystem::Instance()->SendEvent(&aEventMouse);
+			CGUISystem::Instance()->SendEvent(&aEventMouse);
 		}
 
 		return CGUIWidget::OnMouseRightDown(pEvent);
@@ -778,7 +777,7 @@ namespace guiex
 			aEventMouse.SetReceiver(pItem);
 			aEventMouse.SetPosition(pEvent->GetPosition());
 			aEventMouse.SetKeyboardInterface(pEvent->GetKeyboardInterface());
-			CGUIWidgetSystem::Instance()->SendEvent(&aEventMouse);
+			CGUISystem::Instance()->SendEvent(&aEventMouse);
 		}
 
 		return CGUIWidget::OnMouseRightUp(pEvent);
@@ -858,7 +857,7 @@ namespace guiex
 			aEvent.SetEventId(eEVENT_LISTBOX_CLICK_LEFT);
 			aEvent.SetReceiver(this);
 			aEvent.SetDbClickedItemIdx( GetItemIndex(pItem) );
-			CGUIWidgetSystem::Instance()->SendEvent( &aEvent);
+			CGUISystem::Instance()->SendEvent( &aEvent);
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -870,7 +869,7 @@ namespace guiex
 			aEvent.SetEventId(eEVENT_LISTBOX_CLICK_RIGHT);
 			aEvent.SetReceiver(this);
 			aEvent.SetDbClickedItemIdx( GetItemIndex(pItem) );
-			CGUIWidgetSystem::Instance()->SendEvent( &aEvent);
+			CGUISystem::Instance()->SendEvent( &aEvent);
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -882,7 +881,7 @@ namespace guiex
 			aEvent.SetEventId(eEVENT_LISTBOX_DBCLICK_LEFT);
 			aEvent.SetReceiver(this);
 			aEvent.SetDbClickedItemIdx( GetItemIndex(pItem) );
-			CGUIWidgetSystem::Instance()->SendEvent( &aEvent);
+			CGUISystem::Instance()->SendEvent( &aEvent);
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -894,7 +893,7 @@ namespace guiex
 			aEvent.SetEventId(eEVENT_LISTBOX_DBCLICK_RIGHT);
 			aEvent.SetReceiver(this);
 			aEvent.SetDbClickedItemIdx( GetItemIndex(pItem) );
-			CGUIWidgetSystem::Instance()->SendEvent( &aEvent);
+			CGUISystem::Instance()->SendEvent( &aEvent);
 		}
 	}
 	//------------------------------------------------------------------------------

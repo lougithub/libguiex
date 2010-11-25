@@ -47,7 +47,6 @@ namespace guiex
 		*/
 		static CGUIString	GetWidgetTreeInfo( const CGUIWidget* pWidget );
 		static CGUIString	GetWidgetTreeInfo( const CGUIString& rWidgetName, const CGUIString& rSceneName );
-
 	};
 
 	

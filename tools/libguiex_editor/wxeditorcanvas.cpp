@@ -33,12 +33,12 @@ WxEditorCanvasContainer::WxEditorCanvasContainer( wxWindow *parent, const std::s
 
 {
 	SetScrollRate( 10, 10 );
-	SetVirtualSize( guiex::CGUIWidgetSystem::Instance()->GetScreenWidth(), guiex::CGUIWidgetSystem::Instance()->GetScreenHeight() );
+	SetVirtualSize( guiex::CGUISystem::Instance()->GetScreenWidth(), guiex::CGUISystem::Instance()->GetScreenHeight() );
 
 	SetBackgroundColour( *wxLIGHT_GREY );
 
 	//create canvas
-	wxSize aCanvasSize( guiex::CGUIWidgetSystem::Instance()->GetScreenWidth(), guiex::CGUIWidgetSystem::Instance()->GetScreenHeight());
+	wxSize aCanvasSize( guiex::CGUISystem::Instance()->GetScreenWidth(), guiex::CGUISystem::Instance()->GetScreenHeight());
 	int wx_gl_attribs[] = {
 		WX_GL_RGBA, WX_GL_DOUBLEBUFFER, 
 		WX_GL_DEPTH_SIZE, 24, 
@@ -61,7 +61,7 @@ int 	WxEditorCanvasContainer::SaveFileAs(const std::string& rNewFileName)
 //------------------------------------------------------------------------------
 void	WxEditorCanvasContainer::SetSelectedWidget( const std::string& rWidget )
 {
-	guiex::CGUIWidget* pWidget = guiex::CGUIWidgetSystem::Instance()->GetWidget( rWidget.c_str(), GetMainFrame()->GetCurrentSceneName());
+	guiex::CGUIWidget* pWidget = guiex::CGUIWidgetManager::Instance()->GetWidget( rWidget.c_str(), GetMainFrame()->GetCurrentSceneName());
 	SetSelectedWidget(pWidget);
 }
 //------------------------------------------------------------------------------
@@ -130,15 +130,15 @@ WxGLCanvas::WxGLCanvas(wxWindow *parent, int* args, wxWindowID id,
 WxGLCanvas::~WxGLCanvas()
 {
 	//free widgets
-	guiex::CGUIWidgetSystem::Instance()->FreeAllWidgets();
-	guiex::CGUIWidgetSystem::Instance()->UnloadAllResource();
+	guiex::CGUISystem::Instance()->DestroyAllWidgets();
+	guiex::CGUISystem::Instance()->UnloadAllResource();
 }
 //------------------------------------------------------------------------------
 void	WxGLCanvas::InitializeCanvas()
 {
 	SetCurrent();
 
-	wxSize aCanvasSize( guiex::CGUIWidgetSystem::Instance()->GetScreenWidth(), guiex::CGUIWidgetSystem::Instance()->GetScreenHeight());
+	wxSize aCanvasSize( guiex::CGUISystem::Instance()->GetScreenWidth(), guiex::CGUISystem::Instance()->GetScreenHeight());
 	UpdateCanvasSize(aCanvasSize);
 }
 //------------------------------------------------------------------------------
@@ -149,7 +149,7 @@ void	WxGLCanvas::UpdateWindowBox()
 //------------------------------------------------------------------------------
 void WxGLCanvas::OnTimer(wxTimerEvent& event)
 {
-	guiex::CGUIWidgetSystem::Instance()->Update( event.GetInterval() / 1000.f );
+	guiex::CGUISystem::Instance()->Update( event.GetInterval() / 1000.f );
 	Refresh();
 }
 //------------------------------------------------------------------------------
@@ -256,7 +256,7 @@ void WxGLCanvas::Render()
 	glClearStencil( 0 );
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT );	// clear screen and depth buffer 
 
-	guiex::CGUIWidgetSystem::Instance()->Render();
+	guiex::CGUISystem::Instance()->Render();
 
 	DrawResizers();
 
@@ -416,8 +416,8 @@ void WxGLCanvas::HandleMouseMoved (int aMouseX, int aMouseY)
 	wxSnprintf (statusInfo, 100, wxT("[%d, %d][%3.2f, %3.2f]"), 
 		m_mouseX, 
 		m_mouseY, 
-		(double) m_mouseX / guiex::CGUIWidgetSystem::Instance()->GetScreenWidth(), 
-		(double) m_mouseY / guiex::CGUIWidgetSystem::Instance()->GetScreenHeight());
+		(double) m_mouseX / guiex::CGUISystem::Instance()->GetScreenWidth(), 
+		(double) m_mouseY / guiex::CGUISystem::Instance()->GetScreenHeight());
 
 	// Only proceed when the mouse is pressed
 	if (m_mousePressed) 
@@ -497,7 +497,7 @@ void WxGLCanvas::HandleMouseMoved (int aMouseX, int aMouseY)
 		if (m_hoveredResizePoint == RESIZE_POINT_NONE)
 		{
 			// Didn't find resize point, try window
-			m_hoveredWindow = guiex::CGUIWidgetSystem::Instance()->GetWidgetUnderPoint(guiex::CGUIVector2((float)m_mouseX, (float)m_mouseY)) ;
+			m_hoveredWindow = guiex::CGUISystem::Instance()->GetWidgetUnderPoint(guiex::CGUIVector2((float)m_mouseX, (float)m_mouseY)) ;
 		}
 	}
 
@@ -623,9 +623,9 @@ int	WxGLCanvas::SaveToFile( const std::string& rFilename)
 	}
 
 	//get page
-	if( guiex::CGUIWidgetSystem::Instance()->GetOpenedPageNum() != 0 )
+	if( guiex::CGUISystem::Instance()->GetOpenedPageNum() != 0 )
 	{
-		guiex::CGUIWidget* pWidget = guiex::CGUIWidgetSystem::Instance()->GetOpenedPageByIndex(0);
+		guiex::CGUIWidget* pWidget = guiex::CGUISystem::Instance()->GetOpenedPageByIndex(0);
 		if( pWidget )
 		{
 			//save it to doc
@@ -667,7 +667,7 @@ int WxGLCanvas::SaveWidgetNodeToDoc( guiex::CGUIWidget* pWidget, TiXmlDocument& 
 	aNewNode.SetAttribute("type", "CGUIWidget");
 	aNewNode.SetAttribute("value", pWidget->GetType().c_str());
 
-	if( guiex::CGUIWidgetSystem::Instance()->HasPage( pWidget))
+	if( guiex::CGUIWidgetManager::Instance()->HasPage( pWidget))
 	{
 		pWidgetNode = (TiXmlElement*)pRootNode->InsertEndChild(aNewNode);
 	}

@@ -310,7 +310,7 @@ namespace guiex
 				pImage->GetSceneName() == "" )
 			{
 				//this image is not registered as a named image, free it
-				return ReleaseAllocateResource( pImage );
+				return ReleaseFromAllocatePool( pImage );
 			}
 			else
 			{

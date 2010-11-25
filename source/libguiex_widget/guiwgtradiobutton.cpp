@@ -22,10 +22,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtRadioButton);
 	//------------------------------------------------------------------------------
-	CGUIString CGUIWgtRadioButton::ms_strType = "CGUIWgtRadioButton";
-	//------------------------------------------------------------------------------
 	CGUIWgtRadioButton::CGUIWgtRadioButton(const CGUIString& rName, const CGUIString& rSceneName)
-		:CGUIWgtCheckButton(ms_strType, rName, rSceneName)
+		:CGUIWgtCheckButton(StaticGetType(), rName, rSceneName)
 	{
 		InitRadioButton();
 	}
@@ -46,7 +44,7 @@ namespace guiex
 		{
 			throw CGUIException("[CGUIWgtRadioButton::FromWidget]: the given widget is nil" );
 		}
-		if( pWidget->GetType() != ms_strType )
+		if( pWidget->GetType() != StaticGetType() )
 		{
 			throw CGUIException("[CGUIWgtRadioButton::FromWidget]: the real type of given widget is <%s>!", pWidget->GetType().c_str());
 		}
@@ -70,7 +68,7 @@ namespace guiex
 						CGUIEventNotification aRadioEvent;
 						aRadioEvent.SetEventId(eEVENT_UNCHECKED);
 						aRadioEvent.SetReceiver(pWidget);
-						CGUIWidgetSystem::Instance()->SendEvent( &aRadioEvent);
+						CGUISystem::Instance()->SendEvent( &aRadioEvent);
 					}
 					pWidget = pWidget->GetNextSibling();
 				}
@@ -79,7 +77,7 @@ namespace guiex
 				CGUIEventNotification aRadioEvent;
 				aRadioEvent.SetEventId(eEVENT_CHECKED);
 				aRadioEvent.SetReceiver(this);
-				CGUIWidgetSystem::Instance()->SendEvent( &aRadioEvent);
+				CGUISystem::Instance()->SendEvent( &aRadioEvent);
 			}
 		}
 

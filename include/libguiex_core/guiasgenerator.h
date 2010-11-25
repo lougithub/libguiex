@@ -21,42 +21,42 @@
 //============================================================================// 
 #define GUI_AS_GENERATOR_DECLARE(asType)		\
 public:	\
-	static const char* StaticGetAsType();\
-	friend class asType##_Generator;			\
+	static const char* StaticGetType();\
+	friend class asType##_Generator; \
 	class asType##_Generator : public ::guiex::CGUIAsGenerator	\
-	{														\
-	public:													\
-	virtual ::guiex::CGUIAs*	GenerateAs(const CGUIString& rAsName, const CGUIString& rSceneName) const;			\
+	{ \
+	public: \
+	virtual ::guiex::CGUIAs* GenerateAs(const CGUIString& rAsName, const CGUIString& rSceneName) const; \
 	virtual void DestroyAs(const ::guiex::CGUIAs* pAS) const;\
-	static asType##_Generator* GenerateSelf();					\
-	virtual void DestroySelf();							\
-	protected:												\
-	asType##_Generator();										\
+	static asType##_Generator* GenerateSelf(); \
+	virtual void DestroySelf(); \
+	protected: \
+	asType##_Generator(); \
 	};														
 
 
 #define GUI_AS_GENERATOR_IMPLEMENT(asType)	\
-	const char* asType::StaticGetAsType()	\
-	{return #asType;}	\
-	asType::asType##_Generator::asType##_Generator()									\
-	:CGUIAsGenerator(#asType)							\
-	{														\
-	}														\
+	const char* asType::StaticGetType()	\
+	{return #asType;} \
+	asType::asType##_Generator::asType##_Generator() \
+	:CGUIAsGenerator(#asType) \
+	{ \
+	} \
 	::guiex::CGUIAs* asType::asType##_Generator::GenerateAs( const CGUIString& rAsName, const CGUIString& rSceneName ) const			\
-	{														\
-	return new asType(rAsName, rSceneName);									\
-	}														\
+	{ \
+	return new asType(rAsName, rSceneName); \
+	} \
 	void asType::asType##_Generator::DestroyAs(const ::guiex::CGUIAs* pAS) const\
-	{														\
-	delete pAS;										\
-	}														\
-	asType::asType##_Generator* asType::asType##_Generator::GenerateSelf()					\
-	{														\
-	return new asType::asType##_Generator;								\
-	}														\
-	void asType::asType##_Generator::DestroySelf()							\
-	{														\
-	delete this;									\
+	{ \
+	delete pAS; \
+	} \
+	asType::asType##_Generator* asType::asType##_Generator::GenerateSelf() \
+	{ \
+	return new asType::asType##_Generator; \
+	} \
+	void asType::asType##_Generator::DestroySelf() \
+	{ \
+	delete this; \
 	}												
 
 

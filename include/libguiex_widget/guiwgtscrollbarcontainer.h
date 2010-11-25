@@ -148,12 +148,8 @@ namespace guiex
 		bool m_bIsScrollbarAutoPosition;
 
 	private:
-		static CGUIString	ms_strType;
+		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtScrollbarContainer);
 	};
-
-
-
-	GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtScrollbarContainer);
 
 }//namespace libguiex
 

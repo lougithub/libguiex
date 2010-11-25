@@ -241,11 +241,9 @@ namespace guiex
 		CGUIWgtEdit*	m_pEdit;			//!< edit control
 
 	protected:
-		static CGUIString ms_strType;
-
+		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtEditBox);
 	};
 
-	GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtEditBox);
 
 }//namespace guiex
 

@@ -20,10 +20,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIMenuItem);
 	//------------------------------------------------------------------------------
-	CGUIString CGUIMenuItem::ms_strType = "CGUIMenuItem";
-	//------------------------------------------------------------------------------
 	CGUIMenuItem::CGUIMenuItem( const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIItemBase(ms_strType, rName, rSceneName)
+		:CGUIItemBase(StaticGetType(), rName, rSceneName)
 	{
 		InitMenuItem();
 	}

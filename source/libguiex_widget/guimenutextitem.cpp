@@ -24,10 +24,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIMenuTextItem);
 	//------------------------------------------------------------------------------
-	CGUIString CGUIMenuTextItem::ms_strType = "CGUIMenuTextItem";
-	//------------------------------------------------------------------------------
 	CGUIMenuTextItem::CGUIMenuTextItem( const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIMenuItem(ms_strType, rName, rSceneName)
+		:CGUIMenuItem(StaticGetType(), rName, rSceneName)
 	{
 		InitTextItem();
 	}

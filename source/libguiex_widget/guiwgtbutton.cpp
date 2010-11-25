@@ -25,10 +25,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtButton);
 	//------------------------------------------------------------------------------
-	CGUIString CGUIWgtButton::ms_strType = "CGUIWgtButton";
-	//------------------------------------------------------------------------------
 	CGUIWgtButton::CGUIWgtButton(const CGUIString& rName, const CGUIString& rSceneName)
-		:CGUIWidget(ms_strType, rName, rSceneName)
+		:CGUIWidget(StaticGetType(), rName, rSceneName)
 		,m_aTextOffset(0.f,0.f)
 	{
 		InitButton();

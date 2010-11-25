@@ -35,12 +35,12 @@ namespace guiex
 		memset(&m_aContext, 0, sizeof(SKeyContext));
 	}
 	//------------------------------------------------------------------------------ 
-	bool			IGUIInterfaceKeyboard::ProcessKeyEvent( const SKeyEvent& rEvent )
+	bool IGUIInterfaceKeyboard::ProcessKeyEvent( const SKeyEvent& rEvent )
 	{
-		return CGUIWidgetSystem::Instance()->ProcessKeyboardInput( rEvent );
+		return CGUISystem::Instance()->ProcessKeyboardInput( rEvent );
 	}
 	//------------------------------------------------------------------------------ 
-	bool	IGUIInterfaceKeyboard::ChangeKeyState(EKeyCode eKey, EKeyState eState)
+	bool IGUIInterfaceKeyboard::ChangeKeyState(EKeyCode eKey, EKeyState eState)
 	{
 		GUI_ASSERT( eKey >= KC_NONE && eKey < _KEY_CODE_MAX_,"wrong parameter" );
 		GUI_ASSERT( eState >= KEY_DOWN && eState < _KEY_STATE_MAX_,"wrong parameter" );
@@ -98,18 +98,18 @@ namespace guiex
 		return bConsumed;
 	}
 	//------------------------------------------------------------------------------ 
-	bool    IGUIInterfaceKeyboard::IsKeyPressed(EKeyCode eKey) const       
+	bool IGUIInterfaceKeyboard::IsKeyPressed(EKeyCode eKey) const       
 	{
 		GUI_ASSERT( eKey >= KC_NONE && eKey < _KEY_CODE_MAX_,"wrong parameter");
 		return m_aContext.m_bKeyDown[eKey];
 	}
 	//------------------------------------------------------------------------------ 
-	bool    IGUIInterfaceKeyboard::HasAnyKeyPressed() const                      
+	bool IGUIInterfaceKeyboard::HasAnyKeyPressed() const                      
 	{
 		return m_aContext.m_nKeyPressedCounter > 0 ? true : false;
 	}
 	//------------------------------------------------------------------------------ 
-	void    IGUIInterfaceKeyboard::GetAllKeyPressed(std::vector<EKeyCode>& rKeys) const          
+	void IGUIInterfaceKeyboard::GetAllKeyPressed(std::vector<EKeyCode>& rKeys) const          
 	{
 		for( int i = KC_NONE; i < _KEY_CODE_MAX_; ++i )
 		{
@@ -120,12 +120,12 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------ 
-	void	IGUIInterfaceKeyboard::PreUpdate()
+	void IGUIInterfaceKeyboard::PreUpdate()
 	{
 
 	}
 	//------------------------------------------------------------------------------ 
-	void	IGUIInterfaceKeyboard::PostUpdate()
+	void IGUIInterfaceKeyboard::PostUpdate()
 	{
 	}
 	//------------------------------------------------------------------------------ 

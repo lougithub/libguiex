@@ -37,10 +37,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtFrame);
 	//------------------------------------------------------------------------------
-	CGUIString CGUIWgtFrame::ms_strType = "CGUIWgtFrame";
-	//------------------------------------------------------------------------------
 	CGUIWgtFrame::CGUIWgtFrame( const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIWidget(ms_strType, rName, rSceneName)
+		:CGUIWidget(StaticGetType(), rName, rSceneName)
 	{
 		InitFrame();
 	}
