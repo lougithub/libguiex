@@ -23,7 +23,7 @@
 #include <libguiex_module/render_opengles/guirender_opengles.h>
 #include <libguiex_module/stringconv_cocoa/guistringconv_cocoa.h>
 #include <libguiex_module/stringconv_iconv/guistringconv_iconv.h>
-//#include <libguiex_module/script_lua\guiscript_lua.h>
+#include <libguiex_module/script_lua/guiscript_lua.h>
 //#include <libguiex_module/ime_winapi\guiime_winapi.h>
 
 
@@ -82,7 +82,7 @@ void CLibGuiexEngine::Initialize( int width, int height, const char* szDataPath 
     GUI_REGISTER_INTERFACE_LIB( IGUIFont_cocoa);
     //GUI_REGISTER_INTERFACE_LIB( "IGUIKeyboard", IGUIKeyboard_winapi);
     GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
-    //GUI_REGISTER_INTERFACE_LIB_ARG( "IGUIScript", IGUIScript_lua, FuncInitScript);
+    GUI_REGISTER_INTERFACE_LIB( IGUIScript_lua);
 	
     //register widget
     guiex::CGUIWidgetGenerator** pGenerator = guiex::GetAllGenerators();
@@ -187,6 +187,14 @@ void CLibGuiexEngine::Update( float deltaTime )
 {
 	guiex::CGUISystem::Instance()->Update( deltaTime );
 	guiex::CGUISystem::Instance()->Render();
+	
+	static float fFpsTimer = 0.0f;
+	fFpsTimer += deltaTime;
+	if( fFpsTimer >= 3.0f )
+	{
+		fFpsTimer = 0.0f;
+		printf( "fps = %d\n", guiex::CGUISystem::Instance()->GetFPS());
+	}
 }
 
 void CLibGuiexEngine::OnRotate( DeviceOrientation newOrientation )

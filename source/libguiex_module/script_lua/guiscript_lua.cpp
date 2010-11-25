@@ -12,7 +12,7 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_module\script_lua\guiscript_lua.h>
+#include <libguiex_module/script_lua/guiscript_lua.h>
 
 
 #include <libguiex_core/guiexception.h>
