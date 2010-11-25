@@ -154,7 +154,7 @@ namespace guiex
 							   CGUISize(rInfo.m_nFontSize,rInfo.m_nFontSize));
 			
 			//dest area size
-			pRender->DrawRect( rWorldMatrix, aCharRect, 1, pRender->GetAndIncZ(),
+			pRender->DrawRect( rWorldMatrix, aCharRect, 2, pRender->GetAndIncZ(),
 							  rInfo.m_aColor.GetARGB(),
 							  rInfo.m_aColor.GetARGB(),
 							  rInfo.m_aColor.GetARGB(),

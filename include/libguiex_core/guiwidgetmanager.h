@@ -13,6 +13,7 @@
 //============================================================================// 
 #include "guibase.h"
 #include "guistring.h"
+#include "guiwidget.h"
 #include <vector>
 #include <map>
 #include <set>
@@ -20,10 +21,6 @@
 //============================================================================//
 // declare
 //============================================================================// 
-namespace guiex
-{	
-	class CGUIWidget;
-}
 
 #define GUI_CREATE_WIDGET(type, widgetname, scenename)		\
 	::guiex::CGUIWidgetManager::Instance()->CreateWidget(type,widgetname, scenename)

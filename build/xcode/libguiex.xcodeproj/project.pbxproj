@@ -31,6 +31,12 @@
 		FF04084E128847C20053FF31 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF040847128847C20053FF31 /* tinyxmlerror.cpp */; };
 		FF04084F128847C20053FF31 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF040848128847C20053FF31 /* tinyxmlparser.cpp */; };
 		FF040850128847C20053FF31 /* xmltest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF040849128847C20053FF31 /* xmltest.cpp */; };
+		FF065EBB129EA6E300B58A52 /* guiconfigfileloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF065EB8129EA6E300B58A52 /* guiconfigfileloader.cpp */; };
+		FF065EBC129EA6E300B58A52 /* guiresourcemanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF065EB9129EA6E300B58A52 /* guiresourcemanager.cpp */; };
+		FF065EBD129EA6E300B58A52 /* guiwidgetmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF065EBA129EA6E300B58A52 /* guiwidgetmanager.cpp */; };
+		FF065EC2129EA70000B58A52 /* guiconfigfileloader.h in Headers */ = {isa = PBXBuildFile; fileRef = FF065EBF129EA6FF00B58A52 /* guiconfigfileloader.h */; };
+		FF065EC3129EA70000B58A52 /* guienumtype.h in Headers */ = {isa = PBXBuildFile; fileRef = FF065EC0129EA6FF00B58A52 /* guienumtype.h */; };
+		FF065EC4129EA70000B58A52 /* guiwidgetmanager.h in Headers */ = {isa = PBXBuildFile; fileRef = FF065EC1129EA70000B58A52 /* guiwidgetmanager.h */; };
 		FF1B89601289972D006584D3 /* guirender_opengles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF1B895E1289972D006584D3 /* guirender_opengles.cpp */; };
 		FF1B89611289972D006584D3 /* guitexture_opengles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF1B895F1289972D006584D3 /* guitexture_opengles.cpp */; };
 		FF1B896512899741006584D3 /* guirender_opengles.h in Headers */ = {isa = PBXBuildFile; fileRef = FF1B896312899741006584D3 /* guirender_opengles.h */; };
@@ -370,6 +376,12 @@
 		FF040847128847C20053FF31 /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxmlerror.cpp; path = ../../external/tinyxml/tinyxmlerror.cpp; sourceTree = SOURCE_ROOT; };
 		FF040848128847C20053FF31 /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxmlparser.cpp; path = ../../external/tinyxml/tinyxmlparser.cpp; sourceTree = SOURCE_ROOT; };
 		FF040849128847C20053FF31 /* xmltest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xmltest.cpp; path = ../../external/tinyxml/xmltest.cpp; sourceTree = SOURCE_ROOT; };
+		FF065EB8129EA6E300B58A52 /* guiconfigfileloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiconfigfileloader.cpp; sourceTree = "<group>"; };
+		FF065EB9129EA6E300B58A52 /* guiresourcemanager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiresourcemanager.cpp; sourceTree = "<group>"; };
+		FF065EBA129EA6E300B58A52 /* guiwidgetmanager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiwidgetmanager.cpp; sourceTree = "<group>"; };
+		FF065EBF129EA6FF00B58A52 /* guiconfigfileloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiconfigfileloader.h; sourceTree = "<group>"; };
+		FF065EC0129EA6FF00B58A52 /* guienumtype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guienumtype.h; sourceTree = "<group>"; };
+		FF065EC1129EA70000B58A52 /* guiwidgetmanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiwidgetmanager.h; sourceTree = "<group>"; };
 		FF0FC57312897F15004B195F /* hello_ipad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hello_ipad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF1B895E1289972D006584D3 /* guirender_opengles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guirender_opengles.cpp; sourceTree = "<group>"; };
 		FF1B895F1289972D006584D3 /* guitexture_opengles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guitexture_opengles.cpp; sourceTree = "<group>"; };
@@ -952,6 +964,9 @@
 		FFACDE1912858C9D00C0BCB4 /* libguiex_core */ = {
 			isa = PBXGroup;
 			children = (
+				FF065EBF129EA6FF00B58A52 /* guiconfigfileloader.h */,
+				FF065EC0129EA6FF00B58A52 /* guienumtype.h */,
+				FF065EC1129EA70000B58A52 /* guiwidgetmanager.h */,
 				FFE5ED8D12992CF40053457A /* guiinterfacestringconv.h */,
 				FFE5ED8B12992CE20053457A /* guifontdata.h */,
 				FF4011301292C86400A9755A /* guiinterpolation.h */,
@@ -1099,6 +1114,9 @@
 		FFACDEB012858CB200C0BCB4 /* libguiex_core */ = {
 			isa = PBXGroup;
 			children = (
+				FF065EB8129EA6E300B58A52 /* guiconfigfileloader.cpp */,
+				FF065EB9129EA6E300B58A52 /* guiresourcemanager.cpp */,
+				FF065EBA129EA6E300B58A52 /* guiwidgetmanager.cpp */,
 				FFE494F212995BC6002F0BA6 /* guiinterfacestringconv.cpp */,
 				FFE5ED8912992CB40053457A /* guifontdata.cpp */,
 				FF40112E1292C84F00A9755A /* guiinterpolation.cpp */,
@@ -1539,6 +1557,9 @@
 				FF4011311292C86400A9755A /* guiinterpolation.h in Headers */,
 				FFE5ED8C12992CE20053457A /* guifontdata.h in Headers */,
 				FFE5ED8E12992CF40053457A /* guiinterfacestringconv.h in Headers */,
+				FF065EC2129EA70000B58A52 /* guiconfigfileloader.h in Headers */,
+				FF065EC3129EA70000B58A52 /* guienumtype.h in Headers */,
+				FF065EC4129EA70000B58A52 /* guiwidgetmanager.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1880,6 +1901,9 @@
 				FF40112F1292C84F00A9755A /* guiinterpolation.cpp in Sources */,
 				FFE5ED8A12992CB40053457A /* guifontdata.cpp in Sources */,
 				FFE494F312995BC6002F0BA6 /* guiinterfacestringconv.cpp in Sources */,
+				FF065EBB129EA6E300B58A52 /* guiconfigfileloader.cpp in Sources */,
+				FF065EBC129EA6E300B58A52 /* guiresourcemanager.cpp in Sources */,
+				FF065EBD129EA6E300B58A52 /* guiwidgetmanager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -35,7 +35,7 @@ namespace guiex
 		CGUIDataChunk& rData,
 		EOpenMode eOpenMode)
 	{
-		CGUIString	strFileName = CGUIWidgetSystem::Instance()->GetDataPath()+rFileName;
+		CGUIString	strFileName = CGUISystem::Instance()->GetDataPath()+rFileName;
 
 		std::ifstream fin;
 		fin.open( strFileName.c_str(), std::ios::binary );
@@ -89,7 +89,7 @@ namespace guiex
 									  const CGUIString& rSuffix,
 									  std::vector<CGUIString>& rArrayStrings )
 	{
-		CGUIString	strFullPath = CGUIWidgetSystem::Instance()->GetDataPath() + rPath;
+		CGUIString	strFullPath = CGUISystem::Instance()->GetDataPath() + rPath;
 		NSString *nsFullPath = [NSString stringWithUTF8String:strFullPath.c_str()];
 		
 		NSArray *ContentOfDirectory=[[NSFileManager defaultManager] subpathsOfDirectoryAtPath:nsFullPath error:nil];

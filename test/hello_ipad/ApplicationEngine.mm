@@ -55,20 +55,22 @@ void DestroyApplicationEngine( IApplicationEngine* pEngine )
 
 CLibGuiexEngine::CLibGuiexEngine()
 {
-    guiex::CGUIWidgetSystem::Instance()->Initialize();	
+	new guiex::CGUISystem;
+    guiex::CGUISystem::Instance()->Initialize();	
 }
 
 CLibGuiexEngine::~CLibGuiexEngine()
 {
-	guiex::CGUIWidgetSystem::Instance()->Release();	
+	guiex::CGUISystem::Instance()->Release();
+	delete guiex::CGUISystem::Instance();
 }
 
 void CLibGuiexEngine::Initialize( int width, int height, const char* szDataPath )
 {
     //guiex::CGUIAssert::SetWarningCB(EditorWarningCB, NULL);
-    guiex::CGUIWidgetSystem::Instance()->SetScreenSize(width,height);
-    guiex::CGUIWidgetSystem::Instance()->SetDataPath(guiex::CGUIString(szDataPath) + "/");
-    //guiex::CGUIWidgetSystem::Instance()->SetDrawExtraInfo(true);
+    guiex::CGUISystem::Instance()->SetScreenSize(width,height);
+    guiex::CGUISystem::Instance()->SetDataPath(guiex::CGUIString(szDataPath) + "/");
+    //guiex::CGUISystem::Instance()->SetDrawExtraInfo(true);
 	
     //register interface
     GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengles);
@@ -111,21 +113,21 @@ void CLibGuiexEngine::InitWidgets()
 	}		
 	
 
-	guiex::CGUIWidget* pWidget = guiex::CGUIWidgetSystem::Instance()->LoadPage( "dialog_ok.xml", "common.uip");
+	guiex::CGUIWidget* pWidget = guiex::CGUIWidgetManager::Instance()->LoadPage( "dialog_ok.xml", "common.uip");
 
 	
-	guiex::CGUIAsContainer* pAsContainer = guiex::CGUIAsManager::Instance()->AllocateResourceByTypeChecked<guiex::CGUIAsContainer>( );
+	guiex::CGUIAsContainer* pAsContainer = guiex::CGUIAsManager::Instance()->AllocateResource<guiex::CGUIAsContainer>( );
 	pAsContainer->SetLooping(true);
 	pAsContainer->SetReceiver( pWidget );
 	
 	
-	guiex::CGUIAsScale* pAsScale = guiex::CGUIAsManager::Instance()->AllocateResourceByTypeChecked<guiex::CGUIAsScale>( );
+	guiex::CGUIAsScale* pAsScale = guiex::CGUIAsManager::Instance()->AllocateResource<guiex::CGUIAsScale>( );
 	pAsScale->SetInterpolationValue( guiex::CGUISize(0.1,0.1), guiex::CGUISize(1,1), 2 );
 	//pAsScale->SetInterpolationType(guiex::eInterpolationType_EaseInOut);
 	pAsContainer->AddItem( pAsScale, 0.0f );
 	pAsScale->RefRelease();	
 	
-	pAsScale = guiex::CGUIAsManager::Instance()->AllocateResourceByTypeChecked<guiex::CGUIAsScale>( );
+	pAsScale = guiex::CGUIAsManager::Instance()->AllocateResource<guiex::CGUIAsScale>( );
 	pAsScale->SetInterpolationValue( guiex::CGUISize(1,1), guiex::CGUISize(0.1,0.1), 2 );
 	//pAsScale->SetInterpolationType(guiex::eInterpolationType_EaseInOut);
 	pAsContainer->AddItem( pAsScale, 2.0f );
@@ -134,7 +136,7 @@ void CLibGuiexEngine::InitWidgets()
 	pWidget->PlayAs( pAsContainer );
 	pAsContainer->RefRelease();
 	
-	guiex::CGUIWidgetSystem::Instance()->OpenPage(pWidget);	
+	guiex::CGUISystem::Instance()->OpenPage(pWidget);	
 	
 /*
 	guiex::CGUIWidget* pWidget_staticimage = GUI_CREATE_WIDGET("CGUIWgtStaticImage", "staticimage_0", "hello_ipad");
@@ -154,7 +156,7 @@ void CLibGuiexEngine::InitWidgets()
 	pWidget_staticimage2->Create();	
 	
 	{
-		guiex::CGUIAsScale* pAsScale = guiex::CGUIAsManager::Instance()->AllocateResourceByTypeChecked<guiex::CGUIAsScale>("CGUIAsScale");
+		guiex::CGUIAsScale* pAsScale = guiex::CGUIAsManager::Instance()->AllocateResource<guiex::CGUIAsScale>("CGUIAsScale");
 		pAsScale->SetInterpolationValue( guiex::CGUISize(0.1,0.1), guiex::CGUISize(1,1), 1 );
 		pAsScale->SetReceiver( pWidget_staticimage );
 		//pAsScale->SetLooping( true );
@@ -164,7 +166,7 @@ void CLibGuiexEngine::InitWidgets()
 	}
 	
 	{
-		guiex::CGUIAsAlpha* pAsAlpha = guiex::CGUIAsManager::Instance()->AllocateResourceByTypeChecked<guiex::CGUIAsAlpha>("CGUIAsAlpha" );
+		guiex::CGUIAsAlpha* pAsAlpha = guiex::CGUIAsManager::Instance()->AllocateResource<guiex::CGUIAsAlpha>("CGUIAsAlpha" );
 		pAsAlpha->SetInterpolationValue( 0, 1, 1 );
 		pAsAlpha->SetReceiver( pWidget_staticimage2 );
 		pAsAlpha->SetLooping( true );
@@ -174,8 +176,8 @@ void CLibGuiexEngine::InitWidgets()
 	}
 	
 	
-	guiex::CGUIWidgetSystem::Instance()->AddPage(pWidget_staticimage);
-	guiex::CGUIWidgetSystem::Instance()->OpenPage(pWidget_staticimage); 
+	guiex::CGUISystem::Instance()->AddPage(pWidget_staticimage);
+	guiex::CGUISystem::Instance()->OpenPage(pWidget_staticimage); 
  */
 }
 
@@ -183,8 +185,8 @@ void CLibGuiexEngine::InitWidgets()
 
 void CLibGuiexEngine::Update( float deltaTime )
 {
-	guiex::CGUIWidgetSystem::Instance()->Update( deltaTime );
-	guiex::CGUIWidgetSystem::Instance()->Render();
+	guiex::CGUISystem::Instance()->Update( deltaTime );
+	guiex::CGUISystem::Instance()->Render();
 }
 
 void CLibGuiexEngine::OnRotate( DeviceOrientation newOrientation )

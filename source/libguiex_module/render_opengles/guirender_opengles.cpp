@@ -58,7 +58,7 @@ namespace guiex
 		// Initialize the projection matrix.
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		const CGUISize& rSize = CGUIWidgetSystem::Instance()->GetScreenSize();
+		const CGUISize& rSize = CGUISystem::Instance()->GetScreenSize();
 		glOrthof(0.0, rSize.m_fWidth,rSize.m_fHeight,0.0,-1, 1 );
 		
 		glMatrixMode(GL_MODELVIEW);

@@ -230,11 +230,17 @@ namespace guiex
 		if( m_fElapsedTime >= m_fTotalTime )
 		{
 			real fLeftTime = m_fElapsedTime - m_fTotalTime;
-
+			
 			if( IsLooping() )
 			{
-				m_fElapsedTime = fLeftTime;
-				//return Update( fLeftTime );
+				m_fElapsedTime -= m_fTotalTime;
+				while( m_fElapsedTime >= m_fTotalTime )
+				{
+					fLeftTime = m_fElapsedTime - m_fTotalTime;
+					m_fElapsedTime -= m_fTotalTime;	
+				}
+			
+				return Update( fLeftTime );
 			}
 			else
 			{
