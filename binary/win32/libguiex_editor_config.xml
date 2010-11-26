@@ -32,6 +32,7 @@
             <property name="activable" type="bool" value="false"  category="Default"/>
             <property name="hitable" type="bool" value="true"  category="Default"/>
             <property name="disable" type="bool" value="false"  category="Default"/>
+            <property name="auto_play_as" type="bool" value="false"  category="Default"/>
             <property name="clip_children" type="bool" value="false"  category="Default"/>
             <property name="open_with_parent" type="bool" value="true"  category="Default"/>
             <property name="response_update_event" type="bool" value="false"  category="Default"/>

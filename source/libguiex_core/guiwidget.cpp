@@ -826,6 +826,20 @@ namespace guiex
 	void CGUIWidget::SetAutoPlayAs( bool bEnable )
 	{
 		m_bIsAutoPlayAs = bEnable;
+
+		if( m_bIsAutoPlayAs )
+		{
+			for( TMapAs::iterator itor = m_aMapAs.begin();
+				itor != m_aMapAs.end();
+				++itor )
+			{
+				CGUIAs* pAs = itor->second;
+				if( IsAsPlaying( pAs ) == false )
+				{
+					PlayAs( pAs );
+				}
+			}
+		}
 	}
 	//------------------------------------------------------------------------------
 	bool CGUIWidget::IsAutoPlayAs( ) const
@@ -1344,6 +1358,7 @@ namespace guiex
 			throw CGUIException( "failed to get as by name <%s>", rAsName.c_str());
 			return NULL;
 		};
+		pAs->SetReceiver( this );
 		SetAs( rName, pAs );
 		CGUIAsManager::Instance()->DeallocateResource( pAs );
 		return pAs;

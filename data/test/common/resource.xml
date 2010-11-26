@@ -180,15 +180,15 @@
 
 
 		<property name="alpha_looping" type="CGUIAsDefine" value="CGUIAsContainer">
-				<property name="loop" type="bool" value="false"/>
-				<property name="total_time" type="real" value="10" />
+				<property name="loop" type="bool" value="true"/>
+				<property name="total_time" type="real" value="6" />
 				<property name="elapsed_time" type="real" value="0" />
 
 				<property name="item_info" type="CGUIAsContainerItemInfo">
 					<property name="begin_time" type="real" value="0"/>
 					<property name="item" type="CGUIAsDefine" value="CGUIAsAlpha">
 						<property name="loop" type="bool" value="false"/>
-	   			        <property name="total_time" type="real" value="5" />
+	   			        <property name="total_time" type="real" value="3" />
 	   			        <property name="elapsed_time" type="real" value="0" />
 	   			        <property name="interpolation" type="EInterpolationType" value="eInterpolationType_EaseInOut" />
 	   			        <property name="begin_value" type="real" value="0" />
@@ -197,10 +197,10 @@
 				</property>
 
 				<property name="item_info" type="CGUIAsContainerItemInfo">
-					<property name="begin_time" type="real" value="5"/>
+					<property name="begin_time" type="real" value="3"/>
 					<property name="item" type="CGUIAsDefine" value="CGUIAsAlpha">
 						<property name="loop" type="bool" value="false"/>
-	   			        <property name="total_time" type="real" value="5" />
+	   			        <property name="total_time" type="real" value="3" />
 	   			        <property name="elapsed_time" type="real" value="0" />
 	   			        <property name="interpolation" type="EInterpolationType" value="eInterpolationType_EaseInOut" />
 	   			        <property name="begin_value" type="real" value="1" />

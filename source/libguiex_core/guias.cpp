@@ -443,7 +443,7 @@ namespace guiex
 		*		
 		*		<property name="item_info" type="CGUIAsContainItemInfo"/>
 		*			<property name="begin_time" type="real" value="5"/>
-		*			<property name="item" type="CGUIAsColor""/>
+		*			<property name="item" type="CGUIAsDefine" value="CGUIAsColor""/>
 		*				<property name="loop" type="bool" value="false"/>
 		*				<property name="total_time" type="real" value="10" />
 		*				<property name="elapsed_time" type="real" value="5" />
@@ -469,7 +469,7 @@ namespace guiex
 				//begin time
 				{
 					real fBeginTime = 0.0f;
-					const CGUIProperty* pPptBeginTime = rProperty.GetProperty("begin_time");
+					const CGUIProperty* pPptBeginTime = pProperty->GetProperty("begin_time");
 					if( pPptBeginTime )
 					{
 						PropertyToValue( *pPptBeginTime, fBeginTime );
@@ -484,8 +484,8 @@ namespace guiex
 					{
 						throw CGUIException(
 							"[CGUIAsContainer::ProcessProperty]: invalid property: <%s> <%s>", 
-							rProperty.GetName().c_str(), 
-							rProperty.GetTypeAsString().c_str());
+							pProperty->GetName().c_str(), 
+							pProperty->GetTypeAsString().c_str());
 						return -1;
 					}
 
@@ -497,8 +497,8 @@ namespace guiex
 						{
 							throw CGUIException(
 								"[CGUIAsContainer::ProcessProperty]: invalid property: <%s> <%s>", 
-								rProperty.GetName().c_str(), 
-								rProperty.GetTypeAsString().c_str());
+								pProperty->GetName().c_str(), 
+								pProperty->GetTypeAsString().c_str());
 							return -1;
 						}
 						aItemInfo.m_pAs = pAs;
@@ -511,8 +511,8 @@ namespace guiex
 						{
 							throw CGUIException(
 								"[CGUIAsContainer::ProcessProperty]: invalid property: <%s> <%s>", 
-								rProperty.GetName().c_str(), 
-								rProperty.GetTypeAsString().c_str());
+								pProperty->GetName().c_str(), 
+								pProperty->GetTypeAsString().c_str());
 							return -1;
 						}
 						int32 ret = pAs->ProcessProperty( *pPptAs );
@@ -520,8 +520,8 @@ namespace guiex
 						{
 							throw CGUIException(
 								"[CGUIAsContainer::ProcessProperty]: invalid property: <%s> <%s>", 
-								rProperty.GetName().c_str(), 
-								rProperty.GetTypeAsString().c_str());
+								pProperty->GetName().c_str(), 
+								pProperty->GetTypeAsString().c_str());
 							return ret;
 						}
 						aItemInfo.m_pAs = pAs;
@@ -530,9 +530,9 @@ namespace guiex
 					{
 						throw CGUIException(
 							"[CGUIAsContainer::ProcessProperty]: invalid property: <%s> <%s> <%s>", 
-							rProperty.GetName().c_str(), 
-							rProperty.GetTypeAsString().c_str(),
-							rProperty.GetValue().c_str());
+							pProperty->GetName().c_str(), 
+							pProperty->GetTypeAsString().c_str(),
+							pProperty->GetValue().c_str());
 						return -1;
 					}
 				}
@@ -563,7 +563,7 @@ namespace guiex
 		*		
 		*		<property name="item_info" type="CGUIAsContainerItemInfo">
 		*			<property name="begin_time" type="real" value="5"/>
-		*			<property name="item" type="CGUIAsColor">
+		*			<property name="item" type="CGUIAsDefine" value="CGUIAsColorDefine">
 		*				<property name="loop" type="bool" value="false"/>
 		*				<property name="total_time" type="real" value="10" />
 		*				<property name="elapsed_time" type="real" value="5" />
@@ -606,7 +606,7 @@ namespace guiex
 				}
 				else
 				{
-					CGUIProperty aProperty( "item", rItemInfo.m_pAs->GetType() );
+					CGUIProperty aProperty( "item", "CGUIAsDefine", rItemInfo.m_pAs->GetType() );
 					if( 0 != rItemInfo.m_pAs->GenerateProperty( aProperty ) )
 					{
 						return -1;
