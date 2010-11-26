@@ -79,7 +79,7 @@ namespace guiex
 				aEvent.SetEventId(eEVENT_PARENT_CHANGE_SIZE);
 				aEvent.SetSize(pEvent->GetSize());
 				aEvent.SetReceiver(pWidget);
-				CGUISystem::Instance()->SendEvent( &aEvent );
+				GSystem->SendEvent( &aEvent );
 			}
 			pWidget = pWidget->GetNextSibling();
 		}
@@ -387,7 +387,7 @@ namespace guiex
 	{
 		WIDGET_EVENT_TRACE("OnGetFocus");
 
-		CGUISystem::Instance()->SetFocusWidget(this);
+		GSystem->SetFocusWidget(this);
 
 		//call callback function
 		CallbackFunction("OnGetFocus", pEvent);
@@ -399,7 +399,7 @@ namespace guiex
 	{
 		WIDGET_EVENT_TRACE("OnLostFocus");
 
-		CGUISystem::Instance()->SetFocusWidget(NULL);
+		GSystem->SetFocusWidget(NULL);
 
 		//call callback function
 		CallbackFunction("OnInactive", pEvent);
@@ -448,7 +448,7 @@ namespace guiex
 				CGUIEventNotification aEvent;
 				aEvent.SetEventId(eEVENT_SCALE_CHANGE);
 				aEvent.SetReceiver(pWidget);
-				CGUISystem::Instance()->SendEvent( &aEvent );
+				GSystem->SendEvent( &aEvent );
 			}
 			pWidget = pWidget->GetNextSibling();
 		}

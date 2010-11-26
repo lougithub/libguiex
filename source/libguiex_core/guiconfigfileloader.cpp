@@ -74,7 +74,7 @@ namespace guiex
 		const CGUIString& strRelativePath = pPropertySet->GetValue();
 		guiex::IGUIInterfaceScript* pInterfaceScript = CGUIInterfaceManager::Instance()->GetInterfaceScript();
 		if( pInterfaceScript &&
-			CGUISystem::Instance()->ShouldRunScript())
+			GSystem->ShouldRunScript())
 		{
 			// create script
 			pInterfaceScript->CreateScript( rSceneName );
@@ -263,7 +263,7 @@ namespace guiex
 			const CGUIProperty* pProperty = aPropertySet.GetProperty(i);
 			switch( pProperty->GetType() )
 			{
-			case ePropertyType_Widget:
+			case ePropertyType_WidgetDefine:
 				{
 					CGUIWidget* pWidget = DoLoadConfig_Widget( pProperty, rSceneName, rFileName );
 					if( !pWidget )

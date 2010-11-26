@@ -207,7 +207,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void	CGUIColListHeader::AddSegment( const CGUIStringW& rText, uint32 nId )
 	{
-		CGUIColListHeaderSegment * pSegment = static_cast<CGUIColListHeaderSegment*>(GUI_CREATE_WIDGET(m_strSegmentType.c_str(), CGUIString("segment_")+CGUISystem::Instance()->GenerateAnonymousName(), GetSceneName()));
+		CGUIColListHeaderSegment * pSegment = static_cast<CGUIColListHeaderSegment*>(GUI_CREATE_WIDGET(m_strSegmentType.c_str(), CGUIString("segment_")+GSystem->GenerateAnonymousName(), GetSceneName()));
 		pSegment->SetParent(this);
 		m_vecSegment.push_back(pSegment);
 		pSegment->SetTextContent(pText);

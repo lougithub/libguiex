@@ -456,7 +456,7 @@ namespace guiex
 			aEvent.SetReceiver(this);
 			aEvent.SetCurrentPos( m_nCurPos );
 			aEvent.SetRange( m_nMaxPos - m_nMinPos );
-			CGUISystem::Instance()->SendEvent( &aEvent);
+			GSystem->SendEvent( &aEvent);
 		}
 
 		//send event to parent
@@ -469,7 +469,7 @@ namespace guiex
 			aEvent.SetReceiver(GetParent());
 			aEvent.SetCurrentPos( m_nCurPos );
 			aEvent.SetRange( m_nMaxPos - m_nMinPos );
-			CGUISystem::Instance()->SendEvent( &aEvent);
+			GSystem->SendEvent( &aEvent);
 		}
 
 		//send event to host
@@ -482,7 +482,7 @@ namespace guiex
 			aEvent.SetReceiver(m_pWgtHost);
 			aEvent.SetCurrentPos( m_nCurPos );
 			aEvent.SetRange( m_nMaxPos - m_nMinPos );
-			CGUISystem::Instance()->SendEvent( &aEvent);
+			GSystem->SendEvent( &aEvent);
 		}
 	}
 	//------------------------------------------------------------------------------

@@ -33,12 +33,12 @@ WxEditorCanvasContainer::WxEditorCanvasContainer( wxWindow *parent, const std::s
 
 {
 	SetScrollRate( 10, 10 );
-	SetVirtualSize( guiex::CGUISystem::Instance()->GetScreenWidth(), guiex::CGUISystem::Instance()->GetScreenHeight() );
+	SetVirtualSize( guiex::GSystem->GetScreenWidth(), guiex::GSystem->GetScreenHeight() );
 
 	SetBackgroundColour( *wxLIGHT_GREY );
 
 	//create canvas
-	wxSize aCanvasSize( guiex::CGUISystem::Instance()->GetScreenWidth(), guiex::CGUISystem::Instance()->GetScreenHeight());
+	wxSize aCanvasSize( guiex::GSystem->GetScreenWidth(), guiex::GSystem->GetScreenHeight());
 	int wx_gl_attribs[] = {
 		WX_GL_RGBA, WX_GL_DOUBLEBUFFER, 
 		WX_GL_DEPTH_SIZE, 24, 
@@ -130,15 +130,15 @@ WxGLCanvas::WxGLCanvas(wxWindow *parent, int* args, wxWindowID id,
 WxGLCanvas::~WxGLCanvas()
 {
 	//free widgets
-	guiex::CGUISystem::Instance()->DestroyAllWidgets();
-	guiex::CGUISystem::Instance()->UnloadAllResource();
+	guiex::GSystem->DestroyAllWidgets();
+	guiex::GSystem->UnloadAllResource();
 }
 //------------------------------------------------------------------------------
 void	WxGLCanvas::InitializeCanvas()
 {
 	SetCurrent();
 
-	wxSize aCanvasSize( guiex::CGUISystem::Instance()->GetScreenWidth(), guiex::CGUISystem::Instance()->GetScreenHeight());
+	wxSize aCanvasSize( guiex::GSystem->GetScreenWidth(), guiex::GSystem->GetScreenHeight());
 	UpdateCanvasSize(aCanvasSize);
 }
 //------------------------------------------------------------------------------
@@ -149,7 +149,7 @@ void	WxGLCanvas::UpdateWindowBox()
 //------------------------------------------------------------------------------
 void WxGLCanvas::OnTimer(wxTimerEvent& event)
 {
-	guiex::CGUISystem::Instance()->Update( event.GetInterval() / 1000.f );
+	guiex::GSystem->Update( event.GetInterval() / 1000.f );
 	Refresh();
 }
 //------------------------------------------------------------------------------
@@ -256,7 +256,7 @@ void WxGLCanvas::Render()
 	glClearStencil( 0 );
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT );	// clear screen and depth buffer 
 
-	guiex::CGUISystem::Instance()->Render();
+	guiex::GSystem->Render();
 
 	DrawResizers();
 
@@ -416,8 +416,8 @@ void WxGLCanvas::HandleMouseMoved (int aMouseX, int aMouseY)
 	wxSnprintf (statusInfo, 100, wxT("[%d, %d][%3.2f, %3.2f]"), 
 		m_mouseX, 
 		m_mouseY, 
-		(double) m_mouseX / guiex::CGUISystem::Instance()->GetScreenWidth(), 
-		(double) m_mouseY / guiex::CGUISystem::Instance()->GetScreenHeight());
+		(double) m_mouseX / guiex::GSystem->GetScreenWidth(), 
+		(double) m_mouseY / guiex::GSystem->GetScreenHeight());
 
 	// Only proceed when the mouse is pressed
 	if (m_mousePressed) 
@@ -497,7 +497,7 @@ void WxGLCanvas::HandleMouseMoved (int aMouseX, int aMouseY)
 		if (m_hoveredResizePoint == RESIZE_POINT_NONE)
 		{
 			// Didn't find resize point, try window
-			m_hoveredWindow = guiex::CGUISystem::Instance()->GetWidgetUnderPoint(guiex::CGUIVector2((float)m_mouseX, (float)m_mouseY)) ;
+			m_hoveredWindow = guiex::GSystem->GetWidgetUnderPoint(guiex::CGUIVector2((float)m_mouseX, (float)m_mouseY)) ;
 		}
 	}
 
@@ -615,7 +615,7 @@ int	WxGLCanvas::SaveToFile( const std::string& rFilename)
 	while( pNode )
 	{
 		TiXmlElement* pNextNode = pNode->NextSiblingElement("property");
-		if( std::string(pNode->Attribute("type")) == "CGUIWidget" )
+		if( std::string(pNode->Attribute("type")) == "CGUIWidgetDefine" )
 		{
 			pRootNode->RemoveChild(pNode);
 		}
@@ -623,9 +623,9 @@ int	WxGLCanvas::SaveToFile( const std::string& rFilename)
 	}
 
 	//get page
-	if( guiex::CGUISystem::Instance()->GetOpenedPageNum() != 0 )
+	if( guiex::GSystem->GetOpenedPageNum() != 0 )
 	{
-		guiex::CGUIWidget* pWidget = guiex::CGUISystem::Instance()->GetOpenedPageByIndex(0);
+		guiex::CGUIWidget* pWidget = guiex::GSystem->GetOpenedPageByIndex(0);
 		if( pWidget )
 		{
 			//save it to doc
@@ -664,7 +664,7 @@ int WxGLCanvas::SaveWidgetNodeToDoc( guiex::CGUIWidget* pWidget, TiXmlDocument& 
 	//insert a widget
 	TiXmlElement aNewNode("property");
 	aNewNode.SetAttribute("name", pWidget->GetName().c_str());
-	aNewNode.SetAttribute("type", "CGUIWidget");
+	aNewNode.SetAttribute("type", "CGUIWidgetDefine");
 	aNewNode.SetAttribute("value", pWidget->GetType().c_str());
 
 	if( guiex::CGUIWidgetManager::Instance()->HasPage( pWidget))
@@ -685,26 +685,26 @@ int WxGLCanvas::SaveWidgetNodeToDoc( guiex::CGUIWidget* pWidget, TiXmlDocument& 
 	if( aSet.HasProperty("parent"))
 	{
 		guiex::CGUIProperty* pProperty = aSet.GetProperty("parent");
-		AddTopPropertyElement(pProperty, pWidgetNode);
+		AddTopPropertyElement(*pProperty, pWidgetNode);
 		aSet.RemoveProperty(*pProperty);
 	}
 
 	//process image
-	std::vector<const guiex::CGUIProperty*>	aImgVector;
+	std::vector<guiex::CGUIProperty>	aImgVector;
 	for( unsigned i=0; i<aSet.GetPropertyNum(); ++i)
 	{
 		const guiex::CGUIProperty* pProperty = aSet.GetProperty(i);
 		if( pProperty->GetType() == guiex::ePropertyType_Image )
 		{
-			aImgVector.push_back(pProperty);
+			aImgVector.push_back(*pProperty);
 		}
 	}
-	for( std::vector<const guiex::CGUIProperty*>::iterator itor = aImgVector.begin();
+	for( std::vector<guiex::CGUIProperty>::iterator itor = aImgVector.begin();
 		itor != aImgVector.end();
 		++itor )
 	{
 		AddTopPropertyElement(*itor, pWidgetNode);
-		aSet.RemoveProperty(*(*itor));
+		aSet.RemoveProperty(*itor);
 	}
 
 	//process left
@@ -712,7 +712,7 @@ int WxGLCanvas::SaveWidgetNodeToDoc( guiex::CGUIWidget* pWidget, TiXmlDocument& 
 	{
 		const guiex::CGUIProperty* pProperty = aSet.GetProperty(i);
 
-		AddTopPropertyElement(pProperty, pWidgetNode);
+		AddTopPropertyElement(*pProperty, pWidgetNode);
 	}
 
 	//process it's child
@@ -731,25 +731,25 @@ int WxGLCanvas::SaveWidgetNodeToDoc( guiex::CGUIWidget* pWidget, TiXmlDocument& 
 	return 0;
 }
 //------------------------------------------------------------------------------
-void WxGLCanvas::AddTopPropertyElement( const guiex::CGUIProperty* pProperty, TiXmlElement* pWidgetNode)
+void WxGLCanvas::AddTopPropertyElement( const guiex::CGUIProperty& rProperty, TiXmlElement* pWidgetNode)
 {
-	if( pProperty->GetValue().empty() && pProperty->GetPropertyNum() == 0 )
+	if( rProperty.GetValue().empty() && rProperty.GetPropertyNum() == 0 )
 	{
 		//empty property, ignore it
 		return;
 	}
 
 	//get exist's one
-	TiXmlElement* pOldNode = GetElementByName(_T("property"), wxConvUTF8.cMB2WC(pProperty->GetName().c_str()).data(), pWidgetNode);
+	TiXmlElement* pOldNode = GetElementByName(_T("property"), wxConvUTF8.cMB2WC(rProperty.GetName().c_str()).data(), pWidgetNode);
 
 	//add toppest element
 	TiXmlElement* pToppestNode = NULL;
 	TiXmlElement  aNewToppestNode("property");
-	aNewToppestNode.SetAttribute("name",pProperty->GetName().c_str());
-	aNewToppestNode.SetAttribute("type",pProperty->GetTypeAsString().c_str());
-	if( !pProperty->GetValue().empty())
+	aNewToppestNode.SetAttribute("name",rProperty.GetName().c_str());
+	aNewToppestNode.SetAttribute("type",rProperty.GetTypeAsString().c_str());
+	if( !rProperty.GetValue().empty())
 	{
-		aNewToppestNode.SetAttribute("value",pProperty->GetValue().c_str());
+		aNewToppestNode.SetAttribute("value",rProperty.GetValue().c_str());
 	}
 
 	//insert it
@@ -770,11 +770,11 @@ void WxGLCanvas::AddTopPropertyElement( const guiex::CGUIProperty* pProperty, Ti
 	}
 
 	//add all sub-property
-	if( pProperty->GetPropertyNum() > 0)
+	if( rProperty.GetPropertyNum() > 0)
 	{
-		for( unsigned i=0; i<pProperty->GetPropertyNum(); ++i)
+		for( unsigned i=0; i<rProperty.GetPropertyNum(); ++i)
 		{
-			AddSubPropertyElement( pProperty->GetProperty(i), pToppestNode );
+			AddSubPropertyElement( *rProperty.GetProperty(i), pToppestNode );
 		}
 	}
 }
@@ -800,16 +800,16 @@ TiXmlElement*	WxGLCanvas::GetElementByName(
 	return pNode;
 }
 //------------------------------------------------------------------------------
-void WxGLCanvas::AddSubPropertyElement( const guiex::CGUIProperty* pProperty, TiXmlElement* pParentElement)
+void WxGLCanvas::AddSubPropertyElement( const guiex::CGUIProperty& rProperty, TiXmlElement* pParentElement)
 {
 	//add current property
 	TiXmlElement* pToppestNode = NULL;
 	TiXmlElement  aNewToppestNode("property");
-	aNewToppestNode.SetAttribute("name",pProperty->GetName().c_str());
-	aNewToppestNode.SetAttribute("type",pProperty->GetTypeAsString().c_str());
-	if( !pProperty->GetValue().empty())
+	aNewToppestNode.SetAttribute("name",rProperty.GetName().c_str());
+	aNewToppestNode.SetAttribute("type",rProperty.GetTypeAsString().c_str());
+	if( !rProperty.GetValue().empty())
 	{
-		aNewToppestNode.SetAttribute("value",pProperty->GetValue().c_str());
+		aNewToppestNode.SetAttribute("value",rProperty.GetValue().c_str());
 	}
 
 	//insert it
@@ -817,11 +817,11 @@ void WxGLCanvas::AddSubPropertyElement( const guiex::CGUIProperty* pProperty, Ti
 	wxASSERT(pToppestNode);
 
 	//add all sub-property
-	if( pProperty->GetPropertyNum() > 0)
+	if( rProperty.GetPropertyNum() > 0)
 	{
-		for( unsigned i=0; i<pProperty->GetPropertyNum(); ++i)
+		for( unsigned i=0; i<rProperty.GetPropertyNum(); ++i)
 		{
-			AddSubPropertyElement( pProperty->GetProperty(i), pToppestNode );
+			AddSubPropertyElement( *rProperty.GetProperty(i), pToppestNode );
 		}
 	}
 }

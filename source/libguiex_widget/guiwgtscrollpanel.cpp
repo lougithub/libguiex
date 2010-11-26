@@ -356,9 +356,9 @@ namespace guiex
 			m_pScrollbarVert->SetScrollbarHost(NULL);
 			m_pScrollbarVert = NULL;
 		}
-		if( CGUISystem::Instance()->HasWidget(m_strVertScrollbarName, GetSceneName()) )
+		if( GSystem->HasWidget(m_strVertScrollbarName, GetSceneName()) )
 		{
-			CGUIWidget* pWidget = CGUISystem::Instance()->GetWidget(m_strVertScrollbarName, GetSceneName());
+			CGUIWidget* pWidget = GSystem->GetWidget(m_strVertScrollbarName, GetSceneName());
 			if( pWidget->GetType() == CGUIWgtScrollbar::StaticGetType())
 			{
 				m_pScrollbarVert = (CGUIWgtScrollbar*)pWidget;
@@ -375,9 +375,9 @@ namespace guiex
 			m_pScrollbarHorz->SetScrollbarHost(NULL);
 			m_pScrollbarHorz = NULL;
 		}
-		if( CGUISystem::Instance()->HasWidget(m_strHorzScrollbarName, GetSceneName()) )
+		if( GSystem->HasWidget(m_strHorzScrollbarName, GetSceneName()) )
 		{
-			CGUIWidget* pWidget = CGUISystem::Instance()->GetWidget(m_strHorzScrollbarName,GetSceneName());
+			CGUIWidget* pWidget = GSystem->GetWidget(m_strHorzScrollbarName,GetSceneName());
 			if( pWidget->GetType() == CGUIWgtScrollbar::StaticGetType())
 			{
 				m_pScrollbarHorz = (CGUIWgtScrollbar*)pWidget;

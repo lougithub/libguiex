@@ -266,8 +266,8 @@ void WxGLCanvas::OnIdle(wxIdleEvent & event)
 	try
 	{
 		m_aCurTimer.UpdateTime();
-		guiex::CGUISystem::Instance()->Update( (m_aCurTimer - m_aOldTimer) / 1000.f );
-		guiex::CGUISystem::Instance()->Render();
+		guiex::GSystem->Update( (m_aCurTimer - m_aOldTimer) / 1000.f );
+		guiex::GSystem->Render();
 		m_aOldTimer = m_aCurTimer;
 	}
 	catch (guiex::CGUIBaseException& rError)
@@ -291,7 +291,7 @@ void WxGLCanvas::OnSize(wxSizeEvent& event)
 	SetCurrent();
 	glViewport(0,0,aSize.x,aSize.y);	//定义视口
 
-	guiex::CGUISystem::Instance()->SetScreenSize(aSize.x,aSize.y);
+	guiex::GSystem->SetScreenSize(aSize.x,aSize.y);
 }
 //------------------------------------------------------------------------------
 void WxGLCanvas::OnKeyDown( wxKeyEvent& event )
@@ -445,13 +445,13 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 	try
 	{
 		guiex::CGUISystem* pGUISystem = new guiex::CGUISystem;
-		guiex::CGUISystem::Instance()->Initialize();
+		guiex::GSystem->Initialize();
 		GUI_LOG->Open( "gui editor",guiex::CGUILogMsg::FLAG_TIMESTAMP_LITE	|guiex::CGUILogMsg::FLAG_OSTREAM | guiex::CGUILogMsg::FLAG_MSG_CALLBACK);
 		GUI_LOG->SetPriorityMask(guiex::GUI_LM_DEBUG	| guiex::GUI_LM_TRACE	|guiex::GUI_LM_WARNING|guiex::GUI_LM_ERROR);
 		GUI_LOG->SetOstream( new std::ofstream( "libguiex_editor_viewer.log", std::ios_base::out | std::ios_base::trunc ), true );
 		GUI_LOG->SetCallbackMsg( &g_MsgCallback );
 		guiex::CGUIAssert::SetWarningCB(EditorWarningCB, NULL);
-		guiex::CGUISystem::Instance()->SetScreenSize(1024, 768);
+		guiex::GSystem->SetScreenSize(1024, 768);
 
 		//register interface
 		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl );
@@ -482,19 +482,19 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 		//get scene info
 		if(  GetUIInfo( true ))
 		{	
-			guiex::CGUISystem::Instance()->SetDataPath(m_strUIDataPath);
+			guiex::GSystem->SetDataPath(m_strUIDataPath);
 			guiex::CGUISceneInfoManager::Instance()->LoadScenes();
 			guiex::CGUISceneUtility::LoadResource(m_strUISceneFilename);
 			guiex::CGUIWidget* pWidget = guiex::CGUIWidgetManager::Instance()->LoadPage( m_strUIPageFilename, m_strUISceneFilename);
-			guiex::CGUISystem::Instance()->OpenPage(pWidget);
+			guiex::GSystem->OpenPage(pWidget);
 		}
 	}
 	catch (guiex::CGUIBaseException& rError)
 	{
 		MessageBoxA(NULL, rError.what(), "error", MB_OK);
 
-		guiex::CGUISystem::Instance()->Release();
-		delete guiex::CGUISystem::Instance();
+		guiex::GSystem->Release();
+		delete guiex::GSystem;
 	}
 
 	SetClientSize( 1024, 786 );
@@ -506,8 +506,8 @@ WxMainFrame::~WxMainFrame()
 	m_mgr.UnInit();	
 
 	//release libguiex system
-	guiex::CGUISystem::Instance()->Release();
-	delete guiex::CGUISystem::Instance();
+	guiex::GSystem->Release();
+	delete guiex::GSystem;
 }
 //------------------------------------------------------------------------------
 bool		WxMainFrame::GetUIInfo( bool bTryCommandLine)
@@ -539,7 +539,7 @@ bool		WxMainFrame::GetUIInfo( bool bTryCommandLine)
 	m_strUIDataPath = (aDlg.GetPath() + wxT("\\")).char_str(wxConvUTF8).data();
 
 	//chose scene
-	guiex::CGUISystem::Instance()->SetDataPath(m_strUIDataPath);
+	guiex::GSystem->SetDataPath(m_strUIDataPath);
 	guiex::CGUISceneInfoManager::Instance()->LoadScenes();
 	const std::vector<guiex::CGUIString>& vecScenes = guiex::CGUISceneInfoManager::Instance()->GetSceneFileNames( );
 	wxArrayString arrayScenes;
@@ -633,25 +633,25 @@ void WxMainFrame::OnToggleWireframe(wxCommandEvent& evt)
 //------------------------------------------------------------------------------
 void WxMainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 {
-	guiex::CGUISystem::Instance()->DestroyAllWidgets();
-	guiex::CGUISystem::Instance()->ReleaseAllResources();
+	guiex::GSystem->DestroyAllWidgets();
+	guiex::GSystem->ReleaseAllResources();
 
 	if( GetUIInfo(false))
 	{
 		try
 		{
-			guiex::CGUISystem::Instance()->SetDataPath(m_strUIDataPath);
+			guiex::GSystem->SetDataPath(m_strUIDataPath);
 			guiex::CGUISceneInfoManager::Instance()->LoadScenes();
 			guiex::CGUISceneUtility::LoadResource(m_strUISceneFilename);
 			guiex::CGUIWidget* pWidget = guiex::CGUIWidgetManager::Instance()->LoadPage( m_strUIPageFilename, m_strUISceneFilename);
-			guiex::CGUISystem::Instance()->OpenPage(pWidget);
+			guiex::GSystem->OpenPage(pWidget);
 
 		}
 		catch (guiex::CGUIBaseException& rError)
 		{
 			MessageBoxA( NULL, rError.what(), "error", MB_OK);
 
-			guiex::CGUISystem::Instance()->Release();
+			guiex::GSystem->Release();
 		}
 	}
 }

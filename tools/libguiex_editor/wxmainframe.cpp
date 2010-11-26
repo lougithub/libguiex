@@ -103,12 +103,27 @@ EVT_MENU(ID_WidgetDown, WxMainFrame::OnWidgetDown)
 
 
 EVT_MENU(ID_VIEW_Fullscreen, WxMainFrame::OnFullscreen)
-EVT_UPDATE_UI(ID_VIEW_800x600, WxMainFrame::OnUpdate800x600)
+
+EVT_UPDATE_UI(ID_VIEW_800x600, WxMainFrame::OnUpdateResolution)
 EVT_MENU(ID_VIEW_800x600, WxMainFrame::On800x600)
-EVT_UPDATE_UI(ID_VIEW_1024x786, WxMainFrame::OnUpdate1024x786)
+EVT_UPDATE_UI(ID_VIEW_1024x786, WxMainFrame::OnUpdateResolution)
 EVT_MENU(ID_VIEW_1024x786, WxMainFrame::On1024x786)
-EVT_UPDATE_UI(ID_VIEW_1280x800, WxMainFrame::OnUpdate1280x800)
+EVT_UPDATE_UI(ID_VIEW_1280x800, WxMainFrame::OnUpdateResolution)
 EVT_MENU(ID_VIEW_1280x800, WxMainFrame::On1280x800)
+EVT_UPDATE_UI(ID_VIEW_Iphone480x320, WxMainFrame::OnUpdateResolution)
+EVT_MENU(ID_VIEW_Iphone480x320, WxMainFrame::OnIphone480x320)
+EVT_UPDATE_UI(ID_VIEW_Iphone320x480, WxMainFrame::OnUpdateResolution)
+EVT_MENU(ID_VIEW_Iphone320x480, WxMainFrame::OnIphone320x480)
+EVT_UPDATE_UI(ID_VIEW_Iphone960x640, WxMainFrame::OnUpdateResolution)
+EVT_MENU(ID_VIEW_Iphone960x640, WxMainFrame::OnIphone960x640)
+EVT_UPDATE_UI(ID_VIEW_Iphone640x960, WxMainFrame::OnUpdateResolution)
+EVT_MENU(ID_VIEW_Iphone640x960, WxMainFrame::OnIphone640x960)
+EVT_UPDATE_UI(ID_VIEW_Ipad1024x768, WxMainFrame::OnUpdateResolution)
+EVT_MENU(ID_VIEW_Ipad1024x768, WxMainFrame::OnIpad1024x768)
+EVT_UPDATE_UI(ID_VIEW_Ipad768x1024, WxMainFrame::OnUpdateResolution)
+EVT_MENU(ID_VIEW_Ipad768x1024, WxMainFrame::OnIpad768x1024)
+
+
 EVT_MENU(ID_ToggleScissor, WxMainFrame::OnToggleScissor)
 EVT_MENU(ID_ToggleExtraInfo, WxMainFrame::OnToggleExtraInfo)
 EVT_MENU(ID_ToggleWireframe, WxMainFrame::OnToggleWireframe)
@@ -269,16 +284,16 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 	try
 	{
 		guiex::CGUISystem* pGUISystem = new guiex::CGUISystem;
-		guiex::CGUISystem::Instance()->Initialize();
+		guiex::GSystem->Initialize();
 #ifdef NDEBUG
 #else
 		GUI_LOG->Open( "gui editor",guiex::CGUILogMsg::FLAG_TIMESTAMP_LITE	/*|guiex::CGUILogMsg::FLAG_STDERR*/);
 		GUI_LOG->SetPriorityMask(guiex::GUI_LM_DEBUG	| guiex::GUI_LM_TRACE	|guiex::GUI_LM_WARNING|guiex::GUI_LM_ERROR);
 #endif
-		//guiex::CGUISystem::Instance()->SetRunScript(GetMenuBar()->GetMenu(GetMenuBar()->FindMenu(_T("Edit")))->IsChecked(ID_RunScript));
-		guiex::CGUISystem::Instance()->SetRunScript(false);
+		//guiex::GSystem->SetRunScript(GetMenuBar()->GetMenu(GetMenuBar()->FindMenu(_T("Edit")))->IsChecked(ID_RunScript));
+		guiex::GSystem->SetRunScript(false);
 		guiex::CGUIAssert::SetWarningCB(EditorWarningCB, NULL);
-		guiex::CGUISystem::Instance()->SetScreenSize(m_aScreenSize.x, m_aScreenSize.y);
+		guiex::GSystem->SetScreenSize(m_aScreenSize.x, m_aScreenSize.y);
 
 		//register interface
 		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl);
@@ -307,8 +322,8 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 	{
 		wxMessageBox( wxConvUTF8.cMB2WC(rError.what()).data(), _T("error"), wxICON_ERROR|wxCENTRE);
 
-		guiex::CGUISystem::Instance()->Release();
-		delete guiex::CGUISystem::Instance();
+		guiex::GSystem->Release();
+		delete guiex::GSystem;
 	}
 }
 //------------------------------------------------------------------------------
@@ -319,8 +334,8 @@ WxMainFrame::~WxMainFrame()
 	m_mgr.UnInit();	
 	
 	//release libguiex system
-	guiex::CGUISystem::Instance()->Release();
-	delete guiex::CGUISystem::Instance();
+	guiex::GSystem->Release();
+	delete guiex::GSystem;
 }
 //------------------------------------------------------------------------------
 WxOutputPanel*	WxMainFrame::CreateOutput()
@@ -454,17 +469,17 @@ void			WxMainFrame::RefreshWidgetTreeCtrl()
 {
 	ResetWidgetTreeCtrl();
 	
-	if( !guiex::CGUISystem::Instance()->IsInitialized())
+	if( !guiex::GSystem->IsInitialized())
 	{
 		//no editable page now
 		return;
 	}
 
-	if( guiex::CGUISystem::Instance()->GetOpenedPageNum() != 1 )
+	if( guiex::GSystem->GetOpenedPageNum() != 1 )
 	{
 		return;
 	}
-	guiex::CGUIWidget* pWidgetRoot = guiex::CGUISystem::Instance()->GetOpenedPageByIndex(0);
+	guiex::CGUIWidget* pWidgetRoot = guiex::GSystem->GetOpenedPageByIndex(0);
 	if( !pWidgetRoot)
 	{
 		//no root widget
@@ -669,7 +684,7 @@ void	WxMainFrame::CloseScene( )
 
 		CloseCanvas();
 
-		guiex::CGUISystem::Instance()->ReleaseAllResources();
+		guiex::GSystem->ReleaseAllResources();
 		guiex::CGUISceneInfoManager::Instance()->UnloadScenes();
 
 		m_bIsSceneOpened = false;
@@ -696,7 +711,7 @@ void WxMainFrame::OnTreeItemWidgetView(wxCommandEvent& event)
 	viewer_exe = "Release_libguiex_viewer.exe";
 #endif
 
-	std::string strRunCommand = viewer_exe + " " + guiex::CGUISystem::Instance()->GetDataPath() + " " +m_strCurrentSceneName + " " + strFilename.char_str(wxConvUTF8).data();
+	std::string strRunCommand = viewer_exe + " " + guiex::GSystem->GetDataPath() + " " +m_strCurrentSceneName + " " + strFilename.char_str(wxConvUTF8).data();
 	wxExecute(wxConvUTF8.cMB2WC(strRunCommand.c_str()), wxEXEC_ASYNC);
 }
 //------------------------------------------------------------------------------
@@ -1017,11 +1032,11 @@ void WxMainFrame::OnDeleteWidget(wxCommandEvent& evt)
 		return;
 	}
 
-	if( guiex::CGUISystem::Instance()->GetOpenedPageNum() !=0 &&
-		pWidget == guiex::CGUISystem::Instance()->GetOpenedPageByIndex(0))
+	if( guiex::GSystem->GetOpenedPageNum() !=0 &&
+		pWidget == guiex::GSystem->GetOpenedPageByIndex(0))
 	{
 		//is page
-		guiex::CGUISystem::Instance()->ClosePage(pWidget);
+		guiex::GSystem->ClosePage(pWidget);
 		guiex::CGUIWidgetManager::Instance()->DestroyPage(pWidget);
 	}
 	else
@@ -1055,9 +1070,9 @@ void WxMainFrame::OnRunScript(wxCommandEvent& evt)
 {
 	bool bIsChecked = evt.IsChecked();
 
-	if( guiex::CGUISystem::Instance()->IsInitialized())
+	if( guiex::GSystem->IsInitialized())
 	{
-		guiex::CGUISystem::Instance()->SetRunScript(bIsChecked);
+		guiex::GSystem->SetRunScript(bIsChecked);
 	}
 }
 //------------------------------------------------------------------------------
@@ -1077,7 +1092,7 @@ void WxMainFrame::OnToggleExtraInfo(wxCommandEvent& evt)
 
 	if( guiex::CGUIInterfaceManager::Instance()->GetInterfaceRender())
 	{
-		guiex::CGUISystem::Instance()->SetDrawExtraInfo(bIsChecked);
+		guiex::GSystem->SetDrawExtraInfo(bIsChecked);
 	}
 }
 //------------------------------------------------------------------------------
@@ -1093,7 +1108,7 @@ void WxMainFrame::OnToggleWireframe(wxCommandEvent& evt)
 //------------------------------------------------------------------------------
 void WxMainFrame::OnRefresh(wxCommandEvent& evt)
 {
-	guiex::CGUISystem::Instance()->GetCurrentRootWidget()->Refresh();
+	guiex::GSystem->GetCurrentRootWidget()->Refresh();
 	Refresh();
 }
 //------------------------------------------------------------------------------
@@ -1112,18 +1127,9 @@ void WxMainFrame::OnFullscreen(wxCommandEvent& evt)
 	Refresh();
 }
 //------------------------------------------------------------------------------
-void WxMainFrame::OnUpdate800x600(wxUpdateUIEvent& event)
+void WxMainFrame::OnUpdateResolution(wxUpdateUIEvent& event)
 {
-	event.Enable( guiex::CGUISystem::Instance()->IsInitialized());
-}
-//------------------------------------------------------------------------------
-void WxMainFrame::On800x600(wxCommandEvent& evt)
-{
-	guiex::CGUISystem::Instance()->SetScreenSize(800, 600);
-	if( m_pCanvas )
-	{
-		m_pCanvas->SetScreenSize(800, 600);
-	}
+	event.Enable( guiex::GSystem->IsInitialized());
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::OnCreateWidget(wxCommandEvent& evt)
@@ -1145,10 +1151,10 @@ void WxMainFrame::OnCreateWidget(wxCommandEvent& evt)
 		return;
 	}
 
-	if( guiex::CGUISystem::Instance()->GetOpenedPageNum() == 0 )
+	if( guiex::GSystem->GetOpenedPageNum() == 0 )
 	{
 		guiex::CGUIWidgetManager::Instance()->AddPage( pWidget);
-		guiex::CGUISystem::Instance()->OpenPage( pWidget);
+		guiex::GSystem->OpenPage( pWidget);
 	}
 	else if( m_pCanvas->GetSelectedWidget())
 	{
@@ -1168,7 +1174,7 @@ void WxMainFrame::OnUpdateCreateWidget(wxUpdateUIEvent& event)
 {
 	if( m_pCanvas )
 	{
-		if( guiex::CGUISystem::Instance()->GetOpenedPageNum() == 0 ||
+		if( guiex::GSystem->GetOpenedPageNum() == 0 ||
 			m_pCanvas->GetSelectedWidget())
 		{
 			event.Enable(true);
@@ -1178,34 +1184,58 @@ void WxMainFrame::OnUpdateCreateWidget(wxUpdateUIEvent& event)
 	event.Enable(false);
 }
 //------------------------------------------------------------------------------
-void WxMainFrame::OnUpdate1024x786(wxUpdateUIEvent& event)
+void WxMainFrame::SetResolution( int width, int height )
 {
-	event.Enable( guiex::CGUISystem::Instance()->IsInitialized());
+	guiex::GSystem->SetScreenSize(width, height);
+	if( m_pCanvas )
+	{
+		m_pCanvas->SetScreenSize(width, height);
+	}
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::On800x600(wxCommandEvent& evt)
+{
+	SetResolution( 800, 600 );
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::On1024x786(wxCommandEvent& evt)
 {
-	guiex::CGUISystem::Instance()->SetScreenSize(1024, 768);
-
-	if( m_pCanvas )
-	{
-		m_pCanvas->SetScreenSize(1024, 768);
-	}
-}
-//------------------------------------------------------------------------------
-void WxMainFrame::OnUpdate1280x800(wxUpdateUIEvent& event)
-{
-	event.Enable( guiex::CGUISystem::Instance()->IsInitialized());
+	SetResolution( 1024, 768 );
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::On1280x800(wxCommandEvent& evt)
 {
-	guiex::CGUISystem::Instance()->SetScreenSize(1280, 800);
-
-	if( m_pCanvas )
-	{
-		m_pCanvas->SetScreenSize(1280, 800);
-	}
+	SetResolution( 1280, 800 );
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnIphone480x320(wxCommandEvent& evt)
+{
+	SetResolution( 480, 320 );
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnIphone320x480(wxCommandEvent& evt)
+{
+	SetResolution( 320, 480 );
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnIphone960x640(wxCommandEvent& evt)
+{
+	SetResolution( 960, 640 );
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnIphone640x960(wxCommandEvent& evt)
+{
+	SetResolution( 640, 960 );
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnIpad1024x768(wxCommandEvent& evt)
+{
+	SetResolution( 1024, 768 );
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnIpad768x1024(wxCommandEvent& evt)
+{
+	SetResolution( 768, 1024 );
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::OnKeyDown(wxKeyEvent& event)
@@ -1252,7 +1282,7 @@ void WxMainFrame::OnRecentPaths( wxCommandEvent& In )
 	unsigned nFileIdx = In.GetId() - ID_RecentPathsBaseId;
 
 	std::string	strPath = CToolCache::Instance()->m_pathHistory[nFileIdx];
-	guiex::CGUISystem::Instance()->SetDataPath(strPath);
+	guiex::GSystem->SetDataPath(strPath);
 	try
 	{
 		if( 0 != guiex::CGUISceneInfoManager::Instance()->LoadScenes())
@@ -1313,7 +1343,7 @@ void WxMainFrame::OnRecentScenes( wxCommandEvent& In )
 	unsigned nFileIdx = In.GetId() - ID_RecentScenesBaseId;
 
 	std::pair< std::string, std::string>	strScene = CToolCache::Instance()->m_sceneHistory[nFileIdx];
-	guiex::CGUISystem::Instance()->SetDataPath(strScene.second);
+	guiex::GSystem->SetDataPath(strScene.second);
 	try
 	{
 		if( 0 != guiex::CGUISceneInfoManager::Instance()->LoadScenes())
@@ -1382,7 +1412,7 @@ void WxMainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 		return;
 	}
 
-	guiex::CGUIString strPath = guiex::CGUISystem::Instance()->GetDataPath();
+	guiex::CGUIString strPath = guiex::GSystem->GetDataPath();
 	wxDirDialog aDlg( this, _T("Choose a libguiex root path"), wxConvUTF8.cMB2WC( strPath.c_str()));
 	if( wxID_OK != aDlg.ShowModal())
 	{
@@ -1392,7 +1422,7 @@ void WxMainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 	CloseScene();
 
 	std::string strDataPath = (aDlg.GetPath() + wxT("\\")).char_str(wxConvUTF8).data();
-	guiex::CGUISystem::Instance()->SetDataPath(strDataPath);
+	guiex::GSystem->SetDataPath(strDataPath);
 
 	try
 	{
@@ -1462,7 +1492,7 @@ void WxMainFrame::RenderFile( const std::string& rFileName )
 	guiex::CGUISceneInfo* pSceneInfo = guiex::CGUISceneInfoManager::Instance()->GetSceneInfo(m_strCurrentSceneName);
 
 	std::string strAbsFileName = 
-		guiex::CGUISystem::Instance()->GetDataPath() +
+		guiex::GSystem->GetDataPath() +
 		pSceneInfo->GetScenePath() +
 		rFileName;
 
@@ -1478,7 +1508,7 @@ void WxMainFrame::RenderFile( const std::string& rFileName )
 		guiex::CGUIWidget* pWidget = guiex::CGUIWidgetManager::Instance()->LoadPage( rFileName, m_strCurrentSceneName);
 		if( pWidget )
 		{
-			guiex::CGUISystem::Instance()->OpenPage(pWidget);
+			guiex::GSystem->OpenPage(pWidget);
 		}
 	}
 	catch (guiex::CGUIBaseException& rError)
@@ -1499,7 +1529,7 @@ void	WxMainFrame::EditFileExternal( const std::string& rFileName )
 {
 	guiex::CGUISceneInfo* pSceneInfo = guiex::CGUISceneInfoManager::Instance()->GetSceneInfo(m_strCurrentSceneName);
 
-	std::string strAbsPath = guiex::CGUISystem::Instance()->GetDataPath() + pSceneInfo->GetScenePath();
+	std::string strAbsPath = guiex::GSystem->GetDataPath() + pSceneInfo->GetScenePath();
 	std::string strAbsFileName = strAbsPath + rFileName;
 
 	::ShellExecute( 
@@ -1516,7 +1546,7 @@ void	WxMainFrame::EditFile( const std::string& rFileName, EFileType eFileType )
 	guiex::CGUISceneInfo* pSceneInfo = guiex::CGUISceneInfoManager::Instance()->GetSceneInfo(m_strCurrentSceneName);
 
 	std::string strAbsPath = 
-		guiex::CGUISystem::Instance()->GetDataPath() +
+		guiex::GSystem->GetDataPath() +
 		pSceneInfo->GetScenePath() +
 		rFileName;
 
@@ -1679,7 +1709,14 @@ void			WxMainFrame::CreateMenu()
 	view_menu->Append(ID_VIEW_Fullscreen, _("Fullscreen"));
 	view_menu->Append(ID_VIEW_800x600, wxT("800 x 600"), wxT("Convenience resizer for 800 x 600."));
 	view_menu->Append(ID_VIEW_1024x786, wxT("1024 x 768"), wxT("Convenience resizer for 1024 x 768."));
-	view_menu->Append(ID_VIEW_1024x786, wxT("1280 x 800"), wxT("Convenience resizer for 1280 x 800."));
+	view_menu->Append(ID_VIEW_1280x800, wxT("1280 x 800"), wxT("Convenience resizer for 1280 x 800."));
+	view_menu->Append(ID_VIEW_Iphone480x320, wxT("Iphone480x320"), wxT("Convenience resizer for Iphone480x320."));
+	view_menu->Append(ID_VIEW_Iphone320x480, wxT("Iphone320x480"), wxT("Convenience resizer for Iphone320x480."));
+	view_menu->Append(ID_VIEW_Iphone960x640, wxT("Iphone960x640"), wxT("Convenience resizer for Iphone960x640."));
+	view_menu->Append(ID_VIEW_Iphone640x960, wxT("Iphone640x960"), wxT("Convenience resizer for Iphone640x960."));
+	view_menu->Append(ID_VIEW_Ipad1024x768, wxT("Ipad1024x768"), wxT("Convenience resizer for Ipad1024x768."));
+	view_menu->Append(ID_VIEW_Ipad768x1024, wxT("Ipad768x1024"), wxT("Convenience resizer for Ipad768x1024."));
+	
 	view_menu->AppendSeparator();
 	view_menu->Append(ID_ToggleScissor, wxT("Toggle Scissor"), wxT("enable or disable scissor"), wxITEM_CHECK);
 	view_menu->Append(ID_ToggleWireframe, wxT("Toggle Wireframe"), wxT("enable or disable wireframe"), wxITEM_CHECK);

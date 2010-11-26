@@ -82,7 +82,7 @@ namespace guiex
 		void* pItemData ,
 		bool bDisable)	
 	{
-		CGUIString strItemName = CGUIString("collistitem_")+CGUISystem::Instance()->GenerateAnonymousName();
+		CGUIString strItemName = CGUIString("collistitem_")+GSystem->GenerateAnonymousName();
 		CGUIColListTextItem * pItem = 
 			static_cast<CGUIColListTextItem *>(GUI_CREATE_WIDGET("CGUIColListTextItem", strItemName, rSceneName));
 		pItem->SetDisable(bDisable);

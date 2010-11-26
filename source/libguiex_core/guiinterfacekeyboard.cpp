@@ -37,7 +37,7 @@ namespace guiex
 	//------------------------------------------------------------------------------ 
 	bool IGUIInterfaceKeyboard::ProcessKeyEvent( const SKeyEvent& rEvent )
 	{
-		return CGUISystem::Instance()->ProcessKeyboardInput( rEvent );
+		return GSystem->ProcessKeyboardInput( rEvent );
 	}
 	//------------------------------------------------------------------------------ 
 	bool IGUIInterfaceKeyboard::ChangeKeyState(EKeyCode eKey, EKeyState eState)

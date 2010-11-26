@@ -409,7 +409,7 @@ void SampleUpdate( float fDeltaTime)
 	guiex::CGUIWgtStaticText* pWidget = 
 		guiex::CGUIWidgetManager::Instance()->GetWidgetWithTypeCheck<guiex::CGUIWgtStaticText>( "frame", "testscene" );
 	char buf[512];
-	snprintf( buf, 512, "frame = %d", guiex::CGUISystem::Instance()->GetFPS() );
+	snprintf( buf, 512, "frame = %d", guiex::GSystem->GetFPS() );
 	pWidget->SetTextContentUTF8( buf );
 }
 

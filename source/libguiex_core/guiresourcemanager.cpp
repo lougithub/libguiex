@@ -20,12 +20,12 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIResourceManagerBase::CGUIResourceManagerBase()
 	{
-		CGUISystem::Instance()->RegisterResourceManager( this );
+		GSystem->RegisterResourceManager( this );
 	}
 	//------------------------------------------------------------------------------
 	CGUIResourceManagerBase::~CGUIResourceManagerBase()
 	{
-		CGUISystem::Instance()->UnregisterResourceManager( this );
+		GSystem->UnregisterResourceManager( this );
 	}
 	//------------------------------------------------------------------------------
 }

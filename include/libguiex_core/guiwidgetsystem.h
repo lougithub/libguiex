@@ -49,6 +49,8 @@ namespace guiex
 	class CGUISceneInfoManager;
 	class CGUILogMsgManager;
 	class CGUIWidgetManager;
+
+	extern CGUISystem* GSystem;
 }
 
 //============================================================================//

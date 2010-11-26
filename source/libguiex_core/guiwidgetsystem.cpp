@@ -49,20 +49,22 @@
 
 namespace guiex
 {
+	CGUISystem* GSystem = NULL;
+
 	//------------------------------------------------------------------------------
 	GUIEXPORT CGUISystem* GetSystem()
 	{
-		return CGUISystem::Instance();
+		return GSystem;
 	}
 	//------------------------------------------------------------------------------
 	GUIEXPORT void OpenDialog(CGUIWidget* pDlg)
 	{
-		return CGUISystem::Instance()->OpenDialog( pDlg );
+		return GSystem->OpenDialog( pDlg );
 	}
 	//------------------------------------------------------------------------------
 	GUIEXPORT void CloseDialog(CGUIWidget* pDlg)
 	{
-		return CGUISystem::Instance()->CloseDialog( pDlg );
+		return GSystem->CloseDialog( pDlg );
 	}
 	//------------------------------------------------------------------------------
 	GUIEXPORT void SendUIEvent(const CGUIString& rUIEventName,
@@ -87,17 +89,17 @@ namespace guiex
 		aUIEvent.SetArg(7, rArg8 );
 		aUIEvent.SetArg(8, rArg9 );
 		aUIEvent.SetUIName( rUIEventName );
-		CGUISystem::Instance()->SendUIEvent( &aUIEvent );
+		GSystem->SendUIEvent( &aUIEvent );
 	}
 	//------------------------------------------------------------------------------
-	GUIEXPORT	void OpenPage( CGUIWidget* pPage )
+	GUIEXPORT void OpenPage( CGUIWidget* pPage )
 	{
-		return CGUISystem::Instance()->OpenPage( pPage );
+		return GSystem->OpenPage( pPage );
 	}
 	//------------------------------------------------------------------------------
-	GUIEXPORT	void ClosePage( CGUIWidget* pPage )
+	GUIEXPORT void ClosePage( CGUIWidget* pPage )
 	{
-		return CGUISystem::Instance()->ClosePage( pPage );
+		return GSystem->ClosePage( pPage );
 	}
 	//------------------------------------------------------------------------------
 
@@ -135,6 +137,7 @@ namespace guiex
 	{
 		GUI_ASSERT( !m_pSingleton, "[CGUISystem::CGUISystem]:instance has been created" ); 
 		m_pSingleton = this; 
+		GSystem = this;
 
 		SetScreenSize(640,480);
 		m_aInputProcessor.SetSystem(this);
@@ -148,6 +151,7 @@ namespace guiex
 		}
 
 		m_pSingleton = NULL;
+		GSystem = NULL;
 	}
 	//------------------------------------------------------------------------------
 	CGUISystem* CGUISystem::Instance()
@@ -1143,7 +1147,7 @@ namespace guiex
 			if( pReceiverRoot == pRoot )
 			{
 				pEvent->SetReceiver(pReceiver);
-				CGUISystem::Instance()->SendEvent(pEvent);
+				GSystem->SendEvent(pEvent);
 				if( pEvent->IsConsumed())
 				{
 					break;

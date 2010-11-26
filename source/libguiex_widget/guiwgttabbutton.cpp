@@ -77,7 +77,7 @@ namespace guiex
 							CGUIEventNotification aCheckEvent;
 							aCheckEvent.SetEventId(eEVENT_UNCHECKED);
 							aCheckEvent.SetReceiver(pTempTabBtn);
-							CGUISystem::Instance()->SendEvent( &aCheckEvent);
+							GSystem->SendEvent( &aCheckEvent);
 
 							//hide child
 							if( pTempTabBtn->GetChild() )
@@ -91,7 +91,7 @@ namespace guiex
 							CGUIEventNotification aCheckEvent;
 							aCheckEvent.SetEventId(eEVENT_CHECKED);
 							aCheckEvent.SetReceiver(this);
-							CGUISystem::Instance()->SendEvent( &aCheckEvent);
+							GSystem->SendEvent( &aCheckEvent);
 
 							//show child
 							if( this->GetChild() )

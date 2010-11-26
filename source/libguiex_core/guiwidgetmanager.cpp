@@ -356,7 +356,7 @@ namespace guiex
 	{
 		//load file
 		CGUIString strRelPath = CGUISceneInfoManager::Instance()->GetScenePath( rPageSceneName ) + rPageFileName;
-		CGUIString strDynamicSceneName = rPageSceneName + CGUISystem::Instance()->GenerateAnonymousName();
+		CGUIString strDynamicSceneName = rPageSceneName + GSystem->GenerateAnonymousName();
 		CGUIWidget* pPage = CGUIConfigFileLoader::LoadWidgetConfigFile( strRelPath, strDynamicSceneName, rPageFileName );
 		if( !pPage )
 		{

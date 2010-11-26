@@ -131,8 +131,8 @@ protected:
 
 	int	 SaveWidgetNodeToDoc( guiex::CGUIWidget* pWidget, TiXmlDocument& rDoc );
 	TiXmlElement*	GetElementByName( const wxString& rElementName,const wxString& rAttrName, TiXmlElement* pParentElement );
-	void AddTopPropertyElement( const guiex::CGUIProperty* pProperty, TiXmlElement* pWidgetNode);
-	void AddSubPropertyElement( const guiex::CGUIProperty* pProperty, TiXmlElement* pParentElement);
+	void AddTopPropertyElement( const guiex::CGUIProperty& rProperty, TiXmlElement* pWidgetNode);
+	void AddSubPropertyElement( const guiex::CGUIProperty& rProperty, TiXmlElement* pParentElement);
 
 private:
 	wxTimer m_timer;

@@ -171,7 +171,7 @@ namespace guiex
 		{
 			//focus widget process this event at first
 			aEvent.SetReceiver(pFocusWidget);
-			CGUISystem::Instance()->SendEvent(&aEvent);
+			GSystem->SendEvent(&aEvent);
 		}
 
 		if( !aEvent.IsConsumed())
@@ -259,7 +259,7 @@ namespace guiex
 				CGUIEventNotification aEvent;
 				aEvent.SetEventId(eEVENT_ACTIVE);
 				aEvent.SetReceiver(pTargetWidget);
-				CGUISystem::Instance()->SendEvent(&aEvent);
+				GSystem->SendEvent(&aEvent);
 			}
 
 			//mouse down, mouse double click and multi click event
@@ -312,7 +312,7 @@ namespace guiex
 				aEventDrag.SetButton( rMouseEvent.m_eButton );
 				aEventDrag.SetWidgetPos(pTargetWidget->GetPixelPosition());
 				aEventDrag.SetMousePos(rMouseEvent.m_aMousePos);
-				CGUISystem::Instance()->SendEvent(&aEventDrag);
+				GSystem->SendEvent(&aEventDrag);
 				bConsumed |= aEventDrag.IsConsumed();
 				
 				if( !aEventDrag.IsExpired())
@@ -324,7 +324,7 @@ namespace guiex
 			m_pMouseTracker->m_aButtonTrack[rMouseEvent.m_eButton].m_uLastDownEvent = aEventMouse.GetEventId();
 
 			//mouse down event
-			CGUISystem::Instance()->SendEvent(&aEventMouse);
+			GSystem->SendEvent(&aEventMouse);
 			bConsumed |= aEventMouse.IsConsumed();
 		}
 		else
@@ -371,7 +371,7 @@ namespace guiex
 				aEventMouse.SetPosition(rMouseEvent.m_aMousePos);
 				aEventMouse.SetReceiver(pTargetWidget);
 				aEventMouse.SetKeyboardInterface(CGUIInterfaceManager::Instance()->GetInterfaceKeyboard());
-				CGUISystem::Instance()->SendEvent(&aEventMouse);
+				GSystem->SendEvent(&aEventMouse);
 
 				bConsumed |= aEventMouse.IsConsumed();
 			}
@@ -383,7 +383,7 @@ namespace guiex
 			aEventMouse.SetReceiver(pTargetWidget);
 			aEventMouse.SetPosition(rMouseEvent.m_aMousePos);
 			aEventMouse.SetKeyboardInterface(CGUIInterfaceManager::Instance()->GetInterfaceKeyboard());
-			CGUISystem::Instance()->SendEvent(&aEventMouse);
+			GSystem->SendEvent(&aEventMouse);
 
 			bConsumed |= aEventMouse.IsConsumed();
 		}
@@ -398,7 +398,7 @@ namespace guiex
 				aEventMouse.SetReceiver(m_pMouseTracker->m_aButtonTrack[rMouseEvent.m_eButton].m_pTargetWidget);
 				aEventMouse.SetPosition(rMouseEvent.m_aMousePos);
 				aEventMouse.SetKeyboardInterface(CGUIInterfaceManager::Instance()->GetInterfaceKeyboard());
-				CGUISystem::Instance()->SendEvent(&aEventMouse);
+				GSystem->SendEvent(&aEventMouse);
 
 				bConsumed |= aEventMouse.IsConsumed();
 			}
@@ -411,7 +411,7 @@ namespace guiex
 				aEventMouse.SetReceiver(pTargetWidget);
 				aEventMouse.SetPosition(rMouseEvent.m_aMousePos);
 				aEventMouse.SetKeyboardInterface(CGUIInterfaceManager::Instance()->GetInterfaceKeyboard());
-				CGUISystem::Instance()->SendEvent(&aEventMouse);
+				GSystem->SendEvent(&aEventMouse);
 
 				bConsumed |= aEventMouse.IsConsumed();
 			}
@@ -427,7 +427,7 @@ namespace guiex
 			aEventDrag.SetReceiver( m_pDragTracker->m_pDragItem );
 			aEventDrag.SetWidgetPos(m_pDragTracker->m_aDeltaPos + rMouseEvent.m_aMousePos);
 			aEventDrag.SetMousePos(rMouseEvent.m_aMousePos);
-			CGUISystem::Instance()->SendEvent(&aEventDrag);
+			GSystem->SendEvent(&aEventDrag);
 			bConsumed |= aEventDrag.IsConsumed();
 			
 			EndDrag();
@@ -451,7 +451,7 @@ namespace guiex
 			aEventMouse.SetPosition(rMouseEvent.m_aMousePos);
 			aEventMouse.SetWheelChange(rMouseEvent.m_fWheelChange);
 			aEventMouse.SetKeyboardInterface(CGUIInterfaceManager::Instance()->GetInterfaceKeyboard());
-			CGUISystem::Instance()->SendEvent(&aEventMouse);
+			GSystem->SendEvent(&aEventMouse);
 
 			bConsumed |= aEventMouse.IsConsumed();
 		}
@@ -475,7 +475,7 @@ namespace guiex
 			aEventDrag.SetReceiver( m_pDragTracker->m_pDragItem );
 			aEventDrag.SetWidgetPos( m_pDragTracker->m_aDeltaPos + rMouseEvent.m_aMousePos);
 			aEventDrag.SetMousePos(rMouseEvent.m_aMousePos);
-			CGUISystem::Instance()->SendEvent(&aEventDrag);
+			GSystem->SendEvent(&aEventDrag);
 
 			bConsumed |= aEventDrag.IsConsumed();
 		}
@@ -497,7 +497,7 @@ namespace guiex
 						aEventMouse.SetReceiver(m_pMouseTracker->m_pWidgetUnderMouse);
 						aEventMouse.SetPosition(rMouseEvent.m_aMousePos);
 						aEventMouse.SetKeyboardInterface(CGUIInterfaceManager::Instance()->GetInterfaceKeyboard());
-						CGUISystem::Instance()->SendEvent(&aEventMouse);
+						GSystem->SendEvent(&aEventMouse);
 					}
 
 					{
@@ -507,7 +507,7 @@ namespace guiex
 						aEventMouse.SetReceiver(m_pMouseTracker->m_pWidgetUnderMouse);
 						aEventMouse.SetPosition(rMouseEvent.m_aMousePos);
 						aEventMouse.SetKeyboardInterface(CGUIInterfaceManager::Instance()->GetInterfaceKeyboard());
-						CGUISystem::Instance()->SendEvent(&aEventMouse);
+						GSystem->SendEvent(&aEventMouse);
 					}
 				}
 
@@ -519,7 +519,7 @@ namespace guiex
 					aEventMouse.SetReceiver(pTargetWidget);
 					aEventMouse.SetPosition(rMouseEvent.m_aMousePos);
 					aEventMouse.SetKeyboardInterface(CGUIInterfaceManager::Instance()->GetInterfaceKeyboard());
-					CGUISystem::Instance()->SendEvent(&aEventMouse);
+					GSystem->SendEvent(&aEventMouse);
 				}
 
 				m_pMouseTracker->m_pWidgetUnderMouse = pTargetWidget;
@@ -532,7 +532,7 @@ namespace guiex
 				aEventMouse.SetReceiver(m_pMouseTracker->m_pWidgetUnderMouse);
 				aEventMouse.SetPosition(rMouseEvent.m_aMousePos);
 				aEventMouse.SetKeyboardInterface(CGUIInterfaceManager::Instance()->GetInterfaceKeyboard());
-				CGUISystem::Instance()->SendEvent(&aEventMouse);
+				GSystem->SendEvent(&aEventMouse);
 			}
 		}
 		return bConsumed;

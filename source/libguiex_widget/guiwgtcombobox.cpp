@@ -71,8 +71,8 @@ namespace guiex
 
 		CGUIWgtListBox::PostUpdateDirtyRect();
 
-		m_aClipRect = CGUISystem::Instance()->GetScreenRect().GetIntersection(m_aWidgetRect);
-		m_aClientClipRect = CGUISystem::Instance()->GetScreenRect().GetIntersection(aClientClipRect);
+		m_aClipRect = GSystem->GetScreenRect().GetIntersection(m_aWidgetRect);
+		m_aClientClipRect = GSystem->GetScreenRect().GetIntersection(aClientClipRect);
 	}
 	//------------------------------------------------------------------------------
 	uint32		CGUIWgtComboBoxDropList::OnLostFocus( CGUIEventNotification* pEvent )
@@ -219,7 +219,7 @@ namespace guiex
 		aEvent.SetEventId(eEVENT_COMBOBOX_SELECTED);
 		aEvent.SetReceiver(this);
 		aEvent.SetSelectedItemIdx( nIdx );
-		CGUISystem::Instance()->SendEvent( &aEvent);
+		GSystem->SendEvent( &aEvent);
 	}
 	//------------------------------------------------------------------------------
 	void			CGUIWgtComboBox::SetSelectedItem(uint32 nIdx )

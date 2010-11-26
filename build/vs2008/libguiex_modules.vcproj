@@ -275,18 +275,6 @@
 			Name="script_lua"
 			>
 			<File
-				RelativePath="..\..\source\\libguiex_module\\script_lua\game_editor_interface.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\\libguiex_module\\script_lua\game_editor_interface.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\\libguiex_module\\script_lua\game_editor_wrap.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\source\libguiex_module\script_lua\guiex_wrap.cpp"
 				>
 			</File>

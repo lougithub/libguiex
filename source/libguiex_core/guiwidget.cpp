@@ -138,7 +138,7 @@ namespace guiex
 		bool bHasScript = false;
 		guiex::IGUIInterfaceScript* pInterfaceScript = CGUIInterfaceManager::Instance()->GetInterfaceScript();
 		if( pInterfaceScript &&
-			guiex::CGUISystem::Instance()->ShouldRunScript())
+			guiex::GSystem->ShouldRunScript())
 		{
 			bHasScript = pInterfaceScript->HasScript( GetSceneName() );
 		}
@@ -154,7 +154,7 @@ namespace guiex
 		CGUIEventNotification aEvent;
 		aEvent.SetEventId(eEVENT_LOAD);
 		aEvent.SetReceiver(this);
-		CGUISystem::Instance()->SendEvent( &aEvent);
+		GSystem->SendEvent( &aEvent);
 
 		//children's
 		CGUIWidget*	pWidget = GetChild();
@@ -181,7 +181,7 @@ namespace guiex
 		CGUIEventNotification aEvent;
 		aEvent.SetEventId(eEVENT_OPEN);
 		aEvent.SetReceiver(this);
-		CGUISystem::Instance()->SendEvent( &aEvent);
+		GSystem->SendEvent( &aEvent);
 
 		//open child if it is set to "open with parent"
 		CGUIWidget*	pWidget = GetChild();
@@ -213,7 +213,7 @@ namespace guiex
 		CGUIEventNotification aEvent;
 		aEvent.SetEventId(eEVENT_CLOSE);
 		aEvent.SetReceiver(this);
-		CGUISystem::Instance()->SendEvent( &aEvent);
+		GSystem->SendEvent( &aEvent);
 
 		//close child
 		CGUIWidget* pWidget = GetChild();
@@ -338,7 +338,7 @@ namespace guiex
 			aEvent.SetEventId(eEVENT_PARENT_CHANGED);
 			aEvent.SetRelative(pParent);
 			aEvent.SetReceiver(this);
-			CGUISystem::Instance()->SendEvent( &aEvent);
+			GSystem->SendEvent( &aEvent);
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -630,7 +630,7 @@ namespace guiex
 			aEvent.SetEventId(eEVENT_REMOVE_CHILD);
 			aEvent.SetRelative(pChild);
 			aEvent.SetReceiver(this);
-			CGUISystem::Instance()->SendEvent( &aEvent);
+			GSystem->SendEvent( &aEvent);
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -693,7 +693,7 @@ namespace guiex
 			aEvent.SetEventId(eEVENT_ADD_CHILD);
 			aEvent.SetRelative(pChild);
 			aEvent.SetReceiver(this);
-			CGUISystem::Instance()->SendEvent( &aEvent);
+			GSystem->SendEvent( &aEvent);
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -726,32 +726,31 @@ namespace guiex
 				GetType().c_str(),GetName().c_str());
 		}
 
-		CGUISystem* pSys = CGUISystem::Instance();
 		if( !bFocus )
 		{
 			/// lost focus
-			if( pSys->GetFocusWidget()  == this)
+			if( GSystem->GetFocusWidget()  == this)
 			{
 				CGUIEventNotification aEvent;
 				aEvent.SetEventId(eEVENT_FOCUS_LOST);
 				aEvent.SetReceiver(this);
-				CGUISystem::Instance()->SendEvent( &aEvent);
+				GSystem->SendEvent( &aEvent);
 			}
 			return;
 		}
 
 
-		if( pSys->GetFocusWidget()  == this)
+		if( GSystem->GetFocusWidget()  == this)
 		{
 			return;
 		}
 		//remove old widget
-		if( pSys->GetFocusWidget() )
+		if( GSystem->GetFocusWidget() )
 		{
 			CGUIEventNotification aEvent;
 			aEvent.SetEventId(eEVENT_FOCUS_LOST);
-			aEvent.SetReceiver(pSys->GetFocusWidget());
-			CGUISystem::Instance()->SendEvent( &aEvent);
+			aEvent.SetReceiver(GSystem->GetFocusWidget());
+			GSystem->SendEvent( &aEvent);
 		}
 
 		//add this widget 
@@ -760,7 +759,7 @@ namespace guiex
 			CGUIEventNotification aEvent;
 			aEvent.SetEventId(eEVENT_FOCUS_GET);
 			aEvent.SetReceiver(this);
-			CGUISystem::Instance()->SendEvent( &aEvent);
+			GSystem->SendEvent( &aEvent);
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -777,7 +776,7 @@ namespace guiex
 				GetType().c_str(),GetName().c_str());
 		}
 
-		return CGUISystem::Instance()->GetFocusWidget() == this;
+		return GSystem->GetFocusWidget() == this;
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWidget::SetVisible(bool bVisible)
@@ -796,7 +795,7 @@ namespace guiex
 				aEvent.SetEventId(eEVENT_INVISIBLE);
 			}
 			aEvent.SetReceiver(this);
-			CGUISystem::Instance()->SendEvent( &aEvent);
+			GSystem->SendEvent( &aEvent);
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -858,7 +857,7 @@ namespace guiex
 				aEvent.SetEventId(eEVENT_ENABLE);
 			}
 			aEvent.SetReceiver(this);
-			CGUISystem::Instance()->SendEvent( &aEvent);
+			GSystem->SendEvent( &aEvent);
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -1050,12 +1049,12 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void	CGUIWidget::RegisterUIEvent( const CGUIString& rUIEventName )
 	{
-		CGUISystem::Instance()->RegisterUIEvent( rUIEventName, this );
+		GSystem->RegisterUIEvent( rUIEventName, this );
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWidget::UnregisterUIEvent( const CGUIString& rUIEventName )
 	{
-		CGUISystem::Instance()->UnregisterUIEvent( rUIEventName, this );
+		GSystem->UnregisterUIEvent( rUIEventName, this );
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWidget::RegisterSound( const CGUIString& strEventName, int32 nSoundIdx )
@@ -1156,7 +1155,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void	CGUIWidget::CallScriptFunction(const CGUIString& strEventName, CGUIEvent* pEvent)
 	{
-		if( CGUISystem::Instance()->ShouldRunScript())
+		if( GSystem->ShouldRunScript())
 		{
 
 			TMapScriptFunc::iterator itor = m_mapScriptFunc.find(strEventName);
@@ -1203,7 +1202,7 @@ namespace guiex
 			CGUIEventNotification aEvent;
 			aEvent.SetEventId(eEVENT_SCALE_CHANGE);
 			aEvent.SetReceiver(this);
-			CGUISystem::Instance()->SendEvent( &aEvent );
+			GSystem->SendEvent( &aEvent );
 		}
 
 	}
@@ -1228,7 +1227,7 @@ namespace guiex
 			aEvent.SetEventId(eEVENT_CHANGE_ALPHA);
 			aEvent.SetAlpha(fAlpha);
 			aEvent.SetReceiver(this);
-			CGUISystem::Instance()->SendEvent( &aEvent);
+			GSystem->SendEvent( &aEvent);
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -1719,9 +1718,14 @@ namespace guiex
 			ValueToProperty( IsExclusive(), rProperty);
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "DISABLE" )
+		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "disable" )
 		{
 			ValueToProperty( IsDisable(), rProperty);
+		}
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "auto_play_as" )
+		{
+			ValueToProperty( IsAutoPlayAs(), rProperty);
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "open_with_parent" )
@@ -1956,6 +1960,12 @@ namespace guiex
 			PropertyToValue(rProperty, bValue );
 			SetDisable( bValue );
 		}
+		else if( rProperty.GetType()== ePropertyType_Bool &&  rProperty.GetName()=="auto_play_as" )
+		{
+			bool bValue = false;
+			PropertyToValue(rProperty, bValue );
+			SetAutoPlayAs( bValue );
+		}
 		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="hitable" )
 		{
 			bool bValue = false;
@@ -2163,7 +2173,7 @@ namespace guiex
 			CGUIEventNotification aEvent;
 			aEvent.SetEventId(eEVENT_UPDATE);
 			aEvent.SetReceiver(this);
-			CGUISystem::Instance()->SendEvent( &aEvent);
+			GSystem->SendEvent( &aEvent);
 		}
 
 		//for timer event
@@ -2184,7 +2194,7 @@ namespace guiex
 					aEvent.SetEventId(eEVENT_TIMER);
 					aEvent.SetReceiver(this);
 					aEvent.SetTimerName(itor->first);
-					CGUISystem::Instance()->SendEvent( &aEvent);
+					GSystem->SendEvent( &aEvent);
 				}
 			}
 		}
@@ -2329,7 +2339,7 @@ namespace guiex
 		else
 		{
 			//no parent
-			return CGUISystem::Instance()->GetScreenSize();
+			return GSystem->GetScreenSize();
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -2443,7 +2453,7 @@ namespace guiex
 		CGUIEventSize aEvent;
 		aEvent.SetEventId(eEVENT_SIZE_CHANGE);
 		aEvent.SetReceiver(this);
-		CGUISystem::Instance()->SendEvent( &aEvent);
+		GSystem->SendEvent( &aEvent);
 	}
 	//------------------------------------------------------------------------------
 	//set widget size, according size value type
@@ -2484,7 +2494,7 @@ namespace guiex
 		CGUIEventSize aEvent;
 		aEvent.SetEventId(eEVENT_SIZE_CHANGE);
 		aEvent.SetReceiver(this);
-		CGUISystem::Instance()->SendEvent( &aEvent);
+		GSystem->SendEvent( &aEvent);
 	}
 	//------------------------------------------------------------------------------
 	//set widget size in pixel.

@@ -68,7 +68,7 @@ namespace guiex
 						CGUIEventNotification aRadioEvent;
 						aRadioEvent.SetEventId(eEVENT_UNCHECKED);
 						aRadioEvent.SetReceiver(pWidget);
-						CGUISystem::Instance()->SendEvent( &aRadioEvent);
+						GSystem->SendEvent( &aRadioEvent);
 					}
 					pWidget = pWidget->GetNextSibling();
 				}
@@ -77,7 +77,7 @@ namespace guiex
 				CGUIEventNotification aRadioEvent;
 				aRadioEvent.SetEventId(eEVENT_CHECKED);
 				aRadioEvent.SetReceiver(this);
-				CGUISystem::Instance()->SendEvent( &aRadioEvent);
+				GSystem->SendEvent( &aRadioEvent);
 			}
 		}
 

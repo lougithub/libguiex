@@ -77,6 +77,7 @@ namespace guiex
 		RegisterPropertyType( ePropertyType_ImageDefine, "CGUIImageDefine" );
 		RegisterPropertyType( ePropertyType_AnimationDefine, "CGUIAnimationDefine" );
 		RegisterPropertyType( ePropertyType_AsDefine, "CGUIAsDefine" );
+		RegisterPropertyType( ePropertyType_WidgetDefine, "CGUIWidgetDefine" );
 	}
 	//------------------------------------------------------------------------------
 	CGUIPropertyManager::~CGUIPropertyManager()

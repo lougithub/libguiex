@@ -220,7 +220,7 @@ namespace guiex
 		CGUIEventNotification aCheckEvent;
 		aCheckEvent.SetEventId((!m_bChecked)?eEVENT_CHECKED:eEVENT_UNCHECKED);
 		aCheckEvent.SetReceiver(this);
-		CGUISystem::Instance()->SendEvent( &aCheckEvent);
+		GSystem->SendEvent( &aCheckEvent);
 
 		return CGUIWidget::OnMouseLeftClick(pEvent);
 	}

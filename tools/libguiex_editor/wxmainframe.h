@@ -90,6 +90,13 @@ public:
 		ID_VIEW_800x600,
 		ID_VIEW_1024x786,
 		ID_VIEW_1280x800,
+		ID_VIEW_Iphone480x320,
+		ID_VIEW_Iphone320x480,
+		ID_VIEW_Iphone960x640,
+		ID_VIEW_Iphone640x960,
+		ID_VIEW_Ipad1024x768,
+		ID_VIEW_Ipad768x1024,
+
 		ID_ToggleScissor,
 		ID_ToggleWireframe,
 		ID_SetBGColor,
@@ -246,15 +253,19 @@ protected:
 
 	void OnFullscreen(wxCommandEvent& evt);
 
+	void SetResolution( int width, int height );
+
 	void On800x600(wxCommandEvent& evt);
-	void OnUpdate800x600(wxUpdateUIEvent& event);
-
 	void On1024x786(wxCommandEvent& evt);
-	void OnUpdate1024x786(wxUpdateUIEvent& event);
-
 	void On1280x800(wxCommandEvent& evt);
-	void OnUpdate1280x800(wxUpdateUIEvent& event);
+	void OnIphone480x320(wxCommandEvent& evt);
+	void OnIphone320x480(wxCommandEvent& evt);
+	void OnIphone960x640(wxCommandEvent& evt);
+	void OnIphone640x960(wxCommandEvent& evt);
+	void OnIpad1024x768(wxCommandEvent& evt);
+	void OnIpad768x1024(wxCommandEvent& evt);
 
+	void OnUpdateResolution(wxUpdateUIEvent& event);
 
 
 	void OnCreateWidget(wxCommandEvent& evt);

@@ -76,6 +76,7 @@ namespace guiex
 		ePropertyType_ImageDefine,
 		ePropertyType_AnimationDefine,
 		ePropertyType_AsDefine,
+		ePropertyType_WidgetDefine,
 
 
 		ePropertyType_UserDefine = 1000,

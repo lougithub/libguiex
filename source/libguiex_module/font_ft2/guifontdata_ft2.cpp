@@ -100,7 +100,7 @@ namespace guiex
 	int32 CGUIFontData_ft2::DoLoad() const
 	{
 		//load font face
-		CGUIString strFullPath = CGUISystem::Instance()->GetDataPath() + CGUISceneInfoManager::Instance()->GetScenePath( m_strSceneName ) + m_strPath;
+		CGUIString strFullPath = GSystem->GetDataPath() + CGUISceneInfoManager::Instance()->GetScenePath( m_strSceneName ) + m_strPath;
 		
 		GUI_TRACE( GUI_FORMAT( "[IGUIFont_ft2::LoadFontFace]: Load Font Face <%d> from File <%s>",
 			m_nFontIndex, strFullPath.c_str()) );
