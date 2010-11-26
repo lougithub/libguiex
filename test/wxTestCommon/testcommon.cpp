@@ -334,7 +334,7 @@ static void EditorWarningCB(const char* message, void*)
 extern "C" int luaopen_game(lua_State* L);
 void FuncInitScript( void* pScriptState)
 {
-	luaopen_game((lua_State*)pScriptState);
+	//luaopen_game((lua_State*)pScriptState);
 }
 //------------------------------------------------------------------------------
 
@@ -370,6 +370,8 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 						 ,m_pKeyboard(NULL)
 						 ,m_pIme(NULL)
 {
+	guiex::CGUISystem* pGUISystem = new guiex::CGUISystem;
+
 	// tell wxAuiManager to manage this frame
 	m_mgr.SetManagedWindow(this);
 
@@ -450,7 +452,6 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 	//initialize guiex system
 	try
 	{
-		guiex::CGUISystem* pGUISystem = new guiex::CGUISystem;
 		guiex::GSystem->Initialize();
 		GUI_LOG->Open( "gui editor",guiex::CGUILogMsg::FLAG_TIMESTAMP_LITE	|guiex::CGUILogMsg::FLAG_OSTREAM | guiex::CGUILogMsg::FLAG_MSG_CALLBACK);
 		GUI_LOG->SetPriorityMask(guiex::GUI_LM_DEBUG	| guiex::GUI_LM_TRACE	|guiex::GUI_LM_WARNING|guiex::GUI_LM_ERROR);
