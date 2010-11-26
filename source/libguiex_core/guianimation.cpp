@@ -114,7 +114,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	const CGUISize& CGUIAnimation::GetSize() const
 	{
-		if( !m_aAnimationSize.IsEqualZero())
+		if( m_aAnimationSize.IsEqualZero())
 		{
 			Load();
 

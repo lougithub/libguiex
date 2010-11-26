@@ -140,7 +140,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	const CGUISize& CGUIImage::GetSize() const
 	{
-		if( !m_aImageSize.IsEqualZero())
+		if( m_aImageSize.IsEqualZero())
 		{
 			Load();
 
