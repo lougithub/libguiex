@@ -1,0 +1,4 @@
+[Command Line]            $(QTDIR)\bin\moc $(InputPath) -o Moc\Core\moc_$(InputName).cpp
+[Description]             Moc'ing $(InputFileName)...
+[Outputs]                 Moc\Core\moc_$(InputName).cpp
+[Additional Dependencies] $(QTDIR)\bin\moc.exe

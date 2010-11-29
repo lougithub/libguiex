@@ -1,0 +1,128 @@
+// -----------------------------------------------------------------------------
+// Author: GameCrashDebug.
+// Date: 20101109.
+// -----------------------------------------------------------------------------
+#ifndef _RE_EDITOR_MAINWINDOW_H_
+#define _RE_EDITOR_MAINWINDOW_H_
+
+
+#include <QMainWindow>
+#include "UI\ReViewWidget.h"
+#include "Ui\ReBaseWidget.h"
+
+
+class QLabel;
+class QDockWidget;
+class QStackedWidget;
+class QAction;
+
+
+namespace RE
+{
+
+
+class ReControlPanelWidget;
+class ReEditor;
+class ReClipEditor;
+class ReAsEditor;
+class ReTrackPanelWidget;
+class ReClipModel;
+
+
+class ReMainWindow : public QMainWindow
+{
+	// -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	Q_OBJECT
+
+	typedef QMainWindow				TSuper;
+	typedef ReBaseWidget< QWidget >	TEditorBase;
+
+public:
+	ReMainWindow( QWidget* _parent = NULL );
+
+	void					SetUpdateDelta( float _delta )		{ m_updateDelta = _delta; }
+	float					GetUpdateDelta() const				{ return m_updateDelta; }
+
+	// -------------------------------------------------------------------------
+	// Override QMainWindow
+	// -------------------------------------------------------------------------
+protected:
+	void					paintEvent( QPaintEvent* _event );
+
+	// -------------------------------------------------------------------------
+	// Slot
+	// -------------------------------------------------------------------------
+public slots:
+	void					Tick( float _delta = 1.0f / 60.0f );
+
+	// -------------------------------------------------------------------------
+	// Routines
+	// -------------------------------------------------------------------------
+protected:
+	void					InitData();
+	void					InitMainViews();
+	void					InitDockWindows();
+	void					InitMenuBar();
+	void					InitContextMenu();
+
+	// -------------------------------------------------------------------------
+	// Menu
+	// -------------------------------------------------------------------------
+protected:
+	enum eEditor			{ EEditor_Clip, EEditor_As, EEditor_Image, EEditor_Count };
+
+	// -------------------------------------------------------------------------
+	// Slots.
+	// -------------------------------------------------------------------------
+protected slots:
+	void					OnGotoClipEditor();
+	void					OnGotoAsEditor();
+	void					OnGotoImageEditor();
+	void					OnAboutSoftware();
+	void					OnAboutAuthor();
+
+	void					OnContextMenuClipEditor( const QPoint& _point );
+	void					OnContextMenuAsEditor( const QPoint& _point );
+	void					OnMenuChangedWithAsEditor();
+
+	// -------------------------------------------------------------------------
+	// Utilities.
+	// -------------------------------------------------------------------------
+protected:
+	void					UpdateEditMenu();
+
+	// -------------------------------------------------------------------------
+	// Variable.
+	// -------------------------------------------------------------------------
+private:
+	// Editors.
+	QStackedWidget*			m_stackedEditorWidget;
+	TEditorBase*			m_editorWidgets[ EEditor_Count ];	
+	ReClipEditor*			m_clipEditor;
+	ReAsEditor*				m_asEditor;
+	ReViewWidget*			m_viewWidget;	// Will be replaced by image editor.
+
+	// Panels: dockable and stacked widget usually left or right aligned on the screen.
+	QDockWidget*			m_panelDockWidget;
+	ReControlPanelWidget*	m_controlPanelWidget;
+
+	// Models.
+	ReClipModel*			m_clipModel;
+
+	// Menu.
+	QMenuBar*				m_menuBarEx;
+	QMenu*					m_editorMenu;	
+	QMenu*					m_aboutMenu;
+	QMenu*					m_contextMenuClipEditor;
+
+	// Misc.
+	qreal					m_updateDelta;
+
+public:
+	ReEditor*				m_editor;
+};
+
+
+}		// namespace RE
+#endif	// _RE_EDITOR_MAINWINDOW_H_

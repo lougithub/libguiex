@@ -1,0 +1,14 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/image">
+	<file>device_iphone.png</file>
+	<file>device_ipad.png</file>
+	<file>hero_earthshaker.png</file>
+	<file>hero_lion.png</file>
+	<file>hero_shadowfiend.png</file>
+	<file>hero_silencer.png</file>
+	<file>hero_stormspirit.png</file>
+	<file>hero_sven.png</file>
+	<file>hero_zeus.png</file>
+  <file>editor_track_frame.png</file>
+</qresource>
+</RCC>
