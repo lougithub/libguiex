@@ -1,8 +1,8 @@
 %module guiex
 
 %{
-#include "libguiex\guiex.h"
-#include "libguiex_widget\guiwgt.h"
+#include "libguiex/guiex.h"
+#include "libguiex_widget/guiwgt.h"
 %}
 
 %include "std_string.i"

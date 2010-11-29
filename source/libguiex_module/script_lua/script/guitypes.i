@@ -16,13 +16,18 @@ namespace guiex
 	typedef float			real;
  
 
-	enum EImageOperation
+
+	enum EScreenValue
 	{
-		IMAGE_NONE,				///!< none operation
-		IMAGE_ROTATE90CW,		///!< rotate image for 90 CW
-		IMAGE_ROTATE90CCW,		///!< rotate image for 90 CCW
-		IMAGE_FLIPHORIZON,		///!< flip image horizon
-		IMAGE_FLIPVERTICAL,		///!< flip image vertical
+		eScreenValue_Pixel = 0,
+		eScreenValue_Percentage,
 	};
 
+
+	enum EInterpolationType
+	{
+		eInterpolationType_Linear = 0,
+		eInterpolationType_EaseIn,
+		eInterpolationType_EaseInOut,
+	};
 }
