@@ -71,7 +71,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vsprops", "vsprops", "{A83C
 		release.vsprops = release.vsprops
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libguiex_swig_lua", "libguiex_swig_lua\libguiex_swig_lua.vcproj", "{C6FD909C-2AE8-495A-A11C-EA72920EB68B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libguiex_swig_lua", "libguiex_swig_lua.vcproj", "{C6FD909C-2AE8-495A-A11C-EA72920EB68B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
