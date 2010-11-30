@@ -41,8 +41,8 @@ class ReMainWindow : public QMainWindow
 public:
 	ReMainWindow( QWidget* _parent = NULL );
 
-	void					SetUpdateDelta( float _delta )		{ m_updateDelta = _delta; }
-	float					GetUpdateDelta() const				{ return m_updateDelta; }
+	void					SetUpdateDelta( qreal _delta )		{ m_updateDelta = _delta; }
+	qreal					GetUpdateDelta() const				{ return m_updateDelta; }
 
 	// -------------------------------------------------------------------------
 	// Override QMainWindow
@@ -54,7 +54,7 @@ protected:
 	// Slot
 	// -------------------------------------------------------------------------
 public slots:
-	void					Tick( float _delta = 1.0f / 60.0f );
+	void					Tick( qreal _delta = 1.0f / 60.0f );
 
 	// -------------------------------------------------------------------------
 	// Routines
@@ -81,10 +81,6 @@ protected slots:
 	void					OnGotoImageEditor();
 	void					OnAboutSoftware();
 	void					OnAboutAuthor();
-
-	void					OnContextMenuClipEditor( const QPoint& _point );
-	void					OnContextMenuAsEditor( const QPoint& _point );
-	void					OnMenuChangedWithAsEditor();
 
 	// -------------------------------------------------------------------------
 	// Utilities.

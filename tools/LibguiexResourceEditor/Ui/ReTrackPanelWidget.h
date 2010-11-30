@@ -62,7 +62,7 @@ protected:
 	virtual void		resizeEvent( QResizeEvent* _event );
 
 	// -------------------------------------------------------------------------
-	// Overrides QWidget.
+	// Overrides ReBaseWidget.
 	// -------------------------------------------------------------------------
 public:
 	virtual void		Tick( qreal _delta );

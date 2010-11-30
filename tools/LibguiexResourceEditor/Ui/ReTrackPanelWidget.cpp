@@ -229,11 +229,9 @@ void ReTrackPanelWidget::InitMenus()
 	QMenu* menu = NULL;
 	QAction* action = NULL;
 
-	QActionGroup* trackGroup = new QActionGroup( this );
 	m_editMenu = new QMenu( tr( "&Edit" ) );
 
 	action = m_editMenu->addAction( tr( "New &Track" ) );
-	action->setActionGroup( trackGroup );
 	connect( action, SIGNAL( triggered() ), this, SLOT( OnNewTrack() ) );
 }
 

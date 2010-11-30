@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ReControlPanelWidget.h'
 **
-** Created: Mon Nov 29 22:10:36 2010
+** Created: Tue Nov 30 20:42:35 2010
 **      by: The Qt Meta Object Compiler version 61 (Qt 4.5.3)
 **
 ** WARNING! All changes made in this file will be lost!

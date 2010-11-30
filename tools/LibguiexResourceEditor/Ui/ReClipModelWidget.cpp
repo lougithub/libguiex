@@ -7,9 +7,10 @@
 #include "UI\ReClipModelWidget.h"
 #include "UI\ReClipWidget.h"
 #include <QMouseEvent>
-#include <QFileDialog>
-#include <QMessageBox>
 #include <QPainter>
+#include <QFile>
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
 
 namespace RE
@@ -25,6 +26,101 @@ ReClipModelWidget::ReClipModelWidget( ReClipModel* _model, QWidget* _parent /* =
 , m_currentClip( NULL )
 {
 	setMouseTracking( true );
+}
+
+
+bool ReClipModelWidget::LoadImage( const QString& _path )
+{
+	bool result = false;
+
+	QImage image( _path );
+	if( !image.isNull() )
+	{
+		// TODO: Prompt to save.
+		m_imagePath = _path;
+
+		// Recycle data.
+		m_clipList.Clear();
+		TSuperB::ClearData();
+		m_model->ClearData();
+
+		m_model->SetImageHandle( _path );
+		setPixmap( QPixmap::fromImage( image ) );
+		move( 0, 0 );
+		adjustSize();
+		update();
+
+		result = true;
+	}
+
+	return result;
+}
+
+
+bool ReClipModelWidget::Export( const QString& _path )
+{
+	bool result = false;
+
+	QFile file( _path );
+	if( file.open( QFile::WriteOnly | QFile::Text ) )
+	{
+		TClipPoolItor itor = m_clipList.Begin();
+		TClipPoolItor itorEnd = m_clipList.End();
+
+		QXmlStreamWriter writer( &file );
+		writer.setAutoFormatting( true );
+		writer.writeStartDocument();
+		
+		for( ; itor != itorEnd; ++itor )
+		{
+			ReClipWidget* clipWidget = *itor;
+			ReClipData* clipData = clipWidget->GetModelData();
+
+			writer.writeStartElement( "property" );
+			{
+				writer.writeAttribute( "name", clipData->GetName() );
+				writer.writeAttribute( "type", "CGUIImageDefine" );				
+				{
+					writer.writeStartElement( "property" );
+					{
+						writer.writeAttribute( "name", "path" );
+						writer.writeAttribute( "type", "CGUIString" );
+						writer.writeAttribute( "value", m_imagePath );
+					}
+					writer.writeEndElement();
+
+					writer.writeStartElement( "property" );
+					{
+						writer.writeAttribute( "name", "uv" );
+						writer.writeAttribute( "type", "CGUIRect" );
+						writer.writeAttribute( "value", QString( "%1,%2,%3,%4" ).
+							arg( clipData->GetOffset().x() ).
+							arg( clipData->GetOffset().y() ).
+							arg( clipData->GetSize().width() ).
+							arg( clipData->GetSize().height() ) );
+					}
+					writer.writeEndElement();
+
+					writer.writeStartElement( "property" );
+					{
+						writer.writeAttribute( "name", "orientation" );
+						writer.writeAttribute( "type", "EImageOrientation" );
+						writer.writeAttribute( "value", "eImageOrientation_Normal" );
+					}
+					writer.writeEndElement();
+				}
+			}
+			writer.writeEndElement();
+		}
+		
+		writer.writeEndDocument();
+
+		result = true;
+	}
+	else
+	{}
+
+	return result;
 }
 
 
@@ -237,6 +333,22 @@ void ReClipModelWidget::mouseMoveEvent( QMouseEvent* _event )
 // -----------------------------------------------------------------------------
 // Override ReModelBase.
 // -----------------------------------------------------------------------------
+void ReClipModelWidget::Tick( qreal _delta )
+{
+	if( NULL == m_currentClip )
+	{
+		TClipPoolItor itor = m_clipList.Begin();
+		TClipPoolItor itorEnd = m_clipList.End();
+		for( ; itor != itorEnd; ++itor )
+		{
+			ReClipWidget* clipWidget = *itor;
+			clipWidget->PullData();
+			clipWidget->update();
+		}
+	}
+}
+
+
 void ReClipModelWidget::RecycleData( ReClipWidget* _clip )
 {
 	if( IsReadyForEdit() )
@@ -298,52 +410,6 @@ void ReClipModelWidget::OnDelete()
 }
 
 
-bool ReClipModelWidget::OnImportImage()
-{
-	bool result = false;
-	QString path = QFileDialog::getOpenFileName( this, tr( "Open Image File" ), 
-		tr( "." ), tr( "Image File ( *.png *.bmp *.tga *.jpg )" ) );
-
-	if( !path.isNull() )
-	{
-		if( !DoImportImage( path ) )
-		{
-			QMessageBox::critical( this, tr( "Failure" ), tr( "Failed to import image" ), QMessageBox::Ok );
-		}
-		else
-		{
-			result = true;
-		}
-	}
-
-	return result;
-}
-
-
-// -------------------------------------------------------------------------
-// Specific.
-// -------------------------------------------------------------------------
-void ReClipModelWidget::Tick( qreal _delta )
-{
-	if( NULL == m_currentClip )
-	{
-		TClipPoolItor itor = m_clipList.Begin();
-		TClipPoolItor itorEnd = m_clipList.End();
-		for( ; itor != itorEnd; ++itor )
-		{
-			ReClipWidget* clipWidget = *itor;
-			clipWidget->PullData();
-			clipWidget->update();
-		}
-	}
-
-	//m_debugInfo = QString( tr( "DataCount: %1, ClipCount: %2, PoolSize: %3" ) )
-	//	.arg( GetDataCount() )
-	//	.arg( m_clipList.Size() )
-	//	.arg( m_recyclePool.Size() );
-}
-
-
 // -----------------------------------------------------------------------------
 // Utilities.
 // -----------------------------------------------------------------------------
@@ -394,33 +460,6 @@ bool ReClipModelWidget::ValidateClip( ReClipWidget* _clip ) const
 				result = !isOutside;
 			}
 		}
-	}
-
-	return result;
-}
-
-
-bool ReClipModelWidget::DoImportImage( const QString& _path )
-{
-	bool result = false;
-
-	QImage image( _path );
-	if( !image.isNull() )
-	{
-		// TODO: Prompt to save.
-
-		// Recycle data.
-		m_clipList.Clear();
-		TSuperB::ClearData();
-		m_model->ClearData();
-
-		m_model->SetImageHandle( _path );
-		setPixmap( QPixmap::fromImage( image ) );
-		move( 0, 0 );
-		adjustSize();
-		update();
-
-		result = true;
 	}
 
 	return result;

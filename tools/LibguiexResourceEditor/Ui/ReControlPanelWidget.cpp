@@ -76,7 +76,7 @@ ReControlPanelWidget::~ReControlPanelWidget()
 // -----------------------------------------------------
 // ImageBrowser
 // -----------------------------------------------------
-void ReControlPanelWidget::Tick( float _delta )
+void ReControlPanelWidget::Tick( qreal _delta )
 {
 	if( NULL != m_imagePanelWidget )
 		m_imagePanelWidget->Tick( _delta );

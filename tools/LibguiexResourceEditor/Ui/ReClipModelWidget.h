@@ -44,6 +44,12 @@ class ReClipModelWidget : public ReBaseWidget< QLabel >, public ReModelBase< ReC
 public:
 	ReClipModelWidget( ReClipModel* _model, QWidget* _parent = NULL );
 
+	bool					LoadImage( const QString& _path );
+	bool					Export( const QString& _path );
+
+	ReDragInfo&				GetDragInfoRef()		{ return m_dragInfo; }
+	const ReDragInfo&		GetDragInfo() const		{ return m_dragInfo; }
+
 	// -------------------------------------------------------------------------
 	// Override QLabel.
 	// -------------------------------------------------------------------------
@@ -57,23 +63,15 @@ public:
 	// Override ReModelBase.
 	// -------------------------------------------------------------------------
 public:
+	virtual void			Tick( qreal _delta );
 	virtual void			RecycleData( ReClipWidget* _clip );
 
 	// -------------------------------------------------------------------------
 	// Slots.
 	// -------------------------------------------------------------------------
 public slots:
-	bool					OnImportImage();
 	void					OnZoom( qreal _zoomFactor );
 	void					OnDelete();
-
-	// -------------------------------------------------------------------------
-	// Specific.
-	// -------------------------------------------------------------------------
-public:
-	void					Tick( qreal _delta );
-	ReDragInfo&				GetDragInfoRef()		{ return m_dragInfo; }
-	const ReDragInfo&		GetDragInfo() const		{ return m_dragInfo; }
 
 	// -------------------------------------------------------------------------
 	// Utilities.
@@ -82,7 +80,6 @@ protected:
 	bool					IsReadyForEdit() const;
 	ReClipWidget*			CreateClip();
 	bool					ValidateClip( ReClipWidget* _clip ) const;
-	bool					DoImportImage( const QString& _path );
 	void					TrimClip( ReClipWidget* _clip );
 
 	// -------------------------------------------------------------------------
@@ -101,6 +98,7 @@ protected:
 	ReClipWidget*			m_currentClip;
 	ReDragInfo				m_dragInfo;
 	QPoint					m_cursor;
+	QString					m_imagePath;
 
 	QString					m_debugInfo;
 };

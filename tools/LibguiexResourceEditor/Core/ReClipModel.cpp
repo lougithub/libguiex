@@ -27,11 +27,13 @@ ReClipModel::ReClipModel( QWidget* _parent /* = NULL */ )
 bool ReClipModel::setData( const QModelIndex& _index, const QVariant& _value, int _role /* = Qt::EditRole */ )
 {
 	ReClipData* clipData = dynamic_cast< ReClipData* >( TSuper::item( _index.row() ) );
+	QString name = data( index( _index.row(), EColumn_Name, QModelIndex() ) ).toString();
 	qreal x = data( index( _index.row(), EColumn_X, QModelIndex() ) ).toDouble();
 	qreal y = data( index( _index.row(), EColumn_Y, QModelIndex() ) ).toDouble();
 	qreal w = data( index( _index.row(), EColumn_W, QModelIndex() ) ).toDouble();
 	qreal h = data( index( _index.row(), EColumn_H, QModelIndex() ) ).toDouble();
 
+	clipData->GetNameRef() = name;
 	clipData->GetOffsetRef().setX( x );
 	clipData->GetOffsetRef().setY( y );
 	clipData->GetSizeRef().setWidth( w );
@@ -107,6 +109,7 @@ void ReClipModel::SetDataFromItem( const QModelIndex& _index )
 	ReClipData* clipData = dynamic_cast< ReClipData* >( TSuper::item( _index.row() ) );
 	
 	// Call QStandardItemModel's setData instead.
+	TSuper::setData( index( _index.row(), EColumn_Name ), clipData->GetName() );
 	TSuper::setData( index( _index.row(), EColumn_X ), clipData->GetOffset().x() );
 	TSuper::setData( index( _index.row(), EColumn_Y ), clipData->GetOffset().y() );
 	TSuper::setData( index( _index.row(), EColumn_W ), clipData->GetSize().width() );

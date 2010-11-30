@@ -7,6 +7,9 @@
 #include "UI\ReClipModelWidget.h"
 #include <QMouseEvent>
 #include <QPainter>
+#include <QMenu>
+#include <QFileDialog>
+#include <QMessageBox>
 
 
 namespace RE
@@ -18,14 +21,19 @@ namespace RE
 // ----------------------------------------------------------------------------
 ReClipEditor::ReClipEditor( ReClipModel* _model, QWidget* _parent /* = NULL */ )
 : TSuper( _parent )
+, m_editMenu( NULL )
 , m_currentZoomFactor( 1.0f )
 , m_minZoomFactor( 1.0f )
 , m_maxZoomFactor( 5.0f )
 , m_zoomStep( 1.0f )
 , m_isDebugEnabled( false )
 {
+	InitMenus();
+
 	m_modelWidget = new ReClipModelWidget( _model, this );
 	m_modelWidget->setScaledContents( true );
+
+	connect( this, SIGNAL( customContextMenuRequested( const QPoint& ) ), this, SLOT( OnContextMenu( const QPoint& ) ) );
 }
 
 
@@ -165,15 +173,59 @@ void ReClipEditor::Tick( qreal _delta )
 }
 
 
+QMenu* ReClipEditor::GetEditMenu() const
+{
+	return m_editMenu;
+}
+
+
 // ----------------------------------------------------------------------------
 // Slots.
 // ----------------------------------------------------------------------------
-void ReClipEditor::OnImportImage()
+void ReClipEditor::OnContextMenu( const QPoint& _point )
 {
-	if( m_modelWidget->OnImportImage() )
+	m_editMenu->exec( mapToGlobal( _point ) );
+}
+
+
+void ReClipEditor::OnLoadImage()
+{
+	bool result = false;
+	QString path = QFileDialog::getOpenFileName( this, tr( "Open Image File" ), 
+		tr( "." ), tr( "Image File ( *.png *.bmp *.tga *.jpg )" ) );
+
+	if( !path.isNull() )
 	{
-		m_currentZoomFactor = 1.0f;
-		m_modelWidget->OnZoom( m_currentZoomFactor );
+		if( m_modelWidget->LoadImage( path ) )
+		{
+			m_currentZoomFactor = 1.0f;
+			m_modelWidget->OnZoom( m_currentZoomFactor );
+			result = true;			
+		}
+		else
+		{
+			QMessageBox::critical( this, tr( "Failure" ), tr( "Failed to import image" ), QMessageBox::Ok );
+		}
+	}
+}
+
+
+void ReClipEditor::OnImport()
+{
+}
+
+
+void ReClipEditor::OnExport()
+{
+	QString path = QFileDialog::getSaveFileName( this, tr( "Export Clip File" ),
+		tr( "." ), tr( "Clip File ( *.xml )" ) );
+
+	if( !path.isNull() )
+	{
+		if( !m_modelWidget->Export( path ) )
+		{
+			QMessageBox::critical( this, tr( "Failure" ), tr( "Failed to export clips" ), QMessageBox::Ok );
+		}
 	}
 }
 
@@ -187,5 +239,24 @@ void ReClipEditor::OnToggleDebug()
 // ----------------------------------------------------------------------------
 // Utilities.
 // ----------------------------------------------------------------------------
+void ReClipEditor::InitMenus()
+{
+	QMenu* menu = NULL;
+	QAction* action = NULL;
+
+	m_editMenu = new QMenu( tr( "&Edit" ) );
+
+	action = m_editMenu->addAction( tr( "&Load Image" ) );
+	connect( action, SIGNAL( triggered() ), this, SLOT( OnLoadImage() ) );
+
+	m_editMenu->addSeparator();
+
+	action = m_editMenu->addAction( tr( "&Import" ) );
+	connect( action, SIGNAL( triggered() ), this, SLOT( OnImport() ) );
+
+	action = m_editMenu->addAction( tr( "&Export" ) );
+	connect( action, SIGNAL( triggered() ), this, SLOT( OnExport() ) );
+}
+
 
 }

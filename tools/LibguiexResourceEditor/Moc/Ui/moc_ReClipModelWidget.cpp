@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ReClipModelWidget.h'
 **
-** Created: Mon Nov 29 22:10:37 2010
+** Created: Tue Nov 30 22:06:34 2010
 **      by: The Qt Meta Object Compiler version 61 (Qt 4.5.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,22 +23,21 @@ static const uint qt_meta_data_RE__ReClipModelWidget[] = {
        2,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   12, // methods
+       2,   12, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
 
  // slots: signature, parameters, type, tag, flags
-      28,   22,   23,   22, 0x0a,
-      56,   44,   22,   22, 0x0a,
-      70,   22,   22,   22, 0x0a,
+      35,   23,   22,   22, 0x0a,
+      49,   22,   22,   22, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_RE__ReClipModelWidget[] = {
-    "RE::ReClipModelWidget\0\0bool\0OnImportImage()\0"
-    "_zoomFactor\0OnZoom(qreal)\0OnDelete()\0"
+    "RE::ReClipModelWidget\0\0_zoomFactor\0"
+    "OnZoom(qreal)\0OnDelete()\0"
 };
 
 const QMetaObject RE::ReClipModelWidget::staticMetaObject = {
@@ -68,13 +67,11 @@ int RE::ReClipModelWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: { bool _r = OnImportImage();
-            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
-        case 1: OnZoom((*reinterpret_cast< qreal(*)>(_a[1]))); break;
-        case 2: OnDelete(); break;
+        case 0: OnZoom((*reinterpret_cast< qreal(*)>(_a[1]))); break;
+        case 1: OnDelete(); break;
         default: ;
         }
-        _id -= 3;
+        _id -= 2;
     }
     return _id;
 }

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ReMainWindow.h'
 **
-** Created: Mon Nov 29 22:10:36 2010
+** Created: Tue Nov 30 21:22:03 2010
 **      by: The Qt Meta Object Compiler version 61 (Qt 4.5.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_RE__ReMainWindow[] = {
        2,       // revision
        0,       // classname
        0,    0, // classinfo
-      10,   12, // methods
+       7,   12, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -36,21 +36,15 @@ static const uint qt_meta_data_RE__ReMainWindow[] = {
       80,   17,   17,   17, 0x09,
      100,   17,   17,   17, 0x09,
      118,   17,   17,   17, 0x09,
-     141,  134,   17,   17, 0x09,
-     173,  134,   17,   17, 0x09,
-     203,   17,   17,   17, 0x09,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_RE__ReMainWindow[] = {
-    "RE::ReMainWindow\0\0_delta\0Tick(float)\0"
+    "RE::ReMainWindow\0\0_delta\0Tick(qreal)\0"
     "Tick()\0OnGotoClipEditor()\0OnGotoAsEditor()\0"
     "OnGotoImageEditor()\0OnAboutSoftware()\0"
-    "OnAboutAuthor()\0_point\0"
-    "OnContextMenuClipEditor(QPoint)\0"
-    "OnContextMenuAsEditor(QPoint)\0"
-    "OnMenuChangedWithAsEditor()\0"
+    "OnAboutAuthor()\0"
 };
 
 const QMetaObject RE::ReMainWindow::staticMetaObject = {
@@ -78,19 +72,16 @@ int RE::ReMainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: Tick((*reinterpret_cast< float(*)>(_a[1]))); break;
+        case 0: Tick((*reinterpret_cast< qreal(*)>(_a[1]))); break;
         case 1: Tick(); break;
         case 2: OnGotoClipEditor(); break;
         case 3: OnGotoAsEditor(); break;
         case 4: OnGotoImageEditor(); break;
         case 5: OnAboutSoftware(); break;
         case 6: OnAboutAuthor(); break;
-        case 7: OnContextMenuClipEditor((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
-        case 8: OnContextMenuAsEditor((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
-        case 9: OnMenuChangedWithAsEditor(); break;
         default: ;
         }
-        _id -= 10;
+        _id -= 7;
     }
     return _id;
 }

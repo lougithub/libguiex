@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ReClipEditor.h'
 **
-** Created: Mon Nov 29 22:10:37 2010
+** Created: Tue Nov 30 21:26:36 2010
 **      by: The Qt Meta Object Compiler version 61 (Qt 4.5.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,20 +23,24 @@ static const uint qt_meta_data_RE__ReClipEditor[] = {
        2,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   12, // methods
+       5,   12, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
 
  // slots: signature, parameters, type, tag, flags
-      18,   17,   17,   17, 0x0a,
-      34,   17,   17,   17, 0x0a,
+      25,   18,   17,   17, 0x0a,
+      47,   17,   17,   17, 0x0a,
+      61,   17,   17,   17, 0x0a,
+      72,   17,   17,   17, 0x0a,
+      83,   17,   17,   17, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_RE__ReClipEditor[] = {
-    "RE::ReClipEditor\0\0OnImportImage()\0"
+    "RE::ReClipEditor\0\0_point\0OnContextMenu(QPoint)\0"
+    "OnLoadImage()\0OnImport()\0OnExport()\0"
     "OnToggleDebug()\0"
 };
 
@@ -65,11 +69,14 @@ int RE::ReClipEditor::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: OnImportImage(); break;
-        case 1: OnToggleDebug(); break;
+        case 0: OnContextMenu((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 1: OnLoadImage(); break;
+        case 2: OnImport(); break;
+        case 3: OnExport(); break;
+        case 4: OnToggleDebug(); break;
         default: ;
         }
-        _id -= 2;
+        _id -= 5;
     }
     return _id;
 }

@@ -32,12 +32,14 @@ public:
 	// Override.
 	// -------------------------------------------------------------------------
 public:
-	virtual void		setData( const QVariant& _value, int _role = Qt::UserRole + 1 );
+	//virtual void		setData( const QVariant& _value, int _role = Qt::UserRole + 1 );
 
 	// -------------------------------------------------------------------------
 	// Interface.
 	// -------------------------------------------------------------------------
 public:
+	QString				GetName() const			{ return m_name; }
+	QString&			GetNameRef()			{ return m_name; }
 	QPointF				GetOffset() const		{ return m_offset; }
 	QSizeF				GetSize() const			{ return m_size; }
 	QPointF&			GetOffsetRef()			{ return m_offset; }
@@ -46,9 +48,12 @@ public:
 	void				Flush();
 
 protected:
+	QString				m_name;
 	QPointF				m_offset;
 	QSizeF				m_size;
 	bool				m_isFlushingData;
+
+	static int			ms_nextId;
 };
 
 

@@ -43,7 +43,7 @@ protected:
 	// Override ReBaseWidget.
 	// -----------------------------------------------------
 public:
-	virtual void		Tick( float _delta );
+	virtual void		Tick( qreal _delta );
 
 	// -----------------------------------------------------
 	// Variable

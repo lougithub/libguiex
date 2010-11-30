@@ -55,7 +55,7 @@ void ReEditor::run()
 	m_mainWindow->show();
 
 	// Loop based on timer.
-	float tickDelta = 1.0f / 60.0f;
+	qreal tickDelta = 1.0f / 60.0f;
 	QTimer* tickTimer = new QTimer( m_application );
 	QObject::connect( tickTimer, SIGNAL( timeout() ), m_mainWindow, SLOT( Tick() ) );
 	m_mainWindow->SetUpdateDelta( tickDelta );
@@ -82,7 +82,7 @@ void ReEditor::Tick()
 	// it never gets called!
 	if( NULL != m_mainWindow )
 	{
-		static float sDelta = 1.0f / 60.0f;
+		static qreal sDelta = 1.0f / 60.0f;
 		m_mainWindow->Tick( sDelta );
 		Sleep( 3 );
 	}

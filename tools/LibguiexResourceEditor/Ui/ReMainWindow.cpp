@@ -46,7 +46,6 @@ ReMainWindow::ReMainWindow( QWidget* _parent /* = NULL */ )
 , m_menuBarEx( NULL )
 , m_editorMenu( NULL )
 , m_aboutMenu( NULL )
-, m_contextMenuClipEditor( NULL )
 //, m_contextMenuTrackPanel( NULL )
 // Misc.
 , m_updateDelta( 0.0f )
@@ -74,7 +73,7 @@ void ReMainWindow::paintEvent( QPaintEvent* _event )
 // -------------------------------------------------------------------------
 // Slot
 // -------------------------------------------------------------------------
-void ReMainWindow::Tick( float _delta )
+void ReMainWindow::Tick( qreal _delta )
 {
 	// Menu.
 	UpdateEditMenu();
@@ -101,6 +100,7 @@ void ReMainWindow::InitData()
 	m_clipModel = new ReClipModel();
 	m_clipModel->setColumnCount( ReClipModel::EColumn_Count );
 	m_clipModel->setHeaderData( ReClipModel::EColumn_Icon, Qt::Horizontal, tr( "Clip" ) );
+	m_clipModel->setHeaderData( ReClipModel::EColumn_Name, Qt::Horizontal, tr( "Name" ) );
 	m_clipModel->setHeaderData( ReClipModel::EColumn_X, Qt::Horizontal, tr( "X" ) );
 	m_clipModel->setHeaderData( ReClipModel::EColumn_Y, Qt::Horizontal, tr( "Y" ) );
 	m_clipModel->setHeaderData( ReClipModel::EColumn_W, Qt::Horizontal, tr( "W" ) );
@@ -114,17 +114,11 @@ void ReMainWindow::InitMainViews()
 	m_clipEditor = new ReClipEditor( m_clipModel, this );
 	m_clipEditor->setContextMenuPolicy( Qt::CustomContextMenu );
 	m_clipEditor->setFocusPolicy( Qt::ClickFocus );
-	connect( m_clipEditor, SIGNAL( customContextMenuRequested( const QPoint& ) ), 
-		this, SLOT( OnContextMenuClipEditor( const QPoint& ) ) );
 
 	// As editor.
 	m_asEditor = new ReAsEditor( this );
-	//m_asEditor->setContextMenuPolicy( Qt::CustomContextMenu );
+	m_asEditor->setContextMenuPolicy( Qt::CustomContextMenu );
 	m_asEditor->setFocusPolicy( Qt::ClickFocus );
-	connect( m_asEditor, SIGNAL( customContextMenuRequested( const QPoint& ) ),
-		this, SLOT( OnContextMenuAsEditor( const QPoint& ) ) );
-	connect( m_asEditor, SIGNAL( MenuChanged() ),
-		this, SLOT( OnMenuChangedWithAsEditor() ) );
 
 	// Image editor.
 	m_viewWidget = new ReViewWidget( this );
@@ -227,15 +221,6 @@ void ReMainWindow::InitMenuBar()
 
 void ReMainWindow::InitContextMenu()
 {
-	QAction* action = NULL;
-
-	m_contextMenuClipEditor = new QMenu();
-	action = m_contextMenuClipEditor->addAction( tr( "Import Image" ) );
-	connect( action, SIGNAL( triggered() ), m_clipEditor, SLOT( OnImportImage() ) );
-
-	//m_contextMenuTrackPanel = new QMenu();
-	//action = m_contextMenuTrackPanel->addAction( tr( "New Track" ) );
-	//connect( action, SIGNAL( triggered() ), m_asEditor, SLOT( OnNewTrack() ) );
 }
 
 
@@ -255,8 +240,6 @@ void ReMainWindow::OnGotoAsEditor()
 	m_stackedEditorWidget->setCurrentIndex( EEditor_As );
 	m_controlPanelWidget->SwitchPanel( ReControlPanelWidget::EPanel_AsPanel );
 	m_panelDockWidget->setWindowTitle( tr( "As Editor" ) );
-
-	OnMenuChangedWithAsEditor();
 }
 
 
@@ -285,31 +268,6 @@ void ReMainWindow::OnAboutAuthor()
 	msg.setWindowTitle( tr( "Author" ) );
 	msg.setText( tr( "GameCrashDebug\r\n\r\n\r\nNov. 21th, 2010" ) );
 	msg.exec();
-}
-
-
-void ReMainWindow::OnContextMenuClipEditor( const QPoint& _point )
-{
-	m_contextMenuClipEditor->exec( m_clipEditor->mapToGlobal( _point ) );
-}
-
-
-void ReMainWindow::OnContextMenuAsEditor( const QPoint& _point )
-{
-	//m_contextMenuTrackPanel->exec( m_asEditor->mapToGlobal( _point ) );
-}
-
-
-void ReMainWindow::OnMenuChangedWithAsEditor()
-{
-	m_menuBarEx->clear();
-	m_menuBarEx->addMenu( m_editorMenu );
-
-	QMenu* asMenu = m_asEditor->GetEditMenu();
-	if( NULL != asMenu )
-		m_menuBarEx->addMenu( asMenu );
-
-	m_menuBarEx->addMenu( m_aboutMenu );
 }
 
 

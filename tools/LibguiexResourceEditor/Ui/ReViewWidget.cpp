@@ -42,7 +42,7 @@ void ReViewWidget::resizeEvent( QResizeEvent* _event )
 // -------------------------------------------------------------------------
 // Override ReBaseWidget.
 // -------------------------------------------------------------------------
-void ReViewWidget::Tick( float _delta )
+void ReViewWidget::Tick( qreal _delta )
 {
 	m_glWidget->Tick( _delta );
 }

@@ -201,7 +201,7 @@ void ReImagePanel::Upload( const QList< QString >& _idArray )
 }
 
 
-void ReImagePanel::Tick( float _delta )
+void ReImagePanel::Tick( qreal _delta )
 {
 	bool isDirty = false;
 
@@ -214,8 +214,8 @@ void ReImagePanel::Tick( float _delta )
 		ReImageItem* item = *itor;
 		if( NULL != item )
 		{
-			static float sXSpeed = 200.0f;
-			static float sYSpeed = 200.0f;
+			static qreal sXSpeed = 200.0f;
+			static qreal sYSpeed = 200.0f;
 			int x = item->m_pos.x();
 			int newX = item->m_newPos.x();			
 			int y = item->m_pos.y();

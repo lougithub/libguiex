@@ -58,7 +58,7 @@ public:
 	};
 
 public:
-	void				Tick( float _delta );
+	void				Tick( qreal _delta );
 	void				SwitchPanel( ePanel _panel );
 
 public slots:

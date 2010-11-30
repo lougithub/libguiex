@@ -70,7 +70,7 @@ protected:
 public:
 	void				Clear();
 	void				Upload( const QList< QString >& _idArray );
-	void				Tick( float _delta );
+	void				Tick( qreal _delta );
 
 	// -----------------------------------------------------
 	// Utility

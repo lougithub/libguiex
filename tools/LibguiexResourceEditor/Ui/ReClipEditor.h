@@ -17,6 +17,9 @@
 #include "Ui\ReClipWidget.h"
 
 
+class QMenu;
+
+
 namespace RE
 {
 
@@ -54,19 +57,23 @@ protected:
 	// ----------------------------------------------------------------------------
 public:
 	virtual void		Tick( qreal _delta );
+	virtual QMenu*		GetEditMenu() const;
 
 	// ----------------------------------------------------------------------------
 	// Slots.
 	// ----------------------------------------------------------------------------
 public slots:
-	void				OnImportImage();
+	void				OnContextMenu( const QPoint& _point );
+	void				OnLoadImage();
+	void				OnImport();
+	void				OnExport();
 	void				OnToggleDebug();
 
 	// ----------------------------------------------------------------------------
 	// Utilities.
 	// ----------------------------------------------------------------------------
 protected:
-	void				InitActions();
+	void				InitMenus();
 
 	// ----------------------------------------------------------------------------
 	// ----------------------------------------------------------------------------
@@ -77,6 +84,9 @@ protected:
 
 	// Model.
 	ReClipModelWidget*	m_modelWidget;			// The parent of all clip widgets.
+
+	// Menu.
+	QMenu*				m_editMenu;
 
 	// Zooming.
 	qreal				m_currentZoomFactor;

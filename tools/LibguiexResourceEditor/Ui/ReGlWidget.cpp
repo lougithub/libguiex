@@ -65,7 +65,7 @@ ReGlWidget::ReGlWidget( const QGLFormat& _fmt,
 }
 
 
-void ReGlWidget::Tick( float _delta )
+void ReGlWidget::Tick( qreal _delta )
 {
 }
 
@@ -123,9 +123,9 @@ void ReGlWidget::RefreshBackdrop()
 		glNewList( m_backdropId, GL_COMPILE );
 		glBegin( GL_QUADS );
 
-		float c0 = 0.1f;
-		float c1 = 0.6f;
-		float c2 = 1.0f;
+		qreal c0 = 0.1f;
+		qreal c1 = 0.6f;
+		qreal c2 = 1.0f;
 
 		glColor3f( c0, c0, c0 );
 		glVertex2d( 0, 0 );

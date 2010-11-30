@@ -17,7 +17,7 @@ class ReWidgetInterface
 {
 public:
 	virtual ~ReWidgetInterface()				{}
-	virtual void		Tick( float _delta )	{}
+	virtual void		Tick( qreal _delta )	{}
 	virtual QMenu*		GetEditMenu() const		{ return NULL; }
 };
 

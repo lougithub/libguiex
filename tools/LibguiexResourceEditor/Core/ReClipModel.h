@@ -31,7 +31,16 @@ public:
 	typedef QStandardItemModel			TSuper;
 	typedef ReModelBase< ReClipData >	TSuperB;
 
-	enum eColumn { EColumn_Icon, EColumn_X, EColumn_Y, EColumn_W, EColumn_H, EColumn_Count };
+	enum eColumn
+	{
+		EColumn_Icon,
+		EColumn_Name,
+		EColumn_X,
+		EColumn_Y,
+		EColumn_W,
+		EColumn_H,
+		EColumn_Count
+	};
 
 	ReClipModel( QWidget* _parent = NULL );
 
@@ -39,9 +48,10 @@ public:
 	// Override QStandardItemModel.
 	// -------------------------------------------------------------------------
 public:
+	typedef Qt::ItemFlags	TFlags;
 	virtual bool		setData( const QModelIndex& _index, const QVariant& _value, int _role = Qt::EditRole );
 	virtual QVariant	data( const QModelIndex& _index, int _role = Qt::DisplayRole ) const;
-	virtual Qt::ItemFlags	flags( const QModelIndex& _index ) const { return 0xFFFFFFFF; }
+	virtual TFlags		flags( const QModelIndex& _index ) const { return 0xFFFFFFFF; }
 
 	// -------------------------------------------------------------------------
 	// Override ReModelBase.

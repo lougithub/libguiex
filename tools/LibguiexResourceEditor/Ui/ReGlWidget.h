@@ -29,7 +29,7 @@ public:
 	ReGlWidget( const QGLFormat& _fmt, QWidget* _parent = NULL, const QGLWidget* _shareWidget = NULL, Qt::WindowFlags _flag = 0 );
 
 
-	void					Tick( float _delta );
+	void					Tick( qreal _delta );
 
 	// -----------------------------------------------------
 	// Override 

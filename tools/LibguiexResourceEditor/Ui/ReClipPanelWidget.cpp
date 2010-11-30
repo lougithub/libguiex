@@ -21,7 +21,7 @@ ReClipPanelWidget::ReClipPanelWidget( QWidget* _parent /* = NULL */ )
 {
 	m_clipTableView = new QTableView( this );
 	QHeaderView* headerView = m_clipTableView->horizontalHeader();
-	headerView->setResizeMode( QHeaderView::ResizeToContents );
+	headerView->setResizeMode( QHeaderView::Interactive );
 	headerView->setStretchLastSection( true );
 
 	QVBoxLayout* layout = new QVBoxLayout();
