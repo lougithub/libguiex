@@ -15,7 +15,7 @@ set( ${library_name}_filesys_stdio_SRCS
 source_group(filesys_stdio FILES ${${library_name}_filesys_stdio_SRCS} )
 
 set( ${library_name}_filesys_cocoa_SRCS 
-    filesys_cocoa/guifilesys_cocoa.cpp
+    filesys_cocoa/guifilesys_cocoa.mm
     filesys_cocoa/guifilesys_cocoa.h
     )
 source_group(filesys_cocoa FILES ${${library_name}_filesys_stdio_SRCS} )
@@ -119,7 +119,7 @@ set( ${library_name}_stringconv_iconv_SRCS
 source_group(stringconv_iconv FILES ${${library_name}_stringconv_iconv_SRCS} )
 
 set( ${library_name}_stringconv_cocoa_SRCS 
-    stringconv_cocoa/guistringconv_cocoa.cpp
+    stringconv_cocoa/guistringconv_cocoa.mm
     stringconv_cocoa/guistringconv_cocoa.h
     )
 source_group(stringconv_cocoa FILES ${${library_name}_stringconv_cocoa_SRCS} )
