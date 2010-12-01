@@ -42,13 +42,13 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIAs::CGUIAs( const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName )
 		:CGUIResource( rAsName, rSceneName, "AS" )
-		,m_pReceiver(NULL)
-		,m_bRetired(false)
 		,m_fTotalTime(GUIAS_MIN_TOTALTIME)
 		,m_fElapsedTime(0.0f)
+		,m_bLooping(false)
+		,m_bRetired(false)
+		,m_pReceiver(NULL)
 		,m_strAsType(rAsType)
 		,m_pAsGenerator(NULL)
-		,m_bLooping(false)
 	{
 		Load();
 	}

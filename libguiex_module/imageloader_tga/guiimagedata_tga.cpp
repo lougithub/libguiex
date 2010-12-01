@@ -20,9 +20,9 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIImageData_tga::CGUIImageData_tga(IGUIInterfaceImageLoader* pLoader)
 		:CGUIImageData(pLoader)
-		,m_pData(NULL)
 		,m_uWidth(0)
 		,m_uHeight(0)
+		,m_pData(NULL)
 	{
 	}
 	//------------------------------------------------------------------------------

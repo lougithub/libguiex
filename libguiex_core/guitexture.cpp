@@ -28,8 +28,8 @@ namespace guiex
 	CGUITexture::CGUITexture( )
 		:m_pTextureImp(NULL)
 		,m_pDumpMemory(NULL)
-		,m_nRefCount(0)
 		,m_nType(0)
+		,m_nRefCount(0)
 	{
 	}
 	//------------------------------------------------------------------------------

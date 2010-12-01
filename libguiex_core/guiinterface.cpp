@@ -17,8 +17,9 @@ namespace guiex
 {
 
 	IGUIInterface::IGUIInterface(const CGUIString& rModuleName)
-		:m_bInitialize(false)
-		,m_strModuleName(rModuleName)
+		:m_strModuleName(rModuleName)
+		,m_bInitialize(false)
+		
 	{
 	}
 	//------------------------------------------------------------------------------

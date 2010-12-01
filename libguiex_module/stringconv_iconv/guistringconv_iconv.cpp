@@ -82,7 +82,7 @@ namespace guiex
 			} 
 
 			//check ret
-			if( retbytes == -1 )
+			if( retbytes == size_t(-1) )
 			{
 				if( errno == E2BIG )
 				{
@@ -178,7 +178,7 @@ namespace guiex
 			} 
 
 			//check ret
-			if( retbytes == -1 )
+			if( retbytes == size_t(-1) )
 			{
 				if( errno == E2BIG )
 				{

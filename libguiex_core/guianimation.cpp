@@ -37,9 +37,9 @@ namespace guiex
 		:CGUIResource( rName, rSceneName, "ANIMATION" )
 		,m_vecUVRects( rUVRects )
 		,m_vecFileNames( rUVRects.size(), rFileName )
-		,m_nFrame(0)
 		,m_fInterval( fInterval )
 		,m_fDeltaTime(0.0f)
+		,m_nFrame(0)
 		,eUVAnimType(eUVAnimType_SingleFile)
 	{
 
@@ -52,11 +52,11 @@ namespace guiex
 		real fInterval,
 		const CGUISize& rSize )
 		:CGUIResource( rName, rSceneName, "ANIMATION" )
-		,m_vecFileNames( rFileNames )
 		,m_vecUVRects( rFileNames.size(), CGUIRect(0.f,0.f,1.f,1.f))
-		,m_nFrame(0)
+		,m_vecFileNames( rFileNames )
 		,m_fInterval( fInterval )
 		,m_fDeltaTime(0.0f)
+		,m_nFrame(0)
 		,eUVAnimType(eUVAnimType_MultiFile)
 	{
 

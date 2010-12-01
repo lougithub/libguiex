@@ -21,9 +21,47 @@ configure_file (
 # add the binary tree to the search path for include files
 # so that we will find TutorialConfig.h
 include_directories( "${PROJECT_BINARY_DIR}" )
-
-
 include_directories( ${PROJECT_SOURCE_DIR}/ )
+
+# for iphone simulate --begin--
+if( APPLE )
+
+set (SDKVER "4.1")
+set (DEVROOT "/Developer/Platforms/iPhoneSimulator.platform/Developer")
+set (SDKROOT "${DEVROOT}/SDKs/iPhoneSimulator${SDKVER}.sdk")
+set (CMAKE_OSX_SYSROOT "iphonesimulator4.1")
+set (CMAKE_OSX_ARCHITECTURES "$(ARCHS_STANDARD_32_BIT)")
+
+#set (iPhone 1)
+set (iPhoneSimulator 1)
+set (iPhoneSimulator_VERSION ${SDKVER})
+
+message( STATUS ${SDKROOT} )
+macro( ADD_FRAMEWORK fwname appname )
+    find_library(
+	FRAMEWORK_${fwname}
+        NAMES ${fwname}
+        PATHS ${SDKROOT}/System/Library
+        PATH_SUFFIXES Frameworks
+        NO_DEFAULT_PATH)
+    mark_as_advanced( FRAMEWORK_${fwname} )
+    if( ${FRAMEWORK_${fwname}} STREQUAL FRAMEWORK_${fwname}-NOTFOUND )
+        message(ERROR ": Framework ${fwname} not found")
+    else()
+        target_link_libraries(${appname} ${FRAMEWORK_${fwname}})
+        message(STATUS "Framework ${fwname} found at ${FRAMEWORK_${fwname}}")
+    endif()
+endmacro()
+
+#ADD_FRAMEWORK(OpenGLES libguiex)
+#ADD_FRAMEWORK(AudioToolbox libguiex)
+#ADD_FRAMEWORK(CoreGraphics libguiex)
+#ADD_FRAMEWORK(QuartzCore libguiex)
+#ADD_FRAMEWORK(UIKit libguiex)
+
+endif( APPLE ) 
+# for iphone simulate --end--
+
 add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_core projects/libguiex_core )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_widget projects/libguiex_widget )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_module projects/libguiex_module )

@@ -35,10 +35,11 @@ namespace guiex
 		const CGUISize& rSize )
 		:CGUIResource( rName, rSceneName, "IMAGE" )
 		,m_pTexture(NULL)
+		,m_aUVRect(CGUIRect(0.f,0.f,1.f,1.f))
 		,m_eImageOrientation(eImageOrientation_Normal)
 		,m_eImageType( eIT_COLOR )
+		,m_strPath()	
 		,m_aColor( rColor )
-		,m_aUVRect(CGUIRect(0.f,0.f,1.f,1.f))
 		,m_aImageSize( rSize )
 	{
 	}
@@ -53,13 +54,15 @@ namespace guiex
 		const CGUISize& rSize )
 		:CGUIResource( rName, rSceneName, "IMAGE" )
 		,m_pTexture(NULL)
+		,m_aUVRect(CGUIRect(0.f,0.f,1.f,1.f))
 		,m_eImageOrientation(eImageOrientation_Normal)
 		,m_eImageType( eIT_MEM )
+		,m_strPath()
+		,m_aColor()
 		,m_pBuffPtr(buffPtr)
 		,m_nBuffWidth(buffWidth)
 		,m_nBuffHeight(buffHeight)
 		,m_ePixelFormat(ePixelFormat)
-		,m_aUVRect(CGUIRect(0.f,0.f,1.f,1.f))
 		,m_aImageSize( rSize )
 	{
 	}
@@ -73,10 +76,11 @@ namespace guiex
 		const CGUISize& rSize )
 		:CGUIResource( rName, rSceneName, "IMAGE" )
 		,m_pTexture(NULL)
+		,m_aUVRect( rUVRect )
 		,m_eImageOrientation(eImageOrientation)
 		,m_eImageType( eIT_FILE )
 		,m_strPath( rPath )
-		,m_aUVRect( rUVRect )
+		,m_aColor()
 		,m_aImageSize( rSize )
 	{
 	}

@@ -71,9 +71,6 @@ namespace guiex
 #define GUI_REGISTER_INTERFACE_DLL_ARG(interfacename, dllname, arg)	\
 	::guiex::CGUIInterfaceManager::Instance()->RegisterInterface(interfacename, dllname, arg)
 
-//#define GUI_GET_INTERFACE(interfacename,interfacetype)	\
-//	((::guiex::interfacename*)::guiex::CGUIInterfaceManager::Instance()->GetInterface(interfacetype))
-
 #define GUI_HAS_INTERFACE(interfacetype)	\
 	::guiex::CGUIInterfaceManager::Instance()->HasInterface(interfacetype)
 

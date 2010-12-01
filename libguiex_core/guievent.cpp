@@ -51,9 +51,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIEvent::CGUIEvent(const char* pEventName)
 		:m_uEventId(eEVENT_UNKNOW_EVENT)
-		,m_pReceiver(NULL)
 		,m_strEventType(pEventName)
-		//,m_pEventGenerator(NULL)
+		,m_pReceiver(NULL)
 		,m_bConsumed(false)
 	{
 	}

@@ -159,7 +159,7 @@ namespace guiex
 		//{
 		//	tmpBuff[cswap] ^= tmpBuff[cswap+2] ^= tmpBuff[cswap] ^= tmpBuff[cswap+2];
 		//}
-		for(uint32 cswap = 0; cswap < (int)tga.imageSize; cswap += tga.bytesPerPixel)
+		for(uint32 cswap = 0; cswap < (uint32)tga.imageSize; cswap += tga.bytesPerPixel)
 		{
 			uint8 temp = tmpBuff[cswap+0];
 			tmpBuff[cswap+0] = tmpBuff[cswap+2];
