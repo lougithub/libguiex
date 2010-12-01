@@ -1,0 +1,8 @@
+#ifndef _libguiexConfig_h
+#define _libguiexConfig_h
+
+// the configured options and settings for Tutorial
+#define libguiex_VERSION_MAJOR @libguiex_VERSION_MAJOR@
+#define libguiex_VERSION_MINOR @libguiex_VERSION_MINOR@
+
+#endif
