@@ -149,11 +149,11 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\source\\libguiex_module\\filesys_stdio\guifilesys_stdio.cpp"
+				RelativePath="..\..\\libguiex_module\\filesys_stdio\guifilesys_stdio.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\\libguiex_module\\filesys_stdio\guifilesys_stdio.h"
+				RelativePath="..\..\libguiex_module\\filesys_stdio\guifilesys_stdio.h"
 				>
 			</File>
 		</Filter>
@@ -163,11 +163,11 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\source\\libguiex_module\\configfile_tinyxml\guiconfigfile_tinyxml.cpp"
+				RelativePath="..\..\libguiex_module\\configfile_tinyxml\guiconfigfile_tinyxml.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\\libguiex_module\\configfile_tinyxml\guiconfigfile_tinyxml.h"
+				RelativePath="..\..\libguiex_module\\configfile_tinyxml\guiconfigfile_tinyxml.h"
 				>
 			</File>
 		</Filter>
@@ -175,19 +175,19 @@
 			Name="font_ft2"
 			>
 			<File
-				RelativePath="..\..\source\\libguiex_module\\font_ft2\guifont_ft2.cpp"
+				RelativePath="..\..\libguiex_module\\font_ft2\guifont_ft2.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\\libguiex_module\\font_ft2\guifont_ft2.h"
+				RelativePath="..\..\libguiex_module\\font_ft2\guifont_ft2.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_module\font_ft2\guifontdata_ft2.cpp"
+				RelativePath="..\..\libguiex_module\font_ft2\guifontdata_ft2.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_module\font_ft2\guifontdata_ft2.h"
+				RelativePath="..\..\libguiex_module\font_ft2\guifontdata_ft2.h"
 				>
 			</File>
 		</Filter>
@@ -195,11 +195,11 @@
 			Name="ime_winapi"
 			>
 			<File
-				RelativePath="..\..\source\\libguiex_module\\ime_winapi\guiime_winapi.cpp"
+				RelativePath="..\..\libguiex_module\\ime_winapi\guiime_winapi.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\\libguiex_module\\ime_winapi\guiime_winapi.h"
+				RelativePath="..\..\libguiex_module\\ime_winapi\guiime_winapi.h"
 				>
 			</File>
 		</Filter>
@@ -207,11 +207,11 @@
 			Name="keyboard_winapi"
 			>
 			<File
-				RelativePath="..\..\source\\libguiex_module\\keyboard_winapi\guikeyboard_winapi.cpp"
+				RelativePath="..\..\libguiex_module\\keyboard_winapi\guikeyboard_winapi.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\\libguiex_module\\keyboard_winapi\guikeyboard_winapi.h"
+				RelativePath="..\..\libguiex_module\\keyboard_winapi\guikeyboard_winapi.h"
 				>
 			</File>
 		</Filter>
@@ -219,11 +219,11 @@
 			Name="keyboard_default"
 			>
 			<File
-				RelativePath="..\..\source\\libguiex_module\\keyboard_default\guikeyboard_default.cpp"
+				RelativePath="..\..\libguiex_module\\keyboard_default\guikeyboard_default.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\\libguiex_module\\keyboard_default\guikeyboard_default.h"
+				RelativePath="..\..\libguiex_module\\keyboard_default\guikeyboard_default.h"
 				>
 			</File>
 		</Filter>
@@ -231,11 +231,11 @@
 			Name="mouse_default"
 			>
 			<File
-				RelativePath="..\..\source\\libguiex_module\\mouse_default\guimouse_default.cpp"
+				RelativePath="..\..\libguiex_module\\mouse_default\guimouse_default.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\\libguiex_module\\mouse_default\guimouse_default.h"
+				RelativePath="..\..\libguiex_module\\mouse_default\guimouse_default.h"
 				>
 			</File>
 		</Filter>
@@ -243,11 +243,11 @@
 			Name="mouse_winapi"
 			>
 			<File
-				RelativePath="..\..\source\\libguiex_module\\mouse_winapi\guimouse_winapi.cpp"
+				RelativePath="..\..\libguiex_module\\mouse_winapi\guimouse_winapi.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\\libguiex_module\\mouse_winapi\guimouse_winapi.h"
+				RelativePath="..\..\libguiex_module\\mouse_winapi\guimouse_winapi.h"
 				>
 			</File>
 		</Filter>
@@ -255,19 +255,19 @@
 			Name="render_opengl"
 			>
 			<File
-				RelativePath="..\..\source\\libguiex_module\\render_opengl\guirender_opengl.cpp"
+				RelativePath="..\..\libguiex_module\\render_opengl\guirender_opengl.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\\libguiex_module\\render_opengl\guirender_opengl.h"
+				RelativePath="..\..\libguiex_module\\render_opengl\guirender_opengl.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\\libguiex_module\\render_opengl\guitexture_opengl.cpp"
+				RelativePath="..\..\libguiex_module\\render_opengl\guitexture_opengl.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\\libguiex_module\\render_opengl\guitexture_opengl.h"
+				RelativePath="..\..\libguiex_module\\render_opengl\guitexture_opengl.h"
 				>
 			</File>
 		</Filter>
@@ -275,19 +275,19 @@
 			Name="script_lua"
 			>
 			<File
-				RelativePath="..\..\source\libguiex_module\script_lua\guiex_wrap.cpp"
+				RelativePath="..\..\libguiex_module\script_lua\guiex_wrap.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\\libguiex_module\\script_lua\guiex_wrap.h"
+				RelativePath="..\..\libguiex_module\\script_lua\guiex_wrap.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\\libguiex_module\\script_lua\guiscript_lua.cpp"
+				RelativePath="..\..\libguiex_module\\script_lua\guiscript_lua.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\\libguiex_module\\script_lua\guiscript_lua.h"
+				RelativePath="..\..\libguiex_module\\script_lua\guiscript_lua.h"
 				>
 			</File>
 		</Filter>
@@ -295,19 +295,19 @@
 			Name="imageloader_tga"
 			>
 			<File
-				RelativePath="..\..\source\libguiex_module\imageloader_tga\guiimagedata_tga.cpp"
+				RelativePath="..\..\libguiex_module\imageloader_tga\guiimagedata_tga.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_module\imageloader_tga\guiimagedata_tga.h"
+				RelativePath="..\..\libguiex_module\imageloader_tga\guiimagedata_tga.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_module\imageloader_tga\guiimageloader_tga.cpp"
+				RelativePath="..\..\libguiex_module\imageloader_tga\guiimageloader_tga.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_module\imageloader_tga\guiimageloader_tga.h"
+				RelativePath="..\..\libguiex_module\imageloader_tga\guiimageloader_tga.h"
 				>
 			</File>
 		</Filter>
@@ -315,11 +315,11 @@
 			Name="stringconv_winapi"
 			>
 			<File
-				RelativePath="..\..\source\libguiex_module\stringconv_winapi\guistringconv_winapi.cpp"
+				RelativePath="..\..\libguiex_module\stringconv_winapi\guistringconv_winapi.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_module\stringconv_winapi\guistringconv_winapi.h"
+				RelativePath="..\..\libguiex_module\stringconv_winapi\guistringconv_winapi.h"
 				>
 			</File>
 		</Filter>
@@ -327,19 +327,19 @@
 			Name="font_dummy"
 			>
 			<File
-				RelativePath="..\..\source\libguiex_module\font_dummy\guifont_dummy.cpp"
+				RelativePath="..\..\libguiex_module\font_dummy\guifont_dummy.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_module\font_dummy\guifont_dummy.h"
+				RelativePath="..\..\libguiex_module\font_dummy\guifont_dummy.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_module\font_dummy\guifontdata_dummy.cpp"
+				RelativePath="..\..\libguiex_module\font_dummy\guifontdata_dummy.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_module\font_dummy\guifontdata_dummy.h"
+				RelativePath="..\..\libguiex_module\font_dummy\guifontdata_dummy.h"
 				>
 			</File>
 		</Filter>

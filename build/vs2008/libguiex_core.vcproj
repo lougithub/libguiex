@@ -147,315 +147,315 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\source\libguiex_core\guianimation.cpp"
+				RelativePath="..\..\libguiex_core\guianimation.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guianimationmanager.cpp"
+				RelativePath="..\..\libguiex_core\guianimationmanager.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guias.cpp"
+				RelativePath="..\..\libguiex_core\guias.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiasfactory.cpp"
+				RelativePath="..\..\libguiex_core\guiasfactory.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiasgenerator.cpp"
+				RelativePath="..\..\libguiex_core\guiasgenerator.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiasmanager.cpp"
+				RelativePath="..\..\libguiex_core\guiasmanager.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiassert.cpp"
+				RelativePath="..\..\libguiex_core\guiassert.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guicleanup.cpp"
+				RelativePath="..\..\libguiex_core\guicleanup.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guicolor.cpp"
+				RelativePath="..\..\libguiex_core\guicolor.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guicolorrect.cpp"
+				RelativePath="..\..\libguiex_core\guicolorrect.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiconfigfileloader.cpp"
+				RelativePath="..\..\libguiex_core\guiconfigfileloader.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guidebug.cpp"
+				RelativePath="..\..\libguiex_core\guidebug.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guievent.cpp"
+				RelativePath="..\..\libguiex_core\guievent.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiexception.cpp"
+				RelativePath="..\..\libguiex_core\guiexception.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guifontdata.cpp"
+				RelativePath="..\..\libguiex_core\guifontdata.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guifontmanager.cpp"
+				RelativePath="..\..\libguiex_core\guifontmanager.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiimage.cpp"
+				RelativePath="..\..\libguiex_core\guiimage.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiimagedata.cpp"
+				RelativePath="..\..\libguiex_core\guiimagedata.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiimagemanager.cpp"
+				RelativePath="..\..\libguiex_core\guiimagemanager.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiinputprocessor.cpp"
+				RelativePath="..\..\libguiex_core\guiinputprocessor.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiinterface.cpp"
+				RelativePath="..\..\libguiex_core\guiinterface.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiinterfacecommand.cpp"
+				RelativePath="..\..\libguiex_core\guiinterfacecommand.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiinterfaceconfigfile.cpp"
+				RelativePath="..\..\libguiex_core\guiinterfaceconfigfile.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiinterfacefilesys.cpp"
+				RelativePath="..\..\libguiex_core\guiinterfacefilesys.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiinterfacefont.cpp"
+				RelativePath="..\..\libguiex_core\guiinterfacefont.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiinterfaceimageloader.cpp"
+				RelativePath="..\..\libguiex_core\guiinterfaceimageloader.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiinterfaceime.cpp"
+				RelativePath="..\..\libguiex_core\guiinterfaceime.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiinterfacekeyboard.cpp"
+				RelativePath="..\..\libguiex_core\guiinterfacekeyboard.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiinterfacemanager.cpp"
+				RelativePath="..\..\libguiex_core\guiinterfacemanager.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiinterfacemouse.cpp"
+				RelativePath="..\..\libguiex_core\guiinterfacemouse.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiinterfacerender.cpp"
+				RelativePath="..\..\libguiex_core\guiinterfacerender.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiinterfacescript.cpp"
+				RelativePath="..\..\libguiex_core\guiinterfacescript.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiinterfacesound.cpp"
+				RelativePath="..\..\libguiex_core\guiinterfacesound.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiinterfacestringconv.cpp"
+				RelativePath="..\..\libguiex_core\guiinterfacestringconv.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiinterpolation.cpp"
+				RelativePath="..\..\libguiex_core\guiinterpolation.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guilogmsg.cpp"
+				RelativePath="..\..\libguiex_core\guilogmsg.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guilogmsgcallback.cpp"
+				RelativePath="..\..\libguiex_core\guilogmsgcallback.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guilogmsgmanager.cpp"
+				RelativePath="..\..\libguiex_core\guilogmsgmanager.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guilogmsgrecord.cpp"
+				RelativePath="..\..\libguiex_core\guilogmsgrecord.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guimath.cpp"
+				RelativePath="..\..\libguiex_core\guimath.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guimatrix3.cpp"
+				RelativePath="..\..\libguiex_core\guimatrix3.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guimatrix4.cpp"
+				RelativePath="..\..\libguiex_core\guimatrix4.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guimousecursor.cpp"
+				RelativePath="..\..\libguiex_core\guimousecursor.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guinode.cpp"
+				RelativePath="..\..\libguiex_core\guinode.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiobjectmanager.cpp"
+				RelativePath="..\..\libguiex_core\guiobjectmanager.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiobjectmanagerbase.cpp"
+				RelativePath="..\..\libguiex_core\guiobjectmanagerbase.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiperfmonitor.cpp"
+				RelativePath="..\..\libguiex_core\guiperfmonitor.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiplane.cpp"
+				RelativePath="..\..\libguiex_core\guiplane.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiproperty.cpp"
+				RelativePath="..\..\libguiex_core\guiproperty.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guipropertyconvertor.cpp"
+				RelativePath="..\..\libguiex_core\guipropertyconvertor.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guipropertymanager.cpp"
+				RelativePath="..\..\libguiex_core\guipropertymanager.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiquaternion.cpp"
+				RelativePath="..\..\libguiex_core\guiquaternion.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guirect.cpp"
+				RelativePath="..\..\libguiex_core\guirect.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guirenderrect.cpp"
+				RelativePath="..\..\libguiex_core\guirenderrect.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiresource.cpp"
+				RelativePath="..\..\libguiex_core\guiresource.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiresourcemanager.cpp"
+				RelativePath="..\..\libguiex_core\guiresourcemanager.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guisceneinfo.cpp"
+				RelativePath="..\..\libguiex_core\guisceneinfo.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guisceneinfomanager.cpp"
+				RelativePath="..\..\libguiex_core\guisceneinfomanager.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guisceneutility.cpp"
+				RelativePath="..\..\libguiex_core\guisceneutility.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guisize.cpp"
+				RelativePath="..\..\libguiex_core\guisize.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guistringconvertor.cpp"
+				RelativePath="..\..\libguiex_core\guistringconvertor.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guistringex.cpp"
+				RelativePath="..\..\libguiex_core\guistringex.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guitexture.cpp"
+				RelativePath="..\..\libguiex_core\guitexture.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guitextureimp.cpp"
+				RelativePath="..\..\libguiex_core\guitextureimp.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guitexturemanager.cpp"
+				RelativePath="..\..\libguiex_core\guitexturemanager.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guitimer.cpp"
+				RelativePath="..\..\libguiex_core\guitimer.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiutility.cpp"
+				RelativePath="..\..\libguiex_core\guiutility.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guivector2.cpp"
+				RelativePath="..\..\libguiex_core\guivector2.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guivector3.cpp"
+				RelativePath="..\..\libguiex_core\guivector3.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guivector4.cpp"
+				RelativePath="..\..\libguiex_core\guivector4.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiwidget.cpp"
+				RelativePath="..\..\libguiex_core\guiwidget.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiwidgetcallback.cpp"
+				RelativePath="..\..\libguiex_core\guiwidgetcallback.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiwidgetfactory.cpp"
+				RelativePath="..\..\libguiex_core\guiwidgetfactory.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiwidgetgenerator.cpp"
+				RelativePath="..\..\libguiex_core\guiwidgetgenerator.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiwidgetmanager.cpp"
+				RelativePath="..\..\libguiex_core\guiwidgetmanager.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiwidgetroot.cpp"
+				RelativePath="..\..\libguiex_core\guiwidgetroot.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiwidgetsystem.cpp"
+				RelativePath="..\..\libguiex_core\guiwidgetsystem.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_core\guiwidgetutility.cpp"
+				RelativePath="..\..\libguiex_core\guiwidgetutility.cpp"
 				>
 			</File>
 		</Filter>
@@ -465,359 +465,359 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\include\libguiex_core\guianimation.h"
+				RelativePath="..\..\libguiex_core\guianimation.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guianimationmanager.h"
+				RelativePath="..\..\libguiex_core\guianimationmanager.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guias.h"
+				RelativePath="..\..\libguiex_core\guias.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiasfactory.h"
+				RelativePath="..\..\libguiex_core\guiasfactory.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiasgenerator.h"
+				RelativePath="..\..\libguiex_core\guiasgenerator.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiasmanager.h"
+				RelativePath="..\..\libguiex_core\guiasmanager.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiassert.h"
+				RelativePath="..\..\libguiex_core\guiassert.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guibase.h"
+				RelativePath="..\..\libguiex_core\guibase.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guicleanup.h"
+				RelativePath="..\..\libguiex_core\guicleanup.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guicolor.h"
+				RelativePath="..\..\libguiex_core\guicolor.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guicolorrect.h"
+				RelativePath="..\..\libguiex_core\guicolorrect.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiconfig.h"
+				RelativePath="..\..\libguiex_core\guiconfig.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiconfigfileloader.h"
+				RelativePath="..\..\libguiex_core\guiconfigfileloader.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guidatachunk.h"
+				RelativePath="..\..\libguiex_core\guidatachunk.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guidynlib.h"
+				RelativePath="..\..\libguiex_core\guidynlib.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guienumtype.h"
+				RelativePath="..\..\libguiex_core\guienumtype.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guievent.h"
+				RelativePath="..\..\libguiex_core\guievent.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiex.h"
+				RelativePath="..\..\libguiex_core\guiex.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiexception.h"
+				RelativePath="..\..\libguiex_core\guiexception.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guifontdata.h"
+				RelativePath="..\..\libguiex_core\guifontdata.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guifontmanager.h"
+				RelativePath="..\..\libguiex_core\guifontmanager.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guigarbagecollector.h"
+				RelativePath="..\..\libguiex_core\guigarbagecollector.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiimage.h"
+				RelativePath="..\..\libguiex_core\guiimage.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiimagedata.h"
+				RelativePath="..\..\libguiex_core\guiimagedata.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiimagemanager.h"
+				RelativePath="..\..\libguiex_core\guiimagemanager.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiinputprocessor.h"
+				RelativePath="..\..\libguiex_core\guiinputprocessor.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiinterface.h"
+				RelativePath="..\..\libguiex_core\guiinterface.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiinterfacecommand.h"
+				RelativePath="..\..\libguiex_core\guiinterfacecommand.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiinterfaceconfigfile.h"
+				RelativePath="..\..\libguiex_core\guiinterfaceconfigfile.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiinterfacefilesys.h"
+				RelativePath="..\..\libguiex_core\guiinterfacefilesys.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiinterfacefont.h"
+				RelativePath="..\..\libguiex_core\guiinterfacefont.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiinterfaceimageloader.h"
+				RelativePath="..\..\libguiex_core\guiinterfaceimageloader.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiinterfaceime.h"
+				RelativePath="..\..\libguiex_core\guiinterfaceime.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiinterfacekeyboard.h"
+				RelativePath="..\..\libguiex_core\guiinterfacekeyboard.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiinterfacemanager.h"
+				RelativePath="..\..\libguiex_core\guiinterfacemanager.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiinterfacemouse.h"
+				RelativePath="..\..\libguiex_core\guiinterfacemouse.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiinterfaceparser.h"
+				RelativePath="..\..\libguiex_core\guiinterfaceparser.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiinterfacerender.h"
+				RelativePath="..\..\libguiex_core\guiinterfacerender.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiinterfacescript.h"
+				RelativePath="..\..\libguiex_core\guiinterfacescript.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiinterfacesound.h"
+				RelativePath="..\..\libguiex_core\guiinterfacesound.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiinterfacestringconv.h"
+				RelativePath="..\..\libguiex_core\guiinterfacestringconv.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiinterpolation.h"
+				RelativePath="..\..\libguiex_core\guiinterpolation.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guilogmsg.h"
+				RelativePath="..\..\libguiex_core\guilogmsg.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guilogmsgcallback.h"
+				RelativePath="..\..\libguiex_core\guilogmsgcallback.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guilogmsgmanager.h"
+				RelativePath="..\..\libguiex_core\guilogmsgmanager.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guilogmsgrecord.h"
+				RelativePath="..\..\libguiex_core\guilogmsgrecord.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guimath.h"
+				RelativePath="..\..\libguiex_core\guimath.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guimatrix3.h"
+				RelativePath="..\..\libguiex_core\guimatrix3.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guimatrix4.h"
+				RelativePath="..\..\libguiex_core\guimatrix4.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guimousecursor.h"
+				RelativePath="..\..\libguiex_core\guimousecursor.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guinode.h"
+				RelativePath="..\..\libguiex_core\guinode.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiobjectmanager.h"
+				RelativePath="..\..\libguiex_core\guiobjectmanager.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiobjectmanagerbase.h"
+				RelativePath="..\..\libguiex_core\guiobjectmanagerbase.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiperfmonitor.h"
+				RelativePath="..\..\libguiex_core\guiperfmonitor.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiplane.h"
+				RelativePath="..\..\libguiex_core\guiplane.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiproperty.h"
+				RelativePath="..\..\libguiex_core\guiproperty.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guipropertyconvertor.h"
+				RelativePath="..\..\libguiex_core\guipropertyconvertor.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guipropertymanager.h"
+				RelativePath="..\..\libguiex_core\guipropertymanager.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiquaternion.h"
+				RelativePath="..\..\libguiex_core\guiquaternion.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guirect.h"
+				RelativePath="..\..\libguiex_core\guirect.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guirenderrect.h"
+				RelativePath="..\..\libguiex_core\guirenderrect.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiresource.h"
+				RelativePath="..\..\libguiex_core\guiresource.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiresourcemanager.h"
+				RelativePath="..\..\libguiex_core\guiresourcemanager.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guisceneinfo.h"
+				RelativePath="..\..\libguiex_core\guisceneinfo.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guisceneinfomanager.h"
+				RelativePath="..\..\libguiex_core\guisceneinfomanager.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guisceneutility.h"
+				RelativePath="..\..\libguiex_core\guisceneutility.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guisingleton.h"
+				RelativePath="..\..\libguiex_core\guisingleton.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guisingleton.inl"
+				RelativePath="..\..\libguiex_core\guisingleton.inl"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guisize.h"
+				RelativePath="..\..\libguiex_core\guisize.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guistring.h"
+				RelativePath="..\..\libguiex_core\guistring.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guistringconvertor.h"
+				RelativePath="..\..\libguiex_core\guistringconvertor.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guistringex.h"
+				RelativePath="..\..\libguiex_core\guistringex.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guitexture.h"
+				RelativePath="..\..\libguiex_core\guitexture.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guitextureimp.h"
+				RelativePath="..\..\libguiex_core\guitextureimp.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guitexturemanager.h"
+				RelativePath="..\..\libguiex_core\guitexturemanager.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guitimer.h"
+				RelativePath="..\..\libguiex_core\guitimer.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guitypes.h"
+				RelativePath="..\..\libguiex_core\guitypes.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiutility.h"
+				RelativePath="..\..\libguiex_core\guiutility.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guivector2.h"
+				RelativePath="..\..\libguiex_core\guivector2.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guivector3.h"
+				RelativePath="..\..\libguiex_core\guivector3.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guivector4.h"
+				RelativePath="..\..\libguiex_core\guivector4.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiwidget.h"
+				RelativePath="..\..\libguiex_core\guiwidget.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiwidgetfactory.h"
+				RelativePath="..\..\libguiex_core\guiwidgetfactory.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiwidgetgenerator.h"
+				RelativePath="..\..\libguiex_core\guiwidgetgenerator.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiwidgetmanager.h"
+				RelativePath="..\..\libguiex_core\guiwidgetmanager.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiwidgetparameter.h"
+				RelativePath="..\..\libguiex_core\guiwidgetparameter.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiwidgetroot.h"
+				RelativePath="..\..\libguiex_core\guiwidgetroot.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiwidgetsystem.h"
+				RelativePath="..\..\libguiex_core\guiwidgetsystem.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_core\guiwidgetutility.h"
+				RelativePath="..\..\libguiex_core\guiwidgetutility.h"
 				>
 			</File>
 		</Filter>

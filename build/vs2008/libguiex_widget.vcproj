@@ -147,7 +147,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\source\libguiex_widget\guicollistheader.cpp"
+				RelativePath="..\..\libguiex_widget\guicollistheader.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -167,7 +167,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_widget\guicollistheadersegment.cpp"
+				RelativePath="..\..\libguiex_widget\guicollistheadersegment.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -187,7 +187,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_widget\guicollistitem.cpp"
+				RelativePath="..\..\libguiex_widget\guicollistitem.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -207,7 +207,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_widget\guicollisttextitem.cpp"
+				RelativePath="..\..\libguiex_widget\guicollisttextitem.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -227,7 +227,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_widget\guiitembase.cpp"
+				RelativePath="..\..\libguiex_widget\guiitembase.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -247,7 +247,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_widget\guilistboxitem.cpp"
+				RelativePath="..\..\libguiex_widget\guilistboxitem.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -267,7 +267,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_widget\guilistboxtextitem.cpp"
+				RelativePath="..\..\libguiex_widget\guilistboxtextitem.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -287,7 +287,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_widget\guimenuitem.cpp"
+				RelativePath="..\..\libguiex_widget\guimenuitem.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -307,7 +307,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_widget\guimenutextitem.cpp"
+				RelativePath="..\..\libguiex_widget\guimenutextitem.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -327,39 +327,19 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_widget\guiwgtanimation.cpp"
+				RelativePath="..\..\libguiex_widget\guiwgtanimation.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_widget\guiwgtbutton.cpp"
+				RelativePath="..\..\libguiex_widget\guiwgtbutton.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_widget\guiwgtcheckbutton.cpp"
+				RelativePath="..\..\libguiex_widget\guiwgtcheckbutton.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_widget\guiwgtcolumnlist.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\source\libguiex_widget\guiwgtcombobox.cpp"
+				RelativePath="..\..\libguiex_widget\guiwgtcolumnlist.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -379,23 +359,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_widget\guiwgtdialog.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\libguiex_widget\guiwgtedit.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\libguiex_widget\guiwgteditbox.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\libguiex_widget\guiwgtemptynode.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\libguiex_widget\guiwgtframe.cpp"
+				RelativePath="..\..\libguiex_widget\guiwgtcombobox.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -415,46 +379,23 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_widget\guiwgtgeneratewidgets.cpp"
+				RelativePath="..\..\libguiex_widget\guiwgtdialog.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_widget\guiwgtlistbox.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\source\libguiex_widget\guiwgtmultieditbox.cpp"
+				RelativePath="..\..\libguiex_widget\guiwgtedit.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_widget\guiwgtpanel.cpp"
+				RelativePath="..\..\libguiex_widget\guiwgteditbox.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_widget\guiwgtpopupmenu.cpp"
+				RelativePath="..\..\libguiex_widget\guiwgtemptynode.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\libguiex_widget\guiwgtframe.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -474,30 +415,11 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_widget\guiwgtprogress.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\source\libguiex_widget\guiwgtradiobutton.cpp"
+				RelativePath="..\..\libguiex_widget\guiwgtgeneratewidgets.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_widget\guiwgtscrollbar.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\libguiex_widget\guiwgtscrollbarcontainer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\libguiex_widget\guiwgtscrollpanel.cpp"
+				RelativePath="..\..\libguiex_widget\guiwgtlistbox.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -517,19 +439,11 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_widget\guiwgtstatic.cpp"
+				RelativePath="..\..\libguiex_widget\guiwgtmultieditbox.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_widget\guiwgtstaticimage.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\libguiex_widget\guiwgtstatictext.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\libguiex_widget\guiwgttabbutton.cpp"
+				RelativePath="..\..\libguiex_widget\guiwgtpanel.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -540,7 +454,93 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\source\libguiex_widget\guiwgttabcontrol.cpp"
+				RelativePath="..\..\libguiex_widget\guiwgtpopupmenu.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\libguiex_widget\guiwgtprogress.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\libguiex_widget\guiwgtradiobutton.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\libguiex_widget\guiwgtscrollbar.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\libguiex_widget\guiwgtscrollbarcontainer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\libguiex_widget\guiwgtscrollpanel.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\libguiex_widget\guiwgtstatic.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\libguiex_widget\guiwgtstaticimage.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\libguiex_widget\guiwgtstatictext.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\libguiex_widget\guiwgttabbutton.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\libguiex_widget\guiwgttabcontrol.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -557,143 +557,143 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guicollistheader.h"
+				RelativePath="..\..\libguiex_widget\guicollistheader.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guicollistheadersegment.h"
+				RelativePath="..\..\libguiex_widget\guicollistheadersegment.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guicollistitem.h"
+				RelativePath="..\..\libguiex_widget\guicollistitem.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guicollisttextitem.h"
+				RelativePath="..\..\libguiex_widget\guicollisttextitem.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guiitembase.h"
+				RelativePath="..\..\libguiex_widget\guiitembase.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guilistboxitem.h"
+				RelativePath="..\..\libguiex_widget\guilistboxitem.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guilistboxtextitem.h"
+				RelativePath="..\..\libguiex_widget\guilistboxtextitem.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guimenuitem.h"
+				RelativePath="..\..\libguiex_widget\guimenuitem.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guimenutextitem.h"
+				RelativePath="..\..\libguiex_widget\guimenutextitem.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guiwgt.h"
+				RelativePath="..\..\libguiex_widget\guiwgt.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guiwgtanimation.h"
+				RelativePath="..\..\libguiex_widget\guiwgtanimation.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guiwgtbutton.h"
+				RelativePath="..\..\libguiex_widget\guiwgtbutton.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guiwgtcheckbutton.h"
+				RelativePath="..\..\libguiex_widget\guiwgtcheckbutton.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guiwgtcolumnlist.h"
+				RelativePath="..\..\libguiex_widget\guiwgtcolumnlist.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guiwgtcombobox.h"
+				RelativePath="..\..\libguiex_widget\guiwgtcombobox.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guiwgtdialog.h"
+				RelativePath="..\..\libguiex_widget\guiwgtdialog.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guiwgtedit.h"
+				RelativePath="..\..\libguiex_widget\guiwgtedit.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guiwgteditbox.h"
+				RelativePath="..\..\libguiex_widget\guiwgteditbox.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guiwgtemptynode.h"
+				RelativePath="..\..\libguiex_widget\guiwgtemptynode.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guiwgtframe.h"
+				RelativePath="..\..\libguiex_widget\guiwgtframe.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guiwgtgeneratewidgets.h"
+				RelativePath="..\..\libguiex_widget\guiwgtgeneratewidgets.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guiwgtlistbox.h"
+				RelativePath="..\..\libguiex_widget\guiwgtlistbox.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guiwgtmultieditbox.h"
+				RelativePath="..\..\libguiex_widget\guiwgtmultieditbox.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guiwgtpanel.h"
+				RelativePath="..\..\libguiex_widget\guiwgtpanel.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guiwgtpopupmenu.h"
+				RelativePath="..\..\libguiex_widget\guiwgtpopupmenu.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guiwgtprogress.h"
+				RelativePath="..\..\libguiex_widget\guiwgtprogress.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guiwgtradiobutton.h"
+				RelativePath="..\..\libguiex_widget\guiwgtradiobutton.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guiwgtscrollbar.h"
+				RelativePath="..\..\libguiex_widget\guiwgtscrollbar.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guiwgtscrollbarcontainer.h"
+				RelativePath="..\..\libguiex_widget\guiwgtscrollbarcontainer.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guiwgtscrollpanel.h"
+				RelativePath="..\..\libguiex_widget\guiwgtscrollpanel.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guiwgtstatic.h"
+				RelativePath="..\..\libguiex_widget\guiwgtstatic.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guiwgtstaticimage.h"
+				RelativePath="..\..\libguiex_widget\guiwgtstaticimage.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guiwgtstatictext.h"
+				RelativePath="..\..\libguiex_widget\guiwgtstatictext.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guiwgttabbutton.h"
+				RelativePath="..\..\libguiex_widget\guiwgttabbutton.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\libguiex_widget\guiwgttabcontrol.h"
+				RelativePath="..\..\libguiex_widget\guiwgttabcontrol.h"
 				>
 			</File>
 		</Filter>

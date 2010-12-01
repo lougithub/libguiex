@@ -2,49 +2,173 @@ set( library_name "libguiex_module" )
 message( STATUS "generate library: " ${library_name} )
 
 # modify module list here --begin--
+set( ${library_name}_configfile_tinyxml_SRCS 
+    configfile_tinyxml/guiconfigfile_tinyxml.cpp
+    configfile_tinyxml/guiconfigfile_tinyxml.h
+    )
+source_group(configfile_tinyxml FILES ${${library_name}_configfile_tinyxml_SRCS} )
+
+set( ${library_name}_filesys_stdio_SRCS 
+    filesys_stdio/guifilesys_stdio.cpp
+    filesys_stdio/guifilesys_stdio.h
+    )
+source_group(filesys_stdio FILES ${${library_name}_filesys_stdio_SRCS} )
+
+set( ${library_name}_filesys_cocoa_SRCS 
+    filesys_cocoa/guifilesys_cocoa.cpp
+    filesys_cocoa/guifilesys_cocoa.h
+    )
+source_group(filesys_cocoa FILES ${${library_name}_filesys_stdio_SRCS} )
+
+set( ${library_name}_font_ft2_SRCS 
+    font_ft2/guifont_ft2.cpp
+    font_ft2/guifont_ft2.h
+    font_ft2/guifontdata_ft2.cpp
+    font_ft2/guifontdata_ft2.h
+    )
+source_group(font_ft2 FILES ${${library_name}_font_ft2_SRCS} )
+
+set( ${library_name}_font_dummy_SRCS 
+    font_dummy/guifont_dummy.cpp
+    font_dummy/guifont_dummy.h
+    font_dummy/guifontdata_dummy.cpp
+    font_dummy/guifontdata_dummy.h
+    )
+source_group(font_dummy FILES ${${library_name}_font_dummy_SRCS} )
+
+set( ${library_name}_font_cocoa_SRCS 
+    font_cocoa/guifont_cocoa.cpp
+    font_cocoa/guifont_cocoa.h
+    font_cocoa/guifontdata_cocoa.cpp
+    font_cocoa/guifontdata_cocoa.h
+    )
+source_group(font_cocoa FILES ${${library_name}_font_cocoa_SRCS} )
+
+set( ${library_name}_imageloader_tga_SRCS 
+    imageloader_tga/guiimagedata_tga.cpp
+    imageloader_tga/guiimagedata_tga.h
+    imageloader_tga/guiimageloader_tga.cpp
+    imageloader_tga/guiimageloader_tga.h
+    )
+source_group(imageloader_tga FILES ${${library_name}_imageloader_tga_SRCS} )
+
+set( ${library_name}_ime_winapi_SRCS 
+    ime_winapi/guiime_winapi.cpp
+    ime_winapi/guiime_winapi.h
+    )
+source_group(ime_winapi FILES ${${library_name}_ime_winapi_SRCS} )
+
+set( ${library_name}_keyboard_winapi_SRCS 
+    keyboard_winapi/guikeyboard_winapi.cpp
+    keyboard_winapi/guikeyboard_winapi.h
+    )
+source_group(keyboard_winapi FILES ${${library_name}_keyboard_winapi_SRCS} )
+
+set( ${library_name}_keyboard_default_SRCS 
+    keyboard_default/guikeyboard_default.cpp
+    keyboard_default/guikeyboard_default.h
+    )
+source_group(keyboard_default FILES ${${library_name}_keyboard_default_SRCS} )
+
+set( ${library_name}_mouse_winapi_SRCS 
+    mouse_winapi/guimouse_winapi.cpp
+    mouse_winapi/guimouse_winapi.h
+    )
+source_group(mouse_winapi FILES ${${library_name}_mouse_winapi_SRCS} )
+
+set( ${library_name}_mouse_default_SRCS 
+    mouse_default/guimouse_default.cpp
+    mouse_default/guimouse_default.h
+    )
+source_group(mouse_default FILES ${${library_name}_mouse_default_SRCS} )
+
+set( ${library_name}_script_lua_SRCS 
+    script_lua/guiscript_lua.cpp
+    script_lua/guiscript_lua.h
+    script_lua/guiex_wrap.cpp
+    script_lua/guiex_wrap.h
+    )
+source_group(script_lua FILES ${${library_name}_script_lua_SRCS} )
+
+set( ${library_name}_render_opengl_SRCS 
+    render_opengl/guirender_opengl.cpp
+    render_opengl/guirender_opengl.h
+    render_opengl/guitexture_opengl.cpp
+    render_opengl/guitexture_opengl.h
+    )
+source_group(render_opengl FILES ${${library_name}_render_opengl_SRCS} )
+
+set( ${library_name}_render_opengles_SRCS 
+    render_opengles/guirender_opengles.cpp
+    render_opengles/guirender_opengles.h
+    render_opengles/guitexture_opengles.cpp
+    render_opengles/guitexture_opengles.h
+    )
+source_group(render_opengles FILES ${${library_name}_render_opengles_SRCS} )
+
+set( ${library_name}_stringconv_winapi_SRCS 
+    stringconv_winapi/guistringconv_winapi.cpp
+    stringconv_winapi/guistringconv_winapi.h
+    )
+source_group(stringconv_winapi FILES ${${library_name}_stringconv_winapi_SRCS} )
+
+set( ${library_name}_stringconv_iconv_SRCS 
+    stringconv_iconv/guistringconv_iconv.cpp
+    stringconv_iconv/guistringconv_iconv.h
+    )
+source_group(stringconv_iconv FILES ${${library_name}_stringconv_iconv_SRCS} )
+
+set( ${library_name}_stringconv_cocoa_SRCS 
+    stringconv_cocoa/guistringconv_cocoa.cpp
+    stringconv_cocoa/guistringconv_cocoa.h
+    )
+source_group(stringconv_cocoa FILES ${${library_name}_stringconv_cocoa_SRCS} )
+
+
 if( WIN32 )
-    set( module_list 
-        configfile_tinyxml
-        filesys_stdio
-        font_ft2
-        imageloader_tga
-        ime_winapi
-        keyboard_default
-        keyboard_winapi
-        mouse_default
-        mouse_winapi
-        render_opengl
-        script_lua
-        stringconv_winapi
+
+    set( ${library_name}_SRCS 
+        ${${library_name}_configfile_tinyxml_SRCS}
+        ${${library_name}_filesys_stdio_SRCS}
+        ${${library_name}_font_ft2_SRCS}
+        ${${library_name}_font_dummy_SRCS}
+        ${${library_name}_imageloader_tga_SRCS}
+        ${${library_name}_ime_winapi_SRCS}
+        ${${library_name}_keyboard_winapi_SRCS}
+        ${${library_name}_keyboard_default_SRCS}
+        ${${library_name}_mouse_winapi_SRCS}
+        ${${library_name}_mouse_default_SRCS}
+        ${${library_name}_script_lua_SRCS}
+        ${${library_name}_render_opengl_SRCS}
+        ${${library_name}_stringconv_winapi_SRCS}
         )
 
 elseif( APPLE )
-    set( module_list 
-        configfile_tinyxml
-        filesys_cocoa
-        font_cocoa
-        imageloader_tga
-        render_opengles
-        script_lua
-        stringconv_iconv
-        )
-else( WIN32 )
-    message( FATAL_ERROR "unsupport platform" )
-endif( WIN32 )
-# modify module list here --end--
 
-foreach( module ${module_list} )
-    aux_source_directory( ${module} src_list )
-endforeach( module )
+    set( ${library_name}_SRCS 
+        ${${library_name}_configfile_tinyxml_SRCS}
+        ${${library_name}_filesys_cocoa_SRCS}
+        ${${library_name}_font_cocoa_SRCS}
+        ${${library_name}_font_dummy_SRCS}
+        ${${library_name}_imageloader_tga_SRCS}
+        ${${library_name}_render_opengles_SRCS}
+        ${${library_name}_stringconv_iconv_SRCS}
+        ${${library_name}_stringconv_cocoa_SRCS}
+        )
+
+else( WIN32 )
+
+    message( FATAL_ERROR "unsupport platform" )
+
+endif( WIN32 )
+
+# modify module list here --end--
 
 
 include_directories( ${PROJECT_SOURCE_DIR}/external/tinyxml )
 include_directories( ${PROJECT_SOURCE_DIR}/external/lua/src )
 include_directories( ${PROJECT_SOURCE_DIR}/external/freetype-2.4.3/include )
 
-#foreach( F ${src_list} ${inc_list} )
-#    message( ${F} )
-#endforeach( F )
-add_library( ${library_name} STATIC ${src_list} ${inc_list} )
+add_library( ${library_name} STATIC ${${library_name}_SRCS} )
 add_dependencies( ${library_name} libguiex_core lua tinyxml )
 

@@ -23,10 +23,10 @@ configure_file (
 include_directories( "${PROJECT_BINARY_DIR}" )
 
 
-include_directories( ${PROJECT_SOURCE_DIR}/include )
-add_subdirectory( ${PROJECT_SOURCE_DIR}/source/libguiex_core projects/libguiex_core )
-add_subdirectory( ${PROJECT_SOURCE_DIR}/source/libguiex_widget projects/libguiex_widget )
-add_subdirectory( ${PROJECT_SOURCE_DIR}/source/libguiex_module projects/libguiex_module )
+include_directories( ${PROJECT_SOURCE_DIR}/ )
+add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_core projects/libguiex_core )
+add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_widget projects/libguiex_widget )
+add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_module projects/libguiex_module )
 
 add_subdirectory( ${PROJECT_SOURCE_DIR}/external/tinyxml/cmakelist projects/tinyxml )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/external/lua/cmakelist projects/lua )
