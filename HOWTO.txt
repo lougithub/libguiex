@@ -1,2 +1,5 @@
 Q: how to use CMake to compile project.
 A: use command line, go to build directory where you want to compile, such as /build_cmake/vs2008, and then run command "cmake ../../". then the native project file will be generated automatically.
+
+Q: where to get CMake tools.
+A: http://www.cmake.org
