@@ -175,6 +175,7 @@ elseif( APPLE )
         ${${library_name}_render_opengles_SRCS}
         ${${library_name}_stringconv_iconv_SRCS}
         ${${library_name}_stringconv_cocoa_SRCS}
+        ${${library_name}_script_lua_SRCS}
         )
 
 else( )

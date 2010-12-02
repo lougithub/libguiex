@@ -48,10 +48,14 @@ elseif( APPLE )
         guiwgtbutton.h
         guiwgtpanel.cpp
         guiwgtpanel.h
-        guiwgtstatictext.cpp
+        guiwgtstatic.cpp
+        guiwgtstatic.h
+		guiwgtstatictext.cpp
         guiwgtstatictext.h
         guiwgtstaticimage.cpp
         guiwgtstaticimage.h
+        guiwgtgeneratewidgets.cpp
+        guiwgtgeneratewidgets.h
         )
 else( WIN32 )
     message( FATAL_ERROR "unsupport platform" )

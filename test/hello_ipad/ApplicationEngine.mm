@@ -75,8 +75,8 @@ void CLibGuiexEngine::Initialize( int width, int height, const char* szDataPath 
     //register interface
     GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengles);
     GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_tga);
-	//GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_cocoa);
-	GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_iconv);	
+	GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_cocoa);
+	//GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_iconv);	
 	GUI_REGISTER_INTERFACE_LIB( IGUIFileSys_cocoa);
     //GUI_REGISTER_INTERFACE_LIB( "IGUIMouse", IGUIMouse_winapi);
     GUI_REGISTER_INTERFACE_LIB( IGUIFont_cocoa);

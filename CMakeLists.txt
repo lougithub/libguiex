@@ -25,7 +25,6 @@ configure_file (
 include_directories( "${PROJECT_BINARY_DIR}" )
 include_directories( "${PROJECT_SOURCE_DIR}" )
 
-set ( CMAKE_USE_RELATIVE_PATHS true )
 
 if( APPLE )
     # for iphone simulate --begin--
@@ -36,12 +35,11 @@ if( APPLE )
     set( SDKVER "4.1" )
 
     #device type
-    #set( DEVICETYPE "iphonesimulator" )
-    set (DEVICETYPE "iphoneos" )
+    set( DEVICETYPE "iphonesimulator" )
+    #set (DEVICETYPE "iphoneos" )
 
     set( CMAKE_OSX_SYSROOT "${DEVICETYPE}${SDKVER}" )
     set ( CMAKE_OSX_ARCHITECTURES "$(ARCHS_STANDARD_32_BIT)" )
-    set ( MACOSX_BUNDLE true )
 
     #set (iPhone 1)
     #set (iPhoneSimulator 1)
@@ -89,6 +87,8 @@ if( APPLE )
 
     # for iphone simulate --end--
 elseif( WIN32 )
+
+	#set ( CMAKE_USE_RELATIVE_PATHS true )
 
     # unicode support
     add_definitions( -DUNICODE -D_UNICODE )
