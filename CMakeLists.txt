@@ -267,7 +267,7 @@ MESSAGE( STATUS "CMAKE_RANLIB: " ${CMAKE_RANLIB} )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_core projects/libguiex_core )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_widget projects/libguiex_widget )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_module projects/libguiex_module )
-add_subdirectory( ${PROJECT_SOURCE_DIR}/script_wrapper projects/script_wrapper)
+add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_script_wrapper projects/libguiex_script_wrapper)
 
 #external library
 add_subdirectory( ${PROJECT_SOURCE_DIR}/external/tinyxml/cmakelist projects/tinyxml )
