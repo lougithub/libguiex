@@ -186,9 +186,9 @@ endif( )
 # modify module list here --end--
 
 
-include_directories( ${PROJECT_SOURCE_DIR}/external/tinyxml )
-include_directories( ${PROJECT_SOURCE_DIR}/external/lua/src )
-include_directories( ${PROJECT_SOURCE_DIR}/external/freetype-2.4.3/include )
+include_directories( "${PROJECT_SOURCE_DIR}/external/tinyxml" )
+include_directories( "${PROJECT_SOURCE_DIR}/external/lua/src" )
+include_directories( "${PROJECT_SOURCE_DIR}/external/freetype-2.4.3/include" )
 
 add_library( ${library_name} STATIC ${${library_name}_SRCS} )
 add_dependencies( ${library_name} libguiex_core lua tinyxml )

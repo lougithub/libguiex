@@ -30,6 +30,8 @@ set ( CMAKE_USE_RELATIVE_PATHS true )
 if( APPLE )
     # for iphone simulate --begin--
 
+    #http://www.cmake.org/Wiki/CMake:Bundles_And_Frameworks
+
     #version
     set( SDKVER "4.1" )
 
@@ -46,40 +48,6 @@ if( APPLE )
     #set (iPhoneSimulator_VERSION ${SDKVER})
     
 
-
-    # Set the OS X Bundle specific CMake variables which will be used to populate the plist for
-    # the application bundle
-    #set(MACOSX_BUNDLE_INFO_STRING "${PROJECT_NAME}")
-    #set(MACOSX_BUNDLE_BUNDLE_NAME "${PROJECT_NAME}")
-    #MACOSX_BUNDLE_ICON_FILE
-    #set(MACOSX_BUNDLE_GUI_IDENTIFIER "com.rogue-research.SimpleCocoaVTK")
-    #set(MACOSX_BUNDLE_LONG_VERSION_STRING "${PROJECT_NAME} Version ${VTK_VERSION}")
-    #set(MACOSX_BUNDLE_SHORT_VERSION_STRING ${VTK_VERSION})
-    #set(MACOSX_BUNDLE_BUNDLE_VERSION ${VTK_VERSION})
-    #set(MACOSX_BUNDLE_COPYRIGHT "Copyright 2010. All Rights Reserved.")
-
-
-    #http://www.cmake.org/Wiki/CMake:Bundles_And_Frameworks
-    #add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL] source1 source2 ... sourceN)
-    # Probably a better way to set the framework link libraries.
-    #target_link_libraries( <name> "-framework Cocoa -framework OpenGL -framework IOKit")
-    # Make sure the 'Resources' Directory is correctly created before we build
-    #add_custom_command (TARGET SimpleCocoaVTK PRE_BUILD COMMAND mkdir -p ${EXECUTABLE_OUTPUT_PATH}/\${CONFIGURATION}/SimpleCocoaVTK.app/Contents/Resources)
-
-
-    #set resource data
-    #SET_SOURCE_FILES_PROPERTIES(
-    #    apple1_aux1
-    #    apple1_aux2
-    #    PROPERTIES
-    #    MACOSX_PACKAGE_LOCATION MacOSX
-    #    )
-    #SET_SOURCE_FILES_PROPERTIES(
-    #    apple1_res1
-    #    apple1_res2
-    #    PROPERTIES
-    #    MACOSX_PACKAGE_LOCATION Resources
-    #    )
 
 
     #set (DEVROOT "/Developer/Platforms/iPhoneSimulator.platform/Developer")
@@ -299,6 +267,7 @@ MESSAGE( STATUS "CMAKE_RANLIB: " ${CMAKE_RANLIB} )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_core projects/libguiex_core )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_widget projects/libguiex_widget )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_module projects/libguiex_module )
+add_subdirectory( ${PROJECT_SOURCE_DIR}/script_wrapper projects/script_wrapper)
 
 #external library
 add_subdirectory( ${PROJECT_SOURCE_DIR}/external/tinyxml/cmakelist projects/tinyxml )
@@ -309,4 +278,5 @@ add_subdirectory( ${PROJECT_SOURCE_DIR}/external/Box2D/cmakelist projects/box2d 
 #test
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/test1 projects/test1 )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/testbox2d projects/testbox2d )
+add_subdirectory( ${PROJECT_SOURCE_DIR}/test/hello_ipad projects/hello_ipad )
 

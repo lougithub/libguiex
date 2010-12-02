@@ -17,8 +17,8 @@ if( WIN32 )
 
     # all source
     set( ${execute_name}_SRCS 
-        ${${execute_name}_common_SRCS}
-        ${${execute_name}_execute_SRCS}
+        "${${execute_name}_common_SRCS}"
+        "${${execute_name}_execute_SRCS}"
         )
 
 
@@ -36,7 +36,7 @@ if( WIN32 )
 
     set( WIN32_EXECUTABLE true )
     add_executable( ${execute_name} WIN32 ${${execute_name}_SRCS} )
-    add_dependencies( ${execute_name} libguiex_module libguiex_widget libguiex_core )
+    add_dependencies( ${execute_name} libguiex_module libguiex_widget )
     target_link_libraries( ${execute_name}  
         debug freetype243_D.lib
         debug wxmsw28ud_gl.lib
