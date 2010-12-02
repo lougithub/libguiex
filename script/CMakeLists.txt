@@ -1,9 +1,9 @@
-set( library_name "libguiex_widget" )
+set( library_name "script_luawrapper" )
 message( STATUS "generate library: " ${library_name} )
 
 
-# modify file list here --begin--
-set( ${library_name}_SRCS 
+#swig source
+set( ${library_name}_swig_SRCS 
     guias.i
     guicolor.i
     guicolorrect.i
@@ -28,10 +28,24 @@ set( ${library_name}_SRCS
     guiwidgetsystem.i
     guiwidgetutility.i
     )
+source_group( swig FILES ${${execute_name}_swig_SRCS} )
 
-# modify file list here --end--
+#wrapper source
+set( ${library_name}_wrapper_SRCS 
+    guiex_wrapper.cpp
+    guiex_wrapper.h
+    )
+source_group( wrapper FILES ${${execute_name}_wrapper_SRCS} )
+
+# all source
+set( ${library_name}_SRCS 
+    "${${library_name}_wrapper_SRCS}"
+    "${${library_name}_swig_SRCS}"
+    )
+
+
+include_directories( "${PROJECT_SOURCE_DIR}/external/lua/src" )
 
 add_library( ${library_name} STATIC ${${library_name}_SRCS} )
-add_dependencies( ${library_name}  )
-
+add_dependencies( ${library_name} libguiex_core libguiex_widget lua )
 
