@@ -41,30 +41,30 @@ namespace guiex
 		/**
 		* @brief used to delete this object
 		*/
-		virtual void	DeleteSelf();
+		virtual void DeleteSelf();
 
 
 	public:
 		///open ime, that's means the ime could receive the input
-		virtual void			OpenIme();
+		virtual void OpenIme();
 
 		///close ime, that's means the ime won't receive any input
-		virtual void			CloseIme();
+		virtual void CloseIme();
 
 		///get Result string
-		virtual const wchar_t*		GetResultString() const;
+		virtual const wchar_t* GetResultString() const;
 
 		/// add result string
-		void		AddResultString( const wchar_t* pString );
+		void AddResultString( const wchar_t* pString );
 
 		///clear Result string
-		virtual void			ClearResultString();
+		virtual void ClearResultString();
 
 		///set cursor's position, the position is window's position
-		virtual void			SetCursorPos( const CGUIVector2& rPos );
+		virtual void SetCursorPos( const CGUIVector2& rPos );
 
 		///get cursor's position
-		virtual const			CGUIVector2& GetCursorPos() const;
+		virtual const CGUIVector2& GetCursorPos() const;
 
 		/**
 		* @brief process ime's message
@@ -72,7 +72,7 @@ namespace guiex
 		*	-true for the ime will process this message, the window needn't process it
 		*	-false for make windows process it by DefWindowProc(hWnd, message, wParam, lParam)
 		*/
-		bool			ProcessWindowMessage(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+		bool ProcessWindowMessage(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 	protected:
 		/** 
@@ -91,7 +91,7 @@ namespace guiex
 		/**
 		* @brief is this ime opened;
 		*/
-		bool			IsOpen();
+		bool IsOpen();
 
 
 		bool	OnWM_IME_SETCONTEXT();
@@ -104,11 +104,11 @@ namespace guiex
 		bool	On_WM_CHAR( WPARAM wParam );	
 
 	protected:
-		CGUIVector2		m_aPos;			/// position of cursor
-		std::wstring	m_strResult;		/// result string of ime
+		CGUIVector2 m_aPos; /// position of cursor
+		std::wstring m_strResult; /// result string of ime
 
-		HWND				m_hWnd;			/// handle of the windows
-		bool				m_bIsOpen;		/// flag, whether ime is opened
+		HWND m_hWnd; /// handle of the windows
+		bool m_bIsOpen;	/// flag, whether ime is opened
 	};
 
 

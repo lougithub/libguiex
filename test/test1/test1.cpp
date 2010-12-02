@@ -275,7 +275,7 @@ guiex::CGUIWidget* SampleInitialize()
 	pWidget_frame->SetAnchorPoint( 1, 0 );
 	pWidget_frame->SetSize( 250, 25 );
 	pWidget_frame->SetPositionType( guiex::eScreenValue_Percentage );
-	pWidget_frame->SetPosition( 1, 0.1 );
+	pWidget_frame->SetPosition( 1, 0.1f );
 	pWidget_frame->SetTextContentUTF8("frame = ???");
 	pWidget_frame->SetTextColor(guiex::CGUIColor( 1,1,0,1));
 	pWidget_frame->Create();

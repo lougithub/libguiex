@@ -176,10 +176,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\test\wxTestCommon\resource.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\test\wxTestCommon\testcommon.cpp"
 				>
 			</File>
