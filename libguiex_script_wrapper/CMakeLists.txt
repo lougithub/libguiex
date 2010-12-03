@@ -27,7 +27,6 @@ set( ${library_name}_swig_SRCS
 	guiwidgetfactory.i
 	guiwidgetsystem.i
 	guiwidgetutility.i
-	guiex_wrapper.old
 	)
 source_group( swig FILES ${${library_name}_swig_SRCS} )
 
