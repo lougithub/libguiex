@@ -102,7 +102,7 @@ void CLibGuiexEngine::InitWidgets()
 		return;
 	}
 	
-	for( int i=0; i<guiex::CGUISceneInfoManager::Instance()->GetSceneFilePaths().size(); ++i )
+	for( size_t i=0; i<guiex::CGUISceneInfoManager::Instance()->GetSceneFilePaths().size(); ++i )
 	{
 		printf("scene: %s\n", guiex::CGUISceneInfoManager::Instance()->GetSceneFilePaths()[i].c_str());
 	}
@@ -112,7 +112,7 @@ void CLibGuiexEngine::InitWidgets()
 		return;
 	}		
 	
-
+#if 0
 	guiex::CGUIWidget* pWidget = guiex::CGUIWidgetManager::Instance()->LoadPage( "dialog_ok.xml", "common.uip");
 
 	
@@ -138,7 +138,7 @@ void CLibGuiexEngine::InitWidgets()
 	
 	guiex::CGUISystem::Instance()->OpenPage(pWidget);	
 	
-/*
+#else
 	guiex::CGUIWidget* pWidget_staticimage = GUI_CREATE_WIDGET("CGUIWgtStaticImage", "staticimage_0", "hello_ipad");
 	pWidget_staticimage->SetImage( "BGIMAGE", "bg_blue" );
 	pWidget_staticimage->SetSize( 200, 200 );
@@ -156,7 +156,7 @@ void CLibGuiexEngine::InitWidgets()
 	pWidget_staticimage2->Create();	
 	
 	{
-		guiex::CGUIAsScale* pAsScale = guiex::CGUIAsManager::Instance()->AllocateResource<guiex::CGUIAsScale>("CGUIAsScale");
+		guiex::CGUIAsScale* pAsScale = guiex::CGUIAsManager::Instance()->AllocateResource<guiex::CGUIAsScale>();
 		pAsScale->SetInterpolationValue( guiex::CGUISize(0.1,0.1), guiex::CGUISize(1,1), 1 );
 		pAsScale->SetReceiver( pWidget_staticimage );
 		//pAsScale->SetLooping( true );
@@ -166,7 +166,7 @@ void CLibGuiexEngine::InitWidgets()
 	}
 	
 	{
-		guiex::CGUIAsAlpha* pAsAlpha = guiex::CGUIAsManager::Instance()->AllocateResource<guiex::CGUIAsAlpha>("CGUIAsAlpha" );
+		guiex::CGUIAsAlpha* pAsAlpha = guiex::CGUIAsManager::Instance()->AllocateResource<guiex::CGUIAsAlpha>( );
 		pAsAlpha->SetInterpolationValue( 0, 1, 1 );
 		pAsAlpha->SetReceiver( pWidget_staticimage2 );
 		pAsAlpha->SetLooping( true );
@@ -176,9 +176,9 @@ void CLibGuiexEngine::InitWidgets()
 	}
 	
 	
-	guiex::CGUISystem::Instance()->AddPage(pWidget_staticimage);
+	guiex::CGUIWidgetManager::Instance()->AddPage(pWidget_staticimage);
 	guiex::CGUISystem::Instance()->OpenPage(pWidget_staticimage); 
- */
+#endif 
 }
 
 

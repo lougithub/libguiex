@@ -39,7 +39,6 @@ if( APPLE )
     add_dependencies( ${execute_name} libguiex_module libguiex_widget )
     target_link_libraries(
 		${execute_name}
-		"-framework CoreGraphics -framework OpenGLES -framework Foundation -framework UIKit -framework QuartzCore"
 		libguiex_core
 		libguiex_widget
 		libguiex_module
