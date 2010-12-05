@@ -112,7 +112,7 @@ void CLibGuiexEngine::InitWidgets()
 		return;
 	}		
 	
-#if 0
+#if 1
 	guiex::CGUIWidget* pWidget = guiex::CGUIWidgetManager::Instance()->LoadPage( "dialog_ok.xml", "common.uip");
 
 	
