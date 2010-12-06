@@ -7,13 +7,14 @@
 
 %include "std_string.i"
 
-/*
 %include 	"guitypes.i" 
 %include	"guistring.i"
 %include	"guicolor.i"
-%include	"guisize.i" 
+%include	"guisize.i"
 %include	"guivector2.i"
+%include	"guivector3.i"
 %include	"guirect.i"
+ /*
 %include	"guicolorrect.i"
 %include	"guiexception.i"
 %include	"guitimer.i"

@@ -37,7 +37,8 @@ if( WIN32 )
     set( WIN32_EXECUTABLE true )
     add_executable( ${execute_name} WIN32 ${${execute_name}_SRCS} )
     add_dependencies( ${execute_name} libguiex_module libguiex_widget )
-    target_link_libraries( ${execute_name}  
+    target_link_libraries( 
+		${execute_name}  
         debug freetype243_D.lib
         debug wxmsw28ud_gl.lib
         debug wxmsw28ud_core.lib
@@ -66,4 +67,9 @@ if( WIN32 )
         general tinyxml
         general lua
         )
+
+	#set_target_properties( 
+		#${execute_name}  
+		#PROPERTIES 	DEBUG_POSTFIX "_d"
+		#)
 endif()

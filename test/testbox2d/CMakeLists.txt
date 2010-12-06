@@ -67,4 +67,9 @@ if( WIN32 )
         general tinyxml
         general lua
         )
+
+	#set_target_properties( 
+		#${execute_name}  
+		#PROPERTIES 	DEBUG_POSTFIX "_d"
+		#)
 endif()

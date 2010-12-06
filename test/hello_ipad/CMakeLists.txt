@@ -58,8 +58,17 @@ if( APPLE )
 		MACOSX_PACKAGE_LOCATION Resources
 		)
 
+	#set_target_properties( 
+	#	${execute_name}  
+	#	PROPERTIES 	DEBUG_POSTFIX "_d"
+	#	)
+
     # Make sure the 'Resources' Directory is correctly created before we build
     #add_custom_command (TARGET SimpleCocoaVTK PRE_BUILD COMMAND mkdir -p ${EXECUTABLE_OUTPUT_PATH}/\${CONFIGURATION}/SimpleCocoaVTK.app/Contents/Resources)
+
+
+
+
 
 endif()
 

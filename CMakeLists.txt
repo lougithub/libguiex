@@ -56,7 +56,7 @@ elseif( WIN32 )
 	set( CMAKE_SUPPRESS_REGENERATION true )
 
 	# Create debug libraries with _d postfix
-	set(CMAKE_DEBUG_POSTFIX "_d")
+	#set(CMAKE_DEBUG_POSTFIX "_d")
 
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /fp:fast")
 	# Enable intrinsics on MSVC in debug mode

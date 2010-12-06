@@ -17,61 +17,88 @@ namespace guiex
 {
 
 	//------------------------------------------------------------------------------
+	/**
+	* @brief constructor
+	*/
 	CGUISize::CGUISize()
 		:m_fWidth(0.0f)
 		,m_fHeight(0.0f)
 	{
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief constructor
+	*/
 	CGUISize::CGUISize(real fWidth, real fHeight)
 		:m_fWidth(fWidth)
 		,m_fHeight(fHeight)
 	{
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief constructor
+	*/
 	CGUISize::CGUISize(const CGUISize& rSize)
 	{
 		SetSize(rSize);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUISize::SetSize( const CGUISize& rSize)
+	/**
+	* @brief set size
+	*/
+	void CGUISize::SetSize( const CGUISize& rSize)
 	{
 		m_fWidth = rSize.m_fWidth;
 		m_fHeight = rSize.m_fHeight;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUISize::SetValue( real fWidth, real fHeight )
+	/**
+	* @brief set width and height
+	*/
+	void CGUISize::SetValue( real fWidth, real fHeight )
 	{
 		m_fWidth = fWidth;
 		m_fHeight = fHeight;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUISize::SetWidth( real fWidth)
+	/**
+	* @brief set width
+	*/
+	void CGUISize::SetWidth( real fWidth)
 	{
 		m_fWidth = fWidth;
 	}
 	//------------------------------------------------------------------------------
-	real	CGUISize::GetWidth( ) const 
+	/**
+	* @brief set width
+	*/
+	real CGUISize::GetWidth( ) const 
 	{
 		return m_fWidth;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUISize::SetHeight( real fHeight)
+	/**
+	* @brief set height
+	*/
+	void CGUISize::SetHeight( real fHeight)
 	{
 		m_fHeight = fHeight;
 	}
 	//------------------------------------------------------------------------------
-	real	CGUISize::GetHeight(  ) const 
+	/**
+	* @brief get height
+	*/
+	real CGUISize::GetHeight(  ) const 
 	{
 		return m_fHeight;
 	}
 	//------------------------------------------------------------------------------
-	bool	CGUISize::IsEqualZero() const
+	bool CGUISize::IsEqualZero() const
 	{
 		return ( GUI_REAL_EQUAL( m_fWidth, 0.0f ) && GUI_REAL_EQUAL( m_fHeight, 0.0f ));
 	}
 	//------------------------------------------------------------------------------
-	bool	CGUISize::IsEqual( const CGUISize& rSize ) const
+	bool CGUISize::IsEqual( const CGUISize& rSize ) const
 	{
 		if( GUI_REAL_EQUAL( m_fWidth, rSize.m_fWidth ) &&
 			GUI_REAL_EQUAL( m_fHeight, rSize.m_fHeight ))
@@ -192,7 +219,7 @@ namespace guiex
 		return *this;
 	}
 	//------------------------------------------------------------------------------
-	
+
 }//namespace guiex
 
 

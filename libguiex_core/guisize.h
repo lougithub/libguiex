@@ -25,134 +25,37 @@ namespace guiex
 	class GUIEXPORT CGUISize 
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUISize();
-
-		/**
-		* @brief constructor
-		*/
 		CGUISize(real fWidth, real fHeight);
-
-		/**
-		* @brief constructor
-		*/
 		CGUISize(const CGUISize& rSize);
 
-		/**
-		* @brief set size
-		*/
-		void	SetSize( const CGUISize& rSize);
+		void SetSize( const CGUISize& rSize);
+		void SetValue( real fWidth, real fHeight );
 
-		/**
-		* @brief set width and height
-		*/
-		void	SetValue( real fWidth, real fHeight );
+		void SetWidth( real fWidth);
+		real GetWidth( ) const ;
 
-		/**
-		* @brief set width
-		*/
-		void	SetWidth( real fWidth);
+		void SetHeight( real fHeight);
+		real GetHeight( ) const ;
 
-		/**
-		* @brief set width
-		*/
-		real	GetWidth( ) const ;
+		bool IsEqualZero( ) const;
+		bool IsEqual( const CGUISize& rSize ) const;
 
-		/**
-		* @brief set height
-		*/
-		void	SetHeight( real fHeight);
-
-		/**
-		* @brief get height
-		*/
-		real	GetHeight(  ) const ;
-
-		bool	IsEqualZero( ) const;
-
-		bool	IsEqual( const CGUISize& rSize ) const;
-
-
-		/**
-		* @brief assign operator
-		*/
 		CGUISize& operator= (const CGUISize& rSize);
-
-		/**
-		* @brief compare operator
-		*/
 		bool operator==(const CGUISize& other) const;
-
-		/**
-		* @brief compare operator
-		*/
 		bool operator!=(const CGUISize& other) const;
-
-		/**
-		* @brief compare operator
-		*/
 		bool operator<(const CGUISize& other) const;
-
-		/**
-		* @brief algorithm operator
-		*/
 		CGUISize operator+(const CGUISize& other) const;
-
-		/**
-		* @brief algorithm operator
-		*/
 		CGUISize& operator+=(const CGUISize& other);
-
-		/**
-		* @brief algorithm operator
-		*/
 		CGUISize operator-(const CGUISize& other) const;
-
-		/**
-		* @brief algorithm operator
-		*/
 		CGUISize& operator-=(const CGUISize& other);
-
-		/**
-		* @brief algorithm operator
-		*/
 		CGUISize operator*(real fScalar) const;
-
-		/**
-		* @brief algorithm operator
-		*/
 		CGUISize operator*(const CGUISize& other) const;
-
-		/**
-		* @brief algorithm operator
-		*/
 		CGUISize& operator*=(real fScalar);
-
-		/**
-		* @brief algorithm operator
-		*/
 		CGUISize& operator*=(const CGUISize& other);
-
-		/**
-		* @brief algorithm operator
-		*/
 		CGUISize operator/(real fScalar) const;
-
-		/**
-		* @brief algorithm operator
-		*/
 		CGUISize& operator/=(real fScalar);
-
-		/**
-		* @brief algorithm operator
-		*/
 		CGUISize operator/(const CGUISize& other) const;
-
-		/**
-		* @brief algorithm operator
-		*/
 		CGUISize& operator/=(const CGUISize& other);
 
 	public:

@@ -1,12 +1,7 @@
-/***********************************************************
-color
-***********************************************************/
-
-
 namespace guiex
 {
-
 	typedef uint32 GUIARGB;
+	typedef uint32 GUIRGBA;
 
 	class CGUIColor
 	{
@@ -15,32 +10,30 @@ namespace guiex
 		CGUIColor(const CGUIColor &rColor);
 		CGUIColor(GUIARGB argb);
 		CGUIColor(real fRed, real fGreen, real fBlue, real fAlpha=1.0f );
-		~CGUIColor();
 
-		GUIARGB		GetARGB() const;
-		void		SetARGB(GUIARGB argb);
-		void		SetARGB(real fRed, real fGreen, real fBlue, real fAlpha = 1.0f);
-		void		SetColor(const CGUIColor& rColor);
+		void SetARGB(GUIARGB argb);
+		GUIARGB	GetARGB() const;
 
-		real		GetAlpha() const;
-		void		SetAlpha(real fAlpha);
-		real		GetRed() const;
-		void		SetRed(real fRed);
-		real		GetGreen() const;
-		void		SetGreen(real fGreen);
-		real		GetBlue() const;
-		void		SetBlue(real fBlue);
+		GUIRGBA GetRGBA() const;
 
-		void		InvertColor(void);
-		void		InvertColorWithAlpha(void);
+		static GUIRGBA ARGB2RGBA( GUIARGB aColorARGB );
 
+		void SetColor(real fRed, real fGreen, real fBlue, real fAlpha = 1.0f);
+		void SetColor(const CGUIColor& rColor);
 
-		CGUIColor	operator+(const CGUIColor& rColor) const;
-		CGUIColor	operator+(GUIARGB argb) const;
+		real GetAlpha() const;
+		void SetAlpha(real fAlpha);
 
-		CGUIColor	operator-(const CGUIColor& rColor) const;
-		CGUIColor	operator-(GUIARGB argb) const;
+		real GetRed() const;
+		void SetRed(real fRed);
 
-		bool		operator==(const CGUIColor &rColor ) const;
+		real GetGreen() const;
+		void SetGreen(real fGreen);
+
+		real GetBlue() const;
+		void SetBlue(real fBlue);
+
+		void InvertColor(void);
+		void InvertColorWithAlpha(void);
 	};
 }

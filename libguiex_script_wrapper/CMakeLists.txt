@@ -23,6 +23,7 @@ set( ${library_name}_swig_SRCS
 	guitimer.i
 	guitypes.i
 	guivector2.i
+	guivector3.i
 	guiwidget.i
 	guiwidgetfactory.i
 	guiwidgetsystem.i

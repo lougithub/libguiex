@@ -50,6 +50,12 @@ namespace guiex
 		SetRect(rRect);
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief get the intersection of this rect with the given rect.
+	* @return a Rect that is the intersection of 'this' Rect with the Rect 'rect'
+	* @note if the return rect's width is 0 or rect's height is 0, then this rect was outside rect.
+	* @return the intersection rect
+	*/
 	CGUIRect CGUIRect::GetIntersection(const CGUIRect& rect) const
 	{
 		// check for total exclusion
@@ -70,6 +76,11 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief judge is the given point falls within this rect
+	* @param pt Point object describing the position to test.
+	* @return true if given point is within this Rect's area, else false
+	*/
 	bool CGUIRect::IsPointInRect(const CGUIVector2& pt) const
 	{
 		if ((m_fLeft > pt.x) ||
@@ -83,6 +94,9 @@ namespace guiex
 		return true;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief set position of the rect
+	*/
 	void CGUIRect::SetPosition(const CGUIVector2& pt)
 	{
 		CGUISize sz(GetSize());
@@ -92,6 +106,11 @@ namespace guiex
 		SetSize(sz);
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief constrain rect's size to given size if it is bigger than it.
+	* @param sz Size object that describes the maximum dimensions that this Rect should be limited to.
+	* @return 'this' Rect object after the constrain operation
+	*/
 	CGUIRect& CGUIRect::ConstrainSizeMax(const CGUISize& sz)
 	{
 		if (GetWidth() > sz.m_fWidth)
@@ -107,6 +126,11 @@ namespace guiex
 		return *this;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief constrain rect's size to given size if it is smaller than it.
+	* @param sz Size object that describes the minimum dimensions that this Rect should be limited to.
+	* @return  Rect object after the constrain operation
+	*/
 	CGUIRect& CGUIRect::ConstrainSizeMin(const CGUISize& sz)
 	{
 		if (GetWidth() < sz.m_fWidth)
@@ -122,6 +146,13 @@ namespace guiex
 		return *this;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief check the size of the Rect object and if it is bigger than max_sz or 
+	* smaller than min_sz, resize it so it isn't.
+	* @param max_sz Size object that describes the maximum dimensions that this Rect should be limited to.
+	* @param min_sz Size object that describes the minimum dimensions that this Rect should be limited to.
+	* @return Rect object after the constrain operation
+	*/
 	CGUIRect& CGUIRect::ConstrainSize(const CGUISize& max_sz, const CGUISize& min_sz)
 	{
 		CGUISize curr_sz(GetSize());

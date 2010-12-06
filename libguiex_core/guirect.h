@@ -1,189 +1,67 @@
 /** 
-* @file guirect.h
-* @brief Rect used in this system
-* @author ken
-* @date 2006-04-24
-*/
+ * @file guirect.h
+ * @brief Rect used in this system
+ * @author ken
+ * @date 2006-04-24
+ */
 
 #ifndef __GUI_RECT_20060424_H__
 #define __GUI_RECT_20060424_H__
 
-//============================================================================//
-// include
-//============================================================================// 
+ //============================================================================//
+ // include
+ //============================================================================// 
 #include "guibase.h"
 #include "guivector2.h"
 
-//============================================================================//
-// declare
-//============================================================================// 
-namespace guiex
-{
 
-}
+ //============================================================================//
+ // class
+ //============================================================================// 
 
-
-
-//============================================================================//
-// class
-//============================================================================// 
-
-namespace guiex
+ namespace guiex
 {
 	class GUIEXPORT CGUIRect
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUIRect(void);
-
-		/**
-		* @brief Constructor
-		*/
 		CGUIRect(real left, real top, real right, real bottom);
-
-		/**
-		* @brief Constructor
-		*/
 		CGUIRect( const CGUIVector2& pos, const CGUISize& sz);
-
-		/**
-		* @brief copy Constructor
-		*/
 		CGUIRect(const CGUIRect& rRect);
 
-		/**
-		* @brief get position of rect
-		* @Return top-left position of Rect as a Point
-		*/
 		CGUIVector2	GetPosition(void) const;
 
-		/**
-		* @brief Set rect value
-		*/
-		void	SetRect(const CGUIRect& rRect);
-		void	SetRect(real left, real top, real right, real bottom);
-		void	SetRect(const CGUIVector2& pos, const CGUISize& sz);
+		void SetRect(const CGUIRect& rRect);
+		void SetRect(real left, real top, real right, real bottom);
+		void SetRect(const CGUIVector2& pos, const CGUISize& sz);
 
-		/**
-		* @brief get width of rect
-		* @return width of Rect area
-		*/
-		real	GetWidth(void) const;
+		real GetWidth(void) const;
+		real GetHeight(void) const;
+		CGUISize GetSize(void) const;
+		void SetWidth(real width);
+		void SetHeight(real height);
+		void SetSize(const CGUISize& sze);
+		void SetPosition(const CGUIVector2& pt);
 
-		/**
-		* @brief get height of rect
-		* @return height of Rect area
-		*/
-		real	GetHeight(void) const;
+		CGUIRect GetIntersection(const CGUIRect& rect) const;
 
-		/**
-		* @rief get size of the rect
-		* @return the size of the Rect area
-		*/
-		CGUISize	GetSize(void) const;
+		CGUIRect& Offset(const CGUIVector2& pt);
 
-		/**
-		* @brief set position of the rect
-		*/
-		void	SetPosition(const CGUIVector2& pt);
+		bool IsPointInRect(const CGUIVector2& pt) const;
 
-		/**
-		* @brief set the width of the Rect
-		*/
-		void	SetWidth(real width);
+		CGUIRect& ConstrainSizeMax(const CGUISize& sz);
+		CGUIRect& ConstrainSizeMin(const CGUISize& sz);
+		CGUIRect& ConstrainSize(const CGUISize& max_sz, const CGUISize& min_sz);
 
-		/**
-		* @brief set the height of the Rect object
-		*/
-		void	SetHeight(real height);
+		bool IsEqual( const CGUIRect& rhs ) const;
 
-		/**
-		* @brief set the size of the Rect area
-		*/
-		void	SetSize(const CGUISize& sze);
-
-		/**
-		* @brief get the intersection of this rect with the given rect.
-		* @return a Rect that is the intersection of 'this' Rect with the Rect 'rect'
-		* @note if the return rect's width is 0 or rect's height is 0, then this rect was outside rect.
-		* @return the intersection rect
-		*/
-		CGUIRect	GetIntersection(const CGUIRect& rect) const;
-
-		/**
-		* @brief set an offset the Rect object
-		* @param pt CGUIVector2 object containing the offsets to be applied to the Rect.
-		* @return this Rect after the offset is performed
-		*/
-		CGUIRect&	Offset(const CGUIVector2& pt);
-
-		/**
-		* @brief judge is the given point falls within this rect
-		* @param pt Point object describing the position to test.
-		* @return true if given point is within this Rect's area, else false
-		*/
-		bool	IsPointInRect(const CGUIVector2& pt) const;
-
-		/**
-		* @brief constrain rect's size to given size if it is bigger than it.
-		* @param sz Size object that describes the maximum dimensions that this Rect should be limited to.
-		* @return 'this' Rect object after the constrain operation
-		*/
-		CGUIRect&	ConstrainSizeMax(const CGUISize& sz);
-
-
-		/**
-		* @brief constrain rect's size to given size if it is smaller than it.
-		* @param sz Size object that describes the minimum dimensions that this Rect should be limited to.
-		* @return  Rect object after the constrain operation
-		*/
-		CGUIRect&	ConstrainSizeMin(const CGUISize& sz);
-
-		/**
-		* @brief check the size of the Rect object and if it is bigger than max_sz or 
-		* smaller than min_sz, resize it so it isn't.
-		* @param max_sz Size object that describes the maximum dimensions that this Rect should be limited to.
-		* @param min_sz Size object that describes the minimum dimensions that this Rect should be limited to.
-		* @return Rect object after the constrain operation
-		*/
-		CGUIRect&	ConstrainSize(const CGUISize& max_sz, const CGUISize& min_sz);
-
-		bool	IsEqual( const CGUIRect& rhs ) const;
-
-		/** 
-		* @brief compare operator
-		*/
-		bool	operator==(const CGUIRect& rhs) const;
-
-		/** 
-		* @brief compare operator
-		*/
-		bool	operator!=(const CGUIRect& rhs) const;
-
-		/** 
-		* @brief assign operator
-		*/
-		CGUIRect&	operator=(const CGUIRect& rhs);
-
-		/** 
-		* @brief operator for ponit
-		*/
+		bool operator==(const CGUIRect& rhs) const;
+		bool operator!=(const CGUIRect& rhs) const;
+		CGUIRect& operator=(const CGUIRect& rhs);
 		CGUIRect operator+(const CGUIVector2& rPoint) const;
-
 		CGUIRect operator+(const CGUIRect& rRect) const;
-
 		const CGUIRect& operator+=(const CGUIRect& rRect);
-
-		/** 
-		* @brief algorithm operator
-		*/
 		CGUIRect operator*(real scalar) const;
-
-		/** 
-		* @brief algorithm operator
-		*/
 		const CGUIRect& operator*=(real scalar);
 
 	public:
@@ -203,36 +81,61 @@ namespace guiex
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	inline CGUIVector2	CGUIRect::GetPosition(void) const		
+	/**
+	* @brief get position of rect
+	* @Return top-left position of Rect as a Point
+	*/
+	inline CGUIVector2 CGUIRect::GetPosition(void) const		
 	{
 		return CGUIVector2(m_fLeft, m_fTop);
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief get width of rect
+	* @return width of Rect area
+	*/
 	inline real	CGUIRect::GetWidth(void) const		
 	{
 		return m_fRight - m_fLeft;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief get height of rect
+	* @return height of Rect area
+	*/
 	inline real	CGUIRect::GetHeight(void) const		
 	{
 		return m_fBottom - m_fTop;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @rief get size of the rect
+	* @return the size of the Rect area
+	*/
 	inline CGUISize	CGUIRect::GetSize(void) const		
 	{
 		return CGUISize(GetWidth(), GetHeight());
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief set the width of the Rect
+	*/
 	inline void	CGUIRect::SetWidth(real width)		
 	{
 		m_fRight = m_fLeft + width;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief set the height of the Rect object
+	*/
 	inline void	CGUIRect::SetHeight(real height)		
 	{
 		m_fBottom = m_fTop + height;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief set the size of the Rect area
+	*/
 	inline void	CGUIRect::SetSize(const CGUISize& sze)	
 	{
 		SetWidth(sze.m_fWidth); 
@@ -294,6 +197,11 @@ namespace guiex
 		m_fLeft *= scalar; m_fTop *= scalar; m_fRight *= scalar; m_fBottom *= scalar; return *this; 
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief set an offset the Rect object
+	* @param pt CGUIVector2 object containing the offsets to be applied to the Rect.
+	* @return this Rect after the offset is performed
+	*/
 	inline CGUIRect& CGUIRect::Offset(const CGUIVector2& pt)
 	{
 		m_fLeft		+= pt.x;

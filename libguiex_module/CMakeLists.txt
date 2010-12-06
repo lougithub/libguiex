@@ -99,8 +99,6 @@ source_group(mouse_default FILES ${${library_name}_mouse_default_SRCS} )
 set( ${library_name}_script_lua_SRCS 
     script_lua/guiscript_lua.cpp
     script_lua/guiscript_lua.h
-    script_lua/guiex_wrap.cpp
-    script_lua/guiex_wrap.h
     )
 source_group(script_lua FILES ${${library_name}_script_lua_SRCS} )
 
