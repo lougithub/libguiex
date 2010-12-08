@@ -34,8 +34,6 @@ namespace guiex
 //============================================================================//
 // class
 //============================================================================// 
-
-
 namespace guiex
 {
 	/**
@@ -47,14 +45,10 @@ namespace guiex
 	{	
 	protected:
 		friend class CGUIImageManager;
-		//disable =
 		CGUIImage( const CGUIImage&  );
 		const CGUIImage& operator=(const CGUIImage& );
 
 	public:
-		/**
-		* @brief destructor;
-		*/
 		virtual ~CGUIImage();
 
 		void Draw( IGUIInterfaceRender* pRender,
@@ -77,15 +71,9 @@ namespace guiex
 			const CGUIColor& rColor,
 			real fAlpha	) const;
 
-		/**
-		* @brief get image size
-		*/
 		const CGUISize& GetSize() const;
 
 	protected:
-		/**
-		* @brief constructor
-		*/
 		CGUIImage( 
 			const CGUIString& rName, 
 			const CGUIString& rSceneName, 
@@ -109,32 +97,31 @@ namespace guiex
 			EImageOrientation	eImageOrientation,
 			const CGUISize& rSize = CGUISize());
 
-		virtual int32	DoLoad() const;
-		virtual void	DoUnload();
+		virtual int32 DoLoad() const;
+		virtual void DoUnload();
 
 
 	private:
-		//parameter about texture
-		mutable CGUITexture* m_pTexture;		//!< texture
-		CGUIRect m_aUVRect;		//!< UV of texture
-		EImageOrientation	m_eImageOrientation;	//!<
+		mutable CGUITexture* m_pTexture; //!< texture
+		CGUIRect m_aUVRect; //!< UV of texture
+		EImageOrientation m_eImageOrientation; //!<
 
 		/** 
 		* @brief the image type, means where the image load from
 		*/
-		enum	EImageType
+		enum EImageType
 		{
 			eIT_FILE,
 			eIT_COLOR,
 			eIT_MEM,
 		};
-		EImageType		m_eImageType;
+		EImageType m_eImageType;
 
-		CGUIString		m_strPath;		//!< for eIT_FILE
-		CGUIColor		m_aColor;		//!< for eIT_COLOR
-		const void*		m_pBuffPtr;		//!< for eIT_MEM
-		int32			m_nBuffWidth;
-		int32			m_nBuffHeight; 
+		CGUIString m_strPath; //!< for eIT_FILE
+		CGUIColor m_aColor; //!< for eIT_COLOR
+		const void*	m_pBuffPtr; //!< for eIT_MEM
+		int32 m_nBuffWidth;
+		int32 m_nBuffHeight; 
 		EGuiPixelFormat m_ePixelFormat;
 
 		mutable CGUISize m_aImageSize;
@@ -142,4 +129,4 @@ namespace guiex
 
 }//namespace guiex
 
-#endif		//__GUI_IMAGE_20060717_H__
+#endif //__GUI_IMAGE_20060717_H__

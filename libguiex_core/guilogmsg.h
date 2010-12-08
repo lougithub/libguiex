@@ -19,24 +19,19 @@
 
 
 #ifdef WIN32
-#ifndef _WIN32_WINDOWS
-#define _WIN32_WINDOWS 0x0500
-#endif
-#include <windows.h>
+#	ifndef _WIN32_WINDOWS
+#		define _WIN32_WINDOWS 0x0500
+#	endif
+#	include <windows.h>
 #else
 
 #endif
-
-
-
-
 
 //============================================================================//
 // declare
 //============================================================================// 
 namespace guiex
 {
-	
 	class CGUILogMsgCallback;
 	class CGUILogMsgRecord;
 }//namespace guiex
@@ -47,51 +42,51 @@ namespace guiex
 //============================================================================// 
 namespace guiex
 {
-	
+
 	enum EGUI_Log_Priority
 	{
 		// = Note, this first argument *must* start at 1!
-		
-		/// Shutdown the logger (decimal 1).
+
+		/// Shutdown the logger(decimal 1).
 		GUI_LM_SHUTDOWN = 01,
-		
-		/// Messages indicating function-calling sequence (decimal 2).
+
+		/// Messages indicating function-calling sequence(decimal 2).
 		GUI_LM_TRACE = 02,
-		
+
 		/// Messages that contain information normally of use only when
-		/// debugging a program (decimal 4).
+		/// debugging a program(decimal 4).
 		GUI_LM_DEBUG = 04,
-		
-		/// Informational messages (decimal 8).
+
+		/// Informational messages(decimal 8).
 		GUI_LM_INFO = 010,
-		
+
 		/// Conditions that are not error conditions, but that may require
-		/// special handling (decimal 16).
+		/// special handling(decimal 16).
 		GUI_LM_NOTICE = 020,
-		
-		/// Warning messages (decimal 32).
+
+		/// Warning messages(decimal 32).
 		GUI_LM_WARNING = 040,
-		
-		/// Initialize the logger (decimal 64).
+
+		/// Initialize the logger(decimal 64).
 		GUI_LM_STARTUP = 0100,
-		
-		/// Error messages (decimal 128).
+
+		/// Error messages(decimal 128).
 		GUI_LM_ERROR = 0200,
-		
-		/// Critical conditions, such as hard device errors (decimal 256).
+
+		/// Critical conditions, such as hard device errors(decimal 256).
 		GUI_LM_CRITICAL = 0400,
-		
+
 		/// A condition that should be corrected immediately, such as a
-		/// corrupted system database (decimal 512).
+		/// corrupted system database(decimal 512).
 		GUI_LM_ALERT = 01000,
-		
+
 		/// A panic condition.  This is normally broadcast to all users
-		/// (decimal 1024).
+		///(decimal 1024).
 		GUI_LM_EMERGENCY = 02000,
-		
+
 		/// The maximum logging priority.
 		GUI_LM_MAX = GUI_LM_EMERGENCY,
-		
+
 		/// Do not use!!  This enum value ensures that the underlying
 		/// integral type for this enum is at least 32 bits.
 		GUI_LM_ENSURE_32_BITS = 0x7FFFFFFF
@@ -105,10 +100,10 @@ namespace guiex
 namespace guiex
 {
 	/**
-	 * @class CGUILogMsg
-	 * @brief used to log message.this is a singleton class, you should 
-	 * use GUI_LOG_MSG instead of CGUILogMsg.
-	 */
+	* @class CGUILogMsg
+	* @brief used to log message.this is a singleton class, you should 
+	* use GUI_LOG_MSG instead of CGUILogMsg.
+	*/
 	class GUIEXPORT CGUILogMsg  : public CGUICleanup
 	{
 	public:
@@ -123,198 +118,64 @@ namespace guiex
 			FLAG_MSG_CALLBACK = 4,
 			/// Display messages in a verbose manner.
 			FLAG_VERBOSE = 8,
-			/// Display messages in a less verbose manner (i.e., only print
+			/// Display messages in a less verbose manner(i.e., only print
 			/// information that can change between calls).
 			FLAG_VERBOSE_LITE = 16,
 			// show timestamp, include time and date
 			FLAG_TIMESTAMP = 32,
 			// show timestamp, only time
 			FLAG_TIMESTAMP_LITE = 64,
-			/// Do not print messages at all (just leave in thread-specific
+			/// Do not print messages at all(just leave in thread-specific
 			/// storage for later inspection).
 			FLAG_FLAG_SILENT = 128,
 			/// Write messages to the system's event log.
 			FLAG_SYSLOG = 256
 		};
-		
-		
-		/**
-		 * @brief Enable the bits in the logger's options flags.
-		 */
-		void SetFlags (uint32 f);
-		
-		/**
-		 * @brief Disable the bits in the logger's options flags.
-		 */
-		void ClearFlags (uint32 f);
-		
-		/**
-		 * Return the bits in the logger's options flags.
-		 */
-		uint32 GetFlags (void) const;
-		
-		/** 
-		 * @brief Get the current EGUI_Log_Priority mask.
-		 */
-		uint32 GetPriorityMask () const;
-		
-		/**
-		 * @brief Set the EGUI_Log_Priority mask, returns original mask.
-		 */
-		uint32 SetPriorityMask (uint32);
-		
-		/**
-		 * @brief Return true if the requested priority is enabled.
-		 */
-		bool IsPriorityEnabled (EGUI_Log_Priority log_priority) const;
-		
-		/**
-		 * @brief Clears the flag from the default priority mask used to
-		 * initialize ACE_Log_Msg instances.
-		 */
-		static void DisableDefaultMessages (EGUI_Log_Priority priority = GUI_LM_DEBUG);
-		
-		/**
-		 * @brief Sets the flag in the default priority mask used to initialize
-		 * ACE_Log_Msg instances.
-		 */
-		static void EnableDefaultMessages (EGUI_Log_Priority priority = GUI_LM_DEBUG);
-		
-		/**
-		 * @brief Set the line number where an error occurred.
-		 */
-		void SetLineNum (uint32);
-		
-		/**
-		 * @brief Get the line number where an error occurred.
-		 */
-		uint32 GetLineNum (void) const;
-		
-		/**
-		 * @brief Set the file name where an error occurred.
-		 */
-		void SetFileName (const char *);
-		
-		/**
-		 * @brief Get the file name where an error occurred.
-		 */
+
+		void SetFlags(uint32 f);
+		void ClearFlags(uint32 f);
+		uint32 GetFlags(void) const;
+
+		uint32 GetPriorityMask() const;
+		uint32 SetPriorityMask(uint32);
+		bool IsPriorityEnabled(EGUI_Log_Priority log_priority) const;
+
+		static void DisableDefaultMessages(EGUI_Log_Priority priority = GUI_LM_DEBUG);
+		static void EnableDefaultMessages(EGUI_Log_Priority priority = GUI_LM_DEBUG);
+
+		void SetLineNum(uint32);
+		uint32 GetLineNum(void) const;
+
+		void SetFileName(const char *);
 		const char *GetFileName(void);
-		
-		/**
-		 * @brief These values are only actually set if the 
-		 * requested priority is enabled.
-		 */
-		void ConditionalSet (const char *file, uint32 line );
-		
-		/**
-		 * @brief Format a message and send to output.  
-		 * Valid Options (prefixed by '%', as in printf format strings) include:
-		 *   'a': exit the program at this point (var-argument is the exit status!)
-		 *   'c': print a character
-		 *   'i', 'd': print a	decimal number
-		 *   'e', 'E', 'f', 'F', 'g', 'G': print a double
-		 *   'l', print line number where an error occurred.
-		 *   'M': print the name of the priority of the message.
-		 *   'N': print file name where the error occurred.
-		 *   'n': print the name of the program (or "<unknown>" if not set)
-		 *   'o': print as an octal number
-		 *   'Q': print out the uint64 number
-		 *   'q': print out the int64 number
-		 *   '@': print a void* pointer (in hexadecimal)
-		 *   'r': call the function pointed to by the corresponding argument
-		 *   's': format a character string
-		 *   'T': print timestamp in hour:minute:sec:usec format.
-		 *   'D': print timestamp in month/day/year hour:minute:sec:usec format.
-		 *   'u': print as unsigned int
-		 *   'x': print as a hex number
-		 *   'X': print as a hex number
-		 *   'z': print an ACE_OS::WChar character
-		 *   'Z': print an ACE_OS::WChar character string
-		 *   '%': format a single percent sign, '%'
-		 */
+
+		void ConditionalSet(const char *file, uint32 line );
+
 		void Log(EGUI_Log_Priority priority, const char *format, ...);
-		
-		/**
-		 * An alternative logging mechanism that makes it possible to
-		 * integrate variable argument lists from other logging mechanisms
-		 * into the ACE mechanism.
-		 */
-		void Log (const char *format,EGUI_Log_Priority priority,va_list argp);
-		
-		/**
-		 * @brief set callback class to log message
-		 */
+		void Log(const char *format,EGUI_Log_Priority priority,va_list argp);
+
 		void SetCallbackMsg(CGUILogMsgCallback*);
-		
-		/**
-		 * @brief get callback class
-		 */
 		CGUILogMsgCallback* GetCallbackMsg() const;
-		
-		/**
-		 * @brief Get the message that describes the message.
-		 */
-		const char * Msg (void);
-		
-		/**
-		 * @brief set the out stream
-		 * @param bDelete the outstream will be deleted if this flag is set to true
-		 */
-		void	SetOstream( std::ostream* pOstream, bool bDelete=false );
-		
-		/**
-		 * @brief get out stream
-		 */
-		std::ostream*	GetOstream() const;
-		
-		/**
-		 * @brief Method to log hex dump.  This is useful for debugging.  Calls
-		 * log() to do the actual print, but formats first to make the chars
-		 * printable.
-		 */
-		uint32 LogHexDump (EGUI_Log_Priority log_priority, const char *buffer,size_t size,const char *text = 0);
-		
-		
-		/**
-		 * @brief initialize the log facility
-		 */
-		void Open (const char *prog_name,
-				   uint32 options_flags = CGUILogMsg::FLAG_STDERR,
-				   const char *logger_key = NULL);
-		
-		/**
-		 * @brief close the log facility.
-		 * only for internal use at most time
-		 */
+
+		const char * Msg(void);
+
+		void SetOstream( std::ostream* pOstream, bool bDelete=false );
+		std::ostream* GetOstream() const;
+
+		uint32 LogHexDump(EGUI_Log_Priority log_priority, const char *buffer,size_t size,const char *text = 0);
+
+		void Open(const char *prog_name,
+			uint32 options_flags = CGUILogMsg::FLAG_STDERR,
+			const char *logger_key = NULL);
 		void Close();
-		
-		/**
-		 * @brief to destroy this singleton
-		 * @note only for internal use by CGUIObjectManager
-		 */
-		virtual void Cleanup ();
-		
+		virtual void Cleanup();
+
 	protected:
-		/**
-		 * @brief implement to log message
-		 */
-		void	Log(const CGUILogMsgRecord& rRecord, bool bAbortProt);
-		
-		/**
-		 * @brief send message to stderr
-		 */
-		void	Log2SYSLOG(const CGUILogMsgRecord& rRecord);
-		
-		/**
-		 * @brief send message to stderr
-		 */
-		void	Log2STDERR(const CGUILogMsgRecord& rRecord);
-		
-		/**
-		 * @brief send message to stderr
-		 */
-		void	Log2OSTREAM(const CGUILogMsgRecord& rRecord);
-		
+		void Log(const CGUILogMsgRecord& rRecord, bool bAbortProt);
+		void Log2SYSLOG(const CGUILogMsgRecord& rRecord);
+		void Log2STDERR(const CGUILogMsgRecord& rRecord);
+		void Log2OSTREAM(const CGUILogMsgRecord& rRecord);
+
 	protected:
 		friend class CGUILogMsgManager;
 		CGUILogMsg();
@@ -344,16 +205,16 @@ namespace guiex
 		/// calling log() if the log priority is correct.
 		struct
 		{
-			bool				m_bIsSet;
-			const char *		m_strFile;
-			uint32				m_nLine;
+			bool m_bIsSet;
+			const char * m_strFile;
+			uint32 m_nLine;
 		} m_aConditionalValues;
 		
 		/// Line number where the error occurred.
-		uint32		m_nLineNum;
+		uint32 m_nLineNum;
 		
 		/// File where the error occurred.
-		char	m_strFile[GUI_MAXPATHLEN + 1];
+		char m_strFile[GUI_MAXPATHLEN + 1];
 		
 		CGUILogMsgCallback* m_pMsgCallback;
 		
@@ -390,8 +251,6 @@ namespace guiex
 #endif //#ifdef WIN32
 		
 	};
-	
-	
-	
+
 }//namespace guiex
 #endif //__GUI_LOGMSG_20060530_H__

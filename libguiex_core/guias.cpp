@@ -10,7 +10,7 @@
 //============================================================================// 
 #include <libguiex_core/guias.h>
 #include <libguiex_core/guiwidget.h>
-#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guisystem.h>
 #include <libguiex_core/guimath.h>
 #include <libguiex_core/guiasmanager.h>
 
@@ -33,7 +33,7 @@ namespace guiex
 
 		return 0;
 	} 
- 
+
 
 	//*****************************************************************************
 	//	CGUIAs
@@ -53,6 +53,9 @@ namespace guiex
 		Load();
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief destructor
+	*/
 	CGUIAs::~CGUIAs()
 	{
 		for(TListSuccessor::iterator itor = m_listSuccessor.begin();
@@ -158,6 +161,9 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief get as type
+	*/
 	const CGUIString& CGUIAs::GetType() const
 	{
 		return m_strAsType;
@@ -230,7 +236,7 @@ namespace guiex
 		if( m_fElapsedTime >= m_fTotalTime )
 		{
 			real fLeftTime = m_fElapsedTime - m_fTotalTime;
-			
+
 			if( IsLooping() )
 			{
 				m_fElapsedTime -= m_fTotalTime;
@@ -239,7 +245,7 @@ namespace guiex
 					fLeftTime = m_fElapsedTime - m_fTotalTime;
 					m_fElapsedTime -= m_fTotalTime;	
 				}
-			
+
 				return Update( fLeftTime );
 			}
 			else
@@ -303,8 +309,8 @@ namespace guiex
 	//*****************************************************************************
 	//------------------------------------------------------------------------------
 	GUI_AS_GENERATOR_IMPLEMENT( CGUIAsAlpha );
-	
-	
+
+
 	//------------------------------------------------------------------------------
 	CGUIAsAlpha::CGUIAsAlpha( const CGUIString& rAsName, const CGUIString& rSceneName )
 		:CGUIInterpolationBase<real>("CGUIAsAlpha" , rAsName, rSceneName )
@@ -650,7 +656,7 @@ namespace guiex
 			{
 				continue;
 			}
-			
+
 			rInfo.m_pAs->SetElapsedTime( GetElapsedTime() - rInfo.m_fBeginTime );
 			rInfo.m_pAs->Update( 0.0f );
 		}

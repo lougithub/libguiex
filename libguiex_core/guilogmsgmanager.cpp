@@ -50,6 +50,9 @@ namespace guiex
 		return m_pSingleton;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief get default message.
+	*/
 	CGUILogMsg*	CGUILogMsgManager::Msg()
 	{
 		if( m_pMsgInstance == NULL )
@@ -64,6 +67,9 @@ namespace guiex
 		return m_pMsgInstance;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief generate a message
+	*/
 	CGUILogMsg*	CGUILogMsgManager::CreateMsg()
 	{
 		CGUILogMsg* pMsg = new CGUILogMsg();
@@ -75,12 +81,18 @@ namespace guiex
 		return pMsg;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief generate a message
+	*/
 	void CGUILogMsgManager::DestroyMsg(CGUILogMsg* pMsg)
 	{
 		CGUIObjectManager::Instance()->Unregister(pMsg);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUILogMsgManager::ClearDefaultMsg()
+	/** 
+	* @brief clear default msg instance
+	*/
+	void CGUILogMsgManager::ClearDefaultMsg()
 	{
 		m_pMsgInstance = NULL;
 	}

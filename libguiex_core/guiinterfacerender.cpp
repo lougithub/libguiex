@@ -22,6 +22,13 @@ namespace guiex
 	const real	IGUIInterfaceRender::ms_ZElementStep = 0.0001f;	//!< Value to step 'z' for each GUI element.
 	//------------------------------------------------------------------------------
 
+
+	//------------------------------------------------------------------------------
+	const char* IGUIInterfaceRender::StaticGetModuleName()
+	{ 
+		return "IGUIRender";
+	}
+	//------------------------------------------------------------------------------
 	IGUIInterfaceRender::IGUIInterfaceRender( )
 		:IGUIInterface("IGUIRender")
 	{

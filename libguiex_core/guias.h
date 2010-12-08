@@ -33,12 +33,6 @@
 #include <list>
 #include <vector>
 
-
-//============================================================================//
-// define
-//============================================================================//
-
-
 //============================================================================//
 // declare
 //============================================================================//
@@ -46,7 +40,6 @@ namespace guiex
 {
 	class CGUIWidget;
 }
-
 
 //============================================================================//
 // function
@@ -76,18 +69,12 @@ namespace guiex
 	class GUIEXPORT CGUIAs  : public CGUIResource
 	{
 	public:
-		/**
-		* @brief destructor
-		*/
 		virtual ~CGUIAs();
 
 		virtual int32 ProcessProperty( const CGUIProperty& rProperty );
 		virtual int32 GenerateProperty( CGUIProperty& rProperty );
 		virtual CGUIAs* Clone( ) const;
 
-		/**
-		* @brief get as type
-		*/
 		const CGUIString& GetType() const;
 
 		/**
@@ -157,9 +144,6 @@ namespace guiex
 		}
 
 	protected:
-		/**
-		* @brief constructor
-		*/
 		CGUIAs( const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName );
 	
 
@@ -202,9 +186,6 @@ namespace guiex
 	class CGUIInterpolationBase : public CGUIAs
 	{
 	protected:
-		/**
-		* @brief constructor
-		*/
 		CGUIInterpolationBase( const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName )
 			:CGUIAs( rAsType,  rAsType, rSceneName )
 			,m_eInterpolationType( eInterpolationType_Linear )
@@ -397,15 +378,9 @@ namespace guiex
 	class GUIEXPORT CGUIAsAlpha : public CGUIInterpolationBase<real>
 	{
 	protected:
-		/**
-		* @brief constructor
-		*/
 		CGUIAsAlpha(const CGUIString& rAsName, const CGUIString& rSceneName);
 
 	public:
-		/**
-		* @brief update the event.
-		*/
 		virtual real Update( real fDeltaTime );
 
 		GUI_AS_GENERATOR_DECLARE( CGUIAsAlpha);
@@ -424,15 +399,9 @@ namespace guiex
 	class GUIEXPORT CGUIAsScale : public CGUIInterpolationBase<CGUISize>
 	{
 	protected:
-		/**
-		* @brief constructor
-		*/
 		CGUIAsScale(const CGUIString& rAsName, const CGUIString& rSceneName);
 
 	public:
-		/**
-		* @brief Update the event.
-		*/
 		virtual real Update( real fDeltaTime );
 
 		GUI_AS_GENERATOR_DECLARE( CGUIAsScale);
@@ -449,15 +418,9 @@ namespace guiex
 	class GUIEXPORT CGUIAsRotation : public CGUIInterpolationBase<CGUIVector3>
 	{
 	protected:
-		/**
-		* @brief constructor
-		*/
 		CGUIAsRotation(const CGUIString& rAsName, const CGUIString& rSceneName);
 
 	public:
-		/**
-		* @brief Update the event.
-		*/
 		virtual real Update( real fDeltaTime );
 
 		GUI_AS_GENERATOR_DECLARE( CGUIAsRotation);
@@ -473,15 +436,9 @@ namespace guiex
 	class GUIEXPORT CGUIAsPosition : public CGUIInterpolationBase<CGUIVector2>
 	{
 	protected:
-		/**
-		* @brief constructor
-		*/
 		CGUIAsPosition(const CGUIString& rAsName, const CGUIString& rSceneName);
 
 	public:
-		/**
-		* @brief Update the event.
-		*/
 		virtual real Update( real fDeltaTime );
 
 		GUI_AS_GENERATOR_DECLARE( CGUIAsPosition);
@@ -498,15 +455,9 @@ namespace guiex
 	class GUIEXPORT CGUIAsColor : public CGUIInterpolationBase<CGUIColor>
 	{
 	protected:
-		/**
-		* @brief constructor
-		*/
 		CGUIAsColor(const CGUIString& rAsName, const CGUIString& rSceneName);
 
 	public:
-		/**
-		* @brief Update the event.
-		*/
 		virtual real Update( real fDeltaTime );
 
 		GUI_AS_GENERATOR_DECLARE( CGUIAsColor);

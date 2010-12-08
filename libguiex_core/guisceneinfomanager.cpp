@@ -15,7 +15,7 @@
 //============================================================================//
 #include <libguiex_core/guisceneinfomanager.h>
 #include <libguiex_core/guisceneinfo.h>
-#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guisystem.h>
 #include <libguiex_core/guiinterfacefilesys.h>
 #include <libguiex_core/guiinterfacemanager.h>
 #include <libguiex_core/guiinterfaceconfigfile.h>

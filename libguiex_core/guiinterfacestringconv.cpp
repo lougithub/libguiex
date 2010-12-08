@@ -17,15 +17,22 @@
 //============================================================================// 
 namespace guiex
 {
-
 	//------------------------------------------------------------------------------
 	GUIEXPORT IGUIInterfaceStringConv*	GetInterface_StringConv( )
 	{
 		return CGUIInterfaceManager::Instance()->GetInterfaceStringConv();
 	}
 	//------------------------------------------------------------------------------
+
+
+	//------------------------------------------------------------------------------
+	const char* IGUIInterfaceStringConv::StaticGetModuleName()
+	{ 
+		return "IGUIStringConv";
+	}
+	//------------------------------------------------------------------------------
 	IGUIInterfaceStringConv::IGUIInterfaceStringConv( )
-		:IGUIInterface("IGUIStringConv")
+		:IGUIInterface( StaticGetModuleName() )
 	{
 	}
 	//------------------------------------------------------------------------------

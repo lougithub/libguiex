@@ -1,176 +1,241 @@
-set( library_name "libguiex_core" )
-message( STATUS "generate library: " ${library_name} )
-
-set( ${library_name}_SRCS
-    guianimation.cpp
-    guianimation.h
-    guianimationmanager.cpp
-    guianimationmanager.h
-    guias.cpp
-    guias.h
-    guiasfactory.cpp
-    guiasfactory.h
-    guiasgenerator.cpp
-    guiasgenerator.h
-    guiasmanager.cpp
-    guiasmanager.h
-    guiassert.cpp
-    guiassert.h
-    guibase.h
-    guicleanup.cpp
-    guicleanup.h
-    guicolor.cpp
-    guicolor.h
-    guicolorrect.cpp
-    guicolorrect.h
-    guiconfig.h
-    guiconfigfileloader.cpp
-    guiconfigfileloader.h
-    guidatachunk.h
-    guidebug.cpp
-    guidynlib.h
-    guienumtype.h
-    guievent.cpp
-    guievent.h
-    guiex.h
-    guiexception.cpp
-    guiexception.h
-    guifontdata.cpp
-    guifontdata.h
-    guifontmanager.cpp
-    guifontmanager.h
-    guigarbagecollector.h
-    guiimage.cpp
-    guiimage.h
-    guiimagedata.cpp
-    guiimagedata.h
-    guiimagemanager.cpp
-    guiimagemanager.h
-    guiinputprocessor.cpp
-    guiinputprocessor.h
-    guiinterface.cpp
-    guiinterface.h
-    guiinterfacecommand.cpp
-    guiinterfacecommand.h
-    guiinterfaceconfigfile.cpp
-    guiinterfaceconfigfile.h
-    guiinterfacefilesys.cpp
-    guiinterfacefilesys.h
-    guiinterfacefont.cpp
-    guiinterfacefont.h
-    guiinterfaceimageloader.cpp
-    guiinterfaceimageloader.h
-    guiinterfaceime.cpp
-    guiinterfaceime.h
-    guiinterfacekeyboard.cpp
-    guiinterfacekeyboard.h
-    guiinterfacemanager.cpp
-    guiinterfacemanager.h
-    guiinterfacemouse.cpp
-    guiinterfacemouse.h
-    guiinterfaceparser.h
-    guiinterfacerender.cpp
-    guiinterfacerender.h
-    guiinterfacescript.cpp
-    guiinterfacescript.h
-    guiinterfacesound.cpp
-    guiinterfacesound.h
-    guiinterfacestringconv.cpp
-    guiinterfacestringconv.h
-    guiinterpolation.cpp
-    guiinterpolation.h
-    guilogmsg.cpp
-    guilogmsg.h
-    guilogmsgcallback.cpp
-    guilogmsgcallback.h
-    guilogmsgmanager.cpp
-    guilogmsgmanager.h
-    guilogmsgrecord.cpp
-    guilogmsgrecord.h
-    guimath.cpp
-    guimath.h
-    guimatrix3.cpp
-    guimatrix3.h
-    guimatrix4.cpp
-    guimatrix4.h
-    guimousecursor.cpp
-    guimousecursor.h
-    guinode.cpp
-    guinode.h
-    guiobjectmanager.cpp
-    guiobjectmanager.h
-    guiobjectmanagerbase.cpp
-    guiobjectmanagerbase.h
-    guiperfmonitor.cpp
-    guiperfmonitor.h
-    guiplane.cpp
-    guiplane.h
-    guiproperty.cpp
-    guiproperty.h
-    guipropertyconvertor.cpp
-    guipropertyconvertor.h
-    guipropertymanager.cpp
-    guipropertymanager.h
-    guiquaternion.cpp
-    guiquaternion.h
-    guirect.cpp
-    guirect.h
-    guirenderrect.cpp
-    guirenderrect.h
-    guiresource.cpp
-    guiresource.h
-    guiresourcemanager.cpp
-    guiresourcemanager.h
-    guisceneinfo.cpp
-    guisceneinfo.h
-    guisceneinfomanager.cpp
-    guisceneinfomanager.h
-    guisceneutility.cpp
-    guisceneutility.h
-    guisingleton.h
-    guisingleton.inl
-    guisize.cpp
-    guisize.h
-    guistring.h
-    guistringconvertor.cpp
-    guistringconvertor.h
-    guistringex.cpp
-    guistringex.h
-    guitexture.cpp
-    guitexture.h
-    guitextureimp.cpp
-    guitextureimp.h
-    guitexturemanager.cpp
-    guitexturemanager.h
-    guitimer.cpp
-    guitimer.h
-    guitypes.h
-    guiutility.cpp
-    guiutility.h
-    guivector2.cpp
-    guivector2.h
-    guivector3.cpp
-    guivector3.h
-    guivector4.cpp
-    guivector4.h
-    guiwidget.cpp
-    guiwidget.h
-    guiwidgetcallback.cpp
-    guiwidgetfactory.cpp
-    guiwidgetfactory.h
-    guiwidgetgenerator.cpp
-    guiwidgetgenerator.h
-    guiwidgetmanager.cpp
-    guiwidgetmanager.h
-    guiwidgetparameter.h
-    guiwidgetroot.cpp
-    guiwidgetroot.h
-    guiwidgetsystem.cpp
-    guiwidgetsystem.h
-    guiwidgetutility.cpp
-    guiwidgetutility.h
-    )
+set( target_name "libguiex_core" )
+message( STATUS "generate library: " ${target_name} )
 
 
-add_library( ${library_name} STATIC ${${library_name}_SRCS} )
+set( ${target_name}_base_SRCS 
+	guitypes.h
+	guibase.h
+	guiconfig.h
+	guiexception.cpp
+	guiexception.h
+	guiobjectmanager.cpp
+	guiobjectmanager.h
+	guiobjectmanagerbase.cpp
+	guiobjectmanagerbase.h
+	guiperfmonitor.cpp
+	guiperfmonitor.h
+	guidebug.cpp
+	guidynlib.h
+	guienumtype.h
+	guiassert.cpp
+	guiassert.h
+	guicleanup.cpp
+	guicleanup.h
+	guisingleton.h
+	guisingleton.inl
+	guitimer.cpp
+	guitimer.h
+	guiex.h
+	guigarbagecollector.h
+	)
+source_group( base FILES ${${target_name}_base_SRCS} )
+
+
+set( ${target_name}_math_SRCS 
+	guivector2.cpp
+	guivector2.h
+	guivector3.cpp
+	guivector3.h
+	guivector4.cpp
+	guivector4.h
+	guisize.cpp
+	guisize.h
+	guicolor.cpp
+	guicolor.h
+	guicolorrect.cpp
+	guicolorrect.h
+	guirect.cpp
+	guirect.h
+	guirenderrect.cpp
+	guirenderrect.h
+	guimath.cpp
+	guimath.h
+	guimatrix3.cpp
+	guimatrix3.h
+	guimatrix4.cpp
+	guimatrix4.h
+	guiplane.cpp
+	guiplane.h
+	guiquaternion.cpp
+	guiquaternion.h
+	guiinterpolation.cpp
+	guiinterpolation.h
+	)
+source_group( math FILES ${${target_name}_math_SRCS} )
+
+
+set( ${target_name}_resource_SRCS 
+	guiresource.cpp
+	guiresource.h
+	guiresourcemanager.cpp
+	guiresourcemanager.h
+	guianimation.cpp
+	guianimation.h
+	guianimationmanager.cpp
+	guianimationmanager.h
+	guiimage.cpp
+	guiimage.h
+	guiimagemanager.cpp
+	guiimagemanager.h
+	guifontdata.cpp
+	guifontdata.h
+	guifontmanager.cpp
+	guifontmanager.h
+	guias.cpp
+	guias.h
+	guiasmanager.cpp
+	guiasmanager.h
+	guiasfactory.cpp
+	guiasfactory.h
+	guiasgenerator.cpp
+	guiasgenerator.h
+	)
+source_group( resource FILES ${${target_name}_resource_SRCS} )
+
+
+set( ${target_name}_interface_SRCS 
+	guiinterface.cpp
+	guiinterface.h
+	guiinterfacecommand.cpp
+	guiinterfacecommand.h
+	guiinterfaceconfigfile.cpp
+	guiinterfaceconfigfile.h
+	guiinterfacefilesys.cpp
+	guiinterfacefilesys.h
+	guiinterfacefont.cpp
+	guiinterfacefont.h
+	guiinterfaceimageloader.cpp
+	guiinterfaceimageloader.h
+	guiinterfaceime.cpp
+	guiinterfaceime.h
+	guiinterfacekeyboard.cpp
+	guiinterfacekeyboard.h
+	guiinterfacemanager.cpp
+	guiinterfacemanager.h
+	guiinterfacemouse.cpp
+	guiinterfacemouse.h
+	guiinterfaceparser.h
+	guiinterfacerender.cpp
+	guiinterfacerender.h
+	guiinterfacescript.cpp
+	guiinterfacescript.h
+	guiinterfacesound.cpp
+	guiinterfacesound.h
+	guiinterfacestringconv.cpp
+	guiinterfacestringconv.h
+	)
+source_group( interface FILES ${${target_name}_interface_SRCS} )
+
+
+set( ${target_name}_widget_SRCS 
+	guinode.cpp
+	guinode.h
+	guiwidget.cpp
+	guiwidget.h
+	guiwidgetcallback.cpp
+	guiwidgetfactory.cpp
+	guiwidgetfactory.h
+	guiwidgetgenerator.cpp
+	guiwidgetgenerator.h
+	guiwidgetmanager.cpp
+	guiwidgetmanager.h
+	guiwidgetparameter.h
+	guiwidgetroot.cpp
+	guiwidgetroot.h
+	guiwidgetutility.cpp
+	guiwidgetutility.h
+	)
+source_group( widget FILES ${${target_name}_widget_SRCS} )
+
+
+set( ${target_name}_log_SRCS 
+	guilogmsg.cpp
+	guilogmsg.h
+	guilogmsgcallback.cpp
+	guilogmsgcallback.h
+	guilogmsgmanager.cpp
+	guilogmsgmanager.h
+	guilogmsgrecord.cpp
+	guilogmsgrecord.h
+	)
+source_group( log FILES ${${target_name}_log_SRCS} )
+
+
+set( ${target_name}_string_SRCS 
+	guistring.h
+	guistringconvertor.cpp
+	guistringconvertor.h
+	guistringex.cpp
+	guistringex.h
+	)
+source_group( string FILES ${${target_name}_string_SRCS} )
+
+
+set( ${target_name}_property_SRCS 
+	guiproperty.cpp
+	guiproperty.h
+	guipropertyconvertor.cpp
+	guipropertyconvertor.h
+	guipropertymanager.cpp
+	guipropertymanager.h
+	)
+source_group( property FILES ${${target_name}_property_SRCS} )
+
+
+set( ${target_name}_texture_SRCS 
+	guitexture.cpp
+	guitexture.h
+	guitextureimp.cpp
+	guitextureimp.h
+	guitexturemanager.cpp
+	guitexturemanager.h
+	)
+source_group( texture FILES ${${target_name}_texture_SRCS} )
+
+set( ${target_name}_scene_SRCS 
+	guisceneinfo.cpp
+	guisceneinfo.h
+	guisceneinfomanager.cpp
+	guisceneinfomanager.h
+	guisceneutility.cpp
+	guisceneutility.h
+	)
+source_group( scene FILES ${${target_name}_scene_SRCS} )
+
+set( ${target_name}_misc_SRCS 
+	guiconfigfileloader.cpp
+	guiconfigfileloader.h
+	guidatachunk.h
+	guievent.cpp
+	guievent.h
+	guiimagedata.cpp
+	guiimagedata.h
+	guiinputprocessor.cpp
+	guiinputprocessor.h
+	guimousecursor.cpp
+	guimousecursor.h
+	guiutility.cpp
+	guiutility.h
+	guisystem.cpp
+	guisystem.h
+	)
+source_group( misc FILES ${${target_name}_misc_SRCS} )
+
+
+set( ${target_name}_SRCS
+	${${target_name}_base_SRCS}
+	${${target_name}_math_SRCS}
+	${${target_name}_resource_SRCS}
+	${${target_name}_interface_SRCS}
+	${${target_name}_widget_SRCS}
+	${${target_name}_log_SRCS}
+	${${target_name}_string_SRCS}
+	${${target_name}_property_SRCS}
+	${${target_name}_texture_SRCS}
+	${${target_name}_scene_SRCS}
+	${${target_name}_misc_SRCS}
+	)
+
+
+add_library( ${target_name} STATIC ${${target_name}_SRCS} )
 

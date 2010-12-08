@@ -17,14 +17,14 @@
 //============================================================================// 
 #include <libguiex_core/guiinterfacescript.h>
 #include <map>
-
+#include <list>
 
 //============================================================================//
-// declare
+// class
 //============================================================================// 
 namespace guiex
 {
-	typedef void (*FuncInitScript)( void* );
+	typedef void (*FuncScriptLoadModule)( void* );
 }
 
 //============================================================================//
@@ -35,102 +35,41 @@ namespace guiex
 	class GUIEXPORT IGUIScript_lua : public IGUIInterfaceScript
 	{
 	public:
-		/** 
-		* @brief constructor
-		*/
 		IGUIScript_lua();
-
-		/** 
-		* @brief destructor
-		*/
 		virtual ~IGUIScript_lua();
-
-		virtual void	SetExternalData(void* pData);
 
 		virtual void CreateScript( const CGUIString& rSceneName );
 		virtual bool HasScript( const CGUIString& rSceneName );
 		virtual void DestroyScript( const CGUIString& rSceneName );
 		virtual void DestroyAllScript( );
 
-		/** 
-		* @brief execute a script file
-		* 
-		* @param filename filename of the script file
-		*/
-		virtual	void	ExecuteFile(const CGUIString& filename, const CGUIString& rSceneName);
+		virtual	void ExecuteFile(const CGUIString& filename, const CGUIString& rSceneName);
+		virtual	void ExecuteBuffer(void * pBuffer, int32 nBufferSize, const CGUIString& rSceneName);
+		virtual	void ExecuteString(const char * pString, const CGUIString& rSceneName);
+		virtual void ExecuteEventHandler(const CGUIString& rEventName, CGUIEvent* pEvent, const CGUIString& rSceneName);
 
-		/** 
-		* @brief execute a memory buffer which contain script
-		* 
-		*/
-		virtual	void	ExecuteBuffer(void * pBuffer, int32 nBufferSize, const CGUIString& rSceneName);
+		virtual void RegisterWidget( const CGUIWidget* pWidget );
 
-		/** 
-		* @brief execute script from string
-		*/
-		virtual	void	ExecuteString(const char * pString, const CGUIString& rSceneName);
-
-		/** 
-		* @brief execute a event handle
-		*/
-		virtual void 	ExecuteEventHandler(const CGUIString& rEventName, CGUIEvent* pEvent, const CGUIString& rSceneName);
-
-		virtual void	RegisterWidget( const CGUIWidget* pWidget );
-
-		/**
-		* @brief delete this interface
-		*/
-		virtual void	DeleteSelf();
+		virtual void DeleteSelf();
 
 	public:
-		/**
-		* @brief get lua_State used in this module
-		* @return lua_State
-		*/
-		void*		GetLuaState( const CGUIString& rSceneName );
+		void* GetLuaState( const CGUIString& rSceneName );
 
-		/**
-		* @brief execute script function with given parameter.
-		* @param pFunName function name.
-		*/
-		void			ExecuteFunction(const CGUIString& pFunName, void* pLuaState);
+		void ExecuteFunction( const CGUIString& pFunName, void* pLuaState);
+		void ExecuteFunction( const CGUIString& pFunName, void* pPara1, const CGUIString& rParaType1, void* pLuaState);
+		void ExecuteFunction( const CGUIString& pFunName, void* pPara1, const CGUIString& rParaType1, void* pPara2, const CGUIString& rParaType2, void* pLuaState );
 
-		/**
-		* @brief execute script function with given parameter.
-		* @param pFunName function name.
-		* @param pPara1 parameter
-		* @param pParaType1 type of parameter.
-		*/
-		void			ExecuteFunction(
-			const CGUIString& pFunName, 
-			void* pPara1, const CGUIString& rParaType1, 
-			void* pLuaState);
-
-		void			ExecuteFunction(
-			const CGUIString& pFunName, 
-			void* pPara1, const CGUIString& rParaType1,
-			void* pPara2, const CGUIString& rParaType2,
-			void* pLuaState);
-
+		void AddScriptModule( void* pScriptModule );
 
 	protected:
-		/** 
-		* @brief initialize lua and tolua
-		* @return 0 for success
-		*/
 		virtual int DoInitialize(void* );
-
-		/** 
-		* @brief destroy lua and tolua
-		* @return 0 for success
-		*/
 		virtual void DoDestroy();
 
-		bool	PushParToLua( void* pPara, const CGUIString& rParaType, void* pLuaState);
+		bool PushParToLua( void* pPara, const CGUIString& rParaType, void* pLuaState);
 
 	private:
-		std::map<CGUIString, void*>			m_mapLuaState;///< The lua_State used by this module
-		FuncInitScript						m_funcInitScript;
+		std::map<CGUIString, void*> m_mapLuaState;///< The lua_State used by this module
+		std::list<FuncScriptLoadModule> m_listModules;
 	};
 
 	GUI_INTERFACE_DECLARE();

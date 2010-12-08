@@ -12,7 +12,7 @@
 //============================================================================// 
 #include <libguiex_widget/guiwgtdialog.h>
 #include <libguiex_core/guiinterfacerender.h>
-#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guisystem.h>
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guiimage.h>
 

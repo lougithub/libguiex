@@ -1,4 +1,4 @@
-macro( CMakeVariableLogging )
+macro( macro_variable_logging )
 	# ------------------------- Begin Generic CMake Variable Logging ------------------
 	# /*	C++ comment style not allowed	*/
 

@@ -18,15 +18,19 @@
 //============================================================================// 
 namespace guiex
 {
-
 	//------------------------------------------------------------------------------
 	GUIEXPORT IGUIInterfaceCommand*	GetInterface_Command( )
 	{
 		return CGUIInterfaceManager::Instance()->GetInterfaceCommand();
 	}
 	//------------------------------------------------------------------------------
+	const char* IGUIInterfaceCommand::StaticGetModuleName()
+	{ 
+		return "IGUICommand";
+	}
+	//------------------------------------------------------------------------------
 	IGUIInterfaceCommand::IGUIInterfaceCommand( )
-		:IGUIInterface("IGUICommand")
+		:IGUIInterface(StaticGetModuleName())
 	{
 	}
 	//------------------------------------------------------------------------------

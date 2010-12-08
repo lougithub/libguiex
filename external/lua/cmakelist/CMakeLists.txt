@@ -1,5 +1,5 @@
-set( library_name "lua" )
-message( STATUS "generate library: " ${library_name} )
+set( target_name "lua" )
+message( STATUS "generate library: " ${target_name} )
 
 set( src_list 
     ../src/lapi.c
@@ -60,5 +60,5 @@ set( inc_list
 #foreach( F ${src_list} ${inc_list} )
 #    message( ${F} )
 #endforeach( F )
-add_library( ${library_name} STATIC ${src_list} ${inc_list}  )
+add_library( ${target_name} STATIC ${src_list} ${inc_list}  )
 

@@ -1508,19 +1508,66 @@ SWIG_Lua_dostring(lua_State *L, const char* str) {
 
 #define SWIGTYPE_p_char swig_types[0]
 #define SWIGTYPE_p_float swig_types[1]
-#define SWIGTYPE_p_guiex__CGUIColor swig_types[2]
-#define SWIGTYPE_p_guiex__CGUIRect swig_types[3]
-#define SWIGTYPE_p_guiex__CGUISize swig_types[4]
-#define SWIGTYPE_p_guiex__CGUIVector2 swig_types[5]
-#define SWIGTYPE_p_guiex__CGUIVector3 swig_types[6]
-#define SWIGTYPE_p_int swig_types[7]
-#define SWIGTYPE_p_short swig_types[8]
-#define SWIGTYPE_p_std__string swig_types[9]
-#define SWIGTYPE_p_unsigned_char swig_types[10]
-#define SWIGTYPE_p_unsigned_int swig_types[11]
-#define SWIGTYPE_p_unsigned_short swig_types[12]
-static swig_type_info *swig_types[14];
-static swig_module_info swig_module = {swig_types, 13, 0, 0, 0, 0};
+#define SWIGTYPE_p_guiex__CGUIAnimation swig_types[2]
+#define SWIGTYPE_p_guiex__CGUIAs swig_types[3]
+#define SWIGTYPE_p_guiex__CGUIAsAlpha swig_types[4]
+#define SWIGTYPE_p_guiex__CGUIAsColor swig_types[5]
+#define SWIGTYPE_p_guiex__CGUIAsContainer swig_types[6]
+#define SWIGTYPE_p_guiex__CGUIAsPosition swig_types[7]
+#define SWIGTYPE_p_guiex__CGUIAsRotation swig_types[8]
+#define SWIGTYPE_p_guiex__CGUIAsScale swig_types[9]
+#define SWIGTYPE_p_guiex__CGUIColor swig_types[10]
+#define SWIGTYPE_p_guiex__CGUIColorRect swig_types[11]
+#define SWIGTYPE_p_guiex__CGUIEvent swig_types[12]
+#define SWIGTYPE_p_guiex__CGUIEventAlpha swig_types[13]
+#define SWIGTYPE_p_guiex__CGUIEventDrag swig_types[14]
+#define SWIGTYPE_p_guiex__CGUIEventKeyboard swig_types[15]
+#define SWIGTYPE_p_guiex__CGUIEventMouse swig_types[16]
+#define SWIGTYPE_p_guiex__CGUIEventNotification swig_types[17]
+#define SWIGTYPE_p_guiex__CGUIEventScrollbar swig_types[18]
+#define SWIGTYPE_p_guiex__CGUIEventSize swig_types[19]
+#define SWIGTYPE_p_guiex__CGUIEventTimer swig_types[20]
+#define SWIGTYPE_p_guiex__CGUIEventUI swig_types[21]
+#define SWIGTYPE_p_guiex__CGUIImage swig_types[22]
+#define SWIGTYPE_p_guiex__CGUIInterfaceManager swig_types[23]
+#define SWIGTYPE_p_guiex__CGUIInterpolationBaseT_float_t swig_types[24]
+#define SWIGTYPE_p_guiex__CGUIInterpolationBaseT_guiex__CGUIColor_t swig_types[25]
+#define SWIGTYPE_p_guiex__CGUIInterpolationBaseT_guiex__CGUISize_t swig_types[26]
+#define SWIGTYPE_p_guiex__CGUIInterpolationBaseT_guiex__CGUIVector2_t swig_types[27]
+#define SWIGTYPE_p_guiex__CGUIInterpolationBaseT_guiex__CGUIVector3_t swig_types[28]
+#define SWIGTYPE_p_guiex__CGUIProperty swig_types[29]
+#define SWIGTYPE_p_guiex__CGUIRect swig_types[30]
+#define SWIGTYPE_p_guiex__CGUISize swig_types[31]
+#define SWIGTYPE_p_guiex__CGUISystem swig_types[32]
+#define SWIGTYPE_p_guiex__CGUITimer swig_types[33]
+#define SWIGTYPE_p_guiex__CGUIVector2 swig_types[34]
+#define SWIGTYPE_p_guiex__CGUIVector3 swig_types[35]
+#define SWIGTYPE_p_guiex__CGUIWgtButton swig_types[36]
+#define SWIGTYPE_p_guiex__CGUIWgtCheckButton swig_types[37]
+#define SWIGTYPE_p_guiex__CGUIWgtEditBox swig_types[38]
+#define SWIGTYPE_p_guiex__CGUIWgtEmptyNode swig_types[39]
+#define SWIGTYPE_p_guiex__CGUIWgtPanel swig_types[40]
+#define SWIGTYPE_p_guiex__CGUIWgtRadioButton swig_types[41]
+#define SWIGTYPE_p_guiex__CGUIWgtScrollPanel swig_types[42]
+#define SWIGTYPE_p_guiex__CGUIWgtScrollbar swig_types[43]
+#define SWIGTYPE_p_guiex__CGUIWgtStatic swig_types[44]
+#define SWIGTYPE_p_guiex__CGUIWgtStaticImage swig_types[45]
+#define SWIGTYPE_p_guiex__CGUIWgtStaticText swig_types[46]
+#define SWIGTYPE_p_guiex__CGUIWidget swig_types[47]
+#define SWIGTYPE_p_guiex__CGUIWidgetUtility swig_types[48]
+#define SWIGTYPE_p_guiex__IGUIInterface swig_types[49]
+#define SWIGTYPE_p_guiex__IGUIInterfaceCommand swig_types[50]
+#define SWIGTYPE_p_guiex__IGUIInterfaceKeyboard swig_types[51]
+#define SWIGTYPE_p_guiex__IGUIInterfaceSound swig_types[52]
+#define SWIGTYPE_p_int swig_types[53]
+#define SWIGTYPE_p_short swig_types[54]
+#define SWIGTYPE_p_std__string swig_types[55]
+#define SWIGTYPE_p_unsigned_char swig_types[56]
+#define SWIGTYPE_p_unsigned_int swig_types[57]
+#define SWIGTYPE_p_unsigned_short swig_types[58]
+#define SWIGTYPE_p_void swig_types[59]
+static swig_type_info *swig_types[61];
+static swig_module_info swig_module = {swig_types, 60, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -1785,6 +1832,25 @@ static swig_lua_attribute swig_std_string_attributes[] = {
 static swig_lua_class *swig_std_string_bases[] = {0};
 static const char *swig_std_string_base_names[] = {0};
 static swig_lua_class _wrap_class_std_string = { "string", &SWIGTYPE_p_std__string,_wrap_new_string, swig_delete_string, swig_std_string_methods, swig_std_string_attributes, swig_std_string_bases, swig_std_string_base_names };
+
+static int _wrap_ThrowException(lua_State* L) {
+  int SWIG_arg = 0;
+  char *arg1 = (char *) 0 ;
+  
+  SWIG_check_num_args("guiex::ThrowException",1,1)
+  if(!SWIG_lua_isnilstring(L,1)) SWIG_fail_arg("guiex::ThrowException",1,"char const *");
+  arg1 = (char *)lua_tostring(L, 1);
+  guiex::ThrowException((char const *)arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
 
 static int _wrap_new_CGUIColor__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
@@ -2952,78 +3018,6 @@ fail:
 
 static int _wrap_new_CGUIVector2__SWIG_2(lua_State* L) {
   int SWIG_arg = 0;
-  guiex::real *arg1 ;
-  guiex::CGUIVector2 *result = 0 ;
-  
-  SWIG_check_num_args("guiex::CGUIVector2",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::CGUIVector2",1,"guiex::real [2]");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_float,0))){
-    SWIG_fail_ptr("new_CGUIVector2",1,SWIGTYPE_p_float);
-  }
-  
-  result = (guiex::CGUIVector2 *)new guiex::CGUIVector2(arg1);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIVector2,1); SWIG_arg++; 
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_new_CGUIVector2__SWIG_3(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::int32 *arg1 ;
-  guiex::CGUIVector2 *result = 0 ;
-  
-  SWIG_check_num_args("guiex::CGUIVector2",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::CGUIVector2",1,"guiex::int32 [2]");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_int,0))){
-    SWIG_fail_ptr("new_CGUIVector2",1,SWIGTYPE_p_int);
-  }
-  
-  result = (guiex::CGUIVector2 *)new guiex::CGUIVector2(arg1);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIVector2,1); SWIG_arg++; 
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_new_CGUIVector2__SWIG_4(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::real *arg1 = (guiex::real *) (guiex::real *)0 ;
-  guiex::CGUIVector2 *result = 0 ;
-  
-  SWIG_check_num_args("guiex::CGUIVector2",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::CGUIVector2",1,"guiex::real const *const");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_float,0))){
-    SWIG_fail_ptr("new_CGUIVector2",1,SWIGTYPE_p_float);
-  }
-  
-  result = (guiex::CGUIVector2 *)new guiex::CGUIVector2((guiex::real const *)arg1);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIVector2,1); SWIG_arg++; 
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_new_CGUIVector2__SWIG_5(lua_State* L) {
-  int SWIG_arg = 0;
   guiex::CGUIVector2 *arg1 = 0 ;
   guiex::CGUIVector2 *result = 0 ;
   
@@ -3060,48 +3054,6 @@ static int _wrap_new_CGUIVector2(lua_State* L) {
     int _v;
     {
       void *ptr;
-      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_float, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      return _wrap_new_CGUIVector2__SWIG_2(L);
-    }
-  }
-  if (argc == 1) {
-    int _v;
-    {
-      void *ptr;
-      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_int, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      return _wrap_new_CGUIVector2__SWIG_3(L);
-    }
-  }
-  if (argc == 1) {
-    int _v;
-    {
-      void *ptr;
-      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_float, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      return _wrap_new_CGUIVector2__SWIG_4(L);
-    }
-  }
-  if (argc == 1) {
-    int _v;
-    {
-      void *ptr;
       if (lua_isuserdata(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIVector2, 0)) {
         _v = 0;
       } else {
@@ -3109,7 +3061,7 @@ static int _wrap_new_CGUIVector2(lua_State* L) {
       }
     }
     if (_v) {
-      return _wrap_new_CGUIVector2__SWIG_5(L);
+      return _wrap_new_CGUIVector2__SWIG_2(L);
     }
   }
   if (argc == 2) {
@@ -3131,9 +3083,6 @@ static int _wrap_new_CGUIVector2(lua_State* L) {
     "  Possible C/C++ prototypes are:\n"
     "    guiex::CGUIVector2()\n"
     "    guiex::CGUIVector2(guiex::real,guiex::real)\n"
-    "    guiex::CGUIVector2(guiex::real [2])\n"
-    "    guiex::CGUIVector2(guiex::int32 [2])\n"
-    "    guiex::CGUIVector2(guiex::real const *const)\n"
     "    guiex::CGUIVector2(guiex::CGUIVector2 const &)\n");
   lua_error(L);return 0;
 }
@@ -3718,78 +3667,6 @@ fail:
 
 static int _wrap_new_CGUIVector3__SWIG_2(lua_State* L) {
   int SWIG_arg = 0;
-  guiex::real *arg1 ;
-  guiex::CGUIVector3 *result = 0 ;
-  
-  SWIG_check_num_args("guiex::CGUIVector3",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::CGUIVector3",1,"guiex::real [3]");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_float,0))){
-    SWIG_fail_ptr("new_CGUIVector3",1,SWIGTYPE_p_float);
-  }
-  
-  result = (guiex::CGUIVector3 *)new guiex::CGUIVector3(arg1);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIVector3,1); SWIG_arg++; 
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_new_CGUIVector3__SWIG_3(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::int32 *arg1 ;
-  guiex::CGUIVector3 *result = 0 ;
-  
-  SWIG_check_num_args("guiex::CGUIVector3",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::CGUIVector3",1,"guiex::int32 [3]");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_int,0))){
-    SWIG_fail_ptr("new_CGUIVector3",1,SWIGTYPE_p_int);
-  }
-  
-  result = (guiex::CGUIVector3 *)new guiex::CGUIVector3(arg1);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIVector3,1); SWIG_arg++; 
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_new_CGUIVector3__SWIG_4(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::real *arg1 = (guiex::real *) (guiex::real *)0 ;
-  guiex::CGUIVector3 *result = 0 ;
-  
-  SWIG_check_num_args("guiex::CGUIVector3",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::CGUIVector3",1,"guiex::real const *const");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_float,0))){
-    SWIG_fail_ptr("new_CGUIVector3",1,SWIGTYPE_p_float);
-  }
-  
-  result = (guiex::CGUIVector3 *)new guiex::CGUIVector3((guiex::real const *)arg1);
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIVector3,1); SWIG_arg++; 
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_new_CGUIVector3__SWIG_5(lua_State* L) {
-  int SWIG_arg = 0;
   guiex::CGUIVector3 *arg1 = 0 ;
   guiex::CGUIVector3 *result = 0 ;
   
@@ -3826,48 +3703,6 @@ static int _wrap_new_CGUIVector3(lua_State* L) {
     int _v;
     {
       void *ptr;
-      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_float, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      return _wrap_new_CGUIVector3__SWIG_2(L);
-    }
-  }
-  if (argc == 1) {
-    int _v;
-    {
-      void *ptr;
-      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_int, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      return _wrap_new_CGUIVector3__SWIG_3(L);
-    }
-  }
-  if (argc == 1) {
-    int _v;
-    {
-      void *ptr;
-      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_float, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      return _wrap_new_CGUIVector3__SWIG_4(L);
-    }
-  }
-  if (argc == 1) {
-    int _v;
-    {
-      void *ptr;
       if (lua_isuserdata(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIVector3, 0)) {
         _v = 0;
       } else {
@@ -3875,7 +3710,7 @@ static int _wrap_new_CGUIVector3(lua_State* L) {
       }
     }
     if (_v) {
-      return _wrap_new_CGUIVector3__SWIG_5(L);
+      return _wrap_new_CGUIVector3__SWIG_2(L);
     }
   }
   if (argc == 3) {
@@ -3902,9 +3737,6 @@ static int _wrap_new_CGUIVector3(lua_State* L) {
     "  Possible C/C++ prototypes are:\n"
     "    guiex::CGUIVector3()\n"
     "    guiex::CGUIVector3(guiex::real,guiex::real,guiex::real)\n"
-    "    guiex::CGUIVector3(guiex::real [3])\n"
-    "    guiex::CGUIVector3(guiex::int32 [3])\n"
-    "    guiex::CGUIVector3(guiex::real const *const)\n"
     "    guiex::CGUIVector3(guiex::CGUIVector3 const &)\n");
   lua_error(L);return 0;
 }
@@ -5177,12 +5009,9338 @@ static swig_lua_class *swig_guiex_CGUIRect_bases[] = {0};
 static const char *swig_guiex_CGUIRect_base_names[] = {0};
 static swig_lua_class _wrap_class_guiex_CGUIRect = { "CGUIRect", &SWIGTYPE_p_guiex__CGUIRect,_wrap_new_CGUIRect, swig_delete_CGUIRect, swig_guiex_CGUIRect_methods, swig_guiex_CGUIRect_attributes, swig_guiex_CGUIRect_bases, swig_guiex_CGUIRect_base_names };
 
+static int _wrap_new_CGUIColorRect__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIColorRect *result = 0 ;
+  
+  SWIG_check_num_args("guiex::CGUIColorRect",0,0)
+  result = (guiex::CGUIColorRect *)new guiex::CGUIColorRect();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIColorRect,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_CGUIColorRect__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIColor *arg1 = 0 ;
+  guiex::CGUIColorRect *result = 0 ;
+  
+  SWIG_check_num_args("guiex::CGUIColorRect",1,1)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("guiex::CGUIColorRect",1,"guiex::CGUIColor const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIColor,0))){
+    SWIG_fail_ptr("new_CGUIColorRect",1,SWIGTYPE_p_guiex__CGUIColor);
+  }
+  
+  result = (guiex::CGUIColorRect *)new guiex::CGUIColorRect((guiex::CGUIColor const &)*arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIColorRect,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_CGUIColorRect__SWIG_2(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIColor *arg1 = 0 ;
+  guiex::CGUIColor *arg2 = 0 ;
+  guiex::CGUIColor *arg3 = 0 ;
+  guiex::CGUIColor *arg4 = 0 ;
+  guiex::CGUIColorRect *result = 0 ;
+  
+  SWIG_check_num_args("guiex::CGUIColorRect",4,4)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("guiex::CGUIColorRect",1,"guiex::CGUIColor const &");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("guiex::CGUIColorRect",2,"guiex::CGUIColor const &");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("guiex::CGUIColorRect",3,"guiex::CGUIColor const &");
+  if(!lua_isuserdata(L,4)) SWIG_fail_arg("guiex::CGUIColorRect",4,"guiex::CGUIColor const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIColor,0))){
+    SWIG_fail_ptr("new_CGUIColorRect",1,SWIGTYPE_p_guiex__CGUIColor);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIColor,0))){
+    SWIG_fail_ptr("new_CGUIColorRect",2,SWIGTYPE_p_guiex__CGUIColor);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_guiex__CGUIColor,0))){
+    SWIG_fail_ptr("new_CGUIColorRect",3,SWIGTYPE_p_guiex__CGUIColor);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,4,(void**)&arg4,SWIGTYPE_p_guiex__CGUIColor,0))){
+    SWIG_fail_ptr("new_CGUIColorRect",4,SWIGTYPE_p_guiex__CGUIColor);
+  }
+  
+  result = (guiex::CGUIColorRect *)new guiex::CGUIColorRect((guiex::CGUIColor const &)*arg1,(guiex::CGUIColor const &)*arg2,(guiex::CGUIColor const &)*arg3,(guiex::CGUIColor const &)*arg4);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIColorRect,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_CGUIColorRect(lua_State* L) {
+  int argc;
+  int argv[5]={
+    1,2,3,4,5
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 0) {
+    return _wrap_new_CGUIColorRect__SWIG_0(L);
+  }
+  if (argc == 1) {
+    int _v;
+    {
+      void *ptr;
+      if (lua_isuserdata(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIColor, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      return _wrap_new_CGUIColorRect__SWIG_1(L);
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    {
+      void *ptr;
+      if (lua_isuserdata(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIColor, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_guiex__CGUIColor, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (lua_isuserdata(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_guiex__CGUIColor, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          {
+            void *ptr;
+            if (lua_isuserdata(L,argv[3])==0 || SWIG_ConvertPtr(L,argv[3], (void **) &ptr, SWIGTYPE_p_guiex__CGUIColor, 0)) {
+              _v = 0;
+            } else {
+              _v = 1;
+            }
+          }
+          if (_v) {
+            return _wrap_new_CGUIColorRect__SWIG_2(L);
+          }
+        }
+      }
+    }
+  }
+  
+  lua_pushstring(L,"Wrong arguments for overloaded function 'new_CGUIColorRect'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    guiex::CGUIColorRect()\n"
+    "    guiex::CGUIColorRect(guiex::CGUIColor const &)\n"
+    "    guiex::CGUIColorRect(guiex::CGUIColor const &,guiex::CGUIColor const &,guiex::CGUIColor const &,guiex::CGUIColor const &)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_CGUIColorRect_SetAlpha(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIColorRect *arg1 = (guiex::CGUIColorRect *) 0 ;
+  guiex::real arg2 ;
+  
+  SWIG_check_num_args("SetAlpha",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetAlpha",1,"guiex::CGUIColorRect *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SetAlpha",2,"guiex::real");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIColorRect,0))){
+    SWIG_fail_ptr("CGUIColorRect_SetAlpha",1,SWIGTYPE_p_guiex__CGUIColorRect);
+  }
+  
+  arg2 = (guiex::real)lua_tonumber(L, 2);
+  (arg1)->SetAlpha(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIColorRect_SetColours(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIColorRect *arg1 = (guiex::CGUIColorRect *) 0 ;
+  guiex::CGUIColor *arg2 = 0 ;
+  
+  SWIG_check_num_args("SetColours",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetColours",1,"guiex::CGUIColorRect *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("SetColours",2,"guiex::CGUIColor const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIColorRect,0))){
+    SWIG_fail_ptr("CGUIColorRect_SetColours",1,SWIGTYPE_p_guiex__CGUIColorRect);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIColor,0))){
+    SWIG_fail_ptr("CGUIColorRect_SetColours",2,SWIGTYPE_p_guiex__CGUIColor);
+  }
+  
+  (arg1)->SetColours((guiex::CGUIColor const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIColorRect_IsMonochromatic(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIColorRect *arg1 = (guiex::CGUIColorRect *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsMonochromatic",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsMonochromatic",1,"guiex::CGUIColorRect const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIColorRect,0))){
+    SWIG_fail_ptr("CGUIColorRect_IsMonochromatic",1,SWIGTYPE_p_guiex__CGUIColorRect);
+  }
+  
+  result = (bool)((guiex::CGUIColorRect const *)arg1)->IsMonochromatic();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIColorRect_GetSubRectangle(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIColorRect *arg1 = (guiex::CGUIColorRect *) 0 ;
+  guiex::real arg2 ;
+  guiex::real arg3 ;
+  guiex::real arg4 ;
+  guiex::real arg5 ;
+  guiex::CGUIColorRect result;
+  
+  SWIG_check_num_args("GetSubRectangle",5,5)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetSubRectangle",1,"guiex::CGUIColorRect const *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("GetSubRectangle",2,"guiex::real");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("GetSubRectangle",3,"guiex::real");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("GetSubRectangle",4,"guiex::real");
+  if(!lua_isnumber(L,5)) SWIG_fail_arg("GetSubRectangle",5,"guiex::real");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIColorRect,0))){
+    SWIG_fail_ptr("CGUIColorRect_GetSubRectangle",1,SWIGTYPE_p_guiex__CGUIColorRect);
+  }
+  
+  arg2 = (guiex::real)lua_tonumber(L, 2);
+  arg3 = (guiex::real)lua_tonumber(L, 3);
+  arg4 = (guiex::real)lua_tonumber(L, 4);
+  arg5 = (guiex::real)lua_tonumber(L, 5);
+  result = ((guiex::CGUIColorRect const *)arg1)->GetSubRectangle(arg2,arg3,arg4,arg5);
+  {
+    guiex::CGUIColorRect * resultptr = new guiex::CGUIColorRect((const guiex::CGUIColorRect &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_guiex__CGUIColorRect,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIColorRect_GetColorAtPoint(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIColorRect *arg1 = (guiex::CGUIColorRect *) 0 ;
+  guiex::real arg2 ;
+  guiex::real arg3 ;
+  guiex::CGUIColor result;
+  
+  SWIG_check_num_args("GetColorAtPoint",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetColorAtPoint",1,"guiex::CGUIColorRect const *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("GetColorAtPoint",2,"guiex::real");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("GetColorAtPoint",3,"guiex::real");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIColorRect,0))){
+    SWIG_fail_ptr("CGUIColorRect_GetColorAtPoint",1,SWIGTYPE_p_guiex__CGUIColorRect);
+  }
+  
+  arg2 = (guiex::real)lua_tonumber(L, 2);
+  arg3 = (guiex::real)lua_tonumber(L, 3);
+  result = ((guiex::CGUIColorRect const *)arg1)->GetColorAtPoint(arg2,arg3);
+  {
+    guiex::CGUIColor * resultptr = new guiex::CGUIColor((const guiex::CGUIColor &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_guiex__CGUIColor,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIColorRect_ModulateAlpha(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIColorRect *arg1 = (guiex::CGUIColorRect *) 0 ;
+  guiex::real arg2 ;
+  
+  SWIG_check_num_args("ModulateAlpha",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ModulateAlpha",1,"guiex::CGUIColorRect *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("ModulateAlpha",2,"guiex::real");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIColorRect,0))){
+    SWIG_fail_ptr("CGUIColorRect_ModulateAlpha",1,SWIGTYPE_p_guiex__CGUIColorRect);
+  }
+  
+  arg2 = (guiex::real)lua_tonumber(L, 2);
+  (arg1)->ModulateAlpha(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_CGUIColorRect(void *obj) {
+guiex::CGUIColorRect *arg1 = (guiex::CGUIColorRect *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUIColorRect_methods[] = {
+    {"SetAlpha", _wrap_CGUIColorRect_SetAlpha}, 
+    {"SetColours", _wrap_CGUIColorRect_SetColours}, 
+    {"IsMonochromatic", _wrap_CGUIColorRect_IsMonochromatic}, 
+    {"GetSubRectangle", _wrap_CGUIColorRect_GetSubRectangle}, 
+    {"GetColorAtPoint", _wrap_CGUIColorRect_GetColorAtPoint}, 
+    {"ModulateAlpha", _wrap_CGUIColorRect_ModulateAlpha}, 
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIColorRect_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIColorRect_bases[] = {0};
+static const char *swig_guiex_CGUIColorRect_base_names[] = {0};
+static swig_lua_class _wrap_class_guiex_CGUIColorRect = { "CGUIColorRect", &SWIGTYPE_p_guiex__CGUIColorRect,_wrap_new_CGUIColorRect, swig_delete_CGUIColorRect, swig_guiex_CGUIColorRect_methods, swig_guiex_CGUIColorRect_attributes, swig_guiex_CGUIColorRect_bases, swig_guiex_CGUIColorRect_base_names };
+
+static int _wrap_new_CGUITimer__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUITimer *result = 0 ;
+  
+  SWIG_check_num_args("guiex::CGUITimer",0,0)
+  result = (guiex::CGUITimer *)new guiex::CGUITimer();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUITimer,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_CGUITimer__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUITimer *arg1 = 0 ;
+  guiex::CGUITimer *result = 0 ;
+  
+  SWIG_check_num_args("guiex::CGUITimer",1,1)
+  if(!lua_isuserdata(L,1)) SWIG_fail_arg("guiex::CGUITimer",1,"guiex::CGUITimer const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUITimer,0))){
+    SWIG_fail_ptr("new_CGUITimer",1,SWIGTYPE_p_guiex__CGUITimer);
+  }
+  
+  result = (guiex::CGUITimer *)new guiex::CGUITimer((guiex::CGUITimer const &)*arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUITimer,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_CGUITimer(lua_State* L) {
+  int argc;
+  int argv[2]={
+    1,2
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 0) {
+    return _wrap_new_CGUITimer__SWIG_0(L);
+  }
+  if (argc == 1) {
+    int _v;
+    {
+      void *ptr;
+      if (lua_isuserdata(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUITimer, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      return _wrap_new_CGUITimer__SWIG_1(L);
+    }
+  }
+  
+  lua_pushstring(L,"Wrong arguments for overloaded function 'new_CGUITimer'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    guiex::CGUITimer()\n"
+    "    guiex::CGUITimer(guiex::CGUITimer const &)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_CGUITimer_UpdateTime(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUITimer *arg1 = (guiex::CGUITimer *) 0 ;
+  
+  SWIG_check_num_args("UpdateTime",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("UpdateTime",1,"guiex::CGUITimer *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUITimer,0))){
+    SWIG_fail_ptr("CGUITimer_UpdateTime",1,SWIGTYPE_p_guiex__CGUITimer);
+  }
+  
+  (arg1)->UpdateTime();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUITimer_Assign(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUITimer *arg1 = (guiex::CGUITimer *) 0 ;
+  guiex::CGUITimer *arg2 = 0 ;
+  
+  SWIG_check_num_args("Assign",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Assign",1,"guiex::CGUITimer *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("Assign",2,"guiex::CGUITimer const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUITimer,0))){
+    SWIG_fail_ptr("CGUITimer_Assign",1,SWIGTYPE_p_guiex__CGUITimer);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUITimer,0))){
+    SWIG_fail_ptr("CGUITimer_Assign",2,SWIGTYPE_p_guiex__CGUITimer);
+  }
+  
+  (arg1)->Assign((guiex::CGUITimer const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUITimer___sub(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUITimer *arg1 = (guiex::CGUITimer *) 0 ;
+  guiex::CGUITimer *arg2 = 0 ;
+  guiex::int32 result;
+  
+  SWIG_check_num_args("operator -",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("operator -",1,"guiex::CGUITimer const *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("operator -",2,"guiex::CGUITimer const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUITimer,0))){
+    SWIG_fail_ptr("CGUITimer___sub",1,SWIGTYPE_p_guiex__CGUITimer);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUITimer,0))){
+    SWIG_fail_ptr("CGUITimer___sub",2,SWIGTYPE_p_guiex__CGUITimer);
+  }
+  
+  result = (guiex::int32)((guiex::CGUITimer const *)arg1)->operator -((guiex::CGUITimer const &)*arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_CGUITimer(void *obj) {
+guiex::CGUITimer *arg1 = (guiex::CGUITimer *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUITimer_methods[] = {
+    {"UpdateTime", _wrap_CGUITimer_UpdateTime}, 
+    {"Assign", _wrap_CGUITimer_Assign}, 
+    {"__sub", _wrap_CGUITimer___sub}, 
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUITimer_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUITimer_bases[] = {0};
+static const char *swig_guiex_CGUITimer_base_names[] = {0};
+static swig_lua_class _wrap_class_guiex_CGUITimer = { "CGUITimer", &SWIGTYPE_p_guiex__CGUITimer,_wrap_new_CGUITimer, swig_delete_CGUITimer, swig_guiex_CGUITimer_methods, swig_guiex_CGUITimer_attributes, swig_guiex_CGUITimer_bases, swig_guiex_CGUITimer_base_names };
+
+static int _wrap_LogMessage(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::int32 arg1 ;
+  guiex::CGUIString *arg2 = 0 ;
+  std::string temp2 ;
+  
+  SWIG_check_num_args("guiex::LogMessage",2,2)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("guiex::LogMessage",1,"guiex::int32");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("guiex::LogMessage",2,"guiex::CGUIString const &");
+  arg1 = (guiex::int32)lua_tonumber(L, 1);
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  guiex::LogMessage(arg1,(std::string const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PrintDebug(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIString *arg1 = 0 ;
+  std::string temp1 ;
+  
+  SWIG_check_num_args("guiex::PrintDebug",1,1)
+  if(!lua_isstring(L,1)) SWIG_fail_arg("guiex::PrintDebug",1,"guiex::CGUIString const &");
+  temp1.assign(lua_tostring(L,1),lua_strlen(L,1)); arg1=&temp1;
+  guiex::PrintDebug((std::string const &)*arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIEvent_GetEventId(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEvent *arg1 = (guiex::CGUIEvent *) 0 ;
+  guiex::uint32 result;
+  
+  SWIG_check_num_args("GetEventId",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetEventId",1,"guiex::CGUIEvent const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEvent,0))){
+    SWIG_fail_ptr("CGUIEvent_GetEventId",1,SWIGTYPE_p_guiex__CGUIEvent);
+  }
+  
+  result = (guiex::uint32)((guiex::CGUIEvent const *)arg1)->GetEventId();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIEvent_GetEventType(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEvent *arg1 = (guiex::CGUIEvent *) 0 ;
+  guiex::CGUIString *result = 0 ;
+  
+  SWIG_check_num_args("GetEventType",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetEventType",1,"guiex::CGUIEvent const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEvent,0))){
+    SWIG_fail_ptr("CGUIEvent_GetEventType",1,SWIGTYPE_p_guiex__CGUIEvent);
+  }
+  
+  result = (guiex::CGUIString *) &((guiex::CGUIEvent const *)arg1)->GetEventType();
+  lua_pushlstring(L,result->data(),result->size()); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIEvent_GetReceiver(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEvent *arg1 = (guiex::CGUIEvent *) 0 ;
+  guiex::CGUIWidget *result = 0 ;
+  
+  SWIG_check_num_args("GetReceiver",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetReceiver",1,"guiex::CGUIEvent *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEvent,0))){
+    SWIG_fail_ptr("CGUIEvent_GetReceiver",1,SWIGTYPE_p_guiex__CGUIEvent);
+  }
+  
+  result = (guiex::CGUIWidget *)(arg1)->GetReceiver();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIWidget,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIEvent_IsConsumed(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEvent *arg1 = (guiex::CGUIEvent *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsConsumed",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsConsumed",1,"guiex::CGUIEvent *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEvent,0))){
+    SWIG_fail_ptr("CGUIEvent_IsConsumed",1,SWIGTYPE_p_guiex__CGUIEvent);
+  }
+  
+  result = (bool)(arg1)->IsConsumed();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIEvent_Consume(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEvent *arg1 = (guiex::CGUIEvent *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("Consume",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Consume",1,"guiex::CGUIEvent *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("Consume",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEvent,0))){
+    SWIG_fail_ptr("CGUIEvent_Consume",1,SWIGTYPE_p_guiex__CGUIEvent);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->Consume(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_CGUIEvent(void *obj) {
+guiex::CGUIEvent *arg1 = (guiex::CGUIEvent *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUIEvent_methods[] = {
+    {"GetEventId", _wrap_CGUIEvent_GetEventId}, 
+    {"GetEventType", _wrap_CGUIEvent_GetEventType}, 
+    {"GetReceiver", _wrap_CGUIEvent_GetReceiver}, 
+    {"IsConsumed", _wrap_CGUIEvent_IsConsumed}, 
+    {"Consume", _wrap_CGUIEvent_Consume}, 
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIEvent_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIEvent_bases[] = {0};
+static const char *swig_guiex_CGUIEvent_base_names[] = {0};
+static swig_lua_class _wrap_class_guiex_CGUIEvent = { "CGUIEvent", &SWIGTYPE_p_guiex__CGUIEvent,0, swig_delete_CGUIEvent, swig_guiex_CGUIEvent_methods, swig_guiex_CGUIEvent_attributes, swig_guiex_CGUIEvent_bases, swig_guiex_CGUIEvent_base_names };
+
+static int _wrap_CGUIEventScrollbar_SetScrollbarType(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventScrollbar *arg1 = (guiex::CGUIEventScrollbar *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("SetScrollbarType",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetScrollbarType",1,"guiex::CGUIEventScrollbar *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetScrollbarType",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventScrollbar,0))){
+    SWIG_fail_ptr("CGUIEventScrollbar_SetScrollbarType",1,SWIGTYPE_p_guiex__CGUIEventScrollbar);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetScrollbarType(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIEventScrollbar_IsVertical(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventScrollbar *arg1 = (guiex::CGUIEventScrollbar *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsVertical",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsVertical",1,"guiex::CGUIEventScrollbar const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventScrollbar,0))){
+    SWIG_fail_ptr("CGUIEventScrollbar_IsVertical",1,SWIGTYPE_p_guiex__CGUIEventScrollbar);
+  }
+  
+  result = (bool)((guiex::CGUIEventScrollbar const *)arg1)->IsVertical();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIEventScrollbar_IsHorizontal(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventScrollbar *arg1 = (guiex::CGUIEventScrollbar *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsHorizontal",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsHorizontal",1,"guiex::CGUIEventScrollbar const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventScrollbar,0))){
+    SWIG_fail_ptr("CGUIEventScrollbar_IsHorizontal",1,SWIGTYPE_p_guiex__CGUIEventScrollbar);
+  }
+  
+  result = (bool)((guiex::CGUIEventScrollbar const *)arg1)->IsHorizontal();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIEventScrollbar_SetScrollbar(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventScrollbar *arg1 = (guiex::CGUIEventScrollbar *) 0 ;
+  guiex::CGUIWidget *arg2 = (guiex::CGUIWidget *) 0 ;
+  
+  SWIG_check_num_args("SetScrollbar",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetScrollbar",1,"guiex::CGUIEventScrollbar *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("SetScrollbar",2,"guiex::CGUIWidget *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventScrollbar,0))){
+    SWIG_fail_ptr("CGUIEventScrollbar_SetScrollbar",1,SWIGTYPE_p_guiex__CGUIEventScrollbar);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIEventScrollbar_SetScrollbar",2,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  (arg1)->SetScrollbar(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIEventScrollbar_GetScrollbar(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventScrollbar *arg1 = (guiex::CGUIEventScrollbar *) 0 ;
+  guiex::CGUIWidget *result = 0 ;
+  
+  SWIG_check_num_args("GetScrollbar",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetScrollbar",1,"guiex::CGUIEventScrollbar const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventScrollbar,0))){
+    SWIG_fail_ptr("CGUIEventScrollbar_GetScrollbar",1,SWIGTYPE_p_guiex__CGUIEventScrollbar);
+  }
+  
+  result = (guiex::CGUIWidget *)((guiex::CGUIEventScrollbar const *)arg1)->GetScrollbar();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIWidget,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIEventScrollbar_SetCurrentPos(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventScrollbar *arg1 = (guiex::CGUIEventScrollbar *) 0 ;
+  guiex::uint32 arg2 ;
+  
+  SWIG_check_num_args("SetCurrentPos",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetCurrentPos",1,"guiex::CGUIEventScrollbar *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SetCurrentPos",2,"guiex::uint32");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventScrollbar,0))){
+    SWIG_fail_ptr("CGUIEventScrollbar_SetCurrentPos",1,SWIGTYPE_p_guiex__CGUIEventScrollbar);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  arg2 = (guiex::uint32)lua_tonumber(L, 2);
+  (arg1)->SetCurrentPos(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIEventScrollbar_GetCurrentPos(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventScrollbar *arg1 = (guiex::CGUIEventScrollbar *) 0 ;
+  guiex::uint32 result;
+  
+  SWIG_check_num_args("GetCurrentPos",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetCurrentPos",1,"guiex::CGUIEventScrollbar const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventScrollbar,0))){
+    SWIG_fail_ptr("CGUIEventScrollbar_GetCurrentPos",1,SWIGTYPE_p_guiex__CGUIEventScrollbar);
+  }
+  
+  result = (guiex::uint32)((guiex::CGUIEventScrollbar const *)arg1)->GetCurrentPos();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIEventScrollbar_SetRange(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventScrollbar *arg1 = (guiex::CGUIEventScrollbar *) 0 ;
+  guiex::uint32 arg2 ;
+  
+  SWIG_check_num_args("SetRange",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetRange",1,"guiex::CGUIEventScrollbar *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SetRange",2,"guiex::uint32");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventScrollbar,0))){
+    SWIG_fail_ptr("CGUIEventScrollbar_SetRange",1,SWIGTYPE_p_guiex__CGUIEventScrollbar);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  arg2 = (guiex::uint32)lua_tonumber(L, 2);
+  (arg1)->SetRange(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIEventScrollbar_GetRange(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventScrollbar *arg1 = (guiex::CGUIEventScrollbar *) 0 ;
+  guiex::uint32 result;
+  
+  SWIG_check_num_args("GetRange",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetRange",1,"guiex::CGUIEventScrollbar const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventScrollbar,0))){
+    SWIG_fail_ptr("CGUIEventScrollbar_GetRange",1,SWIGTYPE_p_guiex__CGUIEventScrollbar);
+  }
+  
+  result = (guiex::uint32)((guiex::CGUIEventScrollbar const *)arg1)->GetRange();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_CGUIEventScrollbar(void *obj) {
+guiex::CGUIEventScrollbar *arg1 = (guiex::CGUIEventScrollbar *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUIEventScrollbar_methods[] = {
+    {"SetScrollbarType", _wrap_CGUIEventScrollbar_SetScrollbarType}, 
+    {"IsVertical", _wrap_CGUIEventScrollbar_IsVertical}, 
+    {"IsHorizontal", _wrap_CGUIEventScrollbar_IsHorizontal}, 
+    {"SetScrollbar", _wrap_CGUIEventScrollbar_SetScrollbar}, 
+    {"GetScrollbar", _wrap_CGUIEventScrollbar_GetScrollbar}, 
+    {"SetCurrentPos", _wrap_CGUIEventScrollbar_SetCurrentPos}, 
+    {"GetCurrentPos", _wrap_CGUIEventScrollbar_GetCurrentPos}, 
+    {"SetRange", _wrap_CGUIEventScrollbar_SetRange}, 
+    {"GetRange", _wrap_CGUIEventScrollbar_GetRange}, 
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIEventScrollbar_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIEventScrollbar_bases[] = {0,0};
+static const char *swig_guiex_CGUIEventScrollbar_base_names[] = {"guiex::CGUIEvent *",0};
+static swig_lua_class _wrap_class_guiex_CGUIEventScrollbar = { "CGUIEventScrollbar", &SWIGTYPE_p_guiex__CGUIEventScrollbar,0, swig_delete_CGUIEventScrollbar, swig_guiex_CGUIEventScrollbar_methods, swig_guiex_CGUIEventScrollbar_attributes, swig_guiex_CGUIEventScrollbar_bases, swig_guiex_CGUIEventScrollbar_base_names };
+
+static int _wrap_CGUIEventTimer_SetTimerName(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventTimer *arg1 = (guiex::CGUIEventTimer *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  std::string temp2 ;
+  
+  SWIG_check_num_args("SetTimerName",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetTimerName",1,"guiex::CGUIEventTimer *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("SetTimerName",2,"guiex::CGUIString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventTimer,0))){
+    SWIG_fail_ptr("CGUIEventTimer_SetTimerName",1,SWIGTYPE_p_guiex__CGUIEventTimer);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  (arg1)->SetTimerName((guiex::CGUIString const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIEventTimer_GetTimerName(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventTimer *arg1 = (guiex::CGUIEventTimer *) 0 ;
+  guiex::CGUIString *result = 0 ;
+  
+  SWIG_check_num_args("GetTimerName",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetTimerName",1,"guiex::CGUIEventTimer *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventTimer,0))){
+    SWIG_fail_ptr("CGUIEventTimer_GetTimerName",1,SWIGTYPE_p_guiex__CGUIEventTimer);
+  }
+  
+  result = (guiex::CGUIString *) &(arg1)->GetTimerName();
+  lua_pushlstring(L,result->data(),result->size()); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_CGUIEventTimer(void *obj) {
+guiex::CGUIEventTimer *arg1 = (guiex::CGUIEventTimer *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUIEventTimer_methods[] = {
+    {"SetTimerName", _wrap_CGUIEventTimer_SetTimerName}, 
+    {"GetTimerName", _wrap_CGUIEventTimer_GetTimerName}, 
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIEventTimer_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIEventTimer_bases[] = {0,0};
+static const char *swig_guiex_CGUIEventTimer_base_names[] = {"guiex::CGUIEvent *",0};
+static swig_lua_class _wrap_class_guiex_CGUIEventTimer = { "CGUIEventTimer", &SWIGTYPE_p_guiex__CGUIEventTimer,0, swig_delete_CGUIEventTimer, swig_guiex_CGUIEventTimer_methods, swig_guiex_CGUIEventTimer_attributes, swig_guiex_CGUIEventTimer_bases, swig_guiex_CGUIEventTimer_base_names };
+
+static void swig_delete_CGUIEventNotification(void *obj) {
+guiex::CGUIEventNotification *arg1 = (guiex::CGUIEventNotification *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUIEventNotification_methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIEventNotification_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIEventNotification_bases[] = {0,0};
+static const char *swig_guiex_CGUIEventNotification_base_names[] = {"guiex::CGUIEvent *",0};
+static swig_lua_class _wrap_class_guiex_CGUIEventNotification = { "CGUIEventNotification", &SWIGTYPE_p_guiex__CGUIEventNotification,0, swig_delete_CGUIEventNotification, swig_guiex_CGUIEventNotification_methods, swig_guiex_CGUIEventNotification_attributes, swig_guiex_CGUIEventNotification_bases, swig_guiex_CGUIEventNotification_base_names };
+
+static int _wrap_CGUIEventSize_GetSize(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventSize *arg1 = (guiex::CGUIEventSize *) 0 ;
+  guiex::CGUISize *result = 0 ;
+  
+  SWIG_check_num_args("GetSize",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetSize",1,"guiex::CGUIEventSize const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventSize,0))){
+    SWIG_fail_ptr("CGUIEventSize_GetSize",1,SWIGTYPE_p_guiex__CGUIEventSize);
+  }
+  
+  result = (guiex::CGUISize *) &((guiex::CGUIEventSize const *)arg1)->GetSize();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUISize,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIEventSize_SetSize(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventSize *arg1 = (guiex::CGUIEventSize *) 0 ;
+  guiex::CGUISize *arg2 = 0 ;
+  
+  SWIG_check_num_args("SetSize",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetSize",1,"guiex::CGUIEventSize *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("SetSize",2,"guiex::CGUISize const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventSize,0))){
+    SWIG_fail_ptr("CGUIEventSize_SetSize",1,SWIGTYPE_p_guiex__CGUIEventSize);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUISize,0))){
+    SWIG_fail_ptr("CGUIEventSize_SetSize",2,SWIGTYPE_p_guiex__CGUISize);
+  }
+  
+  (arg1)->SetSize((guiex::CGUISize const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_CGUIEventSize(void *obj) {
+guiex::CGUIEventSize *arg1 = (guiex::CGUIEventSize *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUIEventSize_methods[] = {
+    {"GetSize", _wrap_CGUIEventSize_GetSize}, 
+    {"SetSize", _wrap_CGUIEventSize_SetSize}, 
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIEventSize_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIEventSize_bases[] = {0,0};
+static const char *swig_guiex_CGUIEventSize_base_names[] = {"guiex::CGUIEvent *",0};
+static swig_lua_class _wrap_class_guiex_CGUIEventSize = { "CGUIEventSize", &SWIGTYPE_p_guiex__CGUIEventSize,0, swig_delete_CGUIEventSize, swig_guiex_CGUIEventSize_methods, swig_guiex_CGUIEventSize_attributes, swig_guiex_CGUIEventSize_bases, swig_guiex_CGUIEventSize_base_names };
+
+static int _wrap_CGUIEventAlpha_GetAlpha(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventAlpha *arg1 = (guiex::CGUIEventAlpha *) 0 ;
+  guiex::real result;
+  
+  SWIG_check_num_args("GetAlpha",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetAlpha",1,"guiex::CGUIEventAlpha const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventAlpha,0))){
+    SWIG_fail_ptr("CGUIEventAlpha_GetAlpha",1,SWIGTYPE_p_guiex__CGUIEventAlpha);
+  }
+  
+  result = (guiex::real)((guiex::CGUIEventAlpha const *)arg1)->GetAlpha();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIEventAlpha_SetAlpha(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventAlpha *arg1 = (guiex::CGUIEventAlpha *) 0 ;
+  guiex::real arg2 ;
+  
+  SWIG_check_num_args("SetAlpha",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetAlpha",1,"guiex::CGUIEventAlpha *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SetAlpha",2,"guiex::real");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventAlpha,0))){
+    SWIG_fail_ptr("CGUIEventAlpha_SetAlpha",1,SWIGTYPE_p_guiex__CGUIEventAlpha);
+  }
+  
+  arg2 = (guiex::real)lua_tonumber(L, 2);
+  (arg1)->SetAlpha(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_CGUIEventAlpha(void *obj) {
+guiex::CGUIEventAlpha *arg1 = (guiex::CGUIEventAlpha *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUIEventAlpha_methods[] = {
+    {"GetAlpha", _wrap_CGUIEventAlpha_GetAlpha}, 
+    {"SetAlpha", _wrap_CGUIEventAlpha_SetAlpha}, 
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIEventAlpha_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIEventAlpha_bases[] = {0,0};
+static const char *swig_guiex_CGUIEventAlpha_base_names[] = {"guiex::CGUIEvent *",0};
+static swig_lua_class _wrap_class_guiex_CGUIEventAlpha = { "CGUIEventAlpha", &SWIGTYPE_p_guiex__CGUIEventAlpha,0, swig_delete_CGUIEventAlpha, swig_guiex_CGUIEventAlpha_methods, swig_guiex_CGUIEventAlpha_attributes, swig_guiex_CGUIEventAlpha_bases, swig_guiex_CGUIEventAlpha_base_names };
+
+static int _wrap_CGUIEventMouse_GetGlobalPosition(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventMouse *arg1 = (guiex::CGUIEventMouse *) 0 ;
+  guiex::CGUIVector2 *result = 0 ;
+  
+  SWIG_check_num_args("GetGlobalPosition",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetGlobalPosition",1,"guiex::CGUIEventMouse const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventMouse,0))){
+    SWIG_fail_ptr("CGUIEventMouse_GetGlobalPosition",1,SWIGTYPE_p_guiex__CGUIEventMouse);
+  }
+  
+  result = (guiex::CGUIVector2 *) &((guiex::CGUIEventMouse const *)arg1)->GetGlobalPosition();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIVector2,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIEventMouse_GetLocalPosition(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventMouse *arg1 = (guiex::CGUIEventMouse *) 0 ;
+  guiex::CGUIVector2 result;
+  
+  SWIG_check_num_args("GetLocalPosition",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetLocalPosition",1,"guiex::CGUIEventMouse const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventMouse,0))){
+    SWIG_fail_ptr("CGUIEventMouse_GetLocalPosition",1,SWIGTYPE_p_guiex__CGUIEventMouse);
+  }
+  
+  result = ((guiex::CGUIEventMouse const *)arg1)->GetLocalPosition();
+  {
+    guiex::CGUIVector2 * resultptr = new guiex::CGUIVector2((const guiex::CGUIVector2 &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_guiex__CGUIVector2,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIEventMouse_GetSysKeys(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventMouse *arg1 = (guiex::CGUIEventMouse *) 0 ;
+  guiex::uint32 result;
+  
+  SWIG_check_num_args("GetSysKeys",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetSysKeys",1,"guiex::CGUIEventMouse const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventMouse,0))){
+    SWIG_fail_ptr("CGUIEventMouse_GetSysKeys",1,SWIGTYPE_p_guiex__CGUIEventMouse);
+  }
+  
+  result = (guiex::uint32)((guiex::CGUIEventMouse const *)arg1)->GetSysKeys();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIEventMouse_GetWheelChange(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventMouse *arg1 = (guiex::CGUIEventMouse *) 0 ;
+  guiex::real result;
+  
+  SWIG_check_num_args("GetWheelChange",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetWheelChange",1,"guiex::CGUIEventMouse *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventMouse,0))){
+    SWIG_fail_ptr("CGUIEventMouse_GetWheelChange",1,SWIGTYPE_p_guiex__CGUIEventMouse);
+  }
+  
+  result = (guiex::real)(arg1)->GetWheelChange();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIEventMouse_GetMultiClickCount(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventMouse *arg1 = (guiex::CGUIEventMouse *) 0 ;
+  guiex::uint32 result;
+  
+  SWIG_check_num_args("GetMultiClickCount",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetMultiClickCount",1,"guiex::CGUIEventMouse const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventMouse,0))){
+    SWIG_fail_ptr("CGUIEventMouse_GetMultiClickCount",1,SWIGTYPE_p_guiex__CGUIEventMouse);
+  }
+  
+  result = (guiex::uint32)((guiex::CGUIEventMouse const *)arg1)->GetMultiClickCount();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIEventMouse_GetButton(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventMouse *arg1 = (guiex::CGUIEventMouse *) 0 ;
+  guiex::int32 result;
+  
+  SWIG_check_num_args("GetButton",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetButton",1,"guiex::CGUIEventMouse const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventMouse,0))){
+    SWIG_fail_ptr("CGUIEventMouse_GetButton",1,SWIGTYPE_p_guiex__CGUIEventMouse);
+  }
+  
+  result = (guiex::int32)((guiex::CGUIEventMouse const *)arg1)->GetButton();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_CGUIEventMouse(void *obj) {
+guiex::CGUIEventMouse *arg1 = (guiex::CGUIEventMouse *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUIEventMouse_methods[] = {
+    {"GetGlobalPosition", _wrap_CGUIEventMouse_GetGlobalPosition}, 
+    {"GetLocalPosition", _wrap_CGUIEventMouse_GetLocalPosition}, 
+    {"GetSysKeys", _wrap_CGUIEventMouse_GetSysKeys}, 
+    {"GetWheelChange", _wrap_CGUIEventMouse_GetWheelChange}, 
+    {"GetMultiClickCount", _wrap_CGUIEventMouse_GetMultiClickCount}, 
+    {"GetButton", _wrap_CGUIEventMouse_GetButton}, 
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIEventMouse_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIEventMouse_bases[] = {0,0};
+static const char *swig_guiex_CGUIEventMouse_base_names[] = {"guiex::CGUIEvent *",0};
+static swig_lua_class _wrap_class_guiex_CGUIEventMouse = { "CGUIEventMouse", &SWIGTYPE_p_guiex__CGUIEventMouse,0, swig_delete_CGUIEventMouse, swig_guiex_CGUIEventMouse_methods, swig_guiex_CGUIEventMouse_attributes, swig_guiex_CGUIEventMouse_bases, swig_guiex_CGUIEventMouse_base_names };
+
+static int _wrap_CGUIEventKeyboard_GetKeyCode(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventKeyboard *arg1 = (guiex::CGUIEventKeyboard *) 0 ;
+  guiex::int32 result;
+  
+  SWIG_check_num_args("GetKeyCode",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetKeyCode",1,"guiex::CGUIEventKeyboard const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventKeyboard,0))){
+    SWIG_fail_ptr("CGUIEventKeyboard_GetKeyCode",1,SWIGTYPE_p_guiex__CGUIEventKeyboard);
+  }
+  
+  result = (guiex::int32)((guiex::CGUIEventKeyboard const *)arg1)->GetKeyCode();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_CGUIEventKeyboard(void *obj) {
+guiex::CGUIEventKeyboard *arg1 = (guiex::CGUIEventKeyboard *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUIEventKeyboard_methods[] = {
+    {"GetKeyCode", _wrap_CGUIEventKeyboard_GetKeyCode}, 
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIEventKeyboard_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIEventKeyboard_bases[] = {0,0};
+static const char *swig_guiex_CGUIEventKeyboard_base_names[] = {"guiex::CGUIEvent *",0};
+static swig_lua_class _wrap_class_guiex_CGUIEventKeyboard = { "CGUIEventKeyboard", &SWIGTYPE_p_guiex__CGUIEventKeyboard,0, swig_delete_CGUIEventKeyboard, swig_guiex_CGUIEventKeyboard_methods, swig_guiex_CGUIEventKeyboard_attributes, swig_guiex_CGUIEventKeyboard_bases, swig_guiex_CGUIEventKeyboard_base_names };
+
+static int _wrap_CGUIEventDrag_GetWidgetGlobalPos(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventDrag *arg1 = (guiex::CGUIEventDrag *) 0 ;
+  guiex::CGUIVector2 result;
+  
+  SWIG_check_num_args("GetWidgetGlobalPos",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetWidgetGlobalPos",1,"guiex::CGUIEventDrag const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventDrag,0))){
+    SWIG_fail_ptr("CGUIEventDrag_GetWidgetGlobalPos",1,SWIGTYPE_p_guiex__CGUIEventDrag);
+  }
+  
+  result = ((guiex::CGUIEventDrag const *)arg1)->GetWidgetGlobalPos();
+  {
+    guiex::CGUIVector2 * resultptr = new guiex::CGUIVector2((const guiex::CGUIVector2 &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_guiex__CGUIVector2,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIEventDrag_GetWidgetLocalPos(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventDrag *arg1 = (guiex::CGUIEventDrag *) 0 ;
+  guiex::CGUIVector2 *result = 0 ;
+  
+  SWIG_check_num_args("GetWidgetLocalPos",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetWidgetLocalPos",1,"guiex::CGUIEventDrag const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventDrag,0))){
+    SWIG_fail_ptr("CGUIEventDrag_GetWidgetLocalPos",1,SWIGTYPE_p_guiex__CGUIEventDrag);
+  }
+  
+  result = (guiex::CGUIVector2 *) &((guiex::CGUIEventDrag const *)arg1)->GetWidgetLocalPos();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIVector2,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIEventDrag_GetMouseGlobalPos(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventDrag *arg1 = (guiex::CGUIEventDrag *) 0 ;
+  guiex::CGUIVector2 *result = 0 ;
+  
+  SWIG_check_num_args("GetMouseGlobalPos",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetMouseGlobalPos",1,"guiex::CGUIEventDrag const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventDrag,0))){
+    SWIG_fail_ptr("CGUIEventDrag_GetMouseGlobalPos",1,SWIGTYPE_p_guiex__CGUIEventDrag);
+  }
+  
+  result = (guiex::CGUIVector2 *) &((guiex::CGUIEventDrag const *)arg1)->GetMouseGlobalPos();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIVector2,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIEventDrag_GetMouseLocalPos(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventDrag *arg1 = (guiex::CGUIEventDrag *) 0 ;
+  guiex::CGUIVector2 result;
+  
+  SWIG_check_num_args("GetMouseLocalPos",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetMouseLocalPos",1,"guiex::CGUIEventDrag const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventDrag,0))){
+    SWIG_fail_ptr("CGUIEventDrag_GetMouseLocalPos",1,SWIGTYPE_p_guiex__CGUIEventDrag);
+  }
+  
+  result = ((guiex::CGUIEventDrag const *)arg1)->GetMouseLocalPos();
+  {
+    guiex::CGUIVector2 * resultptr = new guiex::CGUIVector2((const guiex::CGUIVector2 &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_guiex__CGUIVector2,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIEventDrag_GetButton(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventDrag *arg1 = (guiex::CGUIEventDrag *) 0 ;
+  guiex::int32 result;
+  
+  SWIG_check_num_args("GetButton",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetButton",1,"guiex::CGUIEventDrag const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventDrag,0))){
+    SWIG_fail_ptr("CGUIEventDrag_GetButton",1,SWIGTYPE_p_guiex__CGUIEventDrag);
+  }
+  
+  result = (guiex::int32)((guiex::CGUIEventDrag const *)arg1)->GetButton();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIEventDrag_IsExpired(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventDrag *arg1 = (guiex::CGUIEventDrag *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsExpired",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsExpired",1,"guiex::CGUIEventDrag *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventDrag,0))){
+    SWIG_fail_ptr("CGUIEventDrag_IsExpired",1,SWIGTYPE_p_guiex__CGUIEventDrag);
+  }
+  
+  result = (bool)(arg1)->IsExpired();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_CGUIEventDrag(void *obj) {
+guiex::CGUIEventDrag *arg1 = (guiex::CGUIEventDrag *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUIEventDrag_methods[] = {
+    {"GetWidgetGlobalPos", _wrap_CGUIEventDrag_GetWidgetGlobalPos}, 
+    {"GetWidgetLocalPos", _wrap_CGUIEventDrag_GetWidgetLocalPos}, 
+    {"GetMouseGlobalPos", _wrap_CGUIEventDrag_GetMouseGlobalPos}, 
+    {"GetMouseLocalPos", _wrap_CGUIEventDrag_GetMouseLocalPos}, 
+    {"GetButton", _wrap_CGUIEventDrag_GetButton}, 
+    {"IsExpired", _wrap_CGUIEventDrag_IsExpired}, 
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIEventDrag_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIEventDrag_bases[] = {0,0};
+static const char *swig_guiex_CGUIEventDrag_base_names[] = {"guiex::CGUIEvent *",0};
+static swig_lua_class _wrap_class_guiex_CGUIEventDrag = { "CGUIEventDrag", &SWIGTYPE_p_guiex__CGUIEventDrag,0, swig_delete_CGUIEventDrag, swig_guiex_CGUIEventDrag_methods, swig_guiex_CGUIEventDrag_attributes, swig_guiex_CGUIEventDrag_bases, swig_guiex_CGUIEventDrag_base_names };
+
+static int _wrap_CGUIEventUI_GetUIName(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventUI *arg1 = (guiex::CGUIEventUI *) 0 ;
+  guiex::CGUIString *result = 0 ;
+  
+  SWIG_check_num_args("GetUIName",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetUIName",1,"guiex::CGUIEventUI const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventUI,0))){
+    SWIG_fail_ptr("CGUIEventUI_GetUIName",1,SWIGTYPE_p_guiex__CGUIEventUI);
+  }
+  
+  result = (guiex::CGUIString *) &((guiex::CGUIEventUI const *)arg1)->GetUIName();
+  lua_pushlstring(L,result->data(),result->size()); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIEventUI_GetArg(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventUI *arg1 = (guiex::CGUIEventUI *) 0 ;
+  int arg2 ;
+  guiex::CGUIString *result = 0 ;
+  
+  SWIG_check_num_args("GetArg",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetArg",1,"guiex::CGUIEventUI const *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("GetArg",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventUI,0))){
+    SWIG_fail_ptr("CGUIEventUI_GetArg",1,SWIGTYPE_p_guiex__CGUIEventUI);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (guiex::CGUIString *) &((guiex::CGUIEventUI const *)arg1)->GetArg(arg2);
+  lua_pushlstring(L,result->data(),result->size()); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_CGUIEventUI(void *obj) {
+guiex::CGUIEventUI *arg1 = (guiex::CGUIEventUI *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUIEventUI_methods[] = {
+    {"GetUIName", _wrap_CGUIEventUI_GetUIName}, 
+    {"GetArg", _wrap_CGUIEventUI_GetArg}, 
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIEventUI_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIEventUI_bases[] = {0,0};
+static const char *swig_guiex_CGUIEventUI_base_names[] = {"guiex::CGUIEvent *",0};
+static swig_lua_class _wrap_class_guiex_CGUIEventUI = { "CGUIEventUI", &SWIGTYPE_p_guiex__CGUIEventUI,0, swig_delete_CGUIEventUI, swig_guiex_CGUIEventUI_methods, swig_guiex_CGUIEventUI_attributes, swig_guiex_CGUIEventUI_bases, swig_guiex_CGUIEventUI_base_names };
+
+static void swig_delete_CGUIProperty(void *obj) {
+guiex::CGUIProperty *arg1 = (guiex::CGUIProperty *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUIProperty_methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIProperty_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIProperty_bases[] = {0};
+static const char *swig_guiex_CGUIProperty_base_names[] = {0};
+static swig_lua_class _wrap_class_guiex_CGUIProperty = { "CGUIProperty", &SWIGTYPE_p_guiex__CGUIProperty,0, swig_delete_CGUIProperty, swig_guiex_CGUIProperty_methods, swig_guiex_CGUIProperty_attributes, swig_guiex_CGUIProperty_bases, swig_guiex_CGUIProperty_base_names };
+
+static swig_lua_method swig_guiex_CGUIAs_methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIAs_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIAs_bases[] = {0};
+static const char *swig_guiex_CGUIAs_base_names[] = {0};
+static swig_lua_class _wrap_class_guiex_CGUIAs = { "CGUIAs", &SWIGTYPE_p_guiex__CGUIAs,0,0, swig_guiex_CGUIAs_methods, swig_guiex_CGUIAs_attributes, swig_guiex_CGUIAs_bases, swig_guiex_CGUIAs_base_names };
+
+static swig_lua_method swig_guiex_CGUIInterpolationBase_Sl_guiex_real_Sg__methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIInterpolationBase_Sl_guiex_real_Sg__attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIInterpolationBase_Sl_guiex_real_Sg__bases[] = {0,0};
+static const char *swig_guiex_CGUIInterpolationBase_Sl_guiex_real_Sg__base_names[] = {"guiex::CGUIAs *",0};
+static swig_lua_class _wrap_class_guiex_CGUIInterpolationBase_Sl_guiex_real_Sg_ = { "CGUIInterpolationBase_real", &SWIGTYPE_p_guiex__CGUIInterpolationBaseT_float_t,0,0, swig_guiex_CGUIInterpolationBase_Sl_guiex_real_Sg__methods, swig_guiex_CGUIInterpolationBase_Sl_guiex_real_Sg__attributes, swig_guiex_CGUIInterpolationBase_Sl_guiex_real_Sg__bases, swig_guiex_CGUIInterpolationBase_Sl_guiex_real_Sg__base_names };
+
+static swig_lua_method swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUISize_Sg__methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUISize_Sg__attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUISize_Sg__bases[] = {0,0};
+static const char *swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUISize_Sg__base_names[] = {"guiex::CGUIAs *",0};
+static swig_lua_class _wrap_class_guiex_CGUIInterpolationBase_Sl_guiex_CGUISize_Sg_ = { "CGUIInterpolationBase_size", &SWIGTYPE_p_guiex__CGUIInterpolationBaseT_guiex__CGUISize_t,0,0, swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUISize_Sg__methods, swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUISize_Sg__attributes, swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUISize_Sg__bases, swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUISize_Sg__base_names };
+
+static swig_lua_method swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUIVector3_Sg__methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUIVector3_Sg__attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUIVector3_Sg__bases[] = {0,0};
+static const char *swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUIVector3_Sg__base_names[] = {"guiex::CGUIAs *",0};
+static swig_lua_class _wrap_class_guiex_CGUIInterpolationBase_Sl_guiex_CGUIVector3_Sg_ = { "CGUIInterpolationBase_Vector3", &SWIGTYPE_p_guiex__CGUIInterpolationBaseT_guiex__CGUIVector3_t,0,0, swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUIVector3_Sg__methods, swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUIVector3_Sg__attributes, swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUIVector3_Sg__bases, swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUIVector3_Sg__base_names };
+
+static swig_lua_method swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUIVector2_Sg__methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUIVector2_Sg__attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUIVector2_Sg__bases[] = {0,0};
+static const char *swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUIVector2_Sg__base_names[] = {"guiex::CGUIAs *",0};
+static swig_lua_class _wrap_class_guiex_CGUIInterpolationBase_Sl_guiex_CGUIVector2_Sg_ = { "CGUIInterpolationBase_Vector2", &SWIGTYPE_p_guiex__CGUIInterpolationBaseT_guiex__CGUIVector2_t,0,0, swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUIVector2_Sg__methods, swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUIVector2_Sg__attributes, swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUIVector2_Sg__bases, swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUIVector2_Sg__base_names };
+
+static swig_lua_method swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUIColor_Sg__methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUIColor_Sg__attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUIColor_Sg__bases[] = {0,0};
+static const char *swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUIColor_Sg__base_names[] = {"guiex::CGUIAs *",0};
+static swig_lua_class _wrap_class_guiex_CGUIInterpolationBase_Sl_guiex_CGUIColor_Sg_ = { "CGUIInterpolationBase_Color", &SWIGTYPE_p_guiex__CGUIInterpolationBaseT_guiex__CGUIColor_t,0,0, swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUIColor_Sg__methods, swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUIColor_Sg__attributes, swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUIColor_Sg__bases, swig_guiex_CGUIInterpolationBase_Sl_guiex_CGUIColor_Sg__base_names };
+
+static swig_lua_method swig_guiex_CGUIAsAlpha_methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIAsAlpha_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIAsAlpha_bases[] = {0,0};
+static const char *swig_guiex_CGUIAsAlpha_base_names[] = {"guiex::CGUIInterpolationBase< guiex::real > *",0};
+static swig_lua_class _wrap_class_guiex_CGUIAsAlpha = { "CGUIAsAlpha", &SWIGTYPE_p_guiex__CGUIAsAlpha,0,0, swig_guiex_CGUIAsAlpha_methods, swig_guiex_CGUIAsAlpha_attributes, swig_guiex_CGUIAsAlpha_bases, swig_guiex_CGUIAsAlpha_base_names };
+
+static swig_lua_method swig_guiex_CGUIAsScale_methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIAsScale_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIAsScale_bases[] = {0,0};
+static const char *swig_guiex_CGUIAsScale_base_names[] = {"guiex::CGUIInterpolationBase< guiex::CGUISize > *",0};
+static swig_lua_class _wrap_class_guiex_CGUIAsScale = { "CGUIAsScale", &SWIGTYPE_p_guiex__CGUIAsScale,0,0, swig_guiex_CGUIAsScale_methods, swig_guiex_CGUIAsScale_attributes, swig_guiex_CGUIAsScale_bases, swig_guiex_CGUIAsScale_base_names };
+
+static swig_lua_method swig_guiex_CGUIAsRotation_methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIAsRotation_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIAsRotation_bases[] = {0,0};
+static const char *swig_guiex_CGUIAsRotation_base_names[] = {"guiex::CGUIInterpolationBase< guiex::CGUIVector3 > *",0};
+static swig_lua_class _wrap_class_guiex_CGUIAsRotation = { "CGUIAsRotation", &SWIGTYPE_p_guiex__CGUIAsRotation,0,0, swig_guiex_CGUIAsRotation_methods, swig_guiex_CGUIAsRotation_attributes, swig_guiex_CGUIAsRotation_bases, swig_guiex_CGUIAsRotation_base_names };
+
+static swig_lua_method swig_guiex_CGUIAsPosition_methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIAsPosition_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIAsPosition_bases[] = {0,0};
+static const char *swig_guiex_CGUIAsPosition_base_names[] = {"guiex::CGUIInterpolationBase< guiex::CGUIVector2 > *",0};
+static swig_lua_class _wrap_class_guiex_CGUIAsPosition = { "CGUIAsPosition", &SWIGTYPE_p_guiex__CGUIAsPosition,0,0, swig_guiex_CGUIAsPosition_methods, swig_guiex_CGUIAsPosition_attributes, swig_guiex_CGUIAsPosition_bases, swig_guiex_CGUIAsPosition_base_names };
+
+static swig_lua_method swig_guiex_CGUIAsColor_methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIAsColor_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIAsColor_bases[] = {0,0};
+static const char *swig_guiex_CGUIAsColor_base_names[] = {"guiex::CGUIInterpolationBase< guiex::CGUIColor > *",0};
+static swig_lua_class _wrap_class_guiex_CGUIAsColor = { "CGUIAsColor", &SWIGTYPE_p_guiex__CGUIAsColor,0,0, swig_guiex_CGUIAsColor_methods, swig_guiex_CGUIAsColor_attributes, swig_guiex_CGUIAsColor_bases, swig_guiex_CGUIAsColor_base_names };
+
+static swig_lua_method swig_guiex_CGUIAsContainer_methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIAsContainer_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIAsContainer_bases[] = {0,0};
+static const char *swig_guiex_CGUIAsContainer_base_names[] = {"guiex::CGUIAs *",0};
+static swig_lua_class _wrap_class_guiex_CGUIAsContainer = { "CGUIAsContainer", &SWIGTYPE_p_guiex__CGUIAsContainer,0,0, swig_guiex_CGUIAsContainer_methods, swig_guiex_CGUIAsContainer_attributes, swig_guiex_CGUIAsContainer_bases, swig_guiex_CGUIAsContainer_base_names };
+
+static int _wrap_CGUIImage_GetSize(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIImage *arg1 = (guiex::CGUIImage *) 0 ;
+  guiex::CGUISize *result = 0 ;
+  
+  SWIG_check_num_args("GetSize",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetSize",1,"guiex::CGUIImage const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIImage,0))){
+    SWIG_fail_ptr("CGUIImage_GetSize",1,SWIGTYPE_p_guiex__CGUIImage);
+  }
+  
+  result = (guiex::CGUISize *) &((guiex::CGUIImage const *)arg1)->GetSize();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUISize,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static swig_lua_method swig_guiex_CGUIImage_methods[] = {
+    {"GetSize", _wrap_CGUIImage_GetSize}, 
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIImage_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIImage_bases[] = {0};
+static const char *swig_guiex_CGUIImage_base_names[] = {0};
+static swig_lua_class _wrap_class_guiex_CGUIImage = { "CGUIImage", &SWIGTYPE_p_guiex__CGUIImage,0,0, swig_guiex_CGUIImage_methods, swig_guiex_CGUIImage_attributes, swig_guiex_CGUIImage_bases, swig_guiex_CGUIImage_base_names };
+
+static int _wrap_CGUIAnimation_GetSize(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIAnimation *arg1 = (guiex::CGUIAnimation *) 0 ;
+  guiex::CGUISize *result = 0 ;
+  
+  SWIG_check_num_args("GetSize",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetSize",1,"guiex::CGUIAnimation const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIAnimation,0))){
+    SWIG_fail_ptr("CGUIAnimation_GetSize",1,SWIGTYPE_p_guiex__CGUIAnimation);
+  }
+  
+  result = (guiex::CGUISize *) &((guiex::CGUIAnimation const *)arg1)->GetSize();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUISize,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static swig_lua_method swig_guiex_CGUIAnimation_methods[] = {
+    {"GetSize", _wrap_CGUIAnimation_GetSize}, 
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIAnimation_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIAnimation_bases[] = {0};
+static const char *swig_guiex_CGUIAnimation_base_names[] = {0};
+static swig_lua_class _wrap_class_guiex_CGUIAnimation = { "CGUIAnimation", &SWIGTYPE_p_guiex__CGUIAnimation,0,0, swig_guiex_CGUIAnimation_methods, swig_guiex_CGUIAnimation_attributes, swig_guiex_CGUIAnimation_bases, swig_guiex_CGUIAnimation_base_names };
+
+static void swig_delete_IGUIInterface(void *obj) {
+guiex::IGUIInterface *arg1 = (guiex::IGUIInterface *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_IGUIInterface_methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_IGUIInterface_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_IGUIInterface_bases[] = {0};
+static const char *swig_guiex_IGUIInterface_base_names[] = {0};
+static swig_lua_class _wrap_class_guiex_IGUIInterface = { "IGUIInterface", &SWIGTYPE_p_guiex__IGUIInterface,0, swig_delete_IGUIInterface, swig_guiex_IGUIInterface_methods, swig_guiex_IGUIInterface_attributes, swig_guiex_IGUIInterface_bases, swig_guiex_IGUIInterface_base_names };
+
+static int _wrap_new_CGUIInterfaceManager(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIInterfaceManager *result = 0 ;
+  
+  SWIG_check_num_args("guiex::CGUIInterfaceManager",0,0)
+  result = (guiex::CGUIInterfaceManager *)new guiex::CGUIInterfaceManager();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIInterfaceManager,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIInterfaceManager_Instance(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIInterfaceManager *result = 0 ;
+  
+  SWIG_check_num_args("guiex::CGUIInterfaceManager::Instance",0,0)
+  result = (guiex::CGUIInterfaceManager *)guiex::CGUIInterfaceManager::Instance();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIInterfaceManager,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIInterfaceManager_RegisterInterface__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIInterfaceManager *arg1 = (guiex::CGUIInterfaceManager *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  guiex::CGUIString *arg3 = 0 ;
+  void *arg4 = (void *) 0 ;
+  std::string temp2 ;
+  std::string temp3 ;
+  int result;
+  
+  SWIG_check_num_args("RegisterInterface",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("RegisterInterface",1,"guiex::CGUIInterfaceManager *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("RegisterInterface",2,"guiex::CGUIString const &");
+  if(!lua_isstring(L,3)) SWIG_fail_arg("RegisterInterface",3,"guiex::CGUIString const &");
+  if(!SWIG_isptrtype(L,4)) SWIG_fail_arg("RegisterInterface",4,"void *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIInterfaceManager,0))){
+    SWIG_fail_ptr("CGUIInterfaceManager_RegisterInterface",1,SWIGTYPE_p_guiex__CGUIInterfaceManager);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  temp3.assign(lua_tostring(L,3),lua_strlen(L,3)); arg3=&temp3;
+  arg4=(void *)SWIG_MustGetPtr(L,4,0,0,4,"CGUIInterfaceManager_RegisterInterface");
+  result = (int)(arg1)->RegisterInterface((guiex::CGUIString const &)*arg2,(guiex::CGUIString const &)*arg3,arg4);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIInterfaceManager_RegisterInterface__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIInterfaceManager *arg1 = (guiex::CGUIInterfaceManager *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  guiex::CGUIString *arg3 = 0 ;
+  std::string temp2 ;
+  std::string temp3 ;
+  int result;
+  
+  SWIG_check_num_args("RegisterInterface",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("RegisterInterface",1,"guiex::CGUIInterfaceManager *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("RegisterInterface",2,"guiex::CGUIString const &");
+  if(!lua_isstring(L,3)) SWIG_fail_arg("RegisterInterface",3,"guiex::CGUIString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIInterfaceManager,0))){
+    SWIG_fail_ptr("CGUIInterfaceManager_RegisterInterface",1,SWIGTYPE_p_guiex__CGUIInterfaceManager);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  temp3.assign(lua_tostring(L,3),lua_strlen(L,3)); arg3=&temp3;
+  result = (int)(arg1)->RegisterInterface((guiex::CGUIString const &)*arg2,(guiex::CGUIString const &)*arg3);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIInterfaceManager_RegisterInterface__SWIG_2(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIInterfaceManager *arg1 = (guiex::CGUIInterfaceManager *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  guiex::IGUIInterface *arg3 = (guiex::IGUIInterface *) 0 ;
+  std::string temp2 ;
+  int result;
+  
+  SWIG_check_num_args("RegisterInterface",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("RegisterInterface",1,"guiex::CGUIInterfaceManager *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("RegisterInterface",2,"guiex::CGUIString const &");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("RegisterInterface",3,"guiex::IGUIInterface *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIInterfaceManager,0))){
+    SWIG_fail_ptr("CGUIInterfaceManager_RegisterInterface",1,SWIGTYPE_p_guiex__CGUIInterfaceManager);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_guiex__IGUIInterface,0))){
+    SWIG_fail_ptr("CGUIInterfaceManager_RegisterInterface",3,SWIGTYPE_p_guiex__IGUIInterface);
+  }
+  
+  result = (int)(arg1)->RegisterInterface((guiex::CGUIString const &)*arg2,arg3);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIInterfaceManager_RegisterInterface(lua_State* L) {
+  int argc;
+  int argv[5]={
+    1,2,3,4,5
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIInterfaceManager, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isstring(L,argv[1]);
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (SWIG_isptrtype(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_guiex__IGUIInterface, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          return _wrap_CGUIInterfaceManager_RegisterInterface__SWIG_2(L);
+        }
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIInterfaceManager, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isstring(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = lua_isstring(L,argv[2]);
+        }
+        if (_v) {
+          return _wrap_CGUIInterfaceManager_RegisterInterface__SWIG_1(L);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIInterfaceManager, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isstring(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = lua_isstring(L,argv[2]);
+        }
+        if (_v) {
+          {
+            void *ptr;
+            if (SWIG_isptrtype(L,argv[3])==0 || SWIG_ConvertPtr(L,argv[3], (void **) &ptr, 0, 0)) {
+              _v = 0;
+            } else {
+              _v = 1;
+            }
+          }
+          if (_v) {
+            return _wrap_CGUIInterfaceManager_RegisterInterface__SWIG_0(L);
+          }
+        }
+      }
+    }
+  }
+  
+  lua_pushstring(L,"Wrong arguments for overloaded function 'CGUIInterfaceManager_RegisterInterface'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    RegisterInterface(guiex::CGUIInterfaceManager *,guiex::CGUIString const &,guiex::CGUIString const &,void *)\n"
+    "    RegisterInterface(guiex::CGUIInterfaceManager *,guiex::CGUIString const &,guiex::CGUIString const &)\n"
+    "    RegisterInterface(guiex::CGUIInterfaceManager *,guiex::CGUIString const &,guiex::IGUIInterface *)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_CGUIInterfaceManager_UnregisterInterface(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIInterfaceManager *arg1 = (guiex::CGUIInterfaceManager *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  std::string temp2 ;
+  int result;
+  
+  SWIG_check_num_args("UnregisterInterface",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("UnregisterInterface",1,"guiex::CGUIInterfaceManager *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("UnregisterInterface",2,"guiex::CGUIString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIInterfaceManager,0))){
+    SWIG_fail_ptr("CGUIInterfaceManager_UnregisterInterface",1,SWIGTYPE_p_guiex__CGUIInterfaceManager);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  result = (int)(arg1)->UnregisterInterface((guiex::CGUIString const &)*arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIInterfaceManager_UnregisterAllInterface(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIInterfaceManager *arg1 = (guiex::CGUIInterfaceManager *) 0 ;
+  
+  SWIG_check_num_args("UnregisterAllInterface",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("UnregisterAllInterface",1,"guiex::CGUIInterfaceManager *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIInterfaceManager,0))){
+    SWIG_fail_ptr("CGUIInterfaceManager_UnregisterAllInterface",1,SWIGTYPE_p_guiex__CGUIInterfaceManager);
+  }
+  
+  (arg1)->UnregisterAllInterface();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIInterfaceManager_GetInterface(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIInterfaceManager *arg1 = (guiex::CGUIInterfaceManager *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  std::string temp2 ;
+  guiex::IGUIInterface *result = 0 ;
+  
+  SWIG_check_num_args("GetInterface",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetInterface",1,"guiex::CGUIInterfaceManager *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("GetInterface",2,"guiex::CGUIString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIInterfaceManager,0))){
+    SWIG_fail_ptr("CGUIInterfaceManager_GetInterface",1,SWIGTYPE_p_guiex__CGUIInterfaceManager);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  result = (guiex::IGUIInterface *)(arg1)->GetInterface((guiex::CGUIString const &)*arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__IGUIInterface,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIInterfaceManager_HasInterface(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIInterfaceManager *arg1 = (guiex::CGUIInterfaceManager *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  std::string temp2 ;
+  bool result;
+  
+  SWIG_check_num_args("HasInterface",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("HasInterface",1,"guiex::CGUIInterfaceManager *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("HasInterface",2,"guiex::CGUIString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIInterfaceManager,0))){
+    SWIG_fail_ptr("CGUIInterfaceManager_HasInterface",1,SWIGTYPE_p_guiex__CGUIInterfaceManager);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  result = (bool)(arg1)->HasInterface((guiex::CGUIString const &)*arg2);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_CGUIInterfaceManager(void *obj) {
+guiex::CGUIInterfaceManager *arg1 = (guiex::CGUIInterfaceManager *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUIInterfaceManager_methods[] = {
+    {"RegisterInterface", _wrap_CGUIInterfaceManager_RegisterInterface}, 
+    {"UnregisterInterface", _wrap_CGUIInterfaceManager_UnregisterInterface}, 
+    {"UnregisterAllInterface", _wrap_CGUIInterfaceManager_UnregisterAllInterface}, 
+    {"GetInterface", _wrap_CGUIInterfaceManager_GetInterface}, 
+    {"HasInterface", _wrap_CGUIInterfaceManager_HasInterface}, 
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIInterfaceManager_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIInterfaceManager_bases[] = {0};
+static const char *swig_guiex_CGUIInterfaceManager_base_names[] = {0};
+static swig_lua_class _wrap_class_guiex_CGUIInterfaceManager = { "CGUIInterfaceManager", &SWIGTYPE_p_guiex__CGUIInterfaceManager,_wrap_new_CGUIInterfaceManager, swig_delete_CGUIInterfaceManager, swig_guiex_CGUIInterfaceManager_methods, swig_guiex_CGUIInterfaceManager_attributes, swig_guiex_CGUIInterfaceManager_bases, swig_guiex_CGUIInterfaceManager_base_names };
+
+static int _wrap_RegisterInterface(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIString *arg1 = 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  std::string temp1 ;
+  std::string temp2 ;
+  int result;
+  
+  SWIG_check_num_args("guiex::RegisterInterface",2,2)
+  if(!lua_isstring(L,1)) SWIG_fail_arg("guiex::RegisterInterface",1,"guiex::CGUIString const &");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("guiex::RegisterInterface",2,"guiex::CGUIString const &");
+  temp1.assign(lua_tostring(L,1),lua_strlen(L,1)); arg1=&temp1;
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  result = (int)guiex::RegisterInterface((std::string const &)*arg1,(std::string const &)*arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_UnregisterInterface(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIString *arg1 = 0 ;
+  std::string temp1 ;
+  int result;
+  
+  SWIG_check_num_args("guiex::UnregisterInterface",1,1)
+  if(!lua_isstring(L,1)) SWIG_fail_arg("guiex::UnregisterInterface",1,"guiex::CGUIString const &");
+  temp1.assign(lua_tostring(L,1),lua_strlen(L,1)); arg1=&temp1;
+  result = (int)guiex::UnregisterInterface((std::string const &)*arg1);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_GetInterface(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIString *arg1 = 0 ;
+  std::string temp1 ;
+  guiex::IGUIInterface *result = 0 ;
+  
+  SWIG_check_num_args("guiex::GetInterface",1,1)
+  if(!lua_isstring(L,1)) SWIG_fail_arg("guiex::GetInterface",1,"guiex::CGUIString const &");
+  temp1.assign(lua_tostring(L,1),lua_strlen(L,1)); arg1=&temp1;
+  result = (guiex::IGUIInterface *)guiex::GetInterface((std::string const &)*arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__IGUIInterface,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_IGUIInterfaceSound_LoadEffect(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::IGUIInterfaceSound *arg1 = (guiex::IGUIInterfaceSound *) 0 ;
+  guiex::int32 arg2 ;
+  guiex::CGUIString *arg3 = 0 ;
+  std::string temp3 ;
+  guiex::int32 result;
+  
+  SWIG_check_num_args("LoadEffect",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LoadEffect",1,"guiex::IGUIInterfaceSound *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("LoadEffect",2,"guiex::int32");
+  if(!lua_isstring(L,3)) SWIG_fail_arg("LoadEffect",3,"guiex::CGUIString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__IGUIInterfaceSound,0))){
+    SWIG_fail_ptr("IGUIInterfaceSound_LoadEffect",1,SWIGTYPE_p_guiex__IGUIInterfaceSound);
+  }
+  
+  arg2 = (guiex::int32)lua_tonumber(L, 2);
+  temp3.assign(lua_tostring(L,3),lua_strlen(L,3)); arg3=&temp3;
+  result = (guiex::int32)(arg1)->LoadEffect(arg2,(guiex::CGUIString const &)*arg3);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_IGUIInterfaceSound_UnloadEffect(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::IGUIInterfaceSound *arg1 = (guiex::IGUIInterfaceSound *) 0 ;
+  guiex::int32 arg2 ;
+  
+  SWIG_check_num_args("UnloadEffect",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("UnloadEffect",1,"guiex::IGUIInterfaceSound *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("UnloadEffect",2,"guiex::int32");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__IGUIInterfaceSound,0))){
+    SWIG_fail_ptr("IGUIInterfaceSound_UnloadEffect",1,SWIGTYPE_p_guiex__IGUIInterfaceSound);
+  }
+  
+  arg2 = (guiex::int32)lua_tonumber(L, 2);
+  (arg1)->UnloadEffect(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_IGUIInterfaceSound_PlayEffect(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::IGUIInterfaceSound *arg1 = (guiex::IGUIInterfaceSound *) 0 ;
+  guiex::int32 arg2 ;
+  guiex::int32 result;
+  
+  SWIG_check_num_args("PlayEffect",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PlayEffect",1,"guiex::IGUIInterfaceSound *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PlayEffect",2,"guiex::int32");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__IGUIInterfaceSound,0))){
+    SWIG_fail_ptr("IGUIInterfaceSound_PlayEffect",1,SWIGTYPE_p_guiex__IGUIInterfaceSound);
+  }
+  
+  arg2 = (guiex::int32)lua_tonumber(L, 2);
+  result = (guiex::int32)(arg1)->PlayEffect(arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_IGUIInterfaceSound(void *obj) {
+guiex::IGUIInterfaceSound *arg1 = (guiex::IGUIInterfaceSound *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_IGUIInterfaceSound_methods[] = {
+    {"LoadEffect", _wrap_IGUIInterfaceSound_LoadEffect}, 
+    {"UnloadEffect", _wrap_IGUIInterfaceSound_UnloadEffect}, 
+    {"PlayEffect", _wrap_IGUIInterfaceSound_PlayEffect}, 
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_IGUIInterfaceSound_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_IGUIInterfaceSound_bases[] = {0,0};
+static const char *swig_guiex_IGUIInterfaceSound_base_names[] = {"guiex::IGUIInterface *",0};
+static swig_lua_class _wrap_class_guiex_IGUIInterfaceSound = { "IGUIInterfaceSound", &SWIGTYPE_p_guiex__IGUIInterfaceSound,0, swig_delete_IGUIInterfaceSound, swig_guiex_IGUIInterfaceSound_methods, swig_guiex_IGUIInterfaceSound_attributes, swig_guiex_IGUIInterfaceSound_bases, swig_guiex_IGUIInterfaceSound_base_names };
+
+static int _wrap_IGUIInterfaceCommand_Send(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::IGUIInterfaceCommand *arg1 = (guiex::IGUIInterfaceCommand *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  std::string temp2 ;
+  
+  SWIG_check_num_args("Send",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Send",1,"guiex::IGUIInterfaceCommand *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("Send",2,"guiex::CGUIString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__IGUIInterfaceCommand,0))){
+    SWIG_fail_ptr("IGUIInterfaceCommand_Send",1,SWIGTYPE_p_guiex__IGUIInterfaceCommand);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  (arg1)->Send((guiex::CGUIString const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_IGUIInterfaceCommand(void *obj) {
+guiex::IGUIInterfaceCommand *arg1 = (guiex::IGUIInterfaceCommand *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_IGUIInterfaceCommand_methods[] = {
+    {"Send", _wrap_IGUIInterfaceCommand_Send}, 
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_IGUIInterfaceCommand_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_IGUIInterfaceCommand_bases[] = {0,0};
+static const char *swig_guiex_IGUIInterfaceCommand_base_names[] = {"guiex::IGUIInterface *",0};
+static swig_lua_class _wrap_class_guiex_IGUIInterfaceCommand = { "IGUIInterfaceCommand", &SWIGTYPE_p_guiex__IGUIInterfaceCommand,0, swig_delete_IGUIInterfaceCommand, swig_guiex_IGUIInterfaceCommand_methods, swig_guiex_IGUIInterfaceCommand_attributes, swig_guiex_IGUIInterfaceCommand_bases, swig_guiex_IGUIInterfaceCommand_base_names };
+
+static void swig_delete_IGUIInterfaceKeyboard(void *obj) {
+guiex::IGUIInterfaceKeyboard *arg1 = (guiex::IGUIInterfaceKeyboard *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_IGUIInterfaceKeyboard_methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_IGUIInterfaceKeyboard_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_IGUIInterfaceKeyboard_bases[] = {0,0};
+static const char *swig_guiex_IGUIInterfaceKeyboard_base_names[] = {"guiex::IGUIInterface *",0};
+static swig_lua_class _wrap_class_guiex_IGUIInterfaceKeyboard = { "IGUIInterfaceKeyboard", &SWIGTYPE_p_guiex__IGUIInterfaceKeyboard,0, swig_delete_IGUIInterfaceKeyboard, swig_guiex_IGUIInterfaceKeyboard_methods, swig_guiex_IGUIInterfaceKeyboard_attributes, swig_guiex_IGUIInterfaceKeyboard_bases, swig_guiex_IGUIInterfaceKeyboard_base_names };
+
+static int _wrap_CGUIWidget_IsCreate(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsCreate",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsCreate",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_IsCreate",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (bool)((guiex::CGUIWidget const *)arg1)->IsCreate();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_Open(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  
+  SWIG_check_num_args("Open",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Open",1,"guiex::CGUIWidget *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_Open",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  (arg1)->Open();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_IsOpen(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsOpen",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsOpen",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_IsOpen",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (bool)((guiex::CGUIWidget const *)arg1)->IsOpen();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_Close(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  
+  SWIG_check_num_args("Close",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Close",1,"guiex::CGUIWidget *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_Close",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  (arg1)->Close();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetParent(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIWidget *arg2 = (guiex::CGUIWidget *) 0 ;
+  
+  SWIG_check_num_args("SetParent",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetParent",1,"guiex::CGUIWidget *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("SetParent",2,"guiex::CGUIWidget *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetParent",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetParent",2,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  (arg1)->SetParent(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_GetParent(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIWidget *result = 0 ;
+  
+  SWIG_check_num_args("GetParent",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetParent",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetParent",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (guiex::CGUIWidget *)((guiex::CGUIWidget const *)arg1)->GetParent();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIWidget,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_GetChild__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIWidget *result = 0 ;
+  
+  SWIG_check_num_args("GetChild",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetChild",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetChild",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (guiex::CGUIWidget *)((guiex::CGUIWidget const *)arg1)->GetChild();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIWidget,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_GetChild__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  std::string temp2 ;
+  guiex::CGUIWidget *result = 0 ;
+  
+  SWIG_check_num_args("GetChild",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetChild",1,"guiex::CGUIWidget const *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("GetChild",2,"guiex::CGUIString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetChild",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  result = (guiex::CGUIWidget *)((guiex::CGUIWidget const *)arg1)->GetChild((guiex::CGUIString const &)*arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIWidget,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_GetChild(lua_State* L) {
+  int argc;
+  int argv[3]={
+    1,2,3
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 1) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      return _wrap_CGUIWidget_GetChild__SWIG_0(L);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isstring(L,argv[1]);
+      }
+      if (_v) {
+        return _wrap_CGUIWidget_GetChild__SWIG_1(L);
+      }
+    }
+  }
+  
+  lua_pushstring(L,"Wrong arguments for overloaded function 'CGUIWidget_GetChild'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    GetChild(guiex::CGUIWidget const *)\n"
+    "    GetChild(guiex::CGUIWidget const *,guiex::CGUIString const &)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_CGUIWidget_GetNextSibling(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIWidget *result = 0 ;
+  
+  SWIG_check_num_args("GetNextSibling",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetNextSibling",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetNextSibling",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (guiex::CGUIWidget *)((guiex::CGUIWidget const *)arg1)->GetNextSibling();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIWidget,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_GetExclusiveChild(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIWidget *result = 0 ;
+  
+  SWIG_check_num_args("GetExclusiveChild",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetExclusiveChild",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetExclusiveChild",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (guiex::CGUIWidget *)((guiex::CGUIWidget const *)arg1)->GetExclusiveChild();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIWidget,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_MoveToTop(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  
+  SWIG_check_num_args("MoveToTop",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("MoveToTop",1,"guiex::CGUIWidget *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_MoveToTop",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  (arg1)->MoveToTop();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_MoveDown(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  
+  SWIG_check_num_args("MoveDown",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("MoveDown",1,"guiex::CGUIWidget *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_MoveDown",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  (arg1)->MoveDown();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_MoveUp(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  
+  SWIG_check_num_args("MoveUp",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("MoveUp",1,"guiex::CGUIWidget *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_MoveUp",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  (arg1)->MoveUp();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_GetName(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString *result = 0 ;
+  
+  SWIG_check_num_args("GetName",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetName",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetName",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (guiex::CGUIString *) &((guiex::CGUIWidget const *)arg1)->GetName();
+  lua_pushlstring(L,result->data(),result->size()); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_GetSceneName(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString *result = 0 ;
+  
+  SWIG_check_num_args("GetSceneName",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetSceneName",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetSceneName",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (guiex::CGUIString *) &((guiex::CGUIWidget const *)arg1)->GetSceneName();
+  lua_pushlstring(L,result->data(),result->size()); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_GetWorkingSceneName(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString *result = 0 ;
+  
+  SWIG_check_num_args("GetWorkingSceneName",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetWorkingSceneName",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetWorkingSceneName",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (guiex::CGUIString *) &((guiex::CGUIWidget const *)arg1)->GetWorkingSceneName();
+  lua_pushlstring(L,result->data(),result->size()); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_GetType(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString *result = 0 ;
+  
+  SWIG_check_num_args("GetType",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetType",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetType",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (guiex::CGUIString *) &((guiex::CGUIWidget const *)arg1)->GetType();
+  lua_pushlstring(L,result->data(),result->size()); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetUserData(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  void *arg2 = (void *) 0 ;
+  
+  SWIG_check_num_args("SetUserData",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetUserData",1,"guiex::CGUIWidget *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("SetUserData",2,"void *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetUserData",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  arg2=(void *)SWIG_MustGetPtr(L,2,0,0,2,"CGUIWidget_SetUserData");
+  (arg1)->SetUserData(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_GetUserData(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  void *result = 0 ;
+  
+  SWIG_check_num_args("GetUserData",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetUserData",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetUserData",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (void *)((guiex::CGUIWidget const *)arg1)->GetUserData();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_void,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetTextColor(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIColor *arg2 = 0 ;
+  
+  SWIG_check_num_args("SetTextColor",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetTextColor",1,"guiex::CGUIWidget *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("SetTextColor",2,"guiex::CGUIColor const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetTextColor",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIColor,0))){
+    SWIG_fail_ptr("CGUIWidget_SetTextColor",2,SWIGTYPE_p_guiex__CGUIColor);
+  }
+  
+  (arg1)->SetTextColor((guiex::CGUIColor const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_IsTextContentEmpty(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsTextContentEmpty",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsTextContentEmpty",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_IsTextContentEmpty",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (bool)((guiex::CGUIWidget const *)arg1)->IsTextContentEmpty();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetTextContentUTF8(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  std::string temp2 ;
+  
+  SWIG_check_num_args("SetTextContentUTF8",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetTextContentUTF8",1,"guiex::CGUIWidget *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("SetTextContentUTF8",2,"guiex::CGUIString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetTextContentUTF8",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  (arg1)->SetTextContentUTF8((guiex::CGUIString const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_GetTextContentUTF8(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString result;
+  
+  SWIG_check_num_args("GetTextContentUTF8",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetTextContentUTF8",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetTextContentUTF8",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = ((guiex::CGUIWidget const *)arg1)->GetTextContentUTF8();
+  lua_pushlstring(L,(&result)->data(),(&result)->size()); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetAutoPlayAs(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("SetAutoPlayAs",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetAutoPlayAs",1,"guiex::CGUIWidget *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetAutoPlayAs",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetAutoPlayAs",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetAutoPlayAs(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_IsAutoPlayAs(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsAutoPlayAs",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsAutoPlayAs",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_IsAutoPlayAs",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (bool)((guiex::CGUIWidget const *)arg1)->IsAutoPlayAs();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetClipChildren(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("SetClipChildren",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetClipChildren",1,"guiex::CGUIWidget *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetClipChildren",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetClipChildren",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetClipChildren(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_IsClipChildren(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsClipChildren",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsClipChildren",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_IsClipChildren",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (bool)((guiex::CGUIWidget const *)arg1)->IsClipChildren();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetActivable(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("SetActivable",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetActivable",1,"guiex::CGUIWidget *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetActivable",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetActivable",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetActivable(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_IsActivable(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsActivable",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsActivable",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_IsActivable",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (bool)((guiex::CGUIWidget const *)arg1)->IsActivable();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_IsDerivedActivable(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsDerivedActivable",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsDerivedActivable",1,"guiex::CGUIWidget *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_IsDerivedActivable",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (bool)(arg1)->IsDerivedActivable();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetFocus(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("SetFocus",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetFocus",1,"guiex::CGUIWidget *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetFocus",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetFocus",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetFocus(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_IsFocus(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsFocus",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsFocus",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_IsFocus",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (bool)((guiex::CGUIWidget const *)arg1)->IsFocus();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetVisible(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("SetVisible",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetVisible",1,"guiex::CGUIWidget *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetVisible",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetVisible",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetVisible(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_IsVisible(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsVisible",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsVisible",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_IsVisible",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (bool)((guiex::CGUIWidget const *)arg1)->IsVisible();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_IsDerivedVisible(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsDerivedVisible",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsDerivedVisible",1,"guiex::CGUIWidget *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_IsDerivedVisible",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (bool)(arg1)->IsDerivedVisible();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetDisable(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("SetDisable",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetDisable",1,"guiex::CGUIWidget *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetDisable",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetDisable",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetDisable(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_IsDisable(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsDisable",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsDisable",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_IsDisable",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (bool)((guiex::CGUIWidget const *)arg1)->IsDisable();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_IsDerivedDisable(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsDerivedDisable",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsDerivedDisable",1,"guiex::CGUIWidget *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_IsDerivedDisable",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (bool)(arg1)->IsDerivedDisable();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetAlpha(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::real arg2 ;
+  
+  SWIG_check_num_args("SetAlpha",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetAlpha",1,"guiex::CGUIWidget *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SetAlpha",2,"guiex::real");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetAlpha",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  arg2 = (guiex::real)lua_tonumber(L, 2);
+  (arg1)->SetAlpha(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_GetAlpha(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::real result;
+  
+  SWIG_check_num_args("GetAlpha",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetAlpha",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetAlpha",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (guiex::real)((guiex::CGUIWidget const *)arg1)->GetAlpha();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_GetDerivedAlpha(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::real result;
+  
+  SWIG_check_num_args("GetDerivedAlpha",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetDerivedAlpha",1,"guiex::CGUIWidget *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetDerivedAlpha",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (guiex::real)(arg1)->GetDerivedAlpha();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetScale(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUISize *arg2 = 0 ;
+  
+  SWIG_check_num_args("SetScale",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetScale",1,"guiex::CGUIWidget *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("SetScale",2,"guiex::CGUISize const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetScale",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUISize,0))){
+    SWIG_fail_ptr("CGUIWidget_SetScale",2,SWIGTYPE_p_guiex__CGUISize);
+  }
+  
+  (arg1)->SetScale((guiex::CGUISize const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_GetScale(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUISize *result = 0 ;
+  
+  SWIG_check_num_args("GetScale",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetScale",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetScale",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (guiex::CGUISize *) &((guiex::CGUIWidget const *)arg1)->GetScale();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUISize,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_GetDerivedScale(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUISize *result = 0 ;
+  
+  SWIG_check_num_args("GetDerivedScale",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetDerivedScale",1,"guiex::CGUIWidget *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetDerivedScale",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (guiex::CGUISize *) &(arg1)->GetDerivedScale();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUISize,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetColor(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIColor *arg2 = 0 ;
+  
+  SWIG_check_num_args("SetColor",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetColor",1,"guiex::CGUIWidget *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("SetColor",2,"guiex::CGUIColor const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetColor",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIColor,0))){
+    SWIG_fail_ptr("CGUIWidget_SetColor",2,SWIGTYPE_p_guiex__CGUIColor);
+  }
+  
+  (arg1)->SetColor((guiex::CGUIColor const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_GetColor(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIColor *result = 0 ;
+  
+  SWIG_check_num_args("GetColor",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetColor",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetColor",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (guiex::CGUIColor *) &((guiex::CGUIWidget const *)arg1)->GetColor();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIColor,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_GetWidgetAtPoint(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIVector2 *arg2 = 0 ;
+  guiex::CGUIWidget *result = 0 ;
+  
+  SWIG_check_num_args("GetWidgetAtPoint",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetWidgetAtPoint",1,"guiex::CGUIWidget *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("GetWidgetAtPoint",2,"guiex::CGUIVector2 const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetWidgetAtPoint",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIVector2,0))){
+    SWIG_fail_ptr("CGUIWidget_GetWidgetAtPoint",2,SWIGTYPE_p_guiex__CGUIVector2);
+  }
+  
+  result = (guiex::CGUIWidget *)(arg1)->GetWidgetAtPoint((guiex::CGUIVector2 const &)*arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIWidget,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_HitTest(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIVector2 *arg2 = 0 ;
+  bool result;
+  
+  SWIG_check_num_args("HitTest",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("HitTest",1,"guiex::CGUIWidget *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("HitTest",2,"guiex::CGUIVector2 const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_HitTest",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIVector2,0))){
+    SWIG_fail_ptr("CGUIWidget_HitTest",2,SWIGTYPE_p_guiex__CGUIVector2);
+  }
+  
+  result = (bool)(arg1)->HitTest((guiex::CGUIVector2 const &)*arg2);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetImage__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  guiex::CGUIString *arg3 = 0 ;
+  std::string temp2 ;
+  std::string temp3 ;
+  guiex::CGUIImage *result = 0 ;
+  
+  SWIG_check_num_args("SetImage",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetImage",1,"guiex::CGUIWidget *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("SetImage",2,"guiex::CGUIString const &");
+  if(!lua_isstring(L,3)) SWIG_fail_arg("SetImage",3,"guiex::CGUIString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetImage",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  temp3.assign(lua_tostring(L,3),lua_strlen(L,3)); arg3=&temp3;
+  result = (guiex::CGUIImage *)(arg1)->SetImage((guiex::CGUIString const &)*arg2,(guiex::CGUIString const &)*arg3);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIImage,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetImage__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  guiex::CGUIImage *arg3 = (guiex::CGUIImage *) 0 ;
+  std::string temp2 ;
+  
+  SWIG_check_num_args("SetImage",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetImage",1,"guiex::CGUIWidget *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("SetImage",2,"guiex::CGUIString const &");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SetImage",3,"guiex::CGUIImage *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetImage",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_guiex__CGUIImage,0))){
+    SWIG_fail_ptr("CGUIWidget_SetImage",3,SWIGTYPE_p_guiex__CGUIImage);
+  }
+  
+  (arg1)->SetImage((guiex::CGUIString const &)*arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetImage(lua_State* L) {
+  int argc;
+  int argv[4]={
+    1,2,3,4
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isstring(L,argv[1]);
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (SWIG_isptrtype(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_guiex__CGUIImage, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          return _wrap_CGUIWidget_SetImage__SWIG_1(L);
+        }
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isstring(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = lua_isstring(L,argv[2]);
+        }
+        if (_v) {
+          return _wrap_CGUIWidget_SetImage__SWIG_0(L);
+        }
+      }
+    }
+  }
+  
+  lua_pushstring(L,"Wrong arguments for overloaded function 'CGUIWidget_SetImage'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    SetImage(guiex::CGUIWidget *,guiex::CGUIString const &,guiex::CGUIString const &)\n"
+    "    SetImage(guiex::CGUIWidget *,guiex::CGUIString const &,guiex::CGUIImage *)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_CGUIWidget_HasImage(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  std::string temp2 ;
+  bool result;
+  
+  SWIG_check_num_args("HasImage",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("HasImage",1,"guiex::CGUIWidget *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("HasImage",2,"guiex::CGUIString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_HasImage",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  result = (bool)(arg1)->HasImage((guiex::CGUIString const &)*arg2);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_GetImage(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  std::string temp2 ;
+  guiex::CGUIImage *result = 0 ;
+  
+  SWIG_check_num_args("GetImage",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetImage",1,"guiex::CGUIWidget *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("GetImage",2,"guiex::CGUIString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetImage",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  result = (guiex::CGUIImage *)(arg1)->GetImage((guiex::CGUIString const &)*arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIImage,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetAnimation__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  guiex::CGUIAnimation *arg3 = (guiex::CGUIAnimation *) 0 ;
+  std::string temp2 ;
+  
+  SWIG_check_num_args("SetAnimation",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetAnimation",1,"guiex::CGUIWidget *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("SetAnimation",2,"guiex::CGUIString const &");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SetAnimation",3,"guiex::CGUIAnimation *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetAnimation",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_guiex__CGUIAnimation,0))){
+    SWIG_fail_ptr("CGUIWidget_SetAnimation",3,SWIGTYPE_p_guiex__CGUIAnimation);
+  }
+  
+  (arg1)->SetAnimation((guiex::CGUIString const &)*arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetAnimation__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  guiex::CGUIString *arg3 = 0 ;
+  std::string temp2 ;
+  std::string temp3 ;
+  guiex::CGUIAnimation *result = 0 ;
+  
+  SWIG_check_num_args("SetAnimation",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetAnimation",1,"guiex::CGUIWidget *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("SetAnimation",2,"guiex::CGUIString const &");
+  if(!lua_isstring(L,3)) SWIG_fail_arg("SetAnimation",3,"guiex::CGUIString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetAnimation",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  temp3.assign(lua_tostring(L,3),lua_strlen(L,3)); arg3=&temp3;
+  result = (guiex::CGUIAnimation *)(arg1)->SetAnimation((guiex::CGUIString const &)*arg2,(guiex::CGUIString const &)*arg3);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIAnimation,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetAnimation(lua_State* L) {
+  int argc;
+  int argv[4]={
+    1,2,3,4
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isstring(L,argv[1]);
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (SWIG_isptrtype(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_guiex__CGUIAnimation, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          return _wrap_CGUIWidget_SetAnimation__SWIG_0(L);
+        }
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isstring(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = lua_isstring(L,argv[2]);
+        }
+        if (_v) {
+          return _wrap_CGUIWidget_SetAnimation__SWIG_1(L);
+        }
+      }
+    }
+  }
+  
+  lua_pushstring(L,"Wrong arguments for overloaded function 'CGUIWidget_SetAnimation'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    SetAnimation(guiex::CGUIWidget *,guiex::CGUIString const &,guiex::CGUIAnimation *)\n"
+    "    SetAnimation(guiex::CGUIWidget *,guiex::CGUIString const &,guiex::CGUIString const &)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_CGUIWidget_GetAnimation(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  std::string temp2 ;
+  guiex::CGUIAnimation *result = 0 ;
+  
+  SWIG_check_num_args("GetAnimation",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetAnimation",1,"guiex::CGUIWidget *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("GetAnimation",2,"guiex::CGUIString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetAnimation",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  result = (guiex::CGUIAnimation *)(arg1)->GetAnimation((guiex::CGUIString const &)*arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIAnimation,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetAs__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  guiex::CGUIString *arg3 = 0 ;
+  std::string temp2 ;
+  std::string temp3 ;
+  guiex::CGUIAs *result = 0 ;
+  
+  SWIG_check_num_args("SetAs",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetAs",1,"guiex::CGUIWidget *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("SetAs",2,"guiex::CGUIString const &");
+  if(!lua_isstring(L,3)) SWIG_fail_arg("SetAs",3,"guiex::CGUIString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetAs",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  temp3.assign(lua_tostring(L,3),lua_strlen(L,3)); arg3=&temp3;
+  result = (guiex::CGUIAs *)(arg1)->SetAs((guiex::CGUIString const &)*arg2,(guiex::CGUIString const &)*arg3);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIAs,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetAs__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  guiex::CGUIAs *arg3 = (guiex::CGUIAs *) 0 ;
+  std::string temp2 ;
+  
+  SWIG_check_num_args("SetAs",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetAs",1,"guiex::CGUIWidget *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("SetAs",2,"guiex::CGUIString const &");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SetAs",3,"guiex::CGUIAs *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetAs",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_guiex__CGUIAs,0))){
+    SWIG_fail_ptr("CGUIWidget_SetAs",3,SWIGTYPE_p_guiex__CGUIAs);
+  }
+  
+  (arg1)->SetAs((guiex::CGUIString const &)*arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetAs(lua_State* L) {
+  int argc;
+  int argv[4]={
+    1,2,3,4
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isstring(L,argv[1]);
+      }
+      if (_v) {
+        {
+          void *ptr;
+          if (SWIG_isptrtype(L,argv[2])==0 || SWIG_ConvertPtr(L,argv[2], (void **) &ptr, SWIGTYPE_p_guiex__CGUIAs, 0)) {
+            _v = 0;
+          } else {
+            _v = 1;
+          }
+        }
+        if (_v) {
+          return _wrap_CGUIWidget_SetAs__SWIG_1(L);
+        }
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isstring(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = lua_isstring(L,argv[2]);
+        }
+        if (_v) {
+          return _wrap_CGUIWidget_SetAs__SWIG_0(L);
+        }
+      }
+    }
+  }
+  
+  lua_pushstring(L,"Wrong arguments for overloaded function 'CGUIWidget_SetAs'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    SetAs(guiex::CGUIWidget *,guiex::CGUIString const &,guiex::CGUIString const &)\n"
+    "    SetAs(guiex::CGUIWidget *,guiex::CGUIString const &,guiex::CGUIAs *)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_CGUIWidget_HasAs(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  std::string temp2 ;
+  bool result;
+  
+  SWIG_check_num_args("HasAs",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("HasAs",1,"guiex::CGUIWidget *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("HasAs",2,"guiex::CGUIString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_HasAs",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  result = (bool)(arg1)->HasAs((guiex::CGUIString const &)*arg2);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_GetAs(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  std::string temp2 ;
+  guiex::CGUIAs *result = 0 ;
+  
+  SWIG_check_num_args("GetAs",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetAs",1,"guiex::CGUIWidget *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("GetAs",2,"guiex::CGUIString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetAs",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  result = (guiex::CGUIAs *)(arg1)->GetAs((guiex::CGUIString const &)*arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIAs,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_PlayAs__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  std::string temp2 ;
+  
+  SWIG_check_num_args("PlayAs",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PlayAs",1,"guiex::CGUIWidget *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("PlayAs",2,"guiex::CGUIString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_PlayAs",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  (arg1)->PlayAs((guiex::CGUIString const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_PlayAs__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIAs *arg2 = (guiex::CGUIAs *) 0 ;
+  
+  SWIG_check_num_args("PlayAs",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PlayAs",1,"guiex::CGUIWidget *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("PlayAs",2,"guiex::CGUIAs *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_PlayAs",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIAs,0))){
+    SWIG_fail_ptr("CGUIWidget_PlayAs",2,SWIGTYPE_p_guiex__CGUIAs);
+  }
+  
+  (arg1)->PlayAs(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_PlayAs(lua_State* L) {
+  int argc;
+  int argv[3]={
+    1,2,3
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 2) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_guiex__CGUIAs, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        return _wrap_CGUIWidget_PlayAs__SWIG_1(L);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isstring(L,argv[1]);
+      }
+      if (_v) {
+        return _wrap_CGUIWidget_PlayAs__SWIG_0(L);
+      }
+    }
+  }
+  
+  lua_pushstring(L,"Wrong arguments for overloaded function 'CGUIWidget_PlayAs'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    PlayAs(guiex::CGUIWidget *,guiex::CGUIString const &)\n"
+    "    PlayAs(guiex::CGUIWidget *,guiex::CGUIAs *)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_CGUIWidget_IsAsPlaying__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  std::string temp2 ;
+  bool result;
+  
+  SWIG_check_num_args("IsAsPlaying",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsAsPlaying",1,"guiex::CGUIWidget *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("IsAsPlaying",2,"guiex::CGUIString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_IsAsPlaying",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  result = (bool)(arg1)->IsAsPlaying((guiex::CGUIString const &)*arg2);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_IsAsPlaying__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIAs *arg2 = (guiex::CGUIAs *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsAsPlaying",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsAsPlaying",1,"guiex::CGUIWidget *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("IsAsPlaying",2,"guiex::CGUIAs *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_IsAsPlaying",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIAs,0))){
+    SWIG_fail_ptr("CGUIWidget_IsAsPlaying",2,SWIGTYPE_p_guiex__CGUIAs);
+  }
+  
+  result = (bool)(arg1)->IsAsPlaying(arg2);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_IsAsPlaying(lua_State* L) {
+  int argc;
+  int argv[3]={
+    1,2,3
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 2) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_guiex__CGUIAs, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        return _wrap_CGUIWidget_IsAsPlaying__SWIG_1(L);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isstring(L,argv[1]);
+      }
+      if (_v) {
+        return _wrap_CGUIWidget_IsAsPlaying__SWIG_0(L);
+      }
+    }
+  }
+  
+  lua_pushstring(L,"Wrong arguments for overloaded function 'CGUIWidget_IsAsPlaying'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    IsAsPlaying(guiex::CGUIWidget *,guiex::CGUIString const &)\n"
+    "    IsAsPlaying(guiex::CGUIWidget *,guiex::CGUIAs *)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_CGUIWidget_StopAs__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  std::string temp2 ;
+  
+  SWIG_check_num_args("StopAs",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("StopAs",1,"guiex::CGUIWidget *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("StopAs",2,"guiex::CGUIString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_StopAs",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  (arg1)->StopAs((guiex::CGUIString const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_StopAs__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIAs *arg2 = (guiex::CGUIAs *) 0 ;
+  
+  SWIG_check_num_args("StopAs",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("StopAs",1,"guiex::CGUIWidget *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("StopAs",2,"guiex::CGUIAs *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_StopAs",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIAs,0))){
+    SWIG_fail_ptr("CGUIWidget_StopAs",2,SWIGTYPE_p_guiex__CGUIAs);
+  }
+  
+  (arg1)->StopAs(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_StopAs(lua_State* L) {
+  int argc;
+  int argv[3]={
+    1,2,3
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 2) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (SWIG_isptrtype(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_guiex__CGUIAs, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        return _wrap_CGUIWidget_StopAs__SWIG_1(L);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isstring(L,argv[1]);
+      }
+      if (_v) {
+        return _wrap_CGUIWidget_StopAs__SWIG_0(L);
+      }
+    }
+  }
+  
+  lua_pushstring(L,"Wrong arguments for overloaded function 'CGUIWidget_StopAs'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    StopAs(guiex::CGUIWidget *,guiex::CGUIString const &)\n"
+    "    StopAs(guiex::CGUIWidget *,guiex::CGUIAs *)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_CGUIWidget_StopAll(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  
+  SWIG_check_num_args("StopAll",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("StopAll",1,"guiex::CGUIWidget *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_StopAll",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  (arg1)->StopAll();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetProperty(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIProperty *arg2 = 0 ;
+  
+  SWIG_check_num_args("SetProperty",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetProperty",1,"guiex::CGUIWidget *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("SetProperty",2,"guiex::CGUIProperty const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetProperty",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIProperty,0))){
+    SWIG_fail_ptr("CGUIWidget_SetProperty",2,SWIGTYPE_p_guiex__CGUIProperty);
+  }
+  
+  (arg1)->SetProperty((guiex::CGUIProperty const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_GetProperty(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIProperty *result = 0 ;
+  
+  SWIG_check_num_args("GetProperty",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetProperty",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetProperty",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (guiex::CGUIProperty *) &((guiex::CGUIWidget const *)arg1)->GetProperty();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIProperty,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_ClearProperty(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  
+  SWIG_check_num_args("ClearProperty",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ClearProperty",1,"guiex::CGUIWidget *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_ClearProperty",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  (arg1)->ClearProperty();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_InsertProperty(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIProperty *arg2 = 0 ;
+  
+  SWIG_check_num_args("InsertProperty",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("InsertProperty",1,"guiex::CGUIWidget *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("InsertProperty",2,"guiex::CGUIProperty const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_InsertProperty",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIProperty,0))){
+    SWIG_fail_ptr("CGUIWidget_InsertProperty",2,SWIGTYPE_p_guiex__CGUIProperty);
+  }
+  
+  (arg1)->InsertProperty((guiex::CGUIProperty const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_LoadProperty(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  
+  SWIG_check_num_args("LoadProperty",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LoadProperty",1,"guiex::CGUIWidget *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_LoadProperty",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  (arg1)->LoadProperty();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_GenerateProperty(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIProperty *arg2 = 0 ;
+  guiex::int32 result;
+  
+  SWIG_check_num_args("GenerateProperty",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GenerateProperty",1,"guiex::CGUIWidget *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("GenerateProperty",2,"guiex::CGUIProperty &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GenerateProperty",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIProperty,0))){
+    SWIG_fail_ptr("CGUIWidget_GenerateProperty",2,SWIGTYPE_p_guiex__CGUIProperty);
+  }
+  
+  result = (guiex::int32)(arg1)->GenerateProperty(*arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_ProcessProperty(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIProperty *arg2 = 0 ;
+  
+  SWIG_check_num_args("ProcessProperty",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ProcessProperty",1,"guiex::CGUIWidget *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("ProcessProperty",2,"guiex::CGUIProperty const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_ProcessProperty",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIProperty,0))){
+    SWIG_fail_ptr("CGUIWidget_ProcessProperty",2,SWIGTYPE_p_guiex__CGUIProperty);
+  }
+  
+  (arg1)->ProcessProperty((guiex::CGUIProperty const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_RegisterUIEvent(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  std::string temp2 ;
+  
+  SWIG_check_num_args("RegisterUIEvent",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("RegisterUIEvent",1,"guiex::CGUIWidget *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("RegisterUIEvent",2,"guiex::CGUIString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_RegisterUIEvent",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  (arg1)->RegisterUIEvent((guiex::CGUIString const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_UnregisterUIEvent(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  std::string temp2 ;
+  
+  SWIG_check_num_args("UnregisterUIEvent",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("UnregisterUIEvent",1,"guiex::CGUIWidget *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("UnregisterUIEvent",2,"guiex::CGUIString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_UnregisterUIEvent",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  (arg1)->UnregisterUIEvent((guiex::CGUIString const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_RegisterSound(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  guiex::int32 arg3 ;
+  std::string temp2 ;
+  
+  SWIG_check_num_args("RegisterSound",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("RegisterSound",1,"guiex::CGUIWidget *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("RegisterSound",2,"guiex::CGUIString const &");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("RegisterSound",3,"guiex::int32");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_RegisterSound",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  arg3 = (guiex::int32)lua_tonumber(L, 3);
+  (arg1)->RegisterSound((guiex::CGUIString const &)*arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_UnregisterSound(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  std::string temp2 ;
+  
+  SWIG_check_num_args("UnregisterSound",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("UnregisterSound",1,"guiex::CGUIWidget *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("UnregisterSound",2,"guiex::CGUIString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_UnregisterSound",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  (arg1)->UnregisterSound((guiex::CGUIString const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_RegisterScriptCallbackFunc(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  guiex::CGUIString *arg3 = 0 ;
+  std::string temp2 ;
+  std::string temp3 ;
+  
+  SWIG_check_num_args("RegisterScriptCallbackFunc",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("RegisterScriptCallbackFunc",1,"guiex::CGUIWidget *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("RegisterScriptCallbackFunc",2,"guiex::CGUIString const &");
+  if(!lua_isstring(L,3)) SWIG_fail_arg("RegisterScriptCallbackFunc",3,"guiex::CGUIString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_RegisterScriptCallbackFunc",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  temp3.assign(lua_tostring(L,3),lua_strlen(L,3)); arg3=&temp3;
+  (arg1)->RegisterScriptCallbackFunc((guiex::CGUIString const &)*arg2,(guiex::CGUIString const &)*arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_UnregisterScriptCallbackFunc(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  std::string temp2 ;
+  
+  SWIG_check_num_args("UnregisterScriptCallbackFunc",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("UnregisterScriptCallbackFunc",1,"guiex::CGUIWidget *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("UnregisterScriptCallbackFunc",2,"guiex::CGUIString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_UnregisterScriptCallbackFunc",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  (arg1)->UnregisterScriptCallbackFunc((guiex::CGUIString const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_HasScriptCallbackFunc(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  std::string temp2 ;
+  bool result;
+  
+  SWIG_check_num_args("HasScriptCallbackFunc",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("HasScriptCallbackFunc",1,"guiex::CGUIWidget const *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("HasScriptCallbackFunc",2,"guiex::CGUIString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_HasScriptCallbackFunc",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  result = (bool)((guiex::CGUIWidget const *)arg1)->HasScriptCallbackFunc((guiex::CGUIString const &)*arg2);
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_GetScriptCallbackFunc(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  std::string temp2 ;
+  guiex::CGUIString *result = 0 ;
+  
+  SWIG_check_num_args("GetScriptCallbackFunc",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetScriptCallbackFunc",1,"guiex::CGUIWidget const *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("GetScriptCallbackFunc",2,"guiex::CGUIString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetScriptCallbackFunc",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  result = (guiex::CGUIString *) &((guiex::CGUIWidget const *)arg1)->GetScriptCallbackFunc((guiex::CGUIString const &)*arg2);
+  lua_pushlstring(L,result->data(),result->size()); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetPosition__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::real arg2 ;
+  guiex::real arg3 ;
+  
+  SWIG_check_num_args("SetPosition",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetPosition",1,"guiex::CGUIWidget *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SetPosition",2,"guiex::real");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("SetPosition",3,"guiex::real");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetPosition",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  arg2 = (guiex::real)lua_tonumber(L, 2);
+  arg3 = (guiex::real)lua_tonumber(L, 3);
+  (arg1)->SetPosition(arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetPosition__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIVector2 *arg2 = 0 ;
+  
+  SWIG_check_num_args("SetPosition",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetPosition",1,"guiex::CGUIWidget *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("SetPosition",2,"guiex::CGUIVector2 const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetPosition",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIVector2,0))){
+    SWIG_fail_ptr("CGUIWidget_SetPosition",2,SWIGTYPE_p_guiex__CGUIVector2);
+  }
+  
+  (arg1)->SetPosition((guiex::CGUIVector2 const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetPosition(lua_State* L) {
+  int argc;
+  int argv[4]={
+    1,2,3,4
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 2) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_guiex__CGUIVector2, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        return _wrap_CGUIWidget_SetPosition__SWIG_1(L);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isnumber(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = lua_isnumber(L,argv[2]);
+        }
+        if (_v) {
+          return _wrap_CGUIWidget_SetPosition__SWIG_0(L);
+        }
+      }
+    }
+  }
+  
+  lua_pushstring(L,"Wrong arguments for overloaded function 'CGUIWidget_SetPosition'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    SetPosition(guiex::CGUIWidget *,guiex::real,guiex::real)\n"
+    "    SetPosition(guiex::CGUIWidget *,guiex::CGUIVector2 const &)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_CGUIWidget_GetPosition(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIVector2 *result = 0 ;
+  
+  SWIG_check_num_args("GetPosition",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetPosition",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetPosition",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (guiex::CGUIVector2 *) &((guiex::CGUIWidget const *)arg1)->GetPosition();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIVector2,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetPixelPosition__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIVector2 *arg2 = 0 ;
+  
+  SWIG_check_num_args("SetPixelPosition",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetPixelPosition",1,"guiex::CGUIWidget *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("SetPixelPosition",2,"guiex::CGUIVector2 const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetPixelPosition",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIVector2,0))){
+    SWIG_fail_ptr("CGUIWidget_SetPixelPosition",2,SWIGTYPE_p_guiex__CGUIVector2);
+  }
+  
+  (arg1)->SetPixelPosition((guiex::CGUIVector2 const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetPixelPosition__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::real arg2 ;
+  guiex::real arg3 ;
+  
+  SWIG_check_num_args("SetPixelPosition",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetPixelPosition",1,"guiex::CGUIWidget *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SetPixelPosition",2,"guiex::real");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("SetPixelPosition",3,"guiex::real");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetPixelPosition",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  arg2 = (guiex::real)lua_tonumber(L, 2);
+  arg3 = (guiex::real)lua_tonumber(L, 3);
+  (arg1)->SetPixelPosition(arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetPixelPosition(lua_State* L) {
+  int argc;
+  int argv[4]={
+    1,2,3,4
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 2) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_guiex__CGUIVector2, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        return _wrap_CGUIWidget_SetPixelPosition__SWIG_0(L);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isnumber(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = lua_isnumber(L,argv[2]);
+        }
+        if (_v) {
+          return _wrap_CGUIWidget_SetPixelPosition__SWIG_1(L);
+        }
+      }
+    }
+  }
+  
+  lua_pushstring(L,"Wrong arguments for overloaded function 'CGUIWidget_SetPixelPosition'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    SetPixelPosition(guiex::CGUIWidget *,guiex::CGUIVector2 const &)\n"
+    "    SetPixelPosition(guiex::CGUIWidget *,guiex::real,guiex::real)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_CGUIWidget_GetPixelPosition(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIVector2 *result = 0 ;
+  
+  SWIG_check_num_args("GetPixelPosition",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetPixelPosition",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetPixelPosition",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (guiex::CGUIVector2 *) &((guiex::CGUIWidget const *)arg1)->GetPixelPosition();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIVector2,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetPositionType(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::EScreenValue arg2 ;
+  
+  SWIG_check_num_args("SetPositionType",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetPositionType",1,"guiex::CGUIWidget *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SetPositionType",2,"guiex::EScreenValue");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetPositionType",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  arg2 = (guiex::EScreenValue)(int)lua_tonumber(L, 2);
+  (arg1)->SetPositionType(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_GetPositionType(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::EScreenValue result;
+  
+  SWIG_check_num_args("GetPositionType",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetPositionType",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetPositionType",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (guiex::EScreenValue)((guiex::CGUIWidget const *)arg1)->GetPositionType();
+  lua_pushnumber(L, (lua_Number)(int)(result)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetSize__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::real arg2 ;
+  guiex::real arg3 ;
+  
+  SWIG_check_num_args("SetSize",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetSize",1,"guiex::CGUIWidget *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SetSize",2,"guiex::real");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("SetSize",3,"guiex::real");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetSize",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  arg2 = (guiex::real)lua_tonumber(L, 2);
+  arg3 = (guiex::real)lua_tonumber(L, 3);
+  (arg1)->SetSize(arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetSize__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUISize *arg2 = 0 ;
+  
+  SWIG_check_num_args("SetSize",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetSize",1,"guiex::CGUIWidget *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("SetSize",2,"guiex::CGUISize const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetSize",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUISize,0))){
+    SWIG_fail_ptr("CGUIWidget_SetSize",2,SWIGTYPE_p_guiex__CGUISize);
+  }
+  
+  (arg1)->SetSize((guiex::CGUISize const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetSize(lua_State* L) {
+  int argc;
+  int argv[4]={
+    1,2,3,4
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 2) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_guiex__CGUISize, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        return _wrap_CGUIWidget_SetSize__SWIG_1(L);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isnumber(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = lua_isnumber(L,argv[2]);
+        }
+        if (_v) {
+          return _wrap_CGUIWidget_SetSize__SWIG_0(L);
+        }
+      }
+    }
+  }
+  
+  lua_pushstring(L,"Wrong arguments for overloaded function 'CGUIWidget_SetSize'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    SetSize(guiex::CGUIWidget *,guiex::real,guiex::real)\n"
+    "    SetSize(guiex::CGUIWidget *,guiex::CGUISize const &)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_CGUIWidget_GetSize(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUISize *result = 0 ;
+  
+  SWIG_check_num_args("GetSize",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetSize",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetSize",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (guiex::CGUISize *) &((guiex::CGUIWidget const *)arg1)->GetSize();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUISize,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetPixelSize__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::real arg2 ;
+  guiex::real arg3 ;
+  
+  SWIG_check_num_args("SetPixelSize",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetPixelSize",1,"guiex::CGUIWidget *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SetPixelSize",2,"guiex::real");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("SetPixelSize",3,"guiex::real");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetPixelSize",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  arg2 = (guiex::real)lua_tonumber(L, 2);
+  arg3 = (guiex::real)lua_tonumber(L, 3);
+  (arg1)->SetPixelSize(arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetPixelSize__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUISize *arg2 = 0 ;
+  
+  SWIG_check_num_args("SetPixelSize",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetPixelSize",1,"guiex::CGUIWidget *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("SetPixelSize",2,"guiex::CGUISize const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetPixelSize",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUISize,0))){
+    SWIG_fail_ptr("CGUIWidget_SetPixelSize",2,SWIGTYPE_p_guiex__CGUISize);
+  }
+  
+  (arg1)->SetPixelSize((guiex::CGUISize const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetPixelSize(lua_State* L) {
+  int argc;
+  int argv[4]={
+    1,2,3,4
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 2) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_guiex__CGUISize, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        return _wrap_CGUIWidget_SetPixelSize__SWIG_1(L);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isnumber(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = lua_isnumber(L,argv[2]);
+        }
+        if (_v) {
+          return _wrap_CGUIWidget_SetPixelSize__SWIG_0(L);
+        }
+      }
+    }
+  }
+  
+  lua_pushstring(L,"Wrong arguments for overloaded function 'CGUIWidget_SetPixelSize'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    SetPixelSize(guiex::CGUIWidget *,guiex::real,guiex::real)\n"
+    "    SetPixelSize(guiex::CGUIWidget *,guiex::CGUISize const &)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_CGUIWidget_GetPixelSize(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUISize *result = 0 ;
+  
+  SWIG_check_num_args("GetPixelSize",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetPixelSize",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetPixelSize",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (guiex::CGUISize *) &((guiex::CGUIWidget const *)arg1)->GetPixelSize();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUISize,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetSizeType(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::EScreenValue arg2 ;
+  
+  SWIG_check_num_args("SetSizeType",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetSizeType",1,"guiex::CGUIWidget *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SetSizeType",2,"guiex::EScreenValue");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetSizeType",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  arg2 = (guiex::EScreenValue)(int)lua_tonumber(L, 2);
+  (arg1)->SetSizeType(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_GetSizeType(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::EScreenValue result;
+  
+  SWIG_check_num_args("GetSizeType",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetSizeType",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetSizeType",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (guiex::EScreenValue)((guiex::CGUIWidget const *)arg1)->GetSizeType();
+  lua_pushnumber(L, (lua_Number)(int)(result)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetRotation__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::real arg2 ;
+  guiex::real arg3 ;
+  guiex::real arg4 ;
+  
+  SWIG_check_num_args("SetRotation",4,4)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetRotation",1,"guiex::CGUIWidget *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SetRotation",2,"guiex::real");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("SetRotation",3,"guiex::real");
+  if(!lua_isnumber(L,4)) SWIG_fail_arg("SetRotation",4,"guiex::real");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetRotation",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  arg2 = (guiex::real)lua_tonumber(L, 2);
+  arg3 = (guiex::real)lua_tonumber(L, 3);
+  arg4 = (guiex::real)lua_tonumber(L, 4);
+  (arg1)->SetRotation(arg2,arg3,arg4);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetRotation__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIVector3 *arg2 = 0 ;
+  
+  SWIG_check_num_args("SetRotation",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetRotation",1,"guiex::CGUIWidget *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("SetRotation",2,"guiex::CGUIVector3 const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetRotation",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIVector3,0))){
+    SWIG_fail_ptr("CGUIWidget_SetRotation",2,SWIGTYPE_p_guiex__CGUIVector3);
+  }
+  
+  (arg1)->SetRotation((guiex::CGUIVector3 const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetRotation(lua_State* L) {
+  int argc;
+  int argv[5]={
+    1,2,3,4,5
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 2) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_guiex__CGUIVector3, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        return _wrap_CGUIWidget_SetRotation__SWIG_1(L);
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isnumber(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = lua_isnumber(L,argv[2]);
+        }
+        if (_v) {
+          {
+            _v = lua_isnumber(L,argv[3]);
+          }
+          if (_v) {
+            return _wrap_CGUIWidget_SetRotation__SWIG_0(L);
+          }
+        }
+      }
+    }
+  }
+  
+  lua_pushstring(L,"Wrong arguments for overloaded function 'CGUIWidget_SetRotation'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    SetRotation(guiex::CGUIWidget *,guiex::real,guiex::real,guiex::real)\n"
+    "    SetRotation(guiex::CGUIWidget *,guiex::CGUIVector3 const &)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_CGUIWidget_GetRotation(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIVector3 *result = 0 ;
+  
+  SWIG_check_num_args("GetRotation",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetRotation",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetRotation",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (guiex::CGUIVector3 *) &((guiex::CGUIWidget const *)arg1)->GetRotation();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIVector3,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_LocalToWorld__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIVector2 *arg2 = 0 ;
+  
+  SWIG_check_num_args("LocalToWorld",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LocalToWorld",1,"guiex::CGUIWidget *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("LocalToWorld",2,"guiex::CGUIVector2 &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_LocalToWorld",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIVector2,0))){
+    SWIG_fail_ptr("CGUIWidget_LocalToWorld",2,SWIGTYPE_p_guiex__CGUIVector2);
+  }
+  
+  (arg1)->LocalToWorld(*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_WorldToLocal__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIVector2 *arg2 = 0 ;
+  
+  SWIG_check_num_args("WorldToLocal",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("WorldToLocal",1,"guiex::CGUIWidget *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("WorldToLocal",2,"guiex::CGUIVector2 &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_WorldToLocal",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIVector2,0))){
+    SWIG_fail_ptr("CGUIWidget_WorldToLocal",2,SWIGTYPE_p_guiex__CGUIVector2);
+  }
+  
+  (arg1)->WorldToLocal(*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_LocalToWorld__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIVector3 *arg2 = 0 ;
+  
+  SWIG_check_num_args("LocalToWorld",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LocalToWorld",1,"guiex::CGUIWidget *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("LocalToWorld",2,"guiex::CGUIVector3 &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_LocalToWorld",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIVector3,0))){
+    SWIG_fail_ptr("CGUIWidget_LocalToWorld",2,SWIGTYPE_p_guiex__CGUIVector3);
+  }
+  
+  (arg1)->LocalToWorld(*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_LocalToWorld(lua_State* L) {
+  int argc;
+  int argv[3]={
+    1,2,3
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 2) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_guiex__CGUIVector2, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        return _wrap_CGUIWidget_LocalToWorld__SWIG_0(L);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_guiex__CGUIVector3, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        return _wrap_CGUIWidget_LocalToWorld__SWIG_1(L);
+      }
+    }
+  }
+  
+  lua_pushstring(L,"Wrong arguments for overloaded function 'CGUIWidget_LocalToWorld'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    LocalToWorld(guiex::CGUIWidget *,guiex::CGUIVector2 &)\n"
+    "    LocalToWorld(guiex::CGUIWidget *,guiex::CGUIVector3 &)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_CGUIWidget_WorldToLocal__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIVector3 *arg2 = 0 ;
+  
+  SWIG_check_num_args("WorldToLocal",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("WorldToLocal",1,"guiex::CGUIWidget *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("WorldToLocal",2,"guiex::CGUIVector3 &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_WorldToLocal",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIVector3,0))){
+    SWIG_fail_ptr("CGUIWidget_WorldToLocal",2,SWIGTYPE_p_guiex__CGUIVector3);
+  }
+  
+  (arg1)->WorldToLocal(*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_WorldToLocal(lua_State* L) {
+  int argc;
+  int argv[3]={
+    1,2,3
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 2) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_guiex__CGUIVector2, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        return _wrap_CGUIWidget_WorldToLocal__SWIG_0(L);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_guiex__CGUIVector3, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        return _wrap_CGUIWidget_WorldToLocal__SWIG_1(L);
+      }
+    }
+  }
+  
+  lua_pushstring(L,"Wrong arguments for overloaded function 'CGUIWidget_WorldToLocal'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    WorldToLocal(guiex::CGUIWidget *,guiex::CGUIVector2 &)\n"
+    "    WorldToLocal(guiex::CGUIWidget *,guiex::CGUIVector3 &)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_CGUIWidget_ParentToWorld(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIVector2 *arg2 = 0 ;
+  
+  SWIG_check_num_args("ParentToWorld",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ParentToWorld",1,"guiex::CGUIWidget *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("ParentToWorld",2,"guiex::CGUIVector2 &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_ParentToWorld",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIVector2,0))){
+    SWIG_fail_ptr("CGUIWidget_ParentToWorld",2,SWIGTYPE_p_guiex__CGUIVector2);
+  }
+  
+  (arg1)->ParentToWorld(*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_WorldToParent(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIVector2 *arg2 = 0 ;
+  
+  SWIG_check_num_args("WorldToParent",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("WorldToParent",1,"guiex::CGUIWidget *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("WorldToParent",2,"guiex::CGUIVector2 &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_WorldToParent",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIVector2,0))){
+    SWIG_fail_ptr("CGUIWidget_WorldToParent",2,SWIGTYPE_p_guiex__CGUIVector2);
+  }
+  
+  (arg1)->WorldToParent(*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_ParentToLocal(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIVector2 *arg2 = 0 ;
+  
+  SWIG_check_num_args("ParentToLocal",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ParentToLocal",1,"guiex::CGUIWidget *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("ParentToLocal",2,"guiex::CGUIVector2 &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_ParentToLocal",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIVector2,0))){
+    SWIG_fail_ptr("CGUIWidget_ParentToLocal",2,SWIGTYPE_p_guiex__CGUIVector2);
+  }
+  
+  (arg1)->ParentToLocal(*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_LocalToParent(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIVector2 *arg2 = 0 ;
+  
+  SWIG_check_num_args("LocalToParent",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LocalToParent",1,"guiex::CGUIWidget *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("LocalToParent",2,"guiex::CGUIVector2 &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_LocalToParent",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIVector2,0))){
+    SWIG_fail_ptr("CGUIWidget_LocalToParent",2,SWIGTYPE_p_guiex__CGUIVector2);
+  }
+  
+  (arg1)->LocalToParent(*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_GetAnchorPoint(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIVector2 *result = 0 ;
+  
+  SWIG_check_num_args("GetAnchorPoint",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetAnchorPoint",1,"guiex::CGUIWidget *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetAnchorPoint",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (guiex::CGUIVector2 *) &(arg1)->GetAnchorPoint();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIVector2,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetAnchorPoint__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIVector2 *arg2 = 0 ;
+  
+  SWIG_check_num_args("SetAnchorPoint",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetAnchorPoint",1,"guiex::CGUIWidget *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("SetAnchorPoint",2,"guiex::CGUIVector2 const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetAnchorPoint",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIVector2,0))){
+    SWIG_fail_ptr("CGUIWidget_SetAnchorPoint",2,SWIGTYPE_p_guiex__CGUIVector2);
+  }
+  
+  (arg1)->SetAnchorPoint((guiex::CGUIVector2 const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetAnchorPoint__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::real arg2 ;
+  guiex::real arg3 ;
+  
+  SWIG_check_num_args("SetAnchorPoint",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetAnchorPoint",1,"guiex::CGUIWidget *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SetAnchorPoint",2,"guiex::real");
+  if(!lua_isnumber(L,3)) SWIG_fail_arg("SetAnchorPoint",3,"guiex::real");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetAnchorPoint",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  arg2 = (guiex::real)lua_tonumber(L, 2);
+  arg3 = (guiex::real)lua_tonumber(L, 3);
+  (arg1)->SetAnchorPoint(arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetAnchorPoint(lua_State* L) {
+  int argc;
+  int argv[4]={
+    1,2,3,4
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 2) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_guiex__CGUIVector2, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        return _wrap_CGUIWidget_SetAnchorPoint__SWIG_0(L);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isnumber(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = lua_isnumber(L,argv[2]);
+        }
+        if (_v) {
+          return _wrap_CGUIWidget_SetAnchorPoint__SWIG_1(L);
+        }
+      }
+    }
+  }
+  
+  lua_pushstring(L,"Wrong arguments for overloaded function 'CGUIWidget_SetAnchorPoint'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    SetAnchorPoint(guiex::CGUIWidget *,guiex::CGUIVector2 const &)\n"
+    "    SetAnchorPoint(guiex::CGUIWidget *,guiex::real,guiex::real)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_CGUIWidget_SetMaximumSize(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUISize *arg2 = 0 ;
+  
+  SWIG_check_num_args("SetMaximumSize",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetMaximumSize",1,"guiex::CGUIWidget *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("SetMaximumSize",2,"guiex::CGUISize const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetMaximumSize",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUISize,0))){
+    SWIG_fail_ptr("CGUIWidget_SetMaximumSize",2,SWIGTYPE_p_guiex__CGUISize);
+  }
+  
+  (arg1)->SetMaximumSize((guiex::CGUISize const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_GetMaximumSize(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUISize *result = 0 ;
+  
+  SWIG_check_num_args("GetMaximumSize",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetMaximumSize",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetMaximumSize",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (guiex::CGUISize *) &((guiex::CGUIWidget const *)arg1)->GetMaximumSize();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUISize,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetMinimumSize(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUISize *arg2 = 0 ;
+  
+  SWIG_check_num_args("SetMinimumSize",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetMinimumSize",1,"guiex::CGUIWidget *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("SetMinimumSize",2,"guiex::CGUISize const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetMinimumSize",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUISize,0))){
+    SWIG_fail_ptr("CGUIWidget_SetMinimumSize",2,SWIGTYPE_p_guiex__CGUISize);
+  }
+  
+  (arg1)->SetMinimumSize((guiex::CGUISize const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_GetMinimumSize(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUISize *result = 0 ;
+  
+  SWIG_check_num_args("GetMinimumSize",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetMinimumSize",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_GetMinimumSize",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (guiex::CGUISize *) &((guiex::CGUIWidget const *)arg1)->GetMinimumSize();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUISize,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetOpenWithParent(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("SetOpenWithParent",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetOpenWithParent",1,"guiex::CGUIWidget *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetOpenWithParent",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetOpenWithParent",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetOpenWithParent(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_IsOpenWithParent(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsOpenWithParent",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsOpenWithParent",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_IsOpenWithParent",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (bool)((guiex::CGUIWidget const *)arg1)->IsOpenWithParent();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetInheritAlpha(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("SetInheritAlpha",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetInheritAlpha",1,"guiex::CGUIWidget *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetInheritAlpha",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetInheritAlpha",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetInheritAlpha(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_IsInheritAlpha(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsInheritAlpha",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsInheritAlpha",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_IsInheritAlpha",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (bool)((guiex::CGUIWidget const *)arg1)->IsInheritAlpha();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetFocusAgency(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("SetFocusAgency",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetFocusAgency",1,"guiex::CGUIWidget *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetFocusAgency",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetFocusAgency",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetFocusAgency(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_IsFocusAgency(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsFocusAgency",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsFocusAgency",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_IsFocusAgency",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (bool)((guiex::CGUIWidget const *)arg1)->IsFocusAgency();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetFocusable(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("SetFocusable",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetFocusable",1,"guiex::CGUIWidget *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetFocusable",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetFocusable",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetFocusable(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_IsFocusable(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsFocusable",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsFocusable",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_IsFocusable",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (bool)((guiex::CGUIWidget const *)arg1)->IsFocusable();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_IsDerivedFocusable(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsDerivedFocusable",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsDerivedFocusable",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_IsDerivedFocusable",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (bool)((guiex::CGUIWidget const *)arg1)->IsDerivedFocusable();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetMovable(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("SetMovable",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetMovable",1,"guiex::CGUIWidget *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetMovable",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetMovable",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetMovable(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_IsMovable(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsMovable",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsMovable",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_IsMovable",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (bool)((guiex::CGUIWidget const *)arg1)->IsMovable();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetExclusive(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("SetExclusive",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetExclusive",1,"guiex::CGUIWidget *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetExclusive",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetExclusive",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetExclusive(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_IsExclusive(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsExclusive",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsExclusive",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_IsExclusive",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (bool)((guiex::CGUIWidget const *)arg1)->IsExclusive();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetHitable(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("SetHitable",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetHitable",1,"guiex::CGUIWidget *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetHitable",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetHitable",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetHitable(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_IsHitable(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsHitable",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsHitable",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_IsHitable",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (bool)((guiex::CGUIWidget const *)arg1)->IsHitable();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetMouseConsumed(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("SetMouseConsumed",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetMouseConsumed",1,"guiex::CGUIWidget *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetMouseConsumed",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetMouseConsumed",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetMouseConsumed(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_IsMouseConsumed(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsMouseConsumed",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsMouseConsumed",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_IsMouseConsumed",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (bool)((guiex::CGUIWidget const *)arg1)->IsMouseConsumed();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetResponseParentSizeChangeEvent(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("SetResponseParentSizeChangeEvent",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetResponseParentSizeChangeEvent",1,"guiex::CGUIWidget *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetResponseParentSizeChangeEvent",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetResponseParentSizeChangeEvent",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetResponseParentSizeChangeEvent(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_IsResponseParentSizeChangeEvent(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsResponseParentSizeChangeEvent",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsResponseParentSizeChangeEvent",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_IsResponseParentSizeChangeEvent",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (bool)((guiex::CGUIWidget const *)arg1)->IsResponseParentSizeChangeEvent();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetResponseUpdateEvent(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("SetResponseUpdateEvent",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetResponseUpdateEvent",1,"guiex::CGUIWidget *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetResponseUpdateEvent",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetResponseUpdateEvent",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetResponseUpdateEvent(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_IsResponseUpdateEvent(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsResponseUpdateEvent",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsResponseUpdateEvent",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_IsResponseUpdateEvent",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (bool)((guiex::CGUIWidget const *)arg1)->IsResponseUpdateEvent();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetGenerateClickEvent(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("SetGenerateClickEvent",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetGenerateClickEvent",1,"guiex::CGUIWidget *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetGenerateClickEvent",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetGenerateClickEvent",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetGenerateClickEvent(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_IsGenerateClickEvent(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsGenerateClickEvent",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsGenerateClickEvent",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_IsGenerateClickEvent",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (bool)((guiex::CGUIWidget const *)arg1)->IsGenerateClickEvent();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetGenerateDBClickEvent(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("SetGenerateDBClickEvent",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetGenerateDBClickEvent",1,"guiex::CGUIWidget *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetGenerateDBClickEvent",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetGenerateDBClickEvent",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetGenerateDBClickEvent(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_IsGenerateDBClickEvent(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsGenerateDBClickEvent",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsGenerateDBClickEvent",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_IsGenerateDBClickEvent",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (bool)((guiex::CGUIWidget const *)arg1)->IsGenerateDBClickEvent();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetGenerateMultiClickEvent(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("SetGenerateMultiClickEvent",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetGenerateMultiClickEvent",1,"guiex::CGUIWidget *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetGenerateMultiClickEvent",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_SetGenerateMultiClickEvent",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetGenerateMultiClickEvent(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_IsGenerateMultiClickEvent(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsGenerateMultiClickEvent",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsGenerateMultiClickEvent",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_IsGenerateMultiClickEvent",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = (bool)((guiex::CGUIWidget const *)arg1)->IsGenerateMultiClickEvent();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_CGUIWidget(void *obj) {
+guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUIWidget_methods[] = {
+    {"IsCreate", _wrap_CGUIWidget_IsCreate}, 
+    {"Open", _wrap_CGUIWidget_Open}, 
+    {"IsOpen", _wrap_CGUIWidget_IsOpen}, 
+    {"Close", _wrap_CGUIWidget_Close}, 
+    {"SetParent", _wrap_CGUIWidget_SetParent}, 
+    {"GetParent", _wrap_CGUIWidget_GetParent}, 
+    {"GetChild", _wrap_CGUIWidget_GetChild}, 
+    {"GetNextSibling", _wrap_CGUIWidget_GetNextSibling}, 
+    {"GetExclusiveChild", _wrap_CGUIWidget_GetExclusiveChild}, 
+    {"MoveToTop", _wrap_CGUIWidget_MoveToTop}, 
+    {"MoveDown", _wrap_CGUIWidget_MoveDown}, 
+    {"MoveUp", _wrap_CGUIWidget_MoveUp}, 
+    {"GetName", _wrap_CGUIWidget_GetName}, 
+    {"GetSceneName", _wrap_CGUIWidget_GetSceneName}, 
+    {"GetWorkingSceneName", _wrap_CGUIWidget_GetWorkingSceneName}, 
+    {"GetType", _wrap_CGUIWidget_GetType}, 
+    {"SetUserData", _wrap_CGUIWidget_SetUserData}, 
+    {"GetUserData", _wrap_CGUIWidget_GetUserData}, 
+    {"SetTextColor", _wrap_CGUIWidget_SetTextColor}, 
+    {"IsTextContentEmpty", _wrap_CGUIWidget_IsTextContentEmpty}, 
+    {"SetTextContentUTF8", _wrap_CGUIWidget_SetTextContentUTF8}, 
+    {"GetTextContentUTF8", _wrap_CGUIWidget_GetTextContentUTF8}, 
+    {"SetAutoPlayAs", _wrap_CGUIWidget_SetAutoPlayAs}, 
+    {"IsAutoPlayAs", _wrap_CGUIWidget_IsAutoPlayAs}, 
+    {"SetClipChildren", _wrap_CGUIWidget_SetClipChildren}, 
+    {"IsClipChildren", _wrap_CGUIWidget_IsClipChildren}, 
+    {"SetActivable", _wrap_CGUIWidget_SetActivable}, 
+    {"IsActivable", _wrap_CGUIWidget_IsActivable}, 
+    {"IsDerivedActivable", _wrap_CGUIWidget_IsDerivedActivable}, 
+    {"SetFocus", _wrap_CGUIWidget_SetFocus}, 
+    {"IsFocus", _wrap_CGUIWidget_IsFocus}, 
+    {"SetVisible", _wrap_CGUIWidget_SetVisible}, 
+    {"IsVisible", _wrap_CGUIWidget_IsVisible}, 
+    {"IsDerivedVisible", _wrap_CGUIWidget_IsDerivedVisible}, 
+    {"SetDisable", _wrap_CGUIWidget_SetDisable}, 
+    {"IsDisable", _wrap_CGUIWidget_IsDisable}, 
+    {"IsDerivedDisable", _wrap_CGUIWidget_IsDerivedDisable}, 
+    {"SetAlpha", _wrap_CGUIWidget_SetAlpha}, 
+    {"GetAlpha", _wrap_CGUIWidget_GetAlpha}, 
+    {"GetDerivedAlpha", _wrap_CGUIWidget_GetDerivedAlpha}, 
+    {"SetScale", _wrap_CGUIWidget_SetScale}, 
+    {"GetScale", _wrap_CGUIWidget_GetScale}, 
+    {"GetDerivedScale", _wrap_CGUIWidget_GetDerivedScale}, 
+    {"SetColor", _wrap_CGUIWidget_SetColor}, 
+    {"GetColor", _wrap_CGUIWidget_GetColor}, 
+    {"GetWidgetAtPoint", _wrap_CGUIWidget_GetWidgetAtPoint}, 
+    {"HitTest", _wrap_CGUIWidget_HitTest}, 
+    {"SetImage", _wrap_CGUIWidget_SetImage}, 
+    {"HasImage", _wrap_CGUIWidget_HasImage}, 
+    {"GetImage", _wrap_CGUIWidget_GetImage}, 
+    {"SetAnimation", _wrap_CGUIWidget_SetAnimation}, 
+    {"GetAnimation", _wrap_CGUIWidget_GetAnimation}, 
+    {"SetAs", _wrap_CGUIWidget_SetAs}, 
+    {"HasAs", _wrap_CGUIWidget_HasAs}, 
+    {"GetAs", _wrap_CGUIWidget_GetAs}, 
+    {"PlayAs", _wrap_CGUIWidget_PlayAs}, 
+    {"IsAsPlaying", _wrap_CGUIWidget_IsAsPlaying}, 
+    {"StopAs", _wrap_CGUIWidget_StopAs}, 
+    {"StopAll", _wrap_CGUIWidget_StopAll}, 
+    {"SetProperty", _wrap_CGUIWidget_SetProperty}, 
+    {"GetProperty", _wrap_CGUIWidget_GetProperty}, 
+    {"ClearProperty", _wrap_CGUIWidget_ClearProperty}, 
+    {"InsertProperty", _wrap_CGUIWidget_InsertProperty}, 
+    {"LoadProperty", _wrap_CGUIWidget_LoadProperty}, 
+    {"GenerateProperty", _wrap_CGUIWidget_GenerateProperty}, 
+    {"ProcessProperty", _wrap_CGUIWidget_ProcessProperty}, 
+    {"RegisterUIEvent", _wrap_CGUIWidget_RegisterUIEvent}, 
+    {"UnregisterUIEvent", _wrap_CGUIWidget_UnregisterUIEvent}, 
+    {"RegisterSound", _wrap_CGUIWidget_RegisterSound}, 
+    {"UnregisterSound", _wrap_CGUIWidget_UnregisterSound}, 
+    {"RegisterScriptCallbackFunc", _wrap_CGUIWidget_RegisterScriptCallbackFunc}, 
+    {"UnregisterScriptCallbackFunc", _wrap_CGUIWidget_UnregisterScriptCallbackFunc}, 
+    {"HasScriptCallbackFunc", _wrap_CGUIWidget_HasScriptCallbackFunc}, 
+    {"GetScriptCallbackFunc", _wrap_CGUIWidget_GetScriptCallbackFunc}, 
+    {"SetPosition", _wrap_CGUIWidget_SetPosition}, 
+    {"GetPosition", _wrap_CGUIWidget_GetPosition}, 
+    {"SetPixelPosition", _wrap_CGUIWidget_SetPixelPosition}, 
+    {"GetPixelPosition", _wrap_CGUIWidget_GetPixelPosition}, 
+    {"SetPositionType", _wrap_CGUIWidget_SetPositionType}, 
+    {"GetPositionType", _wrap_CGUIWidget_GetPositionType}, 
+    {"SetSize", _wrap_CGUIWidget_SetSize}, 
+    {"GetSize", _wrap_CGUIWidget_GetSize}, 
+    {"SetPixelSize", _wrap_CGUIWidget_SetPixelSize}, 
+    {"GetPixelSize", _wrap_CGUIWidget_GetPixelSize}, 
+    {"SetSizeType", _wrap_CGUIWidget_SetSizeType}, 
+    {"GetSizeType", _wrap_CGUIWidget_GetSizeType}, 
+    {"SetRotation", _wrap_CGUIWidget_SetRotation}, 
+    {"GetRotation", _wrap_CGUIWidget_GetRotation}, 
+    {"LocalToWorld", _wrap_CGUIWidget_LocalToWorld}, 
+    {"WorldToLocal", _wrap_CGUIWidget_WorldToLocal}, 
+    {"ParentToWorld", _wrap_CGUIWidget_ParentToWorld}, 
+    {"WorldToParent", _wrap_CGUIWidget_WorldToParent}, 
+    {"ParentToLocal", _wrap_CGUIWidget_ParentToLocal}, 
+    {"LocalToParent", _wrap_CGUIWidget_LocalToParent}, 
+    {"GetAnchorPoint", _wrap_CGUIWidget_GetAnchorPoint}, 
+    {"SetAnchorPoint", _wrap_CGUIWidget_SetAnchorPoint}, 
+    {"SetMaximumSize", _wrap_CGUIWidget_SetMaximumSize}, 
+    {"GetMaximumSize", _wrap_CGUIWidget_GetMaximumSize}, 
+    {"SetMinimumSize", _wrap_CGUIWidget_SetMinimumSize}, 
+    {"GetMinimumSize", _wrap_CGUIWidget_GetMinimumSize}, 
+    {"SetOpenWithParent", _wrap_CGUIWidget_SetOpenWithParent}, 
+    {"IsOpenWithParent", _wrap_CGUIWidget_IsOpenWithParent}, 
+    {"SetInheritAlpha", _wrap_CGUIWidget_SetInheritAlpha}, 
+    {"IsInheritAlpha", _wrap_CGUIWidget_IsInheritAlpha}, 
+    {"SetFocusAgency", _wrap_CGUIWidget_SetFocusAgency}, 
+    {"IsFocusAgency", _wrap_CGUIWidget_IsFocusAgency}, 
+    {"SetFocusable", _wrap_CGUIWidget_SetFocusable}, 
+    {"IsFocusable", _wrap_CGUIWidget_IsFocusable}, 
+    {"IsDerivedFocusable", _wrap_CGUIWidget_IsDerivedFocusable}, 
+    {"SetMovable", _wrap_CGUIWidget_SetMovable}, 
+    {"IsMovable", _wrap_CGUIWidget_IsMovable}, 
+    {"SetExclusive", _wrap_CGUIWidget_SetExclusive}, 
+    {"IsExclusive", _wrap_CGUIWidget_IsExclusive}, 
+    {"SetHitable", _wrap_CGUIWidget_SetHitable}, 
+    {"IsHitable", _wrap_CGUIWidget_IsHitable}, 
+    {"SetMouseConsumed", _wrap_CGUIWidget_SetMouseConsumed}, 
+    {"IsMouseConsumed", _wrap_CGUIWidget_IsMouseConsumed}, 
+    {"SetResponseParentSizeChangeEvent", _wrap_CGUIWidget_SetResponseParentSizeChangeEvent}, 
+    {"IsResponseParentSizeChangeEvent", _wrap_CGUIWidget_IsResponseParentSizeChangeEvent}, 
+    {"SetResponseUpdateEvent", _wrap_CGUIWidget_SetResponseUpdateEvent}, 
+    {"IsResponseUpdateEvent", _wrap_CGUIWidget_IsResponseUpdateEvent}, 
+    {"SetGenerateClickEvent", _wrap_CGUIWidget_SetGenerateClickEvent}, 
+    {"IsGenerateClickEvent", _wrap_CGUIWidget_IsGenerateClickEvent}, 
+    {"SetGenerateDBClickEvent", _wrap_CGUIWidget_SetGenerateDBClickEvent}, 
+    {"IsGenerateDBClickEvent", _wrap_CGUIWidget_IsGenerateDBClickEvent}, 
+    {"SetGenerateMultiClickEvent", _wrap_CGUIWidget_SetGenerateMultiClickEvent}, 
+    {"IsGenerateMultiClickEvent", _wrap_CGUIWidget_IsGenerateMultiClickEvent}, 
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIWidget_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIWidget_bases[] = {0};
+static const char *swig_guiex_CGUIWidget_base_names[] = {0};
+static swig_lua_class _wrap_class_guiex_CGUIWidget = { "CGUIWidget", &SWIGTYPE_p_guiex__CGUIWidget,0, swig_delete_CGUIWidget, swig_guiex_CGUIWidget_methods, swig_guiex_CGUIWidget_attributes, swig_guiex_CGUIWidget_bases, swig_guiex_CGUIWidget_base_names };
+
+static void swig_delete_CGUIWgtScrollbar(void *obj) {
+guiex::CGUIWgtScrollbar *arg1 = (guiex::CGUIWgtScrollbar *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUIWgtScrollbar_methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIWgtScrollbar_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIWgtScrollbar_bases[] = {0,0};
+static const char *swig_guiex_CGUIWgtScrollbar_base_names[] = {"guiex::CGUIWidget *",0};
+static swig_lua_class _wrap_class_guiex_CGUIWgtScrollbar = { "CGUIWgtScrollbar", &SWIGTYPE_p_guiex__CGUIWgtScrollbar,0, swig_delete_CGUIWgtScrollbar, swig_guiex_CGUIWgtScrollbar_methods, swig_guiex_CGUIWgtScrollbar_attributes, swig_guiex_CGUIWgtScrollbar_bases, swig_guiex_CGUIWgtScrollbar_base_names };
+
+static void swig_delete_CGUIWgtScrollPanel(void *obj) {
+guiex::CGUIWgtScrollPanel *arg1 = (guiex::CGUIWgtScrollPanel *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUIWgtScrollPanel_methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIWgtScrollPanel_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIWgtScrollPanel_bases[] = {0,0};
+static const char *swig_guiex_CGUIWgtScrollPanel_base_names[] = {"guiex::CGUIWidget *",0};
+static swig_lua_class _wrap_class_guiex_CGUIWgtScrollPanel = { "CGUIWgtScrollPanel", &SWIGTYPE_p_guiex__CGUIWgtScrollPanel,0, swig_delete_CGUIWgtScrollPanel, swig_guiex_CGUIWgtScrollPanel_methods, swig_guiex_CGUIWgtScrollPanel_attributes, swig_guiex_CGUIWgtScrollPanel_bases, swig_guiex_CGUIWgtScrollPanel_base_names };
+
+static void swig_delete_CGUIWgtCheckButton(void *obj) {
+guiex::CGUIWgtCheckButton *arg1 = (guiex::CGUIWgtCheckButton *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUIWgtCheckButton_methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIWgtCheckButton_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIWgtCheckButton_bases[] = {0,0};
+static const char *swig_guiex_CGUIWgtCheckButton_base_names[] = {"guiex::CGUIWidget *",0};
+static swig_lua_class _wrap_class_guiex_CGUIWgtCheckButton = { "CGUIWgtCheckButton", &SWIGTYPE_p_guiex__CGUIWgtCheckButton,0, swig_delete_CGUIWgtCheckButton, swig_guiex_CGUIWgtCheckButton_methods, swig_guiex_CGUIWgtCheckButton_attributes, swig_guiex_CGUIWgtCheckButton_bases, swig_guiex_CGUIWgtCheckButton_base_names };
+
+static void swig_delete_CGUIWgtRadioButton(void *obj) {
+guiex::CGUIWgtRadioButton *arg1 = (guiex::CGUIWgtRadioButton *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUIWgtRadioButton_methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIWgtRadioButton_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIWgtRadioButton_bases[] = {0,0};
+static const char *swig_guiex_CGUIWgtRadioButton_base_names[] = {"guiex::CGUIWgtCheckButton *",0};
+static swig_lua_class _wrap_class_guiex_CGUIWgtRadioButton = { "CGUIWgtRadioButton", &SWIGTYPE_p_guiex__CGUIWgtRadioButton,0, swig_delete_CGUIWgtRadioButton, swig_guiex_CGUIWgtRadioButton_methods, swig_guiex_CGUIWgtRadioButton_attributes, swig_guiex_CGUIWgtRadioButton_bases, swig_guiex_CGUIWgtRadioButton_base_names };
+
+static void swig_delete_CGUIWgtButton(void *obj) {
+guiex::CGUIWgtButton *arg1 = (guiex::CGUIWgtButton *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUIWgtButton_methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIWgtButton_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIWgtButton_bases[] = {0,0};
+static const char *swig_guiex_CGUIWgtButton_base_names[] = {"guiex::CGUIWidget *",0};
+static swig_lua_class _wrap_class_guiex_CGUIWgtButton = { "CGUIWgtButton", &SWIGTYPE_p_guiex__CGUIWgtButton,0, swig_delete_CGUIWgtButton, swig_guiex_CGUIWgtButton_methods, swig_guiex_CGUIWgtButton_attributes, swig_guiex_CGUIWgtButton_bases, swig_guiex_CGUIWgtButton_base_names };
+
+static void swig_delete_CGUIWgtEditBox(void *obj) {
+guiex::CGUIWgtEditBox *arg1 = (guiex::CGUIWgtEditBox *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUIWgtEditBox_methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIWgtEditBox_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIWgtEditBox_bases[] = {0,0};
+static const char *swig_guiex_CGUIWgtEditBox_base_names[] = {"guiex::CGUIWidget *",0};
+static swig_lua_class _wrap_class_guiex_CGUIWgtEditBox = { "CGUIWgtEditBox", &SWIGTYPE_p_guiex__CGUIWgtEditBox,0, swig_delete_CGUIWgtEditBox, swig_guiex_CGUIWgtEditBox_methods, swig_guiex_CGUIWgtEditBox_attributes, swig_guiex_CGUIWgtEditBox_bases, swig_guiex_CGUIWgtEditBox_base_names };
+
+static void swig_delete_CGUIWgtEmptyNode(void *obj) {
+guiex::CGUIWgtEmptyNode *arg1 = (guiex::CGUIWgtEmptyNode *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUIWgtEmptyNode_methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIWgtEmptyNode_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIWgtEmptyNode_bases[] = {0,0};
+static const char *swig_guiex_CGUIWgtEmptyNode_base_names[] = {"guiex::CGUIWidget *",0};
+static swig_lua_class _wrap_class_guiex_CGUIWgtEmptyNode = { "CGUIWgtEmptyNode", &SWIGTYPE_p_guiex__CGUIWgtEmptyNode,0, swig_delete_CGUIWgtEmptyNode, swig_guiex_CGUIWgtEmptyNode_methods, swig_guiex_CGUIWgtEmptyNode_attributes, swig_guiex_CGUIWgtEmptyNode_bases, swig_guiex_CGUIWgtEmptyNode_base_names };
+
+static void swig_delete_CGUIWgtPanel(void *obj) {
+guiex::CGUIWgtPanel *arg1 = (guiex::CGUIWgtPanel *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUIWgtPanel_methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIWgtPanel_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIWgtPanel_bases[] = {0,0};
+static const char *swig_guiex_CGUIWgtPanel_base_names[] = {"guiex::CGUIWidget *",0};
+static swig_lua_class _wrap_class_guiex_CGUIWgtPanel = { "CGUIWgtPanel", &SWIGTYPE_p_guiex__CGUIWgtPanel,0, swig_delete_CGUIWgtPanel, swig_guiex_CGUIWgtPanel_methods, swig_guiex_CGUIWgtPanel_attributes, swig_guiex_CGUIWgtPanel_bases, swig_guiex_CGUIWgtPanel_base_names };
+
+static void swig_delete_CGUIWgtStatic(void *obj) {
+guiex::CGUIWgtStatic *arg1 = (guiex::CGUIWgtStatic *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUIWgtStatic_methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIWgtStatic_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIWgtStatic_bases[] = {0,0};
+static const char *swig_guiex_CGUIWgtStatic_base_names[] = {"guiex::CGUIWidget *",0};
+static swig_lua_class _wrap_class_guiex_CGUIWgtStatic = { "CGUIWgtStatic", &SWIGTYPE_p_guiex__CGUIWgtStatic,0, swig_delete_CGUIWgtStatic, swig_guiex_CGUIWgtStatic_methods, swig_guiex_CGUIWgtStatic_attributes, swig_guiex_CGUIWgtStatic_bases, swig_guiex_CGUIWgtStatic_base_names };
+
+static void swig_delete_CGUIWgtStaticImage(void *obj) {
+guiex::CGUIWgtStaticImage *arg1 = (guiex::CGUIWgtStaticImage *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUIWgtStaticImage_methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIWgtStaticImage_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIWgtStaticImage_bases[] = {0,0};
+static const char *swig_guiex_CGUIWgtStaticImage_base_names[] = {"guiex::CGUIWgtStatic *",0};
+static swig_lua_class _wrap_class_guiex_CGUIWgtStaticImage = { "CGUIWgtStaticImage", &SWIGTYPE_p_guiex__CGUIWgtStaticImage,0, swig_delete_CGUIWgtStaticImage, swig_guiex_CGUIWgtStaticImage_methods, swig_guiex_CGUIWgtStaticImage_attributes, swig_guiex_CGUIWgtStaticImage_bases, swig_guiex_CGUIWgtStaticImage_base_names };
+
+static void swig_delete_CGUIWgtStaticText(void *obj) {
+guiex::CGUIWgtStaticText *arg1 = (guiex::CGUIWgtStaticText *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUIWgtStaticText_methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIWgtStaticText_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIWgtStaticText_bases[] = {0,0};
+static const char *swig_guiex_CGUIWgtStaticText_base_names[] = {"guiex::CGUIWgtStatic *",0};
+static swig_lua_class _wrap_class_guiex_CGUIWgtStaticText = { "CGUIWgtStaticText", &SWIGTYPE_p_guiex__CGUIWgtStaticText,0, swig_delete_CGUIWgtStaticText, swig_guiex_CGUIWgtStaticText_methods, swig_guiex_CGUIWgtStaticText_attributes, swig_guiex_CGUIWgtStaticText_bases, swig_guiex_CGUIWgtStaticText_base_names };
+
+static int _wrap_CGUISystem_Instance(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *result = 0 ;
+  
+  SWIG_check_num_args("guiex::CGUISystem::Instance",0,0)
+  result = (guiex::CGUISystem *)guiex::CGUISystem::Instance();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUISystem,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUISystem_SetDrawExtraInfo(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("SetDrawExtraInfo",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetDrawExtraInfo",1,"guiex::CGUISystem *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetDrawExtraInfo",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_SetDrawExtraInfo",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetDrawExtraInfo(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUISystem_IsDrawExtraInfo(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsDrawExtraInfo",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsDrawExtraInfo",1,"guiex::CGUISystem const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_IsDrawExtraInfo",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  result = (bool)((guiex::CGUISystem const *)arg1)->IsDrawExtraInfo();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUISystem_GetDataPath(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  guiex::CGUIString *result = 0 ;
+  
+  SWIG_check_num_args("GetDataPath",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetDataPath",1,"guiex::CGUISystem const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_GetDataPath",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  result = (guiex::CGUIString *) &((guiex::CGUISystem const *)arg1)->GetDataPath();
+  lua_pushlstring(L,result->data(),result->size()); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUISystem_GenerateAnonymousName(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  char *result = 0 ;
+  
+  SWIG_check_num_args("GenerateAnonymousName",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GenerateAnonymousName",1,"guiex::CGUISystem *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_GenerateAnonymousName",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  result = (char *)(arg1)->GenerateAnonymousName();
+  lua_pushstring(L,(const char *)result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUISystem_GetFocusWidget(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  guiex::CGUIWidget *result = 0 ;
+  
+  SWIG_check_num_args("GetFocusWidget",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetFocusWidget",1,"guiex::CGUISystem *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_GetFocusWidget",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  result = (guiex::CGUIWidget *)(arg1)->GetFocusWidget();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIWidget,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUISystem_GetWidgetUnderPoint(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  guiex::CGUIVector2 *arg2 = 0 ;
+  guiex::CGUIWidget *result = 0 ;
+  
+  SWIG_check_num_args("GetWidgetUnderPoint",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetWidgetUnderPoint",1,"guiex::CGUISystem *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("GetWidgetUnderPoint",2,"guiex::CGUIVector2 const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_GetWidgetUnderPoint",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIVector2,0))){
+    SWIG_fail_ptr("CGUISystem_GetWidgetUnderPoint",2,SWIGTYPE_p_guiex__CGUIVector2);
+  }
+  
+  result = (guiex::CGUIWidget *)(arg1)->GetWidgetUnderPoint((guiex::CGUIVector2 const &)*arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIWidget,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUISystem_OpenPage(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  guiex::CGUIWidget *arg2 = (guiex::CGUIWidget *) 0 ;
+  
+  SWIG_check_num_args("OpenPage",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("OpenPage",1,"guiex::CGUISystem *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("OpenPage",2,"guiex::CGUIWidget *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_OpenPage",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUISystem_OpenPage",2,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  (arg1)->OpenPage(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUISystem_ClosePage(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  guiex::CGUIWidget *arg2 = (guiex::CGUIWidget *) 0 ;
+  
+  SWIG_check_num_args("ClosePage",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ClosePage",1,"guiex::CGUISystem *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("ClosePage",2,"guiex::CGUIWidget *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_ClosePage",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUISystem_ClosePage",2,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  (arg1)->ClosePage(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUISystem_GetOpenedPageNum(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  guiex::uint32 result;
+  
+  SWIG_check_num_args("GetOpenedPageNum",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetOpenedPageNum",1,"guiex::CGUISystem const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_GetOpenedPageNum",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  result = (guiex::uint32)((guiex::CGUISystem const *)arg1)->GetOpenedPageNum();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUISystem_GetOpenedPageByIndex(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  guiex::uint32 arg2 ;
+  guiex::CGUIWidget *result = 0 ;
+  
+  SWIG_check_num_args("GetOpenedPageByIndex",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetOpenedPageByIndex",1,"guiex::CGUISystem *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("GetOpenedPageByIndex",2,"guiex::uint32");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_GetOpenedPageByIndex",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  arg2 = (guiex::uint32)lua_tonumber(L, 2);
+  result = (guiex::CGUIWidget *)(arg1)->GetOpenedPageByIndex(arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIWidget,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUISystem_OpenDialog(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  guiex::CGUIWidget *arg2 = (guiex::CGUIWidget *) 0 ;
+  
+  SWIG_check_num_args("OpenDialog",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("OpenDialog",1,"guiex::CGUISystem *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("OpenDialog",2,"guiex::CGUIWidget *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_OpenDialog",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUISystem_OpenDialog",2,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  (arg1)->OpenDialog(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUISystem_GetTopestDialog(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  guiex::CGUIWidget *result = 0 ;
+  
+  SWIG_check_num_args("GetTopestDialog",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetTopestDialog",1,"guiex::CGUISystem const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_GetTopestDialog",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  result = (guiex::CGUIWidget *)((guiex::CGUISystem const *)arg1)->GetTopestDialog();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIWidget,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUISystem_CloseDialog(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  guiex::CGUIWidget *arg2 = (guiex::CGUIWidget *) 0 ;
+  
+  SWIG_check_num_args("CloseDialog",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CloseDialog",1,"guiex::CGUISystem *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("CloseDialog",2,"guiex::CGUIWidget *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_CloseDialog",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUISystem_CloseDialog",2,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  (arg1)->CloseDialog(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUISystem_OpenPopupWidget(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  guiex::CGUIWidget *arg2 = (guiex::CGUIWidget *) 0 ;
+  
+  SWIG_check_num_args("OpenPopupWidget",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("OpenPopupWidget",1,"guiex::CGUISystem *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("OpenPopupWidget",2,"guiex::CGUIWidget *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_OpenPopupWidget",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUISystem_OpenPopupWidget",2,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  (arg1)->OpenPopupWidget(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUISystem_GetCurrentPopupWidget(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  guiex::CGUIWidget *result = 0 ;
+  
+  SWIG_check_num_args("GetCurrentPopupWidget",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetCurrentPopupWidget",1,"guiex::CGUISystem const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_GetCurrentPopupWidget",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  result = (guiex::CGUIWidget *)((guiex::CGUISystem const *)arg1)->GetCurrentPopupWidget();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIWidget,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUISystem_ClosePopupWidget(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  guiex::CGUIWidget *arg2 = (guiex::CGUIWidget *) 0 ;
+  
+  SWIG_check_num_args("ClosePopupWidget",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ClosePopupWidget",1,"guiex::CGUISystem *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("ClosePopupWidget",2,"guiex::CGUIWidget *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_ClosePopupWidget",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUISystem_ClosePopupWidget",2,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  (arg1)->ClosePopupWidget(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUISystem_GetCurrentRootWidget(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  guiex::CGUIWidget *result = 0 ;
+  
+  SWIG_check_num_args("GetCurrentRootWidget",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetCurrentRootWidget",1,"guiex::CGUISystem const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_GetCurrentRootWidget",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  result = (guiex::CGUIWidget *)((guiex::CGUISystem const *)arg1)->GetCurrentRootWidget();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIWidget,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUISystem_CloseAll(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  
+  SWIG_check_num_args("CloseAll",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CloseAll",1,"guiex::CGUISystem *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_CloseAll",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  (arg1)->CloseAll();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUISystem_GetScreenSize(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  guiex::CGUISize *result = 0 ;
+  
+  SWIG_check_num_args("GetScreenSize",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetScreenSize",1,"guiex::CGUISystem const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_GetScreenSize",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  result = (guiex::CGUISize *) &((guiex::CGUISystem const *)arg1)->GetScreenSize();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUISize,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUISystem_GetScreenWidth(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  guiex::uint32 result;
+  
+  SWIG_check_num_args("GetScreenWidth",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetScreenWidth",1,"guiex::CGUISystem const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_GetScreenWidth",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  result = (guiex::uint32)((guiex::CGUISystem const *)arg1)->GetScreenWidth();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUISystem_GetScreenHeight(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  guiex::uint32 result;
+  
+  SWIG_check_num_args("GetScreenHeight",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetScreenHeight",1,"guiex::CGUISystem const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_GetScreenHeight",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  result = (guiex::uint32)((guiex::CGUISystem const *)arg1)->GetScreenHeight();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUISystem_GetScreenPos(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  guiex::CGUIVector2 *result = 0 ;
+  
+  SWIG_check_num_args("GetScreenPos",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetScreenPos",1,"guiex::CGUISystem const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_GetScreenPos",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  result = (guiex::CGUIVector2 *) &((guiex::CGUISystem const *)arg1)->GetScreenPos();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIVector2,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUISystem_GetScreenRect(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  guiex::CGUIRect *result = 0 ;
+  
+  SWIG_check_num_args("GetScreenRect",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetScreenRect",1,"guiex::CGUISystem const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_GetScreenRect",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  result = (guiex::CGUIRect *) &((guiex::CGUISystem const *)arg1)->GetScreenRect();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIRect,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUISystem_SendUIEvent(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  guiex::CGUIEventUI *arg2 = (guiex::CGUIEventUI *) 0 ;
+  
+  SWIG_check_num_args("SendUIEvent",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SendUIEvent",1,"guiex::CGUISystem *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("SendUIEvent",2,"guiex::CGUIEventUI *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_SendUIEvent",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIEventUI,0))){
+    SWIG_fail_ptr("CGUISystem_SendUIEvent",2,SWIGTYPE_p_guiex__CGUIEventUI);
+  }
+  
+  (arg1)->SendUIEvent(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUISystem_SendEvent(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  guiex::CGUIEvent *arg2 = (guiex::CGUIEvent *) 0 ;
+  
+  SWIG_check_num_args("SendEvent",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SendEvent",1,"guiex::CGUISystem *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("SendEvent",2,"guiex::CGUIEvent *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_SendEvent",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIEvent,0))){
+    SWIG_fail_ptr("CGUISystem_SendEvent",2,SWIGTYPE_p_guiex__CGUIEvent);
+  }
+  
+  (arg1)->SendEvent(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUISystem_GetSystemTime(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  guiex::real result;
+  
+  SWIG_check_num_args("GetSystemTime",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetSystemTime",1,"guiex::CGUISystem const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_GetSystemTime",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  result = (guiex::real)((guiex::CGUISystem const *)arg1)->GetSystemTime();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUISystem_GetFPS(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  guiex::int32 result;
+  
+  SWIG_check_num_args("GetFPS",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetFPS",1,"guiex::CGUISystem const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_GetFPS",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  result = (guiex::int32)((guiex::CGUISystem const *)arg1)->GetFPS();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_CGUISystem(void *obj) {
+guiex::CGUISystem *arg1 = (guiex::CGUISystem *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUISystem_methods[] = {
+    {"SetDrawExtraInfo", _wrap_CGUISystem_SetDrawExtraInfo}, 
+    {"IsDrawExtraInfo", _wrap_CGUISystem_IsDrawExtraInfo}, 
+    {"GetDataPath", _wrap_CGUISystem_GetDataPath}, 
+    {"GenerateAnonymousName", _wrap_CGUISystem_GenerateAnonymousName}, 
+    {"GetFocusWidget", _wrap_CGUISystem_GetFocusWidget}, 
+    {"GetWidgetUnderPoint", _wrap_CGUISystem_GetWidgetUnderPoint}, 
+    {"OpenPage", _wrap_CGUISystem_OpenPage}, 
+    {"ClosePage", _wrap_CGUISystem_ClosePage}, 
+    {"GetOpenedPageNum", _wrap_CGUISystem_GetOpenedPageNum}, 
+    {"GetOpenedPageByIndex", _wrap_CGUISystem_GetOpenedPageByIndex}, 
+    {"OpenDialog", _wrap_CGUISystem_OpenDialog}, 
+    {"GetTopestDialog", _wrap_CGUISystem_GetTopestDialog}, 
+    {"CloseDialog", _wrap_CGUISystem_CloseDialog}, 
+    {"OpenPopupWidget", _wrap_CGUISystem_OpenPopupWidget}, 
+    {"GetCurrentPopupWidget", _wrap_CGUISystem_GetCurrentPopupWidget}, 
+    {"ClosePopupWidget", _wrap_CGUISystem_ClosePopupWidget}, 
+    {"GetCurrentRootWidget", _wrap_CGUISystem_GetCurrentRootWidget}, 
+    {"CloseAll", _wrap_CGUISystem_CloseAll}, 
+    {"GetScreenSize", _wrap_CGUISystem_GetScreenSize}, 
+    {"GetScreenWidth", _wrap_CGUISystem_GetScreenWidth}, 
+    {"GetScreenHeight", _wrap_CGUISystem_GetScreenHeight}, 
+    {"GetScreenPos", _wrap_CGUISystem_GetScreenPos}, 
+    {"GetScreenRect", _wrap_CGUISystem_GetScreenRect}, 
+    {"SendUIEvent", _wrap_CGUISystem_SendUIEvent}, 
+    {"SendEvent", _wrap_CGUISystem_SendEvent}, 
+    {"GetSystemTime", _wrap_CGUISystem_GetSystemTime}, 
+    {"GetFPS", _wrap_CGUISystem_GetFPS}, 
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUISystem_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUISystem_bases[] = {0};
+static const char *swig_guiex_CGUISystem_base_names[] = {0};
+static swig_lua_class _wrap_class_guiex_CGUISystem = { "CGUISystem", &SWIGTYPE_p_guiex__CGUISystem,0, swig_delete_CGUISystem, swig_guiex_CGUISystem_methods, swig_guiex_CGUISystem_attributes, swig_guiex_CGUISystem_bases, swig_guiex_CGUISystem_base_names };
+
+static int _wrap_GetSystem(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *result = 0 ;
+  
+  SWIG_check_num_args("guiex::GetSystem",0,0)
+  result = (guiex::CGUISystem *)guiex::GetSystem();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUISystem,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_OpenDialog(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  
+  SWIG_check_num_args("guiex::OpenDialog",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::OpenDialog",1,"guiex::CGUIWidget *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("OpenDialog",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  guiex::OpenDialog(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CloseDialog(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  
+  SWIG_check_num_args("guiex::CloseDialog",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::CloseDialog",1,"guiex::CGUIWidget *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CloseDialog",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  guiex::CloseDialog(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_OpenPage(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  
+  SWIG_check_num_args("guiex::OpenPage",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::OpenPage",1,"guiex::CGUIWidget *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("OpenPage",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  guiex::OpenPage(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ClosePage(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  
+  SWIG_check_num_args("guiex::ClosePage",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::ClosePage",1,"guiex::CGUIWidget *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("ClosePage",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  guiex::ClosePage(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SendUIEvent__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIString *arg1 = 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  guiex::CGUIString *arg3 = 0 ;
+  guiex::CGUIString *arg4 = 0 ;
+  guiex::CGUIString *arg5 = 0 ;
+  guiex::CGUIString *arg6 = 0 ;
+  guiex::CGUIString *arg7 = 0 ;
+  guiex::CGUIString *arg8 = 0 ;
+  guiex::CGUIString *arg9 = 0 ;
+  guiex::CGUIString *arg10 = 0 ;
+  std::string temp1 ;
+  std::string temp2 ;
+  std::string temp3 ;
+  std::string temp4 ;
+  std::string temp5 ;
+  std::string temp6 ;
+  std::string temp7 ;
+  std::string temp8 ;
+  std::string temp9 ;
+  std::string temp10 ;
+  
+  SWIG_check_num_args("guiex::SendUIEvent",10,10)
+  if(!lua_isstring(L,1)) SWIG_fail_arg("guiex::SendUIEvent",1,"guiex::CGUIString const &");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("guiex::SendUIEvent",2,"guiex::CGUIString const &");
+  if(!lua_isstring(L,3)) SWIG_fail_arg("guiex::SendUIEvent",3,"guiex::CGUIString const &");
+  if(!lua_isstring(L,4)) SWIG_fail_arg("guiex::SendUIEvent",4,"guiex::CGUIString const &");
+  if(!lua_isstring(L,5)) SWIG_fail_arg("guiex::SendUIEvent",5,"guiex::CGUIString const &");
+  if(!lua_isstring(L,6)) SWIG_fail_arg("guiex::SendUIEvent",6,"guiex::CGUIString const &");
+  if(!lua_isstring(L,7)) SWIG_fail_arg("guiex::SendUIEvent",7,"guiex::CGUIString const &");
+  if(!lua_isstring(L,8)) SWIG_fail_arg("guiex::SendUIEvent",8,"guiex::CGUIString const &");
+  if(!lua_isstring(L,9)) SWIG_fail_arg("guiex::SendUIEvent",9,"guiex::CGUIString const &");
+  if(!lua_isstring(L,10)) SWIG_fail_arg("guiex::SendUIEvent",10,"guiex::CGUIString const &");
+  temp1.assign(lua_tostring(L,1),lua_strlen(L,1)); arg1=&temp1;
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  temp3.assign(lua_tostring(L,3),lua_strlen(L,3)); arg3=&temp3;
+  temp4.assign(lua_tostring(L,4),lua_strlen(L,4)); arg4=&temp4;
+  temp5.assign(lua_tostring(L,5),lua_strlen(L,5)); arg5=&temp5;
+  temp6.assign(lua_tostring(L,6),lua_strlen(L,6)); arg6=&temp6;
+  temp7.assign(lua_tostring(L,7),lua_strlen(L,7)); arg7=&temp7;
+  temp8.assign(lua_tostring(L,8),lua_strlen(L,8)); arg8=&temp8;
+  temp9.assign(lua_tostring(L,9),lua_strlen(L,9)); arg9=&temp9;
+  temp10.assign(lua_tostring(L,10),lua_strlen(L,10)); arg10=&temp10;
+  guiex::SendUIEvent((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7,(std::string const &)*arg8,(std::string const &)*arg9,(std::string const &)*arg10);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SendUIEvent__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIString *arg1 = 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  guiex::CGUIString *arg3 = 0 ;
+  guiex::CGUIString *arg4 = 0 ;
+  guiex::CGUIString *arg5 = 0 ;
+  guiex::CGUIString *arg6 = 0 ;
+  guiex::CGUIString *arg7 = 0 ;
+  guiex::CGUIString *arg8 = 0 ;
+  guiex::CGUIString *arg9 = 0 ;
+  std::string temp1 ;
+  std::string temp2 ;
+  std::string temp3 ;
+  std::string temp4 ;
+  std::string temp5 ;
+  std::string temp6 ;
+  std::string temp7 ;
+  std::string temp8 ;
+  std::string temp9 ;
+  
+  SWIG_check_num_args("guiex::SendUIEvent",9,9)
+  if(!lua_isstring(L,1)) SWIG_fail_arg("guiex::SendUIEvent",1,"guiex::CGUIString const &");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("guiex::SendUIEvent",2,"guiex::CGUIString const &");
+  if(!lua_isstring(L,3)) SWIG_fail_arg("guiex::SendUIEvent",3,"guiex::CGUIString const &");
+  if(!lua_isstring(L,4)) SWIG_fail_arg("guiex::SendUIEvent",4,"guiex::CGUIString const &");
+  if(!lua_isstring(L,5)) SWIG_fail_arg("guiex::SendUIEvent",5,"guiex::CGUIString const &");
+  if(!lua_isstring(L,6)) SWIG_fail_arg("guiex::SendUIEvent",6,"guiex::CGUIString const &");
+  if(!lua_isstring(L,7)) SWIG_fail_arg("guiex::SendUIEvent",7,"guiex::CGUIString const &");
+  if(!lua_isstring(L,8)) SWIG_fail_arg("guiex::SendUIEvent",8,"guiex::CGUIString const &");
+  if(!lua_isstring(L,9)) SWIG_fail_arg("guiex::SendUIEvent",9,"guiex::CGUIString const &");
+  temp1.assign(lua_tostring(L,1),lua_strlen(L,1)); arg1=&temp1;
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  temp3.assign(lua_tostring(L,3),lua_strlen(L,3)); arg3=&temp3;
+  temp4.assign(lua_tostring(L,4),lua_strlen(L,4)); arg4=&temp4;
+  temp5.assign(lua_tostring(L,5),lua_strlen(L,5)); arg5=&temp5;
+  temp6.assign(lua_tostring(L,6),lua_strlen(L,6)); arg6=&temp6;
+  temp7.assign(lua_tostring(L,7),lua_strlen(L,7)); arg7=&temp7;
+  temp8.assign(lua_tostring(L,8),lua_strlen(L,8)); arg8=&temp8;
+  temp9.assign(lua_tostring(L,9),lua_strlen(L,9)); arg9=&temp9;
+  guiex::SendUIEvent((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7,(std::string const &)*arg8,(std::string const &)*arg9);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SendUIEvent__SWIG_2(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIString *arg1 = 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  guiex::CGUIString *arg3 = 0 ;
+  guiex::CGUIString *arg4 = 0 ;
+  guiex::CGUIString *arg5 = 0 ;
+  guiex::CGUIString *arg6 = 0 ;
+  guiex::CGUIString *arg7 = 0 ;
+  guiex::CGUIString *arg8 = 0 ;
+  std::string temp1 ;
+  std::string temp2 ;
+  std::string temp3 ;
+  std::string temp4 ;
+  std::string temp5 ;
+  std::string temp6 ;
+  std::string temp7 ;
+  std::string temp8 ;
+  
+  SWIG_check_num_args("guiex::SendUIEvent",8,8)
+  if(!lua_isstring(L,1)) SWIG_fail_arg("guiex::SendUIEvent",1,"guiex::CGUIString const &");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("guiex::SendUIEvent",2,"guiex::CGUIString const &");
+  if(!lua_isstring(L,3)) SWIG_fail_arg("guiex::SendUIEvent",3,"guiex::CGUIString const &");
+  if(!lua_isstring(L,4)) SWIG_fail_arg("guiex::SendUIEvent",4,"guiex::CGUIString const &");
+  if(!lua_isstring(L,5)) SWIG_fail_arg("guiex::SendUIEvent",5,"guiex::CGUIString const &");
+  if(!lua_isstring(L,6)) SWIG_fail_arg("guiex::SendUIEvent",6,"guiex::CGUIString const &");
+  if(!lua_isstring(L,7)) SWIG_fail_arg("guiex::SendUIEvent",7,"guiex::CGUIString const &");
+  if(!lua_isstring(L,8)) SWIG_fail_arg("guiex::SendUIEvent",8,"guiex::CGUIString const &");
+  temp1.assign(lua_tostring(L,1),lua_strlen(L,1)); arg1=&temp1;
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  temp3.assign(lua_tostring(L,3),lua_strlen(L,3)); arg3=&temp3;
+  temp4.assign(lua_tostring(L,4),lua_strlen(L,4)); arg4=&temp4;
+  temp5.assign(lua_tostring(L,5),lua_strlen(L,5)); arg5=&temp5;
+  temp6.assign(lua_tostring(L,6),lua_strlen(L,6)); arg6=&temp6;
+  temp7.assign(lua_tostring(L,7),lua_strlen(L,7)); arg7=&temp7;
+  temp8.assign(lua_tostring(L,8),lua_strlen(L,8)); arg8=&temp8;
+  guiex::SendUIEvent((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7,(std::string const &)*arg8);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SendUIEvent__SWIG_3(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIString *arg1 = 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  guiex::CGUIString *arg3 = 0 ;
+  guiex::CGUIString *arg4 = 0 ;
+  guiex::CGUIString *arg5 = 0 ;
+  guiex::CGUIString *arg6 = 0 ;
+  guiex::CGUIString *arg7 = 0 ;
+  std::string temp1 ;
+  std::string temp2 ;
+  std::string temp3 ;
+  std::string temp4 ;
+  std::string temp5 ;
+  std::string temp6 ;
+  std::string temp7 ;
+  
+  SWIG_check_num_args("guiex::SendUIEvent",7,7)
+  if(!lua_isstring(L,1)) SWIG_fail_arg("guiex::SendUIEvent",1,"guiex::CGUIString const &");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("guiex::SendUIEvent",2,"guiex::CGUIString const &");
+  if(!lua_isstring(L,3)) SWIG_fail_arg("guiex::SendUIEvent",3,"guiex::CGUIString const &");
+  if(!lua_isstring(L,4)) SWIG_fail_arg("guiex::SendUIEvent",4,"guiex::CGUIString const &");
+  if(!lua_isstring(L,5)) SWIG_fail_arg("guiex::SendUIEvent",5,"guiex::CGUIString const &");
+  if(!lua_isstring(L,6)) SWIG_fail_arg("guiex::SendUIEvent",6,"guiex::CGUIString const &");
+  if(!lua_isstring(L,7)) SWIG_fail_arg("guiex::SendUIEvent",7,"guiex::CGUIString const &");
+  temp1.assign(lua_tostring(L,1),lua_strlen(L,1)); arg1=&temp1;
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  temp3.assign(lua_tostring(L,3),lua_strlen(L,3)); arg3=&temp3;
+  temp4.assign(lua_tostring(L,4),lua_strlen(L,4)); arg4=&temp4;
+  temp5.assign(lua_tostring(L,5),lua_strlen(L,5)); arg5=&temp5;
+  temp6.assign(lua_tostring(L,6),lua_strlen(L,6)); arg6=&temp6;
+  temp7.assign(lua_tostring(L,7),lua_strlen(L,7)); arg7=&temp7;
+  guiex::SendUIEvent((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6,(std::string const &)*arg7);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SendUIEvent__SWIG_4(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIString *arg1 = 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  guiex::CGUIString *arg3 = 0 ;
+  guiex::CGUIString *arg4 = 0 ;
+  guiex::CGUIString *arg5 = 0 ;
+  guiex::CGUIString *arg6 = 0 ;
+  std::string temp1 ;
+  std::string temp2 ;
+  std::string temp3 ;
+  std::string temp4 ;
+  std::string temp5 ;
+  std::string temp6 ;
+  
+  SWIG_check_num_args("guiex::SendUIEvent",6,6)
+  if(!lua_isstring(L,1)) SWIG_fail_arg("guiex::SendUIEvent",1,"guiex::CGUIString const &");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("guiex::SendUIEvent",2,"guiex::CGUIString const &");
+  if(!lua_isstring(L,3)) SWIG_fail_arg("guiex::SendUIEvent",3,"guiex::CGUIString const &");
+  if(!lua_isstring(L,4)) SWIG_fail_arg("guiex::SendUIEvent",4,"guiex::CGUIString const &");
+  if(!lua_isstring(L,5)) SWIG_fail_arg("guiex::SendUIEvent",5,"guiex::CGUIString const &");
+  if(!lua_isstring(L,6)) SWIG_fail_arg("guiex::SendUIEvent",6,"guiex::CGUIString const &");
+  temp1.assign(lua_tostring(L,1),lua_strlen(L,1)); arg1=&temp1;
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  temp3.assign(lua_tostring(L,3),lua_strlen(L,3)); arg3=&temp3;
+  temp4.assign(lua_tostring(L,4),lua_strlen(L,4)); arg4=&temp4;
+  temp5.assign(lua_tostring(L,5),lua_strlen(L,5)); arg5=&temp5;
+  temp6.assign(lua_tostring(L,6),lua_strlen(L,6)); arg6=&temp6;
+  guiex::SendUIEvent((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5,(std::string const &)*arg6);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SendUIEvent__SWIG_5(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIString *arg1 = 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  guiex::CGUIString *arg3 = 0 ;
+  guiex::CGUIString *arg4 = 0 ;
+  guiex::CGUIString *arg5 = 0 ;
+  std::string temp1 ;
+  std::string temp2 ;
+  std::string temp3 ;
+  std::string temp4 ;
+  std::string temp5 ;
+  
+  SWIG_check_num_args("guiex::SendUIEvent",5,5)
+  if(!lua_isstring(L,1)) SWIG_fail_arg("guiex::SendUIEvent",1,"guiex::CGUIString const &");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("guiex::SendUIEvent",2,"guiex::CGUIString const &");
+  if(!lua_isstring(L,3)) SWIG_fail_arg("guiex::SendUIEvent",3,"guiex::CGUIString const &");
+  if(!lua_isstring(L,4)) SWIG_fail_arg("guiex::SendUIEvent",4,"guiex::CGUIString const &");
+  if(!lua_isstring(L,5)) SWIG_fail_arg("guiex::SendUIEvent",5,"guiex::CGUIString const &");
+  temp1.assign(lua_tostring(L,1),lua_strlen(L,1)); arg1=&temp1;
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  temp3.assign(lua_tostring(L,3),lua_strlen(L,3)); arg3=&temp3;
+  temp4.assign(lua_tostring(L,4),lua_strlen(L,4)); arg4=&temp4;
+  temp5.assign(lua_tostring(L,5),lua_strlen(L,5)); arg5=&temp5;
+  guiex::SendUIEvent((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4,(std::string const &)*arg5);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SendUIEvent__SWIG_6(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIString *arg1 = 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  guiex::CGUIString *arg3 = 0 ;
+  guiex::CGUIString *arg4 = 0 ;
+  std::string temp1 ;
+  std::string temp2 ;
+  std::string temp3 ;
+  std::string temp4 ;
+  
+  SWIG_check_num_args("guiex::SendUIEvent",4,4)
+  if(!lua_isstring(L,1)) SWIG_fail_arg("guiex::SendUIEvent",1,"guiex::CGUIString const &");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("guiex::SendUIEvent",2,"guiex::CGUIString const &");
+  if(!lua_isstring(L,3)) SWIG_fail_arg("guiex::SendUIEvent",3,"guiex::CGUIString const &");
+  if(!lua_isstring(L,4)) SWIG_fail_arg("guiex::SendUIEvent",4,"guiex::CGUIString const &");
+  temp1.assign(lua_tostring(L,1),lua_strlen(L,1)); arg1=&temp1;
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  temp3.assign(lua_tostring(L,3),lua_strlen(L,3)); arg3=&temp3;
+  temp4.assign(lua_tostring(L,4),lua_strlen(L,4)); arg4=&temp4;
+  guiex::SendUIEvent((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(std::string const &)*arg4);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SendUIEvent__SWIG_7(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIString *arg1 = 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  guiex::CGUIString *arg3 = 0 ;
+  std::string temp1 ;
+  std::string temp2 ;
+  std::string temp3 ;
+  
+  SWIG_check_num_args("guiex::SendUIEvent",3,3)
+  if(!lua_isstring(L,1)) SWIG_fail_arg("guiex::SendUIEvent",1,"guiex::CGUIString const &");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("guiex::SendUIEvent",2,"guiex::CGUIString const &");
+  if(!lua_isstring(L,3)) SWIG_fail_arg("guiex::SendUIEvent",3,"guiex::CGUIString const &");
+  temp1.assign(lua_tostring(L,1),lua_strlen(L,1)); arg1=&temp1;
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  temp3.assign(lua_tostring(L,3),lua_strlen(L,3)); arg3=&temp3;
+  guiex::SendUIEvent((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SendUIEvent__SWIG_8(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIString *arg1 = 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  std::string temp1 ;
+  std::string temp2 ;
+  
+  SWIG_check_num_args("guiex::SendUIEvent",2,2)
+  if(!lua_isstring(L,1)) SWIG_fail_arg("guiex::SendUIEvent",1,"guiex::CGUIString const &");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("guiex::SendUIEvent",2,"guiex::CGUIString const &");
+  temp1.assign(lua_tostring(L,1),lua_strlen(L,1)); arg1=&temp1;
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  guiex::SendUIEvent((std::string const &)*arg1,(std::string const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SendUIEvent__SWIG_9(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIString *arg1 = 0 ;
+  std::string temp1 ;
+  
+  SWIG_check_num_args("guiex::SendUIEvent",1,1)
+  if(!lua_isstring(L,1)) SWIG_fail_arg("guiex::SendUIEvent",1,"guiex::CGUIString const &");
+  temp1.assign(lua_tostring(L,1),lua_strlen(L,1)); arg1=&temp1;
+  guiex::SendUIEvent((std::string const &)*arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SendUIEvent(lua_State* L) {
+  int argc;
+  int argv[11]={
+    1,2,3,4,5,6,7,8,9,10,11
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 1) {
+    int _v;
+    {
+      _v = lua_isstring(L,argv[0]);
+    }
+    if (_v) {
+      return _wrap_SendUIEvent__SWIG_9(L);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    {
+      _v = lua_isstring(L,argv[0]);
+    }
+    if (_v) {
+      {
+        _v = lua_isstring(L,argv[1]);
+      }
+      if (_v) {
+        return _wrap_SendUIEvent__SWIG_8(L);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      _v = lua_isstring(L,argv[0]);
+    }
+    if (_v) {
+      {
+        _v = lua_isstring(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = lua_isstring(L,argv[2]);
+        }
+        if (_v) {
+          return _wrap_SendUIEvent__SWIG_7(L);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    {
+      _v = lua_isstring(L,argv[0]);
+    }
+    if (_v) {
+      {
+        _v = lua_isstring(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = lua_isstring(L,argv[2]);
+        }
+        if (_v) {
+          {
+            _v = lua_isstring(L,argv[3]);
+          }
+          if (_v) {
+            return _wrap_SendUIEvent__SWIG_6(L);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    {
+      _v = lua_isstring(L,argv[0]);
+    }
+    if (_v) {
+      {
+        _v = lua_isstring(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = lua_isstring(L,argv[2]);
+        }
+        if (_v) {
+          {
+            _v = lua_isstring(L,argv[3]);
+          }
+          if (_v) {
+            {
+              _v = lua_isstring(L,argv[4]);
+            }
+            if (_v) {
+              return _wrap_SendUIEvent__SWIG_5(L);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    {
+      _v = lua_isstring(L,argv[0]);
+    }
+    if (_v) {
+      {
+        _v = lua_isstring(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = lua_isstring(L,argv[2]);
+        }
+        if (_v) {
+          {
+            _v = lua_isstring(L,argv[3]);
+          }
+          if (_v) {
+            {
+              _v = lua_isstring(L,argv[4]);
+            }
+            if (_v) {
+              {
+                _v = lua_isstring(L,argv[5]);
+              }
+              if (_v) {
+                return _wrap_SendUIEvent__SWIG_4(L);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 7) {
+    int _v;
+    {
+      _v = lua_isstring(L,argv[0]);
+    }
+    if (_v) {
+      {
+        _v = lua_isstring(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = lua_isstring(L,argv[2]);
+        }
+        if (_v) {
+          {
+            _v = lua_isstring(L,argv[3]);
+          }
+          if (_v) {
+            {
+              _v = lua_isstring(L,argv[4]);
+            }
+            if (_v) {
+              {
+                _v = lua_isstring(L,argv[5]);
+              }
+              if (_v) {
+                {
+                  _v = lua_isstring(L,argv[6]);
+                }
+                if (_v) {
+                  return _wrap_SendUIEvent__SWIG_3(L);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 8) {
+    int _v;
+    {
+      _v = lua_isstring(L,argv[0]);
+    }
+    if (_v) {
+      {
+        _v = lua_isstring(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = lua_isstring(L,argv[2]);
+        }
+        if (_v) {
+          {
+            _v = lua_isstring(L,argv[3]);
+          }
+          if (_v) {
+            {
+              _v = lua_isstring(L,argv[4]);
+            }
+            if (_v) {
+              {
+                _v = lua_isstring(L,argv[5]);
+              }
+              if (_v) {
+                {
+                  _v = lua_isstring(L,argv[6]);
+                }
+                if (_v) {
+                  {
+                    _v = lua_isstring(L,argv[7]);
+                  }
+                  if (_v) {
+                    return _wrap_SendUIEvent__SWIG_2(L);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 9) {
+    int _v;
+    {
+      _v = lua_isstring(L,argv[0]);
+    }
+    if (_v) {
+      {
+        _v = lua_isstring(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = lua_isstring(L,argv[2]);
+        }
+        if (_v) {
+          {
+            _v = lua_isstring(L,argv[3]);
+          }
+          if (_v) {
+            {
+              _v = lua_isstring(L,argv[4]);
+            }
+            if (_v) {
+              {
+                _v = lua_isstring(L,argv[5]);
+              }
+              if (_v) {
+                {
+                  _v = lua_isstring(L,argv[6]);
+                }
+                if (_v) {
+                  {
+                    _v = lua_isstring(L,argv[7]);
+                  }
+                  if (_v) {
+                    {
+                      _v = lua_isstring(L,argv[8]);
+                    }
+                    if (_v) {
+                      return _wrap_SendUIEvent__SWIG_1(L);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 10) {
+    int _v;
+    {
+      _v = lua_isstring(L,argv[0]);
+    }
+    if (_v) {
+      {
+        _v = lua_isstring(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = lua_isstring(L,argv[2]);
+        }
+        if (_v) {
+          {
+            _v = lua_isstring(L,argv[3]);
+          }
+          if (_v) {
+            {
+              _v = lua_isstring(L,argv[4]);
+            }
+            if (_v) {
+              {
+                _v = lua_isstring(L,argv[5]);
+              }
+              if (_v) {
+                {
+                  _v = lua_isstring(L,argv[6]);
+                }
+                if (_v) {
+                  {
+                    _v = lua_isstring(L,argv[7]);
+                  }
+                  if (_v) {
+                    {
+                      _v = lua_isstring(L,argv[8]);
+                    }
+                    if (_v) {
+                      {
+                        _v = lua_isstring(L,argv[9]);
+                      }
+                      if (_v) {
+                        return _wrap_SendUIEvent__SWIG_0(L);
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  lua_pushstring(L,"Wrong arguments for overloaded function 'SendUIEvent'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    guiex::SendUIEvent(guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &)\n"
+    "    guiex::SendUIEvent(guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &)\n"
+    "    guiex::SendUIEvent(guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &)\n"
+    "    guiex::SendUIEvent(guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &)\n"
+    "    guiex::SendUIEvent(guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &)\n"
+    "    guiex::SendUIEvent(guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &)\n"
+    "    guiex::SendUIEvent(guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &)\n"
+    "    guiex::SendUIEvent(guiex::CGUIString const &,guiex::CGUIString const &,guiex::CGUIString const &)\n"
+    "    guiex::SendUIEvent(guiex::CGUIString const &,guiex::CGUIString const &)\n"
+    "    guiex::SendUIEvent(guiex::CGUIString const &)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_CGUIWidgetUtility_GetWidgetInfo__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString result;
+  
+  SWIG_check_num_args("guiex::CGUIWidgetUtility::GetWidgetInfo",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::CGUIWidgetUtility::GetWidgetInfo",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidgetUtility_GetWidgetInfo",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = guiex::CGUIWidgetUtility::GetWidgetInfo((guiex::CGUIWidget const *)arg1);
+  lua_pushlstring(L,(&result)->data(),(&result)->size()); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidgetUtility_GetWidgetInfo__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIString *arg1 = 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  std::string temp1 ;
+  std::string temp2 ;
+  guiex::CGUIString result;
+  
+  SWIG_check_num_args("guiex::CGUIWidgetUtility::GetWidgetInfo",2,2)
+  if(!lua_isstring(L,1)) SWIG_fail_arg("guiex::CGUIWidgetUtility::GetWidgetInfo",1,"guiex::CGUIString const &");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("guiex::CGUIWidgetUtility::GetWidgetInfo",2,"guiex::CGUIString const &");
+  temp1.assign(lua_tostring(L,1),lua_strlen(L,1)); arg1=&temp1;
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  result = guiex::CGUIWidgetUtility::GetWidgetInfo((std::string const &)*arg1,(std::string const &)*arg2);
+  lua_pushlstring(L,(&result)->data(),(&result)->size()); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidgetUtility_GetWidgetInfo(lua_State* L) {
+  int argc;
+  int argv[3]={
+    1,2,3
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 1) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      return _wrap_CGUIWidgetUtility_GetWidgetInfo__SWIG_0(L);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    {
+      _v = lua_isstring(L,argv[0]);
+    }
+    if (_v) {
+      {
+        _v = lua_isstring(L,argv[1]);
+      }
+      if (_v) {
+        return _wrap_CGUIWidgetUtility_GetWidgetInfo__SWIG_1(L);
+      }
+    }
+  }
+  
+  lua_pushstring(L,"Wrong arguments for overloaded function 'CGUIWidgetUtility_GetWidgetInfo'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    GetWidgetInfo(guiex::CGUIWidget const *)\n"
+    "    guiex::CGUIWidgetUtility::GetWidgetInfo(guiex::CGUIString const &,guiex::CGUIString const &)\n");
+  lua_error(L);return 0;
+}
+
+
+static int _wrap_CGUIWidgetUtility_GetWidgetTreeInfo__SWIG_0(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  guiex::CGUIString result;
+  
+  SWIG_check_num_args("guiex::CGUIWidgetUtility::GetWidgetTreeInfo",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::CGUIWidgetUtility::GetWidgetTreeInfo",1,"guiex::CGUIWidget const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidgetUtility_GetWidgetTreeInfo",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  result = guiex::CGUIWidgetUtility::GetWidgetTreeInfo((guiex::CGUIWidget const *)arg1);
+  lua_pushlstring(L,(&result)->data(),(&result)->size()); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidgetUtility_GetWidgetTreeInfo__SWIG_1(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIString *arg1 = 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  std::string temp1 ;
+  std::string temp2 ;
+  guiex::CGUIString result;
+  
+  SWIG_check_num_args("guiex::CGUIWidgetUtility::GetWidgetTreeInfo",2,2)
+  if(!lua_isstring(L,1)) SWIG_fail_arg("guiex::CGUIWidgetUtility::GetWidgetTreeInfo",1,"guiex::CGUIString const &");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("guiex::CGUIWidgetUtility::GetWidgetTreeInfo",2,"guiex::CGUIString const &");
+  temp1.assign(lua_tostring(L,1),lua_strlen(L,1)); arg1=&temp1;
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  result = guiex::CGUIWidgetUtility::GetWidgetTreeInfo((std::string const &)*arg1,(std::string const &)*arg2);
+  lua_pushlstring(L,(&result)->data(),(&result)->size()); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidgetUtility_GetWidgetTreeInfo(lua_State* L) {
+  int argc;
+  int argv[3]={
+    1,2,3
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 1) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      return _wrap_CGUIWidgetUtility_GetWidgetTreeInfo__SWIG_0(L);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    {
+      _v = lua_isstring(L,argv[0]);
+    }
+    if (_v) {
+      {
+        _v = lua_isstring(L,argv[1]);
+      }
+      if (_v) {
+        return _wrap_CGUIWidgetUtility_GetWidgetTreeInfo__SWIG_1(L);
+      }
+    }
+  }
+  
+  lua_pushstring(L,"Wrong arguments for overloaded function 'CGUIWidgetUtility_GetWidgetTreeInfo'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    GetWidgetTreeInfo(guiex::CGUIWidget const *)\n"
+    "    guiex::CGUIWidgetUtility::GetWidgetTreeInfo(guiex::CGUIString const &,guiex::CGUIString const &)\n");
+  lua_error(L);return 0;
+}
+
+
+static void swig_delete_CGUIWidgetUtility(void *obj) {
+guiex::CGUIWidgetUtility *arg1 = (guiex::CGUIWidgetUtility *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUIWidgetUtility_methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIWidgetUtility_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIWidgetUtility_bases[] = {0};
+static const char *swig_guiex_CGUIWidgetUtility_base_names[] = {0};
+static swig_lua_class _wrap_class_guiex_CGUIWidgetUtility = { "CGUIWidgetUtility", &SWIGTYPE_p_guiex__CGUIWidgetUtility,0, swig_delete_CGUIWidgetUtility, swig_guiex_CGUIWidgetUtility_methods, swig_guiex_CGUIWidgetUtility_attributes, swig_guiex_CGUIWidgetUtility_bases, swig_guiex_CGUIWidgetUtility_base_names };
+
+static int _wrap_RegisterWidgetGenerator(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIString *arg1 = 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  std::string temp1 ;
+  std::string temp2 ;
+  guiex::int32 result;
+  
+  SWIG_check_num_args("guiex::RegisterWidgetGenerator",2,2)
+  if(!lua_isstring(L,1)) SWIG_fail_arg("guiex::RegisterWidgetGenerator",1,"guiex::CGUIString const &");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("guiex::RegisterWidgetGenerator",2,"guiex::CGUIString const &");
+  temp1.assign(lua_tostring(L,1),lua_strlen(L,1)); arg1=&temp1;
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  result = (guiex::int32)guiex::RegisterWidgetGenerator((std::string const &)*arg1,(std::string const &)*arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_UnregisterWidgetGenerator(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIString *arg1 = 0 ;
+  std::string temp1 ;
+  guiex::int32 result;
+  
+  SWIG_check_num_args("guiex::UnregisterWidgetGenerator",1,1)
+  if(!lua_isstring(L,1)) SWIG_fail_arg("guiex::UnregisterWidgetGenerator",1,"guiex::CGUIString const &");
+  temp1.assign(lua_tostring(L,1),lua_strlen(L,1)); arg1=&temp1;
+  result = (guiex::int32)guiex::UnregisterWidgetGenerator((std::string const &)*arg1);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 #ifdef __cplusplus
 }
 #endif
 
 static const struct luaL_reg swig_commands[] = {
+    { "ThrowException", _wrap_ThrowException},
     { "CGUIColor_ARGB2RGBA", _wrap_CGUIColor_ARGB2RGBA},
+    { "LogMessage", _wrap_LogMessage},
+    { "PrintDebug", _wrap_PrintDebug},
+    { "CGUIInterfaceManager_Instance", _wrap_CGUIInterfaceManager_Instance},
+    { "RegisterInterface", _wrap_RegisterInterface},
+    { "UnregisterInterface", _wrap_UnregisterInterface},
+    { "GetInterface", _wrap_GetInterface},
+    { "CGUISystem_Instance", _wrap_CGUISystem_Instance},
+    { "GetSystem", _wrap_GetSystem},
+    { "OpenDialog", _wrap_OpenDialog},
+    { "CloseDialog", _wrap_CloseDialog},
+    { "OpenPage", _wrap_OpenPage},
+    { "ClosePage", _wrap_ClosePage},
+    { "SendUIEvent",_wrap_SendUIEvent},
+    { "CGUIWidgetUtility_GetWidgetInfo",_wrap_CGUIWidgetUtility_GetWidgetInfo},
+    { "CGUIWidgetUtility_GetWidgetTreeInfo",_wrap_CGUIWidgetUtility_GetWidgetTreeInfo},
+    { "RegisterWidgetGenerator", _wrap_RegisterWidgetGenerator},
+    { "UnregisterWidgetGenerator", _wrap_UnregisterWidgetGenerator},
     {0,0}
 };
 
@@ -5196,69 +14354,491 @@ static swig_lua_const_info swig_constants[] = {
 { SWIG_LUA_INT,     (char *)"eInterpolationType_Linear", (long) guiex::eInterpolationType_Linear, 0, 0, 0},
 { SWIG_LUA_INT,     (char *)"eInterpolationType_EaseIn", (long) guiex::eInterpolationType_EaseIn, 0, 0, 0},
 { SWIG_LUA_INT,     (char *)"eInterpolationType_EaseInOut", (long) guiex::eInterpolationType_EaseInOut, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"GUI_LM_SHUTDOWN", (long) guiex::GUI_LM_SHUTDOWN, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"GUI_LM_TRACE", (long) guiex::GUI_LM_TRACE, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"GUI_LM_DEBUG", (long) guiex::GUI_LM_DEBUG, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"GUI_LM_INFO", (long) guiex::GUI_LM_INFO, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"GUI_LM_NOTICE", (long) guiex::GUI_LM_NOTICE, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"GUI_LM_WARNING", (long) guiex::GUI_LM_WARNING, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"GUI_LM_STARTUP", (long) guiex::GUI_LM_STARTUP, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"GUI_LM_ERROR", (long) guiex::GUI_LM_ERROR, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"GUI_LM_CRITICAL", (long) guiex::GUI_LM_CRITICAL, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"GUI_LM_ALERT", (long) guiex::GUI_LM_ALERT, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"GUI_LM_EMERGENCY", (long) guiex::GUI_LM_EMERGENCY, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"GUI_LM_MAX", (long) guiex::GUI_LM_MAX, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_NONE", (long) guiex::KC_NONE, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_0", (long) guiex::KC_0, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_1", (long) guiex::KC_1, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_2", (long) guiex::KC_2, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_3", (long) guiex::KC_3, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_4", (long) guiex::KC_4, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_5", (long) guiex::KC_5, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_6", (long) guiex::KC_6, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_7", (long) guiex::KC_7, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_8", (long) guiex::KC_8, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_9", (long) guiex::KC_9, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_A", (long) guiex::KC_A, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_B", (long) guiex::KC_B, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_C", (long) guiex::KC_C, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_D", (long) guiex::KC_D, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_E", (long) guiex::KC_E, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_F", (long) guiex::KC_F, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_G", (long) guiex::KC_G, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_H", (long) guiex::KC_H, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_I", (long) guiex::KC_I, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_J", (long) guiex::KC_J, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_K", (long) guiex::KC_K, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_L", (long) guiex::KC_L, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_M", (long) guiex::KC_M, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_N", (long) guiex::KC_N, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_O", (long) guiex::KC_O, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_P", (long) guiex::KC_P, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_Q", (long) guiex::KC_Q, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_R", (long) guiex::KC_R, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_S", (long) guiex::KC_S, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_T", (long) guiex::KC_T, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_U", (long) guiex::KC_U, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_V", (long) guiex::KC_V, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_W", (long) guiex::KC_W, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_X", (long) guiex::KC_X, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_Y", (long) guiex::KC_Y, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_Z", (long) guiex::KC_Z, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_SHIFT", (long) guiex::KC_SHIFT, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_CTRL", (long) guiex::KC_CTRL, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_ALT", (long) guiex::KC_ALT, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_CAPSLOCK", (long) guiex::KC_CAPSLOCK, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_BACK", (long) guiex::KC_BACK, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_ESCAPE", (long) guiex::KC_ESCAPE, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_SPACE", (long) guiex::KC_SPACE, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_TAB", (long) guiex::KC_TAB, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_ENTER", (long) guiex::KC_ENTER, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_PLUS", (long) guiex::KC_PLUS, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_COMMA", (long) guiex::KC_COMMA, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_MINUS", (long) guiex::KC_MINUS, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_PERIOD", (long) guiex::KC_PERIOD, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_SEMICOLON", (long) guiex::KC_SEMICOLON, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_SLASH", (long) guiex::KC_SLASH, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_TILDE", (long) guiex::KC_TILDE, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_LEFTBRACKET", (long) guiex::KC_LEFTBRACKET, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_BACKSLASH", (long) guiex::KC_BACKSLASH, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_RIGHTBRACKET", (long) guiex::KC_RIGHTBRACKET, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_QUOTE", (long) guiex::KC_QUOTE, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_PAGEUP", (long) guiex::KC_PAGEUP, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_PAGEDOWN", (long) guiex::KC_PAGEDOWN, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_END", (long) guiex::KC_END, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_HOME", (long) guiex::KC_HOME, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_LEFT", (long) guiex::KC_LEFT, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_RIGHT", (long) guiex::KC_RIGHT, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_DOWN", (long) guiex::KC_DOWN, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_UP", (long) guiex::KC_UP, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_INSERT", (long) guiex::KC_INSERT, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_DELETE", (long) guiex::KC_DELETE, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_PAD_NUM0", (long) guiex::KC_PAD_NUM0, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_PAD_NUM1", (long) guiex::KC_PAD_NUM1, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_PAD_NUM2", (long) guiex::KC_PAD_NUM2, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_PAD_NUM3", (long) guiex::KC_PAD_NUM3, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_PAD_NUM4", (long) guiex::KC_PAD_NUM4, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_PAD_NUM5", (long) guiex::KC_PAD_NUM5, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_PAD_NUM6", (long) guiex::KC_PAD_NUM6, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_PAD_NUM7", (long) guiex::KC_PAD_NUM7, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_PAD_NUM8", (long) guiex::KC_PAD_NUM8, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_PAD_NUM9", (long) guiex::KC_PAD_NUM9, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_PAD_MULTIPLY", (long) guiex::KC_PAD_MULTIPLY, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_PAD_ADD", (long) guiex::KC_PAD_ADD, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_PAD_SEPARATOR", (long) guiex::KC_PAD_SEPARATOR, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_PAD_SUB", (long) guiex::KC_PAD_SUB, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_PAD_DECIMAL", (long) guiex::KC_PAD_DECIMAL, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_PAD_DIVIDE", (long) guiex::KC_PAD_DIVIDE, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_F1", (long) guiex::KC_F1, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_F2", (long) guiex::KC_F2, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_F3", (long) guiex::KC_F3, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_F4", (long) guiex::KC_F4, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_F5", (long) guiex::KC_F5, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_F6", (long) guiex::KC_F6, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_F7", (long) guiex::KC_F7, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_F8", (long) guiex::KC_F8, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_F9", (long) guiex::KC_F9, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_F10", (long) guiex::KC_F10, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_F11", (long) guiex::KC_F11, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"KC_F12", (long) guiex::KC_F12, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"_KEY_CODE_MAX_", (long) guiex::_KEY_CODE_MAX_, 0, 0, 0},
     {0,0,0,0,0,0}
 };
 
 /* -------- TYPE CONVERSION AND EQUIVALENCE RULES (BEGIN) -------- */
 
+static void *_p_guiex__CGUIWgtRadioButtonTo_p_guiex__CGUIWgtCheckButton(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIWgtCheckButton *)  ((guiex::CGUIWgtRadioButton *) x));
+}
+static void *_p_guiex__CGUIAsPositionTo_p_guiex__CGUIInterpolationBaseT_guiex__CGUIVector2_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIInterpolationBase< guiex::CGUIVector2 > *)  ((guiex::CGUIAsPosition *) x));
+}
+static void *_p_guiex__CGUIAsRotationTo_p_guiex__CGUIInterpolationBaseT_guiex__CGUIVector3_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIInterpolationBase< guiex::CGUIVector3 > *)  ((guiex::CGUIAsRotation *) x));
+}
+static void *_p_guiex__CGUIInterpolationBaseT_guiex__CGUIVector2_tTo_p_guiex__CGUIAs(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIAs *)  ((guiex::CGUIInterpolationBase< guiex::CGUIVector2 > *) x));
+}
+static void *_p_guiex__CGUIInterpolationBaseT_guiex__CGUISize_tTo_p_guiex__CGUIAs(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIAs *)  ((guiex::CGUIInterpolationBase< guiex::CGUISize > *) x));
+}
+static void *_p_guiex__CGUIAsPositionTo_p_guiex__CGUIAs(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIAs *) (guiex::CGUIInterpolationBase< guiex::CGUIVector2 > *) ((guiex::CGUIAsPosition *) x));
+}
+static void *_p_guiex__CGUIAsColorTo_p_guiex__CGUIAs(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIAs *) (guiex::CGUIInterpolationBase< guiex::CGUIColor > *) ((guiex::CGUIAsColor *) x));
+}
+static void *_p_guiex__CGUIInterpolationBaseT_float_tTo_p_guiex__CGUIAs(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIAs *)  ((guiex::CGUIInterpolationBase< float > *) x));
+}
+static void *_p_guiex__CGUIInterpolationBaseT_guiex__CGUIVector3_tTo_p_guiex__CGUIAs(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIAs *)  ((guiex::CGUIInterpolationBase< guiex::CGUIVector3 > *) x));
+}
+static void *_p_guiex__CGUIAsAlphaTo_p_guiex__CGUIAs(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIAs *) (guiex::CGUIInterpolationBase< guiex::real > *) ((guiex::CGUIAsAlpha *) x));
+}
+static void *_p_guiex__CGUIInterpolationBaseT_guiex__CGUIColor_tTo_p_guiex__CGUIAs(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIAs *)  ((guiex::CGUIInterpolationBase< guiex::CGUIColor > *) x));
+}
+static void *_p_guiex__CGUIAsContainerTo_p_guiex__CGUIAs(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIAs *)  ((guiex::CGUIAsContainer *) x));
+}
+static void *_p_guiex__CGUIAsScaleTo_p_guiex__CGUIAs(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIAs *) (guiex::CGUIInterpolationBase< guiex::CGUISize > *) ((guiex::CGUIAsScale *) x));
+}
+static void *_p_guiex__CGUIAsRotationTo_p_guiex__CGUIAs(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIAs *) (guiex::CGUIInterpolationBase< guiex::CGUIVector3 > *) ((guiex::CGUIAsRotation *) x));
+}
+static void *_p_guiex__CGUIAsScaleTo_p_guiex__CGUIInterpolationBaseT_guiex__CGUISize_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIInterpolationBase< guiex::CGUISize > *)  ((guiex::CGUIAsScale *) x));
+}
+static void *_p_guiex__CGUIEventTimerTo_p_guiex__CGUIEvent(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIEvent *)  ((guiex::CGUIEventTimer *) x));
+}
+static void *_p_guiex__CGUIEventNotificationTo_p_guiex__CGUIEvent(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIEvent *)  ((guiex::CGUIEventNotification *) x));
+}
+static void *_p_guiex__CGUIEventKeyboardTo_p_guiex__CGUIEvent(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIEvent *)  ((guiex::CGUIEventKeyboard *) x));
+}
+static void *_p_guiex__CGUIEventScrollbarTo_p_guiex__CGUIEvent(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIEvent *)  ((guiex::CGUIEventScrollbar *) x));
+}
+static void *_p_guiex__CGUIEventSizeTo_p_guiex__CGUIEvent(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIEvent *)  ((guiex::CGUIEventSize *) x));
+}
+static void *_p_guiex__CGUIEventMouseTo_p_guiex__CGUIEvent(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIEvent *)  ((guiex::CGUIEventMouse *) x));
+}
+static void *_p_guiex__CGUIEventAlphaTo_p_guiex__CGUIEvent(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIEvent *)  ((guiex::CGUIEventAlpha *) x));
+}
+static void *_p_guiex__CGUIEventDragTo_p_guiex__CGUIEvent(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIEvent *)  ((guiex::CGUIEventDrag *) x));
+}
+static void *_p_guiex__CGUIEventUITo_p_guiex__CGUIEvent(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIEvent *)  ((guiex::CGUIEventUI *) x));
+}
+static void *_p_guiex__CGUIAsColorTo_p_guiex__CGUIInterpolationBaseT_guiex__CGUIColor_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIInterpolationBase< guiex::CGUIColor > *)  ((guiex::CGUIAsColor *) x));
+}
+static void *_p_guiex__CGUIAsAlphaTo_p_guiex__CGUIInterpolationBaseT_float_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIInterpolationBase< float > *)  ((guiex::CGUIAsAlpha *) x));
+}
+static void *_p_guiex__CGUIWgtEditBoxTo_p_guiex__CGUIWidget(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIWidget *)  ((guiex::CGUIWgtEditBox *) x));
+}
+static void *_p_guiex__CGUIWgtStaticImageTo_p_guiex__CGUIWidget(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIWidget *) (guiex::CGUIWgtStatic *) ((guiex::CGUIWgtStaticImage *) x));
+}
+static void *_p_guiex__CGUIWgtScrollbarTo_p_guiex__CGUIWidget(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIWidget *)  ((guiex::CGUIWgtScrollbar *) x));
+}
+static void *_p_guiex__CGUIWgtButtonTo_p_guiex__CGUIWidget(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIWidget *)  ((guiex::CGUIWgtButton *) x));
+}
+static void *_p_guiex__CGUIWgtStaticTextTo_p_guiex__CGUIWidget(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIWidget *) (guiex::CGUIWgtStatic *) ((guiex::CGUIWgtStaticText *) x));
+}
+static void *_p_guiex__CGUIWgtCheckButtonTo_p_guiex__CGUIWidget(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIWidget *)  ((guiex::CGUIWgtCheckButton *) x));
+}
+static void *_p_guiex__CGUIWgtRadioButtonTo_p_guiex__CGUIWidget(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIWidget *) (guiex::CGUIWgtCheckButton *) ((guiex::CGUIWgtRadioButton *) x));
+}
+static void *_p_guiex__CGUIWgtEmptyNodeTo_p_guiex__CGUIWidget(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIWidget *)  ((guiex::CGUIWgtEmptyNode *) x));
+}
+static void *_p_guiex__CGUIWgtScrollPanelTo_p_guiex__CGUIWidget(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIWidget *)  ((guiex::CGUIWgtScrollPanel *) x));
+}
+static void *_p_guiex__CGUIWgtPanelTo_p_guiex__CGUIWidget(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIWidget *)  ((guiex::CGUIWgtPanel *) x));
+}
+static void *_p_guiex__CGUIWgtStaticTo_p_guiex__CGUIWidget(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIWidget *)  ((guiex::CGUIWgtStatic *) x));
+}
+static void *_p_guiex__CGUIWgtStaticImageTo_p_guiex__CGUIWgtStatic(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIWgtStatic *)  ((guiex::CGUIWgtStaticImage *) x));
+}
+static void *_p_guiex__CGUIWgtStaticTextTo_p_guiex__CGUIWgtStatic(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIWgtStatic *)  ((guiex::CGUIWgtStaticText *) x));
+}
+static void *_p_guiex__IGUIInterfaceCommandTo_p_guiex__IGUIInterface(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::IGUIInterface *)  ((guiex::IGUIInterfaceCommand *) x));
+}
+static void *_p_guiex__IGUIInterfaceKeyboardTo_p_guiex__IGUIInterface(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::IGUIInterface *)  ((guiex::IGUIInterfaceKeyboard *) x));
+}
+static void *_p_guiex__IGUIInterfaceSoundTo_p_guiex__IGUIInterface(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::IGUIInterface *)  ((guiex::IGUIInterfaceSound *) x));
+}
 static swig_type_info _swigt__p_char = {"_p_char", "char *|guiex::int8 *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_float = {"_p_float", "guiex::real *|float *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_guiex__CGUIAnimation = {"_p_guiex__CGUIAnimation", "guiex::CGUIAnimation *", 0, 0, (void*)&_wrap_class_guiex_CGUIAnimation, 0};
+static swig_type_info _swigt__p_guiex__CGUIAs = {"_p_guiex__CGUIAs", "guiex::CGUIAs *", 0, 0, (void*)&_wrap_class_guiex_CGUIAs, 0};
+static swig_type_info _swigt__p_guiex__CGUIAsAlpha = {"_p_guiex__CGUIAsAlpha", "guiex::CGUIAsAlpha *", 0, 0, (void*)&_wrap_class_guiex_CGUIAsAlpha, 0};
+static swig_type_info _swigt__p_guiex__CGUIAsColor = {"_p_guiex__CGUIAsColor", "guiex::CGUIAsColor *", 0, 0, (void*)&_wrap_class_guiex_CGUIAsColor, 0};
+static swig_type_info _swigt__p_guiex__CGUIAsContainer = {"_p_guiex__CGUIAsContainer", "guiex::CGUIAsContainer *", 0, 0, (void*)&_wrap_class_guiex_CGUIAsContainer, 0};
+static swig_type_info _swigt__p_guiex__CGUIAsPosition = {"_p_guiex__CGUIAsPosition", "guiex::CGUIAsPosition *", 0, 0, (void*)&_wrap_class_guiex_CGUIAsPosition, 0};
+static swig_type_info _swigt__p_guiex__CGUIAsRotation = {"_p_guiex__CGUIAsRotation", "guiex::CGUIAsRotation *", 0, 0, (void*)&_wrap_class_guiex_CGUIAsRotation, 0};
+static swig_type_info _swigt__p_guiex__CGUIAsScale = {"_p_guiex__CGUIAsScale", "guiex::CGUIAsScale *", 0, 0, (void*)&_wrap_class_guiex_CGUIAsScale, 0};
 static swig_type_info _swigt__p_guiex__CGUIColor = {"_p_guiex__CGUIColor", "guiex::CGUIColor *", 0, 0, (void*)&_wrap_class_guiex_CGUIColor, 0};
+static swig_type_info _swigt__p_guiex__CGUIColorRect = {"_p_guiex__CGUIColorRect", "guiex::CGUIColorRect *", 0, 0, (void*)&_wrap_class_guiex_CGUIColorRect, 0};
+static swig_type_info _swigt__p_guiex__CGUIEvent = {"_p_guiex__CGUIEvent", "guiex::CGUIEvent *", 0, 0, (void*)&_wrap_class_guiex_CGUIEvent, 0};
+static swig_type_info _swigt__p_guiex__CGUIEventAlpha = {"_p_guiex__CGUIEventAlpha", "guiex::CGUIEventAlpha *", 0, 0, (void*)&_wrap_class_guiex_CGUIEventAlpha, 0};
+static swig_type_info _swigt__p_guiex__CGUIEventDrag = {"_p_guiex__CGUIEventDrag", "guiex::CGUIEventDrag *", 0, 0, (void*)&_wrap_class_guiex_CGUIEventDrag, 0};
+static swig_type_info _swigt__p_guiex__CGUIEventKeyboard = {"_p_guiex__CGUIEventKeyboard", "guiex::CGUIEventKeyboard *", 0, 0, (void*)&_wrap_class_guiex_CGUIEventKeyboard, 0};
+static swig_type_info _swigt__p_guiex__CGUIEventMouse = {"_p_guiex__CGUIEventMouse", "guiex::CGUIEventMouse *", 0, 0, (void*)&_wrap_class_guiex_CGUIEventMouse, 0};
+static swig_type_info _swigt__p_guiex__CGUIEventNotification = {"_p_guiex__CGUIEventNotification", "guiex::CGUIEventNotification *", 0, 0, (void*)&_wrap_class_guiex_CGUIEventNotification, 0};
+static swig_type_info _swigt__p_guiex__CGUIEventScrollbar = {"_p_guiex__CGUIEventScrollbar", "guiex::CGUIEventScrollbar *", 0, 0, (void*)&_wrap_class_guiex_CGUIEventScrollbar, 0};
+static swig_type_info _swigt__p_guiex__CGUIEventSize = {"_p_guiex__CGUIEventSize", "guiex::CGUIEventSize *", 0, 0, (void*)&_wrap_class_guiex_CGUIEventSize, 0};
+static swig_type_info _swigt__p_guiex__CGUIEventTimer = {"_p_guiex__CGUIEventTimer", "guiex::CGUIEventTimer *", 0, 0, (void*)&_wrap_class_guiex_CGUIEventTimer, 0};
+static swig_type_info _swigt__p_guiex__CGUIEventUI = {"_p_guiex__CGUIEventUI", "guiex::CGUIEventUI *", 0, 0, (void*)&_wrap_class_guiex_CGUIEventUI, 0};
+static swig_type_info _swigt__p_guiex__CGUIImage = {"_p_guiex__CGUIImage", "guiex::CGUIImage *", 0, 0, (void*)&_wrap_class_guiex_CGUIImage, 0};
+static swig_type_info _swigt__p_guiex__CGUIInterfaceManager = {"_p_guiex__CGUIInterfaceManager", "guiex::CGUIInterfaceManager *", 0, 0, (void*)&_wrap_class_guiex_CGUIInterfaceManager, 0};
+static swig_type_info _swigt__p_guiex__CGUIInterpolationBaseT_float_t = {"_p_guiex__CGUIInterpolationBaseT_float_t", "guiex::CGUIInterpolationBase< float > *|guiex::CGUIInterpolationBase< guiex::real > *", 0, 0, (void*)&_wrap_class_guiex_CGUIInterpolationBase_Sl_guiex_real_Sg_, 0};
+static swig_type_info _swigt__p_guiex__CGUIInterpolationBaseT_guiex__CGUIColor_t = {"_p_guiex__CGUIInterpolationBaseT_guiex__CGUIColor_t", "guiex::CGUIInterpolationBase< guiex::CGUIColor > *", 0, 0, (void*)&_wrap_class_guiex_CGUIInterpolationBase_Sl_guiex_CGUIColor_Sg_, 0};
+static swig_type_info _swigt__p_guiex__CGUIInterpolationBaseT_guiex__CGUISize_t = {"_p_guiex__CGUIInterpolationBaseT_guiex__CGUISize_t", "guiex::CGUIInterpolationBase< guiex::CGUISize > *", 0, 0, (void*)&_wrap_class_guiex_CGUIInterpolationBase_Sl_guiex_CGUISize_Sg_, 0};
+static swig_type_info _swigt__p_guiex__CGUIInterpolationBaseT_guiex__CGUIVector2_t = {"_p_guiex__CGUIInterpolationBaseT_guiex__CGUIVector2_t", "guiex::CGUIInterpolationBase< guiex::CGUIVector2 > *", 0, 0, (void*)&_wrap_class_guiex_CGUIInterpolationBase_Sl_guiex_CGUIVector2_Sg_, 0};
+static swig_type_info _swigt__p_guiex__CGUIInterpolationBaseT_guiex__CGUIVector3_t = {"_p_guiex__CGUIInterpolationBaseT_guiex__CGUIVector3_t", "guiex::CGUIInterpolationBase< guiex::CGUIVector3 > *", 0, 0, (void*)&_wrap_class_guiex_CGUIInterpolationBase_Sl_guiex_CGUIVector3_Sg_, 0};
+static swig_type_info _swigt__p_guiex__CGUIProperty = {"_p_guiex__CGUIProperty", "guiex::CGUIProperty *", 0, 0, (void*)&_wrap_class_guiex_CGUIProperty, 0};
 static swig_type_info _swigt__p_guiex__CGUIRect = {"_p_guiex__CGUIRect", "guiex::CGUIRect *", 0, 0, (void*)&_wrap_class_guiex_CGUIRect, 0};
 static swig_type_info _swigt__p_guiex__CGUISize = {"_p_guiex__CGUISize", "guiex::CGUISize *", 0, 0, (void*)&_wrap_class_guiex_CGUISize, 0};
+static swig_type_info _swigt__p_guiex__CGUISystem = {"_p_guiex__CGUISystem", "guiex::CGUISystem *", 0, 0, (void*)&_wrap_class_guiex_CGUISystem, 0};
+static swig_type_info _swigt__p_guiex__CGUITimer = {"_p_guiex__CGUITimer", "guiex::CGUITimer *", 0, 0, (void*)&_wrap_class_guiex_CGUITimer, 0};
 static swig_type_info _swigt__p_guiex__CGUIVector2 = {"_p_guiex__CGUIVector2", "guiex::CGUIVector2 *", 0, 0, (void*)&_wrap_class_guiex_CGUIVector2, 0};
 static swig_type_info _swigt__p_guiex__CGUIVector3 = {"_p_guiex__CGUIVector3", "guiex::CGUIVector3 *", 0, 0, (void*)&_wrap_class_guiex_CGUIVector3, 0};
+static swig_type_info _swigt__p_guiex__CGUIWgtButton = {"_p_guiex__CGUIWgtButton", "guiex::CGUIWgtButton *", 0, 0, (void*)&_wrap_class_guiex_CGUIWgtButton, 0};
+static swig_type_info _swigt__p_guiex__CGUIWgtCheckButton = {"_p_guiex__CGUIWgtCheckButton", "guiex::CGUIWgtCheckButton *", 0, 0, (void*)&_wrap_class_guiex_CGUIWgtCheckButton, 0};
+static swig_type_info _swigt__p_guiex__CGUIWgtEditBox = {"_p_guiex__CGUIWgtEditBox", "guiex::CGUIWgtEditBox *", 0, 0, (void*)&_wrap_class_guiex_CGUIWgtEditBox, 0};
+static swig_type_info _swigt__p_guiex__CGUIWgtEmptyNode = {"_p_guiex__CGUIWgtEmptyNode", "guiex::CGUIWgtEmptyNode *", 0, 0, (void*)&_wrap_class_guiex_CGUIWgtEmptyNode, 0};
+static swig_type_info _swigt__p_guiex__CGUIWgtPanel = {"_p_guiex__CGUIWgtPanel", "guiex::CGUIWgtPanel *", 0, 0, (void*)&_wrap_class_guiex_CGUIWgtPanel, 0};
+static swig_type_info _swigt__p_guiex__CGUIWgtRadioButton = {"_p_guiex__CGUIWgtRadioButton", "guiex::CGUIWgtRadioButton *", 0, 0, (void*)&_wrap_class_guiex_CGUIWgtRadioButton, 0};
+static swig_type_info _swigt__p_guiex__CGUIWgtScrollPanel = {"_p_guiex__CGUIWgtScrollPanel", "guiex::CGUIWgtScrollPanel *", 0, 0, (void*)&_wrap_class_guiex_CGUIWgtScrollPanel, 0};
+static swig_type_info _swigt__p_guiex__CGUIWgtScrollbar = {"_p_guiex__CGUIWgtScrollbar", "guiex::CGUIWgtScrollbar *", 0, 0, (void*)&_wrap_class_guiex_CGUIWgtScrollbar, 0};
+static swig_type_info _swigt__p_guiex__CGUIWgtStatic = {"_p_guiex__CGUIWgtStatic", "guiex::CGUIWgtStatic *", 0, 0, (void*)&_wrap_class_guiex_CGUIWgtStatic, 0};
+static swig_type_info _swigt__p_guiex__CGUIWgtStaticImage = {"_p_guiex__CGUIWgtStaticImage", "guiex::CGUIWgtStaticImage *", 0, 0, (void*)&_wrap_class_guiex_CGUIWgtStaticImage, 0};
+static swig_type_info _swigt__p_guiex__CGUIWgtStaticText = {"_p_guiex__CGUIWgtStaticText", "guiex::CGUIWgtStaticText *", 0, 0, (void*)&_wrap_class_guiex_CGUIWgtStaticText, 0};
+static swig_type_info _swigt__p_guiex__CGUIWidget = {"_p_guiex__CGUIWidget", "guiex::CGUIWidget *", 0, 0, (void*)&_wrap_class_guiex_CGUIWidget, 0};
+static swig_type_info _swigt__p_guiex__CGUIWidgetUtility = {"_p_guiex__CGUIWidgetUtility", "guiex::CGUIWidgetUtility *", 0, 0, (void*)&_wrap_class_guiex_CGUIWidgetUtility, 0};
+static swig_type_info _swigt__p_guiex__IGUIInterface = {"_p_guiex__IGUIInterface", "guiex::IGUIInterface *", 0, 0, (void*)&_wrap_class_guiex_IGUIInterface, 0};
+static swig_type_info _swigt__p_guiex__IGUIInterfaceCommand = {"_p_guiex__IGUIInterfaceCommand", "guiex::IGUIInterfaceCommand *", 0, 0, (void*)&_wrap_class_guiex_IGUIInterfaceCommand, 0};
+static swig_type_info _swigt__p_guiex__IGUIInterfaceKeyboard = {"_p_guiex__IGUIInterfaceKeyboard", "guiex::IGUIInterfaceKeyboard *", 0, 0, (void*)&_wrap_class_guiex_IGUIInterfaceKeyboard, 0};
+static swig_type_info _swigt__p_guiex__IGUIInterfaceSound = {"_p_guiex__IGUIInterfaceSound", "guiex::IGUIInterfaceSound *", 0, 0, (void*)&_wrap_class_guiex_IGUIInterfaceSound, 0};
 static swig_type_info _swigt__p_int = {"_p_int", "int *|guiex::int32 *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_short = {"_p_short", "guiex::int16 *|short *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__string = {"_p_std__string", "std::string *|guiex::CGUIString *", 0, 0, (void*)&_wrap_class_std_string, 0};
 static swig_type_info _swigt__p_unsigned_char = {"_p_unsigned_char", "unsigned char *|guiex::uint8 *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_unsigned_int = {"_p_unsigned_int", "guiex::uint32 *|guiex::GUIRGBA *|unsigned int *|guiex::GUIARGB *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_unsigned_short = {"_p_unsigned_short", "guiex::uint16 *|unsigned short *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_void = {"_p_void", "void *", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
   &_swigt__p_char,
   &_swigt__p_float,
+  &_swigt__p_guiex__CGUIAnimation,
+  &_swigt__p_guiex__CGUIAs,
+  &_swigt__p_guiex__CGUIAsAlpha,
+  &_swigt__p_guiex__CGUIAsColor,
+  &_swigt__p_guiex__CGUIAsContainer,
+  &_swigt__p_guiex__CGUIAsPosition,
+  &_swigt__p_guiex__CGUIAsRotation,
+  &_swigt__p_guiex__CGUIAsScale,
   &_swigt__p_guiex__CGUIColor,
+  &_swigt__p_guiex__CGUIColorRect,
+  &_swigt__p_guiex__CGUIEvent,
+  &_swigt__p_guiex__CGUIEventAlpha,
+  &_swigt__p_guiex__CGUIEventDrag,
+  &_swigt__p_guiex__CGUIEventKeyboard,
+  &_swigt__p_guiex__CGUIEventMouse,
+  &_swigt__p_guiex__CGUIEventNotification,
+  &_swigt__p_guiex__CGUIEventScrollbar,
+  &_swigt__p_guiex__CGUIEventSize,
+  &_swigt__p_guiex__CGUIEventTimer,
+  &_swigt__p_guiex__CGUIEventUI,
+  &_swigt__p_guiex__CGUIImage,
+  &_swigt__p_guiex__CGUIInterfaceManager,
+  &_swigt__p_guiex__CGUIInterpolationBaseT_float_t,
+  &_swigt__p_guiex__CGUIInterpolationBaseT_guiex__CGUIColor_t,
+  &_swigt__p_guiex__CGUIInterpolationBaseT_guiex__CGUISize_t,
+  &_swigt__p_guiex__CGUIInterpolationBaseT_guiex__CGUIVector2_t,
+  &_swigt__p_guiex__CGUIInterpolationBaseT_guiex__CGUIVector3_t,
+  &_swigt__p_guiex__CGUIProperty,
   &_swigt__p_guiex__CGUIRect,
   &_swigt__p_guiex__CGUISize,
+  &_swigt__p_guiex__CGUISystem,
+  &_swigt__p_guiex__CGUITimer,
   &_swigt__p_guiex__CGUIVector2,
   &_swigt__p_guiex__CGUIVector3,
+  &_swigt__p_guiex__CGUIWgtButton,
+  &_swigt__p_guiex__CGUIWgtCheckButton,
+  &_swigt__p_guiex__CGUIWgtEditBox,
+  &_swigt__p_guiex__CGUIWgtEmptyNode,
+  &_swigt__p_guiex__CGUIWgtPanel,
+  &_swigt__p_guiex__CGUIWgtRadioButton,
+  &_swigt__p_guiex__CGUIWgtScrollPanel,
+  &_swigt__p_guiex__CGUIWgtScrollbar,
+  &_swigt__p_guiex__CGUIWgtStatic,
+  &_swigt__p_guiex__CGUIWgtStaticImage,
+  &_swigt__p_guiex__CGUIWgtStaticText,
+  &_swigt__p_guiex__CGUIWidget,
+  &_swigt__p_guiex__CGUIWidgetUtility,
+  &_swigt__p_guiex__IGUIInterface,
+  &_swigt__p_guiex__IGUIInterfaceCommand,
+  &_swigt__p_guiex__IGUIInterfaceKeyboard,
+  &_swigt__p_guiex__IGUIInterfaceSound,
   &_swigt__p_int,
   &_swigt__p_short,
   &_swigt__p_std__string,
   &_swigt__p_unsigned_char,
   &_swigt__p_unsigned_int,
   &_swigt__p_unsigned_short,
+  &_swigt__p_void,
 };
 
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_float[] = {  {&_swigt__p_float, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIAnimation[] = {  {&_swigt__p_guiex__CGUIAnimation, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIAs[] = {  {&_swigt__p_guiex__CGUIAs, 0, 0, 0},  {&_swigt__p_guiex__CGUIInterpolationBaseT_guiex__CGUIVector2_t, _p_guiex__CGUIInterpolationBaseT_guiex__CGUIVector2_tTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIAsPosition, _p_guiex__CGUIAsPositionTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIAsColor, _p_guiex__CGUIAsColorTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIInterpolationBaseT_guiex__CGUIVector3_t, _p_guiex__CGUIInterpolationBaseT_guiex__CGUIVector3_tTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIAsAlpha, _p_guiex__CGUIAsAlphaTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIInterpolationBaseT_guiex__CGUIColor_t, _p_guiex__CGUIInterpolationBaseT_guiex__CGUIColor_tTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIInterpolationBaseT_guiex__CGUISize_t, _p_guiex__CGUIInterpolationBaseT_guiex__CGUISize_tTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIAsContainer, _p_guiex__CGUIAsContainerTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIAsRotation, _p_guiex__CGUIAsRotationTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIAsScale, _p_guiex__CGUIAsScaleTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIInterpolationBaseT_float_t, _p_guiex__CGUIInterpolationBaseT_float_tTo_p_guiex__CGUIAs, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIAsAlpha[] = {  {&_swigt__p_guiex__CGUIAsAlpha, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIAsColor[] = {  {&_swigt__p_guiex__CGUIAsColor, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIAsContainer[] = {  {&_swigt__p_guiex__CGUIAsContainer, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIAsPosition[] = {  {&_swigt__p_guiex__CGUIAsPosition, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIAsRotation[] = {  {&_swigt__p_guiex__CGUIAsRotation, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIAsScale[] = {  {&_swigt__p_guiex__CGUIAsScale, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUIColor[] = {  {&_swigt__p_guiex__CGUIColor, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIColorRect[] = {  {&_swigt__p_guiex__CGUIColorRect, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIEvent[] = {  {&_swigt__p_guiex__CGUIEventTimer, _p_guiex__CGUIEventTimerTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEventNotification, _p_guiex__CGUIEventNotificationTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEventKeyboard, _p_guiex__CGUIEventKeyboardTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEvent, 0, 0, 0},  {&_swigt__p_guiex__CGUIEventScrollbar, _p_guiex__CGUIEventScrollbarTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEventSize, _p_guiex__CGUIEventSizeTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEventMouse, _p_guiex__CGUIEventMouseTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEventAlpha, _p_guiex__CGUIEventAlphaTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEventDrag, _p_guiex__CGUIEventDragTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEventUI, _p_guiex__CGUIEventUITo_p_guiex__CGUIEvent, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIEventAlpha[] = {  {&_swigt__p_guiex__CGUIEventAlpha, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIEventDrag[] = {  {&_swigt__p_guiex__CGUIEventDrag, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIEventKeyboard[] = {  {&_swigt__p_guiex__CGUIEventKeyboard, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIEventMouse[] = {  {&_swigt__p_guiex__CGUIEventMouse, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIEventNotification[] = {  {&_swigt__p_guiex__CGUIEventNotification, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIEventScrollbar[] = {  {&_swigt__p_guiex__CGUIEventScrollbar, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIEventSize[] = {  {&_swigt__p_guiex__CGUIEventSize, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIEventTimer[] = {  {&_swigt__p_guiex__CGUIEventTimer, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIEventUI[] = {  {&_swigt__p_guiex__CGUIEventUI, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIImage[] = {  {&_swigt__p_guiex__CGUIImage, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIInterfaceManager[] = {  {&_swigt__p_guiex__CGUIInterfaceManager, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIInterpolationBaseT_float_t[] = {  {&_swigt__p_guiex__CGUIAsAlpha, _p_guiex__CGUIAsAlphaTo_p_guiex__CGUIInterpolationBaseT_float_t, 0, 0},  {&_swigt__p_guiex__CGUIInterpolationBaseT_float_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIInterpolationBaseT_guiex__CGUIColor_t[] = {  {&_swigt__p_guiex__CGUIAsColor, _p_guiex__CGUIAsColorTo_p_guiex__CGUIInterpolationBaseT_guiex__CGUIColor_t, 0, 0},  {&_swigt__p_guiex__CGUIInterpolationBaseT_guiex__CGUIColor_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIInterpolationBaseT_guiex__CGUISize_t[] = {  {&_swigt__p_guiex__CGUIInterpolationBaseT_guiex__CGUISize_t, 0, 0, 0},  {&_swigt__p_guiex__CGUIAsScale, _p_guiex__CGUIAsScaleTo_p_guiex__CGUIInterpolationBaseT_guiex__CGUISize_t, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIInterpolationBaseT_guiex__CGUIVector2_t[] = {  {&_swigt__p_guiex__CGUIInterpolationBaseT_guiex__CGUIVector2_t, 0, 0, 0},  {&_swigt__p_guiex__CGUIAsPosition, _p_guiex__CGUIAsPositionTo_p_guiex__CGUIInterpolationBaseT_guiex__CGUIVector2_t, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIInterpolationBaseT_guiex__CGUIVector3_t[] = {  {&_swigt__p_guiex__CGUIInterpolationBaseT_guiex__CGUIVector3_t, 0, 0, 0},  {&_swigt__p_guiex__CGUIAsRotation, _p_guiex__CGUIAsRotationTo_p_guiex__CGUIInterpolationBaseT_guiex__CGUIVector3_t, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIProperty[] = {  {&_swigt__p_guiex__CGUIProperty, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUIRect[] = {  {&_swigt__p_guiex__CGUIRect, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUISize[] = {  {&_swigt__p_guiex__CGUISize, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUISystem[] = {  {&_swigt__p_guiex__CGUISystem, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUITimer[] = {  {&_swigt__p_guiex__CGUITimer, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUIVector2[] = {  {&_swigt__p_guiex__CGUIVector2, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUIVector3[] = {  {&_swigt__p_guiex__CGUIVector3, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIWgtButton[] = {  {&_swigt__p_guiex__CGUIWgtButton, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIWgtCheckButton[] = {  {&_swigt__p_guiex__CGUIWgtCheckButton, 0, 0, 0},  {&_swigt__p_guiex__CGUIWgtRadioButton, _p_guiex__CGUIWgtRadioButtonTo_p_guiex__CGUIWgtCheckButton, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIWgtEditBox[] = {  {&_swigt__p_guiex__CGUIWgtEditBox, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIWgtEmptyNode[] = {  {&_swigt__p_guiex__CGUIWgtEmptyNode, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIWgtPanel[] = {  {&_swigt__p_guiex__CGUIWgtPanel, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIWgtRadioButton[] = {  {&_swigt__p_guiex__CGUIWgtRadioButton, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIWgtScrollPanel[] = {  {&_swigt__p_guiex__CGUIWgtScrollPanel, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIWgtScrollbar[] = {  {&_swigt__p_guiex__CGUIWgtScrollbar, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIWgtStatic[] = {  {&_swigt__p_guiex__CGUIWgtStaticImage, _p_guiex__CGUIWgtStaticImageTo_p_guiex__CGUIWgtStatic, 0, 0},  {&_swigt__p_guiex__CGUIWgtStaticText, _p_guiex__CGUIWgtStaticTextTo_p_guiex__CGUIWgtStatic, 0, 0},  {&_swigt__p_guiex__CGUIWgtStatic, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIWgtStaticImage[] = {  {&_swigt__p_guiex__CGUIWgtStaticImage, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIWgtStaticText[] = {  {&_swigt__p_guiex__CGUIWgtStaticText, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIWidget[] = {  {&_swigt__p_guiex__CGUIWgtEditBox, _p_guiex__CGUIWgtEditBoxTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtStaticImage, _p_guiex__CGUIWgtStaticImageTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtScrollbar, _p_guiex__CGUIWgtScrollbarTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtButton, _p_guiex__CGUIWgtButtonTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtStaticText, _p_guiex__CGUIWgtStaticTextTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtCheckButton, _p_guiex__CGUIWgtCheckButtonTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtRadioButton, _p_guiex__CGUIWgtRadioButtonTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtEmptyNode, _p_guiex__CGUIWgtEmptyNodeTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWidget, 0, 0, 0},  {&_swigt__p_guiex__CGUIWgtScrollPanel, _p_guiex__CGUIWgtScrollPanelTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtPanel, _p_guiex__CGUIWgtPanelTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtStatic, _p_guiex__CGUIWgtStaticTo_p_guiex__CGUIWidget, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIWidgetUtility[] = {  {&_swigt__p_guiex__CGUIWidgetUtility, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__IGUIInterface[] = {  {&_swigt__p_guiex__IGUIInterface, 0, 0, 0},  {&_swigt__p_guiex__IGUIInterfaceCommand, _p_guiex__IGUIInterfaceCommandTo_p_guiex__IGUIInterface, 0, 0},  {&_swigt__p_guiex__IGUIInterfaceKeyboard, _p_guiex__IGUIInterfaceKeyboardTo_p_guiex__IGUIInterface, 0, 0},  {&_swigt__p_guiex__IGUIInterfaceSound, _p_guiex__IGUIInterfaceSoundTo_p_guiex__IGUIInterface, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__IGUIInterfaceCommand[] = {  {&_swigt__p_guiex__IGUIInterfaceCommand, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__IGUIInterfaceKeyboard[] = {  {&_swigt__p_guiex__IGUIInterfaceKeyboard, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__IGUIInterfaceSound[] = {  {&_swigt__p_guiex__IGUIInterfaceSound, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_int[] = {  {&_swigt__p_int, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_short[] = {  {&_swigt__p_short, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__string[] = {  {&_swigt__p_std__string, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_unsigned_char[] = {  {&_swigt__p_unsigned_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_unsigned_int[] = {  {&_swigt__p_unsigned_int, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_unsigned_short[] = {  {&_swigt__p_unsigned_short, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_void[] = {  {&_swigt__p_void, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_char,
   _swigc__p_float,
+  _swigc__p_guiex__CGUIAnimation,
+  _swigc__p_guiex__CGUIAs,
+  _swigc__p_guiex__CGUIAsAlpha,
+  _swigc__p_guiex__CGUIAsColor,
+  _swigc__p_guiex__CGUIAsContainer,
+  _swigc__p_guiex__CGUIAsPosition,
+  _swigc__p_guiex__CGUIAsRotation,
+  _swigc__p_guiex__CGUIAsScale,
   _swigc__p_guiex__CGUIColor,
+  _swigc__p_guiex__CGUIColorRect,
+  _swigc__p_guiex__CGUIEvent,
+  _swigc__p_guiex__CGUIEventAlpha,
+  _swigc__p_guiex__CGUIEventDrag,
+  _swigc__p_guiex__CGUIEventKeyboard,
+  _swigc__p_guiex__CGUIEventMouse,
+  _swigc__p_guiex__CGUIEventNotification,
+  _swigc__p_guiex__CGUIEventScrollbar,
+  _swigc__p_guiex__CGUIEventSize,
+  _swigc__p_guiex__CGUIEventTimer,
+  _swigc__p_guiex__CGUIEventUI,
+  _swigc__p_guiex__CGUIImage,
+  _swigc__p_guiex__CGUIInterfaceManager,
+  _swigc__p_guiex__CGUIInterpolationBaseT_float_t,
+  _swigc__p_guiex__CGUIInterpolationBaseT_guiex__CGUIColor_t,
+  _swigc__p_guiex__CGUIInterpolationBaseT_guiex__CGUISize_t,
+  _swigc__p_guiex__CGUIInterpolationBaseT_guiex__CGUIVector2_t,
+  _swigc__p_guiex__CGUIInterpolationBaseT_guiex__CGUIVector3_t,
+  _swigc__p_guiex__CGUIProperty,
   _swigc__p_guiex__CGUIRect,
   _swigc__p_guiex__CGUISize,
+  _swigc__p_guiex__CGUISystem,
+  _swigc__p_guiex__CGUITimer,
   _swigc__p_guiex__CGUIVector2,
   _swigc__p_guiex__CGUIVector3,
+  _swigc__p_guiex__CGUIWgtButton,
+  _swigc__p_guiex__CGUIWgtCheckButton,
+  _swigc__p_guiex__CGUIWgtEditBox,
+  _swigc__p_guiex__CGUIWgtEmptyNode,
+  _swigc__p_guiex__CGUIWgtPanel,
+  _swigc__p_guiex__CGUIWgtRadioButton,
+  _swigc__p_guiex__CGUIWgtScrollPanel,
+  _swigc__p_guiex__CGUIWgtScrollbar,
+  _swigc__p_guiex__CGUIWgtStatic,
+  _swigc__p_guiex__CGUIWgtStaticImage,
+  _swigc__p_guiex__CGUIWgtStaticText,
+  _swigc__p_guiex__CGUIWidget,
+  _swigc__p_guiex__CGUIWidgetUtility,
+  _swigc__p_guiex__IGUIInterface,
+  _swigc__p_guiex__IGUIInterfaceCommand,
+  _swigc__p_guiex__IGUIInterfaceKeyboard,
+  _swigc__p_guiex__IGUIInterfaceSound,
   _swigc__p_int,
   _swigc__p_short,
   _swigc__p_std__string,
   _swigc__p_unsigned_char,
   _swigc__p_unsigned_int,
   _swigc__p_unsigned_short,
+  _swigc__p_void,
 };
 
 

@@ -9,7 +9,7 @@
 // include 
 //============================================================================// 
 #include <libguiex_core/guianimation.h>
-#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guisystem.h>
 #include <libguiex_core/guiresource.h>
 #include <libguiex_core/guitexture.h>
 #include <libguiex_core/guitexturemanager.h>

@@ -19,7 +19,6 @@
 //============================================================================// 
 namespace guiex
 {
-
 	class CGUILogMsgRecord;
 }
 
@@ -45,7 +44,6 @@ namespace guiex
 		virtual ~CGUILogMsgCallback();
 
 		virtual void	Log( const CGUILogMsgRecord& ) = 0;
-
 	};
 
 }//namespace guiex

@@ -17,9 +17,14 @@
 
 namespace guiex
 {
-//------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------
+	const char* IGUIInterfaceIme::StaticGetModuleName()
+	{ 
+		return "IGUIIme";
+	}
+	//------------------------------------------------------------------------------
 	IGUIInterfaceIme::IGUIInterfaceIme()
-		:IGUIInterface("IGUIIme")
+		:IGUIInterface( StaticGetModuleName() )
 	{
 
 	}

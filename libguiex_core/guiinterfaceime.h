@@ -61,6 +61,9 @@ namespace guiex
 
 		/////Get font's size
 		//virtual uint32		GetFontSize( ) = 0;
+
+	public: 
+		static const char* StaticGetModuleName();
 	};
 
 }//namespace guiex

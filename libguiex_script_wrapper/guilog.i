@@ -16,8 +16,6 @@ namespace guiex
 		GUI_LM_MAX = GUI_LM_EMERGENCY,
 	};
 
-
-	void LogMessage(int32 nPriority, const CGUIString& format  );
+	void LogMessage( int32 nPriority, const CGUIString& format );
 	void PrintDebug( const CGUIString& format );
-
 }

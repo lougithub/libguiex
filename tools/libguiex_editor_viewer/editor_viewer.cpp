@@ -104,8 +104,8 @@ public:
 	/** 
 	* @brief show string in output panel
 	*/
-	void	OutputString( const std::string& rString);
-	bool		GetUIInfo( bool bTryCommandLine);
+	void OutputString( const std::string& rString);
+	bool GetUIInfo( bool bTryCommandLine);
 
 	enum
 	{
@@ -328,12 +328,6 @@ static void EditorWarningCB(const char* message, void*)
 	((WxMainFrame*)wxGetApp().GetTopWindow())->OutputString(message);
 }
 //------------------------------------------------------------------------------
-extern "C" int luaopen_game(lua_State* L);
-void FuncInitScript( void* pScriptState)
-{
-	luaopen_game((lua_State*)pScriptState);
-}
-//------------------------------------------------------------------------------
 
 
 //------------------------------------------------------------------------------
@@ -462,13 +456,12 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 		GUI_REGISTER_INTERFACE_LIB( IGUIKeyboard_winapi);
 		GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
 		GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_Winapi);
-		GUI_REGISTER_INTERFACE_LIB_ARG( IGUIScript_lua, FuncInitScript);
+		GUI_REGISTER_INTERFACE_LIB( IGUIScript_lua );
 		GUI_REGISTER_INTERFACE_LIB_ARG( IGUIIme_winapi, pCanvas->GetHandle());
 
-		m_pMouse = (guiex::IGUIMouse_winapi*)guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse();
-		m_pKeyboard = (guiex::IGUIKeyboard_winapi*)guiex::CGUIInterfaceManager::Instance()->GetInterfaceKeyboard();
-		m_pIme = (guiex::IGUIIme_winapi*)guiex::CGUIInterfaceManager::Instance()->GetInterfaceIme();
-
+		m_pMouse = guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouseImp<guiex::IGUIMouse_winapi>();
+		m_pKeyboard = guiex::CGUIInterfaceManager::Instance()->GetInterfaceKeyboardImp<guiex::IGUIKeyboard_winapi>();
+		m_pIme = guiex::CGUIInterfaceManager::Instance()->GetInterfaceImeImp<guiex::IGUIIme_winapi>();
 
 		//register widget
 		guiex::CGUIWidgetGenerator** pGenerator = guiex::GetAllGenerators();
@@ -510,7 +503,7 @@ WxMainFrame::~WxMainFrame()
 	delete guiex::GSystem;
 }
 //------------------------------------------------------------------------------
-bool		WxMainFrame::GetUIInfo( bool bTryCommandLine)
+bool WxMainFrame::GetUIInfo( bool bTryCommandLine)
 {
 	if( bTryCommandLine )
 	{

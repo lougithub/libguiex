@@ -19,7 +19,7 @@
 #include "guivector2.h"
 #include "guivector3.h"
 #include "guicolor.h"
-#include "guiwidgetsystem.h"
+#include "guisystem.h"
 #include "guiexception.h"
 #include <vector>
 #include <sstream>

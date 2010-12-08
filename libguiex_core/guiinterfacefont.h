@@ -105,6 +105,9 @@ namespace guiex
 			real fAlpha,
 			int32 nStartPos = 0,
 			int32 nEndPos = -1)=0;
+
+	public: 
+		static const char* StaticGetModuleName();
 	};
 
 }//namespace guiex

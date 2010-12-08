@@ -47,21 +47,13 @@ namespace guiex
 
 		static CGUIAsManager* Instance(); 
 
-		int32 RegisterAs( 
-			const CGUIString& rSceneName,
-			const CGUIProperty& rProperty );
+		int32 RegisterAs( const CGUIString& rSceneName, const CGUIProperty& rProperty );
 
 		CGUIAs* AllocateResource( const CGUIString& rResName );
 		CGUIAs* AllocateResourceByType( const CGUIString& rAsType );
 		int32 DeallocateResource( CGUIAs* pRes );
 
-		template<class T>
-		T* AllocateResource(  )
-		{
-			CGUIAs* pAs = AllocateResourceByType( T::StaticGetType() );
-			GUI_ASSERT( pAs->GetType() == T::StaticGetType(), "wrong As type" );
-			return static_cast<T*>( pAs );
-		}
+		template<class T> T* AllocateResource(  );
 
 	protected:
 		CGUIAs* DoCreateAs( 
@@ -78,6 +70,14 @@ namespace guiex
 	private:
 		static CGUIAsManager* m_pSingleton;
 	};
+
+	template<class T> 
+	inline T* CGUIAsManager::AllocateResource(  )
+	{
+		CGUIAs* pAs = AllocateResourceByType( T::StaticGetType() );
+		GUI_ASSERT( pAs->GetType() == T::StaticGetType(), "wrong As type" );
+		return static_cast<T*>( pAs );
+	}
 
 }//namespace guiex
 

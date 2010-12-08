@@ -1,25 +1,44 @@
 if( WIN32 )
 
-    set( target_name "test1" )
-    message( STATUS "generate execute: " ${target_name} )
+	set( target_name "libguiex_editor" )
+	message( STATUS "generate execute: " ${target_name} )
 
-    #common source
-    set( ${target_name}_common_SRCS
-        ../wxTestCommon/testcommon.cpp
-        )
-    source_group( common FILES ${${target_name}_common_SRCS} )
-
-    #test source
-    set( ${target_name}_execute_SRCS
-        test1.cpp
-        )
-    source_group( test FILES ${${target_name}_execute_SRCS} )
-
-    # all source
-    set( ${target_name}_SRCS 
-        "${${target_name}_common_SRCS}"
-        "${${target_name}_execute_SRCS}"
-        )
+	# all source
+	set( ${target_name}_SRCS 
+		command.cpp
+		command.h
+		commandmanager.cpp
+		commandmanager.h
+		libguiex_editor.cpp
+		libguiex_editor.h
+		libguiex_editor.rc
+		propertyconfigmgr.cpp
+		propertyconfigmgr.h
+		propertysheetfunc.cpp
+		propertysheetfunc.h
+		resource.h
+		savefilebase.h
+		toolcache.cpp
+		toolcache.h
+		windowbox.cpp
+		windowbox.h
+		wxeditorcanvas.cpp
+		wxeditorcanvas.h
+		wxmainapp.cpp
+		wxmainapp.h
+		wxmainframe.cpp
+		wxmainframe.h
+		wxoutputpanel.cpp
+		wxoutputpanel.h
+		wxsavefiledlg.cpp
+		wxsavefiledlg.h
+		wxtexteditor.cpp
+		wxtexteditor.h
+		wxwidgetpropertysheet.cpp
+		wxwidgetpropertysheet.h
+		wxwizardcreatewidget.cpp
+		wxwizardcreatewidget.h
+		)
 
 
     #include directory
@@ -64,8 +83,8 @@ if( WIN32 )
         general Rpcrt4.lib
         general libguiex_core
         general libguiex_widget
-        general libguiex_module
         general libguiex_script_wrapper
+        general libguiex_module
         general tinyxml
         general lua
         )

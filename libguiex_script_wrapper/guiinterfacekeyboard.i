@@ -109,10 +109,9 @@ namespace guiex
 		_KEY_CODE_MAX_,
 	};
 
-
 	class IGUIInterfaceKeyboard : public IGUIInterface
 	{
-		bool			IsKeyPressed(EKeyCode eKey) const;   
+		bool IsKeyPressed(EKeyCode eKey) const;   
 	};
 
 }

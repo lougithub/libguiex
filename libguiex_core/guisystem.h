@@ -1,5 +1,5 @@
 /** 
-* @file guiwidgetsystem.h
+* @file guisystem.h
 * @brief system
 * @author ken
 * @date 2006-06-21
@@ -52,10 +52,6 @@ namespace guiex
 
 	extern CGUISystem* GSystem;
 }
-
-//============================================================================//
-// enum
-//============================================================================// 
 
 //============================================================================//
 // class
@@ -163,70 +159,19 @@ namespace guiex
 		//********************************************************
 		//	singleton
 		//********************************************************
-		CGUIImageManager* GetImageManager()
-		{
-			return m_pImageManager;
-		}
-
-		CGUIAnimationManager* GetAnimationManager()
-		{
-			return m_pAnimationManager;
-		}
-		
-		CGUIAsManager* GetAsManager()
-		{
-			return m_pAsManager;
-		}
-
-		CGUIFontManager* GetFontManager()
-		{
-			return m_pFontManager;
-		}
-
-		CGUITextureManager* GetTextureManager()
-		{
-			return m_pTextureManager;
-		}
-
-		CGUIInterfaceManager* GetInterfaceManager()
-		{
-			return m_pInterfaceManager;
-		}
-
-		CGUIMouseCursor* GetMouseCursor()
-		{
-			return m_pMouseCursor;
-		}
-
-		CGUIPropertyManager* GetPropertyManager()
-		{
-			return m_pPropertyManager;
-		}
-		
-		CGUIWidgetFactory* GetWidgetFactory()
-		{
-			return m_pWidgetFactory;
-		}
-
-		CGUISceneInfoManager* GetSceneInfoManager()
-		{
-			return m_pSceneInfoManager;
-		}
-
-		CGUIAsFactory* GetAsFactory()
-		{
-			return m_pAsFactory;
-		}
-
-		CGUILogMsgManager* GetLogMsgManager()
-		{
-			return m_pLogMsgManager;
-		}
-
-		CGUIWidgetManager* GetWidgetManager()
-		{
-			return m_pWidgetManager;
-		}
+		CGUIImageManager* GetImageManager();
+		CGUIAnimationManager* GetAnimationManager();
+		CGUIAsManager* GetAsManager();
+		CGUIFontManager* GetFontManager();
+		CGUITextureManager* GetTextureManager();
+		CGUIInterfaceManager* GetInterfaceManager();
+		CGUIMouseCursor* GetMouseCursor();
+		CGUIPropertyManager* GetPropertyManager();
+		CGUIWidgetFactory* GetWidgetFactory();
+		CGUISceneInfoManager* GetSceneInfoManager();
+		CGUIAsFactory* GetAsFactory();
+		CGUILogMsgManager* GetLogMsgManager();
+		CGUIWidgetManager* GetWidgetManager();
 
 	protected:
 		friend class CGUIWidget;
@@ -348,6 +293,74 @@ namespace guiex
 	private:
 		static CGUISystem* m_pSingleton;
 	};
+
+	
+	
+	inline CGUIImageManager* CGUISystem::GetImageManager()
+	{
+		return m_pImageManager;
+	}
+
+	inline CGUIAnimationManager* CGUISystem::GetAnimationManager()
+	{
+		return m_pAnimationManager;
+	}
+
+	inline CGUIAsManager* CGUISystem::GetAsManager()
+	{
+		return m_pAsManager;
+	}
+
+	inline CGUIFontManager* CGUISystem::GetFontManager()
+	{
+		return m_pFontManager;
+	}
+
+	inline CGUITextureManager* CGUISystem::GetTextureManager()
+	{
+		return m_pTextureManager;
+	}
+
+	inline CGUIInterfaceManager* CGUISystem::GetInterfaceManager()
+	{
+		return m_pInterfaceManager;
+	}
+
+	inline CGUIMouseCursor* CGUISystem::GetMouseCursor()
+	{
+		return m_pMouseCursor;
+	}
+
+	inline CGUIPropertyManager* CGUISystem::GetPropertyManager()
+	{
+		return m_pPropertyManager;
+	}
+
+	inline CGUIWidgetFactory* CGUISystem::GetWidgetFactory()
+	{
+		return m_pWidgetFactory;
+	}
+
+	inline CGUISceneInfoManager* CGUISystem::GetSceneInfoManager()
+	{
+		return m_pSceneInfoManager;
+	}
+
+	inline CGUIAsFactory* CGUISystem::GetAsFactory()
+	{
+		return m_pAsFactory;
+	}
+
+	inline CGUILogMsgManager* CGUISystem::GetLogMsgManager()
+	{
+		return m_pLogMsgManager;
+	}
+
+	inline CGUIWidgetManager* CGUISystem::GetWidgetManager()
+	{
+		return m_pWidgetManager;
+	}
+
 
 }//namespace guiex
 

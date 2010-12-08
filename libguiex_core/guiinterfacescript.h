@@ -29,7 +29,6 @@ namespace guiex
 //============================================================================// 
 namespace guiex
 {
-
 	class GUIEXPORT IGUIInterfaceScript : public IGUIInterface
 	{
 	public:
@@ -43,7 +42,7 @@ namespace guiex
 		*/
 		virtual ~IGUIInterfaceScript();
 
-		virtual void	SetExternalData(void* pData) = 0;
+		virtual void AddScriptModule(void* pData) = 0;
 
 		virtual void CreateScript( const CGUIString& rSceneName ) = 0;
 		virtual bool HasScript( const CGUIString& rSceneName ) = 0;
@@ -55,34 +54,32 @@ namespace guiex
 		* 
 		* @param filename filename of the script file
 		*/
-		virtual	void	ExecuteFile(const CGUIString& filename, const CGUIString& rSceneName) = 0;
+		virtual	void ExecuteFile(const CGUIString& filename, const CGUIString& rSceneName) = 0;
 
 		/** 
 		* @brief execute a memory buffer which contain script
 		*/
-		virtual	void	ExecuteBuffer(void * pBuffer, int32 nBufferSize, const CGUIString& rSceneName) = 0;
+		virtual	void ExecuteBuffer(void * pBuffer, int32 nBufferSize, const CGUIString& rSceneName) = 0;
 
 		/** 
 		* @brief execute a string which contain script
 		*/
-		virtual	void	ExecuteString(const char * pString, const CGUIString& rSceneName) = 0;
+		virtual	void ExecuteString(const char * pString, const CGUIString& rSceneName) = 0;
 
-		virtual void	RegisterWidget( const CGUIWidget* pWidget) = 0;
-
+		virtual void RegisterWidget( const CGUIWidget* pWidget) = 0;
 
 		/** 
 		* @brief execute a event handle
 		* 
 		* @param rEventName event name
 		*/
-		virtual void 	ExecuteEventHandler(const CGUIString& rEventName, CGUIEvent* pEvent, const CGUIString& rSceneName)=0;
+		virtual void ExecuteEventHandler(const CGUIString& rEventName, CGUIEvent* pEvent, const CGUIString& rSceneName)=0;
+
+	public: 
+		static const char* StaticGetModuleName();
 	};
 
-
-
 }//namespace guiex
-
-
 
 
 #endif __GUI_INTERFACE_SCRIPT_20060404_H_

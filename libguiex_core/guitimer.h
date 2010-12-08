@@ -45,36 +45,14 @@ namespace guiex
 	class GUIEXPORT CGUITimer
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUITimer();
-
-		/**
-		* @brief copy constructor
-		*/
 		CGUITimer(const CGUITimer& rTimer);
+	
+		void Assign( const CGUITimer& rTimer );
+		void UpdateTime();
 
-		/**
-		* @brief assign value
-		*/
-		void	Assign( const CGUITimer& rTimer );
-
-		/**
-		* @brief assign operation
-		*/
+		int32 operator-(const CGUITimer& rTimer) const;
 		CGUITimer operator=(const CGUITimer& rTimer);
-
-		/**
-		* @brief get current time
-		*/
-		void	UpdateTime();
-
-		/**
-		* @brief get timerinterval, in millisecond
-		*/
-		int32	operator-(const CGUITimer& rTimer) const;
-
 
 	protected:
 #if defined(GUIEX_PLATFORM_WIN32)

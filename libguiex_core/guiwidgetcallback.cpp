@@ -11,7 +11,7 @@
 #include <libguiex_core/guiwidget.h>
 #include <libguiex_core/guilogmsgmanager.h>
 #include <libguiex_core/guievent.h>
-#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guisystem.h>
 
 //------------------------------------------------------------------------------
 /************ event list *******************
@@ -73,7 +73,7 @@ namespace guiex
 		CGUIWidget* pWidget = GetChild();
 		while( pWidget )
 		{
-			if( pWidget->IsOpen() && pWidget->GetFlag(eFLAG_EVENT_PARENTSIZECHANGE))
+			if( pWidget->IsOpen() && pWidget->IsResponseParentSizeChangeEvent())
 			{
 				CGUIEventSize aEvent;
 				aEvent.SetEventId(eEVENT_PARENT_CHANGE_SIZE);

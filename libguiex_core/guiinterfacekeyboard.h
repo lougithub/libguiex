@@ -171,8 +171,8 @@ namespace guiex
 	public:
 		struct SKeyEvent 
 		{
-			EKeyCode            m_eKeyCode;				///< key's code
-			EKeyEvent           m_eKeyEvent;			///< key's event
+			EKeyCode m_eKeyCode;				///< key's code
+			EKeyEvent m_eKeyEvent;			///< key's event
 
 			SKeyEvent(EKeyCode eKeyCode=KC_NONE, EKeyEvent eKeyEvent=KEY_EVENT_DOWN)
 				:m_eKeyCode(eKeyCode)
@@ -230,6 +230,9 @@ namespace guiex
 			int  m_nKeyPressedCounter;
 		};
 		SKeyContext	m_aContext;				///< key's context
+
+	public: 
+		static const char* StaticGetModuleName();
 	};
 
 }//namespace guiex

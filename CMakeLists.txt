@@ -16,6 +16,7 @@ set(
 	"${PROJECT_SOURCE_DIR}/CMake"
 	)
 include( VariableLogging )
+include( TargetUtility )
 
 # The version number.
 set( ${PROJECT_NAME}_VERSION_MAJOR 0 )
@@ -28,7 +29,6 @@ configure_file (
     "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.h"
     )
 # add the binary tree to the search path for include files
-# so that we will find TutorialConfig.h
 include_directories( "${PROJECT_BINARY_DIR}" )
 include_directories( "${PROJECT_SOURCE_DIR}" )
 
@@ -53,7 +53,7 @@ if( APPLE )
 elseif( WIN32 )
 
 	set( CMAKE_USE_RELATIVE_PATHS true )
-	set( CMAKE_SUPPRESS_REGENERATION true )
+	set( CMAKE_SUPPRESS_REGENERATION false )
 
 	# Create debug libraries with _d postfix
 	#set(CMAKE_DEBUG_POSTFIX "_d")
@@ -64,6 +64,15 @@ elseif( WIN32 )
 
 	# unicode support
     add_definitions( -DUNICODE -D_UNICODE )
+    
+    #misc define
+    add_definitions( -D_CRT_SECURE_NO_WARNINGS )
+    
+    #set output directory
+	set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG "${PROJECT_SOURCE_DIR}/binary/win32" )
+	set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE "${PROJECT_SOURCE_DIR}/binary/win32" )
+	set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL "${PROJECT_SOURCE_DIR}/binary/win32" )
+	set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${PROJECT_SOURCE_DIR}/binary/win32" ) 
 
 else( )
 
@@ -79,7 +88,7 @@ set( CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/lib" )
 
 
 #print logging
-CMakeVariableLogging( )
+macro_variable_logging( )
 
 
 #library
@@ -93,9 +102,12 @@ add_subdirectory( ${PROJECT_SOURCE_DIR}/external/tinyxml/cmakelist projects/tiny
 add_subdirectory( ${PROJECT_SOURCE_DIR}/external/lua/cmakelist projects/lua )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/external/Box2D/cmakelist projects/box2d )
 
-
 #test
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/test1 projects/test1 )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/testbox2d projects/testbox2d )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/hello_ipad projects/hello_ipad )
+
+#tools
+add_subdirectory( ${PROJECT_SOURCE_DIR}/tools/libguiex_editor_viewer projects/libguiex_editor_viewer )
+add_subdirectory( ${PROJECT_SOURCE_DIR}/tools/libguiex_editor projects/libguiex_editor )
 

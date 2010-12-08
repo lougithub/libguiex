@@ -138,17 +138,6 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////
 		// flag
 		////////////////////////////////////////////////////////////////////////////
-		/**
-		* @brief flag name
-		*/
-		enum
-		{
-			/******* whether receive this kind of event *********/
-			eFLAG_EVENT_PARENTSIZECHANGE,	//!< could this widget receive parent change event
-
-			eFLAG_MAX,
-		};
-
 		void SetAutoPlayAs( bool bEnable );
 		bool IsAutoPlayAs( ) const;
 
@@ -188,10 +177,6 @@ namespace guiex
 		void RenderExtraInfo(IGUIInterfaceRender* pRender);
 		void Update( real fDeltaTime );
 		void Refresh( );
-
-		//TODO: remove it later
-		void SetFlag( uint32 nFlag, bool bEnable);
-		bool GetFlag( uint32 nFlag) const;
 
 		////////////////////////////////////////////////////////////////////////////
 		// resource related operation
@@ -330,6 +315,9 @@ namespace guiex
 
 		void SetMouseConsumed( bool bFlag ); 
 		bool IsMouseConsumed( ) const;
+
+		void SetResponseParentSizeChangeEvent( bool bFlag ); 
+		bool IsResponseParentSizeChangeEvent( ) const;
 
 		void SetResponseUpdateEvent( bool bFlag ); 
 		bool IsResponseUpdateEvent( ) const;
@@ -487,13 +475,6 @@ namespace guiex
 		const CGUIWidgetGenerator* m_pWidgetGenerator;	//!< generator which used to create widget
 
 		///////////////////////////////////////////////////////////////////////
-		/// for flag										
-		///////////////////////////////////////////////////////////////////////
-		std::bitset<eFLAG_MAX> m_aBitFlag;	//!< flag, use bit to save result.
-		bool m_bEvent_ChangeParentSize;
-
-
-		///////////////////////////////////////////////////////////////////////
 		/// parameter							
 		///////////////////////////////////////////////////////////////////////
 		CGUIWidgetParamMultiply<CGUISize> m_aParamScale;
@@ -551,6 +532,8 @@ namespace guiex
 		bool m_bIsGenerateClickEvent; 
 		bool m_bIsGenerateDBClickEvent; 
 		bool m_bIsGenerateMultiClickEvent; 
+		bool m_bIsResponseParentSizeChangeEvent; 
+
 		///////////////////////////////////////////////////////////////////////
 		/// sound
 		///////////////////////////////////////////////////////////////////////

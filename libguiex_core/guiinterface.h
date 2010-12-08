@@ -21,30 +21,30 @@ namespace guiex
 {
 
 #if GUI_DLL	//using dll
-#define GUI_INTERFACE_DECLARE()				\
+#define GUI_INTERFACE_DECLARE()	\
 	extern "C" GUIEXPORT guiex::IGUIInterface* GetInterfaceInstance(void*)
 
-#define GUI_INTERFACE_IMPLEMENT(interfacename)				\
+#define GUI_INTERFACE_IMPLEMENT(interfacename) \
 	extern "C" guiex::IGUIInterface* GetInterfaceInstance(void* pUserData)	\
-	{														\
-	IGUIInterface * pInterface = new interfacename;		\
-	if( !pInterface )									\
-	{													\
-	return NULL;									\
-}													\
-	if( pInterface->Initialize(pUserData) !=0)			\
-	{													\
-	delete pInterface;								\
-	return NULL;									\
-}													\
-	return pInterface;									\
-}
+	{ \
+		IGUIInterface * pInterface = new interfacename; \
+		if( !pInterface ) \
+		{ \
+			return NULL; \
+		} \
+		if( pInterface->Initialize(pUserData) !=0) \
+		{ \
+			delete pInterface; \
+			return NULL; \
+		} \
+		return pInterface; \
+	}
 #else	//#if GUI_DLL	
-#define GUI_INTERFACE_DECLARE()
-#define GUI_INTERFACE_IMPLEMENT(interfacename)
+#	define GUI_INTERFACE_DECLARE()
+#	define GUI_INTERFACE_IMPLEMENT(interfacename)
 #endif	//#if GUI_DLL	
 
-}//naespace guiex
+}//namespace guiex
 
 //============================================================================//
 // class
@@ -52,8 +52,6 @@ namespace guiex
 
 namespace guiex
 {
-
-
 	/** 
 	* @brief base class of interface
 	*/

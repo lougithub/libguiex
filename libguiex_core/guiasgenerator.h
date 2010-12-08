@@ -14,16 +14,14 @@
 #include "guibase.h"
 #include "guistring.h"
 
-
-
 //============================================================================//
 // define
 //============================================================================// 
-#define GUI_AS_GENERATOR_DECLARE(asType)		\
+#define GUI_AS_GENERATOR_DECLARE(asType) \
 public:	\
 	static const char* StaticGetType();\
 	friend class asType##_Generator; \
-	class asType##_Generator : public ::guiex::CGUIAsGenerator	\
+	class asType##_Generator : public ::guiex::CGUIAsGenerator \
 	{ \
 	public: \
 	virtual ::guiex::CGUIAs* GenerateAs(const CGUIString& rAsName, const CGUIString& rSceneName) const; \

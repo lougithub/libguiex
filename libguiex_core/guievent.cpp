@@ -10,7 +10,7 @@
 //============================================================================// 
 #include <libguiex_core/guievent.h>
 #include <libguiex_core/guiwidget.h>
-#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guisystem.h>
 #include <libguiex_core/guiinterfacemouse.h>
 #include <libguiex_core/guiinterfacekeyboard.h>
 
@@ -25,30 +25,14 @@
 
 namespace guiex
 {
-	//int32 GUIRegisterAllEvents()
-	//{
-	//	if( 0 != GUI_EVENT_REGISTER(CGUIEventSize)) {return -1;}
-	//	if( 0 != GUI_EVENT_REGISTER(CGUIEventAlpha)){return -1;}
-	//	if( 0 != GUI_EVENT_REGISTER(CGUIEventMouse)){return -1;}
-	//	if( 0 != GUI_EVENT_REGISTER(CGUIEventNotification)){return -1;}
-	//	if( 0 != GUI_EVENT_REGISTER(CGUIEventDrag)){return -1;}
-	//	if( 0 != GUI_EVENT_REGISTER(CGUIEventScrollbar)){return -1;}
-	//	if( 0 != GUI_EVENT_REGISTER(CGUIEventTimer)){return -1;}	
-	//	if( 0 != GUI_EVENT_REGISTER(CGUIEventKeyboard)){return -1;}
-	//	if( 0 != GUI_EVENT_REGISTER(CGUIEventListBox)){return -1;}
-	//	if( 0 != GUI_EVENT_REGISTER(CGUIEventComboBox)){return -1;}
-	//	if( 0 != GUI_EVENT_REGISTER(CGUIEventUI)){return -1;}
-	//	if( 0 != GUI_EVENT_REGISTER(CGUIEventRelativeChange)){return -1;}
-
-	//	return 0;
-	//} 
-
-
 	//*****************************************************************************
 	//	CGUIEvent
 	//*****************************************************************************
 
 	//------------------------------------------------------------------------------
+	/**
+	* @brief constructor
+	*/
 	CGUIEvent::CGUIEvent(const char* pEventName)
 		:m_uEventId(eEVENT_UNKNOW_EVENT)
 		,m_strEventType(pEventName)
@@ -57,52 +41,63 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief destructor
+	*/
 	CGUIEvent::~CGUIEvent()
 	{
 
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIEvent::SetEventId(uint32 uId )
+	/**
+	* @brief set event id
+	*/
+	void CGUIEvent::SetEventId(uint32 uId )
 	{
 		m_uEventId = uId;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief get event id
+	* @return event id in int32 type
+	*/
 	uint32 CGUIEvent::GetEventId() const
 	{
 		return m_uEventId;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIString&		CGUIEvent::GetEventType() const
+	/**
+	* @brief get event type
+	*/
+	const CGUIString& CGUIEvent::GetEventType() const
 	{
 		return m_strEventType;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIEvent::SetReceiver(CGUIWidget* pReceiver)
+	/**
+	* @brief set widget which receives this event
+	*/
+	void CGUIEvent::SetReceiver(CGUIWidget* pReceiver)
 	{
 		m_pReceiver = pReceiver;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief Get widget which receives this event
+	*/
 	CGUIWidget*	CGUIEvent::GetReceiver()
 	{
 		return m_pReceiver;
 	}
-	////------------------------------------------------------------------------------
-	//void	CGUIEvent::SetGenerator( const CGUIEventGenerator* pGenerator)
-	//{
-	//	m_pEventGenerator = pGenerator;
-	//}
-	////------------------------------------------------------------------------------
-	//const CGUIEventGenerator* CGUIEvent::GetGenerator() const
-	//{
-	//	return m_pEventGenerator;
-	//}
 	//------------------------------------------------------------------------------
-	bool	CGUIEvent::IsConsumed()
+	//!< has this event been consumed
+	bool CGUIEvent::IsConsumed()
 	{
 		return m_bConsumed;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIEvent::Consume(bool bConsumed)
+	//!< set whether this event has been consumed
+	void CGUIEvent::Consume(bool bConsumed)
 	{
 		m_bConsumed = bConsumed;
 	}
@@ -124,7 +119,10 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	uint32	CGUIEventScrollbar::Process()
+	/**
+	* @brief process the event
+	*/
+	uint32 CGUIEventScrollbar::Process()
 	{
 		GUI_ASSERT( m_pReceiver,"havn't receiver" );
 
@@ -138,22 +136,22 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIEventScrollbar::SetScrollbarType( bool bVertical )
+	void CGUIEventScrollbar::SetScrollbarType( bool bVertical )
 	{
 		m_bTypeVertical = bVertical;
 	}
 	//------------------------------------------------------------------------------
-	bool	CGUIEventScrollbar::IsVertical() const
+	bool CGUIEventScrollbar::IsVertical() const
 	{
 		return m_bTypeVertical;
 	}
 	//------------------------------------------------------------------------------
-	bool	CGUIEventScrollbar::IsHorizontal() const
+	bool CGUIEventScrollbar::IsHorizontal() const
 	{
 		return !m_bTypeVertical;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIEventScrollbar::SetScrollbar(CGUIWidget * pScrollbar)
+	void CGUIEventScrollbar::SetScrollbar(CGUIWidget * pScrollbar)
 	{
 		m_pScrollbar = pScrollbar;
 	}
@@ -163,7 +161,7 @@ namespace guiex
 		return m_pScrollbar;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIEventScrollbar::SetCurrentPos( uint32 nPos )
+	void CGUIEventScrollbar::SetCurrentPos( uint32 nPos )
 	{
 		m_nCurrentPos = nPos;
 	}
@@ -173,7 +171,7 @@ namespace guiex
 		return m_nCurrentPos;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIEventScrollbar::SetRange( uint32 nRange )
+	void CGUIEventScrollbar::SetRange( uint32 nRange )
 	{
 		m_nRange = nRange;
 	}
@@ -196,7 +194,10 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	uint32	CGUIEventNotification::Process()
+	/**
+	* @brief process the event
+	*/
+	uint32 CGUIEventNotification::Process()
 	{
 		GUI_ASSERT( m_pReceiver,"havn't receiver" );
 
@@ -270,7 +271,10 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	uint32	CGUIEventTimer::Process()
+	/**
+	* @brief process the event
+	*/
+	uint32 CGUIEventTimer::Process()
 	{
 		GUI_ASSERT( m_pReceiver,"havn't receiver" );
 
@@ -284,12 +288,12 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIEventTimer::SetTimerName(const CGUIString& rTimerName)
+	void CGUIEventTimer::SetTimerName(const CGUIString& rTimerName)
 	{
 		m_strTimerName = rTimerName;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIString&	CGUIEventTimer::GetTimerName()
+	const CGUIString& CGUIEventTimer::GetTimerName()
 	{
 		return m_strTimerName;
 	}
@@ -313,12 +317,15 @@ namespace guiex
 		return m_aSize;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIEventSize::SetSize(const CGUISize& rSize)
+	void CGUIEventSize::SetSize(const CGUISize& rSize)
 	{
 		m_aSize = rSize;
 	}
 	//------------------------------------------------------------------------------
-	uint32	CGUIEventSize::Process()
+	/**
+	* @brief process the event
+	*/
+	uint32 CGUIEventSize::Process()
 	{
 		switch( GetEventId())
 		{
@@ -359,7 +366,10 @@ namespace guiex
 		m_fAlpha = fAlpha;
 	}
 	//------------------------------------------------------------------------------
-	uint32	CGUIEventAlpha::Process()
+	/**
+	* @brief process the event
+	*/
+	uint32 CGUIEventAlpha::Process()
 	{
 		GUI_ASSERT( m_pReceiver,"havn't receiver" );
 
@@ -388,7 +398,10 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	uint32	CGUIEventMouse::Process()
+	/**
+	* @brief process the event
+	*/
+	uint32 CGUIEventMouse::Process()
 	{
 		GUI_ASSERT( m_pReceiver,"havn't receiver" );
 
@@ -476,7 +489,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIEventMouse::SetPosition( const CGUIVector2& rPos )
+	void CGUIEventMouse::SetGlobalPosition( const CGUIVector2& rPos )
 	{
 		m_aPosition = rPos;
 	}
@@ -493,48 +506,48 @@ namespace guiex
 		return aTempPos;
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIEventMouse::SetSysKeys(uint32 uSyskeys)
+	void CGUIEventMouse::SetSysKeys(uint32 uSyskeys)
 	{
 		m_uSysKeys = uSyskeys;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIEventMouse::GetSysKeys() const
+	uint32 CGUIEventMouse::GetSysKeys() const
 	{
 		return m_uSysKeys;
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIEventMouse::SetWheelChange(real fWheelChange)
+	void CGUIEventMouse::SetWheelChange(real fWheelChange)
 	{
 		m_fWheelChange = fWheelChange;
 	}
 	//------------------------------------------------------------------------------
-	real		CGUIEventMouse::GetWheelChange( )
+	real CGUIEventMouse::GetWheelChange( )
 	{
 		return m_fWheelChange;
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIEventMouse::SetButton(int32 nButton)
+	void CGUIEventMouse::SetButton(int32 nButton)
 	{
 		GUI_ASSERT(nButton < _MOUSE_BUTTON_MAX_, "unknown button");
 		m_nButton = nButton;
 	}
 	//------------------------------------------------------------------------------
-	int32		CGUIEventMouse::GetButton() const
+	int32 CGUIEventMouse::GetButton() const
 	{
 		return m_nButton;
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIEventMouse::SetMultiClickCount( uint32 nCount )
+	void CGUIEventMouse::SetMultiClickCount( uint32 nCount )
 	{
 		m_nClickCount = nCount;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIEventMouse::GetMultiClickCount( ) const
+	uint32 CGUIEventMouse::GetMultiClickCount( ) const
 	{
 		return m_nClickCount;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIEventMouse::SetKeyboardInterface( IGUIInterfaceKeyboard*pKeyboard)
+	void CGUIEventMouse::SetKeyboardInterface( IGUIInterfaceKeyboard*pKeyboard)
 	{
 		m_pKeyboard = pKeyboard;
 	}
@@ -561,7 +574,10 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	uint32	CGUIEventKeyboard::Process()
+	/**
+	* @brief process the event
+	*/
+	uint32 CGUIEventKeyboard::Process()
 	{	
 		GUI_ASSERT( m_pReceiver,"havn't receiver" );
 
@@ -584,17 +600,17 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIEventKeyboard::SetKeyCode( int32 nKeyCode)
+	void CGUIEventKeyboard::SetKeyCode( int32 nKeyCode)
 	{
 		m_nKeyCode = nKeyCode;
 	}
 	//------------------------------------------------------------------------------
-	int32	CGUIEventKeyboard::GetKeyCode() const
+	int32 CGUIEventKeyboard::GetKeyCode() const
 	{
 		return m_nKeyCode;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIEventKeyboard::SetKeyboardInterface( IGUIInterfaceKeyboard*pKeyboard)
+	void CGUIEventKeyboard::SetKeyboardInterface( IGUIInterfaceKeyboard*pKeyboard)
 	{
 		m_pKeyboard = pKeyboard;
 	}
@@ -619,7 +635,10 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	uint32	CGUIEventDrag::Process()
+	/**
+	* @brief process the event
+	*/
+	uint32 CGUIEventDrag::Process()
 	{
 		GUI_ASSERT( m_pReceiver,"havn't receiver" );
 
@@ -639,12 +658,12 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIEventDrag::SetWidgetPos( const CGUIVector2& rPos )
+	void CGUIEventDrag::SetWidgetLocalPos( const CGUIVector2& rPos )
 	{
 		m_aWidgetPos = rPos;
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIEventDrag::SetMousePos( const CGUIVector2& rPos )
+	void CGUIEventDrag::SetMouseGlobalPos( const CGUIVector2& rPos )
 	{
 		m_aMousePos = rPos;
 	}
@@ -673,22 +692,22 @@ namespace guiex
 		return aTempPos;
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIEventDrag::SetButton( int32 nButton)
+	void CGUIEventDrag::SetButton( int32 nButton)
 	{
 		m_nButton = nButton;
 	}
 	//------------------------------------------------------------------------------
-	const int32		CGUIEventDrag::GetButton( ) const
+	const int32 CGUIEventDrag::GetButton( ) const
 	{
 		return m_nButton;
 	}
 	//------------------------------------------------------------------------------
-	bool	CGUIEventDrag::IsExpired()
+	bool CGUIEventDrag::IsExpired()
 	{
 		return m_bExpired;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIEventDrag::Expire(bool bExpired)
+	void CGUIEventDrag::Expire(bool bExpired)
 	{
 		m_bExpired = bExpired;
 	}
@@ -708,7 +727,10 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	uint32	CGUIEventListBox::Process()
+	/**
+	* @brief process the event
+	*/
+	uint32 CGUIEventListBox::Process()
 	{
 		GUI_ASSERT( m_pReceiver,"havn't receiver" );
 
@@ -737,22 +759,22 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIEventListBox::SetDbClickedItemIdx( uint32 nIdx )
+	void CGUIEventListBox::SetDbClickedItemIdx( uint32 nIdx )
 	{
 		m_nDbClickedItemIdx = nIdx;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIEventListBox::GetDbClickedItemIdx( ) const
+	uint32 CGUIEventListBox::GetDbClickedItemIdx( ) const
 	{
 		return m_nDbClickedItemIdx;
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIEventListBox::SetSelectedItemIdx( uint32 nIdx )
+	void CGUIEventListBox::SetSelectedItemIdx( uint32 nIdx )
 	{
 		m_nSelectedItemIdx = nIdx;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIEventListBox::GetSelectedItemIdx( ) const
+	uint32 CGUIEventListBox::GetSelectedItemIdx( ) const
 	{
 		return m_nSelectedItemIdx;
 	}
@@ -769,7 +791,10 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	uint32	CGUIEventComboBox::Process()
+	/**
+	* @brief process the event
+	*/
+	uint32 CGUIEventComboBox::Process()
 	{
 		GUI_ASSERT( m_pReceiver,"havn't receiver" );
 
@@ -783,12 +808,12 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIEventComboBox::SetSelectedItemIdx( uint32 nIdx )
+	void CGUIEventComboBox::SetSelectedItemIdx( uint32 nIdx )
 	{
 		m_nSelectedItemIdx = nIdx;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIEventComboBox::GetSelectedItemIdx( ) const
+	uint32 CGUIEventComboBox::GetSelectedItemIdx( ) const
 	{
 		return m_nSelectedItemIdx;
 	}
@@ -807,7 +832,7 @@ namespace guiex
 		m_uEventId = eEVENT_UI;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIEventUI::SetArg(int nIndex, const CGUIString& rArg )
+	void CGUIEventUI::SetArg(int nIndex, const CGUIString& rArg )
 	{
 		if( nIndex >= MAX_UIEVENT_ARGS )
 		{
@@ -817,7 +842,7 @@ namespace guiex
 		m_pArgs[nIndex] = rArg;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIString&	CGUIEventUI::GetArg(int nIndex) const
+	const CGUIString& CGUIEventUI::GetArg(int nIndex) const
 	{
 		if( nIndex >= MAX_UIEVENT_ARGS )
 		{
@@ -827,7 +852,10 @@ namespace guiex
 		return m_pArgs[nIndex];
 	}
 	//------------------------------------------------------------------------------
-	uint32	CGUIEventUI::Process()
+	/**
+	* @brief process the event
+	*/
+	uint32 CGUIEventUI::Process()
 	{
 		GUI_ASSERT( m_pReceiver,"havn't receiver" );
 
@@ -841,22 +869,22 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIEventUI::SetExtraData( void* pData )
+	void CGUIEventUI::SetExtraData( void* pData )
 	{
 		m_pExtraData = pData;
 	}
 	//------------------------------------------------------------------------------
-	void*		CGUIEventUI::GetExtraData( ) const
+	void* CGUIEventUI::GetExtraData( ) const
 	{
 		return m_pExtraData;
 	}
 	//------------------------------------------------------------------------------
-	void			CGUIEventUI::SetUIName( const CGUIString& rName )
+	void CGUIEventUI::SetUIName( const CGUIString& rName )
 	{
 		m_strUIEventName = rName;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIString&	CGUIEventUI::GetUIName( ) const
+	const CGUIString& CGUIEventUI::GetUIName( ) const
 	{
 		return m_strUIEventName;
 	}
@@ -875,7 +903,10 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	uint32	CGUIEventRelativeChange::Process()
+	/**
+	* @brief process the event
+	*/
+	uint32 CGUIEventRelativeChange::Process()
 	{
 		GUI_ASSERT( m_pReceiver,"havn't receiver" );
 
@@ -895,23 +926,15 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void				CGUIEventRelativeChange::SetRelative( CGUIWidget* pRelative )
+	void CGUIEventRelativeChange::SetRelative( CGUIWidget* pRelative )
 	{
 		m_pRelative = pRelative;
 	}
 	//------------------------------------------------------------------------------
-	CGUIWidget*		CGUIEventRelativeChange::GetRelative( ) const
+	CGUIWidget*	CGUIEventRelativeChange::GetRelative( ) const
 	{
 		return m_pRelative;
 	}
-
-
-
-
-	//*****************************************************************************
-	//	CGUIUserDefineEvent
-	//*****************************************************************************
-
 }//namespace guiex
 
 

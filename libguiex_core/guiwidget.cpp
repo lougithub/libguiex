@@ -9,7 +9,7 @@
 // include
 //============================================================================// 
 #include <libguiex_core/guiwidget.h>
-#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guisystem.h>
 #include <libguiex_core/guievent.h>
 #include <libguiex_core/guirect.h>
 #include <libguiex_core/guiimagemanager.h>
@@ -54,7 +54,6 @@ namespace guiex
 		,m_strWorkingSceneName(rSceneName)
 		,m_pWidgetGenerator(NULL)
 		,m_pExclusiveChild(NULL)
-		,m_aBitFlag()
 		,m_aParamScale(CGUISize(1.0f,1.0f))
 		,m_aParamAlpha(1.0f)
 		,m_aParamDisable(false)
@@ -75,18 +74,13 @@ namespace guiex
 		,m_bIsHitable(true)
 		,m_bIsMouseConsumed(true)
 		,m_bIsResponseUpdateEvent(false)
+		,m_bIsResponseParentSizeChangeEvent(false)
 		,m_bIsGenerateClickEvent(false)
 		,m_bIsGenerateDBClickEvent(false)
 		,m_bIsGenerateMultiClickEvent(false)
 		,m_bIsAutoPlayAs(false)
 		,m_bIsClipChildren(false)
 	{
-		//set flag
-		m_aBitFlag.reset(eFLAG_EVENT_PARENTSIZECHANGE);	//could this widget receive parent change event
-
-		//init data
-		m_aWidgetPosition.m_eType = eScreenValue_Pixel;
-		m_aWidgetSize.m_eType = eScreenValue_Pixel;
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -807,20 +801,6 @@ namespace guiex
 	bool	CGUIWidget::IsDerivedVisible()
 	{
 		return m_aParamVisible.GetFinalValue();
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWidget::SetFlag( uint32	nFlag, bool bEnable)
-	{
-		GUI_ASSERT( nFlag >=0 && nFlag < eFLAG_MAX , "unknown widget flag");
-
-		bEnable ? m_aBitFlag.set(nFlag) : m_aBitFlag.reset(nFlag);
-	}
-	//------------------------------------------------------------------------------
-	bool	CGUIWidget::GetFlag( uint32	nFlag) const
-	{
-		GUI_ASSERT( nFlag >=0 && nFlag < eFLAG_MAX , "unknown widget flag");
-
-		return m_aBitFlag.test( nFlag );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::SetAutoPlayAs( bool bEnable )
@@ -2017,11 +1997,11 @@ namespace guiex
 			PropertyToValue(rProperty, bValue );
 			SetResponseUpdateEvent(bValue );
 		}
-		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="EVENT_PARENTSIZECHANGE" )
+		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="response_parentsizechange_event" )
 		{
 			bool bValue = false;
 			PropertyToValue(rProperty, bValue );
-			SetFlag( eFLAG_EVENT_PARENTSIZECHANGE, bValue );
+			SetResponseParentSizeChangeEvent(bValue );
 		}		
 		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="EVENT_CLICK" )
 		{
@@ -2748,6 +2728,16 @@ namespace guiex
 	bool CGUIWidget::IsResponseUpdateEvent( ) const
 	{
 		return m_bIsResponseUpdateEvent;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::SetResponseParentSizeChangeEvent( bool bFlag )
+	{
+		m_bIsResponseParentSizeChangeEvent = bFlag;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWidget::IsResponseParentSizeChangeEvent( ) const
+	{
+		return m_bIsResponseParentSizeChangeEvent;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::SetGenerateClickEvent( bool bFlag )

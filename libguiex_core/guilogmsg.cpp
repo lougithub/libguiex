@@ -23,9 +23,9 @@
 namespace guiex
 {
 #define GUI_UPDATE_COUNT(COUNT, LEN) \
-	do { if (static_cast<size_t> (LEN) > COUNT) COUNT = 0; \
-	 else COUNT -= static_cast<size_t> (LEN); \
-	} while (0)
+	do { if(static_cast<size_t>(LEN) > COUNT) COUNT = 0; \
+	 else COUNT -= static_cast<size_t>(LEN); \
+	} while(0)
 
 
 	//------------------------------------------------------------------------------
@@ -34,7 +34,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUILogMsg::CGUILogMsg()
 		:m_nFlags( CGUILogMsg::FLAG_STDERR)
-		,m_nPriorityMask (ms_nDefaultPriorityMask)
+		,m_nPriorityMask(ms_nDefaultPriorityMask)
 		,m_pMsgCallback(NULL)
 		,m_pOstream(NULL)
 		,m_bDeleteOstream(false)
@@ -68,24 +68,36 @@ namespace guiex
 		Close();
 	}
 	//------------------------------------------------------------------------------
-	uint32 CGUILogMsg::GetFlags (void) const
+			/**
+		 * Return the bits in the logger's options flags.
+		 */
+		uint32 CGUILogMsg::GetFlags(void) const
 	{
 		uint32 result;
 		result = m_nFlags;
 		return result;
 	}
 	//------------------------------------------------------------------------------
-	void CGUILogMsg::SetFlags (uint32 flgs)
+		/**
+		 * @brief Enable the bits in the logger's options flags.
+		 */
+			void CGUILogMsg::SetFlags(uint32 flgs)
 	{
-		GUI_SET_BITS (m_nFlags, flgs);
+		GUI_SET_BITS(m_nFlags, flgs);
 	}
 	//------------------------------------------------------------------------------
-	void CGUILogMsg::ClearFlags (uint32 flgs)
+			/**
+		 * @brief Disable the bits in the logger's options flags.
+		 */
+		void CGUILogMsg::ClearFlags(uint32 flgs)
 	{
-		GUI_CLR_BITS (m_nFlags, flgs);
+		GUI_CLR_BITS(m_nFlags, flgs);
 	}
 	//------------------------------------------------------------------------------
-	uint32 CGUILogMsg::SetPriorityMask (uint32 n_mask)
+			/**
+		 * @brief Set the EGUI_Log_Priority mask, returns original mask.
+		 */
+		uint32 CGUILogMsg::SetPriorityMask(uint32 n_mask)
 	{
 		uint32 o_mask = this->m_nPriorityMask;
 		this->m_nPriorityMask = n_mask;
@@ -93,74 +105,117 @@ namespace guiex
 		return o_mask;
 	}
 	//------------------------------------------------------------------------------
-	uint32 CGUILogMsg::GetPriorityMask () const
+			/** 
+		 * @brief Get the current EGUI_Log_Priority mask.
+		 */
+		uint32 CGUILogMsg::GetPriorityMask() const
 	{
 		return this->m_nPriorityMask;
 	}
 	//------------------------------------------------------------------------------
-	bool CGUILogMsg::IsPriorityEnabled (EGUI_Log_Priority log_priority) const
+			/**
+		 * @brief Return true if the requested priority is enabled.
+		 */
+		bool CGUILogMsg::IsPriorityEnabled(EGUI_Log_Priority log_priority) const
 	{
-		return GUI_BIT_ENABLED (this->m_nPriorityMask,log_priority);
+		return GUI_BIT_ENABLED(this->m_nPriorityMask,log_priority);
 	}
 	//------------------------------------------------------------------------------
-	void CGUILogMsg::EnableDefaultMessages (EGUI_Log_Priority priority)
+		/**
+		 * @brief Sets the flag in the default priority mask used to initialize
+		 * ACE_Log_Msg instances.
+		 */
+			void CGUILogMsg::EnableDefaultMessages(EGUI_Log_Priority priority)
 	{
-		GUI_SET_BITS (CGUILogMsg::ms_nDefaultPriorityMask, priority);
+		GUI_SET_BITS(CGUILogMsg::ms_nDefaultPriorityMask, priority);
 	}
 	//------------------------------------------------------------------------------
-	void CGUILogMsg::DisableDefaultMessages (EGUI_Log_Priority priority)
+			/**
+		 * @brief Clears the flag from the default priority mask used to
+		 * initialize ACE_Log_Msg instances.
+		 */
+		void CGUILogMsg::DisableDefaultMessages(EGUI_Log_Priority priority)
 	{
-		GUI_CLR_BITS (CGUILogMsg::ms_nDefaultPriorityMask, priority);
+		GUI_CLR_BITS(CGUILogMsg::ms_nDefaultPriorityMask, priority);
 	}
 	//------------------------------------------------------------------------------
-	uint32 CGUILogMsg::GetLineNum (void) const
+			/**
+		 * @brief Get the line number where an error occurred.
+		 */
+		uint32 CGUILogMsg::GetLineNum(void) const
 	{
 		return this->m_nLineNum;
 	}
 	//------------------------------------------------------------------------------
-	void CGUILogMsg::SetLineNum (uint32 l)
+			/**
+		 * @brief Set the line number where an error occurred.
+		 */
+		void CGUILogMsg::SetLineNum(uint32 l)
 	{
 		this->m_nLineNum = l;
 	}
 	//------------------------------------------------------------------------------
-	const char * CGUILogMsg::GetFileName (void)
+			/**
+		 * @brief Get the file name where an error occurred.
+		 */
+		const char * CGUILogMsg::GetFileName(void)
 	{
 		return this->m_strFile;
 	}
 	//------------------------------------------------------------------------------
-	void CGUILogMsg::SetFileName (const char *s)
+			/**
+		 * @brief Set the file name where an error occurred.
+		 */
+		void CGUILogMsg::SetFileName(const char *s)
 	{
 		strncpy(this->m_strFile, s, sizeof( this->m_strFile));
 	}
 	//------------------------------------------------------------------------------
-	void CGUILogMsg::ConditionalSet (const char *filename, uint32 line)
+			/**
+		 * @brief These values are only actually set if the 
+		 * requested priority is enabled.
+		 */
+		void CGUILogMsg::ConditionalSet(const char *filename, uint32 line)
 	{
 		this->m_aConditionalValues.m_bIsSet = true;
 		this->m_aConditionalValues.m_strFile = filename;
 		this->m_aConditionalValues.m_nLine = line;
 	}
 	//------------------------------------------------------------------------------
-	const char * CGUILogMsg::Msg (void)
+			/**
+		 * @brief Get the message that describes the message.
+		 */
+		const char * CGUILogMsg::Msg(void)
 	{
 		return this->m_pMsg + CGUILogMsg::ms_nMsgOffset;
 	}
 	//------------------------------------------------------------------------------
-	void CGUILogMsg::SetCallbackMsg(CGUILogMsgCallback* pCallback)
+			/**
+		 * @brief set callback class to log message
+		 */
+		void CGUILogMsg::SetCallbackMsg(CGUILogMsgCallback* pCallback)
 	{
 		m_pMsgCallback = pCallback;
 	}
 	//------------------------------------------------------------------------------
-	CGUILogMsgCallback* CGUILogMsg::GetCallbackMsg() const
+			/**
+		 * @brief get callback class
+		 */
+		CGUILogMsgCallback* CGUILogMsg::GetCallbackMsg() const
 	{
 		return m_pMsgCallback;
 	}
 	//------------------------------------------------------------------------------
-	void CGUILogMsg::Close()
+			/**
+		 * @brief close the log facility.
+		 * only for internal use at most time
+		 */
+		void CGUILogMsg::Close()
 	{
 #ifdef WIN32
 		if( m_hEventLog )
 		{
-			DeregisterEventSource (m_hEventLog);
+			DeregisterEventSource(m_hEventLog);
 			m_hEventLog = NULL;
 		}
 #else
@@ -168,7 +223,10 @@ namespace guiex
 #endif
 	}
 	//------------------------------------------------------------------------------
-	void CGUILogMsg::Open (const char *prog_name,
+			/**
+		 * @brief initialize the log facility
+		 */
+		void CGUILogMsg::Open(const char *prog_name,
 		uint32 options_flags,
 		const char *logger_key)
 	{
@@ -192,13 +250,13 @@ namespace guiex
 
 		//*****************************************************************
 		//for SYSLOG
-		if (GUI_BIT_ENABLED (m_nFlags, CGUILogMsg::FLAG_SYSLOG))
+		if(GUI_BIT_ENABLED(m_nFlags, CGUILogMsg::FLAG_SYSLOG))
 		{
 #ifdef WIN32
 			char msg_file [GUI_MAXPATHLEN];
 			if( m_strProgramName.empty() )
 			{
-				if (!::GetModuleFileNameA(NULL,msg_file,GUI_MAXPATHLEN))
+				if(!::GetModuleFileNameA(NULL,msg_file,GUI_MAXPATHLEN))
 				{
 					return;
 				}
@@ -207,7 +265,7 @@ namespace guiex
 			{
 				strncpy( msg_file, m_strProgramName.c_str(), GUI_MAXPATHLEN );
 			}
-			DWORD msg_file_length =static_cast<DWORD>(strlen (msg_file) + 1);
+			DWORD msg_file_length =static_cast<DWORD>(strlen(msg_file) + 1);
 
 			// If a logger_key has been supplied then we use that as the event
 			// source name, otherwise we default to the program name.
@@ -216,22 +274,22 @@ namespace guiex
 			// Information is stored in the registry at a location based on the
 			// program name.
 			char reg_key [GUI_MAXPATHLEN];
-			strcpy (reg_key,"SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\");
+			strcpy(reg_key,"SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\");
 			size_t reg_key_length = strlen(reg_key);
-			strncat (reg_key,event_source_name,GUI_MAXPATHLEN - reg_key_length);
+			strncat(reg_key,event_source_name,GUI_MAXPATHLEN - reg_key_length);
 
 			// Add the event source to the registry. Note that if this fails it
 			// is not fatal. The application will still be able to write entries
 			// to the event log, they just won't be formatted correctly.
 			HKEY hkey = NULL;
-			::RegCreateKeyA (HKEY_LOCAL_MACHINE,reg_key,&hkey);
+			::RegCreateKeyA(HKEY_LOCAL_MACHINE,reg_key,&hkey);
 			DWORD flags = EVENTLOG_ERROR_TYPE | EVENTLOG_WARNING_TYPE | EVENTLOG_INFORMATION_TYPE;
-			::RegSetValueExA (hkey,("TypesSupported"),0,REG_DWORD,(LPBYTE) &flags,sizeof (DWORD));
-			::RegSetValueExA (hkey,("EventMessageFile"),0,REG_SZ,(LPBYTE) msg_file,msg_file_length);
-			RegCloseKey (hkey);
+			::RegSetValueExA(hkey,("TypesSupported"),0,REG_DWORD,(LPBYTE) &flags,sizeof(DWORD));
+			::RegSetValueExA(hkey,("EventMessageFile"),0,REG_SZ,(LPBYTE) msg_file,msg_file_length);
+			RegCloseKey(hkey);
 
 			// Obtain a handle to the event source.
-			HANDLE m_hEventLog = ::RegisterEventSourceA (0,event_source_name);
+			HANDLE m_hEventLog = ::RegisterEventSourceA(0,event_source_name);
 #else
 
 #endif
@@ -239,7 +297,7 @@ namespace guiex
 
 		//	//*****************************************************************
 		//	//for STDERR
-		//	if (GUI_BIT_ENABLED (m_nFlags, CGUILogMsg::FLAG_STDERR))
+		//	if(GUI_BIT_ENABLED(m_nFlags, CGUILogMsg::FLAG_STDERR))
 		//	{
 		//#ifdef WIN32
 		//		if( NULL == m_hConsole )
@@ -252,23 +310,52 @@ namespace guiex
 
 	}
 	//------------------------------------------------------------------------------
-	void CGUILogMsg::Log (EGUI_Log_Priority log_priority, const char *format_str, ...)
+			/**
+		 * @brief Format a message and send to output.  
+		 * Valid Options(prefixed by '%', as in printf format strings) include:
+		 *   'a': exit the program at this point(var-argument is the exit status!)
+		 *   'c': print a character
+		 *   'i', 'd': print a	decimal number
+		 *   'e', 'E', 'f', 'F', 'g', 'G': print a double
+		 *   'l', print line number where an error occurred.
+		 *   'M': print the name of the priority of the message.
+		 *   'N': print file name where the error occurred.
+		 *   'n': print the name of the program(or "<unknown>" if not set)
+		 *   'o': print as an octal number
+		 *   'Q': print out the uint64 number
+		 *   'q': print out the int64 number
+		 *   '@': print a void* pointer(in hexadecimal)
+		 *   'r': call the function pointed to by the corresponding argument
+		 *   's': format a character string
+		 *   'T': print timestamp in hour:minute:sec:usec format.
+		 *   'D': print timestamp in month/day/year hour:minute:sec:usec format.
+		 *   'u': print as unsigned int
+		 *   'x': print as a hex number
+		 *   'X': print as a hex number
+		 *   'z': print an ACE_OS::WChar character
+		 *   'Z': print an ACE_OS::WChar character string
+		 *   '%': format a single percent sign, '%'
+		 */
+	void CGUILogMsg::Log(EGUI_Log_Priority log_priority, const char *format_str, ...)
 	{
 		// Start of variable args section.
 		va_list argp;
 
-		va_start (argp, format_str);
+		va_start(argp, format_str);
 
-		this->Log (format_str,log_priority,argp);
-		va_end (argp);
+		this->Log(format_str,log_priority,argp);
+		va_end(argp);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUILogMsg::Log(const CGUILogMsgRecord& rRecord, bool bAbortProt)
+				/**
+		 * @brief implement to log message
+		 */
+		void	CGUILogMsg::Log(const CGUILogMsgRecord& rRecord, bool bAbortProt)
 	{
 		// Format the message and print it to stderr and/or ship it off to
 		// the log_client daemon, and/or print it to the ostream.  Of
 		// course, only print the message if "FLAG_FLAG_SILENT" mode is disabled.
-		if (GUI_BIT_ENABLED (m_nFlags,CGUILogMsg::FLAG_FLAG_SILENT))
+		if(GUI_BIT_ENABLED(m_nFlags,CGUILogMsg::FLAG_FLAG_SILENT))
 		{
 			return;
 		}
@@ -276,24 +363,24 @@ namespace guiex
 		// Do the callback, if needed, before acquiring the lock
 		// to avoid holding the lock during the callback so we don't
 		// have deadlock if the callback uses the logger.
-		if (GUI_BIT_ENABLED (m_nFlags,CGUILogMsg::FLAG_MSG_CALLBACK)&& GetCallbackMsg() != NULL)
+		if(GUI_BIT_ENABLED(m_nFlags,CGUILogMsg::FLAG_MSG_CALLBACK)&& GetCallbackMsg() != NULL)
 		{
 			GetCallbackMsg()->Log(rRecord);
 		}
 
 		// This is taken care of by our caller.
-		if (GUI_BIT_ENABLED (m_nFlags,CGUILogMsg::FLAG_STDERR) && !bAbortProt) 
+		if(GUI_BIT_ENABLED(m_nFlags,CGUILogMsg::FLAG_STDERR) && !bAbortProt) 
 		{
 			Log2STDERR(rRecord);
 		}
 
 
-		if (GUI_BIT_ENABLED (m_nFlags, CGUILogMsg::FLAG_SYSLOG))
+		if(GUI_BIT_ENABLED(m_nFlags, CGUILogMsg::FLAG_SYSLOG))
 		{
 			Log2SYSLOG(rRecord);
 		}
 
-		if (GUI_BIT_ENABLED (m_nFlags,CGUILogMsg::FLAG_OSTREAM)&& GetOstream () != 0)
+		if(GUI_BIT_ENABLED(m_nFlags,CGUILogMsg::FLAG_OSTREAM)&& GetOstream() != 0)
 		{
 			Log2OSTREAM(rRecord);
 		}
@@ -301,21 +388,26 @@ namespace guiex
 	}
 
 	//------------------------------------------------------------------------------
-	void CGUILogMsg::Log (const char *format_str,EGUI_Log_Priority log_priority,va_list argp)
+				/**
+		 * An alternative logging mechanism that makes it possible to
+		 * integrate variable argument lists from other logging mechanisms
+		 * into the ACE mechanism.
+		 */
+		void CGUILogMsg::Log(const char *format_str,EGUI_Log_Priority log_priority,va_list argp)
 	{
 		// Only print the message if <m_nPriorityMask> hasn't been reset to
 		// exclude this logging priority.
-		if (this->IsPriorityEnabled (log_priority) == 0)
+		if(this->IsPriorityEnabled(log_priority) == 0)
 		{
 			return;
 		}
 
-		//typedef void (*PTF)(...);
+		//typedef void(*PTF)(...);
 
 		// Check if there were any conditional values set.
 		bool bConditionalValues = this->m_aConditionalValues.m_bIsSet;
 		this->m_aConditionalValues.m_bIsSet = false;
-		if (bConditionalValues)
+		if(bConditionalValues)
 		{
 			this->SetFileName(this->m_aConditionalValues.m_strFile);
 			this->SetLineNum(this->m_aConditionalValues.m_nLine);
@@ -323,24 +415,24 @@ namespace guiex
 
 		// bp is pointer to where to put next part of logged message.
 		// bspace is the number of characters remaining in m_pMsg.
-		char *bp = const_cast<char *> (this->Msg ());
+		char *bp = const_cast<char *>(this->Msg());
 		size_t bspace = GUI_MAXLOGMSGLEN;  // Leave room for Nul term.
-		if (this->ms_nMsgOffset <= GUI_MAXLOGMSGLEN)
+		if(this->ms_nMsgOffset <= GUI_MAXLOGMSGLEN)
 		{
-			bspace -= static_cast<size_t> (this->ms_nMsgOffset);
+			bspace -= static_cast<size_t>(this->ms_nMsgOffset);
 		}
 
 		// If this platform has snprintf() capability to prevent overrunning the
 		// output buffer, use it.
 		bool abort_prog = false;
 		uint32 exit_value = 0;
-		if (GUI_BIT_ENABLED (m_nFlags, CGUILogMsg::FLAG_VERBOSE))
+		if(GUI_BIT_ENABLED(m_nFlags, CGUILogMsg::FLAG_VERBOSE))
 		{
 			// Prepend the program name onto this message
-			if (!m_strProgramName.empty())
+			if(!m_strProgramName.empty())
 			{
-				for (const char *s = m_strProgramName.c_str();
-					bspace > 1 && (*bp = *s) != '\0';
+				for(const char *s = m_strProgramName.c_str();
+					bspace > 1 &&(*bp = *s) != '\0';
 					++s, --bspace)
 				{
 					bp++;
@@ -377,24 +469,24 @@ namespace guiex
 			}
 		}
 
-		if (GUI_BIT_ENABLED (m_nFlags, CGUILogMsg::FLAG_TIMESTAMP) ||
-			GUI_BIT_ENABLED (m_nFlags, CGUILogMsg::FLAG_TIMESTAMP_LITE))
+		if(GUI_BIT_ENABLED(m_nFlags, CGUILogMsg::FLAG_TIMESTAMP) ||
+			GUI_BIT_ENABLED(m_nFlags, CGUILogMsg::FLAG_TIMESTAMP_LITE))
 		{
 			char day_and_time[35];
 			const char *s;
-			if (GUI_BIT_ENABLED (m_nFlags, CGUILogMsg::FLAG_TIMESTAMP_LITE))
+			if(GUI_BIT_ENABLED(m_nFlags, CGUILogMsg::FLAG_TIMESTAMP_LITE))
 			{
 				// Print just the time
-				s = CGUIUtility::timestamp (day_and_time, sizeof day_and_time, 1);
+				s = CGUIUtility::timestamp(day_and_time, sizeof day_and_time, 1);
 			}
 			else
 			{
 				// Print time and date
-				CGUIUtility::timestamp (day_and_time, sizeof day_and_time);
+				CGUIUtility::timestamp(day_and_time, sizeof day_and_time);
 				s = day_and_time;
 			}
 
-			for (; bspace > 1 && (*bp = *s) != '\0'; ++s, --bspace)
+			for(; bspace > 1 && (*bp = *s) != '\0'; ++s, --bspace)
 			{
 				++bp;
 			}
@@ -403,17 +495,17 @@ namespace guiex
 			--bspace;
 		}
 
-		while (*format_str != '\0' && bspace > 0)
+		while(*format_str != '\0' && bspace > 0)
 		{
 			// Copy input to output until we encounter a %, however a
 			// % followed by another % is not a format specification.
 
-			if (*format_str != '%')
+			if(*format_str != '%')
 			{
 				*bp++ = *format_str++;
 				--bspace;
 			}
-			else if (format_str[1] == '%') // An "escaped" '%' (just print one '%').
+			else if(format_str[1] == '%') // An "escaped" '%'(just print one '%').
 			{
 				*bp++ = *format_str++;    // Store first %
 				++format_str;             // but skip second %
@@ -453,11 +545,11 @@ namespace guiex
 				// one recognized by sprintf, if needed, and do the sprintf
 				// call.
 
-				while (!done)
+				while(!done)
 				{
 					done = 1;               // Unless a conversion spec changes it
 
-					switch (*format_str)
+					switch(*format_str)
 					{
 						// The initial set of cases are the conversion
 						// specifiers. Copy them in to the format array.
@@ -486,19 +578,19 @@ namespace guiex
 						break;
 
 					case '*':
-						wp = va_arg (argp, int);
-						sprintf (fp, "%d", wp);
-						fp += strlen (fp);
+						wp = va_arg(argp, int);
+						sprintf(fp, "%d", wp);
+						fp += strlen(fp);
 						done = 0;
 						break;
 
 					case 'a': // Abort program after handling all of format string.
 						abort_prog = true;
-						exit_value = va_arg (argp, int);
-						strncpy (bp, abort_str, bspace);
-						if (bspace > strlen (abort_str))
+						exit_value = va_arg(argp, int);
+						strncpy(bp, abort_str, bspace);
+						if(bspace > strlen(abort_str))
 						{
-							bspace -= strlen (abort_str);
+							bspace -= strlen(abort_str);
 						}
 						else
 						{
@@ -507,69 +599,69 @@ namespace guiex
 						break;					break;
 
 					case 'l':             // Source file line number
-						strcpy (fp, "d");
-						this_len = snprintf (bp,bspace,format,GetLineNum ());
-						GUI_UPDATE_COUNT (bspace, this_len);
+						strcpy(fp, "d");
+						this_len = snprintf(bp,bspace,format,GetLineNum());
+						GUI_UPDATE_COUNT(bspace, this_len);
 						break;
 
 					case 'N':             // Source file name
-						strcpy (fp, "s");
-						this_len = snprintf (bp, bspace, format,GetFileName () ?GetFileName (): "<unknown file>");
-						GUI_UPDATE_COUNT (bspace, this_len);
+						strcpy(fp, "s");
+						this_len = snprintf(bp, bspace, format,GetFileName() ?GetFileName(): "<unknown file>");
+						GUI_UPDATE_COUNT(bspace, this_len);
 						break;
 
 					case 'n':             // Program name
-						strcpy (fp, "s");
-						this_len = snprintf (bp, bspace, format,m_strProgramName.empty() ?
+						strcpy(fp, "s");
+						this_len = snprintf(bp, bspace, format,m_strProgramName.empty() ?
 							"<unknown>":m_strProgramName.c_str());
-						GUI_UPDATE_COUNT (bspace, this_len);
+						GUI_UPDATE_COUNT(bspace, this_len);
 						break;
 
 					case 'M': // Print the name of the priority of the message.
-						strcpy (fp, "s");
+						strcpy(fp, "s");
 						this_len = snprintf(bp, bspace, format,
-							CGUILogMsgRecord::GetPriorityName (log_priority));
-						GUI_UPDATE_COUNT (bspace, this_len);
+							CGUILogMsgRecord::GetPriorityName(log_priority));
+						GUI_UPDATE_COUNT(bspace, this_len);
 						break;
 
 					case 'D': // Format the timestamp in month/day/year hour:minute:sec:usec format.
 						{
 							char day_and_time[35];
-							CGUIUtility::timestamp (day_and_time,sizeof day_and_time);
-							strcpy (fp, "s");
+							CGUIUtility::timestamp(day_and_time,sizeof day_and_time);
+							strcpy(fp, "s");
 							this_len = snprintf(bp, bspace, format, day_and_time);
-							GUI_UPDATE_COUNT (bspace, this_len);
+							GUI_UPDATE_COUNT(bspace, this_len);
 							break;
 						}
 
 					case 'T': // Format the timestamp in hour:minute:sec:usec format.
 						{
 							char day_and_time[35];
-							strcpy (fp, "s");
+							strcpy(fp, "s");
 							this_len = snprintf(bp, bspace, format,
-								CGUIUtility::timestamp (day_and_time, sizeof day_and_time));
-							GUI_UPDATE_COUNT (bspace, this_len);
+								CGUIUtility::timestamp(day_and_time, sizeof day_and_time));
+							GUI_UPDATE_COUNT(bspace, this_len);
 							break;
 						}
 
 					case 's':                       // String
-						strcpy (fp, "s");
-						this_len = snprintf(bp, bspace, format, va_arg (argp, char *));
-						GUI_UPDATE_COUNT (bspace, this_len);
+						strcpy(fp, "s");
+						this_len = snprintf(bp, bspace, format, va_arg(argp, char *));
+						GUI_UPDATE_COUNT(bspace, this_len);
 						break;
 
 					case 'c':
-						strcpy (fp, "C");
-						this_len = snprintf(bp, bspace, format, va_arg (argp, int));
-						GUI_UPDATE_COUNT (bspace, this_len);
+						strcpy(fp, "C");
+						this_len = snprintf(bp, bspace, format, va_arg(argp, int));
+						GUI_UPDATE_COUNT(bspace, this_len);
 						break;
 
 					case 'd': case 'i': case 'o':
 					case 'u': case 'x': case 'X':
 						fp[0] = *format_str;
 						fp[1] = '\0';
-						this_len = snprintf(bp, bspace, format, va_arg (argp, int));
-						GUI_UPDATE_COUNT (bspace, this_len);
+						this_len = snprintf(bp, bspace, format, va_arg(argp, int));
+						GUI_UPDATE_COUNT(bspace, this_len);
 						break;
 
 					case 'F': case 'f': case 'e': case 'E':
@@ -577,43 +669,43 @@ namespace guiex
 						fp[0] = *format_str;
 						fp[1] = '\0';
 						this_len = snprintf
-							(bp, bspace, format, va_arg (argp, double));
-						GUI_UPDATE_COUNT (bspace, this_len);
+							(bp, bspace, format, va_arg(argp, double));
+						GUI_UPDATE_COUNT(bspace, this_len);
 						break;
 
 					case 'Q':
 						{
 							const char *fmt = PRINTF_UINT64;
-							strcpy (fp, &fmt[1]);    // Skip leading %
-							this_len = snprintf (bp, bspace,fmt,va_arg (argp, uint64));
-							GUI_UPDATE_COUNT (bspace, this_len);
+							strcpy(fp, &fmt[1]);    // Skip leading %
+							this_len = snprintf(bp, bspace,fmt,va_arg(argp, uint64));
+							GUI_UPDATE_COUNT(bspace, this_len);
 							break;
 						}
 
 					case 'q':
 						{
 							const char *fmt = PRINTF_INT64;
-							strcpy (fp, &fmt[1]);    // Skip leading %
-							this_len = snprintf (bp, bspace,format,va_arg (argp, int64));
+							strcpy(fp, &fmt[1]);    // Skip leading %
+							this_len = snprintf(bp, bspace,format,va_arg(argp, int64));
 						}
-						GUI_UPDATE_COUNT (bspace, this_len);
+						GUI_UPDATE_COUNT(bspace, this_len);
 
 					case '@':
-						strcpy (fp, "p");
-						this_len = snprintf(bp, bspace, format, va_arg (argp, void*));
-						GUI_UPDATE_COUNT (bspace, this_len);
+						strcpy(fp, "p");
+						this_len = snprintf(bp, bspace, format, va_arg(argp, void*));
+						GUI_UPDATE_COUNT(bspace, this_len);
 						break;
 
 					default:
 						// So, it's not a legit format specifier after all...
 						// Copy from the original % to where we are now, then
 						// continue with whatever comes next.
-						while (start_format != format_str && bspace > 0)
+						while(start_format != format_str && bspace > 0)
 						{
 							*bp++ = *start_format++;
 							--bspace;
 						}
-						if (bspace > 0)
+						if(bspace > 0)
 						{
 							*bp++ = *format_str;
 							--bspace;
@@ -625,9 +717,9 @@ namespace guiex
 					++format_str;
 				}
 
-				if (!skip_nul_locate)
+				if(!skip_nul_locate)
 				{
-					while (*bp != '\0') // Locate end of bp.
+					while(*bp != '\0') // Locate end of bp.
 					{
 						++bp;
 					}
@@ -638,30 +730,35 @@ namespace guiex
 		*bp = '\0'; // Terminate bp, but don't auto-increment this!
 
 		// Check that memory was not corrupted.
-		if (bp >= this->m_pMsg + sizeof this->m_pMsg)
+		if(bp >= this->m_pMsg + sizeof this->m_pMsg)
 		{
 			abort_prog = true;
-			fprintf (stderr,"The following logged message is too long!\n");
+			fprintf(stderr,"The following logged message is too long!\n");
 		}
 
 		CGUILogMsgRecord aLogRecord;
 		aLogRecord.SetPriority( this->m_nPriorityMask);
-		aLogRecord.SetMsgData (this->Msg ());
+		aLogRecord.SetMsgData(this->Msg());
 
 		// Write the <rRecord> to the appropriate location.
 		this->Log( aLogRecord, abort_prog);
 
-		if (abort_prog)
+		if(abort_prog)
 		{
 			// *Always* print a message to stderr if we're aborting.  We
 			// don't use verbose, however, to avoid recursive aborts if
 			// something is hosed.
-			//rRecord.print (CGUILogMsg::local_host_, 0, stderr);
-			::abort ();
+			//rRecord.print(CGUILogMsg::local_host_, 0, stderr);
+			::abort();
 		}
 	}
 	//------------------------------------------------------------------------------
-	uint32 CGUILogMsg::LogHexDump (EGUI_Log_Priority log_priority, 
+			/**
+		 * @brief Method to log hex dump.  This is useful for debugging.  Calls
+		 * log() to do the actual print, but formats first to make the chars
+		 * printable.
+		 */
+		uint32 CGUILogMsg::LogHexDump(EGUI_Log_Priority log_priority, 
 		const char *buffer,
 		size_t size,
 		const char *text)
@@ -678,38 +775,45 @@ namespace guiex
 		buf[0] = 0; // in case size = 0
 
 		const size_t len = CGUIUtility::format_hexdump(
-			buffer, size, buf, sizeof (buf) / sizeof (char) - text_sz);
+			buffer, size, buf, sizeof(buf) / sizeof(char) - text_sz);
 
 		int sz = 0;
 
-		if (text)
+		if(text)
 		{
-			sz = sprintf (msg_buf,"%s - ",text);
+			sz = sprintf(msg_buf,"%s - ",text);
 		}
 
-		sz += sprintf (msg_buf + sz,"HEXDUMP %u bytes",uint32(size));
+		sz += sprintf(msg_buf + sz,"HEXDUMP %u bytes",uint32(size));
 
-		if (len < size)
+		if(len < size)
 		{
-			sprintf (msg_buf + sz," (showing first %u bytes)",uint32(len));
+			sprintf(msg_buf + sz,"(showing first %u bytes)",uint32(len));
 		}
 
 		// Now print out the formatted buffer.
-		this->Log (log_priority,"%s\n%s",msg_buf,buf);
+		this->Log(log_priority,"%s\n%s",msg_buf,buf);
 
 		delete [] msg_buf;
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void CGUILogMsg::Cleanup ()
+			/**
+		 * @brief to destroy this singleton
+		 * @note only for internal use by CGUIObjectManager
+		 */
+		void CGUILogMsg::Cleanup()
 	{
 		delete this;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUILogMsg::Log2STDERR(const CGUILogMsgRecord& rRecord)
+			/**
+		 * @brief send message to stderr
+		 */
+		void CGUILogMsg::Log2STDERR(const CGUILogMsgRecord& rRecord)
 	{
 #ifdef WIN32
-		if (IsDebuggerPresent()) 
+		if(IsDebuggerPresent()) 
 		{
 			//Sleep(1);
 			OutputDebugStringA(rRecord.GetMsgData());
@@ -730,11 +834,14 @@ namespace guiex
 			WriteConsole( m_hConsole, rRecord.GetMsgData(), dwBytesToWrite, &dwWritten, NULL );
 		}
 #else
-		fprintf (stderr, "%s", rRecord.GetMsgData());
+		fprintf(stderr, "%s", rRecord.GetMsgData());
 #endif
 	}
 	//------------------------------------------------------------------------------
-	void	CGUILogMsg::Log2SYSLOG(const CGUILogMsgRecord& rRecord)
+			/**
+		 * @brief send message to stderr
+		 */
+		void CGUILogMsg::Log2SYSLOG(const CGUILogMsgRecord& rRecord)
 	{
 #ifdef WIN32
 		if( !m_hEventLog )
@@ -742,7 +849,7 @@ namespace guiex
 			char msg_file [GUI_MAXPATHLEN];
 			if( m_strProgramName.empty() )
 			{
-				if (!::GetModuleFileNameA(NULL,msg_file,GUI_MAXPATHLEN))
+				if(!::GetModuleFileNameA(NULL,msg_file,GUI_MAXPATHLEN))
 				{
 					return;
 				}
@@ -751,7 +858,7 @@ namespace guiex
 			{
 				strncpy( msg_file, m_strProgramName.c_str(), GUI_MAXPATHLEN );
 			}
-			DWORD msg_file_length =static_cast<DWORD>(strlen (msg_file) + 1);
+			DWORD msg_file_length =static_cast<DWORD>(strlen(msg_file) + 1);
 
 			// If a logger_key has been supplied then we use that as the event
 			// source name, otherwise we default to the program name.
@@ -760,22 +867,22 @@ namespace guiex
 			// Information is stored in the registry at a location based on the
 			// program name.
 			char reg_key [GUI_MAXPATHLEN];
-			strcpy (reg_key,"SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\");
+			strcpy(reg_key,"SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\");
 			size_t reg_key_length = strlen(reg_key);
-			strncat (reg_key,event_source_name,GUI_MAXPATHLEN - reg_key_length);
+			strncat(reg_key,event_source_name,GUI_MAXPATHLEN - reg_key_length);
 
 			// Add the event source to the registry. Note that if this fails it
 			// is not fatal. The application will still be able to write entries
 			// to the event log, they just won't be formatted correctly.
 			HKEY hkey = NULL;
-			::RegCreateKeyA (HKEY_LOCAL_MACHINE,reg_key,&hkey);
+			::RegCreateKeyA(HKEY_LOCAL_MACHINE,reg_key,&hkey);
 			DWORD flags = EVENTLOG_ERROR_TYPE | EVENTLOG_WARNING_TYPE | EVENTLOG_INFORMATION_TYPE;
-			::RegSetValueExA (hkey,("TypesSupported"),0,REG_DWORD,(LPBYTE) &flags,sizeof (DWORD));
-			::RegSetValueExA (hkey,("EventMessageFile"),0,REG_SZ,(LPBYTE) msg_file,msg_file_length);
-			RegCloseKey (hkey);
+			::RegSetValueExA(hkey,("TypesSupported"),0,REG_DWORD,(LPBYTE) &flags,sizeof(DWORD));
+			::RegSetValueExA(hkey,("EventMessageFile"),0,REG_SZ,(LPBYTE) msg_file,msg_file_length);
+			RegCloseKey(hkey);
 
 			// Obtain a handle to the event source.
-			HANDLE m_hEventLog = ::RegisterEventSourceA (0,event_source_name);
+			HANDLE m_hEventLog = ::RegisterEventSourceA(0,event_source_name);
 		}
 
 
@@ -786,10 +893,10 @@ namespace guiex
 		const char* src_msg_data = rRecord.GetMsgData();
 		char msg_data [CGUILogMsgRecord::MAXLOGMSGLEN * 2];
 
-		size_t len = rRecord.GetMsgDataLen ();
-		for (size_t i = 0, j = 0; i < len; ++i)
+		size_t len = rRecord.GetMsgDataLen();
+		for(size_t i = 0, j = 0; i < len; ++i)
 		{
-			if (src_msg_data[i] == '\n')
+			if(src_msg_data[i] == '\n')
 			{
 				msg_data[j++] = '\r';
 				msg_data[j++] = '\n';
@@ -802,7 +909,7 @@ namespace guiex
 
 		// Map the ACE log record type to an event log type.
 		WORD event_type;
-		switch (rRecord.GetPriority())
+		switch(rRecord.GetPriority())
 		{
 		case GUI_LM_STARTUP:
 		case GUI_LM_SHUTDOWN:
@@ -834,7 +941,10 @@ namespace guiex
 #endif //#ifdef WIN32
 	}
 	//------------------------------------------------------------------------------
-	void	CGUILogMsg::Log2OSTREAM(const CGUILogMsgRecord& rRecord)
+			/**
+		 * @brief send message to stderr
+		 */
+		void CGUILogMsg::Log2OSTREAM(const CGUILogMsgRecord& rRecord)
 	{
 		if( !GetOstream())
 		{
@@ -843,16 +953,23 @@ namespace guiex
 		std::ostream& s = *GetOstream();
 		const char* pMsgData = rRecord.GetMsgData();
 		s << pMsgData;
-		s.flush ();
+		s.flush();
 	}
 	//------------------------------------------------------------------------------
-	void	CGUILogMsg::SetOstream( std::ostream* pOstream, bool bDelete/*=false*/ )
+			/**
+		 * @brief set the out stream
+		 * @param bDelete the outstream will be deleted if this flag is set to true
+		 */
+		void CGUILogMsg::SetOstream( std::ostream* pOstream, bool bDelete/*=false*/ )
 	{
 		m_pOstream = pOstream;
 		m_bDeleteOstream = bDelete;
 	}
 	//------------------------------------------------------------------------------
-	std::ostream*	CGUILogMsg::GetOstream() const
+			/**
+		 * @brief get out stream
+		 */
+		std::ostream* CGUILogMsg::GetOstream() const
 	{
 		return m_pOstream;
 	}

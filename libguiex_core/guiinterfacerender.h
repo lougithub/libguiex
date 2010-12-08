@@ -102,7 +102,6 @@ namespace guiex
 		*/
 		virtual	CGUITextureImp*	CreateTexture(void) = 0;
 
-
 		/**
 		* @brief Create a Texture object using the given image file.
 		* @param filename String object that specifies the path and filename of the image file to use 
@@ -174,43 +173,42 @@ namespace guiex
 		/**
 		* @brief Reset the z co-ordinate for rendering.
 		*/
-		void	ResetZValue(void);
+		void ResetZValue(void);
 
 		/**
 		* @brief Update the z co-ordinate for the next major UI element (window).
 		*/
-		void	IncreaseZValue(void);
+		void IncreaseZValue(void);
 
 		/**
 		* @brief return the current Z value to use (equates to layer 0 for this UI element).
 		* @return real value that specifies the z co-ordinate to be used for layer 0 on the current GUI element.
 		*/
-		real	GetCurrentZ(void) const			{return m_current_z;}
+		real GetCurrentZ(void) const {return m_current_z;}
 
 		/**
 		* @brief return the current Z value to use and then increase it.
 		*/
-		real	GetAndIncZ();
+		real GetAndIncZ();
 
 
 	public:
 		/// set font render
-		IGUIInterfaceFont*		GetFontRender(){ return m_pFontRender;}
+		IGUIInterfaceFont* GetFontRender(){ return m_pFontRender;}
 		/// get font render
-		void	SetFontRender(IGUIInterfaceFont* pRender){ m_pFontRender = pRender;}
+		void SetFontRender(IGUIInterfaceFont* pRender){ m_pFontRender = pRender;}
 
 	private:
-		IGUIInterfaceFont*		m_pFontRender;			//!< font render, for use it conveniently
+		IGUIInterfaceFont* m_pFontRender; //!< font render, for use it conveniently
 
-		static const real	ms_ZInitialValue;		//!< Initial value to use for 'z' each frame.
-		static const real	ms_ZElementStep;		//!< Value to step 'z' for each GUI element.
+		static const real ms_ZInitialValue; //!< Initial value to use for 'z' each frame.
+		static const real ms_ZElementStep; //!< Value to step 'z' for each GUI element.
 
+		real m_current_z; //!< The current z co-ordinate value.
 
-		real				m_current_z;		//!< The current z co-ordinate value.
-
+	public: 
+		static const char* StaticGetModuleName();
 	};
-
-
 
 }//namespace guiex
 

@@ -21,11 +21,7 @@
 //============================================================================// 
 namespace guiex
 {
-
 	class IGUIInterface;
-
-	typedef IGUIInterface* (*FunCreateInterface)(void*); 
-
 	class IGUIInterfaceRender;
 	class IGUIInterfaceFont;
 	class IGUIInterfaceScript;
@@ -38,6 +34,7 @@ namespace guiex
 	class IGUIInterfaceIme;
 	class IGUIInterfaceStringConv;
 	
+	typedef IGUIInterface* (*FunCreateInterface)(void*); 
 }
 
 
@@ -81,7 +78,6 @@ namespace guiex
 
 namespace guiex
 {
-
 	/**
 	* @class CGUIInterfaceManager
 	* @brief interface manager, use it to register 
@@ -90,7 +86,6 @@ namespace guiex
 	class GUIEXPORT CGUIInterfaceManager
 	{
 	public:
-		//for singleton use
 		CGUIInterfaceManager();
 		~CGUIInterfaceManager();
 
@@ -104,51 +99,29 @@ namespace guiex
 		bool HasInterface(const CGUIString& rInterface );
 
 	public:
-		//utility functions
-		IGUIInterfaceRender* GetInterfaceRender()
-		{
-			return m_pInterfaceRender;
-		}
-		IGUIInterfaceFont* GetInterfaceFont()
-		{
-			return m_pInterfaceFont;
-		}
-		IGUIInterfaceScript* GetInterfaceScript()
-		{
-			return m_pInterfaceScript;
-		}
-		IGUIInterfaceConfigFile* GetInterfaceConfigFile()
-		{
-			return m_pInterfaceConfigFile;
-		}
-		IGUIInterfaceFileSys* GetInterfaceFileSys()
-		{
-			return m_pInterfaceFileSys;
-		}
-		IGUIInterfaceMouse* GetInterfaceMouse()
-		{
-			return m_pInterfaceMouse;
-		}
-		IGUIInterfaceKeyboard* GetInterfaceKeyboard()
-		{
-			return m_pInterfaceKeyboard;
-		}
-		IGUIInterfaceSound* GetInterfaceSound()
-		{
-			return m_pInterfaceSound;
-		}
-		IGUIInterfaceCommand* GetInterfaceCommand()
-		{
-			return m_pInterfaceCommand;
-		}
-		IGUIInterfaceIme* GetInterfaceIme()
-		{
-			return m_pInterfaceIme;
-		}
-		IGUIInterfaceStringConv* GetInterfaceStringConv()
-		{
-			return m_pInterfaceStringConv;
-		}
+		IGUIInterfaceRender* GetInterfaceRender();
+		IGUIInterfaceFont* GetInterfaceFont();
+		IGUIInterfaceScript* GetInterfaceScript();
+		IGUIInterfaceConfigFile* GetInterfaceConfigFile();
+		IGUIInterfaceFileSys* GetInterfaceFileSys();
+		IGUIInterfaceMouse* GetInterfaceMouse();
+		IGUIInterfaceKeyboard* GetInterfaceKeyboard();
+		IGUIInterfaceSound* GetInterfaceSound();
+		IGUIInterfaceCommand* GetInterfaceCommand();
+		IGUIInterfaceIme* GetInterfaceIme();
+		IGUIInterfaceStringConv* GetInterfaceStringConv();
+
+		template <class T> T* GetInterfaceRenderImp();
+		template <class T> T* GetInterfaceFontImp();
+		template <class T> T* GetInterfaceScriptImp();
+		template <class T> T* GetInterfaceConfigFileImp();
+		template <class T> T* GetInterfaceFileSysImp();
+		template <class T> T* GetInterfaceMouseImp();
+		template <class T> T* GetInterfaceKeyboardImp();
+		template <class T> T* GetInterfaceSoundImp();
+		template <class T> T* GetInterfaceCommandImp();
+		template <class T> T* GetInterfaceImeImp();
+		template <class T> T* GetInterfaceStringConvImp();
 
 	protected:
 		struct SInterface
@@ -162,23 +135,135 @@ namespace guiex
 
 		//map for interface
 		typedef std::map<CGUIString, SInterface> TMapInterface;
-		TMapInterface	m_mapInterface;
+		TMapInterface m_mapInterface;
 
-		IGUIInterfaceRender*		m_pInterfaceRender;
-		IGUIInterfaceFont*			m_pInterfaceFont;
-		IGUIInterfaceScript*		m_pInterfaceScript;
-		IGUIInterfaceConfigFile*	m_pInterfaceConfigFile;
-		IGUIInterfaceFileSys*		m_pInterfaceFileSys;
-		IGUIInterfaceMouse*			m_pInterfaceMouse;
-		IGUIInterfaceKeyboard*		m_pInterfaceKeyboard;
-		IGUIInterfaceSound*			m_pInterfaceSound;
-		IGUIInterfaceCommand*		m_pInterfaceCommand;
-		IGUIInterfaceIme*			m_pInterfaceIme;
-		IGUIInterfaceStringConv*	m_pInterfaceStringConv;
+		IGUIInterfaceRender* m_pInterfaceRender;
+		IGUIInterfaceFont* m_pInterfaceFont;
+		IGUIInterfaceScript* m_pInterfaceScript;
+		IGUIInterfaceConfigFile* m_pInterfaceConfigFile;
+		IGUIInterfaceFileSys* m_pInterfaceFileSys;
+		IGUIInterfaceMouse* m_pInterfaceMouse;
+		IGUIInterfaceKeyboard* m_pInterfaceKeyboard;
+		IGUIInterfaceSound* m_pInterfaceSound;
+		IGUIInterfaceCommand* m_pInterfaceCommand;
+		IGUIInterfaceIme* m_pInterfaceIme;
+		IGUIInterfaceStringConv* m_pInterfaceStringConv;
 
 	private:
 		static CGUIInterfaceManager* m_pSingleton;
 	};
+
+	inline IGUIInterfaceRender* CGUIInterfaceManager::GetInterfaceRender()
+	{
+		return m_pInterfaceRender;
+	}
+	inline IGUIInterfaceFont* CGUIInterfaceManager::GetInterfaceFont()
+	{
+		return m_pInterfaceFont;
+	}
+	inline IGUIInterfaceScript* CGUIInterfaceManager::GetInterfaceScript()
+	{
+		return m_pInterfaceScript;
+	}
+	inline IGUIInterfaceConfigFile* CGUIInterfaceManager::GetInterfaceConfigFile()
+	{
+		return m_pInterfaceConfigFile;
+	}
+	inline IGUIInterfaceFileSys* CGUIInterfaceManager::GetInterfaceFileSys()
+	{
+		return m_pInterfaceFileSys;
+	}
+	inline IGUIInterfaceMouse* CGUIInterfaceManager::GetInterfaceMouse()
+	{
+		return m_pInterfaceMouse;
+	}
+	inline IGUIInterfaceKeyboard* CGUIInterfaceManager::GetInterfaceKeyboard()
+	{
+		return m_pInterfaceKeyboard;
+	}
+	inline IGUIInterfaceSound* CGUIInterfaceManager::GetInterfaceSound()
+	{
+		return m_pInterfaceSound;
+	}
+	inline IGUIInterfaceCommand* CGUIInterfaceManager::GetInterfaceCommand()
+	{
+		return m_pInterfaceCommand;
+	}
+	inline IGUIInterfaceIme* CGUIInterfaceManager::GetInterfaceIme()
+	{
+		return m_pInterfaceIme;
+	}
+	inline IGUIInterfaceStringConv* CGUIInterfaceManager::GetInterfaceStringConv()
+	{
+		return m_pInterfaceStringConv;
+	}
+
+	template<class T> 
+	inline T* CGUIInterfaceManager::GetInterfaceRenderImp()
+	{
+		GUI_ASSERT( m_pInterfaceRender->GetModuleName() == T::StaticGetModuleName(), "wrong interface type" );
+		return static_cast<T*>( m_pInterfaceRender );
+	}
+	template<class T> 
+	inline T* CGUIInterfaceManager::GetInterfaceFontImp()
+	{
+		GUI_ASSERT( m_pInterfaceFont->GetModuleName() == T::StaticGetModuleName(), "wrong interface type" );
+		return static_cast<T*>( m_pInterfaceFont );
+	}
+	template<class T> 
+	inline T* CGUIInterfaceManager::GetInterfaceScriptImp()
+	{
+		GUI_ASSERT( m_pInterfaceScript->GetModuleName() == T::StaticGetModuleName(), "wrong interface type" );
+		return static_cast<T*>( m_pInterfaceScript );
+	}
+	template<class T> 
+	inline T* CGUIInterfaceManager::GetInterfaceConfigFileImp()
+	{
+		GUI_ASSERT( m_pInterfaceConfigFile->GetModuleName() == T::StaticGetModuleName(), "wrong interface type" );
+		return static_cast<T*>( m_pInterfaceConfigFile );
+	}
+	template<class T> 
+	inline T* CGUIInterfaceManager::GetInterfaceFileSysImp()
+	{
+		GUI_ASSERT( m_pInterfaceFileSys->GetModuleName() == T::StaticGetModuleName(), "wrong interface type" );
+		return static_cast<T*>( m_pInterfaceFileSys );
+	}
+	template<class T> 
+	inline T* CGUIInterfaceManager::GetInterfaceMouseImp()
+	{
+		GUI_ASSERT( m_pInterfaceMouse->GetModuleName() == T::StaticGetModuleName(), "wrong interface type" );
+		return static_cast<T*>( m_pInterfaceMouse );
+	}
+	template<class T> 
+	inline T* CGUIInterfaceManager::GetInterfaceKeyboardImp()
+	{
+		GUI_ASSERT( m_pInterfaceKeyboard->GetModuleName() == T::StaticGetModuleName(), "wrong interface type" );
+		return static_cast<T*>( m_pInterfaceKeyboard );
+	}
+	template<class T> 
+	inline T* CGUIInterfaceManager::GetInterfaceSoundImp()
+	{
+		GUI_ASSERT( m_pInterfaceSound->GetModuleName() == T::StaticGetModuleName(), "wrong interface type" );
+		return static_cast<T*>( m_pInterfaceSound );
+	}
+	template<class T> 
+	inline T* CGUIInterfaceManager::GetInterfaceCommandImp()
+	{
+		GUI_ASSERT( m_pInterfaceCommand->GetModuleName() == T::StaticGetModuleName(), "wrong interface type" );
+		return static_cast<T*>( m_pInterfaceCommand );
+	}
+	template<class T> 
+	inline T* CGUIInterfaceManager::GetInterfaceImeImp()
+	{
+		GUI_ASSERT( m_pInterfaceIme->GetModuleName() == T::StaticGetModuleName(), "wrong interface type" );
+		return static_cast<T*>( m_pInterfaceIme );
+	}
+	template<class T> 
+	inline T* CGUIInterfaceManager::GetInterfaceStringConvImp()
+	{
+		GUI_ASSERT( m_pInterfaceStringConv->GetModuleName() == T::StaticGetModuleName(), "wrong interface type" );
+		return static_cast<T*>( m_pInterfaceStringConv );
+	}
 
 }//namespace guiex
 
@@ -192,18 +277,17 @@ namespace guiex
 	/**
 	* @brief register interface with out parameter
 	*/
-	GUIEXPORT int	RegisterInterface(const CGUIString& rInterface, 
-		const CGUIString& rModuleName );
+	GUIEXPORT int RegisterInterface( const CGUIString& rInterface, const CGUIString& rModuleName );
 
 	/**
 	* @brief unregister interface
 	*/
-	GUIEXPORT int UnregisterInterface(const CGUIString& rInterface );
+	GUIEXPORT int UnregisterInterface( const CGUIString& rInterface );
 
 	/**
 	* @brief get interface
 	*/
-	GUIEXPORT IGUIInterface* GetInterface(const CGUIString& rInterface );
+	GUIEXPORT IGUIInterface* GetInterface( const CGUIString& rInterface );
 
 }//namespace guiex
 

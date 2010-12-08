@@ -7,9 +7,6 @@ namespace guiex
 	public:
 		CGUIVector2();
 		CGUIVector2( real fX, real fY );
-		CGUIVector2( real afCoordinate[2] );
-		CGUIVector2( int32 afCoordinate[2] );
-		CGUIVector2( const real* const r );
 		CGUIVector2( const CGUIVector2& rkVector );
 
 		void Set( real fX, real fY);

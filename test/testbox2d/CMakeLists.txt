@@ -1,24 +1,24 @@
 if( WIN32 )
 
-    set( execute_name "testbox2d" )
-    message( STATUS "generate execute: " ${execute_name} )
+    set( target_name "testbox2d" )
+    message( STATUS "generate execute: " ${target_name} )
 
     #common source
-    set( ${execute_name}_common_SRCS
+    set( ${target_name}_common_SRCS
         ../wxTestCommon/testcommon.cpp
         )
-    source_group( common FILES ${${execute_name}_common_SRCS} )
+    source_group( common FILES ${${target_name}_common_SRCS} )
 
     #test source
-    set( ${execute_name}_execute_SRCS
+    set( ${target_name}_execute_SRCS
         testbox2d.cpp
         )
-    source_group( test FILES ${${execute_name}_execute_SRCS} )
+    source_group( test FILES ${${target_name}_execute_SRCS} )
 
     # all source
-    set( ${execute_name}_SRCS 
-        ${${execute_name}_common_SRCS}
-        ${${execute_name}_execute_SRCS}
+    set( ${target_name}_SRCS 
+        ${${target_name}_common_SRCS}
+        ${${target_name}_execute_SRCS}
         )
 
 
@@ -35,9 +35,10 @@ if( WIN32 )
     link_directories( "${PROJECT_SOURCE_DIR}/external/freetype-2.4.3/win32" )
 
     set( WIN32_EXECUTABLE true )
-    add_executable( ${execute_name} WIN32 ${${execute_name}_SRCS} )
-    add_dependencies( ${execute_name} libguiex_module libguiex_widget Box2D )
-    target_link_libraries( ${execute_name}  
+    add_executable( ${target_name} WIN32 ${${target_name}_SRCS} )
+    add_dependencies( ${target_name} libguiex_module libguiex_widget Box2D )
+	macro_set_target_output_dir( ${target_name} )
+    target_link_libraries( ${target_name}  
         debug freetype243_D.lib
         debug wxmsw28ud_gl.lib
         debug wxmsw28ud_core.lib
@@ -63,13 +64,10 @@ if( WIN32 )
         general libguiex_core
         general libguiex_widget
         general libguiex_module
+        general libguiex_script_wrapper
         general Box2D
         general tinyxml
         general lua
         )
 
-	#set_target_properties( 
-		#${execute_name}  
-		#PROPERTIES 	DEBUG_POSTFIX "_d"
-		#)
 endif()

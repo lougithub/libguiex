@@ -5,30 +5,21 @@
 * @date 2009-10-22
 */
 
-
-
-
-
-
 //============================================================================//
 // include
 //============================================================================//
 #include <libguiex_core/guisceneutility.h>
 #include <libguiex_core/guisceneinfo.h>
 #include <libguiex_core/guisceneinfomanager.h>
-#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guisystem.h>
 #include <libguiex_core/guiwidgetmanager.h>
 #include <libguiex_core/guiconfigfileloader.h>
 #include <libguiex_core/guiexception.h>
 
 
-
-
 //============================================================================//
 // function
 //============================================================================//
-
-
 namespace guiex
 {
 	//------------------------------------------------------------------------------

@@ -53,6 +53,9 @@ namespace guiex
 		* @return zero for success
 		*/
 		virtual int Utf16ToUtf8( const CGUIStringW& rSrc, CGUIString& rDst ) = 0;
+
+	public: 
+		static const char* StaticGetModuleName();
 	};
 }//namespace guiex
 

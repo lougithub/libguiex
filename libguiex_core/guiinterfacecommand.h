@@ -23,7 +23,6 @@
 //============================================================================// 
 namespace guiex
 {
-
 	/**
 	* @class IGUIInterfaceCommand
 	* @brief script command from out of gui system
@@ -41,7 +40,6 @@ namespace guiex
 		*/
 		virtual ~IGUIInterfaceCommand();
 
-
 	public:
 		/**
 		* @brief receive command
@@ -53,20 +51,9 @@ namespace guiex
 		*/
 		virtual	void Send( const CGUIString& rOutput ) = 0;
 
+	public: 
+		static const char* StaticGetModuleName();
 	};
-}//namespace guiex
-
-
-//============================================================================//
-// function
-//============================================================================// 
-namespace guiex
-{
-	/**
-	* @brief get command interface
-	*/
-	GUIEXPORT IGUIInterfaceCommand*	GetInterface_Command( );
-
 }//namespace guiex
 
 #endif //__GUI_INTERFACE_COMMAND_H_20060926__

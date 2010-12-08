@@ -9,7 +9,7 @@
 // include
 //============================================================================// 
 #include <libguiex_core/guiinterfacekeyboard.h>
-#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guisystem.h>
 
 //============================================================================//
 // function
@@ -17,10 +17,14 @@
 
 namespace guiex
 {
-
+	//------------------------------------------------------------------------------
+	const char* IGUIInterfaceKeyboard::StaticGetModuleName()
+	{ 
+		return "IGUIKeyboard";
+	}
 	//------------------------------------------------------------------------------
 	IGUIInterfaceKeyboard::IGUIInterfaceKeyboard( )
-		:IGUIInterface("IGUIKeyboard")
+		:IGUIInterface( StaticGetModuleName() )
 	{
 		Reset();
 	}

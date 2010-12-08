@@ -11,7 +11,7 @@
 #include <libguiex_widget/guiwgtbutton.h>
 #include <libguiex_widget/guiwgtscrollbar.h>
 #include <libguiex_core/guiinterfacerender.h>
-#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guisystem.h>
 #include <libguiex_core/guistringconvertor.h>
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guiproperty.h>
@@ -229,7 +229,7 @@ namespace guiex
 		m_pScrollbar->SetCurrentPos(nCurScrollbarPos);
 
 		// set slide position
-		pEvent->SetWidgetPos(aMovePos);
+		pEvent->SetWidgetLocalPos(aMovePos);
 
 		return CGUIWidget::OnDragProcess(pEvent);
 	}
@@ -303,10 +303,10 @@ namespace guiex
 		//image
 		m_pImageBg = NULL;
 
-		SetFocusable(true);
-		SetActivable(false);
-		SetFlag(eFLAG_EVENT_PARENTSIZECHANGE, true);
-		SetGenerateClickEvent(true);
+		SetFocusable( true );
+		SetActivable( false );
+		SetResponseParentSizeChangeEvent( true );
+		SetGenerateClickEvent( true );
 	}
 	//------------------------------------------------------------------------------
 	CGUIWgtScrollbar* CGUIWgtScrollbar::FromWidget( CGUIWidget* pWidget )

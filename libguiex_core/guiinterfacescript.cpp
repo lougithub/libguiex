@@ -18,6 +18,11 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
+	const char* IGUIInterfaceScript::StaticGetModuleName()
+	{ 
+		return "IGUIScript";
+	}
+	//------------------------------------------------------------------------------
 	IGUIInterfaceScript::IGUIInterfaceScript( )
 		:IGUIInterface("IGUIScript")
 	{

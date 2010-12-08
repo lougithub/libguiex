@@ -20,28 +20,21 @@
 #include <libguiex_core/guiinterfacefilesys.h>
 #include <libguiex_core/guievent.h>
 #include <libguiex_core/guiwidget.h>
+#include <string.h>
+#include <cassert>
+#include <libguiex_script_wrapper/guiex_wrapper.h>
 
-//////
-#include	<string.h>
-#include	<cassert>
-//////
+extern "C" int luaopen_guiex(lua_State* L);
 
 #ifdef __cplusplus
 extern "C" {
 #endif //#ifdef __cplusplus
-
 #include <lua.h>
 #include <lualib.h>
 #include <lauxlib.h>
-
 #ifdef __cplusplus
 }
 #endif //#ifdef __cplusplus
-
-#include "guiex_wrap.h"
-
-//swig
-extern "C" int luaopen_guiex(lua_State* L);
 
 //============================================================================//
 // function
@@ -61,15 +54,8 @@ namespace guiex
 		Destroy();
 	}
 	//------------------------------------------------------------------------------
-	void	IGUIScript_lua::SetExternalData(void* pData)
+	int IGUIScript_lua::DoInitialize( void* )
 	{
-		m_funcInitScript = (FuncInitScript)pData;
-	}
-	//------------------------------------------------------------------------------
-	int IGUIScript_lua::DoInitialize(void* funInitScript )
-	{
-		m_funcInitScript = (FuncInitScript)funInitScript;
-
 		return 0;
 	}
 	//------------------------------------------------------------------------------
@@ -112,15 +98,17 @@ namespace guiex
 			lua_pushstring(pState, lib->name);
 			lua_call(pState, 1, 0);
 		}
-
-		//open library
-		//luaopen_guiex( pState );
-
+		
 		//init others
-		if(m_funcInitScript) 
+		for( std::list<FuncScriptLoadModule>::iterator itor = m_listModules.begin();
+			itor != m_listModules.end();
+			++itor )
 		{
-			m_funcInitScript( pState );
+			(*itor)( pState );
 		}
+
+		//register swig.
+		luaopen_guiex( pState );
 
 		m_mapLuaState.insert( std::make_pair( rSceneName, pState ));
 	}
@@ -156,7 +144,17 @@ namespace guiex
 		delete this;
 	}
 	//------------------------------------------------------------------------------
-	void*	IGUIScript_lua::GetLuaState(const CGUIString& rSceneName)
+	void IGUIScript_lua::AddScriptModule( void * pScriptModule )
+	{
+		GUI_ASSERT( pScriptModule, "invalid parameter" );
+		m_listModules.push_back( FuncScriptLoadModule(pScriptModule) );
+	}
+	//------------------------------------------------------------------------------
+	/**
+	* @brief get lua_State used in this module
+	* @return lua_State
+	*/
+	void* IGUIScript_lua::GetLuaState(const CGUIString& rSceneName)
 	{
 		std::map<CGUIString, void*>::iterator itor =  m_mapLuaState.find( rSceneName );
 		if( itor != m_mapLuaState.end())
@@ -170,7 +168,12 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	IGUIScript_lua::ExecuteFile(const CGUIString& filename, const CGUIString& rSceneName)
+	/** 
+	* @brief execute a script file
+	* 
+	* @param filename filename of the script file
+	*/
+	void IGUIScript_lua::ExecuteFile(const CGUIString& filename, const CGUIString& rSceneName)
 	{
 		lua_State* L = (lua_State*)GetLuaState(rSceneName);
 
@@ -195,7 +198,11 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	IGUIScript_lua::ExecuteBuffer(void * pBuffer, int32 nBufferSize, const CGUIString& rSceneName)
+	/** 
+	* @brief execute a memory buffer which contain script
+	* 
+	*/
+	void IGUIScript_lua::ExecuteBuffer(void * pBuffer, int32 nBufferSize, const CGUIString& rSceneName)
 	{
 		lua_State* L = (lua_State*)GetLuaState(rSceneName);
 
@@ -211,7 +218,10 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	IGUIScript_lua::ExecuteString(const char * pString, const CGUIString& rSceneName)
+	/** 
+	* @brief execute script from string
+	*/
+	void IGUIScript_lua::ExecuteString(const char * pString, const CGUIString& rSceneName)
 	{
 		lua_State* L = (lua_State*)GetLuaState(rSceneName);
 
@@ -227,7 +237,10 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	 IGUIScript_lua::ExecuteEventHandler(
+	/** 
+	* @brief execute a event handle
+	*/
+	void IGUIScript_lua::ExecuteEventHandler(
 		const CGUIString& rEventName, 
 		CGUIEvent* pEvent,
 		const CGUIString& rSceneName)
@@ -240,7 +253,11 @@ namespace guiex
 			L); 
 	}
 	//------------------------------------------------------------------------------
-	void			IGUIScript_lua::ExecuteFunction(const CGUIString& pFunName, void* pLuaState)
+	/**
+	* @brief execute script function with given parameter.
+	* @param pFunName function name.
+	*/
+	void IGUIScript_lua::ExecuteFunction(const CGUIString& pFunName, void* pLuaState)
 	{
 		lua_State* L = (lua_State*)pLuaState;
 
@@ -267,7 +284,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	bool	IGUIScript_lua::PushParToLua( void* pPara, const CGUIString& rParaType, void* pLuaState)
+	bool IGUIScript_lua::PushParToLua( void* pPara, const CGUIString& rParaType, void* pLuaState)
 	{
 		lua_State* L = (lua_State*)pLuaState;
 		swig_module_info* head_module=SWIG_Lua_GetModule(L);
@@ -285,8 +302,13 @@ namespace guiex
 		return true;
 	}
 	//------------------------------------------------------------------------------
-
-	void			IGUIScript_lua::ExecuteFunction(
+	/**
+	* @brief execute script function with given parameter.
+	* @param pFunName function name.
+	* @param pPara1 parameter
+	* @param pParaType1 type of parameter.
+	*/
+	void IGUIScript_lua::ExecuteFunction(
 		const CGUIString& pFunName, 
 		void* pPara1, const CGUIString& rParaType1,
 		void* pLuaState)
@@ -327,7 +349,7 @@ namespace guiex
 		GUI_ASSERT( nOldTop == nNewTop, "error in script");
 	}
 	//------------------------------------------------------------------------------
-	void			IGUIScript_lua::ExecuteFunction(
+	void IGUIScript_lua::ExecuteFunction(
 		const CGUIString& pFunName, 
 		void* pPara1, const CGUIString& rParaType1,
 		void* pPara2, const CGUIString& rParaType2,
@@ -374,7 +396,7 @@ namespace guiex
 		GUI_ASSERT( nOldTop == nNewTop, "error in script");
 	}
 	//------------------------------------------------------------------------------
-	void	IGUIScript_lua::RegisterWidget( const CGUIWidget* pWidget )
+	void IGUIScript_lua::RegisterWidget( const CGUIWidget* pWidget )
 	{
 		lua_State* L = (lua_State*)GetLuaState(pWidget->GetSceneName());
 

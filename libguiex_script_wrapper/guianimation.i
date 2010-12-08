@@ -1,10 +1,10 @@
 namespace guiex
 {
-	class CGUIImage
+	class CGUIAnimation
 	{
 	protected:
-		CGUIImage();
-		virtual ~CGUIImage();
+		CGUIAnimation();
+		virtual ~CGUIAnimation();
 
 	public:
 		const CGUISize& GetSize() const;

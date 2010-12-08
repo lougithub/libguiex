@@ -10,7 +10,7 @@
 // include 
 //============================================================================// 
 #include <libguiex_core/guiwidgetutility.h>
-#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guisystem.h>
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guiwidgetmanager.h>
 #include <sstream>
@@ -45,6 +45,10 @@ namespace guiex
 		return stream.str();
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief get widget's information, the format of it is:
+	* NAME<> TYPE<>	STATE<>
+	*/
 	CGUIString CGUIWidgetUtility::GetWidgetInfo( const CGUIString& rWidgetName, const CGUIString& rSceneName ) 
 	{
 		return GetWidgetInfo( CGUIWidgetManager::Instance()->GetWidget(rWidgetName, rSceneName));
@@ -64,6 +68,15 @@ namespace guiex
 			pChild = pChild->GetNextSibling();
 		}
 	}
+	//------------------------------------------------------------------------------
+	/**
+	* @brief get widget's and it's child's information, the format of it is:
+	* NAME<> TYPE<>	STATE<>
+	*		NAME<> TYPE<>	STATE<>
+	*			NAME<> TYPE<>	STATE<>
+	*			NAME<> TYPE<>	STATE<>
+	*		NAME<> TYPE<>	STATE<>
+	*/
 	CGUIString	CGUIWidgetUtility::GetWidgetTreeInfo( const CGUIWidget* pWidget ) 
 	{
 		std::stringstream stream;

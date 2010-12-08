@@ -49,7 +49,7 @@
 #include "guiwidget.h"
 #include "guiwidgetgenerator.h"
 #include "guiwidgetfactory.h"
-#include "guiwidgetsystem.h"
+#include "guisystem.h"
 #include "guiwidgetutility.h"
 #include "guiwidgetmanager.h"
 

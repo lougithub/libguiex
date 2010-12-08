@@ -1,24 +1,13 @@
 if( WIN32 )
 
-    set( target_name "test1" )
+    set( target_name "libguiex_editor_viewer" )
     message( STATUS "generate execute: " ${target_name} )
-
-    #common source
-    set( ${target_name}_common_SRCS
-        ../wxTestCommon/testcommon.cpp
-        )
-    source_group( common FILES ${${target_name}_common_SRCS} )
-
-    #test source
-    set( ${target_name}_execute_SRCS
-        test1.cpp
-        )
-    source_group( test FILES ${${target_name}_execute_SRCS} )
 
     # all source
     set( ${target_name}_SRCS 
-        "${${target_name}_common_SRCS}"
-        "${${target_name}_execute_SRCS}"
+		editor_viewer.cpp
+		editor_viewer.h
+		resource.h
         )
 
 
@@ -64,8 +53,8 @@ if( WIN32 )
         general Rpcrt4.lib
         general libguiex_core
         general libguiex_widget
-        general libguiex_module
         general libguiex_script_wrapper
+        general libguiex_module
         general tinyxml
         general lua
         )

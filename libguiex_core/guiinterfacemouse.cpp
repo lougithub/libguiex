@@ -9,7 +9,7 @@
 // include
 //============================================================================// 
 #include <libguiex_core/guiinterfacemouse.h>
-#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guisystem.h>
 
 //============================================================================//
 // function
@@ -18,8 +18,13 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
+	const char* IGUIInterfaceMouse::StaticGetModuleName()
+	{ 
+		return "IGUIMouse";
+	}
+	//------------------------------------------------------------------------------
 	IGUIInterfaceMouse::IGUIInterfaceMouse( )
-		:IGUIInterface("IGUIMouse")
+		:IGUIInterface( StaticGetModuleName() )
 	{
 		Reset();
 	}

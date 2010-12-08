@@ -15,7 +15,6 @@
 #include "guistring.h"
 #include <exception>
 
-
 //============================================================================//
 // class
 //============================================================================// 
@@ -56,17 +55,17 @@ namespace guiex
 	public:
 		CGUIException_Script( const char *format, ... ) throw();
 	};
-	
-	//============================================================================//
-	// function
-	//============================================================================// 
+}//namespace guiex
+
+//============================================================================//
+// function
+//============================================================================// 
+namespace guiex
+{	
 	/**
-	 * @brief throw a exception
-	 */
+	* @brief throw a exception
+	*/
 	GUIEXPORT void ThrowException(const char* szError);
-	
-	
-	
 }//namespace guiex
 
 #endif //__GUI_EXCEPTION_H_20060526__

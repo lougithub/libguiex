@@ -58,6 +58,9 @@ namespace guiex
 		* @brief destroy image data
 		*/
 		virtual void	DestroyImageData(CGUIImageData* pImageData) = 0;
+
+	public: 
+		static const char* StaticGetModuleName();
 	};
 }//namespace guiex
 

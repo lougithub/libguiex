@@ -10,7 +10,7 @@
 // include
 //============================================================================// 
 #include <libguiex_core/guiinputprocessor.h>
-#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guisystem.h>
 #include <libguiex_core/guiwidget.h>
 #include <libguiex_core/guiwidgetfactory.h>
 
@@ -266,7 +266,7 @@ namespace guiex
 			CGUIEventMouse aEventMouse;
 			aEventMouse.SetButton( rMouseEvent.m_eButton );
 			aEventMouse.SetReceiver( pTargetWidget );
-			aEventMouse.SetPosition(rMouseEvent.m_aMousePos);
+			aEventMouse.SetGlobalPosition(rMouseEvent.m_aMousePos);
 			aEventMouse.SetKeyboardInterface(CGUIInterfaceManager::Instance()->GetInterfaceKeyboard());
 
 
@@ -310,8 +310,8 @@ namespace guiex
 				aEventDrag.SetEventId(eEVENT_DRAG_BEGIN );
 				aEventDrag.SetReceiver( pTargetWidget );
 				aEventDrag.SetButton( rMouseEvent.m_eButton );
-				aEventDrag.SetWidgetPos(pTargetWidget->GetPixelPosition());
-				aEventDrag.SetMousePos(rMouseEvent.m_aMousePos);
+				aEventDrag.SetWidgetLocalPos(pTargetWidget->GetPixelPosition());
+				aEventDrag.SetMouseGlobalPos(rMouseEvent.m_aMousePos);
 				GSystem->SendEvent(&aEventDrag);
 				bConsumed |= aEventDrag.IsConsumed();
 				
@@ -368,7 +368,7 @@ namespace guiex
 				CGUIEventMouse aEventMouse;
 				aEventMouse.SetEventId(eEVENT_MOUSE_CLICK);
 				aEventMouse.SetButton( rMouseEvent.m_eButton );
-				aEventMouse.SetPosition(rMouseEvent.m_aMousePos);
+				aEventMouse.SetGlobalPosition(rMouseEvent.m_aMousePos);
 				aEventMouse.SetReceiver(pTargetWidget);
 				aEventMouse.SetKeyboardInterface(CGUIInterfaceManager::Instance()->GetInterfaceKeyboard());
 				GSystem->SendEvent(&aEventMouse);
@@ -381,7 +381,7 @@ namespace guiex
 			aEventMouse.SetEventId(eEVENT_MOUSE_UP);
 			aEventMouse.SetButton( rMouseEvent.m_eButton );
 			aEventMouse.SetReceiver(pTargetWidget);
-			aEventMouse.SetPosition(rMouseEvent.m_aMousePos);
+			aEventMouse.SetGlobalPosition(rMouseEvent.m_aMousePos);
 			aEventMouse.SetKeyboardInterface(CGUIInterfaceManager::Instance()->GetInterfaceKeyboard());
 			GSystem->SendEvent(&aEventMouse);
 
@@ -396,7 +396,7 @@ namespace guiex
 				aEventMouse.SetEventId(eEVENT_MOUSE_UP);
 				aEventMouse.SetButton( rMouseEvent.m_eButton );
 				aEventMouse.SetReceiver(m_pMouseTracker->m_aButtonTrack[rMouseEvent.m_eButton].m_pTargetWidget);
-				aEventMouse.SetPosition(rMouseEvent.m_aMousePos);
+				aEventMouse.SetGlobalPosition(rMouseEvent.m_aMousePos);
 				aEventMouse.SetKeyboardInterface(CGUIInterfaceManager::Instance()->GetInterfaceKeyboard());
 				GSystem->SendEvent(&aEventMouse);
 
@@ -409,7 +409,7 @@ namespace guiex
 				aEventMouse.SetEventId(eEVENT_MOUSE_UP);
 				aEventMouse.SetButton( rMouseEvent.m_eButton );
 				aEventMouse.SetReceiver(pTargetWidget);
-				aEventMouse.SetPosition(rMouseEvent.m_aMousePos);
+				aEventMouse.SetGlobalPosition(rMouseEvent.m_aMousePos);
 				aEventMouse.SetKeyboardInterface(CGUIInterfaceManager::Instance()->GetInterfaceKeyboard());
 				GSystem->SendEvent(&aEventMouse);
 
@@ -425,8 +425,8 @@ namespace guiex
 			CGUIEventDrag aEventDrag;
 			aEventDrag.SetEventId(eEVENT_DRAG_END );
 			aEventDrag.SetReceiver( m_pDragTracker->m_pDragItem );
-			aEventDrag.SetWidgetPos(m_pDragTracker->m_aDeltaPos + rMouseEvent.m_aMousePos);
-			aEventDrag.SetMousePos(rMouseEvent.m_aMousePos);
+			aEventDrag.SetWidgetLocalPos(m_pDragTracker->m_aDeltaPos + rMouseEvent.m_aMousePos);
+			aEventDrag.SetMouseGlobalPos(rMouseEvent.m_aMousePos);
 			GSystem->SendEvent(&aEventDrag);
 			bConsumed |= aEventDrag.IsConsumed();
 			
@@ -448,7 +448,7 @@ namespace guiex
 			CGUIEventMouse aEventMouse;
 			aEventMouse.SetEventId(eEVENT_MOUSE_WHEEL);
 			aEventMouse.SetReceiver(pTargetWidget);
-			aEventMouse.SetPosition(rMouseEvent.m_aMousePos);
+			aEventMouse.SetGlobalPosition(rMouseEvent.m_aMousePos);
 			aEventMouse.SetWheelChange(rMouseEvent.m_fWheelChange);
 			aEventMouse.SetKeyboardInterface(CGUIInterfaceManager::Instance()->GetInterfaceKeyboard());
 			GSystem->SendEvent(&aEventMouse);
@@ -473,8 +473,8 @@ namespace guiex
 			CGUIEventDrag aEventDrag;
 			aEventDrag.SetEventId(eEVENT_DRAG_PROCESS );
 			aEventDrag.SetReceiver( m_pDragTracker->m_pDragItem );
-			aEventDrag.SetWidgetPos( m_pDragTracker->m_aDeltaPos + rMouseEvent.m_aMousePos);
-			aEventDrag.SetMousePos(rMouseEvent.m_aMousePos);
+			aEventDrag.SetWidgetLocalPos( m_pDragTracker->m_aDeltaPos + rMouseEvent.m_aMousePos);
+			aEventDrag.SetMouseGlobalPos(rMouseEvent.m_aMousePos);
 			GSystem->SendEvent(&aEventDrag);
 
 			bConsumed |= aEventDrag.IsConsumed();
@@ -495,7 +495,7 @@ namespace guiex
 						CGUIEventMouse aEventMouse;
 						aEventMouse.SetEventId(eEVENT_MOUSE_MOVE);
 						aEventMouse.SetReceiver(m_pMouseTracker->m_pWidgetUnderMouse);
-						aEventMouse.SetPosition(rMouseEvent.m_aMousePos);
+						aEventMouse.SetGlobalPosition(rMouseEvent.m_aMousePos);
 						aEventMouse.SetKeyboardInterface(CGUIInterfaceManager::Instance()->GetInterfaceKeyboard());
 						GSystem->SendEvent(&aEventMouse);
 					}
@@ -505,7 +505,7 @@ namespace guiex
 						CGUIEventMouse aEventMouse;
 						aEventMouse.SetEventId(eEVENT_MOUSE_LEAVE);
 						aEventMouse.SetReceiver(m_pMouseTracker->m_pWidgetUnderMouse);
-						aEventMouse.SetPosition(rMouseEvent.m_aMousePos);
+						aEventMouse.SetGlobalPosition(rMouseEvent.m_aMousePos);
 						aEventMouse.SetKeyboardInterface(CGUIInterfaceManager::Instance()->GetInterfaceKeyboard());
 						GSystem->SendEvent(&aEventMouse);
 					}
@@ -517,7 +517,7 @@ namespace guiex
 					CGUIEventMouse aEventMouse;
 					aEventMouse.SetEventId(eEVENT_MOUSE_ENTER);
 					aEventMouse.SetReceiver(pTargetWidget);
-					aEventMouse.SetPosition(rMouseEvent.m_aMousePos);
+					aEventMouse.SetGlobalPosition(rMouseEvent.m_aMousePos);
 					aEventMouse.SetKeyboardInterface(CGUIInterfaceManager::Instance()->GetInterfaceKeyboard());
 					GSystem->SendEvent(&aEventMouse);
 				}
@@ -530,7 +530,7 @@ namespace guiex
 				CGUIEventMouse aEventMouse;
 				aEventMouse.SetEventId(eEVENT_MOUSE_MOVE);
 				aEventMouse.SetReceiver(m_pMouseTracker->m_pWidgetUnderMouse);
-				aEventMouse.SetPosition(rMouseEvent.m_aMousePos);
+				aEventMouse.SetGlobalPosition(rMouseEvent.m_aMousePos);
 				aEventMouse.SetKeyboardInterface(CGUIInterfaceManager::Instance()->GetInterfaceKeyboard());
 				GSystem->SendEvent(&aEventMouse);
 			}

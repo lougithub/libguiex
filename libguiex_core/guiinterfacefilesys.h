@@ -74,7 +74,8 @@ namespace guiex
 			const CGUIString& rSuffix,
 			std::vector<CGUIString>& rArrayStrings ) = 0;
 
-
+	public: 
+		static const char* StaticGetModuleName();
 	};
 }//namespace guiex
 

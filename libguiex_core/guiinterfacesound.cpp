@@ -16,15 +16,22 @@
 //============================================================================// 
 namespace guiex
 {
-
 	//------------------------------------------------------------------------------ 
-	GUIEXPORT IGUIInterfaceSound*	GetInterface_Sound( )
+	GUIEXPORT IGUIInterfaceSound* GetInterface_Sound( )
 	{
 		return CGUIInterfaceManager::Instance()->GetInterfaceSound();
 	}
 	//------------------------------------------------------------------------------
+	
+	
+	//------------------------------------------------------------------------------
+	const char* IGUIInterfaceSound::StaticGetModuleName()
+	{ 
+		return "IGUISound";
+	}
+	//------------------------------------------------------------------------------
 	IGUIInterfaceSound::IGUIInterfaceSound( )
-		:IGUIInterface("IGUISound")
+		:IGUIInterface( StaticGetModuleName() )
 	{
 
 	}
@@ -34,7 +41,6 @@ namespace guiex
 
 	}
 	//------------------------------------------------------------------------------ 
-
 }//namespace guiex
 
 

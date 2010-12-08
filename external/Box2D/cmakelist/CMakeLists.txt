@@ -1,5 +1,5 @@
-set( library_name "Box2D" )
-message( STATUS "generate library: " ${library_name} )
+set( target_name "Box2D" )
+message( STATUS "generate library: " ${target_name} )
 
 set(BOX2D_Collision_SRCS
 	../Box2D/Collision/b2BroadPhase.cpp
@@ -110,7 +110,7 @@ source_group(Dynamics\\Contacts FILES ${BOX2D_Contacts_SRCS} ${BOX2D_Contacts_HD
 source_group(Dynamics\\Joints FILES ${BOX2D_Joints_SRCS} ${BOX2D_Joints_HDRS})
 source_group(Include FILES ${BOX2D_General_HDRS})
 
-add_library( ${library_name} STATIC
+add_library( ${target_name} STATIC
     ${BOX2D_General_HDRS}
     ${BOX2D_Joints_SRCS}
     ${BOX2D_Joints_HDRS}

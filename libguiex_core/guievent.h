@@ -49,7 +49,7 @@ namespace guiex
 //============================================================================//
 namespace guiex
 {
-	enum	EEventId
+	enum EEventId
 	{
 		///when the size of widget is changed, this event will be sent
 		///CGUIEventSize
@@ -184,19 +184,6 @@ namespace guiex
 
 
 //============================================================================//
-// function
-//============================================================================//
-namespace guiex
-{
-	/**
-	* @brief register all events
-	* called by CGUISystem
-	*/
-	//extern int32 GUIRegisterAllEvents();
-}
-
-
-//============================================================================//
 // class
 //============================================================================// 
 namespace guiex
@@ -211,89 +198,39 @@ namespace guiex
 	class GUIEXPORT CGUIEvent
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUIEvent(const char* pEventName);
 
-		/**
-		* @brief destructor
-		*/
 		virtual ~CGUIEvent();
 
-		/**
-		* @brief get event id
-		* @return event id in int32 type
-		*/
 		uint32 GetEventId() const;
+		void SetEventId(uint32 uId );
+		const CGUIString& GetEventType() const;
 
-		/**
-		* @brief set event id
-		*/
-		void	SetEventId(uint32 uId );
-
-		/**
-		* @brief get event type
-		*/
-		const CGUIString&		GetEventType() const;
-
-		/**
-		* @brief set widget which receives this event
-		*/
-		void	SetReceiver(CGUIWidget* pReceiver);
-
-		/**
-		* @brief Get widget which receives this event
-		*/
+		void SetReceiver(CGUIWidget* pReceiver);
 		CGUIWidget*	GetReceiver();
 
-		//!< has this event been consumed
-		bool	IsConsumed();
+		bool IsConsumed();
+		void Consume(bool bConsumed);
 
-		//!< set whether this event has been consumed
-		void	Consume(bool bConsumed);
-
-		/**
-		* @brief process the event
-		*/
-		virtual uint32	Process() = 0;
-
-		///is this event created by CGUIEventFactory
-		//bool	IsCreateByFactory() const
-		//{
-		//	return m_pEventGenerator!=NULL;
-		//}
+		virtual uint32 Process() = 0;
 
 	protected:
 		///widget generator
 		friend class CGUIEventFactory;
-		///set generator
-		//void	SetGenerator( const CGUIEventGenerator* pGenerator);
-		///get generator
-		//const CGUIEventGenerator* GetGenerator() const;
 
 	protected:
 		/// id of the event
-		uint32		m_uEventId;
+		uint32 m_uEventId;
 
 		///type of this event
-		CGUIString	m_strEventType;
+		CGUIString m_strEventType;
 
 		///receiver
 		CGUIWidget*	m_pReceiver;
 
 		/// has this event been consumed
-		bool		m_bConsumed;
-
-	private:
-		/**
-		* @brief generator which used to create event
-		*/
-		//const CGUIEventGenerator*	m_pEventGenerator;
+		bool m_bConsumed;
 	};
-
-
-
 
 	//*****************************************************************************
 	//	CGUIEventScrollbar
@@ -306,55 +243,28 @@ namespace guiex
 	class GUIEXPORT CGUIEventScrollbar : public CGUIEvent
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUIEventScrollbar();
+		virtual uint32 Process();
 
-		/**
-		* @brief process the event.
-		* now it works for 
-		*	- <eEVENT_SCROLLBAR_SCROLL>
-		*/
-		virtual uint32	Process();
-
-		/// set type of scrollbar
-		void	SetScrollbarType( bool bVertical );
-
-		/// is a vertical scrollbar 
-		bool	IsVertical() const;
-
-		/// is a horizontal scrollbar
-		bool	IsHorizontal() const;
-
-		/// set scrollbar
-		void	SetScrollbar(CGUIWidget * pScrollbar);
-
-		/// get scrollbar
+		void SetScrollbarType( bool bVertical );
+		bool IsVertical() const;
+		bool IsHorizontal() const;
+		
+		void SetScrollbar(CGUIWidget * pScrollbar);
 		CGUIWidget*	GetScrollbar() const;
 
-		/// set scrollbar value
-		void	SetCurrentPos( uint32 nPos );
-
-		///get scrollbar value
+		void SetCurrentPos( uint32 nPos );
 		uint32 GetCurrentPos() const;
 
-		/// set scrollbar range
-		void	SetRange( uint32 nRange );
-
-		///get scrollbar range
+		void SetRange( uint32 nRange );
 		uint32 GetRange() const;
 
 	protected:
-		bool	m_bTypeVertical;				/// the type of scrollbar
-		uint32	m_nCurrentPos;		/// current position
-		uint32	m_nRange;			/// range
-		CGUIWidget*	m_pScrollbar;	///scrollbar
+		bool m_bTypeVertical; /// the type of scrollbar
+		uint32	m_nCurrentPos; /// current position
+		uint32	m_nRange; /// range
+		CGUIWidget*	m_pScrollbar; ///scrollbar
 	};
-
-	//GUI_EVENT_GENERATOR_DECLARE( CGUIEventScrollbar );
-
-
 
 	//*****************************************************************************
 	//	CGUIEventTimer
@@ -372,24 +282,14 @@ namespace guiex
 		*/
 		CGUIEventTimer();
 
-		/**
-		* @brief process the event.
-		* now it works for 
-		*	- <eEVENT_TIMER>,
-		*/
-		virtual uint32	Process();
+		virtual uint32 Process();
 
-		void	SetTimerName(const CGUIString& rTimerName);
-
-		const CGUIString&	GetTimerName();
+		void SetTimerName(const CGUIString& rTimerName);
+		const CGUIString& GetTimerName();
 
 	protected:
-		CGUIString				m_strTimerName;
+		CGUIString m_strTimerName;
 	};
-
-	//GUI_EVENT_GENERATOR_DECLARE( CGUIEventTimer );
-
-
 
 
 	//*****************************************************************************
@@ -413,34 +313,10 @@ namespace guiex
 	class GUIEXPORT CGUIEventNotification : public CGUIEvent
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUIEventNotification();
 
-		/**
-		* @brief process the event.
-		* now it works for 
-		*	- <eEVENT_ACTIVE>,
-		*	- <eEVENT_INACTIVE>,
-		*	- <eEVENT_FOCUS_LOST>,
-		*	- <eEVENT_FOCUS_GET>,
-		*	- <eEVENT_VISIBLE>,
-		*	- <eEVENT_INVISIBLE>
-		*	- <eEVENT_DISABLE>,
-		*	- <eEVENT_ENABLE>,
-		*	- <eEVENT_CREATE>,
-		* - <eEVENT_UPDATE>
-		*/
-		virtual uint32	Process();
-
-
-	protected:
+		virtual uint32 Process();
 	};
-
-	//GUI_EVENT_GENERATOR_DECLARE( CGUIEventNotification );
-
-
 
 
 
@@ -454,33 +330,16 @@ namespace guiex
 	class GUIEXPORT CGUIEventSize : public CGUIEvent
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUIEventSize();
-
-		/**
-		* @brief get size
-		*/
 		const CGUISize& GetSize() const;
 
-		/**
-		* @brief set size
-		*/
-		void	SetSize(const CGUISize& rSize);
+		void SetSize(const CGUISize& rSize);
 
-		/**
-		* @brief process the event.
-		* now it works for <eEVENT_SIZE_CHANGE>,
-		*/
-		virtual uint32	Process();
+		virtual uint32 Process();
 
 	protected:
-		CGUISize		m_aSize;
+		CGUISize m_aSize;
 	};
-
-	//GUI_EVENT_GENERATOR_DECLARE( CGUIEventSize );
-
 
 	//*****************************************************************************
 	//	CGUIEventAlpha
@@ -492,40 +351,16 @@ namespace guiex
 	class GUIEXPORT CGUIEventAlpha : public CGUIEvent
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUIEventAlpha();
 
-		/**
-		* @brief get alpha
-		*/
 		real GetAlpha() const;
-
-		/**
-		* @brief set alpha
-		*/
 		void SetAlpha(real fAlpha);
 
-		/**
-		* @brief process the event.
-		* now it works for <eEVENT_CHANGE_ALPHA>,
-		*/
-		virtual uint32	Process();
+		virtual uint32 Process();
 
 	protected:
-		real		m_fAlpha;
+		real m_fAlpha;
 	};
-
-	//GUI_EVENT_GENERATOR_DECLARE( CGUIEventAlpha );
-
-
-	//*****************************************************************************
-	//	CGUIUserDefineEvent
-	//*****************************************************************************
-
-
-
 
 
 	//*****************************************************************************
@@ -546,92 +381,39 @@ namespace guiex
 	class GUIEXPORT CGUIEventMouse : public CGUIEvent
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUIEventMouse();
 
-		/**
-		* @brief process the event.
-		*/
-		virtual uint32	Process();
+		virtual uint32 Process();
 
-		/**
-		* @brief set mouse position, in global
-		*/
-		void		SetPosition( const CGUIVector2& rPos );
-
-		/**
-		* @brief get mouse position, in global
-		*/
+		void SetGlobalPosition( const CGUIVector2& rPos );
 		const CGUIVector2& GetGlobalPosition() const;
-
-		/**
-		* @brief get mouse position, in global
-		*/
 		CGUIVector2 GetLocalPosition() const;
+		
+		void SetSysKeys(uint32 uSyskeys);
+		uint32 GetSysKeys() const;
 
-		/**
-		* @brief set system key
-		*/
-		void		SetSysKeys(uint32 uSyskeys);
+		void SetWheelChange(real fWheelChange);
+		real GetWheelChange( );
 
-		/**
-		* @brief get system key
-		*/
-		uint32		GetSysKeys() const;
+		void SetMultiClickCount( uint32 nCount );
+		uint32 GetMultiClickCount( ) const;
 
-		/**
-		* @brief set changes of wheel
-		*/
-		void		SetWheelChange(real fWheelChange);
+		void SetButton(int32 nButton);
+		int32 GetButton() const;
 
-		/**
-		* @brief get changes of wheel
-		*/
-		real		GetWheelChange( );
-
-		/**
-		* @brief set count of click
-		*/
-		void		SetMultiClickCount( uint32 nCount );
-
-		/**
-		* @brief get count of click
-		*/
-		uint32		GetMultiClickCount( ) const;
-
-		/**
-		* @brief set button
-		*/
-		void		SetButton(int32 nButton);
-
-		/**
-		* @brief Get button
-		*/
-		int32		GetButton() const;
-
-		///get keyboard interface
 		IGUIInterfaceKeyboard* GetKeyboardInterface() const;
-
-		///set keyboard interface
-		void	SetKeyboardInterface( IGUIInterfaceKeyboard* pKeyboard );
+		void SetKeyboardInterface( IGUIInterfaceKeyboard* pKeyboard );
 
 	protected:
-		uint32			m_nButton;			//!< mouse's button
-		uint32			m_nClickCount;		//!< click count
-		CGUIVector2		m_aPosition;		//!< holds current mouse position.
-		CGUIVector2		m_aMoveDelta;		//!< holds variation of mouse position from last mouse input
-		uint32			m_uSysKeys;			//!< current state of the system keys and mouse buttons.
-		real			m_fWheelChange;		//!< Holds the amount the scroll wheel has changed.
+		uint32 m_nButton; //!< mouse's button
+		uint32 m_nClickCount; //!< click count
+		CGUIVector2 m_aPosition; //!< holds current mouse position.
+		CGUIVector2 m_aMoveDelta; //!< holds variation of mouse position from last mouse input
+		uint32 m_uSysKeys; //!< current state of the system keys and mouse buttons.
+		real m_fWheelChange; //!< Holds the amount the scroll wheel has changed.
 
 		IGUIInterfaceKeyboard* m_pKeyboard;
 	};
-
-	//GUI_EVENT_GENERATOR_DECLARE( CGUIEventMouse );
-
-
-
 
 
 
@@ -649,36 +431,20 @@ namespace guiex
 	class GUIEXPORT CGUIEventKeyboard: public CGUIEvent
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUIEventKeyboard();
 
-		/**
-		* @brief process the event.
-		*/
-		virtual uint32	Process();
+		virtual uint32 Process();
 
-		/// set key code
-		void	SetKeyCode( int32 nKeyCode);
+		void SetKeyCode( int32 nKeyCode);
+		int32 GetKeyCode() const;
 
-		///get key code
-		int32	GetKeyCode() const;
-
-		///get keyboard interface
 		IGUIInterfaceKeyboard* GetKeyboardInterface() const;
-
-		///set keyboard interface
-		void	SetKeyboardInterface( IGUIInterfaceKeyboard* pKeyboard );
+		void SetKeyboardInterface( IGUIInterfaceKeyboard* pKeyboard );
 
 	protected:
-		int32	m_nKeyCode;		/// key code
+		int32 m_nKeyCode; /// key code
 		IGUIInterfaceKeyboard* m_pKeyboard;
 	};
-
-	//GUI_EVENT_GENERATOR_DECLARE( CGUIEventKeyboard);
-
-
 
 
 
@@ -695,65 +461,32 @@ namespace guiex
 	class GUIEXPORT CGUIEventDrag : public CGUIEvent
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUIEventDrag();
 
-		/**
-		* @brief process the event.
-		*/
-		virtual uint32	Process();
+		virtual uint32 Process();
 
-		/**
-		* @brief set widget position, local
-		*/
-		void SetWidgetPos( const CGUIVector2& rPos );
+		void SetWidgetLocalPos( const CGUIVector2& rPos );
+		void SetMouseGlobalPos( const CGUIVector2& rPos );
 
-		/**
-		* @brief set mouse position, global
-		*/
-		void SetMousePos( const CGUIVector2& rPos );
-
-		/**
-		* @brief get widget position
-		*/
 		CGUIVector2 GetWidgetGlobalPos() const;
 		const CGUIVector2& GetWidgetLocalPos() const;
 
-		/**
-		* @brief get mouse position
-		*/
 		const CGUIVector2& GetMouseGlobalPos() const;
 		CGUIVector2 GetMouseLocalPos() const;
 
-		/**
-		* @brief set button
-		*/
 		void SetButton( int32 nButton);
-
-		/**
-		* @brief get mouse button
-		*/
 		const int32 GetButton() const;
 
-		//!< has this event been consumed
 		bool IsExpired();
-
-		//!< set whether this event has been consumed
 		void Expire(bool bExpired);
 
 	protected:
-		CGUIVector2		m_aWidgetPos;		//!< holds current widget position. local pos
-		CGUIVector2		m_aMousePos;		//!< holds current mouse position. global pos
-		int32			m_nButton;			//!< mouse button
+		CGUIVector2	m_aWidgetPos; //!< holds current widget position. local pos
+		CGUIVector2	m_aMousePos; //!< holds current mouse position. global pos
+		int32 m_nButton; //!< mouse button
 
-		bool			m_bExpired;			//!< whether this event is been expired
+		bool m_bExpired; //!< whether this event is been expired
 	};
-
-	//GUI_EVENT_GENERATOR_DECLARE( CGUIEventDrag );
-
-
 
 
 
@@ -770,36 +503,23 @@ namespace guiex
 	class GUIEXPORT CGUIEventListBox: public CGUIEvent
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUIEventListBox();
 
-		/**
-		* @brief process the event.
-		*/
-		virtual uint32	Process();
+		virtual uint32 Process();
 
-		/// set index of item which is double clicked
-		void			SetDbClickedItemIdx( uint32 nIdx );
+		void SetDbClickedItemIdx( uint32 nIdx );
 
-		/// get index of item which is double clicked
-		uint32			GetDbClickedItemIdx( ) const;
+		uint32 GetDbClickedItemIdx( ) const;
 
-		/// set index of item which is double clicked
-		void			SetSelectedItemIdx( uint32 nIdx );
+		void SetSelectedItemIdx( uint32 nIdx );
 
-		/// get index of item which is double clicked
-		uint32			GetSelectedItemIdx( ) const;
+		uint32 GetSelectedItemIdx( ) const;
 
 	protected:
-		uint32		m_nDbClickedItemIdx;		/// the index of item which is double clicked
-		uint32		m_nSelectedItemIdx;		/// the index of item which is selected
+		uint32 m_nDbClickedItemIdx; /// the index of item which is double clicked
+		uint32 m_nSelectedItemIdx; /// the index of item which is selected
 
 	};
-
-	//GUI_EVENT_GENERATOR_DECLARE( CGUIEventListBox);
-
 
 
 	//*****************************************************************************
@@ -813,28 +533,17 @@ namespace guiex
 	class GUIEXPORT CGUIEventComboBox: public CGUIEvent
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUIEventComboBox();
 
-		/**
-		* @brief process the event.
-		*/
-		virtual uint32	Process();
+		virtual uint32 Process();
 
-		/// set index of item which is double clicked
-		void				SetSelectedItemIdx( uint32 nIdx );
-
-		/// get index of item which is double clicked
-		uint32		GetSelectedItemIdx( ) const;
+		void SetSelectedItemIdx( uint32 nIdx );
+		uint32 GetSelectedItemIdx( ) const;
 
 	protected:
-		uint32		m_nSelectedItemIdx;		/// the index of item which is selected
+		uint32 m_nSelectedItemIdx; /// the index of item which is selected
 
 	};
-	//GUI_EVENT_GENERATOR_DECLARE( CGUIEventComboBox);
-
 
 
 	//*****************************************************************************
@@ -849,41 +558,26 @@ namespace guiex
 	class GUIEXPORT CGUIEventUI: public CGUIEvent
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUIEventUI();
 
-		/**
-		* @brief process the event.
-		*/
-		virtual uint32	Process();
+		virtual uint32 Process();
 
-		/// set extra data for this event
-		void			SetExtraData( void* pData );
+		void SetExtraData( void* pData );
+		void* GetExtraData( ) const;
+		
+		void SetUIName( const CGUIString& rName );
+		const CGUIString& GetUIName( ) const;
 
-		/// get extra data for this event
-		void*			GetExtraData( ) const;
-
-		/// set name of this ui event
-		void			SetUIName( const CGUIString& rName );
-
-		/// get name of this ui event
-		const CGUIString&	GetUIName( ) const;
-
-		void			SetArg(int nIndex, const CGUIString& rArg );
-		const CGUIString&	GetArg(int nIndex) const;
+		void SetArg(int nIndex, const CGUIString& rArg );
+		const CGUIString& GetArg(int nIndex) const;
 
 	protected:
-		void*			m_pExtraData;
-		CGUIString		m_strUIEventName;
+		void* m_pExtraData;
+		CGUIString m_strUIEventName;
 
-		CGUIString			m_pArgs[MAX_UIEVENT_ARGS];
+		CGUIString m_pArgs[MAX_UIEVENT_ARGS];
 
 	};
-
-	//GUI_EVENT_GENERATOR_DECLARE( CGUIEventUI);
-
 
 
 
@@ -900,39 +594,18 @@ namespace guiex
 	class GUIEXPORT CGUIEventRelativeChange: public CGUIEvent
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUIEventRelativeChange();
 
-		/**
-		* @brief process the event.
-		*/
-		virtual uint32		Process();
+		virtual uint32 Process();
 
-
-		/// set extra data for this event
-		void				SetRelative( CGUIWidget* pRelative );
-
-		/// get extra data for this event
+		void SetRelative( CGUIWidget* pRelative );
 		CGUIWidget*	GetRelative( ) const;
 
 	protected:
-		CGUIWidget*			m_pRelative;	//maybe child or parent
-
+		CGUIWidget* m_pRelative;	//maybe child or parent
 	};
-
-	//GUI_EVENT_GENERATOR_DECLARE( CGUIEventRelativeChange);
-
 
 
 }//namespace guiex
 
-
-
-
-
-
 #endif //__GUI_EVENT_20060612_H__
-
-

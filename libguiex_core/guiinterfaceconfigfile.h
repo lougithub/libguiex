@@ -48,6 +48,9 @@ namespace guiex
 
 	public:
 		virtual int32 LoadConfigFile( const CGUIString& rFileName, CGUIProperty& rPropertySet ) = 0;
+
+	public: 
+		static const char* StaticGetModuleName();
 	};
 }//namespace guiex
 

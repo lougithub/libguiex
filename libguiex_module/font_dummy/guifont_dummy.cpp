@@ -23,7 +23,7 @@
 #include <libguiex_core/guicolorrect.h>
 #include <libguiex_core/guisize.h>
 #include <libguiex_core/guivector2.h>
-#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guisystem.h>
 #include <libguiex_core/guiinterfacefilesys.h>
 #include <libguiex_core/guiperfmonitor.h>
 #include <libguiex_core/guisceneinfo.h>

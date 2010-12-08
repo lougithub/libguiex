@@ -16,7 +16,7 @@
 #include <libguiex_core/guitextureimp.h>
 #include <libguiex_core/guitexture.h>
 #include <libguiex_core/guitexturemanager.h>
-#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guisystem.h>
 #include <libguiex_core/guisceneinfomanager.h>
 #include <libguiex_core/guilogmsgmanager.h>
 #include <libguiex_core/guiinterfacemanager.h>

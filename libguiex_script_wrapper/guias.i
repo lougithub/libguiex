@@ -2,25 +2,63 @@ namespace guiex
 {
 	class CGUIAs
 	{
-	public:
-		const CGUIString&		GetAsName() const;
-		CGUIWidget*	GetReceiver();
-		void		PushSuccessor( CGUIAs* pAs);
-		virtual uint32	Process() = 0;
+	protected:
+		CGUIAs();
+		virtual ~CGUIAs();
 	};
-
-	class CGUIAsAlpha : public CGUIAs
+	
+	template< class T >
+	class CGUIInterpolationBase : public CGUIAs
 	{
-	public:
-		void	SetAlphaSequence(real fStartValue, real fEndValue, uint32 nFrames, uint32 nDelayTime);
+	protected:
+		CGUIInterpolationBase();
+		virtual ~CGUIInterpolationBase();
 	};
-	CGUIAsAlpha* CreateAs_CGUIAsAlpha(CGUIWidget* pReceiver);
-
-	class CGUIAsScale: public CGUIAs
+	%template(CGUIInterpolationBase_real) CGUIInterpolationBase<real>;
+	%template(CGUIInterpolationBase_size) CGUIInterpolationBase<CGUISize>;
+	%template(CGUIInterpolationBase_Vector3) CGUIInterpolationBase<CGUIVector3>;
+	%template(CGUIInterpolationBase_Vector2) CGUIInterpolationBase<CGUIVector2>;
+	%template(CGUIInterpolationBase_Color) CGUIInterpolationBase<CGUIColor>;
+	
+	class CGUIAsAlpha : public CGUIInterpolationBase<real>
 	{
-	public:
-		void	SetScaleSequence(const CGUISize& fStartScale, const CGUISize& fEndScale, uint32 nFrames, uint32 nDelayTime);
+	protected:
+		CGUIAsAlpha();
+		virtual ~CGUIAsAlpha();
 	};
-	CGUIAsScale* CreateAs_CGUIAsScale(CGUIWidget* pReceiver);
 
+	class CGUIAsScale : public CGUIInterpolationBase<CGUISize>
+	{
+	protected:
+		CGUIAsScale();
+		virtual ~CGUIAsScale();
+	};
+	
+	class CGUIAsRotation: public CGUIInterpolationBase<CGUIVector3>
+	{
+	protected:
+		CGUIAsRotation();
+		virtual ~CGUIAsRotation();
+	};	
+	
+	class CGUIAsPosition : public CGUIInterpolationBase<CGUIVector2>
+	{
+	protected:
+		CGUIAsPosition();
+		virtual ~CGUIAsPosition();
+	};
+	
+	class CGUIAsColor : public CGUIInterpolationBase<CGUIColor>
+	{
+	protected:
+		CGUIAsColor();
+		virtual ~CGUIAsColor();
+	};
+	
+	class CGUIAsContainer : public CGUIAs
+	{
+	protected:
+		CGUIAsContainer();
+		virtual ~CGUIAsContainer();
+	};
 }

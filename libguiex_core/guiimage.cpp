@@ -17,7 +17,7 @@
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guirect.h>
 #include <libguiex_core/guiperfmonitor.h>
-#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guisystem.h>
 #include <libguiex_core/guisceneinfo.h>
 #include <libguiex_core/guisceneinfomanager.h>
 #include <libguiex_core/guirenderrect.h>
@@ -142,6 +142,9 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief get image size
+	*/
 	const CGUISize& CGUIImage::GetSize() const
 	{
 		if( m_aImageSize.IsEqualZero())

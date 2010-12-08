@@ -15,7 +15,7 @@
 #include <libguiex_core/guiinterfacescript.h>
 #include <libguiex_core/guipropertymanager.h>
 #include <libguiex_core/guiwidgetmanager.h>
-#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guisystem.h>
 #include <libguiex_core/guifontmanager.h>
 #include <libguiex_core/guiimagemanager.h>
 #include <libguiex_core/guiasmanager.h>

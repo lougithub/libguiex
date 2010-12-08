@@ -16,7 +16,6 @@
 #include "guilogmsg.h"
 
 
-
 //============================================================================//
 // define
 //============================================================================// 
@@ -31,12 +30,10 @@
 	guilog___->Log(::guiex::GUI_LM_TRACE, X) ; \
 	} while (0)
 
-
 /**
 * @brief abbreviatation for log message
 */
 #define GUI_LOG ::guiex::CGUILogMsgManager::Instance()->Msg()
-
 
 //============================================================================//
 // declare
@@ -46,13 +43,11 @@ namespace guiex
 	class CGUILogMsg;
 }
 
-
 //============================================================================//
 // class
 //============================================================================// 
 namespace guiex
 {
-
 	/** 
 	* @class CGUILogMsgManager	
 	* @brief manager of CGUILogMsg
@@ -65,24 +60,10 @@ namespace guiex
 
 		static CGUILogMsgManager* Instance();
 
-		/**
-		* @brief get default message.
-		*/
 		CGUILogMsg*	Msg();
 
-		/**
-		* @brief generate a message
-		*/
 		CGUILogMsg*	CreateMsg();
-
-		/**
-		* @brief generate a message
-		*/
 		void DestroyMsg(CGUILogMsg*);
-
-		/** 
-		* @brief clear default msg instance
-		*/
 		void ClearDefaultMsg();
 
 	protected:
@@ -103,8 +84,8 @@ namespace guiex
 	/**
 	* @brief log message
 	*/
-	GUIEXPORT  void LogMessage(int32 nPriority, const CGUIString& format);
-	GUIEXPORT  void PrintDebug( const CGUIString& format );
+	GUIEXPORT void LogMessage(int32 nPriority, const CGUIString& format);
+	GUIEXPORT void PrintDebug( const CGUIString& format );
 
 }//namespace guiex
 

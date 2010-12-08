@@ -21,17 +21,26 @@ namespace guiex
 	LARGE_INTEGER CGUITimer::m_aFrequency;
 	bool CGUITimer::m_sbInit = false;
 	//------------------------------------------------------------------------------
+	/**
+	* @brief constructor
+	*/
 	CGUITimer::CGUITimer()
 	{
 		m_aTimeCounter.QuadPart = 0;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief copy constructor
+	*/
 	CGUITimer::CGUITimer(const CGUITimer& rTimer)
 		:m_aTimeCounter(rTimer.m_aTimeCounter)
 	{
 	}
 	//------------------------------------------------------------------------------
-	void	CGUITimer::Assign( const CGUITimer& rTimer )
+	/**
+	* @brief assign value
+	*/
+	void CGUITimer::Assign( const CGUITimer& rTimer )
 	{
 		if( this != &rTimer)
 		{
@@ -48,7 +57,10 @@ namespace guiex
 		return *this;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUITimer::UpdateTime()
+	/**
+	* @brief get current time
+	*/
+	void CGUITimer::UpdateTime()
 	{
 		if(m_aFrequency.QuadPart == 0 )
 		{
@@ -118,7 +130,7 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	CGUITimer::CGUITimer(const CGUITimer& rTimer)
-	:m_aTimeVal(rTimer.m_aTimeVal)
+		:m_aTimeVal(rTimer.m_aTimeVal)
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -147,8 +159,8 @@ namespace guiex
 	int32	CGUITimer::operator-(const CGUITimer& rTimer) const
 	{
 		int32 nMicroseconds = 1000 * ( m_aTimeVal.tv_sec - rTimer.m_aTimeVal.tv_sec ) 
-		+ (m_aTimeVal.tv_usec - rTimer.m_aTimeVal.tv_usec)/1000;
-		
+			+ (m_aTimeVal.tv_usec - rTimer.m_aTimeVal.tv_usec)/1000;
+
 		return nMicroseconds;
 	}
 #else
