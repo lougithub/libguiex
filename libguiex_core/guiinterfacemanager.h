@@ -15,26 +15,26 @@
 #include "guistring.h"
 #include "guidynlib.h"
 #include <map>
+#include "guiinterface.h"
+#include "guiinterfacerender.h"
+#include "guiinterfacefont.h"
+#include "guiinterfacesound.h"
+#include "guiinterfacescript.h"
+#include "guiinterfacefilesys.h"
+#include "guiinterfaceconfigfile.h"
+#include "guiinterfacecommand.h"
+#include "guiinterfaceime.h"
+#include "guiinterfacestringconv.h"
+#include "guiinterfacekeyboard.h"
+#include "guiinterfacemouse.h"
+#include "guiinterfaceImageLoader.h"
+
 
 //============================================================================//
 // declare
 //============================================================================// 
 namespace guiex
 {
-	class IGUIInterface;
-	class IGUIInterfaceRender;
-	class IGUIInterfaceFont;
-	class IGUIInterfaceScript;
-	class IGUIInterfaceConfigFile;
-	class IGUIInterfaceFileSys;
-	class IGUIInterfaceMouse;
-	class IGUIInterfaceKeyboard;
-	class IGUIInterfaceSound;
-	class IGUIInterfaceCommand;
-	class IGUIInterfaceIme;
-	class IGUIInterfaceStringConv;
-	class IGUIInterfaceImageLoader;
-		
 	typedef IGUIInterface* (*FunCreateInterface)(void*); 
 }
 
