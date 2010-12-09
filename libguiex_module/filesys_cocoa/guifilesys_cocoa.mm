@@ -10,7 +10,7 @@
 // include
 //============================================================================// 
 #include <libguiex_module/filesys_cocoa/guifilesys_cocoa.h>
-#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guisystem.h>
 #include <fstream>
 #include <Foundation/Foundation.h>
 

@@ -13,7 +13,7 @@
 #include <libguiex_module/render_opengles/guitexture_opengles.h>
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guicolorrect.h>
-#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guisystem.h>
 #include <libguiex_core/guirenderrect.h>
 #include <libguiex_core/guilogmsgmanager.h>
 
@@ -172,7 +172,7 @@ namespace guiex
 		return m_nMaxStencilRef >= 2;
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengl::BeginRender(void)
+	void IGUIRender_opengles::BeginRender(void)
 	{
 		TRY_THROW_OPENGL_ERROR("BeginRender start");
 		
@@ -432,8 +432,6 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void	IGUIRender_opengles::UpdateStencil()
 	{
-		glInterleavedArrays(GL_V3F , 0, m_pVertexForStencil);
-
 		//clear stencil buffer to 1 for all area visible now
 		glClearStencil( 0 );
 		glClear( GL_STENCIL_BUFFER_BIT );
@@ -477,9 +475,7 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::RenderRectForStencil( const SClipRect& rRect )
-	{
-		TestOpenglError("RenderRectForStencil 1");
-		
+	{		
 		//set matrix
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
@@ -516,8 +512,6 @@ namespace guiex
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 		
 		glDisableClientState(GL_VERTEX_ARRAY);
-		
-		TestOpenglError("RenderRectForStencil 2");
 	}
 	//------------------------------------------------------------------------------
 	void	IGUIRender_opengles::SetTexCoordinate(SVertexForTile* pTexture, const CGUIRect& tex, EImageOrientation eImageOrientation)
@@ -770,7 +764,7 @@ namespace guiex
 		}
 	}
 	//-----------------------------------------------------------------------------
-	void IGUIRender_opengl::EnableClip( bool bEnable )
+	void IGUIRender_opengles::EnableClip( bool bEnable )
 	{
 		m_bEnableClip = bEnable;
 	}
