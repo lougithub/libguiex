@@ -9,12 +9,13 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_module\render_opengl\guirender_opengl.h>
-#include <libguiex_module\render_opengl\guitexture_opengl.h>
+#include <libguiex_module/render_opengl/guirender_opengl.h>
+#include <libguiex_module/render_opengl/guitexture_opengl.h>
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guicolorrect.h>
 #include <libguiex_core/guisystem.h>
 #include <libguiex_core/guirenderrect.h>
+#include <libguiex_core/guilogmsgmanager.h>
 
 
 
@@ -23,6 +24,45 @@
 //============================================================================// 
 namespace guiex
 {
+	//------------------------------------------------------------------------------
+	void TryThrowOpenglError( const char* info )
+	{
+		int errorcode = glGetError();
+		if( GL_NO_ERROR != errorcode )
+		{
+			switch( errorcode )
+			{
+			case GL_INVALID_ENUM:
+				throw CGUIException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_INVALID_ENUM");
+				break;
+			case GL_INVALID_VALUE:
+				throw CGUIException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_INVALID_VALUE");
+				break;
+			case GL_INVALID_OPERATION:
+				throw CGUIException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_INVALID_OPERATION");
+				break;
+			case GL_STACK_OVERFLOW:
+				throw CGUIException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_STACK_OVERFLOW");
+				break;
+			case GL_STACK_UNDERFLOW:
+				throw CGUIException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_STACK_UNDERFLOW");
+				break;
+			case GL_OUT_OF_MEMORY:
+				throw CGUIException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_OUT_OF_MEMORY");
+				break;			
+			default:
+				throw CGUIException("error find in opengl in <%s>, error is <0x%x>!" ,info, errorcode);
+			}
+		}
+	}
+#if GUI_DEBUG
+# define TRY_THROW_OPENGL_ERROR(info)	TryThrowOpenglError(info)
+#else
+# define TRY_THROW_OPENGL_ERROR(info)	
+#endif
+	//------------------------------------------------------------------------------
+
+
 
 	//------------------------------------------------------------------------------
 	GUI_INTERFACE_IMPLEMENT(IGUIRender_opengl);
@@ -41,14 +81,16 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int IGUIRender_opengl::DoInitialize(void* )
 	{
+		TRY_THROW_OPENGL_ERROR( "render interface initialize" );
+		
 		// get the maximum available texture size.
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &m_maxTextureSize);
-		
+
 		glGetIntegerv( GL_STENCIL_BITS, &m_nStencilBits);
 		m_nMaxStencilRef = (1<<m_nStencilBits) - 1;
 		if( m_nMaxStencilRef < 2 )
 		{
-			return -1;
+			GUI_TRACE( "[IGUIRender_opengl::DoInitialize]: stencil is disabled\n" );
 		}
 
 		makeGLMatrix( m_aWholeScreenRect.m_gl_world_matrix, CGUIMatrix4::IDENTITY );
@@ -70,9 +112,14 @@ namespace guiex
 		DestroyAllTexture();
 	}
 	//------------------------------------------------------------------------------
+	bool IGUIRender_opengl::IsSupportStencil()
+	{
+		return m_nMaxStencilRef >= 2;
+	}
+	//------------------------------------------------------------------------------
 	void IGUIRender_opengl::BeginRender(void)
 	{
-		TestOpenglError("BeginRender 1");
+		TRY_THROW_OPENGL_ERROR("BeginRender start");
 
 		//save current attributes
 		glPushClientAttrib(GL_CLIENT_ALL_ATTRIB_BITS);
@@ -124,6 +171,12 @@ namespace guiex
 		if( m_bEnableClip )
 		{
 			glEnable( GL_STENCIL_TEST );	
+			if( !IsSupportStencil() )
+			{
+				//update stencil
+				glGetIntegerv( GL_STENCIL_BITS, &m_nStencilBits);
+				m_nMaxStencilRef = (1<<m_nStencilBits) - 1;
+			}
 		}
 		else
 		{
@@ -135,12 +188,12 @@ namespace guiex
 		m_nCurrentTexture = -1;
 		m_nCurrentStencilRef = 0;
 
-		TestOpenglError("BeginRender 2");
+		TRY_THROW_OPENGL_ERROR("BeginRender end");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl::EndRender(void)
 	{		
-		TestOpenglError("EndRender 1");
+		TRY_THROW_OPENGL_ERROR("EndRender start");
 
 		//restore model view matrix
 		glMatrixMode(GL_MODELVIEW);
@@ -158,46 +211,13 @@ namespace guiex
 		//reset current texture
 		m_nCurrentTexture = -1;
 
-		TestOpenglError("EndRender 2");
+		TRY_THROW_OPENGL_ERROR("EndRender end");
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengl::TestOpenglError( const char* info )
-	{
-		int errorcode = glGetError();
-		if( GL_NO_ERROR != errorcode )
-		{
-			printf("error find in opengles: <%s>  : ", info);
-
-			switch( errorcode )
-			{
-			case GL_INVALID_ENUM:
-				printf("GL_INVALID_ENUM\n");
-				break;
-			case GL_INVALID_VALUE:
-				printf("GL_INVALID_VALUE\n");
-				break;
-			case GL_INVALID_OPERATION:
-				printf("GL_INVALID_OPERATION\n");
-				break;
-			case GL_STACK_OVERFLOW:
-				printf("GL_STACK_OVERFLOW\n");
-				break;
-			case GL_STACK_UNDERFLOW:
-				printf("GL_STACK_UNDERFLOW\n");
-				break;
-			case GL_OUT_OF_MEMORY:
-				printf("GL_OUT_OF_MEMORY\n");
-				break;			
-			default:
-				printf("unknown opengl error: 0x%x\n", errorcode);
-			}
-
-			assert( GL_NO_ERROR == errorcode);
-		}
-
-	}
-	//------------------------------------------------------------------------------
-	void	IGUIRender_opengl::SetWireFrame( bool bWireFrame)
+	/** 
+	* @brief toggle wire frame.
+	*/
+	void IGUIRender_opengl::SetWireFrame( bool bWireFrame)
 	{
 		m_bWireFrame = bWireFrame;
 	}
@@ -211,8 +231,6 @@ namespace guiex
 		GUIARGB rColor_bottomleft,
 		GUIARGB rColor_bottomright )
 	{
-		TestOpenglError("DrawRect 1");
-
 		glInterleavedArrays(GL_C4UB_V3F , 0, m_pVertexForLine);
 		glDisable(GL_TEXTURE_2D);
 		glLineWidth( fLineWidth );
@@ -262,8 +280,6 @@ namespace guiex
 
 		glEnable(GL_TEXTURE_2D);
 		glInterleavedArrays(GL_T2F_C4UB_V3F , 0, m_pVertex);
-
-		TestOpenglError("DrawRect 2");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl::DrawLine(const CGUIMatrix4& rWorldMatrix,
@@ -274,8 +290,6 @@ namespace guiex
 		GUIARGB rColor_begin,
 		GUIARGB rColor_end )
 	{
-		TestOpenglError("DrawLine 1");
-
 		glInterleavedArrays(GL_C4UB_V3F , 0, m_pVertexForLine);
 		glDisable(GL_TEXTURE_2D);
 		glLineWidth( fLineWidth );
@@ -300,17 +314,19 @@ namespace guiex
 		m_pVertexForLine[1].vertex[0] = rEnd.x;
 		m_pVertexForLine[1].vertex[1] = rEnd.y;
 		m_pVertexForLine[1].vertex[2] = z;
-		m_pVertexForLine[1].color     = rColor_end;     
+		m_pVertexForLine[1].color = rColor_end;     
 
-		glDrawArrays( GL_LINES , 0, 2 );
+		glDrawArrays( GL_LINES, 0, 2 );
 
 		glEnable(GL_TEXTURE_2D);
 		glInterleavedArrays(GL_T2F_C4UB_V3F , 0, m_pVertex);
-
-		TestOpenglError("DrawLine 2");
 	}
 	//------------------------------------------------------------------------------
-	void	IGUIRender_opengl::DrawTile(const CGUIMatrix4& rWorldMatrix,
+	/** 
+	* @brief add a texture into render list
+	*/
+	void IGUIRender_opengl::DrawTile(
+		const CGUIMatrix4& rWorldMatrix,
 		const CGUIRect& rDestRect, real z, 
 		const CGUITextureImp* pTexture, const CGUIRect& rTextureRect, 
 		EImageOrientation eImageOrientation, 				
@@ -319,8 +335,6 @@ namespace guiex
 		GUIARGB  rColor_bottomleft,
 		GUIARGB  rColor_bottomright)
 	{
-		TestOpenglError("DrawTile 1");
-
 		//set modelview matrix
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
@@ -372,33 +386,38 @@ namespace guiex
 		m_pVertex[3].color     = oglcolor_bottomright;      
 
 		glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-		TestOpenglError("DrawTile 2");
 	}
-	
-	void	IGUIRender_opengl::PushClipRect( const CGUIMatrix4& rMatrix, const CGUIRect& rClipRect )
+	//------------------------------------------------------------------------------
+	/** 
+	* @brief add a texture into render list
+	*/
+	void IGUIRender_opengl::PushClipRect( const CGUIMatrix4& rMatrix, const CGUIRect& rClipRect )
 	{
 		m_arrayClipRects.push_back( SClipRect() );
 		makeGLMatrix( m_arrayClipRects.back().m_gl_world_matrix, rMatrix );
 		m_arrayClipRects.back().m_aClipRect = rClipRect;
 
-		UpdateStencil();
+		if( m_bEnableClip && IsSupportStencil())
+		{
+			UpdateStencil();
+		}
 	}
 	//------------------------------------------------------------------------------
-	void	IGUIRender_opengl::PopClipRect( )
+	void IGUIRender_opengl::PopClipRect( )
 	{
 		GUI_ASSERT( m_arrayClipRects.empty() == false, "no clip rect to pop" );
 		m_arrayClipRects.pop_back();
 
-		UpdateStencil();
+		if( m_bEnableClip && IsSupportStencil())
+		{
+			UpdateStencil();
+		}
 	}
 	//------------------------------------------------------------------------------
-	void	IGUIRender_opengl::UpdateStencil()
+	void IGUIRender_opengl::UpdateStencil()
 	{
-		TestOpenglError("UpdateStencil 1");
-
 		glInterleavedArrays(GL_V3F , 0, m_pVertexForStencil);
-		
+
 		//clear stencil buffer to 1 for all area visible now
 		glClearStencil( 0 );
 		glClear( GL_STENCIL_BUFFER_BIT );
@@ -441,14 +460,10 @@ namespace guiex
 		glStencilOp( GL_KEEP, GL_KEEP, GL_KEEP );
 
 		glInterleavedArrays(GL_T2F_C4UB_V3F , 0, m_pVertex);
-
-		TestOpenglError("UpdateStencil 2");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl::RenderRectForStencil( const SClipRect& rRect )
 	{
-		TestOpenglError("RenderRectForStencil 1");
-
 		//set matrix
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
@@ -480,8 +495,6 @@ namespace guiex
 		m_pVertexForStencil[3].vertex[2] = 1.0f;
 
 		glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-		TestOpenglError("RenderRectForStencil 2");
 	}
 	//------------------------------------------------------------------------------
 	void	IGUIRender_opengl::SetTexCoordinate(SVertex* pTexture, const CGUIRect& tex, EImageOrientation eImageOrientation)
@@ -581,6 +594,11 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief Creates a 'null' Texture object.
+	* @return a newly created Texture object.  The returned Texture object has no size or imagery 
+	* associated with it, and is generally of little or no use.
+	*/
 	CGUITextureImp*	IGUIRender_opengl::CreateTexture(void)
 	{
 		CGUITexture_opengl* pTexture = new CGUITexture_opengl(this);
@@ -588,6 +606,17 @@ namespace guiex
 		return pTexture;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief Create a Texture object using the given image file.
+	* @param filename String object that specifies the path and filename of the image file to use 
+	* when creating the texture.
+	* return a newly created Texture object.  The initial contents of the texture memory is the 
+	* requested image file.
+	* @note Textures are always created with a size that is a power of 2.  If the file you specify 
+	* is of a size that is not a power of two, the final size will be rounded up.  Additionally, 
+	* textures are always square, so the ultimate size is governed by the larger of the width and 
+	* height of the specified file.  You can check the ultimate sizes by querying the texture after creation.
+	*/
 	CGUITextureImp*	IGUIRender_opengl::CreateTexture(const CGUIString& filename)
 	{
 		CGUITexture_opengl* pTexture = new CGUITexture_opengl(this);
@@ -601,6 +630,18 @@ namespace guiex
 		return pTexture;
 	}
 	//------------------------------------------------------------------------------
+	/** 
+	* @brief Create a Texture object with the given pixel dimensions as specified by \a size.  
+	* NB: Textures are always square.
+	* param size real value that specifies the size used for the width and height when creating 
+	* the new texture.
+	* @return a newly created Texture object.  The initial contents of the texture memory is 
+	* undefined / random.
+	* note Textures are always created with a size that is a power of 2.  If you specify a size that 
+	* is not a power of two, the final size will be rounded up.  So if you specify a size of 1024, the 
+	* texture will be (1024 x 1024), however, if you specify a size of 1025, the texture will be 
+	* (2048 x 2048).  You can check the ultimate size by querying the texture after creation.
+	*/	
 	CGUITextureImp*	IGUIRender_opengl::CreateTexture(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat)
 	{
 		CGUITexture_opengl* pTexture = new CGUITexture_opengl(this);
@@ -609,7 +650,11 @@ namespace guiex
 		return pTexture;
 	}
 	//------------------------------------------------------------------------------
-	void		IGUIRender_opengl::DestroyTexture(CGUITextureImp* texture)
+	/**
+	* @brief Destroy the given Texture object.
+	* @param texture pointer to the Texture object to be destroyed
+	*/
+	void IGUIRender_opengl::DestroyTexture(CGUITextureImp* texture)
 	{
 		if (texture != NULL)
 		{
@@ -621,7 +666,10 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void		IGUIRender_opengl::DestroyAllTexture()
+	/**
+	* @brief Destroy all textures
+	*/
+	void IGUIRender_opengl::DestroyAllTexture()
 	{
 		while( m_setTexture.empty() == false)
 		{
@@ -629,28 +677,48 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief Return the current width of the display in pixels
+	* @return real value equal to the current width of the display in pixels.
+	*/
 	uint16	IGUIRender_opengl::GetWidth(void) const
 	{
 		GUI_ASSERT(0, "not implemented");
 		return 0;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief Return the current height of the display in pixels
+	* @return real value equal to the current height of the display in pixels.
+	*/
 	uint16	IGUIRender_opengl::GetHeight(void) const
 	{
 		GUI_ASSERT(0, "not implemented");
 		return 0;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief Return the maximum texture size available
+	* @return Size of the maximum supported texture in pixels (textures are always assumed to be square)
+	*/
 	uint32	IGUIRender_opengl::GetMaxTextureSize(void) const
 	{
 		return m_maxTextureSize;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief Return the horizontal display resolution dpi
+	* @return horizontal resolution of the display in dpi.
+	*/
 	uint32	IGUIRender_opengl::GetHorzScreenDPI(void) const
 	{
 		return 96;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief Return the vertical display resolution dpi
+	* @return vertical resolution of the display in dpi.
+	*/
 	uint32	IGUIRender_opengl::GetVertScreenDPI(void) const
 	{
 		return 96;

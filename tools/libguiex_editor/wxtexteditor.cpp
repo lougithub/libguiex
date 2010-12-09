@@ -178,8 +178,6 @@ int WxTextEditor::SaveFileAs(const std::string& rNewFileName)
 //------------------------------------------------------------------------------
 void WxTextEditor::OnSize(wxSizeEvent& event)
 {
-	wxPanel::OnSize(event);
-
 	if( m_hScintillaWnd )
 	{
 		wxRect aRect = GetClientRect();

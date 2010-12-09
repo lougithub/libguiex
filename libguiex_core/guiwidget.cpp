@@ -1733,6 +1733,11 @@ namespace guiex
 			ValueToProperty( IsResponseUpdateEvent(), rProperty);
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
+		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "response_parentsizechange_event" )
+		{
+			ValueToProperty( IsResponseParentSizeChangeEvent(), rProperty);
+		}
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "movable" )
 		{
 			ValueToProperty( IsMovable(), rProperty);

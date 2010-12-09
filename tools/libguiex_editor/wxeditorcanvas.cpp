@@ -46,7 +46,7 @@ WxEditorCanvasContainer::WxEditorCanvasContainer( wxWindow *parent, const std::s
 		0};
 	m_pCanvas = new WxGLCanvas(this, wx_gl_attribs, wxID_ANY, wxDefaultPosition, aCanvasSize);
 	m_pCanvas->InitializeCanvas();
-	m_pCanvas->SetNextHandler(  this );
+	//m_pCanvas->SetNextHandler(  this );
 }
 //------------------------------------------------------------------------------
 void	WxEditorCanvasContainer::UpdateWindowBox()
@@ -132,17 +132,21 @@ WxGLCanvas::~WxGLCanvas()
 	//free widgets
 	guiex::GSystem->DestroyAllWidgets();
 	guiex::GSystem->UnloadAllResource();
+
+	GUI_UNREGISTER_INTERFACE_LIB( IGUIRender_opengl);
 }
 //------------------------------------------------------------------------------
-void	WxGLCanvas::InitializeCanvas()
+void WxGLCanvas::InitializeCanvas()
 {
 	SetCurrent();
 
 	wxSize aCanvasSize( guiex::GSystem->GetScreenWidth(), guiex::GSystem->GetScreenHeight());
 	UpdateCanvasSize(aCanvasSize);
+
+	GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl );
 }
 //------------------------------------------------------------------------------
-void	WxGLCanvas::UpdateWindowBox()
+void WxGLCanvas::UpdateWindowBox()
 {
 	m_aWindowBox.Reset();
 }
@@ -250,7 +254,6 @@ void WxGLCanvas::Render()
 	SetCurrent();
 
 	/* clear color and depth buffers */
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	const wxColour& rBGColor = GetMainFrame()->GetBGColor();
 	glClearColor( rBGColor.Red() / 255.f, rBGColor.Green() / 255.f, rBGColor.Blue() / 255.f, rBGColor.Alpha() / 255.f );
 	glClearStencil( 0 );

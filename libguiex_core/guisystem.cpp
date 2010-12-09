@@ -390,7 +390,10 @@ namespace guiex
 		m_pWidgetManager->DestroyAllPages();
 
 		IGUIInterfaceScript* pScript = CGUIInterfaceManager::Instance()->GetInterfaceScript();
-		pScript->DestroyAllScript();
+		if( pScript )
+		{
+			pScript->DestroyAllScript();
+		}
 	}
 	//------------------------------------------------------------------------------
 	//!< set whether should system run script

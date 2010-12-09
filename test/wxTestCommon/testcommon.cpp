@@ -11,7 +11,7 @@
 // Disable the warning that the pack size is changed in this header.
 #pragma warning(disable:4103)
 #pragma warning(disable:4099)
-#pragma pack(push,8)
+
 #include "wx/wxprec.h"
 #include "wx/glcanvas.h"
 #include "wx/aui/aui.h"
@@ -19,7 +19,6 @@
 #include "wx/cmdline.h"
 #include "wx/dirdlg.h"
 #include "wx/choicdlg.h"
-#pragma pack(pop)
 
 #include <windows.h>
 
@@ -259,7 +258,7 @@ void WxGLCanvas::OnIdle(wxIdleEvent & event)
 	/* clear color and depth buffers */
 	const wxColour& rBGColor = ((WxMainFrame*)wxGetApp().GetTopWindow())->m_aBGColor;
 	glClearColor( rBGColor.Red() / 255.f, rBGColor.Green() / 255.f, rBGColor.Blue() / 255.f, rBGColor.Alpha() / 255.f );
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );	// clear screen and depth buffer 
 
 	try
 	{

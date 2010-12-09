@@ -11,7 +11,6 @@ if( WIN32 )
 		commandmanager.h
 		libguiex_editor.cpp
 		libguiex_editor.h
-		libguiex_editor.rc
 		propertyconfigmgr.cpp
 		propertyconfigmgr.h
 		propertysheetfunc.cpp

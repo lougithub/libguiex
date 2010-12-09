@@ -188,14 +188,22 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 
 	guiex::CGUIProperty aProp( pDefaultProp->GetName(), pDefaultProp->GetTypeAsString());
 	aProp.SetData( pDefaultProp->GetData() );
-	if( 0 != pWidget->GenerateProperty( aProp ))
+	try
 	{
-		wxString strError = wxString::Format( _T("Failed to Generate GUI Property <%s :: %s> for widget <%s :: %s>)"),
-			STRING_M2W(aProp.GetName()), 
-			STRING_M2W(aProp.GetTypeAsString()),
-			STRING_M2W(pWidget->GetName()),
-			STRING_M2W(pWidget->GetType()));
-		wxMessageBox(strError, _T("Error"), wxICON_ERROR|wxCentre);
+		if( 0 != pWidget->GenerateProperty( aProp ))
+		{
+			wxString strError = wxString::Format( _T("Failed to Generate GUI Property <%s :: %s> for widget <%s :: %s>)"),
+				STRING_M2W(aProp.GetName()), 
+				STRING_M2W(aProp.GetTypeAsString()),
+				STRING_M2W(pWidget->GetName()),
+				STRING_M2W(pWidget->GetType()));
+			wxMessageBox(strError, _T("Error"), wxICON_ERROR|wxCentre);
+			return;
+		}
+	}
+	catch (guiex::CGUIBaseException& rError)
+	{
+		wxMessageBox( wxConvUTF8.cMB2WC(rError.what()), _T("error"), wxICON_ERROR|wxCENTRE);
 		return;
 	}
 
@@ -208,7 +216,7 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 
 		if( pPGTop )
 		{
-			pPGTop->SetValue( CGUIVector2ToVariant(aValue));
+			pPGTop->SetValue( WXVARIANT(aValue));
 		}
 		else
 		{
@@ -225,7 +233,7 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 
 		if( pPGTop )
 		{
-			pPGTop->SetValue( CGUIVector3ToVariant(aValue));
+			pPGTop->SetValue( WXVARIANT(aValue));
 		}
 		else
 		{
@@ -242,7 +250,7 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 			
 		if( pPGTop )
 		{
-			pPGTop->SetValue( CGUIRectToVariant(aValue));
+			pPGTop->SetValue( WXVARIANT(aValue));
 		}
 		else
 		{
@@ -254,11 +262,8 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 	//CGUIColor
 	else if( aProp.GetType() == guiex::ePropertyType_Color)
 	{
-		guiex::CGUIColor aColor;
-		guiex::PropertyToValue( aProp, aColor );
-
-		wxColour aValue;
-		aValue = wxColour(aColor.GetRed()*255.f,aColor.GetGreen()*255.f,aColor.GetBlue()*255.f,aColor.GetAlpha()*255.f);
+		guiex::CGUIColor aValue;
+		guiex::PropertyToValue( aProp, aValue );
 
 		if( pPGTop )
 		{
@@ -266,7 +271,7 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxColourProperty(STRING_M2W(CPropertyData::GetPropertyData(aProp)->GetLabel()), STRING_M2W(aProp.GetName()), aValue));
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxGuiColorProperty( STRING_M2W(CPropertyData::GetPropertyData(aProp)->GetLabel()), STRING_M2W(aProp.GetName()), aValue));
 		}
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -278,7 +283,7 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 
 		if( pPGTop )
 		{
-			pPGTop->SetValue( CGUISizeToVariant(aValue));
+			pPGTop->SetValue( WXVARIANT(aValue));
 		}
 		else
 		{
@@ -326,7 +331,7 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 
 		if( pPGTop )
 		{
-			pPGTop->SetValue( CGUIStringInfoToVariant( aValue ));
+			pPGTop->SetValue( WXVARIANT( aValue ));
 		}
 		else
 		{
@@ -342,7 +347,7 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 
 		if( pPGTop )
 		{
-			pPGTop->SetValue( CGUIWidgetPositionToVariant( aValue ));
+			pPGTop->SetValue( WXVARIANT( aValue ));
 		}
 		else
 		{
@@ -361,7 +366,7 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 
 		if( pPGTop )
 		{
-			pPGTop->SetValue( CGUIWidgetSizeToVariant( aValue ));
+			pPGTop->SetValue( WXVARIANT( aValue ));
 		}
 		else
 		{
@@ -566,21 +571,21 @@ void GenerateGUIProperty( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPro
 	//CGUIVector2
 	if( rProperty.GetType() == guiex::ePropertyType_Vector2 )
 	{
-		guiex::CGUIVector2 aValue = CGUIVector2FromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
+		guiex::CGUIVector2 aValue = CGUIVector2RefFromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
 		guiex::ValueToProperty( aValue, rProperty );
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
 	//CGUIVector3
 	else if( rProperty.GetType() == guiex::ePropertyType_Vector3 )
 	{
-		guiex::CGUIVector3 aValue = CGUIVector3FromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
+		guiex::CGUIVector3 aValue = CGUIVector3RefFromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
 		guiex::ValueToProperty( aValue, rProperty );
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
 	//CGUIRect
 	else if( rProperty.GetType() == guiex::ePropertyType_Rect )
 	{
-		guiex::CGUIRect aValue = CGUIRectFromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
+		guiex::CGUIRect aValue = CGUIRectRefFromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
 		guiex::ValueToProperty( aValue, rProperty );
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -608,7 +613,7 @@ void GenerateGUIProperty( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPro
 	//CGUISize
 	else if( rProperty.GetType() == guiex::ePropertyType_Size )
 	{
-		guiex::CGUISize aValue = CGUISizeFromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
+		guiex::CGUISize aValue = CGUISizeRefFromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
 		guiex::ValueToProperty( aValue, rProperty );
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -653,21 +658,21 @@ void GenerateGUIProperty( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPro
 	//CGUIStringInfo
 	else if( rProperty.GetType() == ePropertyType_StringInfo )
 	{
-		guiex::CGUIStringInfo aValue= CGUIStringInfoFromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
+		guiex::CGUIStringInfo aValue= CGUIStringInfoRefFromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
 		guiex::ValueToProperty( aValue, rProperty );
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
 	//CGUIWidgetPosition
 	else if(  rProperty.GetType() == ePropertyType_WidgetPosition )
 	{
-		guiex::CGUIWidgetPosition aValue = CGUIWidgetPositionFromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
+		guiex::CGUIWidgetPosition aValue = CGUIWidgetPositionRefFromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
 		guiex::ValueToProperty( aValue, rProperty );
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
 	//CGUIWidgetSize
 	else if( rProperty.GetType() == ePropertyType_WidgetSize )
 	{
-		guiex::CGUIWidgetSize aValue = CGUIWidgetSizeFromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
+		guiex::CGUIWidgetSize aValue = CGUIWidgetSizeRefFromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
 		guiex::ValueToProperty( aValue, rProperty );
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -675,8 +680,7 @@ void GenerateGUIProperty( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPro
 	else if( rProperty.GetType() == ePropertyType_Color )
 	{
 		//COLOR
-		wxColour aWxColor = wxColourPropertyValueFromVariant(pSheetMgr->GetPropertyValue(pPGProperty)).m_colour;
-		guiex::CGUIColor aValue(aWxColor.Red() / 255.0, aWxColor.Green() / 255.0, aWxColor.Blue() / 255.0, aWxColor.Alpha() / 255.0 );
+		guiex::CGUIColor aValue = CGUIColorRefFromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
 		guiex::ValueToProperty( aValue, rProperty );
 	}
 	//////////////////////////////////////////////////////////////////////////////////////

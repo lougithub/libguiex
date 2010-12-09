@@ -15,6 +15,7 @@
 #include <libguiex_core/guicolorrect.h>
 #include <libguiex_core/guiwidgetsystem.h>
 #include <libguiex_core/guirenderrect.h>
+#include <libguiex_core/guilogmsgmanager.h>
 
 
 
@@ -23,12 +24,48 @@
 //============================================================================// 
 namespace guiex
 {
-
+	//------------------------------------------------------------------------------
+	void TryThrowOpenglError( const char* info )
+	{
+		int errorcode = glGetError();
+		if( GL_NO_ERROR != errorcode )
+		{
+			switch( errorcode )
+			{
+			case GL_INVALID_ENUM:
+				throw CGUIException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_INVALID_ENUM");
+				break;
+			case GL_INVALID_VALUE:
+				throw CGUIException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_INVALID_VALUE");
+				break;
+			case GL_INVALID_OPERATION:
+				throw CGUIException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_INVALID_OPERATION");
+				break;
+			case GL_STACK_OVERFLOW:
+				throw CGUIException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_STACK_OVERFLOW");
+				break;
+			case GL_STACK_UNDERFLOW:
+				throw CGUIException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_STACK_UNDERFLOW");
+				break;
+			case GL_OUT_OF_MEMORY:
+				throw CGUIException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_OUT_OF_MEMORY");
+				break;			
+			default:
+				throw CGUIException("error find in opengl in <%s>, error is <0x%x>!" ,info, errorcode);
+			}
+		}
+	}
+#if GUI_DEBUG
+# define TRY_THROW_OPENGL_ERROR(info)	TryThrowOpenglError(info)
+#else
+# define TRY_THROW_OPENGL_ERROR(info)	
+#endif
 	//------------------------------------------------------------------------------
 	GUI_INTERFACE_IMPLEMENT(IGUIRender_opengles);
 	//------------------------------------------------------------------------------
 	IGUIRender_opengles::IGUIRender_opengles()
 		:m_maxTextureSize(0)
+		,m_bEnableClip(false)
 	{
 		m_nCurrentTexture = -1;
 		m_bWireFrame = false;
@@ -40,7 +77,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int IGUIRender_opengles::DoInitialize(void* )
 	{
-		TestOpenglError("init 1");
+		TRY_THROW_OPENGL_ERROR( "render interface initialize start" );
 		
 		// Create the framebuffer object and attach the color buffer.
 		GLuint framebuffer;
@@ -58,7 +95,7 @@ namespace guiex
 		// Initialize the projection matrix.
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		const CGUISize& rSize = CGUISystem::Instance()->GetScreenSize();
+		const CGUISize& rSize = GSystem->GetScreenSize();
 		glOrthof(0.0, rSize.m_fWidth,rSize.m_fHeight,0.0,-1, 1 );
 		
 		glMatrixMode(GL_MODELVIEW);
@@ -66,10 +103,6 @@ namespace guiex
 		
 		glViewport(0, 0, rSize.m_fWidth,rSize.m_fHeight);
 		
-		TestOpenglError("init 2");
-		
-		// get the maximum available texture size.
-		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &m_maxTextureSize);
 
 		//disable lighting
 		glDisable(GL_LIGHTING);
@@ -96,17 +129,30 @@ namespace guiex
 		
 				
 		glDisable(GL_SCISSOR_TEST);
-		glEnable( GL_STENCIL_TEST );	
+		
+		// get the maximum available texture size.
+		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &m_maxTextureSize);
+
+		glGetIntegerv( GL_STENCIL_BITS, &m_nStencilBits);
+		m_nMaxStencilRef = (1<<m_nStencilBits) - 1;
+		if( m_nMaxStencilRef < 2 )
+		{
+			GUI_TRACE( "[IGUIRender_opengl::DoInitialize]: stencil is disabled\n" );
+		}
+
+		makeGLMatrix( m_aWholeScreenRect.m_gl_world_matrix, CGUIMatrix4::IDENTITY );
+		ResetZValue();
+		m_nCurrentTexture = -1;
+		m_nCurrentStencilRef = 0;
+		
 		
 		// Set up various GL state.
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glEnableClientState(GL_COLOR_ARRAY);
 		
-		TestOpenglError("init 3");
+		TRY_THROW_OPENGL_ERROR( "render interface initialize end" );
 		
-		ResetZValue();
-		m_nCurrentTexture = -1;
 
 		return 0;
 	}
@@ -121,12 +167,18 @@ namespace guiex
 		DestroyAllTexture();
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengles::BeginRender(void)
+	bool IGUIRender_opengles::IsSupportStencil()
 	{
-		TestOpenglError("begin 1");
+		return m_nMaxStencilRef >= 2;
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl::BeginRender(void)
+	{
+		TRY_THROW_OPENGL_ERROR("BeginRender start");
 		
 		glClearColor(0.5f, 0.5f, 0.5f, 1);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );	// clear screen and depth buffer 
+
 		
 		//update projection matrix
 		glMatrixMode(GL_PROJECTION);
@@ -137,13 +189,14 @@ namespace guiex
 		glPushMatrix();
 		
 		m_nCurrentTexture = -1;
-		
-		TestOpenglError("begin 2");
+		m_nCurrentStencilRef = 0;
+
+		TRY_THROW_OPENGL_ERROR("BeginRender end");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::EndRender(void)
 	{		
-		TestOpenglError("end 1");
+		TRY_THROW_OPENGL_ERROR("EndRender start");
 		
 		//restore model view matrix
 		glMatrixMode(GL_MODELVIEW);
@@ -155,8 +208,8 @@ namespace guiex
 		
 		//reset current texture
 		m_nCurrentTexture = -1;
-		
-		TestOpenglError("end 2");
+
+		TRY_THROW_OPENGL_ERROR("EndRender end");
 	}	
 	//------------------------------------------------------------------------------
 	void	IGUIRender_opengles::SetWireFrame( bool bWireFrame)
@@ -173,8 +226,7 @@ namespace guiex
 		GUIARGB rColor_bottomleft,
 		GUIARGB rColor_bottomright )
 	{
-		TestOpenglError("drawrect 1");
-		
+		glDisable(GL_TEXTURE_2D);
 		glLineWidth( fLineWidth );
 
 		//set modelview matrix
@@ -227,7 +279,7 @@ namespace guiex
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glDisableClientState(GL_COLOR_ARRAY);	
 		
-		TestOpenglError("drawrect 2");
+		glEnable(GL_TEXTURE_2D);
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::DrawLine(const CGUIMatrix4& rWorldMatrix,
@@ -238,7 +290,7 @@ namespace guiex
 		GUIARGB rColor_begin,
 		GUIARGB rColor_end )
 	{
-		TestOpenglError("drawline 1");
+		glDisable(GL_TEXTURE_2D);
 		glLineWidth( fLineWidth );
 
 		//set modelview matrix
@@ -272,10 +324,14 @@ namespace guiex
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glDisableClientState(GL_COLOR_ARRAY);	
 
-		TestOpenglError("drawline 2");
+		glEnable(GL_TEXTURE_2D);
 	}
 	//------------------------------------------------------------------------------
-	void	IGUIRender_opengles::DrawTile(const CGUIMatrix4& rWorldMatrix,
+	/** 
+	* @brief add a texture into render list
+	*/
+	void	IGUIRender_opengles::DrawTile(
+		const CGUIMatrix4& rWorldMatrix,
 		const CGUIRect& rDestRect, real z, 
 		const CGUITextureImp* pTexture, const CGUIRect& rTextureRect, 
 		EImageOrientation eImageOrientation, 				
@@ -284,8 +340,6 @@ namespace guiex
 		GUIARGB  rColor_bottomleft,
 		GUIARGB  rColor_bottomright)
 	{
-		TestOpenglError("tt 1");
-		
 		//set modelview matrix
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
@@ -348,17 +402,21 @@ namespace guiex
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_COLOR_ARRAY);
-		
-		TestOpenglError("drawtile 2");
 	}
-	
+	//------------------------------------------------------------------------------
+	/** 
+	* @brief add a texture into render list
+	*/
 	void	IGUIRender_opengles::PushClipRect( const CGUIMatrix4& rMatrix, const CGUIRect& rClipRect )
 	{
 		m_arrayClipRects.push_back( SClipRect() );
 		makeGLMatrix( m_arrayClipRects.back().m_gl_world_matrix, rMatrix );
 		m_arrayClipRects.back().m_aClipRect = rClipRect;
 
-		UpdateStencil();
+		if( m_bEnableClip && IsSupportStencil())
+		{
+			UpdateStencil();
+		}
 	}
 	//------------------------------------------------------------------------------
 	void	IGUIRender_opengles::PopClipRect( )
@@ -366,64 +424,27 @@ namespace guiex
 		GUI_ASSERT( m_arrayClipRects.empty() == false, "no clip rect to pop" );
 		m_arrayClipRects.pop_back();
 
-		UpdateStencil();
-	}
-	//------------------------------------------------------------------------------
-	void IGUIRender_opengles::TestOpenglError( const char* info )
-	{
-		int errorcode = glGetError();
-		if( GL_NO_ERROR != errorcode )
+		if( m_bEnableClip && IsSupportStencil())
 		{
-			printf("error find in opengles: <%s>  : ", info);
-			
-			switch( errorcode )
-			{
-				case GL_INVALID_ENUM:
-					printf("GL_INVALID_ENUM\n");
-					break;
-				case GL_INVALID_VALUE:
-					printf("GL_INVALID_VALUE\n");
-					break;
-				case GL_INVALID_OPERATION:
-					printf("GL_INVALID_OPERATION\n");
-					break;
-				case GL_STACK_OVERFLOW:
-					printf("GL_STACK_OVERFLOW\n");
-					break;
-				case GL_STACK_UNDERFLOW:
-					printf("GL_STACK_UNDERFLOW\n");
-					break;
-				case GL_OUT_OF_MEMORY:
-					printf("GL_OUT_OF_MEMORY\n");
-					break;			
-				default:
-					printf("unknown opengl error: 0x%x\n", errorcode);
-			}
-			
-			assert( GL_NO_ERROR == errorcode);
+			UpdateStencil();
 		}
-		
 	}
 	//------------------------------------------------------------------------------
 	void	IGUIRender_opengles::UpdateStencil()
 	{
-		return;
-		
-		TestOpenglError("UpdateStencil 1");
-		
+		glInterleavedArrays(GL_V3F , 0, m_pVertexForStencil);
+
 		//clear stencil buffer to 1 for all area visible now
 		glClearStencil( 0 );
 		glClear( GL_STENCIL_BUFFER_BIT );
-		
+		m_nCurrentStencilRef = 0;
+
 		// Set color mask and disable texture
 		glColorMask( false, false, false, false );		
 		glDisable( GL_TEXTURE_2D );
-		
-		// Enable stencil buffer for "marking" the floor 
-		glEnable( GL_STENCIL_TEST );	
 
-		glStencilFunc( GL_EQUAL, 1, 1 );
-		glStencilOp( GL_ZERO, GL_ZERO, GL_KEEP );
+		glStencilFunc( GL_EQUAL, m_nCurrentStencilRef, m_nCurrentStencilRef );
+		glStencilOp( GL_ZERO, GL_ZERO, GL_INCR );
 
 		//render clip rect to stencil buffer
 		for( std::vector<SClipRect>::iterator itor =  m_arrayClipRects.begin();
@@ -432,6 +453,18 @@ namespace guiex
 		{
 			SClipRect& rClipRect = *itor;
 			RenderRectForStencil( rClipRect );
+
+			++m_nCurrentStencilRef;
+			if( m_nCurrentStencilRef == m_nMaxStencilRef-1 )
+			{
+				//reach max
+				glStencilFunc( GL_EQUAL, m_nCurrentStencilRef, m_nCurrentStencilRef );
+				glStencilOp( GL_ZERO, GL_ZERO, GL_INVERT );
+
+				RenderRectForStencil( m_aWholeScreenRect );
+				m_nCurrentStencilRef = 1;
+			}
+			glStencilFunc( GL_EQUAL, m_nCurrentStencilRef, m_nCurrentStencilRef );
 		}
 
 		//restore color and texture state
@@ -439,10 +472,8 @@ namespace guiex
 		glEnable( GL_TEXTURE_2D );
 
 		//reset stencil state
-		glStencilFunc( GL_EQUAL, 1, 1 );
+		glStencilFunc( GL_EQUAL, m_nCurrentStencilRef, m_nCurrentStencilRef );
 		glStencilOp( GL_KEEP, GL_KEEP, GL_KEEP );
-		TestOpenglError("UpdateStencil 2");
-		
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::RenderRectForStencil( const SClipRect& rRect )
@@ -586,15 +617,29 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief Creates a 'null' Texture object.
+	* @return a newly created Texture object.  The returned Texture object has no size or imagery 
+	* associated with it, and is generally of little or no use.
+	*/
 	CGUITextureImp*	IGUIRender_opengles::CreateTexture(void)
 	{
-		TestOpenglError("IGUIRender_opengles 1");
 		CGUITexture_opengles* pTexture = new CGUITexture_opengles(this);
 		m_setTexture.insert(pTexture);
-		TestOpenglError("IGUIRender_opengles 2");
 		return pTexture;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief Create a Texture object using the given image file.
+	* @param filename String object that specifies the path and filename of the image file to use 
+	* when creating the texture.
+	* return a newly created Texture object.  The initial contents of the texture memory is the 
+	* requested image file.
+	* @note Textures are always created with a size that is a power of 2.  If the file you specify 
+	* is of a size that is not a power of two, the final size will be rounded up.  Additionally, 
+	* textures are always square, so the ultimate size is governed by the larger of the width and 
+	* height of the specified file.  You can check the ultimate sizes by querying the texture after creation.
+	*/
 	CGUITextureImp*	IGUIRender_opengles::CreateTexture(const CGUIString& filename)
 	{
 		CGUITexture_opengles* pTexture = new CGUITexture_opengles(this);
@@ -608,6 +653,18 @@ namespace guiex
 		return pTexture;
 	}
 	//------------------------------------------------------------------------------
+	/** 
+	* @brief Create a Texture object with the given pixel dimensions as specified by \a size.  
+	* NB: Textures are always square.
+	* param size real value that specifies the size used for the width and height when creating 
+	* the new texture.
+	* @return a newly created Texture object.  The initial contents of the texture memory is 
+	* undefined / random.
+	* note Textures are always created with a size that is a power of 2.  If you specify a size that 
+	* is not a power of two, the final size will be rounded up.  So if you specify a size of 1024, the 
+	* texture will be (1024 x 1024), however, if you specify a size of 1025, the texture will be 
+	* (2048 x 2048).  You can check the ultimate size by querying the texture after creation.
+	*/	
 	CGUITextureImp*	IGUIRender_opengles::CreateTexture(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat)
 	{
 		CGUITexture_opengles* pTexture = new CGUITexture_opengles(this);
@@ -616,6 +673,10 @@ namespace guiex
 		return pTexture;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief Destroy the given Texture object.
+	* @param texture pointer to the Texture object to be destroyed
+	*/
 	void		IGUIRender_opengles::DestroyTexture(CGUITextureImp* texture)
 	{
 		if (texture != NULL)
@@ -628,6 +689,9 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief Destroy all textures
+	*/
 	void		IGUIRender_opengles::DestroyAllTexture()
 	{
 		while( m_setTexture.empty() == false)
@@ -636,28 +700,48 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief Return the current width of the display in pixels
+	* @return real value equal to the current width of the display in pixels.
+	*/
 	uint16	IGUIRender_opengles::GetWidth(void) const
 	{
 		GUI_ASSERT(0, "not implemented");
 		return 0;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief Return the current height of the display in pixels
+	* @return real value equal to the current height of the display in pixels.
+	*/
 	uint16	IGUIRender_opengles::GetHeight(void) const
 	{
 		GUI_ASSERT(0, "not implemented");
 		return 0;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief Return the maximum texture size available
+	* @return Size of the maximum supported texture in pixels (textures are always assumed to be square)
+	*/
 	uint32	IGUIRender_opengles::GetMaxTextureSize(void) const
 	{
 		return m_maxTextureSize;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief Return the horizontal display resolution dpi
+	* @return horizontal resolution of the display in dpi.
+	*/
 	uint32	IGUIRender_opengles::GetHorzScreenDPI(void) const
 	{
 		return 96;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief Return the vertical display resolution dpi
+	* @return vertical resolution of the display in dpi.
+	*/
 	uint32	IGUIRender_opengles::GetVertScreenDPI(void) const
 	{
 		return 96;
@@ -684,6 +768,11 @@ namespace guiex
 				x++;
 			}
 		}
+	}
+	//-----------------------------------------------------------------------------
+	void IGUIRender_opengl::EnableClip( bool bEnable )
+	{
+		m_bEnableClip = bEnable;
 	}
 	//-----------------------------------------------------------------------------
 }//namespace guiex

@@ -128,6 +128,14 @@ namespace guiex
 		{
 			m_pInterfaceStringConv = (IGUIInterfaceStringConv*)rInterfaceData.m_pInterface;
 		}
+		else if( rInterface == "IGUIImageLoader" )
+		{
+			m_pInterfaceImageLoader = (IGUIInterfaceImageLoader*)rInterfaceData.m_pInterface;
+		}
+		else
+		{
+			GUI_ASSERT(0, "unkonwn interface");
+		}
 		return 0;
 	}
 	//------------------------------------------------------------------------------
@@ -215,6 +223,11 @@ namespace guiex
 		return DoRegisterInterface( rInterface, aInterface );
 	}
 	//------------------------------------------------------------------------------
+	int CGUIInterfaceManager::UnregisterInterface( IGUIInterface* pInterface )
+	{
+		return UnregisterInterface( pInterface->GetModuleName() );
+	}
+	//------------------------------------------------------------------------------
 	/**
 	* @brief ungister a interface
 	* @param rName the name of a interface
@@ -287,6 +300,14 @@ namespace guiex
 			else if( rInterface == "IGUIIme" )
 			{
 				m_pInterfaceIme = NULL;
+			}
+			else if( rInterface == "IGUIStringConv" )
+			{
+				m_pInterfaceStringConv = NULL;
+			}
+			else
+			{
+				GUI_ASSERT(0, "unkonwn interface");
 			}
 			return 0;
 		}

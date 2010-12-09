@@ -11,7 +11,7 @@
 // Disable the warning that the pack size is changed in this header.
 #pragma warning(disable:4103)
 #pragma warning(disable:4099)
-#pragma pack(push,8)
+
 #include "wx/wxprec.h"
 #include "wx/glcanvas.h"
 #include "wx/aui/aui.h"
@@ -19,7 +19,6 @@
 #include "wx/cmdline.h"
 #include "wx/dirdlg.h"
 #include "wx/choicdlg.h"
-#pragma pack(pop)
 
 #include <windows.h>
 
@@ -208,13 +207,6 @@ WxGLCanvas::WxGLCanvas( wxWindow *parent,
 					   const wxString& name )
 					   : wxGLCanvas(parent, (wxGLCanvas*) NULL, id, pos, size, style|wxFULL_REPAINT_ON_RESIZE , name, args )
 {
-	int attribute[] = 
-	{
-		WX_GL_STENCIL_SIZE, 8,
-		0
-	};
-	
-	SetupPixelFormat( attribute );
 }
 //------------------------------------------------------------------------------
 void WxGLCanvas::OnEraseBackground(wxEraseEvent& event)

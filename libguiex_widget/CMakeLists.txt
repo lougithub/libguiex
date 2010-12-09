@@ -116,6 +116,9 @@ if( WIN32 )
 elseif( APPLE )
     set( ${target_name}_SRCS 
     	${${target_name}_button_SRCS}
+		${${target_name}_checkbutton_SRCS}
+		${${target_name}_radioutton_SRCS}
+		${${target_name}_emptynode_SRCS}
 		${${target_name}_panel_SRCS}
 		${${target_name}_static_SRCS}
 		${${target_name}_utility_SRCS}

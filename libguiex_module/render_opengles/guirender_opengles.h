@@ -49,14 +49,7 @@ namespace guiex
 	class GUIEXPORT IGUIRender_opengles : public IGUIInterfaceRender
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		IGUIRender_opengles();
-
-		/**
-		* @brief destructor
-		*/
 		virtual ~IGUIRender_opengles();
 
 		virtual void DrawRect(const CGUIMatrix4& rWorldMatrix,
@@ -68,17 +61,17 @@ namespace guiex
 			GUIARGB rColor_bottomleft,
 			GUIARGB rColor_bottomright );
 
-		/** 
-		* @brief add a texture into render list
-		*/
-		virtual	void	DrawTile(	const CGUIMatrix4& rWorldMatrix,
-			const CGUIRect& rDestRect, real z, 
-			const CGUITextureImp* pTexture, const CGUIRect& rTextureRect, 
+
+		virtual	void DrawTile( const CGUIMatrix4& rWorldMatrix,
+			const CGUIRect& rDestRect,
+			real z, 
+			const CGUITextureImp* pTexture, 
+			const CGUIRect& rTextureRect, 
 			EImageOrientation eImageOrientation,
-			GUIARGB  rColor_topleft,
-			GUIARGB  rColor_topright,
-			GUIARGB  rColor_bottomleft,
-			GUIARGB  rColor_bottomright);
+			GUIARGB rColor_topleft,
+			GUIARGB rColor_topright,
+			GUIARGB rColor_bottomleft,
+			GUIARGB rColor_bottomright);
 
 		virtual void DrawLine(const CGUIMatrix4& rWorldMatrix,
 			const CGUIVector2 &rBegin, 
@@ -88,130 +81,40 @@ namespace guiex
 			GUIARGB rColor_begin,
 			GUIARGB rColor_end);
 
-		/** 
-		* @brief add a texture into render list
-		*/
-		virtual void	PushClipRect( const CGUIMatrix4& rMatrix, const CGUIRect& rClipRect );
-		virtual void	PopClipRect( );
+		virtual void PushClipRect( const CGUIMatrix4& rMatrix, const CGUIRect& rClipRect );
+		virtual void PopClipRect( );
 
-		// setup states etc
-		virtual void	BeginRender(void);
+		virtual void BeginRender(void);
+		virtual void EndRender(void);
 
-		// restore states
-		virtual void	EndRender(void);
-
-		/**
-		* @brief Creates a 'null' Texture object.
-		* @return a newly created Texture object.  The returned Texture object has no size or imagery 
-		* associated with it, and is generally of little or no use.
-		*/
 		virtual	CGUITextureImp*	CreateTexture(void);
-
-
-		/**
-		* @brief Create a Texture object using the given image file.
-		* @param filename String object that specifies the path and filename of the image file to use 
-		* when creating the texture.
-		* return a newly created Texture object.  The initial contents of the texture memory is the 
-		* requested image file.
-		* @note Textures are always created with a size that is a power of 2.  If the file you specify 
-		* is of a size that is not a power of two, the final size will be rounded up.  Additionally, 
-		* textures are always square, so the ultimate size is governed by the larger of the width and 
-		* height of the specified file.  You can check the ultimate sizes by querying the texture after creation.
-		*/
 		virtual	CGUITextureImp*	CreateTexture(const CGUIString& filename);
-
-
-		/** 
-		* @brief Create a Texture object with the given pixel dimensions as specified by \a size.  
-		* NB: Textures are always square.
-		* param size real value that specifies the size used for the width and height when creating 
-		* the new texture.
-		* @return a newly created Texture object.  The initial contents of the texture memory is 
-		* undefined / random.
-		* note Textures are always created with a size that is a power of 2.  If you specify a size that 
-		* is not a power of two, the final size will be rounded up.  So if you specify a size of 1024, the 
-		* texture will be (1024 x 1024), however, if you specify a size of 1025, the texture will be 
-		* (2048 x 2048).  You can check the ultimate size by querying the texture after creation.
-		*/	
 		virtual	CGUITextureImp*	CreateTexture(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat);
+		virtual	void DestroyTexture(CGUITextureImp* texture);
+		virtual	void DestroyAllTexture();
 
+		virtual uint16 GetWidth(void) const;
+		virtual uint16 GetHeight(void) const;
 
-		/**
-		* @brief Destroy the given Texture object.
-		* @param texture pointer to the Texture object to be destroyed
-		*/
-		virtual	void		DestroyTexture(CGUITextureImp* texture);
+		virtual	uint32 GetMaxTextureSize(void) const;
 
-		/**
-		* @brief Destroy all textures
-		*/
-		virtual	void		DestroyAllTexture();
+		virtual	uint32 GetHorzScreenDPI(void) const;
+		virtual	uint32 GetVertScreenDPI(void) const;
 
-		/**
-		* @brief Return the current width of the display in pixels
-		* @return real value equal to the current width of the display in pixels.
-		*/
-		virtual uint16	GetWidth(void) const;
+		virtual void SetWireFrame( bool bWireFrame);
+		virtual void EnableClip( bool bEnable );
 
-
-		/**
-		* @brief Return the current height of the display in pixels
-		* @return real value equal to the current height of the display in pixels.
-		*/
-		virtual uint16	GetHeight(void) const;
-
-
-		/**
-		* @brief Return the maximum texture size available
-		* @return Size of the maximum supported texture in pixels (textures are always assumed to be square)
-		*/
-		virtual	uint32	GetMaxTextureSize(void) const;
-
-
-		/**
-		* @brief Return the horizontal display resolution dpi
-		* @return horizontal resolution of the display in dpi.
-		*/
-		virtual	uint32	GetHorzScreenDPI(void) const;
-
-
-		/**
-		* @brief Return the vertical display resolution dpi
-		* @return vertical resolution of the display in dpi.
-		*/
-		virtual	uint32	GetVertScreenDPI(void) const;
-
-		/** 
-		* @brief toggle wire frame.
-		*/
-		virtual void	SetWireFrame( bool bWireFrame);
-
-		/**
-		* @brief used to delete this object
-		*/
-		virtual void	DeleteSelf();
-		
-		virtual void EnableClip( bool bEnable ){}
-
+		virtual void DeleteSelf();
 
 	protected:
-		/** 
-		* @brief initialize render
-		* @return 0 for success
-		*/
 		virtual int DoInitialize(void* );
-
-		/** 
-		* @brief destroy render
-		* @return 0 for success
-		*/
 		virtual void DoDestroy();
 
 		/**
 		* @brief render a texture directly to the display
 		*/
-		void	RenderTextureDirect(const CGUIRect& rDestRect, real z, 
+		void RenderTextureDirect(
+			const CGUIRect& rDestRect, real z, 
 			const CGUITextureImp* pTexture, const CGUIRect& rTextureRect, 
 			EImageOrientation eImageOrientation, 
 			GUIARGB  rColor_topleft,
@@ -220,10 +123,9 @@ namespace guiex
 			GUIARGB  rColor_bottomright);
 
 		// convert CGUIColor to opengl supported format
-		long	ColorToOpengl(GUIARGB col) const;
+		long ColorToOpengl(GUIARGB col) const;
 
-		void	makeGLMatrix(real gl_matrix[16], const CGUIMatrix4& m);
-
+		void makeGLMatrix(real gl_matrix[16], const CGUIMatrix4& m);
 
 		struct SClipRect
 		{
@@ -234,8 +136,6 @@ namespace guiex
 		void UpdateStencil();
 		void RenderRectForStencil( const SClipRect& rRect );
 
-		void TestOpenglError( const char* info );
-		
 	protected:
 
 		struct SVertexForTile
@@ -256,6 +156,8 @@ namespace guiex
 
 		// set the texture's coordinate
 		void			SetTexCoordinate(SVertexForTile* pTexture, const CGUIRect& tex, EImageOrientation eImageOrientation);
+
+		bool IsSupportStencil();
 
 	protected:
 		GLint			m_maxTextureSize;		//!< maximum supported texture size (in pixels).
@@ -278,7 +180,13 @@ namespace guiex
 
 		std::vector<SClipRect>	m_arrayClipRects;
 
-		bool					m_bWireFrame;
+		bool m_bWireFrame;
+		bool m_bEnableClip;
+
+		int m_nStencilBits;
+		int m_nMaxStencilRef;
+		int m_nCurrentStencilRef;
+		SClipRect m_aWholeScreenRect;
 	};
 
 	GUI_INTERFACE_DECLARE();

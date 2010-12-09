@@ -33,7 +33,8 @@ namespace guiex
 	class IGUIInterfaceCommand;
 	class IGUIInterfaceIme;
 	class IGUIInterfaceStringConv;
-	
+	class IGUIInterfaceImageLoader;
+		
 	typedef IGUIInterface* (*FunCreateInterface)(void*); 
 }
 
@@ -51,6 +52,11 @@ namespace guiex
 	}															\
 	::guiex::CGUIInterfaceManager::Instance()->RegisterInterface(pInterface->GetModuleName(), pInterface);	\
 }
+
+#define GUI_UNREGISTER_INTERFACE_LIB(classname)	\
+	::guiex::CGUIInterfaceManager::Instance()->UnregisterInterface(classname::StaticGetModuleName());	
+
+
 
 #define GUI_REGISTER_INTERFACE_LIB_ARG( classname, arg )	\
 {	\
@@ -93,6 +99,7 @@ namespace guiex
 
 		int	RegisterInterface(const CGUIString& rInterface, const CGUIString& rModuleName, void* pUserData = NULL);
 		int	RegisterInterface(const CGUIString& rInterface, IGUIInterface* pInterface );
+		int UnregisterInterface( IGUIInterface* pInterface );
 		int UnregisterInterface(const CGUIString& rInterface );
 		void UnregisterAllInterface();
 		IGUIInterface* GetInterface(const CGUIString& rInterface );
@@ -110,6 +117,7 @@ namespace guiex
 		IGUIInterfaceCommand* GetInterfaceCommand();
 		IGUIInterfaceIme* GetInterfaceIme();
 		IGUIInterfaceStringConv* GetInterfaceStringConv();
+		IGUIInterfaceImageLoader* GetInterfaceImageLoader();
 
 		template <class T> T* GetInterfaceRenderImp();
 		template <class T> T* GetInterfaceFontImp();
@@ -122,6 +130,7 @@ namespace guiex
 		template <class T> T* GetInterfaceCommandImp();
 		template <class T> T* GetInterfaceImeImp();
 		template <class T> T* GetInterfaceStringConvImp();
+		template <class T> T* GetInterfaceImageLoaderImp();
 
 	protected:
 		struct SInterface
@@ -148,6 +157,7 @@ namespace guiex
 		IGUIInterfaceCommand* m_pInterfaceCommand;
 		IGUIInterfaceIme* m_pInterfaceIme;
 		IGUIInterfaceStringConv* m_pInterfaceStringConv;
+		IGUIInterfaceImageLoader* m_pInterfaceImageLoader;
 
 	private:
 		static CGUIInterfaceManager* m_pSingleton;
@@ -196,6 +206,10 @@ namespace guiex
 	inline IGUIInterfaceStringConv* CGUIInterfaceManager::GetInterfaceStringConv()
 	{
 		return m_pInterfaceStringConv;
+	}
+	inline IGUIInterfaceImageLoader* CGUIInterfaceManager::GetInterfaceImageLoader()
+	{
+		return m_pInterfaceImageLoader;
 	}
 
 	template<class T> 
@@ -264,7 +278,12 @@ namespace guiex
 		GUI_ASSERT( m_pInterfaceStringConv->GetModuleName() == T::StaticGetModuleName(), "wrong interface type" );
 		return static_cast<T*>( m_pInterfaceStringConv );
 	}
-
+	template<class T> 
+	inline T* CGUIInterfaceManager::GetInterfaceImageLoaderImp()
+	{
+		GUI_ASSERT( m_pInterfaceImageLoader->GetModuleName() == T::StaticGetModuleName(), "wrong interface type" );
+		return static_cast<T*>( m_pInterfaceImageLoader );
+	}
 }//namespace guiex
 
 

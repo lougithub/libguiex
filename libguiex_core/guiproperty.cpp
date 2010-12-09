@@ -68,6 +68,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	// assign operator
 	void CGUIProperty::operator=(const CGUIProperty& other )
 	{
 		if( this != &other )
@@ -82,26 +83,31 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	/// clear all sub property
 	void CGUIProperty::Clear()
 	{
 		m_setProperty.clear();
 	}
 	//------------------------------------------------------------------------------
+	// set name of this property
 	void CGUIProperty::SetName(const CGUIString& rName)
 	{
 		m_strName = rName;
 	}
 	//------------------------------------------------------------------------------
+	// get name of this property
 	const CGUIString& CGUIProperty::GetName() const
 	{
 		return m_strName;
 	}
 	//------------------------------------------------------------------------------
+	/// set value of this property
 	void CGUIProperty::SetValue(const CGUIString& rValue)
 	{
 		m_strValue = rValue;
 	}
 	//------------------------------------------------------------------------------
+	/// get value of this property
 	const CGUIString& CGUIProperty::GetValue() const
 	{
 		return m_strValue;
@@ -188,6 +194,7 @@ namespace guiex
 		return -1;
 	}
 	//------------------------------------------------------------------------------
+	//get a sub-property by index
 	const CGUIProperty*	CGUIProperty::GetProperty( uint32 nIdx ) const
 	{
 		if( nIdx >= m_setProperty.size())
@@ -202,7 +209,8 @@ namespace guiex
 		return &(m_setProperty[nIdx]);
 	}
 	//------------------------------------------------------------------------------
-	CGUIProperty*	CGUIProperty::GetProperty( const CGUIString& rName )
+	///get a sub-property by name
+	CGUIProperty* CGUIProperty::GetProperty( const CGUIString& rName )
 	{
 		for( TSetProperty::iterator itor = m_setProperty.begin();
 			itor != m_setProperty.end();
@@ -232,6 +240,7 @@ namespace guiex
 		return NULL;
 	}
 	//------------------------------------------------------------------------------
+	///whether this sub-property contain this property
 	bool CGUIProperty::HasProperty( const CGUIString& rName ) const
 	{
 		for( TSetProperty::const_iterator itor = m_setProperty.begin();
@@ -245,4 +254,15 @@ namespace guiex
 		}
 		return false;
 	}
+	//------------------------------------------------------------------------------
+	void CGUIProperty::SetData( void* pData )
+	{
+		m_pExtraData = pData;
+	}
+	//------------------------------------------------------------------------------
+	void* CGUIProperty::GetData( ) const
+	{
+		return m_pExtraData;
+	}
+	//------------------------------------------------------------------------------
 }//namespace guiex

@@ -18,11 +18,8 @@
 #include <windows.h>
 #endif
 
-#pragma pack(push,8)
 #include <GL/gl.h>
 #include <GL/glu.h>
-#pragma pack(pop)
-
 
 
 //============================================================================//

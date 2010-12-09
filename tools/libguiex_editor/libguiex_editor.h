@@ -15,7 +15,6 @@
 // Disable the warning that the pack size is changed in this header.
 #pragma warning(disable:4103)
 #pragma warning(disable:4099)
-#pragma pack(push,8)
 
 //wxwidgets
 #include "wx/wxprec.h"
@@ -27,13 +26,12 @@
 #include "wx/aui/aui.h"
 #include "wx/treebase.h"
 #include "wx/wizard.h"
-#include <wx/propgrid/propgrid.h>
-#include <wx/propgrid/propdev.h>
-#include <wx/propgrid/advprops.h>
-#include <wx/propgrid/manager.h>
 #include "wx/app.h"
 #include "wx/choicdlg.h"
 #include "wx/colordlg.h"
+#include <wx/propgrid/propgrid.h>
+#include <wx/propgrid/advprops.h>
+#include <wx/propgrid/manager.h>
 //scinilla
 #include <scintilla.h>
 #include <Platform.h>
@@ -42,9 +40,6 @@
 #include <Accessor.h>
 #include <PropSetSimple.h>
 #include <SciLexer.h>
-
-
-#pragma pack(pop)
 
 
 //libguiex
@@ -86,22 +81,10 @@
 #include "wxwizardcreatewidget.h"
 #include "wxsavefiledlg.h"
 
-
-
 //============================================================================//
 // declare
 //============================================================================//
 #define STRING_M2W(value)	wxConvUTF8.cMB2WC((value).c_str())
-
-
-
-
-//============================================================================//
-// class
-//============================================================================//
-
-
-
 
 #endif	//__LIBGUIEX_EDITOR_20091016_H__
 

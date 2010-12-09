@@ -118,8 +118,7 @@ wxWizardPageSimple* WxWizardCreateWidget::InitPage2()
 		wxPG_EX_NO_FLAT_TOOLBAR |
 		wxPG_EX_MODE_BUTTONS |
 		wxPG_EX_HELP_AS_TOOLTIPS |
-		wxPG_EX_ENABLE_TLP_TRACKING |
-		wxPG_EX_UNFOCUS_ON_ENTER 
+		wxPG_EX_ENABLE_TLP_TRACKING
 		);
 	m_pPropGridMgr->SetValidationFailureBehavior( wxPG_VFB_BEEP | wxPG_VFB_MARK_CELL | wxPG_VFB_SHOW_MESSAGE );
 

@@ -278,7 +278,6 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 	m_mgr.Update();
 
 
-
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	//initialize guiex system
 	try
@@ -296,7 +295,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 		guiex::GSystem->SetScreenSize(m_aScreenSize.x, m_aScreenSize.y);
 
 		//register interface
-		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl);
+		//GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl);
 		GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_tga);
 		GUI_REGISTER_INTERFACE_LIB( IGUIFileSys_stdio);
 		GUI_REGISTER_INTERFACE_LIB( IGUIMouse_winapi);
@@ -371,8 +370,7 @@ wxPanel*	WxMainFrame::CreatePropGridPanel()
 		wxPG_EX_NO_FLAT_TOOLBAR |
 		wxPG_EX_MODE_BUTTONS |
 		wxPG_EX_HELP_AS_TOOLTIPS |
-		wxPG_EX_ENABLE_TLP_TRACKING |
-		wxPG_EX_UNFOCUS_ON_ENTER 
+		wxPG_EX_ENABLE_TLP_TRACKING
 		);
 	m_pPropGridMan->SetValidationFailureBehavior( wxPG_VFB_BEEP | wxPG_VFB_MARK_CELL | wxPG_VFB_SHOW_MESSAGE );
 
@@ -601,7 +599,7 @@ wxAuiNotebook* WxMainFrame::CreateCanvasNotebook()
 		wxSize(430,200),
 		wxAUI_NB_DEFAULT_STYLE/* | wxAUI_NB_WINDOWLIST_BUTTON | wxAUI_NB_SCROLL_BUTTONS*/);
 	ctrl->SetBackgroundColour( *wxLIGHT_GREY );
-	ctrl->SetNextHandler(this);
+	//ctrl->SetNextHandler(this);
 	return ctrl;
 }
 //------------------------------------------------------------------------------
@@ -703,13 +701,7 @@ void WxMainFrame::OnTreeItemWidgetView(wxCommandEvent& event)
 	wxString strFilename = m_pTreeCtrl_File->GetItemText(id);
 
 	std::string viewer_exe;
-#if SHIPPING_PC_GAME
-	viewer_exe = "_Shipping_libguiex_editor_viewer.exe";
-#elif _DEBUG
-	viewer_exe = "Debug_libguiex_viewer.exe";
-#else
-	viewer_exe = "Release_libguiex_viewer.exe";
-#endif
+	viewer_exe = "libguiex_viewer_release.exe";
 
 	std::string strRunCommand = viewer_exe + " " + guiex::GSystem->GetDataPath() + " " +m_strCurrentSceneName + " " + strFilename.char_str(wxConvUTF8).data();
 	wxExecute(wxConvUTF8.cMB2WC(strRunCommand.c_str()), wxEXEC_ASYNC);
@@ -1498,7 +1490,7 @@ void WxMainFrame::RenderFile( const std::string& rFileName )
 
 	m_pCanvas = new WxEditorCanvasContainer(m_pNoteBook_Canvas, strAbsFileName);
 	m_pNoteBook_Canvas->AddPage( m_pCanvas, wxConvUTF8.cMB2WC(rFileName.c_str()), true );
-	m_pCanvas->SetNextHandler( m_pNoteBook_Canvas );
+	//m_pCanvas->SetNextHandler( m_pNoteBook_Canvas );
 	////for load font
 	//guiex::CGUIFontManager::Instance()->LoadAllResources();
 
