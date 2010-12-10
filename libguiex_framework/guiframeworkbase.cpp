@@ -17,8 +17,10 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	CGUIFrameworkBase::CGUIFrameworkBase( const CGUISize& rScreenSize, const CGUIString& rDataPath )
+	CGUIFrameworkBase::CGUIFrameworkBase( const CGUISize& rScreenSize, const char* pDataPath )
 		:m_bIsInitialized( false )
+		,m_aScreenSize( rScreenSize )
+		,m_strDataPath( pDataPath )
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -94,6 +96,7 @@ namespace guiex
 		{
 			PreUpdate( fDeltaTime );
 
+			UpdateSystem( fDeltaTime );
 
 			PostUpdate( fDeltaTime );
 		}
@@ -114,7 +117,18 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIFrameworkBase::Render( )
 	{
-		GSystem->Render();
+		try
+		{
+			GSystem->Render();
+		}
+		catch (std::exception& rError)
+		{
+			OutputFatalError( rError.what() );
+		}
+		catch (...)
+		{
+			OutputFatalError( "unknown error" );
+		}
 	}
 	//------------------------------------------------------------------------------
 	const CGUISize& CGUIFrameworkBase::GetScreenSize( ) const

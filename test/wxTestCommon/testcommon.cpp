@@ -489,7 +489,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 		if(  GetUIInfo( true ))
 		{	
 			guiex::GSystem->SetDataPath(m_strUIDataPath);
-			guiex::CGUISceneInfoManager::Instance()->LoadScenes( "\\", ".uip" );
+			guiex::CGUISceneInfoManager::Instance()->LoadScenes( "/", ".uip" );
 			guiex::CGUISceneUtility::LoadResource(m_strUISceneFilename);
 			guiex::CGUIWidget* pWidget = SampleInitialize();
 			guiex::CGUIWidgetManager::Instance()->AddPage(pWidget);

@@ -10,21 +10,33 @@ using namespace guiex;
 class CGUIFrameworkTest : public CGUIFramework
 {
 public:
-	CGUIFrameworkTest( const CGUISize& rScreenSize, const CGUIString& rDataPath )
-		:CGUIFramework( rScreenSize, rDataPath )
+	CGUIFrameworkTest( const CGUISize& rScreenSize, const char* pDataPath )
+		:CGUIFramework( rScreenSize, pDataPath )
 	{
-
 	}
 protected:
+	virtual int32 InitializeGame( );
+	virtual void ReleaseGame( );
+
+	virtual void PreUpdate( real fDeltaTime );
+	virtual void PostUpdate( real fDeltaTime );
 };
+
+CGUIFrameworkBase* CreateFramework( const CGUISize& rScreenSize, const char* pDataPath )
+{
+	return new CGUIFrameworkTest( rScreenSize, pDataPath );
+}
 
 const char* GetSampleSceneName()
 {
 	return "common.uip";
 }
 
-CGUIWidget* SampleInitialize()
+int32 CGUIFrameworkTest::InitializeGame( )
 {
+	CGUISceneInfoManager::Instance()->LoadScenes( "/", ".uip" );
+	CGUISceneUtility::LoadResource( "common.uip" );
+
 	CGUIWgtEmptyNode* pWidgetRoot = 
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtEmptyNode>( "page", "testscene" );
 	pWidgetRoot->SetAnchorPoint( 0.5f, 0.5f );
@@ -325,8 +337,6 @@ CGUIWidget* SampleInitialize()
 		pAsPos2->SetReceiver( pWidget_staticimage );
 		pAsPos1->PushSuccessor(pAsPos2);
 		pAsPos2->RefRelease();
-
-
 	}
 
 	{
@@ -410,10 +420,18 @@ CGUIWidget* SampleInitialize()
 		pAsScale->RefRelease();
 	}
 
-	return pWidgetRoot;
+	CGUIWidgetManager::Instance()->AddPage( pWidgetRoot );
+	GSystem->OpenPage( pWidgetRoot );
+
+	return 0;
 }
 
-void SampleUpdate( float fDeltaTime)
+void CGUIFrameworkTest::ReleaseGame( )
+{
+
+}
+
+void CGUIFrameworkTest::PreUpdate( real fDeltaTime )
 {
 	CGUIWgtStaticText* pWidget = 
 		CGUIWidgetManager::Instance()->GetWidgetWithTypeCheck<CGUIWgtStaticText>( "frame", "testscene" );
@@ -422,7 +440,7 @@ void SampleUpdate( float fDeltaTime)
 	pWidget->SetTextContentUTF8( buf );
 }
 
-void SampleDestroy()
+void CGUIFrameworkTest::PostUpdate( real fDeltaTime )
 {
 
 }

@@ -22,7 +22,7 @@ namespace guiex
 	class GUIEXPORT CGUIFramework_Windows : public CGUIFrameworkBase
 	{
 	public:
-		CGUIFramework_Windows( const CGUISize& rScreenSize, const CGUIString& rDataPath );
+		CGUIFramework_Windows( const CGUISize& rScreenSize, const char* pDataPath );
 		virtual ~CGUIFramework_Windows();
 
 

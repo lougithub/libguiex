@@ -15,8 +15,8 @@
 //libguiex module
 #include <libguiex_module/render_opengl/guirender_opengl.h>
 #include <libguiex_module/imageloader_tga/guiimageloader_tga.h>
-#include <libguiex_module/keyboard_winapi/guikeyboard_winapi.h>
-#include <libguiex_module/mouse_winapi/guimouse_winapi.h>
+#include <libguiex_module/keyboard_default/guikeyboard_default.h>
+#include <libguiex_module/mouse_default/guimouse_default.h>
 #include <libguiex_module/font_ft2/guifont_ft2.h>
 #include <libguiex_module/filesys_stdio/guifilesys_stdio.h>
 #include <libguiex_module/configfile_tinyxml/guiconfigfile_tinyxml.h>
@@ -33,8 +33,8 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	CGUIFramework_Windows::CGUIFramework_Windows( const CGUISize& rScreenSize, const CGUIString& rDataPath )
-		:CGUIFrameworkBase( rScreenSize, rDataPath )
+	CGUIFramework_Windows::CGUIFramework_Windows( const CGUISize& rScreenSize, const char* pDataPath )
+		:CGUIFrameworkBase( rScreenSize, pDataPath )
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -66,9 +66,9 @@ namespace guiex
 		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl);
 		GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_tga);
 		GUI_REGISTER_INTERFACE_LIB( IGUIFileSys_stdio);
-		GUI_REGISTER_INTERFACE_LIB( IGUIMouse_winapi);
+		GUI_REGISTER_INTERFACE_LIB( IGUIMouse_default);
+		GUI_REGISTER_INTERFACE_LIB( IGUIKeyboard_default);
 		GUI_REGISTER_INTERFACE_LIB( IGUIFont_ft2);
-		GUI_REGISTER_INTERFACE_LIB( IGUIKeyboard_winapi);
 		GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
 		GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_Winapi);
 		GUI_REGISTER_INTERFACE_LIB( IGUIScript_lua );
