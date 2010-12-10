@@ -54,8 +54,7 @@ if( APPLE )
     #    )
 	set_source_files_properties(
 		${${execute_name}_resource_SRCS}
-		PROPERTIES
-		MACOSX_PACKAGE_LOCATION Resources
+		PROPERTIES MACOSX_PACKAGE_LOCATION Resources
 		)
 
 	#set_target_properties( 

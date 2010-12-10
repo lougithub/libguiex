@@ -56,9 +56,5 @@ set( inc_list
     )
 	
 
-
-#foreach( F ${src_list} ${inc_list} )
-#    message( ${F} )
-#endforeach( F )
 add_library( ${target_name} STATIC ${src_list} ${inc_list}  )
 

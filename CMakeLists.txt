@@ -101,6 +101,7 @@ add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_script_wrapper projects/libguie
 add_subdirectory( ${PROJECT_SOURCE_DIR}/external/tinyxml/cmakelist projects/tinyxml )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/external/lua/cmakelist projects/lua )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/external/Box2D/cmakelist projects/box2d )
+add_subdirectory( ${PROJECT_SOURCE_DIR}/external/freetype/cmakelist projects/freetype )
 
 #test
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/test1 projects/test1 )

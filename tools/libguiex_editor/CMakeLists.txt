@@ -45,13 +45,12 @@ if( WIN32 )
     include_directories( "${PROJECT_SOURCE_DIR}/external/wxWidgets/include/msvc" )
     include_directories( "${PROJECT_SOURCE_DIR}/external/tinyxml" )
     include_directories( "${PROJECT_SOURCE_DIR}/external/lua/src" )
-    include_directories( "${PROJECT_SOURCE_DIR}/external/freetype-2.4.3/include" )
+    include_directories( "${PROJECT_SOURCE_DIR}/external/freetype/include" )
     include_directories( "${PROJECT_SOURCE_DIR}/external/scintilla/include" )
     include_directories( "${PROJECT_SOURCE_DIR}/external/scintilla/lexlib" )
 
     #link directory
 	link_directories( "${PROJECT_SOURCE_DIR}/external/wxWidgets/lib/vc_lib" )
-    link_directories( "${PROJECT_SOURCE_DIR}/external/freetype-2.4.3/win32" )
 
 
     set( WIN32_EXECUTABLE true )
@@ -60,7 +59,6 @@ if( WIN32 )
 	macro_set_target_output_dir( ${target_name} )
     target_link_libraries( 
 		${target_name}  
-        debug freetype243_D.lib
         debug wxmsw29ud_gl.lib
         debug wxmsw29ud_core.lib
         debug wxmsw29ud_aui.lib
@@ -70,7 +68,6 @@ if( WIN32 )
         debug wxmsw29ud_media.lib
         debug wxmsw29ud_html.lib
         debug wxmsw29ud_adv.lib
-        optimized freetype243.lib
         optimized wxmsw29u_gl.lib
         optimized wxmsw29u_core.lib 
         optimized wxmsw29u_aui.lib 
@@ -88,6 +85,7 @@ if( WIN32 )
         general libguiex_module
         general tinyxml
         general lua
+        general freetype
         )
         
 endif()
