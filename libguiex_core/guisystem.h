@@ -113,6 +113,7 @@ namespace guiex
 		//********************************************************
 		//	screen size
 		//********************************************************
+		void SetScreenSize( const CGUISize& rScreenSize );
 		void SetScreenSize( uint32 width, uint32 height);
 		const CGUISize& GetScreenSize( ) const;
 		uint32 GetScreenWidth( ) const;
@@ -194,10 +195,6 @@ namespace guiex
 	protected:
 		void ProcessCommand();
 		bool ProcessGlobalKeyEvent(CGUIEventKeyboard* pEvent);
-
-	public:
-		static uint32 GUI_SCREEN_WIDTH; //!< size of screen, in pixel
-		static uint32 GUI_SCREEN_HEIGHT; //!< size of screen, in pixel
 
 	protected:
 		void Reset();

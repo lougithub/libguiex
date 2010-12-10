@@ -106,9 +106,6 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUISystem * CGUISystem::m_pSingleton = NULL; 
 	//------------------------------------------------------------------------------
-	uint32 CGUISystem::GUI_SCREEN_WIDTH = 0;
-	uint32 CGUISystem::GUI_SCREEN_HEIGHT = 0;
-	//------------------------------------------------------------------------------
 	CGUISystem::CGUISystem()
 		:m_pWgtRoot(NULL)
 		,m_pPopupWidget(NULL)
@@ -491,24 +488,12 @@ namespace guiex
 		return m_fSystemTime;
 	}
 	//------------------------------------------------------------------------------
-	/**
-	* @brief set the size of screen
-	*/
-	void CGUISystem::SetScreenSize( uint32 width, uint32 height)
+	void CGUISystem::SetScreenSize( const CGUISize& rScreenSize )
 	{
-		if( width == GUI_SCREEN_WIDTH && height == GUI_SCREEN_HEIGHT )
-		{
-			return;
-		}
-
-		GUI_SCREEN_WIDTH = width;
-		GUI_SCREEN_HEIGHT = height;
-
+		m_aScreenSize = rScreenSize;
 		m_aScreenRect = CGUIRect(
 			CGUIVector2(0,0),
-			CGUISize(real(CGUISystem::GUI_SCREEN_WIDTH), real(CGUISystem::GUI_SCREEN_HEIGHT)));
-		m_aScreenSize = m_aScreenRect.GetSize();
-		m_aScreenPos = m_aScreenRect.GetPosition();
+			m_aScreenSize );
 
 		//update page
 		if( m_pWgtRoot )
@@ -529,6 +514,14 @@ namespace guiex
 		{
 			m_pPopupWidget->Refresh();
 		}
+	}
+	//------------------------------------------------------------------------------
+	/**
+	* @brief set the size of screen
+	*/
+	void CGUISystem::SetScreenSize( uint32 width, uint32 height)
+	{
+		SetScreenSize( CGUISize( real(width), real(height) ) );
 	}
 	//------------------------------------------------------------------------------
 	/**
