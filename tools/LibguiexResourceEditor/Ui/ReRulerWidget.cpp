@@ -9,6 +9,14 @@
 #include <QFontMetrics>
 
 
+namespace
+{
+	static int gsShortMarkLength = 3;
+	static int gsLongMarkLength = 8;
+	static int gsDivisionBetweenLongMarks = 5;
+}
+
+
 namespace RE
 {
 
@@ -16,17 +24,18 @@ namespace RE
 // -----------------------------------------------------------------------------
 // General.
 // -----------------------------------------------------------------------------
+int ReRulerWidget::ms_invalidCursor = -1;
+
+
 ReRulerWidget::ReRulerWidget( QWidget* _parent /* = NULL */ )
 : TSuper( _parent )
-, m_shortMarkLength( 3 )
-, m_longMarkLength( 8 )
-, m_interval( 8 )
-, m_minInterval( 4 )
-, m_maxInterval( 12 )
-, m_viewportPos( 0 )
+, m_unit( 8 )
+, m_minUnit( 4 )
+, m_maxUnit( 12 )
+, m_viewport( 0 )
 , m_cursor( 0 )
-, m_intervalValue( 1.0f )
-, m_divisionBetweenLongMarks( 5 )
+, m_unitValue( 1.0f )
+, m_isShowCursorValue( true )
 {
 	setMaximumHeight( 50 );
 }
@@ -51,7 +60,7 @@ void ReRulerWidget::mousePressEvent( QMouseEvent* _event )
 		( Qt::LeftButton == _event->button() && Qt::ControlModifier & _event->modifiers() ) )
 	{
 		m_viewportDragInfo.SetCursorPosBackup( _event->pos() );
-		m_viewportDragInfo.SetItemPosBackup( QPoint( m_viewportPos, 0 ) );
+		m_viewportDragInfo.SetItemPosBackup( QPoint( m_viewport, 0 ) );
 		m_viewportDragInfo.StartMove();
 	}
 	else if( Qt::LeftButton == _event->button() )
@@ -107,8 +116,8 @@ void ReRulerWidget::OnCursorChanged( int _pos )
 
 void ReRulerWidget::OnViewportChanged( int _pos )
 {
-	m_cursor += ( m_viewportPos - _pos );
-	m_viewportPos = _pos;
+	m_cursor += ( m_viewport - _pos );
+	m_viewport = _pos;
 }
 
 
@@ -117,8 +126,8 @@ void ReRulerWidget::OnViewportChanged( int _pos )
 // -----------------------------------------------------------------------------
 qreal ReRulerWidget::GetValueAt( int _cursor ) const
 {
-	int pos = m_viewportPos + _cursor;
-	return m_intervalValue * ( ( qreal )pos / ( qreal )m_interval );
+	int pos = m_viewport + _cursor;
+	return m_unitValue * ( ( qreal )pos / ( qreal )m_unit );
 }
 
 
@@ -134,17 +143,17 @@ void ReRulerWidget::DrawContent( QPainter& _painter )
 	// it's hidden. This hidden mark would be clipped by Qt, but would 
 	// be visually correct if the mark is thicker than one pixel.
 	QVector< QPoint > markerList;
-	int markIndex = m_viewportPos / m_interval;
-	int pos = -m_viewportPos % m_interval;
+	int markIndex = m_viewport / m_unit;
+	int pos = -m_viewport % m_unit;
 
 	while( pos < width() )
 	{
-		bool isShortMark = ( 0 == ( markIndex % m_divisionBetweenLongMarks ) ? false : true );
+		bool isShortMark = ( 0 == ( markIndex % gsDivisionBetweenLongMarks ) ? false : true );
 		markerList.push_back( QPoint( pos, 0 ) );
-		markerList.push_back( QPoint( pos, isShortMark ? m_shortMarkLength : m_longMarkLength ) );
+		markerList.push_back( QPoint( pos, isShortMark ? gsShortMarkLength : gsLongMarkLength ) );
 
 		// Advance to the next mark.
-		pos += m_interval;
+		pos += m_unit;
 		++markIndex;
 	}
 
@@ -158,14 +167,18 @@ void ReRulerWidget::DrawForeground( QPainter& _painter )
 	_painter.setPen( QColor( 0, 255, 255 ) );
 	_painter.drawLine( QPoint( m_cursor, 0 ), QPoint( m_cursor, height() ) );
 	QString valueText = QString().setNum( GetValueAt( m_cursor ) );
-	if( m_cursor <= ( width() / 2 ) )
+
+	if( m_isShowCursorValue )
 	{
-		_painter.drawText( m_cursor + 2, height() - 2, valueText );
-	}
-	else
-	{
-		QFontMetrics fm( _painter.font() );
-		_painter.drawText( m_cursor - 2 - fm.width( valueText ), height() - 2, valueText );
+		if( m_cursor <= ( width() / 2 ) )
+		{
+			_painter.drawText( m_cursor + 2, height() - 2, valueText );
+		}
+		else
+		{
+			QFontMetrics fm( _painter.font() );
+			_painter.drawText( m_cursor - 2 - fm.width( valueText ), height() - 2, valueText );
+		}
 	}
 }
 

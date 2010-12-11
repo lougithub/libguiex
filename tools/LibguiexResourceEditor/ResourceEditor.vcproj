@@ -197,36 +197,6 @@
 			Name="UI"
 			>
 			<File
-				RelativePath=".\Ui\ReAsEditor.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Ui\ReAsEditor.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
-						AdditionalDependencies="$(QTDIR)\bin\moc.exe"
-						Outputs="Moc\Ui\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
-						AdditionalDependencies="$(QTDIR)\bin\moc.exe"
-						Outputs="Moc\Ui\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\Ui\ReBaseWidget.h"
 				>
 				<FileConfiguration
@@ -253,191 +223,11 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\Ui\ReClipEditor.cpp"
+				RelativePath=".\Ui\ReEditorPanelWidget.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Ui\ReClipEditor.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
-						AdditionalDependencies="$(QTDIR)\bin\moc.exe"
-						Outputs="Moc\Ui\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
-						AdditionalDependencies="$(QTDIR)\bin\moc.exe"
-						Outputs="Moc\Ui\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\Ui\ReClipModelWidget.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Ui\ReClipModelWidget.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
-						AdditionalDependencies="$(QTDIR)\bin\moc.exe"
-						Outputs="Moc\Ui\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
-						AdditionalDependencies="$(QTDIR)\bin\moc.exe"
-						Outputs="Moc\Ui\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\Ui\ReClipPanelWidget.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Ui\ReClipPanelWidget.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
-						AdditionalDependencies="$(QTDIR)\bin\moc.exe"
-						Outputs="Moc\Ui\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
-						AdditionalDependencies="$(QTDIR)\bin\moc.exe"
-						Outputs="Moc\Ui\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\Ui\ReClipWidget.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Ui\ReClipWidget.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
-						AdditionalDependencies="$(QTDIR)\bin\moc.exe"
-						Outputs="Moc\Ui\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
-						AdditionalDependencies="$(QTDIR)\bin\moc.exe"
-						Outputs="Moc\Ui\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\Ui\ReControlPanelWidget.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Ui\ReControlPanelWidget.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
-						AdditionalDependencies="$(QTDIR)\bin\moc.exe"
-						Outputs="Moc\Ui\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
-						AdditionalDependencies="$(QTDIR)\bin\moc.exe"
-						Outputs="Moc\Ui\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\Ui\ReGlWidget.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Ui\ReGlWidget.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
-						AdditionalDependencies="$(QTDIR)\bin\moc.exe"
-						Outputs="Moc\Ui\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
-						AdditionalDependencies="$(QTDIR)\bin\moc.exe"
-						Outputs="Moc\Ui\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\Ui\ReImagePanel.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Ui\ReImagePanel.h"
+				RelativePath=".\Ui\ReEditorPanelWidget.h"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -493,36 +283,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\Ui\ReRulerWidget.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Ui\ReRulerWidget.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
-						AdditionalDependencies="$(QTDIR)\bin\moc.exe"
-						Outputs="Moc\Ui\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
-						AdditionalDependencies="$(QTDIR)\bin\moc.exe"
-						Outputs="Moc\Ui\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\Ui\ReSettingsWidget.cpp"
 				>
 			</File>
@@ -553,137 +313,449 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\Ui\ReTrackFrameWidget.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Ui\ReTrackFrameWidget.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
-						AdditionalDependencies="$(QTDIR)\bin\moc.exe"
-						Outputs="Moc\Ui\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
-						AdditionalDependencies="$(QTDIR)\bin\moc.exe"
-						Outputs="Moc\Ui\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\Ui\ReTrackHeadWidget.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Ui\ReTrackHeadWidget.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
-						AdditionalDependencies="$(QTDIR)\bin\moc.exe"
-						Outputs="Moc\Ui\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
-						AdditionalDependencies="$(QTDIR)\bin\moc.exe"
-						Outputs="Moc\Ui\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\Ui\ReTrackPanelWidget.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Ui\ReTrackPanelWidget.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
-						AdditionalDependencies="$(QTDIR)\bin\moc.exe"
-						Outputs="Moc\Ui\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
-						AdditionalDependencies="$(QTDIR)\bin\moc.exe"
-						Outputs="Moc\Ui\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\Ui\ReTrackWidget.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Ui\ReTrackWidget.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
-						AdditionalDependencies="$(QTDIR)\bin\moc.exe"
-						Outputs="Moc\Ui\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
-						AdditionalDependencies="$(QTDIR)\bin\moc.exe"
-						Outputs="Moc\Ui\moc_$(InputName).cpp"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\Ui\ReViewWidget.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Ui\ReViewWidget.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Ui\ReWidgetInterface.h"
 				>
 			</File>
+			<Filter
+				Name="AnimEditor"
+				>
+				<File
+					RelativePath=".\Ui\ReAnimEditor.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Ui\ReAnimEditor.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Ui\ReAnimPanelWidget.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Ui\ReAnimPanelWidget.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Ui\ReAnimView.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Ui\ReAnimView.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Ui\ReRulerWidget.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Ui\ReRulerWidget.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Ui\ReTrackFrameWidget.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Ui\ReTrackFrameWidget.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Ui\ReTrackHeadWidget.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Ui\ReTrackHeadWidget.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Ui\ReTrackPanelWidget.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Ui\ReTrackPanelWidget.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Ui\ReTrackWidget.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Ui\ReTrackWidget.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+			</Filter>
+			<Filter
+				Name="ClipEditor"
+				>
+				<File
+					RelativePath=".\Ui\ReClipEditor.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Ui\ReClipEditor.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Ui\ReClipModelWidget.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Ui\ReClipModelWidget.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Ui\ReClipPanelWidget.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Ui\ReClipPanelWidget.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Ui\ReClipWidget.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Ui\ReClipWidget.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+			</Filter>
+			<Filter
+				Name="ImageEditor"
+				>
+				<File
+					RelativePath=".\Ui\ReGlWidget.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Ui\ReGlWidget.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Ui\ReImagePanel.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Ui\ReImagePanel.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Ui\ReViewWidget.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Ui\ReViewWidget.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Resource Files"
@@ -702,22 +774,6 @@
 		<Filter
 			Name="CORE"
 			>
-			<File
-				RelativePath=".\Core\ReClipData.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Core\ReClipData.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Core\ReClipModel.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Core\ReClipModel.h"
-				>
-			</File>
 			<File
 				RelativePath=".\Core\ReDragInfo.h"
 				>
@@ -784,6 +840,88 @@
 				RelativePath=".\Core\ReTypes.h"
 				>
 			</File>
+			<Filter
+				Name="ClipEditor"
+				>
+				<File
+					RelativePath=".\Core\ReClipData.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Core\ReClipData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Core\ReClipModel.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Core\ReClipModel.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="AnimEditor"
+				>
+				<File
+					RelativePath=".\Core\ReAnimDef.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Core\ReAnimFrame.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Core\ReAnimFrame.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Core\ReAnimItem.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Core\ReAnimItem.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Core\ReAnimModel.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Core\ReAnimModel.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Core\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Core\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Core\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Core\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Core\ReAnimTrack.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Core\ReAnimTrack.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Moc"
@@ -791,6 +929,10 @@
 			<Filter
 				Name="Core"
 				>
+				<File
+					RelativePath=".\Moc\Core\moc_ReAnimModel.cpp"
+					>
+				</File>
 				<File
 					RelativePath=".\Moc\Core\moc_ReEditor.cpp"
 					>
@@ -800,7 +942,15 @@
 				Name="Ui"
 				>
 				<File
-					RelativePath=".\Moc\Ui\moc_ReAsEditor.cpp"
+					RelativePath=".\Moc\Ui\moc_ReAnimEditor.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Moc\Ui\moc_ReAnimPanelWidget.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Moc\Ui\moc_ReAnimView.cpp"
 					>
 				</File>
 				<File
@@ -820,7 +970,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Moc\Ui\moc_ReControlPanelWidget.cpp"
+					RelativePath=".\Moc\Ui\moc_ReEditorPanelWidget.cpp"
 					>
 				</File>
 				<File

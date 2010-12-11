@@ -4,10 +4,11 @@
 // -----------------------------------------------------------------------------
 #include "StdAfxEditor.h"
 #include "CORE\ReQrcHelper.h"
-#include "UI\ReControlPanelWidget.h"
+#include "UI\ReEditorPanelWidget.h"
 #include "UI\ReImagePanel.h"
 #include "UI\ReSettingsWidget.h"
 #include "UI\ReClipPanelWidget.h"
+#include "UI\ReAnimPanelWidget.h"
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QLabel>
@@ -24,7 +25,7 @@ namespace RE
 // -----------------------------------------------------
 // General
 // -----------------------------------------------------
-ReControlPanelWidget::ReControlPanelWidget( const ReParam& _param, QWidget* _parent /* = NULL */ )
+ReEditorPanelWidget::ReEditorPanelWidget( const ReParam& _param, QWidget* _parent /* = NULL */ )
 : TSuper( _parent )
 , m_settingBtn( NULL )
 , m_imagePanelWidget( NULL )
@@ -40,8 +41,10 @@ ReControlPanelWidget::ReControlPanelWidget( const ReParam& _param, QWidget* _par
 	m_imagePanelWidget = new ReImagePanel( this );
 
 	// Clip panel.
-	m_clipPanelWidget = new ReClipPanelWidget( this );
-	m_clipPanelWidget->SetClipMode( _param.m_clipModel );
+	m_clipPanelWidget = new ReClipPanelWidget( _param.m_clipModel, this );
+
+	// Animation panel.
+	m_animPanelWidget = new ReAnimPanelWidget( _param.m_animModel, this );
 
 	// Settings.
 	m_settingsWidget = new ReSettingsWidget( this );
@@ -51,6 +54,7 @@ ReControlPanelWidget::ReControlPanelWidget( const ReParam& _param, QWidget* _par
 	// Tab.
 	m_stack = new QStackedWidget( this );
 	m_stack->addWidget( m_clipPanelWidget );
+	m_stack->addWidget( m_animPanelWidget );
 	m_stack->addWidget( m_imagePanelWidget );	
 	m_stack->addWidget( m_settingsWidget );
 	m_stack->setCurrentIndex( EPanel_ClipPanel );
@@ -68,7 +72,7 @@ ReControlPanelWidget::ReControlPanelWidget( const ReParam& _param, QWidget* _par
 }
 
 
-ReControlPanelWidget::~ReControlPanelWidget()
+ReEditorPanelWidget::~ReEditorPanelWidget()
 {
 }
 
@@ -76,14 +80,14 @@ ReControlPanelWidget::~ReControlPanelWidget()
 // -----------------------------------------------------
 // ImageBrowser
 // -----------------------------------------------------
-void ReControlPanelWidget::Tick( qreal _delta )
+void ReEditorPanelWidget::Tick( qreal _delta )
 {
 	if( NULL != m_imagePanelWidget )
 		m_imagePanelWidget->Tick( _delta );
 }
 
 
-void ReControlPanelWidget::SwitchPanel( ePanel _panel )
+void ReEditorPanelWidget::SwitchPanel( ePanel _panel )
 {
 	ePanel curPanel = ( ePanel )m_stack->currentIndex();
 	if( curPanel != _panel )
@@ -93,24 +97,24 @@ void ReControlPanelWidget::SwitchPanel( ePanel _panel )
 }
 
 
-void ReControlPanelWidget::OnToggleSetting()
+void ReEditorPanelWidget::OnToggleSetting()
 {
-	ePanel curPanel = ( ePanel )m_stack->currentIndex();
-	if( EPanel_Settings != curPanel )
-	{
-		m_stack->setCurrentIndex( EPanel_Settings );
-		m_lastPanel = curPanel;
-	}
-	else
-	{
-		SwitchPanel( m_lastPanel );		
-	}
+	//ePanel curPanel = ( ePanel )m_stack->currentIndex();
+	//if( EPanel_Settings != curPanel )
+	//{
+	//	m_stack->setCurrentIndex( EPanel_Settings );
+	//	m_lastPanel = curPanel;
+	//}
+	//else
+	//{
+	//	SwitchPanel( m_lastPanel );		
+	//}
 
-	update();
+	//update();
 }
 
 
-void ReControlPanelWidget::OnSettingsChanged()
+void ReEditorPanelWidget::OnSettingsChanged()
 {
 	if( QDialog::Accepted == m_settingsWidget->result() )
 	{
@@ -159,7 +163,7 @@ void ReControlPanelWidget::OnSettingsChanged()
 // -----------------------------------------------------
 // Override QWidget
 // -----------------------------------------------------
-void ReControlPanelWidget::paintEvent( QPaintEvent* _event )
+void ReEditorPanelWidget::paintEvent( QPaintEvent* _event )
 {
 	QPainter painter( this );
 
@@ -175,12 +179,12 @@ void ReControlPanelWidget::paintEvent( QPaintEvent* _event )
 // -----------------------------------------------------
 // Utility
 // -----------------------------------------------------
-void ReControlPanelWidget::RefreshItemList()
+void ReEditorPanelWidget::RefreshItemList()
 {
 }
 
 
-void ReControlPanelWidget::RefreshImages()
+void ReEditorPanelWidget::RefreshImages()
 {
 }
 

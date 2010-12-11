@@ -34,7 +34,7 @@ public:
 	enum eColumn
 	{
 		EColumn_Icon,
-		EColumn_Name,
+		//EColumn_Name,
 		EColumn_X,
 		EColumn_Y,
 		EColumn_W,
@@ -51,7 +51,7 @@ public:
 	typedef Qt::ItemFlags	TFlags;
 	virtual bool		setData( const QModelIndex& _index, const QVariant& _value, int _role = Qt::EditRole );
 	virtual QVariant	data( const QModelIndex& _index, int _role = Qt::DisplayRole ) const;
-	virtual TFlags		flags( const QModelIndex& _index ) const { return 0xFFFFFFFF; }
+	virtual TFlags		flags( const QModelIndex& _index ) const;// { return 0xFFFFFFFF; }
 
 	// -------------------------------------------------------------------------
 	// Override ReModelBase.

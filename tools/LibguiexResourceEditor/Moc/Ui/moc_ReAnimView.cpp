@@ -1,15 +1,15 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'ReClipWidget.h'
+** Meta object code from reading C++ file 'ReAnimView.h'
 **
-** Created: Sat Dec 11 15:46:07 2010
+** Created: Sat Dec 11 20:49:46 2010
 **      by: The Qt Meta Object Compiler version 61 (Qt 4.5.3)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../../Ui/ReClipWidget.h"
+#include "../../Ui/ReAnimView.h"
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'ReClipWidget.h' doesn't include <QObject>."
+#error "The header file 'ReAnimView.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 61
 #error "This file was generated using the moc from 4.5.3. It"
 #error "cannot be used with the include files from this version of Qt."
@@ -17,7 +17,7 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-static const uint qt_meta_data_RE__ReClipWidget[] = {
+static const uint qt_meta_data_RE__ReAnimView[] = {
 
  // content:
        2,       // revision
@@ -31,31 +31,31 @@ static const uint qt_meta_data_RE__ReClipWidget[] = {
        0        // eod
 };
 
-static const char qt_meta_stringdata_RE__ReClipWidget[] = {
-    "RE::ReClipWidget\0"
+static const char qt_meta_stringdata_RE__ReAnimView[] = {
+    "RE::ReAnimView\0"
 };
 
-const QMetaObject RE::ReClipWidget::staticMetaObject = {
-    { &ReBaseWidget<QLabel>::staticMetaObject, qt_meta_stringdata_RE__ReClipWidget,
-      qt_meta_data_RE__ReClipWidget, 0 }
+const QMetaObject RE::ReAnimView::staticMetaObject = {
+    { &ReBaseWidget<QWidget>::staticMetaObject, qt_meta_stringdata_RE__ReAnimView,
+      qt_meta_data_RE__ReAnimView, 0 }
 };
 
-const QMetaObject *RE::ReClipWidget::metaObject() const
+const QMetaObject *RE::ReAnimView::metaObject() const
 {
     return &staticMetaObject;
 }
 
-void *RE::ReClipWidget::qt_metacast(const char *_clname)
+void *RE::ReAnimView::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_RE__ReClipWidget))
-        return static_cast<void*>(const_cast< ReClipWidget*>(this));
-    return ReBaseWidget<QLabel>::qt_metacast(_clname);
+    if (!strcmp(_clname, qt_meta_stringdata_RE__ReAnimView))
+        return static_cast<void*>(const_cast< ReAnimView*>(this));
+    return ReBaseWidget<QWidget>::qt_metacast(_clname);
 }
 
-int RE::ReClipWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int RE::ReAnimView::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = ReBaseWidget<QLabel>::qt_metacall(_c, _id, _a);
+    _id = ReBaseWidget<QWidget>::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     return _id;

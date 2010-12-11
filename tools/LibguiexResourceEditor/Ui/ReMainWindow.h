@@ -21,12 +21,13 @@ namespace RE
 {
 
 
-class ReControlPanelWidget;
+class ReEditorPanelWidget;
 class ReEditor;
 class ReClipEditor;
-class ReAsEditor;
+class ReAnimEditor;
 class ReTrackPanelWidget;
 class ReClipModel;
+class ReAnimModel;
 
 
 class ReMainWindow : public QMainWindow
@@ -70,7 +71,7 @@ protected:
 	// Menu
 	// -------------------------------------------------------------------------
 protected:
-	enum eEditor			{ EEditor_Clip, EEditor_As, EEditor_Image, EEditor_Count };
+	enum eEditor			{ EEditor_Clip, EEditor_Anim, EEditor_Image, EEditor_Count };
 
 	// -------------------------------------------------------------------------
 	// Slots.
@@ -96,15 +97,16 @@ private:
 	QStackedWidget*			m_stackedEditorWidget;
 	TEditorBase*			m_editorWidgets[ EEditor_Count ];	
 	ReClipEditor*			m_clipEditor;
-	ReAsEditor*				m_asEditor;
+	ReAnimEditor*				m_asEditor;
 	ReViewWidget*			m_viewWidget;	// Will be replaced by image editor.
 
 	// Panels: dockable and stacked widget usually left or right aligned on the screen.
 	QDockWidget*			m_panelDockWidget;
-	ReControlPanelWidget*	m_controlPanelWidget;
+	ReEditorPanelWidget*	m_controlPanelWidget;
 
 	// Models.
 	ReClipModel*			m_clipModel;
+	ReAnimModel*			m_animModel;
 
 	// Menu.
 	QMenuBar*				m_menuBarEx;

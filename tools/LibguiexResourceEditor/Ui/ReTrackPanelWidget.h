@@ -4,10 +4,15 @@
 // -----------------------------------------------------------------------------
 #ifndef _RE_TRACK_PANEL_WIDGET_H_
 #define _RE_TRACK_PANEL_WIDGET_H_
-
-
+// -----------------------------------------------------------------------------
+// The interpretation of QModelIndex for this model:
+// - row:		track type ( translation, rotation, alpha, etc. );
+// - column:	cursor in editor.
+// -----------------------------------------------------------------------------
 #include <list>
 #include <QWidget>
+#include <QMatrix>
+#include "Core\ReAnimDef.h"
 #include "Ui\ReBaseWidget.h"
 
 
@@ -18,9 +23,11 @@ namespace RE
 {
 
 
+class ReAnimModel;
 class ReTrackWidget;
 class ReRulerWidget;
 class ReTrackHeadWidget;
+class ReTrackFrameWidget;
 
 
 class ReTrackPanelWidget : public ReBaseWidget< QWidget >
@@ -35,18 +42,28 @@ public:
 	class ReTrackSuite
 	{
 	public:
-		ReTrackSuite( ReTrackHeadWidget* _head, ReTrackWidget* _track ): m_headWidget( _head ), m_trackWidget( _track ) {}
+		ReTrackSuite( ReTrackHeadWidget* _head, ReTrackWidget* _track, int _type )
+			: m_headWidget( _head )
+			, m_trackWidget( _track )
+			, m_type( _type ) 
+		{}
 
 		ReTrackHeadWidget*	m_headWidget;
 		ReTrackWidget*		m_trackWidget;
+		int					m_type;
 	};
 
 	// -------------------------------------------------------------------------
 	// General.
 	// -------------------------------------------------------------------------
 public:
-	ReTrackPanelWidget( QWidget* _parent = NULL );
+	ReTrackPanelWidget( ReAnimModel* _model, QWidget* _parent = NULL );
 	~ReTrackPanelWidget();
+
+	bool				PrepareTransform( eTrackType _type, QVariant& _left, QVariant& _right, qreal& _factor ) const;
+	QMatrix				GetTranslationMatrix() const;
+	QMatrix				GetRotationMatrix() const;
+	QMatrix				GetScaleMatrix() const;	
 
 	// -------------------------------------------------------------------------
 	// Overrides QWidget.
@@ -71,24 +88,38 @@ public:
 	// -------------------------------------------------------------------------
 	// Slots.
 	// -------------------------------------------------------------------------
-public slots:
-	ReTrackSuite*		OnNewTrack();
+public slots:	
+	ReTrackSuite*		OnNewTranslationTrack();
+	ReTrackSuite*		OnNewRotationTrack();
+	ReTrackSuite*		OnNewScaleTrack();
+	ReTrackSuite*		OnNewAlphaTrack();
+	ReTrackSuite*		OnNewTrack( eTrackType _type );
 	void				OnContextMenu( const QPoint& _point );
+
+	void				OnCreateFrameRequested( ReTrackWidget* _track );
+	void				OnDeleteFrameRequested( ReTrackWidget* _track );
+	void				OnFrameMoved( ReTrackWidget* _track, ReTrackFrameWidget* _frame, qreal _time );
 
 	// -------------------------------------------------------------------------
 	// Utilities.
 	// -------------------------------------------------------------------------
 protected:
-	void				InitRuler();
 	void				InitMenus();
+	void				InitRuler();	
+	void				LayoutTracks();
+
+	eTrackType			GetTrackType( ReTrackWidget* _track ) const;
 
 protected:
+	ReAnimModel*		m_animMode;
+
 	// Widgets.
 	typedef std::list< ReTrackSuite >		TTrackList;
 	typedef TTrackList::iterator			TTrackListItor;
 	typedef TTrackList::const_iterator		TTrackListCItor;
 
 	TTrackList			m_trackList;
+	ReTrackSuite*		m_trackSuites[ ETrackType_Count ];
 	ReRulerWidget*		m_rulerWidget;
 
 	// Menu.
@@ -106,7 +137,6 @@ protected:
 	int					m_headWidth;
 
 	// Debug.
-	QPoint				m_cursor;
 	QString				m_debugInfo;
 	bool				m_isDebugEnabled;
 };

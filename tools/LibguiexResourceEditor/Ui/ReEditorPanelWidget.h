@@ -24,9 +24,11 @@ class ReImagePanel;
 class ReSettingsWidget;
 class ReClipPanelWidget;
 class ReClipModel;
+class ReAnimPanelWidget;
+class ReAnimModel;
 
 
-class ReControlPanelWidget : public ReBaseWidget< QWidget >
+class ReEditorPanelWidget : public ReBaseWidget< QWidget >
 {
 	Q_OBJECT
 
@@ -40,10 +42,11 @@ public:
 	{
 	public:
 		ReClipModel*	m_clipModel;
+		ReAnimModel*	m_animModel;
 	};
 
-	ReControlPanelWidget( const ReParam& _param, QWidget* _parent = NULL );
-	~ReControlPanelWidget();
+	ReEditorPanelWidget( const ReParam& _param, QWidget* _parent = NULL );
+	~ReEditorPanelWidget();
 
 	// -----------------------------------------------------
 	// -----------------------------------------------------
@@ -51,7 +54,7 @@ public:
 	enum ePanel
 	{
 		EPanel_ClipPanel,
-		EPanel_AsPanel,
+		EPanel_AnimPanel,
 		EPanel_ImagePanel,		
 		EPanel_Settings,
 		EPanel_Count
@@ -86,6 +89,7 @@ protected:
 	ReImagePanel*		m_imagePanelWidget;
 	ReSettingsWidget*	m_settingsWidget;
 	ReClipPanelWidget*	m_clipPanelWidget;
+	ReAnimPanelWidget*	m_animPanelWidget;
 	QStackedWidget*		m_stack;
 
 	ePanel				m_lastPanel;

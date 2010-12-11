@@ -16,10 +16,11 @@
 #include <QPixmap>
 #include "Core\ReEditor.h"
 #include "Core\ReClipModel.h"
+#include "Core\ReAnimModel.h"
 #include "UI\ReMainWindow.h"
-#include "UI\ReControlPanelWidget.h"
+#include "UI\ReEditorPanelWidget.h"
 #include "Ui\ReClipEditor.h"
-#include "Ui\ReAsEditor.h"
+#include "Ui\ReAnimEditor.h"
 #include "Ui\ReTrackPanelWidget.h"
 
 
@@ -42,6 +43,7 @@ ReMainWindow::ReMainWindow( QWidget* _parent /* = NULL */ )
 , m_controlPanelWidget( NULL )
 // Models.
 , m_clipModel( NULL )
+, m_animModel( NULL )
 // Menus.
 , m_menuBarEx( NULL )
 , m_editorMenu( NULL )
@@ -100,11 +102,19 @@ void ReMainWindow::InitData()
 	m_clipModel = new ReClipModel();
 	m_clipModel->setColumnCount( ReClipModel::EColumn_Count );
 	m_clipModel->setHeaderData( ReClipModel::EColumn_Icon, Qt::Horizontal, tr( "Clip" ) );
-	m_clipModel->setHeaderData( ReClipModel::EColumn_Name, Qt::Horizontal, tr( "Name" ) );
 	m_clipModel->setHeaderData( ReClipModel::EColumn_X, Qt::Horizontal, tr( "X" ) );
 	m_clipModel->setHeaderData( ReClipModel::EColumn_Y, Qt::Horizontal, tr( "Y" ) );
 	m_clipModel->setHeaderData( ReClipModel::EColumn_W, Qt::Horizontal, tr( "W" ) );
 	m_clipModel->setHeaderData( ReClipModel::EColumn_H, Qt::Horizontal, tr( "H" ) );
+
+	m_animModel = new ReAnimModel();
+//	m_animModel->setHeaderData( ReAnimModel::EColumn_TrackOrFrame, Qt::Horizontal, tr( "Type" ) );
+//	m_animModel->setHeaderData( ReAnimModel::EColumn_X, Qt::Horizontal, tr( "X" ) );
+//	m_animModel->setHeaderData( ReAnimModel::EColumn_Y, Qt::Horizontal, tr( "Y" ) );
+//	m_animModel->setHeaderData( ReAnimModel::EColumn_Z, Qt::Horizontal, tr( "Z" ) );
+//	m_animModel->setHeaderData( ReAnimModel::EColumn_W, Qt::Horizontal, tr( "W" ) );
+	m_animModel->setHeaderData( ReAnimModel::EColumn_Key, Qt::Horizontal, tr( "Key" ) );
+	m_animModel->setHeaderData( ReAnimModel::EColumn_Value, Qt::Horizontal, tr( "Value" ) );
 }
 
 
@@ -115,8 +125,8 @@ void ReMainWindow::InitMainViews()
 	m_clipEditor->setContextMenuPolicy( Qt::CustomContextMenu );
 	m_clipEditor->setFocusPolicy( Qt::ClickFocus );
 
-	// As editor.
-	m_asEditor = new ReAsEditor( this );
+	// Animation editor.
+	m_asEditor = new ReAnimEditor( m_animModel, this );
 	m_asEditor->setContextMenuPolicy( Qt::CustomContextMenu );
 	m_asEditor->setFocusPolicy( Qt::ClickFocus );
 
@@ -125,7 +135,7 @@ void ReMainWindow::InitMainViews()
 
 	// Cache for uniformed access.
 	m_editorWidgets[ EEditor_Clip ] = m_clipEditor;
-	m_editorWidgets[ EEditor_As ] = m_asEditor;
+	m_editorWidgets[ EEditor_Anim ] = m_asEditor;
 	m_editorWidgets[ EEditor_Image ] = m_viewWidget;	
 
 	// Put them all together.
@@ -141,9 +151,10 @@ void ReMainWindow::InitMainViews()
 
 void ReMainWindow::InitDockWindows()
 {
-	ReControlPanelWidget::ReParam param;
+	ReEditorPanelWidget::ReParam param;
 	param.m_clipModel = m_clipModel;
-	m_controlPanelWidget = new ReControlPanelWidget( param, this );
+	param.m_animModel = m_animModel;
+	m_controlPanelWidget = new ReEditorPanelWidget( param, this );
 	m_panelDockWidget = new QDockWidget( tr( "Control Panel" ), this );
 	m_panelDockWidget->setWidget( m_controlPanelWidget );
 	m_panelDockWidget->setAllowedAreas( Qt::AllDockWidgetAreas );
@@ -193,7 +204,7 @@ void ReMainWindow::InitMenuBar()
 	action->setActionGroup( group );
 	connect( action, SIGNAL( triggered() ), this, SLOT( OnGotoClipEditor() ) );
 	
-	action = m_editorMenu->addAction( tr( "&As Editor" ) );
+	action = m_editorMenu->addAction( tr( "&Animation Editor" ) );
 	action->setCheckable( true );
 	action->setChecked( false );
 	action->setActionGroup( group );
@@ -230,23 +241,23 @@ void ReMainWindow::InitContextMenu()
 void ReMainWindow::OnGotoClipEditor()
 {
 	m_stackedEditorWidget->setCurrentIndex( EEditor_Clip );
-	m_controlPanelWidget->SwitchPanel( ReControlPanelWidget::EPanel_ClipPanel );
+	m_controlPanelWidget->SwitchPanel( ReEditorPanelWidget::EPanel_ClipPanel );
 	m_panelDockWidget->setWindowTitle( tr( "Clip Editor" ) );
 }
 
 
 void ReMainWindow::OnGotoAsEditor()
 {
-	m_stackedEditorWidget->setCurrentIndex( EEditor_As );
-	m_controlPanelWidget->SwitchPanel( ReControlPanelWidget::EPanel_AsPanel );
-	m_panelDockWidget->setWindowTitle( tr( "As Editor" ) );
+	m_stackedEditorWidget->setCurrentIndex( EEditor_Anim );
+	m_controlPanelWidget->SwitchPanel( ReEditorPanelWidget::EPanel_AnimPanel );
+	m_panelDockWidget->setWindowTitle( tr( "Animation Editor" ) );
 }
 
 
 void ReMainWindow::OnGotoImageEditor()
 {
 	m_stackedEditorWidget->setCurrentIndex( EEditor_Image );
-	m_controlPanelWidget->SwitchPanel( ReControlPanelWidget::EPanel_ImagePanel );
+	m_controlPanelWidget->SwitchPanel( ReEditorPanelWidget::EPanel_ImagePanel );
 	m_panelDockWidget->setWindowTitle( tr( "Image Editor" ) );
 }
 

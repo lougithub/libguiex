@@ -4,10 +4,12 @@
 // -----------------------------------------------------------------------------
 #include "StdAfxEditor.h"
 #include "Ui\ReTrackWidget.h"
+#include "Core\ReAnimFrame.h"
 #include <QPainter>
 #include <QMenu>
 #include <QAction>
 #include <QMouseEvent>
+#include <QKeyEvent>
 
 
 namespace RE
@@ -26,6 +28,70 @@ ReTrackWidget::ReTrackWidget( QWidget* _parent /* = NULL */ )
 	InitMenus();
 
 	connect( this, SIGNAL( customContextMenuRequested( const QPoint& ) ), this, SLOT( OnContextMenu( const QPoint& ) ) );
+
+	ShowCursorValue( false );
+}
+
+
+ReTrackFrameWidget* ReTrackWidget::CreateFrameAtCurrentCursor()
+{
+	ReTrackFrameWidget* result = DoCreateFrame();
+	result->move( m_cursor - m_frameSize.width() / 2, ( height() - m_frameSize.height() ) / 2  );
+	result->resize( m_frameSize );
+
+	return result;
+}
+
+
+void ReTrackWidget::DeleteCurrentFrame()
+{
+	if( NULL != m_currentFrame )
+	{
+		RecycleData( m_currentFrame );
+		m_currentFrame = NULL;
+	}
+}
+
+
+QVariant ReTrackWidget::Interpolate( int _cursor ) const
+{
+	ReTrackFrameWidget* left = NULL;
+	ReTrackFrameWidget* right = NULL;
+	( const_cast< ReTrackWidget* >( this ) )->GetNearestFrames( _cursor, left, right );
+
+	if( NULL != left && NULL != right )
+	{
+		if( left == right )
+		{
+			//return left->GetData();
+			left->GetModelData()->GetTime();
+		}
+		else
+		{
+			int leftCursor = CalcCursorAtFrame( left );
+			int rightCursor = CalcCursorAtFrame( right );
+			qreal factor = ( qreal )( _cursor - leftCursor ) / ( qreal )( rightCursor - leftCursor );
+			return Interpolate( left->GetModelData()->GetTime(), right->GetModelData()->GetTime(), factor );
+		}
+	}
+	else if( NULL != left )
+	{
+		//return left->GetData();
+		return left->GetModelData()->GetTime();
+	}
+	else
+	{
+		int rightCursor = CalcCursorAtFrame( right );
+		qreal factor = ( qreal )_cursor / ( qreal )rightCursor;
+		return Interpolate( QVariant(), right->GetModelData()->GetTime(), factor );
+	}
+}
+
+
+ReTrackFrameWidget* ReTrackWidget::GetFrameByIndex( int _index )
+{
+	// TODO
+	return NULL;
 }
 
 
@@ -35,12 +101,25 @@ ReTrackWidget::ReTrackWidget( QWidget* _parent /* = NULL */ )
 void ReTrackWidget::paintEvent( QPaintEvent* _event )
 {
 	TSuper::paintEvent( _event );
+
+	QPainter painter( this );
+
+	TFramePoolItor itor = m_frameList.Begin();
+	TFramePoolItor itorEnd = m_frameList.End();
+	for( ; itor != itorEnd; ++itor )
+	{
+		ReTrackFrameWidget* frame = *itor;
+		int pos = CalcCursorAtFrame( frame );
+		painter.drawText( frame->pos().x() + 10, height() / 2, QString( tr( "%1" ) ).arg( pos ) );
+	}
+
+	painter.drawText( GetCursor(), height() - 10, QString( tr( "%1" ) ).arg( GetCursor() ) );
 }
 
 
 void ReTrackWidget::mousePressEvent( QMouseEvent* _event )
 {
-	ReTrackFrameWidget* frame = qobject_cast< ReTrackFrameWidget* >( childAt( _event->pos() ) );
+	ReTrackFrameWidget* frame = dynamic_cast< ReTrackFrameWidget* >( childAt( _event->pos() ) );
 	if( NULL != frame )
 	{
 		m_currentFrame = frame;
@@ -50,6 +129,8 @@ void ReTrackWidget::mousePressEvent( QMouseEvent* _event )
 	}
 	else
 	{
+		m_isShowCursorValue = true;
+		m_currentFrame = NULL;
 		TSuper::mousePressEvent( _event );
 	}
 }
@@ -62,6 +143,7 @@ void ReTrackWidget::mouseReleaseEvent( QMouseEvent* _event )
 		m_currentFrame->GetDragInfoRef().Stop();
 	}
 
+	m_isShowCursorValue = false;
 	TSuper::mouseReleaseEvent( _event );
 }
 
@@ -80,10 +162,30 @@ void ReTrackWidget::mouseMoveEvent( QMouseEvent* _event )
 			newPos.setX( width() - m_currentFrame->width() / 2 );
 
 		m_currentFrame->move( newPos.x(), newPos.y() );
+		qreal time = GetValueAt( newPos.x() + m_currentFrame->width() / 2 );
+
+		emit FrameMoved( this, m_currentFrame, time );
 	}
 	else
 	{
 		TSuper::mouseMoveEvent( _event );
+	}
+}
+
+
+void ReTrackWidget::keyPressEvent( QKeyEvent* _event )
+{
+	if( Qt::Key_A == _event->key() )
+	{
+		OnCreateFrame();
+	}
+	else if( Qt::Key_D == _event->key() )
+	{
+		OnDeleteFrame();
+	}
+	else
+	{
+		TSuper::keyPressEvent( _event );
 	}
 }
 
@@ -111,6 +213,22 @@ void ReTrackWidget::DrawContent( QPainter& _painter )
 void ReTrackWidget::DrawForeground( QPainter& _painter )
 {
 	TSuper::DrawForeground( _painter );
+
+	if( NULL != m_currentFrame )
+	{
+		int half = m_currentFrame->size().width() / 2;
+		int cursor = m_currentFrame->pos().x() + half;
+		QString valueText = QString().setNum( GetValueAt( cursor ) );
+		if( cursor <= ( width() / 2 ) )
+		{
+			_painter.drawText( cursor + half + 2, height() - 2, valueText );
+		}
+		else
+		{
+			QFontMetrics fm( _painter.font() );
+			_painter.drawText( cursor - half - 2 - fm.width( valueText ), height() - 2, valueText );
+		}
+	}
 }
 
 
@@ -119,7 +237,12 @@ void ReTrackWidget::DrawForeground( QPainter& _painter )
 // -----------------------------------------------------------------------------
 void ReTrackWidget::RecycleData( ReTrackFrameWidget* _frame )
 {
-	TSuperB::RecycleData( _frame );
+	if( NULL != _frame )
+	{
+		_frame->setParent( NULL );
+		m_frameList.Erase( _frame );
+		TSuperB::RecycleData( _frame );
+	}
 }
 
 
@@ -130,7 +253,7 @@ void ReTrackWidget::OnViewportChanged( int _pos )
 {
 	TFramePoolItor itor = m_frameList.Begin();
 	TFramePoolItor itorEnd = m_frameList.End();
-	for( int delta = m_viewportPos - _pos; itor != itorEnd; ++itor )
+	for( int delta = m_viewport - _pos; itor != itorEnd; ++itor )
 	{
 		ReTrackFrameWidget* frame = *itor;
 		frame->move( frame->pos() + QPoint( delta, 0 ) );
@@ -149,11 +272,15 @@ void ReTrackWidget::OnContextMenu( const QPoint& _point )
 }
 
 
-void ReTrackWidget::OnNewFrame()
+void ReTrackWidget::OnCreateFrame()
 {
-	ReTrackFrameWidget* newFrame = CreateFrame();
-	newFrame->move( m_cursor - m_frameSize.width() / 2, ( height() - m_frameSize.height() ) / 2  );
-	newFrame->resize( m_frameSize );
+	emit CreateFrameRequested( this );
+}
+
+
+void ReTrackWidget::OnDeleteFrame()
+{
+	emit DeleteFrameRequested( this );
 }
 
 
@@ -166,14 +293,16 @@ void ReTrackWidget::InitMenus()
 
 	m_editMenu = new QMenu( "&Edit" );	
 	action = m_editMenu->addAction( tr( "New &Frame" ) );
-	connect( action, SIGNAL( triggered() ), this, SLOT( OnNewFrame() ) );
+	connect( action, SIGNAL( triggered() ), this, SLOT( OnCreateFrame() ) );
 }
 
 
-ReTrackFrameWidget* ReTrackWidget::CreateFrame()
+ReTrackFrameWidget* ReTrackWidget::DoCreateFrame()
 {
+	// Update UI.
 	ReTrackFrameWidget* result = CreateData();
 	result->setParent( this );
+	//result->GetIdRef() = ReTrackFrameWidget::sNextId();
 	result->setScaledContents( true );
 	result->setPixmap( QPixmap( ":/image/editor_track_frame.png" ) );
 	result->setVisible( true );
@@ -182,6 +311,64 @@ ReTrackFrameWidget* ReTrackWidget::CreateFrame()
 
 	return result;
 }
+
+
+void ReTrackWidget::GetNearestFrames( int _cursor, ReTrackFrameWidget*& _left, ReTrackFrameWidget*& _right )
+{
+	if( NULL != ( &_left ) || NULL != ( &_right ) )
+	{
+		ReTrackFrameWidget* left = NULL;
+		ReTrackFrameWidget* right = NULL;
+		int minLeft = 999999;
+		int minRight = 999999;
+
+		TFramePoolItor itor = m_frameList.Begin();
+		TFramePoolItor itorEnd = m_frameList.End();
+		for( ; itor != itorEnd; ++itor )
+		{		
+			ReTrackFrameWidget* frame = *itor;
+			int cursor = CalcCursorAtFrame( frame );
+			if( cursor == _cursor )
+			{
+				if( NULL != ( &_left ) )
+					_left = frame;
+				if( NULL != ( &_right ) )
+					_right = frame;
+			}
+			else if( cursor < _cursor )
+			{
+				if( NULL != ( &_left ) )
+				{
+					int delta = _cursor - cursor;
+					if( delta < minLeft )
+					{
+						minLeft = delta;
+						_left = frame;
+					}
+				}
+			}
+			else
+			{
+				if( NULL != ( &_right ) )
+				{
+					int delta = cursor - _cursor;
+					if( delta < minRight )
+					{
+						minRight = delta;
+						_right = frame;
+					}
+				}
+			}
+		}
+	}
+}
+
+
+int ReTrackWidget::CalcCursorAtFrame( const ReTrackFrameWidget* _frame ) const
+{
+	return ( NULL != _frame ) ? ( _frame->pos().x() + _frame->width() / 2 ) : ms_invalidCursor;
+}
+
 
 
 // -----------------------------------------------------------------------------

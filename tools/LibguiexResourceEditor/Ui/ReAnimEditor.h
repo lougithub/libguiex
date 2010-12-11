@@ -2,8 +2,8 @@
 // Author: GameCrashDebug.
 // Date: 20101123.
 // -----------------------------------------------------------------------------
-#ifndef _RE_AS_EDITOR_H_
-#define _RE_AS_EDITOR_H_
+#ifndef _RE_ANIM_EDITOR_H_
+#define _RE_ANIM_EDITOR_H_
 // -----------------------------------------------------------------------------
 // Action Sequence Editor.
 // It consists of a track panel widget and a viewer widget for editing and viewing
@@ -24,9 +24,11 @@ namespace RE
 
 
 class ReTrackPanelWidget;
+class ReAnimView;
+class ReAnimModel;
 
 
-class ReAsEditor : public ReBaseWidget< QWidget >
+class ReAnimEditor : public ReBaseWidget< QWidget >
 {
 	Q_OBJECT
 	typedef ReBaseWidget< QWidget >	TSuper;
@@ -35,8 +37,8 @@ class ReAsEditor : public ReBaseWidget< QWidget >
 	// General.
 	// ----------------------------------------------------------------------------
 public:
-	ReAsEditor( QWidget* _parent = NULL );
-	~ReAsEditor();
+	ReAnimEditor( ReAnimModel* _model, QWidget* _parent = NULL );
+	~ReAnimEditor();
 
 	// ----------------------------------------------------------------------------
 	// Overrides QWidget.
@@ -77,10 +79,10 @@ protected:
 	// Widgets.
 	QWidget*			m_lastFocusedWidget;
 	ReTrackPanelWidget*	m_trackPanelWidget;
-	QLabel*				m_asViewWidget;
+	ReAnimView*			m_animView;
 	
 	// Menu.
-	QMenu*				m_asViewMenu;
+	QMenu*				m_animViewMenu;
 
 	// Debug.
 	QPoint				m_cursor;
@@ -90,4 +92,4 @@ protected:
 
 
 }
-#endif	// _RE_CLIP_EDITOR_H_
+#endif	// _RE_ANIM_EDITOR_H_

@@ -27,7 +27,8 @@ ReClipModel::ReClipModel( QWidget* _parent /* = NULL */ )
 bool ReClipModel::setData( const QModelIndex& _index, const QVariant& _value, int _role /* = Qt::EditRole */ )
 {
 	ReClipData* clipData = dynamic_cast< ReClipData* >( TSuper::item( _index.row() ) );
-	QString name = data( index( _index.row(), EColumn_Name, QModelIndex() ) ).toString();
+	//QString name = data( index( _index.row(), EColumn_Name, QModelIndex() ) ).toString();
+	QString name = data( index( _index.row(), EColumn_Icon, QModelIndex() ) ).toString();
 	qreal x = data( index( _index.row(), EColumn_X, QModelIndex() ) ).toDouble();
 	qreal y = data( index( _index.row(), EColumn_Y, QModelIndex() ) ).toDouble();
 	qreal w = data( index( _index.row(), EColumn_W, QModelIndex() ) ).toDouble();
@@ -48,18 +49,41 @@ QVariant ReClipModel::data( const QModelIndex& _index, int _role /* = Qt::Displa
 	if( !_index.isValid() )
 		return QVariant();
 
-	if( Qt::DecorationRole == _role && EColumn_Icon == _index.column() )
+	if( Qt::DecorationRole == _role )
 	{
-		ReClipData* clipData = dynamic_cast< ReClipData* >( TSuper::item( _index.row() ) );
-		QSize size = m_pixmap.size();
-		int x = ( int )( ( qreal )size.width() * clipData->GetOffset().x() );
-		int y = ( int )( ( qreal )size.height() * clipData->GetOffset().y() );
-		int w = ( int )( ( qreal )size.width() * clipData->GetSize().width() );
-		int h = ( int )( ( qreal )size.height() * clipData->GetSize().height() );
-		return QIcon( m_pixmap.copy( x, y, w, h ) );
+		if( EColumn_Icon == _index.column() )
+		{
+			ReClipData* clipData = dynamic_cast< ReClipData* >( TSuper::item( _index.row() ) );
+			QSize size = m_pixmap.size();
+			int x = ( int )( ( qreal )size.width() * clipData->GetOffset().x() );
+			int y = ( int )( ( qreal )size.height() * clipData->GetOffset().y() );
+			int w = ( int )( ( qreal )size.width() * clipData->GetSize().width() );
+			int h = ( int )( ( qreal )size.height() * clipData->GetSize().height() );
+
+			return QIcon( m_pixmap.copy( x, y, w, h ) );
+		}
+	}
+	else if( Qt::TextAlignmentRole == _role )
+	{
+		if( EColumn_Icon == _index.column() )
+			return int( Qt::AlignRight | Qt::AlignCenter );
+		else
+			return int( Qt::AlignCenter );
 	}
 
 	return TSuper::data( _index, _role );
+}
+
+
+ReClipModel::TFlags ReClipModel::flags( const QModelIndex& _index ) const
+{
+	TFlags result = TSuper::flags( _index );
+	if( EColumn_Icon != _index.column() )
+	{
+		result |= Qt::ItemIsEditable;
+	}
+
+	return result;
 }
 
 
@@ -109,11 +133,14 @@ void ReClipModel::SetDataFromItem( const QModelIndex& _index )
 	ReClipData* clipData = dynamic_cast< ReClipData* >( TSuper::item( _index.row() ) );
 	
 	// Call QStandardItemModel's setData instead.
-	TSuper::setData( index( _index.row(), EColumn_Name ), clipData->GetName() );
+	//TSuper::setData( index( _index.row(), EColumn_Name ), clipData->GetName() );
+	TSuper::setData( index( _index.row(), EColumn_Icon ), clipData->GetName() );
 	TSuper::setData( index( _index.row(), EColumn_X ), clipData->GetOffset().x() );
 	TSuper::setData( index( _index.row(), EColumn_Y ), clipData->GetOffset().y() );
 	TSuper::setData( index( _index.row(), EColumn_W ), clipData->GetSize().width() );
 	TSuper::setData( index( _index.row(), EColumn_H ), clipData->GetSize().height() );
+
+	emit dataChanged( _index, _index );
 }
 
 

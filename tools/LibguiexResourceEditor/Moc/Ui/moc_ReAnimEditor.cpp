@@ -1,15 +1,15 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'ReControlPanelWidget.h'
+** Meta object code from reading C++ file 'ReAnimEditor.h'
 **
-** Created: Tue Nov 30 20:42:35 2010
+** Created: Sat Dec 11 15:47:28 2010
 **      by: The Qt Meta Object Compiler version 61 (Qt 4.5.3)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../../Ui/ReControlPanelWidget.h"
+#include "../../Ui/ReAnimEditor.h"
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'ReControlPanelWidget.h' doesn't include <QObject>."
+#error "The header file 'ReAnimEditor.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 61
 #error "This file was generated using the moc from 4.5.3. It"
 #error "cannot be used with the include files from this version of Qt."
@@ -17,59 +17,56 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-static const uint qt_meta_data_RE__ReControlPanelWidget[] = {
+static const uint qt_meta_data_RE__ReAnimEditor[] = {
 
  // content:
        2,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   12, // methods
+       1,   12, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
 
  // slots: signature, parameters, type, tag, flags
-      26,   25,   25,   25, 0x0a,
-      44,   25,   25,   25, 0x0a,
+      18,   17,   17,   17, 0x0a,
 
        0        // eod
 };
 
-static const char qt_meta_stringdata_RE__ReControlPanelWidget[] = {
-    "RE::ReControlPanelWidget\0\0OnToggleSetting()\0"
-    "OnSettingsChanged()\0"
+static const char qt_meta_stringdata_RE__ReAnimEditor[] = {
+    "RE::ReAnimEditor\0\0OnToggleDebug()\0"
 };
 
-const QMetaObject RE::ReControlPanelWidget::staticMetaObject = {
-    { &ReBaseWidget<QWidget>::staticMetaObject, qt_meta_stringdata_RE__ReControlPanelWidget,
-      qt_meta_data_RE__ReControlPanelWidget, 0 }
+const QMetaObject RE::ReAnimEditor::staticMetaObject = {
+    { &ReBaseWidget<QWidget>::staticMetaObject, qt_meta_stringdata_RE__ReAnimEditor,
+      qt_meta_data_RE__ReAnimEditor, 0 }
 };
 
-const QMetaObject *RE::ReControlPanelWidget::metaObject() const
+const QMetaObject *RE::ReAnimEditor::metaObject() const
 {
     return &staticMetaObject;
 }
 
-void *RE::ReControlPanelWidget::qt_metacast(const char *_clname)
+void *RE::ReAnimEditor::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_RE__ReControlPanelWidget))
-        return static_cast<void*>(const_cast< ReControlPanelWidget*>(this));
+    if (!strcmp(_clname, qt_meta_stringdata_RE__ReAnimEditor))
+        return static_cast<void*>(const_cast< ReAnimEditor*>(this));
     return ReBaseWidget<QWidget>::qt_metacast(_clname);
 }
 
-int RE::ReControlPanelWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int RE::ReAnimEditor::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = ReBaseWidget<QWidget>::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: OnToggleSetting(); break;
-        case 1: OnSettingsChanged(); break;
+        case 0: OnToggleDebug(); break;
         default: ;
         }
-        _id -= 2;
+        _id -= 1;
     }
     return _id;
 }

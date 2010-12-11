@@ -30,6 +30,12 @@ class ReRulerWidget : public ReBaseWidget< QLabel >
 public:
 	ReRulerWidget( QWidget* _parent = NULL );
 
+	int					GetCursor() const				{ return m_cursor; }
+	int					GetViewport() const				{ return m_viewport; }
+	int					GetUnit() const					{ return m_unit; }
+	qreal				GetUnitValue() const			{ return m_unitValue; }	
+	void				ShowCursorValue( bool _show )	{ m_isShowCursorValue = _show; }
+
 	// ----------------------------------------------------------------------------
 	// Override QWidget.
 	// ----------------------------------------------------------------------------
@@ -66,21 +72,21 @@ protected:
 	// ----------------------------------------------------------------------------
 protected:
 	// Values that are measured in pixels.
-	int					m_shortMarkLength;
-	int					m_longMarkLength;
-	int					m_interval;	
-	int					m_minInterval;
-	int					m_maxInterval;
-	int					m_viewportPos;
-	int					m_cursor;	
+	int					m_unit;				// Number of pixels between two marks.
+	int					m_minUnit;
+	int					m_maxUnit;
+	int					m_viewport;
+	int					m_cursor;
 
 	// Values that are measured in decimal.
-	qreal				m_intervalValue;
+	qreal				m_unitValue;
 
 	// Misc.
 	ReDragInfo			m_cursorDragInfo;
 	ReDragInfo			m_viewportDragInfo;
-	int					m_divisionBetweenLongMarks;
+	bool				m_isShowCursorValue;
+
+	static int			ms_invalidCursor;
 };
 
 

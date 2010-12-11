@@ -8,7 +8,7 @@
 // A model has two pools: a data pool that holds data that user expects it to
 // posses, and a recycle pool where unused data is stored and could be retrieved
 // later when new data requests are issued.
-// User call CreateData to create a new data item inside this model, and use the
+// User calls CreateData to create a new data item inside this model, and use the
 // returned pointer for further operations ( except trying to release it ).
 // When a model is being released from memory, it makes sure that all data items
 // in both pools are properly released as well.

@@ -16,13 +16,17 @@ namespace RE
 
 // -----------------------------------------------------------------------------
 // -----------------------------------------------------------------------------
-ReClipPanelWidget::ReClipPanelWidget( QWidget* _parent /* = NULL */ )
+ReClipPanelWidget::ReClipPanelWidget( ReClipModel* _model, QWidget* _parent /* = NULL */ )
 : TSuper( _parent )
 {
 	m_clipTableView = new QTableView( this );
 	QHeaderView* headerView = m_clipTableView->horizontalHeader();
 	headerView->setResizeMode( QHeaderView::Interactive );
 	headerView->setStretchLastSection( true );
+
+	QItemSelectionModel* selModel = new QItemSelectionModel( _model );
+	m_clipTableView->setModel( /*( QStandardItemModel* )*/_model );
+	m_clipTableView->setSelectionModel( selModel );
 
 	QVBoxLayout* layout = new QVBoxLayout();
 	layout->addWidget( m_clipTableView, 1 );
@@ -31,12 +35,12 @@ ReClipPanelWidget::ReClipPanelWidget( QWidget* _parent /* = NULL */ )
 }
 
 
-void ReClipPanelWidget::SetClipMode( ReClipModel* _model )
-{
-	QItemSelectionModel* selModel = new QItemSelectionModel( _model );
-	m_clipTableView->setModel( ( QStandardItemModel* )_model );
-	m_clipTableView->setSelectionModel( selModel );
-}
+//void ReClipPanelWidget::SetClipMode( ReClipModel* _model )
+//{
+//	QItemSelectionModel* selModel = new QItemSelectionModel( _model );
+//	m_clipTableView->setModel( ( QStandardItemModel* )_model );
+//	m_clipTableView->setSelectionModel( selModel );
+//}
 
 
 // -----------------------------------------------------------------------------

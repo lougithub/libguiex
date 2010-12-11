@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ReClipEditor.h'
 **
-** Created: Tue Nov 30 21:26:36 2010
+** Created: Sat Dec 11 15:46:07 2010
 **      by: The Qt Meta Object Compiler version 61 (Qt 4.5.3)
 **
 ** WARNING! All changes made in this file will be lost!

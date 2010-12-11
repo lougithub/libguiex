@@ -1,15 +1,15 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'ReSettingsWidget.h'
+** Meta object code from reading C++ file 'ReAnimModel.h'
 **
-** Created: Sat Dec 11 15:46:03 2010
+** Created: Sat Dec 11 15:46:08 2010
 **      by: The Qt Meta Object Compiler version 61 (Qt 4.5.3)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../../Ui/ReSettingsWidget.h"
+#include "../../Core/ReAnimModel.h"
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'ReSettingsWidget.h' doesn't include <QObject>."
+#error "The header file 'ReAnimModel.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 61
 #error "This file was generated using the moc from 4.5.3. It"
 #error "cannot be used with the include files from this version of Qt."
@@ -17,7 +17,7 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-static const uint qt_meta_data_RE__ReSettingsWidget[] = {
+static const uint qt_meta_data_RE__ReAnimModel[] = {
 
  // content:
        2,       // revision
@@ -29,41 +29,42 @@ static const uint qt_meta_data_RE__ReSettingsWidget[] = {
        0,    0, // constructors
 
  // slots: signature, parameters, type, tag, flags
-      22,   21,   21,   21, 0x0a,
+      35,   17,   16,   16, 0x0a,
 
        0        // eod
 };
 
-static const char qt_meta_stringdata_RE__ReSettingsWidget[] = {
-    "RE::ReSettingsWidget\0\0BrowseForQrc()\0"
+static const char qt_meta_stringdata_RE__ReAnimModel[] = {
+    "RE::ReAnimModel\0\0_trackType,_frame\0"
+    "OnFrameChanged(eTrackType,ReAnimFrame*)\0"
 };
 
-const QMetaObject RE::ReSettingsWidget::staticMetaObject = {
-    { &QDialog::staticMetaObject, qt_meta_stringdata_RE__ReSettingsWidget,
-      qt_meta_data_RE__ReSettingsWidget, 0 }
+const QMetaObject RE::ReAnimModel::staticMetaObject = {
+    { &QAbstractItemModel::staticMetaObject, qt_meta_stringdata_RE__ReAnimModel,
+      qt_meta_data_RE__ReAnimModel, 0 }
 };
 
-const QMetaObject *RE::ReSettingsWidget::metaObject() const
+const QMetaObject *RE::ReAnimModel::metaObject() const
 {
     return &staticMetaObject;
 }
 
-void *RE::ReSettingsWidget::qt_metacast(const char *_clname)
+void *RE::ReAnimModel::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_RE__ReSettingsWidget))
-        return static_cast<void*>(const_cast< ReSettingsWidget*>(this));
-    return QDialog::qt_metacast(_clname);
+    if (!strcmp(_clname, qt_meta_stringdata_RE__ReAnimModel))
+        return static_cast<void*>(const_cast< ReAnimModel*>(this));
+    return QAbstractItemModel::qt_metacast(_clname);
 }
 
-int RE::ReSettingsWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int RE::ReAnimModel::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QDialog::qt_metacall(_c, _id, _a);
+    _id = QAbstractItemModel::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: BrowseForQrc(); break;
+        case 0: OnFrameChanged((*reinterpret_cast< eTrackType(*)>(_a[1])),(*reinterpret_cast< ReAnimFrame*(*)>(_a[2]))); break;
         default: ;
         }
         _id -= 1;
