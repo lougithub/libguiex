@@ -27,11 +27,6 @@ CGUIFrameworkBase* CreateFramework( const CGUISize& rScreenSize, const char* pDa
 	return new CGUIFrameworkTest( rScreenSize, pDataPath );
 }
 
-const char* GetSampleSceneName()
-{
-	return "common.uip";
-}
-
 int32 CGUIFrameworkTest::InitializeGame( )
 {
 	CGUISceneInfoManager::Instance()->LoadScenes( "/", ".uip" );
