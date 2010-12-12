@@ -222,6 +222,11 @@ namespace guiex
 		m_bWireFrame = bWireFrame;
 	}
 	//------------------------------------------------------------------------------
+	bool IGUIRender_opengl::IsWireFrame( ) const
+	{
+		return m_bWireFrame;
+	}
+	//------------------------------------------------------------------------------
 	void IGUIRender_opengl::DrawRect(const CGUIMatrix4& rWorldMatrix,
 		const CGUIRect& rDestRect, 
 		real fLineWidth,
@@ -751,6 +756,10 @@ namespace guiex
 	{
 		m_bEnableClip = bEnable;
 	}
+	//------------------------------------------------------------------------------
+	bool IGUIRender_opengl::IsEnableClip( ) const
+	{
+		return m_bEnableClip;
+	}
 	//-----------------------------------------------------------------------------
-
 }//namespace guiex

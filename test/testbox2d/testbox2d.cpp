@@ -25,11 +25,11 @@ class CGUIFrameworkTest : public CGUIFramework
 		{
 		}
 	protected:
-		virtual int32 InitializeGame( );
+		virtual guiex::int32 InitializeGame( );
 		virtual void ReleaseGame( );
 
 		virtual void PreUpdate( real fDeltaTime );
-		virtual void PostUpdate( real fDeltaTime );
+		virtual void PostRender( );
 
 		void CreateBox2dSample_hellobox2d();
 		void CreateBox2dSample_joints();
@@ -44,14 +44,19 @@ class CGUIFrameworkTest : public CGUIFramework
 		CGUIWidget* m_pWidgetRoot;
 };
 
-CGUIFrameworkBase* CreateFramework( const CGUISize& rScreenSize, const char* pDataPath )
+CGUIFrameworkBase* CreateFramework( const CGUISize& rScreenSize, const char* pDataPath )
+
 {
 	return new CGUIFrameworkTest( rScreenSize, pDataPath );
 }
 
 
-int32 CGUIFrameworkTest::InitializeGame( )
-{	//create empty node for widget system
+guiex::int32 CGUIFrameworkTest::InitializeGame( )
+{	
+	CGUISceneInfoManager::Instance()->LoadScenes( "/", ".uip" );
+	CGUISceneUtility::LoadResource( "common.uip" );
+
+	//create empty node for widget system
 	m_pWidgetRoot = GUI_CREATE_WIDGET("CGUIWgtEmptyNode", CGUIUtility::GenerateWidgetName(), "testproject");
 	{
 		m_pWidgetRoot->SetPositionType( eScreenValue_Percentage );
@@ -67,7 +72,10 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	CreateBox2dSample_hellobox2d();
 	CreateBox2dSample_joints();
 
-	return m_pWidgetRoot;
+	CGUIWidgetManager::Instance()->AddPage( m_pWidgetRoot );
+	GSystem->OpenPage( m_pWidgetRoot );
+
+	return 0;
 }
 
 void CGUIFrameworkTest::ReleaseGame( )
@@ -81,21 +89,19 @@ void CGUIFrameworkTest::ReleaseGame( )
 
 void CGUIFrameworkTest::PreUpdate( real fDeltaTime )
 {
-	int32 velocityIterations = 10;
-	int32 positionIterations = 2;
+	guiex::int32 velocityIterations = 10;
+	guiex::int32 positionIterations = 2;
 
 	m_pWorld->Step( fDeltaTime, velocityIterations, positionIterations );
 	m_pWorld->ClearForces();
+}
 
+void CGUIFrameworkTest::PostRender( )
+{
 	UpdateBody(m_pBody);
 	UpdateBody(m_pBody2);
 
 	UpdateJoint( m_pJoint );
-}
-
-void CGUIFrameworkTest::PostUpdate( real fDeltaTime )
-{
-
 }
 
 void CGUIFrameworkTest::CreateBox2dSample_hellobox2d()
@@ -148,7 +154,7 @@ void CGUIFrameworkTest::CreateBox2dSample_hellobox2d()
 		//pWidget_dynamicbody->SetSize( METER2PIXEL(vExtents.x*2), METER2PIXEL(vExtents.y*2) );
 		pWidget_dynamicbody->SetSize( METER2PIXEL(4), METER2PIXEL(1) );
 		pWidget_dynamicbody->SetRotation( 0, 0, m_pBody->GetAngle() / b2_pi * 180.f );
-		pWidget_dynamicbody->SetPosition( METER2PIXEL(m_pBody->GetPosition().x), METER2PIXEL(g_body->GetPosition().y) );
+		pWidget_dynamicbody->SetPosition( METER2PIXEL(m_pBody->GetPosition().x), METER2PIXEL(m_pBody->GetPosition().y) );
 		pWidget_dynamicbody->SetAnchorPoint( 0.5, 0.5 );
 		pWidget_dynamicbody->Create();
 	}
@@ -195,7 +201,7 @@ void CGUIFrameworkTest::CreateBox2dSample_joints()
 	m_pBody2->CreateFixture( &fixtureDef );
 
 	//widget
-	CGUIWidget* pWidget_dynamicbody = GUI_CREATE_WIDGET("CGUIWgtStaticImage", CGUIUtility::GenerateWidgetName(), "testproject");
+	CGUIWgtStaticImage* pWidget_dynamicbody = CGUIWidgetManager::Instance() ->CreateWidget<CGUIWgtStaticImage>(CGUIUtility::GenerateWidgetName(), "testproject");
 	{
 		pWidget_dynamicbody->SetParent( m_pWidgetRoot );
 		pWidget_dynamicbody->SetImage( "BGIMAGE", "color_white" );
@@ -204,7 +210,7 @@ void CGUIFrameworkTest::CreateBox2dSample_joints()
 		//pWidget_dynamicbody->SetSize( METER2PIXEL(vExtents.x*2), METER2PIXEL(vExtents.y*2) );
 		pWidget_dynamicbody->SetSize( METER2PIXEL(2), METER2PIXEL(2) );
 		pWidget_dynamicbody->SetRotation( 0, 0, m_pBody2->GetAngle() / b2_pi * 180.f );
-		pWidget_dynamicbody->SetPosition( METER2PIXEL(m_pBody2->GetPosition().x), METER2PIXEL(g_body2->GetPosition().y) );
+		pWidget_dynamicbody->SetPosition( METER2PIXEL(m_pBody2->GetPosition().x), METER2PIXEL(m_pBody2->GetPosition().y) );
 		pWidget_dynamicbody->SetAnchorPoint( 0.5, 0.5 );
 		pWidget_dynamicbody->Create();
 	}
@@ -234,8 +240,8 @@ void CGUIFrameworkTest::UpdateJoint( b2Joint* pJoint )
 {
 	IGUIInterfaceRender* pRender = CGUIInterfaceManager::Instance()->GetInterfaceRender();
 	pRender->BeginRender();
-	CGUIVector2 aBegin( METER2PIXEL(m_pJoint->GetAnchorA().x), METER2PIXEL(g_pJoint->GetAnchorA().y ));
-	CGUIVector2 aEnd( METER2PIXEL(m_pJoint->GetAnchorB().x), METER2PIXEL(g_pJoint->GetAnchorB().y ));
+	CGUIVector2 aBegin( METER2PIXEL(m_pJoint->GetAnchorA().x), METER2PIXEL(m_pJoint->GetAnchorA().y ));
+	CGUIVector2 aEnd( METER2PIXEL(m_pJoint->GetAnchorB().x), METER2PIXEL(m_pJoint->GetAnchorB().y ));
 	pRender->DrawLine( m_pWidgetRoot->GetFullTransform(), aBegin, aEnd, 2, pRender->GetAndIncZ(), CGUIColor(1,0,0,1).GetRGBA(), CGUIColor( 1,0,0,1).GetRGBA() );
 	pRender->EndRender();
 }

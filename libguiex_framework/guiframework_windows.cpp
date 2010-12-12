@@ -120,6 +120,14 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
+	void CGUIFramework_Windows::PreRender( )
+	{
+	}
+	//------------------------------------------------------------------------------
+	void CGUIFramework_Windows::PostRender( )
+	{
+	}
+	//------------------------------------------------------------------------------
 	void CGUIFramework_Windows::OutputFatalError( const char* pErrorDesc )
 	{
 		::MessageBoxA( NULL, pErrorDesc, "fatal error", MB_OK );

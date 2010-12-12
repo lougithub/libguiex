@@ -43,6 +43,8 @@ namespace guiex
 
 		virtual void PreUpdate( real fDeltaTime ) = 0;
 		virtual void PostUpdate( real fDeltaTime ) = 0;
+		virtual void PreRender( ) = 0;
+		virtual void PostRender( ) = 0;
 
 		void UpdateSystem( real fDeltaTime );
 

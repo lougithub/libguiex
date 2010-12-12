@@ -166,8 +166,10 @@ namespace guiex
 		 * @brief toggle wire frame.
 		 */
 		virtual void SetWireFrame( bool bWireFrame) = 0;
+		virtual bool IsWireFrame( ) const = 0;
 
 		virtual void EnableClip( bool bEnable ) = 0;
+		virtual bool IsEnableClip( ) const = 0;
 
 	public:
 		/**

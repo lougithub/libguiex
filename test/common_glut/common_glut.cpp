@@ -11,6 +11,8 @@
 
 #include <libguiex_framework/guiframework.h>
 
+#include <iostream>
+
 #include <glut.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -111,6 +113,20 @@ void KeyChar(unsigned char key, int x, int y)
 
 	case 0x0D:  // CR (Return)
 		CGUIInterfaceManager::Instance()->GetInterfaceKeyboard()->ChangeKeyState(KC_ENTER, KEY_DOWN);
+		break;
+
+	case 'c':	//clip or not
+		if( CGUIInterfaceManager::Instance()->GetInterfaceRender())
+		{
+			CGUIInterfaceManager::Instance()->GetInterfaceRender()->EnableClip( !CGUIInterfaceManager::Instance()->GetInterfaceRender()->IsEnableClip() );
+		}
+		break;
+
+	case 'w':	//wireframe or not
+		if( CGUIInterfaceManager::Instance()->GetInterfaceRender())
+		{
+			CGUIInterfaceManager::Instance()->GetInterfaceRender()->SetWireFrame( !CGUIInterfaceManager::Instance()->GetInterfaceRender()->IsWireFrame() );
+		}
 		break;
 
 	default:
@@ -229,7 +245,7 @@ int main(int argc, char** argv)
 	glutInitWindowSize( g_nScreenWidth, g_nScreenHeight );
 	glutInitWindowPosition( 100, 100 );
 	glutCreateWindow( "libguiex test" );
-	glutSetCursor( GLUT_CURSOR_NONE );
+	glutSetCursor( GLUT_CURSOR_INHERIT );
 	glutDisplayFunc( DrawFrame );
 	glutMouseFunc( MouseButton );
 	//glutMouseWheelFunc(MouseWheel);
@@ -250,6 +266,7 @@ int main(int argc, char** argv)
 	g_pFramework = CreateFramework( CGUISize( g_nScreenWidth, g_nScreenHeight ), "D:/_ipad_/_project_/libguiex_googlecode/data/test/" );
 	g_pFramework->Initialize();
 
+	g_aOldTimer.UpdateTime();
 	glutMainLoop();
 
 	return 0;

@@ -30,10 +30,9 @@ if( WIN32 )
     include_directories( "${PROJECT_SOURCE_DIR}/external/Box2D" )
 
     #link directory
-    include_directories( "${PROJECT_SOURCE_DIR}/external/glut" )
+    link_directories( "${PROJECT_SOURCE_DIR}/external/glut" )
 
-    set( WIN32_EXECUTABLE true )
-    add_executable( ${target_name} WIN32 ${${target_name}_SRCS} )
+    add_executable( ${target_name} ${${target_name}_SRCS} )
     add_dependencies( ${target_name} libguiex_module libguiex_widget Box2D )
 	macro_set_target_output_dir( ${target_name} )
     target_link_libraries( ${target_name}  

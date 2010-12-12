@@ -217,6 +217,11 @@ namespace guiex
 		m_bWireFrame = bWireFrame;
 	}
 	//------------------------------------------------------------------------------
+	bool IGUIRender_opengles::IsWireFrame( ) const
+	{
+		return m_bWireFrame;
+	}
+	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::DrawRect(const CGUIMatrix4& rWorldMatrix,
 		const CGUIRect& rDestRect, 
 		real fLineWidth,
@@ -767,6 +772,11 @@ namespace guiex
 	void IGUIRender_opengles::EnableClip( bool bEnable )
 	{
 		m_bEnableClip = bEnable;
+	}
+	//------------------------------------------------------------------------------
+	bool IGUIRender_opengles::IsEnableClip( ) const
+	{
+		return m_bEnableClip;
 	}
 	//-----------------------------------------------------------------------------
 }//namespace guiex

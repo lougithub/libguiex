@@ -95,9 +95,7 @@ namespace guiex
 		try
 		{
 			PreUpdate( fDeltaTime );
-
 			UpdateSystem( fDeltaTime );
-
 			PostUpdate( fDeltaTime );
 		}
 		catch (std::exception& rError)
@@ -119,7 +117,9 @@ namespace guiex
 	{
 		try
 		{
+			PreRender( );
 			GSystem->Render();
+			PostRender( );
 		}
 		catch (std::exception& rError)
 		{

@@ -95,7 +95,9 @@ namespace guiex
 		virtual	uint32 GetVertScreenDPI(void) const;
 
 		virtual void SetWireFrame( bool bWireFrame);
+		virtual bool IsWireFrame( ) const;
 		virtual void EnableClip( bool bEnable );
+		virtual bool IsEnableClip( ) const;
 
 		virtual void DeleteSelf();
 
