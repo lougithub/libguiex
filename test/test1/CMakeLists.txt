@@ -1,4 +1,4 @@
-#if( WIN32 )
+if( WIN32 )
 
     set( target_name "test1" )
     message( STATUS "generate execute: " ${target_name} )
@@ -51,4 +51,4 @@
         general freetype
         )
         
-	#endif()
+endif()

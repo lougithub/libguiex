@@ -1,3 +1,4 @@
+if( WIN32 )
 set( target_name "freetype" )
 message( STATUS "generate library: " ${target_name} )
 
@@ -80,4 +81,5 @@ else()
 
 	message( FATAL_ERROR "unsupport platform" )
 
+endif()
 endif()

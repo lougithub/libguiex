@@ -1,3 +1,4 @@
+if( WIN32 )
 set( target_name "libguiex_framework" )
 message( STATUS "generate library: " ${target_name} )
 
@@ -48,3 +49,4 @@ include_directories( "${PROJECT_SOURCE_DIR}/external/freetype/include" )
 add_library( ${target_name} STATIC ${${target_name}_SRCS} )
 add_dependencies( ${target_name} libguiex_module )
 
+endif()
