@@ -31,7 +31,7 @@ if( WIN32 )
 elseif( APPLE )
 
 	set( ${target_name}_SRCS
-		${$a{target_name}_framework_SRCS}
+		${${target_name}_framework_SRCS}
 		${${target_name}_mac_SRCS}
 		)
 
