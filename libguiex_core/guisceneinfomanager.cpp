@@ -112,24 +112,24 @@ namespace guiex
 		}
 
 		//parse scene info
-		CGUISceneInfo * pSceneInfo = GenerateSceneInfo();
-		if( 0 != pSceneInfo->LoadFromPropertySet( DoGetFilename(rSceneFilePath), DoGetFileDir(rSceneFilePath), aPropertySet ))
+		CGUISceneInfo * pSceneInfo = GenerateSceneInfo( DoGetFilename(rSceneFilePath) );
+		if( 0 != pSceneInfo->LoadFromPropertySet( DoGetFileDir(rSceneFilePath), aPropertySet ))
 		{
 			DestroySceneInfo( pSceneInfo );
 			return -1;
 		}
 
-		std::map<CGUIString, CGUISceneInfo*>::iterator itor = m_mapSceneInfos.find( pSceneInfo->GetSceneFilename() );
+		std::map<CGUIString, CGUISceneInfo*>::iterator itor = m_mapSceneInfos.find( pSceneInfo->GetSceneName() );
 		if( itor != m_mapSceneInfos.end() )
 		{
 			DestroySceneInfo( pSceneInfo );
 			throw CGUIException(
 				"[CGUISceneInfoManager::DoLoadScene]: has duplicated scene <%s>", 
-				pSceneInfo->GetSceneFilename().c_str());
+				pSceneInfo->GetSceneName().c_str());
 			return -1;
 		}
-		m_mapSceneInfos.insert( std::make_pair( pSceneInfo->GetSceneFilename(), pSceneInfo));
-		m_vecSceneFileNames.push_back( pSceneInfo->GetSceneFilename() );
+		m_mapSceneInfos.insert( std::make_pair( pSceneInfo->GetSceneName(), pSceneInfo));
+		m_vecSceneFileNames.push_back( pSceneInfo->GetSceneName() );
 
 		return 0;
 	}
@@ -176,7 +176,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUISceneInfoManager::UnloadScenes( )
+	void CGUISceneInfoManager::UnloadScenes( )
 	{
 		for( std::map<CGUIString, CGUISceneInfo*>::iterator itor = m_mapSceneInfos.begin();
 			itor != m_mapSceneInfos.end();
@@ -207,7 +207,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUISceneInfoManager::ClearSceneResourceLoadFlags( )
+	void CGUISceneInfoManager::ClearSceneResourceLoadFlags( )
 	{
 		for( std::map<CGUIString, CGUISceneInfo*>::iterator itor = m_mapSceneInfos.begin();
 			itor != m_mapSceneInfos.end();
@@ -217,7 +217,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	CGUIString	CGUISceneInfoManager::GetScenePath( const CGUIString& rSceneName ) const
+	CGUIString CGUISceneInfoManager::GetScenePath( const CGUIString& rSceneName ) const
 	{
 		CGUISceneInfo * pSceneInfo = GetSceneInfo( rSceneName );
 		if( !pSceneInfo )
@@ -238,9 +238,9 @@ namespace guiex
 		return m_vecSceneFileNames;
 	}
 	//------------------------------------------------------------------------------
-	CGUISceneInfo* CGUISceneInfoManager::GenerateSceneInfo() const
+	CGUISceneInfo* CGUISceneInfoManager::GenerateSceneInfo( const CGUIString& rSceneName ) const
 	{
-		return new CGUISceneInfo;
+		return new CGUISceneInfo( rSceneName );
 	}
 	//------------------------------------------------------------------------------
 	void CGUISceneInfoManager::DestroySceneInfo( CGUISceneInfo* pSceneInfo) const

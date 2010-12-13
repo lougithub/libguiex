@@ -21,7 +21,6 @@
 //============================================================================//
 // declare
 //============================================================================//
-
 namespace guiex
 {
 	class IGUIInterfaceFileSys;
@@ -41,7 +40,7 @@ namespace guiex
 
 		static CGUISceneInfoManager* Instance();
 
-		int32 LoadScenes( const CGUIString& rSceneRootPath = "\\", const CGUIString& rSuffix = ".uip" );
+		int32 LoadScenes( const CGUIString& rSceneRootPath = "/", const CGUIString& rSuffix = ".uip" );
 		void UnloadScenes( );
 
 		CGUISceneInfo* GetSceneInfo( const CGUIString& rSceneName ) const;
@@ -51,22 +50,23 @@ namespace guiex
 
 		void ClearSceneResourceLoadFlags( );
 
-		CGUISceneInfo* GenerateSceneInfo() const;
+		CGUISceneInfo* GenerateSceneInfo( const CGUIString& rSceneName ) const;
 		void DestroySceneInfo( CGUISceneInfo* pSceneInfo) const;
 
 	protected:
 		int32 DoLoadScene( const CGUIString& rSceneFilePath );
 		CGUIString DoGetFilename( const CGUIString& rPath );
 		CGUIString DoGetFileDir( const CGUIString& rPath ); 
+
 	protected:
-		std::map<CGUIString, CGUISceneInfo*>	m_mapSceneInfos;	//
-		std::vector<CGUIString>					m_vecSceneFilePaths;	//absolute file path
-		std::vector<CGUIString>					m_vecSceneFileNames;	//file name
+		std::map<CGUIString, CGUISceneInfo*> m_mapSceneInfos; //
+		std::vector<CGUIString> m_vecSceneFilePaths; //absolute file path
+		std::vector<CGUIString> m_vecSceneFileNames; //file name
 
 	private:
 		static CGUISceneInfoManager* m_pSingleton;
 	};
-}		//namespace guiex
+} //namespace guiex
 
 
 #endif //__KEN_GUISCENEINFOMANAGER_20091022_H__

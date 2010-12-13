@@ -619,7 +619,7 @@ wxAuiNotebook* WxMainFrame::CreateCanvasNotebook()
 //------------------------------------------------------------------------------
 int		WxMainFrame::OpenScene( const guiex::CGUISceneInfo* pSceneInfo )
 {
-	m_strCurrentSceneName = pSceneInfo->GetSceneFilename();
+	m_strCurrentSceneName = pSceneInfo->GetSceneName();
 	OutputString( std::string("Open Scene File: ") + m_strCurrentSceneName );
 
 	//add widget file to tree

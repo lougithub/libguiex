@@ -89,7 +89,7 @@ namespace guiex
 		return ret;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIResource::Unload()
+	void CGUIResource::Unload()
 	{
 		if( m_eIsLoaded == LOADSTATE_Unloaded )
 		{
@@ -100,22 +100,22 @@ namespace guiex
 		m_eIsLoaded = LOADSTATE_Unloaded;
 	}
 	//------------------------------------------------------------------------------
-	bool	CGUIResource::IsLoaded() const
+	bool CGUIResource::IsLoaded() const
 	{
 		return m_eIsLoaded == LOADSTATE_Loaded;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIString&	CGUIResource::GetName() const
+	const CGUIString& CGUIResource::GetName() const
 	{
 		return m_strName;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIString&	CGUIResource::GetSceneName() const
+	const CGUIString& CGUIResource::GetSceneName() const
 	{
 		return m_strSceneName;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIString&	CGUIResource::GetResourceType() const
+	const CGUIString& CGUIResource::GetResourceType() const
 	{
 		return m_strResourceType;
 	}
