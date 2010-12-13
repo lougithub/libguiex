@@ -22,8 +22,8 @@ namespace guiex
 	class GUIEXPORT CGUIFramework_Mac : public CGUIFrameworkBase
 	{
 	public:
-		CGUIFramework_Windows( const CGUISize& rScreenSize, const CGUIString& rDataPath );
-		virtual ~CGUIFramework_Windows();
+		CGUIFramework_Mac( const CGUISize& rScreenSize, const char* pDataPath );
+		virtual ~CGUIFramework_Mac();
 
 
 	protected:

@@ -21,7 +21,7 @@ namespace guiex
 	typedef CGUIFramework_Windows CGUIFramework;
 }
 #elif defined(GUIEX_PLATFORM_MAC)
-#include "guiframework_mach"
+#include "guiframework_mac.h"
 namespace guiex
 {
 	typedef CGUIFramework_Mac CGUIFramework;

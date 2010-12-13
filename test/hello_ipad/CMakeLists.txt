@@ -70,7 +70,7 @@ if( APPLE )
 		TARGET ${execute_name} 
 		POST_BUILD 
 		COMMAND ln
-		ARGS -fs "${PROJECT_SOURCE_DIR}/data/test" "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${execute_name}.app/test"
+		ARGS -fs ${PROJECT_SOURCE_DIR}/data/test ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${execute_name}.app/test
 		WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
 		COMMENT "copying resource ..."
 		)

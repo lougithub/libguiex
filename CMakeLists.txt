@@ -36,13 +36,12 @@ include_directories( "${PROJECT_SOURCE_DIR}" )
 if( APPLE )
 
 	#iphone sdk
-	set( IPHONE_SDK "iphonesimulator4.1" )
-    #set( IPHONE_SDK "iphoneos4.1" )
+	#set( IPHONE_SDK "iphonesimulator4.1" )
+    set( IPHONE_SDK "iphoneos4.1" )
 
     set( CMAKE_OSX_SYSROOT "${IPHONE_SDK}" )
 	set( XCODE_ATTRIBUTE_SDKROOT "${IPHONE_SDK}" )
-	#set( CMAKE_OSX_ARCHITECTURES "$(ARCHS_STANDARD_32_BIT)" )
-	set( CMAKE_OSX_ARCHITECTURES "$(ARCHS_UNIVERSAL_IPHONE_OS)")
+	set( CMAKE_OSX_ARCHITECTURES "$(ARCHS_STANDARD_32_BIT)" )
 	set( CMAKE_OSX_DEPLOYMENT_TARGET "")
 	set( CMAKE_EXE_LINKER_FLAGS "-framework Foundation -framework CoreGraphics -framework QuartzCore -framework UIKit -framework OpenGLES")
 	set( MACOSX_BUNDLE_GUI_IDENTIFIER "com.yourcompany.\${PRODUCT_NAME:rfc1034identifier}")

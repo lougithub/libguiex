@@ -68,7 +68,7 @@ CLibGuiexEngine::~CLibGuiexEngine()
 void CLibGuiexEngine::Initialize( int width, int height, const char* szDataPath )
 {
 	m_pFramework = new CGUIFrameworkTest( CGUISize( width, height ), (CGUIString(szDataPath) + "/test/").c_str() );
-	m_pFramework.Initialize();
+	m_pFramework->Initialize();
 	
 	InitWidgets();
 }

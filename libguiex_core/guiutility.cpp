@@ -93,7 +93,6 @@ namespace guiex
 		date_and_time[33] = '\0';
 		return &date_and_time[15 + (return_pointer_to_first_digit != 0)];
 #elif defined( GUIEX_PLATFORM_MAC)
-		GUI_ASSERT(0,"not implement yet");
 		long now;
 		char timebuf[40];
 		now=(long)time((time_t *)0);

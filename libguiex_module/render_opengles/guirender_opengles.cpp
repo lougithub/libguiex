@@ -137,7 +137,7 @@ namespace guiex
 		m_nMaxStencilRef = (1<<m_nStencilBits) - 1;
 		if( m_nMaxStencilRef < 2 )
 		{
-			GUI_TRACE( "[IGUIRender_opengl::DoInitialize]: stencil is disabled\n" );
+			GUI_TRACE( "[IGUIRender_opengles::DoInitialize]: stencil is disabled\n" );
 		}
 
 		makeGLMatrix( m_aWholeScreenRect.m_gl_world_matrix, CGUIMatrix4::IDENTITY );

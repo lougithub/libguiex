@@ -8,7 +8,7 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include "guiframework_windows.h"
+#include "guiframework_mac.h"
 
 #include <libguiex_widget/guiwgt.h>
 
@@ -28,8 +28,8 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	CGUIFramework_Mac::CGUIFramework_Mac( const CGUISize& rScreenSize, const CGUIString& rDataPath )
-		:CGUIFrameworkBase( rScreenSize, rDataPath )
+	CGUIFramework_Mac::CGUIFramework_Mac( const CGUISize& rScreenSize, const char* pDataPath )
+		:CGUIFrameworkBase( rScreenSize, pDataPath )
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -52,7 +52,8 @@ namespace guiex
 		}
 
 		//log
-		GUI_LOG->Open( "gui_framework_log", CGUILogMsg::FLAG_TIMESTAMP_LITE | CGUILogMsg::FLAG_STDERR);
+		//GUI_LOG->Open( "gui_framework_log", CGUILogMsg::FLAG_TIMESTAMP_LITE | CGUILogMsg::FLAG_STDERR);
+		GUI_LOG->Open( "gui_framework_log", CGUILogMsg::FLAG_STDERR);
 		GUI_LOG->SetPriorityMask( GUI_LM_DEBUG | GUI_LM_TRACE | GUI_LM_WARNING|GUI_LM_ERROR );
 		GSystem->SetScreenSize( GetScreenSize() );
 
@@ -111,11 +112,11 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	virtual void CGUIFramework_Mac::PreRender( )
+	void CGUIFramework_Mac::PreRender( )
 	{
 	}
 	//------------------------------------------------------------------------------
-	virtual void CGUIFramework_Mac::PostRender( )
+	void CGUIFramework_Mac::PostRender( )
 	{
 	}
 	//------------------------------------------------------------------------------
