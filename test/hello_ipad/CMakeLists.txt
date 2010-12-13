@@ -36,13 +36,21 @@ if( APPLE )
 	#set( MACOSX_BUNDLE_COPYRIGHT "Copyright 2010. All Rights Reserved." )
 
 	add_executable( ${execute_name} MACOSX_BUNDLE ${${execute_name}_SRCS} )
-	add_dependencies( ${execute_name} libguiex_module libguiex_widget libguiex_script_wrapper )
+	add_dependencies( 
+		${execute_name} 
+		libguiex_module 
+		libguiex_widget 
+		libguiex_script_wrapper 
+		libguiex_framework
+		)
+
 	target_link_libraries(
 		${execute_name}
 		libguiex_core
 		libguiex_widget
 		libguiex_module
 		libguiex_script_wrapper
+		libguiex_framework
 		tinyxml
 		lua
 		)

@@ -35,6 +35,8 @@ namespace guiex
 
 		virtual void PreUpdate( real fDeltaTime );
 		virtual void PostUpdate( real fDeltaTime );
+		virtual void PreRender( );
+		virtual void PostRender( );
 
 		virtual void OutputFatalError( const char* pErrorDesc );
 

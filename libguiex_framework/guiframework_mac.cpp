@@ -13,18 +13,14 @@
 #include <libguiex_widget/guiwgt.h>
 
 //libguiex module
-#include <libguiex_module/render_opengl/guirender_opengl.h>
+#include <libguiex_module/font_cocoa/guifont_cocoa.h>
 #include <libguiex_module/imageloader_tga/guiimageloader_tga.h>
-#include <libguiex_module/keyboard_winapi/guikeyboard_winapi.h>
-#include <libguiex_module/mouse_winapi/guimouse_winapi.h>
-#include <libguiex_module/font_ft2/guifont_ft2.h>
-#include <libguiex_module/filesys_stdio/guifilesys_stdio.h>
+#include <libguiex_module/filesys_cocoa/guifilesys_cocoa.h>
 #include <libguiex_module/configfile_tinyxml/guiconfigfile_tinyxml.h>
+#include <libguiex_module/render_opengles/guirender_opengles.h>
+#include <libguiex_module/stringconv_cocoa/guistringconv_cocoa.h>
+#include <libguiex_module/stringconv_iconv/guistringconv_iconv.h>
 #include <libguiex_module/script_lua/guiscript_lua.h>
-#include <libguiex_module/ime_winapi/guiime_winapi.h>
-#include <libguiex_module/stringconv_winapi/guistringconv_winapi.h>
-
-#include <fstream>
 
 //============================================================================//
 // function
@@ -112,6 +108,14 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	void CGUIFramework_Mac::PostUpdate( real fDeltaTime )
+	{
+	}
+	//------------------------------------------------------------------------------
+	virtual void CGUIFramework_Mac::PreRender( )
+	{
+	}
+	//------------------------------------------------------------------------------
+	virtual void CGUIFramework_Mac::PostRender( )
 	{
 	}
 	//------------------------------------------------------------------------------
