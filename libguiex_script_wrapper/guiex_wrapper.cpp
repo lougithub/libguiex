@@ -6854,23 +6854,6 @@ static swig_lua_class *swig_guiex_IGUIInterface_bases[] = {0};
 static const char *swig_guiex_IGUIInterface_base_names[] = {0};
 static swig_lua_class _wrap_class_guiex_IGUIInterface = { "IGUIInterface", &SWIGTYPE_p_guiex__IGUIInterface,0, swig_delete_IGUIInterface, swig_guiex_IGUIInterface_methods, swig_guiex_IGUIInterface_attributes, swig_guiex_IGUIInterface_bases, swig_guiex_IGUIInterface_base_names };
 
-static int _wrap_new_CGUIInterfaceManager(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::CGUIInterfaceManager *result = 0 ;
-  
-  SWIG_check_num_args("guiex::CGUIInterfaceManager",0,0)
-  result = (guiex::CGUIInterfaceManager *)new guiex::CGUIInterfaceManager();
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIInterfaceManager,1); SWIG_arg++; 
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static int _wrap_CGUIInterfaceManager_Instance(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIInterfaceManager *result = 0 ;
@@ -7201,10 +7184,6 @@ fail:
 }
 
 
-static void swig_delete_CGUIInterfaceManager(void *obj) {
-guiex::CGUIInterfaceManager *arg1 = (guiex::CGUIInterfaceManager *) obj;
-delete arg1;
-}
 static swig_lua_method swig_guiex_CGUIInterfaceManager_methods[] = {
     {"RegisterInterface", _wrap_CGUIInterfaceManager_RegisterInterface}, 
     {"UnregisterInterface", _wrap_CGUIInterfaceManager_UnregisterInterface}, 
@@ -7218,7 +7197,7 @@ static swig_lua_attribute swig_guiex_CGUIInterfaceManager_attributes[] = {
 };
 static swig_lua_class *swig_guiex_CGUIInterfaceManager_bases[] = {0};
 static const char *swig_guiex_CGUIInterfaceManager_base_names[] = {0};
-static swig_lua_class _wrap_class_guiex_CGUIInterfaceManager = { "CGUIInterfaceManager", &SWIGTYPE_p_guiex__CGUIInterfaceManager,_wrap_new_CGUIInterfaceManager, swig_delete_CGUIInterfaceManager, swig_guiex_CGUIInterfaceManager_methods, swig_guiex_CGUIInterfaceManager_attributes, swig_guiex_CGUIInterfaceManager_bases, swig_guiex_CGUIInterfaceManager_base_names };
+static swig_lua_class _wrap_class_guiex_CGUIInterfaceManager = { "CGUIInterfaceManager", &SWIGTYPE_p_guiex__CGUIInterfaceManager,0,0, swig_guiex_CGUIInterfaceManager_methods, swig_guiex_CGUIInterfaceManager_attributes, swig_guiex_CGUIInterfaceManager_bases, swig_guiex_CGUIInterfaceManager_base_names };
 
 static int _wrap_RegisterInterface(lua_State* L) {
   int SWIG_arg = 0;

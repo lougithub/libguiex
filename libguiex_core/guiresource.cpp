@@ -66,6 +66,11 @@ namespace guiex
 		--m_nReferenceCount;
 	}
 	//------------------------------------------------------------------------------
+	void CGUIResource::RefClear() const
+	{
+		m_nReferenceCount = 0;
+	}
+	//------------------------------------------------------------------------------
 	uint32 CGUIResource::GetRefCount() const
 	{
 		return m_nReferenceCount;

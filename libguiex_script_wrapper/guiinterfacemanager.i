@@ -6,10 +6,11 @@ namespace guiex
 	};
 	class CGUIInterfaceManager
 	{
-	public:
+	protected:
 		CGUIInterfaceManager();
 		~CGUIInterfaceManager();
 
+	public:
 		static CGUIInterfaceManager* Instance();
 
 		int	RegisterInterface(const CGUIString& rInterface, const CGUIString& rModuleName, void* pUserData = NULL);

@@ -1,6 +1,6 @@
 if( APPLE )
 
-	set( execute_name "hello_ipad" )
+	set( execute_name "example_hello_ipad" )
 	message( STATUS "generate execute: " ${execute_name} )
 
 	# all source
@@ -74,9 +74,6 @@ if( APPLE )
 		WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
 		COMMENT "copying resource ..."
 		)
-
-
-
 
 endif()
 

@@ -92,7 +92,6 @@ namespace guiex
 	class GUIEXPORT CGUIInterfaceManager
 	{
 	public:
-		CGUIInterfaceManager();
 		~CGUIInterfaceManager();
 
 		static CGUIInterfaceManager* Instance();
@@ -133,6 +132,10 @@ namespace guiex
 		template <class T> T* GetInterfaceImageLoaderTyped();
 
 	protected:
+		friend class CGUISystem;
+		CGUIInterfaceManager();
+		CGUIInterfaceManager( const CGUIInterfaceManager& );
+
 		struct SInterface
 		{
 			IGUIInterface*		m_pInterface;

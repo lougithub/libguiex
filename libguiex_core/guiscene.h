@@ -4,11 +4,8 @@
 * @author Lou Guoliang (louguoliang@gmail.com)
 * @date 2009-10-22
 */
-
-
 #ifndef	__KEN_SCENEINFO_20091022_H__
 #define __KEN_SCENEINFO_20091022_H__
-
 
 
 //============================================================================//
@@ -36,8 +33,6 @@ namespace guiex
 	public:
 		~CGUIScene();
 
-		void Reset();
-
 		int32 LoadFromPropertySet( const CGUIString& rScenePath, const CGUIProperty& aPropertySet );
 
 		const CGUIString& GetScenePath() const;
@@ -50,9 +45,6 @@ namespace guiex
 
 		bool IsDependenciesLoaded() const;
 		void SetDependenciesLoaded( bool bLoaded );
-
-		bool IsResourceLoaded() const;
-		void SetResourceLoaded( bool bLoaded );
 
 	protected:
 		friend class CGUISceneManager;
@@ -75,7 +67,6 @@ namespace guiex
 
 		std::vector<CGUIString>	m_vecDependencies; //dependent scenes
 		bool m_bDependenciesLoaded; //whether the dependencies has been loaded
-		bool m_bResourceLoaded; //whether the resource of this scene has been loaded
 
 		CGUIString m_strTitle; //title of this scene
 	};

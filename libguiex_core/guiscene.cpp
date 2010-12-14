@@ -26,28 +26,11 @@ namespace guiex
 	CGUIScene::CGUIScene( const CGUIString& rSceneName )
 		:CGUIResource( rSceneName, rSceneName, "SCENE" )
 		,m_bDependenciesLoaded(false)
-		,m_bResourceLoaded(false)
 	{
-		Reset();
 	}
 	//------------------------------------------------------------------------------
 	CGUIScene::~CGUIScene()
 	{
-	}
-	//------------------------------------------------------------------------------
-	/** 
-	* @brief reset data
-	*/
-	void CGUIScene::Reset()
-	{
-		m_strScenePath.empty();
-
-		m_vecWidgetFiles.clear();
-		m_vecScriptFiles.clear();
-		m_vecResourceFiles.clear();
-
-		m_vecDependencies.clear();
-		m_strTitle.clear();
 	}
 	//------------------------------------------------------------------------------
 	bool CGUIScene::IsDependenciesLoaded() const
@@ -58,16 +41,6 @@ namespace guiex
 	void CGUIScene::SetDependenciesLoaded( bool bLoaded )
 	{
 		m_bDependenciesLoaded = bLoaded;
-	}
-	//------------------------------------------------------------------------------
-	bool CGUIScene::IsResourceLoaded() const
-	{
-		return m_bResourceLoaded;
-	}
-	//------------------------------------------------------------------------------
-	void CGUIScene::SetResourceLoaded( bool bLoaded )
-	{
-		m_bResourceLoaded = bLoaded;
 	}
 	//------------------------------------------------------------------------------
 	/** 
@@ -86,8 +59,6 @@ namespace guiex
 		const CGUIString& rScenePath, 
 		const CGUIProperty& aPropertySet )
 	{
-		Reset();
-
 		m_strScenePath = rScenePath;
 
 		uint32 nSize = aPropertySet.GetPropertyNum();

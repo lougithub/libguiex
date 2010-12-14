@@ -1,6 +1,6 @@
 if( WIN32 )
 
-    set( target_name "test1" )
+    set( target_name "example_test1" )
     message( STATUS "generate execute: " ${target_name} )
 
     #common source

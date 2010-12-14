@@ -30,6 +30,7 @@ namespace guiex
 
 		void RefRetain() const;
 		void RefRelease() const;
+		void RefClear() const;
 		uint32 GetRefCount() const;
 
 	protected:

@@ -163,8 +163,8 @@ namespace guiex
 	template< class TResType >
 	inline void CGUIResourceManager<TResType>::ReleaseAllResources( )
 	{
-		ReleaseAllRegisterResources();
 		ReleaseAllAllocateResources();
+		ReleaseAllRegisterResources();
 	}
 	//------------------------------------------------------------------------------
 	//template< class TResType >

@@ -308,7 +308,7 @@ namespace guiex
 		m_bDrawExtraInfo = bDraw;
 	}
 	//------------------------------------------------------------------------------
-	bool	CGUISystem::IsDrawExtraInfo() const
+	bool CGUISystem::IsDrawExtraInfo() const
 	{
 		return m_bDrawExtraInfo;
 	}
@@ -362,14 +362,14 @@ namespace guiex
 	*/
 	void CGUISystem::ReleaseAllResources(  )
 	{
+		CGUISceneManager::Instance()->ReleaseAllResources();
+
 		for( TListResourceMgr::iterator itor = m_listResourceManager.begin(); 
 			itor != m_listResourceManager.end();
 			++itor)
 		{
 			(*itor)->ReleaseAllResources( );
 		}
-
-		CGUISceneManager::Instance()->ClearSceneResourceLoadFlags();
 	}
 	//------------------------------------------------------------------------------
 	void CGUISystem::DestroyAllWidgets(  )

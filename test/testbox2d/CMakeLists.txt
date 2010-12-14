@@ -1,6 +1,6 @@
 if( WIN32 )
 
-    set( target_name "testbox2d" )
+    set( target_name "example_testbox2d" )
     message( STATUS "generate execute: " ${target_name} )
 
     #common source

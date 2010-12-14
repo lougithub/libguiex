@@ -265,16 +265,6 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUISceneManager::ClearSceneResourceLoadFlags( )
-	{
-		for( std::map<CGUIString, CGUIScene*>::iterator itor = m_mapScenes.begin();
-			itor != m_mapScenes.end();
-			++itor )
-		{
-			itor->second->SetResourceLoaded(false );
-		}
-	}
-	//------------------------------------------------------------------------------
 	CGUIString CGUISceneManager::GetScenePath( const CGUIString& rSceneName ) const
 	{
 		CGUIScene * pScene = GetScene( rSceneName );
@@ -300,52 +290,6 @@ namespace guiex
 		delete pScene;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUISceneManager::LoadResourceImp(const CGUIString& strSceneName)
-	{
-		//get scene
-		CGUIScene* pSceneInfo = GetScene( strSceneName );
-		if( !pSceneInfo )
-		{
-			throw CGUIException( "[CGUISceneUtility::LoadResourceImp] failed to load resource by scene name <%s>", strSceneName.c_str());
-			return -1;
-		}
-
-		//load dependencies first
-		const std::vector<CGUIString>& rDependencies = pSceneInfo->GetDependencies();
-		for( std::vector<CGUIString>::const_iterator itor = rDependencies.begin();
-			itor != rDependencies.end();
-			++itor )
-		{
-			if( 0 != LoadResourceImp( *itor ) )
-			{
-				return -1;
-			}
-		}
-
-		//load this scene
-		if( pSceneInfo->GetRefCount() == 0 )
-		{
-			const std::vector<CGUIString>& rResourceFiles = pSceneInfo->GetResourceFiles( );
-			for( uint32 i=0; i<rResourceFiles.size(); ++i )
-			{
-				CGUIString strResourceFilePath = pSceneInfo->GetScenePath() + rResourceFiles[i];	
-				if( 0 != CGUIConfigFileLoader::LoadResourceConfigFile(strResourceFilePath, strSceneName, rResourceFiles[i]))
-				{
-					throw CGUIException( "[CGUISceneUtility::LoadResourceImp] failed to load resource by scene name <%s : %s>",strResourceFilePath.c_str(), strSceneName.c_str());
-					return -1;
-				}
-			}
-		}
-		pSceneInfo->RefRetain();
-
-		return 0;
-	}
-	//------------------------------------------------------------------------------
-	int32 CGUISceneManager::UnloadResourceImp(const CGUIString& strSceneName)
-	{
-		return 0;
-	}
-	//------------------------------------------------------------------------------
 	int32 CGUISceneManager::LoadResource(const CGUIString& strSceneName)
 	{
 		//check dependency
@@ -353,11 +297,37 @@ namespace guiex
 		{
 			return -1;
 		}
+		//get scene
+		CGUIScene* pScene = GetScene( strSceneName );
+		if( !pScene )
+		{
+			throw CGUIException( "[CGUISceneUtility::LoadResource] failed to load resource by scene name <%s>", strSceneName.c_str());
+			return -1;
+		}
 
-		return LoadResourceImp( strSceneName );
+		//load dependencies first
+		const std::vector<CGUIString>& rDependencies = pScene->GetDependencies();
+		for( std::vector<CGUIString>::const_iterator itor = rDependencies.begin();
+			itor != rDependencies.end();
+			++itor )
+		{
+			if( 0 != LoadResource( *itor ) )
+			{
+				return -1;
+			}
+		}
+
+		//load this scene
+		if( pScene->GetRefCount() == 0 )
+		{
+			LoadResourceImp( pScene );
+		}
+		pScene->RefRetain();
+
+		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUISceneManager::UnloadResource(const CGUIString& strSceneName)
+	int32 CGUISceneManager::ReleaseResource(const CGUIString& strSceneName)
 	{
 		//check dependency
 		if( 0 != CheckScenesDependency( strSceneName ) )
@@ -365,7 +335,41 @@ namespace guiex
 			return -1;
 		}
 
-		return UnloadResourceImp( strSceneName );
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	void CGUISceneManager::LoadResourceImp( CGUIScene* pScene )
+	{
+		const std::vector<CGUIString>& rResourceFiles = pScene->GetResourceFiles( );
+		for( uint32 i=0; i<rResourceFiles.size(); ++i )
+		{
+			CGUIString strResourceFilePath = pScene->GetScenePath() + rResourceFiles[i];	
+			if( 0 != CGUIConfigFileLoader::LoadResourceConfigFile(strResourceFilePath, pScene->GetSceneName(), rResourceFiles[i]))
+			{
+				throw CGUIException( 
+					"[CGUISceneUtility::LoadResource] failed to load resource by scene name <%s : %s>",
+					strResourceFilePath.c_str(), pScene->GetSceneName().c_str());
+			}
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUISceneManager::ReleaseResourceImp( CGUIScene* pScene )
+	{
+	}
+	//------------------------------------------------------------------------------
+	void CGUISceneManager::ReleaseAllResources( )
+	{
+		for( std::map<CGUIString, CGUIScene*>::iterator itor = m_mapScenes.begin();
+			itor != m_mapScenes.end();
+			++itor )
+		{
+			CGUIScene* pScene = itor->second;
+			if( pScene->GetRefCount() != 0 )
+			{
+				ReleaseResourceImp( pScene );
+				pScene->RefClear();
+			}
+		}
 	}
 	//------------------------------------------------------------------------------
 }

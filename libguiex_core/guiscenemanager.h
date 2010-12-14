@@ -34,9 +34,6 @@ namespace guiex
 	class GUIEXPORT CGUISceneManager
 	{
 	public:
-		CGUISceneManager();
-		~CGUISceneManager();
-
 		static CGUISceneManager* Instance();
 
 		int32 RegisterScenesFromDir( const CGUIString& rSceneRootPath = "/", const CGUIString& rSuffix = ".uip", bool bAutoBuildDepency = true );
@@ -50,19 +47,22 @@ namespace guiex
 		CGUIScene* GetScene( const CGUIString& rSceneName ) const;
 
 		int32 LoadResource(const CGUIString& strSceneName);
-		int32 UnloadResource(const CGUIString& strSceneName);
+		int32 ReleaseResource(const CGUIString& strSceneName);
+		void ReleaseAllResources( );
 
 		CGUIString GetScenePath( const CGUIString& rSceneName ) const;
 		const std::vector<CGUIString>& GetSceneNames( ) const;
 
-		void ClearSceneResourceLoadFlags(  );
-
 	protected:
+		friend class CGUISystem;
+		CGUISceneManager();
+		~CGUISceneManager();
+
 		CGUIScene* GenerateScene( const CGUIString& rSceneName ) const;
 		void DestroyScene( CGUIScene* pSceneInfo) const;
 
-		int32 LoadResourceImp(const CGUIString& strSceneName);
-		int32 UnloadResourceImp(const CGUIString& strSceneName);
+		void LoadResourceImp( CGUIScene* pScene );
+		void ReleaseResourceImp( CGUIScene* pScene );
 
 	protected:
 		std::map<CGUIString, CGUIScene*> m_mapScenes; 
