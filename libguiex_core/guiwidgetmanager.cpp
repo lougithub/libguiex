@@ -13,7 +13,7 @@
 #include <libguiex_core/guiwidget.h>
 #include <libguiex_core/guiwidgetfactory.h>
 #include <libguiex_core/guiexception.h>
-#include <libguiex_core/guisceneinfomanager.h>
+#include <libguiex_core/guiscenemanager.h>
 #include <libguiex_core/guisystem.h>
 #include <libguiex_core/guiconfigfileloader.h>
 
@@ -28,9 +28,9 @@ namespace guiex
 		return CGUIWidgetManager::Instance()->GetWidget(rWidgetName, rSceneName);
 	}
 	//------------------------------------------------------------------------------
-	GUIEXPORT CGUIWidget* LoadDynamicPage( const CGUIString& rPageFileName, const CGUIString& rPageSceneName, const CGUIString& rWorkingSceneName )
+	GUIEXPORT CGUIWidget* LoadDynamicPage( const CGUIString& rPageName, const CGUIString& rSceneName, const CGUIString& rWorkingSceneName )
 	{
-		return CGUIWidgetManager::Instance()->LoadDynamicPage(rPageFileName, rPageSceneName, rWorkingSceneName);
+		return CGUIWidgetManager::Instance()->LoadDynamicPage(rPageName, rSceneName, rWorkingSceneName);
 	}
 	//------------------------------------------------------------------------------
 
@@ -179,11 +179,11 @@ namespace guiex
 	/**
 	* @brief read config file
 	*/
-	CGUIWidget*	CGUIWidgetManager::LoadPage( const CGUIString& rFileName, const CGUIString& rSceneName )
+	CGUIWidget*	CGUIWidgetManager::LoadPage( const CGUIString& rPageName, const CGUIString& rSceneName )
 	{
 		//load file
-		CGUIString strRelPath = CGUISceneInfoManager::Instance()->GetScenePath( rSceneName ) + rFileName;
-		CGUIWidget* pPage = CGUIConfigFileLoader::LoadWidgetConfigFile( strRelPath, rSceneName, rFileName );
+		CGUIString strRelPath = CGUISceneManager::Instance()->GetScenePath( rSceneName ) + rPageName;
+		CGUIWidget* pPage = CGUIConfigFileLoader::LoadWidgetConfigFile( strRelPath, rSceneName, rPageName );
 		if( !pPage )
 		{
 			throw CGUIException(
@@ -193,7 +193,7 @@ namespace guiex
 		}
 
 		//get page
-		AddPage( pPage, rFileName );
+		AddPage( pPage, rPageName );
 		pPage->NotifyLoaded();
 		return pPage;
 	}
@@ -350,14 +350,14 @@ namespace guiex
 	* @brief read config file
 	*/
 	CGUIWidget*	CGUIWidgetManager::LoadDynamicPage( 
-		const CGUIString& rPageFileName,
-		const CGUIString& rPageSceneName,
+		const CGUIString& rPageName,
+		const CGUIString& rSceneName,
 		const CGUIString& rWorkingSceneName )
 	{
 		//load file
-		CGUIString strRelPath = CGUISceneInfoManager::Instance()->GetScenePath( rPageSceneName ) + rPageFileName;
-		CGUIString strDynamicSceneName = rPageSceneName + GSystem->GenerateAnonymousName();
-		CGUIWidget* pPage = CGUIConfigFileLoader::LoadWidgetConfigFile( strRelPath, strDynamicSceneName, rPageFileName );
+		CGUIString strRelPath = CGUISceneManager::Instance()->GetScenePath( rSceneName ) + rPageName;
+		CGUIString strDynamicSceneName = rSceneName + GSystem->GenerateAnonymousName();
+		CGUIWidget* pPage = CGUIConfigFileLoader::LoadWidgetConfigFile( strRelPath, strDynamicSceneName, rPageName );
 		if( !pPage )
 		{
 			throw CGUIException(

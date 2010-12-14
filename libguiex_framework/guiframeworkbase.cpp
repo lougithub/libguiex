@@ -17,10 +17,8 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	CGUIFrameworkBase::CGUIFrameworkBase( const CGUISize& rScreenSize, const char* pDataPath )
+	CGUIFrameworkBase::CGUIFrameworkBase( )
 		:m_bIsInitialized( false )
-		,m_aScreenSize( rScreenSize )
-		,m_strDataPath( pDataPath )
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -29,7 +27,7 @@ namespace guiex
 		Release( );
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIFrameworkBase::Initialize( )
+	int32 CGUIFrameworkBase::Initialize( const CGUISize& rScreenSize, const char* pDataPath )
 	{
 		try
 		{
@@ -40,7 +38,7 @@ namespace guiex
 			else
 			{
 				//initialize system
-				if( 0 != InitializeSystem( ))
+				if( 0 != InitializeSystem( rScreenSize, pDataPath ))
 				{
 					ReleaseSystem();
 					return -1;
@@ -129,16 +127,6 @@ namespace guiex
 		{
 			OutputFatalError( "unknown error" );
 		}
-	}
-	//------------------------------------------------------------------------------
-	const CGUISize& CGUIFrameworkBase::GetScreenSize( ) const
-	{
-		return m_aScreenSize;
-	}
-	//------------------------------------------------------------------------------
-	const CGUIString& CGUIFrameworkBase::GetDataPath( ) const
-	{
-		return m_strDataPath;
 	}
 	//------------------------------------------------------------------------------
 

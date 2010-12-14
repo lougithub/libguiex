@@ -303,7 +303,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 		//GUI_REGISTER_INTERFACE_LIB( IGUIFont_dummy);
 		GUI_REGISTER_INTERFACE_LIB( IGUIKeyboard_winapi);
 		GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
-		GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_Winapi);
+		GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_winapi);
 		//GUI_REGISTER_INTERFACE_LIB( LIBGUIEX_COMMAND_TCP_DLL);
 		//GUI_REGISTER_INTERFACE_LIB( LIBGUIEX_SOUND_OPENAL_DLL);
 		GUI_REGISTER_INTERFACE_LIB( IGUIScript_lua);
@@ -617,13 +617,13 @@ wxAuiNotebook* WxMainFrame::CreateCanvasNotebook()
 //	return ctrl;
 //}
 //------------------------------------------------------------------------------
-int		WxMainFrame::OpenScene( const guiex::CGUISceneInfo* pSceneInfo )
+int		WxMainFrame::OpenScene( const guiex::CGUIScene* pScene )
 {
-	m_strCurrentSceneName = pSceneInfo->GetSceneName();
+	m_strCurrentSceneName = pScene->GetSceneName();
 	OutputString( std::string("Open Scene File: ") + m_strCurrentSceneName );
 
 	//add widget file to tree
-	const std::vector<CGUIString>& rWidgetFiles = pSceneInfo->GetWidgetFiles();
+	const std::vector<CGUIString>& rWidgetFiles = pScene->GetWidgetFiles();
 	for( unsigned i=0; i<rWidgetFiles.size(); ++i )
 	{
 		AddToFileTreeCtrl(rWidgetFiles[i], TITLE_WIDGET_CONFIG);
@@ -631,7 +631,7 @@ int		WxMainFrame::OpenScene( const guiex::CGUISceneInfo* pSceneInfo )
 	}
 
 	//add script file to tree
-	const std::vector<CGUIString>& rScriptFiles = pSceneInfo->GetScriptFiles();
+	const std::vector<CGUIString>& rScriptFiles = pScene->GetScriptFiles();
 	for( unsigned i=0; i<rScriptFiles.size(); ++i )
 	{
 		AddToFileTreeCtrl(rScriptFiles[i], TITLE_SCRIPT);
@@ -639,7 +639,7 @@ int		WxMainFrame::OpenScene( const guiex::CGUISceneInfo* pSceneInfo )
 	}
 
 	//add resource list file to tree
-	const std::vector<CGUIString>& rResourceFiles = pSceneInfo->GetResourceFiles();
+	const std::vector<CGUIString>& rResourceFiles = pScene->GetResourceFiles();
 	for( unsigned i=0; i<rResourceFiles.size(); ++i )
 	{
 		AddToFileTreeCtrl(rResourceFiles[i], TITLE_RESOURCE_CONFIG);
@@ -649,7 +649,7 @@ int		WxMainFrame::OpenScene( const guiex::CGUISceneInfo* pSceneInfo )
 	//load resource file
 	try
 	{	
-		if( 0 != guiex::CGUISceneUtility::LoadResource(m_strCurrentSceneName))
+		if( 0 != guiex::CGUISceneManager::Instance()->LoadResource(m_strCurrentSceneName))
 		{
 			return -1;
 		}
@@ -683,7 +683,7 @@ void	WxMainFrame::CloseScene( )
 		CloseCanvas();
 
 		guiex::GSystem->ReleaseAllResources();
-		guiex::CGUISceneInfoManager::Instance()->UnloadScenes();
+		guiex::CGUISceneManager::Instance()->UnregisterAllScenes();
 
 		m_bIsSceneOpened = false;
 	}
@@ -1277,7 +1277,8 @@ void WxMainFrame::OnRecentPaths( wxCommandEvent& In )
 	guiex::GSystem->SetDataPath(strPath);
 	try
 	{
-		if( 0 != guiex::CGUISceneInfoManager::Instance()->LoadScenes())
+		guiex::CGUISceneManager::Instance()->UnregisterAllScenes();
+		if( 0 != guiex::CGUISceneManager::Instance()->RegisterScenesFromDir())
 		{
 			wxMessageBox( _T("failed to load scenes"), _T("error"), wxICON_ERROR|wxCENTRE);
 			return;
@@ -1290,7 +1291,7 @@ void WxMainFrame::OnRecentPaths( wxCommandEvent& In )
 	}
 
 	//chose scene
-	const std::vector<guiex::CGUIString>& vecScenes = guiex::CGUISceneInfoManager::Instance()->GetSceneFileNames( );
+	const std::vector<guiex::CGUIString>& vecScenes = guiex::CGUISceneManager::Instance()->GetSceneNames( );
 	wxArrayString arrayScenes;
 	for( unsigned i=0; i<vecScenes.size(); ++i )
 	{
@@ -1304,10 +1305,10 @@ void WxMainFrame::OnRecentPaths( wxCommandEvent& In )
 	guiex::CGUIString strSceneFileName = vecScenes[aChoiceDlg.GetSelection()];
 
 	//get scene info
-	const guiex::CGUISceneInfo* pSceneInfo = guiex::CGUISceneInfoManager::Instance()->GetSceneInfo( strSceneFileName );
-	if( pSceneInfo->IsDependenciesLoaded())
+	const guiex::CGUIScene* pScene = guiex::CGUISceneManager::Instance()->GetScene( strSceneFileName );
+	if( pScene->IsDependenciesLoaded())
 	{
-		if( 0 != OpenScene(pSceneInfo))
+		if( 0 != OpenScene(pScene))
 		{
 			wxMessageBox( _T("failed to open scene"), _T("error"), wxICON_ERROR|wxCENTRE);
 			CloseScene();
@@ -1338,7 +1339,8 @@ void WxMainFrame::OnRecentScenes( wxCommandEvent& In )
 	guiex::GSystem->SetDataPath(strScene.second);
 	try
 	{
-		if( 0 != guiex::CGUISceneInfoManager::Instance()->LoadScenes())
+		guiex::CGUISceneManager::Instance()->UnregisterAllScenes();
+		if( 0 != guiex::CGUISceneManager::Instance()->RegisterScenesFromDir())
 		{
 			wxMessageBox( _T("failed to load scenes"), _T("error"), wxICON_ERROR|wxCENTRE);
 			return;
@@ -1351,15 +1353,15 @@ void WxMainFrame::OnRecentScenes( wxCommandEvent& In )
 	}
 
 	//get scene info
-	const guiex::CGUISceneInfo* pSceneInfo = guiex::CGUISceneInfoManager::Instance()->GetSceneInfo( strScene.first );
-	if( !pSceneInfo )
+	const guiex::CGUIScene* pScene = guiex::CGUISceneManager::Instance()->GetScene( strScene.first );
+	if( !pScene )
 	{
 		wxMessageBox( _T("failed to load scene"), _T("error"), wxICON_ERROR|wxCENTRE);
 		return;
 	}
-	else if( pSceneInfo->IsDependenciesLoaded())
+	else if( pScene->IsDependenciesLoaded())
 	{
-		if( 0 != OpenScene(pSceneInfo))
+		if( 0 != OpenScene(pScene))
 		{
 			wxMessageBox( _T("failed to open scene"), _T("error"), wxICON_ERROR|wxCENTRE);
 			CloseScene();
@@ -1418,7 +1420,8 @@ void WxMainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 
 	try
 	{
-		if( 0 != guiex::CGUISceneInfoManager::Instance()->LoadScenes())
+		guiex::CGUISceneManager::Instance()->UnregisterAllScenes();
+		if( 0 != guiex::CGUISceneManager::Instance()->RegisterScenesFromDir())
 		{
 			wxMessageBox( _T("failed to load scenes"), _T("error"), wxICON_ERROR|wxCENTRE);
 			return;
@@ -1431,7 +1434,7 @@ void WxMainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 	}
 	
 	//chose scene
-	const std::vector<guiex::CGUIString>& vecScenes = guiex::CGUISceneInfoManager::Instance()->GetSceneFileNames( );
+	const std::vector<guiex::CGUIString>& vecScenes = guiex::CGUISceneManager::Instance()->GetSceneNames( );
 	wxArrayString arrayScenes;
 	for( unsigned i=0; i<vecScenes.size(); ++i )
 	{
@@ -1445,10 +1448,10 @@ void WxMainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 	guiex::CGUIString strSceneFileName = vecScenes[aChoiceDlg.GetSelection()];
 
 	//get scene info
-	const guiex::CGUISceneInfo* pSceneInfo = guiex::CGUISceneInfoManager::Instance()->GetSceneInfo( strSceneFileName );
-	if( pSceneInfo->IsDependenciesLoaded())
+	const guiex::CGUIScene* pScene = guiex::CGUISceneManager::Instance()->GetScene( strSceneFileName );
+	if( pScene->IsDependenciesLoaded())
 	{
-		if( 0 != OpenScene(pSceneInfo))
+		if( 0 != OpenScene(pScene))
 		{
 			wxMessageBox( _T("failed to open scene"), _T("error"), wxICON_ERROR|wxCENTRE);
 			CloseScene();
@@ -1481,11 +1484,11 @@ void	WxMainFrame::CloseCanvas()
 void WxMainFrame::RenderFile( const std::string& rFileName )
 {
 	CloseCanvas();
-	guiex::CGUISceneInfo* pSceneInfo = guiex::CGUISceneInfoManager::Instance()->GetSceneInfo(m_strCurrentSceneName);
+	guiex::CGUIScene* pScene = guiex::CGUISceneManager::Instance()->GetScene(m_strCurrentSceneName);
 
 	std::string strAbsFileName = 
 		guiex::GSystem->GetDataPath() +
-		pSceneInfo->GetScenePath() +
+		pScene->GetScenePath() +
 		rFileName;
 
 	m_pCanvas = new WxEditorCanvasContainer(m_pNoteBook_Canvas, strAbsFileName);
@@ -1519,9 +1522,9 @@ void WxMainFrame::RenderFile( const std::string& rFileName )
 //------------------------------------------------------------------------------
 void	WxMainFrame::EditFileExternal( const std::string& rFileName )
 {
-	guiex::CGUISceneInfo* pSceneInfo = guiex::CGUISceneInfoManager::Instance()->GetSceneInfo(m_strCurrentSceneName);
+	guiex::CGUIScene* pScene = guiex::CGUISceneManager::Instance()->GetScene(m_strCurrentSceneName);
 
-	std::string strAbsPath = guiex::GSystem->GetDataPath() + pSceneInfo->GetScenePath();
+	std::string strAbsPath = guiex::GSystem->GetDataPath() + pScene->GetScenePath();
 	std::string strAbsFileName = strAbsPath + rFileName;
 
 	::ShellExecute( 
@@ -1535,11 +1538,11 @@ void	WxMainFrame::EditFileExternal( const std::string& rFileName )
 //------------------------------------------------------------------------------
 void	WxMainFrame::EditFile( const std::string& rFileName, EFileType eFileType )
 {
-	guiex::CGUISceneInfo* pSceneInfo = guiex::CGUISceneInfoManager::Instance()->GetSceneInfo(m_strCurrentSceneName);
+	guiex::CGUIScene* pScene = guiex::CGUISceneManager::Instance()->GetScene(m_strCurrentSceneName);
 
 	std::string strAbsPath = 
 		guiex::GSystem->GetDataPath() +
-		pSceneInfo->GetScenePath() +
+		pScene->GetScenePath() +
 		rFileName;
 
 	//check

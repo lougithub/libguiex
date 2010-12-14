@@ -37,8 +37,8 @@
 #include <libguiex_core/guiperfmonitor.h>
 
 #include <libguiex_core/guiwidgetroot.h>
-#include <libguiex_core/guisceneinfo.h>
-#include <libguiex_core/guisceneinfomanager.h>
+#include <libguiex_core/guiscene.h>
+#include <libguiex_core/guiscenemanager.h>
 #include <libguiex_core/guiwidgetmanager.h>
 
 #include <algorithm>
@@ -170,7 +170,7 @@ namespace guiex
 		m_pMouseCursor = new CGUIMouseCursor;
 		m_pPropertyManager = new CGUIPropertyManager;
 		m_pWidgetFactory = new CGUIWidgetFactory;
-		m_pSceneInfoManager = new CGUISceneInfoManager;
+		m_pSceneInfoManager = new CGUISceneManager;
 		m_pAsFactory = new CGUIAsFactory;
 	}
 	//------------------------------------------------------------------------------
@@ -369,7 +369,7 @@ namespace guiex
 			(*itor)->ReleaseAllResources( );
 		}
 
-		CGUISceneInfoManager::Instance()->ClearSceneResourceLoadFlags();
+		CGUISceneManager::Instance()->ClearSceneResourceLoadFlags();
 	}
 	//------------------------------------------------------------------------------
 	void CGUISystem::DestroyAllWidgets(  )

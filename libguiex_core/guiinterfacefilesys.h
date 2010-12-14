@@ -18,13 +18,6 @@
 #include <vector>
 
 //============================================================================//
-// declare
-//============================================================================// 
-
-
-
-
-//============================================================================//
 // class
 //============================================================================// 
 namespace guiex
@@ -73,6 +66,9 @@ namespace guiex
 			const CGUIString& rPath,
 			const CGUIString& rSuffix,
 			std::vector<CGUIString>& rArrayStrings ) = 0;
+
+		virtual CGUIString GetFilename( const CGUIString& rPath ) = 0;
+		virtual CGUIString GetFileDir( const CGUIString& rPath ) = 0;
 
 	public: 
 		static const char* StaticGetModuleName();

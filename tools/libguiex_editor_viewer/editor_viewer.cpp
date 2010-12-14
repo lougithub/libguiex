@@ -8,179 +8,56 @@
 //============================================================================//
 // include
 //============================================================================//
-// Disable the warning that the pack size is changed in this header.
-#pragma warning(disable:4103)
-#pragma warning(disable:4099)
+#include "editor_viewer.h"
 
-#include "wx/wxprec.h"
-#include "wx/glcanvas.h"
-#include "wx/aui/aui.h"
-#include "wx/colordlg.h"
-#include "wx/cmdline.h"
-#include "wx/dirdlg.h"
-#include "wx/choicdlg.h"
-
-#include <windows.h>
-
-//libguiex
-#include <libguiex_core/guiex.h>
-#include "libguiex_widget\guiwgt.h"
-
-//libguiex module
-#include <libguiex_module\render_opengl\guirender_opengl.h>
-#include <libguiex_module\imageloader_tga\guiimageloader_tga.h>
-#include <libguiex_module\keyboard_winapi\guikeyboard_winapi.h>
-#include <libguiex_module\mouse_winapi\guimouse_winapi.h>
-#include <libguiex_module\font_ft2\guifont_ft2.h>
-#include <libguiex_module\filesys_stdio\guifilesys_stdio.h>
-#include <libguiex_module\configfile_tinyxml\guiconfigfile_tinyxml.h>
-#include <libguiex_module\script_lua\guiscript_lua.h>
-#include <libguiex_module\ime_winapi\guiime_winapi.h>
-#include <libguiex_module\stringconv_winapi\guistringconv_winapi.h>
-
-#include <fstream>
+#include <libguiex_module/keyboard_winapi/guikeyboard_winapi.h>
+#include <libguiex_module/mouse_winapi/guimouse_winapi.h>
+#include <libguiex_module/ime_winapi/guiime_winapi.h>
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif //#ifdef __cplusplus
-
 #include <lua.h>
 #include <lualib.h>
 #include <lauxlib.h>
-
 #ifdef __cplusplus
 }
 #endif //#ifdef __cplusplus
-
-//============================================================================//
-// class
-//============================================================================//
-class WxMainApp : public wxApp
-{
-public:
-	virtual		bool OnInit();
-};
-
-class WxGLCanvas : public wxGLCanvas
-{
-public:
-	WxGLCanvas( wxWindow *parent, int* args,
-		wxWindowID id = wxID_ANY,
-		const wxPoint& pos = wxDefaultPosition,
-		const wxSize& size = wxDefaultSize,
-		long style = 0, const wxString& name = _T("GLCanvas") );
-
-	void OnIdle(wxIdleEvent & event);
-	void OnEraseBackground(wxEraseEvent& event);
-	void OnSize(wxSizeEvent& event);
-	//key
-	void OnKeyDown(wxKeyEvent& event);
-
-	virtual WXLRESULT MSWWindowProc(WXUINT message,
-		WXWPARAM wParam,
-		WXLPARAM lParam);
-
-protected:
-	guiex::CGUITimer m_aOldTimer;
-	guiex::CGUITimer m_aCurTimer;
-
-	DECLARE_EVENT_TABLE()
-};
-
-class WxMainFrame : public wxFrame
-{
-public:
-	WxMainFrame(
-		wxWindow* parent, 
-		wxWindowID id, 
-		const wxString& title, 
-		const wxPoint& pos = wxDefaultPosition,
-		const wxSize& size = wxDefaultSize,
-		long style = wxDEFAULT_FRAME_STYLE | wxSUNKEN_BORDER);
-	~WxMainFrame();
-
-
-	/** 
-	* @brief show string in output panel
-	*/
-	void OutputString( const std::string& rString);
-	bool GetUIInfo( bool bTryCommandLine);
-
-	enum
-	{
-		//file
-		ID_Exit = wxID_HIGHEST+1,
-		ID_About,
-		ID_Open,
-
-		//view
-		ID_VIEW_Fullscreen,
-		ID_VIEW_800x600,
-		ID_VIEW_1024x786,
-		ID_VIEW_1280x800,
-		ID_ToggleScissor,
-		ID_ToggleWireframe,
-		ID_SetBGColor,
-	};
-
-protected:
-
-	//menu
-	void OnExit(wxCommandEvent& evt);
-
-	void OnAbout(wxCommandEvent& evt);
-
-	void OnOpen(wxCommandEvent& evt);
-
-	void OnToggleScissor(wxCommandEvent& evt);
-	void OnToggleWireframe(wxCommandEvent& evt);
-	void OnSetBGColor(wxCommandEvent& evt);
-
-	void OnFullscreen(wxCommandEvent& evt);
-
-	void On800x600(wxCommandEvent& evt);
-	void On1024x786(wxCommandEvent& evt);
-	void On1280x800(wxCommandEvent& evt);
-
-public:
-	wxAuiManager			m_mgr;
-	wxColor					m_aBGColor;
-	wxTextCtrl*				m_pOutput;
-
-	guiex::IGUIMouse_winapi*		m_pMouse;
-	guiex::IGUIKeyboard_winapi*		m_pKeyboard;
-	guiex::IGUIIme_winapi*			m_pIme;
-	std::string	m_strUIDataPath;
-	std::string	m_strUISceneFilename;
-	std::string	m_strUIPageFilename;
-
-	DECLARE_EVENT_TABLE()
-};
-
-
-
 
 
 //============================================================================//
 // function
 //============================================================================//
+//------------------------------------------------------------------------------
+static void EditorWarningCB(const char* message, void*)
+{
+	((WxMainFrame*)wxGetApp().GetTopWindow())->OutputString(message);
+}
+//------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+//	CGUIFrameworkViewer
+//------------------------------------------------------------------------------
+CGUIFrameworkViewer* CGUIFrameworkViewer::ms_pFramework = NULL;
+//------------------------------------------------------------------------------
+CGUIFrameworkViewer::CGUIFrameworkViewer( )
+:CGUIFramework( )
+{
+}
+//------------------------------------------------------------------------------
 
 
 //------------------------------------------------------------------------------
 //	WxMainApp
 //------------------------------------------------------------------------------
-DECLARE_APP(WxMainApp)
 IMPLEMENT_APP(WxMainApp)
 //-----------------------------------------------------------------------------
-
 bool WxMainApp::OnInit()
 {
 	//create frame
-	wxFrame* frame = new WxMainFrame(NULL,
-		wxID_ANY,
-		wxT("liguiex editor viewer"),
-		wxDefaultPosition,
-		wxSize( 1024, 768));
+	wxFrame* frame = new WxMainFrame( NULL, wxID_ANY, wxT("liguiex viewer"), wxDefaultPosition, wxSize( 1024, 768));
+
 	SetTopWindow(frame);
 	frame->Show();
 
@@ -198,41 +75,34 @@ EVT_IDLE(WxGLCanvas::OnIdle)
 EVT_KEY_DOWN( WxGLCanvas::OnKeyDown )
 END_EVENT_TABLE()
 //------------------------------------------------------------------------------
-WxGLCanvas::WxGLCanvas( wxWindow *parent, 
-					   int* args,
-					   wxWindowID id ,
-					   const wxPoint& pos ,
-					   const wxSize& size ,
-					   long style, 
-					   const wxString& name )
-					   : wxGLCanvas(parent, (wxGLCanvas*) NULL, id, pos, size, style|wxFULL_REPAINT_ON_RESIZE , name, args )
+WxGLCanvas::WxGLCanvas( wxWindow *parent, int* args, wxWindowID id, const wxPoint& pos, const wxSize& size, long style, const wxString& name )
+: wxGLCanvas( parent, (wxGLCanvas*) NULL, id, pos, size, style | wxFULL_REPAINT_ON_RESIZE, name, args )
 {
+	m_aOldTimer.UpdateTime();
 }
 //------------------------------------------------------------------------------
 void WxGLCanvas::OnEraseBackground(wxEraseEvent& event)
 {
 }
 //------------------------------------------------------------------------------
-WXLRESULT WxGLCanvas::MSWWindowProc(WXUINT uMsg,
-									WXWPARAM wParam,
-									WXLPARAM lParam)
+WXLRESULT WxGLCanvas::MSWWindowProc(WXUINT uMsg, WXWPARAM wParam, WXLPARAM lParam)
 {
 	try
 	{
-		if( ((WxMainFrame*)wxGetApp().GetTopWindow())->m_pMouse )
+		if( CGUIInterfaceManager::Instance()->GetInterfaceMouseTyped<IGUIMouse_winapi>() )
 		{
-			((WxMainFrame*)wxGetApp().GetTopWindow())->m_pMouse->ProcessWindowMessage((HWND)GetHandle(), uMsg, wParam, lParam );
+			CGUIInterfaceManager::Instance()->GetInterfaceMouseTyped<IGUIMouse_winapi>()->ProcessWindowMessage((HWND)GetHandle(), uMsg, wParam, lParam );
 		}
-		if( ((WxMainFrame*)wxGetApp().GetTopWindow())->m_pKeyboard )
+		if( CGUIInterfaceManager::Instance()->GetInterfaceKeyboardTyped<IGUIKeyboard_winapi>() )
 		{
-			((WxMainFrame*)wxGetApp().GetTopWindow())->m_pKeyboard->ProcessWindowMessage((HWND)GetHandle(), uMsg, wParam, lParam );
+			CGUIInterfaceManager::Instance()->GetInterfaceKeyboardTyped<IGUIKeyboard_winapi>()->ProcessWindowMessage((HWND)GetHandle(), uMsg, wParam, lParam );
 		}
-		if( ((WxMainFrame*)wxGetApp().GetTopWindow())->m_pIme )
+		if( CGUIInterfaceManager::Instance()->GetInterfaceImeTyped<IGUIIme_winapi>() )
 		{
-			((WxMainFrame*)wxGetApp().GetTopWindow())->m_pIme->ProcessWindowMessage((HWND)GetHandle(), uMsg, wParam, lParam );
+			CGUIInterfaceManager::Instance()->GetInterfaceImeTyped<IGUIIme_winapi>()->ProcessWindowMessage((HWND)GetHandle(), uMsg, wParam, lParam );
 		}
 	}
-	catch (guiex::CGUIBaseException& rError)
+	catch (CGUIBaseException& rError)
 	{
 		MessageBoxA(NULL, rError.what(), "error", MB_OK);
 	}
@@ -255,17 +125,11 @@ void WxGLCanvas::OnIdle(wxIdleEvent & event)
 	glClearDepth(1.0f); // Depth buffer setup 
 	glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );	// clear screen and depth buffer 
 
-	try
-	{
-		m_aCurTimer.UpdateTime();
-		guiex::GSystem->Update( (m_aCurTimer - m_aOldTimer) / 1000.f );
-		guiex::GSystem->Render();
-		m_aOldTimer = m_aCurTimer;
-	}
-	catch (guiex::CGUIBaseException& rError)
-	{
-		MessageBoxA( NULL, rError.what(), "error", MB_OK);
-	}
+	m_aCurTimer.UpdateTime();
+	CGUIFrameworkViewer::ms_pFramework->Update( (m_aCurTimer - m_aOldTimer) / 1000.f );
+	m_aOldTimer = m_aCurTimer;
+
+	CGUIFrameworkViewer::ms_pFramework->Render();
 
 	glFlush();
 	SwapBuffers();
@@ -277,13 +141,10 @@ void WxGLCanvas::OnSize(wxSizeEvent& event)
 {
 	// this is also necessary to update the context on some platforms
 	wxGLCanvas::OnSize(event);
-
 	wxSize aSize = event.GetSize();
-
 	SetCurrent();
-	glViewport(0,0,aSize.x,aSize.y);	//定义视口
-
-	guiex::GSystem->SetScreenSize(aSize.x,aSize.y);
+	glViewport(0,0,aSize.x,aSize.y);
+	GSystem->SetScreenSize(aSize.x,aSize.y);
 }
 //------------------------------------------------------------------------------
 void WxGLCanvas::OnKeyDown( wxKeyEvent& event )
@@ -301,23 +162,14 @@ void WxGLCanvas::OnKeyDown( wxKeyEvent& event )
 //------------------------------------------------------------------------------
 
 
-
-
-
 //------------------------------------------------------------------------------
-class CMyLogMsgCallback : public guiex::CGUILogMsgCallback
-{
-public:
-	virtual void	Log( const guiex::CGUILogMsgRecord& rRecord )
-	{
-		((WxMainFrame*)wxGetApp().GetTopWindow())->OutputString( rRecord.GetMsgData());
-	}
-};
-CMyLogMsgCallback	g_MsgCallback;
+//	CMyLogMsgCallback
 //------------------------------------------------------------------------------
-static void EditorWarningCB(const char* message, void*)
+CMyLogMsgCallback CMyLogMsgCallback::g_MsgCallback;
+//------------------------------------------------------------------------------
+void CMyLogMsgCallback::Log( const CGUILogMsgRecord& rRecord )
 {
-	((WxMainFrame*)wxGetApp().GetTopWindow())->OutputString(message);
+	((WxMainFrame*)wxGetApp().GetTopWindow())->OutputString( rRecord.GetMsgData());
 }
 //------------------------------------------------------------------------------
 
@@ -338,19 +190,9 @@ EVT_MENU(ID_ToggleWireframe, WxMainFrame::OnToggleWireframe)
 EVT_MENU(ID_SetBGColor, WxMainFrame::OnSetBGColor)
 END_EVENT_TABLE()
 //------------------------------------------------------------------------------
-
-//------------------------------------------------------------------------------
-WxMainFrame::WxMainFrame(wxWindow* parent,
-						 wxWindowID id,
-						 const wxString& title,
-						 const wxPoint& pos,
-						 const wxSize& size,
-						 long style)
-						 : wxFrame(parent, id, title, pos, size, style)
-						 ,m_aBGColor(128,128,128,255)
-						 ,m_pMouse(NULL)
-						 ,m_pKeyboard(NULL)
-						 ,m_pIme(NULL)
+WxMainFrame::WxMainFrame(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+: wxFrame(parent, id, title, pos, size, style)
+,m_aBGColor(128,128,128,255)
 {
 	// tell wxAuiManager to manage this frame
 	m_mgr.SetManagedWindow(this);
@@ -380,28 +222,27 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 	mb->Append(help_menu, _("Help"));
 	SetMenuBar(mb);
 
-
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	// min size for the frame itself isn't completely done.
 	// see the end up wxAuiManager::Update() for the test
 	// code. For now, just hard code a frame minimum size
 	SetMinSize(wxSize(640,480));
+	SetClientSize( 1024, 786 );
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	// create canvas
-	int wx_gl_attribs[] = {
+	int wx_gl_attribs[] = 
+	{
 		WX_GL_RGBA, WX_GL_DOUBLEBUFFER, 
 		WX_GL_DEPTH_SIZE, 24, 
 		WX_GL_STENCIL_SIZE, 8,
-		0};
+		0
+	};
 	WxGLCanvas* pCanvas = new WxGLCanvas(this, wx_gl_attribs);
 
-
 	///////////////////////////////////////////////////////////////////////////////////////////////////
-	// create putput
+	// create output
 	m_pOutput = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE | wxTE_READONLY);
-
-
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	//add to aui manager
@@ -420,69 +261,27 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 		BestSize(400,100).
 		Dockable(false));
 
+	//get data path
+	CGUIString strDataPath;
+	if( false == GetUIDataPath( strDataPath ) )
+	{
+		Close( true );
+		return;
+	}
+
+	//init framework
 	Show(true);
 	pCanvas->SetCurrent();
 
-	// "commit" all changes made to wxAuiManager
+	CGUIFrameworkViewer::ms_pFramework = new CGUIFrameworkViewer( );
+	CGUIFrameworkViewer::ms_pFramework->Initialize( CGUISize(1024, 768), strDataPath.c_str() );
+	CGUIAssert::SetWarningCB( EditorWarningCB, NULL );
+	CGUISceneManager::Instance()->RegisterScenesFromDir( "/",".uip" );
 	m_mgr.Update();
 
-	///////////////////////////////////////////////////////////////////////////////////////////////////
-	//initialize guiex system
-	try
-	{
-		guiex::CGUISystem* pGUISystem = new guiex::CGUISystem;
-		guiex::GSystem->Initialize();
-		GUI_LOG->Open( "gui editor",guiex::CGUILogMsg::FLAG_TIMESTAMP_LITE	|guiex::CGUILogMsg::FLAG_OSTREAM | guiex::CGUILogMsg::FLAG_MSG_CALLBACK);
-		GUI_LOG->SetPriorityMask(guiex::GUI_LM_DEBUG	| guiex::GUI_LM_TRACE	|guiex::GUI_LM_WARNING|guiex::GUI_LM_ERROR);
-		GUI_LOG->SetOstream( new std::ofstream( "libguiex_editor_viewer.log", std::ios_base::out | std::ios_base::trunc ), true );
-		GUI_LOG->SetCallbackMsg( &g_MsgCallback );
-		guiex::CGUIAssert::SetWarningCB(EditorWarningCB, NULL);
-		guiex::GSystem->SetScreenSize(1024, 768);
+	TryOpenUIPage( true );
 
-		//register interface
-		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl );
-		GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_tga);
-		GUI_REGISTER_INTERFACE_LIB( IGUIFileSys_stdio);
-		GUI_REGISTER_INTERFACE_LIB( IGUIMouse_winapi);
-		GUI_REGISTER_INTERFACE_LIB( IGUIFont_ft2);
-		GUI_REGISTER_INTERFACE_LIB( IGUIKeyboard_winapi);
-		GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
-		GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_Winapi);
-		GUI_REGISTER_INTERFACE_LIB( IGUIScript_lua );
-		GUI_REGISTER_INTERFACE_LIB_ARG( IGUIIme_winapi, pCanvas->GetHandle());
-
-		m_pMouse = guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouseImp<guiex::IGUIMouse_winapi>();
-		m_pKeyboard = guiex::CGUIInterfaceManager::Instance()->GetInterfaceKeyboardImp<guiex::IGUIKeyboard_winapi>();
-		m_pIme = guiex::CGUIInterfaceManager::Instance()->GetInterfaceImeImp<guiex::IGUIIme_winapi>();
-
-		//register widget
-		guiex::CGUIWidgetGenerator** pGenerator = guiex::GetAllGenerators();
-		while(*pGenerator)
-		{
-			guiex::CGUIWidgetFactory::Instance()->RegisterGenerator( *pGenerator);
-			pGenerator ++;
-		}
-
-
-		//get scene info
-		if(  GetUIInfo( true ))
-		{	
-			guiex::GSystem->SetDataPath(m_strUIDataPath);
-			guiex::CGUISceneInfoManager::Instance()->LoadScenes();
-			guiex::CGUISceneUtility::LoadResource(m_strUISceneFilename);
-			guiex::CGUIWidget* pWidget = guiex::CGUIWidgetManager::Instance()->LoadPage( m_strUIPageFilename, m_strUISceneFilename);
-			guiex::GSystem->OpenPage(pWidget);
-		}
-	}
-	catch (guiex::CGUIBaseException& rError)
-	{
-		MessageBoxA(NULL, rError.what(), "error", MB_OK);
-
-		guiex::GSystem->Release();
-		delete guiex::GSystem;
-	}
-
-	SetClientSize( 1024, 786 );
+	// "commit" all changes made to wxAuiManager
 	Refresh();
 }
 //------------------------------------------------------------------------------
@@ -491,13 +290,17 @@ WxMainFrame::~WxMainFrame()
 	m_mgr.UnInit();	
 
 	//release libguiex system
-	guiex::GSystem->Release();
-	delete guiex::GSystem;
+	GSystem->Release();
+	delete GSystem;
 }
 //------------------------------------------------------------------------------
-bool WxMainFrame::GetUIInfo( bool bTryCommandLine)
+void WxMainFrame::TryOpenUIPage( bool bCheckCommandLine )
 {
-	if( bTryCommandLine )
+	CGUIString strUISceneName;
+	CGUIString strUIPageName;
+
+	bool bCommandlineFound = false;
+	if( bCheckCommandLine )
 	{
 		wxArrayString arrayArgs;
 		const wxChar *cmdLine = ::GetCommandLine();
@@ -505,59 +308,89 @@ bool WxMainFrame::GetUIInfo( bool bTryCommandLine)
 		{
 			arrayArgs = wxCmdLineParser::ConvertStringToArgs(cmdLine);
 		}
-		if( arrayArgs.size() ==4 )
+
+		if( arrayArgs.size() >= 4 )
 		{
-			m_strUIDataPath = arrayArgs[1].char_str(wxConvUTF8).data();
-			m_strUISceneFilename = arrayArgs[2].char_str(wxConvUTF8).data();
-			m_strUIPageFilename = arrayArgs[3].char_str(wxConvUTF8).data();
-			return true;
+			strUISceneName = arrayArgs[2].char_str(wxConvUTF8).data();
+			strUIPageName = arrayArgs[3].char_str(wxConvUTF8).data();
+			bCommandlineFound = true;
 		}
 	}
 
+	if( !bCommandlineFound )
+	{
+		//chose scene
+		const std::vector<CGUIString>& vecScenes = CGUISceneManager::Instance()->GetSceneNames( );
+		wxArrayString arrayScenes;
+		for( unsigned i=0; i<vecScenes.size(); ++i )
+		{
+			arrayScenes.Add( wxConvUTF8.cMB2WC( vecScenes[i].c_str()));
+		}
+		wxSingleChoiceDialog aChoiceDlg( this, _T("select scene"), _T("select scene files"), arrayScenes );
+		if( aChoiceDlg.ShowModal() != wxID_OK )
+		{
+			return;
+		}
+		strUISceneName = vecScenes[aChoiceDlg.GetSelection()];
+
+		//chose page file
+		const std::vector<CGUIString>& vecPages = CGUISceneManager::Instance()->GetScene(strUISceneName)->GetWidgetFiles();
+		wxArrayString arrayPages;
+		for( unsigned i=0; i<vecPages.size(); ++i )
+		{
+			arrayPages.Add( wxConvUTF8.cMB2WC( vecPages[i].c_str()));
+		}
+		wxSingleChoiceDialog aPageChoiceDlg( this, _T("select scene"), _T("select scene files"), arrayPages );
+		if( aPageChoiceDlg.ShowModal() != wxID_OK )
+		{
+			return;
+		}
+		strUIPageName = vecPages[aPageChoiceDlg.GetSelection()];
+	}
+
+	//open it
+	try
+	{
+		CGUISceneManager::Instance()->UnregisterAllScenes();
+		CGUISceneManager::Instance()->RegisterScenesFromDir();
+
+		CGUISceneManager::Instance()->LoadResource( strUISceneName );
+		CGUIWidget* pWidget = CGUIWidgetManager::Instance()->LoadPage( strUIPageName, strUISceneName );
+		GSystem->OpenPage(pWidget);
+	}
+	catch (CGUIBaseException& rError)
+	{
+		::MessageBoxA(NULL, rError.what(), "error", MB_OK);
+
+		Close( true );
+	}
+}
+//------------------------------------------------------------------------------
+bool WxMainFrame::GetUIDataPath( CGUIString& rDataPath )
+{
+	wxArrayString arrayArgs;
+	const wxChar *cmdLine = ::GetCommandLine();
+	if ( cmdLine )
+	{
+		arrayArgs = wxCmdLineParser::ConvertStringToArgs(cmdLine);
+	}
+	if( arrayArgs.size() >= 2 )
+	{
+		rDataPath = arrayArgs[1].char_str(wxConvUTF8).data();
+		return true;
+	}
 
 	//chose data path
-	wxDirDialog aDlg( this, _T("Choose a libguiex root path"), wxConvUTF8.cMB2WC( m_strUIDataPath.c_str()));
+	wxDirDialog aDlg( this, _T("Choose data path") );
 	if( wxID_OK != aDlg.ShowModal())
 	{
 		return false;
 	}
-	m_strUIDataPath = (aDlg.GetPath() + wxT("\\")).char_str(wxConvUTF8).data();
-
-	//chose scene
-	guiex::GSystem->SetDataPath(m_strUIDataPath);
-	guiex::CGUISceneInfoManager::Instance()->LoadScenes();
-	const std::vector<guiex::CGUIString>& vecScenes = guiex::CGUISceneInfoManager::Instance()->GetSceneFileNames( );
-	wxArrayString arrayScenes;
-	for( unsigned i=0; i<vecScenes.size(); ++i )
-	{
-		arrayScenes.Add( wxConvUTF8.cMB2WC( vecScenes[i].c_str()));
-	}
-	wxSingleChoiceDialog aChoiceDlg( this, _T("select scene"), _T("select scene files"), arrayScenes );
-	if( aChoiceDlg.ShowModal() != wxID_OK )
-	{
-		return false;
-	}
-	m_strUISceneFilename = vecScenes[aChoiceDlg.GetSelection()];
-
-	//chose page file
-	const std::vector<guiex::CGUIString>& vecPages = guiex::CGUISceneInfoManager::Instance()->GetSceneInfo(m_strUISceneFilename)->GetWidgetFiles();
-	wxArrayString arrayPages;
-	for( unsigned i=0; i<vecPages.size(); ++i )
-	{
-		arrayPages.Add( wxConvUTF8.cMB2WC( vecPages[i].c_str()));
-	}
-	wxSingleChoiceDialog aPageChoiceDlg( this, _T("select scene"), _T("select scene files"), arrayPages );
-	if( aPageChoiceDlg.ShowModal() != wxID_OK )
-	{
-		return false;
-	}
-	m_strUIPageFilename = vecPages[aPageChoiceDlg.GetSelection()];
-
+	rDataPath = (aDlg.GetPath() + wxT("\\")).char_str(wxConvUTF8).data();
 	return true;
 }
 //------------------------------------------------------------------------------
-//------------------------------------------------------------------------------
-void	 WxMainFrame::OutputString( const std::string& rString)
+void WxMainFrame::OutputString( const std::string& rString)
 {
 	m_pOutput->AppendText(wxConvUTF8.cMB2WC(rString.c_str()).data());
 	m_pOutput->AppendText(wxString(_T("\n")));
@@ -600,9 +433,9 @@ void WxMainFrame::OnToggleScissor(wxCommandEvent& evt)
 {
 	bool bIsChecked = evt.IsChecked();
 
-	if( guiex::CGUIInterfaceManager::Instance()->GetInterfaceRender())
+	if( CGUIInterfaceManager::Instance()->GetInterfaceRender())
 	{
-		guiex::CGUIInterfaceManager::Instance()->GetInterfaceRender()->EnableClip(bIsChecked);
+		CGUIInterfaceManager::Instance()->GetInterfaceRender()->EnableClip(bIsChecked);
 	}
 }
 //------------------------------------------------------------------------------
@@ -610,35 +443,18 @@ void WxMainFrame::OnToggleWireframe(wxCommandEvent& evt)
 {
 	bool bIsChecked = evt.IsChecked();
 
-	if( guiex::CGUIInterfaceManager::Instance()->GetInterfaceRender())
+	if( CGUIInterfaceManager::Instance()->GetInterfaceRender())
 	{
-		guiex::CGUIInterfaceManager::Instance()->GetInterfaceRender()->SetWireFrame(bIsChecked);
+		CGUIInterfaceManager::Instance()->GetInterfaceRender()->SetWireFrame(bIsChecked);
 	}
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 {
-	guiex::GSystem->DestroyAllWidgets();
-	guiex::GSystem->ReleaseAllResources();
+	GSystem->DestroyAllWidgets();
+	GSystem->ReleaseAllResources();
 
-	if( GetUIInfo(false))
-	{
-		try
-		{
-			guiex::GSystem->SetDataPath(m_strUIDataPath);
-			guiex::CGUISceneInfoManager::Instance()->LoadScenes();
-			guiex::CGUISceneUtility::LoadResource(m_strUISceneFilename);
-			guiex::CGUIWidget* pWidget = guiex::CGUIWidgetManager::Instance()->LoadPage( m_strUIPageFilename, m_strUISceneFilename);
-			guiex::GSystem->OpenPage(pWidget);
-
-		}
-		catch (guiex::CGUIBaseException& rError)
-		{
-			MessageBoxA( NULL, rError.what(), "error", MB_OK);
-
-			guiex::GSystem->Release();
-		}
-	}
+	TryOpenUIPage( false );
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::OnExit(wxCommandEvent& WXUNUSED(event))
@@ -648,8 +464,6 @@ void WxMainFrame::OnExit(wxCommandEvent& WXUNUSED(event))
 //------------------------------------------------------------------------------
 void WxMainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
-	wxMessageBox(_("libguiex editor viewer"), _("About"), wxOK, this);
+	wxMessageBox(_("libguiex viewer"), _("About"), wxOK, this);
 }
 //------------------------------------------------------------------------------
-
-

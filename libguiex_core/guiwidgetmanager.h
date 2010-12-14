@@ -63,7 +63,7 @@ namespace guiex
 			return static_cast<T*>( pWidget );
 		}	
 
-		CGUIWidget*	LoadPage( const CGUIString& rFileName, const CGUIString& rSceneName);
+		CGUIWidget*	LoadPage( const CGUIString& rPageName, const CGUIString& rSceneName);
 		void AddPage(  CGUIWidget* pPage, const CGUIString& rPageName = CGUIString());
 		CGUIWidget* GetPageByWidgetName( const CGUIString& rWidgetName, const CGUIString& rSceneName );
 		CGUIWidget* GetPageByPageName( const CGUIString& rPageName, const CGUIString& rSceneName );
@@ -72,7 +72,7 @@ namespace guiex
 		void DestroyPage( CGUIWidget* pPage);
 		void DestroyAllPages( );
 
-		CGUIWidget*	LoadDynamicPage( const CGUIString& rPageFileName, const CGUIString& rPageSceneName, const CGUIString& rWorkingSceneName );
+		CGUIWidget*	LoadDynamicPage( const CGUIString& rPageName, const CGUIString& rSceneName, const CGUIString& rWorkingSceneName );
 		void AddDynamicPage(  CGUIWidget* pPage );
 		bool HasDynamicPage( CGUIWidget* pPage ) const;
 		void DestroyDynamicPage( CGUIWidget* pPage);
@@ -98,7 +98,7 @@ namespace guiex
 	};
 
 	GUIEXPORT CGUIWidget* GetWidget( const CGUIString& rWidgetName, const CGUIString& rSceneName );
-	GUIEXPORT CGUIWidget* LoadDynamicPage( const CGUIString& rPageFileName, const CGUIString& rPageSceneName, const CGUIString& rWorkingSceneName );
+	GUIEXPORT CGUIWidget* LoadDynamicPage( const CGUIString& rPageName, const CGUIString& rSceneName, const CGUIString& rWorkingSceneName );
 
 }//namespace guiex
 

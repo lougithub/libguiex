@@ -67,15 +67,15 @@ CLibGuiexEngine::~CLibGuiexEngine()
 
 void CLibGuiexEngine::Initialize( int width, int height, const char* szDataPath )
 {
-	m_pFramework = new CGUIFrameworkTest( CGUISize( width, height ), (CGUIString(szDataPath) + "/test/").c_str() );
-	m_pFramework->Initialize();
+	m_pFramework = new CGUIFrameworkTest(  );
+	m_pFramework->Initialize( CGUISize( width, height ), (CGUIString(szDataPath) + "/test/").c_str() );
 	
 	InitWidgets();
 }
 
 void CLibGuiexEngine::InitWidgets()
 {	
-	CGUISceneInfoManager::Instance()->LoadScenes("/", ".uip");
+	CGUISceneInfoManager::Instance()->RegisterScenesFromDir("/", ".uip");
 	CGUISceneUtility::LoadResource( "common.uip" );
 	CGUIWidget* pWidget = CGUIWidgetManager::Instance()->LoadPage( "dialog_ok.xml", "common.uip");
 	CGUISystem::Instance()->OpenPage(pWidget);	

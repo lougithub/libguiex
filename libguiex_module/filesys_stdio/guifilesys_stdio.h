@@ -50,10 +50,14 @@ namespace guiex
 			const CGUIString& rSuffix,
 			std::vector<CGUIString>& rArrayStrings );
 
+		virtual CGUIString GetFilename( const CGUIString& rPath );
+
+		virtual CGUIString GetFileDir( const CGUIString& rPath );
+
 		/**
 		* @brief used to delete this object
 		*/
-		virtual void	DeleteSelf();
+		virtual void DeleteSelf();
 
 	protected:
 		/** 

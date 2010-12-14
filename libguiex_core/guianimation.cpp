@@ -14,8 +14,8 @@
 #include <libguiex_core/guitexture.h>
 #include <libguiex_core/guitexturemanager.h>
 #include <libguiex_core/guiexception.h>
-#include <libguiex_core/guisceneinfo.h>
-#include <libguiex_core/guisceneinfomanager.h>
+#include <libguiex_core/guiscene.h>
+#include <libguiex_core/guiscenemanager.h>
 #include <libguiex_core/guicolor.h>
 #include <libguiex_core/guiinterfacerender.h>
 #include <libguiex_core/guirenderrect.h>
@@ -70,7 +70,7 @@ namespace guiex
 	int32 CGUIAnimation::DoLoad() const
 	{
 		//get full path
-		CGUIString strPrePath = CGUISceneInfoManager::Instance()->GetScenePath( m_strSceneName );
+		CGUIString strPrePath = CGUISceneManager::Instance()->GetScenePath( m_strSceneName );
 
 		//load texture
 		for( uint32 i=0; i<m_vecFileNames.size(); ++i )

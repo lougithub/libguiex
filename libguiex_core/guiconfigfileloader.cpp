@@ -20,7 +20,7 @@
 #include <libguiex_core/guiimagemanager.h>
 #include <libguiex_core/guiasmanager.h>
 #include <libguiex_core/guianimationmanager.h>
-#include <libguiex_core/guisceneinfomanager.h>
+#include <libguiex_core/guiscenemanager.h>
 
 
 //============================================================================//
@@ -80,7 +80,7 @@ namespace guiex
 			pInterfaceScript->CreateScript( rSceneName );
 
 			// load script
-			CGUIString strPath = CGUISceneInfoManager::Instance()->GetScenePath( rSceneName ) + strRelativePath;
+			CGUIString strPath = CGUISceneManager::Instance()->GetScenePath( rSceneName ) + strRelativePath;
 			pInterfaceScript->ExecuteFile(strPath, rSceneName);
 		}
 		return 0;

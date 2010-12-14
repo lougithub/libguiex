@@ -15,8 +15,8 @@ using namespace guiex;
 class CGUIFrameworkTest : public CGUIFramework
 {
 	public:
-		CGUIFrameworkTest( const CGUISize& rScreenSize, const char* pDataPath )
-			:CGUIFramework( rScreenSize, pDataPath )
+		CGUIFrameworkTest( )
+			:CGUIFramework( )
 		,m_pWorld( NULL )
 		,m_pBody( NULL )
 		,m_pBody2( NULL )
@@ -44,17 +44,16 @@ class CGUIFrameworkTest : public CGUIFramework
 		CGUIWidget* m_pWidgetRoot;
 };
 
-CGUIFrameworkBase* CreateFramework( const CGUISize& rScreenSize, const char* pDataPath )
-
+CGUIFrameworkBase* CreateFramework( )
 {
-	return new CGUIFrameworkTest( rScreenSize, pDataPath );
+	return new CGUIFrameworkTest( );
 }
 
 
 guiex::int32 CGUIFrameworkTest::InitializeGame( )
 {	
-	CGUISceneInfoManager::Instance()->LoadScenes( "/", ".uip" );
-	CGUISceneUtility::LoadResource( "common.uip" );
+	CGUISceneManager::Instance()->RegisterScenesFromDir( "/", ".uip" );
+	CGUISceneManager::Instance()->LoadResource( "common.uip" );
 
 	//create empty node for widget system
 	m_pWidgetRoot = GUI_CREATE_WIDGET("CGUIWgtEmptyNode", CGUIUtility::GenerateWidgetName(), "testproject");

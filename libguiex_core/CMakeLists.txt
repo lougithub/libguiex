@@ -193,10 +193,10 @@ set( ${target_name}_texture_SRCS
 source_group( texture FILES ${${target_name}_texture_SRCS} )
 
 set( ${target_name}_scene_SRCS 
-	guisceneinfo.cpp
-	guisceneinfo.h
-	guisceneinfomanager.cpp
-	guisceneinfomanager.h
+	guiscene.cpp
+	guiscene.h
+	guiscenemanager.cpp
+	guiscenemanager.h
 	guisceneutility.cpp
 	guisceneutility.h
 	)

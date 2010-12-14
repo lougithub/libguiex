@@ -105,10 +105,28 @@ namespace guiex
 				rArrayStrings.push_back( strFileName );
 			}
 		}
-		
 	}
 	//------------------------------------------------------------------------------
-	void	IGUIFileSys_cocoa::DeleteSelf()
+	CGUIString IGUIFileSys_cocoa::GetFilename( const CGUIString& rPath )
+	{
+		char* pBuf = new char[rPath.size()+1];
+		strcpy( pBuf, rPath.c_str() );
+		CGUIString aBaseName(basename( pBuf));
+		delete[] pBuf;
+		return aBaseName;
+	}
+	//------------------------------------------------------------------------------
+	CGUIString IGUIFileSys_cocoa::GetFileDir( const CGUIString& rPath )
+	{
+		char* pBuf = new char[rPath.size()+1];
+		strcpy( pBuf, rPath.c_str() );
+		CGUIString aDirName(dirname( pBuf));
+		aDirName += "/";
+		delete[] pBuf;
+		return aDirName;
+	}	
+	//------------------------------------------------------------------------------
+	void IGUIFileSys_cocoa::DeleteSelf()
 	{
 		delete this;
 	}

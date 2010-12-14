@@ -28,8 +28,8 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	CGUIFramework_Mac::CGUIFramework_Mac( const CGUISize& rScreenSize, const char* pDataPath )
-		:CGUIFrameworkBase( rScreenSize, pDataPath )
+	CGUIFramework_Mac::CGUIFramework_Mac( )
+		:CGUIFrameworkBase( )
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -37,7 +37,7 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIFramework_Mac::InitializeSystem( )
+	int32 CGUIFramework_Mac::InitializeSystem( const CGUISize& rScreenSize, const char* pDataPath )
 	{
 		//init system
 		if( GSystem != NULL )
@@ -55,7 +55,7 @@ namespace guiex
 		//GUI_LOG->Open( "gui_framework_log", CGUILogMsg::FLAG_TIMESTAMP_LITE | CGUILogMsg::FLAG_STDERR);
 		GUI_LOG->Open( "gui_framework_log", CGUILogMsg::FLAG_STDERR);
 		GUI_LOG->SetPriorityMask( GUI_LM_DEBUG | GUI_LM_TRACE | GUI_LM_WARNING|GUI_LM_ERROR );
-		GSystem->SetScreenSize( GetScreenSize() );
+		GSystem->SetScreenSize( rScreenSize );
 
 		//register interface
 		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengles);
@@ -75,10 +75,7 @@ namespace guiex
 		}
 
 		//set date path
-		GSystem->SetDataPath( GetDataPath() );
-
-		////load scene info
-		//CGUISceneInfoManager::Instance()->LoadScenes( "/", ".uip" );
+		GSystem->SetDataPath( pDataPath );
 
 		return 0;
 	}

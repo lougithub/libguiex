@@ -26,7 +26,7 @@ const int32 g_nScreenHeight = 768;
 CGUIFrameworkBase* g_pFramework = NULL;
 std::map<int,EKeyCode> g_mapKey_Glut2Guiex;
 CGUITimer g_aOldTimer;
-extern CGUIFrameworkBase* CreateFramework( const CGUISize& rScreenSize, const char* pDataPath );
+extern CGUIFrameworkBase* CreateFramework( );
 
 //============================================================================//
 // function
@@ -263,8 +263,8 @@ int main(int argc, char** argv)
 	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 	glViewport(0,0,g_nScreenWidth,g_nScreenHeight);
 
-	g_pFramework = CreateFramework( CGUISize( g_nScreenWidth, g_nScreenHeight ), "D:/_ipad_/_project_/libguiex_googlecode/data/test/" );
-	g_pFramework->Initialize();
+	g_pFramework = CreateFramework( );
+	g_pFramework->Initialize( CGUISize( g_nScreenWidth, g_nScreenHeight ), "../../data/test/" );
 
 	g_aOldTimer.UpdateTime();
 	glutMainLoop();

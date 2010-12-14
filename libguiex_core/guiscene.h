@@ -1,5 +1,5 @@
 /** 
-* @file guisceneinfo.h
+* @file guiscene.h
 * @brief 
 * @author Lou Guoliang (louguoliang@gmail.com)
 * @date 2009-10-22
@@ -18,9 +18,6 @@
 #include "guiresource.h"
 #include "vector"
 
-
-
-
 //============================================================================//
 // declare
 //============================================================================//
@@ -29,20 +26,19 @@ namespace guiex
 	class CGUIProperty;
 }
 
-
 //============================================================================//
 // class
 //============================================================================// 
 namespace guiex
 {
-	class GUIEXPORT CGUISceneInfo : public CGUIResource
+	class GUIEXPORT CGUIScene : public CGUIResource
 	{
 	public:
-		~CGUISceneInfo();
+		~CGUIScene();
 
 		void Reset();
 
-		int32 LoadFromPropertySet( const CGUIString& rSceneFilePath, const CGUIProperty& aPropertySet );
+		int32 LoadFromPropertySet( const CGUIString& rScenePath, const CGUIProperty& aPropertySet );
 
 		const CGUIString& GetScenePath() const;
 		const CGUIString& GetTitle() const;
@@ -59,18 +55,18 @@ namespace guiex
 		void SetResourceLoaded( bool bLoaded );
 
 	protected:
-		friend class CGUISceneInfoManager;
-		CGUISceneInfo( const CGUIString& rSceneName );
+		friend class CGUISceneManager;
+		CGUIScene( const CGUIString& rSceneName );
 
 		virtual int32 DoLoad() const;
 		virtual void DoUnload();
 
 	protected:
-		CGUISceneInfo( const CGUISceneInfo& );
-		const CGUISceneInfo& operator=(const CGUISceneInfo& );
+		CGUIScene( const CGUIScene& );
+		const CGUIScene& operator=(const CGUIScene& );
 
 	protected:
-		CGUIString	m_strSceneFilePath; //!< path of scene file
+		CGUIString	m_strScenePath; //!< path of scene
 
 		//files
 		std::vector<CGUIString> m_vecWidgetFiles; //widget file info

@@ -23,18 +23,18 @@ namespace guiex
 {
 
 
-	class GUIEXPORT IGUIStringConv_Winapi : public IGUIInterfaceStringConv
+	class GUIEXPORT IGUIStringConv_winapi : public IGUIInterfaceStringConv
 	{
 	public:
 		/**
 		* @brief constructor
 		*/
-		IGUIStringConv_Winapi();
+		IGUIStringConv_winapi();
 
 		/**
 		* @brief destructor
 		*/
-		virtual ~IGUIStringConv_Winapi();
+		virtual ~IGUIStringConv_winapi();
 
 		/**
 		* @brief convert utf8 to utf16

@@ -13,8 +13,8 @@
 #include <libguiex_core/guiinterfacefont.h>
 #include <libguiex_core/guiinterfacemanager.h>
 #include <libguiex_core/guiexception.h>
-#include <libguiex_core/guisceneinfo.h>
-#include <libguiex_core/guisceneinfomanager.h>
+#include <libguiex_core/guiscene.h>
+#include <libguiex_core/guiscenemanager.h>
 
 
 

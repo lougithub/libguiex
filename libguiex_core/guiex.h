@@ -102,8 +102,8 @@
 #include "guiexception.h"
 
 //scene info
-#include "guisceneinfo.h"
-#include "guisceneinfomanager.h"
+#include "guiscene.h"
+#include "guiscenemanager.h"
 #include "guisceneUtility.h"
 
 #include "guiUtility.h"

@@ -22,23 +22,20 @@ namespace guiex
 	class GUIEXPORT CGUIFrameworkBase
 	{
 	public:
-		CGUIFrameworkBase( const CGUISize& rScreenSize, const char* pDataPath );
+		CGUIFrameworkBase( );
 		virtual ~CGUIFrameworkBase();
 
-		int32 Initialize( );
+		int32 Initialize( const CGUISize& rScreenSize, const char* pDataPath );
 		void Release( );
 
 		void Update( real fDeltaTime );
 		void Render( );
 
-		const CGUISize& GetScreenSize( ) const; 
-		const CGUIString& GetDataPath( ) const; 
-
 	protected:
 		virtual int32 InitializeGame( ) = 0;
 		virtual void ReleaseGame( ) = 0;
 		
-		virtual int32 InitializeSystem( ) = 0;
+		virtual int32 InitializeSystem( const CGUISize& rScreenSize, const char* pDataPath ) = 0;
 		virtual void ReleaseSystem( ) = 0;
 
 		virtual void PreUpdate( real fDeltaTime ) = 0;
@@ -52,9 +49,6 @@ namespace guiex
 
 	private:
 		bool m_bIsInitialized;
-
-		CGUISize m_aScreenSize;
-		CGUIString m_strDataPath;
 	};
 
 }//namespace guiex

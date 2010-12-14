@@ -1,5 +1,5 @@
 /** 
-* @file guisceneinfo.cpp
+* @file guiscene.cpp
 * @brief 
 * @author Lou Guoliang (louguoliang@gmail.com)
 * @date 2009-10-22
@@ -8,7 +8,7 @@
 //============================================================================//
 // include
 //============================================================================//
-#include <libguiex_core/guisceneinfo.h>
+#include <libguiex_core/guiscene.h>
 #include <libguiex_core/guiinterfacefilesys.h>
 #include <libguiex_core/guiinterfacemanager.h>
 #include <libguiex_core/guistring.h>
@@ -23,7 +23,7 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	CGUISceneInfo::CGUISceneInfo( const CGUIString& rSceneName )
+	CGUIScene::CGUIScene( const CGUIString& rSceneName )
 		:CGUIResource( rSceneName, rSceneName, "SCENE" )
 		,m_bDependenciesLoaded(false)
 		,m_bResourceLoaded(false)
@@ -31,16 +31,16 @@ namespace guiex
 		Reset();
 	}
 	//------------------------------------------------------------------------------
-	CGUISceneInfo::~CGUISceneInfo()
+	CGUIScene::~CGUIScene()
 	{
 	}
 	//------------------------------------------------------------------------------
 	/** 
 	* @brief reset data
 	*/
-	void CGUISceneInfo::Reset()
+	void CGUIScene::Reset()
 	{
-		m_strSceneFilePath.empty();
+		m_strScenePath.empty();
 
 		m_vecWidgetFiles.clear();
 		m_vecScriptFiles.clear();
@@ -50,22 +50,22 @@ namespace guiex
 		m_strTitle.clear();
 	}
 	//------------------------------------------------------------------------------
-	bool CGUISceneInfo::IsDependenciesLoaded() const
+	bool CGUIScene::IsDependenciesLoaded() const
 	{
 		return m_bDependenciesLoaded;
 	}
 	//------------------------------------------------------------------------------
-	void CGUISceneInfo::SetDependenciesLoaded( bool bLoaded )
+	void CGUIScene::SetDependenciesLoaded( bool bLoaded )
 	{
 		m_bDependenciesLoaded = bLoaded;
 	}
 	//------------------------------------------------------------------------------
-	bool CGUISceneInfo::IsResourceLoaded() const
+	bool CGUIScene::IsResourceLoaded() const
 	{
 		return m_bResourceLoaded;
 	}
 	//------------------------------------------------------------------------------
-	void CGUISceneInfo::SetResourceLoaded( bool bLoaded )
+	void CGUIScene::SetResourceLoaded( bool bLoaded )
 	{
 		m_bResourceLoaded = bLoaded;
 	}
@@ -73,22 +73,22 @@ namespace guiex
 	/** 
 	* @brief get scene file path
 	*/
-	const CGUIString& CGUISceneInfo::GetScenePath() const
+	const CGUIString& CGUIScene::GetScenePath() const
 	{
-		return m_strSceneFilePath;
+		return m_strScenePath;
 	}
 	//------------------------------------------------------------------------------
 	/** 
 	* @brief read config file
 	* @return 0 for success, others for failed
 	*/
-	int32 CGUISceneInfo::LoadFromPropertySet( 
-		const CGUIString& rSceneFilePath, 
+	int32 CGUIScene::LoadFromPropertySet( 
+		const CGUIString& rScenePath, 
 		const CGUIProperty& aPropertySet )
 	{
 		Reset();
 
-		m_strSceneFilePath = rSceneFilePath;
+		m_strScenePath = rScenePath;
 
 		uint32 nSize = aPropertySet.GetPropertyNum();
 		for( uint32 i=0; i<nSize; ++i )
@@ -116,7 +116,7 @@ namespace guiex
 			}
 			else
 			{
-				throw guiex::CGUIException("[CGUISceneInfo::LoadFromPropertySet], unknown property name! <%s>!", pProperty->GetName().c_str());
+				throw guiex::CGUIException("[CGUIScene::LoadFromPropertySet], unknown property name! <%s>!", pProperty->GetName().c_str());
 				return -1;
 			}
 		}
@@ -124,22 +124,22 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	const std::vector<CGUIString>& CGUISceneInfo::GetWidgetFiles() const
+	const std::vector<CGUIString>& CGUIScene::GetWidgetFiles() const
 	{
 		return m_vecWidgetFiles;
 	}
 	//------------------------------------------------------------------------------
-	const std::vector<CGUIString>& CGUISceneInfo::GetScriptFiles() const
+	const std::vector<CGUIString>& CGUIScene::GetScriptFiles() const
 	{
 		return m_vecScriptFiles;
 	}
 	//------------------------------------------------------------------------------
-	const std::vector<CGUIString>& CGUISceneInfo::GetResourceFiles() const
+	const std::vector<CGUIString>& CGUIScene::GetResourceFiles() const
 	{
 		return m_vecResourceFiles;
 	}
 	//------------------------------------------------------------------------------
-	const std::vector<CGUIString>& CGUISceneInfo::GetDependencies() const
+	const std::vector<CGUIString>& CGUIScene::GetDependencies() const
 	{
 		return m_vecDependencies;
 	}
@@ -147,17 +147,17 @@ namespace guiex
 	/** 
 	* @brief get scene title
 	*/
-	const CGUIString& CGUISceneInfo::GetTitle() const
+	const CGUIString& CGUIScene::GetTitle() const
 	{
 		return m_strTitle;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUISceneInfo::DoLoad() const
+	int32 CGUIScene::DoLoad() const
 	{
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void CGUISceneInfo::DoUnload()
+	void CGUIScene::DoUnload()
 	{
 
 	}

@@ -30,9 +30,6 @@ namespace guiex
 	class GUIEXPORT CGUISceneUtility
 	{
 	public:
-		static int32 LoadResource(const CGUIString& strSceneName);
-		static int32 UnloadResource(const CGUIString& strSceneName);
-
 		static int32 LoadPages( const CGUIString& strSceneName);
 	};
 }		//namespace guiex

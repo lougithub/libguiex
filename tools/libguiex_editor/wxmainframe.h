@@ -176,7 +176,7 @@ protected:
 	 * @brief open scene
 	 * @return 0 for success
 	 */
-	int		OpenScene(const guiex::CGUISceneInfo* pSceneInfo );
+	int		OpenScene(const guiex::CGUIScene* pSceneInfo );
 
 	/** 
 	* @brief close scene

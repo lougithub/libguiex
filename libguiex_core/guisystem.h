@@ -46,7 +46,7 @@ namespace guiex
 	class CGUIPropertyManager;
 	class CGUIWidgetFactory;
 	class CGUIAsFactory;
-	class CGUISceneInfoManager;
+	class CGUISceneManager;
 	class CGUILogMsgManager;
 	class CGUIWidgetManager;
 
@@ -169,7 +169,7 @@ namespace guiex
 		CGUIMouseCursor* GetMouseCursor();
 		CGUIPropertyManager* GetPropertyManager();
 		CGUIWidgetFactory* GetWidgetFactory();
-		CGUISceneInfoManager* GetSceneInfoManager();
+		CGUISceneManager* GetSceneInfoManager();
 		CGUIAsFactory* GetAsFactory();
 		CGUILogMsgManager* GetLogMsgManager();
 		CGUIWidgetManager* GetWidgetManager();
@@ -279,7 +279,7 @@ namespace guiex
 		CGUIMouseCursor* m_pMouseCursor;
 		CGUIPropertyManager* m_pPropertyManager;
 		CGUIWidgetFactory* m_pWidgetFactory;
-		CGUISceneInfoManager* m_pSceneInfoManager;
+		CGUISceneManager* m_pSceneInfoManager;
 		CGUIAsFactory* m_pAsFactory;
 		CGUILogMsgManager* m_pLogMsgManager;
 		CGUIWidgetManager* m_pWidgetManager;
@@ -338,7 +338,7 @@ namespace guiex
 		return m_pWidgetFactory;
 	}
 
-	inline CGUISceneInfoManager* CGUISystem::GetSceneInfoManager()
+	inline CGUISceneManager* CGUISystem::GetSceneInfoManager()
 	{
 		return m_pSceneInfoManager;
 	}

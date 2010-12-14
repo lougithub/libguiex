@@ -31,7 +31,6 @@
 //============================================================================// 
 namespace guiex
 {
-
 	GUI_INTERFACE_IMPLEMENT(IGUIFileSys_stdio);
 	//------------------------------------------------------------------------------
 	IGUIFileSys_stdio::IGUIFileSys_stdio()
@@ -97,12 +96,12 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	
+
 #if defined(GUIEX_PLATFORM_WIN32)	
 	static bool is_reserved_dir (const char *fn)
-    {
-        return (fn [0] == '.' && (fn [1] == 0 || (fn [1] == '.' && fn [2] == 0)));
-    }
+	{
+		return (fn [0] == '.' && (fn [1] == 0 || (fn [1] == '.' && fn [2] == 0)));
+	}
 	//------------------------------------------------------------------------------
 	void IGUIFileSys_stdio::FindFiles( 
 		const CGUIString& rPath,
@@ -123,11 +122,11 @@ namespace guiex
 				rArrayStrings.push_back(strFileName);
 			}
 			res = _findnext( lHandle, &tagData );
-        }
-        // Close if we found any files
-        if(lHandle != -1)
+		}
+		// Close if we found any files
+		if(lHandle != -1)
 		{
-            _findclose(lHandle);
+			_findclose(lHandle);
 		}
 
 		// Now find directories
@@ -154,13 +153,13 @@ namespace guiex
 	//------------------------------------------------------------------------------
 #elif defined(GUIEX_PLATFORM_MAC)
 	void IGUIFileSys_stdio::FindFiles( const CGUIString& rPath,
-									  const CGUIString& rSuffix,
-									  std::vector<CGUIString>& rArrayStrings )
+		const CGUIString& rSuffix,
+		std::vector<CGUIString>& rArrayStrings )
 	{	
 		DIR *dp = NULL; 
 		struct dirent *entry = NULL; 
 		struct stat statbuf; 
-		
+
 		CGUIString	strFullPath = GSystem->GetDataPath() + rPath;
 		if((dp = opendir(strFullPath.c_str())) == NULL) 
 		{  
@@ -176,7 +175,7 @@ namespace guiex
 				{
 					continue; 
 				}
-			
+
 				FindFiles( rPath + entry->d_name + "/", rSuffix, rArrayStrings );
 			}
 			else
@@ -195,23 +194,59 @@ namespace guiex
 			} 
 		} 
 		chdir("..");
-        closedir(dp); 
+		closedir(dp); 
 	}
 #else
-	#	error "unknown platform"	
+#	error "unknown platform"	
 #endif
 	//------------------------------------------------------------------------------
-	void	IGUIFileSys_stdio::DeleteSelf()
+	CGUIString IGUIFileSys_stdio::GetFilename( const CGUIString& rPath )
+	{
+#if defined( GUIEX_PLATFORM_WIN32 )
+		char fname[_MAX_FNAME];
+		char fext[_MAX_EXT];
+		_splitpath( rPath.c_str(), NULL, NULL, fname, fext ); 
+		return CGUIString( fname ) + fext;
+#elif defined( GUIEX_PLATFORM_MAC )
+		char* pBuf = new char[rPath.size()+1];
+		strcpy( pBuf, rPath.c_str() );
+		CGUIString aBaseName(basename( pBuf));
+		delete[] pBuf;
+		return aBaseName;
+#else
+#	error "unknown platform"		
+#endif
+	}
+	//------------------------------------------------------------------------------
+	CGUIString IGUIFileSys_stdio::GetFileDir( const CGUIString& rPath )
+	{
+#if defined( GUIEX_PLATFORM_WIN32 )
+		char fdir[_MAX_DIR];
+		_splitpath( rPath.c_str(), NULL, fdir, NULL, NULL ); 
+		return CGUIString( fdir );
+#elif defined( GUIEX_PLATFORM_MAC )
+		char* pBuf = new char[rPath.size()+1];
+		strcpy( pBuf, rPath.c_str() );
+		CGUIString aDirName(dirname( pBuf));
+		aDirName += "/";
+		delete[] pBuf;
+		return aDirName;
+#else
+#	error "unknown platform"		
+#endif
+	}
+	//------------------------------------------------------------------------------
+	void IGUIFileSys_stdio::DeleteSelf()
 	{
 		delete this;
 	}
 	//------------------------------------------------------------------------------
-	int		IGUIFileSys_stdio::DoInitialize(void* )
+	int	IGUIFileSys_stdio::DoInitialize(void* )
 	{
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void	IGUIFileSys_stdio::DoDestroy()
+	void IGUIFileSys_stdio::DoDestroy()
 	{
 	}
 	//------------------------------------------------------------------------------

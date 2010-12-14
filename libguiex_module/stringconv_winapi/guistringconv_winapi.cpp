@@ -19,27 +19,27 @@ namespace guiex
 {
 
 	//------------------------------------------------------------------------------
-	GUI_INTERFACE_IMPLEMENT(IGUIStringConv_Winapi);
+	GUI_INTERFACE_IMPLEMENT(IGUIStringConv_winapi);
 	//------------------------------------------------------------------------------
-	IGUIStringConv_Winapi::IGUIStringConv_Winapi()
+	IGUIStringConv_winapi::IGUIStringConv_winapi()
 	{
 	}
 	//------------------------------------------------------------------------------
-	IGUIStringConv_Winapi::~IGUIStringConv_Winapi()
+	IGUIStringConv_winapi::~IGUIStringConv_winapi()
 	{
 	}
 	//------------------------------------------------------------------------------
-	int	IGUIStringConv_Winapi::DoInitialize(void* pUserData)
+	int	IGUIStringConv_winapi::DoInitialize(void* pUserData)
 	{
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void IGUIStringConv_Winapi::DoDestroy()
+	void IGUIStringConv_winapi::DoDestroy()
 	{
 
 	}
 	//------------------------------------------------------------------------------
-	int IGUIStringConv_Winapi::Utf8ToUtf16( const CGUIString& rSrc, CGUIStringW& rDst )
+	int IGUIStringConv_winapi::Utf8ToUtf16( const CGUIString& rSrc, CGUIStringW& rDst )
 	{
 		if( rSrc.empty())
 		{
@@ -55,7 +55,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int IGUIStringConv_Winapi::Utf16ToUtf8( const CGUIStringW& rSrc, CGUIString& rDst )
+	int IGUIStringConv_winapi::Utf16ToUtf8( const CGUIStringW& rSrc, CGUIString& rDst )
 	{
 		if( rSrc.empty())
 		{
@@ -71,7 +71,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void	IGUIStringConv_Winapi::DeleteSelf()
+	void	IGUIStringConv_winapi::DeleteSelf()
 	{
 		delete this;
 	}

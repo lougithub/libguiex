@@ -18,8 +18,8 @@
 #include <libguiex_core/guirect.h>
 #include <libguiex_core/guiperfmonitor.h>
 #include <libguiex_core/guisystem.h>
-#include <libguiex_core/guisceneinfo.h>
-#include <libguiex_core/guisceneinfomanager.h>
+#include <libguiex_core/guiscene.h>
+#include <libguiex_core/guiscenemanager.h>
 #include <libguiex_core/guirenderrect.h>
 
 //============================================================================//
@@ -97,7 +97,7 @@ namespace guiex
 		if( m_eImageType == eIT_FILE )
 		{
 			//get full path
-			CGUIString strFullPath = CGUISceneInfoManager::Instance()->GetScenePath( m_strSceneName ) + m_strPath;
+			CGUIString strFullPath = CGUISceneManager::Instance()->GetScenePath( m_strSceneName ) + m_strPath;
 			m_pTexture = CGUITextureManager::Instance()->CreateTexture(strFullPath);
 
 			if( !m_pTexture )

@@ -1,6 +1,6 @@
 if( WIN32 )
 
-	set( target_name "libguiex_editor" )
+	set( target_name "tools_editor" )
 	message( STATUS "generate execute: " ${target_name} )
 
 	# all source

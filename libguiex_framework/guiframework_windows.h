@@ -22,7 +22,7 @@ namespace guiex
 	class GUIEXPORT CGUIFramework_Windows : public CGUIFrameworkBase
 	{
 	public:
-		CGUIFramework_Windows( const CGUISize& rScreenSize, const char* pDataPath );
+		CGUIFramework_Windows( );
 		virtual ~CGUIFramework_Windows();
 
 
@@ -30,7 +30,7 @@ namespace guiex
 		virtual int32 InitializeGame( );
 		virtual void ReleaseGame( );
 
-		virtual int32 InitializeSystem( );
+		virtual int32 InitializeSystem( const CGUISize& rScreenSize, const char* pDataPath );
 		virtual void ReleaseSystem( );
 
 		virtual void PreUpdate( real fDeltaTime );
