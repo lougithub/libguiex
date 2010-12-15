@@ -70,7 +70,6 @@ namespace guiex
 
 		ePropertyType_Set,
 		ePropertyType_Widget,
-		ePropertyType_Script,
 
 		ePropertyType_FontDefine,
 		ePropertyType_ImageDefine,

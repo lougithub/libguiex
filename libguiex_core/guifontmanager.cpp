@@ -99,20 +99,12 @@ namespace guiex
 		return pFontData;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIFontManager::DoDestroyResource( CGUIFontData * pRes )
+	void CGUIFontManager::DestroyResourceImp( CGUIFontData * pRes )
 	{
-		if( pRes->GetRefCount() != 0 )
-		{
-			throw CGUIException( "resource reference is still in using[%d]: <%s:%s:%s>", 
-				pRes->GetRefCount(),
-				pRes->GetName().c_str(), 
-				pRes->GetResourceType().c_str(),
-				pRes->GetSceneName().c_str() );
-		}
 		IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
 		if( !pFont )
 		{
-			throw CGUIException("[CGUIFontManager::DoDestroyResource]: failed to get font interface");
+			throw CGUIException("[CGUIFontManager::DestroyResourceImp]: failed to get font interface");
 		}
 		pFont->DestroyFontData( pRes );
 	}

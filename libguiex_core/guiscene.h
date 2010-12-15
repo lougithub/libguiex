@@ -38,10 +38,10 @@ namespace guiex
 		const CGUIString& GetScenePath() const;
 		const CGUIString& GetTitle() const;
 
-		const std::vector<CGUIString>&	GetWidgetFiles() const;
-		const std::vector<CGUIString>&	GetScriptFiles() const;
-		const std::vector<CGUIString>&	GetResourceFiles() const;
-		const std::vector<CGUIString>&	GetDependencies() const;
+		const std::vector<CGUIString>& GetWidgetFiles() const;
+		const std::vector<CGUIString>& GetScriptFiles() const;
+		const std::vector<CGUIString>& GetResourceFiles() const;
+		const std::vector<CGUIString>& GetDependencies() const;
 
 		bool IsDependenciesLoaded() const;
 		void SetDependenciesLoaded( bool bLoaded );

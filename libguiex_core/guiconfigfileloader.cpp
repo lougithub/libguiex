@@ -30,7 +30,6 @@ namespace guiex
 {
 	static CGUIWidget* DoLoadConfig_Widget( const CGUIProperty* pPropertySet, const CGUIString& rSceneName, const CGUIString& rFileName );
 	static int32 DoLoadConfig_Set( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
-	static int32 DoLoadConfig_Script( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
 	static int32 DoLoadConfig_Image( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
 	static int32 DoLoadConfig_Animation( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
 	static int32 DoLoadConfig_Font( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
@@ -66,23 +65,6 @@ namespace guiex
 		//register set
 		CGUIPropertyManager::Instance()->RegisterSet( strSetName, *pPropertySet );
 
-		return 0;
-	}
-	//------------------------------------------------------------------------------
-	int32 DoLoadConfig_Script( const CGUIProperty* pPropertySet, const CGUIString& rSceneName )
-	{
-		const CGUIString& strRelativePath = pPropertySet->GetValue();
-		guiex::IGUIInterfaceScript* pInterfaceScript = CGUIInterfaceManager::Instance()->GetInterfaceScript();
-		if( pInterfaceScript &&
-			GSystem->ShouldRunScript())
-		{
-			// create script
-			pInterfaceScript->CreateScript( rSceneName );
-
-			// load script
-			CGUIString strPath = CGUISceneManager::Instance()->GetScenePath( rSceneName ) + strRelativePath;
-			pInterfaceScript->ExecuteFile(strPath, rSceneName);
-		}
 		return 0;
 	}
 	//------------------------------------------------------------------------------
@@ -178,13 +160,6 @@ namespace guiex
 			{
 			case ePropertyType_Set:
 				if( 0 != DoLoadConfig_Set( pProperty, rSceneName ))
-				{
-					return -1;
-				}
-				break;
-
-			case ePropertyType_Script:
-				if( 0 != DoLoadConfig_Script( pProperty, rSceneName ))
 				{
 					return -1;
 				}
@@ -296,13 +271,6 @@ namespace guiex
 							return NULL;
 						}
 					}
-				}
-				break;
-
-			case ePropertyType_Script:
-				if( 0 != DoLoadConfig_Script( pProperty, rSceneName ))
-				{
-					return NULL;
 				}
 				break;
 

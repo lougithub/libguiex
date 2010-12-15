@@ -43,35 +43,28 @@ namespace guiex
 
 		static CGUIWidgetManager* Instance(); 
 
+		//widget related function
 		CGUIWidget* CreateWidget( const CGUIString& rType, const CGUIString& rWidgetName, const CGUIString& rSceneName );
 		template<class T>
-		T* CreateWidget( const CGUIString& rWidgetName, const CGUIString& rSceneName )
-		{
-			CGUIWidget* pWidget = CreateWidget( T::StaticGetType(), rWidgetName, rSceneName );
-			GUI_ASSERT( pWidget->GetType() == T::StaticGetType(), "wrong Widget type" );
-			return static_cast<T*>( pWidget );
-		}	
+		T* CreateWidget( const CGUIString& rWidgetName, const CGUIString& rSceneName );
 		bool HasWidget(  const CGUIString& rWidgetName, const CGUIString& rSceneName );
 		CGUIWidget* GetWidget( const CGUIString& rWidgetName, const CGUIString& rSceneName );
 		void DestroyWidget( CGUIWidget* pWidget );
 		template<class T>
-		T* GetWidgetWithTypeCheck( const CGUIString& rWidgetName, const CGUIString& rSceneName )
-		{
-			CGUIWidget* pWidget = GetWidget( rWidgetName, rSceneName );
-			GUI_ASSERT( pWidget, "failed to get widget" );
-			GUI_ASSERT( pWidget->GetType() == T::StaticGetType(), "wrong Widget type" );
-			return static_cast<T*>( pWidget );
-		}	
+		T* GetWidgetWithTypeCheck( const CGUIString& rWidgetName, const CGUIString& rSceneName );
 
+		//page related functions
 		CGUIWidget*	LoadPage( const CGUIString& rPageName, const CGUIString& rSceneName);
 		void AddPage(  CGUIWidget* pPage, const CGUIString& rPageName = CGUIString());
 		CGUIWidget* GetPageByWidgetName( const CGUIString& rWidgetName, const CGUIString& rSceneName );
 		CGUIWidget* GetPageByPageName( const CGUIString& rPageName, const CGUIString& rSceneName );
 		bool HasPage(const CGUIString& rWidgetName, const CGUIString& rSceneName) const;
 		bool HasPage( CGUIWidget* pPage) const;
-		void DestroyPage( CGUIWidget* pPage);
-		void DestroyAllPages( );
+		void ReleasePage( CGUIWidget* pPage);
+		//void ReleasePage( const CGUIString& rPageName );
+		void ReleaseAllPages( );
 
+		//dynamic page related functions
 		CGUIWidget*	LoadDynamicPage( const CGUIString& rPageName, const CGUIString& rSceneName, const CGUIString& rWorkingSceneName );
 		void AddDynamicPage(  CGUIWidget* pPage );
 		bool HasDynamicPage( CGUIWidget* pPage ) const;
@@ -96,6 +89,23 @@ namespace guiex
 	private:
 		static CGUIWidgetManager* m_pSingleton;
 	};
+
+	template< class T >
+	inline T* CGUIWidgetManager::CreateWidget( const CGUIString& rWidgetName, const CGUIString& rSceneName )
+	{
+		CGUIWidget* pWidget = CreateWidget( T::StaticGetType(), rWidgetName, rSceneName );
+		GUI_ASSERT( pWidget->GetType() == T::StaticGetType(), "wrong Widget type" );
+		return static_cast<T*>( pWidget );
+	}	
+
+	template<class T>
+	inline T* CGUIWidgetManager::GetWidgetWithTypeCheck( const CGUIString& rWidgetName, const CGUIString& rSceneName )
+	{
+		CGUIWidget* pWidget = GetWidget( rWidgetName, rSceneName );
+		GUI_ASSERT( pWidget, "failed to get widget" );
+		GUI_ASSERT( pWidget->GetType() == T::StaticGetType(), "wrong Widget type" );
+		return static_cast<T*>( pWidget );
+	}	
 
 	GUIEXPORT CGUIWidget* GetWidget( const CGUIString& rWidgetName, const CGUIString& rSceneName );
 	GUIEXPORT CGUIWidget* LoadDynamicPage( const CGUIString& rPageName, const CGUIString& rSceneName, const CGUIString& rWorkingSceneName );

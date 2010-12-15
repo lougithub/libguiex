@@ -8,14 +8,16 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core/guiwidgetmanager.h>
-#include <libguiex_core/guibase.h>
-#include <libguiex_core/guiwidget.h>
-#include <libguiex_core/guiwidgetfactory.h>
-#include <libguiex_core/guiexception.h>
-#include <libguiex_core/guiscenemanager.h>
-#include <libguiex_core/guisystem.h>
-#include <libguiex_core/guiconfigfileloader.h>
+#include "guiwidgetmanager.h"
+#include "guibase.h"
+#include "guiwidget.h"
+#include "guiwidgetfactory.h"
+#include "guiexception.h"
+#include "guiscenemanager.h"
+#include "guisystem.h"
+#include "guiconfigfileloader.h"
+
+#include <algorithm>
 
 //============================================================================//
 // function
@@ -242,44 +244,47 @@ namespace guiex
 	/**
 	* @brief delete specify page
 	*/
-	void CGUIWidgetManager::DestroyPage( CGUIWidget* pPage)
+	void CGUIWidgetManager::ReleasePage( CGUIWidget* pPage)
 	{
 		GUI_ASSERT( pPage, "invalid parameter");
 
-		TVecPage::iterator itor = m_vecPage.begin();
-		for( ; itor != m_vecPage.end(); ++itor)
+		bool bFound = false;
+		for( TVecPage::iterator itor = m_vecPage.begin(); itor != m_vecPage.end(); ++itor )
 		{
 			SPageInfo& rPageInfo = *itor;
 			if( rPageInfo.m_pPage == pPage )
 			{
+				m_vecPage.erase(itor);
+				bFound = true;
 				break;
 			}
 		}
-		if( itor == m_vecPage.end())
+
+		if( !bFound )
 		{
-			throw CGUIException( "[CGUIWidgetManager::DestroyPage]: failed to find page whose name is <%s>!", pPage->GetName().c_str());
+			throw CGUIException( "[CGUIWidgetManager::ReleasePage]: failed to find page whose name is <%s>!", pPage->GetName().c_str());
+			return;
 		}
 
 		if( pPage->IsOpen() )
 		{
-			throw CGUIException( "[CGUIWidgetManager::DestroyPage]: can't delete widget <%s> who is still opened!", pPage->GetName().c_str());
+			throw CGUIException( "[CGUIWidgetManager::ReleasePage]: can't delete widget <%s> who is still opened!", pPage->GetName().c_str());
 		}
 		if( pPage->GetParent())
 		{
-			throw CGUIException( "[CGUIWidgetManager::DestroyPage]: can't delete widget <%s> who is still has a father!", pPage->GetName().c_str());
+			throw CGUIException( "[CGUIWidgetManager::ReleasePage]: can't delete widget <%s> who is still has a father!", pPage->GetName().c_str());
 		}
 
-		m_vecPage.erase(itor);
 		DestroyWidget(pPage);
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWidgetManager::DestroyAllPages( )
+	void CGUIWidgetManager::ReleaseAllPages( )
 	{
 		while(m_vecPage.empty() == false )
 		{
 			CGUIWidget* pPage = m_vecPage[0].m_pPage;
 			pPage->SetParent(NULL);
-			DestroyPage(pPage);
+			ReleasePage(pPage);
 		}
 	}
 	//------------------------------------------------------------------------------

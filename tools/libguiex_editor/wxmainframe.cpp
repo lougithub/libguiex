@@ -1029,7 +1029,7 @@ void WxMainFrame::OnDeleteWidget(wxCommandEvent& evt)
 	{
 		//is page
 		guiex::GSystem->ClosePage(pWidget);
-		guiex::CGUIWidgetManager::Instance()->DestroyPage(pWidget);
+		guiex::CGUIWidgetManager::Instance()->ReleasePage(pWidget);
 	}
 	else
 	{

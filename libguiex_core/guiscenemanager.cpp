@@ -290,6 +290,56 @@ namespace guiex
 		delete pScene;
 	}
 	//------------------------------------------------------------------------------
+	int32 CGUISceneManager::LoadPage( const CGUIString& rSceneName )
+	{
+		CGUIScene* pScene = GetScene( rSceneName );
+		if( !pScene )
+		{
+			throw CGUIException( "[CGUISceneManager::LoadPage] failed to get scene <%s>", rSceneName.c_str());
+			return -1;
+		}
+
+		const std::vector<CGUIString>& rWidgetFile = pScene->GetWidgetFiles();
+		for( uint32 i=0; i<rWidgetFile.size(); ++i )
+		{
+			CGUIWidget* pPageWidget = CGUIWidgetManager::Instance()->LoadPage( rWidgetFile[i], rSceneName );
+			if( !pPageWidget )
+			{
+				throw CGUIException(
+					"[CGUISceneManager::LoadPage] failed to create page <%s> in scene <%s>", 
+					rWidgetFile[i].c_str(), rSceneName.c_str());
+				return -1;
+			}
+		}
+
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	void CGUISceneManager::ReleasePage( const CGUIString& rSceneName )
+	{
+		//CGUIScene* pScene = GetScene( rSceneName );
+		//if( !pScene )
+		//{
+		//	throw CGUIException( "[CGUISceneManager::ReleasePage] failed to get scene <%s>", rSceneName.c_str());
+		//	return -1;
+		//}
+
+		//const std::vector<CGUIString>& rWidgetFile = pScene->GetWidgetFiles();
+		//for( uint32 i=0; i<rWidgetFile.size(); ++i )
+		//{
+		//	CGUIWidget* pPageWidget = CGUIWidgetManager::Instance()->ReleasePage( rWidgetFile[i], rSceneName );
+		//	if( !pPageWidget )
+		//	{
+		//		throw CGUIException(
+		//			"[CGUISceneManager::LoadPage] failed to create page <%s> in scene <%s>", 
+		//			rWidgetFile[i].c_str(), rSceneName.c_str());
+		//		return -1;
+		//	}
+		//}
+
+		return 0;
+	}
+	//------------------------------------------------------------------------------
 	int32 CGUISceneManager::LoadResource(const CGUIString& strSceneName)
 	{
 		//check dependency
@@ -340,6 +390,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUISceneManager::LoadResourceImp( CGUIScene* pScene )
 	{
+		//load resource
 		const std::vector<CGUIString>& rResourceFiles = pScene->GetResourceFiles( );
 		for( uint32 i=0; i<rResourceFiles.size(); ++i )
 		{
@@ -351,10 +402,36 @@ namespace guiex
 					strResourceFilePath.c_str(), pScene->GetSceneName().c_str());
 			}
 		}
+
+		//load script
+		const std::vector<CGUIString>& rScriptFiles = pScene->GetScriptFiles( );
+		for( uint32 i=0; i<rScriptFiles.size(); ++i )
+		{
+			guiex::IGUIInterfaceScript* pInterfaceScript = CGUIInterfaceManager::Instance()->GetInterfaceScript();
+			if( pInterfaceScript && GSystem->ShouldRunScript())
+			{
+				// create script
+				pInterfaceScript->CreateScript( pScene->GetSceneName() );
+
+				// load script
+				CGUIString strScriptFilePath = pScene->GetScenePath() + rScriptFiles[i];	
+				pInterfaceScript->ExecuteFile(strScriptFilePath, pScene->GetSceneName());
+			}
+		}
 	}
 	//------------------------------------------------------------------------------
 	void CGUISceneManager::ReleaseResourceImp( CGUIScene* pScene )
 	{
+		//release resource
+		GSystem->ReleaseResourceByScene( pScene->GetSceneName() );
+
+		//release script
+		guiex::IGUIInterfaceScript* pInterfaceScript = CGUIInterfaceManager::Instance()->GetInterfaceScript();
+		if( pInterfaceScript )
+		{
+			// create script
+			pInterfaceScript->DestroyScript( pScene->GetSceneName() );
+		}
 	}
 	//------------------------------------------------------------------------------
 	void CGUISceneManager::ReleaseAllResources( )

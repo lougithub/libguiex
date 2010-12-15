@@ -2,25 +2,9 @@ if( WIN32 )
 
 	set( target_name "tools_editor" )
 	message( STATUS "generate execute: " ${target_name} )
-
-	# all source
-	set( ${target_name}_SRCS 
-		command.cpp
-		command.h
-		commandmanager.cpp
-		commandmanager.h
-		libguiex_editor.cpp
-		libguiex_editor.h
-		propertyconfigmgr.cpp
-		propertyconfigmgr.h
-		propertysheetfunc.cpp
-		propertysheetfunc.h
-		resource.h
-		savefilebase.h
-		toolcache.cpp
-		toolcache.h
-		windowbox.cpp
-		windowbox.h
+   
+    #widget source
+    set( ${target_name}_widget_SRCS
 		wxeditorcanvas.cpp
 		wxeditorcanvas.h
 		wxmainapp.cpp
@@ -36,9 +20,42 @@ if( WIN32 )
 		wxwidgetpropertysheet.cpp
 		wxwidgetpropertysheet.h
 		wxwizardcreatewidget.cpp
-		wxwizardcreatewidget.h
-		)
+		wxwizardcreatewidget.h        
+        )
+    source_group( widget FILES ${${target_name}_widget_SRCS} )
+    
+    #property source
+    set( ${target_name}_property_SRCS
+		propertyconfigmgr.cpp
+		propertyconfigmgr.h
+		propertysheetfunc.cpp
+		propertysheetfunc.h    
+        )
+    source_group( property FILES ${${target_name}_property_SRCS} )
+    
+    #utility source
+    set( ${target_name}_utility_SRCS
+		command.cpp
+		command.h
+		commandmanager.cpp
+		commandmanager.h
+		libguiex_editor.cpp
+		libguiex_editor.h
+		resource.h
+		savefilebase.h
+		toolcache.cpp
+		toolcache.h
+		windowbox.cpp
+		windowbox.h
+        )
+    source_group( utility FILES ${${target_name}_utility_SRCS} )    
 
+	# all source
+	set( ${target_name}_SRCS 
+		${${target_name}_widget_SRCS}
+		${${target_name}_utility_SRCS}
+		${${target_name}_property_SRCS}
+		)
 
     #include directory
     include_directories( "${PROJECT_SOURCE_DIR}/external/wxWidgets/include" )

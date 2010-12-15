@@ -144,6 +144,7 @@ namespace guiex
 		void UnregisterResourceManager( class CGUIResourceManagerBase* pMgr );
 		//void FreeResource( const CGUIString& rSceneName );
 		void UnloadAllResource();
+		void ReleaseResourceByScene( const CGUIString& rSceneName );
 		void ReleaseAllResources(  );
 
 		void DestroyAllWidgets(  );

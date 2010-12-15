@@ -50,7 +50,7 @@ namespace guiex
 			const CGUIProperty& rProperty);
 
 	protected:
-		virtual	void DoDestroyResource( CGUIFontData* pRes ); 
+		virtual	void DestroyResourceImp( CGUIFontData* pRes ); 
 		
 		CGUIFontData* DoCreateFont(
 			const CGUIString& rName, 

@@ -110,16 +110,8 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIAsManager::DoDestroyResource( CGUIAs * pRes )
+	void CGUIAsManager::DestroyResourceImp( CGUIAs * pRes )
 	{
-		if( pRes->GetRefCount() != 0 )
-		{
-			throw CGUIException( "resource reference is still in using[%d]: <%s:%s:%s>", 
-				pRes->GetRefCount(),
-				pRes->GetName().c_str(), 
-				pRes->GetResourceType().c_str(),
-				pRes->GetSceneName().c_str() );
-		}
 		CGUIAsFactory::Instance()->DestroyAs( pRes );
 	}
 	//------------------------------------------------------------------------------

@@ -296,7 +296,6 @@ WxMainFrame::~WxMainFrame()
 //------------------------------------------------------------------------------
 void WxMainFrame::TryOpenUIPage( bool bCheckCommandLine )
 {
-	CGUIString strUISceneName;
 	CGUIString strUIPageName;
 
 	bool bCommandlineFound = false;
@@ -311,7 +310,7 @@ void WxMainFrame::TryOpenUIPage( bool bCheckCommandLine )
 
 		if( arrayArgs.size() >= 4 )
 		{
-			strUISceneName = arrayArgs[2].char_str(wxConvUTF8).data();
+			m_strCurrentPlayingScene = arrayArgs[2].char_str(wxConvUTF8).data();
 			strUIPageName = arrayArgs[3].char_str(wxConvUTF8).data();
 			bCommandlineFound = true;
 		}
@@ -331,10 +330,10 @@ void WxMainFrame::TryOpenUIPage( bool bCheckCommandLine )
 		{
 			return;
 		}
-		strUISceneName = vecScenes[aChoiceDlg.GetSelection()];
+		m_strCurrentPlayingScene = vecScenes[aChoiceDlg.GetSelection()];
 
 		//chose page file
-		const std::vector<CGUIString>& vecPages = CGUISceneManager::Instance()->GetScene(strUISceneName)->GetWidgetFiles();
+		const std::vector<CGUIString>& vecPages = CGUISceneManager::Instance()->GetScene(m_strCurrentPlayingScene)->GetWidgetFiles();
 		wxArrayString arrayPages;
 		for( unsigned i=0; i<vecPages.size(); ++i )
 		{
@@ -351,11 +350,17 @@ void WxMainFrame::TryOpenUIPage( bool bCheckCommandLine )
 	//open it
 	try
 	{
-		CGUISceneManager::Instance()->UnregisterAllScenes();
-		CGUISceneManager::Instance()->RegisterScenesFromDir();
+		if( !m_strCurrentPlayingScene.empty() )
+		{
+			GSystem->DestroyAllWidgets();
+			CGUISceneManager::Instance()->ReleaseResource( m_strCurrentPlayingScene );
+			CGUISceneManager::Instance()->UnregisterScene( m_strCurrentPlayingScene );
 
-		CGUISceneManager::Instance()->LoadResource( strUISceneName );
-		CGUIWidget* pWidget = CGUIWidgetManager::Instance()->LoadPage( strUIPageName, strUISceneName );
+			m_strCurrentPlayingScene.clear();
+		}
+		CGUISceneManager::Instance()->RegisterScenesFromDir();
+		CGUISceneManager::Instance()->LoadResource( m_strCurrentPlayingScene );
+		CGUIWidget* pWidget = CGUIWidgetManager::Instance()->LoadPage( strUIPageName, m_strCurrentPlayingScene );
 		GSystem->OpenPage(pWidget);
 	}
 	catch (CGUIBaseException& rError)
@@ -451,9 +456,6 @@ void WxMainFrame::OnToggleWireframe(wxCommandEvent& evt)
 //------------------------------------------------------------------------------
 void WxMainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 {
-	GSystem->DestroyAllWidgets();
-	GSystem->ReleaseAllResources();
-
 	TryOpenUIPage( false );
 }
 //------------------------------------------------------------------------------

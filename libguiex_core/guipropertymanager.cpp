@@ -71,7 +71,6 @@ namespace guiex
 
 		RegisterPropertyType( ePropertyType_Widget, "CGUIWidget" );
 		RegisterPropertyType( ePropertyType_Set, "set" );
-		RegisterPropertyType( ePropertyType_Script, "CGUIScript" );
 
 		RegisterPropertyType( ePropertyType_FontDefine, "CGUIFontDefine" );
 		RegisterPropertyType( ePropertyType_ImageDefine, "CGUIImageDefine" );

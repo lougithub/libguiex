@@ -333,18 +333,18 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	/**
-	* @brief free resource by scene name, 
+	* @brief release resource by scene name, 
 	* only free named image now.
 	*/
-	//void CGUISystem::FreeResource( const CGUIString& rSceneName )
-	//{
-	//	for( TListResourceMgr::iterator itor = m_listResourceManager.begin(); 
-	//		itor != m_listResourceManager.end();
-	//		++itor)
-	//	{
-	//		(*itor)->ReleaseResourcesByScene(rSceneName);
-	//	}
-	//}
+	void CGUISystem::ReleaseResourceByScene( const CGUIString& rSceneName )
+	{
+		for( TListResourceMgr::iterator itor = m_listResourceManager.begin(); 
+			itor != m_listResourceManager.end();
+			++itor)
+		{
+			(*itor)->ReleaseResourceByScene(rSceneName);
+		}
+	}
 	//------------------------------------------------------------------------------
 	void CGUISystem::UnloadAllResource(  )
 	{
@@ -384,7 +384,7 @@ namespace guiex
 		RefreshGarbage();
 
 		//destroy all page
-		m_pWidgetManager->DestroyAllPages();
+		m_pWidgetManager->ReleaseAllPages();
 
 		IGUIInterfaceScript* pScript = CGUIInterfaceManager::Instance()->GetInterfaceScript();
 		if( pScript )
@@ -778,7 +778,7 @@ namespace guiex
 			itor != m_vecPageGarbage.end();
 			++itor )
 		{
-			m_pWidgetManager->DestroyPage( *itor );
+			m_pWidgetManager->ReleasePage( *itor );
 		}
 		m_vecPageGarbage.clear();
 
@@ -954,7 +954,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void			CGUISystem::CloseAll()
+	void CGUISystem::CloseAll()
 	{
 		//close all popup widget
 		while( GetCurrentPopupWidget())

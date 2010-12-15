@@ -114,6 +114,8 @@ public:
 	wxColor m_aBGColor;
 	wxTextCtrl* m_pOutput;
 
+	CGUIString m_strCurrentPlayingScene;
+
 	DECLARE_EVENT_TABLE()
 };
 
