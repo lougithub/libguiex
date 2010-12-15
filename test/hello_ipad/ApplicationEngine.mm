@@ -17,8 +17,8 @@ using namespace guiex;
 class CGUIFrameworkTest : public CGUIFramework
 {
 	public:
-		CGUIFrameworkTest( const CGUISize& rScreenSize, const char* pDataPath )
-			:CGUIFramework( rScreenSize, pDataPath )
+		CGUIFrameworkTest(  )
+			:CGUIFramework(  )
 		{
 		}
 };
@@ -75,9 +75,10 @@ void CLibGuiexEngine::Initialize( int width, int height, const char* szDataPath 
 
 void CLibGuiexEngine::InitWidgets()
 {	
-	CGUISceneInfoManager::Instance()->RegisterScenesFromDir("/", ".uip");
-	CGUISceneUtility::LoadResource( "common.uip" );
-	CGUIWidget* pWidget = CGUIWidgetManager::Instance()->LoadPage( "dialog_ok.xml", "common.uip");
+	CGUISceneManager::Instance()->RegisterScenesFromDir("/", ".uip");
+	CGUISceneManager::Instance()->LoadResources( "common.uip" );
+	CGUISceneManager::Instance()->LoadWidgets( "common.uip" );
+	CGUIWidget* pWidget = CGUIWidgetManager::Instance()->GetPage( "common.uip", "dialog_ok.xml" );
 	CGUISystem::Instance()->OpenPage(pWidget);	
 }
 

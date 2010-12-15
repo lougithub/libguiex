@@ -13,6 +13,7 @@
 #include <libguiex_core/guisystem.h>
 #include <fstream>
 #include <Foundation/Foundation.h>
+#include <libgen.h>
 
 //============================================================================//
 // function

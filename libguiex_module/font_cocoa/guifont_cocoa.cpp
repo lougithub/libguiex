@@ -26,8 +26,8 @@
 #include <libguiex_core/guisystem.h>
 #include <libguiex_core/guiinterfacefilesys.h>
 #include <libguiex_core/guiperfmonitor.h>
-#include <libguiex_core/guisceneinfo.h>
-#include <libguiex_core/guisceneinfomanager.h>
+#include <libguiex_core/guiscene.h>
+#include <libguiex_core/guiscenemanager.h>
 
 #include <algorithm>
 

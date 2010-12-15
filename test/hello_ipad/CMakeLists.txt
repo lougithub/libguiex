@@ -46,13 +46,14 @@ if( APPLE )
 
 	target_link_libraries(
 		${execute_name}
-		libguiex_core
-		libguiex_widget
-		libguiex_module
-		libguiex_script_wrapper
-		libguiex_framework
-		tinyxml
-		lua
+        general libguiex_core
+        general libguiex_widget
+        general libguiex_module
+        general libguiex_script_wrapper
+        general libguiex_framework
+        general tinyxml
+        general lua
+        general freetype
 		)
 	#set resource data
 	#SET_SOURCE_FILES_PROPERTIES(
