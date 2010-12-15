@@ -46,9 +46,13 @@ namespace guiex
 
 		CGUIScene* GetScene( const CGUIString& rSceneName ) const;
 
-		int32 LoadResource(const CGUIString& strSceneName);
-		int32 ReleaseResource(const CGUIString& strSceneName);
+		int32 LoadResources(const CGUIString& strSceneName);
+		void ReleaseResources(const CGUIString& strSceneName);
 		void ReleaseAllResources( );
+
+		int32 LoadWidgets( const CGUIString& rSceneName );
+		void ReleaseWidgets( const CGUIString& rSceneName );
+
 
 		CGUIString GetScenePath( const CGUIString& rSceneName ) const;
 		const std::vector<CGUIString>& GetSceneNames( ) const;

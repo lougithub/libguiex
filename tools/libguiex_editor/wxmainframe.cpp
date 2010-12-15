@@ -649,7 +649,7 @@ int		WxMainFrame::OpenScene( const guiex::CGUIScene* pScene )
 	//load resource file
 	try
 	{	
-		if( 0 != guiex::CGUISceneManager::Instance()->LoadResource(m_strCurrentSceneName))
+		if( 0 != guiex::CGUISceneManager::Instance()->LoadResources(m_strCurrentSceneName))
 		{
 			return -1;
 		}
@@ -1715,9 +1715,9 @@ void			WxMainFrame::CreateMenu()
 	view_menu->AppendSeparator();
 	view_menu->Append(ID_ToggleScissor, wxT("Toggle Scissor"), wxT("enable or disable scissor"), wxITEM_CHECK);
 	view_menu->Append(ID_ToggleWireframe, wxT("Toggle Wireframe"), wxT("enable or disable wireframe"), wxITEM_CHECK);
+	view_menu->Append(ID_ToggleExtraInfo, wxT("render extra info"), wxT("enable or disable render extra info"), wxITEM_CHECK);
 	view_menu->Append(ID_SetBGColor, wxT("Set BG Color"), wxT("set background color"));
 	view_menu->Append(ID_Refresh, wxT("Refresh"), wxT("refresh widgets"));
-	view_menu->Append(ID_ToggleExtraInfo, wxT("render extra info"), wxT("enable or disable render extra info"), wxITEM_CHECK);
 
 	//menu-about
 	wxMenu* help_menu = new wxMenu;

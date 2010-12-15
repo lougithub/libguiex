@@ -17,6 +17,7 @@
 #include "guiproperty.h"
 #include "guiexception.h"
 #include "guiconfigfileloader.h"
+#include "guiwidgetmanager.h"
 #include <algorithm>
 
 
@@ -290,12 +291,12 @@ namespace guiex
 		delete pScene;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUISceneManager::LoadPage( const CGUIString& rSceneName )
+	int32 CGUISceneManager::LoadWidgets( const CGUIString& rSceneName )
 	{
 		CGUIScene* pScene = GetScene( rSceneName );
 		if( !pScene )
 		{
-			throw CGUIException( "[CGUISceneManager::LoadPage] failed to get scene <%s>", rSceneName.c_str());
+			throw CGUIException( "[CGUISceneManager::LoadWidgets] failed to get scene <%s>", rSceneName.c_str());
 			return -1;
 		}
 
@@ -306,7 +307,7 @@ namespace guiex
 			if( !pPageWidget )
 			{
 				throw CGUIException(
-					"[CGUISceneManager::LoadPage] failed to create page <%s> in scene <%s>", 
+					"[CGUISceneManager::LoadWidgets] failed to create page <%s> in scene <%s>", 
 					rWidgetFile[i].c_str(), rSceneName.c_str());
 				return -1;
 			}
@@ -315,43 +316,37 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void CGUISceneManager::ReleasePage( const CGUIString& rSceneName )
+	void CGUISceneManager::ReleaseWidgets( const CGUIString& rSceneName )
 	{
-		//CGUIScene* pScene = GetScene( rSceneName );
-		//if( !pScene )
-		//{
-		//	throw CGUIException( "[CGUISceneManager::ReleasePage] failed to get scene <%s>", rSceneName.c_str());
-		//	return -1;
-		//}
+		CGUIScene* pScene = GetScene( rSceneName );
+		if( !pScene )
+		{
+			throw CGUIException( "[CGUISceneManager::ReleaseWidgets] failed to get scene <%s>", rSceneName.c_str());
+			return;
+		}
 
-		//const std::vector<CGUIString>& rWidgetFile = pScene->GetWidgetFiles();
-		//for( uint32 i=0; i<rWidgetFile.size(); ++i )
-		//{
-		//	CGUIWidget* pPageWidget = CGUIWidgetManager::Instance()->ReleasePage( rWidgetFile[i], rSceneName );
-		//	if( !pPageWidget )
-		//	{
-		//		throw CGUIException(
-		//			"[CGUISceneManager::LoadPage] failed to create page <%s> in scene <%s>", 
-		//			rWidgetFile[i].c_str(), rSceneName.c_str());
-		//		return -1;
-		//	}
-		//}
-
-		return 0;
+		const std::vector<CGUIString>& rWidgetFile = pScene->GetWidgetFiles();
+		for( uint32 i=0; i<rWidgetFile.size(); ++i )
+		{
+			CGUIWidgetManager::Instance()->ReleasePage( rSceneName, rWidgetFile[i] );
+		}
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUISceneManager::LoadResource(const CGUIString& strSceneName)
+	int32 CGUISceneManager::LoadResources(const CGUIString& strSceneName)
 	{
 		//check dependency
 		if( 0 != CheckScenesDependency( strSceneName ) )
 		{
 			return -1;
 		}
+
 		//get scene
 		CGUIScene* pScene = GetScene( strSceneName );
 		if( !pScene )
 		{
-			throw CGUIException( "[CGUISceneUtility::LoadResource] failed to load resource by scene name <%s>", strSceneName.c_str());
+			throw CGUIException(
+				"[CGUISceneUtility::LoadResources] failed to load resource by scene name <%s>", 
+				strSceneName.c_str());
 			return -1;
 		}
 
@@ -361,7 +356,7 @@ namespace guiex
 			itor != rDependencies.end();
 			++itor )
 		{
-			if( 0 != LoadResource( *itor ) )
+			if( 0 != LoadResources( *itor ) )
 			{
 				return -1;
 			}
@@ -377,15 +372,39 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUISceneManager::ReleaseResource(const CGUIString& strSceneName)
+	void CGUISceneManager::ReleaseResources(const CGUIString& strSceneName)
 	{
 		//check dependency
 		if( 0 != CheckScenesDependency( strSceneName ) )
 		{
-			return -1;
+			return;
 		}
 
-		return 0;
+		//get scene
+		CGUIScene* pScene = GetScene( strSceneName );
+		if( !pScene )
+		{
+			throw CGUIException( 
+				"[CGUISceneUtility::ReleaseResources] failed to load resource by scene name <%s>", 
+				strSceneName.c_str());
+			return;
+		}
+
+		//release this scene
+		pScene->RefRelease();
+		if( pScene->GetRefCount() == 0 )
+		{
+			ReleaseResourceImp( pScene );
+		}
+
+		//release dependencies first
+		const std::vector<CGUIString>& rDependencies = pScene->GetDependencies();
+		for( std::vector<CGUIString>::const_iterator itor = rDependencies.begin();
+			itor != rDependencies.end();
+			++itor )
+		{
+			ReleaseResources( *itor );
+		}
 	}
 	//------------------------------------------------------------------------------
 	void CGUISceneManager::LoadResourceImp( CGUIScene* pScene )
@@ -398,7 +417,7 @@ namespace guiex
 			if( 0 != CGUIConfigFileLoader::LoadResourceConfigFile(strResourceFilePath, pScene->GetSceneName(), rResourceFiles[i]))
 			{
 				throw CGUIException( 
-					"[CGUISceneUtility::LoadResource] failed to load resource by scene name <%s : %s>",
+					"[CGUISceneUtility::LoadResources] failed to load resource by scene name <%s : %s>",
 					strResourceFilePath.c_str(), pScene->GetSceneName().c_str());
 			}
 		}
@@ -429,7 +448,7 @@ namespace guiex
 		guiex::IGUIInterfaceScript* pInterfaceScript = CGUIInterfaceManager::Instance()->GetInterfaceScript();
 		if( pInterfaceScript )
 		{
-			// create script
+			// destroy script
 			pInterfaceScript->DestroyScript( pScene->GetSceneName() );
 		}
 	}

@@ -57,11 +57,11 @@ namespace guiex
 		CGUIWidget*	LoadPage( const CGUIString& rPageName, const CGUIString& rSceneName);
 		void AddPage(  CGUIWidget* pPage, const CGUIString& rPageName = CGUIString());
 		CGUIWidget* GetPageByWidgetName( const CGUIString& rWidgetName, const CGUIString& rSceneName );
-		CGUIWidget* GetPageByPageName( const CGUIString& rPageName, const CGUIString& rSceneName );
+		CGUIWidget* GetPage( const CGUIString& rSceneName, const CGUIString& rPageName );
 		bool HasPage(const CGUIString& rWidgetName, const CGUIString& rSceneName) const;
 		bool HasPage( CGUIWidget* pPage) const;
 		void ReleasePage( CGUIWidget* pPage);
-		//void ReleasePage( const CGUIString& rPageName );
+		void ReleasePage( const CGUIString& rSceneName, const CGUIString& rPageName );
 		void ReleaseAllPages( );
 
 		//dynamic page related functions
@@ -69,6 +69,9 @@ namespace guiex
 		void AddDynamicPage(  CGUIWidget* pPage );
 		bool HasDynamicPage( CGUIWidget* pPage ) const;
 		void DestroyDynamicPage( CGUIWidget* pPage);
+
+	protected:
+		void ReleasePageImp( CGUIWidget* pPage );
 
 	protected:
 		//widget list

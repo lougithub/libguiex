@@ -222,9 +222,9 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	/**
-	* @brief get a page page's configure file name
+	* @brief get a page by page name and scene name
 	*/
-	CGUIWidget* CGUIWidgetManager::GetPageByPageName( const CGUIString& rPageName, const CGUIString& rSceneName )
+	CGUIWidget* CGUIWidgetManager::GetPage( const CGUIString& rSceneName, const CGUIString& rPageName )
 	{
 		for( TVecPage::iterator itor = m_vecPage.begin();
 			itor != m_vecPage.end();
@@ -239,6 +239,46 @@ namespace guiex
 		}
 
 		return NULL;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidgetManager::ReleasePageImp( CGUIWidget* pPage )
+	{
+		if( pPage->IsOpen() )
+		{
+			throw CGUIException( "[CGUIWidgetManager::ReleasePage]: can't delete widget <%s> who is still opened!", pPage->GetName().c_str());
+		}
+		if( pPage->GetParent())
+		{
+			throw CGUIException( "[CGUIWidgetManager::ReleasePage]: can't delete widget <%s> who is still has a father!", pPage->GetName().c_str());
+		}
+
+		DestroyWidget(pPage);
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidgetManager::ReleasePage( const CGUIString& rSceneName, const CGUIString& rPageName )
+	{
+		CGUIWidget* pPage = NULL;
+		for( TVecPage::iterator itor = m_vecPage.begin(); itor != m_vecPage.end(); ++itor )
+		{
+			SPageInfo& rPageInfo = *itor;
+			if( rPageInfo.m_strPageName == rPageName &&
+				rPageInfo.m_pPage->GetSceneName() == rSceneName )
+			{
+				pPage = rPageInfo.m_pPage;
+				m_vecPage.erase(itor);
+				break;
+			}
+		}
+
+		if( !pPage )
+		{
+			throw CGUIException( 
+				"[CGUIWidgetManager::ReleasePage]: failed to find page whose scene name is <%s> and page name is <%s>!", 
+				rSceneName.c_str(), rPageName.c_str() );
+			return;
+		}
+
+		ReleasePageImp( pPage );
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -266,16 +306,7 @@ namespace guiex
 			return;
 		}
 
-		if( pPage->IsOpen() )
-		{
-			throw CGUIException( "[CGUIWidgetManager::ReleasePage]: can't delete widget <%s> who is still opened!", pPage->GetName().c_str());
-		}
-		if( pPage->GetParent())
-		{
-			throw CGUIException( "[CGUIWidgetManager::ReleasePage]: can't delete widget <%s> who is still has a father!", pPage->GetName().c_str());
-		}
-
-		DestroyWidget(pPage);
+		ReleasePageImp( pPage );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidgetManager::ReleaseAllPages( )

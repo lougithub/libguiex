@@ -89,18 +89,21 @@ WXLRESULT WxGLCanvas::MSWWindowProc(WXUINT uMsg, WXWPARAM wParam, WXLPARAM lPara
 {
 	try
 	{
-		if( CGUIInterfaceManager::Instance()->GetInterfaceMouseTyped<IGUIMouse_winapi>() )
+		if( CGUISystem::Instance() )
 		{
-			CGUIInterfaceManager::Instance()->GetInterfaceMouseTyped<IGUIMouse_winapi>()->ProcessWindowMessage((HWND)GetHandle(), uMsg, wParam, lParam );
-		}
-		if( CGUIInterfaceManager::Instance()->GetInterfaceKeyboardTyped<IGUIKeyboard_winapi>() )
-		{
-			CGUIInterfaceManager::Instance()->GetInterfaceKeyboardTyped<IGUIKeyboard_winapi>()->ProcessWindowMessage((HWND)GetHandle(), uMsg, wParam, lParam );
-		}
-		if( CGUIInterfaceManager::Instance()->GetInterfaceImeTyped<IGUIIme_winapi>() )
-		{
-			CGUIInterfaceManager::Instance()->GetInterfaceImeTyped<IGUIIme_winapi>()->ProcessWindowMessage((HWND)GetHandle(), uMsg, wParam, lParam );
-		}
+			if( CGUIInterfaceManager::Instance()->GetInterfaceMouse() )
+			{
+				CGUIInterfaceManager::Instance()->GetInterfaceMouseTyped<IGUIMouse_winapi>()->ProcessWindowMessage((HWND)GetHandle(), uMsg, wParam, lParam );
+			}
+			if( CGUIInterfaceManager::Instance()->GetInterfaceKeyboard() )
+			{
+				CGUIInterfaceManager::Instance()->GetInterfaceKeyboardTyped<IGUIKeyboard_winapi>()->ProcessWindowMessage((HWND)GetHandle(), uMsg, wParam, lParam );
+			}
+			if( CGUIInterfaceManager::Instance()->GetInterfaceIme() )
+			{
+				CGUIInterfaceManager::Instance()->GetInterfaceImeTyped<IGUIIme_winapi>()->ProcessWindowMessage((HWND)GetHandle(), uMsg, wParam, lParam );
+			}
+		}	
 	}
 	catch (CGUIBaseException& rError)
 	{
@@ -182,12 +185,20 @@ EVT_MENU(ID_Open, WxMainFrame::OnOpen)
 EVT_MENU(ID_Exit, WxMainFrame::OnExit)
 EVT_MENU(ID_About, WxMainFrame::OnAbout)
 EVT_MENU(ID_VIEW_Fullscreen, WxMainFrame::OnFullscreen)
+EVT_MENU(ID_ToggleScissor, WxMainFrame::OnToggleScissor)
+EVT_MENU(ID_ToggleExtraInfo, WxMainFrame::OnToggleExtraInfo)
+EVT_MENU(ID_ToggleWireframe, WxMainFrame::OnToggleWireframe)
+EVT_MENU(ID_Refresh, WxMainFrame::OnRefresh)
+EVT_MENU(ID_SetBGColor, WxMainFrame::OnSetBGColor)
 EVT_MENU(ID_VIEW_800x600, WxMainFrame::On800x600)
 EVT_MENU(ID_VIEW_1024x786, WxMainFrame::On1024x786)
 EVT_MENU(ID_VIEW_1280x800, WxMainFrame::On1280x800)
-EVT_MENU(ID_ToggleScissor, WxMainFrame::OnToggleScissor)
-EVT_MENU(ID_ToggleWireframe, WxMainFrame::OnToggleWireframe)
-EVT_MENU(ID_SetBGColor, WxMainFrame::OnSetBGColor)
+EVT_MENU(ID_VIEW_Iphone480x320, WxMainFrame::OnIphone480x320)
+EVT_MENU(ID_VIEW_Iphone320x480, WxMainFrame::OnIphone320x480)
+EVT_MENU(ID_VIEW_Iphone960x640, WxMainFrame::OnIphone960x640)
+EVT_MENU(ID_VIEW_Iphone640x960, WxMainFrame::OnIphone640x960)
+EVT_MENU(ID_VIEW_Ipad1024x768, WxMainFrame::OnIpad1024x768)
+EVT_MENU(ID_VIEW_Ipad768x1024, WxMainFrame::OnIpad768x1024)
 END_EVENT_TABLE()
 //------------------------------------------------------------------------------
 WxMainFrame::WxMainFrame(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
@@ -209,11 +220,20 @@ WxMainFrame::WxMainFrame(wxWindow* parent, wxWindowID id, const wxString& title,
 	view_menu->Append(ID_VIEW_Fullscreen, _("Fullscreen"));
 	view_menu->Append(ID_VIEW_800x600, wxT("800 x 600"), wxT("Convenience resizer for 800 x 600."));
 	view_menu->Append(ID_VIEW_1024x786, wxT("1024 x 768"), wxT("Convenience resizer for 1024 x 768."));
-	view_menu->Append(ID_VIEW_1024x786, wxT("1280 x 800"), wxT("Convenience resizer for 1280 x 800."));
+	view_menu->Append(ID_VIEW_1280x800, wxT("1280 x 800"), wxT("Convenience resizer for 1280 x 800."));
+	view_menu->Append(ID_VIEW_Iphone480x320, wxT("Iphone480x320"), wxT("Convenience resizer for Iphone480x320."));
+	view_menu->Append(ID_VIEW_Iphone320x480, wxT("Iphone320x480"), wxT("Convenience resizer for Iphone320x480."));
+	view_menu->Append(ID_VIEW_Iphone960x640, wxT("Iphone960x640"), wxT("Convenience resizer for Iphone960x640."));
+	view_menu->Append(ID_VIEW_Iphone640x960, wxT("Iphone640x960"), wxT("Convenience resizer for Iphone640x960."));
+	view_menu->Append(ID_VIEW_Ipad1024x768, wxT("Ipad1024x768"), wxT("Convenience resizer for Ipad1024x768."));
+	view_menu->Append(ID_VIEW_Ipad768x1024, wxT("Ipad768x1024"), wxT("Convenience resizer for Ipad768x1024."));
 	view_menu->AppendSeparator();
 	view_menu->Append(ID_ToggleScissor, wxT("Toggle Scissor"), wxT("enable or disable scissor"), wxITEM_CHECK);
 	view_menu->Append(ID_ToggleWireframe, wxT("Toggle Wireframe"), wxT("enable or disable wireframe"), wxITEM_CHECK);
+	view_menu->Append(ID_ToggleExtraInfo, wxT("render extra info"), wxT("enable or disable render extra info"), wxITEM_CHECK);
+	view_menu->Append(ID_Refresh, wxT("Refresh"), wxT("refresh widgets"));
 	view_menu->Append(ID_SetBGColor, wxT("Set BG Color"), wxT("set background color"));
+
 	//menu-about
 	wxMenu* help_menu = new wxMenu;
 	help_menu->Append(ID_About, _("About..."));
@@ -226,7 +246,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent, wxWindowID id, const wxString& title,
 	// min size for the frame itself isn't completely done.
 	// see the end up wxAuiManager::Update() for the test
 	// code. For now, just hard code a frame minimum size
-	SetMinSize(wxSize(640,480));
+	SetMinSize(wxSize(100,100));
 	SetClientSize( 1024, 786 );
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -290,13 +310,18 @@ WxMainFrame::~WxMainFrame()
 	m_mgr.UnInit();	
 
 	//release libguiex system
-	GSystem->Release();
-	delete GSystem;
+	if( CGUIFrameworkViewer::ms_pFramework )
+	{
+		CGUIFrameworkViewer::ms_pFramework->Release();
+		delete CGUIFrameworkViewer::ms_pFramework;
+		CGUIFrameworkViewer::ms_pFramework = NULL;
+	}
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::TryOpenUIPage( bool bCheckCommandLine )
 {
 	CGUIString strUIPageName;
+	CGUIString strUISceneName;
 
 	bool bCommandlineFound = false;
 	if( bCheckCommandLine )
@@ -310,7 +335,7 @@ void WxMainFrame::TryOpenUIPage( bool bCheckCommandLine )
 
 		if( arrayArgs.size() >= 4 )
 		{
-			m_strCurrentPlayingScene = arrayArgs[2].char_str(wxConvUTF8).data();
+			strUISceneName = arrayArgs[2].char_str(wxConvUTF8).data();
 			strUIPageName = arrayArgs[3].char_str(wxConvUTF8).data();
 			bCommandlineFound = true;
 		}
@@ -325,15 +350,15 @@ void WxMainFrame::TryOpenUIPage( bool bCheckCommandLine )
 		{
 			arrayScenes.Add( wxConvUTF8.cMB2WC( vecScenes[i].c_str()));
 		}
-		wxSingleChoiceDialog aChoiceDlg( this, _T("select scene"), _T("select scene files"), arrayScenes );
-		if( aChoiceDlg.ShowModal() != wxID_OK )
+		wxSingleChoiceDialog aSceneChoiceDlg( this, _T("select scene"), _T("select scene files"), arrayScenes );
+		if( aSceneChoiceDlg.ShowModal() != wxID_OK )
 		{
 			return;
 		}
-		m_strCurrentPlayingScene = vecScenes[aChoiceDlg.GetSelection()];
+		strUISceneName = vecScenes[aSceneChoiceDlg.GetSelection()];
 
 		//chose page file
-		const std::vector<CGUIString>& vecPages = CGUISceneManager::Instance()->GetScene(m_strCurrentPlayingScene)->GetWidgetFiles();
+		const std::vector<CGUIString>& vecPages = CGUISceneManager::Instance()->GetScene(strUISceneName)->GetWidgetFiles();
 		wxArrayString arrayPages;
 		for( unsigned i=0; i<vecPages.size(); ++i )
 		{
@@ -352,16 +377,14 @@ void WxMainFrame::TryOpenUIPage( bool bCheckCommandLine )
 	{
 		if( !m_strCurrentPlayingScene.empty() )
 		{
-			GSystem->DestroyAllWidgets();
-			CGUISceneManager::Instance()->ReleaseResource( m_strCurrentPlayingScene );
-			CGUISceneManager::Instance()->UnregisterScene( m_strCurrentPlayingScene );
-
-			m_strCurrentPlayingScene.clear();
+			GSystem->CloseAll();
+			CGUISceneManager::Instance()->ReleaseWidgets( m_strCurrentPlayingScene );
+			CGUISceneManager::Instance()->ReleaseResources( m_strCurrentPlayingScene );
 		}
-		CGUISceneManager::Instance()->RegisterScenesFromDir();
-		CGUISceneManager::Instance()->LoadResource( m_strCurrentPlayingScene );
-		CGUIWidget* pWidget = CGUIWidgetManager::Instance()->LoadPage( strUIPageName, m_strCurrentPlayingScene );
-		GSystem->OpenPage(pWidget);
+		m_strCurrentPlayingScene = strUISceneName;
+		CGUISceneManager::Instance()->LoadResources( m_strCurrentPlayingScene );
+		CGUISceneManager::Instance()->LoadWidgets( m_strCurrentPlayingScene );
+		GSystem->OpenPage( CGUIWidgetManager::Instance()->GetPage( m_strCurrentPlayingScene, strUIPageName ));
 	}
 	catch (CGUIBaseException& rError)
 	{
@@ -401,21 +424,54 @@ void WxMainFrame::OutputString( const std::string& rString)
 	m_pOutput->AppendText(wxString(_T("\n")));
 }
 //------------------------------------------------------------------------------
-void WxMainFrame::On1280x800(wxCommandEvent& evt)
+void WxMainFrame::On800x600(wxCommandEvent& evt)
 {
-	this->SetClientSize( 1280, 800 );
-	Refresh();
+	SetResolution( 800, 600 );
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::On1024x786(wxCommandEvent& evt)
 {
-	this->SetClientSize( 1024, 768 );
-	Refresh();
+	SetResolution( 1024, 768 );
 }
 //------------------------------------------------------------------------------
-void WxMainFrame::On800x600(wxCommandEvent& evt)
+void WxMainFrame::On1280x800(wxCommandEvent& evt)
 {
-	this->SetClientSize( 800, 600 );
+	SetResolution( 1280, 800 );
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnIphone480x320(wxCommandEvent& evt)
+{
+	SetResolution( 480, 320 );
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnIphone320x480(wxCommandEvent& evt)
+{
+	SetResolution( 320, 480 );
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnIphone960x640(wxCommandEvent& evt)
+{
+	SetResolution( 960, 640 );
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnIphone640x960(wxCommandEvent& evt)
+{
+	SetResolution( 640, 960 );
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnIpad1024x768(wxCommandEvent& evt)
+{
+	SetResolution( 1024, 768 );
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnIpad768x1024(wxCommandEvent& evt)
+{
+	SetResolution( 768, 1024 );
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::SetResolution( int width, int height )
+{
+	SetClientSize( width, height );
 	Refresh();
 }
 //------------------------------------------------------------------------------
@@ -431,6 +487,16 @@ void WxMainFrame::OnSetBGColor(wxCommandEvent& evt)
 	if(wxID_OK == aColorDlg.ShowModal())
 	{
 		m_aBGColor = aColorDlg.GetColourData().GetColour(); 
+	}
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnToggleExtraInfo(wxCommandEvent& evt)
+{
+	bool bIsChecked = evt.IsChecked();
+
+	if( guiex::CGUIInterfaceManager::Instance()->GetInterfaceRender())
+	{
+		guiex::GSystem->SetDrawExtraInfo(bIsChecked);
 	}
 }
 //------------------------------------------------------------------------------
@@ -452,6 +518,12 @@ void WxMainFrame::OnToggleWireframe(wxCommandEvent& evt)
 	{
 		CGUIInterfaceManager::Instance()->GetInterfaceRender()->SetWireFrame(bIsChecked);
 	}
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnRefresh(wxCommandEvent& evt)
+{
+	guiex::GSystem->GetCurrentRootWidget()->Refresh();
+	Refresh();
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))

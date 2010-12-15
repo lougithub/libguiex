@@ -83,13 +83,22 @@ public:
 		ID_Open,
 
 		//view
-		ID_VIEW_Fullscreen,
 		ID_VIEW_800x600,
 		ID_VIEW_1024x786,
 		ID_VIEW_1280x800,
+		ID_VIEW_Iphone480x320,
+		ID_VIEW_Iphone320x480,
+		ID_VIEW_Iphone960x640,
+		ID_VIEW_Iphone640x960,
+		ID_VIEW_Ipad1024x768,
+		ID_VIEW_Ipad768x1024,
+		ID_VIEW_Fullscreen,
+
 		ID_ToggleScissor,
 		ID_ToggleWireframe,
 		ID_SetBGColor,
+		ID_Refresh,
+		ID_ToggleExtraInfo,
 	};
 
 protected:
@@ -101,13 +110,24 @@ protected:
 	void OnExit(wxCommandEvent& evt);
 	void OnAbout(wxCommandEvent& evt);
 	void OnOpen(wxCommandEvent& evt);
+	void OnFullscreen(wxCommandEvent& evt);
 	void OnToggleScissor(wxCommandEvent& evt);
+	void OnToggleExtraInfo(wxCommandEvent& evt);
 	void OnToggleWireframe(wxCommandEvent& evt);
 	void OnSetBGColor(wxCommandEvent& evt);
-	void OnFullscreen(wxCommandEvent& evt);
+	void OnRefresh(wxCommandEvent& evt);
+
+	void SetResolution( int width, int height );
+
 	void On800x600(wxCommandEvent& evt);
 	void On1024x786(wxCommandEvent& evt);
 	void On1280x800(wxCommandEvent& evt);
+	void OnIphone480x320(wxCommandEvent& evt);
+	void OnIphone320x480(wxCommandEvent& evt);
+	void OnIphone960x640(wxCommandEvent& evt);
+	void OnIphone640x960(wxCommandEvent& evt);
+	void OnIpad1024x768(wxCommandEvent& evt);
+	void OnIpad768x1024(wxCommandEvent& evt);
 
 public:
 	wxAuiManager m_mgr;
