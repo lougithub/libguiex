@@ -20,7 +20,7 @@ int GetTypeIndexInScreenValueEnum( guiex::EScreenValue eValue, const wxArrayStri
 	guiex::ValueToString( eValue, strValue );
 	for( int i=0; i<int(arrEnums.size()); ++i )
 	{
-		if( arrEnums[i] == STRING_M2W( strValue ))
+		if( arrEnums[i] == Gui2wxString( strValue ))
 		{
 			return i;
 		}
@@ -286,7 +286,7 @@ wxVariant WxGUIWidgetPositionProperty::ChildChanged( wxVariant& thisValue, int c
 	switch ( childIndex )
 	{
 	case 0:
-		guiex::StringToValue( wxConvUTF8.cWC2MB( m_arrEnums[childValue.GetLong()].c_str()).data(), widget_pos.m_eType );
+		guiex::StringToValue( wx2GuiString( m_arrEnums[childValue.GetLong()]), widget_pos.m_eType );
 		break;
 	case 1: 
 		widget_pos.m_aValue << childValue; 
@@ -316,13 +316,13 @@ wxString WxGuiColorProperty::ValueToString( wxVariant& value, int argFlags ) con
 	CGUIColor color = CGUIColorRefFromVariant(m_value);
 	CGUIString strValue;
 	guiex::ValueToString( color, strValue );
-	return wxConvUTF8.cMB2WC(strValue.c_str());
+	return Gui2wxString( strValue );
 }
 // -----------------------------------------------------------------------
 bool WxGuiColorProperty::StringToValue( wxVariant& variant, const wxString& text, int argFlags )
 {
 	CGUIColor color;
-	CGUIString strValue = wxConvUTF8.cWC2MB( text.c_str() ).data();
+	CGUIString strValue = wx2GuiString( text );
 	try
 	{
 		if( 0 != guiex::StringToValue( strValue, color ) )
@@ -429,7 +429,7 @@ wxVariant WxGUIWidgetSizeProperty::ChildChanged( wxVariant& thisValue, int child
 	switch ( childIndex )
 	{
 	case 0: 
-		guiex::StringToValue( wxConvUTF8.cWC2MB( m_arrEnums[childValue.GetLong()].c_str()).data(), widget_size.m_eType );
+		guiex::StringToValue( wx2GuiString( m_arrEnums[childValue.GetLong()]), widget_size.m_eType );
 		break;
 	case 1: 
 		widget_size.m_aValue << childValue; 

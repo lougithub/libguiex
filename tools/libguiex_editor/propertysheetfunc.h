@@ -43,9 +43,6 @@ extern void	GenerateGUIProperty( wxPropertyGridManager* pSheetMgr, wxPGProperty*
 //generate gui property
 extern void GenerateGUIProperty( wxPropertyGridManager* pSheetMgr, guiex::CGUIProperty& rSet );
 
-//create a widget from property sheet
-extern guiex::CGUIWidget* CreateWidget( wxPropertyGridManager* pSheetMgr, const char* strType, const char* strName, guiex::CGUIWidget* pParent);
-
 //update image used in the system
 extern void	UpdateImageNameList();
 

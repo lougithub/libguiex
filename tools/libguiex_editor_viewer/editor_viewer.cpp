@@ -35,7 +35,15 @@ static void EditorWarningCB(const char* message, void*)
 	((WxMainFrame*)wxGetApp().GetTopWindow())->OutputString(message);
 }
 //------------------------------------------------------------------------------
-
+wxString Gui2wxString( const CGUIString& rString )
+{
+	return wxConvUTF8.cMB2WC(rString.c_str());
+}
+//------------------------------------------------------------------------------
+CGUIString wx2GuiString( const wxString& rString )
+{
+	return wxConvUTF8.cWC2MB(rString.c_str()).data();
+}
 //------------------------------------------------------------------------------
 //	CGUIFrameworkViewer
 //------------------------------------------------------------------------------
@@ -348,7 +356,7 @@ void WxMainFrame::TryOpenUIPage( bool bCheckCommandLine )
 		wxArrayString arrayScenes;
 		for( unsigned i=0; i<vecScenes.size(); ++i )
 		{
-			arrayScenes.Add( wxConvUTF8.cMB2WC( vecScenes[i].c_str()));
+			arrayScenes.Add( Gui2wxString( vecScenes[i]));
 		}
 		wxSingleChoiceDialog aSceneChoiceDlg( this, _T("select scene"), _T("select scene files"), arrayScenes );
 		if( aSceneChoiceDlg.ShowModal() != wxID_OK )
@@ -362,7 +370,7 @@ void WxMainFrame::TryOpenUIPage( bool bCheckCommandLine )
 		wxArrayString arrayPages;
 		for( unsigned i=0; i<vecPages.size(); ++i )
 		{
-			arrayPages.Add( wxConvUTF8.cMB2WC( vecPages[i].c_str()));
+			arrayPages.Add( Gui2wxString( vecPages[i]));
 		}
 		wxSingleChoiceDialog aPageChoiceDlg( this, _T("select scene"), _T("select scene files"), arrayPages );
 		if( aPageChoiceDlg.ShowModal() != wxID_OK )
@@ -420,7 +428,7 @@ bool WxMainFrame::GetUIDataPath( CGUIString& rDataPath )
 //------------------------------------------------------------------------------
 void WxMainFrame::OutputString( const std::string& rString)
 {
-	m_pOutput->AppendText(wxConvUTF8.cMB2WC(rString.c_str()).data());
+	m_pOutput->AppendText(Gui2wxString(rString).data());
 	m_pOutput->AppendText(wxString(_T("\n")));
 }
 //------------------------------------------------------------------------------

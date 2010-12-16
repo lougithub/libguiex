@@ -86,7 +86,8 @@ using namespace guiex;
 //============================================================================//
 // declare
 //============================================================================//
-#define STRING_M2W(value)	wxConvUTF8.cMB2WC((value).c_str())
+extern wxString Gui2wxString( const CGUIString& rString );
+extern CGUIString wx2GuiString( const wxString& rString );
 
 #endif	//__LIBGUIEX_EDITOR_20091016_H__
 

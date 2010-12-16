@@ -60,6 +60,14 @@ public:
 	{
 		return m_bMustExist;
 	}
+	void SetReadOnly(bool bReadOnly)
+	{
+		m_bReadOnly = bReadOnly;
+	}
+	bool IsReadOnly() const
+	{
+		return m_bReadOnly;
+	}	
 
 	void SetPage(const std::string& rPage)
 	{
@@ -71,10 +79,11 @@ public:
 	}
 
 protected:
-	std::string		m_strLabel;		/// label of this property
-	std::string		m_strPage;		/// page of property
-	std::string		m_strCategories;/// categories of property
-	bool			m_bMustExist;	/// whether this property must exist
+	std::string m_strLabel; /// label of this property
+	std::string m_strPage; /// page of property
+	std::string m_strCategories;/// categories of property
+	bool m_bMustExist; /// whether this property must exist
+	bool m_bReadOnly;
 };
 
 
@@ -85,7 +94,7 @@ protected:
 class CPropertyConfigMgr
 {
 public:
-	typedef std::map<std::string, guiex::CGUIProperty>		TMapPropertySet;
+	typedef std::map<std::string, guiex::CGUIProperty> TMapPropertySet;
 
 public:
 	~CPropertyConfigMgr();
@@ -98,7 +107,7 @@ public:
 	/** 
 	 * @brief clear all property
 	 */
-	void	Clear();
+	void Clear();
 
 	/** 
 	 * @brief read property config from file

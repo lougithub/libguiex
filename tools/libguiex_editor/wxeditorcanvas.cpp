@@ -513,7 +513,7 @@ void WxGLCanvas::HandleMouseMoved (int aMouseX, int aMouseY)
 	else if (m_hoveredWindow != NULL) 
 	{
 		m_hoveredResizePoint = RESIZE_POINT_NONE;
-		wxSnprintf (statusInfo, 100, wxT("%s Window: %s"), statusInfo, wxConvUTF8.cMB2WC(m_hoveredWindow->GetName().c_str()).data());
+		wxSnprintf (statusInfo, 100, wxT("%s Window: %s"), statusInfo, Gui2wxString(m_hoveredWindow->GetName()).data());
 		// Selectable?
 		if(m_hoveredWindow->GetName().find("__auto__") != guiex::CGUIString::npos)
 		{
@@ -676,7 +676,7 @@ int WxGLCanvas::SaveWidgetNodeToDoc( guiex::CGUIWidget* pWidget, TiXmlDocument& 
 	}
 	else
 	{
-		TiXmlElement* pParentNode = GetElementByName(_T("property"), wxConvUTF8.cMB2WC(pWidget->GetParent()->GetName().c_str()).data(), pRootNode);
+		TiXmlElement* pParentNode = GetElementByName(_T("property"), Gui2wxString(pWidget->GetParent()->GetName()), pRootNode);
 		wxASSERT(pParentNode);
 		pWidgetNode = (TiXmlElement*)pRootNode->InsertEndChild(aNewNode);
 	}
@@ -743,7 +743,7 @@ void WxGLCanvas::AddTopPropertyElement( const guiex::CGUIProperty& rProperty, Ti
 	}
 
 	//get exist's one
-	TiXmlElement* pOldNode = GetElementByName(_T("property"), wxConvUTF8.cMB2WC(rProperty.GetName().c_str()).data(), pWidgetNode);
+	TiXmlElement* pOldNode = GetElementByName(_T("property"), Gui2wxString(rProperty.GetName()), pWidgetNode);
 
 	//add toppest element
 	TiXmlElement* pToppestNode = NULL;
@@ -792,7 +792,7 @@ TiXmlElement*	WxGLCanvas::GetElementByName(
 	TiXmlElement* pNode = pParentElement->FirstChildElement(rElementName.char_str(wxConvUTF8).data());
 	while( pNode )
 	{
-		if( rAttrName == wxConvUTF8.cMB2WC(pNode->Attribute("name")).data())
+		if( rAttrName == Gui2wxString(pNode->Attribute("name")))
 		{
 			pFindNode = pNode;
 			break;

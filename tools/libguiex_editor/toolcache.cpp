@@ -152,14 +152,14 @@ void	CToolCache::UpdateMenu( )
 	// Add the MRU items to the menu.
 	for( unsigned x = 0 ; x < m_pathHistory.size() && x<m_nMaxSize ; ++x )
 	{
-		wxString strText = wxConvUTF8.cMB2WC( m_pathHistory[x].c_str());
+		wxString strText = Gui2wxString( m_pathHistory[x]);
 		m_pPathMenu->Append( m_nPathBaseId + x, strText );
 	}
 	// Add the MRU items to the menu.
 	for( unsigned x = 0 ; x < m_sceneHistory.size() && x<m_nMaxSize ; ++x )
 	{
 		std::string strStdText = std::string("<") + m_sceneHistory[x].first + ">: " + m_sceneHistory[x].second;
-		wxString strText = wxConvUTF8.cMB2WC( strStdText.c_str());
+		wxString strText = Gui2wxString( strStdText);
 		m_pSceneMenu->Append( m_nSceneBaseId + x, strText );
 	}
 }

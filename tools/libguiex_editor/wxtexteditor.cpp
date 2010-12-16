@@ -130,7 +130,7 @@ int	WxTextEditor::OpenFile()
 		else 
 		{
 			std::string rErr = std::string("failed to open file: ") + m_strFilename;
-			wxMessageBox(wxConvUTF8.cMB2WC(rErr.c_str()), wxT("error"), wxOK|wxCENTER|wxICON_ERROR);
+			wxMessageBox(Gui2wxString(rErr), wxT("error"), wxOK|wxCENTER|wxICON_ERROR);
 			return -1;
 		}
 	}

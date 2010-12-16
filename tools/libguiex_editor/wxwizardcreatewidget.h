@@ -8,13 +8,6 @@
 #ifndef __KEN_WIZARD_CREATE_WIDGET_20070927_H__
 #define __KEN_WIZARD_CREATE_WIDGET_20070927_H__
 
-
-//============================================================================//
-// include
-//============================================================================// 
-
-
-
 //============================================================================//
 // declare
 //============================================================================// 
@@ -22,7 +15,6 @@ namespace guiex
 {
 	class CGUIWidget;
 }
-
 
 
 //============================================================================//
@@ -58,7 +50,7 @@ private:
 	wxWizardPageSimple* m_pPage1;
 	wxWizardPageSimple* m_pPage2;
 
-	wxString	m_strWidgetType;	//store the type of widget
+	wxString m_strWidgetType;	//store the type of widget
 
 	wxComboBox* m_pComboBoxType;
 	wxTextCtrl* m_pEditName;
@@ -68,7 +60,6 @@ private:
 	CGUIWidget* m_pParent;
 
 	DECLARE_EVENT_TABLE()
-
 };
 
 #endif //__KEN_WIZARD_CREATE_WIDGET_20070927_H__

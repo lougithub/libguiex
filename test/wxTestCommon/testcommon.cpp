@@ -545,7 +545,7 @@ bool		WxMainFrame::GetUIInfo( bool bTryCommandLine)
 
 
 	//chose data path
-	//wxDirDialog aDlg( this, _T("Choose a libguiex root path"), wxConvUTF8.cMB2WC( m_strUIDataPath.c_str()));
+	//wxDirDialog aDlg( this, _T("Choose a libguiex root path"), Gui2wxString( m_strUIDataPath));
 	//if( wxID_OK != aDlg.ShowModal())
 	//{
 	//	return false;
@@ -556,7 +556,7 @@ bool		WxMainFrame::GetUIInfo( bool bTryCommandLine)
 	//get base dir
 	wxString strDir;
 	wxSplitPath(wxGetFullModuleName(), &strDir, NULL, NULL);
-	m_strUIDataPath = guiex::CGUIString(wxConvUTF8.cWC2MB(strDir).data()) + "/../../data/test/";
+	m_strUIDataPath = wx2GuiString(strDir) + "/../../data/test/";
 
 	//chose scene
 	guiex::GSystem->SetDataPath(m_strUIDataPath);
@@ -565,7 +565,7 @@ bool		WxMainFrame::GetUIInfo( bool bTryCommandLine)
 	//wxArrayString arrayScenes;
 	//for( unsigned i=0; i<vecScenes.size(); ++i )
 	//{
-	//	arrayScenes.Add( wxConvUTF8.cMB2WC( vecScenes[i].c_str()));
+	//	arrayScenes.Add( Gui2wxString( vecScenes[i]));
 	//}
 	//wxSingleChoiceDialog aChoiceDlg( this, _T("select resource"), _T("select resource scene"), arrayScenes );
 	//if( aChoiceDlg.ShowModal() != wxID_OK )
@@ -584,7 +584,7 @@ bool		WxMainFrame::GetUIInfo( bool bTryCommandLine)
 //------------------------------------------------------------------------------
 void	 WxMainFrame::OutputString( const std::string& rString)
 {
-	m_pOutput->AppendText(wxConvUTF8.cMB2WC(rString.c_str()).data());
+	m_pOutput->AppendText(Gui2wxString(rString).data());
 	m_pOutput->AppendText(wxString(_T("\n")));
 }
 //------------------------------------------------------------------------------

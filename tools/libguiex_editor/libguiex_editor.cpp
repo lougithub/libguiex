@@ -25,8 +25,15 @@
 
 
 //------------------------------------------------------------------------------
-
-
+wxString Gui2wxString( const CGUIString& rString )
+{
+	return wxConvUTF8.cMB2WC(rString.c_str());
+}
+//------------------------------------------------------------------------------
+CGUIString wx2GuiString( const wxString& rString )
+{
+	return wxConvUTF8.cWC2MB(rString.c_str()).data();
+}
 //------------------------------------------------------------------------------
 
 

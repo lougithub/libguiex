@@ -9,6 +9,7 @@
 
     <widget type="CGUIWidget">
         <page name="Appearance">
+            <property name="parent" type="CGUIString" value="" readonly="true">
             <property name="position" type="CGUIWidgetPosition" category="Default">
                 <property name="type" type="EScreenValue" value="eScreenValue_Pixel"/>
                 <property name="value" type="CGUIVector2" value="0,0" />

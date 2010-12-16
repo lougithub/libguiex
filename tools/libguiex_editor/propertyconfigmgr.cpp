@@ -65,7 +65,7 @@ void	CPropertyConfigMgr::RegisterSet( const std::string& rSetName, const guiex::
 	if( m_mapPropertySet.find(rSetName) != m_mapPropertySet.end())
 	{
 		std::string strError = std::string("[CPropertyConfigMgr::RegisterSet] the property <")+rSetName+"> has existed!";
-		wxMessageBox(wxConvUTF8.cMB2WC(strError.c_str()), _T("Error"), wxICON_ERROR | wxCENTRE );
+		wxMessageBox(Gui2wxString(strError), _T("Error"), wxICON_ERROR | wxCENTRE );
 		wxASSERT(0);
 	}
 	m_mapPropertySet.insert( std::make_pair(rSetName,rPropertySet) );
@@ -76,7 +76,7 @@ void	CPropertyConfigMgr::RegisterEnumDefine( const guiex::CGUIString& rEnumName,
 	if( m_mapEnums.find(rEnumName) != m_mapEnums.end())
 	{
 		std::string strError = std::string("[CPropertyConfigMgr::RegisterSet] the property <")+rEnumName+"> has existed!";
-		wxMessageBox(wxConvUTF8.cMB2WC(strError.c_str()), _T("Error"), wxICON_ERROR | wxCENTRE );
+		wxMessageBox(Gui2wxString(strError), _T("Error"), wxICON_ERROR | wxCENTRE );
 		wxASSERT(0);
 	}
 	m_mapEnums.insert( std::make_pair(rEnumName,rEnumValue) );
@@ -93,7 +93,7 @@ const  guiex::CGUIProperty&	CPropertyConfigMgr::GetPropertySet(const std::string
 	if( itor == m_mapPropertySet.end())
 	{
 		std::string strError = std::string("[CPropertyConfigMgr::GetPropertySet] the property <")+rSetName+"> doesn't exist!";
-		wxMessageBox(wxConvUTF8.cMB2WC(strError.c_str()), _T("Error"), wxICON_ERROR | wxCENTRE );
+		wxMessageBox(Gui2wxString(strError), _T("Error"), wxICON_ERROR | wxCENTRE );
 		wxASSERT(0);
 	}
 	return itor->second;
@@ -105,7 +105,7 @@ const  wxArrayString&	CPropertyConfigMgr::GetEnumDefine( const guiex::CGUIString
 	if( itor == m_mapEnums.end())
 	{
 		std::string strError = std::string("[CPropertyConfigMgr::GetEnumDefine] the enum <")+rEnumName+"> doesn't exist!";
-		wxMessageBox(wxConvUTF8.cMB2WC(strError.c_str()), _T("Error"), wxICON_ERROR | wxCENTRE );
+		wxMessageBox(Gui2wxString(strError), _T("Error"), wxICON_ERROR | wxCENTRE );
 		wxASSERT(0);
 	}
 	return itor->second;
@@ -140,7 +140,7 @@ int		CPropertyConfigMgr::ReadPropertyConfig(const std::string& rFileName)
 	{
 		//failed to parse
 		wxChar buf[1024];
-		wxSnprintf( buf, 1024, _T("Failed to read config file! \n\n%s"), wxConvUTF8.cMB2WC(aDoc.ErrorDesc()));
+		wxSnprintf( buf, 1024, _T("Failed to read config file! \n\n%s"), Gui2wxString(aDoc.ErrorDesc()));
 		wxMessageBox(buf, _T("Error"), wxICON_ERROR, GetMainFrame() );
 		return -1;
 	}
@@ -214,7 +214,7 @@ int		CPropertyConfigMgr::ProcessEnumNode(TiXmlElement* pWidgetNode)
 		while( nEndPos != std::string::npos )
 		{
 			std::string aEnum = strEnum.substr( nStartPos, nEndPos-nStartPos );
-			vecEnum.push_back( wxConvUTF8.cMB2WC( aEnum.c_str()).data());
+			vecEnum.push_back( Gui2wxString( aEnum));
 			nStartPos = nEndPos + 1;
 			nEndPos = strEnum.find(";", nStartPos);
 		}
@@ -287,6 +287,7 @@ int		CPropertyConfigMgr::ProcessPropertyNode(const std::string& rPage, CGUIPrope
 			const char* pValue = pPropertyNode->Attribute("value");
 			const char* pLabel = pPropertyNode->Attribute("label");
 			const char* pMustExist = pPropertyNode->Attribute("must_exist");
+			const char* pReadOnly = pPropertyNode->Attribute("readonly");
 			if( !pName || !pType)
 			{	
 				return -1;
@@ -317,20 +318,17 @@ int		CPropertyConfigMgr::ProcessPropertyNode(const std::string& rPage, CGUIPrope
 			pData->SetLabel(pLabel?pLabel:pName);
 			pData->SetCategory(pCategory ? pCategory : "Default" );
 
-			if( pMustExist )
+			pData->SetMustExist(false);
+			if( pMustExist && strcmp(pMustExist,"true") == 0)
 			{
-				if( strcmp(pMustExist,"true") == 0)
-				{
-					pData->SetMustExist(true);
-				}
-				else
-				{
-					pData->SetMustExist(false);
-				}
+				pData->SetMustExist(true);
 			}
-			else
+
+
+			pData->SetReadOnly(false);
+			if( pReadOnly && strcmp(pReadOnly,"true") == 0)
 			{
-				pData->SetMustExist(false);
+				pData->SetReadOnly(true);
 			}
 
 			//process child

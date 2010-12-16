@@ -4,6 +4,6 @@ end
 
 function showfps_update( self, event )
 	local fps = guiex.GetSystem():GetFPS();
-	self:SetTextContentUTF8( ..fps );
+	self:SetTextContentUTF8( ""..fps );
 end
 

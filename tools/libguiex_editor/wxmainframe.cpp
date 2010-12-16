@@ -308,7 +308,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 	}
 	catch (CGUIBaseException& rError)
 	{
-		wxMessageBox( wxConvUTF8.cMB2WC(rError.what()).data(), _T("error"), wxICON_ERROR|wxCENTRE);
+		wxMessageBox( Gui2wxString(rError.what()), _T("error"), wxICON_ERROR|wxCENTRE);
 
 		GSystem->Release();
 		delete GSystem;
@@ -326,20 +326,20 @@ WxMainFrame::~WxMainFrame()
 	delete GSystem;
 }
 //------------------------------------------------------------------------------
-WxOutputPanel*	WxMainFrame::CreateOutput()
+WxOutputPanel* WxMainFrame::CreateOutput()
 {
 	WxOutputPanel * pOutput = new WxOutputPanel( this, wxID_ANY);
 	return pOutput;
 }
 //------------------------------------------------------------------------------
-wxPanel*	WxMainFrame::CreatePropGridPanel()
+wxPanel* WxMainFrame::CreatePropGridPanel()
 {
 	wxPanel* panel = new wxPanel(this,-1,wxDefaultPosition,wxDefaultSize);
 
 	int style = 
 		wxPG_BOLD_MODIFIED |
 		wxPG_SPLITTER_AUTO_CENTER |
-		wxPG_AUTO_SORT |
+		//wxPG_AUTO_SORT |
 		//wxPG_HIDE_MARGIN|wxPG_STATIC_SPLITTER |
 		//wxPG_TOOLTIPS |
 		//wxPG_HIDE_CATEGORIES |
@@ -362,18 +362,16 @@ wxPanel*	WxMainFrame::CreatePropGridPanel()
 		wxSize(100, 100),
 		style );
 	m_pPropGridMan->SetExtraStyle( extraStyle );
+	m_pPropGridMan->SetValidationFailureBehavior( wxPG_VFB_BEEP | wxPG_VFB_MARK_CELL | wxPG_VFB_SHOW_MESSAGE );
+	m_pPropGridMan->GetGrid()->SetVerticalSpacing( 2 );
+	// Register all editors (SpinCtrl etc.)
+	m_pPropGridMan->RegisterAdditionalEditors();
 
 	m_pPropGridMan->AddPage(wxT("Property"));
 	m_pPropGridMan->AddPage(wxT("Image"));
 	m_pPropGridMan->AddPage(wxT("Event"));
 	m_pPropGridMan->SelectPage(NOTEBOOK_PAGE_PROP);
 	m_pPropGridMan->Refresh();
-
-	m_pPropGridMan->SetValidationFailureBehavior( wxPG_VFB_BEEP | wxPG_VFB_MARK_CELL | wxPG_VFB_SHOW_MESSAGE );
-	m_pPropGridMan->GetGrid()->SetVerticalSpacing( 2 );
-
-    // Register all editors (SpinCtrl etc.)
-    m_pPropGridMan->RegisterAdditionalEditors();
 
 	//initialize image
 	wxInitAllImageHandlers();
@@ -457,9 +455,9 @@ void			WxMainFrame::ResetFileTreeCtrl()
 
 	wxTreeItemId root = m_pTreeCtrl_File->AddRoot(wxT("Scene"), 0);
 
-	m_pTreeCtrl_File->AppendItem(root, wxConvUTF8.cMB2WC(TITLE_WIDGET_CONFIG), 0);
-	m_pTreeCtrl_File->AppendItem(root, wxConvUTF8.cMB2WC(TITLE_SCRIPT), 0);
-	m_pTreeCtrl_File->AppendItem(root, wxConvUTF8.cMB2WC(TITLE_RESOURCE_CONFIG), 0);
+	m_pTreeCtrl_File->AppendItem(root, Gui2wxString(TITLE_WIDGET_CONFIG), 0);
+	m_pTreeCtrl_File->AppendItem(root, Gui2wxString(TITLE_SCRIPT), 0);
+	m_pTreeCtrl_File->AppendItem(root, Gui2wxString(TITLE_RESOURCE_CONFIG), 0);
 
 	m_pTreeCtrl_File->Expand(root);
 }
@@ -492,7 +490,7 @@ void			WxMainFrame::RefreshWidgetTreeCtrl()
 	}
 
 	std::string strItemId = pWidgetRoot->GetName() + " <"+pWidgetRoot->GetType() + ">";
-	wxTreeItemId aItemId = m_pTreeCtrl_Widget->AddRoot(wxConvUTF8.cMB2WC( strItemId.c_str()));
+	wxTreeItemId aItemId = m_pTreeCtrl_Widget->AddRoot(Gui2wxString( strItemId));
 	m_mapTreeItem.insert( std::make_pair( pWidgetRoot, aItemId));
 
 	CGUIWidget* pChild = pWidgetRoot->GetChild();
@@ -508,7 +506,7 @@ void			WxMainFrame::AddWidgetToTreeCtrl(CGUIWidget* pWidget, wxTreeItemId aParen
 	wxASSERT( aParentId.IsOk());
 
 	std::string strItemId = pWidget->GetName() + " <" + pWidget->GetType() + ">";
-	wxTreeItemId aItemId = m_pTreeCtrl_Widget->AppendItem(aParentId, wxConvUTF8.cMB2WC( strItemId.c_str()));
+	wxTreeItemId aItemId = m_pTreeCtrl_Widget->AppendItem(aParentId, Gui2wxString( strItemId));
 	m_mapTreeItem.insert( std::make_pair( pWidget, aItemId));
 
 	CGUIWidget* pChild = pWidget->GetChild();
@@ -530,7 +528,7 @@ void			WxMainFrame::AddToFileTreeCtrl( const std::string& rFileName, const std::
 	//	wxMessageBox( "unknown file type", "error", wxICON_ERROR);
 	//	return;
 	//}
-	wxTreeItemId aFileId = m_pTreeCtrl_File->AppendItem(nItemId, wxConvUTF8.cMB2WC(rFileName.c_str()).data(), 1);
+	wxTreeItemId aFileId = m_pTreeCtrl_File->AppendItem(nItemId, Gui2wxString(rFileName), 1);
 	CTreeNode* pNode = new CTreeNode;
 	pNode->m_strFileType = rType;
 	m_pTreeCtrl_File->SetItemData( aFileId, pNode );
@@ -663,7 +661,7 @@ int		WxMainFrame::OpenScene( const CGUIScene* pScene )
 	}
 	catch (CGUIBaseException& rError)
 	{
-		wxMessageBox( wxConvUTF8.cMB2WC(rError.what()).data(), _T("error"), wxICON_ERROR|wxCENTRE);
+		wxMessageBox( Gui2wxString(rError.what()), _T("error"), wxICON_ERROR|wxCENTRE);
 		return -1;
 	}
 
@@ -711,7 +709,7 @@ void WxMainFrame::OnTreeItemWidgetView(wxCommandEvent& event)
 	viewer_exe = "libguiex_viewer_release.exe";
 
 	std::string strRunCommand = viewer_exe + " " + GSystem->GetDataPath() + " " +m_strCurrentSceneName + " " + strFilename.char_str(wxConvUTF8).data();
-	wxExecute(wxConvUTF8.cMB2WC(strRunCommand.c_str()), wxEXEC_ASYNC);
+	wxExecute(Gui2wxString(strRunCommand), wxEXEC_ASYNC);
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::OnTreeItemWidgetRender(wxCommandEvent& event)
@@ -788,7 +786,7 @@ void WxMainFrame::OnPropertyGridChange( wxPropertyGridEvent& event )
 	}
 	catch(guiex::CGUIBaseException& rError)
 	{
-		wxMessageBox( wxConvUTF8.cMB2WC( rError.what()), _T("OnPropertyChanged error"), wxICON_ERROR|wxCENTRE);
+		wxMessageBox( Gui2wxString( rError.what()), _T("OnPropertyChanged error"), wxICON_ERROR|wxCENTRE);
 		CloseCanvas();
 	}
 	catch(...)
@@ -1323,7 +1321,7 @@ void WxMainFrame::OnRecentPaths( wxCommandEvent& In )
 	}
 	catch (CGUIBaseException& rError)
 	{
-		wxMessageBox( wxConvUTF8.cMB2WC(rError.what()).data(), _T("error"), wxICON_ERROR|wxCENTRE);
+		wxMessageBox( Gui2wxString(rError.what()), _T("error"), wxICON_ERROR|wxCENTRE);
 		return;
 	}
 
@@ -1332,7 +1330,7 @@ void WxMainFrame::OnRecentPaths( wxCommandEvent& In )
 	wxArrayString arrayScenes;
 	for( unsigned i=0; i<vecScenes.size(); ++i )
 	{
-		arrayScenes.Add( wxConvUTF8.cMB2WC( vecScenes[i].c_str()));
+		arrayScenes.Add( Gui2wxString( vecScenes[i]));
 	}
 	wxSingleChoiceDialog aChoiceDlg( this, _T("select scene"), _T("select scene files"), arrayScenes );
 	if( aChoiceDlg.ShowModal() != wxID_OK )
@@ -1385,7 +1383,7 @@ void WxMainFrame::OnRecentScenes( wxCommandEvent& In )
 	}
 	catch (CGUIBaseException& rError)
 	{
-		wxMessageBox( wxConvUTF8.cMB2WC(rError.what()).data(), _T("error"), wxICON_ERROR|wxCENTRE);
+		wxMessageBox( Gui2wxString(rError.what()), _T("error"), wxICON_ERROR|wxCENTRE);
 		return;
 	}
 
@@ -1444,7 +1442,7 @@ void WxMainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 	}
 
 	CGUIString strPath = GSystem->GetDataPath();
-	wxDirDialog aDlg( this, _T("Choose a libguiex root path"), wxConvUTF8.cMB2WC( strPath.c_str()));
+	wxDirDialog aDlg( this, _T("Choose a libguiex root path"), Gui2wxString( strPath));
 	if( wxID_OK != aDlg.ShowModal())
 	{
 		return;
@@ -1466,7 +1464,7 @@ void WxMainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 	}
 	catch (CGUIBaseException& rError)
 	{
-		wxMessageBox( wxConvUTF8.cMB2WC(rError.what()).data(), _T("error"), wxICON_ERROR|wxCENTRE);
+		wxMessageBox( Gui2wxString(rError.what()), _T("error"), wxICON_ERROR|wxCENTRE);
 		return;
 	}
 	
@@ -1475,7 +1473,7 @@ void WxMainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 	wxArrayString arrayScenes;
 	for( unsigned i=0; i<vecScenes.size(); ++i )
 	{
-		arrayScenes.Add( wxConvUTF8.cMB2WC( vecScenes[i].c_str()));
+		arrayScenes.Add( Gui2wxString( vecScenes[i]));
 	}
 	wxSingleChoiceDialog aChoiceDlg( this, _T("select scene"), _T("select scene files"), arrayScenes );
 	if( aChoiceDlg.ShowModal() != wxID_OK )
@@ -1526,7 +1524,7 @@ void WxMainFrame::RenderFile( const std::string& rFileName )
 	std::string strAbsFileName = GSystem->GetDataPath() + pScene->GetScenePath() + rFileName;
 
 	m_pCanvas = new WxEditorCanvasContainer(m_pNoteBook_Canvas, strAbsFileName);
-	m_pNoteBook_Canvas->AddPage( m_pCanvas, wxConvUTF8.cMB2WC(rFileName.c_str()), true );
+	m_pNoteBook_Canvas->AddPage( m_pCanvas, Gui2wxString(rFileName), true );
 	//m_pCanvas->SetNextHandler( m_pNoteBook_Canvas );
 	try
 	{
@@ -1539,7 +1537,7 @@ void WxMainFrame::RenderFile( const std::string& rFileName )
 	}
 	catch (CGUIBaseException& rError)
 	{
-		wxMessageBox( wxConvUTF8.cMB2WC(rError.what()).data(), _T("error"), wxICON_ERROR|wxCENTRE);
+		wxMessageBox( Gui2wxString(rError.what()), _T("error"), wxICON_ERROR|wxCENTRE);
 
 		CloseCanvas();
 	}
@@ -1561,9 +1559,9 @@ void	WxMainFrame::EditFileExternal( const std::string& rFileName )
 	::ShellExecute( 
 		NULL, 
 		_T("open"),
-		wxConvUTF8.cMB2WC( strAbsFileName.c_str()).data(), 
+		Gui2wxString( strAbsFileName).data(), 
 		NULL, 
-		wxConvUTF8.cMB2WC( strAbsPath.c_str()).data(),
+		Gui2wxString( strAbsPath).data(),
 		SW_SHOWDEFAULT);
 }
 //------------------------------------------------------------------------------
@@ -1597,7 +1595,7 @@ void	WxMainFrame::EditFile( const std::string& rFileName, EFileType eFileType )
 		delete pTextEditor;
 		return;
 	}
-	m_pNoteBook_Canvas->AddPage( pTextEditor, wxConvUTF8.cMB2WC(rFileName.c_str()),true);
+	m_pNoteBook_Canvas->AddPage( pTextEditor, Gui2wxString(rFileName),true);
 }
 //------------------------------------------------------------------------------
 bool	WxMainFrame::SaveFileProcess(int nIdx)
@@ -1615,7 +1613,7 @@ bool	WxMainFrame::SaveFileProcess(int nIdx)
 			
 			if( pSave->ShouldSaveFile())
 			{
-				aFileArray.Add( wxConvUTF8.cMB2WC(pSave->GetFileName().c_str()));
+				aFileArray.Add( Gui2wxString(pSave->GetFileName()));
 				aSaveArray.push_back(pSave);
 			}
 		}
@@ -1628,7 +1626,7 @@ bool	WxMainFrame::SaveFileProcess(int nIdx)
 
 		if( pSave->ShouldSaveFile())
 		{
-			aFileArray.Add( wxConvUTF8.cMB2WC( pSave->GetFileName().c_str()).data());
+			aFileArray.Add( Gui2wxString( pSave->GetFileName()).data());
 			aSaveArray.push_back(pSave);
 		}
 	}
@@ -1676,7 +1674,7 @@ void WxMainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 //------------------------------------------------------------------------------
 void	 WxMainFrame::OutputString( const std::string& rString)
 {
-	m_pOutput->AppendText(wxConvUTF8.cMB2WC(rString.c_str()).data());
+	m_pOutput->AppendText(Gui2wxString(rString).data());
 	m_pOutput->AppendText(wxString(_T("\n")));
 }
 //------------------------------------------------------------------------------

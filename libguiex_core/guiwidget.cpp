@@ -1803,7 +1803,11 @@ namespace guiex
 		//property for parent
 		if(rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "parent")
 		{
-			CGUIWidget* pParent = CGUIWidgetManager::Instance()->GetWidget( rProperty.GetValue(), GetSceneName());
+			CGUIWidget* pParent = NULL;
+			if( !rProperty.GetValue().empty() )
+			{
+				pParent = CGUIWidgetManager::Instance()->GetWidget( rProperty.GetValue(), GetSceneName());
+			}
 			SetParent( pParent);
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1909,13 +1913,13 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//property for size
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		else if(  rProperty.GetType()== ePropertyType_Size && rProperty.GetName() == "MAX_SIZE" )
+		else if(  rProperty.GetType()== ePropertyType_Size && rProperty.GetName() == "max_size" )
 		{
 			CGUISize aSize;
 			PropertyToValue( rProperty, aSize );
 			SetMaximumSize(aSize);
 		}
-		else if( rProperty.GetType()== ePropertyType_Size && rProperty.GetName() == "MIN_SIZE" )
+		else if( rProperty.GetType()== ePropertyType_Size && rProperty.GetName() == "min_size" )
 		{
 			CGUISize aSize;
 			PropertyToValue( rProperty, aSize );

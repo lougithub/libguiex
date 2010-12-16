@@ -78,7 +78,7 @@ void CLibGuiexEngine::InitWidgets()
 	CGUISceneManager::Instance()->RegisterScenesFromDir("/", ".uip");
 	CGUISceneManager::Instance()->LoadResources( "common.uip" );
 	CGUISceneManager::Instance()->LoadWidgets( "common.uip" );
-	CGUIWidget* pWidget = CGUIWidgetManager::Instance()->GetPage( "common.uip", "dialog_ok.xml" );
+	CGUIWidget* pWidget = CGUIWidgetManager::Instance()->GetPage( "dialog_ok.xml", "common.uip" );
 	CGUISystem::Instance()->OpenPage(pWidget);	
 }
 
