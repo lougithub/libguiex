@@ -9,9 +9,18 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core/guistringconvertor.h>
-#include <libguiex_core/guiinterfacemanager.h>
-#include <libguiex_core/guiinterfacestringconv.h>
+#include "guistringconvertor.h"
+#include "guiinterfacemanager.h"
+#include "guiinterfacestringconv.h"
+#include <limits>
+
+#ifdef max
+#undef max
+#endif
+
+#ifdef min
+#undef min
+#endif
 
 //============================================================================//
 // function
@@ -113,7 +122,15 @@ namespace guiex
 	template< >
 	int32 StringToValue<uint32>( const CGUIString& rString, uint32& rValue)
 	{
-		rValue = static_cast<uint32>(strtoul(rString.c_str(), 0, 10));
+		unsigned long value = strtoul(rString.c_str(), 0, 10);
+		if( value > std::numeric_limits<uint32>::max() )
+		{
+			throw CGUIException(
+				"[StringToValue[uint32]]: Value <%s> exceeds range of destination type",
+				rString.c_str());
+			return -1;
+		}
+		rValue = static_cast<uint32>(value);
 
 		return 0;
 	}
@@ -139,8 +156,15 @@ namespace guiex
 	template<  >
 	int32 StringToValue<int32>( const CGUIString& rString, int32& rValue)
 	{
-		rValue = static_cast<int32>(strtol(rString.c_str(), 0, 10));
-
+		unsigned long value = strtoul(rString.c_str(), 0, 10);
+		if( value > std::numeric_limits<int32>::max() )
+		{
+			throw CGUIException(
+				"[StringToValue[int32]]: Value <%s> exceeds range of destination type",
+				rString.c_str());
+			return -1;
+		}
+		rValue = static_cast<int32>(value);
 		return 0;
 	}
 
@@ -165,8 +189,15 @@ namespace guiex
 	template<  >
 	int32 StringToValue<uint16>( const CGUIString& rString, uint16& rValue)
 	{
-		rValue = static_cast<uint16>(strtoul(rString.c_str(), 0, 10));
-
+		unsigned long value = strtoul(rString.c_str(), 0, 10);
+		if( value > std::numeric_limits<uint16>::max() )
+		{
+			throw CGUIException(
+				"[StringToValue[uint16]]: Value <%s> exceeds range of destination type",
+				rString.c_str());
+			return -1;
+		}
+		rValue = static_cast<uint16>(value);
 		return 0;
 	}
 
@@ -191,13 +222,53 @@ namespace guiex
 	template<  >
 	int32 StringToValue<int16>( const CGUIString& rString, int16& rValue)
 	{
-		rValue = static_cast<int16>(strtol(rString.c_str(), 0, 10));
-
+		unsigned long value = strtoul(rString.c_str(), 0, 10);
+		if( value > std::numeric_limits<int16>::max() )
+		{
+			throw CGUIException(
+				"[StringToValue[int16]]: Value <%s> exceeds range of destination type",
+				rString.c_str());
+			return -1;
+		}
+		rValue = static_cast<int16>(value);
 		return 0;
 	}
 
 	template<  >
 	int32 ValueToString<int16>( const int16& rValue, CGUIString& rString )
+	{
+		std::stringstream stream;
+		stream.width(0);
+		stream.fill(' ');
+		stream << rValue;
+		rString = stream.str();
+
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	//convert for uint8
+	template< >
+	CGUIString GetValueType<uint8>( )
+	{
+		return "uint8";
+	}
+	template<  >
+	int32 StringToValue<uint8>( const CGUIString& rString, uint8& rValue)
+	{
+		unsigned long value = strtoul(rString.c_str(), 0, 10);
+		if( value > std::numeric_limits<uint8>::max() )
+		{
+			throw CGUIException(
+				"[StringToValue[uint8]]: Value <%s> exceeds range of destination type",
+				rString.c_str());
+			return -1;
+		}
+		rValue = static_cast<uint8>(value);
+		return 0;
+	}
+
+	template<  >
+	int32 ValueToString<uint8>( const uint8& rValue, CGUIString& rString )
 	{
 		std::stringstream stream;
 		stream.width(0);
@@ -400,15 +471,15 @@ namespace guiex
 			return -1;
 		}
 
-		real fColor;
-		StringToValue(aListString[0], fColor );
-		rValue.SetRed( fColor );
-		StringToValue(aListString[1], fColor );
-		rValue.SetGreen( fColor );
-		StringToValue(aListString[2], fColor );
-		rValue.SetBlue( fColor );
-		StringToValue(aListString[3], fColor );
-		rValue.SetAlpha( fColor );
+		uint8 nColor;
+		StringToValue(aListString[0], nColor );
+		rValue.SetRed( nColor / 255.0f );
+		StringToValue(aListString[1], nColor );
+		rValue.SetGreen( nColor / 255.0f );
+		StringToValue(aListString[2], nColor );
+		rValue.SetBlue( nColor / 255.0f );
+		StringToValue(aListString[3], nColor );
+		rValue.SetAlpha( nColor / 255.0f );
 		return 0;
 	}
 
@@ -418,7 +489,10 @@ namespace guiex
 		std::stringstream stream;
 		stream.width(0);
 		stream.fill(' ');
-		stream << rValue.GetRed()<<','<<rValue.GetGreen()<<','<<rValue.GetBlue()<<','<<rValue.GetAlpha();
+		stream << uint16( rValue.GetRed()*255 )
+			<<','<<uint16( rValue.GetGreen()*255 )
+			<<','<<uint16( rValue.GetBlue()*255 )
+			<<','<<uint16( rValue.GetAlpha()*255 );
 		rString = stream.str();
 		return 0;
 	}

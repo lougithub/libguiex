@@ -56,7 +56,7 @@ namespace guiex
 #define GUI_INVALID	0xFFFFFFFF
 
 
-// Efficiently returns the least power of two >= X...
+	// Efficiently returns the least power of two >= X...
 # define GUI_POW(X) (((X) == 0)?1:(X-=1,X|=X>>1,X|=X>>2,X|=X>>4,X|=X>>8,X|=X>>16,(++X)))
 # define GUI_EVEN(NUM) (((NUM) & 1) == 0)
 # define GUI_ODD(NUM) (((NUM) & 1) == 1)
@@ -67,16 +67,14 @@ namespace guiex
 # define GUI_CLR_BITS(WORD, BITS) (WORD &= ~(BITS))
 
 
-
-
-/**
-* @brief value of real delta, used for compare value of  real
-*/
+	/**
+	* @brief value of real delta, used for compare value of  real
+	*/
 #define GUI_REALDELTA	(1e-08)
 
-/**
-* @brief compare real value
-*/
+	/**
+	* @brief compare real value
+	*/
 #define GUI_REAL_EQUAL( expected, actual )	\
 	(fabs( (expected) - (actual) ) < (GUI_REALDELTA))
 
@@ -85,7 +83,7 @@ namespace guiex
 
 
 #if defined(WIN32)
-// A quick define to overcome different names for the same function
+	// A quick define to overcome different names for the same function
 #	define snprintf _snprintf
 #   define vsnprintf vsnprintf
 #endif

@@ -114,6 +114,14 @@ namespace guiex
 	template< >
 	CGUIString GetValueType<int16>( );
 	//------------------------------------------------------------------------------
+	//convert for uint8
+	template<  >
+	int32 StringToValue<uint8>( const CGUIString& rString, uint8& rValue);
+	template<  >
+	int32 ValueToString<uint8>( const uint8& rValue, CGUIString& rString );
+	template< >
+	CGUIString GetValueType<uint8>( );
+	//------------------------------------------------------------------------------
 	//convert for real
 	template<  >
 	int32 StringToValue<real>( const CGUIString& rString, real& rValue);

@@ -11,16 +11,9 @@
 #include "libguiex_editor.h"
 
 
-
-//============================================================================//
-// declare
-//============================================================================// 
-
-
 //============================================================================//
 // function
 //============================================================================// 
-
 //------------------------------------------------------------------------------
 BEGIN_EVENT_TABLE( WxDialogClose, wxDialog )
 EVT_BUTTON( ID_DC_BTN_OK, WxDialogClose::OnOK )
@@ -28,7 +21,6 @@ EVT_BUTTON( ID_DC_BTN_NO, WxDialogClose::OnNO )
 EVT_BUTTON( ID_DC_BTN_CANCEL, WxDialogClose::OnCANCEL )
 END_EVENT_TABLE()
 //------------------------------------------------------------------------------
-
 WxDialogClose::WxDialogClose(wxWindow* parent, const wxArrayString& rFileArray)
 :wxDialog(parent, wxID_ANY, _T("libguiex editor"), wxDefaultPosition,wxSize(463,265),
 		  wxDEFAULT_DIALOG_STYLE/*wxNO_3D*/)

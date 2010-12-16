@@ -309,38 +309,87 @@ WxGuiColorProperty::WxGuiColorProperty( const wxString& label, const wxString& n
 : wxPGProperty(label,name)
 {
 	SetValue( WXVARIANT(value) );
-	AddPrivateChild( new wxIntProperty(wxT("red"), wxT("RED"),value.GetRed()*255) );
-	AddPrivateChild( new wxIntProperty(wxT("green"), wxT("GREEN"),value.GetGreen()*255) );
-	AddPrivateChild( new wxIntProperty(wxT("blue"), wxT("BLUE"),value.GetBlue()*255) );
-	AddPrivateChild( new wxIntProperty(wxT("alpha"), wxT("ALPHA"),value.GetAlpha()*255) );
 }
 // -----------------------------------------------------------------------
-void WxGuiColorProperty::RefreshChildren()
+wxString WxGuiColorProperty::ValueToString( wxVariant& value, int argFlags ) const
 {
-	if ( !GetChildCount() ) return;
-	CGUIColor& color = CGUIColorRefFromVariant(m_value);
-
-	Item(0)->SetValue( color.GetRed()*255 );
-	Item(1)->SetValue( color.GetGreen()*255 );
-	Item(2)->SetValue( color.GetBlue()*255 );
-	Item(3)->SetValue( color.GetAlpha()*255 );
+	CGUIColor color = CGUIColorRefFromVariant(m_value);
+	CGUIString strValue;
+	guiex::ValueToString( color, strValue );
+	return wxConvUTF8.cMB2WC(strValue.c_str());
 }
 // -----------------------------------------------------------------------
-wxVariant WxGuiColorProperty::ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const
+bool WxGuiColorProperty::StringToValue( wxVariant& variant, const wxString& text, int argFlags )
 {
-	CGUIColor& color = CGUIColorRefFromVariant(thisValue);
-
-	switch ( childIndex )
+	CGUIColor color;
+	CGUIString strValue = wxConvUTF8.cWC2MB( text.c_str() ).data();
+	try
 	{
-	case 0: color.SetRed( childValue.GetInteger() / 255.0f ); break;
-	case 1: color.SetGreen( childValue.GetInteger() / 255.0f ); break;
-	case 2: color.SetBlue( childValue.GetInteger() / 255.0f ); break;
-	case 3: color.SetAlpha( childValue.GetInteger() / 255.0f ); break;
+		if( 0 != guiex::StringToValue( strValue, color ) )
+		{
+			return false;
+		}
 	}
+	catch(...)
+	{
+		return false;
+	}
+	variant = WXVARIANT(color);
+	return true;
+}
+// -----------------------------------------------------------------------
+bool WxGuiColorProperty::OnEvent( wxPropertyGrid* propgrid, wxWindow* primary, wxEvent& event )
+{
+	if ( propgrid->IsMainButtonEvent(event) )
+	{
+		CGUIColor color = CGUIColorRefFromVariant(GetValue());
+		wxColour aWxColor( 
+			GUI_FLOAT2UINT_ROUND( color.GetRed()*255 ),
+			GUI_FLOAT2UINT_ROUND( color.GetGreen()*255 ), 
+			GUI_FLOAT2UINT_ROUND( color.GetBlue()*255 ), 
+			GUI_FLOAT2UINT_ROUND( color.GetAlpha()*255 ));
+		
+		wxColourData data;
+		data.SetChooseFull(true);
+		data.SetColour( aWxColor );
+		wxColourDialog dialog(propgrid, &data);
+		if ( dialog.ShowModal() == wxID_OK )
+		{
+			wxColourData retData = dialog.GetColourData();
+			aWxColor = retData.GetColour();
+			color.SetColor( 
+				aWxColor.Red() / 255.0f,
+				aWxColor.Green() / 255.0f,
+				aWxColor.Blue() / 255.0f,
+				aWxColor.Alpha() / 255.0f );
 
-	wxVariant newVariant;
-	newVariant << color;
-	return newVariant;
+			SetValueInEvent( WXVARIANT(color) );
+
+			return true;
+		}
+	}
+	return false;
+}
+// -----------------------------------------------------------------------
+wxSize WxGuiColorProperty::OnMeasureImage( int item ) const
+{
+	return wxPG_DEFAULT_IMAGE_SIZE;
+}
+// -----------------------------------------------------------------------
+void WxGuiColorProperty::OnCustomPaint( wxDC& dc, const wxRect& rect, wxPGPaintData& paintdata )
+{
+	CGUIColor color = CGUIColorRefFromVariant(GetValue());
+	wxColour aWxColor( 
+		GUI_FLOAT2UINT_ROUND( color.GetRed()*255 ),
+		GUI_FLOAT2UINT_ROUND( color.GetGreen()*255 ), 
+		GUI_FLOAT2UINT_ROUND( color.GetBlue()*255 ), 
+		GUI_FLOAT2UINT_ROUND( color.GetAlpha()*255 ));
+
+	if ( aWxColor.Ok() )
+	{
+		dc.SetBrush(aWxColor);
+		dc.DrawRectangle(rect);
+	}
 }
 // -----------------------------------------------------------------------
 

@@ -12154,10 +12154,6 @@ fail:
 }
 
 
-static void swig_delete_CGUIWidget(void *obj) {
-guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) obj;
-delete arg1;
-}
 static swig_lua_method swig_guiex_CGUIWidget_methods[] = {
     {"IsCreate", _wrap_CGUIWidget_IsCreate}, 
     {"Open", _wrap_CGUIWidget_Open}, 
@@ -12293,7 +12289,7 @@ static swig_lua_attribute swig_guiex_CGUIWidget_attributes[] = {
 };
 static swig_lua_class *swig_guiex_CGUIWidget_bases[] = {0};
 static const char *swig_guiex_CGUIWidget_base_names[] = {0};
-static swig_lua_class _wrap_class_guiex_CGUIWidget = { "CGUIWidget", &SWIGTYPE_p_guiex__CGUIWidget,0, swig_delete_CGUIWidget, swig_guiex_CGUIWidget_methods, swig_guiex_CGUIWidget_attributes, swig_guiex_CGUIWidget_bases, swig_guiex_CGUIWidget_base_names };
+static swig_lua_class _wrap_class_guiex_CGUIWidget = { "CGUIWidget", &SWIGTYPE_p_guiex__CGUIWidget,0,0, swig_guiex_CGUIWidget_methods, swig_guiex_CGUIWidget_attributes, swig_guiex_CGUIWidget_bases, swig_guiex_CGUIWidget_base_names };
 
 static void swig_delete_CGUIWgtCheckButton(void *obj) {
 guiex::CGUIWgtCheckButton *arg1 = (guiex::CGUIWgtCheckButton *) obj;
@@ -13132,10 +13128,6 @@ fail:
 }
 
 
-static void swig_delete_CGUISystem(void *obj) {
-guiex::CGUISystem *arg1 = (guiex::CGUISystem *) obj;
-delete arg1;
-}
 static swig_lua_method swig_guiex_CGUISystem_methods[] = {
     {"SetDrawExtraInfo", _wrap_CGUISystem_SetDrawExtraInfo}, 
     {"IsDrawExtraInfo", _wrap_CGUISystem_IsDrawExtraInfo}, 
@@ -13171,7 +13163,7 @@ static swig_lua_attribute swig_guiex_CGUISystem_attributes[] = {
 };
 static swig_lua_class *swig_guiex_CGUISystem_bases[] = {0};
 static const char *swig_guiex_CGUISystem_base_names[] = {0};
-static swig_lua_class _wrap_class_guiex_CGUISystem = { "CGUISystem", &SWIGTYPE_p_guiex__CGUISystem,0, swig_delete_CGUISystem, swig_guiex_CGUISystem_methods, swig_guiex_CGUISystem_attributes, swig_guiex_CGUISystem_bases, swig_guiex_CGUISystem_base_names };
+static swig_lua_class _wrap_class_guiex_CGUISystem = { "CGUISystem", &SWIGTYPE_p_guiex__CGUISystem,0,0, swig_guiex_CGUISystem_methods, swig_guiex_CGUISystem_attributes, swig_guiex_CGUISystem_bases, swig_guiex_CGUISystem_base_names };
 
 static int _wrap_GetSystem(lua_State* L) {
   int SWIG_arg = 0;

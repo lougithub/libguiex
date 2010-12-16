@@ -188,9 +188,6 @@ namespace guiex
 		CGUIWidget* pPage = CGUIConfigFileLoader::LoadWidgetConfigFile( strRelPath, rSceneName, rPageName );
 		if( !pPage )
 		{
-			throw CGUIException(
-				"[CGUIWidgetManager::LoadPage]: failed to load config file <%s>!",
-				strRelPath.c_str());
 			return NULL;
 		}
 
@@ -224,7 +221,7 @@ namespace guiex
 	/**
 	* @brief get a page by page name and scene name
 	*/
-	CGUIWidget* CGUIWidgetManager::GetPage( const CGUIString& rSceneName, const CGUIString& rPageName )
+	CGUIWidget* CGUIWidgetManager::GetPage( const CGUIString& rPageName, const CGUIString& rSceneName )
 	{
 		for( TVecPage::iterator itor = m_vecPage.begin();
 			itor != m_vecPage.end();

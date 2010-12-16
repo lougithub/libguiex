@@ -34,16 +34,16 @@ public:
 
 	}
 
-	void				SetLabel(const std::string& rType)
+	void SetLabel(const std::string& rType)
 	{
 		m_strLabel = rType;
 	}
-	const std::string&		GetLabel() const
+	const std::string& GetLabel() const
 	{
 		return m_strLabel;
 	}
 
-	void				SetCategory(const std::string& rCategory)
+	void SetCategory(const std::string& rCategory)
 	{
 		m_strCategories = rCategory;
 	}
@@ -52,20 +52,20 @@ public:
 		return m_strCategories;
 	}
 
-	void				SetMustExist(bool bMustExist)
+	void SetMustExist(bool bMustExist)
 	{
 		m_bMustExist = bMustExist;
 	}
-	bool				IsMustExist() const
+	bool IsMustExist() const
 	{
 		return m_bMustExist;
 	}
 
-	void				SetPage(const std::string& rPage)
+	void SetPage(const std::string& rPage)
 	{
 		m_strPage = rPage;
 	}
-	const std::string&		GetPage() const
+	const std::string& GetPage() const
 	{
 		return m_strPage;
 	}

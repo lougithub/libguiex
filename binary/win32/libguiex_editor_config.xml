@@ -37,14 +37,14 @@
             <property name="open_with_parent" type="bool" value="true"  category="Default"/>
             <property name="response_update_event" type="bool" value="false"  category="Default"/>
             <property name="response_parentsizechange_event" type="bool" value="false"  category="Default"/>
-            <property name="textinfo" type="CGUIStringInfo" category="textinfo">
-                <property name="size"		type="uint16" value="16"/>
+            <property name="textinfo" type="CGUIStringInfo" value="" category="TextInfo">
+                <property name="size" type="uint16" value="16"/>
                 <property name="index" type="int16" value="0"/>
-                <property name="color" 		type="CGUIColor" value="1.0,1.0,1.0,1.0"/>
+                <property name="color" type="CGUIColor" value="255,255,255,255"/>
             </property>
-            <property name="text"	type="CGUIString" value="" category="TextInfo"/>
-            <property name="text_alignment_horz"	type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center"  category="TextInfo"/>
-            <property name="text_alignment_vert"	type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" category="TextInfo"/>
+            <property name="text" type="CGUIString" value="" category="TextInfo"/>
+            <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center"  category="TextInfo"/>
+            <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" category="TextInfo"/>
 
             <property name="default_as" type="CGUIAs" value=""/>
         </page>
@@ -116,23 +116,23 @@
         <page name="Appearance">
             <property name="text_hover"	type="CGUIString" value=""  category="Button"/>
             <property name="textinfo_hover" type="CGUIStringInfo"  category="Button">
-                <property name="size"		type="uint16" value="16"/>
+                <property name="size" type="uint16" value="16"/>
                 <property name="index" type="int16" value="0"/>
-                <property name="color" type="CGUIColor" value="1.0,1.0,1.0,1.0"/>
+                <property name="color" type="CGUIColor" value="255,255,255,255"/>
             </property>
-            <property name="text_push"	type="CGUIString" value=""  category="Button"/>
+            <property name="text_push" type="CGUIString" value=""  category="Button"/>
             <property name="textinfo_push" type="CGUIStringInfo"  category="Button">
-                <property name="size"		type="uint16" value="16"/>
+                <property name="size" type="uint16" value="16"/>
                 <property name="index" type="int16" value="0"/>
-                <property name="color" 		type="CGUIColor" value="1.0,1.0,1.0,1.0"/>
+                <property name="color" type="CGUIColor" value="255,255,255,255"/>
             </property>
-            <property name="text_disable"	type="CGUIString" value=""  category="Button"/>
+            <property name="text_disable" type="CGUIString" value=""  category="Button"/>
             <property name="textinfo_disable" type="CGUIStringInfo"  category="Button">
-                <property name="size"		type="uint16" value="16"/>
+                <property name="size" type="uint16" value="16"/>
                 <property name="index" type="int16" value="0"/>
-                <property name="color" 		type="CGUIColor" value="1.0,1.0,1.0,1.0"/>
+                <property name="color" type="CGUIColor" value="255,255,255,255"/>
             </property>
-            <property name="text_offset"	type="CGUIVector2" value="0,0"  category="Button"/>
+            <property name="text_offset" type="CGUIVector2" value="0,0"  category="Button"/>
         </page>
         <page name="Image">
             <property name="BTN_NORMAL" type="CGUIImage" value="button_red_normal" must_exist="true"/>

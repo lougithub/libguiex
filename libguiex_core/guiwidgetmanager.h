@@ -54,10 +54,10 @@ namespace guiex
 		T* GetWidgetWithTypeCheck( const CGUIString& rWidgetName, const CGUIString& rSceneName );
 
 		//page related functions
-		CGUIWidget*	LoadPage( const CGUIString& rPageName, const CGUIString& rSceneName);
+		CGUIWidget*	LoadPage( const CGUIString& rSceneName, const CGUIString& rPageName );
 		void AddPage(  CGUIWidget* pPage, const CGUIString& rPageName = CGUIString());
 		CGUIWidget* GetPageByWidgetName( const CGUIString& rWidgetName, const CGUIString& rSceneName );
-		CGUIWidget* GetPage( const CGUIString& rSceneName, const CGUIString& rPageName );
+		CGUIWidget* GetPage( const CGUIString& rPageName , const CGUIString& rSceneName );
 		bool HasPage(const CGUIString& rWidgetName, const CGUIString& rSceneName) const;
 		bool HasPage( CGUIWidget* pPage) const;
 		void ReleasePage( CGUIWidget* pPage);

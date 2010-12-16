@@ -103,14 +103,27 @@ protected:
 // -----------------------------------------------------------------------
 // wxGUIColorProperty
 // -----------------------------------------------------------------------
+//WX_PG_DECLARE_VARIANT_DATA( CGUIColor )
+//class WxGuiColorProperty : public wxPGProperty
+//{
+//	WX_PG_DECLARE_PROPERTY_CLASS(WxGuiColorProperty)
+//public:
+//	WxGuiColorProperty( const wxString& label = wxPG_LABEL, const wxString& name = wxPG_LABEL, const CGUIColor& value = CGUIColor() );
+//	virtual wxVariant ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const;
+//	virtual void RefreshChildren();
+//};
 WX_PG_DECLARE_VARIANT_DATA( CGUIColor )
 class WxGuiColorProperty : public wxPGProperty
 {
 	WX_PG_DECLARE_PROPERTY_CLASS(WxGuiColorProperty)
 public:
 	WxGuiColorProperty( const wxString& label = wxPG_LABEL, const wxString& name = wxPG_LABEL, const CGUIColor& value = CGUIColor() );
-	virtual wxVariant ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const;
-	virtual void RefreshChildren();
+	virtual bool OnEvent( wxPropertyGrid* propgrid, wxWindow* primary, wxEvent& event );
+	virtual wxString ValueToString( wxVariant& value, int argFlags ) const;
+	virtual bool StringToValue( wxVariant& variant, const wxString& text, int argFlags );
+
+	virtual wxSize OnMeasureImage( int item ) const;
+	virtual void OnCustomPaint( wxDC& dc, const wxRect& rect, wxPGPaintData& paintdata );
 };
 
 

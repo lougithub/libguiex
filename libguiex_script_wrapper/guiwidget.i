@@ -66,7 +66,7 @@ namespace guiex
 		void SetAlpha( real fAlpha );
 		real GetAlpha()  const;
 		real GetDerivedAlpha();
- 
+
 		void SetScale( const CGUISize& );
 		const CGUISize& GetScale() const;
 		const CGUISize& GetDerivedScale();
@@ -124,7 +124,7 @@ namespace guiex
 		void UnregisterScriptCallbackFunc(const CGUIString& strEventName);
 		bool HasScriptCallbackFunc(const CGUIString& strEventName) const;
 		const CGUIString& GetScriptCallbackFunc(const CGUIString& strEventName) const;
-		
+
 		void SetPosition( real x, real y );
 		void SetPosition( const CGUIVector2&rPos );
 		const CGUIVector2& GetPosition() const; 
@@ -211,6 +211,9 @@ namespace guiex
 		void SetGenerateMultiClickEvent( bool bFlag ); 
 		bool IsGenerateMultiClickEvent( ) const;
 
+	protected:
+		CGUIWidget();
+		virtual ~CGUIWidget();
 	};
 
 
@@ -272,7 +275,7 @@ namespace guiex
 	class CGUIWgtStaticImage : public CGUIWgtStatic
 	{
 	};
-	
+
 	//============================================================================//
 	// CGUIWgtStaticText
 	//============================================================================// 

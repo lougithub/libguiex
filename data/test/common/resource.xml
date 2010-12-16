@@ -6,7 +6,7 @@
         </property>
 
 		<property name="color_white" type="CGUIImageDefine">
-			<property name="color" type="CGUIColor" value="1,1,1,1"/>
+			<property name="color" type="CGUIColor" value="255,255,255,255"/>
 			<property name="size" type="CGUISize" value="1,1"/>
         </property>
 

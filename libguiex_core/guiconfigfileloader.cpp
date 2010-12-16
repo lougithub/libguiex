@@ -288,10 +288,6 @@ namespace guiex
 
 		if( !pPage )
 		{
-			throw guiex::CGUIException(
-				"[LoadWidgetConfigFile], failed to get root widget of page <%s:%s>", 
-				rSceneName.c_str(),
-				rFileName.c_str() );
 			return NULL;
 		}
 		return pPage;

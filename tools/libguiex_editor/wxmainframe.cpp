@@ -1523,21 +1523,15 @@ void WxMainFrame::RenderFile( const std::string& rFileName )
 	CloseCanvas();
 	CGUIScene* pScene = CGUISceneManager::Instance()->GetScene(m_strCurrentSceneName);
 
-	std::string strAbsFileName = 
-		GSystem->GetDataPath() +
-		pScene->GetScenePath() +
-		rFileName;
+	std::string strAbsFileName = GSystem->GetDataPath() + pScene->GetScenePath() + rFileName;
 
 	m_pCanvas = new WxEditorCanvasContainer(m_pNoteBook_Canvas, strAbsFileName);
 	m_pNoteBook_Canvas->AddPage( m_pCanvas, wxConvUTF8.cMB2WC(rFileName.c_str()), true );
 	//m_pCanvas->SetNextHandler( m_pNoteBook_Canvas );
-	////for load font
-	//CGUIFontManager::Instance()->LoadAllResources();
-
 	try
 	{
 		//load xml widget by libguiex
-		CGUIWidget* pWidget = CGUIWidgetManager::Instance()->LoadPage( rFileName, m_strCurrentSceneName);
+		CGUIWidget* pWidget = CGUIWidgetManager::Instance()->LoadPage( rFileName, m_strCurrentSceneName );
 		if( pWidget )
 		{
 			GSystem->OpenPage(pWidget);

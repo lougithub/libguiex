@@ -56,6 +56,10 @@ namespace guiex
 		//********************************************************
 		real GetSystemTime() const;
 		int32 GetFPS() const;
+
+	protected:
+		CGUISystem();
+		~CGUISystem();
 	};
 
 

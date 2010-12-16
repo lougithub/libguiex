@@ -24,9 +24,9 @@
 */
 #if GUI_ASSERT_ON
 
-	#define GUI_ASSERT(X, error)									\
-	if (!(X))													\
-	{															\
+	#define GUI_ASSERT(X, error) \
+	if (!(X)) \
+	{ \
 	::guiex::CGUIAssert::Assert(__FILE__, __LINE__, error, #X); \
 	}
 
@@ -51,7 +51,6 @@ namespace guiex
 	typedef void (*FGUIAssertCB)(const char* file, int32 line, const char* message, const char* expression, void* user_data);
 	typedef void (*FGUIWarningCB)(const char* message, void* user_data);
 }//namespace guiex
-
 
 
 //============================================================================//

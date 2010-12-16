@@ -384,7 +384,7 @@ void WxMainFrame::TryOpenUIPage( bool bCheckCommandLine )
 		m_strCurrentPlayingScene = strUISceneName;
 		CGUISceneManager::Instance()->LoadResources( m_strCurrentPlayingScene );
 		CGUISceneManager::Instance()->LoadWidgets( m_strCurrentPlayingScene );
-		GSystem->OpenPage( CGUIWidgetManager::Instance()->GetPage( m_strCurrentPlayingScene, strUIPageName ));
+		GSystem->OpenPage( CGUIWidgetManager::Instance()->GetPage( strUIPageName, m_strCurrentPlayingScene ));
 	}
 	catch (CGUIBaseException& rError)
 	{
