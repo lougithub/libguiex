@@ -17,8 +17,8 @@ if( WIN32 )
 		wxsavefiledlg.h
 		wxtexteditor.cpp
 		wxtexteditor.h
-		wxwidgetpropertysheet.cpp
-		wxwidgetpropertysheet.h
+		wxwidgetpropertygridextend.cpp
+		wxwidgetpropertygridextend.h	
 		wxwizardcreatewidget.cpp
 		wxwizardcreatewidget.h        
         )

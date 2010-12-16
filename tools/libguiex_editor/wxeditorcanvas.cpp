@@ -341,7 +341,7 @@ void WxGLCanvas::OnKeyDown( wxKeyEvent& event )
 	if( m_aWindowBox.GetWindow() && (pixelDeltaX != 0 || pixelDeltaY != 0))
 	{
 		m_aWindowBox.MoveWindowPosition(pixelDeltaX, pixelDeltaY);
-		GetMainFrame()->GetPropGrid()->UpdateWidgetSizeAndPos();
+		GetMainFrame()->UpdateWidgetSizeAndPos();
 		m_pContainer->SetSaveFlag(true);
 	}
 
@@ -585,7 +585,7 @@ void WxGLCanvas::OnMouseLeftUp(wxMouseEvent& event)
 
 	if( m_bWidgetStatusChanged )
 	{
-		GetMainFrame()->GetPropGrid()->UpdateWidgetSizeAndPos();
+		GetMainFrame()->UpdateWidgetSizeAndPos();
 		m_pContainer->SetSaveFlag(true);
 		m_bWidgetStatusChanged = false;
 	}

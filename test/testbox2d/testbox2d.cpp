@@ -53,10 +53,10 @@ CGUIFrameworkBase* CreateFramework( )
 guiex::int32 CGUIFrameworkTest::InitializeGame( )
 {	
 	CGUISceneManager::Instance()->RegisterScenesFromDir( "/", ".uip" );
-	CGUISceneManager::Instance()->LoadResource( "common.uip" );
+	CGUISceneManager::Instance()->LoadResources( "common.uip" );
 
 	//create empty node for widget system
-	m_pWidgetRoot = GUI_CREATE_WIDGET("CGUIWgtEmptyNode", CGUIUtility::GenerateWidgetName(), "testproject");
+	m_pWidgetRoot = CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtEmptyNode>( CGUIUtility::GenerateWidgetName(), "testproject");
 	{
 		m_pWidgetRoot->SetPositionType( eScreenValue_Percentage );
 		m_pWidgetRoot->SetPosition( 0,0 );

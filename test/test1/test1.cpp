@@ -30,7 +30,7 @@ CGUIFrameworkBase* CreateFramework( )
 int32 CGUIFrameworkTest::InitializeGame( )
 {
 	CGUISceneManager::Instance()->RegisterScenesFromDir( "/", ".uip" );
-	CGUISceneManager::Instance()->LoadResource( "common.uip" );
+	CGUISceneManager::Instance()->LoadResources( "common.uip" );
 
 	CGUIWgtEmptyNode* pWidgetRoot = 
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtEmptyNode>( "page", "testscene" );
@@ -423,7 +423,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 
 void CGUIFrameworkTest::ReleaseGame( )
 {
-
+	CGUISceneManager::Instance()->ReleaseResources( "common.uip" );
 }
 
 void CGUIFrameworkTest::PreUpdate( real fDeltaTime )

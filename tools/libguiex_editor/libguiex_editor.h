@@ -44,7 +44,8 @@
 
 //libguiex
 #include <libguiex_core/guiex.h>
-#include <libguiex_widget\guiwgt.h>
+#include <libguiex_widget/guiwgt.h>
+using namespace guiex;
 
 //libguiex module
 #include <libguiex_module\render_opengl\guirender_opengl.h>
@@ -76,10 +77,11 @@
 #include "wxmainapp.h"
 #include "wxmainframe.h"
 #include "wxeditorcanvas.h"
-#include "wxwidgetpropertysheet.h"
+#include "wxwidgetpropertygridextend.h"
 #include "wxoutputpanel.h"
 #include "wxwizardcreatewidget.h"
 #include "wxsavefiledlg.h"
+
 
 //============================================================================//
 // declare

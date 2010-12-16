@@ -22,7 +22,6 @@ class WxEditorCanvasContainer;
 class wxTreeCtrl;
 class wxPropertyGridEvent;
 class WxOutputPanel;
-class WxWidgetPropertySheet;
 class wxTreeItemId;
 class CSaveFileBase;
 namespace guiex
@@ -47,16 +46,10 @@ public:
 
 	void DoUpdate();
 
-	/** 
-	 * @brief show string in output panel
-	 */
-	void	OutputString( const std::string& rString);
+	void OutputString( const std::string& rString);
+	void UpdateStatusBar (wxChar *format, ...) ;
 
-	/** 
-	 * @brief set status bar content
-	 */
-	void	UpdateStatusBar (wxChar *format, ...) ;
-
+	void UpdateWidgetSizeAndPos();
 
 	enum
 	{
@@ -103,8 +96,6 @@ public:
 		ID_Refresh,
 		ID_ToggleExtraInfo,
 
-
-
 		ID_ITEM_Widget_Render,
 		ID_ITEM_Widget_View,
 		ID_ITEM_Widget_Edit,
@@ -119,93 +110,84 @@ public:
 		WIDGET_ID_NoteBook_Config,	
 	};
 
-
-	////initialize libguiex,return 0 for success
-	//int	InitializeLibguiex();
-
-	////release libguiex
-	//void	ReleaseLibguiex();
-
 	//set property grid related widget
-	void			SetPropGridWidget(guiex::CGUIWidget* pWidget);
-
-	WxWidgetPropertySheet*		GetPropGrid();
+	void SetPropGridWidget(CGUIWidget* pWidget);
 
 	//get current canvas
-	WxEditorCanvasContainer*			GetCanvasContainer();
+	WxEditorCanvasContainer* GetCanvasContainer();
 
 	//select a widget item in tree
-	void			SelectWidgetTreeItem(guiex::CGUIWidget* pWidget);
+	void SelectWidgetTreeItem(CGUIWidget* pWidget);
 
 	const wxColor& GetBGColor()
 	{
 		return m_aBGColor;
 	}
 
-	const guiex::CGUIString& GetCurrentSceneName() const
+	const CGUIString& GetCurrentSceneName() const
 	{
 		return m_strCurrentSceneName;
 	}
 
 protected:
-	void			CreateMenu();
-	wxToolBar*		CreateToolbar();
+	void CreateMenu();
+	wxToolBar* CreateToolbar();
 	wxAuiNotebook*	CreateCanvasNotebook();
-	//wxAuiNotebook*	CreateConfigNotebook();
+	//wxAuiNotebook* CreateConfigNotebook();
 
 	//file tree ctrl
-	wxTreeCtrl*		CreateFileTreeCtrl();
-	void			ResetFileTreeCtrl();
-	void			AddToFileTreeCtrl( const std::string& rFileName, const std::string& rType);
-	wxTreeItemId	GetFileItemByName(const std::string& rItemName);
+	wxTreeCtrl*	CreateFileTreeCtrl();
+	void ResetFileTreeCtrl();
+	void AddToFileTreeCtrl( const std::string& rFileName, const std::string& rType);
+	wxTreeItemId GetFileItemByName(const std::string& rItemName);
 
 	//widget tree ctrl
-	wxTreeCtrl*		CreateWidgetTreeCtrl();
-	void			ResetWidgetTreeCtrl();
-	void			RefreshWidgetTreeCtrl();
-	void			AddWidgetToTreeCtrl(guiex::CGUIWidget* pWidget, wxTreeItemId aParentId );
+	wxTreeCtrl* CreateWidgetTreeCtrl();
+	void ResetWidgetTreeCtrl();
+	void RefreshWidgetTreeCtrl();
+	void AddWidgetToTreeCtrl(CGUIWidget* pWidget, wxTreeItemId aParentId );
 
-	WxOutputPanel*	CreateOutput();
+	WxOutputPanel* CreateOutput();
 
 	//property ctrl
-	wxPanel*		CreatePropGridPanel();
-	void			ResetPropGridPanel();
-	void			LoadPropConfigByWidget( );
+	wxPanel* CreatePropGridPanel();
+	void LoadPropConfigByWidget( );
 
 	/** 
 	 * @brief open scene
 	 * @return 0 for success
 	 */
-	int		OpenScene(const guiex::CGUIScene* pSceneInfo );
+	int	OpenScene(const CGUIScene* pSceneInfo );
 
 	/** 
 	* @brief close scene
 	*/
-	void	CloseScene( );
+	void CloseScene( );
 
 	/** 
 	 * @brief render given file
 	 */
-	void	RenderFile( const std::string& rFileName );
+	void RenderFile( const std::string& rFileName );
 
 	/** 
 	* @brief edit given file
 	*/
-	void	EditFile( const std::string& rFileName, EFileType eFileType );
+	void EditFile( const std::string& rFileName, EFileType eFileType );
 
-	void	EditFileExternal( const std::string& rFileName );
+	void EditFileExternal( const std::string& rFileName );
 
 	/** 
 	 * @brief save files before close it
 	 * @param nIdx the index of page, -1 for all page
 	 * @return false for user cancel the process.
 	 */
-
-	bool	SaveFileProcess( int nIdx);
+	bool SaveFileProcess( int nIdx);
 
 	//remove old canvas
-	void	CloseCanvas();
+	void CloseCanvas();
 
+protected:
+	void SetResolution( int width, int height );
 
 protected:
 	//callback function
@@ -224,36 +206,27 @@ protected:
 	void OnNewWidgetFile(wxCommandEvent& evt);
 	void OnUpdateNewWidgetFile(wxUpdateUIEvent& event);
 	
-
 	void OnClose(wxCommandEvent& evt);
 	void OnUpdateClose(wxUpdateUIEvent& event);
-
 	void OnSave(wxCommandEvent& evt);
 	void OnUpdateSave(wxUpdateUIEvent& event);
 	void OnSaveAs(wxCommandEvent& evt);
 	void OnUpdateSaveAs(wxUpdateUIEvent& event);
-
 	void OnSaveAll(wxCommandEvent& evt);
 	void OnUpdateSaveAll(wxUpdateUIEvent& event);
-
 	void OnDeleteWidget(wxCommandEvent& evt);
 	void OnUpdateDeleteWidget(wxUpdateUIEvent& event);
-	
 	void OnWidgetUp(wxCommandEvent& evt);
 	void OnUpdateWidgetUp(wxUpdateUIEvent& event);
 	void OnWidgetDown(wxCommandEvent& evt);
 	void OnUpdateWidgetDown(wxUpdateUIEvent& event);
-
 	void OnRunScript(wxCommandEvent& evt);
 	void OnToggleScissor(wxCommandEvent& evt);
 	void OnToggleExtraInfo(wxCommandEvent& evt);
 	void OnToggleWireframe(wxCommandEvent& evt);
 	void OnSetBGColor(wxCommandEvent& evt);
 	void OnRefresh(wxCommandEvent& evt);
-
 	void OnFullscreen(wxCommandEvent& evt);
-
-	void SetResolution( int width, int height );
 
 	void On800x600(wxCommandEvent& evt);
 	void On1024x786(wxCommandEvent& evt);
@@ -267,14 +240,11 @@ protected:
 
 	void OnUpdateResolution(wxUpdateUIEvent& event);
 
-
 	void OnCreateWidget(wxCommandEvent& evt);
 	void OnUpdateCreateWidget(wxUpdateUIEvent& event);
 
 	void OnRecentPaths( wxCommandEvent& In );
 	void OnRecentScenes( wxCommandEvent& In );
-
-
 
 	//file tree
 	void OnTreeItemMenu(wxTreeEvent& event);
@@ -285,7 +255,6 @@ protected:
 	void OnTreeItemImageEdit(wxCommandEvent& event);
 	void OnTreeItemEditExternal(wxCommandEvent& event);
 	
-
 	//notebook
 	void OnBookPageChanged(wxAuiNotebookEvent& event);
 	void OnBookPageClose(wxAuiNotebookEvent& event);
@@ -293,7 +262,6 @@ protected:
 	//widget tree
 	void OnWidgetTreeSelected(wxTreeEvent& event);
 	
-
 	//property sheet
 	void OnPropertyGridChange( wxPropertyGridEvent& event );
 
@@ -302,35 +270,31 @@ protected:
 
 protected:
 	wxAuiManager m_mgr;
-	WxEditorCanvasContainer*		m_pCanvas;
-	wxAuiNotebook*			m_pNoteBook_Canvas;
-	//wxAuiNotebook*			m_pNoteBook_Config;
-	wxTreeCtrl*				m_pTreeCtrl_File;
+	WxEditorCanvasContainer*m_pCanvas;
+	wxAuiNotebook*m_pNoteBook_Canvas;
+	//wxAuiNotebook*m_pNoteBook_Config;
+	wxTreeCtrl*m_pTreeCtrl_File;
 	
 	//widget tree
-	wxTreeCtrl*				m_pTreeCtrl_Widget;
-	typedef std::map<guiex::CGUIWidget*, wxTreeItemId>	TTreeItemMap;
-	TTreeItemMap			m_mapTreeItem;
+	wxTreeCtrl*m_pTreeCtrl_Widget;
+	typedef std::map<CGUIWidget*, wxTreeItemId>	TTreeItemMap;
+	TTreeItemMap m_mapTreeItem;
 
+	wxToolBar*m_pToolbar;
+	WxOutputPanel*m_pOutput;
 
-	wxToolBar*				m_pToolbar;
-	WxOutputPanel*			m_pOutput;
+	wxPropertyGridManager* m_pPropGridMan;
 
-	WxWidgetPropertySheet*	m_pPropGridMan;
+	bool m_bIsSceneOpened;
 
-	bool					m_bIsSceneOpened;
+	wxSize m_aScreenSize;//!< screen size
+	CGUIString m_strCurrentSceneName;
+	wxColor m_aBGColor;
 
-	wxSize					m_aScreenSize;			//!< screen size
-	guiex::CGUIString		m_strCurrentSceneName;
-	wxColor					m_aBGColor;
+	CGUIWidget* m_pCurrentEditingWidget;
 
 	DECLARE_EVENT_TABLE()
 };
-
-
-
-
-
 
 
 #endif //__KEN_MAINFRAME_20070910_H__

@@ -31,7 +31,7 @@ namespace guiex
 class WxWizardCreateWidget : public wxWizard
 {
 public:
-	WxWizardCreateWidget(wxFrame *frame, guiex::CGUIWidget* pParent = NULL);
+	WxWizardCreateWidget(wxFrame *frame, CGUIWidget* pParent = NULL);
 
 	//get first page
 	wxWizardPage *GetFirstPage() const 
@@ -40,7 +40,7 @@ public:
 	}
 
 	//get created widget
-	guiex::CGUIWidget* GetWidget()
+	CGUIWidget* GetWidget()
 	{
 		return m_pWidget;
 	}
@@ -64,8 +64,8 @@ private:
 	wxTextCtrl* m_pEditName;
 	wxPropertyGridManager* m_pPropGridMgr;
 
-	guiex::CGUIWidget* m_pWidget;
-	guiex::CGUIWidget* m_pParent;
+	CGUIWidget* m_pWidget;
+	CGUIWidget* m_pParent;
 
 	DECLARE_EVENT_TABLE()
 

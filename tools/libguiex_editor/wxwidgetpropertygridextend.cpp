@@ -31,11 +31,11 @@ int GetTypeIndexInScreenValueEnum( guiex::EScreenValue eValue, const wxArrayStri
 }
 
 // -----------------------------------------------------------------------
-// wxGUISizeProperty
+// WxGUISizeProperty
 // -----------------------------------------------------------------------
 WX_PG_IMPLEMENT_VARIANT_DATA_DUMMY_EQ( CGUISize );
-WX_PG_IMPLEMENT_PROPERTY_CLASS( wxGUISizeProperty,wxPGProperty,CGUISize,const CGUISize&,TextCtrl);
-wxGUISizeProperty::wxGUISizeProperty( const wxString& label, const wxString& name,const CGUISize& value)
+WX_PG_IMPLEMENT_PROPERTY_CLASS( WxGUISizeProperty,wxPGProperty,CGUISize,const CGUISize&,TextCtrl);
+WxGUISizeProperty::WxGUISizeProperty( const wxString& label, const wxString& name,const CGUISize& value)
 : wxPGProperty(label,name)
 {
 	//ChangeFlag(wxPG_PROP_READONLY, true);
@@ -43,16 +43,16 @@ wxGUISizeProperty::wxGUISizeProperty( const wxString& label, const wxString& nam
 	AddPrivateChild( new wxFloatProperty(wxT("width"), wxT("WIDTH"),value.m_fWidth) );
 	AddPrivateChild( new wxFloatProperty(wxT("height"), wxT("HEIGHT"),value.m_fHeight) );
 }
-
-void wxGUISizeProperty::RefreshChildren()
+// -----------------------------------------------------------------------
+void WxGUISizeProperty::RefreshChildren()
 {
 	if ( !GetChildCount() ) return;
 	CGUISize& size = CGUISizeRefFromVariant(m_value);
 	Item(0)->SetValue( size.m_fWidth );
 	Item(1)->SetValue( size.m_fHeight );
 }
-
-wxVariant wxGUISizeProperty::ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const
+// -----------------------------------------------------------------------
+wxVariant WxGUISizeProperty::ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const
 {
 	CGUISize& size = CGUISizeRefFromVariant(thisValue);
 
@@ -66,15 +66,16 @@ wxVariant wxGUISizeProperty::ChildChanged( wxVariant& thisValue, int childIndex,
 	newVariant << size;
 	return newVariant;
 }
+// -----------------------------------------------------------------------
 
 
 
 // -----------------------------------------------------------------------
-// wxGUIVector2Property
+// WxGUIVector2Property
 // -----------------------------------------------------------------------
 WX_PG_IMPLEMENT_VARIANT_DATA_DUMMY_EQ( CGUIVector2 );
-WX_PG_IMPLEMENT_PROPERTY_CLASS(wxGUIVector2Property,wxPGProperty,CGUIVector2,const CGUIVector2&,TextCtrl);
-wxGUIVector2Property::wxGUIVector2Property( const wxString& label,const wxString& name,const CGUIVector2& value)
+WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGUIVector2Property,wxPGProperty,CGUIVector2,const CGUIVector2&,TextCtrl);
+WxGUIVector2Property::WxGUIVector2Property( const wxString& label,const wxString& name,const CGUIVector2& value)
 : wxPGProperty(label,name)
 {
 	//ChangeFlag(wxPG_PROP_READONLY, true);
@@ -82,8 +83,8 @@ wxGUIVector2Property::wxGUIVector2Property( const wxString& label,const wxString
 	AddPrivateChild( new wxFloatProperty(wxT("x"), wxT("X"),value.x) );
 	AddPrivateChild( new wxFloatProperty(wxT("y"), wxT("Y"),value.y) );
 }
-
-void wxGUIVector2Property::RefreshChildren()
+// -----------------------------------------------------------------------
+void WxGUIVector2Property::RefreshChildren()
 {
 	if ( !GetChildCount() ) return;
 
@@ -91,8 +92,8 @@ void wxGUIVector2Property::RefreshChildren()
 	Item(0)->SetValue( vector.x );
 	Item(1)->SetValue( vector.y);
 }
-
-wxVariant wxGUIVector2Property::ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const
+// -----------------------------------------------------------------------
+wxVariant WxGUIVector2Property::ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const
 {
 	CGUIVector2& vector = CGUIVector2RefFromVariant(thisValue);
 
@@ -106,14 +107,15 @@ wxVariant wxGUIVector2Property::ChildChanged( wxVariant& thisValue, int childInd
 	newVariant << vector;
 	return newVariant;
 }
+// -----------------------------------------------------------------------
 
 
 // -----------------------------------------------------------------------
-// wxGUIVector3Property
+// WxGUIVector3Property
 // -----------------------------------------------------------------------
 WX_PG_IMPLEMENT_VARIANT_DATA_DUMMY_EQ( CGUIVector3 );
-WX_PG_IMPLEMENT_PROPERTY_CLASS(wxGUIVector3Property,wxPGProperty,CGUIVector3,const CGUIVector3&,TextCtrl);
-wxGUIVector3Property::wxGUIVector3Property( 
+WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGUIVector3Property,wxPGProperty,CGUIVector3,const CGUIVector3&,TextCtrl);
+WxGUIVector3Property::WxGUIVector3Property( 
 	const wxString& label,
 	const wxString& name,
 	const CGUIVector3& value)
@@ -125,8 +127,8 @@ wxGUIVector3Property::wxGUIVector3Property(
 	AddPrivateChild( new wxFloatProperty(wxT("y"), wxT("Y"),value.y) );
 	AddPrivateChild( new wxFloatProperty(wxT("z"), wxT("z"),value.z) );
 }
-
-void wxGUIVector3Property::RefreshChildren()
+// -----------------------------------------------------------------------
+void WxGUIVector3Property::RefreshChildren()
 {
 	if ( !GetChildCount() ) return;
 
@@ -135,8 +137,8 @@ void wxGUIVector3Property::RefreshChildren()
 	Item(1)->SetValue( vector.y);
 	Item(2)->SetValue( vector.z);
 }
-
-wxVariant wxGUIVector3Property::ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const
+// -----------------------------------------------------------------------
+wxVariant WxGUIVector3Property::ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const
 {
 	CGUIVector3& vector = CGUIVector3RefFromVariant(thisValue);
 
@@ -151,13 +153,15 @@ wxVariant wxGUIVector3Property::ChildChanged( wxVariant& thisValue, int childInd
 	newVariant << vector;
 	return newVariant;
 }
+// -----------------------------------------------------------------------
+
 
 // -----------------------------------------------------------------------
-// wxGUIRectProperty
+// WxGUIRectProperty
 // -----------------------------------------------------------------------
 WX_PG_IMPLEMENT_VARIANT_DATA_DUMMY_EQ( CGUIRect );
-WX_PG_IMPLEMENT_PROPERTY_CLASS(wxGUIRectProperty,wxPGProperty,CGUIVector2,const CGUIVector2&,TextCtrl);
-wxGUIRectProperty::wxGUIRectProperty( const wxString& label,
+WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGUIRectProperty,wxPGProperty,CGUIVector2,const CGUIVector2&,TextCtrl);
+WxGUIRectProperty::WxGUIRectProperty( const wxString& label,
 									 const wxString& name,
 									 const CGUIRect& value)
 									 : wxPGProperty(label,name)
@@ -169,8 +173,8 @@ wxGUIRectProperty::wxGUIRectProperty( const wxString& label,
 	AddPrivateChild( new wxFloatProperty(wxT("right"), wxT("RIGHT"),value.m_fRight) );
 	AddPrivateChild( new wxFloatProperty(wxT("bottom"), wxT("BOTTOM"),value.m_fBottom) );
 }
-
-void wxGUIRectProperty::RefreshChildren()
+// -----------------------------------------------------------------------
+void WxGUIRectProperty::RefreshChildren()
 {
 	if ( !GetChildCount() ) return;
 
@@ -180,8 +184,8 @@ void wxGUIRectProperty::RefreshChildren()
 	Item(2)->SetValue( rect.m_fRight);
 	Item(3)->SetValue( rect.m_fBottom);
 }
-
-wxVariant wxGUIRectProperty::ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const
+// -----------------------------------------------------------------------
+wxVariant WxGUIRectProperty::ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const
 {
 	CGUIRect& rect = CGUIRectRefFromVariant(thisValue);
 
@@ -197,19 +201,15 @@ wxVariant wxGUIRectProperty::ChildChanged( wxVariant& thisValue, int childIndex,
 	newVariant << rect;
 	return newVariant;
 }
-
-
-
+// -----------------------------------------------------------------------
 
 
 // -----------------------------------------------------------------------
-// wxGUIStringInfoProperty
+// WxGUIStringInfoProperty
 // -----------------------------------------------------------------------
 WX_PG_IMPLEMENT_VARIANT_DATA_DUMMY_EQ( CGUIStringInfo );
-WX_PG_IMPLEMENT_PROPERTY_CLASS(wxGUIStringInfoProperty,wxPGProperty,CGUIStringInfo,const CGUIStringInfo&,TextCtrl);
-
-
-wxGUIStringInfoProperty::wxGUIStringInfoProperty( 
+WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGUIStringInfoProperty,wxPGProperty,CGUIStringInfo,const CGUIStringInfo&,TextCtrl);
+WxGUIStringInfoProperty::WxGUIStringInfoProperty( 
 	const wxString& label,
 	const wxString& name,
 	const CGUIStringInfo& value)
@@ -219,10 +219,10 @@ wxGUIStringInfoProperty::wxGUIStringInfoProperty(
 	SetValue( WXVARIANT(value) );
 	AddPrivateChild( new wxUIntProperty(wxT("size"), wxT("SIZE"), value.m_nFontSize) );
 	AddPrivateChild( new wxUIntProperty(wxT("index"), wxT("FONT_INDEX"),value.m_nFontIdx) );
-	AddPrivateChild( new wxGuiColorProperty(wxT("color"), wxT("COLOR"), value.m_aColor) );
+	AddPrivateChild( new WxGuiColorProperty(wxT("color"), wxT("COLOR"), value.m_aColor) );
 }
 
-void wxGUIStringInfoProperty::RefreshChildren()
+void WxGUIStringInfoProperty::RefreshChildren()
 {
 	if ( !GetChildCount() ) return;
 
@@ -231,8 +231,8 @@ void wxGUIStringInfoProperty::RefreshChildren()
 	Item(1)->SetValue( string_info.m_nFontIdx);
 	Item(2)->SetValue( WXVARIANT( string_info.m_aColor ));
 }
-
-wxVariant wxGUIStringInfoProperty::ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const
+// -----------------------------------------------------------------------
+wxVariant WxGUIStringInfoProperty::ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const
 {
 	CGUIStringInfo& string_info = CGUIStringInfoRefFromVariant(thisValue);
 
@@ -247,13 +247,15 @@ wxVariant wxGUIStringInfoProperty::ChildChanged( wxVariant& thisValue, int child
 	newVariant << string_info;
 	return newVariant;
 }
+// -----------------------------------------------------------------------
+
 
 // -----------------------------------------------------------------------
-// wxGUIWidgetPositionProperty
+// WxGUIWidgetPositionProperty
 // -----------------------------------------------------------------------
 WX_PG_IMPLEMENT_VARIANT_DATA_DUMMY_EQ( CGUIWidgetPosition );
-WX_PG_IMPLEMENT_PROPERTY_CLASS(wxGUIWidgetPositionProperty,wxPGProperty,CGUIWidgetPosition,const CGUIWidgetPosition&,TextCtrl);
-wxGUIWidgetPositionProperty::wxGUIWidgetPositionProperty( 
+WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGUIWidgetPositionProperty,wxPGProperty,CGUIWidgetPosition,const CGUIWidgetPosition&,TextCtrl);
+WxGUIWidgetPositionProperty::WxGUIWidgetPositionProperty( 
 	const wxString& label,
 	const wxString& name,
 	const CGUIWidgetPosition& value)
@@ -263,13 +265,12 @@ wxGUIWidgetPositionProperty::wxGUIWidgetPositionProperty(
 	SetValue( WXVARIANT(value) );
 	m_arrEnums = CPropertyConfigMgr::Instance()->GetEnumDefine("EScreenValue");
 	AddPrivateChild( new wxEnumProperty(wxT("type"), wxT("type"), m_arrEnums ) );
-	AddPrivateChild( new wxGUIVector2Property(wxT("value"), wxT("value"),value.m_aValue) );
+	AddPrivateChild( new WxGUIVector2Property(wxT("value"), wxT("value"),value.m_aValue) );
 
 	RefreshChildren();
 }
-
-
-void wxGUIWidgetPositionProperty::RefreshChildren()
+// -----------------------------------------------------------------------
+void WxGUIWidgetPositionProperty::RefreshChildren()
 {
 	if ( !GetChildCount() ) return;
 
@@ -277,8 +278,8 @@ void wxGUIWidgetPositionProperty::RefreshChildren()
 	Item(0)->SetValue( GetTypeIndexInScreenValueEnum( widget_pos.m_eType, m_arrEnums ) );
 	Item(1)->SetValue( WXVARIANT(widget_pos.m_aValue));
 }
-
-wxVariant wxGUIWidgetPositionProperty::ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const
+// -----------------------------------------------------------------------
+wxVariant WxGUIWidgetPositionProperty::ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const
 {
 	CGUIWidgetPosition& widget_pos = CGUIWidgetPositionRefFromVariant( thisValue );
 
@@ -296,14 +297,15 @@ wxVariant wxGUIWidgetPositionProperty::ChildChanged( wxVariant& thisValue, int c
 	newVariant << widget_pos;
 	return newVariant;
 }
+// -----------------------------------------------------------------------
 
 
 // -----------------------------------------------------------------------
 // wxGUIColorProperty
 // -----------------------------------------------------------------------
 WX_PG_IMPLEMENT_VARIANT_DATA_DUMMY_EQ( CGUIColor );
-WX_PG_IMPLEMENT_PROPERTY_CLASS(wxGuiColorProperty,wxPGProperty,CGUIColor,const CGUIColor&,TextCtrlAndButton);
-wxGuiColorProperty::wxGuiColorProperty( const wxString& label, const wxString& name,const CGUIColor& value)
+WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGuiColorProperty,wxPGProperty,CGUIColor,const CGUIColor&,TextCtrlAndButton);
+WxGuiColorProperty::WxGuiColorProperty( const wxString& label, const wxString& name,const CGUIColor& value)
 : wxPGProperty(label,name)
 {
 	SetValue( WXVARIANT(value) );
@@ -312,8 +314,8 @@ wxGuiColorProperty::wxGuiColorProperty( const wxString& label, const wxString& n
 	AddPrivateChild( new wxIntProperty(wxT("blue"), wxT("BLUE"),value.GetBlue()*255) );
 	AddPrivateChild( new wxIntProperty(wxT("alpha"), wxT("ALPHA"),value.GetAlpha()*255) );
 }
-
-void wxGuiColorProperty::RefreshChildren()
+// -----------------------------------------------------------------------
+void WxGuiColorProperty::RefreshChildren()
 {
 	if ( !GetChildCount() ) return;
 	CGUIColor& color = CGUIColorRefFromVariant(m_value);
@@ -323,8 +325,8 @@ void wxGuiColorProperty::RefreshChildren()
 	Item(2)->SetValue( color.GetBlue()*255 );
 	Item(3)->SetValue( color.GetAlpha()*255 );
 }
-
-wxVariant wxGuiColorProperty::ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const
+// -----------------------------------------------------------------------
+wxVariant WxGuiColorProperty::ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const
 {
 	CGUIColor& color = CGUIColorRefFromVariant(thisValue);
 
@@ -340,15 +342,15 @@ wxVariant wxGuiColorProperty::ChildChanged( wxVariant& thisValue, int childIndex
 	newVariant << color;
 	return newVariant;
 }
-
+// -----------------------------------------------------------------------
 
 
 // -----------------------------------------------------------------------
-// wxGUIWidgetSizeProperty
+// WxGUIWidgetSizeProperty
 // -----------------------------------------------------------------------
 WX_PG_IMPLEMENT_VARIANT_DATA_DUMMY_EQ( CGUIWidgetSize );
-WX_PG_IMPLEMENT_PROPERTY_CLASS(wxGUIWidgetSizeProperty,wxPGProperty,CGUIWidgetSize,const CGUIWidgetSize&,TextCtrl);
-wxGUIWidgetSizeProperty::wxGUIWidgetSizeProperty( const wxString& label,
+WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGUIWidgetSizeProperty,wxPGProperty,CGUIWidgetSize,const CGUIWidgetSize&,TextCtrl);
+WxGUIWidgetSizeProperty::WxGUIWidgetSizeProperty( const wxString& label,
 												 const wxString& name,
 												 const CGUIWidgetSize& value)
 												 : wxPGProperty(label,name)
@@ -357,12 +359,12 @@ wxGUIWidgetSizeProperty::wxGUIWidgetSizeProperty( const wxString& label,
 	SetValue( WXVARIANT(value) );
 	m_arrEnums = CPropertyConfigMgr::Instance()->GetEnumDefine("EScreenValue");
 	AddPrivateChild( new wxEnumProperty(wxT("type"), wxT("type"), m_arrEnums) );
-	AddPrivateChild( new wxGUISizeProperty(wxT("size"), wxT("size"),value.m_aValue) );
+	AddPrivateChild( new WxGUISizeProperty(wxT("size"), wxT("size"),value.m_aValue) );
 
 	RefreshChildren();
 }
-
-void wxGUIWidgetSizeProperty::RefreshChildren()
+// -----------------------------------------------------------------------
+void WxGUIWidgetSizeProperty::RefreshChildren()
 {
 	if ( !GetChildCount() ) return;
 
@@ -370,8 +372,8 @@ void wxGUIWidgetSizeProperty::RefreshChildren()
 	Item(0)->SetValue( GetTypeIndexInScreenValueEnum( widget_size.m_eType, m_arrEnums ) );
 	Item(1)->SetValue( WXVARIANT(widget_size.m_aValue));
 }
-
-wxVariant wxGUIWidgetSizeProperty::ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const
+// -----------------------------------------------------------------------
+wxVariant WxGUIWidgetSizeProperty::ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const
 {
 	CGUIWidgetSize& widget_size = CGUIWidgetSizeRefFromVariant(thisValue);
 
@@ -389,106 +391,5 @@ wxVariant wxGUIWidgetSizeProperty::ChildChanged( wxVariant& thisValue, int child
 	newVariant << widget_size;
 	return newVariant;
 }
-
-
-//------------------------------------------------------------------------------
-WxWidgetPropertySheet::WxWidgetPropertySheet( 
-	wxWindow * parent, 
-	wxWindowID id, 
-	const wxPoint& pos,
-	const wxSize& size, 
-	long style )
-:wxPropertyGridManager(parent,id, pos,size,style )
-,m_pPropWidget(NULL)
-{
-	//add page
-	AddPage(wxT("Property"));
-	AddPage(wxT("Image"));
-	AddPage(wxT("Event"));
-	SelectPage(NOTEBOOK_PAGE_PROP);
-	Refresh();
-}
-//------------------------------------------------------------------------------
-void WxWidgetPropertySheet::ResetContent()
-{
-	m_pPropWidget = NULL;
-	ClearPage(NOTEBOOK_PAGE_PROP);
-	ClearPage(NOTEBOOK_PAGE_IMAGE);
-	ClearPage(NOTEBOOK_PAGE_EVENT);
-	Refresh();
-}
-
-//------------------------------------------------------------------------------
-void WxWidgetPropertySheet::UpdateWidgetSizeAndPos()
-{
-	const guiex::CGUIProperty& rSet = CPropertyConfigMgr::Instance()->GetPropertySet(m_pPropWidget->GetType());
-	const guiex::CGUIProperty* pPropSize = rSet.GetProperty("size");
-	SetPropertyByType( this, NULL, pPropSize, m_pPropWidget );
-	const guiex::CGUIProperty* pPropPos = rSet.GetProperty("position");
-	SetPropertyByType( this, NULL, pPropPos, m_pPropWidget );
-
-	Refresh();
-}
-//------------------------------------------------------------------------------
-int WxWidgetPropertySheet::OnPropertyChanged( wxPropertyGridEvent& event )
-{
-	if( !m_pPropWidget )
-	{
-		return 0;
-	}
-	wxPGProperty* pPGProperty = event.GetProperty();
-	if( !pPGProperty)
-	{
-		return -1;
-	}
-	wxPGProperty* pPGTop = event.GetMainParent();
-	if( !pPGTop)
-	{
-		return -1;
-	}
-
-	guiex::CGUIProperty aGuiProperty;
-	GenerateGUIProperty(this, pPGTop, aGuiProperty);
-
-	int nHasError = 0;
-	try
-	{ 
-		m_pPropWidget->InsertProperty( aGuiProperty );
-		m_pPropWidget->ProcessProperty(aGuiProperty);
-		m_pPropWidget->Refresh();
-		LoadWidgetConfig( this, m_pPropWidget->GetType(), m_pPropWidget );
-	}
-	catch(guiex::CGUIBaseException& rError)
-	{
-		wxMessageBox( wxConvUTF8.cMB2WC( rError.what()), _T("OnPropertyChanged error"), wxICON_ERROR|wxCENTRE);
-		nHasError = -1;
-	}
-	catch(...)
-	{
-		wxMessageBox(_T("unknown error"), _T("OnPropertyChanged error"), wxICON_ERROR|wxCENTRE);
-		nHasError = -1;
-	}
-
-	return nHasError;
-}
-//------------------------------------------------------------------------------
-void WxWidgetPropertySheet::SetPropGridWidget(guiex::CGUIWidget* pWidget)
-{
-	if( m_pPropWidget == pWidget)
-	{
-		//ignore it
-		return;
-	}
-	else
-	{
-		ResetContent();
-		m_pPropWidget = pWidget;
-		if( m_pPropWidget )
-		{
-			LoadWidgetConfig(this, m_pPropWidget->GetType(), m_pPropWidget);
-		}
-	}
-}
-//------------------------------------------------------------------------------
-
+// -----------------------------------------------------------------------
 
