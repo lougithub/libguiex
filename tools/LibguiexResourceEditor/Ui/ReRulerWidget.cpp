@@ -34,10 +34,41 @@ ReRulerWidget::ReRulerWidget( QWidget* _parent /* = NULL */ )
 , m_maxUnit( 12 )
 , m_viewport( 0 )
 , m_cursor( 0 )
+, m_rulerHeight( 30 )
 , m_unitValue( 1.0f )
 , m_isShowCursorValue( true )
+, m_isHorizontal( true )
+, m_isMarkOnSideA( true )
 {
-	setMaximumHeight( 50 );
+	SetRulerHeight( m_rulerHeight );
+}
+
+
+void ReRulerWidget::SetHorizontal( bool _h )
+{
+	m_isHorizontal = _h;
+
+	if( IsHorizontal() )
+	{
+		setMaximumHeight( m_rulerHeight );
+		setMaximumWidth( 999999 );
+	}
+	else
+	{
+		setMaximumWidth( m_rulerHeight );
+		setMaximumHeight( 999999 );
+	}
+}
+
+
+void ReRulerWidget::SetRulerHeight( int _height )
+{
+	if( _height > 0 )
+	{
+		m_rulerHeight = _height;
+
+		IsHorizontal() ? setMaximumHeight( m_rulerHeight ) : setMaximumWidth( m_rulerHeight );
+	}	
 }
 
 
@@ -60,13 +91,14 @@ void ReRulerWidget::mousePressEvent( QMouseEvent* _event )
 		( Qt::LeftButton == _event->button() && Qt::ControlModifier & _event->modifiers() ) )
 	{
 		m_viewportDragInfo.SetCursorPosBackup( _event->pos() );
-		m_viewportDragInfo.SetItemPosBackup( QPoint( m_viewport, 0 ) );
+		m_viewportDragInfo.SetItemPosBackup( IsHorizontal() ? QPoint( m_viewport, 0 ) : QPoint( 0, m_viewport ) );
 		m_viewportDragInfo.StartMove();
 	}
 	else if( Qt::LeftButton == _event->button() )
 	{
-		OnCursorChanged( _event->pos().x() );
-		emit CursorChanged( _event->pos().x() );
+		int cursor = IsHorizontal() ? _event->pos().x() : _event->pos().y();
+		OnCursorChanged( cursor );
+		emit CursorChanged( cursor );
 
 		m_cursorDragInfo.SetCursorPosBackup( _event->pos() );
 		m_cursorDragInfo.StartMove();
@@ -85,11 +117,23 @@ void ReRulerWidget::mouseMoveEvent( QMouseEvent* _event )
 {
 	if( m_cursorDragInfo.IsMoving() )
 	{
-		int cursor = _event->pos().x();
-		if( cursor < 0 )
-			cursor = 0;
-		else if( cursor >= width() )
-			cursor = width() - 1;
+		int cursor = 0;
+		if( IsHorizontal() )
+		{
+			cursor = _event->pos().x();
+			if( cursor < 0 )
+				cursor = 0;
+			else if( cursor >= width() )
+				cursor = width() - 1;
+		}
+		else
+		{
+			cursor = _event->pos().y();
+			if( cursor < 0 )
+				cursor = 0;
+			else if( cursor >= height() )
+				cursor = height() - 1;
+		}
 
 		OnCursorChanged( cursor );
 		emit CursorChanged( cursor );
@@ -97,7 +141,9 @@ void ReRulerWidget::mouseMoveEvent( QMouseEvent* _event )
 	else if( m_viewportDragInfo.IsMoving() )
 	{
 		QPoint delta = _event->pos() - m_viewportDragInfo.GetCursorPosBackup();
-		int newViewportPos = m_viewportDragInfo.GetItemPosBackup().x() - delta.x();
+		int newViewportPos = IsHorizontal()
+			? m_viewportDragInfo.GetItemPosBackup().x() - delta.x()
+			: m_viewportDragInfo.GetItemPosBackup().y() - delta.y();
 
 		OnViewportChanged( newViewportPos );
 		emit ViewportChanged( newViewportPos );
@@ -139,18 +185,37 @@ void ReRulerWidget::DrawBackground( QPainter& _painter )
 
 void ReRulerWidget::DrawContent( QPainter& _painter )
 {
+	// For horizontal ruler:
 	// Draw the mark just left to or on the viewport position, even if
 	// it's hidden. This hidden mark would be clipped by Qt, but would 
 	// be visually correct if the mark is thicker than one pixel.
+	// For vertical ruler:
+	// The above applies.
 	QVector< QPoint > markerList;
 	int markIndex = m_viewport / m_unit;
 	int pos = -m_viewport % m_unit;
 
-	while( pos < width() )
+	int limit = IsHorizontal() ? width() : height();
+	while( pos < limit )
 	{
 		bool isShortMark = ( 0 == ( markIndex % gsDivisionBetweenLongMarks ) ? false : true );
-		markerList.push_back( QPoint( pos, 0 ) );
-		markerList.push_back( QPoint( pos, isShortMark ? gsShortMarkLength : gsLongMarkLength ) );
+
+		if( IsMarkOnSizeA() )
+		{
+			markerList.push_back( IsHorizontal() 
+				? QPoint( pos, m_rulerHeight )
+				: QPoint( m_rulerHeight, pos ) );
+			markerList.push_back( IsHorizontal()
+				? QPoint( pos, m_rulerHeight - ( isShortMark ? gsShortMarkLength : gsLongMarkLength ) )
+				: QPoint( m_rulerHeight - ( isShortMark ? gsShortMarkLength : gsLongMarkLength ), pos ) );
+		}
+		else
+		{
+			markerList.push_back( IsHorizontal() ? QPoint( pos, 0 ) : QPoint( 0, pos ) );
+			markerList.push_back( IsHorizontal()
+				? QPoint( pos, isShortMark ? gsShortMarkLength : gsLongMarkLength )
+				: QPoint( isShortMark ? gsShortMarkLength : gsLongMarkLength, pos ) );
+		}
 
 		// Advance to the next mark.
 		pos += m_unit;
@@ -165,20 +230,37 @@ void ReRulerWidget::DrawContent( QPainter& _painter )
 void ReRulerWidget::DrawForeground( QPainter& _painter )
 {
 	_painter.setPen( QColor( 0, 255, 255 ) );
-	_painter.drawLine( QPoint( m_cursor, 0 ), QPoint( m_cursor, height() ) );
+	IsHorizontal()
+		? _painter.drawLine( QPoint( m_cursor, 0 ), QPoint( m_cursor, height() ) )
+		: _painter.drawLine( QPoint( 0, m_cursor ), QPoint( width(), m_cursor ) );
 	QString valueText = QString().setNum( GetValueAt( m_cursor ) );
 
 	if( m_isShowCursorValue )
 	{
-		if( m_cursor <= ( width() / 2 ) )
+		QFontMetrics fm( _painter.font() );
+		_painter.save();
+		const int cursorMargin = 2;
+		const int edgeMargin = 2;
+
+		if( IsHorizontal() )
 		{
-			_painter.drawText( m_cursor + 2, height() - 2, valueText );
+			_painter.translate( m_cursor, IsMarkOnSizeA() ? fm.height() : height() - edgeMargin );
+			if( m_cursor <= ( width() / 2 ) )
+				_painter.drawText( cursorMargin, 0, valueText );
+			else
+				_painter.drawText( -fm.width( valueText ) - cursorMargin, 0, valueText );
 		}
 		else
 		{
-			QFontMetrics fm( _painter.font() );
-			_painter.drawText( m_cursor - 2 - fm.width( valueText ), height() - 2, valueText );
+			_painter.translate( IsMarkOnSizeA() ? fm.height() : width() - edgeMargin, m_cursor );
+			_painter.rotate( -90 );
+			if( m_cursor <= ( height() / 2 ) )
+				_painter.drawText( -fm.width( valueText ) - cursorMargin, 0, valueText );
+			else
+				_painter.drawText( cursorMargin, 0, valueText );
 		}
+
+		_painter.restore();
 	}
 }
 

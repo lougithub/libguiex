@@ -46,6 +46,8 @@ public:
 	// -------------------------------------------------------------------------
 protected:
 	virtual void			paintEvent( QPaintEvent* _event );
+	virtual void			mousePressEvent( QMouseEvent* _event );
+	virtual void			mouseReleaseEvent( QMouseEvent* _event );
 
 	// -------------------------------------------------------------------------
 	// Slots.

@@ -16,6 +16,9 @@ namespace RE
 {
 
 
+class ReRulerWidget;
+
+
 class ReAnimView : public ReBaseWidget< QWidget >
 {
 	// -------------------------------------------------------------------------
@@ -38,12 +41,19 @@ public:
 	virtual void		mousePressEvent( QMouseEvent* _event );
 	virtual void		mouseReleaseEvent( QMouseEvent* _event );
 	virtual void		mouseMoveEvent( QMouseEvent* _event );
+	virtual void		resizeEvent( QResizeEvent* _event );
 
 	// -------------------------------------------------------------------------
 	// Override ReBaseWidget.
 	// -------------------------------------------------------------------------
 public:
 	virtual void		Tick( qreal _delta );
+
+	// -------------------------------------------------------------------------
+	// Utilities.
+	// -------------------------------------------------------------------------
+protected:
+	void				InitRulers();
 
 	// -------------------------------------------------------------------------
 	// Variable
@@ -54,6 +64,9 @@ protected:
 	QMatrix				m_matrix;
 	ReDragInfo			m_dragInfo;
 	QPoint				m_origin;
+
+	ReRulerWidget*		m_horizontalRuler;
+	ReRulerWidget*		m_verticalRuler;
 };
 
 

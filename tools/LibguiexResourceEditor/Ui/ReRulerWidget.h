@@ -35,6 +35,12 @@ public:
 	int					GetUnit() const					{ return m_unit; }
 	qreal				GetUnitValue() const			{ return m_unitValue; }	
 	void				ShowCursorValue( bool _show )	{ m_isShowCursorValue = _show; }
+	bool				IsHorizontal() const			{ return m_isHorizontal; }
+	void				SetHorizontal( bool _h );
+	int					GetRulerHeight() const			{ return m_rulerHeight; }
+	void				SetRulerHeight( int _height );
+	bool				IsMarkOnSizeA() const			{ return m_isMarkOnSideA; }
+	void				SetMarkOnSizeA( bool _isOn )	{ m_isMarkOnSideA = _isOn; }
 
 	// ----------------------------------------------------------------------------
 	// Override QWidget.
@@ -77,6 +83,7 @@ protected:
 	int					m_maxUnit;
 	int					m_viewport;
 	int					m_cursor;
+	int					m_rulerHeight;
 
 	// Values that are measured in decimal.
 	qreal				m_unitValue;
@@ -85,6 +92,8 @@ protected:
 	ReDragInfo			m_cursorDragInfo;
 	ReDragInfo			m_viewportDragInfo;
 	bool				m_isShowCursorValue;
+	bool				m_isHorizontal;
+	bool				m_isMarkOnSideA;	// Size A is, for horizontal ruler the bottom side, for vertical ruler the right side.
 
 	static int			ms_invalidCursor;
 };

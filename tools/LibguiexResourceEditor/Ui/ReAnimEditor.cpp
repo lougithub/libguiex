@@ -124,8 +124,7 @@ void ReAnimEditor::Tick( qreal _delta )
 	QMatrix translation = m_trackPanelWidget->GetTranslationMatrix();
 	QMatrix rotation = m_trackPanelWidget->GetRotationMatrix();
 	QMatrix scale = m_trackPanelWidget->GetScaleMatrix();
-	QMatrix transform = scale * rotation * translation;
-	//QMatrix transform = translation * rotation * scale;
+	QMatrix transform = translation * scale * rotation;
 
 	m_animView->GetMatrixRef() = transform;
 

@@ -509,6 +509,7 @@ void ReTrackPanelWidget::InitRuler()
 	// Widgets.
 	m_rulerWidget = new ReRulerWidget( this );
 	m_rulerWidget->setVisible( true );
+	m_rulerWidget->SetMarkOnSizeA( false );
 
 	int rulerX = m_leftMargin + m_headWidth + m_horizontalGap;
 	int rulerY = m_topMargin;
