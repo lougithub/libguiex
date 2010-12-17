@@ -8,16 +8,19 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include "libguiex_editor.h"
+#include "wxwidgetpropertygridextend.h"
+#include "propertyconfigmgr.h"
+#include "editorutility.h"
 
+#include <wx/colordlg.h>
 
 //============================================================================//
 // function
 //============================================================================// 
-int GetTypeIndexInScreenValueEnum( guiex::EScreenValue eValue, const wxArrayString& arrEnums )
+int GetTypeIndexInScreenValueEnum( EScreenValue eValue, const wxArrayString& arrEnums )
 {
-	guiex::CGUIString strValue;
-	guiex::ValueToString( eValue, strValue );
+	CGUIString strValue;
+	ValueToString( eValue, strValue );
 	for( int i=0; i<int(arrEnums.size()); ++i )
 	{
 		if( arrEnums[i] == Gui2wxString( strValue ))
@@ -26,7 +29,7 @@ int GetTypeIndexInScreenValueEnum( guiex::EScreenValue eValue, const wxArrayStri
 		}
 	}
 
-	throw guiex::CGUIException("unknown EScreenValue : <%d>", eValue);
+	throw CGUIException("unknown EScreenValue : <%d>", eValue);
 	return 0;
 }
 
@@ -38,7 +41,6 @@ WX_PG_IMPLEMENT_PROPERTY_CLASS( WxGUISizeProperty,wxPGProperty,CGUISize,const CG
 WxGUISizeProperty::WxGUISizeProperty( const wxString& label, const wxString& name,const CGUISize& value)
 : wxPGProperty(label,name)
 {
-	//ChangeFlag(wxPG_PROP_READONLY, true);
 	SetValue( WXVARIANT(value) );
 	AddPrivateChild( new wxFloatProperty(wxT("width"), wxT("WIDTH"),value.m_fWidth) );
 	AddPrivateChild( new wxFloatProperty(wxT("height"), wxT("HEIGHT"),value.m_fHeight) );

@@ -24,16 +24,11 @@
 #include <wx/choicdlg.h>
 
 #include <libguiex_framework/guiframework.h>
-
-//============================================================================//
-// declare
-//============================================================================//
 using namespace guiex;
 
 //============================================================================//
 // class
 //============================================================================//
-
 
 //-----------------------------------------------------------------------------
 //	CGUIFrameworkViewer
@@ -80,7 +75,9 @@ public:
 		//file
 		ID_Exit = wxID_HIGHEST+1,
 		ID_About,
-		ID_Open,
+		ID_OpenPage,
+		ID_AddPage,
+		ID_ClosePage,
 
 		//view
 		ID_VIEW_800x600,
@@ -103,13 +100,18 @@ public:
 
 protected:
 	bool GetUIDataPath( CGUIString& rDataPath );
-	void TryOpenUIPage( bool bCheckCommandLine );
+	bool GetOpenPageInfo( CGUIString& rScene, std::vector<CGUIString>& rPages );
+	bool GetClosePageInfo( CGUIString& rScene, std::vector<CGUIString>& rPages );
+	void OpenPage( bool bCheckCommandLine );
+	void ReOpenPages( );
 
 protected:
 	//menu
 	void OnExit(wxCommandEvent& evt);
 	void OnAbout(wxCommandEvent& evt);
-	void OnOpen(wxCommandEvent& evt);
+	void OnOpenPage(wxCommandEvent& evt);
+	void OnClosePage(wxCommandEvent& evt);
+	void OnAddPage(wxCommandEvent& evt);
 	void OnFullscreen(wxCommandEvent& evt);
 	void OnToggleScissor(wxCommandEvent& evt);
 	void OnToggleExtraInfo(wxCommandEvent& evt);
@@ -134,7 +136,8 @@ public:
 	wxColor m_aBGColor;
 	wxTextCtrl* m_pOutput;
 
-	CGUIString m_strCurrentPlayingScene;
+	typedef std::map<CGUIString, std::vector<CGUIString> > TMapScene;
+	TMapScene m_mapScenes;
 
 	DECLARE_EVENT_TABLE()
 };

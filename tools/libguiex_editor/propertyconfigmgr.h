@@ -11,22 +11,23 @@
 //============================================================================//
 // include
 //============================================================================// 
+#include <wx/wxprec.h>
+#include <libguiex_core/guiex.h>
+#include <tinyxml.h>
 
 #include <map>
 #include <vector>
 #include <set>
 
+using namespace guiex;
+
 //============================================================================//
 // declare
 //============================================================================// 
-//class CProperty;
-class TiXmlElement;
-
-
 class CPropertyData
 {
 public:
-	static const CPropertyData* GetPropertyData( const guiex::CGUIProperty& rProperty );
+	static const CPropertyData* GetPropertyData( const CGUIProperty& rProperty );
 
 	CPropertyData()
 		:m_bMustExist(false)
@@ -94,7 +95,7 @@ protected:
 class CPropertyConfigMgr
 {
 public:
-	typedef std::map<std::string, guiex::CGUIProperty> TMapPropertySet;
+	typedef std::map<std::string, CGUIProperty> TMapPropertySet;
 
 public:
 	~CPropertyConfigMgr();
@@ -119,9 +120,9 @@ public:
 	* @brief get a property set
 	* @return NULL for failed to find this kind of property
 	*/
-	const guiex::CGUIProperty&	GetPropertySet(const std::string& rSetName ) const;
+	const CGUIProperty&	GetPropertySet(const std::string& rSetName ) const;
 	
-	const wxArrayString&	GetEnumDefine(const guiex::CGUIString& rEnumName ) const;
+	const wxArrayString& GetEnumDefine(const CGUIString& rEnumName ) const;
 
 	/** 
 	 * @brief get property set map
@@ -142,14 +143,14 @@ protected:
 	int		ProcessWidgetNode(TiXmlElement* pWidgetNode);
 	int		ProcessEnumNode(TiXmlElement* pWidgetNode);
 
-	int		ProcessPropertyNode(const std::string& rPage, guiex::CGUIProperty& rPropertySet, TiXmlElement* pNode);
+	int		ProcessPropertyNode(const std::string& rPage, CGUIProperty& rPropertySet, TiXmlElement* pNode);
 
 	/**
 	* @brief register a property set
 	*/
-	void	RegisterSet( const std::string& rSetName, const guiex::CGUIProperty& rProperty );
+	void	RegisterSet( const std::string& rSetName, const CGUIProperty& rProperty );
 
-	void	RegisterEnumDefine( const guiex::CGUIString& rEnumName, const wxArrayString& rEnumValue );
+	void	RegisterEnumDefine( const CGUIString& rEnumName, const wxArrayString& rEnumValue );
 
 protected:
 	CPropertyConfigMgr();
@@ -163,9 +164,8 @@ protected:
 
 	std::vector<CPropertyData*>	m_arrayPropertyDataCache;
 
-	typedef	std::map<guiex::CGUIString, wxArrayString>		TEnumMap;
+	typedef	std::map<CGUIString, wxArrayString>		TEnumMap;
 	TEnumMap m_mapEnums;
 };
-
 
 #endif //__KEN_PROPERTYCONFIGMANAGER_20070919_H__

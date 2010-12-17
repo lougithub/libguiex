@@ -18,6 +18,7 @@
 #include <libguiex_core/guimousecursor.h>
 #include <libguiex_core/guistringconvertor.h>
 #include <libguiex_core/guipropertymanager.h>
+#include <libguiex_core/guiwidgetmanager.h>
 
 #include <numeric>
 
@@ -49,7 +50,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtEditBox::InitEditbox()
 	{
-		m_pEdit = new CGUIWgtEdit(GetName()+"__EDIT__auto__", GetSceneName());
+		m_pEdit = new CGUIWgtEdit(GetName()+"__EDIT"+ GUI_INTERNAL_WIDGET_FLAG, GetSceneName());
 		m_pEdit->SetParent(this);
 
 		SetFocusable(true);

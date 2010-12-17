@@ -8,20 +8,19 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include "libguiex_editor.h"
-
+#include "wxsavefiledlg.h"
 
 //============================================================================//
 // function
 //============================================================================// 
 //------------------------------------------------------------------------------
-BEGIN_EVENT_TABLE( WxDialogClose, wxDialog )
-EVT_BUTTON( ID_DC_BTN_OK, WxDialogClose::OnOK )
-EVT_BUTTON( ID_DC_BTN_NO, WxDialogClose::OnNO )
-EVT_BUTTON( ID_DC_BTN_CANCEL, WxDialogClose::OnCANCEL )
+BEGIN_EVENT_TABLE( WxSaveFileDialog, wxDialog )
+EVT_BUTTON( ID_DC_BTN_OK, WxSaveFileDialog::OnOK )
+EVT_BUTTON( ID_DC_BTN_NO, WxSaveFileDialog::OnNO )
+EVT_BUTTON( ID_DC_BTN_CANCEL, WxSaveFileDialog::OnCANCEL )
 END_EVENT_TABLE()
 //------------------------------------------------------------------------------
-WxDialogClose::WxDialogClose(wxWindow* parent, const wxArrayString& rFileArray)
+WxSaveFileDialog::WxSaveFileDialog(wxWindow* parent, const wxArrayString& rFileArray)
 :wxDialog(parent, wxID_ANY, _T("libguiex editor"), wxDefaultPosition,wxSize(463,265),
 		  wxDEFAULT_DIALOG_STYLE/*wxNO_3D*/)
 {
@@ -35,19 +34,19 @@ WxDialogClose::WxDialogClose(wxWindow* parent, const wxArrayString& rFileArray)
 	wxButton *pBtnCancel = new wxButton( this, ID_DC_BTN_CANCEL, wxT("CANCEL"), wxPoint(343, 197),wxSize(95,18));
 }
 //------------------------------------------------------------------------------
-void	WxDialogClose::OnOK(wxCommandEvent& WXUNUSED(event))
+void	WxSaveFileDialog::OnOK(wxCommandEvent& WXUNUSED(event))
 {
 	SetReturnCode(wxID_OK);
 	EndModal(wxID_OK);
 } 
 //------------------------------------------------------------------------------
-void	WxDialogClose::OnCANCEL(wxCommandEvent& WXUNUSED(event))
+void	WxSaveFileDialog::OnCANCEL(wxCommandEvent& WXUNUSED(event))
 {
 	SetReturnCode(wxID_CANCEL);
 	EndModal(wxID_CANCEL);
 }
 //------------------------------------------------------------------------------
-void	WxDialogClose::OnNO(wxCommandEvent& WXUNUSED(event))
+void	WxSaveFileDialog::OnNO(wxCommandEvent& WXUNUSED(event))
 {
 	SetReturnCode(wxID_NO);
 	EndModal(wxID_NO);

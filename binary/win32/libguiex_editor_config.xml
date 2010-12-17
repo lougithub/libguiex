@@ -1,181 +1,181 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <config>
-    <enum>
-        <property name="EScreenValue" type="enum" value="eScreenValue_Pixel;eScreenValue_Percentage;"/>
-        <property name="ETextAlignmentHorz" type="enum" value="eTextAlignment_Horz_Center;eTextAlignment_Horz_Left;eTextAlignment_Horz_Right;"/>
-        <property name="ETextAlignmentVert" type="enum" value="eTextAlignment_Vert_Center;eTextAlignment_Vert_Up;eTextAlignment_Vert_Down;"/>
-    </enum>
+	<enum>
+		<property name="EScreenValue" type="enum" value="eScreenValue_Pixel;eScreenValue_Percentage;"/>
+		<property name="ETextAlignmentHorz" type="enum" value="eTextAlignment_Horz_Center;eTextAlignment_Horz_Left;eTextAlignment_Horz_Right;"/>
+		<property name="ETextAlignmentVert" type="enum" value="eTextAlignment_Vert_Center;eTextAlignment_Vert_Up;eTextAlignment_Vert_Down;"/>
+	</enum>
 
-    <widget type="CGUIWidget">
-        <page name="Appearance">
-            <property name="parent" type="CGUIString" value="" readonly="true">
-            <property name="position" type="CGUIWidgetPosition" category="Default">
-                <property name="type" type="EScreenValue" value="eScreenValue_Pixel"/>
-                <property name="value" type="CGUIVector2" value="0,0" />
-            </property>
+	<widget type="CGUIWidget">
+		<page name="Appearance">
+			<property name="parent" type="CGUIString" value="" readonly="true"/>
+			<property name="position" type="CGUIWidgetPosition" category="Default">
+				<property name="type" type="EScreenValue" value="eScreenValue_Pixel"/>
+				<property name="value" type="CGUIVector2" value="0,0" />
+			</property>
 
-            <property name="size" type="CGUIWidgetSize" category="Default">
-                <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-                <property name="value" type="CGUISize" value="0,0" />
-            </property>
+			<property name="size" type="CGUIWidgetSize" category="Default">
+				<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+				<property name="value" type="CGUISize" value="0,0" />
+			</property>
 
-            <property name="max_size" type="CGUISize" value="0,0" />
-            <property name="min_size" type="CGUISize" value="0,0" />
+			<property name="max_size" type="CGUISize" value="0,0" />
+			<property name="min_size" type="CGUISize" value="0,0" />
 
-            <property name="anchor" type="CGUIVector2" value="0.0,0.0"  category="Default"/>
+			<property name="anchor" type="CGUIVector2" value="0.0,0.0"  category="Default"/>
 
-            <property name="scale" type="CGUISize" value="1.0,1.0"  category="Default"/>
-            <property name="alpha" type="real" value="1.0"  category="Default"/>
-            <property name="rotation" type="CGUIVector3" value="0.0,0.0,0.0"  category="Default"/>
-            <property name="movable" type="bool" value="false"  category="Default"/>
-            <property name="visible" type="bool" value="true"  category="Default"/>
-            <property name="activable" type="bool" value="false"  category="Default"/>
-            <property name="hitable" type="bool" value="true"  category="Default"/>
-            <property name="disable" type="bool" value="false"  category="Default"/>
-            <property name="auto_play_as" type="bool" value="false"  category="Default"/>
-            <property name="clip_children" type="bool" value="false"  category="Default"/>
-            <property name="open_with_parent" type="bool" value="true"  category="Default"/>
-            <property name="response_update_event" type="bool" value="false"  category="Default"/>
-            <property name="response_parentsizechange_event" type="bool" value="false"  category="Default"/>
-            <property name="textinfo" type="CGUIStringInfo" value="" category="TextInfo">
-                <property name="size" type="uint16" value="16"/>
-                <property name="index" type="int16" value="0"/>
-                <property name="color" type="CGUIColor" value="255,255,255,255"/>
-            </property>
-            <property name="text" type="CGUIString" value="" category="TextInfo"/>
-            <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center"  category="TextInfo"/>
-            <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" category="TextInfo"/>
+			<property name="scale" type="CGUISize" value="1.0,1.0"  category="Default"/>
+			<property name="alpha" type="real" value="1.0"  category="Default"/>
+			<property name="rotation" type="CGUIVector3" value="0.0,0.0,0.0"  category="Default"/>
+			<property name="movable" type="bool" value="false"  category="Default"/>
+			<property name="visible" type="bool" value="true"  category="Default"/>
+			<property name="activable" type="bool" value="false"  category="Default"/>
+			<property name="hitable" type="bool" value="true"  category="Default"/>
+			<property name="disable" type="bool" value="false"  category="Default"/>
+			<property name="auto_play_as" type="bool" value="false"  category="Default"/>
+			<property name="clip_children" type="bool" value="false"  category="Default"/>
+			<property name="open_with_parent" type="bool" value="true"  category="Default"/>
+			<property name="response_update_event" type="bool" value="false"  category="Default"/>
+			<property name="response_parentsizechange_event" type="bool" value="false"  category="Default"/>
+			<property name="textinfo" type="CGUIStringInfo" value="" category="TextInfo">
+				<property name="size" type="uint16" value="16"/>
+				<property name="index" type="int16" value="0"/>
+				<property name="color" type="CGUIColor" value="255,255,255,255"/>
+			</property>
+			<property name="text" type="CGUIString" value="" category="TextInfo"/>
+			<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center"  category="TextInfo"/>
+			<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" category="TextInfo"/>
 
-            <property name="default_as" type="CGUIAs" value=""/>
-        </page>
+			<property name="default_as" type="CGUIAs" value=""/>
+		</page>
 
-        <page name="CallbackEvent">      
-            <property name="OnLoad" type="CGUIEvent" value=""/>
-            <property name="OnOpen" type="CGUIEvent" value=""/>
-            <property name="OnClose" type="CGUIEvent" value=""/>
-            <property name="OnUpdate" type="CGUIEvent" value=""/>
+		<page name="Event">      
+			<property name="OnLoad" type="CGUIEvent" value=""/>
+			<property name="OnOpen" type="CGUIEvent" value=""/>
+			<property name="OnClose" type="CGUIEvent" value=""/>
+			<property name="OnUpdate" type="CGUIEvent" value=""/>
 
-            <property name="OnParentSizeChange" type="CGUIEvent" value=""/>
-            <property name="OnAlphaChangeBefore" type="CGUIEvent" value=""/>
-            <property name="OnAlphaChangeAfter" type="CGUIEvent" value=""/>
-            <property name="OnSizeChangeBefore" type="CGUIEvent" value=""/>
-            <property name="OnSizeChangeAfter" type="CGUIEvent" value=""/>
+			<property name="OnParentSizeChange" type="CGUIEvent" value=""/>
+			<property name="OnAlphaChangeBefore" type="CGUIEvent" value=""/>
+			<property name="OnAlphaChangeAfter" type="CGUIEvent" value=""/>
+			<property name="OnSizeChangeBefore" type="CGUIEvent" value=""/>
+			<property name="OnSizeChangeAfter" type="CGUIEvent" value=""/>
 
-            <property name="OnActive" type="CGUIEvent" value=""/>
-            <property name="OnInactive" type="CGUIEvent" value=""/>
-            <property name="OnGetFocus" type="CGUIEvent" value=""/>
-            <property name="OnLostFocus" type="CGUIEvent" value=""/>
-            <property name="OnVisible" type="CGUIEvent" value=""/>
-            <property name="OnInvisible" type="CGUIEvent" value=""/>
-            <property name="OnScaleChange" type="CGUIEvent" value=""/>
-            <property name="OnEnable" type="CGUIEvent" value=""/>
-            <property name="OnDisable" type="CGUIEvent" value=""/>
-            <property name="OnKeyClicked" type="CGUIEvent" value=""/>
-            <property name="OnUIEvent" type="CGUIEvent" value=""/>
-            <property name="OnAddChild" type="CGUIEvent" value=""/>
-            <property name="OnRemoveChild" type="CGUIEvent" value=""/>
-            <property name="OnChangeParent" type="CGUIEvent" value=""/>
+			<property name="OnActive" type="CGUIEvent" value=""/>
+			<property name="OnInactive" type="CGUIEvent" value=""/>
+			<property name="OnGetFocus" type="CGUIEvent" value=""/>
+			<property name="OnLostFocus" type="CGUIEvent" value=""/>
+			<property name="OnVisible" type="CGUIEvent" value=""/>
+			<property name="OnInvisible" type="CGUIEvent" value=""/>
+			<property name="OnScaleChange" type="CGUIEvent" value=""/>
+			<property name="OnEnable" type="CGUIEvent" value=""/>
+			<property name="OnDisable" type="CGUIEvent" value=""/>
+			<property name="OnKeyClicked" type="CGUIEvent" value=""/>
+			<property name="OnUIEvent" type="CGUIEvent" value=""/>
+			<property name="OnAddChild" type="CGUIEvent" value=""/>
+			<property name="OnRemoveChild" type="CGUIEvent" value=""/>
+			<property name="OnChangeParent" type="CGUIEvent" value=""/>
 
-            <property name="OnScrollbarScroll" type="CGUIEvent" value=""/>    
+			<property name="OnScrollbarScroll" type="CGUIEvent" value=""/>    
 
-            <property name="OnMouseEnter" type="CGUIEvent" value="" category="Mouse"/>
-            <property name="OnMouseLeave" type="CGUIEvent" value="" category="Mouse"/>
-            <property name="OnMouseMove" type="CGUIEvent" value="" category="Mouse"/>
-            <property name="OnMouseLeftDown" type="CGUIEvent" value="" category="Mouse"/>
-            <property name="OnMouseLeftUp" type="CGUIEvent" value="" category="Mouse"/>
-            <property name="OnMouseLeftClick" type="CGUIEvent" value="" category="Mouse"/>
-            <property name="OnMouseLeftDbClick" type="CGUIEvent" value="" category="Mouse"/>
-            <property name="OnMouseLeftMultiClick" type="CGUIEvent" value="" category="Mouse"/>
-            <property name="OnMouseRightDown" type="CGUIEvent" value="" category="Mouse"/>
-            <property name="OnMouseRightUp" type="CGUIEvent" value="" category="Mouse"/>
-            <property name="OnMouseRightClick" type="CGUIEvent" value="" category="Mouse"/>
-            <property name="OnMouseRightDbClick" type="CGUIEvent" value="" category="Mouse"/>
-            <property name="OnMouseRightMultiClick" type="CGUIEvent" value="" category="Mouse"/>
-            <property name="OnMouseMiddleDown" type="CGUIEvent" value="" category="Mouse"/>
-            <property name="OnMouseMiddleUp" type="CGUIEvent" value="" category="Mouse"/>
-            <property name="OnMouseMiddleClick" type="CGUIEvent" value="" category="Mouse"/>
-            <property name="OnMouseMiddleDbClick" type="CGUIEvent" value="" category="Mouse"/>
-            <property name="OnMouseMiddleMultiClick" type="CGUIEvent" value="" category="Mouse"/>
-            <property name="OnMouseWheel" type="CGUIEvent" value="" category="Mouse"/>
-            <property name="OnDragBegin" type="CGUIEvent" value="" category="Mouse"/>
-            <property name="OnDragProcess" type="CGUIEvent" value="" category="Mouse"/>
-            <property name="OnDragEnd" type="CGUIEvent" value="" category="Mouse"/>   
+			<property name="OnMouseEnter" type="CGUIEvent" value="" category="Mouse"/>
+			<property name="OnMouseLeave" type="CGUIEvent" value="" category="Mouse"/>
+			<property name="OnMouseMove" type="CGUIEvent" value="" category="Mouse"/>
+			<property name="OnMouseLeftDown" type="CGUIEvent" value="" category="Mouse"/>
+			<property name="OnMouseLeftUp" type="CGUIEvent" value="" category="Mouse"/>
+			<property name="OnMouseLeftClick" type="CGUIEvent" value="" category="Mouse"/>
+			<property name="OnMouseLeftDbClick" type="CGUIEvent" value="" category="Mouse"/>
+			<property name="OnMouseLeftMultiClick" type="CGUIEvent" value="" category="Mouse"/>
+			<property name="OnMouseRightDown" type="CGUIEvent" value="" category="Mouse"/>
+			<property name="OnMouseRightUp" type="CGUIEvent" value="" category="Mouse"/>
+			<property name="OnMouseRightClick" type="CGUIEvent" value="" category="Mouse"/>
+			<property name="OnMouseRightDbClick" type="CGUIEvent" value="" category="Mouse"/>
+			<property name="OnMouseRightMultiClick" type="CGUIEvent" value="" category="Mouse"/>
+			<property name="OnMouseMiddleDown" type="CGUIEvent" value="" category="Mouse"/>
+			<property name="OnMouseMiddleUp" type="CGUIEvent" value="" category="Mouse"/>
+			<property name="OnMouseMiddleClick" type="CGUIEvent" value="" category="Mouse"/>
+			<property name="OnMouseMiddleDbClick" type="CGUIEvent" value="" category="Mouse"/>
+			<property name="OnMouseMiddleMultiClick" type="CGUIEvent" value="" category="Mouse"/>
+			<property name="OnMouseWheel" type="CGUIEvent" value="" category="Mouse"/>
+			<property name="OnDragBegin" type="CGUIEvent" value="" category="Mouse"/>
+			<property name="OnDragProcess" type="CGUIEvent" value="" category="Mouse"/>
+			<property name="OnDragEnd" type="CGUIEvent" value="" category="Mouse"/>   
 
-            <property name="OnChecked" type="CGUIEvent" value="" category="Check"/>
-            <property name="OnUnchecked" type="CGUIEvent" value="" category="Check"/>
+			<property name="OnChecked" type="CGUIEvent" value="" category="Check"/>
+			<property name="OnUnchecked" type="CGUIEvent" value="" category="Check"/>
 
-            <property name="OnKeyDown" type="CGUIEvent" value="" category="Keyboard"/>
-            <property name="OnKeyUp" type="CGUIEvent" value="" category="Keyboard"/>
-            <property name="OnKeyPressed" type="CGUIEvent" value="" category="Keyboard"/>
+			<property name="OnKeyDown" type="CGUIEvent" value="" category="Keyboard"/>
+			<property name="OnKeyUp" type="CGUIEvent" value="" category="Keyboard"/>
+			<property name="OnKeyPressed" type="CGUIEvent" value="" category="Keyboard"/>
 
-        </page>
-    </widget>
+		</page>
+	</widget>
 
 
-    <widget type="CGUIWgtButton" inherit="CGUIWidget">
-        <page name="Appearance">
-            <property name="text_hover"	type="CGUIString" value=""  category="Button"/>
-            <property name="textinfo_hover" type="CGUIStringInfo"  category="Button">
-                <property name="size" type="uint16" value="16"/>
-                <property name="index" type="int16" value="0"/>
-                <property name="color" type="CGUIColor" value="255,255,255,255"/>
-            </property>
-            <property name="text_push" type="CGUIString" value=""  category="Button"/>
-            <property name="textinfo_push" type="CGUIStringInfo"  category="Button">
-                <property name="size" type="uint16" value="16"/>
-                <property name="index" type="int16" value="0"/>
-                <property name="color" type="CGUIColor" value="255,255,255,255"/>
-            </property>
-            <property name="text_disable" type="CGUIString" value=""  category="Button"/>
-            <property name="textinfo_disable" type="CGUIStringInfo"  category="Button">
-                <property name="size" type="uint16" value="16"/>
-                <property name="index" type="int16" value="0"/>
-                <property name="color" type="CGUIColor" value="255,255,255,255"/>
-            </property>
-            <property name="text_offset" type="CGUIVector2" value="0,0"  category="Button"/>
-        </page>
-        <page name="Image">
-            <property name="BTN_NORMAL" type="CGUIImage" value="button_red_normal" must_exist="true"/>
-            <property name="BTN_HOVER" type="CGUIImage" value="button_red_hover"/>
-            <property name="BTN_PUSH" type="CGUIImage" value="button_red_push"/>
-            <property name="BTN_DISABLE" type="CGUIImage" value="button_red_disable"/>
-            <property name="BTN_HOVER_OVERLAY" type="CGUIImage" value=""/>
-            <property name="BTN_PUSH_OVERLAY" type="CGUIImage" value=""/>
-        </page>
-    </widget>
+	<widget type="CGUIWgtButton" inherit="CGUIWidget">
+		<page name="Appearance">
+			<property name="text_hover"	type="CGUIString" value=""  category="Button"/>
+			<property name="textinfo_hover" type="CGUIStringInfo"  category="Button">
+				<property name="size" type="uint16" value="16"/>
+				<property name="index" type="int16" value="0"/>
+				<property name="color" type="CGUIColor" value="255,255,255,255"/>
+			</property>
+			<property name="text_push" type="CGUIString" value=""  category="Button"/>
+			<property name="textinfo_push" type="CGUIStringInfo"  category="Button">
+				<property name="size" type="uint16" value="16"/>
+				<property name="index" type="int16" value="0"/>
+				<property name="color" type="CGUIColor" value="255,255,255,255"/>
+			</property>
+			<property name="text_disable" type="CGUIString" value=""  category="Button"/>
+			<property name="textinfo_disable" type="CGUIStringInfo"  category="Button">
+				<property name="size" type="uint16" value="16"/>
+				<property name="index" type="int16" value="0"/>
+				<property name="color" type="CGUIColor" value="255,255,255,255"/>
+			</property>
+			<property name="text_offset" type="CGUIVector2" value="0,0"  category="Button"/>
+		</page>
+		<page name="Image">
+			<property name="BTN_NORMAL" type="CGUIImage" value="button_red_normal" must_exist="true"/>
+			<property name="BTN_HOVER" type="CGUIImage" value="button_red_hover"/>
+			<property name="BTN_PUSH" type="CGUIImage" value="button_red_push"/>
+			<property name="BTN_DISABLE" type="CGUIImage" value="button_red_disable"/>
+			<property name="BTN_HOVER_OVERLAY" type="CGUIImage" value=""/>
+			<property name="BTN_PUSH_OVERLAY" type="CGUIImage" value=""/>
+		</page>
+	</widget>
 
-    <widget type="CGUIWgtStaticText" inherit="CGUIWidget">
-        <page name="Appearance">
-            <property name="multiline" type="bool" value="false" category="StaticText"/>
-        </page>
-    </widget>
+	<widget type="CGUIWgtStaticText" inherit="CGUIWidget">
+		<page name="Appearance">
+			<property name="multiline" type="bool" value="false" category="StaticText"/>
+		</page>
+		</widget>
 
-    <widget type="CGUIWgtStaticImage" inherit="CGUIWidget">
-        <page name="Appearance">
-        </page>
-        <page name="Image">
-            <property name="BGIMAGE" type="CGUIImage" value="" must_exist="true"/>
-        </page>
-    </widget>
+		<widget type="CGUIWgtStaticImage" inherit="CGUIWidget">
+			<page name="Appearance">
+			</page>
+			<page name="Image">
+				<property name="BGIMAGE" type="CGUIImage" value="" must_exist="true"/>
+			</page>
+		</widget>
 
-    <widget type="CGUIWgtPanel" inherit="CGUIWidget">
-        <page name="Appearance">
-        </page>
-        <page name="Image">
-            <property name="BGIMAGE" type="CGUIImage" value="color_translucent" must_exist="true"/>
-            <property name="PANEL_BORDER_TOP" type="CGUIImage" value="panel_border_top"/>
-            <property name="PANEL_BORDER_BOTTOM" type="CGUIImage" value="panel_border_bottom"/>
-            <property name="PANEL_BORDER_LEFT" type="CGUIImage" value="panel_border_left"/>
-            <property name="PANEL_BORDER_RIGHT" type="CGUIImage" value="panel_border_right"/>
-            <property name="PANEL_BORDER_TOPLEFT" type="CGUIImage" value="panel_border_topleft"/>
-            <property name="PANEL_BORDER_TOPRIGHT" type="CGUIImage" value="panel_border_topright"/>
-            <property name="PANEL_BORDER_BOTTOMLEFT" type="CGUIImage" value="panel_border_bottomleft"/>
-            <property name="PANEL_BORDER_BOTTOMRIGHT" type="CGUIImage" value="panel_border_bottomright"/>
-        </page>
-    </widget>
+		<widget type="CGUIWgtPanel" inherit="CGUIWidget">
+			<page name="Appearance">
+			</page>
+			<page name="Image">
+				<property name="BGIMAGE" type="CGUIImage" value="color_translucent" must_exist="true"/>
+				<property name="PANEL_BORDER_TOP" type="CGUIImage" value="panel_border_top"/>
+				<property name="PANEL_BORDER_BOTTOM" type="CGUIImage" value="panel_border_bottom"/>
+				<property name="PANEL_BORDER_LEFT" type="CGUIImage" value="panel_border_left"/>
+				<property name="PANEL_BORDER_RIGHT" type="CGUIImage" value="panel_border_right"/>
+				<property name="PANEL_BORDER_TOPLEFT" type="CGUIImage" value="panel_border_topleft"/>
+				<property name="PANEL_BORDER_TOPRIGHT" type="CGUIImage" value="panel_border_topright"/>
+				<property name="PANEL_BORDER_BOTTOMLEFT" type="CGUIImage" value="panel_border_bottomleft"/>
+				<property name="PANEL_BORDER_BOTTOMRIGHT" type="CGUIImage" value="panel_border_bottomright"/>
+			</page>
+		</widget>
 
-</config>
+	</config>
 
 
 

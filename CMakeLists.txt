@@ -28,9 +28,6 @@ configure_file (
     "${PROJECT_SOURCE_DIR}/${PROJECT_NAME}Config.h.in"
     "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.h"
     )
-# add the binary tree to the search path for include files
-include_directories( "${PROJECT_BINARY_DIR}" )
-include_directories( "${PROJECT_SOURCE_DIR}" )
 
 
 if( APPLE )
@@ -96,6 +93,9 @@ set( CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/lib" )
 #print logging
 macro_variable_logging( )
 
+# add the binary tree to the search path for include files
+include_directories( "${PROJECT_BINARY_DIR}" )
+include_directories( "${PROJECT_SOURCE_DIR}" )
 
 #library
 add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_core projects/libguiex_core )

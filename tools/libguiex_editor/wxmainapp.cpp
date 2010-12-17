@@ -1,4 +1,3 @@
-
 /** 
 * @file mainapp.cpp
 * @brief entry of the application
@@ -9,8 +8,9 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include "libguiex_editor.h"
-
+#include "wxmainapp.h"
+#include "wxmainframe.h"
+#include "propertyconfigmgr.h"
 
 
 //============================================================================//
@@ -58,7 +58,6 @@ bool WxMainApp::OnInit()
 		wxMessageBox(_T("failed to read property config file!"), _T("error"));
 		return false;
 	}
-
 
 	wxToolTip::Enable(true);
 	wxToolTip::SetDelay(1000);

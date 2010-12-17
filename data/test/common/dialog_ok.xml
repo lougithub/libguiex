@@ -59,7 +59,7 @@
         <property name="response_update_event" type="bool" value="false" />
         <property name="textinfo" type="CGUIStringInfo">
             <property name="size" type="uint16" value="20" />
-            <property name="index" type="int16" value="0" />
+            <property name="index" type="int16" value="2" />
             <property name="color" type="CGUIColor" value="216,200,40,255" />
         </property>
         <property name="text" type="CGUIString" value="dialog" />

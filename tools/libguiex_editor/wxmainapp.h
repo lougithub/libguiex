@@ -8,10 +8,10 @@
 #ifndef __KEN_MAINAPP_20070910_H__
 #define __KEN_MAINAPP_20070910_H__
 
-
 //============================================================================//
 // include
 //============================================================================// 
+#include <wx/wxprec.h>
 
 
 //============================================================================//
@@ -27,9 +27,8 @@ class WxMainApp : public wxApp
 public:
 	WxMainApp();
 
-	virtual		bool OnInit();
-
-	virtual		int OnExit();
+	virtual bool OnInit();
+	virtual int OnExit();
 
 	const std::string& GetBaseDir( ) const;
 
@@ -42,7 +41,4 @@ DECLARE_APP(WxMainApp)
 
 extern WxMainFrame* GetMainFrame();
 
-
-
 #endif //__KEN_MAINAPP_20070910_H__
-

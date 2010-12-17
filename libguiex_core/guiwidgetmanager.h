@@ -25,6 +25,8 @@
 #define GUI_CREATE_WIDGET(type, widgetname, scenename)		\
 	::guiex::CGUIWidgetManager::Instance()->CreateWidget(type,widgetname, scenename)
 
+#define GUI_INTERNAL_WIDGET_FLAG	"__internal__"
+
 //============================================================================//
 // class
 //============================================================================// 
@@ -69,6 +71,8 @@ namespace guiex
 		void AddDynamicPage(  CGUIWidget* pPage );
 		bool HasDynamicPage( CGUIWidget* pPage ) const;
 		void DestroyDynamicPage( CGUIWidget* pPage);
+
+		static bool IsInternalWidget( const CGUIString& rWidgetName );
 
 	protected:
 		void ReleasePageImp( CGUIWidget* pPage );

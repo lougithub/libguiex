@@ -12,12 +12,22 @@
 //============================================================================//
 // include
 //============================================================================// 
+#include "wxtexteditor.h"
+
+#include <wx/wxprec.h>
+#include <wx/aui/aui.h>
+#include <wx/treebase.h>
+#include <wx/propgrid/propgrid.h>
+#include <wx/propgrid/advprops.h>
+#include <wx/propgrid/manager.h>
+#include <libguiex_core/guiex.h>
 
 #include <map>
 
 //============================================================================//
 // declare
 //============================================================================// 
+using namespace guiex;
 class WxEditorCanvasContainer;
 class wxTreeCtrl;
 class wxPropertyGridEvent;

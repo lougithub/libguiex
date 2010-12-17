@@ -5,8 +5,6 @@ if( WIN32 )
    
     #widget source
     set( ${target_name}_widget_SRCS
-		wxeditorcanvas.cpp
-		wxeditorcanvas.h
 		wxmainapp.cpp
 		wxmainapp.h
 		wxmainframe.cpp
@@ -21,6 +19,10 @@ if( WIN32 )
 		wxwidgetpropertygridextend.h	
 		wxwizardcreatewidget.cpp
 		wxwizardcreatewidget.h        
+		wxeditorcanvas.cpp
+		wxeditorcanvas.h		
+		wxeditorcanvascontainer.cpp
+		wxeditorcanvascontainer.h			
         )
     source_group( widget FILES ${${target_name}_widget_SRCS} )
     
@@ -39,14 +41,13 @@ if( WIN32 )
 		command.h
 		commandmanager.cpp
 		commandmanager.h
-		libguiex_editor.cpp
-		libguiex_editor.h
-		resource.h
 		savefilebase.h
 		toolcache.cpp
 		toolcache.h
 		windowbox.cpp
 		windowbox.h
+		editorutility.cpp
+		editorutility.h
         )
     source_group( utility FILES ${${target_name}_utility_SRCS} )    
 

@@ -41,8 +41,8 @@
         <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
     </property>
     <property name="label_fps" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
-      <property name="parent" type="CGUIString" value="panel_fps" />
-      <property name="position" type="CGUIWidgetPosition">
+        <property name="parent" type="CGUIString" value="panel_fps" />
+        <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="0,0" />
             <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
         </property>
@@ -69,7 +69,7 @@
         <property name="textinfo" type="CGUIStringInfo">
             <property name="size" type="uint16" value="14" />
             <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
+            <property name="color" type="CGUIColor" value="255,255,0,255" />
         </property>
         <property name="text" type="CGUIString" value="FPS" />
         <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />

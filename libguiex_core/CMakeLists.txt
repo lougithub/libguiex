@@ -27,6 +27,7 @@ set( ${target_name}_base_SRCS
 	guitimer.h
 	guiex.h
 	guigarbagecollector.h
+	sigslot.h
 	)
 source_group( base FILES ${${target_name}_base_SRCS} )
 

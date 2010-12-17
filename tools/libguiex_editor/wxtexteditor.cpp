@@ -8,27 +8,21 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include "libguiex_editor.h"
-
+#include "wxtexteditor.h"
+#include "editorutility.h"
 
 #include <richedit.h>
-
 
 //============================================================================//
 // declare
 //============================================================================// 
 static const int MARGIN_SCRIPT_FOLD_INDEX = 1;
 
-
-
-
-
 //============================================================================//
 // function
 //============================================================================// 
 //------------------------------------------------------------------------------
 IMPLEMENT_ABSTRACT_CLASS(WxTextEditor, wxPanel)
-
 BEGIN_EVENT_TABLE(WxTextEditor, wxPanel)
 EVT_SIZE(WxTextEditor::OnSize)
 END_EVENT_TABLE()
@@ -112,7 +106,6 @@ int	WxTextEditor::OpenFile()
 	SendEditor(SCI_CANCEL);
 	SendEditor(SCI_SETUNDOCOLLECTION, 0);
 
-
 	if( m_strFilename.empty() == false)
 	{
 		FILE *fp = fopen(m_strFilename.c_str(), "rb");
@@ -130,7 +123,7 @@ int	WxTextEditor::OpenFile()
 		else 
 		{
 			std::string rErr = std::string("failed to open file: ") + m_strFilename;
-			wxMessageBox(Gui2wxString(rErr), wxT("error"), wxOK|wxCENTER|wxICON_ERROR);
+			wxMessageBox(Gui2wxString(rErr), wxT("error") );
 			return -1;
 		}
 	}
@@ -169,7 +162,7 @@ int WxTextEditor::SaveFileAs(const std::string& rNewFileName)
 	} 
 	else 
 	{
-		wxMessageBox(wxT("failed to save file!"),wxT("error"), wxOK|wxCENTER|wxICON_ERROR);
+		wxMessageBox(wxT("failed to save file!"),wxT("error") );
 		return -1;
 	}
 

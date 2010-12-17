@@ -88,6 +88,8 @@ namespace guiex
 	*/
 	CGUIWidget::~CGUIWidget( )
 	{
+		OnWidgetDestroyed( this );
+
 		DestroyAllResource();
 
 		//delete child
@@ -242,6 +244,11 @@ namespace guiex
 	void* CGUIWidget::GetUserData() const
 	{
 		return m_pUserData;
+	}
+	//------------------------------------------------------------------------------
+	sigslot::signal1<CGUIWidget*>& CGUIWidget::GetOnWidgetDestroyedSignal()
+	{
+		return OnWidgetDestroyed;
 	}
 	//------------------------------------------------------------------------------
 	const CGUIStringEx&	CGUIWidget::GetTooltipText(void) const
@@ -1783,6 +1790,18 @@ namespace guiex
 		else if( rProperty.GetType() == ePropertyType_TextAlignmentVert && rProperty.GetName() == "text_alignment_vert" )
 		{
 			ValueToProperty( ETextAlignmentVert(m_uTextAlignment&GUI_TA_VERTICAL_MASK), rProperty);
+		}
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "parent" )
+		{
+			if( GetParent() )
+			{
+				rProperty.SetValue(GetParent()->GetName());
+			}
+			else
+			{
+				rProperty.SetValue("");
+			}
 		}
 		else
 		{

@@ -8,7 +8,9 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include "libguiex_editor.h"
+#include "windowbox.h"
+#include <libguiex_core/guiex.h>
+using namespace guiex;
 
 
 //-----------------------------------------------------------------------
@@ -31,8 +33,8 @@ void CWindowBox::Reset ()
 
 	//==========================================================
 	//update windows rect
-	const guiex::CGUIRect& rc = m_pSelectWidget->GetBoundArea();
-	guiex::CGUIRenderRect aRenderRect;
+	const CGUIRect& rc = m_pSelectWidget->GetBoundArea();
+	CGUIRenderRect aRenderRect;
 	m_pSelectWidget->LocalToWorld( rc, aRenderRect );
 	float fLeft = aRenderRect.m_vecVertex[0].m_aVector.x;
 	float fRight = aRenderRect.m_vecVertex[0].m_aVector.x;
@@ -52,7 +54,7 @@ void CWindowBox::Reset ()
 	m_locked = false;
 	// Find the amount to convert from relative- to screen coordinates
 	// Do this by finding the parent of the element (until no parent)
-	guiex::CGUIRect boundRect( m_aWindowsRect.GetLeft(), 
+	CGUIRect boundRect( m_aWindowsRect.GetLeft(), 
 		m_aWindowsRect.GetTop(), 
 		m_aWindowsRect.GetRight(),
 		m_aWindowsRect.GetBottom());
@@ -96,8 +98,8 @@ void CWindowBox::Reset ()
 	//update windows rect
 	paddX = 2;
 	paddY = 2;
-	guiex::CGUIVector2 rPoint = m_pSelectWidget->GetAnchorPoint();
-	const guiex::CGUIRect& rBoundRect = m_pSelectWidget->GetBoundArea();
+	CGUIVector2 rPoint = m_pSelectWidget->GetAnchorPoint();
+	const CGUIRect& rBoundRect = m_pSelectWidget->GetBoundArea();
 	rPoint.x = rBoundRect.GetPosition().x + rBoundRect.GetWidth() * rPoint.x;
 	rPoint.x = rBoundRect.GetPosition().y + rBoundRect.GetHeight() * rPoint.y;
 	m_pSelectWidget->LocalToWorld( rPoint );
@@ -107,17 +109,32 @@ void CWindowBox::Reset ()
 	m_aAnchorRect.height = paddY * 2;
 }
 //-----------------------------------------------------------------------
-void	CWindowBox::MoveWindowPosition(int deltaX, int deltaY)
+void CWindowBox::Lock(bool lock )
 {
-	guiex::CGUIVector2 aLocalOldPoint = m_pSelectWidget->GetPixelPosition();
-	guiex::CGUIVector3 aWorldOldPoint( aLocalOldPoint.x, aLocalOldPoint.y, 0.0f );
+	m_locked = lock;
+}
+//-----------------------------------------------------------------------
+bool CWindowBox::IsLocked() const
+{
+	return m_locked;
+}
+//-----------------------------------------------------------------------
+CGUIWidget* CWindowBox::GetWindow()
+{
+	return m_pSelectWidget;
+}
+//-----------------------------------------------------------------------
+void CWindowBox::MoveWindowPosition(int deltaX, int deltaY)
+{
+	CGUIVector2 aLocalOldPoint = m_pSelectWidget->GetPixelPosition();
+	CGUIVector3 aWorldOldPoint( aLocalOldPoint.x, aLocalOldPoint.y, 0.0f );
 	m_pSelectWidget->GetParent()->LocalToWorld(aWorldOldPoint);
 
-	guiex::CGUIVector3 aTestPoint = aWorldOldPoint;
+	CGUIVector3 aTestPoint = aWorldOldPoint;
 	m_pSelectWidget->GetParent()->WorldToLocal(aTestPoint);
 
-	guiex::CGUIVector3 aWorldNewPoint = aWorldOldPoint + guiex::CGUIVector3(deltaX, deltaY, 0.0f);
-	guiex::CGUIVector3 aLocalNewPoint = aWorldNewPoint;
+	CGUIVector3 aWorldNewPoint = aWorldOldPoint + CGUIVector3(deltaX, deltaY, 0.0f);
+	CGUIVector3 aLocalNewPoint = aWorldNewPoint;
 	m_pSelectWidget->GetParent()->WorldToLocal( aLocalNewPoint );
 	m_pSelectWidget->SetPixelPosition(aLocalNewPoint.x, aLocalNewPoint.y);
 	m_pSelectWidget->Refresh();
@@ -126,7 +143,7 @@ void	CWindowBox::MoveWindowPosition(int deltaX, int deltaY)
 //-----------------------------------------------------------------------
 void	CWindowBox::SetWindowSize(float deltaleft, float deltatop, float deltaright, float deltabottom)
 {
-	guiex::CGUIRect aBoundRect = m_pSelectWidget->GetBoundArea();
+	CGUIRect aBoundRect = m_pSelectWidget->GetBoundArea();
 	aBoundRect.m_fLeft += deltaleft;
 	aBoundRect.m_fTop += deltatop;
 	aBoundRect.m_fRight += deltaright;
@@ -136,7 +153,7 @@ void	CWindowBox::SetWindowSize(float deltaleft, float deltatop, float deltaright
 	Reset();
 }
 //-----------------------------------------------------------------------
-void CWindowBox::SetWindow(guiex::CGUIWidget* pWindow)
+void CWindowBox::SetWindow(CGUIWidget* pWindow)
 {
 	m_pSelectWidget = pWindow;
 	if( m_pSelectWidget )

@@ -9,107 +9,40 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include "libguiex_editor.h"
-
-
+#include "wxeditorcanvas.h"
+#include "wxeditorcanvascontainer.h"
+#include "wxmainapp.h"
+#include "wxmainframe.h"
+#include "editorutility.h"
+#include <libguiex_core/guiex.h>
 
 #include <sys/timeb.h>
-#include <GL\glu.h>
+#include <GL/glu.h>
+
+#include <libguiex_module\render_opengl\guirender_opengl.h>
+
+using namespace guiex;
 
 //============================================================================//
 // function
 //============================================================================// 
 
 //------------------------------------------------------------------------------
-IMPLEMENT_ABSTRACT_CLASS(WxEditorCanvasContainer, wxScrolledWindow)
-
-BEGIN_EVENT_TABLE(WxEditorCanvasContainer, wxScrolledWindow)
-END_EVENT_TABLE()
-//------------------------------------------------------------------------------
-
-WxEditorCanvasContainer::WxEditorCanvasContainer( wxWindow *parent, const std::string& rFilename )
-: wxScrolledWindow( parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER | wxTAB_TRAVERSAL, _T("canvas container") )
-,CSaveFileBase(rFilename)
-
-{
-	SetScrollRate( 10, 10 );
-	SetVirtualSize( guiex::GSystem->GetScreenWidth(), guiex::GSystem->GetScreenHeight() );
-
-	SetBackgroundColour( *wxLIGHT_GREY );
-
-	//create canvas
-	wxSize aCanvasSize( guiex::GSystem->GetScreenWidth(), guiex::GSystem->GetScreenHeight());
-	int wx_gl_attribs[] = {
-		WX_GL_RGBA, WX_GL_DOUBLEBUFFER, 
-		WX_GL_DEPTH_SIZE, 24, 
-		WX_GL_STENCIL_SIZE, 8,
-		0};
-	m_pCanvas = new WxGLCanvas(this, wx_gl_attribs, wxID_ANY, wxDefaultPosition, aCanvasSize);
-	m_pCanvas->InitializeCanvas();
-	//m_pCanvas->SetNextHandler(  this );
-}
-//------------------------------------------------------------------------------
-void	WxEditorCanvasContainer::UpdateWindowBox()
-{
-	m_pCanvas->UpdateWindowBox();
-}
-//------------------------------------------------------------------------------
-int 	WxEditorCanvasContainer::SaveFileAs(const std::string& rNewFileName)
-{
-	return m_pCanvas->SaveToFile(rNewFileName);
-}
-//------------------------------------------------------------------------------
-void	WxEditorCanvasContainer::SetSelectedWidget( const std::string& rWidget )
-{
-	guiex::CGUIWidget* pWidget = guiex::CGUIWidgetManager::Instance()->GetWidget( rWidget.c_str(), GetMainFrame()->GetCurrentSceneName());
-	SetSelectedWidget(pWidget);
-}
-//------------------------------------------------------------------------------
-void	WxEditorCanvasContainer::SetSelectedWidget( guiex::CGUIWidget* pWidget )
-{
-	m_pCanvas->SelectWidget(pWidget);
-}
-//------------------------------------------------------------------------------
-guiex::CGUIWidget*	WxEditorCanvasContainer::GetSelectedWidget()
-{
-	return m_pCanvas->m_aWindowBox.GetWindow();
-}
-//------------------------------------------------------------------------------
-void	WxEditorCanvasContainer::SetScreenSize( int width, int height )
-{
-	if( m_pCanvas )
-	{
-		m_pCanvas->SetSize(width, height);
-		m_pCanvas->Refresh();
-		SetVirtualSize( width,height );
-		Refresh();
-	}
-}
-//------------------------------------------------------------------------------
-
-
-
-
-
-
-
-//------------------------------------------------------------------------------
-BEGIN_EVENT_TABLE(WxGLCanvas, wxGLCanvas)
-EVT_SIZE(WxGLCanvas::OnSize)
-EVT_PAINT(WxGLCanvas::OnPaint)
-EVT_ERASE_BACKGROUND(WxGLCanvas::OnEraseBackground)
-EVT_KEY_DOWN( WxGLCanvas::OnKeyDown )
-EVT_KEY_UP( WxGLCanvas::OnKeyUp )
-EVT_ENTER_WINDOW( WxGLCanvas::OnEnterWindow )
-EVT_MOTION(WxGLCanvas::OnMouseMove)
-EVT_LEFT_DOWN(WxGLCanvas::OnMouseLeftDown) 
-EVT_LEFT_UP(WxGLCanvas::OnMouseLeftUp) 
-EVT_TIMER(100, WxGLCanvas::OnTimer)
+BEGIN_EVENT_TABLE(WxEditorCanvas, wxGLCanvas)
+EVT_SIZE(WxEditorCanvas::OnSize)
+EVT_PAINT(WxEditorCanvas::OnPaint)
+EVT_ERASE_BACKGROUND(WxEditorCanvas::OnEraseBackground)
+EVT_KEY_DOWN( WxEditorCanvas::OnKeyDown )
+EVT_KEY_UP( WxEditorCanvas::OnKeyUp )
+EVT_ENTER_WINDOW( WxEditorCanvas::OnEnterWindow )
+EVT_MOTION(WxEditorCanvas::OnMouseMove)
+EVT_LEFT_DOWN(WxEditorCanvas::OnMouseLeftDown) 
+EVT_LEFT_UP(WxEditorCanvas::OnMouseLeftUp) 
+EVT_TIMER(100, WxEditorCanvas::OnTimer)
 END_EVENT_TABLE()
 
-
 //------------------------------------------------------------------------------
-WxGLCanvas::WxGLCanvas(wxWindow *parent, int* args, wxWindowID id,
+WxEditorCanvas::WxEditorCanvas(wxWindow *parent, int* args, wxWindowID id,
 					   const wxPoint& pos, const wxSize& size, long style, const wxString& name)
 					   : wxGLCanvas(parent, (wxGLCanvas*) NULL, id, pos, size, style|wxFULL_REPAINT_ON_RESIZE , name )
 					   ,m_timer(this, 100)
@@ -127,37 +60,41 @@ WxGLCanvas::WxGLCanvas(wxWindow *parent, int* args, wxWindowID id,
 	m_timer.Start(33);
 }
 //------------------------------------------------------------------------------
-WxGLCanvas::~WxGLCanvas()
+WxEditorCanvas::~WxEditorCanvas()
 {
-	//free widgets
-	guiex::GSystem->DestroyAllWidgets();
-	guiex::GSystem->UnloadAllResource();
-
-	GUI_UNREGISTER_INTERFACE_LIB( IGUIRender_opengl);
+	DestroyCanvas();
 }
 //------------------------------------------------------------------------------
-void WxGLCanvas::InitializeCanvas()
+void WxEditorCanvas::InitializeCanvas()
 {
 	SetCurrent();
 
-	wxSize aCanvasSize( guiex::GSystem->GetScreenWidth(), guiex::GSystem->GetScreenHeight());
+	wxSize aCanvasSize( GSystem->GetScreenWidth(), GSystem->GetScreenHeight());
 	UpdateCanvasSize(aCanvasSize);
 
 	GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl );
 }
 //------------------------------------------------------------------------------
-void WxGLCanvas::UpdateWindowBox()
+void WxEditorCanvas::DestroyCanvas()
+{
+	GSystem->DestroyAllWidgets();
+	GSystem->UnloadAllResource();
+
+	GUI_UNREGISTER_INTERFACE_LIB( IGUIRender_opengl);
+}
+//------------------------------------------------------------------------------
+void WxEditorCanvas::UpdateWindowBox()
 {
 	m_aWindowBox.Reset();
 }
 //------------------------------------------------------------------------------
-void WxGLCanvas::OnTimer(wxTimerEvent& event)
+void WxEditorCanvas::OnTimer(wxTimerEvent& event)
 {
-	guiex::GSystem->Update( event.GetInterval() / 1000.f );
+	GSystem->Update( event.GetInterval() / 1000.f );
 	Refresh();
 }
 //------------------------------------------------------------------------------
-void WxGLCanvas::DrawResizers()
+void WxEditorCanvas::DrawResizers()
 {
 	GLfloat x0, y0, x1, y1;
 
@@ -243,13 +180,9 @@ void WxGLCanvas::DrawResizers()
 	}
 }
 //------------------------------------------------------------------------------
-void WxGLCanvas::Render()
+void WxEditorCanvas::Render()
 {
 	wxPaintDC dc(this);
-
-#ifndef __WXMOTIF__
-	if (!GetContext()) return;
-#endif
 
 	SetCurrent();
 
@@ -259,7 +192,7 @@ void WxGLCanvas::Render()
 	glClearStencil( 0 );
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT );	// clear screen and depth buffer 
 
-	guiex::GSystem->Render();
+	GSystem->Render();
 
 	DrawResizers();
 
@@ -267,17 +200,17 @@ void WxGLCanvas::Render()
 	SwapBuffers();
 }
 //------------------------------------------------------------------------------
-void WxGLCanvas::OnEnterWindow( wxMouseEvent& WXUNUSED(event) )
+void WxEditorCanvas::OnEnterWindow( wxMouseEvent& WXUNUSED(event) )
 {
 	//SetFocus();
 }
 //------------------------------------------------------------------------------
-void WxGLCanvas::OnPaint( wxPaintEvent& WXUNUSED(event) )
+void WxEditorCanvas::OnPaint( wxPaintEvent& WXUNUSED(event) )
 {
 	Render();
 }
 //------------------------------------------------------------------------------
-void WxGLCanvas::OnSize(wxSizeEvent& event)
+void WxEditorCanvas::OnSize(wxSizeEvent& event)
 {
 	// this is also necessary to update the context on some platforms
 	wxGLCanvas::OnSize(event);
@@ -288,7 +221,7 @@ void WxGLCanvas::OnSize(wxSizeEvent& event)
 	this->m_aWindowBox.Reset( );
 }
 //------------------------------------------------------------------------------
-void WxGLCanvas::UpdateCanvasSize(const wxSize& rSize)
+void WxEditorCanvas::UpdateCanvasSize(const wxSize& rSize)
 {
 	SetCurrent();
 	glMatrixMode(GL_PROJECTION);
@@ -299,7 +232,7 @@ void WxGLCanvas::UpdateCanvasSize(const wxSize& rSize)
 #else
 	real fPerspectiveDegree = 45;
 	gluPerspective( fPerspectiveDegree, rSize.GetWidth()/rSize.GetHeight(), 0.1, 100000 );
-	real fZDistance = rSize.GetHeight()/2 / guiex::CGUIMath::Tan( CGUIDegree(fPerspectiveDegree/2));
+	real fZDistance = rSize.GetHeight()/2 / CGUIMath::Tan( CGUIDegree(fPerspectiveDegree/2));
 	gluLookAt( 
 		rSize.GetWidth()/2,rSize.GetHeight()/2,-fZDistance,
 		rSize.GetWidth()/2,rSize.GetHeight()/2,0, 
@@ -312,11 +245,11 @@ void WxGLCanvas::UpdateCanvasSize(const wxSize& rSize)
 	glViewport(0,0,rSize.x,rSize.y); //定义视口 
 }
 //------------------------------------------------------------------------------
-void WxGLCanvas::OnEraseBackground(wxEraseEvent& WXUNUSED(event))
+void WxEditorCanvas::OnEraseBackground(wxEraseEvent& WXUNUSED(event))
 {
 }
 //------------------------------------------------------------------------------
-void WxGLCanvas::OnKeyDown( wxKeyEvent& event )
+void WxEditorCanvas::OnKeyDown( wxKeyEvent& event )
 {
 	int pixelDeltaX = 0, pixelDeltaY = 0;
 	int key = event.GetKeyCode();
@@ -347,12 +280,12 @@ void WxGLCanvas::OnKeyDown( wxKeyEvent& event )
 
 }
 //------------------------------------------------------------------------------
-void WxGLCanvas::OnKeyUp( wxKeyEvent& event )
+void WxEditorCanvas::OnKeyUp( wxKeyEvent& event )
 {
 	event.Skip();
 }
 //------------------------------------------------------------------------------
-void WxGLCanvas::UpdateCursor() 
+void WxEditorCanvas::UpdateCursor() 
 {
 	if (m_hoveredResizePoint != m_previousHoveredResizePoint)
 	{
@@ -399,12 +332,12 @@ void WxGLCanvas::UpdateCursor()
 	m_previousHoveredResizePoint = m_hoveredResizePoint;
 }
 //------------------------------------------------------------------------------
-void WxGLCanvas::OnMouseMove(wxMouseEvent& event)
+void WxEditorCanvas::OnMouseMove(wxMouseEvent& event)
 {
 	HandleMouseMoved(event.m_x, event.m_y);
 }
 //------------------------------------------------------------------------------
-void WxGLCanvas::HandleMouseMoved (int aMouseX, int aMouseY)
+void WxEditorCanvas::HandleMouseMoved (int aMouseX, int aMouseY)
 {
 
 	wxChar statusInfo [512];
@@ -419,8 +352,8 @@ void WxGLCanvas::HandleMouseMoved (int aMouseX, int aMouseY)
 	wxSnprintf (statusInfo, 100, wxT("[%d, %d][%3.2f, %3.2f]"), 
 		m_mouseX, 
 		m_mouseY, 
-		(double) m_mouseX / guiex::GSystem->GetScreenWidth(), 
-		(double) m_mouseY / guiex::GSystem->GetScreenHeight());
+		(double) m_mouseX / GSystem->GetScreenWidth(), 
+		(double) m_mouseY / GSystem->GetScreenHeight());
 
 	// Only proceed when the mouse is pressed
 	if (m_mousePressed) 
@@ -500,14 +433,14 @@ void WxGLCanvas::HandleMouseMoved (int aMouseX, int aMouseY)
 		if (m_hoveredResizePoint == RESIZE_POINT_NONE)
 		{
 			// Didn't find resize point, try window
-			m_hoveredWindow = guiex::GSystem->GetWidgetUnderPoint(guiex::CGUIVector2((float)m_mouseX, (float)m_mouseY)) ;
+			SetHoveredWindow(GSystem->GetWidgetUnderPoint(CGUIVector2((float)m_mouseX, (float)m_mouseY)));
 		}
 	}
 
 	// Hovering is exclusive; either a resize point or a window. Never both.
 	if (m_hoveredResizePoint != RESIZE_POINT_NONE)
 	{
-		m_hoveredWindow = NULL;
+		SetHoveredWindow( NULL );
 		wxSnprintf (statusInfo, 100, wxT("%s Resize Point: %d"), statusInfo, m_hoveredResizePoint);
 	}
 	else if (m_hoveredWindow != NULL) 
@@ -515,7 +448,7 @@ void WxGLCanvas::HandleMouseMoved (int aMouseX, int aMouseY)
 		m_hoveredResizePoint = RESIZE_POINT_NONE;
 		wxSnprintf (statusInfo, 100, wxT("%s Window: %s"), statusInfo, Gui2wxString(m_hoveredWindow->GetName()).data());
 		// Selectable?
-		if(m_hoveredWindow->GetName().find("__auto__") != guiex::CGUIString::npos)
+		if( CGUIWidgetManager::IsInternalWidget( m_hoveredWindow->GetName()))
 		{
 			// No, add to status info
 			wxSnprintf (statusInfo, 100, wxT("%s (not selectable)"), statusInfo);
@@ -530,7 +463,7 @@ void WxGLCanvas::HandleMouseMoved (int aMouseX, int aMouseY)
 	m_previousMouseY = m_mouseY ;
 }
 //------------------------------------------------------------------------------
-void	WxGLCanvas::SelectWidget( guiex::CGUIWidget* pWidget )
+void WxEditorCanvas::SelectWidget( CGUIWidget* pWidget )
 {
 	m_aWindowBox.SetWindow(pWidget);
 	GetMainFrame()->SetPropGridWidget(pWidget);
@@ -542,12 +475,12 @@ void	WxGLCanvas::SelectWidget( guiex::CGUIWidget* pWidget )
 	}
 }
 //------------------------------------------------------------------------------
-void WxGLCanvas::OnMouseLeftDown(wxMouseEvent& event)
+void WxEditorCanvas::OnMouseLeftDown(wxMouseEvent& event)
 {
-	while(m_hoveredWindow && m_hoveredWindow->GetName().find("__auto__") != guiex::CGUIString::npos )
+	while(m_hoveredWindow && CGUIWidgetManager::IsInternalWidget( m_hoveredWindow->GetName()) )
 	{   
-		// Current window is an __auto__, goto parent (if any)
-		m_hoveredWindow = m_hoveredWindow->GetParent();
+		// Current window is an internal widget, goto parent (if any)
+		SetHoveredWindow( m_hoveredWindow->GetParent() );
 	}   
 
 	if (m_hoveredWindow) 
@@ -569,12 +502,12 @@ void WxGLCanvas::OnMouseLeftDown(wxMouseEvent& event)
 	SetFocus( );
 }
 //------------------------------------------------------------------------------
-void WxGLCanvas::OnMouseLeftUp(wxMouseEvent& event)
+void WxEditorCanvas::OnMouseLeftUp(wxMouseEvent& event)
 {
 	bool mustNotify = (m_hoveredResizePoint != RESIZE_POINT_NONE || m_hoveredWindow);
 	m_mousePressed = false ;
 	m_hoveredResizePoint = RESIZE_POINT_NONE;
-	m_hoveredWindow = NULL ;
+	SetHoveredWindow( NULL );
 	if (mustNotify)
 	{
 		//for (size_t i = 0; i < observers.size(); ++i) 
@@ -593,242 +526,28 @@ void WxGLCanvas::OnMouseLeftUp(wxMouseEvent& event)
 	HandleMouseMoved(event.m_x, event.m_y);
 }
 //------------------------------------------------------------------------------
-int	WxGLCanvas::SaveToFile( const std::string& rFilename)
+void WxEditorCanvas::OnWidgetDestroyed(CGUIWidget* pWidget)
 {
-	//open xml file
-	TiXmlDocument aDoc;
-	aDoc.LoadFile(rFilename.c_str());
-	if( aDoc.Error())
+	if( pWidget == m_hoveredWindow )
 	{
-		////failed to parse
-		//wxChar buf[1024];
-		//wxSnprintf( buf, 1024, "Failed to read config file! \n\n%s", aDoc.ErrorDesc());
-		//wxMessageBox(buf, "Error", wxICON_ERROR, GetMainFrame() );
-		//return -1;
-
-		TiXmlElement  aNewToppestNode("guiex");
-		aDoc.InsertEndChild(aNewToppestNode);
+		m_hoveredWindow = NULL;
 	}
-
-	//remove old widget from doc
-	TiXmlElement* pRootNode = aDoc.RootElement();
-	wxASSERT(pRootNode);
-	TiXmlElement* pFindNode = NULL;
-	TiXmlElement* pNode = pRootNode->FirstChildElement("property");
-	while( pNode )
-	{
-		TiXmlElement* pNextNode = pNode->NextSiblingElement("property");
-		if( std::string(pNode->Attribute("type")) == "CGUIWidgetDefine" )
-		{
-			pRootNode->RemoveChild(pNode);
-		}
-		pNode = pNextNode;
-	}
-
-	//get page
-	if( guiex::GSystem->GetOpenedPageNum() != 0 )
-	{
-		guiex::CGUIWidget* pWidget = guiex::GSystem->GetOpenedPageByIndex(0);
-		if( pWidget )
-		{
-			//save it to doc
-			if( 0 != SaveWidgetNodeToDoc( pWidget, aDoc ))
-			{
-				//failed
-				return -1;
-			}
-		}
-	}
-
-	//save it to file
-	if( false == aDoc.SaveFile( rFilename.c_str()))
-	{
-		//failed to save as file
-		return -1;
-	}
-
-	return 0;
 }
 //------------------------------------------------------------------------------
-int WxGLCanvas::SaveWidgetNodeToDoc( guiex::CGUIWidget* pWidget, TiXmlDocument& rDoc )
+void WxEditorCanvas::SetHoveredWindow( CGUIWidget* pWidget )
 {
-	wxASSERT( pWidget );
-	if(pWidget->GetName().find("__auto__") != guiex::CGUIString::npos)
+	if( pWidget == m_hoveredWindow )
 	{
-		//a "auto" created element, ignore it
-		return 0;
-	}
-
-	TiXmlElement* pRootNode = rDoc.RootElement();
-	wxASSERT(pRootNode);
-
-	//save widget to doc
-	TiXmlElement* pWidgetNode = NULL;
-	//insert a widget
-	TiXmlElement aNewNode("property");
-	aNewNode.SetAttribute("name", pWidget->GetName().c_str());
-	aNewNode.SetAttribute("type", "CGUIWidgetDefine");
-	aNewNode.SetAttribute("value", pWidget->GetType().c_str());
-
-	if( guiex::CGUIWidgetManager::Instance()->HasPage( pWidget))
-	{
-		pWidgetNode = (TiXmlElement*)pRootNode->InsertEndChild(aNewNode);
-	}
-	else
-	{
-		TiXmlElement* pParentNode = GetElementByName(_T("property"), Gui2wxString(pWidget->GetParent()->GetName()), pRootNode);
-		wxASSERT(pParentNode);
-		pWidgetNode = (TiXmlElement*)pRootNode->InsertEndChild(aNewNode);
-	}
-	wxASSERT(pWidgetNode);
-
-	//save property to doc
-	guiex::CGUIProperty aSet = pWidget->GetProperty();
-	//process parent first
-	if( aSet.HasProperty("parent"))
-	{
-		guiex::CGUIProperty* pProperty = aSet.GetProperty("parent");
-		AddTopPropertyElement(*pProperty, pWidgetNode);
-		aSet.RemoveProperty(*pProperty);
-	}
-
-	//process image
-	std::vector<guiex::CGUIProperty>	aImgVector;
-	for( unsigned i=0; i<aSet.GetPropertyNum(); ++i)
-	{
-		const guiex::CGUIProperty* pProperty = aSet.GetProperty(i);
-		if( pProperty->GetType() == guiex::ePropertyType_Image )
-		{
-			aImgVector.push_back(*pProperty);
-		}
-	}
-	for( std::vector<guiex::CGUIProperty>::iterator itor = aImgVector.begin();
-		itor != aImgVector.end();
-		++itor )
-	{
-		AddTopPropertyElement(*itor, pWidgetNode);
-		aSet.RemoveProperty(*itor);
-	}
-
-	//process left
-	for( unsigned i=0; i<aSet.GetPropertyNum(); ++i)
-	{
-		const guiex::CGUIProperty* pProperty = aSet.GetProperty(i);
-
-		AddTopPropertyElement(*pProperty, pWidgetNode);
-	}
-
-	//process it's child
-	guiex::CGUIWidget* pChild = pWidget->GetChild();
-	while( pChild )
-	{
-		if( 0 != SaveWidgetNodeToDoc( pChild, rDoc ))
-		{
-			//failed
-			return -1;
-		}
-
-		pChild = pChild->GetNextSibling();
-	}
-
-	return 0;
-}
-//------------------------------------------------------------------------------
-void WxGLCanvas::AddTopPropertyElement( const guiex::CGUIProperty& rProperty, TiXmlElement* pWidgetNode)
-{
-	if( rProperty.GetValue().empty() && rProperty.GetPropertyNum() == 0 )
-	{
-		//empty property, ignore it
 		return;
 	}
-
-	//get exist's one
-	TiXmlElement* pOldNode = GetElementByName(_T("property"), Gui2wxString(rProperty.GetName()), pWidgetNode);
-
-	//add toppest element
-	TiXmlElement* pToppestNode = NULL;
-	TiXmlElement  aNewToppestNode("property");
-	aNewToppestNode.SetAttribute("name",rProperty.GetName().c_str());
-	aNewToppestNode.SetAttribute("type",rProperty.GetTypeAsString().c_str());
-	if( !rProperty.GetValue().empty())
+	if( m_hoveredWindow )
 	{
-		aNewToppestNode.SetAttribute("value",rProperty.GetValue().c_str());
+		m_hoveredWindow->GetOnWidgetDestroyedSignal().disconnect( this );
 	}
-
-	//insert it
-	if( pOldNode )
+	m_hoveredWindow = pWidget;
+	if( m_hoveredWindow )
 	{
-		pToppestNode = (TiXmlElement*)pWidgetNode->InsertAfterChild(pOldNode, aNewToppestNode);
-	}
-	else
-	{
-		pToppestNode = (TiXmlElement*)pWidgetNode->InsertEndChild( aNewToppestNode);
-	}
-	wxASSERT(pToppestNode);
-
-	//remove old one
-	if( pOldNode )
-	{
-		pWidgetNode->RemoveChild(pOldNode);
-	}
-
-	//add all sub-property
-	if( rProperty.GetPropertyNum() > 0)
-	{
-		for( unsigned i=0; i<rProperty.GetPropertyNum(); ++i)
-		{
-			AddSubPropertyElement( *rProperty.GetProperty(i), pToppestNode );
-		}
+		m_hoveredWindow->GetOnWidgetDestroyedSignal().connect( this, &WxEditorCanvas::OnWidgetDestroyed );
 	}
 }
 //------------------------------------------------------------------------------
-TiXmlElement*	WxGLCanvas::GetElementByName( 
-	const wxString& rElementName,
-	const wxString& rAttrName, 
-	TiXmlElement* pParentElement )
-{
-	//get widget node
-	TiXmlElement* pFindNode = NULL;
-	TiXmlElement* pNode = pParentElement->FirstChildElement(rElementName.char_str(wxConvUTF8).data());
-	while( pNode )
-	{
-		if( rAttrName == Gui2wxString(pNode->Attribute("name")))
-		{
-			pFindNode = pNode;
-			break;
-		}
-		pNode = pNode->NextSiblingElement(rElementName.char_str(wxConvUTF8).data());
-	}
-
-	return pNode;
-}
-//------------------------------------------------------------------------------
-void WxGLCanvas::AddSubPropertyElement( const guiex::CGUIProperty& rProperty, TiXmlElement* pParentElement)
-{
-	//add current property
-	TiXmlElement* pToppestNode = NULL;
-	TiXmlElement  aNewToppestNode("property");
-	aNewToppestNode.SetAttribute("name",rProperty.GetName().c_str());
-	aNewToppestNode.SetAttribute("type",rProperty.GetTypeAsString().c_str());
-	if( !rProperty.GetValue().empty())
-	{
-		aNewToppestNode.SetAttribute("value",rProperty.GetValue().c_str());
-	}
-
-	//insert it
-	pToppestNode = (TiXmlElement*)pParentElement->InsertEndChild( aNewToppestNode);
-	wxASSERT(pToppestNode);
-
-	//add all sub-property
-	if( rProperty.GetPropertyNum() > 0)
-	{
-		for( unsigned i=0; i<rProperty.GetPropertyNum(); ++i)
-		{
-			AddSubPropertyElement( *rProperty.GetProperty(i), pToppestNode );
-		}
-	}
-}
-//------------------------------------------------------------------------------
-
-
-

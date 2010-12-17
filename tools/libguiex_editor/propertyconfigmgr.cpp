@@ -8,18 +8,12 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include "libguiex_editor.h"
-
-#include "tinyxml.h"
-
 #include "propertyconfigmgr.h"
 #include "wxmainframe.h"
 #include "wxmainapp.h"
+#include "editorutility.h"
 
 //------------------------------------------------------------------------------
-
-//------------------------------------------------------------------------------ 
-
 
 //============================================================================//
 // function
@@ -28,8 +22,6 @@ const CPropertyData* CPropertyData::GetPropertyData( const guiex::CGUIProperty& 
 {
 	return reinterpret_cast<CPropertyData*>( rProperty.GetData() );
 }
-
-
 //------------------------------------------------------------------------------
 CPropertyConfigMgr::CPropertyConfigMgr()
 {
@@ -40,7 +32,7 @@ CPropertyConfigMgr::~CPropertyConfigMgr()
 	Clear();
 }
 //------------------------------------------------------------------------------
-void	CPropertyConfigMgr::Clear()
+void CPropertyConfigMgr::Clear()
 {
 	m_mapPropertySet.clear();
 	m_mapType.clear();
@@ -60,23 +52,23 @@ CPropertyConfigMgr* CPropertyConfigMgr::Instance()
 	return &s_mgr;
 }
 //------------------------------------------------------------------------------
-void	CPropertyConfigMgr::RegisterSet( const std::string& rSetName, const guiex::CGUIProperty& rPropertySet )
+void CPropertyConfigMgr::RegisterSet( const std::string& rSetName, const guiex::CGUIProperty& rPropertySet )
 {
 	if( m_mapPropertySet.find(rSetName) != m_mapPropertySet.end())
 	{
 		std::string strError = std::string("[CPropertyConfigMgr::RegisterSet] the property <")+rSetName+"> has existed!";
-		wxMessageBox(Gui2wxString(strError), _T("Error"), wxICON_ERROR | wxCENTRE );
+		wxMessageBox(Gui2wxString(strError), _T("Error") );
 		wxASSERT(0);
 	}
 	m_mapPropertySet.insert( std::make_pair(rSetName,rPropertySet) );
 }
 //------------------------------------------------------------------------------
-void	CPropertyConfigMgr::RegisterEnumDefine( const guiex::CGUIString& rEnumName, const wxArrayString& rEnumValue )
+void CPropertyConfigMgr::RegisterEnumDefine( const guiex::CGUIString& rEnumName, const wxArrayString& rEnumValue )
 {
 	if( m_mapEnums.find(rEnumName) != m_mapEnums.end())
 	{
 		std::string strError = std::string("[CPropertyConfigMgr::RegisterSet] the property <")+rEnumName+"> has existed!";
-		wxMessageBox(Gui2wxString(strError), _T("Error"), wxICON_ERROR | wxCENTRE );
+		wxMessageBox(Gui2wxString(strError), _T("Error") );
 		wxASSERT(0);
 	}
 	m_mapEnums.insert( std::make_pair(rEnumName,rEnumValue) );
@@ -87,31 +79,31 @@ const CPropertyConfigMgr::TMapPropertySet& 	CPropertyConfigMgr::GetPropertySetMa
 	return m_mapPropertySet;
 }
 //------------------------------------------------------------------------------
-const  guiex::CGUIProperty&	CPropertyConfigMgr::GetPropertySet(const std::string& rSetName ) const
+const guiex::CGUIProperty& CPropertyConfigMgr::GetPropertySet(const std::string& rSetName ) const
 {
 	TMapPropertySet::const_iterator itor = m_mapPropertySet.find(rSetName);
 	if( itor == m_mapPropertySet.end())
 	{
 		std::string strError = std::string("[CPropertyConfigMgr::GetPropertySet] the property <")+rSetName+"> doesn't exist!";
-		wxMessageBox(Gui2wxString(strError), _T("Error"), wxICON_ERROR | wxCENTRE );
+		wxMessageBox(Gui2wxString(strError), _T("Error") );
 		wxASSERT(0);
 	}
 	return itor->second;
 }
 //------------------------------------------------------------------------------
-const  wxArrayString&	CPropertyConfigMgr::GetEnumDefine( const guiex::CGUIString& rEnumName ) const
+const wxArrayString& CPropertyConfigMgr::GetEnumDefine( const guiex::CGUIString& rEnumName ) const
 {
 	TEnumMap::const_iterator itor = m_mapEnums.find(rEnumName);
 	if( itor == m_mapEnums.end())
 	{
 		std::string strError = std::string("[CPropertyConfigMgr::GetEnumDefine] the enum <")+rEnumName+"> doesn't exist!";
-		wxMessageBox(Gui2wxString(strError), _T("Error"), wxICON_ERROR | wxCENTRE );
+		wxMessageBox(Gui2wxString(strError), _T("Error") );
 		wxASSERT(0);
 	}
 	return itor->second;
 }
 //------------------------------------------------------------------------------
-std::string*	CPropertyConfigMgr::GetTypePtr( const std::string& rType )
+std::string* CPropertyConfigMgr::GetTypePtr( const std::string& rType )
 {
 	TSetType::iterator itor = m_mapType.find( rType );
 	if(itor == m_mapType.end())
@@ -121,7 +113,7 @@ std::string*	CPropertyConfigMgr::GetTypePtr( const std::string& rType )
 	return itor->second;
 }
 //------------------------------------------------------------------------------
-void	CPropertyConfigMgr::AddType( const std::string& rType )
+void CPropertyConfigMgr::AddType( const std::string& rType )
 {
 	if( m_mapType.find(rType) == m_mapType.end())
 	{
@@ -129,7 +121,7 @@ void	CPropertyConfigMgr::AddType( const std::string& rType )
 	}
 }
 //------------------------------------------------------------------------------
-int		CPropertyConfigMgr::ReadPropertyConfig(const std::string& rFileName)
+int CPropertyConfigMgr::ReadPropertyConfig(const std::string& rFileName)
 {
 	Clear();
 
@@ -141,7 +133,7 @@ int		CPropertyConfigMgr::ReadPropertyConfig(const std::string& rFileName)
 		//failed to parse
 		wxChar buf[1024];
 		wxSnprintf( buf, 1024, _T("Failed to read config file! \n\n%s"), Gui2wxString(aDoc.ErrorDesc()));
-		wxMessageBox(buf, _T("Error"), wxICON_ERROR, GetMainFrame() );
+		wxMessageBox( buf, _T("Error") );
 		return -1;
 	}
 
@@ -151,7 +143,7 @@ int		CPropertyConfigMgr::ReadPropertyConfig(const std::string& rFileName)
 	{
 		wxChar buf[1024];
 		wxSnprintf( buf, 1024, _T("Failed to read Scene file! \n\n%s"), _T("can't get root node"));
-		wxMessageBox(buf, _T("Error"), wxICON_ERROR, GetMainFrame() );
+		wxMessageBox(buf, _T("Error") );
 		return -1;
 	}
 
@@ -163,7 +155,7 @@ int		CPropertyConfigMgr::ReadPropertyConfig(const std::string& rFileName)
 		{
 			if( 0 != ProcessEnumNode(pNode) )
 			{
-				wxMessageBox(_T("Failed to load property config file!"), _T("Error"), wxICON_ERROR, GetMainFrame() );
+				wxMessageBox(_T("Failed to load property config file!"), _T("Error") );
 				wxASSERT(0);
 				return -1;
 			}
@@ -172,7 +164,7 @@ int		CPropertyConfigMgr::ReadPropertyConfig(const std::string& rFileName)
 		{
 			if( 0 != ProcessWidgetNode(pNode) )
 			{
-				wxMessageBox(_T("Failed to load property config file!"), _T("Error"), wxICON_ERROR, GetMainFrame() );
+				wxMessageBox(_T("Failed to load property config file!"), _T("Error") );
 				wxASSERT(0);
 				return -1;
 			}

@@ -53,6 +53,11 @@ namespace guiex
 		m_pSingleton = NULL; 
 	}
 	//------------------------------------------------------------------------------
+	bool CGUIWidgetManager::IsInternalWidget( const CGUIString& rWidgetName )
+	{
+		return (rWidgetName.find(GUI_INTERNAL_WIDGET_FLAG) != CGUIString::npos);
+	}
+	//------------------------------------------------------------------------------
 	CGUIWidgetManager* CGUIWidgetManager::Instance()
 	{
 		return m_pSingleton; 
@@ -446,4 +451,5 @@ namespace guiex
 		DestroyWidget(pPage);
 	}
 	//------------------------------------------------------------------------------
+
 }//namespace guiex

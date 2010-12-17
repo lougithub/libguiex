@@ -17,6 +17,7 @@
 #include <libguiex_core/guiproperty.h>
 #include <libguiex_core/guipropertymanager.h>
 #include <libguiex_core/guiimage.h>
+#include <libguiex_core/guiwidgetmanager.h>
 
 
 //============================================================================//
@@ -275,15 +276,15 @@ namespace guiex
 		SetSizeType( eScreenValue_Pixel );
 
 		//create child
-		m_pArrow[0] = new CGUIWgtScrollbarArrow(GetName()+"_arrow_0__auto__", GetSceneName(), 0);
+		m_pArrow[0] = new CGUIWgtScrollbarArrow(GetName()+"_arrow_0" + GUI_INTERNAL_WIDGET_FLAG, GetSceneName(), 0);
 		m_pArrow[0]->SetParent(this);
 		m_pArrow[0]->SetPositionType( eScreenValue_Percentage );
 		m_pArrow[0]->SetSizeType( eScreenValue_Pixel );
-		m_pArrow[1] = new CGUIWgtScrollbarArrow(GetName()+"_arrow_1__auto__", GetSceneName(), 1);
+		m_pArrow[1] = new CGUIWgtScrollbarArrow(GetName()+"_arrow_1" + GUI_INTERNAL_WIDGET_FLAG, GetSceneName(), 1);
 		m_pArrow[1]->SetParent(this);
 		m_pArrow[1]->SetPositionType( eScreenValue_Percentage );
 		m_pArrow[1]->SetSizeType( eScreenValue_Pixel );
-		m_pSlide = new CGUIWgtScrollbarSlide(GetName()+"_slide__auto__", GetSceneName() );
+		m_pSlide = new CGUIWgtScrollbarSlide(GetName()+"_slide" + GUI_INTERNAL_WIDGET_FLAG, GetSceneName() );
 		m_pSlide->SetParent(this);
 		m_pSlide->SetPositionType( eScreenValue_Percentage );
 		m_pSlide->SetSizeType( eScreenValue_Pixel );

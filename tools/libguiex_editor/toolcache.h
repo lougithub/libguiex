@@ -5,34 +5,17 @@
  * @date 2009-11-05
  */
 
-
-
-
-
-
 #ifndef __KEN_TOOLCACHE_200911015_H__
 #define	__KEN_TOOLCACHE_200911015_H__
-
-
-
 
 
 //============================================================================//
 // include
 //============================================================================//
+#include <wx/wxprec.h>
 #include <string>
 #include <map>
-
-
-
-
-//============================================================================//
-// declare
-//============================================================================//
-
-
-
-
+#include <vector>
 
 //============================================================================//
 // class
@@ -44,41 +27,41 @@ public:
 
 	static CToolCache* Instance();
 
-	void	ParseCache( const std::string& rCacheFile );
+	void ParseCache( const std::string& rCacheFile );
 
-	void	AddCache( const std::string& rScene, const std::string& rPath );	
+	void AddCache( const std::string& rScene, const std::string& rPath );	
 
-	void	SetPathsBaseId(wxWindowID baseId)
+	void SetPathsBaseId(wxWindowID baseId)
 	{
 		m_nPathBaseId = baseId;
 	}
-	void	SetScenesBaseId(wxWindowID baseId)
+	void SetScenesBaseId(wxWindowID baseId)
 	{
 		m_nSceneBaseId = baseId;
 	}
 
-	void	SetMaxCacheSize( unsigned nSize )
+	void SetMaxCacheSize( unsigned nSize )
 	{
 		m_nMaxSize = nSize;
 	}
 
-	void	UpdateMenu( );
+	void UpdateMenu( );
 
 protected:
-	void	SaveFile(  );
+	void SaveFile(  );
 
 public:
 	std::string	m_strCacheFile;
 
 	std::vector<std::pair< std::string, std::string> >	m_sceneHistory;	//<Scene, path>
-	std::vector<std::string>	m_pathHistory;
+	std::vector<std::string> m_pathHistory;
 
-	wxWindowID	m_nPathBaseId;
-	wxWindowID	m_nSceneBaseId;
-	wxMenu		*m_pPathMenu;
-	wxMenu		*m_pSceneMenu;
+	wxWindowID m_nPathBaseId;
+	wxWindowID m_nSceneBaseId;
+	wxMenu *m_pPathMenu;
+	wxMenu *m_pSceneMenu;
 
-	unsigned			m_nMaxSize;
+	unsigned m_nMaxSize;
 
 protected:
 	CToolCache();

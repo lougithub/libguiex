@@ -9,6 +9,12 @@
 #define __KEN_SAVE_FILE_DLG_20070925_H__
 
 //============================================================================//
+// include
+//============================================================================// 
+#include <wx/wxprec.h>
+
+
+//============================================================================//
 // declare
 //============================================================================// 
 enum
@@ -21,10 +27,10 @@ enum
 //============================================================================//
 // class
 //============================================================================// 
-class WxDialogClose : public wxDialog
+class WxSaveFileDialog : public wxDialog
 {
 public:
-	WxDialogClose(wxWindow* parent, const wxArrayString& rFileArray);
+	WxSaveFileDialog(wxWindow* parent, const wxArrayString& rFileArray);
 
 protected:
 	void OnOK(wxCommandEvent& WXUNUSED(event));

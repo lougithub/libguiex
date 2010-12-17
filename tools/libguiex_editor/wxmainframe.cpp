@@ -8,8 +8,38 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include "libguiex_editor.h"
+#include "wxmainframe.h"
+#include "wxmainapp.h"
+#include "wxsavefiledlg.h"
+#include "wxeditorcanvascontainer.h"
+#include "wxoutputpanel.h"
+#include "wxwizardcreatewidget.h"
+#include "propertysheetfunc.h"
+#include "propertyconfigmgr.h"
+#include "editorutility.h"
+#include "toolcache.h"
 
+//wxwidgets
+#include <wx/treectrl.h>
+#include <wx/artprov.h>
+#include <wx/colordlg.h>
+
+//libguiex module
+#include <libguiex_widget/guiwgt.h>
+
+#include <libguiex_module\render_opengl\guirender_opengl.h>
+#include <libguiex_module\imageloader_tga\guiimageloader_tga.h>
+#include <libguiex_module\keyboard_winapi\guikeyboard_winapi.h>
+#include <libguiex_module\mouse_winapi\guimouse_winapi.h>
+#include <libguiex_module\font_ft2\guifont_ft2.h>
+#include <libguiex_module\font_dummy\guifont_dummy.h>
+#include <libguiex_module\filesys_stdio\guifilesys_stdio.h>
+#include <libguiex_module\configfile_tinyxml\guiconfigfile_tinyxml.h>
+#include <libguiex_module\script_lua\guiscript_lua.h>
+#include <libguiex_module\ime_winapi\guiime_winapi.h>
+#include <libguiex_module\stringconv_winapi\guistringconv_winapi.h>
+
+//images
 #include "bitmaps/new.xpm"
 #include "bitmaps/open.xpm"
 #include "bitmaps/save.xpm"
@@ -23,9 +53,6 @@
 #include "bitmaps/gem_red.xpm"
 
 
-
-
-
 //============================================================================//
 // define
 //============================================================================// 
@@ -37,7 +64,7 @@
 // verify that the item is ok and insult the user if it is not
 #define CHECK_ITEM( item ) if ( !item.IsOk() ) \
 { \
-	wxMessageBox(wxT("Please select some item first!"), wxT("Tree sample error"), wxOK | wxICON_EXCLAMATION, this); \
+	wxMessageBox(wxT("Please select some item first!"), wxT("Tree sample error") ); \
 	return; \
 }
 
@@ -308,7 +335,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 	}
 	catch (CGUIBaseException& rError)
 	{
-		wxMessageBox( Gui2wxString(rError.what()), _T("error"), wxICON_ERROR|wxCENTRE);
+		wxMessageBox( Gui2wxString(rError.what()), _T("error") );
 
 		GSystem->Release();
 		delete GSystem;
@@ -367,10 +394,10 @@ wxPanel* WxMainFrame::CreatePropGridPanel()
 	// Register all editors (SpinCtrl etc.)
 	m_pPropGridMan->RegisterAdditionalEditors();
 
-	m_pPropGridMan->AddPage(wxT("Property"));
-	m_pPropGridMan->AddPage(wxT("Image"));
-	m_pPropGridMan->AddPage(wxT("Event"));
-	m_pPropGridMan->SelectPage(NOTEBOOK_PAGE_PROP);
+	m_pPropGridMan->AddPage(wxT(NOTEBOOK_APPEARANCE_PAGE_NAME));
+	m_pPropGridMan->AddPage(wxT(NOTEBOOK_IMAGE_PAGE_NAME));
+	m_pPropGridMan->AddPage(wxT(NOTEBOOK_EVENT_PAGE_NAME));
+	m_pPropGridMan->SelectPage(NOTEBOOK_PAGE_APPEARANCE);
 	m_pPropGridMan->Refresh();
 
 	//initialize image
@@ -409,7 +436,7 @@ void WxMainFrame::SetPropGridWidget(CGUIWidget* pWidget)
 {
 	m_pCurrentEditingWidget = pWidget;
 
-	m_pPropGridMan->ClearPage(NOTEBOOK_PAGE_PROP);
+	m_pPropGridMan->ClearPage(NOTEBOOK_PAGE_APPEARANCE);
 	m_pPropGridMan->ClearPage(NOTEBOOK_PAGE_IMAGE);
 	m_pPropGridMan->ClearPage(NOTEBOOK_PAGE_EVENT);
 
@@ -512,7 +539,7 @@ void			WxMainFrame::AddWidgetToTreeCtrl(CGUIWidget* pWidget, wxTreeItemId aParen
 	CGUIWidget* pChild = pWidget->GetChild();
 	while( pChild )
 	{
-		if( pChild->GetName().find("__auto__") == CGUIString::npos)
+		if( !CGUIWidgetManager::IsInternalWidget( pChild->GetName()))
 		{
 			AddWidgetToTreeCtrl( pChild, aItemId );
 		}
@@ -661,7 +688,7 @@ int		WxMainFrame::OpenScene( const CGUIScene* pScene )
 	}
 	catch (CGUIBaseException& rError)
 	{
-		wxMessageBox( Gui2wxString(rError.what()), _T("error"), wxICON_ERROR|wxCENTRE);
+		wxMessageBox( Gui2wxString(rError.what()), _T("error") );
 		return -1;
 	}
 
@@ -758,19 +785,19 @@ void WxMainFrame::OnPropertyGridChange( wxPropertyGridEvent& event )
 {
 	if( !m_pCurrentEditingWidget )
 	{
-		wxMessageBox( _T("[WxMainFrame::OnPropertyGridChange] no editing widget"), _T("error"), wxICON_ERROR|wxCENTRE);
+		wxMessageBox( _T("[WxMainFrame::OnPropertyGridChange] no editing widget"), _T("error") );
 		return;
 	}
 	wxPGProperty* pPGProperty = event.GetProperty();
 	if( !pPGProperty)
 	{
-		wxMessageBox( _T("[WxMainFrame::OnPropertyGridChange] failed to get wxPGProperty"), _T("error"), wxICON_ERROR|wxCENTRE);
+		wxMessageBox( _T("[WxMainFrame::OnPropertyGridChange] failed to get wxPGProperty"), _T("error") );
 		return;
 	}
 	wxPGProperty* pPGTop = event.GetMainParent();
 	if( !pPGTop)
 	{
-		wxMessageBox( _T("[WxMainFrame::OnPropertyGridChange] failed to get main parent of wxPGProperty"), _T("error"), wxICON_ERROR|wxCENTRE);
+		wxMessageBox( _T("[WxMainFrame::OnPropertyGridChange] failed to get main parent of wxPGProperty"), _T("error") );
 		return;
 	}
 
@@ -786,12 +813,12 @@ void WxMainFrame::OnPropertyGridChange( wxPropertyGridEvent& event )
 	}
 	catch(guiex::CGUIBaseException& rError)
 	{
-		wxMessageBox( Gui2wxString( rError.what()), _T("OnPropertyChanged error"), wxICON_ERROR|wxCENTRE);
+		wxMessageBox( Gui2wxString( rError.what()), _T("OnPropertyChanged error") );
 		CloseCanvas();
 	}
 	catch(...)
 	{
-		wxMessageBox(_T("unknown error"), _T("OnPropertyChanged error"), wxICON_ERROR|wxCENTRE);
+		wxMessageBox(_T("unknown error"), _T("OnPropertyChanged error") );
 		CloseCanvas();
 	}
 
@@ -1315,13 +1342,13 @@ void WxMainFrame::OnRecentPaths( wxCommandEvent& In )
 		CGUISceneManager::Instance()->UnregisterAllScenes();
 		if( 0 != CGUISceneManager::Instance()->RegisterScenesFromDir())
 		{
-			wxMessageBox( _T("failed to load scenes"), _T("error"), wxICON_ERROR|wxCENTRE);
+			wxMessageBox( _T("failed to load scenes"), _T("error") );
 			return;
 		}
 	}
 	catch (CGUIBaseException& rError)
 	{
-		wxMessageBox( Gui2wxString(rError.what()), _T("error"), wxICON_ERROR|wxCENTRE);
+		wxMessageBox( Gui2wxString(rError.what()), _T("error") );
 		return;
 	}
 
@@ -1345,14 +1372,14 @@ void WxMainFrame::OnRecentPaths( wxCommandEvent& In )
 	{
 		if( 0 != OpenScene(pScene))
 		{
-			wxMessageBox( _T("failed to open scene"), _T("error"), wxICON_ERROR|wxCENTRE);
+			wxMessageBox( _T("failed to open scene"), _T("error") );
 			CloseScene();
 			return;
 		}
 	}
 	else
 	{
-		wxMessageBox( _T("some dependent scene of this scene hasn't been loaded"), _T("error"), wxICON_ERROR|wxCENTRE);
+		wxMessageBox( _T("some dependent scene of this scene hasn't been loaded"), _T("error") );
 		return;
 	}
 
@@ -1377,13 +1404,13 @@ void WxMainFrame::OnRecentScenes( wxCommandEvent& In )
 		CGUISceneManager::Instance()->UnregisterAllScenes();
 		if( 0 != CGUISceneManager::Instance()->RegisterScenesFromDir())
 		{
-			wxMessageBox( _T("failed to load scenes"), _T("error"), wxICON_ERROR|wxCENTRE);
+			wxMessageBox( _T("failed to load scenes"), _T("error") );
 			return;
 		}
 	}
 	catch (CGUIBaseException& rError)
 	{
-		wxMessageBox( Gui2wxString(rError.what()), _T("error"), wxICON_ERROR|wxCENTRE);
+		wxMessageBox( Gui2wxString(rError.what()), _T("error") );
 		return;
 	}
 
@@ -1391,21 +1418,21 @@ void WxMainFrame::OnRecentScenes( wxCommandEvent& In )
 	const CGUIScene* pScene = CGUISceneManager::Instance()->GetScene( strScene.first );
 	if( !pScene )
 	{
-		wxMessageBox( _T("failed to load scene"), _T("error"), wxICON_ERROR|wxCENTRE);
+		wxMessageBox( _T("failed to load scene"), _T("error") );
 		return;
 	}
 	else if( pScene->IsDependenciesLoaded())
 	{
 		if( 0 != OpenScene(pScene))
 		{
-			wxMessageBox( _T("failed to open scene"), _T("error"), wxICON_ERROR|wxCENTRE);
+			wxMessageBox( _T("failed to open scene"), _T("error") );
 			CloseScene();
 			return;
 		}
 	}
 	else
 	{
-		wxMessageBox( _T("some dependent scene of this scene hasn't been loaded"), _T("error"), wxICON_ERROR|wxCENTRE);
+		wxMessageBox( _T("some dependent scene of this scene hasn't been loaded"), _T("error") );
 		return;
 	}
 }
@@ -1458,13 +1485,13 @@ void WxMainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 		CGUISceneManager::Instance()->UnregisterAllScenes();
 		if( 0 != CGUISceneManager::Instance()->RegisterScenesFromDir())
 		{
-			wxMessageBox( _T("failed to load scenes"), _T("error"), wxICON_ERROR|wxCENTRE);
+			wxMessageBox( _T("failed to load scenes"), _T("error") );
 			return;
 		}
 	}
 	catch (CGUIBaseException& rError)
 	{
-		wxMessageBox( Gui2wxString(rError.what()), _T("error"), wxICON_ERROR|wxCENTRE);
+		wxMessageBox( Gui2wxString(rError.what()), _T("error") );
 		return;
 	}
 	
@@ -1488,14 +1515,14 @@ void WxMainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 	{
 		if( 0 != OpenScene(pScene))
 		{
-			wxMessageBox( _T("failed to open scene"), _T("error"), wxICON_ERROR|wxCENTRE);
+			wxMessageBox( _T("failed to open scene"), _T("error") );
 			CloseScene();
 			return;
 		}
 	}
 	else
 	{
-		wxMessageBox( _T("some dependent scene of this scene hasn't been loaded"), _T("error"), wxICON_ERROR|wxCENTRE);
+		wxMessageBox( _T("some dependent scene of this scene hasn't been loaded"), _T("error") );
 		return;
 	}
 
@@ -1537,13 +1564,13 @@ void WxMainFrame::RenderFile( const std::string& rFileName )
 	}
 	catch (CGUIBaseException& rError)
 	{
-		wxMessageBox( Gui2wxString(rError.what()), _T("error"), wxICON_ERROR|wxCENTRE);
+		wxMessageBox( Gui2wxString(rError.what()), _T("error") );
 
 		CloseCanvas();
 	}
 	catch(...)
 	{
-		wxMessageBox(_T("unknown error"), _T("error"), wxICON_ERROR|wxCENTRE);
+		wxMessageBox(_T("unknown error"), _T("error") );
 
 		CloseCanvas();
 	}
@@ -1639,7 +1666,7 @@ bool	WxMainFrame::SaveFileProcess(int nIdx)
 	}
 	else
 	{
-		WxDialogClose aDlg(this, aFileArray);
+		WxSaveFileDialog aDlg(this, aFileArray);
 		aDlg.ShowModal();
 		switch( aDlg.GetReturnCode())
 		{

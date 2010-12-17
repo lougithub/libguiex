@@ -14,6 +14,9 @@
 #include <libguiex_module/mouse_winapi/guimouse_winapi.h>
 #include <libguiex_module/ime_winapi/guiime_winapi.h>
 
+#include <algorithm>
+
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -44,6 +47,9 @@ CGUIString wx2GuiString( const wxString& rString )
 {
 	return wxConvUTF8.cWC2MB(rString.c_str()).data();
 }
+//------------------------------------------------------------------------------
+
+
 //------------------------------------------------------------------------------
 //	CGUIFrameworkViewer
 //------------------------------------------------------------------------------
@@ -115,7 +121,7 @@ WXLRESULT WxGLCanvas::MSWWindowProc(WXUINT uMsg, WXWPARAM wParam, WXLPARAM lPara
 	}
 	catch (CGUIBaseException& rError)
 	{
-		MessageBoxA(NULL, rError.what(), "error", MB_OK);
+		wxMessageBox( Gui2wxString( rError.what() ), _T("error") );
 	}
 	return wxGLCanvas::MSWWindowProc(uMsg, wParam, lParam);
 }
@@ -189,7 +195,9 @@ void CMyLogMsgCallback::Log( const CGUILogMsgRecord& rRecord )
 //	WxMainFrame
 //------------------------------------------------------------------------------
 BEGIN_EVENT_TABLE(WxMainFrame, wxFrame)
-EVT_MENU(ID_Open, WxMainFrame::OnOpen)
+EVT_MENU(ID_OpenPage, WxMainFrame::OnOpenPage)
+EVT_MENU(ID_AddPage, WxMainFrame::OnAddPage)
+EVT_MENU(ID_ClosePage, WxMainFrame::OnClosePage)
 EVT_MENU(ID_Exit, WxMainFrame::OnExit)
 EVT_MENU(ID_About, WxMainFrame::OnAbout)
 EVT_MENU(ID_VIEW_Fullscreen, WxMainFrame::OnFullscreen)
@@ -221,7 +229,10 @@ WxMainFrame::WxMainFrame(wxWindow* parent, wxWindowID id, const wxString& title,
 	wxMenuBar* mb = new wxMenuBar;
 	//menu-file
 	wxMenu* file_menu = new wxMenu;
-	file_menu->Append(ID_Open, _("Open"));
+	file_menu->Append(ID_OpenPage, _("Open Page..."));
+	file_menu->Append(ID_AddPage, _("Add Page..."));
+	file_menu->Append(ID_ClosePage, _("Close Page..."));
+	file_menu->AppendSeparator();
 	file_menu->Append(ID_Exit, _("Exit"));
 	//menu-view
 	wxMenu*	view_menu = new wxMenu;
@@ -307,7 +318,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent, wxWindowID id, const wxString& title,
 	CGUISceneManager::Instance()->RegisterScenesFromDir( "/",".uip" );
 	m_mgr.Update();
 
-	TryOpenUIPage( true );
+	OpenPage( true );
 
 	// "commit" all changes made to wxAuiManager
 	Refresh();
@@ -326,9 +337,89 @@ WxMainFrame::~WxMainFrame()
 	}
 }
 //------------------------------------------------------------------------------
-void WxMainFrame::TryOpenUIPage( bool bCheckCommandLine )
+bool WxMainFrame::GetClosePageInfo( CGUIString& rScene, std::vector<CGUIString>& rPages )
 {
-	CGUIString strUIPageName;
+	//chose scene
+	std::vector<CGUIString> vecScenes;
+	for( TMapScene::iterator itor = m_mapScenes.begin();
+		itor != m_mapScenes.end();
+		++itor )
+	{
+		vecScenes.push_back( itor->first );
+	}
+	wxArrayString arrayScenes;
+	for( unsigned i=0; i<vecScenes.size(); ++i )
+	{
+		arrayScenes.Add( Gui2wxString( vecScenes[i]));
+	}
+	wxSingleChoiceDialog aSceneChoiceDlg( this, _T("select scene"), _T("select scene files"), arrayScenes );
+	if( aSceneChoiceDlg.ShowModal() != wxID_OK )
+	{
+		return false;
+	}
+	rScene = vecScenes[aSceneChoiceDlg.GetSelection()];
+
+	//chose page file
+	const std::vector<CGUIString>& vecPages = m_mapScenes[rScene];
+	wxArrayString arrayPages;
+	for( unsigned i=0; i<vecPages.size(); ++i )
+	{
+		arrayPages.Add( Gui2wxString( vecPages[i]));
+	}
+	wxMultiChoiceDialog aPageChoiceDlg( this, _T("select page to close"), _T("select page files"), arrayPages );
+	if( aPageChoiceDlg.ShowModal() != wxID_OK )
+	{
+		return false;
+	}
+	wxArrayInt arrayPageSelections = aPageChoiceDlg.GetSelections();
+	for( unsigned i=0; i<arrayPageSelections.size(); ++i )
+	{
+		rPages.push_back( vecPages[arrayPageSelections[i]] );
+	}
+
+	return true;
+}
+//------------------------------------------------------------------------------
+bool WxMainFrame::GetOpenPageInfo( CGUIString& rScene, std::vector<CGUIString>& rPages )
+{
+	//chose scene
+	const std::vector<CGUIString>& vecScenes = CGUISceneManager::Instance()->GetSceneNames( );
+	wxArrayString arrayScenes;
+	for( unsigned i=0; i<vecScenes.size(); ++i )
+	{
+		arrayScenes.Add( Gui2wxString( vecScenes[i]));
+	}
+	wxSingleChoiceDialog aSceneChoiceDlg( this, _T("select scene"), _T("select scene files"), arrayScenes );
+	if( aSceneChoiceDlg.ShowModal() != wxID_OK )
+	{
+		return false;
+	}
+	rScene = vecScenes[aSceneChoiceDlg.GetSelection()];
+
+	//chose page file
+	const std::vector<CGUIString>& vecPages = CGUISceneManager::Instance()->GetScene(rScene)->GetWidgetFiles();
+	wxArrayString arrayPages;
+	for( unsigned i=0; i<vecPages.size(); ++i )
+	{
+		arrayPages.Add( Gui2wxString( vecPages[i]));
+	}
+	wxMultiChoiceDialog aPageChoiceDlg( this, _T("select pages to open"), _T("select page files"), arrayPages );
+	if( aPageChoiceDlg.ShowModal() != wxID_OK )
+	{
+		return false;
+	}
+	wxArrayInt arrayPageSelections = aPageChoiceDlg.GetSelections();
+	for( unsigned i=0; i<arrayPageSelections.size(); ++i )
+	{
+		rPages.push_back( vecPages[arrayPageSelections[i]] );
+	}
+
+	return true;
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OpenPage( bool bCheckCommandLine )
+{
+	std::vector<CGUIString> arrayUIPageNames;
 	CGUIString strUISceneName;
 
 	bool bCommandlineFound = false;
@@ -343,62 +434,69 @@ void WxMainFrame::TryOpenUIPage( bool bCheckCommandLine )
 
 		if( arrayArgs.size() >= 4 )
 		{
-			strUISceneName = arrayArgs[2].char_str(wxConvUTF8).data();
-			strUIPageName = arrayArgs[3].char_str(wxConvUTF8).data();
+			strUISceneName = wx2GuiString( arrayArgs[2] );
+			arrayUIPageNames.push_back( wx2GuiString( arrayArgs[3] ) );
 			bCommandlineFound = true;
 		}
 	}
 
 	if( !bCommandlineFound )
 	{
-		//chose scene
-		const std::vector<CGUIString>& vecScenes = CGUISceneManager::Instance()->GetSceneNames( );
-		wxArrayString arrayScenes;
-		for( unsigned i=0; i<vecScenes.size(); ++i )
-		{
-			arrayScenes.Add( Gui2wxString( vecScenes[i]));
-		}
-		wxSingleChoiceDialog aSceneChoiceDlg( this, _T("select scene"), _T("select scene files"), arrayScenes );
-		if( aSceneChoiceDlg.ShowModal() != wxID_OK )
+		if( !GetOpenPageInfo(strUISceneName, arrayUIPageNames))
 		{
 			return;
 		}
-		strUISceneName = vecScenes[aSceneChoiceDlg.GetSelection()];
-
-		//chose page file
-		const std::vector<CGUIString>& vecPages = CGUISceneManager::Instance()->GetScene(strUISceneName)->GetWidgetFiles();
-		wxArrayString arrayPages;
-		for( unsigned i=0; i<vecPages.size(); ++i )
-		{
-			arrayPages.Add( Gui2wxString( vecPages[i]));
-		}
-		wxSingleChoiceDialog aPageChoiceDlg( this, _T("select scene"), _T("select scene files"), arrayPages );
-		if( aPageChoiceDlg.ShowModal() != wxID_OK )
-		{
-			return;
-		}
-		strUIPageName = vecPages[aPageChoiceDlg.GetSelection()];
 	}
 
-	//open it
 	try
 	{
-		if( !m_strCurrentPlayingScene.empty() )
+		GSystem->CloseAll();
+
+		//free resource
+		for( TMapScene::iterator itor = m_mapScenes.begin();
+			itor != m_mapScenes.end();
+			++itor )
 		{
-			GSystem->CloseAll();
-			CGUISceneManager::Instance()->ReleaseWidgets( m_strCurrentPlayingScene );
-			CGUISceneManager::Instance()->ReleaseResources( m_strCurrentPlayingScene );
+			CGUISceneManager::Instance()->ReleaseWidgets( itor->first );
+			CGUISceneManager::Instance()->ReleaseResources( itor->first );
 		}
-		m_strCurrentPlayingScene = strUISceneName;
-		CGUISceneManager::Instance()->LoadResources( m_strCurrentPlayingScene );
-		CGUISceneManager::Instance()->LoadWidgets( m_strCurrentPlayingScene );
-		GSystem->OpenPage( CGUIWidgetManager::Instance()->GetPage( strUIPageName, m_strCurrentPlayingScene ));
+
+		//open new pages
+		m_mapScenes.clear();
+		m_mapScenes[strUISceneName] = arrayUIPageNames;
+		for( TMapScene::iterator itor = m_mapScenes.begin();
+			itor != m_mapScenes.end();
+			++itor )
+		{
+			CGUISceneManager::Instance()->LoadResources( itor->first );
+			CGUISceneManager::Instance()->LoadWidgets( itor->first );
+		}
 	}
 	catch (CGUIBaseException& rError)
 	{
-		::MessageBoxA(NULL, rError.what(), "error", MB_OK);
-
+		wxMessageBox( Gui2wxString( rError.what() ), _T("error") );
 		Close( true );
+	}
+
+	ReOpenPages();
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::ReOpenPages()
+{
+	for( TMapScene::iterator itor = m_mapScenes.begin();
+		itor != m_mapScenes.end();
+		++itor )
+	{
+		const CGUIString& rSceneName = itor->first;
+		std::vector<CGUIString>& rPagesInScene = itor->second;
+		for( unsigned i=0; i<rPagesInScene.size(); ++i )
+		{
+			CGUIWidget* pPage = CGUIWidgetManager::Instance()->GetPage( rPagesInScene[i], rSceneName );
+			if( pPage->IsOpen() == false )
+			{
+				GSystem->OpenPage( pPage );
+			}
+		}
 	}
 }
 //------------------------------------------------------------------------------
@@ -412,7 +510,7 @@ bool WxMainFrame::GetUIDataPath( CGUIString& rDataPath )
 	}
 	if( arrayArgs.size() >= 2 )
 	{
-		rDataPath = arrayArgs[1].char_str(wxConvUTF8).data();
+		rDataPath = wx2GuiString( arrayArgs[1]);
 		return true;
 	}
 
@@ -422,7 +520,7 @@ bool WxMainFrame::GetUIDataPath( CGUIString& rDataPath )
 	{
 		return false;
 	}
-	rDataPath = (aDlg.GetPath() + wxT("\\")).char_str(wxConvUTF8).data();
+	rDataPath = wx2GuiString(aDlg.GetPath() + wxT("\\"));
 	return true;
 }
 //------------------------------------------------------------------------------
@@ -534,9 +632,93 @@ void WxMainFrame::OnRefresh(wxCommandEvent& evt)
 	Refresh();
 }
 //------------------------------------------------------------------------------
-void WxMainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
+void WxMainFrame::OnOpenPage(wxCommandEvent& WXUNUSED(event))
 {
-	TryOpenUIPage( false );
+	OpenPage( false );
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnAddPage(wxCommandEvent& WXUNUSED(event))
+{
+	std::vector<CGUIString> arrayUIPageNames;
+	CGUIString strUISceneName;
+
+	if( !GetOpenPageInfo(strUISceneName, arrayUIPageNames))
+	{
+		return;
+	}
+
+	try
+	{
+		//open new pages
+		if( m_mapScenes.find( strUISceneName ) == m_mapScenes.end())
+		{
+			//new scene
+			m_mapScenes[strUISceneName] = arrayUIPageNames;
+			
+			CGUISceneManager::Instance()->LoadResources( strUISceneName );
+			CGUISceneManager::Instance()->LoadWidgets( strUISceneName );
+		}
+		else
+		{
+			for( uint32 i=0; i<arrayUIPageNames.size(); ++i )
+			{
+				if( std::find( m_mapScenes[strUISceneName].begin(), m_mapScenes[strUISceneName].end(), arrayUIPageNames[i] ) == arrayUIPageNames.end() )
+				{
+					m_mapScenes[strUISceneName].push_back( arrayUIPageNames[i] );
+				}
+			}
+		}
+	}
+	catch (CGUIBaseException& rError)
+	{
+		wxMessageBox( Gui2wxString( rError.what() ), _T("error") );
+		Close( true );
+	}
+
+	ReOpenPages( );
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnClosePage(wxCommandEvent& WXUNUSED(event))
+{
+	std::vector<CGUIString> arrayUIPageNames;
+	CGUIString strUISceneName;
+
+	if( !GetClosePageInfo(strUISceneName, arrayUIPageNames))
+	{
+		return;
+	}
+	if( m_mapScenes.find( strUISceneName ) == m_mapScenes.end() )
+	{
+		return;
+	}
+	std::vector<CGUIString>& rOpenPages = m_mapScenes[strUISceneName];
+	for( uint32 i=0; i<arrayUIPageNames.size(); ++i )
+	{
+		std::vector<CGUIString>::iterator itorFind = std::find( rOpenPages.begin(), rOpenPages.end(), arrayUIPageNames[i] );
+		if( itorFind != rOpenPages.end() )
+		{
+			rOpenPages.erase( itorFind );
+		}
+	}
+
+	if( rOpenPages.empty() )
+	{
+		GSystem->CloseAll();
+
+		//release resource
+		m_mapScenes.erase( m_mapScenes.find( strUISceneName ));
+		try
+		{
+			CGUISceneManager::Instance()->ReleaseWidgets( strUISceneName );
+			CGUISceneManager::Instance()->ReleaseResources( strUISceneName );
+		}
+		catch (CGUIBaseException& rError)
+		{
+			wxMessageBox( Gui2wxString( rError.what() ), _T("error") );
+			Close( true );
+		}
+	}
+	ReOpenPages();
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::OnExit(wxCommandEvent& WXUNUSED(event))
@@ -546,6 +728,6 @@ void WxMainFrame::OnExit(wxCommandEvent& WXUNUSED(event))
 //------------------------------------------------------------------------------
 void WxMainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
-	wxMessageBox(_("libguiex viewer"), _("About"), wxOK, this);
+	wxMessageBox( _T("libguiex viewer"), _T("About") );
 }
 //------------------------------------------------------------------------------

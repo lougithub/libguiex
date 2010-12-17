@@ -9,13 +9,13 @@
 #define __KEN_WIZARD_CREATE_WIDGET_20070927_H__
 
 //============================================================================//
-// declare
+// include
 //============================================================================// 
-namespace guiex
-{
-	class CGUIWidget;
-}
+#include <wx/wxprec.h>
+#include "wx/wizard.h"
+#include "libguiex_core/guiex.h"
 
+using namespace guiex;
 
 //============================================================================//
 // class
@@ -54,7 +54,7 @@ private:
 
 	wxComboBox* m_pComboBoxType;
 	wxTextCtrl* m_pEditName;
-	wxPropertyGridManager* m_pPropGridMgr;
+	class wxPropertyGridManager* m_pPropGridMgr;
 
 	CGUIWidget* m_pWidget;
 	CGUIWidget* m_pParent;

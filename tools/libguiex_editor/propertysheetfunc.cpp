@@ -9,7 +9,8 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include "libguiex_editor.h"
+#include "propertysheetfunc.h"
+#include "editorutility.h"
 
 #include "wxwidgetpropertygridextend.h"
 #include "propertysheetfunc.h"
@@ -125,7 +126,7 @@ void LoadWidgetConfig( wxPropertyGridManager* pSheetMgr, const std::string& rTyp
 	pSheetMgr->ExpandAll();
 }
 //------------------------------------------------------------------------------
-void			SetPropertyPageByEvent( wxPropertyGridManager* pSheetMgr, const std::string& rEvent )
+void SetPropertyPageByEvent( wxPropertyGridManager* pSheetMgr, const std::string& rEvent )
 {
 	if( rEvent == NOTEBOOK_EVENT_PAGE_NAME)
 	{
@@ -137,7 +138,7 @@ void			SetPropertyPageByEvent( wxPropertyGridManager* pSheetMgr, const std::stri
 	}
 	else
 	{
-		pSheetMgr->SelectPage(NOTEBOOK_PAGE_PROP);
+		pSheetMgr->SelectPage(NOTEBOOK_PAGE_APPEARANCE);
 	}
 }
 //------------------------------------------------------------------------------
@@ -173,13 +174,13 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 					Gui2wxString(aProp.GetTypeAsString()),
 					Gui2wxString(pWidget->GetName()),
 					Gui2wxString(pWidget->GetType()));
-				wxMessageBox(strError, _T("Error"), wxICON_ERROR|wxCentre);
+				wxMessageBox(strError, _T("Error") );
 				return;
 			}
 		}
 		catch (std::exception& rError)
 		{
-			wxMessageBox( Gui2wxString(rError.what()), _T("error"), wxICON_ERROR|wxCENTRE);
+			wxMessageBox( Gui2wxString(rError.what()), _T("error") );
 			return;
 		}
 	}
@@ -524,7 +525,7 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 	else
 	{
 		std::string strError = std::string("unsupported property type:  ")+aProp.GetTypeAsString();
-		wxMessageBox(Gui2wxString(strError), _T("Error"), wxICON_ERROR|wxCentre);
+		wxMessageBox(Gui2wxString(strError), _T("Error") );
 	}
 
 	//set type as client data
@@ -673,7 +674,7 @@ void GenerateGUIProperty( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPro
 	else
 	{
 		std::string strError = std::string("unsupported property type:  ")+pType->c_str();
-		wxMessageBox(Gui2wxString(strError), _T("Error"), wxICON_ERROR|wxCENTRE);
+		wxMessageBox(Gui2wxString(strError), _T("Error") );
 		throw CGUIException("unsupported property type: <%s>", pType->c_str());
 	}
 }

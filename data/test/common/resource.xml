@@ -1,9 +1,20 @@
 <?xml version="1.0" ?>
 <guiex>
-        <property name="base_font" type="CGUIFontDefine" >
-            <property name="path" type="CGUIString" value="font/MONACO.TTF"/>
+        <property name="font_ltype" type="CGUIFontDefine" >
+            <property name="path" type="CGUIString" value="font/LTYPE.TTF"/>
             <property name="index" type="int16" value="0"/>
         </property>
+
+        <property name="font_ltypeb" type="CGUIFontDefine" >
+            <property name="path" type="CGUIString" value="font/LTYPEB.TTF"/>
+            <property name="index" type="int16" value="1"/>
+        </property>
+
+        <property name="font_lhandw" type="CGUIFontDefine" >
+            <property name="path" type="CGUIString" value="font/LHANDW.TTF"/>
+            <property name="index" type="int16" value="2"/>
+        </property>
+
 
 		<property name="color_white" type="CGUIImageDefine">
 			<property name="color" type="CGUIColor" value="255,255,255,255"/>

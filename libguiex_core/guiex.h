@@ -109,5 +109,7 @@
 #include "guiUtility.h"
 #include "guiinterpolation.h"
 
+#include "sigslot.h"
+
 #endif //__GUI_EX_20060323_H__
 

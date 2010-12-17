@@ -8,10 +8,23 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include "libguiex_editor.h"
+#include "wxwizardcreatewidget.h"
+#include "editorutility.h"
+#include "propertysheetfunc.h"
+#include "propertyconfigmgr.h"
+#include "wxmainapp.h"
+#include "wxmainframe.h"
+
+#include <wx/propgrid/propgrid.h>
+#include <wx/propgrid/advprops.h>
+#include <wx/propgrid/manager.h>
+
+#include <libguiex_core/guiex.h>
 
 #include "bitmaps/wizard.xpm"
 #include "bitmaps/wizard2.xpm"
+
+using namespace guiex;
 
 //============================================================================//
 // function
@@ -22,7 +35,7 @@ EVT_WIZARD_FINISHED(wxID_ANY, WxWizardCreateWidget::OnWizardFinished)
 END_EVENT_TABLE()
 
 //------------------------------------------------------------------------------
-WxWizardCreateWidget::WxWizardCreateWidget(wxFrame *frame, guiex::CGUIWidget* pParent )
+WxWizardCreateWidget::WxWizardCreateWidget(wxFrame *frame, CGUIWidget* pParent )
 : wxWizard(frame,wxID_ANY,_T("Create Widget"),wxBitmap(wiztest_xpm),wxDefaultPosition,wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 ,m_pWidget(NULL)
 ,m_pParent(pParent)
@@ -111,10 +124,10 @@ wxWizardPageSimple* WxWizardCreateWidget::InitPage2()
 	// Register all editors (SpinCtrl etc.)
 	m_pPropGridMgr->RegisterAdditionalEditors();
 
-	m_pPropGridMgr->AddPage(wxT("Property"));
-	m_pPropGridMgr->AddPage(wxT("Image"));
-	m_pPropGridMgr->AddPage(wxT("Event"));
-	m_pPropGridMgr->SelectPage(NOTEBOOK_PAGE_PROP);
+	m_pPropGridMgr->AddPage(wxT(NOTEBOOK_APPEARANCE_PAGE_NAME));
+	m_pPropGridMgr->AddPage(wxT(NOTEBOOK_IMAGE_PAGE_NAME));
+	m_pPropGridMgr->AddPage(wxT(NOTEBOOK_EVENT_PAGE_NAME));
+	m_pPropGridMgr->SelectPage(NOTEBOOK_PAGE_APPEARANCE);
 	m_pPropGridMgr->Refresh();
 
 	wxBoxSizer* topSizer = new wxBoxSizer ( wxVERTICAL );
@@ -134,19 +147,19 @@ void WxWizardCreateWidget::OnWizardPageChanging(wxWizardEvent& event)
 		//page 1
 		if( m_pEditName->GetValue().empty())
 		{
-			wxMessageBox(_T("the widget name is empty!"), _T("Warning"),wxICON_WARNING | wxOK, this);
+			wxMessageBox(_T("the widget name is empty!"), _T("Warning") );
 			event.Veto();
 		}
-		else if (guiex::CGUIWidgetManager::Instance()->HasWidget(wx2GuiString( m_pEditName->GetValue()), GetMainFrame()->GetCurrentSceneName()))
+		else if (CGUIWidgetManager::Instance()->HasWidget(wx2GuiString( m_pEditName->GetValue()), GetMainFrame()->GetCurrentSceneName()))
 		{
-			wxMessageBox(_T("the widget name has existed!"), _T("Warning"),wxICON_WARNING | wxOK, this);
+			wxMessageBox(_T("the widget name has existed!"), _T("Warning") );
 			event.Veto();
 		}
 
 		if( m_strWidgetType != m_pComboBoxType->GetValue())
 		{
 			m_strWidgetType = m_pComboBoxType->GetValue();
-			m_pPropGridMgr->ClearPage(NOTEBOOK_PAGE_PROP);
+			m_pPropGridMgr->ClearPage(NOTEBOOK_PAGE_APPEARANCE);
 			m_pPropGridMgr->ClearPage(NOTEBOOK_PAGE_IMAGE);
 			m_pPropGridMgr->ClearPage(NOTEBOOK_PAGE_EVENT);
 			LoadWidgetConfig( m_pPropGridMgr, m_strWidgetType.char_str(wxConvUTF8).data() );
@@ -177,7 +190,7 @@ void WxWizardCreateWidget::OnWizardFinished(wxWizardEvent& event)
 	}
 	catch (CGUIBaseException& rError)
 	{
-		wxMessageBox( Gui2wxString(rError.what()), _T("error"), wxICON_ERROR|wxCENTRE);
+		wxMessageBox( Gui2wxString(rError.what()), _T("error") );
 
 		if( m_pWidget )
 		{
