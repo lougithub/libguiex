@@ -143,6 +143,7 @@ EVT_MENU(ID_VIEW_Ipad768x1024, WxMainFrame::OnIpad768x1024)
 EVT_MENU(ID_ToggleScissor, WxMainFrame::OnToggleScissor)
 EVT_MENU(ID_ToggleExtraInfo, WxMainFrame::OnToggleExtraInfo)
 EVT_MENU(ID_ToggleWireframe, WxMainFrame::OnToggleWireframe)
+EVT_MENU(ID_TogglePlayingAs, WxMainFrame::OnTogglePlayingAs)
 EVT_MENU(ID_SetBGColor, WxMainFrame::OnSetBGColor)
 EVT_MENU(ID_Refresh, WxMainFrame::OnRefresh)
 
@@ -332,6 +333,10 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 			CGUIWidgetFactory::Instance()->RegisterGenerator( *pGenerator);
 			pGenerator ++;
 		}
+
+		GSystem->SetDrawExtraInfo( true );
+		GSystem->SetRunScript( false );
+		GSystem->SetPlayingAs( false );
 	}
 	catch (CGUIBaseException& rError)
 	{
@@ -1124,7 +1129,7 @@ void WxMainFrame::OnRunScript(wxCommandEvent& evt)
 {
 	bool bIsChecked = evt.IsChecked();
 
-	if( GSystem->IsInitialized())
+	if( GSystem )
 	{
 		GSystem->SetRunScript(bIsChecked);
 	}
@@ -1140,11 +1145,21 @@ void WxMainFrame::OnToggleScissor(wxCommandEvent& evt)
 	}
 }
 //------------------------------------------------------------------------------
+void WxMainFrame::OnTogglePlayingAs(wxCommandEvent& evt)
+{
+	bool bIsChecked = evt.IsChecked();
+
+	if( GSystem )
+	{
+		GSystem->SetPlayingAs(bIsChecked);
+	}
+}
+//------------------------------------------------------------------------------
 void WxMainFrame::OnToggleExtraInfo(wxCommandEvent& evt)
 {
 	bool bIsChecked = evt.IsChecked();
 
-	if( CGUIInterfaceManager::Instance()->GetInterfaceRender())
+	if( GSystem )
 	{
 		GSystem->SetDrawExtraInfo(bIsChecked);
 	}
@@ -1771,7 +1786,8 @@ void			WxMainFrame::CreateMenu()
 	view_menu->AppendSeparator();
 	view_menu->Append(ID_ToggleScissor, wxT("Toggle Scissor"), wxT("enable or disable scissor"), wxITEM_CHECK);
 	view_menu->Append(ID_ToggleWireframe, wxT("Toggle Wireframe"), wxT("enable or disable wireframe"), wxITEM_CHECK);
-	view_menu->Append(ID_ToggleExtraInfo, wxT("render extra info"), wxT("enable or disable render extra info"), wxITEM_CHECK);
+	view_menu->Append(ID_ToggleExtraInfo, wxT("Toggle render extra info"), wxT("enable or disable render extra info"), wxITEM_CHECK);
+	view_menu->Append(ID_TogglePlayingAs, wxT("Toggle playing as"), wxT("enable or disable playing as"), wxITEM_CHECK);
 	view_menu->Append(ID_SetBGColor, wxT("Set BG Color"), wxT("set background color"));
 	view_menu->Append(ID_Refresh, wxT("Refresh"), wxT("refresh widgets"));
 

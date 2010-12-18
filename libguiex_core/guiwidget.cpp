@@ -1490,6 +1490,11 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void	CGUIWidget::UpdateAsSelf( real fDeltaTime )
 	{
+		if( GSystem->IsPlayingAs() == false )
+		{
+			return;
+		}
+
 		TListAs	listAsBuffer;
 		bool bIsAsPlaying = !m_listAsPlaying.empty();
 

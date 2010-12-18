@@ -1,5 +1,5 @@
 <guiex>
-    <property name="dlg_ok" type="CGUIWidgetDefine" value="CGUIWgtPanel">
+    <property name="dlg_okcancel" type="CGUIWidgetDefine" value="CGUIWgtPanel">
         <property name="BGIMAGE" type="CGUIImage" value="dialog_bg" />
         <property name="PANEL_BORDER_TOPRIGHT" type="CGUIImage" value="dialog_border_topright" />
         <property name="PANEL_BORDER_RIGHT" type="CGUIImage" value="dialog_border_right" />
@@ -38,8 +38,8 @@
         </property>
         <property name="auto_play_as" type="bool" value="true" />
     </property>
-    <property name="dlg_ok_content" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
-        <property name="parent" type="CGUIString" value="dlg_ok" />
+    <property name="dlg_okcancel_content" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
+        <property name="parent" type="CGUIString" value="dlg_okcancel" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
             <property name="value" type="CGUIVector2" value="0.5,0.00172186" />
@@ -67,8 +67,8 @@
         <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
         <property name="multiline" type="bool" value="true" />
     </property>
-    <property name="dlg_ok_button_ok" type="CGUIWidgetDefine" value="CGUIWgtButton">
-        <property name="parent" type="CGUIString" value="dlg_ok" />
+    <property name="dlg_okcancle_button_ok" type="CGUIWidgetDefine" value="CGUIWgtButton">
+        <property name="parent" type="CGUIString" value="dlg_okcancel" />
         <property name="BTN_NORMAL" type="CGUIImage" value="button_blue_normal" />
         <property name="BTN_HOVER" type="CGUIImage" value="button_blue_hover" />
         <property name="BTN_PUSH" type="CGUIImage" value="button_blue_push" />
@@ -95,12 +95,61 @@
         <property name="response_update_event" type="bool" value="false" />
         <property name="activable" type="bool" value="false" />
         <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0.3,0.512918" />
             <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
-            <property name="value" type="CGUIVector2" value="0.5,0.512918" />
         </property>
         <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="100,37" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-            <property name="value" type="CGUISize" value="148,37" />
+        </property>
+        <property name="movable" type="bool" value="false" />
+        <property name="text_offset" type="CGUIVector2" value="0,-3" />
+        <property name="textinfo_push" type="CGUIStringInfo">
+            <property name="size" type="uint16" value="16" />
+            <property name="index" type="int16" value="0" />
+            <property name="color" type="CGUIColor" value="255,255,255,255" />
+        </property>
+        <property name="textinfo_disable" type="CGUIStringInfo">
+            <property name="size" type="uint16" value="16" />
+            <property name="index" type="int16" value="0" />
+            <property name="color" type="CGUIColor" value="255,255,255,255" />
+        </property>
+        <property name="rotation" type="CGUIVector3" value="0,0,0" />
+    </property>
+    <property name="dlg_okcancel_button_cancel" type="CGUIWidgetDefine" value="CGUIWgtButton">
+        <property name="parent" type="CGUIString" value="dlg_okcancel" />
+        <property name="BTN_NORMAL" type="CGUIImage" value="button_blue_normal" />
+        <property name="BTN_HOVER" type="CGUIImage" value="button_blue_hover" />
+        <property name="BTN_PUSH" type="CGUIImage" value="button_blue_push" />
+        <property name="BTN_DISABLE" type="CGUIImage" value="button_blue_disable" />
+        <property name="alpha" type="real" value="1" />
+        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
+        <property name="textinfo_hover" type="CGUIStringInfo">
+            <property name="size" type="uint16" value="16" />
+            <property name="index" type="int16" value="0" />
+            <property name="color" type="CGUIColor" value="255,255,255,255" />
+        </property>
+        <property name="anchor" type="CGUIVector2" value="0.5,0" />
+        <property name="textinfo" type="CGUIStringInfo">
+            <property name="size" type="uint16" value="16" />
+            <property name="index" type="int16" value="0" />
+            <property name="color" type="CGUIColor" value="255,255,255,255" />
+        </property>
+        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
+        <property name="disable" type="bool" value="false" />
+        <property name="open_with_parent" type="bool" value="true" />
+        <property name="text" type="CGUIString" value="cancel" />
+        <property name="visible" type="bool" value="true" />
+        <property name="hitable" type="bool" value="true" />
+        <property name="response_update_event" type="bool" value="false" />
+        <property name="activable" type="bool" value="false" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0.7,0.512918" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="100,37" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="movable" type="bool" value="false" />
         <property name="text_offset" type="CGUIVector2" value="0,-3" />

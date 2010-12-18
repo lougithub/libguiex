@@ -49,6 +49,29 @@ CGUIString wx2GuiString( const wxString& rString )
 }
 //------------------------------------------------------------------------------
 
+//------------------------------------------------------------------------------
+typedef BOOL (APIENTRY *PFNWGLSWAPINTERVALFARPROC)( int );
+PFNWGLSWAPINTERVALFARPROC wglSwapIntervalEXT = 0;
+void setVSync(int interval=1)
+{
+	const char *extensions = (const char*)glGetString( GL_EXTENSIONS );
+
+	if( strstr( extensions, "WGL_EXT_swap_control" ) == 0 )
+	{
+		return; // Error: WGL_EXT_swap_control extension not supported on your computer.\n");
+	}
+	else
+	{
+		wglSwapIntervalEXT = (PFNWGLSWAPINTERVALFARPROC)wglGetProcAddress( "wglSwapIntervalEXT" );
+
+		if( wglSwapIntervalEXT )
+		{
+			wglSwapIntervalEXT(interval);
+		}
+	}
+}
+//------------------------------------------------------------------------------
+
 
 //------------------------------------------------------------------------------
 //	CGUIFrameworkViewer
@@ -311,6 +334,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent, wxWindowID id, const wxString& title,
 	//init framework
 	Show(true);
 	pCanvas->SetCurrent();
+	setVSync(0);
 
 	CGUIFrameworkViewer::ms_pFramework = new CGUIFrameworkViewer( );
 	CGUIFrameworkViewer::ms_pFramework->Initialize( CGUISize(1024, 768), strDataPath.c_str() );

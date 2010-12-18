@@ -116,6 +116,7 @@ namespace guiex
 		,m_nNameGenerateIdx(0)
 		,m_bShouldRunScript(true)
 		,m_bDrawExtraInfo(false)
+		,m_bPlayingAs( true )
 		,m_fSystemTime(0.0f)
 		,m_fTimerForFrame(0.0f)
 		,m_pImageManager( NULL )
@@ -313,6 +314,16 @@ namespace guiex
 		return m_bDrawExtraInfo;
 	}
 	//------------------------------------------------------------------------------
+	void CGUISystem::SetPlayingAs( bool bPlaying )
+	{
+		m_bPlayingAs = bPlaying;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUISystem::IsPlayingAs() const
+	{
+		return m_bPlayingAs;
+	}
+	//------------------------------------------------------------------------------
 	void CGUISystem::RegisterResourceManager( CGUIResourceManagerBase* pMgr )
 	{
 		m_listResourceManager.push_back( pMgr );
@@ -441,8 +452,8 @@ namespace guiex
 		}
 
 		//update dlg
-		for(TListDialog::iterator itor = m_listOpenedDlg.begin();
-			itor != m_listOpenedDlg.end();
+		for(TArrayWidget::iterator itor = m_arrayOpenedDlg.begin();
+			itor != m_arrayOpenedDlg.end();
 			++itor)
 		{
 			(*itor)->Update( fDeltaTime );
@@ -502,8 +513,8 @@ namespace guiex
 		}
 
 		//update dlg
-		for(TListDialog::iterator itor = m_listOpenedDlg.begin();
-			itor != m_listOpenedDlg.end();
+		for(TArrayWidget::iterator itor = m_arrayOpenedDlg.begin();
+			itor != m_arrayOpenedDlg.end();
 			++itor)
 		{
 			(*itor)->Refresh();
@@ -571,7 +582,19 @@ namespace guiex
 	*/
 	void CGUISystem::SetFocusWidget(CGUIWidget* pWidget)
 	{
+		if( pWidget == m_pWgtFocus )
+		{
+			return;
+		}
+		if( m_pWgtFocus )
+		{
+			m_pWgtFocus->GetOnWidgetDestroyedSignal().disconnect( this );
+		}
 		m_pWgtFocus = pWidget;
+		if( m_pWgtFocus )
+		{
+			m_pWgtFocus->GetOnWidgetDestroyedSignal().connect( this, &CGUISystem::OnWidgetDestroyed );
+		}
 	}
 	//------------------------------------------------------------------------------
 	/** 
@@ -602,8 +625,8 @@ namespace guiex
 			m_pWgtRoot->Render(pRender);
 		}
 		//render dlg
-		for(TListDialog::iterator itor = m_listOpenedDlg.begin();
-			itor != m_listOpenedDlg.end();
+		for(TArrayWidget::iterator itor = m_arrayOpenedDlg.begin();
+			itor != m_arrayOpenedDlg.end();
 			++itor)
 		{
 			(*itor)->Render(pRender);
@@ -625,8 +648,8 @@ namespace guiex
 				m_pWgtRoot->RenderExtraInfo(pRender);
 			}
 			//render dlg
-			for(TListDialog::iterator itor = m_listOpenedDlg.begin();
-				itor != m_listOpenedDlg.end();
+			for(TArrayWidget::iterator itor = m_arrayOpenedDlg.begin();
+				itor != m_arrayOpenedDlg.end();
 				++itor)
 			{
 				(*itor)->RenderExtraInfo(pRender);
@@ -657,7 +680,35 @@ namespace guiex
 		pPage->Open();
 		pPage->Refresh();
 
-		m_vOpenedPage.push_back(pPage);
+		m_arrayOpenedPage.push_back(pPage);
+	}
+	//------------------------------------------------------------------------------
+	void CGUISystem::CloseByAutoSelect( CGUIWidget* pWidget )
+	{
+		GUI_ASSERT( pWidget, "invalid parameter" );
+
+		//is page
+		TArrayWidget::iterator itorPage = std::find(m_arrayOpenedPage.begin(), m_arrayOpenedPage.end(), pWidget );
+		if( itorPage != m_arrayOpenedPage.end())
+		{
+			ClosePage( pWidget );
+			return;
+		}
+
+		//is dialog
+		TArrayWidget::iterator itorDlg = std::find(m_arrayOpenedDlg.begin(), m_arrayOpenedDlg.end(), pWidget );
+		if( itorDlg != m_arrayOpenedDlg.end())
+		{		
+			CloseDialog( pWidget );
+			return;
+		}
+
+		//is popup widget
+		if( pWidget == m_pPopupWidget )
+		{		
+			ClosePopupWidget( pWidget );
+			return;
+		}
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -677,12 +728,12 @@ namespace guiex
 			throw CGUIException( "[CGUISystem::ClosePage]: the page <%s> has closed!", pPage->GetName().c_str());
 		}
 
-		std::vector<CGUIWidget*>::iterator itor = std::find(m_vOpenedPage.begin(), m_vOpenedPage.end(), pPage );
-		if( itor == m_vOpenedPage.end())
+		TArrayWidget::iterator itor = std::find(m_arrayOpenedPage.begin(), m_arrayOpenedPage.end(), pPage );
+		if( itor == m_arrayOpenedPage.end())
 		{
 			throw CGUIException( "[CGUISystem::ClosePage]: can't find page in opend page <%s> list!", pPage->GetName().c_str());
 		}
-		m_vOpenedPage.erase( itor );
+		m_arrayOpenedPage.erase( itor );
 		pPage->Close();
 		pPage->SetParent(NULL);
 
@@ -696,19 +747,19 @@ namespace guiex
 	///< get opened page num, which should be opened by method OpenPage()
 	uint32 CGUISystem::GetOpenedPageNum() const
 	{
-		return m_vOpenedPage.size();
+		return m_arrayOpenedPage.size();
 	}
 	//------------------------------------------------------------------------------
 	///< get opened page by index
 	CGUIWidget*	CGUISystem::GetOpenedPageByIndex( uint32 nIdx )
 	{
-		if( nIdx >= m_vOpenedPage.size())
+		if( nIdx >= m_arrayOpenedPage.size())
 		{
 			throw CGUIException( "[CGUISystem::GetOpenedPageByIndex]: the given index <%d> is overflow, total opened page size is <%d>",
-				nIdx, m_vOpenedPage.size());
+				nIdx, m_arrayOpenedPage.size());
 		}
 
-		return m_vOpenedPage[nIdx];
+		return m_arrayOpenedPage[nIdx];
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -774,7 +825,7 @@ namespace guiex
 			m_aInputProcessor.Reset();
 		}
 
-		for( std::vector<CGUIWidget*>::iterator itor = m_vecPageGarbage.begin();
+		for( TArrayWidget::iterator itor = m_vecPageGarbage.begin();
 			itor != m_vecPageGarbage.end();
 			++itor )
 		{
@@ -782,7 +833,7 @@ namespace guiex
 		}
 		m_vecPageGarbage.clear();
 
-		for( std::vector<CGUIWidget*>::iterator itor = m_vecDynamicPageGarbage.begin();
+		for( TArrayWidget::iterator itor = m_vecDynamicPageGarbage.begin();
 			itor != m_vecDynamicPageGarbage.end();
 			++itor )
 		{
@@ -828,17 +879,13 @@ namespace guiex
 
 		pDlg->SetParent( NULL );
 
-		for( TListDialog::iterator itor = m_listOpenedDlg.begin();
-			itor != m_listOpenedDlg.end();
-			++itor)
+		TArrayWidget::iterator itor = std::find(m_arrayOpenedDlg.begin(), m_arrayOpenedDlg.end(), pDlg );
+		if( (*itor) == pDlg)
 		{
-			if( (*itor) == pDlg)
-			{
-				throw CGUIException( "[CGUISystem::OpenDialog]: failed to open dialog<%s:%s>, it has opened!", pDlg->GetSceneName().c_str(), pDlg->GetName().c_str());
-			}
+			throw CGUIException( "[CGUISystem::OpenDialog]: failed to open dialog<%s:%s>, it has opened!", pDlg->GetSceneName().c_str(), pDlg->GetName().c_str());
 		}
 
-		m_listOpenedDlg.push_back(pDlg);
+		m_arrayOpenedDlg.push_back(pDlg);
 		pDlg->Open();
 
 		GUI_TRACE( GUI_FORMAT("OpenDialog <%s : %s> \n", pDlg->GetSceneName().c_str(), pDlg->GetName().c_str()));
@@ -849,13 +896,13 @@ namespace guiex
 	*/
 	CGUIWidget*	CGUISystem::GetTopestDialog( ) const 
 	{
-		if(m_listOpenedDlg.empty())
+		if(m_arrayOpenedDlg.empty())
 		{
 			return NULL;
 		}
 		else
 		{
-			return m_listOpenedDlg.back();
+			return m_arrayOpenedDlg.back();
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -866,22 +913,18 @@ namespace guiex
 	{
 		GUI_ASSERT(pDlg, "invalid parameter");
 
-		for( TListDialog::iterator itor = m_listOpenedDlg.begin();
-			itor != m_listOpenedDlg.end();
-			++itor)
-		{
-			if( (*itor) == pDlg)
-			{		
-				m_listOpenedDlg.erase(itor);
-				UngisterGlobalKeyByRoot(pDlg);
-				pDlg->Close();
+		TArrayWidget::iterator itor = std::find(m_arrayOpenedDlg.begin(), m_arrayOpenedDlg.end(), pDlg );
+		if( (*itor) == pDlg)
+		{		
+			m_arrayOpenedDlg.erase(itor);
+			UngisterGlobalKeyByRoot(pDlg);
+			pDlg->Close();
 
-				if( m_pWidgetManager->HasDynamicPage( pDlg ) )
-				{
-					AddToDynamicGarbage( pDlg );
-				}
-				return;
+			if( m_pWidgetManager->HasDynamicPage( pDlg ) )
+			{
+				AddToDynamicGarbage( pDlg );
 			}
+			return;
 		}
 
 		throw CGUIException( "[CGUISystem::CloseDialog]: failed to close dialog <%s : %s>.", pDlg->GetSceneName().c_str(), pDlg->GetName().c_str());
@@ -969,9 +1012,9 @@ namespace guiex
 		}
 
 		//close all page
-		while( !m_vOpenedPage.empty())
+		while( !m_arrayOpenedPage.empty())
 		{
-			ClosePage(*m_vOpenedPage.begin());
+			ClosePage(*m_arrayOpenedPage.begin());
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -1170,4 +1213,13 @@ namespace guiex
 		return m_strDataPath;
 	}
 	//------------------------------------------------------------------------------
+	void CGUISystem::OnWidgetDestroyed( CGUIWidget* pWidget )
+	{
+		if( pWidget == m_pWgtFocus )
+		{
+			m_pWgtFocus = NULL;
+		}
+	}
+	//------------------------------------------------------------------------------
+
 }//namespace guiex

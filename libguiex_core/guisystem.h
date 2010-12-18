@@ -13,12 +13,12 @@
 // include
 //============================================================================// 
 #include "guibase.h"
-#include "guiinterfacemouse.h"
-#include "guitimer.h"
 #include "guistring.h"
 #include "guirect.h"
 #include "guievent.h"
 #include "guiinputprocessor.h"
+#include "guiinterfacemouse.h"
+#include "sigslot.h"
 #include <map>
 #include <set>
 #include <list>
@@ -33,7 +33,6 @@ namespace guiex
 {	
 	class CGUIWidget;
 	class CGUIEventKeyboard;
-	class CGUIProperty;
 
 	//for singleton
 	class CGUIImageManager;
@@ -62,7 +61,7 @@ namespace guiex
 	* @class CGUISystem
 	* @brief widget system
 	*/
-	class GUIEXPORT CGUISystem
+	class GUIEXPORT CGUISystem : public sigslot::has_slots<>
 	{
 	public:
 		CGUISystem();
@@ -79,6 +78,9 @@ namespace guiex
 
 		void SetDrawExtraInfo( bool bDraw );
 		bool IsDrawExtraInfo() const;
+
+		void SetPlayingAs( bool bPlaying );
+		bool IsPlayingAs() const;
 
 		void SetDataPath(const CGUIString& rDataPath);
 		const CGUIString& GetDataPath() const;
@@ -100,14 +102,16 @@ namespace guiex
 		CGUIWidget* GetOpenedPageByIndex( uint32 nIdx );
 
 		void OpenDialog(CGUIWidget* pDlg);
-		CGUIWidget* GetTopestDialog( ) const;
 		void CloseDialog(CGUIWidget* pDlg);
+		CGUIWidget* GetTopestDialog( ) const;
 
 		void OpenPopupWidget(CGUIWidget* pWidget);
 		CGUIWidget* GetCurrentPopupWidget( ) const;
 		void ClosePopupWidget(CGUIWidget* pWidget);
+
 		CGUIWidget* GetCurrentRootWidget( ) const;
 
+		void CloseByAutoSelect( CGUIWidget* pWidget );
 		void CloseAll();
 
 		//********************************************************
@@ -157,6 +161,8 @@ namespace guiex
 
 		real GetSystemTime() const;
 		int32 GetFPS() const;
+
+		void OnWidgetDestroyed(CGUIWidget* pWidget);
 
 		//********************************************************
 		//	singleton
@@ -226,13 +232,13 @@ namespace guiex
 
 		//----------------------------------------------------------------------
 		//page list
-		std::vector<CGUIWidget*> m_vOpenedPage;
-		std::vector<CGUIWidget*> m_vecPageGarbage;
-		std::vector<CGUIWidget*> m_vecDynamicPageGarbage;
+		typedef std::vector<CGUIWidget*>	TArrayWidget;	
+		TArrayWidget m_arrayOpenedPage;
+		TArrayWidget m_vecPageGarbage;
+		TArrayWidget m_vecDynamicPageGarbage;
 
 		//widget modal dialog
-		typedef std::list<CGUIWidget*>	TListDialog;	
-		TListDialog	m_listOpenedDlg; ///contain modal dialog
+		TArrayWidget m_arrayOpenedDlg; ///contain modal dialog
 		
 		//popup widget
 		CGUIWidget*	m_pPopupWidget; ///contain popup widget shown on top
@@ -264,6 +270,7 @@ namespace guiex
 		//index for name generating
 		//----------------------------------------------------------------------
 
+		bool m_bPlayingAs;
 		bool m_bDrawExtraInfo;
 		bool m_bShouldRunScript; //!< should system run script
 
