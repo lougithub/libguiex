@@ -6,7 +6,7 @@ if( APPLE )
 	# all source
 	set( ${execute_name}_code_SRCS 
 		ApplicationEngine.h
-		ApplicationEngine.mm
+		ApplicationEngine.cpp
 		hello_ipad.h
 		hello_ipad.mm
 		)

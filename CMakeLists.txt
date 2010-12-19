@@ -44,6 +44,7 @@ if( APPLE )
 	set( MACOSX_BUNDLE_GUI_IDENTIFIER "com.yourcompany.\${PRODUCT_NAME:rfc1034identifier}")
 
 	add_definitions(-fno-regmove)
+	add_definitions(-Wno-reorder)
 	remove_definitions(-msse)
 
     #set output directory
