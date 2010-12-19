@@ -97,6 +97,9 @@ namespace guiex
 				}
 			}
 			break;
+				
+		default:
+			break;
 		}
 
 		return bConsumed;

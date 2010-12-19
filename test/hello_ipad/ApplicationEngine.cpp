@@ -78,8 +78,13 @@ void CLibGuiexEngine::InitWidgets()
 	CGUISceneManager::Instance()->RegisterScenesFromDir("/", ".uip");
 	CGUISceneManager::Instance()->LoadResources( "common.uip" );
 	CGUISceneManager::Instance()->LoadWidgets( "common.uip" );
-	CGUIWidget* pWidget = CGUIWidgetManager::Instance()->GetPage( "dialog_ok.xml", "common.uip" );
+	CGUIWidget* pWidget = NULL;
+	pWidget = CGUIWidgetManager::Instance()->GetPage( "dialog_ok.xml", "common.uip" );
 	CGUISystem::Instance()->OpenPage(pWidget);	
+	pWidget = CGUIWidgetManager::Instance()->GetPage( "dialog_okcancel.xml", "common.uip" );
+	CGUISystem::Instance()->OpenPage(pWidget);	
+	pWidget = CGUIWidgetManager::Instance()->GetPage( "showfps.xml", "common.uip" );
+	CGUISystem::Instance()->OpenPage(pWidget);		
 }
 
 

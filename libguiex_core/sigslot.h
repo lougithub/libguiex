@@ -359,8 +359,7 @@ namespace sigslot {
 			arg5_type, arg6_type, mt_policy>* duplicate(has_slots<mt_policy>* pnewdest) = 0;
 	};
 
-	template<class arg1_type, class arg2_type, class arg3_type, class arg4_type,
-	class arg5_type, class arg6_type, class arg7_type, class mt_policy>
+	template<class arg1_type, class arg2_type, class arg3_type, class arg4_type,class arg5_type, class arg6_type, class arg7_type, class mt_policy>
 	class _connection_base7
 	{
 	public:
@@ -1926,9 +1925,9 @@ namespace sigslot {
 
 		void emit(arg1_type a1)
 		{
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itNext;
-			typename _signal_base0<mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
+			typename _signal_base1<arg1_type, mt_policy>::connections_list::const_iterator itNext;
+			typename _signal_base1<arg1_type, mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
+			typename _signal_base1<arg1_type, mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
 
 			while(it != itEnd)
 			{
@@ -1943,13 +1942,9 @@ namespace sigslot {
 
 		void operator()(arg1_type a1)
 		{
-			typename connections_list::const_iterator itNext;
-			typename connections_list::const_iterator it = this->m_connected_slots.begin();
-			typename connections_list::const_iterator itEnd = this->m_connected_slots.end();
-		
-			//typename _signal_base0<mt_policy>::connections_list::const_iterator itNext;
-			//typename _signal_base0<mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
-			//typename _signal_base0<mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
+			typename _signal_base1<arg1_type, mt_policy>::connections_list::const_iterator itNext;
+			typename _signal_base1<arg1_type, mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
+			typename _signal_base1<arg1_type, mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
 
 			while(it != itEnd)
 			{
@@ -1990,9 +1985,9 @@ namespace sigslot {
 
 		void emit(arg1_type a1, arg2_type a2)
 		{
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itNext;
-			typename _signal_base0<mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
+			typename _signal_base2<arg1_type, arg2_type, mt_policy>::connections_list::const_iterator itNext;
+			typename _signal_base2<arg1_type, arg2_type, mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
+			typename _signal_base2<arg1_type, arg2_type, mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
 
 			while(it != itEnd)
 			{
@@ -2007,9 +2002,9 @@ namespace sigslot {
 
 		void operator()(arg1_type a1, arg2_type a2)
 		{
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itNext;
-			typename _signal_base0<mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
+			typename _signal_base2<arg1_type, arg2_type, mt_policy>::connections_list::const_iterator itNext;
+			typename _signal_base2<arg1_type, arg2_type, mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
+			typename _signal_base2<arg1_type, arg2_type, mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
 
 			while(it != itEnd)
 			{
@@ -2051,9 +2046,9 @@ namespace sigslot {
 
 		void emit(arg1_type a1, arg2_type a2, arg3_type a3)
 		{
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itNext;
-			typename _signal_base0<mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
+			typename _signal_base3<arg1_type, arg2_type, arg3_type, mt_policy>::connections_list::const_iterator itNext;
+			typename _signal_base3<arg1_type, arg2_type, arg3_type, mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
+			typename _signal_base3<arg1_type, arg2_type, arg3_type, mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
 
 			while(it != itEnd)
 			{
@@ -2068,9 +2063,9 @@ namespace sigslot {
 
 		void operator()(arg1_type a1, arg2_type a2, arg3_type a3)
 		{
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itNext;
-			typename _signal_base0<mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
+			typename _signal_base3<arg1_type, arg2_type, arg3_type, mt_policy>::connections_list::const_iterator itNext;
+			typename _signal_base3<arg1_type, arg2_type, arg3_type, mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
+			typename _signal_base3<arg1_type, arg2_type, arg3_type, mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
 
 			while(it != itEnd)
 			{
@@ -2085,8 +2080,7 @@ namespace sigslot {
 	};
 
 	template<class arg1_type, class arg2_type, class arg3_type, class arg4_type, class mt_policy = SIGSLOT_DEFAULT_MT_POLICY>
-	class signal4 : public _signal_base4<arg1_type, arg2_type, arg3_type,
-		arg4_type, mt_policy>
+	class signal4 : public _signal_base4<arg1_type, arg2_type, arg3_type,arg4_type, mt_policy>
 	{
 	public:
 		signal4()
@@ -2113,9 +2107,9 @@ namespace sigslot {
 
 		void emit(arg1_type a1, arg2_type a2, arg3_type a3, arg4_type a4)
 		{
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itNext;
-			typename _signal_base0<mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
+			typename _signal_base4<arg1_type, arg2_type, arg3_type,arg4_type, mt_policy>::connections_list::const_iterator itNext;
+			typename _signal_base4<arg1_type, arg2_type, arg3_type,arg4_type, mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
+			typename _signal_base4<arg1_type, arg2_type, arg3_type,arg4_type, mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
 
 			while(it != itEnd)
 			{
@@ -2130,8 +2124,8 @@ namespace sigslot {
 
 		void operator()(arg1_type a1, arg2_type a2, arg3_type a3, arg4_type a4)
 		{
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itNext, it = this->m_connected_slots.begin();
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
+			typename _signal_base4<arg1_type, arg2_type, arg3_type,arg4_type, mt_policy>::connections_list::const_iterator itNext, it = this->m_connected_slots.begin();
+			typename _signal_base4<arg1_type, arg2_type, arg3_type,arg4_type, mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
 
 			while(it != itEnd)
 			{
@@ -2147,8 +2141,7 @@ namespace sigslot {
 
 	template<class arg1_type, class arg2_type, class arg3_type, class arg4_type,
 	class arg5_type, class mt_policy = SIGSLOT_DEFAULT_MT_POLICY>
-	class signal5 : public _signal_base5<arg1_type, arg2_type, arg3_type,
-		arg4_type, arg5_type, mt_policy>
+	class signal5 : public _signal_base5<arg1_type, arg2_type, arg3_type, arg4_type, arg5_type, mt_policy>
 	{
 	public:
 		signal5()
@@ -2178,9 +2171,9 @@ namespace sigslot {
 		void emit(arg1_type a1, arg2_type a2, arg3_type a3, arg4_type a4,
 			arg5_type a5)
 		{
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itNext;
-			typename _signal_base0<mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
+			typename _signal_base5<arg1_type, arg2_type, arg3_type, arg4_type, arg5_type, mt_policy>::connections_list::const_iterator itNext;
+			typename _signal_base5<arg1_type, arg2_type, arg3_type, arg4_type, arg5_type, mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
+			typename _signal_base5<arg1_type, arg2_type, arg3_type,arg4_type, arg5_type, mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
 
 			while(it != itEnd)
 			{
@@ -2196,9 +2189,9 @@ namespace sigslot {
 		void operator()(arg1_type a1, arg2_type a2, arg3_type a3, arg4_type a4,
 			arg5_type a5)
 		{
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itNext;
-			typename _signal_base0<mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
+			typename _signal_base5<arg1_type, arg2_type, arg3_type, arg4_type, arg5_type, mt_policy>::connections_list::const_iterator itNext;
+			typename _signal_base5<arg1_type, arg2_type, arg3_type, arg4_type, arg5_type, mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
+			typename _signal_base5<arg1_type, arg2_type, arg3_type, arg4_type, arg5_type, mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
 
 			while(it != itEnd)
 			{
@@ -2215,8 +2208,7 @@ namespace sigslot {
 
 	template<class arg1_type, class arg2_type, class arg3_type, class arg4_type,
 	class arg5_type, class arg6_type, class mt_policy = SIGSLOT_DEFAULT_MT_POLICY>
-	class signal6 : public _signal_base6<arg1_type, arg2_type, arg3_type,
-		arg4_type, arg5_type, arg6_type, mt_policy>
+	class signal6 : public _signal_base6<arg1_type, arg2_type, arg3_type, arg4_type, arg5_type, arg6_type, mt_policy>
 	{
 	public:
 		signal6()
@@ -2247,8 +2239,8 @@ namespace sigslot {
 		void emit(arg1_type a1, arg2_type a2, arg3_type a3, arg4_type a4,
 			arg5_type a5, arg6_type a6)
 		{
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itNext, it = this->m_connected_slots.begin();
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
+			typename _signal_base6<arg1_type, arg2_type, arg3_type,arg4_type, arg5_type, arg6_type, mt_policy>::connections_list::const_iterator itNext, it = this->m_connected_slots.begin();
+			typename _signal_base6<arg1_type, arg2_type, arg3_type,arg4_type, arg5_type, arg6_type, mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
 
 			while(it != itEnd)
 			{
@@ -2264,9 +2256,9 @@ namespace sigslot {
 		void operator()(arg1_type a1, arg2_type a2, arg3_type a3, arg4_type a4,
 			arg5_type a5, arg6_type a6)
 		{
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itNext;
-			typename _signal_base0<mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
+			typename _signal_base6<arg1_type, arg2_type, arg3_type,arg4_type, arg5_type, arg6_type, mt_policy>::connections_list::const_iterator itNext;
+			typename _signal_base6<arg1_type, arg2_type, arg3_type,arg4_type, arg5_type, arg6_type, mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
+			typename _signal_base6<arg1_type, arg2_type, arg3_type,arg4_type, arg5_type, arg6_type, mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
 
 			while(it != itEnd)
 			{
@@ -2282,8 +2274,7 @@ namespace sigslot {
 
 	template<class arg1_type, class arg2_type, class arg3_type, class arg4_type,
 	class arg5_type, class arg6_type, class arg7_type, class mt_policy = SIGSLOT_DEFAULT_MT_POLICY>
-	class signal7 : public _signal_base7<arg1_type, arg2_type, arg3_type,
-		arg4_type, arg5_type, arg6_type, arg7_type, mt_policy>
+	class signal7 : public _signal_base7<arg1_type, arg2_type, arg3_type,arg4_type, arg5_type, arg6_type, arg7_type, mt_policy>
 	{
 	public:
 		signal7()
@@ -2315,9 +2306,9 @@ namespace sigslot {
 		void emit(arg1_type a1, arg2_type a2, arg3_type a3, arg4_type a4,
 			arg5_type a5, arg6_type a6, arg7_type a7)
 		{
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itNext;
-			typename _signal_base0<mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
+			typename _signal_base7<arg1_type, arg2_type, arg3_type,arg4_type, arg5_type, arg6_type, arg7_type, mt_policy>::connections_list::const_iterator itNext;
+			typename _signal_base7<arg1_type, arg2_type, arg3_type,arg4_type, arg5_type, arg6_type, arg7_type, mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
+			typename _signal_base7<arg1_type, arg2_type, arg3_type,arg4_type, arg5_type, arg6_type, arg7_type, mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
 
 			while(it != itEnd)
 			{
@@ -2333,9 +2324,9 @@ namespace sigslot {
 		void operator()(arg1_type a1, arg2_type a2, arg3_type a3, arg4_type a4,
 			arg5_type a5, arg6_type a6, arg7_type a7)
 		{
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itNext;
-			typename _signal_base0<mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
+			typename _signal_base7<arg1_type, arg2_type, arg3_type,arg4_type, arg5_type, arg6_type, arg7_type, mt_policy>::connections_list::const_iterator itNext;
+			typename _signal_base7<arg1_type, arg2_type, arg3_type,arg4_type, arg5_type, arg6_type, arg7_type, mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
+			typename _signal_base7<arg1_type, arg2_type, arg3_type,arg4_type, arg5_type, arg6_type, arg7_type, mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
 
 			while(it != itEnd)
 			{
@@ -2351,8 +2342,7 @@ namespace sigslot {
 
 	template<class arg1_type, class arg2_type, class arg3_type, class arg4_type,
 	class arg5_type, class arg6_type, class arg7_type, class arg8_type, class mt_policy = SIGSLOT_DEFAULT_MT_POLICY>
-	class signal8 : public _signal_base8<arg1_type, arg2_type, arg3_type,
-		arg4_type, arg5_type, arg6_type, arg7_type, arg8_type, mt_policy>
+	class signal8 : public _signal_base8<arg1_type, arg2_type, arg3_type,arg4_type, arg5_type, arg6_type, arg7_type, arg8_type, mt_policy>
 	{
 	public:
 		signal8()
@@ -2385,9 +2375,9 @@ namespace sigslot {
 		void emit(arg1_type a1, arg2_type a2, arg3_type a3, arg4_type a4,
 			arg5_type a5, arg6_type a6, arg7_type a7, arg8_type a8)
 		{
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itNext;
-			typename _signal_base0<mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
+			typename _signal_base8<arg1_type, arg2_type, arg3_type,arg4_type, arg5_type, arg6_type, arg7_type, arg8_type, mt_policy>::connections_list::const_iterator itNext;
+			typename _signal_base8<arg1_type, arg2_type, arg3_type,arg4_type, arg5_type, arg6_type, arg7_type, arg8_type, mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
+			typename _signal_base8<arg1_type, arg2_type, arg3_type,arg4_type, arg5_type, arg6_type, arg7_type, arg8_type, mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
 
 			while(it != itEnd)
 			{
@@ -2403,9 +2393,9 @@ namespace sigslot {
 		void operator()(arg1_type a1, arg2_type a2, arg3_type a3, arg4_type a4,
 			arg5_type a5, arg6_type a6, arg7_type a7, arg8_type a8)
 		{
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itNext;
-			typename _signal_base0<mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
+			typename _signal_base8<arg1_type, arg2_type, arg3_type,arg4_type, arg5_type, arg6_type, arg7_type, arg8_type, mt_policy>::connections_list::const_iterator itNext;
+			typename _signal_base8<arg1_type, arg2_type, arg3_type,arg4_type, arg5_type, arg6_type, arg7_type, arg8_type, mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
+			typename _signal_base8<arg1_type, arg2_type, arg3_type,arg4_type, arg5_type, arg6_type, arg7_type, arg8_type, mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
 
 			while(it != itEnd)
 			{
