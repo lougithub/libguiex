@@ -1943,10 +1943,13 @@ namespace sigslot {
 
 		void operator()(arg1_type a1)
 		{
-			
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itNext;
-			typename _signal_base0<mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
-			typename _signal_base0<mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
+			typename connections_list::const_iterator itNext;
+			typename connections_list::const_iterator it = this->m_connected_slots.begin();
+			typename connections_list::const_iterator itEnd = this->m_connected_slots.end();
+		
+			//typename _signal_base0<mt_policy>::connections_list::const_iterator itNext;
+			//typename _signal_base0<mt_policy>::connections_list::const_iterator it = this->m_connected_slots.begin();
+			//typename _signal_base0<mt_policy>::connections_list::const_iterator itEnd = this->m_connected_slots.end();
 
 			while(it != itEnd)
 			{
