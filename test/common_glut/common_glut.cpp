@@ -27,10 +27,32 @@ CGUIFrameworkBase* g_pFramework = NULL;
 std::map<int,EKeyCode> g_mapKey_Glut2Guiex;
 CGUITimer g_aOldTimer;
 extern CGUIFrameworkBase* CreateFramework( );
+int g_nVSync = 1;
 
 //============================================================================//
 // function
 //============================================================================// 
+//------------------------------------------------------------------------------
+typedef BOOL (APIENTRY *PFNWGLSWAPINTERVALFARPROC)( int );
+PFNWGLSWAPINTERVALFARPROC wglSwapIntervalEXT = 0;
+void setVSync(int interval=1)
+{
+	const char *extensions = (const char*)glGetString( GL_EXTENSIONS );
+
+	if( strstr( extensions, "WGL_EXT_swap_control" ) == 0 )
+	{
+		return; // Error: WGL_EXT_swap_control extension not supported on your computer.\n");
+	}
+	else
+	{
+		wglSwapIntervalEXT = (PFNWGLSWAPINTERVALFARPROC)wglGetProcAddress( "wglSwapIntervalEXT" );
+
+		if( wglSwapIntervalEXT )
+		{
+			wglSwapIntervalEXT(interval);
+		}
+	}
+}
 //------------------------------------------------------------------------------
 void QuitApp()
 {
@@ -122,11 +144,23 @@ void KeyChar(unsigned char key, int x, int y)
 		}
 		break;
 
-	case 'w':	//wireframe or not
+	case 'w':	//wire frame or not
 		if( CGUIInterfaceManager::Instance()->GetInterfaceRender())
 		{
 			CGUIInterfaceManager::Instance()->GetInterfaceRender()->SetWireFrame( !CGUIInterfaceManager::Instance()->GetInterfaceRender()->IsWireFrame() );
 		}
+		break;
+
+	case 'e':	//extra info or not
+		if( GSystem )
+		{
+			GSystem->SetDrawExtraInfo( !GSystem->IsDrawExtraInfo() );
+		}
+		break;
+
+	case 'f':	//draw in full speed or not
+		g_nVSync = ( g_nVSync+1 ) % 2;
+		setVSync( g_nVSync );
 		break;
 
 	default:
@@ -193,27 +227,7 @@ void keyUpSpecial(int key, int x, int y)
 		CGUIInterfaceManager::Instance()->GetInterfaceKeyboard()->ChangeKeyState(itor->second, KEY_UP);
 	}
 }
-//------------------------------------------------------------------------------
-typedef BOOL (APIENTRY *PFNWGLSWAPINTERVALFARPROC)( int );
-PFNWGLSWAPINTERVALFARPROC wglSwapIntervalEXT = 0;
-void setVSync(int interval=1)
-{
-	const char *extensions = (const char*)glGetString( GL_EXTENSIONS );
 
-	if( strstr( extensions, "WGL_EXT_swap_control" ) == 0 )
-	{
-		return; // Error: WGL_EXT_swap_control extension not supported on your computer.\n");
-	}
-	else
-	{
-		wglSwapIntervalEXT = (PFNWGLSWAPINTERVALFARPROC)wglGetProcAddress( "wglSwapIntervalEXT" );
-
-		if( wglSwapIntervalEXT )
-		{
-			wglSwapIntervalEXT(interval);
-		}
-	}
-}
 //------------------------------------------------------------------------------
 int main(int argc, char** argv)
 {
@@ -257,14 +271,20 @@ int main(int argc, char** argv)
 	glutKeyboardUpFunc( KeyUpChar );
 	glutSpecialUpFunc( keyUpSpecial );
 
-	setVSync(0);
+	setVSync( g_nVSync );
 
 	// Set the clear color
 	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 	glViewport(0,0,g_nScreenWidth,g_nScreenHeight);
 
+	//get data path
+	char fdir[_MAX_DIR];
+	_splitpath( argv[0], NULL, fdir, NULL, NULL ); 
+	CGUIString rDir = fdir;
+	rDir += "../../data/test/";
+
 	g_pFramework = CreateFramework( );
-	g_pFramework->Initialize( CGUISize( g_nScreenWidth, g_nScreenHeight ), "../../data/test/" );
+	g_pFramework->Initialize( CGUISize( g_nScreenWidth, g_nScreenHeight ), rDir.c_str() );
 
 	g_aOldTimer.UpdateTime();
 	glutMainLoop();
