@@ -6,7 +6,7 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
-#import "hello_ipad.h"
+#import "common_ios.h"
 #import <UIKit/UIKit.h>
 #import <OpenGLES/ES1/glext.h>
 
@@ -206,3 +206,4 @@ int main(int argc, char *argv[]) {
 	[pool release];
 	return 0;
 }
+

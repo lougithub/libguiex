@@ -1,33 +1,45 @@
+set( target_name "example_hello_ipad" )
+message( STATUS "generate execute: " ${target_name} )
+
+
 if( APPLE )
-
-	set( execute_name "example_hello_ipad" )
-	message( STATUS "generate execute: " ${execute_name} )
-
-	# all source
-	set( ${execute_name}_code_SRCS 
-		ApplicationEngine.h
-		ApplicationEngine.cpp
-		hello_ipad.h
-		hello_ipad.mm
+	#common source
+	set( ${target_name}_common_SRCS
+		../common_ios/common_ios.mm
+		../common_ios/common_ios.h
+		../common_ios/common_ios_engine.cpp
+		../common_ios/common_ios_engine.h
 		)
-
-	#resource
-	set( ${execute_name}_resource_SRCS
-		"${PROJECT_SOURCE_DIR}/data/test/common/common.uip"
+	source_group( common FILES ${${target_name}_common_SRCS} )
+elseif( WIN32)
+	#common source
+	set( ${target_name}_common_SRCS
+		../common_glut/common_glut.cpp
 		)
-
-	#all
-	set( ${execute_name}_SRCS
-		${${execute_name}_code_SRCS} 
-		${${execute_name}_resource_SRCS}
-		)
+	source_group( common FILES ${${target_name}_common_SRCS} )
+else()
+    message( FATAL_ERROR "unsupport platform" )
+endif()	
 
 
+#test source
+set( ${target_name}_execute_SRCS
+	hello_ipad.cpp
+	)
+source_group( test FILES ${${target_name}_execute_SRCS} )
+
+# all source
+set( ${target_name}_SRCS 
+	"${${target_name}_common_SRCS}"
+	"${${target_name}_execute_SRCS}"
+	)
+
+if( APPLE )
 	# Set the OS X Bundle specific CMake variables which will be used to populate the plist for
 	# the application bundle
 	set( MACOSX_BUNDLE true )
-	set( MACOSX_BUNDLE_INFO_STRING "${execute_name}" )
-	set( MACOSX_BUNDLE_BUNDLE_NAME "${execute_name}" )
+	set( MACOSX_BUNDLE_INFO_STRING "${target_name}" )
+	set( MACOSX_BUNDLE_BUNDLE_NAME "${target_name}" )
 	#set( MACOSX_BUNDLE_ICON_FILE "iconname" )
 	#set( MACOSX_BUNDLE_GUI_IDENTIFIER "com.rogue-research.SimpleCocoaVTK" )
 	#set( MACOSX_BUNDLE_LONG_VERSION_STRING "${PROJECT_NAME} Version ${VTK_VERSION}" )
@@ -35,9 +47,10 @@ if( APPLE )
 	#set( MACOSX_BUNDLE_BUNDLE_VERSION ${VTK_VERSION} )
 	#set( MACOSX_BUNDLE_COPYRIGHT "Copyright 2010. All Rights Reserved." )
 
-	add_executable( ${execute_name} MACOSX_BUNDLE ${${execute_name}_SRCS} )
+	add_executable( ${target_name} MACOSX_BUNDLE ${${target_name}_SRCS} )
+
 	add_dependencies( 
-		${execute_name} 
+		${target_name} 
 		libguiex_module 
 		libguiex_widget 
 		libguiex_script_wrapper 
@@ -45,7 +58,48 @@ if( APPLE )
 		)
 
 	target_link_libraries(
-		${execute_name}
+		${target_name}
+		general libguiex_core
+		general libguiex_widget
+		general libguiex_module
+		general libguiex_script_wrapper
+		general libguiex_framework
+		general tinyxml
+		general lua
+		general freetype
+		)
+
+	add_custom_command(
+		TARGET ${target_name} 
+		POST_BUILD 
+		COMMAND ln
+		ARGS -fs ${PROJECT_SOURCE_DIR}/data/test ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${target_name}.app/test
+		WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+		COMMENT "copying resource ..."
+		)
+elseif( WIN32 )
+    #link directory
+    include_directories( "${PROJECT_SOURCE_DIR}/external/glut" )
+    
+    link_directories( "${PROJECT_SOURCE_DIR}/external/glut" )
+    
+    add_executable( ${target_name} ${${target_name}_SRCS} )
+    
+    add_dependencies( 
+    ${target_name}
+     libguiex_module 
+     libguiex_widget 
+     libguiex_framework
+      )
+	
+	macro_set_target_output_dir( ${target_name} )
+    
+    target_link_libraries( 
+		${target_name}  
+        general Imm32.lib 
+        general comctl32.lib 
+        general glut32.lib 
+        general Rpcrt4.lib
         general libguiex_core
         general libguiex_widget
         general libguiex_module
@@ -54,27 +108,9 @@ if( APPLE )
         general tinyxml
         general lua
         general freetype
-		)
-	#set resource data
-	#SET_SOURCE_FILES_PROPERTIES(
-	#    apple1_aux1
-	#    apple1_aux2
-	#    PROPERTIES
-	#    MACOSX_PACKAGE_LOCATION MacOSX
-	#    )
-	#set_source_files_properties(
-	#	${${execute_name}_resource_SRCS}
-	#	PROPERTIES MACOSX_PACKAGE_LOCATION Resources
-	#	)
+        )
+else()
+	message( FATAL_ERROR "unsupport platform" )
+endif()	
 
-	add_custom_command(
-		TARGET ${execute_name} 
-		POST_BUILD 
-		COMMAND ln
-		ARGS -fs ${PROJECT_SOURCE_DIR}/data/test ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${execute_name}.app/test
-		WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
-		COMMENT "copying resource ..."
-		)
-
-endif()
 

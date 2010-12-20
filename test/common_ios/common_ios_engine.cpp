@@ -1,27 +1,17 @@
 /*
- *  ApplicationEngine.cpp
- *  libguiex
+ *  common_ios_engine.cpp
  *
  *  Created by Lou Guo Liang on 11/10/10.
  *  Copyright 2010 __MyCompanyName__. All rights reserved.
  *
  */
 
-#include "ApplicationEngine.h"
+#include "common_ios_engine.h"
 
 //libguiex
 #include <libguiex_framework/guiframework.h>
 using namespace guiex;
 
-
-class CGUIFrameworkTest : public CGUIFramework
-{
-	public:
-		CGUIFrameworkTest(  )
-			:CGUIFramework(  )
-		{
-		}
-};
 
 class CLibGuiexEngine : public IApplicationEngine
 {
@@ -36,9 +26,10 @@ public:
     virtual void OnFingerMove(float oldx, float oldy, float x, float y);
 	
 private:
-	void InitWidgets();
-	CGUIFrameworkTest* m_pFramework;
+	CGUIFrameworkBase* m_pFramework;
 };
+
+extern CGUIFrameworkBase* CreateFramework( );
 
 struct IApplicationEngine* CreateApplicationEngine()
 {
@@ -67,24 +58,8 @@ CLibGuiexEngine::~CLibGuiexEngine()
 
 void CLibGuiexEngine::Initialize( int width, int height, const char* szDataPath )
 {
-	m_pFramework = new CGUIFrameworkTest(  );
+	m_pFramework = CreateFramework();
 	m_pFramework->Initialize( CGUISize( width, height ), (CGUIString(szDataPath) + "/test/").c_str() );
-	
-	InitWidgets();
-}
-
-void CLibGuiexEngine::InitWidgets()
-{	
-	CGUISceneManager::Instance()->RegisterScenesFromDir("/", ".uip");
-	CGUISceneManager::Instance()->LoadResources( "common.uip" );
-	CGUISceneManager::Instance()->LoadWidgets( "common.uip" );
-	CGUIWidget* pWidget = NULL;
-	pWidget = CGUIWidgetManager::Instance()->GetPage( "dialog_ok.xml", "common.uip" );
-	CGUISystem::Instance()->OpenPage(pWidget);	
-	pWidget = CGUIWidgetManager::Instance()->GetPage( "dialog_okcancel.xml", "common.uip" );
-	CGUISystem::Instance()->OpenPage(pWidget);	
-	pWidget = CGUIWidgetManager::Instance()->GetPage( "showfps.xml", "common.uip" );
-	CGUISystem::Instance()->OpenPage(pWidget);		
 }
 
 
