@@ -26,13 +26,13 @@ namespace guiex
 
 
 	//------------------------------------------------------------------------------
-	const char* IGUIInterfaceStringConv::StaticGetModuleName()
+	const char* IGUIInterfaceStringConv::StaticGetModuleType()
 	{ 
 		return "IGUIStringConv";
 	}
 	//------------------------------------------------------------------------------
-	IGUIInterfaceStringConv::IGUIInterfaceStringConv( )
-		:IGUIInterface( StaticGetModuleName() )
+	IGUIInterfaceStringConv::IGUIInterfaceStringConv( const char* szModuleName )
+		:IGUIInterface( StaticGetModuleType(), szModuleName)
 	{
 	}
 	//------------------------------------------------------------------------------

@@ -1,10 +1,10 @@
 /** 
- * @file guikeyboard_default.cpp
- * @brief default keyboard interface, the user has to 
- * set keyboard value himself
- * @author ken
- * @date 2006-07-18
- */
+* @file guikeyboard_default.cpp
+* @brief default keyboard interface, the user has to 
+* set keyboard value himself
+* @author ken
+* @date 2006-07-18
+*/
 
 //============================================================================//
 // include
@@ -13,37 +13,42 @@
 
 
 
-
-namespace guiex
-{
 //============================================================================//
 // function
 //============================================================================// 
-//------------------------------------------------------------------------------
-GUI_INTERFACE_IMPLEMENT(IGUIKeyboard_default);
-//------------------------------------------------------------------------------
-IGUIKeyboard_default::IGUIKeyboard_default()
+namespace guiex
 {
-}
-//------------------------------------------------------------------------------
-IGUIKeyboard_default::~IGUIKeyboard_default()
-{
-}
-//------------------------------------------------------------------------------
-int IGUIKeyboard_default::DoInitialize(void* )
-{
-	return 0;
-}
-//------------------------------------------------------------------------------
-void IGUIKeyboard_default::DoDestroy()
-{
-}
-//------------------------------------------------------------------------------
-void	IGUIKeyboard_default::DeleteSelf()
-{
-	delete this;
-}
-//------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------
+	GUI_INTERFACE_IMPLEMENT(IGUIKeyboard_default);
+	//------------------------------------------------------------------------------
+	const char* IGUIKeyboard_default::StaticGetModuleName()
+	{
+		return "IGUIKeyboard_default";
+	}
+	//------------------------------------------------------------------------------
+	IGUIKeyboard_default::IGUIKeyboard_default()
+		:IGUIInterfaceKeyboard( StaticGetModuleName() )
+	{
+	}
+	//------------------------------------------------------------------------------
+	IGUIKeyboard_default::~IGUIKeyboard_default()
+	{
+	}
+	//------------------------------------------------------------------------------
+	int IGUIKeyboard_default::DoInitialize(void* )
+	{
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	void IGUIKeyboard_default::DoDestroy()
+	{
+	}
+	//------------------------------------------------------------------------------
+	void	IGUIKeyboard_default::DeleteSelf()
+	{
+		delete this;
+	}
+	//------------------------------------------------------------------------------
 
 
 }//namespace guiex

@@ -35,7 +35,7 @@ namespace guiex
 		/** 
 		* @brief constructor
 		*/
-		IGUIInterfaceScript();
+		IGUIInterfaceScript( const char* szModuleName );
 
 		/** 
 		* @brief destructor
@@ -76,7 +76,7 @@ namespace guiex
 		virtual void ExecuteEventHandler(const CGUIString& rEventName, CGUIEvent* pEvent, const CGUIString& rSceneName)=0;
 
 	public: 
-		static const char* StaticGetModuleName();
+		static const char* StaticGetModuleType();
 	};
 
 }//namespace guiex

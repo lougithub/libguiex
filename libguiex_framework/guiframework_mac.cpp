@@ -58,21 +58,10 @@ namespace guiex
 		GSystem->SetScreenSize( rScreenSize );
 
 		//register interface
-		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengles);
-		GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_tga);
-		GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_cocoa);
-		GUI_REGISTER_INTERFACE_LIB( IGUIFileSys_cocoa);
-		GUI_REGISTER_INTERFACE_LIB( IGUIFont_cocoa);
-		GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
-		GUI_REGISTER_INTERFACE_LIB( IGUIScript_lua);
+		RegisterInterfaces();
 
 		//register widget
-		CGUIWidgetGenerator** pGenerator = GetAllGenerators();
-		while(*pGenerator)
-		{
-			CGUIWidgetFactory::Instance()->RegisterGenerator( *pGenerator);
-			pGenerator ++;
-		}
+		RegisterWidgetGenerators();
 
 		//set date path
 		GSystem->SetDataPath( pDataPath );
@@ -90,6 +79,27 @@ namespace guiex
 		}
 		GSystem->Release();
 		delete GSystem;
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Mac::RegisterInterfaces( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengles);
+		GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_tga);
+		GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_cocoa);
+		GUI_REGISTER_INTERFACE_LIB( IGUIFileSys_cocoa);
+		GUI_REGISTER_INTERFACE_LIB( IGUIFont_cocoa);
+		GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
+		GUI_REGISTER_INTERFACE_LIB( IGUIScript_lua);
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Mac::RegisterWidgetGenerators( )
+	{
+		CGUIWidgetGenerator** pGenerator = GetAllWidgetGenerators();
+		while(*pGenerator)
+		{
+			CGUIWidgetFactory::Instance()->RegisterGenerator( *pGenerator);
+			pGenerator ++;
+		}
 	}
 	//------------------------------------------------------------------------------ 
 	int32 CGUIFramework_Mac::InitializeGame( )

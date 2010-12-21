@@ -45,7 +45,13 @@ namespace guiex
 	GUI_INTERFACE_IMPLEMENT(IGUIScript_lua);
 
 	//------------------------------------------------------------------------------
+	const char* IGUIScript_lua::StaticGetModuleName()
+	{
+		return "IGUIScript_lua";
+	}
+	//------------------------------------------------------------------------------
 	IGUIScript_lua::IGUIScript_lua()
+		:IGUIInterfaceScript(StaticGetModuleName())
 	{
 	}
 	//------------------------------------------------------------------------------

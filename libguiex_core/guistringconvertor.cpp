@@ -157,7 +157,7 @@ namespace guiex
 	int32 StringToValue<int32>( const CGUIString& rString, int32& rValue)
 	{
 		unsigned long value = strtoul(rString.c_str(), 0, 10);
-		if( value > std::numeric_limits<int32>::max() )
+		if( value > unsigned long(std::numeric_limits<int32>::max()))
 		{
 			throw CGUIException(
 				"[StringToValue[int32]]: Value <%s> exceeds range of destination type",
@@ -223,7 +223,7 @@ namespace guiex
 	int32 StringToValue<int16>( const CGUIString& rString, int16& rValue)
 	{
 		unsigned long value = strtoul(rString.c_str(), 0, 10);
-		if( value > std::numeric_limits<int16>::max() )
+		if( value > unsigned long(std::numeric_limits<int16>::max()))
 		{
 			throw CGUIException(
 				"[StringToValue[int16]]: Value <%s> exceeds range of destination type",

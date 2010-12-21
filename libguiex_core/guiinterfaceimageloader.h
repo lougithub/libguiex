@@ -34,7 +34,7 @@ namespace guiex
 		/** 
 		* @brief constructor
 		*/
-		IGUIInterfaceImageLoader();
+		IGUIInterfaceImageLoader( const char* szModuleName );
 
 		/** 
 		* @brief destructor
@@ -60,7 +60,7 @@ namespace guiex
 		virtual void	DestroyImageData(CGUIImageData* pImageData) = 0;
 
 	public: 
-		static const char* StaticGetModuleName();
+		static const char* StaticGetModuleType();
 	};
 }//namespace guiex
 

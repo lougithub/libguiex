@@ -340,6 +340,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent, wxWindowID id, const wxString& title,
 	CGUIFrameworkViewer::ms_pFramework->Initialize( CGUISize(1024, 768), strDataPath.c_str() );
 	CGUIAssert::SetWarningCB( EditorWarningCB, NULL );
 	CGUISceneManager::Instance()->RegisterScenesFromDir( "/",".uip" );
+
 	m_mgr.Update();
 
 	OpenPage( true );

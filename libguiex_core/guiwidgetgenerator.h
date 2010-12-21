@@ -62,25 +62,6 @@ public: \
 	{ \
 		return widget::widget##_Generator::GenerateSelf(); \
 	}
-
-
-#define GUI_WIDGET_ALLGENERATOR_DECLARE( ) \
-	extern "C"  GUIEXPORT CGUIWidgetGenerator** GetAllGenerators();
-
-#define GUI_WIDGET_ALLGENERATOR_IMPLEMENT_BEGIN( ) \
-	extern "C"  GUIEXPORT CGUIWidgetGenerator** GetAllGenerators() \
-	{ \
-		static std::vector<CGUIWidgetGenerator*> aList; \
-		aList.clear();
-
-#define GUI_WIDGET_ALLGENERATOR_IMPLEMENT_ADD( widget ) \
-		aList.push_back( widget::widget##_Generator::GenerateSelf());
-
-#define GUI_WIDGET_ALLGENERATOR_IMPLEMENT_END( ) \
-		aList.push_back(NULL); \
-		return (CGUIWidgetGenerator**)&aList[0]; \
-	}
-
 }	//namespace guiex
 
 //============================================================================//

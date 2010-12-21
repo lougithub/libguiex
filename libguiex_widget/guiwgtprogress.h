@@ -37,11 +37,6 @@ namespace guiex
 		CGUIWgtProgress( const CGUIString& rName, const CGUIString& rSceneName );
 
 		/**
-		* @brief create this widget
-		*/
-		virtual void Create();
-
-		/**
 		* @brief set maximum value of progress
 		*/
 		void SetMaximumProgress( real nMaxmium );
@@ -68,27 +63,21 @@ namespace guiex
 		* for derived class
 		*/
 		CGUIWgtProgress( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
-
-		///initialize
 		void InitProgress();
 
-		/// render
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
-
-		/**
-		* @brief override the OnSetImage function
-		*/
+		virtual void OnCreate();
 		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage );
 
 	protected:	//!< callback function
 
 
 	protected:
-		const CGUIImage* m_pImageBg;		///< background
-		const CGUIImage* m_pImageFg;		///< foreground
+		const CGUIImage* m_pImageBg; ///< background
+		const CGUIImage* m_pImageFg; ///< foreground
 
-		real m_fMaximumValue;			///< maximum value of progress
-		real m_fCurrentValue;			///< current value of progress
+		real m_fMaximumValue; ///< maximum value of progress
+		real m_fCurrentValue; ///< current value of progress
 
 	private:
 		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtProgress);

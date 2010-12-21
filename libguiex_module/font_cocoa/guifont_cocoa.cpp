@@ -45,7 +45,13 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_INTERFACE_IMPLEMENT(IGUIFont_cocoa);
 	//------------------------------------------------------------------------------
+	const char* IGUIFont_cocoa::StaticGetModuleName()
+	{
+		return "IGUIFont_cocoa";
+	}
+	//------------------------------------------------------------------------------
 	IGUIFont_cocoa::IGUIFont_cocoa()
+		:IGUIInterfaceFont(StaticGetModuleName())
 	{
 	}
 	//------------------------------------------------------------------------------

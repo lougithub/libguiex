@@ -46,7 +46,7 @@ namespace guiex
 		*		- true the income message contain keyboard information
 		*		- false the income message doesn't contain keyboard information
 		*/
-		bool			ProcessWindowMessage(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+		bool ProcessWindowMessage(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 	protected:
 		/** 
@@ -66,6 +66,9 @@ namespace guiex
 
 	protected:
 		std::map<int/*vk*/, EKeyCode/*ik*/> m_mapVkIk;
+
+	public: 
+		static const char* StaticGetModuleName();
 	};
 
 

@@ -31,8 +31,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_INTERFACE_IMPLEMENT(IGUIIme_winapi);
 	//------------------------------------------------------------------------------
+	const char* IGUIIme_winapi::StaticGetModuleName()
+	{
+		return "IGUIIme_winapi";
+	}
+	//------------------------------------------------------------------------------
 	IGUIIme_winapi::IGUIIme_winapi()
-		:m_hWnd(NULL)
+		:IGUIInterfaceIme( StaticGetModuleName() )
+		,m_hWnd(NULL)
 		,m_bIsOpen(false)
 	{
 	}

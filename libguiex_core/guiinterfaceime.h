@@ -30,7 +30,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		IGUIInterfaceIme();
+		IGUIInterfaceIme( const char* szModuleName );
 
 		/**
 		* @brief destructor
@@ -63,7 +63,7 @@ namespace guiex
 		//virtual uint32		GetFontSize( ) = 0;
 
 	public: 
-		static const char* StaticGetModuleName();
+		static const char* StaticGetModuleType();
 	};
 
 }//namespace guiex

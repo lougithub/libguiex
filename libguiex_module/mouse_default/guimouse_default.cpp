@@ -22,7 +22,13 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_INTERFACE_IMPLEMENT(IGUIMouse_default);
 	//------------------------------------------------------------------------------
+	const char* IGUIMouse_default::StaticGetModuleName()
+	{
+		return "IGUIMouse_default";
+	}
+	//------------------------------------------------------------------------------
 	IGUIMouse_default::IGUIMouse_default()
+		:IGUIInterfaceMouse( StaticGetModuleName() )
 	{
 	}
 	//------------------------------------------------------------------------------

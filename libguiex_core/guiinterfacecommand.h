@@ -33,7 +33,7 @@ namespace guiex
 		/** 
 		* @brief constructor
 		*/
-		IGUIInterfaceCommand();
+		IGUIInterfaceCommand( const char* szModuleName );
 
 		/** 
 		* @brief destructor
@@ -52,7 +52,7 @@ namespace guiex
 		virtual	void Send( const CGUIString& rOutput ) = 0;
 
 	public: 
-		static const char* StaticGetModuleName();
+		static const char* StaticGetModuleType();
 	};
 }//namespace guiex
 

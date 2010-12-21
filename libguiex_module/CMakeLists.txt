@@ -3,6 +3,13 @@ message( STATUS "generate library: " ${target_name} )
 
 # modify module list here --begin--
 
+#physics_box2d
+set( ${target_name}_physics_box2d_SRCS 
+	physics_box2d/guiphysics_box2d.cpp
+	physics_box2d/guiphysics_box2d.h
+	)
+source_group(physics_box2d FILES ${${target_name}_physics_box2d_SRCS} )
+
 #configfile_tinyxml
 set( ${target_name}_configfile_tinyxml_SRCS 
 	configfile_tinyxml/guiconfigfile_tinyxml.cpp
@@ -22,7 +29,7 @@ set( ${target_name}_filesys_cocoa_SRCS
 	filesys_cocoa/guifilesys_cocoa.mm
 	filesys_cocoa/guifilesys_cocoa.h
 	)
-source_group(filesys_cocoa FILES ${${target_name}_filesys_stdio_SRCS} )
+source_group(filesys_cocoa FILES ${${target_name}_filesys_cocoa_SRCS} )
 
 #font_ft2
 set( ${target_name}_font_ft2_SRCS 
@@ -159,6 +166,7 @@ if( WIN32 )
 		${${target_name}_script_lua_SRCS}
 		${${target_name}_render_opengl_SRCS}
 		${${target_name}_stringconv_winapi_SRCS}
+		${${target_name}_physics_box2d_SRCS}
 		)
 
 elseif( APPLE )
@@ -174,6 +182,7 @@ elseif( APPLE )
 		${${target_name}_stringconv_iconv_SRCS}
 		${${target_name}_stringconv_cocoa_SRCS}
 		${${target_name}_script_lua_SRCS}
+		${${target_name}_physics_box2d_SRCS}
 		)
 
 else( )
@@ -188,6 +197,7 @@ endif( )
 include_directories( "${PROJECT_SOURCE_DIR}/external/tinyxml" )
 include_directories( "${PROJECT_SOURCE_DIR}/external/lua/src" )
 include_directories( "${PROJECT_SOURCE_DIR}/external/freetype/include" )
+    include_directories( "${PROJECT_SOURCE_DIR}/external/Box2D" )
 
 add_library( ${target_name} STATIC ${${target_name}_SRCS} )
 
@@ -199,5 +209,6 @@ add_dependencies(
 	lua 
 	tinyxml 
 	freetype 
+	box2d
 	)
 

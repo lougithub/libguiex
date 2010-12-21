@@ -431,14 +431,14 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtScrollbar::Create()
+	void CGUIWgtScrollbar::OnCreate()
 	{
+		CGUIWidget::OnCreate();
+
 		//for child
 		m_pArrow[0]->Create();
 		m_pArrow[1]->Create();
 		m_pSlide->Create();
-
-		CGUIWidget::Create();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtScrollbar::RenderSelf(IGUIInterfaceRender* pRender)

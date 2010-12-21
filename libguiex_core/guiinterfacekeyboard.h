@@ -182,14 +182,7 @@ namespace guiex
 		};
 
 	public:
-		/** 
-		* @brief constructor
-		*/
-		IGUIInterfaceKeyboard();
-
-		/** 
-		* @brief destructor
-		*/
+		IGUIInterfaceKeyboard( const char* szModuleName );
 		virtual ~IGUIInterfaceKeyboard();
 
 		/**
@@ -232,7 +225,7 @@ namespace guiex
 		SKeyContext	m_aContext;				///< key's context
 
 	public: 
-		static const char* StaticGetModuleName();
+		static const char* StaticGetModuleType();
 	};
 
 }//namespace guiex

@@ -1,4 +1,4 @@
-set( target_name "Box2D" )
+set( target_name "box2d" )
 message( STATUS "generate library: " ${target_name} )
 
 set(BOX2D_Collision_SRCS

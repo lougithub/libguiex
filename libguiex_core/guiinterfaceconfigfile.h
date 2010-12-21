@@ -39,7 +39,7 @@ namespace guiex
 		/** 
 		* @brief constructor
 		*/
-		IGUIInterfaceConfigFile();
+		IGUIInterfaceConfigFile( const char* szModuleName );
 
 		/** 
 		* @brief destructor
@@ -50,7 +50,7 @@ namespace guiex
 		virtual int32 LoadConfigFile( const CGUIString& rFileName, CGUIProperty& rPropertySet ) = 0;
 
 	public: 
-		static const char* StaticGetModuleName();
+		static const char* StaticGetModuleType();
 	};
 }//namespace guiex
 

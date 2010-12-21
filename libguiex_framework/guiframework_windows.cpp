@@ -63,24 +63,10 @@ namespace guiex
 		GSystem->SetScreenSize( rScreenSize );
 
 		//register interface
-		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl);
-		GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_tga);
-		GUI_REGISTER_INTERFACE_LIB( IGUIFileSys_stdio);
-		GUI_REGISTER_INTERFACE_LIB( IGUIMouse_winapi);
-		GUI_REGISTER_INTERFACE_LIB( IGUIKeyboard_winapi);
-		GUI_REGISTER_INTERFACE_LIB( IGUIFont_ft2);
-		GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
-		GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_winapi);
-		GUI_REGISTER_INTERFACE_LIB( IGUIScript_lua );
-		GUI_REGISTER_INTERFACE_LIB_ARG( IGUIIme_winapi, GetForegroundWindow() );
+		RegisterInterfaces();
 
 		//register widget
-		CGUIWidgetGenerator** pGenerator = GetAllGenerators();
-		while(*pGenerator)
-		{
-			CGUIWidgetFactory::Instance()->RegisterGenerator( *pGenerator);
-			pGenerator ++;
-		}
+		RegisterWidgetGenerators();
 
 		//set date path
 		GSystem->SetDataPath( pDataPath );
@@ -98,6 +84,30 @@ namespace guiex
 		}
 		GSystem->Release();
 		delete GSystem;
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Windows::RegisterInterfaces( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl);
+		GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_tga);
+		GUI_REGISTER_INTERFACE_LIB( IGUIFileSys_stdio);
+		GUI_REGISTER_INTERFACE_LIB( IGUIMouse_winapi);
+		GUI_REGISTER_INTERFACE_LIB( IGUIKeyboard_winapi);
+		GUI_REGISTER_INTERFACE_LIB( IGUIFont_ft2);
+		GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
+		GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_winapi);
+		GUI_REGISTER_INTERFACE_LIB( IGUIScript_lua );
+		GUI_REGISTER_INTERFACE_LIB_ARG( IGUIIme_winapi, ::GetForegroundWindow() );
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Windows::RegisterWidgetGenerators( )
+	{
+		CGUIWidgetGenerator** pGenerator = GetAllWidgetGenerators();
+		while(*pGenerator)
+		{
+			CGUIWidgetFactory::Instance()->RegisterGenerator( *pGenerator);
+			pGenerator ++;
+		}
 	}
 	//------------------------------------------------------------------------------ 
 	int32 CGUIFramework_Windows::InitializeGame( )

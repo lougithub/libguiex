@@ -54,6 +54,8 @@ namespace guiex
 		,m_pInterfaceCommand(NULL)
 		,m_pInterfaceIme(NULL)
 		,m_pInterfaceStringConv(NULL)
+		,m_pInterfaceImageLoader(NULL)
+		,m_pInterfacePhysics(NULL)
 	{
 		GUI_ASSERT( !m_pSingleton, "[CGUIInterfaceManager::CGUIInterfaceManager]:instance has been created" ); 
 		m_pSingleton = this; 
@@ -131,6 +133,10 @@ namespace guiex
 		else if( rInterface == "IGUIImageLoader" )
 		{
 			m_pInterfaceImageLoader = (IGUIInterfaceImageLoader*)rInterfaceData.m_pInterface;
+		}
+		else if( rInterface == "IGUIPhysics" )
+		{
+			m_pInterfacePhysics = (IGUIInterfacePhysics*)rInterfaceData.m_pInterface;
 		}
 		else
 		{
@@ -212,8 +218,7 @@ namespace guiex
 	*/
 	int	CGUIInterfaceManager::RegisterInterface( const CGUIString& rInterface, IGUIInterface* pInterface )
 	{
-		GUI_TRACE( GUI_FORMAT( "[CGUIInterfaceManager::RegisterInterface]:\n    Register interface <%s>\n\n",
-			rInterface.c_str()));
+		GUI_TRACE( GUI_FORMAT( "[CGUIInterfaceManager::RegisterInterface]:\n    Register interface <%s>\n\n", rInterface.c_str()));
 
 		GUI_ASSERT(pInterface,"wrong parameter");
 
@@ -225,7 +230,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int CGUIInterfaceManager::UnregisterInterface( IGUIInterface* pInterface )
 	{
-		return UnregisterInterface( pInterface->GetModuleName() );
+		return UnregisterInterface( pInterface->GetModuleType() );
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -304,6 +309,14 @@ namespace guiex
 			else if( rInterface == "IGUIStringConv" )
 			{
 				m_pInterfaceStringConv = NULL;
+			}
+			else if( rInterface == "IGUIPhysics" )
+			{
+				m_pInterfacePhysics = NULL;
+			}
+			else if( rInterface == "IGUIImageLoader" )
+			{
+				m_pInterfaceImageLoader = NULL;
 			}
 			else
 			{

@@ -21,7 +21,13 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_INTERFACE_IMPLEMENT(IGUIStringConv_cocoa);
 	//------------------------------------------------------------------------------
+	const char* IGUIStringConv_cocoa::StaticGetModuleName()
+	{
+		return "IGUIStringConv_cocoa";
+	}
+	//------------------------------------------------------------------------------
 	IGUIStringConv_cocoa::IGUIStringConv_cocoa()
+		:IGUIInterfaceStringConv(StaticGetModuleName())
 	{
 	}
 	//------------------------------------------------------------------------------

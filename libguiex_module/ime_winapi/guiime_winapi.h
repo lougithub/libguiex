@@ -109,6 +109,9 @@ namespace guiex
 
 		HWND m_hWnd; /// handle of the windows
 		bool m_bIsOpen;	/// flag, whether ime is opened
+
+	public: 
+		static const char* StaticGetModuleName();
 	};
 
 

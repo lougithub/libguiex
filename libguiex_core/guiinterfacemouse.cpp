@@ -18,13 +18,13 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	const char* IGUIInterfaceMouse::StaticGetModuleName()
+	const char* IGUIInterfaceMouse::StaticGetModuleType( )
 	{ 
 		return "IGUIMouse";
 	}
 	//------------------------------------------------------------------------------
-	IGUIInterfaceMouse::IGUIInterfaceMouse( )
-		:IGUIInterface( StaticGetModuleName() )
+	IGUIInterfaceMouse::IGUIInterfaceMouse( const char* szModuleName )
+		:IGUIInterface( StaticGetModuleType(), szModuleName )
 	{
 		Reset();
 	}
@@ -44,11 +44,18 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------ 
+	/**
+	* @brief process mouse event
+	* @return whether this event is consumed;
+	*/
 	bool IGUIInterfaceMouse::ProcessMouseEvent( const SMouseEvent& rEvent )
 	{
 		return GSystem->ProcessMouseInput( rEvent );
 	}
 	//--------------------------------------------------------------------------------------
+	/**
+	* @brief set state of button
+	*/
 	bool IGUIInterfaceMouse::ChangeButtonState( EMouseButton eButton,  EMouseState eState )
 	{
 		GUI_ASSERT( eButton > MOUSE_NONE && eButton < _MOUSE_BUTTON_MAX_,"wrong parameter" );
@@ -74,6 +81,9 @@ namespace guiex
 		return bConsumed;
 	}
 	//--------------------------------------------------------------------------------------
+	/**
+	* @brief set mouse position
+	*/
 	bool IGUIInterfaceMouse::ChangeMousePos( const CGUIVector2& rPos )
 	{
 		m_aContext.m_aPosCur = rPos;
@@ -81,6 +91,9 @@ namespace guiex
 		return ProcessMouseEvent(SMouseEvent( MOUSE_EVENT_MOVE,MOUSE_NONE, m_aContext.m_aPosCur.x, m_aContext.m_aPosCur.y));
 	}
 	//--------------------------------------------------------------------------------------
+	/**
+	* @brief set mouse position
+	*/
 	bool IGUIInterfaceMouse::ChangeWheel( real fWheelChange )
 	{
 		m_aContext.m_fWheelChange = fWheelChange;
@@ -88,17 +101,27 @@ namespace guiex
 		return ProcessMouseEvent(SMouseEvent( MOUSE_EVENT_WHEEL,MOUSE_MIDDLE, m_aContext.m_aPosCur.x, m_aContext.m_aPosCur.y, fWheelChange));
 	}
 	//--------------------------------------------------------------------------------------
+	/**
+	* @brief get current state of button
+	*/
 	EMouseState	IGUIInterfaceMouse::GetButtonState(int eButton)
 	{
 		GUI_ASSERT( eButton > MOUSE_NONE && eButton < _MOUSE_BUTTON_MAX_,"wrong parameter" );
 		return m_aContext.m_eMouseStateCur[eButton];
 	}
 	//--------------------------------------------------------------------------------------
+
+	/**
+	* @brief get current position of mouse, global position
+	*/
 	const CGUIVector2& IGUIInterfaceMouse::GetPosition() const
 	{
 		return m_aContext.m_aPosCur;
 	}
 	//--------------------------------------------------------------------------------------
+	/**
+	* @brief get mouse position
+	*/
 	real IGUIInterfaceMouse::GetWheelChange( ) const
 	{
 		return m_aContext.m_fWheelChange;

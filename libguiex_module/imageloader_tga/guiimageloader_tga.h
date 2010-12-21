@@ -60,12 +60,12 @@ namespace guiex
 		/**
 		* @brief destroy image data
 		*/
-		virtual void	DestroyImageData(CGUIImageData* pImageData);
+		virtual void DestroyImageData(CGUIImageData* pImageData);
 
 		/**
 		* @brief used to delete this object
 		*/
-		virtual void	DeleteSelf();
+		virtual void DeleteSelf();
 
 	protected:
 		/** 
@@ -83,6 +83,8 @@ namespace guiex
 		CGUIImageData* LoadUncompressedTGA( uint8* pFileData, size_t nSize );
 		CGUIImageData* LoadCompressedTGA( uint8* pFileData, size_t nSize );
 
+	public: 
+		static const char* StaticGetModuleName();
 	};
 
 

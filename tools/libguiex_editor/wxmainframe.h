@@ -13,6 +13,7 @@
 // include
 //============================================================================// 
 #include "wxtexteditor.h"
+#include "guiframeworkeditor.h"
 
 #include <wx/wxprec.h>
 #include <wx/aui/aui.h>
@@ -86,7 +87,6 @@ public:
 		ID_DeleteWidget,
 		ID_WidgetUp,
 		ID_WidgetDown,
-		ID_RunScript,
 		
 		//view
 		ID_VIEW_Fullscreen,
@@ -231,7 +231,6 @@ protected:
 	void OnUpdateWidgetUp(wxUpdateUIEvent& event);
 	void OnWidgetDown(wxCommandEvent& evt);
 	void OnUpdateWidgetDown(wxUpdateUIEvent& event);
-	void OnRunScript(wxCommandEvent& evt);
 	void OnToggleScissor(wxCommandEvent& evt);
 	void OnToggleExtraInfo(wxCommandEvent& evt);
 	void OnToggleWireframe(wxCommandEvent& evt);

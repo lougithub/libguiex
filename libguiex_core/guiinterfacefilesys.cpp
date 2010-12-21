@@ -17,13 +17,13 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	const char* IGUIInterfaceFileSys::StaticGetModuleName()
+	const char* IGUIInterfaceFileSys::StaticGetModuleType()
 	{ 
 		return "IGUIFileSys";
 	}
 	//------------------------------------------------------------------------------
-	IGUIInterfaceFileSys::IGUIInterfaceFileSys( )
-		:IGUIInterface(StaticGetModuleName())
+	IGUIInterfaceFileSys::IGUIInterfaceFileSys( const char* szModuleName )
+		:IGUIInterface(StaticGetModuleType(), szModuleName)
 	{
 	}
 	//------------------------------------------------------------------------------

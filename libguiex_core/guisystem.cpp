@@ -439,6 +439,9 @@ namespace guiex
 	*/
 	void CGUISystem::Update( real fDeltaTime )
 	{
+		//update physics
+		UpdatePhysics( fDeltaTime );
+
 		//update time and frame
 		UpdateTime( fDeltaTime );
 
@@ -804,6 +807,14 @@ namespace guiex
 			m_nFps = m_aFrame;
 			//GUI_TRACE( GUI_FORMAT( "\n--- FRAME %d --- \n",  m_aFrame));
 			m_aFrame = 0;
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUISystem::UpdatePhysics(real fDeltaTime)
+	{
+		if( m_pInterfaceManager->GetInterfacePhysics() )
+		{
+			m_pInterfaceManager->GetInterfacePhysics()->Update( fDeltaTime );
 		}
 	}
 	//------------------------------------------------------------------------------

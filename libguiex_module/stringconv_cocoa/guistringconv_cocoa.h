@@ -53,6 +53,9 @@ namespace guiex
 	protected:
 		virtual int	DoInitialize(void* pUserData);
 		virtual void DoDestroy();
+
+	public: 
+		static const char* StaticGetModuleName();
 	};
 
 	GUI_INTERFACE_DECLARE();

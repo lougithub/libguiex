@@ -33,7 +33,13 @@ namespace guiex
 {
 	GUI_INTERFACE_IMPLEMENT(IGUIFileSys_stdio);
 	//------------------------------------------------------------------------------
+	const char* IGUIFileSys_stdio::StaticGetModuleName()
+	{
+		return "IGUIFileSys_stdio";
+	}
+	//------------------------------------------------------------------------------
 	IGUIFileSys_stdio::IGUIFileSys_stdio()
+		:IGUIInterfaceFileSys( StaticGetModuleName() )
 	{
 	}
 	//------------------------------------------------------------------------------

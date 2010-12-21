@@ -45,7 +45,13 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_INTERFACE_IMPLEMENT(IGUIFont_dummy);
 	//------------------------------------------------------------------------------
+	const char* IGUIFont_dummy::StaticGetModuleName()
+	{
+		return "IGUIFont_dummy";
+	}
+	//------------------------------------------------------------------------------
 	IGUIFont_dummy::IGUIFont_dummy()
+		:IGUIInterfaceFont( StaticGetModuleName() )
 	{
 	}
 	//------------------------------------------------------------------------------

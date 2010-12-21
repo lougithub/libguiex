@@ -50,7 +50,13 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_INTERFACE_IMPLEMENT(IGUIImageLoader_tga);
 	//------------------------------------------------------------------------------
+	const char* IGUIImageLoader_tga::StaticGetModuleName()
+	{
+		return "IGUIImageLoader_tga";
+	}
+	//------------------------------------------------------------------------------
 	IGUIImageLoader_tga::IGUIImageLoader_tga()
+		:IGUIInterfaceImageLoader( StaticGetModuleName() )
 	{
 	}
 	//------------------------------------------------------------------------------

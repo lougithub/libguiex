@@ -58,14 +58,7 @@ namespace guiex
 	class GUIEXPORT IGUIInterface
 	{
 	public:
-		/** 
-		* @brief constructor.
-		*/
-		IGUIInterface( const CGUIString& rModuleName );
-
-		/** 
-		* @brief destructor
-		*/
+		IGUIInterface( const char* szModuleType, const char* szModuleName );
 		virtual ~IGUIInterface();
 
 		/** 
@@ -85,6 +78,7 @@ namespace guiex
 		*/
 		virtual void DeleteSelf() = 0;
 
+		const CGUIString& GetModuleType( ) const;
 		const CGUIString& GetModuleName( ) const;
 
 	protected:
@@ -100,10 +94,11 @@ namespace guiex
 		virtual void DoDestroy() = 0;
 
 	private:
+		CGUIString m_strModuleType;
 		CGUIString m_strModuleName;
 
 	private:
-		bool	m_bInitialize;	///< flag: has this interface been initialized
+		bool m_bInitialize;	///< flag: has this interface been initialized
 
 	};
 

@@ -83,7 +83,7 @@ namespace guiex
 		CGUIWidget(const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName  );
 		virtual ~CGUIWidget();
 
-		virtual void Create();
+		void Create();
 		bool IsCreate() const;
 
 		void NotifyLoaded();
@@ -354,6 +354,7 @@ namespace guiex
 		void UpdateAsSelf( real fDeltaTime );
 
 		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage ); 
+		virtual void OnCreate();
 
 		void DrawRect( IGUIInterfaceRender* pRender, const CGUIRect& rDestRect, real fLineWidth, const CGUIColor& rColor );
 		void DrawCharacter(IGUIInterfaceRender* pRender, wchar_t charCode, const CGUIStringInfo& rInfo, const CGUIVector2& rPos );

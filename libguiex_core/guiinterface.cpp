@@ -16,10 +16,10 @@
 namespace guiex
 {
 
-	IGUIInterface::IGUIInterface(const CGUIString& rModuleName)
-		:m_strModuleName(rModuleName)
+	IGUIInterface::IGUIInterface( const char* szModuleType, const char* szModuleName )
+		:m_strModuleType( szModuleType )
+		,m_strModuleName( szModuleName )
 		,m_bInitialize(false)
-		
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -55,6 +55,11 @@ namespace guiex
 			DoDestroy();
 			m_bInitialize = false;
 		}
+	}
+	//------------------------------------------------------------------------------ 
+	const CGUIString& IGUIInterface::GetModuleType( ) const
+	{
+		return m_strModuleType;
 	}
 	//------------------------------------------------------------------------------ 
 	const CGUIString& IGUIInterface::GetModuleName( ) const

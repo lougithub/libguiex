@@ -13,7 +13,6 @@
 // include
 //============================================================================// 
 #include "guiinterface.h"
-
 #include "guivector2.h"
 
 #include <list>
@@ -32,7 +31,7 @@ namespace guiex
 	};
 	enum	EMouseButton
 	{
-		MOUSE_NONE		= 0,
+		MOUSE_NONE = 0,
 		MOUSE_LEFT,
 		MOUSE_MIDDLE,
 		MOUSE_RIGHT,
@@ -41,7 +40,7 @@ namespace guiex
 	};
 	enum	EMouseEvent
 	{
-		MOUSE_EVENT_DOWN		= 0,
+		MOUSE_EVENT_DOWN = 0,
 		MOUSE_EVENT_UP,
 		MOUSE_EVENT_MOVE,
 		MOUSE_EVENT_WHEEL,
@@ -64,11 +63,11 @@ namespace guiex
 		//mouse event
 		struct SMouseEvent 
 		{
-			EMouseButton        m_eButton;			///< mouse's button
-			EMouseEvent         m_eMouseEvent;		///< mouse's event
+			EMouseButton m_eButton; ///< mouse's button
+			EMouseEvent m_eMouseEvent;		///< mouse's event
 
-			CGUIVector2			m_aMousePos;		///!< mouse's position
-			real				m_fWheelChange;
+			CGUIVector2 m_aMousePos; ///!< mouse's position
+			real m_fWheelChange;
 
 			SMouseEvent(EMouseEvent eEvent=MOUSE_EVENT_DOWN,EMouseButton eButton=MOUSE_LEFT, real x = 0.0f, real y = 0.0f, real wheel=0.0f  )
 				:m_eButton(eButton)
@@ -76,85 +75,42 @@ namespace guiex
 				,m_aMousePos(x,y)
 				,m_fWheelChange(wheel)
 			{
-
 			}
 		};
 
 	public:
-		/** 
-		* @brief constructor
-		*/
-		IGUIInterfaceMouse();
+		IGUIInterfaceMouse( const char* szModuleName );
+		virtual ~IGUIInterfaceMouse();
+		void Reset();
 
-		/** 
-		* @brief destructor
-		*/
-		virtual					~IGUIInterfaceMouse();
+		bool ChangeButtonState( EMouseButton eButton,  EMouseState eState );
+		EMouseState GetButtonState(int eButton);
+		
+		virtual bool ChangeMousePos( const CGUIVector2& rPos );
+		const CGUIVector2& GetPosition() const;
 
-		/**
-		* @brief reset contex
-		*/
-		void					Reset();
+		bool ChangeWheel( real fWheelChange );
+		real GetWheelChange( ) const;
 
-		/**
-		* @brief set state of button
-		*/
-		bool					ChangeButtonState( EMouseButton eButton,  EMouseState eState );
-
-		/**
-		* @brief set mouse position
-		*/
-		virtual bool			ChangeMousePos( const CGUIVector2& rPos );
-
-		/**
-		* @brief set mouse position
-		*/
-		bool					ChangeWheel( real fWheelChange );
-
-		/**
-		* @brief get current state of button
-		*/
-		EMouseState				GetButtonState(int eButton);
-
-		/**
-		* @brief get current position of mouse, global position
-		*/
-		const CGUIVector2&		GetPosition() const;
-
-		/**
-		* @brief get mouse position
-		*/
-		real					GetWheelChange( ) const;
-
-		/**
-		* @brief update mouse state
-		*/
-		virtual void			PreUpdate( );
-
-		/**
-		* @brief update mouse state
-		*/
-		virtual void			PostUpdate( );
+		virtual void PreUpdate( );
+		virtual void PostUpdate( );
 
 	protected:
-		/**
-		* @brief process mouse event
-		* @return whether this event is consumed;
-		*/
-		bool					ProcessMouseEvent( const SMouseEvent& rEvent );
+
+		bool ProcessMouseEvent( const SMouseEvent& rEvent );
 
 	private:
 		struct SMouseContext
 		{
-			CGUIVector2		m_aPosCur;									///< current position
+			CGUIVector2 m_aPosCur; ///< current position
 
-			EMouseState		m_eMouseStateCur[_MOUSE_BUTTON_MAX_];			///< current mouse state
-			real			m_fWheelChange;
+			EMouseState	m_eMouseStateCur[_MOUSE_BUTTON_MAX_]; ///< current mouse state
+			real m_fWheelChange;
 		};
-		SMouseContext		m_aContext;
+		SMouseContext m_aContext;
 
 	public: 
-		static const char* StaticGetModuleName();
+		static const char* StaticGetModuleType();
 	};
 
 }//namespace guiex

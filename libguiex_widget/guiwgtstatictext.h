@@ -29,12 +29,8 @@ namespace guiex
 	class GUIEXPORT CGUIWgtStaticText : public CGUIWgtStatic
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUIWgtStaticText( const CGUIString& rName, const CGUIString& rSceneName );
 	
-		virtual void Create();
 		virtual void SetTextContent(const CGUIStringW& rText);
 		virtual void SetTextInfo(const CGUIStringInfo& rInfo);
 
@@ -51,21 +47,14 @@ namespace guiex
 		 */
 		virtual void ProcessProperty( const CGUIProperty& rProperty);
 
-
 	protected:
-		/**
-		* @brief constructor
-		* for derived class
-		*/
 		CGUIWgtStaticText( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
-		///initialize static
 		void InitStaticText();
 
-		/// render
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
-		
 		virtual void RefreshSelf( );
+		virtual void OnCreate();
 
 		void UpdateStringContent();
 

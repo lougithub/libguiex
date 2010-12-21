@@ -61,6 +61,9 @@ namespace guiex
 		* @brief implement destruct
 		*/
 		virtual void DoDestroy();
+
+	public: 
+		static const char* StaticGetModuleName();
 	};
 
 	GUI_INTERFACE_DECLARE();

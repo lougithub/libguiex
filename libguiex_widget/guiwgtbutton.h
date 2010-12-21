@@ -34,9 +34,6 @@ namespace guiex
 	class GUIEXPORT CGUIWgtButton : public CGUIWidget
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUIWgtButton( const CGUIString& rName, const CGUIString& rSceneName );
 
 		void SetBtnTextContent_Hover( const CGUIStringW& rText );
@@ -52,47 +49,26 @@ namespace guiex
 
 		const CGUIVector2& GetStringOffset(  ) const;
 
-		/**
-		* @brief load widget config from property
-		*/
 		virtual int32 GenerateProperty( CGUIProperty& rProperty );
-
-		/** 
-		 * @brief process property
-		 */
 		virtual void ProcessProperty( const CGUIProperty& rProperty);
 
-
 	protected:
-		/**
-		* @brief constructor
-		* for derived class
-		*/
 		CGUIWgtButton( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
-
-		///initialize
 		void InitButton();
 
-		/// render
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
-
 		virtual void RefreshSelf();
-
-		/**
-		* @brief override the OnSetImage function
-		*/
 		virtual void	OnSetImage( const CGUIString& rName, CGUIImage* pImage );
 
 	protected:	//!< callback function
-		virtual uint32		OnMouseEnter( CGUIEventMouse* pEvent );
-		virtual uint32		OnMouseLeave( CGUIEventMouse* pEvent );
-		virtual uint32		OnMouseLeftDown( CGUIEventMouse* pEvent );
-		virtual uint32		OnMouseLeftUp( CGUIEventMouse* pEvent );
-
+		virtual uint32 OnMouseEnter( CGUIEventMouse* pEvent );
+		virtual uint32 OnMouseLeave( CGUIEventMouse* pEvent );
+		virtual uint32 OnMouseLeftDown( CGUIEventMouse* pEvent );
+		virtual uint32 OnMouseLeftUp( CGUIEventMouse* pEvent );
 
 	protected:
-		bool	m_bHovering;
-		bool	m_bPushing;
+		bool m_bHovering;
+		bool m_bPushing;
 
 		const CGUIImage* m_pImageNormal;
 		const CGUIImage* m_pImageHovering;
@@ -101,12 +77,12 @@ namespace guiex
 		const CGUIImage* m_pImageHoverOverlay;
 		const CGUIImage* m_pImagePushOverlay;
 
-		CGUIStringEx		m_strTextHoving;	//for hover state
-		CGUIStringEx		m_strTextDisable;	//for disable state
-		CGUIStringEx		m_strTextPush;		//for push state
+		CGUIStringEx m_strTextHoving; //for hover state
+		CGUIStringEx m_strTextDisable; //for disable state
+		CGUIStringEx m_strTextPush; //for push state
 
-		CGUIVector2			m_aTextOffset;		//relative pos for button text
-		CGUIRect			m_aStringArea;
+		CGUIVector2 m_aTextOffset; //relative pos for button text
+		CGUIRect m_aStringArea;
 
 	private:
 		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtButton);

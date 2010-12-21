@@ -23,7 +23,13 @@ namespace guiex
 
 	GUI_INTERFACE_IMPLEMENT(IGUIFileSys_cocoa);
 	//------------------------------------------------------------------------------
+	const char* IGUIFileSys_cocoa::StaticGetModuleName()
+	{
+		return "IGUIFileSys_cocoa";
+	}
+	//------------------------------------------------------------------------------
 	IGUIFileSys_cocoa::IGUIFileSys_cocoa()
+		:IGUIInterfaceFileSys(StaticGetModuleName())
 	{
 	}
 	//------------------------------------------------------------------------------

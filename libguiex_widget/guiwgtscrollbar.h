@@ -63,159 +63,123 @@ namespace guiex
 	class GUIEXPORT CGUIWgtScrollbar : public CGUIWidget
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUIWgtScrollbar( const CGUIString& rName, const CGUIString& rSceneName );
-
-		/**
-		* @brief destructor
-		*/
 		virtual ~CGUIWgtScrollbar();
 
-		/**
-		* @brief create this widget
-		*/
-		virtual void Create();
-
-		static CGUIWgtScrollbar*	FromWidget( CGUIWidget* pWidget );
-
-
-		///**
-		//* @brief load widget config from property
-		//*/
-		//virtual CGUIProperty*	GenerateProperty(const CGUIString& rName, const CGUIString& rType );
-
-
-		///**
-		//* @brief process property
-		//*/
-		//virtual void		ProcessProperty( const CGUIProperty* pProperty);
-
+		static CGUIWgtScrollbar* FromWidget( CGUIWidget* pWidget );
 
 		///////////////////////////////////////////////////////////
 		// value related function
 
 		///set page size
-		void			SetPageSize(uint32 nPageSize);
+		void SetPageSize(uint32 nPageSize);
 
 		///get page size
-		uint32			GetPageSize() const;
+		uint32 GetPageSize() const;
 
 		/**
 		* @brief set range of scrollbar
 		*/
-		void			SetRange( uint32 nRange );
+		void SetRange( uint32 nRange );
 
 		/**
 		* @brief get range of scrollbar
 		*/
-		uint32			GetRange(  ) const;
+		uint32 GetRange(  ) const;
 
 		///get minimum position of scrollbar slide
-		uint32			GetMinPos() const;                        
+		uint32 GetMinPos() const;                        
 
 		///set minimum position of scrollbar slide
-		void			SetMinPos(uint32 nMinPos);      
+		void SetMinPos(uint32 nMinPos);      
 
 		///get maximum position of scrollbar slide
-		uint32			GetMaxPos() const;                        
+		uint32 GetMaxPos() const;                        
 
 		///set maximum position of scrollbar slide
-		void			SetMaxPos(uint32 nMaxPos);     
+		void SetMaxPos(uint32 nMaxPos);     
 
-		void			SetScrollbarType( EScrollbarType eScrollbarType );
-		EScrollbarType	GetScrollbarType( ) const;
+		void SetScrollbarType( EScrollbarType eScrollbarType );
+		EScrollbarType GetScrollbarType( ) const;
 
 		///get current position of scrollbar slide
-		uint32			GetCurrentPos() const;                                 
+		uint32 GetCurrentPos() const;                                 
 
 		///set current position of scrollbar slide
-		void			SetCurrentPos(uint32 nPos);
+		void SetCurrentPos(uint32 nPos);
 
 		///increase position of scrollbar slide
-		void			IncreasePos();
+		void IncreasePos();
 
 		///increase position of scrollbar slide
-		void			DecreasePos();
+		void DecreasePos();
 
 		///make this scrollbar could be positioned by parent automatically
-		void			EnableAutoPosition(bool	bAutoPos);
+		void EnableAutoPosition(bool	bAutoPos);
 
 		///whether this scrollbar could be position automatically or not
-		bool			IsAutoPosition() const;
+		bool IsAutoPosition() const;
 
 		///whether notify parent when scroll value change
-		void			EnableNotifyParent(bool bEnable);
+		void EnableNotifyParent(bool bEnable);
 
 		///whether notify parent when scroll value change
-		bool			IsNotifyParent() const;
+		bool IsNotifyParent() const;
 
-		void			SetScrollbarHost( CGUIWidget* pWgtHost );
+		void SetScrollbarHost( CGUIWidget* pWgtHost );
 
 	protected:
-		/**
-		* @brief constructor
-		* for derived class
-		*/
 		CGUIWgtScrollbar( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
+		void InitScrollbar();
 
-		///initialize
-		void			InitScrollbar();
-
-		//render scrollbar
-		virtual void	RenderSelf(IGUIInterfaceRender* pRender);
-
-		virtual void	RefreshSelf();
+		virtual void RenderSelf(IGUIInterfaceRender* pRender);
+		virtual void RefreshSelf();
+		virtual void OnCreate();
+		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage );
 
 		/// update scrollbar's position and size when parent changes size or others
-		void			UpdateScrollbar();
+		void UpdateScrollbar();
 
 		/// update scrollbar by value
-		void			UpdateValue();
+		void UpdateValue();
 
-		void			GenerateNotifyEvent();
+		void GenerateNotifyEvent();
 
 		/// get rect of area where slide could stay.it's a local rect
-		CGUIRect		GetSlideArea( );
+		CGUIRect GetSlideArea( );
 
 		/// get bg size
-		CGUISize		GetBGSize();
-
-		/**
-		* @brief override the OnSetImage function
-		*/
-		virtual void	OnSetImage( const CGUIString& rName, CGUIImage* pImage );
+		CGUISize GetBGSize();
 
 	protected:	//!< callback function
-		virtual uint32		OnOpen( CGUIEventNotification* pEvent );
-		virtual uint32		OnParentSizeChange( CGUIEventSize* pEvent );
-		virtual uint32		OnClose( CGUIEventNotification* pEvent );
-		virtual uint32		OnMouseLeftDown( CGUIEventMouse* pEvent );
-		virtual uint32		OnScrollbarScroll( CGUIEventScrollbar* pEvent );
+		virtual uint32 OnOpen( CGUIEventNotification* pEvent );
+		virtual uint32 OnParentSizeChange( CGUIEventSize* pEvent );
+		virtual uint32 OnClose( CGUIEventNotification* pEvent );
+		virtual uint32 OnMouseLeftDown( CGUIEventMouse* pEvent );
+		virtual uint32 OnScrollbarScroll( CGUIEventScrollbar* pEvent );
 
 	protected:
 		//scrollbar parameter
-		//uint32	m_nMinSlideLength;	///< the minimum length of slide
-		uint32	m_nMaxPos;				///< maximum value of the scrollbar
-		uint32	m_nMinPos;				///< minimum value of the scrollbar
-		uint32	m_nCurPos;				///< current value of the scrollbar
-		uint32	m_nPageSize;			///< page size value of the scrollbar
+		//uint32 m_nMinSlideLength;	///< the minimum length of slide
+		uint32 m_nMaxPos; ///< maximum value of the scrollbar
+		uint32 m_nMinPos; ///< minimum value of the scrollbar
+		uint32 m_nCurPos; ///< current value of the scrollbar
+		uint32 m_nPageSize; ///< page size value of the scrollbar
 
-		EScrollbarType		m_eScrollbarType;			///type of scrollbar
-		bool				m_bAutoPosition;	///the parent could position this scrollbar automatically
-		bool				m_bAutoNotifyParent;///whether notify parent when scrollbar value change
+		EScrollbarType m_eScrollbarType; ///type of scrollbar
+		bool m_bAutoPosition;	///the parent could position this scrollbar automatically
+		bool m_bAutoNotifyParent;///whether notify parent when scrollbar value change
 
 		//image
-		const CGUIImage* m_pImageBg;		///background
+		const CGUIImage* m_pImageBg; ///background
 
 		//child
-		friend	class CGUIWgtScrollbarSlide;
-		friend	class CGUIWgtScrollbarArrow;
-		CGUIWgtScrollbarArrow*		m_pArrow[2];		///arrow of scrollbar
-		CGUIWgtScrollbarSlide*		m_pSlide;			///slide of scrollbar
+		friend class CGUIWgtScrollbarSlide;
+		friend class CGUIWgtScrollbarArrow;
+		CGUIWgtScrollbarArrow* m_pArrow[2]; ///arrow of scrollbar
+		CGUIWgtScrollbarSlide* m_pSlide; ///slide of scrollbar
 
-		CGUIWidget*					m_pWgtHost;
+		CGUIWidget* m_pWgtHost;
 
 	private:
 		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtScrollbar);

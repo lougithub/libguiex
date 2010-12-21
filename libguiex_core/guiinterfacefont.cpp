@@ -17,13 +17,13 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	const char* IGUIInterfaceFont::StaticGetModuleName()
+	const char* IGUIInterfaceFont::StaticGetModuleType()
 	{ 
 		return "IGUIFont";
 	}
 	//------------------------------------------------------------------------------
-	IGUIInterfaceFont::IGUIInterfaceFont()
-		:IGUIInterface(StaticGetModuleName())
+	IGUIInterfaceFont::IGUIInterfaceFont( const char* szModuleName )
+		:IGUIInterface(StaticGetModuleType(), szModuleName)
 	{
 
 	}

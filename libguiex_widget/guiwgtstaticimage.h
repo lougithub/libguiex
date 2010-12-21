@@ -29,42 +29,17 @@ namespace guiex
 	class GUIEXPORT CGUIWgtStaticImage : public CGUIWgtStatic
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUIWgtStaticImage( const CGUIString& rName, const CGUIString& rSceneName );
 
-		/**
-		* @brief select a image to show
-		*/
-		void SetCurrentImage( const CGUIString& rImageName);
-
-		/**
-		* @brief get image name which is showing now
-		*/
-		const CGUIString& GetCurrentImage(  ) const;
-
 	protected:
-		/**
-		* @brief constructor
-		* for derived class
-		*/
 		CGUIWgtStaticImage( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
-
-		/// render
-		virtual void RenderSelf(IGUIInterfaceRender* pRender);
-
-		///initialize check button
 		void InitStaticImage();
 
-		/**
-		* @brief override the OnSetImage function
-		*/
+		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage );
 
 	protected:
 		const CGUIImage* m_pImageBG;
-		CGUIString m_strImageName;
 
 	protected:
 		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtStaticImage);

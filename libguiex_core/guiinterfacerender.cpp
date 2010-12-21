@@ -24,13 +24,13 @@ namespace guiex
 
 
 	//------------------------------------------------------------------------------
-	const char* IGUIInterfaceRender::StaticGetModuleName()
+	const char* IGUIInterfaceRender::StaticGetModuleType()
 	{ 
 		return "IGUIRender";
 	}
 	//------------------------------------------------------------------------------
-	IGUIInterfaceRender::IGUIInterfaceRender( )
-		:IGUIInterface("IGUIRender")
+	IGUIInterfaceRender::IGUIInterfaceRender( const char* szModuleName )
+		:IGUIInterface( StaticGetModuleType(), szModuleName )
 	{
 
 	}

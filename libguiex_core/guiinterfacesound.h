@@ -26,7 +26,7 @@ namespace guiex
 	class GUIEXPORT IGUIInterfaceSound : public IGUIInterface
 	{
 	public:
-		IGUIInterfaceSound();
+		IGUIInterfaceSound( const char* szModuleName );
 		virtual ~IGUIInterfaceSound();
 
 		/**
@@ -46,7 +46,7 @@ namespace guiex
 		virtual int32 PlayEffect( int32 nIdx ) = 0;
 
 	public: 
-		static const char* StaticGetModuleName();
+		static const char* StaticGetModuleType();
 	};
 
 }//namespace guiex

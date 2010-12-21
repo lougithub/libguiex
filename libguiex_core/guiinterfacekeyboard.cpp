@@ -18,13 +18,13 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	const char* IGUIInterfaceKeyboard::StaticGetModuleName()
+	const char* IGUIInterfaceKeyboard::StaticGetModuleType()
 	{ 
 		return "IGUIKeyboard";
 	}
 	//------------------------------------------------------------------------------
-	IGUIInterfaceKeyboard::IGUIInterfaceKeyboard( )
-		:IGUIInterface( StaticGetModuleName() )
+	IGUIInterfaceKeyboard::IGUIInterfaceKeyboard( const char* szModuleName )
+		:IGUIInterface( StaticGetModuleType(), szModuleName )
 	{
 		Reset();
 	}

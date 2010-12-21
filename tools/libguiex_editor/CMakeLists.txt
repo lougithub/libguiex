@@ -37,6 +37,8 @@ if( WIN32 )
     
     #utility source
     set( ${target_name}_utility_SRCS
+		guiframeworkeditor.cpp
+		guiframeworkeditor.h    
 		command.cpp
 		command.h
 		commandmanager.cpp
@@ -73,7 +75,14 @@ if( WIN32 )
 
     set( WIN32_EXECUTABLE true )
     add_executable( ${target_name} WIN32 ${${target_name}_SRCS} )
-    add_dependencies( ${target_name} libguiex_module libguiex_widget )
+    
+    add_dependencies( 
+		${target_name}
+		libguiex_module
+		libguiex_widget
+		libguiex_framework 
+       )
+    
 	macro_set_target_output_dir( ${target_name} )
     target_link_libraries( 
 		${target_name}  
@@ -100,6 +109,7 @@ if( WIN32 )
         general libguiex_core
         general libguiex_widget
         general libguiex_script_wrapper
+        general libguiex_framework
         general libguiex_module
         general tinyxml
         general lua

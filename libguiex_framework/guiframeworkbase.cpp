@@ -24,7 +24,10 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIFrameworkBase::~CGUIFrameworkBase()
 	{
-		Release( );
+		if( m_bIsInitialized )
+		{
+			throw CGUIException("[CGUIFrameworkBase::~CGUIFrameworkBase]: CGUIFrameworkBase is deleted but not released" );
+		}
 	}
 	//------------------------------------------------------------------------------
 	int32 CGUIFrameworkBase::Initialize( const CGUISize& rScreenSize, const char* pDataPath )

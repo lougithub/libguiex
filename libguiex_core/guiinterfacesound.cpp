@@ -25,13 +25,13 @@ namespace guiex
 	
 	
 	//------------------------------------------------------------------------------
-	const char* IGUIInterfaceSound::StaticGetModuleName()
+	const char* IGUIInterfaceSound::StaticGetModuleType()
 	{ 
 		return "IGUISound";
 	}
 	//------------------------------------------------------------------------------
-	IGUIInterfaceSound::IGUIInterfaceSound( )
-		:IGUIInterface( StaticGetModuleName() )
+	IGUIInterfaceSound::IGUIInterfaceSound( const char* szModuleName )
+		:IGUIInterface( StaticGetModuleType(), szModuleName )
 	{
 
 	}

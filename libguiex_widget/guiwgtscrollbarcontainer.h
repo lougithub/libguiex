@@ -69,81 +69,59 @@ namespace guiex
 	class GUIEXPORT CGUIWgtScrollbarContainer : public CGUIWidget
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUIWgtScrollbarContainer( const CGUIString& rName, const CGUIString& rSceneName );
-
-		/**
-		* @brief destructor
-		*/
 		virtual ~CGUIWgtScrollbarContainer(  );
 
-		/**
-		* @brief create this widget
-		*/
-		virtual void Create();
 
 	public:
 		/** 
 		* @brief Return whether the vertical scroll bar is always shown.
 		*/
-		bool	IsVertScrollbarAlwaysShown(void) const;
+		bool IsVertScrollbarAlwaysShown(void) const;
 
 		/**
 		* @brief Set whether the vertical scroll bar should always be shown.
 		*/
-		void	ForceVertScrollbar(bool bShow);
+		void ForceVertScrollbar(bool bShow);
 
 		/**
 		* @brief Return whether the horizontal scroll bar is always shown.
 		*/
-		bool	IsHorzScrollbarAlwaysShown(void) const;
+		bool IsHorzScrollbarAlwaysShown(void) const;
 
 		/**
 		* @brief Set whether the horizontal scroll bar should always be shown.
 		*/
-		void	ForceHorzScrollbar(bool bShow);
+		void ForceHorzScrollbar(bool bShow);
 
 		void SetScrollbarAutoPosition( bool bFlag ); 
 		bool IsScrollbarAutoPosition( ) const;
 
 
 	protected:
-		/**
-		* @brief constructor
-		* for derived class
-		*/
 		CGUIWgtScrollbarContainer( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
+		void InitScrollbarContainer();
 
-		///initialize
-		void			InitScrollbarContainer();
-
-		/// render
-		virtual void	RenderSelf(IGUIInterfaceRender* pRender);
-
-		virtual void	RefreshSelf();
+		virtual void RenderSelf(IGUIInterfaceRender* pRender);
+		virtual void RefreshSelf();
+		virtual void OnCreate();
+		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage );
 
 		//get actual page size
-		void			UpdateScrollbars(void);
+		void UpdateScrollbars(void);
 		
-		virtual void	UpdateClientArea(void);
-
-		/**
-		* @brief override the OnSetImage function
-		*/
-		virtual void	OnSetImage( const CGUIString& rName, CGUIImage* pImage );
+		virtual void UpdateClientArea(void);
 
 	protected:	//!< callback function
-		virtual uint32		OnScrollbarScroll( CGUIEventScrollbar* pEvent );
+		virtual uint32 OnScrollbarScroll( CGUIEventScrollbar* pEvent );
 
 
 	protected:
 		//scrollbar relative
-		CGUIWgtScrollbar*		m_pScrollbarVert;		//!< vertical scroll-bar widget
-		CGUIWgtScrollbar*		m_pScrollbarHorz;		//!< horizontal scroll-bar widget
-		bool					m_bForceVertScroll;		//!< true if vertical scrollbar should always be displayed
-		bool					m_bForceHorzScroll;		//!< true if horizontal scrollbar should always be displayed
+		CGUIWgtScrollbar* m_pScrollbarVert; //!< vertical scroll-bar widget
+		CGUIWgtScrollbar* m_pScrollbarHorz; //!< horizontal scroll-bar widget
+		bool m_bForceVertScroll; //!< true if vertical scrollbar should always be displayed
+		bool m_bForceHorzScroll; //!< true if horizontal scrollbar should always be displayed
 
 		bool m_bIsScrollbarAutoPosition;
 

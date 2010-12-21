@@ -45,18 +45,18 @@ namespace guiex
 		m_fCurrentValue = 0.0f;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtProgress::Create()
+	void CGUIWgtProgress::OnCreate()
 	{
+		CGUIWidget::OnCreate();
+
 		if( !m_pImageBg )
 		{
-			throw CGUIException("[CGUIWgtProgress::Create]: the image <BACKGROUND_IMG> hasn't been found!");
+			throw CGUIException("[CGUIWgtProgress::OnCreate]: the image <BACKGROUND_IMG> hasn't been found!");
 		}
 		if( !m_pImageFg )
 		{
-			throw CGUIException("[CGUIWgtProgress::Create]: the image <FOREGROUND_IMG> hasn't been found!");
+			throw CGUIException("[CGUIWgtProgress::OnCreate]: the image <FOREGROUND_IMG> hasn't been found!");
 		}
-
-		CGUIWidget::Create();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtProgress::OnSetImage( const CGUIString& rName, CGUIImage* pImage )

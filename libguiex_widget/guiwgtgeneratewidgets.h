@@ -21,7 +21,7 @@
 //============================================================================// 
 namespace guiex
 {
-	GUI_WIDGET_ALLGENERATOR_DECLARE( );
+	extern "C"  GUIEXPORT CGUIWidgetGenerator** GetAllWidgetGenerators();
 }
 
 

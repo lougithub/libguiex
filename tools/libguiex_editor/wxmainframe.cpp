@@ -9,6 +9,7 @@
 // include
 //============================================================================// 
 #include "wxmainframe.h"
+#include "guiframeworkeditor.h"
 #include "wxmainapp.h"
 #include "wxsavefiledlg.h"
 #include "wxeditorcanvascontainer.h"
@@ -26,18 +27,6 @@
 
 //libguiex module
 #include <libguiex_widget/guiwgt.h>
-
-#include <libguiex_module\render_opengl\guirender_opengl.h>
-#include <libguiex_module\imageloader_tga\guiimageloader_tga.h>
-#include <libguiex_module\keyboard_winapi\guikeyboard_winapi.h>
-#include <libguiex_module\mouse_winapi\guimouse_winapi.h>
-#include <libguiex_module\font_ft2\guifont_ft2.h>
-#include <libguiex_module\font_dummy\guifont_dummy.h>
-#include <libguiex_module\filesys_stdio\guifilesys_stdio.h>
-#include <libguiex_module\configfile_tinyxml\guiconfigfile_tinyxml.h>
-#include <libguiex_module\script_lua\guiscript_lua.h>
-#include <libguiex_module\ime_winapi\guiime_winapi.h>
-#include <libguiex_module\stringconv_winapi\guistringconv_winapi.h>
 
 //images
 #include "bitmaps/new.xpm"
@@ -116,8 +105,6 @@ EVT_UPDATE_UI(ID_WidgetUp, WxMainFrame::OnUpdateWidgetUp)
 EVT_MENU(ID_WidgetUp, WxMainFrame::OnWidgetUp)
 EVT_UPDATE_UI(ID_WidgetDown, WxMainFrame::OnUpdateWidgetDown)
 EVT_MENU(ID_WidgetDown, WxMainFrame::OnWidgetDown)
-
-//EVT_MENU(ID_RunScript, WxMainFrame::OnRunScript)
 
 EVT_MENU(ID_VIEW_Fullscreen, WxMainFrame::OnFullscreen)
 
@@ -299,40 +286,9 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 	//initialize guiex system
 	try
 	{
-		CGUISystem* pGUISystem = new CGUISystem;
-		GSystem->Initialize();
-#ifdef NDEBUG
-#else
-		GUI_LOG->Open( "gui editor",CGUILogMsg::FLAG_TIMESTAMP_LITE	/*|CGUILogMsg::FLAG_STDERR*/);
-		GUI_LOG->SetPriorityMask(GUI_LM_DEBUG	| GUI_LM_TRACE	|GUI_LM_WARNING|GUI_LM_ERROR);
-#endif
-		//GSystem->SetRunScript(GetMenuBar()->GetMenu(GetMenuBar()->FindMenu(_T("Edit")))->IsChecked(ID_RunScript));
-		GSystem->SetRunScript(false);
-		CGUIAssert::SetWarningCB(EditorWarningCB, NULL);
-		GSystem->SetScreenSize(m_aScreenSize.x, m_aScreenSize.y);
-
-		//register interface
-		//GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl);
-		GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_tga);
-		GUI_REGISTER_INTERFACE_LIB( IGUIFileSys_stdio);
-		GUI_REGISTER_INTERFACE_LIB( IGUIMouse_winapi);
-		GUI_REGISTER_INTERFACE_LIB( IGUIFont_ft2);
-		//GUI_REGISTER_INTERFACE_LIB( IGUIFont_dummy);
-		GUI_REGISTER_INTERFACE_LIB( IGUIKeyboard_winapi);
-		GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
-		GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_winapi);
-		//GUI_REGISTER_INTERFACE_LIB( LIBGUIEX_COMMAND_TCP_DLL);
-		//GUI_REGISTER_INTERFACE_LIB( LIBGUIEX_SOUND_OPENAL_DLL);
-		GUI_REGISTER_INTERFACE_LIB( IGUIScript_lua);
-		GUI_REGISTER_INTERFACE_LIB_ARG( IGUIIme_winapi, (HWND*)GetHandle());
-
-		//register widget
-		CGUIWidgetGenerator** pGenerator = GetAllGenerators();
-		while(*pGenerator)
-		{
-			CGUIWidgetFactory::Instance()->RegisterGenerator( *pGenerator);
-			pGenerator ++;
-		}
+		CGUIFrameworkEditor::ms_pFramework = new CGUIFrameworkEditor( );
+		CGUIFrameworkEditor::ms_pFramework->Initialize( CGUISize(m_aScreenSize.x, m_aScreenSize.y), "" );
+		CGUIAssert::SetWarningCB( EditorWarningCB, NULL );
 
 		GSystem->SetDrawExtraInfo( true );
 		GSystem->SetRunScript( false );
@@ -342,8 +298,12 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 	{
 		wxMessageBox( Gui2wxString(rError.what()), _T("error") );
 
-		GSystem->Release();
-		delete GSystem;
+		if( CGUIFrameworkEditor::ms_pFramework )
+		{
+			CGUIFrameworkEditor::ms_pFramework->Release();
+			delete CGUIFrameworkEditor::ms_pFramework;
+			CGUIFrameworkEditor::ms_pFramework = NULL;
+		}
 	}
 }
 //------------------------------------------------------------------------------
@@ -354,8 +314,12 @@ WxMainFrame::~WxMainFrame()
 	m_mgr.UnInit();	
 	
 	//release libguiex system
-	GSystem->Release();
-	delete GSystem;
+	if( CGUIFrameworkEditor::ms_pFramework )
+	{
+		CGUIFrameworkEditor::ms_pFramework->Release();
+		delete CGUIFrameworkEditor::ms_pFramework;
+		CGUIFrameworkEditor::ms_pFramework = NULL;
+	}
 }
 //------------------------------------------------------------------------------
 WxOutputPanel* WxMainFrame::CreateOutput()
@@ -1125,16 +1089,6 @@ void WxMainFrame::OnUpdateDeleteWidget(wxUpdateUIEvent& event)
 	}
 }
 //------------------------------------------------------------------------------
-void WxMainFrame::OnRunScript(wxCommandEvent& evt)
-{
-	bool bIsChecked = evt.IsChecked();
-
-	if( GSystem )
-	{
-		GSystem->SetRunScript(bIsChecked);
-	}
-}
-//------------------------------------------------------------------------------
 void WxMainFrame::OnToggleScissor(wxCommandEvent& evt)
 {
 	bool bIsChecked = evt.IsChecked();
@@ -1611,10 +1565,7 @@ void	WxMainFrame::EditFile( const std::string& rFileName, EFileType eFileType )
 {
 	CGUIScene* pScene = CGUISceneManager::Instance()->GetScene(m_strCurrentSceneName);
 
-	std::string strAbsPath = 
-		GSystem->GetDataPath() +
-		pScene->GetScenePath() +
-		rFileName;
+	std::string strAbsPath = GSystem->GetDataPath() + pScene->GetScenePath() + rFileName;
 
 	//check
 	for( unsigned i=0; i< m_pNoteBook_Canvas->GetPageCount(); ++i)
@@ -1768,7 +1719,6 @@ void			WxMainFrame::CreateMenu()
 
 	edit_menu->Append(ID_WidgetUp, _("Widget Up"));
 	edit_menu->Append(ID_WidgetDown, _("Widget Down"));
-	//edit_menu->Append(ID_RunScript, _("Run Script"),_T("Run script when render the page"), wxITEM_CHECK );
 
 	//menu-view
 	wxMenu*	view_menu = new wxMenu;

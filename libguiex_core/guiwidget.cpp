@@ -142,6 +142,8 @@ namespace guiex
 		{
 			pInterfaceScript->RegisterWidget( this );
 		}
+
+		OnCreate();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::NotifyLoaded()
@@ -1258,10 +1260,13 @@ namespace guiex
 	*/
 	void CGUIWidget::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
-
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::SetImage( const CGUIString& rName, CGUIImage* pImage )
+	void CGUIWidget::OnCreate()
+	{
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::SetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
 		//clear old one
 		TMapImage::iterator itor = m_aMapImage.find(rName );

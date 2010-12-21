@@ -47,6 +47,9 @@ namespace guiex
 
 	protected:
 		int32 ProcessProperty( TiXmlElement* pNode, CGUIProperty& rPropSet );
+
+	public: 
+		static const char* StaticGetModuleName();
 	};
 
 	GUI_INTERFACE_DECLARE();

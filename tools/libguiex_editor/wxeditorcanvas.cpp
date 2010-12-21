@@ -19,7 +19,6 @@
 #include <sys/timeb.h>
 #include <GL/glu.h>
 
-#include <libguiex_module\render_opengl\guirender_opengl.h>
 
 using namespace guiex;
 
@@ -72,7 +71,7 @@ void WxEditorCanvas::InitializeCanvas()
 	wxSize aCanvasSize( GSystem->GetScreenWidth(), GSystem->GetScreenHeight());
 	UpdateCanvasSize(aCanvasSize);
 
-	GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl );
+	CGUIFrameworkEditor::ms_pFramework->RegisterOpenglInterface();
 }
 //------------------------------------------------------------------------------
 void WxEditorCanvas::DestroyCanvas()
@@ -80,7 +79,7 @@ void WxEditorCanvas::DestroyCanvas()
 	GSystem->DestroyAllWidgets();
 	GSystem->UnloadAllResource();
 
-	GUI_UNREGISTER_INTERFACE_LIB( IGUIRender_opengl);
+	CGUIFrameworkEditor::ms_pFramework->UnregisterOpenglInterface();
 }
 //------------------------------------------------------------------------------
 void WxEditorCanvas::UpdateWindowBox()
@@ -90,7 +89,7 @@ void WxEditorCanvas::UpdateWindowBox()
 //------------------------------------------------------------------------------
 void WxEditorCanvas::OnTimer(wxTimerEvent& event)
 {
-	GSystem->Update( event.GetInterval() / 1000.f );
+	CGUIFrameworkEditor::ms_pFramework->Update( event.GetInterval() / 1000.f );
 	Refresh();
 }
 //------------------------------------------------------------------------------
@@ -192,7 +191,7 @@ void WxEditorCanvas::Render()
 	glClearStencil( 0 );
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT );	// clear screen and depth buffer 
 
-	GSystem->Render();
+	CGUIFrameworkEditor::ms_pFramework->Render();
 
 	DrawResizers();
 

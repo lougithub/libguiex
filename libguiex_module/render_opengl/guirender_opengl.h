@@ -180,6 +180,9 @@ namespace guiex
 		int m_nMaxStencilRef;
 		int m_nCurrentStencilRef;
 		SClipRect m_aWholeScreenRect;
+
+	public: 
+		static const char* StaticGetModuleName();
 	};
 
 	GUI_INTERFACE_DECLARE();

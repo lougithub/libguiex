@@ -68,6 +68,9 @@ namespace guiex
 		* @return 0 for success
 		*/
 		virtual void DoDestroy();
+
+	public: 
+		static const char* StaticGetModuleName();
 	};
 
 	GUI_INTERFACE_DECLARE();

@@ -21,7 +21,13 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_INTERFACE_IMPLEMENT(IGUIMouse_winapi);
 	//------------------------------------------------------------------------------
+	const char* IGUIMouse_winapi::StaticGetModuleName()
+	{
+		return "IGUIMouse_winapi";
+	}
+	//------------------------------------------------------------------------------
 	IGUIMouse_winapi::IGUIMouse_winapi()
+		:IGUIInterfaceMouse( StaticGetModuleName() )
 	{
 	}
 	//------------------------------------------------------------------------------

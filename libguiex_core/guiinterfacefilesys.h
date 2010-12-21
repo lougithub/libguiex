@@ -32,7 +32,7 @@ namespace guiex
 		/** 
 		* @brief constructor
 		*/
-		IGUIInterfaceFileSys();
+		IGUIInterfaceFileSys( const char* szModuleName );
 
 		/** 
 		* @brief destructor
@@ -71,7 +71,7 @@ namespace guiex
 		virtual CGUIString GetFileDir( const CGUIString& rPath ) = 0;
 
 	public: 
-		static const char* StaticGetModuleName();
+		static const char* StaticGetModuleType();
 	};
 }//namespace guiex
 

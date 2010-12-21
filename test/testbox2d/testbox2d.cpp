@@ -7,7 +7,9 @@
  */
 
 #include <libguiex_framework/guiframework.h>
+#include <libguiex_module/physics_box2d/guiphysics_box2d.h>
 #include <Box2D/Box2D.h>
+
 using namespace guiex;
 
 #define METER2PIXEL(meter)	((meter)*10.0f)
@@ -28,6 +30,8 @@ class CGUIFrameworkTest : public CGUIFramework
 		virtual guiex::int32 InitializeGame( );
 		virtual void ReleaseGame( );
 
+		virtual void RegisterInterfaces( );
+
 		virtual void PreUpdate( real fDeltaTime );
 		virtual void PostRender( );
 
@@ -37,7 +41,7 @@ class CGUIFrameworkTest : public CGUIFramework
 		void UpdateBody( b2Body* pBody );
 
 	protected:
-		b2World * m_pWorld;
+		b2World* m_pWorld;
 		b2Body* m_pBody;
 		b2Body* m_pBody2;
 		b2Joint* m_pJoint;
@@ -49,6 +53,12 @@ CGUIFrameworkBase* CreateFramework( )
 	return new CGUIFrameworkTest( );
 }
 
+void CGUIFrameworkTest::RegisterInterfaces( )
+{
+	CGUIFramework::RegisterInterfaces( );
+
+	GUI_REGISTER_INTERFACE_LIB( IGUIPhysics_box2d );
+}
 
 guiex::int32 CGUIFrameworkTest::InitializeGame( )
 {	
@@ -64,9 +74,7 @@ guiex::int32 CGUIFrameworkTest::InitializeGame( )
 	}
 
 	//create world
-	b2Vec2 gravity( 0.0f, 10.0f );
-	bool bDoSleep = true;
-	m_pWorld = new b2World( gravity, bDoSleep );
+	m_pWorld = CGUIInterfaceManager::Instance()->GetInterfacePhysicsTyped<IGUIPhysics_box2d>()->GetWorld();
 
 	CreateBox2dSample_hellobox2d();
 	CreateBox2dSample_joints();
@@ -79,20 +87,11 @@ guiex::int32 CGUIFrameworkTest::InitializeGame( )
 
 void CGUIFrameworkTest::ReleaseGame( )
 {
-	if( m_pWorld )
-	{
-		delete m_pWorld;
-		m_pWorld = NULL;
-	}
+	m_pWorld = NULL;
 }
 
 void CGUIFrameworkTest::PreUpdate( real fDeltaTime )
 {
-	guiex::int32 velocityIterations = 10;
-	guiex::int32 positionIterations = 2;
-
-	m_pWorld->Step( fDeltaTime, velocityIterations, positionIterations );
-	m_pWorld->ClearForces();
 }
 
 void CGUIFrameworkTest::PostRender( )

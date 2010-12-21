@@ -48,7 +48,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		IGUIInterfaceFont();
+		IGUIInterfaceFont( const char* szModuleName );
 
 		/**
 		* @brief destructor
@@ -107,7 +107,7 @@ namespace guiex
 			int32 nEndPos = -1)=0;
 
 	public: 
-		static const char* StaticGetModuleName();
+		static const char* StaticGetModuleType();
 	};
 
 }//namespace guiex

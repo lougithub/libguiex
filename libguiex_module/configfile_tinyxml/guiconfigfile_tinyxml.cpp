@@ -21,10 +21,15 @@
 //============================================================================// 
 namespace guiex
 {
-
 	GUI_INTERFACE_IMPLEMENT(IGUIConfigFile_tinyxml);
 	//------------------------------------------------------------------------------
+	const char* IGUIConfigFile_tinyxml::StaticGetModuleName()
+	{
+		return "IGUIConfigFile_tinyxml";
+	}
+	//------------------------------------------------------------------------------
 	IGUIConfigFile_tinyxml::IGUIConfigFile_tinyxml()
+		:IGUIInterfaceConfigFile( StaticGetModuleName() )
 	{
 	}
 	//------------------------------------------------------------------------------

@@ -23,7 +23,14 @@ if( WIN32 )
 
     set( WIN32_EXECUTABLE true )
     add_executable( ${target_name} WIN32 ${${target_name}_SRCS} )
-    add_dependencies( ${target_name} libguiex_module libguiex_widget libguiex_framework )
+    
+    add_dependencies( 
+		${target_name}
+		libguiex_module
+		libguiex_widget
+		libguiex_framework 
+       )
+       
 	macro_set_target_output_dir( ${target_name} )
     target_link_libraries( 
 		${target_name}  

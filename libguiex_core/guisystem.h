@@ -188,6 +188,8 @@ namespace guiex
 		/// update time and frame
 		void UpdateTime(real fDeltaTime);
 
+		void UpdatePhysics(real fDeltaTime);
+
 		void AddToGarbage( CGUIWidget* pWidget );
 		void AddToDynamicGarbage( CGUIWidget* pWidget );
 		void RefreshGarbage( );

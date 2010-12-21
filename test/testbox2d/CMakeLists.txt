@@ -33,7 +33,7 @@ if( WIN32 )
     link_directories( "${PROJECT_SOURCE_DIR}/external/glut" )
 
     add_executable( ${target_name} ${${target_name}_SRCS} )
-    add_dependencies( ${target_name} libguiex_module libguiex_widget Box2D )
+    add_dependencies( ${target_name} libguiex_module libguiex_widget box2d )
 	macro_set_target_output_dir( ${target_name} )
     target_link_libraries( ${target_name}  
         general Imm32.lib 
@@ -44,7 +44,7 @@ if( WIN32 )
         general libguiex_module
         general libguiex_script_wrapper
         general libguiex_framework
-        general Box2D
+        general box2d
         general tinyxml
         general lua
         general freetype

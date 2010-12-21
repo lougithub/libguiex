@@ -1,10 +1,10 @@
 /** 
- * @file guikeyboard_default.h
- * @brief default keyboard interface, the user has to 
- * set keyboard value himself
- * @author ken
- * @date 2006-07-18
- */
+* @file guikeyboard_default.h
+* @brief default keyboard interface, the user has to 
+* set keyboard value himself
+* @author ken
+* @date 2006-07-18
+*/
 
 #ifndef __GUI_KEYBOARD_DEFAULT_20060718_H__
 #define __GUI_KEYBOARD_DEFAULT_20060718_H__
@@ -19,45 +19,28 @@
 namespace guiex
 {
 
-//============================================================================//
-// class
-//============================================================================// 
-class GUIEXPORT IGUIKeyboard_default : public IGUIInterfaceKeyboard
-{
-public:
-	/**
-	 * @brief constructor
-	 */
-	IGUIKeyboard_default();
+	//============================================================================//
+	// class
+	//============================================================================// 
+	class GUIEXPORT IGUIKeyboard_default : public IGUIInterfaceKeyboard
+	{
+	public:
+		IGUIKeyboard_default();
+		virtual ~IGUIKeyboard_default();
 
-	/**
-	 * @brief destructor
-	 */
-	virtual ~IGUIKeyboard_default();
+		virtual void DeleteSelf();
 
-	/**
-	 * @brief used to delete this object
-	 */
-	virtual void	DeleteSelf();
-
-protected:
-	/** 
-	 * @brief initialize keyboard
-	 * @return 0 for success
-	 */
-	virtual int DoInitialize(void* );
-
-	/** 
-	 * @brief destroy keyboard
-	 * @return 0 for success
-	 */
-	virtual void DoDestroy();
-
-};
+	protected:
+		virtual int DoInitialize(void* );
+		virtual void DoDestroy();
 
 
+	public: 
+		static const char* StaticGetModuleName();
+	};
 
-GUI_INTERFACE_DECLARE();
+
+	GUI_INTERFACE_DECLARE();
 
 }//namespace guiex
 

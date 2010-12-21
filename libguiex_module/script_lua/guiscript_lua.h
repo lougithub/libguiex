@@ -70,6 +70,9 @@ namespace guiex
 	private:
 		std::map<CGUIString, void*> m_mapLuaState;///< The lua_State used by this module
 		std::list<FuncScriptLoadModule> m_listModules;
+
+	public: 
+		static const char* StaticGetModuleName();
 	};
 
 	GUI_INTERFACE_DECLARE();

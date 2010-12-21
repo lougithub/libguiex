@@ -36,7 +36,7 @@ namespace guiex
 		/**
 		* @brief used to delete this object
 		*/
-		virtual void	DeleteSelf();
+		virtual void DeleteSelf();
 
 		/**
 		* @brief process windows message,
@@ -45,7 +45,7 @@ namespace guiex
 		*		- true the income message contain mouse information
 		*		- false the income message doesn't contain mouse information
 		*/
-		bool			ProcessWindowMessage(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+		bool ProcessWindowMessage(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 
 	protected:
@@ -61,6 +61,9 @@ namespace guiex
 		*/
 		virtual void DoDestroy();
 
+
+	public: 
+		static const char* StaticGetModuleName();
 	};
 
 	GUI_INTERFACE_DECLARE();

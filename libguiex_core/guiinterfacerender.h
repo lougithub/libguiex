@@ -46,7 +46,7 @@ namespace guiex
 		/**
 		* @brief constructor
 		*/
-		IGUIInterfaceRender();
+		IGUIInterfaceRender( const char* szModuleName );
 
 		/**
 		* @brief destructor
@@ -209,7 +209,7 @@ namespace guiex
 		real m_current_z; //!< The current z co-ordinate value.
 
 	public: 
-		static const char* StaticGetModuleName();
+		static const char* StaticGetModuleType();
 	};
 
 }//namespace guiex

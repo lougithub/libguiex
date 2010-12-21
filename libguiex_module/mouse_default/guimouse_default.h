@@ -51,6 +51,9 @@ namespace guiex
 		*/
 		virtual void DoDestroy();
 
+
+	public: 
+		static const char* StaticGetModuleName();
 	};
 
 

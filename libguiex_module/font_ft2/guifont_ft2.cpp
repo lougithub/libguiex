@@ -48,8 +48,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_INTERFACE_IMPLEMENT(IGUIFont_ft2);
 	//------------------------------------------------------------------------------
+	const char* IGUIFont_ft2::StaticGetModuleName()
+	{
+		return "IGUIFont_ft2";
+	}
+	//------------------------------------------------------------------------------
 	IGUIFont_ft2::IGUIFont_ft2()
-		:m_pFtLib(NULL)
+		:IGUIInterfaceFont( StaticGetModuleName() )
+		,m_pFtLib(NULL)
 		,m_bEnableKerning(false)
 	{
 	}

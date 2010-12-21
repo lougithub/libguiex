@@ -124,6 +124,8 @@ set( ${target_name}_interface_SRCS
 	guiinterfacesound.h
 	guiinterfacestringconv.cpp
 	guiinterfacestringconv.h
+	guiinterfacephysics.cpp
+	guiinterfacephysics.h
 	)
 source_group( interface FILES ${${target_name}_interface_SRCS} )
 

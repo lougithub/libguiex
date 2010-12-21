@@ -101,6 +101,7 @@ include_directories( "${PROJECT_SOURCE_DIR}" )
 #library
 add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_core projects/libguiex_core )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_widget projects/libguiex_widget )
+add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_widget_box2d projects/libguiex_widget_box2d )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_module projects/libguiex_module )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_script_wrapper projects/libguiex_script_wrapper)
 add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_framework projects/libguiex_framework)

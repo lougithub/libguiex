@@ -33,7 +33,7 @@ namespace guiex
 		/** 
 		* @brief constructor
 		*/
-		IGUIInterfaceStringConv();
+		IGUIInterfaceStringConv( const char* szModuleName );
 
 		/** 
 		* @brief destructor
@@ -55,7 +55,7 @@ namespace guiex
 		virtual int Utf16ToUtf8( const CGUIStringW& rSrc, CGUIString& rDst ) = 0;
 
 	public: 
-		static const char* StaticGetModuleName();
+		static const char* StaticGetModuleType();
 	};
 }//namespace guiex
 

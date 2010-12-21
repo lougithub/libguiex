@@ -67,8 +67,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_INTERFACE_IMPLEMENT(IGUIRender_opengl);
 	//------------------------------------------------------------------------------
+	const char* IGUIRender_opengl::StaticGetModuleName()
+	{
+		return "IGUIRender_opengl";
+	}
+	//------------------------------------------------------------------------------
 	IGUIRender_opengl::IGUIRender_opengl()
-		:m_maxTextureSize(0)
+		:IGUIInterfaceRender( StaticGetModuleName() )
+		,m_maxTextureSize(0)
 		,m_bEnableClip(false)
 	{
 		m_nCurrentTexture = -1;

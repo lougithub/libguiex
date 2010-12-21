@@ -37,7 +37,6 @@ namespace guiex
 	void	CGUIWgtStaticImage::InitStaticImage()
 	{
 		m_pImageBG = NULL;
-		m_strImageName = "BGIMAGE";
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtStaticImage::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
@@ -55,24 +54,6 @@ namespace guiex
 	void	CGUIWgtStaticImage::RenderSelf(IGUIInterfaceRender* pRender)
 	{
 		DrawImage( pRender, m_pImageBG, GetBoundArea( ));
-	}
-	//------------------------------------------------------------------------------
-	void CGUIWgtStaticImage::SetCurrentImage( const CGUIString& rImageName)
-	{
-		if( m_pImageBG = GetImage(rImageName))
-		{
-			m_strImageName = rImageName;
-		}
-		else
-		{
-			//error
-			throw CGUIException("[CGUIWgtStaticImage::SetCurrentImage]: failed to get image by name <%s>!",rImageName.c_str());
-		}
-	}
-	//------------------------------------------------------------------------------
-	const CGUIString& CGUIWgtStaticImage::GetCurrentImage(  ) const
-	{
-		return m_strImageName;
 	}
 	//------------------------------------------------------------------------------
 
