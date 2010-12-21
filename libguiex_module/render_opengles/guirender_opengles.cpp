@@ -63,9 +63,15 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_INTERFACE_IMPLEMENT(IGUIRender_opengles);
 	//------------------------------------------------------------------------------
+	const char* IGUIRender_opengles::StaticGetModuleName()
+	{
+		return "IGUIRender_opengles";
+	}	
+	//------------------------------------------------------------------------------
 	IGUIRender_opengles::IGUIRender_opengles()
-		:m_maxTextureSize(0)
-		,m_bEnableClip(false)
+	:IGUIInterfaceRender(StaticGetModuleName())
+	,m_maxTextureSize(0)
+	,m_bEnableClip(false)
 	{
 		m_nCurrentTexture = -1;
 		m_bWireFrame = false;

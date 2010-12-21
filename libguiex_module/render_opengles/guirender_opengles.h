@@ -49,7 +49,7 @@ namespace guiex
 	class GUIEXPORT IGUIRender_opengles : public IGUIInterfaceRender
 	{
 	public:
-		IGUIRender_opengles();
+		IGUIRender_opengles( );
 		virtual ~IGUIRender_opengles();
 
 		virtual void DrawRect(const CGUIMatrix4& rWorldMatrix,
@@ -189,6 +189,10 @@ namespace guiex
 		int m_nMaxStencilRef;
 		int m_nCurrentStencilRef;
 		SClipRect m_aWholeScreenRect;
+		
+		
+	public: 
+		static const char* StaticGetModuleName();		
 	};
 
 	GUI_INTERFACE_DECLARE();
