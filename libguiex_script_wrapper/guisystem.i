@@ -41,8 +41,6 @@ namespace guiex
 		const CGUISize& GetScreenSize( ) const;
 		uint32 GetScreenWidth( ) const;
 		uint32 GetScreenHeight( ) const;
-		const CGUIVector2& GetScreenPos( ) const;
-		const CGUIRect& GetScreenRect( ) const;
 
 
 		//********************************************************

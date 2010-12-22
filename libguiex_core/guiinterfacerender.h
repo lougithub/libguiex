@@ -95,6 +95,8 @@ namespace guiex
 		// restore states
 		virtual void EndRender(void) = 0;
 
+		virtual void ApplyCamera( const class CGUICamera& rCamera ) = 0;
+
 		/**
 		* @brief Creates a 'null' Texture object.
 		* @return a newly created Texture object.  The returned Texture object has no size or imagery 

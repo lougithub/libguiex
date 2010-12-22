@@ -111,7 +111,6 @@ namespace guiex
 		:m_pMouseTracker(new CMouseTracker)
 		,m_pDragTracker(new CDragTracker)
 		,m_fDbClickTimeout(GUI_DBCLICK_TIME)
-		,m_pSystem(NULL)
 	{
 		GUI_ASSERT(m_pMouseTracker,"error");
 		GUI_ASSERT(m_pDragTracker,"error");
@@ -123,24 +122,19 @@ namespace guiex
 		delete m_pDragTracker;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIInputProcessor::SetSystem(CGUISystem* pSystem)
-	{
-		m_pSystem = pSystem;
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIInputProcessor::Reset()
+	void CGUIInputProcessor::Reset()
 	{
 		m_pMouseTracker->Reset();	
 		m_pDragTracker->Reset();
 	}
 	//------------------------------------------------------------------------------
-	bool	CGUIInputProcessor::ProcessKeyboard(const IGUIInterfaceKeyboard::SKeyEvent& rKeyEvent)
+	bool CGUIInputProcessor::ProcessKeyboard(const IGUIInterfaceKeyboard::SKeyEvent& rKeyEvent)
 	{
 		IGUIInterfaceKeyboard* pKeyboard = CGUIInterfaceManager::Instance()->GetInterfaceKeyboard();
 		pKeyboard->PreUpdate();
 
 		//get key status
-		CGUIWidget *pFocusWidget = m_pSystem->GetFocusWidget();
+		CGUIWidget *pFocusWidget = GSystem->GetFocusWidget();
 
 		uint32	nEventId = 0;
 		switch(rKeyEvent.m_eKeyEvent)
@@ -178,7 +172,7 @@ namespace guiex
 		{
 			//the focus widget doesn't process this event, check global
 			//key register now
-			m_pSystem->ProcessGlobalKeyEvent(&aEvent);
+			GSystem->ProcessGlobalKeyEvent(&aEvent);
 		}
 
 		//update keyboard status
@@ -188,7 +182,7 @@ namespace guiex
 	}
 
 	//------------------------------------------------------------------------------
-	bool	CGUIInputProcessor::ProcessMouse(const IGUIInterfaceMouse::SMouseEvent& rMouseEvent)
+	bool CGUIInputProcessor::ProcessMouse(const IGUIInterfaceMouse::SMouseEvent& rMouseEvent)
 	{
 		IGUIInterfaceMouse* pMouse = CGUIInterfaceManager::Instance()->GetInterfaceMouse();
 		pMouse->PreUpdate();
@@ -224,11 +218,11 @@ namespace guiex
 	{
 		bool bConsumed = false;
 
-		CGUIWidget* pTargetWidget = m_pSystem->GetWidgetUnderPoint(rMouseEvent.m_aMousePos);
+		CGUIWidget* pTargetWidget = GSystem->GetWidgetUnderPoint(rMouseEvent.m_aMousePos);
 
 		if( !m_pMouseTracker->m_aButtonTrack[rMouseEvent.m_eButton].m_pTargetWidget ||
 			pTargetWidget != m_pMouseTracker->m_aButtonTrack[rMouseEvent.m_eButton].m_pTargetWidget ||
-			m_pSystem->GetSystemTime() - m_pMouseTracker->m_aButtonTrack[rMouseEvent.m_eButton].m_fTimer > static_cast<int32>(m_fDbClickTimeout))
+			GSystem->GetSystemTime() - m_pMouseTracker->m_aButtonTrack[rMouseEvent.m_eButton].m_fTimer > static_cast<int32>(m_fDbClickTimeout))
 		{
 			//reset mouse tracker
 			m_pMouseTracker->m_aButtonTrack[rMouseEvent.m_eButton].m_pTargetWidget = pTargetWidget;
@@ -240,12 +234,12 @@ namespace guiex
 			++m_pMouseTracker->m_aButtonTrack[rMouseEvent.m_eButton].m_nClickCount;
 		}
 		//re-initialize timer
-		m_pMouseTracker->m_aButtonTrack[rMouseEvent.m_eButton].m_fTimer = m_pSystem->GetSystemTime();
+		m_pMouseTracker->m_aButtonTrack[rMouseEvent.m_eButton].m_fTimer = GSystem->GetSystemTime();
 
 		if( pTargetWidget )
 		{
 			//set focus
-			if( m_pSystem->GetFocusWidget() != pTargetWidget)
+			if( GSystem->GetFocusWidget() != pTargetWidget)
 			{
 				// if( pTargetWidget->IsFocusable())
 				{
@@ -329,9 +323,9 @@ namespace guiex
 		}
 		else
 		{
-			if( m_pSystem->GetFocusWidget() )
+			if( GSystem->GetFocusWidget() )
 			{
-				m_pSystem->GetFocusWidget()->SetFocus(false);
+				GSystem->GetFocusWidget()->SetFocus(false);
 			}
 		}
 
@@ -356,7 +350,7 @@ namespace guiex
 		bool bConsumed = false;
 
 		//for mouse up event
-		CGUIWidget* pTargetWidget = m_pSystem->GetWidgetUnderPoint(rMouseEvent.m_aMousePos);
+		CGUIWidget* pTargetWidget = GSystem->GetWidgetUnderPoint(rMouseEvent.m_aMousePos);
 
 		if( pTargetWidget &&
 			pTargetWidget == m_pMouseTracker->m_aButtonTrack[rMouseEvent.m_eButton].m_pTargetWidget )
@@ -440,7 +434,7 @@ namespace guiex
 	{
 		bool bConsumed = false;
 
-		CGUIWidget* pTargetWidget = m_pSystem->GetWidgetUnderPoint(rMouseEvent.m_aMousePos);
+		CGUIWidget* pTargetWidget = GSystem->GetWidgetUnderPoint(rMouseEvent.m_aMousePos);
 
 		if( pTargetWidget )
 		{
@@ -481,7 +475,7 @@ namespace guiex
 		}
 		else
 		{
-			CGUIWidget* pTargetWidget = m_pSystem->GetWidgetUnderPoint(rMouseEvent.m_aMousePos);
+			CGUIWidget* pTargetWidget = GSystem->GetWidgetUnderPoint(rMouseEvent.m_aMousePos);
 
 
 			//mouse leave and mouse enter event

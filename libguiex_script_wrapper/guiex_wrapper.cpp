@@ -12972,54 +12972,6 @@ fail:
 }
 
 
-static int _wrap_CGUISystem_GetScreenPos(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
-  guiex::CGUIVector2 *result = 0 ;
-  
-  SWIG_check_num_args("GetScreenPos",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetScreenPos",1,"guiex::CGUISystem const *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
-    SWIG_fail_ptr("CGUISystem_GetScreenPos",1,SWIGTYPE_p_guiex__CGUISystem);
-  }
-  
-  result = (guiex::CGUIVector2 *) &((guiex::CGUISystem const *)arg1)->GetScreenPos();
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIVector2,0); SWIG_arg++; 
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_CGUISystem_GetScreenRect(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
-  guiex::CGUIRect *result = 0 ;
-  
-  SWIG_check_num_args("GetScreenRect",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetScreenRect",1,"guiex::CGUISystem const *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
-    SWIG_fail_ptr("CGUISystem_GetScreenRect",1,SWIGTYPE_p_guiex__CGUISystem);
-  }
-  
-  result = (guiex::CGUIRect *) &((guiex::CGUISystem const *)arg1)->GetScreenRect();
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIRect,0); SWIG_arg++; 
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static int _wrap_CGUISystem_SendUIEvent(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
@@ -13150,8 +13102,6 @@ static swig_lua_method swig_guiex_CGUISystem_methods[] = {
     {"GetScreenSize", _wrap_CGUISystem_GetScreenSize}, 
     {"GetScreenWidth", _wrap_CGUISystem_GetScreenWidth}, 
     {"GetScreenHeight", _wrap_CGUISystem_GetScreenHeight}, 
-    {"GetScreenPos", _wrap_CGUISystem_GetScreenPos}, 
-    {"GetScreenRect", _wrap_CGUISystem_GetScreenRect}, 
     {"SendUIEvent", _wrap_CGUISystem_SendUIEvent}, 
     {"SendEvent", _wrap_CGUISystem_SendEvent}, 
     {"GetSystemTime", _wrap_CGUISystem_GetSystemTime}, 

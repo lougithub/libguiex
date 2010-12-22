@@ -47,11 +47,6 @@ namespace guiex
 		 */
 		void Reset();
 
-		/** 
-		 * @brief set system pointer
-		 */
-		void SetSystem(CGUISystem* pSystem);
-		
 		/**
 		* @brief process mouse and generate relative event
 		* @return whether this mouse event has been processed
@@ -95,16 +90,10 @@ namespace guiex
 		*/
 		void EndDrag( );
 
-
 	protected:
 		CMouseTracker* m_pMouseTracker; ///tracker used for mouse
 		CDragTracker* m_pDragTracker; ///tracker used for drag
 		real m_fDbClickTimeout; ///timeout of 
-
-		CGUISystem* m_pSystem; //pointer of widget system
-
-	private:
-
 	};
 }//namespace guiex
 

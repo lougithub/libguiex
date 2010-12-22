@@ -16,6 +16,7 @@
 #include <libguiex_core/guisystem.h>
 #include <libguiex_core/guirenderrect.h>
 #include <libguiex_core/guilogmsgmanager.h>
+#include <libguiex_core/guicamera.h>
 
 
 
@@ -127,6 +128,8 @@ namespace guiex
 	{
 		TRY_THROW_OPENGL_ERROR("BeginRender start");
 
+		const CGUISize& rSize = GSystem->GetScreenSize();
+
 		//save current attributes
 		glPushClientAttrib(GL_CLIENT_ALL_ATTRIB_BITS);
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
@@ -136,19 +139,18 @@ namespace guiex
 		//update projection matrix
 		glMatrixMode(GL_PROJECTION);
 		glPushMatrix();
-		glLoadIdentity();
-		const CGUISize& rSize = GSystem->GetScreenSize();
-#if 1
-		glOrtho(0.0, rSize.m_fWidth,rSize.m_fHeight,0.0, -100000,100000 );
-#else
-		real fPerspectiveDegree = 45;
-		gluPerspective( fPerspectiveDegree, rSize.m_fWidth/rSize.m_fHeight, 0.1, 100000 );
-		real fZDistance = rSize.m_fHeight/2 / CGUIMath::Tan( CGUIDegree(fPerspectiveDegree/2));
-		gluLookAt( 
-			rSize.m_fWidth/2,rSize.m_fHeight/2,-fZDistance,
-			rSize.m_fWidth/2,rSize.m_fHeight/2,0, 
-			0,-1,0);
-#endif
+		//glLoadIdentity();
+//#if 0
+//		glOrtho(0.0, rSize.m_fWidth,rSize.m_fHeight,0.0, -100000,100000 );
+//#else
+//		real fPerspectiveDegree = 45;
+//		gluPerspective( fPerspectiveDegree, rSize.m_fWidth/rSize.m_fHeight, 0.1, 100000 );
+//		real fZDistance = rSize.m_fHeight/2 / CGUIMath::Tan( CGUIDegree(fPerspectiveDegree/2));
+//		gluLookAt( 
+//			rSize.m_fWidth/2,rSize.m_fHeight/2,-fZDistance,
+//			rSize.m_fWidth/2,rSize.m_fHeight/2,0, 
+//			0,-1,0);
+//#endif
 
 		//update modelview matrix
 		glMatrixMode(GL_MODELVIEW);
@@ -209,7 +211,6 @@ namespace guiex
 		glMatrixMode(GL_PROJECTION);
 		glPopMatrix(); 
 
-
 		//restore former attributes
 		glPopAttrib();
 		glPopClientAttrib();
@@ -218,6 +219,17 @@ namespace guiex
 		m_nCurrentTexture = -1;
 
 		TRY_THROW_OPENGL_ERROR("EndRender end");
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl::ApplyCamera( const class CGUICamera& rCamera )
+	{
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		gluPerspective( rCamera.m_fFov, rCamera.m_fAspectRatio, 0.1, 100000 );
+		gluLookAt( 
+			rCamera.m_vEye.x, rCamera.m_vEye.y, rCamera.m_vEye.z,
+			rCamera.m_vCenter.x, rCamera.m_vCenter.y, rCamera.m_vCenter.z,
+			rCamera.m_vUp.x, rCamera.m_vUp.y, rCamera.m_vUp.z );
 	}
 	//------------------------------------------------------------------------------
 	/** 

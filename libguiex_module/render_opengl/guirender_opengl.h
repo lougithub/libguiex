@@ -80,6 +80,8 @@ namespace guiex
 		virtual void BeginRender(void);
 		virtual void EndRender(void);
 
+		virtual void ApplyCamera( const class CGUICamera& rCamera );
+
 		virtual	CGUITextureImp*	CreateTexture(void);
 		virtual	CGUITextureImp*	CreateTexture(const CGUIString& filename);
 		virtual	CGUITextureImp*	CreateTexture(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat);

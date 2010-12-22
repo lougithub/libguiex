@@ -21,8 +21,7 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	GUIEXPORT int RegisterInterface(const CGUIString& rInterface, 
-		const CGUIString& rModuleName )
+	GUIEXPORT int RegisterInterface(const CGUIString& rInterface, const CGUIString& rModuleName )
 	{
 		return CGUIInterfaceManager::Instance()->RegisterInterface( rInterface, rModuleName );
 	}

@@ -31,6 +31,21 @@ set( ${target_name}_base_SRCS
 	)
 source_group( base FILES ${${target_name}_base_SRCS} )
 
+set( ${target_name}_camera_SRCS 
+	guicamera.h
+	guicamera.cpp
+	guicameramanager.h
+	guicameramanager.cpp	
+)
+source_group( camera FILES ${${target_name}_camera_SRCS} )
+
+set( ${target_name}_canvas_SRCS 
+	guicanvaslayer.h
+	guicanvaslayer.cpp	
+	guicanvaslayermanager.h
+	guicanvaslayermanager.cpp	
+)
+source_group( canvas FILES ${${target_name}_canvas_SRCS} )
 
 set( ${target_name}_math_SRCS 
 	guivector2.cpp
@@ -237,6 +252,8 @@ set( ${target_name}_SRCS
 	${${target_name}_texture_SRCS}
 	${${target_name}_scene_SRCS}
 	${${target_name}_misc_SRCS}
+	${${target_name}_canvas_SRCS}
+	${${target_name}_camera_SRCS}
 	)
 
 

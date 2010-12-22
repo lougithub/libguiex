@@ -24,6 +24,7 @@
 #include <libguiex_core/guifontmanager.h>
 #include <libguiex_core/guiasmanager.h>
 #include <libguiex_core/guitexturemanager.h>
+#include <libguiex_core/guicameramanager.h>
 
 #include <libguiex_core/guiinterfacemanager.h>
 #include <libguiex_core/guiinterfacemouse.h>
@@ -132,13 +133,12 @@ namespace guiex
 		,m_pAsFactory( NULL )
 		,m_pLogMsgManager( NULL )
 		,m_pWidgetManager( NULL )
+		,m_pCameraManager( NULL )
 	{
 		GUI_ASSERT( !m_pSingleton, "[CGUISystem::CGUISystem]:instance has been created" ); 
+		GUI_ASSERT( !GSystem, "[CGUISystem::CGUISystem]:GSystem has been set" ); 
 		m_pSingleton = this; 
 		GSystem = this;
-
-		SetScreenSize(640,480);
-		m_aInputProcessor.SetSystem(this);
 	}
 	//------------------------------------------------------------------------------
 	CGUISystem::~CGUISystem()
@@ -173,6 +173,7 @@ namespace guiex
 		m_pWidgetFactory = new CGUIWidgetFactory;
 		m_pSceneInfoManager = new CGUISceneManager;
 		m_pAsFactory = new CGUIAsFactory;
+		m_pCameraManager = new CGUICameraManager;
 	}
 	//------------------------------------------------------------------------------
 	void CGUISystem::ReleaseSingletons()
@@ -505,17 +506,17 @@ namespace guiex
 	void CGUISystem::SetScreenSize( const CGUISize& rScreenSize )
 	{
 		m_aScreenSize = rScreenSize;
-		m_aScreenRect = CGUIRect(
-			CGUIVector2(0,0),
-			m_aScreenSize );
 
-		//update page
+		//update ui camera
+		m_pCameraManager->GetDefaultUICamera().Restore();
+
+		//update ui page
 		if( m_pWgtRoot )
 		{
 			m_pWgtRoot->Refresh();
 		}
 
-		//update dlg
+		//update ui dlg
 		for(TArrayWidget::iterator itor = m_arrayOpenedDlg.begin();
 			itor != m_arrayOpenedDlg.end();
 			++itor)
@@ -523,7 +524,7 @@ namespace guiex
 			(*itor)->Refresh();
 		}
 
-		//update popup widget
+		//update ui popup widget
 		if( m_pPopupWidget )
 		{
 			m_pPopupWidget->Refresh();
@@ -554,22 +555,6 @@ namespace guiex
 	uint32 CGUISystem::GetScreenHeight( ) const
 	{
 		return uint32(m_aScreenSize.m_fHeight+0.5f);
-	}
-	//------------------------------------------------------------------------------
-	/**
-	* @brief get the position of screen, in default
-	*/
-	const CGUIVector2& CGUISystem::GetScreenPos( ) const
-	{
-		return m_aScreenPos;
-	}
-	//------------------------------------------------------------------------------
-	/**
-	* @brief get the rect of screen, in default
-	*/
-	const CGUIRect& CGUISystem::GetScreenRect( ) const
-	{
-		return m_aScreenRect;
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -608,21 +593,9 @@ namespace guiex
 		return m_pWgtFocus;
 	}
 	//------------------------------------------------------------------------------
-	/**
-	* @brief render system
-	*/
-	void CGUISystem::Render()
+	void CGUISystem::RenderUI( IGUIInterfaceRender* pRender )
 	{
-		IGUIInterfaceRender* pRender = CGUIInterfaceManager::Instance()->GetInterfaceRender();
-		IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
-		pRender->SetFontRender(pFont); 
-
-		//init render
-		pRender->ResetZValue();
-
-		pRender->BeginRender();
-
-		//render page
+		//render ui page
 		if( m_pWgtRoot )
 		{
 			m_pWgtRoot->Render(pRender);
@@ -663,6 +636,34 @@ namespace guiex
 				m_pPopupWidget->RenderExtraInfo(pRender);
 			}
 		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUISystem::RenderCanvas( IGUIInterfaceRender* pRender )
+	{
+
+	}
+	//------------------------------------------------------------------------------
+	/**
+	* @brief render system
+	*/
+	void CGUISystem::Render()
+	{
+		IGUIInterfaceRender* pRender = CGUIInterfaceManager::Instance()->GetInterfaceRender();
+		IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
+		pRender->SetFontRender(pFont); 
+
+		//init render
+		pRender->ResetZValue();
+
+		pRender->BeginRender();
+
+		//render canvas
+		pRender->ApplyCamera( m_pCameraManager->GetDefaultCanvasCamera() );
+		RenderCanvas( pRender );
+
+		//render ui
+		pRender->ApplyCamera( m_pCameraManager->GetDefaultUICamera() );
+		RenderUI( pRender );
 
 		pRender->EndRender();
 	}

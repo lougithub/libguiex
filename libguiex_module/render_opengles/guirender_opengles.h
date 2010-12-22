@@ -19,14 +19,8 @@
 #include <list>
 #include <set>
 
-
 #include <OpenGLES/ES1/gl.h>
 #include <OpenGLES/ES1/glext.h>
-
-
-//============================================================================//
-// define
-//============================================================================// 
 
 
 //============================================================================//
@@ -37,9 +31,6 @@ namespace guiex
 	class CGUITexture_opengles;
 	class CGUIColor;
 }
-
-
-
 
 //============================================================================//
 // class
@@ -86,6 +77,8 @@ namespace guiex
 
 		virtual void BeginRender(void);
 		virtual void EndRender(void);
+
+		virtual void ApplyCamera( const class CGUICamera& rCamera );
 
 		virtual	CGUITextureImp*	CreateTexture(void);
 		virtual	CGUITextureImp*	CreateTexture(const CGUIString& filename);

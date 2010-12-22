@@ -48,6 +48,7 @@ namespace guiex
 	class CGUISceneManager;
 	class CGUILogMsgManager;
 	class CGUIWidgetManager;
+	class CGUICameraManager;
 
 	extern CGUISystem* GSystem;
 }
@@ -122,8 +123,6 @@ namespace guiex
 		const CGUISize& GetScreenSize( ) const;
 		uint32 GetScreenWidth( ) const;
 		uint32 GetScreenHeight( ) const;
-		const CGUIVector2& GetScreenPos( ) const;
-		const CGUIRect& GetScreenRect( ) const;
 
 
 		//********************************************************
@@ -180,6 +179,7 @@ namespace guiex
 		CGUIAsFactory* GetAsFactory();
 		CGUILogMsgManager* GetLogMsgManager();
 		CGUIWidgetManager* GetWidgetManager();
+		CGUICameraManager* GetCameraManager();
 
 	protected:
 		friend class CGUIWidget;
@@ -200,6 +200,8 @@ namespace guiex
 		void InitializeSingletons();
 		void ReleaseSingletons();
 
+		void RenderUI( class IGUIInterfaceRender* pRender );
+		void RenderCanvas( class IGUIInterfaceRender* pRender );
 
 	protected:
 		void ProcessCommand();
@@ -217,9 +219,7 @@ namespace guiex
 
 		//----------------------------------------------------------------------
 		/// screen size
-		CGUIRect m_aScreenRect; //!< rect of screen, in default
 		CGUISize m_aScreenSize; //!< size of screen, in default
-		CGUIVector2 m_aScreenPos; //!< pos of screen, in default
 		//----------------------------------------------------------------------
 
 		//----------------------------------------------------------------------
@@ -293,7 +293,8 @@ namespace guiex
 		CGUIAsFactory* m_pAsFactory;
 		CGUILogMsgManager* m_pLogMsgManager;
 		CGUIWidgetManager* m_pWidgetManager;
-		 
+		CGUICameraManager* m_pCameraManager;
+
 	private:
 		bool m_bInitialized;
 
@@ -368,6 +369,10 @@ namespace guiex
 		return m_pWidgetManager;
 	}
 
+	inline CGUICameraManager* CGUISystem::GetCameraManager()
+	{
+		return m_pCameraManager;
+	}
 
 }//namespace guiex
 
