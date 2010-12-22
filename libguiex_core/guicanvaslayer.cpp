@@ -45,7 +45,7 @@ namespace guiex
 
 	}
 	//------------------------------------------------------------------------------
-	void CGUICanvasLayer::Render( )
+	void CGUICanvasLayer::Render( IGUIInterfaceRender* pRender )
 	{
 
 	}

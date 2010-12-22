@@ -1,4 +1,4 @@
-set( target_name "example_hello_ipad" )
+set( target_name "example_canvaslayer_test" )
 message( STATUS "generate execute: " ${target_name} )
 
 
@@ -24,7 +24,7 @@ endif()
 
 #test source
 set( ${target_name}_execute_SRCS
-	hello_ipad.cpp
+	canvaslayer_test.cpp
 	)
 source_group( test FILES ${${target_name}_execute_SRCS} )
 

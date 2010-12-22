@@ -49,6 +49,7 @@ namespace guiex
 	class CGUILogMsgManager;
 	class CGUIWidgetManager;
 	class CGUICameraManager;
+	class CGUICanvasLayerManager;
 
 	extern CGUISystem* GSystem;
 }
@@ -180,6 +181,7 @@ namespace guiex
 		CGUILogMsgManager* GetLogMsgManager();
 		CGUIWidgetManager* GetWidgetManager();
 		CGUICameraManager* GetCameraManager();
+		CGUICanvasLayerManager* GetCanvasLayerManager();
 
 	protected:
 		friend class CGUIWidget;
@@ -202,7 +204,9 @@ namespace guiex
 
 		void RenderUI( class IGUIInterfaceRender* pRender );
 		void RenderCanvas( class IGUIInterfaceRender* pRender );
-
+		void UpdateUI( real fDeltaTime );
+		void UpdateCanvas( real fDeltaTime );
+		
 	protected:
 		void ProcessCommand();
 		bool ProcessGlobalKeyEvent(CGUIEventKeyboard* pEvent);
@@ -294,7 +298,8 @@ namespace guiex
 		CGUILogMsgManager* m_pLogMsgManager;
 		CGUIWidgetManager* m_pWidgetManager;
 		CGUICameraManager* m_pCameraManager;
-
+		CGUICanvasLayerManager* m_pCanvasLayerManager;
+		
 	private:
 		bool m_bInitialized;
 
@@ -374,6 +379,11 @@ namespace guiex
 		return m_pCameraManager;
 	}
 
+	inline CGUICanvasLayerManager* CGUISystem::GetCanvasLayerManager()
+	{
+		return m_pCanvasLayerManager;
+	}
+	
 }//namespace guiex
 
 

@@ -106,6 +106,14 @@
 #include "guiscenemanager.h"
 #include "guisceneUtility.h"
 
+//canvaslayer
+#include "guicanvaslayer.h"
+#include "guicanvaslayermanager.h"
+
+//camera
+#include "guicamera.h"
+#include "guicameramanager.h"
+
 #include "guiUtility.h"
 #include "guiinterpolation.h"
 

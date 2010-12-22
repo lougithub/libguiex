@@ -25,6 +25,7 @@
 #include <libguiex_core/guiasmanager.h>
 #include <libguiex_core/guitexturemanager.h>
 #include <libguiex_core/guicameramanager.h>
+#include <libguiex_core/guicanvaslayermanager.h>
 
 #include <libguiex_core/guiinterfacemanager.h>
 #include <libguiex_core/guiinterfacemouse.h>
@@ -174,6 +175,7 @@ namespace guiex
 		m_pSceneInfoManager = new CGUISceneManager;
 		m_pAsFactory = new CGUIAsFactory;
 		m_pCameraManager = new CGUICameraManager;
+		m_pCanvasLayerManager = new CGUICanvasLayerManager;
 	}
 	//------------------------------------------------------------------------------
 	void CGUISystem::ReleaseSingletons()
@@ -202,6 +204,11 @@ namespace guiex
 		m_pAsFactory = NULL;
 		delete m_pTextureManager;
 		m_pTextureManager = NULL;
+		delete m_pCameraManager;
+		m_pCameraManager = NULL;
+		delete m_pCanvasLayerManager;
+		m_pCanvasLayerManager = NULL;
+		
 
 		delete m_pLogMsgManager;
 		m_pLogMsgManager = NULL;
@@ -449,28 +456,11 @@ namespace guiex
 		//execute command if it exist
 		ProcessCommand();
 
-		//update page
-		if( m_pWgtRoot)
-		{
-			m_pWgtRoot->Update( fDeltaTime );
-		}
-
-		//update dlg
-		for(TArrayWidget::iterator itor = m_arrayOpenedDlg.begin();
-			itor != m_arrayOpenedDlg.end();
-			++itor)
-		{
-			(*itor)->Update( fDeltaTime );
-		}
-
-		//update popup widget
-		if( m_pPopupWidget )
-		{
-			m_pPopupWidget->Update( fDeltaTime );
-		}
 
 		RefreshGarbage();
 
+		UpdateUI( fDeltaTime );
+		UpdateCanvas( fDeltaTime );
 
 		//update performance monitor
 #if	GUI_PERFORMANCE_ON 
@@ -593,6 +583,34 @@ namespace guiex
 		return m_pWgtFocus;
 	}
 	//------------------------------------------------------------------------------
+	void CGUISystem::UpdateUI( real fDeltaTime )
+	{
+		//update page
+		if( m_pWgtRoot)
+		{
+			m_pWgtRoot->Update( fDeltaTime );
+		}
+		
+		//update dlg
+		for(TArrayWidget::iterator itor = m_arrayOpenedDlg.begin();
+			itor != m_arrayOpenedDlg.end();
+			++itor)
+		{
+			(*itor)->Update( fDeltaTime );
+		}
+		
+		//update popup widget
+		if( m_pPopupWidget )
+		{
+			m_pPopupWidget->Update( fDeltaTime );
+		}		
+	}
+	//------------------------------------------------------------------------------
+	void CGUISystem::UpdateCanvas( real fDeltaTime )
+	{
+		m_pCanvasLayerManager->Update( fDeltaTime );
+	}
+	//------------------------------------------------------------------------------
 	void CGUISystem::RenderUI( IGUIInterfaceRender* pRender )
 	{
 		//render ui page
@@ -607,7 +625,7 @@ namespace guiex
 		{
 			(*itor)->Render(pRender);
 		}
-		//update popup widget
+		//render popup widget
 		if( m_pPopupWidget )
 		{
 			m_pPopupWidget->Render(pRender);
@@ -630,7 +648,7 @@ namespace guiex
 			{
 				(*itor)->RenderExtraInfo(pRender);
 			}
-			//update popup widget
+			//render extra info
 			if( m_pPopupWidget )
 			{
 				m_pPopupWidget->RenderExtraInfo(pRender);
@@ -640,7 +658,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUISystem::RenderCanvas( IGUIInterfaceRender* pRender )
 	{
-
+		m_pCanvasLayerManager->Render( pRender );
 	}
 	//------------------------------------------------------------------------------
 	/**

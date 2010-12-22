@@ -5,8 +5,8 @@
  * @date 2010-12-22
  */
 
-#ifndef __GUI_CANVASMANAGER_20101222_H__
-#define __GUI_CANVASMANAGER_20101222_H__
+#ifndef __GUI_CANVASLAYERMANAGER_20101222_H__
+#define __GUI_CANVASLAYERMANAGER_20101222_H__
 
 //============================================================================//
 // include
@@ -31,13 +31,16 @@ namespace guiex
 	{
 	public:
 		~CGUICanvasLayerManager();
+		
+		static CGUICanvasLayerManager* Instance();
+	
 
 		void Update( real fDeltaTime );
-		void Render( );
+		void Render( class IGUIInterfaceRender* pRender );
 
 		void PushCanvasLayer( CGUICanvasLayer* pLayer );
 		CGUICanvasLayer* PopCanvasLayer( );
-		CGUICanvasLayer* PopAndDestroyCanvasLayer( );
+		void PopAndDestroyCanvasLayer( );
 
 		CGUICanvasLayer* RemoveCanvasLayer( CGUICanvasLayer* pLayer );
 		CGUICanvasLayer* DestroyAllCanvasLayer( );
@@ -61,4 +64,4 @@ namespace guiex
 
 }//namespace guiex
 
-#endif //__GUI_CANVASMANAGER_20101222_H__
+#endif //__GUI_CANVASLAYERMANAGER_20101222_H__

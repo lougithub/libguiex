@@ -28,9 +28,9 @@ namespace guiex
 		virtual void Release();
 
 		virtual void Update( real fDeltaTime );
-		virtual void Render( );
+		virtual void Render( class IGUIInterfaceRender* pRender );
 
-		virtual void DestroySelf( CGUICanvasLayer* pLayer ) = 0;
+		virtual void DestroySelf( ) = 0;
 
 		const CGUIString& GetLayerName( ) const;
 

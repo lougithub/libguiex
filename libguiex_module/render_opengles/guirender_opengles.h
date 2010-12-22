@@ -130,6 +130,12 @@ namespace guiex
 
 		void UpdateStencil();
 		void RenderRectForStencil( const SClipRect& rRect );
+		
+		/** OpenGL gluLookAt implementation */
+		void gluLookAt(float eyeX, float eyeY, float eyeZ, float lookAtX, float lookAtY, float lookAtZ, float upX, float upY, float upZ);
+		/** OpenGL gluPerspective implementation */
+		void gluPerspective(GLfloat fovy, GLfloat aspect, GLfloat zNear, GLfloat zFar);
+		
 
 	protected:
 
