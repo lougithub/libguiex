@@ -16,7 +16,7 @@
 #include <libguiex_core/guisystem.h>
 #include <libguiex_core/guirenderrect.h>
 #include <libguiex_core/guilogmsgmanager.h>
-
+#include <libguiex_core/guicamera.h>
 
 
 //============================================================================//
@@ -218,7 +218,11 @@ namespace guiex
 		TRY_THROW_OPENGL_ERROR("EndRender end");
 	}	
 	//------------------------------------------------------------------------------
-	void	IGUIRender_opengles::SetWireFrame( bool bWireFrame)
+	void IGUIRender_opengles::ApplyCamera( const class CGUICamera& rCamera )
+	{
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengles::SetWireFrame( bool bWireFrame)
 	{
 		m_bWireFrame = bWireFrame;
 	}
