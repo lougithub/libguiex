@@ -30,16 +30,6 @@ namespace guiex
 		return m_strLayerName;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUICanvasLayer::Initialize()
-	{
-		return 0;
-	}
-	//------------------------------------------------------------------------------
-	void CGUICanvasLayer::Release()
-	{
-
-	}
-	//------------------------------------------------------------------------------
 	void CGUICanvasLayer::Update( real /*fDeltaTime*/ )
 	{
 

@@ -169,11 +169,17 @@ namespace guiex
 		return m_strAsType;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief set the flag after this as has been processed.
+	*/
 	void CGUIAs::Retire( bool bRetired )
 	{
 		m_bRetired = bRetired;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief whether the as is retired.
+	*/
 	bool CGUIAs::IsRetired()
 	{
 		return m_bRetired;
@@ -189,16 +195,25 @@ namespace guiex
 		return m_bLooping;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief set widget which receives this as
+	*/
 	void CGUIAs::SetReceiver(CGUIWidget* pReceiver)
 	{
 		m_pReceiver = pReceiver;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief Get widget which receives this as
+	*/
 	CGUIWidget*	CGUIAs::GetReceiver()
 	{
 		return m_pReceiver;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief set total time
+	*/
 	void CGUIAs::SetTotalTime(real fTotalTime)
 	{
 		if( fTotalTime <= 0.0f )

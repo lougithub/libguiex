@@ -11,6 +11,7 @@
 #include "guicanvaslayermanager.h"
 #include "guiexception.h"
 #include "guicanvaslayer.h"
+#include <algorithm>
 
 
 //============================================================================//
@@ -94,7 +95,7 @@ namespace guiex
 		return NULL;
 	}
 	//------------------------------------------------------------------------------
-	CGUICanvasLayer* CGUICanvasLayerManager::DestroyAllCanvasLayer( )
+	void CGUICanvasLayerManager::DestroyAllCanvasLayer( )
 	{
 		for( TArrayCanvasLayer::iterator itor = m_arrayCanvasLayers.begin();
 			itor != m_arrayCanvasLayers.end();

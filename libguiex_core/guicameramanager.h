@@ -25,10 +25,8 @@ namespace guiex
 
 		static CGUICameraManager* Instance();
 
-		const CGUICamera& GetDefaultUICamera() const;
-		const CGUICamera& GetDefaultCanvasCamera() const;
-		CGUICamera& GetDefaultUICamera();
-		CGUICamera& GetDefaultCanvasCamera();
+		const CGUICamera* GetDefaultUICamera() const;
+		CGUICamera* GetDefaultUICamera();
 
 	protected:
 		friend class CGUISystem;
@@ -44,24 +42,14 @@ namespace guiex
 	};
 
 	//------------------------------------------------------------------------------
-	inline const CGUICamera& CGUICameraManager::GetDefaultUICamera() const
+	inline const CGUICamera* CGUICameraManager::GetDefaultUICamera() const
 	{
-		return m_aDefaultUICamera;
+		return &m_aDefaultUICamera;
 	}
 	//------------------------------------------------------------------------------
-	inline const CGUICamera& CGUICameraManager::GetDefaultCanvasCamera() const
+	inline CGUICamera* CGUICameraManager::GetDefaultUICamera()
 	{
-		return m_aDefaultCanvasCamera;
-	}
-	//------------------------------------------------------------------------------
-	inline CGUICamera& CGUICameraManager::GetDefaultUICamera()
-	{
-		return m_aDefaultUICamera;
-	}
-	//------------------------------------------------------------------------------
-	inline CGUICamera& CGUICameraManager::GetDefaultCanvasCamera()
-	{
-		return m_aDefaultCanvasCamera;
+		return &m_aDefaultUICamera;
 	}
 	//------------------------------------------------------------------------------
 

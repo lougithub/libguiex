@@ -29,20 +29,37 @@ namespace guiex
 		void Restore();
 
 		void SetEye( real eyeX, real eyeY, real eyeZ );
+		void SetEye( const CGUIVector3& rEye );
 		void SetCenter( real centerX, real centerY, real centerZ );
+		void SetCenter( const CGUIVector3& rCenter );
 		void SetUp( real upX, real upY, real upZ );
+		void SetUp( const CGUIVector3& rUp );
 
 		const CGUIVector3& GetEye() const;
 		const CGUIVector3& GetCenter() const;
 		const CGUIVector3& GetUp() const;
 
-	public:
+		real GetFov() const;
+		void SetFov( real rFov );
+		real GetAspectRatio() const;
+		real GetNearPlane() const;
+		real GetFarPlane() const;
+
+		bool IsDirty();
+		void SetDirty();
+		void ClearDirty();
+
+	protected:
 		CGUIVector3 m_vEye;
 		CGUIVector3 m_vCenter;
 		CGUIVector3 m_vUp;
 		
 		real m_fFov;
 		real m_fAspectRatio;
+		real m_fNearPlane;
+		real m_fFarPlane;
+
+		bool m_bDirty;
 	};
 
 }//namespace guiex

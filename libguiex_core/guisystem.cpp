@@ -498,7 +498,7 @@ namespace guiex
 		m_aScreenSize = rScreenSize;
 
 		//update ui camera
-		m_pCameraManager->GetDefaultUICamera().Restore();
+		m_pCameraManager->GetDefaultUICamera()->Restore();
 
 		//update ui page
 		if( m_pWgtRoot )
@@ -676,7 +676,6 @@ namespace guiex
 		pRender->BeginRender();
 
 		//render canvas
-		pRender->ApplyCamera( m_pCameraManager->GetDefaultCanvasCamera() );
 		RenderCanvas( pRender );
 
 		//render ui

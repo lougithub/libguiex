@@ -20,21 +20,16 @@ namespace guiex
 {
 	//------------------------------------------------------------------------------
 	CGUICamera::CGUICamera()
+		:m_bDirty(true)
+		,m_vEye( 0,0,-1 )
+		,m_vCenter( 0,0,0 )
+		,m_vUp( 0,-1,0 )
+		,m_fFov( 45.0f )
+		,m_fAspectRatio( 1.0f )
+		,m_fNearPlane( 0.1f )
+		,m_fFarPlane( 100000 )
 	{
-		m_fFov = 45.0f;
-		m_fAspectRatio = 1.0f;
 
-		m_vEye.x = 0;
-		m_vEye.y = 0;
-		m_vEye.z = -1;
-
-		m_vCenter.x = 0;
-		m_vCenter.y = 0;
-		m_vCenter.z = 0;
-
-		m_vUp.x = 0;
-		m_vUp.y = -1;
-		m_vUp.z = 0;
 	}
 	//------------------------------------------------------------------------------
 	CGUICamera::CGUICamera( const CGUICamera& rOther )
@@ -48,7 +43,11 @@ namespace guiex
 		m_vCenter = rOther.m_vCenter;
 		m_vUp = rOther.m_vUp;
 		m_fFov = rOther.m_fFov;
+		m_fAspectRatio = rOther.m_fAspectRatio;
+		m_fNearPlane = rOther.m_fNearPlane;
+		m_fFarPlane = rOther.m_fFarPlane;
 
+		m_bDirty = true;
 		return *this;
 	}
 	//------------------------------------------------------------------------------
@@ -80,30 +79,56 @@ namespace guiex
 		m_vUp.x = 0;
 		m_vUp.y = -1;
 		m_vUp.z = 0;
+
+		m_fNearPlane = 0.1f;
+		m_fFarPlane = 100000;
+
+		m_bDirty = true;
 	}
 	//------------------------------------------------------------------------------
 	/** sets the eye values in points */
+	void CGUICamera::SetEye( const CGUIVector3& rEye )
+	{
+		SetEye( rEye.x, rEye.y, rEye.z );
+	}
+	//------------------------------------------------------------------------------
 	void CGUICamera::SetEye( real eyeX, real eyeY, real eyeZ )
 	{
 		m_vEye.x = eyeX;
 		m_vEye.y = eyeY;
 		m_vEye.z = eyeZ;
+
+		m_bDirty = true;
 	}
 	//------------------------------------------------------------------------------
 	/** sets the center values in points */
+	void CGUICamera::SetCenter( const CGUIVector3& rCenter )
+	{
+		SetCenter( rCenter.x, rCenter.y, rCenter.z );
+	}
+	//------------------------------------------------------------------------------
 	void CGUICamera::SetCenter( real centerX, real centerY, real centerZ )
 	{
 		m_vCenter.x = centerX;
 		m_vCenter.y = centerY;
 		m_vCenter.z = centerZ;
+
+		m_bDirty = true;
 	}
 	//------------------------------------------------------------------------------
 	/** sets the up values */
+	void CGUICamera::SetUp( const CGUIVector3& rUp )
+	{
+		SetEye( rUp.x, rUp.y, rUp.z );
+	}
+	//------------------------------------------------------------------------------
 	void CGUICamera::SetUp( real upX, real upY, real upZ )
 	{
 		m_vUp.x = upX;
 		m_vUp.y = upY;
 		m_vUp.z = upZ;
+
+		m_bDirty = true;
 	}
 	//------------------------------------------------------------------------------
 	/** get the eye vector values in points */
@@ -122,6 +147,46 @@ namespace guiex
 	const CGUIVector3& CGUICamera::GetUp() const
 	{
 		return m_vUp;
+	}
+	//------------------------------------------------------------------------------
+	real CGUICamera::GetFov() const
+	{
+		return m_fFov;
+	}
+	//------------------------------------------------------------------------------
+	void CGUICamera::SetFov( real rFov )
+	{
+		m_fFov = rFov;
+	}
+	//------------------------------------------------------------------------------
+	real CGUICamera::GetAspectRatio() const
+	{
+		return m_fAspectRatio;
+	}
+	//------------------------------------------------------------------------------
+	real CGUICamera::GetNearPlane() const
+	{
+		return m_fNearPlane;
+	}
+	//------------------------------------------------------------------------------
+	real CGUICamera::GetFarPlane() const
+	{
+		return m_fFarPlane;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUICamera::IsDirty()
+	{
+		return m_bDirty;
+	}
+	//------------------------------------------------------------------------------
+	void CGUICamera::SetDirty()
+	{
+		m_bDirty = true;
+	}
+	//------------------------------------------------------------------------------
+	void CGUICamera::ClearDirty()
+	{
+		m_bDirty = false;
 	}
 	//------------------------------------------------------------------------------
 }

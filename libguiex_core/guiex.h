@@ -95,6 +95,7 @@
 #include "guievent.h"
 
 //as
+#include "guiasLite.h"
 #include "guias.h"
 #include "guiasmanager.h"
 

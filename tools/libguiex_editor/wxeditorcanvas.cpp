@@ -223,25 +223,23 @@ void WxEditorCanvas::OnSize(wxSizeEvent& event)
 void WxEditorCanvas::UpdateCanvasSize(const wxSize& rSize)
 {
 	SetCurrent();
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
+	//glMatrixMode(GL_PROJECTION);
+	//glLoadIdentity();
 
-#if 1
-	gluOrtho2D(0.0, rSize.GetWidth(),rSize.GetHeight(),0.0 );
-#else
-	real fPerspectiveDegree = 45;
-	gluPerspective( fPerspectiveDegree, rSize.GetWidth()/rSize.GetHeight(), 0.1, 100000 );
-	real fZDistance = rSize.GetHeight()/2 / CGUIMath::Tan( CGUIDegree(fPerspectiveDegree/2));
-	gluLookAt( 
-		rSize.GetWidth()/2,rSize.GetHeight()/2,-fZDistance,
-		rSize.GetWidth()/2,rSize.GetHeight()/2,0, 
-		0,-1,0);
-#endif
+//#if 1
+///	gluOrtho2D(0.0, rSize.GetWidth(),rSize.GetHeight(),0.0 );
+//#else
+//	real fPerspectiveDegree = 45;
+//	gluPerspective( fPerspectiveDegree, rSize.GetWidth()/rSize.GetHeight(), 0.1, 100000 );
+//	real fZDistance = rSize.GetHeight()/2 / CGUIMath::Tan( CGUIDegree(fPerspectiveDegree/2));
+//	gluLookAt( 
+//		rSize.GetWidth()/2,rSize.GetHeight()/2,-fZDistance,
+//		rSize.GetWidth()/2,rSize.GetHeight()/2,0, 
+//		0,-1,0);
+//#endif
 
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();	
-
-	glViewport(0,0,rSize.x,rSize.y); //定义视口 
+	//glMatrixMode(GL_MODELVIEW);
+	//glLoadIdentity();	
 }
 //------------------------------------------------------------------------------
 void WxEditorCanvas::OnEraseBackground(wxEraseEvent& WXUNUSED(event))

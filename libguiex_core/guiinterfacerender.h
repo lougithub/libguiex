@@ -28,6 +28,7 @@ namespace guiex
 	class IGUIInterfaceFont;
 	class CGUIMatrix4;
 	class CGUIVector2;
+	class CGUICamera;
 }
 
 
@@ -95,7 +96,7 @@ namespace guiex
 		// restore states
 		virtual void EndRender(void) = 0;
 
-		virtual void ApplyCamera( const class CGUICamera& rCamera ) = 0;
+		virtual CGUICamera* ApplyCamera( CGUICamera* pCamera ) = 0;
 
 		/**
 		* @brief Creates a 'null' Texture object.

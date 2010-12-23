@@ -40,10 +40,9 @@ namespace guiex
 
 		void PushCanvasLayer( CGUICanvasLayer* pLayer );
 		CGUICanvasLayer* PopCanvasLayer( );
-		void PopAndDestroyCanvasLayer( );
-
 		CGUICanvasLayer* RemoveCanvasLayer( CGUICanvasLayer* pLayer );
-		CGUICanvasLayer* DestroyAllCanvasLayer( );
+		void PopAndDestroyCanvasLayer( );
+		void DestroyAllCanvasLayer( );
 		
 		uint32 GetCanvasLayerNum() const;
 		CGUICanvasLayer* GetCanvasLayer( uint32 nIndex );

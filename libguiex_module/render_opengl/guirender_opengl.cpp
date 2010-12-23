@@ -77,6 +77,7 @@ namespace guiex
 		:IGUIInterfaceRender( StaticGetModuleName() )
 		,m_maxTextureSize(0)
 		,m_bEnableClip(false)
+		,m_pCamera(NULL)
 	{
 		m_nCurrentTexture = -1;
 		m_bWireFrame = false;
@@ -137,8 +138,8 @@ namespace guiex
 		glPolygonMode(GL_FRONT_AND_BACK, m_bWireFrame ? GL_LINE : GL_FILL);
 
 		//update projection matrix
-		glMatrixMode(GL_PROJECTION);
-		glPushMatrix();
+		//glMatrixMode(GL_PROJECTION);
+		//glPushMatrix();
 		//glLoadIdentity();
 //#if 0
 //		glOrtho(0.0, rSize.m_fWidth,rSize.m_fHeight,0.0, -100000,100000 );
@@ -156,6 +157,8 @@ namespace guiex
 		glMatrixMode(GL_MODELVIEW);
 		glPushMatrix();
 		glLoadIdentity();	
+
+		glViewport(0,0,GUI_FLOAT2UINT_ROUND(rSize.GetWidth()),GUI_FLOAT2UINT_ROUND(rSize.GetHeight()));
 
 		//disable lighting
 		glDisable(GL_LIGHTING);
@@ -208,8 +211,8 @@ namespace guiex
 		glPopMatrix(); 
 
 		//restore projection matrix
-		glMatrixMode(GL_PROJECTION);
-		glPopMatrix(); 
+		//glMatrixMode(GL_PROJECTION);
+		//glPopMatrix(); 
 
 		//restore former attributes
 		glPopAttrib();
@@ -221,15 +224,22 @@ namespace guiex
 		TRY_THROW_OPENGL_ERROR("EndRender end");
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengl::ApplyCamera( const class CGUICamera& rCamera )
+	CGUICamera* IGUIRender_opengl::ApplyCamera( CGUICamera* pCamera )
 	{
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		gluPerspective( rCamera.m_fFov, rCamera.m_fAspectRatio, 0.1, 100000 );
-		gluLookAt( 
-			rCamera.m_vEye.x, rCamera.m_vEye.y, rCamera.m_vEye.z,
-			rCamera.m_vCenter.x, rCamera.m_vCenter.y, rCamera.m_vCenter.z,
-			rCamera.m_vUp.x, rCamera.m_vUp.y, rCamera.m_vUp.z );
+		CGUICamera* pOldCamera = m_pCamera;
+		m_pCamera = pCamera;
+
+		if( m_pCamera && m_pCamera->IsDirty() )
+		{
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			gluPerspective( m_pCamera->GetFov(), m_pCamera->GetAspectRatio(), m_pCamera->GetNearPlane(), m_pCamera->GetFarPlane() );
+			gluLookAt( m_pCamera->GetEye().x, m_pCamera->GetEye().y, m_pCamera->GetEye().z,
+				m_pCamera->GetCenter().x, m_pCamera->GetCenter().y, m_pCamera->GetCenter().z,
+				m_pCamera->GetUp().x, m_pCamera->GetUp().y, m_pCamera->GetUp().z );
+		}
+
+		return pOldCamera;
 	}
 	//------------------------------------------------------------------------------
 	/** 

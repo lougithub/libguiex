@@ -72,9 +72,10 @@ namespace guiex
 	:IGUIInterfaceRender(StaticGetModuleName())
 	,m_maxTextureSize(0)
 	,m_bEnableClip(false)
+	,m_pCamera(NULL)
+	,m_nCurrentTexture(-1)
+	,m_bWireFrame(false)
 	{
-		m_nCurrentTexture = -1;
-		m_bWireFrame = false;
 	}
 	//------------------------------------------------------------------------------
 	IGUIRender_opengles::~IGUIRender_opengles()
@@ -108,7 +109,7 @@ namespace guiex
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		
-		glViewport(0, 0, rSize.m_fWidth,rSize.m_fHeight);
+		glViewport(0,0,GUI_FLOAT2UINT_ROUND(rSize.GetWidth()),GUI_FLOAT2UINT_ROUND(rSize.GetHeight()));
 		
 
 		//disable lighting
@@ -188,8 +189,8 @@ namespace guiex
 
 		
 		//update projection matrix
-		glMatrixMode(GL_PROJECTION);
-		glPushMatrix();
+		//glMatrixMode(GL_PROJECTION);
+		//glPushMatrix();
 		
 		//update modelview matrix
 		glMatrixMode(GL_MODELVIEW);
@@ -210,8 +211,8 @@ namespace guiex
 		glPopMatrix(); 
 		
 		//restore projection matrix
-		glMatrixMode(GL_PROJECTION);
-		glPopMatrix(); 
+		//glMatrixMode(GL_PROJECTION);
+		//glPopMatrix(); 
 		
 		//reset current texture
 		m_nCurrentTexture = -1;
@@ -219,17 +220,22 @@ namespace guiex
 		TRY_THROW_OPENGL_ERROR("EndRender end");
 	}	
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengles::ApplyCamera( const class CGUICamera& rCamera )
+	CGUICamera* IGUIRender_opengles::ApplyCamera( CGUICamera* pCamera )
 	{
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		gluPerspective( rCamera.m_fFov, rCamera.m_fAspectRatio, 0.1, 100000 );
-		gluLookAt( 
-				  rCamera.m_vEye.x, rCamera.m_vEye.y, rCamera.m_vEye.z,
-				  rCamera.m_vCenter.x, rCamera.m_vCenter.y, rCamera.m_vCenter.z,
-				  rCamera.m_vUp.x, rCamera.m_vUp.y, rCamera.m_vUp.z );
-		//glOrthof(0.0, rSize.m_fWidth,rSize.m_fHeight,0.0,-1, 1 );
+		CGUICamera* pOldCamera = m_pCamera;
+		m_pCamera = pCamera;
 
+		if( m_pCamera && m_pCamera->IsDirty() )
+		{
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			gluPerspective( m_pCamera->GetFov(), m_pCamera->GetAspectRatio(), m_pCamera->GetNearPlane(), m_pCamera->GetFarPlane() );
+			gluLookAt( m_pCamera->GetEye().x, m_pCamera->GetEye().y, m_pCamera->GetEye().z,
+				m_pCamera->GetCenter().x, m_pCamera->GetCenter().y, m_pCamera->GetCenter().z,
+				m_pCamera->GetUp().x, m_pCamera->GetUp().y, m_pCamera->GetUp().z );
+		}
+
+		return pOldCamera;
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::SetWireFrame( bool bWireFrame)

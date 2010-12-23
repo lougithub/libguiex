@@ -76,6 +76,8 @@ set( ${target_name}_math_SRCS
 	guiquaternion.h
 	guiinterpolation.cpp
 	guiinterpolation.h
+	guiaslite.cpp
+	guiaslite.h
 	)
 source_group( math FILES ${${target_name}_math_SRCS} )
 

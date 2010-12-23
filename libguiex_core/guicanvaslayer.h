@@ -24,9 +24,6 @@ namespace guiex
 		CGUICanvasLayer( const char* szLayerName );
 		virtual ~CGUICanvasLayer();
 
-		virtual int32 Initialize();
-		virtual void Release();
-
 		virtual void Update( real fDeltaTime );
 		virtual void Render( class IGUIInterfaceRender* pRender );
 

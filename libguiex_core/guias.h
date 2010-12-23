@@ -73,68 +73,29 @@ namespace guiex
 
 		virtual int32 ProcessProperty( const CGUIProperty& rProperty );
 		virtual int32 GenerateProperty( CGUIProperty& rProperty );
+
 		virtual CGUIAs* Clone( ) const;
 
 		const CGUIString& GetType() const;
 
-		/**
-		* @brief set the flag after this as has been processed.
-		*/
 		void Retire( bool bRetired );
-
-		/**
-		* @brief whether the as is retired.
-		*/
 		bool IsRetired();
 
 		void SetLooping( bool bLooping );
 		bool IsLooping();
 
-		/**
-		* @brief set widget which receives this as
-		*/
 		virtual void SetReceiver(CGUIWidget* pReceiver);
-
-		/**
-		* @brief Get widget which receives this as
-		*/
 		CGUIWidget*	GetReceiver();
 
-		/**
-		* @brief set delay time
-		*/
 		void SetTotalTime( real fTotalTime );
-
-		/**
-		* @brief get total time
-		*/
 		real GetTotalTime( ) const;
 
-		/**
-		* @brief set delay time
-		*/
 		void SetElapsedTime( real fElapsedTime );
-
-		/**
-		* @brief get elapsed time
-		*/
 		real GetElapsedTime( ) const;
 
-		/**
-		* @brief add a successor as
-		*/
 		void PushSuccessor( CGUIAs* pAs);
-
-		/**
-		* @brief get successor, 
-		* @return NULL if there isn't any successor
-		*/
 		CGUIAs*	PopSuccessor();
 
-		/**
-		* @brief Update the as
-		* @return the left time that is not processed
-		*/
 		virtual real Update( real fDeltaTime );
 
 		///is this as created by CGUIAsFactory
@@ -145,12 +106,11 @@ namespace guiex
 
 	protected:
 		CGUIAs( const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName );
-	
 
 	private:
 		friend class CGUIAsManager;
 		//disable =
-		CGUIAs( const CGUIAs&  );
+		CGUIAs( const CGUIAs& );
 		const CGUIAs& operator=(const CGUIAs& );
 
 	protected:
@@ -180,8 +140,9 @@ namespace guiex
 	};
 
 
-
-
+	//*****************************************************************************
+	//	CGUIInterpolationBase
+	//*****************************************************************************
 	template< class T >
 	class CGUIInterpolationBase : public CGUIAs
 	{
@@ -387,8 +348,6 @@ namespace guiex
 	};
 
 
-
-
 	//*****************************************************************************
 	//	CGUIAsScale
 	//*****************************************************************************
@@ -425,6 +384,7 @@ namespace guiex
 
 		GUI_AS_GENERATOR_DECLARE( CGUIAsRotation);
 	};
+
 
 	//*****************************************************************************
 	//	CGUIAsPosition
@@ -464,11 +424,9 @@ namespace guiex
 	};
 
 
-
 	//*****************************************************************************
 	//	CGUIAsContainer
 	//*****************************************************************************
-	
 	class CGUIAsContainItemInfo
 	{
 	public:
@@ -483,10 +441,10 @@ namespace guiex
 		}
 	};
 
-	/**
-	* @class CGUIAsContainer
-	* @brief maintain several as.
-	*/
+
+	//*****************************************************************************
+	//	CGUIAsContainer
+	//*****************************************************************************
 	class GUIEXPORT CGUIAsContainer : public CGUIAs
 	{
 	protected:
@@ -505,11 +463,11 @@ namespace guiex
 
 		void AddItem( CGUIAsContainItemInfo& rItemInfo );
 		void AddItem( CGUIAs* pAs, real fBeginTime );
-		
+
 	private:
 		typedef std::vector<CGUIAsContainItemInfo> TAsList;
 		TAsList m_vAsList;//the as in this list should be sorted by begin time
-		
+
 		GUI_AS_GENERATOR_DECLARE( CGUIAsContainer);
 	};
 

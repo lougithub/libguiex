@@ -80,7 +80,7 @@ namespace guiex
 		virtual void BeginRender(void);
 		virtual void EndRender(void);
 
-		virtual void ApplyCamera( const class CGUICamera& rCamera );
+		virtual CGUICamera* ApplyCamera( CGUICamera* pCamera );
 
 		virtual	CGUITextureImp*	CreateTexture(void);
 		virtual	CGUITextureImp*	CreateTexture(const CGUIString& filename);
@@ -182,6 +182,9 @@ namespace guiex
 		int m_nMaxStencilRef;
 		int m_nCurrentStencilRef;
 		SClipRect m_aWholeScreenRect;
+
+		//current camera
+		CGUICamera* m_pCamera;
 
 	public: 
 		static const char* StaticGetModuleName();
