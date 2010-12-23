@@ -83,8 +83,18 @@ namespace guiex
 
 			if (dst != pOutBuf)  
 			{
-				// we have something to write
-				rDst.append((wchar_t*)dst, (pOutBuf-dst)/sizeof(wchar_t));
+				// wchar_t is 4byte in mac, but iconv return a "utf-16" buff which is 2byte per code
+				if (sizeof(wchar_t) == 4) 
+				{
+					for (int iChar = 0; iChar < (pOutBuf-dst)/2; iChar++) {
+						unsigned short* pU16Char = (unsigned short*)&dst[2*iChar];
+						rDst.push_back((wchar_t)*pU16Char);
+					}
+				}
+				else if (sizeof(wchar_t) == 2) 
+				{
+					rDst.append((wchar_t*)dst, (pOutBuf-dst)/sizeof(wchar_t));
+				}
 			} 
 
 			//check ret

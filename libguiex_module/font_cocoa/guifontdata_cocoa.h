@@ -18,6 +18,9 @@
 #include <vector>
 #include <map>
 
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
 //============================================================================//
 // declare
 //============================================================================// 
@@ -32,10 +35,43 @@ namespace guiex
 
 namespace guiex
 {
-	class GUIEXPORT CGUIFontData_cocoa : public CGUIFontData
+	class  CGUICharData_ft2
 	{
 	public:
-
+		CGUICharData_ft2();
+		~CGUICharData_ft2();
+		
+	public:
+		CGUITexture* m_pTexture;
+		CGUIRect m_aUV;
+		
+		uint32 m_nGlyphIdx; //index of glyph
+		int32 m_nBitmapWidth; //size of bitmap
+		int32 m_nBitmapHeight; //size of bitmap
+		int32 m_nLeftBearing; //left bearing of font
+		int32 m_nBottomBearing; //bottom bearing of font
+		int32 m_nTopBearing; //top bearing of font
+		CGUISize m_aSize; //size of font
+	};	
+	
+	class CGUICharsData_ft2
+	{
+	public:
+		CGUICharsData_ft2();
+		~CGUICharsData_ft2();
+		
+	public:
+		typedef	std::vector<CGUITexture*> TVecTexture;
+		TVecTexture m_vecTexture;
+		uint32 m_nX,m_nY; //start position of current free texture area
+		
+		typedef std::map<wchar_t, CGUICharData_ft2*> TMapCharData;
+		TMapCharData m_mapCharsData;
+	};
+	
+	class GUIEXPORT CGUIFontData_cocoa : public CGUIFontData
+	{
+		
 	public:
 		virtual ~CGUIFontData_cocoa();
 
@@ -47,6 +83,10 @@ namespace guiex
 		virtual void DoUnload();
 
 	public:
+		CGUIString m_strPath;		// font file path
+		mutable FT_Face m_aFtFace;
+		typedef std::map<uint32, CGUICharsData_ft2*> TMapSizeChars;
+		TMapSizeChars m_mapSizeChars;
 
 	};
 

@@ -120,7 +120,7 @@ namespace guiex
 	int32	CGUITexture_opengles::LoadFromMemory(const void* buffPtr, int32 buffWidth, int32 buffHeight, EGuiPixelFormat ePixelFormat/* = PF_RGBA_32*/)
 	{
 		glBindTexture(GL_TEXTURE_2D, m_ogltexture);
-
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 		switch(ePixelFormat)
 		{
 		case GUI_PF_RGBA_32:
@@ -141,7 +141,7 @@ namespace guiex
 		}
 		m_nTextureWidth  = static_cast<uint16>(buffWidth);
 		m_nTextureHeight = static_cast<uint16>(buffHeight);
-
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
 		return 0;
 	}
 	//------------------------------------------------------------------------------
@@ -178,7 +178,8 @@ namespace guiex
 			
 		glTexSubImage2D(GL_TEXTURE_2D, 0,nX,nY,nWidth, nHeight,GL_RGBA, GL_UNSIGNED_BYTE,pBuffer);
 
-		if( glGetError( ) != GL_NO_ERROR)
+		int errorCode = glGetError();
+		if( errorCode != GL_NO_ERROR)
 		{
 			throw CGUIException("[CGUITexture_opengles::CopySubImage]: failed to run function <glTexSubImage2D>, error code <%d>;",glGetError());
 		}
@@ -189,7 +190,7 @@ namespace guiex
 	void	CGUITexture_opengles::SetOpenglTextureSize(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat)
 	{
 		glBindTexture(GL_TEXTURE_2D, m_ogltexture);
-
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 		// allocate temp buffer for texture
 		uint8* buff = NULL;
 
@@ -198,7 +199,7 @@ namespace guiex
 		case GUI_PF_RGBA_32:
 		case GUI_PF_ARGB_32:
 			buff = new uint8[nWidth * nHeight * 4];
-			glTexImage2D(GL_TEXTURE_2D, 0, 4, nWidth, nHeight, 0, GL_RGBA ,GL_UNSIGNED_BYTE, buff);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, nWidth, nHeight, 0, GL_RGBA ,GL_UNSIGNED_BYTE, buff);
 			m_nBytesPerPixel = 4;
 			m_ePixelFormat = GUI_PF_RGBA_32;
 			break;
@@ -219,6 +220,7 @@ namespace guiex
 
 		m_nTextureWidth = nWidth;
 		m_nTextureHeight = nHeight;
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

@@ -100,13 +100,38 @@ namespace guiex
 		virtual const CGUISize& GetCharacterSize(int32 nFontFaceIdx, wchar_t charCode, uint32 nSize);
 
 		virtual void DeleteSelf();
+		
+		FT_Library& GetFTLibrary();
 
 	protected:
 		virtual int DoInitialize(void* );
 		virtual void DoDestroy();
+		
+		/**
+		 * @brief get font by given parameter, if failed to find it,
+		 * create this font.
+		 */
+		CGUICharData_ft2* GetFont( uint32 nFontFaceIdx, wchar_t charCode,uint32 nSize );
+		
+		/// load font from file
+		CGUICharData_ft2* LoadFont( CGUIFontData_cocoa* pFontFace, CGUICharsData_ft2* pFont,wchar_t charCode,uint32 nSize);
+		
+		/**
+		 * @brief get kerning between two character
+		 */
+		int32 GetKerningGap(
+							uint32 nFontFaceIdx, 
+							CGUICharData_ft2* pLeftData, 
+							CGUICharData_ft2* pRightData,
+							uint32 nSize);
 
-	public: 
-		static const char* StaticGetModuleName();
+	protected:
+		FT_Library m_pFtLib;
+		
+		typedef std::vector<CGUIFontData_cocoa*> TVecFontData;
+		TVecFontData m_arrayFontDatas;
+		
+		bool m_bEnableKerning;	/// flag whether enable kerning
 	};
 
 	GUI_INTERFACE_DECLARE();
