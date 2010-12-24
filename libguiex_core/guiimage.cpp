@@ -175,7 +175,7 @@ namespace guiex
 		return m_aImageSize;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIImage::Draw(IGUIInterfaceRender* pRender,
+	void CGUIImage::Draw(IGUIInterfaceRender* pRender,
 		const CGUIMatrix4& rWorldMatrix,
 		const CGUIRect& rDestRect,
 		real z, 
@@ -241,6 +241,21 @@ namespace guiex
 			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,
 				aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB());
 		}
+	}
+	//------------------------------------------------------------------------------
+	const CGUIString& CGUIImage::GetFilePath() const
+	{
+		return m_strPath;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIRect& CGUIImage::GetUVRect() const
+	{
+		return m_aUVRect;
+	}
+	//------------------------------------------------------------------------------
+	EImageOrientation CGUIImage::GetOrientation() const
+	{
+		return m_eImageOrientation;
 	}
 	//------------------------------------------------------------------------------
 

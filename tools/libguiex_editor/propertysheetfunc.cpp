@@ -11,6 +11,7 @@
 //============================================================================// 
 #include "propertysheetfunc.h"
 #include "editorutility.h"
+#include "resourcelist.h"
 
 #include "wxwidgetpropertygridextend.h"
 #include "propertysheetfunc.h"
@@ -57,38 +58,10 @@ private:
 // function
 //============================================================================// 
 //------------------------------------------------------------------------------
-static	wxArrayString s_arrayImageArray;
-static	wxArrayString s_arrayAsArray;
 static	wxArrayString s_arrayTextAlignmentH;
 static	wxArrayString s_arrayTextAlignmentV;
 
-void	UpdateAsNameList()
-{
-	s_arrayAsArray.Clear();
-	s_arrayAsArray.Add(_T(""));
-	const std::map<CGUIString, CGUIAs*>& rMapAsList = CGUIAsManager::Instance()->GetRegisterResourceMap();
-	for( std::map<CGUIString,CGUIAs*>::const_iterator itor = rMapAsList.begin();
-		itor != rMapAsList.end();
-		++itor)
-	{
-		s_arrayAsArray.Add(Gui2wxString( itor->first));
-	}
-	s_arrayAsArray.Sort();
-}
-//------------------------------------------------------------------------------
-void UpdateImageNameList()
-{
-	s_arrayImageArray.Clear();
-	s_arrayImageArray.Add(_T(""));
-	const std::map<CGUIString, CGUIImage*>& rMapImageList = CGUIImageManager::Instance()->GetRegisterResourceMap();
-	for( std::map<CGUIString,CGUIImage*>::const_iterator itor = rMapImageList.begin();
-		itor != rMapImageList.end();
-		++itor)
-	{
-		s_arrayImageArray.Add(Gui2wxString( itor->first));
-	}
-	s_arrayImageArray.Sort();
-}
+
 //------------------------------------------------------------------------------
 void LoadWidgetConfig( wxPropertyGridManager* pSheetMgr, const std::string& rType, CGUIWidget* pWidget )
 {
@@ -202,7 +175,7 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new WxGUIVector2Property( Gui2wxString(CPropertyData::GetPropertyData(aProp)->GetLabel()), Gui2wxString(aProp.GetName()), aValue));
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new WxGUIVector2Property( CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()), aValue));
 		}
 	}
 
@@ -219,7 +192,7 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new WxGUIVector3Property( Gui2wxString(CPropertyData::GetPropertyData(aProp)->GetLabel()), Gui2wxString(aProp.GetName()), aValue));
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new WxGUIVector3Property( CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()), aValue));
 		}
 	}
 
@@ -236,7 +209,7 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new WxGUIRectProperty( Gui2wxString(CPropertyData::GetPropertyData(aProp)->GetLabel()), Gui2wxString(aProp.GetName()), aValue));
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new WxGUIRectProperty( CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()), aValue));
 		}
 	}
 
@@ -253,7 +226,7 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new WxGuiColorProperty( Gui2wxString(CPropertyData::GetPropertyData(aProp)->GetLabel()), Gui2wxString(aProp.GetName()), aValue));
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new WxGuiColorProperty( CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()), aValue));
 		}
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -269,7 +242,7 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new WxGUISizeProperty(Gui2wxString(CPropertyData::GetPropertyData(aProp)->GetLabel()), Gui2wxString(aProp.GetName()), aValue));
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new WxGUISizeProperty(CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()), aValue));
 		}
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -285,7 +258,7 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxStringProperty(Gui2wxString(CPropertyData::GetPropertyData(aProp)->GetLabel()), Gui2wxString(aProp.GetName()), aValue));
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxStringProperty(CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()), aValue));
 		}
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -301,7 +274,7 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxStringProperty(Gui2wxString(CPropertyData::GetPropertyData(aProp)->GetLabel()), Gui2wxString(aProp.GetName()), aValue));
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxStringProperty(CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()), aValue));
 		}
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -317,7 +290,7 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new WxGUIStringInfoProperty(Gui2wxString(CPropertyData::GetPropertyData(aProp)->GetLabel()), Gui2wxString(aProp.GetName()), aValue));
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new WxGUIStringInfoProperty(CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()), aValue));
 		}
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -336,7 +309,7 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 			pPGTop = pSheetMgr->Insert( 
 				pPGProperty, 
 				-1, 
-				new WxGUIWidgetPositionProperty(Gui2wxString(CPropertyData::GetPropertyData(aProp)->GetLabel()), Gui2wxString(aProp.GetName()), aValue));
+				new WxGUIWidgetPositionProperty(CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()), aValue));
 		}
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -352,24 +325,22 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new WxGUIWidgetSizeProperty(Gui2wxString(CPropertyData::GetPropertyData(aProp)->GetLabel()), Gui2wxString(aProp.GetName()), aValue));
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new WxGUIWidgetSizeProperty(CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()), aValue));
 		}
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
 	//IMAGE
 	else if(  aProp.GetType() == ePropertyType_Image )
 	{			
-		wxString aValue;
-		aValue = Gui2wxString(aProp.GetValue());
+		wxString aValue = Gui2wxString(aProp.GetValue());
 
 		if( pPGTop )
 		{
-			pPGTop->SetValue(aValue);
+			pPGTop->SetValue( WXVARIANT( aValue ));
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxEnumProperty(Gui2wxString(CPropertyData::GetPropertyData(aProp)->GetLabel()), Gui2wxString(aProp.GetName()),s_arrayImageArray));
-			pSheetMgr->SetPropertyValue(pPGTop, aValue);
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new WxGUIImageProperty(CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()), aValue));
 		}
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -385,7 +356,7 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxEnumProperty(Gui2wxString(CPropertyData::GetPropertyData(aProp)->GetLabel()), Gui2wxString(aProp.GetName()),s_arrayAsArray));
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxEnumProperty(CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()),CResourceList::Instance()->GetAsList()));
 			pSheetMgr->SetPropertyValue(pPGTop, aValue);
 		}
 	}
@@ -403,7 +374,7 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 		else
 		{
 			const wxArrayString& arrEnums = CPropertyConfigMgr::Instance()->GetEnumDefine(aProp.GetTypeAsString());
-			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxEnumProperty(Gui2wxString(CPropertyData::GetPropertyData(aProp)->GetLabel()), Gui2wxString(aProp.GetName()), arrEnums));
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxEnumProperty(CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()), arrEnums));
 			pSheetMgr->SetPropertyValue(pPGTop, aValue);
 		}
 	}
@@ -419,7 +390,7 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 		else
 		{
 			const wxArrayString& arrEnums = CPropertyConfigMgr::Instance()->GetEnumDefine(aProp.GetTypeAsString());
-			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxEnumProperty(Gui2wxString(CPropertyData::GetPropertyData(aProp)->GetLabel()), Gui2wxString(aProp.GetName()), arrEnums));
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxEnumProperty(CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()), arrEnums));
 			pSheetMgr->SetPropertyValue(pPGTop, aValue);
 		}
 	}
@@ -435,7 +406,7 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 		else
 		{
 			const wxArrayString& arrEnums = CPropertyConfigMgr::Instance()->GetEnumDefine(aProp.GetTypeAsString());
-			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxEnumProperty(Gui2wxString(CPropertyData::GetPropertyData(aProp)->GetLabel()), Gui2wxString(aProp.GetName()), arrEnums));
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxEnumProperty(CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()), arrEnums));
 			pSheetMgr->SetPropertyValue(pPGTop, aValue);
 		}
 	}
@@ -451,7 +422,7 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 		else
 		{
 			const wxArrayString& arrEnums = CPropertyConfigMgr::Instance()->GetEnumDefine(aProp.GetTypeAsString());
-			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxEnumProperty(Gui2wxString(CPropertyData::GetPropertyData(aProp)->GetLabel()), Gui2wxString(aProp.GetName()), arrEnums));
+			pPGTop = pSheetMgr->Insert( pPGProperty, -1, new wxEnumProperty(CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()), arrEnums));
 			pSheetMgr->SetPropertyValue(pPGTop, aValue);
 		}
 	}
@@ -468,7 +439,7 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty,-1, new wxFloatProperty( Gui2wxString(CPropertyData::GetPropertyData(aProp)->GetLabel()), Gui2wxString(aProp.GetName()),aValue ) );
+			pPGTop = pSheetMgr->Insert( pPGProperty,-1, new wxFloatProperty( CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()),aValue ) );
 		}		
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -484,7 +455,7 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty,-1, new wxIntProperty( Gui2wxString(CPropertyData::GetPropertyData(aProp)->GetLabel()), Gui2wxString(aProp.GetName()),aValue ) );
+			pPGTop = pSheetMgr->Insert( pPGProperty,-1, new wxIntProperty( CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()),aValue ) );
 		}		
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -500,7 +471,7 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty,-1, new wxBoolProperty( Gui2wxString(CPropertyData::GetPropertyData(aProp)->GetLabel()), Gui2wxString(aProp.GetName()),aValue ) );
+			pPGTop = pSheetMgr->Insert( pPGProperty,-1, new wxBoolProperty( CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()),aValue ) );
 			pSheetMgr->SetPropertyAttribute( pPGTop,wxPG_BOOL_USE_CHECKBOX,(long)1 );
 		}		
 	}
@@ -517,7 +488,7 @@ void SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPrope
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGProperty,-1, new wxUIntProperty( Gui2wxString(CPropertyData::GetPropertyData(aProp)->GetLabel()), Gui2wxString(aProp.GetName()),aValue ) );
+			pPGTop = pSheetMgr->Insert( pPGProperty,-1, new wxUIntProperty( CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()),aValue ) );
 		}		
 	}
 	//////////////////////////////////////////////////////////////////////////////////////

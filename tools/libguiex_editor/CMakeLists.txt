@@ -50,6 +50,8 @@ if( WIN32 )
 		windowbox.h
 		editorutility.cpp
 		editorutility.h
+		resourcelist.cpp
+		resourcelist.h
         )
     source_group( utility FILES ${${target_name}_utility_SRCS} )    
 

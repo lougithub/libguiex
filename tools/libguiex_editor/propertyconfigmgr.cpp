@@ -18,10 +18,20 @@
 //============================================================================//
 // function
 //============================================================================// 
+//------------------------------------------------------------------------------
 const CPropertyData* CPropertyData::GetPropertyData( const guiex::CGUIProperty& rProperty )
 {
 	return reinterpret_cast<CPropertyData*>( rProperty.GetData() );
 }
+//------------------------------------------------------------------------------
+wxString CPropertyData::GetPropertyLabel( const CGUIProperty& rProperty )
+{
+	return Gui2wxString(GetPropertyData( rProperty )->GetLabel());
+}
+//------------------------------------------------------------------------------
+
+
+
 //------------------------------------------------------------------------------
 CPropertyConfigMgr::CPropertyConfigMgr()
 {

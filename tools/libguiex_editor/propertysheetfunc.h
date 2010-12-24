@@ -37,10 +37,8 @@ extern void	SetPropertyPageByEvent(wxPropertyGridManager* pSheetMgr, const std::
 extern void	GenerateGUIProperty( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGProperty, guiex::CGUIProperty& rProperty );
 extern void GenerateGUIProperty( wxPropertyGridManager* pSheetMgr, guiex::CGUIProperty& rSet );
 
-//update image used in the system
-extern void	UpdateImageNameList();
 
-//update as used in the system
-extern void	UpdateAsNameList();
+
+
 
 #endif	//__KEN_PROPERTYSHEETFUNC_20070928_H__

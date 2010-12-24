@@ -98,8 +98,8 @@ namespace guiex
 		//********************************************************
 		//	page and dialog
 		//********************************************************
-		void OpenPage(CGUIWidget* pPage);
-		void ClosePage(CGUIWidget* pPage);
+		void OpenUIPage(CGUIWidget* pPage);
+		void CloseUIPage(CGUIWidget* pPage);
 		uint32 GetOpenedPageNum() const;
 		CGUIWidget* GetOpenedPageByIndex( uint32 nIdx );
 
@@ -401,8 +401,8 @@ namespace guiex
 	GUIEXPORT void OpenDialog(CGUIWidget* pDlg);
 	GUIEXPORT void CloseDialog(CGUIWidget* pDlg);
 
-	GUIEXPORT void OpenPage( CGUIWidget* pPage );
-	GUIEXPORT void ClosePage( CGUIWidget* pPage );
+	GUIEXPORT void OpenUIPage( CGUIWidget* pPage );
+	GUIEXPORT void CloseUIPage( CGUIWidget* pPage );
 
 	GUIEXPORT void SendUIEvent(const CGUIString& rUIEventName,
 		const CGUIString& rArg1 = CGUIString(),

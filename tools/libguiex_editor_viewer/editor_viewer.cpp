@@ -343,7 +343,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent, wxWindowID id, const wxString& title,
 
 	m_mgr.Update();
 
-	OpenPage( true );
+	OpenUIPage( true );
 
 	// "commit" all changes made to wxAuiManager
 	Refresh();
@@ -442,7 +442,7 @@ bool WxMainFrame::GetOpenPageInfo( CGUIString& rScene, std::vector<CGUIString>& 
 	return true;
 }
 //------------------------------------------------------------------------------
-void WxMainFrame::OpenPage( bool bCheckCommandLine )
+void WxMainFrame::OpenUIPage( bool bCheckCommandLine )
 {
 	std::vector<CGUIString> arrayUIPageNames;
 	CGUIString strUISceneName;
@@ -519,7 +519,7 @@ void WxMainFrame::ReOpenPages()
 			CGUIWidget* pPage = CGUIWidgetManager::Instance()->GetPage( rPagesInScene[i], rSceneName );
 			if( pPage->IsOpen() == false )
 			{
-				GSystem->OpenPage( pPage );
+				GSystem->OpenUIPage( pPage );
 			}
 		}
 	}
@@ -659,7 +659,7 @@ void WxMainFrame::OnRefresh(wxCommandEvent& evt)
 //------------------------------------------------------------------------------
 void WxMainFrame::OnOpenPage(wxCommandEvent& WXUNUSED(event))
 {
-	OpenPage( false );
+	OpenUIPage( false );
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::OnAddPage(wxCommandEvent& WXUNUSED(event))

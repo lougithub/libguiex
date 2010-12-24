@@ -25,11 +25,11 @@ int32 CGUIFrameworkTest::InitializeGame()
 	CGUISceneManager::Instance()->LoadWidgets( "common.uip" );
 	CGUIWidget* pWidget = NULL;
 	pWidget = CGUIWidgetManager::Instance()->GetPage( "dialog_ok.xml", "common.uip" );
-	CGUISystem::Instance()->OpenPage(pWidget);	
+	CGUISystem::Instance()->OpenUIPage(pWidget);	
 	pWidget = CGUIWidgetManager::Instance()->GetPage( "dialog_okcancel.xml", "common.uip" );
-	CGUISystem::Instance()->OpenPage(pWidget);	
+	CGUISystem::Instance()->OpenUIPage(pWidget);	
 	pWidget = CGUIWidgetManager::Instance()->GetPage( "showfps.xml", "common.uip" );
-	CGUISystem::Instance()->OpenPage(pWidget);		
+	CGUISystem::Instance()->OpenUIPage(pWidget);		
 	return 0;
 }
 

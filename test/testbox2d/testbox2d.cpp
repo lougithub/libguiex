@@ -80,7 +80,7 @@ guiex::int32 CGUIFrameworkTest::InitializeGame( )
 	CreateBox2dSample_joints();
 
 	CGUIWidgetManager::Instance()->AddPage( m_pWidgetRoot );
-	GSystem->OpenPage( m_pWidgetRoot );
+	GSystem->OpenUIPage( m_pWidgetRoot );
 
 	return 0;
 }

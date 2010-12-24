@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <libguiex_project>
+	<property name="title" type="CGUIString" value="common" />
 	<property name="widget_file" type="CGUIString" value="dialog_ok.xml" />
 	<property name="widget_file" type="CGUIString" value="dialog_okcancel.xml" />
 	<property name="widget_file" type="CGUIString" value="showfps.xml" />
-
 	<property name="script_file" type="CGUIString" value="showfps.lua" />
-
 	<property name="resource_file" type="CGUIString" value="resource.xml" />
 </libguiex_project>
 

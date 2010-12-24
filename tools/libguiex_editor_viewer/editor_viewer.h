@@ -102,7 +102,7 @@ protected:
 	bool GetUIDataPath( CGUIString& rDataPath );
 	bool GetOpenPageInfo( CGUIString& rScene, std::vector<CGUIString>& rPages );
 	bool GetClosePageInfo( CGUIString& rScene, std::vector<CGUIString>& rPages );
-	void OpenPage( bool bCheckCommandLine );
+	void OpenUIPage( bool bCheckCommandLine );
 	void ReOpenPages( );
 
 protected:

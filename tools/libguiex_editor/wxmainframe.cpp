@@ -19,6 +19,7 @@
 #include "propertyconfigmgr.h"
 #include "editorutility.h"
 #include "toolcache.h"
+#include "resourcelist.h"
 
 //wxwidgets
 #include <wx/treectrl.h>
@@ -178,7 +179,6 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 				 ,m_pToolbar(NULL)
 				 ,m_pTreeCtrl_Widget(NULL)
 				 ,m_pTreeCtrl_File(NULL)
-				 //,m_pNoteBook_Config(NULL)
 				 ,m_pNoteBook_Canvas(NULL)
 				 ,m_aScreenSize(800, 600)
 				 ,m_aBGColor(128,128,128,255)
@@ -190,18 +190,14 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 	//set icon
 	SetIcon(wxIcon(icon_xpm));
 
-
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	// create main menu
 	CreateMenu();
-
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	//STATUS
 	CreateStatusBar();
 	GetStatusBar()->SetStatusText(_("Ready"));
-
-
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	// min size for the frame itself isn't completely done.
@@ -209,23 +205,18 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 	// code. For now, just hard code a frame minimum size
 	SetMinSize(wxSize(400,300));
 
-
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	// create some toolbars
 	m_pToolbar = CreateToolbar();
-
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	// create notebook
 	m_pNoteBook_Canvas = CreateCanvasNotebook();
 	//m_pNoteBook_Config = CreateConfigNotebook();
 
-
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	//// create property sheet
 	wxPanel* pGridPanel = CreatePropGridPanel();
-
-
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	// create file tree
@@ -257,10 +248,6 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 		Bottom().
 		Dockable(true));
 
-	//m_mgr.AddPane(m_pNoteBook_Config, wxAuiPaneInfo().BestSize(150,600).
-	//	Name(wxT("Config")).Caption(wxT("Config")).
-	//	Left().Layer(1).Position(1));
-
 	m_mgr.AddPane(m_pTreeCtrl_File, wxAuiPaneInfo().BestSize(150,600).
 		Name(wxT("Scene")).Caption(wxT("Scene")).
 		Left().Layer(1).Position(1));
@@ -268,9 +255,6 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 	m_mgr.AddPane(m_pTreeCtrl_Widget, wxAuiPaneInfo().BestSize(150,600).
 		Name(wxT("Widget")).Caption(wxT("Widget")).
 		Left().Layer(1).Position(2));
-
-	//m_pNoteBook_Config->AddPage(m_pTreeCtrl_File, _T("Scene"));
-	//m_pNoteBook_Config->AddPage(m_pTreeCtrl_Widget, _T("Widget"));	
 
 	m_mgr.AddPane(pGridPanel, wxAuiPaneInfo().BestSize(250,600).
 		Name(wxT("Property")).Caption(wxT("Property")).
@@ -290,7 +274,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 		CGUIFrameworkEditor::ms_pFramework->Initialize( CGUISize(m_aScreenSize.x, m_aScreenSize.y), "" );
 		CGUIAssert::SetWarningCB( EditorWarningCB, NULL );
 
-		GSystem->SetDrawExtraInfo( true );
+		GSystem->SetDrawExtraInfo( false );
 		GSystem->SetRunScript( false );
 		GSystem->SetPlayingAs( false );
 	}
@@ -423,11 +407,6 @@ wxTreeCtrl*	WxMainFrame::CreateWidgetTreeCtrl()
 		wxPoint(0,0), wxSize(160,250),
 		wxTR_DEFAULT_STYLE | wxNO_BORDER);
 
-	//wxImageList* imglist = new wxImageList(16, 16, true, 2);
-	//imglist->Add(wxArtProvider::GetBitmap(wxART_FOLDER, wxART_OTHER, wxSize(16,16)));
-	//imglist->Add(wxArtProvider::GetBitmap(wxART_NORMAL_FILE, wxART_OTHER, wxSize(16,16)));
-	//tree->AssignImageList(imglist);
-
 	return tree;
 }
 //------------------------------------------------------------------------------
@@ -445,7 +424,7 @@ wxTreeCtrl*	WxMainFrame::CreateFileTreeCtrl()
 	return tree;
 }
 //------------------------------------------------------------------------------
-void			WxMainFrame::ResetFileTreeCtrl()
+void WxMainFrame::ResetFileTreeCtrl()
 {
 	m_pTreeCtrl_File->DeleteAllItems();
 
@@ -458,13 +437,13 @@ void			WxMainFrame::ResetFileTreeCtrl()
 	m_pTreeCtrl_File->Expand(root);
 }
 //------------------------------------------------------------------------------
-void			WxMainFrame::ResetWidgetTreeCtrl()
+void WxMainFrame::ResetWidgetTreeCtrl()
 {
 	m_pTreeCtrl_Widget->DeleteAllItems();
 	m_mapTreeItem.clear();
 }
 //------------------------------------------------------------------------------
-void			WxMainFrame::RefreshWidgetTreeCtrl()
+void WxMainFrame::RefreshWidgetTreeCtrl()
 {
 	ResetWidgetTreeCtrl();
 	
@@ -485,25 +464,25 @@ void			WxMainFrame::RefreshWidgetTreeCtrl()
 		return;
 	}
 
-	std::string strItemId = pWidgetRoot->GetName() + " <"+pWidgetRoot->GetType() + ">";
-	wxTreeItemId aItemId = m_pTreeCtrl_Widget->AddRoot(Gui2wxString( strItemId));
-	m_mapTreeItem.insert( std::make_pair( pWidgetRoot, aItemId));
-
-	CGUIWidget* pChild = pWidgetRoot->GetChild();
-	while( pChild )
-	{
-		AddWidgetToTreeCtrl( pChild, aItemId );
-		pChild = pChild->GetNextSibling();
-	}
+	AddWidgetToTreeCtrl( pWidgetRoot, wxTreeItemId() );
 }
 //------------------------------------------------------------------------------
-void			WxMainFrame::AddWidgetToTreeCtrl(CGUIWidget* pWidget, wxTreeItemId aParentId )
+void WxMainFrame::AddWidgetToTreeCtrl(CGUIWidget* pWidget, wxTreeItemId aParentId )
 {
-	wxASSERT( aParentId.IsOk());
-
-	std::string strItemId = pWidget->GetName() + " <" + pWidget->GetType() + ">";
-	wxTreeItemId aItemId = m_pTreeCtrl_Widget->AppendItem(aParentId, Gui2wxString( strItemId));
+	std::string strItemId = pWidget->GetName() + " <"+pWidget->GetType() + ">";
+	wxTreeItemId aItemId;
+	if( !aParentId.IsOk())
+	{
+		//root
+		aItemId = m_pTreeCtrl_Widget->AddRoot(Gui2wxString( strItemId));
+	}
+	else
+	{
+		//not root
+		aItemId = m_pTreeCtrl_Widget->AppendItem(aParentId, Gui2wxString( strItemId));
+	}
 	m_mapTreeItem.insert( std::make_pair( pWidget, aItemId));
+
 
 	CGUIWidget* pChild = pWidget->GetChild();
 	while( pChild )
@@ -516,14 +495,9 @@ void			WxMainFrame::AddWidgetToTreeCtrl(CGUIWidget* pWidget, wxTreeItemId aParen
 	}
 }
 //------------------------------------------------------------------------------
-void			WxMainFrame::AddToFileTreeCtrl( const std::string& rFileName, const std::string& rType)
+void WxMainFrame::AddToFileTreeCtrl( const std::string& rFileName, const std::string& rType)
 {
 	wxTreeItemId nItemId = GetFileItemByName(rType);
-	//if(nItemId.IsOk() == false);
-	//{
-	//	wxMessageBox( "unknown file type", "error", wxICON_ERROR);
-	//	return;
-	//}
 	wxTreeItemId aFileId = m_pTreeCtrl_File->AppendItem(nItemId, Gui2wxString(rFileName), 1);
 	CTreeNode* pNode = new CTreeNode;
 	pNode->m_strFileType = rType;
@@ -531,7 +505,7 @@ void			WxMainFrame::AddToFileTreeCtrl( const std::string& rFileName, const std::
 	m_pTreeCtrl_File->Expand(nItemId);
 }
 //------------------------------------------------------------------------------
-wxTreeItemId	WxMainFrame::GetFileItemByName(const std::string& rItemName)
+wxTreeItemId WxMainFrame::GetFileItemByName(const std::string& rItemName)
 {
 	wxTreeItemIdValue cookie;
 	wxTreeItemId nItemId = m_pTreeCtrl_File->GetFirstChild( m_pTreeCtrl_File->GetRootItem(),cookie );
@@ -550,33 +524,14 @@ wxTreeItemId	WxMainFrame::GetFileItemByName(const std::string& rItemName)
 	return nItemId;
 }
 //------------------------------------------------------------------------------
-wxToolBar*		WxMainFrame::CreateToolbar()
+wxToolBar* WxMainFrame::CreateToolbar()
 {
-	//wxToolBar* tb1 = new wxToolBar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize,
-	//	wxTB_FLAT | wxTB_NODIVIDER);
-	//tb1->SetToolBitmapSize(wxSize(16,16));
-	//wxBitmap tb1_bmp1 = wxArtProvider::GetBitmap(wxART_QUESTION, wxART_OTHER, wxSize(16,16));
-	//tb1->AddTool(101, wxT("Test"), tb1_bmp1);
-	//tb1->AddSeparator();
-	//tb1->AddTool(101, wxT("Test"), tb1_bmp1);
-	//tb1->AddTool(101, wxT("Test"), tb1_bmp1);
-	//tb1->AddTool(101, wxT("Test"), tb1_bmp1);
-	//tb1->AddTool(101, wxT("Test"), tb1_bmp1);
-	//tb1->AddSeparator();
-	//tb1->AddTool(101, wxT("Test"), tb1_bmp1);
-	//tb1->AddTool(101, wxT("Test"), tb1_bmp1);
-	//tb1->Realize();
-
 	wxToolBar* tb1 = new wxToolBar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_FLAT|wxTB_NODIVIDER);
-	//
+
 	//tb1->AddTool(wxID_NEW, wxBitmap (new_xpm));
 	tb1->AddTool(ID_Open, wxBitmap (open_xpm));
 	tb1->AddTool(ID_Save, wxBitmap (save_xpm));
 	tb1->AddSeparator();
-	//tb1->AddTool(ID_EDIT_CUT, wxBitmap (cut_xpm));
-	//tb1->AddTool(ID_EDIT_COPY, wxBitmap (copy_xpm));
-	//tb1->AddTool(ID_EDIT_PASTE, wxBitmap (paste_xpm));
-	//tb1->AddTool(ID_EDIT_CLEAR, wxBitmap (delete_xpm));
 	tb1->AddTool(ID_CreateWidget, wxBitmap (new_xpm));
 	tb1->AddTool(ID_DeleteWidget, wxBitmap (delete_xpm));
 	tb1->AddTool(ID_WidgetUp, wxBitmap (bookmarkBluegem), _T("move widget up"));
@@ -604,21 +559,7 @@ wxAuiNotebook* WxMainFrame::CreateCanvasNotebook()
 	return ctrl;
 }
 //------------------------------------------------------------------------------
-//wxAuiNotebook* WxMainFrame::CreateConfigNotebook()
-//{
-//	wxSize client_size = GetClientSize();
-//
-//	wxAuiNotebook* ctrl = new wxAuiNotebook(this, WIDGET_ID_NoteBook_Config,
-//		wxPoint(0,0), 
-//		wxSize(160,250),
-//		wxAUI_NB_BOTTOM | wxAUI_NB_TAB_SPLIT | wxAUI_NB_TAB_MOVE |wxAUI_NB_SCROLL_BUTTONS );
-//	ctrl->SetBackgroundColour( *wxLIGHT_GREY );
-//	ctrl->SetArtProvider(new wxAuiSimpleTabArt);
-//
-//	return ctrl;
-//}
-//------------------------------------------------------------------------------
-int		WxMainFrame::OpenScene( const CGUIScene* pScene )
+int WxMainFrame::OpenScene( const CGUIScene* pScene )
 {
 	m_strCurrentSceneName = pScene->GetSceneName();
 	OutputString( std::string("Open Scene File: ") + m_strCurrentSceneName );
@@ -646,7 +587,6 @@ int		WxMainFrame::OpenScene( const CGUIScene* pScene )
 		AddToFileTreeCtrl(rResourceFiles[i], TITLE_RESOURCE_CONFIG);
 	}
 
-
 	//load resource file
 	try
 	{	
@@ -661,18 +601,12 @@ int		WxMainFrame::OpenScene( const CGUIScene* pScene )
 		return -1;
 	}
 
-	//update image list
-	UpdateImageNameList();
-
-	//update as list
-	UpdateAsNameList();
-
 	m_bIsSceneOpened = true;
 
 	return 0;
 }
 //------------------------------------------------------------------------------
-void	WxMainFrame::CloseScene( )
+void WxMainFrame::CloseScene( )
 {
 	if( m_bIsSceneOpened )
 	{
@@ -1059,7 +993,7 @@ void WxMainFrame::OnDeleteWidget(wxCommandEvent& evt)
 		pWidget == GSystem->GetOpenedPageByIndex(0))
 	{
 		//is page
-		GSystem->ClosePage(pWidget);
+		GSystem->CloseUIPage(pWidget);
 		CGUIWidgetManager::Instance()->ReleasePage(pWidget);
 	}
 	else
@@ -1177,7 +1111,7 @@ void WxMainFrame::OnCreateWidget(wxCommandEvent& evt)
 	if( GSystem->GetOpenedPageNum() == 0 )
 	{
 		CGUIWidgetManager::Instance()->AddPage( pWidget);
-		GSystem->OpenPage( pWidget);
+		GSystem->OpenUIPage( pWidget);
 	}
 	else if( m_pCanvas->GetSelectedWidget())
 	{
@@ -1522,13 +1456,17 @@ void WxMainFrame::RenderFile( const std::string& rFileName )
 	m_pCanvas = new WxEditorCanvasContainer(m_pNoteBook_Canvas, strAbsFileName);
 	m_pNoteBook_Canvas->AddPage( m_pCanvas, Gui2wxString(rFileName), true );
 	//m_pCanvas->SetNextHandler( m_pNoteBook_Canvas );
+
+	//update resource for editor
+	CResourceList::Instance()->UpdateResourceList();
+
 	try
 	{
 		//load xml widget by libguiex
 		CGUIWidget* pWidget = CGUIWidgetManager::Instance()->LoadPage( rFileName, m_strCurrentSceneName );
 		if( pWidget )
 		{
-			GSystem->OpenPage(pWidget);
+			GSystem->OpenUIPage(pWidget);
 		}
 	}
 	catch (CGUIBaseException& rError)

@@ -29,6 +29,8 @@ class CPropertyData
 public:
 	static const CPropertyData* GetPropertyData( const CGUIProperty& rProperty );
 
+	static wxString GetPropertyLabel( const CGUIProperty& rProperty );
+
 	CPropertyData()
 		:m_bMustExist(false)
 	{

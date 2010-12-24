@@ -73,6 +73,10 @@ namespace guiex
 
 		const CGUISize& GetSize() const;
 
+		const CGUIString& GetFilePath() const;
+		const CGUIRect& GetUVRect() const;
+		EImageOrientation GetOrientation() const;
+
 	protected:
 		CGUIImage( 
 			const CGUIString& rName, 

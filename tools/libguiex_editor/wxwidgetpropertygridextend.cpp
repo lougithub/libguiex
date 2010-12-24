@@ -11,6 +11,7 @@
 #include "wxwidgetpropertygridextend.h"
 #include "propertyconfigmgr.h"
 #include "editorutility.h"
+#include "resourcelist.h"
 
 #include <wx/colordlg.h>
 
@@ -391,6 +392,121 @@ void WxGuiColorProperty::OnCustomPaint( wxDC& dc, const wxRect& rect, wxPGPaintD
 	{
 		dc.SetBrush(aWxColor);
 		dc.DrawRectangle(rect);
+	}
+}
+// -----------------------------------------------------------------------
+
+
+
+// -----------------------------------------------------------------------
+// WxGUIImageProperty
+// -----------------------------------------------------------------------
+WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGUIImageProperty,wxPGProperty,CGUIColor,const CGUIColor&,ChoiceAndButton);
+WxGUIImageProperty::WxGUIImageProperty( const wxString& label, const wxString& name,const wxString& rImage )
+: wxPGProperty(label,name)
+{
+	SetValue( wxVariant( wx2GuiString( rImage )) );
+	m_choices.Set(CResourceList::Instance()->GetImageList(), 0);
+}
+// -----------------------------------------------------------------------
+void WxGUIImageProperty::OnSetValue()
+{
+	wxString variantType = m_value.GetType();
+	if ( variantType == wxPG_VARIANT_TYPE_LONG )
+	{
+		//index of choice
+		wxString strImageName = m_choices.GetLabel( m_value.GetInteger() );
+
+		m_value = strImageName;
+	}
+}
+// -----------------------------------------------------------------------
+wxString WxGUIImageProperty::ValueToString( wxVariant& value, int argFlags ) const
+{
+	wxString s = value.GetString();
+	return s;
+}
+// -----------------------------------------------------------------------
+bool WxGUIImageProperty::StringToValue( wxVariant& variant, const wxString& text, int argFlags )
+{
+	if ( variant != text )
+	{
+		variant = text;
+		return true;
+	}
+
+	return false;
+}
+// -----------------------------------------------------------------------
+bool WxGUIImageProperty::OnEvent( wxPropertyGrid* propgrid, wxWindow* primary, wxEvent& event )
+{
+	if ( propgrid->IsMainButtonEvent(event) )
+	{
+		CGUIColor color = CGUIColorRefFromVariant(GetValue());
+		wxColour aWxColor( 
+			GUI_FLOAT2UINT_ROUND( color.GetRed()*255 ),
+			GUI_FLOAT2UINT_ROUND( color.GetGreen()*255 ), 
+			GUI_FLOAT2UINT_ROUND( color.GetBlue()*255 ), 
+			GUI_FLOAT2UINT_ROUND( color.GetAlpha()*255 ));
+
+		wxColourData data;
+		data.SetChooseFull(true);
+		data.SetColour( aWxColor );
+		wxColourDialog dialog(propgrid, &data);
+		if ( dialog.ShowModal() == wxID_OK )
+		{
+			wxColourData retData = dialog.GetColourData();
+			aWxColor = retData.GetColour();
+			color.SetColor( 
+				aWxColor.Red() / 255.0f,
+				aWxColor.Green() / 255.0f,
+				aWxColor.Blue() / 255.0f,
+				aWxColor.Alpha() / 255.0f );
+
+			SetValueInEvent( WXVARIANT(color) );
+
+			return true;
+		}
+	}
+	return false;
+}
+// -----------------------------------------------------------------------
+wxSize WxGUIImageProperty::OnMeasureImage( int item ) const
+{
+	//if ( item == -1 )
+	//{
+	//	return wxPG_DEFAULT_IMAGE_SIZE;
+	//}
+
+	return wxSize(PREF_THUMBNAIL_HEIGHT,PREF_THUMBNAIL_HEIGHT);
+}
+// -----------------------------------------------------------------------
+void WxGUIImageProperty::OnCustomPaint( wxDC& dc, const wxRect& rect, wxPGPaintData& paintdata )
+{
+	wxString strImageName;
+
+	if ( paintdata.m_choiceItem >= 0 &&
+		paintdata.m_choiceItem < (int)m_choices.GetCount())
+	{
+		int colInd = m_choices[paintdata.m_choiceItem].GetValue();
+		strImageName = m_choices.GetLabel( colInd );
+	}
+	else
+	{
+		strImageName = GetValueAsString();
+	}
+
+	const wxBitmap* pBitmap = CResourceList::Instance()->GetImageThumbnail( strImageName );
+	if( pBitmap )
+	{
+		dc.DrawBitmap ( *pBitmap, rect.x, rect.y, FALSE );
+		// Tell the caller how wide we drew.
+		paintdata.m_drawnWidth = pBitmap->GetWidth();
+	}
+	else
+	{
+		dc.SetBrush ( *wxWHITE_BRUSH );
+		dc.DrawRectangle ( rect );
 	}
 }
 // -----------------------------------------------------------------------

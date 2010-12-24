@@ -12573,25 +12573,25 @@ fail:
 }
 
 
-static int _wrap_CGUISystem_OpenPage(lua_State* L) {
+static int _wrap_CGUISystem_OpenUIPage(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
   guiex::CGUIWidget *arg2 = (guiex::CGUIWidget *) 0 ;
   
-  SWIG_check_num_args("OpenPage",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("OpenPage",1,"guiex::CGUISystem *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("OpenPage",2,"guiex::CGUIWidget *");
+  SWIG_check_num_args("OpenUIPage",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("OpenUIPage",1,"guiex::CGUISystem *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("OpenUIPage",2,"guiex::CGUIWidget *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
-    SWIG_fail_ptr("CGUISystem_OpenPage",1,SWIGTYPE_p_guiex__CGUISystem);
+    SWIG_fail_ptr("CGUISystem_OpenUIPage",1,SWIGTYPE_p_guiex__CGUISystem);
   }
   
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIWidget,0))){
-    SWIG_fail_ptr("CGUISystem_OpenPage",2,SWIGTYPE_p_guiex__CGUIWidget);
+    SWIG_fail_ptr("CGUISystem_OpenUIPage",2,SWIGTYPE_p_guiex__CGUIWidget);
   }
   
-  (arg1)->OpenPage(arg2);
+  (arg1)->OpenUIPage(arg2);
   
   return SWIG_arg;
   
@@ -12603,25 +12603,25 @@ fail:
 }
 
 
-static int _wrap_CGUISystem_ClosePage(lua_State* L) {
+static int _wrap_CGUISystem_CloseUIPage(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
   guiex::CGUIWidget *arg2 = (guiex::CGUIWidget *) 0 ;
   
-  SWIG_check_num_args("ClosePage",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ClosePage",1,"guiex::CGUISystem *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("ClosePage",2,"guiex::CGUIWidget *");
+  SWIG_check_num_args("CloseUIPage",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CloseUIPage",1,"guiex::CGUISystem *");
+  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("CloseUIPage",2,"guiex::CGUIWidget *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
-    SWIG_fail_ptr("CGUISystem_ClosePage",1,SWIGTYPE_p_guiex__CGUISystem);
+    SWIG_fail_ptr("CGUISystem_CloseUIPage",1,SWIGTYPE_p_guiex__CGUISystem);
   }
   
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIWidget,0))){
-    SWIG_fail_ptr("CGUISystem_ClosePage",2,SWIGTYPE_p_guiex__CGUIWidget);
+    SWIG_fail_ptr("CGUISystem_CloseUIPage",2,SWIGTYPE_p_guiex__CGUIWidget);
   }
   
-  (arg1)->ClosePage(arg2);
+  (arg1)->CloseUIPage(arg2);
   
   return SWIG_arg;
   
@@ -13087,8 +13087,8 @@ static swig_lua_method swig_guiex_CGUISystem_methods[] = {
     {"GenerateAnonymousName", _wrap_CGUISystem_GenerateAnonymousName}, 
     {"GetFocusWidget", _wrap_CGUISystem_GetFocusWidget}, 
     {"GetWidgetUnderPoint", _wrap_CGUISystem_GetWidgetUnderPoint}, 
-    {"OpenPage", _wrap_CGUISystem_OpenPage}, 
-    {"ClosePage", _wrap_CGUISystem_ClosePage}, 
+    {"OpenUIPage", _wrap_CGUISystem_OpenUIPage}, 
+    {"CloseUIPage", _wrap_CGUISystem_CloseUIPage}, 
     {"GetOpenedPageNum", _wrap_CGUISystem_GetOpenedPageNum}, 
     {"GetOpenedPageByIndex", _wrap_CGUISystem_GetOpenedPageByIndex}, 
     {"OpenDialog", _wrap_CGUISystem_OpenDialog}, 
@@ -13178,18 +13178,18 @@ fail:
 }
 
 
-static int _wrap_OpenPage(lua_State* L) {
+static int _wrap_OpenUIPage(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
   
-  SWIG_check_num_args("guiex::OpenPage",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::OpenPage",1,"guiex::CGUIWidget *");
+  SWIG_check_num_args("guiex::OpenUIPage",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::OpenUIPage",1,"guiex::CGUIWidget *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
-    SWIG_fail_ptr("OpenPage",1,SWIGTYPE_p_guiex__CGUIWidget);
+    SWIG_fail_ptr("OpenUIPage",1,SWIGTYPE_p_guiex__CGUIWidget);
   }
   
-  guiex::OpenPage(arg1);
+  guiex::OpenUIPage(arg1);
   
   return SWIG_arg;
   
@@ -13201,18 +13201,18 @@ fail:
 }
 
 
-static int _wrap_ClosePage(lua_State* L) {
+static int _wrap_CloseUIPage(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
   
-  SWIG_check_num_args("guiex::ClosePage",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::ClosePage",1,"guiex::CGUIWidget *");
+  SWIG_check_num_args("guiex::CloseUIPage",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::CloseUIPage",1,"guiex::CGUIWidget *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
-    SWIG_fail_ptr("ClosePage",1,SWIGTYPE_p_guiex__CGUIWidget);
+    SWIG_fail_ptr("CloseUIPage",1,SWIGTYPE_p_guiex__CGUIWidget);
   }
   
-  guiex::ClosePage(arg1);
+  guiex::CloseUIPage(arg1);
   
   return SWIG_arg;
   
@@ -14206,8 +14206,8 @@ static const struct luaL_reg swig_commands[] = {
     { "GetSystem", _wrap_GetSystem},
     { "OpenDialog", _wrap_OpenDialog},
     { "CloseDialog", _wrap_CloseDialog},
-    { "OpenPage", _wrap_OpenPage},
-    { "ClosePage", _wrap_ClosePage},
+    { "OpenUIPage", _wrap_OpenUIPage},
+    { "CloseUIPage", _wrap_CloseUIPage},
     { "SendUIEvent",_wrap_SendUIEvent},
     { "CGUIWidgetUtility_GetWidgetInfo",_wrap_CGUIWidgetUtility_GetWidgetInfo},
     { "CGUIWidgetUtility_GetWidgetTreeInfo",_wrap_CGUIWidgetUtility_GetWidgetTreeInfo},

@@ -177,13 +177,15 @@ void WxWizardCreateWidget::OnWizardFinished(wxWizardEvent& event)
 	CGUIString strName = wx2GuiString( m_pEditName->GetValue());
 	try
 	{
+		CGUIProperty aSet;
+		GenerateGUIProperty( m_pPropGridMgr,aSet);
+
 		m_pWidget = CGUIWidgetManager::Instance()->CreateWidget(strType, strName, GetMainFrame()->GetCurrentSceneName());
 		if( m_pParent )
 		{
 			m_pWidget->SetParent( m_pParent );
+			aSet.GetProperty("parent")->SetValue( m_pParent->GetName() );
 		}
-		CGUIProperty aSet;
-		GenerateGUIProperty( m_pPropGridMgr,aSet);
 		m_pWidget->SetProperty(aSet);
 		m_pWidget->LoadProperty();
 		m_pWidget->Create();

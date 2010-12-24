@@ -94,14 +94,14 @@ namespace guiex
 		GSystem->SendUIEvent( &aUIEvent );
 	}
 	//------------------------------------------------------------------------------
-	GUIEXPORT void OpenPage( CGUIWidget* pPage )
+	GUIEXPORT void OpenUIPage( CGUIWidget* pPage )
 	{
-		return GSystem->OpenPage( pPage );
+		return GSystem->OpenUIPage( pPage );
 	}
 	//------------------------------------------------------------------------------
-	GUIEXPORT void ClosePage( CGUIWidget* pPage )
+	GUIEXPORT void CloseUIPage( CGUIWidget* pPage )
 	{
-		return GSystem->ClosePage( pPage );
+		return GSystem->CloseUIPage( pPage );
 	}
 	//------------------------------------------------------------------------------
 
@@ -688,13 +688,13 @@ namespace guiex
 	/**
 	* @brief open a page
 	*/
-	void CGUISystem::OpenPage(CGUIWidget* pPage)
+	void CGUISystem::OpenUIPage(CGUIWidget* pPage)
 	{
 		GUI_ASSERT( pPage, "invalid parameter" );
 
 		if( m_pWidgetManager->HasPage( pPage ) == false )
 		{
-			throw CGUIException( "[CGUISystem::OpenPage]: the widget <%s> isn't a page!", pPage->GetName().c_str());
+			throw CGUIException( "[CGUISystem::OpenUIPage]: the widget <%s> isn't a page!", pPage->GetName().c_str());
 		}
 
 		pPage->SetParent( m_pWgtRoot );
@@ -712,7 +712,7 @@ namespace guiex
 		TArrayWidget::iterator itorPage = std::find(m_arrayOpenedPage.begin(), m_arrayOpenedPage.end(), pWidget );
 		if( itorPage != m_arrayOpenedPage.end())
 		{
-			ClosePage( pWidget );
+			CloseUIPage( pWidget );
 			return;
 		}
 
@@ -735,24 +735,24 @@ namespace guiex
 	/**
 	* @brief close a page
 	*/
-	void CGUISystem::ClosePage(CGUIWidget* pPage)
+	void CGUISystem::CloseUIPage(CGUIWidget* pPage)
 	{
 		GUI_ASSERT( pPage, "invalid parameter" );
 
 		if( m_pWidgetManager->HasPage( pPage ) == false )
 		{
-			throw CGUIException( "[CGUISystem::ClosePage]: the widget <%s> isn't a page!", pPage->GetName().c_str());
+			throw CGUIException( "[CGUISystem::CloseUIPage]: the widget <%s> isn't a page!", pPage->GetName().c_str());
 		}
 
 		if( pPage->IsOpen() == false )
 		{
-			throw CGUIException( "[CGUISystem::ClosePage]: the page <%s> has closed!", pPage->GetName().c_str());
+			throw CGUIException( "[CGUISystem::CloseUIPage]: the page <%s> has closed!", pPage->GetName().c_str());
 		}
 
 		TArrayWidget::iterator itor = std::find(m_arrayOpenedPage.begin(), m_arrayOpenedPage.end(), pPage );
 		if( itor == m_arrayOpenedPage.end())
 		{
-			throw CGUIException( "[CGUISystem::ClosePage]: can't find page in opend page <%s> list!", pPage->GetName().c_str());
+			throw CGUIException( "[CGUISystem::CloseUIPage]: can't find page in opend page <%s> list!", pPage->GetName().c_str());
 		}
 		m_arrayOpenedPage.erase( itor );
 		pPage->Close();
@@ -765,7 +765,7 @@ namespace guiex
 		return;
 	}
 	//------------------------------------------------------------------------------
-	///< get opened page num, which should be opened by method OpenPage()
+	///< get opened page num, which should be opened by method OpenUIPage()
 	uint32 CGUISystem::GetOpenedPageNum() const
 	{
 		return m_arrayOpenedPage.size();
@@ -1043,7 +1043,7 @@ namespace guiex
 		//close all page
 		while( !m_arrayOpenedPage.empty())
 		{
-			ClosePage(*m_arrayOpenedPage.begin());
+			CloseUIPage(*m_arrayOpenedPage.begin());
 		}
 	}
 	//------------------------------------------------------------------------------

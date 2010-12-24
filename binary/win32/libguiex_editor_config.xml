@@ -149,33 +149,32 @@
 		<page name="Appearance">
 			<property name="multiline" type="bool" value="false" category="StaticText"/>
 		</page>
-		</widget>
+	</widget>
 
-		<widget type="CGUIWgtStaticImage" inherit="CGUIWidget">
-			<page name="Appearance">
-			</page>
-			<page name="Image">
-				<property name="BGIMAGE" type="CGUIImage" value="" must_exist="true"/>
-			</page>
-		</widget>
+	<widget type="CGUIWgtStaticImage" inherit="CGUIWidget">
+		<page name="Appearance">
+		</page>
+		<page name="Image">
+			<property name="BGIMAGE" type="CGUIImage" value="" must_exist="true"/>
+		</page>
+	</widget>
 
-		<widget type="CGUIWgtPanel" inherit="CGUIWidget">
-			<page name="Appearance">
-			</page>
-			<page name="Image">
-				<property name="BGIMAGE" type="CGUIImage" value="color_translucent" must_exist="true"/>
-				<property name="PANEL_BORDER_TOP" type="CGUIImage" value="panel_border_top"/>
-				<property name="PANEL_BORDER_BOTTOM" type="CGUIImage" value="panel_border_bottom"/>
-				<property name="PANEL_BORDER_LEFT" type="CGUIImage" value="panel_border_left"/>
-				<property name="PANEL_BORDER_RIGHT" type="CGUIImage" value="panel_border_right"/>
-				<property name="PANEL_BORDER_TOPLEFT" type="CGUIImage" value="panel_border_topleft"/>
-				<property name="PANEL_BORDER_TOPRIGHT" type="CGUIImage" value="panel_border_topright"/>
-				<property name="PANEL_BORDER_BOTTOMLEFT" type="CGUIImage" value="panel_border_bottomleft"/>
-				<property name="PANEL_BORDER_BOTTOMRIGHT" type="CGUIImage" value="panel_border_bottomright"/>
-			</page>
-		</widget>
-
-	</config>
+	<widget type="CGUIWgtPanel" inherit="CGUIWidget">
+		<page name="Appearance">
+		</page>
+		<page name="Image">
+			<property name="BGIMAGE" type="CGUIImage" value="color_translucent" must_exist="true"/>
+			<property name="PANEL_BORDER_TOP" type="CGUIImage" value="panel_border_top"/>
+			<property name="PANEL_BORDER_BOTTOM" type="CGUIImage" value="panel_border_bottom"/>
+			<property name="PANEL_BORDER_LEFT" type="CGUIImage" value="panel_border_left"/>
+			<property name="PANEL_BORDER_RIGHT" type="CGUIImage" value="panel_border_right"/>
+			<property name="PANEL_BORDER_TOPLEFT" type="CGUIImage" value="panel_border_topleft"/>
+			<property name="PANEL_BORDER_TOPRIGHT" type="CGUIImage" value="panel_border_topright"/>
+			<property name="PANEL_BORDER_BOTTOMLEFT" type="CGUIImage" value="panel_border_bottomleft"/>
+			<property name="PANEL_BORDER_BOTTOMRIGHT" type="CGUIImage" value="panel_border_bottomright"/>
+		</page>
+	</widget>
+</config>
 
 
 
