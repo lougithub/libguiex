@@ -53,7 +53,7 @@ bool WxMainApp::OnInit()
 	frame->Show();
 
 	//load config file
-	if( 0 != CPropertyConfigMgr::Instance()->ReadPropertyConfig(GetBaseDir() + ".\\libguiex_editor_config.xml"))
+	if( 0 != CPropertyConfigMgr::Instance()->ReadPropertyConfig(GetBaseDir() + "../editorconfig/libguiex_editor_config.xml"))
 	{
 		wxMessageBox(_T("failed to read property config file!"), _T("error"));
 		return false;
