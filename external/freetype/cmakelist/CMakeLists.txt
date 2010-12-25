@@ -78,6 +78,7 @@ elseif( APPLE )
 		../src/base/ftgxval.c
 		../src/base/ftotval.c
 		../src/base/ftpatent.c
+		../src/gzip/ftgzip.c
 		../src/smooth/smooth.c
 		../src/cff/cff.c
 		../src/cache/ftcache.c
@@ -93,6 +94,7 @@ elseif( APPLE )
 		../src/type1/type1.c
 		../src/type42/type42.c
 		../src/cid/type1cid.c
+		../src/winfonts/winfnt.c
 		)
 
 	set( inc_list

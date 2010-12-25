@@ -132,6 +132,9 @@ namespace guiex
 		TVecFontData m_arrayFontDatas;
 		
 		bool m_bEnableKerning;	/// flag whether enable kerning
+		
+	public:
+		const char* StaticGetModuleName();
 	};
 
 	GUI_INTERFACE_DECLARE();

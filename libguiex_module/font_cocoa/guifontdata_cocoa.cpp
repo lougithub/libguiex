@@ -99,7 +99,7 @@ namespace guiex
 	{
 		// load font face
 		CGUIString strFullPath = GSystem->GetDataPath() 
-								+ CGUISceneInfoManager::Instance()->GetScenePath( m_strSceneName )
+								+ CGUISceneManager::Instance()->GetScenePath( m_strSceneName )
 								+ m_strPath;
 		
 		GUI_TRACE( GUI_FORMAT( "[IGUIFont_cocoa::LoadFontFace]: Load Font Face<%d> from File <%s>",

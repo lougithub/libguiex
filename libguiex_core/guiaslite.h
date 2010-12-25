@@ -223,7 +223,7 @@ namespace guiex
 	template< class T >
 	inline CGUIAsLite_Queue<T>::~CGUIAsLite_Queue( )
 	{
-		for( TAsLiteQueue::iterator itor = m_vAsLiteQueue.begin();
+		for( typename TAsLiteQueue::iterator itor = m_vAsLiteQueue.begin();
 			itor != m_vAsLiteQueue.end();
 			++itor )
 		{
@@ -237,7 +237,7 @@ namespace guiex
 	{
 		real fLeftTime = CGUIAsLite::Update( fDeltaTime );
 
-		for( TAsLiteQueue::iterator itor = m_vAsLiteQueue.begin();
+		for( typename TAsLiteQueue::iterator itor = m_vAsLiteQueue.begin();
 			itor != m_vAsLiteQueue.end();
 			++itor )
 		{
