@@ -38,6 +38,7 @@ if( APPLE )
 
     set( CMAKE_OSX_SYSROOT "${IPHONE_SDK}" )
 	set( XCODE_ATTRIBUTE_SDKROOT "${IPHONE_SDK}" )
+	set( XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "iPad" )
 	set( CMAKE_OSX_ARCHITECTURES "$(ARCHS_STANDARD_32_BIT)" )
 	set( CMAKE_OSX_DEPLOYMENT_TARGET "")
 	set( CMAKE_EXE_LINKER_FLAGS "-framework Foundation -framework CoreGraphics -framework QuartzCore -framework UIKit -framework OpenGLES")
