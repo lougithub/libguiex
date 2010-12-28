@@ -2060,7 +2060,7 @@ namespace guiex
 			SetDisable(bValue);
 		}
 		else
-		{
+		{ 
 			throw CGUIException("[CGUIWidget::ProcessProperty]: failed to process property: name=[%s] type=[%s] value=[%s]!", 
 				rProperty.GetName().c_str(),
 				rProperty.GetTypeAsString().c_str(),

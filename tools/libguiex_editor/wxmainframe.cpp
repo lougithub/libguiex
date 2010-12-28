@@ -1244,7 +1244,7 @@ void WxMainFrame::OnRecentPaths( wxCommandEvent& In )
 	try
 	{
 		CGUISceneManager::Instance()->UnregisterAllScenes();
-		if( 0 != CGUISceneManager::Instance()->RegisterScenesFromDir())
+		if( 0 != CGUISceneManager::Instance()->RegisterScenesFromDir( "/",".uip" ))
 		{
 			wxMessageBox( _T("failed to load scenes"), _T("error") );
 			return;

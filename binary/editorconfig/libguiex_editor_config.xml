@@ -174,6 +174,36 @@
 			<property name="PANEL_BORDER_BOTTOMRIGHT" type="CGUIImage" value="panel_border_bottomright"/>
 		</page>
 	</widget>
+
+
+	<widget type="CGUIWgtEditBox" inherit="CGUIWidget">
+		<page name="Appearance">
+			<property name="size" type="CGUIWidgetSize" category="Default">
+				<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+				<property name="value" type="CGUISize" value="128,20" />
+			</property>
+			<property name="client_area" type="CGUIRect" value="0,0,1,1"  category="EditBox"/>
+			<property name="mask" type="bool" value="false"  category="EditBox"/>
+			<property name="max_text_num" type="uint32" value="100"  category="EditBox"/>
+			<property name="readonly" type="bool" value="false"  category="EditBox"/>
+			<property name="cursor_size" type="CGUISize" value="2,16"  category="EditBox"/>
+		</page>
+		<page name="Image">
+			<property name="EDIT_BGFOCUS" type="CGUIImage" value=""/>
+			<property name="EDIT_BG" type="CGUIImage" value="edit_bg" must_exist="true"/>
+			<property name="EDIT_CURSOR" type="CGUIImage" value="color_white" must_exist="true"/>
+		</page>
+	</widget>
+
+	<widget type="CGUIWgtEmptyNode" inherit="CGUIWidget">
+		<page name="Appearance">
+			<property name="size" type="CGUIWidgetSize" category="Default">
+				<property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+				<property name="value" type="CGUISize" value="1,1" />
+			</property>
+			<property name="hitable" type="bool" value="false"  category="Default"/>
+		</page>
+	</widget>
 </config>
 
 

@@ -155,7 +155,7 @@ namespace guiex
 			itor != rDependencies.end();
 			++itor )
 		{
-			if( !CheckScenesDependency( *itor ) )
+			if( 0 != CheckScenesDependency( *itor ) )
 			{
 				return -1;
 			}

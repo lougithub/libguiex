@@ -19,6 +19,7 @@
 #include <libguiex_core/guistringconvertor.h>
 #include <libguiex_core/guipropertymanager.h>
 #include <libguiex_core/guiwidgetmanager.h>
+#include <libguiex_core/guipropertyconvertor.h>
 
 #include <numeric>
 
@@ -102,6 +103,9 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	/** 
+	* @brief set selected text color
+	*/
 	void CGUIWgtEditBox::SetSelectedTextColor( const CGUIColor& rColor)
 	{
 		m_aSelectedTextColor = rColor;
@@ -127,16 +131,25 @@ namespace guiex
 		return m_nMaxString;
 	}
 	//------------------------------------------------------------------------------
+	/** 
+	* @brief set text readonly
+	*/
 	void CGUIWgtEditBox::SetReadOnly(bool bRead)
 	{
 		m_bReadOnly = bRead;
 	}
 	//------------------------------------------------------------------------------
+	/** 
+	* @brief is text readonly
+	*/
 	bool CGUIWgtEditBox::IsReadOnly() const
 	{
 		return m_bReadOnly;
 	}
 	//------------------------------------------------------------------------------
+	/** 
+	* @brief set text masked
+	*/
 	void CGUIWgtEditBox::SetTextMasked(bool bMask)
 	{
 		if( bMask != m_bMaskText)
@@ -161,19 +174,25 @@ namespace guiex
 				m_vecStringWidth.insert(
 					m_vecStringWidth.begin()+i, 
 					uint32(pFont->GetCharacterSize(
-						pString->m_aStringInfo.m_nFontIdx,
-						pString->m_strContent[i], 
-						pString->m_aStringInfo.m_nFontSize).m_fWidth));
+					pString->m_aStringInfo.m_nFontIdx,
+					pString->m_strContent[i], 
+					pString->m_aStringInfo.m_nFontSize).m_fWidth));
 			}
 		}
-	
+
 	}
 	//------------------------------------------------------------------------------
+	/** 
+	* @brief is text masked
+	*/
 	bool CGUIWgtEditBox::IsTextMasked() const
 	{
 		return m_bMaskText;
 	}
 	//------------------------------------------------------------------------------
+	/** 
+	* @brief is text masked
+	*/
 	void CGUIWgtEditBox::SetMaskCode(wchar_t wMaskCode)
 	{
 		if( m_wMaskCodePoint != wMaskCode )
@@ -196,6 +215,9 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	/** 
+	* @brief is text masked
+	*/
 	wchar_t CGUIWgtEditBox::GetTextMasked() const
 	{
 		return m_wMaskCodePoint;
@@ -252,19 +274,19 @@ namespace guiex
 
 				/* 
 				the text is divided to three section
-					xxx yyy zzz
+				xxx yyy zzz
 				first <xxx> is not selected 
 				second <yyy> is selected
 				last <zzz> is not selected
 				*/
-					
+
 				//draw first not selected section
 				DrawString( pRender, *pRenderString, aPos, 0, m_nSelectionStart);
 				aPos.x += std::accumulate(m_vecStringWidth.begin(), m_vecStringWidth.begin()+m_nSelectionStart, 0.0f);
 
 				//draw second selected section
 				CGUIColor aDefaultColor = pRenderString->m_aStringInfo.m_aColor;
-				
+
 				pRenderString->m_aStringInfo.m_aColor = m_aSelectedTextColor;
 				DrawString( pRender, *pRenderString, aPos, m_nSelectionStart, m_nSelectionEnd);
 				aPos.x += std::accumulate(m_vecStringWidth.begin()+m_nSelectionStart, m_vecStringWidth.begin()+m_nSelectionEnd, 0.0f);
@@ -310,16 +332,25 @@ namespace guiex
 		CGUIWidget::UpdateSelf( fDeltaTime );
 	}
 	//------------------------------------------------------------------------------
+	/** 
+	* @brief set string area ratio
+	*/
 	void CGUIWgtEditBox::SetStringAreaRatio(const CGUIRect& rStringAreaRatio)
 	{
 		m_aStringAreaRatio = rStringAreaRatio;
 	}
 	//------------------------------------------------------------------------------
+	/** 
+	* @brief get string area ratio
+	*/
 	const CGUIRect& CGUIWgtEditBox::GetStringAreaRatio( ) const
 	{
 		return m_aStringAreaRatio;
 	}
 	//------------------------------------------------------------------------------
+	/** 
+	* @brief set widget text
+	*/
 	void CGUIWgtEditBox::SetTextContent( const CGUIStringW& rText )
 	{
 		ClearSelection( );
@@ -428,6 +459,12 @@ namespace guiex
 		m_fTextWidthRel = (fClientWidth - fStringWidth)<0.0f?fClientWidth - fStringWidth:0.0f;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief Set the current position of the carat.
+	* @param nPos New index for the insert cursor relative to the start of the text.  
+	* If the value specified is greater than the number of characters in the Editbox or is negative, 
+	* the cursor is positioned at the end of the text.
+	*/
 	void CGUIWgtEditBox::SetCursorIndex( int32 nPos )
 	{
 		if( nPos<0 || nPos>int32(m_strText.m_strContent.size()))
@@ -677,7 +714,7 @@ namespace guiex
 			pEvent->Consume(true);
 			break;
 		}
-		
+
 		//crack here, consume all key event for editbox here
 		pEvent->Consume(true);
 
@@ -732,114 +769,104 @@ namespace guiex
 		return CGUIWidget::OnMouseMove(pEvent);
 	}
 	//------------------------------------------------------------------------------
-	CGUIProperty* CGUIWgtEditBox::GenerateProperty(const CGUIString& rName, const CGUIString& rType )
+	/**
+	* @brief load widget config from property
+	*/
+	int32 CGUIWgtEditBox::GenerateProperty( CGUIProperty& rProperty )
 	{
-		//CGUIProperty* pProperty = NULL;
-		//
-		//if( rName == "MASK" && rType == "BOOL" )
+		if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "mask" )
+		{
+			ValueToProperty( IsTextMasked(), rProperty);
+		}
+		//else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "mask_code" )
 		//{
-		//	pProperty = CGUIPropertyManager::Instance()->CreateProperty(
-		//		rName, 
-		//		rType, 
-		//		CGUIStringConvertor::BoolToString(IsTextMasked( )));
+		//	rProperty.SetValue( GetTextMasked() );
 		//}
-		//else if( rName == "MASK_CODE" && rType == "CGUIString" )
-		//{
-		//	//pProperty = CGUIPropertyManager::Instance()->CreateProperty(
-		//	//	rName, 
-		//	//	rType, 
-		//	//	GetTextMasked( ));
-		//}
-		//else if( rName == "MAX_TEXT_NUM" && rType == "uint32" )
-		//{
-		//	pProperty = CGUIPropertyManager::Instance()->CreateProperty(
-		//		rName, 
-		//		rType, 
-		//		CGUIStringConvertor::UInt32ToString(GetMaxTextNum( )));
-		//}
-		//else if( rName == "STRING_AREA_RATIO" && rType == "CGUIRect" )
-		//{
-		//	pProperty = CGUIPropertyManager::Instance()->CreateProperty(
-		//		rName, 
-		//		rType, 
-		//		CGUIStringConvertor::RectToString(GetStringAreaRatio( )));
-		//}
-		//else if( rName == "READONLY" && rType == "BOOL")
-		//{
-		//	pProperty = CGUIPropertyManager::Instance()->CreateProperty(
-		//		rName, 
-		//		rType, 
-		//		CGUIStringConvertor::BoolToString(IsReadOnly( )));
-		//}
-		//else if( rName == "CURSOR_SIZE" && rType == "SIZE")
-		//{
-		//	pProperty = CGUIPropertyManager::Instance()->CreateProperty(
-		//		rName, 
-		//		rType, 
-		//		CGUIStringConvertor::SizeToString(GetCursorSize( )));
-		//}
-		//return pProperty ? pProperty : CGUIWidget::GenerateProperty(rName, rType);
-		return NULL;
+		else if( rProperty.GetType() == ePropertyType_UInt32 && rProperty.GetName() == "max_text_num" )
+		{
+			ValueToProperty( GetMaxTextNum(), rProperty);
+		}
+		else if( rProperty.GetType() == ePropertyType_Rect && rProperty.GetName() == "client_area" )
+		{
+			ValueToProperty( GetStringAreaRatio(), rProperty);
+		}
+		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "readonly" )
+		{
+			ValueToProperty( IsReadOnly(), rProperty);
+		}
+		else if( rProperty.GetType() == ePropertyType_Size && rProperty.GetName() == "cursor_size" )
+		{
+			ValueToProperty( GetCursorSize(), rProperty);
+		}
+		else
+		{
+			return CGUIWidget::GenerateProperty( rProperty );
+		}
+		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtEditBox::ProcessProperty( const CGUIProperty* pProperty)
+	/**
+	* @brief process property
+	*/
+	void CGUIWgtEditBox::ProcessProperty( const CGUIProperty& rProperty )
 	{
-		//CGUIWidget::ProcessProperty(pProperty);
-
-		//////////////////////////////////////////////////////////////////////////////////////////////////////
-		////property for text masked
-		///*
-		//*<property name="MASK" type="BOOL" value="true" />
-		//*/
-		//if( pProperty->GetName() == "MASK" && pProperty->GetType() == "BOOL")
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//property for text masked
+		if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "mask")
+		{
+			bool bValue = false;
+			PropertyToValue( rProperty, bValue);
+			SetTextMasked( bValue );
+		}
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//property for maske code
+		//else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "mask_code" )
 		//{
-		//	SetTextMasked(StringToValue(pProperty->GetValue()));
+		//	if( rProperty.GetValue().length() > 0 )
+		//	{
+		//		SetMaskCode(rProperty.GetValue().c_str()[0]);
+		//	}
+		//	else
+		//	{
+		//		SetMaskCode( _'*' );
+		//	}
 		//}
-		//////////////////////////////////////////////////////////////////////////////////////////////////////
-		////property for maske code
-		///*
-		//*<property name="MASK_CODE" type="CGUIString" value="*" />
-		//*/
-		//else if( pProperty->GetName() == "MASK_CODE" &&  pProperty->GetType() == "CGUIString")
-		//{
-		//	//SetMaskCode(pProperty->GetValue().c_str()[0]);
-		//}
-		//////////////////////////////////////////////////////////////////////////////////////////////////////
-		////property for max text num
-		///*
-		//*<property name="MAX_TEXT_NUM" type="uint32" value="*" />
-		//*/
-		//else if( pProperty->GetName() == "MAX_TEXT_NUM" &&  pProperty->GetType() == "uint32")
-		//{
-		//	SetMaxTextNum(CGUIStringConvertor::StringToUInt32(pProperty->GetValue()));
-		//}
-		//////////////////////////////////////////////////////////////////////////////////////////////////////
-		////property for string area ratio
-		///*
-		//*<property name="STRING_AREA_RATIO" type="CGUIRect" value="0.0,0.0,1.0,1.0" />
-		//*/
-		//else if( pProperty->GetName() == "STRING_AREA_RATIO" && pProperty->GetType() == "CGUIRect")
-		//{
-		//	SetStringAreaRatio(CGUIStringConvertor::StringToRect(pProperty->GetValue()));
-		//}
-		//////////////////////////////////////////////////////////////////////////////////////////////////////
-		////property for readonly
-		///*
-		//*<property name="READONLY" type="BOOL" value="false" />
-		//*/
-		//else if( pProperty->GetName() == "READONLY" && pProperty->GetType() == "BOOL")
-		//{
-		//	SetReadOnly(StringToValue(pProperty->GetValue()));
-		//}
-		//////////////////////////////////////////////////////////////////////////////////////////////////////
-		////property for cursor size
-		///*
-		//*<property name="CURSOR_SIZE" type="SIZE" value="2,10" />
-		//*/
-		//else if( pProperty->GetName() == "CURSOR_SIZE" && pProperty->GetType() == "SIZE")
-		//{
-		//	SetCursorSize(CGUIStringConvertor::StringToSize(pProperty->GetValue()));
-		//}
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//property for max text num
+		else if( rProperty.GetType() == ePropertyType_UInt32 && rProperty.GetName() == "max_text_num" )
+		{
+			uint32 uValue = 0;
+			PropertyToValue( rProperty, uValue);
+			SetMaxTextNum( uValue );
+		}
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//property for string area ratio
+		else if( rProperty.GetType() == ePropertyType_Rect && rProperty.GetName() == "client_area" )
+		{
+			CGUIRect aValue;
+			PropertyToValue( rProperty, aValue);
+			SetStringAreaRatio( aValue );
+		}
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//property for readonly
+		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "readonly")
+		{
+			bool bValue = false;
+			PropertyToValue( rProperty, bValue);
+			SetReadOnly( bValue );
+		}
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//property for cursor size
+		else if( rProperty.GetType() == ePropertyType_Size && rProperty.GetName() == "cursor_size")
+		{
+			CGUISize aValue;
+			PropertyToValue( rProperty, aValue);
+			SetCursorSize( aValue );
+		}
+		else
+		{
+			CGUIWidget::ProcessProperty( rProperty );
+		}
 	}
 	//------------------------------------------------------------------------------
 

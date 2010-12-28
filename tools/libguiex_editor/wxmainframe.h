@@ -141,6 +141,7 @@ protected:
 protected:
 	void SetResolution( int width, int height );
 
+
 protected:
 	//callback function
 	void OnCloseWindow(wxCloseEvent& evt);
