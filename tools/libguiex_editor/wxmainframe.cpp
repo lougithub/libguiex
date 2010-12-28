@@ -20,6 +20,7 @@
 #include "editorutility.h"
 #include "toolcache.h"
 #include "resourcelist.h"
+#include "wxeditorid.h"
 
 //wxwidgets
 #include <wx/treectrl.h>
@@ -148,7 +149,7 @@ EVT_TREE_ITEM_MENU(WIDGET_ID_TreeCtrl_File, WxMainFrame::OnTreeItemMenu)
 EVT_MENU(ID_ITEM_Widget_Render, WxMainFrame::OnTreeItemWidgetRender)
 EVT_MENU(ID_ITEM_Widget_View, WxMainFrame::OnTreeItemWidgetView)
 EVT_MENU(ID_ITEM_Widget_Edit, WxMainFrame::OnTreeItemWidgetEdit)
-EVT_MENU(ID_ITEM_Edit_EXTERNAL, WxMainFrame::OnTreeItemEditExternal)
+EVT_MENU(ID_ITEM_Edit_External, WxMainFrame::OnTreeItemEditExternal)
 EVT_MENU(ID_ITEM_Script_Edit, WxMainFrame::OnTreeItemScriptEdit)
 EVT_MENU(ID_ITEM_Image_Edit, WxMainFrame::OnTreeItemImageEdit)
 
@@ -811,7 +812,7 @@ void WxMainFrame::OnTreeItemMenu(wxTreeEvent& event)
 		menu.Append(ID_ITEM_Widget_Render, wxT("&Render"));
 		menu.Append(ID_ITEM_Widget_View, wxT("&View"));
 		menu.Append(ID_ITEM_Widget_Edit, wxT("&Edit"));
-		menu.Append(ID_ITEM_Edit_EXTERNAL, wxT("&Edit External"));
+		menu.Append(ID_ITEM_Edit_External, wxT("&Edit External"));
 		//menu.Enable(ID_ITEM_Widget_View, m_pCanvas==NULL);
 		m_pTreeCtrl_File->PopupMenu(&menu, event.GetPoint());
 	}
@@ -820,7 +821,7 @@ void WxMainFrame::OnTreeItemMenu(wxTreeEvent& event)
 		//script
 		wxMenu menu(_("Script File"));
 		menu.Append(ID_ITEM_Script_Edit, wxT("&Edit"));
-		menu.Append(ID_ITEM_Edit_EXTERNAL, wxT("&Edit External"));
+		menu.Append(ID_ITEM_Edit_External, wxT("&Edit External"));
 		m_pTreeCtrl_File->PopupMenu(&menu, event.GetPoint());
 	}
 	else if(pNode->m_strFileType == TITLE_RESOURCE_CONFIG )
@@ -828,7 +829,7 @@ void WxMainFrame::OnTreeItemMenu(wxTreeEvent& event)
 		//image
 		wxMenu menu(_("Resource File"));
 		menu.Append(ID_ITEM_Image_Edit, wxT("&Edit"));
-		menu.Append(ID_ITEM_Edit_EXTERNAL, wxT("&Edit External"));
+		menu.Append(ID_ITEM_Edit_External, wxT("&Edit External"));
 		m_pTreeCtrl_File->PopupMenu(&menu, event.GetPoint());
 	}
 	else

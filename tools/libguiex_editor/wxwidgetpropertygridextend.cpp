@@ -12,6 +12,7 @@
 #include "propertyconfigmgr.h"
 #include "editorutility.h"
 #include "resourcelist.h"
+#include "wximageselectdlg.h"
 
 #include <wx/colordlg.h>
 
@@ -442,29 +443,10 @@ bool WxGUIImageProperty::OnEvent( wxPropertyGrid* propgrid, wxWindow* primary, w
 {
 	if ( propgrid->IsMainButtonEvent(event) )
 	{
-		CGUIColor color = CGUIColorRefFromVariant(GetValue());
-		wxColour aWxColor( 
-			GUI_FLOAT2UINT_ROUND( color.GetRed()*255 ),
-			GUI_FLOAT2UINT_ROUND( color.GetGreen()*255 ), 
-			GUI_FLOAT2UINT_ROUND( color.GetBlue()*255 ), 
-			GUI_FLOAT2UINT_ROUND( color.GetAlpha()*255 ));
-
-		wxColourData data;
-		data.SetChooseFull(true);
-		data.SetColour( aWxColor );
-		wxColourDialog dialog(propgrid, &data);
+		WxImageSelectDialog dialog( propgrid );
 		if ( dialog.ShowModal() == wxID_OK )
 		{
-			wxColourData retData = dialog.GetColourData();
-			aWxColor = retData.GetColour();
-			color.SetColor( 
-				aWxColor.Red() / 255.0f,
-				aWxColor.Green() / 255.0f,
-				aWxColor.Blue() / 255.0f,
-				aWxColor.Alpha() / 255.0f );
-
-			SetValueInEvent( WXVARIANT(color) );
-
+			SetValueInEvent( dialog.GetImageName() );
 			return true;
 		}
 	}
@@ -473,11 +455,6 @@ bool WxGUIImageProperty::OnEvent( wxPropertyGrid* propgrid, wxWindow* primary, w
 // -----------------------------------------------------------------------
 wxSize WxGUIImageProperty::OnMeasureImage( int item ) const
 {
-	//if ( item == -1 )
-	//{
-	//	return wxPG_DEFAULT_IMAGE_SIZE;
-	//}
-
 	return wxSize(PREF_THUMBNAIL_HEIGHT,PREF_THUMBNAIL_HEIGHT);
 }
 // -----------------------------------------------------------------------

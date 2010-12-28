@@ -44,6 +44,7 @@ void CResourceList::UpdateResourceList()
 void CResourceList::ResetImageList()
 {
 	m_arrayImageArray.Clear();
+
 	for( std::map<wxString, wxBitmap*>::iterator itor = m_mapImageThumbnails.begin();
 		itor != m_mapImageThumbnails.end();
 		++itor )
@@ -51,6 +52,14 @@ void CResourceList::ResetImageList()
 		delete itor->second;
 	}
 	m_mapImageThumbnails.clear();
+
+	for( std::map<wxString, wxBitmap*>::iterator itor = m_mapOriginalImageThumbnails.begin();
+		itor != m_mapOriginalImageThumbnails.end();
+		++itor )
+	{
+		delete itor->second;
+	}
+	m_mapOriginalImageThumbnails.clear();
 }
 //------------------------------------------------------------------------------
 void CResourceList::UpdateImageList()
@@ -101,6 +110,9 @@ void CResourceList::UpdateImageList()
 					break;
 				}
 
+				wxBitmap* pOriginalBitmap = new wxBitmap( *pWxImage );
+				m_mapOriginalImageThumbnails[rWxImageName] = pOriginalBitmap;
+
 				int im_wid = pWxImage->GetWidth();
 				int im_hei = pWxImage->GetHeight();
 				if ( pWxImage->GetWidth() > pWxImage->GetHeight() )
@@ -130,6 +142,16 @@ const wxBitmap* CResourceList::GetImageThumbnail( const wxString& rImageName )
 {
 	std::map<wxString, wxBitmap*>::iterator itor = m_mapImageThumbnails.find( rImageName );
 	if( itor != m_mapImageThumbnails.end() )
+	{
+		return itor->second;
+	}
+	return NULL;
+}
+//------------------------------------------------------------------------------
+const wxBitmap* CResourceList::GetOriginalImageThumbnail( const wxString& rImageName )
+{
+	std::map<wxString, wxBitmap*>::iterator itor = m_mapOriginalImageThumbnails.find( rImageName );
+	if( itor != m_mapOriginalImageThumbnails.end() )
 	{
 		return itor->second;
 	}

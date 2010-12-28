@@ -37,6 +37,7 @@ public:
 	const wxArrayString& GetAsList();
 
 	const wxBitmap* GetImageThumbnail( const wxString& rImageName );
+	const wxBitmap* GetOriginalImageThumbnail( const wxString& rImageName );
 
 protected:
 	//update image used in the system
@@ -54,6 +55,7 @@ protected:
 private:
 	wxArrayString m_arrayImageArray;
 	std::map<wxString, wxBitmap*> m_mapImageThumbnails;
+	std::map<wxString, wxBitmap*> m_mapOriginalImageThumbnails;
 	wxArrayString m_arrayAsArray;
 };
 

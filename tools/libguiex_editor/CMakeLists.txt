@@ -23,6 +23,9 @@ if( WIN32 )
 		wxeditorcanvas.h		
 		wxeditorcanvascontainer.cpp
 		wxeditorcanvascontainer.h			
+		wximageselectdlg.cpp
+		wximageselectdlg.h
+		wxeditorid.h		
         )
     source_group( widget FILES ${${target_name}_widget_SRCS} )
     
