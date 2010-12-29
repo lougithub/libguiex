@@ -12,6 +12,7 @@
 #include "wxmainframe.h"
 #include "wxmainapp.h"
 #include "editorutility.h"
+#include <algorithm>
 
 //------------------------------------------------------------------------------
 
@@ -45,7 +46,16 @@ CPropertyConfigMgr::~CPropertyConfigMgr()
 void CPropertyConfigMgr::Clear()
 {
 	m_mapPropertySet.clear();
+	m_setWidgetTyps.clear();
+
+	for( TMapType::iterator itor = m_mapType.begin();
+		itor != m_mapType.end();
+		++itor )
+	{
+		delete itor->second;
+	}
 	m_mapType.clear();
+
 
 	for( std::vector<CPropertyData*>::iterator itor=m_arrayPropertyDataCache.begin();
 		itor != m_arrayPropertyDataCache.end();
@@ -62,7 +72,7 @@ CPropertyConfigMgr* CPropertyConfigMgr::Instance()
 	return &s_mgr;
 }
 //------------------------------------------------------------------------------
-void CPropertyConfigMgr::RegisterSet( const std::string& rSetName, const guiex::CGUIProperty& rPropertySet )
+void CPropertyConfigMgr::RegisterSet( const std::string& rSetName, const guiex::CGUIProperty& rPropertySet, bool bIsTemplate )
 {
 	if( m_mapPropertySet.find(rSetName) != m_mapPropertySet.end())
 	{
@@ -71,6 +81,12 @@ void CPropertyConfigMgr::RegisterSet( const std::string& rSetName, const guiex::
 		wxASSERT(0);
 	}
 	m_mapPropertySet.insert( std::make_pair(rSetName,rPropertySet) );
+
+	if( bIsTemplate == false )
+	{
+		m_setWidgetTyps.push_back( rSetName );
+		std::sort( m_setWidgetTyps.begin(), m_setWidgetTyps.end() );
+	}
 }
 //------------------------------------------------------------------------------
 void CPropertyConfigMgr::RegisterEnumDefine( const guiex::CGUIString& rEnumName, const wxArrayString& rEnumValue )
@@ -115,7 +131,7 @@ const wxArrayString& CPropertyConfigMgr::GetEnumDefine( const guiex::CGUIString&
 //------------------------------------------------------------------------------
 std::string* CPropertyConfigMgr::GetTypePtr( const std::string& rType )
 {
-	TSetType::iterator itor = m_mapType.find( rType );
+	TMapType::iterator itor = m_mapType.find( rType );
 	if(itor == m_mapType.end())
 	{
 		throw guiex::CGUIException("[CPropertyConfigMgr::GetTypePtr]: failed to find widget type <%s>", rType.c_str());
@@ -133,9 +149,7 @@ void CPropertyConfigMgr::AddType( const std::string& rType )
 //------------------------------------------------------------------------------
 int CPropertyConfigMgr::ReadPropertyConfig(const std::string& rFileName)
 {
-	Clear();
-
-	///parse file
+	//parse file
 	TiXmlDocument aDoc;
 	aDoc.LoadFile( rFileName.c_str() );
 	if( aDoc.Error())
@@ -247,6 +261,13 @@ int		CPropertyConfigMgr::ProcessWidgetNode(TiXmlElement* pWidgetNode)
 		aPropSet = GetPropertySet(szInherit);
 	}
 
+	bool bIsTemplate = false;
+	const char* szTemplate = pWidgetNode->Attribute("template");
+	if( szTemplate && strcmp(szTemplate,"true") == 0)
+	{
+		bIsTemplate = true;
+	}
+
 	//process sub node
 	TiXmlElement* pNode = pWidgetNode->FirstChildElement();
 	while( pNode )
@@ -271,7 +292,7 @@ int		CPropertyConfigMgr::ProcessWidgetNode(TiXmlElement* pWidgetNode)
 
 
 	//register it to map
-	RegisterSet(szType, aPropSet);
+	RegisterSet( szType, aPropSet, bIsTemplate);
 
 	return 0;
 }

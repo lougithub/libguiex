@@ -34,6 +34,11 @@ namespace guiex
 
 		virtual void OnCreate();
 
+		void InitializeBox2D();
+
+	private:
+		b2Body* m_pStaticBody;
+
 	protected:
 		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtBox2DStaticBody);
 	};

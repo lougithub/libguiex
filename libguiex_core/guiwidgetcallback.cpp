@@ -525,24 +525,8 @@ namespace guiex
 
 		return 0;
 	}
-	////------------------------------------------------------------------------------
-	//uint32		CGUIWidget::OnCreate( CGUIEventNotification* pEvent )
-	//{
-	//	WIDGET_EVENT_TRACE("OnCreate");
-	//
-	//	//call callback function
-	//	CallbackFunction("OnCreate", pEvent);
-	//
-	//	//is event expired
-	//	if( pEvent->IsExpired())
-	//	{
-	//		return 0;
-	//	}
-	//
-	//	return 0;
-	//}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnLoad( CGUIEventNotification* pEvent )
+	uint32 CGUIWidget::OnLoad( CGUIEventNotification* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnLoad");
 
@@ -552,7 +536,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnOpen( CGUIEventNotification* pEvent )
+	uint32 CGUIWidget::OnOpen( CGUIEventNotification* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnOpen");
 
@@ -602,15 +586,15 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int32		CGUIWidget::OnUpdate(CGUIEventNotification* pEvent )
+	int32 CGUIWidget::OnEventUpdate(CGUIEventNotification* pEvent )
 	{
 		//call callback function
-		CallbackFunction("OnUpdate", pEvent);
+		CallbackFunction("OnEventUpdate", pEvent);
 
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnScrollbarScroll( CGUIEventScrollbar* pEvent )
+	uint32 CGUIWidget::OnScrollbarScroll( CGUIEventScrollbar* pEvent )
 	{
 		//WIDGET_EVENT_TRACE("OnScrollbarScroll");
 

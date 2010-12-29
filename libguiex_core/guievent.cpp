@@ -249,7 +249,7 @@ namespace guiex
 			return m_pReceiver->OnUnchecked(this);
 
 		case eEVENT_UPDATE:
-			return m_pReceiver->OnUpdate(this);
+			return m_pReceiver->OnEventUpdate(this);
 
 
 		default:

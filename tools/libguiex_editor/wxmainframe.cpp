@@ -278,6 +278,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 		GSystem->SetDrawExtraInfo( false );
 		GSystem->SetRunScript( false );
 		GSystem->SetPlayingAs( false );
+		GSystem->SetEditorMode( true );
 	}
 	catch (CGUIBaseException& rError)
 	{

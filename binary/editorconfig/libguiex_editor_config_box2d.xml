@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<config>
+	<widget type="CGUIWgtBox2DBase" inherit="CGUIWidget" template="true">
+		<page name="Image">
+			<property name="BGIMAGE" type="CGUIImage" value="" must_exist="true"/>
+		</page>
+	</widget>
+
+	<widget type="CGUIWgtBox2DDynamicBody" inherit="CGUIWgtBox2DBase">
+	</widget>
+
+
+	<widget type="CGUIWgtBox2DStaticBody" inherit="CGUIWgtBox2DBase">
+	</widget>
+</config>
+
+
+

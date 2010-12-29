@@ -62,6 +62,7 @@ if( APPLE )
 		${target_name} 
 		libguiex_module 
 		libguiex_widget 
+		libguiex_widget_box2d
 		libguiex_script_wrapper 
 		libguiex_framework
 		)
@@ -70,6 +71,7 @@ if( APPLE )
 		${target_name}
 		general libguiex_core
 		general libguiex_widget
+        general libguiex_widget_box2d
 		general libguiex_module
 		general libguiex_script_wrapper
 		general libguiex_framework
@@ -101,6 +103,7 @@ elseif( WIN32 )
 		${target_name}
 		libguiex_module 
 		libguiex_widget 
+		libguiex_widget_box2d
 		libguiex_framework
 		box2d 
 		)
@@ -115,6 +118,7 @@ elseif( WIN32 )
 		general Rpcrt4.lib
 		general libguiex_core
 		general libguiex_widget
+        general libguiex_widget_box2d
 		general libguiex_module
 		general libguiex_script_wrapper
 		general libguiex_framework

@@ -11,6 +11,7 @@
 #include "guiframework_windows.h"
 
 #include <libguiex_widget/guiwgt.h>
+#include <libguiex_widget_box2d/guiwgt_box2d.h>
 
 //libguiex module
 #include <libguiex_module/render_opengl/guirender_opengl.h>
@@ -23,6 +24,7 @@
 #include <libguiex_module/configfile_tinyxml/guiconfigfile_tinyxml.h>
 #include <libguiex_module/script_lua/guiscript_lua.h>
 #include <libguiex_module/stringconv_winapi/guistringconv_winapi.h>
+#include <libguiex_module/physics_box2d/guiphysics_box2d.h>
 
 #include <windows.h>
 #include <fstream>
@@ -97,17 +99,33 @@ namespace guiex
 		GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
 		GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_winapi);
 		GUI_REGISTER_INTERFACE_LIB( IGUIScript_lua );
+		GUI_REGISTER_INTERFACE_LIB( IGUIPhysics_box2d );
 		GUI_REGISTER_INTERFACE_LIB_ARG( IGUIIme_winapi, ::GetForegroundWindow() );
 	}
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_Windows::RegisterWidgetGenerators( )
 	{
-		CGUIWidgetGenerator** pGenerator = GetAllWidgetGenerators();
-		while(*pGenerator)
+		//basic widgets
 		{
-			CGUIWidgetFactory::Instance()->RegisterGenerator( *pGenerator);
-			pGenerator ++;
+			CGUIWidgetGenerator** pGenerator = GetAllWidgetGenerators();
+			while(*pGenerator)
+			{
+				CGUIWidgetFactory::Instance()->RegisterGenerator( *pGenerator);
+				pGenerator ++;
+			}
 		}
+
+
+		//box2d widgets
+		{
+			CGUIWidgetGenerator** pGenerator = GetAllWidgetGenerators_Box2d();
+			while(*pGenerator)
+			{
+				CGUIWidgetFactory::Instance()->RegisterGenerator( *pGenerator);
+				pGenerator ++;
+			}
+		}
+		
 	}
 	//------------------------------------------------------------------------------ 
 	int32 CGUIFramework_Windows::InitializeGame( )

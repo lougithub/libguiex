@@ -332,20 +332,20 @@ namespace guiex
 		return bConsumed;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIInputProcessor::BeginDrag(CGUIWidget* pWidget, const CGUIVector2& rDeltaPos, uint32 nButton)
+	void CGUIInputProcessor::BeginDrag(CGUIWidget* pWidget, const CGUIVector2& rDeltaPos, uint32 nButton)
 	{
 		m_pDragTracker->m_pDragItem = pWidget;
 		m_pDragTracker->m_aDeltaPos = rDeltaPos;
 		m_pDragTracker->m_nButton = nButton;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIInputProcessor::EndDrag()
+	void CGUIInputProcessor::EndDrag()
 	{
 		//clear drag tracker
 		m_pDragTracker->m_pDragItem = NULL;
 	}
 	//------------------------------------------------------------------------------
-	bool	CGUIInputProcessor::OnMouseButtonUp(const IGUIInterfaceMouse::SMouseEvent& rMouseEvent)
+	bool CGUIInputProcessor::OnMouseButtonUp(const IGUIInterfaceMouse::SMouseEvent& rMouseEvent)
 	{
 		bool bConsumed = false;
 

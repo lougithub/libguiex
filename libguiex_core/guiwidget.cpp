@@ -53,7 +53,7 @@ namespace guiex
 		,m_strOwnerSceneName(rSceneName)
 		,m_strWorkingSceneName(rSceneName)
 		,m_pWidgetGenerator(NULL)
-		,m_pExclusiveChild(NULL)
+		//,m_pExclusiveChild(NULL)
 		,m_aParamScale(CGUISize(1.0f,1.0f))
 		,m_aParamAlpha(1.0f)
 		,m_aParamDisable(false)
@@ -70,7 +70,6 @@ namespace guiex
 		,m_bIsFocusAgency(false)
 		,m_bIsFocusable(true)
 		,m_bIsMovable(false)
-		,m_bIsExclusive(false)
 		,m_bIsHitable(true)
 		,m_bIsMouseConsumed(true)
 		,m_bIsResponseUpdateEvent(false)
@@ -410,12 +409,12 @@ namespace guiex
 	{
 		return static_cast<CGUIWidget*>(m_pNextSibling);
 	}
-	//------------------------------------------------------------------------------
-	//get exclusive child
-	CGUIWidget*	CGUIWidget::GetExclusiveChild( ) const
-	{
-		return m_pExclusiveChild;
-	}
+	////------------------------------------------------------------------------------
+	////get exclusive child
+	//CGUIWidget*	CGUIWidget::GetExclusiveChild( ) const
+	//{
+	//	return m_pExclusiveChild;
+	//}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::SetWorkingSceneName(const CGUIString& rWorkingProjName)
 	{
@@ -613,12 +612,12 @@ namespace guiex
 		pChild->SetParentImpl( NULL );
 		pChild->SetNextSibling( NULL );
 
-		//for exclusive child
-		if( pChild->IsExclusive())
-		{
-			GUI_ASSERT( pChild == m_pExclusiveChild, "error for remove exclusive child");
-			m_pExclusiveChild = NULL;
-		}
+		////for exclusive child
+		//if( pChild->IsExclusive())
+		//{
+		//	GUI_ASSERT( pChild == m_pExclusiveChild, "error for remove exclusive child");
+		//	m_pExclusiveChild = NULL;
+		//}
 
 		//for parameter
 		m_aParamScale.RemoveChild(&(pChild->m_aParamScale));
@@ -676,12 +675,12 @@ namespace guiex
 		//set parent
 		pChild->SetParentImpl( this );
 
-		//for exclusive child
-		if( pChild->IsExclusive())
-		{
-			GUI_ASSERT(m_pExclusiveChild==NULL, "there has been a exclusive child");
-			m_pExclusiveChild = pChild;
-		}
+		////for exclusive child
+		//if( pChild->IsExclusive())
+		//{
+		//	GUI_ASSERT(m_pExclusiveChild==NULL, "there has been a exclusive child");
+		//	m_pExclusiveChild = pChild;
+		//}
 
 		//for parameter
 		m_aParamScale.AddChild(&(pChild->m_aParamScale));
@@ -864,13 +863,13 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	bool	CGUIWidget::IsDisable( ) const
+	bool CGUIWidget::IsDisable( ) const
 	{
 		return m_aParamDisable.GetSelfValue();
 	}
 	//------------------------------------------------------------------------------
 	/// is this widget disable, the value will be affect by the parent's state
-	bool	CGUIWidget::IsDerivedDisable()
+	bool CGUIWidget::IsDerivedDisable()
 	{
 		return m_aParamDisable.GetFinalValue();
 	}
@@ -983,41 +982,38 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	/**
-	* @brief give the child which is pinted
+	* @brief give the child which is under given point
 	*/
-	CGUIWidget*		CGUIWidget::GetWidgetAtPoint(const CGUIVector2& rPos)
+	CGUIWidget* CGUIWidget::GetWidgetAtPoint(const CGUIVector2& rPos)
 	{
-		//check sibling
-		if( GetNextSibling() && 
-			!(IsExclusive() && IsDerivedDisable() == false && IsOpen() && IsDerivedVisible()))
+		//check sibling first
+		if( GetNextSibling() )
 		{
 			CGUIWidget* pWidget = GetNextSibling()->GetWidgetAtPoint(rPos);
-			if( pWidget &&(!pWidget->IsExclusive() || pWidget->HitTest(rPos)))
+			if( pWidget )
 			{
 				//find one
 				return pWidget;
 			}
 		}
 
-		if( IsDerivedDisable() == false && IsOpen() && IsDerivedVisible()) 
+		if( IsOpen() && IsDerivedVisible() ) 
 		{
 			//check child
-			bool bIsChildExclusive = false;
 			if( GetChild() )
 			{
 				CGUIWidget* pWidget = NULL;
-				if( m_pExclusiveChild &&  m_pExclusiveChild->IsDerivedDisable() == false && m_pExclusiveChild->IsOpen() && m_pExclusiveChild->IsDerivedVisible())
-				{
-					//check exclusive child
-					bIsChildExclusive = true;
-					pWidget = m_pExclusiveChild->GetWidgetAtPoint(rPos);
-				}
-				else
+				//if( m_pExclusiveChild )
+				//{
+				//	//check exclusive child
+				//	pWidget = m_pExclusiveChild->GetWidgetAtPoint(rPos);
+				//}
+				//else
 				{
 					//check normal child
 					pWidget = GetChild()->GetWidgetAtPoint(rPos);
 				}
-				if( pWidget &&(!pWidget->IsExclusive() || pWidget->HitTest(rPos)))
+				if( pWidget )
 				{
 					//find one
 					return pWidget;
@@ -1025,7 +1021,7 @@ namespace guiex
 			}
 
 			//check self
-			if( !bIsChildExclusive && HitTest(rPos) )
+			if( HitTest(rPos) )
 			{
 				return this;
 			}
@@ -1040,7 +1036,7 @@ namespace guiex
 	*/
 	bool CGUIWidget::HitTest( const CGUIVector2& rPos)
 	{
-		if( IsHitable() )
+		if( IsHitable() || GSystem->IsEditorMode() )
 		{
 			return m_aBound.IsPointInRect(rPos);
 		}
@@ -1263,6 +1259,10 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::OnCreate()
+	{
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::OnUpdate()
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -1493,7 +1493,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::UpdateAsSelf( real fDeltaTime )
+	void CGUIWidget::UpdateAsSelf( real fDeltaTime )
 	{
 		if( GSystem->IsPlayingAs() == false )
 		{
@@ -1723,11 +1723,6 @@ namespace guiex
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "activable" )
 		{
 			ValueToProperty( IsActivable(), rProperty);
-		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "EXCLUSIVE" )
-		{
-			ValueToProperty( IsExclusive(), rProperty);
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "disable" )
@@ -2017,12 +2012,6 @@ namespace guiex
 			PropertyToValue(rProperty, bValue );
 			SetActivable( bValue );
 		}
-		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="EXCLUSIVE" )
-		{
-			bool bValue = false;
-			PropertyToValue(rProperty, bValue );
-			SetExclusive( bValue );
-		}
 		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="open_with_parent" )
 		{
 			bool bValue = false;
@@ -2232,6 +2221,7 @@ namespace guiex
 			}
 		}
 
+		OnUpdate();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::DrawCharacter(IGUIInterfaceRender* pRender, 
@@ -2726,16 +2716,6 @@ namespace guiex
 	bool CGUIWidget::IsMovable( ) const
 	{
 		return m_bIsMovable;
-	}
-	//------------------------------------------------------------------------------
-	void CGUIWidget::SetExclusive( bool bFlag )
-	{
-		m_bIsExclusive = bFlag;
-	}
-	//------------------------------------------------------------------------------
-	bool CGUIWidget::IsExclusive( ) const
-	{
-		return m_bIsExclusive;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::SetHitable( bool bFlag )

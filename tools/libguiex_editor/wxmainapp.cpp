@@ -55,7 +55,14 @@ bool WxMainApp::OnInit()
 	//load config file
 	if( 0 != CPropertyConfigMgr::Instance()->ReadPropertyConfig(GetBaseDir() + "../editorconfig/libguiex_editor_config.xml"))
 	{
-		wxMessageBox(_T("failed to read property config file!"), _T("error"));
+		wxMessageBox(_T("failed to read property config filelibguiex_editor_config.xml!"), _T("error"));
+		return false;
+	}
+
+	//load box2d config file
+	if( 0 != CPropertyConfigMgr::Instance()->ReadPropertyConfig(GetBaseDir() + "../editorconfig/libguiex_editor_config_box2d.xml"))
+	{
+		wxMessageBox(_T("failed to read property config file <libguiex_editor_config_box2d.xml>!"), _T("error"));
 		return false;
 	}
 

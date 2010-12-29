@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<libguiex_project>
+	<property name="title" type="CGUIString" value="box2d" />
+	<property name="dependencies" type="CGUIString" value="common.uip" />
+	<property name="widget_file" type="CGUIString" value="sample_1.xml" />
+</libguiex_project>
+

@@ -56,6 +56,7 @@ if( APPLE )
 		${target_name} 
 		libguiex_module 
 		libguiex_widget 
+		libguiex_widget_box2d
 		libguiex_script_wrapper 
 		libguiex_framework
 		)
@@ -63,6 +64,7 @@ if( APPLE )
 	target_link_libraries(
 		${target_name}
 		general libguiex_core
+        general libguiex_widget_box2d
 		general libguiex_widget
 		general libguiex_module
 		general libguiex_script_wrapper
@@ -70,6 +72,7 @@ if( APPLE )
 		general tinyxml
 		general lua
 		general freetype
+		general box2d
 		)
 
 	set( RESOURCE_DIR "${PROJECT_SOURCE_DIR}/data/test" )
@@ -102,6 +105,7 @@ elseif( WIN32 )
     ${target_name}
      libguiex_module 
      libguiex_widget 
+	 libguiex_widget_box2d
      libguiex_framework
       )
 	
@@ -114,6 +118,7 @@ elseif( WIN32 )
         general glut32.lib 
         general Rpcrt4.lib
         general libguiex_core
+        general libguiex_widget_box2d
         general libguiex_widget
         general libguiex_module
         general libguiex_script_wrapper
@@ -121,6 +126,7 @@ elseif( WIN32 )
         general tinyxml
         general lua
         general freetype
+		general box2d
         )
 else()
 	message( FATAL_ERROR "unsupport platform" )

@@ -7697,30 +7697,6 @@ fail:
 }
 
 
-static int _wrap_CGUIWidget_GetExclusiveChild(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
-  guiex::CGUIWidget *result = 0 ;
-  
-  SWIG_check_num_args("GetExclusiveChild",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetExclusiveChild",1,"guiex::CGUIWidget const *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
-    SWIG_fail_ptr("CGUIWidget_GetExclusiveChild",1,SWIGTYPE_p_guiex__CGUIWidget);
-  }
-  
-  result = (guiex::CGUIWidget *)((guiex::CGUIWidget const *)arg1)->GetExclusiveChild();
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIWidget,0); SWIG_arg++; 
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static int _wrap_CGUIWidget_MoveToTop(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
@@ -11755,56 +11731,6 @@ fail:
 }
 
 
-static int _wrap_CGUIWidget_SetExclusive(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
-  bool arg2 ;
-  
-  SWIG_check_num_args("SetExclusive",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetExclusive",1,"guiex::CGUIWidget *");
-  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetExclusive",2,"bool");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
-    SWIG_fail_ptr("CGUIWidget_SetExclusive",1,SWIGTYPE_p_guiex__CGUIWidget);
-  }
-  
-  arg2 = (lua_toboolean(L, 2)!=0);
-  (arg1)->SetExclusive(arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_CGUIWidget_IsExclusive(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
-  bool result;
-  
-  SWIG_check_num_args("IsExclusive",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsExclusive",1,"guiex::CGUIWidget const *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
-    SWIG_fail_ptr("CGUIWidget_IsExclusive",1,SWIGTYPE_p_guiex__CGUIWidget);
-  }
-  
-  result = (bool)((guiex::CGUIWidget const *)arg1)->IsExclusive();
-  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static int _wrap_CGUIWidget_SetHitable(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
@@ -12164,7 +12090,6 @@ static swig_lua_method swig_guiex_CGUIWidget_methods[] = {
     {"GetParent", _wrap_CGUIWidget_GetParent}, 
     {"GetChild", _wrap_CGUIWidget_GetChild}, 
     {"GetNextSibling", _wrap_CGUIWidget_GetNextSibling}, 
-    {"GetExclusiveChild", _wrap_CGUIWidget_GetExclusiveChild}, 
     {"MoveToTop", _wrap_CGUIWidget_MoveToTop}, 
     {"MoveDown", _wrap_CGUIWidget_MoveDown}, 
     {"MoveUp", _wrap_CGUIWidget_MoveUp}, 
@@ -12267,8 +12192,6 @@ static swig_lua_method swig_guiex_CGUIWidget_methods[] = {
     {"IsDerivedFocusable", _wrap_CGUIWidget_IsDerivedFocusable}, 
     {"SetMovable", _wrap_CGUIWidget_SetMovable}, 
     {"IsMovable", _wrap_CGUIWidget_IsMovable}, 
-    {"SetExclusive", _wrap_CGUIWidget_SetExclusive}, 
-    {"IsExclusive", _wrap_CGUIWidget_IsExclusive}, 
     {"SetHitable", _wrap_CGUIWidget_SetHitable}, 
     {"IsHitable", _wrap_CGUIWidget_IsHitable}, 
     {"SetMouseConsumed", _wrap_CGUIWidget_SetMouseConsumed}, 

@@ -98,7 +98,7 @@ namespace guiex
 		CGUIWidget* GetChild( ) const;
 		CGUIWidget* GetChild( const CGUIString& rChildName ) const;
 		CGUIWidget* GetNextSibling( ) const;
-		CGUIWidget* GetExclusiveChild( ) const;
+		//CGUIWidget* GetExclusiveChild( ) const;
 
 		void MoveToTop();
 		void MoveDown();
@@ -313,9 +313,6 @@ namespace guiex
 		void SetMovable( bool bFlag ); 
 		bool IsMovable( ) const;
 
-		void SetExclusive( bool bFlag ); 
-		bool IsExclusive( ) const;
-
 		void SetHitable( bool bFlag ); 
 		bool IsHitable( ) const;
 
@@ -355,6 +352,7 @@ namespace guiex
 
 		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage ); 
 		virtual void OnCreate();
+		virtual void OnUpdate();
 
 		void DrawRect( IGUIInterfaceRender* pRender, const CGUIRect& rDestRect, real fLineWidth, const CGUIColor& rColor );
 		void DrawCharacter(IGUIInterfaceRender* pRender, wchar_t charCode, const CGUIStringInfo& rInfo, const CGUIVector2& rPos );
@@ -448,7 +446,7 @@ namespace guiex
 		virtual uint32 OnUnchecked( CGUIEventNotification* pEvent );
 
 		/// callback function: for update event
-		virtual int32 OnUpdate(CGUIEventNotification* pEvent );
+		virtual int32 OnEventUpdate(CGUIEventNotification* pEvent );
 
 		/// callback function: for scrollbar's attach and detach
 		virtual uint32 OnScrollbarScroll( CGUIEventScrollbar* pEvent );
@@ -587,7 +585,7 @@ namespace guiex
 		///////////////////////////////////////////////////////////////////////
 		/// for widget tree											
 		///////////////////////////////////////////////////////////////////////
-		CGUIWidget*	 m_pExclusiveChild;	//!< for exclusive child
+		//CGUIWidget*	 m_pExclusiveChild;	//!< for exclusive child
 
 		CGUIString m_strType; //!< widget type
 		CGUIString m_strName; //!< widget name, should be a unique name in same scene

@@ -40,7 +40,6 @@ namespace guiex
 	{
 		m_pImageBG= NULL;
 
-		SetExclusive( true );
 		SetMovable( true );
 		SetOpenWithParent( false );
 	}	

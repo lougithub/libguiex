@@ -11,13 +11,17 @@
 //============================================================================// 
 #include <libguiex_module/physics_box2d/guiphysics_box2d.h>
 #include <libguiex_core/guisystem.h>
+#include <Box2D/Box2D.h>
 
 //============================================================================//
 // function
 //============================================================================// 
 namespace guiex
 {
+	//------------------------------------------------------------------------------
 	GUI_INTERFACE_IMPLEMENT(IGUIPhysics_box2d);
+	//------------------------------------------------------------------------------
+	real IGUIPhysics_box2d::ms_fScale = 10.0f;
 	//------------------------------------------------------------------------------
 	const char* IGUIPhysics_box2d::StaticGetModuleName()
 	{
@@ -73,5 +77,24 @@ namespace guiex
 		return m_pWorld;
 	}
 	//------------------------------------------------------------------------------
-
+	real IGUIPhysics_box2d::Meter2Pixel( real fMeter )
+	{
+		return fMeter * ms_fScale;
+	}
+	//------------------------------------------------------------------------------
+	real IGUIPhysics_box2d::Pixel2Meter( real fPixel )
+	{
+		return fPixel / ms_fScale;
+	}
+	//------------------------------------------------------------------------------
+	void IGUIPhysics_box2d::SetMeterPixelScale( real fScale )
+	{
+		ms_fScale = fScale;
+	}
+	//------------------------------------------------------------------------------
+	real IGUIPhysics_box2d::GetMeterPixelScale( )
+	{
+		return ms_fScale;
+	}
+	//------------------------------------------------------------------------------
 }//namespace guiex

@@ -119,6 +119,7 @@ namespace guiex
 		,m_bShouldRunScript(true)
 		,m_bDrawExtraInfo(false)
 		,m_bPlayingAs( true )
+		,m_bIsEditorMode( false )
 		,m_fSystemTime(0.0f)
 		,m_fTimerForFrame(0.0f)
 		,m_pImageManager( NULL )
@@ -330,6 +331,16 @@ namespace guiex
 	bool CGUISystem::IsPlayingAs() const
 	{
 		return m_bPlayingAs;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUISystem::IsEditorMode( ) const
+	{
+		return m_bIsEditorMode;
+	}
+	//------------------------------------------------------------------------------
+	void CGUISystem::SetEditorMode( bool bEditorMode )
+	{
+		m_bIsEditorMode = bEditorMode;
 	}
 	//------------------------------------------------------------------------------
 	void CGUISystem::RegisterResourceManager( CGUIResourceManagerBase* pMgr )

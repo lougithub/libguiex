@@ -56,13 +56,12 @@ wxWizardPageSimple* WxWizardCreateWidget::InitPage1()
 	m_pComboBoxType = new wxComboBox( page1, wxID_ANY, wxEmptyString, wxDefaultPosition,wxSize(240,20),0,NULL, wxCB_DROPDOWN|wxCB_READONLY|wxCB_SORT );
 	wxStaticBoxSizer* pSizerComboxType = new wxStaticBoxSizer(new wxStaticBox(page1, -1, wxT("Select Widget Type:")),wxVERTICAL);
 	pSizerComboxType->Add(m_pComboBoxType);
-	const CPropertyConfigMgr::TMapPropertySet& rTypeMap = CPropertyConfigMgr::Instance()->GetPropertySetMap();
-	wxASSERT(rTypeMap.empty() == false);
-	for( CPropertyConfigMgr::TMapPropertySet::const_iterator itor = rTypeMap.begin();
+	const CPropertyConfigMgr::TSetType& rTypeMap = CPropertyConfigMgr::Instance()->GetWidgetTypes();
+	for( CPropertyConfigMgr::TSetType::const_iterator itor = rTypeMap.begin();
 		itor != rTypeMap.end();
 		++itor)
 	{
-		m_pComboBoxType->Append(Gui2wxString( itor->first));
+		m_pComboBoxType->Append(Gui2wxString( *itor ));
 	}
 	m_pComboBoxType->Select(0);
 

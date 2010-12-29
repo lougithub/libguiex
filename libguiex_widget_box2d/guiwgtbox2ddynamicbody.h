@@ -33,6 +33,12 @@ namespace guiex
 		void InitBox2DDynamicBody();
 
 		virtual void OnCreate();
+		virtual void OnUpdate();
+
+		void InitializeBox2D();
+
+	private:
+		b2Body* m_pDynamicBody;
 
 	protected:
 		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtBox2DDynamicBody);

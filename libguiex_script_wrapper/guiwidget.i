@@ -15,7 +15,7 @@ namespace guiex
 		CGUIWidget* GetChild( ) const;
 		CGUIWidget* GetChild( const CGUIString& rChildName ) const;
 		CGUIWidget* GetNextSibling( ) const;
-		CGUIWidget* GetExclusiveChild( ) const;
+		//CGUIWidget* GetExclusiveChild( ) const;
 
 		void MoveToTop();
 		void MoveDown();
@@ -186,9 +186,6 @@ namespace guiex
 
 		void SetMovable( bool bFlag ); 
 		bool IsMovable( ) const;
-
-		void SetExclusive( bool bFlag ); 
-		bool IsExclusive( ) const;
 
 		void SetHitable( bool bFlag ); 
 		bool IsHitable( ) const;

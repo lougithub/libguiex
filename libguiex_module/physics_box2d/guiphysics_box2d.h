@@ -13,11 +13,12 @@
 //============================================================================// 
 #include <libguiex_core/guiinterfacephysics.h>
 #include <vector>
-#include <Box2D/Box2D.h>
 
 //============================================================================//
 // class
 //============================================================================// 
+class b2World;
+
 namespace guiex
 {
 
@@ -34,12 +35,18 @@ namespace guiex
 
 		b2World* GetWorld();
 
+		static void SetMeterPixelScale( real fScale );
+		static real GetMeterPixelScale( );
+		static real Meter2Pixel( real fMeter );
+		static real Pixel2Meter( real fPixel );
+
 	protected:
 		virtual int DoInitialize(void* );
 		virtual void DoDestroy();
 
 	protected:
 		b2World * m_pWorld;
+		static real ms_fScale;
 
 	public: 
 		static const char* StaticGetModuleName();

@@ -16,6 +16,7 @@ if( WIN32 )
     include_directories( "${PROJECT_SOURCE_DIR}/external/tinyxml" )
     include_directories( "${PROJECT_SOURCE_DIR}/external/lua/src" )
     include_directories( "${PROJECT_SOURCE_DIR}/external/freetype/include" )
+	include_directories( "${PROJECT_SOURCE_DIR}/external/Box2D" )
 
     #link directory
     link_directories( "${PROJECT_SOURCE_DIR}/external/wxWidgets/lib/vc_lib" )
@@ -28,6 +29,7 @@ if( WIN32 )
 		${target_name}
 		libguiex_module
 		libguiex_widget
+		libguiex_widget_box2d
 		libguiex_framework 
        )
        
@@ -56,12 +58,14 @@ if( WIN32 )
         general Rpcrt4.lib
         general libguiex_core
         general libguiex_widget
+        general libguiex_widget_box2d
         general libguiex_script_wrapper
         general libguiex_framework
         general libguiex_module
         general tinyxml
         general lua
         general freetype
+		general box2d
         )
         
 endif()

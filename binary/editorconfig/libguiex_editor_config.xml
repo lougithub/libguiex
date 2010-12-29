@@ -7,7 +7,7 @@
 		<property name="ETextAlignmentVert" type="enum" value="eTextAlignment_Vert_Center;eTextAlignment_Vert_Up;eTextAlignment_Vert_Down;"/>
 	</enum>
 
-	<widget type="CGUIWidget">
+	<widget type="CGUIWidget" template="true">
 		<page name="Appearance">
 			<property name="parent" type="CGUIString" value="" readonly="true"/>
 			<property name="position" type="CGUIWidgetPosition" category="Default">

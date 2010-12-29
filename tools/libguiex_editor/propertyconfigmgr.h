@@ -98,13 +98,10 @@ class CPropertyConfigMgr
 {
 public:
 	typedef std::map<std::string, CGUIProperty> TMapPropertySet;
+	typedef	std::vector<std::string> TSetType;
 
 public:
 	~CPropertyConfigMgr();
-
-	/** 
-	* @brief get singleton of Scene config object
-	*/
 	static CPropertyConfigMgr* Instance();
 
 	/** 
@@ -116,7 +113,7 @@ public:
 	 * @brief read property config from file
 	 * @return 0 for success, vice versa
 	 */
-	int		ReadPropertyConfig(const std::string& rFileName);
+	int	ReadPropertyConfig(const std::string& rFileName);
 
 	/**
 	* @brief get a property set
@@ -130,43 +127,49 @@ public:
 	 * @brief get property set map
 	 */
 	const TMapPropertySet& 	GetPropertySetMap( ) const;
+	const TSetType& GetWidgetTypes( ) const
+	{
+		return m_setWidgetTyps;
+	}
 
 	//add a page
-	void	AddType( const std::string& rType );
+	void AddType( const std::string& rType );
 
 	//get type ptr
-	std::string*	GetTypePtr( const std::string& rType );
+	std::string* GetTypePtr( const std::string& rType );
 
 protected:
 	/** 
 	 * @brief process widget node
 	 * @return 0 for success, vice versa
 	 */
-	int		ProcessWidgetNode(TiXmlElement* pWidgetNode);
-	int		ProcessEnumNode(TiXmlElement* pWidgetNode);
+	int	ProcessWidgetNode(TiXmlElement* pWidgetNode);
+	int	ProcessEnumNode(TiXmlElement* pWidgetNode);
 
-	int		ProcessPropertyNode(const std::string& rPage, CGUIProperty& rPropertySet, TiXmlElement* pNode);
+	int	ProcessPropertyNode(const std::string& rPage, CGUIProperty& rPropertySet, TiXmlElement* pNode);
 
 	/**
 	* @brief register a property set
 	*/
-	void	RegisterSet( const std::string& rSetName, const CGUIProperty& rProperty );
+	void RegisterSet( const std::string& rSetName, const CGUIProperty& rProperty, bool bIsTemplate );
 
-	void	RegisterEnumDefine( const CGUIString& rEnumName, const wxArrayString& rEnumValue );
+	void RegisterEnumDefine( const CGUIString& rEnumName, const wxArrayString& rEnumValue );
 
 protected:
 	CPropertyConfigMgr();
 	CPropertyConfigMgr& operator=(CPropertyConfigMgr&);
 
 protected:
-	TMapPropertySet		m_mapPropertySet;
+	TMapPropertySet m_mapPropertySet;
 
-	typedef	std::map<std::string, std::string*>		TSetType;
-	TSetType		m_mapType;
+	typedef	std::map<std::string, std::string*> TMapType;
+	TMapType m_mapType;
+
+	TSetType m_setWidgetTyps;
 
 	std::vector<CPropertyData*>	m_arrayPropertyDataCache;
 
-	typedef	std::map<CGUIString, wxArrayString>		TEnumMap;
+	typedef	std::map<CGUIString, wxArrayString> TEnumMap;
 	TEnumMap m_mapEnums;
 };
 

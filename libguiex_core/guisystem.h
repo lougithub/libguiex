@@ -87,6 +87,9 @@ namespace guiex
 		void SetDataPath(const CGUIString& rDataPath);
 		const CGUIString& GetDataPath() const;
 
+		bool IsEditorMode( ) const;
+		void SetEditorMode( bool bEditorMode );
+
 		const char* GenerateAnonymousName();
 
 		void SetFocusWidget(CGUIWidget* pWidget);
@@ -276,6 +279,7 @@ namespace guiex
 		//index for name generating
 		//----------------------------------------------------------------------
 
+		bool m_bIsEditorMode;
 		bool m_bPlayingAs;
 		bool m_bDrawExtraInfo;
 		bool m_bShouldRunScript; //!< should system run script
