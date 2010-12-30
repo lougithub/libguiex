@@ -87,8 +87,6 @@ namespace guiex
 	*/
 	CGUIWidget::~CGUIWidget( )
 	{
-		OnWidgetDestroyed( this );
-
 		DestroyAllResource();
 
 		//delete child
@@ -1266,6 +1264,11 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
+	void CGUIWidget::OnDestroy()
+	{
+		OnWidgetDestroyed( this );
+	}
+	//------------------------------------------------------------------------------
 	void CGUIWidget::SetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
 		//clear old one
@@ -1605,6 +1608,10 @@ namespace guiex
 		ClearProperty();
 
 		m_aPropertySet = rProperty;
+		if( m_aPropertySet.HasDuplicatedNames() )
+		{
+			throw CGUIException("[CGUIWidget::SetProperty]: widget <%s> find duplicated name in property", GetName().c_str());
+		}
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -1613,9 +1620,10 @@ namespace guiex
 	*/
 	void CGUIWidget::InsertProperty( const CGUIProperty& rProperty)
 	{
-		if( m_aPropertySet.HasProperty(rProperty.GetName()))
+		CGUIProperty* pProp = m_aPropertySet.GetProperty(rProperty.GetName());
+		if( pProp )
 		{
-			*(m_aPropertySet.GetProperty(rProperty.GetName())) = rProperty;
+			*pProp = rProperty;
 		}
 		else
 		{
@@ -2057,7 +2065,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWidget::LoadProperty()
+	void CGUIWidget::LoadFromProperty()
 	{
 		//set parent first
 		CGUIProperty* pPropertyParent = m_aPropertySet.GetProperty( "parent" );
@@ -2071,6 +2079,16 @@ namespace guiex
 		{
 			const CGUIProperty* pProperty = m_aPropertySet.GetProperty(nIdx);
 			ProcessProperty( *pProperty );
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::DumpToProperty()
+	{
+		uint32 nSize = m_aPropertySet.GetPropertyNum();
+		for( uint32 nIdx = 0; nIdx<nSize;++nIdx)
+		{
+			CGUIProperty* pProperty = m_aPropertySet.GetProperty(nIdx);
+			GenerateProperty( *pProperty );
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -2152,11 +2170,11 @@ namespace guiex
 	/**
 	* @brief render this widget only
 	*/
-	void	CGUIWidget::RenderSelf(IGUIInterfaceRender* pRender)
+	void CGUIWidget::RenderSelf(IGUIInterfaceRender* pRender)
 	{
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::RenderExtraSelfInfo(IGUIInterfaceRender* pRender)
+	void CGUIWidget::RenderExtraSelfInfo(IGUIInterfaceRender* pRender)
 	{
 		//draw bound
 		DrawRect( pRender, GetBoundArea(), 3.0f, CGUIColor( 0.f,1.f,0.f,1.f) );

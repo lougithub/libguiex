@@ -419,6 +419,7 @@ void WxEditorCanvas::HandleMouseMoved (int aMouseX, int aMouseY)
 		{
 			m_bWidgetStatusChanged = true;
 			m_pContainer->SetSaveFlag(true);
+			GetMainFrame()->UpdateWidgetSizeAndPos();
 		}
 	}
 	else 
@@ -515,9 +516,9 @@ void WxEditorCanvas::OnMouseLeftUp(wxMouseEvent& event)
 
 	if( m_bWidgetStatusChanged )
 	{
-		GetMainFrame()->UpdateWidgetSizeAndPos();
 		m_pContainer->SetSaveFlag(true);
 		m_bWidgetStatusChanged = false;
+		GetMainFrame()->UpdateWidgetSizeAndPos();
 	}
 
 	HandleMouseMoved(event.m_x, event.m_y);

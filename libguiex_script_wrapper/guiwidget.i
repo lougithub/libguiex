@@ -109,7 +109,8 @@ namespace guiex
 		const CGUIProperty& GetProperty() const;
 		void ClearProperty();
 		void InsertProperty( const CGUIProperty& rProperty);
-		void LoadProperty();
+		void LoadFromProperty();
+		void DumpToProperty();
 		virtual int32 GenerateProperty( CGUIProperty& rProperty );
 		virtual void ProcessProperty( const CGUIProperty& rProperty);
 

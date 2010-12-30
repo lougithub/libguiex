@@ -378,13 +378,10 @@ void WxMainFrame::UpdateWidgetSizeAndPos()
 	{
 		return;
 	}
-	const CGUIProperty& rSet = CPropertyConfigMgr::Instance()->GetPropertySet( m_pCurrentEditingWidget->GetType() );
-	const CGUIProperty* pPropSize = rSet.GetProperty("size");
-	SetPropertyByType( m_pPropGridMan, NULL, pPropSize, m_pCurrentEditingWidget );
-	const CGUIProperty* pPropPos = rSet.GetProperty("position");
-	SetPropertyByType( m_pPropGridMan, NULL, pPropPos, m_pCurrentEditingWidget );
-
 	m_pCurrentEditingWidget->Refresh();
+
+	UpdateGridAndGuiProperty( m_pPropGridMan, m_pCurrentEditingWidget, "size" );
+	UpdateGridAndGuiProperty( m_pPropGridMan, m_pCurrentEditingWidget, "position" );
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::SetPropGridWidget(CGUIWidget* pWidget)
@@ -397,7 +394,7 @@ void WxMainFrame::SetPropGridWidget(CGUIWidget* pWidget)
 
 	if( m_pCurrentEditingWidget )
 	{
-		LoadWidgetConfig(m_pPropGridMan, m_pCurrentEditingWidget->GetType(), m_pCurrentEditingWidget);
+		UpdateGridProperties( m_pPropGridMan, m_pCurrentEditingWidget->GetType(), m_pCurrentEditingWidget );
 	}
 
 	m_pPropGridMan->Refresh();
@@ -714,7 +711,8 @@ void WxMainFrame::OnPropertyGridChange( wxPropertyGridEvent& event )
 		m_pCurrentEditingWidget->InsertProperty( aGuiProperty );
 		m_pCurrentEditingWidget->ProcessProperty(aGuiProperty);
 		m_pCurrentEditingWidget->Refresh();
-		LoadWidgetConfig( m_pPropGridMan, m_pCurrentEditingWidget->GetType(), m_pCurrentEditingWidget );
+
+		UpdateGridProperties( m_pPropGridMan, m_pCurrentEditingWidget->GetType(), m_pCurrentEditingWidget );
 	}
 	catch(guiex::CGUIBaseException& rError)
 	{

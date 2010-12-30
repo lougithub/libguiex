@@ -9682,18 +9682,41 @@ fail:
 }
 
 
-static int _wrap_CGUIWidget_LoadProperty(lua_State* L) {
+static int _wrap_CGUIWidget_LoadFromProperty(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
   
-  SWIG_check_num_args("LoadProperty",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LoadProperty",1,"guiex::CGUIWidget *");
+  SWIG_check_num_args("LoadFromProperty",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LoadFromProperty",1,"guiex::CGUIWidget *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
-    SWIG_fail_ptr("CGUIWidget_LoadProperty",1,SWIGTYPE_p_guiex__CGUIWidget);
+    SWIG_fail_ptr("CGUIWidget_LoadFromProperty",1,SWIGTYPE_p_guiex__CGUIWidget);
   }
   
-  (arg1)->LoadProperty();
+  (arg1)->LoadFromProperty();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_DumpToProperty(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  
+  SWIG_check_num_args("DumpToProperty",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("DumpToProperty",1,"guiex::CGUIWidget *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_DumpToProperty",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  (arg1)->DumpToProperty();
   
   return SWIG_arg;
   
@@ -12144,7 +12167,8 @@ static swig_lua_method swig_guiex_CGUIWidget_methods[] = {
     {"GetProperty", _wrap_CGUIWidget_GetProperty}, 
     {"ClearProperty", _wrap_CGUIWidget_ClearProperty}, 
     {"InsertProperty", _wrap_CGUIWidget_InsertProperty}, 
-    {"LoadProperty", _wrap_CGUIWidget_LoadProperty}, 
+    {"LoadFromProperty", _wrap_CGUIWidget_LoadFromProperty}, 
+    {"DumpToProperty", _wrap_CGUIWidget_DumpToProperty}, 
     {"GenerateProperty", _wrap_CGUIWidget_GenerateProperty}, 
     {"ProcessProperty", _wrap_CGUIWidget_ProcessProperty}, 
     {"RegisterUIEvent", _wrap_CGUIWidget_RegisterUIEvent}, 

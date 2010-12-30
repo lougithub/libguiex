@@ -38,6 +38,19 @@ namespace guiex
 //============================================================================// 
 namespace guiex
 {
+	static void AddOrReplaceProperty( CGUIProperty& rParentProperty, const CGUIProperty& rNewProperty )
+	{
+		CGUIProperty* pOldProp = rParentProperty.GetProperty( rNewProperty.GetName());
+		if( pOldProp )
+		{
+			*pOldProp = rNewProperty;
+		}
+		else
+		{
+			rParentProperty.AddProperty( rNewProperty );
+		}
+	}
+
 	//------------------------------------------------------------------------------
 	//CGUIWidgetPosition
 	template<  >
@@ -83,11 +96,11 @@ namespace guiex
 	{
 		CGUIProperty aValueProperty("value", "CGUIVector2");
 		ValueToProperty( rValue.m_aValue, aValueProperty );
-		rProperty.AddProperty( aValueProperty );
+		AddOrReplaceProperty( rProperty, aValueProperty );
 
 		CGUIProperty aTypeProperty( "type", "EScreenValue" );
 		ValueToProperty( rValue.m_eType, aTypeProperty );
-		rProperty.AddProperty( aTypeProperty );
+		AddOrReplaceProperty( rProperty, aTypeProperty );
 	}
 	//------------------------------------------------------------------------------
 	//CGUIWidgetSize
@@ -133,11 +146,11 @@ namespace guiex
 	{
 		CGUIProperty aValueProperty( "value", "CGUISize" );
 		ValueToProperty( rValue.m_aValue, aValueProperty );
-		rProperty.AddProperty( aValueProperty );
+		AddOrReplaceProperty( rProperty, aValueProperty );
 
 		CGUIProperty aTypeProperty( "type", "EScreenValue" );
 		ValueToProperty( rValue.m_eType, aTypeProperty );
-		rProperty.AddProperty( aTypeProperty );
+		AddOrReplaceProperty( rProperty, aTypeProperty );
 	}
 	//------------------------------------------------------------------------------
 	//CGUIStringInfo
@@ -197,15 +210,15 @@ namespace guiex
 	{
 		CGUIProperty aSizeProperty ( "size", "uint16" );
 		ValueToProperty( rValue.m_nFontSize, aSizeProperty );
-		rProperty.AddProperty( aSizeProperty );
+		AddOrReplaceProperty( rProperty, aSizeProperty );
 
 		CGUIProperty aIndexProperty ( "index", "int16" );
 		ValueToProperty( rValue.m_nFontIdx, aIndexProperty );
-		rProperty.AddProperty( aIndexProperty );
+		AddOrReplaceProperty( rProperty, aIndexProperty );
 
 		CGUIProperty aColorProperty ( "color", "CGUIColor" );
 		ValueToProperty( rValue.m_aColor, aColorProperty );
-		rProperty.AddProperty( aColorProperty );
+		AddOrReplaceProperty( rProperty, aColorProperty );
 	}
 	//------------------------------------------------------------------------------
 }

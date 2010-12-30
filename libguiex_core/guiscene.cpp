@@ -14,6 +14,7 @@
 #include <libguiex_core/guistring.h>
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guiproperty.h>
+#include <libguiex_core/guipropertymanager.h>
 
 
 //============================================================================//
@@ -55,9 +56,7 @@ namespace guiex
 	* @brief read config file
 	* @return 0 for success, others for failed
 	*/
-	int32 CGUIScene::LoadFromPropertySet( 
-		const CGUIString& rScenePath, 
-		const CGUIProperty& aPropertySet )
+	int32 CGUIScene::LoadFromPropertySet( const CGUIString& rScenePath, const CGUIProperty& aPropertySet )
 	{
 		m_strScenePath = rScenePath;
 
@@ -65,29 +64,28 @@ namespace guiex
 		for( uint32 i=0; i<nSize; ++i )
 		{
 			const CGUIProperty* pProperty = aPropertySet.GetProperty(i);
-			if( pProperty->GetName() == "widget_file" )
+			switch( pProperty->GetType() )
 			{
-				m_vecWidgetFiles.push_back(pProperty->GetValue());
-			}
-			else if( pProperty->GetName() == "script_file")
-			{
-				m_vecScriptFiles.push_back(pProperty->GetValue());
-			}
-			else if( pProperty->GetName() == "resource_file")
-			{
-				m_vecResourceFiles.push_back(pProperty->GetValue());
-			}
-			else if( pProperty->GetName() == "title")
-			{
-				m_strTitle = pProperty->GetValue();
-			}
-			else if( pProperty->GetName() == "dependencies")
-			{
-				m_vecDependencies.push_back( pProperty->GetValue() );
-			}
-			else
-			{
-				throw guiex::CGUIException("[CGUIScene::LoadFromPropertySet], unknown property name! <%s>!", pProperty->GetName().c_str());
+			case ePropertyType_Scene_Title:
+				m_strTitle = pProperty->GetName();
+				break;
+			case ePropertyType_Scene_Dependency:
+				m_vecDependencies.push_back( pProperty->GetName() );
+				break;
+			case ePropertyType_Scene_WidgetFile:
+				m_vecWidgetFiles.push_back(pProperty->GetName());
+				break;
+			case ePropertyType_Scene_ScriptFile:
+				m_vecScriptFiles.push_back(pProperty->GetName());
+				break;
+			case ePropertyType_Scene_ResourceFile:
+				m_vecResourceFiles.push_back(pProperty->GetName());
+				break;
+			default:
+				throw CGUIException("[CGUIScene::LoadFromPropertySet]: unknown property <%s:%s> in scene <%s>",
+					pProperty->GetName().c_str(),
+					pProperty->GetTypeAsString().c_str(),
+					GetName().c_str() );
 				return -1;
 			}
 		}

@@ -29,13 +29,13 @@ using namespace guiex;
 #define NOTEBOOK_EVENT_PAGE_NAME "Event"
 #define NOTEBOOK_IMAGE_PAGE_NAME "Image"
 
-extern void LoadWidgetConfig( wxPropertyGridManager* pSheetMgr, const std::string& rType,guiex::CGUIWidget* pWidget = NULL );
+extern void	SelectGridPropertyPage(wxPropertyGridManager* pSheetMgr, const std::string& rEvent );
+extern void UpdateGridProperties( wxPropertyGridManager* pSheetMgr, const std::string& rType,CGUIWidget* pWidget = NULL );
+extern void	UpdateGridProperty( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGProperty, const CGUIProperty& aProp );
+extern void	UpdateGridAndGuiProperty( wxPropertyGridManager* pSheetMgr, CGUIWidget* pWidget, const CGUIString& rPropertyName );
 
-extern void	SetPropertyByType( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGProperty, const guiex::CGUIProperty* pDefaultProp, guiex::CGUIWidget* pWidget );
-extern void	SetPropertyPageByEvent(wxPropertyGridManager* pSheetMgr, const std::string& rEvent );
-
-extern void	GenerateGUIProperty( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGProperty, guiex::CGUIProperty& rProperty );
-extern void GenerateGUIProperty( wxPropertyGridManager* pSheetMgr, guiex::CGUIProperty& rSet );
+extern void	GenerateGUIProperty( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGProperty, CGUIProperty& rProperty );
+extern void GenerateGUIProperties( wxPropertyGridManager* pSheetMgr, CGUIProperty& rSet );
 
 
 

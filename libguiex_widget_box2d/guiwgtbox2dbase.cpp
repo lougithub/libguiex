@@ -12,20 +12,13 @@
 #include <libguiex_core/guiinterfacerender.h>
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guiimage.h>
+#include <libguiex_core/guisystem.h>
 
 //============================================================================//
 // function
 //============================================================================// 
 namespace guiex
 {
-	//------------------------------------------------------------------------------
-	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtBox2DBase);
-	//------------------------------------------------------------------------------
-	CGUIWgtBox2DBase::CGUIWgtBox2DBase( const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIWidget(StaticGetType(), rName, rSceneName)
-	{
-		InitBox2DBase();
-	}
 	//------------------------------------------------------------------------------
 	CGUIWgtBox2DBase::CGUIWgtBox2DBase( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
 		:CGUIWidget(rType, rName, rSceneName)
@@ -60,7 +53,51 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	void CGUIWgtBox2DBase::OnCreate()
+	{
+		CGUIWidget::OnCreate();
 
+		if( !GSystem->IsEditorMode() )
+		{
+			InitializeBox2D();
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtBox2DBase::OnUpdate()
+	{
+		CGUIWidget::OnUpdate();
+
+		if( !GSystem->IsEditorMode() )
+		{
+			UpdateBox2D();
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtBox2DBase::OnDestroy()
+	{
+		if( !GSystem->IsEditorMode() )
+		{
+			ReleaseBox2D();
+		}
+
+		CGUIWidget::OnDestroy();
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtBox2DBase::InitializeBox2D()
+	{
+
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtBox2DBase::ReleaseBox2D()
+	{
+
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtBox2DBase::UpdateBox2D()
+	{
+
+	}
+	//------------------------------------------------------------------------------
 
 }//namespace guiex
 

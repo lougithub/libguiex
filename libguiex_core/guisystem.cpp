@@ -841,9 +841,12 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUISystem::UpdatePhysics(real fDeltaTime)
 	{
-		if( m_pInterfaceManager->GetInterfacePhysics() )
+		if( IsEditorMode() == false )
 		{
-			m_pInterfaceManager->GetInterfacePhysics()->Update( fDeltaTime );
+			if( m_pInterfaceManager->GetInterfacePhysics() )
+			{
+				m_pInterfaceManager->GetInterfacePhysics()->Update( fDeltaTime );
+			}
 		}
 	}
 	//------------------------------------------------------------------------------

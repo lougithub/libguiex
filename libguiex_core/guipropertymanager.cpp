@@ -77,6 +77,13 @@ namespace guiex
 		RegisterPropertyType( ePropertyType_AnimationDefine, "CGUIAnimationDefine" );
 		RegisterPropertyType( ePropertyType_AsDefine, "CGUIAsDefine" );
 		RegisterPropertyType( ePropertyType_WidgetDefine, "CGUIWidgetDefine" );
+
+		//scene related property
+		RegisterPropertyType( ePropertyType_Scene_Title, "Title" );
+		RegisterPropertyType( ePropertyType_Scene_Dependency, "Dependency" );
+		RegisterPropertyType( ePropertyType_Scene_WidgetFile, "WidgetFile" );
+		RegisterPropertyType( ePropertyType_Scene_ScriptFile, "ScriptFile" );
+		RegisterPropertyType( ePropertyType_Scene_ResourceFile, "ResourceFile" );
 	}
 	//------------------------------------------------------------------------------
 	CGUIPropertyManager::~CGUIPropertyManager()

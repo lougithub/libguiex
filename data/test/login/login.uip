@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <libguiex_project>
-	<property name="title" type="CGUIString" value="login" />
-	<property name="dependencies" type="CGUIString" value="common.uip" />
-	<property name="widget_file" type="CGUIString" value="login.xml" />
-	<property name="script_file" type="CGUIString" value="login.lua" />
-	<property name="resource_file" type="CGUIString" value="resource.xml" />
+	<property name="login" type="Title" />
+	<property name="common.uip" type="Dependency"/>
+	<property name="login.xml" type="WidgetFile" />
+	<property name="login.lua" type="WidgetFile" />
+	<property name="resource.xml" type="ResourceFile" />
 </libguiex_project>
 

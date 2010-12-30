@@ -24,44 +24,40 @@ namespace guiex
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtBox2DDynamicBody);
 	//------------------------------------------------------------------------------
 	CGUIWgtBox2DDynamicBody::CGUIWgtBox2DDynamicBody( const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIWgtBox2DBase(StaticGetType(), rName, rSceneName)
+		:CGUIWgtBox2DBodyBase(StaticGetType(), rName, rSceneName)
 	{
 		InitBox2DDynamicBody();
 	}
 	//------------------------------------------------------------------------------
 	CGUIWgtBox2DDynamicBody::CGUIWgtBox2DDynamicBody( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIWgtBox2DBase(rType, rName, rSceneName)
+		:CGUIWgtBox2DBodyBase(rType, rName, rSceneName)
 	{
 		InitBox2DDynamicBody();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtBox2DDynamicBody::InitBox2DDynamicBody()
 	{
-		m_pDynamicBody = NULL;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtBox2DDynamicBody::OnCreate()
+	void CGUIWgtBox2DDynamicBody::UpdateBox2D()
 	{
-		CGUIWgtBox2DBase::OnCreate();
+		CGUIWgtBox2DBase::UpdateBox2D();
 
-		InitializeBox2D();
-	}
-	//------------------------------------------------------------------------------
-	void CGUIWgtBox2DDynamicBody::OnUpdate()
-	{
-		CGUIWgtBox2DBase::OnUpdate();
+		const b2Vec2& rPos = m_pBody->GetPosition();
+		CGUIVector2 aPos( IGUIPhysics_box2d::Meter2Pixel(rPos.x), IGUIPhysics_box2d::Meter2Pixel(rPos.y) );
+		WorldToLocal( aPos );
+		real fRot = m_pBody->GetAngle() / b2_pi * 180.f;
 
-		//const b2Vec2& rPos = m_pDynamicBody->GetPosition();
-		//real fRot = m_pDynamicBody->GetAngle() / b2_pi * 180.f;
-
-		//SetPixelPosition( IGUIPhysics_box2d::Meter2Pixel(rPos.x), IGUIPhysics_box2d::Meter2Pixel(rPos.y) );
-		//SetRotation( 0, 0, fRot );
-		//Refresh();
+		SetPixelPosition( aPos );
+		SetRotation( 0, 0, fRot );
+		Refresh();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtBox2DDynamicBody::InitializeBox2D()
 	{
-		GUI_ASSERT( m_pDynamicBody == NULL, "invalid static body pointer");
+		CGUIWgtBox2DBase::InitializeBox2D();
+
+		GUI_ASSERT( m_pBody == NULL, "invalid static body pointer");
 
 		b2World * pWorld = CGUIInterfaceManager::Instance()->GetInterfacePhysicsTyped<IGUIPhysics_box2d>()->GetWorld();
 		if( !pWorld )
@@ -81,19 +77,19 @@ namespace guiex
 		aBodyDef.position.Set( IGUIPhysics_box2d::Pixel2Meter(vPos.x), IGUIPhysics_box2d::Pixel2Meter(vPos.y) );
 		aBodyDef.angle = fRot;
 		aBodyDef.bullet = true;
-		m_pDynamicBody = pWorld->CreateBody( &aBodyDef );
+		m_pBody = pWorld->CreateBody( &aBodyDef );
 
 		//create fixture
 		b2PolygonShape aBox;
-		aBox.SetAsBox( rSize.GetWidth(), rSize.GetHeight() );
+		aBox.SetAsBox( IGUIPhysics_box2d::Pixel2Meter(rSize.GetWidth()), IGUIPhysics_box2d::Pixel2Meter(rSize.GetHeight()) );
 		b2FixtureDef fixtureDef;
 		fixtureDef.shape = &aBox;
 		fixtureDef.density = 0.0f;
 		fixtureDef.friction = 0.0f;
-		m_pDynamicBody->CreateFixture( &fixtureDef );
+		m_pBody->CreateFixture( &fixtureDef );
 
 		//set user data
-		m_pDynamicBody->SetUserData( this );
+		m_pBody->SetUserData( this );
 	}
 	//------------------------------------------------------------------------------
 

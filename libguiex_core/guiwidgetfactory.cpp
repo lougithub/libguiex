@@ -409,6 +409,7 @@ namespace guiex
 		}
 		else
 		{
+			pWidget->OnDestroy();
 			pGenerator->DestroyWidget(pWidget);
 			return 0;
 		}

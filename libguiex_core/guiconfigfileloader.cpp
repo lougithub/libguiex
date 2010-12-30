@@ -53,7 +53,7 @@ namespace guiex
 		}
 		/// set property to widget
 		pWidget->SetProperty( *pPropertySet );
-		pWidget->LoadProperty();
+		pWidget->LoadFromProperty();
 		pWidget->Create();
 
 		return pWidget;

@@ -11,8 +11,7 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include "guiwgtbox2dbase.h"
-#include <libguiex_core/guiwidgetgenerator.h>
+#include "guiwgtbox2dbodybase.h"
 
 
 //============================================================================//
@@ -23,7 +22,7 @@ namespace guiex
 	/**
 	* @class CGUIWgtBox2DDynamicBody
 	*/
-	class GUIEXPORT CGUIWgtBox2DDynamicBody : public CGUIWgtBox2DBase
+	class GUIEXPORT CGUIWgtBox2DDynamicBody : public CGUIWgtBox2DBodyBase
 	{
 	public:
 		CGUIWgtBox2DDynamicBody( const CGUIString& rName, const CGUIString& rSceneName );
@@ -32,13 +31,10 @@ namespace guiex
 		CGUIWgtBox2DDynamicBody( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 		void InitBox2DDynamicBody();
 
-		virtual void OnCreate();
-		virtual void OnUpdate();
-
-		void InitializeBox2D();
+		virtual void InitializeBox2D();
+		virtual void UpdateBox2D();
 
 	private:
-		b2Body* m_pDynamicBody;
 
 	protected:
 		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtBox2DDynamicBody);

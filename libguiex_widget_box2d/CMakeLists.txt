@@ -5,6 +5,8 @@ message( STATUS "generate library: " ${target_name} )
 set( ${target_name}_box2d_SRCS 
         guiwgtbox2dbase.cpp
         guiwgtbox2dbase.h
+        guiwgtbox2dbodybase.cpp
+        guiwgtbox2dbodybase.h
         guiwgtbox2dstaticbody.cpp
         guiwgtbox2dstaticbody.h
         guiwgtbox2ddynamicbody.cpp

@@ -27,7 +27,6 @@ namespace guiex
 	class GUIEXPORT CGUIWgtBox2DBase : public CGUIWidget
 	{
 	public:
-		CGUIWgtBox2DBase( const CGUIString& rName, const CGUIString& rSceneName );
 
 	protected:
 		CGUIWgtBox2DBase( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
@@ -37,10 +36,18 @@ namespace guiex
 		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage );
 
 	protected:
+		virtual void OnCreate();
+		virtual void OnUpdate();
+		virtual void OnDestroy();
+
+		virtual void InitializeBox2D();
+		virtual void ReleaseBox2D();
+		virtual void UpdateBox2D();
+
+	protected:
 		const CGUIImage* m_pImageBG;
 
 	protected:
-		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtBox2DBase);
 	};
 
 

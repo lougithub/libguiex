@@ -30,8 +30,6 @@ class CGUIFrameworkTest : public CGUIFramework
 		virtual guiex::int32 InitializeGame( );
 		virtual void ReleaseGame( );
 
-		virtual void RegisterInterfaces( );
-
 		virtual void PreUpdate( real fDeltaTime );
 		virtual void PostRender( );
 
@@ -51,13 +49,6 @@ class CGUIFrameworkTest : public CGUIFramework
 CGUIFrameworkBase* CreateFramework( )
 {
 	return new CGUIFrameworkTest( );
-}
-
-void CGUIFrameworkTest::RegisterInterfaces( )
-{
-	CGUIFramework::RegisterInterfaces( );
-
-	GUI_REGISTER_INTERFACE_LIB( IGUIPhysics_box2d );
 }
 
 guiex::int32 CGUIFrameworkTest::InitializeGame( )

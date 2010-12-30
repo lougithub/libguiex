@@ -13,10 +13,8 @@
 #include <libguiex_core/guipropertymanager.h>
 #include <libguiex_core/guiexception.h>
 
-
-//------------------------------------------------------------------------------
- 
 //------------------------------------------------------------------------------ 
+
 //============================================================================//
 // function
 //============================================================================// 
@@ -26,7 +24,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIProperty::CGUIProperty(const CGUIString& rName, const CGUIString& rType, const CGUIString& rValue )
 		:m_pExtraData( NULL )
-		,m_uType(ePropertyType_Unknown)
+		,m_uType( ePropertyType_Unknown )
 	{
 		if( !rName.empty() )
 		{
@@ -78,7 +76,6 @@ namespace guiex
 			m_strValue = other.m_strValue;		/// value of this property
 			m_uType = other.m_uType;
 			m_pExtraData = other.m_pExtraData;
-
 			m_setProperty = other.m_setProperty;	/// sub-property of this property
 		}
 	}
@@ -194,6 +191,20 @@ namespace guiex
 		return -1;
 	}
 	//------------------------------------------------------------------------------
+	CGUIProperty* CGUIProperty::GetProperty( uint32 nIdx )
+	{
+		if( nIdx >= m_setProperty.size())
+		{
+			throw CGUIException( 
+				"[CGUIPropertySet::GetProperty]: error!the total size of sub-property is <%d>, you wanted is <%d>",
+				m_setProperty.size(),
+				nIdx);
+			return NULL;
+		}
+
+		return &(m_setProperty[nIdx]);
+	}
+	//------------------------------------------------------------------------------
 	//get a sub-property by index
 	const CGUIProperty*	CGUIProperty::GetProperty( uint32 nIdx ) const
 	{
@@ -265,4 +276,30 @@ namespace guiex
 		return m_pExtraData;
 	}
 	//------------------------------------------------------------------------------
+	bool CGUIProperty::HasDuplicatedNames( )
+	{
+		if( m_setProperty.size() < 2 )
+		{
+			return false;
+		}
+
+		for( uint32 i=0; i<m_setProperty.size()-1; ++i )
+		{
+			for( uint32 j=i+1; j<m_setProperty.size(); ++j )
+			{
+				if( m_setProperty[i].GetName() == m_setProperty[j].GetName() )
+				{
+					return true;
+				}
+			}
+			if( true == m_setProperty[i].HasDuplicatedNames( ))
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+	//------------------------------------------------------------------------------
+
 }//namespace guiex

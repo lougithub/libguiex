@@ -161,7 +161,8 @@ void WxWizardCreateWidget::OnWizardPageChanging(wxWizardEvent& event)
 			m_pPropGridMgr->ClearPage(NOTEBOOK_PAGE_APPEARANCE);
 			m_pPropGridMgr->ClearPage(NOTEBOOK_PAGE_IMAGE);
 			m_pPropGridMgr->ClearPage(NOTEBOOK_PAGE_EVENT);
-			LoadWidgetConfig( m_pPropGridMgr, m_strWidgetType.char_str(wxConvUTF8).data() );
+
+			UpdateGridProperties( m_pPropGridMgr,  wx2GuiString( m_strWidgetType ) );
 		}
 	}
 	else if( pCurPage == m_pPage2)
@@ -177,7 +178,7 @@ void WxWizardCreateWidget::OnWizardFinished(wxWizardEvent& event)
 	try
 	{
 		CGUIProperty aSet;
-		GenerateGUIProperty( m_pPropGridMgr,aSet);
+		GenerateGUIProperties( m_pPropGridMgr, aSet );
 
 		m_pWidget = CGUIWidgetManager::Instance()->CreateWidget(strType, strName, GetMainFrame()->GetCurrentSceneName());
 		if( m_pParent )
@@ -186,7 +187,7 @@ void WxWizardCreateWidget::OnWizardFinished(wxWizardEvent& event)
 			aSet.GetProperty("parent")->SetValue( m_pParent->GetName() );
 		}
 		m_pWidget->SetProperty(aSet);
-		m_pWidget->LoadProperty();
+		m_pWidget->LoadFromProperty();
 		m_pWidget->Create();
 	}
 	catch (CGUIBaseException& rError)

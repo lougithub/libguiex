@@ -218,7 +218,8 @@ namespace guiex
 		const CGUIProperty& GetProperty() const;
 		void ClearProperty();
 		void InsertProperty( const CGUIProperty& rProperty);
-		void LoadProperty();
+		void LoadFromProperty();
+		void DumpToProperty();
 		virtual int32 GenerateProperty( CGUIProperty& rProperty );
 		virtual void ProcessProperty( const CGUIProperty& rProperty);
 
@@ -353,6 +354,7 @@ namespace guiex
 		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage ); 
 		virtual void OnCreate();
 		virtual void OnUpdate();
+		virtual void OnDestroy();
 
 		void DrawRect( IGUIInterfaceRender* pRender, const CGUIRect& rDestRect, real fLineWidth, const CGUIColor& rColor );
 		void DrawCharacter(IGUIInterfaceRender* pRender, wchar_t charCode, const CGUIStringInfo& rInfo, const CGUIVector2& rPos );

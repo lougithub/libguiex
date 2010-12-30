@@ -24,32 +24,26 @@ namespace guiex
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtBox2DStaticBody);
 	//------------------------------------------------------------------------------
 	CGUIWgtBox2DStaticBody::CGUIWgtBox2DStaticBody( const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIWgtBox2DBase(StaticGetType(), rName, rSceneName)
+		:CGUIWgtBox2DBodyBase(StaticGetType(), rName, rSceneName)
 	{
 		InitBox2DStaticBody();
 	}
 	//------------------------------------------------------------------------------
 	CGUIWgtBox2DStaticBody::CGUIWgtBox2DStaticBody( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIWgtBox2DBase(rType, rName, rSceneName)
+		:CGUIWgtBox2DBodyBase(rType, rName, rSceneName)
 	{
 		InitBox2DStaticBody();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtBox2DStaticBody::InitBox2DStaticBody()
 	{
-		m_pStaticBody = NULL;
-	}
-	//------------------------------------------------------------------------------
-	void CGUIWgtBox2DStaticBody::OnCreate()
-	{
-		CGUIWgtBox2DBase::OnCreate();
-
-		InitializeBox2D();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtBox2DStaticBody::InitializeBox2D()
 	{
-		GUI_ASSERT( m_pStaticBody == NULL, "invalid static body pointer");
+		CGUIWgtBox2DBase::InitializeBox2D();
+
+		GUI_ASSERT( m_pBody == NULL, "invalid static body pointer");
 
 		b2World * pWorld = CGUIInterfaceManager::Instance()->GetInterfacePhysicsTyped<IGUIPhysics_box2d>()->GetWorld();
 		if( !pWorld )
@@ -68,17 +62,17 @@ namespace guiex
 		aBodyDef.type = b2_staticBody;
 		aBodyDef.position.Set( IGUIPhysics_box2d::Pixel2Meter(vPos.x), IGUIPhysics_box2d::Pixel2Meter(vPos.y) );
 		aBodyDef.angle = fRot;
-		m_pStaticBody = pWorld->CreateBody(&aBodyDef);
+		m_pBody = pWorld->CreateBody(&aBodyDef);
 
 		//create fixture
 		b2PolygonShape aBox;
-		aBox.SetAsBox( rSize.GetWidth(), rSize.GetHeight() );
+		aBox.SetAsBox( IGUIPhysics_box2d::Pixel2Meter(rSize.GetWidth()), IGUIPhysics_box2d::Pixel2Meter(rSize.GetHeight()) );
 		b2FixtureDef fixtureDef;
 		fixtureDef.shape = &aBox;
-		m_pStaticBody->CreateFixture( &fixtureDef );
+		m_pBody->CreateFixture( &fixtureDef );
 
 		//set user data
-		m_pStaticBody->SetUserData( this );
+		m_pBody->SetUserData( this );
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

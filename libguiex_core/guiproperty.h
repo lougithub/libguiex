@@ -57,6 +57,7 @@ namespace guiex
 		uint32 GetPropertyNum( ) const;
 		int32 GetPropertyIndex( const CGUIString& rName ) const;
 		const CGUIProperty*	GetProperty( uint32 nIdx ) const;
+		CGUIProperty* GetProperty( uint32 nIdx );
 		const CGUIProperty*	GetProperty( const CGUIString& rName ) const;
 		CGUIProperty* GetProperty( const CGUIString& rName );
 		bool HasProperty( const CGUIString& rName ) const;
@@ -67,6 +68,8 @@ namespace guiex
 
 		void operator=(const CGUIProperty& other );
 		bool operator==(const CGUIProperty& other ) const;
+
+		bool HasDuplicatedNames( );
 
 	protected:
 		CGUIString m_strName; /// name of this property
