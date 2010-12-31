@@ -24,12 +24,18 @@ public:
 	void RegisterOpenglInterface();
 	void UnregisterOpenglInterface();
 
+	void SetCurrentCanvas( class WxEditorCanvas* pCanvas );
+
 protected:
 	virtual void RegisterInterfaces( );
+	virtual void PostRender( );
+	virtual void SetupLogSystem( );
+
+protected:
+	class WxEditorCanvas* m_pCurrentCanvas;
 
 public:
 	static CGUIFrameworkEditor* ms_pFramework;
-
 };
 
 #endif //__KEN_FRAMEWORK_EDITOR_20101221_H__

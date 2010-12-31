@@ -181,7 +181,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 				 ,m_pTreeCtrl_Widget(NULL)
 				 ,m_pTreeCtrl_File(NULL)
 				 ,m_pNoteBook_Canvas(NULL)
-				 ,m_aScreenSize(800, 600)
+				 ,m_aScreenSize(1024, 768)
 				 ,m_aBGColor(128,128,128,255)
 				 ,m_pCurrentEditingWidget( NULL )
 {
@@ -635,7 +635,7 @@ void WxMainFrame::OnTreeItemWidgetView(wxCommandEvent& event)
 	wxString strFilename = m_pTreeCtrl_File->GetItemText(id);
 
 	std::string viewer_exe;
-	viewer_exe = "libguiex_viewer_release.exe";
+	viewer_exe = "tools_viewer_debug.exe";
 
 	std::string strRunCommand = viewer_exe + " " + GSystem->GetDataPath() + " " +m_strCurrentSceneName + " " + strFilename.char_str(wxConvUTF8).data();
 	wxExecute(Gui2wxString(strRunCommand), wxEXEC_ASYNC);
@@ -1603,7 +1603,7 @@ void WxMainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 	wxMessageBox(_("libguiex editor"), _("About"), wxOK, this);
 }
 //------------------------------------------------------------------------------
-void	 WxMainFrame::OutputString( const std::string& rString)
+void WxMainFrame::OutputString( const std::string& rString)
 {
 	m_pOutput->AppendText(Gui2wxString(rString).data());
 	m_pOutput->AppendText(wxString(_T("\n")));

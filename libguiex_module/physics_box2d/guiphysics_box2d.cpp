@@ -21,7 +21,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_INTERFACE_IMPLEMENT(IGUIPhysics_box2d);
 	//------------------------------------------------------------------------------
-	real IGUIPhysics_box2d::ms_fScale = 10.0f;
+	real IGUIPhysics_box2d::ms_fScale = 30.0f;
 	//------------------------------------------------------------------------------
 	const char* IGUIPhysics_box2d::StaticGetModuleName()
 	{

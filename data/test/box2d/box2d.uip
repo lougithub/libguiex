@@ -3,5 +3,6 @@
 	<property name="box2d" type="Title" />
 	<property name="common.uip" type="Dependency"/>
 	<property name="sample_1.xml" type="WidgetFile" />
+	<property name="sample_2.xml" type="WidgetFile" />
 </libguiex_project>
 

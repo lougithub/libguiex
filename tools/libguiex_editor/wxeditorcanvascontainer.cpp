@@ -232,8 +232,7 @@ void	WxEditorCanvasContainer::SetScreenSize( int width, int height )
 {
 	if( m_pCanvas )
 	{
-		m_pCanvas->SetSize(width, height);
-		m_pCanvas->Refresh();
+		m_pCanvas->UpdateCanvasSize( wxSize( width, height) );
 		SetVirtualSize( width,height );
 		Refresh();
 	}

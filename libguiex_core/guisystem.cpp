@@ -672,10 +672,7 @@ namespace guiex
 		m_pCanvasLayerManager->Render( pRender );
 	}
 	//------------------------------------------------------------------------------
-	/**
-	* @brief render system
-	*/
-	void CGUISystem::Render()
+	void CGUISystem::BeginRender()
 	{
 		IGUIInterfaceRender* pRender = CGUIInterfaceManager::Instance()->GetInterfaceRender();
 		IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
@@ -683,8 +680,21 @@ namespace guiex
 
 		//init render
 		pRender->ResetZValue();
-
 		pRender->BeginRender();
+	}
+	//------------------------------------------------------------------------------
+	void CGUISystem::EndRender()
+	{
+		IGUIInterfaceRender* pRender = CGUIInterfaceManager::Instance()->GetInterfaceRender();
+		pRender->EndRender();
+	}
+	//------------------------------------------------------------------------------
+	/**
+	* @brief render system
+	*/
+	void CGUISystem::Render()
+	{
+		IGUIInterfaceRender* pRender = CGUIInterfaceManager::Instance()->GetInterfaceRender();
 
 		//render canvas
 		RenderCanvas( pRender );
@@ -692,8 +702,6 @@ namespace guiex
 		//render ui
 		pRender->ApplyCamera( m_pCameraManager->GetDefaultUICamera() );
 		RenderUI( pRender );
-
-		pRender->EndRender();
 	}
 	//------------------------------------------------------------------------------
 	/**

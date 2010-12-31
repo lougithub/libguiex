@@ -186,16 +186,10 @@ namespace guiex
 		
 		glClearColor(0.5f, 0.5f, 0.5f, 1);
 		glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );	// clear screen and depth buffer 
+		
+		//update camera
+		UpdateCamera();
 
-		
-		//update projection matrix
-		//glMatrixMode(GL_PROJECTION);
-		//glPushMatrix();
-		
-		//update modelview matrix
-		glMatrixMode(GL_MODELVIEW);
-		glPushMatrix();
-		
 		m_nCurrentTexture = -1;
 		m_nCurrentStencilRef = 0;
 
@@ -206,25 +200,14 @@ namespace guiex
 	{		
 		TRY_THROW_OPENGL_ERROR("EndRender start");
 		
-		//restore model view matrix
-		glMatrixMode(GL_MODELVIEW);
-		glPopMatrix(); 
-		
-		//restore projection matrix
-		//glMatrixMode(GL_PROJECTION);
-		//glPopMatrix(); 
-		
 		//reset current texture
 		m_nCurrentTexture = -1;
 
 		TRY_THROW_OPENGL_ERROR("EndRender end");
 	}	
 	//------------------------------------------------------------------------------
-	CGUICamera* IGUIRender_opengles::ApplyCamera( CGUICamera* pCamera )
+	void IGUIRender_opengles::UpdateCamera( )
 	{
-		CGUICamera* pOldCamera = m_pCamera;
-		m_pCamera = pCamera;
-
 		if( m_pCamera && m_pCamera->IsDirty() )
 		{
 			glMatrixMode(GL_PROJECTION);
@@ -233,7 +216,21 @@ namespace guiex
 			gluLookAt( m_pCamera->GetEye().x, m_pCamera->GetEye().y, m_pCamera->GetEye().z,
 				m_pCamera->GetCenter().x, m_pCamera->GetCenter().y, m_pCamera->GetCenter().z,
 				m_pCamera->GetUp().x, m_pCamera->GetUp().y, m_pCamera->GetUp().z );
+
+			m_pCamera->ClearDirty();
 		}
+	}
+	//------------------------------------------------------------------------------
+	CGUICamera* IGUIRender_opengles::ApplyCamera( CGUICamera* pCamera )
+	{
+		CGUICamera* pOldCamera = m_pCamera;
+		m_pCamera = pCamera;
+		if( m_pCamera && m_pCamera != pOldCamera )
+		{
+			m_pCamera->SetDirty();
+		}
+
+		UpdateCamera();
 
 		return pOldCamera;
 	}

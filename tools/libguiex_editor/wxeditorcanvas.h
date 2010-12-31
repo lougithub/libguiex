@@ -42,6 +42,10 @@ public:
 
 	void OnWidgetDestroyed(CGUIWidget* pWidget);
 
+	void UpdateCanvasSize( const wxSize& rSize);
+
+	void RenderEditorInfo();
+
 public:
 	//event
 	void OnPaint(wxPaintEvent& event);
@@ -59,7 +63,6 @@ protected:
 	void Render();
 	void DrawResizers();
 
-	void UpdateCanvasSize( const wxSize& rSize);
 	void UpdateCursor() ;
 
 	void HandleMouseMoved (int aMouseX, int aMouseY);

@@ -137,25 +137,8 @@ namespace guiex
 
 		glPolygonMode(GL_FRONT_AND_BACK, m_bWireFrame ? GL_LINE : GL_FILL);
 
-		//update projection matrix
-		//glMatrixMode(GL_PROJECTION);
-		//glPushMatrix();
-		//glLoadIdentity();
-//#if 0
-//		glOrtho(0.0, rSize.m_fWidth,rSize.m_fHeight,0.0, -100000,100000 );
-//#else
-//		real fPerspectiveDegree = 45;
-//		gluPerspective( fPerspectiveDegree, rSize.m_fWidth/rSize.m_fHeight, 0.1, 100000 );
-//		real fZDistance = rSize.m_fHeight/2 / CGUIMath::Tan( CGUIDegree(fPerspectiveDegree/2));
-//		gluLookAt( 
-//			rSize.m_fWidth/2,rSize.m_fHeight/2,-fZDistance,
-//			rSize.m_fWidth/2,rSize.m_fHeight/2,0, 
-//			0,-1,0);
-//#endif
-
 		//update modelview matrix
 		glMatrixMode(GL_MODELVIEW);
-		glPushMatrix();
 		glLoadIdentity();	
 
 		glViewport(0,0,GUI_FLOAT2UINT_ROUND(rSize.GetWidth()),GUI_FLOAT2UINT_ROUND(rSize.GetHeight()));
@@ -178,6 +161,9 @@ namespace guiex
 		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 		glEnable(GL_TEXTURE_2D);
 		glDisable(GL_SCISSOR_TEST);
+
+		//update camera
+		UpdateCamera();
 
 		if( m_bEnableClip )
 		{
@@ -206,14 +192,6 @@ namespace guiex
 	{		
 		TRY_THROW_OPENGL_ERROR("EndRender start");
 
-		//restore model view matrix
-		glMatrixMode(GL_MODELVIEW);
-		glPopMatrix(); 
-
-		//restore projection matrix
-		//glMatrixMode(GL_PROJECTION);
-		//glPopMatrix(); 
-
 		//restore former attributes
 		glPopAttrib();
 		glPopClientAttrib();
@@ -224,11 +202,8 @@ namespace guiex
 		TRY_THROW_OPENGL_ERROR("EndRender end");
 	}
 	//------------------------------------------------------------------------------
-	CGUICamera* IGUIRender_opengl::ApplyCamera( CGUICamera* pCamera )
+	void IGUIRender_opengl::UpdateCamera( )
 	{
-		CGUICamera* pOldCamera = m_pCamera;
-		m_pCamera = pCamera;
-
 		if( m_pCamera && m_pCamera->IsDirty() )
 		{
 			glMatrixMode(GL_PROJECTION);
@@ -237,7 +212,21 @@ namespace guiex
 			gluLookAt( m_pCamera->GetEye().x, m_pCamera->GetEye().y, m_pCamera->GetEye().z,
 				m_pCamera->GetCenter().x, m_pCamera->GetCenter().y, m_pCamera->GetCenter().z,
 				m_pCamera->GetUp().x, m_pCamera->GetUp().y, m_pCamera->GetUp().z );
+
+			m_pCamera->ClearDirty();
 		}
+	}
+	//------------------------------------------------------------------------------
+	CGUICamera* IGUIRender_opengl::ApplyCamera( CGUICamera* pCamera )
+	{
+		CGUICamera* pOldCamera = m_pCamera;
+		m_pCamera = pCamera;
+		if( m_pCamera && m_pCamera != pOldCamera )
+		{
+			m_pCamera->SetDirty();
+		}
+
+		UpdateCamera();
 
 		return pOldCamera;
 	}

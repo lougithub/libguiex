@@ -30,7 +30,6 @@ class CGUIFrameworkTest : public CGUIFramework
 		virtual guiex::int32 InitializeGame( );
 		virtual void ReleaseGame( );
 
-		virtual void PreUpdate( real fDeltaTime );
 		virtual void PostRender( );
 
 		void CreateBox2dSample_hellobox2d();
@@ -81,16 +80,14 @@ void CGUIFrameworkTest::ReleaseGame( )
 	m_pWorld = NULL;
 }
 
-void CGUIFrameworkTest::PreUpdate( real fDeltaTime )
-{
-}
-
 void CGUIFrameworkTest::PostRender( )
 {
 	UpdateBody(m_pBody);
 	UpdateBody(m_pBody2);
 
 	UpdateJoint( m_pJoint );
+
+	CGUIFramework::PostRender();
 }
 
 void CGUIFrameworkTest::CreateBox2dSample_hellobox2d()

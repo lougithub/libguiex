@@ -114,6 +114,16 @@ namespace guiex
 		GSystem->Update( fDeltaTime );
 	}
 	//------------------------------------------------------------------------------
+	void CGUIFrameworkBase::PreRender( )
+	{
+		GSystem->BeginRender();
+	}
+	//------------------------------------------------------------------------------
+	void CGUIFrameworkBase::PostRender( )
+	{
+		GSystem->EndRender();
+	}
+	//------------------------------------------------------------------------------
 	void CGUIFrameworkBase::Render( )
 	{
 		try

@@ -76,7 +76,9 @@ namespace guiex
 		void Release();
 
 		void Update( real fDeltaTime );
+		void BeginRender();
 		void Render();
+		void EndRender();
 
 		void SetDrawExtraInfo( bool bDraw );
 		bool IsDrawExtraInfo() const;

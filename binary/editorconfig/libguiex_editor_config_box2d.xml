@@ -7,11 +7,18 @@
 		</page>
 	</widget>
 
-	<widget type="CGUIWgtBox2DDynamicBody" inherit="CGUIWgtBox2DBase">
+
+	<widget type="CGUIWgtBox2DBodyBase" inherit="CGUIWgtBox2DBase" template="true">
+		<page name="Appearance">
+			<property name="anchor" type="CGUIVector2" value="0.5,0.5"  category="Default" readonly="true"/>
+		</page>
+	</widget>
+
+	<widget type="CGUIWgtBox2DDynamicBody" inherit="CGUIWgtBox2DBodyBase">
 	</widget>
 
 
-	<widget type="CGUIWgtBox2DStaticBody" inherit="CGUIWgtBox2DBase">
+	<widget type="CGUIWgtBox2DStaticBody" inherit="CGUIWgtBox2DBodyBase">
 	</widget>
 </config>
 

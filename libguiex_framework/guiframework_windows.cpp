@@ -58,10 +58,9 @@ namespace guiex
 			return -1;
 		}
 
-		//log
-		GUI_LOG->Open( "gui_framework_log", CGUILogMsg::FLAG_TIMESTAMP_LITE | CGUILogMsg::FLAG_OSTREAM | CGUILogMsg::FLAG_STDERR);
-		GUI_LOG->SetPriorityMask( GUI_LM_DEBUG | GUI_LM_TRACE | GUI_LM_WARNING|GUI_LM_ERROR );
-		GUI_LOG->SetOstream( new std::ofstream( "libguiex_framework_windows.log", std::ios_base::out | std::ios_base::trunc ), true );
+		//setup log system
+		SetupLogSystem( );
+
 		GSystem->SetScreenSize( rScreenSize );
 
 		//register interface
@@ -74,6 +73,13 @@ namespace guiex
 		GSystem->SetDataPath( pDataPath );
 
 		return 0;
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Windows::SetupLogSystem( )
+	{
+		GUI_LOG->Open( "gui_framework_log", CGUILogMsg::FLAG_TIMESTAMP_LITE | CGUILogMsg::FLAG_OSTREAM | CGUILogMsg::FLAG_STDERR);
+		GUI_LOG->SetPriorityMask( GUI_LM_DEBUG | GUI_LM_TRACE | GUI_LM_WARNING|GUI_LM_ERROR );
+		GUI_LOG->SetOstream( new std::ofstream( "libguiex_framework_windows.log", std::ios_base::out | std::ios_base::trunc ), true );
 	}
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_Windows::ReleaseSystem()
@@ -142,14 +148,6 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	void CGUIFramework_Windows::PostUpdate( real fDeltaTime )
-	{
-	}
-	//------------------------------------------------------------------------------
-	void CGUIFramework_Windows::PreRender( )
-	{
-	}
-	//------------------------------------------------------------------------------
-	void CGUIFramework_Windows::PostRender( )
 	{
 	}
 	//------------------------------------------------------------------------------

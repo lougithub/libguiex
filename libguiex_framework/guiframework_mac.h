@@ -33,13 +33,12 @@ namespace guiex
 		virtual int32 InitializeSystem( const CGUISize& rScreenSize, const char* pDataPath );
 		virtual void ReleaseSystem( );
 
+		virtual void SetupLogSystem( );
 		virtual void RegisterInterfaces( );
 		virtual void RegisterWidgetGenerators( );
 
 		virtual void PreUpdate( real fDeltaTime );
 		virtual void PostUpdate( real fDeltaTime );
-		virtual void PreRender( );
-		virtual void PostRender( );
 
 		virtual void OutputFatalError( const char* pErrorDesc );
 

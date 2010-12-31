@@ -2631,8 +2631,7 @@ namespace guiex
 		}
 
 		//refresh widget rect
-		CGUIVector2 aOffsetPos( -m_aWidgetSize.m_aPixelValue.m_fWidth*m_aWidgetAnchorPoint.x,
-			-m_aWidgetSize.m_aPixelValue.m_fHeight*m_aWidgetAnchorPoint.y );
+		CGUIVector2 aOffsetPos( -GetPixelSize().m_fWidth*m_aWidgetAnchorPoint.x, -GetPixelSize().m_fHeight*m_aWidgetAnchorPoint.y );
 		m_aBoundArea.SetRect( aOffsetPos, m_aWidgetSize.m_aPixelValue );
 		m_aClientArea = m_aBoundArea;
 		m_aClipArea = m_aClientArea;

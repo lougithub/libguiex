@@ -52,10 +52,9 @@ namespace guiex
 			return -1;
 		}
 
-		//log
-		//GUI_LOG->Open( "gui_framework_log", CGUILogMsg::FLAG_TIMESTAMP_LITE | CGUILogMsg::FLAG_STDERR);
-		GUI_LOG->Open( "gui_framework_log", CGUILogMsg::FLAG_STDERR);
-		GUI_LOG->SetPriorityMask( GUI_LM_DEBUG | GUI_LM_TRACE | GUI_LM_WARNING|GUI_LM_ERROR );
+		//setup log system
+		SetupLogSystem();
+
 		GSystem->SetScreenSize( rScreenSize );
 
 		//register interface
@@ -68,6 +67,12 @@ namespace guiex
 		GSystem->SetDataPath( pDataPath );
 
 		return 0;
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Mac::SetupLogSystem( )
+	{
+		GUI_LOG->Open( "gui_framework_log", CGUILogMsg::FLAG_STDERR);
+		GUI_LOG->SetPriorityMask( GUI_LM_DEBUG | GUI_LM_TRACE | GUI_LM_WARNING|GUI_LM_ERROR );
 	}
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_Mac::ReleaseSystem()
@@ -118,14 +123,6 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	void CGUIFramework_Mac::PostUpdate( real fDeltaTime )
-	{
-	}
-	//------------------------------------------------------------------------------
-	void CGUIFramework_Mac::PreRender( )
-	{
-	}
-	//------------------------------------------------------------------------------
-	void CGUIFramework_Mac::PostRender( )
 	{
 	}
 	//------------------------------------------------------------------------------

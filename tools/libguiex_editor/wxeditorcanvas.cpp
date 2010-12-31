@@ -72,6 +72,7 @@ void WxEditorCanvas::InitializeCanvas()
 	UpdateCanvasSize(aCanvasSize);
 
 	CGUIFrameworkEditor::ms_pFramework->RegisterOpenglInterface();
+	CGUIFrameworkEditor::ms_pFramework->SetCurrentCanvas( this );
 }
 //------------------------------------------------------------------------------
 void WxEditorCanvas::DestroyCanvas()
@@ -80,6 +81,7 @@ void WxEditorCanvas::DestroyCanvas()
 	GSystem->UnloadAllResource();
 
 	CGUIFrameworkEditor::ms_pFramework->UnregisterOpenglInterface();
+	CGUIFrameworkEditor::ms_pFramework->SetCurrentCanvas( NULL );
 }
 //------------------------------------------------------------------------------
 void WxEditorCanvas::UpdateWindowBox()
@@ -193,10 +195,23 @@ void WxEditorCanvas::Render()
 
 	CGUIFrameworkEditor::ms_pFramework->Render();
 
-	DrawResizers();
-
 	glFlush();
 	SwapBuffers();
+}
+//------------------------------------------------------------------------------
+void WxEditorCanvas::RenderEditorInfo()
+{
+	glPushClientAttrib(GL_CLIENT_ALL_ATTRIB_BITS);
+	glPushAttrib(GL_ALL_ATTRIB_BITS);
+	glDisable(GL_TEXTURE_2D);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	DrawResizers();
+
+	glPopAttrib();
+	glPopClientAttrib();
 }
 //------------------------------------------------------------------------------
 void WxEditorCanvas::OnEnterWindow( wxMouseEvent& WXUNUSED(event) )
@@ -214,32 +229,14 @@ void WxEditorCanvas::OnSize(wxSizeEvent& event)
 	// this is also necessary to update the context on some platforms
 	wxGLCanvas::OnSize(event);
 
-	wxSize aSize = event.GetSize();
-
-	UpdateCanvasSize(aSize);
-	this->m_aWindowBox.Reset( );
+	UpdateCanvasSize(event.GetSize());
 }
 //------------------------------------------------------------------------------
 void WxEditorCanvas::UpdateCanvasSize(const wxSize& rSize)
 {
-	SetCurrent();
-	//glMatrixMode(GL_PROJECTION);
-	//glLoadIdentity();
+	GSystem->SetScreenSize(rSize.x,rSize.y);
 
-//#if 1
-///	gluOrtho2D(0.0, rSize.GetWidth(),rSize.GetHeight(),0.0 );
-//#else
-//	real fPerspectiveDegree = 45;
-//	gluPerspective( fPerspectiveDegree, rSize.GetWidth()/rSize.GetHeight(), 0.1, 100000 );
-//	real fZDistance = rSize.GetHeight()/2 / CGUIMath::Tan( CGUIDegree(fPerspectiveDegree/2));
-//	gluLookAt( 
-//		rSize.GetWidth()/2,rSize.GetHeight()/2,-fZDistance,
-//		rSize.GetWidth()/2,rSize.GetHeight()/2,0, 
-//		0,-1,0);
-//#endif
-
-	//glMatrixMode(GL_MODELVIEW);
-	//glLoadIdentity();	
+	m_aWindowBox.Reset( );
 }
 //------------------------------------------------------------------------------
 void WxEditorCanvas::OnEraseBackground(wxEraseEvent& WXUNUSED(event))

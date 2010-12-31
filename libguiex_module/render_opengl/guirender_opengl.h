@@ -107,6 +107,8 @@ namespace guiex
 		virtual int DoInitialize(void* );
 		virtual void DoDestroy();
 
+		void UpdateCamera();
+
 		/**
 		* @brief render a texture directly to the display
 		*/

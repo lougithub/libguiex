@@ -60,5 +60,38 @@ namespace guiex
 			aColor.GetARGB(), aColor.GetARGB(), aColor.GetARGB(), aColor.GetARGB() );
 	}
 	//------------------------------------------------------------------------------
+	void CGUIWgtBox2DBodyBase::GetBox2dPosition( CGUIVector2& rPos )
+	{
+		rPos= GetPosition();
+		LocalToWorld( rPos );
+		rPos.x = IGUIPhysics_box2d::Pixel2Meter( rPos.x );
+		rPos.y = IGUIPhysics_box2d::Pixel2Meter( rPos.y );
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtBox2DBodyBase::GetBox2dSize( CGUISize& rSize )
+	{
+		rSize = GetPixelSize();
+		rSize.m_fWidth = IGUIPhysics_box2d::Pixel2Meter( rSize.m_fWidth) / 2;
+		rSize.m_fHeight = IGUIPhysics_box2d::Pixel2Meter( rSize.m_fHeight ) / 2;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtBox2DBodyBase::GetBox2dCenter( CGUIVector2& rCenter )
+	{
+		rCenter.x = rCenter.y = 0.0f;
+		//rCenter = GetAnchorPoint();
+		//const CGUISize& rSize = GetPixelSize();
+		//rCenter = rCenter * rSize;
+		//rCenter.x += ( rSize.m_fWidth / 2 );
+		//rCenter.y += ( rSize.m_fHeight / 2 );
+		//rCenter.x = IGUIPhysics_box2d::Pixel2Meter( rCenter.x );
+		//rCenter.y = IGUIPhysics_box2d::Pixel2Meter( rCenter.y );
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtBox2DBodyBase::GetBox2dRot( real& rRot )
+	{
+		rRot = GetRotation().z / 180.f * b2_pi;
+	}
+	//------------------------------------------------------------------------------
+
 }//namespace guiex
 

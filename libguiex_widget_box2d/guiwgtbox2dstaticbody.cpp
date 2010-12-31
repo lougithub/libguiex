@@ -52,23 +52,28 @@ namespace guiex
 		}
 
 		//get position,size and so on
-		CGUIVector2 vPos = GetPosition();
-		LocalToWorld( vPos );
-		const CGUISize& rSize = GetPixelSize();
-		real fRot = GetRotation().z / 180.f * b2_pi;
+		CGUIVector2 aPos;
+		CGUIVector2 aCenter;
+		CGUISize aSize;
+		real fRot = 0.0f;
+		GetBox2dPosition( aPos );
+		GetBox2dSize( aSize );
+		GetBox2dCenter( aCenter );
+		GetBox2dRot( fRot );
 
 		//create static body
 		b2BodyDef aBodyDef;
 		aBodyDef.type = b2_staticBody;
-		aBodyDef.position.Set( IGUIPhysics_box2d::Pixel2Meter(vPos.x), IGUIPhysics_box2d::Pixel2Meter(vPos.y) );
+		aBodyDef.position.Set( aPos.x, aPos.y );
 		aBodyDef.angle = fRot;
 		m_pBody = pWorld->CreateBody(&aBodyDef);
 
 		//create fixture
 		b2PolygonShape aBox;
-		aBox.SetAsBox( IGUIPhysics_box2d::Pixel2Meter(rSize.GetWidth()), IGUIPhysics_box2d::Pixel2Meter(rSize.GetHeight()) );
+		aBox.SetAsBox( aSize.m_fWidth, aSize.m_fHeight, b2Vec2( aCenter.x, aCenter.y), 0.0f );
 		b2FixtureDef fixtureDef;
 		fixtureDef.shape = &aBox;
+		fixtureDef.density = 0.0f;
 		m_pBody->CreateFixture( &fixtureDef );
 
 		//set user data

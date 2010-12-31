@@ -32,8 +32,12 @@ namespace guiex
 		void InitBox2DBodyBase();
 
 		virtual void RenderExtraSelfInfo(IGUIInterfaceRender* pRender);
-
 		virtual void ReleaseBox2D();
+
+		void GetBox2dPosition( CGUIVector2& rPos );
+		void GetBox2dSize( CGUISize& rSize );
+		void GetBox2dCenter( CGUIVector2& rCenter );
+		void GetBox2dRot( real& rRot );
 
 	protected:
 		b2Body* m_pBody;

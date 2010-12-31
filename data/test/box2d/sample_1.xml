@@ -1,7 +1,7 @@
 <guiex>
     <property name="sample_1_root" type="CGUIWidgetDefine" value="CGUIWgtEmptyNode">
         <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="0,0" />
+            <property name="value" type="CGUIVector2" value="-1,0" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">
@@ -36,7 +36,7 @@
         <property name="parent" type="CGUIString" value="sample_1_root" />
         <property name="BGIMAGE" type="CGUIImage" value="bg_blue" />
         <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="0,0" />
+            <property name="value" type="CGUIVector2" value="0,384" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">
@@ -45,7 +45,7 @@
         </property>
         <property name="max_size" type="CGUISize" value="0,0" />
         <property name="min_size" type="CGUISize" value="0,0" />
-        <property name="anchor" type="CGUIVector2" value="0,0" />
+        <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
         <property name="scale" type="CGUISize" value="1,1" />
         <property name="alpha" type="real" value="1" />
         <property name="rotation" type="CGUIVector3" value="0,0,0" />
@@ -71,7 +71,7 @@
         <property name="parent" type="CGUIString" value="sample_1_root" />
         <property name="BGIMAGE" type="CGUIImage" value="bg_blue" />
         <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="0,750" />
+            <property name="value" type="CGUIVector2" value="512,761" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">
@@ -80,7 +80,7 @@
         </property>
         <property name="max_size" type="CGUISize" value="0,0" />
         <property name="min_size" type="CGUISize" value="0,0" />
-        <property name="anchor" type="CGUIVector2" value="0,0" />
+        <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
         <property name="scale" type="CGUISize" value="1,1" />
         <property name="alpha" type="real" value="1" />
         <property name="rotation" type="CGUIVector3" value="0,0,0" />
@@ -115,7 +115,7 @@
         </property>
         <property name="max_size" type="CGUISize" value="0,0" />
         <property name="min_size" type="CGUISize" value="0,0" />
-        <property name="anchor" type="CGUIVector2" value="0,0" />
+        <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
         <property name="scale" type="CGUISize" value="1,1" />
         <property name="alpha" type="real" value="1" />
         <property name="rotation" type="CGUIVector3" value="0,0,0" />
@@ -150,7 +150,7 @@
         </property>
         <property name="max_size" type="CGUISize" value="0,0" />
         <property name="min_size" type="CGUISize" value="0,0" />
-        <property name="anchor" type="CGUIVector2" value="0,0" />
+        <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
         <property name="scale" type="CGUISize" value="1,1" />
         <property name="alpha" type="real" value="1" />
         <property name="rotation" type="CGUIVector3" value="0,0,0" />
@@ -176,7 +176,7 @@
         <property name="parent" type="CGUIString" value="sample_1_root" />
         <property name="BGIMAGE" type="CGUIImage" value="bg_blue" />
         <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="1007,0" />
+            <property name="value" type="CGUIVector2" value="1018,384" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">
@@ -185,7 +185,7 @@
         </property>
         <property name="max_size" type="CGUISize" value="0,0" />
         <property name="min_size" type="CGUISize" value="0,0" />
-        <property name="anchor" type="CGUIVector2" value="0,0" />
+        <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
         <property name="scale" type="CGUISize" value="1,1" />
         <property name="alpha" type="real" value="1" />
         <property name="rotation" type="CGUIVector3" value="0,0,0" />
@@ -211,7 +211,7 @@
         <property name="parent" type="CGUIString" value="sample_1_root" />
         <property name="BGIMAGE" type="CGUIImage" value="bg_blue" />
         <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="0,0" />
+            <property name="value" type="CGUIVector2" value="512,8" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">
@@ -220,7 +220,7 @@
         </property>
         <property name="max_size" type="CGUISize" value="0,0" />
         <property name="min_size" type="CGUISize" value="0,0" />
-        <property name="anchor" type="CGUIVector2" value="0,0" />
+        <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
         <property name="scale" type="CGUISize" value="1,1" />
         <property name="alpha" type="real" value="1" />
         <property name="rotation" type="CGUIVector3" value="0,0,0" />
