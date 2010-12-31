@@ -30,7 +30,7 @@
 
 #	define  PERFMON_BEGIN( nSection, name )			CPerfMonitor::GetIt()->BeginSection( nSection, name )
 #	define  PERFMON_END( nSection )					CPerfMonitor::GetIt()->EndSection( nSection )
-#	define  PERFMON_SCOPE( nSection, name )			CPerfMonObject		gPerfMon_##nSection(nSection, name);
+#	define  PERFMON_SCOPE( nSection, name )			CPerfMonObject		gPerfMon_##nSection(nSection, name)
 #else	//GUI_PERFORMANCE_ON
 #	define  PERFMON_INIT( nFrameCnt, nSectionNum )		
 #	define  PERFMON_EXIT( )		

@@ -440,6 +440,8 @@ namespace guiex
 	*/
 	void CGUISystem::Update( real fDeltaTime )
 	{
+		PERFMON_BEGIN(0, "CGUISystem::Update");
+
 		//update physics
 		UpdatePhysics( fDeltaTime );
 
@@ -454,6 +456,8 @@ namespace guiex
 
 		UpdateUI( fDeltaTime );
 		UpdateCanvas( fDeltaTime );
+
+		PERFMON_END( 0 );
 
 		UpdatePerformance( fDeltaTime );
 	}
