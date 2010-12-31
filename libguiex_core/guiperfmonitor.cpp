@@ -125,8 +125,8 @@ namespace guiex
 		m_nSectionNum = nSectionNum;
 		m_nFrameCnt = nFrameCnt;
 
-		GUI_ASSERT( nFrameCnt > 0 && nFrameCnt < 4000, "error" );
-		GUI_ASSERT( nSectionNum > 0 && nSectionNum < 100, "error" );
+		GUI_ASSERT( nFrameCnt > 0, "error" );
+		GUI_ASSERT( nSectionNum > 0, "error" );
 
 		//section beginer
 		m_pSectionBegin = new CGUITimer[nSectionNum];
@@ -171,7 +171,7 @@ namespace guiex
 		{
 			m_pSectionName[i] = new char[12];
 			memset(m_pSectionName[i], 0, 12);
-			char buf[10];
+			char buf[20];
 			sprintf( buf,"section %d", i );
 			strncpy( m_pSectionName[i], buf, 12);
 		}
