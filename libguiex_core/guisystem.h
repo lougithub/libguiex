@@ -208,6 +208,7 @@ namespace guiex
 		void RenderCanvas( class IGUIInterfaceRender* pRender );
 		void UpdateUI( real fDeltaTime );
 		void UpdateCanvas( real fDeltaTime );
+		void UpdatePerformance( real fDeltaTime  );
 		
 	protected:
 		void ProcessCommand();

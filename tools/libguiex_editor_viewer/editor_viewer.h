@@ -39,6 +39,10 @@ public:
 	CGUIFrameworkViewer( );
 
 	static CGUIFrameworkViewer* ms_pFramework;
+
+protected:
+	virtual void SetupLogSystem( );
+
 };
 
 
@@ -173,14 +177,14 @@ protected:
 
 
 //-----------------------------------------------------------------------------
-//	CMyLogMsgCallback
+//	CViewerLogMsgCallback
 //-----------------------------------------------------------------------------
-class CMyLogMsgCallback : public CGUILogMsgCallback
+class CViewerLogMsgCallback : public CGUILogMsgCallback
 {
 public:
 	virtual void Log( const CGUILogMsgRecord& rRecord );
 
-	static CMyLogMsgCallback g_MsgCallback;
+	static CViewerLogMsgCallback g_MsgCallback;
 };
 
 #endif

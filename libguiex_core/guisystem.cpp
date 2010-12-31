@@ -231,9 +231,7 @@ namespace guiex
 		}
 
 		//initialize performance monitor if necessary
-#if	GUI_PERFORMANCE_ON 
 		PERFMON_INIT(GUI_PERF_FRAME_COUNT, GUI_PERF_SECTION_NUM_MAX);
-#endif	//GUI_PERFORMANCE_ON
 
 		Reset();
 
@@ -269,11 +267,6 @@ namespace guiex
 	{
 		GUI_ASSERT( m_bInitialized==true, "system has been released" );
 
-		//release performance monitor if necessary
-#if	GUI_PERFORMANCE_ON 
-		PERFMON_EXIT();
-#endif	//GUI_PERFORMANCE_ON
-
 		//release all widgets
 		DestroyAllWidgets();
 
@@ -286,6 +279,9 @@ namespace guiex
 		//destroy singleton instance
 		ReleaseSingletons();
 
+		//release performance monitor if necessary
+		PERFMON_EXIT();
+		
 		m_bInitialized = false;
 
 		CGUIObjectManager::Instance()->UnregisterAll();
@@ -459,26 +455,30 @@ namespace guiex
 		UpdateUI( fDeltaTime );
 		UpdateCanvas( fDeltaTime );
 
+		UpdatePerformance( fDeltaTime );
+	}
+	//------------------------------------------------------------------------------
+	void CGUISystem::UpdatePerformance( real fDeltaTime )
+	{
+#if GUI_PERFORMANCE_ON
 		//update performance monitor
-#if	GUI_PERFORMANCE_ON 
-		PERFMON_FRAMEUPDATE();
-		if( PERFMON_UPDATED() )
+		CPerfMonitor::GetIt()->FrameUpdate( );
+		if( CPerfMonitor::GetIt()->IsUpdated( ) )
 		{
 			GUI_TRACE("\n");
-			GUI_TRACE(GUI_FORMAT("Performance Monitor: %fFPS \n",PERFMON_GETFPS()));
-			for( int32 i=0; i<PERFMON_GET_SECTION_NUM(); ++i)
+			GUI_TRACE(GUI_FORMAT("Performance Monitor: %fFPS \n",CPerfMonitor::GetIt()->GetFPS()));
+			for( int32 i=0; i<CPerfMonitor::GetIt()->GetSectionNum( ); ++i)
 			{
 				GUI_TRACE(GUI_FORMAT(
-					"%d:   %0.3f%%%%   <call times>%d¥Œ   <use time>%d∫¡√Î   <name><%s>\n",
+					"%d:   %0.3f%%%%   <call times>%d   <use time>%f   <name><%s>\n",
 					i, 
-					PERFMON_GETRATE(i)*100,
-					PERFMON_GETTIMES(i),
-					PERFMON_GETMILLIONSEC(i),
-					PERFMON_GETNAME(i)));
+					CPerfMonitor::GetIt()->GetRate(i)*100,
+					CPerfMonitor::GetIt()->GetTimes(i),
+					CPerfMonitor::GetIt()->GetMillionsec(i) / 1000.0f,
+					CPerfMonitor::GetIt()->GetName(i)));
 			}
 			GUI_TRACE("\n");
 		}
-
 #endif	//GUI_PERFORMANCE_ON
 	}
 	//------------------------------------------------------------------------------

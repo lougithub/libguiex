@@ -15,6 +15,7 @@
 #include <libguiex_module/ime_winapi/guiime_winapi.h>
 
 #include <algorithm>
+#include <fstream>
 
 
 #ifdef __cplusplus
@@ -81,6 +82,14 @@ CGUIFrameworkViewer* CGUIFrameworkViewer::ms_pFramework = NULL;
 CGUIFrameworkViewer::CGUIFrameworkViewer( )
 :CGUIFramework( )
 {
+}
+//------------------------------------------------------------------------------ 
+void CGUIFrameworkViewer::SetupLogSystem( )
+{
+	GUI_LOG->Open( "gui_framework_log", CGUILogMsg::FLAG_TIMESTAMP_LITE | CGUILogMsg::FLAG_OSTREAM | CGUILogMsg::FLAG_MSG_CALLBACK );
+	GUI_LOG->SetPriorityMask( GUI_LM_DEBUG | GUI_LM_TRACE | GUI_LM_WARNING|GUI_LM_ERROR );
+	GUI_LOG->SetOstream( new std::ofstream( "libguiex_viewer.log", std::ios_base::out | std::ios_base::trunc ), true );
+	GUI_LOG->SetCallbackMsg( &CViewerLogMsgCallback::g_MsgCallback );
 }
 //------------------------------------------------------------------------------
 
@@ -201,11 +210,11 @@ void WxGLCanvas::OnKeyDown( wxKeyEvent& event )
 
 
 //------------------------------------------------------------------------------
-//	CMyLogMsgCallback
+//	CViewerLogMsgCallback
 //------------------------------------------------------------------------------
-CMyLogMsgCallback CMyLogMsgCallback::g_MsgCallback;
+CViewerLogMsgCallback CViewerLogMsgCallback::g_MsgCallback;
 //------------------------------------------------------------------------------
-void CMyLogMsgCallback::Log( const CGUILogMsgRecord& rRecord )
+void CViewerLogMsgCallback::Log( const CGUILogMsgRecord& rRecord )
 {
 	((WxMainFrame*)wxGetApp().GetTopWindow())->OutputString( rRecord.GetMsgData());
 }
@@ -673,7 +682,8 @@ void WxMainFrame::OnAddPage(wxCommandEvent& WXUNUSED(event))
 	try
 	{
 		//open new pages
-		if( m_mapScenes.find( strUISceneName ) == m_mapScenes.end())
+		TMapScene::iterator itorScene = m_mapScenes.find( strUISceneName );
+		if( itorScene == m_mapScenes.end())
 		{
 			//new scene
 			m_mapScenes[strUISceneName] = arrayUIPageNames;
@@ -683,11 +693,13 @@ void WxMainFrame::OnAddPage(wxCommandEvent& WXUNUSED(event))
 		}
 		else
 		{
+			std::vector<CGUIString>& rArrayPages = itorScene->second;
+
 			for( uint32 i=0; i<arrayUIPageNames.size(); ++i )
 			{
-				if( std::find( m_mapScenes[strUISceneName].begin(), m_mapScenes[strUISceneName].end(), arrayUIPageNames[i] ) == arrayUIPageNames.end() )
+				if( std::find( rArrayPages.begin(), rArrayPages.end(), arrayUIPageNames[i] ) == rArrayPages.end() )
 				{
-					m_mapScenes[strUISceneName].push_back( arrayUIPageNames[i] );
+					rArrayPages.push_back( arrayUIPageNames[i] );
 				}
 			}
 		}

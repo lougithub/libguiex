@@ -69,9 +69,9 @@ void CGUIFrameworkEditor::RegisterInterfaces( )
 //------------------------------------------------------------------------------ 
 void CGUIFrameworkEditor::SetupLogSystem( )
 {
-	GUI_LOG->Open( "gui_framework_log", CGUILogMsg::FLAG_TIMESTAMP_LITE | CGUILogMsg::FLAG_OSTREAM );
+	GUI_LOG->Open( "gui_framework_log", CGUILogMsg::FLAG_TIMESTAMP_LITE | CGUILogMsg::FLAG_OSTREAM | CGUILogMsg::FLAG_MSG_CALLBACK );
 	GUI_LOG->SetPriorityMask( GUI_LM_DEBUG | GUI_LM_TRACE | GUI_LM_WARNING|GUI_LM_ERROR );
-	GUI_LOG->SetOstream( new std::ofstream( "libguiex_framework_windows.log", std::ios_base::out | std::ios_base::trunc ), true );
+	GUI_LOG->SetOstream( new std::ofstream( "libguiex_editor.log", std::ios_base::out | std::ios_base::trunc ), true );
 	GUI_LOG->SetCallbackMsg( &CEditorLogMsgCallback::g_MsgCallback );
 }
 //------------------------------------------------------------------------------

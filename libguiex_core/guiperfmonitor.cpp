@@ -279,18 +279,14 @@ namespace guiex
 		ms_perfMon = 0;
 	}
 	//--------------------------------------------------------------------------------------
-	void		CPerfMonitor::Initialize( int32 nFrameCnt, int32 nSectionNum )
+	void CPerfMonitor::Initialize( int32 nFrameCnt, int32 nSectionNum )
 	{
-		if( m_impl )
-		{
-			GUI_FORCE_ASSERT("has been initialized");
-		}
+		GUI_ASSERT( m_impl == 0, "CPerfMonitor has been initialed!");
 		m_impl = new CPerfMon_impl( nFrameCnt,nSectionNum );
-		GUI_ASSERT(m_impl, "failed to generate performance manager");
 		return;
 	}
 	//--------------------------------------------------------------------------------------
-	void	CPerfMonitor::Release( )
+	void CPerfMonitor::Release( )
 	{
 		if( m_impl )
 		{

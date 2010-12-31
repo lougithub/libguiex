@@ -27,31 +27,17 @@
 #if GUI_PERFORMANCE_ON
 #	define  PERFMON_INIT( nFrameCnt, nSectionNum )	CPerfMonitor::Init(nFrameCnt, nSectionNum)
 #	define  PERFMON_EXIT( )							CPerfMonitor::Exit( )
-#	define  PERFMON_FRAMEUPDATE( )					CPerfMonitor::GetIt()->FrameUpdate( )
+
 #	define  PERFMON_BEGIN( nSection, name )			CPerfMonitor::GetIt()->BeginSection( nSection, name )
 #	define  PERFMON_END( nSection )					CPerfMonitor::GetIt()->EndSection( nSection )
 #	define  PERFMON_SCOPE( nSection, name )			CPerfMonObject		gPerfMon_##nSection(nSection, name);
-#	define  PERFMON_UPDATED( )						CPerfMonitor::GetIt()->IsUpdated( )
-#	define  PERFMON_GETFPS(  )						CPerfMonitor::GetIt()->GetFPS()
-#	define  PERFMON_GETTIMES( nSection )			CPerfMonitor::GetIt()->GetTimes( nSection )
-#	define  PERFMON_GETMILLIONSEC( nSection )		CPerfMonitor::GetIt()->GetMillionsec( nSection )
-#	define  PERFMON_GETRATE( nSection )				CPerfMonitor::GetIt()->GetRate( nSection )
-#	define  PERFMON_GETNAME( nSection )				CPerfMonitor::GetIt()->GetName( nSection )
-#	define  PERFMON_GET_SECTION_NUM( )				CPerfMonitor::GetIt()->GetSectionNum( )
 #else	//GUI_PERFORMANCE_ON
 #	define  PERFMON_INIT( nFrameCnt, nSectionNum )		
 #	define  PERFMON_EXIT( )		
-#	define  PERFMON_FRAMEUPDATE( )		
+
 #	define  PERFMON_BEGIN( nSection, name )		
 #	define  PERFMON_END( nSection )		
 #	define  PERFMON_SCOPE( nSection, name )		
-#	define  PERFMON_UPDATED( )		
-#	define  PERFMON_GETFPS(  )		
-#	define  PERFMON_GETTIMES( nSection )		
-#	define  PERFMON_GETMILLIONSEC( nSection )		
-#	define  PERFMON_GETRATE( nSection )		
-#	define  PERFMON_GETNAME( nSection )	
-#	define  PERFMON_GET_SECTION_NUM( )	
 #endif	//GUI_PERFORMANCE_ON
 
 
@@ -85,58 +71,58 @@ public:
 	/** 
 	* @brief calls this each frame!
 	*/
-	void	FrameUpdate();
+	void FrameUpdate();
 
 	/** 
 	* @brief is frame updated this frame
 	*/
-	bool	IsUpdated();
+	bool IsUpdated();
 
 	/** 
 	* @brief get frame numbers per second
 	*/
-	real	GetFPS();
+	real GetFPS();
 
 	/** 
 	* @brief call this in the begin of the section.
 	*/
-	void	BeginSection(int32 nSectionNo, const char* pName);
+	void BeginSection(int32 nSectionNo, const char* pName);
 
 	/** 
 	* @brief call this in the end of the section
 	*/
-	void	EndSection(int32 nSectionNo);
+	void EndSection(int32 nSectionNo);
 
 	/** 
 	* @brief get the rate of this section.
 	*/
-	real	GetRate(int32 nSectionNo);
+	real GetRate(int32 nSectionNo);
 
 	/** 
 	* @brief get the millionsecond of the section.
 	*/
-	unsigned		GetMillionsec(int32 nSectionNo);
+	unsigned GetMillionsec(int32 nSectionNo);
 
 	/** 
 	* @brief get the run timers of the section.
 	*/
-	unsigned		GetTimes(int32 nSectionNo);
+	unsigned GetTimes(int32 nSectionNo);
 
 	/** 
 	* @brief get the name of the section.
 	*/
-	const char*		GetName(int32 nSectionNo) const;
+	const char* GetName(int32 nSectionNo) const;
 
 	/** 
 	* @brief get number of the section.
 	*/
-	const int32		GetSectionNum() const;
+	const int32 GetSectionNum() const;
 
 protected:
 	CPerfMonitor();
 
-	void		Initialize( int32 nFrameCnt, int32 nSectionNum );
-	void		Release();
+	void Initialize( int32 nFrameCnt, int32 nSectionNum );
+	void Release();
 
 	static CPerfMonitor* ms_perfMon;
 

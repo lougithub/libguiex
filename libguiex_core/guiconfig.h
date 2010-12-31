@@ -109,7 +109,7 @@
 /*************************************************************************
 	performance monitor
 *************************************************************************/
-#define GUI_PERFORMANCE_ON	0
+#define GUI_PERFORMANCE_ON	1
 
 #if GUI_PERFORMANCE_ON
 #	define GUI_PERF_SECTION_NUM_MAX	10
