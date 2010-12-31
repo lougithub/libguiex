@@ -589,7 +589,7 @@ namespace guiex
 	int32 CGUIWidget::OnEventUpdate(CGUIEventNotification* pEvent )
 	{
 		//call callback function
-		CallbackFunction("OnEventUpdate", pEvent);
+		CallbackFunction("OnUpdate", pEvent);
 
 		return 0;
 	}

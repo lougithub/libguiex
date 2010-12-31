@@ -130,8 +130,7 @@ namespace guiex
 		//register to script
 		bool bHasScript = false;
 		guiex::IGUIInterfaceScript* pInterfaceScript = CGUIInterfaceManager::Instance()->GetInterfaceScript();
-		if( pInterfaceScript &&
-			guiex::GSystem->ShouldRunScript())
+		if( pInterfaceScript && !GSystem->IsEditorMode())
 		{
 			bHasScript = pInterfaceScript->HasScript( GetSceneName() );
 		}
@@ -1152,7 +1151,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void	CGUIWidget::CallScriptFunction(const CGUIString& strEventName, CGUIEvent* pEvent)
 	{
-		if( GSystem->ShouldRunScript())
+		if( !GSystem->IsEditorMode() )
 		{
 
 			TMapScriptFunc::iterator itor = m_mapScriptFunc.find(strEventName);
@@ -2452,6 +2451,49 @@ namespace guiex
 	const CGUIVector2&	CGUIWidget::GetPixelPosition() const
 	{
 		return m_aWidgetPosition.m_aPixelValue;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::SetGlobalPixelPosition( const CGUIVector2& rPos )
+	{
+		if( GetParent() )
+		{
+			CGUIVector3 aLocalPoint( rPos.x, rPos.y, 0.0f );
+			GetParent()->WorldToLocal(aLocalPoint);
+			SetPixelPosition( CGUIVector2( aLocalPoint.x, aLocalPoint.y ) );
+		}
+		else
+		{
+			SetPixelPosition( rPos );
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::SetGlobalPixelPosition( real x, real y )
+	{
+		if( GetParent() )
+		{
+			CGUIVector3 aLocalPoint( x, y, 0.0f );
+			GetParent()->WorldToLocal(aLocalPoint);
+			SetPixelPosition( CGUIVector2(aLocalPoint.x, aLocalPoint.y ) );
+		}
+		else
+		{
+			SetPixelPosition( x, y );
+		}
+	}
+	//------------------------------------------------------------------------------
+	CGUIVector2 CGUIWidget::GetGlobalPixelPosition( ) const
+	{
+		const CGUIVector2& rLocalPos = GetPixelPosition();
+		if( GetParent() )
+		{
+			CGUIVector3 aWorldPoint( rLocalPos.x, rLocalPos.y, 0.0f );
+			GetParent()->LocalToWorld(aWorldPoint);
+			return CGUIVector2( aWorldPoint.x, aWorldPoint.y );
+		}
+		else
+		{
+			return rLocalPos;
+		}
 	}
 	//------------------------------------------------------------------------------
 	//set position type

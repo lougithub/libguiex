@@ -158,9 +158,6 @@ namespace guiex
 
 		void DestroyAllWidgets(  );
 
-		void SetRunScript( bool bShouldRun );
-		bool ShouldRunScript() const;
-
 		bool ProcessMouseInput(const IGUIInterfaceMouse::SMouseEvent& rMouseEvent);
 		bool ProcessKeyboardInput( const IGUIInterfaceKeyboard::SKeyEvent& rKeyEvent );
 

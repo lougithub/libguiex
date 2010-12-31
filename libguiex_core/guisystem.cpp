@@ -116,7 +116,6 @@ namespace guiex
 		,m_nFps(0)
 		,m_bInitialized(false)
 		,m_nNameGenerateIdx(0)
-		,m_bShouldRunScript(true)
 		,m_bDrawExtraInfo(false)
 		,m_bPlayingAs( true )
 		,m_bIsEditorMode( false )
@@ -305,7 +304,6 @@ namespace guiex
 	*/
 	void CGUISystem::Reset()
 	{
-		m_bShouldRunScript = true;
 		m_nNameGenerateIdx = 0;
 		m_pPopupWidget = NULL;
 		m_aInputProcessor.Reset();
@@ -421,18 +419,6 @@ namespace guiex
 		{
 			pScript->DestroyAllScript();
 		}
-	}
-	//------------------------------------------------------------------------------
-	//!< set whether should system run script
-	void CGUISystem::SetRunScript( bool bShouldRun )
-	{
-		m_bShouldRunScript = bShouldRun;
-	}
-	//------------------------------------------------------------------------------
-	//!< return should system run script
-	bool CGUISystem::ShouldRunScript() const
-	{
-		return m_bShouldRunScript;
 	}
 	//------------------------------------------------------------------------------
 	/**

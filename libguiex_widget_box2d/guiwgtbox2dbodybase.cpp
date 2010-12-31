@@ -62,8 +62,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtBox2DBodyBase::GetBox2dPosition( CGUIVector2& rPos )
 	{
-		rPos= GetPosition();
-		LocalToWorld( rPos );
+		rPos = GetGlobalPixelPosition();
 		rPos.x = IGUIPhysics_box2d::Pixel2Meter( rPos.x );
 		rPos.y = IGUIPhysics_box2d::Pixel2Meter( rPos.y );
 	}

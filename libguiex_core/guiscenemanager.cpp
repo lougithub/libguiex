@@ -427,7 +427,7 @@ namespace guiex
 		for( uint32 i=0; i<rScriptFiles.size(); ++i )
 		{
 			guiex::IGUIInterfaceScript* pInterfaceScript = CGUIInterfaceManager::Instance()->GetInterfaceScript();
-			if( pInterfaceScript && GSystem->ShouldRunScript())
+			if( pInterfaceScript && !GSystem->IsEditorMode())
 			{
 				// create script
 				pInterfaceScript->CreateScript( pScene->GetSceneName() );

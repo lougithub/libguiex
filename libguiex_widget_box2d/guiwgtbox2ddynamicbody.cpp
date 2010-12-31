@@ -45,10 +45,9 @@ namespace guiex
 
 		const b2Vec2& rPos = m_pBody->GetPosition();
 		CGUIVector2 aPos( IGUIPhysics_box2d::Meter2Pixel(rPos.x), IGUIPhysics_box2d::Meter2Pixel(rPos.y) );
-		WorldToLocal( aPos );
 		real fRot = m_pBody->GetAngle() / b2_pi * 180.f;
 
-		SetPixelPosition( aPos );
+		SetGlobalPixelPosition( aPos );
 		SetRotation( 0, 0, fRot );
 		Refresh();
 	}

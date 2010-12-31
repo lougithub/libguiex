@@ -254,7 +254,11 @@ namespace guiex
 		const CGUIVector2&	GetPosition() const; 
 		void SetPixelPosition( const CGUIVector2& rPixelPos );
 		void SetPixelPosition( real x, real y );
-		const CGUIVector2&	GetPixelPosition() const;
+		const CGUIVector2& GetPixelPosition() const;
+
+		void SetGlobalPixelPosition( const CGUIVector2&rPos );
+		void SetGlobalPixelPosition( real x, real y );
+		CGUIVector2	GetGlobalPixelPosition() const;
 
 		void SetPositionType( EScreenValue rValueType );
 		EScreenValue GetPositionType( ) const; 
