@@ -276,7 +276,6 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 		CGUIAssert::SetWarningCB( EditorWarningCB, NULL );
 
 		GSystem->SetDrawExtraInfo( false );
-		GSystem->SetRunScript( false );
 		GSystem->SetPlayingAs( false );
 		GSystem->SetEditorMode( true );
 	}
