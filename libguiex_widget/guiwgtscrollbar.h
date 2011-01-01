@@ -27,6 +27,9 @@ namespace guiex
 		eSB_VERTICAL = 0,
 		eSB_HORIZONAL
 	};
+	
+	class CGUIWgtScrollbarArrow;
+	class CGUIWgtScrollbarSlide;
 }//namespace guiex
 
 

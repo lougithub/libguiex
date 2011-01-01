@@ -529,7 +529,7 @@ namespace guiex
 		return m_nSelectionEnd - m_nSelectionStart;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtMultiEditBox::SetSelection(uint32 start_pos, uint32 end_pos)
+	void CGUIWgtMultiEditBox::SetSelection(size_t start_pos, size_t end_pos)
 	{
 		if( m_strText.m_strContent.empty())
 		{

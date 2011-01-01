@@ -120,6 +120,8 @@ elseif( APPLE )
 		${${target_name}_radioutton_SRCS}
 		${${target_name}_emptynode_SRCS}
 		${${target_name}_panel_SRCS}
+		${${target_name}_editbox_SRCS}
+		${${target_name}_scrollbar_SRCS}
 		${${target_name}_static_SRCS}
 		${${target_name}_utility_SRCS}
         )

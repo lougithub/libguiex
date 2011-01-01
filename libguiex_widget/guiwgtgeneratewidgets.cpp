@@ -72,12 +72,16 @@ namespace guiex
 	aList.push_back( widget::widget##_Generator::GenerateSelf());
 
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtEmptyNode);		
+		GUI_ADD_WIDGET_GENERATOR(CGUIWgtScrollbar);	
+		GUI_ADD_WIDGET_GENERATOR(CGUIWgtScrollbarContainer);		
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtStaticImage);
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtStaticText);
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtPanel);
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtButton);
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtCheckButton);
-		GUI_ADD_WIDGET_GENERATOR(CGUIWgtRadioButton);		
+		GUI_ADD_WIDGET_GENERATOR(CGUIWgtRadioButton);
+		GUI_ADD_WIDGET_GENERATOR(CGUIWgtEditBox);		
+		GUI_ADD_WIDGET_GENERATOR(CGUIWgtMultiEditBox);		
 #undef GUI_ADD_WIDGET_GENERATOR
 
 		aList.push_back(NULL);

@@ -535,7 +535,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtEditBox::SetSelection(uint32 start_pos, uint32 end_pos)
+	void CGUIWgtEditBox::SetSelection(size_t start_pos, size_t end_pos)
 	{
 		if (start_pos > m_strText.m_strContent.size())
 		{

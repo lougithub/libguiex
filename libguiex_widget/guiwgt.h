@@ -41,6 +41,10 @@
 #	include "guicollistheadersegment.h"
 #	include "guicollisttextitem.h"
 #elif defined(GUIEX_PLATFORM_MAC)
+#	include "guiwgtscrollbar.h"
+#	include "guiwgtscrollbarcontainer.h"
+#	include "guiwgteditbox.h"
+#	include "guiwgtmultieditbox.h"
 #	include "guiwgtstaticimage.h"
 #	include "guiwgtstatictext.h"
 #	include "guiwgtpanel.h"
