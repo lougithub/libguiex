@@ -473,15 +473,17 @@ namespace guiex
 			GUI_TRACE(GUI_FORMAT("Performance Monitor: %fFPS \n",CPerfMonitor::GetIt()->GetFPS()));
 			for( int32 i=0; i<CPerfMonitor::GetIt()->GetSectionNum( ); ++i)
 			{
-				GUI_TRACE(GUI_FORMAT(
-					"%d:   %0.3f%%%%   <call times>%d   <use time>%f   <name><%s>\n",
-					i, 
-					CPerfMonitor::GetIt()->GetRate(i)*100,
-					CPerfMonitor::GetIt()->GetTimes(i),
-					CPerfMonitor::GetIt()->GetMillionsec(i) / 1000.0f,
-					CPerfMonitor::GetIt()->GetName(i)));
+				if( CPerfMonitor::GetIt()->GetTimes(i) > 0 )
+				{
+					GUI_TRACE(GUI_FORMAT(
+						"%d:%0.3f%%%% <call times>%d <use time>%f <name>%s\n",
+						i, 
+						CPerfMonitor::GetIt()->GetRate(i)*100,
+						CPerfMonitor::GetIt()->GetTimes(i),
+						CPerfMonitor::GetIt()->GetMillionsec(i) / 1000.0f,
+						CPerfMonitor::GetIt()->GetName(i)));
+				}
 			}
-			GUI_TRACE("\n");
 		}
 #endif	//GUI_PERFORMANCE_ON
 	}

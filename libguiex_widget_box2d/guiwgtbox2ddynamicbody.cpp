@@ -87,8 +87,8 @@ namespace guiex
 		aBox.SetAsBox( aSize.m_fWidth, aSize.m_fHeight, b2Vec2( aCenter.x, aCenter.y), 0.0f );
 		b2FixtureDef fixtureDef;
 		fixtureDef.shape = &aBox;
-		fixtureDef.density = 0.0f;
-		fixtureDef.friction = 0.0f;
+		fixtureDef.density = 1.0f;
+		fixtureDef.friction = 0.3f;
 		m_pBody->CreateFixture( &fixtureDef );
 
 		//set user data

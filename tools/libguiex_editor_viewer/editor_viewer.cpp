@@ -341,7 +341,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent, wxWindowID id, const wxString& title,
 	//init framework
 	Show(true);
 	pCanvas->SetCurrent();
-	setVSync(0);
+	setVSync(1);
 
 	CGUIFrameworkViewer::ms_pFramework = new CGUIFrameworkViewer( );
 	CGUIFrameworkViewer::ms_pFramework->Initialize( CGUISize(1024, 768), strDataPath.c_str() );

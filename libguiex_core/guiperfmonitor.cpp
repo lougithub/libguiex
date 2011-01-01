@@ -94,28 +94,28 @@ namespace guiex
 			return m_pSectionName[nSectionNo];
 		}
 
-		const int32		GetSectionNum() const
+		const int32 GetSectionNum() const
 		{
 			return m_nSectionNum;
 		}
 
 
 	private:
-		unsigned*			m_pSectionCnt;
-		CGUITimer*		m_pSectionBegin;
-		CGUITimer*		m_pLastCount;
-		CGUITimer*		m_pGlobalTimer;
+		unsigned* m_pSectionCnt;
+		CGUITimer* m_pSectionBegin;
+		CGUITimer* m_pLastCount;
+		CGUITimer* m_pGlobalTimer;
 
-		char**			m_pSectionName;
-		real*			m_pSectionRate;
-		unsigned*			m_pSectionMillionsec;
-		unsigned*			m_pSectionTimes;
-		unsigned*			m_pSectionLastTimes;
-		int32				m_frameindex;
-		real			m_fRecentFPS;
+		char** m_pSectionName;
+		real* m_pSectionRate;
+		unsigned* m_pSectionMillionsec;
+		unsigned* m_pSectionTimes;
+		unsigned* m_pSectionLastTimes;
+		int32 m_frameindex;
+		real m_fRecentFPS;
 
-		int32				m_nFrameCnt;			///< frame count
-		int32				m_nSectionNum;			///< section number
+		int32 m_nFrameCnt; ///< frame count
+		int32 m_nSectionNum; ///< section number
 	};
 	//--------------------------------------------------------------------------------------
 	CPerfMon_impl::CPerfMon_impl( int32 nFrameCnt, int32 nSectionNum )
@@ -216,7 +216,6 @@ namespace guiex
 	{
 		++m_frameindex;
 
-
 		if (m_frameindex == m_nFrameCnt)
 		{
 			m_pGlobalTimer->UpdateTime();
@@ -260,7 +259,6 @@ namespace guiex
 	CPerfMonitor::~CPerfMonitor()
 	{
 		Release();
-
 	}
 	//--------------------------------------------------------------------------------------
 	void CPerfMonitor::Init( int32 nFrameCnt, int32 nSectionNum)

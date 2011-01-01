@@ -32,46 +32,11 @@
         <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
         <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
     </property>
-    <property name="sample_1_staticbody_1" type="CGUIWidgetDefine" value="CGUIWgtBox2DStaticBody">
-        <property name="parent" type="CGUIString" value="sample_1_root" />
-        <property name="BGIMAGE" type="CGUIImage" value="bg_blue" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="0,384" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="value" type="CGUISize" value="21,764" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        </property>
-        <property name="max_size" type="CGUISize" value="0,0" />
-        <property name="min_size" type="CGUISize" value="0,0" />
-        <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
-        <property name="scale" type="CGUISize" value="1,1" />
-        <property name="alpha" type="real" value="1" />
-        <property name="rotation" type="CGUIVector3" value="0,0,0" />
-        <property name="movable" type="bool" value="false" />
-        <property name="visible" type="bool" value="true" />
-        <property name="activable" type="bool" value="false" />
-        <property name="hitable" type="bool" value="true" />
-        <property name="disable" type="bool" value="false" />
-        <property name="auto_play_as" type="bool" value="false" />
-        <property name="clip_children" type="bool" value="false" />
-        <property name="open_with_parent" type="bool" value="true" />
-        <property name="response_update_event" type="bool" value="false" />
-        <property name="response_parentsizechange_event" type="bool" value="false" />
-        <property name="textinfo" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
-    </property>
     <property name="sample_1_staticbody_2" type="CGUIWidgetDefine" value="CGUIWgtBox2DStaticBody">
         <property name="parent" type="CGUIString" value="sample_1_root" />
         <property name="BGIMAGE" type="CGUIImage" value="bg_blue" />
         <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="512,761" />
+            <property name="value" type="CGUIVector2" value="512,759" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">
@@ -106,7 +71,7 @@
         <property name="parent" type="CGUIString" value="sample_1_root" />
         <property name="BGIMAGE" type="CGUIImage" value="panel_bg_grade_green" />
         <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="162,42" />
+            <property name="value" type="CGUIVector2" value="161,90" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">
@@ -118,7 +83,7 @@
         <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
         <property name="scale" type="CGUISize" value="1,1" />
         <property name="alpha" type="real" value="1" />
-        <property name="rotation" type="CGUIVector3" value="0,0,0" />
+        <property name="rotation" type="CGUIVector3" value="0,0,45" />
         <property name="movable" type="bool" value="false" />
         <property name="visible" type="bool" value="true" />
         <property name="activable" type="bool" value="false" />
@@ -141,11 +106,46 @@
         <property name="parent" type="CGUIString" value="sample_1_root" />
         <property name="BGIMAGE" type="CGUIImage" value="panel_bg_grade_green" />
         <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="648,32" />
+            <property name="value" type="CGUIVector2" value="663,97" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">
             <property name="value" type="CGUISize" value="14,96" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="max_size" type="CGUISize" value="0,0" />
+        <property name="min_size" type="CGUISize" value="0,0" />
+        <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
+        <property name="scale" type="CGUISize" value="1,1" />
+        <property name="alpha" type="real" value="1" />
+        <property name="rotation" type="CGUIVector3" value="0,0,1" />
+        <property name="movable" type="bool" value="false" />
+        <property name="visible" type="bool" value="true" />
+        <property name="activable" type="bool" value="false" />
+        <property name="hitable" type="bool" value="true" />
+        <property name="disable" type="bool" value="false" />
+        <property name="auto_play_as" type="bool" value="false" />
+        <property name="clip_children" type="bool" value="false" />
+        <property name="open_with_parent" type="bool" value="true" />
+        <property name="response_update_event" type="bool" value="false" />
+        <property name="response_parentsizechange_event" type="bool" value="false" />
+        <property name="textinfo" type="CGUIStringInfo">
+            <property name="size" type="uint16" value="16" />
+            <property name="index" type="int16" value="0" />
+            <property name="color" type="CGUIColor" value="255,255,255,255" />
+        </property>
+        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
+        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
+    </property>
+    <property name="sample_1_staticbody_4" type="CGUIWidgetDefine" value="CGUIWgtBox2DStaticBody">
+        <property name="parent" type="CGUIString" value="sample_1_root" />
+        <property name="BGIMAGE" type="CGUIImage" value="bg_blue" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="512,10" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="1024,20" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="max_size" type="CGUISize" value="0,0" />
@@ -172,11 +172,11 @@
         <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
         <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
     </property>
-    <property name="sample_1_staticbody_3" type="CGUIWidgetDefine" value="CGUIWgtBox2DStaticBody">
+    <property name="sample_1_staticbody_1" type="CGUIWidgetDefine" value="CGUIWgtBox2DStaticBody">
         <property name="parent" type="CGUIString" value="sample_1_root" />
         <property name="BGIMAGE" type="CGUIImage" value="bg_blue" />
         <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="1018,384" />
+            <property name="value" type="CGUIVector2" value="12,384" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">
@@ -207,15 +207,15 @@
         <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
         <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
     </property>
-    <property name="sample_1_staticbody_4" type="CGUIWidgetDefine" value="CGUIWgtBox2DStaticBody">
+    <property name="sample_1_staticbody_3" type="CGUIWidgetDefine" value="CGUIWgtBox2DStaticBody">
         <property name="parent" type="CGUIString" value="sample_1_root" />
         <property name="BGIMAGE" type="CGUIImage" value="bg_blue" />
         <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="512,8" />
+            <property name="value" type="CGUIVector2" value="1016,384" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">
-            <property name="value" type="CGUISize" value="1024,20" />
+            <property name="value" type="CGUISize" value="21,764" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="max_size" type="CGUISize" value="0,0" />
