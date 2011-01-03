@@ -17,6 +17,21 @@ set( ${target_name}_configfile_tinyxml_SRCS
 	)
 source_group(configfile_tinyxml FILES ${${target_name}_configfile_tinyxml_SRCS} )
 
+
+#sound_cocoa
+set( ${target_name}_sound_cocoa_SRCS 
+	sound_cocoa/guisound_cocoa.mm
+	sound_cocoa/guisound_cocoa.h
+	)
+source_group(sound_openal FILES ${${target_name}_sound_openal_SRCS} )
+
+#sound_openal
+set( ${target_name}_sound_openal_SRCS 
+	sound_openal/guisound_openal.cpp
+	sound_openal/guisound_openal.h
+	)
+source_group(sound_openal FILES ${${target_name}_sound_openal_SRCS} )
+
 #filesys_stdio
 set( ${target_name}_filesys_stdio_SRCS 
 	filesys_stdio/guifilesys_stdio.cpp
@@ -167,6 +182,7 @@ if( WIN32 )
 		${${target_name}_render_opengl_SRCS}
 		${${target_name}_stringconv_winapi_SRCS}
 		${${target_name}_physics_box2d_SRCS}
+		${${target_name}_sound_openal_SRCS}
 		)
 
 elseif( APPLE )
@@ -183,6 +199,7 @@ elseif( APPLE )
 		${${target_name}_stringconv_cocoa_SRCS}
 		${${target_name}_script_lua_SRCS}
 		${${target_name}_physics_box2d_SRCS}
+		${${target_name}_sound_cocoa_SRCS}
 		)
 
 else( )
