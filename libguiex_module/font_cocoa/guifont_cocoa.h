@@ -111,18 +111,18 @@ namespace guiex
 		 * @brief get font by given parameter, if failed to find it,
 		 * create this font.
 		 */
-		CGUICharData_ft2* GetFont( uint32 nFontFaceIdx, wchar_t charCode,uint32 nSize );
+		CGUICharData_cocoa* GetFont( uint32 nFontFaceIdx, wchar_t charCode,uint32 nSize );
 		
 		/// load font from file
-		CGUICharData_ft2* LoadFont( CGUIFontData_cocoa* pFontFace, CGUICharsData_ft2* pFont,wchar_t charCode,uint32 nSize);
+		CGUICharData_cocoa* LoadFont( CGUIFontData_cocoa* pFontFace, CGUICharsData_cocoa* pFont,wchar_t charCode,uint32 nSize);
 		
 		/**
 		 * @brief get kerning between two character
 		 */
 		int32 GetKerningGap(
 							uint32 nFontFaceIdx, 
-							CGUICharData_ft2* pLeftData, 
-							CGUICharData_ft2* pRightData,
+							CGUICharData_cocoa* pLeftData, 
+							CGUICharData_cocoa* pRightData,
 							uint32 nSize);
 
 	protected:
@@ -134,7 +134,7 @@ namespace guiex
 		bool m_bEnableKerning;	/// flag whether enable kerning
 		
 	public:
-		const char* StaticGetModuleName();
+		static const char* StaticGetModuleName();
 	};
 
 	GUI_INTERFACE_DECLARE();

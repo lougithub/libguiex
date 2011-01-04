@@ -53,7 +53,7 @@ namespace guiex
 		*/
 		virtual ~IGUIFont_dummy();
 
-		virtual CGUIFontData* CreateFontData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nFontIndex );
+		virtual CGUIFontData* CreateFontData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nFontID );
 		virtual void DestroyFontData( CGUIFontData* pData );
 
 		/**

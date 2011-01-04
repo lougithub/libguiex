@@ -53,7 +53,7 @@ namespace guiex
 		*/
 		virtual ~IGUIFont_ft2();
 
-		virtual CGUIFontData* CreateFontData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nFontIndex );
+		virtual CGUIFontData* CreateFontData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nFontID );
 		virtual void DestroyFontData( CGUIFontData* pData );
 
 		/**
@@ -111,18 +111,18 @@ namespace guiex
 		* @brief get font by given parameter, if failed to find it,
 		* create this font.
 		*/
-		CGUIFontData_ft2::CGUICharData_ft2* GetFont( uint32 nFontFaceIdx, wchar_t charCode,uint32 nSize );
+		CGUICharData_ft2* GetFont( uint32 nFontFaceIdx, wchar_t charCode,uint32 nSize );
 
 		/// load font from file
-		CGUIFontData_ft2::CGUICharData_ft2* LoadFont( CGUIFontData_ft2* pFontFace, CGUIFontData_ft2::CGUICharsData_ft2* pFont,wchar_t charCode,uint32 nSize);
+		CGUICharData_ft2* LoadFont( CGUIFontData_ft2* pFontFace, CGUICharsData_ft2* pFont,wchar_t charCode,uint32 nSize);
 
 		/**
 		* @brief get kerning between two character
 		*/
 		int32 GetKerningGap(
 			uint32 nFontFaceIdx, 
-			CGUIFontData_ft2::CGUICharData_ft2* pLeftData, 
-			CGUIFontData_ft2::CGUICharData_ft2* pRightData,
+			CGUICharData_ft2* pLeftData, 
+			CGUICharData_ft2* pRightData,
 			uint32 nSize);
 
 	protected:

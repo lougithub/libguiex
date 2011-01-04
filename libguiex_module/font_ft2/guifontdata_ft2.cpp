@@ -39,7 +39,7 @@ namespace guiex
 {
 	//CGUICharData_ft2
 	//------------------------------------------------------------------------------
-	CGUIFontData_ft2::CGUICharData_ft2::CGUICharData_ft2()
+	CGUICharData_ft2::CGUICharData_ft2()
 		:m_pTexture(NULL)
 		,m_nLeftBearing(0)
 		,m_nBottomBearing(0)
@@ -50,7 +50,7 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	CGUIFontData_ft2::CGUICharData_ft2::~CGUICharData_ft2()
+	CGUICharData_ft2::~CGUICharData_ft2()
 	{
 		m_pTexture = NULL;
 	}
@@ -58,13 +58,13 @@ namespace guiex
 	
 	
 	//------------------------------------------------------------------------------
-	CGUIFontData_ft2::CGUICharsData_ft2::CGUICharsData_ft2()
+	CGUICharsData_ft2::CGUICharsData_ft2()
 		:m_nX( 0 )
 		,m_nY( 0 )
 	{
 	}
 	//------------------------------------------------------------------------------
-	CGUIFontData_ft2::CGUICharsData_ft2::~CGUICharsData_ft2()
+	CGUICharsData_ft2::~CGUICharsData_ft2()
 	{
 		//release characters data
 		while( m_mapCharsData.empty() == false )
@@ -90,8 +90,8 @@ namespace guiex
 		Unload();
 	}
 	//------------------------------------------------------------------------------
-	CGUIFontData_ft2::CGUIFontData_ft2( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nFontIndex )
-		:CGUIFontData( rName, rSceneName, nFontIndex )
+	CGUIFontData_ft2::CGUIFontData_ft2( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nFontID )
+		:CGUIFontData( rName, rSceneName, nFontID )
 		,m_strPath( rPath )
 	{
 

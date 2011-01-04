@@ -30,9 +30,9 @@ namespace guiex
 	CGUIFontData::CGUIFontData( 
 		const CGUIString& rName,
 		const CGUIString& rSceneName, 
-		uint32 nFontIndex)
+		uint32 nFontID)
 		:CGUIResource( rName, rSceneName, "FONT" )
-		,m_nFontIndex( nFontIndex )
+		,m_nFontIndex( nFontID )
 	{
 	}
 	//------------------------------------------------------------------------------

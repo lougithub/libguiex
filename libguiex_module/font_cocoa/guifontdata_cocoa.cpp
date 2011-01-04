@@ -37,8 +37,8 @@
 //============================================================================// 
 namespace guiex
 {		
-	// CGUICharData_ft2
-	CGUICharData_ft2::CGUICharData_ft2()
+	// CGUICharData_cocoa
+	CGUICharData_cocoa::CGUICharData_cocoa()
 		:m_pTexture(NULL)
 		,m_nLeftBearing(0)
 		,m_nBottomBearing(0)
@@ -49,20 +49,20 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	CGUICharData_ft2::~CGUICharData_ft2()
+	CGUICharData_cocoa::~CGUICharData_cocoa()
 	{
 		m_pTexture = NULL;
 	}
 	//------------------------------------------------------------------------------
 	
 	//------------------------------------------------------------------------------
-	CGUICharsData_ft2::CGUICharsData_ft2()
+	CGUICharsData_cocoa::CGUICharsData_cocoa()
 		:m_nX( 0 )
 		,m_nY( 0 )
 	{
 	}
 	//------------------------------------------------------------------------------
-	CGUICharsData_ft2::~CGUICharsData_ft2()
+	CGUICharsData_cocoa::~CGUICharsData_cocoa()
 	{
 		// release characters data
 		while ( m_mapCharsData.empty() == false ) 

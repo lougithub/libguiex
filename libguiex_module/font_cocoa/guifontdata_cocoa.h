@@ -35,11 +35,11 @@ namespace guiex
 
 namespace guiex
 {
-	class  CGUICharData_ft2
+	class  CGUICharData_cocoa
 	{
 	public:
-		CGUICharData_ft2();
-		~CGUICharData_ft2();
+		CGUICharData_cocoa();
+		~CGUICharData_cocoa();
 		
 	public:
 		CGUITexture* m_pTexture;
@@ -54,18 +54,18 @@ namespace guiex
 		CGUISize m_aSize; //size of font
 	};	
 	
-	class CGUICharsData_ft2
+	class CGUICharsData_cocoa
 	{
 	public:
-		CGUICharsData_ft2();
-		~CGUICharsData_ft2();
+		CGUICharsData_cocoa();
+		~CGUICharsData_cocoa();
 		
 	public:
 		typedef	std::vector<CGUITexture*> TVecTexture;
 		TVecTexture m_vecTexture;
 		uint32 m_nX,m_nY; //start position of current free texture area
 		
-		typedef std::map<wchar_t, CGUICharData_ft2*> TMapCharData;
+		typedef std::map<wchar_t, CGUICharData_cocoa*> TMapCharData;
 		TMapCharData m_mapCharsData;
 	};
 	
@@ -85,7 +85,7 @@ namespace guiex
 	public:
 		CGUIString m_strPath;		// font file path
 		mutable FT_Face m_aFtFace;
-		typedef std::map<uint32, CGUICharsData_ft2*> TMapSizeChars;
+		typedef std::map<uint32, CGUICharsData_cocoa*> TMapSizeChars;
 		TMapSizeChars m_mapSizeChars;
 
 	};

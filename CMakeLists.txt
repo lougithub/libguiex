@@ -112,6 +112,8 @@ add_subdirectory( ${PROJECT_SOURCE_DIR}/external/tinyxml/cmakelist projects/tiny
 add_subdirectory( ${PROJECT_SOURCE_DIR}/external/lua/cmakelist projects/lua )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/external/Box2D/cmakelist projects/box2d )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/external/freetype/cmakelist projects/freetype )
+add_subdirectory( ${PROJECT_SOURCE_DIR}/external/libogg/cmakelist projects/libogg )
+add_subdirectory( ${PROJECT_SOURCE_DIR}/external/libvorbis/cmakelist projects/libvorbis )
 
 #test
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/test1 projects/test1 )

@@ -97,16 +97,16 @@ namespace guiex
 		m_bEnableKerning = bEnable;
 	}
 	//------------------------------------------------------------------------------
-	CGUICharData_ft2* IGUIFont_cocoa::LoadFont( 
+	CGUICharData_cocoa* IGUIFont_cocoa::LoadFont( 
 												CGUIFontData_cocoa* pFontFace, 
-												CGUICharsData_ft2* pFont,
+												CGUICharsData_cocoa* pFont,
 												wchar_t charCode,
 												uint32 nSize)
 	{
 		if( charCode == L'\n')
 		{
 			//line break
-			CGUICharData_ft2 *pCharData = new CGUICharData_ft2;	
+			CGUICharData_cocoa *pCharData = new CGUICharData_cocoa;	
 			pCharData->m_pTexture = NULL;
 			pCharData->m_nBitmapWidth = 0;
 			pCharData->m_nBitmapHeight = 0;
@@ -156,7 +156,7 @@ namespace guiex
 			FT_GlyphSlot slot = pFontFace->m_aFtFace->glyph;
 			
 			//get information
-			CGUICharData_ft2 *pCharData = new CGUICharData_ft2;	
+			CGUICharData_cocoa *pCharData = new CGUICharData_cocoa;	
 			pCharData->m_nBitmapWidth = bitmap.width;
 			pCharData->m_nBitmapHeight = bitmap.rows;
 			int textureWidth = CGUITexture::ConvertToTextureSize(pCharData->m_nBitmapWidth);
@@ -218,7 +218,7 @@ namespace guiex
 		
 	}
 	//------------------------------------------------------------------------------
-	CGUICharData_ft2* IGUIFont_cocoa::GetFont( uint32 nFontFaceIdx, wchar_t charCode, uint32 nSize )
+	CGUICharData_cocoa* IGUIFont_cocoa::GetFont( uint32 nFontFaceIdx, wchar_t charCode, uint32 nSize )
 	{ 
 		//get font face
 		GUI_ASSERT( nFontFaceIdx < m_arrayFontDatas.size(), "invalid font face index" );
@@ -230,12 +230,12 @@ namespace guiex
 		pFontData->Load();
 		
 		//get font
-		CGUICharsData_ft2* pSizeChars = NULL;
+		CGUICharsData_cocoa* pSizeChars = NULL;
 		CGUIFontData_cocoa::TMapSizeChars::iterator itorSizeChars = pFontData->m_mapSizeChars.find( nSize );
 		if( itorSizeChars == pFontData->m_mapSizeChars.end() )
 		{
 			//this font hasn't been loaded
-			pSizeChars = new CGUICharsData_ft2;
+			pSizeChars = new CGUICharsData_cocoa;
 			
 			//add to map
 			pFontData->m_mapSizeChars.insert( std::make_pair( nSize, pSizeChars ));
@@ -247,7 +247,7 @@ namespace guiex
 		}
 		
 		//get font
-		CGUICharsData_ft2::TMapCharData::iterator itorCharData = pSizeChars->m_mapCharsData.find(charCode);
+		CGUICharsData_cocoa::TMapCharData::iterator itorCharData = pSizeChars->m_mapCharsData.find(charCode);
 		if( itorCharData != pSizeChars->m_mapCharsData.end() )
 		{
 			//bingo! got this font data
@@ -261,8 +261,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int32	IGUIFont_cocoa::GetKerningGap(
 										uint32 nFontFaceIdx, 
-										CGUICharData_ft2* pLeftData, 
-										CGUICharData_ft2* pRightData,
+										CGUICharData_cocoa* pLeftData, 
+										CGUICharData_cocoa* pRightData,
 										uint32 nSize)
 	{
 		if( !pLeftData || !pRightData)
@@ -304,7 +304,7 @@ namespace guiex
 									   const CGUIVector2& rPos,
 									   real fAlpha)
 	{
-		CGUICharData_ft2* pCharData = GetFont( rInfo.m_nFontIdx, charCode, rInfo.m_nFontSize);
+		CGUICharData_cocoa* pCharData = GetFont( rInfo.m_nFontIdx, charCode, rInfo.m_nFontSize);
 		
 		if( pCharData->m_pTexture)
 		{
@@ -400,7 +400,7 @@ namespace guiex
 		for( int32 i= nStartPos; i<nEndPos; ++i)
 		{
 			
-			CGUICharData_ft2 * pCharData = GetFont(rInfo.m_nFontIdx, rString.m_strContent[i], rInfo.m_nFontSize);
+			CGUICharData_cocoa * pCharData = GetFont(rInfo.m_nFontIdx, rString.m_strContent[i], rInfo.m_nFontSize);
 			
 			if( pCharData->m_pTexture)
 			{
@@ -467,7 +467,7 @@ namespace guiex
 		const CGUIStringInfo& rInfo = rString.m_aStringInfo;
 		for( int32 i=nStartPos; i<nEndPos; ++i)
 		{
-			CGUICharData_ft2 * pCharData = GetFont(rInfo.m_nFontIdx, rString.m_strContent[i], rInfo.m_nFontSize);
+			CGUICharData_cocoa * pCharData = GetFont(rInfo.m_nFontIdx, rString.m_strContent[i], rInfo.m_nFontSize);
 			
 			if( pCharData->m_pTexture)
 			{
@@ -511,7 +511,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	const CGUISize& IGUIFont_cocoa::GetCharacterSize(int32 nFontFaceIdx,wchar_t charCode,uint32 nSize)
 	{
-		CGUICharData_ft2* pCharData = GetFont( nFontFaceIdx, charCode, nSize);
+		CGUICharData_cocoa* pCharData = GetFont( nFontFaceIdx, charCode, nSize);
 		
 		return pCharData->m_aSize;
 	}

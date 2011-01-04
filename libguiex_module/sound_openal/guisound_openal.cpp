@@ -9,19 +9,19 @@
 // include
 //============================================================================// 
 #include "guisound_openal.h"
+#include "guisounddata_openal.h"
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guisystem.h>
 
 #include <vorbis/codec.h>
 #include <vorbis/vorbisfile.h>
-#include <alut.h>
 
-
+//============================================================================//
+// function
+//============================================================================// 
 namespace guiex
 {
-	//============================================================================//
-	// function
-	//============================================================================// 
+	//------------------------------------------------------------------------------
 	GUI_INTERFACE_IMPLEMENT(IGUISound_openal);
 	//------------------------------------------------------------------------------
 	const char* IGUISound_openal::StaticGetModuleName()
@@ -94,6 +94,39 @@ namespace guiex
 		delete this;
 	}
 	//------------------------------------------------------------------------------
+	CGUISoundData* IGUISound_openal::CreateSoundData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nSoundID )
+	{
+		if( m_mapSoundData.find( nSoundID ) != m_mapSoundData.end() )
+		{
+			throw CGUIException("[IGUISound_openal::CreateSoundData]: the sound <%d> has existing", nSoundID );
+			return NULL;
+		}
+		CGUISoundData_openal* pSoundData = new CGUISoundData_openal( rName, rSceneName, rPath, nSoundID );
+		m_mapSoundData.insert( std::make_pair( nSoundID, pSoundData ) );
+		return pSoundData;
+	}
+	//------------------------------------------------------------------------------
+	void IGUISound_openal::DestroySoundData( CGUISoundData* pData )
+	{
+		GUI_ASSERT( pData, "invalid parameter" );
+		for( TMapSoundData::iterator itor = m_mapSoundData.begin();
+			itor != m_mapSoundData.end();
+			++itor )
+		{
+			if( itor->second == pData )
+			{
+				delete pData;
+				m_mapSoundData.erase( itor );
+				return;
+			}
+		}
+		throw CGUIException(
+			"[IGUISound_openal::DestroySoundData]: the sound <%s:%s> doesn't existing", 
+			pData->GetName().c_str(),
+			pData->GetSceneName().c_str());
+		return;
+	}
+	//------------------------------------------------------------------------------
 	static CGUIString GetALErrorString(ALenum err)
 	{
 		switch(err)
@@ -127,7 +160,7 @@ namespace guiex
 		};
 	}
 	//------------------------------------------------------------------------------
-	int32 IGUISound_openal::LoadEffect( int32 nIdx,  const CGUIString& rFileName)
+	int32 IGUISound_openal::LoadEffect( int32 nID,  const CGUIString& rFileName)
 	{
 		// identify file type by extension
 		CGUIString strExt;
@@ -177,20 +210,20 @@ namespace guiex
 		
 		
 		//check map
-		TMapSound::iterator itorFind = m_mapEffect.find(nIdx);
+		TMapSound::iterator itorFind = m_mapEffect.find(nID);
 		if( itorFind != m_mapEffect.end())
 		{
 			UnloadEffect(itorFind->first);
 		}
 		
-		m_mapEffect.insert( std::make_pair(nIdx, aSoundData));
+		m_mapEffect.insert( std::make_pair(nID, aSoundData));
 		
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void IGUISound_openal::UnloadEffect( int32 nIdx )
+	void IGUISound_openal::UnloadEffect( int32 nID )
 	{
-		TMapSound::iterator itorFind = m_mapEffect.find(nIdx);
+		TMapSound::iterator itorFind = m_mapEffect.find(nID);
 		if( itorFind != m_mapEffect.end())
 		{
 			//delete our buffer
@@ -203,12 +236,12 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	int32 IGUISound_openal::PlayEffect( int32 nIdx )
+	int32 IGUISound_openal::PlayEffect( int32 nID )
 	{
-		TMapSound::iterator itorFind = m_mapEffect.find(nIdx);
+		TMapSound::iterator itorFind = m_mapEffect.find(nID);
 		if( itorFind == m_mapEffect.end())
 		{
-			throw CGUIException("[IGUISound_openal::PlayEffect]: failed to play sound file <%d>!", nIdx);
+			throw CGUIException("[IGUISound_openal::PlayEffect]: failed to play sound file <%d>!", nID);
 			return -1;
 		}
 		
@@ -226,45 +259,151 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	bool IGUISound_openal::LoadWavFile( const CGUIString& rFilename, SSoundData& rSoundData)
+	bool IGUISound_openal::SetAlBuffer( SSoundData& rSoundData, ALenum format, const ALvoid* data, ALsizei size, ALsizei freq )
 	{
-		char* alBuffer;			//data for the buffer
-		ALenum alFormatBuffer;	//for the buffer format
-		ALsizei alFreqBuffer;	//for the frequency of the buffer
-		ALsizei alBufferLen;	//the bit depth
-		ALboolean alLoop;		//looped
-		
-		//load the wave file
-		alutLoadWAVFile((ALbyte *)rFilename.c_str(),&alFormatBuffer, (void**) &alBuffer, &alBufferLen, &alFreqBuffer, &alLoop);
-		if( ALUT_ERROR_NO_ERROR != alutGetError())
-		{
-			return false;
-		}
-		
 		//create 1 source
 		alGenSources(1, &rSoundData.m_nSourceId);
 		if (alGetError() != AL_NO_ERROR)
 		{
 			return false;
 		}
-		
+
 		//create 1 buffer
 		alGenBuffers(1, &rSoundData.m_nBufferId);
 		if (alGetError() != AL_NO_ERROR)
 		{
 			return false;
 		}
-		
+
 		//fills sample set with buffer data from alBuffer
-		alBufferData(rSoundData.m_nBufferId, alFormatBuffer, alBuffer, alBufferLen, alFreqBuffer);
-		if (alGetError() != AL_NO_ERROR)
+		alBufferData(rSoundData.m_nBufferId, format, data, size, freq );
+		if ( alGetError() != AL_NO_ERROR )
 		{
 			return false;
 		}
-		
-		//release the data
-		alutUnloadWAV(alFormatBuffer, alBuffer, alBufferLen, alFreqBuffer);
+
 		return true;
+	}
+	//------------------------------------------------------------------------------
+	bool IGUISound_openal::LoadWavFile( const CGUIString& rFilename, SSoundData& rSoundData)
+	{
+		HMMIO hmmio = mmioOpenA( LPSTR( rFilename.c_str()), NULL, MMIO_ALLOCBUF | MMIO_READ);
+		if (NULL == hmmio)
+		{
+			return false;
+		}
+
+		// check if it's a wav file
+		PCMWAVEFORMAT aWaveFormat;
+		MMCKINFO mmckinfo;
+		MMCKINFO ckIn;
+		// read next chunk
+		if (0 != mmioDescend(hmmio, &mmckinfo, NULL, 0))
+		{
+			mmioClose(hmmio, 0);
+			return NULL;
+		}
+
+		// check for valid wav file
+		if ((mmckinfo.ckid != FOURCC_RIFF) ||
+			(mmckinfo.fccType != mmioFOURCC('W','A','V','E')))
+		{
+			mmioClose(hmmio, 0);
+			return NULL;
+		}
+
+		// search the fmt chunk
+		ckIn.ckid = mmioFOURCC('f','m','t',' ');
+		if (0 != mmioDescend(hmmio, &ckIn, &mmckinfo, MMIO_FINDCHUNK))
+		{
+			mmioClose(hmmio, 0);
+			return NULL;
+		}
+
+		// Expect the 'fmt' chunk to be at least as large as <PCMWAVEFORMAT>;
+		// if there are extra parameters at the end, we'll ignore them
+		if (ckIn.cksize < (LONG) sizeof(PCMWAVEFORMAT))
+		{
+			mmioClose(hmmio, 0);
+			return NULL;
+		}
+
+		// read fmt chunk into aWaveFormat
+		if (mmioRead(hmmio, (HPSTR) &aWaveFormat, sizeof(aWaveFormat)) != sizeof(aWaveFormat))
+		{
+			mmioClose(hmmio, 0);
+			return NULL;
+		}
+
+		// ascend the input file out of the 'fmt ' chunk
+		if (0 != mmioAscend(hmmio, &ckIn, 0))
+		{
+			mmioClose(hmmio, 0);
+			return NULL;
+		}
+
+		// reset the file to the beginning of data
+		if (-1 == mmioSeek(hmmio, mmckinfo.dwDataOffset + sizeof(FOURCC), SEEK_SET))
+		{
+			mmioClose(hmmio, 0);
+			return false;
+		}
+
+		// search for 'data' chunk
+		mmckinfo.ckid = mmioFOURCC('d','a','t','a');
+		if (0 != mmioDescend(hmmio, &mmckinfo, &mmckinfo, MMIO_FINDCHUNK))
+		{
+			mmioClose(hmmio, 0);
+			return false;
+		}
+
+		//get data size
+		uint32 nDataSize = mmckinfo.cksize;
+		uint8* pDataBuffer = new uint8[nDataSize];
+
+		//read data
+		MMIOINFO mmioInfoIn;    // current status of m_hmmio
+		mmioGetInfo( hmmio, &mmioInfoIn, 0);
+
+		DWORD cT;
+		for (cT = 0; cT < nDataSize; cT++)
+		{
+			// read next chunk if necessary
+			if (mmioInfoIn.pchNext == mmioInfoIn.pchEndRead)
+			{
+				mmioAdvance(hmmio, &mmioInfoIn, MMIO_READ);
+			}
+
+			// copy to buffer
+			*((unsigned char*)pDataBuffer+cT) = *((unsigned char*)mmioInfoIn.pchNext);
+			mmioInfoIn.pchNext++;
+		}
+		mmioSetInfo(hmmio, &mmioInfoIn, 0);
+		mmioClose(hmmio, 0);
+		
+		uint32 nFrequency = aWaveFormat.wf.nSamplesPerSec;
+		uint32 ulFormat = 0;
+		if (aWaveFormat.wf.nChannels == 1)
+		{
+			ulFormat = AL_FORMAT_MONO16;
+		}
+		else if (aWaveFormat.wf.nChannels == 2)
+		{
+			ulFormat = AL_FORMAT_STEREO16;
+		}
+		else if (aWaveFormat.wf.nChannels == 4)
+		{
+			ulFormat = alGetEnumValue("AL_FORMAT_QUAD16");
+		}
+		else if (aWaveFormat.wf.nChannels == 6)
+		{
+			ulFormat = alGetEnumValue("AL_FORMAT_51CHN16");
+		}
+
+		//set al buffer
+		bool bRet = SetAlBuffer( rSoundData, ulFormat, pDataBuffer, nDataSize, nFrequency );
+		delete[] pDataBuffer;
+		return bRet;
 	}
 	//------------------------------------------------------------------------------
 	static size_t ov_read_func(void *ptr, size_t size, size_t nmemb, void *datasource)
@@ -316,9 +455,8 @@ namespace guiex
 			return false;
 		}
 		
-		unsigned long	ulFormat = 0;
 		unsigned long	ulFrequency = pVorbisInfo->rate;
-		unsigned long	ulChannels = pVorbisInfo->channels;
+		unsigned long	ulFormat = 0;
 		if (pVorbisInfo->channels == 1)
 		{
 			ulFormat = AL_FORMAT_MONO16;
@@ -376,28 +514,11 @@ namespace guiex
 				return false;
 			}
 			
-			// Generate some AL Buffers for streaming
-			alGenBuffers( 1, &rSoundData.m_nBufferId );
-			if (alGetError() != AL_NO_ERROR)
-			{
-				return false;
-			}
-			
-			// Generate a Source to playback the Buffers
-			alGenSources( 1, &rSoundData.m_nSourceId );
-			if (alGetError() != AL_NO_ERROR)
-			{
-				return false;
-			}
-			
-			// Fill all the Buffers with decoded audio data from the OggVorbis file
-			alBufferData(rSoundData.m_nBufferId, ulFormat, pDecodeBuffer, ulBytesDone, ulFrequency);
-			if (alGetError() != AL_NO_ERROR)
-			{
-				return false;
-			}
-			
+			//set al buffer
+			bool bRet = SetAlBuffer( rSoundData, ulFormat, pDecodeBuffer, ulBytesDone, ulFrequency );
 			free( pDecodeBuffer );
+			
+			return bRet;
 		}
 		else
 		{

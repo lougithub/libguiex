@@ -51,7 +51,7 @@ namespace guiex
 		if( !pPropPath )
 		{
 			throw guiex::CGUIException(
-				"[CGUIFontManager::RegisterAs], invalid property <%s:%s:%s>!", 
+				"[CGUIFontManager::RegisterSound], invalid property <%s:%s:%s>!", 
 				rProperty.GetName().c_str(),
 				rProperty.GetTypeAsString().c_str(),
 				rProperty.GetValue().c_str());
@@ -63,7 +63,7 @@ namespace guiex
 		if( !pPropIndex )
 		{
 			throw guiex::CGUIException(
-				"[CGUIFontManager::RegisterAs], invalid property <%s:%s:%s>!", 
+				"[CGUIFontManager::RegisterSound], invalid property <%s:%s:%s>!", 
 				rProperty.GetName().c_str(),
 				rProperty.GetTypeAsString().c_str(),
 				rProperty.GetValue().c_str());
@@ -81,11 +81,11 @@ namespace guiex
 			const CGUIString& rName, 
 			const CGUIString& rSceneName, 
 			const CGUIString& rPath, 
-			uint32 nFontIndex)
+			uint32 nFontID)
 	{
-		if( nFontIndex >= GUI_FONT_MAX_NUM )
+		if( nFontID >= GUI_FONT_MAX_NUM )
 		{
-			throw CGUIException("[CGUIFontManager::CreateGUIFont]: nFontIndex should be smaller than %d", GUI_FONT_MAX_NUM );
+			throw CGUIException("[CGUIFontManager::CreateGUIFont]: nFontID should be smaller than %d", GUI_FONT_MAX_NUM );
 			return NULL;
 		}
 
@@ -95,7 +95,7 @@ namespace guiex
 			throw CGUIException("[CGUIFontManager::CreateGUIFont]: failed to get font interface");
 			return NULL;
 		}
-		CGUIFontData* pFontData = pFont->CreateFontData( rName, rSceneName, rPath, nFontIndex );
+		CGUIFontData* pFontData = pFont->CreateFontData( rName, rSceneName, rPath, nFontID );
 		return pFontData;
 	}
 	//------------------------------------------------------------------------------

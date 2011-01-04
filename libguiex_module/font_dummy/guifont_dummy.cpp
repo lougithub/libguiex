@@ -214,9 +214,9 @@ namespace guiex
 		return aSize;
 	}
 	//------------------------------------------------------------------------------
-	CGUIFontData* IGUIFont_dummy::CreateFontData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nFontIndex )
+	CGUIFontData* IGUIFont_dummy::CreateFontData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nFontID )
 	{
-		return new CGUIFontData_dummy(rName, rSceneName, rPath, nFontIndex);
+		return new CGUIFontData_dummy(rName, rSceneName, rPath, nFontID);
 	}
 	//------------------------------------------------------------------------------
 	void IGUIFont_dummy::DestroyFontData( CGUIFontData* pData )

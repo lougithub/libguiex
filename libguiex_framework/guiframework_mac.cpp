@@ -22,6 +22,7 @@
 #include <libguiex_module/stringconv_iconv/guistringconv_iconv.h>
 #include <libguiex_module/script_lua/guiscript_lua.h>
 #include <libguiex_module/physics_box2d/guiphysics_box2d.h>
+#include <libguiex_module/sound_dummy/guisound_dummy.h>
 
 //============================================================================//
 // function
@@ -97,6 +98,7 @@ namespace guiex
 		GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
 		GUI_REGISTER_INTERFACE_LIB( IGUIScript_lua);
 		GUI_REGISTER_INTERFACE_LIB( IGUIPhysics_box2d );
+		GUI_REGISTER_INTERFACE_LIB( IGUISound_dummy );
 	}
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_Mac::RegisterWidgetGenerators( )

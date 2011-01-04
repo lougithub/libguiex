@@ -99,6 +99,10 @@ set( ${target_name}_resource_SRCS
 	guifontdata.h
 	guifontmanager.cpp
 	guifontmanager.h
+	guisounddata.cpp
+	guisounddata.h
+	guisoundmanager.cpp
+	guisoundmanager.h	
 	guias.cpp
 	guias.h
 	guiasmanager.cpp

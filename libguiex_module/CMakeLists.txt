@@ -19,16 +19,29 @@ source_group(configfile_tinyxml FILES ${${target_name}_configfile_tinyxml_SRCS} 
 
 
 #sound_cocoa
+set( ${target_name}_sound_dummy_SRCS 
+	sound_dummy/guisound_dummy.cpp
+	sound_dummy/guisound_dummy.h
+	sound_dummy/guisounddata_dummy.cpp
+	sound_dummy/guisounddata_dummy.h	
+	)
+source_group(sound_dummy FILES ${${target_name}_sound_dummy_SRCS} )
+
+#sound_cocoa
 set( ${target_name}_sound_cocoa_SRCS 
 	sound_cocoa/guisound_cocoa.mm
 	sound_cocoa/guisound_cocoa.h
+	sound_cocoa/guisounddata_cocoa.cpp
+	sound_cocoa/guisounddata_cocoa.h	
 	)
-source_group(sound_openal FILES ${${target_name}_sound_openal_SRCS} )
+source_group(sound_cocoa FILES ${${target_name}_sound_cocoa_SRCS} )
 
 #sound_openal
 set( ${target_name}_sound_openal_SRCS 
 	sound_openal/guisound_openal.cpp
 	sound_openal/guisound_openal.h
+	sound_openal/guisounddata_openal.cpp
+	sound_openal/guisounddata_openal.h	
 	)
 source_group(sound_openal FILES ${${target_name}_sound_openal_SRCS} )
 
@@ -183,7 +196,9 @@ if( WIN32 )
 		${${target_name}_stringconv_winapi_SRCS}
 		${${target_name}_physics_box2d_SRCS}
 		${${target_name}_sound_openal_SRCS}
+		${${target_name}_sound_dummy_SRCS}
 		)
+include_directories( "${PROJECT_SOURCE_DIR}/external/openal/include" )
 
 elseif( APPLE )
 
@@ -200,6 +215,7 @@ elseif( APPLE )
 		${${target_name}_script_lua_SRCS}
 		${${target_name}_physics_box2d_SRCS}
 		${${target_name}_sound_cocoa_SRCS}
+		${${target_name}_sound_dummy_SRCS}
 		)
 
 else( )
@@ -215,6 +231,9 @@ include_directories( "${PROJECT_SOURCE_DIR}/external/tinyxml" )
 include_directories( "${PROJECT_SOURCE_DIR}/external/lua/src" )
 include_directories( "${PROJECT_SOURCE_DIR}/external/freetype/include" )
 include_directories( "${PROJECT_SOURCE_DIR}/external/Box2D" )
+include_directories( "${PROJECT_SOURCE_DIR}/external/libvorbis/include" )
+include_directories( "${PROJECT_SOURCE_DIR}/external/libogg/include" )
+include_directories( "${PROJECT_SOURCE_DIR}/external/freealut/include" )
 
 add_library( ${target_name} STATIC ${${target_name}_SRCS} )
 
@@ -227,5 +246,7 @@ add_dependencies(
 	tinyxml 
 	freetype 
 	box2d
+	ogg
+	vorbis
 	)
 

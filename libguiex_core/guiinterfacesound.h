@@ -15,6 +15,15 @@
 #include "guistring.h"
 
 //============================================================================//
+// declare
+//============================================================================// 
+namespace guiex
+{
+	class CGUISoundData;
+}
+
+
+//============================================================================//
 // class
 //============================================================================// 
 namespace guiex
@@ -28,6 +37,9 @@ namespace guiex
 	public:
 		IGUIInterfaceSound( const char* szModuleName );
 		virtual ~IGUIInterfaceSound();
+
+		virtual CGUISoundData* CreateSoundData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nSoundID ) = 0;
+		virtual void DestroySoundData( CGUISoundData* pData ) = 0;
 
 		/**
 		* @brief load effect.

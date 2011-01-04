@@ -22,15 +22,8 @@ if( WIN32 )
         )
 
 
-    #include directory
-    include_directories( "${PROJECT_SOURCE_DIR}/external/glut" )
-    include_directories( "${PROJECT_SOURCE_DIR}/external/tinyxml" )
-    include_directories( "${PROJECT_SOURCE_DIR}/external/lua/src" )
-    include_directories( "${PROJECT_SOURCE_DIR}/external/freetype/include" )
-
-    #link directory
-    link_directories( "${PROJECT_SOURCE_DIR}/external/glut" )
-
+    macro_include_directories_win32()
+	macro_link_directories_win32()
 
     add_executable( ${target_name} ${${target_name}_SRCS} )
     add_dependencies( 
@@ -41,23 +34,8 @@ if( WIN32 )
     libguiex_framework 
     )
     
-	macro_set_target_output_dir( ${target_name} )
-    target_link_libraries( 
-		${target_name}  
-        general Imm32.lib 
-        general comctl32.lib 
-        general glut32.lib 
-        general Rpcrt4.lib
-        general libguiex_core
-        general libguiex_widget
-        general libguiex_widget_box2d
-        general libguiex_module
-        general libguiex_script_wrapper
-        general libguiex_framework
-        general tinyxml
-        general lua
-        general freetype
-		general box2d
-        )
+	macro_set_target_output_dir_win32( ${target_name} )
+	macro_set_target_link_libraries_win32( ${target_name} )
+
         
 endif()

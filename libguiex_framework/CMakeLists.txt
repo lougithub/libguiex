@@ -28,6 +28,8 @@ if( WIN32 )
 		${${target_name}_windows_SRCS}
 		)
 
+	include_directories( "${PROJECT_SOURCE_DIR}/external/openal/include" )
+
 elseif( APPLE )
 
 	set( ${target_name}_SRCS

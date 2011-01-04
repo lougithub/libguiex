@@ -40,7 +40,7 @@ namespace guiex
 		uint32 GetFontIndex() const;
 
 	protected:
-		CGUIFontData( const CGUIString& rName, const CGUIString& rSceneName, uint32 nFontIndex );
+		CGUIFontData( const CGUIString& rName, const CGUIString& rSceneName, uint32 nFontID );
 
 	protected:
 		friend class CGUIFontManager;

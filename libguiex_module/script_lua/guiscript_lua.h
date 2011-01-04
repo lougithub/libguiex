@@ -77,7 +77,7 @@ namespace guiex
 
 	GUI_INTERFACE_DECLARE();
 
-}//namesace guiex
+}//namespace guiex
 
 #endif //__GUI_SCRIPT_LUA_20060404_H__
 

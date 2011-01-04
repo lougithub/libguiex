@@ -43,8 +43,8 @@ namespace guiex
 		Unload();
 	}
 	//------------------------------------------------------------------------------
-	CGUIFontData_dummy::CGUIFontData_dummy( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nFontIndex )
-		:CGUIFontData( rName, rSceneName, nFontIndex )
+	CGUIFontData_dummy::CGUIFontData_dummy( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nFontID )
+		:CGUIFontData( rName, rSceneName, nFontID )
 	{
 
 	}
