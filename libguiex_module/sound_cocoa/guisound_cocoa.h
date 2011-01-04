@@ -1,12 +1,12 @@
 /** 
- * @file guissound_dummy.h
+ * @file guissound_cocoa.h
  * @brief sound module, use dummy
  * @author ken
  * @date 2006-08-31
  */
 
-#ifndef __GUI_SOUND_DUMMY_20060831H__
-#define __GUI_SOUND_DUMMY_20060831H__
+#ifndef __GUI_SOUND_COCOA_20060831H__
+#define __GUI_SOUND_COCOA_20060831H__
 
 //============================================================================//
 // include
@@ -19,18 +19,18 @@
 //============================================================================// 
 namespace guiex
 {
-	class GUIEXPORT IGUISound_dummy : public IGUIInterfaceSound
+	class GUIEXPORT IGUISound_cocoa : public IGUIInterfaceSound
 	{
 	public:
 		/** 
 		 * @brief constructor
 		 */
-		IGUISound_dummy();
+		IGUISound_cocoa();
 		
 		/** 
 		 * @brief destructor
 		 */
-		virtual ~IGUISound_dummy();
+		virtual ~IGUISound_cocoa();
 		
 		/**
 		 * @brief load effect.
@@ -52,7 +52,6 @@ namespace guiex
 
 		virtual CGUISoundData* CreateSoundData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nSoundID );
 		virtual void DestroySoundData( CGUISoundData* pData );
-		
 		
 	protected:
 		/** 
@@ -80,5 +79,5 @@ namespace guiex
 	
 }//namespace guiex
 
-#endif //__GUI_SOUND_DUMMY_20060831H__
+#endif //__GUI_SOUND_COCOA_20060831H__
 
