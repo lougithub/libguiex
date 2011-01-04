@@ -72,6 +72,7 @@ namespace guiex
 		ePropertyType_Widget,
 
 		ePropertyType_FontDefine,
+		ePropertyType_SoundDefine,
 		ePropertyType_ImageDefine,
 		ePropertyType_AnimationDefine,
 		ePropertyType_AsDefine,
