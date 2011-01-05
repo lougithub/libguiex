@@ -21,6 +21,7 @@
 #include "toolcache.h"
 #include "resourcelist.h"
 #include "wxeditorid.h"
+#include "wxtoolspgmanager.h"
 
 //wxwidgets
 #include <wx/treectrl.h>
@@ -336,7 +337,7 @@ wxPanel* WxMainFrame::CreatePropGridPanel()
 		//| wxPG_EX_HELP_AS_TOOLTIPS
 		wxPG_EX_MULTIPLE_SELECTION;
 
-	m_pPropGridMan = new wxPropertyGridManager(
+	m_pPropGridMan = new WxToolsPGManager(
 		panel,
 		WIDGET_ID_PG, 
 		wxDefaultPosition,
@@ -347,11 +348,6 @@ wxPanel* WxMainFrame::CreatePropGridPanel()
 	m_pPropGridMan->GetGrid()->SetVerticalSpacing( 2 );
 	// Register all editors (SpinCtrl etc.)
 	m_pPropGridMan->RegisterAdditionalEditors();
-
-	m_pPropGridMan->AddPage(wxT(NOTEBOOK_APPEARANCE_PAGE_NAME));
-	m_pPropGridMan->AddPage(wxT(NOTEBOOK_IMAGE_PAGE_NAME));
-	m_pPropGridMan->AddPage(wxT(NOTEBOOK_EVENT_PAGE_NAME));
-	m_pPropGridMan->SelectPage(NOTEBOOK_PAGE_APPEARANCE);
 	m_pPropGridMan->Refresh();
 
 	//initialize image
@@ -385,18 +381,16 @@ void WxMainFrame::UpdateWidgetSizeAndPos()
 //------------------------------------------------------------------------------
 void WxMainFrame::SetPropGridWidget(CGUIWidget* pWidget)
 {
-	m_pCurrentEditingWidget = pWidget;
-
-	m_pPropGridMan->ClearPage(NOTEBOOK_PAGE_APPEARANCE);
-	m_pPropGridMan->ClearPage(NOTEBOOK_PAGE_IMAGE);
-	m_pPropGridMan->ClearPage(NOTEBOOK_PAGE_EVENT);
-
-	if( m_pCurrentEditingWidget )
+	if( m_pCurrentEditingWidget != pWidget )
 	{
-		UpdateGridProperties( m_pPropGridMan, m_pCurrentEditingWidget->GetType(), m_pCurrentEditingWidget );
+		m_pPropGridMan->ToolsClearPage();
+		m_pCurrentEditingWidget = pWidget;
+		if( m_pCurrentEditingWidget )
+		{
+			UpdateGridProperties( m_pPropGridMan, m_pCurrentEditingWidget->GetType(), m_pCurrentEditingWidget );
+		}
+		m_pPropGridMan->Refresh();
 	}
-
-	m_pPropGridMan->Refresh();
 }
 //------------------------------------------------------------------------------
 wxTreeCtrl*	WxMainFrame::CreateWidgetTreeCtrl()

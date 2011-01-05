@@ -35,6 +35,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIAnimationManager* CGUIAnimationManager::Instance()
 	{
+		GUI_ASSERT( m_pSingleton, "not initialized" );
 		return m_pSingleton; 
 	}
 	//------------------------------------------------------------------------------
@@ -197,6 +198,11 @@ namespace guiex
 			return ReleaseFromAllocatePool( pAnimation );
 		}
 		return 0;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAnimationManager::DestroyResourceImp( void* pRes )
+	{
+		delete ( TResourceType* )pRes;
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

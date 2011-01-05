@@ -38,6 +38,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIFontManager* CGUIFontManager::Instance()
 	{
+		GUI_ASSERT( m_pSingleton, "not initialized" );
 		return m_pSingleton; 
 	}
 	//------------------------------------------------------------------------------
@@ -99,14 +100,14 @@ namespace guiex
 		return pFontData;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIFontManager::DestroyResourceImp( CGUIFontData * pRes )
+	void CGUIFontManager::DestroyResourceImp( void* pRes )
 	{
 		IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
 		if( !pFont )
 		{
 			throw CGUIException("[CGUIFontManager::DestroyResourceImp]: failed to get font interface");
 		}
-		pFont->DestroyFontData( pRes );
+		pFont->DestroyFontData( ( TResourceType* )( pRes ) );
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

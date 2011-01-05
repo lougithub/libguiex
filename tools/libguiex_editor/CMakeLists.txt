@@ -9,6 +9,8 @@ if( WIN32 )
 		wxmainapp.h
 		wxmainframe.cpp
 		wxmainframe.h
+		wxtoolspgmanager.cpp
+		wxtoolspgmanager.h
 		wxoutputpanel.cpp
 		wxoutputpanel.h
 		wxsavefiledlg.cpp

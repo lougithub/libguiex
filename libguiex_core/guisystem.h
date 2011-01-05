@@ -37,6 +37,7 @@ namespace guiex
 	//for singleton
 	class CGUIImageManager;
 	class CGUIAnimationManager;
+	class CGUISoundManager;
 	class CGUIAsManager;
 	class CGUIFontManager;
 	class CGUITextureManager;
@@ -171,6 +172,7 @@ namespace guiex
 		//********************************************************
 		CGUIImageManager* GetImageManager();
 		CGUIAnimationManager* GetAnimationManager();
+		CGUISoundManager* GetSoundManager();
 		CGUIAsManager* GetAsManager();
 		CGUIFontManager* GetFontManager();
 		CGUITextureManager* GetTextureManager();
@@ -290,6 +292,7 @@ namespace guiex
 		//single classes
 		CGUIImageManager *m_pImageManager;
 		CGUIAnimationManager *m_pAnimationManager;
+		CGUISoundManager *m_pSoundManager;
 		CGUIAsManager *m_pAsManager;
 		CGUIFontManager *m_pFontManager;
 		CGUITextureManager *m_pTextureManager;
@@ -321,6 +324,11 @@ namespace guiex
 	inline CGUIAnimationManager* CGUISystem::GetAnimationManager()
 	{
 		return m_pAnimationManager;
+	}
+
+	inline CGUISoundManager* CGUISystem::GetSoundManager()
+	{
+		return m_pSoundManager;
 	}
 
 	inline CGUIAsManager* CGUISystem::GetAsManager()

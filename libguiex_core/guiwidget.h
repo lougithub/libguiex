@@ -39,6 +39,7 @@ namespace guiex
 	class CGUIImage;
 	class CGUIAnimation;
 	class CGUIAs;
+	class CGUISoundData;
 
 	typedef void (*CallbackEventFunc)(CGUIEvent* pEvent);
 }
@@ -227,8 +228,9 @@ namespace guiex
 		void RegisterUIEvent( const CGUIString& rUIEventName );
 		void UnregisterUIEvent( const CGUIString& rUIEventName );
 
-		void RegisterSound( const CGUIString& strEventName, int32 nSoundIdx );
+		CGUISoundData* RegisterSound( const CGUIString& strEventName, const CGUIString& rSoundName );
 		void UnregisterSound( const CGUIString& strEventName );
+		CGUISoundData* GetSound( const CGUIString& strEventName );
 
 		template<class TEVENT> void RegisterNativeCallbackFunc( const CGUIString& strEventName, void (*pFunc)(TEVENT*) );
 		void RegisterScriptCallbackFunc( const CGUIString& strEventName, const CGUIString& strFunc );
@@ -340,9 +342,10 @@ namespace guiex
 		bool IsGenerateMultiClickEvent( ) const;
 
 	protected:
-		void CallGlobalFunction(const CGUIString& strEventName, CGUIEvent* pEvent);
-		void CallScriptFunction(const CGUIString& strEventName, CGUIEvent* pEvent);
-		void CallbackFunction(const CGUIString& strEventName, CGUIEvent* pEvent);
+		void CallGlobalFunction( const CGUIString& strEventName, CGUIEvent* pEvent );
+		void CallScriptFunction( const CGUIString& strEventName, CGUIEvent* pEvent );
+		void CallbackFunction( const CGUIString& strEventName, CGUIEvent* pEvent );
+		void PlaySound( const CGUIString& strEventName, CGUIEvent* pEvent );
 
 	protected:
 		virtual void PushClipRect( IGUIInterfaceRender* pRender  );
@@ -548,7 +551,7 @@ namespace guiex
 		///////////////////////////////////////////////////////////////////////
 		/// sound
 		///////////////////////////////////////////////////////////////////////
-		typedef std::map<CGUIString,int32> TMapSound;
+		typedef std::map<CGUIString,CGUISoundData*> TMapSound;
 		TMapSound m_mapEventSound; //!<sound for event
 
 		///////////////////////////////////////////////////////////////////////

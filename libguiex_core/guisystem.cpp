@@ -24,6 +24,7 @@
 #include <libguiex_core/guifontmanager.h>
 #include <libguiex_core/guiasmanager.h>
 #include <libguiex_core/guitexturemanager.h>
+#include <libguiex_core/guisoundmanager.h>
 #include <libguiex_core/guicameramanager.h>
 #include <libguiex_core/guicanvaslayermanager.h>
 
@@ -123,6 +124,7 @@ namespace guiex
 		,m_fTimerForFrame(0.0f)
 		,m_pImageManager( NULL )
 		,m_pAnimationManager( NULL )
+		,m_pSoundManager(NULL)
 		,m_pAsManager( NULL )
 		,m_pFontManager( NULL )
 		,m_pTextureManager( NULL )
@@ -165,6 +167,7 @@ namespace guiex
 		m_pWidgetManager = new CGUIWidgetManager;
 		m_pImageManager = new CGUIImageManager;
 		m_pAnimationManager = new CGUIAnimationManager;
+		m_pSoundManager = new CGUISoundManager;
 		m_pAsManager = new CGUIAsManager;
 		m_pFontManager = new CGUIFontManager;
 		m_pTextureManager = new CGUITextureManager;
@@ -186,6 +189,8 @@ namespace guiex
 		m_pMouseCursor = NULL;
 		delete m_pAnimationManager;
 		m_pAnimationManager = NULL;
+		delete m_pSoundManager;
+		m_pSoundManager = NULL;
 		delete m_pAsManager;
 		m_pAsManager = NULL;
 		delete m_pFontManager;
@@ -247,7 +252,7 @@ namespace guiex
 	void CGUISystem::GenerateRootWidget()
 	{
 		GUI_ASSERT( !m_pWgtRoot, "invalid widget root pointer");
-		m_pWgtRoot = CGUIWidgetManager::Instance()->CreateWidget("CGUIWidgetRoot", "__WIDGET_ROOT__auto__", "__SCENE_ROOT_auto__");
+		m_pWgtRoot = CGUIWidgetManager::Instance()->CreateWidget("CGUIWidgetRoot", "__WIDGET_ROOT"GUI_INTERNAL_WIDGET_FLAG, "__SCENE_ROOT"GUI_INTERNAL_WIDGET_FLAG);
 		m_pWgtRoot->Create();
 		m_pWgtRoot->Open();
 	}

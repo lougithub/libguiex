@@ -38,6 +38,9 @@ namespace guiex
 		virtual void UnloadAllResources( ) = 0;
 		virtual void ReleaseAllResources( ) = 0;
 		virtual void ReleaseResourceByScene( const CGUIString& rSceneName ) = 0;
+
+	protected:
+		virtual	void DestroyResourceImp( void* pRes ) = 0; 
 	};
 
 	/**
@@ -47,6 +50,8 @@ namespace guiex
 	class GUIEXPORT CGUIResourceManager : public CGUIResourceManagerBase
 	{
 	public:
+		typedef TResType TResourceType;
+
 		CGUIResourceManager();
 		virtual ~CGUIResourceManager();
 
@@ -58,9 +63,6 @@ namespace guiex
 		virtual void ReleaseResourceByScene( const CGUIString& rSceneName );
 
 		const std::map< CGUIString, TResType* >& GetRegisterResourceMap() const;
-
-	protected:
-		virtual	void DestroyResourceImp( TResType* pRes ); 
 
 	protected:
 		TResType* GetResource( const CGUIString& rResName ) const;
@@ -298,12 +300,6 @@ namespace guiex
 				pRes->GetResourceType().c_str(),
 				pRes->GetSceneName().c_str() );
 		}
-	}
-	//------------------------------------------------------------------------------
-	template< class TResType >
-	inline void CGUIResourceManager<TResType>::DestroyResourceImp( TResType* pRes )
-	{
-		delete pRes;
 	}
 	//------------------------------------------------------------------------------
 }

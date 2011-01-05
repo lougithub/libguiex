@@ -54,7 +54,7 @@ private:
 
 	wxComboBox* m_pComboBoxType;
 	wxTextCtrl* m_pEditName;
-	class wxPropertyGridManager* m_pPropGridMgr;
+	class WxToolsPGManager* m_pPropGridMgr;
 
 	CGUIWidget* m_pWidget;
 	CGUIWidget* m_pParent;

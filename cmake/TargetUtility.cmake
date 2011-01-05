@@ -141,6 +141,7 @@ macro( macro_include_directories_win32 )
 	include_directories( "${PROJECT_SOURCE_DIR}/external/scintilla/lexlib" )
     include_directories( "${PROJECT_SOURCE_DIR}/external/wxWidgets/include" )
     include_directories( "${PROJECT_SOURCE_DIR}/external/wxWidgets/include/msvc" )
+    include_directories( "${PROJECT_SOURCE_DIR}/external/openal/include" )
 endmacro()
 
 macro( macro_link_directories_win32 )

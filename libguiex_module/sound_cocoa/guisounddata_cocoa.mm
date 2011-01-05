@@ -1,5 +1,5 @@
 /** 
-* @file guisounddata_dummy.cpp
+* @file guisounddata_cocoa.cpp
 * @brief 
 * @author Lou Guoliang (louguoliang@gmail.com)
 * @date 2011-01-04
@@ -8,7 +8,7 @@
 //============================================================================//
 // include
 //============================================================================//
-#include "guisounddata_dummy.h"
+#include "guisounddata_cocoa.h"
 
 
 //============================================================================//
@@ -19,21 +19,21 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	CGUISoundData_dummy::CGUISoundData_dummy( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath )
+	CGUISoundData_cocoa::CGUISoundData_cocoa( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath )
 		:CGUISoundData( rName, rSceneName )
 	{
 	}
 	//------------------------------------------------------------------------------
-	CGUISoundData_dummy::~CGUISoundData_dummy()
+	CGUISoundData_cocoa::~CGUISoundData_cocoa()
 	{
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUISoundData_dummy::DoLoad() const
+	int32 CGUISoundData_cocoa::DoLoad() const
 	{
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void CGUISoundData_dummy::DoUnload()
+	void CGUISoundData_cocoa::DoUnload()
 	{
 
 	}

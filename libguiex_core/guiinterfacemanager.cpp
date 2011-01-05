@@ -69,6 +69,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIInterfaceManager* CGUIInterfaceManager::Instance()
 	{
+		GUI_ASSERT( m_pSingleton, "not initialized" );
 		return m_pSingleton; 
 	}
 	//------------------------------------------------------------------------------

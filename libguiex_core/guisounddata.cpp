@@ -25,14 +25,9 @@
 
 namespace guiex
 {
-
 	//------------------------------------------------------------------------------
-	CGUISoundData::CGUISoundData( 
-		const CGUIString& rName,
-		const CGUIString& rSceneName, 
-		uint32 nSoundID)
+	CGUISoundData::CGUISoundData( const CGUIString& rName, const CGUIString& rSceneName )
 		:CGUIResource( rName, rSceneName, "SOUND" )
-		,m_nSoundID( nSoundID )
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -40,9 +35,49 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	uint32 CGUISoundData::GetSoundID() const
+	void CGUISoundData::Play()
 	{
-		return m_nSoundID;
+		Load();
+
+		IGUIInterfaceSound* pInterfaceSound = CGUIInterfaceManager::Instance()->GetInterfaceSound();
+		if( pInterfaceSound )
+		{
+			pInterfaceSound->Play( this );
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUISoundData::Stop()
+	{
+		Load();
+
+		IGUIInterfaceSound* pInterfaceSound = CGUIInterfaceManager::Instance()->GetInterfaceSound();
+		if( pInterfaceSound )
+		{
+			pInterfaceSound->Stop( this );
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUISoundData::Pause()
+	{
+		Load();
+
+		IGUIInterfaceSound* pInterfaceSound = CGUIInterfaceManager::Instance()->GetInterfaceSound();
+		if( pInterfaceSound )
+		{
+			pInterfaceSound->Pause( this );
+		}
+	}
+	//------------------------------------------------------------------------------
+	bool CGUISoundData::IsPlaying()
+	{
+		Load();
+
+		IGUIInterfaceSound* pInterfaceSound = CGUIInterfaceManager::Instance()->GetInterfaceSound();
+		if( pInterfaceSound )
+		{
+			return pInterfaceSound->IsPlaying( this );
+		}
+		return false;
 	}
 	//------------------------------------------------------------------------------
 }

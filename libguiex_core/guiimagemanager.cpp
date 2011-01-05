@@ -240,16 +240,6 @@ namespace guiex
 		return pImage;
 	}
 	//------------------------------------------------------------------------------
-	//CGUIImage* CGUIImageManager::AllocateResource( 			
-	//	const CGUIProperty& rProperty ) const
-	//{
-	//	CGUIImage* pImage = DoCreateImage(
-	//		"",
-	//		rProperty );
-	//	pImage->RefRetain();
-	//	return pImage;
-	//}
-	//------------------------------------------------------------------------------
 	CGUIImage* CGUIImageManager::AllocateResource( 			
 		const CGUIString& rPath, 
 		const CGUIRect& rUVRect, 
@@ -324,6 +314,11 @@ namespace guiex
 			}
 		}
 		return 0;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIImageManager::DestroyResourceImp( void* pRes )
+	{
+		delete ( TResourceType* )pRes;
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

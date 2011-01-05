@@ -49,6 +49,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIMouseCursor* CGUIMouseCursor::Instance()
 	{
+		GUI_ASSERT( m_pSingleton, "not initialized" );
 		return m_pSingleton; 
 	}
 	//------------------------------------------------------------------------------

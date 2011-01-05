@@ -71,6 +71,7 @@
 #include "guifontmanager.h"
 #include "guianimation.h"
 #include "guianimationmanager.h"
+#include "guisoundmanager.h"
 
 #include "guiconfigfileloader.h"
 
@@ -98,6 +99,9 @@
 #include "guiasLite.h"
 #include "guias.h"
 #include "guiasmanager.h"
+
+//sound
+#include "guisounddata.h"
 
 //exception
 #include "guiexception.h"

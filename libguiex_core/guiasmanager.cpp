@@ -34,6 +34,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIAsManager* CGUIAsManager::Instance()
 	{
+		GUI_ASSERT( m_pSingleton, "not initialized" );
 		return m_pSingleton; 
 	}
 	//------------------------------------------------------------------------------
@@ -110,9 +111,9 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIAsManager::DestroyResourceImp( CGUIAs * pRes )
+	void CGUIAsManager::DestroyResourceImp( void* pRes )
 	{
-		CGUIAsFactory::Instance()->DestroyAs( pRes );
+		CGUIAsFactory::Instance()->DestroyAs( ( TResourceType* )( pRes ) );
 	}
 	//------------------------------------------------------------------------------
 

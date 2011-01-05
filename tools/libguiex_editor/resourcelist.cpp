@@ -27,6 +27,7 @@ CResourceList::~CResourceList()
 {
 	ResetImageList();
 	ResetAsList();
+	ResetSoundList();
 }
 //------------------------------------------------------------------------------
 CResourceList* CResourceList::Instance()
@@ -39,6 +40,7 @@ void CResourceList::UpdateResourceList()
 {
 	UpdateImageList();
 	UpdateAsNameList();
+	UpdateSoundList();
 }
 //------------------------------------------------------------------------------
 void CResourceList::ResetImageList()
@@ -178,6 +180,26 @@ void CResourceList::UpdateAsNameList()
 	m_arrayAsArray.Sort();
 }
 //------------------------------------------------------------------------------
+void CResourceList::ResetSoundList()
+{
+	m_arraySoundArray.Clear();
+}
+//------------------------------------------------------------------------------
+void CResourceList::UpdateSoundList()
+{
+	ResetSoundList();
+
+	m_arraySoundArray.Add(_T(""));
+	const std::map<CGUIString, CGUISoundData*>& rMapSoundList = CGUISoundManager::Instance()->GetRegisterResourceMap();
+	for( std::map<CGUIString,CGUISoundData*>::const_iterator itor = rMapSoundList.begin();
+		itor != rMapSoundList.end();
+		++itor)
+	{
+		m_arraySoundArray.Add(Gui2wxString( itor->first));
+	}
+	m_arraySoundArray.Sort();
+}
+//------------------------------------------------------------------------------
 const wxArrayString& CResourceList::GetImageList()
 {
 	return m_arrayImageArray;
@@ -186,5 +208,10 @@ const wxArrayString& CResourceList::GetImageList()
 const wxArrayString& CResourceList::GetAsList()
 {
 	return m_arrayAsArray;
+}
+//------------------------------------------------------------------------------
+const wxArrayString& CResourceList::GetSoundList()
+{
+	return m_arraySoundArray;
 }
 //------------------------------------------------------------------------------

@@ -22,6 +22,7 @@
 #include <libguiex_module\ime_winapi\guiime_winapi.h>
 #include <libguiex_module\stringconv_winapi\guistringconv_winapi.h>
 #include <libguiex_module/physics_box2d/guiphysics_box2d.h>
+#include <libguiex_module/sound_openal/guisound_openal.h>
 
 #include "wxeditorcanvas.h"
 #include "wxmainapp.h"
@@ -64,6 +65,7 @@ void CGUIFrameworkEditor::RegisterInterfaces( )
 	GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
 	GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_winapi);
 	GUI_REGISTER_INTERFACE_LIB( IGUIPhysics_box2d);
+	GUI_REGISTER_INTERFACE_LIB( IGUISound_openal );
 	GUI_REGISTER_INTERFACE_LIB_ARG( IGUIIme_winapi, ::GetForegroundWindow() );
 }
 //------------------------------------------------------------------------------ 

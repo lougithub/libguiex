@@ -236,7 +236,7 @@ protected:
 	wxToolBar*m_pToolbar;
 	WxOutputPanel*m_pOutput;
 
-	wxPropertyGridManager* m_pPropGridMan;
+	class WxToolsPGManager* m_pPropGridMan;
 
 	bool m_bIsSceneOpened;
 

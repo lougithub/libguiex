@@ -1,6 +1,6 @@
 /** 
  * @file guissound_cocoa.h
- * @brief sound module, use dummy
+ * @brief sound module, use cocoa
  * @author ken
  * @date 2006-08-31
  */
@@ -26,33 +26,17 @@ namespace guiex
 		 * @brief constructor
 		 */
 		IGUISound_cocoa();
+
+		virtual CGUISoundData* CreateSoundData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath );
+		virtual void DestroySoundData( CGUISoundData* pData );
 		
-		/** 
-		 * @brief destructor
-		 */
-		virtual ~IGUISound_cocoa();
-		
-		/**
-		 * @brief load effect.
-		 * @return 0 for success.
-		 */
-		virtual int32 LoadEffect( int32 nID,  const CGUIString& rFileName);
-		
-		/**
-		 * @brief unload effect.
-		 */
-		virtual void UnloadEffect( int32 nID );
-		
-		/**
-		 * @brief play effect.
-		 */
-		virtual int32 PlayEffect( int32 nID );
+		virtual void Play( CGUISoundData* pSoundData );
+		virtual void Stop( CGUISoundData* pSoundData );
+		virtual void Pause( CGUISoundData* pSoundData );
+		virtual bool IsPlaying( CGUISoundData* pSoundData );
 		
 		virtual void DeleteSelf();
 
-		virtual CGUISoundData* CreateSoundData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nSoundID );
-		virtual void DestroySoundData( CGUISoundData* pData );
-		
 	protected:
 		/** 
 		 * @brief initialize sound
@@ -66,11 +50,7 @@ namespace guiex
 		 */
 		virtual void DoDestroy();
 		
-		
-	private:
-		typedef std::map<uint32, CGUISoundData*> TMapSoundData;
-		TMapSoundData m_mapSoundData;
-		
+	
 	public:
 		static const char* StaticGetModuleName();
 	};

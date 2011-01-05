@@ -13,18 +13,12 @@
 // include
 //============================================================================//
 #include <libguiex_core/guisounddata.h>
-
-
-//============================================================================//
-// declare
-//============================================================================//
-
-
+#include <al.h>
+#include <alc.h>
 
 //============================================================================//
 // class
 //============================================================================//
-
 namespace guiex
 {
 	/**
@@ -34,14 +28,24 @@ namespace guiex
 	{	
 	protected:
 		friend class IGUISound_openal;
-		CGUISoundData_openal( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nSoundID );
+		CGUISoundData_openal( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath );
 		virtual ~CGUISoundData_openal();
 
 		virtual int32 DoLoad() const;
 		virtual void DoUnload();
 
 	protected:
+		bool LoadWavFile( const CGUIString& rFilename ) const;
+		bool LoadOggFile( const CGUIString& rFilename ) const;
+
+		bool SetAlBuffer( ALenum format, const ALvoid* data, ALsizei size, ALsizei freq ) const;
+
+	protected:
 		CGUIString m_strPath; //sound file path
+
+		//for openal
+		mutable uint32 m_nSourceId;
+		mutable uint32 m_nBufferId;
 	};
 }
 

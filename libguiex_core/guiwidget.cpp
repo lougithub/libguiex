@@ -12,23 +12,27 @@
 #include <libguiex_core/guisystem.h>
 #include <libguiex_core/guievent.h>
 #include <libguiex_core/guirect.h>
-#include <libguiex_core/guiimagemanager.h>
-#include <libguiex_core/guianimationmanager.h>
-#include <libguiex_core/guiimage.h>
-#include <libguiex_core/guianimation.h>
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guipropertymanager.h>
-#include <libguiex_core/guiinterfacemanager.h>
-#include <libguiex_core/guiinterfacerender.h>
-#include <libguiex_core/guiinterfacesound.h>
-#include <libguiex_core/guiinterfacescript.h>
-#include <libguiex_core/guiinterfacefont.h>
 #include <libguiex_core/guilogmsgmanager.h>
 #include <libguiex_core/guistringconvertor.h>
 #include <libguiex_core/guiperfmonitor.h>
-#include <libguiex_core/guias.h>
 #include <libguiex_core/guipropertyconvertor.h>
+
+#include <libguiex_core/guiinterfacemanager.h>
+#include <libguiex_core/guiinterfacerender.h>
+#include <libguiex_core/guiinterfacescript.h>
+#include <libguiex_core/guiinterfacefont.h>
+
+#include <libguiex_core/guiimage.h>
+#include <libguiex_core/guianimation.h>
+#include <libguiex_core/guias.h>
+#include <libguiex_core/guisounddata.h>
+
+#include <libguiex_core/guiimagemanager.h>
+#include <libguiex_core/guianimationmanager.h>
 #include <libguiex_core/guiasmanager.h>
+#include <libguiex_core/guisoundmanager.h>
 #include <libguiex_core/guiwidgetmanager.h>
 
 #include <algorithm>
@@ -1048,23 +1052,48 @@ namespace guiex
 		GSystem->RegisterUIEvent( rUIEventName, this );
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::UnregisterUIEvent( const CGUIString& rUIEventName )
+	void CGUIWidget::UnregisterUIEvent( const CGUIString& rUIEventName )
 	{
 		GSystem->UnregisterUIEvent( rUIEventName, this );
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::RegisterSound( const CGUIString& strEventName, int32 nSoundIdx )
+	CGUISoundData* CGUIWidget::RegisterSound( const CGUIString& strEventName, const CGUIString& rSoundName )
 	{
-		m_mapEventSound.insert( std::make_pair(strEventName, nSoundIdx));
+		UnregisterSound( strEventName );
+		if( rSoundName.empty() )
+		{
+			return NULL;
+		}
+
+		CGUISoundData* pSound = CGUISoundManager::Instance()->AllocateResource( rSoundName );
+		if( !pSound )
+		{
+			throw CGUIException( "failed to get sound by name <%s>", rSoundName.c_str());
+			return NULL;
+		};
+		m_mapEventSound.insert( std::make_pair( strEventName, pSound ) );
+
+		return pSound;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::UnregisterSound( const CGUIString& strEventName )
+	void CGUIWidget::UnregisterSound( const CGUIString& strEventName )
 	{
 		TMapSound::iterator itor = m_mapEventSound.find(strEventName);
 		if( itor != m_mapEventSound.end())
 		{
+			CGUISoundManager::Instance()->DeallocateResource( itor->second );
 			m_mapEventSound.erase(itor);
 		}
+	}
+	//------------------------------------------------------------------------------
+	CGUISoundData* CGUIWidget::GetSound( const CGUIString& strEventName )
+	{
+		TMapSound::iterator itor = m_mapEventSound.find(strEventName);
+		if( itor != m_mapEventSound.end())
+		{
+			return itor->second;
+		}
+		return NULL;
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWidget::RegisterScriptCallbackFunc( 
@@ -1140,7 +1169,17 @@ namespace guiex
 		m_mapNativeFunc.insert( std::make_pair(strEventName, reinterpret_cast<CallbackEventFunc>(pFunc)));
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::CallGlobalFunction(const CGUIString& strEventName, CGUIEvent* pEvent)
+	void CGUIWidget::PlaySound(const CGUIString& strEventName, CGUIEvent* pEvent)
+	{
+		//play sound
+		TMapSound::iterator itor = m_mapEventSound.find( strEventName );
+		if( itor != m_mapEventSound.end())
+		{
+			itor->second->Play();
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::CallGlobalFunction(const CGUIString& strEventName, CGUIEvent* pEvent)
 	{
 		TMapGlobalFunc::iterator itor = m_mapNativeFunc.find(strEventName);
 		if( itor != m_mapNativeFunc.end())
@@ -1168,18 +1207,13 @@ namespace guiex
 	void CGUIWidget::CallbackFunction(const CGUIString& strEventName, CGUIEvent* pEvent)
 	{		
 		//play sound
-		TMapSound::iterator itor = m_mapEventSound.find( strEventName );
-		if( itor != m_mapEventSound.end())
-		{
-			IGUIInterfaceSound* pSound = CGUIInterfaceManager::Instance()->GetInterfaceSound();
-			pSound->PlayEffect(itor->second);
-		}
+		PlaySound( strEventName, pEvent );
 
 		//call global function
-		CallGlobalFunction(strEventName, pEvent);
+		CallGlobalFunction( strEventName, pEvent );
 
 		//call script function
-		CallScriptFunction(strEventName, pEvent);
+		CallScriptFunction( strEventName, pEvent );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::SetScale( const CGUISize& rSize )
@@ -1581,6 +1615,15 @@ namespace guiex
 		}
 		m_aMapAnimation.clear();
 
+		//release sound
+		for( TMapSound::iterator itor = m_mapEventSound.begin();
+			itor != m_mapEventSound.end();
+			++itor)
+		{
+			CGUISoundManager::Instance()->DeallocateResource( itor->second );
+		}
+		m_mapEventSound.clear();
+
 		//release as
 		for( TMapAs::iterator itor = m_aMapAs.begin();
 			itor != m_aMapAs.end();
@@ -1685,6 +1728,19 @@ namespace guiex
 			if( pImage )
 			{
 				rProperty.SetValue( pImage->GetName() );
+			}
+			else
+			{
+				rProperty.SetValue( "" );
+			}
+		}
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		else if( rProperty.GetType() == ePropertyType_Sound  )
+		{
+			CGUISoundData* pSound = GetSound( rProperty.GetName() );
+			if( pSound )
+			{
+				rProperty.SetValue( pSound->GetName() );
 			}
 			else
 			{
@@ -1852,6 +1908,12 @@ namespace guiex
 			PropertyToValue( rProperty, m_aWidgetSize);
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//property for sound
+		else if(  rProperty.GetType()== ePropertyType_Sound)
+		{
+			RegisterSound( rProperty.GetName(), rProperty.GetValue());
+		}
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// load image
 		else if( rProperty.GetType() == ePropertyType_Image )
 		{
@@ -1906,17 +1968,8 @@ namespace guiex
 			m_uTextAlignment = (m_uTextAlignment & GUI_TA_HORIZON_MASK) + eTextAlignmentV;
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//property for sound
-		else if(  rProperty.GetType()== ePropertyType_Sound)
-		{
-			int32 nSoundIndex = 0;
-			PropertyToValue(rProperty, nSoundIndex);
-			RegisterSound( rProperty.GetName(), nSoundIndex);
-		}
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//property for script event
-		else if(   rProperty.GetType()== ePropertyType_Event )
+		else if( rProperty.GetType()== ePropertyType_Event )
 		{
 			if( rProperty.GetValue().empty())
 			{

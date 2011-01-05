@@ -118,9 +118,6 @@ namespace guiex
 		void RegisterUIEvent( const CGUIString& rUIEventName );
 		void UnregisterUIEvent( const CGUIString& rUIEventName );
 
-		void RegisterSound( const CGUIString& strEventName, int32 nSoundIdx );
-		void UnregisterSound( const CGUIString& strEventName );
-
 		void RegisterScriptCallbackFunc( const CGUIString& strEventName, const CGUIString& strFunc );
 		void UnregisterScriptCallbackFunc(const CGUIString& strEventName);
 		bool HasScriptCallbackFunc(const CGUIString& strEventName) const;

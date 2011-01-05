@@ -7267,98 +7267,11 @@ fail:
 }
 
 
-static int _wrap_IGUIInterfaceSound_LoadEffect(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::IGUIInterfaceSound *arg1 = (guiex::IGUIInterfaceSound *) 0 ;
-  guiex::int32 arg2 ;
-  guiex::CGUIString *arg3 = 0 ;
-  std::string temp3 ;
-  guiex::int32 result;
-  
-  SWIG_check_num_args("LoadEffect",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LoadEffect",1,"guiex::IGUIInterfaceSound *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("LoadEffect",2,"guiex::int32");
-  if(!lua_isstring(L,3)) SWIG_fail_arg("LoadEffect",3,"guiex::CGUIString const &");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__IGUIInterfaceSound,0))){
-    SWIG_fail_ptr("IGUIInterfaceSound_LoadEffect",1,SWIGTYPE_p_guiex__IGUIInterfaceSound);
-  }
-  
-  arg2 = (guiex::int32)lua_tonumber(L, 2);
-  temp3.assign(lua_tostring(L,3),lua_strlen(L,3)); arg3=&temp3;
-  result = (guiex::int32)(arg1)->LoadEffect(arg2,(guiex::CGUIString const &)*arg3);
-  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_IGUIInterfaceSound_UnloadEffect(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::IGUIInterfaceSound *arg1 = (guiex::IGUIInterfaceSound *) 0 ;
-  guiex::int32 arg2 ;
-  
-  SWIG_check_num_args("UnloadEffect",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("UnloadEffect",1,"guiex::IGUIInterfaceSound *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("UnloadEffect",2,"guiex::int32");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__IGUIInterfaceSound,0))){
-    SWIG_fail_ptr("IGUIInterfaceSound_UnloadEffect",1,SWIGTYPE_p_guiex__IGUIInterfaceSound);
-  }
-  
-  arg2 = (guiex::int32)lua_tonumber(L, 2);
-  (arg1)->UnloadEffect(arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_IGUIInterfaceSound_PlayEffect(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::IGUIInterfaceSound *arg1 = (guiex::IGUIInterfaceSound *) 0 ;
-  guiex::int32 arg2 ;
-  guiex::int32 result;
-  
-  SWIG_check_num_args("PlayEffect",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PlayEffect",1,"guiex::IGUIInterfaceSound *");
-  if(!lua_isnumber(L,2)) SWIG_fail_arg("PlayEffect",2,"guiex::int32");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__IGUIInterfaceSound,0))){
-    SWIG_fail_ptr("IGUIInterfaceSound_PlayEffect",1,SWIGTYPE_p_guiex__IGUIInterfaceSound);
-  }
-  
-  arg2 = (guiex::int32)lua_tonumber(L, 2);
-  result = (guiex::int32)(arg1)->PlayEffect(arg2);
-  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static void swig_delete_IGUIInterfaceSound(void *obj) {
 guiex::IGUIInterfaceSound *arg1 = (guiex::IGUIInterfaceSound *) obj;
 delete arg1;
 }
 static swig_lua_method swig_guiex_IGUIInterfaceSound_methods[] = {
-    {"LoadEffect", _wrap_IGUIInterfaceSound_LoadEffect}, 
-    {"UnloadEffect", _wrap_IGUIInterfaceSound_UnloadEffect}, 
-    {"PlayEffect", _wrap_IGUIInterfaceSound_PlayEffect}, 
     {0,0}
 };
 static swig_lua_attribute swig_guiex_IGUIInterfaceSound_attributes[] = {
@@ -9843,63 +9756,6 @@ fail:
 }
 
 
-static int _wrap_CGUIWidget_RegisterSound(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
-  guiex::CGUIString *arg2 = 0 ;
-  guiex::int32 arg3 ;
-  std::string temp2 ;
-  
-  SWIG_check_num_args("RegisterSound",3,3)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("RegisterSound",1,"guiex::CGUIWidget *");
-  if(!lua_isstring(L,2)) SWIG_fail_arg("RegisterSound",2,"guiex::CGUIString const &");
-  if(!lua_isnumber(L,3)) SWIG_fail_arg("RegisterSound",3,"guiex::int32");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
-    SWIG_fail_ptr("CGUIWidget_RegisterSound",1,SWIGTYPE_p_guiex__CGUIWidget);
-  }
-  
-  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
-  arg3 = (guiex::int32)lua_tonumber(L, 3);
-  (arg1)->RegisterSound((guiex::CGUIString const &)*arg2,arg3);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_CGUIWidget_UnregisterSound(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
-  guiex::CGUIString *arg2 = 0 ;
-  std::string temp2 ;
-  
-  SWIG_check_num_args("UnregisterSound",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("UnregisterSound",1,"guiex::CGUIWidget *");
-  if(!lua_isstring(L,2)) SWIG_fail_arg("UnregisterSound",2,"guiex::CGUIString const &");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
-    SWIG_fail_ptr("CGUIWidget_UnregisterSound",1,SWIGTYPE_p_guiex__CGUIWidget);
-  }
-  
-  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
-  (arg1)->UnregisterSound((guiex::CGUIString const &)*arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static int _wrap_CGUIWidget_RegisterScriptCallbackFunc(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
@@ -12173,8 +12029,6 @@ static swig_lua_method swig_guiex_CGUIWidget_methods[] = {
     {"ProcessProperty", _wrap_CGUIWidget_ProcessProperty}, 
     {"RegisterUIEvent", _wrap_CGUIWidget_RegisterUIEvent}, 
     {"UnregisterUIEvent", _wrap_CGUIWidget_UnregisterUIEvent}, 
-    {"RegisterSound", _wrap_CGUIWidget_RegisterSound}, 
-    {"UnregisterSound", _wrap_CGUIWidget_UnregisterSound}, 
     {"RegisterScriptCallbackFunc", _wrap_CGUIWidget_RegisterScriptCallbackFunc}, 
     {"UnregisterScriptCallbackFunc", _wrap_CGUIWidget_UnregisterScriptCallbackFunc}, 
     {"HasScriptCallbackFunc", _wrap_CGUIWidget_HasScriptCallbackFunc}, 

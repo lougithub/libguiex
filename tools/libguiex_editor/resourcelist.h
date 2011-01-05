@@ -35,6 +35,7 @@ public:
 
 	const wxArrayString& GetImageList();
 	const wxArrayString& GetAsList();
+	const wxArrayString& GetSoundList();
 
 	const wxBitmap* GetImageThumbnail( const wxString& rImageName );
 	const wxBitmap* GetOriginalImageThumbnail( const wxString& rImageName );
@@ -48,6 +49,10 @@ protected:
 	void UpdateAsNameList();
 	void ResetAsList();
 
+	//update sound used in the system
+	void UpdateSoundList();
+	void ResetSoundList();
+
 protected:
 	CResourceList();
 	~CResourceList();
@@ -57,6 +62,7 @@ private:
 	std::map<wxString, wxBitmap*> m_mapImageThumbnails;
 	std::map<wxString, wxBitmap*> m_mapOriginalImageThumbnails;
 	wxArrayString m_arrayAsArray;
+	wxArrayString m_arraySoundArray;
 };
 
 

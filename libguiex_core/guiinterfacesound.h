@@ -38,24 +38,13 @@ namespace guiex
 		IGUIInterfaceSound( const char* szModuleName );
 		virtual ~IGUIInterfaceSound();
 
-		virtual CGUISoundData* CreateSoundData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nSoundID ) = 0;
+		virtual CGUISoundData* CreateSoundData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath ) = 0;
 		virtual void DestroySoundData( CGUISoundData* pData ) = 0;
 
-		/**
-		* @brief load effect.
-		* @return 0 for success.
-		*/
-		virtual int32 LoadEffect( int32 nIdx,  const CGUIString& rFileName) = 0;
-
-		/**
-		* @brief unload effect.
-		*/
-		virtual void UnloadEffect( int32 nIdx ) = 0;
-
-		/**
-		* @brief play effect.
-		*/
-		virtual int32 PlayEffect( int32 nIdx ) = 0;
+		virtual void Play( CGUISoundData* pSoundData ) = 0;
+		virtual void Stop( CGUISoundData* pSoundData ) = 0;
+		virtual void Pause( CGUISoundData* pSoundData ) = 0;
+		virtual bool IsPlaying( CGUISoundData* pSoundData ) = 0;
 
 	public: 
 		static const char* StaticGetModuleType();

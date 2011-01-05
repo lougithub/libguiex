@@ -14,6 +14,7 @@
 #include "propertyconfigmgr.h"
 #include "wxmainapp.h"
 #include "wxmainframe.h"
+#include "wxtoolspgmanager.h"
 
 #include <wx/propgrid/propgrid.h>
 #include <wx/propgrid/advprops.h>
@@ -109,7 +110,7 @@ wxWizardPageSimple* WxWizardCreateWidget::InitPage2()
 		//| wxPG_EX_HELP_AS_TOOLTIPS
 		wxPG_EX_MULTIPLE_SELECTION;
 
-	m_pPropGridMgr = new wxPropertyGridManager(
+	m_pPropGridMgr = new WxToolsPGManager(
 		page2,
 		wxID_ANY, 
 		wxDefaultPosition,
@@ -123,10 +124,6 @@ wxWizardPageSimple* WxWizardCreateWidget::InitPage2()
 	// Register all editors (SpinCtrl etc.)
 	m_pPropGridMgr->RegisterAdditionalEditors();
 
-	m_pPropGridMgr->AddPage(wxT(NOTEBOOK_APPEARANCE_PAGE_NAME));
-	m_pPropGridMgr->AddPage(wxT(NOTEBOOK_IMAGE_PAGE_NAME));
-	m_pPropGridMgr->AddPage(wxT(NOTEBOOK_EVENT_PAGE_NAME));
-	m_pPropGridMgr->SelectPage(NOTEBOOK_PAGE_APPEARANCE);
 	m_pPropGridMgr->Refresh();
 
 	wxBoxSizer* topSizer = new wxBoxSizer ( wxVERTICAL );
@@ -158,10 +155,7 @@ void WxWizardCreateWidget::OnWizardPageChanging(wxWizardEvent& event)
 		if( m_strWidgetType != m_pComboBoxType->GetValue())
 		{
 			m_strWidgetType = m_pComboBoxType->GetValue();
-			m_pPropGridMgr->ClearPage(NOTEBOOK_PAGE_APPEARANCE);
-			m_pPropGridMgr->ClearPage(NOTEBOOK_PAGE_IMAGE);
-			m_pPropGridMgr->ClearPage(NOTEBOOK_PAGE_EVENT);
-
+			m_pPropGridMgr->ToolsClearPage();
 			UpdateGridProperties( m_pPropGridMgr,  wx2GuiString( m_strWidgetType ) );
 		}
 	}

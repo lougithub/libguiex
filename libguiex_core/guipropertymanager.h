@@ -45,7 +45,6 @@ namespace guiex
 		ePropertyType_Color,
 		ePropertyType_StringInfo,
 		ePropertyType_Event,
-		ePropertyType_Sound,
 		ePropertyType_WidgetPosition,
 		ePropertyType_WidgetSize,
 
@@ -53,6 +52,7 @@ namespace guiex
 		ePropertyType_Font,
 		ePropertyType_Animation,
 		ePropertyType_As,
+		ePropertyType_Sound,
 
 		ePropertyType_AsColor,
 		ePropertyType_AsScale,

@@ -80,6 +80,8 @@ namespace guiex
 		int32 DeallocateResource( CGUIAnimation* pAnimation );
 
 	protected:
+		virtual	void DestroyResourceImp( void* pRes ); 
+
 		CGUIAnimation* DoCreateAnimation(
 			const CGUIString& rSceneName, 
 			const CGUIProperty& rProperty );

@@ -1,13 +1,13 @@
 /** 
-* @file guisounddata_dummy.h
+* @file guisounddata_cocoa.h
 * @brief 
 * @author Lou Guoliang (louguoliang@gmail.com)
 * @date 2011-01-04
 */
 
 
-#ifndef	__KEN_GUISOUNDDATA_DUMMY_20110104_H__
-#define	__KEN_GUISOUNDDATA_DUMMY_20110104_H__
+#ifndef	__KEN_GUISOUNDDATA_COCOA_20110104_H__
+#define	__KEN_GUISOUNDDATA_COCOA_20110104_H__
 
 //============================================================================//
 // include
@@ -21,16 +21,16 @@
 namespace guiex
 {
 	/**
-	* @class CGUISoundData_dummy
+	* @class CGUISoundData_cocoa
 	*/
-	class GUIEXPORT CGUISoundData_dummy : public CGUISoundData
+	class GUIEXPORT CGUISoundData_cocoa : public CGUISoundData
 	{	
 	public:
-		virtual ~CGUISoundData_dummy();
+		virtual ~CGUISoundData_cocoa();
 
 	protected:
-		friend class IGUISound_dummy;
-		CGUISoundData_dummy( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath );
+		friend class IGUISound_cocoa;
+		CGUISoundData_cocoa( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath );
 
 		virtual int32 DoLoad() const;
 		virtual void DoUnload();
@@ -40,4 +40,4 @@ namespace guiex
 }
 
 
-#endif //__KEN_GUISOUNDDATA_DUMMY_20110104_H__
+#endif //__KEN_GUISOUNDDATA_COCOA_20110104_H__

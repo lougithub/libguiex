@@ -47,14 +47,7 @@ void CPropertyConfigMgr::Clear()
 {
 	m_mapPropertySet.clear();
 	m_setWidgetTyps.clear();
-
-	for( TMapType::iterator itor = m_mapType.begin();
-		itor != m_mapType.end();
-		++itor )
-	{
-		delete itor->second;
-	}
-	m_mapType.clear();
+	m_setType.clear();
 
 
 	for( std::vector<CPropertyData*>::iterator itor=m_arrayPropertyDataCache.begin();
@@ -117,6 +110,16 @@ const guiex::CGUIProperty& CPropertyConfigMgr::GetPropertySet(const std::string&
 	return itor->second;
 }
 //------------------------------------------------------------------------------
+bool CPropertyConfigMgr::HasPropertySet(const std::string& rSetName ) const
+{
+	TMapPropertySet::const_iterator itor = m_mapPropertySet.find(rSetName);
+	if( itor == m_mapPropertySet.end())
+	{
+		return false;
+	}
+	return true;
+}
+//------------------------------------------------------------------------------
 const wxArrayString& CPropertyConfigMgr::GetEnumDefine( const guiex::CGUIString& rEnumName ) const
 {
 	TEnumMap::const_iterator itor = m_mapEnums.find(rEnumName);
@@ -131,19 +134,19 @@ const wxArrayString& CPropertyConfigMgr::GetEnumDefine( const guiex::CGUIString&
 //------------------------------------------------------------------------------
 std::string* CPropertyConfigMgr::GetTypePtr( const std::string& rType )
 {
-	TMapType::iterator itor = m_mapType.find( rType );
-	if(itor == m_mapType.end())
+	std::set<std::string>::iterator itor = m_setType.find( rType );
+	if(itor == m_setType.end())
 	{
 		throw guiex::CGUIException("[CPropertyConfigMgr::GetTypePtr]: failed to find widget type <%s>", rType.c_str());
 	}
-	return itor->second;
+	return &(*itor);
 }
 //------------------------------------------------------------------------------
 void CPropertyConfigMgr::AddType( const std::string& rType )
 {
-	if( m_mapType.find(rType) == m_mapType.end())
+	if( m_setType.find(rType) == m_setType.end())
 	{
-		m_mapType.insert( std::make_pair( rType, new std::string(rType)));
+		m_setType.insert( rType );
 	}
 }
 //------------------------------------------------------------------------------

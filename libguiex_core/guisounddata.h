@@ -36,19 +36,22 @@ namespace guiex
 	{	
 	public:
 		virtual ~CGUISoundData();
-		uint32 GetSoundID() const;
+
+		void Play();
+		void Stop();
+		void Pause();
+		virtual bool IsPlaying();
 
 	protected:
-		CGUISoundData( const CGUIString& rName, const CGUIString& rSceneName, uint32 nSoundID );
+		CGUISoundData( const CGUIString& rName, const CGUIString& rSceneName );
 
 	protected:
 		friend class CGUISoundManager;
+
+	protected:
 		//disable =
 		CGUISoundData( const CGUISoundData&  );
 		const CGUISoundData& operator=(const CGUISoundData& );
-
-	protected:
-		uint32 m_nSoundID;
 	};
 }
 

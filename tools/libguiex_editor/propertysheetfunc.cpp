@@ -16,54 +16,21 @@
 #include "wxwidgetpropertygridextend.h"
 #include "propertysheetfunc.h"
 #include "propertyconfigmgr.h"
+#include "wxtoolspgmanager.h"
 
 //============================================================================//
 // declare
 //============================================================================// 
-class wxInvalidWordValidator : public wxValidator
-{
-public:
-
-	wxInvalidWordValidator( const wxString& invalidWord )
-		: wxValidator(), m_invalidWord(invalidWord)
-	{
-	}
-
-	virtual wxObject* Clone() const
-	{
-		return new wxInvalidWordValidator(m_invalidWord);
-	}
-	virtual bool Validate(wxWindow* WXUNUSED(parent))
-	{
-		wxTextCtrl* tc = wxDynamicCast(GetWindow(), wxTextCtrl);
-		wxCHECK_MSG(tc, true, wxT("validator window must be wxTextCtrl"));
-
-		wxString val = tc->GetValue();
-
-		if( val != m_invalidWord)
-			return true;
-
-		::wxMessageBox(wxString::Format(wxT("%s is not allowed word"),m_invalidWord.c_str()),
-			wxT("Validation Failure"));
-
-		return false;
-	}
-
-private:
-	wxString    m_invalidWord;
-};
 
 
 //============================================================================//
 // function
 //============================================================================// 
 //------------------------------------------------------------------------------
-static	wxArrayString s_arrayTextAlignmentH;
-static	wxArrayString s_arrayTextAlignmentV;
-
+std::vector<CGUIString> g_vecPropertyPages;
 
 //------------------------------------------------------------------------------
-void UpdateGridProperties( wxPropertyGridManager* pSheetMgr, const std::string& rType, CGUIWidget* pWidget )
+void UpdateGridProperties( WxToolsPGManager* pSheetMgr, const std::string& rType, CGUIWidget* pWidget )
 {
 	//get property set
 	const CGUIProperty& rSet = CPropertyConfigMgr::Instance()->GetPropertySet(rType);
@@ -89,7 +56,7 @@ void UpdateGridProperties( wxPropertyGridManager* pSheetMgr, const std::string& 
 		}
 		
 		//select page
-		SelectGridPropertyPage(pSheetMgr, CPropertyData::GetPropertyData(*pProp)->GetPage());
+		pSheetMgr->ToolsSelectPage(CPropertyData::GetPropertyData(*pProp)->GetPage());
 		
 		//add category
 		std::string strPage = CPropertyData::GetPropertyData(*pProp)->GetPage();
@@ -114,23 +81,7 @@ void UpdateGridProperties( wxPropertyGridManager* pSheetMgr, const std::string& 
 	//pSheetMgr->ExpandAll();
 }
 //------------------------------------------------------------------------------
-void SelectGridPropertyPage( wxPropertyGridManager* pSheetMgr, const std::string& rEvent )
-{
-	if( rEvent == NOTEBOOK_EVENT_PAGE_NAME)
-	{
-		pSheetMgr->SelectPage(NOTEBOOK_PAGE_EVENT);
-	}
-	else if( rEvent == NOTEBOOK_IMAGE_PAGE_NAME )
-	{
-		pSheetMgr->SelectPage(NOTEBOOK_PAGE_IMAGE);
-	}
-	else
-	{
-		pSheetMgr->SelectPage(NOTEBOOK_PAGE_APPEARANCE);
-	}
-}
-//------------------------------------------------------------------------------
-void GenerateGUIProperties( wxPropertyGridManager* pSheetMgr,CGUIProperty& rSet )
+void GenerateGUIProperties( WxToolsPGManager* pSheetMgr,CGUIProperty& rSet )
 {
 	for ( wxPGVIterator it = pSheetMgr->GetVIterator(wxPG_ITERATE_PROPERTIES);
 		!it.AtEnd();
@@ -142,7 +93,7 @@ void GenerateGUIProperties( wxPropertyGridManager* pSheetMgr,CGUIProperty& rSet 
 	}
 }
 //------------------------------------------------------------------------------
-void UpdateGridAndGuiProperty( wxPropertyGridManager* pSheetMgr, CGUIWidget* pWidget, const CGUIString& rPropertyName )
+void UpdateGridAndGuiProperty( WxToolsPGManager* pSheetMgr, CGUIWidget* pWidget, const CGUIString& rPropertyName )
 {
 	const CGUIProperty& rSet = CPropertyConfigMgr::Instance()->GetPropertySet(pWidget->GetType());
 
@@ -166,7 +117,7 @@ void UpdateGridAndGuiProperty( wxPropertyGridManager* pSheetMgr, CGUIWidget* pWi
 	UpdateGridProperty( pSheetMgr, NULL, aProp );
 }
 //------------------------------------------------------------------------------
-void UpdateGridProperty( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGCategory, const CGUIProperty& aProp )
+void UpdateGridProperty( WxToolsPGManager* pSheetMgr, wxPGProperty* pPGCategory, const CGUIProperty& aProp )
 {
 	wxPGProperty* pPGTop = pSheetMgr->GetPropertyByName( Gui2wxString( aProp.GetName() ));
 	GUI_ASSERT( pPGTop || pPGCategory, "wrong parameter" );
@@ -367,6 +318,23 @@ void UpdateGridProperty( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGCate
 		}
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
+	//sound
+	else if(  aProp.GetType() == ePropertyType_Sound )
+	{			
+		wxString aValue;
+		aValue = Gui2wxString(aProp.GetValue());
+
+		if( pPGTop )
+		{
+			pPGTop->SetValue(aValue);
+		}
+		else
+		{
+			pPGTop = pSheetMgr->Insert( pPGCategory, -1, new wxEnumProperty(CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()),CResourceList::Instance()->GetSoundList()));
+			pSheetMgr->SetPropertyValue(pPGTop, aValue);
+		}
+	}
+	//////////////////////////////////////////////////////////////////////////////////////
 	//ENUM
 	else if( aProp.GetType() == ePropertyType_ScreenValue )
 	{
@@ -521,7 +489,7 @@ void UpdateGridProperty( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGCate
 	}
 }
 //------------------------------------------------------------------------------
-void GenerateGUIProperty( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGProperty, CGUIProperty& rProperty )
+void GenerateGUIProperty( WxToolsPGManager* pSheetMgr, wxPGProperty* pPGProperty, CGUIProperty& rProperty )
 {
 	std::string  strName = pSheetMgr->GetPropertyName(pPGProperty).char_str(wxConvUTF8).data();
 	std::string* pType = (std::string*)pSheetMgr->GetPropertyClientData( pPGProperty );
@@ -603,6 +571,13 @@ void GenerateGUIProperty( wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGPro
 	//////////////////////////////////////////////////////////////////////////////////////
 	//CGUIAs
 	else if( rProperty.GetType() == ePropertyType_As )
+	{
+		CGUIString aValue = pSheetMgr->GetPropertyValueAsString( pPGProperty ).char_str(wxConvUTF8).data();
+		rProperty.SetValue( aValue );
+	}
+	//////////////////////////////////////////////////////////////////////////////////////
+	//CGUISound
+	else if( rProperty.GetType() == ePropertyType_Sound )
 	{
 		CGUIString aValue = pSheetMgr->GetPropertyValueAsString( pPGProperty ).char_str(wxConvUTF8).data();
 		rProperty.SetValue( aValue );

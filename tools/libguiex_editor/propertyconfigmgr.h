@@ -120,7 +120,8 @@ public:
 	* @return NULL for failed to find this kind of property
 	*/
 	const CGUIProperty&	GetPropertySet(const std::string& rSetName ) const;
-	
+	bool HasPropertySet(const std::string& rSetName ) const;
+
 	const wxArrayString& GetEnumDefine(const CGUIString& rEnumName ) const;
 
 	/** 
@@ -132,10 +133,7 @@ public:
 		return m_setWidgetTyps;
 	}
 
-	//add a page
 	void AddType( const std::string& rType );
-
-	//get type ptr
 	std::string* GetTypePtr( const std::string& rType );
 
 protected:
@@ -162,8 +160,7 @@ protected:
 protected:
 	TMapPropertySet m_mapPropertySet;
 
-	typedef	std::map<std::string, std::string*> TMapType;
-	TMapType m_mapType;
+	std::set<std::string> m_setType;
 
 	TSetType m_setWidgetTyps;
 

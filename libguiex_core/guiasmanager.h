@@ -65,7 +65,7 @@ namespace guiex
 			const CGUIString& rSceneName,
 			const CGUIString& rAsType );
 
-		virtual	void DestroyResourceImp( CGUIAs* pRes ); 
+		virtual	void DestroyResourceImp( void* pRes ); 
 
 	private:
 		static CGUIAsManager* m_pSingleton;

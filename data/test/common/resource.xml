@@ -241,7 +241,45 @@
 	</property>
 
 
+	<property name="se_error.ogg" type="CGUISoundDefine" >
+		<property name="path" type="CGUIString" value="sound/se_error.ogg"/>
+	</property>
 
+	<property name="se_error.wav" type="CGUISoundDefine" >
+		<property name="path" type="CGUIString" value="sound/se_error.wav"/>
+	</property>
+
+	<property name="se_no.ogg" type="CGUISoundDefine" >
+		<property name="path" type="CGUIString" value="sound/se_no.ogg"/>
+	</property>
+
+	<property name="se_no.wav" type="CGUISoundDefine" >
+		<property name="path" type="CGUIString" value="sound/se_no.wav"/>
+	</property>
+
+	<property name="se_yes.ogg" type="CGUISoundDefine" >
+		<property name="path" type="CGUIString" value="sound/se_yes.ogg"/>
+	</property>
+
+	<property name="se_yes.wav" type="CGUISoundDefine" >
+		<property name="path" type="CGUIString" value="sound/se_yes.wav"/>
+	</property>
+
+	<property name="se_selection.ogg" type="CGUISoundDefine" >
+		<property name="path" type="CGUIString" value="sound/se_selection.ogg"/>
+	</property>
+
+	<property name="se_warning.ogg" type="CGUISoundDefine" >
+		<property name="path" type="CGUIString" value="sound/se_warning.ogg"/>
+	</property>
+
+	<property name="se_qianbi_diaoluo.ogg" type="CGUISoundDefine" >
+		<property name="path" type="CGUIString" value="sound/se_qianbi_diaoluo.ogg"/>
+	</property>
+
+	<property name="stereo.ogg" type="CGUISoundDefine" >
+		<property name="path" type="CGUIString" value="sound/stereo.ogg"/>
+	</property>
 </guiex>
 
 

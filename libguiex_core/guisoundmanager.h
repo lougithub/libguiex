@@ -46,15 +46,16 @@ namespace guiex
 		static CGUISoundManager* Instance(); 
 
 		int32 RegisterSound( const CGUIString& rSceneName, const CGUIProperty& rProperty);
+		CGUISoundData* AllocateResource( const CGUIString& rSoundName ) const;
+		int32 DeallocateResource( CGUISoundData* pSound );
 
 	protected:
-		virtual	void DestroyResourceImp( CGUISoundData* pRes ); 
+		virtual	void DestroyResourceImp( void* pRes ); 
 		
 		CGUISoundData* DoCreateSound(
 			const CGUIString& rName, 
 			const CGUIString& rSceneName, 
-			const CGUIString& rPath, 
-			uint32 nSoundID );
+			const CGUIString& rPath);
 
 	private:
 		static CGUISoundManager* m_pSingleton;

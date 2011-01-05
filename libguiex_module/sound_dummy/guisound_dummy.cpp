@@ -32,10 +32,6 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	IGUISound_dummy::~IGUISound_dummy()
-	{
-	}
-	//------------------------------------------------------------------------------
 	int IGUISound_dummy::DoInitialize(void* )
 	{
 		return 0;
@@ -50,51 +46,35 @@ namespace guiex
 		delete this;
 	}
 	//------------------------------------------------------------------------------
-	CGUISoundData* IGUISound_dummy::CreateSoundData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nSoundID )
+	CGUISoundData* IGUISound_dummy::CreateSoundData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath )
 	{
-		if( m_mapSoundData.find( nSoundID ) != m_mapSoundData.end() )
-		{
-			throw CGUIException("[IGUISound_dummy::CreateSoundData]: the sound <%d> has existing", nSoundID );
-			return NULL;
-		}
-		CGUISoundData_dummy* pSoundData = new CGUISoundData_dummy( rName, rSceneName, rPath, nSoundID );
-		m_mapSoundData.insert( std::make_pair( nSoundID, pSoundData ) );
+		CGUISoundData_dummy* pSoundData = new CGUISoundData_dummy( rName, rSceneName, rPath );
 		return pSoundData;
 	}
 	//------------------------------------------------------------------------------
 	void IGUISound_dummy::DestroySoundData( CGUISoundData* pData )
 	{
-		GUI_ASSERT( pData, "invalid parameter" );
-		for( TMapSoundData::iterator itor = m_mapSoundData.begin();
-			itor != m_mapSoundData.end();
-			++itor )
-		{
-			if( itor->second == pData )
-			{
-				delete pData;
-				m_mapSoundData.erase( itor );
-				return;
-			}
-		}
-		throw CGUIException(
-			"[IGUISound_dummy::DestroySoundData]: the sound <%s:%s> doesn't existing", 
-			pData->GetName().c_str(),
-			pData->GetSceneName().c_str());
-		return;
+		delete pData;
 	}
 	//------------------------------------------------------------------------------
-	int32 IGUISound_dummy::LoadEffect( int32 /*nID*/,  const CGUIString& /*rFileName*/)
+	void IGUISound_dummy::Play( CGUISoundData* /*pSoundData*/ )
 	{
-		return 0;
+
 	}
 	//------------------------------------------------------------------------------
-	void IGUISound_dummy::UnloadEffect( int32 /*nID*/ )
+	void IGUISound_dummy::Stop( CGUISoundData* /*pSoundData*/ )
 	{
+
 	}
 	//------------------------------------------------------------------------------
-	int32 IGUISound_dummy::PlayEffect( int32 /*nID*/ )
+	void IGUISound_dummy::Pause( CGUISoundData* /*pSoundData*/ )
 	{
-		return 0;
+
+	}
+	//------------------------------------------------------------------------------
+	bool IGUISound_dummy::IsPlaying( CGUISoundData* /*pSoundData*/ )
+	{
+		return false;
 	}
 	//------------------------------------------------------------------------------
 	

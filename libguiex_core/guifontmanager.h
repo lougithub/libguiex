@@ -48,7 +48,7 @@ namespace guiex
 		int32 RegisterFont( const CGUIString& rSceneName, const CGUIProperty& rProperty);
 
 	protected:
-		virtual	void DestroyResourceImp( CGUIFontData* pRes ); 
+		virtual	void DestroyResourceImp( void* pRes ); 
 		
 		CGUIFontData* DoCreateFont(
 			const CGUIString& rName, 

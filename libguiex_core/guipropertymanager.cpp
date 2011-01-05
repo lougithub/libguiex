@@ -45,7 +45,6 @@ namespace guiex
 		RegisterPropertyType( ePropertyType_Color, "CGUIColor" );
 		RegisterPropertyType( ePropertyType_StringInfo, "CGUIStringInfo" );
 		RegisterPropertyType( ePropertyType_Event, "CGUIEvent" );
-		RegisterPropertyType( ePropertyType_Sound, "CGUISound" );
 		RegisterPropertyType( ePropertyType_WidgetPosition, "CGUIWidgetPosition" );		
 		RegisterPropertyType( ePropertyType_WidgetSize, "CGUIWidgetSize" );		
 
@@ -58,6 +57,7 @@ namespace guiex
 
 		RegisterPropertyType( ePropertyType_Font, "CGUIFont" );		
 		RegisterPropertyType( ePropertyType_Image, "CGUIImage" );
+		RegisterPropertyType( ePropertyType_Sound, "CGUISound" );
 		RegisterPropertyType( ePropertyType_As, "CGUIAs" );
 		RegisterPropertyType( ePropertyType_Animation, "CGUIAnimation" );
 
@@ -94,6 +94,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIPropertyManager* CGUIPropertyManager::Instance()
 	{
+		GUI_ASSERT( m_pSingleton, "not initialized" );
 		return m_pSingleton; 
 	}
 	//------------------------------------------------------------------------------

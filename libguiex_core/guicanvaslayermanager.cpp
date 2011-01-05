@@ -38,6 +38,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUICanvasLayerManager* CGUICanvasLayerManager::Instance()
 	{
+		GUI_ASSERT( m_pSingleton, "not initialized" );
 		return m_pSingleton; 
 	}
 	//------------------------------------------------------------------------------

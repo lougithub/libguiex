@@ -94,6 +94,8 @@ namespace guiex
 		int32 DeallocateResource( CGUIImage* pImage );
 
 	protected:
+		virtual	void DestroyResourceImp( void* pRes ); 
+
 		CGUIImage* DoCreateImage( 
 			const CGUIString& rSceneName,
 			const CGUIProperty& rProperty) const;

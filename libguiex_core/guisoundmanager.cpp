@@ -37,6 +37,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUISoundManager* CGUISoundManager::Instance()
 	{
+		GUI_ASSERT( m_pSingleton, "not initialized" );
 		return m_pSingleton; 
 	}
 	//------------------------------------------------------------------------------
@@ -56,20 +57,7 @@ namespace guiex
 		}
 		CGUIString strPath = pPropPath->GetValue();
 
-		const CGUIProperty* pPropID = rProperty.GetProperty("id");
-		if( !pPropID )
-		{
-			throw guiex::CGUIException(
-				"[CGUISoundManager::RegisterSound], invalid property <%s:%s:%s>!", 
-				rProperty.GetName().c_str(),
-				rProperty.GetTypeAsString().c_str(),
-				rProperty.GetValue().c_str());
-			return -1;
-		}
-		uint32 nID = 0;
-		PropertyToValue( *pPropID, nID);
-
-		CGUISoundData* pSoundData = DoCreateSound( rProperty.GetName(), rSceneName, strPath, nID );
+		CGUISoundData* pSoundData = DoCreateSound( rProperty.GetName(), rSceneName, strPath );
 		RegisterResource( pSoundData );
 		return 0;
 	}
@@ -77,8 +65,7 @@ namespace guiex
 	CGUISoundData* CGUISoundManager::DoCreateSound(
 			const CGUIString& rName, 
 			const CGUIString& rSceneName, 
-			const CGUIString& rPath, 
-			uint32 nSoundID)
+			const CGUIString& rPath )
 	{
 		IGUIInterfaceSound* pSound = CGUIInterfaceManager::Instance()->GetInterfaceSound();
 		if( !pSound )
@@ -86,18 +73,50 @@ namespace guiex
 			throw CGUIException("[CGUISoundManager::DoCreateSound]: failed to get sound interface");
 			return NULL;
 		}
-		CGUISoundData* pSoundData = pSound->CreateSoundData( rName, rSceneName, rPath, nSoundID );
+		CGUISoundData* pSoundData = pSound->CreateSoundData( rName, rSceneName, rPath );
 		return pSoundData;
 	}
 	//------------------------------------------------------------------------------
-	void CGUISoundManager::DestroyResourceImp( CGUISoundData * pRes )
+	void CGUISoundManager::DestroyResourceImp( void* pRes )
 	{
 		IGUIInterfaceSound* pSound = CGUIInterfaceManager::Instance()->GetInterfaceSound();
 		if( !pSound )
 		{
 			throw CGUIException("[CGUISoundManager::DestroyResourceImp]: failed to get sound interface");
 		}
-		pSound->DestroySoundData( pRes );
+		pSound->DestroySoundData( ( TResourceType* )( pRes ) );
+	}
+	//------------------------------------------------------------------------------
+	CGUISoundData* CGUISoundManager::AllocateResource( const CGUIString& rResName ) const
+	{
+		CGUISoundData* pSound = CGUIResourceManager<CGUISoundData>::GetResource( rResName );
+		if( !pSound )
+		{
+			throw CGUIException( 
+				"[CGUISoundDataManager::AllocateResource]: failed to get sound by name <%s>",
+				rResName.c_str());
+			return NULL;
+		}
+		pSound->RefRetain();
+		return pSound;
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUISoundManager::DeallocateResource( CGUISoundData* pSound )
+	{
+		GUI_ASSERT( pSound, "invalid parameter" );
+
+		pSound->RefRelease();
+		if( pSound->GetRefCount() == 0 )
+		{
+			//named image's reference count shouldn't be zero, which is retained by register function
+			throw CGUIException(
+				"[CGUISoundManager::DeallocateResource]: invalid reference count [%d] for resource: <%s:%s:%s>", 
+				pSound->GetRefCount(),
+				pSound->GetName().c_str(), 
+				pSound->GetResourceType().c_str(),
+				pSound->GetSceneName().c_str() );
+		}
+		return 0;
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex
