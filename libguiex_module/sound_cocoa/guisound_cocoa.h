@@ -14,6 +14,9 @@
 #include <libguiex_core/guiinterfacesound.h>
 #include <map>
 
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
+
 //============================================================================//
 // class
 //============================================================================// 
@@ -50,6 +53,9 @@ namespace guiex
 		 */
 		virtual void DoDestroy();
 		
+	protected:
+		ALCcontext * m_pContext;
+		ALCdevice * m_pDevice;
 	
 	public:
 		static const char* StaticGetModuleName();

@@ -13,6 +13,8 @@
 // include
 //============================================================================//
 #include <libguiex_core/guisounddata.h>
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
 
 //============================================================================//
 // class
@@ -35,6 +37,17 @@ namespace guiex
 		virtual int32 DoLoad() const;
 		virtual void DoUnload();
 
+		bool LoadWavFile( const CGUIString& rFilename ) const;
+		bool LoadOggFile( const CGUIString& rFilename ) const;
+
+		bool SetAlBuffer( ALenum format, const ALvoid* data, ALsizei size, ALsizei freq ) const;
+
+	protected:
+		CGUIString m_strPath; //sound file path
+
+		//for openal
+		mutable uint32 m_nSourceId;
+		mutable uint32 m_nBufferId;
 	protected:
 	};
 }

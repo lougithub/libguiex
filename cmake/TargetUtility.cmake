@@ -43,6 +43,8 @@ macro( macro_set_target_link_libraries_mac targetname )
 		general lua
 		general freetype
 		general box2d
+		general ogg
+		general vorbis
 		)
 endmacro()
 
