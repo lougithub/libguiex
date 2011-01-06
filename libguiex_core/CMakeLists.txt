@@ -103,6 +103,10 @@ set( ${target_name}_resource_SRCS
 	guisounddata.h
 	guisoundmanager.cpp
 	guisoundmanager.h	
+	guimusicdata.cpp
+	guimusicdata.h
+	guimusicmanager.cpp
+	guimusicmanager.h		
 	guias.cpp
 	guias.h
 	guiasmanager.cpp

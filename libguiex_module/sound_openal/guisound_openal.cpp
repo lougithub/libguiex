@@ -10,6 +10,7 @@
 //============================================================================// 
 #include "guisound_openal.h"
 #include "guisounddata_openal.h"
+#include "guimusicdata_openal.h"
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guisounddata.h>
 
@@ -98,6 +99,17 @@ namespace guiex
 		delete pData;
 	}
 	//------------------------------------------------------------------------------
+	CGUIMusicData* IGUISound_openal::CreateMusicData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath )
+	{
+		return NULL;
+	}
+	//------------------------------------------------------------------------------
+	void IGUISound_openal::DestroyMusicData( CGUIMusicData* pData )
+	{
+		GUI_ASSERT( pData, "invalid parameter" );
+		delete pData;
+	}
+	//------------------------------------------------------------------------------
 	CGUIString IGUISound_openal::GetALErrorString(ALenum err)
 	{
 		switch(err)
@@ -175,5 +187,24 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	
+	void IGUISound_openal::PlayMusic( CGUIMusicData* pSoundData )
+	{
+
+	}
+	//------------------------------------------------------------------------------
+	void IGUISound_openal::StopMusic( CGUIMusicData* pSoundData )
+	{
+
+	}
+	//------------------------------------------------------------------------------
+	void IGUISound_openal::PauseMusic( CGUIMusicData* pSoundData )
+	{
+
+	}
+	//------------------------------------------------------------------------------
+	bool IGUISound_openal::IsPlayingMusic( CGUIMusicData* pSoundData )
+	{
+		return false;
+	}
+	//------------------------------------------------------------------------------
 }//namespace guiex

@@ -10,6 +10,7 @@
 //============================================================================// 
 #include "guisound_cocoa.h"
 #include "guisounddata_cocoa.h"
+#include "guimusicdata_cocoa.h"
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guisystem.h>
 
@@ -93,6 +94,17 @@ namespace guiex
 		delete pData;
 	}
 	//------------------------------------------------------------------------------
+	CGUIMusicData* IGUISound_cocoa::CreateMusicData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath )
+	{
+		return NULL;
+	}
+	//------------------------------------------------------------------------------
+	void IGUISound_cocoa::DestroyMusicData( CGUIMusicData* pData )
+	{
+		GUI_ASSERT( pData, "invalid parameter" );
+		delete pData;
+	}	
+	//------------------------------------------------------------------------------
 	void IGUISound_cocoa::Play( CGUISoundData* pSoundData )
 	{
 		CGUISoundData_cocoa* pOpenalSoundData = (CGUISoundData_cocoa*)(pSoundData);
@@ -135,6 +147,26 @@ namespace guiex
 		{
 			return false;
 		}
+	}
+	//------------------------------------------------------------------------------
+	void IGUISound_cocoa::PlayMusic( CGUIMusicData* pSoundData )
+	{
+
+	}
+	//------------------------------------------------------------------------------
+	void IGUISound_cocoa::StopMusic( CGUIMusicData* pSoundData )
+	{
+
+	}
+	//------------------------------------------------------------------------------
+	void IGUISound_cocoa::PauseMusic( CGUIMusicData* pSoundData )
+	{
+
+	}
+	//------------------------------------------------------------------------------
+	bool IGUISound_cocoa::IsPlayingMusic( CGUIMusicData* pSoundData )
+	{
+		return false;
 	}
 	//------------------------------------------------------------------------------
 	

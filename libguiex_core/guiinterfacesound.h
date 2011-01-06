@@ -20,6 +20,7 @@
 namespace guiex
 {
 	class CGUISoundData;
+	class CGUIMusicData;
 }
 
 
@@ -40,11 +41,18 @@ namespace guiex
 
 		virtual CGUISoundData* CreateSoundData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath ) = 0;
 		virtual void DestroySoundData( CGUISoundData* pData ) = 0;
+		virtual CGUIMusicData* CreateMusicData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath ) = 0;
+		virtual void DestroyMusicData( CGUIMusicData* pData ) = 0;
 
 		virtual void Play( CGUISoundData* pSoundData ) = 0;
 		virtual void Stop( CGUISoundData* pSoundData ) = 0;
 		virtual void Pause( CGUISoundData* pSoundData ) = 0;
 		virtual bool IsPlaying( CGUISoundData* pSoundData ) = 0;
+
+		virtual void PlayMusic( CGUIMusicData* pSoundData ) = 0;
+		virtual void StopMusic( CGUIMusicData* pSoundData ) = 0;
+		virtual void PauseMusic( CGUIMusicData* pSoundData ) = 0;
+		virtual bool IsPlayingMusic( CGUIMusicData* pSoundData ) = 0;
 
 	public: 
 		static const char* StaticGetModuleType();

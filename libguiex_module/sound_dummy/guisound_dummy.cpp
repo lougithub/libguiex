@@ -10,6 +10,7 @@
 //============================================================================// 
 #include "guisound_dummy.h"
 #include "guisounddata_dummy.h"
+#include "guimusicdata_dummy.h"
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guisystem.h>
 
@@ -57,6 +58,17 @@ namespace guiex
 		delete pData;
 	}
 	//------------------------------------------------------------------------------
+	CGUIMusicData* IGUISound_dummy::CreateMusicData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath )
+	{
+		return NULL;
+	}
+	//------------------------------------------------------------------------------
+	void IGUISound_dummy::DestroyMusicData( CGUIMusicData* pData )
+	{
+		GUI_ASSERT( pData, "invalid parameter" );
+		delete pData;
+	}
+	//------------------------------------------------------------------------------
 	void IGUISound_dummy::Play( CGUISoundData* /*pSoundData*/ )
 	{
 
@@ -77,5 +89,24 @@ namespace guiex
 		return false;
 	}
 	//------------------------------------------------------------------------------
-	
+	void IGUISound_dummy::PlayMusic( CGUIMusicData* pSoundData )
+	{
+
+	}
+	//------------------------------------------------------------------------------
+		void IGUISound_dummy::StopMusic( CGUIMusicData* pSoundData )
+	{
+
+	}
+	//------------------------------------------------------------------------------
+	void IGUISound_dummy::PauseMusic( CGUIMusicData* pSoundData )
+	{
+
+	}
+	//------------------------------------------------------------------------------
+	bool IGUISound_dummy::IsPlayingMusic( CGUIMusicData* pSoundData )
+	{
+		return false;
+	}
+	//------------------------------------------------------------------------------
 }//namespace guiex

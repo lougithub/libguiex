@@ -25,6 +25,7 @@
 #include <libguiex_core/guiasmanager.h>
 #include <libguiex_core/guitexturemanager.h>
 #include <libguiex_core/guisoundmanager.h>
+#include <libguiex_core/guimusicmanager.h>
 #include <libguiex_core/guicameramanager.h>
 #include <libguiex_core/guicanvaslayermanager.h>
 
@@ -124,7 +125,8 @@ namespace guiex
 		,m_fTimerForFrame(0.0f)
 		,m_pImageManager( NULL )
 		,m_pAnimationManager( NULL )
-		,m_pSoundManager(NULL)
+		,m_pSoundManager(NULL )
+		,m_pMusicManager(NULL )
 		,m_pAsManager( NULL )
 		,m_pFontManager( NULL )
 		,m_pTextureManager( NULL )
@@ -168,6 +170,7 @@ namespace guiex
 		m_pImageManager = new CGUIImageManager;
 		m_pAnimationManager = new CGUIAnimationManager;
 		m_pSoundManager = new CGUISoundManager;
+		m_pMusicManager = new CGUIMusicManager;
 		m_pAsManager = new CGUIAsManager;
 		m_pFontManager = new CGUIFontManager;
 		m_pTextureManager = new CGUITextureManager;
@@ -191,6 +194,8 @@ namespace guiex
 		m_pAnimationManager = NULL;
 		delete m_pSoundManager;
 		m_pSoundManager = NULL;
+		delete m_pMusicManager;
+		m_pMusicManager = NULL;
 		delete m_pAsManager;
 		m_pAsManager = NULL;
 		delete m_pFontManager;

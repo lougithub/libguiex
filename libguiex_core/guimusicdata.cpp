@@ -8,7 +8,7 @@
 //============================================================================//
 // include
 //============================================================================//
-#include "guisounddata.h"
+#include "guimusicdata.h"
 #include "guiinterfacesound.h"
 #include "guiinterfacemanager.h"
 #include "guiexception.h"
@@ -25,56 +25,56 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	CGUISoundData::CGUISoundData( const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIResource( rName, rSceneName, "SOUND" )
+	CGUIMusicData::CGUIMusicData( const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIResource( rName, rSceneName, "MUSIC" )
 	{
 	}
 	//------------------------------------------------------------------------------
-	CGUISoundData::~CGUISoundData()
+	CGUIMusicData::~CGUIMusicData()
 	{
 	}
 	//------------------------------------------------------------------------------
-	void CGUISoundData::Play()
+	void CGUIMusicData::Play()
 	{
 		Load();
 
 		IGUIInterfaceSound* pInterfaceSound = CGUIInterfaceManager::Instance()->GetInterfaceSound();
 		if( pInterfaceSound )
 		{
-			pInterfaceSound->Play( this );
+			pInterfaceSound->PlayMusic( this );
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUISoundData::Stop()
+	void CGUIMusicData::Stop()
 	{
 		Load();
 
 		IGUIInterfaceSound* pInterfaceSound = CGUIInterfaceManager::Instance()->GetInterfaceSound();
 		if( pInterfaceSound )
 		{
-			pInterfaceSound->Stop( this );
+			pInterfaceSound->StopMusic( this );
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUISoundData::Pause()
+	void CGUIMusicData::Pause()
 	{
 		Load();
 
 		IGUIInterfaceSound* pInterfaceSound = CGUIInterfaceManager::Instance()->GetInterfaceSound();
 		if( pInterfaceSound )
 		{
-			pInterfaceSound->Pause( this );
+			pInterfaceSound->PauseMusic( this );
 		}
 	}
 	//------------------------------------------------------------------------------
-	bool CGUISoundData::IsPlaying()
+	bool CGUIMusicData::IsPlaying()
 	{
 		Load();
 
 		IGUIInterfaceSound* pInterfaceSound = CGUIInterfaceManager::Instance()->GetInterfaceSound();
 		if( pInterfaceSound )
 		{
-			return pInterfaceSound->IsPlaying( this );
+			return pInterfaceSound->IsPlayingMusic( this );
 		}
 		return false;
 	}

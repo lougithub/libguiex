@@ -24,6 +24,8 @@ set( ${target_name}_sound_dummy_SRCS
 	sound_dummy/guisound_dummy.h
 	sound_dummy/guisounddata_dummy.cpp
 	sound_dummy/guisounddata_dummy.h	
+	sound_dummy/guimusicdata_dummy.cpp
+	sound_dummy/guimusicdata_dummy.h		
 	)
 source_group(sound_dummy FILES ${${target_name}_sound_dummy_SRCS} )
 
@@ -33,6 +35,8 @@ set( ${target_name}_sound_cocoa_SRCS
 	sound_cocoa/guisound_cocoa.h
 	sound_cocoa/guisounddata_cocoa.mm
 	sound_cocoa/guisounddata_cocoa.h	
+	sound_cocoa/guimusicdata_cocoa.cpp
+	sound_cocoa/guimusicdata_cocoa.h		
 	)
 source_group(sound_cocoa FILES ${${target_name}_sound_cocoa_SRCS} )
 
@@ -42,6 +46,8 @@ set( ${target_name}_sound_openal_SRCS
 	sound_openal/guisound_openal.h
 	sound_openal/guisounddata_openal.cpp
 	sound_openal/guisounddata_openal.h	
+	sound_openal/guimusicdata_openal.cpp
+	sound_openal/guimusicdata_openal.h		
 	)
 source_group(sound_openal FILES ${${target_name}_sound_openal_SRCS} )
 

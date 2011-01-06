@@ -74,6 +74,7 @@ namespace guiex
 
 		RegisterPropertyType( ePropertyType_FontDefine, "CGUIFontDefine" );
 		RegisterPropertyType( ePropertyType_SoundDefine, "CGUISoundDefine" );
+		RegisterPropertyType( ePropertyType_MusicDefine, "CGUIMusicDefine" );
 		RegisterPropertyType( ePropertyType_ImageDefine, "CGUIImageDefine" );
 		RegisterPropertyType( ePropertyType_AnimationDefine, "CGUIAnimationDefine" );
 		RegisterPropertyType( ePropertyType_AsDefine, "CGUIAsDefine" );
