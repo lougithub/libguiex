@@ -2,8 +2,8 @@
 // Author: GameCrashDebug.
 // Date: 20101123.
 // -----------------------------------------------------------------------------
-#ifndef _RE_TRACK_PANEL_WIDGET_H_
-#define _RE_TRACK_PANEL_WIDGET_H_
+#ifndef _RE_ANIM_CONSOLE_WIDGET_H_
+#define _RE_ANIM_CONSOLE_WIDGET_H_
 // -----------------------------------------------------------------------------
 // The interpretation of QModelIndex for this model:
 // - row:		track type ( translation, rotation, alpha, etc. );
@@ -17,6 +17,8 @@
 
 
 class QMenu;
+class QLabel;
+class QGraphicsScene;
 
 
 namespace RE
@@ -24,13 +26,14 @@ namespace RE
 
 
 class ReAnimModel;
-class ReTrackWidget;
+class ReAnimTrackWidget;
 class ReRulerWidget;
-class ReTrackHeadWidget;
-class ReTrackFrameWidget;
+class ReAnimEntityWidget;
+class ReAnimFrameWidget;
+class ReAnimGraphicsItem;
 
 
-class ReTrackPanelWidget : public ReBaseWidget< QWidget >
+class ReAnimConsoleWidget : public ReBaseWidget< QWidget >
 {
 	Q_OBJECT
 	typedef ReBaseWidget< QWidget >	TSuper;
@@ -39,88 +42,68 @@ class ReTrackPanelWidget : public ReBaseWidget< QWidget >
 	// Internal classes.
 	// -------------------------------------------------------------------------
 public:
-	class ReTrackSuite
+	class ReAnimEntityInfo
 	{
 	public:
-		ReTrackSuite( ReTrackHeadWidget* _head, ReTrackWidget* _track, int _type )
-			: m_headWidget( _head )
-			, m_trackWidget( _track )
-			, m_type( _type ) 
-		{}
+		ReAnimGraphicsItem*		m_graphicsItem;
+		ReAnimEntityWidget*		m_entityWidget;		
 
-		ReTrackHeadWidget*	m_headWidget;
-		ReTrackWidget*		m_trackWidget;
-		int					m_type;
+		ReAnimEntityInfo(): m_graphicsItem( NULL ), m_entityWidget( NULL ) {}
 	};
+
+	typedef QList< ReAnimEntityInfo >		TAnimEntityList;
+	typedef TAnimEntityList::Iterator		TAnimEntityListItor;
+	typedef TAnimEntityList::const_iterator	TAnimEntityListCItor;
 
 	// -------------------------------------------------------------------------
 	// General.
 	// -------------------------------------------------------------------------
 public:
-	ReTrackPanelWidget( ReAnimModel* _model, QWidget* _parent = NULL );
-	~ReTrackPanelWidget();
-
-	bool				PrepareTransform( eTrackType _type, QVariant& _left, QVariant& _right, qreal& _factor ) const;
-	QMatrix				GetTranslationMatrix() const;
-	QMatrix				GetRotationMatrix() const;
-	QMatrix				GetScaleMatrix() const;	
+	ReAnimConsoleWidget( ReAnimModel* _model, QGraphicsScene* _scene, QWidget* _parent = NULL );
+	~ReAnimConsoleWidget();
 
 	// -------------------------------------------------------------------------
 	// Overrides QWidget.
 	// -------------------------------------------------------------------------
 protected:
 	virtual void		paintEvent( QPaintEvent* _event );	
-	virtual void		mousePressEvent( QMouseEvent* _event );
-	virtual void		mouseReleaseEvent( QMouseEvent* _event );
-	virtual void		mouseMoveEvent( QMouseEvent* _event );
-	virtual void		wheelEvent( QWheelEvent* _event );
-	virtual void		keyPressEvent( QKeyEvent* _event );
-	virtual void		keyReleaseEvent( QKeyEvent* _event );
 	virtual void		resizeEvent( QResizeEvent* _event );
 
 	// -------------------------------------------------------------------------
 	// Overrides ReBaseWidget.
 	// -------------------------------------------------------------------------
 public:
-	virtual void		Tick( qreal _delta );
 	virtual QMenu*		GetEditMenu() const;
+
+	// -------------------------------------------------------------------------
+	// Signals.
+	// -------------------------------------------------------------------------
+signals:
+	void				Focus( ReAnimGraphicsItem* _item );
 
 	// -------------------------------------------------------------------------
 	// Slots.
 	// -------------------------------------------------------------------------
-public slots:	
-	ReTrackSuite*		OnNewTranslationTrack();
-	ReTrackSuite*		OnNewRotationTrack();
-	ReTrackSuite*		OnNewScaleTrack();
-	ReTrackSuite*		OnNewAlphaTrack();
-	ReTrackSuite*		OnNewTrack( eTrackType _type );
-	void				OnContextMenu( const QPoint& _point );
+public slots:
+	void				OnItemAdded( ReAnimGraphicsItem* _item );
+	void				UpdateLayout();
 
-	void				OnCreateFrameRequested( ReTrackWidget* _track );
-	void				OnDeleteFrameRequested( ReTrackWidget* _track );
-	void				OnFrameMoved( ReTrackWidget* _track, ReTrackFrameWidget* _frame, qreal _time );
+	void				OnSceneSelectionChanged();
+	void				OnRulerCursorChanged( int _cursor );
 
 	// -------------------------------------------------------------------------
 	// Utilities.
 	// -------------------------------------------------------------------------
 protected:
 	void				InitMenus();
-	void				InitRuler();	
-	void				LayoutTracks();
-
-	eTrackType			GetTrackType( ReTrackWidget* _track ) const;
+	void				InitRuler();
 
 protected:
+	QGraphicsScene*		m_scene;
 	ReAnimModel*		m_animMode;
-
-	// Widgets.
-	typedef std::list< ReTrackSuite >		TTrackList;
-	typedef TTrackList::iterator			TTrackListItor;
-	typedef TTrackList::const_iterator		TTrackListCItor;
-
-	TTrackList			m_trackList;
-	ReTrackSuite*		m_trackSuites[ ETrackType_Count ];
 	ReRulerWidget*		m_rulerWidget;
+
+	TAnimEntityList		m_animEntityList;
 
 	// Menu.
 	QMenu*				m_editMenu;
@@ -143,4 +126,4 @@ protected:
 
 
 }
-#endif	// _RE_TRACK_PANEL_WIDGET_H_
+#endif	// _RE_ANIM_CONSOLE_WIDGET_H_

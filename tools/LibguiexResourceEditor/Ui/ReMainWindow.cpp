@@ -21,7 +21,7 @@
 #include "UI\ReEditorPanelWidget.h"
 #include "Ui\ReClipEditor.h"
 #include "Ui\ReAnimEditor.h"
-#include "Ui\ReTrackPanelWidget.h"
+#include "Ui\ReAnimConsoleWidget.h"
 
 
 namespace RE
@@ -36,7 +36,7 @@ ReMainWindow::ReMainWindow( QWidget* _parent /* = NULL */ )
 // Editors.
 , m_stackedEditorWidget( NULL )	
 , m_clipEditor( NULL )
-, m_asEditor( NULL )
+, m_animEditor( NULL )
 , m_viewWidget( NULL )
 // Panels.
 , m_panelDockWidget( NULL )
@@ -89,8 +89,7 @@ void ReMainWindow::Tick( qreal _delta )
 	m_controlPanelWidget->Tick( _delta );
 
 	// Hack multi-thread.
-	static bool sHack = true;
-	if( sHack && NULL != m_editor )
+	if( NULL != m_editor )
 		m_editor->Sleep( 3 );
 }
 
@@ -126,16 +125,16 @@ void ReMainWindow::InitMainViews()
 	m_clipEditor->setFocusPolicy( Qt::ClickFocus );
 
 	// Animation editor.
-	m_asEditor = new ReAnimEditor( m_animModel, this );
-	m_asEditor->setContextMenuPolicy( Qt::CustomContextMenu );
-	m_asEditor->setFocusPolicy( Qt::ClickFocus );
+	m_animEditor = new ReAnimEditor( m_animModel, this );
+	m_animEditor->setContextMenuPolicy( Qt::CustomContextMenu );
+	m_animEditor->setFocusPolicy( Qt::ClickFocus );
 
 	// Image editor.
 	m_viewWidget = new ReViewWidget( this );
 
 	// Cache for uniformed access.
 	m_editorWidgets[ EEditor_Clip ] = m_clipEditor;
-	m_editorWidgets[ EEditor_Anim ] = m_asEditor;
+	m_editorWidgets[ EEditor_Anim ] = m_animEditor;
 	m_editorWidgets[ EEditor_Image ] = m_viewWidget;	
 
 	// Put them all together.

@@ -33,14 +33,29 @@ public:
 	int					GetCursor() const				{ return m_cursor; }
 	int					GetViewport() const				{ return m_viewport; }
 	int					GetUnit() const					{ return m_unit; }
-	qreal				GetUnitValue() const			{ return m_unitValue; }	
-	void				ShowCursorValue( bool _show )	{ m_isShowCursorValue = _show; }
+	void				SetUnit( int _pixels )			{ m_unit = _pixels; }
+	qreal				GetUnitValue() const			{ return m_unitValue; }
+	void				SetUnitValue( qreal _value )	{ m_unitValue = _value; }
+	int					GetSnap() const					{ return m_snap; }
+	void				SetSnap( int _snap )			{ m_snap = _snap; }	
+
 	bool				IsHorizontal() const			{ return m_isHorizontal; }
 	void				SetHorizontal( bool _h );
 	int					GetRulerHeight() const			{ return m_rulerHeight; }
 	void				SetRulerHeight( int _height );
+	int					GetLongMarkDivision() const		{ return m_longMarkDivision; }
+	void				SetLongMarkDevision( int _d )	{ m_longMarkDivision = _d; }
 	bool				IsMarkOnSizeA() const			{ return m_isMarkOnSideA; }
 	void				SetMarkOnSizeA( bool _isOn )	{ m_isMarkOnSideA = _isOn; }
+
+	void				ShowCursorValue( bool _show )	{ m_isShowCursorValue = _show; }
+	bool				IsShowCursorValue() const		{ return m_isShowCursorValue; }
+	void				EnableDragViewport( bool _b )	{ m_isDragViewportEnabled = _b; }
+	bool				IsDragViewportEnabled() const	{ return m_isDragViewportEnabled; }
+	void				EnableDragCursor( bool _b )		{ m_isDragCursorEnabled = _b; }
+	bool				IsDragCursorEnabled() const		{ return m_isDragCursorEnabled; }
+
+	qreal				GetValueAt( int _cursor ) const;
 
 	// ----------------------------------------------------------------------------
 	// Override QWidget.
@@ -69,9 +84,8 @@ public slots:
 	// Utilities.
 	// ----------------------------------------------------------------------------
 protected:
-	qreal				GetValueAt( int _cursor ) const;
 	virtual void		DrawBackground( QPainter& _painter );
-	virtual void		DrawContent( QPainter& _painter );
+	virtual void		DrawMarks( QPainter& _painter );
 	virtual void		DrawForeground( QPainter& _painter );
 
 	// ----------------------------------------------------------------------------
@@ -79,21 +93,23 @@ protected:
 protected:
 	// Values that are measured in pixels.
 	int					m_unit;				// Number of pixels between two marks.
-	int					m_minUnit;
-	int					m_maxUnit;
 	int					m_viewport;
 	int					m_cursor;
+	int					m_snap;				// The # of pixels that the cursor should snap to.
 	int					m_rulerHeight;
+	int					m_longMarkDivision;	// The # of units between two long marks.
 
 	// Values that are measured in decimal.
 	qreal				m_unitValue;
 
 	// Misc.
 	ReDragInfo			m_cursorDragInfo;
-	ReDragInfo			m_viewportDragInfo;
-	bool				m_isShowCursorValue;
+	ReDragInfo			m_viewportDragInfo;	
 	bool				m_isHorizontal;
 	bool				m_isMarkOnSideA;	// Size A is, for horizontal ruler the bottom side, for vertical ruler the right side.
+	bool				m_isShowCursorValue;
+	bool				m_isDragViewportEnabled;
+	bool				m_isDragCursorEnabled;
 
 	static int			ms_invalidCursor;
 };

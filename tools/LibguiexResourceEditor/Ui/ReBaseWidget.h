@@ -32,14 +32,39 @@ public:
 	ReDragInfo&			GetDragInfoRef()					{ return m_dragInfo; }
 	const ReDragInfo&	GetDragInfo() const					{ return m_dragInfo; }
 
+	int					GetLeftPadding() const				{ return m_leftPadding; }
+	int&				GetLeftPaddingRef()					{ return m_leftPadding; }
+	int					GetTopPadding() const				{ return m_topPadding; }
+	int&				GetTopPaddingRef()					{ return m_topPadding; }
+	int					GetRightPadding() const				{ return m_rightPadding; }
+	int&				GetRightPaddingRef()				{ return m_rightPadding; }
+	int					GetBottomPadding() const			{ return m_bottomPadding; }
+	int&				GetBottomPaddingRef()				{ return m_bottomPadding; }
+	int					GetHorizontalGap() const			{ return m_horizontalGap; }
+	int&				GetHorizontalGapRef()				{ return m_horizontalGap; }
+	int					GetVerticalGap() const				{ return m_verticalGap; }
+	int&				GetVerticalGapRef() 				{ return m_verticalGap; }
+
 protected:
 	ReDragInfo			m_dragInfo;
+	int					m_leftPadding;
+	int					m_topPadding;
+	int					m_rightPadding;
+	int					m_bottomPadding;
+	int					m_horizontalGap;
+	int					m_verticalGap;
 };
 
 
 template< class T >
 ReBaseWidget< T >::ReBaseWidget( QWidget* _parent /* = NULL */ )
 : T( _parent )
+, m_leftPadding( 0 )
+, m_topPadding( 0 )
+, m_rightPadding( 0 )
+, m_bottomPadding( 0 )
+, m_horizontalGap( 0 )
+, m_verticalGap( 0 )
 {
 
 }

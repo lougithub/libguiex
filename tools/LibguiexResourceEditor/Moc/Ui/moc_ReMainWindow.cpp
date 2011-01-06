@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ReMainWindow.h'
 **
-** Created: Sat Dec 11 15:46:04 2010
+** Created: Wed Dec 29 19:18:20 2010
 **      by: The Qt Meta Object Compiler version 61 (Qt 4.5.3)
 **
 ** WARNING! All changes made in this file will be lost!

@@ -15,9 +15,10 @@ namespace RE
 {
 
 
-class ReAnimItem;
+class ReAnimNode;
 class ReAnimFrame;
 class ReAnimTrack;
+class ReAnimEntity;
 
 
 class ReAnimModel : public QAbstractItemModel
@@ -60,21 +61,11 @@ public slots:
 	void				OnFrameChanged( eTrackType _trackType, ReAnimFrame* _frame );
 
 	// -------------------------------------------------------------------------
-	// Tracks & Frame.
+	// Items & Tracks & Frames.
 	// -------------------------------------------------------------------------
 public:
-	// Track.
-	ReAnimTrack*		CreateTrack( eTrackType _type );
-	void				DeleteTrack( eTrackType _type );
-	ReAnimTrack*		GetTrackByType( eTrackType _type ) const;
-	ReAnimTrack*		GetTrackByIndex( int _index ) const;	
-	int					GetTrackCount() const;
-	int					GetTrackIndex( eTrackType _type ) const;
-
-	// Frame.
-	ReAnimFrame*		CreateFrame( eTrackType _trackType, qreal _time );
-	void				DeleteFrame( eTrackType _trackType, ReAnimFrame* _frame );
-	ReAnimFrame*		GetFrameByIndex( eTrackType _trackType, int _index ) const;
+	// Entity.
+	ReAnimEntity*		CreateEntity();
 
 	// -------------------------------------------------------------------------
 	// -------------------------------------------------------------------------
@@ -86,7 +77,7 @@ public:
 	// Utilities.
 	// -------------------------------------------------------------------------
 protected:
-	ReAnimItem*			ItemFromIndex( const QModelIndex& _index ) const;
+	ReAnimNode*			ItemFromIndex( const QModelIndex& _index ) const;
 	int					PositionToInsertTrack( eTrackType _trackType ) const;
 
 	// -------------------------------------------------------------------------
@@ -94,6 +85,12 @@ protected:
 	// -------------------------------------------------------------------------
 protected:
 	ReAnimTrack*		m_tracks[ ETrackType_Count ];
+
+	typedef QList< ReAnimEntity* >		TItemList;
+	typedef TItemList::iterator			TItemListItor;
+	typedef TItemList::const_iterator	TItemListCItor;
+
+	TItemList			m_items;
 };
 
 }

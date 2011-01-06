@@ -14,7 +14,8 @@ namespace RE
 {
 
 
-class ReDragInfo
+template< class P, class S >
+class ReDragInfo_
 {
 public:
 	enum eDragType	{ EDrag_None, EDrag_Move, EDrag_Resize };
@@ -33,16 +34,16 @@ public:
 	};
 
 public:
-	ReDragInfo(): m_cursorPosBackup( 0, 0 ), m_itemPosBackup( 0, 0 ), m_itemSizeBackup( 0, 0 ),
+	ReDragInfo_(): m_cursorPosBackup( 0, 0 ), m_itemPosBackup( 0, 0 ), m_itemSizeBackup( 0, 0 ),
 		m_dragType( EDrag_None ), m_resizeType( EResize_None ) {}
 
 	// Common.
-	void			SetCursorPosBackup( const QPoint& _pos )	{ m_cursorPosBackup = _pos; }
-	void			SetItemPosBackup( const QPoint& _pos )		{ m_itemPosBackup = _pos; }
-	void			SetItemSizeBackup( const QSize& _size )		{ m_itemSizeBackup = _size; }	
-	const QPoint&	GetCursorPosBackup() const					{ return m_cursorPosBackup; }
-	const QPoint&	GetItemPosBackup() const					{ return m_itemPosBackup; }
-	const QSize&	GetItemSizeBackup() const					{ return m_itemSizeBackup; }
+	void			SetCursorPosBackup( const P& _pos )	{ m_cursorPosBackup = _pos; }
+	void			SetItemPosBackup( const P& _pos )	{ m_itemPosBackup = _pos; }
+	void			SetItemSizeBackup( const S& _size )	{ m_itemSizeBackup = _size; }	
+	const P&		GetCursorPosBackup() const			{ return m_cursorPosBackup; }
+	const P&		GetItemPosBackup() const			{ return m_itemPosBackup; }
+	const S&		GetItemSizeBackup() const			{ return m_itemSizeBackup; }
 
 	// Move.
 	void			StartMove()						{ m_dragType = EDrag_Move; }
@@ -65,12 +66,17 @@ public:
 	bool			IsResizeLB() const				{ return EResize_LeftBottom == m_resizeType; }
 
 protected:
-	QPoint			m_cursorPosBackup;
-	QPoint			m_itemPosBackup;
-	QSize			m_itemSizeBackup;
+	P				m_cursorPosBackup;
+	P				m_itemPosBackup;
+	S				m_itemSizeBackup;
 	eDragType		m_dragType;
 	eResize			m_resizeType;
 };
+
+
+typedef ReDragInfo_< QPoint, QSize >	ReDragInfo;
+typedef ReDragInfo_< QPointF, QSizeF >	ReDragInfoF;
+
 
 }
 #endif	// _RE_DRAG_INFO_H_

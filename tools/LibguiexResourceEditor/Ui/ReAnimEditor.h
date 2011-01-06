@@ -23,9 +23,10 @@ namespace RE
 {
 
 
-class ReTrackPanelWidget;
-class ReAnimView;
+class ReAnimConsoleWidget;
+class ReAnimGraphicsWidget;
 class ReAnimModel;
+class ReAnimGraphicsScene;
 
 
 class ReAnimEditor : public ReBaseWidget< QWidget >
@@ -76,10 +77,11 @@ public slots:
 	// ----------------------------------------------------------------------------
 	// ----------------------------------------------------------------------------
 protected:
-	// Widgets.
-	QWidget*			m_lastFocusedWidget;
-	ReTrackPanelWidget*	m_trackPanelWidget;
-	ReAnimView*			m_animView;
+	// Widgets.	
+	ReAnimConsoleWidget*	m_trackConsole;
+	ReAnimGraphicsWidget*	m_animGraphics;
+	QWidget*				m_lastFocusedWidget;
+	ReAnimGraphicsScene*	m_scene;
 	
 	// Menu.
 	QMenu*				m_animViewMenu;

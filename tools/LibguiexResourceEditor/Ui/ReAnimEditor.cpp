@@ -4,8 +4,9 @@
 // -----------------------------------------------------------------------------
 #include "StdAfxEditor.h"
 #include "Ui\ReAnimEditor.h"
-#include "Ui\ReTrackPanelWidget.h"
-#include "Ui\ReAnimView.h"
+#include "Ui\ReAnimConsoleWidget.h"
+#include "Ui\ReAnimGraphicsWidget.h"
+#include "Ui\ReAnimGraphicsScene.h"
 #include <QMouseEvent>
 #include <QPainter>
 #include <QSplitter>
@@ -24,30 +25,33 @@ namespace RE
 ReAnimEditor::ReAnimEditor( ReAnimModel* _model, QWidget* _parent /* = NULL */ )
 : TSuper( _parent )
 // Widgets.
+, m_trackConsole( NULL )
+, m_animGraphics( NULL )
 , m_lastFocusedWidget( NULL )
-, m_trackPanelWidget( NULL )
-, m_animView( NULL )
 // Menu.
 , m_animViewMenu( NULL )
 // Debug.
 , m_isDebugEnabled( false )
 {
-	// Track panel widget.
-	m_trackPanelWidget = new ReTrackPanelWidget( _model, this );
-	m_trackPanelWidget->setFocusPolicy( Qt::StrongFocus );
-	m_trackPanelWidget->setContextMenuPolicy( Qt::CustomContextMenu );
-	//m_trackPanelWidget->installEventFilter( this );
-	m_trackPanelWidget->setFocus();
-	m_lastFocusedWidget = m_trackPanelWidget;
+	// Animation graphics scene.
+	m_scene = new ReAnimGraphicsScene( _model, this );
 
-	// Animation view widget.
-	m_animView = new ReAnimView( this );
-	m_animView->setFocusPolicy( Qt::ClickFocus );
-	//m_animView->installEventFilter( this );
+	// Animation console widget.
+	m_trackConsole = new ReAnimConsoleWidget( _model, m_scene, this );
+	m_trackConsole->setFocusPolicy( Qt::StrongFocus );
+	m_trackConsole->setContextMenuPolicy( Qt::CustomContextMenu );
+	m_trackConsole->setFocus();
+	m_lastFocusedWidget = m_trackConsole;
+
+	// Animation graphics widget.
+	m_animGraphics = new ReAnimGraphicsWidget( _model, m_scene, this );
+	m_animGraphics->setFocusPolicy( Qt::ClickFocus );
+
+	connect( m_animGraphics, SIGNAL( ItemAdded( ReAnimGraphicsItem* ) ), m_trackConsole, SLOT( OnItemAdded( ReAnimGraphicsItem* ) ) );
 
 	QSplitter* splitter = new QSplitter(  Qt::Vertical, this );
-	splitter->addWidget( m_animView );
-	splitter->addWidget( m_trackPanelWidget );
+	splitter->addWidget( m_animGraphics );
+	splitter->addWidget( m_trackConsole );
 
 	QVBoxLayout* layout = new QVBoxLayout( this );
 	layout->addWidget( splitter );
@@ -121,12 +125,7 @@ void ReAnimEditor::keyReleaseEvent( QKeyEvent* _event )
 // ----------------------------------------------------------------------------
 void ReAnimEditor::Tick( qreal _delta )
 {
-	QMatrix translation = m_trackPanelWidget->GetTranslationMatrix();
-	QMatrix rotation = m_trackPanelWidget->GetRotationMatrix();
-	QMatrix scale = m_trackPanelWidget->GetScaleMatrix();
-	QMatrix transform = translation * scale * rotation;
-
-	m_animView->GetMatrixRef() = transform;
+	m_animGraphics->Tick( _delta );
 
 	update();
 }
@@ -134,8 +133,8 @@ void ReAnimEditor::Tick( qreal _delta )
 
 QMenu* ReAnimEditor::GetEditMenu() const
 {
-	if( !m_animView->hasFocus() )
-		return m_trackPanelWidget->GetEditMenu();
+	if( !m_animGraphics->hasFocus() )
+		return m_trackConsole->GetEditMenu();
 	else
 		return NULL;
 }

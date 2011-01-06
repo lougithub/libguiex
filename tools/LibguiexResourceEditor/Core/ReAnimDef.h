@@ -4,10 +4,26 @@
 
 #include <QString>
 #include <QObject>
+#include <QGraphicsItem>
 
 
 namespace RE
 {
+
+
+// -----------------------------------------------------------------------------
+// Constants.
+// -----------------------------------------------------------------------------
+
+
+// -----------------------------------------------------------------------------
+// Enumerations.
+// -----------------------------------------------------------------------------
+enum eGraphicsItemType
+{
+	EGraphicsItemType_Base	= QGraphicsItem::UserType + 1,
+	EGraphicsItemType_Tool	= QGraphicsItem::UserType + 2,
+};
 
 
 enum eTrackType
@@ -18,6 +34,49 @@ enum eTrackType
 	ETrackType_Alpha,
 	ETrackType_Count
 };
+
+
+enum eEditMode
+{
+	EEditMode_Select,
+	EEditMode_Move,
+	EEditMode_Rotate,
+	EEditMode_Scale,
+	EEditMode_Alpha,
+	EEditMode_Count
+};
+
+
+// -----------------------------------------------------------------------------
+// Utility functions.
+// -----------------------------------------------------------------------------
+inline QString gEditModeToString( eEditMode _mode )
+{
+	if( EEditMode_Move == _mode )
+	{
+		return QObject::tr( "Move" );
+	}
+	else if( EEditMode_Rotate == _mode )
+	{
+		return QObject::tr( "Rotate" );
+	}
+	else if( EEditMode_Scale == _mode )
+	{
+		return QObject::tr( "Scale" );
+	}
+	else if( EEditMode_Alpha == _mode )
+	{
+		return QObject::tr( "Alpha" );
+	}
+	else if( EEditMode_Select == _mode )
+	{
+		return QObject::tr( "Select" );
+	}
+	else
+	{
+		return QObject::tr( "Error" );
+	}
+}
 
 
 inline QString gTrackTypeToString( eTrackType _type )

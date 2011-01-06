@@ -4,6 +4,7 @@
 // -----------------------------------------------------------------------------
 #include "StdAfxEditor.h"
 #include "Ui\ReRulerWidget.h"
+#include "Ui\ReAnimUiInfo.h"
 #include <QPainter>
 #include <QMouseEvent>
 #include <QFontMetrics>
@@ -13,7 +14,6 @@ namespace
 {
 	static int gsShortMarkLength = 3;
 	static int gsLongMarkLength = 8;
-	static int gsDivisionBetweenLongMarks = 5;
 }
 
 
@@ -29,16 +29,18 @@ int ReRulerWidget::ms_invalidCursor = -1;
 
 ReRulerWidget::ReRulerWidget( QWidget* _parent /* = NULL */ )
 : TSuper( _parent )
-, m_unit( 8 )
-, m_minUnit( 4 )
-, m_maxUnit( 12 )
+, m_unit( 1 )
 , m_viewport( 0 )
 , m_cursor( 0 )
+, m_snap( 1 )
 , m_rulerHeight( 30 )
+, m_longMarkDivision( 5 )
 , m_unitValue( 1.0f )
-, m_isShowCursorValue( true )
 , m_isHorizontal( true )
 , m_isMarkOnSideA( true )
+, m_isShowCursorValue( true )
+, m_isDragViewportEnabled( true )
+, m_isDragCursorEnabled( true )
 {
 	SetRulerHeight( m_rulerHeight );
 }
@@ -80,28 +82,35 @@ void ReRulerWidget::paintEvent( QPaintEvent* _event )
 	QPainter painter( this );
 
 	DrawBackground( painter );
-	DrawContent( painter );
+	DrawMarks( painter );
 	DrawForeground( painter );
 }
 
 
 void ReRulerWidget::mousePressEvent( QMouseEvent* _event )
 {
+	QPoint pos = QPoint( _event->pos().x() / m_snap * m_snap, _event->pos().y() / m_snap * m_snap );
+
 	if( ( Qt::MidButton == _event->button() ) ||
 		( Qt::LeftButton == _event->button() && Qt::ControlModifier & _event->modifiers() ) )
 	{
-		m_viewportDragInfo.SetCursorPosBackup( _event->pos() );
-		m_viewportDragInfo.SetItemPosBackup( IsHorizontal() ? QPoint( m_viewport, 0 ) : QPoint( 0, m_viewport ) );
-		m_viewportDragInfo.StartMove();
+		if( IsDragViewportEnabled() )
+		{
+			// Use middle mouse button or left mouse button plus the control key to
+			// move the viewport.		
+			m_viewportDragInfo.SetCursorPosBackup( pos );
+			m_viewportDragInfo.SetItemPosBackup( IsHorizontal() ? QPoint( m_viewport, 0 ) : QPoint( 0, m_viewport ) );
+			m_viewportDragInfo.StartMove();
+		}
 	}
 	else if( Qt::LeftButton == _event->button() )
 	{
-		int cursor = IsHorizontal() ? _event->pos().x() : _event->pos().y();
-		OnCursorChanged( cursor );
-		emit CursorChanged( cursor );
-
-		m_cursorDragInfo.SetCursorPosBackup( _event->pos() );
-		m_cursorDragInfo.StartMove();
+		if( IsDragCursorEnabled() )
+		{
+			// Use left button to move the cursor.
+			m_cursorDragInfo.SetCursorPosBackup( pos );
+			m_cursorDragInfo.StartMove();
+		}
 	}
 }
 
@@ -117,7 +126,11 @@ void ReRulerWidget::mouseMoveEvent( QMouseEvent* _event )
 {
 	if( m_cursorDragInfo.IsMoving() )
 	{
+		int cursorBackup = m_cursor;
 		int cursor = 0;
+		int delta = 0;
+		int newCursor = 0;
+
 		if( IsHorizontal() )
 		{
 			cursor = _event->pos().x();
@@ -125,6 +138,9 @@ void ReRulerWidget::mouseMoveEvent( QMouseEvent* _event )
 				cursor = 0;
 			else if( cursor >= width() )
 				cursor = width() - 1;
+
+			delta = cursor - m_cursorDragInfo.GetCursorPosBackup().x();
+			newCursor = m_cursorDragInfo.GetCursorPosBackup().x() + delta / m_snap * m_snap;
 		}
 		else
 		{
@@ -133,20 +149,32 @@ void ReRulerWidget::mouseMoveEvent( QMouseEvent* _event )
 				cursor = 0;
 			else if( cursor >= height() )
 				cursor = height() - 1;
-		}
 
-		OnCursorChanged( cursor );
-		emit CursorChanged( cursor );
+			delta = cursor - m_cursorDragInfo.GetCursorPosBackup().y();
+			newCursor = m_cursorDragInfo.GetCursorPosBackup().y() + delta / m_snap * m_snap;
+		}
+		
+		if( newCursor != m_cursor )
+		{
+			OnCursorChanged( newCursor );
+			emit CursorChanged( newCursor );
+		}
 	}
 	else if( m_viewportDragInfo.IsMoving() )
 	{
+		int viewPortBackup = m_viewport;
+
 		QPoint delta = _event->pos() - m_viewportDragInfo.GetCursorPosBackup();
 		int newViewportPos = IsHorizontal()
 			? m_viewportDragInfo.GetItemPosBackup().x() - delta.x()
 			: m_viewportDragInfo.GetItemPosBackup().y() - delta.y();
 
-		OnViewportChanged( newViewportPos );
-		emit ViewportChanged( newViewportPos );
+		newViewportPos = newViewportPos / m_snap * m_snap;
+		if( newViewportPos != viewPortBackup )
+		{
+			OnViewportChanged( newViewportPos );
+			emit ViewportChanged( newViewportPos );
+		}
 	}
 }
 
@@ -172,8 +200,8 @@ void ReRulerWidget::OnViewportChanged( int _pos )
 // -----------------------------------------------------------------------------
 qreal ReRulerWidget::GetValueAt( int _cursor ) const
 {
-	int pos = m_viewport + _cursor;
-	return m_unitValue * ( ( qreal )pos / ( qreal )m_unit );
+	int pixelCount = m_viewport + _cursor;
+	return m_unitValue * ( ( qreal )pixelCount / ( qreal )m_unit );
 }
 
 
@@ -183,7 +211,7 @@ void ReRulerWidget::DrawBackground( QPainter& _painter )
 }
 
 
-void ReRulerWidget::DrawContent( QPainter& _painter )
+void ReRulerWidget::DrawMarks( QPainter& _painter )
 {
 	// For horizontal ruler:
 	// Draw the mark just left to or on the viewport position, even if
@@ -198,7 +226,7 @@ void ReRulerWidget::DrawContent( QPainter& _painter )
 	int limit = IsHorizontal() ? width() : height();
 	while( pos < limit )
 	{
-		bool isShortMark = ( 0 == ( markIndex % gsDivisionBetweenLongMarks ) ? false : true );
+		bool isShortMark = ( 0 == ( markIndex % m_longMarkDivision ) ? false : true );
 
 		if( IsMarkOnSizeA() )
 		{
@@ -235,7 +263,7 @@ void ReRulerWidget::DrawForeground( QPainter& _painter )
 		: _painter.drawLine( QPoint( 0, m_cursor ), QPoint( width(), m_cursor ) );
 	QString valueText = QString().setNum( GetValueAt( m_cursor ) );
 
-	if( m_isShowCursorValue )
+	if( IsShowCursorValue() )
 	{
 		QFontMetrics fm( _painter.font() );
 		_painter.save();

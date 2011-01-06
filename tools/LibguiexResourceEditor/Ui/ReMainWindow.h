@@ -25,7 +25,7 @@ class ReEditorPanelWidget;
 class ReEditor;
 class ReClipEditor;
 class ReAnimEditor;
-class ReTrackPanelWidget;
+class ReAnimConsoleWidget;
 class ReClipModel;
 class ReAnimModel;
 
@@ -97,7 +97,7 @@ private:
 	QStackedWidget*			m_stackedEditorWidget;
 	TEditorBase*			m_editorWidgets[ EEditor_Count ];	
 	ReClipEditor*			m_clipEditor;
-	ReAnimEditor*				m_asEditor;
+	ReAnimEditor*			m_animEditor;
 	ReViewWidget*			m_viewWidget;	// Will be replaced by image editor.
 
 	// Panels: dockable and stacked widget usually left or right aligned on the screen.
