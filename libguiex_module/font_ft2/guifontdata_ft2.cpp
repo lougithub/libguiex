@@ -87,7 +87,6 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIFontData_ft2::~CGUIFontData_ft2()
 	{
-		Unload();
 	}
 	//------------------------------------------------------------------------------
 	CGUIFontData_ft2::CGUIFontData_ft2( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nFontID )

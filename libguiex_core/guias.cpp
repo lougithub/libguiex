@@ -65,8 +65,6 @@ namespace guiex
 			CGUIAsManager::Instance()->DeallocateResource( *itor );
 		}
 		m_listSuccessor.clear();
-
-		Unload();
 	}
 	//------------------------------------------------------------------------------
 	CGUIAs* CGUIAs::Clone( ) const

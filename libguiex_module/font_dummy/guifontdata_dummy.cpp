@@ -40,7 +40,6 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIFontData_dummy::~CGUIFontData_dummy()
 	{
-		Unload();
 	}
 	//------------------------------------------------------------------------------
 	CGUIFontData_dummy::CGUIFontData_dummy( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nFontID )

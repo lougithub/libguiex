@@ -85,7 +85,6 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIFontData_cocoa::~CGUIFontData_cocoa()
 	{
-		Unload();
 	}
 	//------------------------------------------------------------------------------
 	CGUIFontData_cocoa::CGUIFontData_cocoa( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nFontIndex )

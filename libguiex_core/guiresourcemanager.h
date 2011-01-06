@@ -79,6 +79,8 @@ namespace guiex
 
 		void CheckResourceReference( TResType* pRes );
 
+		void DestroyResource( TResType* pRes );
+
 	protected:
 		typedef std::map< CGUIString, TResType* > TMapResource;
 		TMapResource m_mapResource;
@@ -185,7 +187,7 @@ namespace guiex
 			pRes->RefRelease();
 
 			CheckResourceReference( pRes );
-			DestroyResourceImp( pRes );
+			DestroyResource( pRes );
 		}
 		m_mapResource.clear();
 	}
@@ -199,7 +201,7 @@ namespace guiex
 		{
 			TResType* pRes = *itor;
 			CheckResourceReference( pRes );
-			DestroyResourceImp( pRes );
+			DestroyResource( pRes );
 		}
 		m_setAllocatePool.clear();
 	}
@@ -249,7 +251,7 @@ namespace guiex
 			TResType* pRes = itor->second;
 			pRes->RefRelease();
 			CheckResourceReference( pRes );
-			DestroyResourceImp( pRes );
+			DestroyResource( pRes );
 			m_mapResource.erase( itor );
 		}
 		else
@@ -284,9 +286,16 @@ namespace guiex
 			return -1;
 		}
 		CheckResourceReference( *itorFind );
-		DestroyResourceImp( *itorFind );
+		DestroyResource( *itorFind );
 		m_setAllocatePool.erase( itorFind );
 		return 0;
+	}
+	//------------------------------------------------------------------------------
+	template< class TResType >
+	inline void CGUIResourceManager<TResType>::DestroyResource( TResType* pRes )
+	{
+		pRes->Unload();
+		DestroyResourceImp( pRes );
 	}
 	//------------------------------------------------------------------------------
 	template< class TResType >
