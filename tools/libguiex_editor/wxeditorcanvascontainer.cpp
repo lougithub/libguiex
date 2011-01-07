@@ -117,9 +117,9 @@ int WxEditorCanvasContainer::SaveWidgetNodeToDoc( CGUIWidget* pWidget, TiXmlDocu
 	CGUIProperty aSet = pWidget->GetProperty();
 
 	//process parent first
-	if( aSet.HasProperty("parent"))
+	if( aSet.HasProperty("parent", "CGUIString"))
 	{
-		CGUIProperty* pProperty = aSet.GetProperty("parent");
+		CGUIProperty* pProperty = aSet.GetProperty("parent", "CGUIString");
 		AddTopPropertyElement(*pProperty, pWidgetNode);
 		aSet.RemoveProperty(*pProperty);
 	}

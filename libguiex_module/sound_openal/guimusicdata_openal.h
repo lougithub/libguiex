@@ -14,10 +14,22 @@
 // include
 //============================================================================//
 #include <libguiex_core/guimusicdata.h>
+#include <vorbis/codec.h>
+#include <vorbis/vorbisfile.h>
+
+
+#if GUIEX_PLATFORM_MAC
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
+#else
+#include <al.h>
+#include <alc.h>
+#endif
 
 //============================================================================//
 // class
 //============================================================================//
+#define GUI_MUSIC_NUMBUFFERS              (4)
 
 namespace guiex
 {
@@ -27,16 +39,31 @@ namespace guiex
 	class GUIEXPORT CGUIMusicData_openal : public CGUIMusicData
 	{	
 	public:
-		virtual ~CGUIMusicData_openal();
+		bool Update();
 
 	protected:
 		friend class IGUISound_openal;
 		CGUIMusicData_openal( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath );
+		virtual ~CGUIMusicData_openal();
 
 		virtual int32 DoLoad() const;
 		virtual void DoUnload();
 
+		bool LoadOggFile( const CGUIString& rFilename ) const;
+
 	protected:
+		CGUIString m_strPath; //sound file path
+
+		//for openal
+		mutable uint32 m_nSourceId;
+		mutable ALuint m_nBuffers[GUI_MUSIC_NUMBUFFERS];
+
+		mutable char* m_pDecodeBuffer;
+		mutable unsigned long m_nBufferSize;
+		mutable unsigned long m_nChannels;
+		mutable unsigned long m_nFrequency;
+		mutable unsigned long m_nFormat;
+		mutable OggVorbis_File m_aVorbisFile;
 	};
 }
 

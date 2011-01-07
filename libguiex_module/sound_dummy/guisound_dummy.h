@@ -32,10 +32,10 @@ namespace guiex
 		virtual CGUIMusicData* CreateMusicData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath );
 		virtual void DestroyMusicData( CGUIMusicData* pData );
 
-		virtual void Play( CGUISoundData* pSoundData );
-		virtual void Stop( CGUISoundData* pSoundData );
-		virtual void Pause( CGUISoundData* pSoundData );
-		virtual bool IsPlaying( CGUISoundData* pSoundData );
+		virtual void PlayEffect( CGUISoundData* pSoundData );
+		virtual void StopEffect( CGUISoundData* pSoundData );
+		virtual void PauseEffect( CGUISoundData* pSoundData );
+		virtual bool IsPlayingEffect( CGUISoundData* pSoundData );
 
 		virtual void PlayMusic( CGUIMusicData* pSoundData );
 		virtual void StopMusic( CGUIMusicData* pSoundData );

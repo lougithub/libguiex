@@ -26,6 +26,7 @@ public:
 
 	void ToolsClearPage( );
 	void ToolsSelectPage( const std::string& rPageName );
+	wxPGProperty* ToolsGetProperty( const std::string& rName, const std::string& rType ) const;
 
 protected:
 	std::vector<std::string> m_vecPropertyPages;

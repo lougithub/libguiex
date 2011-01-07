@@ -53,6 +53,9 @@
 			<property name="default_as" type="CGUIAs" value=""/>
 		</page>
 
+		<page name="Image">      
+		</page>
+
 		<page name="Event">      
 			<property name="OnLoad" type="CGUIEvent" value=""/>
 			<property name="OnOpen" type="CGUIEvent" value=""/>

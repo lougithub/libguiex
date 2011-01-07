@@ -178,7 +178,7 @@ void WxWizardCreateWidget::OnWizardFinished(wxWizardEvent& event)
 		if( m_pParent )
 		{
 			m_pWidget->SetParent( m_pParent );
-			aSet.GetProperty("parent")->SetValue( m_pParent->GetName() );
+			aSet.GetProperty("parent", "CGUIString")->SetValue( m_pParent->GetName() );
 		}
 		m_pWidget->SetProperty(aSet);
 		m_pWidget->LoadFromProperty();

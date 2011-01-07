@@ -195,7 +195,7 @@ namespace guiex
 
 		/// update time and frame
 		void UpdateTime(real fDeltaTime);
-
+		void UpdateSound( real fDeltaTime );
 		void UpdatePhysics(real fDeltaTime);
 
 		void AddToGarbage( CGUIWidget* pWidget );

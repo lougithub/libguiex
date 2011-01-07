@@ -38,9 +38,6 @@ namespace guiex
 		virtual ~CGUIMusicData();
 
 		void Play();
-		void Stop();
-		void Pause();
-		virtual bool IsPlaying();
 
 	protected:
 		CGUIMusicData( const CGUIString& rName, const CGUIString& rSceneName );

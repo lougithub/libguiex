@@ -159,7 +159,7 @@ namespace guiex
 		m_setProperty.erase( m_setProperty.begin() + nIdx );
 	}
 	//------------------------------------------------------------------------------
-	void CGUIProperty::InsertProperty(  const CGUIProperty& rProperty, int32 nIndex )
+	void CGUIProperty::InsertProperty( const CGUIProperty& rProperty, int32 nIndex )
 	{
 		if( nIndex < 0 || guiex::uint32(nIndex) >= m_setProperty.size())
 		{
@@ -176,6 +176,23 @@ namespace guiex
 		return static_cast<uint32>(m_setProperty.size());
 	}
 	//------------------------------------------------------------------------------
+	int32 CGUIProperty::GetPropertyIndex( const CGUIString& rName, const CGUIString& rType ) const
+	{
+		for( uint32 i=0; i<m_setProperty.size(); ++i)
+		{
+			if( m_setProperty[i].GetName() == rName &&
+				m_setProperty[i].GetTypeAsString() == rType )
+			{
+				return int32(i);
+			}
+		}
+		throw CGUIException( 
+			"[CGUIProperty::GetPropertyIndex]: failed to get property index by property name <%s:%s>",
+			rName.c_str(),
+			rType.c_str());
+		return -1;
+	}
+	//------------------------------------------------------------------------------
 	int32 CGUIProperty::GetPropertyIndex( const CGUIString& rName ) const
 	{
 		for( uint32 i=0; i<m_setProperty.size(); ++i)
@@ -187,7 +204,7 @@ namespace guiex
 		}
 		throw CGUIException( 
 			"[CGUIProperty::GetPropertyIndex]: failed to get property index by property name <%s>",
-			rName.size());
+			rName.c_str());
 		return -1;
 	}
 	//------------------------------------------------------------------------------
@@ -221,13 +238,15 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	///get a sub-property by name
-	CGUIProperty* CGUIProperty::GetProperty( const CGUIString& rName )
+	CGUIProperty* CGUIProperty::GetProperty( const CGUIString& rName, uint32 nType )
 	{
 		for( TSetProperty::iterator itor = m_setProperty.begin();
 			itor != m_setProperty.end();
 			++itor)
 		{
-			if( (*itor).GetName() == rName )
+			CGUIProperty& rProperty = *itor;
+			if( rProperty.GetName() == rName &&
+				rProperty.GetType() == nType )
 			{
 				return &(*itor);
 			}
@@ -236,13 +255,72 @@ namespace guiex
 		return NULL;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIProperty*	CGUIProperty::GetProperty( const CGUIString& rName ) const
+	const CGUIProperty*	CGUIProperty::GetProperty( const CGUIString& rName, const CGUIString& rType ) const
 	{
 		for( TSetProperty::const_iterator itor = m_setProperty.begin();
 			itor != m_setProperty.end();
 			++itor)
 		{
-			if( (*itor).GetName() == rName )
+			const CGUIProperty& rProperty = *itor;
+
+			if( rType.empty() )
+			{
+				if( rProperty.GetName() == rName )
+				{
+					return &(*itor);
+				}
+			}
+			else
+			{
+				if( rProperty.GetName() == rName &&
+					rProperty.GetTypeAsString() == rType )
+				{
+					return &(*itor);
+				}
+			}
+		}
+
+		return NULL;
+	}
+	//------------------------------------------------------------------------------
+	CGUIProperty* CGUIProperty::GetProperty( const CGUIString& rName, const CGUIString& rType )
+	{
+		for( TSetProperty::iterator itor = m_setProperty.begin();
+			itor != m_setProperty.end();
+			++itor)
+		{
+			CGUIProperty& rProperty = *itor;
+
+			if( rType.empty() )
+			{
+				if( rProperty.GetName() == rName )
+				{
+					return &(*itor);
+				}
+			}
+			else
+			{
+				if( rProperty.GetName() == rName &&
+					rProperty.GetTypeAsString() == rType )
+				{
+					return &(*itor);
+				}
+			}
+		}
+
+		return NULL;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIProperty*	CGUIProperty::GetProperty( const CGUIString& rName, uint32 nType ) const
+	{
+		for( TSetProperty::const_iterator itor = m_setProperty.begin();
+			itor != m_setProperty.end();
+			++itor)
+		{
+			const CGUIProperty& rProperty = *itor;
+
+			if( rProperty.GetName() == rName &&
+				rProperty.GetType() == nType )
 			{
 				return &(*itor);
 			}
@@ -250,21 +328,84 @@ namespace guiex
 
 		return NULL;
 	}
+	////------------------------------------------------------------------------------
+	/////get a sub-property by name
+	//CGUIProperty* CGUIProperty::GetProperty( const CGUIString& rName )
+	//{
+	//	for( TSetProperty::iterator itor = m_setProperty.begin();
+	//		itor != m_setProperty.end();
+	//		++itor)
+	//	{
+	//		if( (*itor).GetName() == rName )
+	//		{
+	//			return &(*itor);
+	//		}
+	//	}
+
+	//	return NULL;
+	//}
+	////------------------------------------------------------------------------------
+	//const CGUIProperty*	CGUIProperty::GetProperty( const CGUIString& rName ) const
+	//{
+	//	for( TSetProperty::const_iterator itor = m_setProperty.begin();
+	//		itor != m_setProperty.end();
+	//		++itor)
+	//	{
+	//		if( (*itor).GetName() == rName )
+	//		{
+	//			return &(*itor);
+	//		}
+	//	}
+
+	//	return NULL;
+	//}
 	//------------------------------------------------------------------------------
-	///whether this sub-property contain this property
-	bool CGUIProperty::HasProperty( const CGUIString& rName ) const
+	bool CGUIProperty::HasProperty( const CGUIString& rName, const CGUIString& rType ) const
 	{
 		for( TSetProperty::const_iterator itor = m_setProperty.begin();
 			itor != m_setProperty.end();
 			++itor)
 		{
-			if( (*itor).GetName() == rName )
+			const CGUIProperty& rProperty = *itor;
+
+			if( rProperty.GetName() == rName && rProperty.GetTypeAsString() == rType )
 			{
 				return true;
 			}
 		}
 		return false;
 	}
+	//------------------------------------------------------------------------------
+	bool CGUIProperty::HasProperty( const CGUIString& rName, uint32 nType ) const
+	{
+		for( TSetProperty::const_iterator itor = m_setProperty.begin();
+			itor != m_setProperty.end();
+			++itor)
+		{
+			const CGUIProperty& rProperty = *itor;
+
+			if( rProperty.GetName() == rName && rProperty.GetType() == nType )
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	//------------------------------------------------------------------------------
+	///whether this sub-property contain this property
+	//bool CGUIProperty::HasProperty( const CGUIString& rName ) const
+	//{
+	//	for( TSetProperty::const_iterator itor = m_setProperty.begin();
+	//		itor != m_setProperty.end();
+	//		++itor)
+	//	{
+	//		if( (*itor).GetName() == rName )
+	//		{
+	//			return true;
+	//		}
+	//	}
+	//	return false;
+	//}
 	//------------------------------------------------------------------------------
 	void CGUIProperty::SetData( void* pData )
 	{

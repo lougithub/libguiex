@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<libguiex_project>
+	<property name="sound" type="Title" />
+	<property name="common.uip" type="Dependency"/>
+	<property name="sound.xml" type="WidgetFile" />
+	<property name="sound.lua" type="ScriptFile" />
+	<property name="resource.xml" type="ResourceFile" />
+</libguiex_project>
+

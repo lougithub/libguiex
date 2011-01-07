@@ -12,8 +12,13 @@
 // include
 //============================================================================// 
 #include <libguiex_core/guiinterfacesound.h>
+#if GUIEX_PLATFORM_MAC
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
+#else
 #include <al.h>
 #include <alc.h>
+#endif
 
 
 //============================================================================//
@@ -39,20 +44,22 @@ namespace guiex
 		virtual CGUIMusicData* CreateMusicData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath );
 		virtual void DestroyMusicData( CGUIMusicData* pData );
 
-		virtual void Play( CGUISoundData* pSoundData );
-		virtual void Stop( CGUISoundData* pSoundData );
-		virtual void Pause( CGUISoundData* pSoundData );
-		virtual bool IsPlaying( CGUISoundData* pSoundData );
+		virtual void PlayEffect( CGUISoundData* pSoundData );
+		virtual void StopEffect( CGUISoundData* pSoundData );
+		virtual void PauseEffect( CGUISoundData* pSoundData );
+		virtual bool IsPlayingEffect( CGUISoundData* pSoundData );
 		
 		virtual void PlayMusic( CGUIMusicData* pSoundData );
-		virtual void StopMusic( CGUIMusicData* pSoundData );
-		virtual void PauseMusic( CGUIMusicData* pSoundData );
-		virtual bool IsPlayingMusic( CGUIMusicData* pSoundData );
+		virtual void StopMusic(  );
+		virtual void PauseMusic(  );
+		virtual bool IsPlayingMusic(  );
+		virtual CGUIMusicData* GetMusicPlaying();
 
+		virtual void Update( real fDeltaTime );
+		
 		virtual void DeleteSelf();
 
 		CGUIString GetALErrorString(ALenum err);
-
 		
 	protected:
 		/** 
@@ -70,6 +77,8 @@ namespace guiex
 	private:
 		ALCcontext * m_pContext;
 		ALCdevice * m_pDevice;
+
+		class CGUIMusicData_openal* m_pCurrentMusic;
 		
 	public:
 		static const char* StaticGetModuleName();

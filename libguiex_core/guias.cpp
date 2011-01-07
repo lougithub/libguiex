@@ -98,7 +98,7 @@ namespace guiex
 		*/
 		{
 			bool bLoop = false;
-			const CGUIProperty* pPptLoop = rProperty.GetProperty("loop");
+			const CGUIProperty* pPptLoop = rProperty.GetProperty("loop", "bool");
 			if( pPptLoop )
 			{
 				PropertyToValue( *pPptLoop, bLoop );
@@ -108,7 +108,7 @@ namespace guiex
 
 		{
 			real fTotalTime = GUIAS_MIN_TOTALTIME;
-			const CGUIProperty* pPptTotalTime = rProperty.GetProperty("total_time");
+			const CGUIProperty* pPptTotalTime = rProperty.GetProperty("total_time", "real");
 			if( pPptTotalTime )
 			{
 				PropertyToValue( *pPptTotalTime, fTotalTime );
@@ -118,7 +118,7 @@ namespace guiex
 
 		{
 			real fElapsedTime = 0.0;
-			const CGUIProperty* pPPtElapsedTime = rProperty.GetProperty("elapsed_time");
+			const CGUIProperty* pPPtElapsedTime = rProperty.GetProperty("elapsed_time", "real");
 			if( pPPtElapsedTime )
 			{
 				PropertyToValue( *pPPtElapsedTime, fElapsedTime );
@@ -488,7 +488,7 @@ namespace guiex
 				//begin time
 				{
 					real fBeginTime = 0.0f;
-					const CGUIProperty* pPptBeginTime = pProperty->GetProperty("begin_time");
+					const CGUIProperty* pPptBeginTime = pProperty->GetProperty("begin_time", "real");
 					if( pPptBeginTime )
 					{
 						PropertyToValue( *pPptBeginTime, fBeginTime );
@@ -498,7 +498,7 @@ namespace guiex
 
 				//item
 				{
-					const CGUIProperty* pPptAs = pProperty->GetProperty("item");
+					const CGUIProperty* pPptAs = pProperty->GetProperty("item", "CGUIAsDefine");
 					if( !pPptAs )
 					{
 						throw CGUIException(

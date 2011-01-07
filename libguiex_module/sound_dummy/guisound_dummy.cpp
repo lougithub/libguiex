@@ -69,22 +69,22 @@ namespace guiex
 		delete pData;
 	}
 	//------------------------------------------------------------------------------
-	void IGUISound_dummy::Play( CGUISoundData* /*pSoundData*/ )
+	void IGUISound_dummy::PlayEffect( CGUISoundData* /*pSoundData*/ )
 	{
 
 	}
 	//------------------------------------------------------------------------------
-	void IGUISound_dummy::Stop( CGUISoundData* /*pSoundData*/ )
+	void IGUISound_dummy::StopEffect( CGUISoundData* /*pSoundData*/ )
 	{
 
 	}
 	//------------------------------------------------------------------------------
-	void IGUISound_dummy::Pause( CGUISoundData* /*pSoundData*/ )
+	void IGUISound_dummy::PauseEffect( CGUISoundData* /*pSoundData*/ )
 	{
 
 	}
 	//------------------------------------------------------------------------------
-	bool IGUISound_dummy::IsPlaying( CGUISoundData* /*pSoundData*/ )
+	bool IGUISound_dummy::IsPlayingEffect( CGUISoundData* /*pSoundData*/ )
 	{
 		return false;
 	}

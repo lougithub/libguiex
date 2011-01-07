@@ -25,7 +25,7 @@ class WxToolsPGManager;
 //============================================================================// 
 extern void UpdateGridProperties( WxToolsPGManager* pSheetMgr, const std::string& rType,CGUIWidget* pWidget = NULL );
 extern void	UpdateGridProperty( WxToolsPGManager* pSheetMgr, wxPGProperty* pPGProperty, const CGUIProperty& aProp );
-extern void	UpdateGridAndGuiProperty( WxToolsPGManager* pSheetMgr, CGUIWidget* pWidget, const CGUIString& rPropertyName );
+extern void	UpdateGridAndGuiProperty( WxToolsPGManager* pSheetMgr, CGUIWidget* pWidget, const CGUIString& rPropertyName, const CGUIString& rPropertyType );
 
 extern void	GenerateGUIProperty( WxToolsPGManager* pSheetMgr, wxPGProperty* pPGProperty, CGUIProperty& rProperty );
 extern void GenerateGUIProperties( WxToolsPGManager* pSheetMgr, CGUIProperty& rSet );

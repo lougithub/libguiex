@@ -26,6 +26,11 @@
 		<property name="uv" type="CGUIRect" value="0,0,1,1" />
 	</property>
 
+	<property name="color_translucent" type="CGUIImageDefine">
+		<property name="color" type="CGUIColor" value="0,0,0,0"/>
+		<property name="size" type="CGUISize" value="1,1"/>
+	</property>
+
 	<property name="button_red_normal" type="CGUIImageDefine">
 		<property  name="path" type="CGUIString" value="image/Glue-Panel-Button-Up.tga" />
 		<property name="uv" type="CGUIRect" value="0,0,0.578125,0.71875" />

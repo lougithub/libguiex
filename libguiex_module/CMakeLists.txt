@@ -48,6 +48,8 @@ set( ${target_name}_sound_openal_SRCS
 	sound_openal/guisounddata_openal.h	
 	sound_openal/guimusicdata_openal.cpp
 	sound_openal/guimusicdata_openal.h		
+	sound_openal/guioggfunc.cpp
+	sound_openal/guioggfunc.h			
 	)
 source_group(sound_openal FILES ${${target_name}_sound_openal_SRCS} )
 
@@ -220,7 +222,7 @@ elseif( APPLE )
 		${${target_name}_stringconv_cocoa_SRCS}
 		${${target_name}_script_lua_SRCS}
 		${${target_name}_physics_box2d_SRCS}
-		${${target_name}_sound_cocoa_SRCS}
+		${${target_name}_sound_openal_SRCS}
 		${${target_name}_sound_dummy_SRCS}
 		)
 

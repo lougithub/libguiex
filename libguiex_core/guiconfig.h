@@ -28,11 +28,11 @@
 //============================================================================// 
 
 #if defined( __WIN32__ ) || defined( _WIN32 ) || defined(WIN32)
-#define GUIEX_PLATFORM_WIN32
+#define GUIEX_PLATFORM_WIN32 1
 #elif defined(__linux__)
-#define GUIEX_PLATFORM_LINUX
+#define GUIEX_PLATFORM_LINUX 1
 #elif defined(__APPLE__) && defined(__MACH__)
-#define GUIEX_PLATFORM_MAC
+#define GUIEX_PLATFORM_MAC 1
 #endif
 
 

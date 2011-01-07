@@ -25,9 +25,6 @@ namespace guiex
 		uint32 GetPropertyNum( ) const;
 		int32 GetPropertyIndex( const CGUIString& rName ) const;
 		const CGUIProperty*	GetProperty( uint32 nIdx ) const;
-		const CGUIProperty*	GetProperty( const CGUIString& rName ) const;
-		CGUIProperty* GetProperty( const CGUIString& rName );
-		bool HasProperty( const CGUIString& rName ) const;
 	};
 }
 

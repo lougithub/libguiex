@@ -13,8 +13,15 @@
 // include
 //============================================================================//
 #include <libguiex_core/guisounddata.h>
+
+#if GUIEX_PLATFORM_MAC
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
+#else
 #include <al.h>
 #include <alc.h>
+#endif
+
 
 //============================================================================//
 // class
@@ -35,7 +42,9 @@ namespace guiex
 		virtual void DoUnload();
 
 	protected:
+#if GUIEX_PLATFORM_WIN32
 		bool LoadWavFile( const CGUIString& rFilename ) const;
+#endif
 		bool LoadOggFile( const CGUIString& rFilename ) const;
 
 		bool SetAlBuffer( ALenum format, const ALvoid* data, ALsizei size, ALsizei freq ) const;

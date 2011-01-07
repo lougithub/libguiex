@@ -21,6 +21,7 @@
 #include <libguiex_core/guiasmanager.h>
 #include <libguiex_core/guianimationmanager.h>
 #include <libguiex_core/guisoundmanager.h>
+#include <libguiex_core/guimusicmanager.h>
 #include <libguiex_core/guiscenemanager.h>
 
 
@@ -35,6 +36,7 @@ namespace guiex
 	static int32 DoLoadConfig_Animation( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
 	static int32 DoLoadConfig_Font( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
 	static int32 DoLoadConfig_Sound( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
+	static int32 DoLoadConfig_Music( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
 	static int32 DoLoadConfig_As( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
 
 
@@ -57,6 +59,11 @@ namespace guiex
 		pWidget->SetProperty( *pPropertySet );
 		pWidget->LoadFromProperty();
 		pWidget->Create();
+
+		if( !GSystem->IsEditorMode() )
+		{
+			pWidget->ClearProperty();
+		}
 
 		return pWidget;
 	}
@@ -120,6 +127,21 @@ namespace guiex
 		{
 			throw guiex::CGUIException(
 				"[DoLoadConfig_Sound], failed to create sound with name <%s:%s:%s>!", 
+				pPropertySet->GetName().c_str(),
+				pPropertySet->GetTypeAsString().c_str(),
+				pPropertySet->GetValue().c_str());
+			return -1;
+		}
+
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	int32 DoLoadConfig_Music( const CGUIProperty* pPropertySet, const CGUIString& rSceneName )
+	{
+		if( 0 != CGUIMusicManager::Instance()->RegisterMusic( rSceneName, *pPropertySet ) )
+		{
+			throw guiex::CGUIException(
+				"[DoLoadConfig_Music], failed to create sound with name <%s:%s:%s>!", 
 				pPropertySet->GetName().c_str(),
 				pPropertySet->GetTypeAsString().c_str(),
 				pPropertySet->GetValue().c_str());
@@ -205,6 +227,13 @@ namespace guiex
 
 			case ePropertyType_SoundDefine:
 				if( 0 != DoLoadConfig_Sound( pProperty, rSceneName ))
+				{
+					return -1;
+				}
+				break;
+
+			case ePropertyType_MusicDefine:
+				if( 0 != DoLoadConfig_Music( pProperty, rSceneName ))
 				{
 					return -1;
 				}

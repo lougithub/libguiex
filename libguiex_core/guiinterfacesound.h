@@ -44,15 +44,21 @@ namespace guiex
 		virtual CGUIMusicData* CreateMusicData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath ) = 0;
 		virtual void DestroyMusicData( CGUIMusicData* pData ) = 0;
 
-		virtual void Play( CGUISoundData* pSoundData ) = 0;
-		virtual void Stop( CGUISoundData* pSoundData ) = 0;
-		virtual void Pause( CGUISoundData* pSoundData ) = 0;
-		virtual bool IsPlaying( CGUISoundData* pSoundData ) = 0;
+		virtual void PlayEffect( CGUISoundData* pSoundData ) = 0;
+		virtual void StopEffect( CGUISoundData* pSoundData ) = 0;
+		virtual void PauseEffect( CGUISoundData* pSoundData ) = 0;
+		virtual bool IsPlayingEffect( CGUISoundData* pSoundData ) = 0;
 
 		virtual void PlayMusic( CGUIMusicData* pSoundData ) = 0;
-		virtual void StopMusic( CGUIMusicData* pSoundData ) = 0;
-		virtual void PauseMusic( CGUIMusicData* pSoundData ) = 0;
-		virtual bool IsPlayingMusic( CGUIMusicData* pSoundData ) = 0;
+		virtual void StopMusic( ) = 0;
+		virtual void PauseMusic( ) = 0;
+		virtual bool IsPlayingMusic( ) = 0;
+		virtual CGUIMusicData* GetMusicPlaying() = 0;
+
+		virtual void Update( real fDeltaTime );
+
+		void PlayEffect( const CGUIString& rSoundName );
+		void PlayMusic( const CGUIString& rMusicName );
 
 	public: 
 		static const char* StaticGetModuleType();

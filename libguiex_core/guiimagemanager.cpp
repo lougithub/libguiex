@@ -94,13 +94,13 @@ namespace guiex
 		*		<property name="size" type="CGUISize" value="4,4" />
 		*</property>
 		*/
-		if( rProperty.HasProperty("path"))
+		if( rProperty.HasProperty("path", "CGUIString"))
 		{
 			//a PATH image
-			const CGUIProperty* pPptPath = rProperty.GetProperty("path");
-			const CGUIProperty* pPptUV = rProperty.GetProperty("uv");
-			const CGUIProperty* pPPtImgOp = rProperty.GetProperty("orientation");
-			const CGUIProperty* pSize = rProperty.GetProperty("size");
+			const CGUIProperty* pPptPath = rProperty.GetProperty("path", "CGUIString");
+			const CGUIProperty* pPptUV = rProperty.GetProperty("uv", "CGUIRect");
+			const CGUIProperty* pPPtImgOp = rProperty.GetProperty("orientation", "EImageOrientation");
+			const CGUIProperty* pSize = rProperty.GetProperty("size", "CGUISize");
 
 			if( !pPptPath )
 			{
@@ -131,11 +131,11 @@ namespace guiex
 
 			return DoCreateImage( rProperty.GetName(), rSceneName, pPptPath->GetValue(), aUVRect, eImageOrientation, aSize);
 		}
-		else if(rProperty.HasProperty("color"))
+		else if(rProperty.HasProperty("color", "CGUIColor"))
 		{
 			//a COLOR image
-			const CGUIProperty* pPptColor = rProperty.GetProperty("color");
-			const CGUIProperty* pSize = rProperty.GetProperty("size");
+			const CGUIProperty* pPptColor = rProperty.GetProperty("color", "CGUIColor");
+			const CGUIProperty* pSize = rProperty.GetProperty("size", "CGUISize");
 			
 			if( !pPptColor )
 			{

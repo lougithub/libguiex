@@ -40,7 +40,7 @@ namespace guiex
 {
 	static void AddOrReplaceProperty( CGUIProperty& rParentProperty, const CGUIProperty& rNewProperty )
 	{
-		CGUIProperty* pOldProp = rParentProperty.GetProperty( rNewProperty.GetName());
+		CGUIProperty* pOldProp = rParentProperty.GetProperty( rNewProperty.GetName(), rNewProperty.GetType());
 		if( pOldProp )
 		{
 			*pOldProp = rNewProperty;
@@ -64,7 +64,7 @@ namespace guiex
 		*/
 		GUI_PROPERTY_TEST(rProperty, ePropertyType_WidgetPosition);
 
-		const CGUIProperty* pValueProperty = rProperty.GetProperty( "value" );
+		const CGUIProperty* pValueProperty = rProperty.GetProperty( "value", "CGUIVector2" );
 		if( !pValueProperty )
 		{
 			throw CGUIException(
@@ -77,7 +77,7 @@ namespace guiex
 			PropertyToValue( *pValueProperty, rValue.m_aValue );
 		}
 
-		const CGUIProperty* pTypeProperty = rProperty.GetProperty( "type" );
+		const CGUIProperty* pTypeProperty = rProperty.GetProperty( "type", "EScreenValue" );
 		if( !pTypeProperty )
 		{
 			throw CGUIException(
@@ -114,7 +114,7 @@ namespace guiex
 		</property>
 		*/
 		GUI_PROPERTY_TEST( rProperty, ePropertyType_WidgetSize);
-		const CGUIProperty* pValueProperty = rProperty.GetProperty( "value" );
+		const CGUIProperty* pValueProperty = rProperty.GetProperty( "value", "CGUISize" );
 		if( !pValueProperty )
 		{
 			throw CGUIException(
@@ -127,7 +127,7 @@ namespace guiex
 			PropertyToValue( *pValueProperty, rValue.m_aValue );
 		}
 
-		const CGUIProperty* pTypeProperty = rProperty.GetProperty( "type" );
+		const CGUIProperty* pTypeProperty = rProperty.GetProperty( "type", "EScreenValue");
 		if( !pTypeProperty )
 		{
 			throw CGUIException(
@@ -165,7 +165,7 @@ namespace guiex
 		</property>
 		*/
 		GUI_PROPERTY_TEST( rProperty, ePropertyType_StringInfo);
-		const CGUIProperty* pSizeProperty = rProperty.GetProperty( "size" );
+		const CGUIProperty* pSizeProperty = rProperty.GetProperty( "size", "uint16" );
 		if( !pSizeProperty )
 		{
 			throw CGUIException(
@@ -178,7 +178,7 @@ namespace guiex
 			PropertyToValue( *pSizeProperty, rValue.m_nFontSize );
 		}
 
-		const CGUIProperty* pIndexProperty = rProperty.GetProperty( "index" );
+		const CGUIProperty* pIndexProperty = rProperty.GetProperty( "index", "int16" );
 		if( !pIndexProperty )
 		{
 			throw CGUIException(
@@ -191,7 +191,7 @@ namespace guiex
 			PropertyToValue( *pIndexProperty, rValue.m_nFontIdx );
 		}
 
-		const CGUIProperty* pColorProperty = rProperty.GetProperty( "color" );
+		const CGUIProperty* pColorProperty = rProperty.GetProperty( "color", "CGUIColor" );
 		if( !pColorProperty )
 		{
 			throw CGUIException(

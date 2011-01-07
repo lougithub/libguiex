@@ -323,9 +323,9 @@ int		CPropertyConfigMgr::ProcessPropertyNode(const std::string& rPage, CGUIPrope
 
 			int32 nPropertyIndex = -1;
 			//remove old property
-			if( rPropertySet.HasProperty(pName) )
+			if( rPropertySet.HasProperty(pName, pType) )
 			{
-				nPropertyIndex = rPropertySet.GetPropertyIndex(pName);
+				nPropertyIndex = rPropertySet.GetPropertyIndex(pName, pType);
 				rPropertySet.RemoveProperty( nPropertyIndex );
 			}
 

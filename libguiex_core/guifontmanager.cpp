@@ -46,9 +46,7 @@ namespace guiex
 		const CGUIString& rSceneName,
 		const CGUIProperty& rProperty)
 	{
-		CGUIString strName = rProperty.GetName();
-		
-		const CGUIProperty* pPropPath = rProperty.GetProperty("path");
+		const CGUIProperty* pPropPath = rProperty.GetProperty("path", "CGUIString");
 		if( !pPropPath )
 		{
 			throw guiex::CGUIException(
@@ -60,7 +58,7 @@ namespace guiex
 		}
 		CGUIString strPath = pPropPath->GetValue();
 
-		const CGUIProperty* pPropIndex = rProperty.GetProperty("index");
+		const CGUIProperty* pPropIndex = rProperty.GetProperty("index", "int16");
 		if( !pPropIndex )
 		{
 			throw guiex::CGUIException(

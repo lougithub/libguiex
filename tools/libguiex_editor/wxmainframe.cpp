@@ -375,8 +375,8 @@ void WxMainFrame::UpdateWidgetSizeAndPos()
 	}
 	m_pCurrentEditingWidget->Refresh();
 
-	UpdateGridAndGuiProperty( m_pPropGridMan, m_pCurrentEditingWidget, "size" );
-	UpdateGridAndGuiProperty( m_pPropGridMan, m_pCurrentEditingWidget, "position" );
+	UpdateGridAndGuiProperty( m_pPropGridMan, m_pCurrentEditingWidget, "size", "CGUIWidgetSize" );
+	UpdateGridAndGuiProperty( m_pPropGridMan, m_pCurrentEditingWidget, "position", "CGUIWidgetPosition" );
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::SetPropGridWidget(CGUIWidget* pWidget)
@@ -388,6 +388,7 @@ void WxMainFrame::SetPropGridWidget(CGUIWidget* pWidget)
 		if( m_pCurrentEditingWidget )
 		{
 			UpdateGridProperties( m_pPropGridMan, m_pCurrentEditingWidget->GetType(), m_pCurrentEditingWidget );
+			m_pPropGridMan->SelectPage( 0 );
 		}
 		m_pPropGridMan->Refresh();
 	}
@@ -683,12 +684,7 @@ void WxMainFrame::OnPropertyGridChange( wxPropertyGridEvent& event )
 		wxMessageBox( _T("[WxMainFrame::OnPropertyGridChange] no editing widget"), _T("error") );
 		return;
 	}
-	wxPGProperty* pPGProperty = event.GetProperty();
-	if( !pPGProperty)
-	{
-		wxMessageBox( _T("[WxMainFrame::OnPropertyGridChange] failed to get wxPGProperty"), _T("error") );
-		return;
-	}
+
 	wxPGProperty* pPGTop = event.GetMainParent();
 	if( !pPGTop)
 	{

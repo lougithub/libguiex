@@ -43,9 +43,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int32 CGUISoundManager::RegisterSound( const CGUIString& rSceneName, const CGUIProperty& rProperty)
 	{
-		CGUIString strName = rProperty.GetName();
-		
-		const CGUIProperty* pPropPath = rProperty.GetProperty("path");
+		const CGUIProperty* pPropPath = rProperty.GetProperty("path", "CGUIString");
 		if( !pPropPath )
 		{
 			throw guiex::CGUIException(

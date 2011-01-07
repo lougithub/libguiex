@@ -41,7 +41,7 @@ namespace guiex
 		IGUIInterfaceSound* pInterfaceSound = CGUIInterfaceManager::Instance()->GetInterfaceSound();
 		if( pInterfaceSound )
 		{
-			pInterfaceSound->Play( this );
+			pInterfaceSound->PlayEffect( this );
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ namespace guiex
 		IGUIInterfaceSound* pInterfaceSound = CGUIInterfaceManager::Instance()->GetInterfaceSound();
 		if( pInterfaceSound )
 		{
-			pInterfaceSound->Stop( this );
+			pInterfaceSound->StopEffect( this );
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -63,7 +63,7 @@ namespace guiex
 		IGUIInterfaceSound* pInterfaceSound = CGUIInterfaceManager::Instance()->GetInterfaceSound();
 		if( pInterfaceSound )
 		{
-			pInterfaceSound->Pause( this );
+			pInterfaceSound->PauseEffect( this );
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -74,7 +74,7 @@ namespace guiex
 		IGUIInterfaceSound* pInterfaceSound = CGUIInterfaceManager::Instance()->GetInterfaceSound();
 		if( pInterfaceSound )
 		{
-			return pInterfaceSound->IsPlaying( this );
+			return pInterfaceSound->IsPlayingEffect( this );
 		}
 		return false;
 	}

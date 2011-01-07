@@ -1662,7 +1662,7 @@ namespace guiex
 	*/
 	void CGUIWidget::InsertProperty( const CGUIProperty& rProperty)
 	{
-		CGUIProperty* pProp = m_aPropertySet.GetProperty(rProperty.GetName());
+		CGUIProperty* pProp = m_aPropertySet.GetProperty(rProperty.GetName(), rProperty.GetType());
 		if( pProp )
 		{
 			*pProp = rProperty;
@@ -2120,7 +2120,7 @@ namespace guiex
 	void CGUIWidget::LoadFromProperty()
 	{
 		//set parent first
-		CGUIProperty* pPropertyParent = m_aPropertySet.GetProperty( "parent" );
+		CGUIProperty* pPropertyParent = m_aPropertySet.GetProperty( "parent", "CGUIString" );
 		if( pPropertyParent )
 		{
 			ProcessProperty( *pPropertyParent );

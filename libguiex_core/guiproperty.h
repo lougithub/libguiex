@@ -56,11 +56,18 @@ namespace guiex
 		void InsertProperty(  const CGUIProperty& rProperty, int32 nIndex );
 		uint32 GetPropertyNum( ) const;
 		int32 GetPropertyIndex( const CGUIString& rName ) const;
+		int32 GetPropertyIndex( const CGUIString& rName, const CGUIString& rType ) const;
 		const CGUIProperty*	GetProperty( uint32 nIdx ) const;
 		CGUIProperty* GetProperty( uint32 nIdx );
-		const CGUIProperty*	GetProperty( const CGUIString& rName ) const;
-		CGUIProperty* GetProperty( const CGUIString& rName );
-		bool HasProperty( const CGUIString& rName ) const;
+		//const CGUIProperty* GetProperty( const CGUIString& rName ) const;
+		//CGUIProperty* GetProperty( const CGUIString& rName );
+		const CGUIProperty*	GetProperty( const CGUIString& rName, uint32 nType ) const;
+		CGUIProperty* GetProperty( const CGUIString& rName, uint32 nType );
+		const CGUIProperty*	GetProperty( const CGUIString& rName, const CGUIString& rType ) const;
+		CGUIProperty* GetProperty( const CGUIString& rName, const CGUIString& rType );
+		//bool HasProperty( const CGUIString& rName ) const;
+		bool HasProperty( const CGUIString& rName, uint32 nType ) const;
+		bool HasProperty( const CGUIString& rName, const CGUIString& rType ) const;
 
 		//set extra data
 		void SetData( void* pData );

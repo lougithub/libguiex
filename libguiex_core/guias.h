@@ -238,7 +238,7 @@ namespace guiex
 
 			{
 				EInterpolationType eValue = eInterpolationType_Linear;
-				const CGUIProperty* pPPtInterpolationType = rProperty.GetProperty("interpolation");
+				const CGUIProperty* pPPtInterpolationType = rProperty.GetProperty("interpolation", "EInterpolationType" );
 				if( pPPtInterpolationType )
 				{
 					PropertyToValue( *pPPtInterpolationType, eValue );
@@ -247,7 +247,7 @@ namespace guiex
 			}
 
 			{
-				const CGUIProperty* pPPtBeginValue = rProperty.GetProperty("begin_value");
+				const CGUIProperty* pPPtBeginValue = rProperty.GetProperty("begin_value", "");
 				if( !pPPtBeginValue )
 				{
 					throw CGUIException(
@@ -262,7 +262,7 @@ namespace guiex
 			}
 
 			{
-				const CGUIProperty* pPPtEndValue = rProperty.GetProperty("end_value");
+				const CGUIProperty* pPPtEndValue = rProperty.GetProperty("end_value","");
 				if( !pPPtEndValue )
 				{
 					throw CGUIException(

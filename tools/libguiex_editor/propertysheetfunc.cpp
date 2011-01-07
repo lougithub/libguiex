@@ -47,7 +47,7 @@ void UpdateGridProperties( WxToolsPGManager* pSheetMgr, const std::string& rType
 		if( pWidget )
 		{
 			//load property from widget
-			const CGUIProperty* pGUIProp = pWidget->GetProperty().GetProperty( pProp->GetName() );
+			const CGUIProperty* pGUIProp = pWidget->GetProperty().GetProperty( pProp->GetName(), pProp->GetType() );
 			if( pGUIProp )
 			{
 				aGUIProp = *pGUIProp;
@@ -93,17 +93,17 @@ void GenerateGUIProperties( WxToolsPGManager* pSheetMgr,CGUIProperty& rSet )
 	}
 }
 //------------------------------------------------------------------------------
-void UpdateGridAndGuiProperty( WxToolsPGManager* pSheetMgr, CGUIWidget* pWidget, const CGUIString& rPropertyName )
+void UpdateGridAndGuiProperty( WxToolsPGManager* pSheetMgr, CGUIWidget* pWidget, const CGUIString& rPropertyName, const CGUIString& rPropertyType )
 {
 	const CGUIProperty& rSet = CPropertyConfigMgr::Instance()->GetPropertySet(pWidget->GetType());
 
-	const CGUIProperty* pDefaultProp = rSet.GetProperty(rPropertyName);
+	const CGUIProperty* pDefaultProp = rSet.GetProperty(rPropertyName, rPropertyType);
 	if( !pDefaultProp )
 	{
 		throw CGUIException( "[UpdateGridAndGuiProperty]: failed to get default property by name <%s>", rPropertyName.c_str() );
 	}
 
-	const CGUIProperty* pProp = pWidget->GetProperty().GetProperty(rPropertyName);
+	const CGUIProperty* pProp = pWidget->GetProperty().GetProperty(rPropertyName, rPropertyType);
 	if( !pProp )
 	{
 		throw CGUIException( "[UpdateGridAndGuiProperty]: failed to get property by name <%s> from widget <%s>", rPropertyName.c_str(), pWidget->GetName().c_str() );
@@ -119,7 +119,7 @@ void UpdateGridAndGuiProperty( WxToolsPGManager* pSheetMgr, CGUIWidget* pWidget,
 //------------------------------------------------------------------------------
 void UpdateGridProperty( WxToolsPGManager* pSheetMgr, wxPGProperty* pPGCategory, const CGUIProperty& aProp )
 {
-	wxPGProperty* pPGTop = pSheetMgr->GetPropertyByName( Gui2wxString( aProp.GetName() ));
+	wxPGProperty* pPGTop = pSheetMgr->ToolsGetProperty( aProp.GetName(), aProp.GetTypeAsString() );
 	GUI_ASSERT( pPGTop || pPGCategory, "wrong parameter" );
 
 	//////////////////////////////////////////////////////////////////////////////////////

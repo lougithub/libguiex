@@ -452,6 +452,9 @@ namespace guiex
 	{
 		PERFMON_BEGIN(0, "CGUISystem::Update");
 
+		//update sound
+		UpdateSound( fDeltaTime );
+
 		//update physics
 		UpdatePhysics( fDeltaTime );
 
@@ -460,7 +463,6 @@ namespace guiex
 
 		//execute command if it exist
 		ProcessCommand();
-
 
 		RefreshGarbage();
 
@@ -846,6 +848,14 @@ namespace guiex
 			m_nFps = m_aFrame;
 			//GUI_TRACE( GUI_FORMAT( "\n--- FRAME %d --- \n",  m_aFrame));
 			m_aFrame = 0;
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUISystem::UpdateSound( real fDeltaTime )
+	{
+		if( m_pInterfaceManager->GetInterfaceSound() )
+		{
+			m_pInterfaceManager->GetInterfaceSound()->Update( fDeltaTime );
 		}
 	}
 	//------------------------------------------------------------------------------

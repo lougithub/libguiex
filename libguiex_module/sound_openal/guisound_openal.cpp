@@ -31,6 +31,7 @@ namespace guiex
 	:IGUIInterfaceSound( StaticGetModuleName() )
 	,m_pContext(NULL)
 	,m_pDevice(NULL)
+	,m_pCurrentMusic( NULL )
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -101,11 +102,16 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIMusicData* IGUISound_openal::CreateMusicData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath )
 	{
-		return NULL;
+		CGUIMusicData_openal* pSoundData = new CGUIMusicData_openal( rName, rSceneName, rPath );
+		return pSoundData;
 	}
 	//------------------------------------------------------------------------------
 	void IGUISound_openal::DestroyMusicData( CGUIMusicData* pData )
 	{
+		if( m_pCurrentMusic == pData )
+		{
+			StopMusic();
+		}
 		GUI_ASSERT( pData, "invalid parameter" );
 		delete pData;
 	}
@@ -143,7 +149,7 @@ namespace guiex
 		};
 	}
 	//------------------------------------------------------------------------------
-	void IGUISound_openal::Play( CGUISoundData* pSoundData )
+	void IGUISound_openal::PlayEffect( CGUISoundData* pSoundData )
 	{
 		CGUISoundData_openal* pOpenalSoundData = (CGUISoundData_openal*)(pSoundData);
 		
@@ -154,7 +160,7 @@ namespace guiex
 		alSourcePlay( pOpenalSoundData->m_nSourceId );
 	}
 	//------------------------------------------------------------------------------
-	void IGUISound_openal::Stop( CGUISoundData* pSoundData )
+	void IGUISound_openal::StopEffect( CGUISoundData* pSoundData )
 	{
 		CGUISoundData_openal* pOpenalSoundData = (CGUISoundData_openal*)(pSoundData);
 		
@@ -162,7 +168,7 @@ namespace guiex
 		alSourceStop( pOpenalSoundData->m_nSourceId );
 	}
 	//------------------------------------------------------------------------------
-	void IGUISound_openal::Pause( CGUISoundData* pSoundData )
+	void IGUISound_openal::PauseEffect( CGUISoundData* pSoundData )
 	{
 		CGUISoundData_openal* pOpenalSoundData = (CGUISoundData_openal*)(pSoundData);
 
@@ -170,7 +176,7 @@ namespace guiex
 		alSourcePause( pOpenalSoundData->m_nSourceId );
 	}
 	//------------------------------------------------------------------------------
-	bool IGUISound_openal::IsPlaying( CGUISoundData* pSoundData )
+	bool IGUISound_openal::IsPlayingEffect( CGUISoundData* pSoundData )
 	{
 		CGUISoundData_openal* pOpenalSoundData = (CGUISoundData_openal*)(pSoundData);
 
@@ -189,22 +195,78 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void IGUISound_openal::PlayMusic( CGUIMusicData* pSoundData )
 	{
+		if( m_pCurrentMusic != pSoundData )
+		{
+			StopMusic();
+		}
 
+		m_pCurrentMusic = (CGUIMusicData_openal*)(pSoundData);
+		if( !m_pCurrentMusic )
+		{
+			return;
+		}
+
+		//tell the sound to loop continuously
+		alSourcei( m_pCurrentMusic->m_nSourceId, AL_LOOPING, AL_FALSE );
+
+		//play the sound
+		alSourcePlay( m_pCurrentMusic->m_nSourceId );
 	}
 	//------------------------------------------------------------------------------
-	void IGUISound_openal::StopMusic( CGUIMusicData* pSoundData )
+	void IGUISound_openal::StopMusic( )
 	{
-
+		if( m_pCurrentMusic )
+		{
+			// To stop the sound
+			alSourceStop( m_pCurrentMusic->m_nSourceId );
+			m_pCurrentMusic->Unload();
+			m_pCurrentMusic = NULL;
+		}
 	}
 	//------------------------------------------------------------------------------
-	void IGUISound_openal::PauseMusic( CGUIMusicData* pSoundData )
+	void IGUISound_openal::PauseMusic(  )
 	{
-
+		if( m_pCurrentMusic )
+		{
+			// To stop the sound
+			alSourcePause( m_pCurrentMusic->m_nSourceId );
+			m_pCurrentMusic = NULL;
+		}
 	}
 	//------------------------------------------------------------------------------
-	bool IGUISound_openal::IsPlayingMusic( CGUIMusicData* pSoundData )
+	bool IGUISound_openal::IsPlayingMusic( )
 	{
+		if( m_pCurrentMusic )
+		{
+			// To stop the sound
+			ALint state;
+			alGetSourcei( m_pCurrentMusic->m_nSourceId, AL_SOURCE_STATE, &state );
+			if( state == AL_PLAYING )
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 		return false;
+	}
+	//------------------------------------------------------------------------------
+	CGUIMusicData* IGUISound_openal::GetMusicPlaying()
+	{
+		return m_pCurrentMusic;
+	}
+	//------------------------------------------------------------------------------
+	void IGUISound_openal::Update( real fDeltaTime )
+	{
+		if( m_pCurrentMusic )
+		{
+			if( false == m_pCurrentMusic->Update() )
+			{
+				StopMusic();
+			}
+		}
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

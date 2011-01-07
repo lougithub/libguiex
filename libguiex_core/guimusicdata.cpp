@@ -45,38 +45,4 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUIMusicData::Stop()
-	{
-		Load();
-
-		IGUIInterfaceSound* pInterfaceSound = CGUIInterfaceManager::Instance()->GetInterfaceSound();
-		if( pInterfaceSound )
-		{
-			pInterfaceSound->StopMusic( this );
-		}
-	}
-	//------------------------------------------------------------------------------
-	void CGUIMusicData::Pause()
-	{
-		Load();
-
-		IGUIInterfaceSound* pInterfaceSound = CGUIInterfaceManager::Instance()->GetInterfaceSound();
-		if( pInterfaceSound )
-		{
-			pInterfaceSound->PauseMusic( this );
-		}
-	}
-	//------------------------------------------------------------------------------
-	bool CGUIMusicData::IsPlaying()
-	{
-		Load();
-
-		IGUIInterfaceSound* pInterfaceSound = CGUIInterfaceManager::Instance()->GetInterfaceSound();
-		if( pInterfaceSound )
-		{
-			return pInterfaceSound->IsPlayingMusic( this );
-		}
-		return false;
-	}
-	//------------------------------------------------------------------------------
 }
