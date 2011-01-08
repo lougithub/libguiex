@@ -120,6 +120,7 @@ add_subdirectory( ${PROJECT_SOURCE_DIR}/test/test1 projects/test1 )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/testbox2d projects/testbox2d )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/hello_ipad projects/hello_ipad )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/canvaslayer_test projects/canvaslayer_test )
+add_subdirectory( ${PROJECT_SOURCE_DIR}/test/testsound projects/testsound)
 
 #tools
 add_subdirectory( ${PROJECT_SOURCE_DIR}/tools/libguiex_editor_viewer projects/libguiex_editor_viewer )
