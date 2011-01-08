@@ -9,8 +9,14 @@
 // include
 //============================================================================//
 #include "guioggfunc.h"
+#include <libguiex_core/guiex.h>
+#if GUIEX_PLATFORM_MAC
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
+#else
 #include <al.h>
 #include <alc.h>
+#endif
 #include <algorithm>
 
 namespace guiex

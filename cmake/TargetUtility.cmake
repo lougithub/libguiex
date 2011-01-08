@@ -19,13 +19,14 @@ endmacro()
 
 
 macro( macro_copy_resource_mac targetname source )
-	set( TARGET_DIR "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${target_name}.app/" )
+	set( TARGET_DIR "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Debug/${target_name}.app/" )
 	add_custom_command(
 		TARGET ${target_name} 
 		POST_BUILD 
 		COMMAND ln
 		ARGS -fs ${source} ${TARGET_DIR}
-		COMMENT "copying resource ..."
+		COMMENT "copying resource from ${source} to ${TARGET_DIR}"
+
 		)
 endmacro()
 
