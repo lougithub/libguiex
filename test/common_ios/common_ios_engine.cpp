@@ -10,6 +10,8 @@
 
 //libguiex
 #include <libguiex_framework/guiframework.h>
+#include <libguiex_core/guiinterfacemouse.h>
+
 using namespace guiex;
 
 
@@ -75,14 +77,17 @@ void CLibGuiexEngine::OnRotate( DeviceOrientation newOrientation )
 
 void CLibGuiexEngine::OnFingerUp(float x, float y)
 {
+	GSystem->ProcessMouseInput( IGUIInterfaceMouse::SMouseEvent( MOUSE_EVENT_UP, MOUSE_LEFT, x, y ) );
 }
 
 void CLibGuiexEngine::OnFingerDown(float x,float y)
 {
+	GSystem->ProcessMouseInput( IGUIInterfaceMouse::SMouseEvent( MOUSE_EVENT_DOWN, MOUSE_LEFT, x, y ) );
 }
 
 void CLibGuiexEngine::OnFingerMove(float oldx, float oldy, float x, float y)
 {
+	GSystem->ProcessMouseInput( IGUIInterfaceMouse::SMouseEvent( MOUSE_EVENT_MOVE, MOUSE_NONE, x, y ) );
 }
 
 
