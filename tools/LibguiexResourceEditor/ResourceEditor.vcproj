@@ -410,6 +410,36 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath=".\Ui\ReAnimEntityPanel.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Ui\ReAnimEntityPanel.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
 					RelativePath=".\Ui\ReAnimEntityWidget.cpp"
 					>
 				</File>
@@ -614,6 +644,66 @@
 							Name="VCCustomBuildTool"
 							Description="Moc&apos;ing $(InputFileName)..."
 							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Ui\ReAnimPlayer.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Ui\ReAnimPlayer.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Ui\ReAnimPlayerPanel.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Ui\ReAnimPlayerPanel.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp"
 							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
 							Outputs="Moc\Ui\moc_$(InputName).cpp"
 						/>
@@ -1109,6 +1199,10 @@
 						>
 					</File>
 					<File
+						RelativePath=".\Moc\Ui\moc_ReAnimEntityPanel.cpp"
+						>
+					</File>
+					<File
 						RelativePath=".\Moc\Ui\moc_ReAnimEntityWidget.cpp"
 						>
 					</File>
@@ -1134,6 +1228,14 @@
 					</File>
 					<File
 						RelativePath=".\Moc\Ui\moc_ReAnimPanelWidget.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\Moc\Ui\moc_ReAnimPlayer.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\Moc\Ui\moc_ReAnimPlayerWidget.cpp"
 						>
 					</File>
 					<File

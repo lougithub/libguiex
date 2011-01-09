@@ -14,6 +14,7 @@
 #include <QMenu>
 #include <QAction>
 #include <QTransform>
+#include <QLineEdit>
 
 
 namespace RE
@@ -30,6 +31,10 @@ ReAnimEntityWidget::ReAnimEntityWidget( ReAnimEntity* _model, ReRulerWidget* _ru
 , m_editMenu( NULL )
 , m_isHighlighted( false )
 {
+	GetTopPaddingRef() = 2;
+	GetBottomPaddingRef() = 2;
+	GetVerticalGapRef() = 2;
+
 	InitMenu();
 
 	m_toggleButton = new QPushButton( tr( "Collapse" ), this );
@@ -38,8 +43,8 @@ ReAnimEntityWidget::ReAnimEntityWidget( ReAnimEntity* _model, ReRulerWidget* _ru
 	m_toggleButton->setVisible( true );
 	connect( m_toggleButton, SIGNAL( toggled( bool ) ), this, SLOT( OnToggled( bool ) ) );
 	
-	m_label = new QLabel( tr( "Item" ), this );
-	m_label->setVisible( true );
+	static int sEntityCounter = 0;
+	m_nameEdit = new QLineEdit( QString( tr( "Entity_%1" ) ).arg( sEntityCounter++ ), this );
 
 	UpdateLayout();
 
@@ -90,7 +95,7 @@ void ReAnimEntityWidget::Highlight( bool _isHighlight )
 }
 
 
-bool ReAnimEntityWidget::GetTranslationAt( int _cursor, QPointF& _result )
+bool ReAnimEntityWidget::GetTranslationAt( int _cursor, QPointF& _result, bool _allowExterpolate )
 {
 	bool isOk = false;
 
@@ -101,7 +106,7 @@ bool ReAnimEntityWidget::GetTranslationAt( int _cursor, QPointF& _result )
 		ReAnimTrack* trackData = suite.m_track->GetModelData();
 		qreal time = suite.m_track->GetValueAt( _cursor );
 		QVariant data;
-		if( trackData->Interpolate( time, data, false ) )
+		if( trackData->Interpolate( time, data, _allowExterpolate ) )
 		{
 			_result = data.toPointF();
 			isOk = true;
@@ -112,7 +117,7 @@ bool ReAnimEntityWidget::GetTranslationAt( int _cursor, QPointF& _result )
 }
 
 
-bool ReAnimEntityWidget::GetRotationAt( int _cursor, qreal& _result )
+bool ReAnimEntityWidget::GetRotationAt( int _cursor, qreal& _result, bool _allowExterpolate )
 {
 	bool isOk = false;
 
@@ -123,7 +128,7 @@ bool ReAnimEntityWidget::GetRotationAt( int _cursor, qreal& _result )
 		ReAnimTrack* trackData = suite.m_track->GetModelData();
 		qreal time = suite.m_track->GetValueAt( _cursor );
 		QVariant data;
-		if( trackData->Interpolate( time, data, false ) )
+		if( trackData->Interpolate( time, data, _allowExterpolate ) )
 		{
 			_result = data.toDouble();
 			isOk = true;
@@ -134,7 +139,7 @@ bool ReAnimEntityWidget::GetRotationAt( int _cursor, qreal& _result )
 }
 
 
-bool ReAnimEntityWidget::GetScaleAt( int _cursor, QPointF& _result )
+bool ReAnimEntityWidget::GetScaleAt( int _cursor, QPointF& _result, bool _allowExterpolate )
 {
 	bool isOk = false;
 
@@ -145,7 +150,7 @@ bool ReAnimEntityWidget::GetScaleAt( int _cursor, QPointF& _result )
 		ReAnimTrack* trackData = suite.m_track->GetModelData();
 		qreal time = suite.m_track->GetValueAt( _cursor );
 		QVariant data;
-		if( trackData->Interpolate( time, data, false ) )
+		if( trackData->Interpolate( time, data, _allowExterpolate ) )
 		{
 			_result = data.toPointF();
 			isOk = true;
@@ -156,7 +161,7 @@ bool ReAnimEntityWidget::GetScaleAt( int _cursor, QPointF& _result )
 }
 
 
-bool ReAnimEntityWidget::GetAlphaAt( int _cursor, qreal& _result )
+bool ReAnimEntityWidget::GetAlphaAt( int _cursor, qreal& _result, bool _allowExterpolate )
 {
 	bool isOk = false;
 
@@ -167,7 +172,7 @@ bool ReAnimEntityWidget::GetAlphaAt( int _cursor, qreal& _result )
 		ReAnimTrack* trackData = suite.m_track->GetModelData();
 		qreal time = suite.m_track->GetValueAt( _cursor );
 		QVariant data;
-		if( trackData->Interpolate( time, data, false ) )
+		if( trackData->Interpolate( time, data, _allowExterpolate ) )
 		{
 			_result = data.toDouble();
 			isOk = true;
@@ -179,7 +184,7 @@ bool ReAnimEntityWidget::GetAlphaAt( int _cursor, qreal& _result )
 
 
 
-bool ReAnimEntityWidget::GetTransformAt( int _cursor, QTransform& _result )
+bool ReAnimEntityWidget::GetTransformAt( int _cursor, QTransform& _result, bool _allowExterpolate )
 {
 	bool isOk = false;
 
@@ -187,9 +192,9 @@ bool ReAnimEntityWidget::GetTransformAt( int _cursor, QTransform& _result )
 	qreal rotation = 0.0f;
 	QPointF scale;
 
-	bool hasTranslation = GetTranslationAt( _cursor, translation );
-	bool hasRotation = GetRotationAt( _cursor, rotation );
-	bool hasScale = GetScaleAt( _cursor, scale );
+	bool hasTranslation = GetTranslationAt( _cursor, translation, _allowExterpolate );
+	bool hasRotation = GetRotationAt( _cursor, rotation, _allowExterpolate );
+	bool hasScale = GetScaleAt( _cursor, scale, _allowExterpolate );
 
 	if( hasTranslation || hasRotation || hasScale )
 	{		
@@ -209,7 +214,6 @@ bool ReAnimEntityWidget::GetTransformAt( int _cursor, QTransform& _result )
 
 	return isOk;
 }
-
 
 
 // -----------------------------------------------------------------------------
@@ -289,7 +293,11 @@ void ReAnimEntityWidget::OnPositionChanged( const QPointF& _pos )
 		ReAnimFrameWidget* frameWidget = trackWidget->GetFrameAtCursor( trackWidget->GetCursor() );
 		if( NULL == frameWidget )
 		{
+			// Do not use the result returned from CreateFramAtCursor.
+			// Call GetFrameAtCursor again instead.
 			frameWidget = trackWidget->CreateFrameAtCursor( trackWidget->GetCursor() );
+			//trackWidget->CreateFrameAtCursor( trackWidget->GetCursor() );
+			//frameWidget = trackWidget->GetFrameAtCursor( trackWidget->GetCursor() );
 			isDirty = true;
 		}
 
@@ -298,7 +306,10 @@ void ReAnimEntityWidget::OnPositionChanged( const QPointF& _pos )
 		frameData->SetFrameValue( _pos.y(), 1 );
 
 		if( isDirty )
+		{
+			emit DataChangedAt( trackWidget->GetCursor() );
 			update();
+		}
 	}
 }
 
@@ -416,6 +427,7 @@ void ReAnimEntityWidget::CreateTrack( eTrackType _type )
 
 		QObject::connect( m_ruler, SIGNAL( CursorChanged( int ) ), trackWidget, SLOT( OnCursorChanged( int ) ) );
 		QObject::connect( m_ruler, SIGNAL( ViewportChanged( int ) ), trackWidget, SLOT( OnViewportChanged( int ) ) );
+		QObject::connect( trackWidget, SIGNAL( DataChangedAt( int ) ), this, SIGNAL( DataChangedAt( int ) ) );
 
 		ReSuite& suite = m_suiteArray[ _type ];
 		suite.m_type = _type;
@@ -425,10 +437,6 @@ void ReAnimEntityWidget::CreateTrack( eTrackType _type )
 		suite.m_buttons[ ESuiteButton_Enable ]->setCheckable( true );
 		suite.m_buttons[ ESuiteButton_Enable ]->setChecked( true );
 		suite.m_buttons[ ESuiteButton_Enable ]->setStyleSheet( "QPushButton{ text-align: center; }" );
-		suite.m_buttons[ ESuiteButton_Delete ] = new QPushButton( tr( "D" ), this );
-		suite.m_buttons[ ESuiteButton_Delete ]->setVisible( true );
-		suite.m_buttons[ ESuiteButton_Delete ]->setCheckable( true );
-		suite.m_buttons[ ESuiteButton_Delete ]->setStyleSheet( "QPushButton{ text-align: center; }" );
 
 		UpdateLayout();
 	}
@@ -440,14 +448,15 @@ void ReAnimEntityWidget::UpdateLayout()
 	// Toggle button.
 	int toggleButtonX = GetLeftPadding();
 	int toggleButtonY = GetTopPadding();
-	int toggleButtonW = ANIM_ENTITY_HEADER_WIDTH;
+	int toggleButtonW = ANIM_HEADER_WIDTH;
 	int toggleButtonH = ANIM_ENTITY_SUITE_HEIGHT;
 	m_toggleButton->setGeometry( toggleButtonX, toggleButtonY, toggleButtonW, toggleButtonH );
 
 	// Label.
-	int labelX = GetLeftPadding() + ANIM_ENTITY_HEADER_WIDTH + GetHorizontalGap();
-	int labelY = toggleButtonY;
-	m_label->move( labelX, labelY );
+	int nameX = GetLeftPadding() + ANIM_HEADER_WIDTH + ANIM_CONSOLE_H_GAP + GetHorizontalGap();
+	int nameY = toggleButtonY;
+	m_nameEdit->resize( m_nameEdit->width(), ANIM_ENTITY_SUITE_HEIGHT );
+	m_nameEdit->move( nameX, nameY );
 
 	// Suites.
 	int suiteX = GetLeftPadding();
@@ -455,9 +464,9 @@ void ReAnimEntityWidget::UpdateLayout()
 	int suiteButtonHorizontalGap = 4;
 	int suiteButtonWidth = ANIM_ENTITY_SUITE_HEIGHT;
 	int suiteButtonHeight = ANIM_ENTITY_SUITE_HEIGHT;
-	int trackX = labelX;
-	int trackY = labelY + ANIM_ENTITY_SUITE_HEIGHT + GetVerticalGap();
-	int trackW = width() - GetLeftPadding() - GetRightPadding() - ANIM_ENTITY_HEADER_WIDTH - GetHorizontalGap();
+	int trackX = nameX;
+	int trackY = nameY + ANIM_ENTITY_SUITE_HEIGHT + GetVerticalGap();
+	int trackW = width() - GetLeftPadding() - GetRightPadding() - ANIM_HEADER_WIDTH - GetHorizontalGap();
 	int trackH = ANIM_ENTITY_SUITE_HEIGHT;
 
 	for( int i = 0, validSuiteCount = 0; i < ETrackType_Count; ++i )

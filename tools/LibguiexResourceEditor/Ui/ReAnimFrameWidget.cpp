@@ -72,18 +72,6 @@ void ReAnimFrameWidget::mouseReleaseEvent( QMouseEvent* _event )
 }
 
 
-void ReAnimFrameWidget::focusInEvent( QFocusEvent* _event )
-{
-	emit EditStarted( this );
-}
-
-
-void ReAnimFrameWidget::focusOutEvent( QFocusEvent* _event )
-{
-	//emit EditEnded( this );
-}
-
-
 // -----------------------------------------------------------------------------
 // -----------------------------------------------------------------------------
 

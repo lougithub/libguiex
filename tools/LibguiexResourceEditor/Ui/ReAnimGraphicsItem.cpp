@@ -90,29 +90,29 @@ void ReAnimGraphicsItem::paint( QPainter* _painter, const QStyleOptionGraphicsIt
 {
 	_painter->setPen( QColor( 255, 255, 255 ) );
 	_painter->fillRect( boundingRect(), QColor( 255, 255, 0, ( int )( 255.0f * m_alpha ) ) );
-	_painter->setPen( QColor( 0, 0, 255 ) );
-	_painter->drawLine( QPointF( 0.0f, 0.0f ), QPointF( boundingRect().width() / 2, 0.0f ) );
-	_painter->setPen( QColor( 255, 0, 0 ) );
-	_painter->drawLine( QPointF( 0.0f, 0.0f ), QPointF( 0.0f, boundingRect().height() / 2 ) );
+	//_painter->setPen( QColor( 0, 0, 255 ) );
+	//_painter->drawLine( QPointF( 0.0f, 0.0f ), QPointF( boundingRect().width() / 2, 0.0f ) );
+	//_painter->setPen( QColor( 255, 0, 0 ) );
+	//_painter->drawLine( QPointF( 0.0f, 0.0f ), QPointF( 0.0f, boundingRect().height() / 2 ) );
 
-	int extra = _painter->pen().width() / 2;
-	QRectF rect = boundingRect();
-	rect.adjust( extra, extra, extra, extra );
-	_painter->setPen( Qt::red );
-	_painter->drawRect( rect );
+	//int extra = _painter->pen().width() / 2;
+	//QRectF rect = boundingRect();
+	//rect.adjust( extra, extra, extra, extra );
+	//_painter->setPen( Qt::red );
+	//_painter->drawRect( rect );
 
-	if( EEditMode_Select == m_editMode )
-		_painter->drawText( 0, 0, QObject::tr( "O" ) );
-	else if( EEditMode_Move == m_editMode )
-		_painter->drawText( 0, 0, QObject::tr( "T" ) );
-	else if( EEditMode_Rotate == m_editMode )
-		_painter->drawText( 0, 0, QObject::tr( "R" ) );
-	else if( EEditMode_Scale == m_editMode )
-		_painter->drawText( 0, 0, QObject::tr( "S" ) );
-	else if( EEditMode_Alpha == m_editMode )
-		_painter->drawText( 0, 0, QObject::tr( "A" ) );
-	else
-		_painter->drawText( 0, 0, QObject::tr( "X" ) );
+	//if( EEditMode_Select == m_editMode )
+	//	_painter->drawText( 0, 0, QObject::tr( "O" ) );
+	//else if( EEditMode_Move == m_editMode )
+	//	_painter->drawText( 0, 0, QObject::tr( "T" ) );
+	//else if( EEditMode_Rotate == m_editMode )
+	//	_painter->drawText( 0, 0, QObject::tr( "R" ) );
+	//else if( EEditMode_Scale == m_editMode )
+	//	_painter->drawText( 0, 0, QObject::tr( "S" ) );
+	//else if( EEditMode_Alpha == m_editMode )
+	//	_painter->drawText( 0, 0, QObject::tr( "A" ) );
+	//else
+	//	_painter->drawText( 0, 0, QObject::tr( "X" ) );
 }
 
 
@@ -265,6 +265,11 @@ void ReAnimGraphicsItem::keyPressEvent( QKeyEvent* _event )
 		{
 			m_dragInfo.Stop();
 			setTransform( m_transformBackup );
+		}
+
+		if( EEditMode_Move == m_editMode )
+		{
+			setPos( m_dragInfo.GetItemPosBackup() );
 		}
 	}
 }

@@ -30,8 +30,10 @@ ReAnimGraphicsScene::ReAnimGraphicsScene( ReAnimModel* _model, QObject* _parent 
 	lineA->setZValue( -999.0f );
 
 	m_editMenu = new QMenu();
-	QAction* action = m_editMenu->addAction( tr( "&Add Item" ) );
-	connect( action, SIGNAL( triggered() ), this, SLOT( OnAddItem() ) );
+	m_createItemAction = m_editMenu->addAction( tr( "&Add Item" ) );
+	connect( m_createItemAction, SIGNAL( triggered() ), this, SLOT( OnAddItem() ) );
+	m_deleteItemAction = m_editMenu->addAction( tr( "&Delete Item" ) );
+	connect( m_deleteItemAction, SIGNAL( triggered() ), this, SLOT( OnDeleteItem() ) );
 }
 
 
@@ -41,6 +43,9 @@ ReAnimGraphicsScene::ReAnimGraphicsScene( ReAnimModel* _model, QObject* _parent 
 void ReAnimGraphicsScene::contextMenuEvent( QGraphicsSceneContextMenuEvent* _event )
 {
 	m_scenePosBackup = _event->scenePos();
+	QGraphicsItem* item = itemAt( m_scenePosBackup );
+	m_createItemAction->setDisabled( NULL != item );
+	m_deleteItemAction->setDisabled( NULL == item );
 	m_editMenu->exec( _event->screenPos() );
 }
 
@@ -55,6 +60,17 @@ void ReAnimGraphicsScene::OnAddItem()
 	item->setPos( m_scenePosBackup );
 
 	emit ItemAdded( item );
+}
+
+
+void ReAnimGraphicsScene::OnDeleteItem()
+{
+	ReAnimGraphicsItem* item = ( ReAnimGraphicsItem* )itemAt( m_scenePosBackup );
+	if( NULL != item )
+	{
+		emit ItemDeleted( item );
+		removeItem( item );
+	}
 }
 
 

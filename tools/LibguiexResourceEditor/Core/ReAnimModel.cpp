@@ -15,8 +15,24 @@ namespace RE
 ReAnimModel::ReAnimModel( QObject* _parent /* = NULL */ )
 : TSuper( _parent )
 {
-	for( int i = 0; i < ETrackType_Count; ++i )
-		m_tracks[ i ] = NULL;
+	//for( int i = 0; i < ETrackType_Count; ++i )
+	//	m_tracks[ i ] = NULL;
+}
+
+
+qreal ReAnimModel::GetTotalLength() const
+{
+	qreal result = 0;
+
+	TItemListCItor itor = m_items.begin();
+	TItemListCItor itorEnd = m_items.end();
+	for( ; itor != itorEnd; ++itor )
+	{
+		const ReAnimEntity* item = *itor;
+		result = qMax( result, item->GetTotalLength() );
+	}
+
+	return result;
 }
 
 
@@ -299,24 +315,24 @@ ReAnimNode* ReAnimModel::ItemFromIndex( const QModelIndex& _index ) const
 }
 
 
-int ReAnimModel::PositionToInsertTrack( eTrackType _trackType ) const
-{
-	int result = -1;
-
-	if( NULL == m_tracks[ _trackType ] )
-	{
-		result = 0;
-		for( int i = 0; i < _trackType; ++i )
-		{
-			if( NULL != m_tracks[ i ] )
-			{
-				++result;
-			}
-		}
-	}
-
-	return result;
-}
+//int ReAnimModel::PositionToInsertTrack( eTrackType _trackType ) const
+//{
+//	int result = -1;
+//
+//	if( NULL == m_tracks[ _trackType ] )
+//	{
+//		result = 0;
+//		for( int i = 0; i < _trackType; ++i )
+//		{
+//			if( NULL != m_tracks[ i ] )
+//			{
+//				++result;
+//			}
+//		}
+//	}
+//
+//	return result;
+//}
 
 
 

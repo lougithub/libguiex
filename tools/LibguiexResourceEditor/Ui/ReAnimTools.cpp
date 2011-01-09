@@ -1,3 +1,7 @@
+// -----------------------------------------------------------------------------
+// Author: GameCrashDebug.
+// Date: 20101222.
+// -----------------------------------------------------------------------------
 #include "StdAfxEditor.h"
 #include "Ui\ReAnimTools.h"
 #include "Ui\ReAnimGraphicsItem.h"

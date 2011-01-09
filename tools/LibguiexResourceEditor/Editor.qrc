@@ -1,14 +1,19 @@
 <!DOCTYPE RCC><RCC version="1.0">
-<qresource prefix="/image">
-	<file>device_iphone.png</file>
-	<file>device_ipad.png</file>
-	<file>hero_earthshaker.png</file>
-	<file>hero_lion.png</file>
-	<file>hero_shadowfiend.png</file>
-	<file>hero_silencer.png</file>
-	<file>hero_stormspirit.png</file>
-	<file>hero_sven.png</file>
-	<file>hero_zeus.png</file>
-  <file>editor_track_frame.png</file>
+<qresource>
+	<file>res/image/device_iphone.png</file>
+	<file>res/image/device_ipad.png</file>
+	<file>res/image/hero_earthshaker.png</file>
+	<file>res/image/hero_lion.png</file>
+	<file>res/image/hero_shadowfiend.png</file>
+	<file>res/image/hero_silencer.png</file>
+	<file>res/image/hero_stormspirit.png</file>
+	<file>res/image/hero_sven.png</file>
+	<file>res/image/hero_zeus.png</file>
+  <file>res/image/editor_track_frame.png</file>
+  <file>res/image/editor_anim_play.png</file>
+  <file>res/image/editor_anim_stop.png</file>
+  <file>res/image/editor_anim_gotobegin.png</file>
+  <file>res/image/editor_anim_gotoend.png</file>
+  <file>res/image/editor_anim_more.png</file>
 </qresource>
 </RCC>

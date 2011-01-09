@@ -57,7 +57,6 @@ protected:
 	// Override ReBaseWidget.
 	// ----------------------------------------------------------------------------
 public:
-	virtual void		Tick( qreal _delta );
 	virtual QMenu*		GetEditMenu() const;
 
 	// ----------------------------------------------------------------------------
@@ -78,7 +77,7 @@ public slots:
 	// ----------------------------------------------------------------------------
 protected:
 	// Widgets.	
-	ReAnimConsoleWidget*	m_trackConsole;
+	ReAnimConsoleWidget*	m_animConsole;
 	ReAnimGraphicsWidget*	m_animGraphics;
 	QWidget*				m_lastFocusedWidget;
 	ReAnimGraphicsScene*	m_scene;

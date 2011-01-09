@@ -8,7 +8,7 @@
 // -----------------------------------------------------------------------------
 #include "Core\ReAnimNode.h"
 #include "Core\ReAnimFrame.h"
-#include <QList>
+#include <list>
 
 
 namespace RE
@@ -31,10 +31,10 @@ public:
 
 	ReAnimFrame*		CreateFrame( qreal _time );
 	void				DeleteFrame( ReAnimFrame* _frame );
-	ReAnimFrame*		GetFrameByIndex( int _index );
 	bool				HasFrame( const ReAnimFrame* _frame ) const;
-	int					GetFrameCount() const	{ return m_frames.size(); }
+	int					GetFrameCount() const	{ return ( int )m_frames.size(); }
 	bool				Interpolate( qreal _time, QVariant& _result, bool _allowExterpolate );
+	qreal				GetTotalLength();
 
 	// -------------------------------------------------------------------------
 	// Override ReAnimNode.
@@ -48,21 +48,17 @@ public:
 protected:
 	virtual ReAnimFrame*DoCreateFrame( qreal _time ) = 0;
 	virtual QVariant	InterpolateFrameValue( const QVariant& _valueA, const QVariant& _valueB, qreal _factor ) const = 0;
-	void				GetNearestFrames( qreal _time, ReAnimFrame*& _left, ReAnimFrame*& _right );	
-
-	bool				IsDirty() const	{ return m_isSortDirty; }
-	void				Sort()			{ qSort( m_frames ); m_isSortDirty = false; }
+	void				GetNearestFrames( qreal _time, ReAnimFrame*& _left, ReAnimFrame*& _right );		
 
 	// -------------------------------------------------------------------------
 	// Variables.
 	// -------------------------------------------------------------------------
 protected:
-	typedef QList< ReAnimFrame* >		TFrameList;
+	typedef std::list< ReAnimFrame* >	TFrameList;
 	typedef TFrameList::iterator		TFrameListItor;
 	typedef TFrameList::const_iterator	TFrameListCItor;
 
 	TFrameList			m_frames;
-	bool				m_isSortDirty;
 };
 
 

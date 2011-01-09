@@ -26,20 +26,12 @@ ReAnimTrackWidget::ReAnimTrackWidget( ReAnimTrack* _model, eTrackType _type, QWi
 , m_modelData( _model )
 , m_editMenu( NULL )
 , m_currentFrame( NULL )
-, m_type( _type )
 {
 	InitMenus();
 
 	connect( this, SIGNAL( customContextMenuRequested( const QPoint& ) ), this, SLOT( OnContextMenu( const QPoint& ) ) );
 
 	ShowCursorValue( false );
-}
-
-
-ReAnimFrameWidget* ReAnimTrackWidget::GetFrameByIndex( int _index )
-{
-	// TODO
-	return NULL;
 }
 
 
@@ -54,30 +46,44 @@ void ReAnimTrackWidget::paintEvent( QPaintEvent* _event )
 
 void ReAnimTrackWidget::mousePressEvent( QMouseEvent* _event )
 {
-	ReAnimFrameWidget* frame = dynamic_cast< ReAnimFrameWidget* >( childAt( _event->pos() ) );
-	if( NULL != frame )
+	if( Qt::LeftButton == _event->button() )
 	{
-		m_currentFrame = frame;
-		frame->GetDragInfoRef().SetCursorPosBackup( _event->pos() );
-		frame->GetDragInfoRef().SetItemPosBackup( frame->pos() );
-		frame->GetDragInfoRef().StartMove();
+		ReAnimFrameWidget* frame = dynamic_cast< ReAnimFrameWidget* >( childAt( _event->pos() ) );
+		if( NULL != frame )
+		{
+			m_currentFrame = frame;
+			frame->GetDragInfoRef().SetCursorPosBackup( _event->pos() );
+			frame->GetDragInfoRef().SetItemPosBackup( frame->pos() );
+			frame->GetDragInfoRef().StartMove();
+		}
+		else
+		{
+			m_currentFrame = NULL;
+			TSuper::mousePressEvent( _event );
+		}
 	}
 	else
 	{
-		m_currentFrame = NULL;
-		TSuper::mousePressEvent( _event );
+		_event->ignore();
 	}
 }
 
 
 void ReAnimTrackWidget::mouseReleaseEvent( QMouseEvent* _event )
 {
-	if( NULL != m_currentFrame )
+	if( Qt::MidButton == _event->button() )
 	{
-		m_currentFrame->GetDragInfoRef().Stop();
+		_event->ignore();
 	}
+	else
+	{
+		if( NULL != m_currentFrame )
+		{
+			m_currentFrame->GetDragInfoRef().Stop();
+		}
 
-	TSuper::mouseReleaseEvent( _event );
+		TSuper::mouseReleaseEvent( _event );
+	}
 }
 
 
@@ -98,7 +104,10 @@ void ReAnimTrackWidget::mouseMoveEvent( QMouseEvent* _event )
 	}
 	else
 	{
-		TSuper::mouseMoveEvent( _event );
+		if( Qt::MidButton & _event->buttons() )
+			_event->ignore();
+		else
+			TSuper::mouseMoveEvent( _event );
 	}
 }
 
@@ -149,20 +158,6 @@ void ReAnimTrackWidget::DrawForeground( QPainter& _painter )
 }
 
 
-void ReAnimTrackWidget::OnViewportChanged( int _pos )
-{
-	TFramePoolItor itor = m_frameList.Begin();
-	TFramePoolItor itorEnd = m_frameList.End();
-	for( int delta = m_viewport - _pos; itor != itorEnd; ++itor )
-	{
-		ReAnimFrameWidget* frame = *itor;
-		frame->move( frame->pos() + QPoint( delta, 0 ) );
-	}
-
-	TSuper::OnViewportChanged( _pos );
-}
-
-
 // -----------------------------------------------------------------------------
 // Override ReModelBase.
 // -----------------------------------------------------------------------------
@@ -185,7 +180,8 @@ void ReAnimTrackWidget::RecycleData( ReAnimFrameWidget* _frame )
 void ReAnimTrackWidget::OnContextMenu( const QPoint& _point )
 {
 	ReAnimFrameWidget* frameWidget = GetFrameAtCursor( GetCursor() );
-	m_editMenu->setDisabled( NULL != frameWidget );
+	m_createFrameAction->setDisabled( NULL != frameWidget );
+	m_deleteFrameAction->setDisabled( NULL == frameWidget );
 	m_editMenu->exec( mapToGlobal( _point ) );
 }
 
@@ -195,20 +191,37 @@ void ReAnimTrackWidget::OnCreateFrame()
 	if( NULL == GetFrameAtCursor( GetCursor() ) )
 	{
 		CreateFrameAtCursor( m_cursor );
+
+		emit DataChangedAt( m_cursor );
 	}
 }
 
 
 void ReAnimTrackWidget::OnDeleteFrame()
 {
-	//emit DeleteFrameRequested( this );
-
-	if( NULL != m_currentFrame )
+	ReAnimFrameWidget* frame = GetFrameAtCursor( GetCursor() );
+	if( NULL != frame )
 	{		
-		m_modelData->DeleteFrame( m_currentFrame->GetModelData() );
-		RecycleData( m_currentFrame );
-		m_currentFrame = NULL;
+		m_modelData->DeleteFrame( frame->GetModelData() );
+		RecycleData( frame );
+		frame = NULL;
+
+		emit DataChangedAt( m_cursor );
 	}
+}
+
+
+void ReAnimTrackWidget::OnViewportChanged( int _pos )
+{
+	TFramePoolItor itor = m_frameList.Begin();
+	TFramePoolItor itorEnd = m_frameList.End();
+	for( int delta = m_viewport - _pos; itor != itorEnd; ++itor )
+	{
+		ReAnimFrameWidget* frame = *itor;
+		frame->move( frame->pos() + QPoint( delta, 0 ) );
+	}
+
+	TSuper::OnViewportChanged( _pos );
 }
 
 
@@ -220,14 +233,10 @@ void ReAnimTrackWidget::InitMenus()
 	QAction* action = NULL;
 
 	m_editMenu = new QMenu( "&Edit" );	
-	action = m_editMenu->addAction( tr( "New &Frame" ) );
-	connect( action, SIGNAL( triggered() ), this, SLOT( OnCreateFrame() ) );
-}
-
-
-int ReAnimTrackWidget::CalcCursorAtFrame( const ReAnimFrameWidget* _frame ) const
-{
-	return ( NULL != _frame ) ? ( _frame->pos().x() + _frame->width() / 2 ) : ms_invalidCursor;
+	m_createFrameAction = m_editMenu->addAction( tr( "New &Frame" ) );
+	connect( m_createFrameAction, SIGNAL( triggered() ), this, SLOT( OnCreateFrame() ) );
+	m_deleteFrameAction = m_editMenu->addAction( tr( "Delete &Frame" ) );
+	connect( m_deleteFrameAction, SIGNAL( triggered() ), this, SLOT( OnDeleteFrame() ) );
 }
 
 
@@ -273,11 +282,10 @@ ReAnimFrameWidget* ReAnimTrackWidget::CreateFrameAtCursor( int _cursor )
 		frameData->SetFrameValue( value );
 	frameWidget->SetModelData( frameData );
 
-	// Interpolate.
+	//emit FrameCreatedAt( _cursor );
 
 	return frameWidget;
 }
-
 
 
 // -----------------------------------------------------------------------------

@@ -52,6 +52,7 @@ ReAnimGraphicsWidget::ReAnimGraphicsWidget( ReAnimModel* _model, QGraphicsScene*
 
 	connect( m_scene, SIGNAL( selectionChanged() ), m_view, SLOT( OnSceneSelectionChanged() ) );
 	connect( m_scene, SIGNAL( ItemAdded( ReAnimGraphicsItem* ) ), this, SIGNAL( ItemAdded( ReAnimGraphicsItem* ) ) );
+	connect( m_scene, SIGNAL( ItemDeleted( ReAnimGraphicsItem* ) ), this, SIGNAL( ItemDeleted( ReAnimGraphicsItem* ) ) );
 	connect( m_view, SIGNAL( SceneOriginXChanged( int ) ), m_horizontalRuler, SLOT( OnViewportChanged( int ) ) );
 	connect( m_view, SIGNAL( SceneOriginYChanged( int ) ), m_verticalRuler, SLOT( OnViewportChanged( int ) ) );
 	connect( m_horizontalRuler, SIGNAL( ViewportChanged( int ) ), m_view, SLOT( RequestChangeSceneOriginX( int ) ) );

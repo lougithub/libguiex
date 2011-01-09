@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ReAnimGraphicsScene.h'
 **
-** Created: Thu Jan 6 22:46:20 2011
+** Created: Sun Jan 9 22:07:44 2011
 **      by: The Qt Meta Object Compiler version 61 (Qt 4.5.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,16 +23,18 @@ static const uint qt_meta_data_RE__ReAnimGraphicsScene[] = {
        2,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   12, // methods
+       4,   12, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
 
  // signals: signature, parameters, type, tag, flags
       31,   25,   24,   24, 0x05,
+      62,   25,   24,   24, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      62,   24,   24,   24, 0x0a,
+      95,   24,   24,   24, 0x0a,
+     107,   24,   24,   24, 0x0a,
 
        0        // eod
 };
@@ -40,7 +42,8 @@ static const uint qt_meta_data_RE__ReAnimGraphicsScene[] = {
 static const char qt_meta_stringdata_RE__ReAnimGraphicsScene[] = {
     "RE::ReAnimGraphicsScene\0\0_item\0"
     "ItemAdded(ReAnimGraphicsItem*)\0"
-    "OnAddItem()\0"
+    "ItemDeleted(ReAnimGraphicsItem*)\0"
+    "OnAddItem()\0OnDeleteItem()\0"
 };
 
 const QMetaObject RE::ReAnimGraphicsScene::staticMetaObject = {
@@ -69,10 +72,12 @@ int RE::ReAnimGraphicsScene::qt_metacall(QMetaObject::Call _c, int _id, void **_
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
         case 0: ItemAdded((*reinterpret_cast< ReAnimGraphicsItem*(*)>(_a[1]))); break;
-        case 1: OnAddItem(); break;
+        case 1: ItemDeleted((*reinterpret_cast< ReAnimGraphicsItem*(*)>(_a[1]))); break;
+        case 2: OnAddItem(); break;
+        case 3: OnDeleteItem(); break;
         default: ;
         }
-        _id -= 2;
+        _id -= 4;
     }
     return _id;
 }
@@ -82,5 +87,12 @@ void RE::ReAnimGraphicsScene::ItemAdded(ReAnimGraphicsItem * _t1)
 {
     void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
+}
+
+// SIGNAL 1
+void RE::ReAnimGraphicsScene::ItemDeleted(ReAnimGraphicsItem * _t1)
+{
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 QT_END_MOC_NAMESPACE

@@ -25,7 +25,7 @@ namespace RE
 ReAnimEditor::ReAnimEditor( ReAnimModel* _model, QWidget* _parent /* = NULL */ )
 : TSuper( _parent )
 // Widgets.
-, m_trackConsole( NULL )
+, m_animConsole( NULL )
 , m_animGraphics( NULL )
 , m_lastFocusedWidget( NULL )
 // Menu.
@@ -37,21 +37,24 @@ ReAnimEditor::ReAnimEditor( ReAnimModel* _model, QWidget* _parent /* = NULL */ )
 	m_scene = new ReAnimGraphicsScene( _model, this );
 
 	// Animation console widget.
-	m_trackConsole = new ReAnimConsoleWidget( _model, m_scene, this );
-	m_trackConsole->setFocusPolicy( Qt::StrongFocus );
-	m_trackConsole->setContextMenuPolicy( Qt::CustomContextMenu );
-	m_trackConsole->setFocus();
-	m_lastFocusedWidget = m_trackConsole;
+	m_animConsole = new ReAnimConsoleWidget( _model, m_scene, this );
+	m_animConsole->setFocusPolicy( Qt::StrongFocus );
+	m_animConsole->setContextMenuPolicy( Qt::CustomContextMenu );
+	m_animConsole->setFocus();
+	m_lastFocusedWidget = m_animConsole;
 
 	// Animation graphics widget.
 	m_animGraphics = new ReAnimGraphicsWidget( _model, m_scene, this );
 	m_animGraphics->setFocusPolicy( Qt::ClickFocus );
 
-	connect( m_animGraphics, SIGNAL( ItemAdded( ReAnimGraphicsItem* ) ), m_trackConsole, SLOT( OnItemAdded( ReAnimGraphicsItem* ) ) );
+	connect( m_animGraphics, SIGNAL( ItemAdded( ReAnimGraphicsItem* ) ), m_animConsole, SLOT( OnItemAdded( ReAnimGraphicsItem* ) ) );
+	connect( m_animGraphics, SIGNAL( ItemDeleted( ReAnimGraphicsItem* ) ), m_animConsole, SLOT( OnItemDeleted( ReAnimGraphicsItem* ) ) );
 
 	QSplitter* splitter = new QSplitter(  Qt::Vertical, this );
 	splitter->addWidget( m_animGraphics );
-	splitter->addWidget( m_trackConsole );
+	splitter->addWidget( m_animConsole );
+	splitter->setStretchFactor( 0, 1 );
+	splitter->setStretchFactor( 1, 0 );
 
 	QVBoxLayout* layout = new QVBoxLayout( this );
 	layout->addWidget( splitter );
@@ -104,9 +107,10 @@ void ReAnimEditor::keyPressEvent( QKeyEvent* _event )
 	{
 		OnToggleDebug();
 	}
-	else if( Qt::Key_Delete == _event->key() )
-	{
-	}
+	//else if( Qt::Key_Space == _event->key() )
+	//{
+	//	m_animConsole->OnTogglePlay();
+	//}
 	else
 	{
 		TSuper::keyPressEvent( _event );
@@ -123,18 +127,10 @@ void ReAnimEditor::keyReleaseEvent( QKeyEvent* _event )
 // ----------------------------------------------------------------------------
 // Override ReBaseWidget.
 // ----------------------------------------------------------------------------
-void ReAnimEditor::Tick( qreal _delta )
-{
-	m_animGraphics->Tick( _delta );
-
-	update();
-}
-
-
 QMenu* ReAnimEditor::GetEditMenu() const
 {
 	if( !m_animGraphics->hasFocus() )
-		return m_trackConsole->GetEditMenu();
+		return m_animConsole->GetEditMenu();
 	else
 		return NULL;
 }
@@ -152,7 +148,6 @@ void ReAnimEditor::OnToggleDebug()
 // ----------------------------------------------------------------------------
 // Utilities.
 // ----------------------------------------------------------------------------
-
 
 
 }

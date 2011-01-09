@@ -19,6 +19,7 @@
 
 
 class QPushButton;
+class QLineEdit;
 
 
 namespace RE
@@ -40,7 +41,6 @@ class ReAnimEntityWidget : public ReBaseWidget< QWidget >
 	enum eSuiteButton
 	{
 		ESuiteButton_Enable,
-		ESuiteButton_Delete,
 		ESuiteButton_Count
 	};
 
@@ -75,11 +75,11 @@ public:
 	bool				IsHighlighted() const			{ return m_isHighlighted; }
 
 	// Transform.
-	bool				GetTranslationAt( int _cursor, QPointF& _result );
-	bool				GetRotationAt( int _cursor, qreal& _result );
-	bool				GetScaleAt( int _cursor, QPointF& _result );
-	bool				GetAlphaAt( int _cursor, qreal& _result );
-	bool				GetTransformAt( int _cursor, QTransform& _result );
+	bool				GetTranslationAt( int _cursor, QPointF& _result, bool _allowExterpolate );
+	bool				GetRotationAt( int _cursor, qreal& _result, bool _allowExterpolate );
+	bool				GetScaleAt( int _cursor, QPointF& _result, bool _allowExterpolate );
+	bool				GetAlphaAt( int _cursor, qreal& _result, bool _allowExterpolate );
+	bool				GetTransformAt( int _cursor, QTransform& _result, bool _allowExterpolate );
 
 	// ----------------------------------------------------------------------------
 	// Override QWidget.
@@ -99,8 +99,7 @@ public:
 	// ----------------------------------------------------------------------------
 signals:
 	void				TotalHeightChanged();
-	void				EditStarted( ReAnimEntityWidget*, ReAnimTrackWidget*, ReAnimFrameWidget* );
-	void				EditEnded( ReAnimEntityWidget*, ReAnimTrackWidget*, ReAnimFrameWidget* );
+	void				DataChangedAt( int _cursor );
 
 	// ----------------------------------------------------------------------------
 	// Slots.
@@ -133,7 +132,8 @@ protected:
 
 	ReRulerWidget*		m_ruler;
 	QPushButton*		m_toggleButton;
-	QLabel*				m_label;
+	//QLabel*				m_label;
+	QLineEdit*			m_nameEdit;
 	ReSuite				m_suiteArray[ ETrackType_Count ];
 
 	QMenu*				m_editMenu;

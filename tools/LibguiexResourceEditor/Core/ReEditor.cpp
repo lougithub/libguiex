@@ -44,7 +44,7 @@ void ReEditor::run()
 	// Qt app.
 	m_application = new QApplication( m_argc, m_argv );
 
-	QPixmap pm( ":/image/device_ipad.png" );
+	QPixmap pm( ":/res/image/device_ipad.png" );
 	QSplashScreen ss( pm );
 	ss.show();
 	

@@ -53,6 +53,7 @@ public:
 	// -------------------------------------------------------------------------
 signals:
 	void				ItemAdded( ReAnimGraphicsItem* _item );
+	void				ItemDeleted( ReAnimGraphicsItem* _item );
 
 	// -------------------------------------------------------------------------
 	// Slots.

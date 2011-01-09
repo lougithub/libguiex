@@ -43,15 +43,10 @@ protected:
 	virtual void			paintEvent( QPaintEvent* _event );
 	virtual void			mousePressEvent( QMouseEvent* _event );
 	virtual void			mouseReleaseEvent( QMouseEvent* _event );
-	virtual void			focusInEvent( QFocusEvent* _event );
-	virtual void			focusOutEvent( QFocusEvent* _event );
 
 	// -------------------------------------------------------------------------
 	// Signals.
 	// -------------------------------------------------------------------------
-signals:
-	void					EditStarted( ReAnimFrameWidget* _this );
-	void					EditEnded( ReAnimFrameWidget* _this );
 
 	// -------------------------------------------------------------------------
 	// Slots.

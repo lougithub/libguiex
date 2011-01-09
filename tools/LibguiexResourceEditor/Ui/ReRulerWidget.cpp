@@ -205,6 +205,21 @@ qreal ReRulerWidget::GetValueAt( int _cursor ) const
 }
 
 
+void ReRulerWidget::SetValue( qreal _value, bool _scrollViewport )
+{
+	int newCursor = qRound( _value / m_unitValue * m_unit ) - m_viewport;
+
+	OnCursorChanged( newCursor );
+	emit CursorChanged( newCursor );
+
+	if( m_cursor < 0 && _scrollViewport )
+	{
+		OnViewportChanged( newCursor );
+		emit ViewportChanged( newCursor );
+	}
+}
+
+
 void ReRulerWidget::DrawBackground( QPainter& _painter )
 {
 	_painter.fillRect( 0, 0, width(), height(), QColor( 0, 0, 0 ) );

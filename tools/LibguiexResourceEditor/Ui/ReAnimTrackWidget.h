@@ -21,6 +21,7 @@
 
 
 class QMenu;
+class QAction;
 
 
 namespace RE
@@ -49,12 +50,6 @@ public:
 	ReAnimTrack*		GetModelData() const { return m_modelData; }
 	void				SetModelData( ReAnimTrack* _track )	{ m_modelData = _track; }
 
-	eTrackType			GetType() const					{ return m_type; }	
-	ReAnimFrameWidget*	GetCurrentFrame() const			{ return m_currentFrame; }
-	ReAnimFrameWidget*	GetFrameByIndex( int _index );
-
-	int					CalcCursorAtFrame( const ReAnimFrameWidget* _frame ) const;
-
 	ReAnimFrameWidget*	GetFrameAtCursor( int _cursor );
 	ReAnimFrameWidget*	CreateFrameAtCursor( int _cursor );
 
@@ -82,9 +77,6 @@ protected:
 	virtual void		DrawMarks( QPainter& _painter );
 	virtual void		DrawForeground( QPainter& _painter );
 
-public slots:
-	virtual void		OnViewportChanged( int _pos );
-
 	// -------------------------------------------------------------------------
 	// Override ReModelBase.
 	// -------------------------------------------------------------------------
@@ -95,8 +87,7 @@ public:
 	// Signals.
 	// -------------------------------------------------------------------------
 signals:
-	void				EditStarted( ReAnimTrackWidget* _track, ReAnimFrameWidget* _frame );
-	void				EditEnded( ReAnimTrackWidget* _track, ReAnimFrameWidget* _frame );
+	void				DataChangedAt( int _cursor );
 
 	// -------------------------------------------------------------------------
 	// Slots.
@@ -105,6 +96,7 @@ public slots:
 	void				OnContextMenu( const QPoint& _point );
 	void				OnCreateFrame();
 	void				OnDeleteFrame();
+	virtual void		OnViewportChanged( int _pos );
 
 	// -------------------------------------------------------------------------
 	// Utilities.
@@ -123,10 +115,10 @@ protected:
 	ReAnimTrack*		m_modelData;
 
 	QMenu*				m_editMenu;
+	QAction*			m_createFrameAction;
+	QAction*			m_deleteFrameAction;
 	TFramePool			m_frameList;
 	ReAnimFrameWidget*	m_currentFrame;
-
-	eTrackType			m_type;
 };
 
 

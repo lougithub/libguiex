@@ -264,7 +264,7 @@ void ReMainWindow::OnGotoImageEditor()
 void ReMainWindow::OnAboutSoftware()
 {
 	QMessageBox msg;
-	msg.setIconPixmap( QPixmap( ":/image/hero_earthshaker.png" ) );
+	msg.setIconPixmap( QPixmap( ":/res/image/hero_earthshaker.png" ) );
 	msg.setWindowTitle( tr( "Software" ) );
 	msg.setText( tr( "Resource Editor\r\n\r\nV1.0\r\nNov. 21th, 2010" ) );
 	msg.exec();
@@ -274,7 +274,7 @@ void ReMainWindow::OnAboutSoftware()
 void ReMainWindow::OnAboutAuthor()
 {
 	QMessageBox msg;
-	msg.setIconPixmap( QPixmap( ":/image/hero_stormspirit.png" ) );
+	msg.setIconPixmap( QPixmap( ":/res/image/hero_stormspirit.png" ) );
 	msg.setWindowTitle( tr( "Author" ) );
 	msg.setText( tr( "GameCrashDebug\r\n\r\n\r\nNov. 21th, 2010" ) );
 	msg.exec();

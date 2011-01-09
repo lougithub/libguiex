@@ -24,10 +24,25 @@ public:
 	typedef ReAnimNode TSuper;
 	ReAnimFrame( qreal _time ): m_time( _time )	{}
 
-	bool operator<( ReAnimFrame* _other ) const
+	bool operator<( const ReAnimFrame* _other ) const
 	{
 		return m_time < _other->GetTime();
 	}
+
+	bool operator<( const ReAnimFrame& _other ) const
+	{
+		return m_time < _other.GetTime();
+	}
+
+	friend bool operator<( const ReAnimFrame& _frameA, const ReAnimFrame& _frameB )
+	{
+		return _frameA.GetTime() < _frameB.GetTime();
+	}
+
+	//friend bool operator<( const ReAnimFrame* _frameA, const ReAnimFrame* _frameB )
+	//{
+	//	return _frameA->GetTime() < _frameB->GetTime();
+	//}
 
 	virtual QString	GetDescription() const
 	{

@@ -39,6 +39,8 @@ public:
 
 	ReAnimModel( QObject* _parent = NULL );
 
+	qreal				GetTotalLength() const;
+
 	// -------------------------------------------------------------------------
 	// Override QAbstractItemModel.
 	// -------------------------------------------------------------------------
@@ -78,13 +80,13 @@ public:
 	// -------------------------------------------------------------------------
 protected:
 	ReAnimNode*			ItemFromIndex( const QModelIndex& _index ) const;
-	int					PositionToInsertTrack( eTrackType _trackType ) const;
+	//int					PositionToInsertTrack( eTrackType _trackType ) const;
 
 	// -------------------------------------------------------------------------
 	// Variables.
 	// -------------------------------------------------------------------------
 protected:
-	ReAnimTrack*		m_tracks[ ETrackType_Count ];
+	//ReAnimTrack*		m_tracks[ ETrackType_Count ];
 
 	typedef QList< ReAnimEntity* >		TItemList;
 	typedef TItemList::iterator			TItemListItor;

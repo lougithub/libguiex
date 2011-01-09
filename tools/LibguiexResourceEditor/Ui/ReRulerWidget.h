@@ -56,6 +56,7 @@ public:
 	bool				IsDragCursorEnabled() const		{ return m_isDragCursorEnabled; }
 
 	qreal				GetValueAt( int _cursor ) const;
+	void				SetValue( qreal _value, bool _scrollViewport );
 
 	// ----------------------------------------------------------------------------
 	// Override QWidget.

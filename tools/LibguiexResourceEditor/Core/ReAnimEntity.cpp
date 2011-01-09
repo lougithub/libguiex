@@ -64,6 +64,22 @@ ReAnimTrack* ReAnimEntity::CreateTrack( eTrackType _type )
 }
 
 
+qreal ReAnimEntity::GetTotalLength() const
+{
+	qreal result = 0;
+
+	for( int i = 0; i < ETrackType_Count; ++i )
+	{
+		if( NULL != m_tracks[ i ] )
+		{
+			result = qMax( result, m_tracks[ i ]->GetTotalLength() );
+		}
+	}
+
+	return result;
+}
+
+
 // -----------------------------------------------------------------------------
 // -----------------------------------------------------------------------------
 

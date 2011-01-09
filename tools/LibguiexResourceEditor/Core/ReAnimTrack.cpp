@@ -1,5 +1,31 @@
 #include "StdAfxEditor.h"
 #include "Core\ReAnimTrack.h"
+#include <algorithm>
+
+
+namespace
+{
+	using namespace RE;
+
+	//bool SortFramePredicate( const ReAnimFrame* _frameA, const ReAnimFrame* _frameB )
+	//{
+	//	return _frameA->GetTime() < _frameB->GetTime();
+	//}
+
+	//bool SortFramePredicate( const ReAnimFrame& _frameA, const ReAnimFrame& _frameB )
+	//{
+	//	return _frameA.GetTime() < _frameB.GetTime();
+	//}
+
+	class FrameSortPredicater
+	{
+	public:
+		bool operator()( const ReAnimFrame* _frameA, const ReAnimFrame* _frameB ) const
+		{
+			return _frameA->GetTime() < _frameB->GetTime();
+		}
+	};
+}
 
 
 namespace RE
@@ -10,7 +36,6 @@ namespace RE
 // General.
 // -----------------------------------------------------------------------------
 ReAnimTrack::ReAnimTrack()
-: m_isSortDirty( false )
 {
 }
 
@@ -34,7 +59,6 @@ ReAnimFrame* ReAnimTrack::CreateFrame( qreal _time )
 	result->SetName( QString( QObject::tr( "Frame" ) ) );
 	result->SetParent( this );
 	m_frames.push_back( result );
-	m_isSortDirty = true;
 
 	return result;
 }
@@ -59,20 +83,6 @@ void ReAnimTrack::DeleteFrame( ReAnimFrame* _frame )
 }
 
 
-ReAnimFrame* ReAnimTrack::GetFrameByIndex( int _index )
-{
-	ReAnimFrame* result = NULL;
-
-	if( IsDirty() )
-		Sort();
-
-	if( _index >= 0 && _index < m_frames.size() )
-		result = m_frames.value( _index );
-
-	return result;
-}
-
-
 bool ReAnimTrack::HasFrame( const ReAnimFrame* _frame ) const
 {
 	bool result = false;
@@ -90,6 +100,8 @@ bool ReAnimTrack::HasFrame( const ReAnimFrame* _frame ) const
 bool ReAnimTrack::Interpolate( qreal _time, QVariant& _result, bool _allowExterpolate )
 {
 	bool isOk = false;
+
+	m_frames.sort( FrameSortPredicater() );
 
 	ReAnimFrame* left = NULL;
 	ReAnimFrame* right = NULL;
@@ -132,6 +144,21 @@ bool ReAnimTrack::Interpolate( qreal _time, QVariant& _result, bool _allowExterp
 }
 
 
+qreal ReAnimTrack::GetTotalLength()
+{
+	qreal result = 0.0f;
+
+	if( m_frames.size() > 0 )
+	{
+		m_frames.sort( FrameSortPredicater() );
+		ReAnimFrame* lastFrame = m_frames.back();
+		result = lastFrame->GetTime();
+	}
+
+	return result;
+}
+
+
 // -----------------------------------------------------------------------------
 // Override ReAnimNode.
 // -----------------------------------------------------------------------------
@@ -141,8 +168,7 @@ int ReAnimTrack::IndexOfChild( const ReAnimNode* _child )
 
 	if( NULL != _child )
 	{
-		if( IsDirty() )
-			Sort();
+		m_frames.sort( FrameSortPredicater() );
 
 		TFrameListCItor itor = m_frames.begin();
 		TFrameListCItor itorEnd = m_frames.end();
@@ -167,8 +193,11 @@ void ReAnimTrack::GetNearestFrames( qreal _time, ReAnimFrame*& _left, ReAnimFram
 {
 	if( NULL != ( &_left ) || NULL != ( &_right ) )
 	{
-		int minLeft = 999999;
-		int minRight = 999999;
+		qreal minLeft = 999999.9;
+		qreal minRight = 999999.9;
+
+		ReAnimFrame* left = NULL;
+		ReAnimFrame* right = NULL;
 
 		TFrameListItor itor = m_frames.begin();
 		TFrameListItor itorEnd = m_frames.end();
@@ -178,36 +207,32 @@ void ReAnimTrack::GetNearestFrames( qreal _time, ReAnimFrame*& _left, ReAnimFram
 			qreal time = frame->GetTime();
 			if( time == _time )
 			{
-				if( NULL != ( &_left ) )
-					_left = frame;
-				if( NULL != ( &_right ) )
-					_right = frame;
+				left = right = frame;
 			}
 			else if( time < _time )
 			{
-				if( NULL != ( &_left ) )
+				qreal delta = _time - time;
+				if( delta < minLeft )
 				{
-					int delta = _time - time;
-					if( delta < minLeft )
-					{
-						minLeft = delta;
-						_left = frame;
-					}
+					minLeft = delta;
+					_left = frame;
 				}
 			}
 			else
 			{
-				if( NULL != ( &_right ) )
+				qreal delta = time - _time;
+				if( delta < minRight )
 				{
-					int delta = time - _time;
-					if( delta < minRight )
-					{
-						minRight = delta;
-						_right = frame;
-					}
+					minRight = delta;
+					_right = frame;
 				}
 			}
 		}
+
+		if( NULL != left && NULL != &_left )
+			_left = left;
+		if( NULL != right && NULL != &_right )
+			_right = right;
 	}
 }
 

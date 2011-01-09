@@ -11,6 +11,7 @@
 
 
 class QMenu;
+class QAction;
 
 
 namespace RE
@@ -42,12 +43,14 @@ protected:
 	// -------------------------------------------------------------------------
 signals:
 	void			ItemAdded( ReAnimGraphicsItem* _item );
+	void			ItemDeleted( ReAnimGraphicsItem* _item );
 
 	// -------------------------------------------------------------------------
 	// Slots.
 	// -------------------------------------------------------------------------
 public slots:
 	void			OnAddItem();
+	void			OnDeleteItem();
 
 	// -------------------------------------------------------------------------
 	// Variables.
@@ -55,6 +58,8 @@ public slots:
 protected:
 	ReAnimModel*	m_model;
 	QMenu*			m_editMenu;
+	QAction*		m_createItemAction;
+	QAction*		m_deleteItemAction;
 	QPointF			m_scenePosBackup;
 };
 

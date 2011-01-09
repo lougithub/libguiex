@@ -31,6 +31,8 @@ public:
 
 	virtual ReAnimTrack*	CreateTrack( eTrackType _type );
 
+	qreal					GetTotalLength() const;
+
 protected:
 	ReAnimTrack*			m_tracks[ ETrackType_Count ];
 };
