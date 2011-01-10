@@ -11,6 +11,13 @@ set( ${target_name}_physics_box2d_SRCS
 source_group(physics_box2d FILES ${${target_name}_physics_box2d_SRCS} )
 
 #configfile_tinyxml
+set( ${target_name}_touch_cocoa_SRCS 
+	touch_cocoa/guitouch_cocoa.cpp
+	touch_cocoa/guitouch_cocoa.h
+	)
+source_group( touch FILES ${${target_name}_touch_cocoa_SRCS} )
+
+#configfile_tinyxml
 set( ${target_name}_configfile_tinyxml_SRCS 
 	configfile_tinyxml/guiconfigfile_tinyxml.cpp
 	configfile_tinyxml/guiconfigfile_tinyxml.h
@@ -224,6 +231,7 @@ elseif( APPLE )
 		${${target_name}_physics_box2d_SRCS}
 		${${target_name}_sound_openal_SRCS}
 		${${target_name}_sound_dummy_SRCS}
+		${${target_name}_touch_cocoa_SRCS}
 		)
 
 else( )
