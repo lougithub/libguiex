@@ -255,7 +255,6 @@ namespace guiex
 		FILE* pFile = fopen( rFilename.c_str(), "rb" );
 		if( !pFile)
 		{
-			fclose( pFile );
 			return false;
 		}
 

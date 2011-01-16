@@ -95,6 +95,14 @@ namespace guiex
 		m_pBody->SetUserData( this );
 	}
 	//------------------------------------------------------------------------------
+	void CGUIWgtBox2DDynamicBody::SetVelocity( real fVelocityX, real fVelocityY )
+	{
+		b2Vec2 vec( 
+			IGUIPhysics_box2d::Pixel2Meter(fVelocityX),
+			IGUIPhysics_box2d::Pixel2Meter(fVelocityY) );
+		m_pBody->SetLinearVelocity( vec );
+	}
+	//------------------------------------------------------------------------------
 
 }//namespace guiex
 

@@ -75,6 +75,13 @@ enum
 	ID_ImageListID,
 
 	//==================================================
+	//sound select dialog
+	ID_SoundSelect_BTN_OK,
+	ID_SoundSelect_BTN_CANCEL,
+	ID_SoundSelect_BTN_PLAY,
+	ID_SoundListID,
+
+	//==================================================
 	//save file dialog
 	ID_SaveFile_BTN_OK,
 	ID_SaveFile_BTN_NO,

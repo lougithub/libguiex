@@ -22,6 +22,7 @@
 #include "resourcelist.h"
 #include "wxeditorid.h"
 #include "wxtoolspgmanager.h"
+#include "propertyconvertor.h"
 
 //wxwidgets
 #include <wx/treectrl.h>
@@ -693,7 +694,7 @@ void WxMainFrame::OnPropertyGridChange( wxPropertyGridEvent& event )
 	}
 
 	guiex::CGUIProperty aGuiProperty;
-	GenerateGUIProperty(m_pPropGridMan, pPGTop, aGuiProperty);
+	CPropertyConvertorMgr::Instance()->GridProperty2GuiProperty(m_pPropGridMan, pPGTop, aGuiProperty);
 
 	try
 	{ 

@@ -27,6 +27,8 @@ if( WIN32 )
 		wxeditorcanvascontainer.h			
 		wximageselectdlg.cpp
 		wximageselectdlg.h
+		wxsoundselectdlg.cpp
+		wxsoundselectdlg.h		
 		wxeditorid.h		
         )
     source_group( widget FILES ${${target_name}_widget_SRCS} )
@@ -37,6 +39,8 @@ if( WIN32 )
 		propertyconfigmgr.h
 		propertysheetfunc.cpp
 		propertysheetfunc.h    
+		propertyconvertor.cpp
+		propertyconvertor.h    		
         )
     source_group( property FILES ${${target_name}_property_SRCS} )
     

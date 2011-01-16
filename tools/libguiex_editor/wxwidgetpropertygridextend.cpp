@@ -13,6 +13,7 @@
 #include "editorutility.h"
 #include "resourcelist.h"
 #include "wximageselectdlg.h"
+#include "wxsoundselectdlg.h"
 
 #include <wx/colordlg.h>
 
@@ -487,6 +488,63 @@ void WxGUIImageProperty::OnCustomPaint( wxDC& dc, const wxRect& rect, wxPGPaintD
 	}
 }
 // -----------------------------------------------------------------------
+
+
+// -----------------------------------------------------------------------
+// WxGUISoundProperty
+// -----------------------------------------------------------------------
+WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGUISoundProperty,wxPGProperty,CGUIColor,const CGUIColor&,ChoiceAndButton);
+WxGUISoundProperty::WxGUISoundProperty( const wxString& label, const wxString& name,const wxString& rImage )
+: wxPGProperty(label,name)
+{
+	SetValue( wxVariant( wx2GuiString( rImage )) );
+	m_choices.Set(CResourceList::Instance()->GetSoundList(), 0);
+}
+// -----------------------------------------------------------------------
+void WxGUISoundProperty::OnSetValue()
+{
+	wxString variantType = m_value.GetType();
+	if ( variantType == wxPG_VARIANT_TYPE_LONG )
+	{
+		//index of choice
+		wxString strImageName = m_choices.GetLabel( m_value.GetInteger() );
+
+		m_value = strImageName;
+	}
+}
+// -----------------------------------------------------------------------
+wxString WxGUISoundProperty::ValueToString( wxVariant& value, int argFlags ) const
+{
+	wxString s = value.GetString();
+	return s;
+}
+// -----------------------------------------------------------------------
+bool WxGUISoundProperty::StringToValue( wxVariant& variant, const wxString& text, int argFlags )
+{
+	if ( variant != text )
+	{
+		variant = text;
+		return true;
+	}
+
+	return false;
+}
+// -----------------------------------------------------------------------
+bool WxGUISoundProperty::OnEvent( wxPropertyGrid* propgrid, wxWindow* primary, wxEvent& event )
+{
+	if ( propgrid->IsMainButtonEvent(event) )
+	{
+		WxSoundSelectDialog dialog( propgrid );
+		if ( dialog.ShowModal() == wxID_OK )
+		{
+			SetValueInEvent( dialog.GetSoundName() );
+			return true;
+		}
+	}
+	return false;
+}
+// -----------------------------------------------------------------------
+
 
 
 // -----------------------------------------------------------------------

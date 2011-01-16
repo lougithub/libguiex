@@ -78,7 +78,7 @@ namespace guiex
 		,m_bIsMouseConsumed(true)
 		,m_bIsResponseUpdateEvent(false)
 		,m_bIsResponseParentSizeChangeEvent(false)
-		,m_bIsGenerateClickEvent(false)
+		,m_bIsGenerateClickEvent(true)
 		,m_bIsGenerateDBClickEvent(false)
 		,m_bIsGenerateMultiClickEvent(false)
 		,m_bIsAutoPlayAs(false)

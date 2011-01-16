@@ -4,6 +4,7 @@
 %{
 #include "libguiex_core/guiex.h"
 #include "libguiex_widget/guiwgt.h"
+#include "libguiex_widget_box2d/guiwgt_box2d.h"
 %}
 
 %include "std_string.i"
@@ -29,6 +30,7 @@
 %include	"guiinterfacekeyboard.i"
 %include	"guiinterfacemanager.i"
 %include	"guiwidget.i"
+%include	"guiwidget_box2d.i"
 %include	"guisystem.i"
 %include	"guiwidgetutility.i"
 %include	"guiwidgetfactory.i"

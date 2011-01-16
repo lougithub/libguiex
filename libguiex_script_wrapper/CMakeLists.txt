@@ -27,6 +27,7 @@ set( ${target_name}_swig_SRCS
 	guivector2.i
 	guivector3.i
 	guiwidget.i
+	guiwidget_box2d.i
 	guiwidgetfactory.i
 	guiwidgetutility.i
 	guisystem.i
@@ -47,11 +48,17 @@ set( ${target_name}_SRCS
 	)
 
 include_directories( "${PROJECT_SOURCE_DIR}/external/lua/src" )
-
+include_directories( "${PROJECT_SOURCE_DIR}/external/Box2D" )
 
 
 add_library( ${target_name} STATIC ${${target_name}_SRCS} )
-add_dependencies( ${target_name} libguiex_core libguiex_widget lua )
+add_dependencies( 
+	${target_name} 
+	libguiex_core 
+	libguiex_widget 
+	libguiex_widget_box2d 
+	lua 
+	box2d)
 
 
 #${target_name}_wrapper_SRCS

@@ -101,6 +101,7 @@
         </property>
         <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
         <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
+        <property name="OnMouseLeftClick" type="CGUIEvent" value="body_onclick" />
     </property>
     <property name="sample_1_dynamicbody_2" type="CGUIWidgetDefine" value="CGUIWgtBox2DDynamicBody">
         <property name="parent" type="CGUIString" value="sample_1_root" />
@@ -136,6 +137,7 @@
         </property>
         <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
         <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
+        <property name="OnMouseLeftClick" type="CGUIEvent" value="body_onclick" />
     </property>
     <property name="sample_1_staticbody_4" type="CGUIWidgetDefine" value="CGUIWgtBox2DStaticBody">
         <property name="parent" type="CGUIString" value="sample_1_root" />

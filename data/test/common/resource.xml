@@ -254,10 +254,6 @@
 		<property name="path" type="CGUIString" value="sound/se_error.wav"/>
 	</property>
 
-	<property name="se_no.ogg" type="CGUISoundDefine" >
-		<property name="path" type="CGUIString" value="sound/se_no.ogg"/>
-	</property>
-
 	<property name="se_no.wav" type="CGUISoundDefine" >
 		<property name="path" type="CGUIString" value="sound/se_no.wav"/>
 	</property>

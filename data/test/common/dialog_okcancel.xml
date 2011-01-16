@@ -115,8 +115,6 @@
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
         <property name="rotation" type="CGUIVector3" value="0,0,0" />
-        <property name="OnMouseLeftDown" type="CGUISound" value="se_yes.ogg" />
-        <property name="OnOpen" type="CGUISound" value="stereo.ogg" />
     </property>
     <property name="dlg_okcancel_button_cancel" type="CGUIWidgetDefine" value="CGUIWgtButton">
         <property name="parent" type="CGUIString" value="dlg_okcancel" />
@@ -166,6 +164,5 @@
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
         <property name="rotation" type="CGUIVector3" value="0,0,0" />
-        <property name="OnMouseLeftDown" type="CGUISound" value="se_no.ogg" />
     </property>
 </guiex>

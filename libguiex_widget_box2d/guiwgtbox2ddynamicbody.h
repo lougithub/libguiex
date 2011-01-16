@@ -27,6 +27,8 @@ namespace guiex
 	public:
 		CGUIWgtBox2DDynamicBody( const CGUIString& rName, const CGUIString& rSceneName );
 
+		void SetVelocity( real fVelocityX, real fVelocityY );
+
 	protected:
 		CGUIWgtBox2DDynamicBody( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 		void InitBox2DDynamicBody();
