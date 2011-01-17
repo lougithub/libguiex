@@ -6,6 +6,8 @@ set( ${target_name}_base_SRCS
 	guitypes.h
 	guibase.h
 	guiconfig.h
+	guirendertype.cpp
+	guirendertype.h
 	guiexception.cpp
 	guiexception.h
 	guiobjectmanager.cpp
@@ -29,22 +31,22 @@ set( ${target_name}_base_SRCS
 	guigarbagecollector.h
 	sigslot.h
 	)
-source_group( base FILES ${${target_name}_base_SRCS} )
+source_group( "base" FILES ${${target_name}_base_SRCS} )
 
 set( ${target_name}_camera_SRCS 
 	guicamera.h
 	guicamera.cpp
 	guicameramanager.h
 	guicameramanager.cpp	
-)
-source_group( camera FILES ${${target_name}_camera_SRCS} )
+	)
+source_group( "camera" FILES ${${target_name}_camera_SRCS} )
 
 set( ${target_name}_canvas_SRCS 
 	guicanvaslayer.h
 	guicanvaslayer.cpp	
 	guicanvaslayermanager.h
 	guicanvaslayermanager.cpp	
-)
+	)
 source_group( canvas FILES ${${target_name}_canvas_SRCS} )
 
 set( ${target_name}_math_SRCS 
@@ -79,7 +81,7 @@ set( ${target_name}_math_SRCS
 	guiaslite.cpp
 	guiaslite.h
 	)
-source_group( math FILES ${${target_name}_math_SRCS} )
+source_group( "math" FILES ${${target_name}_math_SRCS} )
 
 
 set( ${target_name}_resource_SRCS 
@@ -116,7 +118,7 @@ set( ${target_name}_resource_SRCS
 	guiasgenerator.cpp
 	guiasgenerator.h
 	)
-source_group( resource FILES ${${target_name}_resource_SRCS} )
+source_group( "resource" FILES ${${target_name}_resource_SRCS} )
 
 
 set( ${target_name}_interface_SRCS 
@@ -196,7 +198,7 @@ set( ${target_name}_string_SRCS
 	guistringex.cpp
 	guistringex.h
 	)
-source_group( string FILES ${${target_name}_string_SRCS} )
+source_group( "string" FILES ${${target_name}_string_SRCS} )
 
 
 set( ${target_name}_property_SRCS 
@@ -249,6 +251,16 @@ set( ${target_name}_misc_SRCS
 	)
 source_group( misc FILES ${${target_name}_misc_SRCS} )
 
+set( ${target_name}_particlesystem_SRCS 
+	guiparticle2dsystem.cpp
+	guiparticle2dsystem.h
+	guiparticle2dsystempoint.cpp
+	guiparticle2dsystempoint.h
+	guiparticle2dsystemquad.cpp
+	guiparticle2dsystemquad.h
+	)
+source_group( particlesystem FILES ${${target_name}_particlesystem_SRCS} )
+
 
 set( ${target_name}_SRCS
 	${${target_name}_base_SRCS}
@@ -264,6 +276,7 @@ set( ${target_name}_SRCS
 	${${target_name}_misc_SRCS}
 	${${target_name}_canvas_SRCS}
 	${${target_name}_camera_SRCS}
+	${${target_name}_particlesystem_SRCS}
 	)
 
 

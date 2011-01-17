@@ -245,14 +245,15 @@ namespace guiex
 		return m_bWireFrame;
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengles::DrawRect(const CGUIMatrix4& rWorldMatrix,
+	void IGUIRender_opengles::DrawRect(
+		const CGUIMatrix4& rWorldMatrix,
 		const CGUIRect& rDestRect, 
 		real fLineWidth,
 		real z,
-		GUIARGB rColor_topleft,
-		GUIARGB rColor_topright,
-		GUIARGB rColor_bottomleft,
-		GUIARGB rColor_bottomright )
+		const CGUIColor& rColor_topleft,
+		const CGUIColor& rColor_topright,
+		const CGUIColor& rColor_bottomleft,
+		const CGUIColor& rColor_bottomright )
 	{
 		glDisable(GL_TEXTURE_2D);
 		glLineWidth( fLineWidth );
@@ -315,8 +316,8 @@ namespace guiex
 		const CGUIVector2 &rEnd, 
 		real fLineWidth,
 		real z,
-		GUIARGB rColor_begin,
-		GUIARGB rColor_end )
+		const CGUIColor& rColor_begin,
+		const CGUIColor& rColor_end )
 	{
 		glDisable(GL_TEXTURE_2D);
 		glLineWidth( fLineWidth );
@@ -363,10 +364,10 @@ namespace guiex
 		const CGUIRect& rDestRect, real z, 
 		const CGUITextureImp* pTexture, const CGUIRect& rTextureRect, 
 		EImageOrientation eImageOrientation, 				
-		GUIARGB  rColor_topleft,
-		GUIARGB  rColor_topright,
-		GUIARGB  rColor_bottomleft,
-		GUIARGB  rColor_bottomright)
+		const CGUIColor&  rColor_topleft,
+		const CGUIColor&  rColor_topright,
+		const CGUIColor&  rColor_bottomleft,
+		const CGUIColor&  rColor_bottomright)
 	{
 		//set modelview matrix
 		glMatrixMode(GL_MODELVIEW);
@@ -769,14 +770,9 @@ namespace guiex
 		return 96;
 	}
 	//------------------------------------------------------------------------------
-	long IGUIRender_opengles::ColorToOpengl(GUIARGB col) const
+	long IGUIRender_opengles::ColorToOpengl(const CGUIColor& col) const
 	{
-		return ((col& 0xFF000000) |				//A
-			((col & 0x00FF0000)>>16)  		|			//R
-			(col & 0x0000FF00)  		|		//G
-			((col & 0x000000FF)<<16)					//B
-			);
-
+		return col.GetABGR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::makeGLMatrix(real gl_matrix[16], const CGUIMatrix4& m)

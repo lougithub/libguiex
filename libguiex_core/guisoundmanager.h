@@ -37,7 +37,7 @@ namespace guiex
 	* @brief sound manager
 	* 
 	*/
-	class GUIEXPORT CGUISoundManager : public CGUIResourceManager <CGUISoundData>
+	class GUIEXPORT CGUISoundManager : public CGUIResourceManager <CGUISoundData, CGUISoundData>
 	{
 	public:
 		CGUISoundManager();
@@ -50,7 +50,8 @@ namespace guiex
 		int32 DeallocateResource( CGUISoundData* pSound );
 
 	protected:
-		virtual	void DestroyResourceImp( void* pRes ); 
+		virtual	void DestroyRegisterResourceImp( CGUIResource* pRes ); 
+		virtual	void DestroyAllocateResourceImp( CGUIResource* pRes ); 
 		
 		CGUISoundData* DoCreateSound(
 			const CGUIString& rName, 

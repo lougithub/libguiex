@@ -81,6 +81,12 @@ namespace guiex
 	};
 
 
+	enum EParticle2DSystemMode
+	{
+		eParticle2DSystemMode_Gravity = 0,
+		eParticle2DSystemMode_Radius,
+	};
+
 }//namespace guiex
 
 #endif //__GUI_ENUMTYPES_20101122_H__

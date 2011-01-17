@@ -67,26 +67,6 @@ namespace guiex
 		m_listSuccessor.clear();
 	}
 	//------------------------------------------------------------------------------
-	CGUIAs* CGUIAs::Clone( ) const
-	{
-		CGUIAs* pCloneAs = CGUIAsManager::Instance()->AllocateResourceByType( GetType() );
-		pCloneAs->SetTotalTime( m_fTotalTime );
-		pCloneAs->SetElapsedTime( m_fElapsedTime );
-		pCloneAs->SetLooping( m_bLooping );
-		pCloneAs->SetReceiver( m_pReceiver );
-		pCloneAs->Retire( m_bRetired );
-
-		for( TListSuccessor::const_iterator itor = m_listSuccessor.begin();
-			itor != m_listSuccessor.end();
-			++itor)
-		{
-			CGUIAs* pCloneSuccessor = (*itor)->Clone();
-			pCloneAs->PushSuccessor( pCloneSuccessor );
-			CGUIAsManager::Instance()->DeallocateResource( pCloneSuccessor );
-		}
-		return pCloneAs;
-	}
-	//------------------------------------------------------------------------------
 	int32 CGUIAs::ProcessProperty( const CGUIProperty& rProperty )
 	{
 		/*
@@ -717,24 +697,6 @@ namespace guiex
 		{
 			SetTotalTime( rItemInfo.m_pAs->GetTotalTime() + rItemInfo.m_fBeginTime );
 		}
-	}
-	//------------------------------------------------------------------------------
-	CGUIAs* CGUIAsContainer::Clone( ) const
-	{
-		CGUIAsContainer* pCloneAs = static_cast< CGUIAsContainer* >(CGUIAs::Clone());
-
-		for( TAsList::const_iterator itor = m_vAsList.begin();
-			itor != m_vAsList.end();
-			++itor )
-		{
-			CGUIAsContainItemInfo aCloneInfo;
-			aCloneInfo.m_fBeginTime = (*itor).m_fBeginTime;
-			aCloneInfo.m_pAs = (*itor).m_pAs->Clone();
-			pCloneAs->AddItem( aCloneInfo );
-			CGUIAsManager::Instance()->DeallocateResource( aCloneInfo.m_pAs );
-		}
-
-		return pCloneAs;
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

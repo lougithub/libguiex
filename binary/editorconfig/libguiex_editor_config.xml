@@ -32,6 +32,7 @@
 			<property name="alpha" type="real" value="1.0"  category="Default"/>
 			<property name="rotation" type="CGUIVector3" value="0.0,0.0,0.0"  category="Default"/>
 			<property name="movable" type="bool" value="false"  category="Default"/>
+			<property name="color" type="CGUIColor" value="255,255,255,255"  category="Default"/>
 			<property name="visible" type="bool" value="true"  category="Default"/>
 			<property name="activable" type="bool" value="false"  category="Default"/>
 			<property name="hitable" type="bool" value="true"  category="Default"/>
@@ -161,6 +162,14 @@
 	<widget type="CGUIWgtStaticText" inherit="CGUIWidget">
 		<page name="Appearance">
 			<property name="multiline" type="bool" value="false" category="StaticText"/>
+		</page>
+	</widget>
+
+	<widget type="CGUIWgtStaticParticle2DSystem" inherit="CGUIWidget">
+		<page name="Appearance">
+		</page>
+		<page name="Image">
+			<property name="PARTICLEIMAGE" type="CGUIImage" value="" must_exist="true"/>
 		</page>
 	</widget>
 

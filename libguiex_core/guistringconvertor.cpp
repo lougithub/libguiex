@@ -774,6 +774,53 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
+	//convert for EParticle2DSystemMode
+	template< >
+	CGUIString GetValueType<EParticle2DSystemMode>( )
+	{
+		return "EParticle2DSystemMode";
+	}
+	template<  >
+	int32 StringToValue<EParticle2DSystemMode>( const CGUIString& rString, EParticle2DSystemMode& rValue)
+	{
+		if( rString == "eParticle2DSystemMode_Gravity" )
+		{
+			rValue = eParticle2DSystemMode_Gravity;
+		}
+		else if( rString == "eParticle2DSystemMode_Radius" )
+		{
+			rValue = eParticle2DSystemMode_Radius;
+		}
+		else
+		{
+			throw CGUIException(
+				"[StringToValue[EParticle2DSystemMode]]: string value format is wrong! <%s>",
+				rString.c_str());
+			return -1;
+		}
+		return 0;
+	}
+
+	template<  >
+	int32 ValueToString<EParticle2DSystemMode>( const EParticle2DSystemMode& rValue, CGUIString& rString )
+	{
+		switch(rValue)
+		{
+		case eParticle2DSystemMode_Gravity:
+			rString = CGUIString("eParticle2DSystemMode_Gravity");
+			break;
+		case eParticle2DSystemMode_Radius:
+			rString = CGUIString("eParticle2DSystemMode_Radius");
+			break;
+		default:
+			throw CGUIException(
+				"[ValueToString[EParticle2DSystemMode]]: unknown EParticle2DSystemMode enum <%d>",
+				rValue);
+			return -1;
+		}
+		return 0;
+	}
+	//------------------------------------------------------------------------------
 
 
 }//namespace guiex

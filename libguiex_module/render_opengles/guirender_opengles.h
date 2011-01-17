@@ -43,34 +43,37 @@ namespace guiex
 		IGUIRender_opengles( );
 		virtual ~IGUIRender_opengles();
 
-		virtual void DrawRect(const CGUIMatrix4& rWorldMatrix,
+		virtual void DrawRect(
+			const CGUIMatrix4& rWorldMatrix,
 			const CGUIRect& rDestRect, 
 			real fLineWidth,
 			real z,
-			GUIARGB rColor_topleft,
-			GUIARGB rColor_topright,
-			GUIARGB rColor_bottomleft,
-			GUIARGB rColor_bottomright );
+			const CGUIColor& rColor_topleft,
+			const CGUIColor& rColor_topright,
+			const CGUIColor& rColor_bottomleft,
+			const CGUIColor& rColor_bottomright );
 
 
-		virtual	void DrawTile( const CGUIMatrix4& rWorldMatrix,
+		virtual	void DrawTile( 
+			const CGUIMatrix4& rWorldMatrix,
 			const CGUIRect& rDestRect,
 			real z, 
 			const CGUITextureImp* pTexture, 
 			const CGUIRect& rTextureRect, 
 			EImageOrientation eImageOrientation,
-			GUIARGB rColor_topleft,
-			GUIARGB rColor_topright,
-			GUIARGB rColor_bottomleft,
-			GUIARGB rColor_bottomright);
+			const CGUIColor& rColor_topleft,
+			const CGUIColor& rColor_topright,
+			const CGUIColor& rColor_bottomleft,
+			const CGUIColor& rColor_bottomright);
 
-		virtual void DrawLine(const CGUIMatrix4& rWorldMatrix,
+		virtual void DrawLine(
+			const CGUIMatrix4& rWorldMatrix,
 			const CGUIVector2 &rBegin, 
 			const CGUIVector2 &rEnd, 
 			real fLineWidth,
 			real z,
-			GUIARGB rColor_begin,
-			GUIARGB rColor_end);
+			const CGUIColor& rColor_begin,
+			const CGUIColor& rColor_end);
 
 		virtual void PushClipRect( const CGUIMatrix4& rMatrix, const CGUIRect& rClipRect );
 		virtual void PopClipRect( );
@@ -107,20 +110,8 @@ namespace guiex
 
 		void UpdateCamera();
 
-		/**
-		* @brief render a texture directly to the display
-		*/
-		void RenderTextureDirect(
-			const CGUIRect& rDestRect, real z, 
-			const CGUITextureImp* pTexture, const CGUIRect& rTextureRect, 
-			EImageOrientation eImageOrientation, 
-			GUIARGB  rColor_topleft,
-			GUIARGB  rColor_topright,
-			GUIARGB  rColor_bottomleft,
-			GUIARGB  rColor_bottomright);
-
 		// convert CGUIColor to opengl supported format
-		long ColorToOpengl(GUIARGB col) const;
+		long ColorToOpengl(const CGUIColor& col) const;
 
 		void makeGLMatrix(real gl_matrix[16], const CGUIMatrix4& m);
 

@@ -37,7 +37,7 @@ namespace guiex
 	* @brief image manager
 	* 
 	*/
-	class GUIEXPORT CGUIAnimationManager : public CGUIResourceManager <CGUIAnimation>
+	class GUIEXPORT CGUIAnimationManager : public CGUIResourceManager <CGUIAnimation, CGUIAnimation>
 	{
 	public:
 
@@ -80,7 +80,8 @@ namespace guiex
 		int32 DeallocateResource( CGUIAnimation* pAnimation );
 
 	protected:
-		virtual	void DestroyResourceImp( void* pRes ); 
+		virtual	void DestroyRegisterResourceImp( CGUIResource* pRes ); 
+		virtual	void DestroyAllocateResourceImp( CGUIResource* pRes ); 
 
 		CGUIAnimation* DoCreateAnimation(
 			const CGUIString& rSceneName, 

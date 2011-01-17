@@ -248,10 +248,10 @@ namespace guiex
 		const CGUIRect& rDestRect, 
 		real fLineWidth,
 		real z,
-		GUIARGB rColor_topleft,
-		GUIARGB rColor_topright,
-		GUIARGB rColor_bottomleft,
-		GUIARGB rColor_bottomright )
+		const CGUIColor& rColor_topleft,
+		const CGUIColor& rColor_topright,
+		const CGUIColor& rColor_bottomleft,
+		const CGUIColor& rColor_bottomright )
 	{
 		glInterleavedArrays(GL_C4UB_V3F , 0, m_pVertexForLine);
 		glDisable(GL_TEXTURE_2D);
@@ -309,8 +309,8 @@ namespace guiex
 		const CGUIVector2 &rEnd, 
 		real fLineWidth,
 		real z,
-		GUIARGB rColor_begin,
-		GUIARGB rColor_end )
+		const CGUIColor& rColor_begin,
+		const CGUIColor& rColor_end )
 	{
 		glInterleavedArrays(GL_C4UB_V3F , 0, m_pVertexForLine);
 		glDisable(GL_TEXTURE_2D);
@@ -330,18 +330,131 @@ namespace guiex
 		m_pVertexForLine[0].vertex[0] = rBegin.x;
 		m_pVertexForLine[0].vertex[1] = rBegin.y;
 		m_pVertexForLine[0].vertex[2] = z;
-		m_pVertexForLine[0].color     = rColor_begin;
+		m_pVertexForLine[0].color     = oglcolor_begin;
 
 		//vert1
 		m_pVertexForLine[1].vertex[0] = rEnd.x;
 		m_pVertexForLine[1].vertex[1] = rEnd.y;
 		m_pVertexForLine[1].vertex[2] = z;
-		m_pVertexForLine[1].color = rColor_end;     
+		m_pVertexForLine[1].color = oglcolor_end;     
 
 		glDrawArrays( GL_LINES, 0, 2 );
 
 		glEnable(GL_TEXTURE_2D);
 		glInterleavedArrays(GL_T2F_C4UB_V3F , 0, m_pVertex);
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl::BlendFunc( const SBlendFuncType& rBlendFuncType )
+	{
+		GLenum src,dst;
+		switch( rBlendFuncType.src )
+		{
+		case eBlendFuncType_ONE:
+			src = GL_ONE;break;
+		case eBlendFuncType_SRC_COLOR:
+			src = GL_COLOR;break;
+		case eBlendFuncType_ONE_MINUS_SRC_COLOR:
+			src = GL_SRC_COLOR;break;
+		case eBlendFuncType_SRC_ALPHA:
+			src = GL_SRC_ALPHA;break;
+		case eBlendFuncType_ONE_MINUS_SRC_ALPHA:
+			src = GL_ONE_MINUS_SRC_ALPHA;break;
+		case eBlendFuncType_DST_ALPHA:
+			src = GL_DST_ALPHA;break;
+		case eBlendFuncType_ONE_MINUS_DST_ALPHA:
+			src = GL_ONE_MINUS_DST_ALPHA;break;
+		case eBlendFuncType_ZERO:
+		default:
+			src = GL_ZERO;break;
+		}
+		switch( rBlendFuncType.dst )
+		{
+		case eBlendFuncType_ONE:
+			dst = GL_ONE;break;
+		case eBlendFuncType_SRC_COLOR:
+			dst = GL_COLOR;break;
+		case eBlendFuncType_ONE_MINUS_SRC_COLOR:
+			dst = GL_SRC_COLOR;break;
+		case eBlendFuncType_SRC_ALPHA:
+			dst = GL_SRC_ALPHA;break;
+		case eBlendFuncType_ONE_MINUS_SRC_ALPHA:
+			dst = GL_ONE_MINUS_SRC_ALPHA;break;
+		case eBlendFuncType_DST_ALPHA:
+			dst = GL_DST_ALPHA;break;
+		case eBlendFuncType_ONE_MINUS_DST_ALPHA:
+			dst = GL_ONE_MINUS_DST_ALPHA;break;
+		case eBlendFuncType_ZERO:
+		default:
+			dst = GL_ZERO;break;
+		}
+		glBlendFunc( src, dst );
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl::DrawQuads(
+		const CGUIMatrix4& rWorldMatrix,
+		const CGUITextureImp* pTexture,
+		const SBlendFuncType& rBlendFuncType,
+		const SR_V2F_C4F_T2F_Quad* pQuads,
+		uint16* pIndices,
+		int16 nQuadNum)
+	{
+		//set modelview matrix
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		makeGLMatrix( m_gl_matrix, rWorldMatrix );
+		glMultMatrixf( m_gl_matrix );
+
+		BindTexture( pTexture );
+
+		int16 kQuadSize = sizeof(pQuads[0].bl);
+
+#if CC_USES_VBO
+		glBindBuffer(GL_ARRAY_BUFFER, quadsID);
+
+		glVertexPointer(2,GL_FLOAT, kQuadSize, 0);
+
+		glColorPointer(4, GL_FLOAT, kQuadSize, (GLvoid*) offsetof(ccV2F_C4F_T2F,colors) );
+
+		glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*) offsetof(ccV2F_C4F_T2F,texCoords) );
+#else // vertex array list
+
+		int32 offset = (int32) pQuads;
+
+		// vertex
+		int32 diff = offsetof( SR_V2F_C4F_T2F, vertices);
+		glVertexPointer(2,GL_FLOAT, kQuadSize, (GLvoid*) (offset+diff) );
+
+		// color
+		diff = offsetof( SR_V2F_C4F_T2F, colors);
+		glColorPointer(4, GL_FLOAT, kQuadSize, (GLvoid*)(offset + diff));
+
+		// tex coords
+		diff = offsetof( SR_V2F_C4F_T2F, texCoords);
+		glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*)(offset + diff));		
+
+#endif // ! CC_USES_VBO
+
+		BlendFunc( rBlendFuncType );
+
+		glDrawElements(GL_TRIANGLES, nQuadNum*6, GL_UNSIGNED_SHORT, pIndices);
+
+		// restore blend state
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
+
+#if CC_USES_VBO
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+#endif
+	}
+
+
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl::BindTexture( const CGUITextureImp* pTexture )
+	{
+		if( ((const CGUITexture_opengl*)pTexture)->GetOGLTexid() != m_nCurrentTexture )
+		{
+			m_nCurrentTexture = ((CGUITexture_opengl*)pTexture)->GetOGLTexid();
+			glBindTexture(GL_TEXTURE_2D, m_nCurrentTexture);
+		}
 	}
 	//------------------------------------------------------------------------------
 	/** 
@@ -352,10 +465,10 @@ namespace guiex
 		const CGUIRect& rDestRect, real z, 
 		const CGUITextureImp* pTexture, const CGUIRect& rTextureRect, 
 		EImageOrientation eImageOrientation, 				
-		GUIARGB  rColor_topleft,
-		GUIARGB  rColor_topright,
-		GUIARGB  rColor_bottomleft,
-		GUIARGB  rColor_bottomright)
+		const CGUIColor& rColor_topleft,
+		const CGUIColor& rColor_topright,
+		const CGUIColor& rColor_bottomleft,
+		const CGUIColor& rColor_bottomright)
 	{
 		//set modelview matrix
 		glMatrixMode(GL_MODELVIEW);
@@ -363,12 +476,8 @@ namespace guiex
 		makeGLMatrix( m_gl_matrix, rWorldMatrix );
 		glMultMatrixf( m_gl_matrix );
 
-		//check texture
-		if( ((CGUITexture_opengl*)pTexture)->GetOGLTexid() != m_nCurrentTexture )
-		{
-			m_nCurrentTexture = ((CGUITexture_opengl*)pTexture)->GetOGLTexid();
-			glBindTexture(GL_TEXTURE_2D, m_nCurrentTexture);
-		}
+		//bind texture
+		BindTexture( pTexture );
 
 		//set texture coordinate
 		SetTexCoordinate(m_pVertex, rTextureRect, eImageOrientation);
@@ -746,14 +855,9 @@ namespace guiex
 		return 96;
 	}
 	//------------------------------------------------------------------------------
-	long IGUIRender_opengl::ColorToOpengl(GUIARGB col) const
+	long IGUIRender_opengl::ColorToOpengl(const CGUIColor& col) const
 	{
-		return ((col& 0xFF000000) |				//A
-			((col & 0x00FF0000)>>16)  		|			//R
-			(col & 0x0000FF00)  		|		//G
-			((col & 0x000000FF)<<16)					//B
-			);
-
+		return col.GetABGR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl::makeGLMatrix(real gl_matrix[16], const CGUIMatrix4& m)

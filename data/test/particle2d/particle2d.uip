@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<libguiex_project>
+	<property name="particle2d" type="Title" />
+	<property name="common.uip" type="Dependency"/>
+	<property name="particle2d.xml" type="WidgetFile" />
+	<property name="resource.xml" type="ResourceFile" />
+</libguiex_project>
+

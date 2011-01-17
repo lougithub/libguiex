@@ -20,6 +20,7 @@ namespace guiex
 {
 	typedef uint32 GUIARGB;
 	typedef uint32 GUIRGBA;
+	typedef uint32 GUIABGR;
 }
 
 //============================================================================//
@@ -43,6 +44,7 @@ namespace guiex
 		GUIARGB	GetARGB() const;
 
 		GUIRGBA GetRGBA() const;
+		GUIABGR GetABGR() const;
 
 		static GUIRGBA ARGB2RGBA( GUIARGB aColorARGB );
 
@@ -84,6 +86,7 @@ namespace guiex
 		CGUIColor& operator+=(GUIARGB argb);
 		CGUIColor operator-(const CGUIColor& rColor) const;
 		CGUIColor operator-(GUIARGB argb) const;
+		CGUIColor operator/(real fScale) const;
 		CGUIColor& operator-=(const CGUIColor& rColor);
 		CGUIColor& operator-=(GUIARGB argb);
 		CGUIColor operator*(const real fValue) const;
@@ -127,6 +130,15 @@ namespace guiex
 	inline GUIRGBA CGUIColor::GetRGBA() const
 	{
 		return ((m_nARGB<<8) + ((m_nARGB>>24)&0xFF));
+	}
+	//------------------------------------------------------------------------------ 
+	inline GUIABGR CGUIColor::GetABGR() const
+	{
+		return ((m_nARGB& 0xFF000000) | //A
+			((m_nARGB & 0x00FF0000)>>16) | //R
+			(m_nARGB & 0x0000FF00) | //G
+			((m_nARGB & 0x000000FF)<<16) //B
+			);
 	}
 	//------------------------------------------------------------------------------ 
 	/** 
@@ -341,6 +353,19 @@ namespace guiex
 			GetGreen() 	- rColor.GetGreen(),
 			GetBlue() 	- rColor.GetBlue(),
 			GetAlpha() 	- rColor.GetAlpha());
+	}
+	//------------------------------------------------------------------------------ 
+	inline CGUIColor CGUIColor::operator/(real fScale) const
+	{
+		if( fScale <=0 )
+		{
+			return *this;
+		}
+		return CGUIColor(
+			GetRed() / fScale,
+			GetGreen() / fScale,
+			GetBlue() / fScale,
+			GetAlpha() / fScale);
 	}
 	//------------------------------------------------------------------------------ 
 	inline CGUIColor CGUIColor::operator-(GUIARGB argb) const

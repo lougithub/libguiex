@@ -242,6 +242,12 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	CGUIString CGUIImage::GetFullFilePath() const
+	{
+		CGUIString strFullPath = CGUISceneManager::Instance()->GetScenePath( m_strSceneName ) + m_strPath;
+		return strFullPath;
+	}
+	//------------------------------------------------------------------------------
 	const CGUIString& CGUIImage::GetFilePath() const
 	{
 		return m_strPath;

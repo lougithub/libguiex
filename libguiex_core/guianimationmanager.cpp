@@ -120,7 +120,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIAnimation* CGUIAnimationManager::AllocateResource( const CGUIString& rResName )
 	{
-		const CGUIAnimation* pTemplate = GetResource( rResName );
+		const CGUIAnimation* pTemplate = GetRegisterResource( rResName );
 		if( !pTemplate )
 		{
 			throw CGUIException( 
@@ -200,9 +200,14 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIAnimationManager::DestroyResourceImp( void* pRes )
+	void CGUIAnimationManager::DestroyRegisterResourceImp( CGUIResource* pRes )
 	{
-		delete ( TResourceType* )pRes;
+		delete pRes;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAnimationManager::DestroyAllocateResourceImp( CGUIResource* pRes )
+	{
+		delete pRes;
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

@@ -14,6 +14,7 @@
 //============================================================================// 
 #include "guiinterface.h"
 #include "guicolor.h"
+#include "guirendertype.h"
 
 
 //============================================================================//
@@ -54,38 +55,49 @@ namespace guiex
 		*/
 		virtual ~IGUIInterfaceRender();
 
-		virtual void DrawRect(const CGUIMatrix4& rWorldMatrix,
+		virtual void DrawRect(
+			const CGUIMatrix4& rWorldMatrix,
 			const CGUIRect& rDestRect, 
 			real fLineWidth,
 			real z,
-			GUIARGB rColor_topleft,
-			GUIARGB rColor_topright,
-			GUIARGB rColor_bottomleft,
-			GUIARGB rColor_bottomright ) = 0;
+			const CGUIColor& rColor_topleft,
+			const CGUIColor& rColor_topright,
+			const CGUIColor& rColor_bottomleft,
+			const CGUIColor& rColor_bottomright ) = 0;
+
+		virtual void DrawQuads(
+			const CGUIMatrix4& rWorldMatrix,
+			const CGUITextureImp* pTexture,
+			const SBlendFuncType& rBlendFuncType,
+			const SR_V2F_C4F_T2F_Quad* pQuads,
+			uint16* pIndices,
+			int16 nQuadNum) = 0;
 
 		/** 
 		* @brief add a texture into render list
 		* @param rTextureRect in texture co-ordinates.
 		*/
-		virtual	void DrawTile(	const CGUIMatrix4& rWorldMatrix,
+		virtual	void DrawTile(	
+			const CGUIMatrix4& rWorldMatrix,
 			const CGUIRect& rDestRect, 
 			real z, 
 			const CGUITextureImp* pTex, 
 			const CGUIRect& rTextureRect,
 			EImageOrientation eImageOrientation,
-			GUIARGB rColor_topleft,
-			GUIARGB rColor_topright,
-			GUIARGB rColor_bottomleft,
-			GUIARGB rColor_bottomright
+			const CGUIColor& rColor_topleft,
+			const CGUIColor& rColor_topright,
+			const CGUIColor& rColor_bottomleft,
+			const CGUIColor& rColor_bottomright
 			) = 0;
 
-		virtual void DrawLine(const CGUIMatrix4& rWorldMatrix,
+		virtual void DrawLine(
+			const CGUIMatrix4& rWorldMatrix,
 			const CGUIVector2 &rBegin, 
 			const CGUIVector2 &rEnd, 
 			real fLineWidth,
 			real z,
-			GUIARGB rColor_begin,
-			GUIARGB rColor_end) = 0;
+			const CGUIColor& rColor_begin,
+			const CGUIColor& rColor_end) = 0;
 
 		virtual void PushClipRect( const CGUIMatrix4& rMatrix, const CGUIRect& rClipRect ) = 0;
 		virtual void PopClipRect( ) = 0;

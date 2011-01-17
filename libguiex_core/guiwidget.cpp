@@ -1293,7 +1293,7 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWidget::OnUpdate()
+	void CGUIWidget::OnUpdate( real fDeltaTime )
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -1702,6 +1702,11 @@ namespace guiex
 			ValueToProperty( m_aWidgetSize, rProperty );
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
+		else if( rProperty.GetType() == ePropertyType_Color && rProperty.GetName() == "color")
+		{
+			ValueToProperty( m_aColor, rProperty );
+		}
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Vector2 && rProperty.GetName() == "anchor" )
 		{
 			ValueToProperty( m_aWidgetAnchorPoint, rProperty );
@@ -1906,6 +1911,11 @@ namespace guiex
 		else if( rProperty.GetType() == ePropertyType_WidgetSize && rProperty.GetName() == "size")
 		{
 			PropertyToValue( rProperty, m_aWidgetSize);
+		}
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		else if( rProperty.GetType() == ePropertyType_Color && rProperty.GetName() == "color")
+		{
+			PropertyToValue( rProperty, m_aColor );
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//property for sound
@@ -2291,7 +2301,7 @@ namespace guiex
 			}
 		}
 
-		OnUpdate();
+		OnUpdate( fDeltaTime );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::DrawCharacter(IGUIInterfaceRender* pRender, 

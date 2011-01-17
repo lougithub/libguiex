@@ -37,7 +37,7 @@ namespace guiex
 	* @brief music manager
 	* 
 	*/
-	class GUIEXPORT CGUIMusicManager : public CGUIResourceManager <CGUIMusicData>
+	class GUIEXPORT CGUIMusicManager : public CGUIResourceManager <CGUIMusicData, CGUIMusicData>
 	{
 	public:
 		CGUIMusicManager();
@@ -50,7 +50,8 @@ namespace guiex
 		int32 DeallocateResource( CGUIMusicData* pMusic );
 
 	protected:
-		virtual	void DestroyResourceImp( void* pRes ); 
+		virtual	void DestroyRegisterResourceImp( CGUIResource* pRes ); 
+		virtual	void DestroyAllocateResourceImp( CGUIResource* pRes ); 
 		
 		CGUIMusicData* DoCreateMusic(
 			const CGUIString& rName, 

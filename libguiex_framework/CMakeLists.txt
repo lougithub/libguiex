@@ -13,7 +13,7 @@ set( ${target_name}_windows_SRCS
 	guiframework_windows.cpp
 	guiframework_windows.h
 	)
-source_group( windows FILES ${${target_name}_windows_SRCS} )
+source_group( "windows" FILES ${${target_name}_windows_SRCS} )
 
 set( ${target_name}_mac_SRCS 
 	guiframework_mac.cpp

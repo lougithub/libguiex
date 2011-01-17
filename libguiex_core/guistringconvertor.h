@@ -210,7 +210,14 @@ namespace guiex
 	template< >
 	CGUIString GetValueType<EInterpolationType>( );
 	//------------------------------------------------------------------------------
-
+	//convert for EParticle2DSystemMode
+	template<  >
+	int32 StringToValue<EParticle2DSystemMode>( const CGUIString& rString, EParticle2DSystemMode& rValue);
+	template<  >
+	int32 ValueToString<EParticle2DSystemMode>( const EParticle2DSystemMode& rValue, CGUIString& rString );
+	template< >
+	CGUIString GetValueType<EParticle2DSystemMode>( );
+	//------------------------------------------------------------------------------
 }	//namespace guiex
 
 #endif //__GUI_STRING_CONVERTOR_200608030_H__

@@ -1,675 +1,706 @@
 <guiex>
-    <property name="node_main" type="CGUIWidgetDefine" value="CGUIWgtEmptyNode">
-        <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
-        <property name="alpha" type="real" value="1" />
-        <property name="movable" type="bool" value="false" />
-        <property name="activable" type="bool" value="false" />
-        <property name="open_with_parent" type="bool" value="true" />
-        <property name="response_update_event" type="bool" value="false" />
-        <property name="textinfo" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="14" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,0,255" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
-            <property name="value" type="CGUISize" value="1,1" />
-        </property>
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
-            <property name="value" type="CGUIVector2" value="0.5,0.5" />
-        </property>
-        <property name="hitable" type="bool" value="false" />
-        <property name="disable" type="bool" value="false" />
-        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
-        <property name="OnOpen" type="CGUIEvent" value="node_main_onopen" />
-        <property name="OnLoad" type="CGUIEvent" value="node_main_onload" />
-        <property name="OnUIEvent" type="CGUIEvent" value="node_main_onuievent" />
-    </property>
-    <property name="input_username" type="CGUIWidgetDefine" value="CGUIWgtEditBox">
-        <property name="parent" type="CGUIString" value="node_main" />
-        <property name="EDIT_BG" type="CGUIImage" value="edit_bg" />
-        <property name="EDIT_CURSOR" type="CGUIImage" value="color_white" />
-        <property name="anchor" type="CGUIVector2" value="0.5,0" />
-        <property name="alpha" type="real" value="1" />
-        <property name="movable" type="bool" value="false" />
-        <property name="activable" type="bool" value="true" />
-        <property name="open_with_parent" type="bool" value="true" />
-        <property name="response_update_event" type="bool" value="true" />
-        <property name="textinfo" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="14" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,0,255" />
-        </property>
-        <property name="cursor_size" type="CGUISize" value="5,20" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
-            <property name="value" type="CGUIVector2" value="0.495117,0.337396" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-            <property name="value" type="CGUISize" value="205,30" />
-        </property>
-        <property name="client_area" type="CGUIRect" value="0.05,0,0.95,0.9" />
-        <property name="max_text_num" type="uint32" value="16" />
-        <property name="hitable" type="bool" value="true" />
-        <property name="disable" type="bool" value="false" />
-        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
-    </property>
-    <property name="btn_login" type="CGUIWidgetDefine" value="CGUIWgtButton">
-        <property name="parent" type="CGUIString" value="node_main" />
-        <property name="BTN_NORMAL" type="CGUIImage" value="button_blue_normal" />
-        <property name="BTN_HOVER" type="CGUIImage" value="button_blue_hover" />
-        <property name="BTN_PUSH" type="CGUIImage" value="button_blue_push" />
-        <property name="BTN_DISABLE" type="CGUIImage" value="button_blue_disable" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
-            <property name="value" type="CGUIVector2" value="0.5,0.558333" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-            <property name="value" type="CGUISize" value="220,45" />
-        </property>
-        <property name="anchor" type="CGUIVector2" value="0.5,0" />
-        <property name="alpha" type="real" value="1" />
-        <property name="movable" type="bool" value="false" />
-        <property name="activable" type="bool" value="false" />
-        <property name="open_with_parent" type="bool" value="true" />
-        <property name="response_update_event" type="bool" value="true" />
-        <property name="text" type="CGUIString" value="login" />
-        <property name="text_offset" type="CGUIVector2" value="0,-5" />
-        <property name="textinfo" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="14" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,0,255" />
-        </property>
-        <property name="textinfo_hover" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="0.803922,0.67451,0.176471,1" />
-        </property>
-        <property name="textinfo_push" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="0.803922,0.67451,0.176471,1" />
-        </property>
-        <property name="textinfo_disable" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="0.803922,0.67451,0.176471,1" />
-        </property>
-        <property name="hitable" type="bool" value="true" />
-        <property name="disable" type="bool" value="false" />
-        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
-        <property name="OnMouseLeftClick" type="CGUIEvent" value="btn_login_onclick" />
-    </property>
-    <property name="input_password" type="CGUIWidgetDefine" value="CGUIWgtEditBox">
-        <property name="parent" type="CGUIString" value="node_main" />
-        <property name="EDIT_BG" type="CGUIImage" value="edit_bg" />
-        <property name="EDIT_CURSOR" type="CGUIImage" value="color_white" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
-            <property name="value" type="CGUIVector2" value="0.496523,0.466719" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-            <property name="value" type="CGUISize" value="205,30" />
-        </property>
-        <property name="anchor" type="CGUIVector2" value="0.5,0" />
-        <property name="alpha" type="real" value="1" />
-        <property name="movable" type="bool" value="false" />
-        <property name="activable" type="bool" value="true" />
-        <property name="open_with_parent" type="bool" value="true" />
-        <property name="response_update_event" type="bool" value="true" />
-        <property name="textinfo" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="14" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,0,255" />
-        </property>
-        <property name="cursor_size" type="CGUISize" value="5,20" />
-        <property name="client_area" type="CGUIRect" value="0.05,0,0.95,0.9" />
-        <property name="max_text_num" type="uint32" value="16" />
-        <property name="hitable" type="bool" value="true" />
-        <property name="disable" type="bool" value="false" />
-        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
-    </property>
-    <property name="static_username" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
-        <property name="parent" type="CGUIString" value="node_main" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
-            <property name="value" type="CGUIVector2" value="0.49707,0.297291" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-            <property name="value" type="CGUISize" value="250,20" />
-        </property>
-        <property name="anchor" type="CGUIVector2" value="0.5,0" />
-        <property name="alpha" type="real" value="1" />
-        <property name="movable" type="bool" value="false" />
-        <property name="activable" type="bool" value="true" />
-        <property name="open_with_parent" type="bool" value="true" />
-        <property name="response_update_event" type="bool" value="true" />
-        <property name="textinfo" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="14" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,0,255" />
-        </property>
-        <property name="text" type="CGUIString" value="username" />
-        <property name="hitable" type="bool" value="true" />
-        <property name="disable" type="bool" value="false" />
-        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
-        <property name="multiline" type="bool" value="false" />
-    </property>
-    <property name="static_password" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
-        <property name="parent" type="CGUIString" value="node_main" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
-            <property name="value" type="CGUIVector2" value="0.49707,0.427708" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-            <property name="value" type="CGUISize" value="83,26" />
-        </property>
-        <property name="anchor" type="CGUIVector2" value="0.5,0" />
-        <property name="alpha" type="real" value="1" />
-        <property name="movable" type="bool" value="false" />
-        <property name="activable" type="bool" value="true" />
-        <property name="open_with_parent" type="bool" value="true" />
-        <property name="response_update_event" type="bool" value="true" />
-        <property name="textinfo" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="14" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,0,255" />
-        </property>
-        <property name="text" type="CGUIString" value="password" />
-        <property name="hitable" type="bool" value="true" />
-        <property name="disable" type="bool" value="false" />
-        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
-        <property name="multiline" type="bool" value="false" />
-    </property>
-    <property name="Glues-BlizzardLogo" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
-        <property name="parent" type="CGUIString" value="node_main" />
-        <property name="BGIMAGE" type="CGUIImage" value="Glues-BlizzardLogo" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
-            <property name="value" type="CGUIVector2" value="0.459843,0.820313" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-            <property name="value" type="CGUISize" value="100,100" />
-        </property>
-        <property name="anchor" type="CGUIVector2" value="0,0" />
-        <property name="alpha" type="real" value="1" />
-        <property name="movable" type="bool" value="false" />
-        <property name="visible" type="bool" value="true" />
-        <property name="activable" type="bool" value="false" />
-        <property name="hitable" type="bool" value="true" />
-        <property name="disable" type="bool" value="false" />
-        <property name="open_with_parent" type="bool" value="true" />
-        <property name="response_update_event" type="bool" value="false" />
-        <property name="textinfo" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="14" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,0,255" />
-        </property>
-        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
-    </property>
-    <property name="Glues-WoW-TaiwanWotLKLogo" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
-        <property name="parent" type="CGUIString" value="node_main" />
-        <property name="BGIMAGE" type="CGUIImage" value="Glues-WoW-TaiwanWotLKLogo" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
-            <property name="value" type="CGUIVector2" value="-0.00292969,-0.00479201" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-            <property name="value" type="CGUISize" value="256,128" />
-        </property>
-        <property name="anchor" type="CGUIVector2" value="0,0" />
-        <property name="alpha" type="real" value="1" />
-        <property name="movable" type="bool" value="false" />
-        <property name="visible" type="bool" value="true" />
-        <property name="activable" type="bool" value="false" />
-        <property name="hitable" type="bool" value="true" />
-        <property name="disable" type="bool" value="false" />
-        <property name="open_with_parent" type="bool" value="true" />
-        <property name="response_update_event" type="bool" value="false" />
-        <property name="textinfo" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="14" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,0,255" />
-        </property>
-        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
-    </property>
-    <property name="btn_quit" type="CGUIWidgetDefine" value="CGUIWgtButton">
-        <property name="parent" type="CGUIString" value="node_main" />
-        <property name="BTN_NORMAL" type="CGUIImage" value="button_blue_normal" />
-        <property name="BTN_HOVER" type="CGUIImage" value="button_red_hover" />
-        <property name="BTN_PUSH" type="CGUIImage" value="button_red_push" />
-        <property name="BTN_DISABLE" type="CGUIImage" value="button_red_disable" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
-            <property name="value" type="CGUIVector2" value="0.845703,0.893229" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-            <property name="value" type="CGUISize" value="148,46" />
-        </property>
-        <property name="anchor" type="CGUIVector2" value="0,0" />
-        <property name="alpha" type="real" value="1" />
-        <property name="movable" type="bool" value="false" />
-        <property name="visible" type="bool" value="true" />
-        <property name="activable" type="bool" value="false" />
-        <property name="hitable" type="bool" value="true" />
-        <property name="disable" type="bool" value="false" />
-        <property name="open_with_parent" type="bool" value="true" />
-        <property name="response_update_event" type="bool" value="true" />
-        <property name="textinfo" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="14" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,0,255" />
-        </property>
-        <property name="text" type="CGUIString" value="quit" />
-        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
-        <property name="text_offset" type="CGUIVector2" value="0,-2" />
-        <property name="textinfo_hover" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="textinfo_push" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="textinfo_disable" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-    </property>
-    <property name="btn_text" type="CGUIWidgetDefine" value="CGUIWgtButton">
-        <property name="parent" type="CGUIString" value="node_main" />
-        <property name="BTN_NORMAL" type="CGUIImage" value="button_blue_normal" />
-        <property name="BTN_HOVER" type="CGUIImage" value="button_blue_hover" />
-        <property name="BTN_PUSH" type="CGUIImage" value="button_blue_push" />
-        <property name="BTN_DISABLE" type="CGUIImage" value="button_blue_disable" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
-            <property name="value" type="CGUIVector2" value="0.844727,0.561198" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-            <property name="value" type="CGUISize" value="148,46" />
-        </property>
-        <property name="anchor" type="CGUIVector2" value="0,0" />
-        <property name="alpha" type="real" value="1" />
-        <property name="movable" type="bool" value="false" />
-        <property name="visible" type="bool" value="true" />
-        <property name="activable" type="bool" value="false" />
-        <property name="hitable" type="bool" value="true" />
-        <property name="disable" type="bool" value="false" />
-        <property name="open_with_parent" type="bool" value="true" />
-        <property name="response_update_event" type="bool" value="true" />
-        <property name="textinfo" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="14" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,0,255" />
-        </property>
-        <property name="text" type="CGUIString" value="setting" />
-        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
-        <property name="text_offset" type="CGUIVector2" value="0,-2" />
-        <property name="textinfo_hover" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="textinfo_push" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="textinfo_disable" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-    </property>
-    <property name="btn_text2" type="CGUIWidgetDefine" value="CGUIWgtButton">
-        <property name="parent" type="CGUIString" value="node_main" />
-        <property name="BTN_NORMAL" type="CGUIImage" value="button_blue_normal" />
-        <property name="BTN_HOVER" type="CGUIImage" value="button_blue_normal" />
-        <property name="BTN_PUSH" type="CGUIImage" value="button_blue_push" />
-        <property name="BTN_DISABLE" type="CGUIImage" value="button_blue_disable" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
-            <property name="value" type="CGUIVector2" value="0.84375,0.617188" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-            <property name="value" type="CGUISize" value="148,46" />
-        </property>
-        <property name="anchor" type="CGUIVector2" value="0,0" />
-        <property name="alpha" type="real" value="1" />
-        <property name="movable" type="bool" value="false" />
-        <property name="visible" type="bool" value="true" />
-        <property name="activable" type="bool" value="false" />
-        <property name="hitable" type="bool" value="true" />
-        <property name="disable" type="bool" value="false" />
-        <property name="open_with_parent" type="bool" value="true" />
-        <property name="response_update_event" type="bool" value="true" />
-        <property name="textinfo" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="14" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,0,255" />
-        </property>
-        <property name="text" type="CGUIString" value="animation" />
-        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
-        <property name="text_offset" type="CGUIVector2" value="0,-2" />
-        <property name="textinfo_hover" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,0,255" />
-        </property>
-        <property name="textinfo_push" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="textinfo_disable" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-    </property>
-    <property name="btn_text3" type="CGUIWidgetDefine" value="CGUIWgtButton">
-        <property name="parent" type="CGUIString" value="node_main" />
-        <property name="BTN_NORMAL" type="CGUIImage" value="button_blue_normal" />
-        <property name="BTN_HOVER" type="CGUIImage" value="button_blue_hover" />
-        <property name="BTN_PUSH" type="CGUIImage" value="button_blue_push" />
-        <property name="BTN_DISABLE" type="CGUIImage" value="button_blue_disable" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
-            <property name="value" type="CGUIVector2" value="0.84375,0.670573" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-            <property name="value" type="CGUISize" value="148,46" />
-        </property>
-        <property name="anchor" type="CGUIVector2" value="0,0" />
-        <property name="alpha" type="real" value="1" />
-        <property name="movable" type="bool" value="false" />
-        <property name="visible" type="bool" value="true" />
-        <property name="activable" type="bool" value="false" />
-        <property name="hitable" type="bool" value="true" />
-        <property name="disable" type="bool" value="false" />
-        <property name="open_with_parent" type="bool" value="true" />
-        <property name="response_update_event" type="bool" value="true" />
-        <property name="textinfo" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="14" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,0,255" />
-        </property>
-        <property name="text" type="CGUIString" value="produce" />
-        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
-        <property name="text_offset" type="CGUIVector2" value="0,-2" />
-        <property name="textinfo_hover" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="textinfo_push" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="textinfo_disable" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-    </property>
-    <property name="btn_text4" type="CGUIWidgetDefine" value="CGUIWgtButton">
-        <property name="parent" type="CGUIString" value="node_main" />
-        <property name="BTN_NORMAL" type="CGUIImage" value="button_blue_normal" />
-        <property name="BTN_HOVER" type="CGUIImage" value="button_blue_hover" />
-        <property name="BTN_PUSH" type="CGUIImage" value="button_blue_push" />
-        <property name="BTN_DISABLE" type="CGUIImage" value="button_blue_disable" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
-            <property name="value" type="CGUIVector2" value="0.84375,0.723958" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-            <property name="value" type="CGUISize" value="148,46" />
-        </property>
-        <property name="anchor" type="CGUIVector2" value="0,0" />
-        <property name="alpha" type="real" value="1" />
-        <property name="movable" type="bool" value="false" />
-        <property name="visible" type="bool" value="true" />
-        <property name="activable" type="bool" value="false" />
-        <property name="hitable" type="bool" value="true" />
-        <property name="disable" type="bool" value="false" />
-        <property name="open_with_parent" type="bool" value="true" />
-        <property name="response_update_event" type="bool" value="false" />
-        <property name="textinfo" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="14" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,0,255" />
-        </property>
-        <property name="text" type="CGUIString" value="service" />
-        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
-        <property name="text_offset" type="CGUIVector2" value="0,-2" />
-        <property name="textinfo_hover" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="textinfo_push" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="textinfo_disable" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-    </property>
-    <property name="Copyright" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
-        <property name="parent" type="CGUIString" value="node_main" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
-            <property name="value" type="CGUIVector2" value="0.266484,0.878906" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-            <property name="value" type="CGUISize" value="500,100" />
-        </property>
-        <property name="anchor" type="CGUIVector2" value="0,0" />
-        <property name="alpha" type="real" value="1" />
-        <property name="movable" type="bool" value="false" />
-        <property name="visible" type="bool" value="true" />
-        <property name="activable" type="bool" value="false" />
-        <property name="hitable" type="bool" value="true" />
-        <property name="disable" type="bool" value="false" />
-        <property name="open_with_parent" type="bool" value="true" />
-        <property name="response_update_event" type="bool" value="false" />
-        <property name="textinfo" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="14" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,0,255" />
-        </property>
-        <property name="text" type="CGUIString" value="all rights reserved" />
-        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
-        <property name="multiline" type="bool" value="false" />
-    </property>
-    <property name="btn_text5" type="CGUIWidgetDefine" value="CGUIWgtButton">
-        <property name="parent" type="CGUIString" value="node_main" />
-        <property name="BTN_NORMAL" type="CGUIImage" value="button_blue_normal" />
-        <property name="BTN_HOVER" type="CGUIImage" value="button_blue_hover" />
-        <property name="BTN_PUSH" type="CGUIImage" value="button_blue_push" />
-        <property name="BTN_DISABLE" type="CGUIImage" value="button_blue_disable" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
-            <property name="value" type="CGUIVector2" value="0.0184371,0.638021" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-            <property name="value" type="CGUISize" value="148,46" />
-        </property>
-        <property name="anchor" type="CGUIVector2" value="0,0" />
-        <property name="alpha" type="real" value="1" />
-        <property name="movable" type="bool" value="false" />
-        <property name="visible" type="bool" value="true" />
-        <property name="activable" type="bool" value="false" />
-        <property name="hitable" type="bool" value="true" />
-        <property name="disable" type="bool" value="false" />
-        <property name="open_with_parent" type="bool" value="true" />
-        <property name="response_update_event" type="bool" value="true" />
-        <property name="textinfo" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="14" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,0,255" />
-        </property>
-        <property name="text" type="CGUIString" value="account" />
-        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
-        <property name="text_offset" type="CGUIVector2" value="0,-2" />
-        <property name="textinfo_hover" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="textinfo_push" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="textinfo_disable" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-    </property>
-    <property name="btn_text6" type="CGUIWidgetDefine" value="CGUIWgtButton">
-        <property name="parent" type="CGUIString" value="node_main" />
-        <property name="BTN_NORMAL" type="CGUIImage" value="button_blue_normal" />
-        <property name="BTN_HOVER" type="CGUIImage" value="button_blue_hover" />
-        <property name="BTN_PUSH" type="CGUIImage" value="button_blue_push" />
-        <property name="BTN_DISABLE" type="CGUIImage" value="button_blue_disable" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
-            <property name="value" type="CGUIVector2" value="0.0174606,0.703125" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-            <property name="value" type="CGUISize" value="148,46" />
-        </property>
-        <property name="anchor" type="CGUIVector2" value="0,0" />
-        <property name="alpha" type="real" value="1" />
-        <property name="movable" type="bool" value="false" />
-        <property name="visible" type="bool" value="true" />
-        <property name="activable" type="bool" value="false" />
-        <property name="hitable" type="bool" value="true" />
-        <property name="disable" type="bool" value="false" />
-        <property name="open_with_parent" type="bool" value="true" />
-        <property name="response_update_event" type="bool" value="true" />
-        <property name="textinfo" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="14" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,0,255" />
-        </property>
-        <property name="text" type="CGUIString" value="website" />
-        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
-        <property name="text_offset" type="CGUIVector2" value="0,-2" />
-        <property name="textinfo_hover" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="textinfo_push" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="textinfo_disable" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-    </property>
-    <property name="ver_text" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
-        <property name="parent" type="CGUIString" value="node_main" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
-            <property name="value" type="CGUIVector2" value="-0.0801957,0.885416" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-            <property name="value" type="CGUISize" value="400,100" />
-        </property>
-        <property name="anchor" type="CGUIVector2" value="0,0" />
-        <property name="alpha" type="real" value="1" />
-        <property name="movable" type="bool" value="false" />
-        <property name="visible" type="bool" value="true" />
-        <property name="activable" type="bool" value="false" />
-        <property name="hitable" type="bool" value="true" />
-        <property name="disable" type="bool" value="false" />
-        <property name="open_with_parent" type="bool" value="true" />
-        <property name="response_update_event" type="bool" value="true" />
-        <property name="textinfo" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="14" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,0,255" />
-        </property>
-        <property name="text" type="CGUIString" value="version 3.1.3(11046)" />
-        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
-        <property name="multiline" type="bool" value="false" />
-    </property>
-    <property name="ver2_text" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
-        <property name="parent" type="CGUIString" value="node_main" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
-            <property name="value" type="CGUIVector2" value="-0.144649,0.941406" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-            <property name="value" type="CGUISize" value="400,50" />
-        </property>
-        <property name="anchor" type="CGUIVector2" value="0,0" />
-        <property name="alpha" type="real" value="1" />
-        <property name="movable" type="bool" value="false" />
-        <property name="visible" type="bool" value="true" />
-        <property name="activable" type="bool" value="false" />
-        <property name="hitable" type="bool" value="true" />
-        <property name="disable" type="bool" value="false" />
-        <property name="open_with_parent" type="bool" value="true" />
-        <property name="response_update_event" type="bool" value="true" />
-        <property name="textinfo" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="14" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,0,255" />
-        </property>
-        <property name="text" type="CGUIString" value="Jul 23 2009" />
-        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
-        <property name="multiline" type="bool" value="false" />
-    </property>
+	<property name="node_main" type="CGUIWidgetDefine" value="CGUIWgtEmptyNode">
+		<property name="anchor" type="CGUIVector2" value="0.5,0.5" />
+		<property name="alpha" type="real" value="1" />
+		<property name="movable" type="bool" value="false" />
+		<property name="activable" type="bool" value="false" />
+		<property name="open_with_parent" type="bool" value="true" />
+		<property name="response_update_event" type="bool" value="false" />
+		<property name="textinfo" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="14" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,0,255" />
+		</property>
+		<property name="size" type="CGUIWidgetSize">
+			<property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+			<property name="value" type="CGUISize" value="1,1" />
+		</property>
+		<property name="position" type="CGUIWidgetPosition">
+			<property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+			<property name="value" type="CGUIVector2" value="0.5,0.5" />
+		</property>
+		<property name="hitable" type="bool" value="false" />
+		<property name="disable" type="bool" value="false" />
+		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
+		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
+		<property name="OnOpen" type="CGUIEvent" value="node_main_onopen" />
+		<property name="OnLoad" type="CGUIEvent" value="node_main_onload" />
+		<property name="OnUIEvent" type="CGUIEvent" value="node_main_onuievent" />
+	</property>
+	<property name="input_username" type="CGUIWidgetDefine" value="CGUIWgtEditBox">
+		<property name="parent" type="CGUIString" value="node_main" />
+		<property name="EDIT_BG" type="CGUIImage" value="edit_bg" />
+		<property name="EDIT_CURSOR" type="CGUIImage" value="color_white" />
+		<property name="anchor" type="CGUIVector2" value="0.5,0" />
+		<property name="alpha" type="real" value="1" />
+		<property name="movable" type="bool" value="false" />
+		<property name="activable" type="bool" value="true" />
+		<property name="open_with_parent" type="bool" value="true" />
+		<property name="response_update_event" type="bool" value="true" />
+		<property name="textinfo" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="14" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,0,255" />
+		</property>
+		<property name="cursor_size" type="CGUISize" value="5,20" />
+		<property name="position" type="CGUIWidgetPosition">
+			<property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+			<property name="value" type="CGUIVector2" value="0.495117,0.337396" />
+		</property>
+		<property name="size" type="CGUIWidgetSize">
+			<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+			<property name="value" type="CGUISize" value="205,30" />
+		</property>
+		<property name="client_area" type="CGUIRect" value="0.05,0,0.95,0.9" />
+		<property name="max_text_num" type="uint32" value="16" />
+		<property name="hitable" type="bool" value="true" />
+		<property name="disable" type="bool" value="false" />
+		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
+		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
+	</property>
+	<property name="btn_login" type="CGUIWidgetDefine" value="CGUIWgtButton">
+		<property name="parent" type="CGUIString" value="node_main" />
+		<property name="BTN_NORMAL" type="CGUIImage" value="button_blue_normal" />
+		<property name="BTN_HOVER" type="CGUIImage" value="button_blue_hover" />
+		<property name="BTN_PUSH" type="CGUIImage" value="button_blue_push" />
+		<property name="BTN_DISABLE" type="CGUIImage" value="button_blue_disable" />
+		<property name="position" type="CGUIWidgetPosition">
+			<property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+			<property name="value" type="CGUIVector2" value="0.5,0.558333" />
+		</property>
+		<property name="size" type="CGUIWidgetSize">
+			<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+			<property name="value" type="CGUISize" value="220,45" />
+		</property>
+		<property name="anchor" type="CGUIVector2" value="0.5,0" />
+		<property name="alpha" type="real" value="1" />
+		<property name="movable" type="bool" value="false" />
+		<property name="activable" type="bool" value="false" />
+		<property name="open_with_parent" type="bool" value="true" />
+		<property name="response_update_event" type="bool" value="true" />
+		<property name="text" type="CGUIString" value="login" />
+		<property name="text_offset" type="CGUIVector2" value="0,-5" />
+		<property name="textinfo" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="14" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,0,255" />
+		</property>
+		<property name="textinfo_hover" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="16" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="0.803922,0.67451,0.176471,1" />
+		</property>
+		<property name="textinfo_push" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="16" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="0.803922,0.67451,0.176471,1" />
+		</property>
+		<property name="textinfo_disable" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="16" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="0.803922,0.67451,0.176471,1" />
+		</property>
+		<property name="hitable" type="bool" value="true" />
+		<property name="disable" type="bool" value="false" />
+		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
+		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
+		<property name="OnMouseLeftClick" type="CGUIEvent" value="btn_login_onclick" />
+	</property>
+	<property name="input_password" type="CGUIWidgetDefine" value="CGUIWgtEditBox">
+		<property name="parent" type="CGUIString" value="node_main" />
+		<property name="EDIT_BG" type="CGUIImage" value="edit_bg" />
+		<property name="EDIT_CURSOR" type="CGUIImage" value="color_white" />
+		<property name="position" type="CGUIWidgetPosition">
+			<property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+			<property name="value" type="CGUIVector2" value="0.496523,0.466719" />
+		</property>
+		<property name="size" type="CGUIWidgetSize">
+			<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+			<property name="value" type="CGUISize" value="205,30" />
+		</property>
+		<property name="anchor" type="CGUIVector2" value="0.5,0" />
+		<property name="alpha" type="real" value="1" />
+		<property name="movable" type="bool" value="false" />
+		<property name="activable" type="bool" value="true" />
+		<property name="open_with_parent" type="bool" value="true" />
+		<property name="response_update_event" type="bool" value="true" />
+		<property name="textinfo" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="14" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,0,255" />
+		</property>
+		<property name="cursor_size" type="CGUISize" value="5,20" />
+		<property name="client_area" type="CGUIRect" value="0.05,0,0.95,0.9" />
+		<property name="max_text_num" type="uint32" value="16" />
+		<property name="hitable" type="bool" value="true" />
+		<property name="disable" type="bool" value="false" />
+		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
+		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
+	</property>
+	<property name="static_username" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
+		<property name="parent" type="CGUIString" value="node_main" />
+		<property name="position" type="CGUIWidgetPosition">
+			<property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+			<property name="value" type="CGUIVector2" value="0.49707,0.297291" />
+		</property>
+		<property name="size" type="CGUIWidgetSize">
+			<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+			<property name="value" type="CGUISize" value="250,20" />
+		</property>
+		<property name="anchor" type="CGUIVector2" value="0.5,0" />
+		<property name="alpha" type="real" value="1" />
+		<property name="movable" type="bool" value="false" />
+		<property name="activable" type="bool" value="true" />
+		<property name="open_with_parent" type="bool" value="true" />
+		<property name="response_update_event" type="bool" value="true" />
+		<property name="textinfo" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="14" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,0,255" />
+		</property>
+		<property name="text" type="CGUIString" value="username" />
+		<property name="hitable" type="bool" value="true" />
+		<property name="disable" type="bool" value="false" />
+		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
+		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
+		<property name="multiline" type="bool" value="false" />
+	</property>
+	<property name="static_password" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
+		<property name="parent" type="CGUIString" value="node_main" />
+		<property name="position" type="CGUIWidgetPosition">
+			<property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+			<property name="value" type="CGUIVector2" value="0.49707,0.427708" />
+		</property>
+		<property name="size" type="CGUIWidgetSize">
+			<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+			<property name="value" type="CGUISize" value="83,26" />
+		</property>
+		<property name="anchor" type="CGUIVector2" value="0.5,0" />
+		<property name="alpha" type="real" value="1" />
+		<property name="movable" type="bool" value="false" />
+		<property name="activable" type="bool" value="true" />
+		<property name="open_with_parent" type="bool" value="true" />
+		<property name="response_update_event" type="bool" value="true" />
+		<property name="textinfo" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="14" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,0,255" />
+		</property>
+		<property name="text" type="CGUIString" value="password" />
+		<property name="hitable" type="bool" value="true" />
+		<property name="disable" type="bool" value="false" />
+		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
+		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
+		<property name="multiline" type="bool" value="false" />
+	</property> 
+	<property name="Glues-BlizzardLogo" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
+		<property name="parent" type="CGUIString" value="node_main" />
+		<property name="BGIMAGE" type="CGUIImage" value="Glues-BlizzardLogo" />
+		<property name="position" type="CGUIWidgetPosition">
+			<property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+			<property name="value" type="CGUIVector2" value="0.459843,0.820313" />
+		</property>
+		<property name="size" type="CGUIWidgetSize">
+			<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+			<property name="value" type="CGUISize" value="100,100" />
+		</property>
+		<property name="anchor" type="CGUIVector2" value="0,0" />
+		<property name="alpha" type="real" value="1" />
+		<property name="color" type="CGUIColor" value="255,255,255,255"/>
+		<property name="movable" type="bool" value="false" />
+		<property name="visible" type="bool" value="true" />
+		<property name="activable" type="bool" value="false" />
+		<property name="hitable" type="bool" value="true" />
+		<property name="disable" type="bool" value="false" />
+		<property name="open_with_parent" type="bool" value="true" />
+		<property name="response_update_event" type="bool" value="false" />
+		<property name="textinfo" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="14" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,0,255" />
+		</property>
+		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
+		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
+	</property>
+
+	<property name="Glues-BlizzardLogo_2" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
+		<property name="parent" type="CGUIString" value="node_main" />
+		<property name="BGIMAGE" type="CGUIImage" value="color_white" />
+		<property name="position" type="CGUIWidgetPosition">
+			<property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+			<property name="value" type="CGUIVector2" value="0.659843,0.820313" />
+		</property>
+		<property name="size" type="CGUIWidgetSize">
+			<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+			<property name="value" type="CGUISize" value="100,100" />
+		</property>
+		<property name="anchor" type="CGUIVector2" value="0,0" />
+		<property name="alpha" type="real" value="1" />
+		<property name="color" type="CGUIColor" value="0,0,255,255"/>
+		<property name="movable" type="bool" value="false" />
+		<property name="visible" type="bool" value="true" />
+		<property name="activable" type="bool" value="false" />
+		<property name="hitable" type="bool" value="true" />
+		<property name="disable" type="bool" value="false" />
+		<property name="open_with_parent" type="bool" value="true" />
+		<property name="response_update_event" type="bool" value="false" />
+		<property name="textinfo" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="14" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,0,255" />
+		</property>
+		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
+		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
+	</property>
+	<property name="Glues-WoW-TaiwanWotLKLogo" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
+		<property name="parent" type="CGUIString" value="node_main" />
+		<property name="BGIMAGE" type="CGUIImage" value="Glues-WoW-TaiwanWotLKLogo" />
+		<property name="position" type="CGUIWidgetPosition">
+			<property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+			<property name="value" type="CGUIVector2" value="-0.00292969,-0.00479201" />
+		</property>
+		<property name="size" type="CGUIWidgetSize">
+			<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+			<property name="value" type="CGUISize" value="256,128" />
+		</property>
+		<property name="anchor" type="CGUIVector2" value="0,0" />
+		<property name="alpha" type="real" value="1" />
+		<property name="movable" type="bool" value="false" />
+		<property name="visible" type="bool" value="true" />
+		<property name="activable" type="bool" value="false" />
+		<property name="hitable" type="bool" value="true" />
+		<property name="disable" type="bool" value="false" />
+		<property name="open_with_parent" type="bool" value="true" />
+		<property name="response_update_event" type="bool" value="false" />
+		<property name="textinfo" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="14" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,0,255" />
+		</property>
+		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
+		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
+	</property>
+	<property name="btn_quit" type="CGUIWidgetDefine" value="CGUIWgtButton">
+		<property name="parent" type="CGUIString" value="node_main" />
+		<property name="BTN_NORMAL" type="CGUIImage" value="button_blue_normal" />
+		<property name="BTN_HOVER" type="CGUIImage" value="button_red_hover" />
+		<property name="BTN_PUSH" type="CGUIImage" value="button_red_push" />
+		<property name="BTN_DISABLE" type="CGUIImage" value="button_red_disable" />
+		<property name="position" type="CGUIWidgetPosition">
+			<property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+			<property name="value" type="CGUIVector2" value="0.845703,0.893229" />
+		</property>
+		<property name="size" type="CGUIWidgetSize">
+			<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+			<property name="value" type="CGUISize" value="148,46" />
+		</property>
+		<property name="anchor" type="CGUIVector2" value="0,0" />
+		<property name="alpha" type="real" value="1" />
+		<property name="movable" type="bool" value="false" />
+		<property name="visible" type="bool" value="true" />
+		<property name="activable" type="bool" value="false" />
+		<property name="hitable" type="bool" value="true" />
+		<property name="disable" type="bool" value="false" />
+		<property name="open_with_parent" type="bool" value="true" />
+		<property name="response_update_event" type="bool" value="true" />
+		<property name="textinfo" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="14" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,0,255" />
+		</property>
+		<property name="text" type="CGUIString" value="quit" />
+		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
+		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
+		<property name="text_offset" type="CGUIVector2" value="0,-2" />
+		<property name="textinfo_hover" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="16" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,255,255" />
+		</property>
+		<property name="textinfo_push" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="16" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,255,255" />
+		</property>
+		<property name="textinfo_disable" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="16" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,255,255" />
+		</property>
+	</property>
+	<property name="btn_text" type="CGUIWidgetDefine" value="CGUIWgtButton">
+		<property name="parent" type="CGUIString" value="node_main" />
+		<property name="BTN_NORMAL" type="CGUIImage" value="button_blue_normal" />
+		<property name="BTN_HOVER" type="CGUIImage" value="button_blue_hover" />
+		<property name="BTN_PUSH" type="CGUIImage" value="button_blue_push" />
+		<property name="BTN_DISABLE" type="CGUIImage" value="button_blue_disable" />
+		<property name="position" type="CGUIWidgetPosition">
+			<property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+			<property name="value" type="CGUIVector2" value="0.844727,0.561198" />
+		</property>
+		<property name="size" type="CGUIWidgetSize">
+			<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+			<property name="value" type="CGUISize" value="148,46" />
+		</property>
+		<property name="anchor" type="CGUIVector2" value="0,0" />
+		<property name="alpha" type="real" value="1" />
+		<property name="movable" type="bool" value="false" />
+		<property name="visible" type="bool" value="true" />
+		<property name="activable" type="bool" value="false" />
+		<property name="hitable" type="bool" value="true" />
+		<property name="disable" type="bool" value="false" />
+		<property name="open_with_parent" type="bool" value="true" />
+		<property name="response_update_event" type="bool" value="true" />
+		<property name="textinfo" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="14" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,0,255" />
+		</property>
+		<property name="text" type="CGUIString" value="setting" />
+		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
+		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
+		<property name="text_offset" type="CGUIVector2" value="0,-2" />
+		<property name="textinfo_hover" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="16" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,255,255" />
+		</property>
+		<property name="textinfo_push" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="16" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,255,255" />
+		</property>
+		<property name="textinfo_disable" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="16" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,255,255" />
+		</property>
+	</property>
+	<property name="btn_text2" type="CGUIWidgetDefine" value="CGUIWgtButton">
+		<property name="parent" type="CGUIString" value="node_main" />
+		<property name="BTN_NORMAL" type="CGUIImage" value="button_blue_normal" />
+		<property name="BTN_HOVER" type="CGUIImage" value="button_blue_normal" />
+		<property name="BTN_PUSH" type="CGUIImage" value="button_blue_push" />
+		<property name="BTN_DISABLE" type="CGUIImage" value="button_blue_disable" />
+		<property name="position" type="CGUIWidgetPosition">
+			<property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+			<property name="value" type="CGUIVector2" value="0.84375,0.617188" />
+		</property>
+		<property name="size" type="CGUIWidgetSize">
+			<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+			<property name="value" type="CGUISize" value="148,46" />
+		</property>
+		<property name="anchor" type="CGUIVector2" value="0,0" />
+		<property name="alpha" type="real" value="1" />
+		<property name="movable" type="bool" value="false" />
+		<property name="visible" type="bool" value="true" />
+		<property name="activable" type="bool" value="false" />
+		<property name="hitable" type="bool" value="true" />
+		<property name="disable" type="bool" value="false" />
+		<property name="open_with_parent" type="bool" value="true" />
+		<property name="response_update_event" type="bool" value="true" />
+		<property name="textinfo" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="14" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,0,255" />
+		</property>
+		<property name="text" type="CGUIString" value="animation" />
+		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
+		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
+		<property name="text_offset" type="CGUIVector2" value="0,-2" />
+		<property name="textinfo_hover" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="16" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,0,255" />
+		</property>
+		<property name="textinfo_push" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="16" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,255,255" />
+		</property>
+		<property name="textinfo_disable" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="16" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,255,255" />
+		</property>
+	</property>
+	<property name="btn_text3" type="CGUIWidgetDefine" value="CGUIWgtButton">
+		<property name="parent" type="CGUIString" value="node_main" />
+		<property name="BTN_NORMAL" type="CGUIImage" value="button_blue_normal" />
+		<property name="BTN_HOVER" type="CGUIImage" value="button_blue_hover" />
+		<property name="BTN_PUSH" type="CGUIImage" value="button_blue_push" />
+		<property name="BTN_DISABLE" type="CGUIImage" value="button_blue_disable" />
+		<property name="position" type="CGUIWidgetPosition">
+			<property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+			<property name="value" type="CGUIVector2" value="0.84375,0.670573" />
+		</property>
+		<property name="size" type="CGUIWidgetSize">
+			<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+			<property name="value" type="CGUISize" value="148,46" />
+		</property>
+		<property name="anchor" type="CGUIVector2" value="0,0" />
+		<property name="alpha" type="real" value="1" />
+		<property name="movable" type="bool" value="false" />
+		<property name="visible" type="bool" value="true" />
+		<property name="activable" type="bool" value="false" />
+		<property name="hitable" type="bool" value="true" />
+		<property name="disable" type="bool" value="false" />
+		<property name="open_with_parent" type="bool" value="true" />
+		<property name="response_update_event" type="bool" value="true" />
+		<property name="textinfo" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="14" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,0,255" />
+		</property>
+		<property name="text" type="CGUIString" value="produce" />
+		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
+		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
+		<property name="text_offset" type="CGUIVector2" value="0,-2" />
+		<property name="textinfo_hover" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="16" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,255,255" />
+		</property>
+		<property name="textinfo_push" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="16" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,255,255" />
+		</property>
+		<property name="textinfo_disable" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="16" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,255,255" />
+		</property>
+	</property>
+	<property name="btn_text4" type="CGUIWidgetDefine" value="CGUIWgtButton">
+		<property name="parent" type="CGUIString" value="node_main" />
+		<property name="BTN_NORMAL" type="CGUIImage" value="button_blue_normal" />
+		<property name="BTN_HOVER" type="CGUIImage" value="button_blue_hover" />
+		<property name="BTN_PUSH" type="CGUIImage" value="button_blue_push" />
+		<property name="BTN_DISABLE" type="CGUIImage" value="button_blue_disable" />
+		<property name="position" type="CGUIWidgetPosition">
+			<property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+			<property name="value" type="CGUIVector2" value="0.84375,0.723958" />
+		</property>
+		<property name="size" type="CGUIWidgetSize">
+			<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+			<property name="value" type="CGUISize" value="148,46" />
+		</property>
+		<property name="anchor" type="CGUIVector2" value="0,0" />
+		<property name="alpha" type="real" value="1" />
+		<property name="movable" type="bool" value="false" />
+		<property name="visible" type="bool" value="true" />
+		<property name="activable" type="bool" value="false" />
+		<property name="hitable" type="bool" value="true" />
+		<property name="disable" type="bool" value="false" />
+		<property name="open_with_parent" type="bool" value="true" />
+		<property name="response_update_event" type="bool" value="false" />
+		<property name="textinfo" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="14" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,0,255" />
+		</property>
+		<property name="text" type="CGUIString" value="service" />
+		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
+		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
+		<property name="text_offset" type="CGUIVector2" value="0,-2" />
+		<property name="textinfo_hover" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="16" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,255,255" />
+		</property>
+		<property name="textinfo_push" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="16" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,255,255" />
+		</property>
+		<property name="textinfo_disable" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="16" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,255,255" />
+		</property>
+	</property>
+	<property name="Copyright" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
+		<property name="parent" type="CGUIString" value="node_main" />
+		<property name="position" type="CGUIWidgetPosition">
+			<property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+			<property name="value" type="CGUIVector2" value="0.266484,0.878906" />
+		</property>
+		<property name="size" type="CGUIWidgetSize">
+			<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+			<property name="value" type="CGUISize" value="500,100" />
+		</property>
+		<property name="anchor" type="CGUIVector2" value="0,0" />
+		<property name="alpha" type="real" value="1" />
+		<property name="movable" type="bool" value="false" />
+		<property name="visible" type="bool" value="true" />
+		<property name="activable" type="bool" value="false" />
+		<property name="hitable" type="bool" value="true" />
+		<property name="disable" type="bool" value="false" />
+		<property name="open_with_parent" type="bool" value="true" />
+		<property name="response_update_event" type="bool" value="false" />
+		<property name="textinfo" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="14" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,0,255" />
+		</property>
+		<property name="text" type="CGUIString" value="all rights reserved" />
+		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
+		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
+		<property name="multiline" type="bool" value="false" />
+	</property>
+	<property name="btn_text5" type="CGUIWidgetDefine" value="CGUIWgtButton">
+		<property name="parent" type="CGUIString" value="node_main" />
+		<property name="BTN_NORMAL" type="CGUIImage" value="button_blue_normal" />
+		<property name="BTN_HOVER" type="CGUIImage" value="button_blue_hover" />
+		<property name="BTN_PUSH" type="CGUIImage" value="button_blue_push" />
+		<property name="BTN_DISABLE" type="CGUIImage" value="button_blue_disable" />
+		<property name="position" type="CGUIWidgetPosition">
+			<property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+			<property name="value" type="CGUIVector2" value="0.0184371,0.638021" />
+		</property>
+		<property name="size" type="CGUIWidgetSize">
+			<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+			<property name="value" type="CGUISize" value="148,46" />
+		</property>
+		<property name="anchor" type="CGUIVector2" value="0,0" />
+		<property name="alpha" type="real" value="1" />
+		<property name="movable" type="bool" value="false" />
+		<property name="visible" type="bool" value="true" />
+		<property name="activable" type="bool" value="false" />
+		<property name="hitable" type="bool" value="true" />
+		<property name="disable" type="bool" value="false" />
+		<property name="open_with_parent" type="bool" value="true" />
+		<property name="response_update_event" type="bool" value="true" />
+		<property name="textinfo" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="14" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,0,255" />
+		</property>
+		<property name="text" type="CGUIString" value="account" />
+		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
+		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
+		<property name="text_offset" type="CGUIVector2" value="0,-2" />
+		<property name="textinfo_hover" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="16" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,255,255" />
+		</property>
+		<property name="textinfo_push" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="16" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,255,255" />
+		</property>
+		<property name="textinfo_disable" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="16" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,255,255" />
+		</property>
+	</property>
+	<property name="btn_text6" type="CGUIWidgetDefine" value="CGUIWgtButton">
+		<property name="parent" type="CGUIString" value="node_main" />
+		<property name="BTN_NORMAL" type="CGUIImage" value="button_blue_normal" />
+		<property name="BTN_HOVER" type="CGUIImage" value="button_blue_hover" />
+		<property name="BTN_PUSH" type="CGUIImage" value="button_blue_push" />
+		<property name="BTN_DISABLE" type="CGUIImage" value="button_blue_disable" />
+		<property name="position" type="CGUIWidgetPosition">
+			<property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+			<property name="value" type="CGUIVector2" value="0.0174606,0.703125" />
+		</property>
+		<property name="size" type="CGUIWidgetSize">
+			<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+			<property name="value" type="CGUISize" value="148,46" />
+		</property>
+		<property name="anchor" type="CGUIVector2" value="0,0" />
+		<property name="alpha" type="real" value="1" />
+		<property name="movable" type="bool" value="false" />
+		<property name="visible" type="bool" value="true" />
+		<property name="activable" type="bool" value="false" />
+		<property name="hitable" type="bool" value="true" />
+		<property name="disable" type="bool" value="false" />
+		<property name="open_with_parent" type="bool" value="true" />
+		<property name="response_update_event" type="bool" value="true" />
+		<property name="textinfo" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="14" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,0,255" />
+		</property>
+		<property name="text" type="CGUIString" value="website" />
+		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
+		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
+		<property name="text_offset" type="CGUIVector2" value="0,-2" />
+		<property name="textinfo_hover" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="16" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,255,255" />
+		</property>
+		<property name="textinfo_push" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="16" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,255,255" />
+		</property>
+		<property name="textinfo_disable" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="16" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,255,255" />
+		</property>
+	</property>
+	<property name="ver_text" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
+		<property name="parent" type="CGUIString" value="node_main" />
+		<property name="position" type="CGUIWidgetPosition">
+			<property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+			<property name="value" type="CGUIVector2" value="-0.0801957,0.885416" />
+		</property>
+		<property name="size" type="CGUIWidgetSize">
+			<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+			<property name="value" type="CGUISize" value="400,100" />
+		</property>
+		<property name="anchor" type="CGUIVector2" value="0,0" />
+		<property name="alpha" type="real" value="1" />
+		<property name="movable" type="bool" value="false" />
+		<property name="visible" type="bool" value="true" />
+		<property name="activable" type="bool" value="false" />
+		<property name="hitable" type="bool" value="true" />
+		<property name="disable" type="bool" value="false" />
+		<property name="open_with_parent" type="bool" value="true" />
+		<property name="response_update_event" type="bool" value="true" />
+		<property name="textinfo" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="14" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,0,255" />
+		</property>
+		<property name="text" type="CGUIString" value="version 3.1.3(11046)" />
+		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
+		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
+		<property name="multiline" type="bool" value="false" />
+	</property>
+	<property name="ver2_text" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
+		<property name="parent" type="CGUIString" value="node_main" />
+		<property name="position" type="CGUIWidgetPosition">
+			<property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+			<property name="value" type="CGUIVector2" value="-0.144649,0.941406" />
+		</property>
+		<property name="size" type="CGUIWidgetSize">
+			<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+			<property name="value" type="CGUISize" value="400,50" />
+		</property>
+		<property name="anchor" type="CGUIVector2" value="0,0" />
+		<property name="alpha" type="real" value="1" />
+		<property name="movable" type="bool" value="false" />
+		<property name="visible" type="bool" value="true" />
+		<property name="activable" type="bool" value="false" />
+		<property name="hitable" type="bool" value="true" />
+		<property name="disable" type="bool" value="false" />
+		<property name="open_with_parent" type="bool" value="true" />
+		<property name="response_update_event" type="bool" value="true" />
+		<property name="textinfo" type="CGUIStringInfo">
+			<property name="size" type="uint16" value="14" />
+			<property name="index" type="int16" value="0" />
+			<property name="color" type="CGUIColor" value="255,255,0,255" />
+		</property>
+		<property name="text" type="CGUIString" value="Jul 23 2009" />
+		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
+		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
+		<property name="multiline" type="bool" value="false" />
+	</property>
 </guiex>

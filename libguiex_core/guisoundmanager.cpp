@@ -75,19 +75,29 @@ namespace guiex
 		return pSoundData;
 	}
 	//------------------------------------------------------------------------------
-	void CGUISoundManager::DestroyResourceImp( void* pRes )
+	void CGUISoundManager::DestroyRegisterResourceImp( CGUIResource* pRes )
 	{
 		IGUIInterfaceSound* pSound = CGUIInterfaceManager::Instance()->GetInterfaceSound();
 		if( !pSound )
 		{
 			throw CGUIException("[CGUISoundManager::DestroyResourceImp]: failed to get sound interface");
 		}
-		pSound->DestroySoundData( ( TResourceType* )( pRes ) );
+		pSound->DestroySoundData( (CGUISoundData*)pRes );
+	}
+	//------------------------------------------------------------------------------
+	void CGUISoundManager::DestroyAllocateResourceImp( CGUIResource* pRes )
+	{
+		IGUIInterfaceSound* pSound = CGUIInterfaceManager::Instance()->GetInterfaceSound();
+		if( !pSound )
+		{
+			throw CGUIException("[CGUISoundManager::DestroyResourceImp]: failed to get sound interface");
+		}
+		pSound->DestroySoundData( (CGUISoundData*)pRes );
 	}
 	//------------------------------------------------------------------------------
 	CGUISoundData* CGUISoundManager::AllocateResource( const CGUIString& rResName ) const
 	{
-		CGUISoundData* pSound = CGUIResourceManager<CGUISoundData>::GetResource( rResName );
+		CGUISoundData* pSound = CGUIResourceManager<CGUISoundData, CGUISoundData>::GetRegisterResource( rResName );
 		if( !pSound )
 		{
 			throw CGUIException( 

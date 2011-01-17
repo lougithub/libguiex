@@ -74,8 +74,6 @@ namespace guiex
 		virtual int32 ProcessProperty( const CGUIProperty& rProperty );
 		virtual int32 GenerateProperty( CGUIProperty& rProperty );
 
-		virtual CGUIAs* Clone( ) const;
-
 		const CGUIString& GetType() const;
 
 		void Retire( bool bRetired );
@@ -206,16 +204,6 @@ namespace guiex
 		const T& GetCurrentValue() const
 		{
 			return m_aCurValue;
-		}
-
-		virtual CGUIAs* Clone( ) const
-		{
-			CGUIInterpolationBase<T>* pCloneAs = static_cast< CGUIInterpolationBase<T>* >(CGUIAs::Clone());
-			pCloneAs->SetBeginValue( m_aBeginValue );
-			pCloneAs->SetEndValue( m_aEndValue );
-			pCloneAs->SetCurrentValue( m_aCurValue );
-
-			return pCloneAs;
 		}
 
 		virtual int32 ProcessProperty( const CGUIProperty& rProperty )
@@ -455,7 +443,6 @@ namespace guiex
 	public:
 		virtual int32 ProcessProperty( const CGUIProperty& rProperty );
 		virtual int32 GenerateProperty( CGUIProperty& rProperty );
-		virtual CGUIAs* Clone( ) const;
 
 		virtual real Update( real fDeltaTime );
 

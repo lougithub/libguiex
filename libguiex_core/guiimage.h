@@ -74,6 +74,7 @@ namespace guiex
 		const CGUISize& GetSize() const;
 
 		const CGUIString& GetFilePath() const;
+		CGUIString GetFullFilePath() const;
 		const CGUIRect& GetUVRect() const;
 		EImageOrientation GetOrientation() const;
 

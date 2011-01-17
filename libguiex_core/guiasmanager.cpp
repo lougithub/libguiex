@@ -19,6 +19,29 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
+	CGUIAsData::CGUIAsData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIProperty& rProperty )
+		:CGUIResource( rName, rSceneName, "ASDATA" )
+		,m_aProperty( rProperty )
+	{
+	}
+	//------------------------------------------------------------------------------
+	const CGUIProperty& CGUIAsData::GetAsData() const
+	{
+		return m_aProperty;
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUIAsData::DoLoad() const
+	{
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsData::DoUnload()
+	{
+	}
+	//------------------------------------------------------------------------------
+
+
+	//------------------------------------------------------------------------------
 	CGUIAsManager * CGUIAsManager::m_pSingleton = NULL; 
 	//------------------------------------------------------------------------------
 	CGUIAsManager::CGUIAsManager()
@@ -38,18 +61,14 @@ namespace guiex
 		return m_pSingleton; 
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIAsManager::RegisterAs( 
-		const CGUIString& rSceneName,
-		const CGUIProperty& rProperty )
+	int32 CGUIAsManager::RegisterAs( const CGUIString& rSceneName, const CGUIProperty& rProperty )
 	{
-		CGUIAs* pAs = DoCreateAs( rSceneName, rProperty); 
-		RegisterResource( pAs );
+		CGUIAsData* pAsData = new CGUIAsData( rProperty.GetName(), rSceneName, rProperty );
+		RegisterResource( pAsData );
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	CGUIAs* CGUIAsManager::DoCreateAs( 
-		const CGUIString& rSceneName, 
-		const CGUIProperty& rProperty )
+	CGUIAs* CGUIAsManager::DoCreateAs( const CGUIString& rSceneName, const CGUIProperty& rProperty )
 	{
 		CGUIAs* pAs = CGUIAsFactory::Instance()->GenerateAs( rProperty.GetValue(), rProperty.GetName(), rSceneName);
 		if( 0 != pAs->ProcessProperty( rProperty ))
@@ -64,10 +83,7 @@ namespace guiex
 		return pAs;
 	}
 	//------------------------------------------------------------------------------
-	CGUIAs* CGUIAsManager::DoCreateAs( 
-		const CGUIString& rName,
-		const CGUIString& rSceneName,
-		const CGUIString& rAsType )
+	CGUIAs* CGUIAsManager::DoCreateAs( const CGUIString& rName,const CGUIString& rSceneName,const CGUIString& rAsType )
 	{
 		guiex::CGUIAs* pAs = guiex::CGUIAsFactory::Instance()->GenerateAs( rAsType, rName, rSceneName );
 		return pAs;
@@ -75,20 +91,20 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIAs* CGUIAsManager::AllocateResource( const CGUIString& rResName )
 	{
-		CGUIAs* pAs = CGUIResourceManager<CGUIAs>::GetResource( rResName );
-		if( !pAs )
+		CGUIAsData* pAsData = CGUIResourceManager<CGUIAsData, CGUIAs>::GetRegisterResource( rResName );
+		if( !pAsData )
 		{
 			throw CGUIException( 
-				"[CGUIAsManager::AllocateResource]: failed to get as by name <%s>",
+				"[CGUIAsManager::AllocateResource]: failed to get as data by name <%s>",
 				rResName.c_str());
 			return NULL;
 		}
-		CGUIAs* pCloneAs = pAs->Clone();
+		CGUIAs* pAs = DoCreateAs( pAsData->GetSceneName(), pAsData->GetAsData() );
 
-		//AddToAllocatePool( pCloneAs );
-		//it has been added to pool by function AllocateResourceByType
+		pAs->RefRetain();
+		AddToAllocatePool( pAs );
 
-		return pCloneAs;
+		return pAs;
 	}
 	//------------------------------------------------------------------------------
 	CGUIAs* CGUIAsManager::AllocateResourceByType( const CGUIString& rAsType )
@@ -111,9 +127,14 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIAsManager::DestroyResourceImp( void* pRes )
+	void CGUIAsManager::DestroyRegisterResourceImp( CGUIResource* pRes )
 	{
-		CGUIAsFactory::Instance()->DestroyAs( ( TResourceType* )( pRes ) );
+		delete pRes;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsManager::DestroyAllocateResourceImp( CGUIResource* pRes )
+	{
+		CGUIAsFactory::Instance()->DestroyAs( (CGUIAs*)pRes );
 	}
 	//------------------------------------------------------------------------------
 

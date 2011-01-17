@@ -470,5 +470,17 @@ namespace guiex
 		return CGUIDegree ( a / b.valueDegrees() );
 	}
 
+	template<class _Ty> inline
+		const _Ty& GUIMax(const _Ty& _Left, const _Ty& _Right )
+	{
+		return (( _Left < _Right) ? _Right : _Left);
+	}
+
+	template<class _Ty> inline
+		const _Ty& GUIMin(const _Ty& _Left, const _Ty& _Right )
+	{
+		return (( _Right < _Left ) ? _Right : _Left);
+	}
+
 }	//namespace guiex
 #endif

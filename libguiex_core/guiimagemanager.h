@@ -37,7 +37,7 @@ namespace guiex
 	* @brief image manager
 	* 
 	*/
-	class GUIEXPORT CGUIImageManager : public CGUIResourceManager <CGUIImage>
+	class GUIEXPORT CGUIImageManager : public CGUIResourceManager <CGUIImage, CGUIImage>
 	{
 	public:
 		CGUIImageManager();
@@ -94,7 +94,8 @@ namespace guiex
 		int32 DeallocateResource( CGUIImage* pImage );
 
 	protected:
-		virtual	void DestroyResourceImp( void* pRes ); 
+		virtual	void DestroyRegisterResourceImp( CGUIResource* pRes ); 
+		virtual	void DestroyAllocateResourceImp( CGUIResource* pRes ); 
 
 		CGUIImage* DoCreateImage( 
 			const CGUIString& rSceneName,

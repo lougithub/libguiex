@@ -1,0 +1,37 @@
+<guiex>
+    <property name="particle2d_1" type="CGUIWidgetDefine" value="CGUIWgtStaticParticle2DSystem">
+        <property name="PARTICLEIMAGE" type="CGUIImage" value="panel_bg_grade_green" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="246,218" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="100,100" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="max_size" type="CGUISize" value="0,0" />
+        <property name="min_size" type="CGUISize" value="0,0" />
+        <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
+        <property name="scale" type="CGUISize" value="1,1" />
+        <property name="alpha" type="real" value="1" />
+        <property name="rotation" type="CGUIVector3" value="0,0,0" />
+        <property name="movable" type="bool" value="false" />
+        <property name="color" type="CGUIColor" value="255,255,255,255" />
+        <property name="visible" type="bool" value="true" />
+        <property name="activable" type="bool" value="false" />
+        <property name="hitable" type="bool" value="true" />
+        <property name="disable" type="bool" value="false" />
+        <property name="auto_play_as" type="bool" value="false" />
+        <property name="clip_children" type="bool" value="false" />
+        <property name="open_with_parent" type="bool" value="true" />
+        <property name="response_update_event" type="bool" value="false" />
+        <property name="response_parentsizechange_event" type="bool" value="false" />
+        <property name="textinfo" type="CGUIStringInfo">
+            <property name="size" type="uint16" value="16" />
+            <property name="index" type="int16" value="0" />
+            <property name="color" type="CGUIColor" value="255,255,255,255" />
+        </property>
+        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
+        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
+    </property>
+</guiex>

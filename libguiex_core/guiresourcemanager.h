@@ -22,7 +22,10 @@
 //============================================================================//
 // declare
 //============================================================================//
-
+namespace guiex
+{
+	class CGUIResource;
+}
 
 //============================================================================//
 // class
@@ -40,53 +43,58 @@ namespace guiex
 		virtual void ReleaseResourceByScene( const CGUIString& rSceneName ) = 0;
 
 	protected:
-		virtual	void DestroyResourceImp( void* pRes ) = 0; 
+		virtual	void DestroyRegisterResourceImp( CGUIResource* pRes ) = 0; 
+		virtual	void DestroyAllocateResourceImp( CGUIResource* pRes ) = 0; 
+		virtual void ReleaseAllRegisterResources( ) = 0;
+
 	};
 
 	/**
 	* @class CGUIResourceManager
 	*/
-	template< class TResType >
+	template< class TRegisterResType, class TAllocateResType >
 	class GUIEXPORT CGUIResourceManager : public CGUIResourceManagerBase
 	{
 	public:
-		typedef TResType TResourceType;
+		typedef TRegisterResType TRegisterResourceType;
+		typedef TAllocateResType TAllocateResourceType;
 
 		CGUIResourceManager();
 		virtual ~CGUIResourceManager();
 
 	public:
-		int32 RegisterResource( TResType* pRes );
+		int32 RegisterResource( TRegisterResType* pRes );
 
 		virtual void UnloadAllResources( );
 		virtual void ReleaseAllResources( );
 		virtual void ReleaseResourceByScene( const CGUIString& rSceneName );
 
-		const std::map< CGUIString, TResType* >& GetRegisterResourceMap() const;
+		const std::map< CGUIString, TRegisterResType* >& GetRegisterResourceMap() const;
 
 	protected:
-		TResType* GetResource( const CGUIString& rResName ) const;
+		TRegisterResType* GetRegisterResource( const CGUIString& rResName ) const;
 		void LoadAllResources( );
 
 		//allocate resource
-		void AddToAllocatePool( TResType* pRes );
-		int32 ReleaseFromAllocatePool( TResType* pRes );
+		void AddToAllocatePool( TAllocateResType* pRes );
+		int32 ReleaseFromAllocatePool( TAllocateResType* pRes );
 		void ReleaseAllocateResources( );
 
 		//register resource
 		void ReleaseRegisterResource( const CGUIString& rResName );
-		void ReleaseAllRegisterResources( );
+		virtual void ReleaseAllRegisterResources( );
 
-		void CheckResourceReference( TResType* pRes );
+		void CheckResourceReference( CGUIResource* pRes );
 
-		void DestroyResource( TResType* pRes );
+		void DestroyRegisterResource( TRegisterResType* pRes );
+		void DestroyAllocateResource( TAllocateResType* pRes );
 
-	protected:
-		typedef std::map< CGUIString, TResType* > TMapResource;
-		TMapResource m_mapResource;
+	private:
+		typedef std::map< CGUIString, TRegisterResType* > TMapResource;
+		TMapResource m_mapRegisterResource;
 
-		typedef std::set<TResType*> TSetResource;
-		TSetResource m_setAllocatePool;
+		typedef std::set<TAllocateResType*> TSetResource;
+		TSetResource m_setAllocateResource;
 	};
 }
 
@@ -99,44 +107,44 @@ namespace guiex
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	template< class TResType >
-	inline CGUIResourceManager<TResType>::CGUIResourceManager()
+	template< class TRegisterResType, class TAllocateResType >
+	inline CGUIResourceManager<TRegisterResType, TAllocateResType>::CGUIResourceManager()
 	{
 	}
 	//------------------------------------------------------------------------------
-	template< class TResType >
-	inline CGUIResourceManager<TResType>::~CGUIResourceManager()
+	template< class TRegisterResType, class TAllocateResType >
+	inline CGUIResourceManager<TRegisterResType, TAllocateResType>::~CGUIResourceManager()
 	{
 		ReleaseAllResources();
 	}
 	//------------------------------------------------------------------------------
-	template< class TResType >
-	const std::map< CGUIString, TResType* >& CGUIResourceManager<TResType>::GetRegisterResourceMap() const
+	template< class TRegisterResType, class TAllocateResType >
+	const std::map< CGUIString, TRegisterResType* >& CGUIResourceManager<TRegisterResType, TAllocateResType>::GetRegisterResourceMap() const
 	{
-		return m_mapResource;
+		return m_mapRegisterResource;
 	}
 	//------------------------------------------------------------------------------
-	template< class TResType >
-	inline int32 CGUIResourceManager<TResType>::RegisterResource( TResType* pRes )
+	template< class TRegisterResType, class TAllocateResType >
+	inline int32 CGUIResourceManager<TRegisterResType, TAllocateResType>::RegisterResource( TRegisterResType* pRes )
 	{
 		GUI_ASSERT( pRes, "invalid parameter" );
 
-		if( m_mapResource.find( pRes->GetName()) != m_mapResource.end())
+		if( m_mapRegisterResource.find( pRes->GetName()) != m_mapRegisterResource.end())
 		{
 			throw CGUIException( "the resource <%s> has existed", pRes->GetName().c_str());
 			return -1;
 		}
 
 		pRes->RefRetain();
-		m_mapResource.insert( std::make_pair( pRes->GetName(), pRes));
+		m_mapRegisterResource.insert( std::make_pair( pRes->GetName(), pRes));
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	template< class TResType >
-	inline TResType* CGUIResourceManager<TResType>::GetResource( const CGUIString& rResName ) const
+	template< class TRegisterResType, class TAllocateResType >
+	inline TRegisterResType* CGUIResourceManager<TRegisterResType, TAllocateResType>::GetRegisterResource( const CGUIString& rResName ) const
 	{
-		typename TMapResource::const_iterator itor = m_mapResource.find( rResName );
-		if( itor != m_mapResource.end())
+		typename TMapResource::const_iterator itor = m_mapRegisterResource.find( rResName );
+		if( itor != m_mapRegisterResource.end())
 		{
 			return itor->second;
 		}
@@ -146,20 +154,20 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	template< class TResType >
-	inline void CGUIResourceManager<TResType>::ReleaseAllResources( )
+	template< class TRegisterResType, class TAllocateResType >
+	inline void CGUIResourceManager<TRegisterResType, TAllocateResType>::ReleaseAllResources( )
 	{
 		ReleaseAllRegisterResources();
 		
 		ReleaseAllocateResources();
 	}
 	//------------------------------------------------------------------------------
-	template< class TResType >
-	inline void CGUIResourceManager<TResType>::ReleaseResourceByScene( const CGUIString& rSceneName )
+	template< class TRegisterResType, class TAllocateResType >
+	inline void CGUIResourceManager<TRegisterResType, TAllocateResType>::ReleaseResourceByScene( const CGUIString& rSceneName )
 	{
 		std::vector< CGUIString > vecReleaseRes;
-		for( typename TMapResource::iterator itor = m_mapResource.begin();
-			itor != m_mapResource.end();
+		for( typename TMapResource::iterator itor = m_mapRegisterResource.begin();
+			itor != m_mapRegisterResource.end();
 			++itor )
 		{
 			if( itor->second->GetSceneName() == rSceneName )
@@ -176,83 +184,83 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	template< class TResType >
-	inline void CGUIResourceManager<TResType>::ReleaseAllRegisterResources( )
+	template< class TRegisterResType, class TAllocateResType >
+	inline void CGUIResourceManager<TRegisterResType, TAllocateResType>::ReleaseAllRegisterResources( )
 	{
-		for( typename TMapResource::iterator itor = m_mapResource.begin();
-			itor != m_mapResource.end();
+		for( typename TMapResource::iterator itor = m_mapRegisterResource.begin();
+			itor != m_mapRegisterResource.end();
 			++itor )
 		{
-			TResType* pRes = itor->second;
+			TRegisterResType* pRes = itor->second;
 			pRes->RefRelease();
 
 			CheckResourceReference( pRes );
-			DestroyResource( pRes );
+			DestroyRegisterResource( pRes );
 		}
-		m_mapResource.clear();
+		m_mapRegisterResource.clear();
 	}
 	//------------------------------------------------------------------------------
-	template< class TResType >
-	inline void CGUIResourceManager<TResType>::ReleaseAllocateResources( )
+	template< class TRegisterResType, class TAllocateResType >
+	inline void CGUIResourceManager<TRegisterResType, TAllocateResType>::ReleaseAllocateResources( )
 	{
-		for( typename TSetResource::iterator itor = m_setAllocatePool.begin();
-			itor != m_setAllocatePool.end();
+		for( typename TSetResource::iterator itor = m_setAllocateResource.begin();
+			itor != m_setAllocateResource.end();
 			++itor )
 		{
-			TResType* pRes = *itor;
+			TAllocateResType* pRes = *itor;
 			CheckResourceReference( pRes );
-			DestroyResource( pRes );
+			DestroyAllocateResource( pRes );
 		}
-		m_setAllocatePool.clear();
+		m_setAllocateResource.clear();
 	}
 	//------------------------------------------------------------------------------
-	template< class TResType >
-	inline void CGUIResourceManager<TResType>::UnloadAllResources( )
+	template< class TRegisterResType, class TAllocateResType >
+	inline void CGUIResourceManager<TRegisterResType, TAllocateResType>::UnloadAllResources( )
 	{
-		for( typename TMapResource::iterator itor = m_mapResource.begin();
-			itor != m_mapResource.end();
+		for( typename TMapResource::iterator itor = m_mapRegisterResource.begin();
+			itor != m_mapRegisterResource.end();
 			++itor )
 		{
 			itor->second->Unload();
 		}
 
-		for( typename TSetResource::iterator itor = m_setAllocatePool.begin();
-			itor != m_setAllocatePool.end();
+		for( typename TSetResource::iterator itor = m_setAllocateResource.begin();
+			itor != m_setAllocateResource.end();
 			++itor )
 		{
 			(*itor)->Unload();
 		}
 	}
 	//------------------------------------------------------------------------------
-	template< class TResType >
-	inline void CGUIResourceManager<TResType>::LoadAllResources( )
+	template< class TRegisterResType, class TAllocateResType >
+	inline void CGUIResourceManager<TRegisterResType, TAllocateResType>::LoadAllResources( )
 	{
-		for( typename TMapResource::iterator itor = m_mapResource.begin();
-			itor != m_mapResource.end();
+		for( typename TMapResource::iterator itor = m_mapRegisterResource.begin();
+			itor != m_mapRegisterResource.end();
 			++itor )
 		{
 			itor->second->Load();
 		}
 
-		for( typename TSetResource::iterator itor = m_setAllocatePool.begin();
-			itor != m_setAllocatePool.end();
+		for( typename TSetResource::iterator itor = m_setAllocateResource.begin();
+			itor != m_setAllocateResource.end();
 			++itor )
 		{
 			(*itor)->Load();
 		}
 	}
 	//------------------------------------------------------------------------------
-	template< class TResType >
-	inline void CGUIResourceManager<TResType>::ReleaseRegisterResource( const CGUIString& rResName )
+	template< class TRegisterResType, class TAllocateResType >
+	inline void CGUIResourceManager<TRegisterResType, TAllocateResType>::ReleaseRegisterResource( const CGUIString& rResName )
 	{
-		typename TMapResource::iterator itor = m_mapResource.find( rResName );
-		if( itor != m_mapResource.end())
+		typename TMapResource::iterator itor = m_mapRegisterResource.find( rResName );
+		if( itor != m_mapRegisterResource.end())
 		{
-			TResType* pRes = itor->second;
+			TRegisterResType* pRes = itor->second;
 			pRes->RefRelease();
 			CheckResourceReference( pRes );
-			DestroyResource( pRes );
-			m_mapResource.erase( itor );
+			DestroyRegisterResource( pRes );
+			m_mapRegisterResource.erase( itor );
 		}
 		else
 		{
@@ -260,11 +268,11 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	template< class TResType >
-	inline void CGUIResourceManager<TResType>::AddToAllocatePool( TResType* pRes )
+	template< class TRegisterResType, class TAllocateResType >
+	inline void CGUIResourceManager<TRegisterResType, TAllocateResType>::AddToAllocatePool( TAllocateResType* pRes )
 	{
-		typename TSetResource::const_iterator itorFind = m_setAllocatePool.find( pRes );
-		if( itorFind != m_setAllocatePool.end() )
+		typename TSetResource::const_iterator itorFind = m_setAllocateResource.find( pRes );
+		if( itorFind != m_setAllocateResource.end() )
 		{
 			//not found
 			throw CGUIException("[CGUIResourceManager::AddToAllocatePool]: failed to add resource <%s:%s> to allocate pool", 
@@ -272,34 +280,41 @@ namespace guiex
 				pRes->GetResourceType().c_str());
 			return;
 		}
-		m_setAllocatePool.insert( pRes );
+		m_setAllocateResource.insert( pRes );
 	}
 	//------------------------------------------------------------------------------
-	template< class TResType >
-	inline int32 CGUIResourceManager<TResType>::ReleaseFromAllocatePool( TResType* pRes )
+	template< class TRegisterResType, class TAllocateResType >
+	inline int32 CGUIResourceManager<TRegisterResType, TAllocateResType>::ReleaseFromAllocatePool( TAllocateResType* pRes )
 	{
-		typename TSetResource::const_iterator itorFind = m_setAllocatePool.find( pRes );
-		if( itorFind == m_setAllocatePool.end() )
+		typename TSetResource::const_iterator itorFind = m_setAllocateResource.find( pRes );
+		if( itorFind == m_setAllocateResource.end() )
 		{
 			//not found
 			throw CGUIException("[CGUIResourceManager::ReleaseFromAllocatePool]: failed to remove resource <%s:%s> from allocate pool" );
 			return -1;
 		}
 		CheckResourceReference( *itorFind );
-		DestroyResource( *itorFind );
-		m_setAllocatePool.erase( itorFind );
+		DestroyAllocateResource( *itorFind );
+		m_setAllocateResource.erase( itorFind );
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	template< class TResType >
-	inline void CGUIResourceManager<TResType>::DestroyResource( TResType* pRes )
+	template< class TRegisterResType, class TAllocateResType >
+	inline void CGUIResourceManager<TRegisterResType, TAllocateResType>::DestroyRegisterResource( TRegisterResType* pRes )
 	{
 		pRes->Unload();
-		DestroyResourceImp( pRes );
+		DestroyRegisterResourceImp( pRes );
 	}
 	//------------------------------------------------------------------------------
-	template< class TResType >
-	inline void CGUIResourceManager<TResType>::CheckResourceReference( TResType* pRes )
+	template< class TRegisterResType, class TAllocateResType >
+	inline void CGUIResourceManager<TRegisterResType, TAllocateResType>::DestroyAllocateResource( TAllocateResType* pRes )
+	{
+		pRes->Unload();
+		DestroyAllocateResourceImp( pRes );
+	}
+	//------------------------------------------------------------------------------
+	template< class TRegisterResType, class TAllocateResType >
+	inline void CGUIResourceManager<TRegisterResType, TAllocateResType>::CheckResourceReference( CGUIResource* pRes )
 	{
 		if( pRes->GetRefCount() != 0 )
 		{

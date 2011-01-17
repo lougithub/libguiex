@@ -428,7 +428,8 @@ namespace guiex
 		{
 			for( uint32 j=i+1; j<m_setProperty.size(); ++j )
 			{
-				if( m_setProperty[i].GetName() == m_setProperty[j].GetName() )
+				if( m_setProperty[i].GetName() == m_setProperty[j].GetName() &&
+					m_setProperty[i].GetType() == m_setProperty[j].GetType() )
 				{
 					return true;
 				}

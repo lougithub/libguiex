@@ -228,7 +228,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIImage* CGUIImageManager::AllocateResource( const CGUIString& rResName ) const
 	{
-		CGUIImage* pImage = CGUIResourceManager<CGUIImage>::GetResource( rResName );
+		CGUIImage* pImage = CGUIResourceManager<CGUIImage, CGUIImage>::GetRegisterResource( rResName );
 		if( !pImage )
 		{
 			throw CGUIException( 
@@ -316,9 +316,14 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIImageManager::DestroyResourceImp( void* pRes )
+	void CGUIImageManager::DestroyRegisterResourceImp( CGUIResource* pRes )
 	{
-		delete ( TResourceType* )pRes;
+		delete pRes;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIImageManager::DestroyAllocateResourceImp( CGUIResource* pRes )
+	{
+		delete pRes;
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

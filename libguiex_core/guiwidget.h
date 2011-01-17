@@ -360,7 +360,7 @@ namespace guiex
 
 		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage ); 
 		virtual void OnCreate();
-		virtual void OnUpdate();
+		virtual void OnUpdate( real fDeltaTime );
 		virtual void OnDestroy();
 
 		void DrawRect( IGUIInterfaceRender* pRender, const CGUIRect& rDestRect, real fLineWidth, const CGUIColor& rColor );

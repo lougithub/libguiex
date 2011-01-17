@@ -34,12 +34,29 @@ namespace guiex
 //============================================================================// 
 namespace guiex
 {
+	class GUIEXPORT CGUIAsData  : public CGUIResource
+	{
+	public:
+		const CGUIProperty& GetAsData() const;
+
+	protected:
+		virtual int32 DoLoad() const;
+		virtual void DoUnload();
+
+	protected:
+		friend class CGUIAsManager;
+		CGUIAsData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIProperty& rProperty );
+
+	protected:
+		CGUIProperty m_aProperty;
+	};
+
 	/**
 	* @class CGUIAsManager
 	* @brief image manager
 	* 
 	*/
-	class GUIEXPORT CGUIAsManager : public CGUIResourceManager <CGUIAs>
+	class GUIEXPORT CGUIAsManager : public CGUIResourceManager <CGUIAsData, CGUIAs>
 	{
 	public:
 		CGUIAsManager();
@@ -56,16 +73,13 @@ namespace guiex
 		template<class T> T* AllocateResource(  );
 
 	protected:
-		CGUIAs* DoCreateAs( 
-			const CGUIString& rSceneName,
-			const CGUIProperty& rProperty );
+		CGUIAs* DoCreateAs( const CGUIString& rSceneName,const CGUIProperty& rProperty );
 
-		CGUIAs* DoCreateAs( 
-			const CGUIString& rName,
-			const CGUIString& rSceneName,
-			const CGUIString& rAsType );
+		CGUIAs* DoCreateAs( const CGUIString& rName,const CGUIString& rSceneName,const CGUIString& rAsType );
 
-		virtual	void DestroyResourceImp( void* pRes ); 
+		virtual	void DestroyRegisterResourceImp( CGUIResource* pRes ); 
+		virtual	void DestroyAllocateResourceImp( CGUIResource* pRes ); 
+
 
 	private:
 		static CGUIAsManager* m_pSingleton;

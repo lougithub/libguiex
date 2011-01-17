@@ -37,7 +37,7 @@ namespace guiex
 	* @brief font manager
 	* 
 	*/
-	class GUIEXPORT CGUIFontManager : public CGUIResourceManager <CGUIFontData>
+	class GUIEXPORT CGUIFontManager : public CGUIResourceManager <CGUIFontData, CGUIFontData>
 	{
 	public:
 		CGUIFontManager();
@@ -48,7 +48,8 @@ namespace guiex
 		int32 RegisterFont( const CGUIString& rSceneName, const CGUIProperty& rProperty);
 
 	protected:
-		virtual	void DestroyResourceImp( void* pRes ); 
+		virtual	void DestroyRegisterResourceImp( CGUIResource* pRes ); 
+		virtual	void DestroyAllocateResourceImp( CGUIResource* pRes ); 
 		
 		CGUIFontData* DoCreateFont(
 			const CGUIString& rName, 

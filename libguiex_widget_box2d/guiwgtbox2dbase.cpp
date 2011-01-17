@@ -63,9 +63,9 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtBox2DBase::OnUpdate()
+	void CGUIWgtBox2DBase::OnUpdate(real fDeltaTime)
 	{
-		CGUIWidget::OnUpdate();
+		CGUIWidget::OnUpdate(fDeltaTime );
 
 		if( !GSystem->IsEditorMode() )
 		{

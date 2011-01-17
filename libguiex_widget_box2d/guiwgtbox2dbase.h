@@ -37,7 +37,7 @@ namespace guiex
 
 	protected:
 		virtual void OnCreate();
-		virtual void OnUpdate();
+		virtual void OnUpdate( real fDeltaTime );
 		virtual void OnDestroy();
 
 		virtual void InitializeBox2D();
