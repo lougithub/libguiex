@@ -318,7 +318,8 @@ WxGuiColorProperty::WxGuiColorProperty( const wxString& label, const wxString& n
 // -----------------------------------------------------------------------
 wxString WxGuiColorProperty::ValueToString( wxVariant& value, int argFlags ) const
 {
-	CGUIColor color = CGUIColorRefFromVariant(m_value);
+	wxString test = value.GetType();
+	CGUIColor color = CGUIColorRefFromVariant(value);
 	CGUIString strValue;
 	guiex::ValueToString( color, strValue );
 	return Gui2wxString( strValue );

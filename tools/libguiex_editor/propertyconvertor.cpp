@@ -186,7 +186,7 @@ public:
 
 		if( pPGTop )
 		{
-			pPGTop->SetValue( &aValue );
+			pPGTop->SetValue( WXVARIANT(aValue) );
 		}
 		else
 		{
