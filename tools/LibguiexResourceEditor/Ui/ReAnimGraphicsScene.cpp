@@ -6,6 +6,10 @@
 #include <QMenu>
 #include <QGraphicsSceneContextMenuEvent>
 #include <QPainter>
+#include <QMimeData>
+#include <QByteArray>
+#include <QDataStream>
+#include <QMap>
 
 
 namespace RE
@@ -47,6 +51,49 @@ void ReAnimGraphicsScene::contextMenuEvent( QGraphicsSceneContextMenuEvent* _eve
 	m_createItemAction->setDisabled( NULL != item );
 	m_deleteItemAction->setDisabled( NULL == item );
 	m_editMenu->exec( _event->screenPos() );
+}
+
+
+void ReAnimGraphicsScene::dragEnterEvent( QGraphicsSceneDragDropEvent* _event )
+{
+	int i = 0;
+	_event->accept();
+}
+
+
+void ReAnimGraphicsScene::dragMoveEvent( QGraphicsSceneDragDropEvent* _event )
+{
+	int i = 0;
+	_event->accept();
+}
+
+
+void ReAnimGraphicsScene::dropEvent( QGraphicsSceneDragDropEvent* _event )
+{
+	const QMimeData* mimeData = _event->mimeData();
+	QString type = tr( "application/x-qabstractitemmodeldatalist" );
+	if( mimeData->hasFormat( type ) )
+	{
+		QByteArray rawData = mimeData->data( type );
+		QDataStream stream( &rawData, QIODevice::ReadOnly );
+		int row = 0;
+		int column = 0;
+		//QVariant data = QVariant();
+		QMap< int , QVariant > data;
+		stream >> row >> column >> data;
+
+		int size = data.size();
+		QMap< int, QVariant >::iterator itor = data.find( Qt::DecorationRole );
+		if( itor != data.end() )
+		{
+			//QMap< int, QVariant > mp = qvariant_cast< QMap< int, QVariant > >( data );
+			//QIcon icon = qvariant_cast< QIcon >( data[ Qt::DecorationRole ] );
+			QIcon icon = qvariant_cast< QIcon >( *itor );
+			int j = 0;
+		}
+	}
+
+	int i = 0;
 }
 
 

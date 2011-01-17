@@ -79,7 +79,6 @@ protected:
 	// Widgets.	
 	ReAnimConsoleWidget*	m_animConsole;
 	ReAnimGraphicsWidget*	m_animGraphics;
-	QWidget*				m_lastFocusedWidget;
 	ReAnimGraphicsScene*	m_scene;
 	
 	// Menu.

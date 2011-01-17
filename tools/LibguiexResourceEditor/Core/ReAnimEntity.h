@@ -16,6 +16,7 @@ namespace RE
 
 
 class ReAnimTrack;
+class ReAnimModel;
 
 
 class ReAnimEntity : public ReAnimNode
@@ -26,15 +27,28 @@ class ReAnimEntity : public ReAnimNode
 	// General.
 	// -------------------------------------------------------------------------
 public:
-	ReAnimEntity();
+	ReAnimEntity( ReAnimModel* _model );
 	virtual ~ReAnimEntity();
 
-	virtual ReAnimTrack*	CreateTrack( eTrackType _type );
+	virtual ReAnimTrack*CreateTrack( eTrackType _type );
 
-	qreal					GetTotalLength() const;
+	qreal				GetTotalLength() const;
+
+	// -------------------------------------------------------------------------
+	// Override ReAnimNode.
+	// -------------------------------------------------------------------------
+public:
+	virtual QVariant	GetNameVariant() const	{ return QObject::tr( "Entity" ); }
+	virtual QVariant	GetDataVariant() const	{ return m_name; }
+
+	virtual ReAnimNode*	CreateChild( const QVariant& _arg );
+	virtual void		DestroyChild( ReAnimNode* _child );
+	virtual int			GetChildrenCount() const { return ETrackType_Count; }
+	virtual ReAnimNode*	GetChild( int _index );
+	virtual int			IndexOfChild( const ReAnimNode* _child );
 
 protected:
-	ReAnimTrack*			m_tracks[ ETrackType_Count ];
+	ReAnimTrack*		m_tracks[ ETrackType_Count ];
 };
 
 

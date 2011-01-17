@@ -10,69 +10,157 @@
 // -----------------------------------------------------------------------------
 #include "Core\ReTypes.h"
 #include "Core\ReModelBase.h"
-#include "Core\ReClipData.h"
+#include "Core\ReDataModel.h"
+#include "Core\ReZoomInfo.h"
 #include <list>
-#include <QStandardItemModel>
+#include <QAbstractItemModel>
+#include <QPixmap>
+
+
+class QMimeData;
 
 
 namespace RE
 {
 
 
-// Make sure all Qt super classes are listed before custom super classes.
-// For this class, it wound fail the QAbstractItemView::setModel if we 
-// do not follow this rule.
-class ReClipModel : public QStandardItemModel, public ReModelBase< ReClipData >
+class ReClipModel;
+class ReZoomInfo;
+
+
+// -----------------------------------------------------------------------------
+// Clip.
+// -----------------------------------------------------------------------------
+class ReClipNode : public ReDataNode< ReClipModel >
 {
 	// -------------------------------------------------------------------------
 	// General.
 	// -------------------------------------------------------------------------
 public:
-	typedef QStandardItemModel			TSuper;
-	typedef ReModelBase< ReClipData >	TSuperB;
+	typedef ReDataNode	TSuper;
+	ReClipNode( ReClipModel* _model ): TSuper( _model ), m_offset( 0, 0 ), m_size( 0, 0 ) {}
+
+	void				SetOffset( const QPoint& _offset );
+	const QPoint&		GetOffset() const					{ return m_offset; }
+	void				SetSize( const QSize& _size );
+	const QSize&		GetSize() const						{ return m_size; }
+
+	// -------------------------------------------------------------------------
+	// Override ReDataNode.
+	// -------------------------------------------------------------------------
+public:
+	virtual QVariant GetDetail() const
+	{
+		return QString( QObject::tr( "x:%1 y:%2\r\nw:%3 h:%4" ) )
+			.arg( m_offset.x() / m_zoomScalar )
+			.arg( m_offset.y() / m_zoomScalar )
+			.arg( m_size.width() / m_zoomScalar )
+			.arg( m_size.height() / m_zoomScalar );
+	}
+
+protected:
+	QPoint				m_offset;
+	QSize				m_size;
+};
+
+
+// -----------------------------------------------------------------------------
+// Clip group.
+// -----------------------------------------------------------------------------
+class ReClipGroupNode : public ReDataNodeGroup< ReClipModel >
+{
+	// -------------------------------------------------------------------------
+	// General.
+	// -------------------------------------------------------------------------
+public:
+	typedef ReDataNodeGroup	TSuper;
+	ReClipGroupNode( ReClipModel* _model ): TSuper( _model ), m_image( NULL ) {}
+
+	void				SetImageId( const QString& _id )	{ m_imageId = _id; }
+	const QString&		GetImageId() const					{ return m_imageId; }
+	void				SetImage( const QPixmap* _image )	{ m_image = _image; }
+	const QPixmap*		GetImage() const					{ return m_image; }
+
+	// -------------------------------------------------------------------------
+	// Override ReDataNode.
+	// -------------------------------------------------------------------------
+public:
+	virtual QVariant GetDetail() const
+	{
+		return m_imageId;
+	}
+
+protected:
+	QString				m_imageId;
+	const QPixmap*		m_image;	
+};
+
+
+// -----------------------------------------------------------------------------
+// Clip model.
+// -----------------------------------------------------------------------------
+class ReClipModel : public QAbstractItemModel
+{
+	// -------------------------------------------------------------------------
+	// General.
+	// -------------------------------------------------------------------------
+public:
+	typedef QAbstractItemModel			TSuper;
+	typedef Qt::ItemFlags				TFlags;
+	typedef ReDataNode< ReClipModel >	TNode;
 
 	enum eColumn
 	{
-		EColumn_Icon,
-		//EColumn_Name,
-		EColumn_X,
-		EColumn_Y,
-		EColumn_W,
-		EColumn_H,
+		EColumn_Preview,
+		EColumn_Name,
+		EColumn_Detail,
 		EColumn_Count
 	};
 
 	ReClipModel( QWidget* _parent = NULL );
+	~ReClipModel();
+
+	int					GetGroupCount() const { return m_rootNode->GetChildrenCount(); }
+	ReClipGroupNode*	GetGroupByIndex( int _index ) const;
+	ReClipGroupNode*	GetGroupById( const QString& _id );
+	ReClipGroupNode*	CreateGroup( const QString& _id );
+	ReClipNode*			CreateClip( ReClipGroupNode* _group );
+	void				DestroyGroup( ReClipGroupNode* _group );
+	void				DestroyClip( ReClipNode* _clip );
+	void				Clear();
+
+	void				OnClipChanged( ReClipNode* _clip );
+
+	bool				Export( const QString& _filePath ) const;
+	bool				Import( const QString& _filePath );
 
 	// -------------------------------------------------------------------------
-	// Override QStandardItemModel.
+	// Override QAbstractItemModel.
 	// -------------------------------------------------------------------------
 public:
-	typedef Qt::ItemFlags	TFlags;
-	virtual bool		setData( const QModelIndex& _index, const QVariant& _value, int _role = Qt::EditRole );
 	virtual QVariant	data( const QModelIndex& _index, int _role = Qt::DisplayRole ) const;
-	virtual TFlags		flags( const QModelIndex& _index ) const;// { return 0xFFFFFFFF; }
+	virtual bool		setData( const QModelIndex& _index, const QVariant& _value, int _role = Qt::EditRole );
+	virtual QModelIndex	index( int _row, int _column, const QModelIndex& _parent = QModelIndex() ) const;
+	virtual QModelIndex parent( const QModelIndex& _index ) const;	
+	virtual bool		insertRows( int _row, int _count, const QModelIndex& _parent = QModelIndex() );
+	virtual bool		removeRows( int _row, int _count, const QModelIndex& _parent = QModelIndex() );
+	virtual int			rowCount( const QModelIndex& _parent = QModelIndex() ) const;
+	virtual int			columnCount( const QModelIndex& _parent = QModelIndex() ) const;
+	virtual QVariant	headerData( int _section, Qt::Orientation _orientation, int _role = Qt::DisplayRole ) const;
+	virtual QMimeData*	mimeData( const QModelIndexList& _indexes ) const;
+	virtual TFlags		flags( const QModelIndex& _index ) const;
 
 	// -------------------------------------------------------------------------
-	// Override ReModelBase.
+	// Utilities.
 	// -------------------------------------------------------------------------
-public:
-	virtual ReClipData*	CreateData();
-	virtual void		RecycleData( ReClipData* _clip );
-
-	// -------------------------------------------------------------------------
-	// Model specific.
-	// -------------------------------------------------------------------------
-public:
-	void				SetDataFromItem( const QModelIndex& _index );
-	void				SetImageHandle( TImageHandle _handle );
-	TImageHandle		GetImageHandle() const { return m_imageHandle; }
+protected:
+	// Misc.
+	TNode*				IndexToNode( const QModelIndex& _index ) const;
 
 	// -------------------------------------------------------------------------
 	// -------------------------------------------------------------------------
 protected:
-	TImageHandle		m_imageHandle;
-	QPixmap				m_pixmap;
+	ReClipGroupNode*	m_rootNode;
 };
 
 

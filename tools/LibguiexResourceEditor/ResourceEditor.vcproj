@@ -422,7 +422,7 @@
 						<Tool
 							Name="VCCustomBuildTool"
 							Description="Moc&apos;ing $(InputFileName)..."
-							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp"
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
 							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
 							Outputs="Moc\Ui\moc_$(InputName).cpp"
 						/>
@@ -433,7 +433,7 @@
 						<Tool
 							Name="VCCustomBuildTool"
 							Description="Moc&apos;ing $(InputFileName)..."
-							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp"
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
 							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
 							Outputs="Moc\Ui\moc_$(InputName).cpp"
 						/>
@@ -620,36 +620,6 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\Ui\ReAnimPanelWidget.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Ui\ReAnimPanelWidget.h"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-							Description="Moc&apos;ing $(InputFileName)..."
-							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
-							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
-							Outputs="Moc\Ui\moc_$(InputName).cpp"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-							Description="Moc&apos;ing $(InputFileName)..."
-							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
-							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
-							Outputs="Moc\Ui\moc_$(InputName).cpp"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
 					RelativePath=".\Ui\ReAnimPlayer.cpp"
 					>
 				</File>
@@ -692,7 +662,7 @@
 						<Tool
 							Name="VCCustomBuildTool"
 							Description="Moc&apos;ing $(InputFileName)..."
-							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp"
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
 							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
 							Outputs="Moc\Ui\moc_$(InputName).cpp"
 						/>
@@ -703,7 +673,37 @@
 						<Tool
 							Name="VCCustomBuildTool"
 							Description="Moc&apos;ing $(InputFileName)..."
-							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp"
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Ui\ReAnimSheet.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Ui\ReAnimSheet.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
 							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
 							Outputs="Moc\Ui\moc_$(InputName).cpp"
 						/>
@@ -804,11 +804,11 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\Ui\ReClipModelWidget.cpp"
+					RelativePath=".\Ui\ReClipImage.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Ui\ReClipModelWidget.h"
+					RelativePath=".\Ui\ReClipImage.h"
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
@@ -834,11 +834,11 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\Ui\ReClipPanelWidget.cpp"
+					RelativePath=".\Ui\ReClipSheet.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Ui\ReClipPanelWidget.h"
+					RelativePath=".\Ui\ReClipSheet.h"
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
@@ -862,6 +862,10 @@
 							Outputs="Moc\Ui\moc_$(InputName).cpp"
 						/>
 					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Ui\ReClipUiInfo.h"
+					>
 				</File>
 				<File
 					RelativePath=".\Ui\ReClipWidget.cpp"
@@ -869,6 +873,36 @@
 				</File>
 				<File
 					RelativePath=".\Ui\ReClipWidget.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Moc&apos;ing $(InputFileName)..."
+							CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Ui\moc_$(InputName).cpp&#x0D;&#x0A;"
+							AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+							Outputs="Moc\Ui\moc_$(InputName).cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Ui\ReClipWorkshop.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Ui\ReClipWorkshop.h"
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
@@ -985,6 +1019,10 @@
 			Name="CORE"
 			>
 			<File
+				RelativePath=".\Core\ReDataModel.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Core\ReDragInfo.h"
 				>
 			</File>
@@ -1019,6 +1057,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\Core\ReItemGroup.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Core\ReModelBase.cpp"
 				>
 			</File>
@@ -1050,17 +1092,51 @@
 				RelativePath=".\Core\ReTypes.h"
 				>
 			</File>
+			<File
+				RelativePath=".\Core\ReUtil.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Core\ReWidgetSelection.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Core\ReWidgetSelection.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Core\ReZoomInfo.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Core\ReZoomInfo.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Moc&apos;ing $(InputFileName)..."
+						CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Core\moc_$(InputName).cpp"
+						AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+						Outputs="Moc\Core\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Moc&apos;ing $(InputFileName)..."
+						CommandLine="$(QTDIR)\bin\moc $(InputPath) -o Moc\Core\moc_$(InputName).cpp"
+						AdditionalDependencies="$(QTDIR)\bin\moc.exe"
+						Outputs="Moc\Core\moc_$(InputName).cpp"
+					/>
+				</FileConfiguration>
+			</File>
 			<Filter
 				Name="ClipEditor"
 				>
-				<File
-					RelativePath=".\Core\ReClipData.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Core\ReClipData.h"
-					>
-				</File>
 				<File
 					RelativePath=".\Core\ReClipModel.cpp"
 					>
@@ -1155,6 +1231,10 @@
 					RelativePath=".\Moc\Core\moc_ReEditor.cpp"
 					>
 				</File>
+				<File
+					RelativePath=".\Moc\Core\moc_ReZoomInfo.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Ui"
@@ -1227,15 +1307,15 @@
 						>
 					</File>
 					<File
-						RelativePath=".\Moc\Ui\moc_ReAnimPanelWidget.cpp"
-						>
-					</File>
-					<File
 						RelativePath=".\Moc\Ui\moc_ReAnimPlayer.cpp"
 						>
 					</File>
 					<File
 						RelativePath=".\Moc\Ui\moc_ReAnimPlayerWidget.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\Moc\Ui\moc_ReAnimSheet.cpp"
 						>
 					</File>
 					<File
@@ -1251,15 +1331,19 @@
 						>
 					</File>
 					<File
-						RelativePath=".\Moc\Ui\moc_ReClipModelWidget.cpp"
+						RelativePath=".\Moc\Ui\moc_ReClipImage.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Moc\Ui\moc_ReClipPanelWidget.cpp"
+						RelativePath=".\Moc\Ui\moc_ReClipSheet.cpp"
 						>
 					</File>
 					<File
 						RelativePath=".\Moc\Ui\moc_ReClipWidget.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\Moc\Ui\moc_ReClipWorkshop.cpp"
 						>
 					</File>
 				</Filter>

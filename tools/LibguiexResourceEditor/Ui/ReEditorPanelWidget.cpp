@@ -7,8 +7,8 @@
 #include "UI\ReEditorPanelWidget.h"
 #include "UI\ReImagePanel.h"
 #include "UI\ReSettingsWidget.h"
-#include "UI\ReClipPanelWidget.h"
-#include "UI\ReAnimPanelWidget.h"
+#include "UI\ReClipSheet.h"
+#include "UI\ReAnimSheet.h"
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QLabel>
@@ -16,6 +16,7 @@
 #include <QStackedWidget>
 #include <QGroupBox>
 #include <QPainter>
+#include <QTabWidget>
 
 
 namespace RE
@@ -27,24 +28,24 @@ namespace RE
 // -----------------------------------------------------
 ReEditorPanelWidget::ReEditorPanelWidget( const ReParam& _param, QWidget* _parent /* = NULL */ )
 : TSuper( _parent )
-, m_settingBtn( NULL )
+//, m_settingBtn( NULL )
 , m_imagePanelWidget( NULL )
 , m_lastPanel( EPanel_ImagePanel )
 {
 	// Settings button.
-	m_settingBtn = new QPushButton( this );
-	m_settingBtn->setText( tr( "Settings..." ) );
-	m_settingBtn->setCheckable( true );
-	connect( m_settingBtn, SIGNAL( clicked() ), this, SLOT( OnToggleSetting() ) );
+	//m_settingBtn = new QPushButton( this );
+	//m_settingBtn->setText( tr( "Settings..." ) );
+	//m_settingBtn->setCheckable( true );
+	//connect( m_settingBtn, SIGNAL( clicked() ), this, SLOT( OnToggleSetting() ) );
 
 	// Panel where all images are displayed.
 	m_imagePanelWidget = new ReImagePanel( this );
 
 	// Clip panel.
-	m_clipPanelWidget = new ReClipPanelWidget( _param.m_clipModel, this );
+	m_clipSheet = new ReClipSheet( _param.m_clipModel, this );
 
 	// Animation panel.
-	m_animPanelWidget = new ReAnimPanelWidget( _param.m_animModel, this );
+	m_animSheet = new ReAnimSheet( _param.m_animModel, this );
 
 	// Settings.
 	m_settingsWidget = new ReSettingsWidget( this );
@@ -52,21 +53,20 @@ ReEditorPanelWidget::ReEditorPanelWidget( const ReParam& _param, QWidget* _paren
 	connect( m_settingsWidget, SIGNAL( rejected() ), this, SLOT( OnSettingsChanged() ) );
 
 	// Tab.
-	m_stack = new QStackedWidget( this );
-	m_stack->addWidget( m_clipPanelWidget );
-	m_stack->addWidget( m_animPanelWidget );
-	m_stack->addWidget( m_imagePanelWidget );	
-	m_stack->addWidget( m_settingsWidget );
-	m_stack->setCurrentIndex( EPanel_ClipPanel );
+	m_tab = new QTabWidget( this );
+	m_tab->addTab( m_clipSheet, tr( "Clip" ) );
+	m_tab->addTab( m_animSheet, tr( "Anim" ) );
+	m_tab->addTab( m_imagePanelWidget, tr( "Image" ) );
+	m_tab->setCurrentIndex( EPanel_ClipPanel );
 
 	// Layout.	
 	QVBoxLayout* layoutGroupBox = new QVBoxLayout( this );
-	layoutGroupBox->addWidget( m_stack );
+	layoutGroupBox->addWidget( m_tab );
 	QGroupBox* groupBox = new QGroupBox( this );
 	groupBox->setLayout( layoutGroupBox );	
 
 	QVBoxLayout* layoutMain = new QVBoxLayout( this );
-	layoutMain->addWidget( m_settingBtn, 0, Qt::AlignTop );
+	//layoutMain->addWidget( m_settingBtn, 0, Qt::AlignTop );
 	layoutMain->addWidget( groupBox, 1 );
 	setLayout( layoutMain );
 }
@@ -89,74 +89,60 @@ void ReEditorPanelWidget::Tick( qreal _delta )
 
 void ReEditorPanelWidget::SwitchPanel( ePanel _panel )
 {
-	ePanel curPanel = ( ePanel )m_stack->currentIndex();
+	ePanel curPanel = ( ePanel )m_tab->currentIndex();
 	if( curPanel != _panel )
-	{
-		m_stack->setCurrentIndex( _panel );		
-	}
+		m_tab->setCurrentIndex( _panel );
 }
 
 
 void ReEditorPanelWidget::OnToggleSetting()
 {
-	//ePanel curPanel = ( ePanel )m_stack->currentIndex();
-	//if( EPanel_Settings != curPanel )
-	//{
-	//	m_stack->setCurrentIndex( EPanel_Settings );
-	//	m_lastPanel = curPanel;
-	//}
-	//else
-	//{
-	//	SwitchPanel( m_lastPanel );		
-	//}
-
-	//update();
 }
 
 
 void ReEditorPanelWidget::OnSettingsChanged()
 {
-	if( QDialog::Accepted == m_settingsWidget->result() )
-	{
-		QString qrcFilename = m_settingsWidget->GetQrcFilename();
-		ReQrcHelper qrc( qrcFilename );
+	//if( QDialog::Accepted == m_settingsWidget->result() )
+	//{
+	//	QString qrcFilename = m_settingsWidget->GetQrcFilename();
+	//	ReQrcHelper qrc( qrcFilename );
 
-		if( qrc.IsValid() )
-		{
-			QList< QString > idArray;
+	//	if( qrc.IsValid() )
+	//	{
+	//		QList< QString > idArray;
 
-			const ReQrcHelper::TResList& resList = qrc.GetResourceList();
-			ReQrcHelper::TResListCItor itorRes = resList.begin();
-			ReQrcHelper::TResListCItor itorResEnd = resList.end();
+	//		const ReQrcHelper::TResList& resList = qrc.GetResourceList();
+	//		ReQrcHelper::TResListCItor itorRes = resList.begin();
+	//		ReQrcHelper::TResListCItor itorResEnd = resList.end();
 
-			for( ; itorRes != itorResEnd; ++itorRes )
-			{
-				const ReQrcHelper::ReQResource& resource = *itorRes;
-				const ReQrcHelper::ReQResource::TFileList& fileList = resource.GetFileList();
-				ReQrcHelper::ReQResource::TFileListCItor itorFile = fileList.begin();
-				ReQrcHelper::ReQResource::TFileListCItor itorFileEnd = fileList.end();
+	//		for( ; itorRes != itorResEnd; ++itorRes )
+	//		{
+	//			const ReQrcHelper::ReQResource& resource = *itorRes;
+	//			const ReQrcHelper::ReQResource::TFileList& fileList = resource.GetFileList();
+	//			ReQrcHelper::ReQResource::TFileListCItor itorFile = fileList.begin();
+	//			ReQrcHelper::ReQResource::TFileListCItor itorFileEnd = fileList.end();
 
-				QString prefix = resource.GetPrefix();
-				for( ; itorFile != itorFileEnd; ++itorFile )
-				{
-					const ReQrcHelper::ReQFile& file = *itorFile;
-					QString id;
-					id = ":" + prefix + "/" + file.m_filename;
-					idArray.push_back( id );
-				}
-			}
+	//			QString prefix = resource.GetPrefix();
+	//			for( ; itorFile != itorFileEnd; ++itorFile )
+	//			{
+	//				const ReQrcHelper::ReQFile& file = *itorFile;
+	//				QString id;
+	//				id = ":" + prefix + "/" + file.m_filename;
+	//				idArray.push_back( id );
+	//			}
+	//		}
 
-			if( idArray.size() > 0 )
-			{
-				m_imagePanelWidget->Clear();
-				m_imagePanelWidget->Upload( idArray );
-			}
-		}
-	}
+	//		if( idArray.size() > 0 )
+	//		{
+	//			m_imagePanelWidget->Clear();
+	//			m_imagePanelWidget->Upload( idArray );
+	//		}
+	//	}
+	//}
 
-	m_stack->setCurrentIndex( EPanel_ImagePanel );
-	m_settingBtn->setChecked( !m_settingBtn->isChecked() );
-	update();
+	//m_stack->setCurrentIndex( EPanel_ImagePanel );
+	//m_settingBtn->setChecked( !m_settingBtn->isChecked() );
+	//update();
 }
 
 
@@ -167,10 +153,13 @@ void ReEditorPanelWidget::paintEvent( QPaintEvent* _event )
 {
 	QPainter painter( this );
 
-	if( m_settingBtn->isChecked() )
-		painter.fillRect( 0, 0, width(), height(), QColor( 200, 200, 200, 255 ) );
-	else
-		painter.fillRect( 0, 0, width(), height(), QColor( 50, 50, 50, 255 ) );
+	//painter.fillRect( 0, 0, width(), height(), QColor( 200, 200, 200, 255 ) );
+	painter.fillRect( 0, 0, width(), height(), QColor( 50, 50, 50, 255 ) );
+
+	//if( m_settingBtn->isChecked() )
+	//	painter.fillRect( 0, 0, width(), height(), QColor( 200, 200, 200, 255 ) );
+	//else
+	//	painter.fillRect( 0, 0, width(), height(), QColor( 50, 50, 50, 255 ) );
 
 	TSuper::paintEvent( _event );
 }

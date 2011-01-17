@@ -14,6 +14,7 @@ class QPushButton;
 class QLabel;
 class QImage;
 class QStackedWidget;
+class QTabWidget;
 
 
 namespace RE
@@ -22,16 +23,15 @@ namespace RE
 
 class ReImagePanel;
 class ReSettingsWidget;
-class ReClipPanelWidget;
+class ReClipSheet;
 class ReClipModel;
-class ReAnimPanelWidget;
+class ReAnimSheet;
 class ReAnimModel;
 
 
 class ReEditorPanelWidget : public ReBaseWidget< QWidget >
 {
 	Q_OBJECT
-
 	typedef ReBaseWidget< QWidget >	TSuper;
 
 	// -----------------------------------------------------
@@ -85,12 +85,12 @@ protected:
 	// Variable
 	// -----------------------------------------------------
 protected:
-	QPushButton*		m_settingBtn;
+	QTabWidget*			m_tab;
+	//QPushButton*		m_settingBtn;
 	ReImagePanel*		m_imagePanelWidget;
 	ReSettingsWidget*	m_settingsWidget;
-	ReClipPanelWidget*	m_clipPanelWidget;
-	ReAnimPanelWidget*	m_animPanelWidget;
-	QStackedWidget*		m_stack;
+	ReClipSheet*		m_clipSheet;
+	ReAnimSheet*		m_animSheet;
 
 	ePanel				m_lastPanel;
 };

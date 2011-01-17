@@ -1,27 +1,26 @@
 // -----------------------------------------------------------------------------
 // Author: GameCrashDebug.
-// Date: 20101120.
+// Date: 20110115.
 // -----------------------------------------------------------------------------
-#ifndef _RE_CLIP_PANEL_WIDGET_H_
-#define _RE_CLIP_PANEL_WIDGET_H_
+#ifndef _RE_ANIM_SHEET_H_
+#define _RE_ANIM_SHEET_H_
 
 
 #include <QWidget>
 #include "Ui\ReBaseWidget.h"
 
 
-class QTableView;
+class QTreeView;
 
 
 namespace RE
 {
 
 
-class ReClipEditor;
-class ReClipModel;
+class ReAnimModel;
 
 
-class ReClipPanelWidget : public ReBaseWidget< QWidget >
+class ReAnimSheet : public ReBaseWidget< QWidget >
 {
 	Q_OBJECT
 	typedef ReBaseWidget< QWidget > TSuper;
@@ -29,13 +28,13 @@ class ReClipPanelWidget : public ReBaseWidget< QWidget >
 	// -------------------------------------------------------------------------
 	// -------------------------------------------------------------------------
 public:
-	ReClipPanelWidget( ReClipModel* _model, QWidget* _parent = NULL );
+	ReAnimSheet( ReAnimModel* _model, QWidget* _parent = NULL );
 
 	// -------------------------------------------------------------------------
 	// -------------------------------------------------------------------------
 protected:
-	QTableView*		m_clipTableView;
+	QTreeView*			m_view;
 };
 
 }
-#endif	// _RE_CLIP_PANEL_WIDGET_H_
+#endif	// _RE_ANIM_SHEET_H_

@@ -78,7 +78,7 @@ protected:
 	// -------------------------------------------------------------------------
 protected slots:
 	void					OnGotoClipEditor();
-	void					OnGotoAsEditor();
+	void					OnGotoAnimEditor();
 	void					OnGotoImageEditor();
 	void					OnAboutSoftware();
 	void					OnAboutAuthor();

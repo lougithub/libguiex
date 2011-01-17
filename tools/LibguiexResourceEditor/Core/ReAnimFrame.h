@@ -22,26 +22,21 @@ class ReAnimFrame : public ReAnimNode
 {
 public:
 	typedef ReAnimNode TSuper;
-	ReAnimFrame( qreal _time ): m_time( _time )	{}
+	ReAnimFrame( ReAnimModel* _model, qreal _time = 0.0f ): TSuper( _model ), m_time( _time ) {}
 
-	bool operator<( const ReAnimFrame* _other ) const
-	{
-		return m_time < _other->GetTime();
-	}
-
-	bool operator<( const ReAnimFrame& _other ) const
-	{
-		return m_time < _other.GetTime();
-	}
-
-	friend bool operator<( const ReAnimFrame& _frameA, const ReAnimFrame& _frameB )
-	{
-		return _frameA.GetTime() < _frameB.GetTime();
-	}
-
-	//friend bool operator<( const ReAnimFrame* _frameA, const ReAnimFrame* _frameB )
+	//bool operator<( const ReAnimFrame* _other ) const
 	//{
-	//	return _frameA->GetTime() < _frameB->GetTime();
+	//	return m_time < _other->GetTime();
+	//}
+
+	//bool operator<( const ReAnimFrame& _other ) const
+	//{
+	//	return m_time < _other.GetTime();
+	//}
+
+	//friend bool operator<( const ReAnimFrame& _frameA, const ReAnimFrame& _frameB )
+	//{
+	//	return _frameA.GetTime() < _frameB.GetTime();
 	//}
 
 	virtual QString	GetDescription() const
@@ -70,8 +65,8 @@ public:
 	enum eValue { EValue_X, EValue_Y, EValue_Count };
 
 public:
-	ReAnimTranslationFrame( qreal _time )
-		: TSuper( _time )
+	ReAnimTranslationFrame( ReAnimModel* _model, qreal _time = 0.0f )
+		: TSuper( _model, _time )
 	{
 		m_values[ EValue_X ].SetName( QObject::tr( "X" ) );
 		m_values[ EValue_Y ].SetName( QObject::tr( "Y" ) );
@@ -124,8 +119,8 @@ public:
 	enum eValue { EValue_Angle, EValue_Count };
 
 public:
-	ReAnimRotationFrame( qreal _time )
-		: TSuper( _time )
+	ReAnimRotationFrame( ReAnimModel* _model, qreal _time = 0.0f )
+		: TSuper( _model, _time )
 	{
 		m_values[ EValue_Angle ].SetName( QObject::tr( "Angle" ) );
 	}
@@ -174,8 +169,8 @@ public:
 	enum eValue { EValue_X, EValue_Y, EValue_Count };
 
 public:
-	ReAnimScaleFrame( qreal _time )
-		: TSuper( _time )
+	ReAnimScaleFrame( ReAnimModel* _model, qreal _time = 0.0f )
+		: TSuper( _model, _time )
 	{
 		m_values[ EValue_X ].SetName( QObject::tr( "X" ) );
 		m_values[ EValue_Y ].SetName( QObject::tr( "Y" ) );
@@ -230,8 +225,8 @@ public:
 	enum eValue { EValue_Alpha, EValue_Count };
 
 public:
-	ReAnimAlphaFrame( qreal _time )
-		: TSuper( _time )
+	ReAnimAlphaFrame( ReAnimModel* _model, qreal _time = 0.0f )
+		: TSuper( _model, _time )
 	{
 		m_values[ EValue_Alpha ].SetName( QObject::tr( "Alpha" ) );
 	}

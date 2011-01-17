@@ -44,26 +44,24 @@ public:
 	const P&		GetCursorPosBackup() const			{ return m_cursorPosBackup; }
 	const P&		GetItemPosBackup() const			{ return m_itemPosBackup; }
 	const S&		GetItemSizeBackup() const			{ return m_itemSizeBackup; }
+	virtual void	Stop()								{ m_dragType = EDrag_None; }
 
 	// Move.
-	void			StartMove()						{ m_dragType = EDrag_Move; }
-	void			StopMove()						{ Stop(); }				
-	void			Stop()							{ m_dragType = EDrag_None; }
-	bool			IsMoving() const				{ return EDrag_Move == m_dragType; }
+	void			StartMove()							{ m_dragType = EDrag_Move; }	
+	bool			IsMoving() const					{ return EDrag_Move == m_dragType; }
 
 	// Resize.
-	void			StartResize( eResize _type )	{ if( EResize_None != _type ) { m_resizeType = _type; m_dragType = EDrag_Resize; } }
-	eResize			GetResizeType() const			{ return m_resizeType; }
-	void			StopResize()					{ Stop(); }
-	bool			IsResizing() const				{ return EDrag_Resize == m_dragType; }
-	bool			IsResizeL() const				{ return EResize_Left == m_resizeType; }
-	bool			IsResizeT() const				{ return EResize_Top == m_resizeType; }
-	bool			IsResizeR() const				{ return EResize_Right == m_resizeType; }
-	bool			IsResizeB() const				{ return EResize_Bottom == m_resizeType; }
-	bool			IsResizeLT() const				{ return EResize_LeftTop == m_resizeType; }
-	bool			IsResizeRT() const				{ return EResize_RightTop == m_resizeType; }
-	bool			IsResizeRB() const				{ return EResize_RightBottom == m_resizeType; }
-	bool			IsResizeLB() const				{ return EResize_LeftBottom == m_resizeType; }
+	void			StartResize( eResize _type )		{ if( EResize_None != _type ) { m_resizeType = _type; m_dragType = EDrag_Resize; } }
+	eResize			GetResizeType() const				{ return m_resizeType; }
+	bool			IsResizing() const					{ return EDrag_Resize == m_dragType; }
+	bool			IsResizeL() const					{ return EResize_Left == m_resizeType; }
+	bool			IsResizeT() const					{ return EResize_Top == m_resizeType; }
+	bool			IsResizeR() const					{ return EResize_Right == m_resizeType; }
+	bool			IsResizeB() const					{ return EResize_Bottom == m_resizeType; }
+	bool			IsResizeLT() const					{ return EResize_LeftTop == m_resizeType; }
+	bool			IsResizeRT() const					{ return EResize_RightTop == m_resizeType; }
+	bool			IsResizeRB() const					{ return EResize_RightBottom == m_resizeType; }
+	bool			IsResizeLB() const					{ return EResize_LeftBottom == m_resizeType; }
 
 protected:
 	P				m_cursorPosBackup;

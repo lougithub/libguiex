@@ -5,6 +5,7 @@
 #include "StdAfxEditor.h"
 #include "Core\ReAnimFrame.h"
 #include "Core\ReAnimTrack.h"
+#include "Core\ReAnimModel.h"
 #include "Ui\ReAnimTrackWidget.h"
 #include "Ui\ReAnimUiInfo.h"
 #include <QPainter>
@@ -201,8 +202,9 @@ void ReAnimTrackWidget::OnDeleteFrame()
 {
 	ReAnimFrameWidget* frame = GetFrameAtCursor( GetCursor() );
 	if( NULL != frame )
-	{		
-		m_modelData->DeleteFrame( frame->GetModelData() );
+	{
+		ReAnimModel* animModel = m_modelData->GetModel();
+		animModel->DestroyFrame( frame->GetModelData() );
 		RecycleData( frame );
 		frame = NULL;
 
@@ -277,7 +279,9 @@ ReAnimFrameWidget* ReAnimTrackWidget::CreateFrameAtCursor( int _cursor )
 	qreal time = GetValueAt( _cursor );
 	bool isValueValid = m_modelData->Interpolate( time, value, true );
 
-	ReAnimFrame* frameData = m_modelData->CreateFrame( time );
+	ReAnimModel* animModel = m_modelData->GetModel();
+	ReAnimFrame* frameData = animModel->CreateFrame( m_modelData );
+	frameData->SetTime( time );
 	if( isValueValid )
 		frameData->SetFrameValue( value );
 	frameWidget->SetModelData( frameData );

@@ -1,9 +1,9 @@
 // -----------------------------------------------------------------------------
 // Author: GameCrashDebug.
-// Date: 20101205.
+// Date: 20110115.
 // -----------------------------------------------------------------------------
 #include "StdAfxEditor.h"
-#include "Ui\ReAnimPanelWidget.h"
+#include "Ui\ReAnimSheet.h"
 #include "Core\ReAnimModel.h"
 #include <QVBoxLayout>
 #include <QTreeView>
@@ -16,7 +16,7 @@ namespace RE
 
 // -----------------------------------------------------------------------------
 // -----------------------------------------------------------------------------
-ReAnimPanelWidget::ReAnimPanelWidget( ReAnimModel* _model, QWidget* _parent /* = NULL */ )
+ReAnimSheet::ReAnimSheet( ReAnimModel* _model, QWidget* _parent /* = NULL */ )
 : TSuper( _parent )
 {
 	m_view = new QTreeView( this );

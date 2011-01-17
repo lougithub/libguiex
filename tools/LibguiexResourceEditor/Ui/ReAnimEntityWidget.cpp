@@ -6,6 +6,7 @@
 #include "Core\ReAnimEntity.h"
 #include "Core\ReAnimFrame.h"
 #include "Core\ReAnimTrack.h"
+#include "Core\ReAnimModel.h"
 #include "Ui\ReAnimEntityWidget.h"
 #include "Ui\ReAnimTrackWidget.h"
 #include "Ui\ReAnimUiInfo.h"
@@ -44,11 +45,14 @@ ReAnimEntityWidget::ReAnimEntityWidget( ReAnimEntity* _model, ReRulerWidget* _ru
 	connect( m_toggleButton, SIGNAL( toggled( bool ) ), this, SLOT( OnToggled( bool ) ) );
 	
 	static int sEntityCounter = 0;
-	m_nameEdit = new QLineEdit( QString( tr( "Entity_%1" ) ).arg( sEntityCounter++ ), this );
+	QString entityName = QString( tr( "Entity_%1" ) ).arg( sEntityCounter++ );
+	m_nameEdit = new QLineEdit( entityName, this );
+	_model->SetName( entityName );
 
 	UpdateLayout();
 
 	connect( this, SIGNAL( customContextMenuRequested( const QPoint& ) ), this, SLOT( OnContextMenu( const QPoint& ) ) );
+	connect( m_nameEdit, SIGNAL( editingFinished() ), this, SLOT( OnEntityNameChanged() ) );
 
 	// Create all types of tracks at startup.
 	OnNewTranslationTrack();
@@ -381,6 +385,13 @@ void ReAnimEntityWidget::OnAlphaChanged( qreal _delta )
 }
 
 
+void ReAnimEntityWidget::OnEntityNameChanged()
+{
+	ReAnimModel* animModel = m_modelData->GetModel();
+	animModel->SetEntityName( m_modelData, m_nameEdit->text() );
+}
+
+
 // -----------------------------------------------------------------------------
 // Utilities
 // -----------------------------------------------------------------------------
@@ -408,7 +419,8 @@ void ReAnimEntityWidget::CreateTrack( eTrackType _type )
 	if( NULL == m_suiteArray[ _type ].m_track )
 	{
 		// Model.
-		ReAnimTrack* trackData = m_modelData->CreateTrack( _type );
+		ReAnimModel* animModel = m_modelData->GetModel();
+		ReAnimTrack* trackData = animModel->CreateTrack( m_modelData, _type );
 
 		// UI.
 		ReAnimTrackWidget* trackWidget = new ReAnimTrackWidget( trackData, _type, this );

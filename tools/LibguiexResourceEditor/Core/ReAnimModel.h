@@ -40,6 +40,8 @@ public:
 	ReAnimModel( QObject* _parent = NULL );
 
 	qreal				GetTotalLength() const;
+	int					GetEntityCount() const	{ return m_entities.size(); }
+	bool				Export( const QString& _filePath ) const;
 
 	// -------------------------------------------------------------------------
 	// Override QAbstractItemModel.
@@ -51,16 +53,10 @@ public:
 	virtual bool		setData( const QModelIndex& _index, const QVariant& _value, int _role /* = Qt::EditRole */ );
 	virtual int			rowCount( const QModelIndex& _parent /* = QModelIndex */ ) const;
 	virtual int			columnCount( const QModelIndex& _parent /* = QModelIndex */ ) const;
-	virtual QVariant	headerData( int _section, Qt::Orientation _orient, int _role = Qt::DisplayRole );
+	//virtual QVariant	headerData( int _section, Qt::Orientation _orient, int _role = Qt::DisplayRole );
 	virtual Qt::ItemFlags	flags( const QModelIndex& _index ) const;
-	//virtual bool		insertRows( int _row, int _count, const QModelIndex& _parent = QModelIndex() );
-	//virtual bool		removeRows( int _row, int _count, const QModelIndex& _parent = QModelIndex() );
-
-	// -------------------------------------------------------------------------
-	// Slots.
-	// -------------------------------------------------------------------------
-public slots:
-	void				OnFrameChanged( eTrackType _trackType, ReAnimFrame* _frame );
+	virtual bool		insertRows( int _row, int _count, const QModelIndex& _parent = QModelIndex() );
+	virtual bool		removeRows( int _row, int _count, const QModelIndex& _parent = QModelIndex() );
 
 	// -------------------------------------------------------------------------
 	// Items & Tracks & Frames.
@@ -68,6 +64,12 @@ public slots:
 public:
 	// Entity.
 	ReAnimEntity*		CreateEntity();
+	ReAnimTrack*		CreateTrack( ReAnimEntity* _entity, eTrackType _type );
+	ReAnimFrame*		CreateFrame( ReAnimTrack* _track );
+	void				DestroyEntity( ReAnimEntity* _entity );
+	void				DestroyTrack( ReAnimTrack* _track );
+	void				DestroyFrame( ReAnimFrame* _frame );
+	void				SetEntityName( ReAnimEntity* _entity, const QString& _name );
 
 	// -------------------------------------------------------------------------
 	// -------------------------------------------------------------------------
@@ -79,7 +81,9 @@ public:
 	// Utilities.
 	// -------------------------------------------------------------------------
 protected:
-	ReAnimNode*			ItemFromIndex( const QModelIndex& _index ) const;
+	ReAnimNode*			NodeFromIndex( const QModelIndex& _index ) const;
+	ReAnimEntity*		GetEntity( int _index ) const;
+	int					GetEntityIndex( ReAnimEntity* _entity ) const;
 	//int					PositionToInsertTrack( eTrackType _trackType ) const;
 
 	// -------------------------------------------------------------------------
@@ -88,11 +92,11 @@ protected:
 protected:
 	//ReAnimTrack*		m_tracks[ ETrackType_Count ];
 
-	typedef QList< ReAnimEntity* >		TItemList;
-	typedef TItemList::iterator			TItemListItor;
-	typedef TItemList::const_iterator	TItemListCItor;
+	typedef QList< ReAnimEntity* >		TEntityList;
+	typedef TEntityList::iterator		TEntityListItor;
+	typedef TEntityList::const_iterator	TEntityListCItor;
 
-	TItemList			m_items;
+	TEntityList			m_entities;
 };
 
 }

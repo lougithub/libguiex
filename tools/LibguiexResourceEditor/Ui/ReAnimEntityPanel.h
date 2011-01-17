@@ -50,6 +50,7 @@ public:
 	// ----------------------------------------------------------------------------
 public:
 	ReAnimEntityPanel( ReAnimModel* _model, ReRulerWidget* _ruler, QGraphicsScene* _scene, QWidget* _parent = NULL );
+	bool				Export( const QString& _filePath ) const;
 
 	// ----------------------------------------------------------------------------
 	// Override QWidget.

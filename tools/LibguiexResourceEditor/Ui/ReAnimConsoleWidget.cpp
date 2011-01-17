@@ -14,6 +14,9 @@
 #include <QVBoxLayout>
 #include <QResizeEvent>
 #include <QSizePolicy>
+#include <QAction>
+#include <QFileDialog>
+#include <QMessageBox>
 
 
 namespace
@@ -50,7 +53,13 @@ ReAnimConsoleWidget::ReAnimConsoleWidget( ReAnimModel* _model, QGraphicsScene* _
 
 	// Entity panel.
 	m_entityPanel = new ReAnimEntityPanel( _model, m_playerPanel->GetRuler(), _scene, this );
-	m_entityPanel->setVisible( true );	
+	m_entityPanel->setVisible( true );
+
+	// Menu.
+	m_editMenu = new QMenu( tr( "&Edit" ) );
+	m_exportAction = m_editMenu->addAction( tr( "Export" ) );
+	connect( m_exportAction, SIGNAL( triggered() ), this, SLOT( OnExport() ) );
+	connect( this, SIGNAL( customContextMenuRequested( const QPoint& ) ), this, SLOT( OnContextMenu( const QPoint& ) ) );
 }
 
 
@@ -115,6 +124,23 @@ void ReAnimConsoleWidget::OnItemAdded( ReAnimGraphicsItem* _item )
 void ReAnimConsoleWidget::OnItemDeleted( ReAnimGraphicsItem* _item )
 {
 	m_entityPanel->OnItemDeleted( _item );
+}
+
+
+void ReAnimConsoleWidget::OnContextMenu( const QPoint& _point )
+{
+	m_editMenu->exec( mapToGlobal( _point ) );
+}
+
+
+void ReAnimConsoleWidget::OnExport()
+{
+	QFileDialog dlg;
+	QString filePath = dlg.getSaveFileName( this, tr( "Export Animation Set" ), tr( "." ), tr( "Xml File( *.xml )" ) );
+	if( !m_entityPanel->Export( filePath ) )
+	{
+		QMessageBox::critical( this, tr( "Failure" ), tr( "Not implemented." ).arg( filePath ), QMessageBox::Ok );
+	}
 }
 
 

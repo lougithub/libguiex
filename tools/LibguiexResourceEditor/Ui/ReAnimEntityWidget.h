@@ -115,6 +115,7 @@ public slots:
 	void				OnRotationChanged( qreal _delta );
 	void				OnScaleChanged( const QPointF& _scale );
 	void				OnAlphaChanged( qreal _delta );
+	void				OnEntityNameChanged();
 
 	// ----------------------------------------------------------------------------
 	// Utilities.
@@ -132,7 +133,6 @@ protected:
 
 	ReRulerWidget*		m_ruler;
 	QPushButton*		m_toggleButton;
-	//QLabel*				m_label;
 	QLineEdit*			m_nameEdit;
 	ReSuite				m_suiteArray[ ETrackType_Count ];
 

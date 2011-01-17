@@ -14,6 +14,7 @@
 
 
 class QMenu;
+class QAction;
 class QLabel;
 class QGraphicsScene;
 
@@ -68,6 +69,8 @@ signals:
 public slots:
 	void				OnItemAdded( ReAnimGraphicsItem* _item );
 	void				OnItemDeleted( ReAnimGraphicsItem* _item );
+	void				OnContextMenu( const QPoint& _point );
+	void				OnExport();
 
 	// -------------------------------------------------------------------------
 	// Variables.
@@ -76,6 +79,7 @@ protected:
 	ReAnimPlayerPanel*	m_playerPanel;
 	ReAnimEntityPanel*	m_entityPanel;
 	QMenu*				m_editMenu;
+	QAction*			m_exportAction;
 
 	// Debug.
 	QString				m_debugInfo;

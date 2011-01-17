@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ReMainWindow.h'
 **
-** Created: Wed Dec 29 19:18:20 2010
+** Created: Sun Jan 16 16:12:11 2011
 **      by: The Qt Meta Object Compiler version 61 (Qt 4.5.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -33,16 +33,16 @@ static const uint qt_meta_data_RE__ReMainWindow[] = {
       37,   17,   17,   17, 0x2a,
       44,   17,   17,   17, 0x09,
       63,   17,   17,   17, 0x09,
-      80,   17,   17,   17, 0x09,
-     100,   17,   17,   17, 0x09,
-     118,   17,   17,   17, 0x09,
+      82,   17,   17,   17, 0x09,
+     102,   17,   17,   17, 0x09,
+     120,   17,   17,   17, 0x09,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_RE__ReMainWindow[] = {
     "RE::ReMainWindow\0\0_delta\0Tick(qreal)\0"
-    "Tick()\0OnGotoClipEditor()\0OnGotoAsEditor()\0"
+    "Tick()\0OnGotoClipEditor()\0OnGotoAnimEditor()\0"
     "OnGotoImageEditor()\0OnAboutSoftware()\0"
     "OnAboutAuthor()\0"
 };
@@ -75,7 +75,7 @@ int RE::ReMainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 0: Tick((*reinterpret_cast< qreal(*)>(_a[1]))); break;
         case 1: Tick(); break;
         case 2: OnGotoClipEditor(); break;
-        case 3: OnGotoAsEditor(); break;
+        case 3: OnGotoAnimEditor(); break;
         case 4: OnGotoImageEditor(); break;
         case 5: OnAboutSoftware(); break;
         case 6: OnAboutAuthor(); break;

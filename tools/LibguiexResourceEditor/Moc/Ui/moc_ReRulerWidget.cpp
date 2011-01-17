@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ReRulerWidget.h'
 **
-** Created: Sat Jan 8 15:46:44 2011
+** Created: Sun Jan 16 16:12:10 2011
 **      by: The Qt Meta Object Compiler version 61 (Qt 4.5.3)
 **
 ** WARNING! All changes made in this file will be lost!

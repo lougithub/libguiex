@@ -99,21 +99,16 @@ void ReMainWindow::Tick( qreal _delta )
 void ReMainWindow::InitData()
 {
 	m_clipModel = new ReClipModel();
-	m_clipModel->setColumnCount( ReClipModel::EColumn_Count );
-	m_clipModel->setHeaderData( ReClipModel::EColumn_Icon, Qt::Horizontal, tr( "Clip" ) );
-	m_clipModel->setHeaderData( ReClipModel::EColumn_X, Qt::Horizontal, tr( "X" ) );
-	m_clipModel->setHeaderData( ReClipModel::EColumn_Y, Qt::Horizontal, tr( "Y" ) );
-	m_clipModel->setHeaderData( ReClipModel::EColumn_W, Qt::Horizontal, tr( "W" ) );
-	m_clipModel->setHeaderData( ReClipModel::EColumn_H, Qt::Horizontal, tr( "H" ) );
+	//m_clipModel->setHeaderData( ReClipModel::EColumn_Preview, Qt::Horizontal, tr( "Clip" ) );
+	//m_clipModel->setHeaderData( ReClipModel::EColumn_Name, Qt::Horizontal, tr( "Name" ) );
+	//m_clipModel->setHeaderData( ReClipModel::EColumn_X, Qt::Horizontal, tr( "X" ) );
+	//m_clipModel->setHeaderData( ReClipModel::EColumn_Y, Qt::Horizontal, tr( "Y" ) );
+	//m_clipModel->setHeaderData( ReClipModel::EColumn_W, Qt::Horizontal, tr( "W" ) );
+	//m_clipModel->setHeaderData( ReClipModel::EColumn_H, Qt::Horizontal, tr( "H" ) );
 
 	m_animModel = new ReAnimModel();
-//	m_animModel->setHeaderData( ReAnimModel::EColumn_TrackOrFrame, Qt::Horizontal, tr( "Type" ) );
-//	m_animModel->setHeaderData( ReAnimModel::EColumn_X, Qt::Horizontal, tr( "X" ) );
-//	m_animModel->setHeaderData( ReAnimModel::EColumn_Y, Qt::Horizontal, tr( "Y" ) );
-//	m_animModel->setHeaderData( ReAnimModel::EColumn_Z, Qt::Horizontal, tr( "Z" ) );
-//	m_animModel->setHeaderData( ReAnimModel::EColumn_W, Qt::Horizontal, tr( "W" ) );
-	m_animModel->setHeaderData( ReAnimModel::EColumn_Key, Qt::Horizontal, tr( "Key" ) );
-	m_animModel->setHeaderData( ReAnimModel::EColumn_Value, Qt::Horizontal, tr( "Value" ) );
+	//m_animModel->setHeaderData( ReAnimModel::EColumn_Key, Qt::Horizontal, tr( "Key" ) );
+	//m_animModel->setHeaderData( ReAnimModel::EColumn_Value, Qt::Horizontal, tr( "Value" ) );
 }
 
 
@@ -121,13 +116,9 @@ void ReMainWindow::InitMainViews()
 {
 	// Clip editor.	
 	m_clipEditor = new ReClipEditor( m_clipModel, this );
-	m_clipEditor->setContextMenuPolicy( Qt::CustomContextMenu );
-	m_clipEditor->setFocusPolicy( Qt::ClickFocus );
 
 	// Animation editor.
 	m_animEditor = new ReAnimEditor( m_animModel, this );
-	m_animEditor->setContextMenuPolicy( Qt::CustomContextMenu );
-	m_animEditor->setFocusPolicy( Qt::ClickFocus );
 
 	// Image editor.
 	m_viewWidget = new ReViewWidget( this );
@@ -207,7 +198,7 @@ void ReMainWindow::InitMenuBar()
 	action->setCheckable( true );
 	action->setChecked( false );
 	action->setActionGroup( group );
-	connect( action, SIGNAL( triggered() ), this, SLOT( OnGotoAsEditor() ) );
+	connect( action, SIGNAL( triggered() ), this, SLOT( OnGotoAnimEditor() ) );
 
 	action = m_editorMenu->addAction( tr( "&Image Editor" ) );
 	action->setCheckable( true );
@@ -245,7 +236,7 @@ void ReMainWindow::OnGotoClipEditor()
 }
 
 
-void ReMainWindow::OnGotoAsEditor()
+void ReMainWindow::OnGotoAnimEditor()
 {
 	m_stackedEditorWidget->setCurrentIndex( EEditor_Anim );
 	m_controlPanelWidget->SwitchPanel( ReEditorPanelWidget::EPanel_AnimPanel );

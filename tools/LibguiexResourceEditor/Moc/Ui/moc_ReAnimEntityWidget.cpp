@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ReAnimEntityWidget.h'
 **
-** Created: Sun Jan 9 21:27:55 2011
+** Created: Sun Jan 16 16:12:10 2011
 **      by: The Qt Meta Object Compiler version 61 (Qt 4.5.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_RE__ReAnimEntityWidget[] = {
        2,       // revision
        0,       // classname
        0,    0, // classinfo
-      12,   12, // methods
+      13,   12, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -43,6 +43,7 @@ static const uint qt_meta_data_RE__ReAnimEntityWidget[] = {
      248,  241,   23,   23, 0x0a,
      280,  273,   23,   23, 0x0a,
      304,  241,   23,   23, 0x0a,
+     326,   23,   23,   23, 0x0a,
 
        0        // eod
 };
@@ -57,6 +58,7 @@ static const char qt_meta_stringdata_RE__ReAnimEntityWidget[] = {
     "OnPositionChanged(QPointF)\0_delta\0"
     "OnRotationChanged(qreal)\0_scale\0"
     "OnScaleChanged(QPointF)\0OnAlphaChanged(qreal)\0"
+    "OnEntityNameChanged()\0"
 };
 
 const QMetaObject RE::ReAnimEntityWidget::staticMetaObject = {
@@ -96,9 +98,10 @@ int RE::ReAnimEntityWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a
         case 9: OnRotationChanged((*reinterpret_cast< qreal(*)>(_a[1]))); break;
         case 10: OnScaleChanged((*reinterpret_cast< const QPointF(*)>(_a[1]))); break;
         case 11: OnAlphaChanged((*reinterpret_cast< qreal(*)>(_a[1]))); break;
+        case 12: OnEntityNameChanged(); break;
         default: ;
         }
-        _id -= 12;
+        _id -= 13;
     }
     return _id;
 }

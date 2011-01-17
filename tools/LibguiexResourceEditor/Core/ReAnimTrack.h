@@ -15,6 +15,9 @@ namespace RE
 {
 
 
+class ReAnimModel;
+
+
 // -----------------------------------------------------------------------------
 // Track base.
 // -----------------------------------------------------------------------------
@@ -26,7 +29,7 @@ class ReAnimTrack : public ReAnimNode
 public:
 	typedef ReAnimNode	TSuper;
 
-	ReAnimTrack();
+	ReAnimTrack( ReAnimModel* _model ): TSuper( _model ) {}
 	virtual ~ReAnimTrack();
 
 	ReAnimFrame*		CreateFrame( qreal _time );
@@ -39,7 +42,11 @@ public:
 	// -------------------------------------------------------------------------
 	// Override ReAnimNode.
 	// -------------------------------------------------------------------------
-public:
+public:	
+	virtual ReAnimNode*	CreateChild( const QVariant& _arg );
+	virtual void		DestroyChild( ReAnimNode* _child );
+	virtual int			GetChildrenCount() const { return ( int )m_frames.size(); }
+	virtual ReAnimNode*	GetChild( int _index );
 	virtual int			IndexOfChild( const ReAnimNode* _child );
 
 	// -------------------------------------------------------------------------
@@ -69,6 +76,7 @@ class ReAnimTranslationTrack : public ReAnimTrack
 {
 public:
 	typedef ReAnimTrack TSuper;
+	ReAnimTranslationTrack( ReAnimModel* _model ): TSuper( _model ) {}
 
 	// -------------------------------------------------------------------------
 	// Override ReAnimNode.
@@ -76,7 +84,7 @@ public:
 protected:
 	virtual ReAnimFrame* DoCreateFrame( qreal _time )
 	{
-		return new ReAnimTranslationFrame( _time );
+		return new ReAnimTranslationFrame( GetModel(), _time );
 	}
 
 	virtual QVariant InterpolateFrameValue( const QVariant& _valueA, const QVariant& _valueB, qreal _factor ) const
@@ -96,6 +104,7 @@ class ReAnimRotationTrack : public ReAnimTrack
 {
 public:
 	typedef ReAnimTrack TSuper;
+	ReAnimRotationTrack( ReAnimModel* _model ): TSuper( _model ) {}
 
 	// -------------------------------------------------------------------------
 	// Override ReAnimNode.
@@ -103,7 +112,7 @@ public:
 protected:
 	virtual ReAnimFrame* DoCreateFrame( qreal _time )
 	{
-		return new ReAnimRotationFrame( _time );
+		return new ReAnimRotationFrame( GetModel(), _time );
 	}
 
 	virtual QVariant InterpolateFrameValue( const QVariant& _valueA, const QVariant& _valueB, qreal _factor ) const
@@ -124,6 +133,7 @@ class ReAnimScaleTrack : public ReAnimTrack
 {
 public:
 	typedef ReAnimTrack TSuper;
+	ReAnimScaleTrack( ReAnimModel* _model ): TSuper( _model ) {}
 
 	// -------------------------------------------------------------------------
 	// Override ReAnimNode.
@@ -131,7 +141,7 @@ public:
 protected:
 	virtual ReAnimFrame*DoCreateFrame( qreal _time )
 	{
-		return new ReAnimScaleFrame( _time );
+		return new ReAnimScaleFrame( GetModel(), _time );
 	}
 
 	virtual QVariant InterpolateFrameValue( const QVariant& _valueA, const QVariant& _valueB, qreal _factor ) const
@@ -151,6 +161,7 @@ class ReAnimAlphaTrack : public ReAnimTrack
 {
 public:
 	typedef ReAnimTrack TSuper;
+	ReAnimAlphaTrack( ReAnimModel* _model ): TSuper( _model ) {}
 
 	// -------------------------------------------------------------------------
 	// Override ReAnimNode.
@@ -158,7 +169,7 @@ public:
 protected:
 	virtual ReAnimFrame*DoCreateFrame( qreal _time )
 	{
-		return new ReAnimAlphaFrame( _time );
+		return new ReAnimAlphaFrame( GetModel(), _time );
 	}
 
 	virtual QVariant InterpolateFrameValue( const QVariant& _valueA, const QVariant& _valueB, qreal _factor ) const

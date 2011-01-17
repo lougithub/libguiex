@@ -1,15 +1,15 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'ReAnimPanelWidget.h'
+** Meta object code from reading C++ file 'ReClipSheet.h'
 **
-** Created: Tue Dec 21 20:44:49 2010
+** Created: Sun Jan 16 16:36:31 2011
 **      by: The Qt Meta Object Compiler version 61 (Qt 4.5.3)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../../Ui/ReAnimPanelWidget.h"
+#include "../../Ui/ReClipSheet.h"
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'ReAnimPanelWidget.h' doesn't include <QObject>."
+#error "The header file 'ReClipSheet.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 61
 #error "This file was generated using the moc from 4.5.3. It"
 #error "cannot be used with the include files from this version of Qt."
@@ -17,7 +17,7 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-static const uint qt_meta_data_RE__ReAnimPanelWidget[] = {
+static const uint qt_meta_data_RE__ReClipSheet[] = {
 
  // content:
        2,       // revision
@@ -31,29 +31,29 @@ static const uint qt_meta_data_RE__ReAnimPanelWidget[] = {
        0        // eod
 };
 
-static const char qt_meta_stringdata_RE__ReAnimPanelWidget[] = {
-    "RE::ReAnimPanelWidget\0"
+static const char qt_meta_stringdata_RE__ReClipSheet[] = {
+    "RE::ReClipSheet\0"
 };
 
-const QMetaObject RE::ReAnimPanelWidget::staticMetaObject = {
-    { &ReBaseWidget<QWidget>::staticMetaObject, qt_meta_stringdata_RE__ReAnimPanelWidget,
-      qt_meta_data_RE__ReAnimPanelWidget, 0 }
+const QMetaObject RE::ReClipSheet::staticMetaObject = {
+    { &ReBaseWidget<QWidget>::staticMetaObject, qt_meta_stringdata_RE__ReClipSheet,
+      qt_meta_data_RE__ReClipSheet, 0 }
 };
 
-const QMetaObject *RE::ReAnimPanelWidget::metaObject() const
+const QMetaObject *RE::ReClipSheet::metaObject() const
 {
     return &staticMetaObject;
 }
 
-void *RE::ReAnimPanelWidget::qt_metacast(const char *_clname)
+void *RE::ReClipSheet::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_RE__ReAnimPanelWidget))
-        return static_cast<void*>(const_cast< ReAnimPanelWidget*>(this));
+    if (!strcmp(_clname, qt_meta_stringdata_RE__ReClipSheet))
+        return static_cast<void*>(const_cast< ReClipSheet*>(this));
     return ReBaseWidget<QWidget>::qt_metacast(_clname);
 }
 
-int RE::ReAnimPanelWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int RE::ReClipSheet::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = ReBaseWidget<QWidget>::qt_metacall(_c, _id, _a);
     if (_id < 0)

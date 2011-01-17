@@ -35,11 +35,6 @@ namespace RE
 // -----------------------------------------------------------------------------
 // General.
 // -----------------------------------------------------------------------------
-ReAnimTrack::ReAnimTrack()
-{
-}
-
-
 ReAnimTrack::~ReAnimTrack()
 {
 	TFrameListCItor itor = m_frames.begin();
@@ -162,6 +157,52 @@ qreal ReAnimTrack::GetTotalLength()
 // -----------------------------------------------------------------------------
 // Override ReAnimNode.
 // -----------------------------------------------------------------------------
+ReAnimNode* ReAnimTrack::CreateChild( const QVariant& _arg )
+{
+	ReAnimFrame* result = DoCreateFrame( _arg.toDouble() );
+	result->SetName( QObject::tr( "Frame" ) );
+	result->SetParent( this );
+	m_frames.push_back( result );
+
+	return result;
+}
+
+
+void ReAnimTrack::DestroyChild( ReAnimNode* _child )
+{
+	if( NULL != _child )
+	{
+		TFrameListItor itor = m_frames.begin();
+		TFrameListItor itorEnd = m_frames.end();
+		for( ; itor != itorEnd; ++itor )
+		{
+			if( _child == *itor )
+			{
+				m_frames.erase( itor );
+				delete _child;
+				break;
+			}
+		}
+	}
+}
+
+
+ReAnimNode* ReAnimTrack::GetChild( int _index )
+{
+	ReAnimNode* result = NULL;
+
+	if( _index >= 0 && _index < GetChildrenCount() )
+	{
+		TFrameListItor itor = m_frames.begin();
+		for( int i = 0; i < _index; ++i )
+			++itor;
+		result = *itor;
+	}
+
+	return result;
+}
+
+
 int ReAnimTrack::IndexOfChild( const ReAnimNode* _child )
 {
 	int result = -1;

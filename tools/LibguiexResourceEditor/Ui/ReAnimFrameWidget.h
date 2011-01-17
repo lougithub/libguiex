@@ -16,6 +16,7 @@ namespace RE
 
 
 class ReAnimFrame;
+class ReAnimModel;
 
 
 // -----------------------------------------------------------------------------

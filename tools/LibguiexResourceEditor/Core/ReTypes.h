@@ -13,7 +13,12 @@ namespace RE
 {
 
 
-typedef QString TImageHandle;
+enum ePromptResult
+{
+	EPromptResult_Yes,
+	EPromptResult_No,
+	EPromptResult_Cancel
+};
 
 
 }

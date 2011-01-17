@@ -14,15 +14,19 @@ namespace RE
 {
 
 
+class ReAnimModel;
+
+
 class ReAnimNode
 {
 	// -------------------------------------------------------------------------
 	// General.
 	// -------------------------------------------------------------------------
 public:
-	ReAnimNode(): m_parent( NULL ), m_name( QObject::tr( "AnimNode" ) ) {}
+	ReAnimNode( ReAnimModel* _model ): m_model( _model ), m_parent( NULL ) {}
 	virtual ~ReAnimNode() {}
 
+	ReAnimModel*		GetModel() const					{ return m_model; }
 	ReAnimNode*			GetParent() const					{ return m_parent; }
 	void				SetParent( ReAnimNode* _p )			{ m_parent = _p; }
 
@@ -31,12 +35,18 @@ public:
 
 	virtual QVariant	GetNameVariant() const				{ return m_name; }
 	virtual QVariant	GetDataVariant() const				{ return QVariant(); }
+
+	virtual ReAnimNode*	CreateChild( const QVariant& _arg )	{ return NULL; }
+	virtual void		DestroyChild( ReAnimNode* _child )	{}
+	virtual int			GetChildrenCount() const			{ return 0; }
+	virtual ReAnimNode*	GetChild( int _index )				{ return NULL; }
 	virtual int			IndexOfChild( ReAnimNode* )	const	{ return -1; }
 
 	// -------------------------------------------------------------------------
 	// Variables.
 	// -------------------------------------------------------------------------
 protected:
+	ReAnimModel*		m_model;
 	ReAnimNode*			m_parent;
 	QString				m_name;
 };
@@ -45,7 +55,9 @@ protected:
 class ReAnimValue : public ReAnimNode
 {
 public:
-	ReAnimValue( qreal _value = 0.0f ): m_value( _value ) {}
+	typedef ReAnimNode	TSuper;
+
+	ReAnimValue( ReAnimModel* _model = NULL, qreal _value = 0.0f ): TSuper( _model ), m_value( _value ) {}
 
 	virtual QVariant	GetDataVariant() const				{ return m_value; }
 	void				SetValue( qreal _value )			{ m_value = _value; }

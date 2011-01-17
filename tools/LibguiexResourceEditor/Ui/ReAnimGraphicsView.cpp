@@ -29,6 +29,8 @@ ReAnimGraphicsView::ReAnimGraphicsView( QGraphicsScene* _scene, QWidget* _parent
 {
 	setCacheMode( QGraphicsView::CacheBackground );
 	setViewportUpdateMode( QGraphicsView::SmartViewportUpdate );
+	setOptimizationFlag( QGraphicsView::DontClipPainter, true );
+	setOptimizationFlag( QGraphicsView::DontAdjustForAntialiasing, true );
 	setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
 	setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
 	setFrameShape( QFrame::NoFrame );

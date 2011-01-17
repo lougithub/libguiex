@@ -37,6 +37,22 @@ ReAnimEntityPanel::ReAnimEntityPanel( ReAnimModel* _model, ReRulerWidget* _ruler
 }
 
 
+bool ReAnimEntityPanel::Export( const QString& _filePath ) const
+{
+	bool result = false;
+
+	TAnimEntityListCItor itor = m_entityList.begin();
+	TAnimEntityListCItor itorEnd = m_entityList.end();
+	for( ; itor != itorEnd; ++itor )
+	{
+		const ReAnimEntityInfo& info = *itor;
+		ReAnimEntityWidget* entityWidget = info.m_entityWidget;
+	}
+
+	return result;
+}
+
+
 // -----------------------------------------------------------------------------
 // -----------------------------------------------------------------------------
 
@@ -97,6 +113,8 @@ void ReAnimEntityPanel::OnItemDeleted( ReAnimGraphicsItem* _item )
 		ReAnimEntityInfo& info = *itor;
 		if( info.m_graphicsItem == _item )
 		{
+			ReAnimModel* animModel = m_model;
+			animModel->DestroyEntity( info.m_entityWidget->GetModelData() );
 			delete info.m_entityWidget;
 			m_entityList.erase( itor );			
 			break;

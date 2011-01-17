@@ -24,7 +24,7 @@ namespace RE
 {
 
 
-class ReClipModelWidget;
+class ReClipWorkshop;
 
 
 class ReClipEditor : public ReBaseWidget< QWidget >
@@ -43,56 +43,23 @@ public:
 	// Overrides QWidget.
 	// ----------------------------------------------------------------------------
 protected:
-	virtual void		paintEvent( QPaintEvent* _event );	
-	virtual void		mousePressEvent( QMouseEvent* _event );
-	virtual void		mouseReleaseEvent( QMouseEvent* _event );
-	virtual void		mouseMoveEvent( QMouseEvent* _event );
-	virtual void		wheelEvent( QWheelEvent* _event );
-	virtual void		keyPressEvent( QKeyEvent* _event );
-	virtual void		keyReleaseEvent( QKeyEvent* _event );
 	virtual void		resizeEvent( QResizeEvent* _event );
-
-	// ----------------------------------------------------------------------------
-	// Override ReBaseWidget.
-	// ----------------------------------------------------------------------------
-public:
-	virtual void		Tick( qreal _delta );
-	virtual QMenu*		GetEditMenu() const;
 
 	// ----------------------------------------------------------------------------
 	// Slots.
 	// ----------------------------------------------------------------------------
 public slots:
-	void				OnContextMenu( const QPoint& _point );
-	void				OnLoadImage();
-	void				OnImport();
-	void				OnExport();
 	void				OnToggleDebug();
 
 	// ----------------------------------------------------------------------------
 	// Utilities.
 	// ----------------------------------------------------------------------------
 protected:
-	void				InitMenus();
 
 	// ----------------------------------------------------------------------------
 	// ----------------------------------------------------------------------------
 protected:
-	typedef RePool< ReClipWidget >		TClipPool;
-	typedef TClipPool::TItemListItor	TClipPoolItor;
-	typedef TClipPool::TItemListCItor	TClipPoolCItor;
-
-	// Model.
-	ReClipModelWidget*	m_modelWidget;			// The parent of all clip widgets.
-
-	// Menu.
-	QMenu*				m_editMenu;
-
-	// Zooming.
-	qreal				m_currentZoomFactor;
-	qreal				m_minZoomFactor;
-	qreal				m_maxZoomFactor;
-	qreal				m_zoomStep;
+	ReClipWorkshop*		m_workshop;
 
 	// Debug.
 	QPoint				m_cursor;

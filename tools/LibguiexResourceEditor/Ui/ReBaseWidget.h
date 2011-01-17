@@ -31,6 +31,7 @@ public:
 
 	ReDragInfo&			GetDragInfoRef()					{ return m_dragInfo; }
 	const ReDragInfo&	GetDragInfo() const					{ return m_dragInfo; }
+	ReDragInfo::eResize	CalcResizeType( const QPoint& _point ) const;
 
 	int					GetLeftPadding() const				{ return m_leftPadding; }
 	int&				GetLeftPaddingRef()					{ return m_leftPadding; }
@@ -66,7 +67,61 @@ ReBaseWidget< T >::ReBaseWidget( QWidget* _parent /* = NULL */ )
 , m_horizontalGap( 0 )
 , m_verticalGap( 0 )
 {
+}
 
+
+template< class T >
+ReDragInfo::eResize ReBaseWidget< T >::CalcResizeType( const QPoint& _point ) const
+{
+	ReDragInfo::eResize result = ReDragInfo::EResize_None;	
+	QPoint localPos = _point;
+	const int padding = 3;
+	const int width = T::width();
+	const int height = T::height();
+
+	bool isLeft = ( localPos.x() >= 0 ) && ( localPos.x() < padding );
+	bool isRight = ( width > localPos.x() ) && ( ( width - localPos.x() ) <= padding );
+	bool isTop = ( localPos.y() >= 0 ) && ( localPos.y() < padding );
+	bool isBottom = ( height > localPos.y() ) && ( ( height - localPos.y() ) <= padding );
+	bool isV = ( localPos.y() >= 0 && localPos.y() < height );
+	bool isH = ( localPos.x() >= 0 && localPos.x() < width );
+
+	if( isLeft && isTop )
+	{
+		result = ReDragInfo::EResize_LeftTop;
+	}
+	else if( isLeft && isBottom )
+	{
+		result = ReDragInfo::EResize_LeftBottom;
+	}
+	else if( isRight && isTop )
+	{
+		result = ReDragInfo::EResize_RightTop;
+	}
+	else if( isRight && isBottom )
+	{
+		result = ReDragInfo::EResize_RightBottom;
+	}
+	else
+	{
+		if( isH )
+		{
+			if( isLeft )
+				result = ReDragInfo::EResize_Left;
+			else if( isRight )
+				result = ReDragInfo::EResize_Right;
+		}
+
+		if( isV )
+		{
+			if( isTop )
+				result = ReDragInfo::EResize_Top;
+			else if( isBottom )
+				result = ReDragInfo::EResize_Bottom;
+		}
+	}
+
+	return result;
 }
 
 

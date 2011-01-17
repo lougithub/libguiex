@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ReAnimModel.h'
 **
-** Created: Sat Jan 8 16:03:16 2011
+** Created: Sun Jan 16 16:12:11 2011
 **      by: The Qt Meta Object Compiler version 61 (Qt 4.5.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,20 +23,16 @@ static const uint qt_meta_data_RE__ReAnimModel[] = {
        2,       // revision
        0,       // classname
        0,    0, // classinfo
-       1,   12, // methods
+       0,    0, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
-
- // slots: signature, parameters, type, tag, flags
-      35,   17,   16,   16, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_RE__ReAnimModel[] = {
-    "RE::ReAnimModel\0\0_trackType,_frame\0"
-    "OnFrameChanged(eTrackType,ReAnimFrame*)\0"
+    "RE::ReAnimModel\0"
 };
 
 const QMetaObject RE::ReAnimModel::staticMetaObject = {
@@ -62,13 +58,6 @@ int RE::ReAnimModel::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     _id = QAbstractItemModel::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
-    if (_c == QMetaObject::InvokeMetaMethod) {
-        switch (_id) {
-        case 0: OnFrameChanged((*reinterpret_cast< eTrackType(*)>(_a[1])),(*reinterpret_cast< ReAnimFrame*(*)>(_a[2]))); break;
-        default: ;
-        }
-        _id -= 1;
-    }
     return _id;
 }
 QT_END_MOC_NAMESPACE

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ReAnimConsoleWidget.h'
 **
-** Created: Sun Jan 9 22:07:44 2011
+** Created: Sun Jan 16 16:12:10 2011
 **      by: The Qt Meta Object Compiler version 61 (Qt 4.5.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_RE__ReAnimConsoleWidget[] = {
        2,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   12, // methods
+       5,   12, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -34,6 +34,8 @@ static const uint qt_meta_data_RE__ReAnimConsoleWidget[] = {
  // slots: signature, parameters, type, tag, flags
       58,   25,   24,   24, 0x0a,
       91,   25,   24,   24, 0x0a,
+     133,  126,   24,   24, 0x0a,
+     155,   24,   24,   24, 0x0a,
 
        0        // eod
 };
@@ -43,6 +45,7 @@ static const char qt_meta_stringdata_RE__ReAnimConsoleWidget[] = {
     "Focus(ReAnimGraphicsItem*)\0"
     "OnItemAdded(ReAnimGraphicsItem*)\0"
     "OnItemDeleted(ReAnimGraphicsItem*)\0"
+    "_point\0OnContextMenu(QPoint)\0OnExport()\0"
 };
 
 const QMetaObject RE::ReAnimConsoleWidget::staticMetaObject = {
@@ -73,9 +76,11 @@ int RE::ReAnimConsoleWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_
         case 0: Focus((*reinterpret_cast< ReAnimGraphicsItem*(*)>(_a[1]))); break;
         case 1: OnItemAdded((*reinterpret_cast< ReAnimGraphicsItem*(*)>(_a[1]))); break;
         case 2: OnItemDeleted((*reinterpret_cast< ReAnimGraphicsItem*(*)>(_a[1]))); break;
+        case 3: OnContextMenu((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 4: OnExport(); break;
         default: ;
         }
-        _id -= 3;
+        _id -= 5;
     }
     return _id;
 }

@@ -1,12 +1,11 @@
 // -----------------------------------------------------------------------------
 // Author: GameCrashDebug.
-// Date: 20101121.
+// Date: 20110115.
 // -----------------------------------------------------------------------------
-#ifndef _RE_CLIP_MODEL_WIDGET_H_
-#define _RE_CLIP_MODEL_WIDGET_H_
+#ifndef _RE_EDITOR_CLIPWORKSHOP
+#define _RE_EDITOR_CLIPWORKSHOP
 // -----------------------------------------------------------------------------
 // This widget is the working area of the clip editor.
-// It derives from QLabel so that a background image could be displayed.
 // All its children represent the clips in the clip editor.
 // The moving and resizing features could be developed in either of:
 // .
@@ -17,92 +16,105 @@
 // Therefore, I choose to follow the second approach and keep ReClipWidget's
 // responsibilities to minimum.
 // -----------------------------------------------------------------------------
-#include <QLabel>
+#include <QWidget>
+#include "Core\ReTypes.h"
 #include "Core\ReModelBase.h"
 #include "Core\ReDragInfo.h"
+#include "Core\ReZoomInfo.h"
+#include "Core\ReItemGroup.h"
+#include "Core\ReWidgetSelection.h"
 #include "UI\ReClipWidget.h"
 #include "Ui\ReBaseWidget.h"
+
+
+class QMenu;
+class QAction;
 
 
 namespace RE
 {
 
 
+class ReClipImage;
 class ReClipWidget;
 class ReClipModel;
 
 
-class ReClipModelWidget : public ReBaseWidget< QLabel >, public ReModelBase< ReClipWidget >
+class ReClipWorkshop : public ReBaseWidget< QWidget >
 {
 	Q_OBJECT
-	typedef ReBaseWidget< QLabel >			TSuper;
-	typedef ReModelBase< ReClipWidget >		TSuperB;
+	typedef ReBaseWidget< QWidget >			TSuper;
 
 	// -------------------------------------------------------------------------
 	// General.
 	// -------------------------------------------------------------------------
 public:
-	ReClipModelWidget( ReClipModel* _model, QWidget* _parent = NULL );
+	ReClipWorkshop( ReClipModel* _model, QWidget* _parent = NULL );
 
-	bool					LoadImage( const QString& _path );
-	bool					Export( const QString& _path );
-
-	ReDragInfo&				GetDragInfoRef()		{ return m_dragInfo; }
-	const ReDragInfo&		GetDragInfo() const		{ return m_dragInfo; }
+	ReDragInfo&			GetDragInfoRef()		{ return m_dragInfo; }
+	const ReDragInfo&	GetDragInfo() const		{ return m_dragInfo; }
 
 	// -------------------------------------------------------------------------
-	// Override QLabel.
+	// Override QWidget.
 	// -------------------------------------------------------------------------
 public:
-	virtual void			paintEvent( QPaintEvent* _event );
-	virtual void			mousePressEvent( QMouseEvent* _event );
-	virtual void			mouseReleaseEvent( QMouseEvent* _event );
-	virtual void			mouseMoveEvent( QMouseEvent* _event );
+	virtual void		paintEvent( QPaintEvent* _event );
+	virtual void		wheelEvent( QWheelEvent* _event );
+	virtual void		mousePressEvent( QMouseEvent* _event );
+	virtual void		mouseReleaseEvent( QMouseEvent* _event );
+	virtual void		mouseMoveEvent( QMouseEvent* _event );
 
 	// -------------------------------------------------------------------------
-	// Override ReModelBase.
+	// Override ReBaseWidget.
 	// -------------------------------------------------------------------------
 public:
-	virtual void			Tick( qreal _delta );
-	virtual void			RecycleData( ReClipWidget* _clip );
+	virtual void		Tick( qreal _delta );
 
 	// -------------------------------------------------------------------------
 	// Slots.
 	// -------------------------------------------------------------------------
 public slots:
-	void					OnZoom( qreal _zoomFactor );
-	void					OnDelete();
+	void				OnContextMenu( const QPoint& _point );
+	void				OnLoadImage();
+	void				OnImport();
+	void				OnSave();
+	void				OnSaveAs();
 
 	// -------------------------------------------------------------------------
 	// Utilities.
 	// -------------------------------------------------------------------------
 protected:
-	bool					IsReadyForEdit() const;
-	ReClipWidget*			CreateClip();
-	bool					ValidateClip( ReClipWidget* _clip ) const;
-	void					TrimClip( ReClipWidget* _clip );
+	void				InitMenus();
+	void				DoLoadImage( const QString& _path );
+	void				DoImport( const QString& _path );
+	void				DoReset();
+	ePromptResult		CheckAndPromptToSave();
+	bool				IsDirty() const;
+	bool				IsReadyForEdit() const;
+	bool				IsClipValid( const ReClipWidget* _clip ) const;
 
 	// -------------------------------------------------------------------------
 	// Variables.
 	// -------------------------------------------------------------------------
 protected:
-	// Data.
-	ReClipModel*			m_model;
+	//// Data.
+	ReClipModel*		m_model;
+	ReClipImage*		m_clipImage;
+	ReDragInfo			m_dragInfo;
+	ReZoomInfo			m_zoomInfo;
 
-	// UI.
-	typedef RePool< ReClipWidget >		TClipPool;
-	typedef TClipPool::TItemListItor	TClipPoolItor;
-	typedef TClipPool::TItemListCItor	TClipPoolCItor;
+	QPoint				m_cursor;
+	QString				m_filePath;
 
-	TClipPool				m_clipList;			// Keep a list of all children.
-	ReClipWidget*			m_currentClip;
-	ReDragInfo				m_dragInfo;
-	QPoint					m_cursor;
-	QString					m_imagePath;
+	QMenu*				m_editMenu;
+	QAction*			m_loadImageAction;
+	QAction*			m_importAction;
+	QAction*			m_saveAction;
+	QAction*			m_saveAsAction;
 
-	QString					m_debugInfo;
+	QString				m_debugInfo;
 };
 
 
 }
-#endif	// _RE_CLIP_MODEL_WIDGET_H_
+#endif	// _RE_EDITOR_CLIPWORKSHOP

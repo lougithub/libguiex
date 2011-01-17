@@ -36,7 +36,10 @@ public:
 	// Override QGraphicsScene.
 	// -------------------------------------------------------------------------
 protected:
-	void			contextMenuEvent( QGraphicsSceneContextMenuEvent* _event );
+	virtual void	contextMenuEvent( QGraphicsSceneContextMenuEvent* _event );
+	virtual void	dragEnterEvent( QGraphicsSceneDragDropEvent* _event );
+	virtual void	dragMoveEvent( QGraphicsSceneDragDropEvent* _event );
+	virtual void	dropEvent( QGraphicsSceneDragDropEvent* _event );
 
 	// -------------------------------------------------------------------------
 	// Signals.

@@ -16,7 +16,7 @@ namespace RE
 {
 
 
-class ReClipData;
+class ReClipNode;
 
 
 // -----------------------------------------------------------------------------
@@ -34,16 +34,14 @@ class ReClipWidget : public ReBaseWidget< QLabel >
 	// -------------------------------------------------------------------------
 public:
 	ReClipWidget( QWidget* _parent = NULL );
+	~ReClipWidget();
 
-	ReClipData*			GetModelData() const				{ return m_modelData; }
-	void				SetModelData( ReClipData* _data )	{ m_modelData = _data; }
-	void				PullData();
-	void				PushData();
+	ReClipNode*			GetModelData() const				{ return m_modelData; }
+	void				SetModelData( ReClipNode* _data )	{ m_modelData = _data; }
 
 	int					GetZoomFactor() const				{ return m_zoomFactor; }
 	void				SetZoomFactor( int _z )				{ m_zoomFactor = _z; }
 
-	TResizeType			CalcResizeType( const QPoint& _point ) const;
 	void				ShowOutline( bool _show )			{ m_isShowOutline = _show; }
 
 	// -------------------------------------------------------------------------
@@ -51,9 +49,9 @@ public:
 	// -------------------------------------------------------------------------
 public:
 	virtual void		paintEvent( QPaintEvent* _event );
-	virtual void		mousePressEvent( QMouseEvent* _event );
-	virtual void		mouseReleaseEvent( QMouseEvent* _event );
 	virtual void		mouseMoveEvent( QMouseEvent* _event );
+	virtual void		resizeEvent( QResizeEvent* _event );
+	virtual void		moveEvent( QMoveEvent* _event );
 
 	// -------------------------------------------------------------------------
 	// Utilities.
@@ -64,7 +62,7 @@ protected:
 	// Variables.
 	// -------------------------------------------------------------------------
 protected:
-	ReClipData*			m_modelData;
+	ReClipNode*			m_modelData;
 
 	int					m_zoomFactor;	
 	bool				m_isShowOutline;

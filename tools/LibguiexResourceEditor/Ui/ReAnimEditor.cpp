@@ -27,12 +27,14 @@ ReAnimEditor::ReAnimEditor( ReAnimModel* _model, QWidget* _parent /* = NULL */ )
 // Widgets.
 , m_animConsole( NULL )
 , m_animGraphics( NULL )
-, m_lastFocusedWidget( NULL )
 // Menu.
 , m_animViewMenu( NULL )
 // Debug.
 , m_isDebugEnabled( false )
 {
+	setContextMenuPolicy( Qt::CustomContextMenu );
+	setFocusPolicy( Qt::ClickFocus );
+
 	// Animation graphics scene.
 	m_scene = new ReAnimGraphicsScene( _model, this );
 
@@ -41,7 +43,6 @@ ReAnimEditor::ReAnimEditor( ReAnimModel* _model, QWidget* _parent /* = NULL */ )
 	m_animConsole->setFocusPolicy( Qt::StrongFocus );
 	m_animConsole->setContextMenuPolicy( Qt::CustomContextMenu );
 	m_animConsole->setFocus();
-	m_lastFocusedWidget = m_animConsole;
 
 	// Animation graphics widget.
 	m_animGraphics = new ReAnimGraphicsWidget( _model, m_scene, this );
