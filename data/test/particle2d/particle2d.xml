@@ -1,5 +1,5 @@
 <guiex>
-    <property name="particle2d_1" type="CGUIWidgetDefine" value="CGUIWgtStaticParticle2DSystem">
+    <property name="particle2d_1" type="CGUIWidgetDefine" value="CGUIWgtParticle2D">
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="0.5,0.5" />
             <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />

@@ -1,5 +1,5 @@
 /** 
-* @file guiwgtstaticparticle2dsystem.cpp
+* @file guiwgtparticle2d.cpp
 * @brief used to show a particle 2d system
 * @author ken
 * @date 2011-01-14
@@ -9,7 +9,7 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_widget/guiwgtstaticparticle2dsystem.h>
+#include <libguiex_widget/guiwgtparticle2d.h>
 #include <libguiex_core/guiinterfacerender.h>
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guiimage.h>
@@ -22,21 +22,21 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtStaticParticle2DSystem);
+	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtParticle2D);
 	//------------------------------------------------------------------------------
-	CGUIWgtStaticParticle2DSystem::CGUIWgtStaticParticle2DSystem( const CGUIString& rName, const CGUIString& rSceneName )
+	CGUIWgtParticle2D::CGUIWgtParticle2D( const CGUIString& rName, const CGUIString& rSceneName )
 		:CGUIWgtStatic(StaticGetType(), rName, rSceneName)
 	{
 		InitStaticParticle2DSystem();
 	}
 	//------------------------------------------------------------------------------
-	CGUIWgtStaticParticle2DSystem::CGUIWgtStaticParticle2DSystem( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+	CGUIWgtParticle2D::CGUIWgtParticle2D( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
 		:CGUIWgtStatic(rType, rName, rSceneName)
 	{
 		InitStaticParticle2DSystem();
 	}
 	//------------------------------------------------------------------------------
-	CGUIWgtStaticParticle2DSystem::~CGUIWgtStaticParticle2DSystem()
+	CGUIWgtParticle2D::~CGUIWgtParticle2D()
 	{
 		if( m_pParticle2DSystem )
 		{
@@ -45,12 +45,12 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtStaticParticle2DSystem::InitStaticParticle2DSystem()
+	void CGUIWgtParticle2D::InitStaticParticle2DSystem()
 	{
 		m_pParticle2DSystem = NULL;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtStaticParticle2DSystem::RenderSelf(IGUIInterfaceRender* pRender)
+	void CGUIWgtParticle2D::RenderSelf(IGUIInterfaceRender* pRender)
 	{
 		if( m_pParticle2DSystem )
 		{
@@ -58,7 +58,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtStaticParticle2DSystem::OnUpdate( real fDeltaTime )
+	void CGUIWgtParticle2D::OnUpdate( real fDeltaTime )
 	{
 		CGUIWidget::OnUpdate(fDeltaTime );
 
@@ -68,7 +68,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtStaticParticle2DSystem::SetParticle2D( const CGUIString& rParticle2DName )
+	void CGUIWgtParticle2D::SetParticle2D( const CGUIString& rParticle2DName )
 	{
 		if( rParticle2DName.empty() )
 		{
@@ -83,7 +83,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtStaticParticle2DSystem::SetParticle2D( class CGUIParticle2DSystem* pParticle2D )
+	void CGUIWgtParticle2D::SetParticle2D( class CGUIParticle2DSystem* pParticle2D )
 	{
 		if( m_pParticle2DSystem == pParticle2D )
 		{
@@ -103,7 +103,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIWgtStaticParticle2DSystem::GenerateProperty( CGUIProperty& rProperty )
+	int32 CGUIWgtParticle2D::GenerateProperty( CGUIProperty& rProperty )
 	{
 		if( rProperty.GetType() == ePropertyType_Particle2D && rProperty.GetName() == "particle2d" )
 		{
@@ -123,7 +123,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtStaticParticle2DSystem::ProcessProperty( const CGUIProperty& rProperty)
+	void CGUIWgtParticle2D::ProcessProperty( const CGUIProperty& rProperty)
 	{
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//property for text

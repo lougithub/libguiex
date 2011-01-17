@@ -1,5 +1,5 @@
 /** 
-* @file guiwgtstaticparticle2dsystem.h
+* @file guiwgtparticle2d.h
 * @brief used to show a particle 2d system
 * @author ken
 * @date 2011-01-14
@@ -21,20 +21,20 @@
 namespace guiex
 {
 	/**
-	* @class CGUIWgtStaticParticle2DSystem
+	* @class CGUIWgtParticle2D
 	*/
-	class GUIEXPORT CGUIWgtStaticParticle2DSystem : public CGUIWgtStatic
+	class GUIEXPORT CGUIWgtParticle2D : public CGUIWgtStatic
 	{
 	public:
-		CGUIWgtStaticParticle2DSystem( const CGUIString& rName, const CGUIString& rSceneName );
-		virtual ~CGUIWgtStaticParticle2DSystem();
+		CGUIWgtParticle2D( const CGUIString& rName, const CGUIString& rSceneName );
+		virtual ~CGUIWgtParticle2D();
 
 		virtual int32 GenerateProperty( CGUIProperty& rProperty );
 		virtual void ProcessProperty( const CGUIProperty& rProperty);
 
 
 	protected:
-		CGUIWgtStaticParticle2DSystem( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
+		CGUIWgtParticle2D( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 		void InitStaticParticle2DSystem();
 
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
@@ -47,7 +47,7 @@ namespace guiex
 		class CGUIParticle2DSystem* m_pParticle2DSystem;
 
 	protected:
-		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtStaticParticle2DSystem);
+		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtParticle2D);
 	};
 
 

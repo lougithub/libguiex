@@ -165,7 +165,7 @@
 		</page>
 	</widget>
 
-	<widget type="CGUIWgtStaticParticle2DSystem" inherit="CGUIWidget">
+	<widget type="CGUIWgtParticle2D" inherit="CGUIWidget">
 		<page name="Appearance">
 			<property name="particle2d" type="CGUIParticle2D" value="" category="particle"/>
 		</page>

@@ -37,8 +37,8 @@ set( ${target_name}_static_SRCS
         guiwgtstaticimage.h
         guiwgtstatictext.cpp
 		guiwgtstatictext.h
-		guiwgtstaticparticle2dsystem.cpp
-		guiwgtstaticparticle2dsystem.h
+		guiwgtparticle2d.cpp
+		guiwgtparticle2d.h
 	)
 source_group( static FILES ${${target_name}_static_SRCS} )
 
