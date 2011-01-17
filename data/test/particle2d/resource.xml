@@ -5,7 +5,7 @@
 		<property name="duration" type="real" value="-1"/>
 		<property name="particleLifespan" type="real" value="10"/>
 		<property name="particleLifespanVariance" type="real" value="0"/>
-		<property name="textureFileName" type="CGUIString" value="image/particle1.tga"/><!--SpinningPeas.png-->
+		<property name="textureFileName" type="CGUIString" value="image/stars.tga"/><!--SpinningPeas.png-->
 		<property name="angle" type="real" value="90"/>
 		<property name="angleVariance" type="real" value="360"/>
 		<property name="startColor" type="CGUIColor" value="255,255,255,255"/>
@@ -38,7 +38,7 @@
 		<property name="duration" type="real" value="-1"/>
 		<property name="particleLifespan" type="real" value="4"/>
 		<property name="particleLifespanVariance" type="real" value="1"/>
-		<property name="textureFileName" type="CGUIString" value="image/particle1.tga"/><!--Galaxy.png-->
+		<property name="textureFileName" type="CGUIString" value="image/stars.tga"/><!--Galaxy.png-->
 		<property name="angle" type="real" value="90"/>
 		<property name="angleVariance" type="real" value="360"/>
 		<property name="startColor" type="CGUIColor" value="30,64,192,255"/>
