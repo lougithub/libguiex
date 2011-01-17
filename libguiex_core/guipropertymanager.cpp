@@ -44,15 +44,20 @@ namespace guiex
 		RegisterPropertyType( ePropertyType_Vector3, "CGUIVector3" );
 		RegisterPropertyType( ePropertyType_Color, "CGUIColor" );
 		RegisterPropertyType( ePropertyType_StringInfo, "CGUIStringInfo" );
+		RegisterPropertyType( ePropertyType_SBlendFunc, "SGUIBlendFunc" );
 		RegisterPropertyType( ePropertyType_Event, "CGUIEvent" );
 		RegisterPropertyType( ePropertyType_WidgetPosition, "CGUIWidgetPosition" );		
 		RegisterPropertyType( ePropertyType_WidgetSize, "CGUIWidgetSize" );		
+		RegisterPropertyType( ePropertyType_Particle2D, "CGUIParticle2D" );		
+		
 
 		RegisterPropertyType( ePropertyType_TextAlignmentHorz, "ETextAlignmentHorz" );
 		RegisterPropertyType( ePropertyType_TextAlignmentVert, "ETextAlignmentVert" );
 		RegisterPropertyType( ePropertyType_ImageOrientation, "EImageOrientation" );
 		RegisterPropertyType( ePropertyType_ScreenValue, "EScreenValue" );
 		RegisterPropertyType( ePropertyType_Interpolation, "EInterpolationType" );
+		RegisterPropertyType( ePropertyType_Particle2DSystemMode, "EParticle2DSystemMode" );
+		RegisterPropertyType( ePropertyType_BlendFunc, "EBlendFunc" );
 
 
 		RegisterPropertyType( ePropertyType_Font, "CGUIFont" );		
@@ -79,7 +84,8 @@ namespace guiex
 		RegisterPropertyType( ePropertyType_AnimationDefine, "CGUIAnimationDefine" );
 		RegisterPropertyType( ePropertyType_AsDefine, "CGUIAsDefine" );
 		RegisterPropertyType( ePropertyType_WidgetDefine, "CGUIWidgetDefine" );
-
+		RegisterPropertyType( ePropertyType_Particle2DDefine, "CGUIParticle2DDefine" );
+		
 		//scene related property
 		RegisterPropertyType( ePropertyType_Scene_Title, "Title" );
 		RegisterPropertyType( ePropertyType_Scene_Dependency, "Dependency" );

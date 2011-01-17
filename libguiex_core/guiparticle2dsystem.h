@@ -16,6 +16,7 @@
 #include "guivector2.h"
 #include "guicolor.h"
 #include "guirendertype.h"
+#include "guiresource.h"
 
 //============================================================================//
 // declare
@@ -95,22 +96,22 @@ namespace guiex
 		} mode;
 	};
 
-	class CGUIParticle2DSystem
+
+	class CGUIParticle2DSystem : public CGUIResource
 	{	
 	public:
-		CGUIParticle2DSystem( int numberOfParticles );
 		virtual ~CGUIParticle2DSystem();
 
+		int32 LoadValueFromProperty( const class CGUIProperty& rProperty );
+
 		bool AddParticle();
-		void InitParticle( CGUIParticle2D* particle );
 
 		virtual void Render( class IGUIInterfaceRender* pRender, const class CGUIMatrix4& rWorldMatrix );
-		virtual void UpdateQuadWithParticle( CGUIParticle2D* particle, const CGUIVector2& rNewPos );
-		virtual void PostStep();
 
 		void StopSystem();
 		void ResetSystem();
 		bool IsFull();
+
 		void Update( real rDeltaTime );
 
 		void SetTexture( const CGUIString& rTexturePath );
@@ -157,7 +158,7 @@ namespace guiex
 		void SetRotatePerSecondVar(real degrees);
 		real GetRotatePerSecondVar();
 
-		const SBlendFuncType& GetBlendFuncType() const;
+		const SGUIBlendFunc& GetBlendFuncType() const;
 
 		void SetEmissionRate( real rRate );
 		void SetLife( real rLife );
@@ -176,6 +177,19 @@ namespace guiex
 		void SetDuration( real fDuration );
 		real GetDuration(  ) const;
 
+		void SetTotalParticles( uint32 nTotalParticle );
+
+	protected:
+		CGUIParticle2DSystem( const CGUIString& rName, const CGUIString& rSceneName );
+
+		virtual int32 DoLoad() const;
+		virtual void DoUnload();
+
+		virtual void UpdateQuadWithParticle( CGUIParticle2D* particle, const CGUIVector2& rNewPos );
+		virtual void PostStep();
+
+		void InitParticle( CGUIParticle2D* particle );
+
 	protected:
 		// is the particle system active ?
 		bool active;
@@ -184,7 +198,6 @@ namespace guiex
 		// time elapsed since the start of the system (in seconds)
 		real elapsed;
 
-		CGUIVector2 position;
 		CGUIVector2 sourcePosition;
 		// Position variance
 		CGUIVector2 posVar;
@@ -196,7 +209,7 @@ namespace guiex
 
 		// Different modes
 
-		int32 emitterMode;
+		EParticle2DSystemMode emitterMode;
 		union 
 		{
 			// Mode A:Gravity + Tangential Accel + Radial Accel
@@ -274,7 +287,7 @@ namespace guiex
 
 
 		// Array of particles
-		CGUIParticle2D *particles;
+		mutable CGUIParticle2D *particles;
 		// Maximum particles
 		uint32 totalParticles;
 		// Count of active particles
@@ -285,9 +298,10 @@ namespace guiex
 		real emitCounter;
 
 		// Texture of the particles
-		class CGUITexture *texture;
+		CGUIString m_strFullTexturePath;
+		mutable class CGUITexture *texture;
 		// blend type
-		SBlendFuncType blendFunc;
+		SGUIBlendFunc blendFunc;
 
 		// movement type: free or grouped
 		EParticlePositionType positionType;

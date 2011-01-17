@@ -100,6 +100,10 @@
 #include "guias.h"
 #include "guiasmanager.h"
 
+//particle 2d
+#include "guiparticle2dsystemquad.h"
+#include "guiparticle2dmanager.h"
+
 //sound
 #include "guisounddata.h"
 

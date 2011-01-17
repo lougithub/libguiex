@@ -221,4 +221,55 @@ namespace guiex
 		AddOrReplaceProperty( rProperty, aColorProperty );
 	}
 	//------------------------------------------------------------------------------
+	//SGUIBlendFunc
+	template<  >
+	void PropertyToValue<SGUIBlendFunc>( const CGUIProperty& rProperty, SGUIBlendFunc& rValue)
+	{
+		/*
+		<property name="blendFunc" type="SGUIBlendFunc"/>
+			<property name="src" type="EBlendFunc" value="eBlendFunc_ONE"/>
+			<property name="dst" type="EBlendFunc" value="eBlendFunc_SRC_ALPHA"/>
+		</property>
+		*/
+		GUI_PROPERTY_TEST( rProperty, ePropertyType_SBlendFunc);
+
+		const CGUIProperty* pSrcProperty = rProperty.GetProperty( "src", "EBlendFunc" );
+		if( !pSrcProperty )
+		{
+			throw CGUIException(
+				"[PropertyToValue[SGUIBlendFunc]]: invalid property format" );
+			return;
+		}
+		else
+		{
+			GUI_PROPERTY_TEST( *pSrcProperty, ePropertyType_BlendFunc);
+			PropertyToValue( *pSrcProperty, rValue.src );
+		}
+
+		const CGUIProperty* pDstProperty = rProperty.GetProperty( "dst", "EBlendFunc" );
+		if( !pDstProperty )
+		{
+			throw CGUIException(
+				"[PropertyToValue[SGUIBlendFunc]]: invalid property format" );
+			return;
+		}
+		else
+		{
+			GUI_PROPERTY_TEST( *pDstProperty, ePropertyType_BlendFunc);
+			PropertyToValue( *pDstProperty, rValue.dst );
+		}
+	}
+
+	template<  >
+	void ValueToProperty<SGUIBlendFunc>( const SGUIBlendFunc& rValue, CGUIProperty& rProperty )
+	{
+		CGUIProperty aSrcProperty ( "src", "EBlendFunc" );
+		ValueToProperty( rValue.src, aSrcProperty );
+		AddOrReplaceProperty( rProperty, aSrcProperty );
+
+		CGUIProperty aDstProperty ( "dst", "EBlendFunc" );
+		ValueToProperty( rValue.dst, aDstProperty );
+		AddOrReplaceProperty( rProperty, aDstProperty );
+	}
+	//------------------------------------------------------------------------------
 }

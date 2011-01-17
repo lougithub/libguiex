@@ -24,9 +24,24 @@ namespace guiex
 {
 
 	//------------------------------------------------------------------------------
-	CGUIParticle2DSystemQuad::CGUIParticle2DSystemQuad( int numberOfParticles )
-		:CGUIParticle2DSystem( numberOfParticles )
+	CGUIParticle2DSystemQuad::CGUIParticle2DSystemQuad( const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIParticle2DSystem( rName, rSceneName )
+		,quads(NULL)
+		,indices(NULL)
 	{
+	}
+	//------------------------------------------------------------------------------
+	CGUIParticle2DSystemQuad::~CGUIParticle2DSystemQuad()
+	{
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUIParticle2DSystemQuad::DoLoad() const
+	{
+		if( 0 != CGUIParticle2DSystem::DoLoad() )
+		{
+			return -1;
+		}
+
 		// allocating data space
 		quads = (SR_V2F_C4F_T2F_Quad*)calloc( sizeof(quads[0]) * totalParticles, 1 );
 		indices = (uint16*)calloc( sizeof(indices[0]) * totalParticles * 6, 1 );
@@ -42,7 +57,7 @@ namespace guiex
 				free(indices);
 			}
 			throw CGUIException(" Particle system: not enough memory");
-			return;
+			return -1;
 		}
 
 		// initialize only once the texCoords and the indices
@@ -58,19 +73,31 @@ namespace guiex
 		glBufferData(GL_ARRAY_BUFFER, sizeof(quads[0])*totalParticles, quads,GL_DYNAMIC_DRAW);	
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 #endif
+
+		return 0;
 	}
 	//------------------------------------------------------------------------------
-	CGUIParticle2DSystemQuad::~CGUIParticle2DSystemQuad()
+	void CGUIParticle2DSystemQuad::DoUnload()
 	{
-		free(quads);
-		free(indices);
+		if( quads )
+		{
+			free(quads);
+			quads = NULL;
+		}
+		if( indices )
+		{
+			free(indices);
+			indices = NULL;
+		}
 #if CC_USES_VBO
 		glDeleteBuffers(1, &quadsID);
 #endif
+
+		CGUIParticle2DSystem::DoUnload();
 	}
 	//------------------------------------------------------------------------------
 	// rect is in Points coordinates.
-	void CGUIParticle2DSystemQuad::InitTexCoordsWithUVRect( const CGUIRect& rUVRect )
+	void CGUIParticle2DSystemQuad::InitTexCoordsWithUVRect( const CGUIRect& rUVRect ) const
 	{
 		for( uint32 i=0; i<totalParticles; i++) 
 		{
@@ -89,7 +116,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUIParticle2DSystemQuad::InitIndices()
+	void CGUIParticle2DSystemQuad::InitIndices() const
 	{
 		for( int16 i=0;i<int16(totalParticles);i++) 
 		{
@@ -185,6 +212,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIParticle2DSystemQuad::Render( IGUIInterfaceRender* pRender, const CGUIMatrix4& rWorldMatrix )
 	{
+		CGUIParticle2DSystem::Render( pRender, rWorldMatrix );
+
 		pRender->DrawQuads(
 			rWorldMatrix, 
 			texture->GetTextureImplement(), 
@@ -195,8 +224,6 @@ namespace guiex
 			);
 	}
 	//------------------------------------------------------------------------------
-
-//------------------------------------------------------------------------------
 
 	/*
 	// overriding draw method

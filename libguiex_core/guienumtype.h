@@ -87,6 +87,18 @@ namespace guiex
 		eParticle2DSystemMode_Radius,
 	};
 
+	enum EBlendFunc
+	{
+		eBlendFunc_ZERO = 0,
+		eBlendFunc_ONE,
+		eBlendFunc_SRC_COLOR,
+		eBlendFunc_ONE_MINUS_SRC_COLOR,
+		eBlendFunc_SRC_ALPHA,
+		eBlendFunc_ONE_MINUS_SRC_ALPHA,
+		eBlendFunc_DST_ALPHA,
+		eBlendFunc_ONE_MINUS_DST_ALPHA,
+	};
+
 }//namespace guiex
 
 #endif //__GUI_ENUMTYPES_20101122_H__

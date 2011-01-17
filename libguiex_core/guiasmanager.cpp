@@ -99,8 +99,8 @@ namespace guiex
 				rResName.c_str());
 			return NULL;
 		}
-		CGUIAs* pAs = DoCreateAs( pAsData->GetSceneName(), pAsData->GetAsData() );
 
+		CGUIAs* pAs = DoCreateAs( pAsData->GetSceneName(), pAsData->GetAsData() );
 		pAs->RefRetain();
 		AddToAllocatePool( pAs );
 

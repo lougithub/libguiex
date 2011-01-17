@@ -218,6 +218,14 @@ namespace guiex
 	template< >
 	CGUIString GetValueType<EParticle2DSystemMode>( );
 	//------------------------------------------------------------------------------
+	//convert for EBlendFunc
+	template<  >
+	int32 StringToValue<EBlendFunc>( const CGUIString& rString, EBlendFunc& rValue);
+	template<  >
+	int32 ValueToString<EBlendFunc>( const EBlendFunc& rValue, CGUIString& rString );
+	template< >
+	CGUIString GetValueType<EBlendFunc>( );
+	//------------------------------------------------------------------------------
 }	//namespace guiex
 
 #endif //__GUI_STRING_CONVERTOR_200608030_H__

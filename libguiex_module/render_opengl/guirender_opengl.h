@@ -70,7 +70,7 @@ namespace guiex
 		virtual void DrawQuads(
 			const CGUIMatrix4& rWorldMatrix,
 			const CGUITextureImp* pTexture,
-			const SBlendFuncType& rBlendFuncType,
+			const SGUIBlendFunc& rBlendFuncType,
 			const SR_V2F_C4F_T2F_Quad* pQuads,
 			uint16* pIndices,
 			int16 nQuadNum);
@@ -123,7 +123,7 @@ namespace guiex
 		long ColorToOpengl( const CGUIColor& col ) const;
 		void makeGLMatrix( real gl_matrix[16], const CGUIMatrix4& m );
 		void BindTexture( const CGUITextureImp* pTexture );
-		void BlendFunc( const SBlendFuncType& rBlendFuncType );
+		void BlendFunc( const SGUIBlendFunc& rBlendFuncType );
 
 		struct SClipRect
 		{

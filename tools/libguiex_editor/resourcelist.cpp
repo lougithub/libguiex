@@ -27,6 +27,7 @@ CResourceList::~CResourceList()
 {
 	ResetImageList();
 	ResetAsList();
+	ResetParticle2DList();
 	ResetSoundList();
 }
 //------------------------------------------------------------------------------
@@ -39,7 +40,8 @@ CResourceList* CResourceList::Instance()
 void CResourceList::UpdateResourceList()
 {
 	UpdateImageList();
-	UpdateAsNameList();
+	UpdateAsList();
+	UpdateParticle2DList();
 	UpdateSoundList();
 }
 //------------------------------------------------------------------------------
@@ -165,13 +167,33 @@ void CResourceList::ResetAsList()
 	m_arrayAsArray.Clear();
 }
 //------------------------------------------------------------------------------
-void CResourceList::UpdateAsNameList()
+void CResourceList::UpdateParticle2DList()
+{
+	ResetParticle2DList();
+
+	m_arrayParticle2DArray.Add(_T(""));
+	const std::map<CGUIString, CGUIParticle2DData*>& rMapParticle2DDataList = CGUIParticle2DManager::Instance()->GetRegisterResourceMap();
+	for( std::map<CGUIString,CGUIParticle2DData*>::const_iterator itor = rMapParticle2DDataList.begin();
+		itor != rMapParticle2DDataList.end();
+		++itor)
+	{
+		m_arrayParticle2DArray.Add(Gui2wxString( itor->first));
+	}
+	m_arrayParticle2DArray.Sort();
+}
+//------------------------------------------------------------------------------
+void CResourceList::ResetParticle2DList()
+{
+	m_arrayParticle2DArray.Clear();
+}
+//------------------------------------------------------------------------------
+void CResourceList::UpdateAsList()
 {
 	ResetAsList();
 
 	m_arrayAsArray.Add(_T(""));
-	const std::map<CGUIString, CGUIAs*>& rMapAsList = CGUIAsManager::Instance()->GetRegisterResourceMap();
-	for( std::map<CGUIString,CGUIAs*>::const_iterator itor = rMapAsList.begin();
+	const std::map<CGUIString, CGUIAsData*>& rMapAsList = CGUIAsManager::Instance()->GetRegisterResourceMap();
+	for( std::map<CGUIString,CGUIAsData*>::const_iterator itor = rMapAsList.begin();
 		itor != rMapAsList.end();
 		++itor)
 	{
@@ -208,6 +230,11 @@ const wxArrayString& CResourceList::GetImageList()
 const wxArrayString& CResourceList::GetAsList()
 {
 	return m_arrayAsArray;
+}
+//------------------------------------------------------------------------------
+const wxArrayString& CResourceList::GetParticle2DList()
+{
+	return m_arrayParticle2DArray;
 }
 //------------------------------------------------------------------------------
 const wxArrayString& CResourceList::GetSoundList()

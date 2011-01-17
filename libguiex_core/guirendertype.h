@@ -13,30 +13,26 @@
 // include
 //============================================================================// 
 #include "guitypes.h"
+#include "guienumtype.h"
 
 //============================================================================//
 // declare
 //============================================================================// 
 namespace guiex
 {
-	enum EBlendFuncType
-	{
-		eBlendFuncType_ZERO = 0,
-		eBlendFuncType_ONE,
-		eBlendFuncType_SRC_COLOR,
-		eBlendFuncType_ONE_MINUS_SRC_COLOR,
-		eBlendFuncType_SRC_ALPHA,
-		eBlendFuncType_ONE_MINUS_SRC_ALPHA,
-		eBlendFuncType_DST_ALPHA,
-		eBlendFuncType_ONE_MINUS_DST_ALPHA,
-	};
 
-	struct SBlendFuncType
+	struct SGUIBlendFunc
 	{
 		//! source blend function
-		EBlendFuncType src;
+		EBlendFunc src;
 		//! destination blend function
-		EBlendFuncType dst;
+		EBlendFunc dst;
+
+		SGUIBlendFunc()
+			:src( eBlendFunc_ONE )
+			,dst( eBlendFunc_SRC_ALPHA )
+		{
+		}
 	} ;
 
 

@@ -68,7 +68,7 @@ namespace guiex
 		virtual void DrawQuads(
 			const CGUIMatrix4& rWorldMatrix,
 			const CGUITextureImp* pTexture,
-			const SBlendFuncType& rBlendFuncType,
+			const SGUIBlendFunc& rBlendFuncType,
 			const SR_V2F_C4F_T2F_Quad* pQuads,
 			uint16* pIndices,
 			int16 nQuadNum) = 0;

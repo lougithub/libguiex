@@ -44,9 +44,11 @@ namespace guiex
 		ePropertyType_Rect,
 		ePropertyType_Color,
 		ePropertyType_StringInfo,
+		ePropertyType_SBlendFunc,
 		ePropertyType_Event,
 		ePropertyType_WidgetPosition,
 		ePropertyType_WidgetSize,
+		ePropertyType_Particle2D,
 
 		ePropertyType_Image,
 		ePropertyType_Font,
@@ -62,11 +64,14 @@ namespace guiex
 		ePropertyType_AsContainer,
 		ePropertyType_AsContainerItemInfo,
 
+		//enum
 		ePropertyType_ScreenValue,
 		ePropertyType_TextAlignmentHorz,
 		ePropertyType_TextAlignmentVert,
 		ePropertyType_ImageOrientation,
 		ePropertyType_Interpolation,
+		ePropertyType_Particle2DSystemMode,
+		ePropertyType_BlendFunc,
 
 		ePropertyType_Set,
 		ePropertyType_Widget,
@@ -78,6 +83,7 @@ namespace guiex
 		ePropertyType_AnimationDefine,
 		ePropertyType_AsDefine,
 		ePropertyType_WidgetDefine,
+		ePropertyType_Particle2DDefine,
 
 		
 		//scene related property

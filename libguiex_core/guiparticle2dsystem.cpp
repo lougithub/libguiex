@@ -12,7 +12,10 @@
 #include "guiparticle2dsystem.h"
 #include "guiexception.h"
 #include "guitexturemanager.h"
+#include "guiscenemanager.h"
 #include "guimath.h"
+#include "guiproperty.h"
+#include "guipropertyconvertor.h"
 
 
 //============================================================================//
@@ -53,61 +56,245 @@ namespace guiex
 	//------------------------------------------------------------------------------
 
 	//------------------------------------------------------------------------------
-	CGUIParticle2DSystem::CGUIParticle2DSystem( int numberOfParticles )
-		:emissionRate( 0.0f )
+	CGUIParticle2DSystem::CGUIParticle2DSystem( const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIResource( rName, rSceneName, "PARTICLE2D")
+		,emissionRate( 0.0f )
 		,emitCounter( 0.0f )
-		,totalParticles( numberOfParticles )
+		,totalParticles( 0 )
 		,particleCount( 0 )
 		,particleIdx( 0 )
 		,autoRemoveOnFinish( false )
 		,texture( NULL )
 		,particles( NULL)
-		,endSpinVar( 0.0f )
 		,endSpin( 0.0f )
-		,startSpinVar( 0.0f )
+		,endSpinVar( 0.0f )
 		,startSpin( 0.0f )
-		,lifeVar( 0.0f )
+		,startSpinVar( 0.0f )
 		,life( 0.0f )
-		,endSizeVar( 0.0f )
+		,lifeVar( 0.0f )
 		,endSize( 0.0f )
-		,startSizeVar( 0.0f )
+		,endSizeVar( 0.0f )
 		,startSize( 0.0f )
+		,startSizeVar( 0.0f )
 		,angle( 0.0f )
 		,angleVar( 0.0f )
 		,duration( -1.0f )
 		,elapsed( 0.0f )
+		,active( true )
+		,positionType( kCCPositionTypeFree )
+		,emitterMode( eParticle2DSystemMode_Gravity )
 	{
-		particles = (CGUIParticle2D*)calloc( totalParticles, sizeof(CGUIParticle2D) );
-
-		if( !particles ) 
-		{
-			throw CGUIException( "[CGUIParticle2DSystem::CGUIParticle2DSystem]: not enough memory" );
-			return;
-		}
-
-
-		// default, active
-		active = true;
-
-		// default blend function
-		blendFunc.src = eBlendFuncType_ONE;
-		blendFunc.dst = eBlendFuncType_SRC_ALPHA ;
-
-		// default movement type;
-		positionType = kCCPositionTypeFree;
-
-		// by default be in mode A:
-		emitterMode = eParticle2DSystemMode_Gravity;
-
-		autoRemoveOnFinish = false;
-
-		texture = NULL;
 	}
 	//------------------------------------------------------------------------------
 	CGUIParticle2DSystem::~CGUIParticle2DSystem()
 	{
-		free( particles );
-		particles = NULL;
+
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUIParticle2DSystem::LoadValueFromProperty( const class CGUIProperty& rProperty )
+	{
+		/*
+		<property name="Galaxy" type="CGUIParticle2DDefine" >
+			<property name="maxParticles" type="uint32" value="934"/>
+			<property name="duration" type="real" value="-1"/>
+			<property name="particleLifespan" type="real" value="4"/>
+			<property name="particleLifespanVariance" type="real" value="1"/>
+			<property name="textureFileName" type="CGUIString" value="Galaxy.png"/>
+			<property name="angle" type="real" value="90"/>
+			<property name="angleVariance" type="real" value="360"/>
+			<property name="startColor" type="CGUIColor" value="30,64,192,255"/>
+			<property name="startColorVariance" type="CGUIColor" value="0,0,0,0"/>
+			<property name="finishColor" type="CGUIColor" value="0,0,0,255"/>
+			<property name="finishColorVariance" type="CGUIColor" value="0,0,0,0"/>
+			<property name="startParticleSize" type="real" value="37"/>
+			<property name="startParticleSizeVariance" type="real" value="10"/>
+			<property name="finishParticleSize" type="real" value="37"/>
+			<property name="finishParticleSizeVariance" type="real" value="0"/>
+			<property name="sourcePosition" type="CGUIVector2" value="170,228"/>
+			<property name="sourcePositionVariance" type="CGUIVector2" value="0,0"/>
+			<property name="emitterType" type="EParticle2DSystemMode" value="eParticle2DSystemMode_Gravity"/>
+		</property>
+		*/
+		//maxParticles
+		{
+			const CGUIProperty* pPpt_maxParticles = rProperty.GetPropertyChecked("maxParticles", "uint32");
+			PropertyToValue( *pPpt_maxParticles, totalParticles );
+		}
+
+
+		//angle
+		{
+			const CGUIProperty* pPpt_angle = rProperty.GetPropertyChecked("angle", "real");
+			PropertyToValue( *pPpt_angle, angle );
+			const CGUIProperty* pPpt_angleVar = rProperty.GetPropertyChecked("angleVariance", "real");
+			PropertyToValue( *pPpt_angleVar, angleVar );
+		}
+
+		//duration
+		{
+			const CGUIProperty* pPpt_duration = rProperty.GetPropertyChecked("duration", "real");
+			PropertyToValue( *pPpt_duration, duration );
+		}
+
+		//blendfunc
+		{
+			const CGUIProperty* pPpt_blendFunc = rProperty.GetPropertyChecked("blendFunc", "SGUIBlendFunc");
+			PropertyToValue( *pPpt_blendFunc, blendFunc );
+		}
+
+		//color
+		{
+			const CGUIProperty* pPpt_startColor = rProperty.GetPropertyChecked("startColor", "CGUIColor");
+			PropertyToValue( *pPpt_startColor, startColor );
+			const CGUIProperty* pPpt_startColorVar = rProperty.GetPropertyChecked("startColorVariance", "CGUIColor");
+			PropertyToValue( *pPpt_startColorVar, startColorVar );
+			const CGUIProperty* pPpt_finishColor = rProperty.GetPropertyChecked("finishColor", "CGUIColor");
+			PropertyToValue( *pPpt_finishColor, endColor );
+			const CGUIProperty* pPpt_finishColorVar = rProperty.GetPropertyChecked("finishColorVariance", "CGUIColor");
+			PropertyToValue( *pPpt_finishColorVar, endColorVar );
+		}
+
+		//size
+		{
+			const CGUIProperty* pPpt_startSize = rProperty.GetPropertyChecked("startParticleSize", "real");
+			PropertyToValue( *pPpt_startSize, startSize );
+			const CGUIProperty* pPpt_startSizeVar = rProperty.GetPropertyChecked("startParticleSizeVariance", "real");
+			PropertyToValue( *pPpt_startSizeVar, startSizeVar );
+			const CGUIProperty* pPpt_finishSize = rProperty.GetPropertyChecked("finishParticleSize", "real");
+			PropertyToValue( *pPpt_finishSize, endSize );
+			const CGUIProperty* pPpt_finishSizeVar = rProperty.GetPropertyChecked("finishParticleSizeVariance", "real");
+			PropertyToValue( *pPpt_finishSizeVar, endSizeVar );
+		}
+
+		//position
+		{
+			const CGUIProperty* pPpt_sourcePosition = rProperty.GetPropertyChecked("sourcePosition", "CGUIVector2");
+			PropertyToValue( *pPpt_sourcePosition, sourcePosition );
+			const CGUIProperty* pPpt_sourcePositionVar = rProperty.GetPropertyChecked("sourcePositionVariance", "CGUIVector2");
+			PropertyToValue( *pPpt_sourcePositionVar, posVar );
+		}
+
+		//textureFileName
+		{
+			const CGUIProperty* pPpt_textureFileName = rProperty.GetPropertyChecked("textureFileName", "CGUIString");
+			m_strFullTexturePath = CGUISceneManager::Instance()->GetScenePath( m_strSceneName ) + pPpt_textureFileName->GetValue();
+		}
+
+		//emitter mode
+		{
+			const CGUIProperty* pPpt_emitterType = rProperty.GetPropertyChecked("emitterType", "EParticle2DSystemMode");
+			PropertyToValue( *pPpt_emitterType, emitterMode );
+		}
+
+		//life span
+		{
+			const CGUIProperty* pPpt_particleLifespan = rProperty.GetPropertyChecked("particleLifespan", "real");
+			PropertyToValue( *pPpt_particleLifespan, life );
+			const CGUIProperty* pPpt_particleLifespanVariance = rProperty.GetPropertyChecked("particleLifespanVariance", "real");
+			PropertyToValue( *pPpt_particleLifespanVariance, lifeVar );
+		}
+
+		emissionRate = totalParticles/life;
+
+		// Mode A: Gravity + tangential accel + radial accel
+		if( emitterMode == eParticle2DSystemMode_Gravity )
+		{
+			//gravity
+			{
+				const CGUIProperty* pPpt_gravity = rProperty.GetPropertyChecked("gravity", "CGUIVector2");
+				CGUIVector2 aValue;
+				PropertyToValue( *pPpt_gravity, aValue );
+				mode.A.gravity = aValue;
+			}
+
+			//speed
+			{
+				const CGUIProperty* pPpt_speed = rProperty.GetPropertyChecked("speed", "real");
+				PropertyToValue( *pPpt_speed, mode.A.speed );
+				const CGUIProperty* pPpt_speedVar = rProperty.GetPropertyChecked("speedVariance", "real");
+				PropertyToValue( *pPpt_speedVar, mode.A.speedVar );
+			}
+
+			//radial acceleration
+			{
+				const CGUIProperty* pPpt_radialAccel = rProperty.GetPropertyChecked("radialAcceleration", "real");
+				PropertyToValue( *pPpt_radialAccel, mode.A.radialAccel );
+				const CGUIProperty* pPpt_radialAccelVar = rProperty.GetPropertyChecked("radialAccelVariance", "real");
+				PropertyToValue( *pPpt_radialAccelVar, mode.A.radialAccelVar );
+			}
+
+			//tangential acceleration
+			{
+				const CGUIProperty* pPpt_tangentialAccel = rProperty.GetPropertyChecked("tangentialAcceleration", "real");
+				PropertyToValue( *pPpt_tangentialAccel, mode.A.tangentialAccel );
+				const CGUIProperty* pPpt_tangentialAccelVar = rProperty.GetPropertyChecked("tangentialAccelVariance", "real");
+				PropertyToValue( *pPpt_tangentialAccelVar, mode.A.tangentialAccelVar );
+			}
+		}
+		// or Mode B: radius movement
+		else if( emitterMode == eParticle2DSystemMode_Radius ) 
+		{
+			//radius
+			{
+				const CGUIProperty* pPpt_maxRadius = rProperty.GetPropertyChecked("maxRadius", "real");
+				PropertyToValue( *pPpt_maxRadius, mode.B.startRadius );
+				const CGUIProperty* pPpt_maxRadiusVar = rProperty.GetPropertyChecked("maxRadiusVariance", "real");
+				PropertyToValue( *pPpt_maxRadiusVar, mode.B.startRadiusVar );
+				const CGUIProperty* pPpt_minRadius = rProperty.GetPropertyChecked("minRadius", "real");
+				PropertyToValue( *pPpt_minRadius, mode.B.endRadius );
+				mode.B.endRadiusVar = 0;
+			}
+
+			//rotate
+			{
+				const CGUIProperty* pPpt_rotatePerSecond = rProperty.GetPropertyChecked("rotatePerSecond", "real");
+				PropertyToValue( *pPpt_rotatePerSecond, mode.B.rotatePerSecond );
+				const CGUIProperty* pPpt_rotatePerSecondVar = rProperty.GetPropertyChecked("rotatePerSecondVariance", "real");
+				PropertyToValue( *pPpt_rotatePerSecondVar, mode.B.rotatePerSecondVar );
+			}
+		}
+		else
+		{
+			throw CGUIException( "[CGUIParticle2DSystem::LoadValueFromProperty]: unknown emitter mode!" );
+			return -1;
+		}
+
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUIParticle2DSystem::DoLoad() const
+	{
+		GUI_ASSERT( particles==NULL, "invalid pointer");
+		if( totalParticles <= 0 )
+		{
+			throw CGUIException( "CGUIParticle2DSystem::DoLoad: totalparticles shouldn't be zero" );
+			return -1;
+		}
+		particles = (CGUIParticle2D*)calloc( totalParticles, sizeof(CGUIParticle2D) );
+		if( !particles ) 
+		{
+			throw CGUIException( "[CGUIParticle2DSystem::CGUIParticle2DSystem]: not enough memory" );
+			return -1;
+		}
+
+		GUI_ASSERT( texture == NULL, "invalid pointer" );
+		texture = CGUITextureManager::Instance()->CreateTexture( m_strFullTexturePath );
+		if( !texture )
+		{
+			throw CGUIException("[CGUIParticle2DSystem::DoLoad]: failed to create texture from path <%s>", m_strFullTexturePath.c_str());
+			return -1;
+		}
+
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIParticle2DSystem::DoUnload()
+	{
+		if( particles )
+		{
+			free( particles );
+			particles = NULL;
+		}
 
 		if( texture )
 		{
@@ -162,13 +349,13 @@ namespace guiex
 		particle->deltaRotation = (endA - startA) / particle->timeToLive;
 
 		// position
-		particle->startPos = position;
+		particle->startPos = sourcePosition;
 		//if( positionType == kCCPositionTypeFree )
 		//{
 		//	particle->startPos = [self convertToWorldSpace:CGPointZero];
 		//}
 		//else if( positionType == kCCPositionTypeRelative ) {
-		//	particle->startPos = position;
+		//	particle->startPos = sourcePosition;
 		//}
 
 		// direction
@@ -251,6 +438,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIParticle2DSystem::Update( real rDeltaTime )
 	{
+		Load();
+
 		if( active && emissionRate > 0.0f ) 
 		{
 			real rate = 1.0f / emissionRate;
@@ -270,14 +459,14 @@ namespace guiex
 
 
 		//position
-		CGUIVector2 currentPosition = position;
+		CGUIVector2 currentPosition = sourcePosition;
 		//if( positionType == kCCPositionTypeFree ) 
 		//{
 		//	currentPosition = [self convertToWorldSpace:CGPointZero];
 		//}
 		//else if( positionType == kCCPositionTypeRelative ) 
 		//{
-		//	currentPosition = position;
+		//	currentPosition = sourcePosition;
 		//}
 
 		particleIdx = 0;
@@ -389,6 +578,7 @@ namespace guiex
 	void CGUIParticle2DSystem::Render( class IGUIInterfaceRender* /*pRender*/, const class CGUIMatrix4& /*rWorldMatrix*/ )
 	{
 		// should be override
+		Load();
 	}
 	void CGUIParticle2DSystem::UpdateQuadWithParticle( CGUIParticle2D* /*particle*/, const CGUIVector2& /*rNewPos*/ )
 	{
@@ -430,234 +620,71 @@ namespace guiex
 		return duration;
 	}
 	//------------------------------------------------------------------------------
+	void CGUIParticle2DSystem::SetTexture( const CGUIString& rTexturePath )
+	{
+		m_strFullTexturePath = rTexturePath;
+		if( IsLoaded() )
+		{
+			throw CGUIException( "[CGUIParticle2DSystem::SetTexture]: system has been loaded.");
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUIParticle2DSystem::SetBlendAdditive( bool additive )
+	{
+		if( additive )
+		{
+			blendFunc.src = eBlendFunc_SRC_ALPHA;
+			blendFunc.dst = eBlendFunc_ONE;
 
-//	-(id) initWithDictionary:(NSDictionary *)dictionary
-//	{
-//		NSUInteger maxParticles = [[dictionary valueForKey:"maxParticles"] intValue];
-//		// self, not super
-//		if ((self=[self initWithTotalParticles:maxParticles] ) ) {
-//
-//			// angle
-//			angle = [[dictionary valueForKey:"angle"] floatValue];
-//			angleVar = [[dictionary valueForKey:"angleVariance"] floatValue];
-//
-//			// duration
-//			duration = [[dictionary valueForKey:"duration"] floatValue];
-//
-//			// blend function 
-//			blendFunc.src = [[dictionary valueForKey:"blendFuncSource"] intValue];
-//			blendFunc.dst = [[dictionary valueForKey:"blendFuncDestination"] intValue];
-//
-//			// color
-//			real r,g,b,a;
-//
-//			r = [[dictionary valueForKey:"startColorRed"] floatValue];
-//			g = [[dictionary valueForKey:"startColorGreen"] floatValue];
-//			b = [[dictionary valueForKey:"startColorBlue"] floatValue];
-//			a = [[dictionary valueForKey:"startColorAlpha"] floatValue];
-//			startColor = (ccColor4F) {r,g,b,a};
-//
-//			r = [[dictionary valueForKey:"startColorVarianceRed"] floatValue];
-//			g = [[dictionary valueForKey:"startColorVarianceGreen"] floatValue];
-//			b = [[dictionary valueForKey:"startColorVarianceBlue"] floatValue];
-//			a = [[dictionary valueForKey:"startColorVarianceAlpha"] floatValue];
-//			startColorVar = (ccColor4F) {r,g,b,a};
-//
-//			r = [[dictionary valueForKey:"finishColorRed"] floatValue];
-//			g = [[dictionary valueForKey:"finishColorGreen"] floatValue];
-//			b = [[dictionary valueForKey:"finishColorBlue"] floatValue];
-//			a = [[dictionary valueForKey:"finishColorAlpha"] floatValue];
-//			endColor = (ccColor4F) {r,g,b,a};
-//
-//			r = [[dictionary valueForKey:"finishColorVarianceRed"] floatValue];
-//			g = [[dictionary valueForKey:"finishColorVarianceGreen"] floatValue];
-//			b = [[dictionary valueForKey:"finishColorVarianceBlue"] floatValue];
-//			a = [[dictionary valueForKey:"finishColorVarianceAlpha"] floatValue];
-//			endColorVar = (ccColor4F) {r,g,b,a};
-//
-//			// particle size
-//			startSize = [[dictionary valueForKey:"startParticleSize"] floatValue];
-//			startSizeVar = [[dictionary valueForKey:"startParticleSizeVariance"] floatValue];
-//			endSize = [[dictionary valueForKey:"finishParticleSize"] floatValue];
-//			endSizeVar = [[dictionary valueForKey:"finishParticleSizeVariance"] floatValue];
-//
-//
-//			// position
-//			real x = [[dictionary valueForKey:"sourcePositionx"] floatValue];
-//			real y = [[dictionary valueForKey:"sourcePositiony"] floatValue];
-//			self.position = ccp(x,y);
-//			posVar.x = [[dictionary valueForKey:"sourcePositionVariancex"] floatValue];
-//			posVar.y = [[dictionary valueForKey:"sourcePositionVariancey"] floatValue];
-//
-//
-//			emitterMode = [[dictionary valueForKey:"emitterType"] intValue];
-//
-//			// Mode A: Gravity + tangential accel + radial accel
-//			if( emitterMode == eParticle2DSystemMode_Gravity ) {
-//				// gravity
-//				mode.A.gravity.x = [[dictionary valueForKey:"gravityx"] floatValue];
-//				mode.A.gravity.y = [[dictionary valueForKey:"gravityy"] floatValue];
-//
-//				//
-//				// speed
-//				mode.A.speed = [[dictionary valueForKey:"speed"] floatValue];
-//				mode.A.speedVar = [[dictionary valueForKey:"speedVariance"] floatValue];
-//
-//				// radial acceleration			
-//				NSString *tmp = [dictionary valueForKey:"radialAcceleration"];
-//				mode.A.radialAccel = tmp ? [tmp floatValue] : 0;
-//
-//				tmp = [dictionary valueForKey:"radialAccelVariance"];
-//				mode.A.radialAccelVar = tmp ? [tmp floatValue] : 0;
-//
-//				// tangential acceleration
-//				tmp = [dictionary valueForKey:"tangentialAcceleration"];
-//				mode.A.tangentialAccel = tmp ? [tmp floatValue] : 0;
-//
-//				tmp = [dictionary valueForKey:"tangentialAccelVariance"];
-//				mode.A.tangentialAccelVar = tmp ? [tmp floatValue] : 0;
-//			}
-//
-//
-//			// or Mode B: radius movement
-//			else if( emitterMode == eParticle2DSystemMode_Radius ) {
-//				real maxRadius = [[dictionary valueForKey:"maxRadius"] floatValue];
-//				real maxRadiusVar = [[dictionary valueForKey:"maxRadiusVariance"] floatValue];
-//				real minRadius = [[dictionary valueForKey:"minRadius"] floatValue];
-//
-//				mode.B.startRadius = maxRadius;
-//				mode.B.startRadiusVar = maxRadiusVar;
-//				mode.B.endRadius = minRadius;
-//				mode.B.endRadiusVar = 0;
-//				mode.B.rotatePerSecond = [[dictionary valueForKey:"rotatePerSecond"] floatValue];
-//				mode.B.rotatePerSecondVar = [[dictionary valueForKey:"rotatePerSecondVariance"] floatValue];
-//
-//			} else {
-//				GUI_ASSERT( NO, "Invalid emitterType in config file");
-//			}
-//
-//			// life span
-//			life = [[dictionary valueForKey:"particleLifespan"] floatValue];
-//			lifeVar = [[dictionary valueForKey:"particleLifespanVariance"] floatValue];				
-//
-//			// emission Rate
-//			emissionRate = totalParticles/life;
-//
-//			// texture		
-//			// Try to get the texture from the cache
-//			NSString *textureName = [dictionary valueForKey:"textureFileName"];
-//
-//			self.texture = [[CCTextureCache sharedTextureCache] addImage:textureName];
-//
-//			NSString *textureData = [dictionary valueForKey:"textureImageData"];
-//
-//			if ( ! texture && textureData) {
-//
-//				// if it fails, try to get it from the base64-gzipped data			
-//				unsigned char *buffer = NULL;
-//				NSUInteger len = base64Decode((unsigned char*)[textureData UTF8String], [textureData length], &buffer);
-//				GUI_ASSERT( buffer != NULL, "CCParticleSystem: error decoding textureImageData");
-//
-//				unsigned char *deflated = NULL;
-//				NSUInteger deflatedLen = ccInflateMemory(buffer, len, &deflated);
-//				free( buffer );
-//
-//				GUI_ASSERT( deflated != NULL, "CCParticleSystem: error ungzipping textureImageData");
-//				NSData *data = [[NSData alloc] initWithBytes:deflated length:deflatedLen];
-//
-//#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-//				UIImage *image = [[UIImage alloc] initWithData:data];
-//#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-//				NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
-//#endif
-//
-//				free(deflated); deflated = NULL;
-//
-//				self.texture = [[CCTextureCache sharedTextureCache] addCGImage:[image CGImage] forKey:textureName];
-//				[data release];
-//				[image release];
-//			}
-//
-//			GUI_ASSERT( [self texture] != NULL, "CCParticleSystem: error loading the texture");
-//
-//		}
-//
-//		return self;
-//	}
-//------------------------------------------------------------------------------
-void CGUIParticle2DSystem::SetTexture( const CGUIString& rTexturePath )
-{
-	if( texture )
-	{
-		CGUITextureManager::Instance()->DestroyTexture(texture);
-		texture = NULL;
+		}
+		else 
+		{
+			blendFunc.src = eBlendFunc_ONE;
+			blendFunc.dst = eBlendFunc_SRC_ALPHA;
+		}
 	}
-
-	//CGUIString strFullPath = CGUISceneManager::Instance()->GetScenePath( m_strSceneName ) + m_strPath;
-	texture = CGUITextureManager::Instance()->CreateTexture(rTexturePath);
-	if( !texture )
+	//------------------------------------------------------------------------------
+	bool CGUIParticle2DSystem::IsBlendAdditive()
 	{
-		throw CGUIException("[CGUIParticle2DSystem::SetTexture]: failed to create texture from path <%s>", rTexturePath.c_str());
-		return;
+		return( blendFunc.src == eBlendFunc_SRC_ALPHA && blendFunc.dst == eBlendFunc_ONE);
 	}
-}
-//------------------------------------------------------------------------------
-void CGUIParticle2DSystem::SetBlendAdditive( bool additive )
-{
-	if( additive )
+	//------------------------------------------------------------------------------
+	void CGUIParticle2DSystem::SetTangentialAccel( real t )
 	{
-		blendFunc.src = eBlendFuncType_SRC_ALPHA;
-		blendFunc.dst = eBlendFuncType_ONE;
-
+		GUI_ASSERT( emitterMode == eParticle2DSystemMode_Gravity, "Particle Mode should be Gravity" );
+		mode.A.tangentialAccel = t;
 	}
-	else 
+	//------------------------------------------------------------------------------
+	real CGUIParticle2DSystem::GetTangentialAccel()
 	{
-		blendFunc.src = eBlendFuncType_ONE;
-		blendFunc.dst = eBlendFuncType_SRC_ALPHA;
+		GUI_ASSERT( emitterMode == eParticle2DSystemMode_Gravity, "Particle Mode should be Gravity");
+		return mode.A.tangentialAccel;
 	}
-}
-//------------------------------------------------------------------------------
-bool CGUIParticle2DSystem::IsBlendAdditive()
-{
-	return( blendFunc.src == eBlendFuncType_SRC_ALPHA && blendFunc.dst == eBlendFuncType_ONE);
-}
-//------------------------------------------------------------------------------
-void CGUIParticle2DSystem::SetTangentialAccel( real t )
-{
-	GUI_ASSERT( emitterMode == eParticle2DSystemMode_Gravity, "Particle Mode should be Gravity" );
-	mode.A.tangentialAccel = t;
-}
-//------------------------------------------------------------------------------
-real CGUIParticle2DSystem::GetTangentialAccel()
-{
-	GUI_ASSERT( emitterMode == eParticle2DSystemMode_Gravity, "Particle Mode should be Gravity");
-	return mode.A.tangentialAccel;
-}
-//------------------------------------------------------------------------------
-void CGUIParticle2DSystem::SetTangentialAccelVar( real t )
-{
-	GUI_ASSERT( emitterMode == eParticle2DSystemMode_Gravity, "Particle Mode should be Gravity");
-	mode.A.tangentialAccelVar = t;
-}
-//------------------------------------------------------------------------------
-real CGUIParticle2DSystem::GetTangentialAccelVar()
-{
-	GUI_ASSERT( emitterMode == eParticle2DSystemMode_Gravity, "Particle Mode should be Gravity");
-	return mode.A.tangentialAccelVar;
-}
-//------------------------------------------------------------------------------
-void CGUIParticle2DSystem::SetRadialAccel( real t )
-{
-	GUI_ASSERT( emitterMode == eParticle2DSystemMode_Gravity, "Particle Mode should be Gravity");
-	mode.A.radialAccel = t;
-}
-//------------------------------------------------------------------------------
-real CGUIParticle2DSystem::GetRadialAccel()
-{
-	GUI_ASSERT( emitterMode == eParticle2DSystemMode_Gravity, "Particle Mode should be Gravity");
-	return mode.A.radialAccel;
-}
-//------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------
+	void CGUIParticle2DSystem::SetTangentialAccelVar( real t )
+	{
+		GUI_ASSERT( emitterMode == eParticle2DSystemMode_Gravity, "Particle Mode should be Gravity");
+		mode.A.tangentialAccelVar = t;
+	}
+	//------------------------------------------------------------------------------
+	real CGUIParticle2DSystem::GetTangentialAccelVar()
+	{
+		GUI_ASSERT( emitterMode == eParticle2DSystemMode_Gravity, "Particle Mode should be Gravity");
+		return mode.A.tangentialAccelVar;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIParticle2DSystem::SetRadialAccel( real t )
+	{
+		GUI_ASSERT( emitterMode == eParticle2DSystemMode_Gravity, "Particle Mode should be Gravity");
+		mode.A.radialAccel = t;
+	}
+	//------------------------------------------------------------------------------
+	real CGUIParticle2DSystem::GetRadialAccel()
+	{
+		GUI_ASSERT( emitterMode == eParticle2DSystemMode_Gravity, "Particle Mode should be Gravity");
+		return mode.A.radialAccel;
+	}
+	//------------------------------------------------------------------------------
 	void CGUIParticle2DSystem::SetRadialAccelVar( real t )
 	{
 		GUI_ASSERT( emitterMode == eParticle2DSystemMode_Gravity, "Particle Mode should be Gravity");
@@ -781,7 +808,7 @@ real CGUIParticle2DSystem::GetRadialAccel()
 		return mode.B.rotatePerSecondVar;
 	}
 	//------------------------------------------------------------------------------
-	const SBlendFuncType& CGUIParticle2DSystem::GetBlendFuncType() const
+	const SGUIBlendFunc& CGUIParticle2DSystem::GetBlendFuncType() const
 	{
 		return blendFunc;
 	}
@@ -809,6 +836,11 @@ real CGUIParticle2DSystem::GetRadialAccel()
 	void CGUIParticle2DSystem::SetStartSize( real fSize)
 	{
 		startSize = fSize;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIParticle2DSystem::SetTotalParticles( uint32 nTotalParticle )
+	{
+		totalParticles = nTotalParticle;
 	}
 	//------------------------------------------------------------------------------
 }

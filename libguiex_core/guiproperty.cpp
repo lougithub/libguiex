@@ -311,6 +311,38 @@ namespace guiex
 		return NULL;
 	}
 	//------------------------------------------------------------------------------
+	const CGUIProperty* CGUIProperty::GetPropertyChecked( const CGUIString& rName, const CGUIString& rType ) const
+	{
+		for( TSetProperty::const_iterator itor = m_setProperty.begin();
+			itor != m_setProperty.end();
+			++itor)
+		{
+			const CGUIProperty& rProperty = *itor;
+
+			if( rType.empty() )
+			{
+				if( rProperty.GetName() == rName )
+				{
+					return &(*itor);
+				}
+			}
+			else
+			{
+				if( rProperty.GetName() == rName &&
+					rProperty.GetTypeAsString() == rType )
+				{
+					return &(*itor);
+				}
+			}
+		}
+
+		throw CGUIException( 
+			"[CGUIPropertySet::GetPropertyChecked]: failed to get property by name <%s> and type <%s>",
+			rName.c_str(),
+			rType.c_str());
+		return NULL;
+	}
+	//------------------------------------------------------------------------------
 	const CGUIProperty*	CGUIProperty::GetProperty( const CGUIString& rName, uint32 nType ) const
 	{
 		for( TSetProperty::const_iterator itor = m_setProperty.begin();

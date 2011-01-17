@@ -132,7 +132,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIImage::DoUnload()
+	void CGUIImage::DoUnload()
 	{
 		if( m_pTexture )
 		{

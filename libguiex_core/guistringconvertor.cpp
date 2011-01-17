@@ -821,6 +821,95 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
+	//convert for EBlendFunc
+	template< >
+	CGUIString GetValueType<EBlendFunc>( )
+	{
+		return "EBlendFunc";
+	}
+	template<  >
+	int32 StringToValue<EBlendFunc>( const CGUIString& rString, EBlendFunc& rValue)
+	{
+		if( rString == "eBlendFunc_ZERO" )
+		{
+			rValue = eBlendFunc_ZERO;
+		}
+		else if( rString == "eBlendFunc_ONE" )
+		{
+			rValue = eBlendFunc_ONE;
+		}
+		else if( rString == "eBlendFunc_SRC_COLOR" )
+		{
+			rValue = eBlendFunc_SRC_COLOR;
+		}
+		else if( rString == "eBlendFunc_ONE_MINUS_SRC_COLOR" )
+		{
+			rValue = eBlendFunc_ONE_MINUS_SRC_COLOR;
+		}
+		else if( rString == "eBlendFunc_SRC_ALPHA" )
+		{
+			rValue = eBlendFunc_SRC_ALPHA;
+		}
+		else if( rString == "eBlendFunc_ONE_MINUS_SRC_ALPHA" )
+		{
+			rValue = eBlendFunc_ONE_MINUS_SRC_ALPHA;
+		}
+		else if( rString == "eBlendFunc_DST_ALPHA" )
+		{
+			rValue = eBlendFunc_DST_ALPHA;
+		}
+		else if( rString == "eBlendFunc_ONE_MINUS_DST_ALPHA" )
+		{
+			rValue = eBlendFunc_ONE_MINUS_DST_ALPHA;
+		}
+		else
+		{
+			throw CGUIException(
+				"[StringToValue[EBlendFunc]]: string value format is wrong! <%s>",
+				rString.c_str());
+			return -1;
+		}
+		return 0;
+	}
+
+	template<  >
+	int32 ValueToString<EBlendFunc>( const EBlendFunc& rValue, CGUIString& rString )
+	{
+		switch(rValue)
+		{
+		case eBlendFunc_ZERO:
+			rString = CGUIString("eBlendFunc_ZERO");
+			break;
+		case eBlendFunc_ONE:
+			rString = CGUIString("eBlendFunc_ONE");
+			break;
+		case eBlendFunc_SRC_COLOR:
+			rString = CGUIString("eBlendFunc_SRC_COLOR");
+			break;
+		case eBlendFunc_ONE_MINUS_SRC_COLOR:
+			rString = CGUIString("eBlendFunc_ONE_MINUS_SRC_COLOR");
+			break;
+		case eBlendFunc_SRC_ALPHA:
+			rString = CGUIString("eBlendFunc_SRC_ALPHA");
+			break;
+		case eBlendFunc_ONE_MINUS_SRC_ALPHA:
+			rString = CGUIString("eBlendFunc_ONE_MINUS_SRC_ALPHA");
+			break;
+		case eBlendFunc_DST_ALPHA:
+			rString = CGUIString("eBlendFunc_DST_ALPHA");
+			break;
+		case eBlendFunc_ONE_MINUS_DST_ALPHA:
+			rString = CGUIString("eBlendFunc_ONE_MINUS_DST_ALPHA");
+			break;
+		default:
+			throw CGUIException(
+				"[ValueToString[EBlendFunc]]: unknown EBlendFunc enum <%d>",
+				rValue);
+			return -1;
+		}
+		return 0;
+	}
+	//------------------------------------------------------------------------------
 
 
 }//namespace guiex

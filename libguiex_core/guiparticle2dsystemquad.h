@@ -31,21 +31,27 @@ namespace guiex
 	class CGUIParticle2DSystemQuad : public CGUIParticle2DSystem
 	{
 	public:
-		CGUIParticle2DSystemQuad( int numberOfParticles );
 		virtual ~CGUIParticle2DSystemQuad();
 
 		virtual void Render( IGUIInterfaceRender* pRender, const CGUIMatrix4& rWorldMatrix );
+		
+	protected:
+		friend class CGUIParticle2DManager;
+		CGUIParticle2DSystemQuad( const CGUIString& rName, const CGUIString& rSceneName );
+
+		virtual int32 DoLoad() const;
+		virtual void DoUnload();
 
 	protected:
-		void InitTexCoordsWithUVRect( const CGUIRect& rUVRect );
-		void InitIndices();
+		void InitTexCoordsWithUVRect( const CGUIRect& rUVRect ) const;
+		void InitIndices() const;
 
 		virtual void UpdateQuadWithParticle( CGUIParticle2D* particle, const CGUIVector2& rNewPos );
 		virtual void PostStep();
 
 	protected:
-		SR_V2F_C4F_T2F_Quad *quads; // quads to be rendered
-		uint16 *indices; // indices
+		mutable SR_V2F_C4F_T2F_Quad *quads; // quads to be rendered
+		mutable uint16 *indices; // indices
 #if CC_USES_VBO
 		GLuint quadsID;		// VBO id
 #endif

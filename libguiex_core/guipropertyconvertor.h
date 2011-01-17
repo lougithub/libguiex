@@ -20,6 +20,7 @@
 #include "guivector2.h"
 #include "guisize.h"
 #include "guiwidget.h"
+#include "guirendertype.h"
 
 //============================================================================//
 // declare
@@ -68,6 +69,12 @@ namespace guiex
 	void PropertyToValue<CGUIStringInfo>( const CGUIProperty& rProperty, CGUIStringInfo& rValue);
 	template<  >
 	void ValueToProperty<CGUIStringInfo>( const CGUIStringInfo& rValue, CGUIProperty& rProperty );
+	//------------------------------------------------------------------------------
+	//SGUIBlendFunc
+	template<  >
+	void PropertyToValue<SGUIBlendFunc>( const CGUIProperty& rProperty, SGUIBlendFunc& rValue);
+	template<  >
+	void ValueToProperty<SGUIBlendFunc>( const SGUIBlendFunc& rValue, CGUIProperty& rProperty );
 	//------------------------------------------------------------------------------
 }
 

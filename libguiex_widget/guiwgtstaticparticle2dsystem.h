@@ -27,21 +27,24 @@ namespace guiex
 	{
 	public:
 		CGUIWgtStaticParticle2DSystem( const CGUIString& rName, const CGUIString& rSceneName );
+		virtual ~CGUIWgtStaticParticle2DSystem();
+
+		virtual int32 GenerateProperty( CGUIProperty& rProperty );
+		virtual void ProcessProperty( const CGUIProperty& rProperty);
+
 
 	protected:
 		CGUIWgtStaticParticle2DSystem( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 		void InitStaticParticle2DSystem();
 
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
-		virtual void OnCreate();
 		virtual void OnUpdate( real fDeltaTime );
-		virtual void OnDestroy();
-		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage );
+
+		void SetParticle2D( const CGUIString& rParticle2DName );
+		void SetParticle2D( class CGUIParticle2DSystem* pParticle2D );
 
 	protected:
-		const CGUIImage* m_pParticleImage;
-	protected:
-		class CGUIParticle2DSystemQuad* m_pParticle2DSystem;
+		class CGUIParticle2DSystem* m_pParticle2DSystem;
 
 	protected:
 		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtStaticParticle2DSystem);

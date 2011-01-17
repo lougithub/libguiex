@@ -65,6 +65,7 @@ namespace guiex
 		CGUIProperty* GetProperty( const CGUIString& rName, uint32 nType );
 		const CGUIProperty*	GetProperty( const CGUIString& rName, const CGUIString& rType ) const;
 		CGUIProperty* GetProperty( const CGUIString& rName, const CGUIString& rType );
+		const CGUIProperty* GetPropertyChecked( const CGUIString& rName, const CGUIString& rType ) const;
 		//bool HasProperty( const CGUIString& rName ) const;
 		bool HasProperty( const CGUIString& rName, uint32 nType ) const;
 		bool HasProperty( const CGUIString& rName, const CGUIString& rType ) const;

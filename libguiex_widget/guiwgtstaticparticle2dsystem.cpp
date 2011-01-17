@@ -12,8 +12,9 @@
 #include <libguiex_widget/guiwgtstaticparticle2dsystem.h>
 #include <libguiex_core/guiinterfacerender.h>
 #include <libguiex_core/guiexception.h>
-#include <libguiex_core/guiparticle2dsystemquad.h>
 #include <libguiex_core/guiimage.h>
+#include <libguiex_core/guiparticle2dmanager.h>
+#include <libguiex_core/guipropertymanager.h>
 
 //============================================================================//
 // function
@@ -35,55 +36,104 @@ namespace guiex
 		InitStaticParticle2DSystem();
 	}
 	//------------------------------------------------------------------------------
+	CGUIWgtStaticParticle2DSystem::~CGUIWgtStaticParticle2DSystem()
+	{
+		if( m_pParticle2DSystem )
+		{
+			CGUIParticle2DManager::Instance()->DeallocateResource( m_pParticle2DSystem );
+			m_pParticle2DSystem = NULL;
+		}
+	}
+	//------------------------------------------------------------------------------
 	void CGUIWgtStaticParticle2DSystem::InitStaticParticle2DSystem()
 	{
 		m_pParticle2DSystem = NULL;
-		m_pParticleImage = NULL;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtStaticParticle2DSystem::RenderSelf(IGUIInterfaceRender* pRender)
 	{
-		m_pParticle2DSystem->Render( pRender, getFullTransform() );
-	}
-	//------------------------------------------------------------------------------
-	void CGUIWgtStaticParticle2DSystem::OnCreate()
-	{
-		CGUIWidget::OnCreate();
-
-		GUI_ASSERT( m_pParticle2DSystem==NULL, "CGUIWgtStaticParticle2DSystem::OnCreate: invalid pointer" );
-		m_pParticle2DSystem = new CGUIParticle2DSystemQuad( 1000 );
-		m_pParticle2DSystem->SetTexture( m_pParticleImage->GetFullFilePath() );
-		m_pParticle2DSystem->SetEmissionRate( 30.0f );
-		m_pParticle2DSystem->SetLife( 3.0f );
-		m_pParticle2DSystem->SetStartColor( CGUIColor( 1.0f,0.0f,0.0f,1.0f ));
-		m_pParticle2DSystem->SetEndColor( CGUIColor( 1.0f,1.0f,1.0f,1.0f ) );
-		m_pParticle2DSystem->SetStartSize( 32 );
-		m_pParticle2DSystem->SetSpeed( -5.0f );
-		m_pParticle2DSystem->SetSpeedVar( -5.0f );
-		m_pParticle2DSystem->SetGravity( CGUIVector2(0.0f, 10.0f) );
-	}
-	//------------------------------------------------------------------------------
-	void CGUIWgtStaticParticle2DSystem::OnDestroy()
-	{
-		GUI_ASSERT( m_pParticle2DSystem!=NULL, "CGUIWgtStaticParticle2DSystem::OnDestroy: invalid pointer" );
-		delete m_pParticle2DSystem;
-		m_pParticle2DSystem = NULL;
-
-		CGUIWidget::OnDestroy();
+		if( m_pParticle2DSystem )
+		{
+			m_pParticle2DSystem->Render( pRender, getFullTransform() );
+		}
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtStaticParticle2DSystem::OnUpdate( real fDeltaTime )
 	{
 		CGUIWidget::OnUpdate(fDeltaTime );
 
-		m_pParticle2DSystem->Update( fDeltaTime );
+		if( m_pParticle2DSystem )
+		{
+			m_pParticle2DSystem->Update( fDeltaTime );
+		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtStaticParticle2DSystem::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
+	void CGUIWgtStaticParticle2DSystem::SetParticle2D( const CGUIString& rParticle2DName )
 	{
-		if( rName == "PARTICLEIMAGE")
+		if( rParticle2DName.empty() )
 		{
-			m_pParticleImage = pImage;
+			//clear
+			SetParticle2D( NULL );
+		}
+		else
+		{
+			CGUIParticle2DSystem* pParticle2D = CGUIParticle2DManager::Instance()->AllocateResource( rParticle2DName );
+			SetParticle2D( pParticle2D );
+			CGUIParticle2DManager::Instance()->DeallocateResource( pParticle2D );
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtStaticParticle2DSystem::SetParticle2D( class CGUIParticle2DSystem* pParticle2D )
+	{
+		if( m_pParticle2DSystem == pParticle2D )
+		{
+			return;
+		}
+
+		if( m_pParticle2DSystem )
+		{
+			CGUIParticle2DManager::Instance()->DeallocateResource( m_pParticle2DSystem );
+			m_pParticle2DSystem = NULL;
+		}
+
+		if( pParticle2D )
+		{
+			m_pParticle2DSystem = pParticle2D;
+			m_pParticle2DSystem->RefRetain();
+		}
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUIWgtStaticParticle2DSystem::GenerateProperty( CGUIProperty& rProperty )
+	{
+		if( rProperty.GetType() == ePropertyType_Particle2D && rProperty.GetName() == "particle2d" )
+		{
+			if( m_pParticle2DSystem )
+			{
+				rProperty.SetValue( m_pParticle2DSystem->GetName() );
+			}
+			else
+			{
+				rProperty.SetValue( "" );
+			}
+		}
+		else
+		{
+			return CGUIWidget::GenerateProperty( rProperty );
+		}
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtStaticParticle2DSystem::ProcessProperty( const CGUIProperty& rProperty)
+	{
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//property for text
+		if( rProperty.GetType() == ePropertyType_Particle2D && rProperty.GetName() == "particle2d")
+		{
+			SetParticle2D( rProperty.GetValue());
+		}
+		else
+		{
+			CGUIWidget::ProcessProperty( rProperty );
 		}
 	}
 	//------------------------------------------------------------------------------

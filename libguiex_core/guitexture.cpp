@@ -41,6 +41,9 @@ namespace guiex
 		FreeMemory();
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief convert size to texture's standard size
+	*/
 	uint16	CGUITexture::ConvertToTextureSize(uint16 size)
 	{
 		if ((size & (size - 1)) || !size)
@@ -59,33 +62,46 @@ namespace guiex
 		return size;
 	}
 	//------------------------------------------------------------------------------
-	uint16	CGUITexture::GetWidth(void) const
+	/**
+	* @brief Returns the current pixel width of the texture
+	*/
+	uint16 CGUITexture::GetWidth(void) const
 	{
 		GUI_ASSERT(m_pTextureImp, "texture implement is NULL");
 
 		return m_pTextureImp->GetWidth();
 	}
 	//------------------------------------------------------------------------------
-	uint16	CGUITexture::GetHeight(void) const
+	/**
+	* @brief Returns the current pixel height of the texture
+	*/
+	uint16 CGUITexture::GetHeight(void) const
 	{
 		GUI_ASSERT(m_pTextureImp, "texture implement is NULL");
 
 		return m_pTextureImp->GetHeight();
 	}
 	//------------------------------------------------------------------------------
-	void		CGUITexture::CopySubImage(uint32 nX, uint32 nY, uint32 nWidth, uint32 nHeight,EGuiPixelFormat ePixelFormat, uint8* pBuffer)
+	/**
+	* @brief copy a sub_image to texture
+	*/
+	void CGUITexture::CopySubImage(uint32 nX, uint32 nY, uint32 nWidth, uint32 nHeight,EGuiPixelFormat ePixelFormat, uint8* pBuffer)
 	{
 		GUI_ASSERT(m_pTextureImp, "texture implement is NULL");
 
 		return m_pTextureImp->CopySubImage(nX, nY, nWidth, nHeight, ePixelFormat, pBuffer);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUITexture::NotifyDeletedFromImp()
+	//!< notify when texture imp is deleted
+	void CGUITexture::NotifyDeletedFromImp()
 	{
 		m_pTextureImp = NULL;
 	}
 	//------------------------------------------------------------------------------
-	uint32	CGUITexture::CreateTextureImplement()
+	/** 
+	* @brief create a texture implement from current render
+	*/
+	uint32 CGUITexture::CreateTextureImplement()
 	{
 		if( !m_pTextureImp )
 		{
@@ -99,7 +115,10 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void		CGUITexture::DestoryTextureImplement()
+	/** 
+	* @brief destroy a texture implement from current render
+	*/
+	void CGUITexture::DestoryTextureImplement()
 	{
 		if( m_pTextureImp)
 		{
@@ -109,14 +128,28 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	int32	CGUITexture::CreateTextureByFile(const CGUIString& filename )
+	/**
+	* @brief Loads the specified image file into the texture.  The texture is resized 
+	* as required to hold the image.
+	* @exception throw CGUIException if failed.
+	* @return -1 for failed
+	*/
+	int32 CGUITexture::CreateTextureByFile(const CGUIString& filename )
 	{
 		CreateTextureImplement();
 
 		return m_pTextureImp->LoadFromFile(filename);
 	}
 	//------------------------------------------------------------------------------
-	int32	CGUITexture::CreateTextureByMemory(
+
+	/**
+	* @brief Loads (copies) an image from memory into the texture.  The texture is resized as 
+	required to hold the image.
+	* @param ePixelFormat pixel format.
+	* @exception throw CGUIException if failed.
+	* @return -1 for failed
+	*/
+	int32 CGUITexture::CreateTextureByMemory(
 		const void* buffPtr, 
 		int32 buffWidth, 
 		int32 buffHeight, 
@@ -127,7 +160,11 @@ namespace guiex
 		return m_pTextureImp->LoadFromMemory(buffPtr,buffWidth,buffHeight,ePixelFormat);
 	}
 	//------------------------------------------------------------------------------
-	int32	CGUITexture::CreateTextureBySize(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat)
+	/**
+	* @brief create texture by given size and pixelformat
+	* @return -1 for failed
+	*/
+	int32 CGUITexture::CreateTextureBySize(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat)
 	{
 		DestoryTextureImplement();
 		IGUIInterfaceRender* pRender =  CGUIInterfaceManager::Instance()->GetInterfaceRender();
@@ -136,7 +173,10 @@ namespace guiex
 		return m_pTextureImp?0:-1;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUITexture::FreeMemory()
+	/** 
+	* @brief free memory which contains the texture data
+	*/
+	void CGUITexture::FreeMemory()
 	{
 		if( m_pDumpMemory )
 		{
@@ -145,7 +185,12 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	int32	CGUITexture::SaveToMemory()
+	/**
+	* @brief dump texture to memory and release texture implement,
+	* usually it will happen when changing render.
+	* @return 0 for success, others for failed
+	*/
+	int32 CGUITexture::SaveToMemory()
 	{
 		GUI_ASSERT(m_pTextureImp, "texture implement has been released");
 
@@ -161,11 +206,16 @@ namespace guiex
 		}
 		m_aDumpTextureWidth = m_pTextureImp->GetWidth();
 		m_aDumpTextureHeight = m_pTextureImp->GetHeight();
-		
+
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int32	CGUITexture::LoadFromMemory()
+	/**
+	* @brief create a new texture implement and load texture from memory,
+	* usually it will happen when changing render.
+	* @return 0 for success, others for failed
+	*/
+	int32 CGUITexture::LoadFromMemory()
 	{
 		GUI_ASSERT(m_pDumpMemory, "no dump memory here");
 

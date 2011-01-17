@@ -344,46 +344,46 @@ namespace guiex
 		glInterleavedArrays(GL_T2F_C4UB_V3F , 0, m_pVertex);
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengl::BlendFunc( const SBlendFuncType& rBlendFuncType )
+	void IGUIRender_opengl::BlendFunc( const SGUIBlendFunc& rBlendFuncType )
 	{
 		GLenum src,dst;
 		switch( rBlendFuncType.src )
 		{
-		case eBlendFuncType_ONE:
+		case eBlendFunc_ONE:
 			src = GL_ONE;break;
-		case eBlendFuncType_SRC_COLOR:
+		case eBlendFunc_SRC_COLOR:
 			src = GL_COLOR;break;
-		case eBlendFuncType_ONE_MINUS_SRC_COLOR:
+		case eBlendFunc_ONE_MINUS_SRC_COLOR:
 			src = GL_SRC_COLOR;break;
-		case eBlendFuncType_SRC_ALPHA:
+		case eBlendFunc_SRC_ALPHA:
 			src = GL_SRC_ALPHA;break;
-		case eBlendFuncType_ONE_MINUS_SRC_ALPHA:
+		case eBlendFunc_ONE_MINUS_SRC_ALPHA:
 			src = GL_ONE_MINUS_SRC_ALPHA;break;
-		case eBlendFuncType_DST_ALPHA:
+		case eBlendFunc_DST_ALPHA:
 			src = GL_DST_ALPHA;break;
-		case eBlendFuncType_ONE_MINUS_DST_ALPHA:
+		case eBlendFunc_ONE_MINUS_DST_ALPHA:
 			src = GL_ONE_MINUS_DST_ALPHA;break;
-		case eBlendFuncType_ZERO:
+		case eBlendFunc_ZERO:
 		default:
 			src = GL_ZERO;break;
 		}
 		switch( rBlendFuncType.dst )
 		{
-		case eBlendFuncType_ONE:
+		case eBlendFunc_ONE:
 			dst = GL_ONE;break;
-		case eBlendFuncType_SRC_COLOR:
+		case eBlendFunc_SRC_COLOR:
 			dst = GL_COLOR;break;
-		case eBlendFuncType_ONE_MINUS_SRC_COLOR:
+		case eBlendFunc_ONE_MINUS_SRC_COLOR:
 			dst = GL_SRC_COLOR;break;
-		case eBlendFuncType_SRC_ALPHA:
+		case eBlendFunc_SRC_ALPHA:
 			dst = GL_SRC_ALPHA;break;
-		case eBlendFuncType_ONE_MINUS_SRC_ALPHA:
+		case eBlendFunc_ONE_MINUS_SRC_ALPHA:
 			dst = GL_ONE_MINUS_SRC_ALPHA;break;
-		case eBlendFuncType_DST_ALPHA:
+		case eBlendFunc_DST_ALPHA:
 			dst = GL_DST_ALPHA;break;
-		case eBlendFuncType_ONE_MINUS_DST_ALPHA:
+		case eBlendFunc_ONE_MINUS_DST_ALPHA:
 			dst = GL_ONE_MINUS_DST_ALPHA;break;
-		case eBlendFuncType_ZERO:
+		case eBlendFunc_ZERO:
 		default:
 			dst = GL_ZERO;break;
 		}
@@ -393,7 +393,7 @@ namespace guiex
 	void IGUIRender_opengl::DrawQuads(
 		const CGUIMatrix4& rWorldMatrix,
 		const CGUITextureImp* pTexture,
-		const SBlendFuncType& rBlendFuncType,
+		const SGUIBlendFunc& rBlendFuncType,
 		const SR_V2F_C4F_T2F_Quad* pQuads,
 		uint16* pIndices,
 		int16 nQuadNum)

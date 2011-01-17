@@ -1,11 +1,44 @@
 <?xml version="1.0" ?>
 <guiex>
+	<property name="spinningPeas" type="CGUIParticle2DDefine" >
+		<property name="maxParticles" type="uint32" value="1000"/>
+		<property name="duration" type="real" value="-1"/>
+		<property name="particleLifespan" type="real" value="10"/>
+		<property name="particleLifespanVariance" type="real" value="0"/>
+		<property name="textureFileName" type="CGUIString" value="image/particle1.tga"/><!--SpinningPeas.png-->
+		<property name="angle" type="real" value="90"/>
+		<property name="angleVariance" type="real" value="360"/>
+		<property name="startColor" type="CGUIColor" value="255,255,255,255"/>
+		<property name="startColorVariance" type="CGUIColor" value="255,255,255,255"/>
+		<property name="finishColor" type="CGUIColor" value="255,255,255,255"/>
+		<property name="finishColorVariance" type="CGUIColor" value="255,255,255,255"/>
+		<property name="startParticleSize" type="real" value="64"/>
+		<property name="startParticleSizeVariance" type="real" value="29"/>
+		<property name="finishParticleSize" type="real" value="0"/>
+		<property name="finishParticleSizeVariance" type="real" value="0"/>
+		<property name="sourcePosition" type="CGUIVector2" value="160,22"/>
+		<property name="sourcePositionVariance" type="CGUIVector2" value="7,7"/>
+		<property name="blendFunc" type="SGUIBlendFunc">
+			<property name="src" type="EBlendFunc" value="eBlendFunc_ONE"/>
+			<property name="dst" type="EBlendFunc" value="eBlendFunc_ONE_MINUS_SRC_ALPHA"/>
+		</property>
+		<property name="emitterType" type="EParticle2DSystemMode" value="eParticle2DSystemMode_Radius"/>
+
+		<!-- mode B -->
+		<property name="maxRadius" type="real" value="331"/>
+		<property name="maxRadiusVariance" type="real" value="0"/>
+		<property name="minRadius" type="real" value="0"/>
+		<property name="rotatePerSecond" type="real" value="0"/>
+		<property name="rotatePerSecondVariance" type="real" value="68"/>
+	</property>
+
+
 	<property name="Galaxy" type="CGUIParticle2DDefine" >
-		<property name="maxParticles" type="int32" value="934"/>
+		<property name="maxParticles" type="uint32" value="934"/>
 		<property name="duration" type="real" value="-1"/>
 		<property name="particleLifespan" type="real" value="4"/>
 		<property name="particleLifespanVariance" type="real" value="1"/>
-		<property name="textureFileName" type="CGUIString" value="Galaxy.png"/>
+		<property name="textureFileName" type="CGUIString" value="image/particle1.tga"/><!--Galaxy.png-->
 		<property name="angle" type="real" value="90"/>
 		<property name="angleVariance" type="real" value="360"/>
 		<property name="startColor" type="CGUIColor" value="30,64,192,255"/>
@@ -18,41 +51,21 @@
 		<property name="finishParticleSizeVariance" type="real" value="0"/>
 		<property name="sourcePosition" type="CGUIVector2" value="170,228"/>
 		<property name="sourcePositionVariance" type="CGUIVector2" value="0,0"/>
+		<property name="blendFunc" type="SGUIBlendFunc">
+			<property name="src" type="EBlendFunc" value="eBlendFunc_ONE"/>
+			<property name="dst" type="EBlendFunc" value="eBlendFunc_SRC_ALPHA"/>
+		</property>
 		<property name="emitterType" type="EParticle2DSystemMode" value="eParticle2DSystemMode_Gravity"/>
+
+<!-- mode A -->
+		<property name="gravity" type="CGUIVector2" value="0,0"/>
+		<property name="speed" type="real" value="59.2"/>
+		<property name="speedVariance" type="real" value="10"/>
+		<property name="radialAcceleration" type="real" value="-20"/>
+		<property name="radialAccelVariance" type="real" value="0"/>
+		<property name="tangentialAccelVariance" type="real" value="50"/>
+		<property name="tangentialAcceleration" type="real" value="50"/>
 	</property>
-
-
-	<key>blendFuncDestination</key>
-	<integer>1</integer>
-	<key>blendFuncSource</key>
-	<integer>770</integer>
-	<key>gravityx</key>
-	<real>0.0</real>
-	<key>gravityy</key>
-	<real>0.0</real>
-	<key>maxRadius</key>
-	<real>276.20999145507812</real>
-	<key>maxRadiusVariance</key>
-	<real>154.94999694824219</real>
-	<key>minRadius</key>
-	<real>0.0</real>
-	<key>radialAccelVariance</key>
-	<real>0.0</real>
-	<key>radialAcceleration</key>
-	<real>-20</real>
-	<key>rotatePerSecond</key>
-	<real>35.529998779296875</real>
-	<key>rotatePerSecondVariance</key>
-	<real>0.0</real>
-	<key>speed</key>
-	<real>59.209999084472656</real>
-	<key>speedVariance</key>
-	<real>10</real>
-	<key>tangentialAccelVariance</key>
-	<real>50</real>
-	<key>tangentialAcceleration</key>
-	<real>50</real>
-
 </guiex>
 
 

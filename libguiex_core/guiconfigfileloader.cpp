@@ -22,6 +22,7 @@
 #include <libguiex_core/guianimationmanager.h>
 #include <libguiex_core/guisoundmanager.h>
 #include <libguiex_core/guimusicmanager.h>
+#include <libguiex_core/guiparticle2dmanager.h>
 #include <libguiex_core/guiscenemanager.h>
 
 
@@ -38,6 +39,7 @@ namespace guiex
 	static int32 DoLoadConfig_Sound( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
 	static int32 DoLoadConfig_Music( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
 	static int32 DoLoadConfig_As( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
+	static int32 DoLoadConfig_Particle2D( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
 
 
 	//------------------------------------------------------------------------------
@@ -141,7 +143,7 @@ namespace guiex
 		if( 0 != CGUIMusicManager::Instance()->RegisterMusic( rSceneName, *pPropertySet ) )
 		{
 			throw guiex::CGUIException(
-				"[DoLoadConfig_Music], failed to create sound with name <%s:%s:%s>!", 
+				"[DoLoadConfig_Music], failed to create music with name <%s:%s:%s>!", 
 				pPropertySet->GetName().c_str(),
 				pPropertySet->GetTypeAsString().c_str(),
 				pPropertySet->GetValue().c_str());
@@ -156,7 +158,7 @@ namespace guiex
 		if( 0 != CGUIAsManager::Instance()->RegisterAs( rSceneName, *pPropertySet ) )
 		{
 			throw guiex::CGUIException(
-				"[DoLoadConfig_As], failed to create font with name <%s:%s:%s>!", 
+				"[DoLoadConfig_As], failed to create as with name <%s:%s:%s>!", 
 				pPropertySet->GetName().c_str(),
 				pPropertySet->GetTypeAsString().c_str(),
 				pPropertySet->GetValue().c_str());
@@ -165,7 +167,21 @@ namespace guiex
 
 		return 0;
 	}
+	//------------------------------------------------------------------------------
+	int32 DoLoadConfig_Particle2D( const CGUIProperty* pPropertySet, const CGUIString& rSceneName )
+	{
+		if( 0 != CGUIParticle2DManager::Instance()->RegisterParticle2D( rSceneName, *pPropertySet ) )
+		{
+			throw guiex::CGUIException(
+				"[DoLoadConfig_Particle2D], failed to create particle2D with name <%s:%s:%s>!", 
+				pPropertySet->GetName().c_str(),
+				pPropertySet->GetTypeAsString().c_str(),
+				pPropertySet->GetValue().c_str());
+			return -1;
+		}
 
+		return 0;
+	}
 
 	//------------------------------------------------------------------------------
 	/**
@@ -241,6 +257,13 @@ namespace guiex
 				
 			case ePropertyType_AsDefine:
 				if( 0 != DoLoadConfig_As( pProperty, rSceneName ))
+				{
+					return -1;
+				}
+				break;
+
+			case ePropertyType_Particle2DDefine:
+				if( 0 != DoLoadConfig_Particle2D( pProperty, rSceneName ))
 				{
 					return -1;
 				}
