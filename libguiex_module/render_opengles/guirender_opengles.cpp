@@ -849,9 +849,9 @@ namespace guiex
 		case eBlendFunc_ONE:
 			src = GL_ONE;break;
 		case eBlendFunc_SRC_COLOR:
-			src = GL_COLOR;break;
-		case eBlendFunc_ONE_MINUS_SRC_COLOR:
 			src = GL_SRC_COLOR;break;
+		case eBlendFunc_ONE_MINUS_SRC_COLOR:
+			src = GL_ONE_MINUS_SRC_COLOR;break;
 		case eBlendFunc_SRC_ALPHA:
 			src = GL_SRC_ALPHA;break;
 		case eBlendFunc_ONE_MINUS_SRC_ALPHA:
@@ -869,9 +869,9 @@ namespace guiex
 		case eBlendFunc_ONE:
 			dst = GL_ONE;break;
 		case eBlendFunc_SRC_COLOR:
-			dst = GL_COLOR;break;
-		case eBlendFunc_ONE_MINUS_SRC_COLOR:
 			dst = GL_SRC_COLOR;break;
+		case eBlendFunc_ONE_MINUS_SRC_COLOR:
+			dst = GL_ONE_MINUS_SRC_COLOR;break;
 		case eBlendFunc_SRC_ALPHA:
 			dst = GL_SRC_ALPHA;break;
 		case eBlendFunc_ONE_MINUS_SRC_ALPHA:

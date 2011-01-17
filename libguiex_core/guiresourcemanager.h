@@ -14,6 +14,7 @@
 //============================================================================//
 #include "guibase.h"
 #include "guiexception.h"
+#include "guiresource.h"
 #include <map>
 #include <set>
 #include <vector>
