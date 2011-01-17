@@ -63,6 +63,22 @@ namespace guiex
 		real a;
 	};
 
+	union SR_C4UB
+	{
+		struct
+		{
+			uint8 a,b,g,r;
+		};
+		uint32 abgr; 
+	};
+
+	struct SR_T2F_C4UB_V3F
+	{
+		SR_T2F texCoords;
+		SR_C4UB color;
+		SR_V3F vertices;
+	};
+
 
 	struct SR_V2F_C4F_T2F
 	{

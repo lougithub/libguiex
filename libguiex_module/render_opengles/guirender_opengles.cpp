@@ -376,11 +376,8 @@ namespace guiex
 		glMultMatrixf( m_gl_matrix );
 
 		//check texture
-		if( ((CGUITexture_opengles*)pTexture)->GetOGLTexid() != m_nCurrentTexture )
-		{
-			m_nCurrentTexture = ((CGUITexture_opengles*)pTexture)->GetOGLTexid();
-			glBindTexture(GL_TEXTURE_2D, m_nCurrentTexture);
-		}
+		BindTexture( pTexture );
+
 
 		//set texture coordinate
 		SetTexCoordinate(m_pVertex, rTextureRect, eImageOrientation);
@@ -431,6 +428,62 @@ namespace guiex
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_COLOR_ARRAY);
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengles::DrawQuads(
+		const CGUIMatrix4& rWorldMatrix,
+		const CGUITextureImp* pTexture,
+		const SGUIBlendFunc& rBlendFuncType,
+		const SR_V2F_C4F_T2F_Quad* pQuads,
+		uint16* pIndices,
+		int16 nQuadNum)
+	{
+		//set modelview matrix
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		makeGLMatrix( m_gl_matrix, rWorldMatrix );
+		glMultMatrixf( m_gl_matrix );
+
+		BindTexture( pTexture );
+
+		int16 kQuadSize = sizeof(pQuads[0].bl);
+
+#if CC_USES_VBO
+		glBindBuffer(GL_ARRAY_BUFFER, quadsID);
+
+		glVertexPointer(2,GL_FLOAT, kQuadSize, 0);
+
+		glColorPointer(4, GL_FLOAT, kQuadSize, (GLvoid*) offsetof(ccV2F_C4F_T2F,colors) );
+
+		glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*) offsetof(ccV2F_C4F_T2F,texCoords) );
+#else // vertex array list
+
+		int32 offset = (int32) pQuads;
+
+		// vertex
+		int32 diff = offsetof( SR_V2F_C4F_T2F, vertices);
+		glVertexPointer(2,GL_FLOAT, kQuadSize, (GLvoid*) (offset+diff) );
+
+		// color
+		diff = offsetof( SR_V2F_C4F_T2F, colors);
+		glColorPointer(4, GL_FLOAT, kQuadSize, (GLvoid*)(offset + diff));
+
+		// tex coords
+		diff = offsetof( SR_V2F_C4F_T2F, texCoords);
+		glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*)(offset + diff));		
+
+#endif // ! CC_USES_VBO
+
+		BlendFunc( rBlendFuncType );
+
+		glDrawElements(GL_TRIANGLES, nQuadNum*6, GL_UNSIGNED_SHORT, pIndices);
+
+		// restore blend state
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
+
+#if CC_USES_VBO
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+#endif
 	}
 	//------------------------------------------------------------------------------
 	/** 
@@ -785,6 +838,61 @@ namespace guiex
 				gl_matrix[x] = m[j][i];
 				x++;
 			}
+		}
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengles::BlendFunc( const SGUIBlendFunc& rBlendFuncType )
+	{
+		GLenum src,dst;
+		switch( rBlendFuncType.src )
+		{
+		case eBlendFunc_ONE:
+			src = GL_ONE;break;
+		case eBlendFunc_SRC_COLOR:
+			src = GL_COLOR;break;
+		case eBlendFunc_ONE_MINUS_SRC_COLOR:
+			src = GL_SRC_COLOR;break;
+		case eBlendFunc_SRC_ALPHA:
+			src = GL_SRC_ALPHA;break;
+		case eBlendFunc_ONE_MINUS_SRC_ALPHA:
+			src = GL_ONE_MINUS_SRC_ALPHA;break;
+		case eBlendFunc_DST_ALPHA:
+			src = GL_DST_ALPHA;break;
+		case eBlendFunc_ONE_MINUS_DST_ALPHA:
+			src = GL_ONE_MINUS_DST_ALPHA;break;
+		case eBlendFunc_ZERO:
+		default:
+			src = GL_ZERO;break;
+		}
+		switch( rBlendFuncType.dst )
+		{
+		case eBlendFunc_ONE:
+			dst = GL_ONE;break;
+		case eBlendFunc_SRC_COLOR:
+			dst = GL_COLOR;break;
+		case eBlendFunc_ONE_MINUS_SRC_COLOR:
+			dst = GL_SRC_COLOR;break;
+		case eBlendFunc_SRC_ALPHA:
+			dst = GL_SRC_ALPHA;break;
+		case eBlendFunc_ONE_MINUS_SRC_ALPHA:
+			dst = GL_ONE_MINUS_SRC_ALPHA;break;
+		case eBlendFunc_DST_ALPHA:
+			dst = GL_DST_ALPHA;break;
+		case eBlendFunc_ONE_MINUS_DST_ALPHA:
+			dst = GL_ONE_MINUS_DST_ALPHA;break;
+		case eBlendFunc_ZERO:
+		default:
+			dst = GL_ZERO;break;
+		}
+		glBlendFunc( src, dst );
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengles::BindTexture( const CGUITextureImp* pTexture )
+	{
+		if( ((const CGUITexture_opengles*)pTexture)->GetOGLTexid() != m_nCurrentTexture )
+		{
+			m_nCurrentTexture = ((CGUITexture_opengles*)pTexture)->GetOGLTexid();
+			glBindTexture(GL_TEXTURE_2D, m_nCurrentTexture);
 		}
 	}
 	//-----------------------------------------------------------------------------
