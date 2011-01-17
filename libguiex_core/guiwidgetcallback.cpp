@@ -24,10 +24,10 @@ OnAlphaChange
 //============================================================================// 
 namespace guiex
 {
-
-	//#define WIDGET_EVENT_TRACE(eventname)	\
-	//	GUI_TRACE( GUI_FORMAT("[CGUIWidget::"eventname"]:\n    Widget type<%s>, name <%s>\n\n",m_strType.c_str(), m_strName.c_str()));
-
+/*
+	#define WIDGET_EVENT_TRACE(eventname)	\
+		GUI_TRACE( GUI_FORMAT("[CGUIWidget::"eventname"]:\n    Widget type<%s>, name <%s>\n\n",m_strType.c_str(), m_strName.c_str()));
+*/
 
 #define WIDGET_EVENT_TRACE(eventname)
 
