@@ -35,13 +35,28 @@ void ReClipNode::SetSize( const QSize& _size )
 }
 
 
+ReClipNodeGroup::~ReClipNodeGroup()
+{
+	if( NULL != m_image )
+		delete m_image;
+}
+
+
+void ReClipNodeGroup::SetImageId( const QString& _id )
+{
+	if( NULL != m_image )
+		delete m_image;
+	m_image = new QPixmap( _id );
+}
+
+
 // -------------------------------------------------------------------------
 // General.
 // -------------------------------------------------------------------------
 ReClipModel::ReClipModel( QWidget* _parent /* = NULL */ )
 : TSuper( ( QObject* )_parent )
 {
-	m_rootNode = new ReClipGroupNode( this );
+	m_rootNode = new ReClipNodeGroup( this );
 }
 
 
@@ -59,11 +74,27 @@ void ReClipModel::Clear()
 
 void ReClipModel::OnClipChanged( ReClipNode* _clip )
 {
-	ReClipGroupNode* group = ( ReClipGroupNode* )_clip->GetParent();
+	ReClipNodeGroup* group = ( ReClipNodeGroup* )_clip->GetParent();
 	QModelIndex groupIndex = index( m_rootNode->GetChildIndex( group ), 0, QModelIndex() );
 	QModelIndex clipIndex = index( group->GetChildIndex( _clip ), 0, groupIndex );
 	QModelIndex clipIndex2 = index( group->GetChildIndex( _clip ), EColumn_Count - 1, groupIndex );
 	emit dataChanged( clipIndex, clipIndex2 );
+}
+
+
+void ReClipModel::OnClipDeleted( ReClipNode* _clip )
+{
+	ReClipNodeGroup* group = ( ReClipNodeGroup* )_clip->GetParent();
+	QModelIndex groupIndex = index( m_rootNode->GetChildIndex( group ), 0, QModelIndex() );
+
+	removeRow( group->GetChildIndex( _clip ), groupIndex );
+}
+
+
+bool ReClipModel::IsDirty() const
+{
+	// TODO: ...
+	return true;
 }
 
 
@@ -81,7 +112,7 @@ bool ReClipModel::Export( const QString& _filePath ) const
 		int groupCount = GetGroupCount();
 		for( int i = 0; i < groupCount; ++i )
 		{
-			ReClipGroupNode* group = GetGroupByIndex( i );
+			ReClipNodeGroup* group = GetGroupByIndex( i );
 			writer.writeStartElement( "property" );
 			{
 				QString imagePath = group->GetImageId();
@@ -181,7 +212,7 @@ QVariant ReClipModel::data( const QModelIndex& _index, int _role /* = Qt::Displa
 			if( EColumn_Preview == _index.column() )
 			{
 				TNode* node = IndexToNode( _index );
-				ReClipGroupNode* group = dynamic_cast< ReClipGroupNode* >( node );
+				ReClipNodeGroup* group = dynamic_cast< ReClipNodeGroup* >( node );
 				QPixmap pixmap;
 				if( NULL != group )
 				{
@@ -190,7 +221,7 @@ QVariant ReClipModel::data( const QModelIndex& _index, int _role /* = Qt::Displa
 				else
 				{
 					ReClipNode* clip = ( ReClipNode* )node;
-					group = ( ReClipGroupNode* )clip->GetParent();
+					group = ( ReClipNodeGroup* )clip->GetParent();
 					QPoint offset = clip->GetOffset() / group->GetZoomScalar();
 					QSize size = clip->GetSize() / group->GetZoomScalar();
 					pixmap = group->GetImage()->copy( offset.x(), offset.y(), size.width(), size.height() );
@@ -257,7 +288,7 @@ QModelIndex ReClipModel::index( int _row, int _column, const QModelIndex& _paren
 	{
 		if( _parent.isValid() )
 		{
-			ReClipGroupNode* group = ( ReClipGroupNode* )IndexToNode( _parent );
+			ReClipNodeGroup* group = ( ReClipNodeGroup* )IndexToNode( _parent );
 			if( _row < group->GetChildrenCount() )
 			{
 				result = createIndex( _row, _column, group->GetChild( _row ) );	
@@ -290,7 +321,7 @@ QModelIndex ReClipModel::parent( const QModelIndex& _index ) const
 			ReClipNode* clip = dynamic_cast< ReClipNode* >( node );
 			if( NULL != clip )
 			{
-				ReClipGroupNode* group = ( ReClipGroupNode* )clip->GetParent();
+				ReClipNodeGroup* group = ( ReClipNodeGroup* )clip->GetParent();
 				result = createIndex( m_rootNode->GetChildIndex( group ), 0, group );
 			}
 		}
@@ -311,19 +342,17 @@ bool ReClipModel::insertRows( int _row, int _count, const QModelIndex& _parent )
 		if( _parent.isValid() )
 		{
 			// We are creating new clips.
-			ReClipGroupNode* group = ( ReClipGroupNode* )IndexToNode( _parent );
+			ReClipNodeGroup* group = ( ReClipNodeGroup* )IndexToNode( _parent );
 			ReClipNode* clip = new ReClipNode( this );
-			clip->SetParent( group );
 			clip->SetName( QString( tr( "Clip %1" ) ).arg( group->GetNextChildId() ) );
-			group->AddNode( clip );
+			group->AddChild( clip );
 		}
 		else
 		{
 			// We are creating new clip groups.
-			ReClipGroupNode* group = new ReClipGroupNode( this );
-			group->SetParent( m_rootNode );
+			ReClipNodeGroup* group = new ReClipNodeGroup( this );
 			group->SetName( QString( tr( "Group %1" ) ).arg( m_rootNode->GetNextChildId() ) );
-			m_rootNode->AddNode( group );
+			m_rootNode->AddChild( group );
 		}
 
 		result = true;		
@@ -346,16 +375,16 @@ bool ReClipModel::removeRows( int _row, int _count, const QModelIndex& _parent )
 		if( _parent.isValid() )
 		{
 			// We are removing existing clips.
-			ReClipGroupNode* group = ( ReClipGroupNode* )IndexToNode( _parent );
+			ReClipNodeGroup* group = ( ReClipNodeGroup* )IndexToNode( _parent );
 			TNode* clip = group->GetChild( _row );
-			group->RemoveNode( clip );
+			group->RemoveChild( clip );
 			delete clip;
 		}
 		else
 		{
 			// We are removing existing clip groups.
-			ReClipGroupNode* group = ( ReClipGroupNode* )m_rootNode->GetChild( _row );
-			m_rootNode->RemoveNode( group );
+			ReClipNodeGroup* group = ( ReClipNodeGroup* )m_rootNode->GetChild( _row );
+			m_rootNode->RemoveChild( group );
 			delete group;
 		}
 
@@ -436,12 +465,12 @@ ReClipModel::TFlags ReClipModel::flags( const QModelIndex& _index ) const
 // -------------------------------------------------------------------------
 // Utilities.
 // -------------------------------------------------------------------------
-ReClipGroupNode* ReClipModel::GetGroupByIndex( int _index ) const
+ReClipNodeGroup* ReClipModel::GetGroupByIndex( int _index ) const
 {
 	if( m_rootNode->GetChildrenCount() > 0 )
 	{
-		const ReClipGroupNode* group = ( ReClipGroupNode* )m_rootNode->GetChild( _index );
-		return const_cast< ReClipGroupNode* >( group );
+		const ReClipNodeGroup* group = ( ReClipNodeGroup* )m_rootNode->GetChild( _index );
+		return const_cast< ReClipNodeGroup* >( group );
 	}
 	else
 	{
@@ -450,14 +479,14 @@ ReClipGroupNode* ReClipModel::GetGroupByIndex( int _index ) const
 }
 
 
-ReClipGroupNode* ReClipModel::GetGroupById( const QString& _id )
+ReClipNodeGroup* ReClipModel::GetGroupById( const QString& _id )
 {
-	ReClipGroupNode* result = NULL;
+	ReClipNodeGroup* result = NULL;
 
 	int groupCount = GetGroupCount();
 	for( int i = 0; i < groupCount; ++i )
 	{
-		ReClipGroupNode* group = GetGroupByIndex( i );
+		ReClipNodeGroup* group = GetGroupByIndex( i );
 		if( 0 == group->GetImageId().compare( _id ) )
 		{
 			result = group;
@@ -469,15 +498,15 @@ ReClipGroupNode* ReClipModel::GetGroupById( const QString& _id )
 }
 
 
-ReClipGroupNode* ReClipModel::CreateGroup( const QString& _id )
+ReClipNodeGroup* ReClipModel::CreateGroup( const QString& _id )
 {
-	ReClipGroupNode* group = GetGroupById( _id );
+	ReClipNodeGroup* group = GetGroupById( _id );
 	if( NULL == group )
 	{
 		int groupCount = GetGroupCount();
 		insertRow( groupCount, QModelIndex() );
 
-		group = ( ReClipGroupNode* )m_rootNode->GetChild( groupCount );
+		group = ( ReClipNodeGroup* )m_rootNode->GetChild( groupCount );
 		group->SetImageId( _id );
 	}
 
@@ -485,7 +514,7 @@ ReClipGroupNode* ReClipModel::CreateGroup( const QString& _id )
 }
 
 
-ReClipNode* ReClipModel::CreateClip( ReClipGroupNode* _group )
+ReClipNode* ReClipModel::CreateClip( ReClipNodeGroup* _group )
 {
 	ReClipNode* clip = NULL;
 
@@ -502,7 +531,13 @@ ReClipNode* ReClipModel::CreateClip( ReClipGroupNode* _group )
 }
 
 
-void ReClipModel::DestroyGroup( ReClipGroupNode* _group )
+int ReClipModel::GetGroupIndex( ReClipNodeGroup* _group ) const
+{
+	return m_rootNode->GetChildIndex( _group );
+}
+
+
+void ReClipModel::DestroyGroup( ReClipNodeGroup* _group )
 {
 	removeRow( m_rootNode->GetChildIndex( _group ), QModelIndex() );
 }
@@ -510,7 +545,7 @@ void ReClipModel::DestroyGroup( ReClipGroupNode* _group )
 
 void ReClipModel::DestroyClip( ReClipNode* _clip )
 {
-	ReClipGroupNode* group = ( ReClipGroupNode* )_clip->GetParent();
+	ReClipNodeGroup* group = ( ReClipNodeGroup* )_clip->GetParent();
 	QModelIndex parentIndex = index( m_rootNode->GetChildIndex( group ), 0, QModelIndex() );
 	removeRow( group->GetChildIndex( _clip ), parentIndex );
 }

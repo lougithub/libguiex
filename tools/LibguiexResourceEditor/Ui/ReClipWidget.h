@@ -6,7 +6,7 @@
 #define _RE_CLIP_H_
 
 
-#include <QLabel>
+#include <QWidget>
 #include <QRect>
 #include <list>
 #include "Ui\ReBaseWidget.h"
@@ -22,12 +22,10 @@ class ReClipNode;
 // -----------------------------------------------------------------------------
 // ReClipWidget
 // -----------------------------------------------------------------------------
-class ReClipWidget : public ReBaseWidget< QLabel >
+class ReClipWidget : public ReBaseWidget< QWidget >
 {
 	Q_OBJECT
-	typedef ReBaseWidget< QLabel >	TSuper;
-	typedef ReDragInfo::eDragType	TDragType;
-	typedef ReDragInfo::eResize		TResizeType;
+	typedef ReBaseWidget< QWidget >	TSuper;
 
 	// -------------------------------------------------------------------------
 	// General.
@@ -36,12 +34,8 @@ public:
 	ReClipWidget( QWidget* _parent = NULL );
 	~ReClipWidget();
 
+	void				InitFromModelData( ReClipNode* _modelData );
 	ReClipNode*			GetModelData() const				{ return m_modelData; }
-	void				SetModelData( ReClipNode* _data )	{ m_modelData = _data; }
-
-	int					GetZoomFactor() const				{ return m_zoomFactor; }
-	void				SetZoomFactor( int _z )				{ m_zoomFactor = _z; }
-
 	void				ShowOutline( bool _show )			{ m_isShowOutline = _show; }
 
 	// -------------------------------------------------------------------------
@@ -64,11 +58,7 @@ protected:
 protected:
 	ReClipNode*			m_modelData;
 
-	int					m_zoomFactor;	
 	bool				m_isShowOutline;
-
-public:
-	static QSize		ms_minSize;
 };
 
 

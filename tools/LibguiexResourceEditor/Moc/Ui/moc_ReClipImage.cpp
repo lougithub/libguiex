@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ReClipImage.h'
 **
-** Created: Mon Jan 17 22:39:13 2011
+** Created: Tue Jan 18 22:23:32 2011
 **      by: The Qt Meta Object Compiler version 61 (Qt 4.5.3)
 **
 ** WARNING! All changes made in this file will be lost!

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ReClipWidget.h'
 **
-** Created: Mon Jan 17 22:18:07 2011
+** Created: Tue Jan 18 22:23:31 2011
 **      by: The Qt Meta Object Compiler version 61 (Qt 4.5.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -36,7 +36,7 @@ static const char qt_meta_stringdata_RE__ReClipWidget[] = {
 };
 
 const QMetaObject RE::ReClipWidget::staticMetaObject = {
-    { &ReBaseWidget<QLabel>::staticMetaObject, qt_meta_stringdata_RE__ReClipWidget,
+    { &ReBaseWidget<QWidget>::staticMetaObject, qt_meta_stringdata_RE__ReClipWidget,
       qt_meta_data_RE__ReClipWidget, 0 }
 };
 
@@ -50,12 +50,12 @@ void *RE::ReClipWidget::qt_metacast(const char *_clname)
     if (!_clname) return 0;
     if (!strcmp(_clname, qt_meta_stringdata_RE__ReClipWidget))
         return static_cast<void*>(const_cast< ReClipWidget*>(this));
-    return ReBaseWidget<QLabel>::qt_metacast(_clname);
+    return ReBaseWidget<QWidget>::qt_metacast(_clname);
 }
 
 int RE::ReClipWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = ReBaseWidget<QLabel>::qt_metacall(_c, _id, _a);
+    _id = ReBaseWidget<QWidget>::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     return _id;

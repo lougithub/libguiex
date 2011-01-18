@@ -37,13 +37,15 @@ class ReClipNode : public ReDataNode< ReClipModel >
 	// General.
 	// -------------------------------------------------------------------------
 public:
-	typedef ReDataNode	TSuper;
-	ReClipNode( ReClipModel* _model ): TSuper( _model ), m_offset( 0, 0 ), m_size( 0, 0 ) {}
+	typedef ReDataNode< ReClipModel >	TSuper;
+	ReClipNode( ReClipModel* _model ): TSuper( _model ), m_offset( 0, 0 ), m_size( 0, 0 ), m_zoomScalar( 1 ) {}
 
 	void				SetOffset( const QPoint& _offset );
-	const QPoint&		GetOffset() const					{ return m_offset; }
+	const QPoint&		GetOffset() const { return m_offset; }
 	void				SetSize( const QSize& _size );
-	const QSize&		GetSize() const						{ return m_size; }
+	const QSize&		GetSize() const { return m_size; }
+	void				SetZoomScalar( int _scalar ) { m_zoomScalar = _scalar; }
+	int					GetZoomScalar() const { return m_zoomScalar; }
 
 	// -------------------------------------------------------------------------
 	// Override ReDataNode.
@@ -61,25 +63,28 @@ public:
 protected:
 	QPoint				m_offset;
 	QSize				m_size;
+	int					m_zoomScalar;
 };
 
 
 // -----------------------------------------------------------------------------
 // Clip group.
 // -----------------------------------------------------------------------------
-class ReClipGroupNode : public ReDataNodeGroup< ReClipModel >
+class ReClipNodeGroup : public ReDataNode< ReClipModel >
 {
 	// -------------------------------------------------------------------------
 	// General.
 	// -------------------------------------------------------------------------
 public:
-	typedef ReDataNodeGroup	TSuper;
-	ReClipGroupNode( ReClipModel* _model ): TSuper( _model ), m_image( NULL ) {}
+	typedef ReDataNode< ReClipModel >	TSuper;
+	ReClipNodeGroup( ReClipModel* _model ): TSuper( _model ), m_image( NULL ), m_zoomScalar( 1 ) {}
+	~ReClipNodeGroup();
 
-	void				SetImageId( const QString& _id )	{ m_imageId = _id; }
+	void				SetImageId( const QString& _id );
 	const QString&		GetImageId() const					{ return m_imageId; }
-	void				SetImage( const QPixmap* _image )	{ m_image = _image; }
-	const QPixmap*		GetImage() const					{ return m_image; }
+	QPixmap*			GetImage() const					{ return m_image; }
+	void				SetZoomScalar( int _scalar )		{ m_zoomScalar = _scalar; }
+	int					GetZoomScalar() const				{ return m_zoomScalar; }
 
 	// -------------------------------------------------------------------------
 	// Override ReDataNode.
@@ -92,7 +97,8 @@ public:
 
 protected:
 	QString				m_imageId;
-	const QPixmap*		m_image;	
+	QPixmap*			m_image;
+	int					m_zoomScalar;
 };
 
 
@@ -121,15 +127,18 @@ public:
 	~ReClipModel();
 
 	int					GetGroupCount() const { return m_rootNode->GetChildrenCount(); }
-	ReClipGroupNode*	GetGroupByIndex( int _index ) const;
-	ReClipGroupNode*	GetGroupById( const QString& _id );
-	ReClipGroupNode*	CreateGroup( const QString& _id );
-	ReClipNode*			CreateClip( ReClipGroupNode* _group );
-	void				DestroyGroup( ReClipGroupNode* _group );
+	ReClipNodeGroup*	GetGroupByIndex( int _index ) const;
+	ReClipNodeGroup*	GetGroupById( const QString& _id );
+	ReClipNodeGroup*	CreateGroup( const QString& _id );
+	ReClipNode*			CreateClip( ReClipNodeGroup* _group );
+	int					GetGroupIndex( ReClipNodeGroup* _group ) const;
+	void				DestroyGroup( ReClipNodeGroup* _group );
 	void				DestroyClip( ReClipNode* _clip );
 	void				Clear();
 
 	void				OnClipChanged( ReClipNode* _clip );
+	void				OnClipDeleted( ReClipNode* _clip );
+	bool				IsDirty() const;
 
 	bool				Export( const QString& _filePath ) const;
 	bool				Import( const QString& _filePath );
@@ -160,7 +169,7 @@ protected:
 	// -------------------------------------------------------------------------
 	// -------------------------------------------------------------------------
 protected:
-	ReClipGroupNode*	m_rootNode;
+	ReClipNodeGroup*	m_rootNode;
 };
 
 

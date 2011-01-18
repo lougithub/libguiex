@@ -1,11 +1,12 @@
 // -----------------------------------------------------------------------------
 // Author: GameCrashDebug.
-// Date: 20110115.
+// Date: 20110118.
 // -----------------------------------------------------------------------------
-#ifndef _RE_EDITOR_CLIPWORKSHOP
-#define _RE_EDITOR_CLIPWORKSHOP
+#ifndef _RE_EDITOR_CLIPCELL_H_
+#define _RE_EDITOR_CLIPCELL_H_
 // -----------------------------------------------------------------------------
 // -----------------------------------------------------------------------------
+#include <QWidget>
 #include "Core\ReTypes.h"
 #include "Core\ReModelBase.h"
 #include "Core\ReDragInfo.h"
@@ -14,80 +15,65 @@
 #include "Core\ReWidgetSelection.h"
 #include "UI\ReClipWidget.h"
 #include "Ui\ReBaseWidget.h"
-#include <QWidget>
 
 
 class QMenu;
 class QAction;
-class QTabWidget;
 
 
 namespace RE
 {
 
 
-class ReClipModel;
-class ReClipCell;
+class ReClipImage;
+class ReClipNodeGroup;
 
 
-class ReClipWorkshop : public ReBaseWidget< QWidget >
+class ReClipCell : public ReBaseWidget< QWidget >
 {
 	Q_OBJECT
-	typedef ReBaseWidget< QWidget >			TSuper;
+	typedef ReBaseWidget< QWidget > TSuper;
 
 	// -------------------------------------------------------------------------
 	// General.
 	// -------------------------------------------------------------------------
 public:
-	ReClipWorkshop( ReClipModel* _model, QWidget* _parent = NULL );
+	ReClipCell( QWidget* _parent = NULL );
+
+	void				InitFromModelData( ReClipNodeGroup* _modelData );
 
 	// -------------------------------------------------------------------------
 	// Override QWidget.
 	// -------------------------------------------------------------------------
 public:
 	virtual void		paintEvent( QPaintEvent* _event );
-	virtual void		resizeEvent( QResizeEvent* _event );
+	virtual void		wheelEvent( QWheelEvent* _event );
+	virtual void		mousePressEvent( QMouseEvent* _event );
+	virtual void		mouseReleaseEvent( QMouseEvent* _event );
+	virtual void		mouseMoveEvent( QMouseEvent* _event );
+	virtual void		mouseDoubleClickEvent( QMouseEvent* _event );
 
 	// -------------------------------------------------------------------------
 	// Slots.
 	// -------------------------------------------------------------------------
 public slots:
-	void				OnContextMenu( const QPoint& _point );
-	void				OnLoadImage();
-	void				OnImport();
-	void				OnSave();
-	void				OnSaveAs();
 
 	// -------------------------------------------------------------------------
 	// Utilities.
 	// -------------------------------------------------------------------------
 protected:
-	void				InitMenus();
-	void				Reset();
-	ePromptResult		CheckAndPromptToSave();
 
 	// -------------------------------------------------------------------------
 	// Variables.
 	// -------------------------------------------------------------------------
 protected:
-	typedef ReItemGroup< ReClipCell* >		TCellList;
-	typedef TCellList::TItemListItor		TCellListItor;
-	typedef TCellList::TItemListCItor		TCellListCItor;
-
-	ReClipModel*		m_clipModel;
-	TCellList			m_cellList;
+	//// Data.
+	ReClipNodeGroup*	m_modelData;
+	ReClipImage*		m_clipImage;
 	ReDragInfo			m_dragInfo;
-
-	QTabWidget*			m_tab;
-	QString				m_filePath;
-
-	QMenu*				m_editMenu;
-	QAction*			m_loadImageAction;
-	QAction*			m_importAction;
-	QAction*			m_saveAction;
-	QAction*			m_saveAsAction;
+	ReZoomInfo			m_zoomInfo;
 };
 
 
 }
-#endif	// _RE_EDITOR_CLIPWORKSHOP
+#endif	// _RE_EDITOR_CLIPCELL_H_

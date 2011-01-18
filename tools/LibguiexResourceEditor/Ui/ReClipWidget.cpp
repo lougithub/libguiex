@@ -17,12 +17,8 @@ namespace RE
 // -----------------------------------------------------------------------------
 // General.
 // -----------------------------------------------------------------------------
-QSize ReClipWidget::ms_minSize = QSize( 8, 8 );
-
-
 ReClipWidget::ReClipWidget( QWidget* _parent )
 : TSuper( _parent )
-, m_zoomFactor( 1 )
 , m_isShowOutline( false )
 {
 	setMouseTracking( true );
@@ -32,8 +28,14 @@ ReClipWidget::ReClipWidget( QWidget* _parent )
 
 ReClipWidget::~ReClipWidget()
 {
-	ReClipModel* clipModel = m_modelData->GetModel();
-	clipModel->DestroyClip( m_modelData );
+}
+
+
+void ReClipWidget::InitFromModelData( ReClipNode* _modelData )
+{
+	m_modelData = _modelData;
+	move( _modelData->GetOffset() );
+	resize( _modelData->GetSize() );
 }
 
 
@@ -42,25 +44,14 @@ ReClipWidget::~ReClipWidget()
 // -----------------------------------------------------------------------------
 void ReClipWidget::paintEvent( QPaintEvent* _event )
 {
-	if( NULL != pixmap() )
-	{
-		TSuper::paintEvent( _event );
-	}
-	else
-	{
-		QPainter painter( this );
-		painter.fillRect( 0, 0, width(), height(), QColor( 255, 255, 0, 50 ) );
+	QPainter painter( this );
+	painter.fillRect( 0, 0, width(), height(), QColor( 255, 255, 0, 50 ) );
 
-		if( m_isShowOutline )
-		{
-			painter.setPen( Qt::DashDotLine );
-			painter.setPen( QColor( 0, 255, 0 ) );
-			painter.drawRect( 0, 0, width() - 1, height() - 1 );
-		}
-
-		painter.drawText( 0, height(), tr( "(%1,%2)(%3,%4)" )			
-			.arg( pos().x() ).arg( pos().y() )
-			.arg( width() ).arg( height() ) );
+	if( m_isShowOutline )
+	{
+		painter.setPen( Qt::DashDotLine );
+		painter.setPen( QColor( 0, 255, 0 ) );
+		painter.drawRect( _event->rect().adjusted( 0, 0, -1, -1 ) );
 	}
 }
 

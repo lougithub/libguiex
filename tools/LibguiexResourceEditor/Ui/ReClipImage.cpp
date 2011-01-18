@@ -48,49 +48,43 @@ void ReClipImage::ReClipSelection::Clear()
 // -----------------------------------------------------------------------------
 // General.
 // -----------------------------------------------------------------------------
-ReClipImage::ReClipImage( ReClipModel* _model, ReZoomInfo* _zoomInfo, QWidget* _parent )
+ReClipImage::ReClipImage( ReZoomInfo* _zoomInfo, QWidget* _parent )
 : TSuper( _parent )
-, m_model( _model )
 , m_modelData( NULL )
 , m_zoomScalar( 1 )
 {
-	setMouseTracking( true );
+	//setMouseTracking( true );
 	setScaledContents( true );
 	setFocusPolicy( Qt::ClickFocus );
+	setVisible( true );
 
 	connect( _zoomInfo, SIGNAL( ScalarChanged( int ) ), this, SLOT( OnZoom( int ) ) );
+
+	resize( 64, 64 );
 }
 
 
 ReClipImage::~ReClipImage()
 {
-	if( m_clipList.Size() > 0 )
-	{
-		TClipListItor itor = m_clipList.Begin();
-		TClipListItor itorEnd = m_clipList.End();
-		for( ; itor != itorEnd; ++itor )
-		{
-			ReClipWidget* clipWidget = *itor;
-			delete clipWidget;
-		}
-
-		m_clipList.Clear();
-	}
-
-	m_model->DestroyGroup( m_modelData );
 }
 
 
-void ReClipImage::SetImagePath( const QString& _imagePath )
+void ReClipImage::InitFromModelData( ReClipNodeGroup* _modelData )
 {
-	m_imagePath = _imagePath;
-	QImage image( m_imagePath );
-	if( !image.isNull() )
-	{
-		setPixmap( QPixmap::fromImage( image ) );
-		adjustSize();
+	Reset();
 
-		m_modelData->SetImage( pixmap() );
+	m_modelData = _modelData;
+	setPixmap( *m_modelData->GetImage() );
+	setScaledContents( true );
+	adjustSize();	
+
+	int clipCount = m_modelData->GetChildrenCount();
+	for( int i = 0; i < clipCount; ++i )
+	{
+		ReClipNode* clipData = ( ReClipNode* )m_modelData->GetChild( i );
+
+		ReClipWidget* clipWidget = new ReClipWidget( this );
+		clipWidget->InitFromModelData( clipData );
 	}
 }
 
@@ -100,7 +94,17 @@ void ReClipImage::SetImagePath( const QString& _imagePath )
 // -----------------------------------------------------------------------------
 void ReClipImage::paintEvent( QPaintEvent* _event )
 {
-	TSuper::paintEvent( _event );
+	if( NULL == m_modelData )
+	{
+		QPainter painter( this );
+		painter.fillRect( _event->rect(), QColor( 168, 170, 100 ) );
+		painter.setPen( QColor( 0, 0, 255 ) );
+		painter.drawRect( _event->rect().adjusted( 0, 0, -1, -1 ) );
+	}
+	else
+	{
+		TSuper::paintEvent( _event );
+	}	
 }
 
 
@@ -192,20 +196,19 @@ void ReClipImage::mouseReleaseEvent( QMouseEvent* _event )
 		}
 		else
 		{
+			m_modelData->GetModel()->OnClipDeleted( newClip->GetModelData() );
 			m_selection.Clear();
 			delete newClip;
 		}
 	}
 	else
 	{
-		if( m_selection.IsWaitState() )
-		{
-		}
-
 		m_selection.GotoIdleState();
 		m_selection.GetDragInfoRef().Stop();
-	}
 
+		HandleClipping();
+	}
+	
 	m_dragInfo.Stop();
 }
 
@@ -261,18 +264,22 @@ void ReClipImage::keyPressEvent( QKeyEvent* _event )
 	if( Qt::Key_Left == _event->key() )
 	{
 		m_selection.MoveBy( QPoint( -m_zoomScalar, 0 ) );
+		HandleClipping();
 	}
 	else if( Qt::Key_Right == _event->key() )
 	{
 		m_selection.MoveBy( QPoint( m_zoomScalar, 0 ) );
+		HandleClipping();
 	}
 	else if( Qt::Key_Up == _event->key() )
 	{
 		m_selection.MoveBy( QPoint( 0, -m_zoomScalar ) );
+		HandleClipping();
 	}
 	else if( Qt::Key_Down == _event->key() )
 	{
 		m_selection.MoveBy( QPoint( 0, m_zoomScalar ) );
+		HandleClipping();
 	}
 	else if( Qt::Key_A == _event->key() )
 	{
@@ -331,16 +338,18 @@ void ReClipImage::OnZoom( int _scalar )
 
 void ReClipImage::OnDelete()
 {
-	ReClipSelection::TItemListItor itor = m_selection.Begin();
-	ReClipSelection::TItemListItor itorEnd = m_selection.End();
+	ReClipSelection buffer = m_selection;
+	ReClipSelection::TItemListItor itor = buffer.Begin();
+	ReClipSelection::TItemListItor itorEnd = buffer.End();
 	for( ; itor != itorEnd; ++itor )
 	{
-		ReClipWidget* widget = ( ReClipWidget* )( *itor ).GetWidget();
-		m_clipList.Remove( widget );
-		delete widget;
-	}
+		ReClipWidget* clipWidget = ( ReClipWidget* )( *itor ).GetWidget();
+		m_clipList.Remove( clipWidget );
+		m_selection.Remove( clipWidget );
 
-	m_selection.Clear();
+		m_modelData->GetModel()->OnClipDeleted( clipWidget->GetModelData() );
+		delete clipWidget;
+	}
 }
 
 
@@ -350,13 +359,13 @@ void ReClipImage::OnDelete()
 ReClipWidget* ReClipImage::CreateClip()
 {
 	// Model.
-	ReClipGroupNode* group = m_model->GetGroupById( m_imagePath );
-	ReClipNode* clipData = m_model->CreateClip( group );
+	ReClipModel* clipModel = m_modelData->GetModel();
+	ReClipNode* clipData = clipModel->CreateClip( m_modelData );
 	clipData->SetZoomScalar( m_zoomScalar );
 
 	// Widget.
 	ReClipWidget* clipWidget = new ReClipWidget( this );
-	clipWidget->SetModelData( clipData );
+	clipWidget->InitFromModelData( clipData );
 	clipWidget->setVisible( true );
 
 	return clipWidget;
@@ -436,7 +445,58 @@ void ReClipImage::HandleResize( const QPoint _pos )
 
 void ReClipImage::HandleClipping()
 {
-	
+	if( m_selection.Size() > 0 )
+	{
+		TClipList garbage;
+		QRect rect( 0, 0, width(), height() );
+
+		ReClipSelection::TItemListItor itor = m_selection.Begin();
+		ReClipSelection::TItemListItor itorEnd = m_selection.End();
+		for( ; itor != itorEnd; ++itor )
+		{
+			ReClipWidget* clipWidget = ( ReClipWidget* )( *itor ).GetWidget();
+			QRect geo = clipWidget->geometry();
+
+			if( rect.intersects( geo ) )
+			{
+				geo = rect.intersected( geo );
+
+				if( ( geo.width() / m_zoomScalar >= CLIP_MIN_WIDTH ) && ( geo.height() / m_zoomScalar ) >= CLIP_MIN_HEIGHT )
+				{
+					clipWidget->setGeometry( geo );
+				}
+				else
+				{
+					garbage.Add( clipWidget );
+				}
+			}
+			else
+			{
+				garbage.Add( clipWidget );
+			}
+		}
+
+		TClipListItor gItor = garbage.Begin();
+		TClipListItor gItorEnd = garbage.End();
+		for( ; gItor != gItorEnd; ++gItor )
+		{
+			ReClipWidget* clipWidget = *gItor;
+			m_selection.Remove( clipWidget );
+			m_clipList.Remove( clipWidget );
+
+			m_modelData->GetModel()->OnClipDeleted( clipWidget->GetModelData() );
+			delete clipWidget;
+		}
+	}
+}
+
+
+void ReClipImage::Reset()
+{
+	m_modelData = NULL;
+	m_selection.Clear();
+	m_clipList.Destroy();
+	m_zoomScalar = 1;
 }
 
 

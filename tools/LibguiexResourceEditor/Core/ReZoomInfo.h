@@ -47,6 +47,14 @@ public:
 		m_isEnabled = true;
 	}
 
+	void Reset( T _scalar )
+	{
+		m_scalar = _scalar;
+		m_isEnabled = true;
+
+		emit ScalarChanged( m_scalar );
+	}
+
 	void Zoom( int _step )
 	{
 		if( m_isEnabled )

@@ -6,13 +6,13 @@
 #include "Core\ReClipModel.h"
 #include "Core\ReZoomInfo.h"
 #include "UI\ReClipWorkshop.h"
-#include "UI\ReClipWidget.h"
-#include "UI\ReClipImage.h"
+#include "UI\ReClipCell.h"
 #include <QFile>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QTabWidget>
 
 
 namespace RE
@@ -24,8 +24,7 @@ namespace RE
 // -----------------------------------------------------------------------------
 ReClipWorkshop::ReClipWorkshop( ReClipModel* _model, QWidget* _parent )
 : TSuper( _parent )
-, m_model( _model )
-, m_clipImage( NULL )
+, m_clipModel( _model )
 , m_filePath( tr( "" ) )
 {
 	setMouseTracking( true );
@@ -35,7 +34,8 @@ ReClipWorkshop::ReClipWorkshop( ReClipModel* _model, QWidget* _parent )
 	
 	InitMenus();
 
-	m_zoomInfo.Init( 1, 1, 6, 1 );
+	m_tab = new QTabWidget( this );
+	m_tab->hide();
 }
 
 
@@ -45,62 +45,14 @@ ReClipWorkshop::ReClipWorkshop( ReClipModel* _model, QWidget* _parent )
 void ReClipWorkshop::paintEvent( QPaintEvent* _event )
 {
 	QPainter painter( this );
-
-	// Background.
 	painter.fillRect( geometry(), QColor( 200, 200, 180 ) );
 }
 
 
-void ReClipWorkshop::wheelEvent( QWheelEvent* _event )
+void ReClipWorkshop::resizeEvent( QResizeEvent* _event )
 {
-	if( NULL != m_clipImage )
-	{
-		int degrees = _event->delta() / 8;
-		int stepCount = degrees / 15;
-
-		m_zoomInfo.Zoom( stepCount );
-	}
-}
-
-
-void ReClipWorkshop::mousePressEvent( QMouseEvent* _event )
-{
-	if( Qt::MidButton == _event->button() )
-	{
-		if( NULL != m_clipImage )
-		{
-			m_dragInfo.SetCursorPosBackup( _event->pos() );
-			m_dragInfo.SetItemPosBackup( m_clipImage->pos() );
-			m_dragInfo.StartMove();
-		}
-	}
-}
-
-
-void ReClipWorkshop::mouseReleaseEvent( QMouseEvent* _event )
-{
-	m_dragInfo.Stop();
-}
-
-
-void ReClipWorkshop::mouseMoveEvent( QMouseEvent* _event )
-{
-	if( Qt::MidButton & _event->buttons() )
-	{
-		if( NULL !=m_clipImage )
-		{
-			QPoint delta = _event->pos() - m_dragInfo.GetCursorPosBackup();
-			m_clipImage->move( m_dragInfo.GetItemPosBackup() + delta );
-		}
-	}
-}
-
-
-// -----------------------------------------------------------------------------
-// Override ReModelBase.
-// -----------------------------------------------------------------------------
-void ReClipWorkshop::Tick( qreal _delta )
-{
+	m_tab->move( 0, 0 );
+	m_tab->resize( _event->size() );
 }
 
 
@@ -115,17 +67,29 @@ void ReClipWorkshop::OnContextMenu( const QPoint& _point )
 
 void ReClipWorkshop::OnLoadImage()
 {
-	ePromptResult pr = CheckAndPromptToSave();
-	if( EPromptResult_Cancel != pr )
+	QString path = QFileDialog::getOpenFileName( this, tr( "Open Image File" ), 
+		tr( "." ), tr( "Image File ( *.png *.bmp *.tga *.jpg )" ) );
+
+	if( !path.isEmpty() )
 	{
-		if( EPromptResult_Yes == pr )
-			OnSave();
+		ReClipNodeGroup* group = m_clipModel->GetGroupById( path );
+		if( NULL == group )
+		{
+			// Model.
+			group = m_clipModel->CreateGroup( path );
 
-		QString path = QFileDialog::getOpenFileName( this, tr( "Open Image File" ), 
-			tr( "." ), tr( "Image File ( *.png *.bmp *.tga *.jpg )" ) );
-
-		if( !path.isEmpty() )
-			DoLoadImage( path );
+			// UI.
+			ReClipCell* cell = new ReClipCell( this );
+			cell->InitFromModelData( group );
+			m_cellList.Add( cell );
+			int index = m_tab->addTab( cell, QIcon( *group->GetImage() ), tr( "‡å" ) );
+			m_tab->setCurrentIndex( index );
+			m_tab->show();
+		}
+		else
+		{
+			QMessageBox::warning( this, tr( "Warning" ), tr( "Image already loaded." ) );
+		}
 	}
 }
 
@@ -139,11 +103,38 @@ void ReClipWorkshop::OnImport()
 			OnSave();
 
 		QString path = QFileDialog::getOpenFileName( this, tr( "Open Clip File" ), 
-			tr( "." ), tr( "Xml File ( *.xml )" ) );
+			tr( "." ), tr( "Clip File ( *.xml )" ) );
 
 		if( !path.isEmpty() )
 		{
-			DoImport( path );
+			Reset();
+
+			if( m_clipModel->Import( path ) )
+			{
+				m_filePath = path;
+
+				int groupCount = m_clipModel->GetGroupCount();
+				if( groupCount > 0 )
+				{
+					for( int i = 0; i < groupCount; ++i )
+					{
+						// Model.
+						ReClipNodeGroup* group = m_clipModel->GetGroupByIndex( i );
+
+						// UI.
+						ReClipCell* cell = new ReClipCell( this );
+						cell->InitFromModelData( group );
+						m_cellList.Add( cell );
+						int index = m_tab->addTab( cell, QIcon( *group->GetImage() ), tr( "‡å" ) );					
+					}
+
+					m_tab->setCurrentIndex( 0 );
+				}
+			}
+			else
+			{
+				QMessageBox::critical( this, tr( "Failure" ), QString( tr( "Failed to import file: %1\r\n" ) ).arg( path ), QMessageBox::Ok );
+			}
 		}
 	}
 }
@@ -151,10 +142,11 @@ void ReClipWorkshop::OnImport()
 
 void ReClipWorkshop::OnSave()
 {
-	if( m_filePath.isEmpty() )
+	bool isVirgin = m_filePath.isEmpty();
+	if( isVirgin )
 	{
 		QFileDialog dlg;
-		QString path = dlg.getSaveFileName( this, tr( "Save as" ), tr( "." ), tr( "Xml File( *.xml )" ) );
+		QString path = dlg.getSaveFileName( this, tr( "Save as" ), tr( "." ), tr( "Clip File( *.xml )" ) );
 		if( !path.isEmpty() )
 		{
 			m_filePath = path;			
@@ -163,8 +155,12 @@ void ReClipWorkshop::OnSave()
 
 	if( !m_filePath.isEmpty() )
 	{
-		if( !m_model->Export( m_filePath ) )
+		if( !m_clipModel->Export( m_filePath ) )
+		{
 			QMessageBox::critical( this, tr( "Failure" ), QString( tr( "Failed to save to file: %1\r\n" ) ).arg( m_filePath ), QMessageBox::Ok );
+			if( isVirgin )
+				m_filePath.clear();
+		}
 	}	
 }
 
@@ -172,13 +168,17 @@ void ReClipWorkshop::OnSave()
 void ReClipWorkshop::OnSaveAs()
 {
 	QFileDialog dlg;
-	QString path = dlg.getSaveFileName( this, tr( "Save as" ), tr( "." ), tr( "Xml File( *.xml )" ) );
+	QString path = dlg.getSaveFileName( this, tr( "Save as" ), tr( "." ), tr( "Clip File( *.xml )" ) );
 	if( !path.isEmpty() )
 	{
-		if( m_model->Export( path ) )
+		if( m_clipModel->Export( path ) )
+		{
 			m_filePath = path;
+		}
 		else
+		{
 			QMessageBox::critical( this, tr( "Failure" ), QString( tr( "Failed to save to file: %1\r\n" ) ).arg( path ), QMessageBox::Ok );
+		}
 	}
 }
 
@@ -193,10 +193,10 @@ void ReClipWorkshop::InitMenus()
 	m_loadImageAction = m_editMenu->addAction( tr( "&Load Image" ) );
 	connect( m_loadImageAction, SIGNAL( triggered() ), this, SLOT( OnLoadImage() ) );
 
-	m_editMenu->addSeparator();
-
 	m_importAction = m_editMenu->addAction( tr( "&Import" ) );
 	connect( m_importAction, SIGNAL( triggered() ), this, SLOT( OnImport() ) );
+
+	m_editMenu->addSeparator();
 
 	m_saveAction = m_editMenu->addAction( tr( "&Save" ) );
 	connect( m_saveAction, SIGNAL( triggered() ), this, SLOT( OnSave() ) );
@@ -206,55 +206,11 @@ void ReClipWorkshop::InitMenus()
 }
 
 
-void ReClipWorkshop::DoLoadImage( const QString& _path )
+void ReClipWorkshop::Reset()
 {
-	QImage image( _path );
-	if( !image.isNull() )
-	{
-		DoReset();
-
-		// Model.
-		ReClipGroupNode* group = m_model->CreateGroup( _path );
-
-		// UI.
-		m_clipImage = new ReClipImage( m_model, &m_zoomInfo, this );
-		m_clipImage->setVisible( true );
-		m_clipImage->SetModelData( group );
-		m_clipImage->SetImagePath( _path );
-		m_clipImage->move( 0, 0 );
-		
-		update();
-	}
-	else
-	{
-		QMessageBox::critical( this, tr( "Failure" ), QString( tr( "Failed to load image: %1\r\n" ) ).arg( _path ), QMessageBox::Ok );
-	}
-}
-
-
-void ReClipWorkshop::DoImport( const QString& _path )
-{
-	QFile file( _path );
-	if( file.open( QFile::ReadOnly | QFile::Text ) )
-	{
-		DoReset();
-
-		if( m_model->Import( _path ) )
-			m_filePath = _path;
-		else
-			QMessageBox::critical( this, tr( "Failure" ), QString( tr( "Failed to import file: %1\r\n" ) ).arg( _path ), QMessageBox::Ok );
-	}
-}
-
-
-void ReClipWorkshop::DoReset()
-{
-	if( NULL != m_clipImage )
-	{
-		delete m_clipImage;
-		m_clipImage = NULL;
-	}
-
+	m_tab->clear();
+	m_cellList.Destroy();
+	m_dragInfo.Stop();
 	m_filePath.clear();
 }
 
@@ -266,7 +222,7 @@ ePromptResult ReClipWorkshop::CheckAndPromptToSave()
 	// 1:	yes.
 	ePromptResult result = EPromptResult_Cancel;
 
-	if( IsDirty() )
+	if( m_clipModel->IsDirty() )
 	{
 		QMessageBox mb( QMessageBox::Question, tr( "Save" ), tr( "Save the current document?" ),
 			QMessageBox::Yes | QMessageBox::No, this );
@@ -279,25 +235,6 @@ ePromptResult ReClipWorkshop::CheckAndPromptToSave()
 	}
 
 	return result;
-}
-
-
-bool ReClipWorkshop::IsDirty() const
-{
-	// TODO: implementation.
-	return true;
-}
-
-
-bool ReClipWorkshop::IsReadyForEdit() const
-{
-	return NULL != m_clipImage && NULL != m_clipImage->pixmap();
-}
-
-
-bool ReClipWorkshop::IsClipValid( const ReClipWidget* _clip ) const
-{
-	return _clip->width() >= 4 && _clip->height() >= 4;
 }
 
 

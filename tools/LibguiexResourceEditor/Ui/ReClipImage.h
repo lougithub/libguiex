@@ -17,7 +17,7 @@ namespace RE
 {
 
 
-class ReClipGroupNode;
+class ReClipNodeGroup;
 class ReClipModel;
 class ReZoomInfo;
 
@@ -31,14 +31,14 @@ class ReClipImage : public ReBaseWidget< QLabel >
 	// General.
 	// -------------------------------------------------------------------------
 public:
-	ReClipImage( ReClipModel* _model, ReZoomInfo* _zoomInfo, QWidget* _parent = NULL );
+	ReClipImage( ReZoomInfo* _zoomInfo, QWidget* _parent = NULL );
 	~ReClipImage();
 
-	ReClipGroupNode*	GetModelData() const					{ return m_modelData; }
-	void				SetModelData( ReClipGroupNode* _data )	{ m_modelData = _data; }
+	void				InitFromModelData( ReClipNodeGroup* _modelData );
+	ReClipNodeGroup*	GetModelData() const { return m_modelData; }
 
-	const QString&		GetImagePath() const					{ return m_imagePath; }
-	void				SetImagePath( const QString& _path );
+	//const QString&		GetImagePath() const { return m_imagePath; }
+	//void				SetImagePath( const QString& _path );
 
 	// -------------------------------------------------------------------------
 	// Override QWidget.
@@ -65,6 +65,7 @@ protected:
 	bool				IsClipValid( const ReClipWidget* _clip ) const;
 	void				HandleResize( const QPoint _pos );
 	void				HandleClipping();
+	void				Reset();
 
 	// -------------------------------------------------------------------------
 	// Variables.
@@ -101,8 +102,7 @@ protected:
 	};
 
 	// Data.
-	ReClipModel*		m_model;
-	ReClipGroupNode*	m_modelData;
+	ReClipNodeGroup*	m_modelData;
 	QString				m_imagePath;
 
 	// UI.
