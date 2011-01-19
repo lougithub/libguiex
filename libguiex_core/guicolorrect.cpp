@@ -120,15 +120,15 @@ namespace guiex
 	/** 
 	* @brief Modulate all components of this colour rect with corresponding components from another colour rect.
 	*/
-	CGUIColorRect& CGUIColorRect::operator*=(const CGUIColorRect& other)
-	{
-		m_top_left *= other.m_top_left;
-		m_top_right *= other.m_top_right;
-		m_bottom_left *= other.m_bottom_left;
-		m_bottom_right *= other.m_bottom_right;
+	//CGUIColorRect& CGUIColorRect::operator*=(const CGUIColorRect& other)
+	//{
+	//	m_top_left *= other.m_top_left;
+	//	m_top_right *= other.m_top_right;
+	//	m_bottom_left *= other.m_bottom_left;
+	//	m_bottom_right *= other.m_bottom_right;
 
-		return *this;
-	}
+	//	return *this;
+	//}
 	//------------------------------------------------------------------------------
 
 }//namespaceguiex

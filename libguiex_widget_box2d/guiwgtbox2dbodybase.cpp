@@ -57,7 +57,7 @@ namespace guiex
 		CGUIColor aColor( 1.0f, 0.0f, 0.0f, 1.0f );
 
 		pRender->DrawRect( CGUIMatrix4::IDENTITY, aRect, 3, pRender->GetAndIncZ(),
-			aColor.GetARGB(), aColor.GetARGB(), aColor.GetARGB(), aColor.GetARGB() );
+			aColor, aColor, aColor, aColor );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtBox2DBodyBase::GetBox2dPosition( CGUIVector2& rPos )

@@ -228,7 +228,7 @@ void CGUIFrameworkTest::UpdateJoint( b2Joint* pJoint )
 	pRender->BeginRender();
 	CGUIVector2 aBegin( METER2PIXEL(m_pJoint->GetAnchorA().x), METER2PIXEL(m_pJoint->GetAnchorA().y ));
 	CGUIVector2 aEnd( METER2PIXEL(m_pJoint->GetAnchorB().x), METER2PIXEL(m_pJoint->GetAnchorB().y ));
-	pRender->DrawLine( m_pWidgetRoot->GetFullTransform(), aBegin, aEnd, 2, pRender->GetAndIncZ(), CGUIColor(1,0,0,1).GetRGBA(), CGUIColor( 1,0,0,1).GetRGBA() );
+	pRender->DrawLine( m_pWidgetRoot->GetFullTransform(), aBegin, aEnd, 2, pRender->GetAndIncZ(), CGUIColor(1,0,0,1), CGUIColor( 1,0,0,1) );
 	pRender->EndRender();
 }
 

@@ -87,6 +87,18 @@
 
 #define GUI_MAXPATHLEN  PATH_MAX
 
+/*************************************************************************
+// Endian Settings
+*************************************************************************/
+// check for BIG_ENDIAN config flag, set OGRE_ENDIAN correctly
+#define GUI_ENDIAN_LITTLE 1
+#define GUI_ENDIAN_BIG 2
+#ifdef GUI_CONFIG_BIG_ENDIAN
+#    define GUI_ENDIAN GUI_ENDIAN_BIG
+#else
+#    define GUI_ENDIAN GUI_ENDIAN_LITTLE
+#endif
+
 
 //debug
 /*************************************************************************

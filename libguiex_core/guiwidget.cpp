@@ -2352,7 +2352,7 @@ namespace guiex
 		const CGUIColor& rColor )
 	{
 		pRender->DrawRect( getFullTransform(), rDestRect, fLineWidth, pRender->GetAndIncZ(),
-			rColor.GetARGB(), rColor.GetARGB(), rColor.GetARGB(), rColor.GetARGB() );
+			rColor, rColor, rColor, rColor );
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWidget::DrawAnimation(IGUIInterfaceRender* pRender, 

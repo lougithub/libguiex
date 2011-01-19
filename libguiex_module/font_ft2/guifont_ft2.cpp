@@ -321,10 +321,10 @@ namespace guiex
 				pCharData->m_pTexture->GetTextureImplement(),
 				pCharData->m_aUV, 
 				eImageOrientation_Normal,
-				aColor.GetARGB(),
-				aColor.GetARGB(),
-				aColor.GetARGB(),
-				aColor.GetARGB());
+				aColor,
+				aColor,
+				aColor,
+				aColor);
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -406,10 +406,10 @@ namespace guiex
 					pCharData->m_pTexture->GetTextureImplement(),
 					pCharData->m_aUV, 
 					eImageOrientation_Normal,
-					aColor.GetARGB(),
-					aColor.GetARGB(),
-					aColor.GetARGB(),
-					aColor.GetARGB());
+					aColor,
+					aColor,
+					aColor,
+					aColor);
 			}
 
 			aPos.x+=pCharData->m_aSize.m_fWidth;
@@ -457,10 +457,10 @@ namespace guiex
 					pCharData->m_pTexture->GetTextureImplement(),
 					pCharData->m_aUV, 
 					eImageOrientation_Normal,
-					aColor.GetARGB(),
-					aColor.GetARGB(),
-					aColor.GetARGB(),
-					aColor.GetARGB());
+					aColor,
+					aColor,
+					aColor,
+					aColor);
 			}
 
 			aPos.x+=pCharData->m_aSize.m_fWidth;

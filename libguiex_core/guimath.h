@@ -248,7 +248,8 @@ namespace guiex
 		useTables If true, uses lookup tables rather than
 		calculation - faster but less accurate.
 		*/
-		static real Sin (const CGUIRadian& fValue, bool useTables = false) {
+		static real Sin (const CGUIRadian& fValue, bool useTables = false) 
+		{
 			return (!useTables) ? real(sin(fValue.valueRadians())) : SinTable(fValue.valueRadians());
 		}
 		/** Sine function.
@@ -258,7 +259,8 @@ namespace guiex
 		useTables If true, uses lookup tables rather than
 		calculation - faster but less accurate.
 		*/
-		static real Sin (real fValue, bool useTables = false) {
+		static real Sin (real fValue, bool useTables = false) 
+		{
 			return (!useTables) ? real(sin(fValue)) : SinTable(fValue);
 		}
 
@@ -480,6 +482,12 @@ namespace guiex
 		const _Ty& GUIMin(const _Ty& _Left, const _Ty& _Right )
 	{
 		return (( _Right < _Left ) ? _Right : _Left);
+	}
+
+	template<class T> inline
+		const T& GUIClamp(const T& X, const T& Min, const T& Max )
+	{
+		return X<Min ? Min : X<Max ? X : Max;
 	}
 
 }	//namespace guiex

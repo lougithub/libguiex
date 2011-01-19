@@ -857,7 +857,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	long IGUIRender_opengl::ColorToOpengl(const CGUIColor& col) const
 	{
-		return col.GetABGR();
+		return col.GetAsABGR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl::makeGLMatrix(real gl_matrix[16], const CGUIMatrix4& m)

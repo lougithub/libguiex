@@ -253,13 +253,37 @@ set( ${target_name}_misc_SRCS
 	)
 source_group( misc FILES ${${target_name}_misc_SRCS} )
 
-set( ${target_name}_particlesystem_SRCS 
+set( ${target_name}_particle2dsystem_SRCS 
 	guiparticle2dsystem.cpp
 	guiparticle2dsystem.h
 	guiparticle2dsystempoint.cpp
 	guiparticle2dsystempoint.h
 	guiparticle2dsystemquad.cpp
 	guiparticle2dsystemquad.h
+	)
+source_group( particle2dsystem FILES ${${target_name}_particle2dsystem_SRCS} )
+
+set( ${target_name}_particlesystem_SRCS 
+	guiparticle.cpp
+	guiparticle.h
+	guiparticleiterator.cpp
+	guiparticleiterator.h
+	guiparticleemitter.cpp
+	guiparticleemitter.h
+	guiparticleemitterfactory.cpp
+	guiparticleemitterfactory.h
+	guiparticleaffector.cpp
+	guiparticleaffector.h
+	guiparticleaffectorfactory.cpp
+	guiparticleaffectorfactory.h
+	guiparticlesystem.cpp
+	guiparticlesystem.h
+	guiparticlesystemfactory.cpp
+	guiparticlesystemfactory.h
+	guiparticlesystemmanager.cpp
+	guiparticlesystemmanager.h
+	guiparticlesystemrenderer.cpp
+	guiparticlesystemrenderer.h
 	)
 source_group( particlesystem FILES ${${target_name}_particlesystem_SRCS} )
 
@@ -278,7 +302,8 @@ set( ${target_name}_SRCS
 	${${target_name}_misc_SRCS}
 	${${target_name}_canvas_SRCS}
 	${${target_name}_camera_SRCS}
-	${${target_name}_particlesystem_SRCS}
+	${${target_name}_particle2dsystem_SRCS}
+	#${${target_name}_particlesystem_SRCS}
 	)
 
 

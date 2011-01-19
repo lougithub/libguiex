@@ -48,8 +48,8 @@ namespace guiex
 
 
 	//interpolation functions
-	template<  >
-	CGUIColor LinearTween<CGUIColor>( real t, const CGUIColor& begin, const CGUIColor& end );
+	//template<  >
+	//CGUIColor LinearTween<CGUIColor>( real t, const CGUIColor& begin, const CGUIColor& end );
 
 }//namespace guiex
 

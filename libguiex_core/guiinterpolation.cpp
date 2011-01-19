@@ -18,13 +18,13 @@
 //============================================================================// 
 namespace guiex
 {
-	template<  >
-	CGUIColor LinearTween<CGUIColor>( real t, const CGUIColor& begin, const CGUIColor& end )
-	{
-		return CGUIColor(
-			LinearTween(t, begin.GetRed(), end.GetRed() ),
-			LinearTween(t, begin.GetGreen(), end.GetGreen() ),
-			LinearTween(t, begin.GetBlue(), end.GetBlue() ),
-			LinearTween(t, begin.GetAlpha(), end.GetAlpha() ));
-	}
+	//template<  >
+	//CGUIColor LinearTween<CGUIColor>( real t, const CGUIColor& begin, const CGUIColor& end )
+	//{
+	//	return CGUIColor(
+	//		LinearTween(t, begin.GetRed(), end.GetRed() ),
+	//		LinearTween(t, begin.GetGreen(), end.GetGreen() ),
+	//		LinearTween(t, begin.GetBlue(), end.GetBlue() ),
+	//		LinearTween(t, begin.GetAlpha(), end.GetAlpha() ));
+	//}
 }

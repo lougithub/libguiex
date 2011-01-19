@@ -48,6 +48,7 @@ namespace guiex
 		CGUIVector3 Reflect(const CGUIVector3& normal) const;
 
 		bool PositionEquals(const CGUIVector3& rhs ) const;
+		CGUIVector3 RandomDeviant( const class CGUIRadian& angle, const CGUIVector3& up = CGUIVector3::ZERO ) const;
 
 		real operator [] ( size_t i ) const;
 		real& operator [] ( size_t i );

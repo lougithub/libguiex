@@ -89,10 +89,10 @@ namespace guiex
 						   CGUISize(rInfo.m_nFontSize,rInfo.m_nFontSize));
 		
 		pRender->DrawRect( rWorldMatrix, aCharRect, 1, pRender->GetAndIncZ(),
-						  rInfo.m_aColor.GetARGB(),
-						  rInfo.m_aColor.GetARGB(),
-						  rInfo.m_aColor.GetARGB(),
-						  rInfo.m_aColor.GetARGB());
+						  rInfo.m_aColor,
+						  rInfo.m_aColor,
+						  rInfo.m_aColor,
+						  rInfo.m_aColor);
 	}
 	//------------------------------------------------------------------------------
 	void IGUIFont_dummy::DrawString(IGUIInterfaceRender* pRender, 
@@ -161,10 +161,10 @@ namespace guiex
 			
 			//dest area size
 			pRender->DrawRect( rWorldMatrix, aCharRect, 1, pRender->GetAndIncZ(),
-							  rInfo.m_aColor.GetARGB(),
-							  rInfo.m_aColor.GetARGB(),
-							  rInfo.m_aColor.GetARGB(),
-							  rInfo.m_aColor.GetARGB());
+							  rInfo.m_aColor,
+							  rInfo.m_aColor,
+							  rInfo.m_aColor,
+							  rInfo.m_aColor);
 			
 			aPos.x+=rInfo.m_nFontSize;
 		}
@@ -198,10 +198,10 @@ namespace guiex
 							   CGUISize(rInfo.m_nFontSize,rInfo.m_nFontSize));
 			
 			pRender->DrawRect( rWorldMatrix, aCharRect, 1, pRender->GetAndIncZ(),
-							  rInfo.m_aColor.GetARGB(),
-							  rInfo.m_aColor.GetARGB(),
-							  rInfo.m_aColor.GetARGB(),
-							  rInfo.m_aColor.GetARGB());
+							  rInfo.m_aColor,
+							  rInfo.m_aColor,
+							  rInfo.m_aColor,
+							  rInfo.m_aColor);
 			
 			aPos.x+=rInfo.m_nFontSize;
 		}

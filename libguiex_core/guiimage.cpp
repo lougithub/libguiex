@@ -189,8 +189,8 @@ namespace guiex
 		aColorRect.m_bottom_left.SetAlpha(aColorRect.m_bottom_left.GetAlpha()*fAlpha);
 		aColorRect.m_bottom_right.SetAlpha(aColorRect.m_bottom_right.GetAlpha()*fAlpha);
 		pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,
-			aColorRect.m_top_left.GetARGB(),aColorRect.m_top_right.GetARGB(),
-			aColorRect.m_bottom_left.GetARGB(),aColorRect.m_bottom_right.GetARGB());
+			aColorRect.m_top_left,aColorRect.m_top_right,
+			aColorRect.m_bottom_left,aColorRect.m_bottom_right);
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIImage::Draw( IGUIInterfaceRender* pRender,
@@ -206,14 +206,14 @@ namespace guiex
 			CGUIColor aColor = m_aColor;
 			aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
 			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,
-				aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB());
+				aColor,aColor,aColor,aColor);
 		}
 		else
 		{
 			CGUIColor aColor(0xFFFFFFFF);
 			aColor.SetAlpha(fAlpha);
 			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,
-				aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB());
+				aColor,aColor,aColor,aColor);
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -231,14 +231,14 @@ namespace guiex
 			CGUIColor aColor = m_aColor*rColor;
 			aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
 			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,
-				aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB());
+				aColor,aColor,aColor,aColor);
 		}
 		else
 		{
 			CGUIColor aColor(rColor);
 			aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
 			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,
-				aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB(),aColor.GetARGB());
+				aColor,aColor,aColor,aColor);
 		}
 	}
 	//------------------------------------------------------------------------------

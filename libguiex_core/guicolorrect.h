@@ -37,7 +37,7 @@ namespace guiex
 
 		void ModulateAlpha(real alpha);
 
-		CGUIColorRect& operator*=(const CGUIColorRect& other);
+		//CGUIColorRect& operator*=(const CGUIColorRect& other);
 
 	public:
 		CGUIColor m_top_left, m_top_right, m_bottom_left, m_bottom_right;		//<! CGUIColorRect component colours

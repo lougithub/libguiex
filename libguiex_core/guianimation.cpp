@@ -147,10 +147,10 @@ namespace guiex
 			m_vecTextures[m_nFrame]->GetTextureImplement(),
 			m_vecUVRects[m_nFrame], 
 			eImageOrientation_Normal,
-			aColor.GetARGB(),
-			aColor.GetARGB(),
-			aColor.GetARGB(),
-			aColor.GetARGB());
+			aColor,
+			aColor,
+			aColor,
+			aColor);
 	}
 	//------------------------------------------------------------------------------
 

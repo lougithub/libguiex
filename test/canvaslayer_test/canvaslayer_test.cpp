@@ -141,10 +141,10 @@ public:
 						  m_aRect, 
 						  3,
 						  pRender->GetAndIncZ(),
-						  m_aColor.GetARGB(),
-						  m_aColor.GetARGB(),
-						  m_aColor.GetARGB(),
-						  m_aColor.GetARGB() );
+						  m_aColor,
+						  m_aColor,
+						  m_aColor,
+						  m_aColor );
 		
 		pRender->ApplyCamera( pOldCamera );
 	}

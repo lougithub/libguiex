@@ -321,10 +321,10 @@ namespace guiex
 							  pCharData->m_pTexture->GetTextureImplement(),
 							  pCharData->m_aUV, 
 							  eImageOrientation_Normal,
-							  aColor.GetARGB(),
-							  aColor.GetARGB(),
-							  aColor.GetARGB(),
-							  aColor.GetARGB());
+							  aColor,
+							  aColor,
+							  aColor,
+							  aColor);
 		}
 		
 		/*
@@ -332,10 +332,10 @@ namespace guiex
 						   CGUISize(rInfo.m_nFontSize,rInfo.m_nFontSize));
 		
 		pRender->DrawRect( rWorldMatrix, aCharRect, 1, pRender->GetAndIncZ(),
-						  rInfo.m_aColor.GetARGB(),
-						  rInfo.m_aColor.GetARGB(),
-						  rInfo.m_aColor.GetARGB(),
-						  rInfo.m_aColor.GetARGB());
+						  rInfo.m_aColor,
+						  rInfo.m_aColor,
+						  rInfo.m_aColor,
+						  rInfo.m_aColor);
 		*/
 		
 	}
@@ -418,10 +418,10 @@ namespace guiex
 								  pCharData->m_pTexture->GetTextureImplement(),
 								  pCharData->m_aUV, 
 								  eImageOrientation_Normal,
-								  aColor.GetARGB(),
-								  aColor.GetARGB(),
-								  aColor.GetARGB(),
-								  aColor.GetARGB());
+								  aColor,
+								  aColor,
+								  aColor,
+								  aColor);
 			}
 			aPos.x+=pCharData->m_aSize.m_fWidth;
 			
@@ -433,10 +433,10 @@ namespace guiex
 			
 			//dest area size
 			pRender->DrawRect( rWorldMatrix, aCharRect, 2, pRender->GetAndIncZ(),
-							  rInfo.m_aColor.GetARGB(),
-							  rInfo.m_aColor.GetARGB(),
-							  rInfo.m_aColor.GetARGB(),
-							  rInfo.m_aColor.GetARGB());
+							  rInfo.m_aColor,
+							  rInfo.m_aColor,
+							  rInfo.m_aColor,
+							  rInfo.m_aColor);
 			
 			
 			aPos.x+=rInfo.m_nFontSize;
@@ -485,10 +485,10 @@ namespace guiex
 								  pCharData->m_pTexture->GetTextureImplement(),
 								  pCharData->m_aUV, 
 								  eImageOrientation_Normal,
-								  aColor.GetARGB(),
-								  aColor.GetARGB(),
-								  aColor.GetARGB(),
-								  aColor.GetARGB());
+								  aColor,
+								  aColor,
+								  aColor,
+								  aColor);
 			}
 			
 			aPos.x+=pCharData->m_aSize.m_fWidth;
@@ -499,10 +499,10 @@ namespace guiex
 							   CGUISize(rInfo.m_nFontSize,rInfo.m_nFontSize));
 			
 			pRender->DrawRect( rWorldMatrix, aCharRect, 1, pRender->GetAndIncZ(),
-							  rInfo.m_aColor.GetARGB(),
-							  rInfo.m_aColor.GetARGB(),
-							  rInfo.m_aColor.GetARGB(),
-							  rInfo.m_aColor.GetARGB());
+							  rInfo.m_aColor,
+							  rInfo.m_aColor,
+							  rInfo.m_aColor,
+							  rInfo.m_aColor);
 			
 			aPos.x+=rInfo.m_nFontSize;
 			*/
