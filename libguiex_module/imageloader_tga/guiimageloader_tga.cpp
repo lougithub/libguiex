@@ -37,8 +37,10 @@ namespace guiex
 	} TGA;
 
 
-	uint8 uTGAcompare[12] = {0,0,2, 0,0,0,0,0,0,0,0,0};	// Uncompressed TGA Header
-	uint8 cTGAcompare[12] = {0,0,10,0,0,0,0,0,0,0,0,0};	// Compressed TGA Header
+	uint8 uTGAcompare1[12] = {0,0,2, 0,0,0,0,0,0,0,0,0}; // Uncompressed, RGB images
+	uint8 uTGAcompare2[12] = {0,0,3, 0,0,0,0,0,0,0,0,0}; // Uncompressed, black and white images
+	uint8 cTGAcompare1[12] = {0,0,10,0,0,0,0,0,0,0,0,0};	// Compressed, RGB images.
+	uint8 cTGAcompare2[12] = {0,0,11,0,0,0,0,0,0,0,0,0};	// Compressed, black and white images.
 }
 
 
@@ -100,11 +102,13 @@ namespace guiex
 		pFileData += uHeadSize;
 		nSize -= uHeadSize;
 
-		if(memcmp(uTGAcompare, &tgaheader, uHeadSize) == 0)	
+		if(memcmp(uTGAcompare1, &tgaheader, uHeadSize) == 0 ||
+			memcmp(uTGAcompare2, &tgaheader, uHeadSize) == 0)	
 		{														
 			return LoadUncompressedTGA(pFileData, nSize );
 		}
-		else if(memcmp(cTGAcompare, &tgaheader, uHeadSize) == 0)		
+		else if(memcmp(cTGAcompare1, &tgaheader, uHeadSize) == 0 ||
+			memcmp(cTGAcompare2, &tgaheader, uHeadSize) == 0 )
 		{																
 			return LoadCompressedTGA(pFileData, nSize);				
 		}
@@ -137,19 +141,30 @@ namespace guiex
 		tga.Height = tga.header[3] * 256 + tga.header[2];
 		tga.Bpp		= tga.header[4];
 
-		if((tga.Width <= 0) || (tga.Height <= 0) || ((tga.Bpp != 24) && (tga.Bpp !=32)))
+		if(tga.Width <= 0 || tga.Height <= 0)
 		{
 			throw CGUIException("[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
 			return NULL;
 		}
 
-		if(tga.Bpp == 24)		
+		switch( tga.Bpp )
+		{
+		case 24:
 			tga.type = GUI_PF_RGB_24;
-		else					
+			break;
+		case 32:
 			tga.type = GUI_PF_RGBA_32;
+			break;		
+		case 8:
+			tga.type = GUI_PF_LUMINANCE_8;
+			break;
+		default:
+			throw CGUIException("[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
+			return NULL;
+		}
 
-		tga.bytesPerPixel	= (tga.Bpp / 8);					
-		tga.imageSize		= (tga.bytesPerPixel * tga.Width * tga.Height);	
+		tga.bytesPerPixel = CGUIImageData::GetBytePerPixel( tga.type );					
+		tga.imageSize = (tga.bytesPerPixel * tga.Width * tga.Height);	
 		if( nSize < tga.imageSize )
 		{
 			throw CGUIException("[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
@@ -160,16 +175,14 @@ namespace guiex
 		uint8* tmpBuff = pImageData->SetImageData(tga.Width, tga.Height, tga.type);
 		memcpy( tmpBuff, pFileData, tga.imageSize);
 
-		// Byte Swapping Optimized By Steve Thomas
-		//for(uint32 cswap = 0; cswap < (int)tga.imageSize; cswap += tga.bytesPerPixel)
-		//{
-		//	tmpBuff[cswap] ^= tmpBuff[cswap+2] ^= tmpBuff[cswap] ^= tmpBuff[cswap+2];
-		//}
-		for(uint32 cswap = 0; cswap < (uint32)tga.imageSize; cswap += tga.bytesPerPixel)
+		if( tga.type == GUI_PF_RGBA_32 || tga.type == GUI_PF_RGB_24 )
 		{
-			uint8 temp = tmpBuff[cswap+0];
-			tmpBuff[cswap+0] = tmpBuff[cswap+2];
-			tmpBuff[cswap+2] = temp;
+			for(uint32 cswap = 0; cswap < (uint32)tga.imageSize; cswap += tga.bytesPerPixel)
+			{
+				uint8 temp = tmpBuff[cswap+0];
+				tmpBuff[cswap+0] = tmpBuff[cswap+2];
+				tmpBuff[cswap+2] = temp;
+			}
 		}
 		return pImageData;
 	}

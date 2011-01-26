@@ -14,6 +14,10 @@
 		<property name="finishColorVariance" type="CGUIColor" value="255,255,255,255"/>
 		<property name="startParticleSize" type="real" value="64"/>
 		<property name="startParticleSizeVariance" type="real" value="29"/>
+		<property name="startSpin" type="real" value="0"/>
+		<property name="startSpinVariance" type="real" value="0"/>
+		<property name="endSpin" type="real" value="0"/>
+		<property name="endSpinVariance" type="real" value="0"/>
 		<property name="finishParticleSize" type="real" value="0"/>
 		<property name="finishParticleSizeVariance" type="real" value="0"/>
 		<property name="sourcePosition" type="CGUIVector2" value="160,22"/>
@@ -47,6 +51,10 @@
 		<property name="finishColorVariance" type="CGUIColor" value="0,0,0,0"/>
 		<property name="startParticleSize" type="real" value="37"/>
 		<property name="startParticleSizeVariance" type="real" value="10"/>
+		<property name="startSpin" type="real" value="0"/>
+		<property name="startSpinVariance" type="real" value="0"/>
+		<property name="endSpin" type="real" value="0"/>
+		<property name="endSpinVariance" type="real" value="0"/>
 		<property name="finishParticleSize" type="real" value="37"/>
 		<property name="finishParticleSizeVariance" type="real" value="0"/>
 		<property name="sourcePosition" type="CGUIVector2" value="170,228"/>
@@ -63,9 +71,48 @@
 		<property name="speedVariance" type="real" value="10"/>
 		<property name="radialAcceleration" type="real" value="-20"/>
 		<property name="radialAccelVariance" type="real" value="0"/>
-		<property name="tangentialAccelVariance" type="real" value="50"/>
 		<property name="tangentialAcceleration" type="real" value="50"/>
+		<property name="tangentialAccelVariance" type="real" value="50"/>
 	</property>
+
+	<property name="flower" type="CGUIParticle2DDefine" >
+		<property name="maxParticles" type="uint32" value="500"/>
+		<property name="duration" type="real" value="-1"/>
+		<property name="particleLifespan" type="real" value="4"/>
+		<property name="particleLifespanVariance" type="real" value="1"/>
+		<property name="textureFileName" type="CGUIString" value="image/stars-grayscale.tga"/><!--Galaxy.png-->
+		<property name="angle" type="real" value="90"/>
+		<property name="angleVariance" type="real" value="360"/>
+		<property name="startColor" type="CGUIColor" value="128,128,128,255"/>
+		<property name="startColorVariance" type="CGUIColor" value="128,128,128,255"/>
+		<property name="finishColor" type="CGUIColor" value="25,25,25,50"/>
+		<property name="finishColorVariance" type="CGUIColor" value="25,25,25,50"/>
+		<property name="startParticleSize" type="real" value="40"/>
+		<property name="startParticleSizeVariance" type="real" value="20"/>
+		<property name="startSpin" type="real" value="0"/>
+		<property name="startSpinVariance" type="real" value="0"/>
+		<property name="endSpin" type="real" value="0"/>
+		<property name="endSpinVariance" type="real" value="0"/>
+		<property name="finishParticleSize" type="real" value="-1"/>
+		<property name="finishParticleSizeVariance" type="real" value="0"/>
+		<property name="sourcePosition" type="CGUIVector2" value="160,240"/>
+		<property name="sourcePositionVariance" type="CGUIVector2" value="0,0"/>
+		<property name="blendFunc" type="SGUIBlendFunc">
+			<property name="src" type="EBlendFunc" value="eBlendFunc_SRC_ALPHA"/>
+			<property name="dst" type="EBlendFunc" value="eBlendFunc_ONE"/>
+		</property>
+		<property name="emitterType" type="EParticle2DSystemMode" value="eParticle2DSystemMode_Gravity"/>
+
+<!-- mode A -->
+		<property name="gravity" type="CGUIVector2" value="0,0"/>
+		<property name="speed" type="real" value="160"/>
+		<property name="speedVariance" type="real" value="20"/>
+		<property name="radialAcceleration" type="real" value="-120"/>
+		<property name="radialAccelVariance" type="real" value="0"/>
+		<property name="tangentialAcceleration" type="real" value="30"/>
+		<property name="tangentialAccelVariance" type="real" value="0"/>
+	</property>
+
 </guiex>
 
 

@@ -28,7 +28,7 @@ namespace guiex
 		,m_nTextureWidth(0)
 		,m_nTextureHeight(0)
 		,m_nBytesPerPixel(0)
-		,m_ePixelFormat(GUI_PF_ARGB_32)
+		,m_ePixelFormat(GUI_PF_RGBA_32)
 	{
 		// generate a OGL texture that we will use.
 		glGenTextures(1, &m_ogltexture);
@@ -72,11 +72,10 @@ namespace guiex
 		switch(m_ePixelFormat)
 		{
 		case GUI_PF_RGBA_32:
-		case GUI_PF_ARGB_32:
 			eFormat = GL_RGBA;
 			break;
 
-		//case GUI_PF_LA_16:
+		//case GUI_PF_LUMINANCE_ALPHA_16:
 		//	eFormat = GL_LUMINANCE_ALPHA;
 		//	break;
 
@@ -120,16 +119,21 @@ namespace guiex
 		switch(ePixelFormat)
 		{
 		case GUI_PF_RGBA_32:
-		case GUI_PF_ARGB_32:
 			glTexImage2D(GL_TEXTURE_2D, 0, 4, buffWidth, buffHeight, 0, GL_RGBA ,GL_UNSIGNED_BYTE, buffPtr);
 			m_nBytesPerPixel = 4;
 			m_ePixelFormat = GUI_PF_RGBA_32;
 			break;
 
-		//case GUI_PF_LA_16:
+		case GUI_PF_LUMINANCE_8:
+			glTexImage2D(GL_TEXTURE_2D, 0, 1, buffWidth, buffHeight, 0, GL_LUMINANCE ,GL_UNSIGNED_BYTE, buffPtr);
+			m_nBytesPerPixel = 4;
+			m_ePixelFormat = GUI_PF_LUMINANCE_8;
+			break;
+
+		//case GUI_PF_LUMINANCE_ALPHA_16:
 		//	glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, buffWidth, buffHeight, 0, GL_LUMINANCE_ALPHA ,GL_UNSIGNED_BYTE, buffPtr);
 		//	m_nBytesPerPixel = 2;
-		//	m_ePixelFormat = GUI_PF_LA_16;
+		//	m_ePixelFormat = GUI_PF_LUMINANCE_ALPHA_16;
 		//	break;
 
 		default:
@@ -165,7 +169,7 @@ namespace guiex
 			}
 			break;
 
-		//case GUI_PF_LA_16:
+		//case GUI_PF_LUMINANCE_ALPHA_16:
 		//	glTexSubImage2D(GL_TEXTURE_2D, 0,nX,nY,nWidth, nHeight,GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE,pBuffer);
 		//	break;
 
@@ -193,18 +197,17 @@ namespace guiex
 		switch(ePixelFormat)
 		{
 		case GUI_PF_RGBA_32:
-		case GUI_PF_ARGB_32:
 			buff = new uint8[nWidth * nHeight * 4];
 			glTexImage2D(GL_TEXTURE_2D, 0, 4, nWidth, nHeight, 0, GL_RGBA ,GL_UNSIGNED_BYTE, buff);
 			m_nBytesPerPixel = 4;
 			m_ePixelFormat = GUI_PF_RGBA_32;
 			break;
 
-		//case GUI_PF_LA_16:
+		//case GUI_PF_LUMINANCE_ALPHA_16:
 		//	buff = new uint8[nWidth * nHeight * 2];
 		//	glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, nWidth, nHeight, 0, GL_LUMINANCE_ALPHA ,GL_UNSIGNED_BYTE, buff);
 		//	m_nBytesPerPixel = 2;
-		//	m_ePixelFormat = GUI_PF_LA_16;
+		//	m_ePixelFormat = GUI_PF_LUMINANCE_ALPHA_16;
 		//	break;
 
 		default:

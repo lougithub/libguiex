@@ -31,11 +31,12 @@ namespace guiex
 		return *this;
 	}
 	//------------------------------------------------------------------------------
-	const SParticle2DVector2& SParticle2DVector2::operator*( real fScale )
+	SParticle2DVector2 SParticle2DVector2::operator*( real fScale )
 	{
-		x *= fScale;
-		y *= fScale;
-		return *this;
+		SParticle2DVector2 aVec;
+		aVec.x = x*fScale;
+		aVec.y = y*fScale;
+		return aVec;
 	}
 	//------------------------------------------------------------------------------
 	CGUIVector2 operator+ ( const CGUIVector2& rVec1, const SParticle2DVector2& rVec2 )
@@ -81,7 +82,6 @@ namespace guiex
 		,duration( -1.0f )
 		,elapsed( 0.0f )
 		,active( true )
-		,positionType( kCCPositionTypeFree )
 		,emitterMode( eParticle2DSystemMode_Gravity )
 	{
 	}
@@ -164,6 +164,18 @@ namespace guiex
 			PropertyToValue( *pPpt_finishSize, endSize );
 			const CGUIProperty* pPpt_finishSizeVar = rProperty.GetPropertyChecked("finishParticleSizeVariance", "real");
 			PropertyToValue( *pPpt_finishSizeVar, endSizeVar );
+		}
+
+		//spin
+		{
+			const CGUIProperty* pPpt_startSpin = rProperty.GetPropertyChecked("startSpin", "real");
+			PropertyToValue( *pPpt_startSpin, startSpin );
+			const CGUIProperty* pPpt_startSpinVar = rProperty.GetPropertyChecked("startSpinVariance", "real");
+			PropertyToValue( *pPpt_startSpinVar, startSpinVar );
+			const CGUIProperty* pPpt_endSpin = rProperty.GetPropertyChecked("endSpin", "real");
+			PropertyToValue( *pPpt_endSpin, endSpin );
+			const CGUIProperty* pPpt_endSpinVar = rProperty.GetPropertyChecked("endSpinVariance", "real");
+			PropertyToValue( *pPpt_endSpinVar, endSpinVar );
 		}
 
 		//position
@@ -334,7 +346,9 @@ namespace guiex
 
 		particle->size = startS;
 		if( GUI_REAL_EQUAL( endSize, -1.0f ))
+		{
 			particle->deltaSize = 0;
+		}
 		else
 		{
 			real endS = endSize + endSizeVar * CGUIMath::RangeRandom(-1.0f,1.0f);
@@ -349,14 +363,7 @@ namespace guiex
 		particle->deltaRotation = (endA - startA) / particle->timeToLive;
 
 		// position
-		particle->startPos = sourcePosition;
-		//if( positionType == kCCPositionTypeFree )
-		//{
-		//	particle->startPos = [self convertToWorldSpace:CGPointZero];
-		//}
-		//else if( positionType == kCCPositionTypeRelative ) {
-		//	particle->startPos = sourcePosition;
-		//}
+		particle->startPos = CGUIVector2::ZERO;
 
 		// direction
 		real a = CGUIMath::DegreesToRadians( angle + angleVar * CGUIMath::RangeRandom(-1.0f,1.0f) );	
@@ -459,15 +466,7 @@ namespace guiex
 
 
 		//position
-		CGUIVector2 currentPosition = sourcePosition;
-		//if( positionType == kCCPositionTypeFree ) 
-		//{
-		//	currentPosition = [self convertToWorldSpace:CGPointZero];
-		//}
-		//else if( positionType == kCCPositionTypeRelative ) 
-		//{
-		//	currentPosition = sourcePosition;
-		//}
+		CGUIVector2 currentPosition = CGUIVector2::ZERO;
 
 		particleIdx = 0;
 		while( particleIdx < particleCount )
@@ -482,16 +481,14 @@ namespace guiex
 				// Mode A: gravity, direction, tangential accel & radial accel
 				if( emitterMode == eParticle2DSystemMode_Gravity )
 				{
-					CGUIVector2 tmp, radial, tangential;
-
-					radial = CGUIVector2::ZERO;
+					CGUIVector2 radial = CGUIVector2::ZERO;
 					// radial acceleration
 					if(p->pos.x || p->pos.y)
 					{
 						radial = p->pos.NormalisedCopy();
 					}
 
-					tangential = radial;
+					CGUIVector2 tangential = radial;
 					radial = radial * p->mode.A.radialAccel;
 
 					// tangential acceleration
@@ -501,9 +498,10 @@ namespace guiex
 					tangential = tangential * p->mode.A.tangentialAccel;
 
 					// (gravity + radial + tangential) * rDeltaTime
-					tmp = (radial + tangential + mode.A.gravity) * rDeltaTime;
+					CGUIVector2 tmp = ( radial + tangential + mode.A.gravity ) * rDeltaTime;
 					p->mode.A.dir = p->mode.A.dir + tmp;
-					p->pos = p->pos + p->mode.A.dir * rDeltaTime;
+					SParticle2DVector2 tmp2 = p->mode.A.dir * rDeltaTime;
+					p->pos = p->pos + tmp2;
 				}
 
 				// Mode B: radius movement
@@ -530,22 +528,13 @@ namespace guiex
 				// angle
 				p->rotation += (p->deltaRotation * rDeltaTime);
 
+				//position
+				CGUIVector2 diff = currentPosition - p->startPos;
+				CGUIVector2 newPos = p->pos - diff;
+
 				//
 				// update values in quad
 				//
-
-				CGUIVector2	newPos;
-
-				if( positionType == kCCPositionTypeFree || positionType == kCCPositionTypeRelative )
-				{
-					CGUIVector2 diff = currentPosition - p->startPos;
-					newPos = p->pos - diff;
-				}
-				else
-				{
-					newPos = p->pos;
-				}
-
 
 				UpdateQuadWithParticle( p, newPos );
 

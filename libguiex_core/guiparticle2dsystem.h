@@ -19,29 +19,6 @@
 #include "guiresource.h"
 
 //============================================================================//
-// declare
-//============================================================================// 
-namespace guiex
-{
-	/**
-	possible types of particle positions
-	*/
-	enum EParticlePositionType
-	{
-		/** Living particles are attached to the world and are unaffected by emitter repositioning. */
-		kCCPositionTypeFree,
-
-		/** Living particles are attached to the world but will follow the emitter repositioning.
-		Use case: Attach an emitter to an sprite, and you want that the emitter follows the sprite.
-		*/
-		kCCPositionTypeRelative,
-
-		/** Living particles are attached to the emitter and are translated along with it. */
-		kCCPositionTypeGrouped,
-	};
-}
-
-//============================================================================//
 // class
 //============================================================================// 
 namespace guiex
@@ -51,7 +28,7 @@ namespace guiex
 		real x, y;        
 		
 		const SParticle2DVector2& operator=( const CGUIVector2& rOther );
-		const SParticle2DVector2& operator*( real fScale );
+		SParticle2DVector2 operator*( real fScale );
 	};
 	extern CGUIVector2 operator+ ( const CGUIVector2& rVec1, const SParticle2DVector2& rVec2 );
 	extern SParticle2DVector2 operator+ ( const SParticle2DVector2& rVec1, const CGUIVector2& rVec2 );
@@ -302,9 +279,6 @@ namespace guiex
 		mutable class CGUITexture *texture;
 		// blend type
 		SGUIBlendFunc blendFunc;
-
-		// movement type: free or grouped
-		EParticlePositionType positionType;
 
 		// Whether or not the node will be auto-removed when there are not particles
 		bool autoRemoveOnFinish;

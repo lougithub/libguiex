@@ -53,25 +53,7 @@ namespace guiex
 		SetPixelFormat(ePixelFormat);
 		DestroyData();
 
-		uint32 bytesPerPixel = 0;
-		switch( ePixelFormat )
-		{
-		case GUI_PF_LA_16:
-			bytesPerPixel = 2;
-			break;
-		case GUI_PF_RGB_24:
-			bytesPerPixel = 3;
-			break;
-		case GUI_PF_RGBA_32:
-			bytesPerPixel = 4;
-			break;
-		case GUI_PF_ARGB_32:
-			bytesPerPixel = 4;
-			break;
-		default:
-			throw CGUIException("[CGUIImageData_tga::SetImageData] - unknown pixel format!");
-			return NULL;
-		}
+		uint32 bytesPerPixel = GetBytePerPixel(ePixelFormat);
 
 		m_pData = new uint8[m_uWidth*m_uHeight*bytesPerPixel];
 		return m_pData;

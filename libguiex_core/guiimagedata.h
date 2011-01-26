@@ -72,6 +72,9 @@ namespace guiex
 			return m_ePixelFormat;
 		}
 
+		static uint32 GetBytePerPixel( EGuiPixelFormat ePixelFormat );
+
+
 		/**
 		* @brief release this data
 		*/
