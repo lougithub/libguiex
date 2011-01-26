@@ -9,7 +9,7 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_widget/guiwgtparticle2d.h>
+#include "guiwgtparticle2d.h"
 #include <libguiex_core/guiinterfacerender.h>
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guiimage.h>

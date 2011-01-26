@@ -12,6 +12,7 @@
 
 #include <libguiex_widget/guiwgt.h>
 #include <libguiex_widget_box2d/guiwgt_box2d.h>
+#include <libguiex_widget_game/guiwgt_game.h>
 
 //libguiex module
 #include <libguiex_module/render_opengl/guirender_opengl.h>
@@ -133,7 +134,16 @@ namespace guiex
 				pGenerator ++;
 			}
 		}
-		
+
+		//game widgets
+		{
+			CGUIWidgetGenerator** pGenerator = GetAllWidgetGenerators_Game();
+			while(*pGenerator)
+			{
+				CGUIWidgetFactory::Instance()->RegisterGenerator( *pGenerator);
+				pGenerator ++;
+			}
+		}
 	}
 	//------------------------------------------------------------------------------ 
 	int32 CGUIFramework_Windows::InitializeGame( )

@@ -36,6 +36,7 @@ macro( macro_set_target_link_libraries_mac targetname )
 		${target_name}
 		general libguiex_core
 		general libguiex_widget_box2d
+		general libguiex_widget_game
 		general libguiex_widget
 		general libguiex_module
 		general libguiex_script_wrapper
@@ -59,6 +60,7 @@ macro( macro_set_target_link_libraries_win32 targetname )
 		general OpenAL32.lib
 		general libguiex_core
 		general libguiex_widget_box2d
+		general libguiex_widget_game
 		general libguiex_widget
 		general libguiex_module
 		general libguiex_script_wrapper
@@ -99,6 +101,7 @@ macro( macro_set_target_link_libraries_wx_win32 targetname )
 		general libguiex_core
 		general libguiex_widget
 		general libguiex_widget_box2d
+		general libguiex_widget_game
 		general libguiex_script_wrapper
 		general libguiex_framework
 		general libguiex_module

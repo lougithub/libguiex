@@ -1,8 +1,8 @@
 /** 
-* @file guiwgtgeneratewidgets_box2d.cpp
+* @file guiwgtgeneratewidgets_game.cpp
 * @brief used to generate all widgets
 * @author ken
-* @date 2010-12-21
+* @date 2011-01-26
 */
 
 
@@ -12,7 +12,7 @@
 //============================================================================// 
 #include <vector>
 #include <libguiex_core/guiwidgetgenerator.h>
-#include <libguiex_widget/guiwgt.h>
+#include "guiwgt_game.h"
 
 
 
@@ -23,7 +23,7 @@
 //============================================================================// 
 namespace guiex
 {
-	extern "C"  GUIEXPORT CGUIWidgetGenerator** GetAllWidgetGenerators_Box2d() 
+	extern "C"  GUIEXPORT CGUIWidgetGenerator** GetAllWidgetGenerators_Game() 
 	{ 
 		static std::vector<CGUIWidgetGenerator*> aList; 
 		aList.clear();
@@ -31,9 +31,7 @@ namespace guiex
 #define GUI_ADD_WIDGET_GENERATOR( widget ) \
 	aList.push_back( widget::widget##_Generator::GenerateSelf());
 
-		GUI_ADD_WIDGET_GENERATOR(CGUIWgtBox2DDynamicBody);
-		GUI_ADD_WIDGET_GENERATOR(CGUIWgtBox2DStaticBody);
-		GUI_ADD_WIDGET_GENERATOR(CGUIWgtBox2DJoint);
+		GUI_ADD_WIDGET_GENERATOR(CGUIWgtParticle2D);
 
 #undef GUI_ADD_WIDGET_GENERATOR
 

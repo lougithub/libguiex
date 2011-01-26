@@ -19,7 +19,6 @@
 #	include "guiwgtframe.h"
 #	include "guiwgtstatictext.h"
 #	include "guiwgtstaticimage.h"
-#	include "guiwgtparticle2d.h"
 #	include "guiwgtpanel.h"
 #	include "guiwgteditbox.h"
 #	include "guiwgtmultieditbox.h"
