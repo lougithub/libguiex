@@ -25,13 +25,13 @@ namespace guiex
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtParticle2D);
 	//------------------------------------------------------------------------------
 	CGUIWgtParticle2D::CGUIWgtParticle2D( const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIWgtStatic(StaticGetType(), rName, rSceneName)
+		:CGUIWidget(StaticGetType(), rName, rSceneName)
 	{
 		InitStaticParticle2DSystem();
 	}
 	//------------------------------------------------------------------------------
 	CGUIWgtParticle2D::CGUIWgtParticle2D( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIWgtStatic(rType, rName, rSceneName)
+		:CGUIWidget(rType, rName, rSceneName)
 	{
 		InitStaticParticle2DSystem();
 	}
@@ -48,6 +48,9 @@ namespace guiex
 	void CGUIWgtParticle2D::InitStaticParticle2DSystem()
 	{
 		m_pParticle2DSystem = NULL;
+
+		SetFocusable(false);
+		SetActivable(false);
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtParticle2D::RenderSelf(IGUIInterfaceRender* pRender)

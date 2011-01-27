@@ -11,7 +11,7 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_widget/guiwgtstatic.h>
+#include <libguiex_core/guiwidget.h>
 #include <libguiex_core/guiwidgetgenerator.h>
 
 
@@ -23,7 +23,7 @@ namespace guiex
 	/**
 	* @class CGUIWgtParticle2D
 	*/
-	class GUIEXPORT CGUIWgtParticle2D : public CGUIWgtStatic
+	class GUIEXPORT CGUIWgtParticle2D : public CGUIWidget
 	{
 	public:
 		CGUIWgtParticle2D( const CGUIString& rName, const CGUIString& rSceneName );
