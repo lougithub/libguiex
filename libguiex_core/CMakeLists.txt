@@ -30,6 +30,8 @@ set( ${target_name}_base_SRCS
 	guiex.h
 	guigarbagecollector.h
 	sigslot.h
+	base64.h
+	base64.cpp
 	)
 source_group( "base" FILES ${${target_name}_base_SRCS} )
 

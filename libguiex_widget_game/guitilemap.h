@@ -18,6 +18,17 @@
 //============================================================================//
 namespace guiex
 {
+	enum
+	{
+		/** Orthogonal orientation */
+		CCTMXOrientationOrtho = 0,
+
+		/** Hexagonal orientation */
+		CCTMXOrientationHex,
+
+		/** Isometric orientation */
+		CCTMXOrientationIso,
+	};
 }
 
 //============================================================================//

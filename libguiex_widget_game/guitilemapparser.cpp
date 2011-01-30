@@ -8,6 +8,9 @@
 // include
 //============================================================================//
 #include "guitilemapparser.h"
+#include "guitilemap.h"
+#include <libguiex_core/base64.h>
+#include <tinyxml.h>
 
 
 //============================================================================//
@@ -38,7 +41,27 @@ namespace guiex
 			tiles = NULL;
 		}
 	}
+
+
+
 	//------------------------------------------------------------------------------
+	// CCTMXObjectGroup
+	//------------------------------------------------------------------------------
+	CCTMXObjectGroup::CCTMXObjectGroup()
+	{
+
+	}
+	//------------------------------------------------------------------------------
+	CCTMXObjectGroup::~CCTMXObjectGroup()
+	{
+		for( size_t i=0; i<objects.size(); ++i )
+		{
+			delete objects[i];
+		}
+		objects.clear();
+	}
+	//------------------------------------------------------------------------------
+
 
 
 	//------------------------------------------------------------------------------
@@ -85,7 +108,23 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CCTMXMapInfo::~CCTMXMapInfo()
 	{
+		for( size_t i=0; i<tilesets.size(); ++i )
+		{
+			delete tilesets[i];
+		}
+		tilesets.clear();
 
+		for( size_t i=0; i<layers.size(); ++i )
+		{
+			delete layers[i];
+		}
+		layers.clear();
+
+		for( size_t i=0; i<objectGroups.size(); ++i )
+		{
+			delete objectGroups[i];
+		}
+		objectGroups.clear();
 	}
 	//------------------------------------------------------------------------------
 	int32 CCTMXMapInfo::InitWithTMXFile( const CGUIString& tmxFile )
@@ -95,248 +134,459 @@ namespace guiex
 		layerAttribs = TMXLayerAttribNone;
 		parentElement = TMXPropertyNone;
 
-		ParseXMLFile( filename );		
+		return ParseXMLFile( filename );		
 	}
 	//------------------------------------------------------------------------------
 	int32 CCTMXMapInfo::ParseXMLFile( const CGUIString& tmxFile )
 	{
-		NSURL *url = [NSURL fileURLWithPath:[CCFileUtils fullPathFromRelativePath:xmlFilename] ];
-		NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:url];
+		/*
+		<map version="1.0" orientation="orthogonal" width="64" height="64" tilewidth="32" tileheight="32">
+			<tileset firstgid="1" name="tile 0" tilewidth="32" tileheight="32" spacing="2" margin="2">
+				<image source="fixed-ortho-test2.png"/>
+				<tile id="0">
+					<properties>
+						<property name="type" value="object"/>
+					</properties>
+				</tile>
+			</tileset>
+			<layer name="Layer 0" width="64" height="64">
+				<data encoding="base64" compression="gzip">
+					H4sIAAAAAAAAA+2bS2/UMBDHDSyUHpBgOZVXV0ALEqKwS8sRhLj0CILyBeAAJ7gARygPiSLBhcciwZX3Q3CCG3w0ZtS1mJixM7GdxFHyk/7aJHKS+cePOLZXqY6Ojo7/WQM9rjuIGvkN+lN3ECXTA20WqldTjB3VMGsIGRlClgwhQ0bIgFGqzDLHRsz2EpNuaNkfqLQ9U8rwrxmo9J9F28t/RwfHNCNkm6G2QP1T6P4T0NNqwqkcif8qKftZu8o/Req/aWVj2nI8z/95h5qEr//DDjWJEP8nVNb3omqmf5/3X5Py/xPoM9GXCNfUXi8Rpeq/DHzz/z7oQbmhJc1P0K+6g5jgWy/2gPaC9nncMyX/viyAjoGO56T7CvpmHHuvmu8fuSBIw40xp57/30E/VP78wBljfztoB9mndYvWq9T9a2zzA3rsSOf/YPK7H3RAcF30/yEksBLY6pA0HZeeI8X8l77LXemkfZ9noOegF4xeBvrwxeXnImhFZft3If6blv8uf2OPe6XoX6PbfgljoiKk7F/KmJGUOtv/66AbgdfgvBd5BnXmP/Y9Yz372OW/inHDt6B3ka7VxPqP/m3vXono+7lK/yHfm5QU85/Op9qQfm/mEdO/C1xPs6Wg8pB8b+ZRlf8y8PF/B3SXaBV0T3BekX5QVcTI/5jfHj59XxebGFFilv+PnqqTGP5129tG/xsM+fivem53Y46KUMSnbv9Syv9QfMt82/3rMt9W/23J/z7Z1vM2If5d85x1rJGR+r+m/o394/6IpFkscL/Y37mhYzcS/z1G+G0ypdbH9m3/EbgMugK6So6hf66v+ZA5vy+IP/R5uto17X+OaOfkVzK+fRN0C3TbES9X5vWxg4L4Y/s3hTGg33mVfQ7S8f1Hlngldf2kIH7J83Shfc6AdoF2q6x/jGGOkfZ9SGX9m/en/kckXm7dvXnuMtk2v1m1VlWc/D8COg06qrL+l+2niqD+pxi5KFr/R66EFqjXU4pv/0JA/68m20XnxfLqv7lOxWcNV55/SRuEvAa9YY7T/Ee/8ypbd1xg3VtT5f4fMc+/pA1C6LoAur5F+8dxkSL5j2so+4pfb+BTzjnwfyzU6zm13i6Z9X9guTfGqPs+NE66bea/1L/vmgLuf0omQ+H1Y2llIts8OqezAvnG8xeas1zUAEAAAA==
+				</data>
+			</layer>
+			<objectgroup color="#001ca4" name="Object Group 1" width="0" height="0">
+				<object name="platform 1" x="0" y="290" width="32" height="30"/>
+				<object name="" x="0" y="3" width="31" height="32"/>
+				<object name="" x="130" y="162" width="29" height="29"/>
+				<object name="" x="290" y="290" width="28" height="29"/>
+			</objectgroup>
+		</map>
+		*/
+		///read file
+		IGUIInterfaceFileSys* pFileSys =  CGUIInterfaceManager::Instance()->GetInterfaceFileSys();
+		CGUIDataChunk aDataChunk;
+		if( 0 != pFileSys->ReadFile( tmxFile, aDataChunk, IGUIInterfaceFileSys::eOpenMode_String ))
+		{
+			//failed
+			throw CGUIException("[CCTMXMapInfo::ParseXMLFile]: failed to read file <%s>!", tmxFile.c_str());
+			return -1;
+		}
 
-		// we'll do the parsing
-		[parser setDelegate:self];
-		[parser setShouldProcessNamespaces:NO];
-		[parser setShouldReportNamespacePrefixes:NO];
-		[parser setShouldResolveExternalEntities:NO];
-		[parser parse];
+		///parse file
+		TiXmlDocument aDoc;
+		aDoc.Parse( (const char*)aDataChunk.GetDataPtr(), 0, TIXML_ENCODING_UTF8 );
+		if( aDoc.Error())
+		{
+			//failed to parse
+			throw CGUIException(
+				"[CCTMXMapInfo::ParseXMLFile]: failed to parse file <%s>!\n\n<%s>", 
+				tmxFile.c_str(),
+				aDoc.ErrorDesc());
+			return -1;
+		}
 
-		NSAssert1( ! [parser parserError], @"Error parsing file: %@.", xmlFilename );
+		///get root node
+		TiXmlElement* pRootNode = aDoc.RootElement();
+		if( !pRootNode )
+		{
+			throw guiex::CGUIException("[CCTMXMapInfo::ParseXMLFile], failed to get root node from file <%s>!", tmxFile.c_str());
+			return -1;
+		}
 
-		[parser release];
+		//parse node attribute
+		if( 0 != ParseNode_map( pRootNode ) )
+		{
+			return -1;
+		}
 
+		return 0;
 	}
 	//------------------------------------------------------------------------------
-	// the XML parser calls here with all the elements
-	-(void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
-	{	
-		if([elementName isEqualToString:@"map"]) {
-			NSString *version = [attributeDict valueForKey:@"version"];
-			if( ! [version isEqualToString:@"1.0"] )
-				CCLOG(@"cocos2d: TMXFormat: Unsupported TMX version: %@", version);
-			NSString *orientationStr = [attributeDict valueForKey:@"orientation"];
-			if( [orientationStr isEqualToString:@"orthogonal"])
-				orientation_ = CCTMXOrientationOrtho;
-			else if ( [orientationStr isEqualToString:@"isometric"])
-				orientation_ = CCTMXOrientationIso;
-			else if( [orientationStr isEqualToString:@"hexagonal"])
-				orientation_ = CCTMXOrientationHex;
+	int32 CCTMXMapInfo::ParseNode_map( class TiXmlElement* pMapNode )
+	{
+		//version
+		CGUIString strVersion = pMapNode->Attribute("version");
+		if( strVersion != "1.0" )
+		{
+			throw CGUIException("[CCTMXMapInfo::ParseNode_map]: Unsupported TMX version %s", strVersion->c_str());
+			return -1;
+		}
+
+		//orientation
+		CGUIString strOrientation = pMapNode->Attribute("orientation");
+		if( strOrientation == "orthogonal" )
+		{
+			orientation = CCTMXOrientationOrtho;
+		}
+		else if( strOrientation == "isometric")
+		{
+			orientation = CCTMXOrientationIso;
+		}
+		else if( strOrientation == "hexagonal")
+		{
+			orientation = CCTMXOrientationHex;
+		}
+		else
+		{
+			throw CGUIException( "[CCTMXMapInfo::ParseNode_map]: Unsupported orientation: %s", strOrientation.c_str() );
+			return -1;
+		}
+
+		//width and height
+		CGUIString strWidth = pMapNode->Attribute("width");
+		StringToValue( strWidth, mapSize.m_fWidth );
+		CGUIString strHeight = pMapNode->Attribute("height");
+		StringToValue( strHeight, mapSize.m_fHeight );
+
+		//tile width and height
+		CGUIString strTileWidth = pMapNode->Attribute("tilewidth");
+		StringToValue( strTileWidth, tileSize.m_fWidth );
+		CGUIString strTileHeight = pMapNode->Attribute("tileheight");
+		StringToValue( strTileHeight, tileSize.m_fHeight );
+
+
+		//parse child node
+		TiXmlElement* pChildNode = pMapNode->FirstChildElement();
+		while( pChildNode )
+		{
+			if( CGUIString("tileset") == pChildNode->Value())
+			{
+				if( 0 != ParseNode_tileset( pChildNode ) )
+				{
+					return -1;
+				}
+			}
+			else if( CGUIString("layer") == pChildNode->Value())
+			{
+				if( 0 != ParseNode_layer( pChildNode ) )
+				{
+					return -1;
+				}
+			}
+			else if( CGUIString("objectgroup") == pChildNode->Value())
+			{
+				if( 0 != ParseNode_objectgroup( pChildNode ) )
+				{
+					return -1;
+				}
+			}
+			else if( CGUIString("properties" ) == pChildNode->Value())
+			{
+				if( 0 != ParseNode_properties( pChildNode, properties ) )
+				{
+					return -1;
+				}
+			}
 			else
-				CCLOG(@"cocos2d: TMXFomat: Unsupported orientation: %@", orientation_);
-
-			mapSize_.width = [[attributeDict valueForKey:@"width"] intValue];
-			mapSize_.height = [[attributeDict valueForKey:@"height"] intValue];
-			tileSize_.width = [[attributeDict valueForKey:@"tilewidth"] intValue];
-			tileSize_.height = [[attributeDict valueForKey:@"tileheight"] intValue];
-
-			// The parent element is now "map"
-			parentElement = TMXPropertyMap;
-		} else if([elementName isEqualToString:@"tileset"]) {
-
-			// If this is an external tileset then start parsing that
-			NSString *externalTilesetFilename = [attributeDict valueForKey:@"source"];
-			if (externalTilesetFilename) {
-				// Tileset file will be relative to the map file. So we need to convert it to an absolute path
-				NSString *dir = [filename_ stringByDeletingLastPathComponent];	// Directory of map file
-				externalTilesetFilename = [dir stringByAppendingPathComponent:externalTilesetFilename];	// Append path to tileset file
-
-				[self parseXMLFile:externalTilesetFilename];
-			} else {
-
-				CCTMXTilesetInfo *tileset = [CCTMXTilesetInfo new];
-				tileset.name = [attributeDict valueForKey:@"name"];
-				tileset.firstGid = [[attributeDict valueForKey:@"firstgid"] intValue];
-				tileset.spacing = [[attributeDict valueForKey:@"spacing"] intValue];
-				tileset.margin = [[attributeDict valueForKey:@"margin"] intValue];
-				CGSize s;
-				s.width = [[attributeDict valueForKey:@"tilewidth"] intValue];
-				s.height = [[attributeDict valueForKey:@"tileheight"] intValue];
-				tileset.tileSize = s;
-
-				[tilesets_ addObject:tileset];
-				[tileset release];
+			{
+				throw CGUIException( "[CCTMXMapInfo::ParseXMLFile]: unknown tmx file node <%s>", pChildNode->Value());
+				return -1;
 			}
 
-		}else if([elementName isEqualToString:@"tile"]){
-			CCTMXTilesetInfo* info = [tilesets_ lastObject];
-			NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:3];
-			parentGID_ =  [info firstGid] + [[attributeDict valueForKey:@"id"] intValue];
-			[tileProperties_ setObject:dict forKey:[NSNumber numberWithInt:parentGID_]];
+			//for next node
+			pChildNode = pChildNode->NextSiblingElement();
+		}
 
-			parentElement = TMXPropertyTile;
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	int32 CCTMXMapInfo::ParseSourceFile( const CGUIString& tmxFile )
+	{
+		throw CGUIException( "[CCTMXMapInfo::ParseSourceFile]: unsupport to parse source file now");
+		return -1;
+	}
+	//------------------------------------------------------------------------------
+	int32 CCTMXMapInfo::ParseNode_tileset( class TiXmlElement* pTilesetNode )
+	{
+		//tile width and height
+		const char* szSource = pTilesetNode->Attribute("source");
+		if( szSource )
+		{
+			if( 0 != ParseSourceFile( szSource ) )
+			{
+				return -1;
+			}
+			return 0;
+		}
 
-		}else if([elementName isEqualToString:@"layer"]) {
-			CCTMXLayerInfo *layer = [CCTMXLayerInfo new];
-			layer.name = [attributeDict valueForKey:@"name"];
+		CCTMXTilesetInfo *pTileset = new CCTMXTilesetInfo;
+		tilesets.push_back( pTileset );
 
-			CGSize s;
-			s.width = [[attributeDict valueForKey:@"width"] intValue];
-			s.height = [[attributeDict valueForKey:@"height"] intValue];
-			layer.layerSize = s;
+		//name
+		CGUIString strName = pTilesetNode->Attribute("name");
+		pTileset->name = strName;
 
-			layer.visible = ![[attributeDict valueForKey:@"visible"] isEqualToString:@"0"];
+		//first gid
+		CGUIString strGid = pTilesetNode->Attribute( "firstgid");
+		StringToValue( strGid, pTileset.firstGid );
 
-			if( [attributeDict valueForKey:@"opacity"] )
-				layer.opacity = 255 * [[attributeDict valueForKey:@"opacity"] floatValue];
+		//spacing
+		CGUIString strSpacing = pTilesetNode->Attribute( "spacing");
+		StringToValue( strSpacing, pTileset.spacing );
+
+		//margin
+		CGUIString strMargin = pTilesetNode->Attribute( "margin");
+		StringToValue( strMargin, pTileset.margin );
+
+		//size
+		CGUIString strWidth = pTilesetNode->Attribute( "tilewidth");
+		StringToValue( strWidth, pTileset->tileSize.m_fWidth );
+		CGUIString strHeight = pTilesetNode->Attribute( "tileheight");
+		StringToValue( strHeight, pTileset->tileSize.m_fHeight );
+
+		//parse child node
+		TiXmlElement* pChildNode = pTilesetNode->FirstChildElement();
+		while( pChildNode )
+		{
+			if( CGUIString("image") == pChildNode->Value())
+			{
+				if( 0 != ParseNode_image( pChildNode ) )
+				{
+					return -1;
+				}
+			}
+			else if( CGUIString("tile") == pChildNode->Value())
+			{
+				if( 0 != ParseNode_tile( pChildNode ) )
+				{
+					return -1;
+				}
+			}
 			else
-				layer.opacity = 255;
-
-			int x = [[attributeDict valueForKey:@"x"] intValue];
-			int y = [[attributeDict valueForKey:@"y"] intValue];
-			layer.offset = ccp(x,y);
-
-			[layers_ addObject:layer];
-			[layer release];
-
-			// The parent element is now "layer"
-			parentElement = TMXPropertyLayer;
-
-		} else if([elementName isEqualToString:@"objectgroup"]) {
-
-			CCTMXObjectGroup *objectGroup = [[CCTMXObjectGroup alloc] init];
-			objectGroup.groupName = [attributeDict valueForKey:@"name"];
-			CGPoint positionOffset;
-			positionOffset.x = [[attributeDict valueForKey:@"x"] intValue] * tileSize_.width;
-			positionOffset.y = [[attributeDict valueForKey:@"y"] intValue] * tileSize_.height;
-			objectGroup.positionOffset = positionOffset;
-
-			[objectGroups_ addObject:objectGroup];
-			[objectGroup release];
-
-			// The parent element is now "objectgroup"
-			parentElement = TMXPropertyObjectGroup;
-
-		} else if([elementName isEqualToString:@"image"]) {
-
-			CCTMXTilesetInfo *tileset = [tilesets_ lastObject];
-
-			// build full path
-			NSString *imagename = [attributeDict valueForKey:@"source"];		
-			NSString *path = [filename_ stringByDeletingLastPathComponent];		
-			tileset.sourceImage = [path stringByAppendingPathComponent:imagename];
-
-		} else if([elementName isEqualToString:@"data"]) {
-			NSString *encoding = [attributeDict valueForKey:@"encoding"];
-			NSString *compression = [attributeDict valueForKey:@"compression"];
-
-			if( [encoding isEqualToString:@"base64"] ) {
-				layerAttribs |= TMXLayerAttribBase64;
-				storingCharacters = YES;
-
-				if( [compression isEqualToString:@"gzip"] )
-					layerAttribs |= TMXLayerAttribGzip;
-
-				NSAssert( !compression || [compression isEqualToString:@"gzip"], @"TMX: unsupported compression method" );
+			{
+				throw CGUIException( "[CCTMXMapInfo::ParseXMLFile]: unknown tmx file node <%s>", pChildNode->Value());
+				return -1;
 			}
 
-			NSAssert( layerAttribs != TMXLayerAttribNone, @"TMX tile map: Only base64 and/or gzip maps are supported" );
+			//for next node
+			pChildNode = pChildNode->NextSiblingElement();
+		}
 
-		} else if([elementName isEqualToString:@"object"]) {
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	int32 CCTMXMapInfo::ParseNode_image( class TiXmlElement* pImageNode )
+	{
+		if( tilesets.empty() )
+		{
+			throw CGUIException("[CCTMXMapInfo::ParseNode_tile]: not find tileset when process tile node" );
+			return -1;
+		}
+		CCTMXTilesetInfo* info = tilesets.back();
 
-			CCTMXObjectGroup *objectGroup = [objectGroups_ lastObject];
+		CGUIString strSource = pImageNode->Attribute("source");
+		info->sourceImage = strSource;
 
-			// The value for "type" was blank or not a valid class name
-			// Create an instance of TMXObjectInfo to store the object and its properties
-			NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:5];
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	int32 CCTMXMapInfo::ParseNode_tile( class TiXmlElement* pTileNode )
+	{
+		if( tilesets.empty() )
+		{
+			throw CGUIException("[CCTMXMapInfo::ParseNode_tile]: not find tileset when process tile node" );
+			return -1;
+		}
+		CCTMXTilesetInfo* info = tilesets.back();
 
-			// Set the name of the object to the value for "name"
-			[dict setValue:[attributeDict valueForKey:@"name"] forKey:@"name"];
+		uint32 uID = 0;
+		CGUIString strID = pTileNode->Attribute( "id" );
+		StringToValue( strID, uID );
+		uint32 uParentID = info->firstGid + uID;
 
-			// Assign all the attributes as key/name pairs in the properties dictionary
-			[dict setValue:[attributeDict valueForKey:@"type"] forKey:@"type"];
-			int x = [[attributeDict valueForKey:@"x"] intValue] + objectGroup.positionOffset.x;
-			[dict setValue:[NSNumber numberWithInt:x] forKey:@"x"];
-			int y = [[attributeDict valueForKey:@"y"] intValue] + objectGroup.positionOffset.y;
-			// Correct y position. (Tiled uses Flipped, cocos2d uses Standard)
-			y = (mapSize_.height * tileSize_.height) - y - [[attributeDict valueForKey:@"height"] intValue];
-			[dict setValue:[NSNumber numberWithInt:y] forKey:@"y"];
-			[dict setValue:[attributeDict valueForKey:@"width"] forKey:@"width"];
-			[dict setValue:[attributeDict valueForKey:@"height"] forKey:@"height"];
+		std::map<CGUIString, CGUIString> mapTileProperties;
 
-			// Add the object to the objectGroup
-			[[objectGroup objects] addObject:dict];
-			[dict release];
+		//parse child node
+		TiXmlElement* pChildNode = pTileNode->FirstChildElement();
+		while( pChildNode )
+		{
+			if( CGUIString("properties") == pChildNode->Value())
+			{
+				if( 0 != ParseNode_properties( pChildNode, mapTileProperties ) )
+				{
+					return -1;
+				}
+			}
+			else
+			{
+				throw CGUIException( "[CCTMXMapInfo::ParseNode_tile]: unknown tmx file node <%s>", pChildNode->Value());
+				return -1;
+			}
+			//for next node
+			pChildNode = pChildNode->NextSiblingElement();
+		}
 
-			// The parent element is now "object"
-			parentElement = TMXPropertyObject;
+		tileProperties.insert( std::make_pair( uParentID, mapTileProperties ) );
 
-		} else if([elementName isEqualToString:@"property"]) {
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	int32 CCTMXMapInfo::ParseNode_properties( class TiXmlElement* pPropertiesNode, std::map<CGUIString, CGUIString>& mapTileProperties )
+	{
+		//parse child node
+		TiXmlElement* pChildNode = pPropertiesNode->FirstChildElement();
+		while( pChildNode )
+		{
+			if( CGUIString("property") == pChildNode->Value())
+			{
+				CGUIString strName = pChildNode->Attribute("name");
+				CGUIString strValue = pChildNode->Attribute("value");
+				mapTileProperties.insert( std::make_pair( strName, strValue ) );
+			}
+			else
+			{
+				throw CGUIException( "[CCTMXMapInfo::ParseNode_tile]: unknown tmx file node <%s>", pChildNode->Value());
+				return -1;
+			}
 
-			if ( parentElement == TMXPropertyNone ) {
+			//for next node
+			pChildNode = pChildNode->NextSiblingElement();
+		}
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	int32 CCTMXMapInfo::ParseNode_layer( class TiXmlElement* pLayerNode )
+	{
+		CCTMXLayerInfo *layer = new CCTMXLayerInfo;
+		layers.push_back( layer );
 
-				CCLOG( @"TMX tile map: Parent element is unsupported. Cannot add property named '%@' with value '%@'",
-					[attributeDict valueForKey:@"name"], [attributeDict valueForKey:@"value"] );
+		//name
+		layer->name = pLayerNode->Attribute( "layer" );
 
-			} else if ( parentElement == TMXPropertyMap ) {
+		//size
+		CGUIString strWidth = pLayerNode->Attribute("width");
+		StringToValue( strWidth, layer->layerSize.m_fWidth );
+		CGUIString strHeight = pLayerNode->Attribute("height");
+		StringToValue( strHeight, layer->layerSize.m_fHeight );
 
-				// The parent element is the map
-				[properties_ setValue:[attributeDict valueForKey:@"value"] forKey:[attributeDict valueForKey:@"name"]];
+		//visible
+		CGUIString strVisible = pLayerNode->Attribute("visible");
+		StringToValue( strVisible, layer->visible );
 
-			} else if ( parentElement == TMXPropertyLayer ) {
-
-				// The parent element is the last layer
-				CCTMXLayerInfo *layer = [layers_ lastObject];
-				// Add the property to the layer
-				[[layer properties] setValue:[attributeDict valueForKey:@"value"] forKey:[attributeDict valueForKey:@"name"]];
-
-			} else if ( parentElement == TMXPropertyObjectGroup ) {
-
-				// The parent element is the last object group
-				CCTMXObjectGroup *objectGroup = [objectGroups_ lastObject];
-				[[objectGroup properties] setValue:[attributeDict valueForKey:@"value"] forKey:[attributeDict valueForKey:@"name"]];
-
-			} else if ( parentElement == TMXPropertyObject ) {
-
-				// The parent element is the last object
-				CCTMXObjectGroup *objectGroup = [objectGroups_ lastObject];
-				NSMutableDictionary *dict = [[objectGroup objects] lastObject];
-
-				NSString *propertyName = [attributeDict valueForKey:@"name"];
-				NSString *propertyValue = [attributeDict valueForKey:@"value"];
-
-				[dict setValue:propertyValue forKey:propertyName];
-			} else if ( parentElement == TMXPropertyTile ) {
-
-				NSMutableDictionary* dict = [tileProperties_ objectForKey:[NSNumber numberWithInt:parentGID_]];
-				NSString *propertyName = [attributeDict valueForKey:@"name"];
-				NSString *propertyValue = [attributeDict valueForKey:@"value"];
-				[dict setObject:propertyValue forKey:propertyName];
-
+		//opacity
+		const char* szOpacity = pLayerNode->Attribute("opacity");
+		if( !szOpacity )
+		{
+			layer->opacity = 1.0f;
+			layer->visible = false;
+		}
+		else
+		{
+			StringToValue( szOpacity, layer->opacity );
+			if( szOpacity == "0" )
+			{
+				layer->visible = false;
+			}
+			else
+			{
+				layer->visible = true;
 			}
 		}
-	}
-	//------------------------------------------------------------------------------
-	- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
-	{
-		int len = 0;
 
-		if([elementName isEqualToString:@"data"] && layerAttribs&TMXLayerAttribBase64) {
-			storingCharacters = NO;
+		//offset
+		const char* szX = pLayerNode->Attribute("x");
+		const char* szY = pLayerNode->Attribute("y");
+		layer->offset.x = layer->offset.y = 0;
+		if( szX )
+		{
+			StringToValue( szX, layer->offset.x );
+		}
+		if( szY )
+		{
+			StringToValue( szY, layer->offset.y );
+		}
 
-			CCTMXLayerInfo *layer = [layers_ lastObject];
-
-			unsigned char *buffer;
-			len = base64Decode((unsigned char*)[currentString UTF8String], [currentString length], &buffer);
-			if( ! buffer ) {
-				CCLOG(@"cocos2d: TiledMap: decode data error");
-				return;
+		//parse child node
+		TiXmlElement* pChildNode = pLayerNode->FirstChildElement();
+		while( pChildNode )
+		{
+			if( CGUIString("data") == pChildNode->Value())
+			{
+				if( 0 != ParseNode_data( pChildNode ) )
+				{
+					return -1;
+				}
+			}
+			if( CGUIString("properties") == pChildNode->Value())
+			{
+				if( 0 != ParseNode_data( pChildNode, layer->properties ) )
+				{
+					return -1;
+				}
+			}
+			else
+			{
+				throw CGUIException( "[CCTMXMapInfo::ParseNode_layer]: unknown tmx file node <%s>", pChildNode->Value());
+				return -1;
 			}
 
-			if( layerAttribs & TMXLayerAttribGzip ) {
+			//for next node
+			pChildNode = pChildNode->NextSiblingElement();
+		}
+
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	int32 CCTMXMapInfo::ParseNode_data( class TiXmlElement* pDataNode )
+	{
+		CGUIString strEncoding = pDataNode->Attribute("encoding");
+		CGUIString strCompression = pDataNode->Attribute("compression");
+
+		if( strEncoding == "base64" )
+		{
+			layerAttribs |= TMXLayerAttribBase64;
+		}
+		if( strCompression == "gzip" )
+		{
+			layerAttribs |= TMXLayerAttribGzip;
+		}
+		GUI_ASSERT( layerAttribs != TMXLayerAttribNone, "[CCTMXMapInfo::ParseNode_data]: Only base64 and/or gzip maps are supported" );
+
+
+		const char* data = pDataNode->GetText();
+
+		if( data && layerAttribs & TMXLayerAttribBase64 )
+		{
+			if( layers.empty() )
+			{
+				throw CGUIException("[CCTMXMapInfo::ParseNode_data]: not find layers when process data node" );
+				return -1;
+			}
+			CCTMXLayerInfo* layer = layerAttribs.back();
+
+			unsigned char *buffer = NULL;
+			int len = 0;
+			len = base64Decode( data, strlen(data), &buffer);
+			if( !buffer )
+			{
+				throw CGUIException("[CCTMXMapInfo::ParseNode_data]: TiledMap decode data error");
+				return -1;
+			}
+
+		}
+
+		return 0;
+
+
+
+
+			//int len = 0;
+
+		if([elementName isEqualToString:@"data"] && layerAttribs&TMXLayerAttribBase64) 
+		{
+			storingCharacters = NO;
+
+
+
+
+			if( layerAttribs & TMXLayerAttribGzip ) 
+			{
 				unsigned char *deflated;
 				ccInflateMemory(buffer, len, &deflated);
 				free( buffer );
 
-				if( ! deflated ) {
+				if( ! deflated )
+				{
 					CCLOG(@"cocos2d: TiledMap: inflate data error");
 					return;
 				}
@@ -345,37 +595,116 @@ namespace guiex
 			} else
 				layer.tiles = (unsigned int*) buffer;
 
-			[currentString setString:@""];
+			//	[currentString setString:@""];
+	} 
 
-		} else if ([elementName isEqualToString:@"map"]) {
-			// The map element has ended
-			parentElement = TMXPropertyNone;
 
-		}	else if ([elementName isEqualToString:@"layer"]) {
-			// The layer element has ended
-			parentElement = TMXPropertyNone;
 
-		} else if ([elementName isEqualToString:@"objectgroup"]) {
-			// The objectgroup element has ended
-			parentElement = TMXPropertyNone;
-
-		} else if ([elementName isEqualToString:@"object"]) {
-			// The object element has ended
-			parentElement = TMXPropertyNone;
-		}
-	}
 	//------------------------------------------------------------------------------
-	- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
+	int32 CCTMXMapInfo::ParseNode_objectgroup( class TiXmlElement* pObjectGroupNode )
 	{
-		if (storingCharacters)
-			[currentString appendString:string];
+		CCTMXObjectGroup *objectGroup = new CCTMXObjectGroup;
+		objectGroups->push_back( objectGroup );
+
+		//name
+		objectGroup->groupName = pObjectGroupNode->Attribute( "name" );
+
+		//offset
+		CGUIString strX = pObjectGroupNode->Attribute( "x" );
+		StringToValue( strX, objectGroup->positionOffset.x );
+		CGUIString strY = pObjectGroupNode->Attribute( "y" );
+		StringToValue( strY, objectGroup->positionOffset.y );
+
+		//parse child node
+		TiXmlElement* pChildNode = pObjectGroupNode->FirstChildElement();
+		while( pChildNode )
+		{
+			if( CGUIString("object") == pChildNode->Value())
+			{
+				if( 0 != ParseNode_object( pChildNode ))
+				{
+					return -1;
+				}
+			}
+			else if( CGUIString("properties" ) == pChildNode->Value())
+			{
+				if( 0 != ParseNode_properties( pChildNode, objectGroup->properties ) )
+				{
+					return -1;
+				}
+			}
+			else
+			{
+				throw CGUIException( "[CCTMXMapInfo::ParseNode_objectgroup]: unknown tmx file node <%s>", pChildNode->Value());
+				return -1;
+			}
+
+			//for next node
+			pChildNode = pChildNode->NextSiblingElement();
+		}
+		return 0;
 	}
 	//------------------------------------------------------------------------------
-	//
-	// the level did not load, file not found, etc.
-	//
-	-(void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError{
-		CCLOG(@"cocos2d: Error on XML Parse: %@", [parseError localizedDescription] );
+	int32 CCTMXMapInfo::ParseNode_object( class TiXmlElement* pObjectNode )
+	{
+		if( objectGroups.empty() )
+		{
+			throw CGUIException("[CCTMXMapInfo::ParseNode_object]: not find object group when process objectgroup node" );
+			return -1;
+		}
+		CCTMXObjectGroup* objectGroup = objectGroups.back();
+
+		CCTMXObjectInfo* pInfo = new CCTMXObjectInfo;
+		objectGroup->objects.push_back( pInfo );
+
+		//name
+		pInfo->objectName = pObjectNode->Attribute("name");
+
+		//type
+		const char* szType = pObjectNode->Attribute("type");
+		if( szType )
+		{
+			pInfo->objectType = szType;
+		}
+
+		//size
+		CGUIString strWidth = pObjectNode->Attribute( "width");
+		StringToValue( strWidth, pInfo->size.m_fWidth );
+		CGUIString strHeight = pObjectNode->Attribute( "height");
+		StringToValue( strHeight, pInfo->size.m_fHeight );
+
+		//position
+		CGUIString strX = pObjectNode->Attribute("x");
+		StringToValue( strX, pInfo->position.x );
+		pInfo->position.x += objectGroup->positionOffset.x;
+		CGUIString strY = pObjectNode->Attribute("y");
+		StringToValue( strY, pInfo->position.y );
+		pInfo->position.y += objectGroup->positionOffset.y;
+		// Correct y position. (Tiled uses Flipped, we uses Standard)
+		pInfo->position.y = (mapSize.m_fHeight * tileSize.m_fHeight) - pInfo->position.y - pInfo->size.m_fHeight;
+
+		//parse child node
+		TiXmlElement* pChildNode = pObjectNode->FirstChildElement();
+		while( pChildNode )
+		{
+			if( CGUIString("properties" ) == pChildNode->Value())
+			{
+				if( 0 != ParseNode_properties( pChildNode, pInfo->properties ) )
+				{
+					return -1;
+				}
+			}
+			else
+			{
+				throw CGUIException( "[CCTMXMapInfo::ParseNode_object]: unknown tmx file node <%s>", pChildNode->Value());
+				return -1;
+			}
+
+			//for next node
+			pChildNode = pChildNode->NextSiblingElement();
+		}
+
+		return 0;
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

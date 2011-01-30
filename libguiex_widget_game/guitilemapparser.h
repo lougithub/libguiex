@@ -12,6 +12,7 @@
 // include
 //============================================================================//
 #include <libguiex_core/guibase.h>
+#include <vector>
 
 //============================================================================//
 // declare
@@ -59,7 +60,7 @@ namespace guiex
 		CGUISize layerSize;
 		uint32 *tiles;
 		bool visible;
-		uint8 opacity;
+		real opacity;
 		bool ownTiles;
 		uint32 minGID;
 		uint32 maxGID;
@@ -67,6 +68,28 @@ namespace guiex
 		CGUIVector2 offset;
 	};
 
+	class CCTMXObjectInfo
+	{
+	public:
+		CGUIString objectName;
+		CGUIString objectType;
+		CGUIVector2 position;
+		CGUISize size;
+		std::map<CGUIString,CGUIString>	properties;
+	};
+
+	class CCTMXObjectGroup
+	{
+	public:
+		CCTMXObjectGroup();
+		~CCTMXObjectGroup();
+
+	public:
+		CGUIString groupName;
+		CGUIVector2 positionOffset;
+		std::vector<CCTMXObjectInfo*> objects;
+		std::map<CGUIString,CGUIString>	properties;
+	}
 
 	/* CCTMXTilesetInfo contains the information about the tilesets like:
 	- Tileset name
@@ -119,6 +142,18 @@ namespace guiex
 
 	protected:
 		int32 ParseXMLFile( const CGUIString& tmxFile );
+		int32 ParseNode_map( class TiXmlElement* pMapNode );
+		int32 ParseNode_tileset( class TiXmlElement* pTilesetNode );
+		int32 ParseNode_layer( class TiXmlElement* pLayerNode );
+		int32 ParseNode_image( class TiXmlElement* pImageNode );
+		int32 ParseNode_tile( class TiXmlElement* pTileNode );
+		int32 ParseNode_properties( class TiXmlElement* pPropertiesNode, std::map<CGUIString, CGUIString>& mapTileProperties );
+		int32 ParseNode_data( class TiXmlElement* pTileNode );
+		int32 ParseNode_objectgroup( class TiXmlElement* pObjectGroupNode );
+		int32 ParseNode_object( class TiXmlElement* pObjectNode );
+
+		int32 ParseSourceFile( const CGUIString& tmxFile );
+
 
 	public:
 		CGUIString currentString;
@@ -130,11 +165,11 @@ namespace guiex
 		int32 orientation;	// map orientation
 		CGUISize mapSize; // map width & height
 		CGUISize tileSize; // tiles width & height
-		NSMutableArray layers; // Layers
-		NSMutableArray tilesets; // tilesets
-		NSMutableArray objectGroups; // ObjectGroups
+		std::vector<CCTMXLayerInfo> layers; // Layers
+		std::vector<CCTMXTilesetInfo> tilesets; // tilesets
+		std::vector<CCTMXObjectGroup> objectGroups; // ObjectGroups
 		std::map<CGUIString, CGUIString> properties; // properties
-		std::map<CGUIString, CGUIString> tileProperties; // tile properties
+		std::map<uint32, std::map<CGUIString, CGUIString> > tileProperties; // tile properties <gid, tile property>
 	};
 
 } //namespace guiex
