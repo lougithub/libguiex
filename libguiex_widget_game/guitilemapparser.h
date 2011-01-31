@@ -12,7 +12,11 @@
 // include
 //============================================================================//
 #include <libguiex_core/guibase.h>
+#include <libguiex_core/guiintsize.h>
+#include <libguiex_core/guiintvector2.h>
+#include <libguiex_core/guirect.h>
 #include <vector>
+#include <map>
 
 //============================================================================//
 // declare
@@ -36,6 +40,7 @@ namespace guiex
 		TMXPropertyTile
 	};
 }
+class TiXmlElement;
 
 //============================================================================//
 // class
@@ -57,7 +62,7 @@ namespace guiex
 
 	public:
 		CGUIString name;
-		CGUISize layerSize;
+		CGUIIntSize layerSize;
 		uint32 *tiles;
 		bool visible;
 		real opacity;
@@ -65,7 +70,7 @@ namespace guiex
 		uint32 minGID;
 		uint32 maxGID;
 		std::map<CGUIString, CGUIString> properties;
-		CGUIVector2 offset;
+		CGUIIntVector2 offset;
 	};
 
 	class CCTMXObjectInfo
@@ -73,8 +78,8 @@ namespace guiex
 	public:
 		CGUIString objectName;
 		CGUIString objectType;
-		CGUIVector2 position;
-		CGUISize size;
+		CGUIIntVector2 position;
+		CGUIIntSize size;
 		std::map<CGUIString,CGUIString>	properties;
 	};
 
@@ -86,10 +91,10 @@ namespace guiex
 
 	public:
 		CGUIString groupName;
-		CGUIVector2 positionOffset;
+		CGUIIntVector2 positionOffset;
 		std::vector<CCTMXObjectInfo*> objects;
 		std::map<CGUIString,CGUIString>	properties;
-	}
+	};
 
 	/* CCTMXTilesetInfo contains the information about the tilesets like:
 	- Tileset name
@@ -112,11 +117,11 @@ namespace guiex
 	public:
 		CGUIString name;
 		uint32 firstGid;
-		CGUISize tileSize;
+		CGUIIntSize tileSize;
 		uint32 spacing;
 		uint32 margin;
 		CGUIString sourceImage; // image containing the tiles
-		CGUISize imageSize; // size in pixels of the image
+		CGUIIntSize imageSize; // size in pixels of the image
 	};
 
 
@@ -142,32 +147,28 @@ namespace guiex
 
 	protected:
 		int32 ParseXMLFile( const CGUIString& tmxFile );
-		int32 ParseNode_map( class TiXmlElement* pMapNode );
-		int32 ParseNode_tileset( class TiXmlElement* pTilesetNode );
-		int32 ParseNode_layer( class TiXmlElement* pLayerNode );
-		int32 ParseNode_image( class TiXmlElement* pImageNode );
-		int32 ParseNode_tile( class TiXmlElement* pTileNode );
-		int32 ParseNode_properties( class TiXmlElement* pPropertiesNode, std::map<CGUIString, CGUIString>& mapTileProperties );
-		int32 ParseNode_data( class TiXmlElement* pTileNode );
-		int32 ParseNode_objectgroup( class TiXmlElement* pObjectGroupNode );
-		int32 ParseNode_object( class TiXmlElement* pObjectNode );
+		int32 ParseNode_map( TiXmlElement* pMapNode );
+		int32 ParseNode_tileset( TiXmlElement* pTilesetNode );
+		int32 ParseNode_layer( TiXmlElement* pLayerNode );
+		int32 ParseNode_image( TiXmlElement* pImageNode );
+		int32 ParseNode_tile( TiXmlElement* pTileNode );
+		int32 ParseNode_properties( TiXmlElement* pPropertiesNode, std::map<CGUIString, CGUIString>& mapTileProperties );
+		int32 ParseNode_data( TiXmlElement* pTileNode );
+		int32 ParseNode_objectgroup( TiXmlElement* pObjectGroupNode );
+		int32 ParseNode_object( TiXmlElement* pObjectNode );
 
 		int32 ParseSourceFile( const CGUIString& tmxFile );
 
 
 	public:
-		CGUIString currentString;
-		bool storingCharacters;	
-		int32 layerAttribs;
-		int32 parentElement;
 		uint32 parentGID;
 		CGUIString filename; // tmx filename
 		int32 orientation;	// map orientation
-		CGUISize mapSize; // map width & height
-		CGUISize tileSize; // tiles width & height
-		std::vector<CCTMXLayerInfo> layers; // Layers
-		std::vector<CCTMXTilesetInfo> tilesets; // tilesets
-		std::vector<CCTMXObjectGroup> objectGroups; // ObjectGroups
+		CGUIIntSize mapSize; // map width & height
+		CGUIIntSize tileSize; // tiles width & height
+		std::vector<CCTMXLayerInfo*> layers; // Layers
+		std::vector<CCTMXTilesetInfo*> tilesets; // tilesets
+		std::vector<CCTMXObjectGroup*> objectGroups; // ObjectGroups
 		std::map<CGUIString, CGUIString> properties; // properties
 		std::map<uint32, std::map<CGUIString, CGUIString> > tileProperties; // tile properties <gid, tile property>
 	};

@@ -28,6 +28,7 @@ namespace guiex
 		CGUISize();
 		CGUISize(real fWidth, real fHeight);
 		CGUISize(const CGUISize& rSize);
+		CGUISize(const class CGUIIntSize& rSize);
 
 		void SetSize( const CGUISize& rSize);
 		void SetValue( real fWidth, real fHeight );

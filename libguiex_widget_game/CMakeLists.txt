@@ -57,6 +57,11 @@ endif( WIN32 )
 # modify file list here --end--
 
 #include directory
+if( WIN32 )
+    include_directories( "${PROJECT_SOURCE_DIR}/external/zlib" )
+endif()
+include_directories( "${PROJECT_SOURCE_DIR}/external/tinyxml" )
+
 add_library( ${target_name} STATIC ${${target_name}_SRCS} )
 add_dependencies( ${target_name} libguiex_core libguiex_widget)
 

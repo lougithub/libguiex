@@ -8,7 +8,6 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core/guisize.h>
 #include <libguiex_core/guiintsize.h>
 
 //============================================================================//
@@ -21,94 +20,88 @@ namespace guiex
 	/**
 	* @brief constructor
 	*/
-	CGUISize::CGUISize()
-		:m_fWidth(0.0f)
-		,m_fHeight(0.0f)
+	CGUIIntSize::CGUIIntSize()
+		:m_uWidth(0)
+		,m_uHeight(0)
 	{
 	}
 	//------------------------------------------------------------------------------
 	/**
 	* @brief constructor
 	*/
-	CGUISize::CGUISize(real fWidth, real fHeight)
-		:m_fWidth(fWidth)
-		,m_fHeight(fHeight)
+	CGUIIntSize::CGUIIntSize(uint32 uWidth, uint32 uHeight)
+		:m_uWidth(uWidth)
+		,m_uHeight(uHeight)
 	{
 	}
 	//------------------------------------------------------------------------------
 	/**
 	* @brief constructor
 	*/
-	CGUISize::CGUISize(const CGUISize& rSize)
+	CGUIIntSize::CGUIIntSize(const CGUIIntSize& rSize)
 	{
 		SetSize(rSize);
-	}
-	//------------------------------------------------------------------------------
-	CGUISize::CGUISize(const class CGUIIntSize& rSize)
-		:m_fWidth( real(rSize.m_uWidth) )
-		,m_fHeight( real(rSize.m_uHeight) )
-	{
 	}
 	//------------------------------------------------------------------------------
 	/**
 	* @brief set size
 	*/
-	void CGUISize::SetSize( const CGUISize& rSize)
+	void CGUIIntSize::SetSize( const CGUIIntSize& rSize)
 	{
-		m_fWidth = rSize.m_fWidth;
-		m_fHeight = rSize.m_fHeight;
+		m_uWidth = rSize.m_uWidth;
+		m_uHeight = rSize.m_uHeight;
 	}
 	//------------------------------------------------------------------------------
 	/**
 	* @brief set width and height
 	*/
-	void CGUISize::SetValue( real fWidth, real fHeight )
+	void CGUIIntSize::SetValue( uint32 uWidth, uint32 uHeight )
 	{
-		m_fWidth = fWidth;
-		m_fHeight = fHeight;
+		m_uWidth = uWidth;
+		m_uHeight = uHeight;
 	}
 	//------------------------------------------------------------------------------
 	/**
 	* @brief set width
 	*/
-	void CGUISize::SetWidth( real fWidth)
+	void CGUIIntSize::SetWidth( uint32 uWidth)
 	{
-		m_fWidth = fWidth;
+		m_uWidth = uWidth;
 	}
 	//------------------------------------------------------------------------------
 	/**
 	* @brief set width
 	*/
-	real CGUISize::GetWidth( ) const 
+	uint32 CGUIIntSize::GetWidth( ) const 
 	{
-		return m_fWidth;
+		return m_uWidth;
 	}
 	//------------------------------------------------------------------------------
 	/**
 	* @brief set height
 	*/
-	void CGUISize::SetHeight( real fHeight)
+	void CGUIIntSize::SetHeight( uint32 uHeight)
 	{
-		m_fHeight = fHeight;
+		m_uHeight = uHeight;
 	}
 	//------------------------------------------------------------------------------
 	/**
 	* @brief get height
 	*/
-	real CGUISize::GetHeight(  ) const 
+	uint32 CGUIIntSize::GetHeight(  ) const 
 	{
-		return m_fHeight;
+		return m_uHeight;
 	}
 	//------------------------------------------------------------------------------
-	bool CGUISize::IsEqualZero() const
+	bool CGUIIntSize::IsEqualZero() const
 	{
-		return ( GUI_REAL_EQUAL( m_fWidth, 0.0f ) && GUI_REAL_EQUAL( m_fHeight, 0.0f ));
+		return ( m_uWidth == 0 && m_uHeight == 0 );
 	}
 	//------------------------------------------------------------------------------
-	bool CGUISize::IsEqual( const CGUISize& rSize ) const
+	bool CGUIIntSize::IsEqual( const CGUIIntSize& rSize ) const
 	{
-		if( GUI_REAL_EQUAL( m_fWidth, rSize.m_fWidth ) &&
-			GUI_REAL_EQUAL( m_fHeight, rSize.m_fHeight ))
+		if( m_uWidth == rSize.m_uWidth &&
+			m_uHeight == rSize.m_uHeight )
 		{
 			return true;
 		}
@@ -118,16 +111,16 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	CGUISize& CGUISize::operator= (const CGUISize& rSize)
+	CGUIIntSize& CGUIIntSize::operator= (const CGUIIntSize& rSize)
 	{
 		SetSize( rSize );
 		return *this;
 	}
 	//------------------------------------------------------------------------------
-	bool CGUISize::operator==(const CGUISize& other) const
+	bool CGUIIntSize::operator==(const CGUIIntSize& other) const
 	{
-		if( m_fWidth == other.m_fWidth &&
-			m_fHeight == other.m_fHeight )
+		if( m_uWidth == other.m_uWidth &&
+			m_uHeight == other.m_uHeight )
 		{
 			return true;
 		}
@@ -137,92 +130,92 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	bool CGUISize::operator!=(const CGUISize& other) const
+	bool CGUIIntSize::operator!=(const CGUIIntSize& other) const
 	{
 		return !(*this == other);
 	}
 	//------------------------------------------------------------------------------
-	bool CGUISize::operator<( const CGUISize& other ) const
+	bool CGUIIntSize::operator<( const CGUIIntSize& other ) const
 	{
-		return( m_fWidth < other.m_fWidth ||
-			!(other.m_fWidth< m_fWidth) && m_fHeight < other.m_fHeight);
+		return( m_uWidth < other.m_uWidth ||
+			!(other.m_uWidth< m_uWidth) && m_uHeight < other.m_uHeight);
 	}
 	//------------------------------------------------------------------------------
-	CGUISize CGUISize::operator+( const CGUISize& other ) const
+	CGUIIntSize CGUIIntSize::operator+( const CGUIIntSize& other ) const
 	{
-		return CGUISize( m_fWidth+other.m_fWidth, m_fHeight+other.m_fHeight );
+		return CGUIIntSize( m_uWidth+other.m_uWidth, m_uHeight+other.m_uHeight );
 	}
 	//------------------------------------------------------------------------------
-	CGUISize& CGUISize::operator+=( const CGUISize& other )
+	CGUIIntSize& CGUIIntSize::operator+=( const CGUIIntSize& other )
 	{
-		m_fWidth += other.m_fWidth;
-		m_fHeight += other.m_fHeight;
+		m_uWidth += other.m_uWidth;
+		m_uHeight += other.m_uHeight;
 		return *this;
 	}
 	//------------------------------------------------------------------------------
-	CGUISize CGUISize::operator-( const CGUISize& other ) const
+	CGUIIntSize CGUIIntSize::operator-( const CGUIIntSize& other ) const
 	{
-		return CGUISize( m_fWidth-other.m_fWidth, m_fHeight-other.m_fHeight );
+		return CGUIIntSize( m_uWidth-other.m_uWidth, m_uHeight-other.m_uHeight );
 	}
 	//------------------------------------------------------------------------------
-	CGUISize& CGUISize::operator-=(const CGUISize& other)
+	CGUIIntSize& CGUIIntSize::operator-=(const CGUIIntSize& other)
 	{
-		m_fWidth -= other.m_fWidth;
-		m_fHeight -= other.m_fHeight;
+		m_uWidth -= other.m_uWidth;
+		m_uHeight -= other.m_uHeight;
 		return *this;
 	}
 	//------------------------------------------------------------------------------
-	CGUISize CGUISize::operator*(real fScalar) const
+	CGUIIntSize CGUIIntSize::operator*(uint32 uScalar) const
 	{
-		return CGUISize( m_fWidth*fScalar, m_fHeight*fScalar );
+		return CGUIIntSize( m_uWidth*uScalar, m_uHeight*uScalar );
 	}
 	//------------------------------------------------------------------------------
-	CGUISize CGUISize::operator*(const CGUISize& other) const
+	CGUIIntSize CGUIIntSize::operator*(const CGUIIntSize& other) const
 	{
-		return CGUISize( m_fWidth*other.m_fWidth, m_fHeight*other.m_fHeight );
+		return CGUIIntSize( m_uWidth*other.m_uWidth, m_uHeight*other.m_uHeight );
 	}
 	//------------------------------------------------------------------------------
-	CGUISize& CGUISize::operator*=(real fScalar)
+	CGUIIntSize& CGUIIntSize::operator*=(uint32 uScalar)
 	{
-		m_fWidth *= fScalar;
-		m_fHeight *= fScalar;
+		m_uWidth *= uScalar;
+		m_uHeight *= uScalar;
 		return *this;
 	}
 	//------------------------------------------------------------------------------
-	CGUISize& CGUISize::operator*=(const CGUISize& other)
+	CGUIIntSize& CGUIIntSize::operator*=(const CGUIIntSize& other)
 	{
-		m_fWidth *= other.m_fWidth;
-		m_fHeight *= other.m_fHeight;
+		m_uWidth *= other.m_uWidth;
+		m_uHeight *= other.m_uHeight;
 		return *this;
 	}
 	//------------------------------------------------------------------------------
-	CGUISize CGUISize::operator/(real fScalar) const
+	CGUIIntSize CGUIIntSize::operator/(uint32 uScalar) const
 	{
-		assert( !GUI_REAL_EQUAL( fScalar, 0.0f ) );
-		return CGUISize( m_fWidth/fScalar, m_fHeight/fScalar );
+		assert( uScalar != 0 );
+		return CGUIIntSize( m_uWidth/uScalar, m_uHeight/uScalar );
 	}
 	//------------------------------------------------------------------------------
-	CGUISize& CGUISize::operator/=(real fScalar)
+	CGUIIntSize& CGUIIntSize::operator/=(uint32 uScalar)
 	{
-		assert( !GUI_REAL_EQUAL( fScalar, 0.0f ) );
-		m_fWidth /= fScalar;
-		m_fHeight /= fScalar;
+		assert( uScalar != 0 );
+		m_uWidth /= uScalar;
+		m_uHeight /= uScalar;
 		return *this;
 	}
 	//------------------------------------------------------------------------------
-	CGUISize CGUISize::operator/(const CGUISize& other) const
+	CGUIIntSize CGUIIntSize::operator/(const CGUIIntSize& other) const
 	{
-		assert( !GUI_REAL_EQUAL( other.m_fWidth, 0.0f ) );
-		assert( !GUI_REAL_EQUAL( other.m_fHeight, 0.0f ) );
-		return CGUISize( m_fWidth/other.m_fWidth, m_fHeight/other.m_fHeight );
+		assert( other.m_uWidth != 0 );
+		assert( other.m_uHeight != 0 );
+		return CGUIIntSize( m_uWidth/other.m_uWidth, m_uHeight/other.m_uHeight );
 	}
 	//------------------------------------------------------------------------------
-	CGUISize& CGUISize::operator/=(const CGUISize& other)
+	CGUIIntSize& CGUIIntSize::operator/=(const CGUIIntSize& other)
 	{
-		assert( !GUI_REAL_EQUAL( other.m_fWidth, 0.0f ) );
-		assert( !GUI_REAL_EQUAL( other.m_fHeight, 0.0f ) );
-		m_fWidth /= other.m_fWidth;
-		m_fHeight /= other.m_fHeight;
+		assert( other.m_uWidth != 0 );
+		assert( other.m_uHeight != 0 );
+		m_uWidth /= other.m_uWidth;
+		m_uHeight /= other.m_uHeight;
 		return *this;
 	}
 	//------------------------------------------------------------------------------

@@ -29,7 +29,10 @@
 #include "guicolor.h"
 #include "guirect.h"
 #include "guicolorrect.h"
+#include "guisize.h"
+#include "guiintsize.h"
 #include "guivector2.h"
+#include "guiintvector2.h"
 #include "guivector3.h"
 #include "guivector4.h"
 
@@ -127,6 +130,7 @@
 #include "guiinterpolation.h"
 
 #include "sigslot.h"
+#include "base64.h"
 
 #endif //__GUI_EX_20060323_H__
 

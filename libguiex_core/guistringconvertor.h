@@ -16,6 +16,7 @@
 #include "guistringex.h"
 #include "guirect.h"
 #include "guisize.h"
+#include "guiintsize.h"
 #include "guivector2.h"
 #include "guivector3.h"
 #include "guicolor.h"
@@ -145,6 +146,14 @@ namespace guiex
 	int32 ValueToString<CGUISize>( const CGUISize& rValue, CGUIString& rString );
 	template< >
 	CGUIString GetValueType<CGUISize>( );
+	//------------------------------------------------------------------------------
+	//convert for CGUIIntSize
+	template<  >
+	int32 StringToValue<CGUIIntSize>( const CGUIString& rString, CGUIIntSize& rValue);
+	template<  >
+	int32 ValueToString<CGUIIntSize>( const CGUIIntSize& rValue, CGUIString& rString );
+	template< >
+	CGUIString GetValueType<CGUIIntSize>( );
 	//------------------------------------------------------------------------------
 	//convert for CGUIVector2
 	template<  >

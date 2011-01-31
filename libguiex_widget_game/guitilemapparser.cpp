@@ -9,7 +9,8 @@
 //============================================================================//
 #include "guitilemapparser.h"
 #include "guitilemap.h"
-#include <libguiex_core/base64.h>
+#include <libguiex_core/guiex.h>
+#include <zlib.h>
 #include <tinyxml.h>
 
 
@@ -20,15 +21,121 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
+	#define BUFFER_INC_FACTOR (2)
+	static int inflateMemory_(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int *outLength)
+	{
+		/* ret value */
+		int err = Z_OK;
+
+		/* 256k initial decompress buffer */
+		int bufferSize = 256 * 1024;
+		*out = (unsigned char*) malloc(bufferSize);
+
+		z_stream d_stream; /* decompression stream */	
+		d_stream.zalloc = (alloc_func)0;
+		d_stream.zfree = (free_func)0;
+		d_stream.opaque = (voidpf)0;
+
+		d_stream.next_in  = in;
+		d_stream.avail_in = inLength;
+		d_stream.next_out = *out;
+		d_stream.avail_out = bufferSize;
+
+		/* window size to hold 256k */
+		if( (err = inflateInit2(&d_stream, 15 + 32)) != Z_OK )
+		{
+			return err;
+		}
+
+		for (;;) 
+		{
+			err = inflate(&d_stream, Z_NO_FLUSH);
+
+			if (err == Z_STREAM_END)
+			{
+				break;
+			}
+
+			switch (err) 
+			{
+			case Z_NEED_DICT:
+				err = Z_DATA_ERROR;
+			case Z_DATA_ERROR:
+			case Z_MEM_ERROR:
+				inflateEnd(&d_stream);
+				return err;
+			}
+
+			// not enough memory ?
+			if (err != Z_STREAM_END) 
+			{
+
+				unsigned char *tmp = (unsigned char *)realloc(*out, bufferSize * BUFFER_INC_FACTOR);
+
+				/* not enough memory, ouch */
+				if (!tmp )
+				{
+					inflateEnd(&d_stream);
+					throw CGUIException("[inflateMemory_]: realloc failed");
+					return Z_MEM_ERROR;
+				}
+				/* only assign to *out if tmp is valid. it's not guaranteed that realloc will reuse the memory */
+				*out = tmp;
+
+				d_stream.next_out = *out + bufferSize;
+				d_stream.avail_out = bufferSize;
+				bufferSize *= BUFFER_INC_FACTOR;
+			}
+		}
+
+		*outLength = bufferSize - d_stream.avail_out;
+		err = inflateEnd(&d_stream);
+		return err;
+	}
+	//------------------------------------------------------------------------------
+	static int InflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out)
+	{
+		unsigned int outLength = 0;
+		int err = inflateMemory_(in, inLength, out, &outLength);
+
+		if (err != Z_OK || *out == NULL)
+		{
+			free(*out);
+			*out = NULL;
+			outLength = 0;
+			
+			switch(err)
+			{
+			case Z_MEM_ERROR:
+				throw CGUIException("[InflateMemory]: Out of memory while decompressing map data!");
+				break;
+			case Z_VERSION_ERROR:
+				throw CGUIException("[InflateMemory]: Incompatible zlib version!");
+				break;
+			case Z_DATA_ERROR:
+				throw CGUIException("[InflateMemory]: Incorrect zlib compressed data!");
+				break;
+			default:
+				throw CGUIException("[InflateMemory]: Unknown error while decompressing map data!");
+				break;
+			}
+		}
+
+		return outLength;
+	}
+	//------------------------------------------------------------------------------
+
+
+
+	//------------------------------------------------------------------------------
 	// CCTMXLayerInfo
 	//------------------------------------------------------------------------------
 	CCTMXLayerInfo::CCTMXLayerInfo()
-		:ownTiles( true ),
+		:ownTiles( true )
 		,minGID( 100000 )
 		,maxGID( 0 )
-		,tiles( NULL );
-		,offset( 0.0f,0.0f )
-		,opacity( 255 )
+		,tiles( NULL )
+		,opacity( 1.0f )
 	{
 
 	}
@@ -71,8 +178,6 @@ namespace guiex
 		:firstGid( 0 )
 		,spacing( 0 )
 		,margin( 0 )
-		,tileSize( 0.0f,0.0f )
-		,imageSize( 0.0f, 0.0f )
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -84,11 +189,11 @@ namespace guiex
 	{
 		gid = gid - firstGid;
 
-		real max_x = ( imageSize.m_fWidth - margin*2 + spacing ) / ( tileSize.m_fWidth + spacing );
+		uint32 max_x = ( imageSize.m_uWidth - margin*2 + spacing ) / ( tileSize.m_uWidth + spacing );
 
 		CGUIVector2 aTopLeft;
-		aTopLeft.x = (gid % max_x) * (tileSize.m_fWidth + spacing) + margin; //column
-		aTopLeft.y = (gid / max_x) * (tileSize.m_fHeight + spacing) + margin; //row
+		aTopLeft.x = real((gid % max_x) * (tileSize.m_uWidth + spacing) + margin); //column
+		aTopLeft.y = real((gid / max_x) * (tileSize.m_uHeight + spacing) + margin); //row
 		
 		return CGUIRect( aTopLeft, tileSize );
 	}
@@ -98,10 +203,7 @@ namespace guiex
 	// CCTMXMapInfo
 	//------------------------------------------------------------------------------
 	CCTMXMapInfo::CCTMXMapInfo()
-		:storingCharacters( false )
-		,layerAttribs( 0 )
-		,parentElement( 0 )
-		,parentGID( 0 )
+		:parentGID( 0 )
 		,orientation( 0 ) // map orientation
 	{
 	}
@@ -130,9 +232,6 @@ namespace guiex
 	int32 CCTMXMapInfo::InitWithTMXFile( const CGUIString& tmxFile )
 	{
 		filename = tmxFile;
-		storingCharacters = false;
-		layerAttribs = TMXLayerAttribNone;
-		parentElement = TMXPropertyNone;
 
 		return ParseXMLFile( filename );		
 	}
@@ -202,13 +301,13 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int32 CCTMXMapInfo::ParseNode_map( class TiXmlElement* pMapNode )
+	int32 CCTMXMapInfo::ParseNode_map( TiXmlElement* pMapNode )
 	{
 		//version
 		CGUIString strVersion = pMapNode->Attribute("version");
 		if( strVersion != "1.0" )
 		{
-			throw CGUIException("[CCTMXMapInfo::ParseNode_map]: Unsupported TMX version %s", strVersion->c_str());
+			throw CGUIException("[CCTMXMapInfo::ParseNode_map]: Unsupported TMX version %s", strVersion.c_str());
 			return -1;
 		}
 
@@ -234,15 +333,15 @@ namespace guiex
 
 		//width and height
 		CGUIString strWidth = pMapNode->Attribute("width");
-		StringToValue( strWidth, mapSize.m_fWidth );
+		StringToValue( strWidth, mapSize.m_uWidth );
 		CGUIString strHeight = pMapNode->Attribute("height");
-		StringToValue( strHeight, mapSize.m_fHeight );
+		StringToValue( strHeight, mapSize.m_uHeight );
 
 		//tile width and height
 		CGUIString strTileWidth = pMapNode->Attribute("tilewidth");
-		StringToValue( strTileWidth, tileSize.m_fWidth );
+		StringToValue( strTileWidth, tileSize.m_uWidth );
 		CGUIString strTileHeight = pMapNode->Attribute("tileheight");
-		StringToValue( strTileHeight, tileSize.m_fHeight );
+		StringToValue( strTileHeight, tileSize.m_uHeight );
 
 
 		//parse child node
@@ -296,7 +395,7 @@ namespace guiex
 		return -1;
 	}
 	//------------------------------------------------------------------------------
-	int32 CCTMXMapInfo::ParseNode_tileset( class TiXmlElement* pTilesetNode )
+	int32 CCTMXMapInfo::ParseNode_tileset( TiXmlElement* pTilesetNode )
 	{
 		//tile width and height
 		const char* szSource = pTilesetNode->Attribute("source");
@@ -318,21 +417,21 @@ namespace guiex
 
 		//first gid
 		CGUIString strGid = pTilesetNode->Attribute( "firstgid");
-		StringToValue( strGid, pTileset.firstGid );
+		StringToValue( strGid, pTileset->firstGid );
 
 		//spacing
 		CGUIString strSpacing = pTilesetNode->Attribute( "spacing");
-		StringToValue( strSpacing, pTileset.spacing );
+		StringToValue( strSpacing, pTileset->spacing );
 
 		//margin
 		CGUIString strMargin = pTilesetNode->Attribute( "margin");
-		StringToValue( strMargin, pTileset.margin );
+		StringToValue( strMargin, pTileset->margin );
 
 		//size
 		CGUIString strWidth = pTilesetNode->Attribute( "tilewidth");
-		StringToValue( strWidth, pTileset->tileSize.m_fWidth );
+		StringToValue( strWidth, pTileset->tileSize.m_uWidth );
 		CGUIString strHeight = pTilesetNode->Attribute( "tileheight");
-		StringToValue( strHeight, pTileset->tileSize.m_fHeight );
+		StringToValue( strHeight, pTileset->tileSize.m_uHeight );
 
 		//parse child node
 		TiXmlElement* pChildNode = pTilesetNode->FirstChildElement();
@@ -365,7 +464,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int32 CCTMXMapInfo::ParseNode_image( class TiXmlElement* pImageNode )
+	int32 CCTMXMapInfo::ParseNode_image( TiXmlElement* pImageNode )
 	{
 		if( tilesets.empty() )
 		{
@@ -380,7 +479,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int32 CCTMXMapInfo::ParseNode_tile( class TiXmlElement* pTileNode )
+	int32 CCTMXMapInfo::ParseNode_tile( TiXmlElement* pTileNode )
 	{
 		if( tilesets.empty() )
 		{
@@ -421,7 +520,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int32 CCTMXMapInfo::ParseNode_properties( class TiXmlElement* pPropertiesNode, std::map<CGUIString, CGUIString>& mapTileProperties )
+	int32 CCTMXMapInfo::ParseNode_properties( TiXmlElement* pPropertiesNode, std::map<CGUIString, CGUIString>& mapTileProperties )
 	{
 		//parse child node
 		TiXmlElement* pChildNode = pPropertiesNode->FirstChildElement();
@@ -445,7 +544,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int32 CCTMXMapInfo::ParseNode_layer( class TiXmlElement* pLayerNode )
+	int32 CCTMXMapInfo::ParseNode_layer( TiXmlElement* pLayerNode )
 	{
 		CCTMXLayerInfo *layer = new CCTMXLayerInfo;
 		layers.push_back( layer );
@@ -455,9 +554,9 @@ namespace guiex
 
 		//size
 		CGUIString strWidth = pLayerNode->Attribute("width");
-		StringToValue( strWidth, layer->layerSize.m_fWidth );
+		StringToValue( strWidth, layer->layerSize.m_uWidth );
 		CGUIString strHeight = pLayerNode->Attribute("height");
-		StringToValue( strHeight, layer->layerSize.m_fHeight );
+		StringToValue( strHeight, layer->layerSize.m_uHeight );
 
 		//visible
 		CGUIString strVisible = pLayerNode->Attribute("visible");
@@ -509,7 +608,7 @@ namespace guiex
 			}
 			if( CGUIString("properties") == pChildNode->Value())
 			{
-				if( 0 != ParseNode_data( pChildNode, layer->properties ) )
+				if( 0 != ParseNode_properties( pChildNode, layer->properties ) )
 				{
 					return -1;
 				}
@@ -527,84 +626,63 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int32 CCTMXMapInfo::ParseNode_data( class TiXmlElement* pDataNode )
+	int32 CCTMXMapInfo::ParseNode_data( TiXmlElement* pDataNode )
 	{
 		CGUIString strEncoding = pDataNode->Attribute("encoding");
 		CGUIString strCompression = pDataNode->Attribute("compression");
 
-		if( strEncoding == "base64" )
+		if( strEncoding != "base64" )
 		{
-			layerAttribs |= TMXLayerAttribBase64;
+			throw CGUIException("[CCTMXMapInfo::ParseNode_data]: date only support base64 now");
+			return -1;
 		}
-		if( strCompression == "gzip" )
-		{
-			layerAttribs |= TMXLayerAttribGzip;
-		}
-		GUI_ASSERT( layerAttribs != TMXLayerAttribNone, "[CCTMXMapInfo::ParseNode_data]: Only base64 and/or gzip maps are supported" );
-
-
 		const char* data = pDataNode->GetText();
 
-		if( data && layerAttribs & TMXLayerAttribBase64 )
+		if( data )
 		{
 			if( layers.empty() )
 			{
 				throw CGUIException("[CCTMXMapInfo::ParseNode_data]: not find layers when process data node" );
 				return -1;
 			}
-			CCTMXLayerInfo* layer = layerAttribs.back();
+			CCTMXLayerInfo* layer = layers.back();
 
 			unsigned char *buffer = NULL;
 			int len = 0;
-			len = base64Decode( data, strlen(data), &buffer);
+			len = base64Decode( (const unsigned char*)data, strlen(data), &buffer);
 			if( !buffer )
 			{
 				throw CGUIException("[CCTMXMapInfo::ParseNode_data]: TiledMap decode data error");
 				return -1;
 			}
 
+			if( strCompression == "gzip" )
+			{
+				unsigned char *deflated;
+				InflateMemory(buffer, len, &deflated);
+				free( buffer );
+
+				if( !deflated )
+				{
+					throw CGUIException("[CCTMXMapInfo::ParseNode_data]: inflate data error");
+					return -1;
+				}
+
+				layer->tiles = (unsigned int*) deflated;
+			} 
+			else
+			{
+				layer->tiles = (unsigned int*) buffer;
+			}
 		}
 
 		return 0;
-
-
-
-
-			//int len = 0;
-
-		if([elementName isEqualToString:@"data"] && layerAttribs&TMXLayerAttribBase64) 
-		{
-			storingCharacters = NO;
-
-
-
-
-			if( layerAttribs & TMXLayerAttribGzip ) 
-			{
-				unsigned char *deflated;
-				ccInflateMemory(buffer, len, &deflated);
-				free( buffer );
-
-				if( ! deflated )
-				{
-					CCLOG(@"cocos2d: TiledMap: inflate data error");
-					return;
-				}
-
-				layer.tiles = (unsigned int*) deflated;
-			} else
-				layer.tiles = (unsigned int*) buffer;
-
-			//	[currentString setString:@""];
 	} 
-
-
-
 	//------------------------------------------------------------------------------
-	int32 CCTMXMapInfo::ParseNode_objectgroup( class TiXmlElement* pObjectGroupNode )
+	int32 CCTMXMapInfo::ParseNode_objectgroup( TiXmlElement* pObjectGroupNode )
 	{
 		CCTMXObjectGroup *objectGroup = new CCTMXObjectGroup;
-		objectGroups->push_back( objectGroup );
+		objectGroups.push_back( objectGroup );
 
 		//name
 		objectGroup->groupName = pObjectGroupNode->Attribute( "name" );
@@ -645,7 +723,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int32 CCTMXMapInfo::ParseNode_object( class TiXmlElement* pObjectNode )
+	int32 CCTMXMapInfo::ParseNode_object( TiXmlElement* pObjectNode )
 	{
 		if( objectGroups.empty() )
 		{
@@ -669,9 +747,9 @@ namespace guiex
 
 		//size
 		CGUIString strWidth = pObjectNode->Attribute( "width");
-		StringToValue( strWidth, pInfo->size.m_fWidth );
+		StringToValue( strWidth, pInfo->size.m_uWidth );
 		CGUIString strHeight = pObjectNode->Attribute( "height");
-		StringToValue( strHeight, pInfo->size.m_fHeight );
+		StringToValue( strHeight, pInfo->size.m_uHeight );
 
 		//position
 		CGUIString strX = pObjectNode->Attribute("x");
@@ -681,7 +759,7 @@ namespace guiex
 		StringToValue( strY, pInfo->position.y );
 		pInfo->position.y += objectGroup->positionOffset.y;
 		// Correct y position. (Tiled uses Flipped, we uses Standard)
-		pInfo->position.y = (mapSize.m_fHeight * tileSize.m_fHeight) - pInfo->position.y - pInfo->size.m_fHeight;
+		pInfo->position.y = (mapSize.m_uHeight * tileSize.m_uHeight) - pInfo->position.y - pInfo->size.m_uHeight;
 
 		//parse child node
 		TiXmlElement* pChildNode = pObjectNode->FirstChildElement();

@@ -5,7 +5,7 @@
 #include "libguiex_core/guiex.h"
 #include "libguiex_widget/guiwgt.h"
 #include "libguiex_widget_box2d/guiwgt_box2d.h"
-#include "libguiex_widget_box2d/guiwgt_game.h"
+#include "libguiex_widget_game/guiwgt_game.h"
 %}
 
 %include "std_string.i"

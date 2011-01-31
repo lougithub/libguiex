@@ -72,6 +72,8 @@ elseif( WIN32 )
     
     #misc define
     add_definitions( -D_CRT_SECURE_NO_WARNINGS )
+    add_definitions( -D_CRT_SECURE_NO_DEPRECATE )
+    add_definitions( -D_CRT_NONSTDC_NO_DEPRECATE )
     
     #set output directory
 	set( CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/binary/win32" )
@@ -115,6 +117,9 @@ add_subdirectory( ${PROJECT_SOURCE_DIR}/external/Box2D/cmakelist projects/box2d 
 add_subdirectory( ${PROJECT_SOURCE_DIR}/external/freetype/cmakelist projects/freetype )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/external/libogg/cmakelist projects/libogg )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/external/libvorbis/cmakelist projects/libvorbis )
+if( WIN32 )
+	add_subdirectory( ${PROJECT_SOURCE_DIR}/external/zlib/cmakelist projects/zlib )
+endif()
 
 #test
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/test1 projects/test1 )

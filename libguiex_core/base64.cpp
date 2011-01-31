@@ -4,16 +4,19 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <memory.h>
 
-unsigned char alphabet[64] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+unsigned char alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 int _base64Decode( const unsigned char *input, unsigned int input_len, unsigned char *output, unsigned int *output_len )
 {
-    static char inalphabet[256], decoder[256];
+    char inalphabet[256], decoder[256];
     int i, bits, c, char_count, errors = 0;
 	unsigned int input_idx = 0;
 	unsigned int output_idx = 0;
 
+	memset( inalphabet,0,sizeof(inalphabet) );
+	memset( decoder,0,sizeof(decoder) );
     for (i = (sizeof alphabet) - 1; i >= 0 ; i--) {
 		inalphabet[alphabet[i]] = 1;
 		decoder[alphabet[i]] = i;
@@ -71,7 +74,7 @@ int base64Decode(const unsigned char *in, unsigned int inLength, unsigned char *
 	unsigned int outLength = 0;
 	
 	//should be enough to store 6-bit buffers in 8-bit buffers
-	*out = malloc( inLength * 3.0f / 4.0f + 1 );
+	*out = (unsigned char*)malloc( inLength * 3 / 4 + 1 );
 	if( *out ) {
 		int ret = _base64Decode(in, inLength, *out, &outLength);
 		

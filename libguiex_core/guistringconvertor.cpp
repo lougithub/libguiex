@@ -378,6 +378,42 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
+	//convert for CGUIIntSize
+	template< >
+	CGUIString GetValueType<CGUIIntSize>( )
+	{
+		return "CGUIIntSize";
+	}
+	template<  >
+	int32 StringToValue<CGUIIntSize>( const CGUIString& rString, CGUIIntSize& rValue)
+	{
+		//string should have format as "width,height"
+		std::vector<CGUIString> aListString= StringToVector(rString);
+
+		if( aListString.size() != 2 )
+		{
+			throw CGUIException(
+				"[StringToValue[CGUIIntSize]]: string value format is wrong! <%s>",
+				rString.c_str());
+			return -1;
+		}
+
+		StringToValue( aListString[0], rValue.m_uWidth );
+		StringToValue( aListString[1], rValue.m_uHeight );
+		return 0;
+	}
+
+	template<  >
+	int32 ValueToString<CGUIIntSize>( const CGUIIntSize& rValue, CGUIString& rString )
+	{
+		std::stringstream stream;
+		stream.width(0);
+		stream.fill(' ');
+		stream << rValue.m_uWidth<<','<<rValue.m_uHeight;
+		rString = stream.str();
+		return 0;
+	}
+	//------------------------------------------------------------------------------
 	//convert for CGUIVector2
 	template< >
 	CGUIString GetValueType<CGUIVector2>( )
