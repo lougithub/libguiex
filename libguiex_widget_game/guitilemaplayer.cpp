@@ -192,7 +192,8 @@ namespace guiex
 	{
 		STileData aTileData;
 		aTileData.m_uGID = gid;
-		aTileData.m_aPosition = PositionAt( pos );
+		CGUISize aTileSize( real( GetMapTileSize().m_uWidth),real( GetMapTileSize().m_uHeight));
+		aTileData.m_aDestRect = CGUIRect( PositionAt( pos ), aTileSize );
 		aTileData.m_aUV = m_pTileSetInfo->RectForGID( gid );
 		m_vecTiles.push_back( aTileData );
 		return 0;
@@ -241,6 +242,20 @@ namespace guiex
 		return CGUIVector2(
 			real(pos.x * GetMapTileSize().m_uWidth*3/4),
 			real(GetLayerSize().m_uHeight - pos.y - 1) * GetMapTileSize().m_uHeight + diffY);
+	}
+	//------------------------------------------------------------------------------
+	void CCTMXLayer::Render( IGUIInterfaceRender* pRender, const CGUIMatrix4& rWorldMatrix )
+	{
+		for( uint32 i = 0;
+			i < m_vecTiles.size();
+			++i )
+		{
+			const STileData& rData = m_vecTiles[i];
+
+			CGUIColor aColor(0xFFFFFFFF);
+			aColor.SetAlpha(GetOpacity());
+			pRender->DrawTile( rWorldMatrix, rData.m_aDestRect, pRender->GetAndIncZ(), m_pTexture->GetTextureImplement(),rData.m_aUV, eImageOrientation_Normal,aColor);
+		}
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

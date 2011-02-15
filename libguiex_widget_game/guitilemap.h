@@ -45,6 +45,7 @@ namespace guiex
 		const std::map<CGUIString, CGUIString>* GetTileProperties( uint32 gid );
 		const CCTMXObjectGroup* GetObjectGroup( const CGUIString& rGroupName ) const;
 
+		void Render( IGUIInterfaceRender* pRender, const CGUIMatrix4& rWorldMatrix );
 
 	public:
 		CCTMXMapInfo* m_pMapInfo;

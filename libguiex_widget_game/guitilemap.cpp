@@ -123,4 +123,15 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	void CCTMXTiledMap::Render( IGUIInterfaceRender* pRender, const CGUIMatrix4& rWorldMatrix )
+	{
+		for( TLayerArray::iterator itor = m_arrayLayer.begin();
+			itor != m_arrayLayer.end();
+			++itor )
+		{
+			(*itor)->Render( pRender, rWorldMatrix );
+		}
+
+	}
+	//------------------------------------------------------------------------------
 }//namespace guiex

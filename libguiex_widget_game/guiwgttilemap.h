@@ -15,6 +15,13 @@
 #include <libguiex_core/guiwidget.h>
 #include <libguiex_core/guiwidgetgenerator.h>
 
+//============================================================================//
+// declare
+//============================================================================// 
+namespace guiex
+{
+	class CCTMXTiledMap;
+}
 
 //============================================================================//
 // class
@@ -36,23 +43,6 @@ namespace guiex
 		virtual int32 GenerateProperty( CGUIProperty& rProperty );
 		virtual void ProcessProperty( const CGUIProperty& rProperty);
 
-		void SetTileImageCacheCapacity( uint32 nCapacity );
-		uint32 GetTileImageCacheCapacity( ) const;
-		void ClearTileImageCache();
-
-		void SetTileImageSize( const CGUISize& rTileImageSize );
-		const CGUISize& GetTileImageSize( ) const;
-
-		void SetTileImageCache( uint32 nTileID, CGUIImage* pImage );
-		const CGUIImage* GetTileImageCache( uint32 nTileID) const;
-
-		void ClearTileMapData();
-		void SetTileMapData( const TTileMapData& rTileMapData );
-		const TTileMapData& GetTileMapData() const;
-
-		void SetTileMapSize( uint32 nRow, uint32 nColumn );
-		void SetTileID( uint32 nRow, uint32 nColumn, uint32 nTileID );
-		uint32 GetTileID( uint32 nRow, uint32 nColumn );
 
 	protected:
 		CGUIWgtTileMap( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
@@ -60,17 +50,8 @@ namespace guiex
 
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 
-		void UpdateTileMapSize( );
-
 	protected:
-		typedef std::vector<CGUIImage*> TTileImageCache;
-		TTileImageCache m_vecTileImageCache;
-
-		TTileMapData m_aTileMapData;
-		uint32 m_nRows;
-		uint32 m_nColumns;
-
-		CGUISize m_aTileImageSize;
+		CCTMXTiledMap* m_pTiledMap;
 
 	protected:
 		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtTileMap);

@@ -58,6 +58,19 @@ namespace guiex
 		//return oldZ;
 	}
 	//------------------------------------------------------------------------------
+	void IGUIInterfaceRender::DrawTile(	
+		const CGUIMatrix4& rWorldMatrix,
+		const CGUIRect& rDestRect, 
+		real z, 
+		const CGUITextureImp* pTex, 
+		const CGUIRect& rTextureRect,
+		EImageOrientation eImageOrientation,
+		const CGUIColor& rColor
+		)
+	{
+		DrawTile( rWorldMatrix, rDestRect, z, pTex, rTextureRect, eImageOrientation, rColor );
+	}
+	//------------------------------------------------------------------------------
 }//namespace guiex
 
 

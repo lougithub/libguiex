@@ -1,13 +1,6 @@
 set( target_name "libguiex_widget_game" )
 message( STATUS "generate library: " ${target_name} )
 
-#tilemap widget
-set( ${target_name}_tilemap_SRCS 
-        guiwgttilemap.cpp
-        guiwgttilemap.h
-	)
-source_group( tilemap FILES ${${target_name}_tilemap_SRCS} )
-
 #particle2d widget
 set( ${target_name}_particle2d_SRCS 
         guiwgtparticle2d.cpp
@@ -31,6 +24,8 @@ set( ${target_name}_tilemap_SRCS
 	guitilemaplayer.cpp	
 	guitilemapparser.h
 	guitilemapparser.cpp	
+    guiwgttilemap.cpp
+    guiwgttilemap.h	
 	)
 source_group( "tilemap" FILES ${${target_name}_tilemap_SRCS} )
 
@@ -38,14 +33,12 @@ source_group( "tilemap" FILES ${${target_name}_tilemap_SRCS} )
 if( WIN32 )
     set( ${target_name}_SRCS 
 		${${target_name}_particle2d_SRCS}
-		${${target_name}_tilemap_SRCS}
 		${${target_name}_utility_SRCS}
 		${${target_name}_tilemap_SRCS}
         )
 elseif( APPLE )
     set( ${target_name}_SRCS 
     	${${target_name}_particle2d_SRCS}
-		${${target_name}_tilemap_SRCS}
 		${${target_name}_utility_SRCS}
 		${${target_name}_tilemap_SRCS}
         )

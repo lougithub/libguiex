@@ -90,6 +90,16 @@ namespace guiex
 			const CGUIColor& rColor_bottomright
 			) = 0;
 
+		virtual	void DrawTile(	
+			const CGUIMatrix4& rWorldMatrix,
+			const CGUIRect& rDestRect, 
+			real z, 
+			const CGUITextureImp* pTex, 
+			const CGUIRect& rTextureRect,
+			EImageOrientation eImageOrientation,
+			const CGUIColor& rColor
+			);
+
 		virtual void DrawLine(
 			const CGUIMatrix4& rWorldMatrix,
 			const CGUIVector2 &rBegin, 

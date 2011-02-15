@@ -205,15 +205,13 @@ namespace guiex
 		{
 			CGUIColor aColor = m_aColor;
 			aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
-			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,
-				aColor,aColor,aColor,aColor);
+			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,aColor);
 		}
 		else
 		{
 			CGUIColor aColor(0xFFFFFFFF);
 			aColor.SetAlpha(fAlpha);
-			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,
-				aColor,aColor,aColor,aColor);
+			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,aColor);
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -230,15 +228,13 @@ namespace guiex
 		{
 			CGUIColor aColor = m_aColor*rColor;
 			aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
-			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,
-				aColor,aColor,aColor,aColor);
+			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,aColor);
 		}
 		else
 		{
 			CGUIColor aColor(rColor);
 			aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
-			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,
-				aColor,aColor,aColor,aColor);
+			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,aColor);
 		}
 	}
 	//------------------------------------------------------------------------------
