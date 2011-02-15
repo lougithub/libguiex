@@ -177,7 +177,7 @@ namespace guiex
 			if( pFont->m_vecTexture.empty() || pFont->m_nY + nSize > GUI_FT2_TEXTURE_SIZE )
 			{
 				pFont->m_nX = pFont->m_nY = 0;
-				CGUITexture* pNewTexture = CGUITextureManager::Instance()->CreateTexture(GUI_FT2_TEXTURE_SIZE,GUI_FT2_TEXTURE_SIZE,GUI_PF_ARGB_32);
+				CGUITexture* pNewTexture = CGUITextureManager::Instance()->CreateTexture(GUI_FT2_TEXTURE_SIZE,GUI_FT2_TEXTURE_SIZE,GUI_PF_RGBA_32);
 				pFont->m_vecTexture.push_back(pNewTexture);
 			}
 			pCharData->m_pTexture = pFont->m_vecTexture.back();
