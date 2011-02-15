@@ -11,7 +11,7 @@
 //============================================================================//
 // include
 //============================================================================//
-#include <libguiex_core/guiex.h>
+#include "guibase.h"
 #include <vector>
 #include <map>
 
@@ -23,6 +23,9 @@ namespace guiex
 	class CCTMXLayer;
 	class CCTMXMapInfo;
 	class CCTMXObjectGroup;
+
+	class IGUIInterfaceRender;
+	class CGUIMatrix4;
 }
 
 //============================================================================//

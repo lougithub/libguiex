@@ -18,12 +18,6 @@ source_group( utility FILES ${${target_name}_utility_SRCS} )
 
 #tilemap
 set( ${target_name}_tilemap_SRCS 
-	guitilemap.h
-	guitilemap.cpp
-	guitilemaplayer.h
-	guitilemaplayer.cpp	
-	guitilemapparser.h
-	guitilemapparser.cpp	
     guiwgttilemap.cpp
     guiwgttilemap.h	
 	)
@@ -48,11 +42,6 @@ endif( WIN32 )
 # modify file list here --end--
 
 #include directory
-if( WIN32 )
-    include_directories( "${PROJECT_SOURCE_DIR}/external/zlib" )
-endif()
-include_directories( "${PROJECT_SOURCE_DIR}/external/tinyxml" )
-
 add_library( ${target_name} STATIC ${${target_name}_SRCS} )
 add_dependencies( ${target_name} libguiex_core libguiex_widget)
 

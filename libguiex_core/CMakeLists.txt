@@ -261,6 +261,17 @@ set( ${target_name}_misc_SRCS
 	)
 source_group( misc FILES ${${target_name}_misc_SRCS} )
 
+#tilemap
+set( ${target_name}_tilemap_SRCS 
+	guitilemap.h
+	guitilemap.cpp
+	guitilemaplayer.h
+	guitilemaplayer.cpp	
+	guitilemapparser.h
+	guitilemapparser.cpp	
+	)
+source_group( "tilemap" FILES ${${target_name}_tilemap_SRCS} )
+
 set( ${target_name}_particle2dsystem_SRCS 
 	guiparticle2dsystem.cpp
 	guiparticle2dsystem.h
@@ -310,10 +321,14 @@ set( ${target_name}_SRCS
 	${${target_name}_misc_SRCS}
 	${${target_name}_canvas_SRCS}
 	${${target_name}_camera_SRCS}
+	${${target_name}_tilemap_SRCS}
 	${${target_name}_particle2dsystem_SRCS}
 	#${${target_name}_particlesystem_SRCS}
 	)
 
-
+if( WIN32 )
+    include_directories( "${PROJECT_SOURCE_DIR}/external/zlib" )
+endif()
+include_directories( "${PROJECT_SOURCE_DIR}/external/tinyxml" )
 add_library( ${target_name} STATIC ${${target_name}_SRCS} )
 

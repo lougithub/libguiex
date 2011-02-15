@@ -9,7 +9,12 @@
 //============================================================================//
 #include "guitilemapparser.h"
 #include "guitilemap.h"
-#include <libguiex_core/guiex.h>
+#include "guiexception.h"
+#include "guiinterfacefilesys.h"
+#include "guistringconvertor.h"
+#include "guiinterfacemanager.h"
+#include "base64.h"
+
 #include <zlib.h>
 #include <tinyxml.h>
 

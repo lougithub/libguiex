@@ -11,10 +11,10 @@
 //============================================================================//
 // include
 //============================================================================//
-#include <libguiex_core/guibase.h>
-#include <libguiex_core/guiintsize.h>
-#include <libguiex_core/guiintvector2.h>
-#include <libguiex_core/guirect.h>
+#include "guibase.h"
+#include "guiintsize.h"
+#include "guiintvector2.h"
+#include "guirect.h"
 #include <vector>
 #include <map>
 

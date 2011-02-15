@@ -10,8 +10,14 @@
 #include "guitilemaplayer.h"
 #include "guitilemap.h"
 #include "guitilemapparser.h"
+#include "guiexception.h"
+#include "guimath.h"
+#include "guitexturemanager.h"
+#include "guicolor.h"
+#include "guiinterfacerender.h"
+#include "guitexture.h"
+#include "guiexception.h"
 
-#include "libguiex_core/guiex.h"
 
 //============================================================================//
 // function
