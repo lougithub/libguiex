@@ -11,24 +11,18 @@
 //============================================================================//
 // include
 //============================================================================//
-#include <libguiex_core/guibase.h>
+#include <libguiex_core/guiex.h>
+#include <vector>
+#include <map>
 
 //============================================================================//
 // declare
 //============================================================================//
 namespace guiex
 {
-	enum
-	{
-		/** Orthogonal orientation */
-		CCTMXOrientationOrtho = 0,
-
-		/** Hexagonal orientation */
-		CCTMXOrientationHex,
-
-		/** Isometric orientation */
-		CCTMXOrientationIso,
-	};
+	class CCTMXLayer;
+	class CCTMXMapInfo;
+	class CCTMXObjectGroup;
 }
 
 //============================================================================//
@@ -36,6 +30,28 @@ namespace guiex
 //============================================================================// 
 namespace guiex
 {
+	class CCTMXTiledMap
+	{
+	public:
+		CCTMXTiledMap();
+		~CCTMXTiledMap();
+
+		void Reset();
+
+		int32 ParseTMXFile( const CGUIString& rFileName );
+
+		CCTMXLayer* GetLayer( const CGUIString& rLayerName );
+		const CGUIString* GetProperty( const CGUIString& rPropertyName ) const;
+		const std::map<CGUIString, CGUIString>* GetTileProperties( uint32 gid );
+		const CCTMXObjectGroup* GetObjectGroup( const CGUIString& rGroupName ) const;
+
+
+	public:
+		CCTMXMapInfo* m_pMapInfo;
+
+		typedef std::vector<CCTMXLayer*> TLayerArray;
+		TLayerArray m_arrayLayer;
+	};
 
 } //namespace guiex
 

@@ -29,8 +29,6 @@ set( ${target_name}_tilemap_SRCS
 	guitilemap.cpp
 	guitilemaplayer.h
 	guitilemaplayer.cpp	
-	guitilemapobjectlayer.h
-	guitilemapobjectlayer.cpp	
 	guitilemapparser.h
 	guitilemapparser.cpp	
 	)

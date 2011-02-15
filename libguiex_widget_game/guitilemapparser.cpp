@@ -132,9 +132,6 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CCTMXLayerInfo::CCTMXLayerInfo()
 		:ownTiles( true )
-		,minGID( 100000 )
-		,maxGID( 0 )
-		,tiles( NULL )
 		,opacity( 1.0f )
 	{
 
@@ -142,14 +139,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CCTMXLayerInfo::~CCTMXLayerInfo()
 	{
-		if( ownTiles && tiles )
-		{
-			free( tiles );
-			tiles = NULL;
-		}
 	}
-
-
 
 	//------------------------------------------------------------------------------
 	// CCTMXObjectGroup
@@ -161,14 +151,35 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CCTMXObjectGroup::~CCTMXObjectGroup()
 	{
-		for( size_t i=0; i<objects.size(); ++i )
-		{
-			delete objects[i];
-		}
-		objects.clear();
 	}
 	//------------------------------------------------------------------------------
-
+	const CCTMXObjectInfo* CCTMXObjectGroup::GetObjectInfo( const CGUIString& rObjectName ) const
+	{
+		for( std::vector<CCTMXObjectInfo>::const_iterator itor = objects.begin();
+			itor != objects.end();
+			++itor )
+		{
+			if((*itor).objectName == rObjectName )
+			{
+				return &(*itor);
+			}
+		}
+		return NULL;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIString* CCTMXObjectGroup::GetProperty( const CGUIString& rPropertyName ) const
+	{
+		std::map<CGUIString, CGUIString>::const_iterator itorFind = properties.find( rPropertyName );
+		if( itorFind == properties.end() )
+		{
+			return NULL;
+		}
+		else
+		{
+			return &itorFind->second;
+		}
+	}
+	//------------------------------------------------------------------------------
 
 
 	//------------------------------------------------------------------------------
@@ -204,29 +215,12 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CCTMXMapInfo::CCTMXMapInfo()
 		:parentGID( 0 )
-		,orientation( 0 ) // map orientation
+		,orientation( CCTMXOrientationOrtho ) // map orientation
 	{
 	}
 	//------------------------------------------------------------------------------
 	CCTMXMapInfo::~CCTMXMapInfo()
 	{
-		for( size_t i=0; i<tilesets.size(); ++i )
-		{
-			delete tilesets[i];
-		}
-		tilesets.clear();
-
-		for( size_t i=0; i<layers.size(); ++i )
-		{
-			delete layers[i];
-		}
-		layers.clear();
-
-		for( size_t i=0; i<objectGroups.size(); ++i )
-		{
-			delete objectGroups[i];
-		}
-		objectGroups.clear();
 	}
 	//------------------------------------------------------------------------------
 	int32 CCTMXMapInfo::InitWithTMXFile( const CGUIString& tmxFile )
@@ -408,30 +402,30 @@ namespace guiex
 			return 0;
 		}
 
-		CCTMXTilesetInfo *pTileset = new CCTMXTilesetInfo;
-		tilesets.push_back( pTileset );
+		tilesets.push_back( CCTMXTilesetInfo() );
+		CCTMXTilesetInfo& tileset = tilesets.back();
 
 		//name
 		CGUIString strName = pTilesetNode->Attribute("name");
-		pTileset->name = strName;
+		tileset.name = strName;
 
 		//first gid
 		CGUIString strGid = pTilesetNode->Attribute( "firstgid");
-		StringToValue( strGid, pTileset->firstGid );
+		StringToValue( strGid, tileset.firstGid );
 
 		//spacing
 		CGUIString strSpacing = pTilesetNode->Attribute( "spacing");
-		StringToValue( strSpacing, pTileset->spacing );
+		StringToValue( strSpacing, tileset.spacing );
 
 		//margin
 		CGUIString strMargin = pTilesetNode->Attribute( "margin");
-		StringToValue( strMargin, pTileset->margin );
+		StringToValue( strMargin, tileset.margin );
 
 		//size
 		CGUIString strWidth = pTilesetNode->Attribute( "tilewidth");
-		StringToValue( strWidth, pTileset->tileSize.m_uWidth );
+		StringToValue( strWidth, tileset.tileSize.m_uWidth );
 		CGUIString strHeight = pTilesetNode->Attribute( "tileheight");
-		StringToValue( strHeight, pTileset->tileSize.m_uHeight );
+		StringToValue( strHeight, tileset.tileSize.m_uHeight );
 
 		//parse child node
 		TiXmlElement* pChildNode = pTilesetNode->FirstChildElement();
@@ -471,10 +465,10 @@ namespace guiex
 			throw CGUIException("[CCTMXMapInfo::ParseNode_tile]: not find tileset when process tile node" );
 			return -1;
 		}
-		CCTMXTilesetInfo* info = tilesets.back();
+		CCTMXTilesetInfo& info = tilesets.back();
 
 		CGUIString strSource = pImageNode->Attribute("source");
-		info->sourceImage = strSource;
+		info.sourceImage = strSource;
 
 		return 0;
 	}
@@ -486,12 +480,12 @@ namespace guiex
 			throw CGUIException("[CCTMXMapInfo::ParseNode_tile]: not find tileset when process tile node" );
 			return -1;
 		}
-		CCTMXTilesetInfo* info = tilesets.back();
+		CCTMXTilesetInfo& info = tilesets.back();
 
 		uint32 uID = 0;
 		CGUIString strID = pTileNode->Attribute( "id" );
 		StringToValue( strID, uID );
-		uint32 uParentID = info->firstGid + uID;
+		uint32 uParentID = info.firstGid + uID;
 
 		std::map<CGUIString, CGUIString> mapTileProperties;
 
@@ -546,53 +540,53 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int32 CCTMXMapInfo::ParseNode_layer( TiXmlElement* pLayerNode )
 	{
-		CCTMXLayerInfo *layer = new CCTMXLayerInfo;
-		layers.push_back( layer );
+		layers.push_back( CCTMXLayerInfo() );
+		CCTMXLayerInfo &layer = layers.back();
 
 		//name
-		layer->name = pLayerNode->Attribute( "layer" );
+		layer.name = pLayerNode->Attribute( "layer" );
 
 		//size
 		CGUIString strWidth = pLayerNode->Attribute("width");
-		StringToValue( strWidth, layer->layerSize.m_uWidth );
+		StringToValue( strWidth, layer.layerSize.m_uWidth );
 		CGUIString strHeight = pLayerNode->Attribute("height");
-		StringToValue( strHeight, layer->layerSize.m_uHeight );
+		StringToValue( strHeight, layer.layerSize.m_uHeight );
 
 		//visible
 		CGUIString strVisible = pLayerNode->Attribute("visible");
-		StringToValue( strVisible, layer->visible );
+		StringToValue( strVisible, layer.visible );
 
 		//opacity
 		const char* szOpacity = pLayerNode->Attribute("opacity");
 		if( !szOpacity )
 		{
-			layer->opacity = 1.0f;
-			layer->visible = false;
+			layer.opacity = 1.0f;
+			layer.visible = false;
 		}
 		else
 		{
-			StringToValue( szOpacity, layer->opacity );
+			StringToValue( szOpacity, layer.opacity );
 			if( szOpacity == "0" )
 			{
-				layer->visible = false;
+				layer.visible = false;
 			}
 			else
 			{
-				layer->visible = true;
+				layer.visible = true;
 			}
 		}
 
 		//offset
 		const char* szX = pLayerNode->Attribute("x");
 		const char* szY = pLayerNode->Attribute("y");
-		layer->offset.x = layer->offset.y = 0;
+		layer.offset.x = layer.offset.y = 0;
 		if( szX )
 		{
-			StringToValue( szX, layer->offset.x );
+			StringToValue( szX, layer.offset.x );
 		}
 		if( szY )
 		{
-			StringToValue( szY, layer->offset.y );
+			StringToValue( szY, layer.offset.y );
 		}
 
 		//parse child node
@@ -608,7 +602,7 @@ namespace guiex
 			}
 			if( CGUIString("properties") == pChildNode->Value())
 			{
-				if( 0 != ParseNode_properties( pChildNode, layer->properties ) )
+				if( 0 != ParseNode_properties( pChildNode, layer.properties ) )
 				{
 					return -1;
 				}
@@ -645,7 +639,7 @@ namespace guiex
 				throw CGUIException("[CCTMXMapInfo::ParseNode_data]: not find layers when process data node" );
 				return -1;
 			}
-			CCTMXLayerInfo* layer = layers.back();
+			CCTMXLayerInfo& layer = layers.back();
 
 			unsigned char *buffer = NULL;
 			int len = 0;
@@ -656,10 +650,12 @@ namespace guiex
 				return -1;
 			}
 
+			uint32* pTiles = NULL;
+			int nTileNum = 0;
 			if( strCompression == "gzip" )
 			{
 				unsigned char *deflated;
-				InflateMemory(buffer, len, &deflated);
+				int outlength = InflateMemory(buffer, len, &deflated);
 				free( buffer );
 
 				if( !deflated )
@@ -668,12 +664,31 @@ namespace guiex
 					return -1;
 				}
 
-				layer->tiles = (unsigned int*) deflated;
+				pTiles = (unsigned int*) deflated;
+				nTileNum = outlength / 2;
 			} 
 			else
 			{
-				layer->tiles = (unsigned int*) buffer;
+				pTiles = (unsigned int*) buffer;
+				nTileNum = len / 2;
 			}
+			if( nTileNum <= 0 )
+			{
+				free( pTiles );
+				throw CGUIException("[CCTMXMapInfo::ParseNode_data]: invalid tile num");
+				return -1;
+			}
+			layer.tiles.resize( nTileNum, 0 );
+			for( int i=0; i<nTileNum; ++i )
+			{
+				// gid are stored in little endian.
+				// if host is big endian, then swap
+#if GUI_ENDIAN == GUI_ENDIAN_BIG
+				pTiles[i] = ((pTiles[i] & 0xFF) << 24) | ((pTiles[i] & 0xFF00) << 8) | ((pTiles[i] >> 8) & 0xFF00) | ((pTiles[i] >> 24) & 0xFF);
+#endif	//#if GUI_ENDIAN == GUI_ENDIAN_BIG
+				layer.tiles[i] = pTiles[i];
+			}
+			free( pTiles );
 		}
 
 		return 0;
@@ -681,17 +696,17 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int32 CCTMXMapInfo::ParseNode_objectgroup( TiXmlElement* pObjectGroupNode )
 	{
-		CCTMXObjectGroup *objectGroup = new CCTMXObjectGroup;
-		objectGroups.push_back( objectGroup );
+		objectGroups.push_back( CCTMXObjectGroup() );
+		CCTMXObjectGroup& objectGroup = objectGroups.back();
 
 		//name
-		objectGroup->groupName = pObjectGroupNode->Attribute( "name" );
+		objectGroup.groupName = pObjectGroupNode->Attribute( "name" );
 
 		//offset
 		CGUIString strX = pObjectGroupNode->Attribute( "x" );
-		StringToValue( strX, objectGroup->positionOffset.x );
+		StringToValue( strX, objectGroup.positionOffset.x );
 		CGUIString strY = pObjectGroupNode->Attribute( "y" );
-		StringToValue( strY, objectGroup->positionOffset.y );
+		StringToValue( strY, objectGroup.positionOffset.y );
 
 		//parse child node
 		TiXmlElement* pChildNode = pObjectGroupNode->FirstChildElement();
@@ -706,7 +721,7 @@ namespace guiex
 			}
 			else if( CGUIString("properties" ) == pChildNode->Value())
 			{
-				if( 0 != ParseNode_properties( pChildNode, objectGroup->properties ) )
+				if( 0 != ParseNode_properties( pChildNode, objectGroup.properties ) )
 				{
 					return -1;
 				}
@@ -730,36 +745,36 @@ namespace guiex
 			throw CGUIException("[CCTMXMapInfo::ParseNode_object]: not find object group when process objectgroup node" );
 			return -1;
 		}
-		CCTMXObjectGroup* objectGroup = objectGroups.back();
+		CCTMXObjectGroup& objectGroup = objectGroups.back();
 
-		CCTMXObjectInfo* pInfo = new CCTMXObjectInfo;
-		objectGroup->objects.push_back( pInfo );
+		objectGroup.objects.push_back( CCTMXObjectInfo() );
+		CCTMXObjectInfo& object = objectGroup.objects.back();
 
 		//name
-		pInfo->objectName = pObjectNode->Attribute("name");
+		object.objectName = pObjectNode->Attribute("name");
 
 		//type
 		const char* szType = pObjectNode->Attribute("type");
 		if( szType )
 		{
-			pInfo->objectType = szType;
+			object.objectType = szType;
 		}
 
 		//size
 		CGUIString strWidth = pObjectNode->Attribute( "width");
-		StringToValue( strWidth, pInfo->size.m_uWidth );
+		StringToValue( strWidth, object.size.m_uWidth );
 		CGUIString strHeight = pObjectNode->Attribute( "height");
-		StringToValue( strHeight, pInfo->size.m_uHeight );
+		StringToValue( strHeight, object.size.m_uHeight );
 
 		//position
 		CGUIString strX = pObjectNode->Attribute("x");
-		StringToValue( strX, pInfo->position.x );
-		pInfo->position.x += objectGroup->positionOffset.x;
+		StringToValue( strX, object.position.x );
+		object.position.x += objectGroup.positionOffset.x;
 		CGUIString strY = pObjectNode->Attribute("y");
-		StringToValue( strY, pInfo->position.y );
-		pInfo->position.y += objectGroup->positionOffset.y;
+		StringToValue( strY, object.position.y );
+		object.position.y += objectGroup.positionOffset.y;
 		// Correct y position. (Tiled uses Flipped, we uses Standard)
-		pInfo->position.y = (mapSize.m_uHeight * tileSize.m_uHeight) - pInfo->position.y - pInfo->size.m_uHeight;
+		object.position.y = (mapSize.m_uHeight * tileSize.m_uHeight) - object.position.y - object.size.m_uHeight;
 
 		//parse child node
 		TiXmlElement* pChildNode = pObjectNode->FirstChildElement();
@@ -767,7 +782,7 @@ namespace guiex
 		{
 			if( CGUIString("properties" ) == pChildNode->Value())
 			{
-				if( 0 != ParseNode_properties( pChildNode, pInfo->properties ) )
+				if( 0 != ParseNode_properties( pChildNode, object.properties ) )
 				{
 					return -1;
 				}

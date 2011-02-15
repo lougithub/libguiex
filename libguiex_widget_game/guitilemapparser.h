@@ -23,21 +23,16 @@
 //============================================================================//
 namespace guiex
 {
-	enum 
+	enum ETMXOrientation
 	{
-		TMXLayerAttribNone = 1 << 0,
-		TMXLayerAttribBase64 = 1 << 1,
-		TMXLayerAttribGzip = 1 << 2,
-	};
+		/** Orthogonal orientation */
+		CCTMXOrientationOrtho = 0,
 
-	enum 
-	{
-		TMXPropertyNone,
-		TMXPropertyMap,
-		TMXPropertyLayer,
-		TMXPropertyObjectGroup,
-		TMXPropertyObject,
-		TMXPropertyTile
+		/** Hexagonal orientation */
+		CCTMXOrientationHex,
+
+		/** Isometric orientation */
+		CCTMXOrientationIso,
 	};
 }
 class TiXmlElement;
@@ -63,12 +58,10 @@ namespace guiex
 	public:
 		CGUIString name;
 		CGUIIntSize layerSize;
-		uint32 *tiles;
+		std::vector<uint32> tiles;
 		bool visible;
 		real opacity;
 		bool ownTiles;
-		uint32 minGID;
-		uint32 maxGID;
 		std::map<CGUIString, CGUIString> properties;
 		CGUIIntVector2 offset;
 	};
@@ -89,10 +82,13 @@ namespace guiex
 		CCTMXObjectGroup();
 		~CCTMXObjectGroup();
 
+		const CCTMXObjectInfo* GetObjectInfo( const CGUIString& rObjectName ) const;
+		const CGUIString* GetProperty( const CGUIString& rPropertyName ) const;
+
 	public:
 		CGUIString groupName;
 		CGUIIntVector2 positionOffset;
-		std::vector<CCTMXObjectInfo*> objects;
+		std::vector<CCTMXObjectInfo> objects;
 		std::map<CGUIString,CGUIString>	properties;
 	};
 
@@ -159,16 +155,15 @@ namespace guiex
 
 		int32 ParseSourceFile( const CGUIString& tmxFile );
 
-
 	public:
 		uint32 parentGID;
 		CGUIString filename; // tmx filename
-		int32 orientation;	// map orientation
+		ETMXOrientation orientation; // map orientation
 		CGUIIntSize mapSize; // map width & height
 		CGUIIntSize tileSize; // tiles width & height
-		std::vector<CCTMXLayerInfo*> layers; // Layers
-		std::vector<CCTMXTilesetInfo*> tilesets; // tilesets
-		std::vector<CCTMXObjectGroup*> objectGroups; // ObjectGroups
+		std::vector<CCTMXLayerInfo> layers; // Layers
+		std::vector<CCTMXTilesetInfo> tilesets; // tilesets
+		std::vector<CCTMXObjectGroup> objectGroups; // ObjectGroups
 		std::map<CGUIString, CGUIString> properties; // properties
 		std::map<uint32, std::map<CGUIString, CGUIString> > tileProperties; // tile properties <gid, tile property>
 	};
