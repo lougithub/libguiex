@@ -209,7 +209,7 @@ namespace guiex
 		}
 		else
 		{
-			CGUIColor aColor(0xFFFFFFFF);
+			CGUIColor aColor(1.0f,1.0f,1.0f,1.0f);
 			aColor.SetAlpha(fAlpha);
 			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,aColor);
 		}

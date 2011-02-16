@@ -127,6 +127,8 @@ set( ${target_name}_resource_SRCS
 	guiasgenerator.h
 	guiparticle2dmanager.cpp
 	guiparticle2dmanager.h
+	guitilemapmanager.cpp
+	guitilemapmanager.h
 	)
 source_group( "resource" FILES ${${target_name}_resource_SRCS} )
 

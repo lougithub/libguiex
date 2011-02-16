@@ -38,11 +38,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIWgtParticle2D::~CGUIWgtParticle2D()
 	{
-		if( m_pParticle2DSystem )
-		{
-			CGUIParticle2DManager::Instance()->DeallocateResource( m_pParticle2DSystem );
-			m_pParticle2DSystem = NULL;
-		}
+		GUI_ASSERT( !m_pParticle2DSystem, "resource leak" );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtParticle2D::InitStaticParticle2DSystem()
@@ -51,6 +47,17 @@ namespace guiex
 
 		SetFocusable(false);
 		SetActivable(false);
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtParticle2D::OnDestroy()
+	{
+		if( m_pParticle2DSystem )
+		{
+			CGUIParticle2DManager::Instance()->DeallocateResource( m_pParticle2DSystem );
+			m_pParticle2DSystem = NULL;
+		}
+
+		CGUIWidget::OnDestroy();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtParticle2D::RenderSelf(IGUIInterfaceRender* pRender)

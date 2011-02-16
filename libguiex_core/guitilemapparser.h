@@ -42,18 +42,18 @@ class TiXmlElement;
 //============================================================================// 
 namespace guiex
 {
-	/* CCTMXLayerInfo contains the information about the layers like:
+	/* CGUITileMapLayerInfo contains the information about the layers like:
 	- Layer name
 	- Layer size
 	- Layer opacity at creation time (it can be modified at runtime)
 	- Whether the layer is visible
 	This information is obtained from the TMX file.
 	*/
-	class CCTMXLayerInfo
+	class CGUITileMapLayerInfo
 	{
 	public:
-		CCTMXLayerInfo();
-		~CCTMXLayerInfo();
+		CGUITileMapLayerInfo();
+		~CGUITileMapLayerInfo();
 
 	public:
 		CGUIString name;
@@ -66,7 +66,7 @@ namespace guiex
 		CGUIIntVector2 offset;
 	};
 
-	class CCTMXObjectInfo
+	class CGUITileMapObjectInfo
 	{
 	public:
 		CGUIString objectName;
@@ -76,23 +76,23 @@ namespace guiex
 		std::map<CGUIString,CGUIString>	properties;
 	};
 
-	class CCTMXObjectGroup
+	class CGUITileMapObjectGroup
 	{
 	public:
-		CCTMXObjectGroup();
-		~CCTMXObjectGroup();
+		CGUITileMapObjectGroup();
+		~CGUITileMapObjectGroup();
 
-		const CCTMXObjectInfo* GetObjectInfo( const CGUIString& rObjectName ) const;
+		const CGUITileMapObjectInfo* GetObjectInfo( const CGUIString& rObjectName ) const;
 		const CGUIString* GetProperty( const CGUIString& rPropertyName ) const;
 
 	public:
 		CGUIString groupName;
 		CGUIIntVector2 positionOffset;
-		std::vector<CCTMXObjectInfo> objects;
+		std::vector<CGUITileMapObjectInfo> objects;
 		std::map<CGUIString,CGUIString>	properties;
 	};
 
-	/* CCTMXTilesetInfo contains the information about the tilesets like:
+	/* CGUITileMapTilesetInfo contains the information about the tilesets like:
 	- Tileset name
 	- Tilset spacing
 	- Tileset margin
@@ -102,13 +102,13 @@ namespace guiex
 
 	This information is obtained from the TMX file. 
 	*/
-	class CCTMXTilesetInfo
+	class CGUITileMapTilesetInfo
 	{
 	public:
-		CCTMXTilesetInfo();
-		~CCTMXTilesetInfo();
+		CGUITileMapTilesetInfo();
+		~CGUITileMapTilesetInfo();
 
-		CGUIRect RectForGID( uint32 gid );
+		CGUIRect RectForGID( uint32 gid, const CGUIIntSize& rImageSize ) const;
 
 	public:
 		CGUIString name;
@@ -117,11 +117,10 @@ namespace guiex
 		uint32 spacing;
 		uint32 margin;
 		CGUIString sourceImage; // image containing the tiles
-		CGUIIntSize imageSize; // size in pixels of the image
 	};
 
 
-	/* CCTMXMapInfo contains the information about the map like:
+	/* CGUITileMapInfo contains the information about the map like:
 	- Map orientation (hexagonal, isometric or orthogonal)
 	- Tile size
 	- Map size
@@ -133,11 +132,11 @@ namespace guiex
 
 	This information is obtained from the TMX file.
 	*/
-	class CCTMXMapInfo
+	class CGUITileMapInfo
 	{	
 	public:	
-		CCTMXMapInfo();
-		~CCTMXMapInfo();
+		CGUITileMapInfo();
+		~CGUITileMapInfo();
 
 		int32 InitWithTMXFile( const CGUIString& tmxFile );
 
@@ -161,9 +160,9 @@ namespace guiex
 		ETMXOrientation orientation; // map orientation
 		CGUIIntSize mapSize; // map width & height
 		CGUIIntSize tileSize; // tiles width & height
-		std::vector<CCTMXLayerInfo> layers; // Layers
-		std::vector<CCTMXTilesetInfo> tilesets; // tilesets
-		std::vector<CCTMXObjectGroup> objectGroups; // ObjectGroups
+		std::vector<CGUITileMapLayerInfo> layers; // Layers
+		std::vector<CGUITileMapTilesetInfo> tilesets; // tilesets
+		std::vector<CGUITileMapObjectGroup> objectGroups; // ObjectGroups
 		std::map<CGUIString, CGUIString> properties; // properties
 		std::map<uint32, std::map<CGUIString, CGUIString> > tileProperties; // tile properties <gid, tile property>
 	};

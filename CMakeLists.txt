@@ -129,6 +129,7 @@ add_subdirectory( ${PROJECT_SOURCE_DIR}/test/canvaslayer_test projects/canvaslay
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/testsound projects/testsound)
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/testbox2d_2 projects/testbox2d_2)
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/testparticle2d projects/testparticle2d)
+add_subdirectory( ${PROJECT_SOURCE_DIR}/test/testtilemap projects/testtilemap)
 
 #tools
 add_subdirectory( ${PROJECT_SOURCE_DIR}/tools/libguiex_editor_viewer projects/libguiex_editor_viewer )

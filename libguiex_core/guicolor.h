@@ -45,11 +45,8 @@ namespace guiex
 
 	public:
 		CGUIColor(const CGUIColor &rColor);
-		CGUIColor(
-			real red = 1.0f,
-			real green = 1.0f,
-			real blue = 1.0f,
-			real alpha = 1.0f );
+		CGUIColor( );
+		CGUIColor( real red, real green, real blue, real alpha );
 
 		GUIRGBA GetAsRGBA(void) const;
 		GUIARGB GetAsARGB(void) const;

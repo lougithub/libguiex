@@ -12,6 +12,7 @@
 // include
 //============================================================================//
 #include "guibase.h"
+#include "guiresource.h"
 #include <vector>
 #include <map>
 
@@ -20,9 +21,9 @@
 //============================================================================//
 namespace guiex
 {
-	class CCTMXLayer;
-	class CCTMXMapInfo;
-	class CCTMXObjectGroup;
+	class CGUITileMapLayer;
+	class CGUITileMapInfo;
+	class CGUITileMapObjectGroup;
 
 	class IGUIInterfaceRender;
 	class CGUIMatrix4;
@@ -33,28 +34,39 @@ namespace guiex
 //============================================================================// 
 namespace guiex
 {
-	class CCTMXTiledMap
+	class CGUITileMap : public CGUIResource
 	{
 	public:
-		CCTMXTiledMap();
-		~CCTMXTiledMap();
+		virtual ~CGUITileMap();
 
-		void Reset();
+		int32 LoadValueFromProperty( const class CGUIProperty& rProperty );
 
-		int32 ParseTMXFile( const CGUIString& rFileName );
 
-		CCTMXLayer* GetLayer( const CGUIString& rLayerName );
+		CGUITileMapLayer* GetLayer( const CGUIString& rLayerName );
 		const CGUIString* GetProperty( const CGUIString& rPropertyName ) const;
 		const std::map<CGUIString, CGUIString>* GetTileProperties( uint32 gid );
-		const CCTMXObjectGroup* GetObjectGroup( const CGUIString& rGroupName ) const;
+		const CGUITileMapObjectGroup* GetObjectGroup( const CGUIString& rGroupName ) const;
 
 		void Render( IGUIInterfaceRender* pRender, const CGUIMatrix4& rWorldMatrix );
 
-	public:
-		CCTMXMapInfo* m_pMapInfo;
+	protected:
+		void Reset() const;
+		int32 ParseTMXFile( const CGUIString& rFileName ) const;
 
-		typedef std::vector<CCTMXLayer*> TLayerArray;
-		TLayerArray m_arrayLayer;
+	protected:
+		friend class CGUITileMapManager;
+		CGUITileMap( const CGUIString& rName, const CGUIString& rSceneName );
+		virtual int32 DoLoad() const;
+		virtual void DoUnload();
+
+	public:
+		mutable CGUITileMapInfo* m_pMapInfo;
+
+		typedef std::vector<CGUITileMapLayer*> TLayerArray;
+		mutable TLayerArray m_arrayLayer;
+
+		CGUIString m_strFullWorkingDir;
+		CGUIString m_strConfigFile;
 	};
 
 } //namespace guiex

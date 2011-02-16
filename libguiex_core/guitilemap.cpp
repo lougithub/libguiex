@@ -9,6 +9,8 @@
 //============================================================================//
 #include "guitilemap.h"
 #include "guitilemaplayer.h"
+#include "guiproperty.h"
+#include "guiscenemanager.h"
 #include "guiexception.h"
 
 
@@ -19,18 +21,19 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	CCTMXTiledMap::CCTMXTiledMap()
-		:m_pMapInfo( NULL )
+	CGUITileMap::CGUITileMap( const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIResource( rName, rSceneName, "TILEMAP")
+		,m_pMapInfo( NULL )
 	{
 
 	}
 	//------------------------------------------------------------------------------
-	CCTMXTiledMap::~CCTMXTiledMap()
+	CGUITileMap::~CGUITileMap()
 	{
 		Reset();
 	}
 	//------------------------------------------------------------------------------
-	void CCTMXTiledMap::Reset()
+	void CGUITileMap::Reset() const
 	{
 		//clear layer
 		for( uint32 i=0; i<m_arrayLayer.size(); ++i )
@@ -47,27 +50,57 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	int32 CCTMXTiledMap::ParseTMXFile( const CGUIString& rFileName )
+	int32 CGUITileMap::LoadValueFromProperty( const class CGUIProperty& rProperty )
+	{
+		/*
+		<property name="tilemap_0" type="CGUITileMapDefine" >
+			<property name="working_dir" type="CGUIString" value="tilemap/"/>
+			<property name="config_file" type="CGUIString" value="tilemap_0.tmx"/>
+		</property>
+		*/
+		const CGUIProperty* pPpt_WorkingDir = rProperty.GetPropertyChecked("working_dir", "CGUIString");
+		m_strFullWorkingDir = CGUISceneManager::Instance()->GetScenePath( m_strSceneName ) + pPpt_WorkingDir->GetValue();
+		const CGUIProperty* pPpt_ConfigFile = rProperty.GetPropertyChecked("config_file", "CGUIString");
+		m_strConfigFile = pPpt_ConfigFile->GetValue();
+
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUITileMap::DoLoad() const
+	{
+		if( 0 != ParseTMXFile(m_strFullWorkingDir + m_strConfigFile) )
+		{
+			return -1;
+		}
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	void CGUITileMap::DoUnload()
+	{
+		Reset();
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUITileMap::ParseTMXFile( const CGUIString& rFileName ) const
 	{
 		Reset();
 
-		m_pMapInfo = new CCTMXMapInfo;
+		m_pMapInfo = new CGUITileMapInfo;
 		if( 0 != m_pMapInfo->InitWithTMXFile( rFileName ) )
 		{
-			throw CGUIException("[CCTMXTiledMap::ParseTMXFile]: failed parse tmx file %s", rFileName.c_str() );
+			throw CGUIException("[CGUITileMap::ParseTMXFile]: failed parse tmx file %s", rFileName.c_str() );
 			return -1;
 		}
 
 		for( uint32 i=0; i<m_pMapInfo->layers.size(); ++i ) 
 		{
-			CCTMXLayer* pLayer = new CCTMXLayer( this, i );
+			CGUITileMapLayer* pLayer = new CGUITileMapLayer( this, i );
 			m_arrayLayer.push_back( pLayer );
 		}		
 
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	CCTMXLayer* CCTMXTiledMap::GetLayer( const CGUIString& rLayerName )
+	CGUITileMapLayer* CGUITileMap::GetLayer( const CGUIString& rLayerName )
 	{
 		for( TLayerArray::iterator itor = m_arrayLayer.begin();
 			itor != m_arrayLayer.end();
@@ -82,9 +115,9 @@ namespace guiex
 	}
 
 	//------------------------------------------------------------------------------
-	const CCTMXObjectGroup* CCTMXTiledMap::GetObjectGroup( const CGUIString& rGroupName ) const
+	const CGUITileMapObjectGroup* CGUITileMap::GetObjectGroup( const CGUIString& rGroupName ) const
 	{
-		for( std::vector<CCTMXObjectGroup>::const_iterator itor = m_pMapInfo->objectGroups.begin();
+		for( std::vector<CGUITileMapObjectGroup>::const_iterator itor = m_pMapInfo->objectGroups.begin();
 			itor != m_pMapInfo->objectGroups.end();
 			++itor ) 
 		{
@@ -98,7 +131,7 @@ namespace guiex
 		return NULL;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIString* CCTMXTiledMap::GetProperty( const CGUIString& rPropertyName ) const
+	const CGUIString* CGUITileMap::GetProperty( const CGUIString& rPropertyName ) const
 	{
 		std::map<CGUIString, CGUIString>::const_iterator itorFind = m_pMapInfo->properties.find( rPropertyName );
 		if( itorFind == m_pMapInfo->properties.end() )
@@ -111,7 +144,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	const std::map<CGUIString, CGUIString>* CCTMXTiledMap::GetTileProperties( uint32 gid )
+	const std::map<CGUIString, CGUIString>* CGUITileMap::GetTileProperties( uint32 gid )
 	{
 		std::map<uint32, std::map<CGUIString, CGUIString> >::const_iterator itorFind = m_pMapInfo->tileProperties.find( gid );
 		if( itorFind == m_pMapInfo->tileProperties.end() )
@@ -124,7 +157,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CCTMXTiledMap::Render( IGUIInterfaceRender* pRender, const CGUIMatrix4& rWorldMatrix )
+	void CGUITileMap::Render( IGUIInterfaceRender* pRender, const CGUIMatrix4& rWorldMatrix )
 	{
 		for( TLayerArray::iterator itor = m_arrayLayer.begin();
 			itor != m_arrayLayer.end();

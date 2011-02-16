@@ -29,6 +29,7 @@ CResourceList::~CResourceList()
 	ResetAsList();
 	ResetParticle2DList();
 	ResetSoundList();
+	ResetTileMapList();
 }
 //------------------------------------------------------------------------------
 CResourceList* CResourceList::Instance()
@@ -43,6 +44,7 @@ void CResourceList::UpdateResourceList()
 	UpdateAsList();
 	UpdateParticle2DList();
 	UpdateSoundList();
+	UpdateTileMapList();
 }
 //------------------------------------------------------------------------------
 void CResourceList::ResetImageList()
@@ -167,6 +169,21 @@ void CResourceList::ResetAsList()
 	m_arrayAsArray.Clear();
 }
 //------------------------------------------------------------------------------
+void CResourceList::UpdateTileMapList()
+{
+	ResetTileMapList();
+
+	m_arrayTileMapArray.Add(_T(""));
+	const std::map<CGUIString, CGUITileMapData*>& rMapTileMapDataList = CGUITileMapManager::Instance()->GetRegisterResourceMap();
+	for( std::map<CGUIString,CGUITileMapData*>::const_iterator itor = rMapTileMapDataList.begin();
+		itor != rMapTileMapDataList.end();
+		++itor)
+	{
+		m_arrayTileMapArray.Add(Gui2wxString( itor->first));
+	}
+	m_arrayTileMapArray.Sort();
+}
+//------------------------------------------------------------------------------
 void CResourceList::UpdateParticle2DList()
 {
 	ResetParticle2DList();
@@ -180,6 +197,11 @@ void CResourceList::UpdateParticle2DList()
 		m_arrayParticle2DArray.Add(Gui2wxString( itor->first));
 	}
 	m_arrayParticle2DArray.Sort();
+}
+//------------------------------------------------------------------------------
+void CResourceList::ResetTileMapList()
+{
+	m_arrayTileMapArray.Clear();
 }
 //------------------------------------------------------------------------------
 void CResourceList::ResetParticle2DList()
@@ -230,6 +252,11 @@ const wxArrayString& CResourceList::GetImageList()
 const wxArrayString& CResourceList::GetAsList()
 {
 	return m_arrayAsArray;
+}
+//------------------------------------------------------------------------------
+const wxArrayString& CResourceList::GetTileMapList()
+{
+	return m_arrayTileMapArray;
 }
 //------------------------------------------------------------------------------
 const wxArrayString& CResourceList::GetParticle2DList()

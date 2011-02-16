@@ -19,7 +19,7 @@
 //============================================================================//
 namespace guiex
 {
-	class CCTMXTiledMap;
+	class CGUITileMap;
 	class CGUITexture;
 	class IGUIInterfaceRender;
 	class CGUIMatrix4;
@@ -30,11 +30,11 @@ namespace guiex
 //============================================================================// 
 namespace guiex
 {
-	class CCTMXLayer
+	class CGUITileMapLayer
 	{
 	public:
-		CCTMXLayer( CCTMXTiledMap* pOwnerMap, uint32 nLayerIndex );
-		~CCTMXLayer();
+		CGUITileMapLayer( const CGUITileMap* pOwnerMap, uint32 nLayerIndex );
+		~CGUITileMapLayer();
 
 		const CGUIString& GetLayerName() const;
 
@@ -47,7 +47,6 @@ namespace guiex
 		real GetOpacity() const;
 
 		const std::vector<uint32>& GetTileGIDs() const;
-		std::vector<uint32>& GetTileGIDs();
 
 		const std::map<CGUIString, CGUIString>& GetProperties() const;
 
@@ -64,7 +63,7 @@ namespace guiex
 		};
 
 	protected:
-		CCTMXTilesetInfo* GetTilesetForLayer();
+		CGUITileMapTilesetInfo* GetTilesetForLayer();
 		int32 InitLayer();
 		int32 AppendTileForGID( uint32 gid, const CGUIIntVector2& pos );
 		CGUIVector2 PositionAt( const CGUIIntVector2& pos );
@@ -74,9 +73,9 @@ namespace guiex
 
 	protected:
 		uint32 m_nLayerIndex;
-		CCTMXTiledMap* m_pOwnerMap;
-		CCTMXLayerInfo* m_pLayerInfo;
-		CCTMXTilesetInfo* m_pTileSetInfo;
+		const CGUITileMap* m_pOwnerMap;
+		const CGUITileMapLayerInfo* m_pLayerInfo;
+		const CGUITileMapTilesetInfo* m_pTileSetInfo;
 
 		CGUISize m_aLayerSize;
 		CGUIVector2 m_aLayerOffset;

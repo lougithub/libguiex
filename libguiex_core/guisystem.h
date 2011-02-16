@@ -53,6 +53,7 @@ namespace guiex
 	class CGUICameraManager;
 	class CGUICanvasLayerManager;
 	class CGUIParticle2DManager;
+	class CGUITileMapManager;
 
 	extern CGUISystem* GSystem;
 }
@@ -179,6 +180,7 @@ namespace guiex
 		CGUIAsManager* GetAsManager();
 		CGUIFontManager* GetFontManager();
 		CGUIParticle2DManager* GetParticle2DManager();
+		CGUITileMapManager* GetTileMapManager();
 		CGUITextureManager* GetTextureManager();
 		CGUIInterfaceManager* GetInterfaceManager();
 		CGUIMouseCursor* GetMouseCursor();
@@ -301,6 +303,7 @@ namespace guiex
 		CGUIAsManager *m_pAsManager;
 		CGUIFontManager *m_pFontManager;
 		CGUIParticle2DManager* m_pParticle2DManager;
+		CGUITileMapManager* m_pTileMapManager;
 		CGUITextureManager *m_pTextureManager;
 		CGUIInterfaceManager* m_pInterfaceManager;
 		CGUIMouseCursor* m_pMouseCursor;
@@ -355,6 +358,11 @@ namespace guiex
 	inline CGUIParticle2DManager* CGUISystem::GetParticle2DManager()
 	{
 		return m_pParticle2DManager;
+	}
+
+	inline CGUITileMapManager* CGUISystem::GetTileMapManager()
+	{
+		return m_pTileMapManager;
 	}
 
 	inline CGUITextureManager* CGUISystem::GetTextureManager()

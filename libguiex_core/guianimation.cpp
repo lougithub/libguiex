@@ -139,7 +139,7 @@ namespace guiex
 	{
 		Load();
 
-		CGUIColor aColor(0xFFFFFFFF);
+		CGUIColor aColor(1.0f,1.0f,1.0f,1.0f);
 		aColor.SetAlpha(fAlpha);
 		pRender->DrawTile( rWorldMatrix,
 			rDestRect, 

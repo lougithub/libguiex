@@ -11,10 +11,9 @@
 //============================================================================//
 // include
 //============================================================================// 
-#	include "guiwgtparticle2d.h"
-
+#include "guiwgtparticle2d.h"
+#include "guiwgttilemap.h"
 
 #include "guiwgtgeneratewidgets_game.h"
-
 
 #endif //__GUI_WIDGET_GAME_20110126_H__

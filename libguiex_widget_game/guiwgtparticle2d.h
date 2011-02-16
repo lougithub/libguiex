@@ -39,6 +39,7 @@ namespace guiex
 
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 		virtual void OnUpdate( real fDeltaTime );
+		virtual void OnDestroy();
 
 		void SetParticle2D( const CGUIString& rParticle2DName );
 		void SetParticle2D( class CGUIParticle2DSystem* pParticle2D );

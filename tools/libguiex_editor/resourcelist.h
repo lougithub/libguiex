@@ -37,6 +37,7 @@ public:
 	const wxArrayString& GetAsList();
 	const wxArrayString& GetParticle2DList();
 	const wxArrayString& GetSoundList();
+	const wxArrayString& GetTileMapList();
 
 	const wxBitmap* GetImageThumbnail( const wxString& rImageName );
 	const wxBitmap* GetOriginalImageThumbnail( const wxString& rImageName );
@@ -54,6 +55,10 @@ protected:
 	void UpdateParticle2DList();
 	void ResetParticle2DList();
 
+	//update tilemap used in the system
+	void UpdateTileMapList();
+	void ResetTileMapList();
+
 	//update sound used in the system
 	void UpdateSoundList();
 	void ResetSoundList();
@@ -68,6 +73,7 @@ private:
 	std::map<wxString, wxBitmap*> m_mapOriginalImageThumbnails;
 	wxArrayString m_arrayAsArray;
 	wxArrayString m_arrayParticle2DArray;
+	wxArrayString m_arrayTileMapArray;
 	wxArrayString m_arraySoundArray;
 };
 

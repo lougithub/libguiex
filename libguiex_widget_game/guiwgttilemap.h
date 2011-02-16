@@ -20,7 +20,7 @@
 //============================================================================// 
 namespace guiex
 {
-	class CCTMXTiledMap;
+	class CGUITileMap;
 }
 
 //============================================================================//
@@ -49,9 +49,13 @@ namespace guiex
 		void InitTileMap();
 
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
+		virtual void OnDestroy();
+
+		void SetTileMap( const CGUIString& rTileMapName );
+		void SetTileMap( class CGUITileMap* pTileMap );
 
 	protected:
-		CCTMXTiledMap* m_pTiledMap;
+		CGUITileMap* m_pTileMap;
 
 	protected:
 		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtTileMap);

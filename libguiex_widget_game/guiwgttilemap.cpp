@@ -12,10 +12,9 @@
 #include "guiwgttilemap.h"
 #include <libguiex_core/guiinterfacerender.h>
 #include <libguiex_core/guiexception.h>
-#include <libguiex_core/guiimage.h>
 #include <libguiex_core/guipropertymanager.h>
-#include <libguiex_core/guiimagemanager.h>
-#include "guitilemap.h"
+#include <libguiex_core/guitilemap.h>
+#include <libguiex_core/guitilemapmanager.h>
 
 
 //============================================================================//
@@ -40,6 +39,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIWgtTileMap::~CGUIWgtTileMap()
 	{
+		GUI_ASSERT( !m_pTileMap, "resource leak" );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtTileMap::InitTileMap()
@@ -47,25 +47,95 @@ namespace guiex
 		SetFocusable(false);
 		SetActivable(false);
 
-		m_pTiledMap = NULL;
+		m_pTileMap = NULL;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtTileMap::OnDestroy()
+	{
+		if( m_pTileMap )
+		{
+			CGUITileMapManager::Instance()->DeallocateResource( m_pTileMap );
+			m_pTileMap = NULL;
+		}
+
+		CGUIWidget::OnDestroy();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtTileMap::RenderSelf(IGUIInterfaceRender* pRender)
 	{
-		if( m_pTiledMap )
+		if( m_pTileMap )
 		{
-			m_pTiledMap->Render( pRender, getFullTransform() );
+			m_pTileMap->Render( pRender, getFullTransform() );
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtTileMap::SetTileMap( const CGUIString& rTileMapName )
+	{
+		if( rTileMapName.empty() )
+		{
+			//clear
+			SetTileMap( NULL );
+		}
+		else
+		{
+			CGUITileMap* pTileMap = CGUITileMapManager::Instance()->AllocateResource( rTileMapName );
+			SetTileMap( pTileMap );
+			CGUITileMapManager::Instance()->DeallocateResource( pTileMap );
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtTileMap::SetTileMap( class CGUITileMap* pTileMap )
+	{
+		if( m_pTileMap == pTileMap )
+		{
+			return;
+		}
+
+		if( m_pTileMap )
+		{
+			CGUITileMapManager::Instance()->DeallocateResource( m_pTileMap );
+			m_pTileMap = NULL;
+		}
+
+		if( pTileMap )
+		{
+			m_pTileMap = pTileMap;
+			m_pTileMap->RefRetain();
 		}
 	}
 	//------------------------------------------------------------------------------
 	int32 CGUIWgtTileMap::GenerateProperty( CGUIProperty& rProperty )
 	{
-		return CGUIWidget::GenerateProperty( rProperty );
+		if( rProperty.GetType() == ePropertyType_TileMap && rProperty.GetName() == "tilemap" )
+		{
+			if( m_pTileMap )
+			{
+				rProperty.SetValue( m_pTileMap->GetName() );
+			}
+			else
+			{
+				rProperty.SetValue( "" );
+			}
+		}
+		else
+		{
+			return CGUIWidget::GenerateProperty( rProperty );
+		}
+		return 0;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtTileMap::ProcessProperty( const CGUIProperty& rProperty)
 	{
-		CGUIWidget::ProcessProperty( rProperty );
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//property for text
+		if( rProperty.GetType() == ePropertyType_TileMap && rProperty.GetName() == "tilemap")
+		{
+			SetTileMap( rProperty.GetValue());
+		}
+		else
+		{
+			CGUIWidget::ProcessProperty( rProperty );
+		}
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

@@ -49,6 +49,7 @@ namespace guiex
 		RegisterPropertyType( ePropertyType_WidgetPosition, "CGUIWidgetPosition" );		
 		RegisterPropertyType( ePropertyType_WidgetSize, "CGUIWidgetSize" );		
 		RegisterPropertyType( ePropertyType_Particle2D, "CGUIParticle2D" );		
+		RegisterPropertyType( ePropertyType_TileMap, "CGUITileMap" );		
 		
 
 		RegisterPropertyType( ePropertyType_TextAlignmentHorz, "ETextAlignmentHorz" );
@@ -85,6 +86,7 @@ namespace guiex
 		RegisterPropertyType( ePropertyType_AsDefine, "CGUIAsDefine" );
 		RegisterPropertyType( ePropertyType_WidgetDefine, "CGUIWidgetDefine" );
 		RegisterPropertyType( ePropertyType_Particle2DDefine, "CGUIParticle2DDefine" );
+		RegisterPropertyType( ePropertyType_TileMapDefine, "CGUITileMapDefine" );
 		
 		//scene related property
 		RegisterPropertyType( ePropertyType_Scene_Title, "Title" );

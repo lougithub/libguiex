@@ -68,7 +68,7 @@ namespace guiex
 		const CGUIColor& rColor
 		)
 	{
-		DrawTile( rWorldMatrix, rDestRect, z, pTex, rTextureRect, eImageOrientation, rColor );
+		DrawTile( rWorldMatrix, rDestRect, z, pTex, rTextureRect, eImageOrientation, rColor,rColor,rColor,rColor );
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

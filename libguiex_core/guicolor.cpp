@@ -18,11 +18,11 @@
 namespace guiex
 {
 	const CGUIColor CGUIColor::ZERO = CGUIColor(0.0,0.0,0.0,0.0);
-	const CGUIColor CGUIColor::Black = CGUIColor(0.0,0.0,0.0);
-	const CGUIColor CGUIColor::White = CGUIColor(1.0,1.0,1.0);
-	const CGUIColor CGUIColor::Red = CGUIColor(1.0,0.0,0.0);
-	const CGUIColor CGUIColor::Green = CGUIColor(0.0,1.0,0.0);
-	const CGUIColor CGUIColor::Blue = CGUIColor(0.0,0.0,1.0);
+	const CGUIColor CGUIColor::Black = CGUIColor(0.0,0.0,0.0,1.0f);
+	const CGUIColor CGUIColor::White = CGUIColor(1.0,1.0,1.0,1.0f);
+	const CGUIColor CGUIColor::Red = CGUIColor(1.0,0.0,0.0,1.0f);
+	const CGUIColor CGUIColor::Green = CGUIColor(0.0,1.0,0.0,1.0f);
+	const CGUIColor CGUIColor::Blue = CGUIColor(0.0,0.0,1.0,1.0f);
 
 	//------------------------------------------------------------------------------ 
 	/** 
@@ -36,6 +36,14 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------ 
+	CGUIColor::CGUIColor( )
+		:r(1.0f)
+		,g(1.0f)
+		,b(1.0f)
+		,a(1.0f)
+	{
+	}
+	//------------------------------------------------------------------------------ 
 	/** 
 	* @brief constructor
 	* @param fRed red factor of color, from 0.0 to 1.0
@@ -43,11 +51,7 @@ namespace guiex
 	* @param fBlue blue factor of color, from 0.0 to 1.0
 	* @param fAlpha alpha factor of color, from 0.0 to 1.0, default is 1.0f
 	*/
-	CGUIColor::CGUIColor(
-		real red /*= 1.0f*/,
-		real green /*= 1.0f*/,
-		real blue /*= 1.0f*/,
-		real alpha /*= 1.0f*/ )
+	CGUIColor::CGUIColor( real red, real green, real blue, real alpha )
 		:r(red), g(green), b(blue), a(alpha)
 	{
 	}

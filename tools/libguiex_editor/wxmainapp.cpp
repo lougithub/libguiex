@@ -66,6 +66,13 @@ bool WxMainApp::OnInit()
 		return false;
 	}
 
+	//load game config file
+	if( 0 != CPropertyConfigMgr::Instance()->ReadPropertyConfig(GetBaseDir() + "../editorconfig/libguiex_editor_config_game.xml"))
+	{
+		wxMessageBox(_T("failed to read property config file <libguiex_editor_config_game.xml>!"), _T("error"));
+		return false;
+	}
+
 	wxToolTip::Enable(true);
 	wxToolTip::SetDelay(1000);
 

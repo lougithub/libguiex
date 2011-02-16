@@ -5,17 +5,12 @@
 * @date 2011-01-26
 */
 
-
-
 //============================================================================//
 // include
 //============================================================================// 
 #include <vector>
 #include <libguiex_core/guiwidgetgenerator.h>
 #include "guiwgt_game.h"
-
-
-
 
 
 //============================================================================//
@@ -32,6 +27,7 @@ namespace guiex
 	aList.push_back( widget::widget##_Generator::GenerateSelf());
 
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtParticle2D);
+		GUI_ADD_WIDGET_GENERATOR(CGUIWgtTileMap);
 
 #undef GUI_ADD_WIDGET_GENERATOR
 

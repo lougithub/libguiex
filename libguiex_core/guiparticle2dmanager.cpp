@@ -105,7 +105,7 @@ namespace guiex
 		if( !pParticle2DData )
 		{
 			throw CGUIException( 
-				"[CGUISoundDataManager::AllocateResource]: failed to get sound by name <%s>",
+				"[CGUIParticle2DManager::AllocateResource]: failed to get sound by name <%s>",
 				rResName.c_str());
 			return NULL;
 		}
