@@ -46,7 +46,6 @@
 #	include "guiwgteditbox.h"
 #	include "guiwgtmultieditbox.h"
 #	include "guiwgtstaticimage.h"
-#	include "guiwgtparticle2d.h"
 #	include "guiwgtstatictext.h"
 #	include "guiwgtpanel.h"
 #	include "guiwgtbutton.h"
