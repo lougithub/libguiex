@@ -15,7 +15,6 @@
 		<property name="index" type="int16" value="2"/>
 	</property>
 
-
 	<property name="color_white" type="CGUIImageDefine">
 		<property name="color" type="CGUIColor" value="255,255,255,255"/>
 		<property name="size" type="CGUISize" value="1,1"/>

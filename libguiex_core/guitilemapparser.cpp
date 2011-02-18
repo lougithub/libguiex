@@ -666,7 +666,7 @@ namespace guiex
 
 			uint32* pTiles = NULL;
 			int nTileNum = 0;
-			if( strCompression == "gzip" )
+			if( strCompression == "gzip" || strCompression == "zlib" )
 			{
 				unsigned char *deflated;
 				int outlength = InflateMemory(buffer, len, &deflated);
@@ -678,13 +678,13 @@ namespace guiex
 					return -1;
 				}
 
-				pTiles = (unsigned int*) deflated;
-				nTileNum = outlength / 2;
+				pTiles = (uint32*) deflated;
+				nTileNum = outlength / 4;
 			} 
 			else
 			{
-				pTiles = (unsigned int*) buffer;
-				nTileNum = len / 2;
+				pTiles = (uint32*) buffer;
+				nTileNum = len / 4;
 			}
 			if( nTileNum <= 0 )
 			{
