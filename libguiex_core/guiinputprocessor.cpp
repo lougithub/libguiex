@@ -9,21 +9,17 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core/guiinputprocessor.h>
-#include <libguiex_core/guisystem.h>
-#include <libguiex_core/guiwidget.h>
-#include <libguiex_core/guiwidgetfactory.h>
-
-#include <libguiex_core/guimousecursor.h>
-
-
-#include <libguiex_core/guievent.h>
-
-#include <libguiex_core/guiexception.h>
-
-#include <libguiex_core/guiinterfacemanager.h>
-#include <libguiex_core/guiinterfacemouse.h>
-#include <libguiex_core/guiinterfacekeyboard.h>
+#include "guiinputprocessor.h"
+#include "guisystem.h"
+#include "guiwidget.h"
+#include "guiwidgetfactory.h"
+#include "guimousecursor.h"
+#include "guievent.h"
+#include "guiexception.h"
+#include "guiinterfacemanager.h"
+#include "guiinterfacemouse.h"
+#include "guiinterfacekeyboard.h"
+#include "sigslot.h"
 
 //------------------------------------------------------------------------------
 
@@ -39,13 +35,19 @@ namespace guiex
 	/**
 	* @brief used to track mouse operation
 	*/
-	class CMouseTracker
+	class CMouseTracker : public sigslot::has_slots<>
 	{
 	public:
 		/// constructor
 		CMouseTracker()
+			:m_pWidgetUnderMouse( NULL )
 		{
-			Reset();
+			for( int i = 0; i< _MOUSE_BUTTON_MAX_; ++i )
+			{
+				m_aButtonTrack[i].m_nClickCount = 1;
+				m_aButtonTrack[i].m_pTargetWidget = NULL;
+				m_aButtonTrack[i].m_uLastDownEvent = eEVENT_MOUSE_DOWN;
+			}
 		}
 
 		/// reset the tracker
@@ -57,20 +59,119 @@ namespace guiex
 				m_aButtonTrack[i].m_pTargetWidget = NULL;
 				m_aButtonTrack[i].m_uLastDownEvent = eEVENT_MOUSE_DOWN;
 			}
-			m_pWidgetUnderMouse = NULL;
+			SetWidgetUnderMouse( NULL );
 		}
 
-	public:
+		void OnWidgetDestroyed( CGUIWidget* pWidget )
+		{
+			if( m_pWidgetUnderMouse == pWidget )
+			{
+				m_pWidgetUnderMouse = NULL;
+			}
+			for( uint32 i = 0; i< _MOUSE_BUTTON_MAX_; ++i )
+			{
+				if( m_aButtonTrack[i].m_pTargetWidget == pWidget )
+				{
+					SetTimer( i,0.0f );
+					SetClickCount( i,1 );
+					SetLastDownEvent( i,eEVENT_MOUSE_DOWN );
+					SetTargetWidget( i,NULL );
+				}
+			}
+		}
+
+		void SetWidgetUnderMouse( CGUIWidget* pWidget )
+		{
+			if( m_pWidgetUnderMouse == pWidget )
+			{
+				return;
+			}
+			if( m_pWidgetUnderMouse )
+			{
+				m_pWidgetUnderMouse->GetOnWidgetDestroyedSignal().disconnect( this );
+			}
+			m_pWidgetUnderMouse = pWidget;
+			if( m_pWidgetUnderMouse )
+			{
+				m_pWidgetUnderMouse->GetOnWidgetDestroyedSignal().connect( this, &CMouseTracker::OnWidgetDestroyed );
+			}
+		}
+
+		CGUIWidget* GetWidgetUnderMouse()
+		{
+			return m_pWidgetUnderMouse;
+		}
+
+		real GetTimer( uint32 uButtonIdx )
+		{
+			GUI_ASSERT( uButtonIdx < _MOUSE_BUTTON_MAX_, "invalid button idx" );
+			return m_aButtonTrack[uButtonIdx].m_fTimer;
+		}
+
+		void SetTimer( uint32 uButtonIdx, real fTimer )
+		{
+			GUI_ASSERT( uButtonIdx < _MOUSE_BUTTON_MAX_, "invalid button idx" );
+			m_aButtonTrack[uButtonIdx].m_fTimer = fTimer;
+		}
+
+		uint32 GetClickCount( uint32 uButtonIdx )
+		{
+			GUI_ASSERT( uButtonIdx < _MOUSE_BUTTON_MAX_, "invalid button idx" );
+			return m_aButtonTrack[uButtonIdx].m_nClickCount;
+		}
+
+		void SetClickCount( uint32 uButtonIdx, uint32 nClickCount )
+		{
+			GUI_ASSERT( uButtonIdx < _MOUSE_BUTTON_MAX_, "invalid button idx" );
+			m_aButtonTrack[uButtonIdx].m_nClickCount = nClickCount;
+		}
+
+		uint32 GetLastDownEvent( uint32 uButtonIdx )
+		{
+			GUI_ASSERT( uButtonIdx < _MOUSE_BUTTON_MAX_, "invalid button idx" );
+			return m_aButtonTrack[uButtonIdx].m_uLastDownEvent;
+		}
+
+		void SetLastDownEvent( uint32 uButtonIdx, uint32 uLastDownEvent )
+		{
+			GUI_ASSERT( uButtonIdx < _MOUSE_BUTTON_MAX_, "invalid button idx" );
+			m_aButtonTrack[uButtonIdx].m_uLastDownEvent = uLastDownEvent;
+		}
+
+		CGUIWidget* GetTargetWidget( uint32 uButtonIdx )
+		{
+			GUI_ASSERT( uButtonIdx < _MOUSE_BUTTON_MAX_, "invalid button idx" );
+			return m_aButtonTrack[uButtonIdx].m_pTargetWidget;
+		}
+
+		void SetTargetWidget( uint32 uButtonIdx, CGUIWidget* pTargetWidget )
+		{
+			GUI_ASSERT( uButtonIdx < _MOUSE_BUTTON_MAX_, "invalid button idx" );
+			if( m_aButtonTrack[uButtonIdx].m_pTargetWidget == pTargetWidget )
+			{
+				return;
+			}
+			if( m_aButtonTrack[uButtonIdx].m_pTargetWidget )
+			{
+				m_aButtonTrack[uButtonIdx].m_pTargetWidget->GetOnWidgetDestroyedSignal().disconnect( this );
+			}
+			m_aButtonTrack[uButtonIdx].m_pTargetWidget = pTargetWidget;
+			if( m_aButtonTrack[uButtonIdx].m_pTargetWidget )
+			{
+				m_aButtonTrack[uButtonIdx].m_pTargetWidget->GetOnWidgetDestroyedSignal().connect( this, &CMouseTracker::OnWidgetDestroyed );
+			}
+		}
+
+	private:
 		struct 
 		{
-			real			m_fTimer;			//!< Timer used to track clicks for this button.
-			uint32			m_nClickCount;		//!< count of clicks made so far.
-			CGUIWidget*		m_pTargetWidget;    //!< target window for any events generated.
-			uint32			m_uLastDownEvent;	//!< last event generated by mouse down
+			real m_fTimer; //!< Timer used to track clicks for this button.
+			uint32 m_nClickCount; //!< count of clicks made so far.
+			CGUIWidget* m_pTargetWidget; //!< target window for any events generated.
+			uint32 m_uLastDownEvent; //!< last event generated by mouse down
 		}
 		m_aButtonTrack[_MOUSE_BUTTON_MAX_];
-
-		CGUIWidget*			m_pWidgetUnderMouse;	//!< the widget that under mouse
+		CGUIWidget* m_pWidgetUnderMouse;	//!< the widget that under mouse
 	};
 
 
@@ -78,25 +179,57 @@ namespace guiex
 	/**
 	* @brief used for drag
 	*/
-	class CDragTracker
+	class CDragTracker : public sigslot::has_slots<>
 	{
 	public:
 		/// constructor
 		CDragTracker()
+			:m_pDragItem(NULL)
 		{
-			Reset();
 		}
 
 		/// reset the tracker
 		void Reset()
 		{
-			m_pDragItem = NULL;
+			SetDragItem( NULL );
+		}
+
+		void OnWidgetDestroyed( CGUIWidget* pWidget )
+		{
+			if( m_pDragItem == pWidget )
+			{
+				m_pDragItem = NULL;
+			}
+		}
+
+		void SetDragItem( CGUIWidget* pDragItem )
+		{
+			if( m_pDragItem == pDragItem )
+			{
+				return;
+			}
+			if( m_pDragItem )
+			{
+				m_pDragItem->GetOnWidgetDestroyedSignal().disconnect( this );
+			}
+			m_pDragItem = pDragItem;
+			if( m_pDragItem )
+			{
+				m_pDragItem->GetOnWidgetDestroyedSignal().connect( this, &CDragTracker::OnWidgetDestroyed );
+			}
+		}
+
+		CGUIWidget* GetDragItem()
+		{
+			return m_pDragItem;
 		}
 
 	public:
-		CGUIWidget*		m_pDragItem;	///!< the widget which is being dragged now.
-		CGUIVector2		m_aDeltaPos;	///!< this value is used to calculate the widget's position.
-		int32			m_nButton;		///!< button of mouse which used to drag widget
+		CGUIVector2 m_aDeltaPos; ///!< this value is used to calculate the widget's position.
+		int32 m_nButton; ///!< button of mouse which used to drag widget
+
+	private:
+		CGUIWidget* m_pDragItem; ///!< the widget which is being dragged now.
 	};
 }
 
@@ -220,21 +353,21 @@ namespace guiex
 
 		CGUIWidget* pTargetWidget = GSystem->GetWidgetUnderPoint(rMouseEvent.m_aMousePos);
 
-		if( !m_pMouseTracker->m_aButtonTrack[rMouseEvent.m_eButton].m_pTargetWidget ||
-			pTargetWidget != m_pMouseTracker->m_aButtonTrack[rMouseEvent.m_eButton].m_pTargetWidget ||
-			GSystem->GetSystemTime() - m_pMouseTracker->m_aButtonTrack[rMouseEvent.m_eButton].m_fTimer > static_cast<int32>(m_fDbClickTimeout))
+		if( !m_pMouseTracker->GetTargetWidget(rMouseEvent.m_eButton) ||
+			pTargetWidget != m_pMouseTracker->GetTargetWidget(rMouseEvent.m_eButton) ||
+			GSystem->GetSystemTime() - m_pMouseTracker->GetTimer(rMouseEvent.m_eButton) > static_cast<int32>(m_fDbClickTimeout))
 		{
 			//reset mouse tracker
-			m_pMouseTracker->m_aButtonTrack[rMouseEvent.m_eButton].m_pTargetWidget = pTargetWidget;
-			m_pMouseTracker->m_aButtonTrack[rMouseEvent.m_eButton].m_nClickCount = 1;
+			m_pMouseTracker->SetTargetWidget(rMouseEvent.m_eButton, pTargetWidget );
+			m_pMouseTracker->SetClickCount(rMouseEvent.m_eButton, 1);
 		}
 		else
 		{
 			//add click count
-			++m_pMouseTracker->m_aButtonTrack[rMouseEvent.m_eButton].m_nClickCount;
+			m_pMouseTracker->SetClickCount( rMouseEvent.m_eButton, m_pMouseTracker->GetClickCount(rMouseEvent.m_eButton ));
 		}
 		//re-initialize timer
-		m_pMouseTracker->m_aButtonTrack[rMouseEvent.m_eButton].m_fTimer = GSystem->GetSystemTime();
+		m_pMouseTracker->SetTimer(rMouseEvent.m_eButton, GSystem->GetSystemTime());
 
 		if( pTargetWidget )
 		{
@@ -264,7 +397,7 @@ namespace guiex
 			aEventMouse.SetKeyboardInterface(CGUIInterfaceManager::Instance()->GetInterfaceKeyboard());
 
 
-			switch( m_pMouseTracker->m_aButtonTrack[rMouseEvent.m_eButton].m_nClickCount )
+			switch( m_pMouseTracker->GetClickCount( rMouseEvent.m_eButton ))
 			{
 			case 1:
 				aEventMouse.SetEventId(eEVENT_MOUSE_DOWN);
@@ -285,7 +418,7 @@ namespace guiex
 				if( pTargetWidget->IsGenerateMultiClickEvent())
 				{
 					aEventMouse.SetEventId(eEVENT_MOUSE_MULTI_CLICK);
-					aEventMouse.SetMultiClickCount(m_pMouseTracker->m_aButtonTrack[rMouseEvent.m_eButton].m_nClickCount);
+					aEventMouse.SetMultiClickCount(m_pMouseTracker->GetClickCount( rMouseEvent.m_eButton ));
 				}
 				else
 				{
@@ -315,7 +448,7 @@ namespace guiex
 					BeginDrag( pTargetWidget, pTargetWidget->GetPixelPosition()-rMouseEvent.m_aMousePos, rMouseEvent.m_eButton);
 				}
 			}
-			m_pMouseTracker->m_aButtonTrack[rMouseEvent.m_eButton].m_uLastDownEvent = aEventMouse.GetEventId();
+			m_pMouseTracker->SetLastDownEvent(rMouseEvent.m_eButton, aEventMouse.GetEventId());
 
 			//mouse down event
 			GSystem->SendEvent(&aEventMouse);
@@ -334,7 +467,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIInputProcessor::BeginDrag(CGUIWidget* pWidget, const CGUIVector2& rDeltaPos, uint32 nButton)
 	{
-		m_pDragTracker->m_pDragItem = pWidget;
+		m_pDragTracker->SetDragItem( pWidget );
 		m_pDragTracker->m_aDeltaPos = rDeltaPos;
 		m_pDragTracker->m_nButton = nButton;
 	}
@@ -342,7 +475,7 @@ namespace guiex
 	void CGUIInputProcessor::EndDrag()
 	{
 		//clear drag tracker
-		m_pDragTracker->m_pDragItem = NULL;
+		m_pDragTracker->SetDragItem( NULL );
 	}
 	//------------------------------------------------------------------------------
 	bool CGUIInputProcessor::OnMouseButtonUp(const IGUIInterfaceMouse::SMouseEvent& rMouseEvent)
@@ -353,9 +486,9 @@ namespace guiex
 		CGUIWidget* pTargetWidget = GSystem->GetWidgetUnderPoint(rMouseEvent.m_aMousePos);
 
 		if( pTargetWidget &&
-			pTargetWidget == m_pMouseTracker->m_aButtonTrack[rMouseEvent.m_eButton].m_pTargetWidget )
+			pTargetWidget == m_pMouseTracker->GetTargetWidget(rMouseEvent.m_eButton) )
 		{
-			if( m_pMouseTracker->m_aButtonTrack[rMouseEvent.m_eButton].m_uLastDownEvent == eEVENT_MOUSE_DOWN &&
+			if( m_pMouseTracker->GetLastDownEvent(rMouseEvent.m_eButton) == eEVENT_MOUSE_DOWN &&
 				pTargetWidget->IsGenerateClickEvent())
 			{
 				//click event
@@ -383,13 +516,13 @@ namespace guiex
 		}
 		else
 		{
-			if( m_pMouseTracker->m_aButtonTrack[rMouseEvent.m_eButton].m_pTargetWidget )
+			if( m_pMouseTracker->GetTargetWidget(rMouseEvent.m_eButton) )
 			{
 				//mouse up event for old target
 				CGUIEventMouse aEventMouse;
 				aEventMouse.SetEventId(eEVENT_MOUSE_UP);
 				aEventMouse.SetButton( rMouseEvent.m_eButton );
-				aEventMouse.SetReceiver(m_pMouseTracker->m_aButtonTrack[rMouseEvent.m_eButton].m_pTargetWidget);
+				aEventMouse.SetReceiver(m_pMouseTracker->GetTargetWidget(rMouseEvent.m_eButton));
 				aEventMouse.SetGlobalPosition(rMouseEvent.m_aMousePos);
 				aEventMouse.SetKeyboardInterface(CGUIInterfaceManager::Instance()->GetInterfaceKeyboard());
 				GSystem->SendEvent(&aEventMouse);
@@ -413,12 +546,12 @@ namespace guiex
 
 		// for drag event
 		if(	rMouseEvent.m_eButton == m_pDragTracker->m_nButton  &&
-			m_pDragTracker->m_pDragItem)
+			m_pDragTracker->GetDragItem())
 		{
 			// send drag end event
 			CGUIEventDrag aEventDrag;
 			aEventDrag.SetEventId(eEVENT_DRAG_END );
-			aEventDrag.SetReceiver( m_pDragTracker->m_pDragItem );
+			aEventDrag.SetReceiver( m_pDragTracker->GetDragItem() );
 			aEventDrag.SetWidgetLocalPos(m_pDragTracker->m_aDeltaPos + rMouseEvent.m_aMousePos);
 			aEventDrag.SetMouseGlobalPos(rMouseEvent.m_aMousePos);
 			GSystem->SendEvent(&aEventDrag);
@@ -461,12 +594,12 @@ namespace guiex
 		CGUIMouseCursor::Instance()->SetPosition(rMouseEvent.m_aMousePos);
 
 		// for drag event
-		if(m_pDragTracker->m_pDragItem)
+		if(m_pDragTracker->GetDragItem())
 		{
 			// send drag end event
 			CGUIEventDrag aEventDrag;
 			aEventDrag.SetEventId(eEVENT_DRAG_PROCESS );
-			aEventDrag.SetReceiver( m_pDragTracker->m_pDragItem );
+			aEventDrag.SetReceiver( m_pDragTracker->GetDragItem() );
 			aEventDrag.SetWidgetLocalPos( m_pDragTracker->m_aDeltaPos + rMouseEvent.m_aMousePos);
 			aEventDrag.SetMouseGlobalPos(rMouseEvent.m_aMousePos);
 			GSystem->SendEvent(&aEventDrag);
@@ -479,16 +612,16 @@ namespace guiex
 
 
 			//mouse leave and mouse enter event
-			if( m_pMouseTracker->m_pWidgetUnderMouse != pTargetWidget )
+			if( m_pMouseTracker->GetWidgetUnderMouse() != pTargetWidget )
 			{
 				//mouse leave
-				if( m_pMouseTracker->m_pWidgetUnderMouse )
+				if( m_pMouseTracker->GetWidgetUnderMouse() )
 				{
 					{
 						//mouse move
 						CGUIEventMouse aEventMouse;
 						aEventMouse.SetEventId(eEVENT_MOUSE_MOVE);
-						aEventMouse.SetReceiver(m_pMouseTracker->m_pWidgetUnderMouse);
+						aEventMouse.SetReceiver(m_pMouseTracker->GetWidgetUnderMouse());
 						aEventMouse.SetGlobalPosition(rMouseEvent.m_aMousePos);
 						aEventMouse.SetKeyboardInterface(CGUIInterfaceManager::Instance()->GetInterfaceKeyboard());
 						GSystem->SendEvent(&aEventMouse);
@@ -498,7 +631,7 @@ namespace guiex
 						//mouse leave event for curent target
 						CGUIEventMouse aEventMouse;
 						aEventMouse.SetEventId(eEVENT_MOUSE_LEAVE);
-						aEventMouse.SetReceiver(m_pMouseTracker->m_pWidgetUnderMouse);
+						aEventMouse.SetReceiver(m_pMouseTracker->GetWidgetUnderMouse());
 						aEventMouse.SetGlobalPosition(rMouseEvent.m_aMousePos);
 						aEventMouse.SetKeyboardInterface(CGUIInterfaceManager::Instance()->GetInterfaceKeyboard());
 						GSystem->SendEvent(&aEventMouse);
@@ -516,14 +649,14 @@ namespace guiex
 					GSystem->SendEvent(&aEventMouse);
 				}
 
-				m_pMouseTracker->m_pWidgetUnderMouse = pTargetWidget;
+				m_pMouseTracker->SetWidgetUnderMouse( pTargetWidget );
 			}
-			else if( m_pMouseTracker->m_pWidgetUnderMouse )
+			else if( m_pMouseTracker->GetWidgetUnderMouse() )
 			{
 				//mouse move event for curent target
 				CGUIEventMouse aEventMouse;
 				aEventMouse.SetEventId(eEVENT_MOUSE_MOVE);
-				aEventMouse.SetReceiver(m_pMouseTracker->m_pWidgetUnderMouse);
+				aEventMouse.SetReceiver(m_pMouseTracker->GetWidgetUnderMouse());
 				aEventMouse.SetGlobalPosition(rMouseEvent.m_aMousePos);
 				aEventMouse.SetKeyboardInterface(CGUIInterfaceManager::Instance()->GetInterfaceKeyboard());
 				GSystem->SendEvent(&aEventMouse);

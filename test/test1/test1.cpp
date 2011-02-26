@@ -416,7 +416,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	}
 
 	CGUIWidgetManager::Instance()->AddPage( pWidgetRoot );
-	GSystem->OpenUIPage( pWidgetRoot );
+	GSystem->GetUICanvas()->OpenUIPage( pWidgetRoot );
 
 	return 0;
 }

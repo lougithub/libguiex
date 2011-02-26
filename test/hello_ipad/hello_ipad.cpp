@@ -28,11 +28,11 @@ int32 CGUIFrameworkTest::InitializeGame()
 	CGUISceneManager::Instance()->LoadWidgets( "sound.uip" );
 	CGUIWidget* pWidget = NULL;
 	pWidget = CGUIWidgetManager::Instance()->GetPage( "login.xml", "login.uip" );
-	CGUISystem::Instance()->OpenUIPage(pWidget);	
+	GSystem->GetUICanvas()->OpenUIPage(pWidget);	
 	//pWidget = CGUIWidgetManager::Instance()->GetPage( "dialog_okcancel.xml", "common.uip" );
 	//CGUISystem::Instance()->OpenUIPage(pWidget);	
 	pWidget = CGUIWidgetManager::Instance()->GetPage( "showfps.xml", "common.uip" );
-	CGUISystem::Instance()->OpenUIPage(pWidget);	
+	GSystem->GetUICanvas()->OpenUIPage(pWidget);	
 	//pWidget = CGUIWidgetManager::Instance()->GetPage( "sound.xml", "sound.uip" );
 	//CGUISystem::Instance()->OpenUIPage(pWidget);		
 	return 0;

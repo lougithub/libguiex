@@ -132,6 +132,10 @@ namespace guiex
 			{
 				pWidget->SetParent(NULL);
 			}
+
+			//unregister ui event
+			GSystem->UnregisterUIEvent( pWidget );
+
 			CGUIWidgetFactory::Instance()->DestoryWidget(pWidget);
 			itor->second.erase(itor_widget);
 			if( itor->second.empty())

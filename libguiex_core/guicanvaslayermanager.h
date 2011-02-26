@@ -20,6 +20,8 @@
 namespace guiex
 {
 	class CGUICanvasLayer;
+	class CGUIWidget;
+	class CGUIVector2;
 }
 
 //============================================================================//
@@ -34,9 +36,12 @@ namespace guiex
 		
 		static CGUICanvasLayerManager* Instance();
 	
-
 		void Update( real fDeltaTime );
 		void Render( class IGUIInterfaceRender* pRender );
+		void RenderExtraInfo( class IGUIInterfaceRender* pRender );
+		void Refresh( );
+		CGUIWidget*	GetWidgetUnderPoint(const CGUIVector2& rPos);
+
 
 		void PushCanvasLayer( CGUICanvasLayer* pLayer );
 		CGUICanvasLayer* PopCanvasLayer( );

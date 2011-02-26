@@ -25,7 +25,7 @@ int32 CGUIFrameworkTest::InitializeGame()
 	CGUISceneManager::Instance()->LoadWidgets( "particle2d.uip" );
 	CGUIWidget* pWidget = NULL;
 	pWidget = CGUIWidgetManager::Instance()->GetPage( "particle2d.xml", "particle2d.uip" );
-	CGUISystem::Instance()->OpenUIPage(pWidget);		
+	GSystem->GetUICanvas()->OpenUIPage(pWidget);		
 	return 0;
 }
 

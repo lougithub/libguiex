@@ -9,43 +9,45 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core/guisystem.h>
-#include <libguiex_core/guiwidget.h>
-#include <libguiex_core/guiwidgetfactory.h>
-#include <libguiex_core/guias.h>
-#include <libguiex_core/guievent.h>
-#include <libguiex_core/guiexception.h>
-#include <libguiex_core/guitimer.h>
-#include <libguiex_core/guilogmsgmanager.h>
-#include <libguiex_core/guimousecursor.h>
+#include "guisystem.h"
+#include "guiwidget.h"
+#include "guiwidgetfactory.h"
+#include "guias.h"
+#include "guievent.h"
+#include "guiexception.h"
+#include "guitimer.h"
+#include "guilogmsgmanager.h"
+#include "guimousecursor.h"
 
-#include <libguiex_core/guiimagemanager.h>
-#include <libguiex_core/guianimationmanager.h>
-#include <libguiex_core/guifontmanager.h>
-#include <libguiex_core/guiasmanager.h>
-#include <libguiex_core/guitexturemanager.h>
-#include <libguiex_core/guisoundmanager.h>
-#include <libguiex_core/guiparticle2dmanager.h>
-#include <libguiex_core/guitilemapmanager.h>
-#include <libguiex_core/guimusicmanager.h>
-#include <libguiex_core/guicameramanager.h>
-#include <libguiex_core/guicanvaslayermanager.h>
+#include "guiimagemanager.h"
+#include "guianimationmanager.h"
+#include "guifontmanager.h"
+#include "guiasmanager.h"
+#include "guitexturemanager.h"
+#include "guisoundmanager.h"
+#include "guiparticle2dmanager.h"
+#include "guitilemapmanager.h"
+#include "guimusicmanager.h"
+#include "guicameramanager.h"
+#include "guicanvaslayermanager.h"
 
-#include <libguiex_core/guiinterfacemanager.h>
-#include <libguiex_core/guiinterfacemouse.h>
-#include <libguiex_core/guiinterfaceconfigfile.h>
-#include <libguiex_core/guiinterfacekeyboard.h>
-#include <libguiex_core/guiinterfacerender.h>
-#include <libguiex_core/guiinterfacefont.h>
-#include <libguiex_core/guiinterfacecommand.h>
-#include <libguiex_core/guiinterfacescript.h>
+#include "guiinterfacemanager.h"
+#include "guiinterfacemouse.h"
+#include "guiinterfaceconfigfile.h"
+#include "guiinterfacekeyboard.h"
+#include "guiinterfacerender.h"
+#include "guiinterfacefont.h"
+#include "guiinterfacecommand.h"
+#include "guiinterfacescript.h"
 
-#include <libguiex_core/guiperfmonitor.h>
+#include "guiperfmonitor.h"
 
-#include <libguiex_core/guiwidgetroot.h>
-#include <libguiex_core/guiscene.h>
-#include <libguiex_core/guiscenemanager.h>
-#include <libguiex_core/guiwidgetmanager.h>
+#include "guiwidgetroot.h"
+#include "guiscene.h"
+#include "guiscenemanager.h"
+#include "guiwidgetmanager.h"
+
+#include "guiuicanvaslayer.h"
 
 #include <algorithm>
 
@@ -61,16 +63,6 @@ namespace guiex
 	GUIEXPORT CGUISystem* GetSystem()
 	{
 		return GSystem;
-	}
-	//------------------------------------------------------------------------------
-	GUIEXPORT void OpenDialog(CGUIWidget* pDlg)
-	{
-		return GSystem->OpenDialog( pDlg );
-	}
-	//------------------------------------------------------------------------------
-	GUIEXPORT void CloseDialog(CGUIWidget* pDlg)
-	{
-		return GSystem->CloseDialog( pDlg );
 	}
 	//------------------------------------------------------------------------------
 	GUIEXPORT void SendUIEvent(const CGUIString& rUIEventName,
@@ -98,24 +90,12 @@ namespace guiex
 		GSystem->SendUIEvent( &aUIEvent );
 	}
 	//------------------------------------------------------------------------------
-	GUIEXPORT void OpenUIPage( CGUIWidget* pPage )
-	{
-		return GSystem->OpenUIPage( pPage );
-	}
-	//------------------------------------------------------------------------------
-	GUIEXPORT void CloseUIPage( CGUIWidget* pPage )
-	{
-		return GSystem->CloseUIPage( pPage );
-	}
-	//------------------------------------------------------------------------------
 
 	//------------------------------------------------------------------------------
 	CGUISystem * CGUISystem::m_pSingleton = NULL; 
 	//------------------------------------------------------------------------------
 	CGUISystem::CGUISystem()
-		:m_pWgtRoot(NULL)
-		,m_pPopupWidget(NULL)
-		,m_pWgtFocus(NULL)
+		:m_pWgtFocus(NULL)
 		,m_aFrame(0)
 		,m_nFps(0)
 		,m_bInitialized(false)
@@ -143,6 +123,7 @@ namespace guiex
 		,m_pLogMsgManager( NULL )
 		,m_pWidgetManager( NULL )
 		,m_pCameraManager( NULL )
+		,m_pUICanvas( NULL )
 	{
 		GUI_ASSERT( !m_pSingleton, "[CGUISystem::CGUISystem]:instance has been created" ); 
 		GUI_ASSERT( !GSystem, "[CGUISystem::CGUISystem]:GSystem has been set" ); 
@@ -257,27 +238,13 @@ namespace guiex
 
 		//register internal root widget
 		GUI_REGISTER_WIDGET_LIB(CGUIWidgetRoot);
-		GenerateRootWidget();
+
+		//add ui layer.
+		GenerateUICanvas();
 
 		m_bInitialized = true;
 
 		return 0;
-	}
-	//------------------------------------------------------------------------------
-	void CGUISystem::GenerateRootWidget()
-	{
-		GUI_ASSERT( !m_pWgtRoot, "invalid widget root pointer");
-		m_pWgtRoot = CGUIWidgetManager::Instance()->CreateWidget("CGUIWidgetRoot", "__WIDGET_ROOT"GUI_INTERNAL_WIDGET_FLAG, "__SCENE_ROOT"GUI_INTERNAL_WIDGET_FLAG);
-		m_pWgtRoot->Create();
-		m_pWgtRoot->Open();
-	}
-	//------------------------------------------------------------------------------
-	void CGUISystem::DestroyRootWidget()
-	{
-		GUI_ASSERT( m_pWgtRoot, "invalid widget root pointer");
-		m_pWgtRoot->Close();
-		m_pWidgetManager->DestroyWidget(m_pWgtRoot);
-		m_pWgtRoot = NULL;
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -287,11 +254,11 @@ namespace guiex
 	{
 		GUI_ASSERT( m_bInitialized==true, "system has been released" );
 
+		//destroy all canvas
+		DestroyAllCanvas();
+
 		//release all widgets
 		DestroyAllWidgets();
-
-		//destroy root widget
-		DestroyRootWidget();
 
 		//release resource
 		ReleaseAllResources();
@@ -321,10 +288,31 @@ namespace guiex
 	void CGUISystem::Reset()
 	{
 		m_nNameGenerateIdx = 0;
-		m_pPopupWidget = NULL;
 		m_aInputProcessor.Reset();
 		UnregisterAllUIEvent();
 		UngisterAllGlobalKey();
+	}
+	//------------------------------------------------------------------------------
+	void CGUISystem::GenerateUICanvas()
+	{
+		GUI_ASSERT( !m_pUICanvas, "ui canvas has been generated" );
+		m_pUICanvas = new CGUIUICanvasLayer( "ui_layer" );
+		m_pCanvasLayerManager->PushCanvasLayer( m_pUICanvas );	
+	}
+	//------------------------------------------------------------------------------
+	void CGUISystem::DestroyUICanvas()
+	{
+		if( m_pUICanvas )
+		{
+			m_pCanvasLayerManager->RemoveCanvasLayer( m_pUICanvas );
+			m_pUICanvas->DestroySelf();
+			m_pUICanvas = NULL;
+		}
+	}
+	//------------------------------------------------------------------------------
+	CGUIUICanvasLayer* CGUISystem::GetUICanvas()
+	{
+		return m_pUICanvas;
 	}
 	//------------------------------------------------------------------------------
 	void CGUISystem::SetDrawExtraInfo( bool bDraw )
@@ -416,16 +404,17 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	void CGUISystem::DestroyAllCanvas()
+	{
+		m_pCanvasLayerManager->DestroyAllCanvasLayer();
+		m_pUICanvas = NULL;
+	}
+	//------------------------------------------------------------------------------
 	void CGUISystem::DestroyAllWidgets(  )
 	{
 		m_aInputProcessor.Reset();
 		UnregisterAllUIEvent();
 		UngisterAllGlobalKey();
-
-		CloseAll();
-
-		//clear page in garbage
-		RefreshGarbage();
 
 		//destroy all page
 		m_pWidgetManager->ReleaseAllPages();
@@ -474,9 +463,6 @@ namespace guiex
 		//execute command if it exist
 		ProcessCommand();
 
-		RefreshGarbage();
-
-		UpdateUI( fDeltaTime );
 		UpdateCanvas( fDeltaTime );
 
 		PERFMON_END( 0 );
@@ -526,24 +512,7 @@ namespace guiex
 		m_pCameraManager->GetDefaultUICamera()->Restore();
 
 		//update ui page
-		if( m_pWgtRoot )
-		{
-			m_pWgtRoot->Refresh();
-		}
-
-		//update ui dlg
-		for(TArrayWidget::iterator itor = m_arrayOpenedDlg.begin();
-			itor != m_arrayOpenedDlg.end();
-			++itor)
-		{
-			(*itor)->Refresh();
-		}
-
-		//update ui popup widget
-		if( m_pPopupWidget )
-		{
-			m_pPopupWidget->Refresh();
-		}
+		m_pCanvasLayerManager->Refresh();
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -608,82 +577,19 @@ namespace guiex
 		return m_pWgtFocus;
 	}
 	//------------------------------------------------------------------------------
-	void CGUISystem::UpdateUI( real fDeltaTime )
-	{
-		//update page
-		if( m_pWgtRoot)
-		{
-			m_pWgtRoot->Update( fDeltaTime );
-		}
-		
-		//update dlg
-		for(TArrayWidget::iterator itor = m_arrayOpenedDlg.begin();
-			itor != m_arrayOpenedDlg.end();
-			++itor)
-		{
-			(*itor)->Update( fDeltaTime );
-		}
-		
-		//update popup widget
-		if( m_pPopupWidget )
-		{
-			m_pPopupWidget->Update( fDeltaTime );
-		}		
-	}
-	//------------------------------------------------------------------------------
 	void CGUISystem::UpdateCanvas( real fDeltaTime )
 	{
 		m_pCanvasLayerManager->Update( fDeltaTime );
 	}
 	//------------------------------------------------------------------------------
-	void CGUISystem::RenderUI( IGUIInterfaceRender* pRender )
-	{
-		//render ui page
-		if( m_pWgtRoot )
-		{
-			m_pWgtRoot->Render(pRender);
-		}
-		//render dlg
-		for(TArrayWidget::iterator itor = m_arrayOpenedDlg.begin();
-			itor != m_arrayOpenedDlg.end();
-			++itor)
-		{
-			(*itor)->Render(pRender);
-		}
-		//render popup widget
-		if( m_pPopupWidget )
-		{
-			m_pPopupWidget->Render(pRender);
-		}
-		//render mouse
-		CGUIMouseCursor::Instance()->Render(pRender);
-
-		if( IsDrawExtraInfo() )
-		{
-			//draw extra info
-			//render page
-			if( m_pWgtRoot )
-			{
-				m_pWgtRoot->RenderExtraInfo(pRender);
-			}
-			//render dlg
-			for(TArrayWidget::iterator itor = m_arrayOpenedDlg.begin();
-				itor != m_arrayOpenedDlg.end();
-				++itor)
-			{
-				(*itor)->RenderExtraInfo(pRender);
-			}
-			//render extra info
-			if( m_pPopupWidget )
-			{
-				m_pPopupWidget->RenderExtraInfo(pRender);
-			}
-		}
-	}
-	//------------------------------------------------------------------------------
 	void CGUISystem::RenderCanvas( IGUIInterfaceRender* pRender )
 	{
 		m_pCanvasLayerManager->Render( pRender );
+		if( IsDrawExtraInfo() )
+		{
+			//draw extra info
+			m_pCanvasLayerManager->RenderExtraInfo( pRender );
+		}
 	}
 	//------------------------------------------------------------------------------
 	void CGUISystem::BeginRender()
@@ -715,105 +621,9 @@ namespace guiex
 
 		//render ui
 		pRender->ApplyCamera( m_pCameraManager->GetDefaultUICamera() );
-		RenderUI( pRender );
-	}
-	//------------------------------------------------------------------------------
-	/**
-	* @brief open a page
-	*/
-	void CGUISystem::OpenUIPage(CGUIWidget* pPage)
-	{
-		GUI_ASSERT( pPage, "invalid parameter" );
 
-		if( m_pWidgetManager->HasPage( pPage ) == false )
-		{
-			throw CGUIException( "[CGUISystem::OpenUIPage]: the widget <%s> isn't a page!", pPage->GetName().c_str());
-		}
-
-		pPage->SetParent( m_pWgtRoot );
-		pPage->Open();
-		pPage->Refresh();
-
-		m_arrayOpenedPage.push_back(pPage);
-	}
-	//------------------------------------------------------------------------------
-	void CGUISystem::CloseByAutoSelect( CGUIWidget* pWidget )
-	{
-		GUI_ASSERT( pWidget, "invalid parameter" );
-
-		//is page
-		TArrayWidget::iterator itorPage = std::find(m_arrayOpenedPage.begin(), m_arrayOpenedPage.end(), pWidget );
-		if( itorPage != m_arrayOpenedPage.end())
-		{
-			CloseUIPage( pWidget );
-			return;
-		}
-
-		//is dialog
-		TArrayWidget::iterator itorDlg = std::find(m_arrayOpenedDlg.begin(), m_arrayOpenedDlg.end(), pWidget );
-		if( itorDlg != m_arrayOpenedDlg.end())
-		{		
-			CloseDialog( pWidget );
-			return;
-		}
-
-		//is popup widget
-		if( pWidget == m_pPopupWidget )
-		{		
-			ClosePopupWidget( pWidget );
-			return;
-		}
-	}
-	//------------------------------------------------------------------------------
-	/**
-	* @brief close a page
-	*/
-	void CGUISystem::CloseUIPage(CGUIWidget* pPage)
-	{
-		GUI_ASSERT( pPage, "invalid parameter" );
-
-		if( m_pWidgetManager->HasPage( pPage ) == false )
-		{
-			throw CGUIException( "[CGUISystem::CloseUIPage]: the widget <%s> isn't a page!", pPage->GetName().c_str());
-		}
-
-		if( pPage->IsOpen() == false )
-		{
-			throw CGUIException( "[CGUISystem::CloseUIPage]: the page <%s> has closed!", pPage->GetName().c_str());
-		}
-
-		TArrayWidget::iterator itor = std::find(m_arrayOpenedPage.begin(), m_arrayOpenedPage.end(), pPage );
-		if( itor == m_arrayOpenedPage.end())
-		{
-			throw CGUIException( "[CGUISystem::CloseUIPage]: can't find page in opend page <%s> list!", pPage->GetName().c_str());
-		}
-		m_arrayOpenedPage.erase( itor );
-		pPage->Close();
-		pPage->SetParent(NULL);
-
-		if( m_pWidgetManager->HasDynamicPage( pPage ) )
-		{
-			AddToDynamicGarbage( pPage );
-		}
-		return;
-	}
-	//------------------------------------------------------------------------------
-	///< get opened page num, which should be opened by method OpenUIPage()
-	uint32 CGUISystem::GetOpenedPageNum() const
-	{
-		return m_arrayOpenedPage.size();
-	}
-	//------------------------------------------------------------------------------
-	///< get opened page by index
-	CGUIWidget*	CGUISystem::GetOpenedPageByIndex( uint32 nIdx )
-	{
-		if( nIdx >= m_arrayOpenedPage.size())
-		{
-			throw CGUIException( "[CGUISystem::GetOpenedPageByIndex]: the given index <%d> is overflow, total opened page size is <%d>",
-				nIdx, m_arrayOpenedPage.size());
-		}
-
-		return m_arrayOpenedPage[nIdx];
+		//render cursor
+		CGUIMouseCursor::Instance()->Render(pRender);
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -834,16 +644,7 @@ namespace guiex
 	*/
 	CGUIWidget*	CGUISystem::GetWidgetUnderPoint(const CGUIVector2& rPos)
 	{
-		//capture input
-		CGUIWidget* pRootWidget = GetCurrentRootWidget();
-		if( pRootWidget )
-		{
-			return pRootWidget->GetWidgetAtPoint(rPos);
-		}
-		else
-		{
-			return NULL;
-		}
+		return m_pCanvasLayerManager->GetWidgetUnderPoint( rPos );
 	}
 	//------------------------------------------------------------------------------
 	void CGUISystem::UpdateTime(real fDeltaTime)
@@ -880,41 +681,6 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUISystem::AddToGarbage( CGUIWidget* pWidget )
-	{
-		m_vecPageGarbage.push_back(pWidget);
-	}
-	//------------------------------------------------------------------------------
-	void CGUISystem::AddToDynamicGarbage( CGUIWidget* pWidget )
-	{
-		m_vecDynamicPageGarbage.push_back(pWidget);
-	}
-	//------------------------------------------------------------------------------
-	void CGUISystem::RefreshGarbage( )
-	{
-		if( !m_vecPageGarbage.empty() ||
-			!m_vecDynamicPageGarbage.empty() )
-		{
-			m_aInputProcessor.Reset();
-		}
-
-		for( TArrayWidget::iterator itor = m_vecPageGarbage.begin();
-			itor != m_vecPageGarbage.end();
-			++itor )
-		{
-			m_pWidgetManager->ReleasePage( *itor );
-		}
-		m_vecPageGarbage.clear();
-
-		for( TArrayWidget::iterator itor = m_vecDynamicPageGarbage.begin();
-			itor != m_vecDynamicPageGarbage.end();
-			++itor )
-		{
-			m_pWidgetManager->DestroyDynamicPage( *itor );
-		}
-		m_vecDynamicPageGarbage.clear();
-	}
-	//------------------------------------------------------------------------------
 	///process command
 	void CGUISystem::ProcessCommand()
 	{
@@ -935,160 +701,6 @@ namespace guiex
 		//		}
 		//	}
 		//}
-	}
-	//------------------------------------------------------------------------------
-	/** 
-	* @brief open modal dialog
-	*/
-	void CGUISystem::OpenDialog(CGUIWidget* pDlg)
-	{
-		GUI_ASSERT(pDlg, "invalid parameter");
-		GUI_ASSERT( pDlg->GetParent() == false, "the modal dialog shouldn't have a parent");
-
-		if( !m_pWidgetManager->HasPage( pDlg ))
-		{
-			throw CGUIException( "[CGUISystem::OpenDialog]: the dialog <%s:%s> isn't a page", pDlg->GetSceneName().c_str(), pDlg->GetName().c_str());
-		}
-
-		pDlg->SetParent( NULL );
-
-		TArrayWidget::iterator itor = std::find(m_arrayOpenedDlg.begin(), m_arrayOpenedDlg.end(), pDlg );
-		if( (*itor) == pDlg)
-		{
-			throw CGUIException( "[CGUISystem::OpenDialog]: failed to open dialog<%s:%s>, it has opened!", pDlg->GetSceneName().c_str(), pDlg->GetName().c_str());
-		}
-
-		m_arrayOpenedDlg.push_back(pDlg);
-		pDlg->Open();
-
-		GUI_TRACE( GUI_FORMAT("OpenDialog <%s : %s> \n", pDlg->GetSceneName().c_str(), pDlg->GetName().c_str()));
-	}
-	//------------------------------------------------------------------------------
-	/** 
-	* @brief get current modal dialog
-	*/
-	CGUIWidget*	CGUISystem::GetTopestDialog( ) const 
-	{
-		if(m_arrayOpenedDlg.empty())
-		{
-			return NULL;
-		}
-		else
-		{
-			return m_arrayOpenedDlg.back();
-		}
-	}
-	//------------------------------------------------------------------------------
-	/** 
-	* @brief close modal dialog
-	*/
-	void CGUISystem::CloseDialog(CGUIWidget* pDlg)
-	{
-		GUI_ASSERT(pDlg, "invalid parameter");
-
-		TArrayWidget::iterator itor = std::find(m_arrayOpenedDlg.begin(), m_arrayOpenedDlg.end(), pDlg );
-		if( (*itor) == pDlg)
-		{		
-			m_arrayOpenedDlg.erase(itor);
-			UngisterGlobalKeyByRoot(pDlg);
-			pDlg->Close();
-
-			if( m_pWidgetManager->HasDynamicPage( pDlg ) )
-			{
-				AddToDynamicGarbage( pDlg );
-			}
-			return;
-		}
-
-		throw CGUIException( "[CGUISystem::CloseDialog]: failed to close dialog <%s : %s>.", pDlg->GetSceneName().c_str(), pDlg->GetName().c_str());
-	}
-	//------------------------------------------------------------------------------
-	/** 
-	* @brief open popup widget
-	*/
-	void CGUISystem::OpenPopupWidget(CGUIWidget* pWidget)
-	{
-		GUI_ASSERT(pWidget, "invalid parameter");
-
-		if( m_pPopupWidget )
-		{
-			GUI_FORCE_ASSERT(GUI_FORMAT("failed to open popup widget, a popup widget has opened! <%s>", m_pPopupWidget->GetName().c_str()));
-		}
-
-		pWidget->Open();
-		m_pPopupWidget = pWidget;
-
-		GUI_TRACE( GUI_FORMAT("OpenPopupWidget <%s> \n", pWidget->GetName().c_str()));
-	}
-	//------------------------------------------------------------------------------
-	/** 
-	* @brief get current modal dialog
-	*/
-	CGUIWidget* CGUISystem::GetCurrentPopupWidget( ) const
-	{
-		return m_pPopupWidget;
-	}
-	//------------------------------------------------------------------------------
-	/** 
-	* @brief close modal dialog
-	*/
-	void CGUISystem::ClosePopupWidget(CGUIWidget* pWidget)
-	{
-		GUI_ASSERT(pWidget, "invalid parameter");
-
-		if( m_pPopupWidget = pWidget )
-		{
-			pWidget->Close();
-			m_pPopupWidget = NULL;
-			GUI_TRACE( GUI_FORMAT("ClosePopupWidget <%s> \n", pWidget->GetName().c_str()));
-			return;
-		}
-		else
-		{
-			GUI_FORCE_ASSERT(GUI_FORMAT("failed to close popup widget <%s>", pWidget->GetName().c_str()));
-		}
-	}
-	//------------------------------------------------------------------------------
-
-	/** 
-	* @brief get current root widget, will be a dialog if there has or a page
-	*/
-	CGUIWidget*	CGUISystem::GetCurrentRootWidget( ) const
-	{
-		CGUIWidget* pDlgRoot = NULL;
-		if( pDlgRoot = GetCurrentPopupWidget())
-		{
-			return pDlgRoot;
-		}
-		else if( pDlgRoot = GetTopestDialog())
-		{
-			return pDlgRoot;
-		}
-		else
-		{
-			return m_pWgtRoot;
-		}
-	}
-	//------------------------------------------------------------------------------
-	void CGUISystem::CloseAll()
-	{
-		//close all popup widget
-		while( GetCurrentPopupWidget())
-		{
-			ClosePopupWidget(GetCurrentPopupWidget());
-		}
-
-		//close all modal dialog
-		while(GetTopestDialog())
-		{
-			CloseDialog(GetTopestDialog());
-		}
-
-		//close all page
-		while( !m_arrayOpenedPage.empty())
-		{
-			CloseUIPage(*m_arrayOpenedPage.begin());
-		}
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -1242,7 +854,7 @@ namespace guiex
 	*/
 	bool CGUISystem::ProcessGlobalKeyEvent(CGUIEventKeyboard* pEvent)
 	{
-		CGUIWidget* pRoot = GetCurrentRootWidget();
+		CGUIWidget* pRoot = m_pUICanvas->GetCurrentRootWidget();
 		if( !pRoot)
 		{
 			//no root widget here

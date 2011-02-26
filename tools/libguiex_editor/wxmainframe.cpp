@@ -447,11 +447,11 @@ void WxMainFrame::RefreshWidgetTreeCtrl()
 		return;
 	}
 
-	if( GSystem->GetOpenedPageNum() != 1 )
+	if( GSystem->GetUICanvas()->GetOpenedPageNum() != 1 )
 	{
 		return;
 	}
-	CGUIWidget* pWidgetRoot = GSystem->GetOpenedPageByIndex(0);
+	CGUIWidget* pWidgetRoot = GSystem->GetUICanvas()->GetOpenedPageByIndex(0);
 	if( !pWidgetRoot)
 	{
 		//no root widget
@@ -979,11 +979,11 @@ void WxMainFrame::OnDeleteWidget(wxCommandEvent& evt)
 		return;
 	}
 
-	if( GSystem->GetOpenedPageNum() !=0 &&
-		pWidget == GSystem->GetOpenedPageByIndex(0))
+	if( GSystem->GetUICanvas()->GetOpenedPageNum() !=0 &&
+		pWidget == GSystem->GetUICanvas()->GetOpenedPageByIndex(0))
 	{
 		//is page
-		GSystem->CloseUIPage(pWidget);
+		GSystem->GetUICanvas()->CloseUIPage(pWidget);
 		CGUIWidgetManager::Instance()->ReleasePage(pWidget);
 	}
 	else
@@ -1055,7 +1055,7 @@ void WxMainFrame::OnToggleWireframe(wxCommandEvent& evt)
 //------------------------------------------------------------------------------
 void WxMainFrame::OnRefresh(wxCommandEvent& evt)
 {
-	GSystem->GetCurrentRootWidget()->Refresh();
+	GSystem->GetUICanvas()->GetCurrentRootWidget()->Refresh();
 	Refresh();
 }
 //------------------------------------------------------------------------------
@@ -1098,10 +1098,10 @@ void WxMainFrame::OnCreateWidget(wxCommandEvent& evt)
 		return;
 	}
 
-	if( GSystem->GetOpenedPageNum() == 0 )
+	if( GSystem->GetUICanvas()->GetOpenedPageNum() == 0 )
 	{
 		CGUIWidgetManager::Instance()->AddPage( pWidget);
-		GSystem->OpenUIPage( pWidget);
+		GSystem->GetUICanvas()->OpenUIPage( pWidget);
 	}
 	else if( m_pCanvas->GetSelectedWidget())
 	{
@@ -1121,7 +1121,7 @@ void WxMainFrame::OnUpdateCreateWidget(wxUpdateUIEvent& event)
 {
 	if( m_pCanvas )
 	{
-		if( GSystem->GetOpenedPageNum() == 0 ||
+		if( GSystem->GetUICanvas()->GetOpenedPageNum() == 0 ||
 			m_pCanvas->GetSelectedWidget())
 		{
 			event.Enable(true);
@@ -1456,7 +1456,7 @@ void WxMainFrame::RenderFile( const std::string& rFileName )
 		CGUIWidget* pWidget = CGUIWidgetManager::Instance()->LoadPage( rFileName, m_strCurrentSceneName );
 		if( pWidget )
 		{
-			GSystem->OpenUIPage(pWidget);
+			GSystem->GetUICanvas()->OpenUIPage(pWidget);
 		}
 	}
 	catch (CGUIBaseException& rError)

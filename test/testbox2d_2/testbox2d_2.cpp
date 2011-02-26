@@ -25,7 +25,7 @@ int32 CGUIFrameworkTest::InitializeGame()
 	CGUISceneManager::Instance()->LoadWidgets( "box2d.uip" );
 	CGUIWidget* pWidget = NULL;
 	pWidget = CGUIWidgetManager::Instance()->GetPage( "sample_1.xml", "box2d.uip" );
-	CGUISystem::Instance()->OpenUIPage(pWidget);		
+	GSystem->GetUICanvas()->OpenUIPage(pWidget);		
 	return 0;
 }
 

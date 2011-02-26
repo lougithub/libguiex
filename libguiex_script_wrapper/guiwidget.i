@@ -115,9 +115,6 @@ namespace guiex
 		virtual void ProcessProperty( const CGUIProperty& rProperty);
 
 	public:
-		void RegisterUIEvent( const CGUIString& rUIEventName );
-		void UnregisterUIEvent( const CGUIString& rUIEventName );
-
 		void RegisterScriptCallbackFunc( const CGUIString& strEventName, const CGUIString& strFunc );
 		void UnregisterScriptCallbackFunc(const CGUIString& strEventName);
 		bool HasScriptCallbackFunc(const CGUIString& strEventName) const;

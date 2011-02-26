@@ -44,8 +44,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUICanvasLayerManager::Update( real fDeltaTime )
 	{
-		for( TArrayCanvasLayer::iterator itor = m_arrayCanvasLayers.begin();
-			itor != m_arrayCanvasLayers.end();
+		for( TArrayCanvasLayer::reverse_iterator itor = m_arrayCanvasLayers.rbegin();
+			itor != m_arrayCanvasLayers.rend();
 			++itor )
 		{
 			(*itor)->Update( fDeltaTime );
@@ -60,6 +60,41 @@ namespace guiex
 		{
 			(*itor)->Render( pRender );
 		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUICanvasLayerManager::RenderExtraInfo( class IGUIInterfaceRender* pRender )
+	{
+		for( TArrayCanvasLayer::iterator itor = m_arrayCanvasLayers.begin();
+			itor != m_arrayCanvasLayers.end();
+			++itor )
+		{
+			(*itor)->RenderExtraInfo( pRender );
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUICanvasLayerManager::Refresh( )
+	{
+		for( TArrayCanvasLayer::reverse_iterator itor = m_arrayCanvasLayers.rbegin();
+			itor != m_arrayCanvasLayers.rend();
+			++itor )
+		{
+			(*itor)->Refresh( );
+		}
+	}
+	//------------------------------------------------------------------------------
+	CGUIWidget*	CGUICanvasLayerManager::GetWidgetUnderPoint(const CGUIVector2& rPos)
+	{
+		for( TArrayCanvasLayer::reverse_iterator itor = m_arrayCanvasLayers.rbegin();
+			itor != m_arrayCanvasLayers.rend();
+			++itor )
+		{
+			CGUIWidget* pWidget = (*itor)->GetWidgetUnderPoint( rPos );
+			if( pWidget )
+			{
+				return pWidget;
+			}
+		}
+		return NULL;
 	}
 	//------------------------------------------------------------------------------
 	void CGUICanvasLayerManager::PushCanvasLayer( CGUICanvasLayer* pLayer )
@@ -93,6 +128,7 @@ namespace guiex
 			m_arrayCanvasLayers.erase( itor );
 			return pLayer;
 		}
+		throw CGUIException("[CGUICanvasLayerManager::RemoveCanvasLayer]: not given layer");
 		return NULL;
 	}
 	//------------------------------------------------------------------------------

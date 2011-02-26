@@ -25,7 +25,7 @@ int32 CGUIFrameworkTest::InitializeGame()
 	CGUISceneManager::Instance()->LoadWidgets( "sound.uip" );
 	CGUIWidget* pWidget = NULL;
 	pWidget = CGUIWidgetManager::Instance()->GetPage( "sound.xml", "sound.uip" );
-	CGUISystem::Instance()->OpenUIPage(pWidget);		
+	GSystem->GetUICanvas()->OpenUIPage(pWidget);		
 	return 0;
 }
 

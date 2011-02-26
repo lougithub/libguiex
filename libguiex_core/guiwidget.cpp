@@ -1047,16 +1047,6 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::RegisterUIEvent( const CGUIString& rUIEventName )
-	{
-		GSystem->RegisterUIEvent( rUIEventName, this );
-	}
-	//------------------------------------------------------------------------------
-	void CGUIWidget::UnregisterUIEvent( const CGUIString& rUIEventName )
-	{
-		GSystem->UnregisterUIEvent( rUIEventName, this );
-	}
-	//------------------------------------------------------------------------------
 	CGUISoundData* CGUIWidget::RegisterSound( const CGUIString& strEventName, const CGUIString& rSoundName )
 	{
 		UnregisterSound( strEventName );

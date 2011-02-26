@@ -66,9 +66,9 @@ int WxEditorCanvasContainer::SaveFileAs(const std::string& rNewFileName)
 	aDoc.InsertEndChild(aNewToppestNode);
 
 	//get page
-	if( GSystem->GetOpenedPageNum() != 0 )
+	if( GSystem->GetUICanvas()->GetOpenedPageNum() != 0 )
 	{
-		CGUIWidget* pWidget = GSystem->GetOpenedPageByIndex(0);
+		CGUIWidget* pWidget = GSystem->GetUICanvas()->GetOpenedPageByIndex(0);
 		if( pWidget )
 		{
 			//save it to doc

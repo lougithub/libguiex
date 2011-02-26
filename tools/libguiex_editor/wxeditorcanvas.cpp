@@ -68,6 +68,11 @@ void WxEditorCanvas::InitializeCanvas()
 {
 	SetCurrent();
 
+	if( !GSystem->GetUICanvas())
+	{
+		GSystem->GenerateUICanvas();
+	}
+
 	wxSize aCanvasSize( GSystem->GetScreenWidth(), GSystem->GetScreenHeight());
 	UpdateCanvasSize(aCanvasSize);
 
@@ -77,6 +82,7 @@ void WxEditorCanvas::InitializeCanvas()
 //------------------------------------------------------------------------------
 void WxEditorCanvas::DestroyCanvas()
 {
+	GSystem->DestroyUICanvas();
 	GSystem->DestroyAllWidgets();
 	GSystem->UnloadAllResource();
 

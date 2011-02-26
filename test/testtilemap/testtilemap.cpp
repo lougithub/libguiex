@@ -25,7 +25,7 @@ int32 CGUIFrameworkTest::InitializeGame()
 	CGUISceneManager::Instance()->LoadWidgets( "tilemap.uip" );
 	CGUIWidget* pWidget = NULL;
 	pWidget = CGUIWidgetManager::Instance()->GetPage( "sample1.xml", "tilemap.uip" );
-	CGUISystem::Instance()->OpenUIPage(pWidget);		
+	GSystem->GetUICanvas()->OpenUIPage(pWidget);		
 	return 0;
 }
 

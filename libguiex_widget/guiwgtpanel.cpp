@@ -38,7 +38,7 @@ namespace guiex
 		InitPanel();
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtPanel::InitPanel()
+	void CGUIWgtPanel::InitPanel()
 	{
 		m_pImageBG = NULL;
 
@@ -52,7 +52,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtPanel::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
+	void CGUIWgtPanel::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
 		if( rName == "BGIMAGE")
 		{

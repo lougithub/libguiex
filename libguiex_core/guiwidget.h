@@ -225,9 +225,6 @@ namespace guiex
 		virtual void ProcessProperty( const CGUIProperty& rProperty);
 
 	public:
-		void RegisterUIEvent( const CGUIString& rUIEventName );
-		void UnregisterUIEvent( const CGUIString& rUIEventName );
-
 		CGUISoundData* RegisterSound( const CGUIString& strEventName, const CGUIString& rSoundName );
 		void UnregisterSound( const CGUIString& strEventName );
 		CGUISoundData* GetSound( const CGUIString& strEventName );

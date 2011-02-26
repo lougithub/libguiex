@@ -17,7 +17,9 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	CGUICanvasLayer::CGUICanvasLayer( const char* szLayerName )
+	CGUICanvasLayer::CGUICanvasLayer( const char* szLayerName, bool bTopMost /*= false*/ )
+		:m_strLayerName( szLayerName )
+		,m_bTopMost( bTopMost )
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -30,6 +32,11 @@ namespace guiex
 		return m_strLayerName;
 	}
 	//------------------------------------------------------------------------------
+	bool CGUICanvasLayer::IsTopMost( ) const
+	{
+		return m_bTopMost;
+	}
+	//------------------------------------------------------------------------------
 	void CGUICanvasLayer::Update( real /*fDeltaTime*/ )
 	{
 
@@ -37,7 +44,19 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUICanvasLayer::Render( IGUIInterfaceRender* pRender )
 	{
+	}
+	void CGUICanvasLayer::RenderExtraInfo( IGUIInterfaceRender* pRender )
+	{
+	}
+	//------------------------------------------------------------------------------
+	void CGUICanvasLayer::Refresh( )
+	{
 
+	}
+	//------------------------------------------------------------------------------
+	CGUIWidget* CGUICanvasLayer::GetWidgetUnderPoint( const CGUIVector2& rPos )
+	{
+		return NULL;
 	}
 	//------------------------------------------------------------------------------
 }

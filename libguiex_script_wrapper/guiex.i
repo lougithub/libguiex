@@ -32,9 +32,11 @@
 %include	"guiinterfacemanager.i"
 %include	"guiwidget.i"
 %include	"guiwidget_box2d.i"
-%include	"guisystem.i"
 %include	"guiwidgetutility.i"
 %include	"guiwidgetfactory.i"
+%include	"guiuicanvaslayer.i"
+%include	"guisystem.i"
+
 
 
 

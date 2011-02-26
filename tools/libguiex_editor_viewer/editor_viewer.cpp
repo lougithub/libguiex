@@ -482,7 +482,7 @@ void WxMainFrame::OpenUIPage( bool bCheckCommandLine )
 
 	try
 	{
-		GSystem->CloseAll();
+		//GSystem->CloseAll();
 
 		//free resource
 		for( TMapScene::iterator itor = m_mapScenes.begin();
@@ -526,7 +526,7 @@ void WxMainFrame::ReOpenPages()
 			CGUIWidget* pPage = CGUIWidgetManager::Instance()->GetPage( rPagesInScene[i], rSceneName );
 			if( pPage->IsOpen() == false )
 			{
-				GSystem->OpenUIPage( pPage );
+				GSystem->GetUICanvas()->OpenUIPage( pPage );
 			}
 		}
 	}
@@ -660,7 +660,7 @@ void WxMainFrame::OnToggleWireframe(wxCommandEvent& evt)
 //------------------------------------------------------------------------------
 void WxMainFrame::OnRefresh(wxCommandEvent& evt)
 {
-	guiex::GSystem->GetCurrentRootWidget()->Refresh();
+	guiex::GSystem->GetUICanvas()->GetCurrentRootWidget()->Refresh();
 	Refresh();
 }
 //------------------------------------------------------------------------------
@@ -738,7 +738,7 @@ void WxMainFrame::OnClosePage(wxCommandEvent& WXUNUSED(event))
 
 	if( rOpenPages.empty() )
 	{
-		GSystem->CloseAll();
+		//GSystem->CloseAll();
 
 		//release resource
 		m_mapScenes.erase( m_mapScenes.find( strUISceneName ));

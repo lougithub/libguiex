@@ -46,6 +46,8 @@ source_group( "camera" FILES ${${target_name}_camera_SRCS} )
 
 
 set( ${target_name}_canvas_SRCS 
+	guiuicanvaslayer.h
+	guiuicanvaslayer.cpp	
 	guicanvaslayer.h
 	guicanvaslayer.cpp	
 	guicanvaslayermanager.h

@@ -503,6 +503,7 @@ namespace guiex
 		if( pEvent->IsExpired() == false)
 		{
 			SetPixelPosition(pEvent->GetWidgetLocalPos());
+			Refresh();
 		}
 		if( IsMouseConsumed())
 		{

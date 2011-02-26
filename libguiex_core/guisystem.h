@@ -55,6 +55,8 @@ namespace guiex
 	class CGUIParticle2DManager;
 	class CGUITileMapManager;
 
+	class CGUIUICanvasLayer;
+
 	extern CGUISystem* GSystem;
 }
 
@@ -107,23 +109,10 @@ namespace guiex
 		//********************************************************
 		//	page and dialog
 		//********************************************************
-		void OpenUIPage(CGUIWidget* pPage);
-		void CloseUIPage(CGUIWidget* pPage);
-		uint32 GetOpenedPageNum() const;
-		CGUIWidget* GetOpenedPageByIndex( uint32 nIdx );
+		void GenerateUICanvas();
+		void DestroyUICanvas();
+		CGUIUICanvasLayer* GetUICanvas();
 
-		void OpenDialog(CGUIWidget* pDlg);
-		void CloseDialog(CGUIWidget* pDlg);
-		CGUIWidget* GetTopestDialog( ) const;
-
-		void OpenPopupWidget(CGUIWidget* pWidget);
-		CGUIWidget* GetCurrentPopupWidget( ) const;
-		void ClosePopupWidget(CGUIWidget* pWidget);
-
-		CGUIWidget* GetCurrentRootWidget( ) const;
-
-		void CloseByAutoSelect( CGUIWidget* pWidget );
-		void CloseAll();
 
 		//********************************************************
 		//	screen size
@@ -158,9 +147,10 @@ namespace guiex
 		//void FreeResource( const CGUIString& rSceneName );
 		void UnloadAllResource();
 		void ReleaseResourceByScene( const CGUIString& rSceneName );
-		void ReleaseAllResources(  );
+		void ReleaseAllResources( );
 
-		void DestroyAllWidgets(  );
+		void DestroyAllCanvas( );
+		void DestroyAllWidgets( );
 
 		bool ProcessMouseInput(const IGUIInterfaceMouse::SMouseEvent& rMouseEvent);
 		bool ProcessKeyboardInput( const IGUIInterfaceKeyboard::SKeyEvent& rKeyEvent );
@@ -202,19 +192,10 @@ namespace guiex
 		void UpdateSound( real fDeltaTime );
 		void UpdatePhysics(real fDeltaTime);
 
-		void AddToGarbage( CGUIWidget* pWidget );
-		void AddToDynamicGarbage( CGUIWidget* pWidget );
-		void RefreshGarbage( );
-	
-		void GenerateRootWidget();
-		void DestroyRootWidget();
-
 		void InitializeSingletons();
 		void ReleaseSingletons();
 
-		void RenderUI( class IGUIInterfaceRender* pRender );
 		void RenderCanvas( class IGUIInterfaceRender* pRender );
-		void UpdateUI( real fDeltaTime );
 		void UpdateCanvas( real fDeltaTime );
 		void UpdatePerformance( real fDeltaTime  );
 		
@@ -228,7 +209,6 @@ namespace guiex
 	private:
 		//----------------------------------------------------------------------
 		/// the root widget of widget tree
-		CGUIWidget* m_pWgtRoot; ///widget root
 		CGUIWidget* m_pWgtFocus; ///widget which has focus
 		//----------------------------------------------------------------------
 
@@ -248,21 +228,6 @@ namespace guiex
 		CGUIInputProcessor m_aInputProcessor; ///input processor
 
 		//----------------------------------------------------------------------
-		//page list
-		typedef std::vector<CGUIWidget*>	TArrayWidget;	
-		TArrayWidget m_arrayOpenedPage;
-		TArrayWidget m_vecPageGarbage;
-		TArrayWidget m_vecDynamicPageGarbage;
-
-		//widget modal dialog
-		TArrayWidget m_arrayOpenedDlg; ///contain modal dialog
-		
-		//popup widget
-		CGUIWidget*	m_pPopupWidget; ///contain popup widget shown on top
-		//----------------------------------------------------------------------
-
-
-		//----------------------------------------------------------------------
 		//global ui event
 		typedef std::vector<CGUIWidget* > TEventReceiver;
 		typedef std::map<CGUIString, TEventReceiver> TMapUIEvent;
@@ -279,6 +244,9 @@ namespace guiex
 		//----------------------------------------------------------------------
 
 		CGUIString m_strDataPath; //data path
+
+		friend class CGUIUICanvasLayer;
+		CGUIUICanvasLayer* m_pUICanvas; //ui canvas
 
 		//----------------------------------------------------------------------
 		//index for name generating
@@ -433,12 +401,6 @@ namespace guiex
 	* @brief get widget system
 	*/
 	GUIEXPORT CGUISystem* GetSystem();
-
-	GUIEXPORT void OpenDialog(CGUIWidget* pDlg);
-	GUIEXPORT void CloseDialog(CGUIWidget* pDlg);
-
-	GUIEXPORT void OpenUIPage( CGUIWidget* pPage );
-	GUIEXPORT void CloseUIPage( CGUIWidget* pPage );
 
 	GUIEXPORT void SendUIEvent(const CGUIString& rUIEventName,
 		const CGUIString& rArg1 = CGUIString(),

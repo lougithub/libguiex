@@ -9,30 +9,21 @@ public:
 	{
 		m_aCamera.Restore();
 		m_aCamera.SetFov( 45 );
-		m_aAsLiteQueue.AddItem( CGUIAsLite_Interpolation<CGUIVector3>( 
-			m_aCamera.GetEye()+CGUIVector3(1000,1000,1000), 
-			m_aCamera.GetEye()+CGUIVector3(-1000,-1000,-1000), 
-			3,
-			eInterpolationType_EaseInOut));
-		m_aAsLiteQueue.AddItem( CGUIAsLite_Interpolation<CGUIVector3>(
-			m_aCamera.GetEye()+CGUIVector3(-1000,-1000,-1000),
-			m_aCamera.GetEye()+CGUIVector3(1000,1000,1000),
-			3, 
-			eInterpolationType_EaseInOut));
-		m_aAsLiteQueue.SetLooping( true );
 
 		CGUIWidget* pWidget = NULL;
 
 		pWidget = CGUIWidgetManager::Instance()->GetPage( "sample1.xml", "tilemap.uip" );
+		pWidget->SetMovable( true );
 		m_vecWidgets.push_back( pWidget );
 		pWidget->Open()	;
 
 		pWidget = CGUIWidgetManager::Instance()->GetPage( "dialog_okcancel.xml", "common.uip" );
+		pWidget->SetMovable( true );
 		m_vecWidgets.push_back( pWidget );
 		pWidget->Open()	;
 	}
 
-	~CMyCanvasLayer_DrawWidget(  )
+	~CMyCanvasLayer_DrawWidget( )
 	{
 		for( uint32 i=0; i<m_vecWidgets.size(); ++i )
 		{
@@ -41,17 +32,31 @@ public:
 		m_vecWidgets.clear();		
 	}
 
+	//------------------------------------------------------------------------------
+	CGUIWidget* GetWidgetUnderPoint( const CGUIVector2& rPos )
+	{
+		//capture input
+		for( std::vector<CGUIWidget*>::reverse_iterator itor = m_vecWidgets.rbegin();
+			itor != m_vecWidgets.rend();
+			++itor )
+		{
+			CGUIWidget* pWidget = (*itor)->GetWidgetAtPoint(rPos);
+			if( pWidget )
+			{
+				return pWidget;
+			}
+		}
+		return NULL;
+	}
+
 	virtual void Update( real fDeltaTime )
 	{
-		for( std::vector<CGUIWidget*>::iterator itor = m_vecWidgets.begin();
-			itor != m_vecWidgets.end();
+		for( std::vector<CGUIWidget*>::reverse_iterator itor = m_vecWidgets.rbegin();
+			itor != m_vecWidgets.rend();
 			++itor )
 		{
 			(*itor)->Update( fDeltaTime );
 		}
-
-		m_aAsLiteQueue.Update( fDeltaTime );
-		m_aCamera.SetEye( m_aAsLiteQueue.GetCurrentValue());
 	}
 
 	virtual void Render( class IGUIInterfaceRender* pRender )
@@ -76,7 +81,6 @@ public:
 protected:
 	std::vector<CGUIWidget*> m_vecWidgets;
 	CGUICamera m_aCamera;
-	CGUIAsLite_Queue<CGUIVector3> m_aAsLiteQueue; 
 };
 
 

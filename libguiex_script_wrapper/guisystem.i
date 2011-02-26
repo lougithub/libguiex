@@ -16,24 +16,9 @@ namespace guiex
 
 		CGUIWidget* GetWidgetUnderPoint(const CGUIVector2& rPos);
 
-		//********************************************************
-		//	page and dialog
-		//********************************************************
-		void OpenUIPage(CGUIWidget* pPage);
-		void CloseUIPage(CGUIWidget* pPage);
-		uint32 GetOpenedPageNum() const;
-		CGUIWidget* GetOpenedPageByIndex( uint32 nIdx );
-
-		void OpenDialog(CGUIWidget* pDlg);
-		CGUIWidget* GetTopestDialog( ) const;
-		void CloseDialog(CGUIWidget* pDlg);
-
-		void OpenPopupWidget(CGUIWidget* pWidget);
-		CGUIWidget* GetCurrentPopupWidget( ) const;
-		void ClosePopupWidget(CGUIWidget* pWidget);
-		CGUIWidget* GetCurrentRootWidget( ) const;
-
-		void CloseAll();
+		void GenerateUICanvas();
+		void DestroyUICanvas();
+		CGUIUICanvasLayer* GetUICanvas();
 
 		//********************************************************
 		//	screen size
@@ -62,12 +47,6 @@ namespace guiex
 
 
 	CGUISystem* GetSystem();
-
-	void OpenDialog(CGUIWidget* pDlg);
-	void CloseDialog(CGUIWidget* pDlg);
-
-	void OpenUIPage( CGUIWidget* pPage );
-	void CloseUIPage( CGUIWidget* pPage );
 
 	void SendUIEvent(const CGUIString& rUIEventName,
 		const CGUIString& rArg1 = CGUIString(),

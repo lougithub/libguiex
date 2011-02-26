@@ -124,6 +124,7 @@
 
 //canvaslayer
 #include "guicanvaslayer.h"
+#include "guiuicanvaslayer.h"
 #include "guicanvaslayermanager.h"
 
 //camera
