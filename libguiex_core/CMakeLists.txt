@@ -184,8 +184,6 @@ set( ${target_name}_widget_SRCS
 	guiwidgetmanager.cpp
 	guiwidgetmanager.h
 	guiwidgetparameter.h
-	guiwidgetroot.cpp
-	guiwidgetroot.h
 	guiwidgetutility.cpp
 	guiwidgetutility.h
 	)

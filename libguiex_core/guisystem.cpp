@@ -236,9 +236,6 @@ namespace guiex
 
 		Reset();
 
-		//register internal root widget
-		GUI_REGISTER_WIDGET_LIB(CGUIWidgetRoot);
-
 		//add ui layer.
 		GenerateUICanvas();
 
