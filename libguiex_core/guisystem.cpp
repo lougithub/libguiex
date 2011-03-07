@@ -42,7 +42,6 @@
 
 #include "guiperfmonitor.h"
 
-#include "guiwidgetroot.h"
 #include "guiscene.h"
 #include "guiscenemanager.h"
 #include "guiwidgetmanager.h"

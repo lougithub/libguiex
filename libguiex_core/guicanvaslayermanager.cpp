@@ -99,7 +99,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUICanvasLayerManager::PushCanvasLayer( CGUICanvasLayer* pLayer )
 	{
-		m_arrayCanvasLayers.push_back( pLayer );
+		if( pLayer->IsTopMost() )
+		{
+			m_arrayCanvasLayers.push_front( pLayer );
+		}
+		else
+		{
+			m_arrayCanvasLayers.push_back( pLayer );
+		}
 	}
 	//------------------------------------------------------------------------------
 	CGUICanvasLayer* CGUICanvasLayerManager::PopCanvasLayer( )
@@ -157,7 +164,13 @@ namespace guiex
 			throw CGUIException("[CGUICanvasLayerManager::GetCanvasLayer]: not finding layer by index");
 			return NULL;
 		}
-		return m_arrayCanvasLayers[nIndex];
+
+		TArrayCanvasLayer::iterator itor = m_arrayCanvasLayers.begin();
+		for( uint32 i=1; i<nIndex; ++i )
+		{
+			++itor;
+		}
+		return *itor;
 	}
 	//------------------------------------------------------------------------------
 	CGUICanvasLayer* CGUICanvasLayerManager::GetCanvasLayer( const char* szLayerName )
