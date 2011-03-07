@@ -25,6 +25,9 @@ namespace guiex
 		CGUIUICanvasLayer( const char* szLayerName );
 		virtual ~CGUIUICanvasLayer();
 
+		virtual void Initialize( );
+		virtual void Finalize( );
+
 		virtual void Update( real fDeltaTime );
 		virtual void Render( class IGUIInterfaceRender* pRender );
 		virtual void RenderExtraInfo( IGUIInterfaceRender* pRender );
@@ -51,11 +54,7 @@ namespace guiex
 		void AddToDynamicGarbage( CGUIWidget* pWidget );
 		void RefreshGarbage( );
 
-		CGUIWidget*	GetCurrentRootWidget( ) const;
-
-	protected:
-		void GenerateRootWidget();
-		void DestroyRootWidget();
+		CGUIWidget*	GetCurrentRootWidget( );
 
 	private:
 		typedef std::vector<CGUIWidget*>	TArrayWidget;	
@@ -64,7 +63,6 @@ namespace guiex
 		TArrayWidget m_vecDynamicPageGarbage;
 		TArrayWidget m_arrayOpenedDlg; //widget modal dialog
 		CGUIWidget*	m_pPopupWidget; //popup widget
-		CGUIWidget* m_pWgtRoot; ///widget root
 	};
 
 }//namespace guiex

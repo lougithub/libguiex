@@ -263,6 +263,9 @@ namespace guiex
 		//release resource
 		ReleaseAllResources();
 
+		//release interface
+		m_pInterfaceManager->UnregisterAllInterface();
+
 		//destroy singleton instance
 		ReleaseSingletons();
 
@@ -296,7 +299,8 @@ namespace guiex
 	void CGUISystem::GenerateUICanvas()
 	{
 		GUI_ASSERT( !m_pUICanvas, "ui canvas has been generated" );
-		m_pUICanvas = new CGUIUICanvasLayer( "ui_layer" );
+		m_pUICanvas = new CGUIUICanvasLayer( "ui_layer"GUI_INTERNAL_WIDGET_FLAG );
+		m_pUICanvas->Initialize();
 		m_pCanvasLayerManager->PushCanvasLayer( m_pUICanvas );	
 	}
 	//------------------------------------------------------------------------------
@@ -305,6 +309,7 @@ namespace guiex
 		if( m_pUICanvas )
 		{
 			m_pCanvasLayerManager->RemoveCanvasLayer( m_pUICanvas );
+			m_pUICanvas->Finalize();
 			m_pUICanvas->DestroySelf();
 			m_pUICanvas = NULL;
 		}

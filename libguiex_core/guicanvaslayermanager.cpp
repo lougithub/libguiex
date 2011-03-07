@@ -117,6 +117,7 @@ namespace guiex
 	void CGUICanvasLayerManager::PopAndDestroyCanvasLayer( )
 	{
 		CGUICanvasLayer* pCanvasLayer = PopCanvasLayer();
+		pCanvasLayer->Finalize();
 		pCanvasLayer->DestroySelf();
 	}
 	//------------------------------------------------------------------------------
@@ -138,6 +139,7 @@ namespace guiex
 			itor != m_arrayCanvasLayers.end();
 			++itor )
 		{
+			(*itor)->Finalize();
 			(*itor)->DestroySelf( );
 		}
 		m_arrayCanvasLayers.clear();

@@ -12,13 +12,14 @@
 // include
 //============================================================================// 
 #include "guibase.h"
+#include "guiwidget.h"
+#include "guisystem.h"
 
 //============================================================================//
 // declare
 //============================================================================// 
 namespace guiex
 {
-	class CGUIWidget;
 	class CGUIVector2;
 }
 
@@ -27,12 +28,14 @@ namespace guiex
 //============================================================================// 
 namespace guiex
 {
-	class GUIEXPORT CGUICanvasLayer
+	class GUIEXPORT CGUICanvasLayer : public CGUIWidget
 	{
 	public:
-		CGUICanvasLayer( const char* szLayerName, bool bTopMost = false );
+		CGUICanvasLayer( const char* szLayerName, bool bTopMost = false, const CGUISize& rCanvasSize = GSystem->GetScreenSize());
 		virtual ~CGUICanvasLayer();
 
+		virtual void Initialize( );
+		virtual void Finalize( );
 		virtual void Update( real fDeltaTime );
 		virtual void Render( class IGUIInterfaceRender* pRender );
 		virtual void RenderExtraInfo( IGUIInterfaceRender* pRender );

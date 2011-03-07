@@ -180,10 +180,10 @@ namespace guiex
 		CGUIWidget* GetWidgetAtPoint(const CGUIVector2& rPos);
 		virtual bool HitTest( const CGUIVector2& rPos);
 
-		void Render( IGUIInterfaceRender* pRender );
-		void RenderExtraInfo(IGUIInterfaceRender* pRender);
-		void Update( real fDeltaTime );
-		void Refresh( );
+		virtual void Render( IGUIInterfaceRender* pRender );
+		virtual void RenderExtraInfo(IGUIInterfaceRender* pRender);
+		virtual void Update( real fDeltaTime );
+		virtual void Refresh( );
 
 		////////////////////////////////////////////////////////////////////////////
 		// resource related operation

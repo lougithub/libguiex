@@ -18,7 +18,7 @@ namespace guiex
 		void OpenPopupWidget(CGUIWidget* pWidget);
 		CGUIWidget* GetCurrentPopupWidget( ) const;
 		void ClosePopupWidget(CGUIWidget* pWidget);
-		CGUIWidget* GetCurrentRootWidget( ) const;
+		CGUIWidget* GetCurrentRootWidget( );
 	};
 }
 

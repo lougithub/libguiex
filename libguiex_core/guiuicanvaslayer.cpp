@@ -25,14 +25,23 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIUICanvasLayer::CGUIUICanvasLayer( const char* szLayerName )
 		:CGUICanvasLayer( szLayerName, true )
-		,m_pWgtRoot(NULL)
 		,m_pPopupWidget(NULL)
 
 	{
-		GenerateRootWidget();
+		SetSizeType(eScreenValue_Percentage);
+		SetSize( 1.0f, 1.0f );
 	}
 	//------------------------------------------------------------------------------
 	CGUIUICanvasLayer::~CGUIUICanvasLayer()
+	{
+	}
+	//------------------------------------------------------------------------------
+	void CGUIUICanvasLayer::Initialize( )
+	{
+		CGUICanvasLayer::Initialize();
+	}
+	//------------------------------------------------------------------------------
+	void CGUIUICanvasLayer::Finalize( )
 	{
 		//close all popup widget
 		while( GetCurrentPopupWidget())
@@ -52,10 +61,10 @@ namespace guiex
 			CloseUIPage(*m_arrayOpenedPage.begin());
 		}
 
-		DestroyRootWidget();
-
 		//clear page in garbage
 		RefreshGarbage();
+
+		CGUICanvasLayer::Finalize();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIUICanvasLayer::DestroySelf( )
@@ -66,12 +75,6 @@ namespace guiex
 	void CGUIUICanvasLayer::Update( real fDeltaTime )
 	{
 		CGUICanvasLayer::Update( fDeltaTime );
-
-		//update page
-		if( m_pWgtRoot)
-		{
-			m_pWgtRoot->Update( fDeltaTime );
-		}
 
 		//update dlg
 		for(TArrayWidget::iterator itor = m_arrayOpenedDlg.begin();
@@ -94,12 +97,6 @@ namespace guiex
 	{
 		CGUICanvasLayer::Render( pRender );
 
-		//render ui page
-		if( m_pWgtRoot )
-		{
-			m_pWgtRoot->Render(pRender);
-		}
-
 		//render dlg
 		for(TArrayWidget::iterator itor = m_arrayOpenedDlg.begin();
 			itor != m_arrayOpenedDlg.end();
@@ -117,11 +114,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIUICanvasLayer::RenderExtraInfo( IGUIInterfaceRender* pRender )
 	{
-		//render page
-		if( m_pWgtRoot )
-		{
-			m_pWgtRoot->RenderExtraInfo(pRender);
-		}
+		CGUICanvasLayer::RenderExtraInfo( pRender );
+
 		//render dlg
 		for(TArrayWidget::iterator itor = m_arrayOpenedDlg.begin();
 			itor != m_arrayOpenedDlg.end();
@@ -139,11 +133,6 @@ namespace guiex
 	void CGUIUICanvasLayer::Refresh( )
 	{
 		CGUICanvasLayer::Refresh( );
-
-		if( m_pWgtRoot )
-		{
-			m_pWgtRoot->Refresh();
-		}
 
 		//update ui dlg
 		for(TArrayWidget::iterator itor = m_arrayOpenedDlg.begin();
@@ -172,22 +161,6 @@ namespace guiex
 		{
 			return NULL;
 		}
-	}
-	//------------------------------------------------------------------------------
-	void CGUIUICanvasLayer::GenerateRootWidget()
-	{
-		GUI_ASSERT( !m_pWgtRoot, "invalid widget root pointer");
-		m_pWgtRoot = CGUIWidgetManager::Instance()->CreateWidget("CGUIWidgetRoot", "__WIDGET_ROOT"GUI_INTERNAL_WIDGET_FLAG, "__SCENE_ROOT"GUI_INTERNAL_WIDGET_FLAG);
-		m_pWgtRoot->Create();
-		m_pWgtRoot->Open();
-	}
-	//------------------------------------------------------------------------------
-	void CGUIUICanvasLayer::DestroyRootWidget()
-	{
-		GUI_ASSERT( m_pWgtRoot, "invalid widget root pointer");
-		m_pWgtRoot->Close();
-		CGUIWidgetManager::Instance()->DestroyWidget(m_pWgtRoot);
-		m_pWgtRoot = NULL;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIUICanvasLayer::OpenDialog(CGUIWidget* pDlg)
@@ -321,7 +294,7 @@ namespace guiex
 			throw CGUIException( "[CGUIUICanvasLayer::OpenUIPage]: the widget <%s> isn't a page!", pPage->GetName().c_str());
 		}
 
-		pPage->SetParent( m_pWgtRoot );
+		pPage->SetParent( this );
 		pPage->Open();
 		pPage->Refresh();
 
@@ -405,7 +378,7 @@ namespace guiex
 		m_vecDynamicPageGarbage.clear();
 	}
 	//------------------------------------------------------------------------------
-	CGUIWidget*	CGUIUICanvasLayer::GetCurrentRootWidget( ) const
+	CGUIWidget*	CGUIUICanvasLayer::GetCurrentRootWidget( )
 	{
 		CGUIWidget* pDlgRoot = NULL;
 		if( pDlgRoot = GetCurrentPopupWidget())
@@ -418,7 +391,7 @@ namespace guiex
 		}
 		else
 		{
-			return m_pWgtRoot;
+			return this;
 		}
 	}
 	//------------------------------------------------------------------------------

@@ -338,7 +338,7 @@ namespace guiex
 			itor != itorEnd2;
 			itor++)
 		{
-			SInterface&		rInterface = itor->second;
+			SInterface&	rInterface = itor->second;
 			rInterface.m_pInterface->Destroy();
 			rInterface.m_pInterface->DeleteSelf();
 			if( rInterface.m_hHandle )

@@ -17,14 +17,33 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	CGUICanvasLayer::CGUICanvasLayer( const char* szLayerName, bool bTopMost /*= false*/ )
-		:m_strLayerName( szLayerName )
+	CGUICanvasLayer::CGUICanvasLayer( const char* szLayerName, bool bTopMost /*= false*/, const CGUISize& rCanvasSize /*= GSystem->GetScreenSize()*/ )
+		:CGUIWidget( "CGUICanvasLayer", "szLayerName", "" )
+		,m_strLayerName( szLayerName )
 		,m_bTopMost( bTopMost )
 	{
+		SetPixelSize( rCanvasSize );
 	}
 	//------------------------------------------------------------------------------
 	CGUICanvasLayer::~CGUICanvasLayer()
 	{
+	}
+	//------------------------------------------------------------------------------
+	void CGUICanvasLayer::Initialize( )
+	{
+		SetFocusable(false);
+		SetActivable(false);
+		SetMouseConsumed(false);
+		SetHitable( false );
+
+		Create();
+		Open();
+	}
+	//------------------------------------------------------------------------------
+	void CGUICanvasLayer::Finalize( )
+	{
+		Close();
+		OnDestroy();
 	}
 	//------------------------------------------------------------------------------
 	const CGUIString& CGUICanvasLayer::GetLayerName( ) const
@@ -37,26 +56,30 @@ namespace guiex
 		return m_bTopMost;
 	}
 	//------------------------------------------------------------------------------
-	void CGUICanvasLayer::Update( real /*fDeltaTime*/ )
+	void CGUICanvasLayer::Update( real fDeltaTime )
 	{
-
+		//update widget
+		CGUIWidget::Update( fDeltaTime );
 	}
 	//------------------------------------------------------------------------------
 	void CGUICanvasLayer::Render( IGUIInterfaceRender* pRender )
 	{
+		CGUIWidget::Render( pRender );
 	}
+	//------------------------------------------------------------------------------
 	void CGUICanvasLayer::RenderExtraInfo( IGUIInterfaceRender* pRender )
 	{
+		CGUIWidget::RenderExtraInfo( pRender );
 	}
 	//------------------------------------------------------------------------------
 	void CGUICanvasLayer::Refresh( )
 	{
-
+		CGUIWidget::Refresh( );
 	}
 	//------------------------------------------------------------------------------
 	CGUIWidget* CGUICanvasLayer::GetWidgetUnderPoint( const CGUIVector2& rPos )
 	{
-		return NULL;
+		return GetWidgetAtPoint(rPos);
 	}
 	//------------------------------------------------------------------------------
 }

@@ -11768,13 +11768,13 @@ static int _wrap_CGUIUICanvasLayer_GetCurrentRootWidget(lua_State* L) {
   guiex::CGUIWidget *result = 0 ;
   
   SWIG_check_num_args("GetCurrentRootWidget",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetCurrentRootWidget",1,"guiex::CGUIUICanvasLayer const *");
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetCurrentRootWidget",1,"guiex::CGUIUICanvasLayer *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIUICanvasLayer,0))){
     SWIG_fail_ptr("CGUIUICanvasLayer_GetCurrentRootWidget",1,SWIGTYPE_p_guiex__CGUIUICanvasLayer);
   }
   
-  result = (guiex::CGUIWidget *)((guiex::CGUIUICanvasLayer const *)arg1)->GetCurrentRootWidget();
+  result = (guiex::CGUIWidget *)(arg1)->GetCurrentRootWidget();
   SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIWidget,0); SWIG_arg++; 
   return SWIG_arg;
   

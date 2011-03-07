@@ -51,6 +51,8 @@ public:
 
 	virtual void Update( real fDeltaTime )
 	{
+		CGUICanvasLayer::Update( fDeltaTime );
+
 		for( std::vector<CGUIWidget*>::reverse_iterator itor = m_vecWidgets.rbegin();
 			itor != m_vecWidgets.rend();
 			++itor )
@@ -61,6 +63,8 @@ public:
 
 	virtual void Render( class IGUIInterfaceRender* pRender )
 	{
+		CGUICanvasLayer::Render( pRender );
+
 		CGUICamera* pOldCamera = pRender->ApplyCamera( &m_aCamera );
 
 		for( std::vector<CGUIWidget*>::iterator itor = m_vecWidgets.begin();
@@ -133,6 +137,8 @@ public:
 
 	virtual void Update( real fDeltaTime )
 	{
+		CGUICanvasLayer::Update( fDeltaTime );
+
 		m_aAsLiteQueue.Update( fDeltaTime );
 
 		switch( m_nMoveCamera )
@@ -148,6 +154,8 @@ public:
 
 	virtual void Render( class IGUIInterfaceRender* pRender )
 	{
+		CGUICanvasLayer::Render( pRender );
+
 		CGUICamera* pOldCamera = pRender->ApplyCamera( &m_aCamera );
 	
 		pRender->DrawRect(CGUIMatrix4::IDENTITY,
@@ -189,12 +197,17 @@ protected:
 		CGUISceneManager::Instance()->LoadWidgets( "tilemap.uip" );
 
 		//create layer
-		CGUICanvasLayerManager::Instance()->PushCanvasLayer( 
-			new CMyCanvasLayer_DrawRect( "layer 1",CGUIRect( 400,284,600,484), CGUIColor( 0,1,1,1 ), 0 ));	
-		CGUICanvasLayerManager::Instance()->PushCanvasLayer( 
-			new CMyCanvasLayer_DrawRect( "layer 2", CGUIRect( 400,284,600,484), CGUIColor( 1,1,1,1 ), 1));
-		CGUICanvasLayerManager::Instance()->PushCanvasLayer( 
-			new CMyCanvasLayer_DrawWidget( "layer 3" ));
+		CMyCanvasLayer_DrawRect* pLayer1 = new CMyCanvasLayer_DrawRect( "layer 1",CGUIRect( 400,284,600,484), CGUIColor( 0,1,1,1 ), 0 );	
+		pLayer1->Initialize();
+		CGUICanvasLayerManager::Instance()->PushCanvasLayer( pLayer1 );
+		
+		CMyCanvasLayer_DrawRect* pLayer2 = new CMyCanvasLayer_DrawRect( "layer 2", CGUIRect( 400,284,600,484), CGUIColor( 1,1,1,1 ), 1);
+		pLayer2->Initialize();
+		CGUICanvasLayerManager::Instance()->PushCanvasLayer( pLayer2 );
+
+		CMyCanvasLayer_DrawWidget* pLayer3 = new CMyCanvasLayer_DrawWidget( "layer 3" );
+		pLayer3->Initialize();
+		CGUICanvasLayerManager::Instance()->PushCanvasLayer( pLayer3 );
 
 		//open ui page
 		CGUIWidget* pWidget = CGUIWidgetManager::Instance()->GetPage( "showfps.xml", "common.uip" );
