@@ -17,8 +17,21 @@
 //============================================================================//
 // define
 //============================================================================// 
+#define GUI_AS_NO_GENERATOR_DECLARE(asType) \
+public:	\
+	friend class CGUIAsFactory; \
+	static bool HasGenerator() \
+	{ \
+	return false; \
+	} \
+	static const char* StaticGetType() \
+	{ \
+	return #asType; \
+	} 
+
 #define GUI_AS_GENERATOR_DECLARE(asType) \
 public:	\
+	static bool HasGenerator(); \
 	static const char* StaticGetType();\
 	friend class asType##_Generator; \
 	class asType##_Generator : public ::guiex::CGUIAsGenerator \
@@ -34,6 +47,8 @@ public:	\
 
 
 #define GUI_AS_GENERATOR_IMPLEMENT(asType)	\
+	bool asType::HasGenerator() \
+	{ return true; } \
 	const char* asType::StaticGetType()	\
 	{return #asType;} \
 	asType::asType##_Generator::asType##_Generator() \

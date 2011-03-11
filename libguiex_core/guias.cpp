@@ -306,13 +306,13 @@ namespace guiex
 
 	//------------------------------------------------------------------------------
 	CGUIAsAlpha::CGUIAsAlpha( const CGUIString& rAsName, const CGUIString& rSceneName )
-		:CGUIInterpolationBase<real>("CGUIAsAlpha" , rAsName, rSceneName )
+		:CGUIAsInterpolation<real>("CGUIAsAlpha" , rAsName, rSceneName )
 	{
 	}
 	//------------------------------------------------------------------------------
 	real CGUIAsAlpha::Update( real fDeltaTime )
 	{
-		real fLeftTime = CGUIInterpolationBase<real>::Update( fDeltaTime );
+		real fLeftTime = CGUIAsInterpolation<real>::Update( fDeltaTime );
 		GUI_ASSERT( GetReceiver(), "no receiver");
 		GetReceiver()->SetAlpha(GetCurrentValue());
 		return fLeftTime;
@@ -328,13 +328,13 @@ namespace guiex
 	GUI_AS_GENERATOR_IMPLEMENT( CGUIAsRotation );
 	//------------------------------------------------------------------------------
 	CGUIAsRotation::CGUIAsRotation(const CGUIString& rAsName, const CGUIString& rSceneName)
-		:CGUIInterpolationBase<CGUIVector3>("CGUIAsRotation", rAsName, rSceneName )
+		:CGUIAsInterpolation<CGUIVector3>("CGUIAsRotation", rAsName, rSceneName )
 	{
 	}
 	//------------------------------------------------------------------------------
 	real CGUIAsRotation::Update( real fDeltaTime )
 	{
-		real fLeftTime = CGUIInterpolationBase<CGUIVector3>::Update( fDeltaTime );
+		real fLeftTime = CGUIAsInterpolation<CGUIVector3>::Update( fDeltaTime );
 		GUI_ASSERT( GetReceiver(), "no receiver");
 		GetReceiver()->SetRotation(GetCurrentValue());
 		return fLeftTime;
@@ -349,13 +349,13 @@ namespace guiex
 	GUI_AS_GENERATOR_IMPLEMENT( CGUIAsScale );
 	//------------------------------------------------------------------------------
 	CGUIAsScale::CGUIAsScale(const CGUIString& rAsName, const CGUIString& rSceneName)
-		:CGUIInterpolationBase<CGUISize>("CGUIAsScale", rAsName, rSceneName )
+		:CGUIAsInterpolation<CGUISize>("CGUIAsScale", rAsName, rSceneName )
 	{
 	}
 	//------------------------------------------------------------------------------
 	real CGUIAsScale::Update( real fDeltaTime )
 	{
-		real fLeftTime = CGUIInterpolationBase<CGUISize>::Update( fDeltaTime );
+		real fLeftTime = CGUIAsInterpolation<CGUISize>::Update( fDeltaTime );
 		GUI_ASSERT( GetReceiver(), "no receiver");
 		GetReceiver()->SetScale(GetCurrentValue());
 		return fLeftTime;
@@ -369,13 +369,13 @@ namespace guiex
 	GUI_AS_GENERATOR_IMPLEMENT( CGUIAsPosition );
 	//------------------------------------------------------------------------------
 	CGUIAsPosition::CGUIAsPosition(const CGUIString& rAsName, const CGUIString& rSceneName)
-		:CGUIInterpolationBase<CGUIVector2>("CGUIAsPosition", rAsName, rSceneName )
+		:CGUIAsInterpolation<CGUIVector2>("CGUIAsPosition", rAsName, rSceneName )
 	{
 	}
 	//------------------------------------------------------------------------------
 	real CGUIAsPosition::Update( real fDeltaTime )
 	{
-		real fLeftTime = CGUIInterpolationBase<CGUIVector2>::Update( fDeltaTime );
+		real fLeftTime = CGUIAsInterpolation<CGUIVector2>::Update( fDeltaTime );
 		GUI_ASSERT( GetReceiver(), "no receiver");
 		GetReceiver()->SetPixelPosition(GetCurrentValue());
 		return fLeftTime;
@@ -390,13 +390,13 @@ namespace guiex
 	GUI_AS_GENERATOR_IMPLEMENT( CGUIAsColor );
 	//------------------------------------------------------------------------------
 	CGUIAsColor::CGUIAsColor(const CGUIString& rAsName, const CGUIString& rSceneName)
-		:CGUIInterpolationBase<CGUIColor>("CGUIAsColor", rAsName, rSceneName )
+		:CGUIAsInterpolation<CGUIColor>("CGUIAsColor", rAsName, rSceneName )
 	{
 	}
 	//------------------------------------------------------------------------------
 	real CGUIAsColor::Update( real fDeltaTime )
 	{
-		real fLeftTime = CGUIInterpolationBase<CGUIColor>::Update( fDeltaTime );
+		real fLeftTime = CGUIAsInterpolation<CGUIColor>::Update( fDeltaTime );
 		GUI_ASSERT( GetReceiver(), "no receiver");
 		GetReceiver()->SetColor(GetCurrentValue());
 		return fLeftTime;

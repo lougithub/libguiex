@@ -148,16 +148,13 @@ namespace guiex
 		const CGUIAsGenerator* pGenerator = pAs->GetGenerator();
 		if( !pGenerator )
 		{
-			throw CGUIException(
-				"[CGUIAsFactory::DestroyAs] failed to delete as");
-			return -1;
+			delete pAs;
 		}
 		else
 		{
-			GUI_ASSERT(pAs->m_pAsGenerator, "this as isn't created by this factory");
 			pGenerator->DestroyAs(pAs);
-			return 0;
 		}
+		return 0;
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

@@ -14,6 +14,8 @@
 //============================================================================// 
 #include "guibase.h"
 #include <map>
+#include "guias.h"
+#include "guiexception.h"
 
 //============================================================================//
 // declare
@@ -59,6 +61,20 @@ namespace guiex
 	protected:
 		CGUIAs*	GenerateAs(const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName);
 		int	DestroyAs( CGUIAs* pEvent );
+
+		template<class T>
+		T* GenerateAs( const CGUIString& rAsName, const CGUIString& rSceneName )
+		{
+			T* pNewAs = new T( rAsName, rSceneName );
+			if( !pNewAs || pNewAs->GetType() != T::StaticGetType() )
+			{
+				throw CGUIException(
+					"[CGUIAsFactory::GenerateAs] failed to generate as <%s>",
+					T::StaticGetType());
+				return NULL;	
+			}
+			return pNewAs;
+		}
 
 	protected:
 		friend class CGUIAsManager;

@@ -8,47 +8,47 @@ namespace guiex
 	};
 	
 	template< class T >
-	class CGUIInterpolationBase : public CGUIAs
+	class CGUIAsInterpolation : public CGUIAs
 	{
 	protected:
-		CGUIInterpolationBase();
-		virtual ~CGUIInterpolationBase();
+		CGUIAsInterpolation();
+		virtual ~CGUIAsInterpolation();
 	};
-	%template(CGUIInterpolationBase_real) CGUIInterpolationBase<real>;
-	%template(CGUIInterpolationBase_size) CGUIInterpolationBase<CGUISize>;
-	%template(CGUIInterpolationBase_Vector3) CGUIInterpolationBase<CGUIVector3>;
-	%template(CGUIInterpolationBase_Vector2) CGUIInterpolationBase<CGUIVector2>;
-	%template(CGUIInterpolationBase_Color) CGUIInterpolationBase<CGUIColor>;
+	%template(CGUIInterpolationBase_real) CGUIAsInterpolation<real>;
+	%template(CGUIInterpolationBase_size) CGUIAsInterpolation<CGUISize>;
+	%template(CGUIInterpolationBase_Vector3) CGUIAsInterpolation<CGUIVector3>;
+	%template(CGUIInterpolationBase_Vector2) CGUIAsInterpolation<CGUIVector2>;
+	%template(CGUIInterpolationBase_Color) CGUIAsInterpolation<CGUIColor>;
 	
-	class CGUIAsAlpha : public CGUIInterpolationBase<real>
+	class CGUIAsAlpha : public CGUIAsInterpolation<real>
 	{
 	protected:
 		CGUIAsAlpha();
 		virtual ~CGUIAsAlpha();
 	};
 
-	class CGUIAsScale : public CGUIInterpolationBase<CGUISize>
+	class CGUIAsScale : public CGUIAsInterpolation<CGUISize>
 	{
 	protected:
 		CGUIAsScale();
 		virtual ~CGUIAsScale();
 	};
 	
-	class CGUIAsRotation: public CGUIInterpolationBase<CGUIVector3>
+	class CGUIAsRotation: public CGUIAsInterpolation<CGUIVector3>
 	{
 	protected:
 		CGUIAsRotation();
 		virtual ~CGUIAsRotation();
 	};	
 	
-	class CGUIAsPosition : public CGUIInterpolationBase<CGUIVector2>
+	class CGUIAsPosition : public CGUIAsInterpolation<CGUIVector2>
 	{
 	protected:
 		CGUIAsPosition();
 		virtual ~CGUIAsPosition();
 	};
 	
-	class CGUIAsColor : public CGUIInterpolationBase<CGUIColor>
+	class CGUIAsColor : public CGUIAsInterpolation<CGUIColor>
 	{
 	protected:
 		CGUIAsColor();

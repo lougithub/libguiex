@@ -8,9 +8,9 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core/guiasmanager.h>
-#include <libguiex_core/guias.h>
-#include <libguiex_core/guiasfactory.h>
+#include "guiasmanager.h"
+#include "guias.h"
+#include "guiasfactory.h"
 
 
 //============================================================================//

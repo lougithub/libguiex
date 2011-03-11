@@ -139,173 +139,31 @@ namespace guiex
 
 
 	//*****************************************************************************
-	//	CGUIInterpolationBase
+	//	CGUIAsInterpolation
 	//*****************************************************************************
 	template< class T >
-	class CGUIInterpolationBase : public CGUIAs
+	class CGUIAsInterpolation : public CGUIAs
 	{
 	protected:
-		CGUIInterpolationBase( const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName )
-			:CGUIAs( rAsType,  rAsType, rSceneName )
-			,m_eInterpolationType( eInterpolationType_Linear )
-		{
-		}
+		CGUIAsInterpolation(const CGUIString& rAsName, const CGUIString& rSceneName);
+		CGUIAsInterpolation( const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName );
 
 	public:
-		EInterpolationType GetInterpolationType( ) const
-		{
-			return m_eInterpolationType;
-		}
-		void SetInterpolationType( EInterpolationType eType )
-		{
-			m_eInterpolationType = eType;
-		}
+		EInterpolationType GetInterpolationType( ) const;
+		void SetInterpolationType( EInterpolationType eType );
 
-		void SetInterpolationValue( const T& rBeginValue, const T& rEndValue, real fTotalTime )
-		{
-			m_aBeginValue = rBeginValue;
-			m_aEndValue = rEndValue;
-			m_aCurValue = m_aBeginValue;
-			SetTotalTime( fTotalTime );
-		}
+		void SetInterpolationValue( const T& rBeginValue, const T& rEndValue, real fTotalTime );
 
-		virtual real Update( real fDeltaTime )
-		{
-			real fLeftTime = CGUIAs::Update( fDeltaTime );
-			m_aCurValue = LinearTween( GetElapsedTime() / GetTotalTime(), m_aBeginValue, m_aEndValue );
-			return fLeftTime;
-		}
+		virtual real Update( real fDeltaTime );
 
-		void SetBeginValue( const T& rValue )
-		{
-			m_aBeginValue = rValue;
-		}
-
-		const T& GetBeginValue() const
-		{
-			return m_aBeginValue;
-		}
-
-		void SetEndValue( const T& rValue )
-		{
-			m_aEndValue = rValue;
-		}
-
-		const T& GetEndValue() const
-		{
-			return m_aEndValue;
-		}
-
-		void SetCurrentValue( const T& rValue )
-		{
-			m_aCurValue = rValue;
-		}
-
-		const T& GetCurrentValue() const
-		{
-			return m_aCurValue;
-		}
-
-		virtual int32 ProcessProperty( const CGUIProperty& rProperty )
-		{
-			/*
-			*<property name="asname" type="CGUIAsColor">
-			*		<property name="loop" type="bool" value="false"/>
-			*		<property name="total_time" type="real" value="10" />
-			*		<property name="elapsed_time" type="real" value="5" />
-			*		<property name="interpolation" type="EInterpolationType" value="0,0,0" />
-			*		<property name="begin_value" type="CGUIVector3" value="0,0,0" />
-			*		<property name="end_value" type="CGUIVector3" value="0,0,0" />
-			*</property>
-			*/
-			int32 ret = CGUIAs::ProcessProperty( rProperty );
-			if( ret != 0 )
-			{
-				return ret;
-			}
-
-			{
-				EInterpolationType eValue = eInterpolationType_Linear;
-				const CGUIProperty* pPPtInterpolationType = rProperty.GetProperty("interpolation", "EInterpolationType" );
-				if( pPPtInterpolationType )
-				{
-					PropertyToValue( *pPPtInterpolationType, eValue );
-				}
-				SetInterpolationType( eValue );
-			}
-
-			{
-				const CGUIProperty* pPPtBeginValue = rProperty.GetProperty("begin_value", "");
-				if( !pPPtBeginValue )
-				{
-					throw CGUIException(
-						"[CGUIInterpolationBase::ProcessProperty]: invalid property: <%s> <%s>", 
-						rProperty.GetName().c_str(), 
-						rProperty.GetTypeAsString().c_str());
-					return -1;
-				}
-				T aBeginValue;
-				PropertyToValue( *pPPtBeginValue, aBeginValue );
-				SetBeginValue( aBeginValue );
-			}
-
-			{
-				const CGUIProperty* pPPtEndValue = rProperty.GetProperty("end_value","");
-				if( !pPPtEndValue )
-				{
-					throw CGUIException(
-						"[CGUIInterpolationBase::ProcessProperty]: invalid property: <%s> <%s>", 
-						rProperty.GetName().c_str(), 
-						rProperty.GetTypeAsString().c_str());
-					return -1;
-				}
-				T aEndValue;
-				PropertyToValue( *pPPtEndValue, aEndValue );
-				SetEndValue( aEndValue );
-			}
-
-			return 0;
-		}
-
-		virtual int32 GenerateProperty( CGUIProperty& rProperty )
-		{
-			/*
-			*<property name="asname" type="CGUIAsColor">
-			*		<property name="loop" type="bool" value="false"/>
-			*		<property name="total_time" type="real" value="10" />
-			*		<property name="elapsed_time" type="real" value="5" />
-			*
-			*		<property name="interpolation" type="EInterpolationType" value="0,0,0" />
-			*		<property name="begin_value" type="CGUIVector3" value="0,0,0" />
-			*		<property name="end_value" type="CGUIVector3" value="0,0,0" />
-			*</property>
-			*/
-			int32 ret = CGUIAs::GenerateProperty( rProperty );
-			if( ret != 0 )
-			{
-				return ret;
-			}
-
-			{
-				CGUIProperty aProperty( "interpolation", "EInterpolationType" );
-				ValueToProperty( GetInterpolationType(), aProperty );
-				rProperty.AddProperty( aProperty );
-			}
-
-			{
-				CGUIProperty aProperty( "begin_value", GetValueType<T>() );
-				ValueToProperty( GetBeginValue(), aProperty );
-				rProperty.AddProperty( aProperty );
-			}
-
-			{
-				CGUIProperty aProperty( "end_value", GetValueType<T>() );
-				ValueToProperty( GetEndValue(), aProperty );
-				rProperty.AddProperty( aProperty );
-			}
-			return 0;
-		}
-
+		void SetBeginValue( const T& rValue );
+		const T& GetBeginValue() const;
+		void SetEndValue( const T& rValue );
+		const T& GetEndValue() const;
+		void SetCurrentValue( const T& rValue );
+		const T& GetCurrentValue() const;
+		virtual int32 ProcessProperty( const CGUIProperty& rProperty );
+		virtual int32 GenerateProperty( CGUIProperty& rProperty );
 
 	private:
 		EInterpolationType	m_eInterpolationType;
@@ -314,6 +172,43 @@ namespace guiex
 		T m_aEndValue;
 
 		T m_aCurValue;
+
+		GUI_AS_NO_GENERATOR_DECLARE( CGUIAsInterpolation );
+	};
+
+	//*****************************************************************************
+	//	CGUIAsInterpolationQueue
+	//*****************************************************************************
+	template< class T >
+	class CGUIAsInterpolationQueue : public CGUIAs
+	{
+	protected:
+		CGUIAsInterpolationQueue(const CGUIString& rAsName, const CGUIString& rSceneName);
+		virtual ~CGUIAsInterpolationQueue( );
+
+	public:
+		virtual real Update( real fDeltaTime );
+		void AddItem( CGUIAsInterpolation<T>* pAs );
+		const T& GetCurrentValue() const;
+
+	private:
+		class CGUIQueueItemInfo
+		{
+		public:
+			CGUIAsInterpolation<T>* m_pAs;
+			real m_fBeginTime;
+			CGUIQueueItemInfo()
+				:m_fBeginTime( 0.0f )
+				,m_pAs(NULL)
+			{
+			}
+		};
+		typedef std::vector<CGUIQueueItemInfo> TAsQueue;
+		TAsQueue m_vAsQueue;
+
+		T m_aCurValue;
+
+		GUI_AS_NO_GENERATOR_DECLARE( CGUIAsInterpolationQueue );
 	};
 
 
@@ -324,7 +219,7 @@ namespace guiex
 	* @class CGUIAsAlpha
 	* @brief the as, change alpha of widget
 	*/
-	class GUIEXPORT CGUIAsAlpha : public CGUIInterpolationBase<real>
+	class GUIEXPORT CGUIAsAlpha : public CGUIAsInterpolation<real>
 	{
 	protected:
 		CGUIAsAlpha(const CGUIString& rAsName, const CGUIString& rSceneName);
@@ -343,7 +238,7 @@ namespace guiex
 	* @class CGUIAsScale
 	* @brief the as, change scale of widget
 	*/
-	class GUIEXPORT CGUIAsScale : public CGUIInterpolationBase<CGUISize>
+	class GUIEXPORT CGUIAsScale : public CGUIAsInterpolation<CGUISize>
 	{
 	protected:
 		CGUIAsScale(const CGUIString& rAsName, const CGUIString& rSceneName);
@@ -362,7 +257,7 @@ namespace guiex
 	* @class CGUIAsRotation
 	* @brief the as, change rotation of widget
 	*/
-	class GUIEXPORT CGUIAsRotation : public CGUIInterpolationBase<CGUIVector3>
+	class GUIEXPORT CGUIAsRotation : public CGUIAsInterpolation<CGUIVector3>
 	{
 	protected:
 		CGUIAsRotation(const CGUIString& rAsName, const CGUIString& rSceneName);
@@ -381,7 +276,7 @@ namespace guiex
 	* @class CGUIAsPosition
 	* @brief the as, change scale of widget
 	*/
-	class GUIEXPORT CGUIAsPosition : public CGUIInterpolationBase<CGUIVector2>
+	class GUIEXPORT CGUIAsPosition : public CGUIAsInterpolation<CGUIVector2>
 	{
 	protected:
 		CGUIAsPosition(const CGUIString& rAsName, const CGUIString& rSceneName);
@@ -400,7 +295,7 @@ namespace guiex
 	* @class CGUIAsColor
 	* @brief the as, change color of widget
 	*/
-	class GUIEXPORT CGUIAsColor : public CGUIInterpolationBase<CGUIColor>
+	class GUIEXPORT CGUIAsColor : public CGUIAsInterpolation<CGUIColor>
 	{
 	protected:
 		CGUIAsColor(const CGUIString& rAsName, const CGUIString& rSceneName);
@@ -425,7 +320,6 @@ namespace guiex
 			:m_pAs( NULL )
 			,m_fBeginTime( 0.0f )
 		{
-
 		}
 	};
 
@@ -436,7 +330,6 @@ namespace guiex
 	class GUIEXPORT CGUIAsContainer : public CGUIAs
 	{
 	protected:
-
 		CGUIAsContainer(const CGUIString& rAsName, const CGUIString& rSceneName);
 		virtual ~CGUIAsContainer( );
 
@@ -459,6 +352,285 @@ namespace guiex
 	};
 
 }//namespace guiex
+
+
+
+
+//============================================================================//
+// function
+//============================================================================// 
+namespace guiex
+{
+	//------------------------------------------------------------------------------
+	// CGUIAsInterpolation
+	//------------------------------------------------------------------------------
+	template< class T >
+	inline CGUIAsInterpolation<T>::CGUIAsInterpolation( const CGUIString& rAsName, const CGUIString& rSceneName )
+		:CGUIAs( "CGUIAsInterpolation",  rAsName, rSceneName )
+		,m_eInterpolationType( eInterpolationType_Linear )
+	{
+
+	}
+	//------------------------------------------------------------------------------
+	template< class T >
+	inline CGUIAsInterpolation<T>::CGUIAsInterpolation( const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName )
+		:CGUIAs( rAsType,  rAsName, rSceneName )
+		,m_eInterpolationType( eInterpolationType_Linear )
+	{
+	}
+	//------------------------------------------------------------------------------
+	template< class T >
+	inline EInterpolationType CGUIAsInterpolation<T>::GetInterpolationType( ) const
+	{
+		return m_eInterpolationType;
+	}
+	//------------------------------------------------------------------------------
+	template< class T >
+	inline void CGUIAsInterpolation<T>::SetInterpolationType( EInterpolationType eType )
+	{
+		m_eInterpolationType = eType;
+	}
+	//------------------------------------------------------------------------------
+	template< class T >
+	inline void CGUIAsInterpolation<T>::SetInterpolationValue( const T& rBeginValue, const T& rEndValue, real fTotalTime )
+	{
+		m_aBeginValue = rBeginValue;
+		m_aEndValue = rEndValue;
+		m_aCurValue = m_aBeginValue;
+		SetTotalTime( fTotalTime );
+	}
+	//------------------------------------------------------------------------------
+	template< class T >
+	inline real CGUIAsInterpolation<T>::Update( real fDeltaTime )
+	{
+		real fLeftTime = CGUIAs::Update( fDeltaTime );
+		m_aCurValue = LinearTween( GetElapsedTime() / GetTotalTime(), m_aBeginValue, m_aEndValue );
+		return fLeftTime;
+	}
+	//------------------------------------------------------------------------------
+	template< class T >
+	inline void CGUIAsInterpolation<T>::SetBeginValue( const T& rValue )
+	{
+		m_aBeginValue = rValue;
+	}
+	//------------------------------------------------------------------------------
+	template< class T >
+	inline const T& CGUIAsInterpolation<T>::GetBeginValue() const
+	{
+		return m_aBeginValue;
+	}
+	//------------------------------------------------------------------------------
+	template< class T >
+	inline void CGUIAsInterpolation<T>::SetEndValue( const T& rValue )
+	{
+		m_aEndValue = rValue;
+	}
+	//------------------------------------------------------------------------------
+	template< class T >
+	inline const T& CGUIAsInterpolation<T>::GetEndValue() const
+	{
+		return m_aEndValue;
+	}
+	//------------------------------------------------------------------------------
+	template< class T >
+	inline void CGUIAsInterpolation<T>::SetCurrentValue( const T& rValue )
+	{
+		m_aCurValue = rValue;
+	}
+	//------------------------------------------------------------------------------
+	template< class T >
+	inline const T& CGUIAsInterpolation<T>::GetCurrentValue() const
+	{
+		return m_aCurValue;
+	}
+	//------------------------------------------------------------------------------
+	template< class T >
+	inline int32 CGUIAsInterpolation<T>::ProcessProperty( const CGUIProperty& rProperty )
+	{
+		/*
+		*<property name="asname" type="CGUIAsColor">
+		*		<property name="loop" type="bool" value="false"/>
+		*		<property name="total_time" type="real" value="10" />
+		*		<property name="elapsed_time" type="real" value="5" />
+		*		<property name="interpolation" type="EInterpolationType" value="0,0,0" />
+		*		<property name="begin_value" type="CGUIVector3" value="0,0,0" />
+		*		<property name="end_value" type="CGUIVector3" value="0,0,0" />
+		*</property>
+		*/
+		int32 ret = CGUIAs::ProcessProperty( rProperty );
+		if( ret != 0 )
+		{
+			return ret;
+		}
+
+		{
+			EInterpolationType eValue = eInterpolationType_Linear;
+			const CGUIProperty* pPPtInterpolationType = rProperty.GetProperty("interpolation", "EInterpolationType" );
+			if( pPPtInterpolationType )
+			{
+				PropertyToValue( *pPPtInterpolationType, eValue );
+			}
+			SetInterpolationType( eValue );
+		}
+
+		{
+			const CGUIProperty* pPPtBeginValue = rProperty.GetProperty("begin_value", "");
+			if( !pPPtBeginValue )
+			{
+				throw CGUIException(
+					"[CGUIAsInterpolation::ProcessProperty]: invalid property: <%s> <%s>", 
+					rProperty.GetName().c_str(), 
+					rProperty.GetTypeAsString().c_str());
+				return -1;
+			}
+			T aBeginValue;
+			PropertyToValue( *pPPtBeginValue, aBeginValue );
+			SetBeginValue( aBeginValue );
+		}
+
+		{
+			const CGUIProperty* pPPtEndValue = rProperty.GetProperty("end_value","");
+			if( !pPPtEndValue )
+			{
+				throw CGUIException(
+					"[CGUIAsInterpolation::ProcessProperty]: invalid property: <%s> <%s>", 
+					rProperty.GetName().c_str(), 
+					rProperty.GetTypeAsString().c_str());
+				return -1;
+			}
+			T aEndValue;
+			PropertyToValue( *pPPtEndValue, aEndValue );
+			SetEndValue( aEndValue );
+		}
+
+		return 0;
+	}
+
+	//------------------------------------------------------------------------------
+	template< class T >
+	inline int32 CGUIAsInterpolation<T>::GenerateProperty( CGUIProperty& rProperty )
+	{
+		/*
+		*<property name="asname" type="CGUIAsColor">
+		*		<property name="loop" type="bool" value="false"/>
+		*		<property name="total_time" type="real" value="10" />
+		*		<property name="elapsed_time" type="real" value="5" />
+		*
+		*		<property name="interpolation" type="EInterpolationType" value="0,0,0" />
+		*		<property name="begin_value" type="CGUIVector3" value="0,0,0" />
+		*		<property name="end_value" type="CGUIVector3" value="0,0,0" />
+		*</property>
+		*/
+		int32 ret = CGUIAs::GenerateProperty( rProperty );
+		if( ret != 0 )
+		{
+			return ret;
+		}
+
+		{
+			CGUIProperty aProperty( "interpolation", "EInterpolationType" );
+			ValueToProperty( GetInterpolationType(), aProperty );
+			rProperty.AddProperty( aProperty );
+		}
+
+		{
+			CGUIProperty aProperty( "begin_value", GetValueType<T>() );
+			ValueToProperty( GetBeginValue(), aProperty );
+			rProperty.AddProperty( aProperty );
+		}
+
+		{
+			CGUIProperty aProperty( "end_value", GetValueType<T>() );
+			ValueToProperty( GetEndValue(), aProperty );
+			rProperty.AddProperty( aProperty );
+		}
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+
+
+	//------------------------------------------------------------------------------
+	// CGUIAsInterpolationQueue
+	//------------------------------------------------------------------------------
+	template< class T >
+	inline CGUIAsInterpolationQueue<T>::CGUIAsInterpolationQueue( const CGUIString& rAsName, const CGUIString& rSceneName )
+		:CGUIAs("CGUIAsInterpolationQueue", rAsName, rSceneName)
+	{
+	}
+	//------------------------------------------------------------------------------
+	template< class T >
+	inline CGUIAsInterpolationQueue<T>::~CGUIAsInterpolationQueue( )
+	{
+		for( typename TAsQueue::iterator itor = m_vAsQueue.begin();
+			itor != m_vAsQueue.end();
+			++itor )
+		{
+			CGUIAsManager::Instance()->DeallocateResource( (*itor).m_pAs );
+		}
+		m_vAsQueue.clear();
+	}
+	//------------------------------------------------------------------------------
+	template< class T >
+	inline real CGUIAsInterpolationQueue<T>::Update( real fDeltaTime )
+	{
+		real fLeftTime = CGUIAs::Update( fDeltaTime );
+
+		for( typename TAsQueue::iterator itor = m_vAsQueue.begin();
+			itor != m_vAsQueue.end();
+			++itor )
+		{
+			CGUIQueueItemInfo &rInfo = *itor;
+			if( rInfo.m_fBeginTime > GetElapsedTime() )
+			{
+				//update done
+				break;
+			}
+
+			if( rInfo.m_fBeginTime + rInfo.m_pAs->GetTotalTime() < GetElapsedTime() )
+			{
+				continue;
+			}
+
+			rInfo.m_pAs->SetElapsedTime( GetElapsedTime() - rInfo.m_fBeginTime );
+			rInfo.m_pAs->Update( 0.0f );
+			m_aCurValue = rInfo.m_pAs->GetCurrentValue();
+		}
+
+		return fLeftTime;
+	}
+	//------------------------------------------------------------------------------
+	template< class T >
+	inline void CGUIAsInterpolationQueue<T>::AddItem( CGUIAsInterpolation<T>* pAs )
+	{
+		CGUIQueueItemInfo aNewInfo;
+		aNewInfo.m_pAs = pAs;
+
+		//retain
+		aNewInfo.m_pAs->RefRetain();
+
+		if( m_vAsQueue.empty() )
+		{
+			aNewInfo.m_fBeginTime = 0.0f;
+			SetTotalTime( pAs->GetTotalTime() );
+		}
+		else
+		{
+			aNewInfo.m_fBeginTime = GetTotalTime();
+			SetTotalTime( GetTotalTime() + pAs->GetTotalTime() );
+		}
+
+		//insert
+		m_vAsQueue.push_back( aNewInfo );
+	}
+	//------------------------------------------------------------------------------
+	template< class T >
+	inline const T& CGUIAsInterpolationQueue<T>::GetCurrentValue() const
+	{
+		return m_aCurValue;
+	}
+	//------------------------------------------------------------------------------
+
+}
 
 #endif //__GUI_AS_20071121_H__
 

@@ -14,7 +14,6 @@
 #include "guibase.h"
 #include "guias.h"
 #include "guistring.h"
-#include "guiimage.h"
 #include "guiresourcemanager.h"
 #include <set>
 #include <map>
@@ -69,7 +68,7 @@ namespace guiex
 		CGUIAs* AllocateResource( const CGUIString& rResName );
 		CGUIAs* AllocateResourceByType( const CGUIString& rAsType );
 		int32 DeallocateResource( CGUIAs* pRes );
-
+		
 		template<class T> T* AllocateResource(  );
 
 	protected:
@@ -88,9 +87,20 @@ namespace guiex
 	template<class T> 
 	inline T* CGUIAsManager::AllocateResource(  )
 	{
-		CGUIAs* pAs = AllocateResourceByType( T::StaticGetType() );
-		GUI_ASSERT( pAs->GetType() == T::StaticGetType(), "wrong As type" );
-		return static_cast<T*>( pAs );
+		if( T::HasGenerator() == true )
+		{
+			CGUIAs* pAs = AllocateResourceByType( T::StaticGetType() );
+			GUI_ASSERT( pAs->GetType() == T::StaticGetType(), "wrong As type" );
+			return static_cast<T*>( pAs );
+		}
+		else
+		{
+			T* pAs = guiex::CGUIAsFactory::Instance()->GenerateAs<T>( "", "" );
+			GUI_ASSERT( pAs->GetType() == T::StaticGetType(), "wrong As type" );
+			AddToAllocatePool( pAs );
+			pAs->RefRetain();
+			return pAs;
+		}
 	}
 
 }//namespace guiex
