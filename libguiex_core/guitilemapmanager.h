@@ -64,7 +64,7 @@ namespace guiex
 		int32 RegisterTileMap( const CGUIString& rSceneName, const CGUIProperty& rProperty);
 		
 		CGUITileMap* AllocateResource( const CGUIString& rResName );
-		int32 DeallocateResource( CGUITileMap* pRes );
+		virtual void DeallocateResource( CGUIResource* pRes );
 
 		CGUITileMap* AllocateResource( const CGUIString& rName, const CGUIString& rSceneName );
 

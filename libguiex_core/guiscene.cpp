@@ -8,13 +8,13 @@
 //============================================================================//
 // include
 //============================================================================//
-#include <libguiex_core/guiscene.h>
-#include <libguiex_core/guiinterfacefilesys.h>
-#include <libguiex_core/guiinterfacemanager.h>
-#include <libguiex_core/guistring.h>
-#include <libguiex_core/guiexception.h>
-#include <libguiex_core/guiproperty.h>
-#include <libguiex_core/guipropertymanager.h>
+#include "guiscene.h"
+#include "guiinterfacefilesys.h"
+#include "guiinterfacemanager.h"
+#include "guistring.h"
+#include "guiexception.h"
+#include "guiproperty.h"
+#include "guipropertymanager.h"
 
 
 //============================================================================//
@@ -25,7 +25,7 @@ namespace guiex
 {
 	//------------------------------------------------------------------------------
 	CGUIScene::CGUIScene( const CGUIString& rSceneName )
-		:CGUIResource( rSceneName, rSceneName, "SCENE" )
+		:m_strSceneName( rSceneName )
 		,m_bDependenciesLoaded(false)
 	{
 	}
@@ -42,6 +42,11 @@ namespace guiex
 	void CGUIScene::SetDependenciesLoaded( bool bLoaded )
 	{
 		m_bDependenciesLoaded = bLoaded;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIString& CGUIScene::GetSceneName() const
+	{
+		return m_strSceneName;
 	}
 	//------------------------------------------------------------------------------
 	/** 
@@ -85,7 +90,7 @@ namespace guiex
 				throw CGUIException("[CGUIScene::LoadFromPropertySet]: unknown property <%s:%s> in scene <%s>",
 					pProperty->GetName().c_str(),
 					pProperty->GetTypeAsString().c_str(),
-					GetName().c_str() );
+					GetSceneName().c_str() );
 				return -1;
 			}
 		}

@@ -8,17 +8,19 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core/guianimation.h>
-#include <libguiex_core/guisystem.h>
-#include <libguiex_core/guiresource.h>
-#include <libguiex_core/guitexture.h>
-#include <libguiex_core/guitexturemanager.h>
-#include <libguiex_core/guiexception.h>
-#include <libguiex_core/guiscene.h>
-#include <libguiex_core/guiscenemanager.h>
-#include <libguiex_core/guicolor.h>
-#include <libguiex_core/guiinterfacerender.h>
-#include <libguiex_core/guirenderrect.h>
+#include "guianimation.h"
+#include "guisystem.h"
+#include "guiresource.h"
+#include "guitexture.h"
+#include "guitexturemanager.h"
+#include "guiexception.h"
+#include "guiscene.h"
+#include "guiscenemanager.h"
+#include "guicolor.h"
+#include "guiinterfacerender.h"
+#include "guirenderrect.h"
+#include "guisystem.h"
+#include "guianimationmanager.h"
 
 
 //============================================================================//
@@ -34,7 +36,7 @@ namespace guiex
 		const std::vector<CGUIRect>& rUVRects,
 		real fInterval,
 		const CGUISize& rSize )
-		:CGUIResource( rName, rSceneName, "ANIMATION" )
+		:CGUIResource( rName, rSceneName, "ANIMATION", GSystem->GetAnimationManager() )
 		,m_vecUVRects( rUVRects )
 		,m_vecFileNames( rUVRects.size(), rFileName )
 		,m_fInterval( fInterval )
@@ -51,7 +53,7 @@ namespace guiex
 		const std::vector<CGUIString>& rFileNames,  
 		real fInterval,
 		const CGUISize& rSize )
-		:CGUIResource( rName, rSceneName, "ANIMATION" )
+		:CGUIResource( rName, rSceneName, "ANIMATION", GSystem->GetAnimationManager() )
 		,m_vecUVRects( rFileNames.size(), CGUIRect(0.f,0.f,1.f,1.f))
 		,m_vecFileNames( rFileNames )
 		,m_fInterval( fInterval )

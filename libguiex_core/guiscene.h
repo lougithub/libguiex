@@ -12,8 +12,8 @@
 // include
 //============================================================================//
 #include "guibase.h"
-#include "guiresource.h"
 #include "vector"
+#include "guireference.h"
 
 //============================================================================//
 // declare
@@ -28,13 +28,14 @@ namespace guiex
 //============================================================================// 
 namespace guiex
 {
-	class GUIEXPORT CGUIScene : public CGUIResource
+	class GUIEXPORT CGUIScene : public CGUIReference
 	{
 	public:
-		~CGUIScene();
+		virtual ~CGUIScene();
 
 		int32 LoadFromPropertySet( const CGUIString& rScenePath, const CGUIProperty& aPropertySet );
 
+		const CGUIString& GetSceneName() const;
 		const CGUIString& GetScenePath() const;
 		const CGUIString& GetTitle() const;
 
@@ -67,8 +68,9 @@ namespace guiex
 
 		std::vector<CGUIString>	m_vecDependencies; //dependent scenes
 		bool m_bDependenciesLoaded; //whether the dependencies has been loaded
-
+		
 		CGUIString m_strTitle; //title of this scene
+		CGUIString m_strSceneName;
 	};
 } //namespace guiex
 

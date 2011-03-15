@@ -8,14 +8,15 @@
 //============================================================================//
 // include
 //============================================================================//
-#include <libguiex_core/guibase.h>
-#include <libguiex_core/guifontdata.h>
-#include <libguiex_core/guiinterfacefont.h>
-#include <libguiex_core/guiinterfacemanager.h>
-#include <libguiex_core/guiexception.h>
-#include <libguiex_core/guiscene.h>
-#include <libguiex_core/guiscenemanager.h>
-
+#include "guibase.h"
+#include "guifontdata.h"
+#include "guiinterfacefont.h"
+#include "guiinterfacemanager.h"
+#include "guiexception.h"
+#include "guiscene.h"
+#include "guiscenemanager.h"
+#include "guisystem.h"
+#include "guifontmanager.h"
 
 
 //============================================================================//
@@ -31,7 +32,7 @@ namespace guiex
 		const CGUIString& rName,
 		const CGUIString& rSceneName, 
 		uint32 nFontID)
-		:CGUIResource( rName, rSceneName, "FONT" )
+		:CGUIResource( rName, rSceneName, "FONT", GSystem->GetFontManager())
 		,m_nFontIndex( nFontID )
 	{
 	}

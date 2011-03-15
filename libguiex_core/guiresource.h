@@ -9,15 +9,33 @@
 #ifndef __KEN_GUIRESOURCE_20091026_H__
 #define	__KEN_GUIRESOURCE_20091026_H__
 
+
+
+//============================================================================//
+// include
+//============================================================================//
+#include "guibase.h"
+#include "guistring.h"
+#include "guireference.h"
+
+//============================================================================//
+// declare
+//============================================================================//
+namespace guiex
+{
+	class CGUIResourceManagerBase;
+}
+
+
 //============================================================================//
 // class
 //============================================================================//
 namespace guiex
 {
-	class GUIEXPORT CGUIResource
+	class GUIEXPORT CGUIResource : public CGUIReference
 	{
 	public:
-		CGUIResource(const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rResourceType);
+		CGUIResource(const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rResourceType, CGUIResourceManagerBase* pResourceManager );
 		virtual ~CGUIResource();
 
 		int32 Load() const;
@@ -28,14 +46,15 @@ namespace guiex
 		const CGUIString& GetSceneName() const;
 		const CGUIString& GetResourceType() const;
 
-		void RefRetain() const;
-		void RefRelease() const;
-		void RefClear() const;
-		uint32 GetRefCount() const;
+		virtual void RefRelease();
 
 	protected:
 		virtual int32 DoLoad() const = 0;
 		virtual void DoUnload() = 0;
+
+		friend class CGUIResourceManagerBase;
+
+		void DoRefReleaseByManager();
 
 	protected:
 		enum ELoadState
@@ -50,7 +69,7 @@ namespace guiex
 		CGUIString m_strResourceType;
 
 	private:
-		mutable uint32 m_nReferenceCount;
+		CGUIResourceManagerBase* m_pResourceManager;
 	};
 }
 

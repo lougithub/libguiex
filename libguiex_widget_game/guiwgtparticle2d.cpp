@@ -53,7 +53,7 @@ namespace guiex
 	{
 		if( m_pParticle2DSystem )
 		{
-			CGUIParticle2DManager::Instance()->DeallocateResource( m_pParticle2DSystem );
+			m_pParticle2DSystem->RefRelease();
 			m_pParticle2DSystem = NULL;
 		}
 
@@ -89,7 +89,7 @@ namespace guiex
 		{
 			CGUIParticle2DSystem* pParticle2D = CGUIParticle2DManager::Instance()->AllocateResource( rParticle2DName );
 			SetParticle2D( pParticle2D );
-			CGUIParticle2DManager::Instance()->DeallocateResource( pParticle2D );
+			pParticle2D->RefRelease();
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -102,7 +102,7 @@ namespace guiex
 
 		if( m_pParticle2DSystem )
 		{
-			CGUIParticle2DManager::Instance()->DeallocateResource( m_pParticle2DSystem );
+			m_pParticle2DSystem->RefRelease();
 			m_pParticle2DSystem = NULL;
 		}
 

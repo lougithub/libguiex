@@ -17,6 +17,7 @@
 #include "guiexception.h"
 #include "guiproperty.h"
 #include "guiparticle2dsystemquad.h"
+#include "guisystem.h"
 
 //============================================================================//
 // function
@@ -25,7 +26,7 @@ namespace guiex
 {
 	//------------------------------------------------------------------------------
 	CGUIParticle2DData::CGUIParticle2DData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIProperty& rProperty )
-		:CGUIResource( rName, rSceneName, "PARTICLE2DDATA" )
+		:CGUIResource( rName, rSceneName, "PARTICLE2DDATA", GSystem->GetParticle2DManager() )
 		,m_aProperty( rProperty )
 	{
 	}
@@ -126,16 +127,15 @@ namespace guiex
 		return pParticle2D;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIParticle2DManager::DeallocateResource( CGUIParticle2DSystem* pRes )
+	void CGUIParticle2DManager::DeallocateResource( CGUIResource* pRes )
 	{
 		GUI_ASSERT( pRes, "invalid parameter" );
 
-		pRes->RefRelease();
+		DoRefRelease( pRes );
 		if( pRes->GetRefCount() == 0 )
 		{
-			return ReleaseFromAllocatePool( pRes );
+			ReleaseFromAllocatePool( pRes );
 		}
-		return 0;
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

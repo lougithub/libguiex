@@ -47,7 +47,7 @@ namespace guiex
 
 		int32 RegisterSound( const CGUIString& rSceneName, const CGUIProperty& rProperty);
 		CGUISoundData* AllocateResource( const CGUIString& rSoundName ) const;
-		int32 DeallocateResource( CGUISoundData* pSound );
+		virtual void DeallocateResource( CGUIResource* pRes );
 
 	protected:
 		virtual	void DestroyRegisterResourceImp( CGUIResource* pRes ); 

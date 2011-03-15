@@ -8,19 +8,19 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core/guibase.h>
-#include <libguiex_core/guiimage.h>
-#include <libguiex_core/guiinterfacemanager.h>
-#include <libguiex_core/guiinterfacerender.h>
-#include <libguiex_core/guitexture.h>
-#include <libguiex_core/guitexturemanager.h>
-#include <libguiex_core/guiexception.h>
-#include <libguiex_core/guirect.h>
-#include <libguiex_core/guiperfmonitor.h>
-#include <libguiex_core/guisystem.h>
-#include <libguiex_core/guiscene.h>
-#include <libguiex_core/guiscenemanager.h>
-#include <libguiex_core/guirenderrect.h>
+#include "guiimage.h"
+#include "guiinterfacemanager.h"
+#include "guiinterfacerender.h"
+#include "guitexture.h"
+#include "guitexturemanager.h"
+#include "guiexception.h"
+#include "guirect.h"
+#include "guiperfmonitor.h"
+#include "guisystem.h"
+#include "guiscene.h"
+#include "guiscenemanager.h"
+#include "guirenderrect.h"
+#include "guiimagemanager.h"
 
 //============================================================================//
 // function
@@ -33,7 +33,7 @@ namespace guiex
 		const CGUIString& rSceneName, 
 		const CGUIColor& rColor,
 		const CGUISize& rSize )
-		:CGUIResource( rName, rSceneName, "IMAGE" )
+		:CGUIResource( rName, rSceneName, "IMAGE", GSystem->GetImageManager() )
 		,m_pTexture(NULL)
 		,m_aUVRect(CGUIRect(0.f,0.f,1.f,1.f))
 		,m_eImageOrientation(eImageOrientation_Normal)
@@ -52,7 +52,7 @@ namespace guiex
 		int32 buffHeight, 
 		EGuiPixelFormat ePixelFormat,
 		const CGUISize& rSize )
-		:CGUIResource( rName, rSceneName, "IMAGE" )
+		:CGUIResource( rName, rSceneName, "IMAGE", GSystem->GetImageManager() )
 		,m_pTexture(NULL)
 		,m_aUVRect(CGUIRect(0.f,0.f,1.f,1.f))
 		,m_eImageOrientation(eImageOrientation_Normal)
@@ -74,7 +74,7 @@ namespace guiex
 		const CGUIRect& rUVRect,
 		EImageOrientation	eImageOrientation,
 		const CGUISize& rSize )
-		:CGUIResource( rName, rSceneName, "IMAGE" )
+		:CGUIResource( rName, rSceneName, "IMAGE", GSystem->GetImageManager() )
 		,m_pTexture(NULL)
 		,m_aUVRect( rUVRect )
 		,m_eImageOrientation(eImageOrientation)

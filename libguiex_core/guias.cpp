@@ -8,11 +8,11 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core/guias.h>
-#include <libguiex_core/guiwidget.h>
-#include <libguiex_core/guisystem.h>
-#include <libguiex_core/guimath.h>
-#include <libguiex_core/guiasmanager.h>
+#include "guias.h"
+#include "guiwidget.h"
+#include "guisystem.h"
+#include "guimath.h"
+#include "guiasmanager.h"
 
 #define GUIAS_MIN_TOTALTIME (0.01f)
 
@@ -22,33 +22,19 @@
 
 namespace guiex
 {
-	int32 GUIRegisterAllAs()
-	{
-		if( 0 != GUI_AS_REGISTER(CGUIAsAlpha)) {return -1;}
-		if( 0 != GUI_AS_REGISTER(CGUIAsScale)) {return -1;}
-		if( 0 != GUI_AS_REGISTER(CGUIAsPosition)) {return -1;}
-		if( 0 != GUI_AS_REGISTER(CGUIAsRotation)) {return -1;}
-		if( 0 != GUI_AS_REGISTER(CGUIAsColor)) {return -1;}
-		if( 0 != GUI_AS_REGISTER(CGUIAsContainer)) {return -1;}
-
-		return 0;
-	} 
-
-
 	//*****************************************************************************
 	//	CGUIAs
 	//*****************************************************************************
 
 	//------------------------------------------------------------------------------
 	CGUIAs::CGUIAs( const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName )
-		:CGUIResource( rAsName, rSceneName, "AS" )
+		:CGUIResource( rAsName, rSceneName, "AS", GSystem->GetAsManager() )
 		,m_fTotalTime(GUIAS_MIN_TOTALTIME)
 		,m_fElapsedTime(0.0f)
 		,m_bLooping(false)
 		,m_bRetired(false)
 		,m_pReceiver(NULL)
 		,m_strAsType(rAsType)
-		,m_pAsGenerator(NULL)
 	{
 		Load();
 	}
@@ -62,7 +48,7 @@ namespace guiex
 			itor != m_listSuccessor.end();
 			++itor)
 		{
-			CGUIAsManager::Instance()->DeallocateResource( *itor );
+			( *itor )->RefRelease();
 		}
 		m_listSuccessor.clear();
 	}
@@ -274,16 +260,6 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUIAs::SetGenerator( const CGUIAsGenerator* pGenerator)
-	{
-		m_pAsGenerator = pGenerator;
-	}
-	//------------------------------------------------------------------------------
-	const CGUIAsGenerator* CGUIAs::GetGenerator() const
-	{
-		return m_pAsGenerator;
-	}
-	//------------------------------------------------------------------------------
 	int32 CGUIAs::DoLoad() const
 	{
 		return 0;
@@ -301,8 +277,6 @@ namespace guiex
 	//	CGUIAsAlpha
 	//*****************************************************************************
 	//------------------------------------------------------------------------------
-	GUI_AS_GENERATOR_IMPLEMENT( CGUIAsAlpha );
-
 
 	//------------------------------------------------------------------------------
 	CGUIAsAlpha::CGUIAsAlpha( const CGUIString& rAsName, const CGUIString& rSceneName )
@@ -325,8 +299,6 @@ namespace guiex
 	//	CGUIAsRotation
 	//*****************************************************************************
 	//------------------------------------------------------------------------------
-	GUI_AS_GENERATOR_IMPLEMENT( CGUIAsRotation );
-	//------------------------------------------------------------------------------
 	CGUIAsRotation::CGUIAsRotation(const CGUIString& rAsName, const CGUIString& rSceneName)
 		:CGUIAsInterpolation<CGUIVector3>("CGUIAsRotation", rAsName, rSceneName )
 	{
@@ -346,8 +318,6 @@ namespace guiex
 	//	CGUIAsScale
 	//*****************************************************************************
 	//------------------------------------------------------------------------------
-	GUI_AS_GENERATOR_IMPLEMENT( CGUIAsScale );
-	//------------------------------------------------------------------------------
 	CGUIAsScale::CGUIAsScale(const CGUIString& rAsName, const CGUIString& rSceneName)
 		:CGUIAsInterpolation<CGUISize>("CGUIAsScale", rAsName, rSceneName )
 	{
@@ -365,8 +335,6 @@ namespace guiex
 	//*****************************************************************************
 	//	CGUIAsPosition
 	//*****************************************************************************
-	//------------------------------------------------------------------------------
-	GUI_AS_GENERATOR_IMPLEMENT( CGUIAsPosition );
 	//------------------------------------------------------------------------------
 	CGUIAsPosition::CGUIAsPosition(const CGUIString& rAsName, const CGUIString& rSceneName)
 		:CGUIAsInterpolation<CGUIVector2>("CGUIAsPosition", rAsName, rSceneName )
@@ -386,8 +354,6 @@ namespace guiex
 	//*****************************************************************************
 	//	CGUIAsColor
 	//*****************************************************************************
-	//------------------------------------------------------------------------------
-	GUI_AS_GENERATOR_IMPLEMENT( CGUIAsColor );
 	//------------------------------------------------------------------------------
 	CGUIAsColor::CGUIAsColor(const CGUIString& rAsName, const CGUIString& rSceneName)
 		:CGUIAsInterpolation<CGUIColor>("CGUIAsColor", rAsName, rSceneName )
@@ -409,8 +375,6 @@ namespace guiex
 	//	CGUIAsContainer
 	//*****************************************************************************
 	//------------------------------------------------------------------------------
-	GUI_AS_GENERATOR_IMPLEMENT( CGUIAsContainer );
-	//------------------------------------------------------------------------------
 	CGUIAsContainer::CGUIAsContainer(const CGUIString& rAsName, const CGUIString& rSceneName)
 		:CGUIAs("CGUIAsContainer", rAsName, rSceneName)
 	{
@@ -422,7 +386,7 @@ namespace guiex
 			itor != m_vAsList.end();
 			++itor )
 		{
-			CGUIAsManager::Instance()->DeallocateResource( (*itor).m_pAs );
+			(*itor).m_pAs->RefRelease();
 		}
 		m_vAsList.clear();
 	}
@@ -505,7 +469,7 @@ namespace guiex
 					else if( pPptAs->GetType() == ePropertyType_AsDefine )
 					{
 						//allocate as by type
-						CGUIAs* pAs = CGUIAsManager::Instance()->AllocateResourceByType( pPptAs->GetValue() );
+						CGUIAs* pAs = CGUIAsManager::Instance()->AllocateResource( pPptAs->GetValue(), "", "" );
 						if( !pAs )
 						{
 							throw CGUIException(

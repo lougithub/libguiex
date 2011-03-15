@@ -118,4 +118,9 @@ namespace guiex
 		pFont->DestroyFontData( (CGUIFontData*)pRes );
 	}
 	//------------------------------------------------------------------------------
+	void CGUIFontManager::DeallocateResource( CGUIResource* /*pRes*/ )
+	{
+		throw CGUIException("[CGUIFontManager::DeallocateResource]: shouldn't call here");
+	}	
+	//------------------------------------------------------------------------------
 }//namespace guiex

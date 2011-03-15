@@ -47,7 +47,7 @@ namespace guiex
 
 		int32 RegisterMusic( const CGUIString& rSceneName, const CGUIProperty& rProperty);
 		CGUIMusicData* AllocateResource( const CGUIString& rMusicName ) const;
-		int32 DeallocateResource( CGUIMusicData* pMusic );
+		virtual void DeallocateResource( CGUIResource* pRes );
 
 	protected:
 		virtual	void DestroyRegisterResourceImp( CGUIResource* pRes ); 

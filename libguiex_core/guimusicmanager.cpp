@@ -109,22 +109,21 @@ namespace guiex
 		return pMusic;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIMusicManager::DeallocateResource( CGUIMusicData* pMusic )
+	void CGUIMusicManager::DeallocateResource( CGUIResource* pRes )
 	{
-		GUI_ASSERT( pMusic, "invalid parameter" );
+		GUI_ASSERT( pRes, "invalid parameter" );
 
-		pMusic->RefRelease();
-		if( pMusic->GetRefCount() == 0 )
+		DoRefRelease( pRes );
+		if( pRes->GetRefCount() == 0 )
 		{
-			//named image's reference count shouldn't be zero, which is retained by register function
+			//music's reference count shouldn't be zero, which is retained by register function
 			throw CGUIException(
 				"[CGUIMusicManager::DeallocateResource]: invalid reference count [%d] for resource: <%s:%s:%s>", 
-				pMusic->GetRefCount(),
-				pMusic->GetName().c_str(), 
-				pMusic->GetResourceType().c_str(),
-				pMusic->GetSceneName().c_str() );
+				pRes->GetRefCount(),
+				pRes->GetName().c_str(), 
+				pRes->GetResourceType().c_str(),
+				pRes->GetSceneName().c_str() );
 		}
-		return 0;
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

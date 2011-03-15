@@ -6,37 +6,29 @@
 */
 
 
-
-
-
-
 //============================================================================//
 // include
 //============================================================================//
-#include <libguiex_core/guibase.h>
-#include <libguiex_core/guistring.h>
-#include <libguiex_core/guiexception.h>
-#include <libguiex_core/guiresource.h>
-
-
-
+#include "guiresource.h"
+#include "guiexception.h"
+#include "guiresourcemanager.h"
 
 
 //============================================================================//
 // function
 //============================================================================//
 
-
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	CGUIResource::CGUIResource(const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rResourceType)
-		:m_strName(rName)
-		,m_strSceneName(rSceneName)
-		,m_eIsLoaded(LOADSTATE_Unloaded)
-		,m_strResourceType(rResourceType)
-		,m_nReferenceCount(0)
+	CGUIResource::CGUIResource( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rResourceType, CGUIResourceManagerBase* pResourceManager )
+		:m_strName( rName )
+		,m_strSceneName( rSceneName )
+		,m_eIsLoaded( LOADSTATE_Unloaded )
+		,m_strResourceType( rResourceType )
+		,m_pResourceManager( pResourceManager )
 	{
+		GUI_ASSERT( m_pResourceManager, "invalid parameter" );
 	}
 	//------------------------------------------------------------------------------
 	CGUIResource::~CGUIResource()
@@ -51,29 +43,14 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUIResource::RefRetain() const
+	void CGUIResource::DoRefReleaseByManager()
 	{
-		++m_nReferenceCount;
+		DoDecreaseReference();
 	}
 	//------------------------------------------------------------------------------
-	void CGUIResource::RefRelease() const
+	void CGUIResource::RefRelease()
 	{
-		if( m_nReferenceCount == 0)
-		{
-			throw CGUIException( "[CGUIResource::RefRelease]:invalid reference count for resource <%s:%s:%s>", GetName().c_str(), GetResourceType().c_str(),GetSceneName().c_str() );
-			return;
-		}
-		--m_nReferenceCount;
-	}
-	//------------------------------------------------------------------------------
-	void CGUIResource::RefClear() const
-	{
-		m_nReferenceCount = 0;
-	}
-	//------------------------------------------------------------------------------
-	uint32 CGUIResource::GetRefCount() const
-	{
-		return m_nReferenceCount;
+		m_pResourceManager->DeallocateResource( this );
 	}
 	//------------------------------------------------------------------------------
 	int32 CGUIResource::Load() const

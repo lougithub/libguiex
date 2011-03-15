@@ -46,6 +46,7 @@ namespace guiex
 		static CGUIFontManager* Instance(); 
 
 		int32 RegisterFont( const CGUIString& rSceneName, const CGUIProperty& rProperty);
+		virtual void DeallocateResource( CGUIResource* pRes );
 
 	protected:
 		virtual	void DestroyRegisterResourceImp( CGUIResource* pRes ); 

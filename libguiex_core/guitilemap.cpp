@@ -12,6 +12,8 @@
 #include "guiproperty.h"
 #include "guiscenemanager.h"
 #include "guiexception.h"
+#include "guitilemapmanager.h"
+#include "guisystem.h"
 
 
 //============================================================================//
@@ -22,7 +24,7 @@ namespace guiex
 {
 	//------------------------------------------------------------------------------
 	CGUITileMap::CGUITileMap( const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIResource( rName, rSceneName, "TILEMAP")
+		:CGUIResource( rName, rSceneName, "TILEMAP", GSystem->GetTileMapManager())
 		,m_pMapInfo( NULL )
 	{
 

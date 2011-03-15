@@ -43,11 +43,14 @@ namespace guiex
 		virtual void ReleaseAllResources( ) = 0;
 		virtual void ReleaseResourceByScene( const CGUIString& rSceneName ) = 0;
 
+		virtual void DeallocateResource( CGUIResource* pRes ) = 0;
+
 	protected:
 		virtual	void DestroyRegisterResourceImp( CGUIResource* pRes ) = 0; 
 		virtual	void DestroyAllocateResourceImp( CGUIResource* pRes ) = 0; 
 		virtual void ReleaseAllRegisterResources( ) = 0;
 
+		void DoRefRelease( CGUIResource* pRes );
 	};
 
 	/**
@@ -77,8 +80,8 @@ namespace guiex
 		void LoadAllResources( );
 
 		//allocate resource
-		void AddToAllocatePool( TAllocateResType* pRes );
-		int32 ReleaseFromAllocatePool( TAllocateResType* pRes );
+		void AddToAllocatePool( CGUIResource* pRes );
+		int32 ReleaseFromAllocatePool( CGUIResource* pRes );
 		void ReleaseAllocateResources( );
 
 		//register resource
@@ -88,13 +91,13 @@ namespace guiex
 		void CheckResourceReference( CGUIResource* pRes );
 
 		void DestroyRegisterResource( TRegisterResType* pRes );
-		void DestroyAllocateResource( TAllocateResType* pRes );
+		void DestroyAllocateResource( CGUIResource* pRes );
 
 	private:
 		typedef std::map< CGUIString, TRegisterResType* > TMapResource;
 		TMapResource m_mapRegisterResource;
 
-		typedef std::set<TAllocateResType*> TSetResource;
+		typedef std::set<CGUIResource*> TSetResource;
 		TSetResource m_setAllocateResource;
 	};
 }
@@ -193,7 +196,7 @@ namespace guiex
 			++itor )
 		{
 			TRegisterResType* pRes = itor->second;
-			pRes->RefRelease();
+			DoRefRelease( pRes );
 
 			CheckResourceReference( pRes );
 			DestroyRegisterResource( pRes );
@@ -208,7 +211,7 @@ namespace guiex
 			itor != m_setAllocateResource.end();
 			++itor )
 		{
-			TAllocateResType* pRes = *itor;
+			CGUIResource* pRes = *itor;
 			CheckResourceReference( pRes );
 			DestroyAllocateResource( pRes );
 		}
@@ -258,7 +261,7 @@ namespace guiex
 		if( itor != m_mapRegisterResource.end())
 		{
 			TRegisterResType* pRes = itor->second;
-			pRes->RefRelease();
+			DoRefRelease( pRes );
 			CheckResourceReference( pRes );
 			DestroyRegisterResource( pRes );
 			m_mapRegisterResource.erase( itor );
@@ -270,7 +273,7 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	template< class TRegisterResType, class TAllocateResType >
-	inline void CGUIResourceManager<TRegisterResType, TAllocateResType>::AddToAllocatePool( TAllocateResType* pRes )
+	inline void CGUIResourceManager<TRegisterResType, TAllocateResType>::AddToAllocatePool( CGUIResource* pRes )
 	{
 		typename TSetResource::const_iterator itorFind = m_setAllocateResource.find( pRes );
 		if( itorFind != m_setAllocateResource.end() )
@@ -285,7 +288,7 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	template< class TRegisterResType, class TAllocateResType >
-	inline int32 CGUIResourceManager<TRegisterResType, TAllocateResType>::ReleaseFromAllocatePool( TAllocateResType* pRes )
+	inline int32 CGUIResourceManager<TRegisterResType, TAllocateResType>::ReleaseFromAllocatePool( CGUIResource* pRes )
 	{
 		typename TSetResource::const_iterator itorFind = m_setAllocateResource.find( pRes );
 		if( itorFind == m_setAllocateResource.end() )
@@ -308,7 +311,7 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	template< class TRegisterResType, class TAllocateResType >
-	inline void CGUIResourceManager<TRegisterResType, TAllocateResType>::DestroyAllocateResource( TAllocateResType* pRes )
+	inline void CGUIResourceManager<TRegisterResType, TAllocateResType>::DestroyAllocateResource( CGUIResource* pRes )
 	{
 		pRes->Unload();
 		DestroyAllocateResourceImp( pRes );

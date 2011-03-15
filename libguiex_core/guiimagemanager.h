@@ -91,7 +91,7 @@ namespace guiex
 			EGuiPixelFormat ePixelFormat,
 			const CGUISize& rSize = CGUISize() ) const;
 
-		int32 DeallocateResource( CGUIImage* pImage );
+		virtual void DeallocateResource( CGUIResource* pRes );
 
 	protected:
 		virtual	void DestroyRegisterResourceImp( CGUIResource* pRes ); 

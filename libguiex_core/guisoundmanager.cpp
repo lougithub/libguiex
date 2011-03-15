@@ -109,22 +109,21 @@ namespace guiex
 		return pSound;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUISoundManager::DeallocateResource( CGUISoundData* pSound )
+	void CGUISoundManager::DeallocateResource( CGUIResource* pRes )
 	{
-		GUI_ASSERT( pSound, "invalid parameter" );
+		GUI_ASSERT( pRes, "invalid parameter" );
 
-		pSound->RefRelease();
-		if( pSound->GetRefCount() == 0 )
+		DoRefRelease( pRes );
+		if( pRes->GetRefCount() == 0 )
 		{
-			//named image's reference count shouldn't be zero, which is retained by register function
+			//sound reference count shouldn't be zero, which is retained by register function
 			throw CGUIException(
 				"[CGUISoundManager::DeallocateResource]: invalid reference count [%d] for resource: <%s:%s:%s>", 
-				pSound->GetRefCount(),
-				pSound->GetName().c_str(), 
-				pSound->GetResourceType().c_str(),
-				pSound->GetSceneName().c_str() );
+				pRes->GetRefCount(),
+				pRes->GetName().c_str(), 
+				pRes->GetResourceType().c_str(),
+				pRes->GetSceneName().c_str() );
 		}
-		return 0;
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

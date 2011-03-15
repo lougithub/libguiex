@@ -14,6 +14,8 @@
 #include "guiexception.h"
 #include "guiscene.h"
 #include "guiscenemanager.h"
+#include "guisystem.h"
+#include "guisoundmanager.h"
 
 
 
@@ -26,7 +28,7 @@ namespace guiex
 {
 	//------------------------------------------------------------------------------
 	CGUISoundData::CGUISoundData( const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIResource( rName, rSceneName, "SOUND" )
+		:CGUIResource( rName, rSceneName, "SOUND", GSystem->GetSoundManager() )
 	{
 	}
 	//------------------------------------------------------------------------------

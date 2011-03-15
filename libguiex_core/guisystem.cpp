@@ -118,7 +118,6 @@ namespace guiex
 		,m_pPropertyManager( NULL )
 		,m_pWidgetFactory( NULL )
 		,m_pSceneInfoManager( NULL )
-		,m_pAsFactory( NULL )
 		,m_pLogMsgManager( NULL )
 		,m_pWidgetManager( NULL )
 		,m_pCameraManager( NULL )
@@ -165,7 +164,6 @@ namespace guiex
 		m_pPropertyManager = new CGUIPropertyManager;
 		m_pWidgetFactory = new CGUIWidgetFactory;
 		m_pSceneInfoManager = new CGUISceneManager;
-		m_pAsFactory = new CGUIAsFactory;
 		m_pCameraManager = new CGUICameraManager;
 		m_pCanvasLayerManager = new CGUICanvasLayerManager;
 	}
@@ -200,8 +198,6 @@ namespace guiex
 		m_pSceneInfoManager = NULL;
 		delete m_pWidgetFactory;
 		m_pWidgetFactory = NULL;
-		delete m_pAsFactory;
-		m_pAsFactory = NULL;
 		delete m_pTextureManager;
 		m_pTextureManager = NULL;
 		delete m_pCameraManager;
@@ -223,12 +219,6 @@ namespace guiex
 		InitializeSingletons();
 
 		GUI_TRACE( "[CGUISystem::Initialize]: \n" );
-
-		//register as
-		if( 0 != GUIRegisterAllAs())
-		{
-			return -1;
-		}
 
 		//initialize performance monitor if necessary
 		PERFMON_INIT(GUI_PERF_FRAME_COUNT, GUI_PERF_SECTION_NUM_MAX);

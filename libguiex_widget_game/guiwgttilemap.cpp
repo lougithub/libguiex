@@ -54,7 +54,7 @@ namespace guiex
 	{
 		if( m_pTileMap )
 		{
-			CGUITileMapManager::Instance()->DeallocateResource( m_pTileMap );
+			m_pTileMap->RefRelease();
 			m_pTileMap = NULL;
 		}
 
@@ -80,7 +80,7 @@ namespace guiex
 		{
 			CGUITileMap* pTileMap = CGUITileMapManager::Instance()->AllocateResource( rTileMapName );
 			SetTileMap( pTileMap );
-			CGUITileMapManager::Instance()->DeallocateResource( pTileMap );
+			pTileMap->RefRelease();
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -93,7 +93,7 @@ namespace guiex
 
 		if( m_pTileMap )
 		{
-			CGUITileMapManager::Instance()->DeallocateResource( m_pTileMap );
+			m_pTileMap->RefRelease();
 			m_pTileMap = NULL;
 		}
 

@@ -64,7 +64,7 @@ namespace guiex
 		int32 RegisterParticle2D( const CGUIString& rSceneName, const CGUIProperty& rProperty);
 		
 		CGUIParticle2DSystem* AllocateResource( const CGUIString& rResName );
-		int32 DeallocateResource( CGUIParticle2DSystem* pRes );
+		virtual void DeallocateResource( CGUIResource* pRes );
 
 		CGUIParticle2DSystem* AllocateResource( const CGUIString& rName, const CGUIString& rSceneName );
 

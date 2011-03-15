@@ -77,7 +77,7 @@ namespace guiex
 			real fInterval,
 			const CGUISize& rSize = CGUISize(0,0));
 
-		int32 DeallocateResource( CGUIAnimation* pAnimation );
+		virtual void DeallocateResource( CGUIResource* pRes );
 
 	protected:
 		virtual	void DestroyRegisterResourceImp( CGUIResource* pRes ); 

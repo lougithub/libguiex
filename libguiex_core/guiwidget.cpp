@@ -1071,7 +1071,7 @@ namespace guiex
 		TMapSound::iterator itor = m_mapEventSound.find(strEventName);
 		if( itor != m_mapEventSound.end())
 		{
-			CGUISoundManager::Instance()->DeallocateResource( itor->second );
+			itor->second->RefRelease();
 			m_mapEventSound.erase(itor);
 		}
 	}
@@ -1298,7 +1298,7 @@ namespace guiex
 		TMapImage::iterator itor = m_aMapImage.find(rName );
 		if( itor != m_aMapImage.end())
 		{
-			CGUIImageManager::Instance()->DeallocateResource( itor->second );
+			itor->second->RefRelease();
 			m_aMapImage.erase( itor );
 		}
 
@@ -1320,7 +1320,7 @@ namespace guiex
 			return NULL;
 		};
 		SetImage(rName, pImage);
-		CGUIImageManager::Instance()->DeallocateResource( pImage );
+		pImage->RefRelease();
 		return pImage;
 	}
 	//------------------------------------------------------------------------------
@@ -1330,7 +1330,7 @@ namespace guiex
 		if( itor != m_aMapAnimation.end())
 		{
 			//remove old one
-			CGUIAnimationManager::Instance()->DeallocateResource( itor->second );
+			itor->second->RefRelease();
 			m_aMapAnimation.erase(itor);
 		}
 		if( pAnimation )
@@ -1350,7 +1350,7 @@ namespace guiex
 			return NULL;
 		};
 		SetAnimation(rName, pAnimation);
-		CGUIAnimationManager::Instance()->DeallocateResource( pAnimation );
+		pAnimation->RefRelease();
 		return pAnimation;
 	}
 	//------------------------------------------------------------------------------
@@ -1378,7 +1378,7 @@ namespace guiex
 		};
 		pAs->SetReceiver( this );
 		SetAs( rName, pAs );
-		CGUIAsManager::Instance()->DeallocateResource( pAs );
+		pAs->RefRelease();
 		return pAs;
 	}
 	//------------------------------------------------------------------------------
@@ -1389,7 +1389,7 @@ namespace guiex
 		if( itor != m_aMapAs.end())
 		{
 			//remove old one
-			CGUIAsManager::Instance()->DeallocateResource( itor->second );
+			itor->second->RefRelease();
 			m_aMapAs.erase(itor);
 		}
 		if( pAs )
@@ -1474,17 +1474,14 @@ namespace guiex
 			itor != m_listAsPlaying.end();
 			++itor )
 		{
-			CGUIAsManager::Instance()->DeallocateResource( *itor );
+			(*itor)->RefRelease();
 		}
 		m_listAsPlaying.clear();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::PlayAs( CGUIAs* pAs )
 	{
-		TListAs::iterator itor = std::find( 
-			m_listAsPlaying.begin(), 
-			m_listAsPlaying.end(), 
-			pAs );
+		TListAs::iterator itor = std::find( m_listAsPlaying.begin(), m_listAsPlaying.end(), pAs );
 		if( itor == m_listAsPlaying.end() )
 		{
 			pAs->SetElapsedTime( 0.0f );
@@ -1495,10 +1492,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	bool CGUIWidget::IsAsPlaying( CGUIAs* pAs )
 	{
-		TListAs::iterator itor = std::find( 
-			m_listAsPlaying.begin(), 
-			m_listAsPlaying.end(), 
-			pAs );
+		TListAs::iterator itor = std::find( m_listAsPlaying.begin(), m_listAsPlaying.end(), pAs );
 		if( itor == m_listAsPlaying.end() )
 		{
 			return false;
@@ -1508,13 +1502,10 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWidget::StopAs( CGUIAs* pAs )
 	{
-		TListAs::iterator itor = std::find( 
-			m_listAsPlaying.begin(), 
-			m_listAsPlaying.end(), 
-			pAs );
+		TListAs::iterator itor = std::find( m_listAsPlaying.begin(), m_listAsPlaying.end(), pAs );
 		if( itor != m_listAsPlaying.end() )
 		{
-			CGUIAsManager::Instance()->DeallocateResource( pAs );
+			pAs->RefRelease();
 			m_listAsPlaying.erase( itor );
 		}
 	}
@@ -1546,7 +1537,7 @@ namespace guiex
 				{
 					pSuccessor->GetReceiver()->PlayAs(pSuccessor);
 				}
-				CGUIAsManager::Instance()->DeallocateResource( pAs );
+				pAs->RefRelease();
 			}
 			else
 			{
@@ -1592,7 +1583,7 @@ namespace guiex
 			itor != m_aMapImage.end();
 			++itor)
 		{
-			CGUIImageManager::Instance()->DeallocateResource( itor->second );
+			itor->second->RefRelease();
 		}
 		m_aMapImage.clear();
 
@@ -1601,7 +1592,7 @@ namespace guiex
 			itor != m_aMapAnimation.end();
 			++itor)
 		{
-			CGUIAnimationManager::Instance()->DeallocateResource( itor->second );
+			itor->second->RefRelease();
 		}
 		m_aMapAnimation.clear();
 
@@ -1619,14 +1610,14 @@ namespace guiex
 			itor != m_aMapAs.end();
 			++itor)
 		{
-			CGUIAsManager::Instance()->DeallocateResource( itor->second );
+			itor->second->RefRelease();
 		}
 		m_aMapAs.clear();
 		for( TListAs::iterator itor = m_listAsPlaying.begin();
 			itor != m_listAsPlaying.end();
 			++itor)
 		{
-			CGUIAsManager::Instance()->DeallocateResource( *itor );
+			(*itor)->RefRelease();
 		}
 		m_listAsPlaying.clear();
 	}

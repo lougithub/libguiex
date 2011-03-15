@@ -14,6 +14,8 @@
 #include "guistringconvertor.h"
 #include "guiexception.h"
 #include "guiproperty.h"
+#include "guitilemap.h"
+#include "guisystem.h"
 
  
 //============================================================================//
@@ -23,7 +25,7 @@ namespace guiex
 {
 	//------------------------------------------------------------------------------
 	CGUITileMapData::CGUITileMapData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIProperty& rProperty )
-	:CGUIResource( rName, rSceneName, "TILEMAPDATA" )
+	:CGUIResource( rName, rSceneName, "TILEMAPDATA", GSystem->GetTileMapManager() )
 	,m_aProperty( rProperty )
 	{
 	}
@@ -125,16 +127,15 @@ namespace guiex
 		return pTileMap;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUITileMapManager::DeallocateResource( CGUITileMap* pRes )
+	void CGUITileMapManager::DeallocateResource( CGUIResource* pRes )
 	{
 		GUI_ASSERT( pRes, "invalid parameter" );
 
-		pRes->RefRelease();
+		DoRefRelease( pRes );
 		if( pRes->GetRefCount() == 0 )
 		{
-			return ReleaseFromAllocatePool( pRes );
+			ReleaseFromAllocatePool( pRes );
 		}
-		return 0;
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

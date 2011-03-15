@@ -26,6 +26,9 @@ namespace guiex
 {
 	class CGUIAs;
 	class CGUIProperty;
+
+	typedef CGUIAs* (*TAsGenerator)( const CGUIString& rAsName, const CGUIString& rSceneName );
+		
 }
 
 //============================================================================//
@@ -50,6 +53,8 @@ namespace guiex
 		CGUIProperty m_aProperty;
 	};
 
+
+
 	/**
 	* @class CGUIAsManager
 	* @brief image manager
@@ -66,41 +71,36 @@ namespace guiex
 		int32 RegisterAs( const CGUIString& rSceneName, const CGUIProperty& rProperty );
 
 		CGUIAs* AllocateResource( const CGUIString& rResName );
-		CGUIAs* AllocateResourceByType( const CGUIString& rAsType );
-		int32 DeallocateResource( CGUIAs* pRes );
-		
-		template<class T> T* AllocateResource(  );
+		CGUIAs* AllocateResource( const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName );
+		template<class T> 
+		T* AllocateResource( const CGUIString& rAsName="", const CGUIString& rSceneName="" );
+		virtual void DeallocateResource( CGUIResource* pRes );
 
 	protected:
-		CGUIAs* DoCreateAs( const CGUIString& rSceneName,const CGUIProperty& rProperty );
-
-		CGUIAs* DoCreateAs( const CGUIString& rName,const CGUIString& rSceneName,const CGUIString& rAsType );
-
 		virtual	void DestroyRegisterResourceImp( CGUIResource* pRes ); 
 		virtual	void DestroyAllocateResourceImp( CGUIResource* pRes ); 
 
-
 	private:
 		static CGUIAsManager* m_pSingleton;
+		typedef std::map<CGUIString, TAsGenerator> TMapAsGenerator;
+		TMapAsGenerator m_mapAsGenerator;
 	};
 
 	template<class T> 
-	inline T* CGUIAsManager::AllocateResource(  )
+	inline T* CGUIAsManager::AllocateResource( const CGUIString& rAsName, const CGUIString& rSceneName )
 	{
-		if( T::HasGenerator() == true )
+		T* pAs = new T( rAsName, rSceneName );
+		if( !pAs || pAs->GetType() != T::StaticGetType() )
 		{
-			CGUIAs* pAs = AllocateResourceByType( T::StaticGetType() );
-			GUI_ASSERT( pAs->GetType() == T::StaticGetType(), "wrong As type" );
-			return static_cast<T*>( pAs );
+			throw CGUIException(
+				"[CGUIAsManager::AllocateResource] failed to generate as <%s>",
+				T::StaticGetType());
+			return NULL;	
 		}
-		else
-		{
-			T* pAs = guiex::CGUIAsFactory::Instance()->GenerateAs<T>( "", "" );
-			GUI_ASSERT( pAs->GetType() == T::StaticGetType(), "wrong As type" );
-			AddToAllocatePool( pAs );
-			pAs->RefRetain();
-			return pAs;
-		}
+
+		AddToAllocatePool( pAs );
+		pAs->RefRetain();
+		return pAs;
 	}
 
 }//namespace guiex

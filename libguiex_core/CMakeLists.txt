@@ -32,6 +32,8 @@ set( ${target_name}_base_SRCS
 	sigslot.h
 	base64.h
 	base64.cpp
+	guireference.h
+	guireference.cpp
 	)
 source_group( "base" FILES ${${target_name}_base_SRCS} )
 
@@ -121,10 +123,6 @@ set( ${target_name}_resource_SRCS
 	guias.h
 	guiasmanager.cpp
 	guiasmanager.h
-	guiasfactory.cpp
-	guiasfactory.h
-	guiasgenerator.cpp
-	guiasgenerator.h
 	guiparticle2dmanager.cpp
 	guiparticle2dmanager.h
 	guitilemapmanager.cpp
@@ -282,6 +280,13 @@ set( ${target_name}_particle2dsystem_SRCS
 	)
 source_group( particle2dsystem FILES ${${target_name}_particle2dsystem_SRCS} )
 
+
+set( ${target_name}_scenecapture_SRCS 
+	guiscenecapture.cpp
+	guiscenecapture.h
+	)
+source_group( scenecapture FILES ${${target_name}_scenecapture_SRCS} )
+
 set( ${target_name}_particlesystem_SRCS 
 	guiparticle.cpp
 	guiparticle.h
@@ -323,6 +328,8 @@ set( ${target_name}_SRCS
 	${${target_name}_camera_SRCS}
 	${${target_name}_tilemap_SRCS}
 	${${target_name}_particle2dsystem_SRCS}
+	${${target_name}_scenecapture_SRCS}
+
 	#${${target_name}_particlesystem_SRCS}
 	)
 

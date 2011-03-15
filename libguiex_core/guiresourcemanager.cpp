@@ -28,4 +28,9 @@ namespace guiex
 		GSystem->UnregisterResourceManager( this );
 	}
 	//------------------------------------------------------------------------------
+	void CGUIResourceManagerBase::DoRefRelease( CGUIResource* pRes )
+	{
+		pRes->DoRefReleaseByManager();
+	}
+	//------------------------------------------------------------------------------
 }

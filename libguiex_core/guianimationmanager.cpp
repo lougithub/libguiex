@@ -188,16 +188,15 @@ namespace guiex
 		return pAnimation;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIAnimationManager::DeallocateResource( CGUIAnimation* pAnimation )
+	void CGUIAnimationManager::DeallocateResource( CGUIResource* pRes )
 	{
-		GUI_ASSERT( pAnimation, "invalid parameter" );
+		GUI_ASSERT( pRes, "invalid parameter" );
 
-		pAnimation->RefRelease();
-		if( pAnimation->GetRefCount() == 0 )
+		DoRefRelease( pRes );
+		if( pRes->GetRefCount() == 0 )
 		{
-			return ReleaseFromAllocatePool( pAnimation );
+			ReleaseFromAllocatePool( pRes );
 		}
-		return 0;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIAnimationManager::DestroyRegisterResourceImp( CGUIResource* pRes )

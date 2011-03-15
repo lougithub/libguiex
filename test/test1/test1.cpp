@@ -423,7 +423,6 @@ int32 CGUIFrameworkTest::InitializeGame( )
 
 void CGUIFrameworkTest::ReleaseGame( )
 {
-	CGUISceneManager::Instance()->ReleaseResources( "common.uip" );
 }
 
 void CGUIFrameworkTest::PreUpdate( real fDeltaTime )

@@ -17,9 +17,6 @@
 #include "guivector3.h"
 #include "guicolor.h"
 
-#include "guiasgenerator.h"
-#include "guiasfactory.h"
-
 #include "guiresource.h"
 
 #include "guiproperty.h"
@@ -40,6 +37,18 @@ namespace guiex
 {
 	class CGUIWidget;
 }
+
+#define GUI_AS_GENERATOR_DECLARE(asType) \
+public:	\
+	friend class CGUIAsManager; \
+	static CGUIAs* GenerateAs( const CGUIString& rAsName, const CGUIString& rSceneName ) \
+	{ \
+		return new asType( rAsName, rSceneName ); \
+	} \
+	static const char* StaticGetType() \
+	{ \
+		return #asType; \
+	} 
 
 //============================================================================//
 // function
@@ -96,29 +105,15 @@ namespace guiex
 
 		virtual real Update( real fDeltaTime );
 
-		///is this as created by CGUIAsFactory
-		bool IsCreateByFactory() const
-		{
-			return m_pAsGenerator!=NULL;
-		}
-
 	protected:
 		CGUIAs( const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName );
 
 	private:
-		friend class CGUIAsManager;
 		//disable =
 		CGUIAs( const CGUIAs& );
 		const CGUIAs& operator=(const CGUIAs& );
 
 	protected:
-		///widget generator
-		friend class CGUIAsFactory;
-		//!<set generator
-		void SetGenerator( const CGUIAsGenerator* pGenerator);
-		//!<get generator
-		const CGUIAsGenerator* GetGenerator() const;
-
 		virtual int32	DoLoad() const;
 		virtual void	DoUnload();
 
@@ -133,8 +128,6 @@ namespace guiex
 		TListSuccessor m_listSuccessor; //!<successor
 
 		CGUIString m_strAsType; //!<type of this as
-	private:
-		const CGUIAsGenerator* m_pAsGenerator;	//!<generator which used to create as
 	};
 
 
@@ -145,7 +138,7 @@ namespace guiex
 	class CGUIAsInterpolation : public CGUIAs
 	{
 	protected:
-		CGUIAsInterpolation(const CGUIString& rAsName, const CGUIString& rSceneName);
+		CGUIAsInterpolation( const CGUIString& rAsName, const CGUIString& rSceneName );
 		CGUIAsInterpolation( const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName );
 
 	public:
@@ -173,7 +166,7 @@ namespace guiex
 
 		T m_aCurValue;
 
-		GUI_AS_NO_GENERATOR_DECLARE( CGUIAsInterpolation );
+		GUI_AS_GENERATOR_DECLARE( CGUIAsInterpolation );
 	};
 
 	//*****************************************************************************
@@ -208,7 +201,7 @@ namespace guiex
 
 		T m_aCurValue;
 
-		GUI_AS_NO_GENERATOR_DECLARE( CGUIAsInterpolationQueue );
+		GUI_AS_GENERATOR_DECLARE( CGUIAsInterpolationQueue );
 	};
 
 
@@ -565,7 +558,7 @@ namespace guiex
 			itor != m_vAsQueue.end();
 			++itor )
 		{
-			CGUIAsManager::Instance()->DeallocateResource( (*itor).m_pAs );
+			(*itor).m_pAs->RefRelease();
 		}
 		m_vAsQueue.clear();
 	}

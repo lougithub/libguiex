@@ -10,8 +10,6 @@
 //============================================================================// 
 #include "guiasmanager.h"
 #include "guias.h"
-#include "guiasfactory.h"
-
 
 //============================================================================//
 // function
@@ -20,7 +18,7 @@ namespace guiex
 {
 	//------------------------------------------------------------------------------
 	CGUIAsData::CGUIAsData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIProperty& rProperty )
-		:CGUIResource( rName, rSceneName, "ASDATA" )
+		:CGUIResource( rName, rSceneName, "ASDATA", GSystem->GetAsManager() )
 		,m_aProperty( rProperty )
 	{
 	}
@@ -48,6 +46,16 @@ namespace guiex
 	{
 		GUI_ASSERT( !m_pSingleton, "[CGUIAsManager::CGUIAsManager]:instance has been created" ); 
 		m_pSingleton = this; 
+
+		//register as generator to map
+#define REGISTER_AS( as ) m_mapAsGenerator[#as] = as::GenerateAs;
+		REGISTER_AS( CGUIAsAlpha );
+		REGISTER_AS( CGUIAsScale );
+		REGISTER_AS( CGUIAsPosition );
+		REGISTER_AS( CGUIAsRotation );
+		REGISTER_AS( CGUIAsColor );
+		REGISTER_AS( CGUIAsContainer );
+#undef REGISTER_AS
 	}
 	//------------------------------------------------------------------------------
 	CGUIAsManager::~CGUIAsManager()
@@ -68,27 +76,6 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	CGUIAs* CGUIAsManager::DoCreateAs( const CGUIString& rSceneName, const CGUIProperty& rProperty )
-	{
-		CGUIAs* pAs = CGUIAsFactory::Instance()->GenerateAs( rProperty.GetValue(), rProperty.GetName(), rSceneName);
-		if( 0 != pAs->ProcessProperty( rProperty ))
-		{
-			throw CGUIException(
-				"[CGUIAsManager::DoCreateAs]: invalid property: <%s> <%s> <%s>", 
-				rProperty.GetName().c_str(), 
-				rProperty.GetTypeAsString().c_str(),
-				rProperty.GetValue().c_str());
-			return NULL;
-		}
-		return pAs;
-	}
-	//------------------------------------------------------------------------------
-	CGUIAs* CGUIAsManager::DoCreateAs( const CGUIString& rName,const CGUIString& rSceneName,const CGUIString& rAsType )
-	{
-		guiex::CGUIAs* pAs = guiex::CGUIAsFactory::Instance()->GenerateAs( rAsType, rName, rSceneName );
-		return pAs;
-	}
-	//------------------------------------------------------------------------------
 	CGUIAs* CGUIAsManager::AllocateResource( const CGUIString& rResName )
 	{
 		CGUIAsData* pAsData = CGUIResourceManager<CGUIAsData, CGUIAs>::GetRegisterResource( rResName );
@@ -100,31 +87,57 @@ namespace guiex
 			return NULL;
 		}
 
-		CGUIAs* pAs = DoCreateAs( pAsData->GetSceneName(), pAsData->GetAsData() );
+		TMapAsGenerator::iterator itorFind = m_mapAsGenerator.find( pAsData->GetAsData().GetValue() );
+		if( itorFind == m_mapAsGenerator.end() )
+		{
+			throw CGUIException(
+				"[CGUIAsManager::AllocateResource] failed to find as generator <%s>",
+				pAsData->GetAsData().GetValue().c_str());
+			return NULL;
+		}
+
+		CGUIAs* pAs = itorFind->second( pAsData->GetAsData().GetName(), pAsData->GetSceneName() );
+		if( 0 != pAs->ProcessProperty( pAsData->GetAsData() ))
+		{
+			throw CGUIException(
+				"[CGUIAsManager::AllocateResource]: invalid property: <%s> <%s> <%s>", 
+				pAsData->GetAsData().GetName().c_str(), 
+				pAsData->GetAsData().GetTypeAsString().c_str(),
+				pAsData->GetAsData().GetValue().c_str());
+			return NULL;
+		}
+
 		pAs->RefRetain();
 		AddToAllocatePool( pAs );
 
 		return pAs;
 	}
 	//------------------------------------------------------------------------------
-	CGUIAs* CGUIAsManager::AllocateResourceByType( const CGUIString& rAsType )
+	CGUIAs* CGUIAsManager::AllocateResource( const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName )
 	{
-		CGUIAs* pAs = DoCreateAs( "", "", rAsType );
+		TMapAsGenerator::iterator itorFind = m_mapAsGenerator.find( rAsType );
+		if( itorFind == m_mapAsGenerator.end() )
+		{
+			throw CGUIException(
+				"[CGUIAsManager::AllocateResource] failed to find as generator <%s>",
+				rAsType.c_str());
+			return NULL;
+		}
+
+		CGUIAs* pAs = itorFind->second( rAsName, rSceneName );
 		pAs->RefRetain();
 		AddToAllocatePool( pAs );
 		return pAs;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIAsManager::DeallocateResource( CGUIAs* pRes )
+	void CGUIAsManager::DeallocateResource( CGUIResource* pRes )
 	{
 		GUI_ASSERT( pRes, "invalid parameter" );
-
-		pRes->RefRelease();
+		DoRefRelease( pRes );
 		if( pRes->GetRefCount() == 0 )
 		{
-			return ReleaseFromAllocatePool( pRes );
+			ReleaseFromAllocatePool( pRes );
 		}
-		return 0;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIAsManager::DestroyRegisterResourceImp( CGUIResource* pRes )
@@ -134,7 +147,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIAsManager::DestroyAllocateResourceImp( CGUIResource* pRes )
 	{
-		CGUIAsFactory::Instance()->DestroyAs( (CGUIAs*)pRes );
+		delete pRes;
 	}
 	//------------------------------------------------------------------------------
 

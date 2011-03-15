@@ -289,31 +289,30 @@ namespace guiex
 		return pImage;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIImageManager::DeallocateResource( CGUIImage* pImage )
+	void CGUIImageManager::DeallocateResource( CGUIResource* pRes )
 	{
-		GUI_ASSERT( pImage, "invalid parameter" );
+		GUI_ASSERT( pRes, "invalid parameter" );
 
-		pImage->RefRelease();
-		if( pImage->GetRefCount() == 0 )
+		DoRefRelease( pRes );
+		if( pRes->GetRefCount() == 0 )
 		{
-			if( pImage->GetName() == "" &&
-				pImage->GetSceneName() == "" )
+			if( pRes->GetName() == "" &&
+				pRes->GetSceneName() == "" )
 			{
 				//this image is not registered as a named image, free it
-				return ReleaseFromAllocatePool( pImage );
+				ReleaseFromAllocatePool( pRes );
 			}
 			else
 			{
 				//named image's reference count shouldn't be zero, which is retained by register function
 				throw CGUIException(
 					"[CGUIImageManager::DeallocateResource]: invalid reference count [%d] for resource: <%s:%s:%s>", 
-					pImage->GetRefCount(),
-					pImage->GetName().c_str(), 
-					pImage->GetResourceType().c_str(),
-					pImage->GetSceneName().c_str() );
+					pRes->GetRefCount(),
+					pRes->GetName().c_str(), 
+					pRes->GetResourceType().c_str(),
+					pRes->GetSceneName().c_str() );
 			}
 		}
-		return 0;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIImageManager::DestroyRegisterResourceImp( CGUIResource* pRes )

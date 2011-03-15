@@ -16,6 +16,7 @@
 #include "guimath.h"
 #include "guiproperty.h"
 #include "guipropertyconvertor.h"
+#include "guiparticle2dmanager.h"
 
 
 //============================================================================//
@@ -58,7 +59,7 @@ namespace guiex
 
 	//------------------------------------------------------------------------------
 	CGUIParticle2DSystem::CGUIParticle2DSystem( const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIResource( rName, rSceneName, "PARTICLE2D")
+		:CGUIResource( rName, rSceneName, "PARTICLE2D", GSystem->GetParticle2DManager())
 		,emissionRate( 0.0f )
 		,emitCounter( 0.0f )
 		,totalParticles( 0 )
