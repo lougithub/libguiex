@@ -134,7 +134,6 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	void CGUIAnimation::Draw( IGUIInterfaceRender* pRender,
-		const CGUIMatrix4& rWorldMatrix,
 		const CGUIRect& rDestRect,
 		real z, 
 		real fAlpha	) const
@@ -143,8 +142,7 @@ namespace guiex
 
 		CGUIColor aColor(1.0f,1.0f,1.0f,1.0f);
 		aColor.SetAlpha(fAlpha);
-		pRender->DrawTile( rWorldMatrix,
-			rDestRect, 
+		pRender->DrawTile( rDestRect, 
 			z,
 			m_vecTextures[m_nFrame]->GetTextureImplement(),
 			m_vecUVRects[m_nFrame], 

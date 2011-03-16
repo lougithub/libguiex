@@ -43,8 +43,14 @@ namespace guiex
 		IGUIRender_opengles( );
 		virtual ~IGUIRender_opengles();
 
+		virtual void PushMatrix();
+		virtual void PopMatrix();
+		virtual void SetModelViewMatrixMode( );
+		virtual void LoadIdentityMatrix( );
+		virtual void MultMatrix( const CGUIMatrix4& rMatrix );
+		virtual uint32 GenFrameBuffers( );
+
 		virtual void DrawRect(
-			const CGUIMatrix4& rWorldMatrix,
 			const CGUIRect& rDestRect, 
 			real fLineWidth,
 			real z,
@@ -55,7 +61,6 @@ namespace guiex
 
 
 		virtual	void DrawTile( 
-			const CGUIMatrix4& rWorldMatrix,
 			const CGUIRect& rDestRect,
 			real z, 
 			const CGUITextureImp* pTexture, 
@@ -67,7 +72,6 @@ namespace guiex
 			const CGUIColor& rColor_bottomright);
 		
 		virtual void DrawQuads(
-			const CGUIMatrix4& rWorldMatrix,
 			const CGUITextureImp* pTexture,
 			const SGUIBlendFunc& rBlendFuncType,
 			const SR_V2F_C4F_T2F_Quad* pQuads,
@@ -75,7 +79,6 @@ namespace guiex
 			int16 nQuadNum);
 
 		virtual void DrawLine(
-			const CGUIMatrix4& rWorldMatrix,
 			const CGUIVector2 &rBegin, 
 			const CGUIVector2 &rEnd, 
 			real fLineWidth,
@@ -83,7 +86,7 @@ namespace guiex
 			const CGUIColor& rColor_begin,
 			const CGUIColor& rColor_end);
 
-		virtual void PushClipRect( const CGUIMatrix4& rMatrix, const CGUIRect& rClipRect );
+		virtual void PushClipRect( const CGUIRect& rClipRect );
 		virtual void PopClipRect( );
 
 		virtual void BeginRender(void);

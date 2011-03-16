@@ -64,7 +64,7 @@ namespace guiex
 	{
 		if( m_pParticle2DSystem )
 		{
-			m_pParticle2DSystem->Render( pRender, getFullTransform() );
+			m_pParticle2DSystem->Render( pRender );
 		}
 	}
 	//------------------------------------------------------------------------------

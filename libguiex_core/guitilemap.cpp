@@ -165,7 +165,7 @@ namespace guiex
 			itor != m_arrayLayer.end();
 			++itor )
 		{
-			(*itor)->Render( pRender, rWorldMatrix );
+			(*itor)->Render( pRender );
 		}
 
 	}

@@ -18,9 +18,6 @@
 #include <windows.h>
 #endif
 
-#include <GL/gl.h>
-#include <GL/glu.h>
-
 
 //============================================================================//
 // declare
@@ -93,7 +90,7 @@ namespace guiex
 
 	protected:
 		void SetOpenglTextureSize(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat);
-		GLuint GetOGLTexid(void) const {return m_ogltexture;}
+		uint32 GetOGLTexid(void) const {return m_ogltexture;}
 
 	protected:
 		friend class IGUIRender_opengl;
@@ -103,7 +100,7 @@ namespace guiex
 		CGUITexture_opengl(IGUIInterfaceRender* pRender);
 
 	protected:
-		GLuint m_ogltexture; //!< The texture.
+		uint32 m_ogltexture; //!< The texture.
 		uint16 m_nTextureWidth;
 		uint16 m_nTextureHeight;
 

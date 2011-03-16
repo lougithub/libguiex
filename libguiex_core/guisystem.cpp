@@ -607,14 +607,17 @@ namespace guiex
 	{
 		IGUIInterfaceRender* pRender = CGUIInterfaceManager::Instance()->GetInterfaceRender();
 
+		pRender->PushMatrix();
+		pRender->SetModelViewMatrixMode();
+		pRender->LoadIdentityMatrix();
+
 		//render canvas
 		RenderCanvas( pRender );
 
-		//render ui
-		pRender->ApplyCamera( m_pCameraManager->GetDefaultUICamera() );
-
 		//render cursor
 		CGUIMouseCursor::Instance()->Render(pRender);
+
+		pRender->PopMatrix();
 	}
 	//------------------------------------------------------------------------------
 	/**

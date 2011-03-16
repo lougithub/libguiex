@@ -112,7 +112,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtButton::RenderSelf(IGUIInterfaceRender* pRender)
+	void CGUIWgtButton::RenderSelf(IGUIInterfaceRender* pRender)
 	{
 		const CGUIImage* pImage = NULL;
 		CGUIStringEx* pString = NULL;

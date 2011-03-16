@@ -66,7 +66,6 @@ namespace guiex
 		*/
 		virtual void DrawCharacter(
 			IGUIInterfaceRender* pRender, 
-			const CGUIMatrix4& rWorldMatrix,
 			wchar_t charCode, 
 			const CGUIStringInfo& rInfo,
 			const CGUIVector2& rPos,
@@ -77,7 +76,6 @@ namespace guiex
 		*/
 		virtual void DrawString(
 			IGUIInterfaceRender* pRender, 
-			const CGUIMatrix4& rWorldMatrix,
 			const CGUIStringEx& rString, 
 			const CGUIVector2& rPos,
 			real fAlpha,
@@ -89,7 +87,6 @@ namespace guiex
 		*/
 		virtual void DrawString(
 			IGUIInterfaceRender* pRender, 
-			const CGUIMatrix4& rWorldMatrix,
 			const CGUIStringEx& rString, 
 			const CGUIRect&	rStringRect,
 			const uint8& uTextAlignment,

@@ -52,7 +52,7 @@ namespace guiex
 
 		ETMXOrientation GetLayerOrientation() const;
 
-		void Render( IGUIInterfaceRender* pRender, const CGUIMatrix4& rWorldMatrix );
+		void Render( IGUIInterfaceRender* pRender );
 
 	protected:
 		struct STileData

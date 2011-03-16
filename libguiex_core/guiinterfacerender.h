@@ -55,8 +55,15 @@ namespace guiex
 		*/
 		virtual ~IGUIInterfaceRender();
 
+		virtual void PushMatrix() = 0;
+		virtual void PopMatrix() = 0;
+		virtual void SetModelViewMatrixMode( ) = 0;
+		virtual void MultMatrix( const CGUIMatrix4& rMatrix ) = 0;
+		virtual void LoadIdentityMatrix( ) = 0;
+
+		virtual uint32 GenFrameBuffers( ) = 0;
+
 		virtual void DrawRect(
-			const CGUIMatrix4& rWorldMatrix,
 			const CGUIRect& rDestRect, 
 			real fLineWidth,
 			real z,
@@ -65,8 +72,13 @@ namespace guiex
 			const CGUIColor& rColor_bottomleft,
 			const CGUIColor& rColor_bottomright ) = 0;
 
+		virtual void DrawRect(
+			const CGUIRect& rDestRect, 
+			real fLineWidth,
+			real z,
+			const CGUIColor& rColor );
+
 		virtual void DrawQuads(
-			const CGUIMatrix4& rWorldMatrix,
 			const CGUITextureImp* pTexture,
 			const SGUIBlendFunc& rBlendFuncType,
 			const SR_V2F_C4F_T2F_Quad* pQuads,
@@ -78,7 +90,6 @@ namespace guiex
 		* @param rTextureRect in texture co-ordinates.
 		*/
 		virtual	void DrawTile(	
-			const CGUIMatrix4& rWorldMatrix,
 			const CGUIRect& rDestRect, 
 			real z, 
 			const CGUITextureImp* pTex, 
@@ -91,7 +102,6 @@ namespace guiex
 			) = 0;
 
 		virtual	void DrawTile(	
-			const CGUIMatrix4& rWorldMatrix,
 			const CGUIRect& rDestRect, 
 			real z, 
 			const CGUITextureImp* pTex, 
@@ -101,7 +111,6 @@ namespace guiex
 			);
 
 		virtual void DrawLine(
-			const CGUIMatrix4& rWorldMatrix,
 			const CGUIVector2 &rBegin, 
 			const CGUIVector2 &rEnd, 
 			real fLineWidth,
@@ -109,7 +118,7 @@ namespace guiex
 			const CGUIColor& rColor_begin,
 			const CGUIColor& rColor_end) = 0;
 
-		virtual void PushClipRect( const CGUIMatrix4& rMatrix, const CGUIRect& rClipRect ) = 0;
+		virtual void PushClipRect( const CGUIRect& rClipRect ) = 0;
 		virtual void PopClipRect( ) = 0;
 
 		// setup states etc

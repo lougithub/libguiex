@@ -83,7 +83,7 @@ namespace guiex
 
 		bool AddParticle();
 
-		virtual void Render( class IGUIInterfaceRender* pRender, const class CGUIMatrix4& rWorldMatrix );
+		virtual void Render( class IGUIInterfaceRender* pRender );
 
 		void StopSystem();
 		void ResetSystem();

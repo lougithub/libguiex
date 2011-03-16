@@ -18,7 +18,21 @@
 #include <libguiex_core/guilogmsgmanager.h>
 #include <libguiex_core/guicamera.h>
 
+//#ifdef __cplusplus
+//extern "C" {
+//#endif //#ifdef __cplusplus
+#include <GL/glew.h>
+#include <GL/wglew.h>
+//#ifdef __cplusplus
+//}
+//#endif //#ifdef __cplusplus
 
+#include <GL/gl.h>
+#include <GL/glu.h>
+
+//============================================================================//
+// declare
+//============================================================================// 
 
 //============================================================================//
 // function
@@ -90,6 +104,15 @@ namespace guiex
 	int IGUIRender_opengl::DoInitialize(void* )
 	{
 		TRY_THROW_OPENGL_ERROR( "render interface initialize" );
+
+		//init glew
+		GLenum err = glewInit();
+		if (GLEW_OK != err)
+		{
+			/* Problem: glewInit failed, something is seriously wrong. */
+			throw CGUIException("[IGUIRender_opengl::DoInitialize]: failed to init glew: %s", glewGetErrorString(err));
+			return -1;
+		}
 		
 		// get the maximum available texture size.
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &m_maxTextureSize);
@@ -118,6 +141,40 @@ namespace guiex
 	void IGUIRender_opengl::DoDestroy()
 	{
 		DestroyAllTexture();
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl::PushMatrix()
+	{
+		glPushMatrix();
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl::SetModelViewMatrixMode( )
+	{
+		glMatrixMode( GL_MODELVIEW );
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl::LoadIdentityMatrix( )
+	{
+		glLoadIdentity();
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl::MultMatrix( const CGUIMatrix4& rMatrix )
+	{
+		makeGLMatrix( m_gl_matrix, rMatrix );
+		glMultMatrixf( m_gl_matrix );
+	}
+	//------------------------------------------------------------------------------
+	uint32 IGUIRender_opengl::GenFrameBuffers( )
+	{
+		//uint32 fbo;
+		//glGenFrameBuffers( 1, &fbo );
+		//return fbo;
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl::PopMatrix()
+	{
+		glPopMatrix();
 	}
 	//------------------------------------------------------------------------------
 	bool IGUIRender_opengl::IsSupportStencil()
@@ -214,6 +271,7 @@ namespace guiex
 				m_pCamera->GetUp().x, m_pCamera->GetUp().y, m_pCamera->GetUp().z );
 
 			m_pCamera->ClearDirty();
+			glMatrixMode(GL_MODELVIEW);
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -244,7 +302,7 @@ namespace guiex
 		return m_bWireFrame;
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengl::DrawRect(const CGUIMatrix4& rWorldMatrix,
+	void IGUIRender_opengl::DrawRect(
 		const CGUIRect& rDestRect, 
 		real fLineWidth,
 		real z,
@@ -256,13 +314,6 @@ namespace guiex
 		glInterleavedArrays(GL_C4UB_V3F , 0, m_pVertexForLine);
 		glDisable(GL_TEXTURE_2D);
 		glLineWidth( fLineWidth );
-
-
-		//set modelview matrix
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		makeGLMatrix( m_gl_matrix, rWorldMatrix );
-		glMultMatrixf( m_gl_matrix );
 
 		real fLeft = rDestRect.m_fLeft;
 		real fRight = rDestRect.m_fRight;
@@ -304,7 +355,7 @@ namespace guiex
 		glInterleavedArrays(GL_T2F_C4UB_V3F , 0, m_pVertex);
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengl::DrawLine(const CGUIMatrix4& rWorldMatrix,
+	void IGUIRender_opengl::DrawLine(
 		const CGUIVector2 &rBegin, 
 		const CGUIVector2 &rEnd, 
 		real fLineWidth,
@@ -315,13 +366,6 @@ namespace guiex
 		glInterleavedArrays(GL_C4UB_V3F , 0, m_pVertexForLine);
 		glDisable(GL_TEXTURE_2D);
 		glLineWidth( fLineWidth );
-
-
-		//set modelview matrix
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		makeGLMatrix( m_gl_matrix, rWorldMatrix );
-		glMultMatrixf( m_gl_matrix );
 
 		long oglcolor_begin = ColorToOpengl(rColor_begin);
 		long oglcolor_end= ColorToOpengl(rColor_end);
@@ -391,19 +435,12 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl::DrawQuads(
-		const CGUIMatrix4& rWorldMatrix,
 		const CGUITextureImp* pTexture,
 		const SGUIBlendFunc& rBlendFuncType,
 		const SR_V2F_C4F_T2F_Quad* pQuads,
 		uint16* pIndices,
 		int16 nQuadNum)
 	{
-		//set modelview matrix
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		makeGLMatrix( m_gl_matrix, rWorldMatrix );
-		glMultMatrixf( m_gl_matrix );
-
 		BindTexture( pTexture );
 
 		int16 kQuadSize = sizeof(pQuads[0].bl);
@@ -461,7 +498,6 @@ namespace guiex
 	* @brief add a texture into render list
 	*/
 	void IGUIRender_opengl::DrawTile(
-		const CGUIMatrix4& rWorldMatrix,
 		const CGUIRect& rDestRect, real z, 
 		const CGUITextureImp* pTexture, const CGUIRect& rTextureRect, 
 		EImageOrientation eImageOrientation, 				
@@ -470,12 +506,6 @@ namespace guiex
 		const CGUIColor& rColor_bottomleft,
 		const CGUIColor& rColor_bottomright)
 	{
-		//set modelview matrix
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		makeGLMatrix( m_gl_matrix, rWorldMatrix );
-		glMultMatrixf( m_gl_matrix );
-
 		//bind texture
 		BindTexture( pTexture );
 
@@ -522,10 +552,10 @@ namespace guiex
 	/** 
 	* @brief add a texture into render list
 	*/
-	void IGUIRender_opengl::PushClipRect( const CGUIMatrix4& rMatrix, const CGUIRect& rClipRect )
+	void IGUIRender_opengl::PushClipRect( const CGUIRect& rClipRect )
 	{
 		m_arrayClipRects.push_back( SClipRect() );
-		makeGLMatrix( m_arrayClipRects.back().m_gl_world_matrix, rMatrix );
+		glGetFloatv( GL_MODELVIEW_MATRIX, m_arrayClipRects.back().m_gl_world_matrix );
 		m_arrayClipRects.back().m_aClipRect = rClipRect;
 
 		if( m_bEnableClip && IsSupportStencil())

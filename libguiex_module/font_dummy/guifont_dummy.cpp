@@ -79,7 +79,6 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void IGUIFont_dummy::DrawCharacter(
 									   IGUIInterfaceRender* pRender, 
-									   const CGUIMatrix4& rWorldMatrix,
 									   wchar_t charCode, 
 									   const CGUIStringInfo& rInfo,
 									   const CGUIVector2& rPos,
@@ -88,7 +87,7 @@ namespace guiex
 		CGUIRect aCharRect( CGUIVector2(rPos.x, rPos.y),
 						   CGUISize(rInfo.m_nFontSize,rInfo.m_nFontSize));
 		
-		pRender->DrawRect( rWorldMatrix, aCharRect, 1, pRender->GetAndIncZ(),
+		pRender->DrawRect( aCharRect, 1, pRender->GetAndIncZ(),
 						  rInfo.m_aColor,
 						  rInfo.m_aColor,
 						  rInfo.m_aColor,
@@ -96,7 +95,6 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	void IGUIFont_dummy::DrawString(IGUIInterfaceRender* pRender, 
-									const CGUIMatrix4& rWorldMatrix,
 									const CGUIStringEx& rString, 
 									const CGUIRect&	rStringRect,
 									const uint8&	uTextAlignment,
@@ -160,7 +158,7 @@ namespace guiex
 							   CGUISize(rInfo.m_nFontSize,rInfo.m_nFontSize));
 			
 			//dest area size
-			pRender->DrawRect( rWorldMatrix, aCharRect, 1, pRender->GetAndIncZ(),
+			pRender->DrawRect( aCharRect, 1, pRender->GetAndIncZ(),
 							  rInfo.m_aColor,
 							  rInfo.m_aColor,
 							  rInfo.m_aColor,
@@ -171,7 +169,6 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	void IGUIFont_dummy::DrawString(IGUIInterfaceRender* pRender, 
-									const CGUIMatrix4& rWorldMatrix,
 									const CGUIStringEx& rString, 
 									const CGUIVector2& rPos,
 									real fAlpha,
@@ -197,7 +194,7 @@ namespace guiex
 							   CGUIVector2(aPos.x, aPos.y+rInfo.m_nFontSize),
 							   CGUISize(rInfo.m_nFontSize,rInfo.m_nFontSize));
 			
-			pRender->DrawRect( rWorldMatrix, aCharRect, 1, pRender->GetAndIncZ(),
+			pRender->DrawRect( aCharRect, 1, pRender->GetAndIncZ(),
 							  rInfo.m_aColor,
 							  rInfo.m_aColor,
 							  rInfo.m_aColor,

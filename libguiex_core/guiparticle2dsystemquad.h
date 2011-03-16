@@ -33,7 +33,7 @@ namespace guiex
 	public:
 		virtual ~CGUIParticle2DSystemQuad();
 
-		virtual void Render( IGUIInterfaceRender* pRender, const CGUIMatrix4& rWorldMatrix );
+		virtual void Render( IGUIInterfaceRender* pRender );
 		
 	protected:
 		friend class CGUIParticle2DManager;

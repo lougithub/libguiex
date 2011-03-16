@@ -157,8 +157,6 @@ namespace guiex
 		CGUIVector2 aPos = GetClientArea().GetPosition();
 		if( !m_strText.m_strContent.empty())
 		{
-			pRender->PushClipRect(getFullTransform(), GetClipArea());
-
 			if( GetSelectionLength())
 			{
 				/* 
@@ -228,8 +226,6 @@ namespace guiex
 				}
 				
 			}
-
-			pRender->PopClipRect( );
 		}
 	}
 	//------------------------------------------------------------------------------

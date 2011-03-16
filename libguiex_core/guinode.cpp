@@ -48,14 +48,19 @@ namespace guiex
 	}
 
 	//-----------------------------------------------------------------------
-	const CGUIMatrix4& CGUINode::getFullTransform(void)
+	const CGUIMatrix4& CGUINode::getTransform(void)
 	{
 		return mCachedTransform;
 	}
 	//-----------------------------------------------------------------------
+	const CGUIMatrix4& CGUINode::getFullTransform(void)
+	{
+		return mCachedFullTransform;
+	}
+	//-----------------------------------------------------------------------
 	const CGUIMatrix4& CGUINode::getFullInverseTransform(void)
 	{
-		return mCachedInverseTransform;
+		return mCachedFullInverseTransform;
 	}
 	//-----------------------------------------------------------------------
 	void CGUINode::updateFromParent(void)
@@ -93,8 +98,10 @@ namespace guiex
 			m_aDerivedScale = m_aScale;
 		}
 
-		makeTransform( getDerivedPosition(), getDerivedScale(), getDerivedOrientation(), mCachedTransform);
-		mCachedInverseTransform = mCachedTransform.inverse();
+		
+		makeTransform( getPosition(), getScale(), getOrientation(), mCachedTransform);
+		makeTransform( getDerivedPosition(), getDerivedScale(), getDerivedOrientation(), mCachedFullTransform);
+		mCachedFullInverseTransform = mCachedFullTransform.inverse();
 	}
 	//-----------------------------------------------------------------------
 	const CGUIQuaternion& CGUINode::getOrientation() const

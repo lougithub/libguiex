@@ -8,32 +8,34 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core/guiwidget.h>
-#include <libguiex_core/guisystem.h>
-#include <libguiex_core/guievent.h>
-#include <libguiex_core/guirect.h>
-#include <libguiex_core/guiexception.h>
-#include <libguiex_core/guipropertymanager.h>
-#include <libguiex_core/guilogmsgmanager.h>
-#include <libguiex_core/guistringconvertor.h>
-#include <libguiex_core/guiperfmonitor.h>
-#include <libguiex_core/guipropertyconvertor.h>
+#include "guiwidget.h"
+#include "guisystem.h"
+#include "guievent.h"
+#include "guirect.h"
+#include "guiexception.h"
+#include "guipropertymanager.h"
+#include "guilogmsgmanager.h"
+#include "guistringconvertor.h"
+#include "guiperfmonitor.h"
+#include "guipropertyconvertor.h"
 
-#include <libguiex_core/guiinterfacemanager.h>
-#include <libguiex_core/guiinterfacerender.h>
-#include <libguiex_core/guiinterfacescript.h>
-#include <libguiex_core/guiinterfacefont.h>
+#include "guiinterfacemanager.h"
+#include "guiinterfacerender.h"
+#include "guiinterfacescript.h"
+#include "guiinterfacefont.h"
 
-#include <libguiex_core/guiimage.h>
-#include <libguiex_core/guianimation.h>
-#include <libguiex_core/guias.h>
-#include <libguiex_core/guisounddata.h>
+#include "guiimage.h"
+#include "guianimation.h"
+#include "guias.h"
+#include "guisounddata.h"
 
-#include <libguiex_core/guiimagemanager.h>
-#include <libguiex_core/guianimationmanager.h>
-#include <libguiex_core/guiasmanager.h>
-#include <libguiex_core/guisoundmanager.h>
-#include <libguiex_core/guiwidgetmanager.h>
+#include "guiimagemanager.h"
+#include "guianimationmanager.h"
+#include "guiasmanager.h"
+#include "guisoundmanager.h"
+#include "guiwidgetmanager.h"
+
+#include "guiscenecapture.h"
 
 #include <algorithm>
 
@@ -83,6 +85,7 @@ namespace guiex
 		,m_bIsGenerateMultiClickEvent(false)
 		,m_bIsAutoPlayAs(false)
 		,m_bIsClipChildren(false)
+		,m_pSceneCapture( NULL )
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -1620,6 +1623,13 @@ namespace guiex
 			(*itor)->RefRelease();
 		}
 		m_listAsPlaying.clear();
+
+		//clear scene capture
+		if( m_pSceneCapture )
+		{
+			m_pSceneCapture->RefRelease();
+			m_pSceneCapture = NULL;
+		}
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -2160,12 +2170,20 @@ namespace guiex
 	* it will render this widget and all children.
 	* @param pRender current render
 	*/
-	void	CGUIWidget::Render(IGUIInterfaceRender* pRender)
+	void CGUIWidget::Render(IGUIInterfaceRender* pRender)
 	{
 		// don't do anything if window is not visible or closed
 		if (IsOpen()==false || !IsDerivedVisible()) 
 		{
 			return;
+		}
+
+		pRender->PushMatrix();
+		pRender->MultMatrix( getTransform() );
+
+		if( m_pSceneCapture )
+		{
+			m_pSceneCapture->BeforeRender( pRender );
 		}
 
 		// perform render for 'this' Window
@@ -2182,6 +2200,13 @@ namespace guiex
 		}
 
 		PopClipRect( pRender );
+
+		if( m_pSceneCapture )
+		{
+			m_pSceneCapture->AfterRender( pRender );
+		}
+
+		pRender->PopMatrix();
 	}
 	//------------------------------------------------------------------------------
 
@@ -2230,7 +2255,7 @@ namespace guiex
 	{
 		if( IsClipChildren() )
 		{
-			pRender->PushClipRect( getFullTransform(), GetClipArea() );
+			pRender->PushClipRect( GetClipArea() );
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -2290,7 +2315,7 @@ namespace guiex
 		const CGUIStringInfo& rInfo,
 		const CGUIVector2& rPos)
 	{
-		pRender->GetFontRender()->DrawCharacter(pRender,getFullTransform(), charCode, rInfo, rPos, GetDerivedAlpha());
+		pRender->GetFontRender()->DrawCharacter(pRender, charCode, rInfo, rPos, GetDerivedAlpha());
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -2304,7 +2329,7 @@ namespace guiex
 		int32 nStartPos,
 		int32 nEndPos)
 	{
-		pRender->GetFontRender()->DrawString(pRender,getFullTransform(), strText, rDrawRect, uTextAlignment, GetDerivedAlpha(), nStartPos, nEndPos);
+		pRender->GetFontRender()->DrawString(pRender, strText, rDrawRect, uTextAlignment, GetDerivedAlpha(), nStartPos, nEndPos);
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWidget::DrawString(
@@ -2314,7 +2339,7 @@ namespace guiex
 		int32 nStartPos,
 		int32 nEndPos)
 	{
-		pRender->GetFontRender()->DrawString(pRender,getFullTransform(), strText,rPos, GetDerivedAlpha(), nStartPos,nEndPos);
+		pRender->GetFontRender()->DrawString(pRender, strText,rPos, GetDerivedAlpha(), nStartPos,nEndPos);
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWidget::DrawImage(IGUIInterfaceRender* pRender, 
@@ -2323,7 +2348,7 @@ namespace guiex
 	{
 		if( pImage )
 		{
-			pImage->Draw( pRender, getFullTransform(), rDestRect,pRender->GetAndIncZ(),m_aColor,GetDerivedAlpha() );
+			pImage->Draw( pRender, rDestRect,pRender->GetAndIncZ(),m_aColor,GetDerivedAlpha() );
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -2332,7 +2357,7 @@ namespace guiex
 		real fLineWidth,
 		const CGUIColor& rColor )
 	{
-		pRender->DrawRect( getFullTransform(), rDestRect, fLineWidth, pRender->GetAndIncZ(),
+		pRender->DrawRect( rDestRect, fLineWidth, pRender->GetAndIncZ(),
 			rColor, rColor, rColor, rColor );
 	}
 	//------------------------------------------------------------------------------
@@ -2342,7 +2367,7 @@ namespace guiex
 	{
 		if( pAnimation )
 		{
-			pAnimation->Draw( pRender,getFullTransform(), rDestRect,pRender->GetAndIncZ(),GetDerivedAlpha() );
+			pAnimation->Draw( pRender, rDestRect,pRender->GetAndIncZ(),GetDerivedAlpha() );
 		}
 	}
 	//------------------------------------------------------------------------------

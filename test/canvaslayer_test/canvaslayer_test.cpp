@@ -261,7 +261,10 @@ void CMyCanvasLayer_DrawRect::Render( class IGUIInterfaceRender* pRender )
 
 	CGUICamera* pOldCamera = pRender->ApplyCamera( &m_aCamera );
 
-	pRender->DrawRect(CGUIMatrix4::IDENTITY,
+	pRender->PushMatrix();
+	pRender->LoadIdentityMatrix();
+
+	pRender->DrawRect(
 		m_aRect, 
 		3,
 		pRender->GetAndIncZ(),
@@ -271,6 +274,7 @@ void CMyCanvasLayer_DrawRect::Render( class IGUIInterfaceRender* pRender )
 		m_aColor );
 
 	pRender->ApplyCamera( pOldCamera );
+	pRender->PopMatrix();
 }
 //------------------------------------------------------------------------------
 void CMyCanvasLayer_DrawRect::DestroySelf( )

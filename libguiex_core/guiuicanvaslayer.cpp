@@ -14,6 +14,8 @@
 #include "guiexception.h"
 #include "guisystem.h"
 #include "guilogmsgmanager.h"
+#include "guicameramanager.h"
+#include "guiinterfacerender.h"
 
 #include <algorithm>
 
@@ -95,6 +97,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIUICanvasLayer::Render( IGUIInterfaceRender* pRender )
 	{
+		pRender->ApplyCamera( CGUICameraManager::Instance()->GetDefaultUICamera() );
+
 		CGUICanvasLayer::Render( pRender );
 
 		//render dlg

@@ -174,8 +174,8 @@ namespace guiex
 		return m_aImageSize;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIImage::Draw(IGUIInterfaceRender* pRender,
-		const CGUIMatrix4& rWorldMatrix,
+	void CGUIImage::Draw(
+		IGUIInterfaceRender* pRender,
 		const CGUIRect& rDestRect,
 		real z, 
 		const CGUIColorRect& rColorRect,
@@ -188,13 +188,13 @@ namespace guiex
 		aColorRect.m_top_right.SetAlpha(aColorRect.m_top_right.GetAlpha()*fAlpha);
 		aColorRect.m_bottom_left.SetAlpha(aColorRect.m_bottom_left.GetAlpha()*fAlpha);
 		aColorRect.m_bottom_right.SetAlpha(aColorRect.m_bottom_right.GetAlpha()*fAlpha);
-		pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,
+		pRender->DrawTile( rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,
 			aColorRect.m_top_left,aColorRect.m_top_right,
 			aColorRect.m_bottom_left,aColorRect.m_bottom_right);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIImage::Draw( IGUIInterfaceRender* pRender,
-		const CGUIMatrix4& rWorldMatrix,
+	void	CGUIImage::Draw(
+		IGUIInterfaceRender* pRender,
 		const CGUIRect& rDestRect,
 		real z, 
 		real fAlpha) const
@@ -205,18 +205,18 @@ namespace guiex
 		{
 			CGUIColor aColor = m_aColor;
 			aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
-			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,aColor);
+			pRender->DrawTile( rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,aColor);
 		}
 		else
 		{
 			CGUIColor aColor(1.0f,1.0f,1.0f,1.0f);
 			aColor.SetAlpha(fAlpha);
-			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,aColor);
+			pRender->DrawTile( rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,aColor);
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIImage::Draw(IGUIInterfaceRender* pRender,
-		const CGUIMatrix4& rWorldMatrix,
+	void	CGUIImage::Draw(
+		IGUIInterfaceRender* pRender,
 		const CGUIRect& rDestRect,
 		real z, 
 		const CGUIColor& rColor,
@@ -228,13 +228,13 @@ namespace guiex
 		{
 			CGUIColor aColor = m_aColor*rColor;
 			aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
-			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,aColor);
+			pRender->DrawTile( rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,aColor);
 		}
 		else
 		{
 			CGUIColor aColor(rColor);
 			aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
-			pRender->DrawTile( rWorldMatrix, rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,aColor);
+			pRender->DrawTile( rDestRect, z, m_pTexture->GetTextureImplement(),m_aUVRect, m_eImageOrientation,aColor);
 		}
 	}
 	//------------------------------------------------------------------------------

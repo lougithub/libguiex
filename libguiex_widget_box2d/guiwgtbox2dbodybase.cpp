@@ -56,8 +56,12 @@ namespace guiex
 		CGUIRect aRect( aPos.x-3, aPos.y-3, aPos.x+3, aPos.y+3 );
 		CGUIColor aColor( 1.0f, 0.0f, 0.0f, 1.0f );
 
-		pRender->DrawRect( CGUIMatrix4::IDENTITY, aRect, 3, pRender->GetAndIncZ(),
-			aColor, aColor, aColor, aColor );
+		pRender->PushMatrix();
+		pRender->LoadIdentityMatrix();
+
+		pRender->DrawRect( aRect, 3, pRender->GetAndIncZ(),aColor );
+
+		pRender->PopMatrix();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtBox2DBodyBase::GetBox2dPosition( CGUIVector2& rPos )

@@ -265,9 +265,6 @@ namespace guiex
 		{
 			CGUIStringEx* pRenderString = m_bMaskText?&m_strMaskText:&m_strText;
 
-			//push clip rect
-			pRender->PushClipRect( getFullTransform(), m_aStringAreaRect );
-
 			if( GetSelectionLength())
 			{
 				//has selection
@@ -300,9 +297,6 @@ namespace guiex
 				//no selection
 				DrawString( pRender, *pRenderString,aPos);
 			}
-
-			//pop clip rect
-			pRender->PopClipRect( );
 		}
 	}
 	//------------------------------------------------------------------------------

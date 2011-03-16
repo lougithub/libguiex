@@ -40,6 +40,7 @@ namespace guiex
 	class CGUIAnimation;
 	class CGUIAs;
 	class CGUISoundData;
+	class CGUISceneCapture;
 
 	typedef void (*CallbackEventFunc)(CGUIEvent* pEvent);
 }
@@ -597,6 +598,8 @@ namespace guiex
 		CGUIString m_strName; //!< widget name, should be a unique name in same scene
 		CGUIString m_strOwnerSceneName; //!< scene name, should be a unique name
 		CGUIString m_strWorkingSceneName; //!< working scene name, should be a unique name
+
+		CGUISceneCapture* m_pSceneCapture;
 
 		void* m_pUserData; //!< user data, used by user.
 

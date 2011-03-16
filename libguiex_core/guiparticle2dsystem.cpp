@@ -565,7 +565,7 @@ namespace guiex
 	{
 		// should be override
 	}
-	void CGUIParticle2DSystem::Render( class IGUIInterfaceRender* /*pRender*/, const class CGUIMatrix4& /*rWorldMatrix*/ )
+	void CGUIParticle2DSystem::Render( class IGUIInterfaceRender* /*pRender*/ )
 	{
 		// should be override
 		Load();

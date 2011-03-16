@@ -41,8 +41,4 @@ namespace guiex
 	};
 }
 
-
-
-
-
 #endif //__KEN_GUIREFERENCE_20100315_H__

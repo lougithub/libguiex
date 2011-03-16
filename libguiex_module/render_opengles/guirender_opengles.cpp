@@ -175,6 +175,40 @@ namespace guiex
 		DestroyAllTexture();
 	}
 	//------------------------------------------------------------------------------
+	void IGUIRender_opengles::PushMatrix()
+	{
+		glPushMatrix();
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengles::SetModelViewMatrixMode( )
+	{
+		glMatrixMode( GL_MODELVIEW );
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengles::LoadIdentityMatrix( )
+	{
+		glLoadIdentity();
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengles::MultMatrix( const CGUIMatrix4& rMatrix )
+	{
+		makeGLMatrix( m_gl_matrix, rMatrix );
+		glMultMatrixf( m_gl_matrix );
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengles::PopMatrix()
+	{
+		glPopMatrix();
+	}
+	//------------------------------------------------------------------------------
+	uint32 IGUIRender_opengles::GenFrameBuffers( )
+	{
+		//uint32 fbo;
+		//glGenFrameBuffers( 1, &fbo );
+		//return fbo;
+		return 0;
+	}
+	//------------------------------------------------------------------------------
 	bool IGUIRender_opengles::IsSupportStencil()
 	{
 		return m_nMaxStencilRef >= 2;
@@ -218,6 +252,7 @@ namespace guiex
 				m_pCamera->GetUp().x, m_pCamera->GetUp().y, m_pCamera->GetUp().z );
 
 			m_pCamera->ClearDirty();
+			glMatrixMode(GL_MODELVIEW);
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -246,7 +281,6 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::DrawRect(
-		const CGUIMatrix4& rWorldMatrix,
 		const CGUIRect& rDestRect, 
 		real fLineWidth,
 		real z,
@@ -257,12 +291,6 @@ namespace guiex
 	{
 		glDisable(GL_TEXTURE_2D);
 		glLineWidth( fLineWidth );
-
-		//set modelview matrix
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		makeGLMatrix( m_gl_matrix, rWorldMatrix );
-		glMultMatrixf( m_gl_matrix );
 
 		real fLeft = rDestRect.m_fLeft;
 		real fRight = rDestRect.m_fRight;
@@ -311,7 +339,7 @@ namespace guiex
 		glEnable(GL_TEXTURE_2D);
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengles::DrawLine(const CGUIMatrix4& rWorldMatrix,
+	void IGUIRender_opengles::DrawLine(
 		const CGUIVector2 &rBegin, 
 		const CGUIVector2 &rEnd, 
 		real fLineWidth,
@@ -321,12 +349,6 @@ namespace guiex
 	{
 		glDisable(GL_TEXTURE_2D);
 		glLineWidth( fLineWidth );
-
-		//set modelview matrix
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		makeGLMatrix( m_gl_matrix, rWorldMatrix );
-		glMultMatrixf( m_gl_matrix );
 
 		long oglcolor_topleft = ColorToOpengl(rColor_begin);
 		long oglcolor_bottomleft = ColorToOpengl(rColor_end);
@@ -360,7 +382,6 @@ namespace guiex
 	* @brief add a texture into render list
 	*/
 	void	IGUIRender_opengles::DrawTile(
-		const CGUIMatrix4& rWorldMatrix,
 		const CGUIRect& rDestRect, real z, 
 		const CGUITextureImp* pTexture, const CGUIRect& rTextureRect, 
 		EImageOrientation eImageOrientation, 				
@@ -369,12 +390,6 @@ namespace guiex
 		const CGUIColor&  rColor_bottomleft,
 		const CGUIColor&  rColor_bottomright)
 	{
-		//set modelview matrix
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		makeGLMatrix( m_gl_matrix, rWorldMatrix );
-		glMultMatrixf( m_gl_matrix );
-
 		//check texture
 		BindTexture( pTexture );
 
@@ -431,19 +446,12 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::DrawQuads(
-		const CGUIMatrix4& rWorldMatrix,
 		const CGUITextureImp* pTexture,
 		const SGUIBlendFunc& rBlendFuncType,
 		const SR_V2F_C4F_T2F_Quad* pQuads,
 		uint16* pIndices,
 		int16 nQuadNum)
 	{
-		//set modelview matrix
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		makeGLMatrix( m_gl_matrix, rWorldMatrix );
-		glMultMatrixf( m_gl_matrix );
-
 		BindTexture( pTexture );
 
 		int16 kQuadSize = sizeof(pQuads[0].bl);
@@ -489,10 +497,10 @@ namespace guiex
 	/** 
 	* @brief add a texture into render list
 	*/
-	void	IGUIRender_opengles::PushClipRect( const CGUIMatrix4& rMatrix, const CGUIRect& rClipRect )
+	void	IGUIRender_opengles::PushClipRect( const CGUIRect& rClipRect )
 	{
 		m_arrayClipRects.push_back( SClipRect() );
-		makeGLMatrix( m_arrayClipRects.back().m_gl_world_matrix, rMatrix );
+		glGetFloatv( GL_MODELVIEW_MATRIX, m_arrayClipRects.back().m_gl_world_matrix );
 		m_arrayClipRects.back().m_aClipRect = rClipRect;
 
 		if( m_bEnableClip && IsSupportStencil())

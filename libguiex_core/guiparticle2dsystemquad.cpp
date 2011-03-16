@@ -210,18 +210,16 @@ namespace guiex
 #endif
 	}
 	//------------------------------------------------------------------------------
-	void CGUIParticle2DSystemQuad::Render( IGUIInterfaceRender* pRender, const CGUIMatrix4& rWorldMatrix )
+	void CGUIParticle2DSystemQuad::Render( IGUIInterfaceRender* pRender )
 	{
-		CGUIParticle2DSystem::Render( pRender, rWorldMatrix );
+		CGUIParticle2DSystem::Render( pRender );
 
 		pRender->DrawQuads(
-			rWorldMatrix, 
 			texture->GetTextureImplement(), 
 			blendFunc,
 			quads,
 			indices,
-			particleCount
-			);
+			particleCount );
 	}
 	//------------------------------------------------------------------------------
 

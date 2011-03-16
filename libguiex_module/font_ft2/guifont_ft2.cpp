@@ -298,7 +298,6 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void IGUIFont_ft2::DrawCharacter(
 		IGUIInterfaceRender* pRender, 
-		const CGUIMatrix4& rWorldMatrix,
 		wchar_t charCode, 
 		const CGUIStringInfo& rInfo,
 		const CGUIVector2& rPos,
@@ -315,7 +314,6 @@ namespace guiex
 			CGUIColor aColor(rInfo.m_aColor);
 			aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
 			pRender->DrawTile( 
-				rWorldMatrix,
 				aCharRect,
 				pRender->GetAndIncZ(), 
 				pCharData->m_pTexture->GetTextureImplement(),
@@ -329,7 +327,6 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	void IGUIFont_ft2::DrawString(IGUIInterfaceRender* pRender, 
-		const CGUIMatrix4& rWorldMatrix,
 		const CGUIStringEx& rString, 
 			const CGUIRect&	rStringRect,
 			const uint8&	uTextAlignment,
@@ -400,7 +397,6 @@ namespace guiex
 				CGUIColor aColor(rInfo.m_aColor);
 				aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
 				pRender->DrawTile( 
-					rWorldMatrix,
 					aCharRect,
 					pRender->GetAndIncZ(), 
 					pCharData->m_pTexture->GetTextureImplement(),
@@ -417,7 +413,6 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	void IGUIFont_ft2::DrawString(IGUIInterfaceRender* pRender, 
-		const CGUIMatrix4& rWorldMatrix,
 		const CGUIStringEx& rString, 
 		const CGUIVector2& rPos,
 		real fAlpha,
@@ -451,7 +446,6 @@ namespace guiex
 				CGUIColor aColor(rInfo.m_aColor);
 				aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
 				pRender->DrawTile( 
-					rWorldMatrix,
 					aCharRect,
 					pRender->GetAndIncZ(), 
 					pCharData->m_pTexture->GetTextureImplement(),

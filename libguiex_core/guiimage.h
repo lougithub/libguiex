@@ -52,20 +52,17 @@ namespace guiex
 		virtual ~CGUIImage();
 
 		void Draw( IGUIInterfaceRender* pRender,
-			const CGUIMatrix4& rWorldMatrix,
 			const CGUIRect& rDestRect,
 			real z, 
 			const CGUIColorRect& rColorRect,
 			real fAlpha) const;
 
 		void Draw(IGUIInterfaceRender* pRender,
-			const CGUIMatrix4& rWorldMatrix,
 			const CGUIRect& rDestRect,
 			real z, 
 			real fAlpha	) const;
 
 		void Draw( IGUIInterfaceRender* pRender,
-			const CGUIMatrix4& rWorldMatrix,
 			const CGUIRect& rDestRect,
 			real z, 
 			const CGUIColor& rColor,

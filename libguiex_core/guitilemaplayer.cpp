@@ -248,7 +248,7 @@ namespace guiex
 			real(pos.y * GetMapTileSize().m_uHeight + diffY));
 	}
 	//------------------------------------------------------------------------------
-	void CGUITileMapLayer::Render( IGUIInterfaceRender* pRender, const CGUIMatrix4& rWorldMatrix )
+	void CGUITileMapLayer::Render( IGUIInterfaceRender* pRender )
 	{
 		for( uint32 i = 0;
 			i < m_vecTiles.size();
@@ -258,7 +258,7 @@ namespace guiex
 
 			CGUIColor aColor(1.0f,1.0f,1.0f,1.0f);
 			aColor.SetAlpha(GetOpacity());
-			pRender->DrawTile( rWorldMatrix, rData.m_aDestRect, pRender->GetAndIncZ(), m_pTexture->GetTextureImplement(),rData.m_aUV, eImageOrientation_Normal,aColor);
+			pRender->DrawTile( rData.m_aDestRect, pRender->GetAndIncZ(), m_pTexture->GetTextureImplement(),rData.m_aUV, eImageOrientation_Normal,aColor);
 		}
 	}
 	//------------------------------------------------------------------------------

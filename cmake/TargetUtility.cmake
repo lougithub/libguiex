@@ -72,6 +72,7 @@ macro( macro_set_target_link_libraries_win32 targetname )
 		general ogg
 		general vorbis
 		general zlib
+		general glew
 		)
 endmacro()
 
@@ -113,6 +114,7 @@ macro( macro_set_target_link_libraries_wx_win32 targetname )
 		general ogg
 		general vorbis
 		general zlib
+		general glew
 		)
 endmacro()
 
@@ -151,6 +153,7 @@ macro( macro_include_directories_win32 )
     include_directories( "${PROJECT_SOURCE_DIR}/external/wxWidgets/include/msvc" )
     include_directories( "${PROJECT_SOURCE_DIR}/external/openal/include" )
     include_directories( "${PROJECT_SOURCE_DIR}/external/zlib" )
+    include_directories( "${PROJECT_SOURCE_DIR}/external/glew/include" )
 endmacro()
 
 macro( macro_link_directories_win32 )

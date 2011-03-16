@@ -213,7 +213,8 @@ if( WIN32 )
 		${${target_name}_sound_openal_SRCS}
 		${${target_name}_sound_dummy_SRCS}
 		)
-include_directories( "${PROJECT_SOURCE_DIR}/external/openal/include" )
+	include_directories( "${PROJECT_SOURCE_DIR}/external/openal/include" )
+	include_directories( "${PROJECT_SOURCE_DIR}/external/glew/include" )
 
 elseif( APPLE )
 
@@ -252,6 +253,7 @@ include_directories( "${PROJECT_SOURCE_DIR}/external/libogg/include" )
 include_directories( "${PROJECT_SOURCE_DIR}/external/freealut/include" )
 
 add_library( ${target_name} STATIC ${${target_name}_SRCS} )
+
 
 add_dependencies( 
 	${target_name} 

@@ -272,6 +272,9 @@ namespace guiex
 		//!< get the full inverse transform matrix of this node
 		virtual const CGUIMatrix4& getFullInverseTransform(void);
 
+		virtual const CGUIMatrix4& getTransform(void);
+
+
 		/** 
 		@remarks This is only used if the SceneManager chooses to render the node.
 		*/
@@ -368,8 +371,9 @@ namespace guiex
 		*/
 		CGUIVector3 m_aDerivedScale;			
 		
-		CGUIMatrix4 mCachedTransform;		//!< Cached derived transform as a 4x4 matrix
-		CGUIMatrix4 mCachedInverseTransform;		//!< Cached derived transform as a 4x4 matrix
+		CGUIMatrix4 mCachedTransform; //!< Cached transform as a 4x4 matrix
+		CGUIMatrix4 mCachedFullTransform; //!< Cached derived transform as a 4x4 matrix
+		CGUIMatrix4 mCachedFullInverseTransform; //!< Cached inverse derived transform as a 4x4 matrix
 	};
 
 } //namespace

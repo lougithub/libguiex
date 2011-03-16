@@ -49,7 +49,6 @@ namespace guiex
 		void Update( real fDeltaTime );
 
 		void Draw( IGUIInterfaceRender* pRender,
-			const CGUIMatrix4& rWorldMatrix,
 			const CGUIRect& rDestRect,
 			real z, 
 			real fAlpha	) const;
