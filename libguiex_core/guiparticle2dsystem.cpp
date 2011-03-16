@@ -275,7 +275,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIParticle2DSystem::DoLoad() const
+	int32 CGUIParticle2DSystem::DoLoad()
 	{
 		GUI_ASSERT( particles==NULL, "invalid pointer");
 		if( totalParticles <= 0 )

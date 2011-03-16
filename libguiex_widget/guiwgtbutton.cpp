@@ -114,7 +114,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtButton::RenderSelf(IGUIInterfaceRender* pRender)
 	{
-		const CGUIImage* pImage = NULL;
+		CGUIImage* pImage = NULL;
 		CGUIStringEx* pString = NULL;
 
 		if( IsDerivedDisable())

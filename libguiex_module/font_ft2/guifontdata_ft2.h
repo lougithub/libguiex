@@ -78,7 +78,7 @@ namespace guiex
 		friend class IGUIFont_ft2;
 		CGUIFontData_ft2( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nFontID );
 
-		virtual int32 DoLoad() const;
+		virtual int32 DoLoad();
 		virtual void DoUnload();
 
 	public:

@@ -18,15 +18,8 @@
 #include <libguiex_core/guilogmsgmanager.h>
 #include <libguiex_core/guicamera.h>
 
-//#ifdef __cplusplus
-//extern "C" {
-//#endif //#ifdef __cplusplus
+#define GLEW_STATIC
 #include <GL/glew.h>
-#include <GL/wglew.h>
-//#ifdef __cplusplus
-//}
-//#endif //#ifdef __cplusplus
-
 #include <GL/gl.h>
 #include <GL/glu.h>
 
@@ -143,9 +136,37 @@ namespace guiex
 		DestroyAllTexture();
 	}
 	//------------------------------------------------------------------------------
+	void IGUIRender_opengl::ClearColor( real red, real green, real blue, real alpha )
+	{
+		glClearColor( red, green, blue, alpha );
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl::Clear( uint32 uFlag )
+	{
+		GLbitfield bitfield = 0;
+		if( uFlag & eRenderBuffer_COLOR_BIT )
+		{
+			bitfield |= GL_COLOR_BUFFER_BIT;
+		}
+		if( uFlag & eRenderBuffer_DEPTH_BIT )
+		{
+			bitfield |= GL_DEPTH_BUFFER_BIT;
+		}
+		if( uFlag & eRenderBuffer_STENCIL_BIT )
+		{
+			bitfield |= GL_STENCIL_BUFFER_BIT;
+		}
+		glClear( bitfield );
+	}
+	//------------------------------------------------------------------------------
 	void IGUIRender_opengl::PushMatrix()
 	{
 		glPushMatrix();
+	}	
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl::PopMatrix()
+	{
+		glPopMatrix();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl::SetModelViewMatrixMode( )
@@ -164,17 +185,35 @@ namespace guiex
 		glMultMatrixf( m_gl_matrix );
 	}
 	//------------------------------------------------------------------------------
-	uint32 IGUIRender_opengl::GenFrameBuffers( )
+	void IGUIRender_opengl::GenFramebuffers( uint32 n, uint32* framebuffers )
 	{
-		//uint32 fbo;
-		//glGenFrameBuffers( 1, &fbo );
-		//return fbo;
-		return 0;
+		glGenFramebuffers( n, framebuffers );
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengl::PopMatrix()
+	void IGUIRender_opengl::DeleteFramebuffers( uint32 n, const uint32* framebuffers )
 	{
-		glPopMatrix();
+		glDeleteFramebuffers( n, framebuffers );
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl::BindFramebuffer( uint32 framebuffer )
+	{
+		glBindFramebuffer( GL_FRAMEBUFFER, framebuffer );
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl::GetCurrentBindingFrameBuffer( int32* framebuffer )
+	{
+		glGetIntegerv(GL_FRAMEBUFFER_BINDING, framebuffer);
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl::FramebufferTexture2D_Color( const CGUITextureImp* pTexture, int32 level )
+	{
+		glFramebufferTexture2D( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ((const CGUITexture_opengl*)pTexture)->GetOGLTexid(), level );
+	}
+	//------------------------------------------------------------------------------
+	bool IGUIRender_opengl::CheckFramebufferStatus( )
+	{
+		GLuint status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+		return status == GL_FRAMEBUFFER_COMPLETE;
 	}
 	//------------------------------------------------------------------------------
 	bool IGUIRender_opengl::IsSupportStencil()
@@ -498,8 +537,10 @@ namespace guiex
 	* @brief add a texture into render list
 	*/
 	void IGUIRender_opengl::DrawTile(
-		const CGUIRect& rDestRect, real z, 
-		const CGUITextureImp* pTexture, const CGUIRect& rTextureRect, 
+		const CGUIRect& rDestRect, 
+		real z, 
+		const CGUITextureImp* pTexture, 
+		const CGUIRect& rTextureRect, 
 		EImageOrientation eImageOrientation, 				
 		const CGUIColor& rColor_topleft,
 		const CGUIColor& rColor_topright,

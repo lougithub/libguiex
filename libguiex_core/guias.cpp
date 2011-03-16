@@ -260,7 +260,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIAs::DoLoad() const
+	int32 CGUIAs::DoLoad()
 	{
 		return 0;
 	}

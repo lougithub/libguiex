@@ -38,7 +38,7 @@ namespace guiex
 		CGUISoundData_openal( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath );
 		virtual ~CGUISoundData_openal();
 
-		virtual int32 DoLoad() const;
+		virtual int32 DoLoad();
 		virtual void DoUnload();
 
 	protected:

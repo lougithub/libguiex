@@ -39,7 +39,7 @@ namespace guiex
 		friend class CGUIParticle2DManager;
 		CGUIParticle2DSystemQuad( const CGUIString& rName, const CGUIString& rSceneName );
 
-		virtual int32 DoLoad() const;
+		virtual int32 DoLoad();
 		virtual void DoUnload();
 
 	protected:
@@ -50,8 +50,8 @@ namespace guiex
 		virtual void PostStep();
 
 	protected:
-		mutable SR_V2F_C4F_T2F_Quad *quads; // quads to be rendered
-		mutable uint16 *indices; // indices
+		SR_V2F_C4F_T2F_Quad *quads; // quads to be rendered
+		uint16 *indices; // indices
 #if CC_USES_VBO
 		GLuint quadsID;		// VBO id
 #endif

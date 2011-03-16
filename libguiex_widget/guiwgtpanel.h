@@ -103,13 +103,13 @@ namespace guiex
 		struct
 		{
 			CGUISize m_aSize;
-			const CGUIImage* m_pImageInfo;
+			CGUIImage* m_pImageInfo;
 			CGUIRect m_aRenderRect;
 		} m_aBorderInfo[PANEL_BORDER_NONE];
 
-		const CGUIImage* m_pImageBG;
+		CGUIImage* m_pImageBG;
 
-		bool		m_bAutoResize;
+		bool m_bAutoResize;
 
 	private:
 		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtPanel);

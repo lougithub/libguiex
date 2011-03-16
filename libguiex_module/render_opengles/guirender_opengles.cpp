@@ -175,9 +175,37 @@ namespace guiex
 		DestroyAllTexture();
 	}
 	//------------------------------------------------------------------------------
+	void IGUIRender_opengles::ClearColor( real red, real green, real blue, real alpha )
+	{
+		glClearColor( red, green, blue, alpha );
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengles::Clear( uint32 uFlag )
+	{
+		GLbitfield bitfield = 0;
+		if( uFlag & eRenderBuffer_COLOR_BIT )
+		{
+			bitfield |= GL_COLOR_BUFFER_BIT;
+		}
+		if( uFlag & eRenderBuffer_DEPTH_BIT )
+		{
+			bitfield |= GL_DEPTH_BUFFER_BIT;
+		}
+		if( uFlag & eRenderBuffer_STENCIL_BIT )
+		{
+			bitfield |= GL_STENCIL_BUFFER_BIT;
+		}
+		glClear( bitfield );
+	}
+	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::PushMatrix()
 	{
 		glPushMatrix();
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengles::PopMatrix()
+	{
+		glPopMatrix();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::SetModelViewMatrixMode( )
@@ -196,17 +224,42 @@ namespace guiex
 		glMultMatrixf( m_gl_matrix );
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengles::PopMatrix()
+	uint32 IGUIRender_opengles::GenFramebuffers( )
 	{
-		glPopMatrix();
+		uint32 fbo;
+		glGenFramebuffers( 1, &fbo );
+		return fbo;
 	}
 	//------------------------------------------------------------------------------
-	uint32 IGUIRender_opengles::GenFrameBuffers( )
+	void IGUIRender_opengles::GenFramebuffers( uint32 n, uint32* framebuffers )
 	{
-		//uint32 fbo;
-		//glGenFrameBuffers( 1, &fbo );
-		//return fbo;
-		return 0;
+		glGenFramebuffers( n, framebuffers );
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengles::DeleteFramebuffers( uint32 n, const uint32* framebuffers )
+	{
+		glDeleteFramebuffers( n, framebuffers );
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengles::BindFramebuffer( uint32 framebuffer )
+	{
+		glBindFramebuffer( GL_FRAMEBUFFER, framebuffers );
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengles::GetCurrentBindingFrameBuffer( int32* framebuffer )
+	{
+		glGetIntegerv(GL_FRAMEBUFFER_BINDING, framebuffer);
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengles::FramebufferTexture2D_Color( const CGUITextureImp* pTexture, int32 level )
+	{
+		glFramebufferTexture2D( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ((const CGUITexture_opengl*)pTexture)->GetOGLTexid(), level );
+	}
+	//------------------------------------------------------------------------------
+	bool IGUIRender_opengles::CheckFramebufferStatus( )
+	{
+		GLuint status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+		return status == GL_FRAMEBUFFER_COMPLETE;
 	}
 	//------------------------------------------------------------------------------
 	bool IGUIRender_opengles::IsSupportStencil()

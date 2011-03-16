@@ -43,7 +43,7 @@ namespace guiex
 		friend class IGUIFont_dummy;
 		CGUIFontData_dummy( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nFontID );
 	
-		virtual int32 DoLoad() const;
+		virtual int32 DoLoad();
 		virtual void DoUnload();
 
 	public:

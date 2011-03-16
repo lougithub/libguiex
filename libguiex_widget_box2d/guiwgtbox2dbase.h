@@ -45,7 +45,7 @@ namespace guiex
 		virtual void UpdateBox2D();
 
 	protected:
-		const CGUIImage* m_pImageBG;
+		CGUIImage* m_pImageBG;
 
 	protected:
 	};

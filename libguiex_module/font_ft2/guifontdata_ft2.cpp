@@ -96,7 +96,7 @@ namespace guiex
 
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIFontData_ft2::DoLoad() const
+	int32 CGUIFontData_ft2::DoLoad()
 	{
 		//load font face
 		CGUIString strFullPath = GSystem->GetDataPath() + CGUISceneManager::Instance()->GetScenePath( m_strSceneName ) + m_strPath;

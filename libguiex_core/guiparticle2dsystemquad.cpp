@@ -35,7 +35,7 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIParticle2DSystemQuad::DoLoad() const
+	int32 CGUIParticle2DSystemQuad::DoLoad()
 	{
 		if( 0 != CGUIParticle2DSystem::DoLoad() )
 		{

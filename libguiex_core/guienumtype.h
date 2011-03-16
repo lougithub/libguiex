@@ -102,6 +102,13 @@ namespace guiex
 		eBlendFunc_ONE_MINUS_DST_ALPHA,
 	};
 
+	enum ERenderBuffer
+	{
+		eRenderBuffer_COLOR_BIT = 0x00000001,
+		eRenderBuffer_DEPTH_BIT = 0x00000002,
+		eRenderBuffer_STENCIL_BIT = 0x00000004,
+	};
+
 }//namespace guiex
 
 #endif //__GUI_ENUMTYPES_20101122_H__

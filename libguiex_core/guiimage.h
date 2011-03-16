@@ -55,20 +55,20 @@ namespace guiex
 			const CGUIRect& rDestRect,
 			real z, 
 			const CGUIColorRect& rColorRect,
-			real fAlpha) const;
+			real fAlpha);
 
 		void Draw(IGUIInterfaceRender* pRender,
 			const CGUIRect& rDestRect,
 			real z, 
-			real fAlpha	) const;
+			real fAlpha	);
 
 		void Draw( IGUIInterfaceRender* pRender,
 			const CGUIRect& rDestRect,
 			real z, 
 			const CGUIColor& rColor,
-			real fAlpha	) const;
+			real fAlpha	);
 
-		const CGUISize& GetSize() const;
+		const CGUISize& GetSize();
 
 		const CGUIString& GetFilePath() const;
 		CGUIString GetFullFilePath() const;
@@ -99,12 +99,12 @@ namespace guiex
 			EImageOrientation	eImageOrientation,
 			const CGUISize& rSize = CGUISize());
 
-		virtual int32 DoLoad() const;
+		virtual int32 DoLoad();
 		virtual void DoUnload();
 
 
 	private:
-		mutable CGUITexture* m_pTexture; //!< texture
+		CGUITexture* m_pTexture; //!< texture
 		CGUIRect m_aUVRect; //!< UV of texture
 		EImageOrientation m_eImageOrientation; //!<
 
@@ -126,7 +126,7 @@ namespace guiex
 		int32 m_nBuffHeight; 
 		EGuiPixelFormat m_ePixelFormat;
 
-		mutable CGUISize m_aImageSize;
+		CGUISize m_aImageSize;
 	};
 
 }//namespace guiex

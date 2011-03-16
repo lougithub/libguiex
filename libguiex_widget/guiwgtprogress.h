@@ -73,8 +73,8 @@ namespace guiex
 
 
 	protected:
-		const CGUIImage* m_pImageBg; ///< background
-		const CGUIImage* m_pImageFg; ///< foreground
+		CGUIImage* m_pImageBg; ///< background
+		CGUIImage* m_pImageFg; ///< foreground
 
 		real m_fMaximumValue; ///< maximum value of progress
 		real m_fCurrentValue; ///< current value of progress

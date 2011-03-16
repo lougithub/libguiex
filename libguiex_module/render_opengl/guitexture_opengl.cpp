@@ -16,8 +16,8 @@
 #include <libguiex_core/guiinterfaceimageloader.h>
 #include <libguiex_core/guigarbagecollector.h>
 
+#define GLEW_STATIC
 #include <GL/glew.h>
-#include <GL/wglew.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 

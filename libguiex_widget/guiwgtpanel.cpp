@@ -255,7 +255,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtPanel::RenderSelf(IGUIInterfaceRender* pRender)
+	void CGUIWgtPanel::RenderSelf(IGUIInterfaceRender* pRender)
 	{
 		DrawImage( pRender, m_pImageBG, GetClientArea( ));
 		for( int i=0; i<PANEL_BORDER_NONE; ++i)

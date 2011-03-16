@@ -38,7 +38,7 @@ namespace guiex
 		CGUIResource(const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rResourceType, CGUIResourceManagerBase* pResourceManager );
 		virtual ~CGUIResource();
 
-		int32 Load() const;
+		int32 Load();
 		void Unload();
 		bool IsLoaded() const;
 
@@ -49,7 +49,7 @@ namespace guiex
 		virtual void RefRelease();
 
 	protected:
-		virtual int32 DoLoad() const = 0;
+		virtual int32 DoLoad() = 0;
 		virtual void DoUnload() = 0;
 
 		friend class CGUIResourceManagerBase;
@@ -62,7 +62,7 @@ namespace guiex
 			LOADSTATE_Unloaded,
 			LOADSTATE_Loaded,
 		};
-		mutable ELoadState m_eIsLoaded;
+		ELoadState m_eIsLoaded;
 
 		CGUIString m_strName;
 		CGUIString m_strSceneName;

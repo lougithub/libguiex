@@ -35,7 +35,7 @@ namespace guiex
 		const CGUIProperty& GetParticle2DData() const;
 
 	protected:
-		virtual int32 DoLoad() const;
+		virtual int32 DoLoad();
 		virtual void DoUnload();
 
 	protected:

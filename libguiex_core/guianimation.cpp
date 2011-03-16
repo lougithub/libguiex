@@ -68,7 +68,7 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIAnimation::DoLoad() const
+	int32 CGUIAnimation::DoLoad()
 	{
 		//get full path
 		CGUIString strPrePath = CGUISceneManager::Instance()->GetScenePath( m_strSceneName );
@@ -113,7 +113,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	const CGUISize& CGUIAnimation::GetSize() const
+	const CGUISize& CGUIAnimation::GetSize()
 	{
 		if( m_aAnimationSize.IsEqualZero())
 		{
@@ -136,7 +136,7 @@ namespace guiex
 	void CGUIAnimation::Draw( IGUIInterfaceRender* pRender,
 		const CGUIRect& rDestRect,
 		real z, 
-		real fAlpha	) const
+		real fAlpha	)
 	{
 		Load();
 

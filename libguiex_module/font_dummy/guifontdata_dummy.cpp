@@ -48,12 +48,12 @@ namespace guiex
 
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIFontData_dummy::DoLoad() const
+	int32 CGUIFontData_dummy::DoLoad()
 	{
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIFontData_dummy::DoUnload()
+	void CGUIFontData_dummy::DoUnload()
 	{
 	}
 	//------------------------------------------------------------------------------

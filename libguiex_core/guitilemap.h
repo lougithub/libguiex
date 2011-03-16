@@ -50,20 +50,20 @@ namespace guiex
 		void Render( IGUIInterfaceRender* pRender, const CGUIMatrix4& rWorldMatrix );
 
 	protected:
-		void Reset() const;
-		int32 ParseTMXFile( const CGUIString& rFileName ) const;
+		void Reset();
+		int32 ParseTMXFile( const CGUIString& rFileName );
 
 	protected:
 		friend class CGUITileMapManager;
 		CGUITileMap( const CGUIString& rName, const CGUIString& rSceneName );
-		virtual int32 DoLoad() const;
+		virtual int32 DoLoad();
 		virtual void DoUnload();
 
 	public:
-		mutable CGUITileMapInfo* m_pMapInfo;
+		CGUITileMapInfo* m_pMapInfo;
 
 		typedef std::vector<CGUITileMapLayer*> TLayerArray;
-		mutable TLayerArray m_arrayLayer;
+		TLayerArray m_arrayLayer;
 
 		CGUIString m_strFullWorkingDir;
 		CGUIString m_strConfigFile;

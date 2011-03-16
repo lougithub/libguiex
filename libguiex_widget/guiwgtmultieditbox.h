@@ -201,9 +201,9 @@ namespace guiex
 
 		//---------------------------------------------------
 		//image
-		const CGUIImage* m_pBG; //!< bg image
-		const CGUIImage* m_pBGFocus; //!< bg image rendered when this widget is focusable
-		const CGUIImage* m_pCursor; //!< cursor 
+		CGUIImage* m_pBG; //!< bg image
+		CGUIImage* m_pBGFocus; //!< bg image rendered when this widget is focusable
+		CGUIImage* m_pCursor; //!< cursor 
 
 		CGUIRect m_aStringAreaRatio; //!< the ratio of string area, the (0,0,1,1) equal whole client area
 

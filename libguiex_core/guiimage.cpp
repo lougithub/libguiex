@@ -89,7 +89,7 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	int32	CGUIImage::DoLoad() const
+	int32	CGUIImage::DoLoad()
 	{
 		GUI_ASSERT( m_pTexture==NULL, "the texture has existed");
 
@@ -144,7 +144,7 @@ namespace guiex
 	/**
 	* @brief get image size
 	*/
-	const CGUISize& CGUIImage::GetSize() const
+	const CGUISize& CGUIImage::GetSize()
 	{
 		if( m_aImageSize.IsEqualZero())
 		{
@@ -179,7 +179,7 @@ namespace guiex
 		const CGUIRect& rDestRect,
 		real z, 
 		const CGUIColorRect& rColorRect,
-		real fAlpha	) const
+		real fAlpha	)
 	{
 		Load();
 
@@ -197,7 +197,7 @@ namespace guiex
 		IGUIInterfaceRender* pRender,
 		const CGUIRect& rDestRect,
 		real z, 
-		real fAlpha) const
+		real fAlpha)
 	{
 		Load();
 
@@ -220,7 +220,7 @@ namespace guiex
 		const CGUIRect& rDestRect,
 		real z, 
 		const CGUIColor& rColor,
-		real fAlpha) const
+		real fAlpha)
 	{
 		Load();
 

@@ -55,13 +55,21 @@ namespace guiex
 		*/
 		virtual ~IGUIInterfaceRender();
 
+		virtual void ClearColor(real red, real green, real blue, real alpha) = 0;
+		virtual void Clear( uint32 uFlag ) = 0;
+
 		virtual void PushMatrix() = 0;
 		virtual void PopMatrix() = 0;
 		virtual void SetModelViewMatrixMode( ) = 0;
 		virtual void MultMatrix( const CGUIMatrix4& rMatrix ) = 0;
 		virtual void LoadIdentityMatrix( ) = 0;
 
-		virtual uint32 GenFrameBuffers( ) = 0;
+		virtual void GenFramebuffers( uint32 n, uint32* framebuffers ) = 0;
+		virtual void DeleteFramebuffers( uint32 n, const uint32* framebuffers ) = 0;
+		virtual void BindFramebuffer( uint32 framebuffer ) = 0;
+		virtual void GetCurrentBindingFrameBuffer( int32* framebuffer ) = 0;
+		virtual void FramebufferTexture2D_Color( const CGUITextureImp* pTexture, int32 level ) = 0;
+		virtual bool CheckFramebufferStatus( ) = 0;
 
 		virtual void DrawRect(
 			const CGUIRect& rDestRect, 

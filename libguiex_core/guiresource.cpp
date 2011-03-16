@@ -53,7 +53,7 @@ namespace guiex
 		m_pResourceManager->DeallocateResource( this );
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIResource::Load() const
+	int32 CGUIResource::Load()
 	{
 		if( m_eIsLoaded ==  LOADSTATE_Loaded)
 		{

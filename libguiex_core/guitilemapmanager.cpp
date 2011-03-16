@@ -35,7 +35,7 @@ namespace guiex
 		return m_aProperty;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUITileMapData::DoLoad() const
+	int32 CGUITileMapData::DoLoad()
 	{
 		return 0;
 	}

@@ -2342,8 +2342,8 @@ namespace guiex
 		pRender->GetFontRender()->DrawString(pRender, strText,rPos, GetDerivedAlpha(), nStartPos,nEndPos);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::DrawImage(IGUIInterfaceRender* pRender, 
-		const CGUIImage* pImage, 
+	void CGUIWidget::DrawImage(IGUIInterfaceRender* pRender, 
+		CGUIImage* pImage, 
 		const CGUIRect& rDestRect)
 	{
 		if( pImage )
@@ -2362,7 +2362,7 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWidget::DrawAnimation(IGUIInterfaceRender* pRender, 
-		const CGUIAnimation* pAnimation, 
+		CGUIAnimation* pAnimation, 
 		const CGUIRect& rDestRect)
 	{
 		if( pAnimation )

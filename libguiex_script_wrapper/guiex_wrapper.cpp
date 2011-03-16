@@ -6021,13 +6021,13 @@ static int _wrap_CGUIImage_GetSize(lua_State* L) {
   guiex::CGUISize *result = 0 ;
   
   SWIG_check_num_args("GetSize",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetSize",1,"guiex::CGUIImage const *");
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetSize",1,"guiex::CGUIImage *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIImage,0))){
     SWIG_fail_ptr("CGUIImage_GetSize",1,SWIGTYPE_p_guiex__CGUIImage);
   }
   
-  result = (guiex::CGUISize *) &((guiex::CGUIImage const *)arg1)->GetSize();
+  result = (guiex::CGUISize *) &(arg1)->GetSize();
   SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUISize,0); SWIG_arg++; 
   return SWIG_arg;
   
@@ -6056,13 +6056,13 @@ static int _wrap_CGUIAnimation_GetSize(lua_State* L) {
   guiex::CGUISize *result = 0 ;
   
   SWIG_check_num_args("GetSize",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetSize",1,"guiex::CGUIAnimation const *");
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetSize",1,"guiex::CGUIAnimation *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIAnimation,0))){
     SWIG_fail_ptr("CGUIAnimation_GetSize",1,SWIGTYPE_p_guiex__CGUIAnimation);
   }
   
-  result = (guiex::CGUISize *) &((guiex::CGUIAnimation const *)arg1)->GetSize();
+  result = (guiex::CGUISize *) &(arg1)->GetSize();
   SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUISize,0); SWIG_arg++; 
   return SWIG_arg;
   

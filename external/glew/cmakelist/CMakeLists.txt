@@ -7,7 +7,6 @@ set( src_list
 
 set( inc_list
 	../include/GL/glew.h
-    ../include/GL/glxew.h
     ../include/GL/wglew.h
     )
 	

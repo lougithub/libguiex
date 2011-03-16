@@ -365,9 +365,9 @@ namespace guiex
 		void DrawCharacter(IGUIInterfaceRender* pRender, wchar_t charCode, const CGUIStringInfo& rInfo, const CGUIVector2& rPos );
 		void DrawString( IGUIInterfaceRender* pRender, const CGUIStringEx& strText, const CGUIRect& rDrawRect, uint8 uTextAlignment, int32 nStartPos = 0, int32 nEndPos = -1 );
 		void DrawString( IGUIInterfaceRender* pRender, const CGUIStringEx& strText, const CGUIVector2& rPos, int32 nStartPos = 0, int32 nEndPos = -1);
-		void DrawImage( IGUIInterfaceRender* pRender, const CGUIImage* pImage, const CGUIRect& rDestRect );
+		void DrawImage( IGUIInterfaceRender* pRender, CGUIImage* pImage, const CGUIRect& rDestRect );
 		void DrawImage( IGUIInterfaceRender* pRender, const CGUIString& rName, const CGUIRect& rDestRect );
-		void DrawAnimation( IGUIInterfaceRender* pRender, const CGUIAnimation* pAnimation, const CGUIRect& rDestRect );
+		void DrawAnimation( IGUIInterfaceRender* pRender, CGUIAnimation* pAnimation, const CGUIRect& rDestRect );
 
 		friend class CGUIWidgetFactory;
 		void SetGenerator( const CGUIWidgetGenerator* pGenerator);

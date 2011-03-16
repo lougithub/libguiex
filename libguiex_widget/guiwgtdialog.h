@@ -58,7 +58,7 @@ namespace guiex
 
 
 	protected:
-		const CGUIImage* m_pImageBG;
+		CGUIImage* m_pImageBG;
 
 	private:
 		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtDialog);

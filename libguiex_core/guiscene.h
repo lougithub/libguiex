@@ -51,7 +51,7 @@ namespace guiex
 		friend class CGUISceneManager;
 		CGUIScene( const CGUIString& rSceneName );
 
-		virtual int32 DoLoad() const;
+		virtual int32 DoLoad();
 		virtual void DoUnload();
 
 	protected:

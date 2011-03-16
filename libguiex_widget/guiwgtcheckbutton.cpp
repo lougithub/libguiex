@@ -110,7 +110,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void	CGUIWgtCheckButton::RenderSelf(IGUIInterfaceRender* pRender)
 	{
-		const CGUIImage* pImage = NULL;
+		CGUIImage* pImage = NULL;
 
 		if( !m_bChecked )
 		{

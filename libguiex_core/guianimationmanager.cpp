@@ -120,7 +120,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIAnimation* CGUIAnimationManager::AllocateResource( const CGUIString& rResName )
 	{
-		const CGUIAnimation* pTemplate = GetRegisterResource( rResName );
+		CGUIAnimation* pTemplate = GetRegisterResource( rResName );
 		if( !pTemplate )
 		{
 			throw CGUIException( 

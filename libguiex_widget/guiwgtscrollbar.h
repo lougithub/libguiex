@@ -174,7 +174,7 @@ namespace guiex
 		bool m_bAutoNotifyParent;///whether notify parent when scrollbar value change
 
 		//image
-		const CGUIImage* m_pImageBg; ///background
+		CGUIImage* m_pImageBg; ///background
 
 		//child
 		friend class CGUIWgtScrollbarSlide;

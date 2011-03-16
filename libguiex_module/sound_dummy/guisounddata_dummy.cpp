@@ -28,7 +28,7 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUISoundData_dummy::DoLoad() const
+	int32 CGUISoundData_dummy::DoLoad()
 	{
 		return 0;
 	}

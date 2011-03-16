@@ -7,7 +7,7 @@ namespace guiex
 		virtual ~CGUIAnimation();
 
 	public:
-		const CGUISize& GetSize() const;
+		const CGUISize& GetSize();
 	};
 }
 

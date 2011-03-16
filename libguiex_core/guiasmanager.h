@@ -42,7 +42,7 @@ namespace guiex
 		const CGUIProperty& GetAsData() const;
 
 	protected:
-		virtual int32 DoLoad() const;
+		virtual int32 DoLoad();
 		virtual void DoUnload();
 
 	protected:

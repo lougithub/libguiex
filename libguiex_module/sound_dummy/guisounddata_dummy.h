@@ -32,7 +32,7 @@ namespace guiex
 		friend class IGUISound_dummy;
 		CGUISoundData_dummy( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath );
 
-		virtual int32 DoLoad() const;
+		virtual int32 DoLoad();
 		virtual void DoUnload();
 
 	protected:

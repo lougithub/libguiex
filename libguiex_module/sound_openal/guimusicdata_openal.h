@@ -46,7 +46,7 @@ namespace guiex
 		CGUIMusicData_openal( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath );
 		virtual ~CGUIMusicData_openal();
 
-		virtual int32 DoLoad() const;
+		virtual int32 DoLoad();
 		virtual void DoUnload();
 
 		bool LoadOggFile( const CGUIString& rFilename ) const;

@@ -43,12 +43,21 @@ namespace guiex
 		IGUIRender_opengles( );
 		virtual ~IGUIRender_opengles();
 
+		virtual void ClearColor(real red, real green, real blue, real alpha);
+		virtual void Clear( uint32 uFlag );
+
 		virtual void PushMatrix();
 		virtual void PopMatrix();
 		virtual void SetModelViewMatrixMode( );
 		virtual void LoadIdentityMatrix( );
 		virtual void MultMatrix( const CGUIMatrix4& rMatrix );
-		virtual uint32 GenFrameBuffers( );
+
+		virtual void GenFramebuffers( uint32 n, uint32* framebuffers );
+		virtual void DeleteFramebuffers( uint32 n, const uint32* framebuffers );
+		virtual void BindFramebuffer( uint32 framebuffer );
+		virtual void GetCurrentBindingFrameBuffer( int32* framebuffer );
+		virtual void FramebufferTexture2D_Color( const CGUITextureImp* pTexture, int32 level );
+		virtual bool CheckFramebufferStatus( );
 
 		virtual void DrawRect(
 			const CGUIRect& rDestRect, 

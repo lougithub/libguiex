@@ -114,7 +114,7 @@ namespace guiex
 		const CGUIAs& operator=(const CGUIAs& );
 
 	protected:
-		virtual int32	DoLoad() const;
+		virtual int32	DoLoad();
 		virtual void	DoUnload();
 
 	private:

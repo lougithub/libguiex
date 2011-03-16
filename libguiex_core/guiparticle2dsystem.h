@@ -159,7 +159,7 @@ namespace guiex
 	protected:
 		CGUIParticle2DSystem( const CGUIString& rName, const CGUIString& rSceneName );
 
-		virtual int32 DoLoad() const;
+		virtual int32 DoLoad();
 		virtual void DoUnload();
 
 		virtual void UpdateQuadWithParticle( CGUIParticle2D* particle, const CGUIVector2& rNewPos );
@@ -264,7 +264,7 @@ namespace guiex
 
 
 		// Array of particles
-		mutable CGUIParticle2D *particles;
+		CGUIParticle2D *particles;
 		// Maximum particles
 		uint32 totalParticles;
 		// Count of active particles
@@ -276,7 +276,7 @@ namespace guiex
 
 		// Texture of the particles
 		CGUIString m_strFullTexturePath;
-		mutable class CGUITexture *texture;
+		class CGUITexture *texture;
 		// blend type
 		SGUIBlendFunc blendFunc;
 

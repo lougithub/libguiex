@@ -39,7 +39,7 @@ namespace guiex
 		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage );
 
 	protected:
-		const CGUIImage* m_pImageBG;
+		CGUIImage* m_pImageBG;
 
 	protected:
 		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtStaticImage);

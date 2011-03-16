@@ -28,7 +28,7 @@ namespace guiex
 		return m_aProperty;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIAsData::DoLoad() const
+	int32 CGUIAsData::DoLoad()
 	{
 		return 0;
 	}

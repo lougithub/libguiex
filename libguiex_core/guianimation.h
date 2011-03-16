@@ -51,9 +51,9 @@ namespace guiex
 		void Draw( IGUIInterfaceRender* pRender,
 			const CGUIRect& rDestRect,
 			real z, 
-			real fAlpha	) const;
+			real fAlpha	);
 
-		const CGUISize& GetSize( ) const;
+		const CGUISize& GetSize( );
 
 	protected:
 		/**
@@ -82,12 +82,12 @@ namespace guiex
 			real fInterval,
 			const CGUISize& rSize);
 
-		virtual int32 DoLoad() const;
+		virtual int32 DoLoad();
 		virtual void DoUnload();
 
 	protected:
 		friend class CGUIAnimationManager;
-		mutable std::vector<CGUITexture*> m_vecTextures;
+		std::vector<CGUITexture*> m_vecTextures;
 		std::vector<CGUIRect> m_vecUVRects;
 
 		std::vector<CGUIString>	m_vecFileNames; //resource path
@@ -103,7 +103,7 @@ namespace guiex
 		};
 		EUVAnimType eUVAnimType;
 
-		mutable CGUISize m_aAnimationSize;
+		CGUISize m_aAnimationSize;
 	};
 
 }//namespace guiex

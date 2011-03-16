@@ -126,7 +126,7 @@ namespace guiex
 		return m_strTitle;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIScene::DoLoad() const
+	int32 CGUIScene::DoLoad()
 	{
 		return 0;
 	}

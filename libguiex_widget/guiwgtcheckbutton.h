@@ -99,16 +99,16 @@ namespace guiex
 		bool	m_bPushing;		///whether button is pushed
 		bool	m_bChecked;		///whether button is checked
 
-		const CGUIImage* m_pImageNormal;
-		const CGUIImage* m_pImageHovering;
-		const CGUIImage* m_pImageDisable;
-		const CGUIImage *m_pImagePush;
-		const CGUIImage* m_pImageNormalChecked;
-		const CGUIImage* m_pImageHoveringChecked;
-		const CGUIImage* m_pImageDisableChecked;
-		const CGUIImage* m_pImagePushChecked;
-		const CGUIImage* m_pImageHoverOverlay;
-		const CGUIImage* m_pImageCheckedOverlay;
+		CGUIImage* m_pImageNormal;
+		CGUIImage* m_pImageHovering;
+		CGUIImage* m_pImageDisable;
+		CGUIImage *m_pImagePush;
+		CGUIImage* m_pImageNormalChecked;
+		CGUIImage* m_pImageHoveringChecked;
+		CGUIImage* m_pImageDisableChecked;
+		CGUIImage* m_pImagePushChecked;
+		CGUIImage* m_pImageHoverOverlay;
+		CGUIImage* m_pImageCheckedOverlay;
 
 	private:
 		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtCheckButton);

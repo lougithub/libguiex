@@ -1,20 +1,20 @@
 /** 
- * @file guiscenecapture.h
+ * @file guieffecttiledgrid3d.h
  * @brief 
  * @author Lou Guoliang (louguoliang@gmail.com)
- * @date 2011-03-15
+ * @date 2011-03-16
  */
 
 
-#ifndef __KEN_GUISCENECAPTURE_20110315_H__
-#define	__KEN_GUISCENECAPTURE_20110315_H__
+#ifndef __KEN_GUIEFFECTTILEDGRID3D_20110316_H__
+#define	__KEN_GUIEFFECTTILEDGRID3D_20110316_H__
 
 
 //============================================================================//
 // include
 //============================================================================//
 #include "guibase.h"
-#include "guireference.h"
+#include "guiscenecapture.h"
 
 //============================================================================//
 // declare
@@ -22,7 +22,6 @@
 namespace guiex
 {
 	class IGUIInterfaceRender;
-	class CGUITexture;
 }
 
 //============================================================================//
@@ -30,30 +29,20 @@ namespace guiex
 //============================================================================//
 namespace guiex
 {
-	class GUIEXPORT CGUISceneCapture : public CGUIReference
+	class GUIEXPORT CGUIEffectTiledGrid3D : public CGUISceneCapture
 	{
 	public:
-		CGUISceneCapture( );
+		CGUIEffectTiledGrid3D( );
 
 		virtual int32 Initialize( uint32 uTextureWidth, uint32 uTextureHeight );
 		virtual void Release( );
 
-		virtual void RefRelease();
-
-		virtual void BeforeRender( IGUIInterfaceRender* pRender );
-		virtual void AfterRender( IGUIInterfaceRender* pRender );
+	protected:
+		virtual ~CGUIEffectTiledGrid3D();
+		virtual void ProcessCaptureTexture( IGUIInterfaceRender* pRender );
 
 	protected:
-		virtual ~CGUISceneCapture();
-		virtual void ProcessCaptureTexture( IGUIInterfaceRender* pRender ) = 0;
-
-	protected:
-		CGUITexture* m_pTexture; //!< texture
-
-	private:
-		uint32 m_fbo;
-		int32 m_oldfbo;
 	};
 }
 
-#endif //__KEN_GUISCENECAPTURE_20110315_H__
+#endif //__KEN_GUIEFFECTTILEDGRID3D_20110316_H__

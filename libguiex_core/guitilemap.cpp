@@ -35,7 +35,7 @@ namespace guiex
 		Reset();
 	}
 	//------------------------------------------------------------------------------
-	void CGUITileMap::Reset() const
+	void CGUITileMap::Reset()
 	{
 		//clear layer
 		for( uint32 i=0; i<m_arrayLayer.size(); ++i )
@@ -68,7 +68,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUITileMap::DoLoad() const
+	int32 CGUITileMap::DoLoad()
 	{
 		if( 0 != ParseTMXFile(m_strFullWorkingDir + m_strConfigFile) )
 		{
@@ -82,7 +82,7 @@ namespace guiex
 		Reset();
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUITileMap::ParseTMXFile( const CGUIString& rFileName ) const
+	int32 CGUITileMap::ParseTMXFile( const CGUIString& rFileName )
 	{
 		Reset();
 

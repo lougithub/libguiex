@@ -284,6 +284,10 @@ source_group( particle2dsystem FILES ${${target_name}_particle2dsystem_SRCS} )
 set( ${target_name}_scenecapture_SRCS 
 	guiscenecapture.cpp
 	guiscenecapture.h
+	guieffecttiledgrid3d.cpp
+	guieffecttiledgrid3d.h
+	guieffectgrid3d.cpp
+	guieffectgrid3d.h
 	)
 source_group( scenecapture FILES ${${target_name}_scenecapture_SRCS} )
 

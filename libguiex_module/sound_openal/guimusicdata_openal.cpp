@@ -37,7 +37,7 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIMusicData_openal::DoLoad() const
+	int32 CGUIMusicData_openal::DoLoad()
 	{
 		// identify file type by extension
 		CGUIString strExt;
