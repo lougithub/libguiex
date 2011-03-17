@@ -214,12 +214,26 @@ namespace guiex
 	{
 		CGUIParticle2DSystem::Render( pRender );
 
+		SGUIBlendFunc oldBlendFunc;
+		pRender->GetBlendFunc( oldBlendFunc );
+
+		if( blendFunc.src != oldBlendFunc.src ||
+			blendFunc.dst != oldBlendFunc.dst )
+		{
+			pRender->SetBlendFunc( blendFunc );
+		}
+
 		pRender->DrawQuads(
 			texture->GetTextureImplement(), 
-			blendFunc,
 			quads,
 			indices,
 			particleCount );
+
+		if( blendFunc.src != oldBlendFunc.src ||
+			blendFunc.dst != oldBlendFunc.dst )
+		{
+			pRender->SetBlendFunc( oldBlendFunc );
+		}
 	}
 	//------------------------------------------------------------------------------
 

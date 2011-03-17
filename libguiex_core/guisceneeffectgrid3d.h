@@ -57,6 +57,6 @@ namespace guiex
 		SR_V3F *m_pOriginalVertices;
 		uint16 *m_pIndices;
 	};
-}
+}//namespace guiex
 
 #endif //__KEN_GUISCENEEFFECTGRID3D_20110316_H__

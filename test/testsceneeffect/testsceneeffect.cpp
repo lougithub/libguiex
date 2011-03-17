@@ -49,11 +49,6 @@ protected:
 		CGUISceneManager::Instance()->LoadWidgets( "tilemap.uip" );
 
 		//create layer
-
-		CMyCanvasLayer_DrawWidget* pLayer3 = new CMyCanvasLayer_DrawWidget( "layer 3" );
-		pLayer3->Initialize();
-		CGUICanvasLayerManager::Instance()->PushCanvasLayer( pLayer3 );
-
 		CMyCanvasLayer_DrawRect* pLayer1 = new CMyCanvasLayer_DrawRect( "layer 1",CGUIRect( 400,284,600,484), CGUIColor( 0,1,1,1 ), 0 );	
 		pLayer1->Initialize();
 		CGUICanvasLayerManager::Instance()->PushCanvasLayer( pLayer1 );
@@ -61,6 +56,10 @@ protected:
 		CMyCanvasLayer_DrawRect* pLayer2 = new CMyCanvasLayer_DrawRect( "layer 2", CGUIRect( 400,284,600,484), CGUIColor( 1,1,1,1 ), 1);
 		pLayer2->Initialize();
 		CGUICanvasLayerManager::Instance()->PushCanvasLayer( pLayer2 );
+
+		CMyCanvasLayer_DrawWidget* pLayer3 = new CMyCanvasLayer_DrawWidget( "layer 3" );
+		pLayer3->Initialize();
+		CGUICanvasLayerManager::Instance()->PushCanvasLayer( pLayer3 );
 
 		//open ui page
 		CGUIWidget* pWidget = CGUIWidgetManager::Instance()->GetPage( "showfps.xml", "common.uip" );
@@ -87,7 +86,7 @@ CGUIFrameworkBase* CreateFramework( )
 
 //------------------------------------------------------------------------------
 CMyCanvasLayer_DrawWidget::CMyCanvasLayer_DrawWidget( const char* szLayerName )
-:CGUICanvasLayer( szLayerName )
+	:CGUICanvasLayer( szLayerName )
 {
 	m_aCamera.Restore();
 	m_aCamera.SetFov( 45 );
@@ -103,6 +102,15 @@ CMyCanvasLayer_DrawWidget::CMyCanvasLayer_DrawWidget( const char* szLayerName )
 	pWidget->SetMovable( true );
 	pWidget->SetParent( this );
 	pWidget->Open()	;
+
+	CGUIAsPageTurn3D* pAs1 = CGUIAsManager::Instance()->AllocateResource<CGUIAsPageTurn3D>();
+	pAs1->SetLooping( true );
+	pAs1->SetTotalTime( 5.0f );
+	pAs1->SetGridSize( CGUIIntSize(30, 30) );
+	pAs1->SetReceiver( this );
+	this->SetAutoPlayAs( true );
+	this->SetAs( "pageturn", pAs1 );
+	pAs1->RefRelease();
 }
 
 //------------------------------------------------------------------------------
@@ -113,6 +121,8 @@ CMyCanvasLayer_DrawWidget::~CMyCanvasLayer_DrawWidget( )
 //------------------------------------------------------------------------------
 void CMyCanvasLayer_DrawWidget::Render( class IGUIInterfaceRender* pRender )
 {
+	CGUICanvasLayer::Render( pRender );
+
 	CGUICamera* pOldCamera = pRender->ApplyCamera( &m_aCamera );
 
 	CGUICanvasLayer::Render( pRender );
@@ -132,11 +142,11 @@ void CMyCanvasLayer_DrawWidget::DestroySelf( )
 
 //------------------------------------------------------------------------------
 CMyCanvasLayer_DrawRect::CMyCanvasLayer_DrawRect( const char* szLayerName, const CGUIRect& rRect, const CGUIColor& rColor, int nCameraType )
-:CGUICanvasLayer( szLayerName )
-,m_aRect( rRect )
-,m_aColor( rColor )
-,m_nMoveCamera( nCameraType )
-,m_pAsQueue( NULL )
+	:CGUICanvasLayer( szLayerName )
+	,m_aRect( rRect )
+	,m_aColor( rColor )
+	,m_nMoveCamera( nCameraType )
+	,m_pAsQueue( NULL )
 {
 	m_pAsQueue = CGUIAsManager::Instance()->AllocateResource<CGUIAsInterpolationQueue<CGUIVector3> >();
 	m_pAsQueue->SetLooping( true );

@@ -76,7 +76,7 @@ namespace guiex
 				real y1 = y * m_aStep.y;
 				real y2 = y1 + m_aStep.y;
 
-				uint16 l1[4] = { a*3, b*3, c*3, d*3 };
+				uint16 l1[4] = { a, b, c, d };
 				SR_V3F	e = {x1,y1,0};
 				SR_V3F	f = {x2,y1,0};
 				SR_V3F	g = {x2,y2,0};
@@ -84,7 +84,7 @@ namespace guiex
 
 				SR_V3F l2[4] = { e, f, g, h };
 
-				uint16 tex1[4] = { a*2, b*2, c*2, d*2 };
+				uint16 tex1[4] = { a, b, c, d };
 				SR_V2F tex2[4] = { {x1, y1}, {x2, y1}, {x2, y2}, {x1, y2} };
 
 				for( int32 i = 0; i < 4; i++ )
@@ -138,7 +138,9 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUISceneEffectGrid3D::ProcessCaptureTexture( IGUIInterfaceRender* pRender )
 	{
-		CGUISceneEffectGridBase::ProcessCaptureTexture( pRender );
+		int n = m_aGridSize.m_uWidth * m_aGridSize.m_uHeight;
+
+		pRender->DrawGrid( m_pTexture->GetTextureImplement(), m_pTexCoordinates, m_pVertices, m_pIndices, n );
 	}
 	//------------------------------------------------------------------------------
 	/** 

@@ -258,7 +258,7 @@ namespace guiex
 
 			CGUIColor aColor(1.0f,1.0f,1.0f,1.0f);
 			aColor.SetAlpha(GetOpacity());
-			pRender->DrawTile( rData.m_aDestRect, pRender->GetAndIncZ(), m_pTexture->GetTextureImplement(),rData.m_aUV, eImageOrientation_Normal,aColor);
+			pRender->DrawTile( rData.m_aDestRect, 0, m_pTexture->GetTextureImplement(),rData.m_aUV, eImageOrientation_Normal,aColor);
 		}
 	}
 	//------------------------------------------------------------------------------

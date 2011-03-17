@@ -35,19 +35,23 @@ namespace guiex
 		CGUIAsGridBase( const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName);
 		virtual ~CGUIAsGridBase( );
 
-		void SetGridSize( const CGUIIntSize& rGridSize );
-		const CGUIIntSize& GetGridSize() const;
-
-
 	public:
 		virtual int32 ProcessProperty( const CGUIProperty& rProperty );
 		virtual int32 GenerateProperty( CGUIProperty& rProperty );
 
-		virtual int32 InitGrid( );
-		virtual void OnDestory();
+		void SetGridSize( const CGUIIntSize& rGridSize );
+		const CGUIIntSize& GetGridSize() const;
 
 	protected:
 		virtual CGUISceneEffectGridBase* GenerateGrid( const CGUISize& rSceneSize, const CGUIIntSize& rGridSize ) = 0;
+
+		virtual void OnUpdate(  );
+		virtual void OnRetired();
+		virtual void OnDestory();
+
+		int32 InitGrid( );
+		void FiniGrid( );
+		bool IsGridInit() const;
 
 	protected:
 		CGUIIntSize m_aGridSize;

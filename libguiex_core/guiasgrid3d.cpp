@@ -11,6 +11,7 @@
 #include "guiasgrid3d.h"
 #include "guisceneeffectgrid3d.h"
 #include "guiexception.h"
+#include "guimath.h"
 
 //============================================================================//
 // function
@@ -101,5 +102,86 @@ namespace guiex
 		GetGrid3D()->SetVertex( rPos, rVertex );
 	}
 	//------------------------------------------------------------------------------
-}
+
+
+
+
+	//*****************************************************************************
+	//	CGUIAsGrid3D
+	//*****************************************************************************
+
+	//------------------------------------------------------------------------------
+	CGUIAsPageTurn3D::CGUIAsPageTurn3D( const CGUIString& rAsName, const CGUIString& rSceneName )
+		:CGUIAsGrid3D( "CGUIAsPageTurn3D", rAsName, rSceneName )
+	{
+
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsPageTurn3D::OnUpdate( )
+	{
+		CGUIAsGrid3D::OnUpdate( );
+
+		if( !IsGridInit() )
+		{
+			return;
+		}
+
+		real fPercent = GetElapsedTime() / GetTotalTime();
+		real tt = GUIMax( 0.0f, fPercent - 0.25f );
+		real deltaAy = ( tt * tt * 500);
+		real ay = -100 - deltaAy;
+
+		real deltaTheta = - CGUIMath::GUI_HALF_PI * sqrtf( fPercent) ;
+		real theta = CGUIMath::GUI_HALF_PI +deltaTheta;
+
+		real sinTheta = sinf(theta);
+		real cosTheta = cosf(theta);
+
+		for( uint32 i = 0; i <= m_aGridSize.m_uWidth; i++ )
+		{
+			for( uint32 j = 0; j <= m_aGridSize.m_uHeight; j++ )
+			{
+				// Get original vertex
+				SR_V3F p = GetOriginalVertex( CGUIIntSize(i,j));
+
+				real R = sqrtf(p.x*p.x + (p.y - ay) * (p.y - ay));
+				real r = R * sinTheta;
+				real alpha = asinf( p.x / R );
+				real beta = alpha / sinTheta;
+				real cosBeta = cosf( beta );
+
+				// If beta > PI then we've wrapped around the cone
+				// Reduce the radius to stop these points interfering with others
+				if( beta <= CGUIMath::GUI_PI)
+				{
+					p.x = ( r * sinf(beta));
+				}
+				else
+				{
+					// Force X = 0 to stop wrapped
+					// points
+					p.x = 0;
+				}
+
+				p.y = ( R + ay - ( r*(1 - cosBeta)*sinTheta));
+
+				// We scale z here to avoid the animation being
+				// too much bigger than the screen due to perspectve transform
+				p.z = (r * ( 1 - cosBeta ) * cosTheta) / 7; // "100" didn't work for
+
+				// Stop z coord from dropping beneath underlying page in a transition
+				// issue #751				
+				if( p.z<0.5f )
+				{
+					p.z = 0.5f;
+				}
+
+				// Set new coords
+				SetVertex( CGUIIntSize(i,j), p );
+			}
+		}
+	}
+	//------------------------------------------------------------------------------
+
+} //namespace guiex
 

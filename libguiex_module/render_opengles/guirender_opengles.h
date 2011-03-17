@@ -45,6 +45,9 @@ namespace guiex
 
 		virtual void ClearColor(real red, real green, real blue, real alpha);
 		virtual void Clear( uint32 uFlag );
+		virtual void SetDepthTest( bool bEnable );
+		virtual void SetBlendFunc( const SGUIBlendFunc& rBlendFuncType );
+		virtual void GetBlendFunc( SGUIBlendFunc& rBlendFuncType );
 
 		virtual void PushMatrix();
 		virtual void PopMatrix();
@@ -82,10 +85,16 @@ namespace guiex
 		
 		virtual void DrawQuads(
 			const CGUITextureImp* pTexture,
-			const SGUIBlendFunc& rBlendFuncType,
 			const SR_V2F_C4F_T2F_Quad* pQuads,
 			uint16* pIndices,
 			int16 nQuadNum);
+
+		virtual void DrawGrid(
+			const CGUITextureImp* pTexture,
+			const SR_T2F* pTextures,
+			const SR_V3F* pVerdices,
+			uint16* pIndices,
+			int16 nGridNum );
 
 		virtual void DrawLine(
 			const CGUIVector2 &rBegin, 
@@ -134,7 +143,6 @@ namespace guiex
 		long ColorToOpengl(const CGUIColor& col) const;
 		void makeGLMatrix(real gl_matrix[16], const CGUIMatrix4& m);
 		void BindTexture( const CGUITextureImp* pTexture );
-		void BlendFunc( const SGUIBlendFunc& rBlendFuncType );
 
 		struct SClipRect
 		{

@@ -212,6 +212,7 @@ namespace guiex
 		void StopAllAs( );
 
 		void SetSceneCapture( CGUISceneCapture* pSceneCapture );
+		CGUISceneCapture* GetSceneCapture() const;
 
 		void DestroyAllResource( );
 

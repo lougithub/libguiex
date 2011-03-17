@@ -1565,7 +1565,15 @@ namespace guiex
 			m_pSceneCapture->RefRelease();
 		}
 		m_pSceneCapture = pSceneCapture;
-		m_pSceneCapture->RefRetain();
+		if( m_pSceneCapture )
+		{
+			m_pSceneCapture->RefRetain();
+		}
+	}
+	//------------------------------------------------------------------------------
+	CGUISceneCapture* CGUIWidget::GetSceneCapture() const
+	{
+		return m_pSceneCapture;
 	}
 	//------------------------------------------------------------------------------
 	bool CGUIWidget::HasImage( const CGUIString& rName )
@@ -2163,6 +2171,9 @@ namespace guiex
 			return;
 		}
 
+		pRender->PushMatrix();
+		pRender->MultMatrix( getTransform() );
+
 		// perform render for 'this' Window
 		RenderExtraSelfInfo(pRender);
 
@@ -2173,6 +2184,8 @@ namespace guiex
 			pWidget->RenderExtraInfo(pRender);
 			pWidget = pWidget->GetNextSibling();
 		}
+
+		pRender->PopMatrix();
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -2358,7 +2371,7 @@ namespace guiex
 	{
 		if( pImage )
 		{
-			pImage->Draw( pRender, rDestRect,pRender->GetAndIncZ(),m_aColor,GetDerivedAlpha() );
+			pImage->Draw( pRender, rDestRect,0,m_aColor,GetDerivedAlpha() );
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -2367,8 +2380,7 @@ namespace guiex
 		real fLineWidth,
 		const CGUIColor& rColor )
 	{
-		pRender->DrawRect( rDestRect, fLineWidth, pRender->GetAndIncZ(),
-			rColor, rColor, rColor, rColor );
+		pRender->DrawRect( rDestRect, fLineWidth, 0, rColor );
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWidget::DrawAnimation(IGUIInterfaceRender* pRender, 
@@ -2377,7 +2389,7 @@ namespace guiex
 	{
 		if( pAnimation )
 		{
-			pAnimation->Draw( pRender, rDestRect,pRender->GetAndIncZ(),GetDerivedAlpha() );
+			pAnimation->Draw( pRender, rDestRect,0,GetDerivedAlpha() );
 		}
 	}
 	//------------------------------------------------------------------------------

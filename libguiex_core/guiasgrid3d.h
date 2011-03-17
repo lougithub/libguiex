@@ -51,6 +51,21 @@ namespace guiex
 	protected:
 	};
 
+	//*****************************************************************************
+	//	CGUIAsPageTurn3D
+	//*****************************************************************************
+	class GUIEXPORT CGUIAsPageTurn3D : public CGUIAsGrid3D
+	{
+	public:
+		CGUIAsPageTurn3D( const CGUIString& rAsName, const CGUIString& rSceneName );
+
+	protected:
+		virtual void OnUpdate( );
+
+	protected:
+		GUI_AS_GENERATOR_DECLARE( CGUIAsPageTurn3D);
+	};
+
 }//namespace guiex
 
 

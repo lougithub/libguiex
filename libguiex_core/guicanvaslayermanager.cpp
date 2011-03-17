@@ -99,13 +99,17 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUICanvasLayerManager::PushCanvasLayer( CGUICanvasLayer* pLayer )
 	{
-		if( pLayer->IsTopMost() )
+		m_arrayCanvasLayers.push_back( pLayer );
+
+		if( !pLayer->IsTopMost() && m_arrayCanvasLayers.size() >= 2 )
 		{
-			m_arrayCanvasLayers.push_front( pLayer );
-		}
-		else
-		{
-			m_arrayCanvasLayers.push_back( pLayer );
+			for( int32 i=int32(m_arrayCanvasLayers.size())-2; i>=0; --i )
+			{
+				if( m_arrayCanvasLayers[i]->IsTopMost() )
+				{
+					std::swap( m_arrayCanvasLayers[i], m_arrayCanvasLayers[i+1] );
+				}
+			}
 		}
 	}
 	//------------------------------------------------------------------------------

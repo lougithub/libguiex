@@ -92,11 +92,15 @@ namespace guiex
 		void PushSuccessor( CGUIAs* pAs);
 		CGUIAs*	PopSuccessor();
 
-		virtual real Update( real fDeltaTime );
-		virtual void OnDestory();
+		real Update( real fDeltaTime );
 
 	protected:
+		friend class CGUIAsManager;
 		CGUIAs( const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName );
+		
+		virtual void OnUpdate();
+		virtual void OnRetired();
+		virtual void OnDestory();
 
 	private:
 		//disable =
@@ -137,8 +141,6 @@ namespace guiex
 
 		void SetInterpolationValue( const T& rBeginValue, const T& rEndValue, real fTotalTime );
 
-		virtual real Update( real fDeltaTime );
-
 		void SetBeginValue( const T& rValue );
 		const T& GetBeginValue() const;
 		void SetEndValue( const T& rValue );
@@ -147,6 +149,9 @@ namespace guiex
 		const T& GetCurrentValue() const;
 		virtual int32 ProcessProperty( const CGUIProperty& rProperty );
 		virtual int32 GenerateProperty( CGUIProperty& rProperty );
+
+	protected:
+		virtual void OnUpdate();
 
 	private:
 		EInterpolationType	m_eInterpolationType;
@@ -170,9 +175,11 @@ namespace guiex
 		virtual ~CGUIAsInterpolationQueue( );
 
 	public:
-		virtual real Update( real fDeltaTime );
 		void AddItem( CGUIAsInterpolation<T>* pAs );
 		const T& GetCurrentValue() const;
+
+	protected:
+		virtual void OnUpdate();
 
 	private:
 		class CGUIQueueItemInfo
@@ -207,8 +214,8 @@ namespace guiex
 	protected:
 		CGUIAsAlpha(const CGUIString& rAsName, const CGUIString& rSceneName);
 
-	public:
-		virtual real Update( real fDeltaTime );
+	protected:
+		virtual void OnUpdate();
 
 		GUI_AS_GENERATOR_DECLARE( CGUIAsAlpha);
 	};
@@ -226,8 +233,8 @@ namespace guiex
 	protected:
 		CGUIAsScale(const CGUIString& rAsName, const CGUIString& rSceneName);
 
-	public:
-		virtual real Update( real fDeltaTime );
+	protected:
+		virtual void OnUpdate();
 
 		GUI_AS_GENERATOR_DECLARE( CGUIAsScale);
 	};
@@ -245,8 +252,8 @@ namespace guiex
 	protected:
 		CGUIAsRotation(const CGUIString& rAsName, const CGUIString& rSceneName);
 
-	public:
-		virtual real Update( real fDeltaTime );
+	protected:
+		virtual void OnUpdate();
 
 		GUI_AS_GENERATOR_DECLARE( CGUIAsRotation);
 	};
@@ -264,8 +271,8 @@ namespace guiex
 	protected:
 		CGUIAsPosition(const CGUIString& rAsName, const CGUIString& rSceneName);
 
-	public:
-		virtual real Update( real fDeltaTime );
+	protected:
+		virtual void OnUpdate();
 
 		GUI_AS_GENERATOR_DECLARE( CGUIAsPosition);
 	};
@@ -283,8 +290,8 @@ namespace guiex
 	protected:
 		CGUIAsColor(const CGUIString& rAsName, const CGUIString& rSceneName);
 
-	public:
-		virtual real Update( real fDeltaTime );
+	protected:
+		virtual void OnUpdate();
 
 		GUI_AS_GENERATOR_DECLARE( CGUIAsColor);
 	};
@@ -320,12 +327,13 @@ namespace guiex
 		virtual int32 ProcessProperty( const CGUIProperty& rProperty );
 		virtual int32 GenerateProperty( CGUIProperty& rProperty );
 
-		virtual real Update( real fDeltaTime );
-
 		virtual void SetReceiver(CGUIWidget* pReceiver);
 
 		void AddItem( CGUIAsContainItemInfo& rItemInfo );
 		void AddItem( CGUIAs* pAs, real fBeginTime );
+
+	protected:
+		virtual void OnUpdate();
 
 	private:
 		typedef std::vector<CGUIAsContainItemInfo> TAsList;
@@ -384,11 +392,10 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	template< class T >
-	inline real CGUIAsInterpolation<T>::Update( real fDeltaTime )
+	inline void CGUIAsInterpolation<T>::OnUpdate( )
 	{
-		real fLeftTime = CGUIAs::Update( fDeltaTime );
+		CGUIAs::OnUpdate( );
 		m_aCurValue = LinearTween( GetElapsedTime() / GetTotalTime(), m_aBeginValue, m_aEndValue );
-		return fLeftTime;
 	}
 	//------------------------------------------------------------------------------
 	template< class T >
@@ -554,9 +561,9 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	template< class T >
-	inline real CGUIAsInterpolationQueue<T>::Update( real fDeltaTime )
+	inline void CGUIAsInterpolationQueue<T>::OnUpdate( )
 	{
-		real fLeftTime = CGUIAs::Update( fDeltaTime );
+		CGUIAs::OnUpdate( );
 
 		for( typename TAsQueue::iterator itor = m_vAsQueue.begin();
 			itor != m_vAsQueue.end();
@@ -578,8 +585,6 @@ namespace guiex
 			rInfo.m_pAs->Update( 0.0f );
 			m_aCurValue = rInfo.m_pAs->GetCurrentValue();
 		}
-
-		return fLeftTime;
 	}
 	//------------------------------------------------------------------------------
 	template< class T >

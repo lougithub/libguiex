@@ -59,7 +59,7 @@ namespace guiex
 		pRender->PushMatrix();
 		pRender->LoadIdentityMatrix();
 
-		pRender->DrawRect( aRect, 3, pRender->GetAndIncZ(),aColor );
+		pRender->DrawRect( aRect, 3, 0,aColor );
 
 		pRender->PopMatrix();
 	}

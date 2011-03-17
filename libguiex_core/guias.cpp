@@ -138,7 +138,15 @@ namespace guiex
 	*/
 	void CGUIAs::Retire( bool bRetired )
 	{
-		m_bRetired = bRetired;
+		if( !m_bRetired && bRetired )
+		{
+			m_bRetired = bRetired;
+			OnRetired();
+		}
+		else
+		{
+			m_bRetired = bRetired;
+		}
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -230,15 +238,28 @@ namespace guiex
 			else
 			{
 				m_fElapsedTime = m_fTotalTime;
+				OnUpdate();
 				Retire( true );
 				return fLeftTime;
 			}
 		}
+
+		OnUpdate();
 		return 0.0f;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAs::OnUpdate()
+	{
+
 	}
 	//------------------------------------------------------------------------------
 	void CGUIAs::OnDestory()
 	{
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAs::OnRetired()
+	{
+
 	}
 	//------------------------------------------------------------------------------
 	void CGUIAs::PushSuccessor( CGUIAs* pAs)
@@ -288,12 +309,11 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	real CGUIAsAlpha::Update( real fDeltaTime )
+	void CGUIAsAlpha::OnUpdate( )
 	{
-		real fLeftTime = CGUIAsInterpolation<real>::Update( fDeltaTime );
+		CGUIAsInterpolation<real>::OnUpdate( );
 		GUI_ASSERT( GetReceiver(), "no receiver");
 		GetReceiver()->SetAlpha(GetCurrentValue());
-		return fLeftTime;
 	}
 	//------------------------------------------------------------------------------
 
@@ -308,12 +328,11 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	real CGUIAsRotation::Update( real fDeltaTime )
+	void CGUIAsRotation::OnUpdate( )
 	{
-		real fLeftTime = CGUIAsInterpolation<CGUIVector3>::Update( fDeltaTime );
+		CGUIAsInterpolation<CGUIVector3>::OnUpdate( );
 		GUI_ASSERT( GetReceiver(), "no receiver");
 		GetReceiver()->SetRotation(GetCurrentValue());
-		return fLeftTime;
 	}
 	//------------------------------------------------------------------------------
 
@@ -327,12 +346,11 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	real CGUIAsScale::Update( real fDeltaTime )
+	void CGUIAsScale::OnUpdate( )
 	{
-		real fLeftTime = CGUIAsInterpolation<CGUISize>::Update( fDeltaTime );
+		CGUIAsInterpolation<CGUISize>::OnUpdate( );
 		GUI_ASSERT( GetReceiver(), "no receiver");
 		GetReceiver()->SetScale(GetCurrentValue());
-		return fLeftTime;
 	}
 	//------------------------------------------------------------------------------
 
@@ -345,12 +363,11 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	real CGUIAsPosition::Update( real fDeltaTime )
+	void CGUIAsPosition::OnUpdate( )
 	{
-		real fLeftTime = CGUIAsInterpolation<CGUIVector2>::Update( fDeltaTime );
+		CGUIAsInterpolation<CGUIVector2>::OnUpdate( );
 		GUI_ASSERT( GetReceiver(), "no receiver");
 		GetReceiver()->SetPixelPosition(GetCurrentValue());
-		return fLeftTime;
 	}
 	//------------------------------------------------------------------------------
 
@@ -364,12 +381,11 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	real CGUIAsColor::Update( real fDeltaTime )
+	void CGUIAsColor::OnUpdate( )
 	{
-		real fLeftTime = CGUIAsInterpolation<CGUIColor>::Update( fDeltaTime );
+		CGUIAsInterpolation<CGUIColor>::OnUpdate( );
 		GUI_ASSERT( GetReceiver(), "no receiver");
 		GetReceiver()->SetColor(GetCurrentValue());
-		return fLeftTime;
 	}
 	//------------------------------------------------------------------------------
 
@@ -598,9 +614,9 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	real CGUIAsContainer::Update( real fDeltaTime )
+	void CGUIAsContainer::OnUpdate( )
 	{
-		real fLeftTime = CGUIAs::Update( fDeltaTime );
+		CGUIAs::OnUpdate( );
 
 		for( TAsList::iterator itor = m_vAsList.begin();
 			itor != m_vAsList.end();
@@ -621,8 +637,6 @@ namespace guiex
 			rInfo.m_pAs->SetElapsedTime( GetElapsedTime() - rInfo.m_fBeginTime );
 			rInfo.m_pAs->Update( 0.0f );
 		}
-
-		return fLeftTime;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIAsContainer::AddItem( CGUIAs* pAs, real fBeginTime )

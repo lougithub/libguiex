@@ -10,6 +10,7 @@
 //============================================================================// 
 #include "guiasmanager.h"
 #include "guias.h"
+#include "guiasgrid3d.h"
 
 //============================================================================//
 // function
@@ -55,6 +56,7 @@ namespace guiex
 		REGISTER_AS( CGUIAsRotation );
 		REGISTER_AS( CGUIAsColor );
 		REGISTER_AS( CGUIAsContainer );
+		REGISTER_AS( CGUIAsPageTurn3D );
 #undef REGISTER_AS
 	}
 	//------------------------------------------------------------------------------

@@ -150,8 +150,18 @@ namespace guiex
 		//restore fbo
 		pRender->BindFramebuffer( m_oldfbo );
 
+		pRender->LoadIdentityMatrix();
+
+		SGUIBlendFunc oldBlendFunc, curBlendFunc;
+		pRender->GetBlendFunc( oldBlendFunc );
+
+		curBlendFunc.src = eBlendFunc_ONE;
+		curBlendFunc.dst = eBlendFunc_ZERO;
+		pRender->SetBlendFunc( curBlendFunc );
+
 		ProcessCaptureTexture( pRender );
 
+		pRender->SetBlendFunc( oldBlendFunc );
 		pRender->PopMatrix();
 	}
 	//------------------------------------------------------------------------------

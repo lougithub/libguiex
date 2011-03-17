@@ -12,7 +12,6 @@ public:
 	virtual void DestroySelf( );
 
 protected:
-	std::vector<CGUIWidget*> m_vecWidgets;
 	CGUICamera m_aCamera;
 	CGUIAsInterpolationQueue<CGUIVector3>* m_pAsQueue;
 };
@@ -114,22 +113,16 @@ CMyCanvasLayer_DrawWidget::CMyCanvasLayer_DrawWidget( const char* szLayerName )
 
 	CGUIWidget* pWidget = NULL;
 	pWidget = CGUIWidgetManager::Instance()->GetPage( "sample1.xml", "tilemap.uip" );
-	m_vecWidgets.push_back( pWidget );
+	pWidget->SetParent( this );
 	pWidget->Open()	;
 	pWidget = CGUIWidgetManager::Instance()->GetPage( "dialog_okcancel.xml", "common.uip" );
-	m_vecWidgets.push_back( pWidget );
+	pWidget->SetParent( this );
 	pWidget->Open()	;
 }
 
 //------------------------------------------------------------------------------
 CMyCanvasLayer_DrawWidget::~CMyCanvasLayer_DrawWidget(  )
 {
-	for( uint32 i=0; i<m_vecWidgets.size(); ++i )
-	{
-		m_vecWidgets[i]->Close();
-	}
-	m_vecWidgets.clear();
-
 	CGUIAsManager::Instance()->DeallocateResource( m_pAsQueue );
 	m_pAsQueue = NULL;
 }
@@ -139,13 +132,6 @@ void CMyCanvasLayer_DrawWidget::Update( real fDeltaTime )
 {
 	CGUICanvasLayer::Update( fDeltaTime );
 
-	for( std::vector<CGUIWidget*>::iterator itor = m_vecWidgets.begin();
-		itor != m_vecWidgets.end();
-		++itor )
-	{
-		(*itor)->Update( fDeltaTime );
-	}
-
 	m_pAsQueue->Update( fDeltaTime );
 	m_aCamera.SetEye( m_pAsQueue->GetCurrentValue());
 }
@@ -153,16 +139,9 @@ void CMyCanvasLayer_DrawWidget::Update( real fDeltaTime )
 //------------------------------------------------------------------------------
 void CMyCanvasLayer_DrawWidget::Render( class IGUIInterfaceRender* pRender )
 {
-	CGUICanvasLayer::Render( pRender );
-
 	CGUICamera* pOldCamera = pRender->ApplyCamera( &m_aCamera );
 
-	for( std::vector<CGUIWidget*>::iterator itor = m_vecWidgets.begin();
-		itor != m_vecWidgets.end();
-		++itor )
-	{
-		(*itor)->Render( pRender );
-	}
+	CGUICanvasLayer::Render( pRender );
 
 	pRender->ApplyCamera( pOldCamera );
 }
@@ -267,7 +246,7 @@ void CMyCanvasLayer_DrawRect::Render( class IGUIInterfaceRender* pRender )
 	pRender->DrawRect(
 		m_aRect, 
 		3,
-		pRender->GetAndIncZ(),
+		0,
 		m_aColor,
 		m_aColor,
 		m_aColor,

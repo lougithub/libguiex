@@ -12,7 +12,7 @@
 // include
 //============================================================================// 
 #include "guibase.h"
-#include <list>
+#include <vector>
 
 //============================================================================//
 // declare
@@ -59,7 +59,7 @@ namespace guiex
 		CGUICanvasLayerManager( const CGUICanvasLayerManager& );
 
 	protected:
-		typedef std::list<CGUICanvasLayer*>	TArrayCanvasLayer;
+		typedef std::vector<CGUICanvasLayer*>	TArrayCanvasLayer;
 		TArrayCanvasLayer m_arrayCanvasLayers;
 
 	private:

@@ -35,6 +35,16 @@ namespace guiex
 
 	}
 	//------------------------------------------------------------------------------
+	void CGUIAsGridBase::OnUpdate( )
+	{
+		CGUIAs::OnUpdate( );
+		
+		if( !IsGridInit() )
+		{
+			InitGrid();
+		}
+	}
+	//------------------------------------------------------------------------------
 	void CGUIAsGridBase::SetGridSize( const CGUIIntSize& rGridSize )
 	{
 		m_aGridSize = rGridSize;
@@ -69,10 +79,15 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
+	bool CGUIAsGridBase::IsGridInit() const
+	{
+		return m_pEffectGrid != NULL;
+	}
+	//------------------------------------------------------------------------------
 	int32 CGUIAsGridBase::InitGrid( )
 	{
 		//check grid
-		if( m_pEffectGrid )
+		if( IsGridInit() )
 		{
 			throw CGUIException("[CGUIAsGridBase::InitGrid]: grid has been initialized!" );
 			return -1;
@@ -98,13 +113,31 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
+	void CGUIAsGridBase::FiniGrid( )
+	{
+		if( !IsGridInit() )
+		{
+			return;
+		}
+		if( GetReceiver() && GetReceiver()->GetSceneCapture() == m_pEffectGrid )
+		{
+			GetReceiver()->SetSceneCapture( NULL );
+		}
+
+		m_pEffectGrid->RefRelease();
+		m_pEffectGrid = 0;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsGridBase::OnRetired()
+	{
+		FiniGrid();
+		CGUIAs::OnRetired();
+	}
+	//------------------------------------------------------------------------------
 	void CGUIAsGridBase::OnDestory()
 	{
-		if( m_pEffectGrid )
-		{
-			m_pEffectGrid->RefRelease();
-			m_pEffectGrid = 0;
-		}	
+		FiniGrid();
+		CGUIAs::OnDestory();
 	}
 	//------------------------------------------------------------------------------
 }

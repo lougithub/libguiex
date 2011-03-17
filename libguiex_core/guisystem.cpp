@@ -590,7 +590,6 @@ namespace guiex
 		pRender->SetFontRender(pFont); 
 
 		//init render
-		pRender->ResetZValue();
 		pRender->BeginRender();
 	}
 	//------------------------------------------------------------------------------

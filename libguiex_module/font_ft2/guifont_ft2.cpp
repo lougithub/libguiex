@@ -315,7 +315,7 @@ namespace guiex
 			aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
 			pRender->DrawTile( 
 				aCharRect,
-				pRender->GetAndIncZ(), 
+				0, 
 				pCharData->m_pTexture->GetTextureImplement(),
 				pCharData->m_aUV, 
 				eImageOrientation_Normal,
@@ -398,7 +398,7 @@ namespace guiex
 				aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
 				pRender->DrawTile( 
 					aCharRect,
-					pRender->GetAndIncZ(), 
+					0, 
 					pCharData->m_pTexture->GetTextureImplement(),
 					pCharData->m_aUV, 
 					eImageOrientation_Normal,
@@ -447,7 +447,7 @@ namespace guiex
 				aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
 				pRender->DrawTile( 
 					aCharRect,
-					pRender->GetAndIncZ(), 
+					0, 
 					pCharData->m_pTexture->GetTextureImplement(),
 					pCharData->m_aUV, 
 					eImageOrientation_Normal,

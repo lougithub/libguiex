@@ -114,7 +114,7 @@ namespace guiex
 
 		//disable lighting
 		glDisable(GL_LIGHTING);
-		glDisable(GL_DEPTH_TEST);
+		SetDepthTest(false);
 		
 		//enable smooth shade
 		glShadeModel(GL_SMOOTH);
@@ -149,7 +149,7 @@ namespace guiex
 		}
 
 		makeGLMatrix( m_aWholeScreenRect.m_gl_world_matrix, CGUIMatrix4::IDENTITY );
-		ResetZValue();
+
 		m_nCurrentTexture = -1;
 		m_nCurrentStencilRef = 0;
 		
@@ -196,6 +196,72 @@ namespace guiex
 			bitfield |= GL_STENCIL_BUFFER_BIT;
 		}
 		glClear( bitfield );
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengles::GetBlendFunc( SGUIBlendFunc& rBlendFuncType )
+	{
+		GLint src = 0;
+		GLint dst = 0;
+		glGetIntegerv( GL_BLEND_SRC, &src );
+		glGetIntegerv( GL_BLEND_DST, &dst );
+
+		switch( src )
+		{
+		case GL_ONE:
+			rBlendFuncType.src = eBlendFunc_ONE;break;
+		case GL_SRC_COLOR:
+			rBlendFuncType.src = eBlendFunc_SRC_COLOR;break;
+		case GL_ONE_MINUS_SRC_COLOR:
+			rBlendFuncType.src = eBlendFunc_ONE_MINUS_SRC_COLOR;break;
+		case GL_SRC_ALPHA:
+			rBlendFuncType.src = eBlendFunc_SRC_ALPHA;break;
+		case GL_ONE_MINUS_SRC_ALPHA:
+			rBlendFuncType.src = eBlendFunc_ONE_MINUS_SRC_ALPHA;break;
+		case GL_DST_ALPHA:
+			rBlendFuncType.src = eBlendFunc_DST_ALPHA;break;
+		case GL_ONE_MINUS_DST_ALPHA:
+			rBlendFuncType.src = eBlendFunc_ONE_MINUS_DST_ALPHA;break;
+		case GL_ZERO:
+			rBlendFuncType.src = eBlendFunc_ZERO;break;
+		default:
+			GUI_ASSERT( 0, "unknown blend func type" );
+		}
+		switch( dst )
+		{
+		case GL_ONE:
+			rBlendFuncType.dst = eBlendFunc_ONE;break;
+		case GL_SRC_COLOR:
+			rBlendFuncType.dst = eBlendFunc_SRC_COLOR;break;
+		case GL_ONE_MINUS_SRC_COLOR:
+			rBlendFuncType.dst = eBlendFunc_ONE_MINUS_SRC_COLOR;break;
+		case GL_SRC_ALPHA:
+			rBlendFuncType.dst = eBlendFunc_SRC_ALPHA;break;
+		case GL_ONE_MINUS_SRC_ALPHA:
+			rBlendFuncType.dst = eBlendFunc_ONE_MINUS_SRC_ALPHA;break;
+		case GL_DST_ALPHA:
+			rBlendFuncType.dst = eBlendFunc_DST_ALPHA;break;
+		case GL_ONE_MINUS_DST_ALPHA:
+			rBlendFuncType.dst = eBlendFunc_ONE_MINUS_DST_ALPHA;break;
+		case GL_ZERO:
+			rBlendFuncType.dst = eBlendFunc_ZERO;break;
+		default:
+			GUI_ASSERT( 0, "unknown blend func type" );
+		}
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengles::SetDepthTest( bool bEnable )
+	{
+		if ( bEnable ) 
+		{
+			glClearDepth(1.0f);
+			glEnable(GL_DEPTH_TEST);
+			glDepthFunc(GL_LEQUAL);
+			glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+		}
+		else
+		{
+			glDisable( GL_DEPTH_TEST );
+		}
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::PushMatrix()
@@ -498,9 +564,30 @@ namespace guiex
 		glDisableClientState(GL_COLOR_ARRAY);
 	}
 	//------------------------------------------------------------------------------
+	void IGUIRender_opengles::DrawGrid( 
+		const CGUITextureImp* pTexture,
+		const SR_T2F* pTextures,
+		const SR_V3F* pVerdices,
+		uint16* pIndices,
+		int16 nGridNum )
+	{
+		BindTexture( pTexture );
+		glDisableClientState(GL_COLOR_ARRAY);	
+
+		// vertex
+		glVertexPointer(3,GL_FLOAT, sizeof(SR_V3F), pVerdices );
+
+		// tex coords
+		glTexCoordPointer(2, GL_FLOAT, sizeof(SR_T2F), pTextures);		
+
+		glDrawElements(GL_TRIANGLES, nGridNum*6, GL_UNSIGNED_SHORT, pIndices);
+
+		// restore GL default state
+		glEnableClientState(GL_COLOR_ARRAY);
+	}
+	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::DrawQuads(
 		const CGUITextureImp* pTexture,
-		const SGUIBlendFunc& rBlendFuncType,
 		const SR_V2F_C4F_T2F_Quad* pQuads,
 		uint16* pIndices,
 		int16 nQuadNum)
@@ -508,17 +595,6 @@ namespace guiex
 		BindTexture( pTexture );
 
 		int16 kQuadSize = sizeof(pQuads[0].bl);
-
-#if CC_USES_VBO
-		glBindBuffer(GL_ARRAY_BUFFER, quadsID);
-
-		glVertexPointer(2,GL_FLOAT, kQuadSize, 0);
-
-		glColorPointer(4, GL_FLOAT, kQuadSize, (GLvoid*) offsetof(ccV2F_C4F_T2F,colors) );
-
-		glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*) offsetof(ccV2F_C4F_T2F,texCoords) );
-#else // vertex array list
-
 		int32 offset = (int32) pQuads;
 
 		// vertex
@@ -533,18 +609,7 @@ namespace guiex
 		diff = offsetof( SR_V2F_C4F_T2F, texCoords);
 		glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*)(offset + diff));		
 
-#endif // ! CC_USES_VBO
-
-		BlendFunc( rBlendFuncType );
-
 		glDrawElements(GL_TRIANGLES, nQuadNum*6, GL_UNSIGNED_SHORT, pIndices);
-
-		// restore blend state
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
-
-#if CC_USES_VBO
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-#endif
 	}
 	//------------------------------------------------------------------------------
 	/** 
@@ -900,52 +965,6 @@ namespace guiex
 				x++;
 			}
 		}
-	}
-	//------------------------------------------------------------------------------
-	void IGUIRender_opengles::BlendFunc( const SGUIBlendFunc& rBlendFuncType )
-	{
-		GLenum src,dst;
-		switch( rBlendFuncType.src )
-		{
-		case eBlendFunc_ONE:
-			src = GL_ONE;break;
-		case eBlendFunc_SRC_COLOR:
-			src = GL_SRC_COLOR;break;
-		case eBlendFunc_ONE_MINUS_SRC_COLOR:
-			src = GL_ONE_MINUS_SRC_COLOR;break;
-		case eBlendFunc_SRC_ALPHA:
-			src = GL_SRC_ALPHA;break;
-		case eBlendFunc_ONE_MINUS_SRC_ALPHA:
-			src = GL_ONE_MINUS_SRC_ALPHA;break;
-		case eBlendFunc_DST_ALPHA:
-			src = GL_DST_ALPHA;break;
-		case eBlendFunc_ONE_MINUS_DST_ALPHA:
-			src = GL_ONE_MINUS_DST_ALPHA;break;
-		case eBlendFunc_ZERO:
-		default:
-			src = GL_ZERO;break;
-		}
-		switch( rBlendFuncType.dst )
-		{
-		case eBlendFunc_ONE:
-			dst = GL_ONE;break;
-		case eBlendFunc_SRC_COLOR:
-			dst = GL_SRC_COLOR;break;
-		case eBlendFunc_ONE_MINUS_SRC_COLOR:
-			dst = GL_ONE_MINUS_SRC_COLOR;break;
-		case eBlendFunc_SRC_ALPHA:
-			dst = GL_SRC_ALPHA;break;
-		case eBlendFunc_ONE_MINUS_SRC_ALPHA:
-			dst = GL_ONE_MINUS_SRC_ALPHA;break;
-		case eBlendFunc_DST_ALPHA:
-			dst = GL_DST_ALPHA;break;
-		case eBlendFunc_ONE_MINUS_DST_ALPHA:
-			dst = GL_ONE_MINUS_DST_ALPHA;break;
-		case eBlendFunc_ZERO:
-		default:
-			dst = GL_ZERO;break;
-		}
-		glBlendFunc( src, dst );
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::BindTexture( const CGUITextureImp* pTexture )

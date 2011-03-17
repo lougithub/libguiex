@@ -57,6 +57,9 @@ namespace guiex
 
 		virtual void ClearColor(real red, real green, real blue, real alpha) = 0;
 		virtual void Clear( uint32 uFlag ) = 0;
+		virtual void SetDepthTest( bool bEnable ) = 0;
+		virtual void SetBlendFunc( const SGUIBlendFunc& rBlendFuncType ) = 0;
+		virtual void GetBlendFunc( SGUIBlendFunc& rBlendFuncType ) = 0;
 
 		virtual void PushMatrix() = 0;
 		virtual void PopMatrix() = 0;
@@ -88,10 +91,16 @@ namespace guiex
 
 		virtual void DrawQuads(
 			const CGUITextureImp* pTexture,
-			const SGUIBlendFunc& rBlendFuncType,
 			const SR_V2F_C4F_T2F_Quad* pQuads,
 			uint16* pIndices,
 			int16 nQuadNum) = 0;
+
+		virtual void DrawGrid(
+			const CGUITextureImp* pTexture,
+			const SR_T2F* pTextures,
+			const SR_V3F* pVerdices,
+			uint16* pIndices,
+			int16 nGridNum ) = 0;
 
 		/** 
 		* @brief add a texture into render list
@@ -214,29 +223,6 @@ namespace guiex
 		virtual bool IsEnableClip( ) const = 0;
 
 	public:
-		/**
-		* @brief Reset the z co-ordinate for rendering.
-		*/
-		void ResetZValue(void);
-
-		/**
-		* @brief Update the z co-ordinate for the next major UI element (window).
-		*/
-		void IncreaseZValue(void);
-
-		/**
-		* @brief return the current Z value to use (equates to layer 0 for this UI element).
-		* @return real value that specifies the z co-ordinate to be used for layer 0 on the current GUI element.
-		*/
-		real GetCurrentZ(void) const {return m_current_z;}
-
-		/**
-		* @brief return the current Z value to use and then increase it.
-		*/
-		real GetAndIncZ();
-
-
-	public:
 		/// set font render
 		IGUIInterfaceFont* GetFontRender(){ return m_pFontRender;}
 		/// get font render
@@ -244,11 +230,6 @@ namespace guiex
 
 	private:
 		IGUIInterfaceFont* m_pFontRender; //!< font render, for use it conveniently
-
-		static const real ms_ZInitialValue; //!< Initial value to use for 'z' each frame.
-		static const real ms_ZElementStep; //!< Value to step 'z' for each GUI element.
-
-		real m_current_z; //!< The current z co-ordinate value.
 
 	public: 
 		static const char* StaticGetModuleType();
