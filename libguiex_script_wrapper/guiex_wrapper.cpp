@@ -8452,18 +8452,18 @@ static int _wrap_CGUIWidget_StopAs(lua_State* L) {
 }
 
 
-static int _wrap_CGUIWidget_StopAll(lua_State* L) {
+static int _wrap_CGUIWidget_StopAllAs(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
   
-  SWIG_check_num_args("StopAll",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("StopAll",1,"guiex::CGUIWidget *");
+  SWIG_check_num_args("StopAllAs",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("StopAllAs",1,"guiex::CGUIWidget *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
-    SWIG_fail_ptr("CGUIWidget_StopAll",1,SWIGTYPE_p_guiex__CGUIWidget);
+    SWIG_fail_ptr("CGUIWidget_StopAllAs",1,SWIGTYPE_p_guiex__CGUIWidget);
   }
   
-  (arg1)->StopAll();
+  (arg1)->StopAllAs();
   
   return SWIG_arg;
   
@@ -10951,7 +10951,7 @@ static swig_lua_method swig_guiex_CGUIWidget_methods[] = {
     {"PlayAs", _wrap_CGUIWidget_PlayAs}, 
     {"IsAsPlaying", _wrap_CGUIWidget_IsAsPlaying}, 
     {"StopAs", _wrap_CGUIWidget_StopAs}, 
-    {"StopAll", _wrap_CGUIWidget_StopAll}, 
+    {"StopAllAs", _wrap_CGUIWidget_StopAllAs}, 
     {"SetProperty", _wrap_CGUIWidget_SetProperty}, 
     {"GetProperty", _wrap_CGUIWidget_GetProperty}, 
     {"ClearProperty", _wrap_CGUIWidget_ClearProperty}, 

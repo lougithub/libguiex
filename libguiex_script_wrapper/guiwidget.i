@@ -100,7 +100,7 @@ namespace guiex
 		bool IsAsPlaying( CGUIAs* pAs );
 		void StopAs( const CGUIString& rName );
 		void StopAs( CGUIAs* pAs );
-		void StopAll( );
+		void StopAllAs( );
 
 		////////////////////////////////////////////////////////////////////////////
 		// property related operation

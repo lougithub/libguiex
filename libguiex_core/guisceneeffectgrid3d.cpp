@@ -1,5 +1,5 @@
 /** 
- * @file guieffectgrid3d.cpp
+ * @file guisceneeffectgrid3d.cpp
  * @brief 
  * @author Lou Guoliang (louguoliang@gmail.com)
  * @date 2011-03-15
@@ -9,7 +9,7 @@
 //============================================================================//
 // include
 //============================================================================//
-#include "guieffectgrid3d.h"
+#include "guisceneeffectgrid3d.h"
 #include "guiexception.h"
 #include "guiinterfacerender.h"
 #include "guitexture.h"
@@ -24,8 +24,8 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	CGUIEffectGrid3D::CGUIEffectGrid3D( const CGUIIntSize& rSceneSize, const CGUIIntSize& rGridSize )
-		:CGUIEffectGridBase( rSceneSize, rGridSize )
+	CGUISceneEffectGrid3D::CGUISceneEffectGrid3D( const CGUISize& rSceneSize, const CGUIIntSize& rGridSize )
+		:CGUISceneEffectGridBase( rSceneSize, rGridSize )
 		,m_pTexCoordinates( NULL )
 		,m_pVertices( NULL )
 		,m_pOriginalVertices( NULL )
@@ -34,15 +34,15 @@ namespace guiex
 
 	}
 	//------------------------------------------------------------------------------
-	CGUIEffectGrid3D::~CGUIEffectGrid3D()
+	CGUISceneEffectGrid3D::~CGUISceneEffectGrid3D()
 	{
 
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIEffectGrid3D::Initialize(  )
+	int32 CGUISceneEffectGrid3D::Initialize(  )
 	{
 		//call parent function
-		if( CGUIEffectGridBase::Initialize( ) != 0 )
+		if( CGUISceneEffectGridBase::Initialize( ) != 0 )
 		{
 			return -1;
 		}
@@ -53,8 +53,8 @@ namespace guiex
 		m_pTexCoordinates = new SR_T2F[(m_aGridSize.m_uWidth+1)*(m_aGridSize.m_uHeight+1)];
 		m_pIndices = new uint16[ m_aGridSize.m_uWidth * m_aGridSize.m_uHeight * 6];
 
-		real *vertArray = (real*)m_pVertices;
-		real *texArray = (real*)m_pTexCoordinates;
+		//real *vertArray = (real*)m_pVertices;
+		//real *texArray = (real*)m_pTexCoordinates;
 		uint16 *idxArray = (uint16 *)m_pIndices;
 
 		for( uint32 x = 0; x < m_aGridSize.m_uWidth; x++ )
@@ -89,18 +89,16 @@ namespace guiex
 
 				for( int32 i = 0; i < 4; i++ )
 				{
-					vertArray[ l1[i] ] = l2[i].x;
-					vertArray[ l1[i] + 1 ] = l2[i].y;
-					vertArray[ l1[i] + 2 ] = l2[i].z;
+					m_pVertices[ l1[i] ] = l2[i];
 
-					texArray[ tex1[i] ] = tex2[i].x / m_pTexture->GetWidth();
+					m_pTexCoordinates[ tex1[i] ].u = tex2[i].x / m_pTexture->GetWidth();
 					if( m_bIsTextureFlipped )
 					{
-						texArray[ tex1[i] + 1 ] = (m_aSceneSize.m_fHeight - tex2[i].y) / m_pTexture->GetHeight();
+						m_pTexCoordinates[ tex1[i] ].v = (m_aSceneSize.m_fHeight - tex2[i].y) / m_pTexture->GetHeight();
 					}
 					else
 					{
-						texArray[ tex1[i] + 1 ] = tex2[i].y / m_pTexture->GetHeight();
+						m_pTexCoordinates[ tex1[i] ].v = tex2[i].y / m_pTexture->GetHeight();
 					}
 				}
 			}
@@ -112,7 +110,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIEffectGrid3D::Release( )
+	void CGUISceneEffectGrid3D::Release( )
 	{
 		if( m_pTexCoordinates )
 		{
@@ -135,14 +133,45 @@ namespace guiex
 			m_pIndices = NULL;
 		}
 
-		CGUIEffectGridBase::Release();
+		CGUISceneEffectGridBase::Release();
 	}
 	//------------------------------------------------------------------------------
-	void CGUIEffectGrid3D::ProcessCaptureTexture( IGUIInterfaceRender* pRender )
+	void CGUISceneEffectGrid3D::ProcessCaptureTexture( IGUIInterfaceRender* pRender )
 	{
-		CGUIEffectGridBase::ProcessCaptureTexture( pRender );
+		CGUISceneEffectGridBase::ProcessCaptureTexture( pRender );
+	}
+	//------------------------------------------------------------------------------
+	/** 
+	* returns the vertex than belongs to certain position in the grid 
+	*/
+	const SR_V3F& CGUISceneEffectGrid3D::GetVertex( const CGUIIntSize& rPos )
+	{
+		GUI_ASSERT( rPos.m_uWidth <= m_aGridSize.m_uWidth && rPos.m_uHeight <= m_aGridSize.m_uHeight, "invalid pos" );
 
+		int	index = (rPos.m_uWidth * (m_aGridSize.m_uHeight+1) + rPos.m_uHeight);
+		return m_pVertices[index];
+	}
+	//------------------------------------------------------------------------------
+	/** 
+	* returns the non-transformed vertex than belongs to certain position in the grid 
+	*/
+	const SR_V3F& CGUISceneEffectGrid3D::GetOriginalVertex( const CGUIIntSize& rPos )
+	{
+		GUI_ASSERT( rPos.m_uWidth <= m_aGridSize.m_uWidth && rPos.m_uHeight <= m_aGridSize.m_uHeight, "invalid pos" );
+		
+		int	index = (rPos.m_uWidth * (m_aGridSize.m_uHeight+1) + rPos.m_uHeight);
+		return m_pOriginalVertices[index];
+	}
+	//------------------------------------------------------------------------------
+	/**
+	 * sets a new vertex to a certain position of the grid 
+	 */
+	void CGUISceneEffectGrid3D::SetVertex( const CGUIIntSize& rPos, const SR_V3F& rVertex )
+	{
+		GUI_ASSERT( rPos.m_uWidth <= m_aGridSize.m_uWidth && rPos.m_uHeight <= m_aGridSize.m_uHeight, "invalid pos" );
 
+		int	index = (rPos.m_uWidth * (m_aGridSize.m_uHeight+1) + rPos.m_uHeight);
+		m_pOriginalVertices[index] = rVertex;
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

@@ -119,14 +119,6 @@ set( ${target_name}_resource_SRCS
 	guimusicdata.h
 	guimusicmanager.cpp
 	guimusicmanager.h		
-	guias.cpp
-	guias.h
-	guiasgridbase.cpp
-	guiasgridbase.h
-	guiasgrid3d.cpp
-	guiasgrid3d.h
-	guiastiledgrid3d.cpp
-	guiastiledgrid3d.h
 	guiasmanager.cpp
 	guiasmanager.h
 	guiparticle2dmanager.cpp
@@ -135,6 +127,20 @@ set( ${target_name}_resource_SRCS
 	guitilemapmanager.h
 	)
 source_group( "resource" FILES ${${target_name}_resource_SRCS} )
+
+
+set( ${target_name}_as_SRCS 
+	guias.cpp
+	guias.h
+	guiasgridbase.cpp
+	guiasgridbase.h
+	guiasgrid3d.cpp
+	guiasgrid3d.h
+	guiastiledgrid3d.cpp
+	guiastiledgrid3d.h
+	)
+source_group( "as" FILES ${${target_name}_as_SRCS} )
+
 
 
 set( ${target_name}_interface_SRCS 
@@ -287,17 +293,17 @@ set( ${target_name}_particle2dsystem_SRCS
 source_group( particle2dsystem FILES ${${target_name}_particle2dsystem_SRCS} )
 
 
-set( ${target_name}_scenecapture_SRCS 
+set( ${target_name}_sceneeffect_SRCS 
 	guiscenecapture.cpp
 	guiscenecapture.h
-	guieffectgridbase.cpp
-	guieffectgridbase.h
-	guieffecttiledgrid3d.cpp
-	guieffecttiledgrid3d.h
-	guieffectgrid3d.cpp
-	guieffectgrid3d.h
+	guisceneeffectgridbase.cpp
+	guisceneeffectgridbase.h
+	guisceneeffecttiledgrid3d.cpp
+	guisceneeffecttiledgrid3d.h
+	guisceneeffectgrid3d.cpp
+	guisceneeffectgrid3d.h
 	)
-source_group( scenecapture FILES ${${target_name}_scenecapture_SRCS} )
+source_group( sceneeffect FILES ${${target_name}_sceneeffect_SRCS} )
 
 set( ${target_name}_particlesystem_SRCS 
 	guiparticle.cpp
@@ -340,7 +346,9 @@ set( ${target_name}_SRCS
 	${${target_name}_camera_SRCS}
 	${${target_name}_tilemap_SRCS}
 	${${target_name}_particle2dsystem_SRCS}
-	${${target_name}_scenecapture_SRCS}
+	${${target_name}_sceneeffect_SRCS}
+	${${target_name}_as_SRCS}
+
 
 	#${${target_name}_particlesystem_SRCS}
 	)

@@ -1,20 +1,19 @@
 /** 
- * @file guieffectgridbase.h
+ * @file guisceneeffectgrid3d.h
  * @brief 
  * @author Lou Guoliang (louguoliang@gmail.com)
  * @date 2011-03-16
  */
 
 
-#ifndef __KEN_GUIEFFECTGRIDBASE_20110316_H__
-#define	__KEN_GUIEFFECTGRIDBASE_20110316_H__
+#ifndef __KEN_GUISCENEEFFECTGRID3D_20110316_H__
+#define	__KEN_GUISCENEEFFECTGRID3D_20110316_H__
 
 
 //============================================================================//
 // include
 //============================================================================//
-#include "guibase.h"
-#include "guiscenecapture.h"
+#include "guisceneeffectgridbase.h"
 #include "guivector2.h"
 
 //============================================================================//
@@ -33,10 +32,10 @@ namespace guiex
 //============================================================================//
 namespace guiex
 {
-	class GUIEXPORT CGUIEffectGridBase : public CGUISceneCapture
+	class GUIEXPORT CGUISceneEffectGrid3D : public CGUISceneEffectGridBase
 	{
 	public:
-		CGUIEffectGridBase( const CGUISize& rSceneSize, const CGUIIntSize& rGridSize );
+		CGUISceneEffectGrid3D( const CGUISize& rSceneSize, const CGUIIntSize& rGridSize );
 
 		virtual int32 Initialize( );
 		virtual void Release( );
@@ -44,11 +43,20 @@ namespace guiex
 		void SetTextureFlipped( bool bFlipped );
 		bool IsTextureFlipped() const;
 
+		const SR_V3F& GetVertex( const CGUIIntSize& rPos );
+		const SR_V3F& GetOriginalVertex( const CGUIIntSize& rPos );
+		void SetVertex( const CGUIIntSize& rPos, const SR_V3F& rVertex );
+
 	protected:
-		CGUIIntSize m_aGridSize;
-		CGUIVector2 m_aStep;
-		bool m_bIsTextureFlipped;
+		virtual ~CGUISceneEffectGrid3D();
+		virtual void ProcessCaptureTexture( IGUIInterfaceRender* pRender );
+
+	protected:
+		SR_T2F *m_pTexCoordinates;
+		SR_V3F *m_pVertices;
+		SR_V3F *m_pOriginalVertices;
+		uint16 *m_pIndices;
 	};
 }
 
-#endif //__KEN_GUIEFFECTGRIDBASE_20110316_H__
+#endif //__KEN_GUISCENEEFFECTGRID3D_20110316_H__

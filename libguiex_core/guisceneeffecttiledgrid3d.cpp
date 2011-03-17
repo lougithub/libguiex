@@ -1,15 +1,15 @@
 /** 
- * @file guieffectgridbase.cpp
+ * @file guisceneeffecttiledgrid3d.cpp
  * @brief 
  * @author Lou Guoliang (louguoliang@gmail.com)
- * @date 2011-03-15
+ * @date 2011-03-16
  */
 
 
 //============================================================================//
 // include
 //============================================================================//
-#include "guieffectgridbase.h"
+#include "guisceneeffecttiledgrid3d.h"
 #include "guiexception.h"
 #include "guiinterfacerender.h"
 #include "guitexture.h"
@@ -23,42 +23,37 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	CGUIEffectGridBase::CGUIEffectGridBase( const CGUISize& rSceneSize, const CGUIIntSize& rGridSize )
-		:CGUISceneCapture( rSceneSize )
-		,m_aGridSize( rGridSize )
-		,m_bIsTextureFlipped( false )
+	CGUISceneEffectTiledGrid3D::CGUISceneEffectTiledGrid3D( const CGUIIntSize& rSceneSize, const CGUIIntSize& rGridSize )
+		:CGUISceneEffectGridBase( rSceneSize, rGridSize )
 	{
 
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIEffectGridBase::Initialize(  )
+	CGUISceneEffectTiledGrid3D::~CGUISceneEffectTiledGrid3D()
 	{
-		//call parent function
-		if( CGUISceneCapture::Initialize( ) != 0 )
+
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUISceneEffectTiledGrid3D::Initialize( )
+	{
+		if( CGUISceneEffectGridBase::Initialize( ) != 0 )
 		{
 			return -1;
 		}
 
-		//set step size
-		m_aStep.x = m_aSceneSize.m_fWidth / m_aGridSize.m_uWidth;
-		m_aStep.y = m_aSceneSize.m_fHeight / m_aGridSize.m_uHeight;
-
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIEffectGridBase::Release( )
+	void CGUISceneEffectTiledGrid3D::Release( )
 	{
-		CGUISceneCapture::Release();
+
+		CGUISceneEffectGridBase::Release();
 	}
 	//------------------------------------------------------------------------------
-	void CGUIEffectGridBase::SetTextureFlipped( bool bFlipped )
+	void CGUISceneEffectTiledGrid3D::ProcessCaptureTexture( IGUIInterfaceRender* pRender )
 	{
-		m_bIsTextureFlipped = bFlipped;
-	}
-	//------------------------------------------------------------------------------
-	bool CGUIEffectGridBase::IsTextureFlipped() const
-	{
-		return m_bIsTextureFlipped;
+		CGUISceneEffectGridBase::ProcessCaptureTexture( pRender );
+
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex
