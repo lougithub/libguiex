@@ -121,6 +121,12 @@ set( ${target_name}_resource_SRCS
 	guimusicmanager.h		
 	guias.cpp
 	guias.h
+	guiasgridbase.cpp
+	guiasgridbase.h
+	guiasgrid3d.cpp
+	guiasgrid3d.h
+	guiastiledgrid3d.cpp
+	guiastiledgrid3d.h
 	guiasmanager.cpp
 	guiasmanager.h
 	guiparticle2dmanager.cpp
@@ -284,6 +290,8 @@ source_group( particle2dsystem FILES ${${target_name}_particle2dsystem_SRCS} )
 set( ${target_name}_scenecapture_SRCS 
 	guiscenecapture.cpp
 	guiscenecapture.h
+	guieffectgridbase.cpp
+	guieffectgridbase.h
 	guieffecttiledgrid3d.cpp
 	guieffecttiledgrid3d.h
 	guieffectgrid3d.cpp

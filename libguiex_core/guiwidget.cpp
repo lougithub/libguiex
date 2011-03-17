@@ -1471,7 +1471,7 @@ namespace guiex
 		StopAs( pAs );
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWidget::StopAll( )
+	void CGUIWidget::StopAllAs( )
 	{
 		for( TListAs::iterator itor = m_listAsPlaying.begin();
 			itor != m_listAsPlaying.end();
@@ -1556,6 +1556,16 @@ namespace guiex
 		{
 			Refresh();
 		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::SetSceneCapture( CGUISceneCapture* pSceneCapture )
+	{
+		if( m_pSceneCapture )
+		{
+			m_pSceneCapture->RefRelease();
+		}
+		m_pSceneCapture = pSceneCapture;
+		m_pSceneCapture->RefRetain();
 	}
 	//------------------------------------------------------------------------------
 	bool CGUIWidget::HasImage( const CGUIString& rName )

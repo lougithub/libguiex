@@ -50,17 +50,6 @@ public:	\
 		return #asType; \
 	} 
 
-//============================================================================//
-// function
-//============================================================================//
-namespace guiex
-{
-	/**
-	* @brief register all as
-	* called by CGUISystem
-	*/
-	extern int32 GUIRegisterAllAs();
-}
 
 
 //============================================================================//
@@ -104,6 +93,7 @@ namespace guiex
 		CGUIAs*	PopSuccessor();
 
 		virtual real Update( real fDeltaTime );
+		virtual void OnDestory();
 
 	protected:
 		CGUIAs( const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName );

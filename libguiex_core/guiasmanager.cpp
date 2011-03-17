@@ -147,7 +147,9 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIAsManager::DestroyAllocateResourceImp( CGUIResource* pRes )
 	{
-		delete pRes;
+		CGUIAs* pAs = static_cast<CGUIAs*>( pRes );
+		pAs->OnDestory();
+		delete pAs;
 	}
 	//------------------------------------------------------------------------------
 

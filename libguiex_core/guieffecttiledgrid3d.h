@@ -13,8 +13,7 @@
 //============================================================================//
 // include
 //============================================================================//
-#include "guibase.h"
-#include "guiscenecapture.h"
+#include "guieffectgridbase.h"
 
 //============================================================================//
 // declare
@@ -29,12 +28,12 @@ namespace guiex
 //============================================================================//
 namespace guiex
 {
-	class GUIEXPORT CGUIEffectTiledGrid3D : public CGUISceneCapture
+	class GUIEXPORT CGUIEffectTiledGrid3D : public CGUIEffectGridBase
 	{
 	public:
-		CGUIEffectTiledGrid3D( );
+		CGUIEffectTiledGrid3D( const CGUIIntSize& rSceneSize, const CGUIIntSize& rGridSize );
 
-		virtual int32 Initialize( uint32 uTextureWidth, uint32 uTextureHeight );
+		virtual int32 Initialize( );
 		virtual void Release( );
 
 	protected:

@@ -15,6 +15,8 @@
 //============================================================================//
 #include "guibase.h"
 #include "guireference.h"
+#include "guiintsize.h"
+#include "guisize.h"
 
 //============================================================================//
 // declare
@@ -33,9 +35,9 @@ namespace guiex
 	class GUIEXPORT CGUISceneCapture : public CGUIReference
 	{
 	public:
-		CGUISceneCapture( );
+		CGUISceneCapture( const CGUISize& rSceneSize );
 
-		virtual int32 Initialize( uint32 uTextureWidth, uint32 uTextureHeight );
+		virtual int32 Initialize(  );
 		virtual void Release( );
 
 		virtual void RefRelease();
@@ -50,6 +52,8 @@ namespace guiex
 	protected:
 		CGUITexture* m_pTexture; //!< texture
 
+		CGUISize m_aSceneSize;
+	
 	private:
 		uint32 m_fbo;
 		int32 m_oldfbo;

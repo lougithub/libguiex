@@ -24,10 +24,11 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	CGUISceneCapture::CGUISceneCapture( )
+	CGUISceneCapture::CGUISceneCapture( const CGUISize& rSceneSize )
 		:m_pTexture( NULL )
 		,m_fbo( 0 )
-		,m_oldfbo(0)
+		,m_oldfbo( 0 )
+		,m_aSceneSize( rSceneSize )
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -39,7 +40,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUISceneCapture::Initialize( uint32 uTextureWidth, uint32 uTextureHeight )
+	int32 CGUISceneCapture::Initialize( )
 	{
 		IGUIInterfaceRender* pRender = CGUIInterfaceManager::Instance()->GetInterfaceRender();
 		if( !pRender )
@@ -52,12 +53,12 @@ namespace guiex
 
 		//create texture
 		uint32 uTextureWidthUse = 1;
-		while( uTextureWidthUse < uTextureWidth )
+		while( uTextureWidthUse < m_aSceneSize.m_fWidth )
 		{
 			uTextureWidthUse <<= 1;
 		}
 		uint32 uTextureHeightUse = 1;
-		while( uTextureHeightUse < uTextureHeight )
+		while( uTextureHeightUse < m_aSceneSize.m_fHeight )
 		{
 			uTextureHeightUse <<= 1;
 		}

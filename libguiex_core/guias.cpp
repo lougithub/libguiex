@@ -237,6 +237,10 @@ namespace guiex
 		return 0.0f;
 	}
 	//------------------------------------------------------------------------------
+	void CGUIAs::OnDestory()
+	{
+	}
+	//------------------------------------------------------------------------------
 	void CGUIAs::PushSuccessor( CGUIAs* pAs)
 	{
 		GUI_ASSERT(pAs, "wrong parameter");
