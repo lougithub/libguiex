@@ -30,7 +30,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIFrameworkBase::Initialize( const CGUISize& rScreenSize, const char* pDataPath )
+	int32 CGUIFrameworkBase::Initialize( const CGUIIntSize& rScreenSize, const char* pDataPath )
 	{
 		try
 		{

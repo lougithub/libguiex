@@ -61,7 +61,7 @@ CLibGuiexEngine::~CLibGuiexEngine()
 void CLibGuiexEngine::Initialize( int width, int height, const char* szDataPath )
 {
 	m_pFramework = CreateFramework();
-	m_pFramework->Initialize( CGUISize( width, height ), (CGUIString(szDataPath) + "/test/").c_str() );
+	m_pFramework->Initialize( CGUIIntSize( width, height ), (CGUIString(szDataPath) + "/test/").c_str() );
 }
 
 

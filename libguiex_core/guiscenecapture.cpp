@@ -15,6 +15,7 @@
 #include "guitexture.h"
 #include "guitexturemanager.h"
 #include "guiinterfacemanager.h"
+#include "guisystem.h"
 
 
 //============================================================================//
@@ -30,6 +31,8 @@ namespace guiex
 		,m_oldfbo( 0 )
 		,m_aSceneSize( rSceneSize )
 	{
+		m_aBlendFunc.src = eBlendFunc_ONE;
+		m_aBlendFunc.dst = eBlendFunc_ZERO;
 	}
 	//------------------------------------------------------------------------------
 	CGUISceneCapture::~CGUISceneCapture()
@@ -132,12 +135,18 @@ namespace guiex
 		pRender->PushMatrix();
 		pRender->LoadIdentityMatrix();
 
+		//set viewport
+		pRender->SetViewport(
+			0,0,
+			GUI_FLOAT2UINT_ROUND(m_aSceneSize.m_fWidth), 
+			GUI_FLOAT2UINT_ROUND(m_aSceneSize.m_fHeight));
+
 		//set framebuffer
 		pRender->GetCurrentBindingFrameBuffer( &m_oldfbo );
 		pRender->BindFramebuffer( m_fbo );
 
-		pRender->ClearColor(0,0,0,0);
-		pRender->Clear( eRenderBuffer_COLOR_BIT | eRenderBuffer_DEPTH_BIT );	
+		pRender->ClearColor(0,0,0,0.5);
+		pRender->Clear( eRenderBuffer_COLOR_BIT );	
 	}
 	//------------------------------------------------------------------------------
 	void CGUISceneCapture::AfterRender( IGUIInterfaceRender* pRender )
@@ -150,18 +159,25 @@ namespace guiex
 		//restore fbo
 		pRender->BindFramebuffer( m_oldfbo );
 
+		//restore view port
+		const CGUIIntSize& rSize = GSystem->GetScreenSize();
+		pRender->SetViewport(0,0,rSize.GetWidth(),rSize.GetHeight());
+
+		//reset matrix
 		pRender->LoadIdentityMatrix();
 
-		SGUIBlendFunc oldBlendFunc, curBlendFunc;
+		//set blend func
+		SGUIBlendFunc oldBlendFunc;
 		pRender->GetBlendFunc( oldBlendFunc );
+		pRender->SetBlendFunc( m_aBlendFunc );
 
-		curBlendFunc.src = eBlendFunc_ONE;
-		curBlendFunc.dst = eBlendFunc_ZERO;
-		pRender->SetBlendFunc( curBlendFunc );
-
+		//process texture
 		ProcessCaptureTexture( pRender );
 
+		//restore blend func
 		pRender->SetBlendFunc( oldBlendFunc );
+
+		//reset matrix
 		pRender->PopMatrix();
 	}
 	//------------------------------------------------------------------------------

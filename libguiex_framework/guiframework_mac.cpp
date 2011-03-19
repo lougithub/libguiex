@@ -43,7 +43,7 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIFramework_Mac::InitializeSystem( const CGUISize& rScreenSize, const char* pDataPath )
+	int32 CGUIFramework_Mac::InitializeSystem( const CGUIIntSize& rScreenSize, const char* pDataPath )
 	{
 		//init system
 		if( GSystem != NULL )

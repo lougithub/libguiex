@@ -42,8 +42,8 @@ namespace guiex
 		glBindTexture(GL_TEXTURE_2D, m_ogltexture);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST/*GL_LINEAR*/);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST/*GL_LINEAR*/); 
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);	// GL_CLAMP_TO_EDGE
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);	// GL_CLAMP_TO_EDGE
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);	// GL_CLAMP_TO_EDGE GL_CLAMP
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);	// GL_CLAMP_TO_EDGE GL_CLAMP
 		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	}
 	//------------------------------------------------------------------------------
@@ -124,7 +124,7 @@ namespace guiex
 		switch(ePixelFormat)
 		{
 		case GUI_PF_RGBA_32:
-			glTexImage2D(GL_TEXTURE_2D, 0, 4, buffWidth, buffHeight, 0, GL_RGBA ,GL_UNSIGNED_BYTE, buffPtr);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, buffWidth, buffHeight, 0, GL_RGBA ,GL_UNSIGNED_BYTE, buffPtr);
 			m_nBytesPerPixel = 4;
 			m_ePixelFormat = GUI_PF_RGBA_32;
 			break;
@@ -203,7 +203,7 @@ namespace guiex
 		{
 		case GUI_PF_RGBA_32:
 			buff = new uint8[nWidth * nHeight * 4];
-			glTexImage2D(GL_TEXTURE_2D, 0, 4, nWidth, nHeight, 0, GL_RGBA ,GL_UNSIGNED_BYTE, buff);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, nWidth, nHeight, 0, GL_RGBA ,GL_UNSIGNED_BYTE, buff);
 			m_nBytesPerPixel = 4;
 			m_ePixelFormat = GUI_PF_RGBA_32;
 			break;

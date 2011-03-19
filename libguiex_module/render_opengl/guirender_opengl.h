@@ -47,6 +47,7 @@ namespace guiex
 		virtual void SetDepthTest( bool bEnable );
 		virtual void SetBlendFunc( const SGUIBlendFunc& rBlendFuncType );
 		virtual void GetBlendFunc( SGUIBlendFunc& rBlendFuncType );
+		virtual void SetViewport( int32 x, int32 y, uint32 width, uint32 height);
 
 		virtual void PushMatrix();
 		virtual void PopMatrix();

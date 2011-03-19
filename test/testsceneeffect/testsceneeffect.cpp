@@ -89,7 +89,10 @@ CMyCanvasLayer_DrawWidget::CMyCanvasLayer_DrawWidget( const char* szLayerName )
 	:CGUICanvasLayer( szLayerName )
 {
 	m_aCamera.Restore();
-	m_aCamera.SetFov( 45 );
+	//m_aCamera.SetUp( 0,1,0 );
+	//m_aCamera.SetFov( 60.0f );
+	//m_aCamera.SetFarPlane( 1500.0f );
+	//m_aCamera.SetNearPlane( 0.5f );
 
 	CGUIWidget* pWidget = NULL;
 
@@ -103,13 +106,23 @@ CMyCanvasLayer_DrawWidget::CMyCanvasLayer_DrawWidget( const char* szLayerName )
 	pWidget->SetParent( this );
 	pWidget->Open()	;
 
-	CGUIAsPageTurn3D* pAs1 = CGUIAsManager::Instance()->AllocateResource<CGUIAsPageTurn3D>();
+	//CGUIAsPageTurn3D* pAs1 = CGUIAsManager::Instance()->AllocateResource<CGUIAsPageTurn3D>();
+	//pAs1->SetLooping( true );
+	//pAs1->SetTotalTime( 5.0f );
+	//pAs1->SetGridSize( CGUIIntSize(30, 30) );
+	//pAs1->SetReceiver( this );
+	//this->SetAutoPlayAs( true );
+	//this->SetAs( "pageturn", pAs1 );
+	//pAs1->RefRelease();
+
+	CGUIAsWaves3D* pAs1 = CGUIAsManager::Instance()->AllocateResource<CGUIAsWaves3D>();
 	pAs1->SetLooping( true );
-	pAs1->SetTotalTime( 5.0f );
+	pAs1->SetTotalTime( 10.0f );
+	pAs1->SetWavesInfo( 18, 15.0f);
 	pAs1->SetGridSize( CGUIIntSize(30, 30) );
 	pAs1->SetReceiver( this );
 	this->SetAutoPlayAs( true );
-	this->SetAs( "pageturn", pAs1 );
+	this->SetAs( "wave3d", pAs1 );
 	pAs1->RefRelease();
 }
 
@@ -121,8 +134,6 @@ CMyCanvasLayer_DrawWidget::~CMyCanvasLayer_DrawWidget( )
 //------------------------------------------------------------------------------
 void CMyCanvasLayer_DrawWidget::Render( class IGUIInterfaceRender* pRender )
 {
-	CGUICanvasLayer::Render( pRender );
-
 	CGUICamera* pOldCamera = pRender->ApplyCamera( &m_aCamera );
 
 	CGUICanvasLayer::Render( pRender );

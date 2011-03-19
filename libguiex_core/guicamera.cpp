@@ -174,6 +174,16 @@ namespace guiex
 		return m_fFarPlane;
 	}
 	//------------------------------------------------------------------------------
+	void CGUICamera::SetNearPlane( real fNearPlane )
+	{
+		m_fNearPlane = fNearPlane;
+	}
+	//------------------------------------------------------------------------------
+	void CGUICamera::SetFarPlane( real fFarPlane )
+	{
+		m_fFarPlane = fFarPlane;
+	}
+	//------------------------------------------------------------------------------
 	bool CGUICamera::IsDirty()
 	{
 		return m_bDirty;

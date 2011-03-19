@@ -44,6 +44,8 @@ namespace guiex
 		real GetAspectRatio() const;
 		real GetNearPlane() const;
 		real GetFarPlane() const;
+		void SetNearPlane( real fNearPlane );
+		void SetFarPlane( real fFarPlane );
 
 		bool IsDirty();
 		void SetDirty();

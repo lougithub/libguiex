@@ -25,7 +25,7 @@ namespace guiex
 		CGUIFrameworkBase( );
 		virtual ~CGUIFrameworkBase();
 
-		int32 Initialize( const CGUISize& rScreenSize, const char* pDataPath );
+		int32 Initialize( const CGUIIntSize& rScreenSize, const char* pDataPath );
 		void Release( );
 
 		void Update( real fDeltaTime );
@@ -35,7 +35,7 @@ namespace guiex
 		virtual int32 InitializeGame( ) = 0;
 		virtual void ReleaseGame( ) = 0;
 		
-		virtual int32 InitializeSystem( const CGUISize& rScreenSize, const char* pDataPath ) = 0;
+		virtual int32 InitializeSystem( const CGUIIntSize& rScreenSize, const char* pDataPath ) = 0;
 		virtual void ReleaseSystem( ) = 0;
 
 		virtual void SetupLogSystem( ) = 0;

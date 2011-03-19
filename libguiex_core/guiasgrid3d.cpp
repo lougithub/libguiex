@@ -35,30 +35,6 @@ namespace guiex
 
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIAsGrid3D::ProcessProperty( const CGUIProperty& rProperty )
-	{
-		int32 ret = CGUIAsGridBase::ProcessProperty( rProperty );
-		if( ret != 0 )
-		{
-			return ret;
-		}
-
-		return 0;
-	}
-	//------------------------------------------------------------------------------
-	int32 CGUIAsGrid3D::GenerateProperty( CGUIProperty& rProperty )
-	{
-		int32 ret = CGUIAsGridBase::GenerateProperty( rProperty );
-		if( ret != 0 )
-		{
-			return ret;
-		}
-
-
-
-		return 0;
-	}
-	//------------------------------------------------------------------------------
 	CGUISceneEffectGridBase* CGUIAsGrid3D::GenerateGrid( const CGUISize& rSceneSize, const CGUIIntSize& rGridSize )
 	{
 		CGUISceneEffectGridBase* pGrid = new CGUISceneEffectGrid3D( rSceneSize, rGridSize );
@@ -107,9 +83,8 @@ namespace guiex
 
 
 	//*****************************************************************************
-	//	CGUIAsGrid3D
+	//	CGUIAsPageTurn3D
 	//*****************************************************************************
-
 	//------------------------------------------------------------------------------
 	CGUIAsPageTurn3D::CGUIAsPageTurn3D( const CGUIString& rAsName, const CGUIString& rSceneName )
 		:CGUIAsGrid3D( "CGUIAsPageTurn3D", rAsName, rSceneName )
@@ -120,11 +95,6 @@ namespace guiex
 	void CGUIAsPageTurn3D::OnUpdate( )
 	{
 		CGUIAsGrid3D::OnUpdate( );
-
-		if( !IsGridInit() )
-		{
-			return;
-		}
 
 		real fPercent = GetElapsedTime() / GetTotalTime();
 		real tt = GUIMax( 0.0f, fPercent - 0.25f );
@@ -178,6 +148,45 @@ namespace guiex
 
 				// Set new coords
 				SetVertex( CGUIIntSize(i,j), p );
+			}
+		}
+	}
+	//------------------------------------------------------------------------------
+
+
+
+	//*****************************************************************************
+	//	CGUIAsWaves3D
+	//*****************************************************************************
+	//------------------------------------------------------------------------------
+	CGUIAsWaves3D::CGUIAsWaves3D( const CGUIString& rAsName, const CGUIString& rSceneName )
+		:CGUIAsGrid3D( "CGUIAsWaves3D", rAsName, rSceneName )
+		,m_nWaves( 1 )
+		,m_fAmplitude( 3.0f )
+		,m_fAmplitudeRate( 1.0f )
+	{
+
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsWaves3D::SetWavesInfo( int32 nWaves, real fAmplitude)
+	{
+		m_nWaves = nWaves;
+		m_fAmplitude = fAmplitude;
+		m_fAmplitudeRate = 1.0f;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsWaves3D::OnUpdate( )
+	{
+		CGUIAsGrid3D::OnUpdate( );
+		real fPercent = GetElapsedTime() / GetTotalTime();
+
+		for( uint32 i = 0; i < (m_aGridSize.m_uWidth+1); i++ )
+		{
+			for( uint32 j = 0; j < (m_aGridSize.m_uHeight+1); j++ )
+			{
+				SR_V3F v = GetOriginalVertex( CGUIIntSize(i,j));
+				v.z += (sinf(CGUIMath::GUI_PI * fPercent * m_nWaves*2 + (v.y+v.x) * .01f) * m_fAmplitude * m_fAmplitudeRate);
+				SetVertex( CGUIIntSize(i,j), v );
 			}
 		}
 	}

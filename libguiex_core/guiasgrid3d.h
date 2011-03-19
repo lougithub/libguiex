@@ -35,10 +35,6 @@ namespace guiex
 		CGUIAsGrid3D(const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName);
 		virtual ~CGUIAsGrid3D( );
 
-	public:
-		virtual int32 ProcessProperty( const CGUIProperty& rProperty );
-		virtual int32 GenerateProperty( CGUIProperty& rProperty );
-
 	protected:
 		virtual CGUISceneEffectGridBase* GenerateGrid( const CGUISize& rSceneSize, const CGUIIntSize& rGridSize );
 
@@ -50,6 +46,8 @@ namespace guiex
 
 	protected:
 	};
+
+
 
 	//*****************************************************************************
 	//	CGUIAsPageTurn3D
@@ -64,6 +62,29 @@ namespace guiex
 
 	protected:
 		GUI_AS_GENERATOR_DECLARE( CGUIAsPageTurn3D);
+	};
+
+
+	//*****************************************************************************
+	//	CGUIAsWaves3D
+	//*****************************************************************************
+	class GUIEXPORT CGUIAsWaves3D : public CGUIAsGrid3D
+	{
+	public:
+		CGUIAsWaves3D( const CGUIString& rAsName, const CGUIString& rSceneName );
+
+		void SetWavesInfo( int32 nWaves, real fAmplitude);
+
+	protected:
+		virtual void OnUpdate( );
+
+	private:
+		int32 m_nWaves;
+		real m_fAmplitude;
+		real m_fAmplitudeRate;
+
+	protected:
+		GUI_AS_GENERATOR_DECLARE( CGUIAsWaves3D);
 	};
 
 }//namespace guiex

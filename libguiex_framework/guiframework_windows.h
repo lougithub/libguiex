@@ -30,7 +30,7 @@ namespace guiex
 		virtual int32 InitializeGame( );
 		virtual void ReleaseGame( );
 
-		virtual int32 InitializeSystem( const CGUISize& rScreenSize, const char* pDataPath );
+		virtual int32 InitializeSystem( const CGUIIntSize& rScreenSize, const char* pDataPath );
 		virtual void ReleaseSystem( );
 
 		virtual void SetupLogSystem( );

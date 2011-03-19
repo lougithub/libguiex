@@ -272,6 +272,11 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	void IGUIRender_opengl::SetViewport( int32 x, int32 y, uint32 width, uint32 height)
+	{
+		glViewport( x, y, width, height );
+	}
+	//------------------------------------------------------------------------------
 	void IGUIRender_opengl::PushMatrix()
 	{
 		glPushMatrix();
@@ -338,8 +343,6 @@ namespace guiex
 	{
 		TRY_THROW_OPENGL_ERROR("BeginRender start");
 
-		const CGUISize& rSize = GSystem->GetScreenSize();
-
 		//save current attributes
 		glPushClientAttrib(GL_CLIENT_ALL_ATTRIB_BITS);
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
@@ -350,7 +353,8 @@ namespace guiex
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();	
 
-		glViewport(0,0,GUI_FLOAT2UINT_ROUND(rSize.GetWidth()),GUI_FLOAT2UINT_ROUND(rSize.GetHeight()));
+		const CGUIIntSize& rSize = GSystem->GetScreenSize();
+		glViewport(0,0,rSize.GetWidth(),rSize.GetHeight());
 
 		//disable lighting
 		glDisable(GL_LIGHTING);

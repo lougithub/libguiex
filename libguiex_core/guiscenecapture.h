@@ -17,6 +17,7 @@
 #include "guireference.h"
 #include "guiintsize.h"
 #include "guisize.h"
+#include "guirendertype.h"
 
 //============================================================================//
 // declare
@@ -57,6 +58,8 @@ namespace guiex
 	private:
 		uint32 m_fbo;
 		int32 m_oldfbo;
+
+		SGUIBlendFunc m_aBlendFunc;
 	};
 }
 

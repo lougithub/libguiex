@@ -86,7 +86,6 @@ namespace guiex
 	{
 		TRY_THROW_OPENGL_ERROR( "render interface initialize start" );
 		
-		const CGUISize& rSize = GSystem->GetScreenSize();
 		
 		// Create the framebuffer object and attach the color buffer.
 		GLuint framebuffer;
@@ -109,7 +108,8 @@ namespace guiex
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		
-		glViewport(0,0,GUI_FLOAT2UINT_ROUND(rSize.GetWidth()),GUI_FLOAT2UINT_ROUND(rSize.GetHeight()));
+		const CGUIIntSize& rSize = GSystem->GetScreenSize();
+		glViewport(0,0,rSize.GetWidth(),rSize.GetHeight());
 		
 
 		//disable lighting
@@ -247,6 +247,11 @@ namespace guiex
 		default:
 			GUI_ASSERT( 0, "unknown blend func type" );
 		}
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengles::SetViewport( int32 x, int32 y, uint32 width, uint32 height)
+	{
+		glViewport( x, y, width, height );
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::SetDepthTest( bool bEnable )

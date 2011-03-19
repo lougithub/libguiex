@@ -46,7 +46,7 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIFramework_Windows::InitializeSystem( const CGUISize& rScreenSize, const char* pDataPath )
+	int32 CGUIFramework_Windows::InitializeSystem( const CGUIIntSize& rScreenSize, const char* pDataPath )
 	{
 		//init system
 		if( GSystem != NULL )

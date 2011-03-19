@@ -495,7 +495,7 @@ namespace guiex
 		return m_fSystemTime;
 	}
 	//------------------------------------------------------------------------------
-	void CGUISystem::SetScreenSize( const CGUISize& rScreenSize )
+	void CGUISystem::SetScreenSize( const CGUIIntSize& rScreenSize )
 	{
 		m_aScreenSize = rScreenSize;
 
@@ -511,25 +511,25 @@ namespace guiex
 	*/
 	void CGUISystem::SetScreenSize( uint32 width, uint32 height)
 	{
-		SetScreenSize( CGUISize( real(width), real(height) ) );
+		SetScreenSize( CGUIIntSize( width, height ) );
 	}
 	//------------------------------------------------------------------------------
 	/**
 	* @brief get the size of screen, in default
 	*/
-	const CGUISize& CGUISystem::GetScreenSize( ) const
+	const CGUIIntSize& CGUISystem::GetScreenSize( ) const
 	{
 		return m_aScreenSize;
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUISystem::GetScreenWidth( ) const
 	{
-		return uint32(m_aScreenSize.m_fWidth+0.5f);
+		return m_aScreenSize.GetWidth();
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUISystem::GetScreenHeight( ) const
 	{
-		return uint32(m_aScreenSize.m_fHeight+0.5f);
+		return m_aScreenSize.GetHeight();
 	}
 	//------------------------------------------------------------------------------
 	/**

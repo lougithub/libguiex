@@ -16,6 +16,7 @@
 #include "guistring.h"
 #include "guirect.h"
 #include "guievent.h"
+#include "guiintsize.h"
 #include "guiinputprocessor.h"
 #include "guiinterfacemouse.h"
 #include "sigslot.h"
@@ -117,9 +118,9 @@ namespace guiex
 		//********************************************************
 		//	screen size
 		//********************************************************
-		void SetScreenSize( const CGUISize& rScreenSize );
+		void SetScreenSize( const CGUIIntSize& rScreenSize );
 		void SetScreenSize( uint32 width, uint32 height);
-		const CGUISize& GetScreenSize( ) const;
+		const CGUIIntSize& GetScreenSize( ) const;
 		uint32 GetScreenWidth( ) const;
 		uint32 GetScreenHeight( ) const;
 
@@ -214,7 +215,7 @@ namespace guiex
 
 		//----------------------------------------------------------------------
 		/// screen size
-		CGUISize m_aScreenSize; //!< size of screen, in default
+		CGUIIntSize m_aScreenSize; //!< size of screen, in default
 		//----------------------------------------------------------------------
 
 		//----------------------------------------------------------------------
