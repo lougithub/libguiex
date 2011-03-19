@@ -108,7 +108,7 @@ namespace guiex
 			return -1;
 		}
 
-		pReceiver->SetSceneCapture( m_pEffectGrid ); 
+		pReceiver->SetSceneEffect( m_pEffectGrid ); 
 
 		return 0;
 	}
@@ -119,9 +119,9 @@ namespace guiex
 		{
 			return;
 		}
-		if( GetReceiver() && GetReceiver()->GetSceneCapture() == m_pEffectGrid )
+		if( GetReceiver() && GetReceiver()->GetSceneEffect() == m_pEffectGrid )
 		{
-			GetReceiver()->SetSceneCapture( NULL );
+			GetReceiver()->SetSceneEffect( NULL );
 		}
 
 		m_pEffectGrid->RefRelease();

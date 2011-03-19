@@ -35,7 +35,7 @@
 #include "guisoundmanager.h"
 #include "guiwidgetmanager.h"
 
-#include "guiscenecapture.h"
+#include "guisceneeffect.h"
 
 #include <algorithm>
 
@@ -85,7 +85,7 @@ namespace guiex
 		,m_bIsGenerateMultiClickEvent(false)
 		,m_bIsAutoPlayAs(false)
 		,m_bIsClipChildren(false)
-		,m_pSceneCapture( NULL )
+		,m_pSceneEffect( NULL )
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -1558,22 +1558,22 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWidget::SetSceneCapture( CGUISceneCapture* pSceneCapture )
+	void CGUIWidget::SetSceneEffect( CGUISceneEffect* pSceneEffect )
 	{
-		if( m_pSceneCapture )
+		if( m_pSceneEffect )
 		{
-			m_pSceneCapture->RefRelease();
+			m_pSceneEffect->RefRelease();
 		}
-		m_pSceneCapture = pSceneCapture;
-		if( m_pSceneCapture )
+		m_pSceneEffect = pSceneEffect;
+		if( m_pSceneEffect )
 		{
-			m_pSceneCapture->RefRetain();
+			m_pSceneEffect->RefRetain();
 		}
 	}
 	//------------------------------------------------------------------------------
-	CGUISceneCapture* CGUIWidget::GetSceneCapture() const
+	CGUISceneEffect* CGUIWidget::GetSceneEffect() const
 	{
-		return m_pSceneCapture;
+		return m_pSceneEffect;
 	}
 	//------------------------------------------------------------------------------
 	bool CGUIWidget::HasImage( const CGUIString& rName )
@@ -1643,10 +1643,10 @@ namespace guiex
 		m_listAsPlaying.clear();
 
 		//clear scene capture
-		if( m_pSceneCapture )
+		if( m_pSceneEffect )
 		{
-			m_pSceneCapture->RefRelease();
-			m_pSceneCapture = NULL;
+			m_pSceneEffect->RefRelease();
+			m_pSceneEffect = NULL;
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -2204,9 +2204,9 @@ namespace guiex
 		pRender->PushMatrix();
 		pRender->MultMatrix( getTransform() );
 
-		if( m_pSceneCapture )
+		if( m_pSceneEffect )
 		{
-			m_pSceneCapture->BeforeRender( pRender );
+			m_pSceneEffect->BeforeRender( pRender );
 		}
 
 		// perform render for 'this' Window
@@ -2224,9 +2224,9 @@ namespace guiex
 
 		PopClipRect( pRender );
 
-		if( m_pSceneCapture )
+		if( m_pSceneEffect )
 		{
-			m_pSceneCapture->AfterRender( pRender );
+			m_pSceneEffect->AfterRender( pRender );
 		}
 
 		pRender->PopMatrix();

@@ -40,7 +40,7 @@ namespace guiex
 	class CGUIAnimation;
 	class CGUIAs;
 	class CGUISoundData;
-	class CGUISceneCapture;
+	class CGUISceneEffect;
 
 	typedef void (*CallbackEventFunc)(CGUIEvent* pEvent);
 }
@@ -211,8 +211,8 @@ namespace guiex
 		void StopAs( CGUIAs* pAs );
 		void StopAllAs( );
 
-		void SetSceneCapture( CGUISceneCapture* pSceneCapture );
-		CGUISceneCapture* GetSceneCapture() const;
+		void SetSceneEffect( CGUISceneEffect* pSceneEffect );
+		CGUISceneEffect* GetSceneEffect() const;
 
 		void DestroyAllResource( );
 
@@ -602,7 +602,7 @@ namespace guiex
 		CGUIString m_strOwnerSceneName; //!< scene name, should be a unique name
 		CGUIString m_strWorkingSceneName; //!< working scene name, should be a unique name
 
-		CGUISceneCapture* m_pSceneCapture;
+		CGUISceneEffect* m_pSceneEffect;
 
 		void* m_pUserData; //!< user data, used by user.
 

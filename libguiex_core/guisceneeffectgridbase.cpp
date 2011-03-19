@@ -24,7 +24,7 @@ namespace guiex
 {
 	//------------------------------------------------------------------------------
 	CGUISceneEffectGridBase::CGUISceneEffectGridBase( const CGUISize& rSceneSize, const CGUIIntSize& rGridSize )
-		:CGUISceneCapture( rSceneSize )
+		:CGUISceneEffect( rSceneSize )
 		,m_aGridSize( rGridSize )
 		,m_bIsTextureFlipped( false )
 	{
@@ -34,7 +34,7 @@ namespace guiex
 	int32 CGUISceneEffectGridBase::Initialize(  )
 	{
 		//call parent function
-		if( CGUISceneCapture::Initialize( ) != 0 )
+		if( CGUISceneEffect::Initialize( ) != 0 )
 		{
 			return -1;
 		}
@@ -48,7 +48,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUISceneEffectGridBase::Release( )
 	{
-		CGUISceneCapture::Release();
+		CGUISceneEffect::Release();
 	}
 	//------------------------------------------------------------------------------
 	void CGUISceneEffectGridBase::SetTextureFlipped( bool bFlipped )

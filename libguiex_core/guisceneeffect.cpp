@@ -1,5 +1,5 @@
 /** 
- * @file guiscenecapture.cpp
+ * @file guisceneeffect.cpp
  * @brief 
  * @author Lou Guoliang (louguoliang@gmail.com)
  * @date 2011-03-15
@@ -9,7 +9,7 @@
 //============================================================================//
 // include
 //============================================================================//
-#include "guiscenecapture.h"
+#include "guisceneeffect.h"
 #include "guiexception.h"
 #include "guiinterfacerender.h"
 #include "guitexture.h"
@@ -25,7 +25,7 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	CGUISceneCapture::CGUISceneCapture( const CGUISize& rSceneSize )
+	CGUISceneEffect::CGUISceneEffect( const CGUISize& rSceneSize )
 		:m_pTexture( NULL )
 		,m_fbo( 0 )
 		,m_oldfbo( 0 )
@@ -35,20 +35,20 @@ namespace guiex
 		m_aBlendFunc.dst = eBlendFunc_ZERO;
 	}
 	//------------------------------------------------------------------------------
-	CGUISceneCapture::~CGUISceneCapture()
+	CGUISceneEffect::~CGUISceneEffect()
 	{
 		if( m_pTexture )
 		{
-			throw CGUIException("[CGUISceneCapture::~CGUISceneCapture]: texture not cleared");
+			throw CGUIException("[CGUISceneEffect::~CGUISceneEffect]: texture not cleared");
 		}
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUISceneCapture::Initialize( )
+	int32 CGUISceneEffect::Initialize( )
 	{
 		IGUIInterfaceRender* pRender = CGUIInterfaceManager::Instance()->GetInterfaceRender();
 		if( !pRender )
 		{
-			throw CGUIException("[CGUISceneCapture::Initialize]: failed to get render interface!");
+			throw CGUIException("[CGUISceneEffect::Initialize]: failed to get render interface!");
 			return -1;
 		}
 
@@ -68,7 +68,7 @@ namespace guiex
 		m_pTexture = CGUITextureManager::Instance()->CreateTexture( uTextureWidthUse, uTextureHeightUse, GUI_PF_RGBA_32 );
 		if( !m_pTexture )
 		{
-			throw CGUIException("[CGUISceneCapture::Initialize]: failed to create texture!");
+			throw CGUIException("[CGUISceneEffect::Initialize]: failed to create texture!");
 			return -1;
 		}
 
@@ -85,7 +85,7 @@ namespace guiex
 		// check if it worked
 		if( !pRender->CheckFramebufferStatus( ) )
 		{
-			throw CGUIException("[CGUISceneCapture::Initialize]: Could not attach texture to framebuffer!");
+			throw CGUIException("[CGUISceneEffect::Initialize]: Could not attach texture to framebuffer!");
 			return -1;
 		}
 
@@ -95,7 +95,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void CGUISceneCapture::Release( )
+	void CGUISceneEffect::Release( )
 	{
 		if( m_pTexture )
 		{
@@ -105,7 +105,7 @@ namespace guiex
 			IGUIInterfaceRender* pRender = CGUIInterfaceManager::Instance()->GetInterfaceRender();
 			if( !pRender )
 			{
-				throw CGUIException("[CGUISceneCapture::Release]: failed to get render interface!");
+				throw CGUIException("[CGUISceneEffect::Release]: failed to get render interface!");
 				return;
 			}
 			pRender->DeleteFramebuffers(1, &m_fbo);
@@ -113,7 +113,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUISceneCapture::RefRelease()
+	void CGUISceneEffect::RefRelease()
 	{
 		DoDecreaseReference();
 
@@ -124,7 +124,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUISceneCapture::BeforeRender( IGUIInterfaceRender* pRender )
+	void CGUISceneEffect::BeforeRender( IGUIInterfaceRender* pRender )
 	{
 		if( !m_pTexture )
 		{
@@ -149,7 +149,7 @@ namespace guiex
 		pRender->Clear( eRenderBuffer_COLOR_BIT );	
 	}
 	//------------------------------------------------------------------------------
-	void CGUISceneCapture::AfterRender( IGUIInterfaceRender* pRender )
+	void CGUISceneEffect::AfterRender( IGUIInterfaceRender* pRender )
 	{
 		if( !m_pTexture )
 		{

@@ -294,8 +294,8 @@ source_group( particle2dsystem FILES ${${target_name}_particle2dsystem_SRCS} )
 
 
 set( ${target_name}_sceneeffect_SRCS 
-	guiscenecapture.cpp
-	guiscenecapture.h
+	guisceneeffect.cpp
+	guisceneeffect.h
 	guisceneeffectgridbase.cpp
 	guisceneeffectgridbase.h
 	guisceneeffecttiledgrid3d.cpp

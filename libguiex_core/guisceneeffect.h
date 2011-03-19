@@ -1,5 +1,5 @@
 /** 
- * @file guiscenecapture.h
+ * @file guisceneeffect.h
  * @brief 
  * @author Lou Guoliang (louguoliang@gmail.com)
  * @date 2011-03-15
@@ -33,10 +33,10 @@ namespace guiex
 //============================================================================//
 namespace guiex
 {
-	class GUIEXPORT CGUISceneCapture : public CGUIReference
+	class GUIEXPORT CGUISceneEffect : public CGUIReference
 	{
 	public:
-		CGUISceneCapture( const CGUISize& rSceneSize );
+		CGUISceneEffect( const CGUISize& rSceneSize );
 
 		virtual int32 Initialize(  );
 		virtual void Release( );
@@ -47,7 +47,7 @@ namespace guiex
 		virtual void AfterRender( IGUIInterfaceRender* pRender );
 
 	protected:
-		virtual ~CGUISceneCapture();
+		virtual ~CGUISceneEffect();
 		virtual void ProcessCaptureTexture( IGUIInterfaceRender* pRender ) = 0;
 
 	protected:

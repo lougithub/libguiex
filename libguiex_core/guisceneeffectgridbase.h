@@ -14,7 +14,7 @@
 // include
 //============================================================================//
 #include "guibase.h"
-#include "guiscenecapture.h"
+#include "guisceneeffect.h"
 #include "guivector2.h"
 
 //============================================================================//
@@ -33,7 +33,7 @@ namespace guiex
 //============================================================================//
 namespace guiex
 {
-	class GUIEXPORT CGUISceneEffectGridBase : public CGUISceneCapture
+	class GUIEXPORT CGUISceneEffectGridBase : public CGUISceneEffect
 	{
 	public:
 		CGUISceneEffectGridBase( const CGUISize& rSceneSize, const CGUIIntSize& rGridSize );
