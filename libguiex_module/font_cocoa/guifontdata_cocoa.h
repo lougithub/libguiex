@@ -79,12 +79,12 @@ namespace guiex
 		friend class IGUIFont_cocoa;
 		CGUIFontData_cocoa( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nFontIndex );
 	
-		virtual int32 DoLoad() const;
+		virtual int32 DoLoad();
 		virtual void DoUnload();
 
 	public:
 		CGUIString m_strPath;		// font file path
-		mutable FT_Face m_aFtFace;
+		FT_Face m_aFtFace;
 		typedef std::map<uint32, CGUICharsData_cocoa*> TMapSizeChars;
 		TMapSizeChars m_mapSizeChars;
 

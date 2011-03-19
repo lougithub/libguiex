@@ -248,6 +248,54 @@ namespace guiex
 			GUI_ASSERT( 0, "unknown blend func type" );
 		}
 	}
+	//------------------------------------------------------------------------------	
+	void IGUIRender_opengles::SetBlendFunc( const SGUIBlendFunc& rBlendFuncType )
+	{
+		GLenum src,dst;
+		switch( rBlendFuncType.src )
+		{
+			case eBlendFunc_ONE:
+				src = GL_ONE;break;
+			case eBlendFunc_SRC_COLOR:
+				src = GL_SRC_COLOR;break;
+			case eBlendFunc_ONE_MINUS_SRC_COLOR:
+				src = GL_ONE_MINUS_SRC_COLOR;break;
+			case eBlendFunc_SRC_ALPHA:
+				src = GL_SRC_ALPHA;break;
+			case eBlendFunc_ONE_MINUS_SRC_ALPHA:
+				src = GL_ONE_MINUS_SRC_ALPHA;break;
+			case eBlendFunc_DST_ALPHA:
+				src = GL_DST_ALPHA;break;
+			case eBlendFunc_ONE_MINUS_DST_ALPHA:
+				src = GL_ONE_MINUS_DST_ALPHA;break;
+			case eBlendFunc_ZERO:
+				src = GL_ZERO;break;
+			default:
+				GUI_ASSERT( 0, "unknown blend func type" );
+		}
+		switch( rBlendFuncType.dst )
+		{
+			case eBlendFunc_ONE:
+				dst = GL_ONE;break;
+			case eBlendFunc_SRC_COLOR:
+				dst = GL_SRC_COLOR;break;
+			case eBlendFunc_ONE_MINUS_SRC_COLOR:
+				dst = GL_ONE_MINUS_SRC_COLOR;break;
+			case eBlendFunc_SRC_ALPHA:
+				dst = GL_SRC_ALPHA;break;
+			case eBlendFunc_ONE_MINUS_SRC_ALPHA:
+				dst = GL_ONE_MINUS_SRC_ALPHA;break;
+			case eBlendFunc_DST_ALPHA:
+				dst = GL_DST_ALPHA;break;
+			case eBlendFunc_ONE_MINUS_DST_ALPHA:
+				dst = GL_ONE_MINUS_DST_ALPHA;break;
+			case eBlendFunc_ZERO:
+				dst = GL_ZERO;break;
+			default:
+				GUI_ASSERT( 0, "unknown blend func type" );
+		}
+		glBlendFunc( src, dst );
+	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::SetViewport( int32 x, int32 y, uint32 width, uint32 height)
 	{
@@ -258,7 +306,7 @@ namespace guiex
 	{
 		if ( bEnable ) 
 		{
-			glClearDepth(1.0f);
+			//glClearDepth(1.0f);
 			glEnable(GL_DEPTH_TEST);
 			glDepthFunc(GL_LEQUAL);
 			glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
@@ -295,42 +343,35 @@ namespace guiex
 		glMultMatrixf( m_gl_matrix );
 	}
 	//------------------------------------------------------------------------------
-	uint32 IGUIRender_opengles::GenFramebuffers( )
-	{
-		uint32 fbo;
-		glGenFramebuffers( 1, &fbo );
-		return fbo;
-	}
-	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::GenFramebuffers( uint32 n, uint32* framebuffers )
 	{
-		glGenFramebuffers( n, framebuffers );
+		glGenFramebuffersOES( n, framebuffers );
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::DeleteFramebuffers( uint32 n, const uint32* framebuffers )
 	{
-		glDeleteFramebuffers( n, framebuffers );
+		glDeleteFramebuffersOES( n, framebuffers );
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::BindFramebuffer( uint32 framebuffer )
 	{
-		glBindFramebuffer( GL_FRAMEBUFFER, framebuffers );
+		glBindFramebufferOES( GL_FRAMEBUFFER_OES, framebuffer );
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::GetCurrentBindingFrameBuffer( int32* framebuffer )
 	{
-		glGetIntegerv(GL_FRAMEBUFFER_BINDING, framebuffer);
+		glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, framebuffer);
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::FramebufferTexture2D_Color( const CGUITextureImp* pTexture, int32 level )
 	{
-		glFramebufferTexture2D( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ((const CGUITexture_opengl*)pTexture)->GetOGLTexid(), level );
+		glFramebufferTexture2DOES( GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_TEXTURE_2D, ((const CGUITexture_opengles*)pTexture)->GetOGLTexid(), level );
 	}
 	//------------------------------------------------------------------------------
 	bool IGUIRender_opengles::CheckFramebufferStatus( )
 	{
-		GLuint status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-		return status == GL_FRAMEBUFFER_COMPLETE;
+		GLuint status = glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES);
+		return status == GL_FRAMEBUFFER_COMPLETE_OES;
 	}
 	//------------------------------------------------------------------------------
 	bool IGUIRender_opengles::IsSupportStencil()

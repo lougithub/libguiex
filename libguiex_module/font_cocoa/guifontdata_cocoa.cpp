@@ -94,7 +94,7 @@ namespace guiex
 
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIFontData_cocoa::DoLoad() const
+	int32 CGUIFontData_cocoa::DoLoad()
 	{
 		// load font face
 		CGUIString strFullPath = GSystem->GetDataPath() 

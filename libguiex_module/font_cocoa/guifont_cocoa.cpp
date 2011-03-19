@@ -315,7 +315,7 @@ namespace guiex
 			aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
 			pRender->DrawTile( 
 							  aCharRect,
-							  pRender->GetAndIncZ(), 
+							  0, 
 							  pCharData->m_pTexture->GetTextureImplement(),
 							  pCharData->m_aUV, 
 							  eImageOrientation_Normal,
@@ -329,7 +329,7 @@ namespace guiex
 		CGUIRect aCharRect( CGUIVector2(rPos.x, rPos.y),
 						   CGUISize(rInfo.m_nFontSize,rInfo.m_nFontSize));
 		
-		pRender->DrawRect( aCharRect, 1, pRender->GetAndIncZ(),
+		pRender->DrawRect( aCharRect, 1, 0,
 						  rInfo.m_aColor,
 						  rInfo.m_aColor,
 						  rInfo.m_aColor,
@@ -410,7 +410,7 @@ namespace guiex
 				aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
 				pRender->DrawTile( 
 								  aCharRect,
-								  pRender->GetAndIncZ(), 
+								  0, 
 								  pCharData->m_pTexture->GetTextureImplement(),
 								  pCharData->m_aUV, 
 								  eImageOrientation_Normal,
@@ -428,7 +428,7 @@ namespace guiex
 							   CGUISize(rInfo.m_nFontSize,rInfo.m_nFontSize));
 			
 			//dest area size
-			pRender->DrawRect( aCharRect, 2, pRender->GetAndIncZ(),
+			pRender->DrawRect( aCharRect, 2, 0,
 							  rInfo.m_aColor,
 							  rInfo.m_aColor,
 							  rInfo.m_aColor,
@@ -475,7 +475,7 @@ namespace guiex
 				aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
 				pRender->DrawTile( 
 								  aCharRect,
-								  pRender->GetAndIncZ(), 
+								  0, 
 								  pCharData->m_pTexture->GetTextureImplement(),
 								  pCharData->m_aUV, 
 								  eImageOrientation_Normal,
@@ -492,7 +492,7 @@ namespace guiex
 							   CGUIVector2(aPos.x, aPos.y+rInfo.m_nFontSize),
 							   CGUISize(rInfo.m_nFontSize,rInfo.m_nFontSize));
 			
-			pRender->DrawRect( aCharRect, 1, pRender->GetAndIncZ(),
+			pRender->DrawRect( aCharRect, 1, 0,
 							  rInfo.m_aColor,
 							  rInfo.m_aColor,
 							  rInfo.m_aColor,
