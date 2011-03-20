@@ -69,6 +69,7 @@ namespace guiex
 			real fAlpha	);
 
 		const CGUISize& GetSize();
+		CGUITexture* GetTexture();
 
 		const CGUIString& GetFilePath() const;
 		CGUIString GetFullFilePath() const;

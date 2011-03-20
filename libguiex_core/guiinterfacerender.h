@@ -75,6 +75,9 @@ namespace guiex
 		virtual void FramebufferTexture2D_Color( const CGUITextureImp* pTexture, int32 level ) = 0;
 		virtual bool CheckFramebufferStatus( ) = 0;
 
+		//virtual void GenRenderbuffers( uint32 n, uint32* renderbuffers) = 0;
+		//virtual void BindRenderbuffer( uint32 renderbuffer) = 0;
+		
 		virtual void DrawRect(
 			const CGUIRect& rDestRect, 
 			real fLineWidth,

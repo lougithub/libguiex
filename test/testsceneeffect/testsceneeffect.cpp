@@ -106,24 +106,24 @@ CMyCanvasLayer_DrawWidget::CMyCanvasLayer_DrawWidget( const char* szLayerName )
 	pWidget->SetParent( this );
 	pWidget->Open()	;
 
-	//CGUIAsPageTurn3D* pAs1 = CGUIAsManager::Instance()->AllocateResource<CGUIAsPageTurn3D>();
-	//pAs1->SetLooping( true );
-	//pAs1->SetTotalTime( 5.0f );
-	//pAs1->SetGridSize( CGUIIntSize(30, 30) );
-	//pAs1->SetReceiver( this );
-	//this->SetAutoPlayAs( true );
-	//this->SetAs( "pageturn", pAs1 );
-	//pAs1->RefRelease();
-
-	CGUIAsWaves3D* pAs1 = CGUIAsManager::Instance()->AllocateResource<CGUIAsWaves3D>();
+	CGUIAsPageTurn3D* pAs1 = CGUIAsManager::Instance()->AllocateResource<CGUIAsPageTurn3D>();
 	pAs1->SetLooping( true );
-	pAs1->SetTotalTime( 10.0f );
-	pAs1->SetWavesInfo( 18, 15.0f);
+	pAs1->SetTotalTime( 5.0f );
 	pAs1->SetGridSize( CGUIIntSize(30, 30) );
 	pAs1->SetReceiver( this );
 	this->SetAutoPlayAs( true );
-	this->SetAs( "wave3d", pAs1 );
+	this->SetAs( "pageturn", pAs1 );
 	pAs1->RefRelease();
+
+	//CGUIAsWaves3D* pAs1 = CGUIAsManager::Instance()->AllocateResource<CGUIAsWaves3D>();
+	//pAs1->SetLooping( true );
+	//pAs1->SetTotalTime( 10.0f );
+	//pAs1->SetWavesInfo( 18, 15.0f);
+	//pAs1->SetGridSize( CGUIIntSize(30, 30) );
+	//pAs1->SetReceiver( this );
+	//this->SetAutoPlayAs( true );
+	//this->SetAs( "wave3d", pAs1 );
+	//pAs1->RefRelease();
 }
 
 //------------------------------------------------------------------------------

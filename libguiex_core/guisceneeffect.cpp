@@ -145,8 +145,8 @@ namespace guiex
 		pRender->GetCurrentBindingFrameBuffer( &m_oldfbo );
 		pRender->BindFramebuffer( m_fbo );
 
-		pRender->ClearColor(0,0,0,0.5);
-		pRender->Clear( eRenderBuffer_COLOR_BIT );	
+		pRender->ClearColor(0,0,0,0);
+		pRender->Clear( eRenderBuffer_COLOR_BIT | eRenderBuffer_DEPTH_BIT );	
 	}
 	//------------------------------------------------------------------------------
 	void CGUISceneEffect::AfterRender( IGUIInterfaceRender* pRender )

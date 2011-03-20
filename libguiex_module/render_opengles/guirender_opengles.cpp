@@ -126,6 +126,8 @@ namespace guiex
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
 		
+		glDisable( GL_DEPTH_TEST );
+		
 		//set texture
 		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 		glEnable(GL_TEXTURE_2D);
@@ -306,7 +308,7 @@ namespace guiex
 	{
 		if ( bEnable ) 
 		{
-			//glClearDepth(1.0f);
+			glClearDepthf(1.0f);
 			glEnable(GL_DEPTH_TEST);
 			glDepthFunc(GL_LEQUAL);
 			glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
@@ -383,7 +385,8 @@ namespace guiex
 	{
 		TRY_THROW_OPENGL_ERROR("BeginRender start");
 		
-		glClearColor(0.5f, 0.5f, 0.5f, 1);
+		glClearColor( 0.5f, 0.5f, 0.5f, 1 );
+		glClearDepthf( 1.0f );
 		glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );	// clear screen and depth buffer 
 		
 		//update camera
@@ -491,15 +494,13 @@ namespace guiex
 		m_pVertexForLine[3].vertex[2] = z;
 		m_pVertexForLine[3].color     = oglcolor_topright;      
 		
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glEnableClientState(GL_COLOR_ARRAY);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
 		glVertexPointer(3, GL_FLOAT, sizeof(SVertexForLine), &m_pVertexForLine[0].vertex[0]);
 		glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(SVertexForLine), &m_pVertexForLine[0].color);
 		glDrawArrays(GL_LINE_LOOP, 0, 4);
 		
-		glDisableClientState(GL_VERTEX_ARRAY);
-		glDisableClientState(GL_COLOR_ARRAY);	
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		
 		glEnable(GL_TEXTURE_2D);
 	}
@@ -530,16 +531,14 @@ namespace guiex
 		m_pVertexForLine[1].vertex[2] = z;
 		m_pVertexForLine[1].color     = oglcolor_bottomleft;     
 
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glEnableClientState(GL_COLOR_ARRAY);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
 		glVertexPointer(3, GL_FLOAT, sizeof(SVertexForLine), &m_pVertexForLine[0].vertex[0]);
 		glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(SVertexForLine), &m_pVertexForLine[0].color);
 		glDrawArrays(GL_LINES, 0, 2);
 
-		glDisableClientState(GL_VERTEX_ARRAY);
-		glDisableClientState(GL_COLOR_ARRAY);	
-
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		
 		glEnable(GL_TEXTURE_2D);
 	}
 	//------------------------------------------------------------------------------
@@ -596,18 +595,11 @@ namespace guiex
 		m_pVertex[3].vertex[2] = z;
 		m_pVertex[3].color     = oglcolor_bottomright;      
 
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		glEnableClientState(GL_COLOR_ARRAY);		
 		
 		glVertexPointer(3, GL_FLOAT, sizeof(SVertexForTile), &m_pVertex[0].vertex[0]);
 		glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(SVertexForTile), &m_pVertex[0].color);
 		glTexCoordPointer(2, GL_FLOAT, sizeof(SVertexForTile), &m_pVertex[0].tex[0]);		
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-		
-		glDisableClientState(GL_VERTEX_ARRAY);
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-		glDisableClientState(GL_COLOR_ARRAY);
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::DrawGrid( 
@@ -618,7 +610,7 @@ namespace guiex
 		int16 nGridNum )
 	{
 		BindTexture( pTexture );
-		glDisableClientState(GL_COLOR_ARRAY);	
+		glDisableClientState(GL_COLOR_ARRAY);
 
 		// vertex
 		glVertexPointer(3,GL_FLOAT, sizeof(SR_V3F), pVerdices );
@@ -642,6 +634,7 @@ namespace guiex
 
 		int16 kQuadSize = sizeof(pQuads[0].bl);
 		int32 offset = (int32) pQuads;
+			
 
 		// vertex
 		int32 diff = offsetof( SR_V2F_C4F_T2F, vertices);
@@ -760,12 +753,14 @@ namespace guiex
 		m_pVertexForStencil[3].vertex[1] = fBottom;
 		m_pVertexForStencil[3].vertex[2] = 1.0f;
 
-		glEnableClientState(GL_VERTEX_ARRAY);	
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		glDisableClientState(GL_COLOR_ARRAY);
 		
 		glVertexPointer(3, GL_FLOAT, sizeof(SVertexForStencil), &m_pVertexForStencil[0].vertex[0]);
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 		
-		glDisableClientState(GL_VERTEX_ARRAY);
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glEnableClientState(GL_COLOR_ARRAY);
 	}
 	//------------------------------------------------------------------------------
 	void	IGUIRender_opengles::SetTexCoordinate(SVertexForTile* pTexture, const CGUIRect& tex, EImageOrientation eImageOrientation)

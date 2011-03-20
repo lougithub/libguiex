@@ -17,6 +17,10 @@
 #include "guirendertype.h"
 #include "guirect.h"
 
+//TEMP
+#include "guiimage.h"
+#include "guiimagemanager.h"
+
 //============================================================================//
 // function
 //============================================================================//
@@ -138,10 +142,15 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUISceneEffectGrid3D::ProcessCaptureTexture( IGUIInterfaceRender* pRender )
 	{
-		int n = m_aGridSize.m_uWidth * m_aGridSize.m_uHeight;
+		//uint32 n = m_aGridSize.m_uWidth * m_aGridSize.m_uHeight;
+		//pRender->DrawGrid( m_pTexture->GetTextureImplement(), m_pTexCoordinates, m_pVertices, m_pIndices, n );
 
-//		pRender->DrawGrid( m_pTexture->GetTextureImplement(), m_pTexCoordinates, m_pVertices, m_pIndices, n );
-		pRender->DrawTile( CGUIRect( 0,0,640,480 ), 0, m_pTexture->GetTextureImplement(), CGUIRect(0,0,1,1),  eImageOrientation_Normal, CGUIColor());
+		pRender->DrawTile( CGUIRect( 0,0, m_pTexture->GetWidth(), m_pTexture->GetHeight() ), 0, m_pTexture->GetTextureImplement(), CGUIRect(0,0,1,1),  eImageOrientation_Normal, CGUIColor());
+		
+		CGUIImage* pImage = CGUIImageManager::Instance()->AllocateResource("scrollbar_downbutton_highlight" );
+		pRender->DrawTile( CGUIRect( CGUIVector2(100,100), pImage->GetSize()*4 ), 0, pImage->GetTexture()->GetTextureImplement(), CGUIRect(0,0,1,1),  eImageOrientation_Normal, CGUIColor());
+		pImage->RefRelease();
+ 
 	}
 	//------------------------------------------------------------------------------
 	/** 
@@ -152,7 +161,7 @@ namespace guiex
 		GUI_ASSERT( rPos.m_uWidth <= m_aGridSize.m_uWidth && rPos.m_uHeight <= m_aGridSize.m_uHeight, "invalid pos" );
 
 		int	index = (rPos.m_uWidth * (m_aGridSize.m_uHeight+1) + rPos.m_uHeight);
-		return m_pVertices[index];
+		return m_pVertices[index]; 
 	}
 	//------------------------------------------------------------------------------
 	/** 

@@ -174,6 +174,12 @@ namespace guiex
 		return m_aImageSize;
 	}
 	//------------------------------------------------------------------------------
+	CGUITexture* CGUIImage::GetTexture()
+	{
+		Load();
+		return m_pTexture;
+	}
+	//------------------------------------------------------------------------------
 	void CGUIImage::Draw(
 		IGUIInterfaceRender* pRender,
 		const CGUIRect& rDestRect,
