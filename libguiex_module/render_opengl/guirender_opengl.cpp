@@ -269,12 +269,29 @@ namespace guiex
 			rBlendFuncType.dst = eBlendFunc_ZERO;break;
 		default:
 			GUI_ASSERT( 0, "unknown blend func type" );
+			break;
 		}
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl::SetViewport( int32 x, int32 y, uint32 width, uint32 height)
 	{
 		glViewport( x, y, width, height );
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl::MatrixMode( EMatrixMode eMode )
+	{
+		switch( eMode )
+		{
+		case eMatrixMode_PROJECTION:
+			glMatrixMode( GL_PROJECTION );
+			break;
+		case eMatrixMode_MODELVIEW:
+			glMatrixMode( GL_MODELVIEW );
+			break;
+		default:
+			GUI_ASSERT( 0, "unknown matrix mode" );
+			break;
+		}
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl::PushMatrix()

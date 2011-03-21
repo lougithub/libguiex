@@ -24,7 +24,7 @@ namespace guiex
 		,m_vEye( 0,0,-1 )
 		,m_vCenter( 0,0,0 )
 		,m_vUp( 0,-1,0 )
-		,m_fFov( 45.0f )
+		,m_fFov( 60.0f )
 		,m_fAspectRatio( 1.0f )
 		,m_fNearPlane( 0.1f )
 		,m_fFarPlane( 100000 )
@@ -56,7 +56,7 @@ namespace guiex
 	{
 		const CGUISize& rSize = GSystem->GetScreenSize();
 
-		m_fFov = 45.0f;
+		m_fFov = 60.0f;
 		if( GUI_REAL_EQUAL( rSize.GetHeight(), 0.0f ))
 		{
 			m_fAspectRatio = 1;
@@ -81,7 +81,7 @@ namespace guiex
 		m_vUp.z = 0;
 
 		m_fNearPlane = 0.1f;
-		m_fFarPlane = 100000;
+		m_fFarPlane = 10000;
 
 		m_bDirty = true;
 	}

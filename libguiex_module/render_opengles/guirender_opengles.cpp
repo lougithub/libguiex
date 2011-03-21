@@ -319,6 +319,22 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	void IGUIRender_opengles::MatrixMode( EMatrixMode eMode )
+	{
+		switch( eMode )
+		{
+		case eMatrixMode_PROJECTION:
+			glMatrixMode( GL_PROJECTION );
+			break;
+		case eMatrixMode_MODELVIEW:
+			glMatrixMode( GL_MODELVIEW );
+			break;
+		default:
+			GUI_ASSERT( 0, "unknown matrix mode" );
+			break;
+		}
+	}
+	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::PushMatrix()
 	{
 		glPushMatrix();

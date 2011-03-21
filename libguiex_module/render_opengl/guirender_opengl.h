@@ -49,6 +49,7 @@ namespace guiex
 		virtual void GetBlendFunc( SGUIBlendFunc& rBlendFuncType );
 		virtual void SetViewport( int32 x, int32 y, uint32 width, uint32 height);
 
+		virtual void MatrixMode( EMatrixMode eMode );
 		virtual void PushMatrix();
 		virtual void PopMatrix();
 		virtual void SetModelViewMatrixMode( );

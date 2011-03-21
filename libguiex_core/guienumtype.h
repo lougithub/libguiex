@@ -109,6 +109,12 @@ namespace guiex
 		eRenderBuffer_STENCIL_BIT = 0x00000004,
 	};
 
+	enum EMatrixMode
+	{
+		eMatrixMode_PROJECTION = 0,
+		eMatrixMode_MODELVIEW,
+	};
+
 }//namespace guiex
 
 #endif //__GUI_ENUMTYPES_20101122_H__

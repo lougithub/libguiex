@@ -89,10 +89,6 @@ CMyCanvasLayer_DrawWidget::CMyCanvasLayer_DrawWidget( const char* szLayerName )
 	:CGUICanvasLayer( szLayerName )
 {
 	m_aCamera.Restore();
-	//m_aCamera.SetUp( 0,1,0 );
-	//m_aCamera.SetFov( 60.0f );
-	//m_aCamera.SetFarPlane( 1500.0f );
-	//m_aCamera.SetNearPlane( 0.5f );
 
 	CGUIWidget* pWidget = NULL;
 

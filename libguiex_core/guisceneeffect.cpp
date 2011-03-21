@@ -16,6 +16,7 @@
 #include "guitexturemanager.h"
 #include "guiinterfacemanager.h"
 #include "guisystem.h"
+#include "guimath.h"
 
 
 //============================================================================//
@@ -30,6 +31,7 @@ namespace guiex
 		,m_fbo( 0 )
 		,m_oldfbo( 0 )
 		,m_aSceneSize( rSceneSize )
+		,m_pOldCamera(NULL)
 	{
 		m_aBlendFunc.src = eBlendFunc_ONE;
 		m_aBlendFunc.dst = eBlendFunc_ZERO;
@@ -92,6 +94,13 @@ namespace guiex
 		//restore fbo
 		pRender->BindFramebuffer( m_oldfbo );
 
+		//update camera
+		m_aCamera.Restore();
+		m_aCamera.SetFov( 60.0f );
+		real fZDistance = -(m_aSceneSize.m_fHeight/2) / CGUIMath::Tan( CGUIDegree(60.0f/2));
+		m_aCamera.SetEye( m_aSceneSize.GetWidth() / 2, m_aSceneSize.GetHeight() / 2, fZDistance );
+		m_aCamera.SetCenter( m_aSceneSize.GetWidth() / 2, m_aSceneSize.GetHeight() / 2, 0.0f );
+
 		return 0;
 	}
 	//------------------------------------------------------------------------------
@@ -141,6 +150,9 @@ namespace guiex
 			GUI_FLOAT2UINT_ROUND(m_aSceneSize.m_fWidth), 
 			GUI_FLOAT2UINT_ROUND(m_aSceneSize.m_fHeight));
 
+		//set camera
+		m_pOldCamera = pRender->ApplyCamera( &m_aCamera );
+
 		//set framebuffer
 		pRender->GetCurrentBindingFrameBuffer( &m_oldfbo );
 		pRender->BindFramebuffer( m_fbo );
@@ -158,6 +170,9 @@ namespace guiex
 
 		//restore fbo
 		pRender->BindFramebuffer( m_oldfbo );
+
+		//restore camera
+		pRender->ApplyCamera( m_pOldCamera );
 
 		//restore view port
 		const CGUIIntSize& rSize = GSystem->GetScreenSize();

@@ -18,6 +18,7 @@
 #include "guiintsize.h"
 #include "guisize.h"
 #include "guirendertype.h"
+#include "guicamera.h"
 
 //============================================================================//
 // declare
@@ -60,6 +61,9 @@ namespace guiex
 		int32 m_oldfbo;
 
 		SGUIBlendFunc m_aBlendFunc;
+
+		CGUICamera m_aCamera;
+		CGUICamera *m_pOldCamera;
 	};
 }
 
