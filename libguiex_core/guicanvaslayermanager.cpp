@@ -11,6 +11,7 @@
 #include "guicanvaslayermanager.h"
 #include "guiexception.h"
 #include "guicanvaslayer.h"
+#include "guiinterfacerender.h"
 #include <algorithm>
 
 
@@ -58,6 +59,7 @@ namespace guiex
 			itor != m_arrayCanvasLayers.end();
 			++itor )
 		{
+			pRender->Clear( eRenderBuffer_DEPTH_BIT );
 			(*itor)->Render( pRender );
 		}
 	}

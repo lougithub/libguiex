@@ -274,7 +274,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 	try
 	{
 		CGUIFrameworkEditor::ms_pFramework = new CGUIFrameworkEditor( );
-		CGUIFrameworkEditor::ms_pFramework->Initialize( CGUISize(m_aScreenSize.x, m_aScreenSize.y), "" );
+		CGUIFrameworkEditor::ms_pFramework->Initialize( CGUIIntSize(m_aScreenSize.x, m_aScreenSize.y), "" );
 		CGUIAssert::SetWarningCB( EditorWarningCB, NULL );
 
 		GSystem->SetDrawExtraInfo( false );

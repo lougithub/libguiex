@@ -28,13 +28,27 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUISceneEffect::CGUISceneEffect( const CGUISize& rSceneSize )
 		:m_pTexture( NULL )
+		,m_aSceneSize( rSceneSize )
+#if GUI_SCENEEFFECT_USE_VBO
 		,m_fbo( 0 )
 		,m_oldfbo( 0 )
-		,m_aSceneSize( rSceneSize )
-		,m_pOldCamera(NULL)
+#if GUI_SCENEEFFECT_USE_RENDERBUFFER
+		,m_rbo( 0 )
+#endif //#if GUI_SCENEEFFECT_USE_RENDERBUFFER
+
+#endif //#if GUI_SCENEEFFECT_USE_VBO
 	{
 		m_aBlendFunc.src = eBlendFunc_ONE;
 		m_aBlendFunc.dst = eBlendFunc_ZERO;
+
+		if( m_aSceneSize.m_fHeight < 1.0f )
+		{
+			m_aSceneSize.m_fHeight = 1.0f;
+		}
+		if( m_aSceneSize.m_fWidth < 1.0f )
+		{
+			m_aSceneSize.m_fWidth = 1.0f;
+		}
 	}
 	//------------------------------------------------------------------------------
 	CGUISceneEffect::~CGUISceneEffect()
@@ -57,16 +71,8 @@ namespace guiex
 		Release();
 
 		//create texture
-		uint32 uTextureWidthUse = 1;
-		while( uTextureWidthUse < m_aSceneSize.m_fWidth )
-		{
-			uTextureWidthUse <<= 1;
-		}
-		uint32 uTextureHeightUse = 1;
-		while( uTextureHeightUse < m_aSceneSize.m_fHeight )
-		{
-			uTextureHeightUse <<= 1;
-		}
+		uint32 uTextureWidthUse = CGUITexture::ConvertToTextureSize( GetSceneWidth() );
+		uint32 uTextureHeightUse = CGUITexture::ConvertToTextureSize( GetSceneHeight() );
 		m_pTexture = CGUITextureManager::Instance()->CreateTexture( uTextureWidthUse, uTextureHeightUse, GUI_PF_RGBA_32 );
 		if( !m_pTexture )
 		{
@@ -74,15 +80,27 @@ namespace guiex
 			return -1;
 		}
 
+#if GUI_SCENEEFFECT_USE_VBO
 		//create frame buffer
 		pRender->GenFramebuffers(1, &m_fbo);
-		pRender->GetCurrentBindingFrameBuffer( &m_oldfbo );
-
-		// bind
+		pRender->GetBindingFrameBuffer( &m_oldfbo );
 		pRender->BindFramebuffer( m_fbo );
 
-		// associate texture with FBO
+#if GUI_SCENEEFFECT_USE_RENDERBUFFER
+		//create render buffer
+		pRender->GenRenderbuffers( 1, &m_rbo );
+		pRender->BindRenderbuffer( m_rbo );
+		pRender->RenderbufferStorage_Depth( GetSceneWidth(), GetSceneHeight() );
+		pRender->BindRenderbuffer( 0 );
+#endif //#if GUI_SCENEEFFECT_USE_RENDERBUFFER
+
+		// attach a texture to FBO color attachement point
 		pRender->FramebufferTexture2D_Color( m_pTexture->GetTextureImplement(), 0);
+		
+#if GUI_SCENEEFFECT_USE_RENDERBUFFER
+		// attach a renderbuffer to depth attachment point
+		pRender->FramebufferRenderbuffer_Depth( m_rbo );
+#endif //#if GUI_SCENEEFFECT_USE_RENDERBUFFER
 
 		// check if it worked
 		if( !pRender->CheckFramebufferStatus( ) )
@@ -94,12 +112,7 @@ namespace guiex
 		//restore fbo
 		pRender->BindFramebuffer( m_oldfbo );
 
-		//update camera
-		m_aCamera.Restore();
-		m_aCamera.SetFov( 60.0f );
-		real fZDistance = -(m_aSceneSize.m_fHeight/2) / CGUIMath::Tan( CGUIDegree(60.0f/2));
-		m_aCamera.SetEye( m_aSceneSize.GetWidth() / 2, m_aSceneSize.GetHeight() / 2, fZDistance );
-		m_aCamera.SetCenter( m_aSceneSize.GetWidth() / 2, m_aSceneSize.GetHeight() / 2, 0.0f );
+#endif //#if GUI_SCENEEFFECT_USE_VBO
 
 		return 0;
 	}
@@ -117,8 +130,23 @@ namespace guiex
 				throw CGUIException("[CGUISceneEffect::Release]: failed to get render interface!");
 				return;
 			}
-			pRender->DeleteFramebuffers(1, &m_fbo);
-			m_fbo = 0;
+
+#if GUI_SCENEEFFECT_USE_VBO
+			if( m_fbo != 0 )
+			{
+				pRender->DeleteFramebuffers(1, &m_fbo);
+				m_fbo = 0;
+			}
+
+#if GUI_SCENEEFFECT_USE_RENDERBUFFER
+			if( m_rbo != 0 )
+			{
+				pRender->DeleteRenderbuffers(1, &m_rbo);
+				m_rbo = 0;
+			}
+#endif //#if GUI_SCENEEFFECT_USE_RENDERBUFFER
+
+#endif //#if GUI_SCENEEFFECT_USE_VBO
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -133,46 +161,55 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	uint32 CGUISceneEffect::GetSceneWidth( ) const
+	{
+		return GUI_FLOAT2UINT_ROUND( m_aSceneSize.m_fWidth );
+	}
+	//------------------------------------------------------------------------------
+	uint32 CGUISceneEffect::GetSceneHeight( ) const
+	{
+		return GUI_FLOAT2UINT_ROUND( m_aSceneSize.m_fHeight );
+	}
+	//------------------------------------------------------------------------------
 	void CGUISceneEffect::BeforeRender( IGUIInterfaceRender* pRender )
 	{
-		if( !m_pTexture )
-		{
-			return;
-		}
+		//set viewport
+		pRender->SetViewport( 0,0,GetSceneWidth(), GetSceneHeight() );
 
 		//set matrix
-		pRender->PushMatrix();
 		pRender->LoadIdentityMatrix();
 
-		//set viewport
-		pRender->SetViewport(
-			0,0,
-			GUI_FLOAT2UINT_ROUND(m_aSceneSize.m_fWidth), 
-			GUI_FLOAT2UINT_ROUND(m_aSceneSize.m_fHeight));
-
-		//set camera
-		m_pOldCamera = pRender->ApplyCamera( &m_aCamera );
-
+#if GUI_SCENEEFFECT_USE_VBO
 		//set framebuffer
-		pRender->GetCurrentBindingFrameBuffer( &m_oldfbo );
+		pRender->GetBindingFrameBuffer( &m_oldfbo );
 		pRender->BindFramebuffer( m_fbo );
+#else
+		// clear buffer
+		pRender->PushAttrib(eAttribMask_COLOR_BUFFER_BIT | eAttribMask_PIXEL_MODE_BIT);
+		pRender->DrawBuffer(eBufferMode_Back);
+		pRender->ReadBuffer(eBufferMode_Back);
+
+#endif //#if GUI_SCENEEFFECT_USE_VBO
 
 		pRender->ClearColor(0,0,0,0);
 		pRender->Clear( eRenderBuffer_COLOR_BIT | eRenderBuffer_DEPTH_BIT );	
+
+		uint32 xOffset = 0;
+		pRender->DrawLine( CGUIVector2( xOffset+500,10), CGUIVector2(xOffset+10,500), 5, 0.2f, CGUIColor(1,0,0,1), CGUIColor( 1,0,0,1));
+		pRender->DrawLine( CGUIVector2( xOffset+10,500), CGUIVector2(xOffset+990,500), 5, 0.2f, CGUIColor(1,0,0,1), CGUIColor( 1,0,0,1));
 	}
 	//------------------------------------------------------------------------------
 	void CGUISceneEffect::AfterRender( IGUIInterfaceRender* pRender )
 	{
-		if( !m_pTexture )
-		{
-			return;
-		}
-
+#if GUI_SCENEEFFECT_USE_VBO
 		//restore fbo
 		pRender->BindFramebuffer( m_oldfbo );
-
-		//restore camera
-		pRender->ApplyCamera( m_pOldCamera );
+#else
+		// copy the framebuffer pixels to a texture
+		pRender->BindTexture( m_pTexture->GetTextureImplement() );
+		pRender->CopyTexSubImage2D( 0, 0, 0, 0, 0, GetSceneWidth(), GetSceneHeight());
+		pRender->PopAttrib();
+#endif //#if GUI_SCENEEFFECT_USE_VBO
 
 		//restore view port
 		const CGUIIntSize& rSize = GSystem->GetScreenSize();
@@ -192,8 +229,9 @@ namespace guiex
 		//restore blend func
 		pRender->SetBlendFunc( oldBlendFunc );
 
-		//reset matrix
-		pRender->PopMatrix();
+		uint32 xOffset = 100;
+		pRender->DrawLine( CGUIVector2( xOffset+500,10), CGUIVector2(xOffset+10,500), 5, 0.2f, CGUIColor(1,0,0,1), CGUIColor( 1,0,0,1));
+		pRender->DrawLine( CGUIVector2( xOffset+10,500), CGUIVector2(xOffset+990,500), 5, 0.2f, CGUIColor(1,0,0,1), CGUIColor( 1,0,0,1));
 	}
 	//------------------------------------------------------------------------------
 }

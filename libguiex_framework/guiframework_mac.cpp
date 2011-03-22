@@ -15,7 +15,7 @@
 #include <libguiex_widget_game/guiwgt_game.h>
 
 //libguiex module
-#include <libguiex_module/font_cocoa/guifont_cocoa.h>
+#include <libguiex_module/font_ft2/guifont_ft2.h>
 #include <libguiex_module/imageloader_tga/guiimageloader_tga.h>
 #include <libguiex_module/filesys_cocoa/guifilesys_cocoa.h>
 #include <libguiex_module/configfile_tinyxml/guiconfigfile_tinyxml.h>
@@ -99,7 +99,7 @@ namespace guiex
 		GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_cocoa);
 		GUI_REGISTER_INTERFACE_LIB( IGUIFileSys_cocoa);
 		GUI_REGISTER_INTERFACE_LIB( IGUITouch_cocoa );
-		GUI_REGISTER_INTERFACE_LIB( IGUIFont_cocoa);
+		GUI_REGISTER_INTERFACE_LIB( IGUIFont_ft2);
 		GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
 		GUI_REGISTER_INTERFACE_LIB( IGUIScript_lua);
 		GUI_REGISTER_INTERFACE_LIB( IGUIPhysics_box2d );

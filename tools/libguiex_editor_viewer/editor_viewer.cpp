@@ -192,6 +192,7 @@ void WxGLCanvas::OnSize(wxSizeEvent& event)
 	wxGLCanvas::OnSize(event);
 	wxSize aSize = event.GetSize();
 	GSystem->SetScreenSize(aSize.x,aSize.y);
+	glViewport(aSize.x,aSize.y);
 }
 //------------------------------------------------------------------------------
 void WxGLCanvas::OnKeyDown( wxKeyEvent& event )
@@ -344,7 +345,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent, wxWindowID id, const wxString& title,
 	setVSync(1);
 
 	CGUIFrameworkViewer::ms_pFramework = new CGUIFrameworkViewer( );
-	CGUIFrameworkViewer::ms_pFramework->Initialize( CGUISize(1024, 768), strDataPath.c_str() );
+	CGUIFrameworkViewer::ms_pFramework->Initialize( CGUIIntSize(1024, 768), strDataPath.c_str() );
 	CGUIAssert::SetWarningCB( EditorWarningCB, NULL );
 	CGUISceneManager::Instance()->RegisterScenesFromDir( "/",".uip" );
 

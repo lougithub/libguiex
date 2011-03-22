@@ -234,6 +234,7 @@ void	WxEditorCanvasContainer::SetScreenSize( int width, int height )
 	{
 		m_pCanvas->UpdateCanvasSize( wxSize( width, height) );
 		SetVirtualSize( width,height );
+		glViewport(width,height);
 		Refresh();
 	}
 }

@@ -92,15 +92,6 @@ set( ${target_name}_font_dummy_SRCS
 	)
 source_group(font_dummy FILES ${${target_name}_font_dummy_SRCS} )
 
-#font_cocoa
-set( ${target_name}_font_cocoa_SRCS 
-	font_cocoa/guifont_cocoa.cpp
-	font_cocoa/guifont_cocoa.h
-	font_cocoa/guifontdata_cocoa.cpp
-	font_cocoa/guifontdata_cocoa.h
-	)
-source_group(font_cocoa FILES ${${target_name}_font_cocoa_SRCS} )
-
 #imageloader_tga
 set( ${target_name}_imageloader_tga_SRCS 
 	imageloader_tga/guiimagedata_tga.cpp
@@ -151,6 +142,16 @@ set( ${target_name}_script_lua_SRCS
 	script_lua/guiscript_lua.h
 	)
 source_group(script_lua FILES ${${target_name}_script_lua_SRCS} )
+
+
+#render_opengl_base
+set( ${target_name}_render_opengl_base_SRCS 
+	render_opengl_base/guirender_opengl_base.cpp
+	render_opengl_base/guirender_opengl_base.h
+	render_opengl_base/guitexture_opengl_base.cpp
+	render_opengl_base/guitexture_opengl_base.h
+	)
+source_group(render_opengl_base FILES ${${target_name}_render_opengl_base_SRCS} )
 
 #render_opengl
 set( ${target_name}_render_opengl_SRCS 
@@ -207,6 +208,7 @@ if( WIN32 )
 		${${target_name}_mouse_winapi_SRCS}
 		${${target_name}_mouse_default_SRCS}
 		${${target_name}_script_lua_SRCS}
+		${${target_name}_render_opengl_base_SRCS}
 		${${target_name}_render_opengl_SRCS}
 		${${target_name}_stringconv_winapi_SRCS}
 		${${target_name}_physics_box2d_SRCS}
@@ -222,10 +224,11 @@ elseif( APPLE )
 	set( ${target_name}_SRCS 
 		${${target_name}_configfile_tinyxml_SRCS}
 		${${target_name}_filesys_cocoa_SRCS}
-		${${target_name}_font_cocoa_SRCS}
+		${${target_name}_font_ft2_SRCS}
 		${${target_name}_font_dummy_SRCS}
 		${${target_name}_imageloader_tga_SRCS}
 		${${target_name}_render_opengles_SRCS}
+		${${target_name}_render_opengl_base_SRCS}
 		${${target_name}_stringconv_iconv_SRCS}
 		${${target_name}_stringconv_cocoa_SRCS}
 		${${target_name}_script_lua_SRCS}

@@ -215,6 +215,7 @@ void CMyCanvasLayer_DrawRect::Render( class IGUIInterfaceRender* pRender )
 	CGUICamera* pOldCamera = pRender->ApplyCamera( &m_aCamera );
 
 	pRender->PushMatrix();
+	pRender->MatrixMode( eMatrixMode_MODELVIEW );
 	pRender->LoadIdentityMatrix();
 
 	pRender->DrawRect(

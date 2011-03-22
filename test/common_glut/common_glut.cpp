@@ -58,17 +58,10 @@ void setVSync(int interval=1)
 //------------------------------------------------------------------------------
 void QuitApp()
 {
-	if( g_pFramework )
-	{
-		g_pFramework->Release();
-		delete g_pFramework;
-		g_pFramework = NULL;
-	}
-
 	exit( 0 );
 }
 //------------------------------------------------------------------------------
-void MouseMotion(int x, int y)
+void mouseMotionCB(int x, int y)
 {
 	CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeMousePos(CGUIVector2(x,y));
 }
@@ -78,7 +71,7 @@ void MouseWheel(int wheel, int direction, int x, int y)
 	CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeWheel(wheel);
 }
 //------------------------------------------------------------------------------
-void MouseButton(int button, int state, int x, int y)
+void mouseCB(int button, int state, int x, int y)
 {
 	switch(button)
 	{
@@ -117,7 +110,7 @@ void MouseButton(int button, int state, int x, int y)
 	}
 }
 //------------------------------------------------------------------------------
-void KeyChar(unsigned char key, int x, int y)
+void keyboardCB(unsigned char key, int x, int y)
 {
 	// extract some keys may be handled via key code and generate those too
 	int k = key;
@@ -171,7 +164,7 @@ void KeyChar(unsigned char key, int x, int y)
 	}
 }
 //------------------------------------------------------------------------------
-void KeyUpChar(unsigned char key, int x, int y)
+void keyboardUpCB(unsigned char key, int x, int y)
 {
 	// extract some keys may be handled via key code and generate those too
 	int k = key;
@@ -195,7 +188,7 @@ void KeyUpChar(unsigned char key, int x, int y)
 	}
 }
 //------------------------------------------------------------------------------
-void keySpecial(int key, int x, int y)
+void keySpecialCB(int key, int x, int y)
 {
 	std::map<int,EKeyCode>::iterator itor = g_mapKey_Glut2Guiex.find(key);
 	if( itor != g_mapKey_Glut2Guiex.end())
@@ -204,7 +197,7 @@ void keySpecial(int key, int x, int y)
 	}
 }
 //------------------------------------------------------------------------------
-void DrawFrame(void)
+void displayCB(void)
 {
 	// do updates
 	CGUITimer aCurTimer;
@@ -221,7 +214,18 @@ void DrawFrame(void)
 	glutSwapBuffers();
 }
 //------------------------------------------------------------------------------
-void keyUpSpecial(int key, int x, int y)
+void idleCB()
+{
+	glutPostRedisplay();
+}
+//------------------------------------------------------------------------------
+void reshapeCB(int width, int height)
+{
+	GSystem->SetScreenSize(width,height);
+	glViewport(0, 0, width, height);
+}
+//------------------------------------------------------------------------------
+void keyUpSpecialCB(int key, int x, int y)
 {
 	std::map<int,EKeyCode>::iterator itor = g_mapKey_Glut2Guiex.find(key);
 	if( itor != g_mapKey_Glut2Guiex.end())
@@ -229,9 +233,7 @@ void keyUpSpecial(int key, int x, int y)
 		CGUIInterfaceManager::Instance()->GetInterfaceKeyboard()->ChangeKeyState(itor->second, KEY_UP);
 	}
 }
-
-//------------------------------------------------------------------------------
-int main(int argc, char** argv)
+void RegisterKeyboard()
 {
 	g_mapKey_Glut2Guiex[GLUT_KEY_F1] = KC_F1;
 	g_mapKey_Glut2Guiex[GLUT_KEY_F2] = KC_F2;
@@ -254,6 +256,22 @@ int main(int argc, char** argv)
 	g_mapKey_Glut2Guiex[GLUT_KEY_HOME] = KC_HOME;
 	g_mapKey_Glut2Guiex[GLUT_KEY_END] = KC_END;
 	g_mapKey_Glut2Guiex[GLUT_KEY_INSERT] = KC_INSERT;
+}
+//------------------------------------------------------------------------------
+void exitCB()
+{
+	if( g_pFramework )
+	{
+		g_pFramework->Release();
+		delete g_pFramework;
+		g_pFramework = NULL;
+	}
+}
+
+//------------------------------------------------------------------------------
+int main(int argc, char** argv)
+{
+	atexit(exitCB);
 
 	// Do GLUT init
 	glutInit( &argc, argv );
@@ -262,22 +280,19 @@ int main(int argc, char** argv)
 	glutInitWindowPosition( 100, 100 );
 	glutCreateWindow( "libguiex test" );
 	glutSetCursor( GLUT_CURSOR_INHERIT );
-	glutDisplayFunc( DrawFrame );
-	glutMouseFunc( MouseButton );
+	glutDisplayFunc( displayCB );
+	glutIdleFunc(idleCB);
+	glutMouseFunc( mouseCB );
 	//glutMouseWheelFunc(MouseWheel);
-	glutMotionFunc( MouseMotion );
-	glutPassiveMotionFunc( MouseMotion );
-	//glutReshapeFunc(reshape);
-	glutKeyboardFunc( KeyChar );
-	glutSpecialFunc( keySpecial );
-	glutKeyboardUpFunc( KeyUpChar );
-	glutSpecialUpFunc( keyUpSpecial );
+	glutMotionFunc( mouseMotionCB );
+	glutPassiveMotionFunc( mouseMotionCB );
+	glutReshapeFunc(reshapeCB);
+	glutKeyboardFunc( keyboardCB );
+	glutSpecialFunc( keySpecialCB );
+	glutKeyboardUpFunc( keyboardUpCB );
+	glutSpecialUpFunc( keyUpSpecialCB );
 
 	setVSync( g_nVSync );
-
-	// Set the clear color
-	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-	glViewport(0,0,g_nScreenWidth,g_nScreenHeight);
 
 	//get data path
 	char fdir[_MAX_DIR];
@@ -287,6 +302,7 @@ int main(int argc, char** argv)
 
 	g_pFramework = CreateFramework( );
 	g_pFramework->Initialize( CGUIIntSize( g_nScreenWidth, g_nScreenHeight ), rDir.c_str() );
+	RegisterKeyboard();
 
 	g_aOldTimer.UpdateTime();
 	glutMainLoop();

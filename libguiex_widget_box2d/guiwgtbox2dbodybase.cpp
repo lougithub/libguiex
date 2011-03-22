@@ -57,6 +57,7 @@ namespace guiex
 		CGUIColor aColor( 1.0f, 0.0f, 0.0f, 1.0f );
 
 		pRender->PushMatrix();
+		pRender->MatrixMode( eMatrixMode_MODELVIEW );
 		pRender->LoadIdentityMatrix();
 
 		pRender->DrawRect( aRect, 3, 0,aColor );

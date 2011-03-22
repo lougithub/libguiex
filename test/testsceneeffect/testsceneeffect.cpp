@@ -8,11 +8,12 @@ public:
 	~CMyCanvasLayer_DrawWidget( );
 
 	virtual void Render( class IGUIInterfaceRender* pRender );
+	virtual void RenderSelf(IGUIInterfaceRender* pRender);
 
 	virtual void DestroySelf( );
 
 protected:
-	CGUICamera m_aCamera;
+	CGUIImage *m_pImage;
 };
 
 
@@ -87,23 +88,24 @@ CGUIFrameworkBase* CreateFramework( )
 //------------------------------------------------------------------------------
 CMyCanvasLayer_DrawWidget::CMyCanvasLayer_DrawWidget( const char* szLayerName )
 	:CGUICanvasLayer( szLayerName )
+	,m_pImage(NULL)
 {
-	m_aCamera.Restore();
+	//CGUIWidget* pWidget = NULL;
 
-	CGUIWidget* pWidget = NULL;
+	//pWidget = CGUIWidgetManager::Instance()->GetPage( "sample1.xml", "tilemap.uip" );
+	//pWidget->SetMovable( true );
+	//pWidget->SetParent( this );
+	//pWidget->Open()	;
 
-	pWidget = CGUIWidgetManager::Instance()->GetPage( "sample1.xml", "tilemap.uip" );
-	pWidget->SetMovable( true );
-	pWidget->SetParent( this );
-	pWidget->Open()	;
+	//pWidget = CGUIWidgetManager::Instance()->GetPage( "dialog_okcancel.xml", "common.uip" );
+	//pWidget->SetMovable( true );
+	//pWidget->SetParent( this );
+	//pWidget->Open()	;
 
-	pWidget = CGUIWidgetManager::Instance()->GetPage( "dialog_okcancel.xml", "common.uip" );
-	pWidget->SetMovable( true );
-	pWidget->SetParent( this );
-	pWidget->Open()	;
+	m_pImage = CGUIImageManager::Instance()->AllocateResource( "scrollbar_downbutton_up" );
 
 	CGUIAsPageTurn3D* pAs1 = CGUIAsManager::Instance()->AllocateResource<CGUIAsPageTurn3D>();
-	pAs1->SetLooping( true );
+	//pAs1->SetLooping( true );
 	pAs1->SetTotalTime( 5.0f );
 	pAs1->SetGridSize( CGUIIntSize(30, 30) );
 	pAs1->SetReceiver( this );
@@ -125,16 +127,25 @@ CMyCanvasLayer_DrawWidget::CMyCanvasLayer_DrawWidget( const char* szLayerName )
 //------------------------------------------------------------------------------
 CMyCanvasLayer_DrawWidget::~CMyCanvasLayer_DrawWidget( )
 {
+	m_pImage->RefRelease();
+	m_pImage = NULL;
 }
-
+//------------------------------------------------------------------------------
+void CMyCanvasLayer_DrawWidget::RenderSelf(IGUIInterfaceRender* pRender)
+{
+	//DrawImage( pRender, m_pImage, CGUIRect( 0,0, 200,200 ));
+	//pRender->DrawLine( CGUIVector2( 500,10), CGUIVector2(10,500), 5, 0.2f, CGUIColor(1,0,0,1), CGUIColor( 0,1,0,1));
+	//pRender->DrawLine( CGUIVector2( 10,500), CGUIVector2(990,500), 5, 0.2f, CGUIColor(1,0,0,1), CGUIColor( 0,1,0,1));
+	// pRender->DrawLine( CGUIVector2( 990,500), CGUIVector2(500,10), 5, 0.2f, CGUIColor(1,0,0,1), CGUIColor( 0,1,0,1));
+}
 //------------------------------------------------------------------------------
 void CMyCanvasLayer_DrawWidget::Render( class IGUIInterfaceRender* pRender )
 {
-	CGUICamera* pOldCamera = pRender->ApplyCamera( &m_aCamera );
-
 	CGUICanvasLayer::Render( pRender );
 
-	pRender->ApplyCamera( pOldCamera );
+	//CGUIImage* pImage = CGUIImageManager::Instance()->AllocateResource("scrollbar_downbutton_up" );
+	//pImage->Draw( pRender, CGUIRect( CGUIVector2(200,200), pImage->GetSize()*10 ), 0, CGUIColor(), 1.0f );
+	//pImage->RefRelease();
 }
 
 //------------------------------------------------------------------------------
@@ -232,7 +243,6 @@ void CMyCanvasLayer_DrawRect::Render( class IGUIInterfaceRender* pRender )
 	CGUICamera* pOldCamera = pRender->ApplyCamera( &m_aCamera );
 
 	pRender->PushMatrix();
-	pRender->LoadIdentityMatrix();
 
 	pRender->DrawRect(
 		m_aRect, 

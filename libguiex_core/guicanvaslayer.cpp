@@ -18,7 +18,7 @@ namespace guiex
 {
 	//------------------------------------------------------------------------------
 	CGUICanvasLayer::CGUICanvasLayer( const char* szLayerName, bool bTopMost /*= false*/, const CGUISize& rCanvasSize /*= GSystem->GetScreenSize()*/ )
-		:CGUIWidget( "CGUICanvasLayer", "szLayerName", "" )
+		:CGUIWidget( "CGUICanvasLayer", szLayerName, "" )
 		,m_strLayerName( szLayerName )
 		,m_bTopMost( bTopMost )
 	{

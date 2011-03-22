@@ -55,30 +55,42 @@ namespace guiex
 		*/
 		virtual ~IGUIInterfaceRender();
 
+		virtual void ClearDepth (real depth) = 0;
 		virtual void ClearColor(real red, real green, real blue, real alpha) = 0;
 		virtual void Clear( uint32 uFlag ) = 0;
 		virtual void SetDepthTest( bool bEnable ) = 0;
 		virtual void SetBlendFunc( const SGUIBlendFunc& rBlendFuncType ) = 0;
 		virtual void GetBlendFunc( SGUIBlendFunc& rBlendFuncType ) = 0;
 		virtual void SetViewport( int32 x, int32 y, uint32 width, uint32 height) = 0;
+		virtual void LookAt(real eyeX, real eyeY, real eyeZ, real lookAtX, real lookAtY, real lookAtZ, real upX, real upY, real upZ) = 0;
+		virtual void Perspective(real fovy, real aspect, real zNear, real zFar) = 0;
+		virtual void PushAttrib (uint32 uFlag) = 0;
+		virtual void PopAttrib ( ) = 0;
+		virtual void DrawBuffer( EBufferMode mode ) = 0;
+		virtual void ReadBuffer( EBufferMode mode ) = 0;
+		virtual void BindTexture( const CGUITextureImp* pTexture ) = 0;
+		virtual void CopyTexSubImage2D ( int32 level, int32 xoffset, int32 yoffset, int32 x, int32 y, uint32 width, uint32 height) = 0;
 
 		virtual void MatrixMode( EMatrixMode eMode ) = 0;
 		virtual void PushMatrix() = 0;
 		virtual void PopMatrix() = 0;
-		virtual void SetModelViewMatrixMode( ) = 0;
 		virtual void MultMatrix( const CGUIMatrix4& rMatrix ) = 0;
 		virtual void LoadIdentityMatrix( ) = 0;
 
 		virtual void GenFramebuffers( uint32 n, uint32* framebuffers ) = 0;
 		virtual void DeleteFramebuffers( uint32 n, const uint32* framebuffers ) = 0;
 		virtual void BindFramebuffer( uint32 framebuffer ) = 0;
-		virtual void GetCurrentBindingFrameBuffer( int32* framebuffer ) = 0;
+		virtual void GetBindingFrameBuffer( int32* framebuffer ) = 0;
 		virtual void FramebufferTexture2D_Color( const CGUITextureImp* pTexture, int32 level ) = 0;
 		virtual bool CheckFramebufferStatus( ) = 0;
 
-		//virtual void GenRenderbuffers( uint32 n, uint32* renderbuffers) = 0;
-		//virtual void BindRenderbuffer( uint32 renderbuffer) = 0;
-		
+		virtual void GenRenderbuffers(uint32 n, uint32* renderbuffers) = 0;
+		virtual void BindRenderbuffer( uint32 renderbuffer) = 0;
+		virtual void GetBindingRenderBuffer( int32* renderbuffer ) = 0;
+		virtual void RenderbufferStorage_Depth( uint32 width, uint32 height) = 0;
+		virtual void FramebufferRenderbuffer_Depth( uint32 renderbuffer ) = 0;
+		virtual void DeleteRenderbuffers(uint32 n, const uint32* renderbuffers) = 0;
+
 		virtual void DrawRect(
 			const CGUIRect& rDestRect, 
 			real fLineWidth,

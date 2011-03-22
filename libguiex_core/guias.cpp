@@ -279,7 +279,6 @@ namespace guiex
 		else
 		{
 			CGUIAs* pAs = m_listSuccessor.front();
-			pAs->RefRelease();
 			m_listSuccessor.pop_front();
 			return pAs;
 		}

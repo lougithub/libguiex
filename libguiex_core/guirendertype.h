@@ -18,6 +18,7 @@
 //============================================================================//
 // declare
 //============================================================================// 
+#pragma pack( push, 1 )
 namespace guiex
 {
 
@@ -79,6 +80,12 @@ namespace guiex
 		SR_V3F vertices;
 	};
 
+	struct SR_C4UB_V3F
+	{
+		SR_C4UB color;
+		SR_V3F vertices;
+	};
+
 
 	struct SR_V2F_C4F_T2F
 	{
@@ -98,9 +105,17 @@ namespace guiex
 		//! top right
 		SR_V2F_C4F_T2F	tr;
 	};
+}
+#pragma pack( pop )
 
 
+//============================================================================//
+// declare
+//============================================================================// 
+namespace guiex
+{
 	extern void ConvGUIColor_2_C4f( const class CGUIColor& rSrc, SR_C4F& rDst );
 }
+
 
 #endif //__GUI_RENDERTYPE_20110114_H__

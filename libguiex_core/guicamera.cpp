@@ -159,6 +159,11 @@ namespace guiex
 		m_fFov = rFov;
 	}
 	//------------------------------------------------------------------------------
+	void CGUICamera::SetAspectRatio( real rRatio )
+	{
+		m_fAspectRatio = rRatio;
+	}
+	//------------------------------------------------------------------------------
 	real CGUICamera::GetAspectRatio() const
 	{
 		return m_fAspectRatio;

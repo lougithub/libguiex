@@ -1539,6 +1539,7 @@ namespace guiex
 				while( pSuccessor = pAs->PopSuccessor())
 				{
 					pSuccessor->GetReceiver()->PlayAs(pSuccessor);
+					pSuccessor->RefRelease();
 				}
 				pAs->RefRelease();
 			}

@@ -95,11 +95,14 @@ namespace guiex
 		eBlendFunc_ZERO = 0,
 		eBlendFunc_ONE,
 		eBlendFunc_SRC_COLOR,
+		eBlendFunc_DST_COLOR,
 		eBlendFunc_ONE_MINUS_SRC_COLOR,
+		eBlendFunc_ONE_MINUS_DST_COLOR,
 		eBlendFunc_SRC_ALPHA,
 		eBlendFunc_ONE_MINUS_SRC_ALPHA,
 		eBlendFunc_DST_ALPHA,
 		eBlendFunc_ONE_MINUS_DST_ALPHA,
+		eBlendFunc_SRC_ALPHA_SATURATE,
 	};
 
 	enum ERenderBuffer
@@ -113,6 +116,21 @@ namespace guiex
 	{
 		eMatrixMode_PROJECTION = 0,
 		eMatrixMode_MODELVIEW,
+	};
+
+	enum EAttribMask
+	{
+		eAttribMask_COLOR_BUFFER_BIT = 0x00000001,
+		eAttribMask_PIXEL_MODE_BIT = 0x00000002,
+
+		eAttribMask_ALL_ATTRIB_BITS = 0xF0000000,
+	};
+
+	enum EBufferMode
+	{
+		eBufferMode_Back = 0,
+		eBufferMode_Front,
+
 	};
 
 }//namespace guiex

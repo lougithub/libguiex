@@ -18,7 +18,6 @@
 #include "guiintsize.h"
 #include "guisize.h"
 #include "guirendertype.h"
-#include "guicamera.h"
 
 //============================================================================//
 // declare
@@ -28,6 +27,8 @@ namespace guiex
 	class IGUIInterfaceRender;
 	class CGUITexture;
 }
+#define GUI_SCENEEFFECT_USE_VBO 0
+#define GUI_SCENEEFFECT_USE_RENDERBUFFER 1
 
 //============================================================================//
 // class
@@ -47,6 +48,9 @@ namespace guiex
 		virtual void BeforeRender( IGUIInterfaceRender* pRender );
 		virtual void AfterRender( IGUIInterfaceRender* pRender );
 
+		uint32 GetSceneWidth( ) const;
+		uint32 GetSceneHeight( ) const;
+
 	protected:
 		virtual ~CGUISceneEffect();
 		virtual void ProcessCaptureTexture( IGUIInterfaceRender* pRender ) = 0;
@@ -57,13 +61,17 @@ namespace guiex
 		CGUISize m_aSceneSize;
 	
 	private:
+#if GUI_SCENEEFFECT_USE_VBO
 		uint32 m_fbo;
 		int32 m_oldfbo;
 
-		SGUIBlendFunc m_aBlendFunc;
+#if GUI_SCENEEFFECT_USE_RENDERBUFFER
+		uint32 m_rbo;
+#endif //#if GUI_SCENEEFFECT_USE_RENDERBUFFER
 
-		CGUICamera m_aCamera;
-		CGUICamera *m_pOldCamera;
+#endif //#if GUI_SCENEEFFECT_USE_VBO
+
+		SGUIBlendFunc m_aBlendFunc;
 	};
 }
 

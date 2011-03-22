@@ -84,7 +84,7 @@ namespace guiex
 	public:
 		CGUIString m_strPath; //font file path
 
-		mutable FT_Face m_aFtFace;
+		FT_Face m_aFtFace;
 		typedef std::map<uint32, CGUICharsData_ft2*> TMapSizeChars;
 		TMapSizeChars m_mapSizeChars;
 	};

@@ -607,7 +607,7 @@ namespace guiex
 		IGUIInterfaceRender* pRender = CGUIInterfaceManager::Instance()->GetInterfaceRender();
 
 		pRender->PushMatrix();
-		pRender->SetModelViewMatrixMode();
+		pRender->MatrixMode(eMatrixMode_MODELVIEW);
 		pRender->LoadIdentityMatrix();
 
 		//render canvas

@@ -32,6 +32,9 @@ namespace guiex
 	{
 		SetSizeType(eScreenValue_Percentage);
 		SetSize( 1.0f, 1.0f );
+
+		SetMouseConsumed(false);
+		SetHitable( false );
 	}
 	//------------------------------------------------------------------------------
 	CGUIUICanvasLayer::~CGUIUICanvasLayer()

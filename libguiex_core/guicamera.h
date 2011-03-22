@@ -41,6 +41,7 @@ namespace guiex
 
 		real GetFov() const;
 		void SetFov( real rFov );
+		void SetAspectRatio( real rRatio );
 		real GetAspectRatio() const;
 		real GetNearPlane() const;
 		real GetFarPlane() const;

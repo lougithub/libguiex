@@ -144,13 +144,12 @@ namespace guiex
 	{
 		//uint32 n = m_aGridSize.m_uWidth * m_aGridSize.m_uHeight;
 		//pRender->DrawGrid( m_pTexture->GetTextureImplement(), m_pTexCoordinates, m_pVertices, m_pIndices, n );
-
-		pRender->DrawTile( CGUIRect( CGUIVector2(), m_aSceneSize ), 0, m_pTexture->GetTextureImplement(), CGUIRect(0,0,1,1),  eImageOrientation_Normal, CGUIColor());
 		
-		CGUIImage* pImage = CGUIImageManager::Instance()->AllocateResource("scrollbar_downbutton_highlight" );
-		pRender->DrawTile( CGUIRect( CGUIVector2(100,100), pImage->GetSize()*4 ), 0, pImage->GetTexture()->GetTextureImplement(), CGUIRect(0,0,1,1),  eImageOrientation_Normal, CGUIColor());
-		pImage->RefRelease();
- 
+		//CGUIImage* pImage = CGUIImageManager::Instance()->AllocateResource("scrollbar_downbutton_up" );
+		//pImage->Draw( pRender, CGUIRect( CGUIVector2(200,200), pImage->GetSize()*10 ), 0, CGUIColor(), 1.0f );
+		//pImage->RefRelease();
+		
+		pRender->DrawTile( CGUIRect( CGUIVector2(), m_aSceneSize ), 0, m_pTexture->GetTextureImplement(), CGUIRect(0,0,1,1),  eImageOrientation_Normal, CGUIColor());
 	}
 	//------------------------------------------------------------------------------
 	/** 
