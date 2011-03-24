@@ -190,8 +190,8 @@ namespace guiex
 	//-----------------------------------------------------------------------------
 	CGUITextureImp*	IGUIRender_opengles::CreateTexture(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat)
 	{
-		CGUITexture_opengles* pTexture = new CGUITexture_opengles(this);
-		pTexture->SetOpenglTextureSize(nWidth,nHeight,ePixelFormat);
+		CGUITextureImp* pTexture = this->CreateTexture();
+		((CGUITexture_opengles*)pTexture)->SetOpenglTextureSize(nWidth,nHeight,ePixelFormat);
 		return pTexture;
 	}
 	//------------------------------------------------------------------------------

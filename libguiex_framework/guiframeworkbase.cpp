@@ -67,6 +67,7 @@ namespace guiex
 		catch (...)
 		{
 			OutputFatalError( "unknown error" );
+			return -1;
 		}
 	}
 	//------------------------------------------------------------------------------ 

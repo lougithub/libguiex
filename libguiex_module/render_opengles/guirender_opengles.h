@@ -59,7 +59,6 @@ namespace guiex
 
 	protected:
 		virtual int DoInitialize(void* );
-		virtual void DoDestroy();
 		
 		virtual	CGUITextureImp*	CreateTexture(void);
 		virtual	CGUITextureImp*	CreateTexture(const CGUIString& filename);

@@ -75,6 +75,9 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	uint32 CGUITexture_opengl_base::GetBuffer(uint8* pBuffer, uint32 nBufferSize, EGuiPixelFormat& rPixelFormat)
 	{
+		GUI_ASSERT(0, "TODO: implement it later" );
+		return -1;
+		/*
 		GUI_ASSERT( pBuffer && nBufferSize == GetBufferSize(), "invalid parameter");
 
 		GLenum eFormat = 0;
@@ -98,6 +101,7 @@ namespace guiex
 		rPixelFormat = m_ePixelFormat;
 
 		return 0;
+		 */
 	}
 	//------------------------------------------------------------------------------
 	int32	CGUITexture_opengl_base::LoadFromFile(const CGUIString& filename )

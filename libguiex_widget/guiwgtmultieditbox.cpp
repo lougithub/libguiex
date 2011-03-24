@@ -725,7 +725,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtMultiEditBox::OnKeyPressed_Down(CGUIEventKeyboard* pEvent)
 	{
-		if( m_aLineList.empty() ||  m_nCursorLine == m_aLineList.size()-1)
+		if( m_aLineList.empty() ||  m_nCursorLine == int32(m_aLineList.size()-1))
 		{
 			//last line
 			return;

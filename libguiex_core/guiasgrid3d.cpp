@@ -218,8 +218,6 @@ namespace guiex
 	{
 		CGUIAsGrid3D::OnUpdate( );
 
-		int i, j;
-
 		for( uint32 i = 0; i < (m_aGridSize.GetWidth()+1); i++ )
 		{
 			for( uint32 j = 0; j < (m_aGridSize.GetHeight()+1); j++ )
