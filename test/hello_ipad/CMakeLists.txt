@@ -61,7 +61,6 @@ elseif( WIN32 )
     add_executable( ${target_name} ${${target_name}_SRCS} )
     
     add_dependencies( 
-    ${target_name}
 		${target_name} 
 		libguiex_module 
 		libguiex_widget 

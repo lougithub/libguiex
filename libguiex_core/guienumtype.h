@@ -118,14 +118,6 @@ namespace guiex
 		eMatrixMode_MODELVIEW,
 	};
 
-	enum EAttribMask
-	{
-		eAttribMask_COLOR_BUFFER_BIT = 0x00000001,
-		eAttribMask_PIXEL_MODE_BIT = 0x00000002,
-
-		eAttribMask_ALL_ATTRIB_BITS = 0xF0000000,
-	};
-
 	enum EBufferMode
 	{
 		eBufferMode_Back = 0,

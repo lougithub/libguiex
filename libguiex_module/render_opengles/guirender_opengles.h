@@ -12,7 +12,7 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_module\render_opengl_base\guirender_opengl_base.h>
+#include <libguiex_module/render_opengl_base/guirender_opengl_base.h>
 #include <libguiex_core/guiinterfacerender.h>
 #include <libguiex_core/guirect.h>
 #include <libguiex_core/guimatrix4.h>
@@ -34,8 +34,8 @@ namespace guiex
 
 	public:	//api
 		virtual void ClearDepth (real depth);
-		virtual void LookAt(float eyeX, float eyeY, float eyeZ, float lookAtX, float lookAtY, float lookAtZ, float upX, float upY, float upZ);
-		virtual void Perspective(GLfloat fovy, GLfloat aspect, GLfloat zNear, GLfloat zFar);
+		virtual void LookAt(real eyeX, real eyeY, real eyeZ, real lookAtX, real lookAtY, real lookAtZ, real upX, real upY, real upZ);
+		virtual void Perspective(real fovy, real aspect, real zNear, real zFar);
 
 		virtual void GenFramebuffers( uint32 n, uint32* framebuffers );
 		virtual void DeleteFramebuffers( uint32 n, const uint32* framebuffers );
@@ -54,7 +54,13 @@ namespace guiex
 		virtual void BeginRender(void);
 		virtual void EndRender(void);
 
+		virtual void SetWireFrame( bool bWireFrame);
+		virtual bool IsWireFrame( ) const;
+
 	protected:
+		virtual int DoInitialize(void* );
+		virtual void DoDestroy();
+		
 		virtual	CGUITextureImp*	CreateTexture(void);
 		virtual	CGUITextureImp*	CreateTexture(const CGUIString& filename);
 		virtual	CGUITextureImp*	CreateTexture(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat);

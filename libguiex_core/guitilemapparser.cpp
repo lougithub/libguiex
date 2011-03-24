@@ -580,7 +580,7 @@ namespace guiex
 		else
 		{
 			StringToValue( szOpacity, layer.opacity );
-			if( szOpacity == "0" )
+			if( layer.opacity == 0.0f )
 			{
 				layer.visible = false;
 			}

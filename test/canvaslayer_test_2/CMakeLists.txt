@@ -39,9 +39,6 @@ if( APPLE )
 	macro_set_bundle_mac( ${target_name} )
 
 	add_executable( ${target_name} MACOSX_BUNDLE ${${target_name}_SRCS} )
-
-	# code signing
-	set_target_properties(${target_name} PROPERTIES XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer")
 	
 	add_dependencies( 
 		${target_name} 
@@ -51,6 +48,9 @@ if( APPLE )
 		libguiex_script_wrapper 
 		libguiex_framework
 		)
+
+	# code signing
+	set_target_properties(${target_name} PROPERTIES XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer")
 
     macro_set_target_link_libraries_mac( ${target_name} )
 	macro_copy_resource_mac( ${target_name} "${PROJECT_SOURCE_DIR}/data/test" )

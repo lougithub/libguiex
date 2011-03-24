@@ -51,10 +51,8 @@ namespace guiex
 		virtual void SetBlendFunc( const SGUIBlendFunc& rBlendFuncType );
 		virtual void GetBlendFunc( SGUIBlendFunc& rBlendFuncType );
 		virtual void SetViewport( int32 x, int32 y, uint32 width, uint32 height);
-		virtual void PushAttrib (uint32 uFlag);
-		virtual void PopAttrib ( );
-		virtual void DrawBuffer( EBufferMode mode );
-		virtual void ReadBuffer( EBufferMode mode );
+		//virtual void DrawBuffer( EBufferMode mode );
+		//virtual void ReadBuffer( EBufferMode mode );
 		virtual void BindTexture( const CGUITexture* pTexture );
 		virtual void CopyTexSubImage2D ( int32 level, int32 xoffset, int32 yoffset, int32 x, int32 y, uint32 width, uint32 height);
 
@@ -125,8 +123,7 @@ namespace guiex
 		virtual	uint32 GetHorzScreenDPI(void) const;
 		virtual	uint32 GetVertScreenDPI(void) const;
 
-		virtual void SetWireFrame( bool bWireFrame);
-		virtual bool IsWireFrame( ) const;
+
 		virtual void EnableClip( bool bEnable );
 		virtual bool IsEnableClip( ) const;
 

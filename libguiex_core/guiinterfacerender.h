@@ -65,10 +65,8 @@ namespace guiex
 		virtual void SetViewport( int32 x, int32 y, uint32 width, uint32 height) = 0;
 		virtual void LookAt(real eyeX, real eyeY, real eyeZ, real lookAtX, real lookAtY, real lookAtZ, real upX, real upY, real upZ) = 0;
 		virtual void Perspective(real fovy, real aspect, real zNear, real zFar) = 0;
-		virtual void PushAttrib (uint32 uFlag) = 0;
-		virtual void PopAttrib ( ) = 0;
-		virtual void DrawBuffer( EBufferMode mode ) = 0;
-		virtual void ReadBuffer( EBufferMode mode ) = 0;
+		//virtual void DrawBuffer( EBufferMode mode ) = 0;
+		//virtual void ReadBuffer( EBufferMode mode ) = 0;
 		virtual void BindTexture( const CGUITexture* pTexture ) = 0;
 		virtual void CopyTexSubImage2D ( int32 level, int32 xoffset, int32 yoffset, int32 x, int32 y, uint32 width, uint32 height) = 0;
 

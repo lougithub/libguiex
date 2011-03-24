@@ -1,5 +1,5 @@
 /** 
-* @file guirender_ft2.cpp
+* @file guifont_ft2.cpp
 * @brief use freetype2 as font engine
 * @author ken
 * @date 2006-02-06
@@ -10,8 +10,8 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_module\font_ft2\guifont_ft2.h>
-#include <libguiex_module\font_ft2\guifontdata_ft2.h>
+#include <libguiex_module/font_ft2/guifont_ft2.h>
+#include <libguiex_module/font_ft2/guifontdata_ft2.h>
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guilogmsgmanager.h>
 #include <libguiex_core/guiinterfacemanager.h>

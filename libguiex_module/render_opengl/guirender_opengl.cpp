@@ -203,5 +203,30 @@ namespace guiex
 	{
 		gluLookAt( eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
 	}
+	//------------------------------------------------------------------------------
+	/** 
+	 * @brief toggle wire frame.
+	 */
+	void IGUIRender_opengl::SetWireFrame( bool bWireFrame)
+	{
+		if( bWireFrame )
+		{
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE );
+			glDisable( GL_CULL_FACE );
+		}
+		else
+		{
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			glEnable( GL_CULL_FACE );
+		}
+	}
+	//------------------------------------------------------------------------------
+	bool IGUIRender_opengl::IsWireFrame( ) const
+	{
+		GLint nPolygonMode[2];
+		glGetIntegerv( GL_POLYGON_MODE, nPolygonMode );
+		return (nPolygonMode[1]==GL_LINE);
+	}
 	//-----------------------------------------------------------------------------
+	
 }//namespace guiex

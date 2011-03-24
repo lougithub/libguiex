@@ -44,7 +44,7 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	int IGUIRender_opengles::DoInitialize(void* pData )
+	int32 IGUIRender_opengles::DoInitialize(void* pData )
 	{
 		TRY_THROW_OPENGL_ERROR( "render interface initialize start" );
 
@@ -101,15 +101,15 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::DeleteRenderbuffers(uint32 n, const uint32* renderbuffers)
 	{
-		glDeleteRenderbuffersOES(n, &renderbuffers);
+		glDeleteRenderbuffersOES(n, renderbuffers);
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::RenderbufferStorage_Depth( uint32 width, uint32 height)
 	{
-		glRenderbufferStorageOES( GL_RENDERBUFFER_OES, GL_DEPTH_COMPONENT_OES, width, height);
+		glRenderbufferStorageOES( GL_RENDERBUFFER_OES, GL_DEPTH_COMPONENT16_OES, width, height);
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengl::FramebufferRenderbuffer_Depth( uint32 renderbuffer )
+	void IGUIRender_opengles::FramebufferRenderbuffer_Depth( uint32 renderbuffer )
 	{
 		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_DEPTH_ATTACHMENT_OES, GL_RENDERBUFFER_OES, renderbuffer);
 	}
@@ -190,7 +190,7 @@ namespace guiex
 	//-----------------------------------------------------------------------------
 	CGUITextureImp*	IGUIRender_opengles::CreateTexture(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat)
 	{
-		CGUITexture_opengl* pTexture = new CGUITexture_opengl(this);
+		CGUITexture_opengles* pTexture = new CGUITexture_opengles(this);
 		pTexture->SetOpenglTextureSize(nWidth,nHeight,ePixelFormat);
 		return pTexture;
 	}
@@ -292,6 +292,16 @@ namespace guiex
 	
 		/* Translate Eye to Origin */
 		glTranslatef(-eyex, -eyey, -eyez);
+	}
+	//-----------------------------------------------------------------------------	
+	void IGUIRender_opengles::SetWireFrame( bool /*bWireFrame*/)
+	{
+		//TODO: implement later
+	}
+	//-----------------------------------------------------------------------------	
+	bool IGUIRender_opengles::IsWireFrame( ) const
+	{
+		return false;
 	}
 	//-----------------------------------------------------------------------------	
 }//namespace guiex

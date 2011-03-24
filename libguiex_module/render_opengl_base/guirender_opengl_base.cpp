@@ -204,7 +204,7 @@ namespace guiex
 		glEnable( GL_LINE_SMOOTH );
 
 		glEnable(GL_TEXTURE_2D);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
 		glEnable(GL_CULL_FACE);
@@ -286,44 +286,20 @@ namespace guiex
 		glViewport( x, y, width, height );
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengl_base::PushAttrib (uint32 uFlag)
-	{
-		GLbitfield bitfield = 0;
-		if( uFlag & eAttribMask_COLOR_BUFFER_BIT )
-		{
-			bitfield |= GL_COLOR_BUFFER_BIT;
-		}
-		if( uFlag & eAttribMask_PIXEL_MODE_BIT )
-		{
-			bitfield |= GL_PIXEL_MODE_BIT;
-		}
-		if( uFlag & eAttribMask_ALL_ATTRIB_BITS )
-		{
-			bitfield |= GL_ALL_ATTRIB_BITS;
-		}
-		
-		glPushAttrib( bitfield ); 
-	}
-	//------------------------------------------------------------------------------
-	void IGUIRender_opengl_base::PopAttrib( )
-	{
-		glPopAttrib();
-	}
-	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::CopyTexSubImage2D ( int32 level, int32 xoffset, int32 yoffset, int32 x, int32 y, uint32 width, uint32 height)
 	{
 		glCopyTexSubImage2D(GL_TEXTURE_2D, level, xoffset, yoffset, x, y, width, height);
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengl_base::DrawBuffer( EBufferMode mode )
-	{
-		glDrawBuffer( BufferMode_Engin2GL(mode) );
-	}
+	//void IGUIRender_opengl_base::DrawBuffer( EBufferMode mode )
+	//{
+	//	glDrawBuffer( BufferMode_Engin2GL(mode) );
+	//}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengl_base::ReadBuffer( EBufferMode mode )
-	{
-		glReadBuffer( BufferMode_Engin2GL(mode) );
-	}
+	//void IGUIRender_opengl_base::ReadBuffer( EBufferMode mode )
+	//{
+	//	glReadBuffer( BufferMode_Engin2GL(mode) );
+	//}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::PushMatrix()
 	{
@@ -417,30 +393,7 @@ namespace guiex
 
 		return pOldCamera;
 	}
-	//------------------------------------------------------------------------------
-	/** 
-	* @brief toggle wire frame.
-	*/
-	void IGUIRender_opengl_base::SetWireFrame( bool bWireFrame)
-	{
-		if( bWireFrame )
-		{
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE );
-			glDisable( GL_CULL_FACE );
-		}
-		else
-		{
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-			glEnable( GL_CULL_FACE );
-		}
-	}
-	//------------------------------------------------------------------------------
-	bool IGUIRender_opengl_base::IsWireFrame( ) const
-	{
-		GLint nPolygonMode[2];
-		glGetIntegerv( GL_POLYGON_MODE, nPolygonMode );
-		return (nPolygonMode[1]==GL_LINE);
-	}
+
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::DrawRect(
 		const CGUIRect& rDestRect, 
