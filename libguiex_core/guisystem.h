@@ -139,8 +139,8 @@ namespace guiex
 		//********************************************************
 		//	global key event
 		//********************************************************
-		void RegisterGlobalKeyReceiver( CGUIWidget* pReceiver, CGUIWidget* pRoot);
-		void UngisterGlobalKeyByRoot( CGUIWidget* pRoot);	
+		void RegisterGlobalKeyReceiver( CGUIWidget* pReceiver );
+		void UngisterGlobalKeyReceiver( CGUIWidget* pReceiver);	
 		void UngisterAllGlobalKey( );
 
 		void RegisterResourceManager( class CGUIResourceManagerBase* pMgr );
@@ -238,8 +238,7 @@ namespace guiex
 
 		//----------------------------------------------------------------------
 		//global key event
-		/*receiver*/	/*root of this receiver*/
-		typedef std::vector<std::pair<CGUIWidget*, CGUIWidget*> > TGlobalKeyObj;
+		typedef std::vector<CGUIWidget*> TGlobalKeyObj;
 		TGlobalKeyObj m_vecGlobalKeyObj;
 		//global key event
 		//----------------------------------------------------------------------

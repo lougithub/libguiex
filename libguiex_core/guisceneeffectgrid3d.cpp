@@ -57,52 +57,44 @@ namespace guiex
 		m_pTexCoordinates = new SR_T2F[(m_aGridSize.m_uWidth+1)*(m_aGridSize.m_uHeight+1)];
 		m_pIndices = new uint16[ m_aGridSize.m_uWidth * m_aGridSize.m_uHeight * 6];
 
-		//real *vertArray = (real*)m_pVertices;
-		//real *texArray = (real*)m_pTexCoordinates;
-		uint16 *idxArray = (uint16 *)m_pIndices;
-
 		for( uint32 x = 0; x < m_aGridSize.m_uWidth; x++ )
 		{
 			for( uint32 y = 0; y < m_aGridSize.m_uHeight; y++ )
 			{
+				uint16 idxTL = x * (m_aGridSize.m_uHeight+1) + y; //top left
+				uint16 idxTR = (x+1) * (m_aGridSize.m_uHeight+1) + y; //top right
+				uint16 idxBR = (x+1) * (m_aGridSize.m_uHeight+1) + (y+1); //bottom right
+				uint16 idxBL = x * (m_aGridSize.m_uHeight+1) + (y+1); //bottom left
+
+				uint16	tempidx[6] = { idxTL, idxBL, idxTR, idxBR, idxTR, idxBL };
 				int idx = (y * m_aGridSize.m_uWidth) + x;
-
-				uint16 a = x * (m_aGridSize.m_uHeight+1) + y;
-				uint16 b = (x+1) * (m_aGridSize.m_uHeight+1) + y;
-				uint16 c = (x+1) * (m_aGridSize.m_uHeight+1) + (y+1);
-				uint16 d = x * (m_aGridSize.m_uHeight+1) + (y+1);
-
-				uint16	tempidx[6] = { a, b, d, b, c, d };
-				memcpy( &idxArray[6*idx], tempidx, 6*sizeof(uint16) );
+				memcpy( &m_pIndices[6*idx], tempidx, 6*sizeof(uint16) );
 
 				real x1 = x * m_aStep.x;
 				real x2 = x1 + m_aStep.x;
 				real y1 = y * m_aStep.y;
 				real y2 = y1 + m_aStep.y;
 
-				uint16 l1[4] = { a, b, c, d };
-				SR_V3F	e = {x1,y1,0};
-				SR_V3F	f = {x2,y1,0};
-				SR_V3F	g = {x2,y2,0};
-				SR_V3F	h = {x1,y2,0};
+				SR_V3F	vTL = {x1,y1,0}; //top left
+				SR_V3F	vTR = {x2,y1,0}; //top right
+				SR_V3F	vBR = {x2,y2,0}; //bottom right
+				SR_V3F	vBL = {x1,y2,0}; //bottom left
 
-				SR_V3F l2[4] = { e, f, g, h };
-
-				uint16 tex1[4] = { a, b, c, d };
-				SR_V2F tex2[4] = { {x1, y1}, {x2, y1}, {x2, y2}, {x1, y2} };
+				uint16 indexs[4] = { idxTL, idxTR, idxBR, idxBL };
+				SR_V3F vertices[4] = { vTL, vTR, vBR, vBL };
 
 				for( int32 i = 0; i < 4; i++ )
 				{
-					m_pVertices[ l1[i] ] = l2[i];
+					m_pVertices[ indexs[i] ] = vertices[i];
 
-					m_pTexCoordinates[ tex1[i] ].u = tex2[i].x / m_pTexture->GetWidth();
+					m_pTexCoordinates[ indexs[i] ].u = vertices[i].x / m_pTexture->GetWidth();
 					if( m_bIsTextureFlipped )
 					{
-						m_pTexCoordinates[ tex1[i] ].v = (m_aSceneSize.m_fHeight - tex2[i].y) / m_pTexture->GetHeight();
+						m_pTexCoordinates[ indexs[i] ].v = m_pTexture->UVConvertTopleft2Engine_v( (m_aSceneSize.m_fHeight - vertices[i].y) / m_pTexture->GetHeight());
 					}
 					else
 					{
-						m_pTexCoordinates[ tex1[i] ].v = tex2[i].y / m_pTexture->GetHeight();
+						m_pTexCoordinates[ indexs[i] ].v = m_pTexture->UVConvertTopleft2Engine_v(vertices[i].y / m_pTexture->GetHeight());
 					}
 				}
 			}
@@ -142,14 +134,16 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUISceneEffectGrid3D::ProcessCaptureTexture( IGUIInterfaceRender* pRender )
 	{
-		//uint32 n = m_aGridSize.m_uWidth * m_aGridSize.m_uHeight;
-		//pRender->DrawGrid( m_pTexture->GetTextureImplement(), m_pTexCoordinates, m_pVertices, m_pIndices, n );
+		uint32 n = m_aGridSize.m_uWidth * m_aGridSize.m_uHeight;
+		pRender->DrawGrid( m_pTexture, m_pTexCoordinates, m_pVertices, m_pIndices, n );
 		
-		//CGUIImage* pImage = CGUIImageManager::Instance()->AllocateResource("scrollbar_downbutton_up" );
-		//pImage->Draw( pRender, CGUIRect( CGUIVector2(200,200), pImage->GetSize()*10 ), 0, CGUIColor(), 1.0f );
-		//pImage->RefRelease();
-		
-		pRender->DrawTile( CGUIRect( CGUIVector2(), m_aSceneSize ), 0, m_pTexture->GetTextureImplement(), CGUIRect(0,0,1,1),  eImageOrientation_Normal, CGUIColor());
+		//pRender->DrawTile( 
+		//	CGUIRect( CGUIVector2(), m_aSceneSize ), 
+		//	0, 
+		//	m_pTexture, 
+		//	CGUIRect(0,0,m_aSceneSize.GetWidth() / m_pTexture->GetWidth(), m_aSceneSize.GetHeight() / m_pTexture->GetHeight()),  
+		//	eImageOrientation_Normal, 
+		//	CGUIColor());
 	}
 	//------------------------------------------------------------------------------
 	/** 

@@ -21,9 +21,7 @@ namespace guiex
 {
 	class IGUIInterfaceRender;
 	class CGUISize;
-
 }
-
 
 
 //============================================================================//
@@ -76,12 +74,12 @@ namespace guiex
 		/**
 		* @brief destroy this texture
 		*/
-		void	Destroy();
+		void Destroy();
 
 		/**
 		* @brief copy a sub_image to texture
 		*/
-		virtual void		CopySubImage(uint32 nX, uint32 nY, uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat, uint8* pBuffer) = 0;
+		virtual void CopySubImage(uint32 nX, uint32 nY, uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat, uint8* pBuffer) = 0;
 
 		/**
 		* @brief Loads the specified image file into the texture.  The texture is resized 
@@ -89,7 +87,7 @@ namespace guiex
 		* @exception throw CGUIException if failed.
 		* @return -1 for failed
 		*/
-		virtual int32	LoadFromFile(const CGUIString& filename ) = 0;
+		virtual int32 LoadFromFile(const CGUIString& filename ) = 0;
 
 
 		/**
@@ -99,17 +97,17 @@ namespace guiex
 		* @exception throw CGUIException if failed.
 		* @return -1 for failed
 		*/
-		virtual int32	LoadFromMemory(
+		virtual int32 LoadFromMemory(
 			const void* buffPtr, 
 			int32 buffWidth, 
 			int32 buffHeight, 
 			EGuiPixelFormat ePixelFormat ) = 0;
 
 		//!< save pointer of texture
-		void	SetTexture( CGUITexture* pTexture);
+		void SetTexture( CGUITexture* pTexture);
 
 		//!< get pointer of texture
-		CGUITexture*	GetTexture(  ) const;
+		CGUITexture* GetTexture(  ) const;
 
 	protected:
 		/**
@@ -117,10 +115,9 @@ namespace guiex
 		*/
 		CGUITextureImp(IGUIInterfaceRender* pRender);
 
-
 	protected:
-		IGUIInterfaceRender*	m_pRender;	//!< the render which create this texture
-		CGUITexture*			m_pTexture;	//!< pointer of texture class
+		IGUIInterfaceRender* m_pRender;	//!< the render which create this texture
+		CGUITexture* m_pTexture; //!< pointer of texture class
 	};
 
 }//namespace guiex

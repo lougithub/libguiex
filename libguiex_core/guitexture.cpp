@@ -30,6 +30,7 @@ namespace guiex
 		,m_pDumpMemory(NULL)
 		,m_nType(0)
 		,m_nRefCount(0)
+		,m_bIsBottomUp(false)
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -222,11 +223,25 @@ namespace guiex
 		return CreateTextureByMemory(m_pDumpMemory, m_aDumpTextureWidth, m_aDumpTextureHeight, m_eDumpPixelFormat);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUITexture::Unreference()
+	void CGUITexture::Unreference()
 	{
 		GUI_ASSERT(m_nRefCount>0, "reference count is zero now, can't be unreference more.");
 		--m_nRefCount;
 	}
 	//------------------------------------------------------------------------------
-
+	void CGUITexture::SetBottomUp( bool bIsBottomUp )
+	{
+		m_bIsBottomUp = bIsBottomUp;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUITexture::IsBottomUp( ) const
+	{
+		return m_bIsBottomUp;
+	}
+	//------------------------------------------------------------------------------
+	real CGUITexture::UVConvertTopleft2Engine_v( real v ) const
+	{
+		return (m_bIsBottomUp?1-v:v);
+	}
+	//------------------------------------------------------------------------------
 }//namespaceguiex

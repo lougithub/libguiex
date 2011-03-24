@@ -144,7 +144,7 @@ namespace guiex
 		aColor.SetAlpha(fAlpha);
 		pRender->DrawTile( rDestRect, 
 			z,
-			m_vecTextures[m_nFrame]->GetTextureImplement(),
+			m_vecTextures[m_nFrame],
 			m_vecUVRects[m_nFrame], 
 			eImageOrientation_Normal,
 			aColor,

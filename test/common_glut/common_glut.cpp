@@ -58,7 +58,14 @@ void setVSync(int interval=1)
 //------------------------------------------------------------------------------
 void QuitApp()
 {
-	exit( 0 );
+	if( g_pFramework )
+	{
+		g_pFramework->Release();
+		delete g_pFramework;
+		g_pFramework = NULL;
+	}
+
+	exit(0);
 }
 //------------------------------------------------------------------------------
 void mouseMotionCB(int x, int y)
@@ -260,18 +267,12 @@ void RegisterKeyboard()
 //------------------------------------------------------------------------------
 void exitCB()
 {
-	if( g_pFramework )
-	{
-		g_pFramework->Release();
-		delete g_pFramework;
-		g_pFramework = NULL;
-	}
 }
 
 //------------------------------------------------------------------------------
 int main(int argc, char** argv)
 {
-	atexit(exitCB);
+	//atexit(exitCB);
 
 	// Do GLUT init
 	glutInit( &argc, argv );

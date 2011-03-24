@@ -27,8 +27,8 @@ namespace guiex
 	class IGUIInterfaceRender;
 	class CGUITexture;
 }
-#define GUI_SCENEEFFECT_USE_VBO 0
-#define GUI_SCENEEFFECT_USE_RENDERBUFFER 1
+#define GUI_SCENEEFFECT_USE_VBO 1
+#define GUI_SCENEEFFECT_USE_RENDERBUFFER 0
 
 //============================================================================//
 // class

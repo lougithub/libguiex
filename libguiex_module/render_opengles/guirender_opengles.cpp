@@ -17,6 +17,7 @@
 #include <libguiex_core/guirenderrect.h>
 #include <libguiex_core/guilogmsgmanager.h>
 #include <libguiex_core/guicamera.h>
+#include <libguiex_core/guitexture.h>
 
 #include <OpenGLES/ES1/gl.h>
 #include <OpenGLES/ES1/glext.h>
@@ -133,9 +134,9 @@ namespace guiex
 		glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, framebuffer);
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengles::FramebufferTexture2D_Color( const CGUITextureImp* pTexture, int32 level )
+	void IGUIRender_opengles::FramebufferTexture2D_Color( const CGUITexture* pTexture, int32 level )
 	{
-		glFramebufferTexture2DOES( GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_TEXTURE_2D, ((const CGUITexture_opengles*)pTexture)->GetOGLTexid(), level );
+		glFramebufferTexture2DOES( GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_TEXTURE_2D, ((const CGUITexture_opengles*)pTexture->GetTextureImplement())->GetOGLTexid(), level );
 	}
 	//------------------------------------------------------------------------------
 	bool IGUIRender_opengles::CheckFramebufferStatus( )

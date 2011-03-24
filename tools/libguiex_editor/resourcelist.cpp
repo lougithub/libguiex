@@ -102,6 +102,21 @@ void CResourceList::UpdateImageList()
 				pWxImage->Resize( newSize, -newPoint );
 				switch( pGuiImage->GetOrientation() )
 				{
+				case eImageOrientation_90CW: ///!< rotate image for 90 CW
+					*pWxImage = pWxImage->Rotate90(true);
+					break;
+				case eImageOrientation_90CCW: ///!< rotate image for 90 CCW
+					*pWxImage = pWxImage->Rotate90(false);
+					break;
+				case eImageOrientation_FlipHorizon:	///!< flip image horizon
+					*pWxImage = pWxImage->Mirror( true );
+					break;
+				case eImageOrientation_FlipVertical: ///!< flip image vertical
+					*pWxImage = pWxImage->Mirror( false );
+					break;
+				}
+				switch( pGuiImage->GetOrientation() )
+				{
 				case eImageOrientation_90CW:
 					pWxImage->Rotate90( true );
 					break;

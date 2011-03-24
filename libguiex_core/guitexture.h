@@ -22,10 +22,6 @@ namespace guiex
 	class CGUITextureImp;
 }
 
-
-
-
-
 //============================================================================//
 // class
 //============================================================================// 
@@ -46,7 +42,7 @@ namespace guiex
 		/**
 		* @brief get "real" texture
 		*/
-		CGUITextureImp*	GetTextureImplement()
+		const CGUITextureImp* GetTextureImplement() const 
 		{
 			return m_pTextureImp;
 		}
@@ -61,6 +57,11 @@ namespace guiex
 
 		// Decrements the Referent count.
 		void Unreference();
+
+		void SetBottomUp( bool bIsBottomUp );
+		bool IsBottomUp( ) const;
+
+		real UVConvertTopleft2Engine_v( real v ) const;
 
 	protected:
 		friend class CGUITextureManager;
@@ -112,7 +113,7 @@ namespace guiex
 		uint8 m_nType; //texture type.
 
 		uint16 m_nRefCount; //reference count
-
+		bool m_bIsBottomUp;
 	};
 
 }//namespace guiex

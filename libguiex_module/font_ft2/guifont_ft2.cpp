@@ -316,7 +316,7 @@ namespace guiex
 			pRender->DrawTile( 
 				aCharRect,
 				0, 
-				pCharData->m_pTexture->GetTextureImplement(),
+				pCharData->m_pTexture,
 				pCharData->m_aUV, 
 				eImageOrientation_Normal,
 				aColor,
@@ -399,7 +399,7 @@ namespace guiex
 				pRender->DrawTile( 
 					aCharRect,
 					0, 
-					pCharData->m_pTexture->GetTextureImplement(),
+					pCharData->m_pTexture,
 					pCharData->m_aUV, 
 					eImageOrientation_Normal,
 					aColor,
@@ -448,7 +448,7 @@ namespace guiex
 				pRender->DrawTile( 
 					aCharRect,
 					0, 
-					pCharData->m_pTexture->GetTextureImplement(),
+					pCharData->m_pTexture,
 					pCharData->m_aUV, 
 					eImageOrientation_Normal,
 					aColor,

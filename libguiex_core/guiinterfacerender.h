@@ -26,6 +26,7 @@ namespace guiex
 	class CGUISize;
 	class CGUIRect;
 	class CGUITextureImp;
+	class CGUITexture;
 	class IGUIInterfaceFont;
 	class CGUIMatrix4;
 	class CGUIVector2;
@@ -68,7 +69,7 @@ namespace guiex
 		virtual void PopAttrib ( ) = 0;
 		virtual void DrawBuffer( EBufferMode mode ) = 0;
 		virtual void ReadBuffer( EBufferMode mode ) = 0;
-		virtual void BindTexture( const CGUITextureImp* pTexture ) = 0;
+		virtual void BindTexture( const CGUITexture* pTexture ) = 0;
 		virtual void CopyTexSubImage2D ( int32 level, int32 xoffset, int32 yoffset, int32 x, int32 y, uint32 width, uint32 height) = 0;
 
 		virtual void MatrixMode( EMatrixMode eMode ) = 0;
@@ -81,7 +82,7 @@ namespace guiex
 		virtual void DeleteFramebuffers( uint32 n, const uint32* framebuffers ) = 0;
 		virtual void BindFramebuffer( uint32 framebuffer ) = 0;
 		virtual void GetBindingFrameBuffer( int32* framebuffer ) = 0;
-		virtual void FramebufferTexture2D_Color( const CGUITextureImp* pTexture, int32 level ) = 0;
+		virtual void FramebufferTexture2D_Color( const CGUITexture* pTexture, int32 level ) = 0;
 		virtual bool CheckFramebufferStatus( ) = 0;
 
 		virtual void GenRenderbuffers(uint32 n, uint32* renderbuffers) = 0;
@@ -107,13 +108,13 @@ namespace guiex
 			const CGUIColor& rColor );
 
 		virtual void DrawQuads(
-			const CGUITextureImp* pTexture,
+			const CGUITexture* pTexture,
 			const SR_V2F_C4F_T2F_Quad* pQuads,
 			uint16* pIndices,
 			int16 nQuadNum) = 0;
 
 		virtual void DrawGrid(
-			const CGUITextureImp* pTexture,
+			const CGUITexture* pTexture,
 			const SR_T2F* pTextures,
 			const SR_V3F* pVerdices,
 			uint16* pIndices,
@@ -126,7 +127,7 @@ namespace guiex
 		virtual	void DrawTile(	
 			const CGUIRect& rDestRect, 
 			real z, 
-			const CGUITextureImp* pTex, 
+			const CGUITexture* pTex, 
 			const CGUIRect& rTextureRect,
 			EImageOrientation eImageOrientation,
 			const CGUIColor& rColor_topleft,
@@ -138,7 +139,7 @@ namespace guiex
 		virtual	void DrawTile(	
 			const CGUIRect& rDestRect, 
 			real z, 
-			const CGUITextureImp* pTex, 
+			const CGUITexture* pTex, 
 			const CGUIRect& rTextureRect,
 			EImageOrientation eImageOrientation,
 			const CGUIColor& rColor
@@ -162,6 +163,44 @@ namespace guiex
 		virtual void EndRender(void) = 0;
 
 		virtual CGUICamera* ApplyCamera( CGUICamera* pCamera ) = 0;
+
+		/**
+		* @brief Destroy all textures
+		*/
+		virtual	void DestroyAllTexture() = 0;
+
+		/**
+		* @brief Return the current width of the display in pixels
+		* @return real value equal to the current width of the display in pixels.
+		*/
+		virtual uint16 GetWidth(void) const	= 0;
+
+
+		/**
+		* @brief Return the current height of the display in pixels
+		* @return real value equal to the current height of the display in pixels.
+		*/
+		virtual uint16 GetHeight(void) const	= 0;
+
+
+		/**
+		* @brief Return the maximum texture size available
+		* @return Size of the maximum supported texture in pixels (textures are always assumed to be square)
+		*/
+		virtual	uint32 GetMaxTextureSize(void) const	= 0;
+
+		/** 
+		 * @brief toggle wire frame.
+		 */
+		virtual void SetWireFrame( bool bWireFrame) = 0;
+		virtual bool IsWireFrame( ) const = 0;
+
+		virtual void EnableClip( bool bEnable ) = 0;
+		virtual bool IsEnableClip( ) const = 0;
+
+	protected:
+		friend class CGUITextureImp;
+		friend class CGUITexture;
 
 		/**
 		* @brief Creates a 'null' Texture object.
@@ -204,40 +243,6 @@ namespace guiex
 		* @param texture pointer to the Texture object to be destroyed
 		*/
 		virtual	void DestroyTexture(CGUITextureImp* texture) = 0;
-
-		/**
-		* @brief Destroy all textures
-		*/
-		virtual	void DestroyAllTexture() = 0;
-
-		/**
-		* @brief Return the current width of the display in pixels
-		* @return real value equal to the current width of the display in pixels.
-		*/
-		virtual uint16 GetWidth(void) const	= 0;
-
-
-		/**
-		* @brief Return the current height of the display in pixels
-		* @return real value equal to the current height of the display in pixels.
-		*/
-		virtual uint16 GetHeight(void) const	= 0;
-
-
-		/**
-		* @brief Return the maximum texture size available
-		* @return Size of the maximum supported texture in pixels (textures are always assumed to be square)
-		*/
-		virtual	uint32 GetMaxTextureSize(void) const	= 0;
-
-		/** 
-		 * @brief toggle wire frame.
-		 */
-		virtual void SetWireFrame( bool bWireFrame) = 0;
-		virtual bool IsWireFrame( ) const = 0;
-
-		virtual void EnableClip( bool bEnable ) = 0;
-		virtual bool IsEnableClip( ) const = 0;
 
 	public:
 		/// set font render

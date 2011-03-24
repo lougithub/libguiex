@@ -17,6 +17,7 @@
 #include <libguiex_core/guirenderrect.h>
 #include <libguiex_core/guilogmsgmanager.h>
 #include <libguiex_core/guicamera.h>
+#include <libguiex_core/guitexture.h>
 
 #define GLEW_STATIC
 #include <GL/glew.h>
@@ -108,9 +109,9 @@ namespace guiex
 		glRenderbufferStorage( GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height);
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengl::FramebufferTexture2D_Color( const CGUITextureImp* pTexture, int32 level )
+	void IGUIRender_opengl::FramebufferTexture2D_Color( const CGUITexture* pTexture, int32 level )
 	{
-		glFramebufferTexture2D( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ((const CGUITexture_opengl*)pTexture)->GetOGLTexid(), level );
+		glFramebufferTexture2D( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ((const CGUITexture_opengl*)pTexture->GetTextureImplement())->GetOGLTexid(), level );
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl::FramebufferRenderbuffer_Depth( uint32 renderbuffer )

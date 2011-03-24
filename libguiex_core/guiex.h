@@ -132,6 +132,11 @@
 #include "guicamera.h"
 #include "guicameramanager.h"
 
+//scene effect
+#include "guisceneeffect.h"
+#include "guisceneeffectgrid3d.h"
+#include "guisceneeffecttiledgrid3d.h"
+
 #include "guiUtility.h"
 #include "guiinterpolation.h"
 

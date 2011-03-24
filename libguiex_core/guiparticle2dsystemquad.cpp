@@ -122,13 +122,13 @@ namespace guiex
 		{
 			const int16 i6 = i*6;
 			const int16 i4 = i*4;
-			indices[i6+0] = (int16) i4+0;
-			indices[i6+1] = (int16) i4+1;
-			indices[i6+2] = (int16) i4+2;
+			indices[i6+0] = (int16) i4+0; //tl
+			indices[i6+1] = (int16) i4+1; //bl
+			indices[i6+2] = (int16) i4+2; //tr
 
-			indices[i6+5] = (int16) i4+1;
-			indices[i6+4] = (int16) i4+2;
-			indices[i6+3] = (int16) i4+3;
+			indices[i6+3] = (int16) i4+3; //br
+			indices[i6+4] = (int16) i4+2; //tr
+			indices[i6+5] = (int16) i4+1; //bl
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -224,7 +224,7 @@ namespace guiex
 		}
 
 		pRender->DrawQuads(
-			texture->GetTextureImplement(), 
+			texture, 
 			quads,
 			indices,
 			particleCount );

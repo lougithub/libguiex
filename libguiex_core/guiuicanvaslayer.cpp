@@ -202,7 +202,6 @@ namespace guiex
 		if( (*itor) == pDlg)
 		{		
 			m_arrayOpenedDlg.erase(itor);
-			GSystem->UngisterGlobalKeyByRoot(pDlg);
 			pDlg->Close();
 
 			if( CGUIWidgetManager::Instance()->HasDynamicPage( pDlg ) )

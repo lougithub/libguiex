@@ -39,7 +39,7 @@ namespace guiex
 		virtual void DeleteFramebuffers( uint32 n, const uint32* framebuffers );
 		virtual void BindFramebuffer( uint32 framebuffer );
 		virtual void GetBindingFrameBuffer( int32* framebuffer );
-		virtual void FramebufferTexture2D_Color( const CGUITextureImp* pTexture, int32 level );
+		virtual void FramebufferTexture2D_Color( const CGUITexture* pTexture, int32 level );
 		virtual bool CheckFramebufferStatus( );
 
 		virtual void GenRenderbuffers(uint32 n, uint32* renderbuffers);
@@ -49,13 +49,14 @@ namespace guiex
 		virtual void FramebufferRenderbuffer_Depth( uint32 renderbuffer );
 		virtual void DeleteRenderbuffers(uint32 n, const uint32* renderbuffers);
 
+		virtual void BeginRender(void);
+		virtual void EndRender(void);
 		
-	public:
+	protected:
 		virtual	CGUITextureImp*	CreateTexture(void);
 		virtual	CGUITextureImp*	CreateTexture(const CGUIString& filename);
 		virtual	CGUITextureImp*	CreateTexture(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat);
-		virtual void BeginRender(void);
-		virtual void EndRender(void);
+
 
 	protected:
 		virtual int DoInitialize(void* );
@@ -69,5 +70,3 @@ namespace guiex
 }//namespace guiex
 
 #endif //__GUI_RENDER_OPENGL_20060706_H__
-
-

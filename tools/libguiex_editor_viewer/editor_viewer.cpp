@@ -192,7 +192,7 @@ void WxGLCanvas::OnSize(wxSizeEvent& event)
 	wxGLCanvas::OnSize(event);
 	wxSize aSize = event.GetSize();
 	GSystem->SetScreenSize(aSize.x,aSize.y);
-	glViewport(aSize.x,aSize.y);
+	glViewport(0,0,aSize.x,aSize.y);
 }
 //------------------------------------------------------------------------------
 void WxGLCanvas::OnKeyDown( wxKeyEvent& event )

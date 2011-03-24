@@ -42,7 +42,7 @@ namespace guiex
 {
 
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnAlphaChange( CGUIEventAlpha* pEvent )
+	uint32 CGUIWidget::OnAlphaChange( CGUIEventAlpha* pEvent )
 	{
 		//WIDGET_EVENT_TRACE("OnAlphaChange");
 
@@ -52,7 +52,7 @@ namespace guiex
 		return 0;	
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnParentSizeChange( CGUIEventSize* pEvent )
+	uint32 CGUIWidget::OnParentSizeChange( CGUIEventSize* pEvent )
 	{
 		//WIDGET_EVENT_TRACE("OnParentSizeChange");
 
@@ -62,7 +62,7 @@ namespace guiex
 		return 0;	
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnSizeChanged( CGUIEventSize* pEvent )
+	uint32 CGUIWidget::OnSizeChanged( CGUIEventSize* pEvent )
 	{
 		//WIDGET_EVENT_TRACE("OnSizeChanged");
 
@@ -87,7 +87,7 @@ namespace guiex
 		return 0;	
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnMouseEnter( CGUIEventMouse* pEvent )
+	uint32 CGUIWidget::OnMouseEnter( CGUIEventMouse* pEvent )
 	{
 		//WIDGET_EVENT_TRACE("OnMouseEnter");
 
@@ -102,7 +102,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnMouseLeave( CGUIEventMouse* pEvent )
+	uint32 CGUIWidget::OnMouseLeave( CGUIEventMouse* pEvent )
 	{
 		//WIDGET_EVENT_TRACE("OnMouseLeave");
 
@@ -116,7 +116,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnMouseMove( CGUIEventMouse* pEvent )
+	uint32 CGUIWidget::OnMouseMove( CGUIEventMouse* pEvent )
 	{
 		//	WIDGET_EVENT_TRACE("OnMouseMove");
 
@@ -126,7 +126,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnMouseLeftDown( CGUIEventMouse* pEvent )
+	uint32 CGUIWidget::OnMouseLeftDown( CGUIEventMouse* pEvent )
 	{
 		//WIDGET_EVENT_TRACE("OnMouseLeftDown");
 
@@ -140,7 +140,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnMouseLeftUp( CGUIEventMouse* pEvent )
+	uint32 CGUIWidget::OnMouseLeftUp( CGUIEventMouse* pEvent )
 	{
 		//WIDGET_EVENT_TRACE("OnMouseLeftUp");
 
@@ -154,7 +154,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnMouseLeftClick( CGUIEventMouse* pEvent )
+	uint32 CGUIWidget::OnMouseLeftClick( CGUIEventMouse* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnMouseLeftClick");
 
@@ -168,7 +168,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnMouseLeftDbClick( CGUIEventMouse* pEvent )
+	uint32 CGUIWidget::OnMouseLeftDbClick( CGUIEventMouse* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnMouseLeftDbClick");
 
@@ -182,7 +182,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnMouseLeftMultiClick( CGUIEventMouse* pEvent )
+	uint32 CGUIWidget::OnMouseLeftMultiClick( CGUIEventMouse* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnMouseMultiClick");
 
@@ -196,7 +196,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnMouseRightDown( CGUIEventMouse* pEvent )
+	uint32 CGUIWidget::OnMouseRightDown( CGUIEventMouse* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnMouseRightDown");
 
@@ -210,7 +210,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnMouseRightUp( CGUIEventMouse* pEvent )
+	uint32 CGUIWidget::OnMouseRightUp( CGUIEventMouse* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnMouseRightUp");
 
@@ -224,7 +224,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnMouseRightClick( CGUIEventMouse* pEvent )
+	uint32 CGUIWidget::OnMouseRightClick( CGUIEventMouse* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnMouseRightClick");
 
@@ -238,7 +238,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnMouseRightDbClick( CGUIEventMouse* pEvent )
+	uint32 CGUIWidget::OnMouseRightDbClick( CGUIEventMouse* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnMouseRightDbClick");
 
@@ -252,7 +252,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnMouseRightMultiClick( CGUIEventMouse* pEvent )
+	uint32 CGUIWidget::OnMouseRightMultiClick( CGUIEventMouse* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnMouseMultiClick");
 
@@ -266,7 +266,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnMouseMiddleDown( CGUIEventMouse* pEvent )
+	uint32 CGUIWidget::OnMouseMiddleDown( CGUIEventMouse* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnMouseMiddleDown");
 
@@ -280,7 +280,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnMouseMiddleUp( CGUIEventMouse* pEvent )
+	uint32 CGUIWidget::OnMouseMiddleUp( CGUIEventMouse* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnMouseMiddleUp");
 
@@ -294,7 +294,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnMouseMiddleClick( CGUIEventMouse* pEvent )
+	uint32 CGUIWidget::OnMouseMiddleClick( CGUIEventMouse* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnMouseMiddleClick");
 
@@ -308,7 +308,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnMouseMiddleDbClick( CGUIEventMouse* pEvent )
+	uint32 CGUIWidget::OnMouseMiddleDbClick( CGUIEventMouse* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnMouseMiddleClick");
 
@@ -322,7 +322,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnMouseMiddleMultiClick( CGUIEventMouse* pEvent )
+	uint32 CGUIWidget::OnMouseMiddleMultiClick( CGUIEventMouse* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnMouseMultiClick");
 
@@ -336,7 +336,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnMouseWheel( CGUIEventMouse* pEvent )
+	uint32 CGUIWidget::OnMouseWheel( CGUIEventMouse* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnMouseWheel");
 
@@ -350,7 +350,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnActive( CGUIEventNotification* pEvent )
+	uint32 CGUIWidget::OnActive( CGUIEventNotification* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnActive");
 
@@ -373,7 +373,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnInactive( CGUIEventNotification* pEvent )
+	uint32 CGUIWidget::OnInactive( CGUIEventNotification* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnInactive");
 
@@ -407,7 +407,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnVisible( CGUIEventNotification* pEvent )
+	uint32 CGUIWidget::OnVisible( CGUIEventNotification* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnVisible");
 
@@ -419,7 +419,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnInvisible( CGUIEventNotification* pEvent )
+	uint32 CGUIWidget::OnInvisible( CGUIEventNotification* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnInvisible");
 
@@ -431,7 +431,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnScaleChange( CGUIEventNotification* pEvent )
+	uint32 CGUIWidget::OnScaleChange( CGUIEventNotification* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnScaleChange");
 
@@ -456,7 +456,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnEnable( CGUIEventNotification* pEvent )
+	uint32 CGUIWidget::OnEnable( CGUIEventNotification* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnEnable");
 
@@ -468,7 +468,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnDisable( CGUIEventNotification* pEvent )
+	uint32 CGUIWidget::OnDisable( CGUIEventNotification* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnDisable");
 
@@ -481,7 +481,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnDragBegin( CGUIEventDrag* pEvent )
+	uint32 CGUIWidget::OnDragBegin( CGUIEventDrag* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnDragBegin");
 
@@ -495,7 +495,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnDragProcess( CGUIEventDrag* pEvent )
+	uint32 CGUIWidget::OnDragProcess( CGUIEventDrag* pEvent )
 	{
 		//call callback function
 		CallbackFunction("OnDragProcess", pEvent);
@@ -513,7 +513,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnDragEnd( CGUIEventDrag* pEvent )
+	uint32 CGUIWidget::OnDragEnd( CGUIEventDrag* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnDragEnd");
 
@@ -552,7 +552,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnClose( CGUIEventNotification* pEvent )
+	uint32 CGUIWidget::OnClose( CGUIEventNotification* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnClose");
 
@@ -567,7 +567,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnChecked( CGUIEventNotification* pEvent )
+	uint32 CGUIWidget::OnChecked( CGUIEventNotification* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnChecked");
 
@@ -577,7 +577,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnUnchecked( CGUIEventNotification* pEvent )
+	uint32 CGUIWidget::OnUnchecked( CGUIEventNotification* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnUnchecked");
 
@@ -605,7 +605,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnTimer( CGUIEventTimer* pEvent )
+	uint32 CGUIWidget::OnTimer( CGUIEventTimer* pEvent )
 	{
 		//call callback function
 		CallbackFunction(pEvent->GetTimerName(), pEvent);
@@ -613,7 +613,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnKeyDown( CGUIEventKeyboard* pEvent )
+	uint32 CGUIWidget::OnKeyDown( CGUIEventKeyboard* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnKeyDown");
 
@@ -623,7 +623,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnKeyUp( CGUIEventKeyboard* pEvent )
+	uint32 CGUIWidget::OnKeyUp( CGUIEventKeyboard* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnKeyUp");
 
@@ -633,7 +633,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnKeyPressed( CGUIEventKeyboard* pEvent )
+	uint32 CGUIWidget::OnKeyPressed( CGUIEventKeyboard* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnKeyPressed");
 
@@ -643,7 +643,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnKeyClicked( CGUIEventKeyboard* pEvent )
+	uint32 CGUIWidget::OnKeyClicked( CGUIEventKeyboard* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnKeyClicked");
 
@@ -653,7 +653,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnListBoxSelected( CGUIEventListBox* pEvent )
+	uint32 CGUIWidget::OnListBoxSelected( CGUIEventListBox* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnListBoxSelected");
 
@@ -663,7 +663,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnListBoxSelectChanged( CGUIEventListBox* pEvent )
+	uint32 CGUIWidget::OnListBoxSelectChanged( CGUIEventListBox* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnListBoxSelecteChanged");
 
@@ -673,7 +673,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnListBoxLeftDbClick( CGUIEventListBox* pEvent )
+	uint32 CGUIWidget::OnListBoxLeftDbClick( CGUIEventListBox* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnListBoxLeftDbClick");
 
@@ -683,7 +683,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnListBoxRightDbClick( CGUIEventListBox* pEvent )
+	uint32 CGUIWidget::OnListBoxRightDbClick( CGUIEventListBox* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnListBoxRightDbClick");
 
@@ -693,7 +693,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnListBoxLeftClick( CGUIEventListBox* pEvent )
+	uint32 CGUIWidget::OnListBoxLeftClick( CGUIEventListBox* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnListBoxLeftClick");
 
@@ -703,7 +703,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnListBoxRightClick( CGUIEventListBox* pEvent )
+	uint32 CGUIWidget::OnListBoxRightClick( CGUIEventListBox* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnListBoxRightClick");
 
@@ -713,7 +713,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnComboBoxSelected(CGUIEventComboBox* pEvent)
+	uint32 CGUIWidget::OnComboBoxSelected(CGUIEventComboBox* pEvent)
 	{
 		WIDGET_EVENT_TRACE("OnComboBoxSelected");
 
@@ -723,7 +723,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnUIEvent(CGUIEventUI* pEvent)
+	uint32 CGUIWidget::OnUIEvent(CGUIEventUI* pEvent)
 	{
 		WIDGET_EVENT_TRACE("OnUIEvent");
 
@@ -733,7 +733,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnAddChild( CGUIEventRelativeChange* pEvent )
+	uint32 CGUIWidget::OnAddChild( CGUIEventRelativeChange* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnAddChild");
 
@@ -743,7 +743,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnRemoveChild( CGUIEventRelativeChange* pEvent )
+	uint32 CGUIWidget::OnRemoveChild( CGUIEventRelativeChange* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnRemoveChild");
 
@@ -753,7 +753,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWidget::OnParentChanged( CGUIEventRelativeChange* pEvent )
+	uint32 CGUIWidget::OnParentChanged( CGUIEventRelativeChange* pEvent )
 	{
 		WIDGET_EVENT_TRACE("OnParentChanged");
 

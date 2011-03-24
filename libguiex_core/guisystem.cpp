@@ -415,6 +415,10 @@ namespace guiex
 		{
 			pScript->DestroyAllScript();
 		}
+
+		//check global register
+		GUI_ASSERT( m_vecGlobalKeyObj.empty(), "global key receiver is not cleared" );
+		m_vecGlobalKeyObj.clear();
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -810,27 +814,27 @@ namespace guiex
 	* @param pReceiver the widget which will receive the global key event
 	* @pRoot the root widget of this receiver, is a root of page or a root of dialog
 	*/
-	void CGUISystem::RegisterGlobalKeyReceiver( CGUIWidget* pReceiver, CGUIWidget* pRoot)
+	void CGUISystem::RegisterGlobalKeyReceiver( CGUIWidget* pReceiver )
 	{
-		m_vecGlobalKeyObj.push_back(std::make_pair(pReceiver, pRoot));
+		m_vecGlobalKeyObj.push_back(pReceiver);
 	}
 	//------------------------------------------------------------------------------
 	/** 
 	* @brief remove key event by root widget
 	*/
-	void CGUISystem::UngisterGlobalKeyByRoot( CGUIWidget* pRoot)
+	void CGUISystem::UngisterGlobalKeyReceiver( CGUIWidget* pReceiver )
 	{
-		for( uint32 i=0;i<m_vecGlobalKeyObj.size();)
+		for( TGlobalKeyObj::iterator itor = m_vecGlobalKeyObj.begin();
+			itor != m_vecGlobalKeyObj.end();
+			++itor)
 		{
-			if( m_vecGlobalKeyObj[i].second == pRoot)
+			if( *itor == pReceiver )
 			{
-				m_vecGlobalKeyObj.erase(m_vecGlobalKeyObj.begin()+i);
-			}
-			else
-			{
-				++i;
+				m_vecGlobalKeyObj.erase( itor );
+				return;
 			}
 		}
+		throw CGUIException("[CGUISystem::UngisterGlobalKeyByRoot]: failed to ungister global key!");
 	}
 	//------------------------------------------------------------------------------
 	/** 
@@ -847,28 +851,15 @@ namespace guiex
 	*/
 	bool CGUISystem::ProcessGlobalKeyEvent(CGUIEventKeyboard* pEvent)
 	{
-		CGUIWidget* pRoot = m_pUICanvas->GetCurrentRootWidget();
-		if( !pRoot)
-		{
-			//no root widget here
-			return false;
-		}
-
-
 		for( TGlobalKeyObj::reverse_iterator itor = m_vecGlobalKeyObj.rbegin();
 			itor != m_vecGlobalKeyObj.rend();
 			++itor)
 		{
-			CGUIWidget* pReceiver = (*itor).first;
-			CGUIWidget* pReceiverRoot = (*itor).second;
-			if( pReceiverRoot == pRoot )
+			pEvent->SetReceiver(*itor);
+			GSystem->SendEvent(pEvent);
+			if( pEvent->IsConsumed())
 			{
-				pEvent->SetReceiver(pReceiver);
-				GSystem->SendEvent(pEvent);
-				if( pEvent->IsConsumed())
-				{
-					break;
-				}
+				break;
 			}
 		}
 

@@ -79,6 +79,7 @@ namespace guiex
 			throw CGUIException("[CGUISceneEffect::Initialize]: failed to create texture!");
 			return -1;
 		}
+		m_pTexture->SetBottomUp( true );
 
 #if GUI_SCENEEFFECT_USE_VBO
 		//create frame buffer
@@ -95,7 +96,7 @@ namespace guiex
 #endif //#if GUI_SCENEEFFECT_USE_RENDERBUFFER
 
 		// attach a texture to FBO color attachement point
-		pRender->FramebufferTexture2D_Color( m_pTexture->GetTextureImplement(), 0);
+		pRender->FramebufferTexture2D_Color( m_pTexture, 0);
 		
 #if GUI_SCENEEFFECT_USE_RENDERBUFFER
 		// attach a renderbuffer to depth attachment point
@@ -173,12 +174,6 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUISceneEffect::BeforeRender( IGUIInterfaceRender* pRender )
 	{
-		//set viewport
-		pRender->SetViewport( 0,0,GetSceneWidth(), GetSceneHeight() );
-
-		//set matrix
-		pRender->LoadIdentityMatrix();
-
 #if GUI_SCENEEFFECT_USE_VBO
 		//set framebuffer
 		pRender->GetBindingFrameBuffer( &m_oldfbo );
@@ -191,12 +186,14 @@ namespace guiex
 
 #endif //#if GUI_SCENEEFFECT_USE_VBO
 
+		//set viewport
+		pRender->SetViewport( 0,m_pTexture->GetHeight() - GetSceneHeight(),GetSceneWidth(), GetSceneHeight() );
+
+		//set matrix
+		pRender->LoadIdentityMatrix();
+
 		pRender->ClearColor(0,0,0,0);
 		pRender->Clear( eRenderBuffer_COLOR_BIT | eRenderBuffer_DEPTH_BIT );	
-
-		uint32 xOffset = 0;
-		pRender->DrawLine( CGUIVector2( xOffset+500,10), CGUIVector2(xOffset+10,500), 5, 0.2f, CGUIColor(1,0,0,1), CGUIColor( 1,0,0,1));
-		pRender->DrawLine( CGUIVector2( xOffset+10,500), CGUIVector2(xOffset+990,500), 5, 0.2f, CGUIColor(1,0,0,1), CGUIColor( 1,0,0,1));
 	}
 	//------------------------------------------------------------------------------
 	void CGUISceneEffect::AfterRender( IGUIInterfaceRender* pRender )
@@ -206,7 +203,7 @@ namespace guiex
 		pRender->BindFramebuffer( m_oldfbo );
 #else
 		// copy the framebuffer pixels to a texture
-		pRender->BindTexture( m_pTexture->GetTextureImplement() );
+		pRender->BindTexture( m_pTexture );
 		pRender->CopyTexSubImage2D( 0, 0, 0, 0, 0, GetSceneWidth(), GetSceneHeight());
 		pRender->PopAttrib();
 #endif //#if GUI_SCENEEFFECT_USE_VBO
@@ -228,10 +225,6 @@ namespace guiex
 
 		//restore blend func
 		pRender->SetBlendFunc( oldBlendFunc );
-
-		uint32 xOffset = 100;
-		pRender->DrawLine( CGUIVector2( xOffset+500,10), CGUIVector2(xOffset+10,500), 5, 0.2f, CGUIColor(1,0,0,1), CGUIColor( 1,0,0,1));
-		pRender->DrawLine( CGUIVector2( xOffset+10,500), CGUIVector2(xOffset+990,500), 5, 0.2f, CGUIColor(1,0,0,1), CGUIColor( 1,0,0,1));
 	}
 	//------------------------------------------------------------------------------
 }

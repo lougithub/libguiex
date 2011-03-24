@@ -44,7 +44,7 @@ namespace guiex
 	void IGUIInterfaceRender::DrawTile(	
 		const CGUIRect& rDestRect, 
 		real z, 
-		const CGUITextureImp* pTex, 
+		const CGUITexture* pTex, 
 		const CGUIRect& rTextureRect,
 		EImageOrientation eImageOrientation,
 		const CGUIColor& rColor

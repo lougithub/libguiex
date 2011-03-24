@@ -96,14 +96,10 @@ namespace guiex
 
 	struct SR_V2F_C4F_T2F_Quad
 	{
-		//! bottom left
-		SR_V2F_C4F_T2F	bl;
-		//! bottom right
-		SR_V2F_C4F_T2F	br;
-		//! top left
 		SR_V2F_C4F_T2F	tl;
-		//! top right
+		SR_V2F_C4F_T2F	bl;
 		SR_V2F_C4F_T2F	tr;
+		SR_V2F_C4F_T2F	br;
 	};
 }
 #pragma pack( pop )

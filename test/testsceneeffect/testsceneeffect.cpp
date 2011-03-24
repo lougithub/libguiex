@@ -7,13 +7,10 @@ public:
 	CMyCanvasLayer_DrawWidget( const char* szLayerName );
 	~CMyCanvasLayer_DrawWidget( );
 
-	virtual void Render( class IGUIInterfaceRender* pRender );
-	virtual void RenderSelf(IGUIInterfaceRender* pRender);
-
 	virtual void DestroySelf( );
 
 protected:
-	CGUIImage *m_pImage;
+	virtual uint32 OnKeyClicked( CGUIEventKeyboard* pEvent );
 };
 
 
@@ -88,70 +85,49 @@ CGUIFrameworkBase* CreateFramework( )
 //------------------------------------------------------------------------------
 CMyCanvasLayer_DrawWidget::CMyCanvasLayer_DrawWidget( const char* szLayerName )
 	:CGUICanvasLayer( szLayerName )
-	,m_pImage(NULL)
 {
-	//CGUIWidget* pWidget = NULL;
+	CGUIWidget* pWidget = NULL;
 
-	//pWidget = CGUIWidgetManager::Instance()->GetPage( "sample1.xml", "tilemap.uip" );
-	//pWidget->SetMovable( true );
-	//pWidget->SetParent( this );
-	//pWidget->Open()	;
+	pWidget = CGUIWidgetManager::Instance()->GetPage( "sample1.xml", "tilemap.uip" );
+	pWidget->SetMovable( true );
+	pWidget->SetParent( this );
+	pWidget->Open();
 
-	//pWidget = CGUIWidgetManager::Instance()->GetPage( "dialog_okcancel.xml", "common.uip" );
-	//pWidget->SetMovable( true );
-	//pWidget->SetParent( this );
-	//pWidget->Open()	;
+	pWidget = CGUIWidgetManager::Instance()->GetPage( "dialog_okcancel.xml", "common.uip" );
+	pWidget->SetMovable( true );
+	pWidget->SetParent( this );
+	pWidget->Open();
 
-	m_pImage = CGUIImageManager::Instance()->AllocateResource( "scrollbar_downbutton_up" );
-
-	CGUIAsPageTurn3D* pAs1 = CGUIAsManager::Instance()->AllocateResource<CGUIAsPageTurn3D>();
-	//pAs1->SetLooping( true );
-	pAs1->SetTotalTime( 5.0f );
-	pAs1->SetGridSize( CGUIIntSize(30, 30) );
-	pAs1->SetReceiver( this );
-	this->SetAutoPlayAs( true );
-	this->SetAs( "pageturn", pAs1 );
-	pAs1->RefRelease();
-
-	//CGUIAsWaves3D* pAs1 = CGUIAsManager::Instance()->AllocateResource<CGUIAsWaves3D>();
-	//pAs1->SetLooping( true );
-	//pAs1->SetTotalTime( 10.0f );
-	//pAs1->SetWavesInfo( 18, 15.0f);
-	//pAs1->SetGridSize( CGUIIntSize(30, 30) );
-	//pAs1->SetReceiver( this );
-	//this->SetAutoPlayAs( true );
-	//this->SetAs( "wave3d", pAs1 );
-	//pAs1->RefRelease();
+	GSystem->RegisterGlobalKeyReceiver( this );
 }
 
 //------------------------------------------------------------------------------
 CMyCanvasLayer_DrawWidget::~CMyCanvasLayer_DrawWidget( )
 {
-	m_pImage->RefRelease();
-	m_pImage = NULL;
+	GSystem->UngisterGlobalKeyReceiver( this );
 }
-//------------------------------------------------------------------------------
-void CMyCanvasLayer_DrawWidget::RenderSelf(IGUIInterfaceRender* pRender)
-{
-	//DrawImage( pRender, m_pImage, CGUIRect( 0,0, 200,200 ));
-	//pRender->DrawLine( CGUIVector2( 500,10), CGUIVector2(10,500), 5, 0.2f, CGUIColor(1,0,0,1), CGUIColor( 0,1,0,1));
-	//pRender->DrawLine( CGUIVector2( 10,500), CGUIVector2(990,500), 5, 0.2f, CGUIColor(1,0,0,1), CGUIColor( 0,1,0,1));
-	// pRender->DrawLine( CGUIVector2( 990,500), CGUIVector2(500,10), 5, 0.2f, CGUIColor(1,0,0,1), CGUIColor( 0,1,0,1));
-}
-//------------------------------------------------------------------------------
-void CMyCanvasLayer_DrawWidget::Render( class IGUIInterfaceRender* pRender )
-{
-	CGUICanvasLayer::Render( pRender );
-
-	//CGUIImage* pImage = CGUIImageManager::Instance()->AllocateResource("scrollbar_downbutton_up" );
-	//pImage->Draw( pRender, CGUIRect( CGUIVector2(200,200), pImage->GetSize()*10 ), 0, CGUIColor(), 1.0f );
-	//pImage->RefRelease();
-}
-
 //------------------------------------------------------------------------------
 void CMyCanvasLayer_DrawWidget::DestroySelf( )
 {
 	delete this;
+}
+//------------------------------------------------------------------------------
+uint32 CMyCanvasLayer_DrawWidget::OnKeyClicked( CGUIEventKeyboard* pEvent )
+{
+	if( pEvent->GetKeyCode() == KC_F1 )
+	{
+		CGUIAsPageTurn3D* pAs1 = CGUIAsManager::Instance()->AllocateResource<CGUIAsPageTurn3D>();
+		pAs1->SetTotalTime( 5.0f );
+		pAs1->SetGridSize( CGUIIntSize(30, 30) );
+		pAs1->SetReceiver( this );
+		this->SetAutoPlayAs( true );
+		this->SetAs( "pageturn", pAs1 );
+		pAs1->RefRelease();
+
+		pEvent->Consume(true);
+	}
+
+	return CGUICanvasLayer::OnKeyClicked( pEvent );
 }
 //------------------------------------------------------------------------------
 
