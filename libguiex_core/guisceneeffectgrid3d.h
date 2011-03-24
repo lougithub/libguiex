@@ -43,9 +43,9 @@ namespace guiex
 		void SetTextureFlipped( bool bFlipped );
 		bool IsTextureFlipped() const;
 
-		const SR_V3F& GetVertex( const CGUIIntSize& rPos );
-		const SR_V3F& GetOriginalVertex( const CGUIIntSize& rPos );
-		void SetVertex( const CGUIIntSize& rPos, const SR_V3F& rVertex );
+		const SR_V3F& GetVertex( uint32 uX, uint32 uY );
+		const SR_V3F& GetOriginalVertex( uint32 uX, uint32 uY );
+		void SetVertex( uint32 uX, uint32 uY, const SR_V3F& rVertex );
 
 	protected:
 		virtual ~CGUISceneEffectGrid3D();

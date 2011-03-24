@@ -146,9 +146,6 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////
 		// flag
 		////////////////////////////////////////////////////////////////////////////
-		void SetAutoPlayAs( bool bEnable );
-		bool IsAutoPlayAs( ) const;
-
 		void SetClipChildren( bool bClip );
 		bool IsClipChildren( ) const;
 
@@ -203,6 +200,8 @@ namespace guiex
 		bool HasAs( const CGUIString& rName );
 		CGUIAs* GetAs( const CGUIString& rName );
 
+		void SetAutoPlayAs( bool bEnable );
+		bool IsAutoPlayAs( ) const;
 		void PlayAs( const CGUIString& rName );
 		void PlayAs( CGUIAs* pAs );
 		bool IsAsPlaying( const CGUIString& rName );

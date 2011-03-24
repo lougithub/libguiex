@@ -149,34 +149,34 @@ namespace guiex
 	/** 
 	* returns the vertex than belongs to certain position in the grid 
 	*/
-	const SR_V3F& CGUISceneEffectGrid3D::GetVertex( const CGUIIntSize& rPos )
+	const SR_V3F& CGUISceneEffectGrid3D::GetVertex( uint32 uX, uint32 uY )
 	{
-		GUI_ASSERT( rPos.m_uWidth <= m_aGridSize.m_uWidth && rPos.m_uHeight <= m_aGridSize.m_uHeight, "invalid pos" );
+		GUI_ASSERT( uX <= m_aGridSize.m_uWidth && uY <= m_aGridSize.m_uHeight, "invalid pos" );
 
-		int	index = (rPos.m_uWidth * (m_aGridSize.m_uHeight+1) + rPos.m_uHeight);
+		int	index = (uX * (m_aGridSize.m_uHeight+1) + uY);
 		return m_pVertices[index]; 
 	}
 	//------------------------------------------------------------------------------
 	/** 
 	* returns the non-transformed vertex than belongs to certain position in the grid 
 	*/
-	const SR_V3F& CGUISceneEffectGrid3D::GetOriginalVertex( const CGUIIntSize& rPos )
+	const SR_V3F& CGUISceneEffectGrid3D::GetOriginalVertex( uint32 uX, uint32 uY )
 	{
-		GUI_ASSERT( rPos.m_uWidth <= m_aGridSize.m_uWidth && rPos.m_uHeight <= m_aGridSize.m_uHeight, "invalid pos" );
+		GUI_ASSERT( uX <= m_aGridSize.m_uWidth && uY <= m_aGridSize.m_uHeight, "invalid pos" );
 		
-		int	index = (rPos.m_uWidth * (m_aGridSize.m_uHeight+1) + rPos.m_uHeight);
+		int	index = (uX * (m_aGridSize.m_uHeight+1) + uY);
 		return m_pOriginalVertices[index];
 	}
 	//------------------------------------------------------------------------------
 	/**
 	 * sets a new vertex to a certain position of the grid 
 	 */
-	void CGUISceneEffectGrid3D::SetVertex( const CGUIIntSize& rPos, const SR_V3F& rVertex )
+	void CGUISceneEffectGrid3D::SetVertex( uint32 uX, uint32 uY, const SR_V3F& rVertex )
 	{
-		GUI_ASSERT( rPos.m_uWidth <= m_aGridSize.m_uWidth && rPos.m_uHeight <= m_aGridSize.m_uHeight, "invalid pos" );
+		GUI_ASSERT( uX <= m_aGridSize.m_uWidth && uY <= m_aGridSize.m_uHeight, "invalid pos" );
 
-		int	index = (rPos.m_uWidth * (m_aGridSize.m_uHeight+1) + rPos.m_uHeight);
-		m_pOriginalVertices[index] = rVertex;
+		int	index = (uX * (m_aGridSize.m_uHeight+1) + uY);
+		m_pVertices[index] = rVertex;
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

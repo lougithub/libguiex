@@ -11,6 +11,8 @@ public:
 
 protected:
 	virtual uint32 OnKeyClicked( CGUIEventKeyboard* pEvent );
+
+	void ApplyEffect();
 };
 
 
@@ -47,13 +49,13 @@ protected:
 		CGUISceneManager::Instance()->LoadWidgets( "tilemap.uip" );
 
 		//create layer
-		CMyCanvasLayer_DrawRect* pLayer1 = new CMyCanvasLayer_DrawRect( "layer 1",CGUIRect( 400,284,600,484), CGUIColor( 0,1,1,1 ), 0 );	
-		pLayer1->Initialize();
-		CGUICanvasLayerManager::Instance()->PushCanvasLayer( pLayer1 );
+		//CMyCanvasLayer_DrawRect* pLayer1 = new CMyCanvasLayer_DrawRect( "layer 1",CGUIRect( 400,284,600,484), CGUIColor( 0,1,1,1 ), 0 );	
+		//pLayer1->Initialize();
+		//CGUICanvasLayerManager::Instance()->PushCanvasLayer( pLayer1 );
 
-		CMyCanvasLayer_DrawRect* pLayer2 = new CMyCanvasLayer_DrawRect( "layer 2", CGUIRect( 400,284,600,484), CGUIColor( 1,1,1,1 ), 1);
-		pLayer2->Initialize();
-		CGUICanvasLayerManager::Instance()->PushCanvasLayer( pLayer2 );
+		//CMyCanvasLayer_DrawRect* pLayer2 = new CMyCanvasLayer_DrawRect( "layer 2", CGUIRect( 400,284,600,484), CGUIColor( 1,1,1,1 ), 1);
+		//pLayer2->Initialize();
+		//CGUICanvasLayerManager::Instance()->PushCanvasLayer( pLayer2 );
 
 		CMyCanvasLayer_DrawWidget* pLayer3 = new CMyCanvasLayer_DrawWidget( "layer 3" );
 		pLayer3->Initialize();
@@ -93,12 +95,15 @@ CMyCanvasLayer_DrawWidget::CMyCanvasLayer_DrawWidget( const char* szLayerName )
 	pWidget->SetParent( this );
 	pWidget->Open();
 
-	pWidget = CGUIWidgetManager::Instance()->GetPage( "dialog_okcancel.xml", "common.uip" );
-	pWidget->SetMovable( true );
-	pWidget->SetParent( this );
-	pWidget->Open();
+	//pWidget = CGUIWidgetManager::Instance()->GetPage( "dialog_okcancel.xml", "common.uip" );
+	//pWidget->SetMovable( true );
+	//pWidget->SetParent( this );
+	//pWidget->Open();
 
 	GSystem->RegisterGlobalKeyReceiver( this );
+	SetAutoPlayAs( true );
+
+	ApplyEffect();
 }
 
 //------------------------------------------------------------------------------
@@ -112,17 +117,52 @@ void CMyCanvasLayer_DrawWidget::DestroySelf( )
 	delete this;
 }
 //------------------------------------------------------------------------------
+void CMyCanvasLayer_DrawWidget::ApplyEffect()
+{
+	static int i=0;
+	CGUIAsGridBase* pAs = NULL;
+	switch( i )
+	{
+	case 0:
+		//pageturn
+		pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsPageTurn3D>();
+		pAs->SetGridSize( CGUIIntSize(30, 30) );
+		break;
+
+	case 1:
+		//wave 3d
+		pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsWaves3D>();
+		pAs->SetGridSize( CGUIIntSize(30, 30) );
+		((CGUIAsWaves3D*)pAs)->SetWavesInfo( 5, 20 );
+		break;
+
+	case 2:
+		//shaky 3d
+		pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsShaky3D>();
+		pAs->SetGridSize( CGUIIntSize(30, 30) );
+		((CGUIAsShaky3D*)pAs)->SetShakyInfo( 30, false );
+		break;
+
+	default:
+		//pageturn
+		pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsPageTurn3D>();
+		pAs->SetGridSize( CGUIIntSize(30, 30) );
+		i = 0;
+		break;
+	}
+	++i;
+
+	pAs->SetTotalTime( 5.0f );
+	pAs->SetReceiver( this );
+	this->SetAs( "effect", pAs );
+	pAs->RefRelease();
+}
+//------------------------------------------------------------------------------
 uint32 CMyCanvasLayer_DrawWidget::OnKeyClicked( CGUIEventKeyboard* pEvent )
 {
 	if( pEvent->GetKeyCode() == KC_F1 )
-	{
-		CGUIAsPageTurn3D* pAs1 = CGUIAsManager::Instance()->AllocateResource<CGUIAsPageTurn3D>();
-		pAs1->SetTotalTime( 5.0f );
-		pAs1->SetGridSize( CGUIIntSize(30, 30) );
-		pAs1->SetReceiver( this );
-		this->SetAutoPlayAs( true );
-		this->SetAs( "pageturn", pAs1 );
-		pAs1->RefRelease();
+	{	
+		ApplyEffect();
 
 		pEvent->Consume(true);
 	}

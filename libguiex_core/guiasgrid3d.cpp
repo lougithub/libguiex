@@ -57,25 +57,25 @@ namespace guiex
 	/** 
 	 * returns the vertex than belongs to certain position in the grid 
 	 */
-	const SR_V3F& CGUIAsGrid3D::GetVertex( const CGUIIntSize& rPos )
+	const SR_V3F& CGUIAsGrid3D::GetVertex( uint32 uX, uint32 uY )
 	{
-		return GetGrid3D()->GetVertex( rPos );
+		return GetGrid3D()->GetVertex( uX, uY );
 	}
 	//------------------------------------------------------------------------------
 	/** 
 	 * returns the non-transformed vertex than belongs to certain position in the grid 
 	 */
-	const SR_V3F& CGUIAsGrid3D::GetOriginalVertex( const CGUIIntSize& rPos )
+	const SR_V3F& CGUIAsGrid3D::GetOriginalVertex( uint32 uX, uint32 uY )
 	{
-		return GetGrid3D()->GetOriginalVertex( rPos );
+		return GetGrid3D()->GetOriginalVertex( uX, uY );
 	}
 	//------------------------------------------------------------------------------
 	/**
 	 * sets a new vertex to a certain position of the grid 
 	 */
-	void CGUIAsGrid3D::SetVertex( const CGUIIntSize& rPos, const SR_V3F& rVertex )
+	void CGUIAsGrid3D::SetVertex( uint32 uX, uint32 uY, const SR_V3F& rVertex )
 	{
-		GetGrid3D()->SetVertex( rPos, rVertex );
+		GetGrid3D()->SetVertex( uX, uY, rVertex );
 	}
 	//------------------------------------------------------------------------------
 
@@ -107,12 +107,12 @@ namespace guiex
 		real sinTheta = sinf(theta);
 		real cosTheta = cosf(theta);
 
-		for( uint32 i = 0; i <= m_aGridSize.m_uWidth; i++ )
+		for( uint32 i = 0; i <= m_aGridSize.GetWidth(); i++ )
 		{
-			for( uint32 j = 0; j <= m_aGridSize.m_uHeight; j++ )
+			for( uint32 j = 0; j <= m_aGridSize.GetHeight(); j++ )
 			{
 				// Get original vertex
-				SR_V3F p = GetOriginalVertex( CGUIIntSize(i,j));
+				SR_V3F p = GetOriginalVertex( i,j);
 
 				real R = sqrtf(p.x*p.x + (p.y - ay) * (p.y - ay));
 				real r = R * sinTheta;
@@ -147,7 +147,7 @@ namespace guiex
 				}
 
 				// Set new coords
-				SetVertex( CGUIIntSize(i,j), p );
+				SetVertex( i,j, p );
 			}
 		}
 	}
@@ -180,15 +180,62 @@ namespace guiex
 		CGUIAsGrid3D::OnUpdate( );
 		real fPercent = GetElapsedTime() / GetTotalTime();
 
-		for( uint32 i = 0; i < (m_aGridSize.m_uWidth+1); i++ )
+		for( uint32 i = 0; i < (m_aGridSize.GetWidth()+1); i++ )
 		{
-			for( uint32 j = 0; j < (m_aGridSize.m_uHeight+1); j++ )
+			for( uint32 j = 0; j < (m_aGridSize.GetHeight()+1); j++ )
 			{
-				SR_V3F v = GetOriginalVertex( CGUIIntSize(i,j));
+				SR_V3F v = GetOriginalVertex( i,j);
 				v.z += (sinf(CGUIMath::GUI_PI * fPercent * m_nWaves*2 + (v.y+v.x) * .01f) * m_fAmplitude * m_fAmplitudeRate);
-				SetVertex( CGUIIntSize(i,j), v );
+				SetVertex( i,j, v );
 			}
 		}
+	}
+	//------------------------------------------------------------------------------
+
+
+	
+
+
+	//*****************************************************************************
+	//	CGUIAsShaky3D
+	//*****************************************************************************
+	//------------------------------------------------------------------------------
+	CGUIAsShaky3D::CGUIAsShaky3D( const CGUIString& rAsName, const CGUIString& rSceneName )
+		:CGUIAsGrid3D( "CGUIAsShaky3D", rAsName, rSceneName )
+		,m_bShakeZ( false )
+		,m_nRandrange( 4 )
+	{
+
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsShaky3D::SetShakyInfo( int32 nRange, bool bShakeZ )
+	{
+		m_nRandrange = nRange;
+		m_bShakeZ = bShakeZ;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsShaky3D::OnUpdate( )
+	{
+		CGUIAsGrid3D::OnUpdate( );
+
+		int i, j;
+
+		for( uint32 i = 0; i < (m_aGridSize.GetWidth()+1); i++ )
+		{
+			for( uint32 j = 0; j < (m_aGridSize.GetHeight()+1); j++ )
+			{
+				SR_V3F v = GetOriginalVertex( i, j );
+				v.x += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
+				v.y += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
+				if( m_bShakeZ )
+				{
+					v.z += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
+				}
+
+				SetVertex( i,j, v);
+			}
+		}
+
 	}
 	//------------------------------------------------------------------------------
 

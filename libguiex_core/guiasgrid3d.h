@@ -40,9 +40,9 @@ namespace guiex
 
 		CGUISceneEffectGrid3D* GetGrid3D();
 
-		const SR_V3F& GetVertex( const CGUIIntSize& rPos );
-		const SR_V3F& GetOriginalVertex( const CGUIIntSize& rPos );
-		void SetVertex( const CGUIIntSize& rPos, const SR_V3F& rVertex );
+		const SR_V3F& GetVertex( uint32 uX, uint32 uY );
+		const SR_V3F& GetOriginalVertex( uint32 uX, uint32 uY );
+		void SetVertex( uint32 uX, uint32 uY, const SR_V3F& rVertex );
 
 	protected:
 	};
@@ -85,6 +85,28 @@ namespace guiex
 
 	protected:
 		GUI_AS_GENERATOR_DECLARE( CGUIAsWaves3D);
+	};
+
+	
+	//*****************************************************************************
+	//	CGUIAsShaky3D
+	//*****************************************************************************
+	class GUIEXPORT CGUIAsShaky3D : public CGUIAsGrid3D
+	{
+	public:
+		CGUIAsShaky3D( const CGUIString& rAsName, const CGUIString& rSceneName );
+
+		void SetShakyInfo( int32 nRange, bool bShakeZ );
+
+	protected:
+		virtual void OnUpdate( );
+
+	private:
+		int32 m_nRandrange;
+		bool m_bShakeZ;
+
+	protected:
+		GUI_AS_GENERATOR_DECLARE( CGUIAsShaky3D);
 	};
 
 }//namespace guiex

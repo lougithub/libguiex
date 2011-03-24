@@ -819,19 +819,19 @@ namespace guiex
 	{
 		m_bIsAutoPlayAs = bEnable;
 
-		if( m_bIsAutoPlayAs )
-		{
-			for( TMapAs::iterator itor = m_aMapAs.begin();
-				itor != m_aMapAs.end();
-				++itor )
-			{
-				CGUIAs* pAs = itor->second;
-				if( IsAsPlaying( pAs ) == false )
-				{
-					PlayAs( pAs );
-				}
-			}
-		}
+		//if( m_bIsAutoPlayAs )
+		//{
+		//	for( TMapAs::iterator itor = m_aMapAs.begin();
+		//		itor != m_aMapAs.end();
+		//		++itor )
+		//	{
+		//		CGUIAs* pAs = itor->second;
+		//		if( IsAsPlaying( pAs ) == false )
+		//		{
+		//			PlayAs( pAs );
+		//		}
+		//	}
+		//}
 	}
 	//------------------------------------------------------------------------------
 	bool CGUIWidget::IsAutoPlayAs( ) const

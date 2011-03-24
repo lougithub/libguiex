@@ -58,6 +58,7 @@ namespace guiex
 		REGISTER_AS( CGUIAsContainer );
 		REGISTER_AS( CGUIAsWaves3D );
 		REGISTER_AS( CGUIAsPageTurn3D );
+		REGISTER_AS( CGUIAsShaky3D );
 #undef REGISTER_AS
 	}
 	//------------------------------------------------------------------------------
