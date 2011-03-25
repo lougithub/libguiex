@@ -50,7 +50,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUISceneEffectGrid3D* CGUIAsGrid3D::GetGrid3D()
 	{
-		GUI_ASSERT( m_pEffectGrid, "[CGUIAsGrid3D::GetVertex]: no grid." );
+		GUI_ASSERT( m_pEffectGrid, "[CGUIAsGrid3D::GetGrid3D]: no grid." );
 		return static_cast<CGUISceneEffectGrid3D*>( m_pEffectGrid );
 	}
 	//------------------------------------------------------------------------------

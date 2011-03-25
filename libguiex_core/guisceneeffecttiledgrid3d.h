@@ -31,10 +31,16 @@ namespace guiex
 	class GUIEXPORT CGUISceneEffectTiledGrid3D : public CGUISceneEffectGridBase
 	{
 	public:
-		CGUISceneEffectTiledGrid3D( const CGUIIntSize& rSceneSize, const CGUIIntSize& rGridSize );
+		CGUISceneEffectTiledGrid3D( const CGUISize& rSceneSize, const CGUIIntSize& rGridSize );
 
 		virtual int32 Initialize( );
 		virtual void Release( );
+
+		void Reset( );
+
+		const SR_V3F_Quad& GetTile( uint32 uX, uint32 uY );
+		const SR_V3F_Quad& GetOriginalTile( uint32 uX, uint32 uY );
+		void SetTile( uint32 uX, uint32 uY, const SR_V3F_Quad& rTile );
 
 	protected:
 		virtual ~CGUISceneEffectTiledGrid3D();
@@ -42,8 +48,8 @@ namespace guiex
 
 	protected:
 		SR_T2F	*m_pTexCoordinates;
-		SR_V3F	*m_pVertices;
-		SR_V3F	*m_pOriginalVertices;
+		SR_V3F_Quad	*m_pVertices;
+		SR_V3F_Quad	*m_pOriginalVertices;
 		uint16	*m_pIndices;
 	};
 }

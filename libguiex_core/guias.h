@@ -74,6 +74,8 @@ namespace guiex
 
 		const CGUIString& GetType() const;
 
+		virtual void Reset( );
+
 		void Retire( bool bRetired );
 		bool IsRetired();
 
@@ -136,6 +138,8 @@ namespace guiex
 		CGUIAsInterpolation( const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName );
 
 	public:
+		virtual void Reset( );
+
 		EInterpolationType GetInterpolationType( ) const;
 		void SetInterpolationType( EInterpolationType eType );
 
@@ -175,6 +179,8 @@ namespace guiex
 		virtual ~CGUIAsInterpolationQueue( );
 
 	public:
+		virtual void Reset( );
+
 		void AddItem( CGUIAsInterpolation<T>* pAs );
 		const T& GetCurrentValue() const;
 
@@ -324,6 +330,8 @@ namespace guiex
 		virtual ~CGUIAsContainer( );
 
 	public:
+		virtual void Reset( );
+
 		virtual int32 ProcessProperty( const CGUIProperty& rProperty );
 		virtual int32 GenerateProperty( CGUIProperty& rProperty );
 
@@ -368,6 +376,14 @@ namespace guiex
 		:CGUIAs( rAsType,  rAsName, rSceneName )
 		,m_eInterpolationType( eInterpolationType_Linear )
 	{
+	}
+	//------------------------------------------------------------------------------
+	template< class T >
+	inline void CGUIAsInterpolation<T>::Reset( )
+	{
+		CGUIAs::Reset();
+
+		m_aCurValue = m_aBeginValue;
 	}
 	//------------------------------------------------------------------------------
 	template< class T >
@@ -558,6 +574,18 @@ namespace guiex
 			(*itor).m_pAs->RefRelease();
 		}
 		m_vAsQueue.clear();
+	}
+	//------------------------------------------------------------------------------
+	template< class T >
+	inline void CGUIAsInterpolationQueue<T>::Reset( )
+	{
+		CGUIAs::Reset();
+		for( typename TAsQueue::iterator itor = m_vAsQueue.begin();
+			itor != m_vAsQueue.end();
+			++itor )
+		{
+			(*itor).m_pAs->Reset();
+		}
 	}
 	//------------------------------------------------------------------------------
 	template< class T >

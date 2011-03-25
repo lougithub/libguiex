@@ -1487,7 +1487,7 @@ namespace guiex
 		TListAs::iterator itor = std::find( m_listAsPlaying.begin(), m_listAsPlaying.end(), pAs );
 		if( itor == m_listAsPlaying.end() )
 		{
-			pAs->SetElapsedTime( 0.0f );
+			pAs->Reset( );
 			pAs->RefRetain();
 			m_listAsPlaying.push_back( pAs );
 		}

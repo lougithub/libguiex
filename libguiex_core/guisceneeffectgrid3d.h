@@ -40,6 +40,8 @@ namespace guiex
 		virtual int32 Initialize( );
 		virtual void Release( );
 
+		virtual void Reset( );
+
 		void SetTextureFlipped( bool bFlipped );
 		bool IsTextureFlipped() const;
 

@@ -67,7 +67,7 @@ namespace guiex
 				uint16 idxBL = x * (m_aGridSize.m_uHeight+1) + (y+1); //bottom left
 
 				uint16	tempidx[6] = { idxTL, idxBL, idxTR, idxBR, idxTR, idxBL };
-				int idx = (y * m_aGridSize.m_uWidth) + x;
+				int idx = (x * m_aGridSize.m_uHeight) + y;
 				memcpy( &m_pIndices[6*idx], tempidx, 6*sizeof(uint16) );
 
 				real x1 = x * m_aStep.x;
@@ -130,6 +130,11 @@ namespace guiex
 		}
 
 		CGUISceneEffectGridBase::Release();
+	}
+	//------------------------------------------------------------------------------
+	void CGUISceneEffectGrid3D::Reset( )
+	{
+		memcpy(m_pVertices, m_pOriginalVertices, (m_aGridSize.m_uWidth+1)*(m_aGridSize.m_uHeight+1)*sizeof(SR_V3F));
 	}
 	//------------------------------------------------------------------------------
 	void CGUISceneEffectGrid3D::ProcessCaptureTexture( IGUIInterfaceRender* pRender )

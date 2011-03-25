@@ -24,7 +24,7 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	CGUISceneEffectTiledGrid3D::CGUISceneEffectTiledGrid3D( const CGUIIntSize& rSceneSize, const CGUIIntSize& rGridSize )
+	CGUISceneEffectTiledGrid3D::CGUISceneEffectTiledGrid3D( const CGUISize& rSceneSize, const CGUIIntSize& rGridSize )
 		:CGUISceneEffectGridBase( rSceneSize, rGridSize )
 		 ,m_pTexCoordinates( NULL )
 		 ,m_pVertices( NULL )
@@ -41,25 +41,21 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int32 CGUISceneEffectTiledGrid3D::Initialize( )
 	{
-		real width = m_pTexture->GetWidth();
-		real height = m_pTexture->GetHeight();
-		
 		//call parent function
 		if( CGUISceneEffectGridBase::Initialize( ) != 0 )
 		{
 			return -1;
 		}
 
+		real width = m_pTexture->GetWidth();
+		real height = m_pTexture->GetHeight();
+
 		// allocating data space	
 		uint32 numQuads = m_aGridSize.m_uWidth * m_aGridSize.m_uHeight;
-		m_pVertices = new SR_V3F[numQuads * 4];
-		m_pOriginalVertices = new SR_V3F[numQuads * 4];
+		m_pVertices = new SR_V3F_Quad[numQuads];
+		m_pOriginalVertices = new SR_V3F_Quad[numQuads];
 		m_pTexCoordinates = new SR_T2F[numQuads * 4];
 		m_pIndices = new uint16[ numQuads * 6];
-
-		SR_V3F *vertArray = m_pVertices;
-		SR_T2F *texArray = m_pTexCoordinates;
-		uint16 *idxArray = m_pIndices;
 
 		for( uint32 x = 0; x < m_aGridSize.m_uWidth; x++ )
 		{
@@ -70,59 +66,55 @@ namespace guiex
 				real y1 = y * m_aStep.y;
 				real y2 = y1 + m_aStep.y;
 
-				vertArray->x = x1;
-				vertArray->y = y1;
-				vertArray->z = 0;
-				++vertArray;
-				vertArray->x = x2;
-				vertArray->y = y1;
-				vertArray->z = 0;
-				++vertArray;
-				vertArray->x = x1;
-				vertArray->y = y2;
-				vertArray->z = 0;
-				++vertArray;
-				vertArray->x = x2;
-				vertArray->y = y2;
-				vertArray->z = 0;
-				++vertArray;
+				int idx = (x * m_aGridSize.m_uHeight) + y;
+
+				m_pVertices[idx].tl.x = x1; //top left
+				m_pVertices[idx].tl.y = y1;
+				m_pVertices[idx].tl.z = 0;
+				m_pVertices[idx].bl.x = x1; //bottom left
+				m_pVertices[idx].bl.y = y2;
+				m_pVertices[idx].bl.z = 0;
+				m_pVertices[idx].tr.x = x2; //top right
+				m_pVertices[idx].tr.y = y1;
+				m_pVertices[idx].tr.z = 0;
+				m_pVertices[idx].br.x= x2; // bottom right
+				m_pVertices[idx].br.y = y2;
+				m_pVertices[idx].br.z = 0;
 
 				real newY1 = y1;
 				real newY2 = y2;
-
 				if( m_bIsTextureFlipped ) 
 				{
 					newY1 = m_aSceneSize.m_fHeight - y1;
 					newY2 = m_aSceneSize.m_fHeight - y2;
 				}
 
-				texArray->u = x1 / width;
-				texArray->v = newY1 / height;
-				++texArray;
-				texArray->u = x2 / width;
-				texArray->v = newY1 / height;
-				++texArray;
-				texArray->u = x1 / width;
-				texArray->v = newY2 / height;
-				++texArray;
-				texArray->u = x2 / width;
-				texArray->v = newY2 / height;
-				++texArray;
+				uint32 nTexIdx = idx*4;
+				m_pTexCoordinates[nTexIdx].u = x1 / width; //top left
+				m_pTexCoordinates[nTexIdx].v = m_pTexture->UVConvertTopleft2Engine_v( newY1 / height );
+				m_pTexCoordinates[nTexIdx+1].u = x1 / width; //bottom left
+				m_pTexCoordinates[nTexIdx+1].v = m_pTexture->UVConvertTopleft2Engine_v( newY2 / height );
+				m_pTexCoordinates[nTexIdx+2].u = x2 / width; //top right
+				m_pTexCoordinates[nTexIdx+2].v = m_pTexture->UVConvertTopleft2Engine_v( newY1 / height );
+				m_pTexCoordinates[nTexIdx+3].u = x2 / width; //bottom right
+				m_pTexCoordinates[nTexIdx+3].v = m_pTexture->UVConvertTopleft2Engine_v( newY2 / height );
 			}
 		}
 
 		for( uint32 x = 0; x < numQuads; x++)
 		{
-			idxArray[x*6+0] = x*4+0;
-			idxArray[x*6+1] = x*4+1;
-			idxArray[x*6+2] = x*4+2;
+			uint32 nIdx = x*6;
 
-			idxArray[x*6+3] = x*4+1;
-			idxArray[x*6+4] = x*4+2;
-			idxArray[x*6+5] = x*4+3;
+			m_pIndices[nIdx+0] = x*4+0; //tl
+			m_pIndices[nIdx+1] = x*4+1; //bl
+			m_pIndices[nIdx+2] = x*4+2; //tr
+
+			m_pIndices[nIdx+3] = x*4+3; //br
+			m_pIndices[nIdx+4] = x*4+2; //tr
+			m_pIndices[nIdx+5] = x*4+1; //bl
 		}
 
-		memcpy(m_pOriginalVertices, m_pVertices, numQuads*4*sizeof(SR_V3F));
+		memcpy(m_pOriginalVertices, m_pVertices, numQuads*sizeof(SR_V3F_Quad));
 
 		return 0;
 	}
@@ -153,11 +145,39 @@ namespace guiex
 		CGUISceneEffectGridBase::Release();
 	}
 	//------------------------------------------------------------------------------
-	void CGUISceneEffectTiledGrid3D::ProcessCaptureTexture( IGUIInterfaceRender* pRender )
+	void CGUISceneEffectTiledGrid3D::Reset( )
 	{
-		CGUISceneEffectGridBase::ProcessCaptureTexture( pRender );
-
+		memcpy(m_pVertices, m_pOriginalVertices, m_aGridSize.m_uWidth * m_aGridSize.m_uHeight*sizeof(SR_V3F_Quad));
 	}
 	//------------------------------------------------------------------------------
+	void CGUISceneEffectTiledGrid3D::ProcessCaptureTexture( IGUIInterfaceRender* pRender )
+	{
+		uint32 n = m_aGridSize.m_uWidth * m_aGridSize.m_uHeight;
+		pRender->DrawGrid( m_pTexture, m_pTexCoordinates, (SR_V3F*)m_pVertices, m_pIndices, n );
+	}
+	//------------------------------------------------------------------------------
+	const SR_V3F_Quad& CGUISceneEffectTiledGrid3D::GetTile( uint32 uX, uint32 uY )
+	{
+		GUI_ASSERT( uX < m_aGridSize.m_uWidth && uY < m_aGridSize.m_uHeight, "invalid pos" );
+
+		int	index = uX * m_aGridSize.m_uHeight + uY;
+		return m_pVertices[index]; 
+	}
+	//------------------------------------------------------------------------------
+	const SR_V3F_Quad& CGUISceneEffectTiledGrid3D::GetOriginalTile( uint32 uX, uint32 uY )
+	{
+		GUI_ASSERT( uX < m_aGridSize.m_uWidth && uY < m_aGridSize.m_uHeight, "invalid pos" );
+
+		int	index = uX * m_aGridSize.m_uHeight + uY;
+		return m_pOriginalVertices[index];
+	}
+	//------------------------------------------------------------------------------
+	void CGUISceneEffectTiledGrid3D::SetTile( uint32 uX, uint32 uY, const SR_V3F_Quad& rTile )
+	{
+		GUI_ASSERT( uX < m_aGridSize.m_uWidth && uY < m_aGridSize.m_uHeight, "invalid pos" );
+
+		int	index = uX * m_aGridSize.m_uHeight + uY;
+		m_pVertices[index] = rTile;
+	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

@@ -41,8 +41,12 @@ namespace guiex
 		virtual int32 Initialize( );
 		virtual void Release( );
 
+		virtual void Reset( ) = 0;
+
 		void SetTextureFlipped( bool bFlipped );
 		bool IsTextureFlipped() const;
+
+		const CGUIVector2& GetStep() const;
 
 	protected:
 		CGUIIntSize m_aGridSize;

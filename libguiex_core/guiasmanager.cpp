@@ -11,6 +11,7 @@
 #include "guiasmanager.h"
 #include "guias.h"
 #include "guiasgrid3d.h"
+#include "guiastiledgrid3d.h"
 
 //============================================================================//
 // function
@@ -49,17 +50,7 @@ namespace guiex
 		m_pSingleton = this; 
 
 		//register as generator to map
-#define REGISTER_AS( as ) m_mapAsGenerator[#as] = as::GenerateAs;
-		REGISTER_AS( CGUIAsAlpha );
-		REGISTER_AS( CGUIAsScale );
-		REGISTER_AS( CGUIAsPosition );
-		REGISTER_AS( CGUIAsRotation );
-		REGISTER_AS( CGUIAsColor );
-		REGISTER_AS( CGUIAsContainer );
-		REGISTER_AS( CGUIAsWaves3D );
-		REGISTER_AS( CGUIAsPageTurn3D );
-		REGISTER_AS( CGUIAsShaky3D );
-#undef REGISTER_AS
+		RegisterAs();
 	}
 	//------------------------------------------------------------------------------
 	CGUIAsManager::~CGUIAsManager()
@@ -154,6 +145,32 @@ namespace guiex
 		CGUIAs* pAs = static_cast<CGUIAs*>( pRes );
 		pAs->OnDestory();
 		delete pAs;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsManager::RegisterAs()
+	{
+#define REGISTER_AS( as ) m_mapAsGenerator[#as] = as::GenerateAs;
+
+		REGISTER_AS( CGUIAsAlpha );
+		REGISTER_AS( CGUIAsScale );
+		REGISTER_AS( CGUIAsPosition );
+		REGISTER_AS( CGUIAsRotation );
+		REGISTER_AS( CGUIAsColor );
+		REGISTER_AS( CGUIAsContainer );
+
+		//grid 3d
+		REGISTER_AS( CGUIAsWaves3D );
+		REGISTER_AS( CGUIAsPageTurn3D );
+		REGISTER_AS( CGUIAsShaky3D );
+
+		//tiled grid 3d
+		REGISTER_AS( CGUIAsShakyTiles3D );
+		REGISTER_AS( CGUIAsShatteredTiles3D );
+		REGISTER_AS( CGUIAsShuffleTiles );
+		REGISTER_AS( CGUIAsFadeOutTRTiles );
+		
+
+#undef REGISTER_AS
 	}
 	//------------------------------------------------------------------------------
 

@@ -61,4 +61,9 @@ namespace guiex
 		return m_bIsTextureFlipped;
 	}
 	//------------------------------------------------------------------------------
+	const CGUIVector2& CGUISceneEffectGridBase::GetStep() const
+	{
+		return m_aStep;
+	}
+	//------------------------------------------------------------------------------
 }//namespace guiex

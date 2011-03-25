@@ -35,6 +35,15 @@ namespace guiex
 
 	}
 	//------------------------------------------------------------------------------
+	void CGUIAsGridBase::Reset( )
+	{
+		CGUIAs::Reset();
+		if( m_pEffectGrid )
+		{
+			m_pEffectGrid->Reset();
+		}
+	}
+	//------------------------------------------------------------------------------
 	void CGUIAsGridBase::OnUpdate( )
 	{
 		CGUIAs::OnUpdate( );
@@ -84,6 +93,16 @@ namespace guiex
 		return m_pEffectGrid != NULL;
 	}
 	//------------------------------------------------------------------------------
+	int32 CGUIAsGridBase::OnInitGrid()
+	{
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsGridBase::OnFiniGrid()
+	{
+
+	}
+	//------------------------------------------------------------------------------
 	int32 CGUIAsGridBase::InitGrid( )
 	{
 		//check grid
@@ -110,6 +129,12 @@ namespace guiex
 
 		pReceiver->SetSceneEffect( m_pEffectGrid ); 
 
+		if( 0 != OnInitGrid() )
+		{
+			throw CGUIException("[CGUIAsGridBase::InitGrid]: failed in OnInitGrid!" );
+			return -1;
+		}
+
 		return 0;
 	}
 	//------------------------------------------------------------------------------
@@ -119,6 +144,9 @@ namespace guiex
 		{
 			return;
 		}
+
+		OnFiniGrid();
+
 		if( GetReceiver() && GetReceiver()->GetSceneEffect() == m_pEffectGrid )
 		{
 			GetReceiver()->SetSceneEffect( NULL );

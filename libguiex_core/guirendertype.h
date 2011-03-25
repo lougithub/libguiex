@@ -101,6 +101,14 @@ namespace guiex
 		SR_V2F_C4F_T2F	tr;
 		SR_V2F_C4F_T2F	br;
 	};
+
+	struct SR_V3F_Quad
+	{
+		SR_V3F	tl;
+		SR_V3F	bl;
+		SR_V3F	tr;
+		SR_V3F	br;
+	};
 }
 #pragma pack( pop )
 

@@ -54,10 +54,8 @@ namespace guiex
 	//*****************************************************************************
 	class GUIEXPORT CGUIAsPageTurn3D : public CGUIAsGrid3D
 	{
-	public:
-		CGUIAsPageTurn3D( const CGUIString& rAsName, const CGUIString& rSceneName );
-
 	protected:
+		CGUIAsPageTurn3D( const CGUIString& rAsName, const CGUIString& rSceneName );
 		virtual void OnUpdate( );
 
 	protected:
@@ -71,11 +69,11 @@ namespace guiex
 	class GUIEXPORT CGUIAsWaves3D : public CGUIAsGrid3D
 	{
 	public:
-		CGUIAsWaves3D( const CGUIString& rAsName, const CGUIString& rSceneName );
-
 		void SetWavesInfo( int32 nWaves, real fAmplitude);
 
 	protected:
+		CGUIAsWaves3D( const CGUIString& rAsName, const CGUIString& rSceneName );
+
 		virtual void OnUpdate( );
 
 	private:
@@ -94,11 +92,10 @@ namespace guiex
 	class GUIEXPORT CGUIAsShaky3D : public CGUIAsGrid3D
 	{
 	public:
-		CGUIAsShaky3D( const CGUIString& rAsName, const CGUIString& rSceneName );
-
 		void SetShakyInfo( int32 nRange, bool bShakeZ );
 
 	protected:
+		CGUIAsShaky3D( const CGUIString& rAsName, const CGUIString& rSceneName );
 		virtual void OnUpdate( );
 
 	private:

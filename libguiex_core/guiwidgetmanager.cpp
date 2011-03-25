@@ -72,7 +72,7 @@ namespace guiex
 	{
 		CGUIWidget* pWidget = NULL;
 
-		if( !rWidgetName.empty() && !rSceneName.empty() )
+		if( !rWidgetName.empty() )
 		{
 			//check whether this widget has exist
 			TMapWidget::iterator itor = m_aMapWidget.find( rSceneName );
@@ -113,7 +113,7 @@ namespace guiex
 			throw CGUIException( "[CGUIWidgetManager::DestroyWidget]: Invalid parameter");
 		}
 
-		if( !pWidget->GetName().empty() && !pWidget->GetSceneName().empty())
+		if( !pWidget->GetName().empty() )
 		{
 			//check
 			TMapWidget::iterator itor = m_aMapWidget.find( pWidget->GetSceneName());

@@ -53,6 +53,12 @@ namespace guiex
 		m_listSuccessor.clear();
 	}
 	//------------------------------------------------------------------------------
+	void CGUIAs::Reset( )
+	{
+		m_bRetired = false;
+		m_fElapsedTime = 0.0f;
+	}
+	//------------------------------------------------------------------------------
 	int32 CGUIAs::ProcessProperty( const CGUIProperty& rProperty )
 	{
 		/*
@@ -408,6 +414,18 @@ namespace guiex
 			(*itor).m_pAs->RefRelease();
 		}
 		m_vAsList.clear();
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsContainer::Reset( )
+	{
+		CGUIAs::Reset();
+
+		for( TAsList::iterator itor = m_vAsList.begin();
+			itor != m_vAsList.end();
+			++itor )
+		{
+			(*itor).m_pAs->Reset();
+		}
 	}
 	//------------------------------------------------------------------------------
 	int32 CGUIAsContainer::ProcessProperty( const CGUIProperty& rProperty )

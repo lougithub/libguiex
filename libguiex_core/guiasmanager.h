@@ -80,6 +80,8 @@ namespace guiex
 		virtual	void DestroyRegisterResourceImp( CGUIResource* pRes ); 
 		virtual	void DestroyAllocateResourceImp( CGUIResource* pRes ); 
 
+		void RegisterAs();
+
 	private:
 		static CGUIAsManager* m_pSingleton;
 		typedef std::map<CGUIString, TAsGenerator> TMapAsGenerator;
