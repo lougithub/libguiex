@@ -1,5 +1,5 @@
 /** 
-* @file guitilemapparser.cpp
+* @file guitiledmapparser.cpp
 * @brief 
 * @author Lou Guoliang (louguoliang@gmail.com)
 * @date 2011-01-27
@@ -7,8 +7,8 @@
 //============================================================================//
 // include
 //============================================================================//
-#include "guitilemapparser.h"
-#include "guitilemap.h"
+#include "guitiledmapparser.h"
+#include "guitiledmap.h"
 #include "guiexception.h"
 #include "guiinterfacefilesys.h"
 #include "guistringconvertor.h"
@@ -133,38 +133,60 @@ namespace guiex
 
 
 	//------------------------------------------------------------------------------
-	// CGUITileMapLayerInfo
+	// CGUITiledMapLayerInfo
 	//------------------------------------------------------------------------------
-	CGUITileMapLayerInfo::CGUITileMapLayerInfo()
-		:ownTiles( true )
-		,opacity( 1.0f )
+	CGUITiledMapLayerInfo::CGUITiledMapLayerInfo()
+		:m_bOwnTiles( true )
+		,m_fOpacity( 1.0f )
 	{
 
 	}
 	//------------------------------------------------------------------------------
-	CGUITileMapLayerInfo::~CGUITileMapLayerInfo()
+	CGUITiledMapLayerInfo::~CGUITiledMapLayerInfo()
 	{
 	}
+	//------------------------------------------------------------------------------
+	const std::map<CGUIString, CGUIString>& CGUITiledMapLayerInfo::GetProperties() const
+	{
+		return m_mapProperties;
+	}
+	//------------------------------------------------------------------------------
 
 	//------------------------------------------------------------------------------
-	// CGUITileMapObjectGroup
+	// CGUITiledMapObjectInfo
 	//------------------------------------------------------------------------------
-	CGUITileMapObjectGroup::CGUITileMapObjectGroup()
+	const CGUIString& CGUITiledMapObjectInfo::GetName() const
+	{
+		return m_strObjectName;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIString& CGUITiledMapObjectInfo::GetType() const
+	{
+		return m_strObjectType;
+	}
+	//------------------------------------------------------------------------------
+
+
+
+	//------------------------------------------------------------------------------
+	// CGUITiledMapObjectGroup
+	//------------------------------------------------------------------------------
+	CGUITiledMapObjectGroup::CGUITiledMapObjectGroup()
 	{
 
 	}
 	//------------------------------------------------------------------------------
-	CGUITileMapObjectGroup::~CGUITileMapObjectGroup()
+	CGUITiledMapObjectGroup::~CGUITiledMapObjectGroup()
 	{
 	}
 	//------------------------------------------------------------------------------
-	const CGUITileMapObjectInfo* CGUITileMapObjectGroup::GetObjectInfo( const CGUIString& rObjectName ) const
+	const CGUITiledMapObjectInfo* CGUITiledMapObjectGroup::GetObjectInfo( const CGUIString& rObjectName ) const
 	{
-		for( std::vector<CGUITileMapObjectInfo>::const_iterator itor = objects.begin();
-			itor != objects.end();
+		for( std::vector<CGUITiledMapObjectInfo>::const_iterator itor = m_vObjects.begin();
+			itor != m_vObjects.end();
 			++itor )
 		{
-			if((*itor).objectName == rObjectName )
+			if((*itor).GetName() == rObjectName )
 			{
 				return &(*itor);
 			}
@@ -172,10 +194,10 @@ namespace guiex
 		return NULL;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIString* CGUITileMapObjectGroup::GetProperty( const CGUIString& rPropertyName ) const
+	const CGUIString* CGUITiledMapObjectGroup::GetProperty( const CGUIString& rPropertyName ) const
 	{
-		std::map<CGUIString, CGUIString>::const_iterator itorFind = properties.find( rPropertyName );
-		if( itorFind == properties.end() )
+		std::map<CGUIString, CGUIString>::const_iterator itorFind = m_mapProperties.find( rPropertyName );
+		if( itorFind == m_mapProperties.end() )
 		{
 			return NULL;
 		}
@@ -185,59 +207,74 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	const CGUIString& CGUITiledMapObjectGroup::GetName() const
+	{
+		return m_strGroupName;
+	}
+	//------------------------------------------------------------------------------
 
 
 	//------------------------------------------------------------------------------
-	// CGUITileMapTilesetInfo
+	// CGUITiledMapTilesetInfo
 	//------------------------------------------------------------------------------
-	CGUITileMapTilesetInfo::CGUITileMapTilesetInfo()
-		:firstGid( 0 )
-		,spacing( 0 )
-		,margin( 0 )
+	CGUITiledMapTilesetInfo::CGUITiledMapTilesetInfo()
+		:m_nFirstGid( 0 )
+		,m_nSpacing( 0 )
+		,m_nMargin( 0 )
 	{
 	}
 	//------------------------------------------------------------------------------
-	CGUITileMapTilesetInfo::~CGUITileMapTilesetInfo()
+	CGUITiledMapTilesetInfo::~CGUITiledMapTilesetInfo()
 	{
 	}
 	//------------------------------------------------------------------------------
-	CGUIRect CGUITileMapTilesetInfo::RectForGID( uint32 gid, const CGUIIntSize& rImageSize ) const
+	uint32 CGUITiledMapTilesetInfo::GetFirstGid() const
 	{
-		gid = gid - firstGid;
-		uint32 max_x = ( rImageSize.m_uWidth - margin*2 + spacing ) / ( tileSize.m_uWidth + spacing );
+		return m_nFirstGid;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIString& CGUITiledMapTilesetInfo::GetSourceImage() const
+	{
+		return m_strSourceImage;
+	}
+	//------------------------------------------------------------------------------
+	CGUIRect CGUITiledMapTilesetInfo::RectForGID( uint32 gid, const CGUIIntSize& rImageSize ) const
+	{
+		gid = gid - m_nFirstGid;
+		uint32 max_x = ( rImageSize.m_uWidth - m_nMargin*2 + m_nSpacing ) / ( m_aTileSize.m_uWidth + m_nSpacing );
 
 		CGUIVector2 aTopLeft;
-		aTopLeft.x = real((gid % max_x) * (tileSize.m_uWidth + spacing) + margin) / rImageSize.m_uWidth; //column
-		aTopLeft.y = real((gid / max_x) * (tileSize.m_uHeight + spacing) + margin)/ rImageSize.m_uHeight; //row
+		aTopLeft.x = real((gid % max_x) * (m_aTileSize.m_uWidth + m_nSpacing) + m_nMargin) / rImageSize.m_uWidth; //column
+		aTopLeft.y = real((gid / max_x) * (m_aTileSize.m_uHeight + m_nSpacing) + m_nMargin)/ rImageSize.m_uHeight; //row
 		CGUISize aSize(
-			real(tileSize.m_uWidth) / rImageSize.m_uWidth,
-			real(tileSize.m_uHeight) / rImageSize.m_uHeight
+			real(m_aTileSize.m_uWidth) / rImageSize.m_uWidth,
+			real(m_aTileSize.m_uHeight) / rImageSize.m_uHeight
 			);
 		return CGUIRect( aTopLeft, aSize );
 	}
 	//------------------------------------------------------------------------------
 
 	//------------------------------------------------------------------------------
-	// CGUITileMapInfo
+	// CGUITiledMapInfo
 	//------------------------------------------------------------------------------
-	CGUITileMapInfo::CGUITileMapInfo()
-		:parentGID( 0 )
-		,orientation( CCTMXOrientationOrtho ) // map orientation
+	CGUITiledMapInfo::CGUITiledMapInfo()
+		:m_uParentGID( 0 )
+		,m_eOrientation( eTMXOrientationOrtho ) // map orientation
 	{
 	}
 	//------------------------------------------------------------------------------
-	CGUITileMapInfo::~CGUITileMapInfo()
+	CGUITiledMapInfo::~CGUITiledMapInfo()
 	{
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUITileMapInfo::InitWithTMXFile( const CGUIString& tmxFile )
+	int32 CGUITiledMapInfo::InitWithTMXFile( const CGUIString& tmxFile )
 	{
-		filename = tmxFile;
+		m_strFilename = tmxFile;
 
-		return ParseXMLFile( filename );		
+		return ParseXMLFile( m_strFilename );		
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUITileMapInfo::ParseXMLFile( const CGUIString& tmxFile )
+	int32 CGUITiledMapInfo::ParseXMLFile( const CGUIString& tmxFile )
 	{
 		/*
 		<map version="1.0" orientation="orthogonal" width="64" height="64" tilewidth="32" tileheight="32">
@@ -268,7 +305,7 @@ namespace guiex
 		if( 0 != pFileSys->ReadFile( tmxFile, aDataChunk, IGUIInterfaceFileSys::eOpenMode_String ))
 		{
 			//failed
-			throw CGUIException("[CGUITileMapInfo::ParseXMLFile]: failed to read file <%s>!", tmxFile.c_str());
+			throw CGUIException("[CGUITiledMapInfo::ParseXMLFile]: failed to read file <%s>!", tmxFile.c_str());
 			return -1;
 		}
 
@@ -279,7 +316,7 @@ namespace guiex
 		{
 			//failed to parse
 			throw CGUIException(
-				"[CGUITileMapInfo::ParseXMLFile]: failed to parse file <%s>!\n\n<%s>", 
+				"[CGUITiledMapInfo::ParseXMLFile]: failed to parse file <%s>!\n\n<%s>", 
 				tmxFile.c_str(),
 				aDoc.ErrorDesc());
 			return -1;
@@ -289,7 +326,7 @@ namespace guiex
 		TiXmlElement* pRootNode = aDoc.RootElement();
 		if( !pRootNode )
 		{
-			throw guiex::CGUIException("[CGUITileMapInfo::ParseXMLFile], failed to get root node from file <%s>!", tmxFile.c_str());
+			throw guiex::CGUIException("[CGUITiledMapInfo::ParseXMLFile], failed to get root node from file <%s>!", tmxFile.c_str());
 			return -1;
 		}
 
@@ -302,13 +339,13 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUITileMapInfo::ParseNode_map( TiXmlElement* pMapNode )
+	int32 CGUITiledMapInfo::ParseNode_map( TiXmlElement* pMapNode )
 	{
 		//version
 		CGUIString strVersion = pMapNode->Attribute("version");
 		if( strVersion != "1.0" )
 		{
-			throw CGUIException("[CGUITileMapInfo::ParseNode_map]: Unsupported TMX version %s", strVersion.c_str());
+			throw CGUIException("[CGUITiledMapInfo::ParseNode_map]: Unsupported TMX version %s", strVersion.c_str());
 			return -1;
 		}
 
@@ -316,33 +353,33 @@ namespace guiex
 		CGUIString strOrientation = pMapNode->Attribute("orientation");
 		if( strOrientation == "orthogonal" )
 		{
-			orientation = CCTMXOrientationOrtho;
+			m_eOrientation = eTMXOrientationOrtho;
 		}
 		else if( strOrientation == "isometric")
 		{
-			orientation = CCTMXOrientationIso;
+			m_eOrientation = eTMXOrientationIso;
 		}
 		else if( strOrientation == "hexagonal")
 		{
-			orientation = CCTMXOrientationHex;
+			m_eOrientation = eTMXOrientationHex;
 		}
 		else
 		{
-			throw CGUIException( "[CGUITileMapInfo::ParseNode_map]: Unsupported orientation: %s", strOrientation.c_str() );
+			throw CGUIException( "[CGUITiledMapInfo::ParseNode_map]: Unsupported orientation: %s", strOrientation.c_str() );
 			return -1;
 		}
 
 		//width and height
 		CGUIString strWidth = pMapNode->Attribute("width");
-		StringToValue( strWidth, mapSize.m_uWidth );
+		StringToValue( strWidth, m_aMapSize.m_uWidth );
 		CGUIString strHeight = pMapNode->Attribute("height");
-		StringToValue( strHeight, mapSize.m_uHeight );
+		StringToValue( strHeight, m_aMapSize.m_uHeight );
 
 		//tile width and height
 		CGUIString strTileWidth = pMapNode->Attribute("tilewidth");
-		StringToValue( strTileWidth, tileSize.m_uWidth );
+		StringToValue( strTileWidth, m_aTileSize.m_uWidth );
 		CGUIString strTileHeight = pMapNode->Attribute("tileheight");
-		StringToValue( strTileHeight, tileSize.m_uHeight );
+		StringToValue( strTileHeight, m_aTileSize.m_uHeight );
 
 
 		//parse child node
@@ -372,14 +409,14 @@ namespace guiex
 			}
 			else if( CGUIString("properties" ) == pChildNode->Value())
 			{
-				if( 0 != ParseNode_properties( pChildNode, properties ) )
+				if( 0 != ParseNode_properties( pChildNode, m_mapProperties ) )
 				{
 					return -1;
 				}
 			}
 			else
 			{
-				throw CGUIException( "[CGUITileMapInfo::ParseXMLFile]: unknown tmx file node <%s>", pChildNode->Value());
+				throw CGUIException( "[CGUITiledMapInfo::ParseXMLFile]: unknown tmx file node <%s>", pChildNode->Value());
 				return -1;
 			}
 
@@ -390,13 +427,13 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUITileMapInfo::ParseSourceFile( const CGUIString& tmxFile )
+	int32 CGUITiledMapInfo::ParseSourceFile( const CGUIString& tmxFile )
 	{
-		throw CGUIException( "[CGUITileMapInfo::ParseSourceFile]: unsupport to parse source file now");
+		throw CGUIException( "[CGUITiledMapInfo::ParseSourceFile]: unsupport to parse source file now");
 		return -1;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUITileMapInfo::ParseNode_tileset( TiXmlElement* pTilesetNode )
+	int32 CGUITiledMapInfo::ParseNode_tileset( TiXmlElement* pTilesetNode )
 	{
 		//tile width and height
 		const char* szSource = pTilesetNode->Attribute("source");
@@ -409,30 +446,30 @@ namespace guiex
 			return 0;
 		}
 
-		tilesets.push_back( CGUITileMapTilesetInfo() );
-		CGUITileMapTilesetInfo& tileset = tilesets.back();
+		m_vTilesets.push_back( CGUITiledMapTilesetInfo() );
+		CGUITiledMapTilesetInfo& tileset = m_vTilesets.back();
 
 		//name
 		CGUIString strName = pTilesetNode->Attribute("name");
-		tileset.name = strName;
+		tileset.m_strName = strName;
 
 		//first gid
 		CGUIString strGid = pTilesetNode->Attribute( "firstgid");
-		StringToValue( strGid, tileset.firstGid );
+		StringToValue( strGid, tileset.m_nFirstGid );
 
 		//spacing
 		CGUIString strSpacing = pTilesetNode->Attribute( "spacing");
-		StringToValue( strSpacing, tileset.spacing );
+		StringToValue( strSpacing, tileset.m_nSpacing );
 
 		//margin
 		CGUIString strMargin = pTilesetNode->Attribute( "margin");
-		StringToValue( strMargin, tileset.margin );
+		StringToValue( strMargin, tileset.m_nMargin );
 
 		//size
 		CGUIString strWidth = pTilesetNode->Attribute( "tilewidth");
-		StringToValue( strWidth, tileset.tileSize.m_uWidth );
+		StringToValue( strWidth, tileset.m_aTileSize.m_uWidth );
 		CGUIString strHeight = pTilesetNode->Attribute( "tileheight");
-		StringToValue( strHeight, tileset.tileSize.m_uHeight );
+		StringToValue( strHeight, tileset.m_aTileSize.m_uHeight );
 
 		//parse child node
 		TiXmlElement* pChildNode = pTilesetNode->FirstChildElement();
@@ -454,7 +491,7 @@ namespace guiex
 			}
 			else
 			{
-				throw CGUIException( "[CGUITileMapInfo::ParseXMLFile]: unknown tmx file node <%s>", pChildNode->Value());
+				throw CGUIException( "[CGUITiledMapInfo::ParseXMLFile]: unknown tmx file node <%s>", pChildNode->Value());
 				return -1;
 			}
 
@@ -465,34 +502,34 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUITileMapInfo::ParseNode_image( TiXmlElement* pImageNode )
+	int32 CGUITiledMapInfo::ParseNode_image( TiXmlElement* pImageNode )
 	{
-		if( tilesets.empty() )
+		if( m_vTilesets.empty() )
 		{
-			throw CGUIException("[CGUITileMapInfo::ParseNode_tile]: not find tileset when process tile node" );
+			throw CGUIException("[CGUITiledMapInfo::ParseNode_tile]: not find tileset when process tile node" );
 			return -1;
 		}
-		CGUITileMapTilesetInfo& info = tilesets.back();
+		CGUITiledMapTilesetInfo& info = m_vTilesets.back();
 
 		CGUIString strSource = pImageNode->Attribute("source");
-		info.sourceImage = strSource;
+		info.m_strSourceImage = strSource;
 
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUITileMapInfo::ParseNode_tile( TiXmlElement* pTileNode )
+	int32 CGUITiledMapInfo::ParseNode_tile( TiXmlElement* pTileNode )
 	{
-		if( tilesets.empty() )
+		if( m_vTilesets.empty() )
 		{
-			throw CGUIException("[CGUITileMapInfo::ParseNode_tile]: not find tileset when process tile node" );
+			throw CGUIException("[CGUITiledMapInfo::ParseNode_tile]: not find tileset when process tile node" );
 			return -1;
 		}
-		CGUITileMapTilesetInfo& info = tilesets.back();
+		CGUITiledMapTilesetInfo& info = m_vTilesets.back();
 
 		uint32 uID = 0;
 		CGUIString strID = pTileNode->Attribute( "id" );
 		StringToValue( strID, uID );
-		uint32 uParentID = info.firstGid + uID;
+		uint32 uParentID = info.m_nFirstGid + uID;
 
 		std::map<CGUIString, CGUIString> mapTileProperties;
 
@@ -509,19 +546,19 @@ namespace guiex
 			}
 			else
 			{
-				throw CGUIException( "[CGUITileMapInfo::ParseNode_tile]: unknown tmx file node <%s>", pChildNode->Value());
+				throw CGUIException( "[CGUITiledMapInfo::ParseNode_tile]: unknown tmx file node <%s>", pChildNode->Value());
 				return -1;
 			}
 			//for next node
 			pChildNode = pChildNode->NextSiblingElement();
 		}
 
-		tileProperties.insert( std::make_pair( uParentID, mapTileProperties ) );
+		m_mapTileProperties.insert( std::make_pair( uParentID, mapTileProperties ) );
 
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUITileMapInfo::ParseNode_properties( TiXmlElement* pPropertiesNode, std::map<CGUIString, CGUIString>& mapTileProperties )
+	int32 CGUITiledMapInfo::ParseNode_properties( TiXmlElement* pPropertiesNode, std::map<CGUIString, CGUIString>& mapTileProperties )
 	{
 		//parse child node
 		TiXmlElement* pChildNode = pPropertiesNode->FirstChildElement();
@@ -535,7 +572,7 @@ namespace guiex
 			}
 			else
 			{
-				throw CGUIException( "[CGUITileMapInfo::ParseNode_tile]: unknown tmx file node <%s>", pChildNode->Value());
+				throw CGUIException( "[CGUITiledMapInfo::ParseNode_tile]: unknown tmx file node <%s>", pChildNode->Value());
 				return -1;
 			}
 
@@ -545,62 +582,62 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUITileMapInfo::ParseNode_layer( TiXmlElement* pLayerNode )
+	int32 CGUITiledMapInfo::ParseNode_layer( TiXmlElement* pLayerNode )
 	{
-		layers.push_back( CGUITileMapLayerInfo() );
-		CGUITileMapLayerInfo &layer = layers.back();
+		m_vLayers.push_back( CGUITiledMapLayerInfo() );
+		CGUITiledMapLayerInfo &layer = m_vLayers.back();
 
 		//name
-		layer.name = pLayerNode->Attribute( "name" );
+		layer.m_strName = pLayerNode->Attribute( "name" );
 
 		//size
 		CGUIString strWidth = pLayerNode->Attribute("width");
-		StringToValue( strWidth, layer.layerSize.m_uWidth );
+		StringToValue( strWidth, layer.m_aLayerSize.m_uWidth );
 		CGUIString strHeight = pLayerNode->Attribute("height");
-		StringToValue( strHeight, layer.layerSize.m_uHeight );
+		StringToValue( strHeight, layer.m_aLayerSize.m_uHeight );
 
 		//visible
 		const char* szVisible = pLayerNode->Attribute("visible");
 		if( szVisible )
 		{
-			StringToValue( szVisible, layer.visible );
+			StringToValue( szVisible, layer.m_bVisible );
 		}
 		else
 		{
-			layer.visible = true;
+			layer.m_bVisible = true;
 		}
 
 		//opacity
 		const char* szOpacity = pLayerNode->Attribute("opacity");
 		if( !szOpacity )
 		{
-			layer.opacity = 1.0f;
-			layer.visible = false;
+			layer.m_fOpacity = 1.0f;
+			layer.m_bVisible = false;
 		}
 		else
 		{
-			StringToValue( szOpacity, layer.opacity );
-			if( layer.opacity == 0.0f )
+			StringToValue( szOpacity, layer.m_fOpacity );
+			if( layer.m_fOpacity == 0.0f )
 			{
-				layer.visible = false;
+				layer.m_bVisible = false;
 			}
 			else
 			{
-				layer.visible = true;
+				layer.m_bVisible = true;
 			}
 		}
 
 		//offset
 		const char* szX = pLayerNode->Attribute("x");
 		const char* szY = pLayerNode->Attribute("y");
-		layer.offset.x = layer.offset.y = 0;
+		layer.m_aOffset.x = layer.m_aOffset.y = 0;
 		if( szX )
 		{
-			StringToValue( szX, layer.offset.x );
+			StringToValue( szX, layer.m_aOffset.x );
 		}
 		if( szY )
 		{
-			StringToValue( szY, layer.offset.y );
+			StringToValue( szY, layer.m_aOffset.y );
 		}
 
 		//parse child node
@@ -616,14 +653,14 @@ namespace guiex
 			}
 			else if( CGUIString("properties") == pChildNode->Value())
 			{
-				if( 0 != ParseNode_properties( pChildNode, layer.properties ) )
+				if( 0 != ParseNode_properties( pChildNode, layer.m_mapProperties ) )
 				{
 					return -1;
 				}
 			}
 			else
 			{
-				throw CGUIException( "[CGUITileMapInfo::ParseNode_layer]: unknown tmx file node <%s>", pChildNode->Value());
+				throw CGUIException( "[CGUITiledMapInfo::ParseNode_layer]: unknown tmx file node <%s>", pChildNode->Value());
 				return -1;
 			}
 
@@ -634,33 +671,33 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUITileMapInfo::ParseNode_data( TiXmlElement* pDataNode )
+	int32 CGUITiledMapInfo::ParseNode_data( TiXmlElement* pDataNode )
 	{
 		CGUIString strEncoding = pDataNode->Attribute("encoding");
 		CGUIString strCompression = pDataNode->Attribute("compression");
 
 		if( strEncoding != "base64" )
 		{
-			throw CGUIException("[CGUITileMapInfo::ParseNode_data]: date only support base64 now");
+			throw CGUIException("[CGUITiledMapInfo::ParseNode_data]: date only support base64 now");
 			return -1;
 		}
 		const char* data = pDataNode->GetText();
 
 		if( data )
 		{
-			if( layers.empty() )
+			if( m_vLayers.empty() )
 			{
-				throw CGUIException("[CGUITileMapInfo::ParseNode_data]: not find layers when process data node" );
+				throw CGUIException("[CGUITiledMapInfo::ParseNode_data]: not find layers when process data node" );
 				return -1;
 			}
-			CGUITileMapLayerInfo& layer = layers.back();
+			CGUITiledMapLayerInfo& layer = m_vLayers.back();
 
 			unsigned char *buffer = NULL;
 			int len = 0;
 			len = base64Decode( (const unsigned char*)data, strlen(data), &buffer);
 			if( !buffer )
 			{
-				throw CGUIException("[CGUITileMapInfo::ParseNode_data]: TiledMap decode data error");
+				throw CGUIException("[CGUITiledMapInfo::ParseNode_data]: TiledMap decode data error");
 				return -1;
 			}
 
@@ -674,7 +711,7 @@ namespace guiex
 
 				if( !deflated )
 				{
-					throw CGUIException("[CGUITileMapInfo::ParseNode_data]: inflate data error");
+					throw CGUIException("[CGUITiledMapInfo::ParseNode_data]: inflate data error");
 					return -1;
 				}
 
@@ -689,10 +726,10 @@ namespace guiex
 			if( nTileNum <= 0 )
 			{
 				free( pTiles );
-				throw CGUIException("[CGUITileMapInfo::ParseNode_data]: invalid tile num");
+				throw CGUIException("[CGUITiledMapInfo::ParseNode_data]: invalid tile num");
 				return -1;
 			}
-			layer.tiles.resize( nTileNum, 0 );
+			layer.m_vTiles.resize( nTileNum, 0 );
 			for( int i=0; i<nTileNum; ++i )
 			{
 				// gid are stored in little endian.
@@ -700,7 +737,7 @@ namespace guiex
 #if GUI_ENDIAN == GUI_ENDIAN_BIG
 				pTiles[i] = ((pTiles[i] & 0xFF) << 24) | ((pTiles[i] & 0xFF00) << 8) | ((pTiles[i] >> 8) & 0xFF00) | ((pTiles[i] >> 24) & 0xFF);
 #endif	//#if GUI_ENDIAN == GUI_ENDIAN_BIG
-				layer.tiles[i] = pTiles[i];
+				layer.m_vTiles[i] = pTiles[i];
 			}
 			free( pTiles );
 		}
@@ -708,19 +745,19 @@ namespace guiex
 		return 0;
 	} 
 	//------------------------------------------------------------------------------
-	int32 CGUITileMapInfo::ParseNode_objectgroup( TiXmlElement* pObjectGroupNode )
+	int32 CGUITiledMapInfo::ParseNode_objectgroup( TiXmlElement* pObjectGroupNode )
 	{
-		objectGroups.push_back( CGUITileMapObjectGroup() );
-		CGUITileMapObjectGroup& objectGroup = objectGroups.back();
+		m_vObjectGroups.push_back( CGUITiledMapObjectGroup() );
+		CGUITiledMapObjectGroup& objectGroup = m_vObjectGroups.back();
 
 		//name
-		objectGroup.groupName = pObjectGroupNode->Attribute( "name" );
+		objectGroup.m_strGroupName = pObjectGroupNode->Attribute( "name" );
 
 		//offset
 		CGUIString strX = pObjectGroupNode->Attribute( "x" );
-		StringToValue( strX, objectGroup.positionOffset.x );
+		StringToValue( strX, objectGroup.m_aPositionOffset.x );
 		CGUIString strY = pObjectGroupNode->Attribute( "y" );
-		StringToValue( strY, objectGroup.positionOffset.y );
+		StringToValue( strY, objectGroup.m_aPositionOffset.y );
 
 		//parse child node
 		TiXmlElement* pChildNode = pObjectGroupNode->FirstChildElement();
@@ -735,14 +772,14 @@ namespace guiex
 			}
 			else if( CGUIString("properties" ) == pChildNode->Value())
 			{
-				if( 0 != ParseNode_properties( pChildNode, objectGroup.properties ) )
+				if( 0 != ParseNode_properties( pChildNode, objectGroup.m_mapProperties ) )
 				{
 					return -1;
 				}
 			}
 			else
 			{
-				throw CGUIException( "[CGUITileMapInfo::ParseNode_objectgroup]: unknown tmx file node <%s>", pChildNode->Value());
+				throw CGUIException( "[CGUITiledMapInfo::ParseNode_objectgroup]: unknown tmx file node <%s>", pChildNode->Value());
 				return -1;
 			}
 
@@ -752,43 +789,43 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUITileMapInfo::ParseNode_object( TiXmlElement* pObjectNode )
+	int32 CGUITiledMapInfo::ParseNode_object( TiXmlElement* pObjectNode )
 	{
-		if( objectGroups.empty() )
+		if( m_vObjectGroups.empty() )
 		{
-			throw CGUIException("[CGUITileMapInfo::ParseNode_object]: not find object group when process objectgroup node" );
+			throw CGUIException("[CGUITiledMapInfo::ParseNode_object]: not find object group when process objectgroup node" );
 			return -1;
 		}
-		CGUITileMapObjectGroup& objectGroup = objectGroups.back();
+		CGUITiledMapObjectGroup& objectGroup = m_vObjectGroups.back();
 
-		objectGroup.objects.push_back( CGUITileMapObjectInfo() );
-		CGUITileMapObjectInfo& object = objectGroup.objects.back();
+		objectGroup.m_vObjects.push_back( CGUITiledMapObjectInfo() );
+		CGUITiledMapObjectInfo& object = objectGroup.m_vObjects.back();
 
 		//name
-		object.objectName = pObjectNode->Attribute("name");
+		object.m_strObjectName = pObjectNode->Attribute("name");
 
 		//type
 		const char* szType = pObjectNode->Attribute("type");
 		if( szType )
 		{
-			object.objectType = szType;
+			object.m_strObjectType = szType;
 		}
 
 		//size
 		CGUIString strWidth = pObjectNode->Attribute( "width");
-		StringToValue( strWidth, object.size.m_uWidth );
+		StringToValue( strWidth, object.m_aSize.m_uWidth );
 		CGUIString strHeight = pObjectNode->Attribute( "height");
-		StringToValue( strHeight, object.size.m_uHeight );
+		StringToValue( strHeight, object.m_aSize.m_uHeight );
 
 		//position
 		CGUIString strX = pObjectNode->Attribute("x");
-		StringToValue( strX, object.position.x );
-		object.position.x += objectGroup.positionOffset.x;
+		StringToValue( strX, object.m_aPosition.x );
+		object.m_aPosition.x += objectGroup.m_aPositionOffset.x;
 		CGUIString strY = pObjectNode->Attribute("y");
-		StringToValue( strY, object.position.y );
-		object.position.y += objectGroup.positionOffset.y;
+		StringToValue( strY, object.m_aPosition.y );
+		object.m_aPosition.y += objectGroup.m_aPositionOffset.y;
 		// Correct y position. (Tiled uses Flipped, we uses Standard)
-		object.position.y = (mapSize.m_uHeight * tileSize.m_uHeight) - object.position.y - object.size.m_uHeight;
+		object.m_aPosition.y = (m_aMapSize.m_uHeight * m_aTileSize.m_uHeight) - object.m_aPosition.y - object.m_aSize.m_uHeight;
 
 		//parse child node
 		TiXmlElement* pChildNode = pObjectNode->FirstChildElement();
@@ -796,14 +833,14 @@ namespace guiex
 		{
 			if( CGUIString("properties" ) == pChildNode->Value())
 			{
-				if( 0 != ParseNode_properties( pChildNode, object.properties ) )
+				if( 0 != ParseNode_properties( pChildNode, object.m_mapProperties ) )
 				{
 					return -1;
 				}
 			}
 			else
 			{
-				throw CGUIException( "[CGUITileMapInfo::ParseNode_object]: unknown tmx file node <%s>", pChildNode->Value());
+				throw CGUIException( "[CGUITiledMapInfo::ParseNode_object]: unknown tmx file node <%s>", pChildNode->Value());
 				return -1;
 			}
 
@@ -814,5 +851,41 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
+	const std::vector<CGUITiledMapLayerInfo>& CGUITiledMapInfo::GetLayers() const
+	{
+		return m_vLayers;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIIntSize& CGUITiledMapInfo::GetTileSize() const
+	{
+		return m_aTileSize;
+	}
+	//------------------------------------------------------------------------------
+	ETMXOrientation CGUITiledMapInfo::GetOrientation() const
+	{
+		return m_eOrientation;
+	}
+	//------------------------------------------------------------------------------
+	const std::vector<CGUITiledMapTilesetInfo>& CGUITiledMapInfo::GetTilesets() const
+	{
+		return m_vTilesets;
+	}
+	//------------------------------------------------------------------------------
+	const std::vector<CGUITiledMapObjectGroup>& CGUITiledMapInfo::GetObjectGroups() const
+	{
+		return m_vObjectGroups;
+	}
+	//------------------------------------------------------------------------------
+	const std::map<CGUIString, CGUIString>& CGUITiledMapInfo::GetProperties() const
+	{
+		return m_mapProperties;
+	}
+	//------------------------------------------------------------------------------
+	const std::map<uint32, std::map<CGUIString, CGUIString> >& CGUITiledMapInfo::GetTileProperties() const
+	{
+		return m_mapTileProperties;
+	}
+	//------------------------------------------------------------------------------
+
 }//namespace guiex
 

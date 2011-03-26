@@ -474,11 +474,11 @@ public:
 };
 
 
-class CEditorPropertyConvertor_TileMap : public CEditorPropertyConvertorBase
+class CEditorPropertyConvertor_TiledMap : public CEditorPropertyConvertorBase
 {
 public:
-	CEditorPropertyConvertor_TileMap()
-		:CEditorPropertyConvertorBase( ePropertyType_TileMap )
+	CEditorPropertyConvertor_TiledMap()
+		:CEditorPropertyConvertorBase( ePropertyType_TiledMap )
 	{
 
 	}
@@ -493,7 +493,7 @@ public:
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGCategory, -1, new wxEnumProperty(CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()),CResourceList::Instance()->GetTileMapList()));
+			pPGTop = pSheetMgr->Insert( pPGCategory, -1, new wxEnumProperty(CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()),CResourceList::Instance()->GetTiledMapList()));
 			pSheetMgr->SetPropertyValue(pPGTop, aValue);
 		}
 	}
@@ -800,7 +800,7 @@ CPropertyConvertorMgr::CPropertyConvertorMgr()
 	RegisterConvertor( new CEditorPropertyConvertor_Image );
 	RegisterConvertor( new CEditorPropertyConvertor_As );
 	RegisterConvertor( new CEditorPropertyConvertor_Particle2D );
-	RegisterConvertor( new CEditorPropertyConvertor_TileMap );
+	RegisterConvertor( new CEditorPropertyConvertor_TiledMap );
 	RegisterConvertor( new CEditorPropertyConvertor_Sound );
 	RegisterConvertor( new CEditorPropertyConvertor_ScreenValue );
 	RegisterConvertor( new CEditorPropertyConvertor_TextAlignmentHorz );

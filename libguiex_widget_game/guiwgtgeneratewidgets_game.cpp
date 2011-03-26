@@ -27,7 +27,7 @@ namespace guiex
 	aList.push_back( widget::widget##_Generator::GenerateSelf());
 
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtParticle2D);
-		GUI_ADD_WIDGET_GENERATOR(CGUIWgtTileMap);
+		GUI_ADD_WIDGET_GENERATOR(CGUIWgtTiledMap);
 
 #undef GUI_ADD_WIDGET_GENERATOR
 

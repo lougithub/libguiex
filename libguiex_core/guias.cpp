@@ -211,6 +211,11 @@ namespace guiex
 		return m_fElapsedTime;
 	}
 	//------------------------------------------------------------------------------
+	real CGUIAs::GetPercent() const
+	{
+		return GetElapsedTime() / GetTotalTime();
+	}
+	//------------------------------------------------------------------------------
 	void CGUIAs::SetElapsedTime( real fElapsedTime )
 	{
 		if( fElapsedTime < 0.0f )

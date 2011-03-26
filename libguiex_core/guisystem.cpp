@@ -26,7 +26,7 @@
 #include "guitexturemanager.h"
 #include "guisoundmanager.h"
 #include "guiparticle2dmanager.h"
-#include "guitilemapmanager.h"
+#include "guitiledmapmanager.h"
 #include "guimusicmanager.h"
 #include "guicameramanager.h"
 #include "guicanvaslayermanager.h"
@@ -110,7 +110,7 @@ namespace guiex
 		,m_pMusicManager(NULL )
 		,m_pAsManager( NULL )
 		,m_pParticle2DManager( NULL )
-		,m_pTileMapManager( NULL )
+		,m_pTiledMapManager( NULL )
 		,m_pFontManager( NULL )
 		,m_pTextureManager( NULL )
 		,m_pInterfaceManager( NULL )
@@ -156,7 +156,7 @@ namespace guiex
 		m_pMusicManager = new CGUIMusicManager;
 		m_pAsManager = new CGUIAsManager;
 		m_pParticle2DManager = new CGUIParticle2DManager;
-		m_pTileMapManager = new CGUITileMapManager;
+		m_pTiledMapManager = new CGUITiledMapManager;
 		m_pFontManager = new CGUIFontManager;
 		m_pTextureManager = new CGUITextureManager;
 		m_pInterfaceManager = new CGUIInterfaceManager;
@@ -184,8 +184,8 @@ namespace guiex
 		m_pAsManager = NULL;
 		delete m_pParticle2DManager;
 		m_pParticle2DManager = NULL;
-		delete m_pTileMapManager;
-		m_pTileMapManager = NULL;
+		delete m_pTiledMapManager;
+		m_pTiledMapManager = NULL;
 		delete m_pFontManager;
 		m_pFontManager = NULL;
 		delete m_pImageManager;

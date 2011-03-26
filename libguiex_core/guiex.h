@@ -108,9 +108,9 @@
 #include "guiparticle2dsystemquad.h"
 #include "guiparticle2dmanager.h"
 
-//tilemap
-#include "guitilemap.h"
-#include "guitilemapmanager.h"
+//tiledmap
+#include "guitiledmap.h"
+#include "guitiledmapmanager.h"
 
 //sound
 #include "guisounddata.h"

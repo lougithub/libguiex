@@ -40,6 +40,8 @@ namespace guiex
 		real GetSystemTime() const;
 		int32 GetFPS() const;
 
+		CGUIInterfaceManager* GetInterfaceManager();
+
 	protected:
 		CGUISystem();
 		~CGUISystem();

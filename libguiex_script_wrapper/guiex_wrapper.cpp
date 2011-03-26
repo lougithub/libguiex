@@ -1560,16 +1560,17 @@ SWIG_Lua_dostring(lua_State *L, const char* str) {
 #define SWIGTYPE_p_guiex__CGUIWidgetUtility swig_types[51]
 #define SWIGTYPE_p_guiex__IGUIInterfaceCommand swig_types[52]
 #define SWIGTYPE_p_guiex__IGUIInterfaceKeyboard swig_types[53]
-#define SWIGTYPE_p_guiex__IGUIInterfaceSound swig_types[54]
-#define SWIGTYPE_p_int swig_types[55]
-#define SWIGTYPE_p_short swig_types[56]
-#define SWIGTYPE_p_std__string swig_types[57]
-#define SWIGTYPE_p_unsigned_char swig_types[58]
-#define SWIGTYPE_p_unsigned_int swig_types[59]
-#define SWIGTYPE_p_unsigned_short swig_types[60]
-#define SWIGTYPE_p_void swig_types[61]
-static swig_type_info *swig_types[63];
-static swig_module_info swig_module = {swig_types, 62, 0, 0, 0, 0};
+#define SWIGTYPE_p_guiex__IGUIInterfaceRender swig_types[54]
+#define SWIGTYPE_p_guiex__IGUIInterfaceSound swig_types[55]
+#define SWIGTYPE_p_int swig_types[56]
+#define SWIGTYPE_p_short swig_types[57]
+#define SWIGTYPE_p_std__string swig_types[58]
+#define SWIGTYPE_p_unsigned_char swig_types[59]
+#define SWIGTYPE_p_unsigned_int swig_types[60]
+#define SWIGTYPE_p_unsigned_short swig_types[61]
+#define SWIGTYPE_p_void swig_types[62]
+static swig_type_info *swig_types[64];
+static swig_module_info swig_module = {swig_types, 63, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -6085,6 +6086,120 @@ static swig_lua_class *swig_guiex_CGUIAnimation_bases[] = {0};
 static const char *swig_guiex_CGUIAnimation_base_names[] = {0};
 static swig_lua_class _wrap_class_guiex_CGUIAnimation = { "CGUIAnimation", &SWIGTYPE_p_guiex__CGUIAnimation,0,0, swig_guiex_CGUIAnimation_methods, swig_guiex_CGUIAnimation_attributes, swig_guiex_CGUIAnimation_bases, swig_guiex_CGUIAnimation_base_names };
 
+static int _wrap_IGUIInterfaceRender_SetWireFrame(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::IGUIInterfaceRender *arg1 = (guiex::IGUIInterfaceRender *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("SetWireFrame",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetWireFrame",1,"guiex::IGUIInterfaceRender *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetWireFrame",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__IGUIInterfaceRender,0))){
+    SWIG_fail_ptr("IGUIInterfaceRender_SetWireFrame",1,SWIGTYPE_p_guiex__IGUIInterfaceRender);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetWireFrame(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_IGUIInterfaceRender_IsWireFrame(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::IGUIInterfaceRender *arg1 = (guiex::IGUIInterfaceRender *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsWireFrame",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsWireFrame",1,"guiex::IGUIInterfaceRender const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__IGUIInterfaceRender,0))){
+    SWIG_fail_ptr("IGUIInterfaceRender_IsWireFrame",1,SWIGTYPE_p_guiex__IGUIInterfaceRender);
+  }
+  
+  result = (bool)((guiex::IGUIInterfaceRender const *)arg1)->IsWireFrame();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_IGUIInterfaceRender_EnableClip(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::IGUIInterfaceRender *arg1 = (guiex::IGUIInterfaceRender *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("EnableClip",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("EnableClip",1,"guiex::IGUIInterfaceRender *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("EnableClip",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__IGUIInterfaceRender,0))){
+    SWIG_fail_ptr("IGUIInterfaceRender_EnableClip",1,SWIGTYPE_p_guiex__IGUIInterfaceRender);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->EnableClip(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_IGUIInterfaceRender_IsEnableClip(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::IGUIInterfaceRender *arg1 = (guiex::IGUIInterfaceRender *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsEnableClip",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsEnableClip",1,"guiex::IGUIInterfaceRender const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__IGUIInterfaceRender,0))){
+    SWIG_fail_ptr("IGUIInterfaceRender_IsEnableClip",1,SWIGTYPE_p_guiex__IGUIInterfaceRender);
+  }
+  
+  result = (bool)((guiex::IGUIInterfaceRender const *)arg1)->IsEnableClip();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static swig_lua_method swig_guiex_IGUIInterfaceRender_methods[] = {
+    {"SetWireFrame", _wrap_IGUIInterfaceRender_SetWireFrame}, 
+    {"IsWireFrame", _wrap_IGUIInterfaceRender_IsWireFrame}, 
+    {"EnableClip", _wrap_IGUIInterfaceRender_EnableClip}, 
+    {"IsEnableClip", _wrap_IGUIInterfaceRender_IsEnableClip}, 
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_IGUIInterfaceRender_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_IGUIInterfaceRender_bases[] = {0};
+static const char *swig_guiex_IGUIInterfaceRender_base_names[] = {0};
+static swig_lua_class _wrap_class_guiex_IGUIInterfaceRender = { "IGUIInterfaceRender", &SWIGTYPE_p_guiex__IGUIInterfaceRender,0,0, swig_guiex_IGUIInterfaceRender_methods, swig_guiex_IGUIInterfaceRender_attributes, swig_guiex_IGUIInterfaceRender_bases, swig_guiex_IGUIInterfaceRender_base_names };
+
 static int _wrap_IGUIInterfaceSound_StopMusic(lua_State* L) {
   int SWIG_arg = 0;
   guiex::IGUIInterfaceSound *arg1 = (guiex::IGUIInterfaceSound *) 0 ;
@@ -6289,6 +6404,30 @@ fail:
 }
 
 
+static int _wrap_CGUIInterfaceManager_GetInterfaceRender(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIInterfaceManager *arg1 = (guiex::CGUIInterfaceManager *) 0 ;
+  guiex::IGUIInterfaceRender *result = 0 ;
+  
+  SWIG_check_num_args("GetInterfaceRender",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetInterfaceRender",1,"guiex::CGUIInterfaceManager *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIInterfaceManager,0))){
+    SWIG_fail_ptr("CGUIInterfaceManager_GetInterfaceRender",1,SWIGTYPE_p_guiex__CGUIInterfaceManager);
+  }
+  
+  result = (guiex::IGUIInterfaceRender *)(arg1)->GetInterfaceRender();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__IGUIInterfaceRender,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_CGUIInterfaceManager_GetInterfaceSound(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIInterfaceManager *arg1 = (guiex::CGUIInterfaceManager *) 0 ;
@@ -6314,6 +6453,7 @@ fail:
 
 
 static swig_lua_method swig_guiex_CGUIInterfaceManager_methods[] = {
+    {"GetInterfaceRender", _wrap_CGUIInterfaceManager_GetInterfaceRender}, 
     {"GetInterfaceSound", _wrap_CGUIInterfaceManager_GetInterfaceSound}, 
     {0,0}
 };
@@ -12231,6 +12371,30 @@ fail:
 }
 
 
+static int _wrap_CGUISystem_GetInterfaceManager(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  guiex::CGUIInterfaceManager *result = 0 ;
+  
+  SWIG_check_num_args("GetInterfaceManager",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetInterfaceManager",1,"guiex::CGUISystem *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_GetInterfaceManager",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  result = (guiex::CGUIInterfaceManager *)(arg1)->GetInterfaceManager();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIInterfaceManager,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static swig_lua_method swig_guiex_CGUISystem_methods[] = {
     {"SetDrawExtraInfo", _wrap_CGUISystem_SetDrawExtraInfo}, 
     {"IsDrawExtraInfo", _wrap_CGUISystem_IsDrawExtraInfo}, 
@@ -12248,6 +12412,7 @@ static swig_lua_method swig_guiex_CGUISystem_methods[] = {
     {"SendEvent", _wrap_CGUISystem_SendEvent}, 
     {"GetSystemTime", _wrap_CGUISystem_GetSystemTime}, 
     {"GetFPS", _wrap_CGUISystem_GetFPS}, 
+    {"GetInterfaceManager", _wrap_CGUISystem_GetInterfaceManager}, 
     {0,0}
 };
 static swig_lua_attribute swig_guiex_CGUISystem_attributes[] = {
@@ -13327,6 +13492,7 @@ static swig_type_info _swigt__p_guiex__CGUIWidget = {"_p_guiex__CGUIWidget", "gu
 static swig_type_info _swigt__p_guiex__CGUIWidgetUtility = {"_p_guiex__CGUIWidgetUtility", "guiex::CGUIWidgetUtility *", 0, 0, (void*)&_wrap_class_guiex_CGUIWidgetUtility, 0};
 static swig_type_info _swigt__p_guiex__IGUIInterfaceCommand = {"_p_guiex__IGUIInterfaceCommand", "guiex::IGUIInterfaceCommand *", 0, 0, (void*)&_wrap_class_guiex_IGUIInterfaceCommand, 0};
 static swig_type_info _swigt__p_guiex__IGUIInterfaceKeyboard = {"_p_guiex__IGUIInterfaceKeyboard", "guiex::IGUIInterfaceKeyboard *", 0, 0, (void*)&_wrap_class_guiex_IGUIInterfaceKeyboard, 0};
+static swig_type_info _swigt__p_guiex__IGUIInterfaceRender = {"_p_guiex__IGUIInterfaceRender", "guiex::IGUIInterfaceRender *", 0, 0, (void*)&_wrap_class_guiex_IGUIInterfaceRender, 0};
 static swig_type_info _swigt__p_guiex__IGUIInterfaceSound = {"_p_guiex__IGUIInterfaceSound", "guiex::IGUIInterfaceSound *", 0, 0, (void*)&_wrap_class_guiex_IGUIInterfaceSound, 0};
 static swig_type_info _swigt__p_int = {"_p_int", "int *|guiex::int32 *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_short = {"_p_short", "guiex::int16 *|short *", 0, 0, (void*)0, 0};
@@ -13391,6 +13557,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_guiex__CGUIWidgetUtility,
   &_swigt__p_guiex__IGUIInterfaceCommand,
   &_swigt__p_guiex__IGUIInterfaceKeyboard,
+  &_swigt__p_guiex__IGUIInterfaceRender,
   &_swigt__p_guiex__IGUIInterfaceSound,
   &_swigt__p_int,
   &_swigt__p_short,
@@ -13455,6 +13622,7 @@ static swig_cast_info _swigc__p_guiex__CGUIWidget[] = {  {&_swigt__p_guiex__CGUI
 static swig_cast_info _swigc__p_guiex__CGUIWidgetUtility[] = {  {&_swigt__p_guiex__CGUIWidgetUtility, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__IGUIInterfaceCommand[] = {  {&_swigt__p_guiex__IGUIInterfaceCommand, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__IGUIInterfaceKeyboard[] = {  {&_swigt__p_guiex__IGUIInterfaceKeyboard, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__IGUIInterfaceRender[] = {  {&_swigt__p_guiex__IGUIInterfaceRender, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__IGUIInterfaceSound[] = {  {&_swigt__p_guiex__IGUIInterfaceSound, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_int[] = {  {&_swigt__p_int, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_short[] = {  {&_swigt__p_short, 0, 0, 0},{0, 0, 0, 0}};
@@ -13519,6 +13687,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_guiex__CGUIWidgetUtility,
   _swigc__p_guiex__IGUIInterfaceCommand,
   _swigc__p_guiex__IGUIInterfaceKeyboard,
+  _swigc__p_guiex__IGUIInterfaceRender,
   _swigc__p_guiex__IGUIInterfaceSound,
   _swigc__p_int,
   _swigc__p_short,

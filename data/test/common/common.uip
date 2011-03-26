@@ -5,8 +5,8 @@
 	<property name="dialog_ok.xml" type="WidgetFile" />
 	<property name="dialog_okcancel.xml" type="WidgetFile" />
 
-	<property name="showfps.xml" type="WidgetFile" />
-	<property name="showfps.lua" type="ScriptFile" />
+	<property name="utility.xml" type="WidgetFile" />
+	<property name="utility.lua" type="ScriptFile" />
 
 	<property name="resource.xml" type="ResourceFile" />
 </libguiex_project>

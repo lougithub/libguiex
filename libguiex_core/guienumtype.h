@@ -90,6 +90,13 @@ namespace guiex
 		eParticle2DSystemMode_Radius,
 	};
 
+	enum ETMXOrientation
+	{
+		eTMXOrientationOrtho = 0,
+		eTMXOrientationHex,
+		eTMXOrientationIso,
+	};
+
 	enum EBlendFunc
 	{
 		eBlendFunc_ZERO = 0,
@@ -118,12 +125,12 @@ namespace guiex
 		eMatrixMode_MODELVIEW,
 	};
 
-	enum EBufferMode
-	{
-		eBufferMode_Back = 0,
-		eBufferMode_Front,
+	//enum EBufferMode
+	//{
+	//	eBufferMode_Back = 0,
+	//	eBufferMode_Front,
 
-	};
+	//};
 
 }//namespace guiex
 

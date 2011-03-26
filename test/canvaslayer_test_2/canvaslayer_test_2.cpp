@@ -45,8 +45,8 @@ protected:
 		CGUISceneManager::Instance()->RegisterScenesFromDir("/", ".uip");
 		CGUISceneManager::Instance()->LoadResources( "common.uip" );
 		CGUISceneManager::Instance()->LoadWidgets( "common.uip" );
-		CGUISceneManager::Instance()->LoadResources( "tilemap.uip" );
-		CGUISceneManager::Instance()->LoadWidgets( "tilemap.uip" );
+		CGUISceneManager::Instance()->LoadResources( "tiledmap.uip" );
+		CGUISceneManager::Instance()->LoadWidgets( "tiledmap.uip" );
 
 		//create layer
 
@@ -63,7 +63,7 @@ protected:
 		CGUICanvasLayerManager::Instance()->PushCanvasLayer( pLayer2 );
 
 		//open ui page
-		CGUIWidget* pWidget = CGUIWidgetManager::Instance()->GetPage( "showfps.xml", "common.uip" );
+		CGUIWidget* pWidget = CGUIWidgetManager::Instance()->GetPage( "utility.xml", "common.uip" );
 		GSystem->GetUICanvas()->OpenUIPage( pWidget);
 		return 0;
 	}
@@ -94,7 +94,7 @@ CMyCanvasLayer_DrawWidget::CMyCanvasLayer_DrawWidget( const char* szLayerName )
 
 	CGUIWidget* pWidget = NULL;
 
-	pWidget = CGUIWidgetManager::Instance()->GetPage( "sample1.xml", "tilemap.uip" );
+	pWidget = CGUIWidgetManager::Instance()->GetPage( "sample1.xml", "tiledmap.uip" );
 	pWidget->SetMovable( true );
 	pWidget->SetParent( this );
 	pWidget->Open()	;

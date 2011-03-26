@@ -23,7 +23,7 @@
 #include <libguiex_core/guisoundmanager.h>
 #include <libguiex_core/guimusicmanager.h>
 #include <libguiex_core/guiparticle2dmanager.h>
-#include <libguiex_core/guitilemapmanager.h>
+#include <libguiex_core/guitiledmapmanager.h>
 #include <libguiex_core/guiscenemanager.h>
 
 
@@ -41,7 +41,7 @@ namespace guiex
 	static int32 DoLoadConfig_Music( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
 	static int32 DoLoadConfig_As( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
 	static int32 DoLoadConfig_Particle2D( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
-	static int32 DoLoadConfig_TileMap( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
+	static int32 DoLoadConfig_TiledMap( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
 
 
 	//------------------------------------------------------------------------------
@@ -170,12 +170,12 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int32 DoLoadConfig_TileMap( const CGUIProperty* pPropertySet, const CGUIString& rSceneName )
+	int32 DoLoadConfig_TiledMap( const CGUIProperty* pPropertySet, const CGUIString& rSceneName )
 	{
-		if( 0 != CGUITileMapManager::Instance()->RegisterTileMap( rSceneName, *pPropertySet ) )
+		if( 0 != CGUITiledMapManager::Instance()->RegisterTiledMap( rSceneName, *pPropertySet ) )
 		{
 			throw guiex::CGUIException(
-				"[DoLoadConfig_TileMap], failed to create tilemap with name <%s:%s:%s>!", 
+				"[DoLoadConfig_TiledMap], failed to create tiledmap with name <%s:%s:%s>!", 
 				pPropertySet->GetName().c_str(),
 				pPropertySet->GetTypeAsString().c_str(),
 				pPropertySet->GetValue().c_str());
@@ -286,8 +286,8 @@ namespace guiex
 				}
 				break;
 
-			case ePropertyType_TileMapDefine:
-				if( 0 != DoLoadConfig_TileMap( pProperty, rSceneName ))
+			case ePropertyType_TiledMapDefine:
+				if( 0 != DoLoadConfig_TiledMap( pProperty, rSceneName ))
 				{
 					return -1;
 				}

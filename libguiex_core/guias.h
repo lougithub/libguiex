@@ -91,6 +91,8 @@ namespace guiex
 		void SetElapsedTime( real fElapsedTime );
 		real GetElapsedTime( ) const;
 
+		real GetPercent() const;
+
 		void PushSuccessor( CGUIAs* pAs);
 		CGUIAs*	PopSuccessor();
 

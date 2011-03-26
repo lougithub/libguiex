@@ -1,5 +1,5 @@
 /** 
-* @file guiwgttilemap.cpp
+* @file guiwgttiledmap.cpp
 * @brief used to render tile map
 * @author ken
 * @date 2011-01-26
@@ -9,12 +9,12 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include "guiwgttilemap.h"
+#include "guiwgttiledmap.h"
 #include <libguiex_core/guiinterfacerender.h>
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guipropertymanager.h>
-#include <libguiex_core/guitilemap.h>
-#include <libguiex_core/guitilemapmanager.h>
+#include <libguiex_core/guitiledmap.h>
+#include <libguiex_core/guitiledmapmanager.h>
 
 
 //============================================================================//
@@ -23,94 +23,94 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtTileMap);
+	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtTiledMap);
 	//------------------------------------------------------------------------------
-	CGUIWgtTileMap::CGUIWgtTileMap( const CGUIString& rName, const CGUIString& rSceneName )
+	CGUIWgtTiledMap::CGUIWgtTiledMap( const CGUIString& rName, const CGUIString& rSceneName )
 		:CGUIWidget(StaticGetType(), rName, rSceneName)
 	{
-		InitTileMap();
+		InitTiledMap();
 	}
 	//------------------------------------------------------------------------------
-	CGUIWgtTileMap::CGUIWgtTileMap( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+	CGUIWgtTiledMap::CGUIWgtTiledMap( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
 		:CGUIWidget(rType, rName, rSceneName)
 	{
-		InitTileMap();
+		InitTiledMap();
 	}
 	//------------------------------------------------------------------------------
-	CGUIWgtTileMap::~CGUIWgtTileMap()
+	CGUIWgtTiledMap::~CGUIWgtTiledMap()
 	{
-		GUI_ASSERT( !m_pTileMap, "resource leak" );
+		GUI_ASSERT( !m_pTiledMap, "resource leak" );
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtTileMap::InitTileMap()
+	void CGUIWgtTiledMap::InitTiledMap()
 	{
 		SetFocusable(false);
 		SetActivable(false);
 
-		m_pTileMap = NULL;
+		m_pTiledMap = NULL;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtTileMap::OnDestroy()
+	void CGUIWgtTiledMap::OnDestroy()
 	{
-		if( m_pTileMap )
+		if( m_pTiledMap )
 		{
-			m_pTileMap->RefRelease();
-			m_pTileMap = NULL;
+			m_pTiledMap->RefRelease();
+			m_pTiledMap = NULL;
 		}
 
 		CGUIWidget::OnDestroy();
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtTileMap::RenderSelf(IGUIInterfaceRender* pRender)
+	void CGUIWgtTiledMap::RenderSelf(IGUIInterfaceRender* pRender)
 	{
-		if( m_pTileMap )
+		if( m_pTiledMap )
 		{
-			m_pTileMap->Render( pRender, getFullTransform() );
+			m_pTiledMap->Render( pRender, getFullTransform() );
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtTileMap::SetTileMap( const CGUIString& rTileMapName )
+	void CGUIWgtTiledMap::SetTiledMap( const CGUIString& rTiledMapName )
 	{
-		if( rTileMapName.empty() )
+		if( rTiledMapName.empty() )
 		{
 			//clear
-			SetTileMap( NULL );
+			SetTiledMap( NULL );
 		}
 		else
 		{
-			CGUITileMap* pTileMap = CGUITileMapManager::Instance()->AllocateResource( rTileMapName );
-			SetTileMap( pTileMap );
-			pTileMap->RefRelease();
+			CGUITiledMap* pTiledMap = CGUITiledMapManager::Instance()->AllocateResource( rTiledMapName );
+			SetTiledMap( pTiledMap );
+			pTiledMap->RefRelease();
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtTileMap::SetTileMap( class CGUITileMap* pTileMap )
+	void CGUIWgtTiledMap::SetTiledMap( class CGUITiledMap* pTiledMap )
 	{
-		if( m_pTileMap == pTileMap )
+		if( m_pTiledMap == pTiledMap )
 		{
 			return;
 		}
 
-		if( m_pTileMap )
+		if( m_pTiledMap )
 		{
-			m_pTileMap->RefRelease();
-			m_pTileMap = NULL;
+			m_pTiledMap->RefRelease();
+			m_pTiledMap = NULL;
 		}
 
-		if( pTileMap )
+		if( pTiledMap )
 		{
-			m_pTileMap = pTileMap;
-			m_pTileMap->RefRetain();
+			m_pTiledMap = pTiledMap;
+			m_pTiledMap->RefRetain();
 		}
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIWgtTileMap::GenerateProperty( CGUIProperty& rProperty )
+	int32 CGUIWgtTiledMap::GenerateProperty( CGUIProperty& rProperty )
 	{
-		if( rProperty.GetType() == ePropertyType_TileMap && rProperty.GetName() == "tilemap" )
+		if( rProperty.GetType() == ePropertyType_TiledMap && rProperty.GetName() == "tiledmap" )
 		{
-			if( m_pTileMap )
+			if( m_pTiledMap )
 			{
-				rProperty.SetValue( m_pTileMap->GetName() );
+				rProperty.SetValue( m_pTiledMap->GetName() );
 			}
 			else
 			{
@@ -124,13 +124,13 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtTileMap::ProcessProperty( const CGUIProperty& rProperty)
+	void CGUIWgtTiledMap::ProcessProperty( const CGUIProperty& rProperty)
 	{
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//property for text
-		if( rProperty.GetType() == ePropertyType_TileMap && rProperty.GetName() == "tilemap")
+		if( rProperty.GetType() == ePropertyType_TiledMap && rProperty.GetName() == "tiledmap")
 		{
-			SetTileMap( rProperty.GetValue());
+			SetTiledMap( rProperty.GetValue());
 		}
 		else
 		{

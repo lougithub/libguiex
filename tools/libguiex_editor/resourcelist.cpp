@@ -29,7 +29,7 @@ CResourceList::~CResourceList()
 	ResetAsList();
 	ResetParticle2DList();
 	ResetSoundList();
-	ResetTileMapList();
+	ResetTiledMapList();
 }
 //------------------------------------------------------------------------------
 CResourceList* CResourceList::Instance()
@@ -44,7 +44,7 @@ void CResourceList::UpdateResourceList()
 	UpdateAsList();
 	UpdateParticle2DList();
 	UpdateSoundList();
-	UpdateTileMapList();
+	UpdateTiledMapList();
 }
 //------------------------------------------------------------------------------
 void CResourceList::ResetImageList()
@@ -184,19 +184,19 @@ void CResourceList::ResetAsList()
 	m_arrayAsArray.Clear();
 }
 //------------------------------------------------------------------------------
-void CResourceList::UpdateTileMapList()
+void CResourceList::UpdateTiledMapList()
 {
-	ResetTileMapList();
+	ResetTiledMapList();
 
-	m_arrayTileMapArray.Add(_T(""));
-	const std::map<CGUIString, CGUITileMapData*>& rMapTileMapDataList = CGUITileMapManager::Instance()->GetRegisterResourceMap();
-	for( std::map<CGUIString,CGUITileMapData*>::const_iterator itor = rMapTileMapDataList.begin();
-		itor != rMapTileMapDataList.end();
+	m_arrayTiledMapArray.Add(_T(""));
+	const std::map<CGUIString, CGUITiledMapData*>& rMapTiledMapDataList = CGUITiledMapManager::Instance()->GetRegisterResourceMap();
+	for( std::map<CGUIString,CGUITiledMapData*>::const_iterator itor = rMapTiledMapDataList.begin();
+		itor != rMapTiledMapDataList.end();
 		++itor)
 	{
-		m_arrayTileMapArray.Add(Gui2wxString( itor->first));
+		m_arrayTiledMapArray.Add(Gui2wxString( itor->first));
 	}
-	m_arrayTileMapArray.Sort();
+	m_arrayTiledMapArray.Sort();
 }
 //------------------------------------------------------------------------------
 void CResourceList::UpdateParticle2DList()
@@ -214,9 +214,9 @@ void CResourceList::UpdateParticle2DList()
 	m_arrayParticle2DArray.Sort();
 }
 //------------------------------------------------------------------------------
-void CResourceList::ResetTileMapList()
+void CResourceList::ResetTiledMapList()
 {
-	m_arrayTileMapArray.Clear();
+	m_arrayTiledMapArray.Clear();
 }
 //------------------------------------------------------------------------------
 void CResourceList::ResetParticle2DList()
@@ -269,9 +269,9 @@ const wxArrayString& CResourceList::GetAsList()
 	return m_arrayAsArray;
 }
 //------------------------------------------------------------------------------
-const wxArrayString& CResourceList::GetTileMapList()
+const wxArrayString& CResourceList::GetTiledMapList()
 {
-	return m_arrayTileMapArray;
+	return m_arrayTiledMapArray;
 }
 //------------------------------------------------------------------------------
 const wxArrayString& CResourceList::GetParticle2DList()

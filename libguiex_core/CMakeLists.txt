@@ -123,8 +123,8 @@ set( ${target_name}_resource_SRCS
 	guiasmanager.h
 	guiparticle2dmanager.cpp
 	guiparticle2dmanager.h
-	guitilemapmanager.cpp
-	guitilemapmanager.h
+	guitiledmapmanager.cpp
+	guitiledmapmanager.h
 	)
 source_group( "resource" FILES ${${target_name}_resource_SRCS} )
 
@@ -271,16 +271,16 @@ set( ${target_name}_misc_SRCS
 	)
 source_group( misc FILES ${${target_name}_misc_SRCS} )
 
-#tilemap
-set( ${target_name}_tilemap_SRCS 
-	guitilemap.h
-	guitilemap.cpp
-	guitilemaplayer.h
-	guitilemaplayer.cpp	
-	guitilemapparser.h
-	guitilemapparser.cpp	
+#tiledmap
+set( ${target_name}_tiledmap_SRCS 
+	guitiledmap.h
+	guitiledmap.cpp
+	guitiledmaplayer.h
+	guitiledmaplayer.cpp	
+	guitiledmapparser.h
+	guitiledmapparser.cpp	
 	)
-source_group( "tilemap" FILES ${${target_name}_tilemap_SRCS} )
+source_group( "tiledmap" FILES ${${target_name}_tiledmap_SRCS} )
 
 set( ${target_name}_particle2dsystem_SRCS 
 	guiparticle2dsystem.cpp
@@ -344,7 +344,7 @@ set( ${target_name}_SRCS
 	${${target_name}_misc_SRCS}
 	${${target_name}_canvas_SRCS}
 	${${target_name}_camera_SRCS}
-	${${target_name}_tilemap_SRCS}
+	${${target_name}_tiledmap_SRCS}
 	${${target_name}_particle2dsystem_SRCS}
 	${${target_name}_sceneeffect_SRCS}
 	${${target_name}_as_SRCS}

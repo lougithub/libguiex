@@ -12,7 +12,7 @@
 // include
 //============================================================================// 
 #include "guiwgtparticle2d.h"
-#include "guiwgttilemap.h"
+#include "guiwgttiledmap.h"
 
 #include "guiwgtgeneratewidgets_game.h"
 

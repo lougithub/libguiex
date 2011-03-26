@@ -133,19 +133,19 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	GLenum BufferMode_Engin2GL( EBufferMode eMode )
-	{
-		switch ( eMode )
-		{
-		case eBufferMode_Back:
-			return GL_BACK;
-		case eBufferMode_Front:
-			return GL_FRONT;
-		default:
-			GUI_ASSERT( 0, "unknown buffer mode" );
-			return GL_BACK;
-		}
-	}
+	//GLenum BufferMode_Engin2GL( EBufferMode eMode )
+	//{
+	//	switch ( eMode )
+	//	{
+	//	case eBufferMode_Back:
+	//		return GL_BACK;
+	//	case eBufferMode_Front:
+	//		return GL_FRONT;
+	//	default:
+	//		GUI_ASSERT( 0, "unknown buffer mode" );
+	//		return GL_BACK;
+	//	}
+	//}
 	//------------------------------------------------------------------------------
 
 

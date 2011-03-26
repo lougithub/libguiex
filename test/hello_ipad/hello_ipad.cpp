@@ -31,7 +31,7 @@ int32 CGUIFrameworkTest::InitializeGame()
 	GSystem->GetUICanvas()->OpenUIPage(pWidget);	
 	//pWidget = CGUIWidgetManager::Instance()->GetPage( "dialog_okcancel.xml", "common.uip" );
 	//CGUISystem::Instance()->OpenUIPage(pWidget);	
-	pWidget = CGUIWidgetManager::Instance()->GetPage( "showfps.xml", "common.uip" );
+	pWidget = CGUIWidgetManager::Instance()->GetPage( "utility.xml", "common.uip" );
 	GSystem->GetUICanvas()->OpenUIPage(pWidget);	
 	//pWidget = CGUIWidgetManager::Instance()->GetPage( "sound.xml", "sound.uip" );
 	//CGUISystem::Instance()->OpenUIPage(pWidget);		

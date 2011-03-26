@@ -1,4 +1,4 @@
-set( target_name "example_testtilemap" )
+set( target_name "example_testtiledmap" )
 message( STATUS "generate execute: " ${target_name} )
 
 
@@ -24,7 +24,7 @@ endif()
 
 #test source
 set( ${target_name}_execute_SRCS
-	testtilemap.cpp
+	testtiledmap.cpp
 	)
 source_group( test FILES ${${target_name}_execute_SRCS} )
 

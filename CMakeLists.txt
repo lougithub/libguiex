@@ -132,7 +132,7 @@ add_subdirectory( ${PROJECT_SOURCE_DIR}/test/canvaslayer_test_2 projects/canvasl
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/testsound projects/testsound)
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/testbox2d_2 projects/testbox2d_2)
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/testparticle2d projects/testparticle2d)
-add_subdirectory( ${PROJECT_SOURCE_DIR}/test/testtilemap projects/testtilemap)
+add_subdirectory( ${PROJECT_SOURCE_DIR}/test/testtiledmap projects/testtiledmap)
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/testsceneeffect projects/testsceneeffect)
 
 #tools

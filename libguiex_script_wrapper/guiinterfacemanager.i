@@ -11,7 +11,7 @@ namespace guiex
 
 
 	public:
-		//IGUIInterfaceRender* GetInterfaceRender();
+		IGUIInterfaceRender* GetInterfaceRender();
 		//IGUIInterfaceFont* GetInterfaceFont();
 		//IGUIInterfaceScript* GetInterfaceScript();
 		//IGUIInterfaceConfigFile* GetInterfaceConfigFile();

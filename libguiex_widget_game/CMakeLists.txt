@@ -16,25 +16,25 @@ set( ${target_name}_utility_SRCS
 	)
 source_group( utility FILES ${${target_name}_utility_SRCS} )
 
-#tilemap
-set( ${target_name}_tilemap_SRCS 
-    guiwgttilemap.cpp
-    guiwgttilemap.h	
+#tiledmap
+set( ${target_name}_tiledmap_SRCS 
+    guiwgttiledmap.cpp
+    guiwgttiledmap.h	
 	)
-source_group( "tilemap" FILES ${${target_name}_tilemap_SRCS} )
+source_group( "tiledmap" FILES ${${target_name}_tiledmap_SRCS} )
 
 # modify file list here --begin--
 if( WIN32 )
     set( ${target_name}_SRCS 
 		${${target_name}_particle2d_SRCS}
 		${${target_name}_utility_SRCS}
-		${${target_name}_tilemap_SRCS}
+		${${target_name}_tiledmap_SRCS}
         )
 elseif( APPLE )
     set( ${target_name}_SRCS 
     	${${target_name}_particle2d_SRCS}
 		${${target_name}_utility_SRCS}
-		${${target_name}_tilemap_SRCS}
+		${${target_name}_tiledmap_SRCS}
         )
 else( WIN32 )
     message( FATAL_ERROR "unsupport platform" )

@@ -1,25 +1,25 @@
 /** 
-* @file guitilemaplayer.h
+* @file guitiledmaplayer.h
 * @brief 
 * @author Lou Guoliang (louguoliang@gmail.com)
 * @date 2011-01-27
 */
-#ifndef	__KEN_TILEMAPLAYER_20110127_H__
-#define __KEN_TILEMAPLAYER_20110127_H__
+#ifndef	__KEN_TILEDMAPLAYER_20110127_H__
+#define __KEN_TILEDMAPLAYER_20110127_H__
 
 
 //============================================================================//
 // include
 //============================================================================//
 #include "guibase.h"
-#include "guitilemapparser.h"
+#include "guitiledmapparser.h"
 
 //============================================================================//
 // declare
 //============================================================================//
 namespace guiex
 {
-	class CGUITileMap;
+	class CGUITiledMap;
 	class CGUITexture;
 	class IGUIInterfaceRender;
 	class CGUIMatrix4;
@@ -30,11 +30,11 @@ namespace guiex
 //============================================================================// 
 namespace guiex
 {
-	class CGUITileMapLayer
+	class CGUITiledMapLayer
 	{
 	public:
-		CGUITileMapLayer( const CGUITileMap* pOwnerMap, uint32 nLayerIndex );
-		~CGUITileMapLayer();
+		CGUITiledMapLayer( const CGUITiledMap* pOwnerMap, uint32 nLayerIndex );
+		~CGUITiledMapLayer();
 
 		const CGUIString& GetLayerName() const;
 
@@ -63,7 +63,7 @@ namespace guiex
 		};
 
 	protected:
-		CGUITileMapTilesetInfo* GetTilesetForLayer();
+		const CGUITiledMapTilesetInfo* GetTilesetForLayer() const;
 		int32 InitLayer();
 		int32 AppendTileForGID( uint32 gid, const CGUIIntVector2& pos );
 		CGUIVector2 PositionAt( const CGUIIntVector2& pos );
@@ -73,9 +73,9 @@ namespace guiex
 
 	protected:
 		uint32 m_nLayerIndex;
-		const CGUITileMap* m_pOwnerMap;
-		const CGUITileMapLayerInfo* m_pLayerInfo;
-		const CGUITileMapTilesetInfo* m_pTileSetInfo;
+		const CGUITiledMap* m_pOwnerMap;
+		const CGUITiledMapLayerInfo* m_pLayerInfo;
+		const CGUITiledMapTilesetInfo* m_pTileSetInfo;
 
 		CGUISize m_aLayerSize;
 		CGUIVector2 m_aLayerOffset;
@@ -92,5 +92,5 @@ namespace guiex
 } //namespace guiex
 
 
-#endif //__KEN_TILEMAPLAYER_20110127_H__
+#endif //__KEN_TILEDMAPLAYER_20110127_H__
 

@@ -2268,8 +2268,20 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWidget::RenderExtraSelfInfo(IGUIInterfaceRender* pRender)
 	{
+		if( IsFocus() )
+		{
+			DrawRect( pRender, GetBoundArea(), 7.0f, CGUIColor( 1.f,1.f,1.f, 1.0f) );
+		}
+
 		//draw bound
-		DrawRect( pRender, GetBoundArea(), 3.0f, CGUIColor( 0.f,1.f,0.f,1.f) );
+		if( IsFocusable() )
+		{
+			DrawRect( pRender, GetBoundArea(), 3.0f, CGUIColor( 0.f,1.f,0.f,1.f) );
+		}
+		else
+		{
+			DrawRect( pRender, GetBoundArea(), 3.0f, CGUIColor( 0.f,0.f,1.f,1.f) );
+		}
 
 		//draw client area
 		DrawRect( pRender, GetBoundArea(), 1.0f, CGUIColor( 1.f,0.f,0.f,1.f) );

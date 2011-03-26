@@ -1,5 +1,5 @@
 /** 
-* @file guitilemaplayer.cpp
+* @file guitiledmaplayer.cpp
 * @brief 
 * @author Lou Guoliang (louguoliang@gmail.com)
 * @date 2011-01-27
@@ -7,9 +7,9 @@
 //============================================================================//
 // include
 //============================================================================//
-#include "guitilemaplayer.h"
-#include "guitilemap.h"
-#include "guitilemapparser.h"
+#include "guitiledmaplayer.h"
+#include "guitiledmap.h"
+#include "guitiledmapparser.h"
 #include "guiexception.h"
 #include "guimath.h"
 #include "guitexturemanager.h"
@@ -26,7 +26,7 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	CGUITileMapLayer::CGUITileMapLayer( const CGUITileMap* pOwnerMap, uint32 nLayerIndex )
+	CGUITiledMapLayer::CGUITiledMapLayer( const CGUITiledMap* pOwnerMap, uint32 nLayerIndex )
 		:m_pOwnerMap( pOwnerMap )
 		,m_nLayerIndex( nLayerIndex )
 		,m_pLayerInfo( NULL )
@@ -36,14 +36,14 @@ namespace guiex
 		,maxGID( 0 )
 	{
 		//check layer index
-		if( m_pOwnerMap->m_pMapInfo->layers.size() <= nLayerIndex )
+		if( m_pOwnerMap->GetMapInfo()->GetLayers().size() <= nLayerIndex )
 		{
-			throw CGUIException("[CGUITileMapLayer::CGUITileMapLayer]: invalid tile map layer index");
+			throw CGUIException("[CGUITiledMapLayer::CGUITiledMapLayer]: invalid tile map layer index");
 			return;
 		}
 
 		//init layer info
-		m_pLayerInfo = &m_pOwnerMap->m_pMapInfo->layers[nLayerIndex];
+		m_pLayerInfo = &m_pOwnerMap->GetMapInfo()->GetLayers()[nLayerIndex];
 
 		//init tile set
 		m_pTileSetInfo = GetTilesetForLayer();
@@ -51,12 +51,12 @@ namespace guiex
 		//init layer
 		if( 0 != InitLayer() )
 		{
-			throw CGUIException("[CGUITileMapLayer::CGUITileMapLayer]: failed to init layer");
+			throw CGUIException("[CGUITiledMapLayer::CGUITiledMapLayer]: failed to init layer");
 			return;
 		}
 	}
 	//------------------------------------------------------------------------------
-	CGUITileMapLayer::~CGUITileMapLayer()
+	CGUITiledMapLayer::~CGUITiledMapLayer()
 	{
 		if( m_pTexture )
 		{
@@ -65,71 +65,71 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	const CGUIString& CGUITileMapLayer::GetLayerName() const
+	const CGUIString& CGUITiledMapLayer::GetLayerName() const
 	{
-		return m_pLayerInfo->name;
+		return m_pLayerInfo->m_strName;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIIntSize& CGUITileMapLayer::GetLayerSize() const
+	const CGUIIntSize& CGUITiledMapLayer::GetLayerSize() const
 	{
-		return m_pLayerInfo->layerSize;
+		return m_pLayerInfo->m_aLayerSize;
 	}
 	//------------------------------------------------------------------------------
-	uint32 CGUITileMapLayer::GetMinGID() const
+	uint32 CGUITiledMapLayer::GetMinGID() const
 	{
 		return minGID;
 	}
 	//------------------------------------------------------------------------------
-	uint32 CGUITileMapLayer::GetMaxGID() const
+	uint32 CGUITiledMapLayer::GetMaxGID() const
 	{
 		return maxGID;
 	}
 	//------------------------------------------------------------------------------
-	real CGUITileMapLayer::GetOpacity() const
+	real CGUITiledMapLayer::GetOpacity() const
 	{
-		return m_pLayerInfo->opacity;
+		return m_pLayerInfo->m_fOpacity;
 	}
 	//------------------------------------------------------------------------------
-	const std::vector<uint32>& CGUITileMapLayer::GetTileGIDs() const
+	const std::vector<uint32>& CGUITiledMapLayer::GetTileGIDs() const
 	{
-		return m_pLayerInfo->tiles;
+		return m_pLayerInfo->m_vTiles;
 	}
 	//------------------------------------------------------------------------------
-	const std::map<CGUIString, CGUIString>& CGUITileMapLayer::GetProperties() const
+	const std::map<CGUIString, CGUIString>& CGUITiledMapLayer::GetProperties() const
 	{
-		return m_pLayerInfo->properties;
+		return m_pLayerInfo->m_mapProperties;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIIntSize& CGUITileMapLayer::GetMapTileSize() const
+	const CGUIIntSize& CGUITiledMapLayer::GetMapTileSize() const
 	{
-		return m_pOwnerMap->m_pMapInfo->tileSize;
+		return m_pOwnerMap->GetMapInfo()->GetTileSize();
 	}
 	//------------------------------------------------------------------------------
-	ETMXOrientation CGUITileMapLayer::GetLayerOrientation() const
+	ETMXOrientation CGUITiledMapLayer::GetLayerOrientation() const
 	{
-		return m_pOwnerMap->m_pMapInfo->orientation;
+		return m_pOwnerMap->GetMapInfo()->GetOrientation();
 	}
 	//------------------------------------------------------------------------------
-	CGUITileMapTilesetInfo* CGUITileMapLayer::GetTilesetForLayer()
+	const CGUITiledMapTilesetInfo* CGUITiledMapLayer::GetTilesetForLayer() const
 	{		
-		const CGUIIntSize& size = m_pLayerInfo->layerSize;
+		const CGUIIntSize& size = m_pLayerInfo->m_aLayerSize;
 
-		for( uint32 i=0; i<m_pOwnerMap->m_pMapInfo->tilesets.size(); ++i )
+		for( uint32 i=0; i<m_pOwnerMap->GetMapInfo()->GetTilesets().size(); ++i )
 		{
-			CGUITileMapTilesetInfo* pTileset = &m_pOwnerMap->m_pMapInfo->tilesets[i];
+			const CGUITiledMapTilesetInfo* pTileset = &m_pOwnerMap->GetMapInfo()->GetTilesets()[i];
 			for( uint32 y = 0; y < size.m_uHeight; y++ ) 
 			{
 				for( uint32 x = 0; x < size.m_uWidth; x++ )
 				{
 					uint32 pos = x + size.m_uWidth * y;
-					uint32 gid = m_pLayerInfo->tiles[ pos ];
+					uint32 gid = m_pLayerInfo->m_vTiles[ pos ];
 
 					// XXX: gid == 0 --> empty tile
 					if( gid != 0 ) 
 					{
 						// Optimization: quick return
 						// if the layer is invalid (more than 1 tileset per layer) an assert will be thrown later
-						if( gid >= pTileset->firstGid )
+						if( gid >= pTileset->GetFirstGid() )
 						{
 							return pTileset;
 						}
@@ -138,24 +138,24 @@ namespace guiex
 			}		
 		}
 
-		throw CGUIException("[CGUITileMapLayer::GetTilesetForLayer]: Layer '%s' has no tiles", GetLayerName().c_str());
+		throw CGUIException("[CGUITiledMapLayer::GetTilesetForLayer]: Layer '%s' has no tiles", GetLayerName().c_str());
 		return NULL;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUITileMapLayer::InitLayer()
+	int32 CGUITiledMapLayer::InitLayer()
 	{
 		//update image
-		CGUIString strFullPath = m_pOwnerMap->m_strFullWorkingDir + m_pTileSetInfo->sourceImage;
+		CGUIString strFullPath = m_pOwnerMap->GetWorkingDir() + m_pTileSetInfo->GetSourceImage();
 		m_pTexture = CGUITextureManager::Instance()->CreateTexture(strFullPath);
 		if( !m_pTexture )
 		{
-			throw CGUIException("[CGUITileMapLayer::InitLayer]: failed to create texture from path <%s>",strFullPath.c_str());
+			throw CGUIException("[CGUITiledMapLayer::InitLayer]: failed to create texture from path <%s>",strFullPath.c_str());
 			return -1;
 		}
 
 		// update offset (after layer orientation is set);
-		m_aLayerOffset.x = real( m_pLayerInfo->offset.x );
-		m_aLayerOffset.y = real( m_pLayerInfo->offset.y );
+		m_aLayerOffset.x = real( m_pLayerInfo->m_aOffset.x );
+		m_aLayerOffset.y = real( m_pLayerInfo->m_aOffset.y );
 
 		//update layer size
 		m_aLayerSize.m_fWidth = real( GetLayerSize().m_uWidth * GetMapTileSize().m_uWidth );
@@ -183,16 +183,16 @@ namespace guiex
 			}
 		}
 
-		if( maxGID < m_pTileSetInfo->firstGid || minGID > m_pTileSetInfo->firstGid )
+		if( maxGID < m_pTileSetInfo->GetFirstGid() || minGID > m_pTileSetInfo->GetFirstGid() )
 		{
-			throw CGUIException("[CGUITileMapLayer::InitLayer]: Only 1 tilset per layer is supported");
+			throw CGUIException("[CGUITiledMapLayer::InitLayer]: Only 1 tilset per layer is supported");
 			return -1;
 		}
 
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUITileMapLayer::AppendTileForGID( uint32 gid, const CGUIIntVector2& pos )
+	int32 CGUITiledMapLayer::AppendTileForGID( uint32 gid, const CGUIIntVector2& pos )
 	{
 		STileData aTileData;
 		aTileData.m_uGID = gid;
@@ -203,39 +203,39 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	CGUIVector2 CGUITileMapLayer::PositionAt( const CGUIIntVector2& pos )
+	CGUIVector2 CGUITiledMapLayer::PositionAt( const CGUIIntVector2& pos )
 	{
 		CGUIVector2 ret;
 		switch( GetLayerOrientation() ) 
 		{
-		case CCTMXOrientationOrtho:
+		case eTMXOrientationOrtho:
 			ret = PositionForOrthoAt(pos);
 			break;
-		case CCTMXOrientationIso:
+		case eTMXOrientationIso:
 			ret = PositionForIsoAt(pos);
 			break;
-		case CCTMXOrientationHex:
+		case eTMXOrientationHex:
 			ret = PositionForHexAt(pos);
 			break;
 		}
 		return ret;
 	}
 	//------------------------------------------------------------------------------
-	CGUIVector2 CGUITileMapLayer::PositionForOrthoAt( const CGUIIntVector2& pos )
+	CGUIVector2 CGUITiledMapLayer::PositionForOrthoAt( const CGUIIntVector2& pos )
 	{
 		return CGUIVector2(
 			real(pos.x * GetMapTileSize().m_uWidth),
 			real (pos.y * GetMapTileSize().m_uHeight));
 	}
 	//------------------------------------------------------------------------------
-	CGUIVector2 CGUITileMapLayer::PositionForIsoAt( const CGUIIntVector2& pos )
+	CGUIVector2 CGUITiledMapLayer::PositionForIsoAt( const CGUIIntVector2& pos )
 	{
 		return CGUIVector2(
 			real(GetMapTileSize().m_uWidth /2 * ( GetLayerSize().m_uWidth + pos.x - pos.y - 1)),
 			real(GetMapTileSize().m_uHeight /2 * (pos.x + pos.y)));
 	}
 	//------------------------------------------------------------------------------
-	CGUIVector2 CGUITileMapLayer::PositionForHexAt( const CGUIIntVector2& pos )
+	CGUIVector2 CGUITiledMapLayer::PositionForHexAt( const CGUIIntVector2& pos )
 	{
 		float diffY = 0;
 		if( pos.x % 2 == 1 )
@@ -248,7 +248,7 @@ namespace guiex
 			real(pos.y * GetMapTileSize().m_uHeight + diffY));
 	}
 	//------------------------------------------------------------------------------
-	void CGUITileMapLayer::Render( IGUIInterfaceRender* pRender )
+	void CGUITiledMapLayer::Render( IGUIInterfaceRender* pRender )
 	{
 		for( uint32 i = 0;
 			i < m_vecTiles.size();

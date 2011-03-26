@@ -1,19 +1,19 @@
 /** 
-* @file guitilemapmanager.h
+* @file guitiledmapmanager.h
 * @brief tile map manager.
 * @author ken
 * @date 2011-02-15
 */
 
-#ifndef __GUI_TILEMAPMANAGER_20110215_H__
-#define __GUI_TILEMAPMANAGER_20110215_H__
+#ifndef __GUI_TILEDMAPMANAGER_20110215_H__
+#define __GUI_TILEDMAPMANAGER_20110215_H__
 
 //============================================================================//
 // include
 //============================================================================// 
 #include "guibase.h"
 #include "guistring.h"
-#include "guitilemap.h"
+#include "guitiledmap.h"
 #include "guiresourcemanager.h"
 #include "guiproperty.h"
 #include <set>
@@ -29,18 +29,18 @@
 //============================================================================// 
 namespace guiex
 {
-	class GUIEXPORT CGUITileMapData : public CGUIResource
+	class GUIEXPORT CGUITiledMapData : public CGUIResource
 	{
 	public:
-		const CGUIProperty& GetTileMapData() const;
+		const CGUIProperty& GetTiledMapData() const;
 
 	protected:
 		virtual int32 DoLoad();
 		virtual void DoUnload();
 
 	protected:
-		friend class CGUITileMapManager;
-		CGUITileMapData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIProperty& rProperty );
+		friend class CGUITiledMapManager;
+		CGUITiledMapData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIProperty& rProperty );
 
 	protected:
 		CGUIProperty m_aProperty;
@@ -49,36 +49,36 @@ namespace guiex
 
 
 	/**
-	* @class CGUITileMapManager
-	* @brief tilemap manager
+	* @class CGUITiledMapManager
+	* @brief tiledmap manager
 	* 
 	*/
-	class GUIEXPORT CGUITileMapManager : public CGUIResourceManager <CGUITileMapData, CGUITileMap>
+	class GUIEXPORT CGUITiledMapManager : public CGUIResourceManager <CGUITiledMapData, CGUITiledMap>
 	{
 	public:
-		CGUITileMapManager();
-		virtual ~CGUITileMapManager();
+		CGUITiledMapManager();
+		virtual ~CGUITiledMapManager();
 
-		static CGUITileMapManager* Instance(); 
+		static CGUITiledMapManager* Instance(); 
 
-		int32 RegisterTileMap( const CGUIString& rSceneName, const CGUIProperty& rProperty);
+		int32 RegisterTiledMap( const CGUIString& rSceneName, const CGUIProperty& rProperty);
 		
-		CGUITileMap* AllocateResource( const CGUIString& rResName );
+		CGUITiledMap* AllocateResource( const CGUIString& rResName );
 		virtual void DeallocateResource( CGUIResource* pRes );
 
-		CGUITileMap* AllocateResource( const CGUIString& rName, const CGUIString& rSceneName );
+		CGUITiledMap* AllocateResource( const CGUIString& rName, const CGUIString& rSceneName );
 
 	protected:
 		virtual	void DestroyRegisterResourceImp( CGUIResource* pRes ); 
 		virtual	void DestroyAllocateResourceImp( CGUIResource* pRes ); 
 
-		CGUITileMap* DoCreateTileMap( const CGUIString& rSceneName, const CGUIProperty& rProperty );
+		CGUITiledMap* DoCreateTiledMap( const CGUIString& rSceneName, const CGUIProperty& rProperty );
 
 	private:
-		static CGUITileMapManager* m_pSingleton;
+		static CGUITiledMapManager* m_pSingleton;
 	};
 
 }//namespace guiex
 
-#endif //__GUI_TILEMAPMANAGER_20110215_H__
+#endif //__GUI_TILEDMAPMANAGER_20110215_H__
 

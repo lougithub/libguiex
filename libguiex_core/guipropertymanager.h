@@ -49,7 +49,7 @@ namespace guiex
 		ePropertyType_WidgetPosition,
 		ePropertyType_WidgetSize,
 		ePropertyType_Particle2D,
-		ePropertyType_TileMap,
+		ePropertyType_TiledMap,
 
 		ePropertyType_Image,
 		ePropertyType_Font,
@@ -85,7 +85,7 @@ namespace guiex
 		ePropertyType_AsDefine,
 		ePropertyType_WidgetDefine,
 		ePropertyType_Particle2DDefine,
-		ePropertyType_TileMapDefine,
+		ePropertyType_TiledMapDefine,
 
 		
 		//scene related property

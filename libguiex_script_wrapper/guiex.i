@@ -26,6 +26,7 @@
 %include	"guias.i"
 %include	"guiimage.i"
 %include	"guianimation.i"
+%include	"guiinterfacerender.i"
 %include	"guiinterfacesound.i"
 %include	"guiinterfacecommand.i"
 %include	"guiinterfacekeyboard.i"

@@ -78,7 +78,18 @@ namespace guiex
 		GetTiledGrid3D()->SetTile( uX, uY, rTile );
 	}
 	//------------------------------------------------------------------------------
-
+	void CGUIAsTiledGrid3D::TurnOnTile( uint32 uX, uint32 uY )
+	{
+		SetTile( uX, uY, GetOriginalTile( uX, uY ));
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsTiledGrid3D::TurnOffTile( uint32 uX, uint32 uY )
+	{
+		SR_V3F_Quad coords;
+		memset( &coords, 0, sizeof( SR_V3F_Quad ) );
+		SetTile( uX, uY, coords );
+	}	
+	//------------------------------------------------------------------------------
 
 
 
@@ -267,9 +278,7 @@ namespace guiex
 		for( int32 i = m_nTilesCount - 1; i >= 0; i-- )
 		{
 			int j = rand() % (i+1);
-			int v = m_vTilesOrder[i];
-			m_vTilesOrder[i] = m_vTilesOrder[j];
-			m_vTilesOrder[j] = v;
+			std::swap( m_vTilesOrder[i], m_vTilesOrder[j] );
 		}
 
 		m_vTilesDelta.resize( m_nTilesCount );
@@ -297,7 +306,7 @@ namespace guiex
 	{
 		CGUIAsTiledGrid3D::OnUpdate( );
 
-		real fPercent = GetElapsedTime() / GetTotalTime();
+		real fPercent = GetPercent();
 		const CGUIVector2& rStep = GetTiledGrid3D()->GetStep();
 
 		for( uint32 i = 0; i < m_aGridSize.GetWidth(); i++ )
@@ -335,6 +344,11 @@ namespace guiex
 	//	CGUIAsFadeOutTRTiles
 	//*****************************************************************************
 	//------------------------------------------------------------------------------
+	CGUIAsFadeOutTRTiles::CGUIAsFadeOutTRTiles( const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName)
+		:CGUIAsTiledGrid3D( rAsType, rAsName, rSceneName )
+	{
+	}
+	//------------------------------------------------------------------------------
 	CGUIAsFadeOutTRTiles::CGUIAsFadeOutTRTiles( const CGUIString& rAsName, const CGUIString& rSceneName )
 		:CGUIAsTiledGrid3D( "CGUIAsFadeOutTRTiles", rAsName, rSceneName )
 	{
@@ -349,18 +363,6 @@ namespace guiex
 		}
 
 		return powf( (uX+uY) / (n.x+n.y), 6 );
-	}
-	//------------------------------------------------------------------------------
-	void CGUIAsFadeOutTRTiles::TurnOnTile( uint32 uX, uint32 uY )
-	{
-		SetTile( uX, uY, GetOriginalTile( uX, uY ));
-	}
-	//------------------------------------------------------------------------------
-	void CGUIAsFadeOutTRTiles::TurnOffTile( uint32 uX, uint32 uY )
-	{
-		SR_V3F_Quad coords;
-		memset( &coords, 0, sizeof( SR_V3F_Quad ) );
-		SetTile( uX, uY, coords );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIAsFadeOutTRTiles::TransformTile( uint32 uX, uint32 uY, real distance )
@@ -387,7 +389,7 @@ namespace guiex
 	{
 		CGUIAsTiledGrid3D::OnUpdate( );
 
-		real fPercent = GetElapsedTime() / GetTotalTime();
+		real fPercent = GetPercent();
 		for( uint32 i = 0; i < m_aGridSize.GetWidth(); i++ )
 		{
 			for( uint32 j = 0; j < m_aGridSize.GetHeight(); j++ )
@@ -410,185 +412,369 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 
-	///**
-	//* Fades out the tiles in a Top-Right direction
-	//*/
-	//class GUIEXPORT CGUIAsFadeOutTRTiles : public CGUIAsTiledGrid3D
-	//{
-
-	//protected:
-	//	CGUIAsFadeOutTRTiles( const CGUIString& rAsName, const CGUIString& rSceneName );
-	//	virtual void OnUpdate( );
-
-	//protected:
-	//	GUI_AS_GENERATOR_DECLARE( CGUIAsFadeOutTRTiles);
-
-	//private:
-	//};
 
 
-	////*****************************************************************************
-	////	CGUIAsFadeOutBLTiles
-	////*****************************************************************************
+	//*****************************************************************************
+	//	CGUIAsFadeOutBLTiles
+	//*****************************************************************************
+	//------------------------------------------------------------------------------
+	CGUIAsFadeOutBLTiles::CGUIAsFadeOutBLTiles( const CGUIString& rAsName, const CGUIString& rSceneName )
+		:CGUIAsFadeOutTRTiles( "CGUIAsFadeOutBLTiles", rAsName, rSceneName )
+	{
+	}
+	//------------------------------------------------------------------------------
+	real CGUIAsFadeOutBLTiles::TestFunc( uint32 uX, uint32 uY, real fPercent )
+	{
+		fPercent = 1.0f - fPercent;
+		CGUIVector2	n( m_aGridSize.GetWidth() * fPercent, m_aGridSize.GetHeight()*fPercent );
+		if ( (uX+uY) == 0 )
+		{
+			return 1.0f;
+		}
 
-	///**
-	//*  Fades out the tiles in a Bottom-Left direction
-	//*/
-	//class GUIEXPORT CGUIAsFadeOutBLTiles : public CGUIAsFadeOutTRTiles
-	//{
-
-	//protected:
-	//	CGUIAsFadeOutBLTiles( const CGUIString& rAsName, const CGUIString& rSceneName );
-	//	virtual void OnUpdate( );
-
-	//protected:
-	//	GUI_AS_GENERATOR_DECLARE( CGUIAsFadeOutBLTiles);
-
-	//private:
-	//};
-
-
-	////*****************************************************************************
-	////	CGUIAsFadeOutUpTiles
-	////*****************************************************************************
-	///**
-	//*   Fades out the tiles in upwards direction
-	//*/
-	//class GUIEXPORT CGUIAsFadeOutUpTiles : public CGUIAsFadeOutTRTiles
-	//{
-
-	//protected:
-	//	CGUIAsFadeOutUpTiles( const CGUIString& rAsName, const CGUIString& rSceneName );
-	//	virtual void OnUpdate( );
-
-	//protected:
-	//	GUI_AS_GENERATOR_DECLARE( CGUIAsFadeOutUpTiles);
-
-	//private:
-	//};
-
-
-	////*****************************************************************************
-	////	CGUIAsFadeOutDownTiles
-	////*****************************************************************************
-	///**
-	//*	Fades out the tiles in downwards direction
-	//*/
-	//class GUIEXPORT CGUIAsFadeOutDownTiles : public CGUIAsFadeOutUpTiles
-	//{
-
-	//protected:
-	//	CGUIAsFadeOutDownTiles( const CGUIString& rAsName, const CGUIString& rSceneName );
-	//	virtual void OnUpdate( );
-
-	//protected:
-	//	GUI_AS_GENERATOR_DECLARE( CGUIAsFadeOutDownTiles);
-
-	//private:
-	//};
-
-
-	////*****************************************************************************
-	////	CGUIAsTurnOffTiles
-	////*****************************************************************************
-	///**
-	//*	 Turn off the tiles in random order
-	//*/	
-	//class GUIEXPORT CGUIAsTurnOffTiles : public CGUIAsTiledGrid3D
-	//{
-
-	//protected:
-	//	CGUIAsTurnOffTiles( const CGUIString& rAsName, const CGUIString& rSceneName );
-	//	virtual void OnUpdate( );
-
-	//protected:
-	//	GUI_AS_GENERATOR_DECLARE( CGUIAsTurnOffTiles);
-
-	//private:
-	//	int32	m_nSeed;
-	//	int32 m_nTilesCount;
-	//	int32 *m_pTilesOrder;
-	//};
-
-	////*****************************************************************************
-	////	CGUIAsWavesTiles3D
-	////*****************************************************************************
-	//class GUIEXPORT CGUIAsWavesTiles3D : public CGUIAsTiledGrid3D
-	//{
-
-	//protected:
-	//	CGUIAsWavesTiles3D( const CGUIString& rAsName, const CGUIString& rSceneName );
-	//	virtual void OnUpdate( );
-
-	//protected:
-	//	GUI_AS_GENERATOR_DECLARE( CGUIAsWavesTiles3D);
-
-	//private:
-	//	int32 waves;
-	//	real amplitude;
-	//	real amplitudeRate;
-	//};
+		return powf( (n.x+n.y) / (uX+uY), 6 );
+	}
+	//------------------------------------------------------------------------------
 
 
 
-	////*****************************************************************************
-	////	CGUIAsJumpTiles3D
-	////*****************************************************************************
-	///**
-	//*	A sin function is executed to move the tiles across the Z axis
-	//*/	
-	//class GUIEXPORT CGUIAsJumpTiles3D : public CGUIAsTiledGrid3D
-	//{
 
-	//protected:
-	//	CGUIAsJumpTiles3D( const CGUIString& rAsName, const CGUIString& rSceneName );
-	//	virtual void OnUpdate( );
+	//*****************************************************************************
+	//	CGUIAsFadeOutUpTiles
+	//*****************************************************************************
+	//------------------------------------------------------------------------------
+	CGUIAsFadeOutUpTiles::CGUIAsFadeOutUpTiles( const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName)
+	:CGUIAsFadeOutTRTiles( rAsType, rAsName, rSceneName )
+	{
+	}
+	//------------------------------------------------------------------------------
+	CGUIAsFadeOutUpTiles::CGUIAsFadeOutUpTiles( const CGUIString& rAsName, const CGUIString& rSceneName )
+		:CGUIAsFadeOutTRTiles( "CGUIAsFadeOutUpTiles", rAsName, rSceneName )
+	{
+	}
+	//------------------------------------------------------------------------------
+	real CGUIAsFadeOutUpTiles::TestFunc( uint32 uX, uint32 uY, real fPercent )
+	{
+		CGUIVector2	n( m_aGridSize.GetWidth() * fPercent, m_aGridSize.GetHeight()*fPercent );
+		if ( n.y == 0.0f )
+		{
+			return 1.0f;
+		}
 
-	//protected:
-	//	GUI_AS_GENERATOR_DECLARE( CGUIAsJumpTiles3D);
+		return powf( uY / n.y, 6 );
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsFadeOutUpTiles::TransformTile( uint32 uX, uint32 uY, real distance )
+	{
+		SR_V3F_Quad coords = GetOriginalTile(uX,uY);
+		const CGUIVector2& step = GetTiledGrid3D()->GetStep();
 
-	//private:
-	//	int32 jumps;
-	//	real amplitude;
-	//	real amplitudeRate;
-	//};
+		coords.bl.y -= (step.y / 2) * (1.0f - distance);
+		coords.br.y -= (step.y / 2) * (1.0f - distance);
+		coords.tl.y += (step.y / 2) * (1.0f - distance);
+		coords.tr.y += (step.y / 2) * (1.0f - distance);
 
-
-	////*****************************************************************************
-	////	CGUIAsSplitRows
-	////*****************************************************************************
-	//class GUIEXPORT CGUIAsSplitRows : public CGUIAsTiledGrid3D
-	//{
-
-	//protected:
-	//	CGUIAsSplitRows( const CGUIString& rAsName, const CGUIString& rSceneName );
-	//	virtual void OnUpdate( );
-
-	//protected:
-	//	GUI_AS_GENERATOR_DECLARE( CGUIAsSplitRows);
-
-	//private:
-	//	int32 rows;
-	//	CGUIIntSize winSize;
-	//};
-
+		SetTile( uX, uY, coords );
+	}
+	//------------------------------------------------------------------------------
 
 
-	////*****************************************************************************
-	////	CGUIAsSplitCols
-	////*****************************************************************************
-	//class GUIEXPORT CGUIAsSplitCols : public CGUIAsTiledGrid3D
-	//{
 
-	//protected:
-	//	CGUIAsSplitCols( const CGUIString& rAsName, const CGUIString& rSceneName );
-	//	virtual void OnUpdate( );
+	//*****************************************************************************
+	//	CGUIAsFadeOutDownTiles
+	//*****************************************************************************
+	//------------------------------------------------------------------------------
+	CGUIAsFadeOutDownTiles::CGUIAsFadeOutDownTiles( const CGUIString& rAsName, const CGUIString& rSceneName )
+		:CGUIAsFadeOutUpTiles( "CGUIAsFadeOutDownTiles", rAsName, rSceneName )
+	{
+	}
+	//------------------------------------------------------------------------------
+	real CGUIAsFadeOutDownTiles::TestFunc( uint32 uX, uint32 uY, real fPercent )
+	{
+		fPercent = 1.0f - fPercent;
+		CGUIVector2	n( m_aGridSize.GetWidth() * fPercent, m_aGridSize.GetHeight()*fPercent );
+		if ( uY == 0 )
+		{
+			return 1.0f;
+		}
 
-	//protected:
-	//	GUI_AS_GENERATOR_DECLARE( CGUIAsSplitCols);
+		return powf( n.y / uY, 6 );
+	}
+	//------------------------------------------------------------------------------
 
-	//private:
-	//	int32 cols;
-	//	CGUIIntSize	winSize;
-	//};
+
+
+	//*****************************************************************************
+	//	CGUIAsTurnOffTiles
+	//*****************************************************************************
+	//------------------------------------------------------------------------------
+	CGUIAsTurnOffTiles::CGUIAsTurnOffTiles( const CGUIString& rAsName, const CGUIString& rSceneName )
+		:CGUIAsTiledGrid3D( "CGUIAsTurnOffTiles", rAsName, rSceneName )
+		,m_nSeed( 10 )
+		,m_nTilesCount( 0 )
+	{
+
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsTurnOffTiles::Reset( )
+	{
+		CGUIAsTiledGrid3D::Reset();
+
+		m_vTilesOrder.clear();
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsTurnOffTiles::SetTurnOffTilesInfo( int32 seed )
+	{
+		m_nSeed = seed;
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUIAsTurnOffTiles::OnInitGrid( )
+	{
+		if( 0 != CGUIAsTiledGrid3D::OnInitGrid() )
+		{
+			return -1;
+		}
+
+		if ( m_nSeed != -1 )
+		{
+			srand( m_nSeed );
+		}
+
+		m_nTilesCount = m_aGridSize.GetWidth() * m_aGridSize.GetHeight();
+		m_vTilesOrder.resize(m_nTilesCount);
+
+		for( uint32 i = 0; i < m_nTilesCount; i++ )
+		{
+			m_vTilesOrder[i] = i;
+		}
+
+		//shuffle
+		for( int32 i = m_nTilesCount - 1; i >= 0; i-- )
+		{
+			int j = rand() % (i+1);
+			std::swap( m_vTilesOrder[i], m_vTilesOrder[j] );
+		}
+
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsTurnOffTiles::OnFiniGrid( )
+	{
+		m_vTilesOrder.clear();
+
+		CGUIAsTiledGrid3D::OnFiniGrid();
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsTurnOffTiles::OnUpdate( )
+	{
+		CGUIAsTiledGrid3D::OnUpdate( );
+
+		real fPercent = GetPercent();
+		uint32 l = (uint32)( fPercent * (real)m_nTilesCount );
+		for( uint32 i = 0; i < m_nTilesCount; i++ )
+		{
+			uint32 t = m_vTilesOrder[i];
+			uint32 uX = t / m_aGridSize.GetHeight();
+			uint32 uY = t % m_aGridSize.GetHeight();
+
+			if ( i < l )
+			{
+				TurnOffTile( uX, uY );
+			}
+			else
+			{
+				TurnOnTile( uX, uY );
+			}
+		}
+	}
+	//------------------------------------------------------------------------------
+
+
+
+
+	//*****************************************************************************
+	//	CGUIAsWavesTiles3D
+	//*****************************************************************************
+	//------------------------------------------------------------------------------
+	CGUIAsWavesTiles3D::CGUIAsWavesTiles3D( const CGUIString& rAsName, const CGUIString& rSceneName )
+		:CGUIAsTiledGrid3D( "CGUIAsWavesTiles3D", rAsName, rSceneName )
+		,m_nWaves( 1 )
+		,m_fAmplitude( 3.0f )
+		,m_fAmplitudeRate( 1.0f )
+	{
+
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsWavesTiles3D::SetWavesInfo( int32 nWaves, real fAmplitude)
+	{
+		m_nWaves = nWaves;
+		m_fAmplitude = fAmplitude;
+		m_fAmplitudeRate = 1.0f;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsWavesTiles3D::OnUpdate()
+	{
+		CGUIAsTiledGrid3D::OnUpdate( );
+
+		real fPercent = GetPercent();
+		for( uint32 i = 0; i < m_aGridSize.GetWidth(); i++ )
+		{
+			for( uint32 j = 0; j < m_aGridSize.GetHeight(); j++ )
+			{
+				SR_V3F_Quad coords = GetOriginalTile(i,j);
+
+				coords.bl.z = (sinf(fPercent*CGUIMath::GUI_PI*m_nWaves*2 + (coords.bl.y+coords.bl.x) * 0.01f) * m_fAmplitude * m_fAmplitudeRate );
+				coords.br.z	= coords.bl.z;
+				coords.tl.z = coords.bl.z;
+				coords.tr.z = coords.bl.z;
+
+				SetTile( i, j, coords );
+			}
+		}
+	}
+	//------------------------------------------------------------------------------
+
+
+
+
+	//*****************************************************************************
+	//	CGUIAsJumpTiles3D
+	//*****************************************************************************
+	//------------------------------------------------------------------------------
+	CGUIAsJumpTiles3D::CGUIAsJumpTiles3D( const CGUIString& rAsName, const CGUIString& rSceneName )
+		:CGUIAsTiledGrid3D( "CGUIAsJumpTiles3D", rAsName, rSceneName )
+		,m_nJumps( 1 )
+		,m_fAmplitude( 3.0f )
+		,m_fAmplitudeRate( 1.0f )
+	{
+
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsJumpTiles3D::SetJumpTilesInfo( int32 nJumps, real fAmplitude)
+	{
+		m_nJumps = nJumps;
+		m_fAmplitude = fAmplitude;
+		m_fAmplitudeRate = 1.0f;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsJumpTiles3D::OnUpdate()
+	{
+		CGUIAsTiledGrid3D::OnUpdate( );
+
+		real fPercent = GetPercent();
+		float sinz =  (sinf(CGUIMath::GUI_PI*fPercent*m_nJumps*2) * m_fAmplitude * m_fAmplitudeRate );
+		float sinz2 = (sinf(CGUIMath::GUI_PI*(fPercent*m_nJumps*2 + 1)) * m_fAmplitude * m_fAmplitudeRate );
+
+		for( uint32 i = 0; i < m_aGridSize.GetWidth(); i++ )
+		{
+			for( uint32 j = 0; j < m_aGridSize.GetHeight(); j++ )
+			{
+				SR_V3F_Quad coords = GetOriginalTile(i,j);
+				
+				if ( ((i+j) % 2) == 0 )
+				{
+					coords.bl.z += sinz;
+					coords.br.z += sinz;
+					coords.tl.z += sinz;
+					coords.tr.z += sinz;
+				}
+				else
+				{
+					coords.bl.z += sinz2;
+					coords.br.z += sinz2;
+					coords.tl.z += sinz2;
+					coords.tr.z += sinz2;
+				}
+
+				SetTile( i, j, coords );
+			}
+		}
+	}
+
+
+	//*****************************************************************************
+	//	CGUIAsSplitRows
+	//*****************************************************************************
+	//------------------------------------------------------------------------------
+	CGUIAsSplitRows::CGUIAsSplitRows( const CGUIString& rAsName, const CGUIString& rSceneName )
+		:CGUIAsTiledGrid3D( "CGUIAsSplitRows", rAsName, rSceneName )
+		,m_nRows( 1 )
+	{
+
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsSplitRows::SetSplitRowsInfo( uint32 nRows )
+	{
+		m_nRows = nRows;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsSplitRows::OnUpdate()
+	{
+		CGUIAsTiledGrid3D::OnUpdate( );
+
+		uint32 nSceneWidth = GetTiledGrid3D()->GetSceneWidth();
+		real fPercent = GetPercent();
+		for( uint32 j = 0; j < m_aGridSize.GetHeight(); j++ )
+		{
+			SR_V3F_Quad coords = GetOriginalTile(0,j);
+			real direction = 1;
+			if ( (j % 2 ) == 0 )
+			{
+				direction = -1;
+			}
+
+			coords.bl.x += direction * nSceneWidth * fPercent;
+			coords.br.x += direction * nSceneWidth * fPercent;
+			coords.tl.x += direction * nSceneWidth * fPercent;
+			coords.tr.x += direction * nSceneWidth * fPercent;
+
+			SetTile( 0, j, coords );
+		}
+
+	}
+	//------------------------------------------------------------------------------
+
+
+	//*****************************************************************************
+	//	CGUIAsSplitCols
+	//*****************************************************************************
+	//------------------------------------------------------------------------------
+	CGUIAsSplitCols::CGUIAsSplitCols( const CGUIString& rAsName, const CGUIString& rSceneName )
+		:CGUIAsTiledGrid3D( "CGUIAsSplitCols", rAsName, rSceneName )
+		,m_nCols( 1 )
+	{
+
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsSplitCols::SetSplitColsInfo( uint32 nRows )
+	{
+		m_nCols = nRows;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsSplitCols::OnUpdate()
+	{
+		CGUIAsTiledGrid3D::OnUpdate( );
+
+		uint32 nSceneHeight = GetTiledGrid3D()->GetSceneHeight();
+		real fPercent = GetPercent();
+		for( uint32 i = 0; i < m_aGridSize.GetWidth(); i++ )
+		{
+			SR_V3F_Quad coords = GetOriginalTile(i,0);
+			real direction = 1;
+			if ( (i % 2 ) == 0 )
+			{
+				direction = -1;
+			}
+
+			coords.bl.y += direction * nSceneHeight * fPercent;
+			coords.br.y += direction * nSceneHeight * fPercent;
+			coords.tl.y += direction * nSceneHeight * fPercent;
+			coords.tr.y += direction * nSceneHeight * fPercent;
+
+			SetTile( i,0, coords );
+		}
+
+	}
+	//------------------------------------------------------------------------------
+
 }

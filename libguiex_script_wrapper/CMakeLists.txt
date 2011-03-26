@@ -15,8 +15,9 @@ set( ${target_name}_swig_SRCS
 	guiimage.i
 	guiinterfacecommand.i
 	guiinterfacekeyboard.i
-	guiinterfacemanager.i
 	guiinterfacesound.i
+	guiinterfacerender.i
+	guiinterfacemanager.i
 	guilog.i
 	guimousecursor.i
 	guirect.i

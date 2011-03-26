@@ -44,6 +44,9 @@ namespace guiex
 		const SR_V3F_Quad& GetTile( uint32 uX, uint32 uY );
 		const SR_V3F_Quad& GetOriginalTile( uint32 uX, uint32 uY );
 		void SetTile( uint32 uX, uint32 uY, const SR_V3F_Quad& rTile );
+
+		void TurnOnTile( uint32 uX, uint32 uY );
+		void TurnOffTile( uint32 uX, uint32 uY );
 	};
 
 
@@ -135,13 +138,12 @@ namespace guiex
 	{
 
 	protected:
+		CGUIAsFadeOutTRTiles( const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName);
 		CGUIAsFadeOutTRTiles( const CGUIString& rAsName, const CGUIString& rSceneName );
 		virtual void OnUpdate( );
 
-		real TestFunc( uint32 uX, uint32 uY, real fPercent );
-		void TurnOnTile( uint32 uX, uint32 uY );
-		void TurnOffTile( uint32 uX, uint32 uY );
-		void TransformTile( uint32 uX, uint32 uY, real distance );
+		virtual real TestFunc( uint32 uX, uint32 uY, real fPercent );
+		virtual void TransformTile( uint32 uX, uint32 uY, real distance );
 
 	protected:
 		GUI_AS_GENERATOR_DECLARE( CGUIAsFadeOutTRTiles);
@@ -157,10 +159,10 @@ namespace guiex
 	*/
 	class GUIEXPORT CGUIAsFadeOutBLTiles : public CGUIAsFadeOutTRTiles
 	{
-
 	protected:
 		CGUIAsFadeOutBLTiles( const CGUIString& rAsName, const CGUIString& rSceneName );
-		virtual void OnUpdate( );
+
+		virtual real TestFunc( uint32 uX, uint32 uY, real fPercent );
 
 	protected:
 		GUI_AS_GENERATOR_DECLARE( CGUIAsFadeOutBLTiles);
@@ -179,8 +181,11 @@ namespace guiex
 	{
 
 	protected:
+		CGUIAsFadeOutUpTiles( const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName);
 		CGUIAsFadeOutUpTiles( const CGUIString& rAsName, const CGUIString& rSceneName );
-		virtual void OnUpdate( );
+	
+		virtual real TestFunc( uint32 uX, uint32 uY, real fPercent );
+		virtual void TransformTile( uint32 uX, uint32 uY, real distance );
 
 	protected:
 		GUI_AS_GENERATOR_DECLARE( CGUIAsFadeOutUpTiles);
@@ -197,10 +202,10 @@ namespace guiex
 	*/
 	class GUIEXPORT CGUIAsFadeOutDownTiles : public CGUIAsFadeOutUpTiles
 	{
-
 	protected:
 		CGUIAsFadeOutDownTiles( const CGUIString& rAsName, const CGUIString& rSceneName );
-		virtual void OnUpdate( );
+		
+		virtual real TestFunc( uint32 uX, uint32 uY, real fPercent );
 
 	protected:
 		GUI_AS_GENERATOR_DECLARE( CGUIAsFadeOutDownTiles);
@@ -217,18 +222,24 @@ namespace guiex
 	*/	
 	class GUIEXPORT CGUIAsTurnOffTiles : public CGUIAsTiledGrid3D
 	{
+	public:
+		void SetTurnOffTilesInfo( int32 seed );
+		virtual void Reset( );
 
 	protected:
 		CGUIAsTurnOffTiles( const CGUIString& rAsName, const CGUIString& rSceneName );
 		virtual void OnUpdate( );
 
+		virtual int32 OnInitGrid();
+		virtual void OnFiniGrid();
+
 	protected:
 		GUI_AS_GENERATOR_DECLARE( CGUIAsTurnOffTiles);
 
 	private:
-		int32	seed;
-		int32 tilesCount;
-		int32 *tilesOrder;
+		int32 m_nSeed;
+		uint32 m_nTilesCount;
+		std::vector<uint32> m_vTilesOrder;
 	};
 
 	//*****************************************************************************
@@ -236,6 +247,8 @@ namespace guiex
 	//*****************************************************************************
 	class GUIEXPORT CGUIAsWavesTiles3D : public CGUIAsTiledGrid3D
 	{
+	public:
+		void SetWavesInfo( int32 nWaves, real fAmplitude);
 
 	protected:
 		CGUIAsWavesTiles3D( const CGUIString& rAsName, const CGUIString& rSceneName );
@@ -245,9 +258,9 @@ namespace guiex
 		GUI_AS_GENERATOR_DECLARE( CGUIAsWavesTiles3D);
 
 	private:
-		int32 waves;
-		real amplitude;
-		real amplitudeRate;
+		int32 m_nWaves;
+		real m_fAmplitude;
+		real m_fAmplitudeRate;
 	};
 
 
@@ -260,6 +273,8 @@ namespace guiex
 	*/	
 	class GUIEXPORT CGUIAsJumpTiles3D : public CGUIAsTiledGrid3D
 	{
+	public:
+		void SetJumpTilesInfo( int32 nJumps, real fAmplitude);
 
 	protected:
 		CGUIAsJumpTiles3D( const CGUIString& rAsName, const CGUIString& rSceneName );
@@ -269,17 +284,20 @@ namespace guiex
 		GUI_AS_GENERATOR_DECLARE( CGUIAsJumpTiles3D);
 
 	private:
-		int32 jumps;
-		real amplitude;
-		real amplitudeRate;
+		int32 m_nJumps;
+		real m_fAmplitude;
+		real m_fAmplitudeRate;
 	};
 
 
 	//*****************************************************************************
 	//	CGUIAsSplitRows
 	//*****************************************************************************
+	//TODO: fix it later
 	class GUIEXPORT CGUIAsSplitRows : public CGUIAsTiledGrid3D
 	{
+	public:
+		void SetSplitRowsInfo( uint32 nRows );
 
 	protected:
 		CGUIAsSplitRows( const CGUIString& rAsName, const CGUIString& rSceneName );
@@ -289,8 +307,7 @@ namespace guiex
 		GUI_AS_GENERATOR_DECLARE( CGUIAsSplitRows);
 
 	private:
-		int32 rows;
-		CGUIIntSize winSize;
+		uint32 m_nRows;
 	};
 
 
@@ -300,6 +317,8 @@ namespace guiex
 	//*****************************************************************************
 	class GUIEXPORT CGUIAsSplitCols : public CGUIAsTiledGrid3D
 	{
+	public:
+		void SetSplitColsInfo( uint32 nCols );
 
 	protected:
 		CGUIAsSplitCols( const CGUIString& rAsName, const CGUIString& rSceneName );
@@ -309,8 +328,7 @@ namespace guiex
 		GUI_AS_GENERATOR_DECLARE( CGUIAsSplitCols);
 
 	private:
-		int32 cols;
-		CGUIIntSize	winSize;
+		int32 m_nCols;
 	};
 
 }//namespace guiex

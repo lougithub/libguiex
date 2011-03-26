@@ -13,6 +13,11 @@ public:
 
 protected:
 	virtual uint32 OnKeyClicked( CGUIEventKeyboard* pEvent );
+	void RegisterAsPlayer();
+
+protected:
+	typedef CGUIAs* (*Fun_GenerateAsPlayer)( );
+	std::vector< Fun_GenerateAsPlayer > m_vecAsPlayers;
 };
 
 
@@ -47,8 +52,8 @@ protected:
 		CGUISceneManager::Instance()->RegisterScenesFromDir("/", ".uip");
 		CGUISceneManager::Instance()->LoadResources( "common.uip" );
 		CGUISceneManager::Instance()->LoadWidgets( "common.uip" );
-		CGUISceneManager::Instance()->LoadResources( "tilemap.uip" );
-		CGUISceneManager::Instance()->LoadWidgets( "tilemap.uip" );
+		CGUISceneManager::Instance()->LoadResources( "tiledmap.uip" );
+		CGUISceneManager::Instance()->LoadWidgets( "tiledmap.uip" );
 
 		//create layer
 		CMyCanvasLayer_DrawRect* pLayer1 = new CMyCanvasLayer_DrawRect( "layer 1",CGUIRect( 400,284,600,484), CGUIColor( 0,1,1,1 ), 0 );	
@@ -64,7 +69,7 @@ protected:
 		CGUICanvasLayerManager::Instance()->PushCanvasLayer( pLayer3 );
 
 		//open ui page
-		CGUIWidget* pWidget = CGUIWidgetManager::Instance()->GetPage( "showfps.xml", "common.uip" );
+		CGUIWidget* pWidget = CGUIWidgetManager::Instance()->GetPage( "utility.xml", "common.uip" );
 		GSystem->GetUICanvas()->OpenUIPage( pWidget);
 		return 0;
 	}
@@ -202,11 +207,11 @@ void Btn_OnClick_ToggleEffect( CGUIEventMouse* pEvent )
 }
 //------------------------------------------------------------------------------
 CMyCanvasLayer_DrawWidget::CMyCanvasLayer_DrawWidget( const char* szLayerName )
-	:CGUICanvasLayer( szLayerName )
+:CGUICanvasLayer( szLayerName )
 {
 	CGUIWidget* pWidget = NULL;
 
-	pWidget = CGUIWidgetManager::Instance()->GetPage( "sample1.xml", "tilemap.uip" );
+	pWidget = CGUIWidgetManager::Instance()->GetPage( "sample1.xml", "tiledmap.uip" );
 	pWidget->SetMovable( true );
 	pWidget->SetParent( this );
 	pWidget->Open();
@@ -231,6 +236,7 @@ CMyCanvasLayer_DrawWidget::CMyCanvasLayer_DrawWidget( const char* szLayerName )
 	GSystem->RegisterGlobalKeyReceiver( this );
 	SetAutoPlayAs( true );
 
+	RegisterAsPlayer();
 	ApplyEffect();
 }
 
@@ -247,72 +253,15 @@ void CMyCanvasLayer_DrawWidget::DestroySelf( )
 //------------------------------------------------------------------------------
 void CMyCanvasLayer_DrawWidget::ApplyEffect()
 {
-	static int i=6;
+	static int i=m_vecAsPlayers.size() - 1;
 
-	CGUIAsGridBase* pAs = NULL;
-	switch( i )
-	{
-	case 0:
-		//CGUIAsPageTurn3D
-		pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsPageTurn3D>();
-		pAs->SetGridSize( CGUIIntSize(30, 30) );
-		break;
-
-	case 1:
-		//CGUIAsWaves3D
-		pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsWaves3D>();
-		pAs->SetGridSize( CGUIIntSize(30, 30) );
-		((CGUIAsWaves3D*)pAs)->SetWavesInfo( 5, 20 );
-		break;
-
-	case 2:
-		//CGUIAsShaky3D
-		pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsShaky3D>();
-		pAs->SetGridSize( CGUIIntSize(30, 30) );
-		((CGUIAsShaky3D*)pAs)->SetShakyInfo( 30, false );
-		break;
-
-	case 3:
-		//CGUIAsShakyTiles3D
-		pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsShakyTiles3D>();
-		pAs->SetGridSize( CGUIIntSize(30, 30) );
-		((CGUIAsShakyTiles3D*)pAs)->SetShakyTiles3DInfo( 30, false );
-		break;
-
-	case 4:
-		//CGUIAsShatteredTiles3D
-		pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsShatteredTiles3D>();
-		pAs->SetGridSize( CGUIIntSize(30, 30) );
-		((CGUIAsShatteredTiles3D*)pAs)->SetShatteredTiles3DInfo( 30, false );
-		break;
-		
-	case 5:
-		//CGUIAsShuffleTiles
-		pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsShuffleTiles>();
-		pAs->SetGridSize( CGUIIntSize(30, 30) );
-		((CGUIAsShuffleTiles*)pAs)->SetShuffleTilesInfo( rand() );
-		break;
-
-	case 6:
-		//CGUIAsFadeOutTRTiles
-		pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsFadeOutTRTiles>();
-		pAs->SetGridSize( CGUIIntSize(30, 30) );
-		break;
-		
-
-	default:
-		//CGUIAsPageTurn3D
-		pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsPageTurn3D>();
-		pAs->SetGridSize( CGUIIntSize(30, 30) );
-		i = 0;
-		break;
-	}
-	++i;
-
+	CGUIAs* pAs = m_vecAsPlayers[i]();
 	pAs->SetTotalTime( 3.0f );
 	pAs->SetReceiver( this );
 	this->SetAs( "effect", pAs );
 	pAs->RefRelease();
+
+	i = (i+1)%m_vecAsPlayers.size();
 }
 //------------------------------------------------------------------------------
 uint32 CMyCanvasLayer_DrawWidget::OnKeyClicked( CGUIEventKeyboard* pEvent )
@@ -325,6 +274,224 @@ uint32 CMyCanvasLayer_DrawWidget::OnKeyClicked( CGUIEventKeyboard* pEvent )
 	}
 
 	return CGUICanvasLayer::OnKeyClicked( pEvent );
+}
+//------------------------------------------------------------------------------
+CGUIAs* Fun_GenerateAsPlayer_CGUIAsPageTurn3D( )
+{
+	//CGUIAsPageTurn3D
+	CGUIAsPageTurn3D* pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsPageTurn3D>();
+	pAs->SetGridSize( CGUIIntSize(30, 30) );
+	return pAs;
+}
+
+CGUIAs* Fun_GenerateAsPlayer_CGUIAsWaves3D( )
+{
+	//CGUIAsWaves3D
+	CGUIAsWaves3D* pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsWaves3D>();
+	pAs->SetGridSize( CGUIIntSize(30, 30) );
+	pAs->SetWavesInfo( 5, 20 );
+	return pAs;
+}
+
+CGUIAs* Fun_GenerateAsPlayer_CGUIAsShaky3D( )
+{
+	//CGUIAsShaky3D
+	CGUIAsShaky3D* pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsShaky3D>();
+	pAs->SetGridSize( CGUIIntSize(30, 30) );
+	pAs->SetShakyInfo( 30, false );
+	return pAs;
+}
+
+CGUIAs* Fun_GenerateAsPlayer_CGUIAsShakyTiles3D( )
+{
+	//CGUIAsShakyTiles3D
+	CGUIAsShakyTiles3D* pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsShakyTiles3D>();
+	pAs->SetGridSize( CGUIIntSize(30, 30) );
+	pAs->SetShakyTiles3DInfo( 30, false );
+	return pAs;
+}
+
+CGUIAs* Fun_GenerateAsPlayer_CGUIAsShatteredTiles3D( )
+{
+	//CGUIAsShatteredTiles3D
+	CGUIAsShatteredTiles3D* pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsShatteredTiles3D>();
+	pAs->SetGridSize( CGUIIntSize(30, 30) );
+	pAs->SetShatteredTiles3DInfo( 30, false );
+	return pAs;
+}
+
+CGUIAs* Fun_GenerateAsPlayer_CGUIAsShuffleTiles( )
+{
+	//CGUIAsShuffleTiles
+	CGUIAsShuffleTiles* pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsShuffleTiles>();
+	pAs->SetGridSize( CGUIIntSize(30, 30) );
+	pAs->SetShuffleTilesInfo( rand() );
+	return pAs;
+}
+
+CGUIAs* Fun_GenerateAsPlayer_CGUIAsFadeOutTRTiles( )
+{
+	//CGUIAsFadeOutTRTiles
+	CGUIAsFadeOutTRTiles* pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsFadeOutTRTiles>();
+	pAs->SetGridSize( CGUIIntSize(30, 30) );
+	return pAs;
+}
+
+CGUIAs* Fun_GenerateAsPlayer_CGUIAsFadeOutBLTiles( )
+{
+	//CGUIAsFadeOutBLTiles
+	CGUIAsFadeOutBLTiles* pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsFadeOutBLTiles>();
+	pAs->SetGridSize( CGUIIntSize(30, 30) );
+	return pAs;
+}
+
+CGUIAs* Fun_GenerateAsPlayer_CGUIAsFadeOutUpTiles( )
+{
+	//CGUIAsFadeOutUpTiles
+	CGUIAsFadeOutUpTiles* pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsFadeOutUpTiles>();
+	pAs->SetGridSize( CGUIIntSize(30, 30) );
+	return pAs;
+}
+
+CGUIAs* Fun_GenerateAsPlayer_CGUIAsFadeOutDownTiles( )
+{
+	//CGUIAsFadeOutDownTiles
+	CGUIAsFadeOutDownTiles* pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsFadeOutDownTiles>();
+	pAs->SetGridSize( CGUIIntSize(30, 30) );
+	return pAs;
+}
+
+CGUIAs* Fun_GenerateAsPlayer_CGUIAsTurnOffTiles( )
+{
+	//CGUIAsTurnOffTiles
+	CGUIAsTurnOffTiles* pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsTurnOffTiles>();
+	pAs->SetGridSize( CGUIIntSize(30, 30) );
+	pAs->SetTurnOffTilesInfo( rand() );
+	return pAs;
+}
+
+CGUIAs* Fun_GenerateAsPlayer_CGUIAsWavesTiles3D( )
+{
+	//CGUIAsWavesTiles3D
+	CGUIAsWavesTiles3D* pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsWavesTiles3D>();
+	pAs->SetGridSize( CGUIIntSize(30, 30) );
+	pAs->SetWavesInfo( 5, 20 );
+	return pAs;
+}
+
+CGUIAs* Fun_GenerateAsPlayer_CGUIAsJumpTiles3D( )
+{
+	//CGUIAsJumpTiles3D
+	CGUIAsJumpTiles3D* pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsJumpTiles3D>();
+	pAs->SetGridSize( CGUIIntSize(30, 30) );
+	pAs->SetJumpTilesInfo( 5, 20 );
+	return pAs;
+}
+
+CGUIAs* Fun_GenerateAsPlayer_CGUIAsSplitRows( )
+{
+	//CGUIAsSplitRows
+	CGUIAsSplitRows* pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsSplitRows>();
+	pAs->SetGridSize( CGUIIntSize(30, 30) );
+	pAs->SetSplitRowsInfo( 5 );
+	return pAs;
+}
+
+CGUIAs* Fun_GenerateAsPlayer_CGUIAsSplitCols( )
+{
+	//CGUIAsSplitCols
+	CGUIAsSplitCols* pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsSplitCols>();
+	pAs->SetGridSize( CGUIIntSize(30, 30) );
+	pAs->SetSplitColsInfo( 5 );
+	return pAs;
+}
+
+CGUIAs* Fun_GenerateAsPlayer_CGUIAsFlipX3D( )
+{
+	//CGUIAsFlipX3D
+	CGUIAsFlipX3D* pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsFlipX3D>();
+	pAs->SetGridSize( CGUIIntSize(1, 1) );
+	return pAs;
+}
+
+CGUIAs* Fun_GenerateAsPlayer_CGUIAsFlipY3D( )
+{
+	//CGUIAsFlipY3D
+	CGUIAsFlipY3D* pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsFlipY3D>();
+	pAs->SetGridSize( CGUIIntSize(1, 1) );
+	return pAs;
+}
+
+CGUIAs* Fun_GenerateAsPlayer_CGUIAsLens3D( )
+{
+	//CGUIAsLens3D
+	CGUIAsLens3D* pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsLens3D>();
+	pAs->SetGridSize( CGUIIntSize(30, 30) );
+	pAs->SetLens3DInfo( CGUIVector2(200,200), 200 );
+	return pAs;
+}
+
+CGUIAs* Fun_GenerateAsPlayer_CGUIAsRipple3D( )
+{
+	//CGUIAsRipple3D
+	CGUIAsRipple3D* pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsRipple3D>();
+	pAs->SetGridSize( CGUIIntSize(30, 30) );
+	pAs->SetRipple3DInfo( CGUIVector2(200,200), 200, 3, 30 );
+	return pAs;
+}
+
+CGUIAs* Fun_GenerateAsPlayer_CGUIAsLiquid( )
+{
+	//CGUIAsLiquid
+	CGUIAsLiquid* pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsLiquid>();
+	pAs->SetGridSize( CGUIIntSize(30, 30) );
+	pAs->SetLiquidInfo( 1, 30 );
+	return pAs;
+}
+
+CGUIAs* Fun_GenerateAsPlayer_CGUIAsWaves( )
+{
+	//CGUIAsWaves
+	CGUIAsWaves* pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsWaves>();
+	pAs->SetGridSize( CGUIIntSize(30, 30) );
+	pAs->SetWavesInfo( 1, 30, true, true );
+	return pAs;
+}
+
+CGUIAs* Fun_GenerateAsPlayer_CGUIAsTwirl( )
+{
+	//CGUIAsTwirl
+	CGUIAsTwirl* pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsTwirl>();
+	pAs->SetGridSize( CGUIIntSize(30, 30) );
+	pAs->SetTwirlInfo( CGUIVector2(200,200), 2, 30 );
+	return pAs;
+}
+
+void CMyCanvasLayer_DrawWidget::RegisterAsPlayer()
+{
+	m_vecAsPlayers.push_back( Fun_GenerateAsPlayer_CGUIAsPageTurn3D );
+	m_vecAsPlayers.push_back( Fun_GenerateAsPlayer_CGUIAsWaves3D );
+	m_vecAsPlayers.push_back( Fun_GenerateAsPlayer_CGUIAsShaky3D );
+	m_vecAsPlayers.push_back( Fun_GenerateAsPlayer_CGUIAsShakyTiles3D );
+	m_vecAsPlayers.push_back( Fun_GenerateAsPlayer_CGUIAsShatteredTiles3D );
+	m_vecAsPlayers.push_back( Fun_GenerateAsPlayer_CGUIAsShuffleTiles );
+	m_vecAsPlayers.push_back( Fun_GenerateAsPlayer_CGUIAsFadeOutTRTiles );
+	m_vecAsPlayers.push_back( Fun_GenerateAsPlayer_CGUIAsFadeOutBLTiles );
+	m_vecAsPlayers.push_back( Fun_GenerateAsPlayer_CGUIAsFadeOutUpTiles );
+	m_vecAsPlayers.push_back( Fun_GenerateAsPlayer_CGUIAsFadeOutDownTiles );
+	m_vecAsPlayers.push_back( Fun_GenerateAsPlayer_CGUIAsTurnOffTiles );
+	m_vecAsPlayers.push_back( Fun_GenerateAsPlayer_CGUIAsWavesTiles3D );
+	m_vecAsPlayers.push_back( Fun_GenerateAsPlayer_CGUIAsJumpTiles3D );
+	m_vecAsPlayers.push_back( Fun_GenerateAsPlayer_CGUIAsSplitRows );
+	m_vecAsPlayers.push_back( Fun_GenerateAsPlayer_CGUIAsSplitCols );
+	m_vecAsPlayers.push_back( Fun_GenerateAsPlayer_CGUIAsFlipX3D );
+	m_vecAsPlayers.push_back( Fun_GenerateAsPlayer_CGUIAsFlipY3D );
+	m_vecAsPlayers.push_back( Fun_GenerateAsPlayer_CGUIAsLens3D );
+	m_vecAsPlayers.push_back( Fun_GenerateAsPlayer_CGUIAsRipple3D );
+	m_vecAsPlayers.push_back( Fun_GenerateAsPlayer_CGUIAsLiquid );
+	m_vecAsPlayers.push_back( Fun_GenerateAsPlayer_CGUIAsWaves );
+	m_vecAsPlayers.push_back( Fun_GenerateAsPlayer_CGUIAsTwirl );
+
 }
 //------------------------------------------------------------------------------
 

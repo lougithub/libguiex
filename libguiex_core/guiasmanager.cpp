@@ -162,14 +162,29 @@ namespace guiex
 		REGISTER_AS( CGUIAsWaves3D );
 		REGISTER_AS( CGUIAsPageTurn3D );
 		REGISTER_AS( CGUIAsShaky3D );
+		REGISTER_AS( CGUIAsFlipX3D );
+		REGISTER_AS( CGUIAsFlipY3D );
+		REGISTER_AS( CGUIAsLens3D );
+		REGISTER_AS( CGUIAsRipple3D );
+		REGISTER_AS( CGUIAsLiquid );
+		REGISTER_AS( CGUIAsWaves );
+		REGISTER_AS( CGUIAsTwirl );
+		
 
 		//tiled grid 3d
 		REGISTER_AS( CGUIAsShakyTiles3D );
 		REGISTER_AS( CGUIAsShatteredTiles3D );
 		REGISTER_AS( CGUIAsShuffleTiles );
 		REGISTER_AS( CGUIAsFadeOutTRTiles );
+		REGISTER_AS( CGUIAsFadeOutBLTiles );
+		REGISTER_AS( CGUIAsFadeOutUpTiles );
+		REGISTER_AS( CGUIAsFadeOutDownTiles );
+		REGISTER_AS( CGUIAsTurnOffTiles );
+		REGISTER_AS( CGUIAsWavesTiles3D );
+		REGISTER_AS( CGUIAsJumpTiles3D );
+		REGISTER_AS( CGUIAsSplitRows );
+		REGISTER_AS( CGUIAsSplitCols );
 		
-
 #undef REGISTER_AS
 	}
 	//------------------------------------------------------------------------------

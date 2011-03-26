@@ -1,13 +1,13 @@
 
 /** 
-* @file guiwgttilemap.h
+* @file guiwgttiledmap.h
 * @brief used to render tile map
 * @author ken
 * @date 2011-01-26
 */
 
-#ifndef __GUI_WGTTILEMAP_20110126_H__
-#define __GUI_WGTTILEMAP_20110126_H__
+#ifndef __GUI_WGTTILEDMAP_20110126_H__
+#define __GUI_WGTTILEDMAP_20110126_H__
 
 //============================================================================//
 // include
@@ -20,7 +20,7 @@
 //============================================================================// 
 namespace guiex
 {
-	class CGUITileMap;
+	class CGUITiledMap;
 }
 
 //============================================================================//
@@ -29,40 +29,40 @@ namespace guiex
 namespace guiex
 {
 	/**
-	* @class CGUIWgtTileMap
+	* @class CGUIWgtTiledMap
 	*/
-	class GUIEXPORT CGUIWgtTileMap : public CGUIWidget
+	class GUIEXPORT CGUIWgtTiledMap : public CGUIWidget
 	{
 	public:
-		typedef std::vector<std::vector<uint32> > TTileMapData; //row<column>
+		typedef std::vector<std::vector<uint32> > TTiledMapData; //row<column>
 
 	public:
-		CGUIWgtTileMap( const CGUIString& rName, const CGUIString& rSceneName );
-		virtual ~CGUIWgtTileMap();
+		CGUIWgtTiledMap( const CGUIString& rName, const CGUIString& rSceneName );
+		virtual ~CGUIWgtTiledMap();
 
 		virtual int32 GenerateProperty( CGUIProperty& rProperty );
 		virtual void ProcessProperty( const CGUIProperty& rProperty);
 
 
 	protected:
-		CGUIWgtTileMap( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
-		void InitTileMap();
+		CGUIWgtTiledMap( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
+		void InitTiledMap();
 
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 		virtual void OnDestroy();
 
-		void SetTileMap( const CGUIString& rTileMapName );
-		void SetTileMap( class CGUITileMap* pTileMap );
+		void SetTiledMap( const CGUIString& rTiledMapName );
+		void SetTiledMap( class CGUITiledMap* pTiledMap );
 
 	protected:
-		CGUITileMap* m_pTileMap;
+		CGUITiledMap* m_pTiledMap;
 
 	protected:
-		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtTileMap);
+		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtTiledMap);
 	};
 
 
 }//namespace guiex
 
-#endif //__GUI_WGTTILEMAP_20110126_H__
+#endif //__GUI_WGTTILEDMAP_20110126_H__
 
