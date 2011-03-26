@@ -38,11 +38,14 @@ if( APPLE )
 
     set( CMAKE_OSX_SYSROOT "${IPHONE_SDK}" )
 	set( XCODE_ATTRIBUTE_SDKROOT "${IPHONE_SDK}" )
+	#set( XCODE_ATTRIBUTE_SDKROOT "$(ARCHS_STANDARD_32_BIT)" )
 	set( XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "iPad" )
 	set( CMAKE_OSX_ARCHITECTURES "$(ARCHS_STANDARD_32_BIT)" )
 	set( CMAKE_OSX_DEPLOYMENT_TARGET "")
 	set( CMAKE_EXE_LINKER_FLAGS "-framework Foundation -framework CoreGraphics -framework QuartzCore -framework UIKit -framework OpenGLES -framework OpenAL -lz")
 	set( MACOSX_BUNDLE_GUI_IDENTIFIER "com.yourcompany.\${PRODUCT_NAME:rfc1034identifier}")
+	
+	#link_directories(\${HOME}/\${SDKROOT}/lib)
 
 	add_definitions(-fno-regmove)
 	add_definitions(-Wno-reorder)

@@ -19,14 +19,19 @@ endmacro()
 
 
 macro( macro_copy_resource_mac targetname source )
-	set( TARGET_DIR "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Debug/${target_name}.app/" )
+	set( TARGET_DIR "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIGURATION>/${target_name}.app/" )
+	#add_custom_command(
+	#	TARGET ${target_name} 
+	#	POST_BUILD 
+	#	COMMAND ln
+	#	ARGS -fs ${source} ${TARGET_DIR}
+	#	COMMENT "copying resource from ${source} to ${TARGET_DIR}"
+	#	)
+
 	add_custom_command(
 		TARGET ${target_name} 
 		POST_BUILD 
-		COMMAND ln
-		ARGS -fs ${source} ${TARGET_DIR}
-		COMMENT "copying resource from ${source} to ${TARGET_DIR}"
-
+		COMMAND /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks ${source} ${TARGET_DIR}
 		)
 endmacro()
 

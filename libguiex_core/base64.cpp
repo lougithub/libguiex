@@ -11,7 +11,7 @@ unsigned char alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
 int _base64Decode( const unsigned char *input, unsigned int input_len, unsigned char *output, unsigned int *output_len )
 {
     char inalphabet[256], decoder[256];
-    int i, bits, c, char_count, errors = 0;
+    int i, bits, c=0, char_count, errors = 0;
 	unsigned int input_idx = 0;
 	unsigned int output_idx = 0;
 
