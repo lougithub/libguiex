@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <libguiex_project>
-	<property name="tilemap" type="Title" />
+	<property name="tiledmap" type="Title" />
 	<property name="common.uip" type="Dependency"/>
 	<property name="sample1.xml" type="WidgetFile" />
 	<property name="resource.xml" type="ResourceFile" />

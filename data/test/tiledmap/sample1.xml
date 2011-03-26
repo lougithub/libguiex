@@ -1,5 +1,5 @@
 <guiex>
-    <property name="tilemap_1" type="CGUIWidgetDefine" value="CGUIWgtTileMap">
+    <property name="tiledmap_1" type="CGUIWidgetDefine" value="CGUIWgtTiledMap">
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="0,0" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
@@ -24,7 +24,7 @@
         <property name="clip_children" type="bool" value="false" />
         <property name="open_with_parent" type="bool" value="true" />
         <property name="response_update_event" type="bool" value="false" />
-        <property name="tilemap" type="CGUITileMap" value="tilemap_desert" />
+        <property name="tiledmap" type="CGUITiledMap" value="tiledmap_desert" />
         <property name="response_parentsizechange_event" type="bool" value="false" />
         <property name="textinfo" type="CGUIStringInfo">
             <property name="size" type="uint16" value="16" />
