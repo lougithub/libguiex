@@ -185,19 +185,19 @@ namespace guiex
 		{
 			// bottom-left vertex:
 			quad->bl.vertices.x = rNewPos.x - size_2;
-			quad->bl.vertices.y = rNewPos.y - size_2;
+			quad->bl.vertices.y = rNewPos.y + size_2;
 
 			// bottom-right vertex:
 			quad->br.vertices.x = rNewPos.x + size_2;
-			quad->br.vertices.y = rNewPos.y - size_2;
+			quad->br.vertices.y = rNewPos.y + size_2;
 
 			// top-left vertex:
 			quad->tl.vertices.x = rNewPos.x - size_2;
-			quad->tl.vertices.y = rNewPos.y + size_2;
+			quad->tl.vertices.y = rNewPos.y - size_2;
 
 			// top-right vertex:
 			quad->tr.vertices.x = rNewPos.x + size_2;
-			quad->tr.vertices.y = rNewPos.y + size_2;				
+			quad->tr.vertices.y = rNewPos.y - size_2;				
 		}
 	}
 	//------------------------------------------------------------------------------

@@ -54,6 +54,7 @@ guiex::int32 CGUIFrameworkTest::InitializeGame( )
 {	
 	CGUISceneManager::Instance()->RegisterScenesFromDir( "/", ".uip" );
 	CGUISceneManager::Instance()->LoadResources( "common.uip" );
+	CGUISceneManager::Instance()->LoadWidgets( "common.uip" );
 
 	//create empty node for widget system
 	m_pWidgetRoot = CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtEmptyNode>( CGUIUtility::GenerateWidgetName(), "testproject");
@@ -70,8 +71,9 @@ guiex::int32 CGUIFrameworkTest::InitializeGame( )
 	CreateBox2dSample_joints();
 
 	CGUIWidgetManager::Instance()->AddPage( m_pWidgetRoot );
-	GSystem->GetUICanvas()->OpenUIPage( m_pWidgetRoot );
-
+	GSystem->GetUICanvas()->OpenUIPage( m_pWidgetRoot );	
+	CGUIWidget* pWidget = CGUIWidgetManager::Instance()->GetPage( "utility.xml", "common.uip" );
+	GSystem->GetUICanvas()->OpenUIPage(pWidget);	
 	return 0;
 }
 

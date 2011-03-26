@@ -207,7 +207,7 @@ namespace guiex
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
-		glEnable(GL_CULL_FACE);
+		//glEnable(GL_CULL_FACE);
 
 		// Set up various GL state.
 		glEnableClientState(GL_VERTEX_ARRAY);
