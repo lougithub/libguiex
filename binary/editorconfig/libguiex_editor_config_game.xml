@@ -8,9 +8,9 @@
 		</page>
 	</widget>
 
-	<widget type="CGUIWgtTileMap" inherit="CGUIWidget">
+	<widget type="CGUIWgtTiledMap" inherit="CGUIWidget">
 		<page name="Appearance">
-			<property name="tilemap" type="CGUITileMap" value="" category="tilemap_category"/>
+			<property name="tiledmap" type="CGUITiledMap" value="" category="tiledmap_category"/>
 		</page>
 	</widget>
 </config>
