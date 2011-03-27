@@ -371,16 +371,16 @@ namespace guiex
 		const CGUIVector2& step = GetTiledGrid3D()->GetStep();
 
 		coords.bl.x += (step.x / 2) * (1.0f - distance);
-		coords.bl.y += (step.y / 2) * (1.0f - distance);
+		coords.bl.y -= (step.y / 2) * (1.0f - distance);
 
 		coords.br.x -= (step.x / 2) * (1.0f - distance);
-		coords.br.y += (step.y / 2) * (1.0f - distance);
+		coords.br.y -= (step.y / 2) * (1.0f - distance);
 
 		coords.tl.x += (step.x / 2) * (1.0f - distance);
-		coords.tl.y -= (step.y / 2) * (1.0f - distance);
+		coords.tl.y += (step.y / 2) * (1.0f - distance);
 
 		coords.tr.x -= (step.x / 2) * (1.0f - distance);
-		coords.tr.y -= (step.y / 2) * (1.0f - distance);
+		coords.tr.y += (step.y / 2) * (1.0f - distance);
 
 		SetTile( uX, uY, coords );
 	}
@@ -714,21 +714,24 @@ namespace guiex
 
 		uint32 nSceneWidth = GetTiledGrid3D()->GetSceneWidth();
 		real fPercent = GetPercent();
-		for( uint32 j = 0; j < m_aGridSize.GetHeight(); j++ )
+		for( uint32 i = 0; i < m_aGridSize.GetWidth(); i++ )
 		{
-			SR_V3F_Quad coords = GetOriginalTile(0,j);
-			real direction = 1;
-			if ( (j % 2 ) == 0 )
+			for( uint32 j = 0; j < m_aGridSize.GetHeight(); j++ )
 			{
-				direction = -1;
+				SR_V3F_Quad coords = GetOriginalTile(i,j);
+				real direction = 1;
+				if ( (j % 2 ) == 0 )
+				{
+					direction = -1;
+				}	
+
+				coords.bl.x += direction * nSceneWidth * fPercent;
+				coords.br.x += direction * nSceneWidth * fPercent;
+				coords.tl.x += direction * nSceneWidth * fPercent;
+				coords.tr.x += direction * nSceneWidth * fPercent;
+
+				SetTile( i, j, coords );
 			}
-
-			coords.bl.x += direction * nSceneWidth * fPercent;
-			coords.br.x += direction * nSceneWidth * fPercent;
-			coords.tl.x += direction * nSceneWidth * fPercent;
-			coords.tr.x += direction * nSceneWidth * fPercent;
-
-			SetTile( 0, j, coords );
 		}
 
 	}
@@ -759,19 +762,22 @@ namespace guiex
 		real fPercent = GetPercent();
 		for( uint32 i = 0; i < m_aGridSize.GetWidth(); i++ )
 		{
-			SR_V3F_Quad coords = GetOriginalTile(i,0);
-			real direction = 1;
-			if ( (i % 2 ) == 0 )
+			for( uint32 j = 0; j < m_aGridSize.GetHeight(); j++ )
 			{
-				direction = -1;
+				SR_V3F_Quad coords = GetOriginalTile(i,j);
+				real direction = 1;
+				if ( (i % 2 ) == 0 )
+				{
+					direction = -1;
+				}
+				
+				coords.bl.y += direction * nSceneHeight * fPercent;
+				coords.br.y += direction * nSceneHeight * fPercent;
+				coords.tl.y += direction * nSceneHeight * fPercent;
+				coords.tr.y += direction * nSceneHeight * fPercent;
+
+				SetTile( i,j, coords );
 			}
-
-			coords.bl.y += direction * nSceneHeight * fPercent;
-			coords.br.y += direction * nSceneHeight * fPercent;
-			coords.tl.y += direction * nSceneHeight * fPercent;
-			coords.tr.y += direction * nSceneHeight * fPercent;
-
-			SetTile( i,0, coords );
 		}
 
 	}
