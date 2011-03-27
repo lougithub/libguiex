@@ -11,6 +11,7 @@
 #include "guicamera.h"
 #include "guisystem.h"
 #include "guimath.h"
+#include "guiintsize.h"
 
 
 //============================================================================//
@@ -18,6 +19,13 @@
 //============================================================================// 
 namespace guiex
 {
+	CGUIVector3 CGUICamera::ms_vEye = CGUIVector3( 0.0f,0.0f, -1.0f );
+	CGUIVector3 CGUICamera::ms_vCenter = CGUIVector3( 0.0f,0.0f, 0.0f );
+	CGUIVector3 CGUICamera::ms_vUp = CGUIVector3( 0.0f,-1.0f,0.0f );
+	real CGUICamera::ms_fFov = 60.0f;
+	real CGUICamera::ms_fAspectRatio = 1.0f;
+	real CGUICamera::ms_fNearPlane = 0.1f;
+	real CGUICamera::ms_fFarPlane = 10000;
 	//------------------------------------------------------------------------------
 	CGUICamera::CGUICamera()
 		:m_bDirty(true)
@@ -27,7 +35,7 @@ namespace guiex
 		,m_fFov( 60.0f )
 		,m_fAspectRatio( 1.0f )
 		,m_fNearPlane( 0.1f )
-		,m_fFarPlane( 100000 )
+		,m_fFarPlane( 10000 )
 	{
 
 	}

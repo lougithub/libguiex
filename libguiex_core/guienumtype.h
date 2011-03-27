@@ -125,6 +125,16 @@ namespace guiex
 		eMatrixMode_MODELVIEW,
 	};
 
+	enum EScreenOrientation
+	{
+		eDeviceOrientation_Portrait = 0,
+		eDeviceOrientation_PortraitUpsideDown,
+		eDeviceOrientation_LandscapeLeft,
+		eDeviceOrientation_LandscapeRight,
+		eDeviceOrientation_FaceUp,
+		eDeviceOrientation_FaceDown,
+	};
+
 	//enum EBufferMode
 	//{
 	//	eBufferMode_Back = 0,

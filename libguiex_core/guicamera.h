@@ -11,7 +11,17 @@
 //============================================================================//
 // include
 //============================================================================// 
+#include "guibase.h"
 #include "guivector3.h"
+
+
+//============================================================================//
+// include
+//============================================================================// 
+namespace guiex
+{
+	class CGUIIntSize;
+}
 
 //============================================================================//
 // class
@@ -26,6 +36,8 @@ namespace guiex
 		const CGUICamera& operator=( const CGUICamera& rOther );
 
 	public:
+		static void SetDefaultValue( const CGUIIntSize& rScreenSize, EScreenOrientation eScreenOrientation );
+
 		void Restore();
 
 		void SetEye( real eyeX, real eyeY, real eyeZ );
@@ -63,6 +75,16 @@ namespace guiex
 		real m_fFarPlane;
 
 		bool m_bDirty;
+
+	private:
+		static CGUIVector3 ms_vEye;
+		static CGUIVector3 ms_vCenter;
+		static CGUIVector3 ms_vUp;
+
+		static real ms_fFov;
+		static real ms_fAspectRatio;
+		static real ms_fNearPlane;
+		static real ms_fFarPlane;
 	};
 
 }//namespace guiex

@@ -170,7 +170,7 @@
 {
 	UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
 	
-	m_pEngine->OnRotate( DeviceOrientation(orientation) );
+	m_pEngine->OnRotate( EDeviceOrientation(orientation) );
 	
 	[self drawView:nil];
 }

@@ -24,6 +24,7 @@
 namespace guiex
 {
 	class CGUISize;
+	class CGUIIntSize;
 	class CGUIRect;
 	class CGUITextureImp;
 	class CGUITexture;
@@ -195,6 +196,8 @@ namespace guiex
 
 		virtual void EnableClip( bool bEnable ) = 0;
 		virtual bool IsEnableClip( ) const = 0;
+
+		virtual void OnScreenSizeChange( const CGUIIntSize& rSize ) = 0;
 
 	protected:
 		friend class CGUITextureImp;

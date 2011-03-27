@@ -229,7 +229,6 @@ void idleCB()
 void reshapeCB(int width, int height)
 {
 	GSystem->SetScreenSize(width,height);
-	glViewport(0, 0, width, height);
 }
 //------------------------------------------------------------------------------
 void keyUpSpecialCB(int key, int x, int y)

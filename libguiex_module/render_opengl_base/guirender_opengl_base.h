@@ -129,6 +129,9 @@ namespace guiex
 
 		virtual void DeleteSelf();
 
+		virtual void OnScreenSizeChange( const CGUIIntSize& rSize );
+
+
 	protected:
 		IGUIRender_opengl_base( const char* szModuleName );
 

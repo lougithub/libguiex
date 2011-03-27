@@ -216,12 +216,16 @@ namespace guiex
 
 		m_nCurrentStencilRef = 0;
 
-		const CGUIIntSize& rSize = GSystem->GetScreenSize();
-		glViewport(0,0,rSize.GetWidth(),rSize.GetHeight());
+		OnScreenSizeChange( GSystem->GetScreenSize() );
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void	IGUIRender_opengl_base::DeleteSelf()
+	void IGUIRender_opengl_base::OnScreenSizeChange( const CGUIIntSize& rSize )
+	{
+		glViewport(0,0,rSize.GetWidth(),rSize.GetHeight());
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_base::DeleteSelf()
 	{
 		delete this;
 	}

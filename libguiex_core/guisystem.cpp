@@ -508,6 +508,13 @@ namespace guiex
 
 		//update ui page
 		m_pCanvasLayerManager->Refresh();
+
+		//notify render
+		IGUIInterfaceRender* pRender = CGUIInterfaceManager::Instance()->GetInterfaceRender();
+		if( pRender )
+		{
+			pRender->OnScreenSizeChange( rScreenSize );
+		}
 	}
 	//------------------------------------------------------------------------------
 	/**

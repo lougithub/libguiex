@@ -22,7 +22,7 @@ public:
 	virtual ~CLibGuiexEngine();
 	virtual void Initialize( int width, int height, const char* szDataPath );
 	virtual void Update( float deltaTime );
-	virtual void OnRotate( DeviceOrientation newOrientation );
+	virtual void OnRotate( EDeviceOrientation newOrientation );
 	virtual void OnFingerUp(float x, float y);
     virtual void OnFingerDown(float x,float y);
     virtual void OnFingerMove(float oldx, float oldy, float x, float y);
@@ -62,6 +62,8 @@ void CLibGuiexEngine::Initialize( int width, int height, const char* szDataPath 
 {
 	m_pFramework = CreateFramework();
 	m_pFramework->Initialize( CGUIIntSize( width, height ), (CGUIString(szDataPath) + "/test/").c_str() );
+
+    OnRotate(eDeviceOrientation_Portrait);
 }
 
 
@@ -71,7 +73,7 @@ void CLibGuiexEngine::Update( float deltaTime )
 	m_pFramework->Render();
 }
 
-void CLibGuiexEngine::OnRotate( DeviceOrientation newOrientation )
+void CLibGuiexEngine::OnRotate( EDeviceOrientation newOrientation )
 {
 }
 
