@@ -23,9 +23,13 @@ int32 CGUIFrameworkTest::InitializeGame()
 	CGUISceneManager::Instance()->RegisterScenesFromDir("/", ".uip");
 	CGUISceneManager::Instance()->LoadResources( "particle2d.uip" );	
 	CGUISceneManager::Instance()->LoadWidgets( "particle2d.uip" );
+	CGUISceneManager::Instance()->LoadResources( "common.uip" );	
+	CGUISceneManager::Instance()->LoadWidgets( "common.uip" );
 	CGUIWidget* pWidget = NULL;
 	pWidget = CGUIWidgetManager::Instance()->GetPage( "particle2d.xml", "particle2d.uip" );
 	GSystem->GetUICanvas()->OpenUIPage(pWidget);		
+	pWidget = CGUIWidgetManager::Instance()->GetPage( "utility.xml", "common.uip" );
+	GSystem->GetUICanvas()->OpenUIPage(pWidget);	
 	return 0;
 }
 
