@@ -20,4 +20,5 @@ set( inc_list
 #    message( ${F} )
 #endforeach( F )
 add_library( ${target_name} STATIC ${src_list} ${inc_list}  )
+set_target_properties(${target_name} PROPERTIES FOLDER external)
 

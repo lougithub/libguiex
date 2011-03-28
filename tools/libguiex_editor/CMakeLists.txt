@@ -89,3 +89,6 @@ if( WIN32 )
 	macro_set_target_link_libraries_wx_win32( ${target_name} )
         
 endif()
+
+set_target_properties(${target_name} PROPERTIES FOLDER editor)
+

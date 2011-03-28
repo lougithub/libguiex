@@ -39,3 +39,6 @@ if( WIN32 )
 
         
 endif()
+
+set_target_properties(${target_name} PROPERTIES FOLDER example)
+

@@ -19,4 +19,5 @@ set_target_properties(
 	COMPILE_DEFINITIONS GLEW_STATIC
 	)
 
+set_target_properties(${target_name} PROPERTIES FOLDER external)
 

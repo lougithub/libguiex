@@ -141,3 +141,6 @@ else()
 	message( FATAL_ERROR "unsupport platform" )
 
 endif()
+
+set_target_properties(${target_name} PROPERTIES FOLDER external)
+

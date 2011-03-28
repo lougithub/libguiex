@@ -85,3 +85,5 @@ include_directories( ../lib )
 include_directories( "${PROJECT_SOURCE_DIR}/external/libogg/include" )
 add_library( ${target_name} STATIC ${all_list}  )
 
+set_target_properties(${target_name} PROPERTIES FOLDER external)
+

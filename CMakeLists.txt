@@ -6,7 +6,7 @@ mark_as_advanced( CMAKE_BACKWARDS_COMPATIBILITY )
 
 # allow more human readable "if then else" constructs
 set( CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS true )
-
+set_property(GLOBAL PROPERTY USE_FOLDERS On)
 project( libguiex )
 
 

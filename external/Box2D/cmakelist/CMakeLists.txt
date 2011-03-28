@@ -126,3 +126,5 @@ add_library( ${target_name} STATIC
     ${BOX2D_Collision_HDRS}
     )
 
+set_target_properties(${target_name} PROPERTIES FOLDER external)
+

@@ -131,6 +131,7 @@ endif( WIN32 )
 # modify file list here --end--
 
 add_library( ${target_name} STATIC ${${target_name}_SRCS} )
+set_target_properties(${target_name} PROPERTIES FOLDER library)
 add_dependencies( ${target_name} libguiex_core )
 
 

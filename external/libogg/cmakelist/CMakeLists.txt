@@ -14,3 +14,5 @@ set( inc_list
 include_directories( ../include )
 add_library( ${target_name} STATIC ${src_list} ${inc_list}  )
 
+set_target_properties(${target_name} PROPERTIES FOLDER external)
+

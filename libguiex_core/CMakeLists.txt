@@ -358,4 +358,5 @@ if( WIN32 )
 endif()
 include_directories( "${PROJECT_SOURCE_DIR}/external/tinyxml" )
 add_library( ${target_name} STATIC ${${target_name}_SRCS} )
+set_target_properties(${target_name} PROPERTIES FOLDER library)
 

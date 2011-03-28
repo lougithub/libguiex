@@ -37,7 +37,5 @@ set(ZLIB_SRCS
 
 include_directories( ../ )
 add_library(${target_name} STATIC ${ZLIB_SRCS} ${ZLIB_PUBLIC_HDRS} ${ZLIB_PRIVATE_HDRS})
-
-
-
+set_target_properties(${target_name} PROPERTIES FOLDER external)
 
