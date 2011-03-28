@@ -13,6 +13,7 @@
 //============================================================================// 
 #include "guibase.h"
 #include "guisize.h"
+#include "guireference.h"
 
 //============================================================================//
 // declare
@@ -31,7 +32,7 @@ namespace guiex
 	* @class CGUITexture
 	* @brief abstract class of texture
 	*/
-	class GUIEXPORT CGUITexture
+	class GUIEXPORT CGUITexture : public CGUIReference
 	{
 	public:
 		uint16 GetWidth(void) const;
@@ -48,15 +49,6 @@ namespace guiex
 		}
 
 		void CopySubImage(uint32 nX, uint32 nY, uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat, uint8* pBuffer);
-
-		/// Increments the Reference count.
-		void Reference() 
-		{ 
-			++m_nRefCount;
-		}
-
-		// Decrements the Referent count.
-		void Unreference();
 
 		void SetBottomUp( bool bIsBottomUp );
 		bool IsBottomUp( ) const;
@@ -76,12 +68,6 @@ namespace guiex
 		int32 SaveToMemory();
 		int32 LoadFromMemory();
 		void FreeMemory();
-
-		// Returns the current reference count.
-		uint16 RefCount() const 
-		{ 
-			return m_nRefCount; 
-		}
 
 		/// set texture type, used by texture manager
 		void SetTextureType(uint8 nType)
@@ -112,7 +98,6 @@ namespace guiex
 
 		uint8 m_nType; //texture type.
 
-		uint16 m_nRefCount; //reference count
 		bool m_bIsBottomUp;
 	};
 

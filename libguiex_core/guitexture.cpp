@@ -29,14 +29,13 @@ namespace guiex
 		:m_pTextureImp(NULL)
 		,m_pDumpMemory(NULL)
 		,m_nType(0)
-		,m_nRefCount(0)
 		,m_bIsBottomUp(false)
 	{
 	}
 	//------------------------------------------------------------------------------
 	CGUITexture::~CGUITexture()
 	{
-		GUI_ASSERT( m_nRefCount==0, "texture is still referenced");
+		GUI_ASSERT( GetRefCount()==0, "texture is still referenced");
 
 		DestoryTextureImplement();
 		FreeMemory();
@@ -221,12 +220,6 @@ namespace guiex
 		GUI_ASSERT(m_pDumpMemory, "no dump memory here");
 
 		return CreateTextureByMemory(m_pDumpMemory, m_aDumpTextureWidth, m_aDumpTextureHeight, m_eDumpPixelFormat);
-	}
-	//------------------------------------------------------------------------------
-	void CGUITexture::Unreference()
-	{
-		GUI_ASSERT(m_nRefCount>0, "reference count is zero now, can't be unreference more.");
-		--m_nRefCount;
 	}
 	//------------------------------------------------------------------------------
 	void CGUITexture::SetBottomUp( bool bIsBottomUp )

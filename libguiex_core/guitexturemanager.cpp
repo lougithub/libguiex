@@ -78,13 +78,13 @@ namespace guiex
 				return NULL;
 			}
 			m_aMapTexture.insert( std::make_pair( rImageName,  pTexture ));
-			pTexture->Reference();
+			pTexture->RefRetain();
 			return pTexture;
 		}
 		else
 		{
 			//return a exist texture
-			itorFind->second->Reference();
+			itorFind->second->RefRetain();
 			return itorFind->second;
 		}
 	}
@@ -106,7 +106,7 @@ namespace guiex
 			}
 		}
 
-		m_pDefaultTexture->Reference();
+		m_pDefaultTexture->RefRetain();
 		return m_pDefaultTexture;
 	}
 	//------------------------------------------------------------------------------
@@ -126,7 +126,7 @@ namespace guiex
 			throw CGUIException("[CGUITextureManager::CreateTexture]: failed to load texture by given size!");
 			return NULL;
 		}
-		pTexture->Reference();
+		pTexture->RefRetain();
 		m_aSetTexture.insert(pTexture);
 		return pTexture;
 	}
@@ -148,7 +148,7 @@ namespace guiex
 			throw CGUIException("[CGUITextureManager::CreateTexture]: failed to load texture from memory!");
 			return NULL;
 		}
-		pTexture->Reference();
+		pTexture->RefRetain();
 		m_aSetTexture.insert(pTexture);
 		return pTexture;
 	}
@@ -165,8 +165,8 @@ namespace guiex
 				//default texture
 				if( pTexture == m_pDefaultTexture )
 				{
-					pTexture->Unreference();
-					if( pTexture->RefCount() == 0)
+					pTexture->RefRelease();
+					if( pTexture->GetRefCount() == 0)
 					{
 						//real delete it now
 						delete pTexture;
@@ -186,8 +186,8 @@ namespace guiex
 				{
 					if( itor->second == pTexture)
 					{
-						pTexture->Unreference();
-						if( pTexture->RefCount() == 0)
+						pTexture->RefRelease();
+						if( pTexture->GetRefCount() == 0)
 						{
 							//real delete it now
 							delete pTexture;
@@ -205,8 +205,8 @@ namespace guiex
 				TSetTexture::iterator itorSet = m_aSetTexture.find(pTexture);
 				if( itorSet != m_aSetTexture.end())
 				{
-					pTexture->Unreference();
-					if( pTexture->RefCount() == 0)
+					pTexture->RefRelease();
+					if( pTexture->GetRefCount() == 0)
 					{
 						//real delete it now
 						delete pTexture;
