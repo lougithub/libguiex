@@ -26,8 +26,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIParticle2DSystemQuad::CGUIParticle2DSystemQuad( const CGUIString& rName, const CGUIString& rSceneName )
 		:CGUIParticle2DSystem( rName, rSceneName )
-		,quads(NULL)
-		,indices(NULL)
+		,m_pQuads(NULL)
+		,m_pIndices(NULL)
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -43,18 +43,20 @@ namespace guiex
 		}
 
 		// allocating data space
-		quads = (SR_V2F_C4F_T2F_Quad*)calloc( sizeof(quads[0]) * totalParticles, 1 );
-		indices = (uint16*)calloc( sizeof(indices[0]) * totalParticles * 6, 1 );
+		m_pQuads = new SR_V2F_C4F_T2F_Quad[totalParticles];
+		m_pIndices = new uint16[totalParticles * 6];
 
-		if( !quads || !indices ) 
+		if( !m_pQuads || !m_pIndices ) 
 		{
-			if( quads )
+			if( m_pQuads )
 			{
-				free( quads );
+				delete[] m_pQuads;
+				m_pQuads = NULL;
 			}
-			if(indices)
+			if(m_pIndices)
 			{
-				free(indices);
+				delete[] m_pIndices;
+				m_pIndices = NULL;
 			}
 			throw CGUIException(" Particle system: not enough memory");
 			return -1;
@@ -66,11 +68,11 @@ namespace guiex
 
 #if CC_USES_VBO
 		// create the VBO buffer
-		glGenBuffers(1, &quadsID);
+		glGenBuffers(1, &m_pQuadsID);
 
 		// initial binding
-		glBindBuffer(GL_ARRAY_BUFFER, quadsID);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(quads[0])*totalParticles, quads,GL_DYNAMIC_DRAW);	
+		glBindBuffer(GL_ARRAY_BUFFER, m_pQuadsID);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0])*totalParticles, m_pQuads,GL_DYNAMIC_DRAW);	
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 #endif
 
@@ -79,15 +81,15 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIParticle2DSystemQuad::DoUnload()
 	{
-		if( quads )
+		if( m_pQuads )
 		{
-			free(quads);
-			quads = NULL;
+			delete[] m_pQuads;
+			m_pQuads = NULL;
 		}
-		if( indices )
+		if( m_pIndices )
 		{
-			free(indices);
-			indices = NULL;
+			delete[] m_pIndices;
+			m_pIndices = NULL;
 		}
 #if CC_USES_VBO
 		glDeleteBuffers(1, &quadsID);
@@ -102,17 +104,17 @@ namespace guiex
 		for( uint32 i=0; i<totalParticles; i++) 
 		{
 			// bottom-left vertex:
-			quads[i].bl.texCoords.u = rUVRect.m_fLeft;
-			quads[i].bl.texCoords.v = rUVRect.m_fBottom;
+			m_pQuads[i].bl.texCoords.u = rUVRect.m_fLeft;
+			m_pQuads[i].bl.texCoords.v = rUVRect.m_fBottom;
 			// bottom-right vertex:
-			quads[i].br.texCoords.u = rUVRect.m_fRight;
-			quads[i].br.texCoords.v = rUVRect.m_fBottom;
+			m_pQuads[i].br.texCoords.u = rUVRect.m_fRight;
+			m_pQuads[i].br.texCoords.v = rUVRect.m_fBottom;
 			// top-left vertex:
-			quads[i].tl.texCoords.u = rUVRect.m_fLeft;
-			quads[i].tl.texCoords.v = rUVRect.m_fTop;
+			m_pQuads[i].tl.texCoords.u = rUVRect.m_fLeft;
+			m_pQuads[i].tl.texCoords.v = rUVRect.m_fTop;
 			// top-right vertex:
-			quads[i].tr.texCoords.u = rUVRect.m_fRight;
-			quads[i].tr.texCoords.v = rUVRect.m_fTop;
+			m_pQuads[i].tr.texCoords.u = rUVRect.m_fRight;
+			m_pQuads[i].tr.texCoords.v = rUVRect.m_fTop;
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -122,20 +124,20 @@ namespace guiex
 		{
 			const int16 i6 = i*6;
 			const int16 i4 = i*4;
-			indices[i6+0] = (int16) i4+0; //tl
-			indices[i6+1] = (int16) i4+1; //bl
-			indices[i6+2] = (int16) i4+2; //tr
+			m_pIndices[i6+0] = (int16) i4+0; //tl
+			m_pIndices[i6+1] = (int16) i4+1; //bl
+			m_pIndices[i6+2] = (int16) i4+2; //tr
 
-			indices[i6+3] = (int16) i4+3; //br
-			indices[i6+4] = (int16) i4+2; //tr
-			indices[i6+5] = (int16) i4+1; //bl
+			m_pIndices[i6+3] = (int16) i4+3; //br
+			m_pIndices[i6+4] = (int16) i4+2; //tr
+			m_pIndices[i6+5] = (int16) i4+1; //bl
 		}
 	}
 	//------------------------------------------------------------------------------
 	void CGUIParticle2DSystemQuad::UpdateQuadWithParticle( CGUIParticle2D* particle, const CGUIVector2& rNewPos )
 	{
 		// colors
-		SR_V2F_C4F_T2F_Quad *quad = &(quads[particleIdx]);
+		SR_V2F_C4F_T2F_Quad *quad = &(m_pQuads[particleIdx]);
 		ConvGUIColor_2_C4f( particle->color, quad->bl.colors);
 		ConvGUIColor_2_C4f( particle->color, quad->br.colors);
 		ConvGUIColor_2_C4f( particle->color, quad->tl.colors);
@@ -205,7 +207,7 @@ namespace guiex
 	{
 #if CC_USES_VBO
 		glBindBuffer(GL_ARRAY_BUFFER, quadsID);
-		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(quads[0])*particleCount, quads);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(m_pQuads[0])*particleCount, m_pQuads);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 #endif
 	}
@@ -225,8 +227,8 @@ namespace guiex
 
 		pRender->DrawQuads(
 			texture, 
-			quads,
-			indices,
+			m_pQuads,
+			m_pIndices,
 			particleCount );
 
 		if( blendFunc.src != oldBlendFunc.src ||
@@ -236,62 +238,4 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-
-	/*
-	// overriding draw method
-	-(void) draw
-	{	
-	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Unneeded states: -
-
-	glBindTexture(GL_TEXTURE_2D, [texture_ name]);
-
-	#define kQuadSize sizeof(quads[0].bl)
-
-	#if CC_USES_VBO
-	glBindBuffer(GL_ARRAY_BUFFER, quadsID);
-
-	glVertexPointer(2,GL_FLOAT, kQuadSize, 0);
-
-	glColorPointer(4, GL_FLOAT, kQuadSize, (GLvoid*) offsetof(ccV2F_C4F_T2F,colors) );
-
-	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*) offsetof(ccV2F_C4F_T2F,texCoords) );
-	#else // vertex array list
-
-	NSUInteger offset = (NSUInteger) quads;
-
-	// vertex
-	NSUInteger diff = offsetof( ccV2F_C4F_T2F, vertices);
-	glVertexPointer(2,GL_FLOAT, kQuadSize, (GLvoid*) (offset+diff) );
-
-	// color
-	diff = offsetof( ccV2F_C4F_T2F, colors);
-	glColorPointer(4, GL_FLOAT, kQuadSize, (GLvoid*)(offset + diff));
-
-	// tex coords
-	diff = offsetof( ccV2F_C4F_T2F, texCoords);
-	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*)(offset + diff));		
-
-	#endif // ! CC_USES_VBO
-
-	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
-	if( newBlend )
-	glBlendFunc( blendFunc_.src, blendFunc_.dst );
-
-	NSAssert( particleIdx == particleCount, @"Abnormal error in particle quad");
-	glDrawElements(GL_TRIANGLES, particleIdx*6, GL_UNSIGNED_SHORT, indices);
-
-	// restore blend state
-	if( newBlend )
-	glBlendFunc( CC_BLEND_SRC, CC_BLEND_DST );
-
-	#if CC_USES_VBO
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	#endif
-
-	// restore GL default state
-	// -
-	}
-	*/
 }

@@ -75,6 +75,21 @@ void CLibGuiexEngine::Update( float deltaTime )
 
 void CLibGuiexEngine::OnRotate( EDeviceOrientation newOrientation )
 {
+	switch( newOrientation )
+	{
+		case eDeviceOrientation_Portrait:
+			GSystem->SetScreenOrientation( eDeviceOrientation_Portrait );
+			break;
+		case eDeviceOrientation_PortraitUpsideDown:
+			GSystem->SetScreenOrientation( eDeviceOrientation_PortraitUpsideDown );
+			break;
+		case eDeviceOrientation_LandscapeLeft:
+			GSystem->SetScreenOrientation( eDeviceOrientation_LandscapeLeft );
+			break;
+		case eDeviceOrientation_LandscapeRight:
+			GSystem->SetScreenOrientation( eDeviceOrientation_LandscapeRight );
+			break;
+	}
 }
 
 void CLibGuiexEngine::OnFingerUp(float x, float y)

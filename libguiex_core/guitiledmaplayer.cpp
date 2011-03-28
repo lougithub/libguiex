@@ -34,10 +34,6 @@ namespace guiex
 		,m_pTexture( NULL )
 		,minGID( 0 )
 		,maxGID( 0 )
-		//,m_pTexCoordinates
-		//,m_pVertices
-		//,m_pOriginalVertices
-		//,m_pIndices
 	{
 		//check layer index
 		if( m_pOwnerMap->GetMapInfo()->GetLayers().size() <= nLayerIndex )
@@ -62,11 +58,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUITiledMapLayer::~CGUITiledMapLayer()
 	{
-		if( m_pTexture )
-		{
-			CGUITextureManager::Instance()->DestroyTexture(m_pTexture);
-			m_pTexture = NULL;
-		}
+		ClearRenderData();
 	}
 	//------------------------------------------------------------------------------
 	const CGUIString& CGUITiledMapLayer::GetLayerName() const
@@ -146,8 +138,19 @@ namespace guiex
 		return NULL;
 	}
 	//------------------------------------------------------------------------------
+	void CGUITiledMapLayer::ClearRenderData()
+	{
+		if( m_pTexture )
+		{
+			CGUITextureManager::Instance()->DestroyTexture(m_pTexture);
+			m_pTexture = NULL;
+		}
+	}
+	//------------------------------------------------------------------------------
 	int32 CGUITiledMapLayer::InitLayer()
 	{
+		ClearRenderData();
+
 		//update image
 		CGUIString strFullPath = m_pOwnerMap->GetWorkingDir() + m_pTileSetInfo->GetSourceImage();
 		m_pTexture = CGUITextureManager::Instance()->CreateTexture(strFullPath);
@@ -171,7 +174,6 @@ namespace guiex
 		{
 			for( uint32 x=0; x < GetLayerSize().m_uWidth; x++ ) 
 			{
-
 				uint32 pos = x + GetLayerSize().m_uWidth * y;
 				uint32 gid = GetTileGIDs()[ pos ];
 

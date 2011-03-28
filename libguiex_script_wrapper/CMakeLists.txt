@@ -32,6 +32,7 @@ set( ${target_name}_swig_SRCS
 	guiwidget_box2d.i
 	guiwidget_game.i
 	guiwidgetfactory.i
+	guiwidgetmanager.i
 	guiwidgetutility.i
 	guisystem.i
 	)

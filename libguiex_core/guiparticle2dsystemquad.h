@@ -50,8 +50,8 @@ namespace guiex
 		virtual void PostStep();
 
 	protected:
-		SR_V2F_C4F_T2F_Quad *quads; // quads to be rendered
-		uint16 *indices; // indices
+		SR_V2F_C4F_T2F_Quad * m_pQuads; // quads to be rendered
+		uint16 * m_pIndices; // indices
 #if CC_USES_VBO
 		GLuint quadsID;		// VBO id
 #endif

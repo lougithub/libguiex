@@ -175,7 +175,7 @@ namespace guiex
 		GUI_ASSERT( pDlg, "invalid parameter" );
 		GUI_ASSERT( pDlg->GetParent() == false, "the modal dialog shouldn't have a parent");
 
-		if( !CGUIWidgetManager::Instance()->HasPage( pDlg ))
+		if( !CGUIWidgetManager::Instance()->HasDynamicPage( pDlg ))
 		{
 			throw CGUIException( "[CGUIUICanvasLayer::OpenDialog]: the dialog <%s:%s> isn't a page", pDlg->GetSceneName().c_str(), pDlg->GetName().c_str());
 		}
@@ -183,7 +183,7 @@ namespace guiex
 		pDlg->SetParent( NULL );
 
 		TArrayWidget::iterator itor = std::find(m_arrayOpenedDlg.begin(), m_arrayOpenedDlg.end(), pDlg );
-		if( (*itor) == pDlg)
+		if( itor != m_arrayOpenedDlg.end() )
 		{
 			throw CGUIException( "[CGUIUICanvasLayer::OpenDialog]: failed to open dialog<%s:%s>, it has opened!", pDlg->GetSceneName().c_str(), pDlg->GetName().c_str());
 		}
@@ -199,7 +199,7 @@ namespace guiex
 		GUI_ASSERT(pDlg, "invalid parameter");
 
 		TArrayWidget::iterator itor = std::find(m_arrayOpenedDlg.begin(), m_arrayOpenedDlg.end(), pDlg );
-		if( (*itor) == pDlg)
+		if( itor != m_arrayOpenedDlg.end() )
 		{		
 			m_arrayOpenedDlg.erase(itor);
 			pDlg->Close();

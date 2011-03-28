@@ -3,8 +3,6 @@ namespace guiex
 	class CGUISystem
 	{
 	public:
-		static CGUISystem* Instance();
-
 		void SetDrawExtraInfo( bool bDraw );
 		bool IsDrawExtraInfo() const;
 
@@ -30,20 +28,11 @@ namespace guiex
 		void SetScreenOrientation( EScreenOrientation eOrientation );
 		EScreenOrientation GetScreenOrientation( ) const;
 
-
-		//********************************************************
-		//	ui event
-		//********************************************************
-		void SendUIEvent(CGUIEventUI* pEvent );
-		void SendEvent(CGUIEvent* pEvent );
-
-		//********************************************************
-		//	global key event
-		//********************************************************
 		real GetSystemTime() const;
 		int32 GetFPS() const;
 
 		CGUIInterfaceManager* GetInterfaceManager();
+		CGUIWidgetManager* GetWidgetManager();
 
 	protected:
 		CGUISystem();

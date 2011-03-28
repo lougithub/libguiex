@@ -65,6 +65,7 @@ namespace guiex
 
 	protected:
 		const CGUITiledMapTilesetInfo* GetTilesetForLayer() const;
+		void ClearRenderData();
 		int32 InitLayer();
 		int32 AppendTileForGID( uint32 gid, const CGUIIntVector2& pos );
 		CGUIVector2 PositionAt( const CGUIIntVector2& pos );
@@ -87,11 +88,6 @@ namespace guiex
 		uint32 maxGID;
 
 		std::vector<STileData> m_vecTiles;
-		//render info
-		//SR_T2F *m_pTexCoordinates;
-		//SR_V3F_Quad	*m_pVertices;
-		//SR_V3F_Quad	*m_pOriginalVertices;
-		//uint16 *m_pIndices;
 	};
 
 

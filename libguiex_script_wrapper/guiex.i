@@ -35,9 +35,7 @@
 %include	"guiwidget_box2d.i"
 %include	"guiwidgetutility.i"
 %include	"guiwidgetfactory.i"
+%include	"guiwidgetmanager.i"
 %include	"guiuicanvaslayer.i"
 %include	"guisystem.i"
-
-
-
 
