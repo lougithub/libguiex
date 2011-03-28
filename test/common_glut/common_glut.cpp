@@ -21,10 +21,10 @@
 // declare
 //============================================================================// 
 using namespace guiex;
-const int32 g_nScreenWidth = 1024;
-const int32 g_nScreenHeight = 768;
-//const int32 g_nScreenWidth = 640;
-//const int32 g_nScreenHeight = 480;
+//const int32 g_nScreenWidth = 1024;
+//const int32 g_nScreenHeight = 768;
+const int32 g_nScreenWidth = 640;
+const int32 g_nScreenHeight = 480;
 CGUIFrameworkBase* g_pFramework = NULL;
 std::map<int,EKeyCode> g_mapKey_Glut2Guiex;
 CGUITimer g_aOldTimer;

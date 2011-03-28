@@ -89,8 +89,7 @@ CGUIFrameworkBase* CreateFramework( )
 CMyCanvasLayer_DrawWidget::CMyCanvasLayer_DrawWidget( const char* szLayerName )
 :CGUICanvasLayer( szLayerName )
 {
-	m_aCamera.Restore();
-	m_aCamera.SetFov( 45 );
+	m_aCamera.SetOffsetFov( -15 );
 
 	CGUIWidget* pWidget = NULL;
 
@@ -141,23 +140,21 @@ CMyCanvasLayer_DrawRect::CMyCanvasLayer_DrawRect( const char* szLayerName, const
 	m_pAsQueue = CGUIAsManager::Instance()->AllocateResource<CGUIAsInterpolationQueue<CGUIVector3> >();
 	m_pAsQueue->SetLooping( true );
 
-	m_aCamera.Restore();
-
 	switch( m_nMoveCamera )
 	{
 	case 0:
 		{
-			m_aCamera.SetFov( 45 );
+			m_aCamera.SetOffsetFov( -15 );
 
 			CGUIAsInterpolation<CGUIVector3>* pAs1 = CGUIAsManager::Instance()->AllocateResource<CGUIAsInterpolation<CGUIVector3> >();
 			pAs1->SetInterpolationType( eInterpolationType_EaseInOut );
-			pAs1->SetInterpolationValue( m_aCamera.GetEye()+CGUIVector3(-1000,-1000,-1000), m_aCamera.GetEye()+CGUIVector3(1000,1000,1000), 3.0f );
+			pAs1->SetInterpolationValue( CGUIVector3(-1000,-1000,-1000), CGUIVector3(1000,1000,1000), 3.0f );
 			m_pAsQueue->AddItem( pAs1 );
 			pAs1->RefRelease();
 
 			CGUIAsInterpolation<CGUIVector3>* pAs2 = CGUIAsManager::Instance()->AllocateResource<CGUIAsInterpolation<CGUIVector3> >();
 			pAs2->SetInterpolationType( eInterpolationType_EaseInOut );
-			pAs2->SetInterpolationValue( m_aCamera.GetEye()+CGUIVector3(1000,1000,1000), m_aCamera.GetEye()+CGUIVector3(-1000,-1000,-1000), 3.0f );
+			pAs2->SetInterpolationValue( CGUIVector3(1000,1000,1000), CGUIVector3(-1000,-1000,-1000), 3.0f );
 			m_pAsQueue->AddItem( pAs2 );
 			pAs2->RefRelease();
 		}
@@ -165,17 +162,17 @@ CMyCanvasLayer_DrawRect::CMyCanvasLayer_DrawRect( const char* szLayerName, const
 
 	case 1:
 		{
-			m_aCamera.SetFov( 90 );
+			m_aCamera.SetOffsetFov( 30 );
 
 			CGUIAsInterpolation<CGUIVector3>* pAs1 = CGUIAsManager::Instance()->AllocateResource<CGUIAsInterpolation<CGUIVector3> >();
 			pAs1->SetInterpolationType( eInterpolationType_EaseInOut );
-			pAs1->SetInterpolationValue( m_aCamera.GetCenter()+CGUIVector3(-500,0,0), m_aCamera.GetCenter()+CGUIVector3(500,0,0), 3.0f );
+			pAs1->SetInterpolationValue( CGUIVector3(-500,0,0), CGUIVector3(500,0,0), 3.0f );
 			m_pAsQueue->AddItem( pAs1 );
 			pAs1->RefRelease();
 
 			CGUIAsInterpolation<CGUIVector3>* pAs2 = CGUIAsManager::Instance()->AllocateResource<CGUIAsInterpolation<CGUIVector3> >();
 			pAs2->SetInterpolationType( eInterpolationType_EaseInOut );
-			pAs2->SetInterpolationValue( m_aCamera.GetCenter()+CGUIVector3(500,0,0), m_aCamera.GetCenter()+CGUIVector3(-500,0,0), 3.0f );
+			pAs2->SetInterpolationValue( CGUIVector3(500,0,0), CGUIVector3(-500,0,0), 3.0f );
 			m_pAsQueue->AddItem( pAs2 );
 			pAs2->RefRelease();
 		}
@@ -200,10 +197,10 @@ void CMyCanvasLayer_DrawRect::Update( real fDeltaTime )
 	switch( m_nMoveCamera )
 	{
 	case 0:
-		m_aCamera.SetEye( m_pAsQueue->GetCurrentValue());
+		m_aCamera.SetOffsetEye( m_pAsQueue->GetCurrentValue());
 		break;
 	case 1:
-		m_aCamera.SetCenter( m_pAsQueue->GetCurrentValue());
+		m_aCamera.SetOffsetCenter( m_pAsQueue->GetCurrentValue());
 		break;
 	}
 }

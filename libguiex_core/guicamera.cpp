@@ -9,6 +9,7 @@
 // include 
 //============================================================================// 
 #include "guicamera.h"
+#include "guicameramanager.h"
 #include "guisystem.h"
 #include "guimath.h"
 #include "guiintsize.h"
@@ -20,16 +21,19 @@
 //============================================================================// 
 namespace guiex
 {
-	CGUIVector3 CGUICamera::ms_vDefaultEye = CGUIVector3( 0.0f,0.0f, -1.0f );
-	CGUIVector3 CGUICamera::ms_vDefaultCenter = CGUIVector3( 0.0f,0.0f, 0.0f );
-	CGUIVector3 CGUICamera::ms_vDefaultUp = CGUIVector3( 0.0f,-1.0f,0.0f );
-	real CGUICamera::ms_fDefaultFov = 60.0f;
-	real CGUICamera::ms_fDefaultAspectRatio = 1.0f;
-	real CGUICamera::ms_fDefaultNearPlane = 0.1f;
-	real CGUICamera::ms_fDefaultFarPlane = 10000;
 	//------------------------------------------------------------------------------
 	CGUICamera::CGUICamera()
 		:m_bDirty(true)
+		,m_vBaseEye( 0,0,-1 )
+		,m_vBaseCenter( 0,0,0 )
+		,m_vBaseUp( 0,-1,0 )
+		,m_fBaseFov( 60.0f )
+		,m_fBaseAspectRatio( 1.0f )
+		,m_vOffsetEye( 0,0,0 )
+		,m_vOffsetCenter( 0,0,0 )
+		,m_vOffsetUp( 0,0,0 )
+		,m_fOffsetFov( 0.0f )
+		,m_fOffsetAspectRatio( 0.0f )
 		,m_vEye( 0,0,-1 )
 		,m_vCenter( 0,0,0 )
 		,m_vUp( 0,-1,0 )
@@ -38,16 +42,36 @@ namespace guiex
 		,m_fNearPlane( 0.1f )
 		,m_fFarPlane( 10000 )
 	{
-
+		CGUICameraManager::Instance()->GetOnDefaultValueChangedSignal().connect( this, &CGUICamera::OnCameraDefaultValueChanged );
+		Reset();
+		Restore();
 	}
 	//------------------------------------------------------------------------------
 	CGUICamera::CGUICamera( const CGUICamera& rOther )
 	{
 		*this = rOther;
+		CGUICameraManager::Instance()->GetOnDefaultValueChangedSignal().connect( this, &CGUICamera::OnCameraDefaultValueChanged );
+	}
+	//------------------------------------------------------------------------------
+	CGUICamera::~CGUICamera()
+	{
+		CGUICameraManager::Instance()->GetOnDefaultValueChangedSignal().disconnect( this );
 	}
 	//------------------------------------------------------------------------------
 	const CGUICamera& CGUICamera::operator=( const CGUICamera& rOther )
 	{
+		m_vBaseEye = rOther.m_vBaseEye;
+		m_vBaseCenter = rOther.m_vBaseCenter;
+		m_vBaseUp = rOther.m_vBaseUp;
+		m_fBaseFov = rOther.m_fBaseFov;
+		m_fBaseAspectRatio = rOther.m_fBaseAspectRatio;
+
+		m_vOffsetEye = rOther.m_vOffsetEye;
+		m_vOffsetCenter = rOther.m_vOffsetCenter;
+		m_vOffsetUp = rOther.m_vOffsetUp;
+		m_fOffsetFov = rOther.m_fOffsetFov;
+		m_fOffsetAspectRatio = rOther.m_fOffsetAspectRatio;
+
 		m_vEye = rOther.m_vEye;
 		m_vCenter = rOther.m_vCenter;
 		m_vUp = rOther.m_vUp;
@@ -60,157 +84,182 @@ namespace guiex
 		return *this;
 	}
 	//------------------------------------------------------------------------------
-	void CGUICamera::SetDefaultValue( const CGUIIntSize& rRawScreenSize, EScreenOrientation eScreenOrientation )
+	/** sets the camera in the default position */
+	void CGUICamera::Reset()
 	{
-		ms_fDefaultFov = 60.0f;
-		if( rRawScreenSize.GetHeight() == 0 )
-		{
-			ms_fDefaultAspectRatio = 1;
-		}
-		else
-		{
-			ms_fDefaultAspectRatio = rRawScreenSize.GetWidth() / real( rRawScreenSize.GetHeight());
-		}
-
-		real fZDistance = -(rRawScreenSize.GetHeight()/2.0f) / CGUIMath::Tan( CGUIDegree(ms_fDefaultFov/2));
-
-		switch( eScreenOrientation )
-		{
-		case eDeviceOrientation_Portrait:
-			ms_vDefaultCenter.x = rRawScreenSize.GetWidth() / 2.0f;
-			ms_vDefaultCenter.y = rRawScreenSize.GetHeight() / 2.0f;
-			ms_vDefaultCenter.z = 0.0f;
-
-			ms_vDefaultEye.x = ms_vDefaultCenter.x;
-			ms_vDefaultEye.y = ms_vDefaultCenter.y;
-			ms_vDefaultEye.z = fZDistance;
-
-			ms_vDefaultUp.x = 0.0f;
-			ms_vDefaultUp.y = -1.0f;
-			ms_vDefaultUp.z = 0.0f;
-			break;
-		case eDeviceOrientation_PortraitUpsideDown:
-			ms_vDefaultCenter.x = rRawScreenSize.GetWidth() / 2.0f;
-			ms_vDefaultCenter.y = rRawScreenSize.GetHeight() / 2.0f;
-			ms_vDefaultCenter.z = 0.0f;
-
-			ms_vDefaultEye.x = ms_vDefaultCenter.x;
-			ms_vDefaultEye.y = ms_vDefaultCenter.y;
-			ms_vDefaultEye.z = fZDistance;
-
-			ms_vDefaultUp.x = 0.0f;
-			ms_vDefaultUp.y = 1.0f;
-			ms_vDefaultUp.z = 0.0f;
-			break;
-		case eDeviceOrientation_LandscapeLeft:
-			ms_vDefaultCenter.x = rRawScreenSize.GetHeight() / 2.0f;
-			ms_vDefaultCenter.y = rRawScreenSize.GetWidth() / 2.0f;
-			ms_vDefaultCenter.z = 0.0f;
-
-			ms_vDefaultEye.x = ms_vDefaultCenter.x;
-			ms_vDefaultEye.y = ms_vDefaultCenter.y;
-			ms_vDefaultEye.z = fZDistance;
-
-			ms_vDefaultUp.x = 1.0f;
-			ms_vDefaultUp.y = 0.0f;
-			ms_vDefaultUp.z = 0.0f;
-			break;
-		case eDeviceOrientation_LandscapeRight:
-			ms_vDefaultCenter.x = rRawScreenSize.GetHeight() / 2.0f;
-			ms_vDefaultCenter.y = rRawScreenSize.GetWidth() / 2.0f;
-			ms_vDefaultCenter.z = 0.0f;
-
-			ms_vDefaultEye.x = ms_vDefaultCenter.x;
-			ms_vDefaultEye.y = ms_vDefaultCenter.y;
-			ms_vDefaultEye.z = fZDistance;
-
-			ms_vDefaultUp.x = -1.0f;
-			ms_vDefaultUp.y = 0.0f;
-			ms_vDefaultUp.z = 0.0f;
-			break;
-
-		default:
-			throw CGUIException("CGUICamera::SetDefaultValue: unknown screen orientation.");
-			break;
-		}
-
-		ms_fDefaultNearPlane = 0.1f;
-		ms_fDefaultFarPlane = 10000.0f;
+		m_vOffsetEye = CGUIVector3::ZERO;
+		m_vOffsetCenter = CGUIVector3::ZERO;
+		m_vOffsetUp = CGUIVector3::ZERO;
+		m_fOffsetFov = 0.0f;
+		m_fOffsetAspectRatio = 0.0f;
 	}
 	//------------------------------------------------------------------------------
-	/** sets the camera in the default position */
 	void CGUICamera::Restore()
 	{
-		m_vEye = ms_vDefaultEye;
-		m_vCenter = ms_vDefaultCenter;
-		m_vUp = ms_vDefaultUp;
+		CGUICameraManager* pCameraManager = GSystem->GetCameraManager();
 
-		m_fFov = ms_fDefaultFov;
-		m_fAspectRatio = ms_fDefaultAspectRatio;
-		m_fNearPlane = ms_fDefaultNearPlane;
-		m_fFarPlane = ms_fDefaultFarPlane;
-
-		m_bDirty = true;
-	}
-	//------------------------------------------------------------------------------
-	/** sets the eye values in points */
-	void CGUICamera::SetEye( const CGUIVector3& rEye )
-	{
-		SetEye( rEye.x, rEye.y, rEye.z );
-	}
-	//------------------------------------------------------------------------------
-	void CGUICamera::SetEye( real eyeX, real eyeY, real eyeZ )
-	{
-		m_vEye.x = eyeX;
-		m_vEye.y = eyeY;
-		m_vEye.z = eyeZ;
+		SetBaseEye( pCameraManager->GetDefaultEye() );
+		SetBaseCenter( pCameraManager->GetDefaultCenter());
+		SetBaseUp( pCameraManager->GetDefaultUp());
+		SetBaseFov( pCameraManager->GetDefaultFov());
+		SetBaseAspectRatio( pCameraManager->GetDefaultAspectRatio());
+		
+		m_fNearPlane = pCameraManager->GetDefaultNearPlane();
+		m_fFarPlane = pCameraManager->GetDefaultFarPlane();
 
 		m_bDirty = true;
 	}
 	//------------------------------------------------------------------------------
-	/** sets the center values in points */
-	void CGUICamera::SetCenter( const CGUIVector3& rCenter )
+	void CGUICamera::UpdateEye()
 	{
-		SetCenter( rCenter.x, rCenter.y, rCenter.z );
-	}
-	//------------------------------------------------------------------------------
-	void CGUICamera::SetCenter( real centerX, real centerY, real centerZ )
-	{
-		m_vCenter.x = centerX;
-		m_vCenter.y = centerY;
-		m_vCenter.z = centerZ;
-
+		m_vEye = m_vBaseEye + m_vOffsetEye;
 		m_bDirty = true;
 	}
 	//------------------------------------------------------------------------------
-	/** sets the up values */
-	void CGUICamera::SetUp( const CGUIVector3& rUp )
+	void CGUICamera::UpdateCenter()
 	{
-		SetEye( rUp.x, rUp.y, rUp.z );
-	}
-	//------------------------------------------------------------------------------
-	void CGUICamera::SetUp( real upX, real upY, real upZ )
-	{
-		m_vUp.x = upX;
-		m_vUp.y = upY;
-		m_vUp.z = upZ;
-
+		m_vCenter = m_vBaseCenter + m_vOffsetCenter;
 		m_bDirty = true;
 	}
 	//------------------------------------------------------------------------------
-	/** get the eye vector values in points */
+	void CGUICamera::UpdateUp()
+	{
+		m_vUp = m_vBaseUp + m_vOffsetUp;
+		m_bDirty = true;
+	}
+	//------------------------------------------------------------------------------
+	void CGUICamera::UpdateFov()
+	{
+		m_fFov = m_fBaseFov + m_fOffsetFov;
+		m_bDirty = true;
+	}
+	//------------------------------------------------------------------------------
+	void CGUICamera::UpdateAspectRatio()
+	{
+		m_fAspectRatio = m_fBaseAspectRatio + m_fOffsetAspectRatio;
+		m_bDirty = true;
+	}
+	//------------------------------------------------------------------------------
+	void CGUICamera::SetBaseEye( const CGUIVector3& rEye )
+	{
+		m_vBaseEye = rEye;
+		UpdateEye();
+	}
+	//------------------------------------------------------------------------------
+	void CGUICamera::SetBaseCenter( const CGUIVector3& rCenter )
+	{
+		m_vBaseCenter = rCenter;
+		UpdateCenter();
+	}
+	//------------------------------------------------------------------------------
+	void CGUICamera::SetBaseUp( const CGUIVector3& rUp )
+	{
+		m_vBaseUp = rUp;
+		UpdateUp();
+	}
+	//------------------------------------------------------------------------------
+	void CGUICamera::SetBaseFov( real rFov )
+	{
+		m_fBaseFov = rFov;
+		UpdateFov();
+	}
+	//------------------------------------------------------------------------------
+	void CGUICamera::SetBaseAspectRatio( real rRatio )
+	{
+		m_fBaseAspectRatio = rRatio;
+		UpdateAspectRatio();
+	}
+	//------------------------------------------------------------------------------
+	void CGUICamera::SetOffsetEye( const CGUIVector3& rEye )
+	{
+		m_vOffsetEye = rEye;
+		UpdateEye();
+	}
+	//------------------------------------------------------------------------------
+	void CGUICamera::SetOffsetCenter( const CGUIVector3& rCenter )
+	{
+		m_vOffsetCenter = rCenter;
+		UpdateCenter();
+	}
+	//------------------------------------------------------------------------------
+	void CGUICamera::SetOffsetUp( const CGUIVector3& rUp )
+	{
+		m_vOffsetUp = rUp;
+		UpdateUp();
+	}
+	//------------------------------------------------------------------------------
+	void CGUICamera::SetOffsetFov( real rFov )
+	{
+		m_fOffsetFov = rFov;
+		UpdateFov();
+	}
+	//------------------------------------------------------------------------------
+	void CGUICamera::SetOffsetAspectRatio( real rRatio )
+	{
+		m_fOffsetAspectRatio = rRatio;
+		UpdateAspectRatio();
+	}
+	//------------------------------------------------------------------------------
+	const CGUIVector3& CGUICamera::GetBaseEye() const
+	{
+		return m_vBaseEye;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIVector3& CGUICamera::GetBaseCenter() const
+	{
+		return m_vBaseCenter;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIVector3& CGUICamera::GetBaseUp() const
+	{
+		return m_vBaseUp;
+	}
+	//------------------------------------------------------------------------------
+	real CGUICamera::GetBaseFov() const
+	{
+		return m_fBaseFov;
+	}
+	//------------------------------------------------------------------------------
+	real CGUICamera::GetBaseAspectRatio() const
+	{
+		return m_fBaseAspectRatio;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIVector3& CGUICamera::GetOffsetEye() const
+	{
+		return m_vOffsetEye;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIVector3& CGUICamera::GetOffsetCenter() const
+	{
+		return m_vOffsetCenter;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIVector3& CGUICamera::GetOffsetUp() const
+	{
+		return m_vOffsetUp;
+	}
+	//------------------------------------------------------------------------------
+	real CGUICamera::GetOffsetFov() const
+	{
+		return m_fOffsetFov;
+	}
+	//------------------------------------------------------------------------------
+	real CGUICamera::GetOffsetAspectRatio() const
+	{
+		return m_fOffsetAspectRatio;
+	}
+	//------------------------------------------------------------------------------
 	const CGUIVector3& CGUICamera::GetEye() const
 	{
 		return m_vEye;
 	}
 	//------------------------------------------------------------------------------
-	/** get the center vector values in points */
 	const CGUIVector3& CGUICamera::GetCenter() const
 	{
 		return m_vCenter;
 	}
 	//------------------------------------------------------------------------------
-	/** get the up vector values */
 	const CGUIVector3& CGUICamera::GetUp() const
 	{
 		return m_vUp;
@@ -219,16 +268,6 @@ namespace guiex
 	real CGUICamera::GetFov() const
 	{
 		return m_fFov;
-	}
-	//------------------------------------------------------------------------------
-	void CGUICamera::SetFov( real rFov )
-	{
-		m_fFov = rFov;
-	}
-	//------------------------------------------------------------------------------
-	void CGUICamera::SetAspectRatio( real rRatio )
-	{
-		m_fAspectRatio = rRatio;
 	}
 	//------------------------------------------------------------------------------
 	real CGUICamera::GetAspectRatio() const
@@ -246,16 +285,6 @@ namespace guiex
 		return m_fFarPlane;
 	}
 	//------------------------------------------------------------------------------
-	void CGUICamera::SetNearPlane( real fNearPlane )
-	{
-		m_fNearPlane = fNearPlane;
-	}
-	//------------------------------------------------------------------------------
-	void CGUICamera::SetFarPlane( real fFarPlane )
-	{
-		m_fFarPlane = fFarPlane;
-	}
-	//------------------------------------------------------------------------------
 	bool CGUICamera::IsDirty()
 	{
 		return m_bDirty;
@@ -269,6 +298,11 @@ namespace guiex
 	void CGUICamera::ClearDirty()
 	{
 		m_bDirty = false;
+	}
+	//------------------------------------------------------------------------------
+	void CGUICamera::OnCameraDefaultValueChanged( )
+	{
+		Restore();
 	}
 	//------------------------------------------------------------------------------
 }

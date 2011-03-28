@@ -15,6 +15,14 @@
 #include <vector>
 
 //============================================================================//
+// declare
+//============================================================================// 
+namespace guiex
+{
+	class CGUICamera;
+}
+
+//============================================================================//
 // class
 //============================================================================// 
 namespace guiex
@@ -56,6 +64,9 @@ namespace guiex
 
 		CGUIWidget*	GetCurrentRootWidget( );
 
+		const CGUICamera* GetCamera() const;
+		CGUICamera* GetCamera();
+
 	private:
 		typedef std::vector<CGUIWidget*>	TArrayWidget;	
 		TArrayWidget m_arrayOpenedPage;
@@ -63,6 +74,8 @@ namespace guiex
 		TArrayWidget m_vecDynamicPageGarbage;
 		TArrayWidget m_arrayOpenedDlg; //widget modal dialog
 		CGUIWidget*	m_pPopupWidget; //popup widget
+
+		CGUICamera* m_pDefaultUICamera;
 	};
 
 }//namespace guiex

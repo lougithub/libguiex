@@ -561,8 +561,7 @@ namespace guiex
 		}
 
 		//update ui camera
-		CGUICamera::SetDefaultValue( m_aRawScreenSize, m_eScreenOrientation );
-		m_pCameraManager->GetDefaultUICamera()->Restore();
+		m_pCameraManager->SetCameraDefaultValue( m_aRawScreenSize, m_eScreenOrientation );
 
 		//update ui page
 		m_pCanvasLayerManager->Refresh();

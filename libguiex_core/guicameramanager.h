@@ -11,7 +11,9 @@
 //============================================================================//
 // include
 //============================================================================// 
+#include "guibase.h"
 #include "guicamera.h"
+#include "sigslot.h"
 
 //============================================================================//
 // class
@@ -25,33 +27,39 @@ namespace guiex
 
 		static CGUICameraManager* Instance();
 
-		const CGUICamera* GetDefaultUICamera() const;
-		CGUICamera* GetDefaultUICamera();
+		const CGUIVector3& GetDefaultEye() const;
+		const CGUIVector3& GetDefaultCenter() const;
+		const CGUIVector3& GetDefaultUp() const;
+		real GetDefaultFov() const;
+		real GetDefaultAspectRatio() const;
+		real GetDefaultNearPlane() const;
+		real GetDefaultFarPlane() const;
+
+		void SetCameraDefaultValue( const CGUIIntSize& rRawScreenSize, EScreenOrientation eScreenOrientation );
+
+		sigslot::signal0<>& GetOnDefaultValueChangedSignal();
 
 	protected:
 		friend class CGUISystem;
 		CGUICameraManager();
 		CGUICameraManager( const CGUICameraManager& );
 
-	protected:
-		CGUICamera m_aDefaultUICamera;
-		CGUICamera m_aDefaultCanvasCamera;
+	private:
+		//default value of camera
+		CGUIVector3 m_vDefaultEye;
+		CGUIVector3 m_vDefaultCenter;
+		CGUIVector3 m_vDefaultUp;
+		real m_fDefaultFov;
+		real m_fDefaultAspectRatio;
+		real m_fDefaultNearPlane;
+		real m_fDefaultFarPlane;
+
+		//sigslot
+		sigslot::signal0<> OnDefaultValueChanged;
 
 	private:
 		static CGUICameraManager* m_pSingleton;
 	};
-
-	//------------------------------------------------------------------------------
-	inline const CGUICamera* CGUICameraManager::GetDefaultUICamera() const
-	{
-		return &m_aDefaultUICamera;
-	}
-	//------------------------------------------------------------------------------
-	inline CGUICamera* CGUICameraManager::GetDefaultUICamera()
-	{
-		return &m_aDefaultUICamera;
-	}
-	//------------------------------------------------------------------------------
 
 }//namespace guiex
 

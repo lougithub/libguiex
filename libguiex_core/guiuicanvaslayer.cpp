@@ -28,7 +28,7 @@ namespace guiex
 	CGUIUICanvasLayer::CGUIUICanvasLayer( const char* szLayerName )
 		:CGUICanvasLayer( szLayerName, true )
 		,m_pPopupWidget(NULL)
-
+		,m_pDefaultUICamera(NULL)
 	{
 		SetSizeType(eScreenValue_Percentage);
 		SetSize( 1.0f, 1.0f );
@@ -44,10 +44,18 @@ namespace guiex
 	void CGUIUICanvasLayer::Initialize( )
 	{
 		CGUICanvasLayer::Initialize();
+
+		m_pDefaultUICamera = new CGUICamera;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIUICanvasLayer::Finalize( )
 	{
+		if( m_pDefaultUICamera )
+		{
+			delete m_pDefaultUICamera;
+			m_pDefaultUICamera = NULL;
+		}
+
 		//close all popup widget
 		while( GetCurrentPopupWidget())
 		{
@@ -77,6 +85,16 @@ namespace guiex
 		delete this;
 	}
 	//------------------------------------------------------------------------------
+	const CGUICamera* CGUIUICanvasLayer::GetCamera() const
+	{
+		return m_pDefaultUICamera;
+	}
+	//------------------------------------------------------------------------------
+	CGUICamera* CGUIUICanvasLayer::GetCamera()
+	{
+		return m_pDefaultUICamera;
+	}
+	//------------------------------------------------------------------------------
 	void CGUIUICanvasLayer::Update( real fDeltaTime )
 	{
 		CGUICanvasLayer::Update( fDeltaTime );
@@ -100,7 +118,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIUICanvasLayer::Render( IGUIInterfaceRender* pRender )
 	{
-		pRender->ApplyCamera( CGUICameraManager::Instance()->GetDefaultUICamera() );
+		CGUICamera* pCamera = pRender->ApplyCamera( m_pDefaultUICamera );
 
 		CGUICanvasLayer::Render( pRender );
 
@@ -117,6 +135,8 @@ namespace guiex
 		{
 			m_pPopupWidget->Render(pRender);
 		}
+
+		pRender->ApplyCamera( pCamera );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIUICanvasLayer::RenderExtraInfo( IGUIInterfaceRender* pRender )
