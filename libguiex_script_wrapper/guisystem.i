@@ -27,6 +27,9 @@ namespace guiex
 		uint32 GetScreenWidth( ) const;
 		uint32 GetScreenHeight( ) const;
 
+		void SetScreenOrientation( EScreenOrientation eOrientation );
+		EScreenOrientation GetScreenOrientation( ) const;
+
 
 		//********************************************************
 		//	ui event

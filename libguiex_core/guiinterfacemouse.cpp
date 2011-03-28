@@ -10,6 +10,7 @@
 //============================================================================// 
 #include <libguiex_core/guiinterfacemouse.h>
 #include <libguiex_core/guisystem.h>
+#include <libguiex_core/guiexception.h>
 
 //============================================================================//
 // function
@@ -36,12 +37,45 @@ namespace guiex
 	//--------------------------------------------------------------------------------------
 	void IGUIInterfaceMouse::Reset()
 	{
-
 		m_aContext.m_fWheelChange = 0.0f;
 		for(int i=0; i<_MOUSE_BUTTON_MAX_; ++i )
 		{
 			m_aContext.m_eMouseStateCur[i]	= MOUSE_UP;
 		}
+	}
+	//------------------------------------------------------------------------------ 
+	CGUIVector2 IGUIInterfaceMouse::ConvertPosToEngine( const CGUIVector2& rPos )
+	{
+		const CGUIIntSize& rRawScreenSize = GSystem->GetRawScreenSize();
+		
+		real newY = rRawScreenSize.m_uHeight - rPos.y;
+		real newX = rRawScreenSize.m_uWidth - rPos.x;
+
+		CGUIVector2 ret;
+		switch ( GSystem->GetScreenOrientation() )
+		{
+		case eDeviceOrientation_Portrait:
+			ret.x = rPos.x;
+			ret.y = rPos.y;
+			break;
+		case eDeviceOrientation_PortraitUpsideDown:
+			ret.x = newX;
+			ret.y = newY;
+			break;
+		case eDeviceOrientation_LandscapeLeft:
+			ret.x = newY;
+			ret.y = rPos.x;
+			break;
+		case eDeviceOrientation_LandscapeRight:
+			ret.x = rPos.y;
+			ret.y = newX;
+			break;
+		default:
+			throw CGUIException(" IGUIInterfaceMouse::ConvertPosToEngine: unknown screen orientation");
+			break;
+		}
+
+		return ret;
 	}
 	//------------------------------------------------------------------------------ 
 	/**
@@ -86,7 +120,7 @@ namespace guiex
 	*/
 	bool IGUIInterfaceMouse::ChangeMousePos( const CGUIVector2& rPos )
 	{
-		m_aContext.m_aPosCur = rPos;
+		m_aContext.m_aPosCur = ConvertPosToEngine(rPos);
 
 		return ProcessMouseEvent(SMouseEvent( MOUSE_EVENT_MOVE,MOUSE_NONE, m_aContext.m_aPosCur.x, m_aContext.m_aPosCur.y));
 	}

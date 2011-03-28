@@ -216,7 +216,7 @@ namespace guiex
 
 		m_nCurrentStencilRef = 0;
 
-		OnScreenSizeChange( GSystem->GetScreenSize() );
+		OnScreenSizeChange( GSystem->GetRawScreenSize() );
 		return 0;
 	}
 	//------------------------------------------------------------------------------

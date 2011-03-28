@@ -147,14 +147,14 @@ namespace guiex
 		return radians * GUI_Rad2Deg; 
 	}
 	//-----------------------------------------------------------------------
-	real CGUIMath::Cos (const CGUIRadian& fValue, bool useTables) 
+	real CGUIMath::Cos (const CGUIRadian& fValue) 
 	{
-		return (!useTables) ? real(cos(fValue.valueRadians())) : SinTable(fValue.valueRadians() + GUI_HALF_PI);
+		return real(cos(fValue.valueRadians()));
 	}
 	//-----------------------------------------------------------------------
-	real CGUIMath::Cos (real fValue, bool useTables )
+	real CGUIMath::Cos (real fValue)
 	{
-		return (!useTables) ? real(cos(fValue)) : SinTable(fValue + GUI_HALF_PI);
+		return real(cos(fValue));
 	}
 	//-----------------------------------------------------------------------
 	real CGUIMath::InvSqrt(real fValue)

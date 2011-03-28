@@ -164,6 +164,10 @@ void keyboardCB(unsigned char key, int x, int y)
 		g_nVSync = ( g_nVSync+1 ) % 2;
 		setVSync( g_nVSync );
 		break;
+	
+	case 'r':	//rotate screen
+		GSystem->SetScreenOrientation( EScreenOrientation((GSystem->GetScreenOrientation() + 1) % (eDeviceOrientation_LandscapeRight+1)));
+		break;
 
 	default:
 		// inject Character code
@@ -228,7 +232,7 @@ void idleCB()
 //------------------------------------------------------------------------------
 void reshapeCB(int width, int height)
 {
-	GSystem->SetScreenSize(width,height);
+	GSystem->SetRawScreenSize(width,height);
 }
 //------------------------------------------------------------------------------
 void keyUpSpecialCB(int key, int x, int y)

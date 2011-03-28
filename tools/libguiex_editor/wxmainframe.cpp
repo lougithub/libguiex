@@ -1133,10 +1133,13 @@ void WxMainFrame::OnUpdateCreateWidget(wxUpdateUIEvent& event)
 //------------------------------------------------------------------------------
 void WxMainFrame::SetResolution( int width, int height )
 {
-	GSystem->SetScreenSize(width, height);
 	if( m_pCanvas )
 	{
 		m_pCanvas->SetScreenSize(width, height);
+	}
+	else
+	{
+		GSystem->SetRawScreenSize(width, height);
 	}
 }
 //------------------------------------------------------------------------------

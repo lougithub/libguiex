@@ -240,7 +240,7 @@ void WxEditorCanvas::OnSize(wxSizeEvent& event)
 //------------------------------------------------------------------------------
 void WxEditorCanvas::UpdateCanvasSize(const wxSize& rSize)
 {
-	GSystem->SetScreenSize(rSize.x,rSize.y);
+	GSystem->SetRawScreenSize(rSize.x,rSize.y);
 
 	m_aWindowBox.Reset( );
 }

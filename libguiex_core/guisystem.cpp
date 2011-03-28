@@ -122,6 +122,7 @@ namespace guiex
 		,m_pWidgetManager( NULL )
 		,m_pCameraManager( NULL )
 		,m_pUICanvas( NULL )
+		,m_eScreenOrientation( eDeviceOrientation_Portrait )
 	{
 		GUI_ASSERT( !m_pSingleton, "[CGUISystem::CGUISystem]:instance has been created" ); 
 		GUI_ASSERT( !GSystem, "[CGUISystem::CGUISystem]:GSystem has been set" ); 
@@ -497,32 +498,74 @@ namespace guiex
 	real CGUISystem::GetSystemTime() const
 	{
 		return m_fSystemTime;
-	}
-	//------------------------------------------------------------------------------
-	void CGUISystem::SetScreenSize( const CGUIIntSize& rScreenSize )
-	{
-		m_aScreenSize = rScreenSize;
-
-		//update ui camera
-		m_pCameraManager->GetDefaultUICamera()->Restore();
-
-		//update ui page
-		m_pCanvasLayerManager->Refresh();
-
-		//notify render
-		IGUIInterfaceRender* pRender = CGUIInterfaceManager::Instance()->GetInterfaceRender();
-		if( pRender )
-		{
-			pRender->OnScreenSizeChange( rScreenSize );
-		}
-	}
+	}	
 	//------------------------------------------------------------------------------
 	/**
 	* @brief set the size of screen
 	*/
-	void CGUISystem::SetScreenSize( uint32 width, uint32 height)
+	void CGUISystem::SetRawScreenSize( uint32 width, uint32 height)
 	{
-		SetScreenSize( CGUIIntSize( width, height ) );
+		SetRawScreenSize( CGUIIntSize( width, height ) );
+	}
+	//------------------------------------------------------------------------------
+	void CGUISystem::SetRawScreenSize( const CGUIIntSize& rScreenSize )
+	{
+		if( rScreenSize != m_aRawScreenSize)
+		{
+			m_aRawScreenSize = rScreenSize;
+
+			RefreshScreenSize( );
+			
+			//notify render
+			IGUIInterfaceRender* pRender = CGUIInterfaceManager::Instance()->GetInterfaceRender();
+			if( pRender )
+			{
+				pRender->OnScreenSizeChange( m_aRawScreenSize );
+			}
+		}
+	}
+	//------------------------------------------------------------------------------
+	const CGUIIntSize& CGUISystem::GetRawScreenSize( ) const
+	{
+		return m_aRawScreenSize;
+	}
+	//------------------------------------------------------------------------------
+	void CGUISystem::SetScreenOrientation( EScreenOrientation eOrientation )
+	{
+		if( m_eScreenOrientation != eOrientation )
+		{
+			m_eScreenOrientation = eOrientation;
+
+			RefreshScreenSize( );
+		}
+	}
+	//------------------------------------------------------------------------------
+	EScreenOrientation CGUISystem::GetScreenOrientation( ) const
+	{
+		return m_eScreenOrientation;
+	}
+	//------------------------------------------------------------------------------
+	void CGUISystem::RefreshScreenSize()
+	{
+		switch( m_eScreenOrientation )
+		{
+		case eDeviceOrientation_Portrait:
+		case eDeviceOrientation_PortraitUpsideDown:
+			m_aScreenSize = m_aRawScreenSize;
+			break;
+
+		case eDeviceOrientation_LandscapeLeft:
+		case eDeviceOrientation_LandscapeRight:
+			m_aScreenSize.SetValue( m_aRawScreenSize.m_uHeight, m_aRawScreenSize.m_uWidth );
+			break;
+		}
+
+		//update ui camera
+		CGUICamera::SetDefaultValue( m_aRawScreenSize, m_eScreenOrientation );
+		m_pCameraManager->GetDefaultUICamera()->Restore();
+
+		//update ui page
+		m_pCanvasLayerManager->Refresh();
 	}
 	//------------------------------------------------------------------------------
 	/**

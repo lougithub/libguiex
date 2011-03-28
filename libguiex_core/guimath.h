@@ -208,20 +208,15 @@ namespace guiex
 		/** Cosine function.
 		@param
 		fValue CGUIAngle in radians
-		@param
-		useTables If true, uses lookup tables rather than
 		calculation - faster but less accurate.
 		*/
-		static real Cos (const CGUIRadian& fValue, bool useTables = false);
+		static real Cos (const CGUIRadian& fValue );
 
 		/** Cosine function.
 		@param
 		fValue CGUIAngle in radians
-		@param
-		useTables If true, uses lookup tables rather than
-		calculation - faster but less accurate.
 		*/
-		static real Cos (real fValue, bool useTables = false) ;
+		static real Cos (real fValue ) ;
 
 		static real Exp (real fValue) { return real(exp(fValue)); }
 
@@ -244,24 +239,19 @@ namespace guiex
 		/** Sine function.
 		@param
 		fValue CGUIAngle in radians
-		@param
-		useTables If true, uses lookup tables rather than
-		calculation - faster but less accurate.
 		*/
-		static real Sin (const CGUIRadian& fValue, bool useTables = false) 
+		static real Sin (const CGUIRadian& fValue ) 
 		{
-			return (!useTables) ? real(sin(fValue.valueRadians())) : SinTable(fValue.valueRadians());
+			return real(sin(fValue.valueRadians()));
 		}
 		/** Sine function.
 		@param
 		fValue CGUIAngle in radians
-		@param
-		useTables If true, uses lookup tables rather than
 		calculation - faster but less accurate.
 		*/
-		static real Sin (real fValue, bool useTables = false) 
+		static real Sin (real fValue ) 
 		{
-			return (!useTables) ? real(sin(fValue)) : SinTable(fValue);
+			return real(sin(fValue));
 		}
 
 		static real Sqr (real fValue) { return fValue*fValue; }
@@ -286,24 +276,18 @@ namespace guiex
 		/** Tangent function.
 		@param
 		fValue CGUIAngle in radians
-		@param
-		useTables If true, uses lookup tables rather than
-		calculation - faster but less accurate.
 		*/
-		static real Tan (const CGUIRadian& fValue, bool useTables = false) 
+		static real Tan (const CGUIRadian& fValue) 
 		{
-			return (!useTables) ? real(tan(fValue.valueRadians())) : TanTable(fValue.valueRadians());
+			return real(tan(fValue.valueRadians()));
 		}
 		/** Tangent function.
 		@param
 		fValue CGUIAngle in radians
-		@param
-		useTables If true, uses lookup tables rather than
-		calculation - faster but less accurate.
 		*/
-		static real Tan (real fValue, bool useTables = false)
+		static real Tan (real fValue )
 		{
-			return (!useTables) ? real(tan(fValue)) : TanTable(fValue);
+			return real(tan(fValue));
 		}
 
 		static real DegreesToRadians(real degrees) ;

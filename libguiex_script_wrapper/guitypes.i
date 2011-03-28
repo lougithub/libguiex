@@ -21,4 +21,12 @@ namespace guiex
 		eInterpolationType_EaseIn,
 		eInterpolationType_EaseInOut,
 	};
+
+	enum EScreenOrientation
+	{
+		eDeviceOrientation_Portrait = 0,
+		eDeviceOrientation_PortraitUpsideDown,
+		eDeviceOrientation_LandscapeLeft,
+		eDeviceOrientation_LandscapeRight,
+	};
 }

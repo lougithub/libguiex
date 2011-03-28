@@ -12,6 +12,7 @@
 #include "guisystem.h"
 #include "guimath.h"
 #include "guiintsize.h"
+#include "guiexception.h"
 
 
 //============================================================================//
@@ -19,13 +20,13 @@
 //============================================================================// 
 namespace guiex
 {
-	CGUIVector3 CGUICamera::ms_vEye = CGUIVector3( 0.0f,0.0f, -1.0f );
-	CGUIVector3 CGUICamera::ms_vCenter = CGUIVector3( 0.0f,0.0f, 0.0f );
-	CGUIVector3 CGUICamera::ms_vUp = CGUIVector3( 0.0f,-1.0f,0.0f );
-	real CGUICamera::ms_fFov = 60.0f;
-	real CGUICamera::ms_fAspectRatio = 1.0f;
-	real CGUICamera::ms_fNearPlane = 0.1f;
-	real CGUICamera::ms_fFarPlane = 10000;
+	CGUIVector3 CGUICamera::ms_vDefaultEye = CGUIVector3( 0.0f,0.0f, -1.0f );
+	CGUIVector3 CGUICamera::ms_vDefaultCenter = CGUIVector3( 0.0f,0.0f, 0.0f );
+	CGUIVector3 CGUICamera::ms_vDefaultUp = CGUIVector3( 0.0f,-1.0f,0.0f );
+	real CGUICamera::ms_fDefaultFov = 60.0f;
+	real CGUICamera::ms_fDefaultAspectRatio = 1.0f;
+	real CGUICamera::ms_fDefaultNearPlane = 0.1f;
+	real CGUICamera::ms_fDefaultFarPlane = 10000;
 	//------------------------------------------------------------------------------
 	CGUICamera::CGUICamera()
 		:m_bDirty(true)
@@ -59,37 +60,95 @@ namespace guiex
 		return *this;
 	}
 	//------------------------------------------------------------------------------
-	/** sets the camera in the default position */
-	void CGUICamera::Restore()
+	void CGUICamera::SetDefaultValue( const CGUIIntSize& rRawScreenSize, EScreenOrientation eScreenOrientation )
 	{
-		const CGUISize& rSize = GSystem->GetScreenSize();
-
-		m_fFov = 60.0f;
-		if( GUI_REAL_EQUAL( rSize.GetHeight(), 0.0f ))
+		ms_fDefaultFov = 60.0f;
+		if( rRawScreenSize.GetHeight() == 0 )
 		{
-			m_fAspectRatio = 1;
+			ms_fDefaultAspectRatio = 1;
 		}
 		else
 		{
-			m_fAspectRatio = rSize.GetWidth() / rSize.GetHeight();
+			ms_fDefaultAspectRatio = rRawScreenSize.GetWidth() / real( rRawScreenSize.GetHeight());
 		}
 
-		real fZDistance = -(rSize.m_fHeight/2) / CGUIMath::Tan( CGUIDegree(m_fFov/2));
+		real fZDistance = -(rRawScreenSize.GetHeight()/2.0f) / CGUIMath::Tan( CGUIDegree(ms_fDefaultFov/2));
 
-		m_vEye.x = rSize.GetWidth() / 2;
-		m_vEye.y = rSize.GetHeight() / 2;
-		m_vEye.z = fZDistance;
+		switch( eScreenOrientation )
+		{
+		case eDeviceOrientation_Portrait:
+			ms_vDefaultCenter.x = rRawScreenSize.GetWidth() / 2.0f;
+			ms_vDefaultCenter.y = rRawScreenSize.GetHeight() / 2.0f;
+			ms_vDefaultCenter.z = 0.0f;
 
-		m_vCenter.x = rSize.GetWidth() / 2;
-		m_vCenter.y = rSize.GetHeight() / 2;
-		m_vCenter.z = 0;
+			ms_vDefaultEye.x = ms_vDefaultCenter.x;
+			ms_vDefaultEye.y = ms_vDefaultCenter.y;
+			ms_vDefaultEye.z = fZDistance;
 
-		m_vUp.x = 0;
-		m_vUp.y = -1;
-		m_vUp.z = 0;
+			ms_vDefaultUp.x = 0.0f;
+			ms_vDefaultUp.y = -1.0f;
+			ms_vDefaultUp.z = 0.0f;
+			break;
+		case eDeviceOrientation_PortraitUpsideDown:
+			ms_vDefaultCenter.x = rRawScreenSize.GetWidth() / 2.0f;
+			ms_vDefaultCenter.y = rRawScreenSize.GetHeight() / 2.0f;
+			ms_vDefaultCenter.z = 0.0f;
 
-		m_fNearPlane = 0.1f;
-		m_fFarPlane = 10000;
+			ms_vDefaultEye.x = ms_vDefaultCenter.x;
+			ms_vDefaultEye.y = ms_vDefaultCenter.y;
+			ms_vDefaultEye.z = fZDistance;
+
+			ms_vDefaultUp.x = 0.0f;
+			ms_vDefaultUp.y = 1.0f;
+			ms_vDefaultUp.z = 0.0f;
+			break;
+		case eDeviceOrientation_LandscapeLeft:
+			ms_vDefaultCenter.x = rRawScreenSize.GetHeight() / 2.0f;
+			ms_vDefaultCenter.y = rRawScreenSize.GetWidth() / 2.0f;
+			ms_vDefaultCenter.z = 0.0f;
+
+			ms_vDefaultEye.x = ms_vDefaultCenter.x;
+			ms_vDefaultEye.y = ms_vDefaultCenter.y;
+			ms_vDefaultEye.z = fZDistance;
+
+			ms_vDefaultUp.x = 1.0f;
+			ms_vDefaultUp.y = 0.0f;
+			ms_vDefaultUp.z = 0.0f;
+			break;
+		case eDeviceOrientation_LandscapeRight:
+			ms_vDefaultCenter.x = rRawScreenSize.GetHeight() / 2.0f;
+			ms_vDefaultCenter.y = rRawScreenSize.GetWidth() / 2.0f;
+			ms_vDefaultCenter.z = 0.0f;
+
+			ms_vDefaultEye.x = ms_vDefaultCenter.x;
+			ms_vDefaultEye.y = ms_vDefaultCenter.y;
+			ms_vDefaultEye.z = fZDistance;
+
+			ms_vDefaultUp.x = -1.0f;
+			ms_vDefaultUp.y = 0.0f;
+			ms_vDefaultUp.z = 0.0f;
+			break;
+
+		default:
+			throw CGUIException("CGUICamera::SetDefaultValue: unknown screen orientation.");
+			break;
+		}
+
+		ms_fDefaultNearPlane = 0.1f;
+		ms_fDefaultFarPlane = 10000.0f;
+	}
+	//------------------------------------------------------------------------------
+	/** sets the camera in the default position */
+	void CGUICamera::Restore()
+	{
+		m_vEye = ms_vDefaultEye;
+		m_vCenter = ms_vDefaultCenter;
+		m_vUp = ms_vDefaultUp;
+
+		m_fFov = ms_fDefaultFov;
+		m_fAspectRatio = ms_fDefaultAspectRatio;
+		m_fNearPlane = ms_fDefaultNearPlane;
+		m_fFarPlane = ms_fDefaultFarPlane;
 
 		m_bDirty = true;
 	}

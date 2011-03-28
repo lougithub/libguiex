@@ -13,6 +13,7 @@
 //============================================================================//
 #include "guibase.h"
 #include "guitiledmapparser.h"
+#include "guirendertype.h"
 
 //============================================================================//
 // declare
@@ -86,6 +87,11 @@ namespace guiex
 		uint32 maxGID;
 
 		std::vector<STileData> m_vecTiles;
+		//render info
+		//SR_T2F *m_pTexCoordinates;
+		//SR_V3F_Quad	*m_pVertices;
+		//SR_V3F_Quad	*m_pOriginalVertices;
+		//uint16 *m_pIndices;
 	};
 
 

@@ -131,8 +131,9 @@ namespace guiex
 		eDeviceOrientation_PortraitUpsideDown,
 		eDeviceOrientation_LandscapeLeft,
 		eDeviceOrientation_LandscapeRight,
-		eDeviceOrientation_FaceUp,
-		eDeviceOrientation_FaceDown,
+
+		//eDeviceOrientation_FaceUp,
+		//eDeviceOrientation_FaceDown,
 	};
 
 	//enum EBufferMode

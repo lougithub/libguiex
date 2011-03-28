@@ -12263,6 +12263,56 @@ fail:
 }
 
 
+static int _wrap_CGUISystem_SetScreenOrientation(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  guiex::EScreenOrientation arg2 ;
+  
+  SWIG_check_num_args("SetScreenOrientation",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetScreenOrientation",1,"guiex::CGUISystem *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SetScreenOrientation",2,"guiex::EScreenOrientation");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_SetScreenOrientation",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  arg2 = (guiex::EScreenOrientation)(int)lua_tonumber(L, 2);
+  (arg1)->SetScreenOrientation(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUISystem_GetScreenOrientation(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  guiex::EScreenOrientation result;
+  
+  SWIG_check_num_args("GetScreenOrientation",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetScreenOrientation",1,"guiex::CGUISystem const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_GetScreenOrientation",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  result = (guiex::EScreenOrientation)((guiex::CGUISystem const *)arg1)->GetScreenOrientation();
+  lua_pushnumber(L, (lua_Number)(int)(result)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_CGUISystem_SendUIEvent(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
@@ -12408,6 +12458,8 @@ static swig_lua_method swig_guiex_CGUISystem_methods[] = {
     {"GetScreenSize", _wrap_CGUISystem_GetScreenSize}, 
     {"GetScreenWidth", _wrap_CGUISystem_GetScreenWidth}, 
     {"GetScreenHeight", _wrap_CGUISystem_GetScreenHeight}, 
+    {"SetScreenOrientation", _wrap_CGUISystem_SetScreenOrientation}, 
+    {"GetScreenOrientation", _wrap_CGUISystem_GetScreenOrientation}, 
     {"SendUIEvent", _wrap_CGUISystem_SendUIEvent}, 
     {"SendEvent", _wrap_CGUISystem_SendEvent}, 
     {"GetSystemTime", _wrap_CGUISystem_GetSystemTime}, 
@@ -13187,6 +13239,10 @@ static swig_lua_const_info swig_constants[] = {
 { SWIG_LUA_INT,     (char *)"eInterpolationType_Linear", (long) guiex::eInterpolationType_Linear, 0, 0, 0},
 { SWIG_LUA_INT,     (char *)"eInterpolationType_EaseIn", (long) guiex::eInterpolationType_EaseIn, 0, 0, 0},
 { SWIG_LUA_INT,     (char *)"eInterpolationType_EaseInOut", (long) guiex::eInterpolationType_EaseInOut, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"eDeviceOrientation_Portrait", (long) guiex::eDeviceOrientation_Portrait, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"eDeviceOrientation_PortraitUpsideDown", (long) guiex::eDeviceOrientation_PortraitUpsideDown, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"eDeviceOrientation_LandscapeLeft", (long) guiex::eDeviceOrientation_LandscapeLeft, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"eDeviceOrientation_LandscapeRight", (long) guiex::eDeviceOrientation_LandscapeRight, 0, 0, 0},
 { SWIG_LUA_INT,     (char *)"GUI_LM_SHUTDOWN", (long) guiex::GUI_LM_SHUTDOWN, 0, 0, 0},
 { SWIG_LUA_INT,     (char *)"GUI_LM_TRACE", (long) guiex::GUI_LM_TRACE, 0, 0, 0},
 { SWIG_LUA_INT,     (char *)"GUI_LM_DEBUG", (long) guiex::GUI_LM_DEBUG, 0, 0, 0},

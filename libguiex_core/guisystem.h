@@ -118,12 +118,16 @@ namespace guiex
 		//********************************************************
 		//	screen size
 		//********************************************************
-		void SetScreenSize( const CGUIIntSize& rScreenSize );
-		void SetScreenSize( uint32 width, uint32 height);
+		void SetRawScreenSize( const CGUIIntSize& rScreenSize );
+		void SetRawScreenSize( uint32 width, uint32 height);
+		const CGUIIntSize& GetRawScreenSize( ) const;
+		
+		void SetScreenOrientation( EScreenOrientation eOrientation );
+		EScreenOrientation GetScreenOrientation( ) const;
+
 		const CGUIIntSize& GetScreenSize( ) const;
 		uint32 GetScreenWidth( ) const;
 		uint32 GetScreenHeight( ) const;
-
 
 		//********************************************************
 		//	ui event
@@ -196,6 +200,8 @@ namespace guiex
 		void InitializeSingletons();
 		void ReleaseSingletons();
 
+		void RefreshScreenSize();
+
 		void RenderCanvas( class IGUIInterfaceRender* pRender );
 		void UpdateCanvas( real fDeltaTime );
 		void UpdatePerformance( real fDeltaTime  );
@@ -214,8 +220,10 @@ namespace guiex
 		//----------------------------------------------------------------------
 
 		//----------------------------------------------------------------------
-		/// screen size
-		CGUIIntSize m_aScreenSize; //!< size of screen, in default
+		/// screen size and orientation
+		CGUIIntSize m_aRawScreenSize; //!< raw size of screen
+		CGUIIntSize m_aScreenSize; //!< size of screen
+		EScreenOrientation m_eScreenOrientation; //!< screen orientation
 		//----------------------------------------------------------------------
 
 		//----------------------------------------------------------------------

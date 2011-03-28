@@ -22,14 +22,14 @@
 //============================================================================// 
 namespace guiex
 {
-	enum	EMouseState
+	enum EMouseState
 	{
 		MOUSE_UP = 0,
 		MOUSE_DOWN,
 
 		_MOUSE_STATE_MAX_,
 	};
-	enum	EMouseButton
+	enum EMouseButton
 	{
 		MOUSE_NONE = 0,
 		MOUSE_LEFT,
@@ -38,7 +38,7 @@ namespace guiex
 
 		_MOUSE_BUTTON_MAX_,
 	};
-	enum	EMouseEvent
+	enum EMouseEvent
 	{
 		MOUSE_EVENT_DOWN = 0,
 		MOUSE_EVENT_UP,
@@ -96,8 +96,8 @@ namespace guiex
 		virtual void PostUpdate( );
 
 	protected:
-
 		bool ProcessMouseEvent( const SMouseEvent& rEvent );
+		CGUIVector2 ConvertPosToEngine( const CGUIVector2& rPos );
 
 	private:
 		struct SMouseContext

@@ -34,6 +34,10 @@ namespace guiex
 		,m_pTexture( NULL )
 		,minGID( 0 )
 		,maxGID( 0 )
+		//,m_pTexCoordinates
+		//,m_pVertices
+		//,m_pOriginalVertices
+		//,m_pIndices
 	{
 		//check layer index
 		if( m_pOwnerMap->GetMapInfo()->GetLayers().size() <= nLayerIndex )

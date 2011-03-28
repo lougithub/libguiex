@@ -36,7 +36,7 @@ namespace guiex
 		const CGUICamera& operator=( const CGUICamera& rOther );
 
 	public:
-		static void SetDefaultValue( const CGUIIntSize& rScreenSize, EScreenOrientation eScreenOrientation );
+		static void SetDefaultValue( const CGUIIntSize& rRawScreenSize, EScreenOrientation eScreenOrientation );
 
 		void Restore();
 
@@ -77,14 +77,14 @@ namespace guiex
 		bool m_bDirty;
 
 	private:
-		static CGUIVector3 ms_vEye;
-		static CGUIVector3 ms_vCenter;
-		static CGUIVector3 ms_vUp;
+		static CGUIVector3 ms_vDefaultEye;
+		static CGUIVector3 ms_vDefaultCenter;
+		static CGUIVector3 ms_vDefaultUp;
 
-		static real ms_fFov;
-		static real ms_fAspectRatio;
-		static real ms_fNearPlane;
-		static real ms_fFarPlane;
+		static real ms_fDefaultFov;
+		static real ms_fDefaultAspectRatio;
+		static real ms_fDefaultNearPlane;
+		static real ms_fDefaultFarPlane;
 	};
 
 }//namespace guiex
