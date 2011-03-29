@@ -38,9 +38,22 @@ namespace guiex
 		CGUIWgtEditBox( const CGUIString& rName, const CGUIString& rSceneName );
 		virtual ~CGUIWgtEditBox( );
 
-		virtual void SetTextContent(const CGUIStringW& rText);
 		virtual int32 GenerateProperty( CGUIProperty& rProperty );
 		virtual void ProcessProperty( const CGUIProperty& rProperty );
+
+		void SetTextContent(const CGUIStringW& rText);
+		const CGUIStringW& GetTextContent( ) const;
+
+		void SetTextInfo(const CGUIStringInfo& rInfo);
+		const CGUIStringInfo& GetTextInfo( ) const;
+
+		void SetTextContentUTF8( const CGUIString& rString);
+		CGUIString GetTextContentUTF8( ) const;
+
+		void SetTextAlignmentVert( ETextAlignmentVert eAlignment );
+		void SetTextAlignmentHorz( ETextAlignmentHorz eAlignment );
+		ETextAlignmentHorz GetTextAlignmentHorz( ) const;
+		ETextAlignmentVert GetTextAlignmentVert( ) const;
 
 		void SetCursorIndex(int32 nPos);
 
@@ -53,9 +66,7 @@ namespace guiex
 		void SetReadOnly(bool bRead);
 		bool IsReadOnly() const;
 
-
 		void SetStringAreaRatio(const CGUIRect& rStringAreaRatio);
-
 		const CGUIRect& GetStringAreaRatio( ) const;
 
 		void SetSelectedTextColor( const CGUIColor& rColor);
@@ -77,40 +88,21 @@ namespace guiex
 
 
 	protected://string related function
-		/// get position of cursor 
 		CGUIVector2	GetCursorPos();
-
-		/// get rect of cursor necessary for rendering
 		CGUIRect GetCursorRect();
 
-		/// get text index from given global pos
 		uint32 GetTextIndexFromPos( const CGUIVector2& rPos);
 
-		/// clear selection-area
 		void ClearSelection();
-
-		///return the length of the current selection .
 		uint32 GetSelectionLength(void) const;
-
-		/// erase selected string
 		void EraseSelectedText( );
-
-		/**
-		 * @brief Define the current selection for the Editbox
-		*/
 		void SetSelection(size_t start_pos, size_t end_pos);
 
 
-		/// insert a string
 		void InsertString( const CGUIStringW& rText );
-
-		/// delete string
 		void DeleteString( int32 nBeginPos, int32 nEndPos);
-
-		/// update string position
 		void UpdateStringPos();
 
-		/// get string width
 		real GetStringWidth(int32 nBeginPos, int32 nEndPos) const;
 
 
@@ -160,6 +152,11 @@ namespace guiex
 		CGUIImage* m_pBG; //!< bg image
 		CGUIImage* m_pBGFocus; //!< bg image rendered when this widget is focusable
 		CGUIImage* m_pCursor; //!< cursor 
+
+		//text
+		CGUIStringEx m_strText;
+		ETextAlignmentHorz m_eTextAlignmentHorz;
+		ETextAlignmentVert m_eTextAlignmentVert;
 
 		//---------------------------------------------------
 		CGUIRect m_aStringAreaRatio; //!< the ratio of string area, the (0,0,1,1) equal whole client area

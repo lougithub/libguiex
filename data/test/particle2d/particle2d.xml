@@ -24,13 +24,6 @@
         <property name="open_with_parent" type="bool" value="true" />
         <property name="generate_update_event" type="bool" value="false" />
         <property name="generate_parentsizechange_event" type="bool" value="false" />
-        <property name="textinfo" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
     </property>
 
     <property name="particle2d_1" type="CGUIWidgetDefine" value="CGUIWgtParticle2D">
@@ -60,13 +53,6 @@
         <property name="open_with_parent" type="bool" value="true" />
         <property name="generate_update_event" type="bool" value="false" />
         <property name="generate_parentsizechange_event" type="bool" value="false" />
-        <property name="textinfo" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
         <property name="particle2d" type="CGUIParticle2D" value="spinningPeas" />
     </property>
 
@@ -98,13 +84,6 @@
         <property name="open_with_parent" type="bool" value="true" />
         <property name="generate_update_event" type="bool" value="false" />
         <property name="generate_parentsizechange_event" type="bool" value="false" />
-        <property name="textinfo" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
         <property name="particle2d" type="CGUIParticle2D" value="flower" />
     </property>
 
@@ -135,13 +114,6 @@
         <property name="open_with_parent" type="bool" value="true" />
         <property name="generate_update_event" type="bool" value="false" />
         <property name="generate_parentsizechange_event" type="bool" value="false" />
-        <property name="textinfo" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
         <property name="particle2d" type="CGUIParticle2D" value="fire" />
     </property>
 

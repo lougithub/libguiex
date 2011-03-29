@@ -125,23 +125,9 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////
 		// text about function
 		////////////////////////////////////////////////////////////////////////////
-		const CGUIStringEx& GetTooltipText(void) const;
-		void SetTooltipText(const CGUIStringEx& rText);
-
-		virtual void SetTextColor(const CGUIColor& rColor);
-		virtual void SetTextContent(const CGUIStringW& rStringW);
-		virtual const CGUIStringW& GetTextContent() const;
-		virtual bool IsTextContentEmpty( ) const;
-		void SetTextContentUTF8( const CGUIString& rString);
-		CGUIString GetTextContentUTF8() const;
-
-		virtual void SetTextAlignment( uint8 uAlignment );
-		virtual uint8 GetTextAlignment( ) const;
-
-		virtual void SetTextInfo(const CGUIStringInfo& rInfo);
-		virtual const CGUIStringInfo& GetTextInfo( ) const;
-
-		virtual const CGUIStringEx& GetText() const;
+		virtual CGUIStringEx* GetTooltipText(void) const;
+		virtual void SetTooltipText(const CGUIStringEx& rText);
+		bool HasTooltips( ) const;
 
 		////////////////////////////////////////////////////////////////////////////
 		// flag
@@ -222,6 +208,7 @@ namespace guiex
 		const CGUIProperty& GetProperty() const;
 		void ClearProperty();
 		void InsertProperty( const CGUIProperty& rProperty);
+		void LoadFromProperty( const CGUIProperty& rProperty );
 		void LoadFromProperty();
 		void DumpToProperty();
 		virtual int32 GenerateProperty( CGUIProperty& rProperty );
@@ -371,10 +358,9 @@ namespace guiex
 
 		void DrawRect( IGUIInterfaceRender* pRender, const CGUIRect& rDestRect, real fLineWidth, const CGUIColor& rColor );
 		void DrawCharacter(IGUIInterfaceRender* pRender, wchar_t charCode, const CGUIStringInfo& rInfo, const CGUIVector2& rPos );
-		void DrawString( IGUIInterfaceRender* pRender, const CGUIStringEx& strText, const CGUIRect& rDrawRect, uint8 uTextAlignment, int32 nStartPos = 0, int32 nEndPos = -1 );
+		void DrawString( IGUIInterfaceRender* pRender, const CGUIStringEx& strText, const CGUIRect& rDrawRect, ETextAlignmentHorz uTextAlignmentHorz, ETextAlignmentVert uTextAlignmentVert, int32 nStartPos = 0, int32 nEndPos = -1 );
 		void DrawString( IGUIInterfaceRender* pRender, const CGUIStringEx& strText, const CGUIVector2& rPos, int32 nStartPos = 0, int32 nEndPos = -1);
 		void DrawImage( IGUIInterfaceRender* pRender, CGUIImage* pImage, const CGUIRect& rDestRect );
-		void DrawImage( IGUIInterfaceRender* pRender, const CGUIString& rName, const CGUIRect& rDestRect );
 		void DrawAnimation( IGUIInterfaceRender* pRender, CGUIAnimation* pAnimation, const CGUIRect& rDestRect );
 
 		friend class CGUIWidgetFactory;
@@ -598,17 +584,8 @@ namespace guiex
 		TListAs	m_listAsPlaying;
 
 		///////////////////////////////////////////////////////////////////////
-		/// for text										
-		///////////////////////////////////////////////////////////////////////
-		CGUIStringEx m_strTooltipText; //!< tooltip for list box item.  
-		CGUIStringEx m_strText; //!< text
-		uint8 m_uTextAlignment;
-
-		///////////////////////////////////////////////////////////////////////
 		/// for widget tree											
 		///////////////////////////////////////////////////////////////////////
-		//CGUIWidget*	 m_pExclusiveChild;	//!< for exclusive child
-
 		CGUIString m_strType; //!< widget type
 		CGUIString m_strName; //!< widget name, should be a unique name in same scene
 		CGUIString m_strOwnerSceneName; //!< scene name, should be a unique name

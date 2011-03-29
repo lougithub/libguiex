@@ -78,8 +78,8 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	pWidget_button->SetImage( "BTN_DISABLE", "button_blue_disable" );
 	pWidget_button->SetAnchorPoint( 0.5, 0.5 );
 	pWidget_button->SetPosition( 400, 200 );
-	pWidget_button->SetTextContentUTF8("ok");
-	pWidget_button->SetTextColor(CGUIColor( 1,1,1,1));
+	pWidget_button->SetTextContentUTF8("ok", CGUIWgtButton::eButtonState_Normal);
+	pWidget_button->SetTextColor(CGUIColor( 1,1,1,1), CGUIWgtButton::eButtonState_Normal);
 	pWidget_button->Create();
 
 	CGUIWgtButton* pWidget_button2 = 
@@ -91,8 +91,8 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	pWidget_button2->SetImage( "BTN_DISABLE", "button_blue_disable" );
 	pWidget_button2->SetAnchorPoint( 0.5, 0.5 );
 	pWidget_button2->SetPosition( 600, 200 );
-	pWidget_button2->SetTextContentUTF8("cancel");
-	pWidget_button2->SetTextColor(CGUIColor( 1,1,1,1));
+	pWidget_button2->SetTextContentUTF8("cancel", CGUIWgtButton::eButtonState_Normal);
+	pWidget_button2->SetTextColor(CGUIColor( 1,1,1,1), CGUIWgtButton::eButtonState_Normal);
 	pWidget_button2->SetRotation( 0,0,45 );
 	pWidget_button2->Create();
 

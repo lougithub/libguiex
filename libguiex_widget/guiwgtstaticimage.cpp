@@ -23,20 +23,22 @@ namespace guiex
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtStaticImage);
 	//------------------------------------------------------------------------------
 	CGUIWgtStaticImage::CGUIWgtStaticImage( const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIWgtStatic(StaticGetType(), rName, rSceneName)
+		:CGUIWidget(StaticGetType(), rName, rSceneName)
 	{
 		InitStaticImage();
 	}
 	//------------------------------------------------------------------------------
 	CGUIWgtStaticImage::CGUIWgtStaticImage( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIWgtStatic(rType, rName, rSceneName)
+		:CGUIWidget(rType, rName, rSceneName)
 	{
 		InitStaticImage();
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtStaticImage::InitStaticImage()
+	void CGUIWgtStaticImage::InitStaticImage()
 	{
 		m_pImageBG = NULL;
+		SetFocusable(false);
+		SetActivable(false);
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtStaticImage::OnSetImage( const CGUIString& rName, CGUIImage* pImage )

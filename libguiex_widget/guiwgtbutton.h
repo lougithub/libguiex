@@ -34,21 +34,41 @@ namespace guiex
 	class GUIEXPORT CGUIWgtButton : public CGUIWidget
 	{
 	public:
+		enum EButtonState
+		{
+			eButtonState_Normal = 0,
+			eButtonState_Hover,
+			eButtonState_Push,
+			eButtonState_Disable,
+
+			__eButtonState_NUM__,
+		};
 		CGUIWgtButton( const CGUIString& rName, const CGUIString& rSceneName );
 
-		void SetBtnTextContent_Hover( const CGUIStringW& rText );
-		void SetBtnTextInfo_Hover(const CGUIStringInfo& rInfo );
-		void SetBtnTextContent_Disable( const CGUIStringW& rText );
-		void SetBtnTextInfo_Disable(const CGUIStringInfo& rInfo );
-		void SetBtnTextContent_Push( const CGUIStringW& rText );
-		void SetBtnTextInfo_Push(const CGUIStringInfo& rInfo );
+		void SetTextContent( const CGUIStringW& rText, EButtonState eButtonState );
+		const CGUIStringW& GetTextContent( EButtonState eButtonState ) const;
 
-		virtual void SetTextContent(const CGUIStringW& rText);
+		void SetTextInfo( const CGUIStringInfo& rInfo, EButtonState eButtonState );
+		const CGUIStringInfo& GetTextInfo( EButtonState eButtonState ) const;
+
+		void SetTextContentUTF8( const CGUIString& rString, EButtonState eButtonState);
+		CGUIString GetTextContentUTF8( EButtonState eButtonState ) const;
+
+		const CGUIStringEx&	GetText( EButtonState eButtonState ) const;
+
+		bool IsTextContentEmpty( EButtonState eButtonState ) const;
 
 		void SetStringOffset( const CGUIVector2& rPos);
-
 		const CGUIVector2& GetStringOffset(  ) const;
 
+		void SetTextColor(const CGUIColor& rColor, EButtonState eButtonState);
+
+		void SetTextAlignmentVert( ETextAlignmentVert eAlignment );
+		void SetTextAlignmentHorz( ETextAlignmentHorz eAlignment );
+		ETextAlignmentHorz GetTextAlignmentHorz( ) const;
+		ETextAlignmentVert GetTextAlignmentVert( ) const;
+
+	protected:
 		virtual int32 GenerateProperty( CGUIProperty& rProperty );
 		virtual void ProcessProperty( const CGUIProperty& rProperty);
 
@@ -58,7 +78,7 @@ namespace guiex
 
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 		virtual void RefreshSelf();
-		virtual void	OnSetImage( const CGUIString& rName, CGUIImage* pImage );
+		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage );
 
 	protected:	//!< callback function
 		virtual uint32 OnMouseEnter( CGUIEventMouse* pEvent );
@@ -70,16 +90,13 @@ namespace guiex
 		bool m_bHovering;
 		bool m_bPushing;
 
-		CGUIImage* m_pImageNormal;
-		CGUIImage* m_pImageHovering;
-		CGUIImage* m_pImageDisable;
-		CGUIImage* m_pImagePush;
+		CGUIImage* m_pImage[__eButtonState_NUM__];
 		CGUIImage* m_pImageHoverOverlay;
-		CGUIImage* m_pImagePushOverlay;
 
-		CGUIStringEx m_strTextHoving; //for hover state
-		CGUIStringEx m_strTextDisable; //for disable state
-		CGUIStringEx m_strTextPush; //for push state
+		CGUIStringEx m_strText[__eButtonState_NUM__];
+
+		ETextAlignmentHorz m_eTextAlignmentHorz;
+		ETextAlignmentVert m_eTextAlignmentVert;
 
 		CGUIVector2 m_aTextOffset; //relative pos for button text
 		CGUIRect m_aStringArea;

@@ -449,7 +449,7 @@ namespace guiex
 		return m_pExtraData;
 	}
 	//------------------------------------------------------------------------------
-	bool CGUIProperty::HasDuplicatedNames( )
+	bool CGUIProperty::HasDuplicatedNames( CGUIString* pName )
 	{
 		if( m_setProperty.size() < 2 )
 		{
@@ -463,10 +463,14 @@ namespace guiex
 				if( m_setProperty[i].GetName() == m_setProperty[j].GetName() &&
 					m_setProperty[i].GetType() == m_setProperty[j].GetType() )
 				{
+					if( pName )
+					{
+						*pName = m_setProperty[j].GetName();
+					}
 					return true;
 				}
 			}
-			if( true == m_setProperty[i].HasDuplicatedNames( ))
+			if( true == m_setProperty[i].HasDuplicatedNames( pName ))
 			{
 				return true;
 			}

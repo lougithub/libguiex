@@ -77,7 +77,7 @@ namespace guiex
 		void operator=(const CGUIProperty& other );
 		bool operator==(const CGUIProperty& other ) const;
 
-		bool HasDuplicatedNames( );
+		bool HasDuplicatedNames( CGUIString* pName );
 
 	protected:
 		CGUIString m_strName; /// name of this property

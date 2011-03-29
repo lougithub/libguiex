@@ -77,6 +77,10 @@ namespace guiex
 		m_pBG = NULL;
 		m_pBGFocus = NULL;
 		m_pCursor = NULL;
+
+		//text
+		m_eTextAlignmentHorz = eTextAlignment_Horz_Left;
+		m_eTextAlignmentVert = eTextAlignment_Vert_Center;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtEditBox::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
@@ -345,11 +349,60 @@ namespace guiex
 	/** 
 	* @brief set widget text
 	*/
-	void CGUIWgtEditBox::SetTextContent( const CGUIStringW& rText )
+	void CGUIWgtEditBox::SetTextContent(const CGUIStringW& rText)
 	{
 		ClearSelection( );
 		DeleteString( 0, -1 );
 		InsertString( rText );
+	}
+	//------------------------------------------------------------------------------
+	const CGUIStringW& CGUIWgtEditBox::GetTextContent( ) const
+	{
+		return m_strText.m_strContent;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtEditBox::SetTextInfo(const CGUIStringInfo& rInfo)
+	{
+		m_strText.m_aStringInfo = rInfo;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIStringInfo& CGUIWgtEditBox::GetTextInfo( ) const
+	{
+		return m_strText.m_aStringInfo;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtEditBox::SetTextContentUTF8( const CGUIString& rString)
+	{
+		CGUIStringW strTemp;
+		MultiByteToWideChar( rString, strTemp);
+		SetTextContent( strTemp );
+	}
+	//------------------------------------------------------------------------------
+	CGUIString CGUIWgtEditBox::GetTextContentUTF8( ) const
+	{
+		CGUIString aContentUTF8;
+		WideByteToMultiChar( m_strText.m_strContent, aContentUTF8 );
+		return aContentUTF8;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtEditBox::SetTextAlignmentVert( ETextAlignmentVert eAlignment )
+	{
+		m_eTextAlignmentVert = eAlignment;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtEditBox::SetTextAlignmentHorz( ETextAlignmentHorz eAlignment )
+	{
+		m_eTextAlignmentHorz = eAlignment;
+	}
+	//------------------------------------------------------------------------------
+	ETextAlignmentHorz CGUIWgtEditBox::GetTextAlignmentHorz( ) const
+	{
+		return m_eTextAlignmentHorz;
+	}
+	//------------------------------------------------------------------------------
+	ETextAlignmentVert CGUIWgtEditBox::GetTextAlignmentVert( ) const
+	{
+		return m_eTextAlignmentVert;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtEditBox::InsertString( const CGUIStringW& rText )
@@ -772,10 +825,6 @@ namespace guiex
 		{
 			ValueToProperty( IsTextMasked(), rProperty);
 		}
-		//else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "mask_code" )
-		//{
-		//	rProperty.SetValue( GetTextMasked() );
-		//}
 		else if( rProperty.GetType() == ePropertyType_UInt32 && rProperty.GetName() == "max_text_num" )
 		{
 			ValueToProperty( GetMaxTextNum(), rProperty);
@@ -791,6 +840,24 @@ namespace guiex
 		else if( rProperty.GetType() == ePropertyType_Size && rProperty.GetName() == "cursor_size" )
 		{
 			ValueToProperty( GetCursorSize(), rProperty);
+		}
+		else if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo" )
+		{
+			ValueToProperty( m_strText.GetStringInfo(), rProperty );
+		}
+		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text" )
+		{
+			CGUIString aStrText;
+			WideByteToMultiChar( m_strText.GetContent(), aStrText);
+			rProperty.SetValue(aStrText);
+		}
+		else if( rProperty.GetType() == ePropertyType_TextAlignmentHorz && rProperty.GetName() == "text_alignment_horz" )
+		{
+			ValueToProperty( GetTextAlignmentHorz(), rProperty);
+		}
+		else if( rProperty.GetType() == ePropertyType_TextAlignmentVert && rProperty.GetName() == "text_alignment_vert" )
+		{
+			ValueToProperty( GetTextAlignmentVert(), rProperty);
 		}
 		else
 		{
@@ -812,19 +879,6 @@ namespace guiex
 			PropertyToValue( rProperty, bValue);
 			SetTextMasked( bValue );
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//property for maske code
-		//else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "mask_code" )
-		//{
-		//	if( rProperty.GetValue().length() > 0 )
-		//	{
-		//		SetMaskCode(rProperty.GetValue().c_str()[0]);
-		//	}
-		//	else
-		//	{
-		//		SetMaskCode( _'*' );
-		//	}
-		//}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//property for max text num
 		else if( rProperty.GetType() == ePropertyType_UInt32 && rProperty.GetName() == "max_text_num" )
@@ -856,6 +910,30 @@ namespace guiex
 			CGUISize aValue;
 			PropertyToValue( rProperty, aValue);
 			SetCursorSize( aValue );
+		}
+		else if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo")
+		{
+			CGUIStringInfo aInfo;
+			PropertyToValue( rProperty, aInfo);
+			SetTextInfo(aInfo);
+		}
+		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text")
+		{
+			CGUIStringEx aStrText;
+			MultiByteToWideChar(rProperty.GetValue(), aStrText.m_strContent);
+			SetTextContent(aStrText.GetContent());
+		}		
+		else if( rProperty.GetType() == ePropertyType_TextAlignmentHorz && rProperty.GetName() == "text_alignment_horz" )
+		{
+			ETextAlignmentHorz eTextAlignmentH = eTextAlignment_Horz_Center;
+			PropertyToValue( rProperty, eTextAlignmentH );
+			SetTextAlignmentHorz( eTextAlignmentH );
+		}
+		else if( rProperty.GetType() == ePropertyType_TextAlignmentVert && rProperty.GetName() == "text_alignment_vert" )
+		{
+			ETextAlignmentVert eTextAlignmentV = eTextAlignment_Vert_Center;
+			PropertyToValue( rProperty, eTextAlignmentV );
+			SetTextAlignmentVert( eTextAlignmentV );
 		}
 		else
 		{

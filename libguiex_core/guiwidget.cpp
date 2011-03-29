@@ -62,7 +62,6 @@ namespace guiex
 		,m_pChild(NULL)
 		,m_pNextSibling(NULL)
 		,m_pWidgetGenerator(NULL)
-		//,m_pExclusiveChild(NULL)
 		,m_aParamScale(CGUISize(1.0f,1.0f))
 		,m_aParamAlpha(1.0f)
 		,m_aParamDisable(false)
@@ -72,7 +71,6 @@ namespace guiex
 		,m_bIsOpen( false )
 		,m_bIsCreate( false )
 		,m_aColor(1.0f,1.0f,1.0f,1.0f)
-		,m_uTextAlignment(GUI_TA_CENTER)
 		,m_vRotation(0.0f,0.0f,0.0f)
 		,m_bOpenWithParent(true)
 		,m_bInheritAlpha(true)
@@ -260,76 +258,21 @@ namespace guiex
 		return OnWidgetDestroyed;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIStringEx&	CGUIWidget::GetTooltipText(void) const
+	CGUIStringEx* CGUIWidget::GetTooltipText(void) const
 	{
-		return m_strTooltipText;
+		return NULL;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWidget::SetTooltipText(const CGUIStringEx& rText)
+	void CGUIWidget::SetTooltipText(const CGUIStringEx& /*rText*/)
 	{
-		m_strTooltipText = rText;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWidget::SetTextColor(const CGUIColor& rColor)
+	bool CGUIWidget::HasTooltips( ) const
 	{
-		m_strText.m_aStringInfo.m_aColor = rColor;
+		return GetTooltipText() !=  NULL;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWidget::SetTextContent( const CGUIStringW& rStringW )
-	{
-		m_strText.m_strContent = rStringW;
-	}
-	//------------------------------------------------------------------------------
-	const CGUIStringW& CGUIWidget::GetTextContent() const
-	{
-		return m_strText.m_strContent;
-	}
-	//------------------------------------------------------------------------------
-	bool CGUIWidget::IsTextContentEmpty( ) const
-	{
-		return m_strText.m_strContent.empty();
-	}
-	//------------------------------------------------------------------------------
-	void CGUIWidget::SetTextContentUTF8( const CGUIString& rString)
-	{
-		CGUIStringW strTemp;
-		MultiByteToWideChar( rString, strTemp);
-		SetTextContent( strTemp );
-	}
-	//------------------------------------------------------------------------------
-	CGUIString	CGUIWidget::GetTextContentUTF8() const
-	{
-		CGUIString aContentUTF8;
-		WideByteToMultiChar( m_strText.m_strContent, aContentUTF8 );
-		return aContentUTF8;
-	}
-	//------------------------------------------------------------------------------
-	void CGUIWidget::SetTextAlignment( uint8 uAlignment)
-	{
-		m_uTextAlignment = uAlignment;
-	}
-	//------------------------------------------------------------------------------
-	uint8  CGUIWidget::GetTextAlignment( ) const
-	{
-		return m_uTextAlignment;
-	}
-	//------------------------------------------------------------------------------
-	const CGUIStringEx&	CGUIWidget::GetText() const
-	{
-		return m_strText;
-	}
-	//------------------------------------------------------------------------------
-	void CGUIWidget::SetTextInfo(const CGUIStringInfo& rInfo)
-	{
-		m_strText.m_aStringInfo = rInfo;
-	}
-	//------------------------------------------------------------------------------
-	const CGUIStringInfo& CGUIWidget::GetTextInfo( ) const
-	{
-		return m_strText.m_aStringInfo;
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWidget::SetGenerator( const CGUIWidgetGenerator* pGenerator)
+	void CGUIWidget::SetGenerator( const CGUIWidgetGenerator* pGenerator)
 	{
 		m_pWidgetGenerator = pGenerator;
 	}
@@ -435,12 +378,6 @@ namespace guiex
 	{
 		return m_pNextSibling;
 	}
-	////------------------------------------------------------------------------------
-	////get exclusive child
-	//CGUIWidget*	CGUIWidget::GetExclusiveChild( ) const
-	//{
-	//	return m_pExclusiveChild;
-	//}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::SetWorkingSceneName(const CGUIString& rWorkingProjName)
 	{
@@ -638,13 +575,6 @@ namespace guiex
 		pChild->SetParentImpl( NULL );
 		pChild->SetNextSiblingImpl( NULL );
 
-		////for exclusive child
-		//if( pChild->IsExclusive())
-		//{
-		//	GUI_ASSERT( pChild == m_pExclusiveChild, "error for remove exclusive child");
-		//	m_pExclusiveChild = NULL;
-		//}
-
 		//for parameter
 		m_aParamScale.RemoveChild(&(pChild->m_aParamScale));
 		m_aParamAlpha.RemoveChild(&(pChild->m_aParamAlpha));
@@ -700,13 +630,6 @@ namespace guiex
 
 		//set parent
 		pChild->SetParentImpl( this );
-
-		////for exclusive child
-		//if( pChild->IsExclusive())
-		//{
-		//	GUI_ASSERT(m_pExclusiveChild==NULL, "there has been a exclusive child");
-		//	m_pExclusiveChild = pChild;
-		//}
 
 		//for parameter
 		m_aParamScale.AddChild(&(pChild->m_aParamScale));
@@ -1028,17 +951,7 @@ namespace guiex
 			//check child
 			if( GetChild() )
 			{
-				CGUIWidget* pWidget = NULL;
-				//if( m_pExclusiveChild )
-				//{
-				//	//check exclusive child
-				//	pWidget = m_pExclusiveChild->GetWidgetAtPoint(rPos);
-				//}
-				//else
-				{
-					//check normal child
-					pWidget = GetChild()->GetWidgetAtPoint(rPos);
-				}
+				CGUIWidget* pWidget = GetChild()->GetWidgetAtPoint(rPos);
 				if( pWidget )
 				{
 					//find one
@@ -1679,14 +1592,18 @@ namespace guiex
 	* @brief set property set of this widget, if this widget has gotten the 
 	* property, the old property will be destroyed.
 	*/
-	void CGUIWidget::SetProperty( const CGUIProperty&	rProperty)
+	void CGUIWidget::SetProperty( const CGUIProperty& rProperty)
 	{
 		ClearProperty();
 
 		m_aPropertySet = rProperty;
-		if( m_aPropertySet.HasDuplicatedNames() )
+		CGUIString strTempName;
+		if( m_aPropertySet.HasDuplicatedNames( &strTempName ) )
 		{
-			throw CGUIException("[CGUIWidget::SetProperty]: widget <%s> find duplicated name in property", GetName().c_str());
+			throw CGUIException(
+				"[CGUIWidget::SetProperty]: widget <%s> find duplicated name <%s> in property", 
+				GetName().c_str(), 
+				strTempName.c_str());
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -1877,28 +1794,6 @@ namespace guiex
 			ValueToProperty( IsClipChildren(), rProperty);
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		else if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo" )
-		{
-			ValueToProperty( GetTextInfo(), rProperty);
-		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text" )
-		{
-			CGUIString aStrText;
-			WideByteToMultiChar( GetTextContent(), aStrText);
-			rProperty.SetValue(aStrText);
-		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		else if( rProperty.GetType() == ePropertyType_TextAlignmentHorz && rProperty.GetName() == "text_alignment_horz" )
-		{
-			ValueToProperty( ETextAlignmentHorz(m_uTextAlignment&GUI_TA_HORIZON_MASK), rProperty);
-		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		else if( rProperty.GetType() == ePropertyType_TextAlignmentVert && rProperty.GetName() == "text_alignment_vert" )
-		{
-			ValueToProperty( ETextAlignmentVert(m_uTextAlignment&GUI_TA_VERTICAL_MASK), rProperty);
-		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "parent" )
 		{
 			if( GetParent() )
@@ -1984,32 +1879,6 @@ namespace guiex
 				//clear as
 				SetAs( rProperty.GetName(), NULL);
 			}
-		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//property for text
-		else if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo" )
-		{
-			CGUIStringInfo aInfo;
-			PropertyToValue( rProperty, aInfo);
-			SetTextInfo(aInfo);
-		}
-		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text" )
-		{
-			CGUIStringW aStrText;
-			MultiByteToWideChar( rProperty.GetValue(), aStrText );
-			SetTextContent( aStrText );
-		}
-		else if( rProperty.GetType() == ePropertyType_TextAlignmentHorz && rProperty.GetName() == "text_alignment_horz" )
-		{
-			ETextAlignmentHorz eTextAlignmentH = eTextAlignment_Horz_Center;
-			PropertyToValue( rProperty, eTextAlignmentH );
-			m_uTextAlignment = (m_uTextAlignment & GUI_TA_VERTICAL_MASK) + eTextAlignmentH;
-		}
-		else if( rProperty.GetType() == ePropertyType_TextAlignmentVert && rProperty.GetName() == "text_alignment_vert" )
-		{
-			ETextAlignmentVert eTextAlignmentV = eTextAlignment_Vert_Center;
-			PropertyToValue( rProperty, eTextAlignmentV );
-			m_uTextAlignment = (m_uTextAlignment & GUI_TA_HORIZON_MASK) + eTextAlignmentV;
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//property for script event
@@ -2154,28 +2023,34 @@ namespace guiex
 		}
 		else
 		{ 
-			throw CGUIException("[CGUIWidget::ProcessProperty]: failed to process property: name=[%s] type=[%s] value=[%s]!", 
+			throw CGUIException("[CGUIWidget::ProcessProperty]: widget <%s> failed to process property: name=[%s] type=[%s] value=[%s]!", 
+				GetName().c_str(),
 				rProperty.GetName().c_str(),
 				rProperty.GetTypeAsString().c_str(),
 				rProperty.GetValue().c_str());
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWidget::LoadFromProperty()
+	void CGUIWidget::LoadFromProperty( const CGUIProperty& rProperty )
 	{
 		//set parent first
-		CGUIProperty* pPropertyParent = m_aPropertySet.GetProperty( "parent", "CGUIString" );
+		const CGUIProperty* pPropertyParent = rProperty.GetProperty( "parent", "CGUIString" );
 		if( pPropertyParent )
 		{
 			ProcessProperty( *pPropertyParent );
 		}
 
-		uint32 nSize = m_aPropertySet.GetPropertyNum();
+		uint32 nSize = rProperty.GetPropertyNum();
 		for( uint32 nIdx = 0; nIdx<nSize;++nIdx)
 		{
-			const CGUIProperty* pProperty = m_aPropertySet.GetProperty(nIdx);
+			const CGUIProperty* pProperty = rProperty.GetProperty(nIdx);
 			ProcessProperty( *pProperty );
 		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::LoadFromProperty()
+	{
+		LoadFromProperty( m_aPropertySet );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::DumpToProperty()
@@ -2294,21 +2169,21 @@ namespace guiex
 	{
 		if( IsFocus() )
 		{
-			DrawRect( pRender, GetBoundArea(), 7.0f, CGUIColor( 1.f,1.f,1.f, 1.0f) );
+			pRender->DrawRect( GetBoundArea(), 7.0f, 0.0f, CGUIColor( 1.f,1.f,1.f, 1.0f) );
 		}
 
 		//draw bound
 		if( IsFocusable() )
 		{
-			DrawRect( pRender, GetBoundArea(), 3.0f, CGUIColor( 0.f,1.f,0.f,1.f) );
+			pRender->DrawRect( GetBoundArea(), 3.0f, 0.0f, CGUIColor( 0.f,1.f,0.f,1.f) );
 		}
 		else
 		{
-			DrawRect( pRender, GetBoundArea(), 3.0f, CGUIColor( 0.f,0.f,1.f,1.f) );
+			pRender->DrawRect( GetBoundArea(), 3.0f, 0.0f, CGUIColor( 0.f,0.f,1.f,1.f) );
 		}
 
 		//draw client area
-		DrawRect( pRender, GetBoundArea(), 1.0f, CGUIColor( 1.f,0.f,0.f,1.f) );
+		pRender->DrawRect( GetBoundArea(), 1.0f, 0.0f, CGUIColor( 1.f,0.f,0.f,1.f) );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::PushClipRect( IGUIInterfaceRender* pRender )
@@ -2381,15 +2256,16 @@ namespace guiex
 	/**
 	* @brief draw a string
 	*/
-	void	CGUIWidget::DrawString(
+	void CGUIWidget::DrawString(
 		IGUIInterfaceRender* pRender, 
 		const CGUIStringEx& strText, 
 		const CGUIRect& rDrawRect,
-		uint8 uTextAlignment,
+		ETextAlignmentHorz uTextAlignmentHorz,
+		ETextAlignmentVert uTextAlignmentVert,
 		int32 nStartPos,
 		int32 nEndPos)
 	{
-		pRender->GetFontRender()->DrawString(pRender, strText, rDrawRect, uTextAlignment, GetDerivedAlpha(), nStartPos, nEndPos);
+		pRender->GetFontRender()->DrawString(pRender, strText, rDrawRect, uTextAlignmentHorz, uTextAlignmentVert, GetDerivedAlpha(), nStartPos, nEndPos);
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWidget::DrawString(
@@ -2427,22 +2303,6 @@ namespace guiex
 		if( pAnimation )
 		{
 			pAnimation->Draw( pRender, rDestRect,0,GetDerivedAlpha() );
-		}
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWidget::DrawImage(IGUIInterfaceRender* pRender, 
-		const CGUIString& rName, 
-		const CGUIRect& rDestRect)
-	{
-		TMapImage::iterator itor= m_aMapImage.find(rName);
-		if( itor == m_aMapImage.end())
-		{
-			throw CGUIException("[CGUIWidget::RenderImage]: failed to render image <%s>!", rName.c_str());
-			return;
-		}
-		else
-		{
-			DrawImage(pRender, itor->second, rDestRect );
 		}
 	}
 	//------------------------------------------------------------------------------

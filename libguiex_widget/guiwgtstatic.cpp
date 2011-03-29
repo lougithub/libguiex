@@ -22,10 +22,9 @@ namespace guiex
 		InitStatic();
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtStatic::InitStatic()
+	void CGUIWgtStatic::InitStatic()
 	{
-		SetFocusable(false);
-		SetActivable(false);
+
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

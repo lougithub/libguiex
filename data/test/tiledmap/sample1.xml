@@ -26,12 +26,5 @@
         <property name="generate_update_event" type="bool" value="false" />
         <property name="tiledmap" type="CGUITiledMap" value="tiledmap_desert" />
         <property name="generate_parentsizechange_event" type="bool" value="false" />
-        <property name="textinfo" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
     </property>
  </guiex>

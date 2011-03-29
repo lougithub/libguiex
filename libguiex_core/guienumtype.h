@@ -22,20 +22,16 @@ namespace guiex
 {
 	enum ETextAlignmentHorz
 	{
-		eTextAlignment_Horz_Center = 0x00,
-		eTextAlignment_Horz_Left  = 0x01,
-		eTextAlignment_Horz_Right = 0x02,
+		eTextAlignment_Horz_Center = 0,
+		eTextAlignment_Horz_Left,
+		eTextAlignment_Horz_Right,
 	};
 	enum ETextAlignmentVert
 	{
-		eTextAlignment_Vert_Center = 0x00,
-		eTextAlignment_Vert_Up = 0x10,
-		eTextAlignment_Vert_Down = 0x20,
+		eTextAlignment_Vert_Center = 0,
+		eTextAlignment_Vert_Up,
+		eTextAlignment_Vert_Down,
 	};
-
-	const uint8 GUI_TA_CENTER = eTextAlignment_Horz_Center | eTextAlignment_Vert_Center;
-	const uint8 GUI_TA_HORIZON_MASK = 0x0F;
-	const uint8 GUI_TA_VERTICAL_MASK = 0xF0;
 
 	/**
 	* @brief image orientation

@@ -98,7 +98,8 @@ namespace guiex
 		virtual void DrawString(IGUIInterfaceRender* pRender, 
 			const CGUIStringEx& rString, 
 			const CGUIRect&	rStringRect,
-			const uint8& uTextAlignment,
+			ETextAlignmentHorz uTextAlignmentHorz,
+			ETextAlignmentVert uTextAlignmentVert,
 			real fAlpha,
 			int32 nStartPos = 0,
 			int32 nEndPos = -1)=0;

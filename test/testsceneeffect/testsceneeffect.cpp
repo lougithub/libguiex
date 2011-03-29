@@ -219,17 +219,17 @@ CMyCanvasLayer_DrawWidget::CMyCanvasLayer_DrawWidget( const char* szLayerName )
 	pWidget->SetParent( this );
 	pWidget->Open();
 
-	pWidget = CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtButton>( "btnToggleEffect", "");
-	pWidget->SetParent( this );
-	pWidget->SetImage( "BTN_NORMAL", "button_blue_normal" );
-	pWidget->SetImage( "BTN_HOVER", "button_blue_hover" );
-	pWidget->SetImage( "BTN_PUSH", "button_blue_push" );
-	pWidget->SetImage( "BTN_DISABLE", "button_blue_disable" );
-	pWidget->SetPosition( 0, 0 );
-	pWidget->SetTextContentUTF8("effect");
-	pWidget->Create();
-	pWidget->Open();
-	pWidget->RegisterNativeCallbackFunc( "OnMouseLeftClick", Btn_OnClick_ToggleEffect );
+	CGUIWgtButton* pButtonWidget = CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtButton>( "btnToggleEffect", "");
+	pButtonWidget->SetParent( this );
+	pButtonWidget->SetImage( "BTN_NORMAL", "button_blue_normal" );
+	pButtonWidget->SetImage( "BTN_HOVER", "button_blue_hover" );
+	pButtonWidget->SetImage( "BTN_PUSH", "button_blue_push" );
+	pButtonWidget->SetImage( "BTN_DISABLE", "button_blue_disable" );
+	pButtonWidget->SetPosition( 0, 0 );
+	pButtonWidget->SetTextContentUTF8("effect", CGUIWgtButton::eButtonState_Normal);
+	pButtonWidget->Create();
+	pButtonWidget->Open();
+	pButtonWidget->RegisterNativeCallbackFunc( "OnMouseLeftClick", Btn_OnClick_ToggleEffect );
 
 	GSystem->RegisterGlobalKeyReceiver( this );
 	SetAutoPlayAs( true );

@@ -46,122 +46,62 @@ namespace guiex
 		 */
 		virtual ~CGUIWgtMultiEditBox( );
 
-		/** 
-		* @brief set widget text
-		*/
-		virtual void SetTextContent(const CGUIStringW& rText);
+		void SetTextContent(const CGUIStringW& rText);
+		const CGUIStringW& GetTextContent( ) const;
 
-		/**
-		* @brief load widget config from property
-		*/
+		void SetTextInfo(const CGUIStringInfo& rInfo);
+		const CGUIStringInfo& GetTextInfo( ) const;
+
+		void SetTextContentUTF8( const CGUIString& rString);
+		CGUIString GetTextContentUTF8( ) const;
+
+		void SetTextAlignmentVert( ETextAlignmentVert eAlignment );
+		void SetTextAlignmentHorz( ETextAlignmentHorz eAlignment );
+		ETextAlignmentHorz GetTextAlignmentHorz( ) const;
+		ETextAlignmentVert GetTextAlignmentVert( ) const;
+
 		virtual int32 GenerateProperty( CGUIProperty& rProperty );
-
-		/** 
-		 * @brief process property
-		 */
 		virtual void ProcessProperty( const CGUIProperty& rProperty);
 
-		/** 
-		* @brief set text readonly
-		*/
 		void SetReadOnly(bool bRead);
-
-		/** 
-		* @brief is text readonly
-		*/
 		bool IsReadOnly() const;
 
-		/** 
-		* @brief set string area ratio
-		*/
 		void SetStringAreaRatio(const CGUIRect& rStringAreaRatio);
-
-		/** 
-		* @brief set selected text color
-		*/
 		void SetSelectedTextColor( const CGUIColor& rColor);
 
 		const CGUISize& GetCursorSize() const;
-
 		void SetCursorSize( const CGUISize& rSize );
 
 	protected:
-		/**
-		* @brief constructor
-		* for derived class
-		*/
 		CGUIWgtMultiEditBox( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
-		/// render
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
-
-		/**
-		* @brief update this widget, 
-		*/
 		virtual void UpdateSelf( real fDeltaTime );
-
 		virtual void RefreshSelf();
-
 		virtual void UpdateClientArea(void);
 
-		/// initialize editbox
 		void InitMultiEditbox();
 
-		/**
-		* @brief override the OnSetImage function
-		*/
 		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage );
 
 	protected://string related function
-		/// get position of cursor 
 		CGUIVector2 GetCursorPos();
-
-		/// get rect of cursor necessary for rendering
 		CGUIRect GetCursorRect();
-
-		/// clear selection-area
 		void ClearSelection();
-
-		///return the length of the current selection .
 		uint32 GetSelectionLength(void) const;
-
-		/// erase selected string
 		void EraseSelectedText( );
-
-		/**
-		* @brief Define the current selection for the Editbox
-		*/
 		void SetSelection(size_t start_pos, size_t end_pos);
-
-
-		/// set cursor index by pos and return it
 		uint32 SetCursorIndexByPos( const CGUIVector2& rPos);
 
-		/** 
-		 * @brief get the line number from a given index
-		 * @return the index of line, start from 0
-		 */
 		uint32 GetLineNumberFromIndex(uint32 index) const;
 
-		/// insert a string
 		void InsertString( const CGUIStringW& rText );
-
-		/// delete string
 		void DeleteString( int32 nBeginPos, int32 nEndPos);
-
-		/// get string width
 		real GetStringWidth(int32 nBeginPos, int32 nEndPos) const;
-
-		/** 
-		 * @brief set cursor index
-		 * @param nForceLineNum if it isn't -1, means the cursor index will locate at this line
-		 */
 		void SetCursorIndex( int32 nIdx, int32 nForceLineIdx = -1 );
 
-		/// format text
 		void FormatText_Imp();
 		void FormatText();
-
 
 	protected: //callback function
 		virtual uint32 OnGetFocus( CGUIEventNotification* pEvent );
@@ -207,6 +147,10 @@ namespace guiex
 
 		CGUIRect m_aStringAreaRatio; //!< the ratio of string area, the (0,0,1,1) equal whole client area
 
+		//text
+		CGUIStringEx m_strText;
+		ETextAlignmentHorz m_eTextAlignmentHorz;
+		ETextAlignmentVert m_eTextAlignmentVert;
 
 		//line break
 		/**

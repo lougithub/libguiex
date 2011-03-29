@@ -328,11 +328,12 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void IGUIFont_ft2::DrawString(IGUIInterfaceRender* pRender, 
 		const CGUIStringEx& rString, 
-			const CGUIRect&	rStringRect,
-			const uint8&	uTextAlignment,
-			real			fAlpha,
-			int32 nStartPos,
-			int32 nEndPos)
+		const CGUIRect&	rStringRect,
+		ETextAlignmentHorz uTextAlignmentHorz,
+		ETextAlignmentVert uTextAlignmentVert,
+		real fAlpha,
+		int32 nStartPos,
+		int32 nEndPos)
 	{
 		if( rString.m_strContent.empty())
 		{
@@ -345,37 +346,34 @@ namespace guiex
 		real fScaledStringWidth = GetStringWidth(rString);
 		real fScaledStringHeight = rString.GetStringInfo().m_nFontSize;
 
-		if(( uTextAlignment & GUI_TA_HORIZON_MASK) == eTextAlignment_Horz_Left )
+		switch( uTextAlignmentHorz )
 		{
-			//for horizon left
+		case eTextAlignment_Horz_Left:
 			aPos.x = rStringRect.m_fLeft;
-		}
-		else if(( uTextAlignment & GUI_TA_HORIZON_MASK) == eTextAlignment_Horz_Right )
-		{
-			//for horizon right
+			break;
+		case eTextAlignment_Horz_Right:
 			aPos.x = rStringRect.m_fRight-fScaledStringWidth;
-		}
-		else
-		{
-			//for horizon center
+			break;
+		case eTextAlignment_Horz_Center:
+		default:
 			aPos.x = rStringRect.m_fLeft+(rStringRect.GetWidth()-fScaledStringWidth)/2;
+			break;
 		}
 
-		if(( uTextAlignment & GUI_TA_VERTICAL_MASK) == eTextAlignment_Vert_Up )
+		switch( uTextAlignmentVert )
 		{
-			//for vertical up
+		case eTextAlignment_Vert_Up:
 			aPos.y = rStringRect.m_fTop;
-		}
-		else if(( uTextAlignment & GUI_TA_VERTICAL_MASK) == eTextAlignment_Vert_Down )
-		{
-			//for vertical down
+			break;
+		case eTextAlignment_Vert_Down:
 			aPos.y = rStringRect.m_fBottom - fScaledStringHeight;
-		}
-		else
-		{
-			//for vertical center
+			break;
+		case eTextAlignment_Vert_Center:
+		default:
 			aPos.y = rStringRect.m_fTop + (rStringRect.GetHeight() - fScaledStringHeight) / 2;
+			break;
 		}
+
 		if( nEndPos < 0 || nEndPos >int32( rString.m_strContent.size()))
 		{
 			nEndPos = rString.m_strContent.size();

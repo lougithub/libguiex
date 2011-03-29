@@ -60,13 +60,12 @@ namespace guiex
 			return NULL;
 		}
 		/// set property to widget
-		pWidget->SetProperty( *pPropertySet );
-		pWidget->LoadFromProperty();
+		pWidget->LoadFromProperty( *pPropertySet );
 		pWidget->Create();
 
-		if( !GSystem->IsEditorMode() )
+		if( GSystem->IsEditorMode() )
 		{
-			pWidget->ClearProperty();
+			pWidget->SetProperty( *pPropertySet );
 		}
 
 		return pWidget;

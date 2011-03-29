@@ -42,15 +42,6 @@
 			<property name="open_with_parent" type="bool" value="true"  category="Default"/>
 			<property name="generate_update_event" type="bool" value="false"  category="Default"/>
 			<property name="generate_parentsizechange_event" type="bool" value="false"  category="Default"/>
-			<property name="textinfo" type="CGUIStringInfo" value="" category="TextInfo">
-				<property name="size" type="uint16" value="16"/>
-				<property name="index" type="int16" value="0"/>
-				<property name="color" type="CGUIColor" value="255,255,255,255"/>
-			</property>
-			<property name="text" type="CGUIString" value="" category="TextInfo"/>
-			<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center"  category="TextInfo"/>
-			<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" category="TextInfo"/>
-
 			<property name="default_as" type="CGUIAs" value=""/>
 		</page>
 
@@ -129,6 +120,12 @@
 
 	<widget type="CGUIWgtButton" inherit="CGUIWidget">
 		<page name="Appearance">
+      <property name="text_normal" type="CGUIString" value=""  category="Button"/>
+      <property name="textinfo_normal" type="CGUIStringInfo"  category="Button">
+        <property name="size" type="uint16" value="16"/>
+        <property name="index" type="int16" value="0"/>
+        <property name="color" type="CGUIColor" value="255,255,255,255"/>
+      </property>
 			<property name="text_hover"	type="CGUIString" value=""  category="Button"/>
 			<property name="textinfo_hover" type="CGUIStringInfo"  category="Button">
 				<property name="size" type="uint16" value="16"/>
@@ -155,14 +152,19 @@
 			<property name="BTN_PUSH" type="CGUIImage" value="button_red_push"/>
 			<property name="BTN_DISABLE" type="CGUIImage" value="button_red_disable"/>
 			<property name="BTN_HOVER_OVERLAY" type="CGUIImage" value=""/>
-			<property name="BTN_PUSH_OVERLAY" type="CGUIImage" value=""/>
 		</page>
 	</widget>
 
 	<widget type="CGUIWgtStaticText" inherit="CGUIWidget">
 		<page name="Appearance">
 			<property name="multiline" type="bool" value="false" category="StaticText"/>
-		</page>
+      <property name="text" type="CGUIString" value=""  category="StaticText"/>
+      <property name="textinfo" type="CGUIStringInfo"  category="StaticText">
+        <property name="size" type="uint16" value="16"/>
+        <property name="index" type="int16" value="0"/>
+        <property name="color" type="CGUIColor" value="255,255,255,255"/>
+      </property>
+    </page>
 	</widget>
 
 
@@ -202,7 +204,16 @@
 			<property name="max_text_num" type="uint32" value="100"  category="EditBox"/>
 			<property name="readonly" type="bool" value="false"  category="EditBox"/>
 			<property name="cursor_size" type="CGUISize" value="2,16"  category="EditBox"/>
-		</page>
+      <property name="textinfo" type="CGUIStringInfo" value="" category="EditBox">
+        <property name="size" type="uint16" value="16"/>
+        <property name="index" type="int16" value="0"/>
+        <property name="color" type="CGUIColor" value="255,255,255,255"/>
+      </property>
+      <property name="text" type="CGUIString" value="" category="EditBox"/>
+      <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" category="EditBox"/>
+      <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" category="EditBox"/>
+
+    </page>
 		<page name="Image">
 			<property name="EDIT_BGFOCUS" type="CGUIImage" value=""/>
 			<property name="EDIT_BG" type="CGUIImage" value="edit_bg" must_exist="true"/>

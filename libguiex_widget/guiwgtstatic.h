@@ -39,8 +39,7 @@ namespace guiex
 
 	protected:
 		///initialize static
-		void	InitStatic();
-
+		void InitStatic();
 	};
 
 }//namespace guiex

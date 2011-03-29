@@ -18,7 +18,9 @@
 #include <libguiex_core/guimousecursor.h>
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guistringconvertor.h>
+#include <libguiex_core/guipropertymanager.h>
 #include <libguiex_core/guiwidgetmanager.h>
+#include <libguiex_core/guipropertyconvertor.h>
 #include <numeric>
 #include <algorithm>
 
@@ -74,6 +76,10 @@ namespace guiex
 		m_pBG = NULL;
 		m_pBGFocus = NULL;
 		m_pCursor = NULL;
+
+		//text
+		m_eTextAlignmentHorz = eTextAlignment_Horz_Left;
+		m_eTextAlignmentVert = eTextAlignment_Vert_Center;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtMultiEditBox::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
@@ -127,6 +133,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtMultiEditBox::RenderSelf(IGUIInterfaceRender* pRender)
 	{
+		CGUIWgtScrollbarContainer::RenderSelf(pRender);
+
 		////////////////////////////////////////////////////////////////////////////
 		//render bg
 		if( m_pBG )
@@ -167,10 +175,10 @@ namespace guiex
 				last <zzz> is not selected
 				*/
 
-				int16				nDrawState = 0;	//0 == draw first <xxx>, 1 == draw second <yyy>, 2 == draw last <zzz> 
-				CGUIStringInfo		aStringInfo = m_strText.GetStringInfo();
-				CGUIColor			aDefaultColor = aStringInfo.m_aColor;
-				uint32				nCurIdx = 0;
+				int16 nDrawState = 0;	//0 == draw first <xxx>, 1 == draw second <yyy>, 2 == draw last <zzz> 
+				CGUIStringInfo aStringInfo = m_strText.GetStringInfo();
+				CGUIColor aDefaultColor = aStringInfo.m_aColor;
+				uint32 nCurIdx = 0;
 
 				//has selection
 				for( TLineList::iterator itor = m_aLineList.begin();
@@ -224,12 +232,11 @@ namespace guiex
 					DrawString( pRender, m_strText, aPos, aLineInfo.m_nStartIdx, aLineInfo.m_nStartIdx+aLineInfo.m_nLength );
 					aPos.y += aLineInfo.m_nLineHeight;
 				}
-				
 			}
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtMultiEditBox::UpdateSelf( real fDeltaTime )
+	void CGUIWgtMultiEditBox::UpdateSelf( real fDeltaTime )
 	{
 		if( IsFocus())
 		{
@@ -246,8 +253,58 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtMultiEditBox::SetTextContent(const CGUIStringW& rText)
 	{
+		ClearSelection( );
 		DeleteString(0, -1);
 		InsertString( rText );
+	}
+	//------------------------------------------------------------------------------
+	const CGUIStringW& CGUIWgtMultiEditBox::GetTextContent( ) const
+	{
+		return m_strText.m_strContent;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtMultiEditBox::SetTextInfo(const CGUIStringInfo& rInfo)
+	{
+		m_strText.m_aStringInfo = rInfo;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIStringInfo& CGUIWgtMultiEditBox::GetTextInfo( ) const
+	{
+		return m_strText.m_aStringInfo;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtMultiEditBox::SetTextContentUTF8( const CGUIString& rString)
+	{
+		CGUIStringW strTemp;
+		MultiByteToWideChar( rString, strTemp);
+		SetTextContent( strTemp );
+	}
+	//------------------------------------------------------------------------------
+	CGUIString CGUIWgtMultiEditBox::GetTextContentUTF8( ) const
+	{
+		CGUIString aContentUTF8;
+		WideByteToMultiChar( m_strText.m_strContent, aContentUTF8 );
+		return aContentUTF8;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtMultiEditBox::SetTextAlignmentVert( ETextAlignmentVert eAlignment )
+	{
+		m_eTextAlignmentVert = eAlignment;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtMultiEditBox::SetTextAlignmentHorz( ETextAlignmentHorz eAlignment )
+	{
+		m_eTextAlignmentHorz = eAlignment;
+	}
+	//------------------------------------------------------------------------------
+	ETextAlignmentHorz CGUIWgtMultiEditBox::GetTextAlignmentHorz( ) const
+	{
+		return m_eTextAlignmentHorz;
+	}
+	//------------------------------------------------------------------------------
+	ETextAlignmentVert CGUIWgtMultiEditBox::GetTextAlignmentVert( ) const
+	{
+		return m_eTextAlignmentVert;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtMultiEditBox::SetSelectedTextColor( const CGUIColor& rColor)
@@ -963,34 +1020,85 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int32 CGUIWgtMultiEditBox::GenerateProperty( CGUIProperty& rProperty )
 	{
-		return CGUIWidget::GenerateProperty( rProperty );
+		if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "readonly" )
+		{
+			ValueToProperty( IsReadOnly(), rProperty);
+		}
+		else if( rProperty.GetType() == ePropertyType_Size && rProperty.GetName() == "cursor_size" )
+		{
+			ValueToProperty( GetCursorSize(), rProperty);
+		}
+		else if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo" )
+		{
+			ValueToProperty( m_strText.GetStringInfo(), rProperty );
+		}
+		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text" )
+		{
+			CGUIString aStrText;
+			WideByteToMultiChar( m_strText.GetContent(), aStrText);
+			rProperty.SetValue(aStrText);
+		}
+		else if( rProperty.GetType() == ePropertyType_TextAlignmentHorz && rProperty.GetName() == "text_alignment_horz" )
+		{
+			ValueToProperty( GetTextAlignmentHorz(), rProperty);
+		}
+		else if( rProperty.GetType() == ePropertyType_TextAlignmentVert && rProperty.GetName() == "text_alignment_vert" )
+		{
+			ValueToProperty( GetTextAlignmentVert(), rProperty);
+		}
+		else
+		{
+			return CGUIWgtScrollbarContainer::GenerateProperty( rProperty );
+		}
+		return 0;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtMultiEditBox::ProcessProperty( const CGUIProperty& rProperty )
 	{
-		CGUIWidget::ProcessProperty( rProperty );
-		//CGUIWgtScrollbarContainer::ProcessProperty(pProperty);
-
-
-		//////////////////////////////////////////////////////////////////////////////////////////////////////
-		////property for string area ratio
-		///*
-		//*<property name="STRING_AREA_RATIO" type="CGUIRect" value="0.0,0.0,1.0,1.0" />
-		//*/
-		//if( pProperty->GetName() == "STRING_AREA_RATIO")
-		//{
-		//	SetStringAreaRatio(CGUIStringConvertor::StringToRect(pProperty->GetValue()));
-		//}
-
-		//////////////////////////////////////////////////////////////////////////////////////////////////////
-		////property for readonly
-		///*
-		//*<property name="READONLY" type="BOOL" value="false" />
-		//*/
-		//else if( pProperty->GetName() == "READONLY")
-		//{
-		//	SetReadOnly(StringToValue(pProperty->GetValue()));
-		//}
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//property for readonly
+		if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "readonly")
+		{
+			bool bValue = false;
+			PropertyToValue( rProperty, bValue);
+			SetReadOnly( bValue );
+		}
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//property for cursor size
+		else if( rProperty.GetType() == ePropertyType_Size && rProperty.GetName() == "cursor_size")
+		{
+			CGUISize aValue;
+			PropertyToValue( rProperty, aValue);
+			SetCursorSize( aValue );
+		}
+		else if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo")
+		{
+			CGUIStringInfo aInfo;
+			PropertyToValue( rProperty, aInfo);
+			SetTextInfo(aInfo);
+		}
+		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text")
+		{
+			CGUIStringEx aStrText;
+			MultiByteToWideChar(rProperty.GetValue(), aStrText.m_strContent);
+			SetTextContent(aStrText.GetContent());
+		}		
+		else if( rProperty.GetType() == ePropertyType_TextAlignmentHorz && rProperty.GetName() == "text_alignment_horz" )
+		{
+			ETextAlignmentHorz eTextAlignmentH = eTextAlignment_Horz_Center;
+			PropertyToValue( rProperty, eTextAlignmentH );
+			SetTextAlignmentHorz( eTextAlignmentH );
+		}
+		else if( rProperty.GetType() == ePropertyType_TextAlignmentVert && rProperty.GetName() == "text_alignment_vert" )
+		{
+			ETextAlignmentVert eTextAlignmentV = eTextAlignment_Vert_Center;
+			PropertyToValue( rProperty, eTextAlignmentV );
+			SetTextAlignmentVert( eTextAlignmentV );
+		}
+		else
+		{
+			CGUIWgtScrollbarContainer::ProcessProperty( rProperty );
+		}
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

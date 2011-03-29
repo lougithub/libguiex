@@ -6,11 +6,6 @@
 		<property name="activable" type="bool" value="false" />
 		<property name="open_with_parent" type="bool" value="true" />
 		<property name="generate_update_event" type="bool" value="false" />
-		<property name="textinfo" type="CGUIStringInfo">
-			<property name="size" type="uint16" value="14" />
-			<property name="index" type="int16" value="0" />
-			<property name="color" type="CGUIColor" value="255,255,0,255" />
-		</property>
 		<property name="size" type="CGUIWidgetSize">
 			<property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
 			<property name="value" type="CGUISize" value="1,1" />
@@ -21,8 +16,6 @@
 		</property>
 		<property name="hitable" type="bool" value="false" />
 		<property name="disable" type="bool" value="false" />
-		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
 		<property name="OnOpen" type="CGUIEvent" value="node_main_onopen" />
 		<property name="OnLoad" type="CGUIEvent" value="node_main_onload" />
 		<property name="OnUIEvent" type="CGUIEvent" value="node_main_onuievent" />
@@ -78,9 +71,9 @@
 		<property name="activable" type="bool" value="false" />
 		<property name="open_with_parent" type="bool" value="true" />
 		<property name="generate_update_event" type="bool" value="true" />
-		<property name="text" type="CGUIString" value="login" />
+		<property name="text_normal" type="CGUIString" value="login" />
 		<property name="text_offset" type="CGUIVector2" value="0,-5" />
-		<property name="textinfo" type="CGUIStringInfo">
+		<property name="textinfo_normal" type="CGUIStringInfo">
 			<property name="size" type="uint16" value="14" />
 			<property name="index" type="int16" value="0" />
 			<property name="color" type="CGUIColor" value="255,255,0,255" />
@@ -214,13 +207,6 @@
 		<property name="disable" type="bool" value="false" />
 		<property name="open_with_parent" type="bool" value="true" />
 		<property name="generate_update_event" type="bool" value="false" />
-		<property name="textinfo" type="CGUIStringInfo">
-			<property name="size" type="uint16" value="14" />
-			<property name="index" type="int16" value="0" />
-			<property name="color" type="CGUIColor" value="255,255,0,255" />
-		</property>
-		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
 	</property>
 
 	<property name="Glues-BlizzardLogo_2" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
@@ -244,13 +230,6 @@
 		<property name="disable" type="bool" value="false" />
 		<property name="open_with_parent" type="bool" value="true" />
 		<property name="generate_update_event" type="bool" value="false" />
-		<property name="textinfo" type="CGUIStringInfo">
-			<property name="size" type="uint16" value="14" />
-			<property name="index" type="int16" value="0" />
-			<property name="color" type="CGUIColor" value="255,255,0,255" />
-		</property>
-		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
 	</property>
 	<property name="Glues-WoW-TaiwanWotLKLogo" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
 		<property name="parent" type="CGUIString" value="node_main" />
@@ -272,13 +251,6 @@
 		<property name="disable" type="bool" value="false" />
 		<property name="open_with_parent" type="bool" value="true" />
 		<property name="generate_update_event" type="bool" value="false" />
-		<property name="textinfo" type="CGUIStringInfo">
-			<property name="size" type="uint16" value="14" />
-			<property name="index" type="int16" value="0" />
-			<property name="color" type="CGUIColor" value="255,255,0,255" />
-		</property>
-		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
 	</property>
 	<property name="btn_quit" type="CGUIWidgetDefine" value="CGUIWgtButton">
 		<property name="parent" type="CGUIString" value="node_main" />
@@ -303,12 +275,12 @@
 		<property name="disable" type="bool" value="false" />
 		<property name="open_with_parent" type="bool" value="true" />
 		<property name="generate_update_event" type="bool" value="true" />
-		<property name="textinfo" type="CGUIStringInfo">
+		<property name="textinfo_normal" type="CGUIStringInfo">
 			<property name="size" type="uint16" value="14" />
 			<property name="index" type="int16" value="0" />
 			<property name="color" type="CGUIColor" value="255,255,0,255" />
 		</property>
-		<property name="text" type="CGUIString" value="quit" />
+		<property name="text_normal" type="CGUIString" value="quit" />
 		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
 		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
 		<property name="text_offset" type="CGUIVector2" value="0,-2" />
@@ -351,12 +323,12 @@
 		<property name="disable" type="bool" value="false" />
 		<property name="open_with_parent" type="bool" value="true" />
 		<property name="generate_update_event" type="bool" value="true" />
-		<property name="textinfo" type="CGUIStringInfo">
+		<property name="textinfo_normal" type="CGUIStringInfo">
 			<property name="size" type="uint16" value="14" />
 			<property name="index" type="int16" value="0" />
 			<property name="color" type="CGUIColor" value="255,255,0,255" />
 		</property>
-		<property name="text" type="CGUIString" value="setting" />
+		<property name="text_normal" type="CGUIString" value="setting" />
 		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
 		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
 		<property name="text_offset" type="CGUIVector2" value="0,-2" />
@@ -399,12 +371,12 @@
 		<property name="disable" type="bool" value="false" />
 		<property name="open_with_parent" type="bool" value="true" />
 		<property name="generate_update_event" type="bool" value="true" />
-		<property name="textinfo" type="CGUIStringInfo">
+		<property name="textinfo_normal" type="CGUIStringInfo">
 			<property name="size" type="uint16" value="14" />
 			<property name="index" type="int16" value="0" />
 			<property name="color" type="CGUIColor" value="255,255,0,255" />
 		</property>
-		<property name="text" type="CGUIString" value="animation" />
+		<property name="text_normal" type="CGUIString" value="animation" />
 		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
 		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
 		<property name="text_offset" type="CGUIVector2" value="0,-2" />
@@ -447,12 +419,12 @@
 		<property name="disable" type="bool" value="false" />
 		<property name="open_with_parent" type="bool" value="true" />
 		<property name="generate_update_event" type="bool" value="true" />
-		<property name="textinfo" type="CGUIStringInfo">
+		<property name="textinfo_normal" type="CGUIStringInfo">
 			<property name="size" type="uint16" value="14" />
 			<property name="index" type="int16" value="0" />
 			<property name="color" type="CGUIColor" value="255,255,0,255" />
 		</property>
-		<property name="text" type="CGUIString" value="produce" />
+		<property name="text_normal" type="CGUIString" value="produce" />
 		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
 		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
 		<property name="text_offset" type="CGUIVector2" value="0,-2" />
@@ -495,12 +467,12 @@
 		<property name="disable" type="bool" value="false" />
 		<property name="open_with_parent" type="bool" value="true" />
 		<property name="generate_update_event" type="bool" value="false" />
-		<property name="textinfo" type="CGUIStringInfo">
+		<property name="textinfo_normal" type="CGUIStringInfo">
 			<property name="size" type="uint16" value="14" />
 			<property name="index" type="int16" value="0" />
 			<property name="color" type="CGUIColor" value="255,255,0,255" />
 		</property>
-		<property name="text" type="CGUIString" value="service" />
+		<property name="text_normal" type="CGUIString" value="service" />
 		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
 		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
 		<property name="text_offset" type="CGUIVector2" value="0,-2" />
@@ -572,12 +544,12 @@
 		<property name="disable" type="bool" value="false" />
 		<property name="open_with_parent" type="bool" value="true" />
 		<property name="generate_update_event" type="bool" value="true" />
-		<property name="textinfo" type="CGUIStringInfo">
+		<property name="textinfo_normal" type="CGUIStringInfo">
 			<property name="size" type="uint16" value="14" />
 			<property name="index" type="int16" value="0" />
 			<property name="color" type="CGUIColor" value="255,255,0,255" />
 		</property>
-		<property name="text" type="CGUIString" value="account" />
+		<property name="text_normal" type="CGUIString" value="account" />
 		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
 		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
 		<property name="text_offset" type="CGUIVector2" value="0,-2" />
@@ -620,12 +592,12 @@
 		<property name="disable" type="bool" value="false" />
 		<property name="open_with_parent" type="bool" value="true" />
 		<property name="generate_update_event" type="bool" value="true" />
-		<property name="textinfo" type="CGUIStringInfo">
+		<property name="textinfo_normal" type="CGUIStringInfo">
 			<property name="size" type="uint16" value="14" />
 			<property name="index" type="int16" value="0" />
 			<property name="color" type="CGUIColor" value="255,255,0,255" />
 		</property>
-		<property name="text" type="CGUIString" value="website" />
+		<property name="text_normal" type="CGUIString" value="website" />
 		<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
 		<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
 		<property name="text_offset" type="CGUIVector2" value="0,-2" />

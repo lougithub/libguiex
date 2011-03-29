@@ -31,13 +31,6 @@ namespace guiex
 		void SetUserData(void* pData);
 		void* GetUserData() const;
 
-		////////////////////////////////////////////////////////////////////////////
-		// text about function
-		////////////////////////////////////////////////////////////////////////////
-		virtual void SetTextColor(const CGUIColor& rColor);
-		virtual bool IsTextContentEmpty( ) const;
-		void SetTextContentUTF8( const CGUIString& rString);
-		CGUIString GetTextContentUTF8() const;
 
 		////////////////////////////////////////////////////////////////////////////
 		// flag
@@ -256,23 +249,18 @@ namespace guiex
 	//============================================================================//
 	// CGUIWgtStaticImage
 	//============================================================================// 
-	class CGUIWgtStatic : public CGUIWidget
-	{
-	};
-
-
-	//============================================================================//
-	// CGUIWgtStaticImage
-	//============================================================================// 
-	class CGUIWgtStaticImage : public CGUIWgtStatic
+	class CGUIWgtStaticImage : public CGUIWidget
 	{
 	};
 
 	//============================================================================//
 	// CGUIWgtStaticText
 	//============================================================================// 
-	class CGUIWgtStaticText : public CGUIWgtStatic
+	class CGUIWgtStaticText : public CGUIWidget
 	{
+	public:
+		void SetTextContentUTF8( const CGUIString& rString);
+		CGUIString GetTextContentUTF8() const;
 	};
 
 	//============================================================================//
@@ -280,6 +268,9 @@ namespace guiex
 	//============================================================================// 
 	class CGUIWgtEditBox : public CGUIWidget
 	{
+	public:
+		void SetTextContentUTF8( const CGUIString& rString);
+		CGUIString GetTextContentUTF8() const;
 	};
 
 

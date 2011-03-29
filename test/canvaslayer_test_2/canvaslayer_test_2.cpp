@@ -81,10 +81,6 @@ CGUIFrameworkBase* CreateFramework( )
 }
 
 
-
-
-
-
 //------------------------------------------------------------------------------
 CMyCanvasLayer_DrawWidget::CMyCanvasLayer_DrawWidget( const char* szLayerName )
 :CGUICanvasLayer( szLayerName )

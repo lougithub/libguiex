@@ -11,7 +11,7 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_widget/guiwgtstatic.h>
+#include <libguiex_core/guiwidget.h>
 #include <libguiex_core/guiwidgetgenerator.h>
 
 
@@ -26,7 +26,7 @@ namespace guiex
 	* used image name:
 	*		-BGIMAGE
 	*/
-	class GUIEXPORT CGUIWgtStaticImage : public CGUIWgtStatic
+	class GUIEXPORT CGUIWgtStaticImage : public CGUIWidget
 	{
 	public:
 		CGUIWgtStaticImage( const CGUIString& rName, const CGUIString& rSceneName );
