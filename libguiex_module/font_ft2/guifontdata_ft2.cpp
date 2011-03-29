@@ -21,17 +21,6 @@
 #include <libguiex_core/guilogmsgmanager.h>
 #include <libguiex_core/guiinterfacemanager.h>
 
-
-//============================================================================//
-// define
-//============================================================================// 
-
-
-//============================================================================//
-// class
-//============================================================================// 
-
-
 //============================================================================//
 // function
 //============================================================================// 
@@ -41,12 +30,11 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUICharData_ft2::CGUICharData_ft2()
 		:m_pTexture(NULL)
-		,m_nLeftBearing(0)
-		,m_nBottomBearing(0)
+		,m_fLeftBearing(0)
 		,m_nGlyphIdx(0)
-		,m_nBitmapWidth(0)
-		,m_nBitmapHeight(0)
-		,m_nTopBearing(0)
+		,m_fBitmapWidth(0)
+		,m_fBitmapHeight(0)
+		,m_fTopBearing(0)
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -121,7 +109,7 @@ namespace guiex
 			return -1;
 		}
 #else
-		IGUIInterfaceFileSys* pFileSys = GUI_GET_INTERFACE(IGUIInterfaceFileSys, "IGUIFileSys");
+		IGUIInterfaceFileSys* pFileSys = CGUIInterfaceManager::GetInterfaceFileSys();
 		CGUIDataChunk aDataChunk;
 		if( 0 != pFileSys->ReadFile( strFullPath, aDataChunk ))
 		{
@@ -138,10 +126,9 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIFontData_ft2::DoUnload()
+	void CGUIFontData_ft2::DoUnload()
 	{
-		GUI_TRACE(GUI_FORMAT( "[CGUIFontData_ft2::DoUnload]:\n   Unload Font Face <%d>",
-			m_nFontIndex));
+		GUI_TRACE(GUI_FORMAT( "[CGUIFontData_ft2::DoUnload]:\n   Unload Font Face <%d>", m_nFontIndex));
 
 		//remove data
 		for( TMapSizeChars::iterator itor = m_mapSizeChars.begin();

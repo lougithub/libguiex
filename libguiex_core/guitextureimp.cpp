@@ -25,6 +25,7 @@ namespace guiex
 	CGUITextureImp::CGUITextureImp(IGUIInterfaceRender* pRender)
 		:m_pRender(pRender)
 		,m_pTexture(NULL)
+		,m_ePixelFormat(GUI_PF_UNKNOEWN)
 	{
 		GUI_ASSERT( pRender, "no render" );
 	}

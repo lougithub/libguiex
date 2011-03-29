@@ -103,7 +103,7 @@
         <property name="generate_update_event" type="bool" value="false" />
         <property name="generate_parentsizechange_event" type="bool" value="false" />
         <property name="textinfo_normal" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="10" />
+            <property name="size" type="uint16" value="8" />
             <property name="index" type="int16" value="0" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
@@ -125,7 +125,7 @@
             <property name="index" type="int16" value="0" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
-        <property name="text_offset" type="CGUIVector2" value="0,-4" />
+        <property name="text_offset" type="CGUIVector2" value="0,0" />
         <property name="OnMouseLeftClick" type="CGUIEvent" value="toggle_wireframe" />
     </property>
     <property name="btn_toggle_extrainfo" type="CGUIWidgetDefine" value="CGUIWgtButton">
@@ -160,7 +160,7 @@
         <property name="generate_update_event" type="bool" value="false" />
         <property name="generate_parentsizechange_event" type="bool" value="false" />
         <property name="textinfo_normal" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="10" />
+            <property name="size" type="uint16" value="8" />
             <property name="index" type="int16" value="0" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
@@ -182,7 +182,7 @@
             <property name="index" type="int16" value="0" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
-        <property name="text_offset" type="CGUIVector2" value="0,-4" />
+        <property name="text_offset" type="CGUIVector2" value="0,0" />
         <property name="OnMouseLeftClick" type="CGUIEvent" value="toggle_extrainfo" />
     </property>
     <property name="btn_toggle_screenrotate" type="CGUIWidgetDefine" value="CGUIWgtButton">
@@ -217,7 +217,7 @@
         <property name="generate_update_event" type="bool" value="false" />
         <property name="generate_parentsizechange_event" type="bool" value="false" />
         <property name="textinfo_normal" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="10" />
+            <property name="size" type="uint16" value="8" />
             <property name="index" type="int16" value="0" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
@@ -239,8 +239,7 @@
             <property name="index" type="int16" value="0" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
-        <property name="text_offset" type="CGUIVector2" value="0,-4" />
+        <property name="text_offset" type="CGUIVector2" value="0,0" />
         <property name="OnMouseLeftClick" type="CGUIEvent" value="toggle_rotate" />
     </property>
-
 </guiex>

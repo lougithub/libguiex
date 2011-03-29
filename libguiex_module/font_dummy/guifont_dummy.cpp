@@ -152,7 +152,7 @@ namespace guiex
 		{
 			
 			CGUIRect aCharRect(
-							   CGUIVector2(aPos.x, aPos.y+real(rInfo.m_nFontSize)),
+							   CGUIVector2(aPos.x, aPos.y),
 							   CGUISize(rInfo.m_nFontSize,rInfo.m_nFontSize));
 			
 			//dest area size
@@ -189,7 +189,7 @@ namespace guiex
 		for( int32 i=nStartPos; i<nEndPos; ++i)
 		{
 			CGUIRect aCharRect(
-							   CGUIVector2(aPos.x, aPos.y+rInfo.m_nFontSize),
+							   CGUIVector2(aPos.x, aPos.y),
 							   CGUISize(rInfo.m_nFontSize,rInfo.m_nFontSize));
 			
 			pRender->DrawRect( aCharRect, 1, 0,

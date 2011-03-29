@@ -56,8 +56,10 @@ namespace guiex
 	*/
 	enum EGuiPixelFormat
 	{
+		GUI_PF_UNKNOEWN = 0,
+
 		/// 2 byte pixel format, 1 byte luminance, 1 byte alpha
-		GUI_PF_LUMINANCE_ALPHA_16 = 0,
+		GUI_PF_LUMINANCE_ALPHA_16,
 		
 		//1 byte pixel format
 		GUI_PF_LUMINANCE_8,

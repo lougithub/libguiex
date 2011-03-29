@@ -37,7 +37,6 @@ namespace guiex
 		,m_nTextureWidth(0)
 		,m_nTextureHeight(0)
 		,m_nBytesPerPixel(0)
-		,m_ePixelFormat(GUI_PF_RGBA_32)
 	{
 		// generate a OGL texture that we will use.
 		glGenTextures(1, &m_ogltexture);
@@ -163,38 +162,38 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUITexture_opengl_base::CopySubImage(uint32 nX, uint32 nY, uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat, uint8* pBuffer)
+	void CGUITexture_opengl_base::CopySubImage(uint32 nX, uint32 nY, uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat, uint8* pBuffer)
 	{
+		GUI_ASSERT( m_ePixelFormat == ePixelFormat, "invalid pixef format" );
+
 		glBindTexture( GL_TEXTURE_2D, m_ogltexture );
 		//glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
 		switch(ePixelFormat)
 		{
 		case GUI_PF_RGBA_32:
+			glTexSubImage2D(GL_TEXTURE_2D, 0,nX,nY,nWidth, nHeight,GL_RGBA, GL_UNSIGNED_BYTE,pBuffer);
 			break;
 
 		case GUI_PF_ARGB_32:
+			for( uint32 i=0; i<nHeight; ++i)
 			{
-				for( uint32 i=0; i<nHeight; ++i)
+				for( uint32 j=0; j<nWidth; ++j)
 				{
-					for( uint32 j=0; j<nWidth; ++j)
-					{
-						uint32 nStartIdx = i*nWidth * 4+j*4;
-						std::swap(pBuffer[nStartIdx+0], pBuffer[nStartIdx+2]);
-					}	
-				}
+					uint32 nStartIdx = i*nWidth * 4+j*4;
+					std::swap(pBuffer[nStartIdx+0], pBuffer[nStartIdx+2]);
+				}	
 			}
+			glTexSubImage2D(GL_TEXTURE_2D, 0,nX,nY,nWidth, nHeight,GL_RGBA, GL_UNSIGNED_BYTE,pBuffer);
 			break;
 
-		//case GUI_PF_LUMINANCE_ALPHA_16:
-		//	glTexSubImage2D(GL_TEXTURE_2D, 0,nX,nY,nWidth, nHeight,GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE,pBuffer);
-		//	break;
+		case GUI_PF_LUMINANCE_ALPHA_16:
+			glTexSubImage2D(GL_TEXTURE_2D, 0,nX,nY,nWidth, nHeight,GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE,pBuffer);
+			break;
 
 		default:
 			throw CGUIException("[CGUITexture_opengl_base::CopySubImage]: unsupported pixel format;");
 		}
-			
-		glTexSubImage2D(GL_TEXTURE_2D, 0,nX,nY,nWidth, nHeight,GL_RGBA, GL_UNSIGNED_BYTE,pBuffer);
 
 
 		int errorCode = glGetError();
@@ -206,7 +205,7 @@ namespace guiex
 		//glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUITexture_opengl_base::SetOpenglTextureSize(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat)
+	void CGUITexture_opengl_base::SetOpenglTextureSize(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat)
 	{
 		glBindTexture(GL_TEXTURE_2D, m_ogltexture);
 
@@ -218,12 +217,10 @@ namespace guiex
 			m_nBytesPerPixel = 4;
 			break;
 
-		//case GUI_PF_LUMINANCE_ALPHA_16:
-		//	buff = new uint8[nWidth * nHeight * 2];
-		//	glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, nWidth, nHeight, 0, GL_LUMINANCE_ALPHA ,GL_UNSIGNED_BYTE, buff);
-		//	m_nBytesPerPixel = 2;
-		//	m_ePixelFormat = GUI_PF_LUMINANCE_ALPHA_16;
-		//	break;
+		case GUI_PF_LUMINANCE_ALPHA_16:
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, nWidth, nHeight, 0, GL_LUMINANCE_ALPHA ,GL_UNSIGNED_BYTE, NULL);
+			m_nBytesPerPixel = 2;
+			break;
 
 		default:
 			throw CGUIException("[CGUITexture_opengl_base::LoadFromMemory]: unsupported pixel format;");

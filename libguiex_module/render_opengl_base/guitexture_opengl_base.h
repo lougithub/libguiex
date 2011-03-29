@@ -96,7 +96,6 @@ namespace guiex
 		uint16 m_nTextureHeight;
 
 		uint8 m_nBytesPerPixel;	//!< how many bytes does one pixel contain
-		EGuiPixelFormat m_ePixelFormat; //!< pixel format
 	};
 
 

@@ -75,7 +75,7 @@
         </property>
         <property name="anchor" type="CGUIVector2" value="0.5,0" />
         <property name="textinfo_normal" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
+            <property name="size" type="uint16" value="12" />
             <property name="index" type="int16" value="0" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
@@ -96,7 +96,7 @@
             <property name="value" type="CGUISize" value="148,37" />
         </property>
         <property name="movable" type="bool" value="false" />
-        <property name="text_offset" type="CGUIVector2" value="0,-3" />
+        <property name="text_offset" type="CGUIVector2" value="0,0" />
         <property name="textinfo_push" type="CGUIStringInfo">
             <property name="size" type="uint16" value="16" />
             <property name="index" type="int16" value="0" />

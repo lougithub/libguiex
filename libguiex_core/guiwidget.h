@@ -502,7 +502,6 @@ namespace guiex
 		///////////////////////////////////////////////////////////////////////
 		CGUIWidgetPosition m_aWidgetPosition;
 		CGUIWidgetSize m_aWidgetSize;
-		CGUIQuaternion m_aQuaternion;
 		CGUIVector2	m_aWidgetAnchorPoint; //anchor point, the value is from 0.0f to 1.0f
 
 		CGUIRect m_aBoundArea; //widget bound, local

@@ -116,10 +116,11 @@
 	</widget>
 
 
-
-
 	<widget type="CGUIWgtButton" inherit="CGUIWidget">
 		<page name="Appearance">
+      <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" category="EditBox"/>
+      <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" category="EditBox"/>
+      <property name="text_offset" type="CGUIVector2" value="0,0"  category="Button"/>
       <property name="text_normal" type="CGUIString" value=""  category="Button"/>
       <property name="textinfo_normal" type="CGUIStringInfo"  category="Button">
         <property name="size" type="uint16" value="16"/>
@@ -144,7 +145,6 @@
 				<property name="index" type="int16" value="0"/>
 				<property name="color" type="CGUIColor" value="255,255,255,255"/>
 			</property>
-			<property name="text_offset" type="CGUIVector2" value="0,0"  category="Button"/>
 		</page>
 		<page name="Image">
 			<property name="BTN_NORMAL" type="CGUIImage" value="button_red_normal" must_exist="true"/>
@@ -158,6 +158,8 @@
 	<widget type="CGUIWgtStaticText" inherit="CGUIWidget">
 		<page name="Appearance">
 			<property name="multiline" type="bool" value="false" category="StaticText"/>
+      <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" category="EditBox"/>
+      <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" category="EditBox"/>
       <property name="text" type="CGUIString" value=""  category="StaticText"/>
       <property name="textinfo" type="CGUIStringInfo"  category="StaticText">
         <property name="size" type="uint16" value="16"/>

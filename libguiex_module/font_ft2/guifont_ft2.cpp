@@ -33,7 +33,7 @@
 
 
 #include <ft2build.h>
-#include FT_FREETYPE_H
+#include <freetype/freetype.h>
 
 //============================================================================//
 // define
@@ -96,7 +96,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	IGUIFont_ft2::EnableKerning( bool bEnable )
+	void IGUIFont_ft2::EnableKerning( bool bEnable )
 	{
 		m_bEnableKerning = bEnable;
 	}
@@ -112,11 +112,10 @@ namespace guiex
 			//line break
 			CGUICharData_ft2 *pCharData = new CGUICharData_ft2;	
 			pCharData->m_pTexture = NULL;
-			pCharData->m_nBitmapWidth = 0;
-			pCharData->m_nBitmapHeight = 0;
-			pCharData->m_nLeftBearing = 0;
-			pCharData->m_nBottomBearing = 0;
-			pCharData->m_nTopBearing = 0;
+			pCharData->m_fBitmapWidth = 0;
+			pCharData->m_fBitmapHeight = 0;
+			pCharData->m_fLeftBearing = 0;
+			pCharData->m_fTopBearing = 0;
 			pCharData->m_aSize.m_fWidth = 0;
 			pCharData->m_aSize.m_fHeight = real(nSize);
 			pCharData->m_nGlyphIdx = 0;
@@ -131,11 +130,14 @@ namespace guiex
 			//normal text
 
 			//set size
+#if 0
 			if( FT_Set_Pixel_Sizes( pFontFace->m_aFtFace, nSize, nSize) )
+#else
+			if( FT_Set_Char_Size( pFontFace->m_aFtFace, nSize << 6, nSize << 6, 96, 96) )
+#endif
 			{
 				throw CGUIException( "[IGUIFont_ft2::LoadFontFace]:Could not set char size!");
 			}
-
 			//load this font
 #if 0
 			if( FT_Load_Char( pFontFace->m_aFtFace, charCode, FT_LOAD_RENDER ))
@@ -145,7 +147,7 @@ namespace guiex
 #else
 			uint32 uGlyphIdx = FT_Get_Char_Index( pFontFace->m_aFtFace, charCode );
 
-			if( FT_Load_Glyph( pFontFace->m_aFtFace, uGlyphIdx, FT_LOAD_DEFAULT ))
+			if( FT_Load_Glyph( pFontFace->m_aFtFace, uGlyphIdx, /*FT_LOAD_DEFAULT*/FT_LOAD_RENDER ))
 			{
 				throw CGUIException("[IGUIFont_ft2::GetFont]:Failed to load glyph, the code is <%x>!", charCode );
 			}
@@ -156,24 +158,20 @@ namespace guiex
 			}
 #endif
 
-			FT_Bitmap bitmap = pFontFace->m_aFtFace->glyph->bitmap;
-			FT_GlyphSlot slot = pFontFace->m_aFtFace->glyph;
+			const FT_GlyphSlot& glyph = pFontFace->m_aFtFace->glyph;
 
 			//get information
 			CGUICharData_ft2 *pCharData = new CGUICharData_ft2;	
-			pCharData->m_nBitmapWidth = bitmap.width;
-			pCharData->m_nBitmapHeight = bitmap.rows;
-			int textureWidth = CGUITexture::ConvertToTextureSize(pCharData->m_nBitmapWidth);
-			int textureHeight = CGUITexture::ConvertToTextureSize(pCharData->m_nBitmapHeight);
-			pCharData->m_nLeftBearing = slot->bitmap_left;
-			pCharData->m_nBottomBearing = -( bitmap.rows - slot->bitmap_top );
-			pCharData->m_nTopBearing = slot->bitmap_top;
-			pCharData->m_aSize.m_fWidth = real(slot->advance.x>>6);
+			pCharData->m_fBitmapWidth = real(glyph->bitmap.width);
+			pCharData->m_fBitmapHeight = real(glyph->bitmap.rows);
+			pCharData->m_fLeftBearing = real(glyph->bitmap_left);
+			pCharData->m_fTopBearing = real(glyph->bitmap_top);
+			pCharData->m_aSize.m_fWidth = real(glyph->advance.x>>6);
 			pCharData->m_aSize.m_fHeight = real(nSize);
 			pCharData->m_nGlyphIdx = uGlyphIdx;
 
 			//get texture
-			if( pFont->m_nX + nSize >= GUI_FT2_TEXTURE_SIZE)
+			if( pFont->m_nX + glyph->bitmap.width >= GUI_FT2_TEXTURE_SIZE)
 			{
 				pFont->m_nX = 0;
 				pFont->m_nY += nSize;
@@ -181,42 +179,41 @@ namespace guiex
 			if( pFont->m_vecTexture.empty() || pFont->m_nY + nSize > GUI_FT2_TEXTURE_SIZE )
 			{
 				pFont->m_nX = pFont->m_nY = 0;
-				CGUITexture* pNewTexture = CGUITextureManager::Instance()->CreateTexture(GUI_FT2_TEXTURE_SIZE,GUI_FT2_TEXTURE_SIZE,GUI_PF_RGBA_32);
+				CGUITexture* pNewTexture = CGUITextureManager::Instance()->CreateTexture(GUI_FT2_TEXTURE_SIZE,GUI_FT2_TEXTURE_SIZE,GUI_PF_LUMINANCE_ALPHA_16);
 				pFont->m_vecTexture.push_back(pNewTexture);
 			}
 			pCharData->m_pTexture = pFont->m_vecTexture.back();
 
 			//copy data
 			//get image data
-			uint8* pImageData = new uint8[bitmap.width * bitmap.rows * 4];
+			uint8* pImageData = new uint8[glyph->bitmap.width * glyph->bitmap.rows * 2];
 			uint8* pBufferDst = pImageData;
-			uint8* pBufferSrc = bitmap.buffer;
-			for( int i=0; i<bitmap.rows; ++i)
+			uint8* pBufferSrc = glyph->bitmap.buffer;
+			for( int i=0; i<glyph->bitmap.rows; ++i)
 			{
-				for( int j=0; j<bitmap.width; ++j)
+				for( int j=0; j<glyph->bitmap.width; ++j)
 				{
-					*pBufferDst++ = 0xFF;//*pBufferSrc;
-					*pBufferDst++ = 0xFF;//*pBufferSrc;
-					*pBufferDst++ = 0xFF;//*pBufferSrc;
-					*pBufferDst++ = *pBufferSrc++;
+					*pBufferDst++ = 0xFF;//*pBufferSrc;//*pBufferSrc;
+					*pBufferDst++ = *pBufferSrc;
+					++pBufferSrc;
 				}	
 			}
-			pCharData->m_pTexture->CopySubImage(pFont->m_nX,pFont->m_nY,bitmap.width,bitmap.rows,GUI_PF_ARGB_32,pImageData );
+			pCharData->m_pTexture->CopySubImage(pFont->m_nX,pFont->m_nY,glyph->bitmap.width,glyph->bitmap.rows,GUI_PF_LUMINANCE_ALPHA_16,pImageData );
 			delete[] pImageData;
 			pCharData->m_aUV = CGUIRect(
-				real(pFont->m_nX) / GUI_FT2_TEXTURE_SIZE,
+				//TODO: why add add 0.5f for fix bug.but don't known why add it...
+				real(pFont->m_nX+0.5f) / GUI_FT2_TEXTURE_SIZE,
 				real(pFont->m_nY) / GUI_FT2_TEXTURE_SIZE,
-				real(pFont->m_nX+bitmap.width) / GUI_FT2_TEXTURE_SIZE,
-				real(pFont->m_nY+bitmap.rows) / GUI_FT2_TEXTURE_SIZE);
+				real(pFont->m_nX+glyph->bitmap.width) / GUI_FT2_TEXTURE_SIZE,
+				real(pFont->m_nY+glyph->bitmap.rows) / GUI_FT2_TEXTURE_SIZE);
 
-			pFont->m_nX += bitmap.width;
+			pFont->m_nX += glyph->bitmap.width;
 
 			//add to map
 			pFont->m_mapCharsData.insert(std::make_pair(charCode, pCharData));
 
 			return pCharData;
 		}
-
 	}
 	//------------------------------------------------------------------------------
 	CGUICharData_ft2* IGUIFont_ft2::GetFont( uint32 nFontFaceIdx, wchar_t charCode, uint32 nSize )
@@ -293,7 +290,6 @@ namespace guiex
 		}
 
 		return kerning.x>>6;
-
 	}
 	//------------------------------------------------------------------------------
 	void IGUIFont_ft2::DrawCharacter(
@@ -308,8 +304,8 @@ namespace guiex
 		if( pCharData->m_pTexture)
 		{
 			CGUIRect aCharRect(
-				CGUIVector2(rPos.x+real(pCharData->m_nLeftBearing), rPos.y+real(rInfo.m_nFontSize-pCharData->m_nTopBearing)),
-				CGUISize(real(pCharData->m_nBitmapWidth),real(pCharData->m_nBitmapHeight)));
+				CGUIVector2(rPos.x+pCharData->m_fLeftBearing, rPos.y-pCharData->m_fTopBearing),
+				CGUISize(pCharData->m_fBitmapWidth,pCharData->m_fBitmapHeight));
 
 			CGUIColor aColor(rInfo.m_aColor);
 			aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
@@ -341,6 +337,7 @@ namespace guiex
 			return;
 		}
 
+		const CGUIStringInfo& rInfo = rString.m_aStringInfo;
 		CGUIVector2 aPos;
 
 		real fScaledStringWidth = GetStringWidth(rString);
@@ -373,23 +370,22 @@ namespace guiex
 			aPos.y = rStringRect.m_fTop + (rStringRect.GetHeight() - fScaledStringHeight) / 2;
 			break;
 		}
+		aPos.y += rInfo.m_nFontSize;
 
 		if( nEndPos < 0 || nEndPos >int32( rString.m_strContent.size()))
 		{
 			nEndPos = rString.m_strContent.size();
 		}
 
-		const CGUIStringInfo& rInfo = rString.m_aStringInfo;
 		for( int32 i= nStartPos; i<nEndPos; ++i)
 		{
-
 			CGUICharData_ft2 * pCharData = GetFont(rInfo.m_nFontIdx, rString.m_strContent[i], rInfo.m_nFontSize);
 
 			if( pCharData->m_pTexture)
 			{
 				CGUIRect aCharRect(
-					CGUIVector2(aPos.x+real(pCharData->m_nLeftBearing), aPos.y+real(rInfo.m_nFontSize-pCharData->m_nTopBearing)),
-					CGUISize(real(pCharData->m_nBitmapWidth),real(pCharData->m_nBitmapHeight)));
+					CGUIVector2(aPos.x+pCharData->m_fLeftBearing, aPos.y-pCharData->m_fTopBearing),
+					CGUISize(pCharData->m_fBitmapWidth,pCharData->m_fBitmapHeight));
 
 				//dest area size
 				CGUIColor aColor(rInfo.m_aColor);
@@ -437,8 +433,8 @@ namespace guiex
 			if( pCharData->m_pTexture)
 			{
 				CGUIRect aCharRect(
-					CGUIVector2(aPos.x+real(pCharData->m_nLeftBearing), aPos.y+real(rInfo.m_nFontSize-pCharData->m_nTopBearing)),
-					CGUISize(real(pCharData->m_nBitmapWidth),real(pCharData->m_nBitmapHeight)));
+					CGUIVector2(aPos.x+pCharData->m_fLeftBearing, aPos.y-pCharData->m_fTopBearing),
+					CGUISize(pCharData->m_fBitmapWidth,pCharData->m_fBitmapHeight));
 
 				//dest area size
 				CGUIColor aColor(rInfo.m_aColor);

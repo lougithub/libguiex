@@ -118,6 +118,7 @@ namespace guiex
 	protected:
 		IGUIInterfaceRender* m_pRender;	//!< the render which create this texture
 		CGUITexture* m_pTexture; //!< pointer of texture class
+		EGuiPixelFormat m_ePixelFormat;
 	};
 
 }//namespace guiex

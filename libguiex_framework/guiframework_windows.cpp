@@ -21,6 +21,7 @@
 #include <libguiex_module/mouse_winapi/guimouse_winapi.h>
 #include <libguiex_module/ime_winapi/guiime_winapi.h>
 #include <libguiex_module/font_ft2/guifont_ft2.h>
+#include <libguiex_module/font_dummy/guifont_dummy.h>
 #include <libguiex_module/filesys_stdio/guifilesys_stdio.h>
 #include <libguiex_module/configfile_tinyxml/guiconfigfile_tinyxml.h>
 #include <libguiex_module/script_lua/guiscript_lua.h>
@@ -104,6 +105,7 @@ namespace guiex
 		GUI_REGISTER_INTERFACE_LIB( IGUIMouse_winapi);
 		GUI_REGISTER_INTERFACE_LIB( IGUIKeyboard_winapi);
 		GUI_REGISTER_INTERFACE_LIB( IGUIFont_ft2);
+		//GUI_REGISTER_INTERFACE_LIB( IGUIFont_dummy);
 		GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
 		GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_winapi);
 		GUI_REGISTER_INTERFACE_LIB( IGUIScript_lua );

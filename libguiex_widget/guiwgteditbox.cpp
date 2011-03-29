@@ -265,6 +265,7 @@ namespace guiex
 		//render string
 		CGUIVector2	aPos = GetBoundArea().GetPosition();
 		aPos.x += m_fTextWidthRel;
+		aPos.y += GetTextInfo().m_nFontSize;
 		if( !m_strText.m_strContent.empty())
 		{
 			CGUIStringEx* pRenderString = m_bMaskText?&m_strMaskText:&m_strText;

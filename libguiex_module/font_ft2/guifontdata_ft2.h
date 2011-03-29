@@ -46,11 +46,10 @@ namespace guiex
 		CGUIRect m_aUV;
 
 		uint32 m_nGlyphIdx; //index of glyph
-		int32 m_nBitmapWidth; //size of bitmap
-		int32 m_nBitmapHeight; //size of bitmap
-		int32 m_nLeftBearing; //left bearing of font
-		int32 m_nBottomBearing; //bottom bearing of font
-		int32 m_nTopBearing; //top bearing of font
+		real m_fBitmapWidth; //size of bitmap
+		real m_fBitmapHeight; //size of bitmap
+		real m_fLeftBearing; //left bearing of font
+		real m_fTopBearing; //top bearing of font
 		CGUISize m_aSize; //size of font
 	};	
 

@@ -187,6 +187,8 @@ namespace guiex
 				{
 					const SLineInfo& aLineInfo = *itor;
 					aPos.x = GetClientArea().m_fLeft;
+					aPos.y += aLineInfo.m_nLineHeight;
+
 					for( uint32 i=0; i<aLineInfo.m_nLength; ++i)
 					{
 						nCurIdx = i + aLineInfo.m_nStartIdx;
@@ -215,8 +217,6 @@ namespace guiex
 						DrawCharacter(pRender, m_strText.m_strContent[nCurIdx],aStringInfo,aPos);
 						aPos.x+=m_vecStringSize[nCurIdx].m_fWidth;
 					}
-
-					aPos.y += aLineInfo.m_nLineHeight;
 				}
 			}
 			else
@@ -227,10 +227,10 @@ namespace guiex
 					++itor)
 				{
 					const SLineInfo& aLineInfo = *itor;
+					aPos.y += aLineInfo.m_nLineHeight;
 
 					//no selection
 					DrawString( pRender, m_strText, aPos, aLineInfo.m_nStartIdx, aLineInfo.m_nStartIdx+aLineInfo.m_nLength );
-					aPos.y += aLineInfo.m_nLineHeight;
 				}
 			}
 		}
