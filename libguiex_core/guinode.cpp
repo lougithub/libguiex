@@ -20,11 +20,7 @@ namespace guiex
 {
 	//-----------------------------------------------------------------------
 	CGUINode::CGUINode( )
-		:m_pParent(NULL)
-		,m_pChild(NULL)
-		,m_pNextSibling(NULL)
 	{
-		m_pParent = 0;
 		m_aOrientation = m_aDerivedOrientation = CGUIQuaternion::IDENTITY;
 		m_aPosition = m_aDerivedPosition = CGUIVector3::ZERO;
 		m_aScale = m_aDerivedScale = CGUIVector3::UNIT_SCALE;
@@ -36,43 +32,42 @@ namespace guiex
 	{
 	}    
 	//-----------------------------------------------------------------------
-	CGUINode* CGUINode::GetParent(void) const
-	{
-		return m_pParent;
-	}
-
-	//-----------------------------------------------------------------------
-	void CGUINode::SetParent(CGUINode* parent)
-	{
-		m_pParent = parent;
-	}
-
-	//-----------------------------------------------------------------------
-	const CGUIMatrix4& CGUINode::getTransform(void)
+	const CGUIMatrix4& CGUINode::NodeGetTransform(void)
 	{
 		return mCachedTransform;
 	}
 	//-----------------------------------------------------------------------
-	const CGUIMatrix4& CGUINode::getFullTransform(void)
+	/** Gets the full transformation matrix for this node.
+	@remarks This method returns the full transformation matrix
+	for this node, including the effect of any parent node
+	transformations
+	*/
+	const CGUIMatrix4& CGUINode::NodeGetFullTransform(void)
 	{
 		return mCachedFullTransform;
 	}
 	//-----------------------------------------------------------------------
-	const CGUIMatrix4& CGUINode::getFullInverseTransform(void)
+	//!< get the full inverse transform matrix of this node
+	const CGUIMatrix4& CGUINode::NodeGetFullInverseTransform(void)
 	{
 		return mCachedFullInverseTransform;
 	}
 	//-----------------------------------------------------------------------
-	void CGUINode::updateFromParent(void)
+	/** Triggers the node to update it's combined transforms.
+	@par This method is called internally by Ogre to ask the node
+	to update it's complete transformation based on it's parents
+	derived transform.
+	*/
+	void CGUINode::NodeUpdateFromParent(void)
 	{
-		if (m_pParent)
+		if ( NodeGetParent() )
 		{
 			// Combine orientation with that of parent
-			CGUIQuaternion parentOrientation = m_pParent->getDerivedOrientation();
+			CGUIQuaternion parentOrientation = NodeGetParent()->NodeGetDerivedOrientation();
 			m_aDerivedOrientation = parentOrientation * m_aOrientation;
 
 			// Update scale
-			CGUIVector3 parentScale = m_pParent->getDerivedScale();
+			CGUIVector3 parentScale = NodeGetParent()->NodeGetDerivedScale();
 			if (m_bInheritScale)
 			{
 				// Scale own position by parent scale
@@ -88,7 +83,7 @@ namespace guiex
 			m_aDerivedPosition = parentOrientation * (m_aPosition * parentScale);
 
 			// Add altered position vector to parents
-			m_aDerivedPosition += m_pParent->getDerivedPosition();
+			m_aDerivedPosition += NodeGetParent()->NodeGetDerivedPosition();
 		}
 		else
 		{
@@ -98,24 +93,25 @@ namespace guiex
 			m_aDerivedScale = m_aScale;
 		}
 
-		
-		makeTransform( getPosition(), getScale(), getOrientation(), mCachedTransform);
-		makeTransform( getDerivedPosition(), getDerivedScale(), getDerivedOrientation(), mCachedFullTransform);
+		NodeMakeTransform( NodeGetPosition(), NodeGetScale(), NodeGetOrientation(), mCachedTransform);
+		NodeMakeTransform( NodeGetDerivedPosition(), NodeGetDerivedScale(), NodeGetDerivedOrientation(), mCachedFullTransform);
 		mCachedFullInverseTransform = mCachedFullTransform.inverse();
 	}
 	//-----------------------------------------------------------------------
-	const CGUIQuaternion& CGUINode::getOrientation() const
+	//!< Returns a quaternion representing the nodes orientation.
+	const CGUIQuaternion& CGUINode::NodeGetOrientation() const
 	{
 		return m_aOrientation;
 	}
-
 	//-----------------------------------------------------------------------
-	void CGUINode::setOrientation( const CGUIQuaternion & q )
+	//!< Sets the orientation of this node via a quaternion.
+	void CGUINode::NodeSetOrientation( const CGUIQuaternion & q )
 	{
 		m_aOrientation = q;
 	}
 	//-----------------------------------------------------------------------
-	void CGUINode::setOrientation( real w, real x, real y, real z)
+	//!< Sets the orientation of this node via quaternion parameters.
+	void CGUINode::NodeSetOrientation( real w, real x, real y, real z)
 	{
 		m_aOrientation.w = w;
 		m_aOrientation.x = x;
@@ -123,32 +119,35 @@ namespace guiex
 		m_aOrientation.z = z;
 	}
 	//-----------------------------------------------------------------------
-	void CGUINode::resetOrientation(void)
+	//!< Resets the nodes orientation (local axes as world axes, no rotation).
+	void CGUINode::NodeResetOrientation(void)
 	{
 		m_aOrientation = CGUIQuaternion::IDENTITY;
 	}
 
 	//-----------------------------------------------------------------------
-	void CGUINode::setPosition(const CGUIVector3& pos)
+	//!< Sets the position of the node relative to it's parent.
+	void CGUINode::NodeSetPosition(const CGUIVector3& pos)
 	{
 		m_aPosition = pos;
 	}
-
-
 	//-----------------------------------------------------------------------
-	void CGUINode::setPosition(real x, real y, real z)
+	//!< Sets the position of the node relative to it's parent.
+	void CGUINode::NodeSetPosition(real x, real y, real z)
 	{
-		CGUIVector3 v(x,y,z);
-		setPosition(v);
+		NodeSetPosition(CGUIVector3(x,y,z));
 	}
 
 	//-----------------------------------------------------------------------
-	const CGUIVector3 & CGUINode::getPosition(void) const
+	//!< Gets the position of the node relative to it's parent.
+	const CGUIVector3 & CGUINode::NodeGetPosition(void) const
 	{
 		return m_aPosition;
 	}
 	//-----------------------------------------------------------------------
-	CGUIMatrix3 CGUINode::getLocalAxes(void) const
+	/** Gets a matrix whose columns are the local axes based on
+	the nodes orientation relative to it's parent. */
+	CGUIMatrix3 CGUINode::NodeGetLocalAxes(void) const
 	{
 		CGUIVector3 axisX = CGUIVector3::UNIT_X;
 		CGUIVector3 axisY = CGUIVector3::UNIT_Y;
@@ -164,7 +163,13 @@ namespace guiex
 	}
 
 	//-----------------------------------------------------------------------
-	void CGUINode::translate(const CGUIVector3& d, ETransformSpace relativeTo)
+	/** Moves the node along the cartesian axes.
+	@par This method moves the node by the supplied vector along the
+	world cartesian axes, i.e. along world x,y,z
+	@param d Vector with x,y,z values representing the translation.
+	@param relativeTo The space which this transform is relative to.
+	*/
+	void CGUINode::NodeTranslate(const CGUIVector3& d, ETransformSpace relativeTo)
 	{
 		CGUIVector3 adjusted;
 		switch(relativeTo) 
@@ -175,9 +180,9 @@ namespace guiex
 			break;
 		case eTS_WORLD:
 			// position is relative to parent so transform upwards
-			if (m_pParent)
+			if (NodeGetParent())
 			{
-				m_aPosition += m_pParent->getDerivedOrientation().Inverse() * d; 
+				m_aPosition += NodeGetParent()->NodeGetDerivedOrientation().Inverse() * d; 
 			}
 			else
 			{
@@ -190,49 +195,109 @@ namespace guiex
 		}
 	}
 	//-----------------------------------------------------------------------
-	void CGUINode::translate(real x, real y, real z, ETransformSpace relativeTo)
+	/** Moves the node along the cartesian axes.
+	@par This method moves the node by the supplied vector along the
+	world cartesian axes, i.e. along world x,y,z
+	@param x
+	@param y
+	@param z real x, y and z values representing the translation.
+	@param relativeTo The space which this transform is relative to.
+	*/
+	void CGUINode::NodeTranslate(real x, real y, real z, ETransformSpace relativeTo)
 	{
 		CGUIVector3 v(x,y,z);
-		translate(v, relativeTo);
+		NodeTranslate(v, relativeTo);
 	}
 	//-----------------------------------------------------------------------
-	void CGUINode::translate(const CGUIMatrix3& axes, const CGUIVector3& move, ETransformSpace relativeTo)
+	/** Moves the node along arbitrary axes.
+	@remarks This method translates the node by a vector which is relative to
+	a custom set of axes.
+	@param axes A 3x3 Matrix containg 3 column vectors each representing the
+	axes X, Y and Z respectively. In this format the standard cartesian
+	axes would be expressed as:
+	<pre>
+	1 0 0
+	0 1 0
+	0 0 1
+	</pre>
+	i.e. the identity matrix.
+	@param move Vector relative to the axes above.
+	@param relativeTo The space which this transform is relative to.
+	*/
+	void CGUINode::NodeTranslate(const CGUIMatrix3& axes, const CGUIVector3& move, ETransformSpace relativeTo)
 	{
 		CGUIVector3 derived = axes * move;
-		translate(derived, relativeTo);
+		NodeTranslate(derived, relativeTo);
 	}
 	//-----------------------------------------------------------------------
-	void CGUINode::translate(const CGUIMatrix3& axes, real x, real y, real z, ETransformSpace relativeTo)
+	/** Moves the node along arbitrary axes.
+	@remarks This method translates the node by a vector which is relative to
+	a custom set of axes.
+	@param axes A 3x3 Matrix containg 3 column vectors each representing the
+	axes X, Y and Z respectively. In this format the standard cartesian
+	axes would be expressed as
+	<pre>
+	1 0 0
+	0 1 0
+	0 0 1
+	</pre>
+	i.e. the identity matrix.
+	@param x,y,z Translation components relative to the axes above.
+	@param relativeTo The space which this transform is relative to.
+	*/
+	void CGUINode::NodeTranslate(const CGUIMatrix3& axes, real x, real y, real z, ETransformSpace relativeTo)
 	{
 		CGUIVector3 d(x,y,z);
-		translate(axes,d,relativeTo);
+		NodeTranslate(axes,d,relativeTo);
 	}
 	//-----------------------------------------------------------------------
-	void CGUINode::roll(const CGUIRadian& angle, ETransformSpace relativeTo)
+	//!< Rotate the node around the Z-axis.
+	void CGUINode::NodeRoll(const CGUIRadian& angle, ETransformSpace relativeTo)
 	{
-		rotate(CGUIVector3::UNIT_Z, angle, relativeTo);
+		NodeRotate(CGUIVector3::UNIT_Z, angle, relativeTo);
 	}
 	//-----------------------------------------------------------------------
-	void CGUINode::pitch(const CGUIRadian& angle, ETransformSpace relativeTo)
+	void CGUINode::NodeRoll(real degrees, ETransformSpace relativeTo /*= eTS_LOCAL*/)
 	{
-		rotate(CGUIVector3::UNIT_X, angle, relativeTo);
+		NodeRoll( CGUIAngle(degrees), relativeTo );
 	}
 	//-----------------------------------------------------------------------
-	void CGUINode::yaw(const CGUIRadian& angle, ETransformSpace relativeTo)
+	//!< Rotate the node around the X-axis.
+	void CGUINode::NodePitch(const CGUIRadian& angle, ETransformSpace relativeTo)
 	{
-		rotate(CGUIVector3::UNIT_Y, angle, relativeTo);
-
+		NodeRotate(CGUIVector3::UNIT_X, angle, relativeTo);
 	}
 	//-----------------------------------------------------------------------
-	void CGUINode::rotate(const CGUIVector3& axis, const CGUIRadian& angle, ETransformSpace relativeTo)
+	void CGUINode::NodePitch(real degrees, ETransformSpace relativeTo /*= eTS_LOCAL*/) 
+	{
+		NodePitch( CGUIAngle(degrees), relativeTo );
+	}
+	//-----------------------------------------------------------------------
+	//!< Rotate the node around the Y-axis.
+	void CGUINode::NodeYaw(const CGUIRadian& angle, ETransformSpace relativeTo)
+	{
+		NodeRotate(CGUIVector3::UNIT_Y, angle, relativeTo);
+	}
+	//-----------------------------------------------------------------------
+	void CGUINode::NodeYaw(real degrees, ETransformSpace relativeTo /*= eTS_LOCAL*/)
+	{
+		NodeYaw( CGUIAngle(degrees), relativeTo );
+	}
+	//-----------------------------------------------------------------------
+	//!< Rotate the node around an arbitrary axis.
+	void CGUINode::NodeRotate(const CGUIVector3& axis, const CGUIRadian& angle, ETransformSpace relativeTo)
 	{
 		CGUIQuaternion q;
 		q.FromAngleAxis(angle,axis);
-		rotate(q, relativeTo);
+		NodeRotate(q, relativeTo);
 	}
-
 	//-----------------------------------------------------------------------
-	void CGUINode::rotate(const CGUIQuaternion& q, ETransformSpace relativeTo)
+	void CGUINode::NodeRotate(const CGUIVector3& axis, real degrees, ETransformSpace relativeTo /*= eTS_LOCAL*/) 
+	{
+		CGUINode::NodeRotate ( axis, CGUIAngle(degrees), relativeTo );
+	}
+	//-----------------------------------------------------------------------
+	void CGUINode::NodeRotate(const CGUIQuaternion& q, ETransformSpace relativeTo)
 	{
 		switch(relativeTo) 
 		{
@@ -242,7 +307,7 @@ namespace guiex
 			break;
 		case eTS_WORLD:
 			// Rotations are normally relative to world axes, transform up
-			m_aOrientation = m_aOrientation * getDerivedOrientation().Inverse() * q * getDerivedOrientation();
+			m_aOrientation = m_aOrientation * NodeGetDerivedOrientation().Inverse() * q * NodeGetDerivedOrientation();
 			break;
 		case eTS_LOCAL:
 			// Note the order of the mult, i.e. q comes after
@@ -251,61 +316,126 @@ namespace guiex
 		}
 	}
 	//-----------------------------------------------------------------------
-	const CGUIQuaternion & CGUINode::getDerivedOrientation(void)
+	/** Gets the orientation of the node as derived from all parents.
+	*/
+	const CGUIQuaternion & CGUINode::NodeGetDerivedOrientation(void)
 	{
 		return m_aDerivedOrientation;
 	}
 	//-----------------------------------------------------------------------
-	const CGUIVector3 & CGUINode::getDerivedPosition(void)
+	/** Gets the position of the node as derived from all parents.
+	*/
+	const CGUIVector3 & CGUINode::NodeGetDerivedPosition(void)
 	{
 		return m_aDerivedPosition;
 	}
 	//-----------------------------------------------------------------------
-	const CGUIVector3 & CGUINode::getDerivedScale(void)
+	/** Gets the scaling factor of the node as derived from all parents.
+	*/
+	const CGUIVector3 & CGUINode::NodeGetDerivedScale(void)
 	{
 		return m_aDerivedScale;
 	}
 	//-----------------------------------------------------------------------
-	void CGUINode::setScale(const CGUIVector3& scale)
+	/** Sets the scaling factor applied to this node.
+	@remarks Scaling factors, unlike other transforms, are not always inherited by child nodes. 
+	Whether or not scalings affect both the size and position of the child nodes depends on
+	the NodeSetInheritScale option of the child. In some cases you want a scaling factor of a parent node
+	to apply to a child node (e.g. where the child node is a part of the same object, so you
+	want it to be the same relative size and position based on the parent's size), but
+	not in other cases (e.g. where the child node is just for positioning another object,
+	you want it to maintain it's own size and relative position). The default is to inherit
+	as with other transforms.
+	@par Note that like rotations, scalings are oriented around the node's origin.
+	*/
+	void CGUINode::NodeSetScale(const CGUIVector3& scale)
 	{
 		m_aScale = scale;
 	}
 	//-----------------------------------------------------------------------
-	void CGUINode::setScale(real x, real y, real z)
+	/** Sets the scaling factor applied to this node.
+	@remarks Scaling factors, unlike other transforms, are not always inherited by child nodes. 
+	Whether or not scalings affect both the size and position of the child nodes depends on
+	the NodeSetInheritScale option of the child. In some cases you want a scaling factor of a parent node
+	to apply to a child node (e.g. where the child node is a part of the same object, so you
+	want it to be the same relative size and position based on the parent's size), but
+	not in other cases (e.g. where the child node is just for positioning another object,
+	you want it to maintain it's own size and relative position). The default is to inherit
+	as with other transforms.
+	@par Note that like rotations, scalings are oriented around the node's origin.
+	*/
+	void CGUINode::NodeSetScale(real x, real y, real z)
 	{
 		m_aScale.x = x;
 		m_aScale.y = y;
 		m_aScale.z = z;
 	}
 	//-----------------------------------------------------------------------
-	const CGUIVector3 & CGUINode::getScale(void) const
+	/** Gets the scaling factor of this node.
+	*/
+	const CGUIVector3 & CGUINode::NodeGetScale(void) const
 	{
 		return m_aScale;
 	}
 	//-----------------------------------------------------------------------
-	void CGUINode::setInheritScale(bool inherit)
+	/** Tells the node whether it should inherit scaling factors from it's parent node.
+	@remarks
+	Scaling factors, unlike other transforms, are not always inherited by child nodes. 
+	Whether or not scalings affect both the size and position of the child nodes depends on
+	the NodeSetInheritScale option of the child. In some cases you want a scaling factor of a parent node
+	to apply to a child node (e.g. where the child node is a part of the same object, so you
+	want it to be the same relative size and position based on the parent's size), but
+	not in other cases (e.g. where the child node is just for positioning another object,
+	you want it to maintain it's own size and relative position). The default is to inherit
+	as with other transforms.
+	@param inherit If true, this node's scale and position will be affected by its parent's scale. If false,
+	it will not be affected.
+	*/
+	void CGUINode::NodeSetInheritScale(bool inherit)
 	{
 		m_bInheritScale = inherit;
 	}
 	//-----------------------------------------------------------------------
-	bool CGUINode::getInheritScale(void) const
+	/** Returns true if this node is affected by scaling factors applied to the parent node. 
+	@remarks See NodeSetInheritScale for more info.
+	*/
+	bool CGUINode::NodeGetInheritScale(void) const
 	{
 		return m_bInheritScale;
 	}
 	//-----------------------------------------------------------------------
-	void CGUINode::scale(const CGUIVector3& scale)
+	/** Scales the node, combining it's current scale with the passed in scaling factor. 
+	@remarks This method applies an extra scaling factor to the node's existing scale, (unlike NodeSetScale
+	which overwrites it) combining it's current scale with the new one. E.g. calling this 
+	method twice with CGUIVector3(2,2,2) would have the same effect as NodeSetScale(CGUIVector3(4,4,4)) if
+	the existing scale was 1.
+	@par Note that like rotations, scalings are oriented around the node's origin.
+	*/
+	void CGUINode::NodeScale(const CGUIVector3& scale)
 	{
 		m_aScale = m_aScale * scale;
 	}
 	//-----------------------------------------------------------------------
-	void CGUINode::scale(real x, real y, real z)
+	/** Scales the node, combining it's current scale with the passed in scaling factor. 
+	@remarks This method applies an extra scaling factor to the node's existing scale, (unlike NodeSetScale
+	which overwrites it) combining it's current scale with the new one. E.g. calling this 
+	method twice with CGUIVector3(2,2,2) would have the same effect as NodeSetScale(CGUIVector3(4,4,4)) if
+	the existing scale was 1.
+	@par Note that like rotations, scalings are oriented around the node's origin.
+	*/
+	void CGUINode::NodeScale(real x, real y, real z)
 	{
 		m_aScale.x *= x;
 		m_aScale.y *= y;
 		m_aScale.z *= z;
 	}
 	//-----------------------------------------------------------------------
-	void CGUINode::makeTransform(const CGUIVector3& position, const CGUIVector3& scale, 
+	/** Internal method for building a CGUIMatrix4 from orientation / scale / position. 
+	@remarks Transform is performed in the order rotate, scale, translation, i.e. translation is independent
+	of orientation axes, scale does not affect size of translation, rotation and scaling are always
+	centered on the origin.
+	*/
+	void CGUINode::NodeMakeTransform(const CGUIVector3& position, const CGUIVector3& scale, 
 		const CGUIQuaternion& orientation, CGUIMatrix4& destMatrix) const
 	{
 		destMatrix = CGUIMatrix4::IDENTITY;
@@ -327,30 +457,33 @@ namespace guiex
 		destMatrix.setTrans(position);
 	}
 	//-----------------------------------------------------------------------
-	void CGUINode::getWorldTransforms(CGUIMatrix4* xform)
+	/** 
+	@remarks This is only used if the SceneManager chooses to render the node.
+	*/
+	void CGUINode::NodeGetWorldTransforms(CGUIMatrix4* xform)
 	{
 		// Assumes up to date
-		*xform = getFullTransform();
+		*xform = NodeGetFullTransform();
 	}
 	//-----------------------------------------------------------------------
-	const CGUIQuaternion& CGUINode::getWorldOrientation(void)
+	/** Gets the world orientation of this node; this is used in order to
+	more efficiently update parameters to vertex & fragment programs, since inverting Quaterion
+	and Vector in order to derive object-space positions / directions for cameras and
+	lights is much more efficient than inverting a complete 4x4 matrix, and also 
+	eliminates problems introduced by scaling. */
+	const CGUIQuaternion& CGUINode::NodeGetWorldOrientation(void)
 	{
-		return getDerivedOrientation();
+		return NodeGetDerivedOrientation();
 	}
 	//-----------------------------------------------------------------------
-	const CGUIVector3& CGUINode::getWorldPosition(void)
+	/** Gets the world orientation of this node; this is used in order to
+	more efficiently update parameters to vertex & fragment programs, since inverting Quaterion
+	and Vector in order to derive object-space positions / directions for cameras and
+	lights is much more efficient than inverting a complete 4x4 matrix, and also 
+	eliminates problems introduced by scaling. */
+	const CGUIVector3& CGUINode::NodeGetWorldPosition(void)
 	{
-		return getDerivedPosition();
-	}
-	//------------------------------------------------------------------------------
-	void	CGUINode::setChild( const CGUINode* pNode)
-	{
-		m_pChild = (CGUINode*)(pNode);
-	}
-	//-----------------------------------------------------------------------	
-	void	CGUINode::SetNextSibling( const CGUINode* pNode )
-	{
-		m_pNextSibling = (CGUINode*)(pNode);
+		return NodeGetDerivedPosition();
 	}
 	//------------------------------------------------------------------------------
 }

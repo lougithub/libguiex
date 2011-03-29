@@ -20,7 +20,6 @@
 //============================================================================// 
 namespace guiex
 {
-
 	///type for scrollbar
 	enum EScrollbarType
 	{

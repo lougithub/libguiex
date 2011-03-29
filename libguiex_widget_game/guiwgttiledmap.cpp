@@ -65,7 +65,7 @@ namespace guiex
 	{
 		if( m_pTiledMap )
 		{
-			m_pTiledMap->Render( pRender, getFullTransform() );
+			m_pTiledMap->Render( pRender );
 		}
 	}
 	//------------------------------------------------------------------------------

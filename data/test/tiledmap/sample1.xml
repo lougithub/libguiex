@@ -23,9 +23,9 @@
         <property name="auto_play_as" type="bool" value="false" />
         <property name="clip_children" type="bool" value="false" />
         <property name="open_with_parent" type="bool" value="true" />
-        <property name="response_update_event" type="bool" value="false" />
+        <property name="generate_update_event" type="bool" value="false" />
         <property name="tiledmap" type="CGUITiledMap" value="tiledmap_desert" />
-        <property name="response_parentsizechange_event" type="bool" value="false" />
+        <property name="generate_parentsizechange_event" type="bool" value="false" />
         <property name="textinfo" type="CGUIStringInfo">
             <property name="size" type="uint16" value="16" />
             <property name="index" type="int16" value="0" />

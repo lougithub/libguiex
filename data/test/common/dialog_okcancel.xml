@@ -10,7 +10,7 @@
         <property name="PANEL_BORDER_TOP" type="CGUIImage" value="dialog_border_top" />
         <property name="PANEL_BORDER_BOTTOMLEFT" type="CGUIImage" value="dialog_border_bottomleft" />
         <property name="visible" type="bool" value="true" />
-        <property name="response_update_event" type="bool" value="false" />
+        <property name="generate_update_event" type="bool" value="false" />
         <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
         <property name="default_as" type="CGUIAs" value="alpha_looping" />
         <property name="disable" type="bool" value="false" />
@@ -56,7 +56,7 @@
         <property name="hitable" type="bool" value="false" />
         <property name="disable" type="bool" value="false" />
         <property name="open_with_parent" type="bool" value="true" />
-        <property name="response_update_event" type="bool" value="false" />
+        <property name="generate_update_event" type="bool" value="false" />
         <property name="textinfo" type="CGUIStringInfo">
             <property name="size" type="uint16" value="20" />
             <property name="index" type="int16" value="2" />
@@ -92,7 +92,7 @@
         <property name="text" type="CGUIString" value="ok" />
         <property name="visible" type="bool" value="true" />
         <property name="hitable" type="bool" value="true" />
-        <property name="response_update_event" type="bool" value="false" />
+        <property name="generate_update_event" type="bool" value="false" />
         <property name="activable" type="bool" value="false" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="0.3,0.512918" />
@@ -141,7 +141,7 @@
         <property name="text" type="CGUIString" value="cancel" />
         <property name="visible" type="bool" value="true" />
         <property name="hitable" type="bool" value="true" />
-        <property name="response_update_event" type="bool" value="false" />
+        <property name="generate_update_event" type="bool" value="false" />
         <property name="activable" type="bool" value="false" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="0.7,0.512918" />

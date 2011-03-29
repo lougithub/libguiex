@@ -159,7 +159,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUITiledMap::Render( IGUIInterfaceRender* pRender, const CGUIMatrix4& rWorldMatrix )
+	void CGUITiledMap::Render( IGUIInterfaceRender* pRender )
 	{
 		for( TLayerArray::iterator itor = m_arrayLayer.begin();
 			itor != m_arrayLayer.end();

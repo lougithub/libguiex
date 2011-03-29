@@ -10784,21 +10784,21 @@ fail:
 }
 
 
-static int _wrap_CGUIWidget_SetResponseParentSizeChangeEvent(lua_State* L) {
+static int _wrap_CGUIWidget_SetGenerateParentSizeChangeEvent(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
   bool arg2 ;
   
-  SWIG_check_num_args("SetResponseParentSizeChangeEvent",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetResponseParentSizeChangeEvent",1,"guiex::CGUIWidget *");
-  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetResponseParentSizeChangeEvent",2,"bool");
+  SWIG_check_num_args("SetGenerateParentSizeChangeEvent",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetGenerateParentSizeChangeEvent",1,"guiex::CGUIWidget *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetGenerateParentSizeChangeEvent",2,"bool");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
-    SWIG_fail_ptr("CGUIWidget_SetResponseParentSizeChangeEvent",1,SWIGTYPE_p_guiex__CGUIWidget);
+    SWIG_fail_ptr("CGUIWidget_SetGenerateParentSizeChangeEvent",1,SWIGTYPE_p_guiex__CGUIWidget);
   }
   
   arg2 = (lua_toboolean(L, 2)!=0);
-  (arg1)->SetResponseParentSizeChangeEvent(arg2);
+  (arg1)->SetGenerateParentSizeChangeEvent(arg2);
   
   return SWIG_arg;
   
@@ -10810,19 +10810,19 @@ fail:
 }
 
 
-static int _wrap_CGUIWidget_IsResponseParentSizeChangeEvent(lua_State* L) {
+static int _wrap_CGUIWidget_IsGenerateParentSizeChangeEvent(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
   bool result;
   
-  SWIG_check_num_args("IsResponseParentSizeChangeEvent",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsResponseParentSizeChangeEvent",1,"guiex::CGUIWidget const *");
+  SWIG_check_num_args("IsGenerateParentSizeChangeEvent",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsGenerateParentSizeChangeEvent",1,"guiex::CGUIWidget const *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
-    SWIG_fail_ptr("CGUIWidget_IsResponseParentSizeChangeEvent",1,SWIGTYPE_p_guiex__CGUIWidget);
+    SWIG_fail_ptr("CGUIWidget_IsGenerateParentSizeChangeEvent",1,SWIGTYPE_p_guiex__CGUIWidget);
   }
   
-  result = (bool)((guiex::CGUIWidget const *)arg1)->IsResponseParentSizeChangeEvent();
+  result = (bool)((guiex::CGUIWidget const *)arg1)->IsGenerateParentSizeChangeEvent();
   lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
   return SWIG_arg;
   
@@ -10834,21 +10834,21 @@ fail:
 }
 
 
-static int _wrap_CGUIWidget_SetResponseUpdateEvent(lua_State* L) {
+static int _wrap_CGUIWidget_SetGenerateUpdateEvent(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
   bool arg2 ;
   
-  SWIG_check_num_args("SetResponseUpdateEvent",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetResponseUpdateEvent",1,"guiex::CGUIWidget *");
-  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetResponseUpdateEvent",2,"bool");
+  SWIG_check_num_args("SetGenerateUpdateEvent",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetGenerateUpdateEvent",1,"guiex::CGUIWidget *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetGenerateUpdateEvent",2,"bool");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
-    SWIG_fail_ptr("CGUIWidget_SetResponseUpdateEvent",1,SWIGTYPE_p_guiex__CGUIWidget);
+    SWIG_fail_ptr("CGUIWidget_SetGenerateUpdateEvent",1,SWIGTYPE_p_guiex__CGUIWidget);
   }
   
   arg2 = (lua_toboolean(L, 2)!=0);
-  (arg1)->SetResponseUpdateEvent(arg2);
+  (arg1)->SetGenerateUpdateEvent(arg2);
   
   return SWIG_arg;
   
@@ -10860,19 +10860,19 @@ fail:
 }
 
 
-static int _wrap_CGUIWidget_IsResponseUpdateEvent(lua_State* L) {
+static int _wrap_CGUIWidget_IsGenerateUpdateEvent(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
   bool result;
   
-  SWIG_check_num_args("IsResponseUpdateEvent",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsResponseUpdateEvent",1,"guiex::CGUIWidget const *");
+  SWIG_check_num_args("IsGenerateUpdateEvent",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsGenerateUpdateEvent",1,"guiex::CGUIWidget const *");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
-    SWIG_fail_ptr("CGUIWidget_IsResponseUpdateEvent",1,SWIGTYPE_p_guiex__CGUIWidget);
+    SWIG_fail_ptr("CGUIWidget_IsGenerateUpdateEvent",1,SWIGTYPE_p_guiex__CGUIWidget);
   }
   
-  result = (bool)((guiex::CGUIWidget const *)arg1)->IsResponseUpdateEvent();
+  result = (bool)((guiex::CGUIWidget const *)arg1)->IsGenerateUpdateEvent();
   lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
   return SWIG_arg;
   
@@ -11146,10 +11146,10 @@ static swig_lua_method swig_guiex_CGUIWidget_methods[] = {
     {"IsHitable", _wrap_CGUIWidget_IsHitable}, 
     {"SetMouseConsumed", _wrap_CGUIWidget_SetMouseConsumed}, 
     {"IsMouseConsumed", _wrap_CGUIWidget_IsMouseConsumed}, 
-    {"SetResponseParentSizeChangeEvent", _wrap_CGUIWidget_SetResponseParentSizeChangeEvent}, 
-    {"IsResponseParentSizeChangeEvent", _wrap_CGUIWidget_IsResponseParentSizeChangeEvent}, 
-    {"SetResponseUpdateEvent", _wrap_CGUIWidget_SetResponseUpdateEvent}, 
-    {"IsResponseUpdateEvent", _wrap_CGUIWidget_IsResponseUpdateEvent}, 
+    {"SetGenerateParentSizeChangeEvent", _wrap_CGUIWidget_SetGenerateParentSizeChangeEvent}, 
+    {"IsGenerateParentSizeChangeEvent", _wrap_CGUIWidget_IsGenerateParentSizeChangeEvent}, 
+    {"SetGenerateUpdateEvent", _wrap_CGUIWidget_SetGenerateUpdateEvent}, 
+    {"IsGenerateUpdateEvent", _wrap_CGUIWidget_IsGenerateUpdateEvent}, 
     {"SetGenerateClickEvent", _wrap_CGUIWidget_SetGenerateClickEvent}, 
     {"IsGenerateClickEvent", _wrap_CGUIWidget_IsGenerateClickEvent}, 
     {"SetGenerateDBClickEvent", _wrap_CGUIWidget_SetGenerateDBClickEvent}, 

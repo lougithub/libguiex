@@ -326,11 +326,17 @@ namespace guiex
 		void SetMouseConsumed( bool bFlag ); 
 		bool IsMouseConsumed( ) const;
 
-		void SetResponseParentSizeChangeEvent( bool bFlag ); 
-		bool IsResponseParentSizeChangeEvent( ) const;
+		void SetGenerateParentSizeChangeEvent( bool bFlag ); 
+		bool IsGenerateParentSizeChangeEvent( ) const;
 
-		void SetResponseUpdateEvent( bool bFlag ); 
-		bool IsResponseUpdateEvent( ) const;
+		void SetGenerateParentChangeEvent( bool bFlag ); 
+		bool IsGenerateParentChangeEvent( ) const;
+
+		void SetGenerateUpdateEvent( bool bFlag ); 
+		bool IsGenerateUpdateEvent( ) const;
+
+		void SetGenerateScaleChangeEvent( bool bFlag ); 
+		bool IsGenerateScaleChangeEvent( ) const;
 
 		void SetGenerateClickEvent( bool bFlag ); 
 		bool IsGenerateClickEvent( ) const;
@@ -381,9 +387,13 @@ namespace guiex
 
 		CGUISize GetParentSize() const;
 
+		virtual CGUINode* NodeGetParent();
+
 
 	private:
 		void SetParentImpl( CGUIWidget* pParent );
+		void SetChildImpl( CGUIWidget* pChild );
+		void SetNextSiblingImpl( CGUIWidget* pNextSibling );
 
 	protected://event
 		//declare friend event
@@ -542,11 +552,14 @@ namespace guiex
 		bool m_bIsExclusive;
 		bool m_bIsHitable;
 		bool m_bIsMouseConsumed;
-		bool m_bIsResponseUpdateEvent; 
+
 		bool m_bIsGenerateClickEvent; 
 		bool m_bIsGenerateDBClickEvent; 
 		bool m_bIsGenerateMultiClickEvent; 
-		bool m_bIsResponseParentSizeChangeEvent; 
+		bool m_bIsGenerateParentChangeEvent; 
+		bool m_bIsGenerateParentSizeChangeEvent; 
+		bool m_bIsGenerateUpdateEvent; 
+		bool m_bIsGenerateScaleChangeEvent; 
 
 		///////////////////////////////////////////////////////////////////////
 		/// sound
@@ -614,6 +627,10 @@ namespace guiex
 		/// sigslot
 		///////////////////////////////////////////////////////////////////////
 		sigslot::signal1<CGUIWidget*> OnWidgetDestroyed; ///< - signal to emit when widget is destroyed
+
+		CGUIWidget* m_pParent; //!< parent
+		CGUIWidget* m_pChild; //!< child
+		CGUIWidget* m_pNextSibling; //!< sibling
 	};
 
 

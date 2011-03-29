@@ -188,11 +188,11 @@ namespace guiex
 		void SetMouseConsumed( bool bFlag ); 
 		bool IsMouseConsumed( ) const;
 
-		void SetResponseParentSizeChangeEvent( bool bFlag ); 
-		bool IsResponseParentSizeChangeEvent( ) const;
+		void SetGenerateParentSizeChangeEvent( bool bFlag ); 
+		bool IsGenerateParentSizeChangeEvent( ) const;
 
-		void SetResponseUpdateEvent( bool bFlag ); 
-		bool IsResponseUpdateEvent( ) const;
+		void SetGenerateUpdateEvent( bool bFlag ); 
+		bool IsGenerateUpdateEvent( ) const;
 
 		void SetGenerateClickEvent( bool bFlag ); 
 		bool IsGenerateClickEvent( ) const;

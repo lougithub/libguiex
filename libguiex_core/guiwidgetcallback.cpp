@@ -73,7 +73,7 @@ namespace guiex
 		CGUIWidget* pWidget = GetChild();
 		while( pWidget )
 		{
-			if( pWidget->IsOpen() && pWidget->IsResponseParentSizeChangeEvent())
+			if( pWidget->IsOpen() && pWidget->IsGenerateParentSizeChangeEvent())
 			{
 				CGUIEventSize aEvent;
 				aEvent.SetEventId(eEVENT_PARENT_CHANGE_SIZE);

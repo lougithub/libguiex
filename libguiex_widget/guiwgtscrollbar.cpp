@@ -39,25 +39,21 @@ namespace guiex
 	class GUIEXPORT CGUIWgtScrollbarArrow : public CGUIWgtButton
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUIWgtScrollbarArrow( const CGUIString& rName,const CGUIString& rSceneName, int nType );
 
 	protected:
-		///initialize
 		void InitScrollbarArrow();
 
 	protected:	//!< callback function
-		virtual uint32		OnParentChanged( CGUIEventRelativeChange* pEvent );
-		virtual uint32		OnMouseLeftDown( CGUIEventMouse* pEvent );
+		virtual uint32 OnParentChanged( CGUIEventRelativeChange* pEvent );
+		virtual uint32 OnMouseLeftDown( CGUIEventMouse* pEvent );
 
 	protected:
-		int		m_nArrowType;		/// arrow type
+		int m_nArrowType;		/// arrow type
 		CGUIWgtScrollbar* m_pScrollbar;
 
 	private:
-		static CGUIString	ms_strType;
+		static CGUIString ms_strType;
 	};
 
 
@@ -120,6 +116,7 @@ namespace guiex
 	void CGUIWgtScrollbarArrow::InitScrollbarArrow()
 	{
 		SetFocusAgency( true );
+		SetGenerateParentChangeEvent( true );
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtScrollbarArrow::OnParentChanged( CGUIEventRelativeChange* pEvent )
@@ -128,7 +125,7 @@ namespace guiex
 		return CGUIWgtButton::OnParentChanged(pEvent);
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWgtScrollbarArrow::OnMouseLeftDown( CGUIEventMouse* pEvent )
+	uint32 CGUIWgtScrollbarArrow::OnMouseLeftDown( CGUIEventMouse* pEvent )
 	{
 		GUI_ASSERT( m_pScrollbar, "haven't parent" );
 
@@ -167,6 +164,7 @@ namespace guiex
 	{
 		SetMovable(true);
 		SetFocusAgency( true );
+		SetGenerateParentChangeEvent( true );
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtScrollbarSlide::OnParentChanged( CGUIEventRelativeChange* pEvent )
@@ -175,17 +173,17 @@ namespace guiex
 		return CGUIWgtButton::OnParentChanged(pEvent);
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWgtScrollbarSlide::OnDragBegin( CGUIEventDrag* pEvent )
+	uint32 CGUIWgtScrollbarSlide::OnDragBegin( CGUIEventDrag* pEvent )
 	{
 
 		return CGUIWidget::OnDragBegin(pEvent);
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWgtScrollbarSlide::OnDragProcess( CGUIEventDrag* pEvent )
+	uint32 CGUIWgtScrollbarSlide::OnDragProcess( CGUIEventDrag* pEvent )
 	{
 		GUI_ASSERT( m_pScrollbar, "haven't parent" );
 
-		CGUIRect	aSlideWorkArea = m_pScrollbar->GetSlideArea();
+		CGUIRect aSlideWorkArea = m_pScrollbar->GetSlideArea();
 		CGUIVector2	aSlidePoint = GetPixelPosition( );
 		CGUIVector2	aWidgetPoint = pEvent->GetWidgetLocalPos();
 		CGUIVector2	aMovePos;		/// wanted position
@@ -235,7 +233,7 @@ namespace guiex
 		return CGUIWidget::OnDragProcess(pEvent);
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWgtScrollbarSlide::OnDragEnd( CGUIEventDrag* pEvent )
+	uint32 CGUIWgtScrollbarSlide::OnDragEnd( CGUIEventDrag* pEvent )
 	{
 		CGUIWgtScrollbar* pParent = static_cast<CGUIWgtScrollbar*>(GetParent());
 		pParent->SetCurrentPos(pParent->GetCurrentPos());
@@ -306,7 +304,7 @@ namespace guiex
 
 		SetFocusable( true );
 		SetActivable( false );
-		SetResponseParentSizeChangeEvent( true );
+		SetGenerateParentSizeChangeEvent( true );
 		SetGenerateClickEvent( true );
 	}
 	//------------------------------------------------------------------------------

@@ -58,6 +58,9 @@ namespace guiex
 		,m_strName(rName)
 		,m_strOwnerSceneName(rSceneName)
 		,m_strWorkingSceneName(rSceneName)
+		,m_pParent(NULL)
+		,m_pChild(NULL)
+		,m_pNextSibling(NULL)
 		,m_pWidgetGenerator(NULL)
 		//,m_pExclusiveChild(NULL)
 		,m_aParamScale(CGUISize(1.0f,1.0f))
@@ -78,8 +81,9 @@ namespace guiex
 		,m_bIsMovable(false)
 		,m_bIsHitable(true)
 		,m_bIsMouseConsumed(true)
-		,m_bIsResponseUpdateEvent(false)
-		,m_bIsResponseParentSizeChangeEvent(false)
+		,m_bIsGenerateUpdateEvent(false)
+		,m_bIsGenerateParentSizeChangeEvent(false)
+		,m_bIsGenerateParentChangeEvent(false)
 		,m_bIsGenerateClickEvent(true)
 		,m_bIsGenerateDBClickEvent(false)
 		,m_bIsGenerateMultiClickEvent(false)
@@ -339,6 +343,7 @@ namespace guiex
 	{
 		m_pParent = pParent;
 		//send event for change parent
+		if( IsGenerateParentChangeEvent() )
 		{
 			CGUIEventRelativeChange aEvent;
 			aEvent.SetEventId(eEVENT_PARENT_CHANGED);
@@ -346,6 +351,18 @@ namespace guiex
 			aEvent.SetReceiver(this);
 			GSystem->SendEvent( &aEvent);
 		}
+	}
+	//------------------------------------------------------------------------------
+	/// set child
+	void CGUIWidget::SetChildImpl( CGUIWidget* pChild )
+	{
+		m_pChild = pChild;
+	}
+	//-----------------------------------------------------------------------	
+	/// set next sibling
+	void CGUIWidget::SetNextSiblingImpl( CGUIWidget* pNextSibling )
+	{
+		m_pNextSibling = pNextSibling;
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -380,7 +397,12 @@ namespace guiex
 	*/
 	CGUIWidget* CGUIWidget::GetParent() const
 	{
-		return static_cast<CGUIWidget*>(m_pParent);
+		return m_pParent;
+	}
+	//------------------------------------------------------------------------------
+	CGUINode* CGUIWidget::NodeGetParent()
+	{
+		return m_pParent;
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -388,7 +410,7 @@ namespace guiex
 	*/
 	CGUIWidget*	CGUIWidget::GetChild( ) const
 	{
-		return static_cast<CGUIWidget*>(m_pChild);
+		return m_pChild;
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -411,7 +433,7 @@ namespace guiex
 	/// get next sibling
 	CGUIWidget*	CGUIWidget::GetNextSibling( ) const
 	{
-		return static_cast<CGUIWidget*>(m_pNextSibling);
+		return m_pNextSibling;
 	}
 	////------------------------------------------------------------------------------
 	////get exclusive child
@@ -440,7 +462,7 @@ namespace guiex
 	/**
 	* @brief move down this widget between his sibling
 	*/
-	void	CGUIWidget::MoveDown()
+	void CGUIWidget::MoveDown()
 	{
 		if( GetParent() )
 		{
@@ -454,9 +476,9 @@ namespace guiex
 			//check for second one
 			if( this == GetParent()->GetChild()->GetNextSibling() )
 			{
-				GetParent()->GetChild()->SetNextSibling( GetNextSibling() );
-				SetNextSibling( GetParent()->GetChild() );
-				GetParent()->setChild( this );
+				GetParent()->GetChild()->SetNextSiblingImpl( GetNextSibling() );
+				SetNextSiblingImpl( GetParent()->GetChild() );
+				GetParent()->SetChildImpl( this );
 			}
 			else
 			{
@@ -471,9 +493,9 @@ namespace guiex
 					pWidget = pWidget->GetNextSibling();
 				}
 				GUI_ASSERT( pWidget, "error");
-				pWidget->GetNextSibling()->SetNextSibling( GetNextSibling( ));
-				SetNextSibling( pWidget->GetNextSibling());
-				pWidget->SetNextSibling( this );
+				pWidget->GetNextSibling()->SetNextSiblingImpl( GetNextSibling( ));
+				SetNextSiblingImpl( pWidget->GetNextSibling());
+				pWidget->SetNextSiblingImpl( this );
 			}
 		}
 	}
@@ -495,9 +517,9 @@ namespace guiex
 			//check for first
 			if( this == GetParent()->GetChild() )
 			{
-				GetParent()->setChild( GetParent()->GetChild()->GetNextSibling());
-				SetNextSibling( GetParent()->GetChild()->GetNextSibling() );
-				GetParent()->GetChild()->SetNextSibling( this );
+				GetParent()->SetChildImpl( GetParent()->GetChild()->GetNextSibling());
+				SetNextSiblingImpl( GetParent()->GetChild()->GetNextSibling() );
+				GetParent()->GetChild()->SetNextSiblingImpl( this );
 			}
 			else
 			{
@@ -512,9 +534,9 @@ namespace guiex
 					pWidget = pWidget->GetNextSibling();
 				}
 				GUI_ASSERT( pWidget, "error");
-				pWidget->SetNextSibling( GetNextSibling( ));
-				SetNextSibling( pWidget->GetNextSibling()->GetNextSibling());
-				pWidget->GetNextSibling()->SetNextSibling( this );
+				pWidget->SetNextSiblingImpl( GetNextSibling( ));
+				SetNextSiblingImpl( pWidget->GetNextSibling()->GetNextSibling());
+				pWidget->GetNextSibling()->SetNextSiblingImpl( this );
 
 			}
 		}
@@ -537,8 +559,8 @@ namespace guiex
 			//check for first
 			if( this == GetParent()->GetChild() )
 			{
-				GetParent()->setChild( GetParent()->GetChild()->GetNextSibling());
-				SetNextSibling( NULL );
+				GetParent()->SetChildImpl( GetParent()->GetChild()->GetNextSibling());
+				SetNextSiblingImpl( NULL );
 			}
 
 			//find this
@@ -556,20 +578,20 @@ namespace guiex
 			if( !pWidget->GetNextSibling() )
 			{
 				//add to last
-				pWidget->SetNextSibling( this );
+				pWidget->SetNextSiblingImpl( this );
 			}
 			else
 			{
 				//remove it first
-				pWidget->SetNextSibling( GetNextSibling() );
-				SetNextSibling( NULL );
+				pWidget->SetNextSiblingImpl( GetNextSibling() );
+				SetNextSiblingImpl( NULL );
 
 				//add to last
 				while( pWidget )
 				{
 					if( !pWidget->GetNextSibling() )
 					{
-						pWidget->SetNextSibling( this );
+						pWidget->SetNextSiblingImpl( this );
 						return;
 					}
 					pWidget = pWidget->GetNextSibling();
@@ -588,7 +610,7 @@ namespace guiex
 
 		if( pChild == GetChild() )
 		{
-			setChild( GetChild()->GetNextSibling());
+			SetChildImpl( GetChild()->GetNextSibling());
 		}
 		else
 		{
@@ -598,7 +620,7 @@ namespace guiex
 			{
 				if( pParam->GetNextSibling() == pChild )
 				{
-					pParam->SetNextSibling( pParam->GetNextSibling()->GetNextSibling() );
+					pParam->SetNextSiblingImpl( pParam->GetNextSibling()->GetNextSibling() );
 					bFind = true;
 					break;
 				}
@@ -614,7 +636,7 @@ namespace guiex
 			}
 		}
 		pChild->SetParentImpl( NULL );
-		pChild->SetNextSibling( NULL );
+		pChild->SetNextSiblingImpl( NULL );
 
 		////for exclusive child
 		//if( pChild->IsExclusive())
@@ -668,13 +690,13 @@ namespace guiex
 		CGUIWidget* pLastChild = GetLastChild();
 		if( pLastChild )
 		{
-			pLastChild->SetNextSibling( pChild );
+			pLastChild->SetNextSiblingImpl( pChild );
 		}
 		else
 		{
-			setChild( pChild );
+			SetChildImpl( pChild );
 		}
-		pChild->SetNextSibling( NULL );
+		pChild->SetNextSiblingImpl( NULL );
 
 		//set parent
 		pChild->SetParentImpl( this );
@@ -909,12 +931,12 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	const CGUIMatrix4& CGUIWidget::GetFullTransform(void)
 	{
-		return getFullTransform();
+		return NodeGetFullTransform();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::LocalToWorld( CGUIVector2& rPos )
 	{
-		const CGUIMatrix4& rWorldMatrix = getFullTransform();
+		const CGUIMatrix4& rWorldMatrix = NodeGetFullTransform();
 		CGUIVector3	aPos(rPos.x,rPos.y,0.0f);
 		aPos = rWorldMatrix*aPos;
 		rPos.x = aPos.x;
@@ -923,7 +945,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWidget::WorldToLocal( CGUIVector2& rPos )
 	{
-		const CGUIMatrix4& rWorldInverseMatrix = getFullInverseTransform();
+		const CGUIMatrix4& rWorldInverseMatrix = NodeGetFullInverseTransform();
 		CGUIVector3	aPos(rPos.x,rPos.y,0.0f);
 		aPos = rWorldInverseMatrix*aPos;
 		rPos.x = aPos.x;
@@ -932,14 +954,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWidget::LocalToWorld( CGUIVector3& rPos )
 	{
-		const CGUIMatrix4& rWorldMatrix = getFullTransform();
+		const CGUIMatrix4& rWorldMatrix = NodeGetFullTransform();
 		rPos = rWorldMatrix*rPos;
 
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::WorldToLocal( CGUIVector3& rPos )
 	{
-		const CGUIMatrix4& rWorldInverseMatrix = getFullInverseTransform();
+		const CGUIMatrix4& rWorldInverseMatrix = NodeGetFullInverseTransform();
 		rPos = rWorldInverseMatrix*rPos;
 	}
 	//------------------------------------------------------------------------------
@@ -947,7 +969,7 @@ namespace guiex
 	{
 		if(GetParent())
 		{
-			const CGUIMatrix4& rWorldMatrix = GetParent()->getFullTransform();
+			const CGUIMatrix4& rWorldMatrix = GetParent()->NodeGetFullTransform();
 			CGUIVector3	aPos(rPos.x,rPos.y,0.0f);
 			aPos = rWorldMatrix*aPos;
 			rPos.x = aPos.x;
@@ -959,7 +981,7 @@ namespace guiex
 	{
 		if(GetParent())
 		{
-			const CGUIMatrix4& rWorldInverseMatrix = GetParent()->getFullInverseTransform();
+			const CGUIMatrix4& rWorldInverseMatrix = GetParent()->NodeGetFullInverseTransform();
 			CGUIVector3	aPos(rPos.x,rPos.y,0.0f);
 			aPos = rWorldInverseMatrix*aPos;
 			rPos.x = aPos.x;
@@ -1222,15 +1244,17 @@ namespace guiex
 			m_aParamScale.SetSelfValue(rSize);
 
 			//send event
-			CGUIEventNotification aEvent;
-			aEvent.SetEventId(eEVENT_SCALE_CHANGE);
-			aEvent.SetReceiver(this);
-			GSystem->SendEvent( &aEvent );
+			if( IsGenerateScaleChangeEvent())
+			{
+				CGUIEventNotification aEvent;
+				aEvent.SetEventId(eEVENT_SCALE_CHANGE);
+				aEvent.SetReceiver(this);
+				GSystem->SendEvent( &aEvent );
+			}
 		}
-
 	}
 	//------------------------------------------------------------------------------
-	const CGUISize & CGUIWidget::GetScale( ) const
+	const CGUISize& CGUIWidget::GetScale( ) const
 	{
 		return m_aParamScale.GetSelfValue();
 	}
@@ -1818,14 +1842,14 @@ namespace guiex
 			ValueToProperty( IsOpenWithParent(), rProperty);
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "response_update_event" )
+		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "generate_update_event" )
 		{
-			ValueToProperty( IsResponseUpdateEvent(), rProperty);
+			ValueToProperty( IsGenerateUpdateEvent(), rProperty);
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "response_parentsizechange_event" )
+		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "generate_parentsizechange_event" )
 		{
-			ValueToProperty( IsResponseParentSizeChangeEvent(), rProperty);
+			ValueToProperty( IsGenerateParentSizeChangeEvent(), rProperty);
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "movable" )
@@ -2098,17 +2122,17 @@ namespace guiex
 			PropertyToValue(rProperty, bValue );
 			SetOpenWithParent( bValue );
 		}
-		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="response_update_event" )
+		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="generate_update_event" )
 		{
 			bool bValue = false;
 			PropertyToValue(rProperty, bValue );
-			SetResponseUpdateEvent(bValue );
+			SetGenerateUpdateEvent(bValue );
 		}
-		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="response_parentsizechange_event" )
+		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="generate_parentsizechange_event" )
 		{
 			bool bValue = false;
 			PropertyToValue(rProperty, bValue );
-			SetResponseParentSizeChangeEvent(bValue );
+			SetGenerateParentSizeChangeEvent(bValue );
 		}		
 		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="EVENT_CLICK" )
 		{
@@ -2173,7 +2197,7 @@ namespace guiex
 		}
 
 		pRender->PushMatrix();
-		pRender->MultMatrix( getTransform() );
+		pRender->MultMatrix( NodeGetTransform() );
 
 		// perform render for 'this' Window
 		RenderExtraSelfInfo(pRender);
@@ -2203,7 +2227,7 @@ namespace guiex
 		}
 
 		pRender->PushMatrix();
-		pRender->MultMatrix( getTransform() );
+		pRender->MultMatrix( NodeGetTransform() );
 
 		if( m_pSceneEffect )
 		{
@@ -2312,7 +2336,7 @@ namespace guiex
 		UpdateAsSelf( fDeltaTime );
 
 		//call update event
-		if( IsResponseUpdateEvent() )
+		if( IsGenerateUpdateEvent() )
 		{
 			CGUIEventNotification aEvent;
 			aEvent.SetEventId(eEVENT_UPDATE);
@@ -2796,19 +2820,17 @@ namespace guiex
 			m_aWidgetPosition.m_aPixelValue.y - aParentOffsetPos.y,
 			0.0f);
 		const CGUISize& rScale = m_aParamScale.GetSelfValue( );
+		
 		//pos
-		setPosition( aPos );
+		NodeSetPosition( aPos );
 		//scale
-		setScale( rScale.m_fWidth, rScale.m_fHeight, 1.0f );
+		NodeSetScale( rScale.m_fWidth, rScale.m_fHeight, 1.0f );
 		//rotation
-		//real w = CGUIMath::Cos( m_vRotation.z/2 );
-		//real z = CGUIMath::Sin( m_vRotation.z/2 );
-		//setOrientation( w, 0.0f, 0.0f, z );
 		CGUIMatrix3 aRotMat;
 		aRotMat.FromEulerAnglesXYZ( CGUIDegree(m_vRotation.x), CGUIDegree(m_vRotation.y), CGUIDegree(m_vRotation.z) );
-		setOrientation( CGUIQuaternion( aRotMat) );
+		NodeSetOrientation( CGUIQuaternion( aRotMat) );
 
-		updateFromParent( );
+		NodeUpdateFromParent( );
 
 		//refresh render rect
 		LocalToWorld( m_aBoundArea, m_aBound );
@@ -2901,24 +2923,44 @@ namespace guiex
 		return m_bIsMouseConsumed;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWidget::SetResponseUpdateEvent( bool bFlag )
+	void CGUIWidget::SetGenerateUpdateEvent( bool bFlag )
 	{
-		m_bIsResponseUpdateEvent = bFlag;
+		m_bIsGenerateUpdateEvent = bFlag;
 	}
 	//------------------------------------------------------------------------------
-	bool CGUIWidget::IsResponseUpdateEvent( ) const
+	bool CGUIWidget::IsGenerateUpdateEvent( ) const
 	{
-		return m_bIsResponseUpdateEvent;
+		return m_bIsGenerateUpdateEvent;
+	}	
+	//------------------------------------------------------------------------------
+	void CGUIWidget::SetGenerateScaleChangeEvent( bool bFlag )
+	{
+		m_bIsGenerateScaleChangeEvent = bFlag;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWidget::SetResponseParentSizeChangeEvent( bool bFlag )
+	bool CGUIWidget::IsGenerateScaleChangeEvent( ) const
 	{
-		m_bIsResponseParentSizeChangeEvent = bFlag;
+		return m_bIsGenerateScaleChangeEvent;
 	}
 	//------------------------------------------------------------------------------
-	bool CGUIWidget::IsResponseParentSizeChangeEvent( ) const
+	void CGUIWidget::SetGenerateParentSizeChangeEvent( bool bFlag )
 	{
-		return m_bIsResponseParentSizeChangeEvent;
+		m_bIsGenerateParentSizeChangeEvent = bFlag;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWidget::IsGenerateParentSizeChangeEvent( ) const
+	{
+		return m_bIsGenerateParentSizeChangeEvent;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::SetGenerateParentChangeEvent( bool bFlag )
+	{
+		m_bIsGenerateParentChangeEvent = bFlag;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWidget::IsGenerateParentChangeEvent( ) const
+	{
+		return m_bIsGenerateParentChangeEvent;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::SetGenerateClickEvent( bool bFlag )
