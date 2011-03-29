@@ -31,8 +31,6 @@ source_group( panel FILES ${${target_name}_panel_SRCS} )
 
 #static
 set( ${target_name}_static_SRCS 
-        guiwgtstatic.cpp
-        guiwgtstatic.h
         guiwgtstaticimage.cpp
         guiwgtstaticimage.h
         guiwgtstatictext.cpp
