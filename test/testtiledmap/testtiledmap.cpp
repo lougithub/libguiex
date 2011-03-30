@@ -21,10 +21,18 @@ CGUIFrameworkBase* CreateFramework( )
 int32 CGUIFrameworkTest::InitializeGame()
 {
 	CGUISceneManager::Instance()->RegisterScenesFromDir("/", ".uip");
+	
+	CGUISceneManager::Instance()->LoadResources( "common.uip" );	
+	CGUISceneManager::Instance()->LoadWidgets( "common.uip" );
+
 	CGUISceneManager::Instance()->LoadResources( "tiledmap.uip" );	
 	CGUISceneManager::Instance()->LoadWidgets( "tiledmap.uip" );
+
 	CGUIWidget* pWidget = NULL;
 	pWidget = CGUIWidgetManager::Instance()->GetPage( "sample1.xml", "tiledmap.uip" );
+	GSystem->GetUICanvas()->OpenUIPage(pWidget);		
+	
+	pWidget = CGUIWidgetManager::Instance()->GetPage( "utility.xml", "common.uip" );
 	GSystem->GetUICanvas()->OpenUIPage(pWidget);		
 	return 0;
 }

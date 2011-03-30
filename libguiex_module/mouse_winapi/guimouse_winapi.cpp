@@ -44,12 +44,12 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	void	IGUIMouse_winapi::DeleteSelf()
+	void IGUIMouse_winapi::DeleteSelf()
 	{
 		delete this;
 	}
 	//------------------------------------------------------------------------------
-	bool			IGUIMouse_winapi::ProcessWindowMessage(
+	bool IGUIMouse_winapi::ProcessWindowMessage(
 		HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		switch(message)

@@ -24,9 +24,9 @@ namespace guiex
 
 	enum EScreenOrientation
 	{
-		eDeviceOrientation_Portrait = 0,
-		eDeviceOrientation_PortraitUpsideDown,
-		eDeviceOrientation_LandscapeLeft,
-		eDeviceOrientation_LandscapeRight,
+		eScreenOrientation_Portrait = 0,
+		eScreenOrientation_PortraitUpsideDown,
+		eScreenOrientation_LandscapeLeft,
+		eScreenOrientation_LandscapeRight,
 	};
 }

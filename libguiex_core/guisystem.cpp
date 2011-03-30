@@ -122,7 +122,7 @@ namespace guiex
 		,m_pWidgetManager( NULL )
 		,m_pCameraManager( NULL )
 		,m_pUICanvas( NULL )
-		,m_eScreenOrientation( eDeviceOrientation_Portrait )
+		,m_eScreenOrientation( eScreenOrientation_Portrait )
 	{
 		GUI_ASSERT( !m_pSingleton, "[CGUISystem::CGUISystem]:instance has been created" ); 
 		GUI_ASSERT( !GSystem, "[CGUISystem::CGUISystem]:GSystem has been set" ); 
@@ -549,13 +549,13 @@ namespace guiex
 	{
 		switch( m_eScreenOrientation )
 		{
-		case eDeviceOrientation_Portrait:
-		case eDeviceOrientation_PortraitUpsideDown:
+		case eScreenOrientation_Portrait:
+		case eScreenOrientation_PortraitUpsideDown:
 			m_aScreenSize = m_aRawScreenSize;
 			break;
 
-		case eDeviceOrientation_LandscapeLeft:
-		case eDeviceOrientation_LandscapeRight:
+		case eScreenOrientation_LandscapeLeft:
+		case eScreenOrientation_LandscapeRight:
 			m_aScreenSize.SetValue( m_aRawScreenSize.m_uHeight, m_aRawScreenSize.m_uWidth );
 			break;
 		}

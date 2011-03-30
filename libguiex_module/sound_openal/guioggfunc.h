@@ -11,6 +11,10 @@
 //============================================================================//
 // include
 //============================================================================//
+
+#ifndef OV_EXCLUDE_STATIC_CALLBACKS
+#define OV_EXCLUDE_STATIC_CALLBACKS
+#endif
 #include <vorbis/codec.h>
 #include <vorbis/vorbisfile.h>
 

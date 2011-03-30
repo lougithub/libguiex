@@ -24,13 +24,13 @@ namespace guiex
 	CGUICameraManager * CGUICameraManager::m_pSingleton = NULL; 
 	//------------------------------------------------------------------------------
 	CGUICameraManager::CGUICameraManager()
-		:m_vDefaultEye( 0.0f,0.0f, -1.0f )
-		,m_vDefaultCenter( 0.0f,0.0f, 0.0f )
-		,m_vDefaultUp( 0.0f,-1.0f,0.0f )
-		,m_fDefaultFov(60.0f)
-		,m_fDefaultAspectRatio(1.0f)
-		,m_fDefaultNearPlane(0.1f)
-		,m_fDefaultFarPlane(10000.0f)
+	:m_vDefaultEye( 0.0f,0.0f, -1.0f )
+	,m_vDefaultCenter( 0.0f,0.0f, 0.0f )
+	,m_vDefaultUp( 0.0f,-1.0f,0.0f )
+	,m_fDefaultFov(60.0f)
+	,m_fDefaultAspectRatio(1.0f)
+	,m_fDefaultNearPlane(0.1f)
+	,m_fDefaultFarPlane(10000.0f)
 	{
 		GUI_ASSERT( !m_pSingleton, "[CGUICameraManager::CGUICameraManager]:instance has been created" ); 
 		m_pSingleton = this; 
@@ -57,72 +57,74 @@ namespace guiex
 		{
 			m_fDefaultAspectRatio = rRawScreenSize.GetWidth() / real( rRawScreenSize.GetHeight());
 		}
-
+		
 		real fZDistance = -(rRawScreenSize.GetHeight()/2.0f) / CGUIMath::Tan( CGUIDegree(m_fDefaultFov/2));
-
+		
 		switch( eScreenOrientation )
 		{
-		case eDeviceOrientation_Portrait:
-			m_vDefaultCenter.x = rRawScreenSize.GetWidth() / 2.0f;
-			m_vDefaultCenter.y = rRawScreenSize.GetHeight() / 2.0f;
-			m_vDefaultCenter.z = 0.0f;
-
-			m_vDefaultEye.x = m_vDefaultCenter.x;
-			m_vDefaultEye.y = m_vDefaultCenter.y;
-			m_vDefaultEye.z = fZDistance;
-
-			m_vDefaultUp.x = 0.0f;
-			m_vDefaultUp.y = -1.0f;
-			m_vDefaultUp.z = 0.0f;
-			break;
-		case eDeviceOrientation_PortraitUpsideDown:
-			m_vDefaultCenter.x = rRawScreenSize.GetWidth() / 2.0f;
-			m_vDefaultCenter.y = rRawScreenSize.GetHeight() / 2.0f;
-			m_vDefaultCenter.z = 0.0f;
-
-			m_vDefaultEye.x = m_vDefaultCenter.x;
-			m_vDefaultEye.y = m_vDefaultCenter.y;
-			m_vDefaultEye.z = fZDistance;
-
-			m_vDefaultUp.x = 0.0f;
-			m_vDefaultUp.y = 1.0f;
-			m_vDefaultUp.z = 0.0f;
-			break;
-		case eDeviceOrientation_LandscapeLeft:
-			m_vDefaultCenter.x = rRawScreenSize.GetHeight() / 2.0f;
-			m_vDefaultCenter.y = rRawScreenSize.GetWidth() / 2.0f;
-			m_vDefaultCenter.z = 0.0f;
-
-			m_vDefaultEye.x = m_vDefaultCenter.x;
-			m_vDefaultEye.y = m_vDefaultCenter.y;
-			m_vDefaultEye.z = fZDistance;
-
-			m_vDefaultUp.x = 1.0f;
-			m_vDefaultUp.y = 0.0f;
-			m_vDefaultUp.z = 0.0f;
-			break;
-		case eDeviceOrientation_LandscapeRight:
-			m_vDefaultCenter.x = rRawScreenSize.GetHeight() / 2.0f;
-			m_vDefaultCenter.y = rRawScreenSize.GetWidth() / 2.0f;
-			m_vDefaultCenter.z = 0.0f;
-
-			m_vDefaultEye.x = m_vDefaultCenter.x;
-			m_vDefaultEye.y = m_vDefaultCenter.y;
-			m_vDefaultEye.z = fZDistance;
-
-			m_vDefaultUp.x = -1.0f;
-			m_vDefaultUp.y = 0.0f;
-			m_vDefaultUp.z = 0.0f;
-			break;
-
-		default:
-			throw CGUIException("CGUICamera::SetDefaultValue: unknown screen orientation.");
-			break;
+			case eScreenOrientation_Portrait:
+				m_vDefaultCenter.x = rRawScreenSize.GetWidth() / 2.0f;
+				m_vDefaultCenter.y = rRawScreenSize.GetHeight() / 2.0f;
+				m_vDefaultCenter.z = 0.0f;
+				
+				m_vDefaultEye.x = m_vDefaultCenter.x;
+				m_vDefaultEye.y = m_vDefaultCenter.y;
+				m_vDefaultEye.z = fZDistance;
+				
+				m_vDefaultUp.x = 0.0f;
+				m_vDefaultUp.y = -1.0f;
+				m_vDefaultUp.z = 0.0f;
+				break;
+			case eScreenOrientation_PortraitUpsideDown:
+				m_vDefaultCenter.x = rRawScreenSize.GetWidth() / 2.0f;
+				m_vDefaultCenter.y = rRawScreenSize.GetHeight() / 2.0f;
+				m_vDefaultCenter.z = 0.0f;
+				
+				m_vDefaultEye.x = m_vDefaultCenter.x;
+				m_vDefaultEye.y = m_vDefaultCenter.y;
+				m_vDefaultEye.z = fZDistance;
+				
+				m_vDefaultUp.x = 0.0f;
+				m_vDefaultUp.y = 1.0f;
+				m_vDefaultUp.z = 0.0f;
+				break;
+			case eScreenOrientation_LandscapeLeft:
+				m_vDefaultCenter.x = rRawScreenSize.GetHeight() / 2.0f;
+				m_vDefaultCenter.y = rRawScreenSize.GetWidth() / 2.0f;
+				m_vDefaultCenter.z = 0.0f;
+				
+				m_vDefaultEye.x = m_vDefaultCenter.x;
+				m_vDefaultEye.y = m_vDefaultCenter.y;
+				m_vDefaultEye.z = fZDistance;
+				
+				m_vDefaultUp.x = -1.0f;
+				m_vDefaultUp.y = 0.0f;
+				m_vDefaultUp.z = 0.0f;
+				break;
+				
+			case eScreenOrientation_LandscapeRight:
+				m_vDefaultCenter.x = rRawScreenSize.GetHeight() / 2.0f;
+				m_vDefaultCenter.y = rRawScreenSize.GetWidth() / 2.0f;
+				m_vDefaultCenter.z = 0.0f;
+				
+				m_vDefaultEye.x = m_vDefaultCenter.x;
+				m_vDefaultEye.y = m_vDefaultCenter.y;
+				m_vDefaultEye.z = fZDistance;
+				
+				m_vDefaultUp.x = 1.0f;
+				m_vDefaultUp.y = 0.0f;
+				m_vDefaultUp.z = 0.0f;
+				
+				break;
+				
+			default:
+				throw CGUIException("CGUICamera::SetDefaultValue: unknown screen orientation.");
+				break;
 		}
-
+		
 		m_fDefaultNearPlane = 0.1f;
 		m_fDefaultFarPlane = 10000.0f;
-
+		
 		OnDefaultValueChanged();
 	}
 	//------------------------------------------------------------------------------
@@ -166,5 +168,5 @@ namespace guiex
 		return OnDefaultValueChanged;
 	}
 	//------------------------------------------------------------------------------
-
+	
 }

@@ -67,7 +67,7 @@ namespace guiex
 	void CGUIWgtEdit::UpdateSelf( real fDeltaTime )
 	{
 		//get result string
-		if( m_pIme )
+		if( m_pIme && m_pIme->GetResultString() )
 		{
 			if( wcslen(m_pIme->GetResultString()) )
 			{

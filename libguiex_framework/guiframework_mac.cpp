@@ -61,7 +61,7 @@ namespace guiex
 		//setup log system
 		SetupLogSystem();
 
-		GSystem->SetScreenSize( rScreenSize );
+		GSystem->SetRawScreenSize( rScreenSize );
 
 		//register interface
 		RegisterInterfaces();

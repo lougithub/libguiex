@@ -18,6 +18,6 @@ end
 
 function toggle_rotate( self, event )
 	local orientation = guiex.GetSystem():GetScreenOrientation();
-	orientation = (orientation+1) % (guiex.eDeviceOrientation_LandscapeRight+1);
+	orientation = (orientation+1) % (guiex.eScreenOrientation_LandscapeRight+1);
 	guiex.GetSystem():SetScreenOrientation( orientation );
 end

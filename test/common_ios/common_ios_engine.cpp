@@ -78,33 +78,35 @@ void CLibGuiexEngine::OnRotate( EDeviceOrientation newOrientation )
 	switch( newOrientation )
 	{
 		case eDeviceOrientation_Portrait:
-			GSystem->SetScreenOrientation( eDeviceOrientation_Portrait );
+			GSystem->SetScreenOrientation( eScreenOrientation_Portrait );
 			break;
 		case eDeviceOrientation_PortraitUpsideDown:
-			GSystem->SetScreenOrientation( eDeviceOrientation_PortraitUpsideDown );
+			GSystem->SetScreenOrientation( eScreenOrientation_PortraitUpsideDown );
 			break;
 		case eDeviceOrientation_LandscapeLeft:
-			GSystem->SetScreenOrientation( eDeviceOrientation_LandscapeLeft );
+			GSystem->SetScreenOrientation( eScreenOrientation_LandscapeLeft );
 			break;
 		case eDeviceOrientation_LandscapeRight:
-			GSystem->SetScreenOrientation( eDeviceOrientation_LandscapeRight );
+			GSystem->SetScreenOrientation( eScreenOrientation_LandscapeRight );
 			break;
 	}
 }
 
 void CLibGuiexEngine::OnFingerUp(float x, float y)
 {
-	GSystem->ProcessMouseInput( IGUIInterfaceMouse::SMouseEvent( MOUSE_EVENT_UP, MOUSE_LEFT, x, y ) );
+	CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeMousePos(CGUIVector2(x,y));
+	CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( MOUSE_LEFT, MOUSE_UP );
 }
 
 void CLibGuiexEngine::OnFingerDown(float x,float y)
 {
-	GSystem->ProcessMouseInput( IGUIInterfaceMouse::SMouseEvent( MOUSE_EVENT_DOWN, MOUSE_LEFT, x, y ) );
+	CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeMousePos(CGUIVector2(x,y));	
+	CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( MOUSE_LEFT, MOUSE_DOWN );
 }
 
 void CLibGuiexEngine::OnFingerMove(float oldx, float oldy, float x, float y)
 {
-	GSystem->ProcessMouseInput( IGUIInterfaceMouse::SMouseEvent( MOUSE_EVENT_MOVE, MOUSE_NONE, x, y ) );
+	CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeMousePos(CGUIVector2(x,y));
 }
 
 
