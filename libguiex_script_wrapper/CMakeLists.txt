@@ -57,14 +57,6 @@ include_directories( "${PROJECT_SOURCE_DIR}/external/Box2D" )
 
 add_library( ${target_name} STATIC ${${target_name}_SRCS} )
 set_target_properties(${target_name} PROPERTIES FOLDER library)
-add_dependencies( 
-	${target_name} 
-	libguiex_core 
-	libguiex_widget 
-	libguiex_widget_box2d 
-	lua 
-	box2d)
-
 
 #${target_name}_wrapper_SRCS
 if( WIN32 )

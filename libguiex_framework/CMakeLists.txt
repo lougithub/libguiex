@@ -49,5 +49,4 @@ include_directories( "${PROJECT_SOURCE_DIR}/external/freetype/include" )
 include_directories( "${PROJECT_SOURCE_DIR}/external/Box2D" )
     
 add_library( ${target_name} STATIC ${${target_name}_SRCS} )
-add_dependencies( ${target_name} libguiex_module )
 set_target_properties(${target_name} PROPERTIES FOLDER library)

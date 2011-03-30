@@ -256,19 +256,5 @@ include_directories( "${PROJECT_SOURCE_DIR}/external/libogg/include" )
 include_directories( "${PROJECT_SOURCE_DIR}/external/freealut/include" )
 
 add_library( ${target_name} STATIC ${${target_name}_SRCS} )
-
 set_target_properties(${target_name} PROPERTIES FOLDER library)
-
-add_dependencies( 
-	${target_name} 
-	libguiex_core 
-	libguiex_widget 
-	libguiex_script_wrapper 
-	lua 
-	tinyxml 
-	freetype 
-	box2d
-	ogg
-	vorbis
-	)
 
