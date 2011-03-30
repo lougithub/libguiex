@@ -25,6 +25,7 @@
 #include <libguiex_module/script_lua/guiscript_lua.h>
 #include <libguiex_module/physics_box2d/guiphysics_box2d.h>
 #include <libguiex_module/sound_dummy/guisound_dummy.h>
+#include <libguiex_module/ime_dummy/guiime_dummy.h>
 #include <libguiex_module/sound_openal/guisound_openal.h>
 #include <libguiex_module/touch_cocoa/guitouch_cocoa.h>
 
@@ -100,6 +101,7 @@ namespace guiex
 		GUI_REGISTER_INTERFACE_LIB( IGUIFileSys_cocoa);
 		GUI_REGISTER_INTERFACE_LIB( IGUITouch_cocoa );
 		GUI_REGISTER_INTERFACE_LIB( IGUIFont_ft2);
+		GUI_REGISTER_INTERFACE_LIB( IGUIIme_dummy);
 		GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
 		GUI_REGISTER_INTERFACE_LIB( IGUIScript_lua);
 		GUI_REGISTER_INTERFACE_LIB( IGUIPhysics_box2d );

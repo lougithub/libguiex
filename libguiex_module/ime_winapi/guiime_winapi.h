@@ -28,19 +28,9 @@ namespace guiex
 	class GUIEXPORT IGUIIme_winapi : public IGUIInterfaceIme
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		IGUIIme_winapi();
-
-		/**
-		* @brief destructor
-		*/
 		virtual ~IGUIIme_winapi();
 
-		/**
-		* @brief used to delete this object
-		*/
 		virtual void DeleteSelf();
 
 
@@ -75,17 +65,7 @@ namespace guiex
 		bool ProcessWindowMessage(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 	protected:
-		/** 
-		* @brief initialize keyboard
-		* @param pData HWND
-		* @return 0 for success
-		*/
 		virtual int DoInitialize(void* pData);
-
-		/** 
-		* @brief destroy keyboard
-		* @return 0 for success
-		*/
 		virtual void DoDestroy();
 
 		/**
@@ -94,14 +74,14 @@ namespace guiex
 		bool IsOpen();
 
 
-		bool	OnWM_IME_SETCONTEXT();
-		bool	OnWM_INPUTLANGCHANGEREQUEST();
-		bool	OnWM_INPUTLANGCHANGE();
-		bool	OnWM_IME_STARTCOMPOSITION();
-		bool	OnWM_IME_ENDCOMPOSITION();
-		bool	OnWM_IME_NOTIFY(UINT message, WPARAM wParam, LPARAM lParam);
-		bool	OnWM_IME_COMPOSITION(UINT message, WPARAM wParam, LPARAM lParam);
-		bool	On_WM_CHAR( WPARAM wParam );	
+		bool OnWM_IME_SETCONTEXT();
+		bool OnWM_INPUTLANGCHANGEREQUEST();
+		bool OnWM_INPUTLANGCHANGE();
+		bool OnWM_IME_STARTCOMPOSITION();
+		bool OnWM_IME_ENDCOMPOSITION();
+		bool OnWM_IME_NOTIFY(UINT message, WPARAM wParam, LPARAM lParam);
+		bool OnWM_IME_COMPOSITION(UINT message, WPARAM wParam, LPARAM lParam);
+		bool On_WM_CHAR( WPARAM wParam );	
 
 	protected:
 		CGUIVector2 m_aPos; /// position of cursor

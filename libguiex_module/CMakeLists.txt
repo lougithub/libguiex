@@ -108,6 +108,14 @@ set( ${target_name}_ime_winapi_SRCS
 	)
 source_group(ime_winapi FILES ${${target_name}_ime_winapi_SRCS} )
 
+
+#ime_dummy
+set( ${target_name}_ime_dummy_SRCS 
+	ime_dummy/guiime_dummy.cpp
+	ime_dummy/guiime_dummy.h
+	)
+source_group(ime_dummy FILES ${${target_name}_ime_dummy_SRCS} )
+
 #keyboard_winapi
 set( ${target_name}_keyboard_winapi_SRCS 
 	keyboard_winapi/guikeyboard_winapi.cpp
@@ -203,6 +211,7 @@ if( WIN32 )
 		${${target_name}_font_dummy_SRCS}
 		${${target_name}_imageloader_tga_SRCS}
 		${${target_name}_ime_winapi_SRCS}
+		${${target_name}_ime_dummy_SRCS}
 		${${target_name}_keyboard_winapi_SRCS}
 		${${target_name}_keyboard_default_SRCS}
 		${${target_name}_mouse_winapi_SRCS}
@@ -226,6 +235,7 @@ elseif( APPLE )
 		${${target_name}_filesys_cocoa_SRCS}
 		${${target_name}_font_ft2_SRCS}
 		${${target_name}_font_dummy_SRCS}
+		${${target_name}_ime_dummy_SRCS}
 		${${target_name}_imageloader_tga_SRCS}
 		${${target_name}_render_opengles_SRCS}
 		${${target_name}_render_opengl_base_SRCS}

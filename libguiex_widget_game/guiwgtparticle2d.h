@@ -32,6 +32,8 @@ namespace guiex
 		virtual int32 GenerateProperty( CGUIProperty& rProperty );
 		virtual void ProcessProperty( const CGUIProperty& rProperty);
 
+		void SetParticle2D( const CGUIString& rParticle2DName );
+		void SetParticle2D( class CGUIParticle2DSystem* pParticle2D );
 
 	protected:
 		CGUIWgtParticle2D( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
@@ -41,8 +43,6 @@ namespace guiex
 		virtual void OnUpdate( real fDeltaTime );
 		virtual void OnDestroy();
 
-		void SetParticle2D( const CGUIString& rParticle2DName );
-		void SetParticle2D( class CGUIParticle2DSystem* pParticle2D );
 
 	protected:
 		class CGUIParticle2DSystem* m_pParticle2DSystem;
