@@ -44,6 +44,7 @@ namespace guiex
 	void CGUIWgtParticle2D::InitStaticParticle2DSystem()
 	{
 		m_pParticle2DSystem = NULL;
+		m_aOffsetMatrix = CGUIMatrix4::IDENTITY;
 
 		SetFocusable(false);
 		SetActivable(false);
@@ -62,10 +63,24 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtParticle2D::RenderSelf(IGUIInterfaceRender* pRender)
 	{
+		CGUIWidget::RenderSelf( pRender );
+
 		if( m_pParticle2DSystem )
 		{
+			pRender->PushMatrix();
+			pRender->MultMatrix( m_aOffsetMatrix );
+
 			m_pParticle2DSystem->Render( pRender );
+
+			pRender->PopMatrix();
 		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtParticle2D::RefreshSelf()
+	{
+		CGUIWidget::RefreshSelf();
+
+		m_aOffsetMatrix.setTrans( CGUIVector3( GetPixelSize().GetWidth() / 2, GetPixelSize().GetHeight() / 2, 0.0f ));
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtParticle2D::OnUpdate( real fDeltaTime )

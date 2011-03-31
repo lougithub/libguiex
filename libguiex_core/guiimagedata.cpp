@@ -42,7 +42,7 @@ namespace guiex
 		uint32 bytesPerPixel = 0;
 		switch( ePixelFormat )
 		{
-		case GUI_PF_LUMINANCE_8:
+		case GUI_PF_ALPHA_8:
 			bytesPerPixel = 1;
 			break;
 		case GUI_PF_LUMINANCE_ALPHA_16:

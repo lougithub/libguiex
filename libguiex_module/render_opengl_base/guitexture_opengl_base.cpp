@@ -138,10 +138,10 @@ namespace guiex
 			m_ePixelFormat = GUI_PF_RGBA_32;
 			break;
 
-		case GUI_PF_LUMINANCE_8:
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, buffWidth, buffHeight, 0, GL_LUMINANCE ,GL_UNSIGNED_BYTE, buffPtr);
+		case GUI_PF_ALPHA_8:
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, buffWidth, buffHeight, 0, GL_ALPHA ,GL_UNSIGNED_BYTE, buffPtr);
 			m_nBytesPerPixel = 1;
-			m_ePixelFormat = GUI_PF_LUMINANCE_8;
+			m_ePixelFormat = GUI_PF_ALPHA_8;
 			break;
 
 		//case GUI_PF_LUMINANCE_ALPHA_16:

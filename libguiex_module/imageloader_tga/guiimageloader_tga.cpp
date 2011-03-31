@@ -156,7 +156,7 @@ namespace guiex
 			tga.type = GUI_PF_RGBA_32;
 			break;		
 		case 8:
-			tga.type = GUI_PF_LUMINANCE_8;
+			tga.type = GUI_PF_ALPHA_8;
 			break;
 		default:
 			throw CGUIException("[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");

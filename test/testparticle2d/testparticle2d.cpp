@@ -18,8 +18,7 @@ protected:
 	void RegisterParticlePlayer();
 
 protected:
-	typedef CGUIParticle2DSystem* (*Fun_GenerateParticlePlayer)( );
-	std::vector< Fun_GenerateParticlePlayer > m_vecParticlePlayers;
+	std::vector< CGUIString > m_vecParticlePlayers;
 
 	CGUIWgtParticle2D* m_pWidgetParticle;
 };
@@ -108,8 +107,7 @@ void CMyCanvasLayer_Particle::ApplyEffect()
 {
 	static int i=m_vecParticlePlayers.size() - 1;
 
-	CGUIParticle2DSystem* pParticle = m_vecParticlePlayers[i]();
-	m_pWidgetParticle->SetParticle2D( pParticle );
+	m_pWidgetParticle->SetParticle2D( m_vecParticlePlayers[i] );
 
 	i = (i+1)%m_vecParticlePlayers.size();
 }
@@ -126,26 +124,16 @@ uint32 CMyCanvasLayer_Particle::OnKeyClicked( CGUIEventKeyboard* pEvent )
 	return CGUICanvasLayer::OnKeyClicked( pEvent );
 }
 //------------------------------------------------------------------------------
-CGUIAs* Fun_GenerateAsPlayer_CGUIAsPageTurn3D( )
-{
-	//CGUIAsPageTurn3D
-	CGUIAsPageTurn3D* pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsPageTurn3D>();
-	pAs->SetGridSize( CGUIIntSize(30, 30) );
-	return pAs;
-}
-
-//CGUIWgtParticle2D* Fun_GenerateParticle2d_sample1( )
-//{
-//	//CGUIAsWaves3D
-//	CGUIAsWaves3D* pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsWaves3D>();
-//	pAs->SetGridSize( CGUIIntSize(30, 30) );
-//	pAs->SetWavesInfo( 5, 20 );
-//	return pAs;
-//}
-
 void CMyCanvasLayer_Particle::RegisterParticlePlayer()
 {
-	//m_vecParticlePlayers.push_back( Fun_GenerateParticle2d_sample1 );
+	m_vecParticlePlayers.push_back( "DemoRain" );
+	m_vecParticlePlayers.push_back( "DemoGalaxy" );
+	m_vecParticlePlayers.push_back( "DemoSpiral" );
+	m_vecParticlePlayers.push_back( "DemoFlower" );
+	m_vecParticlePlayers.push_back( "DemoFirework" );
+	m_vecParticlePlayers.push_back( "DemoSun" );
+	m_vecParticlePlayers.push_back( "DemoSnow" );
+	m_vecParticlePlayers.push_back( "DemoExplosion" );
 }
 //------------------------------------------------------------------------------
 

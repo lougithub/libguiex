@@ -118,7 +118,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIUICanvasLayer::Render( IGUIInterfaceRender* pRender )
 	{
-		CGUICamera* pCamera = pRender->ApplyCamera( m_pDefaultUICamera );
+		pRender->ApplyCamera( m_pDefaultUICamera );
 
 		CGUICanvasLayer::Render( pRender );
 
@@ -135,8 +135,6 @@ namespace guiex
 		{
 			m_pPopupWidget->Render(pRender);
 		}
-
-		pRender->ApplyCamera( pCamera );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIUICanvasLayer::RenderExtraInfo( IGUIInterfaceRender* pRender )

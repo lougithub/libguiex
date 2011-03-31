@@ -13,7 +13,15 @@
 //============================================================================// 
 #include <libguiex_core/guiwidget.h>
 #include <libguiex_core/guiwidgetgenerator.h>
+#include <libguiex_core/guimatrix4.h>
 
+//============================================================================//
+// declare
+//============================================================================// 
+namespace guiex
+{
+	class CGUIParticle2DSystem;
+}
 
 //============================================================================//
 // class
@@ -33,7 +41,7 @@ namespace guiex
 		virtual void ProcessProperty( const CGUIProperty& rProperty);
 
 		void SetParticle2D( const CGUIString& rParticle2DName );
-		void SetParticle2D( class CGUIParticle2DSystem* pParticle2D );
+		void SetParticle2D( CGUIParticle2DSystem* pParticle2D );
 
 	protected:
 		CGUIWgtParticle2D( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
@@ -42,10 +50,12 @@ namespace guiex
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 		virtual void OnUpdate( real fDeltaTime );
 		virtual void OnDestroy();
+		virtual void RefreshSelf();
 
 
 	protected:
-		class CGUIParticle2DSystem* m_pParticle2DSystem;
+		CGUIParticle2DSystem* m_pParticle2DSystem;
+		CGUIMatrix4 m_aOffsetMatrix;
 
 	protected:
 		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtParticle2D);

@@ -62,7 +62,7 @@ namespace guiex
 		GUI_PF_LUMINANCE_ALPHA_16,
 		
 		//1 byte pixel format
-		GUI_PF_LUMINANCE_8,
+		GUI_PF_ALPHA_8,
 
 		/// 3 byte pixel format
 		GUI_PF_RGB_24,

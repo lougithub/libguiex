@@ -166,7 +166,7 @@ void keyboardCB(unsigned char key, int x, int y)
 		break;
 	
 	case 'r':	//rotate screen
-		GSystem->SetScreenOrientation( EScreenOrientation((GSystem->GetScreenOrientation() + 1) % (eDeviceOrientation_LandscapeRight+1)));
+		GSystem->SetScreenOrientation( EScreenOrientation((GSystem->GetScreenOrientation() + 1) % (eScreenOrientation_LandscapeRight+1)));
 		break;
 
 	default:
