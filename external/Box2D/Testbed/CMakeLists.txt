@@ -60,12 +60,12 @@ include_directories (
 	${Box2D_SOURCE_DIR}
 )
 
-if(APPLE)
+if(BUILD_PLATFORM_MACOS OR BUILD_PLATFORM_IPHONE)
 	# We are not using the Apple's framework version, but X11's
 	include_directories( /usr/X11/include )
 	link_directories( /usr/X11/lib )
 	set (OPENGL_LIBRARIES GL GLU GLUT X11)
-endif(APPLE)
+endif( )
 
 add_executable(Testbed
 	${Testbed_Framework_SRCS}

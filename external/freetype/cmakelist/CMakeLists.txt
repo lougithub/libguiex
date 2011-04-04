@@ -2,7 +2,7 @@ set( target_name "freetype" )
 message( STATUS "generate library: " ${target_name} )
 
 
-if( WIN32 )
+if( BUILD_PLATFORM_WIN32 )
 	set( src_list 
 		../src/autofit/autofit.c
 		../src/bdf/bdf.c
@@ -54,7 +54,7 @@ if( WIN32 )
 		../include/freetype/config/ftstdlib.h
 		)
 
-elseif( APPLE )
+elseif( BUILD_PLATFORM_MACOS OR BUILD_PLATFORM_IPHONE )
 
 	set( src_list 
 		../src/autofit/autofit.c
@@ -118,7 +118,7 @@ include_directories( ../include )
 add_library( ${target_name} STATIC ${src_list} ${inc_list}  )
 
 
-if( WIN32 )
+if( BUILD_PLATFORM_WIN32 )
 
 	set_target_properties( 
 		${target_name}
@@ -128,7 +128,7 @@ if( WIN32 )
 		COMPILE_DEFINITIONS_DEBUG FT_DEBUG_LEVEL_TRACE
 		)
 
-elseif( APPLE )
+elseif( BUILD_PLATFORM_MACOS OR BUILD_PLATFORM_IPHONE )
 
 	set_target_properties( 
 		${target_name}

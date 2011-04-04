@@ -2,7 +2,7 @@ set( target_name "example_testsound" )
 message( STATUS "generate execute: " ${target_name} )
 
 
-if( APPLE )
+if( BUILD_PLATFORM_MACOS OR BUILD_PLATFORM_IPHONE )
 	#common source
 	set( ${target_name}_common_SRCS
 		../common_ios/common_ios.mm
@@ -11,7 +11,7 @@ if( APPLE )
 		../common_ios/common_ios_engine.h
 		)
 	source_group( common FILES ${${target_name}_common_SRCS} )
-elseif( WIN32)
+elseif( BUILD_PLATFORM_WIN32)
 	#common source
 	set( ${target_name}_common_SRCS
 		../common_glut/common_glut.cpp
@@ -34,7 +34,7 @@ set( ${target_name}_SRCS
 	"${${target_name}_execute_SRCS}"
 	)
 
-if( APPLE )
+if( BUILD_PLATFORM_MACOS OR BUILD_PLATFORM_IPHONE )
 
 	macro_set_bundle_mac( ${target_name} )
 	add_executable( ${target_name} MACOSX_BUNDLE ${${target_name}_SRCS} )
@@ -54,7 +54,7 @@ if( APPLE )
 	macro_set_target_link_libraries_mac( ${target_name} )
 	macro_copy_resource_mac( ${target_name} "${PROJECT_SOURCE_DIR}/data/test" )
 
-elseif( WIN32 )
+elseif( BUILD_PLATFORM_WIN32 )
     macro_include_directories_win32()
 	macro_link_directories_win32()
     

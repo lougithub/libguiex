@@ -96,7 +96,7 @@ set( ${target_name}_progress_SRCS
 source_group( progress FILES ${${target_name}_progress_SRCS} )
 
 # modify file list here --begin--
-if( WIN32 )
+if( BUILD_PLATFORM_WIN32 )
     set( ${target_name}_SRCS 
 		${${target_name}_button_SRCS}
 		${${target_name}_checkbutton_SRCS}
@@ -111,7 +111,7 @@ if( WIN32 )
 		${${target_name}_progress_SRCS}
 		${${target_name}_utility_SRCS}
         )
-elseif( APPLE )
+elseif( BUILD_PLATFORM_MACOS OR BUILD_PLATFORM_IPHONE)
     set( ${target_name}_SRCS 
     	${${target_name}_button_SRCS}
 		${${target_name}_checkbutton_SRCS}
@@ -123,9 +123,9 @@ elseif( APPLE )
 		${${target_name}_static_SRCS}
 		${${target_name}_utility_SRCS}
         )
-else( WIN32 )
+else( )
     message( FATAL_ERROR "unsupport platform" )
-endif( WIN32 )
+endif( )
 # modify file list here --end--
 
 add_library( ${target_name} STATIC ${${target_name}_SRCS} )

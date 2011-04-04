@@ -201,9 +201,8 @@ set( ${target_name}_stringconv_cocoa_SRCS
 source_group(stringconv_cocoa FILES ${${target_name}_stringconv_cocoa_SRCS} )
 
 
-if( WIN32 )
+if( BUILD_PLATFORM_WIN32 )
 
-	#all win32 source
 	set( ${target_name}_SRCS 
 		${${target_name}_configfile_tinyxml_SRCS}
 		${${target_name}_filesys_stdio_SRCS}
@@ -227,9 +226,8 @@ if( WIN32 )
 	include_directories( "${PROJECT_SOURCE_DIR}/external/openal/include" )
 	include_directories( "${PROJECT_SOURCE_DIR}/external/glew/include" )
 
-elseif( APPLE )
+elseif( BUILD_PLATFORM_IPHONE OR BUILD_PLATFORM_MACOS )
 
-	#all apple source
 	set( ${target_name}_SRCS 
 		${${target_name}_configfile_tinyxml_SRCS}
 		${${target_name}_filesys_cocoa_SRCS}

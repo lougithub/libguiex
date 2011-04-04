@@ -353,7 +353,7 @@ set( ${target_name}_SRCS
 	#${${target_name}_particlesystem_SRCS}
 	)
 
-if( WIN32 )
+if( BUILD_PLATFORM_WIN32 )
     include_directories( "${PROJECT_SOURCE_DIR}/external/zlib" )
 endif()
 include_directories( "${PROJECT_SOURCE_DIR}/external/tinyxml" )

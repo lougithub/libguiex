@@ -9,6 +9,33 @@ set( CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS true )
 set_property(GLOBAL PROPERTY USE_FOLDERS On)
 project( libguiex )
 
+# check platform
+
+option(BUILD_PLATFORM_WIN32 "platform win32" OFF)
+option(BUILD_PLATFORM_MACOS "platform macos" OFF)
+option(BUILD_PLATFORM_IPHONE "platform iphone" OFF)
+if( NOT BUILD_PLATFORM_IPHONE AND
+	NOT BUILD_PLATFORM_MACOS AND
+	NOT BUILD_PLATFORM_WIN32 )
+	message( STATUS "try default platform" )
+	if( WIN32 )
+		set(BUILD_PLATFORM_WIN32 ON)
+	elseif(APPLE)
+		set(BUILD_PLATFORM_MACOS ON)
+	else()
+		message( FATAL_ERROR "unsupport platform" )
+	endif()
+endif()
+
+if( BUILD_PLATFORM_IPHONE )
+	message( STATUS "PLATFORM: iphone" )
+elseif( BUILD_PLATFORM_MACOS )
+	message( STATUS "PLATFORM: macos" )
+elseif( BUILD_PLATFORM_WIN32 )
+	message( STATUS "PLATFORM: win32" )
+else()
+	message( FATAL_ERROR "unsupport platform" )
+endif()
 
 # Include necessary submodules
 set(
@@ -30,7 +57,7 @@ configure_file (
     )
 
 
-if( APPLE )
+if( BUILD_PLATFORM_IPHONE OR BUILD_PLATFORM_MACOS )
 
 	#iphone sdk
 	#set( IPHONE_SDK "iphonesimulator4.1" )
@@ -53,7 +80,7 @@ if( APPLE )
     #set output directory
 	set( CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/binary/mac" )
 
-elseif( WIN32 )
+elseif( BUILD_PLATFORM_WIN32 )
 
 	set( CMAKE_USE_RELATIVE_PATHS true )
 	set( CMAKE_SUPPRESS_REGENERATION false )
@@ -116,7 +143,7 @@ add_subdirectory( ${PROJECT_SOURCE_DIR}/external/Box2D/cmakelist projects/box2d 
 add_subdirectory( ${PROJECT_SOURCE_DIR}/external/freetype/cmakelist projects/freetype )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/external/libogg/cmakelist projects/libogg )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/external/libvorbis/cmakelist projects/libvorbis )
-if( WIN32 )
+if( BUILD_PLATFORM_WIN32)
 	add_subdirectory( ${PROJECT_SOURCE_DIR}/external/zlib/cmakelist projects/zlib )
 	add_subdirectory( ${PROJECT_SOURCE_DIR}/external/glew/cmakelist projects/glew )
 endif()

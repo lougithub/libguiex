@@ -21,7 +21,7 @@ set( ${target_name}_mac_SRCS
 	)
 source_group( mac FILES ${${target_name}_mac_SRCS} )
 
-if( WIN32 )
+if( BUILD_PLATFORM_WIN32 )
 
 	set( ${target_name}_SRCS
 		${${target_name}_framework_SRCS}
@@ -30,7 +30,7 @@ if( WIN32 )
 
 	include_directories( "${PROJECT_SOURCE_DIR}/external/openal/include" )
 
-elseif( APPLE )
+elseif( BUILD_PLATFORM_IPHONE OR BUILD_PLATFORM_MACOS )
 
 	set( ${target_name}_SRCS
 		${${target_name}_framework_SRCS}

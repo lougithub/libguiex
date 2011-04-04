@@ -59,7 +59,7 @@ add_library( ${target_name} STATIC ${${target_name}_SRCS} )
 set_target_properties(${target_name} PROPERTIES FOLDER library)
 
 #${target_name}_wrapper_SRCS
-if( WIN32 )
+if( BUILD_PLATFORM_WIN32 )
 	add_custom_command( 
 		OUTPUT ${CMAKE_CURRENT_LIST_DIR}/guiex_wrapper.cpp ${CMAKE_CURRENT_LIST_DIR}/guiex_wrapper.h
 		COMMAND ${PROJECT_SOURCE_DIR}/external/swigwin/swig.exe 

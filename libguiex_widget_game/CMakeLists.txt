@@ -24,21 +24,21 @@ set( ${target_name}_tiledmap_SRCS
 source_group( "tiledmap" FILES ${${target_name}_tiledmap_SRCS} )
 
 # modify file list here --begin--
-if( WIN32 )
+if( BUILD_PLATFORM_WIN32 )
     set( ${target_name}_SRCS 
 		${${target_name}_particle2d_SRCS}
 		${${target_name}_utility_SRCS}
 		${${target_name}_tiledmap_SRCS}
         )
-elseif( APPLE )
+elseif( BUILD_PLATFORM_IPHONE OR BUILD_PLATFORM_MACOS )
     set( ${target_name}_SRCS 
     	${${target_name}_particle2d_SRCS}
 		${${target_name}_utility_SRCS}
 		${${target_name}_tiledmap_SRCS}
         )
-else( WIN32 )
+else(  )
     message( FATAL_ERROR "unsupport platform" )
-endif( WIN32 )
+endif(  )
 # modify file list here --end--
 
 #include directory

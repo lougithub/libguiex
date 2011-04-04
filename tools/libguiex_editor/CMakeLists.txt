@@ -1,4 +1,4 @@
-if( WIN32 )
+if( BUILD_PLATFORM_WIN32 )
 
 	set( target_name "tools_editor" )
 	message( STATUS "generate execute: " ${target_name} )
