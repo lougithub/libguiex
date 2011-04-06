@@ -9,5 +9,7 @@
 	<property name="utility.lua" type="ScriptFile" />
 
 	<property name="resource.xml" type="ResourceFile" />
+
+	<property name="localization.xml" type="LocalizationFile" />
 </libguiex_project>
 
