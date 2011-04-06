@@ -82,7 +82,7 @@
         <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
         <property name="disable" type="bool" value="false" />
         <property name="open_with_parent" type="bool" value="true" />
-        <property name="text_normal" type="CGUIString" value="ok" />
+        <property name="text_normal" type="CGUILocalizedString" value="ok" />
         <property name="visible" type="bool" value="true" />
         <property name="hitable" type="bool" value="true" />
         <property name="generate_update_event" type="bool" value="false" />
@@ -131,7 +131,7 @@
         <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
         <property name="disable" type="bool" value="false" />
         <property name="open_with_parent" type="bool" value="true" />
-        <property name="text_normal" type="CGUIString" value="cancel" />
+        <property name="text_normal" type="CGUILocalizedString" value="cancel" />
         <property name="visible" type="bool" value="true" />
         <property name="hitable" type="bool" value="true" />
         <property name="generate_update_event" type="bool" value="false" />

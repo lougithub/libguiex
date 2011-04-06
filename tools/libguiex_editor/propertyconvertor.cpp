@@ -260,6 +260,34 @@ public:
 	}
 };
 
+class CEditorPropertyConvertor_LocalizedString : public CEditorPropertyConvertorBase
+{
+public:
+	CEditorPropertyConvertor_LocalizedString()
+		:CEditorPropertyConvertorBase( ePropertyType_LocalizedString )
+	{
+
+	}
+	virtual void DoGuiProperty2GridProperty(WxToolsPGManager* pSheetMgr, wxPGProperty* pPGCategory, wxPGProperty*& pPGTop, const CGUIProperty& aProp)
+	{
+		wxString aValue;
+		aValue = Gui2wxString(aProp.GetValue());
+
+		if( pPGTop )
+		{
+			pPGTop->SetValue( aValue );
+		}
+		else
+		{
+			pPGTop = pSheetMgr->Insert( pPGCategory, -1, new WxGUILocalizedStringProperty(CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()), aValue));
+		}
+	}
+	virtual void DoGridProperty2GuiProperty( WxToolsPGManager* pSheetMgr, wxPGProperty* pPGProperty, CGUIProperty& rProperty )
+	{
+		CGUIString aValue = wx2GuiString(pSheetMgr->GetPropertyValueAsString( pPGProperty ));
+		rProperty.SetValue( aValue );
+	}
+};
 
 
 class CEditorPropertyConvertor_Event : public CEditorPropertyConvertorBase
@@ -793,6 +821,7 @@ CPropertyConvertorMgr::CPropertyConvertorMgr()
 	RegisterConvertor( new CEditorPropertyConvertor_Color );
 	RegisterConvertor( new CEditorPropertyConvertor_Size );
 	RegisterConvertor( new CEditorPropertyConvertor_String );
+	RegisterConvertor( new CEditorPropertyConvertor_LocalizedString );
 	RegisterConvertor( new CEditorPropertyConvertor_Event );
 	RegisterConvertor( new CEditorPropertyConvertor_StringInfo );
 	RegisterConvertor( new CEditorPropertyConvertor_WidgetPosition );

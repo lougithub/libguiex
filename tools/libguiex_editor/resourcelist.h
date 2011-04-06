@@ -37,6 +37,7 @@ public:
 	const wxArrayString& GetAsList();
 	const wxArrayString& GetParticle2DList();
 	const wxArrayString& GetSoundList();
+	const wxArrayString& GetLocalizationList();
 	const wxArrayString& GetTiledMapList();
 
 	const wxBitmap* GetImageThumbnail( const wxString& rImageName );
@@ -63,6 +64,10 @@ protected:
 	void UpdateSoundList();
 	void ResetSoundList();
 
+	//update localization list used in the system
+	void UpdateLocalizationList();
+	void ResetLocalizationList();
+
 protected:
 	CResourceList();
 	~CResourceList();
@@ -75,6 +80,7 @@ private:
 	wxArrayString m_arrayParticle2DArray;
 	wxArrayString m_arrayTiledMapArray;
 	wxArrayString m_arraySoundArray;
+	wxArrayString m_arrayLocalizationArray;
 };
 
 

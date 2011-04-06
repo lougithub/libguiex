@@ -123,10 +123,25 @@ public:
 	WxGuiColorProperty( const wxString& label = wxPG_LABEL, const wxString& name = wxPG_LABEL, const CGUIColor& value = CGUIColor() );
 	virtual bool OnEvent( wxPropertyGrid* propgrid, wxWindow* primary, wxEvent& event );
 	virtual wxString ValueToString( wxVariant& value, int argFlags ) const;
-	virtual bool StringToValue( wxVariant& variant, const wxString& text, int argFlags );
+	virtual bool StringToValue( wxVariant& variant, const wxString& text, int argFlags ) const;
 
 	virtual wxSize OnMeasureImage( int item ) const;
 	virtual void OnCustomPaint( wxDC& dc, const wxRect& rect, wxPGPaintData& paintdata );
+};
+
+
+
+// -----------------------------------------------------------------------
+// WxGUILocalizedStringProperty
+// -----------------------------------------------------------------------
+class WxGUILocalizedStringProperty : public wxPGProperty
+{
+	WX_PG_DECLARE_PROPERTY_CLASS(WxGUILocalizedStringProperty)
+public:
+	WxGUILocalizedStringProperty( const wxString& label = wxPG_LABEL, const wxString& name = wxPG_LABEL, const wxString& rLocalizedString=wxEmptyString );
+	virtual bool OnEvent( wxPropertyGrid* propgrid, wxWindow* primary, wxEvent& event );
+	virtual wxString ValueToString( wxVariant& value, int argFlags ) const;
+	virtual bool StringToValue( wxVariant& variant, const wxString& text, int argFlags ) const;
 };
 
 
@@ -141,7 +156,7 @@ public:
 	virtual bool OnEvent( wxPropertyGrid* propgrid, wxWindow* primary, wxEvent& event );
 	virtual void OnSetValue();
 	virtual wxString ValueToString( wxVariant& value, int argFlags ) const;
-	virtual bool StringToValue( wxVariant& variant, const wxString& text, int argFlags );
+	virtual bool StringToValue( wxVariant& variant, const wxString& text, int argFlags ) const;
 
 	virtual wxSize OnMeasureImage( int item ) const;
 	virtual void OnCustomPaint( wxDC& dc, const wxRect& rect, wxPGPaintData& paintdata );
@@ -154,11 +169,11 @@ class WxGUISoundProperty : public wxPGProperty
 {
 	WX_PG_DECLARE_PROPERTY_CLASS(WxGUISoundProperty)
 public:
-	WxGUISoundProperty( const wxString& label = wxPG_LABEL, const wxString& name = wxPG_LABEL, const wxString& rImage=wxEmptyString );
+	WxGUISoundProperty( const wxString& label = wxPG_LABEL, const wxString& name = wxPG_LABEL, const wxString& rSound=wxEmptyString );
 	virtual bool OnEvent( wxPropertyGrid* propgrid, wxWindow* primary, wxEvent& event );
 	virtual void OnSetValue();
 	virtual wxString ValueToString( wxVariant& value, int argFlags ) const;
-	virtual bool StringToValue( wxVariant& variant, const wxString& text, int argFlags );
+	virtual bool StringToValue( wxVariant& variant, const wxString& text, int argFlags ) const;
 };
 
 

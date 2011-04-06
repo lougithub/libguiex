@@ -239,7 +239,17 @@ namespace guiex
 		return itorKey->second;
 	}
 	//------------------------------------------------------------------------------
-
+	void CGUILocalizationManager::GetAllLocalizations( std::vector<CGUIString>& rArrays ) const
+	{
+		for( TMapScenes::const_iterator itorScene = m_mapScenes.begin(); itorScene != m_mapScenes.end(); ++itorScene )
+		{
+			for( TMapKeys::const_iterator itorKey = itorScene->second.begin(); itorKey != itorScene->second.end(); ++itorKey )
+			{
+				rArrays.push_back( CGUIString("@") + itorScene->first + "/" + itorKey->first );
+			}
+		}
+	}
+	//------------------------------------------------------------------------------
 }//namespace guiex
 
 

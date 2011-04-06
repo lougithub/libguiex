@@ -38,6 +38,7 @@ namespace guiex
 		ePropertyType_Real,
 		
 		ePropertyType_String,
+		ePropertyType_LocalizedString,
 		ePropertyType_Size,
 		ePropertyType_Vector2,
 		ePropertyType_Vector3,

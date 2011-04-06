@@ -27,6 +27,8 @@ if( BUILD_PLATFORM_WIN32 )
 		wxeditorcanvascontainer.h			
 		wximageselectdlg.cpp
 		wximageselectdlg.h
+		wxlocalizedstringselectdlg.cpp
+		wxlocalizedstringselectdlg.h
 		wxsoundselectdlg.cpp
 		wxsoundselectdlg.h		
 		wxeditorid.h		

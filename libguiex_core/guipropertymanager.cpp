@@ -40,6 +40,7 @@ namespace guiex
 		RegisterPropertyType( ePropertyType_Size, "CGUISize" );
 		RegisterPropertyType( ePropertyType_Rect, "CGUIRect" );
 		RegisterPropertyType( ePropertyType_String, "CGUIString" );
+		RegisterPropertyType( ePropertyType_LocalizedString, "CGUILocalizedString" );
 		RegisterPropertyType( ePropertyType_Vector2, "CGUIVector2" );
 		RegisterPropertyType( ePropertyType_Vector3, "CGUIVector3" );
 		RegisterPropertyType( ePropertyType_Color, "CGUIColor" );

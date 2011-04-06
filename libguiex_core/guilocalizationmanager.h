@@ -15,6 +15,7 @@
 #include "guistring.h"
 
 #include <map>
+#include <vector>
 
 
 //============================================================================//
@@ -45,6 +46,8 @@ namespace guiex
 		///< full_key should be "@scenename/key"
 		CGUIStringW Localize( const CGUIStringW& rFullKey ) const;
 		CGUIStringW Localize( const CGUIString& rFullKey ) const;
+
+		void GetAllLocalizations( std::vector<CGUIString>& rArrays ) const;
 
 	protected:
 		friend class CGUISystem;

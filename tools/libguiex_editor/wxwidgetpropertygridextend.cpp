@@ -14,6 +14,7 @@
 #include "resourcelist.h"
 #include "wximageselectdlg.h"
 #include "wxsoundselectdlg.h"
+#include "wxlocalizedstringselectdlg.h"
 
 #include <wx/colordlg.h>
 
@@ -325,7 +326,7 @@ wxString WxGuiColorProperty::ValueToString( wxVariant& value, int argFlags ) con
 	return Gui2wxString( strValue );
 }
 // -----------------------------------------------------------------------
-bool WxGuiColorProperty::StringToValue( wxVariant& variant, const wxString& text, int argFlags )
+bool WxGuiColorProperty::StringToValue( wxVariant& variant, const wxString& text, int argFlags ) const
 {
 	CGUIColor color;
 	CGUIString strValue = wx2GuiString( text );
@@ -430,7 +431,7 @@ wxString WxGUIImageProperty::ValueToString( wxVariant& value, int argFlags ) con
 	return s;
 }
 // -----------------------------------------------------------------------
-bool WxGUIImageProperty::StringToValue( wxVariant& variant, const wxString& text, int argFlags )
+bool WxGUIImageProperty::StringToValue( wxVariant& variant, const wxString& text, int argFlags ) const
 {
 	if ( variant != text )
 	{
@@ -491,14 +492,57 @@ void WxGUIImageProperty::OnCustomPaint( wxDC& dc, const wxRect& rect, wxPGPaintD
 // -----------------------------------------------------------------------
 
 
+
+// -----------------------------------------------------------------------
+// WxGUILocalizedStringProperty
+// -----------------------------------------------------------------------
+WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGUILocalizedStringProperty,wxPGProperty,CGUIString,const CGUIString&,TextCtrlAndButton);
+WxGUILocalizedStringProperty::WxGUILocalizedStringProperty( const wxString& label, const wxString& name,const wxString& rLocalizedString )
+: wxPGProperty(label,name)
+{
+	SetValue( wxVariant( wx2GuiString( rLocalizedString )) );
+}
+// -----------------------------------------------------------------------
+wxString WxGUILocalizedStringProperty::ValueToString( wxVariant& value, int argFlags ) const
+{
+	return value;
+}
+// -----------------------------------------------------------------------
+bool WxGUILocalizedStringProperty::StringToValue( wxVariant& variant, const wxString& text, int argFlags ) const
+{
+	if ( variant != text )
+	{
+		variant = text;
+		return true;
+	}
+
+	return false;
+}
+// -----------------------------------------------------------------------
+bool WxGUILocalizedStringProperty::OnEvent( wxPropertyGrid* propgrid, wxWindow* primary, wxEvent& event )
+{
+	if ( propgrid->IsMainButtonEvent(event) )
+	{
+		WxLocalizedstringSelectDialog dialog( propgrid );
+		if ( dialog.ShowModal() == wxID_OK )
+		{
+			SetValueInEvent( dialog.GetLocalzedString() );
+			return true;
+		}
+	}
+	return false;
+}
+// -----------------------------------------------------------------------
+
+
 // -----------------------------------------------------------------------
 // WxGUISoundProperty
 // -----------------------------------------------------------------------
-WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGUISoundProperty,wxPGProperty,CGUIColor,const CGUIColor&,ChoiceAndButton);
-WxGUISoundProperty::WxGUISoundProperty( const wxString& label, const wxString& name,const wxString& rImage )
+WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGUISoundProperty,wxPGProperty,CGUIString,const CGUIString&,ChoiceAndButton);
+WxGUISoundProperty::WxGUISoundProperty( const wxString& label, const wxString& name,const wxString& rSound )
 : wxPGProperty(label,name)
 {
-	SetValue( wxVariant( wx2GuiString( rImage )) );
+	SetValue( wxVariant( wx2GuiString( rSound )) );
 	m_choices.Set(CResourceList::Instance()->GetSoundList(), 0);
 }
 // -----------------------------------------------------------------------
@@ -508,9 +552,9 @@ void WxGUISoundProperty::OnSetValue()
 	if ( variantType == wxPG_VARIANT_TYPE_LONG )
 	{
 		//index of choice
-		wxString strImageName = m_choices.GetLabel( m_value.GetInteger() );
+		wxString strSound = m_choices.GetLabel( m_value.GetInteger() );
 
-		m_value = strImageName;
+		m_value = strSound;
 	}
 }
 // -----------------------------------------------------------------------
@@ -520,7 +564,7 @@ wxString WxGUISoundProperty::ValueToString( wxVariant& value, int argFlags ) con
 	return s;
 }
 // -----------------------------------------------------------------------
-bool WxGUISoundProperty::StringToValue( wxVariant& variant, const wxString& text, int argFlags )
+bool WxGUISoundProperty::StringToValue( wxVariant& variant, const wxString& text, int argFlags ) const
 {
 	if ( variant != text )
 	{

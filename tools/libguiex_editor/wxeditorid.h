@@ -82,6 +82,12 @@ enum
 	ID_SoundListID,
 
 	//==================================================
+	//localization select dialog
+	ID_LocalizationSelect_BTN_OK,
+	ID_LocalizationSelect_BTN_CANCEL,
+	ID_LocalizationListID,
+
+	//==================================================
 	//save file dialog
 	ID_SaveFile_BTN_OK,
 	ID_SaveFile_BTN_NO,

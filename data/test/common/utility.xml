@@ -107,7 +107,7 @@
             <property name="index" type="int16" value="0" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
-        <property name="text_normal" type="CGUIString" value="wireframe" />
+        <property name="text_normal" type="CGUILocalizedString" value="wireframe" />
         <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
         <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
         <property name="textinfo_hover" type="CGUIStringInfo">
@@ -164,7 +164,7 @@
             <property name="index" type="int16" value="0" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
-        <property name="text_normal" type="CGUIString" value="extrainfo" />
+        <property name="text_normal" type="CGUILocalizedString" value="extrainfo" />
         <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
         <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
         <property name="textinfo_hover" type="CGUIStringInfo">
@@ -221,7 +221,7 @@
             <property name="index" type="int16" value="0" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
-        <property name="text_normal" type="CGUIString" value="rotate" />
+        <property name="text_normal" type="CGUILocalizedString" value="rotate" />
         <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
         <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
         <property name="textinfo_hover" type="CGUIStringInfo">

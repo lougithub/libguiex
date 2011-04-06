@@ -1293,7 +1293,7 @@ void WxMainFrame::OnRecentScenes( wxCommandEvent& In )
 
 	unsigned nFileIdx = In.GetId() - ID_RecentScenesBaseId;
 
-	std::pair< std::string, std::string>	strScene = CToolCache::Instance()->m_sceneHistory[nFileIdx];
+	std::pair< std::string, std::string> strScene = CToolCache::Instance()->m_sceneHistory[nFileIdx];
 	GSystem->SetDataPath(strScene.second);
 	try
 	{

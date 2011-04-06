@@ -29,6 +29,7 @@ CResourceList::~CResourceList()
 	ResetAsList();
 	ResetParticle2DList();
 	ResetSoundList();
+	ResetLocalizationList();
 	ResetTiledMapList();
 }
 //------------------------------------------------------------------------------
@@ -44,6 +45,7 @@ void CResourceList::UpdateResourceList()
 	UpdateAsList();
 	UpdateParticle2DList();
 	UpdateSoundList();
+	UpdateLocalizationList();
 	UpdateTiledMapList();
 }
 //------------------------------------------------------------------------------
@@ -239,6 +241,29 @@ void CResourceList::UpdateAsList()
 	m_arrayAsArray.Sort();
 }
 //------------------------------------------------------------------------------
+void CResourceList::UpdateLocalizationList()
+{
+	ResetLocalizationList();
+
+	m_arrayLocalizationArray.Add(_T(""));
+
+	std::vector<CGUIString> m_tempArrays;
+	CGUILocalizationManager::Instance()->GetAllLocalizations( m_tempArrays );
+
+	for( std::vector<CGUIString>::const_iterator itor = m_tempArrays.begin();
+		itor != m_tempArrays.end();
+		++itor)
+	{
+		m_arrayLocalizationArray.Add(Gui2wxString( *itor));
+	}
+	m_arrayLocalizationArray.Sort();
+}
+//------------------------------------------------------------------------------
+void CResourceList::ResetLocalizationList()
+{
+	m_arrayLocalizationArray.Clear();
+}
+//------------------------------------------------------------------------------
 void CResourceList::ResetSoundList()
 {
 	m_arraySoundArray.Clear();
@@ -282,5 +307,10 @@ const wxArrayString& CResourceList::GetParticle2DList()
 const wxArrayString& CResourceList::GetSoundList()
 {
 	return m_arraySoundArray;
+}
+//------------------------------------------------------------------------------
+const wxArrayString& CResourceList::GetLocalizationList()
+{
+	return m_arrayLocalizationArray;
 }
 //------------------------------------------------------------------------------

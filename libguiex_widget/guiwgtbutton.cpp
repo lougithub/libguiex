@@ -165,25 +165,25 @@ namespace guiex
 		{
 			ValueToProperty( m_strText[eButtonState_Push].GetStringInfo(), rProperty );
 		}
-		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text_normal" )
+		else if( rProperty.GetType() == ePropertyType_LocalizedString && rProperty.GetName() == "text_normal" )
 		{
 			CGUIString aStrText;
 			AppWideByteToMultiChar( m_strText[eButtonState_Normal].GetContent(), aStrText);
 			rProperty.SetValue(aStrText);
 		}
-		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text_hover" )
+		else if( rProperty.GetType() == ePropertyType_LocalizedString && rProperty.GetName() == "text_hover" )
 		{
 			CGUIString aStrText;
 			AppWideByteToMultiChar( m_strText[eButtonState_Hover].GetContent(), aStrText);
 			rProperty.SetValue(aStrText);
 		}
-		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text_push" )
+		else if( rProperty.GetType() == ePropertyType_LocalizedString && rProperty.GetName() == "text_push" )
 		{
 			CGUIString aStrText;
 			AppWideByteToMultiChar( m_strText[eButtonState_Push].GetContent(), aStrText);
 			rProperty.SetValue(aStrText);
 		}
-		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text_disable" )
+		else if( rProperty.GetType() == ePropertyType_LocalizedString && rProperty.GetName() == "text_disable" )
 		{
 			CGUIString aStrText;
 			AppWideByteToMultiChar( m_strText[eButtonState_Disable].GetContent(), aStrText);
@@ -236,25 +236,25 @@ namespace guiex
 			PropertyToValue( rProperty, aInfo);
 			SetTextInfo(aInfo, eButtonState_Disable);
 		}
-		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text_normal")
+		else if( rProperty.GetType() == ePropertyType_LocalizedString && rProperty.GetName() == "text_normal")
 		{
 			CGUIStringEx aStrText;
 			AppMultiByteToWideChar(rProperty.GetValue(), aStrText.m_strContent);
 			SetTextContent(aStrText.GetContent(), eButtonState_Normal);
 		}
-		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text_hover")
+		else if( rProperty.GetType() == ePropertyType_LocalizedString && rProperty.GetName() == "text_hover")
 		{
 			CGUIStringEx aStrText;
 			AppMultiByteToWideChar(rProperty.GetValue(), aStrText.m_strContent);
 			SetTextContent(aStrText.GetContent(), eButtonState_Hover);
 		}
-		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text_push")
+		else if( rProperty.GetType() == ePropertyType_LocalizedString && rProperty.GetName() == "text_push")
 		{
 			CGUIStringEx aStrText;
 			AppMultiByteToWideChar(rProperty.GetValue(), aStrText.m_strContent);
 			SetTextContent(aStrText.GetContent(), eButtonState_Push);
 		}
-		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text_disable")
+		else if( rProperty.GetType() == ePropertyType_LocalizedString && rProperty.GetName() == "text_disable")
 		{
 			CGUIStringEx aStrText;
 			AppMultiByteToWideChar(rProperty.GetValue(), aStrText.m_strContent);

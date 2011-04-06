@@ -137,6 +137,9 @@
 #include "guisceneeffectgrid3d.h"
 #include "guisceneeffecttiledgrid3d.h"
 
+//localization
+#include "guilocalizationmanager.h"
+
 #include "guiUtility.h"
 #include "guiinterpolation.h"
 
