@@ -2,6 +2,13 @@ set( target_name "libguiex_widget" )
 message( STATUS "generate library: " ${target_name} )
 
 #button
+set( ${target_name}_utilitywidget_SRCS 
+        guiwgttextbase.cpp
+        guiwgttextbase.h
+	)
+source_group( utilitywidget FILES ${${target_name}_utilitywidget_SRCS} )
+
+#button
 set( ${target_name}_button_SRCS 
         guiwgtbutton.cpp
         guiwgtbutton.h
@@ -98,6 +105,7 @@ source_group( progress FILES ${${target_name}_progress_SRCS} )
 # modify file list here --begin--
 if( BUILD_PLATFORM_WIN32 )
     set( ${target_name}_SRCS 
+		${${target_name}_utilitywidget_SRCS}
 		${${target_name}_button_SRCS}
 		${${target_name}_checkbutton_SRCS}
 		${${target_name}_radioutton_SRCS}
@@ -113,6 +121,7 @@ if( BUILD_PLATFORM_WIN32 )
         )
 elseif( BUILD_PLATFORM_MACOS OR BUILD_PLATFORM_IPHONE)
     set( ${target_name}_SRCS 
+		${${target_name}_utilitywidget_SRCS}
     	${${target_name}_button_SRCS}
 		${${target_name}_checkbutton_SRCS}
 		${${target_name}_radioutton_SRCS}

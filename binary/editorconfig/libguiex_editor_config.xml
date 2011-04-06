@@ -115,8 +115,20 @@
 		</page>
 	</widget>
 
+  <widget type="CGUIWgtTextBase" template="true">
+    <page name="Appearance">
+      <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" category="EditBox"/>
+      <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" category="EditBox"/>
+      <property name="text" type="CGUIString" value=""  category="StaticText"/>
+      <property name="textinfo" type="CGUIStringInfo"  category="StaticText">
+        <property name="size" type="uint16" value="16"/>
+        <property name="index" type="int16" value="0"/>
+        <property name="color" type="CGUIColor" value="255,255,255,255"/>
+      </property>
+    </page>
+  </widget>
 
-	<widget type="CGUIWgtButton" inherit="CGUIWidget">
+  <widget type="CGUIWgtButton" inherit="CGUIWidget">
 		<page name="Appearance">
       <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" category="EditBox"/>
       <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" category="EditBox"/>
@@ -155,17 +167,9 @@
 		</page>
 	</widget>
 
-	<widget type="CGUIWgtStaticText" inherit="CGUIWidget">
+	<widget type="CGUIWgtStaticText" inherit="CGUIWgtTextBase">
 		<page name="Appearance">
 			<property name="multiline" type="bool" value="false" category="StaticText"/>
-      <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" category="EditBox"/>
-      <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" category="EditBox"/>
-      <property name="text" type="CGUIString" value=""  category="StaticText"/>
-      <property name="textinfo" type="CGUIStringInfo"  category="StaticText">
-        <property name="size" type="uint16" value="16"/>
-        <property name="index" type="int16" value="0"/>
-        <property name="color" type="CGUIColor" value="255,255,255,255"/>
-      </property>
     </page>
 	</widget>
 
@@ -195,7 +199,7 @@
 	</widget>
 
 
-	<widget type="CGUIWgtEditBox" inherit="CGUIWidget">
+	<widget type="CGUIWgtEditBox" inherit="CGUIWgtTextBase">
 		<page name="Appearance">
 			<property name="size" type="CGUIWidgetSize" category="Default">
 				<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
@@ -206,15 +210,6 @@
 			<property name="max_text_num" type="uint32" value="100"  category="EditBox"/>
 			<property name="readonly" type="bool" value="false"  category="EditBox"/>
 			<property name="cursor_size" type="CGUISize" value="2,16"  category="EditBox"/>
-      <property name="textinfo" type="CGUIStringInfo" value="" category="EditBox">
-        <property name="size" type="uint16" value="16"/>
-        <property name="index" type="int16" value="0"/>
-        <property name="color" type="CGUIColor" value="255,255,255,255"/>
-      </property>
-      <property name="text" type="CGUIString" value="" category="EditBox"/>
-      <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" category="EditBox"/>
-      <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" category="EditBox"/>
-
     </page>
 		<page name="Image">
 			<property name="EDIT_BGFOCUS" type="CGUIImage" value=""/>

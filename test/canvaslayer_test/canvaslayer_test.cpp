@@ -43,10 +43,10 @@ protected:
 	{
 		//load data
 		CGUISceneManager::Instance()->RegisterScenesFromDir("/", ".uip");
-		CGUISceneManager::Instance()->LoadResources( "common.uip" );
-		CGUISceneManager::Instance()->LoadWidgets( "common.uip" );
-		CGUISceneManager::Instance()->LoadResources( "tiledmap.uip" );
-		CGUISceneManager::Instance()->LoadWidgets( "tiledmap.uip" );
+		CGUISceneManager::Instance()->LoadResources( "common" );
+		CGUISceneManager::Instance()->LoadWidgets( "common" );
+		CGUISceneManager::Instance()->LoadResources( "tiledmap" );
+		CGUISceneManager::Instance()->LoadWidgets( "tiledmap" );
 
 		//create layer
 		CMyCanvasLayer_DrawWidget* pLayer3 = new CMyCanvasLayer_DrawWidget( "layer 3" );
@@ -62,7 +62,7 @@ protected:
 		CGUICanvasLayerManager::Instance()->PushCanvasLayer( pLayer2 );
 
 		//open ui page
-		CGUIWidget* pWidget = CGUIWidgetManager::Instance()->GetPage( "utility.xml", "common.uip" );
+		CGUIWidget* pWidget = CGUIWidgetManager::Instance()->GetPage( "utility.xml", "common" );
 		GSystem->GetUICanvas()->OpenUIPage( pWidget);
 		return 0;
 	}
@@ -111,10 +111,10 @@ CMyCanvasLayer_DrawWidget::CMyCanvasLayer_DrawWidget( const char* szLayerName )
 	m_pAsQueue->SetLooping( true );
 
 	CGUIWidget* pWidget = NULL;
-	pWidget = CGUIWidgetManager::Instance()->GetPage( "sample1.xml", "tiledmap.uip" );
+	pWidget = CGUIWidgetManager::Instance()->GetPage( "sample1.xml", "tiledmap" );
 	pWidget->SetParent( this );
 	pWidget->Open()	;
-	pWidget = CGUIWidgetManager::Instance()->GetPage( "dialog_okcancel.xml", "common.uip" );
+	pWidget = CGUIWidgetManager::Instance()->GetPage( "dialog_okcancel.xml", "common" );
 	pWidget->SetParent( this );
 	pWidget->Open()	;
 }

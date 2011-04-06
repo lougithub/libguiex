@@ -203,7 +203,7 @@ namespace guiex
 	/**
 	* @brief read config file and load data
 	*/
-	int32 CGUIConfigFileLoader::LoadResourceConfigFile( const CGUIString& rPath, const CGUIString& rSceneName, const CGUIString& rFileName)
+	int32 CGUIConfigFileLoader::LoadResourceConfigFile( const CGUIString& rPath, const CGUIString& rSceneName)
 	{
 		//get interface of config file
 		IGUIInterfaceConfigFile* pConfigFile = CGUIInterfaceManager::Instance()->GetInterfaceConfigFile();

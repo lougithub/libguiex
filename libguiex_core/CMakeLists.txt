@@ -34,6 +34,8 @@ set( ${target_name}_base_SRCS
 	base64.cpp
 	guireference.h
 	guireference.cpp
+	guilocalizationmanager.h
+	guilocalizationmanager.cpp
 	)
 source_group( "base" FILES ${${target_name}_base_SRCS} )
 

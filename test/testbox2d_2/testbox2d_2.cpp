@@ -21,14 +21,14 @@ CGUIFrameworkBase* CreateFramework( )
 int32 CGUIFrameworkTest::InitializeGame()
 {
 	CGUISceneManager::Instance()->RegisterScenesFromDir("/", ".uip");
-	CGUISceneManager::Instance()->LoadResources( "box2d.uip" );	
-	CGUISceneManager::Instance()->LoadWidgets( "box2d.uip" );
-	CGUISceneManager::Instance()->LoadResources( "common.uip" );
-	CGUISceneManager::Instance()->LoadWidgets( "common.uip" );
+	CGUISceneManager::Instance()->LoadResources( "box2d" );	
+	CGUISceneManager::Instance()->LoadWidgets( "box2d" );
+	CGUISceneManager::Instance()->LoadResources( "common" );
+	CGUISceneManager::Instance()->LoadWidgets( "common" );
 	CGUIWidget* pWidget = NULL;
-	pWidget = CGUIWidgetManager::Instance()->GetPage( "sample_1.xml", "box2d.uip" );
+	pWidget = CGUIWidgetManager::Instance()->GetPage( "sample_1.xml", "box2d" );
 	GSystem->GetUICanvas()->OpenUIPage(pWidget);		
-	pWidget = CGUIWidgetManager::Instance()->GetPage( "utility.xml", "common.uip" );
+	pWidget = CGUIWidgetManager::Instance()->GetPage( "utility.xml", "common" );
 	GSystem->GetUICanvas()->OpenUIPage(pWidget);		
 	return 0;
 }

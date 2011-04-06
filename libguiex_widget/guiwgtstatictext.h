@@ -12,7 +12,7 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core/guiwidget.h>
+#include "guiwgttextbase.h"
 #include <libguiex_core/guiwidgetgenerator.h>
 
 
@@ -26,26 +26,13 @@ namespace guiex
 	* @class CGUIWgtStaticText
 	* @brief to show a static text
 	*/
-	class GUIEXPORT CGUIWgtStaticText : public CGUIWidget
+	class GUIEXPORT CGUIWgtStaticText : public CGUIWgtTextBase
 	{
 	public:
 		CGUIWgtStaticText( const CGUIString& rName, const CGUIString& rSceneName );
 	
-		void SetTextContent(const CGUIStringW& rText);
-		const CGUIStringW& GetTextContent( ) const;
-
-		void SetTextInfo(const CGUIStringInfo& rInfo);
-		const CGUIStringInfo& GetTextInfo( ) const;
-
-		void SetTextContentUTF8( const CGUIString& rString);
-		CGUIString GetTextContentUTF8( ) const;
-
-		void SetTextColor(const CGUIColor& rColor );
-
-		void SetTextAlignmentVert( ETextAlignmentVert eAlignment );
-		void SetTextAlignmentHorz( ETextAlignmentHorz eAlignment );
-		ETextAlignmentHorz GetTextAlignmentHorz( ) const;
-		ETextAlignmentVert GetTextAlignmentVert( ) const;
+		virtual void SetTextContent(const CGUIStringW& rText);
+		virtual void SetTextInfo(const CGUIStringInfo& rInfo);
 
 		void SetMultiLine( bool bMultiLine );
 		bool IsMultiLine( ) const;
@@ -83,11 +70,6 @@ namespace guiex
 		TLineList m_aLineList;			//!< line list
 		bool m_bMultiLine;
 	
-		//text
-		CGUIStringEx m_strText;
-		ETextAlignmentHorz m_eTextAlignmentHorz;
-		ETextAlignmentVert m_eTextAlignmentVert;
-
 	protected:
 		static wchar_t ms_wLineBreak;
 

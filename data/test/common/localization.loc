@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<guiex>
+	<localization local="english">
+		<string key="ok"> ok </string>
+		<string key="cancel"> cancel </string>
+
+	</localization>
+
+	<localization local="chinese">
+		<string key="ok"> 确定 </string>
+		<string key="cancel"> 取消 </string>
+
+	</localization>
+
+
+</guiex>

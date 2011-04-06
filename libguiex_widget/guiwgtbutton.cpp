@@ -16,6 +16,7 @@
 #include <libguiex_core/guipropertyconvertor.h>
 #include <libguiex_core/guistringconvertor.h>
 #include <libguiex_core/guiimage.h>
+#include <libguiex_core/guilocalizationmanager.h>
 
 //============================================================================//
 // function
@@ -167,25 +168,25 @@ namespace guiex
 		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text_normal" )
 		{
 			CGUIString aStrText;
-			WideByteToMultiChar( m_strText[eButtonState_Normal].GetContent(), aStrText);
+			AppWideByteToMultiChar( m_strText[eButtonState_Normal].GetContent(), aStrText);
 			rProperty.SetValue(aStrText);
 		}
 		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text_hover" )
 		{
 			CGUIString aStrText;
-			WideByteToMultiChar( m_strText[eButtonState_Hover].GetContent(), aStrText);
+			AppWideByteToMultiChar( m_strText[eButtonState_Hover].GetContent(), aStrText);
 			rProperty.SetValue(aStrText);
 		}
 		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text_push" )
 		{
 			CGUIString aStrText;
-			WideByteToMultiChar( m_strText[eButtonState_Push].GetContent(), aStrText);
+			AppWideByteToMultiChar( m_strText[eButtonState_Push].GetContent(), aStrText);
 			rProperty.SetValue(aStrText);
 		}
 		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text_disable" )
 		{
 			CGUIString aStrText;
-			WideByteToMultiChar( m_strText[eButtonState_Disable].GetContent(), aStrText);
+			AppWideByteToMultiChar( m_strText[eButtonState_Disable].GetContent(), aStrText);
 			rProperty.SetValue(aStrText);
 		}
 		else if( rProperty.GetType() == ePropertyType_Vector2 && rProperty.GetName() == "text_offset" )
@@ -238,25 +239,25 @@ namespace guiex
 		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text_normal")
 		{
 			CGUIStringEx aStrText;
-			MultiByteToWideChar(rProperty.GetValue(), aStrText.m_strContent);
+			AppMultiByteToWideChar(rProperty.GetValue(), aStrText.m_strContent);
 			SetTextContent(aStrText.GetContent(), eButtonState_Normal);
 		}
 		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text_hover")
 		{
 			CGUIStringEx aStrText;
-			MultiByteToWideChar(rProperty.GetValue(), aStrText.m_strContent);
+			AppMultiByteToWideChar(rProperty.GetValue(), aStrText.m_strContent);
 			SetTextContent(aStrText.GetContent(), eButtonState_Hover);
 		}
 		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text_push")
 		{
 			CGUIStringEx aStrText;
-			MultiByteToWideChar(rProperty.GetValue(), aStrText.m_strContent);
+			AppMultiByteToWideChar(rProperty.GetValue(), aStrText.m_strContent);
 			SetTextContent(aStrText.GetContent(), eButtonState_Push);
 		}
 		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text_disable")
 		{
 			CGUIStringEx aStrText;
-			MultiByteToWideChar(rProperty.GetValue(), aStrText.m_strContent);
+			AppMultiByteToWideChar(rProperty.GetValue(), aStrText.m_strContent);
 			SetTextContent(aStrText.GetContent(), eButtonState_Disable);
 		}
 		else if( rProperty.GetType() == ePropertyType_Vector2 && rProperty.GetName() == "text_offset")
@@ -306,7 +307,7 @@ namespace guiex
 	void CGUIWgtButton::SetTextContent( const CGUIStringW& rText, EButtonState eButtonState )
 	{
 		GUI_ASSERT( eButtonState < __eButtonState_NUM__, "invalid button state");
-		m_strText[eButtonState].m_strContent = rText;
+		m_strText[eButtonState].m_strContent = CGUILocalizationManager::Instance()->Localize( rText );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtButton::SetTextInfo(const CGUIStringInfo& rInfo, EButtonState eButtonState )
@@ -337,7 +338,7 @@ namespace guiex
 	{
 		GUI_ASSERT( eButtonState < __eButtonState_NUM__, "invalid button state");
 		CGUIStringW strTemp;
-		MultiByteToWideChar( rString, strTemp);
+		AppMultiByteToWideChar( rString, strTemp);
 		SetTextContent( strTemp, eButtonState );
 	}
 	//------------------------------------------------------------------------------
@@ -345,7 +346,7 @@ namespace guiex
 	{
 		GUI_ASSERT( eButtonState < __eButtonState_NUM__, "invalid button state");
 		CGUIString aContentUTF8;
-		WideByteToMultiChar( m_strText[eButtonState].m_strContent, aContentUTF8 );
+		AppWideByteToMultiChar( m_strText[eButtonState].m_strContent, aContentUTF8 );
 		return aContentUTF8;
 	}
 	//------------------------------------------------------------------------------

@@ -276,14 +276,14 @@ namespace guiex
 	void CGUIWgtMultiEditBox::SetTextContentUTF8( const CGUIString& rString)
 	{
 		CGUIStringW strTemp;
-		MultiByteToWideChar( rString, strTemp);
+		AppMultiByteToWideChar( rString, strTemp);
 		SetTextContent( strTemp );
 	}
 	//------------------------------------------------------------------------------
 	CGUIString CGUIWgtMultiEditBox::GetTextContentUTF8( ) const
 	{
 		CGUIString aContentUTF8;
-		WideByteToMultiChar( m_strText.m_strContent, aContentUTF8 );
+		AppWideByteToMultiChar( m_strText.m_strContent, aContentUTF8 );
 		return aContentUTF8;
 	}
 	//------------------------------------------------------------------------------
@@ -1035,7 +1035,7 @@ namespace guiex
 		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text" )
 		{
 			CGUIString aStrText;
-			WideByteToMultiChar( m_strText.GetContent(), aStrText);
+			AppWideByteToMultiChar( m_strText.GetContent(), aStrText);
 			rProperty.SetValue(aStrText);
 		}
 		else if( rProperty.GetType() == ePropertyType_TextAlignmentHorz && rProperty.GetName() == "text_alignment_horz" )
@@ -1080,7 +1080,7 @@ namespace guiex
 		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text")
 		{
 			CGUIStringEx aStrText;
-			MultiByteToWideChar(rProperty.GetValue(), aStrText.m_strContent);
+			AppMultiByteToWideChar(rProperty.GetValue(), aStrText.m_strContent);
 			SetTextContent(aStrText.GetContent());
 		}		
 		else if( rProperty.GetType() == ePropertyType_TextAlignmentHorz && rProperty.GetName() == "text_alignment_horz" )

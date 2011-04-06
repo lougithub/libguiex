@@ -33,15 +33,14 @@ namespace guiex
 	public:
 		virtual ~CGUIScene();
 
-		int32 LoadFromPropertySet( const CGUIString& rScenePath, const CGUIProperty& aPropertySet );
-
 		const CGUIString& GetSceneName() const;
 		const CGUIString& GetScenePath() const;
-		const CGUIString& GetTitle() const;
+		const CGUIString& GetSceneConfigFileName() const;
 
 		const std::vector<CGUIString>& GetWidgetFiles() const;
 		const std::vector<CGUIString>& GetScriptFiles() const;
 		const std::vector<CGUIString>& GetResourceFiles() const;
+		const std::vector<CGUIString>& GetLocalizationFiles() const;
 		const std::vector<CGUIString>& GetDependencies() const;
 
 		bool IsDependenciesLoaded() const;
@@ -49,27 +48,26 @@ namespace guiex
 
 	protected:
 		friend class CGUISceneManager;
-		CGUIScene( const CGUIString& rSceneName );
+		CGUIScene( const CGUIString& rSceneConfigFileName );
 
-		virtual int32 DoLoad();
-		virtual void DoUnload();
+		int32 LoadConfigFile( );
 
 	protected:
 		CGUIScene( const CGUIScene& );
 		const CGUIScene& operator=(const CGUIScene& );
 
 	protected:
-		CGUIString	m_strScenePath; //!< path of scene
-
 		//files
 		std::vector<CGUIString> m_vecWidgetFiles; //widget file info
 		std::vector<CGUIString> m_vecScriptFiles; //script file info
 		std::vector<CGUIString> m_vecResourceFiles; //resource file list
+		std::vector<CGUIString> m_vecLocalizationFiles; //localization file list
 
 		std::vector<CGUIString>	m_vecDependencies; //dependent scenes
 		bool m_bDependenciesLoaded; //whether the dependencies has been loaded
 		
-		CGUIString m_strTitle; //title of this scene
+		CGUIString m_strSceneConfigFileName;
+		CGUIString m_strScenePath;
 		CGUIString m_strSceneName;
 	};
 } //namespace guiex

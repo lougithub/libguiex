@@ -98,7 +98,7 @@ namespace guiex
 	* @brief process property, get sub property set of this property node
 	* @return 0 for success
 	*/
-	int32		IGUIConfigFile_tinyxml::ProcessProperty( TiXmlElement* pNode, CGUIProperty&	rPropSet )
+	int32 IGUIConfigFile_tinyxml::ProcessProperty( TiXmlElement* pNode, CGUIProperty&	rPropSet )
 	{
 		TiXmlElement* pPropertyNode = pNode->FirstChildElement();
 		while( pPropertyNode )

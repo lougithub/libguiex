@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <libguiex_project>
-	<property name="box2d" type="Title" />
-	<property name="common.uip" type="Dependency"/>
+	<property name="box2d" type="SceneName" />
+	<property name="common" type="Dependency"/>
 	<property name="sample_1.xml" type="WidgetFile" />
 	<property name="sample_1.lua" type="ScriptFile" />
 	<property name="sample_2.xml" type="WidgetFile" />

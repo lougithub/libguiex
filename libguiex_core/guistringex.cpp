@@ -81,7 +81,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIStringEx::CGUIStringEx(const CGUIString& rString )
 	{
-		MultiByteToWideChar( rString, this->m_strContent );
+		AppMultiByteToWideChar( rString, this->m_strContent );
 	}
 	//------------------------------------------------------------------------------
 	CGUIStringEx::~CGUIStringEx()

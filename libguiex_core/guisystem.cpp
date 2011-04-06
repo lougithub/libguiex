@@ -30,6 +30,7 @@
 #include "guimusicmanager.h"
 #include "guicameramanager.h"
 #include "guicanvaslayermanager.h"
+#include "guilocalizationmanager.h"
 
 #include "guiinterfacemanager.h"
 #include "guiinterfacemouse.h"
@@ -121,6 +122,8 @@ namespace guiex
 		,m_pLogMsgManager( NULL )
 		,m_pWidgetManager( NULL )
 		,m_pCameraManager( NULL )
+		,m_pLocalizationManager( NULL )
+		,m_pCanvasLayerManager( NULL )
 		,m_pUICanvas( NULL )
 		,m_eScreenOrientation( eScreenOrientation_Portrait )
 	{
@@ -167,6 +170,7 @@ namespace guiex
 		m_pSceneInfoManager = new CGUISceneManager;
 		m_pCameraManager = new CGUICameraManager;
 		m_pCanvasLayerManager = new CGUICanvasLayerManager;
+		m_pLocalizationManager = new CGUILocalizationManager;
 	}
 	//------------------------------------------------------------------------------
 	void CGUISystem::ReleaseSingletons()
@@ -205,7 +209,8 @@ namespace guiex
 		m_pCameraManager = NULL;
 		delete m_pCanvasLayerManager;
 		m_pCanvasLayerManager = NULL;
-		
+		delete m_pLocalizationManager;
+		m_pLocalizationManager = NULL;
 
 		delete m_pLogMsgManager;
 		m_pLogMsgManager = NULL;

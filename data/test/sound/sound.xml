@@ -88,7 +88,7 @@
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
         <property name="text_offset" type="CGUIVector2" value="0,0" />
-        <property name="text_normal" type="CGUIString" value="play effect" />
+        <property name="text_normal" type="CGUIString" value="@sound/play_effect" />
         <property name="OnMouseLeftClick" type="CGUIEvent" value="btn_playeffect_se_yes_onclick" />
     </property>
     <property name="btn_playeffect_se_warning" type="CGUIWidgetDefine" value="CGUIWgtButton">
@@ -144,7 +144,7 @@
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
         <property name="text_offset" type="CGUIVector2" value="0,0" />
-        <property name="text_normal" type="CGUIString" value="play effect" />
+        <property name="text_normal" type="CGUIString" value="@sound/play_effect" />
         <property name="OnMouseLeftClick" type="CGUIEvent" value="btn_playeffect_se_warning_onclick" />
     </property>
     <property name="btn_playeffect_stereo" type="CGUIWidgetDefine" value="CGUIWgtButton">
@@ -200,7 +200,7 @@
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
         <property name="text_offset" type="CGUIVector2" value="0,0" />
-        <property name="text_normal" type="CGUIString" value="play effect" />
+        <property name="text_normal" type="CGUIString" value="@sound/play_effect" />
         <property name="OnMouseLeftClick" type="CGUIEvent" value="btn_playeffect_stereo_onclick" />
     </property>
     <property name="btn_playmusic" type="CGUIWidgetDefine" value="CGUIWgtButton">
@@ -238,7 +238,7 @@
             <property name="index" type="int16" value="0" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
-        <property name="text_normal" type="CGUIString" value="play music" />
+        <property name="text_normal" type="CGUIString" value="@sound/play_music" />
         <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
         <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
         <property name="textinfo_hover" type="CGUIStringInfo">
@@ -294,7 +294,7 @@
             <property name="index" type="int16" value="0" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
-        <property name="text_normal" type="CGUIString" value="pause music" />
+        <property name="text_normal" type="CGUIString" value="@sound/pause_music" />
         <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
         <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
         <property name="textinfo_hover" type="CGUIStringInfo">
@@ -350,7 +350,7 @@
             <property name="index" type="int16" value="0" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
-        <property name="text_normal" type="CGUIString" value="stop music" />
+        <property name="text_normal" type="CGUIString" value="@sound/stop_music" />
         <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
         <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
         <property name="textinfo_hover" type="CGUIStringInfo">

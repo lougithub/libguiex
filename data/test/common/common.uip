@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <libguiex_project>
-	<property name="common" type="Title" />
+	<property name="common" type="SceneName" />
 
 	<property name="dialog_ok.xml" type="WidgetFile" />
 	<property name="dialog_okcancel.xml" type="WidgetFile" />
@@ -8,8 +8,8 @@
 	<property name="utility.xml" type="WidgetFile" />
 	<property name="utility.lua" type="ScriptFile" />
 
-	<property name="resource.xml" type="ResourceFile" />
+	<property name="resource.res" type="ResourceFile" />
 
-	<property name="localization.xml" type="LocalizationFile" />
+	<property name="localization.loc" type="LocalizationFile" />
 </libguiex_project>
 

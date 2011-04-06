@@ -89,12 +89,12 @@ namespace guiex
 
 		
 		//scene related property
-		ePropertyType_Scene_Title,
+		ePropertyType_Scene_Name,
 		ePropertyType_Scene_Dependency,
 		ePropertyType_Scene_WidgetFile,
 		ePropertyType_Scene_ScriptFile,
 		ePropertyType_Scene_ResourceFile,
-
+		ePropertyType_Scene_LocalizationFile,
 
 		ePropertyType_UserDefine = 1000,
 	};

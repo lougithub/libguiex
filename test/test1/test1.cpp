@@ -30,8 +30,8 @@ CGUIFrameworkBase* CreateFramework( )
 int32 CGUIFrameworkTest::InitializeGame( )
 {
 	CGUISceneManager::Instance()->RegisterScenesFromDir( "/", ".uip" );
-	CGUISceneManager::Instance()->LoadResources( "common.uip" );
-	CGUISceneManager::Instance()->LoadWidgets( "common.uip" );
+	CGUISceneManager::Instance()->LoadResources( "common" );
+	CGUISceneManager::Instance()->LoadWidgets( "common" );
 
 	CGUIWgtEmptyNode* pWidgetRoot = 
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtEmptyNode>( "page", "testscene" );
@@ -418,7 +418,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 
 	CGUIWidgetManager::Instance()->AddPage( pWidgetRoot );
 	GSystem->GetUICanvas()->OpenUIPage( pWidgetRoot );
-	CGUIWidget* pWidget = CGUIWidgetManager::Instance()->GetPage( "utility.xml", "common.uip" );
+	CGUIWidget* pWidget = CGUIWidgetManager::Instance()->GetPage( "utility.xml", "common" );
 	GSystem->GetUICanvas()->OpenUIPage(pWidget);	
 
 	return 0;

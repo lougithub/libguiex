@@ -54,28 +54,42 @@ namespace guiex
 
 
 	//------------------------------------------------------------------------------
-	int WideByteToMultiChar( const CGUIStringW& rSrc, CGUIString& rDst,  const char* szFromCode )
+	int AppWideByteToMultiChar( const CGUIStringW& rSrc, CGUIString& rDst )
 	{
 		IGUIInterfaceStringConv* pStringConv = CGUIInterfaceManager::Instance()->GetInterfaceStringConv();
 		if( !pStringConv )
 		{
 			throw CGUIException(
-				"[WideByteToMultiChar]: not found interface to convert string code");
+				"[AppWideByteToMultiChar]: not found interface to convert string code");
 			return -1;
 		}
 		return pStringConv->Utf16ToUtf8( rSrc, rDst );
 	}
 	//------------------------------------------------------------------------------
-	int MultiByteToWideChar( const CGUIString& rSrc, CGUIStringW& rDst, const char* szFromCode)
+	CGUIString AppWideByteToMultiChar( const CGUIStringW& rSrc )
+	{
+		CGUIString strDst;
+		AppWideByteToMultiChar( rSrc, strDst );
+		return strDst;
+	}
+	//------------------------------------------------------------------------------
+	int AppMultiByteToWideChar( const CGUIString& rSrc, CGUIStringW& rDst )
 	{
 		IGUIInterfaceStringConv* pStringConv = CGUIInterfaceManager::Instance()->GetInterfaceStringConv();
 		if( !pStringConv )
 		{
 			throw CGUIException(
-				"[MultiByteToWideChar]: not found interface to convert string code");
+				"[AppMultiByteToWideChar]: not found interface to convert string code");
 			return -1;
 		}
 		return pStringConv->Utf8ToUtf16( rSrc, rDst );
+	}
+	//------------------------------------------------------------------------------
+	CGUIStringW AppMultiByteToWideChar( const CGUIString& rSrc )
+	{
+		CGUIStringW strDst;
+		AppMultiByteToWideChar( rSrc, strDst );
+		return strDst;
 	}
 	//------------------------------------------------------------------------------
 	//convert for bool

@@ -35,7 +35,7 @@ namespace guiex
 	class GUIEXPORT CGUIConfigFileLoader
 	{
 	public:
-		static int32 LoadResourceConfigFile( const CGUIString& rPath, const CGUIString& rSceneName, const CGUIString& rFileName );
+		static int32 LoadResourceConfigFile( const CGUIString& rPath, const CGUIString& rSceneName );
 		static CGUIWidget* LoadWidgetConfigFile( const CGUIString& rPath, const CGUIString& rSceneName, const CGUIString& rFileName );
 	};
 }//namespace guiex

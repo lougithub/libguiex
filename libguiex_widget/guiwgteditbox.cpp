@@ -32,13 +32,13 @@ namespace guiex
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtEditBox);
 	//------------------------------------------------------------------------------
 	CGUIWgtEditBox::CGUIWgtEditBox(const CGUIString& rName, const CGUIString& rSceneName)
-		:CGUIWidget(StaticGetType(), rName, rSceneName)
+		:CGUIWgtTextBase(StaticGetType(), rName, rSceneName)
 	{
 		InitEditbox();
 	}
 	//------------------------------------------------------------------------------
 	CGUIWgtEditBox::CGUIWgtEditBox( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIWidget(rType, rName, rSceneName)
+		:CGUIWgtTextBase(rType, rName, rSceneName)
 	{
 		InitEditbox();
 	}
@@ -229,7 +229,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtEditBox::RefreshSelf( )
 	{
-		CGUIWidget::RefreshSelf();
+		CGUIWgtTextBase::RefreshSelf();
 
 		m_aStringAreaRect.m_fLeft = GetBoundArea().m_fLeft+(GetPixelSize().GetWidth()*m_aStringAreaRatio.m_fLeft);
 		m_aStringAreaRect.m_fRight = GetBoundArea().m_fLeft+(GetPixelSize().GetWidth()*m_aStringAreaRatio.m_fRight);
@@ -328,7 +328,7 @@ namespace guiex
 			}
 		}
 
-		CGUIWidget::UpdateSelf( fDeltaTime );
+		CGUIWgtTextBase::UpdateSelf( fDeltaTime );
 	}
 	//------------------------------------------------------------------------------
 	/** 
@@ -357,53 +357,9 @@ namespace guiex
 		InsertString( rText );
 	}
 	//------------------------------------------------------------------------------
-	const CGUIStringW& CGUIWgtEditBox::GetTextContent( ) const
-	{
-		return m_strText.m_strContent;
-	}
-	//------------------------------------------------------------------------------
 	void CGUIWgtEditBox::SetTextInfo(const CGUIStringInfo& rInfo)
 	{
-		m_strText.m_aStringInfo = rInfo;
-	}
-	//------------------------------------------------------------------------------
-	const CGUIStringInfo& CGUIWgtEditBox::GetTextInfo( ) const
-	{
-		return m_strText.m_aStringInfo;
-	}
-	//------------------------------------------------------------------------------
-	void CGUIWgtEditBox::SetTextContentUTF8( const CGUIString& rString)
-	{
-		CGUIStringW strTemp;
-		MultiByteToWideChar( rString, strTemp);
-		SetTextContent( strTemp );
-	}
-	//------------------------------------------------------------------------------
-	CGUIString CGUIWgtEditBox::GetTextContentUTF8( ) const
-	{
-		CGUIString aContentUTF8;
-		WideByteToMultiChar( m_strText.m_strContent, aContentUTF8 );
-		return aContentUTF8;
-	}
-	//------------------------------------------------------------------------------
-	void CGUIWgtEditBox::SetTextAlignmentVert( ETextAlignmentVert eAlignment )
-	{
-		m_eTextAlignmentVert = eAlignment;
-	}
-	//------------------------------------------------------------------------------
-	void CGUIWgtEditBox::SetTextAlignmentHorz( ETextAlignmentHorz eAlignment )
-	{
-		m_eTextAlignmentHorz = eAlignment;
-	}
-	//------------------------------------------------------------------------------
-	ETextAlignmentHorz CGUIWgtEditBox::GetTextAlignmentHorz( ) const
-	{
-		return m_eTextAlignmentHorz;
-	}
-	//------------------------------------------------------------------------------
-	ETextAlignmentVert CGUIWgtEditBox::GetTextAlignmentVert( ) const
-	{
-		return m_eTextAlignmentVert;
+		CGUIWgtTextBase::SetTextInfo( rInfo );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtEditBox::InsertString( const CGUIStringW& rText )
@@ -711,13 +667,13 @@ namespace guiex
 	uint32 CGUIWgtEditBox::OnGetFocus( CGUIEventNotification* pEvent )
 	{
 		m_pEdit->Open();
-		return CGUIWidget::OnGetFocus(pEvent);
+		return CGUIWgtTextBase::OnGetFocus(pEvent);
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtEditBox::OnLostFocus( CGUIEventNotification* pEvent )
 	{
 		m_pEdit->Close();
-		return CGUIWidget::OnLostFocus(pEvent);
+		return CGUIWgtTextBase::OnLostFocus(pEvent);
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtEditBox::OnKeyPressed( CGUIEventKeyboard* pEvent )
@@ -766,7 +722,7 @@ namespace guiex
 		//crack here, consume all key event for editbox here
 		pEvent->Consume(true);
 
-		return CGUIWidget::OnKeyPressed(pEvent);
+		return CGUIWgtTextBase::OnKeyPressed(pEvent);
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtEditBox::OnMouseLeftDown( CGUIEventMouse* pEvent )
@@ -783,14 +739,14 @@ namespace guiex
 			SetCursorIndex(m_nDragAnchorIdx);
 		}
 
-		return CGUIWidget::OnMouseLeftDown(pEvent);
+		return CGUIWgtTextBase::OnMouseLeftDown(pEvent);
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtEditBox::OnMouseLeftUp( CGUIEventMouse* pEvent )
 	{
 		m_bDraging = false;
 
-		return CGUIWidget::OnMouseLeftUp(pEvent);
+		return CGUIWgtTextBase::OnMouseLeftUp(pEvent);
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtEditBox::OnMouseMove( CGUIEventMouse* pEvent )
@@ -814,7 +770,7 @@ namespace guiex
 			SetSelection(m_nCursorIdx, m_nDragAnchorIdx);
 		}
 
-		return CGUIWidget::OnMouseMove(pEvent);
+		return CGUIWgtTextBase::OnMouseMove(pEvent);
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -842,27 +798,9 @@ namespace guiex
 		{
 			ValueToProperty( GetCursorSize(), rProperty);
 		}
-		else if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo" )
-		{
-			ValueToProperty( m_strText.GetStringInfo(), rProperty );
-		}
-		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text" )
-		{
-			CGUIString aStrText;
-			WideByteToMultiChar( m_strText.GetContent(), aStrText);
-			rProperty.SetValue(aStrText);
-		}
-		else if( rProperty.GetType() == ePropertyType_TextAlignmentHorz && rProperty.GetName() == "text_alignment_horz" )
-		{
-			ValueToProperty( GetTextAlignmentHorz(), rProperty);
-		}
-		else if( rProperty.GetType() == ePropertyType_TextAlignmentVert && rProperty.GetName() == "text_alignment_vert" )
-		{
-			ValueToProperty( GetTextAlignmentVert(), rProperty);
-		}
 		else
 		{
-			return CGUIWidget::GenerateProperty( rProperty );
+			return CGUIWgtTextBase::GenerateProperty( rProperty );
 		}
 		return 0;
 	}
@@ -912,33 +850,9 @@ namespace guiex
 			PropertyToValue( rProperty, aValue);
 			SetCursorSize( aValue );
 		}
-		else if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo")
-		{
-			CGUIStringInfo aInfo;
-			PropertyToValue( rProperty, aInfo);
-			SetTextInfo(aInfo);
-		}
-		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text")
-		{
-			CGUIStringEx aStrText;
-			MultiByteToWideChar(rProperty.GetValue(), aStrText.m_strContent);
-			SetTextContent(aStrText.GetContent());
-		}		
-		else if( rProperty.GetType() == ePropertyType_TextAlignmentHorz && rProperty.GetName() == "text_alignment_horz" )
-		{
-			ETextAlignmentHorz eTextAlignmentH = eTextAlignment_Horz_Center;
-			PropertyToValue( rProperty, eTextAlignmentH );
-			SetTextAlignmentHorz( eTextAlignmentH );
-		}
-		else if( rProperty.GetType() == ePropertyType_TextAlignmentVert && rProperty.GetName() == "text_alignment_vert" )
-		{
-			ETextAlignmentVert eTextAlignmentV = eTextAlignment_Vert_Center;
-			PropertyToValue( rProperty, eTextAlignmentV );
-			SetTextAlignmentVert( eTextAlignmentV );
-		}
 		else
 		{
-			CGUIWidget::ProcessProperty( rProperty );
+			CGUIWgtTextBase::ProcessProperty( rProperty );
 		}
 	}
 	//------------------------------------------------------------------------------

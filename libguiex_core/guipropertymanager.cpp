@@ -89,11 +89,12 @@ namespace guiex
 		RegisterPropertyType( ePropertyType_TiledMapDefine, "CGUITiledMapDefine" );
 		
 		//scene related property
-		RegisterPropertyType( ePropertyType_Scene_Title, "Title" );
+		RegisterPropertyType( ePropertyType_Scene_Name, "SceneName" );	
 		RegisterPropertyType( ePropertyType_Scene_Dependency, "Dependency" );
 		RegisterPropertyType( ePropertyType_Scene_WidgetFile, "WidgetFile" );
 		RegisterPropertyType( ePropertyType_Scene_ScriptFile, "ScriptFile" );
 		RegisterPropertyType( ePropertyType_Scene_ResourceFile, "ResourceFile" );
+		RegisterPropertyType( ePropertyType_Scene_LocalizationFile, "LocalizationFile" );
 	}
 	//------------------------------------------------------------------------------
 	CGUIPropertyManager::~CGUIPropertyManager()

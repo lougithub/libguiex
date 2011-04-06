@@ -62,17 +62,17 @@ namespace guiex
 
 	/**
 	* @brief convert multi byte to wide char (utf16)
-	* @param szFromCode the default will use the global code which was set before.
 	* @return zero for success
 	*/
-	extern int MultiByteToWideChar( const CGUIString& rSrc, CGUIStringW& rDst, const char* szFromCode = NULL );
+	extern int AppMultiByteToWideChar( const CGUIString& rSrc, CGUIStringW& rDst );
+	extern CGUIStringW AppMultiByteToWideChar( const CGUIString& rSrc );
 
 	/**
 	* @brief convert wide byte to multi char
-	* @param szFromCode the default will use the global code which was set before.
 	* @return zero for success
 	*/
-	extern int WideByteToMultiChar( const CGUIStringW& rSrc, CGUIString& rDst,  const char* szFromCode = NULL );
+	extern int AppWideByteToMultiChar( const CGUIStringW& rSrc, CGUIString& rDst );
+	extern CGUIString AppWideByteToMultiChar( const CGUIStringW& rSrc );
 
 	//------------------------------------------------------------------------------
 	//convert for bool

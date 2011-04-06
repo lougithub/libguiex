@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<guiex>
+	<localization local="english">
+		<string key="play_effect"> play effect </string>
+		<string key="play_music"> play music </string>
+		<string key="pause_music"> pause music </string>
+		<string key="stop_music"> stop music </string>
+	</localization>
+
+	<localization local="chinese">
+		<string key="play_effect"> 播放音效 </string>
+		<string key="play_music"> 播放音乐 </string>
+		<string key="pause_music"> 暂停音乐 </string>
+		<string key="stop_music"> 停止音乐 </string>
+	</localization>
+
+
+</guiex>

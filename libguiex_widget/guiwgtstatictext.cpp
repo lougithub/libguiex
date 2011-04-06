@@ -29,13 +29,13 @@ namespace guiex
 	wchar_t CGUIWgtStaticText::ms_wLineBreak = L'\n';
 	//------------------------------------------------------------------------------
 	CGUIWgtStaticText::CGUIWgtStaticText( const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIWidget( StaticGetType(), rName, rSceneName)
+		:CGUIWgtTextBase( StaticGetType(), rName, rSceneName)
 	{
 		InitStaticText();
 	}
 	//------------------------------------------------------------------------------
 	CGUIWgtStaticText::CGUIWgtStaticText( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIWidget(rType, rName, rSceneName)
+		:CGUIWgtTextBase(rType, rName, rSceneName)
 	{
 		InitStaticText();
 	}
@@ -43,8 +43,6 @@ namespace guiex
 	void CGUIWgtStaticText::InitStaticText()
 	{
 		m_bMultiLine = false;
-		m_eTextAlignmentHorz = eTextAlignment_Horz_Center;
-		m_eTextAlignmentVert = eTextAlignment_Vert_Center;
 
 		SetFocusable(false);
 		SetActivable(false);
@@ -52,14 +50,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtStaticText::OnCreate()
 	{
-		CGUIWidget::OnCreate();
+		CGUIWgtTextBase::OnCreate();
 
 		UpdateStringContent();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtStaticText::RefreshSelf( )
 	{
-		CGUIWidget::RefreshSelf();
+		CGUIWgtTextBase::RefreshSelf();
 		UpdateStringContent();
 	}
 	//------------------------------------------------------------------------------
@@ -108,63 +106,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtStaticText::SetTextContent(const CGUIStringW& rText)
 	{
-		m_strText.m_strContent = rText;
+		CGUIWgtTextBase::SetTextContent( rText );
 		UpdateStringContent();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtStaticText::SetTextInfo( const CGUIStringInfo& rInfo )
 	{
-		m_strText.m_aStringInfo = rInfo;
+		CGUIWgtTextBase::SetTextInfo( rInfo );
 		UpdateStringContent();
-	}
-	//------------------------------------------------------------------------------
-	const CGUIStringW& CGUIWgtStaticText::GetTextContent() const
-	{
-		return m_strText.m_strContent;
-	}
-	//------------------------------------------------------------------------------
-	const CGUIStringInfo& CGUIWgtStaticText::GetTextInfo( ) const
-	{
-		return m_strText.m_aStringInfo;
-	}
-	//------------------------------------------------------------------------------
-	void CGUIWgtStaticText::SetTextContentUTF8( const CGUIString& rString)
-	{
-		CGUIStringW strTemp;
-		MultiByteToWideChar( rString, strTemp);
-		SetTextContent( strTemp );
-	}
-	//------------------------------------------------------------------------------
-	CGUIString CGUIWgtStaticText::GetTextContentUTF8( ) const
-	{
-		CGUIString aContentUTF8;
-		WideByteToMultiChar( m_strText.m_strContent, aContentUTF8 );
-		return aContentUTF8;
-	}
-	//------------------------------------------------------------------------------
-	void CGUIWgtStaticText::SetTextAlignmentVert( ETextAlignmentVert eAlignment )
-	{
-		m_eTextAlignmentVert = eAlignment;
-	}
-	//------------------------------------------------------------------------------
-	void CGUIWgtStaticText::SetTextAlignmentHorz( ETextAlignmentHorz eAlignment )
-	{
-		m_eTextAlignmentHorz = eAlignment;
-	}
-	//------------------------------------------------------------------------------
-	ETextAlignmentHorz CGUIWgtStaticText::GetTextAlignmentHorz( ) const
-	{
-		return m_eTextAlignmentHorz;
-	}
-	//------------------------------------------------------------------------------
-	ETextAlignmentVert CGUIWgtStaticText::GetTextAlignmentVert( ) const
-	{
-		return m_eTextAlignmentVert;
-	}
-	//------------------------------------------------------------------------------
-	void CGUIWgtStaticText::SetTextColor(const CGUIColor& rColor )
-	{
-		m_strText.m_aStringInfo.m_aColor = rColor;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtStaticText::UpdateStringContent()
@@ -246,27 +195,9 @@ namespace guiex
 		{
 			ValueToProperty( IsMultiLine(), rProperty);
 		}
-		else if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo" )
-		{
-			ValueToProperty( m_strText.GetStringInfo(), rProperty );
-		}
-		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text" )
-		{
-			CGUIString aStrText;
-			WideByteToMultiChar( m_strText.GetContent(), aStrText);
-			rProperty.SetValue(aStrText);
-		}
-		else if( rProperty.GetType() == ePropertyType_TextAlignmentHorz && rProperty.GetName() == "text_alignment_horz" )
-		{
-			ValueToProperty( GetTextAlignmentHorz(), rProperty);
-		}
-		else if( rProperty.GetType() == ePropertyType_TextAlignmentVert && rProperty.GetName() == "text_alignment_vert" )
-		{
-			ValueToProperty( GetTextAlignmentVert(), rProperty);
-		}
 		else
 		{
-			return CGUIWidget::GenerateProperty( rProperty );
+			return CGUIWgtTextBase::GenerateProperty( rProperty );
 		}
 		return 0;
 	}
@@ -279,40 +210,16 @@ namespace guiex
 			PropertyToValue( rProperty, bValue);
 			SetMultiLine( bValue );
 		}
-		else if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo")
-		{
-			CGUIStringInfo aInfo;
-			PropertyToValue( rProperty, aInfo);
-			SetTextInfo(aInfo);
-		}
-		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text")
-		{
-			CGUIStringEx aStrText;
-			MultiByteToWideChar(rProperty.GetValue(), aStrText.m_strContent);
-			SetTextContent(aStrText.GetContent());
-		}		
-		else if( rProperty.GetType() == ePropertyType_TextAlignmentHorz && rProperty.GetName() == "text_alignment_horz" )
-		{
-			ETextAlignmentHorz eTextAlignmentH = eTextAlignment_Horz_Center;
-			PropertyToValue( rProperty, eTextAlignmentH );
-			SetTextAlignmentHorz( eTextAlignmentH );
-		}
-		else if( rProperty.GetType() == ePropertyType_TextAlignmentVert && rProperty.GetName() == "text_alignment_vert" )
-		{
-			ETextAlignmentVert eTextAlignmentV = eTextAlignment_Vert_Center;
-			PropertyToValue( rProperty, eTextAlignmentV );
-			SetTextAlignmentVert( eTextAlignmentV );
-		}
 		else
 		{
-			CGUIWidget::ProcessProperty( rProperty );
+			CGUIWgtTextBase::ProcessProperty( rProperty );
 		}
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtStaticText::OnSizeChanged( CGUIEventSize* pEvent )
 	{
 		UpdateStringContent();
-		return CGUIWidget::OnSizeChanged(pEvent);
+		return CGUIWgtTextBase::OnSizeChanged(pEvent);
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

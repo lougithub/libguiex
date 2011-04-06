@@ -43,16 +43,16 @@ CGUIFrameworkBase* CreateFramework( )
 int32 CGUIFrameworkTest::InitializeGame()
 {
 	CGUISceneManager::Instance()->RegisterScenesFromDir("/", ".uip");
-	CGUISceneManager::Instance()->LoadResources( "particle2d.uip" );	
-	CGUISceneManager::Instance()->LoadWidgets( "particle2d.uip" );
+	CGUISceneManager::Instance()->LoadResources( "particle2d" );	
+	CGUISceneManager::Instance()->LoadWidgets( "particle2d" );
 
 	CMyCanvasLayer_Particle* pLayer3 = new CMyCanvasLayer_Particle( "layer 3" );
 	pLayer3->Initialize();
 	CGUICanvasLayerManager::Instance()->PushCanvasLayer( pLayer3 );
 
-	CGUISceneManager::Instance()->LoadResources( "common.uip" );	
-	CGUISceneManager::Instance()->LoadWidgets( "common.uip" );
-	CGUIWidget* pWidget = CGUIWidgetManager::Instance()->GetPage( "utility.xml", "common.uip" );
+	CGUISceneManager::Instance()->LoadResources( "common" );	
+	CGUISceneManager::Instance()->LoadWidgets( "common" );
+	CGUIWidget* pWidget = CGUIWidgetManager::Instance()->GetPage( "utility.xml", "common" );
 	GSystem->GetUICanvas()->OpenUIPage(pWidget);	
 	return 0;
 }
@@ -70,7 +70,7 @@ void Btn_OnClick_ToggleEffect( CGUIEventMouse* pEvent )
 CMyCanvasLayer_Particle::CMyCanvasLayer_Particle( const char* szLayerName )
 :CGUICanvasLayer( szLayerName )
 {
-	m_pWidgetParticle = (CGUIWgtParticle2D*)CGUIWidgetManager::Instance()->GetPage( "particle2d.xml", "particle2d.uip" );
+	m_pWidgetParticle = (CGUIWgtParticle2D*)CGUIWidgetManager::Instance()->GetPage( "particle2d.xml", "particle2d" );
 	m_pWidgetParticle->SetParent( this );
 	m_pWidgetParticle->Open();
 

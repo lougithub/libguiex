@@ -21,16 +21,16 @@ CGUIFrameworkBase* CreateFramework( )
 int32 CGUIFrameworkTest::InitializeGame()
 {
 	CGUISceneManager::Instance()->RegisterScenesFromDir("/", ".uip");
-	CGUISceneManager::Instance()->LoadResources( "login.uip" );
-	CGUISceneManager::Instance()->LoadResources( "sound.uip" );	
-	CGUISceneManager::Instance()->LoadWidgets( "login.uip" );
-	CGUISceneManager::Instance()->LoadWidgets( "common.uip" );
-	CGUISceneManager::Instance()->LoadWidgets( "sound.uip" );
+	CGUISceneManager::Instance()->LoadResources( "login" );
+	CGUISceneManager::Instance()->LoadResources( "sound" );	
+	CGUISceneManager::Instance()->LoadWidgets( "login" );
+	CGUISceneManager::Instance()->LoadWidgets( "common" );
+	CGUISceneManager::Instance()->LoadWidgets( "sound" );
 	CGUIWidget* pWidget = NULL;
-	pWidget = CGUIWidgetManager::Instance()->GetPage( "login.xml", "login.uip" );
+	pWidget = CGUIWidgetManager::Instance()->GetPage( "login.xml", "login" );
 	GSystem->GetUICanvas()->OpenUIPage(pWidget);	
 
-	pWidget = CGUIWidgetManager::Instance()->GetPage( "utility.xml", "common.uip" );
+	pWidget = CGUIWidgetManager::Instance()->GetPage( "utility.xml", "common" );
 	GSystem->GetUICanvas()->OpenUIPage(pWidget);	
 	
 	return 0;

@@ -55,6 +55,7 @@ namespace guiex
 	class CGUICanvasLayerManager;
 	class CGUIParticle2DManager;
 	class CGUITiledMapManager;
+	class CGUILocalizationManager;
 
 	class CGUIUICanvasLayer;
 
@@ -187,6 +188,7 @@ namespace guiex
 		CGUIWidgetManager* GetWidgetManager();
 		CGUICameraManager* GetCameraManager();
 		CGUICanvasLayerManager* GetCanvasLayerManager();
+		CGUILocalizationManager* GetLocalizationManager();
 
 	protected:
 		friend class CGUIWidget;
@@ -290,7 +292,8 @@ namespace guiex
 		CGUIWidgetManager* m_pWidgetManager;
 		CGUICameraManager* m_pCameraManager;
 		CGUICanvasLayerManager* m_pCanvasLayerManager;
-		
+		CGUILocalizationManager* m_pLocalizationManager;
+
 	private:
 		bool m_bInitialized;
 
@@ -389,7 +392,11 @@ namespace guiex
 	{
 		return m_pCanvasLayerManager;
 	}
-	
+
+	inline CGUILocalizationManager* CGUISystem::GetLocalizationManager()
+	{
+		return m_pLocalizationManager;
+	}
 }//namespace guiex
 
 

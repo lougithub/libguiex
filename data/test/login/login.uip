@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <libguiex_project>
-	<property name="login" type="Title" />
-	<property name="common.uip" type="Dependency"/>
+	<property name="login" type="SceneName" />
+	<property name="common" type="Dependency"/>
 	<property name="login.xml" type="WidgetFile" />
 	<property name="login.lua" type="ScriptFile" />
-	<property name="resource.xml" type="ResourceFile" />
+	<property name="resource.res" type="ResourceFile" />
 </libguiex_project>
 

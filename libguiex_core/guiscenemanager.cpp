@@ -13,11 +13,11 @@
 #include "guisystem.h"
 #include "guiinterfacefilesys.h"
 #include "guiinterfacemanager.h"
-#include "guiinterfaceconfigfile.h"
 #include "guiproperty.h"
 #include "guiexception.h"
 #include "guiconfigfileloader.h"
 #include "guiwidgetmanager.h"
+#include "guilocalizationmanager.h"
 #include <algorithm>
 
 
@@ -55,24 +55,6 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int32 CGUISceneManager::RegisterScene( const CGUIString& rSceneFilePath, bool bAutoBuildDepency )
 	{
-		//get interface of config file
-		IGUIInterfaceConfigFile* pConfigFile = CGUIInterfaceManager::Instance()->GetInterfaceConfigFile();
-		if( !pConfigFile )
-		{
-			throw CGUIException( "[CGUISceneManager::RegisterScene]: failed to get config file interface." );
-			return -1;
-		}
-
-		//get property set
-		CGUIProperty aPropertySet;
-		if( 0 != pConfigFile->LoadConfigFile( rSceneFilePath, aPropertySet ))
-		{
-			throw CGUIException( 
-				"[CGUISceneManager::RegisterScene]: failed to read scene info config file <%s>.",
-				rSceneFilePath.c_str() );
-			return -1;
-		}
-		
 		//get interface of file system
 		IGUIInterfaceFileSys* pFileSys = CGUIInterfaceManager::Instance()->GetInterfaceFileSys();
 		if( !pFileSys )
@@ -82,8 +64,8 @@ namespace guiex
 		}
 
 		//parse scene info
-		CGUIScene * pScene = GenerateScene( pFileSys->GetFilename(rSceneFilePath) );
-		if( 0 != pScene->LoadFromPropertySet( pFileSys->GetFileDir(rSceneFilePath), aPropertySet ))
+		CGUIScene * pScene = GenerateScene( rSceneFilePath );
+		if( 0 != pScene->LoadConfigFile())
 		{
 			DestroyScene( pScene );
 			return -1;
@@ -345,7 +327,7 @@ namespace guiex
 		if( !pScene )
 		{
 			throw CGUIException(
-				"[CGUISceneUtility::LoadResources] failed to load resource by scene name <%s>", 
+				"[CGUISceneManager::LoadResources] failed to load resource by scene name <%s>", 
 				strSceneName.c_str());
 			return -1;
 		}
@@ -385,7 +367,7 @@ namespace guiex
 		if( !pScene )
 		{
 			throw CGUIException( 
-				"[CGUISceneUtility::ReleaseResources] failed to load resource by scene name <%s>", 
+				"[CGUISceneManager::ReleaseResources] failed to load resource by scene name <%s>", 
 				strSceneName.c_str());
 			return;
 		}
@@ -414,11 +396,24 @@ namespace guiex
 		for( uint32 i=0; i<rResourceFiles.size(); ++i )
 		{
 			CGUIString strResourceFilePath = pScene->GetScenePath() + rResourceFiles[i];	
-			if( 0 != CGUIConfigFileLoader::LoadResourceConfigFile(strResourceFilePath, pScene->GetSceneName(), rResourceFiles[i]))
+			if( 0 != CGUIConfigFileLoader::LoadResourceConfigFile(strResourceFilePath, pScene->GetSceneName()))
 			{
 				throw CGUIException( 
-					"[CGUISceneUtility::LoadResources] failed to load resource by scene name <%s : %s>",
+					"[CGUISceneManager::LoadResourceImp] failed to load resource by scene name <%s : %s>",
 					strResourceFilePath.c_str(), pScene->GetSceneName().c_str());
+			}
+		}
+
+		//load localization
+		const std::vector<CGUIString>& rLocalizationFiles = pScene->GetLocalizationFiles( );
+		for( uint32 i=0; i<rLocalizationFiles.size(); ++i )
+		{
+			CGUIString strLocalizationFilePath = pScene->GetScenePath() + rLocalizationFiles[i];	
+			if( 0 != CGUILocalizationManager::Instance()->LoadLocalization(strLocalizationFilePath, pScene->GetSceneName()))
+			{
+				throw CGUIException( 
+					"[CGUISceneManager::LoadResourceImp] failed to load localization by scene name <%s : %s>",
+					strLocalizationFilePath.c_str(), pScene->GetSceneName().c_str());
 			}
 		}
 
@@ -443,6 +438,9 @@ namespace guiex
 	{
 		//release resource
 		GSystem->ReleaseResourceByScene( pScene->GetSceneName() );
+
+		//unload localization
+		CGUILocalizationManager::Instance()->UnloadLocalization( pScene->GetSceneName() );
 
 		//release script
 		guiex::IGUIInterfaceScript* pInterfaceScript = CGUIInterfaceManager::Instance()->GetInterfaceScript();
