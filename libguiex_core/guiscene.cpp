@@ -73,12 +73,12 @@ namespace guiex
 	int32 CGUIScene::LoadConfigFile( )
 	{
 		//clear data
-		m_strSceneName.empty();
-		m_vecDependencies.empty();
-		m_vecWidgetFiles.empty();
-		m_vecScriptFiles.empty();
-		m_vecResourceFiles.empty();
-		m_vecLocalizationFiles.empty();
+		m_strSceneName.clear();
+		m_vecDependencies.clear();
+		m_vecWidgetFiles.clear();
+		m_vecScriptFiles.clear();
+		m_vecResourceFiles.clear();
+		m_vecLocalizationFiles.clear();
 
 		//load data
 		//get interface of config file

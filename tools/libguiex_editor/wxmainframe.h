@@ -195,6 +195,7 @@ protected:
 
 	void OnCreateWidget(wxCommandEvent& evt);
 	void OnUpdateCreateWidget(wxUpdateUIEvent& event);
+	void OnSetLocalization( wxCommandEvent& event );
 
 	void OnRecentPaths( wxCommandEvent& In );
 	void OnRecentScenes( wxCommandEvent& In );
@@ -240,7 +241,6 @@ protected:
 
 	bool m_bIsSceneOpened;
 
-	wxSize m_aScreenSize;//!< screen size
 	CGUIString m_strCurrentSceneName;
 	wxColor m_aBGColor;
 

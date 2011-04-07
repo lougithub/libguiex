@@ -190,7 +190,7 @@ namespace guiex
 		}
 
 		CGUIString rSceneName = rFullKey.substr( 1, index-1 );
-		CGUIString rKey = rFullKey.substr( index );
+		CGUIString rKey = rFullKey.substr( index+1 );
 
 		TMapScenes::const_iterator itorScene = m_mapScenes.find( rSceneName );
 		if( itorScene == m_mapScenes.end() )

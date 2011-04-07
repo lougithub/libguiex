@@ -29,6 +29,13 @@ namespace guiex
 	class CGUIRect;
 	class CGUIRenderRect;
 	class CGUIMatrix4;
+
+	enum EImageType
+	{
+		eImageType_FromFile,
+		eImageType_FromColor,
+		eImageType_FromBuffer,
+	};
 }
 
 //============================================================================//
@@ -75,6 +82,7 @@ namespace guiex
 		CGUIString GetFullFilePath() const;
 		const CGUIRect& GetUVRect() const;
 		EImageOrientation GetOrientation() const;
+		EImageType GetImageType() const;
 
 	protected:
 		CGUIImage( 
@@ -112,17 +120,12 @@ namespace guiex
 		/** 
 		* @brief the image type, means where the image load from
 		*/
-		enum EImageType
-		{
-			eIT_FILE,
-			eIT_COLOR,
-			eIT_MEM,
-		};
+
 		EImageType m_eImageType;
 
-		CGUIString m_strPath; //!< for eIT_FILE
-		CGUIColor m_aColor; //!< for eIT_COLOR
-		const void*	m_pBuffPtr; //!< for eIT_MEM
+		CGUIString m_strPath; //!< for eImageType_FromFile
+		CGUIColor m_aColor; //!< for eImageType_FromColor
+		const void*	m_pBuffPtr; //!< for eImageType_FromBuffer
 		int32 m_nBuffWidth;
 		int32 m_nBuffHeight; 
 		EGuiPixelFormat m_ePixelFormat;

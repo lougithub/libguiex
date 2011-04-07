@@ -11,6 +11,7 @@
 #include "wxlocalizedstringselectdlg.h"
 #include "resourcelist.h"
 #include "wxeditorid.h"
+#include "editorutility.h"
 
 //============================================================================//
 // function
@@ -33,12 +34,16 @@ WxLocalizedstringSelectDialog::WxLocalizedstringSelectDialog( wxWindow* parent )
 		CResourceList::Instance()->GetLocalizationList(),
 		wxLB_HSCROLL|wxLB_NEEDED_SB|wxLB_SORT );
 
+	m_pTextBox = new wxTextCtrl( this, wxID_ANY );
+	m_pTextBox->SetEditable( false );
+
 	wxButton *pBtnOk = new wxButton( this, ID_LocalizationSelect_BTN_OK, wxT("OK") );
 	wxButton *pBtnCancel = new wxButton( this, ID_LocalizationSelect_BTN_CANCEL, wxT("CANCEL") );
 
 	wxSizer *sizerTop = new wxBoxSizer( wxVERTICAL );
 
 	wxSizer *sizerRow0 = new wxBoxSizer( wxHORIZONTAL );
+	sizerRow0->Add( m_pTextBox, 1, wxALL|wxEXPAND );
 	sizerRow0->Add( m_pListBox, 1, wxALL|wxEXPAND );
 	sizerTop->Add( sizerRow0, 1, wxALL|wxEXPAND );
 
@@ -67,5 +72,7 @@ void WxLocalizedstringSelectDialog::OnListBoxSelect(wxCommandEvent& event)
 {
 	long sel = event.GetSelection();
 	m_strLocalizedString = m_pListBox->GetString( sel );
+
+	m_pTextBox->SetLabelText( CGUILocalizationManager::Instance()->Localize( wx2GuiString(m_strLocalizedString )));
 }
 //------------------------------------------------------------------------------

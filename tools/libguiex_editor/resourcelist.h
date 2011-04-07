@@ -40,8 +40,8 @@ public:
 	const wxArrayString& GetLocalizationList();
 	const wxArrayString& GetTiledMapList();
 
-	const wxBitmap* GetImageThumbnail( const wxString& rImageName );
-	const wxBitmap* GetOriginalImageThumbnail( const wxString& rImageName );
+	wxBitmap* GetImageThumbnail( const wxString& rImageName );
+	wxBitmap* GetOriginalImageThumbnail( const wxString& rImageName );
 
 protected:
 	//update image used in the system

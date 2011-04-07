@@ -26,6 +26,8 @@ public:
 
 	void SetCurrentCanvas( class WxEditorCanvas* pCanvas );
 
+	void EditorSetupLogSystem( );
+
 protected:
 	virtual void RegisterInterfaces( );
 	virtual void PostRender( );

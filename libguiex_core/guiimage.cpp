@@ -37,7 +37,7 @@ namespace guiex
 		,m_pTexture(NULL)
 		,m_aUVRect(CGUIRect(0.f,0.f,1.f,1.f))
 		,m_eImageOrientation(eImageOrientation_Normal)
-		,m_eImageType( eIT_COLOR )
+		,m_eImageType( eImageType_FromColor )
 		,m_strPath()	
 		,m_aColor( rColor )
 		,m_aImageSize( rSize )
@@ -56,7 +56,7 @@ namespace guiex
 		,m_pTexture(NULL)
 		,m_aUVRect(CGUIRect(0.f,0.f,1.f,1.f))
 		,m_eImageOrientation(eImageOrientation_Normal)
-		,m_eImageType( eIT_MEM )
+		,m_eImageType( eImageType_FromBuffer )
 		,m_strPath()
 		,m_aColor()
 		,m_pBuffPtr(buffPtr)
@@ -78,7 +78,7 @@ namespace guiex
 		,m_pTexture(NULL)
 		,m_aUVRect( rUVRect )
 		,m_eImageOrientation(eImageOrientation)
-		,m_eImageType( eIT_FILE )
+		,m_eImageType( eImageType_FromFile )
 		,m_strPath( rPath )
 		,m_aColor()
 		,m_aImageSize( rSize )
@@ -93,7 +93,7 @@ namespace guiex
 	{
 		GUI_ASSERT( m_pTexture==NULL, "the texture has existed");
 
-		if( m_eImageType == eIT_FILE )
+		if( m_eImageType == eImageType_FromFile )
 		{
 			//get full path
 			CGUIString strFullPath = CGUISceneManager::Instance()->GetScenePath( m_strSceneName ) + m_strPath;
@@ -105,7 +105,7 @@ namespace guiex
 				return -1;
 			}
 		}
-		else if( m_eImageType == eIT_COLOR )
+		else if( m_eImageType == eImageType_FromColor )
 		{
 			m_pTexture = CGUITextureManager::Instance()->CreateDefaultTexture();
 			if( !m_pTexture )
@@ -114,7 +114,7 @@ namespace guiex
 				return -1;
 			}
 		}
-		else if( m_eImageType == eIT_MEM )
+		else if( m_eImageType == eImageType_FromBuffer )
 		{
 			m_pTexture = CGUITextureManager::Instance()->CreateTexture(m_pBuffPtr, m_nBuffWidth, m_nBuffHeight, m_ePixelFormat);
 			if( !m_pTexture )
@@ -207,7 +207,7 @@ namespace guiex
 	{
 		Load();
 
-		if( m_eImageType == eIT_COLOR )
+		if( m_eImageType == eImageType_FromColor )
 		{
 			CGUIColor aColor = m_aColor;
 			aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
@@ -230,7 +230,7 @@ namespace guiex
 	{
 		Load();
 
-		if( m_eImageType == eIT_COLOR )
+		if( m_eImageType == eImageType_FromColor )
 		{
 			CGUIColor aColor = m_aColor*rColor;
 			aColor.SetAlpha(aColor.GetAlpha()*fAlpha);
@@ -263,6 +263,11 @@ namespace guiex
 	EImageOrientation CGUIImage::GetOrientation() const
 	{
 		return m_eImageOrientation;
+	}
+	//------------------------------------------------------------------------------
+	EImageType CGUIImage::GetImageType() const
+	{
+		return m_eImageType;
 	}
 	//------------------------------------------------------------------------------
 

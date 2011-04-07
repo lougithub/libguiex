@@ -93,11 +93,25 @@ void CPropertyConfigMgr::RegisterEnumDefine( const guiex::CGUIString& rEnumName,
 	m_mapEnums.insert( std::make_pair(rEnumName,rEnumValue) );
 }
 //------------------------------------------------------------------------------
-const CPropertyConfigMgr::TMapPropertySet& 	CPropertyConfigMgr::GetPropertySetMap( ) const
+const CPropertyConfigMgr::TMapPropertySet& CPropertyConfigMgr::GetPropertySetMap( ) const
 {
 	return m_mapPropertySet;
 }
 //------------------------------------------------------------------------------
+const CPropertyConfigMgr::TSetType& CPropertyConfigMgr::GetWidgetTypes( ) const
+{
+	return m_setWidgetTyps;
+}
+//------------------------------------------------------------------------------
+const std::vector<wxString>& CPropertyConfigMgr::GetLocalizations() const
+{
+	return m_arrayLocalizations;
+}
+//------------------------------------------------------------------------------
+/**
+* @brief get a property set
+* @return NULL for failed to find this kind of property
+*/
 const guiex::CGUIProperty& CPropertyConfigMgr::GetPropertySet(const std::string& rSetName ) const
 {
 	TMapPropertySet::const_iterator itor = m_mapPropertySet.find(rSetName);
@@ -148,6 +162,57 @@ void CPropertyConfigMgr::AddType( const std::string& rType )
 	{
 		m_setType.insert( rType );
 	}
+}
+//------------------------------------------------------------------------------
+int	CPropertyConfigMgr::ReadLocalizationConfig(const std::string& rFileName)
+{
+	m_arrayLocalizations.clear();
+
+	//parse file
+	TiXmlDocument aDoc;
+	aDoc.LoadFile( rFileName.c_str() );
+	if( aDoc.Error())
+	{
+		//failed to parse
+		wxChar buf[1024];
+		wxSnprintf( buf, 1024, _T("Failed to read config file! \n\n%s"), Gui2wxString(aDoc.ErrorDesc()));
+		wxMessageBox( buf, _T("Error") );
+		return -1;
+	}
+
+	///get root node
+	TiXmlElement* pRootNode = aDoc.RootElement();
+	if( !pRootNode )
+	{
+		wxChar buf[1024];
+		wxSnprintf( buf, 1024, _T("Failed to read config file! \n\n%s"), _T("can't get root node"));
+		wxMessageBox(buf, _T("Error") );
+		return -1;
+	}
+
+	///get node that contain config information
+	TiXmlElement* pNode = pRootNode->FirstChildElement();
+	while( pNode )
+	{
+		if( std::string("Localization") != pNode->Value())
+		{
+			wxMessageBox("unknown localization config file type!", _T("Error") );
+			return -1;
+		}
+
+		const char* szLoc = pNode->Attribute("value");
+		if( !szLoc )
+		{
+			wxMessageBox("unknown localization config file type!", _T("Error") );
+			return -1;
+		}
+
+		m_arrayLocalizations.push_back( Gui2wxString( szLoc ) );
+
+		pNode = pNode->NextSiblingElement();
+	}
+
+	return 0;
 }
 //------------------------------------------------------------------------------
 int CPropertyConfigMgr::ReadPropertyConfig(const std::string& rFileName)
@@ -207,7 +272,7 @@ int CPropertyConfigMgr::ReadPropertyConfig(const std::string& rFileName)
 	return 0;
 }
 //------------------------------------------------------------------------------
-int		CPropertyConfigMgr::ProcessEnumNode(TiXmlElement* pWidgetNode)
+int CPropertyConfigMgr::ProcessEnumNode(TiXmlElement* pWidgetNode)
 {
 	//process sub node
 	TiXmlElement* pNode = pWidgetNode->FirstChildElement();
@@ -300,7 +365,7 @@ int		CPropertyConfigMgr::ProcessWidgetNode(TiXmlElement* pWidgetNode)
 	return 0;
 }
 //------------------------------------------------------------------------------
-int		CPropertyConfigMgr::ProcessPropertyNode(const std::string& rPage, CGUIProperty& rPropertySet, TiXmlElement* pNode)
+int	CPropertyConfigMgr::ProcessPropertyNode(const std::string& rPage, CGUIProperty& rPropertySet, TiXmlElement* pNode)
 {
 	TiXmlElement* pPropertyNode = pNode->FirstChildElement();
 	while( pPropertyNode )

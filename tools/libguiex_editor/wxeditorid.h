@@ -35,6 +35,10 @@ enum
 	ID_DeleteWidget,
 	ID_WidgetUp,
 	ID_WidgetDown,
+
+	ID_Localization_begin,
+	ID_Localization_end = ID_Localization_begin+10,
+
 	//view
 	ID_VIEW_Fullscreen,
 	ID_VIEW_800x600,

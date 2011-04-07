@@ -34,6 +34,7 @@ protected:
 
 protected:
 	wxListBox* m_pListBox;
+	wxTextCtrl* m_pTextBox;
 
 	wxString m_strLocalizedString;
 

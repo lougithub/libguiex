@@ -87,7 +87,7 @@ void CResourceList::UpdateImageList()
 		m_arrayImageArray.Add( rWxImageName );
 
 		// Create the image thumbnail
-		wxString rImagePath = Gui2wxString( GSystem->GetDataPath() + CGUISceneManager::Instance()->GetScenePath( pGuiImage->GetSceneName() ) + pGuiImage->GetFilePath() );
+		wxString rImagePath = Gui2wxString( GSystem->GetDataPath() + pGuiImage->GetFullFilePath() );
 		wxFileName filename( rImagePath );
 		if ( filename.FileExists() )
 		{
@@ -161,7 +161,7 @@ void CResourceList::UpdateImageList()
 	m_arrayImageArray.Sort();
 }
 //------------------------------------------------------------------------------
-const wxBitmap* CResourceList::GetImageThumbnail( const wxString& rImageName )
+wxBitmap* CResourceList::GetImageThumbnail( const wxString& rImageName )
 {
 	std::map<wxString, wxBitmap*>::iterator itor = m_mapImageThumbnails.find( rImageName );
 	if( itor != m_mapImageThumbnails.end() )
@@ -171,7 +171,7 @@ const wxBitmap* CResourceList::GetImageThumbnail( const wxString& rImageName )
 	return NULL;
 }
 //------------------------------------------------------------------------------
-const wxBitmap* CResourceList::GetOriginalImageThumbnail( const wxString& rImageName )
+wxBitmap* CResourceList::GetOriginalImageThumbnail( const wxString& rImageName )
 {
 	std::map<wxString, wxBitmap*>::iterator itor = m_mapOriginalImageThumbnails.find( rImageName );
 	if( itor != m_mapOriginalImageThumbnails.end() )

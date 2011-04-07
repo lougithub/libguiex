@@ -101,6 +101,7 @@ EVT_MENU(ID_SaveAll, WxMainFrame::OnSaveAll)
 
 EVT_UPDATE_UI(ID_CreateWidget, WxMainFrame::OnUpdateCreateWidget)
 EVT_MENU(ID_CreateWidget, WxMainFrame::OnCreateWidget)
+EVT_MENU_RANGE(ID_Localization_begin, ID_Localization_end, WxMainFrame::OnSetLocalization)
 
 EVT_UPDATE_UI(ID_DeleteWidget, WxMainFrame::OnUpdateDeleteWidget)
 EVT_MENU(ID_DeleteWidget, WxMainFrame::OnDeleteWidget)
@@ -183,7 +184,6 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 				 ,m_pTreeCtrl_Widget(NULL)
 				 ,m_pTreeCtrl_File(NULL)
 				 ,m_pNoteBook_Canvas(NULL)
-				 ,m_aScreenSize(1024, 768)
 				 ,m_aBGColor(128,128,128,255)
 				 ,m_pCurrentEditingWidget( NULL )
 {
@@ -268,30 +268,8 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 	// "commit" all changes made to wxAuiManager
 	m_mgr.Update();
 
-
-	///////////////////////////////////////////////////////////////////////////////////////////////////
-	//initialize guiex system
-	try
-	{
-		CGUIFrameworkEditor::ms_pFramework = new CGUIFrameworkEditor( );
-		CGUIFrameworkEditor::ms_pFramework->Initialize( CGUIIntSize(m_aScreenSize.x, m_aScreenSize.y), "" );
-		CGUIAssert::SetWarningCB( EditorWarningCB, NULL );
-
-		GSystem->SetDrawExtraInfo( false );
-		GSystem->SetPlayingAs( false );
-		GSystem->SetEditorMode( true );
-	}
-	catch (CGUIBaseException& rError)
-	{
-		wxMessageBox( Gui2wxString(rError.what()), _T("error") );
-
-		if( CGUIFrameworkEditor::ms_pFramework )
-		{
-			CGUIFrameworkEditor::ms_pFramework->Release();
-			delete CGUIFrameworkEditor::ms_pFramework;
-			CGUIFrameworkEditor::ms_pFramework = NULL;
-		}
-	}
+	CGUIFrameworkEditor::ms_pFramework->EditorSetupLogSystem();
+	CGUIAssert::SetWarningCB( EditorWarningCB, NULL );
 }
 //------------------------------------------------------------------------------
 WxMainFrame::~WxMainFrame()
@@ -299,14 +277,6 @@ WxMainFrame::~WxMainFrame()
 	CloseCanvas();
 	CloseScene();
 	m_mgr.UnInit();	
-	
-	//release libguiex system
-	if( CGUIFrameworkEditor::ms_pFramework )
-	{
-		CGUIFrameworkEditor::ms_pFramework->Release();
-		delete CGUIFrameworkEditor::ms_pFramework;
-		CGUIFrameworkEditor::ms_pFramework = NULL;
-	}
 }
 //------------------------------------------------------------------------------
 WxOutputPanel* WxMainFrame::CreateOutput()
@@ -1117,6 +1087,14 @@ void WxMainFrame::OnCreateWidget(wxCommandEvent& evt)
 	m_pCanvas->SetSelectedWidget(pWidget);
 }
 //------------------------------------------------------------------------------
+void WxMainFrame::OnSetLocalization( wxCommandEvent& event )
+{
+	int nId = event.GetId();
+	uint32 nIdx = nId - ID_Localization_begin;
+
+	CGUILocalizationManager::Instance()->SetCurrentLocalConfig( wx2GuiString( CPropertyConfigMgr::Instance()->GetLocalizations()[nIdx]));
+}
+//------------------------------------------------------------------------------
 void WxMainFrame::OnUpdateCreateWidget(wxUpdateUIEvent& event)
 {
 	if( m_pCanvas )
@@ -1604,7 +1582,7 @@ void WxMainFrame::OutputString( const std::string& rString)
 //------------------------------------------------------------------------------
 void WxMainFrame::UpdateStatusBar (wxChar *format, ...) 
 {
-	wxChar        buffer[1024] ;
+	wxChar buffer[1024] ;
 
 	// initialize variable arguments list
 	va_list arguments;
@@ -1645,25 +1623,38 @@ void			WxMainFrame::CreateMenu()
 
 	//menu-edit
 	wxMenu*	edit_menu = new wxMenu;
+
+	wxMenu*	localization_menu = new wxMenu;
+	edit_menu->AppendSubMenu(localization_menu, wxT("Localization"));
+	const std::vector<wxString>& rLocs = CPropertyConfigMgr::Instance()->GetLocalizations();
+	for( uint32 i=0; i<rLocs.size(); ++i )
+	{
+		localization_menu->Append(ID_Localization_begin+i, rLocs[i]);
+	}
+
 	edit_menu->Append(ID_CreateWidget, _("Create Widget"));
 	edit_menu->Append(ID_DeleteWidget, _("Delete Widget"));
 
 	edit_menu->Append(ID_WidgetUp, _("Widget Up"));
 	edit_menu->Append(ID_WidgetDown, _("Widget Down"));
 
+
+
 	//menu-view
 	wxMenu*	view_menu = new wxMenu;
-	view_menu->Append(ID_VIEW_Fullscreen, _("Fullscreen"));
-	view_menu->Append(ID_VIEW_800x600, wxT("800 x 600"), wxT("Convenience resizer for 800 x 600."));
-	view_menu->Append(ID_VIEW_1024x786, wxT("1024 x 768"), wxT("Convenience resizer for 1024 x 768."));
-	view_menu->Append(ID_VIEW_1280x800, wxT("1280 x 800"), wxT("Convenience resizer for 1280 x 800."));
-	view_menu->Append(ID_VIEW_Iphone480x320, wxT("Iphone480x320"), wxT("Convenience resizer for Iphone480x320."));
-	view_menu->Append(ID_VIEW_Iphone320x480, wxT("Iphone320x480"), wxT("Convenience resizer for Iphone320x480."));
-	view_menu->Append(ID_VIEW_Iphone960x640, wxT("Iphone960x640"), wxT("Convenience resizer for Iphone960x640."));
-	view_menu->Append(ID_VIEW_Iphone640x960, wxT("Iphone640x960"), wxT("Convenience resizer for Iphone640x960."));
-	view_menu->Append(ID_VIEW_Ipad1024x768, wxT("Ipad1024x768"), wxT("Convenience resizer for Ipad1024x768."));
-	view_menu->Append(ID_VIEW_Ipad768x1024, wxT("Ipad768x1024"), wxT("Convenience resizer for Ipad768x1024."));
-	
+	wxMenu*	resolution_menu = new wxMenu;
+	resolution_menu->Append(ID_VIEW_Fullscreen, _("Fullscreen"));
+	resolution_menu->Append(ID_VIEW_800x600, wxT("800 x 600"), wxT("Convenience resizer for 800 x 600."));
+	resolution_menu->Append(ID_VIEW_1024x786, wxT("1024 x 768"), wxT("Convenience resizer for 1024 x 768."));
+	resolution_menu->Append(ID_VIEW_1280x800, wxT("1280 x 800"), wxT("Convenience resizer for 1280 x 800."));
+	resolution_menu->Append(ID_VIEW_Iphone480x320, wxT("Iphone480x320"), wxT("Convenience resizer for Iphone480x320."));
+	resolution_menu->Append(ID_VIEW_Iphone320x480, wxT("Iphone320x480"), wxT("Convenience resizer for Iphone320x480."));
+	resolution_menu->Append(ID_VIEW_Iphone960x640, wxT("Iphone960x640"), wxT("Convenience resizer for Iphone960x640."));
+	resolution_menu->Append(ID_VIEW_Iphone640x960, wxT("Iphone640x960"), wxT("Convenience resizer for Iphone640x960."));
+	resolution_menu->Append(ID_VIEW_Ipad1024x768, wxT("Ipad1024x768"), wxT("Convenience resizer for Ipad1024x768."));
+	resolution_menu->Append(ID_VIEW_Ipad768x1024, wxT("Ipad768x1024"), wxT("Convenience resizer for Ipad768x1024."));
+
+	view_menu->AppendSubMenu(resolution_menu, wxT("Resolution"));
 	view_menu->AppendSeparator();
 	view_menu->Append(ID_ToggleScissor, wxT("Toggle Scissor"), wxT("enable or disable scissor"), wxITEM_CHECK);
 	view_menu->Append(ID_ToggleWireframe, wxT("Toggle Wireframe"), wxT("enable or disable wireframe"), wxITEM_CHECK);

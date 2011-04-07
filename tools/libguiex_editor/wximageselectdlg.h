@@ -20,18 +20,32 @@
 class WxImageCanvas: public wxScrolledWindow
 {
 public:
-	WxImageCanvas( wxWindow *parent, wxWindowID, const wxPoint &pos, const wxSize &size );
+	WxImageCanvas( wxWindow *parent, bool bAutoDelete, bool bDrawUVRect );
 	~WxImageCanvas();
 
 	void OnPaint( wxPaintEvent &event );
 
-	void SetBitmap( const wxBitmap* pBitmap )
+	void SetBitmap( wxBitmap* pBitmap )
 	{
+		if( m_pBitmap && m_bAutoDelete )
+		{
+			delete m_pBitmap;
+			m_pBitmap = NULL;
+		}
 		m_pBitmap = pBitmap;
 	}
 
+	void SetUVRect( const wxRect& rTargetRect )
+	{
+		m_aUVRect = rTargetRect;
+	}
+
+
 protected:
-	const wxBitmap* m_pBitmap;
+	wxBitmap* m_pBitmap;
+	bool m_bAutoDelete;
+	wxRect m_aUVRect;
+	bool m_bDrawUVRect;
 
 	DECLARE_EVENT_TABLE()
 };
@@ -54,6 +68,7 @@ protected:
 
 protected:
 	WxImageCanvas* m_pImageCanvas;
+	WxImageCanvas* m_pFullImageCanvas;
 	wxListBox* m_pListBox;
 	wxString m_strImageName;
 

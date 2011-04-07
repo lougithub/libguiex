@@ -104,51 +104,29 @@ public:
 	~CPropertyConfigMgr();
 	static CPropertyConfigMgr* Instance();
 
-	/** 
-	 * @brief clear all property
-	 */
 	void Clear();
 
-	/** 
-	 * @brief read property config from file
-	 * @return 0 for success, vice versa
-	 */
 	int	ReadPropertyConfig(const std::string& rFileName);
+	int	ReadLocalizationConfig(const std::string& rFileName);
 
-	/**
-	* @brief get a property set
-	* @return NULL for failed to find this kind of property
-	*/
 	const CGUIProperty&	GetPropertySet(const std::string& rSetName ) const;
 	bool HasPropertySet(const std::string& rSetName ) const;
 
 	const wxArrayString& GetEnumDefine(const CGUIString& rEnumName ) const;
 
-	/** 
-	 * @brief get property set map
-	 */
-	const TMapPropertySet& 	GetPropertySetMap( ) const;
-	const TSetType& GetWidgetTypes( ) const
-	{
-		return m_setWidgetTyps;
-	}
+	const TMapPropertySet& GetPropertySetMap( ) const;
+	const TSetType& GetWidgetTypes( ) const;
+	const std::vector<wxString>& GetLocalizations() const;
 
 	void AddType( const std::string& rType );
 	std::string* GetTypePtr( const std::string& rType );
 
 protected:
-	/** 
-	 * @brief process widget node
-	 * @return 0 for success, vice versa
-	 */
 	int	ProcessWidgetNode(TiXmlElement* pWidgetNode);
 	int	ProcessEnumNode(TiXmlElement* pWidgetNode);
 
 	int	ProcessPropertyNode(const std::string& rPage, CGUIProperty& rPropertySet, TiXmlElement* pNode);
 
-	/**
-	* @brief register a property set
-	*/
 	void RegisterSet( const std::string& rSetName, const CGUIProperty& rProperty, bool bIsTemplate );
 
 	void RegisterEnumDefine( const CGUIString& rEnumName, const wxArrayString& rEnumValue );
@@ -168,6 +146,8 @@ protected:
 
 	typedef	std::map<CGUIString, wxArrayString> TEnumMap;
 	TEnumMap m_mapEnums;
+
+	std::vector<wxString> m_arrayLocalizations;
 };
 
 #endif //__KEN_PROPERTYCONFIGMANAGER_20070919_H__
