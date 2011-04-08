@@ -14,76 +14,15 @@ set( ${target_name}_SRCS
 	${${target_name}_common_SRCS}
 	${${target_name}_execute_SRCS}
 	)
+macro_include_directories()
+macro_link_directories()
+macro_add_executable( ${target_name} ${${target_name}_SRCS})
+macro_add_project_dependencies(${target_name})
+macro_set_target_output_dir( ${target_name} )
+macro_set_target_link_libraries( ${target_name} )
 
-if( BUILD_PLATFORM_MACOS OR BUILD_PLATFORM_IOS )
-	macro_include_directories_mac()
-	macro_set_bundle_mac( ${target_name} )
-
-	add_executable( ${target_name} MACOSX_BUNDLE ${${target_name}_SRCS} )
-
-	# code signing
-	set_target_properties(${target_name} PROPERTIES XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer")
-	macro_add_project_dependencies(${target_name})
-	macro_set_target_link_libraries_mac( ${target_name} )
+if( BUILD_PLATFORM_IOS OR BUILD_PLATFORM_MACOS )
 	macro_copy_resource_mac( ${target_name} "${PROJECT_SOURCE_DIR}/data/test" )
-
-elseif( BUILD_PLATFORM_WIN32 )
-	macro_include_directories_win32()
-	macro_link_directories_win32()
-
-	add_executable( ${target_name} ${${target_name}_SRCS} )
-
-	macro_add_project_dependencies(${target_name})
-	macro_set_target_output_dir_win32( ${target_name} )
-	macro_set_target_link_libraries_win32( ${target_name} )
-
-else()
-	message( FATAL_ERROR "unsupport platform" )
 endif()	
 
 set_target_properties(${target_name} PROPERTIES FOLDER example)
-
-#if( BUILD_PLATFORM_WIN32 )
-
-    #set( target_name "example_test1" )
-    #message( STATUS "generate execute: " ${target_name} )
-
-    ##common source
-    #set( ${target_name}_common_SRCS
-        #../common_glut/common_glut.cpp
-        #)
-    #source_group( common FILES ${${target_name}_common_SRCS} )
-
-    ##test source
-    #set( ${target_name}_execute_SRCS
-        #test1.cpp
-        #)
-    #source_group( test FILES ${${target_name}_execute_SRCS} )
-
-    ## all source
-    #set( ${target_name}_SRCS 
-        #"${${target_name}_common_SRCS}"
-        #"${${target_name}_execute_SRCS}"
-        #)
-
-
-    #macro_include_directories_win32()
-	#macro_link_directories_win32()
-
-    #add_executable( ${target_name} ${${target_name}_SRCS} )
-    #add_dependencies( 
-    #${target_name} 
-    #libguiex_module 
-    #libguiex_widget 
-	#libguiex_widget_box2d
-    #libguiex_framework 
-    #)
-    
-	#macro_set_target_output_dir_win32( ${target_name} )
-	#macro_set_target_link_libraries_win32( ${target_name} )
-
-        
-#endif()
-
-#set_target_properties(${target_name} PROPERTIES FOLDER example)
-

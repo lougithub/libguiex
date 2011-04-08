@@ -10,8 +10,8 @@ if( BUILD_PLATFORM_WIN32 )
         )
 
 
-    macro_include_directories_win32()
-	macro_link_directories_win32()
+    macro_include_directories()
+	macro_link_directories()
 
     set( WIN32_EXECUTABLE true )
     add_executable( ${target_name} WIN32 ${${target_name}_SRCS} )
@@ -24,7 +24,7 @@ if( BUILD_PLATFORM_WIN32 )
 		libguiex_framework 
        )
        
-	macro_set_target_output_dir_win32( ${target_name} )
+	macro_set_target_output_dir( ${target_name} )
     macro_set_target_link_libraries_wx_win32( ${target_name} )
         
 endif()
