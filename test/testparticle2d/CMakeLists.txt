@@ -1,26 +1,7 @@
 set( target_name "example_testparticle2d" )
 message( STATUS "generate execute: " ${target_name} )
 
-
-if( BUILD_PLATFORM_MACOS OR BUILD_PLATFORM_IPHONE )
-	#common source
-	set( ${target_name}_common_SRCS
-		../common_ios/common_ios.mm
-		../common_ios/common_ios.h
-		../common_ios/common_ios_engine.cpp
-		../common_ios/common_ios_engine.h
-		)
-	source_group( common FILES ${${target_name}_common_SRCS} )
-elseif( BUILD_PLATFORM_WIN32)
-	#common source
-	set( ${target_name}_common_SRCS
-		../common_glut/common_glut.cpp
-		)
-	source_group( common FILES ${${target_name}_common_SRCS} )
-else()
-    message( FATAL_ERROR "unsupport platform" )
-endif()	
-
+macro_set_common_sources( ${target_name}_common_SRCS )
 
 #test source
 set( ${target_name}_execute_SRCS
@@ -42,15 +23,7 @@ if( BUILD_PLATFORM_MACOS OR BUILD_PLATFORM_IPHONE )
 	# code signing
 	set_target_properties(${target_name} PROPERTIES XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer")
 	
-	add_dependencies( 
-		${target_name} 
-		libguiex_module 
-		libguiex_widget 
-		libguiex_widget_box2d
-		libguiex_script_wrapper 
-		libguiex_framework
-		)
-
+	macro_add_project_dependencies(${target_name})
 	macro_set_target_link_libraries_mac( ${target_name} )
 	macro_copy_resource_mac( ${target_name} "${PROJECT_SOURCE_DIR}/data/test" )
 
@@ -60,16 +33,7 @@ elseif( BUILD_PLATFORM_WIN32 )
     
     add_executable( ${target_name} ${${target_name}_SRCS} )
     
-    add_dependencies( 
-    ${target_name}
-		${target_name} 
-		libguiex_module 
-		libguiex_widget 
-		libguiex_widget_box2d
-		libguiex_script_wrapper 
-		libguiex_framework
-      )
-	
+	macro_add_project_dependencies(${target_name})
 	macro_set_target_output_dir_win32( ${target_name} )
 	macro_set_target_link_libraries_win32( ${target_name} )
 

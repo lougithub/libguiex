@@ -19,9 +19,9 @@ endmacro()
 
 
 macro( macro_copy_resource_mac targetname source )
-	set( TARGET_DIR "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIGURATION>/${target_name}.app/" )
+	set( TARGET_DIR "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIGURATION>/${targetname}.app/" )
 	#add_custom_command(
-	#	TARGET ${target_name} 
+	#	TARGET ${targetname} 
 	#	POST_BUILD 
 	#	COMMAND ln
 	#	ARGS -fs ${source} ${TARGET_DIR}
@@ -29,7 +29,7 @@ macro( macro_copy_resource_mac targetname source )
 	#	)
 
 	add_custom_command(
-		TARGET ${target_name} 
+		TARGET ${targetname} 
 		POST_BUILD 
 		COMMAND /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks ${source} ${TARGET_DIR}
 		)
@@ -38,7 +38,7 @@ endmacro()
 
 macro( macro_set_target_link_libraries_mac targetname )
 	target_link_libraries(
-		${target_name}
+		${targetname}
 		general libguiex_core
 		general libguiex_widget_box2d
 		general libguiex_widget_game
@@ -57,7 +57,7 @@ endmacro()
 
 macro( macro_set_target_link_libraries_win32 targetname )
 	target_link_libraries( 
-		${target_name}  
+		${targetname}  
 		general Imm32.lib 
 		general comctl32.lib 
 		general glut32.lib 
@@ -83,7 +83,7 @@ endmacro()
 
 macro( macro_set_target_link_libraries_wx_win32 targetname )
 	target_link_libraries( 
-		${target_name}  
+		${targetname}  
 		debug wxmsw29ud_gl.lib
 		debug wxmsw29ud_core.lib
 		debug wxmsw29ud_aui.lib
@@ -128,8 +128,8 @@ macro( macro_set_bundle_mac targetname )
 	# Set the OS X Bundle specific CMake variables which will be used to populate the plist for
 	# the application bundle
 	set( MACOSX_BUNDLE true )
-	set( MACOSX_BUNDLE_INFO_STRING "${target_name}" )
-	set( MACOSX_BUNDLE_BUNDLE_NAME "${target_name}" )
+	set( MACOSX_BUNDLE_INFO_STRING ${targetname} )
+	set( MACOSX_BUNDLE_BUNDLE_NAME ${targetname} )
 	#set( MACOSX_BUNDLE_ICON_FILE "iconname" )
 	#set( MACOSX_BUNDLE_GUI_IDENTIFIER "com.rogue-research.SimpleCocoaVTK" )
 	#set( MACOSX_BUNDLE_LONG_VERSION_STRING "${PROJECT_NAME} Version ${VTK_VERSION}" )
@@ -167,3 +167,38 @@ macro( macro_link_directories_win32 )
 	link_directories( "${PROJECT_SOURCE_DIR}/external/wxWidgets/lib/vc_lib" )
 	link_directories( "${PROJECT_SOURCE_DIR}/external/scintilla/bin" )
 endmacro()
+
+macro( macro_set_common_sources common_srcs )
+	if( BUILD_PLATFORM_MACOS OR BUILD_PLATFORM_IPHONE )
+		#common source
+		set( ${common_srcs}
+			../common_ios/common_ios.mm
+			../common_ios/common_ios.h
+			../common_ios/common_ios_engine.cpp
+			../common_ios/common_ios_engine.h
+			)
+		source_group( common FILES ${common_srcs} )
+	elseif( BUILD_PLATFORM_WIN32)
+		#common source
+		set( ${common_srcs}
+			../common_glut/common_glut.cpp
+			)
+		source_group( common FILES ${common_srcs} )
+	else()
+		message( FATAL_ERROR "unsupport platform" )
+	endif()	
+endmacro()
+
+macro( macro_add_project_dependencies targetname)
+	add_dependencies( 
+		${targetname} 
+		libguiex_core
+		libguiex_module 
+		libguiex_widget 
+		libguiex_widget_box2d
+		libguiex_widget_game
+		libguiex_script_wrapper 
+		libguiex_framework
+		)
+endmacro()
+
