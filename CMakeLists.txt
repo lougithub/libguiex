@@ -124,7 +124,7 @@ set( CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/lib" )
 option(PRINT_VARIABLE_LOG "print variable log" OFF)
 if( PRINT_VARIABLE_LOG )
 	macro_variable_logging( )
-endif
+endif()
 
 # add the binary tree to the search path for include files
 include_directories( "${PROJECT_BINARY_DIR}" )
