@@ -13,9 +13,7 @@
 
 #include <iostream>
 
-#include <glut.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
+#include <GLUT/glut.h>
 
 //============================================================================//
 // declare

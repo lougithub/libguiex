@@ -24,22 +24,10 @@ set( ${target_name}_utility_SRCS
 	)
 source_group( utility FILES ${${target_name}_utility_SRCS} )
 
-
-# modify file list here --begin--
-if( BUILD_PLATFORM_WIN32 )
-    set( ${target_name}_SRCS 
-		${${target_name}_box2d_SRCS}
-		${${target_name}_utility_SRCS}
-        )
-elseif( BUILD_PLATFORM_IPHONE OR BUILD_PLATFORM_MACOS )
-    set( ${target_name}_SRCS 
-    	${${target_name}_box2d_SRCS}
-		${${target_name}_utility_SRCS}
-        )
-else( )
-    message( FATAL_ERROR "unsupport platform" )
-endif( )
-# modify file list here --end--
+set( ${target_name}_SRCS 
+	${${target_name}_box2d_SRCS}
+	${${target_name}_utility_SRCS}
+	)
 
 #include directory
 include_directories( "${PROJECT_SOURCE_DIR}/external/Box2D" )

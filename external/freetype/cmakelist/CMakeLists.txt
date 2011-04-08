@@ -54,7 +54,7 @@ if( BUILD_PLATFORM_WIN32 )
 		../include/freetype/config/ftstdlib.h
 		)
 
-elseif( BUILD_PLATFORM_MACOS OR BUILD_PLATFORM_IPHONE )
+elseif( BUILD_PLATFORM_MACOS OR BUILD_PLATFORM_IOS )
 
 	set( src_list 
 		../src/autofit/autofit.c
@@ -128,7 +128,7 @@ if( BUILD_PLATFORM_WIN32 )
 		COMPILE_DEFINITIONS_DEBUG FT_DEBUG_LEVEL_TRACE
 		)
 
-elseif( BUILD_PLATFORM_MACOS OR BUILD_PLATFORM_IPHONE )
+elseif( BUILD_PLATFORM_MACOS OR BUILD_PLATFORM_IOS )
 
 	set_target_properties( 
 		${target_name}

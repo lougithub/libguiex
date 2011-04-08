@@ -102,7 +102,6 @@ set( ${target_name}_progress_SRCS
 	)
 source_group( progress FILES ${${target_name}_progress_SRCS} )
 
-# modify file list here --begin--
 if( BUILD_PLATFORM_WIN32 )
     set( ${target_name}_SRCS 
 		${${target_name}_utilitywidget_SRCS}
@@ -119,7 +118,20 @@ if( BUILD_PLATFORM_WIN32 )
 		${${target_name}_progress_SRCS}
 		${${target_name}_utility_SRCS}
         )
-elseif( BUILD_PLATFORM_MACOS OR BUILD_PLATFORM_IPHONE)
+elseif( BUILD_PLATFORM_IOS)
+    set( ${target_name}_SRCS 
+		${${target_name}_utilitywidget_SRCS}
+    	${${target_name}_button_SRCS}
+		${${target_name}_checkbutton_SRCS}
+		${${target_name}_radioutton_SRCS}
+		${${target_name}_emptynode_SRCS}
+		${${target_name}_panel_SRCS}
+		${${target_name}_editbox_SRCS}
+		${${target_name}_scrollbar_SRCS}
+		${${target_name}_static_SRCS}
+		${${target_name}_utility_SRCS}
+        )
+elseif( BUILD_PLATFORM_MACOS )
     set( ${target_name}_SRCS 
 		${${target_name}_utilitywidget_SRCS}
     	${${target_name}_button_SRCS}
@@ -135,7 +147,6 @@ elseif( BUILD_PLATFORM_MACOS OR BUILD_PLATFORM_IPHONE)
 else( )
     message( FATAL_ERROR "unsupport platform" )
 endif( )
-# modify file list here --end--
 
 add_library( ${target_name} STATIC ${${target_name}_SRCS} )
 set_target_properties(${target_name} PROPERTIES FOLDER library)

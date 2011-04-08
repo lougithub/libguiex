@@ -35,6 +35,13 @@
 #define GUIEX_PLATFORM_MAC 1
 #endif
 
+#if defined( _GUIEX_TARGET_IOS )
+#define GUIEX_TARGET_IOS 1
+#elif defined(_GUIEX_TARGET_MACOS)
+#define GUIEX_TARGET_MACOS 1
+#elif defined(_GUIEX_TARGET_WIN32)
+#define GUIEX_TARGET_WIN32 1
+#endif
 
 /*************************************************************************
 	Dynamic Library import / export control conditional

@@ -10,11 +10,10 @@ set_property(GLOBAL PROPERTY USE_FOLDERS On)
 project( libguiex )
 
 # check platform
-
 option(BUILD_PLATFORM_WIN32 "platform win32" OFF)
 option(BUILD_PLATFORM_MACOS "platform macos" OFF)
-option(BUILD_PLATFORM_IPHONE "platform iphone" OFF)
-if( NOT BUILD_PLATFORM_IPHONE AND
+option(BUILD_PLATFORM_IOS "platform ios" OFF)
+if( NOT BUILD_PLATFORM_IOS AND
 	NOT BUILD_PLATFORM_MACOS AND
 	NOT BUILD_PLATFORM_WIN32 )
 	message( STATUS "try default platform" )
@@ -27,12 +26,15 @@ if( NOT BUILD_PLATFORM_IPHONE AND
 	endif()
 endif()
 
-if( BUILD_PLATFORM_IPHONE )
-	message( STATUS "PLATFORM: iphone" )
+if( BUILD_PLATFORM_IOS )
+	message( STATUS "PLATFORM: ios" )
+	add_definitions( -D_GUIEX_TARGET_IOS )
 elseif( BUILD_PLATFORM_MACOS )
 	message( STATUS "PLATFORM: macos" )
+	add_definitions( -D_GUIEX_TARGET_MACOS )
 elseif( BUILD_PLATFORM_WIN32 )
 	message( STATUS "PLATFORM: win32" )
+	add_definitions( -D_GUIEX_TARGET_WIN32 )
 else()
 	message( FATAL_ERROR "unsupport platform" )
 endif()
@@ -56,31 +58,7 @@ configure_file (
     "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.h"
     )
 
-
-if( BUILD_PLATFORM_IPHONE OR BUILD_PLATFORM_MACOS )
-
-	#iphone sdk
-	#set( IPHONE_SDK "iphonesimulator4.1" )
-    set( IPHONE_SDK "iphoneos4.1" )
-
-	set( CMAKE_OSX_SYSROOT "${IPHONE_SDK}" )
-	set( CMAKE_OSX_DEPLOYMENT_TARGET "")
-	set( CMAKE_EXE_LINKER_FLAGS "-framework Foundation -framework CoreGraphics -framework QuartzCore -framework UIKit -framework OpenGLES -framework OpenAL -lz")
-	set( XCODE_ATTRIBUTE_SDKROOT "${IPHONE_SDK}" )
-	#set( XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "iPad" )
-	set( CMAKE_OSX_ARCHITECTURES $(ARCHS_STANDARD_32_BIT))
-	set( MACOSX_BUNDLE_GUI_IDENTIFIER "com.yourcompany.\${PRODUCT_NAME:rfc1034identifier}")
-	
-	#link_directories(\${HOME}/\${SDKROOT}/lib)
-
-	add_definitions(-fno-regmove)
-	add_definitions(-Wno-reorder)
-	remove_definitions(-msse)
-
-    #set output directory
-	set( CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/binary/mac" )
-
-elseif( BUILD_PLATFORM_WIN32 )
+if( BUILD_PLATFORM_WIN32 )
 
 	set( CMAKE_USE_RELATIVE_PATHS true )
 	set( CMAKE_SUPPRESS_REGENERATION false )
@@ -107,6 +85,38 @@ elseif( BUILD_PLATFORM_WIN32 )
 	set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE "${PROJECT_SOURCE_DIR}/binary/win32" )
 	set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL "${PROJECT_SOURCE_DIR}/binary/win32" )
 	set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${PROJECT_SOURCE_DIR}/binary/win32" ) 
+
+elseif( BUILD_PLATFORM_IOS )
+
+	#iphone sdk
+	#set( IPHONE_SDK "iphonesimulator4.1" )
+    set( IPHONE_SDK "iphoneos4.1" )
+
+	set( CMAKE_OSX_SYSROOT "${IPHONE_SDK}" )
+	set( CMAKE_OSX_DEPLOYMENT_TARGET "")
+	set( CMAKE_EXE_LINKER_FLAGS "-framework Foundation -framework CoreGraphics -framework QuartzCore -framework UIKit -framework OpenGLES -framework OpenAL -lz")
+	set( XCODE_ATTRIBUTE_SDKROOT "${IPHONE_SDK}" )
+	set( CMAKE_OSX_ARCHITECTURES $(ARCHS_STANDARD_32_BIT))
+	set( MACOSX_BUNDLE_GUI_IDENTIFIER "com.yourcompany.\${PRODUCT_NAME:rfc1034identifier}")
+	
+	add_definitions(-fno-regmove)
+	add_definitions(-Wno-reorder)
+
+    #set output directory
+	set( CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/binary/ios" )
+
+elseif( BUILD_PLATFORM_MACOS )
+
+	set(XCODE_ATTRIBUTE_SDKROOT macosx10.4)
+
+	set( CMAKE_OSX_DEPLOYMENT_TARGET "")
+	set( CMAKE_OSX_ARCHITECTURES "i386")
+
+	add_definitions(-Wno-reorder)
+	add_definitions(-msse)
+
+    #set output directory
+	set( CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/binary/macos" )
 
 else( )
 

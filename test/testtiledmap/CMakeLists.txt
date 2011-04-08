@@ -15,7 +15,7 @@ set( ${target_name}_SRCS
 	"${${target_name}_execute_SRCS}"
 	)
 
-if( BUILD_PLATFORM_MACOS OR BUILD_PLATFORM_IPHONE )
+if( BUILD_PLATFORM_MACOS OR BUILD_PLATFORM_IOS )
 
 	macro_set_bundle_mac( ${target_name} )
 	add_executable( ${target_name} MACOSX_BUNDLE ${${target_name}_SRCS} )

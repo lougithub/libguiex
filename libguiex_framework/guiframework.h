@@ -14,13 +14,19 @@
 #include <libguiex_core/guiex.h>
 #include <libguiex_widget/guiwgt.h>
 
-#if defined( GUIEX_PLATFORM_WIN32 )
+#if defined( _GUIEX_TARGET_WIN32 )
 #include "guiframework_windows.h"
 namespace guiex
 {
 	typedef CGUIFramework_Windows CGUIFramework;
 }
-#elif defined(GUIEX_PLATFORM_MAC)
+#elif defined(GUIEX_TARGET_IOS)
+#include "guiframework_ios.h"
+namespace guiex
+{
+	typedef CGUIFramework_Ios CGUIFramework;
+}
+#elif defined(GUIEX_TARGET_MACOS)
 #include "guiframework_mac.h"
 namespace guiex
 {

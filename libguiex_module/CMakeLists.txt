@@ -11,13 +11,6 @@ set( ${target_name}_physics_box2d_SRCS
 source_group(physics_box2d FILES ${${target_name}_physics_box2d_SRCS} )
 
 #configfile_tinyxml
-set( ${target_name}_touch_cocoa_SRCS 
-	touch_cocoa/guitouch_cocoa.cpp
-	touch_cocoa/guitouch_cocoa.h
-	)
-source_group( touch FILES ${${target_name}_touch_cocoa_SRCS} )
-
-#configfile_tinyxml
 set( ${target_name}_configfile_tinyxml_SRCS 
 	configfile_tinyxml/guiconfigfile_tinyxml.cpp
 	configfile_tinyxml/guiconfigfile_tinyxml.h
@@ -226,7 +219,7 @@ if( BUILD_PLATFORM_WIN32 )
 	include_directories( "${PROJECT_SOURCE_DIR}/external/openal/include" )
 	include_directories( "${PROJECT_SOURCE_DIR}/external/glew/include" )
 
-elseif( BUILD_PLATFORM_IPHONE OR BUILD_PLATFORM_MACOS )
+elseif( BUILD_PLATFORM_IOS )
 
 	set( ${target_name}_SRCS 
 		${${target_name}_configfile_tinyxml_SRCS}
@@ -243,7 +236,25 @@ elseif( BUILD_PLATFORM_IPHONE OR BUILD_PLATFORM_MACOS )
 		${${target_name}_physics_box2d_SRCS}
 		${${target_name}_sound_openal_SRCS}
 		${${target_name}_sound_dummy_SRCS}
-		${${target_name}_touch_cocoa_SRCS}
+		)
+
+elseif( BUILD_PLATFORM_MACOS )
+
+	set( ${target_name}_SRCS 
+		${${target_name}_configfile_tinyxml_SRCS}
+		${${target_name}_filesys_cocoa_SRCS}
+		${${target_name}_font_ft2_SRCS}
+		${${target_name}_font_dummy_SRCS}
+		${${target_name}_ime_dummy_SRCS}
+		${${target_name}_imageloader_tga_SRCS}
+		${${target_name}_render_opengl_SRCS}
+		${${target_name}_render_opengl_base_SRCS}
+		${${target_name}_stringconv_iconv_SRCS}
+		${${target_name}_stringconv_cocoa_SRCS}
+		${${target_name}_script_lua_SRCS}
+		${${target_name}_physics_box2d_SRCS}
+		${${target_name}_sound_openal_SRCS}
+		${${target_name}_sound_dummy_SRCS}
 		)
 
 else( )

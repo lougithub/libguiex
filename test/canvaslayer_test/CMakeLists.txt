@@ -17,7 +17,7 @@ set( ${target_name}_SRCS
 	"${${target_name}_execute_SRCS}"
 	)
 
-if( BUILD_PLATFORM_IPHONE OR BUILD_PLATFORM_MACOS )
+if( BUILD_PLATFORM_IOS OR BUILD_PLATFORM_MACOS )
     macro_include_directories_mac()
 	macro_set_bundle_mac( ${target_name} )
 
