@@ -43,7 +43,7 @@ set(
 	"${PROJECT_SOURCE_DIR}/CMake"
 	)
 include( VariableLogging )
-include( TargetUtility )
+include( ProjectUtility )
 
 # The version number.
 set( ${PROJECT_NAME}_VERSION_MAJOR 0 )
@@ -121,7 +121,10 @@ set( CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/lib" )
 
 
 #print logging
-macro_variable_logging( )
+option(PRINT_VARIABLE_LOG "print variable log" OFF)
+if( PRINT_VARIABLE_LOG )
+	macro_variable_logging( )
+endif
 
 # add the binary tree to the search path for include files
 include_directories( "${PROJECT_BINARY_DIR}" )
