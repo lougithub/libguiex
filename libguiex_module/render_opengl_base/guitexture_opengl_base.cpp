@@ -15,15 +15,17 @@
 #include <libguiex_core/guiinterfacefilesys.h>
 #include <libguiex_core/guiinterfaceimageloader.h>
 
-#if defined(GUIEX_PLATFORM_WIN32)
+#if defined(GUIEX_TARGET_WIN32)
 #include <windows.h>
-//#define GLEW_STATIC
 #include <GL/glew.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
-#elif defined(GUIEX_PLATFORM_MAC)
+#elif defined(GUIEX_TARGET_IOS)
 #include <OpenGLES/ES1/gl.h>
 #include <OpenGLES/ES1/glext.h>
+#elif defined(GUIEX_TARGET_MACOS)
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
 #endif
 
 //============================================================================//

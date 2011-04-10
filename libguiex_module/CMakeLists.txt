@@ -236,6 +236,7 @@ elseif( BUILD_PLATFORM_IOS )
 		${${target_name}_physics_box2d_SRCS}
 		${${target_name}_sound_openal_SRCS}
 		${${target_name}_sound_dummy_SRCS}
+		${${target_name}_mouse_default_SRCS}
 		)
 
 elseif( BUILD_PLATFORM_MACOS )
@@ -255,8 +256,10 @@ elseif( BUILD_PLATFORM_MACOS )
 		${${target_name}_physics_box2d_SRCS}
 		${${target_name}_sound_openal_SRCS}
 		${${target_name}_sound_dummy_SRCS}
+		${${target_name}_mouse_default_SRCS}
 		)
 
+	include_directories( "${PROJECT_SOURCE_DIR}/external/glew/include" )
 else( )
 
 	message( FATAL_ERROR "unsupport platform" )

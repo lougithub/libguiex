@@ -24,7 +24,7 @@ namespace guiex
 #include "guiframework_ios.h"
 namespace guiex
 {
-	typedef CGUIFramework_Ios CGUIFramework;
+	typedef CGUIFramework_IOS CGUIFramework;
 }
 #elif defined(GUIEX_TARGET_MACOS)
 #include "guiframework_mac.h"

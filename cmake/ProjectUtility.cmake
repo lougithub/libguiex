@@ -87,6 +87,7 @@ macro( macro_set_target_link_libraries targetname )
 			general box2d
 			general ogg
 			general vorbis
+			general glew
 			)
 
 	else()
@@ -155,10 +156,10 @@ macro( macro_add_executable targetname sources)
 		add_executable( ${targetname} ${sources} )
 	elseif( BUILD_PLATFORM_IOS)
 		add_executable( ${targetname} MACOSX_BUNDLE ${sources} )
-		set_target_properties(${targetname} PROPERTIES XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "IOS Developer")
+		set_target_properties(${targetname} PROPERTIES XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer")
 	elseif( BUILD_PLATFORM_MACOS )	
 		add_executable( ${targetname} MACOSX_BUNDLE ${sources} )
-		set_target_properties(${targetname} PROPERTIES XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "Macos Developer")
+		#set_target_properties(${targetname} PROPERTIES XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "Macos Developer")
 	else()
 		message( FATAL_ERROR "unsupport platform" )
 	endif()	
@@ -189,6 +190,7 @@ macro( macro_include_directories )
 		include_directories( "${PROJECT_SOURCE_DIR}/external/lua/src" )
 		include_directories( "${PROJECT_SOURCE_DIR}/external/freetype/include" )
 		include_directories( "${PROJECT_SOURCE_DIR}/external/Box2D" )
+		include_directories( "${PROJECT_SOURCE_DIR}/external/glew/include" )
 	else()
 		message( FATAL_ERROR "unsupport platform" )
 	endif()
@@ -204,16 +206,22 @@ macro( macro_link_directories )
 endmacro()
 
 macro( macro_set_common_sources common_srcs )
-	if( BUILD_PLATFORM_MACOS OR BUILD_PLATFORM_IPHONE )
+	if( BUILD_PLATFORM_IOS )
 		#common source
 		set( ${common_srcs}
-			../common_ios/common_ios.mm
-			../common_ios/common_ios.h
 			../common_ios/common_ios_engine.cpp
 			../common_ios/common_ios_engine.h
+			../common_ios/common_ios.mm
+			../common_ios/common_ios.h
 			)
 		source_group( common FILES ${common_srcs} )
 	elseif( BUILD_PLATFORM_WIN32)
+		#common source
+		set( ${common_srcs}
+			../common_glut/common_glut.cpp
+			)
+		source_group( common FILES ${common_srcs} )
+	elseif( BUILD_PLATFORM_MACOS )
 		#common source
 		set( ${common_srcs}
 			../common_glut/common_glut.cpp

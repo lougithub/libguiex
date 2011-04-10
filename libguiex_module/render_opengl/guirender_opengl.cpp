@@ -19,10 +19,17 @@
 #include <libguiex_core/guicamera.h>
 #include <libguiex_core/guitexture.h>
 
-#define GLEW_STATIC
 #include <GL/glew.h>
+
+#if defined(GUIEX_PLATFORM_WIN32)
 #include <GL/gl.h>
 #include <GL/glu.h>
+#elif defined(GUIEX_PLATFORM_MAC)
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
+#else
+#error "unknown platform"	
+#endif
 
 //============================================================================//
 // function

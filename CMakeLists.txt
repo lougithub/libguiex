@@ -111,6 +111,7 @@ elseif( BUILD_PLATFORM_MACOS )
 
 	set( CMAKE_OSX_DEPLOYMENT_TARGET "")
 	set( CMAKE_OSX_ARCHITECTURES "i386")
+	set( CMAKE_EXE_LINKER_FLAGS "-framework Foundation -framework OpenGL -framework OpenAL -lz -framework GLUT")
 
 	add_definitions(-Wno-reorder)
 	add_definitions(-msse)
@@ -158,6 +159,8 @@ add_subdirectory( ${PROJECT_SOURCE_DIR}/external/libogg/cmakelist projects/libog
 add_subdirectory( ${PROJECT_SOURCE_DIR}/external/libvorbis/cmakelist projects/libvorbis )
 if( BUILD_PLATFORM_WIN32)
 	add_subdirectory( ${PROJECT_SOURCE_DIR}/external/zlib/cmakelist projects/zlib )
+	add_subdirectory( ${PROJECT_SOURCE_DIR}/external/glew/cmakelist projects/glew )
+elseif( BUILD_PLATFORM_MACOS )
 	add_subdirectory( ${PROJECT_SOURCE_DIR}/external/glew/cmakelist projects/glew )
 endif()
 

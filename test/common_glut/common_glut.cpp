@@ -15,6 +15,10 @@
 
 #include <GLUT/glut.h>
 
+#if defined(GUIEX_PLATFORM_MAC)
+#include <libgen.h>  
+#endif
+
 //============================================================================//
 // declare
 //============================================================================// 
@@ -33,6 +37,7 @@ int g_nVSync = 1;
 // function
 //============================================================================// 
 //------------------------------------------------------------------------------
+/*
 typedef BOOL (APIENTRY *PFNWGLSWAPINTERVALFARPROC)( int );
 PFNWGLSWAPINTERVALFARPROC wglSwapIntervalEXT = 0;
 void setVSync(int interval=1)
@@ -53,6 +58,7 @@ void setVSync(int interval=1)
 		}
 	}
 }
+ */
 //------------------------------------------------------------------------------
 void QuitApp()
 {
@@ -158,10 +164,10 @@ void keyboardCB(unsigned char key, int x, int y)
 		}
 		break;
 
-	case 'f':	//draw in full speed or not
-		g_nVSync = ( g_nVSync+1 ) % 2;
-		setVSync( g_nVSync );
-		break;
+//	case 'f':	//draw in full speed or not
+//		g_nVSync = ( g_nVSync+1 ) % 2;
+//		setVSync( g_nVSync );
+//		break;
 	
 	case 'r':	//rotate screen
 		GSystem->SetScreenOrientation( EScreenOrientation((GSystem->GetScreenOrientation() + 1) % (eScreenOrientation_LandscapeRight+1)));
@@ -294,13 +300,20 @@ int main(int argc, char** argv)
 	glutKeyboardUpFunc( keyboardUpCB );
 	glutSpecialUpFunc( keyUpSpecialCB );
 
-	setVSync( g_nVSync );
+//	setVSync( g_nVSync );
 
 	//get data path
+#if defined( GUIEX_PLATFORM_WIN32 )
 	char fdir[_MAX_DIR];
 	_splitpath( argv[0], NULL, fdir, NULL, NULL ); 
 	CGUIString rDir = fdir;
 	rDir += "../../data/test/";
+#elif defined( GUIEX_PLATFORM_MAC )
+	CGUIString rDir(dirname( argv[0]));
+	rDir += "/../../test/";
+#else
+#	error "unknown platform"		
+#endif
 
 	g_pFramework = CreateFramework( );
 	g_pFramework->Initialize( CGUIIntSize( g_nScreenWidth, g_nScreenHeight ), rDir.c_str() );

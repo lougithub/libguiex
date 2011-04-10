@@ -16,7 +16,7 @@ set( ${target_name}_SRCS
 	)
 macro_include_directories()
 macro_link_directories()
-macro_add_executable( ${target_name} ${${target_name}_SRCS})
+macro_add_executable( ${target_name} "${${target_name}_SRCS}")
 macro_add_project_dependencies(${target_name})
 macro_set_target_output_dir( ${target_name} )
 macro_set_target_link_libraries( ${target_name} )

@@ -27,7 +27,7 @@
 #include <libguiex_module/sound_dummy/guisound_dummy.h>
 #include <libguiex_module/ime_dummy/guiime_dummy.h>
 #include <libguiex_module/sound_openal/guisound_openal.h>
-#include <libguiex_module/touch_cocoa/guitouch_cocoa.h>
+#include <libguiex_module/mouse_default/guimouse_default.h>
 
 //============================================================================//
 // function
@@ -99,13 +99,13 @@ namespace guiex
 		GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_tga);
 		GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_cocoa);
 		GUI_REGISTER_INTERFACE_LIB( IGUIFileSys_cocoa);
-		GUI_REGISTER_INTERFACE_LIB( IGUITouch_cocoa );
 		GUI_REGISTER_INTERFACE_LIB( IGUIFont_ft2);
 		GUI_REGISTER_INTERFACE_LIB( IGUIIme_dummy);
 		GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
 		GUI_REGISTER_INTERFACE_LIB( IGUIScript_lua);
 		GUI_REGISTER_INTERFACE_LIB( IGUIPhysics_box2d );
 		GUI_REGISTER_INTERFACE_LIB( IGUISound_openal ); 
+		GUI_REGISTER_INTERFACE_LIB( IGUIMouse_default); 
 	}
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_IOS::RegisterWidgetGenerators( )

@@ -207,7 +207,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	pWidget_panel->SetRotation( 0,0,70 );
 	pWidget_panel->Create();
 
-
+/*
 	CGUIWgtTabControl* pWidget_tabcontroll= 
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtTabControl>( "tabcontrol", "testscene");
 	pWidget_tabcontroll->SetParent( pWidget_panel );
@@ -224,7 +224,9 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	pWidget_tabbutton->SetSize( 0.33f,0.1f );
 	pWidget_tabbutton->SetPosition( 0, 0 );
 	pWidget_tabbutton->Create();
-
+*/
+	
+	/*
 	CGUIWgtPanel* pWidget_panel1= 
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtPanel>( "panel1", "testscene");
 	pWidget_panel1->SetParent( pWidget_tabbutton );
@@ -253,7 +255,8 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	pWidget_panel2->SetSize( 1.0f, 0.5f);
 	pWidget_panel2->SetColor(CGUIColor(0,1,0,1));
 	pWidget_panel2->Create();
-
+*/
+	/*
 	CGUIWgtTabButton* pWidget_tabbutton3 = 
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtTabButton>( "tabbutton3", "testscene");
 	pWidget_tabbutton3->SetParent( pWidget_tabcontroll );
@@ -264,7 +267,8 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	pWidget_tabbutton3->SetSize( 0.33f, 0.1f );
 	pWidget_tabbutton3->SetPosition( 0.66f, 0 );
 	pWidget_tabbutton3->Create();
-
+*/
+	/*
 	CGUIWgtPanel* pWidget_panel3= 
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtPanel>( "panel3", "testscene");
 	pWidget_panel3->SetParent( pWidget_tabbutton3 );
@@ -273,8 +277,8 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	pWidget_panel3->SetSize( 1.0f, 0.5f);
 	pWidget_panel3->SetColor(CGUIColor(0,0,1,1));
 	pWidget_panel3->Create();
-
-
+*/
+/*
 	CGUIWgtProgress* pWidget_progress= 
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtProgress>( "progress", "testscene");
 	pWidget_progress->SetParent( pWidgetRoot );
@@ -285,7 +289,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	pWidget_progress->SetCurrentProgress( 50 );
 	pWidget_progress->SetPosition( 500,500 );
 	pWidget_progress->Create();
-
+*/
 	CGUIWgtStaticText* pWidget_frame = 
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtStaticText>( "frame", "testscene");
 	pWidget_frame->SetParent( pWidgetRoot );
