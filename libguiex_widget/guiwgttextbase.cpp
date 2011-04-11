@@ -70,6 +70,11 @@ namespace guiex
 		return aContentUTF8;
 	}
 	//------------------------------------------------------------------------------
+	bool CGUIWgtTextBase::IsTextContentEmpty() const
+	{
+		return m_strText.m_strContent.empty();
+	}
+	//------------------------------------------------------------------------------
 	void CGUIWgtTextBase::SetTextAlignmentVert( ETextAlignmentVert eAlignment )
 	{
 		m_eTextAlignmentVert = eAlignment;

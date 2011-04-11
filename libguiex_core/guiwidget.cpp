@@ -2853,6 +2853,15 @@ namespace guiex
 		return m_bIsGenerateMultiClickEvent; 
 	}
 	//------------------------------------------------------------------------------
+	void CGUIWidget::SetTextContentUTF8( const CGUIString& /*rString*/)
+	{
+	}
+	//------------------------------------------------------------------------------
+	CGUIString CGUIWidget::GetTextContentUTF8( ) const
+	{
+		return CGUIString();
+	}
+	//------------------------------------------------------------------------------
 	const CGUIColor& CGUIWidget::GetColor() const
 	{
 		return m_aColor;

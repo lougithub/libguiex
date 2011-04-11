@@ -30,6 +30,9 @@ namespace guiex
 		virtual void SetTextContent(const CGUIStringW& rText);
 		virtual void SetTextInfo(const CGUIStringInfo& rInfo);
 
+		virtual void SetTextContentUTF8( const CGUIString& rString);
+		virtual CGUIString GetTextContentUTF8( ) const;
+
 		virtual void SetTextAlignmentVert( ETextAlignmentVert eAlignment );
 		virtual void SetTextAlignmentHorz( ETextAlignmentHorz eAlignment );
 
@@ -38,8 +41,9 @@ namespace guiex
 
 		const CGUIStringW& GetTextContent( ) const;
 		const CGUIStringInfo& GetTextInfo( ) const;
-		void SetTextContentUTF8( const CGUIString& rString);
-		CGUIString GetTextContentUTF8( ) const;
+
+		bool IsTextContentEmpty() const;
+
 
 		void SetTextColor(const CGUIColor& rColor );
 

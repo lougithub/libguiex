@@ -195,6 +195,9 @@ namespace guiex
 
 		void SetGenerateMultiClickEvent( bool bFlag ); 
 		bool IsGenerateMultiClickEvent( ) const;
+		
+		void SetTextContentUTF8( const CGUIString& rString);
+		CGUIString GetTextContentUTF8( ) const;	
 
 	protected:
 		CGUIWidget();
@@ -202,6 +205,16 @@ namespace guiex
 	};
 
 
+	//============================================================================//
+	// CGUIWgtTextBase
+	//============================================================================// 
+	class CGUIWgtTextBase : public CGUIWidget
+	{
+	public:
+		bool IsTextContentEmpty() const;
+
+		void SetTextColor(const CGUIColor& rColor );
+	};
 
 
 	//============================================================================//
@@ -256,21 +269,17 @@ namespace guiex
 	//============================================================================//
 	// CGUIWgtStaticText
 	//============================================================================// 
-	class CGUIWgtStaticText : public CGUIWidget
+	class CGUIWgtStaticText : public CGUIWgtTextBase
 	{
 	public:
-		void SetTextContentUTF8( const CGUIString& rString);
-		CGUIString GetTextContentUTF8() const;
 	};
 
 	//============================================================================//
 	// CGUIWgtEditBox
 	//============================================================================// 
-	class CGUIWgtEditBox : public CGUIWidget
+	class CGUIWgtEditBox : public CGUIWgtTextBase
 	{
 	public:
-		void SetTextContentUTF8( const CGUIString& rString);
-		CGUIString GetTextContentUTF8() const;
 	};
 
 

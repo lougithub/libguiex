@@ -117,6 +117,9 @@ namespace guiex
 		void SetUserData(void* pData);
 		void* GetUserData() const;
 
+		virtual void SetTextContentUTF8( const CGUIString& rString);
+		virtual CGUIString GetTextContentUTF8( ) const;
+
 		////////////////////////////////////////////////////////////////////////////
 		// signal
 		////////////////////////////////////////////////////////////////////////////
