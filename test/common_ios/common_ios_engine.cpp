@@ -36,7 +36,7 @@ extern CGUIFrameworkBase* CreateFramework( );
 
 struct IApplicationEngine* CreateApplicationEngine()
 {
-	rand(time(NULL));
+	srand(time(NULL));
 	return new CLibGuiexEngine;
 }
 
