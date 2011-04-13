@@ -17,6 +17,8 @@
 
 #if defined(GUIEX_PLATFORM_MAC)
 #include <libgen.h>  
+#include <OpenGL/OpenGL.h>
+#include <OpenGL/CGLCurrent.h>
 #endif
 
 //============================================================================//
@@ -37,7 +39,8 @@ int g_nVSync = 1;
 // function
 //============================================================================// 
 //------------------------------------------------------------------------------
-/*
+#if defined GUIEX_PLATFORM_WIN32
+
 typedef BOOL (APIENTRY *PFNWGLSWAPINTERVALFARPROC)( int );
 PFNWGLSWAPINTERVALFARPROC wglSwapIntervalEXT = 0;
 void setVSync(int interval=1)
@@ -58,7 +61,19 @@ void setVSync(int interval=1)
 		}
 	}
 }
- */
+ 
+#elif defined GUIEX_PLATFORM_MAC
+void setVSync( int interval = 1 )
+{
+	// a swap interval of 1 causes SwapBuffers to wait until the 
+	// next vertical sync, avoiding possible tears in your images.
+	// Note that this limits your framerate to 60 fps or so,
+	// so don't forget to turn it OFF if you are doing render timing.
+	
+	CGLContextObj cgl_context = CGLGetCurrentContext();
+	CGLSetParameter(cgl_context, kCGLCPSwapInterval, &interval);
+}
+#endif
 //------------------------------------------------------------------------------
 void QuitApp()
 {
@@ -301,7 +316,7 @@ int main(int argc, char** argv)
 	glutKeyboardUpFunc( keyboardUpCB );
 	glutSpecialUpFunc( keyUpSpecialCB );
 
-//	setVSync( g_nVSync );
+	setVSync( g_nVSync );
 
 	//get data path
 #if defined( GUIEX_PLATFORM_WIN32 )
