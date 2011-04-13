@@ -93,7 +93,7 @@ namespace guiex
 			return -1;
 		}
 
-		for( uint32 i=0; i<m_pMapInfo->GetLayers().size(); ++i ) 
+		for( uint32 i=0; i<m_pMapInfo->GetLayerInfos().size(); ++i ) 
 		{
 			CGUITiledMapLayer* pLayer = new CGUITiledMapLayer( this, i );
 			m_arrayLayer.push_back( pLayer );
@@ -148,8 +148,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	const std::map<CGUIString, CGUIString>* CGUITiledMap::GetTileProperties( uint32 gid )
 	{
-		std::map<uint32, std::map<CGUIString, CGUIString> >::const_iterator itorFind = m_pMapInfo->GetTileProperties().find( gid );
-		if( itorFind == m_pMapInfo->GetTileProperties().end() )
+		std::map<uint32, std::map<CGUIString, CGUIString> >::const_iterator itorFind = m_pMapInfo->GetAllTileProperties().find( gid );
+		if( itorFind == m_pMapInfo->GetAllTileProperties().end() )
 		{
 			return NULL;
 		}
@@ -170,7 +170,7 @@ namespace guiex
 
 	}
 	//------------------------------------------------------------------------------
-	const CGUITiledMapInfo* CGUITiledMap::GetMapInfo() const
+	CGUITiledMapInfo* CGUITiledMap::GetMapInfo()
 	{
 		return m_pMapInfo;
 	}

@@ -88,7 +88,7 @@ namespace guiex
 		void UpdateFov();
 		void UpdateAspectRatio();
 
-	protected:
+	private:
 		//base value
 		CGUIVector3 m_vBaseEye;
 		CGUIVector3 m_vBaseCenter;

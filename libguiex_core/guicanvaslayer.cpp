@@ -23,6 +23,10 @@ namespace guiex
 		,m_bTopMost( bTopMost )
 	{
 		SetPixelSize( rCanvasSize );
+		SetFocusable(false);
+		SetActivable(false);
+		SetMouseConsumed(false);
+		SetHitable( false );
 	}
 	//------------------------------------------------------------------------------
 	CGUICanvasLayer::~CGUICanvasLayer()
@@ -31,11 +35,6 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUICanvasLayer::Initialize( )
 	{
-		SetFocusable(false);
-		SetActivable(false);
-		SetMouseConsumed(false);
-		SetHitable( false );
-
 		Create();
 		Open();
 	}
@@ -70,6 +69,14 @@ namespace guiex
 	void CGUICanvasLayer::RenderExtraInfo( IGUIInterfaceRender* pRender )
 	{
 		CGUIWidget::RenderExtraInfo( pRender );
+	}
+	//------------------------------------------------------------------------------
+	void CGUICanvasLayer::BeginRender( IGUIInterfaceRender* /*pRender*/ )
+	{
+	}
+	//------------------------------------------------------------------------------
+	void CGUICanvasLayer::EndRender( IGUIInterfaceRender* /*pRender*/ )
+	{
 	}
 	//------------------------------------------------------------------------------
 	void CGUICanvasLayer::Refresh( )

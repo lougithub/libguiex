@@ -109,6 +109,8 @@
 #include "guiparticle2dmanager.h"
 
 //tiledmap
+#include "guitiledmapparser.h"
+#include "guitiledmaplayer.h"
 #include "guitiledmap.h"
 #include "guitiledmapmanager.h"
 

@@ -48,6 +48,11 @@ namespace guiex
 		const CGUIString& GetLayerName( ) const;
 		bool IsTopMost( ) const;
 
+	protected:
+		friend class CGUICanvasLayerManager;
+		virtual void BeginRender( class IGUIInterfaceRender* pRender );
+		virtual void EndRender( class IGUIInterfaceRender* pRender );
+
 	private:
 		CGUIString m_strLayerName;
 		bool m_bTopMost;

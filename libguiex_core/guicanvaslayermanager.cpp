@@ -60,7 +60,9 @@ namespace guiex
 			++itor )
 		{
 			pRender->Clear( eRenderBuffer_DEPTH_BIT );
+			(*itor)->BeginRender( pRender );
 			(*itor)->Render( pRender );
+			(*itor)->EndRender( pRender );
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -70,7 +72,9 @@ namespace guiex
 			itor != m_arrayCanvasLayers.end();
 			++itor )
 		{
+			(*itor)->BeginRender( pRender );
 			(*itor)->RenderExtraInfo( pRender );
+			(*itor)->EndRender( pRender );
 		}
 	}
 	//------------------------------------------------------------------------------

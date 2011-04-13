@@ -26,7 +26,7 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	CGUITiledMapLayer::CGUITiledMapLayer( const CGUITiledMap* pOwnerMap, uint32 nLayerIndex )
+	CGUITiledMapLayer::CGUITiledMapLayer( CGUITiledMap* pOwnerMap, uint32 nLayerIndex )
 		:m_pOwnerMap( pOwnerMap )
 		,m_nLayerIndex( nLayerIndex )
 		,m_pLayerInfo( NULL )
@@ -36,14 +36,14 @@ namespace guiex
 		,maxGID( 0 )
 	{
 		//check layer index
-		if( m_pOwnerMap->GetMapInfo()->GetLayers().size() <= nLayerIndex )
+		if( m_pOwnerMap->GetMapInfo()->GetLayerInfos().size() <= nLayerIndex )
 		{
 			throw CGUIException("[CGUITiledMapLayer::CGUITiledMapLayer]: invalid tile map layer index");
 			return;
 		}
 
 		//init layer info
-		m_pLayerInfo = &m_pOwnerMap->GetMapInfo()->GetLayers()[nLayerIndex];
+		m_pLayerInfo = &m_pOwnerMap->GetMapInfo()->GetLayerInfos()[nLayerIndex];
 
 		//init tile set
 		m_pTileSetInfo = GetTilesetForLayer();
@@ -64,6 +64,11 @@ namespace guiex
 	const CGUIString& CGUITiledMapLayer::GetLayerName() const
 	{
 		return m_pLayerInfo->m_strName;
+	}
+	//------------------------------------------------------------------------------
+	CGUITiledMapLayerInfo* CGUITiledMapLayer::GetLayerInfo( )
+	{
+		return m_pLayerInfo;
 	}
 	//------------------------------------------------------------------------------
 	const CGUIIntSize& CGUITiledMapLayer::GetLayerSize() const
@@ -91,6 +96,72 @@ namespace guiex
 		return m_pLayerInfo->m_vTiles;
 	}
 	//------------------------------------------------------------------------------
+	uint32 CGUITiledMapLayer::GetTileGID( uint32 x, uint32 y ) const
+	{
+		GUI_ASSERT( x<GetLayerSize().m_uWidth && y<GetLayerSize().m_uHeight,"invalid param" );
+		uint32 pos = x + GetLayerSize().m_uWidth * y;
+		return m_pLayerInfo->m_vTiles[ pos ];
+	}
+	//------------------------------------------------------------------------------
+	void CGUITiledMapLayer::SetTileGID( uint32 uGID, uint32 x, uint32 y )
+	{
+		GUI_ASSERT( x<GetLayerSize().m_uWidth && y<GetLayerSize().m_uHeight,"invalid param" );
+		uint32 pos = x + GetLayerSize().m_uWidth * y;
+		if( m_pLayerInfo->m_vTiles[ pos ] != uGID )
+		{
+			if( m_pLayerInfo->m_vTiles[ pos ] == 0 )
+			{
+				//insert a tile to render
+				std::vector<STileData>::iterator itorOld = m_vecTiles.begin();
+				for( std::vector<STileData>::iterator itor = m_vecTiles.begin();
+					itor != m_vecTiles.end();
+					itorOld=itor, ++itor )
+				{
+					if( (*itor).m_uPos >= pos )
+					{
+						break;
+					}
+				}
+
+				STileData aTileData;
+				aTileData.m_uPos = pos;
+				aTileData.m_uGID = uGID;
+				CGUISize aTileSize( real( GetMapTileSize().m_uWidth),real( GetMapTileSize().m_uHeight));
+				aTileData.m_aDestRect = CGUIRect( PositionAt( CGUIIntVector2(x,y) ), aTileSize );
+				aTileData.m_aUV = m_pTileSetInfo->RectForGID( uGID, CGUIIntSize( m_pTexture->GetWidth(), m_pTexture->GetHeight()) );
+				m_vecTiles.insert( itorOld, aTileData );
+			}
+			else
+			{
+				//find tile
+				std::vector<STileData>::iterator itor = m_vecTiles.begin();
+				for( ; itor != m_vecTiles.end(); ++itor )
+				{
+					if( (*itor).m_uPos == pos )
+					{
+						break;
+					}
+				}
+				GUI_ASSERT( itor != m_vecTiles.end(), "invalid tiled map layer data");
+				if( uGID == 0 )
+				{
+					m_vecTiles.erase( itor );
+				}
+				else
+				{
+					(*itor).m_uGID = uGID;
+					(*itor).m_aUV = m_pTileSetInfo->RectForGID( uGID, CGUIIntSize( m_pTexture->GetWidth(), m_pTexture->GetHeight()) );
+				}
+			}
+			m_pLayerInfo->m_vTiles[ pos ] = uGID;
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUITiledMapLayer::RemoveTileAt( uint32 x, uint32 y )
+	{
+		SetTileGID( 0, x, y );
+	}
+	//------------------------------------------------------------------------------
 	const std::map<CGUIString, CGUIString>& CGUITiledMapLayer::GetProperties() const
 	{
 		return m_pLayerInfo->m_mapProperties;
@@ -106,29 +177,34 @@ namespace guiex
 		return m_pOwnerMap->GetMapInfo()->GetOrientation();
 	}
 	//------------------------------------------------------------------------------
-	const CGUITiledMapTilesetInfo* CGUITiledMapLayer::GetTilesetForLayer() const
+	CGUITiledMapTilesetInfo* CGUITiledMapLayer::GetTilesetForLayer()
 	{		
 		const CGUIIntSize& size = m_pLayerInfo->m_aLayerSize;
 
 		for( uint32 i=0; i<m_pOwnerMap->GetMapInfo()->GetTilesets().size(); ++i )
 		{
-			const CGUITiledMapTilesetInfo* pTileset = &m_pOwnerMap->GetMapInfo()->GetTilesets()[i];
-			for( uint32 y = 0; y < size.m_uHeight; y++ ) 
+			CGUITiledMapTilesetInfo* pTileset = &m_pOwnerMap->GetMapInfo()->GetTilesets()[i];
+			uint32 gid = 0;
+			uint32 uGidNum = (pTileset->GetImageSize().GetWidth() / pTileset->GetTileSize().GetWidth()) *
+				(pTileset->GetImageSize().GetHeight() / pTileset->GetTileSize().GetHeight());
+		
+			for( uint32 y = 0; y < size.m_uHeight && gid == 0; y++ ) 
 			{
 				for( uint32 x = 0; x < size.m_uWidth; x++ )
 				{
 					uint32 pos = x + size.m_uWidth * y;
-					uint32 gid = m_pLayerInfo->m_vTiles[ pos ];
+					gid = m_pLayerInfo->m_vTiles[ pos ];
 
 					// XXX: gid == 0 --> empty tile
 					if( gid != 0 ) 
 					{
 						// Optimization: quick return
 						// if the layer is invalid (more than 1 tileset per layer) an assert will be thrown later
-						if( gid >= pTileset->GetFirstGid() )
+						if( gid >= pTileset->GetFirstGid() && gid < pTileset->GetFirstGid() + uGidNum )
 						{
 							return pTileset;
 						}
+						break;
 					}
 				}
 			}		
@@ -174,8 +250,7 @@ namespace guiex
 		{
 			for( uint32 x=0; x < GetLayerSize().m_uWidth; x++ ) 
 			{
-				uint32 pos = x + GetLayerSize().m_uWidth * y;
-				uint32 gid = GetTileGIDs()[ pos ];
+				uint32 gid = GetTileGID(x, y);
 
 				// XXX: gid == 0 --> empty tile
 				if( gid != 0 )
@@ -201,6 +276,7 @@ namespace guiex
 	int32 CGUITiledMapLayer::AppendTileForGID( uint32 gid, const CGUIIntVector2& pos )
 	{
 		STileData aTileData;
+		aTileData.m_uPos = pos.x + GetLayerSize().m_uWidth * pos.y;
 		aTileData.m_uGID = gid;
 		CGUISize aTileSize( real( GetMapTileSize().m_uWidth),real( GetMapTileSize().m_uHeight));
 		aTileData.m_aDestRect = CGUIRect( PositionAt( pos ), aTileSize );
@@ -256,6 +332,11 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUITiledMapLayer::Render( IGUIInterfaceRender* pRender )
 	{
+		if( m_pLayerInfo->IsVisible() == false )
+		{
+			return;
+		}
+
 		for( uint32 i = 0;
 			i < m_vecTiles.size();
 			++i )

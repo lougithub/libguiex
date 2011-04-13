@@ -41,7 +41,7 @@ namespace guiex
 
 		int32 LoadValueFromProperty( const class CGUIProperty& rProperty );
 
-		const CGUITiledMapInfo* GetMapInfo() const;
+		CGUITiledMapInfo* GetMapInfo();
 		const CGUIString& GetWorkingDir() const;
 
 		CGUITiledMapLayer* GetLayer( const CGUIString& rLayerName );

@@ -146,6 +146,26 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
+	const CGUIString& CGUITiledMapLayerInfo::GetName() const
+	{
+		return m_strName;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUITiledMapLayerInfo::IsVisible() const
+	{
+		return m_bVisible;
+	}
+	//------------------------------------------------------------------------------
+	void CGUITiledMapLayerInfo::SetVisible( bool bVisible )
+	{
+		m_bVisible = bVisible;
+	}
+	//------------------------------------------------------------------------------
+	real CGUITiledMapLayerInfo::GetOpacity() const
+	{
+		return m_fOpacity;
+	}
+	//------------------------------------------------------------------------------
 	const std::map<CGUIString, CGUIString>& CGUITiledMapLayerInfo::GetProperties() const
 	{
 		return m_mapProperties;
@@ -163,6 +183,11 @@ namespace guiex
 	const CGUIString& CGUITiledMapObjectInfo::GetType() const
 	{
 		return m_strObjectType;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIIntVector2& CGUITiledMapObjectInfo::GetPosition() const
+	{
+		return m_aPosition;
 	}
 	//------------------------------------------------------------------------------
 
@@ -219,6 +244,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUITiledMapTilesetInfo::CGUITiledMapTilesetInfo()
 		:m_nFirstGid( 0 )
+		,m_nGidNum( 0 )
 		,m_nSpacing( 0 )
 		,m_nMargin( 0 )
 	{
@@ -251,6 +277,16 @@ namespace guiex
 			real(m_aTileSize.m_uHeight) / rImageSize.m_uHeight
 			);
 		return CGUIRect( aTopLeft, aSize );
+	}
+	//------------------------------------------------------------------------------
+	const CGUIIntSize& CGUITiledMapTilesetInfo::GetImageSize() const
+	{
+		return m_aImageSize;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIIntSize& CGUITiledMapTilesetInfo::GetTileSize() const
+	{
+		return m_aTileSize;
 	}
 	//------------------------------------------------------------------------------
 
@@ -458,12 +494,20 @@ namespace guiex
 		StringToValue( strGid, tileset.m_nFirstGid );
 
 		//spacing
-		CGUIString strSpacing = pTilesetNode->Attribute( "spacing");
-		StringToValue( strSpacing, tileset.m_nSpacing );
+		const char* spacing = pTilesetNode->Attribute( "spacing");
+		tileset.m_nSpacing = 0;
+		if( spacing )
+		{
+			StringToValue(CGUIString(spacing), tileset.m_nSpacing );
+		}
 
 		//margin
-		CGUIString strMargin = pTilesetNode->Attribute( "margin");
-		StringToValue( strMargin, tileset.m_nMargin );
+		const char* margin = pTilesetNode->Attribute( "margin");
+		tileset.m_nMargin = 0;
+		if( margin )
+		{
+			StringToValue(CGUIString(margin), tileset.m_nMargin );
+		}
 
 		//size
 		CGUIString strWidth = pTilesetNode->Attribute( "tilewidth");
@@ -506,13 +550,19 @@ namespace guiex
 	{
 		if( m_vTilesets.empty() )
 		{
-			throw CGUIException("[CGUITiledMapInfo::ParseNode_tile]: not find tileset when process tile node" );
+			throw CGUIException("[CGUITiledMapInfo::ParseNode_image]: not find tileset when process tile node" );
 			return -1;
 		}
 		CGUITiledMapTilesetInfo& info = m_vTilesets.back();
 
 		CGUIString strSource = pImageNode->Attribute("source");
 		info.m_strSourceImage = strSource;
+
+		//image width and height
+		CGUIString strImageWidth = pImageNode->Attribute("width");
+		StringToValue( strImageWidth, info.m_aImageSize.m_uWidth );
+		CGUIString strImageHeight = pImageNode->Attribute("height");
+		StringToValue( strImageHeight, info.m_aImageSize.m_uHeight );
 
 		return 0;
 	}
@@ -612,12 +662,12 @@ namespace guiex
 		if( !szOpacity )
 		{
 			layer.m_fOpacity = 1.0f;
-			layer.m_bVisible = false;
+			layer.m_bVisible = true;
 		}
 		else
 		{
 			StringToValue( szOpacity, layer.m_fOpacity );
-			if( layer.m_fOpacity == 0.0f )
+			if( GUI_REAL_EQUAL(layer.m_fOpacity, 0.0f ))
 			{
 				layer.m_bVisible = false;
 			}
@@ -754,10 +804,18 @@ namespace guiex
 		objectGroup.m_strGroupName = pObjectGroupNode->Attribute( "name" );
 
 		//offset
-		CGUIString strX = pObjectGroupNode->Attribute( "x" );
-		StringToValue( strX, objectGroup.m_aPositionOffset.x );
-		CGUIString strY = pObjectGroupNode->Attribute( "y" );
-		StringToValue( strY, objectGroup.m_aPositionOffset.y );
+		const char* x = pObjectGroupNode->Attribute( "x" );
+		objectGroup.m_aPositionOffset.x = 0;
+		if( x )
+		{
+			StringToValue( CGUIString(x), objectGroup.m_aPositionOffset.x );
+		}
+		const char* y = pObjectGroupNode->Attribute( "y" );
+		objectGroup.m_aPositionOffset.y = 0;
+		if( y )
+		{
+			StringToValue( CGUIString(y), objectGroup.m_aPositionOffset.y );
+		}
 
 		//parse child node
 		TiXmlElement* pChildNode = pObjectGroupNode->FirstChildElement();
@@ -825,7 +883,7 @@ namespace guiex
 		StringToValue( strY, object.m_aPosition.y );
 		object.m_aPosition.y += objectGroup.m_aPositionOffset.y;
 		// Correct y position. (Tiled uses Flipped, we uses Standard)
-		object.m_aPosition.y = (m_aMapSize.m_uHeight * m_aTileSize.m_uHeight) - object.m_aPosition.y - object.m_aSize.m_uHeight;
+		//object.m_aPosition.y = (m_aMapSize.m_uHeight * m_aTileSize.m_uHeight) - object.m_aPosition.y - object.m_aSize.m_uHeight;
 
 		//parse child node
 		TiXmlElement* pChildNode = pObjectNode->FirstChildElement();
@@ -851,9 +909,29 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	const std::vector<CGUITiledMapLayerInfo>& CGUITiledMapInfo::GetLayers() const
+	std::vector<CGUITiledMapLayerInfo>& CGUITiledMapInfo::GetLayerInfos()
 	{
 		return m_vLayers;
+	}
+	//------------------------------------------------------------------------------
+	CGUITiledMapLayerInfo* CGUITiledMapInfo::GetLayerInfo( const CGUIString& rLayerName )
+	{
+		for( std::vector<CGUITiledMapLayerInfo>::iterator itor = m_vLayers.begin();
+			itor != m_vLayers.end();
+			++itor )
+		{
+			if( rLayerName == (*itor).GetName() )
+			{
+				return &(*itor);
+			}
+		}
+		throw CGUIException("[CGUITiledMapInfo::GetLayerInfo]: failed to find layer named <%s>", rLayerName.c_str());
+		return NULL;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIIntSize& CGUITiledMapInfo::GetMapSize() const
+	{
+		return m_aMapSize;
 	}
 	//------------------------------------------------------------------------------
 	const CGUIIntSize& CGUITiledMapInfo::GetTileSize() const
@@ -866,7 +944,7 @@ namespace guiex
 		return m_eOrientation;
 	}
 	//------------------------------------------------------------------------------
-	const std::vector<CGUITiledMapTilesetInfo>& CGUITiledMapInfo::GetTilesets() const
+	std::vector<CGUITiledMapTilesetInfo>& CGUITiledMapInfo::GetTilesets()
 	{
 		return m_vTilesets;
 	}
@@ -881,7 +959,7 @@ namespace guiex
 		return m_mapProperties;
 	}
 	//------------------------------------------------------------------------------
-	const std::map<uint32, std::map<CGUIString, CGUIString> >& CGUITiledMapInfo::GetTileProperties() const
+	const std::map<uint32, std::map<CGUIString, CGUIString> >& CGUITiledMapInfo::GetAllTileProperties() const
 	{
 		return m_mapTileProperties;
 	}

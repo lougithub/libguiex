@@ -41,7 +41,13 @@ namespace guiex
 		CGUITiledMapLayerInfo();
 		~CGUITiledMapLayerInfo();
 
+		const CGUIString& GetName() const;
 		const std::map<CGUIString, CGUIString>& GetProperties() const;
+
+		bool IsVisible() const;
+		void SetVisible( bool bVisible );
+
+		real GetOpacity() const;
 
 	protected:
 		friend class CGUITiledMapInfo;
@@ -62,6 +68,7 @@ namespace guiex
 	public:
 		const CGUIString& GetName() const;
 		const CGUIString& GetType() const;
+		const CGUIIntVector2& GetPosition() const;
 
 	protected:
 		friend class CGUITiledMapInfo;
@@ -109,6 +116,8 @@ namespace guiex
 		~CGUITiledMapTilesetInfo();
 
 		CGUIRect RectForGID( uint32 gid, const CGUIIntSize& rImageSize ) const;
+		const CGUIIntSize& GetImageSize() const;
+		const CGUIIntSize& GetTileSize() const;
 
 		uint32 GetFirstGid() const;
 		const CGUIString& GetSourceImage() const;
@@ -118,10 +127,12 @@ namespace guiex
 
 		CGUIString m_strName;
 		uint32 m_nFirstGid;
+		uint32 m_nGidNum;
 		CGUIIntSize m_aTileSize;
 		uint32 m_nSpacing;
 		uint32 m_nMargin;
 		CGUIString m_strSourceImage; // image containing the tiles
+		CGUIIntSize m_aImageSize;
 	};
 
 
@@ -145,14 +156,16 @@ namespace guiex
 
 		int32 InitWithTMXFile( const CGUIString& tmxFile );
 
-		const std::vector<CGUITiledMapLayerInfo>& GetLayers() const;
+		std::vector<CGUITiledMapLayerInfo>& GetLayerInfos();
+		CGUITiledMapLayerInfo* GetLayerInfo( const CGUIString& rLayerName );
 
+		const CGUIIntSize& GetMapSize() const;
 		const CGUIIntSize& GetTileSize() const;
 		ETMXOrientation GetOrientation() const;
-		const std::vector<CGUITiledMapTilesetInfo>& GetTilesets() const;
+		std::vector<CGUITiledMapTilesetInfo>& GetTilesets();
 		const std::vector<CGUITiledMapObjectGroup>& GetObjectGroups() const;
 		const std::map<CGUIString, CGUIString>& GetProperties() const;
-		const std::map<uint32, std::map<CGUIString, CGUIString> >& GetTileProperties() const;
+		const std::map<uint32, std::map<CGUIString, CGUIString> >& GetAllTileProperties() const;
 
 	protected:
 		int32 ParseXMLFile( const CGUIString& tmxFile );

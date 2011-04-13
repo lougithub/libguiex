@@ -2436,7 +2436,7 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	//get widget position in pixel format
-	const CGUIVector2&	CGUIWidget::GetPixelPosition() const
+	const CGUIVector2& CGUIWidget::GetPixelPosition() const
 	{
 		return m_aWidgetPosition.m_aPixelValue;
 	}

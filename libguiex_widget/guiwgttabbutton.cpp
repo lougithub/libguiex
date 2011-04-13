@@ -58,7 +58,7 @@ namespace guiex
 		return IsCheck();
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWgtTabButton::OnMouseLeftClick(CGUIEventMouse* pEvent)
+	uint32 CGUIWgtTabButton::OnMouseLeftClick(CGUIEventMouse* pEvent)
 	{
 		if( m_bChecked == false )
 		{
