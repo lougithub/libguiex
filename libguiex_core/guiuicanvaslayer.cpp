@@ -71,9 +71,6 @@ namespace guiex
 			CloseUIPage(*m_arrayOpenedPage.begin());
 		}
 
-		//clear page in garbage
-		RefreshGarbage();
-
 		CGUICanvasLayer::Finalize();
 	}
 	//------------------------------------------------------------------------------
@@ -109,8 +106,6 @@ namespace guiex
 		{
 			m_pPopupWidget->Update( fDeltaTime );
 		}		
-
-		RefreshGarbage();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIUICanvasLayer::Render( IGUIInterfaceRender* pRender )
@@ -221,7 +216,7 @@ namespace guiex
 
 			if( CGUIWidgetManager::Instance()->HasDynamicPage( pDlg ) )
 			{
-				AddToDynamicGarbage( pDlg );
+				CGUIWidgetManager::Instance()->DelayedDestroyWidget( pDlg );
 			}
 			return;
 		}
@@ -347,7 +342,7 @@ namespace guiex
 
 		if( CGUIWidgetManager::Instance()->HasDynamicPage( pPage ) )
 		{
-			AddToDynamicGarbage( pPage );
+			CGUIWidgetManager::Instance()->DelayedDestroyWidget( pPage );
 		}
 		return;
 	}
@@ -368,35 +363,6 @@ namespace guiex
 		}
 
 		return m_arrayOpenedPage[nIdx];
-	}
-	//------------------------------------------------------------------------------
-	void CGUIUICanvasLayer::AddToGarbage( CGUIWidget* pWidget )
-	{
-		m_vecPageGarbage.push_back(pWidget);
-	}
-	//------------------------------------------------------------------------------
-	void CGUIUICanvasLayer::AddToDynamicGarbage( CGUIWidget* pWidget )
-	{
-		m_vecDynamicPageGarbage.push_back(pWidget);
-	}
-	//------------------------------------------------------------------------------
-	void CGUIUICanvasLayer::RefreshGarbage( )
-	{
-		for( TArrayWidget::iterator itor = m_vecPageGarbage.begin();
-			itor != m_vecPageGarbage.end();
-			++itor )
-		{
-			CGUIWidgetManager::Instance()->ReleasePage( *itor );
-		}
-		m_vecPageGarbage.clear();
-
-		for( TArrayWidget::iterator itor = m_vecDynamicPageGarbage.begin();
-			itor != m_vecDynamicPageGarbage.end();
-			++itor )
-		{
-			CGUIWidgetManager::Instance()->DestroyDynamicPage( *itor );
-		}
-		m_vecDynamicPageGarbage.clear();
 	}
 	//------------------------------------------------------------------------------
 	CGUIWidget*	CGUIUICanvasLayer::GetCurrentRootWidget( )

@@ -27,7 +27,6 @@
 #include "guimath.h"
 #include "guiinterpolation.h"
 
-#include <list>
 #include <vector>
 
 //============================================================================//
@@ -36,6 +35,8 @@
 namespace guiex
 {
 	class CGUIWidget;
+
+	typedef void (*FunOnAsCallback)(CGUIAs*);
 }
 
 #define GUI_AS_GENERATOR_DECLARE(asType) \
@@ -93,10 +94,12 @@ namespace guiex
 
 		real GetPercent() const;
 
-		void PushSuccessor( CGUIAs* pAs);
-		CGUIAs*	PopSuccessor();
+		void AddSuccessor( CGUIAs* pAs);
+		uint32 GetSuccessorNum( ) const;
+		CGUIAs*	GetSuccessor( uint32 nIndex );
+		void RemoveSuccessor( uint32 nIndex );
 
-		real Update( real fDeltaTime );
+		virtual real Update( real fDeltaTime );
 
 	protected:
 		friend class CGUIAsManager;
@@ -112,8 +115,8 @@ namespace guiex
 		const CGUIAs& operator=(const CGUIAs& );
 
 	protected:
-		virtual int32	DoLoad();
-		virtual void	DoUnload();
+		virtual int32 DoLoad();
+		virtual void DoUnload();
 
 	private:
 		real m_fTotalTime; //!<delay-time, to control when to process this as, millisecond
@@ -122,12 +125,25 @@ namespace guiex
 		bool m_bRetired; //!<should this as be retired
 		CGUIWidget*	m_pReceiver; //!<receiver
 
-		typedef std::list<CGUIAs*> TListSuccessor;
+		typedef std::vector<CGUIAs*> TListSuccessor;
 		TListSuccessor m_listSuccessor; //!<successor
 
 		CGUIString m_strAsType; //!<type of this as
 	};
 
+
+	//*****************************************************************************
+	//	CGUICustomAs
+	//*****************************************************************************
+	class CGUICustomAs : public CGUIAs
+	{
+	public:
+		CGUICustomAs( const CGUIString& rAsType );
+		virtual void RefRelease();
+
+	protected:
+		virtual void DestroySelf();
+	};
 
 	//*****************************************************************************
 	//	CGUIAsInterpolation
@@ -648,6 +664,55 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 
+
+	//*****************************************************************************
+	//	CGUIAsCallFunc
+	//*****************************************************************************
+	/**
+	* @class CGUIAsCallFunc
+	*/
+	class GUIEXPORT CGUIAsCallFunc : public CGUIAs
+	{
+	public:
+		void SetFuncCallback( FunOnAsCallback funCallback );
+
+		virtual real Update( real fDeltaTime );
+
+	protected:
+		CGUIAsCallFunc(const CGUIString& rAsName, const CGUIString& rSceneName);
+
+	private:
+		FunOnAsCallback m_funCallback;
+
+		GUI_AS_GENERATOR_DECLARE( CGUIAsCallFunc);
+	};
+
+	//*****************************************************************************
+	//	CGUIAsMoveTo
+	//*****************************************************************************
+	/**
+	* @class CGUIAsMoveTo
+	* @brief move widget to destination with given velocity.
+	*/
+	class GUIEXPORT CGUIAsMoveTo : public CGUIAs
+	{
+	public:
+		void SetVelocity( real fVelocity );
+		real GetVelocity( ) const;
+		void SetDestination( const CGUIVector2& rDestination );
+		const CGUIVector2& GetDestination( ) const;
+
+		virtual real Update( real fDeltaTime );
+
+	protected:
+		CGUIAsMoveTo(const CGUIString& rAsName, const CGUIString& rSceneName);
+
+	private:
+		real m_fVelocity;
+		CGUIVector2 m_aDestination;
+
+		GUI_AS_GENERATOR_DECLARE( CGUIAsMoveTo);
+	};
 }
 
 #endif //__GUI_AS_20071121_H__

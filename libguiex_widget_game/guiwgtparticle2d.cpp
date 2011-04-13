@@ -15,6 +15,8 @@
 #include <libguiex_core/guiimage.h>
 #include <libguiex_core/guiparticle2dmanager.h>
 #include <libguiex_core/guipropertymanager.h>
+#include <libguiex_core/guiwidgetmanager.h>
+#include <libguiex_core/guipropertyconvertor.h>
 
 //============================================================================//
 // function
@@ -45,6 +47,8 @@ namespace guiex
 	{
 		m_pParticle2DSystem = NULL;
 		m_aOffsetMatrix = CGUIMatrix4::IDENTITY;
+		m_bAutoDestoryOnFinish = false;
+		m_aParticleOffset.x = m_aParticleOffset.y = 0.5f;
 
 		SetFocusable(false);
 		SetActivable(false);
@@ -80,7 +84,7 @@ namespace guiex
 	{
 		CGUIWidget::RefreshSelf();
 
-		m_aOffsetMatrix.setTrans( CGUIVector3( GetPixelSize().GetWidth() / 2, GetPixelSize().GetHeight() / 2, 0.0f ));
+		m_aOffsetMatrix.setTrans( CGUIVector3( GetPixelSize().GetWidth() * m_aParticleOffset.x, GetPixelSize().GetHeight() * m_aParticleOffset.y, 0.0f ));
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtParticle2D::OnUpdate( real fDeltaTime )
@@ -90,6 +94,10 @@ namespace guiex
 		if( m_pParticle2DSystem )
 		{
 			m_pParticle2DSystem->Update( fDeltaTime );
+			if( !m_pParticle2DSystem->IsActive() )
+			{
+				CGUIWidgetManager::Instance()->DelayedDestroyWidget( this );
+			}
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -128,6 +136,17 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	void CGUIWgtParticle2D::SetParticleOffset( const CGUIVector2& rOffset)
+	{
+		m_aParticleOffset = rOffset;
+		m_aOffsetMatrix.setTrans( CGUIVector3( GetPixelSize().GetWidth() * m_aParticleOffset.x, GetPixelSize().GetHeight() * m_aParticleOffset.y, 0.0f ));
+	}
+	//------------------------------------------------------------------------------
+	const CGUIVector2& CGUIWgtParticle2D::GetParticleOffset(  ) const
+	{
+		return m_aParticleOffset;
+	}		
+	//------------------------------------------------------------------------------
 	int32 CGUIWgtParticle2D::GenerateProperty( CGUIProperty& rProperty )
 	{
 		if( rProperty.GetType() == ePropertyType_Particle2D && rProperty.GetName() == "particle2d" )
@@ -140,6 +159,10 @@ namespace guiex
 			{
 				rProperty.SetValue( "" );
 			}
+		}
+		else if( rProperty.GetType() == ePropertyType_Vector2 && rProperty.GetName() == "offset" )
+		{
+			ValueToProperty( GetParticleOffset(), rProperty );
 		}
 		else
 		{
@@ -155,6 +178,12 @@ namespace guiex
 		if( rProperty.GetType() == ePropertyType_Particle2D && rProperty.GetName() == "particle2d")
 		{
 			SetParticle2D( rProperty.GetValue());
+		}
+		else if( rProperty.GetType() == ePropertyType_Vector2 && rProperty.GetName() == "offset")
+		{
+			CGUIVector2 aValue;
+			PropertyToValue( rProperty, aValue );
+			SetParticleOffset( aValue );
 		}
 		else
 		{

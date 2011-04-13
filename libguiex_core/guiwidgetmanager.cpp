@@ -47,6 +47,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIWidgetManager::~CGUIWidgetManager()
 	{
+		RefreshGarbage();
+
 		//check
 		GUI_ASSERT(m_aMapWidget.empty(), "shouldn't has any widget in map");
 
@@ -127,26 +129,62 @@ namespace guiex
 				throw CGUIException( "[CGUIWidgetManager::DestroyWidget]: the widget <%s : %s> doesn't exist!", pWidget->GetSceneName().c_str(), pWidget->GetName().c_str());
 			}
 
-			//delete it
-			if( pWidget->GetParent())
-			{
-				pWidget->SetParent(NULL);
-			}
-
-			//unregister ui event
-			GSystem->UnregisterUIEvent( pWidget );
-
-			CGUIWidgetFactory::Instance()->DestoryWidget(pWidget);
+			//clear widget pool
 			itor->second.erase(itor_widget);
 			if( itor->second.empty())
 			{
 				m_aMapWidget.erase( itor );
 			}
+
+			//clear page pool
+			if( TryRemovePage( pWidget ) )
+			{
+				//is a page
+			}
+			else if( TryRemoveDynamicPage( pWidget ))
+			{
+				//is a dynamic page
+			}
+
+			//delete it
+			if( pWidget->GetParent())
+			{
+				pWidget->SetParent(NULL);
+			}
+			CGUIWidgetFactory::Instance()->DestoryWidget(pWidget);
+
 		}
 		else
 		{
 			throw CGUIException( "CGUIWidgetManager::DestroyWidget: lack name for type <%s>!", pWidget->GetType().c_str());
 		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidgetManager::DelayedDestroyWidget( CGUIWidget* pWidget )
+	{
+		GUI_ASSERT( pWidget, "invalid param" );
+		pWidget->Close( );
+		pWidget->SetParent( NULL );
+		m_vecGarbage.push_back( pWidget );
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidgetManager::RefreshGarbage()
+	{
+		if( m_vecGarbage.empty() )
+		{
+			return;
+		}
+
+		for( uint32 i=0; i<uint32(m_vecGarbage.size()); ++i )
+		{
+			CGUIWidget* pWidget = m_vecGarbage[i];
+			if( pWidget )
+			{
+				DestroyWidget( pWidget );
+			}
+		}
+
+		m_vecGarbage.clear( );
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -248,72 +286,18 @@ namespace guiex
 		return NULL;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWidgetManager::ReleasePageImp( CGUIWidget* pPage )
+	bool CGUIWidgetManager::TryRemovePage( CGUIWidget* pWidget )
 	{
-		if( pPage->IsOpen() )
-		{
-			throw CGUIException( "[CGUIWidgetManager::ReleasePage]: can't delete widget <%s> who is still opened!", pPage->GetName().c_str());
-		}
-		if( pPage->GetParent())
-		{
-			throw CGUIException( "[CGUIWidgetManager::ReleasePage]: can't delete widget <%s> who is still has a father!", pPage->GetName().c_str());
-		}
-
-		DestroyWidget(pPage);
-	}
-	//------------------------------------------------------------------------------
-	void CGUIWidgetManager::ReleasePage( const CGUIString& rSceneName, const CGUIString& rPageName )
-	{
-		CGUIWidget* pPage = NULL;
 		for( TVecPage::iterator itor = m_vecPage.begin(); itor != m_vecPage.end(); ++itor )
 		{
 			SPageInfo& rPageInfo = *itor;
-			if( rPageInfo.m_strPageName == rPageName &&
-				rPageInfo.m_pPage->GetSceneName() == rSceneName )
-			{
-				pPage = rPageInfo.m_pPage;
-				m_vecPage.erase(itor);
-				break;
-			}
-		}
-
-		if( !pPage )
-		{
-			throw CGUIException( 
-				"[CGUIWidgetManager::ReleasePage]: failed to find page whose scene name is <%s> and page name is <%s>!", 
-				rSceneName.c_str(), rPageName.c_str() );
-			return;
-		}
-
-		ReleasePageImp( pPage );
-	}
-	//------------------------------------------------------------------------------
-	/**
-	* @brief delete specify page
-	*/
-	void CGUIWidgetManager::ReleasePage( CGUIWidget* pPage)
-	{
-		GUI_ASSERT( pPage, "invalid parameter");
-
-		bool bFound = false;
-		for( TVecPage::iterator itor = m_vecPage.begin(); itor != m_vecPage.end(); ++itor )
-		{
-			SPageInfo& rPageInfo = *itor;
-			if( rPageInfo.m_pPage == pPage )
+			if( rPageInfo.m_pPage == pWidget )
 			{
 				m_vecPage.erase(itor);
-				bFound = true;
-				break;
+				return true;
 			}
 		}
-
-		if( !bFound )
-		{
-			throw CGUIException( "[CGUIWidgetManager::ReleasePage]: failed to find page whose name is <%s>!", pPage->GetName().c_str());
-			return;
-		}
-
-		ReleasePageImp( pPage );
+		return false;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidgetManager::ReleaseAllPages( )
@@ -322,7 +306,7 @@ namespace guiex
 		{
 			CGUIWidget* pPage = m_vecPage[0].m_pPage;
 			pPage->SetParent(NULL);
-			ReleasePage(pPage);
+			DestroyWidget(pPage);
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -434,26 +418,15 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWidgetManager::DestroyDynamicPage( CGUIWidget* pPage)
+	bool CGUIWidgetManager::TryRemoveDynamicPage( CGUIWidget* pWidget )
 	{
-		GUI_ASSERT( pPage, "invalid parameter");
-
 		TDynamicPage::iterator itor = m_setDynamicPageList.begin();
-		if( itor == m_setDynamicPageList.end())
+		if( itor != m_setDynamicPageList.end() )
 		{
-			throw CGUIException( "[CGUIWidgetManager::DestroyDynamicPage]: failed to find dynamic page whose name is <%s>!", pPage->GetName().c_str());
+			m_setDynamicPageList.erase(itor);
+			return true;
 		}
-		if( pPage->IsOpen() )
-		{
-			throw CGUIException( "[CGUIWidgetManager::DestroyDynamicPage]: can't delete widget <%s> who is still opened!", pPage->GetName().c_str());
-		}
-		if( pPage->GetParent())
-		{
-			throw CGUIException( "[CGUIWidgetManager::DestroyDynamicPage]: can't delete widget <%s> who is still has a father!", pPage->GetName().c_str());
-		}
-
-		m_setDynamicPageList.erase(itor);
-		DestroyWidget(pPage);
+		return false;
 	}
 	//------------------------------------------------------------------------------
 

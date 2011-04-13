@@ -85,6 +85,7 @@ namespace guiex
 
 		virtual void Render( class IGUIInterfaceRender* pRender );
 
+		bool IsActive() const;
 		void StopSystem();
 		void ResetSystem();
 		bool IsFull();
@@ -279,9 +280,6 @@ namespace guiex
 		class CGUITexture *texture;
 		// blend type
 		SGUIBlendFunc blendFunc;
-
-		// Whether or not the node will be auto-removed when there are not particles
-		bool autoRemoveOnFinish;
 
 		//  particle idx
 		uint32 particleIdx;

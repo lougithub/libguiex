@@ -52,6 +52,7 @@ namespace guiex
 		bool HasWidget(  const CGUIString& rWidgetName, const CGUIString& rSceneName );
 		CGUIWidget* GetWidget( const CGUIString& rWidgetName, const CGUIString& rSceneName );
 		void DestroyWidget( CGUIWidget* pWidget );
+		void DelayedDestroyWidget( CGUIWidget* pWidget );
 		template<class T>
 		T* GetWidgetWithTypeCheck( const CGUIString& rWidgetName, const CGUIString& rSceneName );
 
@@ -62,20 +63,22 @@ namespace guiex
 		CGUIWidget* GetPage( const CGUIString& rPageName , const CGUIString& rSceneName );
 		bool HasPage(const CGUIString& rWidgetName, const CGUIString& rSceneName) const;
 		bool HasPage( CGUIWidget* pPage) const;
-		void ReleasePage( CGUIWidget* pPage);
-		void ReleasePage( const CGUIString& rSceneName, const CGUIString& rPageName );
 		void ReleaseAllPages( );
 
 		//dynamic page related functions
 		CGUIWidget*	LoadDynamicPage( const CGUIString& rPageName, const CGUIString& rSceneName, const CGUIString& rWorkingSceneName );
 		void AddDynamicPage(  CGUIWidget* pPage );
 		bool HasDynamicPage( CGUIWidget* pPage ) const;
-		void DestroyDynamicPage( CGUIWidget* pPage);
+
+		void RefreshGarbage();
 
 		static bool IsInternalWidget( const CGUIString& rWidgetName );
 
 	protected:
-		void ReleasePageImp( CGUIWidget* pPage );
+		bool TryRemovePage( CGUIWidget* pWidget );
+		bool TryRemoveDynamicPage( CGUIWidget* pWidget );
+
+	protected:
 
 	protected:
 		//widget list
@@ -92,6 +95,8 @@ namespace guiex
 
 		typedef std::set<CGUIWidget*> TDynamicPage;
 		TDynamicPage m_setDynamicPageList;
+
+		std::vector<CGUIWidget*> m_vecGarbage; //garbate
 
 	private:
 		static CGUIWidgetManager* m_pSingleton;

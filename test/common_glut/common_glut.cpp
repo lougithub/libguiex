@@ -12,7 +12,7 @@
 #include <libguiex_framework/guiframework.h>
 
 #include <iostream>
-
+#include <time.h>
 #include <GLUT/glut.h>
 
 #if defined(GUIEX_PLATFORM_MAC)
@@ -279,6 +279,7 @@ void exitCB()
 //------------------------------------------------------------------------------
 int main(int argc, char** argv)
 {
+	srand( time(NULL) );
 	//atexit(exitCB);
 
 	// Do GLUT init

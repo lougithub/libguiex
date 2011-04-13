@@ -207,8 +207,7 @@ namespace guiex
 		//close self
 		if( !IsOpen())
 		{
-			throw CGUIException("[CGUIWidget::Close]: the widget isn't in opened state. TYPE<%s>  NAME<%s>",
-				GetType().c_str(), GetName().c_str());
+			return;
 		}
 
 		m_bIsOpen = false;
@@ -1472,11 +1471,10 @@ namespace guiex
 			if( pAs->IsRetired())
 			{
 				//the as has retired, push his successor
-				CGUIAs* pSuccessor = NULL;
-				while( pSuccessor = pAs->PopSuccessor())
+				for( uint32 i=0; i<pAs->GetSuccessorNum(); ++i )
 				{
+					CGUIAs* pSuccessor = pAs->GetSuccessor( i );
 					pSuccessor->GetReceiver()->PlayAs(pSuccessor);
-					pSuccessor->RefRelease();
 				}
 				pAs->RefRelease();
 			}
@@ -1764,6 +1762,11 @@ namespace guiex
 			ValueToProperty( IsGenerateUpdateEvent(), rProperty);
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
+		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "generate_click_event" )
+		{
+			ValueToProperty( IsGenerateClickEvent(), rProperty);
+		}		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "generate_parentsizechange_event" )
 		{
 			ValueToProperty( IsGenerateParentSizeChangeEvent(), rProperty);
@@ -1996,6 +1999,12 @@ namespace guiex
 			bool bValue = false;
 			PropertyToValue(rProperty, bValue );
 			SetGenerateUpdateEvent(bValue );
+		}
+		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="generate_click_event" )
+		{
+			bool bValue = false;
+			PropertyToValue(rProperty, bValue );
+			SetGenerateClickEvent(bValue );
 		}
 		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="generate_parentsizechange_event" )
 		{

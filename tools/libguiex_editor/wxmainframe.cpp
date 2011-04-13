@@ -954,7 +954,7 @@ void WxMainFrame::OnDeleteWidget(wxCommandEvent& evt)
 	{
 		//is page
 		GSystem->GetUICanvas()->CloseUIPage(pWidget);
-		CGUIWidgetManager::Instance()->ReleasePage(pWidget);
+		CGUIWidgetManager::Instance()->DestroyWidget(pWidget);
 	}
 	else
 	{

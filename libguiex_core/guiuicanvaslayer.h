@@ -58,10 +58,6 @@ namespace guiex
 		CGUIWidget*	GetOpenedPageByIndex( uint32 nIdx );
 		uint32 GetOpenedPageNum() const;
 
-		void AddToGarbage( CGUIWidget* pWidget );
-		void AddToDynamicGarbage( CGUIWidget* pWidget );
-		void RefreshGarbage( );
-
 		CGUIWidget*	GetCurrentRootWidget( );
 
 		const CGUICamera* GetCamera() const;
@@ -70,8 +66,6 @@ namespace guiex
 	private:
 		typedef std::vector<CGUIWidget*>	TArrayWidget;	
 		TArrayWidget m_arrayOpenedPage;
-		TArrayWidget m_vecPageGarbage;
-		TArrayWidget m_vecDynamicPageGarbage;
 		TArrayWidget m_arrayOpenedDlg; //widget modal dialog
 		CGUIWidget*	m_pPopupWidget; //popup widget
 

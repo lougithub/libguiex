@@ -468,6 +468,8 @@ namespace guiex
 
 		PERFMON_END( 0 );
 
+		m_pWidgetManager->RefreshGarbage();
+
 		UpdatePerformance( fDeltaTime );
 	}
 	//------------------------------------------------------------------------------
@@ -938,10 +940,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUISystem::OnWidgetDestroyed( CGUIWidget* pWidget )
 	{
+		//clear focus widget
 		if( pWidget == m_pWgtFocus )
 		{
 			m_pWgtFocus = NULL;
 		}
+
+		//clear ui event
+		UnregisterUIEvent( pWidget );
 	}
 	//------------------------------------------------------------------------------
 

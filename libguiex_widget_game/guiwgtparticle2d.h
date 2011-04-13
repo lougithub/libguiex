@@ -43,6 +43,9 @@ namespace guiex
 		void SetParticle2D( const CGUIString& rParticle2DName );
 		void SetParticle2D( CGUIParticle2DSystem* pParticle2D );
 
+		void SetParticleOffset( const CGUIVector2& rOffset);
+		const CGUIVector2& GetParticleOffset(  ) const;
+
 	protected:
 		CGUIWgtParticle2D( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 		void InitStaticParticle2DSystem();
@@ -52,10 +55,12 @@ namespace guiex
 		virtual void OnDestroy();
 		virtual void RefreshSelf();
 
-
 	protected:
 		CGUIParticle2DSystem* m_pParticle2DSystem;
 		CGUIMatrix4 m_aOffsetMatrix;
+
+		bool m_bAutoDestoryOnFinish;
+		CGUIVector2 m_aParticleOffset;
 
 	protected:
 		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtParticle2D);

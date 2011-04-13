@@ -335,7 +335,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 		CGUIAsPosition* pAsPos2 = pAsManager->AllocateResource<CGUIAsPosition>( );
 		pAsPos2->SetInterpolationValue( CGUIVector2(500,500), CGUIVector2(100,500), 2 );
 		pAsPos2->SetReceiver( pWidget_staticimage );
-		pAsPos1->PushSuccessor(pAsPos2);
+		pAsPos1->AddSuccessor(pAsPos2);
 		pAsPos2->RefRelease();
 	}
 

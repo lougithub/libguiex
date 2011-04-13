@@ -157,6 +157,9 @@ namespace guiex
 		REGISTER_AS( CGUIAsRotation );
 		REGISTER_AS( CGUIAsColor );
 		REGISTER_AS( CGUIAsContainer );
+		REGISTER_AS( CGUIAsCallFunc );
+		REGISTER_AS( CGUIAsMoveTo );
+		
 
 		//grid 3d
 		REGISTER_AS( CGUIAsWaves3D );

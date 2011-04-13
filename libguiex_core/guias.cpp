@@ -270,10 +270,9 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIAs::OnRetired()
 	{
-
 	}
 	//------------------------------------------------------------------------------
-	void CGUIAs::PushSuccessor( CGUIAs* pAs)
+	void CGUIAs::AddSuccessor( CGUIAs* pAs)
 	{
 		GUI_ASSERT(pAs, "wrong parameter");
 
@@ -281,18 +280,22 @@ namespace guiex
 		m_listSuccessor.push_back(pAs);
 	}
 	//------------------------------------------------------------------------------
-	CGUIAs* CGUIAs::PopSuccessor()
+	uint32 CGUIAs::GetSuccessorNum( ) const
 	{
-		if( m_listSuccessor.empty())
-		{
-			return NULL;
-		}
-		else
-		{
-			CGUIAs* pAs = m_listSuccessor.front();
-			m_listSuccessor.pop_front();
-			return pAs;
-		}
+		return uint32(m_listSuccessor.size());
+	}
+	//------------------------------------------------------------------------------
+	CGUIAs*	CGUIAs::GetSuccessor( uint32 nIndex )
+	{
+		GUI_ASSERT( nIndex<uint32(m_listSuccessor.size()), "wrong parameter");
+		return m_listSuccessor[nIndex];
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAs::RemoveSuccessor( uint32 nIndex )
+	{
+		GUI_ASSERT( nIndex<uint32(m_listSuccessor.size()), "wrong parameter");
+		m_listSuccessor[nIndex]->RefRelease();
+		m_listSuccessor.erase( m_listSuccessor.begin() + nIndex );
 	}
 	//------------------------------------------------------------------------------
 	int32 CGUIAs::DoLoad()
@@ -306,6 +309,31 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 
+
+	//*****************************************************************************
+	//	CGUICustomAs
+	//*****************************************************************************
+	//------------------------------------------------------------------------------
+	CGUICustomAs::CGUICustomAs( const CGUIString& rAsType )
+		:CGUIAs( rAsType, "", "" )
+	{
+	}
+	//------------------------------------------------------------------------------
+	void CGUICustomAs::RefRelease()
+	{
+		DoDecreaseReference();
+		if( GetRefCount() == 0 )
+		{
+			Unload();
+			DestroySelf();
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUICustomAs::DestroySelf()
+	{
+		delete this;
+	}
+	//------------------------------------------------------------------------------
 
 
 	//*****************************************************************************
@@ -701,6 +729,89 @@ namespace guiex
 		{
 			SetTotalTime( rItemInfo.m_pAs->GetTotalTime() + rItemInfo.m_fBeginTime );
 		}
+	}
+	//------------------------------------------------------------------------------
+
+
+	//*****************************************************************************
+	//	CGUIAsCallFunc
+	//*****************************************************************************
+	//------------------------------------------------------------------------------
+	CGUIAsCallFunc::CGUIAsCallFunc(const CGUIString& rAsName, const CGUIString& rSceneName)
+		:CGUIAs("CGUIAsCallFunc", rAsName, rSceneName)
+		,m_funCallback( NULL )
+	{
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsCallFunc::SetFuncCallback( FunOnAsCallback funCallback )
+	{
+		m_funCallback = funCallback;
+	}
+	//------------------------------------------------------------------------------
+	real CGUIAsCallFunc::Update( real fDeltaTime )
+	{
+		if( m_funCallback )
+		{
+			m_funCallback( this );
+		}
+		Retire( true );
+		return 0.0f;
+	}
+	//------------------------------------------------------------------------------
+
+
+	//*****************************************************************************
+	//	CGUIAsMoveTo
+	//*****************************************************************************
+	//------------------------------------------------------------------------------
+	CGUIAsMoveTo::CGUIAsMoveTo(const CGUIString& rAsName, const CGUIString& rSceneName)
+		:CGUIAs("CGUIAsMoveTo", rAsName, rSceneName)
+		,m_fVelocity( 5.0f )
+	{
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsMoveTo::SetVelocity( real fVelocity )
+	{
+		m_fVelocity = fVelocity;
+	}
+	//------------------------------------------------------------------------------
+	real CGUIAsMoveTo::GetVelocity( ) const
+	{
+		return m_fVelocity;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsMoveTo::SetDestination( const CGUIVector2& rDestination )
+	{
+		m_aDestination = rDestination;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIVector2& CGUIAsMoveTo::GetDestination( ) const
+	{
+		return m_aDestination;
+	}
+	//------------------------------------------------------------------------------
+	real CGUIAsMoveTo::Update( real fDeltaTime )
+	{
+		const CGUIVector2& rCurPos = GetReceiver()->GetPixelPosition();
+		if( rCurPos == m_aDestination )
+		{
+			Retire( true );
+			return 0.0f;
+		}
+		CGUIVector2 aDelta = m_aDestination - rCurPos;
+		real fDeltaLen = aDelta.Normalise();
+		real fCurMoveLen = m_fVelocity * fDeltaTime;
+		if( fDeltaLen <= fCurMoveLen )
+		{
+			GetReceiver()->SetPixelPosition( m_aDestination );
+			Retire( true );
+			return 0.0f;
+		}
+		else
+		{
+			GetReceiver()->SetPixelPosition( rCurPos + aDelta * fCurMoveLen );
+		}
+		return 0.0f;
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

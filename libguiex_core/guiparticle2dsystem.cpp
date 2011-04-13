@@ -65,7 +65,6 @@ namespace guiex
 		,totalParticles( 0 )
 		,particleCount( 0 )
 		,particleIdx( 0 )
-		,autoRemoveOnFinish( false )
 		,texture( NULL )
 		,particles( NULL)
 		,endSpin( 0.0f )
@@ -426,6 +425,11 @@ namespace guiex
 		return true;
 	}
 	//------------------------------------------------------------------------------
+	bool CGUIParticle2DSystem::IsActive() const
+	{
+		return active;
+	}
+	//------------------------------------------------------------------------------
 	void CGUIParticle2DSystem::StopSystem()
 	{
 		active = false;
@@ -551,8 +555,9 @@ namespace guiex
 				}
 				particleCount--;
 
-				if( particleCount == 0 && autoRemoveOnFinish )
+				if( particleCount == 0  )
 				{
+					active = false;
 					return;
 				}
 			}

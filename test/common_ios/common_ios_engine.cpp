@@ -11,6 +11,7 @@
 //libguiex
 #include <libguiex_framework/guiframework.h>
 #include <libguiex_core/guiinterfacemouse.h>
+#include <time.h>
 
 using namespace guiex;
 
@@ -35,6 +36,7 @@ extern CGUIFrameworkBase* CreateFramework( );
 
 struct IApplicationEngine* CreateApplicationEngine()
 {
+	rand(time(NULL));
 	return new CLibGuiexEngine;
 }
 

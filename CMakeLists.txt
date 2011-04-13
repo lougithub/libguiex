@@ -177,6 +177,7 @@ add_subdirectory( ${PROJECT_SOURCE_DIR}/test/testparticle2d projects/testparticl
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/testtiledmap projects/testtiledmap)
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/testtiledmap_2 projects/testtiledmap_2)
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/testsceneeffect projects/testsceneeffect)
+add_subdirectory( ${PROJECT_SOURCE_DIR}/test/game_turret projects/game_turret)
 
 #tools
 add_subdirectory( ${PROJECT_SOURCE_DIR}/tools/libguiex_editor_viewer projects/libguiex_editor_viewer )

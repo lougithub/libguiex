@@ -310,7 +310,8 @@ namespace guiex
 		const std::vector<CGUIString>& rWidgetFile = pScene->GetWidgetFiles();
 		for( uint32 i=0; i<rWidgetFile.size(); ++i )
 		{
-			CGUIWidgetManager::Instance()->ReleasePage( rSceneName, rWidgetFile[i] );
+			CGUIWidget* pWidget = CGUIWidgetManager::Instance()->GetPage(rSceneName, rWidgetFile[i]);
+			CGUIWidgetManager::Instance()->DestroyWidget( pWidget );
 		}
 	}
 	//------------------------------------------------------------------------------
