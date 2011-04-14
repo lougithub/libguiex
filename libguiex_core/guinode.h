@@ -81,17 +81,11 @@ namespace guiex
 		void NodeTranslate(const CGUIMatrix3& axes, const CGUIVector3& move, ETransformSpace relativeTo = eTS_PARENT);
 		void NodeTranslate(const CGUIMatrix3& axes, real x, real y, real z, ETransformSpace relativeTo = eTS_PARENT);
 
-		void NodeRoll(const CGUIRadian& angle, ETransformSpace relativeTo = eTS_LOCAL);
-		void NodeRoll(real degrees, ETransformSpace relativeTo = eTS_LOCAL);
+		void NodeRoll(real angle, ETransformSpace relativeTo = eTS_LOCAL);
+		void NodePitch(real angle, ETransformSpace relativeTo = eTS_LOCAL);
+		void NodeYaw(real angle, ETransformSpace relativeTo = eTS_LOCAL);
 
-		void NodePitch(const CGUIRadian& angle, ETransformSpace relativeTo = eTS_LOCAL);
-		void NodePitch(real degrees, ETransformSpace relativeTo = eTS_LOCAL);
-
-		void NodeYaw(const CGUIRadian& angle, ETransformSpace relativeTo = eTS_LOCAL);
-		void NodeYaw(real degrees, ETransformSpace relativeTo = eTS_LOCAL);
-
-		void NodeRotate(const CGUIVector3& axis, const CGUIRadian& angle, ETransformSpace relativeTo = eTS_LOCAL);
-		void NodeRotate(const CGUIVector3& axis, real degrees, ETransformSpace relativeTo = eTS_LOCAL);
+		void NodeRotate(const CGUIVector3& axis, real angle, ETransformSpace relativeTo = eTS_LOCAL);
 		void NodeRotate(const CGUIQuaternion& q, ETransformSpace relativeTo = eTS_LOCAL);
 
 		CGUIMatrix3 NodeGetLocalAxes(void) const;

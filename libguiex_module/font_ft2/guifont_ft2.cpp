@@ -202,7 +202,7 @@ namespace guiex
 			delete[] pImageData;
 			pCharData->m_aUV = CGUIRect(
 				//TODO: why add add 0.5f for fix bug.but don't known why add it...
-				real(pFont->m_nX+0.5f) / GUI_FT2_TEXTURE_SIZE,
+				real(pFont->m_nX/*+0.5f*/) / GUI_FT2_TEXTURE_SIZE,
 				real(pFont->m_nY) / GUI_FT2_TEXTURE_SIZE,
 				real(pFont->m_nX+glyph->bitmap.width) / GUI_FT2_TEXTURE_SIZE,
 				real(pFont->m_nY+glyph->bitmap.rows) / GUI_FT2_TEXTURE_SIZE);

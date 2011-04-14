@@ -76,6 +76,22 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	bool CGUIRect::IsIntersection(const CGUIRect& rect) const
+	{
+		// check for total exclusion
+		if ((m_fRight > rect.m_fLeft) &&
+			(m_fLeft < rect.m_fRight) &&
+			(m_fBottom > rect.m_fTop) &&
+			(m_fTop < rect.m_fBottom))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	//------------------------------------------------------------------------------
 	/**
 	* @brief judge is the given point falls within this rect
 	* @param pt Point object describing the position to test.

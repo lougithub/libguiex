@@ -252,49 +252,29 @@ namespace guiex
 	}
 	//-----------------------------------------------------------------------
 	//!< Rotate the node around the Z-axis.
-	void CGUINode::NodeRoll(const CGUIRadian& angle, ETransformSpace relativeTo)
+	void CGUINode::NodeRoll(real angle, ETransformSpace relativeTo)
 	{
 		NodeRotate(CGUIVector3::UNIT_Z, angle, relativeTo);
 	}
 	//-----------------------------------------------------------------------
-	void CGUINode::NodeRoll(real degrees, ETransformSpace relativeTo /*= eTS_LOCAL*/)
-	{
-		NodeRoll( CGUIAngle(degrees), relativeTo );
-	}
-	//-----------------------------------------------------------------------
 	//!< Rotate the node around the X-axis.
-	void CGUINode::NodePitch(const CGUIRadian& angle, ETransformSpace relativeTo)
+	void CGUINode::NodePitch(real angle, ETransformSpace relativeTo)
 	{
 		NodeRotate(CGUIVector3::UNIT_X, angle, relativeTo);
 	}
 	//-----------------------------------------------------------------------
-	void CGUINode::NodePitch(real degrees, ETransformSpace relativeTo /*= eTS_LOCAL*/) 
-	{
-		NodePitch( CGUIAngle(degrees), relativeTo );
-	}
-	//-----------------------------------------------------------------------
 	//!< Rotate the node around the Y-axis.
-	void CGUINode::NodeYaw(const CGUIRadian& angle, ETransformSpace relativeTo)
+	void CGUINode::NodeYaw(real angle, ETransformSpace relativeTo)
 	{
 		NodeRotate(CGUIVector3::UNIT_Y, angle, relativeTo);
 	}
 	//-----------------------------------------------------------------------
-	void CGUINode::NodeYaw(real degrees, ETransformSpace relativeTo /*= eTS_LOCAL*/)
-	{
-		NodeYaw( CGUIAngle(degrees), relativeTo );
-	}
-	//-----------------------------------------------------------------------
 	//!< Rotate the node around an arbitrary axis.
-	void CGUINode::NodeRotate(const CGUIVector3& axis, const CGUIRadian& angle, ETransformSpace relativeTo)
+	void CGUINode::NodeRotate(const CGUIVector3& axis, real angle, ETransformSpace relativeTo)
 	{
 		CGUIQuaternion q;
 		q.FromAngleAxis(angle,axis);
 		NodeRotate(q, relativeTo);
-	}
-	//-----------------------------------------------------------------------
-	void CGUINode::NodeRotate(const CGUIVector3& axis, real degrees, ETransformSpace relativeTo /*= eTS_LOCAL*/) 
-	{
-		CGUINode::NodeRotate ( axis, CGUIAngle(degrees), relativeTo );
 	}
 	//-----------------------------------------------------------------------
 	void CGUINode::NodeRotate(const CGUIQuaternion& q, ETransformSpace relativeTo)

@@ -397,22 +397,20 @@ namespace guiex
 	*	- 0 for success
 	*	- -1 for failed
 	*/
-	int32	CGUIWidgetFactory::DestoryWidget( CGUIWidget* pWidget)
+	int32 CGUIWidgetFactory::DestoryWidget( CGUIWidget* pWidget)
 	{
 		GUI_ASSERT(pWidget, "wrong parameter");
 		const CGUIWidgetGenerator* pGenerator = pWidget->GetGenerator();
+		pWidget->OnDestroy();
 		if( !pGenerator )
 		{
-			throw CGUIException(
-				"[CGUIWidgetFactory::DestoryWidget] failed to delete widget");
-			return -1;
+			delete pWidget;
 		}
 		else
 		{
-			pWidget->OnDestroy();
 			pGenerator->DestroyWidget(pWidget);
-			return 0;
 		}
+		return 0;
 	}
 	//------------------------------------------------------------------------------
 

@@ -44,6 +44,7 @@
 		void SetPosition(const CGUIVector2& pt);
 
 		CGUIRect GetIntersection(const CGUIRect& rect) const;
+		bool IsIntersection(const CGUIRect& rect) const;
 
 		CGUIRect& Offset(const CGUIVector2& pt);
 

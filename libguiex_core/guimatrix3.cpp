@@ -69,115 +69,6 @@ namespace guiex
 		return !operator==(rkMatrix);
 	}
 	//-----------------------------------------------------------------------
-	void CGUIMatrix3::ToAxisAngle (CGUIVector3& rkAxis, CGUIDegree& rfAngle) const 
-	{
-		CGUIRadian r;
-		ToAxisAngle ( rkAxis, r );
-		rfAngle = r;
-	}
-	//-----------------------------------------------------------------------
-	void CGUIMatrix3::ToAxisAngle (CGUIVector3& rkAxis, real& rfRadians) const
-	{
-		CGUIRadian r;
-		ToAxisAngle ( rkAxis, r );
-		rfRadians = r.valueRadians();
-	}
-	//-----------------------------------------------------------------------
-	void CGUIMatrix3::FromAxisAngle (const CGUIVector3& rkAxis, real fRadians)
-	{
-		FromAxisAngle ( rkAxis, CGUIRadian(fRadians) );
-	}
-	//-----------------------------------------------------------------------
-	bool CGUIMatrix3::ToEulerAnglesXYZ (real& rfYAngle, real& rfPAngle,real& rfRAngle) const 
-	{
-			CGUIRadian y, p, r;
-			bool b = ToEulerAnglesXYZ(y,p,r);
-			rfYAngle = y.valueRadians();
-			rfPAngle = p.valueRadians();
-			rfRAngle = r.valueRadians();
-			return b;
-	}
-	//-----------------------------------------------------------------------
-	bool CGUIMatrix3::ToEulerAnglesXZY (real& rfYAngle, real& rfPAngle,real& rfRAngle) const 
-	{
-			CGUIRadian y, p, r;
-			bool b = ToEulerAnglesXZY(y,p,r);
-			rfYAngle = y.valueRadians();
-			rfPAngle = p.valueRadians();
-			rfRAngle = r.valueRadians();
-			return b;
-	}
-	//-----------------------------------------------------------------------
-	bool CGUIMatrix3::ToEulerAnglesYXZ (real& rfYAngle, real& rfPAngle,real& rfRAngle) const 
-	{
-			CGUIRadian y, p, r;
-			bool b = ToEulerAnglesYXZ(y,p,r);
-			rfYAngle = y.valueRadians();
-			rfPAngle = p.valueRadians();
-			rfRAngle = r.valueRadians();
-			return b;
-	}
-	//-----------------------------------------------------------------------
-	bool CGUIMatrix3::ToEulerAnglesYZX (real& rfYAngle, real& rfPAngle,real& rfRAngle) const 
-	{
-			CGUIRadian y, p, r;
-			bool b = ToEulerAnglesYZX(y,p,r);
-			rfYAngle = y.valueRadians();
-			rfPAngle = p.valueRadians();
-			rfRAngle = r.valueRadians();
-			return b;
-	}
-	//-----------------------------------------------------------------------
-	bool CGUIMatrix3::ToEulerAnglesZXY (real& rfYAngle, real& rfPAngle,real& rfRAngle) const 
-	{
-			CGUIRadian y, p, r;
-			bool b = ToEulerAnglesZXY(y,p,r);
-			rfYAngle = y.valueRadians();
-			rfPAngle = p.valueRadians();
-			rfRAngle = r.valueRadians();
-			return b;
-	}
-	//-----------------------------------------------------------------------
-	bool CGUIMatrix3::ToEulerAnglesZYX (real& rfYAngle, real& rfPAngle,real& rfRAngle) const
-	{
-			CGUIRadian y, p, r;
-			bool b = ToEulerAnglesZYX(y,p,r);
-			rfYAngle = y.valueRadians();
-			rfPAngle = p.valueRadians();
-			rfRAngle = r.valueRadians();
-			return b;
-	}
-	//-----------------------------------------------------------------------
-	void CGUIMatrix3::FromEulerAnglesXYZ (real fYAngle, real fPAngle, real fRAngle) 
-	{
-		FromEulerAnglesXYZ ( CGUIRadian(fYAngle), CGUIRadian(fPAngle), CGUIRadian(fRAngle) );
-	}
-	//-----------------------------------------------------------------------
-	void CGUIMatrix3::FromEulerAnglesXZY (real fYAngle, real fPAngle, real fRAngle)
-	{
-		FromEulerAnglesXZY ( CGUIRadian(fYAngle), CGUIRadian(fPAngle), CGUIRadian(fRAngle) );
-	}
-	//-----------------------------------------------------------------------
-	void CGUIMatrix3::FromEulerAnglesYXZ (real fYAngle, real fPAngle, real fRAngle) 
-	{
-		FromEulerAnglesYXZ ( CGUIRadian(fYAngle), CGUIRadian(fPAngle), CGUIRadian(fRAngle) );
-	}
-	//-----------------------------------------------------------------------
-	void CGUIMatrix3::FromEulerAnglesYZX (real fYAngle, real fPAngle, real fRAngle) 
-	{
-		FromEulerAnglesYZX ( CGUIRadian(fYAngle), CGUIRadian(fPAngle), CGUIRadian(fRAngle) );
-	}
-	//-----------------------------------------------------------------------
-	void CGUIMatrix3::FromEulerAnglesZXY (real fYAngle, real fPAngle, real fRAngle) 
-	{
-		FromEulerAnglesZXY ( CGUIRadian(fYAngle), CGUIRadian(fPAngle), CGUIRadian(fRAngle) );
-	}
-	//-----------------------------------------------------------------------
-	void CGUIMatrix3::FromEulerAnglesZYX (real fYAngle, real fPAngle, real fRAngle) 
-	{
-		FromEulerAnglesZYX ( CGUIRadian(fYAngle), CGUIRadian(fPAngle), CGUIRadian(fRAngle) );
-	}
-	//-----------------------------------------------------------------------
 	CGUIVector3 CGUIMatrix3::GetColumn (size_t iCol) const
 	{
 		assert( 0 <= iCol && iCol < 3 );
@@ -359,7 +250,7 @@ namespace guiex
 			m[0][1]*rkInverse[1][0]+
 			m[0][2]*rkInverse[2][0];
 
-		if ( CGUIMath::Abs(fDet) <= fTolerance )
+		if ( fabs(fDet) <= fTolerance )
 			return false;
 
 		real fInvDet = 1.0f/fDet;
@@ -404,7 +295,7 @@ namespace guiex
 		bool bIdentity;
 
 		// map first column to (*,0,0)
-		fLength = CGUIMath::Sqrt(kA[0][0]*kA[0][0] + kA[1][0]*kA[1][0] +
+		fLength = sqrt(kA[0][0]*kA[0][0] + kA[1][0]*kA[1][0] +
 			kA[2][0]*kA[2][0]);
 		if ( fLength > 0.0 )
 		{
@@ -441,7 +332,7 @@ namespace guiex
 		}
 
 		// map first row to (*,*,0)
-		fLength = CGUIMath::Sqrt(kA[0][1]*kA[0][1]+kA[0][2]*kA[0][2]);
+		fLength = sqrt(kA[0][1]*kA[0][1]+kA[0][2]*kA[0][2]);
 		if ( fLength > 0.0 )
 		{
 			fSign = (kA[0][1] > 0.0f ? 1.0f : -1.0f);
@@ -471,7 +362,7 @@ namespace guiex
 		}
 
 		// map second column to (*,*,0)
-		fLength = CGUIMath::Sqrt(kA[1][1]*kA[1][1]+kA[2][1]*kA[2][1]);
+		fLength = sqrt(kA[1][1]*kA[1][1]+kA[2][1]*kA[2][1]);
 		if ( fLength > 0.0f )
 		{
 			fSign = (kA[1][1] > 0.0f ? 1.0f : -1.0f);
@@ -519,15 +410,15 @@ namespace guiex
 		real fT12 = kA[1][1]*kA[1][2];
 		real fTrace = fT11+fT22;
 		real fDiff = fT11-fT22;
-		real fDiscr = CGUIMath::Sqrt(fDiff*fDiff+4.0f*fT12*fT12);
+		real fDiscr = sqrt(fDiff*fDiff+4.0f*fT12*fT12);
 		real fRoot1 = 0.5f*(fTrace+fDiscr);
 		real fRoot2 = 0.5f*(fTrace-fDiscr);
 
 		// adjust right
-		real fY = kA[0][0] - (CGUIMath::Abs(fRoot1-fT22) <=
-			CGUIMath::Abs(fRoot2-fT22) ? fRoot1 : fRoot2);
+		real fY = kA[0][0] - (fabs(fRoot1-fT22) <=
+			fabs(fRoot2-fT22) ? fRoot1 : fRoot2);
 		real fZ = kA[0][1];
-		real fInvLength = CGUIMath::InvSqrt(fY*fY+fZ*fZ);
+		real fInvLength = 1 / sqrt(fY*fY+fZ*fZ);
 		real fSin = fZ*fInvLength;
 		real fCos = -fY*fInvLength;
 
@@ -550,7 +441,7 @@ namespace guiex
 		// adjust left
 		fY = kA[0][0];
 		fZ = kA[1][0];
-		fInvLength = CGUIMath::InvSqrt(fY*fY+fZ*fZ);
+		fInvLength = 1 / sqrt(fY*fY+fZ*fZ);
 		fSin = fZ*fInvLength;
 		fCos = -fY*fInvLength;
 
@@ -574,7 +465,7 @@ namespace guiex
 		// adjust right
 		fY = kA[0][1];
 		fZ = kA[0][2];
-		fInvLength = CGUIMath::InvSqrt(fY*fY+fZ*fZ);
+		fInvLength = 1 / sqrt(fY*fY+fZ*fZ);
 		fSin = fZ*fInvLength;
 		fCos = -fY*fInvLength;
 
@@ -597,7 +488,7 @@ namespace guiex
 		// adjust left
 		fY = kA[1][1];
 		fZ = kA[2][1];
-		fInvLength = CGUIMath::InvSqrt(fY*fY+fZ*fZ);
+		fInvLength = 1 / sqrt(fY*fY+fZ*fZ);
 		fSin = fZ*fInvLength;
 		fCos = -fY*fInvLength;
 
@@ -632,10 +523,10 @@ namespace guiex
 			real fSin0, fCos0, fTan0;
 			real fSin1, fCos1, fTan1;
 
-			bool bTest1 = (CGUIMath::Abs(kA[0][1]) <=
-				ms_fSvdEpsilon*(CGUIMath::Abs(kA[0][0])+CGUIMath::Abs(kA[1][1])));
-			bool bTest2 = (CGUIMath::Abs(kA[1][2]) <=
-				ms_fSvdEpsilon*(CGUIMath::Abs(kA[1][1])+CGUIMath::Abs(kA[2][2])));
+			bool bTest1 = (fabs(kA[0][1]) <=
+				ms_fSvdEpsilon*(fabs(kA[0][0])+fabs(kA[1][1])));
+			bool bTest2 = (fabs(kA[1][2]) <=
+				ms_fSvdEpsilon*(fabs(kA[1][1])+fabs(kA[2][2])));
 			if ( bTest1 )
 			{
 				if ( bTest2 )
@@ -650,8 +541,8 @@ namespace guiex
 					// 2x2 closed form factorization
 					fTmp = (kA[1][1]*kA[1][1] - kA[2][2]*kA[2][2] +
 						kA[1][2]*kA[1][2])/(kA[1][2]*kA[2][2]);
-					fTan0 = 0.5f*(fTmp+CGUIMath::Sqrt(fTmp*fTmp + 4.0f));
-					fCos0 = CGUIMath::InvSqrt(1.0f+fTan0*fTan0);
+					fTan0 = 0.5f*(fTmp+sqrt(fTmp*fTmp + 4.0f));
+					fCos0 = 1 / sqrt(1.0f+fTan0*fTan0);
 					fSin0 = fTan0*fCos0;
 
 					for (iCol = 0; iCol < 3; iCol++)
@@ -663,7 +554,7 @@ namespace guiex
 					}
 
 					fTan1 = (kA[1][2]-kA[2][2]*fTan0)/kA[1][1];
-					fCos1 = CGUIMath::InvSqrt(1.0f+fTan1*fTan1);
+					fCos1 = 1 / sqrt(1.0f+fTan1*fTan1);
 					fSin1 = -fTan1*fCos1;
 
 					for (iRow = 0; iRow < 3; iRow++)
@@ -689,8 +580,8 @@ namespace guiex
 					// 2x2 closed form factorization
 					fTmp = (kA[0][0]*kA[0][0] + kA[1][1]*kA[1][1] -
 						kA[0][1]*kA[0][1])/(kA[0][1]*kA[1][1]);
-					fTan0 = 0.5f*(-fTmp+CGUIMath::Sqrt(fTmp*fTmp + 4.0f));
-					fCos0 = CGUIMath::InvSqrt(1.0f+fTan0*fTan0);
+					fTan0 = 0.5f*(-fTmp+sqrt(fTmp*fTmp + 4.0f));
+					fCos0 = 1 / sqrt(1.0f+fTan0*fTan0);
 					fSin0 = fTan0*fCos0;
 
 					for (iCol = 0; iCol < 3; iCol++)
@@ -702,7 +593,7 @@ namespace guiex
 					}
 
 					fTan1 = (kA[0][1]-kA[1][1]*fTan0)/kA[0][0];
-					fCos1 = CGUIMath::InvSqrt(1.0f+fTan1*fTan1);
+					fCos1 = 1 / sqrt(1.0f+fTan1*fTan1);
 					fSin1 = -fTan1*fCos1;
 
 					for (iRow = 0; iRow < 3; iRow++)
@@ -777,7 +668,7 @@ namespace guiex
 		// product of vectors A and B.
 
 		// compute q0
-		real fInvLength = CGUIMath::InvSqrt(m[0][0]*m[0][0]
+		real fInvLength = 1 / sqrt(m[0][0]*m[0][0]
 		+ m[1][0]*m[1][0] +
 			m[2][0]*m[2][0]);
 
@@ -795,7 +686,7 @@ namespace guiex
 		m[1][1] -= fDot0*m[1][0];
 		m[2][1] -= fDot0*m[2][0];
 
-		fInvLength = CGUIMath::InvSqrt(m[0][1]*m[0][1] +
+		fInvLength = 1 / sqrt(m[0][1]*m[0][1] +
 			m[1][1]*m[1][1] +
 			m[2][1]*m[2][1]);
 
@@ -818,7 +709,7 @@ namespace guiex
 		m[1][2] -= fDot0*m[1][0] + fDot1*m[1][1];
 		m[2][2] -= fDot0*m[2][0] + fDot1*m[2][1];
 
-		fInvLength = CGUIMath::InvSqrt(m[0][2]*m[0][2] +
+		fInvLength = 1 / sqrt(m[0][2]*m[0][2] +
 			m[1][2]*m[1][2] +
 			m[2][2]*m[2][2]);
 
@@ -858,7 +749,7 @@ namespace guiex
 		// U stores the entries U[0] = u01, U[1] = u02, U[2] = u12
 
 		// build orthogonal matrix Q
-		real fInvLength = CGUIMath::InvSqrt(m[0][0]*m[0][0]
+		real fInvLength = 1 / sqrt(m[0][0]*m[0][0]
 		+ m[1][0]*m[1][0] +
 			m[2][0]*m[2][0]);
 		kQ[0][0] = m[0][0]*fInvLength;
@@ -870,7 +761,7 @@ namespace guiex
 		kQ[0][1] = m[0][1]-fDot*kQ[0][0];
 		kQ[1][1] = m[1][1]-fDot*kQ[1][0];
 		kQ[2][1] = m[2][1]-fDot*kQ[2][0];
-		fInvLength = CGUIMath::InvSqrt(kQ[0][1]*kQ[0][1] + kQ[1][1]*kQ[1][1] +
+		fInvLength = 1 / sqrt(kQ[0][1]*kQ[0][1] + kQ[1][1]*kQ[1][1] +
 			kQ[2][1]*kQ[2][1]);
 		kQ[0][1] *= fInvLength;
 		kQ[1][1] *= fInvLength;
@@ -886,7 +777,7 @@ namespace guiex
 		kQ[0][2] -= fDot*kQ[0][1];
 		kQ[1][2] -= fDot*kQ[1][1];
 		kQ[2][2] -= fDot*kQ[2][1];
-		fInvLength = CGUIMath::InvSqrt(kQ[0][2]*kQ[0][2] + kQ[1][2]*kQ[1][2] +
+		fInvLength = 1 / sqrt(kQ[0][2]*kQ[0][2] + kQ[1][2]*kQ[1][2] +
 			kQ[2][2]*kQ[2][2]);
 		kQ[0][2] *= fInvLength;
 		kQ[1][2] *= fInvLength;
@@ -951,11 +842,11 @@ namespace guiex
 		if ( fPoly < 0.0f )
 		{
 			// uses a matrix norm to find an upper bound on maximum root
-			fX = CGUIMath::Abs(afCoeff[0]);
-			real fTmp = 1.0f+CGUIMath::Abs(afCoeff[1]);
+			fX = fabs(afCoeff[0]);
+			real fTmp = 1.0f+fabs(afCoeff[1]);
 			if ( fTmp > fX )
 				fX = fTmp;
-			fTmp = 1.0f+CGUIMath::Abs(afCoeff[2]);
+			fTmp = 1.0f+fabs(afCoeff[2]);
 			if ( fTmp > fX )
 				fX = fTmp;
 		}
@@ -965,7 +856,7 @@ namespace guiex
 		for (int i = 0; i < 16; i++)
 		{
 			fPoly = afCoeff[0]+fX*(afCoeff[1]+fX*(afCoeff[2]+fX));
-			if ( CGUIMath::Abs(fPoly) <= fEpsilon )
+			if ( fabs(fPoly) <= fEpsilon )
 				return fX;
 
 			real fDeriv = afCoeff[1]+fX*(fTwoC2+3.0f*fX);
@@ -1012,11 +903,11 @@ namespace guiex
 		afCoeff[2] = -(kP[0][0]+kP[1][1]+kP[2][2]);
 
 		real fRoot = MaxCubicRoot(afCoeff);
-		real fNorm = CGUIMath::Sqrt(fPmax*fRoot);
+		real fNorm = sqrt(fPmax*fRoot);
 		return fNorm;
 	}
 	//-----------------------------------------------------------------------
-	void CGUIMatrix3::ToAxisAngle (CGUIVector3& rkAxis, CGUIRadian& rfRadians) const
+	void CGUIMatrix3::ToAxisAngle (CGUIVector3& rkAxis, real& rfRadians) const
 	{
 		// Let (x,y,z) be the unit-length axis and let A be an angle of rotation.
 		// The rotation matrix is R = I + sin(A)*P + (1-cos(A))*P^2 where
@@ -1042,11 +933,11 @@ namespace guiex
 
 		real fTrace = m[0][0] + m[1][1] + m[2][2];
 		real fCos = 0.5f*(fTrace-1.0f);
-		rfRadians = CGUIMath::ACos(fCos);  // in [0,GUI_PI]
+		rfRadians = acos(fCos);  // in [0,GUI_PI]
 
-		if ( rfRadians > CGUIRadian(0.0) )
+		if ( rfRadians > 0.0f )
 		{
-			if ( rfRadians < CGUIRadian(CGUIMath::GUI_PI) )
+			if ( rfRadians < CGUIMath::GUI_PI )
 			{
 				rkAxis.x = m[2][1]-m[1][2];
 				rkAxis.y = m[0][2]-m[2][0];
@@ -1063,7 +954,7 @@ namespace guiex
 					if ( m[0][0] >= m[2][2] )
 					{
 						// r00 is maximum diagonal term
-						rkAxis.x = 0.5f*CGUIMath::Sqrt(m[0][0] -m[1][1] - m[2][2] + 1.0f);
+						rkAxis.x = 0.5f*sqrt(m[0][0] -m[1][1] - m[2][2] + 1.0f);
 						fHalfInverse = 0.5f/rkAxis.x;
 						rkAxis.y = fHalfInverse*m[0][1];
 						rkAxis.z = fHalfInverse*m[0][2];
@@ -1071,7 +962,7 @@ namespace guiex
 					else
 					{
 						// r22 is maximum diagonal term
-						rkAxis.z = 0.5f*CGUIMath::Sqrt(m[2][2] -m[0][0] - m[1][1] + 1.0f);
+						rkAxis.z = 0.5f*sqrt(m[2][2] -m[0][0] - m[1][1] + 1.0f);
 						fHalfInverse = 0.5f/rkAxis.z;
 						rkAxis.x = fHalfInverse*m[0][2];
 						rkAxis.y = fHalfInverse*m[1][2];
@@ -1083,7 +974,7 @@ namespace guiex
 					if ( m[1][1] >= m[2][2] )
 					{
 						// r11 is maximum diagonal term
-						rkAxis.y = 0.5f*CGUIMath::Sqrt(m[1][1] -m[0][0] - m[2][2] + 1.0f);
+						rkAxis.y = 0.5f*sqrt(m[1][1] -m[0][0] - m[2][2] + 1.0f);
 						fHalfInverse  = 0.5f/rkAxis.y;
 						rkAxis.x = fHalfInverse*m[0][1];
 						rkAxis.z = fHalfInverse*m[1][2];
@@ -1091,7 +982,7 @@ namespace guiex
 					else
 					{
 						// r22 is maximum diagonal term
-						rkAxis.z = 0.5f*CGUIMath::Sqrt(m[2][2] -m[0][0] - m[1][1] + 1.0f);
+						rkAxis.z = 0.5f*sqrt(m[2][2] -m[0][0] - m[1][1] + 1.0f);
 						fHalfInverse = 0.5f/rkAxis.z;
 						rkAxis.x = fHalfInverse*m[0][2];
 						rkAxis.y = fHalfInverse*m[1][2];
@@ -1109,10 +1000,10 @@ namespace guiex
 		}
 	}
 	//-----------------------------------------------------------------------
-	void CGUIMatrix3::FromAxisAngle (const CGUIVector3& rkAxis, const CGUIRadian& fRadians)
+	void CGUIMatrix3::FromAxisAngle (const CGUIVector3& rkAxis, real fRadians)
 	{
-		real fCos = CGUIMath::Cos(fRadians);
-		real fSin = CGUIMath::Sin(fRadians);
+		real fCos = cos(fRadians);
+		real fSin = sin(fRadians);
 		real fOneMinusCos = 1.0f-fCos;
 		real fX2 = rkAxis.x*rkAxis.x;
 		real fY2 = rkAxis.y*rkAxis.y;
@@ -1135,27 +1026,26 @@ namespace guiex
 		m[2][2] = fZ2*fOneMinusCos+fCos;
 	}
 	//-----------------------------------------------------------------------
-	bool CGUIMatrix3::ToEulerAnglesXYZ (CGUIRadian& rfYAngle, CGUIRadian& rfPAngle,
-		CGUIRadian& rfRAngle) const
+	bool CGUIMatrix3::ToEulerAnglesXYZ (real& rfYAngle, real& rfPAngle, real& rfRAngle) const
 	{
 		// rot =  cy*cz          -cy*sz           sy
 		//        cz*sx*sy+cx*sz  cx*cz-sx*sy*sz -cy*sx
 		//       -cx*cz*sy+sx*sz  cz*sx+cx*sy*sz  cx*cy
 
-		rfPAngle = CGUIRadian(CGUIMath::ASin(m[0][2]));
-		if ( rfPAngle < CGUIRadian(CGUIMath::GUI_HALF_PI) )
+		rfPAngle = asin(m[0][2]);
+		if ( rfPAngle < CGUIMath::GUI_HALF_PI)
 		{
-			if ( rfPAngle > CGUIRadian(-CGUIMath::GUI_HALF_PI) )
+			if ( rfPAngle > -CGUIMath::GUI_HALF_PI)
 			{
-				rfYAngle = CGUIMath::ATan2(-m[1][2],m[2][2]);
-				rfRAngle = CGUIMath::ATan2(-m[0][1],m[0][0]);
+				rfYAngle = atan2(-m[1][2],m[2][2]);
+				rfRAngle = atan2(-m[0][1],m[0][0]);
 				return true;
 			}
 			else
 			{
 				// WARNING.  Not a unique solution.
-				CGUIRadian fRmY = CGUIMath::ATan2(m[1][0],m[1][1]);
-				rfRAngle = CGUIRadian(0.0);  // any angle works
+				real fRmY = atan2(m[1][0],m[1][1]);
+				rfRAngle = 0.0f;  // any angle works
 				rfYAngle = rfRAngle - fRmY;
 				return false;
 			}
@@ -1163,34 +1053,33 @@ namespace guiex
 		else
 		{
 			// WARNING.  Not a unique solution.
-			CGUIRadian fRpY = CGUIMath::ATan2(m[1][0],m[1][1]);
-			rfRAngle = CGUIRadian(0.0);  // any angle works
+			real fRpY = atan2(m[1][0],m[1][1]);
+			rfRAngle = 0.0f;  // any angle works
 			rfYAngle = fRpY - rfRAngle;
 			return false;
 		}
 	}
 	//-----------------------------------------------------------------------
-	bool CGUIMatrix3::ToEulerAnglesXZY (CGUIRadian& rfYAngle, CGUIRadian& rfPAngle,
-		CGUIRadian& rfRAngle) const
+	bool CGUIMatrix3::ToEulerAnglesXZY (real& rfYAngle, real& rfPAngle, real& rfRAngle) const
 	{
 		// rot =  cy*cz          -sz              cz*sy
 		//        sx*sy+cx*cy*sz  cx*cz          -cy*sx+cx*sy*sz
 		//       -cx*sy+cy*sx*sz  cz*sx           cx*cy+sx*sy*sz
 
-		rfPAngle = CGUIMath::ASin(-m[0][1]);
-		if ( rfPAngle < CGUIRadian(CGUIMath::GUI_HALF_PI) )
+		rfPAngle = asin(-m[0][1]);
+		if ( rfPAngle < CGUIMath::GUI_HALF_PI )
 		{
-			if ( rfPAngle > CGUIRadian(-CGUIMath::GUI_HALF_PI) )
+			if ( rfPAngle > -CGUIMath::GUI_HALF_PI )
 			{
-				rfYAngle = CGUIMath::ATan2(m[2][1],m[1][1]);
-				rfRAngle = CGUIMath::ATan2(m[0][2],m[0][0]);
+				rfYAngle = atan2(m[2][1],m[1][1]);
+				rfRAngle = atan2(m[0][2],m[0][0]);
 				return true;
 			}
 			else
 			{
 				// WARNING.  Not a unique solution.
-				CGUIRadian fRmY = CGUIMath::ATan2(-m[2][0],m[2][2]);
-				rfRAngle = CGUIRadian(0.0);  // any angle works
+				real fRmY = atan2(-m[2][0],m[2][2]);
+				rfRAngle = 0.0f;  // any angle works
 				rfYAngle = rfRAngle - fRmY;
 				return false;
 			}
@@ -1198,34 +1087,33 @@ namespace guiex
 		else
 		{
 			// WARNING.  Not a unique solution.
-			CGUIRadian fRpY = CGUIMath::ATan2(-m[2][0],m[2][2]);
-			rfRAngle = CGUIRadian(0.0);  // any angle works
+			real fRpY = atan2(-m[2][0],m[2][2]);
+			rfRAngle = 0.0f;  // any angle works
 			rfYAngle = fRpY - rfRAngle;
 			return false;
 		}
 	}
 	//-----------------------------------------------------------------------
-	bool CGUIMatrix3::ToEulerAnglesYXZ (CGUIRadian& rfYAngle, CGUIRadian& rfPAngle,
-		CGUIRadian& rfRAngle) const
+	bool CGUIMatrix3::ToEulerAnglesYXZ (real& rfYAngle, real& rfPAngle, real& rfRAngle) const
 	{
 		// rot =  cy*cz+sx*sy*sz  cz*sx*sy-cy*sz  cx*sy
 		//        cx*sz           cx*cz          -sx
 		//       -cz*sy+cy*sx*sz  cy*cz*sx+sy*sz  cx*cy
 
-		rfPAngle = CGUIMath::ASin(-m[1][2]);
-		if ( rfPAngle < CGUIRadian(CGUIMath::GUI_HALF_PI) )
+		rfPAngle = asin(-m[1][2]);
+		if ( rfPAngle < CGUIMath::GUI_HALF_PI )
 		{
-			if ( rfPAngle > CGUIRadian(-CGUIMath::GUI_HALF_PI) )
+			if ( rfPAngle > -CGUIMath::GUI_HALF_PI )
 			{
-				rfYAngle = CGUIMath::ATan2(m[0][2],m[2][2]);
-				rfRAngle = CGUIMath::ATan2(m[1][0],m[1][1]);
+				rfYAngle = atan2(m[0][2],m[2][2]);
+				rfRAngle = atan2(m[1][0],m[1][1]);
 				return true;
 			}
 			else
 			{
 				// WARNING.  Not a unique solution.
-				CGUIRadian fRmY = CGUIMath::ATan2(-m[0][1],m[0][0]);
-				rfRAngle = CGUIRadian(0.0);  // any angle works
+				real fRmY = atan2(-m[0][1],m[0][0]);
+				rfRAngle = 0.0f;  // any angle works
 				rfYAngle = rfRAngle - fRmY;
 				return false;
 			}
@@ -1233,34 +1121,33 @@ namespace guiex
 		else
 		{
 			// WARNING.  Not a unique solution.
-			CGUIRadian fRpY = CGUIMath::ATan2(-m[0][1],m[0][0]);
-			rfRAngle = CGUIRadian(0.0);  // any angle works
+			real fRpY = atan2(-m[0][1],m[0][0]);
+			rfRAngle = 0.0f;  // any angle works
 			rfYAngle = fRpY - rfRAngle;
 			return false;
 		}
 	}
 	//-----------------------------------------------------------------------
-	bool CGUIMatrix3::ToEulerAnglesYZX (CGUIRadian& rfYAngle, CGUIRadian& rfPAngle,
-		CGUIRadian& rfRAngle) const
+	bool CGUIMatrix3::ToEulerAnglesYZX (real& rfYAngle, real& rfPAngle,real& rfRAngle) const
 	{
 		// rot =  cy*cz           sx*sy-cx*cy*sz  cx*sy+cy*sx*sz
 		//        sz              cx*cz          -cz*sx
 		//       -cz*sy           cy*sx+cx*sy*sz  cx*cy-sx*sy*sz
 
-		rfPAngle = CGUIMath::ASin(m[1][0]);
-		if ( rfPAngle < CGUIRadian(CGUIMath::GUI_HALF_PI) )
+		rfPAngle = asin(m[1][0]);
+		if ( rfPAngle < CGUIMath::GUI_HALF_PI )
 		{
-			if ( rfPAngle > CGUIRadian(-CGUIMath::GUI_HALF_PI) )
+			if ( rfPAngle > -CGUIMath::GUI_HALF_PI )
 			{
-				rfYAngle = CGUIMath::ATan2(-m[2][0],m[0][0]);
-				rfRAngle = CGUIMath::ATan2(-m[1][2],m[1][1]);
+				rfYAngle = atan2(-m[2][0],m[0][0]);
+				rfRAngle = atan2(-m[1][2],m[1][1]);
 				return true;
 			}
 			else
 			{
 				// WARNING.  Not a unique solution.
-				CGUIRadian fRmY = CGUIMath::ATan2(m[2][1],m[2][2]);
-				rfRAngle = CGUIRadian(0.0);  // any angle works
+				real fRmY = atan2(m[2][1],m[2][2]);
+				rfRAngle = 0.0f;  // any angle works
 				rfYAngle = rfRAngle - fRmY;
 				return false;
 			}
@@ -1268,34 +1155,33 @@ namespace guiex
 		else
 		{
 			// WARNING.  Not a unique solution.
-			CGUIRadian fRpY = CGUIMath::ATan2(m[2][1],m[2][2]);
-			rfRAngle = CGUIRadian(0.0);  // any angle works
+			real fRpY = atan2(m[2][1],m[2][2]);
+			rfRAngle = 0.0f;  // any angle works
 			rfYAngle = fRpY - rfRAngle;
 			return false;
 		}
 	}
 	//-----------------------------------------------------------------------
-	bool CGUIMatrix3::ToEulerAnglesZXY (CGUIRadian& rfYAngle, CGUIRadian& rfPAngle,
-		CGUIRadian& rfRAngle) const
+	bool CGUIMatrix3::ToEulerAnglesZXY (real& rfYAngle, real& rfPAngle,real& rfRAngle) const
 	{
 		// rot =  cy*cz-sx*sy*sz -cx*sz           cz*sy+cy*sx*sz
 		//        cz*sx*sy+cy*sz  cx*cz          -cy*cz*sx+sy*sz
 		//       -cx*sy           sx              cx*cy
 
-		rfPAngle = CGUIMath::ASin(m[2][1]);
-		if ( rfPAngle < CGUIRadian(CGUIMath::GUI_HALF_PI) )
+		rfPAngle = asin(m[2][1]);
+		if ( rfPAngle < CGUIMath::GUI_HALF_PI )
 		{
-			if ( rfPAngle > CGUIRadian(-CGUIMath::GUI_HALF_PI) )
+			if ( rfPAngle > -CGUIMath::GUI_HALF_PI ) 
 			{
-				rfYAngle = CGUIMath::ATan2(-m[0][1],m[1][1]);
-				rfRAngle = CGUIMath::ATan2(-m[2][0],m[2][2]);
+				rfYAngle = atan2(-m[0][1],m[1][1]);
+				rfRAngle = atan2(-m[2][0],m[2][2]);
 				return true;
 			}
 			else
 			{
 				// WARNING.  Not a unique solution.
-				CGUIRadian fRmY = CGUIMath::ATan2(m[0][2],m[0][0]);
-				rfRAngle = CGUIRadian(0.0);  // any angle works
+				real fRmY = atan2(m[0][2],m[0][0]);
+				rfRAngle = 0.0f;  // any angle works
 				rfYAngle = rfRAngle - fRmY;
 				return false;
 			}
@@ -1303,34 +1189,33 @@ namespace guiex
 		else
 		{
 			// WARNING.  Not a unique solution.
-			CGUIRadian fRpY = CGUIMath::ATan2(m[0][2],m[0][0]);
-			rfRAngle = CGUIRadian(0.0);  // any angle works
+			real fRpY = atan2(m[0][2],m[0][0]);
+			rfRAngle = 0.0f;  // any angle works
 			rfYAngle = fRpY - rfRAngle;
 			return false;
 		}
 	}
 	//-----------------------------------------------------------------------
-	bool CGUIMatrix3::ToEulerAnglesZYX (CGUIRadian& rfYAngle, CGUIRadian& rfPAngle,
-		CGUIRadian& rfRAngle) const
+	bool CGUIMatrix3::ToEulerAnglesZYX (real& rfYAngle, real& rfPAngle,real& rfRAngle) const
 	{
 		// rot =  cy*cz           cz*sx*sy-cx*sz  cx*cz*sy+sx*sz
 		//        cy*sz           cx*cz+sx*sy*sz -cz*sx+cx*sy*sz
 		//       -sy              cy*sx           cx*cy
 
-		rfPAngle = CGUIMath::ASin(-m[2][0]);
-		if ( rfPAngle < CGUIRadian(CGUIMath::GUI_HALF_PI) )
+		rfPAngle = asin(-m[2][0]);
+		if ( rfPAngle < CGUIMath::GUI_HALF_PI )
 		{
-			if ( rfPAngle > CGUIRadian(-CGUIMath::GUI_HALF_PI) )
+			if ( rfPAngle > -CGUIMath::GUI_HALF_PI )
 			{
-				rfYAngle = CGUIMath::ATan2(m[1][0],m[0][0]);
-				rfRAngle = CGUIMath::ATan2(m[2][1],m[2][2]);
+				rfYAngle = atan2(m[1][0],m[0][0]);
+				rfRAngle = atan2(m[2][1],m[2][2]);
 				return true;
 			}
 			else
 			{
 				// WARNING.  Not a unique solution.
-				CGUIRadian fRmY = CGUIMath::ATan2(-m[0][1],m[0][2]);
-				rfRAngle = CGUIRadian(0.0);  // any angle works
+				real fRmY = atan2(-m[0][1],m[0][2]);
+				rfRAngle = 0.0f;  // any angle works
 				rfYAngle = rfRAngle - fRmY;
 				return false;
 			}
@@ -1338,128 +1223,122 @@ namespace guiex
 		else
 		{
 			// WARNING.  Not a unique solution.
-			CGUIRadian fRpY = CGUIMath::ATan2(-m[0][1],m[0][2]);
-			rfRAngle = CGUIRadian(0.0);  // any angle works
+			real fRpY = atan2(-m[0][1],m[0][2]);
+			rfRAngle = 0.0f;  // any angle works
 			rfYAngle = fRpY - rfRAngle;
 			return false;
 		}
 	}
 	//-----------------------------------------------------------------------
-	void CGUIMatrix3::FromEulerAnglesXYZ (const CGUIRadian& fYAngle, const CGUIRadian& fPAngle,
-		const CGUIRadian& fRAngle)
+	void CGUIMatrix3::FromEulerAnglesXYZ (real fYAngle, real fPAngle, real fRAngle)
 	{
 		real fCos, fSin;
 
-		fCos = CGUIMath::Cos(fYAngle);
-		fSin = CGUIMath::Sin(fYAngle);
+		fCos = cos(fYAngle);
+		fSin = sin(fYAngle);
 		CGUIMatrix3 kXMat(1.0,0.0,0.0,0.0,fCos,-fSin,0.0,fSin,fCos);
 
-		fCos = CGUIMath::Cos(fPAngle);
-		fSin = CGUIMath::Sin(fPAngle);
+		fCos = cos(fPAngle);
+		fSin = sin(fPAngle);
 		CGUIMatrix3 kYMat(fCos,0.0,fSin,0.0,1.0,0.0,-fSin,0.0,fCos);
 
-		fCos = CGUIMath::Cos(fRAngle);
-		fSin = CGUIMath::Sin(fRAngle);
+		fCos = cos(fRAngle);
+		fSin = sin(fRAngle);
 		CGUIMatrix3 kZMat(fCos,-fSin,0.0,fSin,fCos,0.0,0.0,0.0,1.0);
 
 		*this = kXMat*(kYMat*kZMat);
 	}
 	//-----------------------------------------------------------------------
-	void CGUIMatrix3::FromEulerAnglesXZY (const CGUIRadian& fYAngle, const CGUIRadian& fPAngle,
-		const CGUIRadian& fRAngle)
+	void CGUIMatrix3::FromEulerAnglesXZY (real fYAngle, real fPAngle, real fRAngle)
 	{
 		real fCos, fSin;
 
-		fCos = CGUIMath::Cos(fYAngle);
-		fSin = CGUIMath::Sin(fYAngle);
+		fCos = cos(fYAngle);
+		fSin = sin(fYAngle);
 		CGUIMatrix3 kXMat(1.0,0.0,0.0,0.0,fCos,-fSin,0.0,fSin,fCos);
 
-		fCos = CGUIMath::Cos(fPAngle);
-		fSin = CGUIMath::Sin(fPAngle);
+		fCos = cos(fPAngle);
+		fSin = sin(fPAngle);
 		CGUIMatrix3 kZMat(fCos,-fSin,0.0,fSin,fCos,0.0,0.0,0.0,1.0);
 
-		fCos = CGUIMath::Cos(fRAngle);
-		fSin = CGUIMath::Sin(fRAngle);
+		fCos = cos(fRAngle);
+		fSin = sin(fRAngle);
 		CGUIMatrix3 kYMat(fCos,0.0,fSin,0.0,1.0,0.0,-fSin,0.0,fCos);
 
 		*this = kXMat*(kZMat*kYMat);
 	}
 	//-----------------------------------------------------------------------
-	void CGUIMatrix3::FromEulerAnglesYXZ (const CGUIRadian& fYAngle, const CGUIRadian& fPAngle,
-		const CGUIRadian& fRAngle)
+	void CGUIMatrix3::FromEulerAnglesYXZ (real fYAngle, real fPAngle, real fRAngle)
 	{
 		real fCos, fSin;
 
-		fCos = CGUIMath::Cos(fYAngle);
-		fSin = CGUIMath::Sin(fYAngle);
+		fCos = cos(fYAngle);
+		fSin = sin(fYAngle);
 		CGUIMatrix3 kYMat(fCos,0.0,fSin,0.0,1.0,0.0,-fSin,0.0,fCos);
 
-		fCos = CGUIMath::Cos(fPAngle);
-		fSin = CGUIMath::Sin(fPAngle);
+		fCos = cos(fPAngle);
+		fSin = sin(fPAngle);
 		CGUIMatrix3 kXMat(1.0,0.0,0.0,0.0,fCos,-fSin,0.0,fSin,fCos);
 
-		fCos = CGUIMath::Cos(fRAngle);
-		fSin = CGUIMath::Sin(fRAngle);
+		fCos = cos(fRAngle);
+		fSin = sin(fRAngle);
 		CGUIMatrix3 kZMat(fCos,-fSin,0.0,fSin,fCos,0.0,0.0,0.0,1.0);
 
 		*this = kYMat*(kXMat*kZMat);
 	}
 	//-----------------------------------------------------------------------
-	void CGUIMatrix3::FromEulerAnglesYZX (const CGUIRadian& fYAngle, const CGUIRadian& fPAngle,
-		const CGUIRadian& fRAngle)
+	void CGUIMatrix3::FromEulerAnglesYZX (real fYAngle, real fPAngle, real fRAngle)
 	{
 		real fCos, fSin;
 
-		fCos = CGUIMath::Cos(fYAngle);
-		fSin = CGUIMath::Sin(fYAngle);
+		fCos = cos(fYAngle);
+		fSin = sin(fYAngle);
 		CGUIMatrix3 kYMat(fCos,0.0,fSin,0.0,1.0,0.0,-fSin,0.0,fCos);
 
-		fCos = CGUIMath::Cos(fPAngle);
-		fSin = CGUIMath::Sin(fPAngle);
+		fCos = cos(fPAngle);
+		fSin = sin(fPAngle);
 		CGUIMatrix3 kZMat(fCos,-fSin,0.0,fSin,fCos,0.0,0.0,0.0,1.0);
 
-		fCos = CGUIMath::Cos(fRAngle);
-		fSin = CGUIMath::Sin(fRAngle);
+		fCos = cos(fRAngle);
+		fSin = sin(fRAngle);
 		CGUIMatrix3 kXMat(1.0,0.0,0.0,0.0,fCos,-fSin,0.0,fSin,fCos);
 
 		*this = kYMat*(kZMat*kXMat);
 	}
 	//-----------------------------------------------------------------------
-	void CGUIMatrix3::FromEulerAnglesZXY (const CGUIRadian& fYAngle, const CGUIRadian& fPAngle,
-		const CGUIRadian& fRAngle)
+	void CGUIMatrix3::FromEulerAnglesZXY (real fYAngle, real fPAngle, real fRAngle)
 	{
 		real fCos, fSin;
 
-		fCos = CGUIMath::Cos(fYAngle);
-		fSin = CGUIMath::Sin(fYAngle);
+		fCos = cos(fYAngle);
+		fSin = sin(fYAngle);
 		CGUIMatrix3 kZMat(fCos,-fSin,0.0,fSin,fCos,0.0,0.0,0.0,1.0);
 
-		fCos = CGUIMath::Cos(fPAngle);
-		fSin = CGUIMath::Sin(fPAngle);
+		fCos = cos(fPAngle);
+		fSin = sin(fPAngle);
 		CGUIMatrix3 kXMat(1.0,0.0,0.0,0.0,fCos,-fSin,0.0,fSin,fCos);
 
-		fCos = CGUIMath::Cos(fRAngle);
-		fSin = CGUIMath::Sin(fRAngle);
+		fCos = cos(fRAngle);
+		fSin = sin(fRAngle);
 		CGUIMatrix3 kYMat(fCos,0.0,fSin,0.0,1.0,0.0,-fSin,0.0,fCos);
 
 		*this = kZMat*(kXMat*kYMat);
 	}
 	//-----------------------------------------------------------------------
-	void CGUIMatrix3::FromEulerAnglesZYX (const CGUIRadian& fYAngle, const CGUIRadian& fPAngle,
-		const CGUIRadian& fRAngle)
+	void CGUIMatrix3::FromEulerAnglesZYX (real fYAngle, real fPAngle, real fRAngle)
 	{
 		real fCos, fSin;
 
-		fCos = CGUIMath::Cos(fYAngle);
-		fSin = CGUIMath::Sin(fYAngle);
+		fCos = cos(fYAngle);
+		fSin = sin(fYAngle);
 		CGUIMatrix3 kZMat(fCos,-fSin,0.0,fSin,fCos,0.0,0.0,0.0,1.0);
 
-		fCos = CGUIMath::Cos(fPAngle);
-		fSin = CGUIMath::Sin(fPAngle);
+		fCos = cos(fPAngle);
+		fSin = sin(fPAngle);
 		CGUIMatrix3 kYMat(fCos,0.0,fSin,0.0,1.0,0.0,-fSin,0.0,fCos);
 
-		fCos = CGUIMath::Cos(fRAngle);
-		fSin = CGUIMath::Sin(fRAngle);
+		fCos = cos(fRAngle);
+		fSin = sin(fRAngle);
 		CGUIMatrix3 kXMat(1.0,0.0,0.0,0.0,fCos,-fSin,0.0,fSin,fCos);
 
 		*this = kZMat*(kYMat*kXMat);
@@ -1484,9 +1363,9 @@ namespace guiex
 
 		afDiag[0] = fA;
 		afSubDiag[2] = 0.0;
-		if ( CGUIMath::Abs(fC) >= EPSILON )
+		if ( fabs(fC) >= EPSILON )
 		{
-			real fLength = CGUIMath::Sqrt(fB*fB+fC*fC);
+			real fLength = sqrt(fB*fB+fC*fC);
 			real fInvLength = 1.0f/fLength;
 			fB *= fInvLength;
 			fC *= fInvLength;
@@ -1537,16 +1416,16 @@ namespace guiex
 				int i1;
 				for (i1 = i0; i1 <= 1; i1++)
 				{
-					real fSum = CGUIMath::Abs(afDiag[i1]) +
-						CGUIMath::Abs(afDiag[i1+1]);
-					if ( CGUIMath::Abs(afSubDiag[i1]) + fSum == fSum )
+					real fSum = fabs(afDiag[i1]) +
+						fabs(afDiag[i1+1]);
+					if ( fabs(afSubDiag[i1]) + fSum == fSum )
 						break;
 				}
 				if ( i1 == i0 )
 					break;
 
 				real fTmp0 = (afDiag[i0+1]-afDiag[i0])/(2.0f*afSubDiag[i0]);
-				real fTmp1 = CGUIMath::Sqrt(fTmp0*fTmp0+1.0f);
+				real fTmp1 = sqrt(fTmp0*fTmp0+1.0f);
 				if ( fTmp0 < 0.0f )
 					fTmp0 = afDiag[i1]-afDiag[i0]+afSubDiag[i0]/(fTmp0-fTmp1);
 				else
@@ -1558,10 +1437,10 @@ namespace guiex
 				{
 					real fTmp3 = fSin*afSubDiag[i2];
 					real fTmp4 = fCos*afSubDiag[i2];
-					if ( CGUIMath::Abs(fTmp3) >= CGUIMath::Abs(fTmp0) )
+					if ( fabs(fTmp3) >= fabs(fTmp0) )
 					{
 						fCos = fTmp0/fTmp3;
-						fTmp1 = CGUIMath::Sqrt(fCos*fCos+1.0f);
+						fTmp1 = sqrt(fCos*fCos+1.0f);
 						afSubDiag[i2+1] = fTmp3*fTmp1;
 						fSin = 1.0f/fTmp1;
 						fCos *= fSin;
@@ -1569,7 +1448,7 @@ namespace guiex
 					else
 					{
 						fSin = fTmp3/fTmp0;
-						fTmp1 = CGUIMath::Sqrt(fSin*fSin+1.0f);
+						fTmp1 = sqrt(fSin*fSin+1.0f);
 						afSubDiag[i2+1] = fTmp0*fTmp1;
 						fCos = 1.0f/fTmp1;
 						fSin *= fCos;

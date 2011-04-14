@@ -98,6 +98,7 @@ namespace guiex
 		uint32 GetSuccessorNum( ) const;
 		CGUIAs*	GetSuccessor( uint32 nIndex );
 		void RemoveSuccessor( uint32 nIndex );
+		void ClearSuccessor( );
 
 		virtual real Update( real fDeltaTime );
 
@@ -125,8 +126,8 @@ namespace guiex
 		bool m_bRetired; //!<should this as be retired
 		CGUIWidget*	m_pReceiver; //!<receiver
 
-		typedef std::vector<CGUIAs*> TListSuccessor;
-		TListSuccessor m_listSuccessor; //!<successor
+		typedef std::vector<CGUIAs*> TArraySuccessor;
+		TArraySuccessor m_arraySuccessor; //!<successor
 
 		CGUIString m_strAsType; //!<type of this as
 	};
@@ -138,10 +139,10 @@ namespace guiex
 	class CGUICustomAs : public CGUIAs
 	{
 	public:
-		CGUICustomAs( const CGUIString& rAsType );
 		virtual void RefRelease();
 
 	protected:
+		CGUICustomAs( const CGUIString& rAsType );
 		virtual void DestroySelf();
 	};
 

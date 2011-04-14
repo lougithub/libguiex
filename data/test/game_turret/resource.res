@@ -5,6 +5,12 @@
 		<property name="uv" type="CGUIRect" value="0,0,1,1" />
 	</property>
 
+	<property name="target2" type="CGUIImageDefine">
+		<property  name="path" type="CGUIString" value="image/Target2.tga" />
+		<property name="uv" type="CGUIRect" value="0,0,1,1" />
+	</property>
+
+
 	<property name="turret" type="CGUIImageDefine">
 		<property  name="path" type="CGUIString" value="image/Turret.tga" />
 		<property name="uv" type="CGUIRect" value="0,0,1,1" />

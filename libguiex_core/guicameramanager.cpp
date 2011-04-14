@@ -58,7 +58,7 @@ namespace guiex
 			m_fDefaultAspectRatio = rRawScreenSize.GetWidth() / real( rRawScreenSize.GetHeight());
 		}
 		
-		real fZDistance = -(rRawScreenSize.GetHeight()/2.0f) / CGUIMath::Tan( CGUIDegree(m_fDefaultFov/2));
+		real fZDistance = -(rRawScreenSize.GetHeight()/2.0f) / tan( CGUIMath::DegreesToRadians(m_fDefaultFov/2));
 		
 		switch( eScreenOrientation )
 		{

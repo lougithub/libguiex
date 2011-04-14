@@ -24,118 +24,6 @@ namespace guiex
 	const real CGUIMath::GUI_Deg2Rad = CGUIMath::GUI_PI / real(180.0f);
 	const real CGUIMath::GUI_Rad2Deg = real(180.0f) / CGUIMath::GUI_PI;
 
-	int CGUIMath::mTrigTableSize;
-	CGUIMath::EAngleUnit CGUIMath::msAngleUnit;
-
-	real  CGUIMath::mTrigTableFactor;
-	real *CGUIMath::mSinTable = NULL;
-	real *CGUIMath::mTanTable = NULL;
-
-	//-----------------------------------------------------------------------
-	CGUIMath::CGUIMath( unsigned int trigTableSize )
-	{
-		msAngleUnit = AU_DEGREE;
-
-		mTrigTableSize = trigTableSize;
-		mTrigTableFactor = mTrigTableSize / CGUIMath::GUI_TWO_PI;
-
-		mSinTable = new real[mTrigTableSize];
-		mTanTable = new real[mTrigTableSize];
-
-		buildTrigTables();
-	}
-
-	//-----------------------------------------------------------------------
-	CGUIMath::~CGUIMath()
-	{
-		delete [] mSinTable;
-		delete [] mTanTable;
-	}
-
-	//-----------------------------------------------------------------------
-	void CGUIMath::buildTrigTables(void)
-	{
-		// Build trig lookup tables
-		// Could get away with building only GUI_PI sized Sin table but simpler this 
-		// way. Who cares, it'll ony use an extra 8k of memory anyway and I like 
-		// simplicity.
-		real angle;
-		for (int i = 0; i < mTrigTableSize; ++i)
-		{
-			angle = CGUIMath::GUI_TWO_PI * i / mTrigTableSize;
-			mSinTable[i] = sin(angle);
-			mTanTable[i] = tan(angle);
-		}
-	}
-	//-----------------------------------------------------------------------	
-	real CGUIMath::SinTable (real fValue)
-	{
-		// Convert range to index values, wrap if required
-		int idx;
-		if (fValue >= 0)
-		{
-			idx = int(fValue * mTrigTableFactor) % mTrigTableSize;
-		}
-		else
-		{
-			idx = mTrigTableSize - (int(-fValue * mTrigTableFactor) % mTrigTableSize) - 1;
-		}
-
-		return mSinTable[idx];
-	}
-	//-----------------------------------------------------------------------
-	real CGUIMath::TanTable (real fValue)
-	{
-		// Convert range to index values, wrap if required
-		int idx = int(fValue *= mTrigTableFactor) % mTrigTableSize;
-		return mTanTable[idx];
-	}
-	//-----------------------------------------------------------------------
-	int CGUIMath::ISign (int iValue)
-	{
-		return ( iValue > 0 ? +1 : ( iValue < 0 ? -1 : 0 ) );
-	}
-	//-----------------------------------------------------------------------
-	CGUIRadian CGUIMath::ACos (real fValue)
-	{
-		if ( -1.0 < fValue )
-		{
-			if ( fValue < 1.0 )
-				return CGUIRadian(acos(fValue));
-			else
-				return CGUIRadian(0.0);
-		}
-		else
-		{
-			return CGUIRadian(GUI_PI);
-		}
-	}
-	//-----------------------------------------------------------------------
-	CGUIRadian CGUIMath::ASin (real fValue)
-	{
-		if ( -1.0 < fValue )
-		{
-			if ( fValue < 1.0 )
-				return CGUIRadian(asin(fValue));
-			else
-				return CGUIRadian(-GUI_HALF_PI);
-		}
-		else
-		{
-			return CGUIRadian(GUI_HALF_PI);
-		}
-	}
-	//-----------------------------------------------------------------------
-	real CGUIMath::Sign (real fValue)
-	{
-		if ( fValue > 0.0 )
-			return 1.0;
-
-		if ( fValue < 0.0 )
-			return -1.0;
-
-		return 0.0;
-	}
 	//-----------------------------------------------------------------------
 	real CGUIMath::DegreesToRadians(real degrees) 
 	{ 
@@ -145,21 +33,6 @@ namespace guiex
 	real CGUIMath::RadiansToDegrees(real radians)
 	{
 		return radians * GUI_Rad2Deg; 
-	}
-	//-----------------------------------------------------------------------
-	real CGUIMath::Cos (const CGUIRadian& fValue) 
-	{
-		return real(cos(fValue.valueRadians()));
-	}
-	//-----------------------------------------------------------------------
-	real CGUIMath::Cos (real fValue)
-	{
-		return real(cos(fValue));
-	}
-	//-----------------------------------------------------------------------
-	real CGUIMath::InvSqrt(real fValue)
-	{
-		return real(1 / sqrt( fValue ));
 	}
 	//-----------------------------------------------------------------------
 	real CGUIMath::UnitRandom ()
@@ -178,53 +51,6 @@ namespace guiex
 	{
 		return 2.0f * UnitRandom() - 1.0f;
 	}
-
-	//-----------------------------------------------------------------------
-	void CGUIMath::setAngleUnit(CGUIMath::EAngleUnit unit)
-	{
-		msAngleUnit = unit;
-	}
-	//-----------------------------------------------------------------------
-	CGUIMath::EAngleUnit CGUIMath::getAngleUnit(void)
-	{
-		return msAngleUnit;
-	}
-	//-----------------------------------------------------------------------
-	real CGUIMath::AngleUnitsToRadians(real angleunits)
-	{
-		if (msAngleUnit == AU_DEGREE)
-			return angleunits * GUI_Deg2Rad;
-		else
-			return angleunits;
-	}
-
-	//-----------------------------------------------------------------------
-	real CGUIMath::RadiansToAngleUnits(real radians)
-	{
-		if (msAngleUnit == AU_DEGREE)
-			return radians * GUI_Rad2Deg;
-		else
-			return radians;
-	}
-
-	//-----------------------------------------------------------------------
-	real CGUIMath::AngleUnitsToDegrees(real angleunits)
-	{
-		if (msAngleUnit == AU_RADIAN)
-			return angleunits * GUI_Rad2Deg;
-		else
-			return angleunits;
-	}
-
-	//-----------------------------------------------------------------------
-	real CGUIMath::DegreesToAngleUnits(real degrees)
-	{
-		if (msAngleUnit == AU_RADIAN)
-			return degrees * GUI_Deg2Rad;
-		else
-			return degrees;
-	}
-
 	//-----------------------------------------------------------------------
 	bool CGUIMath::pointInTri2D( real px, real py, real ax, real ay, real bx, real by, real cx, real cy )
 	{

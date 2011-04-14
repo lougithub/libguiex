@@ -66,42 +66,51 @@ namespace guiex
 		return m_pSingleton; 
 	}
 	//------------------------------------------------------------------------------
+	bool CGUIWidgetManager::TryAddToWidgetPool( CGUIWidget* pWidget )
+	{
+		GUI_ASSERT( pWidget, "invalid parameter" );
+
+		if( pWidget->GetName().empty() )
+		{
+			throw CGUIException( "CGUIWidgetManager::TryAddToWidgetPool: lack name for type <%s>!", pWidget->GetType().c_str());
+			return false;
+		}
+
+		//check whether this widget has exist
+		TMapWidget::iterator itorScene = m_aMapWidget.find( pWidget->GetSceneName() );
+		std::map<CGUIString, CGUIWidget*>* pSceneWidgetMap = NULL;
+		if( itorScene != m_aMapWidget.end())
+		{
+			if( itorScene->second.find( pWidget->GetName() ) != itorScene->second.end())
+			{
+				throw CGUIException( "[CGUIWidgetManager::TryAddToWidgetPool]: the widget [%s : %s] has existed!", pWidget->GetSceneName().c_str(), pWidget->GetName().c_str());
+				return false;
+			}
+			pSceneWidgetMap = &itorScene->second;
+		}
+		else
+		{
+			//add scene
+			itorScene = m_aMapWidget.insert( std::make_pair( pWidget->GetSceneName(), std::map<CGUIString, CGUIWidget*>())).first;
+			pSceneWidgetMap = &itorScene->second;
+		}
+
+		pSceneWidgetMap->insert(std::make_pair(pWidget->GetName(), pWidget));
+		return true;
+	}
+	//------------------------------------------------------------------------------
 	/**
 	* @brief create a widget by type and name
 	* @return pointer of created widget
 	*/
 	CGUIWidget* CGUIWidgetManager::CreateWidget( const CGUIString& rType, const CGUIString& rWidgetName, const CGUIString& rSceneName )
 	{
-		CGUIWidget* pWidget = NULL;
-
-		if( !rWidgetName.empty() )
+		CGUIWidget* pWidget = CGUIWidgetFactory::Instance()->CreateWidget( rType, rWidgetName, rSceneName );
+		if( false == TryAddToWidgetPool( pWidget ))
 		{
-			//check whether this widget has exist
-			TMapWidget::iterator itor = m_aMapWidget.find( rSceneName );
-			std::map<CGUIString, CGUIWidget*>* pWidgetMap = NULL;
-			if( itor != m_aMapWidget.end())
-			{
-				if( itor->second.find( rWidgetName ) != itor->second.end())
-				{
-					throw CGUIException( "[CGUIWidgetManager::CreateWidget]: the widget [%s : %s] has existed!", rSceneName.c_str(), rWidgetName.c_str());
-				}
-				pWidgetMap = &itor->second;
-			}
-			else
-			{
-				//add scene
-				itor = m_aMapWidget.insert( std::make_pair( rSceneName, std::map<CGUIString, CGUIWidget*>())).first;
-				pWidgetMap = &itor->second;
-			}
-
-			pWidget = CGUIWidgetFactory::Instance()->CreateWidget( rType, rWidgetName, rSceneName );
-			pWidgetMap->insert(std::make_pair(rWidgetName, pWidget));
+			CGUIWidgetFactory::Instance()->DestoryWidget( pWidget );
+			return NULL;
 		}
-		else
-		{
-			throw CGUIException( "CGUIWidgetManager::CreateWidget: lack name for type <%s>!", rType.c_str());
-		}
-
 		return pWidget;
 	}
 	//------------------------------------------------------------------------------
@@ -119,12 +128,12 @@ namespace guiex
 		{
 			//check
 			TMapWidget::iterator itor = m_aMapWidget.find( pWidget->GetSceneName());
-			if( itor  == m_aMapWidget.end())
+			if( itor == m_aMapWidget.end())
 			{
 				throw CGUIException( "[CGUIWidgetManager::DestroyWidget]: the widget <%s : %s> doesn't exist!", pWidget->GetSceneName().c_str(), pWidget->GetName().c_str());
 			}
 			std::map<CGUIString, CGUIWidget*>::iterator  itor_widget = itor->second.find(pWidget->GetName());
-			if( itor_widget  == itor->second.end())
+			if( itor_widget == itor->second.end())
 			{
 				throw CGUIException( "[CGUIWidgetManager::DestroyWidget]: the widget <%s : %s> doesn't exist!", pWidget->GetSceneName().c_str(), pWidget->GetName().c_str());
 			}
@@ -152,7 +161,6 @@ namespace guiex
 				pWidget->SetParent(NULL);
 			}
 			CGUIWidgetFactory::Instance()->DestoryWidget(pWidget);
-
 		}
 		else
 		{

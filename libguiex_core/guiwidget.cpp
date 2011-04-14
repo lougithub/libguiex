@@ -2609,9 +2609,24 @@ namespace guiex
 	*/
 	void CGUIWidget::SetRotation(real x, real y, real z)
 	{
-		m_vRotation.x = x;
-		m_vRotation.y = y;
-		m_vRotation.z = z;
+		m_vRotation.x = CGUIDegree(x).valueRadians();
+		m_vRotation.y = CGUIDegree(y).valueRadians();
+		m_vRotation.z = CGUIDegree(z).valueRadians();
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::Roll( real x )
+	{
+		m_vRotation.x = CGUIDegree(x).valueRadians();
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::Pitch( real y )
+	{
+		m_vRotation.y = CGUIDegree(y).valueRadians();
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::Yaw( real z )
+	{
+		m_vRotation.z = CGUIDegree(z).valueRadians();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::SetRotation(const CGUIVector3& rRotation)
@@ -2619,9 +2634,12 @@ namespace guiex
 		SetRotation(rRotation.x, rRotation.y, rRotation.z);
 	}
 	//------------------------------------------------------------------------------
-	const CGUIVector3& CGUIWidget::GetRotation( ) const
+	CGUIVector3 CGUIWidget::GetRotation( ) const
 	{
-		return m_vRotation;
+		return CGUIVector3(
+			CGUIRadian(m_vRotation.x).valueDegrees(),
+			CGUIRadian(m_vRotation.y).valueDegrees(),
+			CGUIRadian(m_vRotation.z).valueDegrees());
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::Refresh( )
@@ -2696,7 +2714,7 @@ namespace guiex
 		NodeSetScale( rScale.m_fWidth, rScale.m_fHeight, 1.0f );
 		//rotation
 		CGUIMatrix3 aRotMat;
-		aRotMat.FromEulerAnglesXYZ( CGUIDegree(m_vRotation.x), CGUIDegree(m_vRotation.y), CGUIDegree(m_vRotation.z) );
+		aRotMat.FromEulerAnglesXYZ( m_vRotation.x, m_vRotation.y, m_vRotation.z );
 		NodeSetOrientation( CGUIQuaternion( aRotMat) );
 
 		NodeUpdateFromParent( );

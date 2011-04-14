@@ -49,7 +49,7 @@ namespace guiex
 		CGUIVector3 m_vDefaultEye;
 		CGUIVector3 m_vDefaultCenter;
 		CGUIVector3 m_vDefaultUp;
-		real m_fDefaultFov;
+		real m_fDefaultFov; //in degree
 		real m_fDefaultAspectRatio;
 		real m_fDefaultNearPlane;
 		real m_fDefaultFarPlane;

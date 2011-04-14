@@ -6,6 +6,7 @@ macro_set_common_sources( ${target_name}_common_SRCS )
 #test source
 set( ${target_name}_execute_SRCS
 	game_turret.cpp
+	game_turret.h
 	)
 source_group( test FILES ${${target_name}_execute_SRCS} )
 

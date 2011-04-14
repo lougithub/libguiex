@@ -265,9 +265,12 @@ namespace guiex
 		void SetSizeType( EScreenValue eValueType );
 		EScreenValue GetSizeType( ) const;
 
-		void SetRotation(real x, real y, real z);
+		void SetRotation(real x, real y, real z); //in degrees
+		void Roll( real x ); //x
+		void Pitch( real y ); //y
+		void Yaw( real z ); //z
 		void SetRotation(const CGUIVector3& rRotation);
-		const CGUIVector3& GetRotation( ) const;
+		CGUIVector3 GetRotation( ) const;
 
 		const CGUIMatrix4& GetFullTransform(void);
 

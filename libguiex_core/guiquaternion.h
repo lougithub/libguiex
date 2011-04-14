@@ -56,7 +56,7 @@ namespace guiex
 			this->FromRotationMatrix(rot);
 		}
 		/// Construct a quaternion from an angle/axis
-		inline CGUIQuaternion(const CGUIRadian& rfAngle, const CGUIVector3& rkAxis)
+		inline CGUIQuaternion(real rfAngle, const CGUIVector3& rkAxis)
 		{
 			this->FromAngleAxis(rfAngle, rkAxis);
 		}
@@ -79,23 +79,8 @@ namespace guiex
 
 		void FromRotationMatrix (const CGUIMatrix3& kRot);
 		void ToRotationMatrix (CGUIMatrix3& kRot) const;
-		void FromAngleAxis (const CGUIRadian& rfAngle, const CGUIVector3& rkAxis);
-		void ToAngleAxis (CGUIRadian& rfAngle, CGUIVector3& rkAxis) const;
-		inline void ToAngleAxis (CGUIDegree& dAngle, CGUIVector3& rkAxis) const 
-		{
-			CGUIRadian rAngle;
-			ToAngleAxis ( rAngle, rkAxis );
-			dAngle = rAngle;
-		}
-
-		inline void FromAngleAxis (const real& rfAngle, const CGUIVector3& rkAxis) {
-			FromAngleAxis ( CGUIAngle(rfAngle), rkAxis );
-		}
-		inline void ToAngleAxis (real& rfAngle, CGUIVector3& rkAxis) const {
-			CGUIRadian r;
-			ToAngleAxis ( r, rkAxis );
-			rfAngle = r.valueAngleUnits();
-		}
+		void FromAngleAxis (real rfAngle, const CGUIVector3& rkAxis);
+		void ToAngleAxis (real& rfAngle, CGUIVector3& rkAxis) const;
 
 		void FromAxes (const CGUIVector3* akAxis);
 		void FromAxes (const CGUIVector3& xAxis, const CGUIVector3& yAxis, const CGUIVector3& zAxis);
@@ -145,13 +130,13 @@ namespace guiex
 		CGUIVector3 operator* (const CGUIVector3& rkVector) const;
 
 		/// Calculate the local roll element of this quaternion
-		CGUIRadian getRoll(void) const;
+		real getRoll(void) const;
 		/// Calculate the local pitch element of this quaternion
-		CGUIRadian getPitch(void) const;
+		real getPitch(void) const;
 		/// Calculate the local yaw element of this quaternion
-		CGUIRadian getYaw(void) const;		
+		real getYaw(void) const;		
 		/// Equality with tolerance (tolerance is max angle difference)
-		bool equals(const CGUIQuaternion& rhs, const CGUIRadian& tolerance) const;
+		bool equals(const CGUIQuaternion& rhs, real tolerance) const;
 
 		// spherical linear interpolation
 		static CGUIQuaternion Slerp (real fT, const CGUIQuaternion& rkP,const CGUIQuaternion& rkQ, bool shortestPath = false);

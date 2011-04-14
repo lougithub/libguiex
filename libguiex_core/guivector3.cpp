@@ -519,7 +519,7 @@ namespace guiex
 	vector will not be normalised, normalise it if you wish
 	afterwards.
 	*/
-	CGUIVector3 CGUIVector3::RandomDeviant( const CGUIRadian& angle, const CGUIVector3& up ) const
+	CGUIVector3 CGUIVector3::RandomDeviant( real angle, const CGUIVector3& up ) const
 	{
 		CGUIVector3 newUp;
 
@@ -535,7 +535,7 @@ namespace guiex
 
 		// Rotate up vector by random amount around this
 		CGUIQuaternion q;
-		q.FromAngleAxis( CGUIRadian(CGUIMath::UnitRandom() * CGUIMath::GUI_TWO_PI), *this );
+		q.FromAngleAxis( CGUIMath::UnitRandom() * CGUIMath::GUI_TWO_PI, *this );
 		newUp = q * newUp;
 
 		// Finally rotate this by given angle around randomised up

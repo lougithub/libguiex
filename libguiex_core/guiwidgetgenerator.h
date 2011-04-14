@@ -62,6 +62,15 @@ public: \
 	{ \
 		return widget::widget##_Generator::GenerateSelf(); \
 	}
+
+	#define GUI_CUSTOM_WIDGET_DECLARE(widget) \
+	public: \
+		static const char* StaticGetType();
+
+	#define GUI_CUSTOM_WIDGET_IMPLEMENT(widget) \
+	const char* widget::StaticGetType()	\
+	{return #widget;}
+
 }	//namespace guiex
 
 //============================================================================//

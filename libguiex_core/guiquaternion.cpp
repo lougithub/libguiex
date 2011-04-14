@@ -27,7 +27,7 @@ namespace guiex
 	void CGUIQuaternion::FromRotationMatrix (const CGUIMatrix3& kRot)
 	{
 		// Algorithm in Ken Shoemake's article in 1987 SIGGRAPH course notes
-		// article "CGUIQuaternion Calculus and Fast Animation".
+		// article "Quaternion Calculus and Fast Animation".
 
 		real fTrace = kRot[0][0]+kRot[1][1]+kRot[2][2];
 		real fRoot;
@@ -35,7 +35,7 @@ namespace guiex
 		if ( fTrace > 0.0 )
 		{
 			// |w| > 1/2, may as well choose w > 1/2
-			fRoot = CGUIMath::Sqrt(fTrace + 1.0f);  // 2w
+			fRoot = sqrt(fTrace + 1.0f);  // 2w
 			w = 0.5f*fRoot;
 			fRoot = 0.5f/fRoot;  // 1/(4w)
 			x = (kRot[2][1]-kRot[1][2])*fRoot;
@@ -54,7 +54,7 @@ namespace guiex
 			size_t j = s_iNext[i];
 			size_t k = s_iNext[j];
 
-			fRoot = CGUIMath::Sqrt(kRot[i][i]-kRot[j][j]-kRot[k][k] + 1.0f);
+			fRoot = sqrt(kRot[i][i]-kRot[j][j]-kRot[k][k] + 1.0f);
 			real* apkQuat[3] = { &x, &y, &z };
 			*apkQuat[i] = 0.5f*fRoot;
 			fRoot = 0.5f/fRoot;
@@ -90,22 +90,22 @@ namespace guiex
 		kRot[2][2] = 1.0f-(fTxx+fTyy);
 	}
 	//-----------------------------------------------------------------------
-	void CGUIQuaternion::FromAngleAxis (const CGUIRadian& rfAngle,const CGUIVector3& rkAxis)
+	void CGUIQuaternion::FromAngleAxis (real rfAngle,const CGUIVector3& rkAxis)
 	{
 		// assert:  axis[] is unit length
 		//
 		// The quaternion representing the rotation is
 		//   q = cos(A/2)+sin(A/2)*(x*i+y*j+z*k)
 
-		CGUIRadian fHalfAngle ( 0.5f*rfAngle );
-		real fSin = CGUIMath::Sin(fHalfAngle);
-		w = CGUIMath::Cos(fHalfAngle);
+		real fHalfAngle = 0.5f*rfAngle;
+		real fSin = sin(fHalfAngle);
+		w = cos(fHalfAngle);
 		x = fSin*rkAxis.x;
 		y = fSin*rkAxis.y;
 		z = fSin*rkAxis.z;
 	}
 	//-----------------------------------------------------------------------
-	void CGUIQuaternion::ToAngleAxis (CGUIRadian& rfAngle, CGUIVector3& rkAxis) const
+	void CGUIQuaternion::ToAngleAxis (real& rfAngle, CGUIVector3& rkAxis) const
 	{
 		// The quaternion representing the rotation is
 		//   q = cos(A/2)+sin(A/2)*(x*i+y*j+z*k)
@@ -113,8 +113,8 @@ namespace guiex
 		real fSqrLength = x*x+y*y+z*z;
 		if ( fSqrLength > 0.0 )
 		{
-			rfAngle = 2.0f*CGUIMath::ACos(w);
-			real fInvLength = CGUIMath::InvSqrt(fSqrLength);
+			rfAngle = 2.0f*acos(w);
+			real fInvLength = 1 / sqrt(fSqrLength);
 			rkAxis.x = x*fInvLength;
 			rkAxis.y = y*fInvLength;
 			rkAxis.z = z*fInvLength;
@@ -122,10 +122,10 @@ namespace guiex
 		else
 		{
 			// angle is 0 (mod 2*pi), so any axis will do
-			rfAngle = CGUIRadian(0.0);
-			rkAxis.x = 1.0;
-			rkAxis.y = 0.0;
-			rkAxis.z = 0.0;
+			rfAngle = 0.0f;
+			rkAxis.x = 1.0f;
+			rkAxis.y = 0.0f;
+			rkAxis.z = 0.0f;
 		}
 	}
 	//-----------------------------------------------------------------------
@@ -319,15 +319,15 @@ namespace guiex
 		// exp(q) = cos(A)+sin(A)*(x*i+y*j+z*k).  If sin(A) is near zero,
 		// use exp(q) = cos(A)+A*(x*i+y*j+z*k) since A/sin(A) has limit 1.
 
-		CGUIRadian fAngle ( CGUIMath::Sqrt(x*x+y*y+z*z) );
-		real fSin = CGUIMath::Sin(fAngle);
+		real fAngle = sqrt(x*x+y*y+z*z);
+		real fSin = sin(fAngle);
 
 		CGUIQuaternion kResult;
-		kResult.w = CGUIMath::Cos(fAngle);
+		kResult.w = cos(fAngle);
 
-		if ( CGUIMath::Abs(fSin) >= ms_fEpsilon )
+		if ( fabs(fSin) >= ms_fEpsilon )
 		{
-			real fCoeff = fSin/(fAngle.valueRadians());
+			real fCoeff = fSin/fAngle;
 			kResult.x = fCoeff*x;
 			kResult.y = fCoeff*y;
 			kResult.z = fCoeff*z;
@@ -351,13 +351,13 @@ namespace guiex
 		CGUIQuaternion kResult;
 		kResult.w = 0.0;
 
-		if ( CGUIMath::Abs(w) < 1.0 )
+		if ( fabs(w) < 1.0 )
 		{
-			CGUIRadian fAngle ( CGUIMath::ACos(w) );
-			real fSin = CGUIMath::Sin(fAngle);
-			if ( CGUIMath::Abs(fSin) >= ms_fEpsilon )
+			real fAngle = acos(w);
+			real fSin = sin(fAngle);
+			if ( fabs(fSin) >= ms_fEpsilon )
 			{
-				real fCoeff = fAngle.valueRadians()/fSin;
+				real fCoeff = fAngle/fSin;
 				kResult.x = fCoeff*x;
 				kResult.y = fCoeff*y;
 				kResult.z = fCoeff*z;
@@ -386,13 +386,13 @@ namespace guiex
 
 	}
 	//-----------------------------------------------------------------------
-	bool CGUIQuaternion::equals(const CGUIQuaternion& rhs, const CGUIRadian& tolerance) const
+	bool CGUIQuaternion::equals(const CGUIQuaternion& rhs, real tolerance) const
 	{
 		real fCos = Dot(rhs);
-		CGUIRadian angle = CGUIMath::ACos(fCos);
+		real angle = acos(fCos);
 
-		return (CGUIMath::Abs(angle.valueRadians()) <= tolerance.valueRadians())
-			|| CGUIMath::RealEqual(angle.valueRadians(), CGUIMath::GUI_PI, tolerance.valueRadians());
+		return (fabs(angle) <= tolerance)
+			|| CGUIMath::RealEqual(angle, CGUIMath::GUI_PI, tolerance);
 
 
 	}
@@ -401,15 +401,15 @@ namespace guiex
 		const CGUIQuaternion& rkQ, bool shortestPath)
 	{
 		real fCos = rkP.Dot(rkQ);
-		CGUIRadian fAngle ( CGUIMath::ACos(fCos) );
+		real fAngle = acos(fCos);
 
-		if ( CGUIMath::Abs(fAngle.valueRadians()) < ms_fEpsilon )
+		if ( fabs(fAngle) < ms_fEpsilon )
 			return rkP;
 
-		real fSin = CGUIMath::Sin(fAngle);
+		real fSin = sin(fAngle);
 		real fInvSin = 1.0f/fSin;
-		real fCoeff0 = CGUIMath::Sin((1.0f-fT)*fAngle)*fInvSin;
-		real fCoeff1 = CGUIMath::Sin(fT*fAngle)*fInvSin;
+		real fCoeff0 = sin((1.0f-fT)*fAngle)*fInvSin;
+		real fCoeff1 = sin(fT*fAngle)*fInvSin;
 		// Do we need to invert rotation?
 		if (fCos < 0.0f && shortestPath)
 		{
@@ -429,16 +429,16 @@ namespace guiex
 		const CGUIQuaternion& rkP, const CGUIQuaternion& rkQ, int iExtraSpins)
 	{
 		real fCos = rkP.Dot(rkQ);
-		CGUIRadian fAngle ( CGUIMath::ACos(fCos) );
+		real fAngle = acos(fCos);
 
-		if ( CGUIMath::Abs(fAngle.valueRadians()) < ms_fEpsilon )
+		if ( fabs(fAngle) < ms_fEpsilon )
 			return rkP;
 
-		real fSin = CGUIMath::Sin(fAngle);
-		CGUIRadian fPhase ( CGUIMath::GUI_PI*iExtraSpins*fT );
+		real fSin = sin(fAngle);
+		real fPhase = CGUIMath::GUI_PI*iExtraSpins*fT;
 		real fInvSin = 1.0f/fSin;
-		real fCoeff0 = CGUIMath::Sin((1.0f-fT)*fAngle - fPhase)*fInvSin;
-		real fCoeff1 = CGUIMath::Sin(fT*fAngle + fPhase)*fInvSin;
+		real fCoeff0 = sin((1.0f-fT)*fAngle - fPhase)*fInvSin;
+		real fCoeff1 = sin(fT*fAngle + fPhase)*fInvSin;
 		return fCoeff0*rkP + fCoeff1*rkQ;
 	}
 	//-----------------------------------------------------------------------
@@ -472,24 +472,24 @@ namespace guiex
 	real CGUIQuaternion::Normalise(void)
 	{
 		real len = Norm();
-		real factor = 1.0f / CGUIMath::Sqrt(len);
+		real factor = 1.0f / sqrt(len);
 		*this = *this * factor;
 		return len;
 	}
 	//-----------------------------------------------------------------------
-	CGUIRadian CGUIQuaternion::getRoll(void) const
+	real CGUIQuaternion::getRoll(void) const
 	{
-		return CGUIRadian(CGUIMath::ATan2(2*(x*y + w*z), w*w + x*x - y*y - z*z));
+		return (atan2(2*(x*y + w*z), w*w + x*x - y*y - z*z));
 	}
 	//-----------------------------------------------------------------------
-	CGUIRadian CGUIQuaternion::getPitch(void) const
+	real CGUIQuaternion::getPitch(void) const
 	{
-		return CGUIRadian(CGUIMath::ATan2(2*(y*z + w*x), w*w - x*x - y*y + z*z));
+		return (atan2(2*(y*z + w*x), w*w - x*x - y*y + z*z));
 	}
 	//-----------------------------------------------------------------------
-	CGUIRadian CGUIQuaternion::getYaw(void) const
+	real CGUIQuaternion::getYaw(void) const
 	{
-		return CGUIRadian(CGUIMath::ASin(-2*(x*z - w*y)));
+		return (asin(-2*(x*z - w*y)));
 	}
 	//-----------------------------------------------------------------------
 	CGUIQuaternion CGUIQuaternion::nlerp(real fT, const CGUIQuaternion& rkP, 

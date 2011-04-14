@@ -52,7 +52,6 @@ namespace guiex
 
 		real valueDegrees() const; // see bottom of this file
 		real valueRadians() const { return mRad; }
-		real valueAngleUnits() const;
 
 		CGUIRadian operator + ( const CGUIRadian& r ) const { return CGUIRadian ( mRad + r.mRad ); }
 		CGUIRadian operator + ( const CGUIDegree& d ) const;
@@ -94,7 +93,6 @@ namespace guiex
 
 		real valueDegrees() const { return mDeg; }
 		real valueRadians() const; // see bottom of this file
-		real valueAngleUnits() const;
 
 		CGUIDegree operator + ( const CGUIDegree& d ) const { return CGUIDegree ( mDeg + d.mDeg ); }
 		CGUIDegree operator + ( const CGUIRadian& r ) const { return CGUIDegree ( mDeg + r.valueDegrees() ); }
@@ -120,197 +118,19 @@ namespace guiex
 	};
 
 
-	/** Wrapper class which identifies a value as the currently default angle 
-	type, as defined by CGUIMath::setAngleUnit.
-	@remarks CGUIAngle values will be automatically converted between radians and degrees,
-	as appropriate.
-	*/
-	class GUIEXPORT CGUIAngle
-	{
-		real mAngle;
-	public:
-		explicit CGUIAngle ( real angle ) : mAngle(angle) {}
-		operator CGUIRadian();
-		operator CGUIDegree();
-	};
-
-
-
 	/** Class to provide access to common mathematical functions.
-	@remarks
-	Most of the maths functions are aliased versions of the C runtime
-	library functions. They are aliased here to provide future
-	optimisation opportunities, either from faster RTLs or custom
-	math approximations.
-	@note
-	<br>This is based on MgcMath.h from
-	<a href="http://www.magic-software.com">Wild Magic</a>.
 	*/
 	class GUIEXPORT CGUIMath 
 	{
 	public:
-		/** The angular units used by the API. This functionality is now deprecated in favor
-		of discreet angular unit types ( see CGUIDegree and CGUIRadian above ). The only place
-		this functionality is actually still used is when parsing files. Search for
-		usage of the CGUIAngle class for those instances
-		*/
-		enum EAngleUnit
-		{
-			AU_DEGREE,
-			AU_RADIAN
-		};
-
-	protected:
-		// angle units used by the api
-		static EAngleUnit msAngleUnit;
-
-		/// Size of the trig tables as determined by constructor.
-		static int mTrigTableSize;
-
-		/// CGUIRadian -> index factor value ( mTrigTableSize / 2 * GUI_PI )
-		static real mTrigTableFactor;
-		static real* mSinTable;
-		static real* mTanTable;
-
-		/** Private function to build trig tables.
-		*/
-		void buildTrigTables();
-
-		static real SinTable (real fValue);
-		static real TanTable (real fValue);
-
-	public:
-		/** Default constructor.
-		@param
-		trigTableSize Optional parameter to set the size of the
-		tables used to implement Sin, Cos, Tan
-		*/
-		CGUIMath(unsigned int trigTableSize = 4096);
-
-		/** Default destructor.
-		*/
-		~CGUIMath();
-
-		static int IAbs (int iValue) { return ( iValue >= 0 ? iValue : -iValue ); }
-		static int ICeil (real fValue) { return int(ceil(fValue)); }
-		static int IFloor (real fValue) { return int(floor(fValue)); }
-		static int ISign (int iValue);
-
-		static real Abs (real fValue) { return real(fabs(fValue)); }
-		static CGUIDegree Abs (const CGUIDegree& dValue) { return CGUIDegree(fabs(dValue.valueDegrees())); }
-		static CGUIRadian Abs (const CGUIRadian& rValue) { return CGUIRadian(fabs(rValue.valueRadians())); }
-		static CGUIRadian ACos (real fValue);
-		static CGUIRadian ASin (real fValue);
-		static CGUIRadian ATan (real fValue) { return CGUIRadian(atan(fValue)); }
-		static CGUIRadian ATan2 (real fY, real fX) { return CGUIRadian(atan2(fY,fX)); }
-		static real Ceil (real fValue) { return real(ceil(fValue)); }
-
-		/** Cosine function.
-		@param
-		fValue CGUIAngle in radians
-		calculation - faster but less accurate.
-		*/
-		static real Cos (const CGUIRadian& fValue );
-
-		/** Cosine function.
-		@param
-		fValue CGUIAngle in radians
-		*/
-		static real Cos (real fValue ) ;
-
-		static real Exp (real fValue) { return real(exp(fValue)); }
-
-		static real Floor (real fValue) { return real(floor(fValue)); }
-
-		static real Log (real fValue) { return real(log(fValue)); }
-
-		static real Pow (real fBase, real fExponent) { return real(pow(fBase,fExponent)); }
-
-		static real Sign (real fValue);
-		static CGUIRadian Sign ( const CGUIRadian& rValue )
-		{
-			return CGUIRadian(Sign(rValue.valueRadians()));
-		}
-		static CGUIDegree Sign ( const CGUIDegree& dValue )
-		{
-			return CGUIDegree(Sign(dValue.valueDegrees()));
-		}
-
-		/** Sine function.
-		@param
-		fValue CGUIAngle in radians
-		*/
-		static real Sin (const CGUIRadian& fValue ) 
-		{
-			return real(sin(fValue.valueRadians()));
-		}
-		/** Sine function.
-		@param
-		fValue CGUIAngle in radians
-		calculation - faster but less accurate.
-		*/
-		static real Sin (real fValue ) 
-		{
-			return real(sin(fValue));
-		}
-
-		static real Sqr (real fValue) { return fValue*fValue; }
-
-		static real Sqrt (real fValue) { return real(sqrt(fValue)); }
-
-		static CGUIRadian Sqrt (const CGUIRadian& fValue) { return CGUIRadian(sqrt(fValue.valueRadians())); }
-
-		static CGUIDegree Sqrt (const CGUIDegree& fValue) { return CGUIDegree(sqrt(fValue.valueDegrees())); }
-
-		/** Inverse square root i.e. 1 / Sqrt(x), good for vector
-		normalisation.
-		*/
-		static real InvSqrt(real fValue);
-
 		static real UnitRandom ();  // in [0,1]
 
 		static real RangeRandom (real fLow, real fHigh);  // in [fLow,fHigh]
 
 		static real SymmetricRandom ();  // in [-1,1]
 
-		/** Tangent function.
-		@param
-		fValue CGUIAngle in radians
-		*/
-		static real Tan (const CGUIRadian& fValue) 
-		{
-			return real(tan(fValue.valueRadians()));
-		}
-		/** Tangent function.
-		@param
-		fValue CGUIAngle in radians
-		*/
-		static real Tan (real fValue )
-		{
-			return real(tan(fValue));
-		}
-
 		static real DegreesToRadians(real degrees) ;
 		static real RadiansToDegrees(real radians);
-
-		/** These functions used to set the assumed angle units (radians or degrees) 
-		expected when using the CGUIAngle type.
-		@par
-		You can set this directly after creating a new Root, and also before/after resource creation,
-		depending on whether you want the change to affect resource files.
-		*/
-		static void setAngleUnit(EAngleUnit unit);
-		/** Get the unit being used for angles. */
-		static EAngleUnit getAngleUnit(void);
-
-		/** Convert from the current EAngleUnit to radians. */
-		static real AngleUnitsToRadians(real units);
-		/** Convert from radians to the current EAngleUnit . */
-		static real RadiansToAngleUnits(real radians);
-		/** Convert from the current EAngleUnit to degrees. */
-		static real AngleUnitsToDegrees(real units);
-		/** Convert from degrees to the current EAngleUnit. */
-		static real DegreesToAngleUnits(real degrees);
 
 		/** Checks wether a given point is inside a triangle, in a
 		2-dimensional (Cartesian) space.
@@ -373,7 +193,6 @@ namespace guiex
 	};
 
 
-
 	// these functions could not be defined within the class definition of class
 	// CGUIRadian because they required class CGUIDegree to be defined
 	inline CGUIRadian::CGUIRadian ( const CGUIDegree& d ) : mRad(d.valueRadians())
@@ -411,29 +230,9 @@ namespace guiex
 		return CGUIMath::RadiansToDegrees ( mRad );
 	}
 
-	inline real CGUIRadian::valueAngleUnits() const
-	{
-		return CGUIMath::RadiansToAngleUnits ( mRad );
-	}
-
 	inline real CGUIDegree::valueRadians() const
 	{
 		return CGUIMath::DegreesToRadians ( mDeg );
-	}
-
-	inline real CGUIDegree::valueAngleUnits() const
-	{
-		return CGUIMath::DegreesToAngleUnits ( mDeg );
-	}
-
-	inline CGUIAngle::operator CGUIRadian()
-	{
-		return CGUIRadian(CGUIMath::AngleUnitsToRadians(mAngle));
-	}
-
-	inline CGUIAngle::operator CGUIDegree()
-	{
-		return CGUIDegree(CGUIMath::AngleUnitsToDegrees(mAngle));
 	}
 
 	inline CGUIRadian operator * ( real a, const CGUIRadian& b )

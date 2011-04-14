@@ -44,19 +44,20 @@ namespace guiex
 	*/
 	CGUIAs::~CGUIAs()
 	{
-		for(TListSuccessor::iterator itor = m_listSuccessor.begin();
-			itor != m_listSuccessor.end();
-			++itor)
-		{
-			( *itor )->RefRelease();
-		}
-		m_listSuccessor.clear();
+		ClearSuccessor();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIAs::Reset( )
 	{
 		m_bRetired = false;
 		m_fElapsedTime = 0.0f;
+
+		for(TArraySuccessor::iterator itor = m_arraySuccessor.begin();
+			itor != m_arraySuccessor.end();
+			++itor)
+		{
+			( *itor )->Reset();
+		}
 	}
 	//------------------------------------------------------------------------------
 	int32 CGUIAs::ProcessProperty( const CGUIProperty& rProperty )
@@ -277,25 +278,36 @@ namespace guiex
 		GUI_ASSERT(pAs, "wrong parameter");
 
 		pAs->RefRetain();
-		m_listSuccessor.push_back(pAs);
+		m_arraySuccessor.push_back(pAs);
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIAs::GetSuccessorNum( ) const
 	{
-		return uint32(m_listSuccessor.size());
+		return uint32(m_arraySuccessor.size());
 	}
 	//------------------------------------------------------------------------------
 	CGUIAs*	CGUIAs::GetSuccessor( uint32 nIndex )
 	{
-		GUI_ASSERT( nIndex<uint32(m_listSuccessor.size()), "wrong parameter");
-		return m_listSuccessor[nIndex];
+		GUI_ASSERT( nIndex<uint32(m_arraySuccessor.size()), "wrong parameter");
+		return m_arraySuccessor[nIndex];
 	}
 	//------------------------------------------------------------------------------
 	void CGUIAs::RemoveSuccessor( uint32 nIndex )
 	{
-		GUI_ASSERT( nIndex<uint32(m_listSuccessor.size()), "wrong parameter");
-		m_listSuccessor[nIndex]->RefRelease();
-		m_listSuccessor.erase( m_listSuccessor.begin() + nIndex );
+		GUI_ASSERT( nIndex<uint32(m_arraySuccessor.size()), "wrong parameter");
+		m_arraySuccessor[nIndex]->RefRelease();
+		m_arraySuccessor.erase( m_arraySuccessor.begin() + nIndex );
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAs::ClearSuccessor( )
+	{
+		for(TArraySuccessor::iterator itor = m_arraySuccessor.begin();
+			itor != m_arraySuccessor.end();
+			++itor)
+		{
+			( *itor )->RefRelease();
+		}
+		m_arraySuccessor.clear();
 	}
 	//------------------------------------------------------------------------------
 	int32 CGUIAs::DoLoad()

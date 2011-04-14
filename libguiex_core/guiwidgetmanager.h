@@ -49,6 +49,8 @@ namespace guiex
 		CGUIWidget* CreateWidget( const CGUIString& rType, const CGUIString& rWidgetName, const CGUIString& rSceneName );
 		template<class T>
 		T* CreateWidget( const CGUIString& rWidgetName, const CGUIString& rSceneName );
+		template<class T>
+		T* CreateCustomWidget( const CGUIString& rWidgetName, const CGUIString& rSceneName );
 		bool HasWidget(  const CGUIString& rWidgetName, const CGUIString& rSceneName );
 		CGUIWidget* GetWidget( const CGUIString& rWidgetName, const CGUIString& rSceneName );
 		void DestroyWidget( CGUIWidget* pWidget );
@@ -77,6 +79,7 @@ namespace guiex
 	protected:
 		bool TryRemovePage( CGUIWidget* pWidget );
 		bool TryRemoveDynamicPage( CGUIWidget* pWidget );
+		bool TryAddToWidgetPool( CGUIWidget* pWidget );
 
 	protected:
 
@@ -108,6 +111,19 @@ namespace guiex
 		CGUIWidget* pWidget = CreateWidget( T::StaticGetType(), rWidgetName, rSceneName );
 		GUI_ASSERT( pWidget->GetType() == T::StaticGetType(), "wrong Widget type" );
 		return static_cast<T*>( pWidget );
+	}	
+
+	template< class T >
+	inline T* CGUIWidgetManager::CreateCustomWidget( const CGUIString& rWidgetName, const CGUIString& rSceneName )
+	{
+		T* pWidget = new T( rWidgetName, rSceneName );
+		GUI_ASSERT( pWidget->GetType() == T::StaticGetType(), "wrong Widget type" );
+		if( false == TryAddToWidgetPool( pWidget ))
+		{
+			CGUIWidgetFactory::Instance()->DestoryWidget( pWidget );
+			return NULL;
+		}
+		return pWidget;
 	}	
 
 	template<class T>
