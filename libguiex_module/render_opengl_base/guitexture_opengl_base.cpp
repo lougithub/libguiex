@@ -131,19 +131,21 @@ namespace guiex
 		glBindTexture(GL_TEXTURE_2D, m_ogltexture);
 
 		//glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+		m_nBytesPerPixel = CGUIImageData::GetBytePerPixel(ePixelFormat);
+		m_ePixelFormat = ePixelFormat;
 
 		switch(ePixelFormat)
 		{
 		case GUI_PF_RGBA_32:
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, buffWidth, buffHeight, 0, GL_RGBA ,GL_UNSIGNED_BYTE, buffPtr);
-			m_nBytesPerPixel = 4;
-			m_ePixelFormat = GUI_PF_RGBA_32;
+			glTexImage2D(GL_TEXTURE_2D, 0, m_nBytesPerPixel, buffWidth, buffHeight, 0, GL_RGBA ,GL_UNSIGNED_BYTE, buffPtr);
+			break;
+
+		case GUI_PF_RGB_24:
+			glTexImage2D(GL_TEXTURE_2D, 0, m_nBytesPerPixel, buffWidth, buffHeight, 0, GL_RGB ,GL_UNSIGNED_BYTE, buffPtr);
 			break;
 
 		case GUI_PF_ALPHA_8:
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, buffWidth, buffHeight, 0, GL_ALPHA ,GL_UNSIGNED_BYTE, buffPtr);
-			m_nBytesPerPixel = 1;
-			m_ePixelFormat = GUI_PF_ALPHA_8;
+			glTexImage2D(GL_TEXTURE_2D, 0, m_nBytesPerPixel, buffWidth, buffHeight, 0, GL_ALPHA ,GL_UNSIGNED_BYTE, buffPtr);
 			break;
 
 		//case GUI_PF_LUMINANCE_ALPHA_16:

@@ -43,6 +43,7 @@ namespace guiex
 		,m_fDeltaTime(0.0f)
 		,m_nFrame(0)
 		,eUVAnimType(eUVAnimType_SingleFile)
+		,m_aAnimationSize(rSize)
 	{
 
 	}
@@ -60,8 +61,28 @@ namespace guiex
 		,m_fDeltaTime(0.0f)
 		,m_nFrame(0)
 		,eUVAnimType(eUVAnimType_MultiFile)
+		,m_aAnimationSize(rSize)
 	{
 
+	}
+	//------------------------------------------------------------------------------
+	CGUIAnimation::CGUIAnimation(
+		const CGUIString& rName, 
+		const CGUIString& rSceneName, 
+		const std::vector<CGUIString>& rFileNames,  
+		const std::vector<CGUIRect>& rUVRects,
+		real fInterval,
+		const CGUISize& rSize )
+		:CGUIResource( rName, rSceneName, "ANIMATION", GSystem->GetAnimationManager() )
+		,m_vecUVRects( rUVRects )
+		,m_vecFileNames( rFileNames )
+		,m_fInterval( fInterval )
+		,m_fDeltaTime(0.0f)
+		,m_nFrame(0)
+		,eUVAnimType(eUVAnimType_MultiFile)
+		,m_aAnimationSize(rSize)
+	{
+		GUI_ASSERT( m_vecFileNames.size() == m_vecUVRects.size(), "invalid param" );
 	}
 	//------------------------------------------------------------------------------
 	CGUIAnimation::~CGUIAnimation()

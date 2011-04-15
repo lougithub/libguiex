@@ -15,6 +15,7 @@
 #include "guistring.h"
 #include "guianimation.h"
 #include "guiresourcemanager.h"
+#include "guiproperty.h"
 #include <set>
 #include <map>
 
@@ -32,12 +33,30 @@ namespace guiex
 //============================================================================// 
 namespace guiex
 {
+	class GUIEXPORT CGUIAnimationData  : public CGUIResource
+	{
+	public:
+		const CGUIProperty& GetAnimationData() const;
+
+	protected:
+		virtual int32 DoLoad();
+		virtual void DoUnload();
+
+	protected:
+		friend class CGUIAnimationManager;
+		CGUIAnimationData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIProperty& rProperty );
+
+	protected:
+		CGUIProperty m_aProperty;
+	};
+
+
 	/**
 	* @class CGUIAnimationManager
 	* @brief image manager
 	* 
 	*/
-	class GUIEXPORT CGUIAnimationManager : public CGUIResourceManager <CGUIAnimation, CGUIAnimation>
+	class GUIEXPORT CGUIAnimationManager : public CGUIResourceManager <CGUIAnimationData, CGUIAnimation>
 	{
 	public:
 
@@ -50,57 +69,13 @@ namespace guiex
 			const CGUIString& rSceneName, 
 			const CGUIProperty& rProperty );
 
-		int32 RegisterAnimation(
-			const CGUIString& rName, 
-			const CGUIString& rSceneName, 
-			const CGUIString& rFileName, 
-			const std::vector<CGUIRect>& rUVRects,
-			real fInterval,
-			const CGUISize& rSize = CGUISize(0,0));
-
-		int32 RegisterAnimation( 
-			const CGUIString& rName, 
-			const CGUIString& rSceneName, 
-			const std::vector<CGUIString>& rFileNames,  
-			real fInterval,
-			const CGUISize& rSize = CGUISize(0,0));
-
 		CGUIAnimation* AllocateResource( const CGUIString& rResName );
-		CGUIAnimation* AllocateResource(
-			const CGUIString& rFileName, 
-			const std::vector<CGUIRect>& rUVRects,
-			real fInterval,
-			const CGUISize& rSize = CGUISize(0,0)
-			);
-		CGUIAnimation* AllocateResource( 
-			const std::vector<CGUIString>& rFileNames,  
-			real fInterval,
-			const CGUISize& rSize = CGUISize(0,0));
 
 		virtual void DeallocateResource( CGUIResource* pRes );
 
 	protected:
 		virtual	void DestroyRegisterResourceImp( CGUIResource* pRes ); 
 		virtual	void DestroyAllocateResourceImp( CGUIResource* pRes ); 
-
-		CGUIAnimation* DoCreateAnimation(
-			const CGUIString& rSceneName, 
-			const CGUIProperty& rProperty );
-
-		CGUIAnimation* DoCreateAnimation(
-			const CGUIString& rName, 
-			const CGUIString& rSceneName, 
-			const CGUIString& rFileName, 
-			const std::vector<CGUIRect>& rUVRects,
-			real fInterval,
-			const CGUISize& rSize );
-
-		CGUIAnimation* DoCreateAnimation( 
-			const CGUIString& rName, 
-			const CGUIString& rSceneName, 
-			const std::vector<CGUIString>& rFileNames,  
-			real fInterval,
-			const CGUISize& rSize );
 
 	private:
 		static CGUIAnimationManager* m_pSingleton;

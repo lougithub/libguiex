@@ -8,17 +8,41 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core/guianimationmanager.h>
-#include <libguiex_core/guianimation.h>
-#include <libguiex_core/guiproperty.h>
-#include <libguiex_core/guistringconvertor.h>
-#include <libguiex_core/guiexception.h>
+#include "guianimationmanager.h"
+#include "guianimation.h"
+#include "guiproperty.h"
+#include "guistringconvertor.h"
+#include "guiexception.h"
+#include "guipropertyconvertor.h"
 
 //============================================================================//
 // function
 //============================================================================// 
 namespace guiex
 {
+	//------------------------------------------------------------------------------
+	CGUIAnimationData::CGUIAnimationData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIProperty& rProperty )
+		:CGUIResource( rName, rSceneName, "ANIMATIONDATA", GSystem->GetAnimationManager() )
+		,m_aProperty( rProperty )
+	{
+	}
+	//------------------------------------------------------------------------------
+	const CGUIProperty& CGUIAnimationData::GetAnimationData() const
+	{
+		return m_aProperty;
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUIAnimationData::DoLoad()
+	{
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAnimationData::DoUnload()
+	{
+	}
+	//------------------------------------------------------------------------------
+
+
 	//------------------------------------------------------------------------------
 	CGUIAnimationManager * CGUIAnimationManager::m_pSingleton = NULL; 
 	//------------------------------------------------------------------------------
@@ -43,146 +67,89 @@ namespace guiex
 		const CGUIString& rSceneName, 
 		const CGUIProperty& rProperty )
 	{
-		CGUIAnimation* pAnimation = DoCreateAnimation(
-			rSceneName,
-			rProperty);
-		RegisterResource( pAnimation );
+		CGUIAnimationData* pAnimationData = new CGUIAnimationData( rProperty.GetName(), rSceneName, rProperty );
+		RegisterResource( pAnimationData );
 		return 0;
-	}
-	//------------------------------------------------------------------------------
-	int32 CGUIAnimationManager::RegisterAnimation(
-		const CGUIString& rName, 
-		const CGUIString& rSceneName, 
-		const CGUIString& rFileName, 
-		const std::vector<CGUIRect>& rUVRects,
-		real fInterval,
-		const CGUISize& rSize )
-	{
-		CGUIAnimation* pAnimation = DoCreateAnimation(
-			rName,
-			rSceneName,
-			rFileName, 
-			rUVRects,
-			fInterval,
-			rSize );
-		RegisterResource( pAnimation );
-		return 0;
-	}
-	//------------------------------------------------------------------------------
-	int32 CGUIAnimationManager::RegisterAnimation( 
-		const CGUIString& rName, 
-		const CGUIString& rSceneName, 
-		const std::vector<CGUIString>& rFileNames,  
-		real fInterval,
-		const CGUISize& rSize )
-	{
-		CGUIAnimation* pAnimation = DoCreateAnimation(
-			rName,
-			rSceneName,
-			rFileNames, 
-			fInterval,
-			rSize );
-		RegisterResource( pAnimation );
-		return 0;
-	}
-	//------------------------------------------------------------------------------
-	CGUIAnimation* CGUIAnimationManager::DoCreateAnimation(
-		const CGUIString& rSceneName, 
-		const CGUIProperty& rProperty )
-	{
-		GUI_ASSERT(0, "not implementation");
-		return NULL;
-	}
-	//------------------------------------------------------------------------------
-	CGUIAnimation* CGUIAnimationManager::DoCreateAnimation(
-			const CGUIString& rName, 
-			const CGUIString& rSceneName, 
-			const CGUIString& rFileName, 
-			const std::vector<CGUIRect>& rUVRects,
-			real fInterval,
-			const CGUISize& rSize )
-	{
-		CGUIAnimation* pAnimation = new CGUIAnimation( rName, rSceneName, rFileName, rUVRects, fInterval, rSize );
-		return pAnimation;
-	}
-	//------------------------------------------------------------------------------
-	CGUIAnimation* CGUIAnimationManager::DoCreateAnimation( 
-			const CGUIString& rName, 
-			const CGUIString& rSceneName, 
-			const std::vector<CGUIString>& rFileNames,  
-			real fInterval,
-			const CGUISize& rSize )
-	{
-		CGUIAnimation* pAnimation = new CGUIAnimation( rName, rSceneName, rFileNames, fInterval, rSize );
-		RegisterResource(pAnimation);
-		return pAnimation;
 	}
 	//------------------------------------------------------------------------------
 	CGUIAnimation* CGUIAnimationManager::AllocateResource( const CGUIString& rResName )
 	{
-		CGUIAnimation* pTemplate = GetRegisterResource( rResName );
-		if( !pTemplate )
+		CGUIAnimationData* pAnimationData = CGUIResourceManager<CGUIAnimationData, CGUIAnimation>::GetRegisterResource( rResName );
+		if( !pAnimationData )
 		{
 			throw CGUIException( 
-				"[CGUIAnimationManager::AllocateResource]: failed to get image by name <%s>",
+				"[CGUIAnimationManager::AllocateResource]: failed to get as data by name <%s>",
 				rResName.c_str());
 			return NULL;
 		}
 
-		CGUIAnimation* pAnimation = NULL;
-		if( pTemplate->eUVAnimType == CGUIAnimation::eUVAnimType_MultiFile )
+		/**
+		<property name="mole_laugh" type="CGUIImageDefine">
+			<property name="size" type="CGUISize" value="178,200"/>
+			<property name="interval" type="CGUISize" value="178,200"/>
+			<property name="path" type="CGUIString" value="image/anim/mole_laugh1.tga" />
+			<property name="uv" type="CGUIRect" value="0,0,1,1" />
+			<property name="path" type="CGUIString" value="image/anim/mole_laugh2.tga" />
+			<property name="uv" type="CGUIRect" value="0,0,1,1" />
+			<property name="path" type="CGUIString" value="image/anim/mole_laugh3.tga" />
+			<property name="uv" type="CGUIRect" value="0,0,1,1" />
+		</property>
+		*/
+
+		const CGUIProperty& rRootProperty = pAnimationData->GetAnimationData();
+
+		//size
+		CGUISize aAnimationSize;
 		{
-			pAnimation = DoCreateAnimation(
-				"",
-				"",
-				pTemplate->m_vecFileNames, 
-				pTemplate->m_fInterval,
-				pTemplate->GetSize() );
+			const CGUIProperty* pPropertySize = rRootProperty.GetProperty("size", "CGUISize");
+			if( pPropertySize )
+			{
+				PropertyToValue( *pPropertySize, aAnimationSize );
+			}
 		}
-		else
+
+		//interval
+		real fInterval = 0.033f;
 		{
-			pAnimation = DoCreateAnimation(
-				"",
-				"",
-				pTemplate->m_vecFileNames[0], 
-				pTemplate->m_vecUVRects,
-				pTemplate->m_fInterval,
-				pTemplate->GetSize() );
+			const CGUIProperty* pPropertyInterval = rRootProperty.GetProperty("interval", "real");
+			if( pPropertyInterval )
+			{
+				PropertyToValue( *pPropertyInterval, fInterval );
+			}
 		}
-		pAnimation->RefRetain();
-		AddToAllocatePool( pAnimation );
-		return pAnimation;
-	}
-	//------------------------------------------------------------------------------
-	CGUIAnimation* CGUIAnimationManager::AllocateResource(
-		const CGUIString& rFileName, 
-		const std::vector<CGUIRect>& rUVRects,
-		real fInterval,
-		const CGUISize& rSize )
-	{
-		CGUIAnimation* pAnimation = DoCreateAnimation(
-			"",
-			"",
-			rFileName, 
-			rUVRects, 
-			fInterval,
-			rSize );
-		pAnimation->RefRetain();
-		AddToAllocatePool( pAnimation );
-		return pAnimation;
-	}
-	//------------------------------------------------------------------------------
-	CGUIAnimation* CGUIAnimationManager::AllocateResource( 
-		const std::vector<CGUIString>& rFileNames,  
-		real fInterval,
-		const CGUISize& rSize )
-	{
-		CGUIAnimation* pAnimation = DoCreateAnimation(
-			"",
-			"",
-			rFileNames, 
-			fInterval,
-			rSize );
+
+		//images
+		std::vector<CGUIString> vecFilenames;
+		std::vector<CGUIRect> vecRects;
+		{
+			const CGUIProperty* pPropertyImages = rRootProperty.GetProperty("images", "folder" );
+			if( pPropertyImages )
+			{
+				for( uint32 i=0; i<pPropertyImages->GetPropertyNum(); ++i )
+				{
+					const CGUIProperty* pProperty = pPropertyImages->GetProperty( i );
+					if( pProperty->GetType() == ePropertyType_String && pProperty->GetName() == "path" )
+					{
+						vecFilenames.push_back( pProperty->GetValue() );
+					}
+					else if( pProperty->GetType() == ePropertyType_Rect && pProperty->GetName() == "uv" )
+					{
+						CGUIRect aRect;
+						PropertyToValue( *pProperty, aRect );
+						vecRects.push_back( aRect );
+					}
+					else
+					{
+						throw CGUIException( 
+							"[CGUIAnimationManager::AllocateResource]: failed to parse animation data <%s>",
+							rRootProperty.GetName().c_str());
+					}
+				}
+			}
+		}
+
+
+		CGUIAnimation* pAnimation = new CGUIAnimation( rRootProperty.GetName(), pAnimationData->GetSceneName(), vecFilenames, vecRects, fInterval, aAnimationSize );
 		pAnimation->RefRetain();
 		AddToAllocatePool( pAnimation );
 		return pAnimation;

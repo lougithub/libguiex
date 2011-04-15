@@ -37,6 +37,8 @@ namespace guiex
 		ePropertyType_UInt16,
 		ePropertyType_Real,
 		
+		ePropertyType_Folder,
+
 		ePropertyType_String,
 		ePropertyType_LocalizedString,
 		ePropertyType_Size,

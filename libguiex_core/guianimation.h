@@ -82,6 +82,19 @@ namespace guiex
 			real fInterval,
 			const CGUISize& rSize);
 
+		/**
+		* @brief constructor
+		* @param nInterval interval time between two frame.in millisecond
+		* @param rListFileName list contains all image's name
+		*/
+		CGUIAnimation(
+			const CGUIString& rName, 
+			const CGUIString& rSceneName, 
+			const std::vector<CGUIString>& rFileNames,  
+			const std::vector<CGUIRect>& rUVRects,
+			real fInterval,
+			const CGUISize& rSize);
+
 		virtual int32 DoLoad();
 		virtual void DoUnload();
 
