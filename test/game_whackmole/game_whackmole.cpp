@@ -33,6 +33,9 @@ CMyCanvasLayer_WhackMoleGame::CMyCanvasLayer_WhackMoleGame( const char* szLayerN
 	//set attribute
 	SetHitable( true );
 	SetMouseConsumed(true);
+	
+	SetSizeType( eScreenValue_Percentage );
+	SetSize( 1,1 );
 
 	CGUIWidget* pPanel = CGUIWidgetManager::Instance()->GetPage( "game_whackmole.xml", "game_whackmole" );
 	pPanel->SetParent( this );	

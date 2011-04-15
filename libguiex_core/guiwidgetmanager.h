@@ -14,6 +14,7 @@
 #include "guibase.h"
 #include "guistring.h"
 #include "guiwidget.h"
+#include "guiwidgetfactory.h"
 #include <vector>
 #include <map>
 #include <set>
