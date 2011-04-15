@@ -12,6 +12,7 @@
 // include
 //============================================================================// 
 #if defined(GUIEX_PLATFORM_WIN32)
+#	include "guiwgttag.h"
 #	include "guiwgtframe.h"
 #	include "guiwgtbutton.h"
 #	include "guiwgtradiobutton.h"
@@ -41,6 +42,7 @@
 #	include "guicollistheadersegment.h"
 #	include "guicollisttextitem.h"
 #elif defined(GUIEX_PLATFORM_MAC)
+#	include "guiwgttag.h"
 #	include "guiwgtscrollbar.h"
 #	include "guiwgtscrollbarcontainer.h"
 #	include "guiwgteditbox.h"

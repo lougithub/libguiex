@@ -52,12 +52,14 @@ set( ${target_name}_utility_SRCS
 	)
 source_group( utility FILES ${${target_name}_utility_SRCS} )
 
-#empty node
-set( ${target_name}_emptynode_SRCS 
+#utility node
+set( ${target_name}_utilitynode_SRCS 
         guiwgtemptynode.cpp
         guiwgtemptynode.h
+        guiwgttag.cpp
+        guiwgttag.h
 	)
-source_group( emptynode FILES ${${target_name}_emptynode_SRCS} )
+source_group( utilitynode FILES ${${target_name}_utilitynode_SRCS} )
 
 #edit box
 set( ${target_name}_editbox_SRCS 
@@ -110,7 +112,7 @@ if( BUILD_PLATFORM_WIN32 )
 		${${target_name}_radioutton_SRCS}
 		${${target_name}_panel_SRCS}
 		${${target_name}_static_SRCS}
-		${${target_name}_emptynode_SRCS}
+		${${target_name}_utilitynode_SRCS}
 		${${target_name}_editbox_SRCS}
 		${${target_name}_tabcontrol_SRCS}
 		${${target_name}_scrollbar_SRCS}
@@ -124,7 +126,7 @@ elseif( BUILD_PLATFORM_IOS)
     	${${target_name}_button_SRCS}
 		${${target_name}_checkbutton_SRCS}
 		${${target_name}_radioutton_SRCS}
-		${${target_name}_emptynode_SRCS}
+		${${target_name}_utilitynode_SRCS}
 		${${target_name}_panel_SRCS}
 		${${target_name}_editbox_SRCS}
 		${${target_name}_scrollbar_SRCS}
@@ -137,7 +139,7 @@ elseif( BUILD_PLATFORM_MACOS )
     	${${target_name}_button_SRCS}
 		${${target_name}_checkbutton_SRCS}
 		${${target_name}_radioutton_SRCS}
-		${${target_name}_emptynode_SRCS}
+		${${target_name}_utilitynode_SRCS}
 		${${target_name}_panel_SRCS}
 		${${target_name}_editbox_SRCS}
 		${${target_name}_scrollbar_SRCS}

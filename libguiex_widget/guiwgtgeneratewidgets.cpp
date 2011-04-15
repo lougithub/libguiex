@@ -28,6 +28,7 @@ namespace guiex
 #define GUI_ADD_WIDGET_GENERATOR( widget ) \
 	aList.push_back( widget::widget##_Generator::GenerateSelf());
 
+		GUI_ADD_WIDGET_GENERATOR(CGUIWgtTag);		
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtButton);
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtCheckButton);
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtRadioButton);
@@ -71,6 +72,7 @@ namespace guiex
 #define GUI_ADD_WIDGET_GENERATOR( widget ) \
 	aList.push_back( widget::widget##_Generator::GenerateSelf());
 
+		GUI_ADD_WIDGET_GENERATOR(CGUIWgtTag);		
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtEmptyNode);		
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtScrollbar);	
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtScrollbarContainer);		
