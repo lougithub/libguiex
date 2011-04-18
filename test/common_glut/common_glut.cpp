@@ -24,15 +24,15 @@
 //============================================================================//
 // declare
 //============================================================================// 
-using namespace guiex;
+//using namespace guiex;
 //const int32 g_nScreenWidth = 1024;
 //const int32 g_nScreenHeight = 768;
-const int32 g_nScreenWidth = 640;
-const int32 g_nScreenHeight = 480;
-CGUIFrameworkBase* g_pFramework = NULL;
-std::map<int,EKeyCode> g_mapKey_Glut2Guiex;
-CGUITimer g_aOldTimer;
-extern CGUIFrameworkBase* CreateFramework( );
+const guiex::int32 g_nScreenWidth = 640;
+const guiex::int32 g_nScreenHeight = 480;
+guiex::CGUIFrameworkBase* g_pFramework = NULL;
+std::map<int,guiex::EKeyCode> g_mapKey_Glut2Guiex;
+guiex::CGUITimer g_aOldTimer;
+extern guiex::CGUIFrameworkBase* CreateFramework( );
 int g_nVSync = 1;
 
 //============================================================================//
@@ -89,12 +89,12 @@ void QuitApp()
 //------------------------------------------------------------------------------
 void mouseMotionCB(int x, int y)
 {
-	CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeMousePos(CGUIVector2(x,y));
+	guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeMousePos(guiex::CGUIVector2(x,y));
 }
 //------------------------------------------------------------------------------
 void MouseWheel(int wheel, int direction, int x, int y)
 {
-	CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeWheel(wheel);
+	guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeWheel(wheel);
 }
 //------------------------------------------------------------------------------
 void mouseCB(int button, int state, int x, int y)
@@ -104,33 +104,33 @@ void mouseCB(int button, int state, int x, int y)
 	case  GLUT_LEFT_BUTTON:
 		if (state == GLUT_UP)
 		{
-			CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( MOUSE_LEFT, MOUSE_UP );
+			guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( guiex::MOUSE_LEFT, guiex::MOUSE_UP );
 		}
 		else
 		{
-			CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( MOUSE_LEFT, MOUSE_DOWN );
+			guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( guiex::MOUSE_LEFT, guiex::MOUSE_DOWN );
 		}
 		break;
 
 	case GLUT_RIGHT_BUTTON:
 		if (state == GLUT_UP)
 		{
-			CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( MOUSE_RIGHT, MOUSE_UP );
+			guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( guiex::MOUSE_RIGHT, guiex::MOUSE_UP );
 		}
 		else
 		{
-			CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( MOUSE_RIGHT, MOUSE_DOWN );
+			guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( guiex::MOUSE_RIGHT, guiex::MOUSE_DOWN );
 		}
 		break;
 
 	case GLUT_MIDDLE_BUTTON:
 		if (state == GLUT_UP)
 		{
-			CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( MOUSE_MIDDLE, MOUSE_UP );
+			guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( guiex::MOUSE_MIDDLE, guiex::MOUSE_UP );
 		}
 		else
 		{
-			CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( MOUSE_MIDDLE, MOUSE_DOWN );
+			guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( guiex::MOUSE_MIDDLE, guiex::MOUSE_DOWN );
 		}
 		break;
 	}
@@ -147,35 +147,35 @@ void keyboardCB(unsigned char key, int x, int y)
 		break;
 
 	case 0x08:  // backspace
-		CGUIInterfaceManager::Instance()->GetInterfaceKeyboard()->ChangeKeyState(KC_BACK, KEY_DOWN);
+		guiex::CGUIInterfaceManager::Instance()->GetInterfaceKeyboard()->ChangeKeyState(guiex::KC_BACK, guiex::KEY_DOWN);
 		break;
 
 	case 0x7F:  // delete
-		CGUIInterfaceManager::Instance()->GetInterfaceKeyboard()->ChangeKeyState(KC_DELETE, KEY_DOWN);
+		guiex::CGUIInterfaceManager::Instance()->GetInterfaceKeyboard()->ChangeKeyState(guiex::KC_DELETE, guiex::KEY_DOWN);
 		break;
 
 	case 0x0D:  // CR (Return)
-		CGUIInterfaceManager::Instance()->GetInterfaceKeyboard()->ChangeKeyState(KC_ENTER, KEY_DOWN);
+		guiex::CGUIInterfaceManager::Instance()->GetInterfaceKeyboard()->ChangeKeyState(guiex::KC_ENTER, guiex::KEY_DOWN);
 		break;
 
 	case 'c':	//clip or not
-		if( CGUIInterfaceManager::Instance()->GetInterfaceRender())
+		if( guiex::CGUIInterfaceManager::Instance()->GetInterfaceRender())
 		{
-			CGUIInterfaceManager::Instance()->GetInterfaceRender()->EnableClip( !CGUIInterfaceManager::Instance()->GetInterfaceRender()->IsEnableClip() );
+			guiex::CGUIInterfaceManager::Instance()->GetInterfaceRender()->EnableClip( !guiex::CGUIInterfaceManager::Instance()->GetInterfaceRender()->IsEnableClip() );
 		}
 		break;
 
 	case 'w':	//wire frame or not
-		if( CGUIInterfaceManager::Instance()->GetInterfaceRender())
+		if( guiex::CGUIInterfaceManager::Instance()->GetInterfaceRender())
 		{
-			CGUIInterfaceManager::Instance()->GetInterfaceRender()->SetWireFrame( !CGUIInterfaceManager::Instance()->GetInterfaceRender()->IsWireFrame() );
+			guiex::CGUIInterfaceManager::Instance()->GetInterfaceRender()->SetWireFrame( !guiex::CGUIInterfaceManager::Instance()->GetInterfaceRender()->IsWireFrame() );
 		}
 		break;
 
 	case 'e':	//extra info or not
-		if( GSystem )
+		if( guiex::GSystem )
 		{
-			GSystem->SetDrawExtraInfo( !GSystem->IsDrawExtraInfo() );
+			guiex::GSystem->SetDrawExtraInfo( !guiex::GSystem->IsDrawExtraInfo() );
 		}
 		break;
 
@@ -185,7 +185,7 @@ void keyboardCB(unsigned char key, int x, int y)
 //		break;
 	
 	case 'r':	//rotate screen
-		GSystem->SetScreenOrientation( EScreenOrientation((GSystem->GetScreenOrientation() + 1) % (eScreenOrientation_LandscapeRight+1)));
+		guiex::GSystem->SetScreenOrientation( guiex::EScreenOrientation((guiex::GSystem->GetScreenOrientation() + 1) % (guiex::eScreenOrientation_LandscapeRight+1)));
 		break;
 
 	default:
@@ -201,15 +201,15 @@ void keyboardUpCB(unsigned char key, int x, int y)
 	switch (key)
 	{
 	case 0x08:  // backspace
-		CGUIInterfaceManager::Instance()->GetInterfaceKeyboard()->ChangeKeyState(KC_BACK, KEY_UP);
+		guiex::CGUIInterfaceManager::Instance()->GetInterfaceKeyboard()->ChangeKeyState(guiex::KC_BACK, guiex::KEY_UP);
 		break;
 
 	case 0x7F:  // delete
-		CGUIInterfaceManager::Instance()->GetInterfaceKeyboard()->ChangeKeyState(KC_DELETE, KEY_UP);
+		guiex::CGUIInterfaceManager::Instance()->GetInterfaceKeyboard()->ChangeKeyState(guiex::KC_DELETE, guiex::KEY_UP);
 		break;
 
 	case 0x0D:  // CR (Return)
-		CGUIInterfaceManager::Instance()->GetInterfaceKeyboard()->ChangeKeyState(KC_ENTER, KEY_UP);
+		guiex::CGUIInterfaceManager::Instance()->GetInterfaceKeyboard()->ChangeKeyState(guiex::KC_ENTER, guiex::KEY_UP);
 		break;
 
 	default:
@@ -220,19 +220,19 @@ void keyboardUpCB(unsigned char key, int x, int y)
 //------------------------------------------------------------------------------
 void keySpecialCB(int key, int x, int y)
 {
-	std::map<int,EKeyCode>::iterator itor = g_mapKey_Glut2Guiex.find(key);
+	std::map<int,guiex::EKeyCode>::iterator itor = g_mapKey_Glut2Guiex.find(key);
 	if( itor != g_mapKey_Glut2Guiex.end())
 	{
-		CGUIInterfaceManager::Instance()->GetInterfaceKeyboard()->ChangeKeyState(itor->second, KEY_DOWN);
+		guiex::CGUIInterfaceManager::Instance()->GetInterfaceKeyboard()->ChangeKeyState(itor->second, guiex::KEY_DOWN);
 	}
 }
 //------------------------------------------------------------------------------
 void displayCB(void)
 {
 	// do updates
-	CGUITimer aCurTimer;
+	guiex::CGUITimer aCurTimer;
 	aCurTimer.UpdateTime();
-	float fDeltaTime = (aCurTimer - g_aOldTimer) / 1000.f;
+	guiex::real fDeltaTime = (aCurTimer - g_aOldTimer) / 1000.f;
 	g_aOldTimer = aCurTimer;
 
 	g_pFramework->Update( fDeltaTime );
@@ -251,40 +251,40 @@ void idleCB()
 //------------------------------------------------------------------------------
 void reshapeCB(int width, int height)
 {
-	GSystem->SetRawScreenSize(width,height);
+	guiex::GSystem->SetRawScreenSize(width,height);
 }
 //------------------------------------------------------------------------------
 void keyUpSpecialCB(int key, int x, int y)
 {
-	std::map<int,EKeyCode>::iterator itor = g_mapKey_Glut2Guiex.find(key);
+	std::map<int,guiex::EKeyCode>::iterator itor = g_mapKey_Glut2Guiex.find(key);
 	if( itor != g_mapKey_Glut2Guiex.end())
 	{
-		CGUIInterfaceManager::Instance()->GetInterfaceKeyboard()->ChangeKeyState(itor->second, KEY_UP);
+		guiex::CGUIInterfaceManager::Instance()->GetInterfaceKeyboard()->ChangeKeyState(itor->second, guiex::KEY_UP);
 	}
 }
 void RegisterKeyboard()
 {
-	g_mapKey_Glut2Guiex[GLUT_KEY_F1] = KC_F1;
-	g_mapKey_Glut2Guiex[GLUT_KEY_F2] = KC_F2;
-	g_mapKey_Glut2Guiex[GLUT_KEY_F3] = KC_F3;
-	g_mapKey_Glut2Guiex[GLUT_KEY_F4] = KC_F4;
-	g_mapKey_Glut2Guiex[GLUT_KEY_F5] = KC_F5;
-	g_mapKey_Glut2Guiex[GLUT_KEY_F6] = KC_F6;
-	g_mapKey_Glut2Guiex[GLUT_KEY_F7] = KC_F7;
-	g_mapKey_Glut2Guiex[GLUT_KEY_F8] = KC_F8;
-	g_mapKey_Glut2Guiex[GLUT_KEY_F9] = KC_F9;
-	g_mapKey_Glut2Guiex[GLUT_KEY_F10] = KC_F10;
-	g_mapKey_Glut2Guiex[GLUT_KEY_F11] = KC_F11;
-	g_mapKey_Glut2Guiex[GLUT_KEY_F12] = KC_F12;
-	g_mapKey_Glut2Guiex[GLUT_KEY_LEFT] = KC_LEFT;
-	g_mapKey_Glut2Guiex[GLUT_KEY_UP] = KC_UP;
-	g_mapKey_Glut2Guiex[GLUT_KEY_RIGHT] = KC_RIGHT;
-	g_mapKey_Glut2Guiex[GLUT_KEY_DOWN] = KC_DOWN;
-	g_mapKey_Glut2Guiex[GLUT_KEY_PAGE_UP] = KC_PAGEUP;
-	g_mapKey_Glut2Guiex[GLUT_KEY_PAGE_DOWN] = KC_PAGEDOWN;
-	g_mapKey_Glut2Guiex[GLUT_KEY_HOME] = KC_HOME;
-	g_mapKey_Glut2Guiex[GLUT_KEY_END] = KC_END;
-	g_mapKey_Glut2Guiex[GLUT_KEY_INSERT] = KC_INSERT;
+	g_mapKey_Glut2Guiex[GLUT_KEY_F1] = guiex::KC_F1;
+	g_mapKey_Glut2Guiex[GLUT_KEY_F2] = guiex::KC_F2;
+	g_mapKey_Glut2Guiex[GLUT_KEY_F3] = guiex::KC_F3;
+	g_mapKey_Glut2Guiex[GLUT_KEY_F4] = guiex::KC_F4;
+	g_mapKey_Glut2Guiex[GLUT_KEY_F5] = guiex::KC_F5;
+	g_mapKey_Glut2Guiex[GLUT_KEY_F6] = guiex::KC_F6;
+	g_mapKey_Glut2Guiex[GLUT_KEY_F7] = guiex::KC_F7;
+	g_mapKey_Glut2Guiex[GLUT_KEY_F8] = guiex::KC_F8;
+	g_mapKey_Glut2Guiex[GLUT_KEY_F9] = guiex::KC_F9;
+	g_mapKey_Glut2Guiex[GLUT_KEY_F10] = guiex::KC_F10;
+	g_mapKey_Glut2Guiex[GLUT_KEY_F11] = guiex::KC_F11;
+	g_mapKey_Glut2Guiex[GLUT_KEY_F12] = guiex::KC_F12;
+	g_mapKey_Glut2Guiex[GLUT_KEY_LEFT] = guiex::KC_LEFT;
+	g_mapKey_Glut2Guiex[GLUT_KEY_UP] = guiex::KC_UP;
+	g_mapKey_Glut2Guiex[GLUT_KEY_RIGHT] = guiex::KC_RIGHT;
+	g_mapKey_Glut2Guiex[GLUT_KEY_DOWN] = guiex::KC_DOWN;
+	g_mapKey_Glut2Guiex[GLUT_KEY_PAGE_UP] = guiex::KC_PAGEUP;
+	g_mapKey_Glut2Guiex[GLUT_KEY_PAGE_DOWN] = guiex::KC_PAGEDOWN;
+	g_mapKey_Glut2Guiex[GLUT_KEY_HOME] = guiex::KC_HOME;
+	g_mapKey_Glut2Guiex[GLUT_KEY_END] = guiex::KC_END;
+	g_mapKey_Glut2Guiex[GLUT_KEY_INSERT] = guiex::KC_INSERT;
 }
 //------------------------------------------------------------------------------
 void exitCB()
@@ -322,17 +322,17 @@ int main(int argc, char** argv)
 #if defined( GUIEX_PLATFORM_WIN32 )
 	char fdir[_MAX_DIR];
 	_splitpath( argv[0], NULL, fdir, NULL, NULL ); 
-	CGUIString rDir = fdir;
+	guiex::CGUIString rDir = fdir;
 	rDir += "../../data/test/";
 #elif defined( GUIEX_PLATFORM_MAC )
-	CGUIString rDir(dirname( argv[0]));
+	guiex::CGUIString rDir(dirname( argv[0]));
 	rDir += "/../../test/";
 #else
 #	error "unknown platform"		
 #endif
 
 	g_pFramework = CreateFramework( );
-	g_pFramework->Initialize( CGUIIntSize( g_nScreenWidth, g_nScreenHeight ), rDir.c_str() );
+	g_pFramework->Initialize( guiex::CGUIIntSize( g_nScreenWidth, g_nScreenHeight ), rDir.c_str() );
 	RegisterKeyboard();
 
 	g_aOldTimer.UpdateTime();

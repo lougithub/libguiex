@@ -14,6 +14,7 @@
 #include <libguiex_core/guiimage.h>
 #include <libguiex_core/guiinterfacemanager.h>
 #include <libguiex_module/physics_box2d/guiphysics_box2d.h>
+#include <Box2D/Box2D.h>
 
 //============================================================================//
 // function

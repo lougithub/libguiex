@@ -13,7 +13,6 @@
 //============================================================================// 
 #include <libguiex_core/guiwidget.h>
 #include <libguiex_core/guiwidgetgenerator.h>
-#include <Box2D/Box2D.h>
 
 //============================================================================//
 // class
