@@ -45,9 +45,9 @@ namespace guiex
 		m_pAnimationName = "ANIMATION_DEFAULT";
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtAnimation::SetAnimation(const CGUIString& rAnimationName, CGUIAnimation* pAnimation)
+	void CGUIWgtAnimation::OnSetAnimation( const CGUIString& rName, CGUIAnimation* pAnimation )
 	{
-		if( rAnimationName == "ANIMATION_DEFAULT" )
+		if( rName == "ANIMATION_DEFAULT" )
 		{
 			m_pAnimationCur = pAnimation;
 			if( GetSize().IsEqualZero() && pAnimation )
@@ -55,7 +55,6 @@ namespace guiex
 				SetPixelSize( pAnimation->GetSize() );
 			}
 		}
-		CGUIWidget::SetAnimation(rAnimationName,pAnimation);;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtAnimation::SetCurrentAnimation( const CGUIString& rAnimationName)
@@ -71,9 +70,14 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	const CGUIString& CGUIWgtAnimation::GetCurrentAnimation(  ) const
+	const CGUIString& CGUIWgtAnimation::GetCurrentAnimationName(  ) const
 	{
 		return m_pAnimationName;
+	}
+	//------------------------------------------------------------------------------
+	CGUIAnimation* CGUIWgtAnimation::GetCurrentAnimation(  ) const
+	{
+		return m_pAnimationCur;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtAnimation::UpdateSelf( real fDeltaTime )
@@ -94,6 +98,5 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-
 
 }//namespace guiex

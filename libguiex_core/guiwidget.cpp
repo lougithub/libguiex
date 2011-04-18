@@ -82,6 +82,7 @@ namespace guiex
 		,m_bIsGenerateUpdateEvent(false)
 		,m_bIsGenerateParentSizeChangeEvent(false)
 		,m_bIsGenerateParentChangeEvent(false)
+		,m_bIsGenerateAddChildEvent(false )
 		,m_bIsGenerateClickEvent(true)
 		,m_bIsGenerateDBClickEvent(false)
 		,m_bIsGenerateMultiClickEvent(false)
@@ -283,7 +284,40 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWidget::SetParentImpl( CGUIWidget* pParent )
 	{
+		if( pParent == m_pParent )
+		{
+			return;
+		}
+
+		if( m_pParent )
+		{
+			//for parameter
+			m_pParent->m_aParamScale.RemoveChild(&(m_aParamScale));
+			m_pParent->m_aParamAlpha.RemoveChild(&(m_aParamAlpha));
+			m_pParent->m_aParamDisable.RemoveChild(&(m_aParamDisable));
+			m_pParent->m_aParamActivable.RemoveChild(&(m_aParamActivable));
+			m_pParent->m_aParamVisible.RemoveChild(&(m_aParamVisible));
+		}
 		m_pParent = pParent;
+		if( m_pParent )
+		{
+			m_pParent->m_aParamScale.AddChild(&(m_aParamScale));
+			m_pParent->m_aParamAlpha.AddChild(&(m_aParamAlpha));
+			m_pParent->m_aParamDisable.AddChild(&(m_aParamDisable));
+			m_pParent->m_aParamActivable.AddChild(&(m_aParamActivable));
+			m_pParent->m_aParamVisible.AddChild(&(m_aParamVisible));
+
+			//send event for add child
+			if( IsGenerateAddChildEvent() )
+			{
+				CGUIEventRelativeChange aEvent;
+				aEvent.SetEventId(eEVENT_ADD_CHILD);
+				aEvent.SetRelative(this);
+				aEvent.SetReceiver(m_pParent);
+				GSystem->SendEvent( &aEvent);
+			}
+		}
+
 		//send event for change parent
 		if( IsGenerateParentChangeEvent() )
 		{
@@ -574,13 +608,6 @@ namespace guiex
 		pChild->SetParentImpl( NULL );
 		pChild->SetNextSiblingImpl( NULL );
 
-		//for parameter
-		m_aParamScale.RemoveChild(&(pChild->m_aParamScale));
-		m_aParamAlpha.RemoveChild(&(pChild->m_aParamAlpha));
-		m_aParamDisable.RemoveChild(&(pChild->m_aParamDisable));
-		m_aParamActivable.RemoveChild(&(pChild->m_aParamActivable));
-		m_aParamVisible.RemoveChild(&(pChild->m_aParamVisible));
-
 		//send event for add child
 		{
 			CGUIEventRelativeChange aEvent;
@@ -629,40 +656,61 @@ namespace guiex
 
 		//set parent
 		pChild->SetParentImpl( this );
-
-		//for parameter
-		m_aParamScale.AddChild(&(pChild->m_aParamScale));
-		m_aParamAlpha.AddChild(&(pChild->m_aParamAlpha));
-		m_aParamDisable.AddChild(&(pChild->m_aParamDisable));
-		m_aParamActivable.AddChild(&(pChild->m_aParamActivable));
-		m_aParamVisible.AddChild(&(pChild->m_aParamVisible));
-
-		//send event for add child
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::InsertChild( CGUIWidget* pWhere, CGUIWidget* pChild )
+	{	
+		GUI_ASSERT( pChild, "invalid parameter");
+		GUI_ASSERT( pChild->GetParent() == NULL, "the child has haven a parent!");
+		
+		if( !pWhere )
 		{
-			CGUIEventRelativeChange aEvent;
-			aEvent.SetEventId(eEVENT_ADD_CHILD);
-			aEvent.SetRelative(pChild);
-			aEvent.SetReceiver(this);
-			GSystem->SendEvent( &aEvent);
+			AddChild( pChild );
+		}
+		else
+		{
+			CGUIWidget* pOldTmpChild = NULL;
+			for( CGUIWidget* pTmpChild = GetChild(); pTmpChild != NULL; pTmpChild = pTmpChild->GetNextSibling() )
+			{
+				if( pTmpChild == pWhere )
+				{
+					pChild->SetNextSiblingImpl( pWhere );
+					if( pOldTmpChild )
+					{
+						pOldTmpChild->SetNextSiblingImpl( pChild );
+					}	
+					//set parent
+					pChild->SetParentImpl( this );
+
+					return;
+				}
+				else
+				{
+					pOldTmpChild = pTmpChild;
+				}
+			}
+
+			throw CGUIException("[CGUIWidget::InsertChild]: failed to find where to insert child! TYPE<%s>  NAME<%s>",
+				pWhere->GetType().c_str(),pWhere->GetName().c_str());
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::SetActivable(bool bActivable)
+	void CGUIWidget::SetActivable(bool bActivable)
 	{
 		m_aParamActivable.SetSelfValue(bActivable);
 	}
 	//------------------------------------------------------------------------------
-	bool	CGUIWidget::IsActivable( ) const
+	bool CGUIWidget::IsActivable( ) const
 	{
 		return m_aParamActivable.GetSelfValue();
 	}
 	//------------------------------------------------------------------------------
-	bool	CGUIWidget::IsDerivedActivable()
+	bool CGUIWidget::IsDerivedActivable()
 	{
 		return m_aParamActivable.GetFinalValue();
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::SetFocus(bool bFocus)
+	void CGUIWidget::SetFocus(bool bFocus)
 	{
 		if( bFocus && IsFocusAgency())
 		{
@@ -1218,6 +1266,11 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
+	void CGUIWidget::OnSetAnimation( const CGUIString& rName, CGUIAnimation* pAnimation )
+	{
+
+	}
+	//------------------------------------------------------------------------------
 	void CGUIWidget::OnCreate()
 	{
 	}
@@ -1272,6 +1325,8 @@ namespace guiex
 			itor->second->RefRelease();
 			m_aMapAnimation.erase(itor);
 		}
+
+		OnSetAnimation( rName, pAnimation );
 		if( pAnimation )
 		{
 			pAnimation->RefRetain();
@@ -1510,6 +1565,11 @@ namespace guiex
 	CGUISceneEffect* CGUIWidget::GetSceneEffect() const
 	{
 		return m_pSceneEffect;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWidget::HasAnimation( const CGUIString& rName )
+	{
+		return m_aMapAnimation.find(rName ) != m_aMapAnimation.end();
 	}
 	//------------------------------------------------------------------------------
 	bool CGUIWidget::HasImage( const CGUIString& rName )
@@ -2246,6 +2306,7 @@ namespace guiex
 					aEvent.SetEventId(eEVENT_TIMER);
 					aEvent.SetReceiver(this);
 					aEvent.SetTimerName(itor->first);
+					aEvent.SetDuration( rCurrentTimer.m_fTimeWaiting );
 					GSystem->SendEvent( &aEvent);
 				}
 			}
@@ -2848,6 +2909,16 @@ namespace guiex
 	bool CGUIWidget::IsGenerateParentChangeEvent( ) const
 	{
 		return m_bIsGenerateParentChangeEvent;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::SetGenerateAddChildEvent( bool bFlag )
+	{
+		m_bIsGenerateAddChildEvent = bFlag;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWidget::IsGenerateAddChildEvent( ) const
+	{
+		return m_bIsGenerateAddChildEvent;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::SetGenerateClickEvent( bool bFlag )

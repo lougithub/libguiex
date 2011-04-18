@@ -41,7 +41,7 @@ namespace guiex
 		m_pImageBG = NULL;
 		
 		SetAnchorPoint( 0.5f, 0.5f );
-		SetSize( 5.0f, 5.0f );
+		SetPixelSize(17.0f, 17.0f );
 		SetFocusable(false);
 		SetActivable(false);
 		

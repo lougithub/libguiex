@@ -268,6 +268,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIEventTimer::CGUIEventTimer()
 		:CGUIEvent("CGUIEventTimer")
+		,m_fDuration(0.0f)
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -286,6 +287,16 @@ namespace guiex
 		default:
 			return GUI_INVALID;
 		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUIEventTimer::SetDuration(real fDuration)
+	{
+		m_fDuration = fDuration;
+	}
+	//------------------------------------------------------------------------------
+	real CGUIEventTimer::GetDuration() const
+	{
+		return m_fDuration;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIEventTimer::SetTimerName(const CGUIString& rTimerName)

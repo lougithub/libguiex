@@ -804,7 +804,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	real CGUIAsMoveTo::Update( real fDeltaTime )
 	{
-		const CGUIVector2& rCurPos = GetReceiver()->GetPixelPosition();
+		const CGUIVector2& rCurPos = GetReceiver()->GetPosition();
 		if( rCurPos == m_aDestination )
 		{
 			Retire( true );
@@ -815,13 +815,13 @@ namespace guiex
 		real fCurMoveLen = m_fVelocity * fDeltaTime;
 		if( fDeltaLen <= fCurMoveLen )
 		{
-			GetReceiver()->SetPixelPosition( m_aDestination );
+			GetReceiver()->SetPosition( m_aDestination );
 			Retire( true );
 			return 0.0f;
 		}
 		else
 		{
-			GetReceiver()->SetPixelPosition( rCurPos + aDelta * fCurMoveLen );
+			GetReceiver()->SetPosition( rCurPos + aDelta * fCurMoveLen );
 		}
 		return 0.0f;
 	}

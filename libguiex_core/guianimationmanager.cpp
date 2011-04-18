@@ -86,7 +86,8 @@ namespace guiex
 		/**
 		<property name="mole_laugh" type="CGUIImageDefine">
 			<property name="size" type="CGUISize" value="178,200"/>
-			<property name="interval" type="CGUISize" value="178,200"/>
+			<property name="interval" type="real" value="0.5"/>
+			<property name="loop" type="bool" value="false"/>
 			<property name="path" type="CGUIString" value="image/anim/mole_laugh1.tga" />
 			<property name="uv" type="CGUIRect" value="0,0,1,1" />
 			<property name="path" type="CGUIString" value="image/anim/mole_laugh2.tga" />
@@ -105,6 +106,16 @@ namespace guiex
 			if( pPropertySize )
 			{
 				PropertyToValue( *pPropertySize, aAnimationSize );
+			}
+		}
+
+		//looping
+		bool bLoop = false;
+		{
+			const CGUIProperty* pPropertyLoop = rRootProperty.GetProperty("loop", "bool");
+			if( pPropertyLoop )
+			{
+				PropertyToValue( *pPropertyLoop, bLoop );
 			}
 		}
 
@@ -148,8 +159,7 @@ namespace guiex
 			}
 		}
 
-
-		CGUIAnimation* pAnimation = new CGUIAnimation( rRootProperty.GetName(), pAnimationData->GetSceneName(), vecFilenames, vecRects, fInterval, aAnimationSize );
+		CGUIAnimation* pAnimation = new CGUIAnimation( rRootProperty.GetName(), pAnimationData->GetSceneName(), vecFilenames, vecRects, fInterval, bLoop, aAnimationSize );
 		pAnimation->RefRetain();
 		AddToAllocatePool( pAnimation );
 		return pAnimation;

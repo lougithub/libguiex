@@ -96,6 +96,8 @@ namespace guiex
 
 		// tree function
 		void SetParent( CGUIWidget *pParent);
+		void AddChild( CGUIWidget* pChild );
+		void InsertChild( CGUIWidget* pWhere, CGUIWidget* pChild );
 		CGUIWidget* GetParent()  const;
 		CGUIWidget* GetChild( ) const;
 		CGUIWidget* GetChild( const CGUIString& rChildName ) const;
@@ -182,6 +184,7 @@ namespace guiex
 
 		void SetAnimation( const CGUIString& rName, CGUIAnimation* pAnimation );
 		CGUIAnimation* SetAnimation( const CGUIString& rName, const CGUIString& rAnimationName );
+		bool HasAnimation( const CGUIString& rName );
 		CGUIAnimation* GetAnimation( const CGUIString& rAnimationName);
 
 		CGUIAs* SetAs( const CGUIString& rName, const CGUIString& rAsName );
@@ -325,6 +328,9 @@ namespace guiex
 		void SetGenerateParentChangeEvent( bool bFlag ); 
 		bool IsGenerateParentChangeEvent( ) const;
 
+		void SetGenerateAddChildEvent( bool bFlag ); 
+		bool IsGenerateAddChildEvent( ) const;
+
 		void SetGenerateUpdateEvent( bool bFlag ); 
 		bool IsGenerateUpdateEvent( ) const;
 
@@ -357,6 +363,7 @@ namespace guiex
 
 		void UpdateAsSelf( real fDeltaTime );
 
+		virtual void OnSetAnimation( const CGUIString& rName, CGUIAnimation* pAnimation ); 
 		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage ); 
 		virtual void OnCreate();
 		virtual void OnUpdate( real fDeltaTime );
@@ -373,8 +380,7 @@ namespace guiex
 		void SetGenerator( const CGUIWidgetGenerator* pGenerator);
 		const CGUIWidgetGenerator* GetGenerator() const;
 
-		void RemoveChild( CGUIWidget* pWidget );
-		void AddChild( CGUIWidget* pWidget );
+		void RemoveChild( CGUIWidget* pChild );
 		CGUIWidget*	GetLastChild( );
 
 		CGUISize GetParentSize() const;
@@ -548,6 +554,7 @@ namespace guiex
 		bool m_bIsGenerateDBClickEvent; 
 		bool m_bIsGenerateMultiClickEvent; 
 		bool m_bIsGenerateParentChangeEvent; 
+		bool m_bIsGenerateAddChildEvent;
 		bool m_bIsGenerateParentSizeChangeEvent; 
 		bool m_bIsGenerateUpdateEvent; 
 		bool m_bIsGenerateScaleChangeEvent; 

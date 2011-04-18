@@ -19,14 +19,17 @@
 //============================================================================// 
 namespace guiex
 {
+
+#define GUI_ADD_WIDGET_GENERATOR( widget ) \
+	aList.push_back( widget::widget##_Generator::GenerateSelf());
+
 #if defined( GUIEX_PLATFORM_WIN32)
 	extern "C"  GUIEXPORT CGUIWidgetGenerator** GetAllWidgetGenerators() 
 	{ 
 		static std::vector<CGUIWidgetGenerator*> aList; 
 		aList.clear();
 
-#define GUI_ADD_WIDGET_GENERATOR( widget ) \
-	aList.push_back( widget::widget##_Generator::GenerateSelf());
+
 
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtTag);		
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtButton);
@@ -41,7 +44,7 @@ namespace guiex
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtScrollbar);
 		//GUI_ADD_WIDGET_GENERATOR(CGUIWgtScrollPanel);
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtEmptyNode);
-		//GUI_ADD_WIDGET_GENERATOR(CGUIWgtAnimation);
+		GUI_ADD_WIDGET_GENERATOR(CGUIWgtAnimation);
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtDialog);
 		//GUI_ADD_WIDGET_GENERATOR(CGUIWgtListBox);
 		//GUI_ADD_WIDGET_GENERATOR(CGUIWgtComboBox);
@@ -57,8 +60,6 @@ namespace guiex
 		//GUI_ADD_WIDGET_GENERATOR(CGUIColListHeaderSegment);
 		//GUI_ADD_WIDGET_GENERATOR(CGUIColListTextItem);
 
-#undef GUI_ADD_WIDGET_GENERATOR
-
 		aList.push_back(NULL);
 		return (CGUIWidgetGenerator**)&aList[0];
 	}
@@ -69,10 +70,8 @@ namespace guiex
 		static std::vector<CGUIWidgetGenerator*> aList; 
 		aList.clear();
 
-#define GUI_ADD_WIDGET_GENERATOR( widget ) \
-	aList.push_back( widget::widget##_Generator::GenerateSelf());
-
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtTag);		
+		GUI_ADD_WIDGET_GENERATOR(CGUIWgtAnimation);
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtEmptyNode);		
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtScrollbar);	
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtScrollbarContainer);		
@@ -84,7 +83,6 @@ namespace guiex
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtRadioButton);
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtEditBox);		
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtMultiEditBox);		
-#undef GUI_ADD_WIDGET_GENERATOR
 
 		aList.push_back(NULL);
 		return (CGUIWidgetGenerator**)&aList[0];
@@ -92,6 +90,8 @@ namespace guiex
 #else
 #	error "unknown platform"	
 #endif
+
+#undef GUI_ADD_WIDGET_GENERATOR
 
 }//namespace guiex
 

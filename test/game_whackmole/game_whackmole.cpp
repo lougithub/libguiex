@@ -21,6 +21,158 @@ CGUIFrameworkBase* CreateFramework( )
 }
 
 
+//*****************************************************************************
+//	CMyMole
+//*****************************************************************************
+//------------------------------------------------------------------------------
+GUI_CUSTOM_WIDGET_IMPLEMENT( CMyMole );
+//------------------------------------------------------------------------------
+CMyMole::CMyMole( const CGUIString& rName, const CGUIString& rSceneName )
+:CGUIWgtAnimation( StaticGetType(), rName, rSceneName )
+,m_eMoleState( eMoleState_Hide )
+,m_pAs(NULL)
+{
+
+}
+//------------------------------------------------------------------------------
+void CMyMole::InitMole( CGUIWgtTag* pTag )
+{
+	//enable mouse hit
+	SetHitable( true );
+
+	//set parent
+	pTag->GetParent()->InsertChild( pTag, this );
+
+	SetAnimation( "normal", "mole" );
+	SetAnimation( "laugh", "mole_laugh" );
+	SetAnimation( "thump", "mole_thump" );
+
+	SetCurrentAnimation( "normal" );
+
+	SetAnchorPoint( 0.5f, 0.0f );
+
+	//set position
+	SetPositionType( pTag->GetPositionType() );
+	SetPosition( pTag->GetPosition() );
+
+	//set size
+	SetSizeType( eScreenValue_Percentage );	
+	CGUIImage* pBGImage = CGUIImageManager::Instance()->AllocateResource( "grass_upper" );
+	GUI_ASSERT( pBGImage, "failed to get bg image");
+	CGUISize aBGSize = pBGImage->GetSize();
+	pBGImage->RefRelease();
+	aBGSize.SetHeight( aBGSize.GetHeight() * 2 );
+	CGUISize aMoleSize = GetCurrentAnimation()->GetSize();
+	aMoleSize.SetWidth( aMoleSize.GetWidth() * GSystem->GetScreenWidth() / aBGSize.GetWidth()  );
+	aMoleSize.SetHeight( aMoleSize.GetHeight() * GSystem->GetScreenHeight() / aBGSize.GetHeight() );
+	SetPixelSize( aMoleSize );
+	Refresh();
+
+	//set position info
+	m_aHidePosition = GetPosition();
+	m_aPopPosition = m_aHidePosition;
+	m_aPopPosition.y -= (aMoleSize.GetHeight() / GetParent()->GetPixelSize().GetHeight() );
+
+	//set as
+	m_pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsMoveTo>();
+	m_pAs->SetReceiver( this );
+	m_pAs->SetVelocity( (m_aHidePosition.y - m_aPopPosition.y) );
+	SetAs( "working_as", m_pAs );
+	m_pAs->RefRelease();
+}
+//------------------------------------------------------------------------------
+bool CMyMole::IsTappable() const
+{
+	if( m_eMoleState == eMoleState_Popping || m_eMoleState == eMoleState_Popped )
+	{
+		return true;
+	}
+	return false;
+}
+//------------------------------------------------------------------------------
+void CMyMole::UpdateMole(real fDeltaTime)
+{
+	switch( m_eMoleState )
+	{
+	case eMoleState_Hide:
+		UpdateMole_Hide(fDeltaTime);
+		break;
+	case eMoleState_Popping:
+		UpdateMole_Popping(fDeltaTime);
+		break;
+	case eMoleState_Popped:
+		UpdateMole_Popped(fDeltaTime);
+		break;
+	case eMoleState_Shrinking:
+		UpdateMole_Shrinking(fDeltaTime);
+		break;
+	}
+}
+//------------------------------------------------------------------------------
+void CMyMole::UpdateMole_Hide(real fDeltaTime)
+{
+	if( rand() % 5 == 0 )
+	{
+		m_pAs->SetDestination( m_aPopPosition );
+		m_pAs->Reset();
+		PlayAs( m_pAs );
+		m_eMoleState = eMoleState_Popping;
+	}
+}
+//------------------------------------------------------------------------------
+void CMyMole::UpdateMole_Popping(real fDeltaTime)
+{
+	if( !IsAsPlaying( m_pAs ) )
+	{
+		m_eMoleState = eMoleState_Popped;
+		SetCurrentAnimation("laugh");
+		GetCurrentAnimation()->Reset();
+		m_fPoppedTime = 1.0f;
+	}
+}
+//------------------------------------------------------------------------------
+void CMyMole::ShrinkMole()
+{
+	m_pAs->SetDestination( m_aHidePosition );
+	m_pAs->Reset();
+	PlayAs( m_pAs );
+	m_eMoleState = eMoleState_Shrinking;
+}
+//------------------------------------------------------------------------------
+void CMyMole::UpdateMole_Popped(real fDeltaTime)
+{
+	if( GetCurrentAnimation()->IsPlaying() == false )
+	{
+		m_fPoppedTime -= fDeltaTime;
+		if( m_fPoppedTime <= 0.0f )
+		{
+			ShrinkMole();
+		}
+	}
+}
+//------------------------------------------------------------------------------
+void CMyMole::UpdateMole_Shrinking(real fDeltaTime)
+{
+	if( !IsAsPlaying( m_pAs ) )
+	{
+		m_eMoleState = eMoleState_Hide;
+		SetCurrentAnimation("normal");
+		GetCurrentAnimation()->Reset();
+	}
+}
+//------------------------------------------------------------------------------
+uint32 CMyMole::OnMouseLeftDown( CGUIEventMouse* pEvent )
+{
+	if( IsTappable() )
+	{
+		ShrinkMole();
+		SetCurrentAnimation("thump");
+		GetCurrentAnimation()->Reset();		
+	}
+	return CGUIWgtAnimation::OnMouseLeftDown( pEvent );
+}
+//------------------------------------------------------------------------------
+
 
 //*****************************************************************************
 //	CMyCanvasLayer_WhackMoleGame
@@ -37,8 +189,30 @@ CMyCanvasLayer_WhackMoleGame::CMyCanvasLayer_WhackMoleGame( const char* szLayerN
 	SetSizeType( eScreenValue_Percentage );
 	SetSize( 1,1 );
 
+	Refresh();
+
 	CGUIWidget* pPanel = CGUIWidgetManager::Instance()->GetPage( "game_whackmole.xml", "game_whackmole" );
-	pPanel->SetParent( this );	
+	pPanel->SetParent( this );
+	pPanel->Refresh();
+
+	//init mole
+	for( uint32 i=0; i<3; ++i )
+	{
+		char szTagName[32];
+		snprintf( szTagName, 32, "tag_mole_%d", i );
+		CGUIWgtTag* pTag = CGUIWidgetManager::Instance()->GetWidgetWithTypeCheck<CGUIWgtTag>( szTagName, "game_whackmole" );
+		GUI_ASSERT( pTag, "not found tag for mole" );
+
+		char szMoleName[32];
+		snprintf( szMoleName, 32, "mole_%d", i );
+		CMyMole* pMole = CGUIWidgetManager::Instance()->CreateCustomWidget<CMyMole>( szMoleName, "" );
+		pMole->InitMole( pTag );
+		m_vecMole.push_back( pMole );
+	}
+
+	//init timer
+	RegisterNativeTimerFunc( 0.5f, "UpdateTimer", CMyCanvasLayer_WhackMoleGame::FunOnTimer );
+
 }
 //------------------------------------------------------------------------------
 CMyCanvasLayer_WhackMoleGame::~CMyCanvasLayer_WhackMoleGame(  )
@@ -51,10 +225,19 @@ void CMyCanvasLayer_WhackMoleGame::OnUpdate(real fDeltaTime)
 
 }
 //------------------------------------------------------------------------------
+void CMyCanvasLayer_WhackMoleGame::FunOnTimer(CGUIEventTimer* pEvent )
+{
+	for( uint32 i=0; i<uint32(CGUIFrameworkTest::ms_pFrameWork->GetGameLayer()->m_vecMole.size()); ++i )
+	{
+		CGUIFrameworkTest::ms_pFrameWork->GetGameLayer()->m_vecMole[i]->UpdateMole( pEvent->GetDuration() );
+	}
+}
+//------------------------------------------------------------------------------
 void CMyCanvasLayer_WhackMoleGame::DestroySelf( )
 {
 	delete this;
 }
+//------------------------------------------------------------------------------
 
 
 

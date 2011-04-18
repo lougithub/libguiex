@@ -12,6 +12,7 @@
 // include
 //============================================================================// 
 #include <libguiex_framework/guiframework.h>
+#include <vector>
 using namespace guiex;
 
 
@@ -19,6 +20,47 @@ using namespace guiex;
 // class
 //============================================================================// 
 
+//*****************************************************************************
+//	CMyMole
+//*****************************************************************************
+class CMyMole : public CGUIWgtAnimation
+{
+public:
+	CMyMole( const CGUIString& rName, const CGUIString& rSceneName );
+
+	void InitMole( CGUIWgtTag* pTag );
+	void UpdateMole( real fDeltaTime );
+
+protected:
+	void UpdateMole_Hide(real fDeltaTime);
+	void UpdateMole_Popping(real fDeltaTime);
+	void UpdateMole_Popped(real fDeltaTime);
+	void UpdateMole_Shrinking(real fDeltaTime);
+
+	void ShrinkMole();
+
+	bool IsTappable() const;
+
+	virtual uint32 OnMouseLeftDown( CGUIEventMouse* pEvent );
+
+protected:
+	enum EMoleState
+	{
+		eMoleState_Hide,
+		eMoleState_Popping,
+		eMoleState_Popped,
+		eMoleState_Shrinking,
+	};
+	EMoleState m_eMoleState;
+
+	CGUIVector2 m_aHidePosition;
+	CGUIVector2 m_aPopPosition;
+	CGUIAsMoveTo* m_pAs;
+
+	real m_fPoppedTime;
+
+	GUI_CUSTOM_WIDGET_DECLARE( CMyMole );
+};
 
 //*****************************************************************************
 //	CMyCanvasLayer_WhackMoleGame
@@ -35,7 +77,10 @@ public:
 protected:
 	virtual void OnUpdate( real fDeltaTime );
 
+	static void FunOnTimer(CGUIEventTimer* pEvent );
+
 protected:
+	std::vector<CMyMole*> m_vecMole;
 };
 
 

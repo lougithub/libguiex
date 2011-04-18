@@ -17,7 +17,8 @@
 
 	<property name="mole_laugh" type="CGUIAnimationDefine">
 		<property name="size" type="CGUISize" value="178,200"/>
-		<property name="interval" type="CGUISize" value="178,200"/>
+		<property name="interval" type="real" value="0.2"/>
+		<property name="loop" type="bool" value="false"/>
 		<property name="images" type="folder" >
 			<property name="path" type="CGUIString" value="image/anim/mole_laugh1.tga" />
 			<property name="uv" type="CGUIRect" value="0,0,1,1" />
@@ -30,7 +31,8 @@
 
 	<property name="mole" type="CGUIAnimationDefine">
 		<property name="size" type="CGUISize" value="178,200"/>
-		<property name="interval" type="CGUISize" value="178,200"/>
+		<property name="loop" type="bool" value="false"/>
+		<property name="interval" type="real" value="0.2"/>
 		<property name="images" type="folder" >
 			<property name="path" type="CGUIString" value="image/anim/mole_1.tga" />
 			<property name="uv" type="CGUIRect" value="0,0,1,1" />
@@ -39,7 +41,8 @@
 
 	<property name="mole_thump" type="CGUIAnimationDefine">
 		<property name="size" type="CGUISize" value="178,200"/>
-		<property name="interval" type="CGUISize" value="178,200"/>
+		<property name="interval" type="real" value="0.2"/>
+		<property name="loop" type="bool" value="false"/>
 		<property name="images" type="folder" >
 			<property name="path" type="CGUIString" value="image/anim/mole_thump1.tga" />
 			<property name="uv" type="CGUIRect" value="0,0,1,1" />

@@ -30,9 +30,6 @@ namespace guiex
 	class GUIEXPORT CGUIWgtTag: public CGUIWidget
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUIWgtTag( const CGUIString& rName, const CGUIString& rSceneName );
 		
 		virtual void Render( IGUIInterfaceRender* pRender );
@@ -41,13 +38,8 @@ namespace guiex
 		
 
 	protected:
-		/**
-		* @brief constructor
-		* for derived class
-		*/
 		CGUIWgtTag( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
-		/// initialize tag
 		void InitTag();
 
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);

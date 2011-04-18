@@ -55,6 +55,11 @@ namespace guiex
 
 		const CGUISize& GetSize( );
 
+		bool IsLooping() const;
+		bool IsPlaying() const;
+
+		void Reset();
+
 	protected:
 		/**
 		* @brief constructor
@@ -68,6 +73,7 @@ namespace guiex
 			const CGUIString& rFileName, 
 			const std::vector<CGUIRect>& rUVRects,
 			real fInterval,
+			bool bLooping,
 			const CGUISize& rSize);
 
 		/**
@@ -80,6 +86,7 @@ namespace guiex
 			const CGUIString& rSceneName, 
 			const std::vector<CGUIString>& rFileNames,  
 			real fInterval,
+			bool bLooping,
 			const CGUISize& rSize);
 
 		/**
@@ -93,6 +100,7 @@ namespace guiex
 			const std::vector<CGUIString>& rFileNames,  
 			const std::vector<CGUIRect>& rUVRects,
 			real fInterval,
+			bool bLooping,
 			const CGUISize& rSize);
 
 		virtual int32 DoLoad();
@@ -117,6 +125,8 @@ namespace guiex
 		EUVAnimType eUVAnimType;
 
 		CGUISize m_aAnimationSize;
+
+		bool m_bLooping;
 	};
 
 }//namespace guiex

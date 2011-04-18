@@ -284,11 +284,15 @@ namespace guiex
 
 		virtual uint32 Process();
 
+		void SetDuration(real fDuration);
+		real GetDuration() const;
+
 		void SetTimerName(const CGUIString& rTimerName);
 		const CGUIString& GetTimerName();
 
 	protected:
 		CGUIString m_strTimerName;
+		real m_fDuration;
 	};
 
 

@@ -666,6 +666,36 @@ void WxMainFrame::OnPropertyGridChange( wxPropertyGridEvent& event )
 	guiex::CGUIProperty aGuiProperty;
 	CPropertyConvertorMgr::Instance()->GridProperty2GuiProperty(m_pPropGridMan, pPGTop, aGuiProperty);
 
+	//do some dirty check for make edit convenicence
+	if( aGuiProperty.GetName() == "position" )
+	{
+		guiex::CGUIWidgetPosition aPosition;
+		PropertyToValue( aGuiProperty, aPosition );
+		if( aPosition.m_eType != m_pCurrentEditingWidget->GetPositionType() )
+		{
+			//change position type
+			CGUIVector2 aPixelPos = m_pCurrentEditingWidget->GetPixelPosition();
+			m_pCurrentEditingWidget->SetPositionType( aPosition.m_eType );
+			m_pCurrentEditingWidget->SetPixelPosition( aPixelPos );
+			aPosition.m_aValue = m_pCurrentEditingWidget->GetPosition();
+			ValueToProperty( aPosition, aGuiProperty );
+		}
+	}
+	else if( aGuiProperty.GetName() == "size" )
+	{
+		guiex::CGUIWidgetSize aSize;
+		PropertyToValue( aGuiProperty, aSize );
+		if( aSize.m_eType != m_pCurrentEditingWidget->GetSizeType() )
+		{
+			//change Size type
+			CGUISize aPixelSize = m_pCurrentEditingWidget->GetPixelSize();
+			m_pCurrentEditingWidget->SetSizeType( aSize.m_eType );
+			m_pCurrentEditingWidget->SetPixelSize( aPixelSize );
+			aSize.m_aValue = m_pCurrentEditingWidget->GetSize();
+			ValueToProperty( aSize, aGuiProperty );
+		}
+	}
+
 	try
 	{ 
 		m_pCurrentEditingWidget->InsertProperty( aGuiProperty );

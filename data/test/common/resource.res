@@ -25,6 +25,12 @@
 		<property name="uv" type="CGUIRect" value="0,0,1,1" />
 	</property>
 
+	<property name="TagIcon" type="CGUIImageDefine">
+		<property name="size" type="CGUISize" value="16,16"/>
+		<property  name="path" type="CGUIString" value="image/TagIcon.tga" />
+		<property name="uv" type="CGUIRect" value="0,0,1,1" />
+	</property>
+
 	<property name="color_translucent" type="CGUIImageDefine">
 		<property name="color" type="CGUIColor" value="0,0,0,0"/>
 		<property name="size" type="CGUISize" value="1,1"/>

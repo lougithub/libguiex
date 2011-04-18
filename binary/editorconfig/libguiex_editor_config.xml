@@ -169,6 +169,19 @@
 		</page>
 	</widget>
 
+  <widget type="CGUIWgtTag" inherit="CGUIWidget">		
+    <page name="Appearance">
+      <property name="size" type="CGUIWidgetSize" category="Default">
+        <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        <property name="value" type="CGUISize" value="17,17" />
+      </property>
+      <property name="anchor" type="CGUIVector2" value="0.5,0.5"  category="Default"/>
+    </page>
+    <page name="Image">
+      <property name="BGIMAGE" type="CGUIImage" value="TagIcon" must_exist="true"/>
+    </page>
+  </widget>
+
 	<widget type="CGUIWgtStaticText" inherit="CGUIWgtTextBase">
 		<page name="Appearance">
 			<property name="multiline" type="bool" value="false" category="StaticText"/>

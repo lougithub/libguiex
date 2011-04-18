@@ -135,20 +135,6 @@ void WxEditorCanvas::DrawResizers()
 				{
 					const wxRect& winRc = m_aWindowBox.GetPointRect(i);
 
-					// WHITE filled rectangle for the inside
-					glColor3f (1.0f, 1.0f, 1.0f);
-					glBegin(GL_QUADS);
-					x0 = winRc.x;
-					y0 = winRc.y;
-					x1 = winRc.GetRight();
-					y1 = winRc.GetBottom();
-
-					glVertex2f(x0, y0);
-					glVertex2f(x1, y0);
-					glVertex2f(x1, y1);
-					glVertex2f(x0, y1);
-					glEnd();	// GL_QUADS
-
 					// RED surrounding rectangle for the border (just draw over the filled rectangle)
 					glColor3f (1.0f, 0.0f, 0.0f);
 					glBegin(GL_LINE_LOOP);
@@ -172,7 +158,7 @@ void WxEditorCanvas::DrawResizers()
 			const wxRect& winRc = m_aWindowBox.GetAnchorRect();
 			// green surrounding rectangle for the border (just draw over the filled rectangle)
 			glColor3f (0.0f, 1.0f, 0.0f);
-			glBegin(GL_QUADS);
+			glBegin(GL_LINE_LOOP);
 			x0 = winRc.x;
 			y0 = winRc.y;
 			x1 = winRc.GetRight();

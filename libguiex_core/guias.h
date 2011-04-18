@@ -369,6 +369,56 @@ namespace guiex
 		GUI_AS_GENERATOR_DECLARE( CGUIAsContainer);
 	};
 
+	
+
+	//*****************************************************************************
+	//	CGUIAsCallFunc
+	//*****************************************************************************
+	/**
+	* @class CGUIAsCallFunc
+	*/
+	class GUIEXPORT CGUIAsCallFunc : public CGUIAs
+	{
+	public:
+		void SetFuncCallback( FunOnAsCallback funCallback );
+
+		virtual real Update( real fDeltaTime );
+
+	protected:
+		CGUIAsCallFunc(const CGUIString& rAsName, const CGUIString& rSceneName);
+
+	private:
+		FunOnAsCallback m_funCallback;
+
+		GUI_AS_GENERATOR_DECLARE( CGUIAsCallFunc);
+	};
+
+	//*****************************************************************************
+	//	CGUIAsMoveTo
+	//*****************************************************************************
+	/**
+	* @class CGUIAsMoveTo
+	* @brief move widget to destination with given velocity.
+	*/
+	class GUIEXPORT CGUIAsMoveTo : public CGUIAs
+	{
+	public:
+		void SetVelocity( real fVelocity );
+		real GetVelocity( ) const;
+		void SetDestination( const CGUIVector2& rDestination );
+		const CGUIVector2& GetDestination( ) const;
+
+		virtual real Update( real fDeltaTime );
+
+	protected:
+		CGUIAsMoveTo(const CGUIString& rAsName, const CGUIString& rSceneName);
+
+	private:
+		real m_fVelocity; //velocity per second
+		CGUIVector2 m_aDestination;
+
+		GUI_AS_GENERATOR_DECLARE( CGUIAsMoveTo);
+	};
 }//namespace guiex
 
 
@@ -665,55 +715,6 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 
-
-	//*****************************************************************************
-	//	CGUIAsCallFunc
-	//*****************************************************************************
-	/**
-	* @class CGUIAsCallFunc
-	*/
-	class GUIEXPORT CGUIAsCallFunc : public CGUIAs
-	{
-	public:
-		void SetFuncCallback( FunOnAsCallback funCallback );
-
-		virtual real Update( real fDeltaTime );
-
-	protected:
-		CGUIAsCallFunc(const CGUIString& rAsName, const CGUIString& rSceneName);
-
-	private:
-		FunOnAsCallback m_funCallback;
-
-		GUI_AS_GENERATOR_DECLARE( CGUIAsCallFunc);
-	};
-
-	//*****************************************************************************
-	//	CGUIAsMoveTo
-	//*****************************************************************************
-	/**
-	* @class CGUIAsMoveTo
-	* @brief move widget to destination with given velocity.
-	*/
-	class GUIEXPORT CGUIAsMoveTo : public CGUIAs
-	{
-	public:
-		void SetVelocity( real fVelocity );
-		real GetVelocity( ) const;
-		void SetDestination( const CGUIVector2& rDestination );
-		const CGUIVector2& GetDestination( ) const;
-
-		virtual real Update( real fDeltaTime );
-
-	protected:
-		CGUIAsMoveTo(const CGUIString& rAsName, const CGUIString& rSceneName);
-
-	private:
-		real m_fVelocity;
-		CGUIVector2 m_aDestination;
-
-		GUI_AS_GENERATOR_DECLARE( CGUIAsMoveTo);
-	};
 }
 
 #endif //__GUI_AS_20071121_H__

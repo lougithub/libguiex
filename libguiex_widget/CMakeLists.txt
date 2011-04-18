@@ -42,6 +42,8 @@ set( ${target_name}_static_SRCS
         guiwgtstaticimage.h
         guiwgtstatictext.cpp
 		guiwgtstatictext.h
+		guiwgtanimation.cpp
+		guiwgtanimation.h
 	)
 source_group( static FILES ${${target_name}_static_SRCS} )
 
