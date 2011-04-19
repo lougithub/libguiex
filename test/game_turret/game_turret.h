@@ -33,7 +33,7 @@ public:
 	void SetHp( uint32 uHp);
 
 protected:
-	static void FunRetiredCallback_TargetMoveto(CGUIAs* pAs);
+	static void FunCallback_TargetMoveto(CGUIAs* pAs);
 	void ResetTargetPosition( );
 	CGUIVector2 GenerateTargetPosition();
 
@@ -75,7 +75,7 @@ public:
 	void InitProjectile( CGUIWidget* pParent,CGUIWgtStaticImage* pTurret, const CGUIVector2& rShootPos );
 
 protected:
-	static void FunRetiredCallback_ProjectileFinish(CGUIAs* pAs);
+	static void FunCallback_ProjectileFinish(CGUIAs* pAs);
 
 protected:
 	CGUIWgtStaticImage* m_pTurret;

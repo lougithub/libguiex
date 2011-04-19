@@ -24,6 +24,7 @@ namespace guiex
 	CGUICanvasLayerManager * CGUICanvasLayerManager::m_pSingleton = NULL; 
 	//------------------------------------------------------------------------------
 	CGUICanvasLayerManager::CGUICanvasLayerManager()
+		:m_bCacheDirtyFlag(false)
 	{
 		GUI_ASSERT( !m_pSingleton, "[CGUICanvasLayerManager::CGUICanvasLayerManager]:instance has been created" ); 
 		m_pSingleton = this; 
@@ -31,10 +32,9 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUICanvasLayerManager::~CGUICanvasLayerManager()
 	{
-		if( !m_arrayCanvasLayers.empty() )
-		{
-			throw CGUIException( "[CGUICanvasLayerManager::~CGUICanvasLayerManager]: still has some canvaslayers");
-		}
+		//check
+		GUI_ASSERT(m_vecGarbage.empty(), "[CGUICanvasLayerManager::~CGUICanvasLayerManager]: shouldn't has any layer in garbate");
+		GUI_ASSERT(m_arrayCanvasLayers.empty(), "[CGUICanvasLayerManager::~CGUICanvasLayerManager]: shouldn't has any layer");
 	}
 	//------------------------------------------------------------------------------
 	CGUICanvasLayerManager* CGUICanvasLayerManager::Instance()
@@ -45,12 +45,20 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUICanvasLayerManager::Update( real fDeltaTime )
 	{
-		for( TArrayCanvasLayer::reverse_iterator itor = m_arrayCanvasLayers.rbegin();
-			itor != m_arrayCanvasLayers.rend();
+		if( m_bCacheDirtyFlag )
+		{
+			m_bCacheDirtyFlag = false;
+			m_arrayCanvasLayersCache = m_arrayCanvasLayers;
+		}
+
+		for( TArrayCanvasLayer::reverse_iterator itor = m_arrayCanvasLayersCache.rbegin();
+			itor != m_arrayCanvasLayersCache.rend();
 			++itor )
 		{
 			(*itor)->Update( fDeltaTime );
 		}
+
+		RefreshGarbage();
 	}
 	//------------------------------------------------------------------------------
 	void CGUICanvasLayerManager::Render( IGUIInterfaceRender* pRender )
@@ -106,6 +114,7 @@ namespace guiex
 	void CGUICanvasLayerManager::PushCanvasLayer( CGUICanvasLayer* pLayer )
 	{
 		m_arrayCanvasLayers.push_back( pLayer );
+		m_bCacheDirtyFlag = true;
 
 		if( !pLayer->IsTopMost() && m_arrayCanvasLayers.size() >= 2 )
 		{
@@ -128,6 +137,7 @@ namespace guiex
 		}
 		CGUICanvasLayer* pLayer = m_arrayCanvasLayers.back();
 		m_arrayCanvasLayers.pop_back();
+		m_bCacheDirtyFlag = true;
 		return pLayer;
 	}
 	//------------------------------------------------------------------------------
@@ -138,16 +148,43 @@ namespace guiex
 		pCanvasLayer->DestroySelf();
 	}
 	//------------------------------------------------------------------------------
-	CGUICanvasLayer* CGUICanvasLayerManager::RemoveCanvasLayer( CGUICanvasLayer* pLayer )
+	void CGUICanvasLayerManager::RemoveCanvasLayer( CGUICanvasLayer* pLayer )
 	{
 		TArrayCanvasLayer::iterator itor = std::find( m_arrayCanvasLayers.begin(), m_arrayCanvasLayers.end(), pLayer );
 		if( itor != m_arrayCanvasLayers.end() )
 		{
 			m_arrayCanvasLayers.erase( itor );
-			return pLayer;
+			m_bCacheDirtyFlag = true;
+			return;
 		}
-		throw CGUIException("[CGUICanvasLayerManager::RemoveCanvasLayer]: not given layer");
-		return NULL;
+		throw CGUIException("[CGUICanvasLayerManager::RemoveCanvasLayer]: not found given layer");
+	}
+	//------------------------------------------------------------------------------
+	void CGUICanvasLayerManager::DestroyCanvasLayer( CGUICanvasLayer* pLayer )
+	{
+		TArrayCanvasLayer::iterator itor = std::find( m_arrayCanvasLayers.begin(), m_arrayCanvasLayers.end(), pLayer );
+		if( itor != m_arrayCanvasLayers.end() )
+		{
+			m_arrayCanvasLayers.erase( itor );
+			m_bCacheDirtyFlag = true;
+			pLayer->Finalize();
+			pLayer->DestroySelf();
+			return;
+		}
+		throw CGUIException("[CGUICanvasLayerManager::DestroyCanvasLayer]: not found given layer");
+	}
+	//------------------------------------------------------------------------------
+	void CGUICanvasLayerManager::DelayedDestroyCanvasLayer( CGUICanvasLayer* pLayer )
+	{
+		TArrayCanvasLayer::iterator itor = std::find( m_arrayCanvasLayers.begin(), m_arrayCanvasLayers.end(), pLayer );
+		if( itor != m_arrayCanvasLayers.end() )
+		{
+			m_arrayCanvasLayers.erase( itor );
+			m_bCacheDirtyFlag = true;
+			m_vecGarbage.push_back( pLayer );
+			return;
+		}
+		throw CGUIException("[CGUICanvasLayerManager::DelayedDestroyCanvasLayer]: not found given layer");
 	}
 	//------------------------------------------------------------------------------
 	void CGUICanvasLayerManager::DestroyAllCanvasLayer( )
@@ -160,6 +197,27 @@ namespace guiex
 			(*itor)->DestroySelf( );
 		}
 		m_arrayCanvasLayers.clear();
+		m_bCacheDirtyFlag = true;
+	}
+	//------------------------------------------------------------------------------
+	void CGUICanvasLayerManager::RefreshGarbage()
+	{
+		if( m_vecGarbage.empty() )
+		{
+			return;
+		}
+
+		for( uint32 i=0; i<uint32(m_vecGarbage.size()); ++i )
+		{
+			CGUICanvasLayer* pLayer = m_vecGarbage[i];
+			if( pLayer )
+			{
+				pLayer->Finalize();
+				pLayer->DestroySelf();
+			}
+		}
+
+		m_vecGarbage.clear( );
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUICanvasLayerManager::GetCanvasLayerNum() const

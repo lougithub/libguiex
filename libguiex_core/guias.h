@@ -83,6 +83,9 @@ namespace guiex
 		void SetLooping( bool bLooping );
 		bool IsLooping();
 
+		void SetReverse( bool bReverse );
+		bool IsReverse() const;
+
 		virtual void SetReceiver(CGUIWidget* pReceiver);
 		CGUIWidget*	GetReceiver();
 
@@ -123,6 +126,7 @@ namespace guiex
 		real m_fTotalTime; //!<delay-time, to control when to process this as, millisecond
 		real m_fElapsedTime;			
 		bool m_bLooping;
+		bool m_bReverse;
 		bool m_bRetired; //!<should this as be retired
 		CGUIWidget*	m_pReceiver; //!<receiver
 
@@ -480,7 +484,7 @@ namespace guiex
 	inline void CGUIAsInterpolation<T>::OnUpdate( )
 	{
 		CGUIAs::OnUpdate( );
-		m_aCurValue = LinearTween( GetElapsedTime() / GetTotalTime(), m_aBeginValue, m_aEndValue );
+		m_aCurValue = LinearTween( GetPercent(), m_aBeginValue, m_aEndValue );
 	}
 	//------------------------------------------------------------------------------
 	template< class T >

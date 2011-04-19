@@ -116,7 +116,7 @@
 		</page>
 	</widget>
 
-  <widget type="CGUIWgtTextBase" template="true">
+  <widget type="CGUIWgtTextBase"  inherit="CGUIWidget" template="true">
     <page name="Appearance">
       <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" category="EditBox"/>
       <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" category="EditBox"/>

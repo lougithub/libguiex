@@ -100,7 +100,7 @@ namespace guiex
 		typedef std::set<CGUIWidget*> TDynamicPage;
 		TDynamicPage m_setDynamicPageList;
 
-		std::vector<CGUIWidget*> m_vecGarbage; //garbate
+		std::vector<CGUIWidget*> m_vecGarbage; //garbage
 
 	private:
 		static CGUIWidgetManager* m_pSingleton;

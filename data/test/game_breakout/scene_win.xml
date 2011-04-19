@@ -1,0 +1,127 @@
+<guiex>
+    <property name="win_background" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
+        <property name="BGIMAGE" type="CGUIImage" value="bg_blue" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0,0" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="1,1" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+        </property>
+        <property name="max_size" type="CGUISize" value="0,0" />
+        <property name="min_size" type="CGUISize" value="0,0" />
+        <property name="anchor" type="CGUIVector2" value="0,0" />
+        <property name="scale" type="CGUISize" value="1,1" />
+        <property name="alpha" type="real" value="1" />
+        <property name="rotation" type="CGUIVector3" value="0,0,0" />
+        <property name="movable" type="bool" value="false" />
+        <property name="color" type="CGUIColor" value="255,255,255,255" />
+        <property name="visible" type="bool" value="true" />
+        <property name="activable" type="bool" value="false" />
+        <property name="hitable" type="bool" value="true" />
+        <property name="disable" type="bool" value="false" />
+        <property name="auto_play_as" type="bool" value="false" />
+        <property name="clip_children" type="bool" value="false" />
+        <property name="open_with_parent" type="bool" value="true" />
+        <property name="generate_update_event" type="bool" value="false" />
+        <property name="generate_click_event" type="bool" value="false" />
+        <property name="generate_parentsizechange_event" type="bool" value="false" />
+    </property>
+    <property name="label_win" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
+        <property name="parent" type="CGUIString" value="win_background" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0.5,0.5" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="300,40" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="max_size" type="CGUISize" value="0,0" />
+        <property name="min_size" type="CGUISize" value="0,0" />
+        <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
+        <property name="scale" type="CGUISize" value="1,1" />
+        <property name="alpha" type="real" value="1" />
+        <property name="rotation" type="CGUIVector3" value="0,0,0" />
+        <property name="movable" type="bool" value="false" />
+        <property name="color" type="CGUIColor" value="255,255,255,255" />
+        <property name="visible" type="bool" value="true" />
+        <property name="activable" type="bool" value="false" />
+        <property name="hitable" type="bool" value="true" />
+        <property name="disable" type="bool" value="false" />
+        <property name="auto_play_as" type="bool" value="false" />
+        <property name="clip_children" type="bool" value="false" />
+        <property name="open_with_parent" type="bool" value="true" />
+        <property name="generate_update_event" type="bool" value="false" />
+        <property name="generate_click_event" type="bool" value="false" />
+        <property name="generate_parentsizechange_event" type="bool" value="false" />
+        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
+        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
+        <property name="text" type="CGUIString" value="you win" />
+        <property name="textinfo" type="CGUIStringInfo">
+            <property name="size" type="uint16" value="32" />
+            <property name="index" type="int16" value="0" />
+            <property name="color" type="CGUIColor" value="255,255,255,255" />
+        </property>
+        <property name="multiline" type="bool" value="false" />
+    </property>
+    <property name="btn_replay_win" type="CGUIWidgetDefine" value="CGUIWgtButton">
+        <property name="parent" type="CGUIString" value="lose_background" />
+        <property name="BTN_NORMAL" type="CGUIImage" value="button_red_normal" />
+        <property name="BTN_HOVER" type="CGUIImage" value="button_red_hover" />
+        <property name="BTN_PUSH" type="CGUIImage" value="button_red_push" />
+        <property name="BTN_DISABLE" type="CGUIImage" value="button_red_disable" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0.5,0.654948" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="148,46" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="max_size" type="CGUISize" value="0,0" />
+        <property name="min_size" type="CGUISize" value="0,0" />
+        <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
+        <property name="scale" type="CGUISize" value="1,1" />
+        <property name="alpha" type="real" value="1" />
+        <property name="rotation" type="CGUIVector3" value="0,0,0" />
+        <property name="movable" type="bool" value="false" />
+        <property name="color" type="CGUIColor" value="255,255,255,255" />
+        <property name="visible" type="bool" value="true" />
+        <property name="activable" type="bool" value="false" />
+        <property name="hitable" type="bool" value="true" />
+        <property name="disable" type="bool" value="false" />
+        <property name="auto_play_as" type="bool" value="false" />
+        <property name="clip_children" type="bool" value="false" />
+        <property name="open_with_parent" type="bool" value="true" />
+        <property name="generate_update_event" type="bool" value="false" />
+        <property name="generate_click_event" type="bool" value="true" />
+        <property name="generate_parentsizechange_event" type="bool" value="false" />
+        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
+        <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
+        <property name="text_offset" type="CGUIVector2" value="0,0" />
+        <property name="text_normal" type="CGUILocalizedString" value="Replay" />
+        <property name="textinfo_normal" type="CGUIStringInfo">
+            <property name="size" type="uint16" value="16" />
+            <property name="index" type="int16" value="0" />
+            <property name="color" type="CGUIColor" value="255,255,255,255" />
+        </property>
+        <property name="textinfo_hover" type="CGUIStringInfo">
+            <property name="size" type="uint16" value="16" />
+            <property name="index" type="int16" value="0" />
+            <property name="color" type="CGUIColor" value="255,255,255,255" />
+        </property>
+        <property name="textinfo_push" type="CGUIStringInfo">
+            <property name="size" type="uint16" value="16" />
+            <property name="index" type="int16" value="0" />
+            <property name="color" type="CGUIColor" value="255,255,255,255" />
+        </property>
+        <property name="textinfo_disable" type="CGUIStringInfo">
+            <property name="size" type="uint16" value="16" />
+            <property name="index" type="int16" value="0" />
+            <property name="color" type="CGUIColor" value="255,255,255,255" />
+        </property>
+    </property>
+
+</guiex>

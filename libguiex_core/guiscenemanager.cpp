@@ -311,7 +311,10 @@ namespace guiex
 		for( uint32 i=0; i<rWidgetFile.size(); ++i )
 		{
 			CGUIWidget* pWidget = CGUIWidgetManager::Instance()->GetPage(rSceneName, rWidgetFile[i]);
-			CGUIWidgetManager::Instance()->DestroyWidget( pWidget );
+			if( pWidget )
+			{
+				CGUIWidgetManager::Instance()->DestroyWidget( pWidget );
+			}
 		}
 	}
 	//------------------------------------------------------------------------------

@@ -404,6 +404,7 @@ namespace guiex
 	void CGUISystem::DestroyAllCanvas()
 	{
 		m_pCanvasLayerManager->DestroyAllCanvasLayer();
+		m_pCanvasLayerManager->RefreshGarbage();
 		m_pUICanvas = NULL;
 	}
 	//------------------------------------------------------------------------------
@@ -415,6 +416,7 @@ namespace guiex
 
 		//destroy all page
 		m_pWidgetManager->ReleaseAllPages();
+		m_pWidgetManager->RefreshGarbage();
 
 		IGUIInterfaceScript* pScript = CGUIInterfaceManager::Instance()->GetInterfaceScript();
 		if( pScript )

@@ -45,13 +45,18 @@ namespace guiex
 
 		void PushCanvasLayer( CGUICanvasLayer* pLayer );
 		CGUICanvasLayer* PopCanvasLayer( );
-		CGUICanvasLayer* RemoveCanvasLayer( CGUICanvasLayer* pLayer );
+		void RemoveCanvasLayer( CGUICanvasLayer* pLayer );
+		void DestroyCanvasLayer( CGUICanvasLayer* pLayer );
+		void DelayedDestroyCanvasLayer( CGUICanvasLayer* pLayer );
+
 		void PopAndDestroyCanvasLayer( );
 		void DestroyAllCanvasLayer( );
 		
 		uint32 GetCanvasLayerNum() const;
 		CGUICanvasLayer* GetCanvasLayer( uint32 nIndex );
 		CGUICanvasLayer* GetCanvasLayer( const char* szLayerName );
+
+		void RefreshGarbage();
 
 	protected:
 		friend class CGUISystem;
@@ -61,6 +66,10 @@ namespace guiex
 	protected:
 		typedef std::vector<CGUICanvasLayer*>	TArrayCanvasLayer;
 		TArrayCanvasLayer m_arrayCanvasLayers;
+		TArrayCanvasLayer m_arrayCanvasLayersCache;
+		bool m_bCacheDirtyFlag;
+
+		std::vector<CGUICanvasLayer*> m_vecGarbage; //garbage
 
 	private:
 		static CGUICanvasLayerManager* m_pSingleton;

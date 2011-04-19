@@ -32,6 +32,7 @@ namespace guiex
 		,m_fTotalTime(GUIAS_MIN_TOTALTIME)
 		,m_fElapsedTime(0.0f)
 		,m_bLooping(false)
+		,m_bReverse(false)
 		,m_bRetired(false)
 		,m_pReceiver(NULL)
 		,m_strAsType(rAsType)
@@ -67,6 +68,7 @@ namespace guiex
 		*		<property name="loop" type="bool" value="false"/>
 		*		<property name="total_time" type="real" value="10" />
 		*		<property name="elapsed_time" type="real" value="5" />
+		*		<property name="reverse" type="bool" value="false" />
 		*</property>
 		*/
 		{
@@ -77,6 +79,16 @@ namespace guiex
 				PropertyToValue( *pPptLoop, bLoop );
 			}
 			SetLooping( bLoop );
+		}	
+		
+		{
+			bool bReverse = false;
+			const CGUIProperty* pPptReverse = rProperty.GetProperty("reverse", "bool");
+			if( pPptReverse )
+			{
+				PropertyToValue( *pPptReverse, bReverse );
+			}
+			SetReverse( bReverse );
 		}
 
 		{
@@ -174,6 +186,16 @@ namespace guiex
 		return m_bLooping;
 	}
 	//------------------------------------------------------------------------------
+	void CGUIAs::SetReverse( bool bReverse )
+	{
+		m_bReverse = bReverse;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIAs::IsReverse() const
+	{
+		return m_bReverse;
+	}
+	//------------------------------------------------------------------------------
 	/**
 	* @brief set widget which receives this as
 	*/
@@ -214,7 +236,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	real CGUIAs::GetPercent() const
 	{
-		return GetElapsedTime() / GetTotalTime();
+		if( IsReverse() )
+		{
+			return 1.0f - GetElapsedTime() / GetTotalTime();
+		}
+		else
+		{
+			return GetElapsedTime() / GetTotalTime();
+		}
 	}
 	//------------------------------------------------------------------------------
 	void CGUIAs::SetElapsedTime( real fElapsedTime )

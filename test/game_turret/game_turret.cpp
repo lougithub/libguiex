@@ -64,7 +64,7 @@ void CMyMonster::InitMonster( CGUIWidget* pParent, bool bStrong, CGUIWgtStaticIm
 
 	CGUIAsCallFunc* pAsCallFunc = CGUIAsManager::Instance()->AllocateResource<CGUIAsCallFunc>();
 	pAsCallFunc->SetReceiver( this );
-	pAsCallFunc->SetFuncCallback( FunRetiredCallback_TargetMoveto );
+	pAsCallFunc->SetFuncCallback( FunCallback_TargetMoveto );
 
 	CGUIAsMoveTo* pAsMoveTo = CGUIAsManager::Instance()->AllocateResource<CGUIAsMoveTo>();
 	pAsMoveTo->SetReceiver( this );
@@ -89,7 +89,7 @@ void CMyMonster::SetHp( uint32 uHp)
 	m_uHp = uHp;
 }
 //------------------------------------------------------------------------------
-void CMyMonster::FunRetiredCallback_TargetMoveto(CGUIAs* pAs)
+void CMyMonster::FunCallback_TargetMoveto(CGUIAs* pAs)
 {
 	((CMyMonster*)pAs->GetReceiver())->ResetTargetPosition();
 }
@@ -190,7 +190,7 @@ void CMyProjectile::InitProjectile( CGUIWidget* pParent,CGUIWgtStaticImage* pTur
 	//set projectile as
 	CGUIAsCallFunc* pAsCallFunc = CGUIAsManager::Instance()->AllocateResource<CGUIAsCallFunc>();
 	pAsCallFunc->SetReceiver( this );
-	pAsCallFunc->SetFuncCallback( FunRetiredCallback_ProjectileFinish );
+	pAsCallFunc->SetFuncCallback( FunCallback_ProjectileFinish );
 
 	CGUIAsMoveTo* pAsMoveTo = CGUIAsManager::Instance()->AllocateResource<CGUIAsMoveTo>();
 	pAsMoveTo->SetReceiver( this );
@@ -207,7 +207,7 @@ void CMyProjectile::InitProjectile( CGUIWidget* pParent,CGUIWgtStaticImage* pTur
 	CGUIInterfaceManager::Instance()->GetInterfaceSound()->PlayEffect( "se_selection.ogg" );
 }
 //------------------------------------------------------------------------------
-void CMyProjectile::FunRetiredCallback_ProjectileFinish(CGUIAs* pAs)
+void CMyProjectile::FunCallback_ProjectileFinish(CGUIAs* pAs)
 {
 	CGUIFrameworkTest::ms_pFrameWork->GetTurretGameLayer()->DestroyProjectile( (CMyProjectile*)pAs->GetReceiver() );
 }

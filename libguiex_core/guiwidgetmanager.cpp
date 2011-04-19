@@ -47,10 +47,9 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIWidgetManager::~CGUIWidgetManager()
 	{
-		RefreshGarbage();
-
 		//check
-		GUI_ASSERT(m_aMapWidget.empty(), "shouldn't has any widget in map");
+		GUI_ASSERT(m_vecGarbage.empty(), "[CGUIWidgetManager::~CGUIWidgetManager]: shouldn't has any garbate");
+		GUI_ASSERT(m_aMapWidget.empty(), "[CGUIWidgetManager::~CGUIWidgetManager]: shouldn't has any widget");
 
 		m_pSingleton = NULL; 
 	}

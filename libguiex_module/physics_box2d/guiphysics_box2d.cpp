@@ -31,6 +31,7 @@ namespace guiex
 	IGUIPhysics_box2d::IGUIPhysics_box2d()
 		:IGUIInterfacePhysics( StaticGetModuleName() )
 		,m_pWorld(NULL)
+		,m_bSimulateWorld(true)
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -63,13 +64,31 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	bool IGUIPhysics_box2d::IsSimulating() const
+	{
+		return m_bSimulateWorld;
+	}
+	//------------------------------------------------------------------------------
+	void IGUIPhysics_box2d::PauseSimulate()
+	{
+		m_bSimulateWorld = false;
+	}
+	//------------------------------------------------------------------------------
+	void IGUIPhysics_box2d::BeginSimulate()
+	{
+		m_bSimulateWorld = true;
+	}
+	//------------------------------------------------------------------------------
 	void IGUIPhysics_box2d::Update( real fDeltaTime )
 	{
-		guiex::int32 velocityIterations = 10;
-		guiex::int32 positionIterations = 2;
+		if( m_bSimulateWorld )
+		{
+			int32 velocityIterations = 10;
+			int32 positionIterations = 2;
 
-		m_pWorld->Step( fDeltaTime, velocityIterations, positionIterations );
-		m_pWorld->ClearForces();
+			m_pWorld->Step( fDeltaTime, velocityIterations, positionIterations );
+			m_pWorld->ClearForces();
+		}
 	}
 	//------------------------------------------------------------------------------
 	b2World* IGUIPhysics_box2d::GetWorld()

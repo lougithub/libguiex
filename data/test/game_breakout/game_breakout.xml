@@ -1,2 +1,31 @@
 <guiex>
+    <property name="game_background" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
+        <property name="BGIMAGE" type="CGUIImage" value="dialog_bg" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0,0" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="1,1" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+        </property>
+        <property name="max_size" type="CGUISize" value="0,0" />
+        <property name="min_size" type="CGUISize" value="0,0" />
+        <property name="anchor" type="CGUIVector2" value="0,0" />
+        <property name="scale" type="CGUISize" value="1,1" />
+        <property name="alpha" type="real" value="1" />
+        <property name="rotation" type="CGUIVector3" value="0,0,0" />
+        <property name="movable" type="bool" value="false" />
+        <property name="color" type="CGUIColor" value="255,255,255,255" />
+        <property name="visible" type="bool" value="true" />
+        <property name="activable" type="bool" value="false" />
+        <property name="hitable" type="bool" value="true" />
+        <property name="disable" type="bool" value="false" />
+        <property name="auto_play_as" type="bool" value="false" />
+        <property name="clip_children" type="bool" value="false" />
+        <property name="open_with_parent" type="bool" value="true" />
+        <property name="generate_update_event" type="bool" value="false" />
+        <property name="generate_click_event" type="bool" value="false" />
+        <property name="generate_parentsizechange_event" type="bool" value="false" />
+    </property>
 </guiex>

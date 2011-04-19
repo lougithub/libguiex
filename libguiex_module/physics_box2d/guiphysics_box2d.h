@@ -34,6 +34,9 @@ namespace guiex
 		virtual	void Update( real fDeltaTime );
 
 		b2World* GetWorld();
+		bool IsSimulating() const;
+		void PauseSimulate();
+		void BeginSimulate();
 
 		static void SetMeterPixelScale( real fScale );
 		static real GetMeterPixelScale( );
@@ -47,6 +50,7 @@ namespace guiex
 	protected:
 		b2World * m_pWorld;
 		static real ms_fScale;
+		bool m_bSimulateWorld;
 
 	public: 
 		static const char* StaticGetModuleName();
