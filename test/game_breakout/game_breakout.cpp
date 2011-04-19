@@ -660,6 +660,11 @@ void CGUIFrameworkTest::CreateMenuLayer( const char* szLayerConfigName )
 			guiex::CGUIWidget* pWidget = guiex::CGUIWidgetManager::Instance()->GetWidget( "btn_replay_win", "game_breakout" );
 			pWidget->RegisterNativeCallbackFunc( "OnMouseLeftClick", Btn_OnClick_Replay );
 		}
+		else if( guiex::CGUIString("scene_start.xml") == szLayerConfigName )
+		{
+			guiex::CGUIWidget* pWidget = guiex::CGUIWidgetManager::Instance()->GetWidget( "btn_start", "game_breakout" );
+			pWidget->RegisterNativeCallbackFunc( "OnMouseLeftClick", Btn_OnClick_Replay );
+		}
 	}
 }
 //------------------------------------------------------------------------------
@@ -685,7 +690,7 @@ guiex::int32 CGUIFrameworkTest::InitializeGame()
 	guiex::CGUIWidget* pWidget = guiex::CGUIWidgetManager::Instance()->GetPage( "utility.xml", "common" );
 	guiex::GSystem->GetUICanvas()->OpenUIPage(pWidget);		
 
-	CreateGameLayer();
+	CreateMenuLayer("scene_start.xml");
 	return 0;
 }
 //------------------------------------------------------------------------------

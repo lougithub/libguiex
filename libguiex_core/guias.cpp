@@ -791,11 +791,15 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	real CGUIAsCallFunc::Update( real fDeltaTime )
 	{
-		if( m_funCallback )
+		if( !IsRetired() )
 		{
-			m_funCallback( this );
+			if( m_funCallback )
+			{
+				m_funCallback( this );
+			}
+			Retire( true );
 		}
-		Retire( true );
+
 		return 0.0f;
 	}
 	//------------------------------------------------------------------------------
@@ -833,25 +837,29 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	real CGUIAsMoveTo::Update( real fDeltaTime )
 	{
-		const CGUIVector2& rCurPos = GetReceiver()->GetPosition();
-		if( rCurPos == m_aDestination )
+		if( !IsRetired() )
 		{
-			Retire( true );
-			return 0.0f;
+			const CGUIVector2& rCurPos = GetReceiver()->GetPosition();
+			if( rCurPos == m_aDestination )
+			{
+				Retire( true );
+				return 0.0f;
+			}
+			CGUIVector2 aDelta = m_aDestination - rCurPos;
+			real fDeltaLen = aDelta.Normalise();
+			real fCurMoveLen = m_fVelocity * fDeltaTime;
+			if( fDeltaLen <= fCurMoveLen )
+			{
+				GetReceiver()->SetPosition( m_aDestination );
+				Retire( true );
+				return 0.0f;
+			}
+			else
+			{
+				GetReceiver()->SetPosition( rCurPos + aDelta * fCurMoveLen );
+			}
 		}
-		CGUIVector2 aDelta = m_aDestination - rCurPos;
-		real fDeltaLen = aDelta.Normalise();
-		real fCurMoveLen = m_fVelocity * fDeltaTime;
-		if( fDeltaLen <= fCurMoveLen )
-		{
-			GetReceiver()->SetPosition( m_aDestination );
-			Retire( true );
-			return 0.0f;
-		}
-		else
-		{
-			GetReceiver()->SetPosition( rCurPos + aDelta * fCurMoveLen );
-		}
+
 		return 0.0f;
 	}
 	//------------------------------------------------------------------------------

@@ -5,6 +5,7 @@
 	<property name="game_breakout.xml" type="WidgetFile" />
 	<property name="scene_lose.xml" type="WidgetFile" />
 	<property name="scene_win.xml" type="WidgetFile" />
+	<property name="scene_start.xml" type="WidgetFile" />
 	<property name="resource.res" type="ResourceFile" />
 </libguiex_project>
 

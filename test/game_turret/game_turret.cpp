@@ -132,8 +132,12 @@ void CGUIAsShoot::SetShootPos(const CGUIVector2& rShootPos)
 //------------------------------------------------------------------------------
 real CGUIAsShoot::Update( real fDeltaTime )
 {
-	m_pGameLayer->Shoot( m_aShootPos );
-	Retire( true );
+	if( !IsRetired() )
+	{
+		m_pGameLayer->Shoot( m_aShootPos );
+		Retire( true );
+	}
+
 	return 0.0f;
 }
 //------------------------------------------------------------------------------

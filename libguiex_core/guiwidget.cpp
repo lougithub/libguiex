@@ -1481,6 +1481,8 @@ namespace guiex
 			pAs->Reset( );
 			pAs->RefRetain();
 			m_listAsPlaying.push_back( pAs );
+
+			pAs->Update(0.0f);
 		}
 	}
 	//------------------------------------------------------------------------------
