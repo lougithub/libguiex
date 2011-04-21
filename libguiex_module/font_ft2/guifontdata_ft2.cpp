@@ -10,8 +10,9 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_module/font_ft2/guifontdata_ft2.h>
-#include <libguiex_module/font_ft2/guifont_ft2.h>
+#include "guifontdata_ft2.h"
+#include "guifontface_ft2.h"
+#include "guifont_ft2.h"
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guitextureimp.h>
 #include <libguiex_core/guitexture.h>
@@ -26,33 +27,29 @@
 //============================================================================// 
 namespace guiex
 {
-	//CGUICharData_ft2
 	//------------------------------------------------------------------------------
-	CGUICharData_ft2::CGUICharData_ft2()
-		:m_pTexture(NULL)
-		,m_fLeftBearing(0)
-		,m_nGlyphIdx(0)
-		,m_fBitmapWidth(0)
-		,m_fBitmapHeight(0)
-		,m_fTopBearing(0)
+	CGUIFontData_ft2::CGUIFontData_ft2( 
+		const CGUIString& rName, 
+		const CGUIString& rSceneName, 
+		const SFontInfo& rFontInfo,
+		CGUIFontFace_ft2* pFontFace)
+		:CGUIFontData( rName, rSceneName, rFontInfo )
+		,m_pFontFace(pFontFace)
+		,m_uTexturePosX(0)
+		,m_uTexturePosY(0)
 	{
 	}
 	//------------------------------------------------------------------------------
-	CGUICharData_ft2::~CGUICharData_ft2()
-	{
-		m_pTexture = NULL;
-	}
-	//------------------------------------------------------------------------------
-	
-	
-	//------------------------------------------------------------------------------
-	CGUICharsData_ft2::CGUICharsData_ft2()
-		:m_nX( 0 )
-		,m_nY( 0 )
+	CGUIFontData_ft2::~CGUIFontData_ft2()
 	{
 	}
 	//------------------------------------------------------------------------------
-	CGUICharsData_ft2::~CGUICharsData_ft2()
+	int32 CGUIFontData_ft2::DoLoad()
+	{
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIFontData_ft2::DoUnload()
 	{
 		//release characters data
 		while( m_mapCharsData.empty() == false )
@@ -69,78 +66,137 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-		
-		
-		
-	//------------------------------------------------------------------------------
-	CGUIFontData_ft2::~CGUIFontData_ft2()
+	FT_Face CGUIFontData_ft2::GetFontFace()
 	{
+		return m_pFontFace->GetFontFace();
 	}
 	//------------------------------------------------------------------------------
-	CGUIFontData_ft2::CGUIFontData_ft2( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nFontID )
-		:CGUIFontData( rName, rSceneName, nFontID )
-		,m_strPath( rPath )
+	SCharData_ft2* CGUIFontData_ft2::GetCharData( wchar_t charCode )
 	{
-
-	}
-	//------------------------------------------------------------------------------
-	int32 CGUIFontData_ft2::DoLoad()
-	{
-		//load font face
-		CGUIString strFullPath = GSystem->GetDataPath() + CGUISceneManager::Instance()->GetScenePath( m_strSceneName ) + m_strPath;
-		
-		GUI_TRACE( GUI_FORMAT( "[IGUIFont_ft2::LoadFontFace]: Load Font Face <%d> from File <%s>",
-			m_nFontIndex, strFullPath.c_str()) );
-
-		IGUIFont_ft2* pFont =  reinterpret_cast<IGUIFont_ft2*>( CGUIInterfaceManager::Instance()->GetInterfaceFont() );
-		if( !pFont )
+		//get font
+		TMapCharData::iterator itorCharData = m_mapCharsData.find(charCode);
+		if( itorCharData != m_mapCharsData.end() )
 		{
-			throw CGUIException( "[CGUIFontData::DoLoad]: failed to get font interface" );
-			return -1;
+			//bingo! got this font data
+			return itorCharData->second;
 		}
-		
-#if 1
-		FT_Error ret = FT_New_Face( pFont->GetFTLibrary( ), strFullPath.c_str(), 0, &m_aFtFace );
-		if(  ret != 0 )
+		else
 		{
-			throw CGUIException(
-				"[CGUIFontData_ft2::DoLoad]:Could not get font face from file <%s>!",
-				strFullPath.c_str());
-			return -1;
+			return LoadCharData( charCode );
+		}
+	}
+	//------------------------------------------------------------------------------
+	SCharData_ft2* CGUIFontData_ft2::LoadCharData( wchar_t charCode )
+	{
+		uint16 uFontSize = GetFontSize();
+		if( charCode == L'\n')
+		{
+			//line break
+			SCharData_ft2 *pCharData = new SCharData_ft2;	
+			pCharData->m_pTexture = NULL;
+			pCharData->m_fBitmapWidth = 0;
+			pCharData->m_fBitmapHeight = 0;
+			pCharData->m_fLeftBearing = 0;
+			pCharData->m_fTopBearing = 0;
+			pCharData->m_aSize.m_fWidth = 0;
+			pCharData->m_aSize.m_fHeight = real(uFontSize);
+			pCharData->m_nGlyphIdx = 0;
+
+			//add to map
+			m_mapCharsData.insert(std::make_pair(charCode, pCharData));
+
+			return pCharData;
+		}
+
+		//normal text
+
+		//set size
+		FT_Face pFontFace = GetFontFace();
+#if 0
+		if( FT_Set_Pixel_Sizes( pFontFace, uFontSize, uFontSize) )
+#else
+		if( FT_Set_Char_Size( pFontFace, uFontSize << 6, uFontSize << 6, 96, 96) )
+#endif
+		{
+			throw CGUIException( "[IGUIFont_ft2::LoadFontFace]:Could not set char size!");
+		}
+		//load this font
+#if 0
+		if( FT_Load_Char( pFontFace, charCode, FT_LOAD_RENDER ))
+		{
+			throw CGUIException("[CGUIFontData_ft2::LoadCharData]:Failed to load char, the code is <%x>!", charCode );
 		}
 #else
-		IGUIInterfaceFileSys* pFileSys = CGUIInterfaceManager::GetInterfaceFileSys();
-		CGUIDataChunk aDataChunk;
-		if( 0 != pFileSys->ReadFile( strFullPath, aDataChunk ))
+		uint32 uGlyphIdx = FT_Get_Char_Index( pFontFace, charCode );
+
+		if( FT_Load_Glyph( pFontFace, uGlyphIdx, /*FT_LOAD_DEFAULT*/FT_LOAD_RENDER ))
 		{
-			throw CGUIException("[IGUIFont_ft2::LoadFontFace]:Could not get font face from file <%s>!",
-				strFullPath.c_str());
+			throw CGUIException("[CGUIFontData_ft2::LoadCharData]:Failed to load glyph, the code is <%x>!", charCode );
 		}
-		FT_Error ret = FT_New_Memory_Face( pFont->GetFTLibrary( ), aDataChunk.GetDataPtr(),aDataChunk.GetSize(), 0, &m_aFtFace );
-		if(  ret != 0 )
+
+		if( FT_Render_Glyph( pFontFace->glyph, FT_RENDER_MODE_NORMAL ))
 		{
-			throw CGUIException("[IGUIFont_ft2::LoadFontFace]:Could not get font face from file <%s>!",
-				strFullPath.c_str());
+			throw CGUIException("[CGUIFontData_ft2::LoadCharData]:Failed to render glyph, the code is <%x>!", charCode );
 		}
 #endif
-		return 0;
-	}
-	//------------------------------------------------------------------------------
-	void CGUIFontData_ft2::DoUnload()
-	{
-		GUI_TRACE(GUI_FORMAT( "[CGUIFontData_ft2::DoUnload]:\n   Unload Font Face <%d>", m_nFontIndex));
 
-		//remove data
-		for( TMapSizeChars::iterator itor = m_mapSizeChars.begin();
-			itor != m_mapSizeChars.end();
-			++itor )
+		const FT_GlyphSlot& glyph = pFontFace->glyph;
+
+		//get information
+		SCharData_ft2 *pCharData = new SCharData_ft2;	
+		pCharData->m_fBitmapWidth = real(glyph->bitmap.width);
+		pCharData->m_fBitmapHeight = real(glyph->bitmap.rows);
+		pCharData->m_fLeftBearing = real(glyph->bitmap_left);
+		pCharData->m_fTopBearing = real(glyph->bitmap_top);
+		pCharData->m_aSize.m_fWidth = real(glyph->advance.x>>6);
+		pCharData->m_aSize.m_fHeight = real(uFontSize);
+		pCharData->m_nGlyphIdx = uGlyphIdx;
+
+		//get texture
+		uint32 nTextureWidth = GetTextureSize().GetWidth();
+		uint32 nTextureHeight = GetTextureSize().GetHeight();
+		if( m_uTexturePosX + glyph->bitmap.width >= nTextureWidth)
 		{
-			delete itor->second;
+			m_uTexturePosX = 0;
+			m_uTexturePosY += uFontSize;
 		}
-		m_mapSizeChars.clear();
+		if( m_vecTexture.empty() || m_uTexturePosY + uFontSize > nTextureHeight )
+		{
+			m_uTexturePosX = m_uTexturePosY = 0;
+			CGUITexture* pNewTexture = CGUITextureManager::Instance()->CreateTexture(nTextureWidth,nTextureHeight,GUI_PF_LUMINANCE_ALPHA_16);
+			m_vecTexture.push_back(pNewTexture);
+		}
+		pCharData->m_pTexture = m_vecTexture.back();
 
-		//unload
-		FT_Done_Face(m_aFtFace );
+		//copy data
+		//get image data
+		uint8* pImageData = new uint8[glyph->bitmap.width * glyph->bitmap.rows * 2];
+		uint8* pBufferDst = pImageData;
+		uint8* pBufferSrc = glyph->bitmap.buffer;
+		for( int i=0; i<glyph->bitmap.rows; ++i)
+		{
+			for( int j=0; j<glyph->bitmap.width; ++j)
+			{
+				*pBufferDst++ = 0xFF;//*pBufferSrc;//*pBufferSrc;
+				*pBufferDst++ = *pBufferSrc;
+				++pBufferSrc;
+			}	
+		}
+		pCharData->m_pTexture->CopySubImage(m_uTexturePosX,m_uTexturePosY,glyph->bitmap.width,glyph->bitmap.rows,GUI_PF_LUMINANCE_ALPHA_16,pImageData );
+		delete[] pImageData;
+		pCharData->m_aUV = CGUIRect(
+			//TODO: why add add 0.5f for fix bug.but don't known why add it...
+			real(m_uTexturePosX/*+0.5f*/) / nTextureWidth,
+			real(m_uTexturePosY) / nTextureHeight,
+			real(m_uTexturePosX+glyph->bitmap.width) / nTextureWidth,
+			real(m_uTexturePosY+glyph->bitmap.rows) / nTextureHeight);
+
+		m_uTexturePosX += glyph->bitmap.width;
+
+		//add to map
+		m_mapCharsData.insert(std::make_pair(charCode, pCharData));
+
+		return pCharData;
 	}
 	//------------------------------------------------------------------------------
 }//guiex

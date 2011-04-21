@@ -258,12 +258,12 @@ namespace guiex
 		return OnWidgetDestroyed;
 	}
 	//------------------------------------------------------------------------------
-	CGUIStringEx* CGUIWidget::GetTooltipText(void) const
+	CGUIStringRender* CGUIWidget::GetTooltipText(void) const
 	{
 		return NULL;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWidget::SetTooltipText(const CGUIStringEx& /*rText*/)
+	void CGUIWidget::SetTooltipText(const CGUIStringRender& /*rText*/)
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -1195,13 +1195,17 @@ namespace guiex
 	{
 		if(m_aParamScale.GetSelfValue() != rSize )
 		{
-			if( rSize.m_fHeight <= 0.0f || rSize.m_fWidth <= 0.0f)
+			CGUISize aSize( rSize );
+			if( aSize.m_fHeight <= 0.0f )
 			{
-				GUI_FORCE_ASSERT( GUI_FORMAT("can't set the zero scale to a widget <%s>", m_strName.c_str()));
-				return;
+				aSize.m_fHeight = 0.001f;
+			}
+			if( aSize.m_fWidth <= 0.0f )
+			{
+				aSize.m_fWidth = 0.001f;
 			}
 
-			m_aParamScale.SetSelfValue(rSize);
+			m_aParamScale.SetSelfValue(aSize);
 
 			//send event
 			if( IsGenerateScaleChangeEvent())
@@ -2319,7 +2323,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWidget::DrawCharacter(IGUIInterfaceRender* pRender, 
 		wchar_t charCode, 
-		const CGUIStringInfo& rInfo,
+		const CGUIStringRenderInfo& rInfo,
 		const CGUIVector2& rPos)
 	{
 		pRender->GetFontRender()->DrawCharacter(pRender, charCode, rInfo, rPos, GetDerivedAlpha());
@@ -2330,7 +2334,7 @@ namespace guiex
 	*/
 	void CGUIWidget::DrawString(
 		IGUIInterfaceRender* pRender, 
-		const CGUIStringEx& strText, 
+		const CGUIStringRender& strText, 
 		const CGUIRect& rDrawRect,
 		ETextAlignmentHorz uTextAlignmentHorz,
 		ETextAlignmentVert uTextAlignmentVert,
@@ -2342,7 +2346,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void	CGUIWidget::DrawString(
 		IGUIInterfaceRender* pRender, 
-		const CGUIStringEx& strText, 
+		const CGUIStringRender& strText, 
 		const CGUIVector2& rPos,
 		int32 nStartPos,
 		int32 nEndPos)

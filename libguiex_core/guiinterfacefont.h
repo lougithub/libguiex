@@ -17,6 +17,7 @@
 #include "guistringex.h"
 #include "guicolor.h"
 #include "guicolorrect.h"
+#include "guifontdata.h"
 
 
 //============================================================================//
@@ -28,7 +29,6 @@ namespace guiex
 	class CGUIRect;
 	class IGUIInterfaceRender;
 	class CGUIMatrix4;
-	class CGUIFontData;
 }
 
 
@@ -55,18 +55,23 @@ namespace guiex
 		*/
 		virtual ~IGUIInterfaceFont();
 
-		virtual CGUIFontData* CreateFontData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nFontID ) = 0;
+		virtual CGUIFontData* CreateFontData( 
+			const CGUIString& rName, 
+			const CGUIString& rSceneName,
+			const SFontInfo& rFontInfo ) = 0;
 		virtual void DestroyFontData( CGUIFontData* pData ) = 0;
 
 		/**
 		* @brief get string width
 		*/
-		real GetStringWidth( const CGUIStringEx& rString, int32 nStartPos = 0, int32 nEndPos = -1);
+		real GetStringWidth( const CGUIStringRender& rString, int32 nStartPos = 0, int32 nEndPos = -1);
+
+		virtual real GetFontHeight( const CGUIStringRenderInfo& rInfo ) = 0;
 
 		/**
 		* @brief get string size
 		*/
-		virtual const CGUISize& GetCharacterSize(int32 nFontFaceIdx, wchar_t charCode, uint32 nSize) = 0;
+		virtual CGUISize GetCharacterSize( wchar_t charCode, const CGUIStringRenderInfo& rInfo ) = 0;
 
 		/**
 		* @brief enable kerning
@@ -78,7 +83,7 @@ namespace guiex
 		*/
 		virtual void DrawCharacter(IGUIInterfaceRender* pRender, 
 			wchar_t charCode, 
-			const CGUIStringInfo& rInfo,
+			const CGUIStringRenderInfo& rInfo,
 			const CGUIVector2& rPos,
 			real fAlpha) = 0;
 
@@ -86,7 +91,7 @@ namespace guiex
 		* @brief draw string
 		*/
 		virtual void DrawString(IGUIInterfaceRender* pRender, 
-			const CGUIStringEx& rString, 
+			const CGUIStringRender& rString, 
 			const CGUIVector2& rPos,
 			real fAlpha,
 			int32 nStartPos = 0,
@@ -96,7 +101,7 @@ namespace guiex
 		* @brief draw string
 		*/
 		virtual void DrawString(IGUIInterfaceRender* pRender, 
-			const CGUIStringEx& rString, 
+			const CGUIStringRender& rString, 
 			const CGUIRect&	rStringRect,
 			ETextAlignmentHorz uTextAlignmentHorz,
 			ETextAlignmentVert uTextAlignmentVert,

@@ -32,7 +32,7 @@ namespace guiex
 		CGUIWgtStaticText( const CGUIString& rName, const CGUIString& rSceneName );
 	
 		virtual void SetTextContent(const CGUIStringW& rText);
-		virtual void SetTextInfo(const CGUIStringInfo& rInfo);
+		virtual void SetTextInfo(const CGUIStringRenderInfo& rInfo);
 
 		void SetMultiLine( bool bMultiLine );
 		bool IsMultiLine( ) const;
@@ -64,7 +64,7 @@ namespace guiex
 		{
 			uint32	m_nStartIdx;     //!< Starting index for this line.
 			uint32	m_nLength;       //!< Code point length of this line.
-			uint32	m_nLineHeight;   //!< line height
+			real m_fLineHeight;   //!< line height
 		};
 		typedef std::vector<SLineInfo>   TLineList;  //!< Type for collection of LineInfos.
 		TLineList m_aLineList;			//!< line list

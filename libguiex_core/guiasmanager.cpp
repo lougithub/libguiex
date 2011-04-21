@@ -64,10 +64,10 @@ namespace guiex
 		return m_pSingleton; 
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIAsManager::RegisterAs( const CGUIString& rSceneName, const CGUIProperty& rProperty )
+	int32 CGUIAsManager::RegisterResource( const CGUIString& rSceneName, const CGUIProperty& rProperty )
 	{
 		CGUIAsData* pAsData = new CGUIAsData( rProperty.GetName(), rSceneName, rProperty );
-		RegisterResource( pAsData );
+		RegisterResourceImp( pAsData );
 		return 0;
 	}
 	//------------------------------------------------------------------------------

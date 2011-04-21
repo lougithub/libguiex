@@ -33,7 +33,7 @@ namespace guiex
 	}
 //------------------------------------------------------------------------------
 	real IGUIInterfaceFont::GetStringWidth(	
-		const CGUIStringEx& rString,
+		const CGUIStringRender& rString,
 		int32 nStartPos /*= 0*/,
 		int32 nEndPos/* = -1*/)
 	{
@@ -43,10 +43,10 @@ namespace guiex
 		}
 
 		real fWidth = 0.0f;
-		const CGUIStringInfo& rInfo = rString.m_aStringInfo;
+		const CGUIStringRenderInfo& rInfo = rString.m_aStringInfo;
 		for( int32 i=nStartPos; i<nEndPos; ++i )
 		{
-			fWidth += GetCharacterSize( rInfo.m_nFontIdx, rString.m_strContent[i], rInfo.m_nFontSize).m_fWidth;
+			fWidth += GetCharacterSize( rString.m_strContent[i], rInfo).m_fWidth;
 		}
 		return fWidth;
 	}

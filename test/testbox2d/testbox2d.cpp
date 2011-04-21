@@ -65,7 +65,7 @@ guiex::int32 CGUIFrameworkTest::InitializeGame( )
 	}
 
 	//create world
-	m_pWorld = CGUIInterfaceManager::Instance()->GetInterfacePhysicsTyped<IGUIPhysics_box2d>()->GetWorld();
+	m_pWorld = CGUIInterfaceManager::Instance()->GetInterfacePhysicsWithTypeCheck<IGUIPhysics_box2d>()->GetWorld();
 
 	CreateBox2dSample_hellobox2d();
 	CreateBox2dSample_joints();

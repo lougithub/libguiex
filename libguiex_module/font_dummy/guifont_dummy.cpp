@@ -66,6 +66,9 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int IGUIFont_dummy::DoInitialize(void* )
 	{
+		//init datas
+		m_arrayFontDatas.resize( GUI_FONT_MAX_NUM, NULL );
+
 		return 0;
 	}
 	//------------------------------------------------------------------------------
@@ -80,12 +83,14 @@ namespace guiex
 	void IGUIFont_dummy::DrawCharacter(
 									   IGUIInterfaceRender* pRender, 
 									   wchar_t charCode, 
-									   const CGUIStringInfo& rInfo,
+									   const CGUIStringRenderInfo& rInfo,
 									   const CGUIVector2& rPos,
 									   real fAlpha)
 	{
+		CGUIFontData_dummy* pFontData = GetFontData( rInfo.m_uFontID );
+		CGUISize aFontSize(pFontData->GetFontSize()*rInfo.m_fFontScale,pFontData->GetFontSize()*rInfo.m_fFontScale);
 		CGUIRect aCharRect( CGUIVector2(rPos.x, rPos.y),
-						   CGUISize(rInfo.m_nFontSize,rInfo.m_nFontSize));
+						   aFontSize);
 		
 		pRender->DrawRect( aCharRect, 1, 0,
 						  rInfo.m_aColor,
@@ -95,7 +100,7 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	void IGUIFont_dummy::DrawString(IGUIInterfaceRender* pRender, 
-									const CGUIStringEx& rString, 
+									const CGUIStringRender& rString, 
 									const CGUIRect&	rStringRect,
 									ETextAlignmentHorz uTextAlignmentHorz,
 									ETextAlignmentVert uTextAlignmentVert,
@@ -108,12 +113,13 @@ namespace guiex
 			//empty string
 			return;
 		}
+		const CGUIStringRenderInfo& rInfo = rString.m_aStringInfo;
+
+		CGUIFontData_dummy* pFontData = GetFontData( rInfo.m_uFontID );
+		real fScaledStringWidth = GetStringWidth(rString);
+		real fScaledStringHeight = pFontData->GetFontSize() * rString.GetStringInfo().m_fFontScale;
 		
 		CGUIVector2 aPos;
-		
-		real fScaledStringWidth = GetStringWidth(rString);
-		real fScaledStringHeight = rString.GetStringInfo().m_nFontSize;
-		
 		switch( uTextAlignmentHorz )
 		{
 		case eTextAlignment_Horz_Left:
@@ -147,13 +153,13 @@ namespace guiex
 			nEndPos = rString.m_strContent.size();
 		}
 		
-		const CGUIStringInfo& rInfo = rString.m_aStringInfo;
+		CGUISize aFontSize(pFontData->GetFontSize()*rInfo.m_fFontScale,pFontData->GetFontSize()*rInfo.m_fFontScale);
 		for( int32 i= nStartPos; i<nEndPos; ++i)
 		{
 			
 			CGUIRect aCharRect(
 							   CGUIVector2(aPos.x, aPos.y),
-							   CGUISize(rInfo.m_nFontSize,rInfo.m_nFontSize));
+							   aFontSize);
 			
 			//dest area size
 			pRender->DrawRect( aCharRect, 1, 0,
@@ -162,12 +168,12 @@ namespace guiex
 							  rInfo.m_aColor,
 							  rInfo.m_aColor);
 			
-			aPos.x+=rInfo.m_nFontSize;
+			aPos.x+=aFontSize.m_fWidth;
 		}
 	}
 	//------------------------------------------------------------------------------
 	void IGUIFont_dummy::DrawString(IGUIInterfaceRender* pRender, 
-									const CGUIStringEx& rString, 
+									const CGUIStringRender& rString, 
 									const CGUIVector2& rPos,
 									real fAlpha,
 									int32 nStartPos,
@@ -178,19 +184,23 @@ namespace guiex
 			//empty string
 			return;
 		}
-		CGUIVector2 aPos = rPos;
+
 		
 		if( nEndPos<0 || nEndPos>int32(rString.m_strContent.size()))
 		{
 			nEndPos = rString.m_strContent.size();
 		}
 		
-		const CGUIStringInfo& rInfo = rString.m_aStringInfo;
+		const CGUIStringRenderInfo& rInfo = rString.m_aStringInfo;
+		CGUIFontData_dummy* pFontData = GetFontData( rInfo.m_uFontID );
+		CGUISize aFontSize(pFontData->GetFontSize()*rInfo.m_fFontScale,pFontData->GetFontSize()*rInfo.m_fFontScale);
+		CGUIVector2 aPos = rPos;
+	
 		for( int32 i=nStartPos; i<nEndPos; ++i)
 		{
 			CGUIRect aCharRect(
 							   CGUIVector2(aPos.x, aPos.y),
-							   CGUISize(rInfo.m_nFontSize,rInfo.m_nFontSize));
+							   aFontSize);
 			
 			pRender->DrawRect( aCharRect, 1, 0,
 							  rInfo.m_aColor,
@@ -198,26 +208,72 @@ namespace guiex
 							  rInfo.m_aColor,
 							  rInfo.m_aColor);
 			
-			aPos.x+=rInfo.m_nFontSize;
+			aPos.x+=aFontSize.m_fWidth;
 		}
 	}
 	//------------------------------------------------------------------------------
-	const CGUISize& IGUIFont_dummy::GetCharacterSize(int32 nFontFaceIdx,wchar_t charCode,uint32 nSize)
+	real IGUIFont_dummy::GetFontHeight( const CGUIStringRenderInfo& rInfo )
 	{
-		static CGUISize aSize;
-		aSize.SetValue( real( nSize), real(nSize ));
-		return aSize;
+		CGUIFontData_dummy* pFontData = GetFontData( rInfo.m_uFontID );
+		return pFontData->GetFontSize() * rInfo.m_fFontScale;
 	}
 	//------------------------------------------------------------------------------
-	CGUIFontData* IGUIFont_dummy::CreateFontData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nFontID )
+	CGUISize IGUIFont_dummy::GetCharacterSize( wchar_t charCode, const CGUIStringRenderInfo& rInfo )
 	{
-		return new CGUIFontData_dummy(rName, rSceneName, rPath, nFontID);
+		CGUIFontData_dummy* pFontData = GetFontData( rInfo.m_uFontID );
+		return CGUISize(pFontData->GetFontSize()*rInfo.m_fFontScale,pFontData->GetFontSize()*rInfo.m_fFontScale);
+	}
+	//------------------------------------------------------------------------------
+	CGUIFontData* IGUIFont_dummy::CreateFontData(
+		const CGUIString& rName, 
+		const CGUIString& rSceneName,
+		const SFontInfo& rFontInfo)
+	{
+		//check
+		if( rFontInfo.m_uID >= m_arrayFontDatas.size() ||
+			m_arrayFontDatas[rFontInfo.m_uID] != NULL )
+		{
+			throw CGUIException("[IGUIFont_dummy::CreateFontData]: invalid font id <%d>", rFontInfo.m_uID );
+			return NULL;
+		}
+
+		m_arrayFontDatas[rFontInfo.m_uID] = new CGUIFontData_dummy( rName, rSceneName, rFontInfo );
+		m_arrayFontDatas[rFontInfo.m_uID]->Load();
+		return m_arrayFontDatas[rFontInfo.m_uID];
 	}
 	//------------------------------------------------------------------------------
 	void IGUIFont_dummy::DestroyFontData( CGUIFontData* pData )
 	{
+		GUI_ASSERT( pData, "invalid parameter" );
+
+		//check
+		CGUIFontData_dummy* pFontData = m_arrayFontDatas[pData->GetFontID()];
+		if( pFontData != pData )
+		{
+			throw CGUIException(
+				"[IGUIFont_dummy::DestroyFontData]: the font<%s:%s> doesn't existing", 
+				pData->GetName().c_str(),
+				pData->GetSceneName().c_str());
+			return;
+		}
+
+		//clear font
+		m_arrayFontDatas[pData->GetFontID()] = NULL;
 		delete pData;
 	}
 	//------------------------------------------------------------------------------
+	CGUIFontData_dummy* IGUIFont_dummy::GetFontData( uint16 uFontID )
+	{
+		//check
+		if( uFontID >= m_arrayFontDatas.size() ||
+			m_arrayFontDatas[uFontID] == NULL )
+		{
+			throw CGUIException("[IGUIFont_dummy::GetFontData]: invalid font id <%d>", uFontID );
+			return NULL;
+		}
+		return m_arrayFontDatas[uFontID];
+	}
+	//------------------------------------------------------------------------------
+
 }//guiex
 

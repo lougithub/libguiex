@@ -213,39 +213,39 @@ wxVariant WxGUIRectProperty::ChildChanged( wxVariant& thisValue, int childIndex,
 // -----------------------------------------------------------------------
 // WxGUIStringInfoProperty
 // -----------------------------------------------------------------------
-WX_PG_IMPLEMENT_VARIANT_DATA_DUMMY_EQ( CGUIStringInfo );
-WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGUIStringInfoProperty,wxPGProperty,CGUIStringInfo,const CGUIStringInfo&,TextCtrl);
+WX_PG_IMPLEMENT_VARIANT_DATA_DUMMY_EQ( CGUIStringRenderInfo );
+WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGUIStringInfoProperty,wxPGProperty,CGUIStringRenderInfo,const CGUIStringRenderInfo&,TextCtrl);
 WxGUIStringInfoProperty::WxGUIStringInfoProperty( 
 	const wxString& label,
 	const wxString& name,
-	const CGUIStringInfo& value)
+	const CGUIStringRenderInfo& value)
 	: wxPGProperty(label,name)
 {
 	//ChangeFlag(wxPG_PROP_READONLY, true);
 	SetValue( WXVARIANT(value) );
-	AddPrivateChild( new wxUIntProperty(wxT("size"), wxT("SIZE"), value.m_nFontSize) );
-	AddPrivateChild( new wxUIntProperty(wxT("index"), wxT("FONT_INDEX"),value.m_nFontIdx) );
-	AddPrivateChild( new WxGuiColorProperty(wxT("color"), wxT("COLOR"), value.m_aColor) );
+	AddPrivateChild( new wxFloatProperty(wxT("scale"), wxT("Scale"), value.m_fFontScale) );
+	AddPrivateChild( new wxUIntProperty(wxT("id"), wxT("FontID"),value.m_uFontID) );
+	AddPrivateChild( new WxGuiColorProperty(wxT("color"), wxT("Color"), value.m_aColor) );
 }
 
 void WxGUIStringInfoProperty::RefreshChildren()
 {
 	if ( !GetChildCount() ) return;
 
-	CGUIStringInfo& string_info = CGUIStringInfoRefFromVariant(m_value);
-	Item(0)->SetValue( string_info.m_nFontSize );
-	Item(1)->SetValue( string_info.m_nFontIdx);
+	CGUIStringRenderInfo& string_info = CGUIStringRenderInfoRefFromVariant(m_value);
+	Item(0)->SetValue( string_info.m_fFontScale );
+	Item(1)->SetValue( string_info.m_uFontID);
 	Item(2)->SetValue( WXVARIANT( string_info.m_aColor ));
 }
 // -----------------------------------------------------------------------
 wxVariant WxGUIStringInfoProperty::ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const
 {
-	CGUIStringInfo& string_info = CGUIStringInfoRefFromVariant(thisValue);
+	CGUIStringRenderInfo& string_info = CGUIStringRenderInfoRefFromVariant(thisValue);
 
 	switch ( childIndex )
 	{
-	case 0: string_info.m_nFontSize = childValue.GetInteger(); break;
-	case 1: string_info.m_nFontIdx = childValue.GetInteger(); break;
+	case 0: string_info.m_fFontScale = childValue.GetDouble(); break;
+	case 1: string_info.m_uFontID = childValue.GetInteger(); break;
 	case 2: string_info.m_aColor << childValue; break;
 	}
 

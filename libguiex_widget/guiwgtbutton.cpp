@@ -125,7 +125,7 @@ namespace guiex
 			eType = eButtonState_Hover;
 		}
 
-		CGUIStringEx* pString = m_strText[eType].m_strContent.empty() ? &m_strText[eButtonState_Normal] : &m_strText[eType];
+		CGUIStringRender* pString = m_strText[eType].m_strContent.empty() ? &m_strText[eButtonState_Normal] : &m_strText[eType];
 		CGUIImage* pImage = m_pImage[eType] ? m_pImage[eType] : m_pImage[eButtonState_Normal];
 
 		DrawImage( pRender, pImage, GetBoundArea());
@@ -149,19 +149,19 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int32 CGUIWgtButton::GenerateProperty( CGUIProperty& rProperty )
 	{
-		if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo_normal" )
+		if( rProperty.GetType() == ePropertyType_StringRenderInfo && rProperty.GetName() == "textinfo_normal" )
 		{
 			ValueToProperty( m_strText[eButtonState_Normal].GetStringInfo(), rProperty );
 		}
-		else if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo_hover" )
+		else if( rProperty.GetType() == ePropertyType_StringRenderInfo && rProperty.GetName() == "textinfo_hover" )
 		{
 			ValueToProperty( m_strText[eButtonState_Hover].GetStringInfo(), rProperty );
 		}
-		else if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo_disable" )
+		else if( rProperty.GetType() == ePropertyType_StringRenderInfo && rProperty.GetName() == "textinfo_disable" )
 		{
 			ValueToProperty( m_strText[eButtonState_Disable].GetStringInfo(), rProperty );
 		}
-		else if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo_push" )
+		else if( rProperty.GetType() == ePropertyType_StringRenderInfo && rProperty.GetName() == "textinfo_push" )
 		{
 			ValueToProperty( m_strText[eButtonState_Push].GetStringInfo(), rProperty );
 		}
@@ -212,51 +212,51 @@ namespace guiex
 	{
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//property for text
-		if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo_normal")
+		if( rProperty.GetType() == ePropertyType_StringRenderInfo && rProperty.GetName() == "textinfo_normal")
 		{
-			CGUIStringInfo aInfo;
+			CGUIStringRenderInfo aInfo;
 			PropertyToValue( rProperty, aInfo);
 			SetTextInfo(aInfo, eButtonState_Normal);
 		}
-		else if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo_hover")
+		else if( rProperty.GetType() == ePropertyType_StringRenderInfo && rProperty.GetName() == "textinfo_hover")
 		{
-			CGUIStringInfo aInfo;
+			CGUIStringRenderInfo aInfo;
 			PropertyToValue( rProperty, aInfo);
 			SetTextInfo(aInfo, eButtonState_Hover);
 		}
-		else if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo_push")
+		else if( rProperty.GetType() == ePropertyType_StringRenderInfo && rProperty.GetName() == "textinfo_push")
 		{
-			CGUIStringInfo aInfo;
+			CGUIStringRenderInfo aInfo;
 			PropertyToValue( rProperty, aInfo);
 			SetTextInfo(aInfo, eButtonState_Push);
 		}
-		else if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo_disable")
+		else if( rProperty.GetType() == ePropertyType_StringRenderInfo && rProperty.GetName() == "textinfo_disable")
 		{
-			CGUIStringInfo aInfo;
+			CGUIStringRenderInfo aInfo;
 			PropertyToValue( rProperty, aInfo);
 			SetTextInfo(aInfo, eButtonState_Disable);
 		}
 		else if( rProperty.GetType() == ePropertyType_LocalizedString && rProperty.GetName() == "text_normal")
 		{
-			CGUIStringEx aStrText;
+			CGUIStringRender aStrText;
 			AppMultiByteToWideChar(rProperty.GetValue(), aStrText.m_strContent);
 			SetTextContent(aStrText.GetContent(), eButtonState_Normal);
 		}
 		else if( rProperty.GetType() == ePropertyType_LocalizedString && rProperty.GetName() == "text_hover")
 		{
-			CGUIStringEx aStrText;
+			CGUIStringRender aStrText;
 			AppMultiByteToWideChar(rProperty.GetValue(), aStrText.m_strContent);
 			SetTextContent(aStrText.GetContent(), eButtonState_Hover);
 		}
 		else if( rProperty.GetType() == ePropertyType_LocalizedString && rProperty.GetName() == "text_push")
 		{
-			CGUIStringEx aStrText;
+			CGUIStringRender aStrText;
 			AppMultiByteToWideChar(rProperty.GetValue(), aStrText.m_strContent);
 			SetTextContent(aStrText.GetContent(), eButtonState_Push);
 		}
 		else if( rProperty.GetType() == ePropertyType_LocalizedString && rProperty.GetName() == "text_disable")
 		{
-			CGUIStringEx aStrText;
+			CGUIStringRender aStrText;
 			AppMultiByteToWideChar(rProperty.GetValue(), aStrText.m_strContent);
 			SetTextContent(aStrText.GetContent(), eButtonState_Disable);
 		}
@@ -310,7 +310,7 @@ namespace guiex
 		m_strText[eButtonState].m_strContent = CGUILocalizationManager::Instance()->Localize( rText );
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtButton::SetTextInfo(const CGUIStringInfo& rInfo, EButtonState eButtonState )
+	void CGUIWgtButton::SetTextInfo(const CGUIStringRenderInfo& rInfo, EButtonState eButtonState )
 	{
 		GUI_ASSERT( eButtonState < __eButtonState_NUM__, "invalid button state");
 		m_strText[eButtonState].m_aStringInfo = rInfo;
@@ -350,13 +350,13 @@ namespace guiex
 		return aContentUTF8;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIStringEx&	CGUIWgtButton::GetText( EButtonState eButtonState ) const
+	const CGUIStringRender&	CGUIWgtButton::GetText( EButtonState eButtonState ) const
 	{
 		GUI_ASSERT( eButtonState < __eButtonState_NUM__, "invalid button state");
 		return m_strText[eButtonState];
 	}
 	//------------------------------------------------------------------------------
-	const CGUIStringInfo& CGUIWgtButton::GetTextInfo( EButtonState eButtonState ) const
+	const CGUIStringRenderInfo& CGUIWgtButton::GetTextInfo( EButtonState eButtonState ) const
 	{
 		GUI_ASSERT( eButtonState < __eButtonState_NUM__, "invalid button state");
 		return m_strText[eButtonState].m_aStringInfo;

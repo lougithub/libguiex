@@ -120,19 +120,19 @@ namespace guiex
 		IGUIInterfaceImageLoader* GetInterfaceImageLoader();
 		IGUIInterfacePhysics* GetInterfacePhysics();
 
-		template <class T> T* GetInterfaceRenderTyped();
-		template <class T> T* GetInterfaceFontTyped();
-		template <class T> T* GetInterfaceScriptTyped();
-		template <class T> T* GetInterfaceConfigFileTyped();
-		template <class T> T* GetInterfaceFileSysTyped();
-		template <class T> T* GetInterfaceMouseTyped();
-		template <class T> T* GetInterfaceKeyboardTyped();
-		template <class T> T* GetInterfaceSoundTyped();
-		template <class T> T* GetInterfaceCommandTyped();
-		template <class T> T* GetInterfaceImeTyped();
-		template <class T> T* GetInterfaceStringConvTyped();
-		template <class T> T* GetInterfaceImageLoaderTyped();
-		template <class T> T* GetInterfacePhysicsTyped();
+		template <class T> T* GetInterfaceRenderWithTypeCheck();
+		template <class T> T* GetInterfaceFontWithTypeCheck();
+		template <class T> T* GetInterfaceScriptWithTypeCheck();
+		template <class T> T* GetInterfaceConfigFileWithTypeCheck();
+		template <class T> T* GetInterfaceFileSysWithTypeCheck();
+		template <class T> T* GetInterfaceMouseWithTypeCheck();
+		template <class T> T* GetInterfaceKeyboardWithTypeCheck();
+		template <class T> T* GetInterfaceSoundWithTypeCheck();
+		template <class T> T* GetInterfaceCommandWithTypeCheck();
+		template <class T> T* GetInterfaceImeWithTypeCheck();
+		template <class T> T* GetInterfaceStringConvWithTypeCheck();
+		template <class T> T* GetInterfaceImageLoaderWithTypeCheck();
+		template <class T> T* GetInterfacePhysicsWithTypeCheck();
 
 	protected:
 		friend class CGUISystem;
@@ -224,91 +224,91 @@ namespace guiex
 	}
 
 	template<class T> 
-	inline T* CGUIInterfaceManager::GetInterfaceRenderTyped()
+	inline T* CGUIInterfaceManager::GetInterfaceRenderWithTypeCheck()
 	{
 		GUI_ASSERT( m_pInterfaceRender->GetModuleType() == T::StaticGetModuleType(), "wrong interface type" );
 		GUI_ASSERT( m_pInterfaceRender->GetModuleName() == T::StaticGetModuleName(), "wrong interface name" );
 		return static_cast<T*>( m_pInterfaceRender );
 	}
 	template<class T> 
-	inline T* CGUIInterfaceManager::GetInterfaceFontTyped()
+	inline T* CGUIInterfaceManager::GetInterfaceFontWithTypeCheck()
 	{
 		GUI_ASSERT( m_pInterfaceFont->GetModuleType() == T::StaticGetModuleType(), "wrong interface type" );
 		GUI_ASSERT( m_pInterfaceFont->GetModuleName() == T::StaticGetModuleName(), "wrong interface name" );
 		return static_cast<T*>( m_pInterfaceFont );
 	}
 	template<class T> 
-	inline T* CGUIInterfaceManager::GetInterfaceScriptTyped()
+	inline T* CGUIInterfaceManager::GetInterfaceScriptWithTypeCheck()
 	{
 		GUI_ASSERT( m_pInterfaceScript->GetModuleType() == T::StaticGetModuleType(), "wrong interface type" );
 		GUI_ASSERT( m_pInterfaceScript->GetModuleName() == T::StaticGetModuleName(), "wrong interface name" );
 		return static_cast<T*>( m_pInterfaceScript );
 	}
 	template<class T> 
-	inline T* CGUIInterfaceManager::GetInterfaceConfigFileTyped()
+	inline T* CGUIInterfaceManager::GetInterfaceConfigFileWithTypeCheck()
 	{
 		GUI_ASSERT( m_pInterfaceConfigFile->GetModuleType() == T::StaticGetModuleType(), "wrong interface type" );
 		GUI_ASSERT( m_pInterfaceConfigFile->GetModuleName() == T::StaticGetModuleName(), "wrong interface name" );
 		return static_cast<T*>( m_pInterfaceConfigFile );
 	}
 	template<class T> 
-	inline T* CGUIInterfaceManager::GetInterfaceFileSysTyped()
+	inline T* CGUIInterfaceManager::GetInterfaceFileSysWithTypeCheck()
 	{
 		GUI_ASSERT( m_pInterfaceFileSys->GetModuleType() == T::StaticGetModuleType(), "wrong interface type" );
 		GUI_ASSERT( m_pInterfaceFileSys->GetModuleName() == T::StaticGetModuleName(), "wrong interface name" );
 		return static_cast<T*>( m_pInterfaceFileSys );
 	}
 	template<class T> 
-	inline T* CGUIInterfaceManager::GetInterfaceMouseTyped()
+	inline T* CGUIInterfaceManager::GetInterfaceMouseWithTypeCheck()
 	{
 		GUI_ASSERT( m_pInterfaceMouse->GetModuleType() == T::StaticGetModuleType(), "wrong interface type" );
 		GUI_ASSERT( m_pInterfaceMouse->GetModuleName() == T::StaticGetModuleName(), "wrong interface name" );
 		return static_cast<T*>( m_pInterfaceMouse );
 	}
 	template<class T> 
-	inline T* CGUIInterfaceManager::GetInterfaceKeyboardTyped()
+	inline T* CGUIInterfaceManager::GetInterfaceKeyboardWithTypeCheck()
 	{
 		GUI_ASSERT( m_pInterfaceKeyboard->GetModuleType() == T::StaticGetModuleType(), "wrong interface type" );
 		GUI_ASSERT( m_pInterfaceKeyboard->GetModuleName() == T::StaticGetModuleName(), "wrong interface name" );
 		return static_cast<T*>( m_pInterfaceKeyboard );
 	}
 	template<class T> 
-	inline T* CGUIInterfaceManager::GetInterfaceSoundTyped()
+	inline T* CGUIInterfaceManager::GetInterfaceSoundWithTypeCheck()
 	{
 		GUI_ASSERT( m_pInterfaceSound->GetModuleType() == T::StaticGetModuleType(), "wrong interface type" );
 		GUI_ASSERT( m_pInterfaceSound->GetModuleName() == T::StaticGetModuleName(), "wrong interface name" );
 		return static_cast<T*>( m_pInterfaceSound );
 	}
 	template<class T> 
-	inline T* CGUIInterfaceManager::GetInterfaceCommandTyped()
+	inline T* CGUIInterfaceManager::GetInterfaceCommandWithTypeCheck()
 	{
 		GUI_ASSERT( m_pInterfaceCommand->GetModuleType() == T::StaticGetModuleType(), "wrong interface type" );
 		GUI_ASSERT( m_pInterfaceCommand->GetModuleName() == T::StaticGetModuleName(), "wrong interface name" );
 		return static_cast<T*>( m_pInterfaceCommand );
 	}
 	template<class T> 
-	inline T* CGUIInterfaceManager::GetInterfaceImeTyped()
+	inline T* CGUIInterfaceManager::GetInterfaceImeWithTypeCheck()
 	{
 		GUI_ASSERT( m_pInterfaceIme->GetModuleType() == T::StaticGetModuleType(), "wrong interface type" );
 		GUI_ASSERT( m_pInterfaceIme->GetModuleName() == T::StaticGetModuleName(), "wrong interface name" );
 		return static_cast<T*>( m_pInterfaceIme );
 	}
 	template<class T> 
-	inline T* CGUIInterfaceManager::GetInterfaceStringConvTyped()
+	inline T* CGUIInterfaceManager::GetInterfaceStringConvWithTypeCheck()
 	{
 		GUI_ASSERT( m_pInterfaceStringConv->GetModuleType() == T::StaticGetModuleType(), "wrong interface type" );
 		GUI_ASSERT( m_pInterfaceStringConv->GetModuleName() == T::StaticGetModuleName(), "wrong interface name" );
 		return static_cast<T*>( m_pInterfaceStringConv );
 	}
 	template<class T> 
-	inline T* CGUIInterfaceManager::GetInterfaceImageLoaderTyped()
+	inline T* CGUIInterfaceManager::GetInterfaceImageLoaderWithTypeCheck()
 	{
 		GUI_ASSERT( m_pInterfaceImageLoader->GetModuleType() == T::StaticGetModuleType(), "wrong interface type" );
 		GUI_ASSERT( m_pInterfaceImageLoader->GetModuleName() == T::StaticGetModuleName(), "wrong interface name" );
 		return static_cast<T*>( m_pInterfaceImageLoader );
 	}
 	template<class T> 
-	inline T* CGUIInterfaceManager::GetInterfacePhysicsTyped()
+	inline T* CGUIInterfaceManager::GetInterfacePhysicsWithTypeCheck()
 	{
 		GUI_ASSERT( m_pInterfacePhysics->GetModuleType() == T::StaticGetModuleType(), "wrong interface type" );
 		GUI_ASSERT( m_pInterfacePhysics->GetModuleName() == T::StaticGetModuleName(), "wrong interface name" );

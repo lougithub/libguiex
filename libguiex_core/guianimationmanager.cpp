@@ -63,12 +63,10 @@ namespace guiex
 		return m_pSingleton; 
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIAnimationManager::RegisterAnimation(
-		const CGUIString& rSceneName, 
-		const CGUIProperty& rProperty )
+	int32 CGUIAnimationManager::RegisterResource(const CGUIString& rSceneName, const CGUIProperty& rProperty )
 	{
 		CGUIAnimationData* pAnimationData = new CGUIAnimationData( rProperty.GetName(), rSceneName, rProperty );
-		RegisterResource( pAnimationData );
+		RegisterResourceImp( pAnimationData );
 		return 0;
 	}
 	//------------------------------------------------------------------------------

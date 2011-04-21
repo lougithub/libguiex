@@ -169,7 +169,7 @@ namespace guiex
 				m_strMaskText.m_strContent.clear();
 			}
 
-			CGUIStringEx* pString = m_bMaskText ? &m_strMaskText : &m_strText;
+			CGUIStringRender* pString = m_bMaskText ? &m_strMaskText : &m_strText;
 			uint32 nSize = pString->m_strContent.size();
 			IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
 			m_vecStringWidth.clear();
@@ -177,10 +177,7 @@ namespace guiex
 			{
 				m_vecStringWidth.insert(
 					m_vecStringWidth.begin()+i, 
-					uint32(pFont->GetCharacterSize(
-					pString->m_aStringInfo.m_nFontIdx,
-					pString->m_strContent[i], 
-					pString->m_aStringInfo.m_nFontSize).m_fWidth));
+					pFont->GetCharacterSize( pString->m_strContent[i],pString->m_aStringInfo).m_fWidth);
 			}
 		}
 
@@ -213,7 +210,7 @@ namespace guiex
 				{
 					m_vecStringWidth.insert(
 						m_vecStringWidth.begin()+i,
-						uint32(pFont->GetCharacterSize(m_strMaskText.m_aStringInfo.m_nFontIdx,m_strMaskText.m_strContent[i], m_strMaskText.m_aStringInfo.m_nFontSize).m_fWidth));
+						pFont->GetCharacterSize(m_strMaskText.m_strContent[i], m_strMaskText.m_aStringInfo).m_fWidth);
 				}
 			}
 		}
@@ -263,12 +260,13 @@ namespace guiex
 		}
 
 		//render string
+		IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
 		CGUIVector2	aPos = GetBoundArea().GetPosition();
 		aPos.x += m_fTextWidthRel;
-		aPos.y += GetTextInfo().m_nFontSize;
+		aPos.y += pFont->GetFontHeight(GetTextInfo());
 		if( !m_strText.m_strContent.empty())
 		{
-			CGUIStringEx* pRenderString = m_bMaskText?&m_strMaskText:&m_strText;
+			CGUIStringRender* pRenderString = m_bMaskText?&m_strMaskText:&m_strText;
 
 			if( GetSelectionLength())
 			{
@@ -357,7 +355,7 @@ namespace guiex
 		InsertString( rText );
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtEditBox::SetTextInfo(const CGUIStringInfo& rInfo)
+	void CGUIWgtEditBox::SetTextInfo(const CGUIStringRenderInfo& rInfo)
 	{
 		CGUIWgtTextBase::SetTextInfo( rInfo );
 	}
@@ -386,12 +384,12 @@ namespace guiex
 		}
 
 		//string width
-		CGUIStringEx* pString = m_bMaskText ? &m_strMaskText : &m_strText;
+		CGUIStringRender* pString = m_bMaskText ? &m_strMaskText : &m_strText;
 		for( uint32 i=0; i<len; ++i)
 		{
 			m_vecStringWidth.insert(
 				m_vecStringWidth.begin()+m_nCursorIdx+i, 
-				uint32(pFont->GetCharacterSize(pString->m_aStringInfo.m_nFontIdx,pString->m_strContent[m_nCursorIdx+i], pString->m_aStringInfo.m_nFontSize).m_fWidth));
+				pFont->GetCharacterSize(pString->m_strContent[m_nCursorIdx+i], pString->m_aStringInfo).m_fWidth);
 		}
 
 		//cursor id
@@ -403,9 +401,11 @@ namespace guiex
 		real fWidth = GetStringWidth(0, m_nCursorIdx);
 		real fHeight = 0.0f;
 
+		IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
+
 		CGUIVector2 aPos = m_aStringAreaRect.GetPosition();
 		aPos.x = aPos.x+fWidth+m_fTextWidthRel-m_pEdit->GetCursorSize().m_fWidth/2;
-		aPos.y = aPos.y + fHeight + (m_aStringAreaRect.GetHeight() - ( m_pEdit->GetCursorSize().m_fHeight + GetTextInfo().m_nFontSize )/2 );
+		aPos.y = aPos.y + fHeight + (m_aStringAreaRect.GetHeight() - ( m_pEdit->GetCursorSize().m_fHeight + pFont->GetFontHeight(GetTextInfo()) )/2 );
 
 		return aPos;
 	}

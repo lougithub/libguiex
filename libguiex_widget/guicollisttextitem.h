@@ -39,13 +39,13 @@ namespace guiex
 		/**
 		* @brief get size of this item
 		*/
-		virtual	real		GetHeight(void);
-		virtual	real		GetWidth(void);
+		virtual	real GetHeight(void);
+		virtual	real GetWidth(void);
 
 		//set text
-		virtual void		SetTextContent(const CGUIStringW& rText);
+		virtual void SetTextContent(const CGUIStringW& rText);
 		//set text size
-		virtual void		SetTextInfo( const CGUIStringInfo& rInfo);
+		virtual void SetTextInfo( const CGUIStringRenderInfo& rInfo);
 
 
 		/**
@@ -53,7 +53,7 @@ namespace guiex
 		*/
 		static CGUIColListTextItem*	CreateTextItem(
 			const CGUIStringW& rText, 
-			const CGUIStringInfo& rInfo,
+			const CGUIStringRenderInfo& rInfo,
 			const CGUIString& rSceneName,
 			uint32 nItemID = 0, 
 			void* pItemData = NULL,
@@ -69,10 +69,10 @@ namespace guiex
 		CGUIColListTextItem( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
 		//init item
-		void	InitTextItem();
+		void InitTextItem();
 
 		//update text size
-		void	UpdateTextSize();
+		void UpdateTextSize();
 
 		//render self
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);

@@ -48,13 +48,13 @@ namespace guiex
 		void SetTextContent( const CGUIStringW& rText, EButtonState eButtonState );
 		const CGUIStringW& GetTextContent( EButtonState eButtonState ) const;
 
-		void SetTextInfo( const CGUIStringInfo& rInfo, EButtonState eButtonState );
-		const CGUIStringInfo& GetTextInfo( EButtonState eButtonState ) const;
+		void SetTextInfo( const CGUIStringRenderInfo& rInfo, EButtonState eButtonState );
+		const CGUIStringRenderInfo& GetTextInfo( EButtonState eButtonState ) const;
 
 		void SetTextContentUTF8( const CGUIString& rString, EButtonState eButtonState);
 		CGUIString GetTextContentUTF8( EButtonState eButtonState ) const;
 
-		const CGUIStringEx&	GetText( EButtonState eButtonState ) const;
+		const CGUIStringRender&	GetText( EButtonState eButtonState ) const;
 
 		bool IsTextContentEmpty( EButtonState eButtonState ) const;
 
@@ -93,7 +93,7 @@ namespace guiex
 		CGUIImage* m_pImage[__eButtonState_NUM__];
 		CGUIImage* m_pImageHoverOverlay;
 
-		CGUIStringEx m_strText[__eButtonState_NUM__];
+		CGUIStringRender m_strText[__eButtonState_NUM__];
 
 		ETextAlignmentHorz m_eTextAlignmentHorz;
 		ETextAlignmentVert m_eTextAlignmentVert;

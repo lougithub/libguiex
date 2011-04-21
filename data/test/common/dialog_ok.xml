@@ -50,9 +50,9 @@
         <property name="disable" type="bool" value="false" />
         <property name="open_with_parent" type="bool" value="true" />
         <property name="generate_update_event" type="bool" value="false" />
-        <property name="textinfo" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="20" />
-            <property name="index" type="int16" value="2" />
+        <property name="textinfo" type="CGUIStringRenderInfo">
+          <property name="scale" type="real" value="1.6" />
+            <property name="id" type="uint16" value="2" />
             <property name="color" type="CGUIColor" value="216,200,40,255" />
         </property>
         <property name="text" type="CGUIString" value="dialog" />
@@ -68,15 +68,15 @@
         <property name="BTN_DISABLE" type="CGUIImage" value="button_blue_disable" />
         <property name="alpha" type="real" value="1" />
         <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-        <property name="textinfo_hover" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
+        <property name="textinfo_hover" type="CGUIStringRenderInfo">
+            <property name="scale" type="real" value="1.33" />
+            <property name="id" type="uint16" value="0" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
         <property name="anchor" type="CGUIVector2" value="0.5,0" />
-        <property name="textinfo_normal" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="12" />
-            <property name="index" type="int16" value="0" />
+        <property name="textinfo_normal" type="CGUIStringRenderInfo">
+            <property name="scale" type="real" value="1" />
+            <property name="id" type="uint16" value="0" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
         <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
@@ -97,14 +97,14 @@
         </property>
         <property name="movable" type="bool" value="false" />
         <property name="text_offset" type="CGUIVector2" value="0,0" />
-        <property name="textinfo_push" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
+        <property name="textinfo_push" type="CGUIStringRenderInfo">
+            <property name="scale" type="real" value="1.33" />
+            <property name="id" type="uint16" value="0" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
-        <property name="textinfo_disable" type="CGUIStringInfo">
-            <property name="size" type="uint16" value="16" />
-            <property name="index" type="int16" value="0" />
+        <property name="textinfo_disable" type="CGUIStringRenderInfo">
+            <property name="scale" type="real" value="1.33" />
+            <property name="id" type="uint16" value="0" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
         <property name="rotation" type="CGUIVector3" value="0,0,0" />

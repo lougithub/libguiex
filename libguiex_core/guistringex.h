@@ -25,45 +25,44 @@
 namespace guiex
 {
 
-	class GUIEXPORT CGUIStringInfo
+	class GUIEXPORT CGUIStringRenderInfo
 	{	
+	public:
+		CGUIStringRenderInfo();
+		CGUIStringRenderInfo(uint16 uFontID, real fFontScale,const CGUIColor& rColor);
+		CGUIStringRenderInfo(const CGUIStringRenderInfo& rInfo);
+
+		bool operator==(const CGUIStringRenderInfo& rInfo ) const;
+		bool operator!=(const CGUIStringRenderInfo& rInfo ) const;
+		const CGUIStringRenderInfo& operator=(const CGUIStringRenderInfo& rInfo );
 
 	public:
-		CGUIStringInfo();
-		CGUIStringInfo(int16 nFontIdx,uint16 nFontSize,const CGUIColor& rColor);
-		CGUIStringInfo(const CGUIStringInfo& rInfo);
-
-		bool operator==(const CGUIStringInfo& rInfo ) const;
-		bool operator!=(const CGUIStringInfo& rInfo ) const;
-		const CGUIStringInfo& operator=(const CGUIStringInfo& rInfo );
-
-	public:
-		int16 m_nFontIdx;
-		uint16 m_nFontSize;
+		uint16 m_uFontID;
+		real m_fFontScale;
 		CGUIColor m_aColor;
 	};
 
-	class GUIEXPORT CGUIStringEx
+	class GUIEXPORT CGUIStringRender
 	{
 	public:
-		CGUIStringEx( );
-		CGUIStringEx( const CGUIStringEx& rString );
-		CGUIStringEx( const CGUIStringW& str );
-		CGUIStringEx( const CGUIString& rString );
-		~CGUIStringEx( );
+		CGUIStringRender( );
+		CGUIStringRender( const CGUIStringRender& rString );
+		CGUIStringRender( const CGUIStringW& str );
+		CGUIStringRender( const CGUIString& rString );
+		~CGUIStringRender( );
 
-		void SetStringInfo(const CGUIStringInfo* pInfo);
-		const CGUIStringInfo& GetStringInfo() const;
-		CGUIStringInfo& GetStringInfo();
+		void SetStringInfo(const CGUIStringRenderInfo* pInfo);
+		const CGUIStringRenderInfo& GetStringInfo() const;
+		CGUIStringRenderInfo& GetStringInfo();
 
 		void SetContent( const CGUIStringW& rContent);
 		const CGUIStringW& GetContent( ) const;
 		CGUIStringW& GetContent( );
 
-		const CGUIStringEx& operator=(const CGUIStringEx& rOther );
+		const CGUIStringRender& operator=(const CGUIStringRender& rOther );
 
 	public:
-		CGUIStringInfo m_aStringInfo;
+		CGUIStringRenderInfo m_aStringInfo;
 		CGUIStringW	m_strContent;
 	};
 

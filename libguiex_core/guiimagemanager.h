@@ -45,9 +45,6 @@ namespace guiex
 
 		static CGUIImageManager* Instance(); 
 
-		int32 RegisterImage( 
-			const CGUIString& rSceneName,
-			const CGUIProperty& rProperty);
 
 		int32 RegisterImage(
 			const CGUIString& rName,
@@ -71,6 +68,8 @@ namespace guiex
 			int32 buffHeight, 
 			EGuiPixelFormat ePixelFormat,
 			const CGUISize& rSize = CGUISize(0,0));
+
+		virtual int32 RegisterResource( const CGUIString& rSceneName, const CGUIProperty& rProperty);
 
 		CGUIImage* AllocateResource( const CGUIString& rImageName ) const;
 

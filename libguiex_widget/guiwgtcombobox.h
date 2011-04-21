@@ -79,7 +79,7 @@ namespace guiex
 		/**
 		* @brief set size of text
 		*/
-		virtual void		SetTextInfo( const CGUIStringInfo& rInfo);
+		virtual void SetTextInfo( const CGUIStringRenderInfo& rInfo);
 
 		/**
 		* @brief load widget config from property
@@ -90,12 +90,12 @@ namespace guiex
 		/** 
 		* @brief process property
 		*/
-		virtual void		ProcessProperty( const CGUIProperty* pProperty);
+		virtual void ProcessProperty( const CGUIProperty* pProperty);
 
 		/**
 		* @brief set the size of drop list
 		*/
-		void	SetDropListSize( const CGUISize& rSize );
+		void SetDropListSize( const CGUISize& rSize );
 
 		/**
 		* @brief get the size of drop list

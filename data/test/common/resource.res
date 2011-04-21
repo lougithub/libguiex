@@ -1,18 +1,24 @@
 <?xml version="1.0" ?>
 <guiex>
 	<property name="font_ltype" type="CGUIFontDefine" >
+		<property name="id" type="uint16" value="0"/>
 		<property name="path" type="CGUIString" value="font/LTYPE.TTF"/>
-		<property name="index" type="int16" value="0"/>
+		<property name="size" type="uint16" value="12"/>
+		<property name="texture_size" type="CGUIIntSize" value="512,512"/>
 	</property>
 
 	<property name="font_ltypeb" type="CGUIFontDefine" >
+		<property name="id" type="uint16" value="1"/>
 		<property name="path" type="CGUIString" value="font/LTYPEB.TTF"/>
-		<property name="index" type="int16" value="1"/>
+		<property name="size" type="uint16" value="12"/>
+		<property name="texture_size" type="CGUIIntSize" value="512,512"/>
 	</property>
 
 	<property name="font_lhandw" type="CGUIFontDefine" >
+		<property name="id" type="uint16" value="2"/>
 		<property name="path" type="CGUIString" value="font/LHANDW.TTF"/>
-		<property name="index" type="int16" value="2"/>
+		<property name="size" type="uint16" value="12"/>
+		<property name="texture_size" type="CGUIIntSize" value="512,512"/>
 	</property>
 
 	<property name="color_white" type="CGUIImageDefine">

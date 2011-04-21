@@ -45,7 +45,7 @@ namespace guiex
 
 		static CGUIFontManager* Instance(); 
 
-		int32 RegisterFont( const CGUIString& rSceneName, const CGUIProperty& rProperty);
+		virtual int32 RegisterResource( const CGUIString& rSceneName, const CGUIProperty& rProperty );
 		virtual void DeallocateResource( CGUIResource* pRes );
 
 	protected:
@@ -55,8 +55,7 @@ namespace guiex
 		CGUIFontData* DoCreateFont(
 			const CGUIString& rName, 
 			const CGUIString& rSceneName, 
-			const CGUIString& rPath, 
-			uint32 nFontID );
+			const SFontInfo& rFontInfo );
 
 	private:
 		static CGUIFontManager* m_pSingleton;

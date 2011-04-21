@@ -59,7 +59,7 @@ namespace guiex
 
 		GUI_ASSERT( m_pBody == NULL, "invalid static body pointer");
 
-		b2World * pWorld = CGUIInterfaceManager::Instance()->GetInterfacePhysicsTyped<IGUIPhysics_box2d>()->GetWorld();
+		b2World * pWorld = CGUIInterfaceManager::Instance()->GetInterfacePhysicsWithTypeCheck<IGUIPhysics_box2d>()->GetWorld();
 		if( !pWorld )
 		{
 			return;

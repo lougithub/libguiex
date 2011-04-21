@@ -130,8 +130,8 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////
 		// text about function
 		////////////////////////////////////////////////////////////////////////////
-		virtual CGUIStringEx* GetTooltipText(void) const;
-		virtual void SetTooltipText(const CGUIStringEx& rText);
+		virtual CGUIStringRender* GetTooltipText(void) const;
+		virtual void SetTooltipText(const CGUIStringRender& rText);
 		bool HasTooltips( ) const;
 
 		////////////////////////////////////////////////////////////////////////////
@@ -370,9 +370,9 @@ namespace guiex
 		virtual void OnDestroy();
 
 		void DrawRect( IGUIInterfaceRender* pRender, const CGUIRect& rDestRect, real fLineWidth, const CGUIColor& rColor );
-		void DrawCharacter(IGUIInterfaceRender* pRender, wchar_t charCode, const CGUIStringInfo& rInfo, const CGUIVector2& rPos );
-		void DrawString( IGUIInterfaceRender* pRender, const CGUIStringEx& strText, const CGUIRect& rDrawRect, ETextAlignmentHorz uTextAlignmentHorz, ETextAlignmentVert uTextAlignmentVert, int32 nStartPos = 0, int32 nEndPos = -1 );
-		void DrawString( IGUIInterfaceRender* pRender, const CGUIStringEx& strText, const CGUIVector2& rPos, int32 nStartPos = 0, int32 nEndPos = -1);
+		void DrawCharacter(IGUIInterfaceRender* pRender, wchar_t charCode, const CGUIStringRenderInfo& rInfo, const CGUIVector2& rPos );
+		void DrawString( IGUIInterfaceRender* pRender, const CGUIStringRender& strText, const CGUIRect& rDrawRect, ETextAlignmentHorz uTextAlignmentHorz, ETextAlignmentVert uTextAlignmentVert, int32 nStartPos = 0, int32 nEndPos = -1 );
+		void DrawString( IGUIInterfaceRender* pRender, const CGUIStringRender& strText, const CGUIVector2& rPos, int32 nStartPos = 0, int32 nEndPos = -1);
 		void DrawImage( IGUIInterfaceRender* pRender, CGUIImage* pImage, const CGUIRect& rDestRect );
 		void DrawAnimation( IGUIInterfaceRender* pRender, CGUIAnimation* pAnimation, const CGUIRect& rDestRect );
 

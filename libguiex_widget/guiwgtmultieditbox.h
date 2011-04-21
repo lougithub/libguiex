@@ -49,8 +49,8 @@ namespace guiex
 		void SetTextContent(const CGUIStringW& rText);
 		const CGUIStringW& GetTextContent( ) const;
 
-		void SetTextInfo(const CGUIStringInfo& rInfo);
-		const CGUIStringInfo& GetTextInfo( ) const;
+		void SetTextInfo(const CGUIStringRenderInfo& rInfo);
+		const CGUIStringRenderInfo& GetTextInfo( ) const;
 
 		void SetTextContentUTF8( const CGUIString& rString);
 		CGUIString GetTextContentUTF8( ) const;
@@ -148,7 +148,7 @@ namespace guiex
 		CGUIRect m_aStringAreaRatio; //!< the ratio of string area, the (0,0,1,1) equal whole client area
 
 		//text
-		CGUIStringEx m_strText;
+		CGUIStringRender m_strText;
 		ETextAlignmentHorz m_eTextAlignmentHorz;
 		ETextAlignmentVert m_eTextAlignmentVert;
 
@@ -160,7 +160,7 @@ namespace guiex
 		{
 			uint32 m_nStartIdx;     //!< Starting index for this line.
 			uint32 m_nLength;       //!< Code point length of this line.
-			uint32 m_nLineHeight;   //!< line height
+			real m_fLineHeight;   //!< line height
 		};
 		typedef std::vector<SLineInfo>   TLineList;  //!< Type for collection of LineInfos.
 		TLineList m_aLineList; //!< line list

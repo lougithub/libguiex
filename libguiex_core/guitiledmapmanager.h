@@ -61,7 +61,7 @@ namespace guiex
 
 		static CGUITiledMapManager* Instance(); 
 
-		int32 RegisterTiledMap( const CGUIString& rSceneName, const CGUIProperty& rProperty);
+		virtual int32 RegisterResource( const CGUIString& rSceneName, const CGUIProperty& rProperty);
 		
 		CGUITiledMap* AllocateResource( const CGUIString& rResName );
 		virtual void DeallocateResource( CGUIResource* pRes );

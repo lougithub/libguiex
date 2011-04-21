@@ -11,9 +11,11 @@
 //============================================================================//
 // include
 //============================================================================// 
+
 #include <libguiex_core/guifontdata.h>
 #include <libguiex_core/guirect.h>
 #include <libguiex_core/guivector2.h>
+#include <libguiex_core/guiintvector2.h>
 
 #include <vector>
 #include <map>
@@ -27,6 +29,7 @@
 namespace guiex
 {
 	class CGUITexture;
+	class CGUIFontFace_ft2;
 }
 
 //============================================================================//
@@ -35,13 +38,8 @@ namespace guiex
 
 namespace guiex
 {
-	class  CGUICharData_ft2
+	struct SCharData_ft2
 	{
-	public:
-		CGUICharData_ft2();
-		~CGUICharData_ft2();
-
-	public:
 		CGUITexture* m_pTexture;
 		CGUIRect m_aUV;
 
@@ -51,41 +49,49 @@ namespace guiex
 		real m_fLeftBearing; //left bearing of font
 		real m_fTopBearing; //top bearing of font
 		CGUISize m_aSize; //size of font
+
+		SCharData_ft2()
+			:m_pTexture(NULL)
+			,m_fLeftBearing(0)
+			,m_nGlyphIdx(0)
+			,m_fBitmapWidth(0)
+			,m_fBitmapHeight(0)
+			,m_fTopBearing(0)
+		{
+		}
 	};	
-
-	class CGUICharsData_ft2
-	{
-	public:
-		CGUICharsData_ft2();
-		~CGUICharsData_ft2();
-
-	public:
-		typedef	std::vector<CGUITexture*> TVecTexture;
-		TVecTexture m_vecTexture;
-		uint32 m_nX,m_nY; //start position of current free texture area
-
-		typedef std::map<wchar_t, CGUICharData_ft2*> TMapCharData;
-		TMapCharData m_mapCharsData;
-	};
 
 	class GUIEXPORT CGUIFontData_ft2 : public CGUIFontData
 	{
 	public:
 		virtual ~CGUIFontData_ft2();
 
+		FT_Face GetFontFace();
+		SCharData_ft2* GetCharData( wchar_t charCode );
+
 	protected:
 		friend class IGUIFont_ft2;
-		CGUIFontData_ft2( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nFontID );
+		CGUIFontData_ft2( 
+			const CGUIString& rName, 
+			const CGUIString& rSceneName, 
+			const SFontInfo& rFontInfo,
+			CGUIFontFace_ft2* pFontFace );
 
 		virtual int32 DoLoad();
 		virtual void DoUnload();
 
-	public:
-		CGUIString m_strPath; //font file path
+		SCharData_ft2* LoadCharData( wchar_t charCode );
 
-		FT_Face m_aFtFace;
-		typedef std::map<uint32, CGUICharsData_ft2*> TMapSizeChars;
-		TMapSizeChars m_mapSizeChars;
+	protected:
+		CGUIFontFace_ft2* m_pFontFace; //font face
+
+		typedef	std::vector<CGUITexture*> TVecTexture;
+		TVecTexture m_vecTexture;
+		uint32 m_uTexturePosX;
+		uint32 m_uTexturePosY;
+
+		typedef std::map<wchar_t, SCharData_ft2*> TMapCharData;
+		TMapCharData m_mapCharsData;
 	};
 
 }//namespace guiex

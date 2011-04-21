@@ -45,70 +45,70 @@ namespace guiex
 		/**
 		* @brief get the ID assigned to this list box item.
 		*/
-		uint32		GetID(void) const;
+		uint32 GetID(void) const;
 
 		/**
 		* @brief get the ID assigned to this list box item.
 		*/
-		void		SetID(uint32 nItemId);
+		void SetID(uint32 nItemId);
 
 		/**
 		* @brief get user data assigned to this item.
 		*/
-		void*		GetUserData(void) const;
+		void* GetUserData(void) const;
 
 		/**
 		* @brief set user data
 		*/
-		void		SetUserData(void* pUserData);
+		void SetUserData(void* pUserData);
 
 		/**
 		* @brief	return whether this item is selected.
 		*/
-		bool		IsSelected(void) const;
+		bool IsSelected(void) const;
 
 		/**
 		* @brief	select this item
 		*/
-		void		SetSelected(bool bSelect);
+		void SetSelected(bool bSelect);
 
 		/**
 		* @brief	return whether this item is disabled.
 		*/
-		bool		IsDisabled(void) const;
+		bool IsDisabled(void) const;
 
 		/**
 		* @brief	make this item disable
 		*/
-		void		SetDisabled(bool bDisable);
+		void SetDisabled(bool bDisable);
 
 		/**
 		* @brief set image which will be draw if item is selected
 		*/
-		void		SetSelectionImage(CGUIImage* pImage);
+		void SetSelectionImage(CGUIImage* pImage);
 
 		/** 
 		* @brief Return the rendered pixel size of this list box item.
 		*/
-		virtual	real		GetHeight(void);
-		virtual	real		GetWidth(void);
+		virtual	real GetHeight(void);
+		virtual	real GetWidth(void);
 
 		/**
 		* @brief Less-than operator, compares item texts.
 		*/
-		virtual	bool	operator<(const CGUIItemBase& rItem) const;
+		virtual	bool operator<(const CGUIItemBase& rItem) const;
 
 
 		/**
 		* @brief Greater-than operator, compares item texts.
 		*/
-		virtual	bool	operator>(const CGUIItemBase& rItem) const;
+		virtual	bool operator>(const CGUIItemBase& rItem) const;
 
 
 		//set item information
-		virtual void	SetItemInfo(
+		virtual void SetItemInfo(
 			const CGUIStringW& rText, 
-			const CGUIStringInfo& rInfo,
+			const CGUIStringRenderInfo& rInfo,
 			uint32 nItemID = 0, 
 			void* pItemData = NULL,
 			bool bDisable = false);

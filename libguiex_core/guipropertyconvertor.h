@@ -64,11 +64,11 @@ namespace guiex
 	template<  >
 	void ValueToProperty<CGUIWidgetSize>( const CGUIWidgetSize& rValue, CGUIProperty& rProperty );
 	//------------------------------------------------------------------------------
-	//CGUIStringInfo
+	//CGUIStringRenderInfo
 	template<  >
-	void PropertyToValue<CGUIStringInfo>( const CGUIProperty& rProperty, CGUIStringInfo& rValue);
+	void PropertyToValue<CGUIStringRenderInfo>( const CGUIProperty& rProperty, CGUIStringRenderInfo& rValue);
 	template<  >
-	void ValueToProperty<CGUIStringInfo>( const CGUIStringInfo& rValue, CGUIProperty& rProperty );
+	void ValueToProperty<CGUIStringRenderInfo>( const CGUIStringRenderInfo& rValue, CGUIProperty& rProperty );
 	//------------------------------------------------------------------------------
 	//SGUIBlendFunc
 	template<  >

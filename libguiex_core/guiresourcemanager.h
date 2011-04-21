@@ -26,6 +26,7 @@
 namespace guiex
 {
 	class CGUIResource;
+	class CGUIProperty;
 }
 
 //============================================================================//
@@ -39,6 +40,7 @@ namespace guiex
 		CGUIResourceManagerBase();
 		virtual ~CGUIResourceManagerBase();
 
+		virtual int32 RegisterResource( const CGUIString& rSceneName, const CGUIProperty& rProperty ) = 0;
 		virtual void UnloadAllResources( ) = 0;
 		virtual void ReleaseAllResources( ) = 0;
 		virtual void ReleaseResourceByScene( const CGUIString& rSceneName ) = 0;
@@ -67,8 +69,6 @@ namespace guiex
 		virtual ~CGUIResourceManager();
 
 	public:
-		int32 RegisterResource( TRegisterResType* pRes );
-
 		virtual void UnloadAllResources( );
 		virtual void ReleaseAllResources( );
 		virtual void ReleaseResourceByScene( const CGUIString& rSceneName );
@@ -76,6 +76,8 @@ namespace guiex
 		const std::map< CGUIString, TRegisterResType* >& GetRegisterResourceMap() const;
 
 	protected:
+		int32 RegisterResourceImp( TRegisterResType* pRes );
+
 		TRegisterResType* GetRegisterResource( const CGUIString& rResName ) const;
 		void LoadAllResources( );
 
@@ -129,7 +131,7 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	template< class TRegisterResType, class TAllocateResType >
-	inline int32 CGUIResourceManager<TRegisterResType, TAllocateResType>::RegisterResource( TRegisterResType* pRes )
+	inline int32 CGUIResourceManager<TRegisterResType, TAllocateResType>::RegisterResourceImp( TRegisterResType* pRes )
 	{
 		GUI_ASSERT( pRes, "invalid parameter" );
 

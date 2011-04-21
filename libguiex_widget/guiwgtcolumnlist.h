@@ -286,66 +286,34 @@ namespace guiex
 		*/
 		bool  IsSorting() const;
 
-		/**
-		* @brief make the specified item visible
-		*/
+
 		void MakeItemVisible(uint32 nItemIndex);
-
-		/**
-		* @brief make the specified item visible
-		*/
 		void MakeItemVisible(const CGUIColListItem* pItem);
-
-
-
 
 		/**
 		* @brief Return the number of segment 
 		*/
 		uint32	GetSegmentCount(void) const;
 
-
-		/**
-		* @brief Return the number of rows.
-		*/
 		uint32	GetRowCount(void) const;
 
-		/**
-		* @brief Set the column to be used as the sort key.
-		*/
-		void	SetSortSegment(uint32 nIdx);
-
-		/**
-		* @brief return the current sort segment pointer
-		*/
+		void SetSortSegment(uint32 nIdx);
 		CGUIColListHeaderSegment*	GetSortSegment(void) const;
+		uint32 GetSortSegmentIndex(void) const;
 
-		/**
-		* @brief Return the zero based index of the current sort column.  
-		There must be at least one column to successfully call this method.
-		*/
-		uint32	GetSortSegmentIndex(void) const;
-
-		/** 
-		* @brief set segment text info
-		*/
-		void	SetSegmentTextInfo(const CGUIStringInfo& rInfo);
-
-		/** 
-		* @brief get segment text info
-		*/
-		const CGUIStringInfo&	GetSegmentTextInfo() const;
+		void SetSegmentTextInfo(const CGUIStringRenderInfo& rInfo);
+		const CGUIStringRenderInfo&	GetSegmentTextInfo() const;
 
 
 		/**
 		* @brief add a segment
 		*/
-		void	AddSegment( const CGUIStringW& rText, uint32 nId );
+		void AddSegment( const CGUIStringW& rText, uint32 nId );
 
 		/**
 		* @brief set default size of segment
 		*/
-		void	SetDefaultSegmentSize( const CGUISize& rSize);
+		void SetDefaultSegmentSize( const CGUISize& rSize);
 
 		/**
 		* @brief get default size of segment

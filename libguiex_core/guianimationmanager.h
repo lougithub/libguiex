@@ -65,9 +65,7 @@ namespace guiex
 		
 		static CGUIAnimationManager* Instance(); 
 
-		int32 RegisterAnimation(
-			const CGUIString& rSceneName, 
-			const CGUIProperty& rProperty );
+		virtual int32 RegisterResource( const CGUIString& rSceneName, const CGUIProperty& rProperty );
 
 		CGUIAnimation* AllocateResource( const CGUIString& rResName );
 

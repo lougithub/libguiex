@@ -17,6 +17,12 @@
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guiproperty.h>
 
+
+//============================================================================//
+// define
+//============================================================================// 
+#define GUI_FONT_TEXTURE_SIZE	512
+
 //============================================================================//
 // function
 //============================================================================// 
@@ -42,47 +48,100 @@ namespace guiex
 		return m_pSingleton; 
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIFontManager::RegisterFont( 
+	int32 CGUIFontManager::RegisterResource( 
 		const CGUIString& rSceneName,
 		const CGUIProperty& rProperty)
 	{
-		const CGUIProperty* pPropPath = rProperty.GetProperty("path", "CGUIString");
-		if( !pPropPath )
-		{
-			throw guiex::CGUIException(
-				"[CGUIFontManager::RegisterSound], invalid property <%s:%s:%s>!", 
-				rProperty.GetName().c_str(),
-				rProperty.GetTypeAsString().c_str(),
-				rProperty.GetValue().c_str());
-			return -1;
-		}
-		CGUIString strPath = pPropPath->GetValue();
+		/*
+		<property name="font_ltypeb" type="CGUIFontDefine" >
+			<property name="path" type="CGUIString" value="font/LTYPEB.TTF"/>
+			<property name="id" type="uint16" value="1"/>
+			<property name="size" type="uint16" value="12"/>
+			<property name="desc" type="CGUIString" value="desc"/>
+			<property name="texture_size" type="CGUIIntSize" value="512,512"/>
+		</property>
+		*/
 
-		const CGUIProperty* pPropIndex = rProperty.GetProperty("index", "int16");
-		if( !pPropIndex )
-		{
-			throw guiex::CGUIException(
-				"[CGUIFontManager::RegisterSound], invalid property <%s:%s:%s>!", 
-				rProperty.GetName().c_str(),
-				rProperty.GetTypeAsString().c_str(),
-				rProperty.GetValue().c_str());
-			return -1;
-		}
-		uint32 nIndex = 0;
-		PropertyToValue( *pPropIndex, nIndex);
+		SFontInfo aFontInfo;
 
-		CGUIFontData* pFontData = DoCreateFont( rProperty.GetName(), rSceneName, strPath, nIndex );
-		RegisterResource( pFontData );
+		//path
+		{
+			const CGUIProperty* pPropPath = rProperty.GetProperty("path", "CGUIString");
+			if( !pPropPath )
+			{
+				throw guiex::CGUIException(
+					"[CGUIFontManager::RegisterResource], invalid property <%s:%s:%s>!", 
+					rProperty.GetName().c_str(),
+					rProperty.GetTypeAsString().c_str(),
+					rProperty.GetValue().c_str());
+				return -1;
+			}
+			aFontInfo.m_strPath = pPropPath->GetValue();
+		}
+
+		//index
+		{
+			const CGUIProperty* pPropId = rProperty.GetProperty("id", "uint16");
+			if( !pPropId )
+			{
+				throw guiex::CGUIException(
+					"[CGUIFontManager::RegisterResource], invalid property <%s:%s:%s>!", 
+					rProperty.GetName().c_str(),
+					rProperty.GetTypeAsString().c_str(),
+					rProperty.GetValue().c_str());
+				return -1;
+			}
+			PropertyToValue( *pPropId, aFontInfo.m_uID);
+		}
+
+		//size
+		{
+			const CGUIProperty* pPropSize = rProperty.GetProperty("size", "uint16");
+			if( !pPropSize )
+			{
+				throw guiex::CGUIException(
+					"[CGUIFontManager::RegisterResource], invalid property <%s:%s:%s>!", 
+					rProperty.GetName().c_str(),
+					rProperty.GetTypeAsString().c_str(),
+					rProperty.GetValue().c_str());
+				return -1;
+			}
+			PropertyToValue( *pPropSize, aFontInfo.m_uSize);
+		}
+
+		//desc
+		{
+			const CGUIProperty* pPropDesc = rProperty.GetProperty("desc", "CGUIString");
+			if( pPropDesc )
+			{
+				aFontInfo.m_strDesc = pPropDesc->GetValue();
+			}
+		}
+
+		//texture size
+		{
+			const CGUIProperty* pPropTextureSize = rProperty.GetProperty("texture_size", "CGUIIntSize");
+			if( pPropTextureSize )
+			{
+				PropertyToValue( *pPropTextureSize, aFontInfo.m_aTextureSize);
+			}
+			else
+			{
+				aFontInfo.m_aTextureSize.SetValue( GUI_FONT_TEXTURE_SIZE, GUI_FONT_TEXTURE_SIZE);
+			}
+		}
+
+		CGUIFontData* pFontData = DoCreateFont( rProperty.GetName(), rSceneName, aFontInfo );
+		RegisterResourceImp( pFontData );
 		return 0;
 	}
 	//------------------------------------------------------------------------------
 	CGUIFontData* CGUIFontManager::DoCreateFont(
 			const CGUIString& rName, 
 			const CGUIString& rSceneName, 
-			const CGUIString& rPath, 
-			uint32 nFontID)
+			const SFontInfo& rFontInfo)
 	{
-		if( nFontID >= GUI_FONT_MAX_NUM )
+		if( rFontInfo.m_uID >= GUI_FONT_MAX_NUM )
 		{
 			throw CGUIException("[CGUIFontManager::CreateGUIFont]: nFontID should be smaller than %d", GUI_FONT_MAX_NUM );
 			return NULL;
@@ -94,7 +153,7 @@ namespace guiex
 			throw CGUIException("[CGUIFontManager::CreateGUIFont]: failed to get font interface");
 			return NULL;
 		}
-		CGUIFontData* pFontData = pFont->CreateFontData( rName, rSceneName, rPath, nFontID );
+		CGUIFontData* pFontData = pFont->CreateFontData( rName, rSceneName, rFontInfo );
 		return pFontData;
 	}
 	//------------------------------------------------------------------------------

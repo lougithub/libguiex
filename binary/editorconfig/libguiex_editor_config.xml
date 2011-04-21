@@ -121,9 +121,9 @@
       <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" category="EditBox"/>
       <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" category="EditBox"/>
       <property name="text" type="CGUIString" value=""  category="StaticText"/>
-      <property name="textinfo" type="CGUIStringInfo"  category="StaticText">
-        <property name="size" type="uint16" value="16"/>
-        <property name="index" type="int16" value="0"/>
+      <property name="textinfo" type="CGUIStringRenderInfo"  category="StaticText">
+        <property name="scale" type="real" value="1"/>
+        <property name="id" type="uint16" value="0"/>
         <property name="color" type="CGUIColor" value="255,255,255,255"/>
       </property>
     </page>
@@ -136,27 +136,27 @@
       <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" category="EditBox"/>
       <property name="text_offset" type="CGUIVector2" value="0,0"  category="Button"/>
       <property name="text_normal" type="CGUILocalizedString" value=""  category="Button"/>
-      <property name="textinfo_normal" type="CGUIStringInfo"  category="Button">
-        <property name="size" type="uint16" value="16"/>
-        <property name="index" type="int16" value="0"/>
+      <property name="textinfo_normal" type="CGUIStringRenderInfo"  category="Button">
+        <property name="scale" type="real" value="1"/>
+        <property name="id" type="uint16" value="0"/>
         <property name="color" type="CGUIColor" value="255,255,255,255"/>
       </property>
 			<property name="text_hover"	type="CGUILocalizedString" value=""  category="Button"/>
-			<property name="textinfo_hover" type="CGUIStringInfo"  category="Button">
-				<property name="size" type="uint16" value="16"/>
-				<property name="index" type="int16" value="0"/>
+			<property name="textinfo_hover" type="CGUIStringRenderInfo"  category="Button">
+        <property name="scale" type="real" value="1"/>
+        <property name="id" type="uint16" value="0"/>
 				<property name="color" type="CGUIColor" value="255,255,255,255"/>
 			</property>
 			<property name="text_push" type="CGUILocalizedString" value=""  category="Button"/>
-			<property name="textinfo_push" type="CGUIStringInfo"  category="Button">
-				<property name="size" type="uint16" value="16"/>
-				<property name="index" type="int16" value="0"/>
+			<property name="textinfo_push" type="CGUIStringRenderInfo"  category="Button">
+        <property name="scale" type="real" value="1"/>
+        <property name="id" type="uint16" value="0"/>
 				<property name="color" type="CGUIColor" value="255,255,255,255"/>
 			</property>
 			<property name="text_disable" type="CGUILocalizedString" value=""  category="Button"/>
-			<property name="textinfo_disable" type="CGUIStringInfo"  category="Button">
-				<property name="size" type="uint16" value="16"/>
-				<property name="index" type="int16" value="0"/>
+			<property name="textinfo_disable" type="CGUIStringRenderInfo"  category="Button">
+        <property name="scale" type="real" value="1"/>
+        <property name="id" type="uint16" value="0"/>
 				<property name="color" type="CGUIColor" value="255,255,255,255"/>
 			</property>
 		</page>

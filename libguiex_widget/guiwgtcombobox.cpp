@@ -172,7 +172,7 @@ namespace guiex
 		}
 	}	
 	//------------------------------------------------------------------------------
-	void			CGUIWgtComboBox::SetTextInfo( const CGUIStringInfo& rInfo)
+	void CGUIWgtComboBox::SetTextInfo( const CGUIStringRenderInfo& rInfo)
 	{
 		m_pDropList->SetTextInfo(rInfo);
 		CGUIWidget::SetTextInfo(rInfo);

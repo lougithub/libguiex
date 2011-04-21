@@ -41,7 +41,10 @@ namespace guiex
 
 	protected:
 		friend class IGUIFont_dummy;
-		CGUIFontData_dummy( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nFontID );
+		CGUIFontData_dummy( 	
+			const CGUIString& rName,
+			const CGUIString& rSceneName, 
+			const SFontInfo& rFontInfo );
 	
 		virtual int32 DoLoad();
 		virtual void DoUnload();

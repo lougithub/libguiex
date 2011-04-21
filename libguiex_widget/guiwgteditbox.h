@@ -42,7 +42,7 @@ namespace guiex
 		virtual void ProcessProperty( const CGUIProperty& rProperty );
 
 		virtual void SetTextContent(const CGUIStringW& rText);
-		virtual void SetTextInfo(const CGUIStringInfo& rInfo);
+		virtual void SetTextInfo(const CGUIStringRenderInfo& rInfo);
 
 		void SetCursorIndex(int32 nPos);
 
@@ -118,13 +118,13 @@ namespace guiex
 		uint32 m_nMaxString; //!< max number of string
 		uint32 m_nCursorIdx; //!< cursor's position in edited string, the first is 0.
 		real m_fTextWidthRel; //!< start position of text, it's a relative position
-		std::vector<uint32>	m_vecStringWidth; //!< width of each string.
+		std::vector<real>	m_vecStringWidth; //!< width of each string.
 		bool m_bReadOnly; //!< is text readonly
 
 		//for mask
 		bool m_bMaskText; //!< True if the editbox text should be rendered masked.
 		wchar_t m_wMaskCodePoint; //!< Code point to use when rendering masked text.
-		CGUIStringEx m_strMaskText; //!< mask text
+		CGUIStringRender m_strMaskText; //!< mask text
 
 		//---------------------------------------------------
 		//select state

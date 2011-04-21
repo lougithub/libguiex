@@ -69,10 +69,10 @@ namespace guiex
 		return m_pSingleton; 
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIParticle2DManager::RegisterParticle2D( const CGUIString& rSceneName, const CGUIProperty& rProperty)
+	int32 CGUIParticle2DManager::RegisterResource( const CGUIString& rSceneName, const CGUIProperty& rProperty)
 	{
 		CGUIParticle2DData* pParticle2Data = new CGUIParticle2DData( rProperty.GetName(), rSceneName, rProperty );
-		RegisterResource( pParticle2Data );
+		RegisterResourceImp( pParticle2Data );
 		return 0;
 	}
 	//------------------------------------------------------------------------------

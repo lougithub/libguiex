@@ -139,15 +139,15 @@ WXLRESULT WxGLCanvas::MSWWindowProc(WXUINT uMsg, WXWPARAM wParam, WXLPARAM lPara
 		{
 			if( CGUIInterfaceManager::Instance()->GetInterfaceMouse() )
 			{
-				CGUIInterfaceManager::Instance()->GetInterfaceMouseTyped<IGUIMouse_winapi>()->ProcessWindowMessage((HWND)GetHandle(), uMsg, wParam, lParam );
+				CGUIInterfaceManager::Instance()->GetInterfaceMouseWithTypeCheck<IGUIMouse_winapi>()->ProcessWindowMessage((HWND)GetHandle(), uMsg, wParam, lParam );
 			}
 			if( CGUIInterfaceManager::Instance()->GetInterfaceKeyboard() )
 			{
-				CGUIInterfaceManager::Instance()->GetInterfaceKeyboardTyped<IGUIKeyboard_winapi>()->ProcessWindowMessage((HWND)GetHandle(), uMsg, wParam, lParam );
+				CGUIInterfaceManager::Instance()->GetInterfaceKeyboardWithTypeCheck<IGUIKeyboard_winapi>()->ProcessWindowMessage((HWND)GetHandle(), uMsg, wParam, lParam );
 			}
 			if( CGUIInterfaceManager::Instance()->GetInterfaceIme() )
 			{
-				CGUIInterfaceManager::Instance()->GetInterfaceImeTyped<IGUIIme_winapi>()->ProcessWindowMessage((HWND)GetHandle(), uMsg, wParam, lParam );
+				CGUIInterfaceManager::Instance()->GetInterfaceImeWithTypeCheck<IGUIIme_winapi>()->ProcessWindowMessage((HWND)GetHandle(), uMsg, wParam, lParam );
 			}
 		}	
 	}

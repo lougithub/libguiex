@@ -37,7 +37,7 @@ namespace guiex
 	{
 		if( m_pBody )
 		{
-			b2World * pWorld = CGUIInterfaceManager::Instance()->GetInterfacePhysicsTyped<IGUIPhysics_box2d>()->GetWorld();
+			b2World * pWorld = CGUIInterfaceManager::Instance()->GetInterfacePhysicsWithTypeCheck<IGUIPhysics_box2d>()->GetWorld();
 			if( pWorld )
 			{
 				pWorld->DestroyBody( m_pBody );

@@ -19,28 +19,28 @@
 //============================================================================// 
 namespace guiex
 {
-	CGUIStringInfo::CGUIStringInfo()
-		:m_nFontIdx(0)
-		,m_nFontSize(16)
+	CGUIStringRenderInfo::CGUIStringRenderInfo()
+		:m_uFontID(0)
+		,m_fFontScale(1.0f)
 	{
 	}
 	//------------------------------------------------------------------------------
-	CGUIStringInfo::CGUIStringInfo(const CGUIStringInfo& rInfo)
+	CGUIStringRenderInfo::CGUIStringRenderInfo(const CGUIStringRenderInfo& rInfo)
 	{
 		*this = rInfo;
 	}
 	//------------------------------------------------------------------------------
-	CGUIStringInfo::CGUIStringInfo(int16 nFontIdx,uint16 nFontSize,const CGUIColor& rColor)
-		:m_nFontIdx(nFontIdx)
-		,m_nFontSize(nFontSize)
+	CGUIStringRenderInfo::CGUIStringRenderInfo(uint16 uFontID, real fFontScale,const CGUIColor& rColor)
+		:m_uFontID(uFontID)
+		,m_fFontScale(fFontScale)
 		,m_aColor(rColor)
 	{
 	}
 	//------------------------------------------------------------------------------
-	bool CGUIStringInfo::operator==(const CGUIStringInfo& rInfo ) const
+	bool CGUIStringRenderInfo::operator==(const CGUIStringRenderInfo& rInfo ) const
 	{
-		if( m_nFontIdx == rInfo.m_nFontIdx &&
-			m_nFontSize == rInfo.m_nFontSize &&
+		if( m_uFontID == rInfo.m_uFontID &&
+			m_fFontScale == rInfo.m_fFontScale &&
 			m_aColor == rInfo.m_aColor)
 		{
 			return true;
@@ -51,44 +51,44 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	bool CGUIStringInfo::operator!=(const CGUIStringInfo& rInfo ) const
+	bool CGUIStringRenderInfo::operator!=(const CGUIStringRenderInfo& rInfo ) const
 	{
 		return !(*this == rInfo);
 	}
 	//------------------------------------------------------------------------------
-	const CGUIStringInfo& CGUIStringInfo::operator=(const CGUIStringInfo& rInfo )
+	const CGUIStringRenderInfo& CGUIStringRenderInfo::operator=(const CGUIStringRenderInfo& rInfo )
 	{
-		m_nFontIdx = rInfo.m_nFontIdx;
-		m_nFontSize = rInfo.m_nFontSize;
+		m_uFontID = rInfo.m_uFontID;
+		m_fFontScale = rInfo.m_fFontScale;
 		m_aColor = rInfo.m_aColor;
 		return *this;
 	}
 	//------------------------------------------------------------------------------
-	CGUIStringEx::CGUIStringEx()
+	CGUIStringRender::CGUIStringRender()
 	{
 	}
 	//------------------------------------------------------------------------------
-	CGUIStringEx::CGUIStringEx(const CGUIStringEx& rString )
+	CGUIStringRender::CGUIStringRender(const CGUIStringRender& rString )
 		:m_strContent(rString.m_strContent)
 	{
 		*this = rString;
 	}
 	//------------------------------------------------------------------------------
-	CGUIStringEx::CGUIStringEx( const CGUIStringW& str )
+	CGUIStringRender::CGUIStringRender( const CGUIStringW& str )
 		:m_strContent(str)
 	{
 	}
 	//------------------------------------------------------------------------------
-	CGUIStringEx::CGUIStringEx(const CGUIString& rString )
+	CGUIStringRender::CGUIStringRender(const CGUIString& rString )
 	{
 		AppMultiByteToWideChar( rString, this->m_strContent );
 	}
 	//------------------------------------------------------------------------------
-	CGUIStringEx::~CGUIStringEx()
+	CGUIStringRender::~CGUIStringRender()
 	{
 	}	
 	//------------------------------------------------------------------------------ 
-	const CGUIStringEx& CGUIStringEx::operator=( const CGUIStringEx& rOther )
+	const CGUIStringRender& CGUIStringRender::operator=( const CGUIStringRender& rOther )
 	{
 		m_aStringInfo = rOther.m_aStringInfo;
 		m_strContent = rOther.m_strContent;
@@ -99,17 +99,17 @@ namespace guiex
 	/**
 	* @brief set string default info
 	*/
-	void CGUIStringEx::SetStringInfo(const CGUIStringInfo* pInfo)
+	void CGUIStringRender::SetStringInfo(const CGUIStringRenderInfo* pInfo)
 	{
 		m_aStringInfo = *pInfo;
 	}
 	//------------------------------------------------------------------------------ 
-	const CGUIStringInfo& CGUIStringEx::GetStringInfo() const
+	const CGUIStringRenderInfo& CGUIStringRender::GetStringInfo() const
 	{
 		return m_aStringInfo;
 	}
 	//------------------------------------------------------------------------------ 
-	CGUIStringInfo&	CGUIStringEx::GetStringInfo() 
+	CGUIStringRenderInfo&	CGUIStringRender::GetStringInfo() 
 	{
 		return m_aStringInfo;
 	}
@@ -117,7 +117,7 @@ namespace guiex
 	/**
 	* @brief set string content
 	*/
-	void CGUIStringEx::SetContent( const CGUIStringW& rContent)
+	void CGUIStringRender::SetContent( const CGUIStringW& rContent)
 	{
 		m_strContent = rContent;
 	}
@@ -125,7 +125,7 @@ namespace guiex
 	/**
 	* @brief get string content
 	*/
-	const CGUIStringW& CGUIStringEx::GetContent( ) const
+	const CGUIStringW& CGUIStringRender::GetContent( ) const
 	{
 		return m_strContent;
 	}
@@ -133,7 +133,7 @@ namespace guiex
 	/**
 	* @brief get string content
 	*/
-	CGUIStringW& CGUIStringEx::GetContent( )
+	CGUIStringW& CGUIStringRender::GetContent( )
 	{
 		return m_strContent;
 	}

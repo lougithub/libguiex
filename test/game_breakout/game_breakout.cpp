@@ -35,7 +35,7 @@ CMyBodyBase::CMyBodyBase( const guiex::CGUIString& rType, const guiex::CGUIStrin
 //------------------------------------------------------------------------------
 void CMyBodyBase::OnDestroy()
 {
-	guiex::IGUIPhysics_box2d* pPhysics = guiex::CGUIInterfaceManager::Instance()->GetInterfacePhysicsTyped<guiex::IGUIPhysics_box2d>();
+	guiex::IGUIPhysics_box2d* pPhysics = guiex::CGUIInterfaceManager::Instance()->GetInterfacePhysicsWithTypeCheck<guiex::IGUIPhysics_box2d>();
 	if( m_pBody )
 	{
 		pPhysics->GetWorld()->DestroyBody( m_pBody );
@@ -94,7 +94,7 @@ void CMyBall::InitBall( guiex::CGUIWidget* pParent )
 	Refresh();
 
 	// Create ball body 
-	guiex::IGUIPhysics_box2d* pPhysics = guiex::CGUIInterfaceManager::Instance()->GetInterfacePhysicsTyped<guiex::IGUIPhysics_box2d>();
+	guiex::IGUIPhysics_box2d* pPhysics = guiex::CGUIInterfaceManager::Instance()->GetInterfacePhysicsWithTypeCheck<guiex::IGUIPhysics_box2d>();
 	guiex::real fScale = pPhysics->GetMeterPixelScale();
 
 	b2BodyDef ballBodyDef;
@@ -178,7 +178,7 @@ void CMyPaddle::InitPaddle( guiex::CGUIWidget* pParent )
 	Refresh();
 
 	// Create paddle body 
-	guiex::IGUIPhysics_box2d* pPhysics = guiex::CGUIInterfaceManager::Instance()->GetInterfacePhysicsTyped<guiex::IGUIPhysics_box2d>();
+	guiex::IGUIPhysics_box2d* pPhysics = guiex::CGUIInterfaceManager::Instance()->GetInterfacePhysicsWithTypeCheck<guiex::IGUIPhysics_box2d>();
 	guiex::real fScale = pPhysics->GetMeterPixelScale();
 	guiex::real winWidth = guiex::real(guiex::GSystem->GetScreenWidth());
 	guiex::real winHeight = guiex::real(guiex::GSystem->GetScreenHeight());
@@ -220,7 +220,7 @@ uint32 CMyPaddle::OnDragBegin( guiex::CGUIEventDrag* pEvent )
 
 	if (m_pFixture->TestPoint(locationWorld)) 
 	{
-		guiex::IGUIPhysics_box2d* pPhysics = guiex::CGUIInterfaceManager::Instance()->GetInterfacePhysicsTyped<guiex::IGUIPhysics_box2d>();
+		guiex::IGUIPhysics_box2d* pPhysics = guiex::CGUIInterfaceManager::Instance()->GetInterfacePhysicsWithTypeCheck<guiex::IGUIPhysics_box2d>();
 
 		b2MouseJointDef md;
 		md.bodyA = CGUIFrameworkTest::ms_pFrameWork->GetGameLayer()->GetGroundBody();
@@ -256,7 +256,7 @@ uint32 CMyPaddle::OnDragEnd( guiex::CGUIEventDrag* pEvent )
 {
 	if (m_mouseJoint) 
 	{
-		guiex::IGUIPhysics_box2d* pPhysics = guiex::CGUIInterfaceManager::Instance()->GetInterfacePhysicsTyped<guiex::IGUIPhysics_box2d>();
+		guiex::IGUIPhysics_box2d* pPhysics = guiex::CGUIInterfaceManager::Instance()->GetInterfacePhysicsWithTypeCheck<guiex::IGUIPhysics_box2d>();
 		pPhysics->GetWorld()->DestroyJoint(m_mouseJoint);
 		m_mouseJoint = NULL;
 	}
@@ -289,7 +289,7 @@ void CMyBlock::InitBlock( guiex::CGUIWidget* pParent, const guiex::CGUIVector2& 
 	Refresh();
 
 	// Create ball body 
-	guiex::IGUIPhysics_box2d* pPhysics = guiex::CGUIInterfaceManager::Instance()->GetInterfacePhysicsTyped<guiex::IGUIPhysics_box2d>();
+	guiex::IGUIPhysics_box2d* pPhysics = guiex::CGUIInterfaceManager::Instance()->GetInterfacePhysicsWithTypeCheck<guiex::IGUIPhysics_box2d>();
 	guiex::real fScale = pPhysics->GetMeterPixelScale();
 
 	b2BodyDef blockBodyDef;
@@ -375,7 +375,7 @@ CMyCanvasLayer_GameLayer::CMyCanvasLayer_GameLayer( const char* szLayerName )
 	SetMouseConsumed(true);
 
 	//init physics
-	m_pPhysics = guiex::CGUIInterfaceManager::Instance()->GetInterfacePhysicsTyped<guiex::IGUIPhysics_box2d>();
+	m_pPhysics = guiex::CGUIInterfaceManager::Instance()->GetInterfacePhysicsWithTypeCheck<guiex::IGUIPhysics_box2d>();
 	m_pPhysics->SetMeterPixelScale( 32.0f );
 
 	//set gravity
@@ -728,7 +728,7 @@ void CGUIFrameworkTest::Btn_OnClick_Replay( guiex::CGUIEventMouse* pEvent )
 {
 	ms_pFrameWork->DestroyMenuLayer();
 	ms_pFrameWork->CreateGameLayer();
-	guiex::IGUIPhysics_box2d* pPhysics = guiex::CGUIInterfaceManager::Instance()->GetInterfacePhysicsTyped<guiex::IGUIPhysics_box2d>();
+	guiex::IGUIPhysics_box2d* pPhysics = guiex::CGUIInterfaceManager::Instance()->GetInterfacePhysicsWithTypeCheck<guiex::IGUIPhysics_box2d>();
 	pPhysics->BeginSimulate();
 }
 //------------------------------------------------------------------------------

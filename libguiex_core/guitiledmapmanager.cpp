@@ -68,10 +68,10 @@ namespace guiex
 		return m_pSingleton; 
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUITiledMapManager::RegisterTiledMap( const CGUIString& rSceneName, const CGUIProperty& rProperty)
+	int32 CGUITiledMapManager::RegisterResource( const CGUIString& rSceneName, const CGUIProperty& rProperty)
 	{
 		CGUITiledMapData* pTiledMapata = new CGUITiledMapData( rProperty.GetName(), rSceneName, rProperty );
-		RegisterResource( pTiledMapata );
+		RegisterResourceImp( pTiledMapata );
 		return 0;
 	}
 	//------------------------------------------------------------------------------

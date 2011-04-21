@@ -125,7 +125,7 @@ namespace guiex
 			itor != m_aLineList.end();
 			++itor)
 		{
-			fHeight += (*itor).m_nLineHeight;
+			fHeight += (*itor).m_fLineHeight;
 		}
 		m_aClientArea.SetHeight(fHeight);
 		m_aClientArea.SetWidth( GetClipArea().GetWidth() );
@@ -176,7 +176,7 @@ namespace guiex
 				*/
 
 				int16 nDrawState = 0;	//0 == draw first <xxx>, 1 == draw second <yyy>, 2 == draw last <zzz> 
-				CGUIStringInfo aStringInfo = m_strText.GetStringInfo();
+				CGUIStringRenderInfo aStringInfo = m_strText.GetStringInfo();
 				CGUIColor aDefaultColor = aStringInfo.m_aColor;
 				uint32 nCurIdx = 0;
 
@@ -187,7 +187,7 @@ namespace guiex
 				{
 					const SLineInfo& aLineInfo = *itor;
 					aPos.x = GetClientArea().m_fLeft;
-					aPos.y += aLineInfo.m_nLineHeight;
+					aPos.y += aLineInfo.m_fLineHeight;
 
 					for( uint32 i=0; i<aLineInfo.m_nLength; ++i)
 					{
@@ -227,7 +227,7 @@ namespace guiex
 					++itor)
 				{
 					const SLineInfo& aLineInfo = *itor;
-					aPos.y += aLineInfo.m_nLineHeight;
+					aPos.y += aLineInfo.m_fLineHeight;
 
 					//no selection
 					DrawString( pRender, m_strText, aPos, aLineInfo.m_nStartIdx, aLineInfo.m_nStartIdx+aLineInfo.m_nLength );
@@ -263,12 +263,12 @@ namespace guiex
 		return m_strText.m_strContent;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtMultiEditBox::SetTextInfo(const CGUIStringInfo& rInfo)
+	void CGUIWgtMultiEditBox::SetTextInfo(const CGUIStringRenderInfo& rInfo)
 	{
 		m_strText.m_aStringInfo = rInfo;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIStringInfo& CGUIWgtMultiEditBox::GetTextInfo( ) const
+	const CGUIStringRenderInfo& CGUIWgtMultiEditBox::GetTextInfo( ) const
 	{
 		return m_strText.m_aStringInfo;
 	}
@@ -339,7 +339,7 @@ namespace guiex
 			m_strText.m_strContent.append( 1, ms_wLineBreak );
 			m_vecStringSize.insert(
 				m_vecStringSize.begin(), 
-				pFont->GetCharacterSize(m_strText.GetStringInfo().m_nFontIdx,ms_wLineBreak, m_strText.GetStringInfo().m_nFontSize));
+				pFont->GetCharacterSize( ms_wLineBreak, m_strText.GetStringInfo()));
 		}
 
 		m_strText.m_strContent.insert(m_nCursorIdx, rText );
@@ -347,7 +347,7 @@ namespace guiex
 		{
 			m_vecStringSize.insert(
 				m_vecStringSize.begin()+m_nCursorIdx+i, 
-				pFont->GetCharacterSize(m_strText.m_aStringInfo.m_nFontIdx,rText[i], m_strText.m_aStringInfo.m_nFontSize));
+				pFont->GetCharacterSize( rText[i], m_strText.GetStringInfo()));
 		}
 
 		//format text
@@ -377,7 +377,7 @@ namespace guiex
 			//calculate height
 			for( int32 i=0; i<=m_nCursorLine; ++i )
 			{
-				fHeight += m_aLineList[i].m_nLineHeight;
+				fHeight += m_aLineList[i].m_fLineHeight;
 			}
 
 			//calculate width
@@ -388,22 +388,23 @@ namespace guiex
 		}
 		else
 		{
-			fHeight = m_strText.GetStringInfo().m_nFontSize;
+			IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
+			fHeight = pFont->GetFontHeight(m_strText.GetStringInfo());
 		}
 
 		CGUIVector2 aPos = GetClientArea( ).GetPosition();
-		aPos.x = aPos.x+fWidth;
+		aPos.x = aPos.x + fWidth;
 		aPos.y = aPos.y + fHeight - m_pEdit->GetCursorSize().GetHeight();
 
 		return aPos;
 	}
 	//------------------------------------------------------------------------------
-	CGUIRect	CGUIWgtMultiEditBox::GetCursorRect()
+	CGUIRect CGUIWgtMultiEditBox::GetCursorRect()
 	{
 		return CGUIRect(GetCursorPos(), m_pEdit->GetCursorSize());
 	}
 	//------------------------------------------------------------------------------
-	real		CGUIWgtMultiEditBox::GetStringWidth(int32 nBeginPos, int32 nEndPos) const
+	real CGUIWgtMultiEditBox::GetStringWidth(int32 nBeginPos, int32 nEndPos) const
 	{
 		nBeginPos = static_cast<int32>(nBeginPos<0?0:nBeginPos);
 		nEndPos = static_cast<int32>(nEndPos<0?m_strText.m_strContent.size():nEndPos);
@@ -517,12 +518,15 @@ namespace guiex
 		// clear old formatting data
 		m_aLineList.clear();
 
-		real		fLineMaxWidth = GetClientArea().GetWidth();
-		uint32		nLineWidth = 0;
-		SLineInfo	aLine;
+		IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
+
+		real fLineMaxWidth = GetClientArea().GetWidth();
+		real fLineWidth = 0.0f;
+		real fLineHeight = pFont->GetFontHeight(m_strText.GetStringInfo());
+		SLineInfo aLine;
 		aLine.m_nLength = 0;
 		aLine.m_nStartIdx = 0; 
-		aLine.m_nLineHeight = GetTextInfo().m_nFontSize; 
+		aLine.m_fLineHeight = fLineHeight; 
 
 		for( uint32 i=0; i<m_vecStringSize.size(); ++i)
 		{
@@ -532,31 +536,31 @@ namespace guiex
 				++aLine.m_nLength;
 				m_aLineList.push_back(aLine);
 				aLine.m_nLength = 0;
-				aLine.m_nLineHeight = GetTextInfo().m_nFontSize;
+				aLine.m_fLineHeight = fLineHeight;
 				aLine.m_nStartIdx = i+1;
-				nLineWidth = 0;
+				fLineWidth = 0.0f;
 				continue;
 			}
 			else
 			{
-				if( nLineWidth + m_vecStringSize[i].m_fWidth > fLineMaxWidth)
+				if( fLineWidth + m_vecStringSize[i].m_fWidth > fLineMaxWidth)
 				{
 					//new line
 					m_aLineList.push_back(aLine);
 					aLine.m_nLength = 1;
-					aLine.m_nLineHeight = uint32(GetTextInfo().m_nFontSize>m_vecStringSize[i].m_fHeight?GetTextInfo().m_nFontSize:m_vecStringSize[i].m_fHeight);
+					aLine.m_fLineHeight = fLineHeight>m_vecStringSize[i].m_fHeight?fLineHeight:m_vecStringSize[i].m_fHeight;
 					aLine.m_nStartIdx = i;
-					nLineWidth = uint32(m_vecStringSize[i].m_fWidth);
+					fLineWidth = m_vecStringSize[i].m_fWidth;
 				}
 				else
 				{
 					//add a character to line
 					++aLine.m_nLength;
-					if( uint32(m_vecStringSize[i].m_fHeight) > aLine.m_nLineHeight)
+					if( m_vecStringSize[i].m_fHeight > aLine.m_fLineHeight)
 					{
-						aLine.m_nLineHeight = uint32(m_vecStringSize[i].m_fHeight);
+						aLine.m_fLineHeight = m_vecStringSize[i].m_fHeight;
 					}
-					nLineWidth += uint32(m_vecStringSize[i].m_fWidth);
+					fLineWidth += m_vecStringSize[i].m_fWidth;
 				}
 			}
 		}
@@ -666,7 +670,7 @@ namespace guiex
 			real fHeight = GetClientArea().m_fTop;
 			for( uint32 i = 0;i < m_aLineList.size();++i)
 			{
-				fHeight += m_aLineList[i].m_nLineHeight;
+				fHeight += m_aLineList[i].m_fLineHeight;
 				if( rPos.y <= fHeight)
 				{
 					m_nCursorLine = i;
@@ -708,8 +712,6 @@ namespace guiex
 		return m_nCursorIdx;
 	}
 	//------------------------------------------------------------------------------
-
-
 
 
 
@@ -766,7 +768,7 @@ namespace guiex
 		else
 		{
 			CGUIVector2 aPos = GetCursorPos();
-			aPos.y -= m_aLineList[m_nCursorLine-1].m_nLineHeight;
+			aPos.y -= m_aLineList[m_nCursorLine-1].m_fLineHeight;
 			SetCursorIndexByPos(aPos);
 		}
 
@@ -790,7 +792,7 @@ namespace guiex
 		else
 		{
 			CGUIVector2 aPos = GetCursorPos();
-			aPos.y += m_aLineList[m_nCursorLine].m_nLineHeight;
+			aPos.y += m_aLineList[m_nCursorLine].m_fLineHeight;
 			SetCursorIndexByPos(aPos);
 		}
 
@@ -1028,7 +1030,7 @@ namespace guiex
 		{
 			ValueToProperty( GetCursorSize(), rProperty);
 		}
-		else if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo" )
+		else if( rProperty.GetType() == ePropertyType_StringRenderInfo && rProperty.GetName() == "textinfo" )
 		{
 			ValueToProperty( m_strText.GetStringInfo(), rProperty );
 		}
@@ -1071,15 +1073,15 @@ namespace guiex
 			PropertyToValue( rProperty, aValue);
 			SetCursorSize( aValue );
 		}
-		else if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo")
+		else if( rProperty.GetType() == ePropertyType_StringRenderInfo && rProperty.GetName() == "textinfo")
 		{
-			CGUIStringInfo aInfo;
+			CGUIStringRenderInfo aInfo;
 			PropertyToValue( rProperty, aInfo);
 			SetTextInfo(aInfo);
 		}
 		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text")
 		{
-			CGUIStringEx aStrText;
+			CGUIStringRender aStrText;
 			AppMultiByteToWideChar(rProperty.GetValue(), aStrText.m_strContent);
 			SetTextContent(aStrText.GetContent());
 		}		

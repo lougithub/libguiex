@@ -79,7 +79,7 @@ namespace guiex
 			{
 				const SLineInfo& aLineInfo = *itor;
 
-				aDestRect.m_fBottom = aDestRect.m_fTop + aLineInfo.m_nLineHeight * GetDerivedScale().m_fHeight;
+				aDestRect.m_fBottom = aDestRect.m_fTop + aLineInfo.m_fLineHeight * GetDerivedScale().m_fHeight;
 
 				//no selection
 				DrawString( pRender, m_strText, aDestRect, m_eTextAlignmentHorz,m_eTextAlignmentVert, aLineInfo.m_nStartIdx, aLineInfo.m_nStartIdx+aLineInfo.m_nLength );
@@ -110,7 +110,7 @@ namespace guiex
 		UpdateStringContent();
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtStaticText::SetTextInfo( const CGUIStringInfo& rInfo )
+	void CGUIWgtStaticText::SetTextInfo( const CGUIStringRenderInfo& rInfo )
 	{
 		CGUIWgtTextBase::SetTextInfo( rInfo );
 		UpdateStringContent();
@@ -125,16 +125,17 @@ namespace guiex
 			return;
 		}
 			
-		const CGUIStringInfo& rDefaultInfo = GetTextInfo();
+		const CGUIStringRenderInfo& rDefaultInfo = GetTextInfo();
+		IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
+
+		real fLineHeight = pFont->GetFontHeight(rDefaultInfo);
 
 		real fLineMaxWidth = GetPixelSize().GetWidth();
-		uint32 nLineWidth = 0;
+		real fLineWidth = 0.0f;
 		SLineInfo aLine;
 		aLine.m_nLength = 0;
 		aLine.m_nStartIdx = 0; 
-		aLine.m_nLineHeight = rDefaultInfo.m_nFontSize; 
-
-		IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
+		aLine.m_fLineHeight = fLineHeight; 
 
 		real fTotalHeight = 0.f;
 		for( uint32 i=0; i<m_strText.m_strContent.size(); ++i)
@@ -144,47 +145,46 @@ namespace guiex
 				//line break
 				++aLine.m_nLength;
 				m_aLineList.push_back(aLine);
-				fTotalHeight += aLine.m_nLineHeight;
+				fTotalHeight += aLine.m_fLineHeight;
 				aLine.m_nLength = 0;
-				aLine.m_nLineHeight = rDefaultInfo.m_nFontSize;
+				aLine.m_fLineHeight = fLineHeight;
 				aLine.m_nStartIdx = i+1;
-				nLineWidth = 0;
+				fLineWidth = 0.0f;
 				continue;
 			}
 			else
 			{
 				CGUISize aWordSize = pFont->GetCharacterSize(
-					m_strText.m_aStringInfo.m_nFontIdx,
 					m_strText.m_strContent[i], 
-					m_strText.m_aStringInfo.m_nFontSize);
+					m_strText.m_aStringInfo);
 				
-				if( nLineWidth + aWordSize.m_fWidth > fLineMaxWidth)
+				if( fLineWidth + aWordSize.m_fWidth > fLineMaxWidth)
 				{
 					//new line
 					m_aLineList.push_back(aLine);
-					fTotalHeight += aLine.m_nLineHeight;
+					fTotalHeight += aLine.m_fLineHeight;
 
 					aLine.m_nLength = 1;
-					aLine.m_nLineHeight = GUI_FLOAT2UINT_ROUND( rDefaultInfo.m_nFontSize > aWordSize.m_fHeight ? rDefaultInfo.m_nFontSize : aWordSize.m_fHeight );
+					aLine.m_fLineHeight = fLineHeight > aWordSize.m_fHeight ? fLineHeight : aWordSize.m_fHeight;
 					aLine.m_nStartIdx = i;
-					nLineWidth = GUI_FLOAT2UINT_ROUND(aWordSize.m_fWidth);
+					fLineWidth = aWordSize.m_fWidth;
 				}
 				else
 				{
 					//add a character to line
 					++aLine.m_nLength;
-					if( GUI_FLOAT2UINT_ROUND(aWordSize.m_fHeight) > aLine.m_nLineHeight)
+					if( aWordSize.m_fHeight > aLine.m_fLineHeight)
 					{
-						aLine.m_nLineHeight = GUI_FLOAT2UINT_ROUND(aWordSize.m_fHeight);
+						aLine.m_fLineHeight = aWordSize.m_fHeight;
 					}
-					nLineWidth += GUI_FLOAT2UINT_ROUND(aWordSize.m_fWidth);
+					fLineWidth += aWordSize.m_fWidth;
 				}
 			}
 		}
 		if( aLine.m_nLength > 0)
 		{
 			m_aLineList.push_back(aLine);
-			fTotalHeight += aLine.m_nLineHeight;
+			fTotalHeight += aLine.m_fLineHeight;
 		}
 
 	}

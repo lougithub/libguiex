@@ -15,12 +15,12 @@
 #include "guibase.h"
 #include "guistring.h"
 #include "guiresource.h"
+#include "guiintsize.h"
 
 
 //============================================================================//
 // declare
 //============================================================================//
-
 
 
 //============================================================================//
@@ -30,6 +30,19 @@
 namespace guiex
 {
 	/**
+	* @desc font info
+	*/
+	struct SFontInfo
+	{
+		uint16 m_uID;
+		CGUIString m_strPath;
+		uint16 m_uSize;
+		CGUIString m_strDesc;
+		CGUIIntSize m_aTextureSize;
+	};
+
+
+	/**
 	* @class CGUIFontData
 	*/
 	class GUIEXPORT CGUIFontData : public CGUIResource
@@ -37,10 +50,16 @@ namespace guiex
 	public:
 		virtual ~CGUIFontData();
 
-		uint32 GetFontIndex() const;
+		uint16 GetFontID() const;
+		uint16 GetFontSize() const;
+		const CGUIString& GetFontDesc() const;
+		const CGUIString& GetFontPath() const;
+		const CGUIIntSize& GetTextureSize() const;
 
 	protected:
-		CGUIFontData( const CGUIString& rName, const CGUIString& rSceneName, uint32 nFontID );
+		CGUIFontData( const CGUIString& rName,
+			const CGUIString& rSceneName, 
+			const SFontInfo& rFontInfo );
 
 	protected:
 		friend class CGUIFontManager;
@@ -49,7 +68,7 @@ namespace guiex
 		const CGUIFontData& operator=(const CGUIFontData& );
 
 	protected:
-		uint32 m_nFontIndex;
+		SFontInfo m_aFontInfo;
 	};
 }
 

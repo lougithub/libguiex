@@ -43,51 +43,35 @@ namespace guiex
 	class GUIEXPORT IGUIFont_dummy : public IGUIInterfaceFont
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		IGUIFont_dummy();
-
-		/**
-		* @brief destructor
-		*/
 		virtual ~IGUIFont_dummy();
 
-		virtual CGUIFontData* CreateFontData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath, uint32 nFontID );
+		virtual CGUIFontData* CreateFontData( 
+			const CGUIString& rName, 
+			const CGUIString& rSceneName,
+			const SFontInfo& rFontInfo );
 		virtual void DestroyFontData( CGUIFontData* pData );
 
-		/**
-		* @brief enable kerning
-		*/
 		virtual void EnableKerning( bool bEnable );
 
-		/**
-		* @brief draw a character
-		*/
 		virtual void DrawCharacter(
 			IGUIInterfaceRender* pRender, 
 			wchar_t charCode, 
-			const CGUIStringInfo& rInfo,
+			const CGUIStringRenderInfo& rInfo,
 			const CGUIVector2& rPos,
 			real fAlpha);
 
-		/**
-		* @brief draw string
-		*/
 		virtual void DrawString(
 			IGUIInterfaceRender* pRender, 
-			const CGUIStringEx& rString, 
+			const CGUIStringRender& rString, 
 			const CGUIVector2& rPos,
 			real fAlpha,
 			int32 nStartPos = 0,
 			int32 nEndPos = -1);
 
-		/**
-		* @brief draw string
-		*/
 		virtual void DrawString(
 			IGUIInterfaceRender* pRender, 
-			const CGUIStringEx& rString, 
+			const CGUIStringRender& rString, 
 			const CGUIRect&	rStringRect,
 			ETextAlignmentHorz uTextAlignmentHorz,
 			ETextAlignmentVert uTextAlignmentVert,
@@ -95,13 +79,20 @@ namespace guiex
 			int32 nStartPos = 0,
 			int32 nEndPos = -1);
 
-		virtual const CGUISize& GetCharacterSize(int32 nFontFaceIdx, wchar_t charCode, uint32 nSize);
+		virtual real GetFontHeight( const CGUIStringRenderInfo& rInfo );
+		virtual CGUISize GetCharacterSize( wchar_t charCode, const CGUIStringRenderInfo& rInfo );
 
 		virtual void DeleteSelf();
 
 	protected:
 		virtual int DoInitialize(void* );
 		virtual void DoDestroy();
+
+		CGUIFontData_dummy* GetFontData( uint16 uFontID );
+
+	protected:
+		typedef std::vector<CGUIFontData_dummy*> TVecFontData;
+		TVecFontData m_arrayFontDatas;
 
 	public: 
 		static const char* StaticGetModuleName();

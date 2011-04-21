@@ -519,7 +519,7 @@ namespace guiex
 				// if item is supposed to be deleted by us
 				GSystem->DestroyWidget(pItem);
 
-//				SetRectDirty();
+				//				SetRectDirty();
 				UpdateScrollbars();
 
 				if( m_pLastOperateItem  == pItem )
@@ -542,7 +542,7 @@ namespace guiex
 
 		}
 
-//		SetRectDirty();
+		//		SetRectDirty();
 		UpdateScrollbars();
 	}
 	//------------------------------------------------------------------------------
@@ -652,7 +652,10 @@ namespace guiex
 		return m_bSorted;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtColumnList::MakeItemVisible(uint32 nItemIndex)
+			/**
+		* @brief make the specified item visible
+		*/
+	void CGUIWgtColumnList::MakeItemVisible(uint32 nItemIndex)
 	{
 		//// handle simple "scroll to the bottom" case
 		//if (nItemIndex >= GetItemCount())
@@ -697,7 +700,10 @@ namespace guiex
 		//}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtColumnList::MakeItemVisible(const CGUIColListItem* pItem)
+	/**
+	* @brief make the specified item visible
+	*/
+	void CGUIWgtColumnList::MakeItemVisible(const CGUIColListItem* pItem)
 	{
 		MakeItemVisible(GetItemIndex(pItem));
 	}
@@ -835,7 +841,10 @@ namespace guiex
 		return m_pHeader->GetSegmentCount();
 	}
 	//------------------------------------------------------------------------------
-	uint32	CGUIWgtColumnList::GetRowCount(void) const
+			/**
+		* @brief Return the number of rows.
+		*/
+	uint32 CGUIWgtColumnList::GetRowCount(void) const
 	{
 		return static_cast<uint32>(m_aListRows.size());
 	}
@@ -889,12 +898,18 @@ namespace guiex
 		m_pHeader->SetLocalPosition(m_aClientRect.m_fLeft - aOldX, 0.0f);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtColumnList::SetSegmentTextInfo(const CGUIStringInfo& rInfo)
+	/** 
+	* @brief set segment text info
+	*/
+	void CGUIWgtColumnList::SetSegmentTextInfo(const CGUIStringRenderInfo& rInfo)
 	{
 		m_pHeader->SetSegmentTextInfo(rInfo);
 	}
 	//------------------------------------------------------------------------------
-	const CGUIStringInfo&	CGUIWgtColumnList::GetSegmentTextInfo() const
+	/** 
+	* @brief get segment text info
+	*/
+	const CGUIStringRenderInfo&	CGUIWgtColumnList::GetSegmentTextInfo() const
 	{
 		return m_pHeader->GetSegmentTextInfo();
 	}
@@ -929,16 +944,26 @@ namespace guiex
 		return m_pHeader->GetSegmentPosByIndex( nIdx );
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtColumnList::SetSortSegment(uint32 nIdx)
+	/**
+	* @brief Set the column to be used as the sort key.
+	*/
+	void CGUIWgtColumnList::SetSortSegment(uint32 nIdx)
 	{
 		m_pHeader->SetSortSegment(nIdx);
 	}
 	//------------------------------------------------------------------------------
-	CGUIColListHeaderSegment*	CGUIWgtColumnList::GetSortSegment(void) const
+	/**
+	* @brief return the current sort segment pointer
+	*/
+	CGUIColListHeaderSegment* CGUIWgtColumnList::GetSortSegment(void) const
 	{
 		return m_pHeader->GetSortSegment();
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief Return the zero based index of the current sort column.  
+	There must be at least one column to successfully call this method.
+	*/
 	uint32	CGUIWgtColumnList::GetSortSegmentIndex(void) const
 	{
 		return m_pHeader->GetSortSegmentIndex();
@@ -1010,7 +1035,7 @@ namespace guiex
 		pItem->SetWidth(GetSegmentWidthByIndex(rGrid.m_nColumn));
 		UpdateItemPos();
 
-//		SetRectDirty();
+		//		SetRectDirty();
 		UpdateScrollbars();
 
 		//// signal a change to the list contents

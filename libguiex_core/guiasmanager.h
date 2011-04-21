@@ -68,7 +68,7 @@ namespace guiex
 
 		static CGUIAsManager* Instance(); 
 
-		int32 RegisterAs( const CGUIString& rSceneName, const CGUIProperty& rProperty );
+		virtual int32 RegisterResource( const CGUIString& rSceneName, const CGUIProperty& rProperty );
 
 		CGUIAs* AllocateResource( const CGUIString& rResName );
 		CGUIAs* AllocateResource( const CGUIString& rAsType, const CGUIString& rAsName, const CGUIString& rSceneName );

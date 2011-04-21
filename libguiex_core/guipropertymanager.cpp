@@ -40,13 +40,14 @@ namespace guiex
 		RegisterPropertyType( ePropertyType_Folder, "folder" );
 
 		RegisterPropertyType( ePropertyType_Size, "CGUISize" );
+		RegisterPropertyType( ePropertyType_IntSize, "CGUIIntSize" );
 		RegisterPropertyType( ePropertyType_Rect, "CGUIRect" );
 		RegisterPropertyType( ePropertyType_String, "CGUIString" );
 		RegisterPropertyType( ePropertyType_LocalizedString, "CGUILocalizedString" );
 		RegisterPropertyType( ePropertyType_Vector2, "CGUIVector2" );
 		RegisterPropertyType( ePropertyType_Vector3, "CGUIVector3" );
 		RegisterPropertyType( ePropertyType_Color, "CGUIColor" );
-		RegisterPropertyType( ePropertyType_StringInfo, "CGUIStringInfo" );
+		RegisterPropertyType( ePropertyType_StringRenderInfo, "CGUIStringRenderInfo" );
 		RegisterPropertyType( ePropertyType_SBlendFunc, "SGUIBlendFunc" );
 		RegisterPropertyType( ePropertyType_Event, "CGUIEvent" );
 		RegisterPropertyType( ePropertyType_WidgetPosition, "CGUIWidgetPosition" );		

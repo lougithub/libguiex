@@ -52,31 +52,31 @@ namespace guiex
 		SetSize(GetSize().m_fWidth, m_strText.GetStringInfo().m_nFontSize);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIColListTextItem::SetTextContent(const CGUIStringW& rText)
+	void CGUIColListTextItem::SetTextContent(const CGUIStringW& rText)
 	{
 		CGUIColListItem::SetTextContent(pText);
 		UpdateTextSize();
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIColListTextItem::SetTextInfo( const CGUIStringInfo& rInfo)
+	void CGUIColListTextItem::SetTextInfo( const CGUIStringRenderInfo& rInfo)
 	{
 		CGUIColListItem::SetTextInfo(rInfo);
 		UpdateTextSize();
 	}
 	//------------------------------------------------------------------------------
-	real		CGUIColListTextItem::GetHeight(void)
+	real CGUIColListTextItem::GetHeight(void)
 	{
 		return GetSize().GetHeight()*GetDerivedScale().GetHeight();
 	}
 	//------------------------------------------------------------------------------
-	real	CGUIColListTextItem::GetWidth(void)
+	real CGUIColListTextItem::GetWidth(void)
 	{
 		return GetSize().GetWidth()*GetDerivedScale().GetWidth();
 	}
 	//------------------------------------------------------------------------------
-	CGUIColListTextItem*	CGUIColListTextItem::CreateTextItem(
+	CGUIColListTextItem* CGUIColListTextItem::CreateTextItem(
 		const CGUIStringW& rText, 
-		const CGUIStringInfo& rInfo,
+		const CGUIStringRenderInfo& rInfo,
 		const CGUIString& rSceneName,
 		uint32 nItemID,
 		void* pItemData ,

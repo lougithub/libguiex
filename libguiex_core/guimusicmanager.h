@@ -45,7 +45,7 @@ namespace guiex
 
 		static CGUIMusicManager* Instance(); 
 
-		int32 RegisterMusic( const CGUIString& rSceneName, const CGUIProperty& rProperty);
+		virtual int32 RegisterResource( const CGUIString& rSceneName, const CGUIProperty& rProperty);
 		CGUIMusicData* AllocateResource( const CGUIString& rMusicName ) const;
 		virtual void DeallocateResource( CGUIResource* pRes );
 

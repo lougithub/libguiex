@@ -69,6 +69,8 @@ source_group(filesys_cocoa FILES ${${target_name}_filesys_cocoa_SRCS} )
 
 #font_ft2
 set( ${target_name}_font_ft2_SRCS 
+	font_ft2/guifontface_ft2.cpp
+	font_ft2/guifontface_ft2.h
 	font_ft2/guifont_ft2.cpp
 	font_ft2/guifont_ft2.h
 	font_ft2/guifontdata_ft2.cpp

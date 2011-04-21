@@ -324,13 +324,13 @@ class CEditorPropertyConvertor_StringInfo : public CEditorPropertyConvertorBase
 {
 public:
 	CEditorPropertyConvertor_StringInfo()
-		:CEditorPropertyConvertorBase( ePropertyType_StringInfo )
+		:CEditorPropertyConvertorBase( ePropertyType_StringRenderInfo )
 	{
 
 	}
 	virtual void DoGuiProperty2GridProperty(WxToolsPGManager* pSheetMgr, wxPGProperty* pPGCategory, wxPGProperty*& pPGTop, const CGUIProperty& aProp)
 	{
-		CGUIStringInfo aValue;
+		CGUIStringRenderInfo aValue;
 		PropertyToValue( aProp, aValue );
 
 		if( pPGTop )
@@ -344,7 +344,7 @@ public:
 	}
 	virtual void DoGridProperty2GuiProperty( WxToolsPGManager* pSheetMgr, wxPGProperty* pPGProperty, CGUIProperty& rProperty )
 	{
-		CGUIStringInfo aValue= CGUIStringInfoRefFromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
+		CGUIStringRenderInfo aValue= CGUIStringRenderInfoRefFromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
 		ValueToProperty( aValue, rProperty );
 	}
 };

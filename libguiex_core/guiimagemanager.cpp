@@ -160,14 +160,12 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIImageManager::RegisterImage( 
-		const CGUIString& rSceneName,
-		const CGUIProperty& rProperty)
+	int32 CGUIImageManager::RegisterResource( const CGUIString& rSceneName, const CGUIProperty& rProperty)
 	{
 		CGUIImage* pImage = DoCreateImage(
 			rSceneName,
 			rProperty );
-		RegisterResource( pImage );
+		RegisterResourceImp( pImage );
 		return 0;
 	}
 	//------------------------------------------------------------------------------
@@ -186,7 +184,7 @@ namespace guiex
 			rUVRect, 
 			eImageOrientation,
 			rSize);
-		RegisterResource( pImage );
+		RegisterResourceImp( pImage );
 		return 0;
 	}
 	//------------------------------------------------------------------------------
@@ -201,7 +199,7 @@ namespace guiex
 			rSceneName,
 			rColor,
 			rSize);
-		RegisterResource( pImage );
+		RegisterResourceImp( pImage );
 		return 0;
 	}
 	//------------------------------------------------------------------------------
@@ -222,7 +220,7 @@ namespace guiex
 			buffHeight, 
 			ePixelFormat,
 			rSize);
-		RegisterResource( pImage );
+		RegisterResourceImp( pImage );
 		return 0;
 	}
 	//------------------------------------------------------------------------------

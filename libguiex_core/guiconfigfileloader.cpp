@@ -34,15 +34,6 @@ namespace guiex
 {
 	static CGUIWidget* DoLoadConfig_Widget( const CGUIProperty* pPropertySet, const CGUIString& rSceneName, const CGUIString& rFileName );
 	static int32 DoLoadConfig_Set( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
-	static int32 DoLoadConfig_Image( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
-	static int32 DoLoadConfig_Animation( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
-	static int32 DoLoadConfig_Font( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
-	static int32 DoLoadConfig_Sound( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
-	static int32 DoLoadConfig_Music( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
-	static int32 DoLoadConfig_As( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
-	static int32 DoLoadConfig_Particle2D( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
-	static int32 DoLoadConfig_TiledMap( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
-
 
 	//------------------------------------------------------------------------------
 	CGUIWidget* DoLoadConfig_Widget( const CGUIProperty* pPropertySet, const CGUIString& rSceneName, const CGUIString& rFileName )
@@ -80,126 +71,6 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int32 DoLoadConfig_Image( const CGUIProperty* pPropertySet, const CGUIString& rSceneName )
-	{
-		if( 0 != CGUIImageManager::Instance()->RegisterImage( rSceneName, *pPropertySet ) )
-		{
-			throw guiex::CGUIException(
-				"[IGUIConfigFile_tinyxml::DoLoadResourceImage], failed to create image with name <%s:%s:%s>!", 
-				pPropertySet->GetName().c_str(),
-				pPropertySet->GetTypeAsString().c_str(),
-				pPropertySet->GetValue().c_str());
-			return -1;
-		}
-		return 0;
-	}
-	//------------------------------------------------------------------------------
-	int32 DoLoadConfig_Animation( const CGUIProperty* pPropertySet, const CGUIString& rSceneName )
-	{
-		if( 0 != CGUIAnimationManager::Instance()->RegisterAnimation( rSceneName, *pPropertySet ) )
-		{
-			throw guiex::CGUIException(
-				"[DoLoadConfig_Animation], failed to create Animation with name <%s:%s:%s>!", 
-				pPropertySet->GetName().c_str(),
-				pPropertySet->GetTypeAsString().c_str(),
-				pPropertySet->GetValue().c_str());
-			return -1;
-		}
-
-		return 0;
-	}
-	//------------------------------------------------------------------------------
-	int32 DoLoadConfig_Font( const CGUIProperty* pPropertySet, const CGUIString& rSceneName )
-	{
-		if( 0 != CGUIFontManager::Instance()->RegisterFont( rSceneName, *pPropertySet ) )
-		{
-			throw guiex::CGUIException(
-				"[DoLoadConfig_Font], failed to create font with name <%s:%s:%s>!", 
-				pPropertySet->GetName().c_str(),
-				pPropertySet->GetTypeAsString().c_str(),
-				pPropertySet->GetValue().c_str());
-			return -1;
-		}
-
-		return 0;
-	}
-	//------------------------------------------------------------------------------
-	int32 DoLoadConfig_Sound( const CGUIProperty* pPropertySet, const CGUIString& rSceneName )
-	{
-		if( 0 != CGUISoundManager::Instance()->RegisterSound( rSceneName, *pPropertySet ) )
-		{
-			throw guiex::CGUIException(
-				"[DoLoadConfig_Sound], failed to create sound with name <%s:%s:%s>!", 
-				pPropertySet->GetName().c_str(),
-				pPropertySet->GetTypeAsString().c_str(),
-				pPropertySet->GetValue().c_str());
-			return -1;
-		}
-
-		return 0;
-	}
-	//------------------------------------------------------------------------------
-	int32 DoLoadConfig_Music( const CGUIProperty* pPropertySet, const CGUIString& rSceneName )
-	{
-		if( 0 != CGUIMusicManager::Instance()->RegisterMusic( rSceneName, *pPropertySet ) )
-		{
-			throw guiex::CGUIException(
-				"[DoLoadConfig_Music], failed to create music with name <%s:%s:%s>!", 
-				pPropertySet->GetName().c_str(),
-				pPropertySet->GetTypeAsString().c_str(),
-				pPropertySet->GetValue().c_str());
-			return -1;
-		}
-
-		return 0;
-	}
-	//------------------------------------------------------------------------------
-	int32 DoLoadConfig_As( const CGUIProperty* pPropertySet, const CGUIString& rSceneName )
-	{
-		if( 0 != CGUIAsManager::Instance()->RegisterAs( rSceneName, *pPropertySet ) )
-		{
-			throw guiex::CGUIException(
-				"[DoLoadConfig_As], failed to create as with name <%s:%s:%s>!", 
-				pPropertySet->GetName().c_str(),
-				pPropertySet->GetTypeAsString().c_str(),
-				pPropertySet->GetValue().c_str());
-			return -1;
-		}
-
-		return 0;
-	}
-	//------------------------------------------------------------------------------
-	int32 DoLoadConfig_TiledMap( const CGUIProperty* pPropertySet, const CGUIString& rSceneName )
-	{
-		if( 0 != CGUITiledMapManager::Instance()->RegisterTiledMap( rSceneName, *pPropertySet ) )
-		{
-			throw guiex::CGUIException(
-				"[DoLoadConfig_TiledMap], failed to create tiledmap with name <%s:%s:%s>!", 
-				pPropertySet->GetName().c_str(),
-				pPropertySet->GetTypeAsString().c_str(),
-				pPropertySet->GetValue().c_str());
-			return -1;
-		}
-
-		return 0;
-	}
-	//------------------------------------------------------------------------------
-	int32 DoLoadConfig_Particle2D( const CGUIProperty* pPropertySet, const CGUIString& rSceneName )
-	{
-		if( 0 != CGUIParticle2DManager::Instance()->RegisterParticle2D( rSceneName, *pPropertySet ) )
-		{
-			throw guiex::CGUIException(
-				"[DoLoadConfig_Particle2D], failed to create particle2D with name <%s:%s:%s>!", 
-				pPropertySet->GetName().c_str(),
-				pPropertySet->GetTypeAsString().c_str(),
-				pPropertySet->GetValue().c_str());
-			return -1;
-		}
-
-		return 0;
-	}
-
-	//------------------------------------------------------------------------------
 	/**
 	* @brief read config file and load data
 	*/
@@ -227,6 +98,7 @@ namespace guiex
 		for( uint32 i=0; i<nSize; ++i )
 		{
 			const CGUIProperty* pProperty = aPropertySet.GetProperty(i);
+			CGUIResourceManagerBase* pResourceManager = NULL;
 			switch( pProperty->GetType() )
 			{
 			case ePropertyType_Set:
@@ -237,59 +109,35 @@ namespace guiex
 				break;
 
 			case ePropertyType_ImageDefine:
-				if( 0 != DoLoadConfig_Image( pProperty, rSceneName ))
-				{
-					return -1;
-				}
+				pResourceManager = CGUIImageManager::Instance();
 				break;
 
 			case ePropertyType_AnimationDefine:
-				if( 0 != DoLoadConfig_Animation( pProperty, rSceneName ))
-				{
-					return -1;
-				}
+				pResourceManager = CGUIAnimationManager::Instance();
 				break;
 
 			case ePropertyType_FontDefine:
-				if( 0 != DoLoadConfig_Font( pProperty, rSceneName ))
-				{
-					return -1;
-				}
+				pResourceManager = CGUIFontManager::Instance();
 				break;
 
 			case ePropertyType_SoundDefine:
-				if( 0 != DoLoadConfig_Sound( pProperty, rSceneName ))
-				{
-					return -1;
-				}
+				pResourceManager = CGUISoundManager::Instance();
 				break;
 
 			case ePropertyType_MusicDefine:
-				if( 0 != DoLoadConfig_Music( pProperty, rSceneName ))
-				{
-					return -1;
-				}
+				pResourceManager = CGUIMusicManager::Instance();
 				break;
 				
 			case ePropertyType_AsDefine:
-				if( 0 != DoLoadConfig_As( pProperty, rSceneName ))
-				{
-					return -1;
-				}
+				pResourceManager = CGUIAsManager::Instance();
 				break;
 
 			case ePropertyType_Particle2DDefine:
-				if( 0 != DoLoadConfig_Particle2D( pProperty, rSceneName ))
-				{
-					return -1;
-				}
+				pResourceManager = CGUIParticle2DManager::Instance();
 				break;
 
 			case ePropertyType_TiledMapDefine:
-				if( 0 != DoLoadConfig_TiledMap( pProperty, rSceneName ))
-				{
-					return -1;
-				}
+				pResourceManager = CGUITiledMapManager::Instance();
 				break;
 
 			default:
@@ -301,6 +149,19 @@ namespace guiex
 						pProperty->GetValue().c_str());
 				}
 				return -1;
+			}
+
+			if( pResourceManager )
+			{
+				if( 0 != pResourceManager->RegisterResource( rSceneName, *pProperty ) )
+				{
+					throw guiex::CGUIException(
+						"[CGUIConfigFileLoader::LoadResourceConfigFile], failed to register resource with name <%s:%s:%s>!", 
+						pProperty->GetName().c_str(),
+						pProperty->GetTypeAsString().c_str(),
+						pProperty->GetValue().c_str());
+					return -1;
+				}
 			}
 		}
 

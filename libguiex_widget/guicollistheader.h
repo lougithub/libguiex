@@ -98,12 +98,12 @@ namespace guiex
 		/** 
 		* @brief set segment text info
 		*/
-		void	SetSegmentTextInfo(const CGUIStringInfo& rInfo);
+		void	SetSegmentTextInfo(const CGUIStringRenderInfo& rInfo);
 
 		/** 
 		* @brief get segment text info
 		*/
-		const CGUIStringInfo&	GetSegmentTextInfo() const;
+		const CGUIStringRenderInfo&	GetSegmentTextInfo() const;
 
 		/**
 		* @brief add a segment
@@ -164,14 +164,14 @@ namespace guiex
 		void		LayoutSegment();
 
 	protected:
-		typedef	std::vector<CGUIColListHeaderSegment*>		TVecSegment;
-		TVecSegment	m_vecSegment;							//segment list
+		typedef	std::vector<CGUIColListHeaderSegment*> TVecSegment;
+		TVecSegment	m_vecSegment; //segment list
 
-		CGUIColListHeaderSegment*	m_pSortedSegment;		//sorted segment
+		CGUIColListHeaderSegment* m_pSortedSegment; //sorted segment
 
-		CGUIString					m_strSegmentType;		//type of segment
-		CGUIStringInfo			m_aSegmentTextInfo;		//text information of segment
-		CGUISize					m_aSegmentDefaultSize;	//default size of segment
+		CGUIString m_strSegmentType; //type of segment
+		CGUIStringRenderInfo m_aSegmentTextInfo;		//text information of segment
+		CGUISize m_aSegmentDefaultSize;	//default size of segment
 
 	private:
 		GUI_WIDGET_GENERATOR_DECLARE(CGUIColListHeader);

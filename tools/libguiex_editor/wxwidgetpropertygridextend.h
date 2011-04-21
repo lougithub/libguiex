@@ -84,12 +84,12 @@ public:
 // -----------------------------------------------------------------------
 // WxGUIStringInfoProperty
 // -----------------------------------------------------------------------
-WX_PG_DECLARE_VARIANT_DATA( CGUIStringInfo )
+WX_PG_DECLARE_VARIANT_DATA( CGUIStringRenderInfo )
 class WxGUIStringInfoProperty : public wxPGProperty
 {
 	WX_PG_DECLARE_PROPERTY_CLASS(WxGUIStringInfoProperty)
 public:
-	WxGUIStringInfoProperty( const wxString& label = wxPG_LABEL, const wxString& name = wxPG_LABEL, const CGUIStringInfo& value = CGUIStringInfo() );
+	WxGUIStringInfoProperty( const wxString& label = wxPG_LABEL, const wxString& name = wxPG_LABEL, const CGUIStringRenderInfo& value = CGUIStringRenderInfo() );
 	virtual wxVariant ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const;
 	virtual void RefreshChildren();
 };

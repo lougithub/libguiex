@@ -31,19 +31,40 @@ namespace guiex
 	CGUIFontData::CGUIFontData( 
 		const CGUIString& rName,
 		const CGUIString& rSceneName, 
-		uint32 nFontID)
+		const SFontInfo& rFontInfo)
 		:CGUIResource( rName, rSceneName, "FONT", GSystem->GetFontManager())
-		,m_nFontIndex( nFontID )
+		,m_aFontInfo(rFontInfo)
 	{
+		
 	}
 	//------------------------------------------------------------------------------
 	CGUIFontData::~CGUIFontData()
 	{
 	}
 	//------------------------------------------------------------------------------
-	uint32 CGUIFontData::GetFontIndex() const
+	uint16 CGUIFontData::GetFontID() const
 	{
-		return m_nFontIndex;
+		return m_aFontInfo.m_uID;
+	}
+	//------------------------------------------------------------------------------
+	uint16 CGUIFontData::GetFontSize() const
+	{
+		return m_aFontInfo.m_uSize;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIString& CGUIFontData::GetFontDesc() const
+	{
+		return m_aFontInfo.m_strDesc;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIString& CGUIFontData::GetFontPath() const
+	{
+		return m_aFontInfo.m_strPath;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIIntSize& CGUIFontData::GetTextureSize() const
+	{
+		return m_aFontInfo.m_aTextureSize;
 	}
 	//------------------------------------------------------------------------------
 }

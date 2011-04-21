@@ -28,7 +28,7 @@ namespace guiex
 	{
 	public:
 		virtual void SetTextContent(const CGUIStringW& rText);
-		virtual void SetTextInfo(const CGUIStringInfo& rInfo);
+		virtual void SetTextInfo(const CGUIStringRenderInfo& rInfo);
 
 		virtual void SetTextContentUTF8( const CGUIString& rString);
 		virtual CGUIString GetTextContentUTF8( ) const;
@@ -40,7 +40,7 @@ namespace guiex
 		virtual void ProcessProperty( const CGUIProperty& rProperty);
 
 		const CGUIStringW& GetTextContent( ) const;
-		const CGUIStringInfo& GetTextInfo( ) const;
+		const CGUIStringRenderInfo& GetTextInfo( ) const;
 
 		bool IsTextContentEmpty() const;
 
@@ -57,7 +57,7 @@ namespace guiex
 
 	protected:
 		//text
-		CGUIStringEx m_strText;
+		CGUIStringRender m_strText;
 		ETextAlignmentHorz m_eTextAlignmentHorz;
 		ETextAlignmentVert m_eTextAlignmentVert;
 	};

@@ -41,7 +41,7 @@ namespace guiex
 		m_strText.m_strContent = rText;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtTextBase::SetTextInfo( const CGUIStringInfo& rInfo )
+	void CGUIWgtTextBase::SetTextInfo( const CGUIStringRenderInfo& rInfo )
 	{
 		m_strText.m_aStringInfo = rInfo;
 	}
@@ -51,7 +51,7 @@ namespace guiex
 		return m_strText.m_strContent;
 	}
 	//------------------------------------------------------------------------------
-	const CGUIStringInfo& CGUIWgtTextBase::GetTextInfo( ) const
+	const CGUIStringRenderInfo& CGUIWgtTextBase::GetTextInfo( ) const
 	{
 		return m_strText.m_aStringInfo;
 	}
@@ -102,7 +102,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int32 CGUIWgtTextBase::GenerateProperty( CGUIProperty& rProperty )
 	{
-		if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo" )
+		if( rProperty.GetType() == ePropertyType_StringRenderInfo && rProperty.GetName() == "textinfo" )
 		{
 			ValueToProperty( m_strText.GetStringInfo(), rProperty );
 		}
@@ -129,15 +129,15 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtTextBase::ProcessProperty( const CGUIProperty& rProperty )
 	{
-		if( rProperty.GetType() == ePropertyType_StringInfo && rProperty.GetName() == "textinfo")
+		if( rProperty.GetType() == ePropertyType_StringRenderInfo && rProperty.GetName() == "textinfo")
 		{
-			CGUIStringInfo aInfo;
+			CGUIStringRenderInfo aInfo;
 			PropertyToValue( rProperty, aInfo);
 			SetTextInfo(aInfo);
 		}
 		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "text")
 		{
-			CGUIStringEx aStrText;
+			CGUIStringRender aStrText;
 			AppMultiByteToWideChar(rProperty.GetValue(), aStrText.m_strContent);
 			SetTextContent(aStrText.GetContent());
 		}		

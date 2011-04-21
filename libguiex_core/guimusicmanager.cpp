@@ -41,13 +41,13 @@ namespace guiex
 		return m_pSingleton; 
 	}
 	//------------------------------------------------------------------------------
-	int32 CGUIMusicManager::RegisterMusic( const CGUIString& rSceneName, const CGUIProperty& rProperty)
+	int32 CGUIMusicManager::RegisterResource( const CGUIString& rSceneName, const CGUIProperty& rProperty)
 	{
 		const CGUIProperty* pPropPath = rProperty.GetProperty("path", "CGUIString");
 		if( !pPropPath )
 		{
 			throw guiex::CGUIException(
-				"[CGUIMusicManager::RegisterMusic], invalid property <%s:%s:%s>!", 
+				"[CGUIMusicManager::RegisterResource], invalid property <%s:%s:%s>!", 
 				rProperty.GetName().c_str(),
 				rProperty.GetTypeAsString().c_str(),
 				rProperty.GetValue().c_str());
@@ -56,7 +56,7 @@ namespace guiex
 		CGUIString strPath = pPropPath->GetValue();
 
 		CGUIMusicData* pMusicData = DoCreateMusic( rProperty.GetName(), rSceneName, strPath );
-		RegisterResource( pMusicData );
+		RegisterResourceImp( pMusicData );
 		return 0;
 	}
 	//------------------------------------------------------------------------------
