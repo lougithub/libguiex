@@ -88,9 +88,9 @@ namespace guiex
 									   real fAlpha)
 	{
 		CGUIFontData_dummy* pFontData = GetFontData( rInfo.m_uFontID );
-		CGUISize aFontSize(pFontData->GetFontSize()*rInfo.m_fFontScale,pFontData->GetFontSize()*rInfo.m_fFontScale);
-		CGUIRect aCharRect( CGUIVector2(rPos.x, rPos.y),
-						   aFontSize);
+		uint16 fFontSize = pFontData->GetFontSize()*rInfo.m_fFontScale;
+		CGUIRect aCharRect( CGUIVector2(rPos.x, rPos.y-fFontSize),
+						   CGUISize(fFontSize,fFontSize));
 		
 		pRender->DrawRect( aCharRect, 1, 0,
 						  rInfo.m_aColor,
@@ -116,9 +116,9 @@ namespace guiex
 		const CGUIStringRenderInfo& rInfo = rString.m_aStringInfo;
 
 		CGUIFontData_dummy* pFontData = GetFontData( rInfo.m_uFontID );
-		real fScaledStringWidth = GetStringWidth(rString);
-		real fScaledStringHeight = pFontData->GetFontSize() * rString.GetStringInfo().m_fFontScale;
-		
+		real fStringWidth = GetStringWidth(rString);
+		uint16 fFontSize = pFontData->GetFontSize()*rInfo.m_fFontScale;
+
 		CGUIVector2 aPos;
 		switch( uTextAlignmentHorz )
 		{
@@ -126,11 +126,11 @@ namespace guiex
 			aPos.x = rStringRect.m_fLeft;
 			break;
 		case eTextAlignment_Horz_Right:
-			aPos.x = rStringRect.m_fRight-fScaledStringWidth;
+			aPos.x = rStringRect.m_fRight-fStringWidth;
 			break;
 		case eTextAlignment_Horz_Center:
 		default:
-			aPos.x = rStringRect.m_fLeft+(rStringRect.GetWidth()-fScaledStringWidth)/2;
+			aPos.x = rStringRect.m_fLeft+(rStringRect.GetWidth()-fStringWidth)/2;
 			break;
 		}
 
@@ -140,11 +140,11 @@ namespace guiex
 			aPos.y = rStringRect.m_fTop;
 			break;
 		case eTextAlignment_Vert_Down:
-			aPos.y = rStringRect.m_fBottom - fScaledStringHeight;
+			aPos.y = rStringRect.m_fBottom - fFontSize;
 			break;
 		case eTextAlignment_Vert_Center:
 		default:
-			aPos.y = rStringRect.m_fTop + (rStringRect.GetHeight() - fScaledStringHeight) / 2;
+			aPos.y = rStringRect.m_fTop + (rStringRect.GetHeight() - fFontSize) / 2;
 			break;
 		}
 
@@ -153,12 +153,12 @@ namespace guiex
 			nEndPos = rString.m_strContent.size();
 		}
 		
-		CGUISize aFontSize(pFontData->GetFontSize()*rInfo.m_fFontScale,pFontData->GetFontSize()*rInfo.m_fFontScale);
+		CGUISize aFontSize(fFontSize,fFontSize);
 		for( int32 i= nStartPos; i<nEndPos; ++i)
 		{
 			
 			CGUIRect aCharRect(
-							   CGUIVector2(aPos.x, aPos.y),
+							   CGUIVector2(aPos.x, aPos.y-fFontSize),
 							   aFontSize);
 			
 			//dest area size
@@ -193,13 +193,14 @@ namespace guiex
 		
 		const CGUIStringRenderInfo& rInfo = rString.m_aStringInfo;
 		CGUIFontData_dummy* pFontData = GetFontData( rInfo.m_uFontID );
-		CGUISize aFontSize(pFontData->GetFontSize()*rInfo.m_fFontScale,pFontData->GetFontSize()*rInfo.m_fFontScale);
+		uint16 fFontSize = pFontData->GetFontSize()*rInfo.m_fFontScale;
+		CGUISize aFontSize(fFontSize,fFontSize);
 		CGUIVector2 aPos = rPos;
 	
 		for( int32 i=nStartPos; i<nEndPos; ++i)
 		{
 			CGUIRect aCharRect(
-							   CGUIVector2(aPos.x, aPos.y),
+							   CGUIVector2(aPos.x, aPos.y-fFontSize),
 							   aFontSize);
 			
 			pRender->DrawRect( aCharRect, 1, 0,
@@ -221,7 +222,8 @@ namespace guiex
 	CGUISize IGUIFont_dummy::GetCharacterSize( wchar_t charCode, const CGUIStringRenderInfo& rInfo )
 	{
 		CGUIFontData_dummy* pFontData = GetFontData( rInfo.m_uFontID );
-		return CGUISize(pFontData->GetFontSize()*rInfo.m_fFontScale,pFontData->GetFontSize()*rInfo.m_fFontScale);
+		uint16 fFontSize = pFontData->GetFontSize()*rInfo.m_fFontScale;
+		return CGUISize(fFontSize,fFontSize);
 	}
 	//------------------------------------------------------------------------------
 	CGUIFontData* IGUIFont_dummy::CreateFontData(

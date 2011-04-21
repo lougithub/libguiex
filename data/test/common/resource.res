@@ -1,25 +1,32 @@
 <?xml version="1.0" ?>
 <guiex>
-	<property name="font_ltype" type="CGUIFontDefine" >
-		<property name="id" type="uint16" value="0"/>
+	<property name="font_ltype_12" type="CGUIFontDefine" >
+		<property name="id" type="uint16" value="1"/>
 		<property name="path" type="CGUIString" value="font/LTYPE.TTF"/>
 		<property name="size" type="uint16" value="12"/>
-		<property name="texture_size" type="CGUIIntSize" value="512,512"/>
+		<property name="texture_size" type="CGUIIntSize" value="256,256"/>
 	</property>
 
-	<property name="font_ltypeb" type="CGUIFontDefine" >
-		<property name="id" type="uint16" value="1"/>
+	<property name="font_ltypeb_12" type="CGUIFontDefine" >
+		<property name="id" type="uint16" value="0"/>
 		<property name="path" type="CGUIString" value="font/LTYPEB.TTF"/>
 		<property name="size" type="uint16" value="12"/>
-		<property name="texture_size" type="CGUIIntSize" value="512,512"/>
+		<property name="texture_size" type="CGUIIntSize" value="256,256"/>
 	</property>
 
-	<property name="font_lhandw" type="CGUIFontDefine" >
-		<property name="id" type="uint16" value="2"/>
-		<property name="path" type="CGUIString" value="font/LHANDW.TTF"/>
-		<property name="size" type="uint16" value="12"/>
-		<property name="texture_size" type="CGUIIntSize" value="512,512"/>
-	</property>
+  <property name="font_ltype_24" type="CGUIFontDefine" >
+    <property name="id" type="uint16" value="2"/>
+    <property name="path" type="CGUIString" value="font/LTYPE.TTF"/>
+    <property name="size" type="uint16" value="24"/>
+    <property name="texture_size" type="CGUIIntSize" value="256,256"/>
+  </property>
+
+  <property name="font_ltypeb_24" type="CGUIFontDefine" >
+    <property name="id" type="uint16" value="3"/>
+    <property name="path" type="CGUIString" value="font/LTYPEB.TTF"/>
+    <property name="size" type="uint16" value="24"/>
+    <property name="texture_size" type="CGUIIntSize" value="256,256"/>
+  </property>
 
 	<property name="color_white" type="CGUIImageDefine">
 		<property name="color" type="CGUIColor" value="255,255,255,255"/>

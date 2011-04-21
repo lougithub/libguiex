@@ -52,7 +52,7 @@
         <property name="generate_update_event" type="bool" value="false" />
         <property name="textinfo" type="CGUIStringRenderInfo">
           <property name="scale" type="real" value="1.8" />
-            <property name="id" type="uint16" value="2" />
+            <property name="id" type="uint16" value="1" />
             <property name="color" type="CGUIColor" value="216,200,40,255" />
         </property>
         <property name="text" type="CGUIString" value="dialog" />

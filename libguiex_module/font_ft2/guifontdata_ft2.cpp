@@ -155,10 +155,10 @@ namespace guiex
 		//get texture
 		uint32 nTextureWidth = GetTextureSize().GetWidth();
 		uint32 nTextureHeight = GetTextureSize().GetHeight();
-		if( m_uTexturePosX + glyph->bitmap.width >= nTextureWidth)
+		if( m_uTexturePosX + (glyph->bitmap.width+1) >= nTextureWidth)
 		{
 			m_uTexturePosX = 0;
-			m_uTexturePosY += uFontSize;
+			m_uTexturePosY += (uFontSize+1);
 		}
 		if( m_vecTexture.empty() || m_uTexturePosY + uFontSize > nTextureHeight )
 		{
@@ -191,7 +191,7 @@ namespace guiex
 			real(m_uTexturePosX+glyph->bitmap.width) / nTextureWidth,
 			real(m_uTexturePosY+glyph->bitmap.rows) / nTextureHeight);
 
-		m_uTexturePosX += glyph->bitmap.width;
+		m_uTexturePosX += (glyph->bitmap.width+1);
 
 		//add to map
 		m_mapCharsData.insert(std::make_pair(charCode, pCharData));

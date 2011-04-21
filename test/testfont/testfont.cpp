@@ -9,7 +9,6 @@ public:
 
 	virtual void DestroySelf( );
 
-
 protected:
 	virtual void RenderSelf(IGUIInterfaceRender* pRender);
 
@@ -74,47 +73,102 @@ void CMyCanvasLayer_DrawFont::DestroySelf( )
 //------------------------------------------------------------------------------
 void CMyCanvasLayer_DrawFont::RenderSelf(IGUIInterfaceRender* pRender)
 {
+#if 0
 	IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
 	CGUIStringRender aStringRender(L"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
 	CGUIStringRenderInfo aRenderInfo;
-	aRenderInfo.m_uFontID = 0;
+	aRenderInfo.m_fFontScale = 3;
+	aRenderInfo.m_uFontID = 3;
 	aRenderInfo.m_aColor = CGUIColor( 1.0f,1.0f,1.0f,1.0f );
-	CGUIVector2 aPos( 0.0f, 10.0f );
-
-	//scale 1
-	aRenderInfo.m_fFontScale = 1.0f;
 	aStringRender.SetStringInfo(&aRenderInfo);
-	aPos.y += pFont->GetFontHeight( aRenderInfo );
+	CGUIVector2 aPos( 100.0f, 100.0f );
 	DrawString( pRender, aStringRender, aPos );
-	pRender->DrawLine( aPos, CGUIVector2( aPos.x+pFont->GetStringWidth( aStringRender), aPos.y), 1, 0, CGUIColor(0.0f,1.0f,0.0f,1.0f), CGUIColor(0.0f,1.0f,0.0f,1.0f));
-	aPos.y += 10.0f;
+
+#else
+	CGUIVector2 aPos( 0.0f, 10.0f );
+	IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
+	CGUIStringRender aStringRender(L"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+	CGUIStringRenderInfo aRenderInfo;
+	aRenderInfo.m_aColor = CGUIColor( 1.0f,1.0f,1.0f,1.0f );
 
 	real fBeginScale = 0.4f;
 	real fEndScale = 3.0f;
 	int nGrade = 6;
 
-	real fScalePerGrade = (fEndScale - fBeginScale) / nGrade;
-	char buf[32];
-	for( int i=0; i<nGrade; ++i )
 	{
-		aRenderInfo.m_fFontScale = fBeginScale + fScalePerGrade*i;
-
-		snprintf( buf, 32, "%3.2f", aRenderInfo.m_fFontScale );
-		CGUIStringRender strScaleString( buf );
-		strScaleString.SetStringInfo( &aRenderInfo );
+		aRenderInfo.m_uFontID = 0;
 		aPos.x = 0.0f;
-		aPos.y += pFont->GetFontHeight( aRenderInfo );
-		DrawString( pRender, strScaleString, aPos );
 
-		real fScaleWidth = pFont->GetStringWidth( strScaleString );
-		aPos.x = fScaleWidth + 10.0f;
-
+		//scale 1
+		aRenderInfo.m_fFontScale = 1.0f;
 		aStringRender.SetStringInfo(&aRenderInfo);
+		aPos.y += pFont->GetFontHeight( aRenderInfo );
 		DrawString( pRender, aStringRender, aPos );
 		pRender->DrawLine( aPos, CGUIVector2( aPos.x+pFont->GetStringWidth( aStringRender), aPos.y), 1, 0, CGUIColor(0.0f,1.0f,0.0f,1.0f), CGUIColor(0.0f,1.0f,0.0f,1.0f));
 		aPos.y += 10.0f;
+
+
+
+		real fScalePerGrade = (fEndScale - fBeginScale) / nGrade;
+		char buf[32];
+		for( int i=0; i<nGrade; ++i )
+		{
+			aRenderInfo.m_fFontScale = fBeginScale + fScalePerGrade*i;
+
+			snprintf( buf, 32, "%3.2f", aRenderInfo.m_fFontScale );
+			CGUIStringRender strScaleString( buf );
+			strScaleString.SetStringInfo( &aRenderInfo );
+			aPos.x = 0.0f;
+			aPos.y += pFont->GetFontHeight( aRenderInfo );
+			DrawString( pRender, strScaleString, aPos );
+
+			real fScaleWidth = pFont->GetStringWidth( strScaleString );
+			aPos.x = fScaleWidth + 10.0f;
+
+			aStringRender.SetStringInfo(&aRenderInfo);
+			DrawString( pRender, aStringRender, aPos );
+			//pRender->DrawLine( aPos, CGUIVector2( aPos.x+pFont->GetStringWidth( aStringRender), aPos.y), 1, 0, CGUIColor(0.0f,1.0f,0.0f,1.0f), CGUIColor(0.0f,1.0f,0.0f,1.0f));
+
+			aPos.y += 10.0f;
+		}
 	}
 
+	{
+		aRenderInfo.m_uFontID = 1;
+		aPos.x = 0.0f;
+
+		//scale 1
+		aRenderInfo.m_fFontScale = 1.0f;
+		aStringRender.SetStringInfo(&aRenderInfo);
+		aPos.y += pFont->GetFontHeight( aRenderInfo );
+		DrawString( pRender, aStringRender, aPos );
+		pRender->DrawLine( aPos, CGUIVector2( aPos.x+pFont->GetStringWidth( aStringRender), aPos.y), 1, 0, CGUIColor(0.0f,1.0f,0.0f,1.0f), CGUIColor(0.0f,1.0f,0.0f,1.0f));
+		aPos.y += 10.0f;
+
+		real fScalePerGrade = (fEndScale - fBeginScale) / nGrade;
+		char buf[32];
+		for( int i=0; i<nGrade; ++i )
+		{
+			aRenderInfo.m_fFontScale = fBeginScale + fScalePerGrade*i;
+
+			snprintf( buf, 32, "%3.2f", aRenderInfo.m_fFontScale );
+			CGUIStringRender strScaleString( buf );
+			strScaleString.SetStringInfo( &aRenderInfo );
+			aPos.x = 0.0f;
+			aPos.y += pFont->GetFontHeight( aRenderInfo );
+			DrawString( pRender, strScaleString, aPos );
+
+			real fScaleWidth = pFont->GetStringWidth( strScaleString );
+			aPos.x = fScaleWidth + 10.0f;
+
+			aStringRender.SetStringInfo(&aRenderInfo);
+			DrawString( pRender, aStringRender, aPos );
+			//pRender->DrawLine( aPos, CGUIVector2( aPos.x+pFont->GetStringWidth( aStringRender), aPos.y), 1, 0, CGUIColor(0.0f,1.0f,0.0f,1.0f), CGUIColor(0.0f,1.0f,0.0f,1.0f));
+			
+			aPos.y += 10.0f;
+		}
+	}
+#endif
 	CGUICanvasLayer::RenderSelf( pRender );
 }
 //------------------------------------------------------------------------------

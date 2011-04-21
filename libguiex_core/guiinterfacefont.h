@@ -80,6 +80,7 @@ namespace guiex
 
 		/**
 		* @brief draw a character
+		* @param rPos left-bottom position
 		*/
 		virtual void DrawCharacter(IGUIInterfaceRender* pRender, 
 			wchar_t charCode, 
@@ -89,6 +90,7 @@ namespace guiex
 
 		/**
 		* @brief draw string
+		* @param rPos left-bottom position
 		*/
 		virtual void DrawString(IGUIInterfaceRender* pRender, 
 			const CGUIStringRender& rString, 

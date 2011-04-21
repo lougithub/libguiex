@@ -168,7 +168,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUITexture_opengl_base::CopySubImage(uint32 nX, uint32 nY, uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat, uint8* pBuffer)
 	{
-		GUI_ASSERT( m_ePixelFormat == ePixelFormat, "invalid pixef format" );
+		GUI_ASSERT( m_ePixelFormat == ePixelFormat, "invalid pixel format" );
 
 		glBindTexture( GL_TEXTURE_2D, m_ogltexture );
 		//glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
