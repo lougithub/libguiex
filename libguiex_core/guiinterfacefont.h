@@ -14,7 +14,7 @@
 //============================================================================// 
 #include "guiinterface.h"
 #include "guivector2.h"
-#include "guistringex.h"
+#include "guistringrender.h"
 #include "guicolor.h"
 #include "guicolorrect.h"
 #include "guifontdata.h"

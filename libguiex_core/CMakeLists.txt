@@ -217,8 +217,8 @@ set( ${target_name}_string_SRCS
 	guistring.h
 	guistringconvertor.cpp
 	guistringconvertor.h
-	guistringex.cpp
-	guistringex.h
+	guistringrender.cpp
+	guistringrender.h
 	)
 source_group( "string" FILES ${${target_name}_string_SRCS} )
 

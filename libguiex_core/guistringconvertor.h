@@ -13,7 +13,7 @@
 // include
 //============================================================================// 
 #include "guistring.h"
-#include "guistringex.h"
+#include "guistringrender.h"
 #include "guirect.h"
 #include "guisize.h"
 #include "guiintsize.h"

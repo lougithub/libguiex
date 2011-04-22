@@ -38,7 +38,7 @@
 
 //string
 #include "guistring.h"
-#include "guistringex.h"
+#include "guistringrender.h"
 #include "guistringconvertor.h"
 
 //log

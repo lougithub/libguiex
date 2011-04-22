@@ -16,7 +16,7 @@
 #include "guirect.h"
 #include "guinode.h"
 #include "guicolorrect.h"
-#include "guistringex.h"
+#include "guistringrender.h"
 #include "guistring.h"
 #include "guitimer.h"
 #include "guicolorrect.h"

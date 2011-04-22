@@ -6,8 +6,8 @@
  * @date 2006-04-09
  */
 
-#ifndef __GUI_STRING_EX_20060409_H__
-#define __GUI_STRING_EX_20060409_H__
+#ifndef __GUI_STRING_RENDER_20060409_H__
+#define __GUI_STRING_RENDER_20060409_H__
 
 //============================================================================//
 // 	include
@@ -69,8 +69,5 @@ namespace guiex
 }//namespace guiex
 
 
-#endif //__GUI_STRING_EX_20060409_H__
-
-
-
+#endif //__GUI_STRING_RENDER_20060409_H__
 
