@@ -146,37 +146,41 @@ void WxImageSelectDialog::OnListBoxSelect(wxCommandEvent& event)
 
 	//full image
 	m_pFullImageCanvas->SetBitmap( NULL );
-	CGUIImage* pImage = CGUIImageManager::Instance()->AllocateResource( wx2GuiString( m_strImageName ) );
-	if( pImage )
+	if( !m_strImageName.empty() )
 	{
-		if( pImage->GetImageType() == eImageType_FromFile )
+		CGUIImage* pImage = CGUIImageManager::Instance()->AllocateResource( wx2GuiString( m_strImageName ) );
+		if( pImage )
 		{
-			wxString rImagePath = Gui2wxString( GSystem->GetDataPath() + pImage->GetFullFilePath() );
-			wxFileName filename( rImagePath );
-			if ( filename.FileExists() )
+			if( pImage->GetImageType() == eImageType_FromFile )
 			{
-				wxImage* pWxImage = new wxImage( filename.GetFullPath(), wxBITMAP_TYPE_TGA );
-				if ( pWxImage && pWxImage->Ok() )
+				wxString rImagePath = Gui2wxString( GSystem->GetDataPath() + pImage->GetFullFilePath() );
+				wxFileName filename( rImagePath );
+				if ( filename.FileExists() )
 				{
-					wxBitmap* pOriginalBitmap = new wxBitmap( *pWxImage );
-					delete pWxImage;
-					pWxImage = NULL;
+					wxImage* pWxImage = new wxImage( filename.GetFullPath(), wxBITMAP_TYPE_TGA );
+					if ( pWxImage && pWxImage->Ok() )
+					{
+						wxBitmap* pOriginalBitmap = new wxBitmap( *pWxImage );
+						delete pWxImage;
+						pWxImage = NULL;
 
-					m_pFullImageCanvas->SetBitmap( pOriginalBitmap );
-					const CGUIRect& rRect = pImage->GetUVRect();
-					wxSize newSize( 
-						pOriginalBitmap->GetSize().GetWidth() * rRect.GetWidth(), 
-						pOriginalBitmap->GetSize().GetHeight()* rRect.GetHeight() );
-					wxPoint newPoint( 
-						rRect.GetPosition().x * pOriginalBitmap->GetSize().GetWidth(), 
-						rRect.GetPosition().y * pOriginalBitmap->GetSize().GetHeight() );
-					wxRect aUVRect( newPoint, newSize );
-					m_pFullImageCanvas->SetUVRect( aUVRect );
+						m_pFullImageCanvas->SetBitmap( pOriginalBitmap );
+						const CGUIRect& rRect = pImage->GetUVRect();
+						wxSize newSize( 
+							pOriginalBitmap->GetSize().GetWidth() * rRect.GetWidth(), 
+							pOriginalBitmap->GetSize().GetHeight()* rRect.GetHeight() );
+						wxPoint newPoint( 
+							rRect.GetPosition().x * pOriginalBitmap->GetSize().GetWidth(), 
+							rRect.GetPosition().y * pOriginalBitmap->GetSize().GetHeight() );
+						wxRect aUVRect( newPoint, newSize );
+						m_pFullImageCanvas->SetUVRect( aUVRect );
+					}
 				}
 			}
+			pImage->RefRelease();
 		}
-		pImage->RefRelease();
 	}
+
 	m_pFullImageCanvas->Refresh();
 }
 //------------------------------------------------------------------------------
