@@ -49,7 +49,7 @@ public:
 protected:
 	int SaveWidgetNodeToDoc( CGUIWidget* pWidget, TiXmlDocument& rDoc );
 	TiXmlElement* GetElementByName( const wxString& rElementName,const wxString& rAttrName, TiXmlElement* pParentElement );
-	void AddTopPropertyElement( const CGUIProperty& rProperty, TiXmlElement* pWidgetNode);
+	void AddTopPropertyElement( const CGUIProperty& rPropertyTemplate, const CGUIProperty& rProperty, TiXmlElement* pWidgetNode);
 	void AddSubPropertyElement( const CGUIProperty& rProperty, TiXmlElement* pParentElement);
 
 protected:

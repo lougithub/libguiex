@@ -71,7 +71,14 @@ public:
 	{
 		return m_bReadOnly;
 	}	
-
+	void SetAlternaitiveSave(bool bAlternativeSave )
+	{
+		m_bAlternativeSave = bAlternativeSave;
+	}
+	bool IsAlternaitiveSave() const
+	{
+		return m_bAlternativeSave;
+	}	
 	void SetPage(const std::string& rPage)
 	{
 		m_strPage = rPage;
@@ -87,6 +94,7 @@ protected:
 	std::string m_strCategories;/// categories of property
 	bool m_bMustExist; /// whether this property must exist
 	bool m_bReadOnly;
+	bool m_bAlternativeSave;
 };
 
 

@@ -23,21 +23,21 @@
 				<property name="value" type="CGUISize" value="0,0" />
 			</property>
 
-			<property name="max_size" type="CGUISize" value="0,0" />
-			<property name="min_size" type="CGUISize" value="0,0" />
+			<property name="max_size" type="CGUISize" value="0,0" alternative_save="true" />
+			<property name="min_size" type="CGUISize" value="0,0" alternative_save="true" />
 
-			<property name="anchor" type="CGUIVector2" value="0.0,0.0"  category="Default"/>
+			<property name="anchor" type="CGUIVector2" value="0.0,0.0"  category="Default" alternative_save="true" />
 
-			<property name="scale" type="CGUISize" value="1.0,1.0"  category="Default"/>
-			<property name="alpha" type="real" value="1.0"  category="Default"/>
-			<property name="rotation" type="CGUIVector3" value="0.0,0.0,0.0"  category="Default"/>
+			<property name="scale" type="CGUISize" value="1.0,1.0"  category="Default" alternative_save="true"/>
+			<property name="alpha" type="real" value="1.0"  category="Default" alternative_save="true"/>
+			<property name="rotation" type="CGUIVector3" value="0.0,0.0,0.0"  category="Default" alternative_save="true"/>
 			<property name="movable" type="bool" value="false"  category="Default"/>
-			<property name="color" type="CGUIColor" value="255,255,255,255"  category="Default"/>
-			<property name="visible" type="bool" value="true"  category="Default"/>
+			<property name="color" type="CGUIColor" value="255,255,255,255"  category="Default" alternative_save="true"/>
+			<property name="visible" type="bool" value="true"  category="Default" alternative_save="true"/>
 			<property name="activable" type="bool" value="false"  category="Default"/>
 			<property name="hitable" type="bool" value="true"  category="Default"/>
 			<property name="disable" type="bool" value="false"  category="Default"/>
-      <property name="auto_play_as" type="bool" value="false"  category="Default"/>
+      <property name="auto_play_as" type="bool" value="false"  category="Default" alternative_save="true"/>
 			<property name="clip_children" type="bool" value="false"  category="Default"/>
 			<property name="open_with_parent" type="bool" value="true"  category="Default"/>
       
@@ -46,7 +46,7 @@
       <property name="generate_load_event" type="bool" value="false"  category="GenerateEvent"/>
 			<property name="generate_parentsizechange_event" type="bool" value="false"  category="GenerateEvent"/>
       
-			<property name="default_as" type="CGUIAs" value=""/>
+			<property name="default_as" type="CGUIAs" value="" alternative_save="true"/>
 		</page>
 
 		<page name="Image">      
@@ -123,8 +123,8 @@
     <page name="Appearance">
       <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" category="EditBox"/>
       <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" category="EditBox"/>
-      <property name="text" type="CGUIString" value=""  category="StaticText"/>
-      <property name="textinfo" type="CGUIStringRenderInfo"  category="StaticText">
+      <property name="text" type="CGUIString" value=""  category="StaticText" alternative_save="true"/>
+      <property name="textinfo" type="CGUIStringRenderInfo"  category="StaticText" alternative_save="true">
         <property name="scale" type="real" value="1"/>
         <property name="font" type="CGUIFont" value="0"/>
         <property name="color" type="CGUIColor" value="255,255,255,255"/>
@@ -137,27 +137,27 @@
       <property name="generate_click_event" type="bool" value="true"  category="Default"/>
       <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" category="EditBox"/>
       <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" category="EditBox"/>
-      <property name="text_offset" type="CGUIVector2" value="0,0"  category="Button"/>
-      <property name="text_normal" type="CGUILocalizedString" value=""  category="Button"/>
-      <property name="textinfo_normal" type="CGUIStringRenderInfo"  category="Button">
+      <property name="text_offset" type="CGUIVector2" value="0,0"  category="Button" alternative_save="true"/>
+      <property name="text_normal" type="CGUILocalizedString" value=""  category="Button" alternative_save="true"/>
+      <property name="textinfo_normal" type="CGUIStringRenderInfo"  category="Button" alternative_save="true">
         <property name="scale" type="real" value="1"/>
         <property name="font" type="CGUIFont" value="0"/>
         <property name="color" type="CGUIColor" value="255,255,255,255"/>
       </property>
-			<property name="text_hover"	type="CGUILocalizedString" value=""  category="Button"/>
-			<property name="textinfo_hover" type="CGUIStringRenderInfo"  category="Button">
+			<property name="text_hover"	type="CGUILocalizedString" value=""  category="Button" alternative_save="true"/>
+			<property name="textinfo_hover" type="CGUIStringRenderInfo"  category="Button" alternative_save="true">
         <property name="scale" type="real" value="1"/>
         <property name="font" type="CGUIFont" value="0"/>
 				<property name="color" type="CGUIColor" value="255,255,255,255"/>
 			</property>
-			<property name="text_push" type="CGUILocalizedString" value=""  category="Button"/>
-			<property name="textinfo_push" type="CGUIStringRenderInfo"  category="Button">
+			<property name="text_push" type="CGUILocalizedString" value=""  category="Button" alternative_save="true"/>
+			<property name="textinfo_push" type="CGUIStringRenderInfo"  category="Button" alternative_save="true">
         <property name="scale" type="real" value="1"/>
         <property name="font" type="CGUIFont" value="0"/>
 				<property name="color" type="CGUIColor" value="255,255,255,255"/>
 			</property>
-			<property name="text_disable" type="CGUILocalizedString" value=""  category="Button"/>
-			<property name="textinfo_disable" type="CGUIStringRenderInfo"  category="Button">
+			<property name="text_disable" type="CGUILocalizedString" value=""  category="Button" alternative_save="true"/>
+			<property name="textinfo_disable" type="CGUIStringRenderInfo"  category="Button" alternative_save="true">
         <property name="scale" type="real" value="1"/>
         <property name="font" type="CGUIFont" value="0"/>
 				<property name="color" type="CGUIColor" value="255,255,255,255"/>
@@ -243,7 +243,7 @@
 				<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
 				<property name="value" type="CGUISize" value="128,20" />
 			</property>
-			<property name="client_area" type="CGUIRect" value="0,0,1,1"  category="EditBox"/>
+			<property name="client_area" type="CGUIRect" value="0,0,1,1"  category="EditBox" alternative_save="true"/>
 			<property name="mask" type="bool" value="false"  category="EditBox"/>
 			<property name="max_text_num" type="uint32" value="100"  category="EditBox"/>
 			<property name="readonly" type="bool" value="false"  category="EditBox"/>

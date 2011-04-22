@@ -379,6 +379,7 @@ int	CPropertyConfigMgr::ProcessPropertyNode(const std::string& rPage, CGUIProper
 			const char* pLabel = pPropertyNode->Attribute("label");
 			const char* pMustExist = pPropertyNode->Attribute("must_exist");
 			const char* pReadOnly = pPropertyNode->Attribute("readonly");
+			const char* pAlternativeSave = pPropertyNode->Attribute("alternative_save");
 			if( !pName || !pType)
 			{	
 				return -1;
@@ -420,6 +421,12 @@ int	CPropertyConfigMgr::ProcessPropertyNode(const std::string& rPage, CGUIProper
 			if( pReadOnly && strcmp(pReadOnly,"true") == 0)
 			{
 				pData->SetReadOnly(true);
+			}
+
+			pData->SetAlternaitiveSave(false);
+			if( pAlternativeSave && strcmp(pAlternativeSave,"true") == 0)
+			{
+				pData->SetAlternaitiveSave(true);
 			}
 
 			//process child

@@ -14,6 +14,7 @@
 #include "wxmainapp.h"
 #include "wxmainframe.h"
 #include "editorutility.h"
+#include "propertyconfigmgr.h"
 
 #include <libguiex_core/guiex.h>
 #include <wx/glcanvas.h>
@@ -115,12 +116,13 @@ int WxEditorCanvasContainer::SaveWidgetNodeToDoc( CGUIWidget* pWidget, TiXmlDocu
 
 	//save property to doc
 	CGUIProperty aSet = pWidget->GetProperty();
+	const CGUIProperty& rPropertyTemplate = CPropertyConfigMgr::Instance()->GetPropertySet(pWidget->GetType());
 
 	//process parent first
 	if( aSet.HasProperty("parent", "CGUIString"))
 	{
 		CGUIProperty* pProperty = aSet.GetProperty("parent", "CGUIString");
-		AddTopPropertyElement(*pProperty, pWidgetNode);
+		AddTopPropertyElement(rPropertyTemplate, *pProperty, pWidgetNode);
 		aSet.RemoveProperty(*pProperty);
 	}
 
@@ -138,7 +140,7 @@ int WxEditorCanvasContainer::SaveWidgetNodeToDoc( CGUIWidget* pWidget, TiXmlDocu
 		itor != aImgVector.end();
 		++itor )
 	{
-		AddTopPropertyElement(*itor, pWidgetNode);
+		AddTopPropertyElement(rPropertyTemplate, *itor, pWidgetNode);
 		aSet.RemoveProperty(*itor);
 	}
 
@@ -146,7 +148,7 @@ int WxEditorCanvasContainer::SaveWidgetNodeToDoc( CGUIWidget* pWidget, TiXmlDocu
 	for( unsigned i=0; i<aSet.GetPropertyNum(); ++i)
 	{
 		const CGUIProperty* pProperty = aSet.GetProperty(i);
-		AddTopPropertyElement(*pProperty, pWidgetNode);
+		AddTopPropertyElement(rPropertyTemplate, *pProperty, pWidgetNode);
 	}
 
 	//process it's child
@@ -164,51 +166,65 @@ int WxEditorCanvasContainer::SaveWidgetNodeToDoc( CGUIWidget* pWidget, TiXmlDocu
 	return 0;
 }
 //------------------------------------------------------------------------------
-void WxEditorCanvasContainer::AddTopPropertyElement( const CGUIProperty& rProperty, TiXmlElement* pWidgetNode)
+void WxEditorCanvasContainer::AddTopPropertyElement( const CGUIProperty& rPropertyTemplate, const CGUIProperty& rProperty, TiXmlElement* pWidgetNode)
 {
-	if( rProperty.GetValue().empty() && rProperty.GetPropertyNum() == 0 )
-	{
-		//empty property, ignore it
-		return;
-	}
-
 	//get exist's one
 	TiXmlElement* pOldNode = GetElementByName(_T("property"), Gui2wxString(rProperty.GetName()), pWidgetNode);
 
-	//add toppest element
-	TiXmlElement* pToppestNode = NULL;
-	TiXmlElement  aNewToppestNode("property");
-	aNewToppestNode.SetAttribute("name",rProperty.GetName().c_str());
-	aNewToppestNode.SetAttribute("type",rProperty.GetTypeAsString().c_str());
-	if( !rProperty.GetValue().empty())
+	bool bIgnoreIt = false;
+	if( rProperty.GetValue().empty() && rProperty.GetPropertyNum() == 0 )
 	{
-		aNewToppestNode.SetAttribute("value",rProperty.GetValue().c_str());
+		//empty property, ignore it
+		bIgnoreIt = true;
+	}
+	const CGUIProperty* pPropertyTemplate = rPropertyTemplate.GetProperty( rProperty.GetName(), rProperty.GetType() );
+	wxASSERT( pPropertyTemplate );
+	if( CPropertyData::GetPropertyData(*pPropertyTemplate)->IsAlternaitiveSave())
+	{
+		if( rProperty == *pPropertyTemplate )
+		{
+			//same, ignore it
+			bIgnoreIt = true;
+		}
 	}
 
-	//insert it
-	if( pOldNode )
+	if( !bIgnoreIt )
 	{
-		pToppestNode = (TiXmlElement*)pWidgetNode->InsertAfterChild(pOldNode, aNewToppestNode);
+		//add toppest element
+		TiXmlElement* pToppestNode = NULL;
+		TiXmlElement aNewToppestNode("property");
+		aNewToppestNode.SetAttribute("name",rProperty.GetName().c_str());
+		aNewToppestNode.SetAttribute("type",rProperty.GetTypeAsString().c_str());
+		if( !rProperty.GetValue().empty())
+		{
+			aNewToppestNode.SetAttribute("value",rProperty.GetValue().c_str());
+		}
+
+		//insert it
+		if( pOldNode )
+		{
+			pToppestNode = (TiXmlElement*)pWidgetNode->InsertAfterChild(pOldNode, aNewToppestNode);
+		}
+		else
+		{
+			pToppestNode = (TiXmlElement*)pWidgetNode->InsertEndChild( aNewToppestNode);
+		}
+		wxASSERT(pToppestNode);
+
+		//add all sub-property
+		if( rProperty.GetPropertyNum() > 0)
+		{
+			for( unsigned i=0; i<rProperty.GetPropertyNum(); ++i)
+			{
+				AddSubPropertyElement( *rProperty.GetProperty(i), pToppestNode );
+			}
+		}
 	}
-	else
-	{
-		pToppestNode = (TiXmlElement*)pWidgetNode->InsertEndChild( aNewToppestNode);
-	}
-	wxASSERT(pToppestNode);
 
 	//remove old one
 	if( pOldNode )
 	{
 		pWidgetNode->RemoveChild(pOldNode);
-	}
-
-	//add all sub-property
-	if( rProperty.GetPropertyNum() > 0)
-	{
-		for( unsigned i=0; i<rProperty.GetPropertyNum(); ++i)
-		{
-			AddSubPropertyElement( *rProperty.GetProperty(i), pToppestNode );
-		}
 	}
 }
 //------------------------------------------------------------------------------

@@ -55,7 +55,6 @@ namespace guiex
 			m_strType == other.m_strType &&		/// type of this property
 			m_strValue == other.m_strValue &&		/// value of this property
 			m_uType == other.m_uType &&
-			m_pExtraData == other.m_pExtraData &&
 			m_setProperty == other.m_setProperty )	/// sub-property of this property
 		{
 			return true;
