@@ -9,7 +9,6 @@
         <property name="PANEL_BORDER_BOTTOM" type="CGUIImage" value="dialog_border_bottom" />
         <property name="PANEL_BORDER_TOP" type="CGUIImage" value="dialog_border_top" />
         <property name="PANEL_BORDER_BOTTOMLEFT" type="CGUIImage" value="dialog_border_bottomleft" />
-        <property name="visible" type="bool" value="true" />
         <property name="generate_update_event" type="bool" value="false" />
         <property name="default_as" type="CGUIAs" value="as_alpha_looping" />
         <property name="disable" type="bool" value="false" />
@@ -35,24 +34,23 @@
         <property name="parent" type="CGUIString" value="dlg_ok" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
-            <property name="value" type="CGUIVector2" value="0.5,0.00172186" />
+            <property name="value" type="CGUIVector2" value="0.502907,0.0485969" />
         </property>
         <property name="size" type="CGUIWidgetSize">
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-            <property name="value" type="CGUISize" value="275,16" />
+            <property name="value" type="CGUISize" value="275,36" />
         </property>
         <property name="anchor" type="CGUIVector2" value="0.5,0" />
         <property name="alpha" type="real" value="1" />
         <property name="movable" type="bool" value="false" />
-        <property name="visible" type="bool" value="true" />
         <property name="activable" type="bool" value="false" />
         <property name="hitable" type="bool" value="false" />
         <property name="disable" type="bool" value="false" />
         <property name="open_with_parent" type="bool" value="true" />
         <property name="generate_update_event" type="bool" value="false" />
         <property name="textinfo" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1.6" />
-            <property name="font" type="CGUIFont" value="1" />
+            <property name="scale" type="real" value="1" />
+            <property name="font" type="CGUIFont" value="3" />
             <property name="color" type="CGUIColor" value="216,200,40,255" />
         </property>
         <property name="text" type="CGUIString" value="dialog" />
@@ -68,22 +66,16 @@
         <property name="BTN_DISABLE" type="CGUIImage" value="button_blue_disable" />
         <property name="alpha" type="real" value="1" />
         <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
-        <property name="textinfo_hover" type="CGUIStringRenderInfo">
-            <property name="scale" type="real" value="1.33" />
-            <property name="font" type="CGUIFont" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
         <property name="anchor" type="CGUIVector2" value="0.5,0" />
         <property name="textinfo_normal" type="CGUIStringRenderInfo">
             <property name="scale" type="real" value="1" />
-            <property name="font" type="CGUIFont" value="0" />
+            <property name="font" type="CGUIFont" value="1" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
         <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
         <property name="disable" type="bool" value="false" />
         <property name="open_with_parent" type="bool" value="true" />
         <property name="text_normal" type="CGUILocalizedString" value="ok" />
-        <property name="visible" type="bool" value="true" />
         <property name="hitable" type="bool" value="true" />
         <property name="generate_update_event" type="bool" value="false" />
         <property name="activable" type="bool" value="false" />
@@ -96,17 +88,6 @@
             <property name="value" type="CGUISize" value="148,37" />
         </property>
         <property name="movable" type="bool" value="false" />
-        <property name="text_offset" type="CGUIVector2" value="0,0" />
-        <property name="textinfo_push" type="CGUIStringRenderInfo">
-            <property name="scale" type="real" value="1.33" />
-            <property name="font" type="CGUIFont" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="textinfo_disable" type="CGUIStringRenderInfo">
-            <property name="scale" type="real" value="1.33" />
-            <property name="font" type="CGUIFont" value="0" />
-            <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
         <property name="rotation" type="CGUIVector3" value="0,0,0" />
     </property>
 </guiex>

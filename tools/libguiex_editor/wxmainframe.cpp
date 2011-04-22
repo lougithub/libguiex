@@ -866,7 +866,7 @@ void WxMainFrame::OnSave(wxCommandEvent& evt)
 	{
 		CSaveFileBase* pSave = GetSaveFilePtr(m_pNoteBook_Canvas->GetPage(m_pNoteBook_Canvas->GetSelection()));
 
-		if( pSave->ShouldSaveFile())
+		//if( pSave->ShouldSaveFile())
 		{
 			pSave->SaveFile();
 		}

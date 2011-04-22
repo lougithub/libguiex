@@ -17,18 +17,14 @@
             <property name="value" type="CGUISize" value="269,415" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
-        <property name="max_size" type="CGUISize" value="0,0" />
-        <property name="min_size" type="CGUISize" value="0,0" />
         <property name="anchor" type="CGUIVector2" value="0,0" />
         <property name="scale" type="CGUISize" value="1,1" />
         <property name="alpha" type="real" value="1" />
         <property name="rotation" type="CGUIVector3" value="0,0,0" />
         <property name="movable" type="bool" value="false" />
-        <property name="visible" type="bool" value="true" />
         <property name="activable" type="bool" value="false" />
         <property name="hitable" type="bool" value="true" />
         <property name="disable" type="bool" value="false" />
-        <property name="auto_play_as" type="bool" value="false" />
         <property name="clip_children" type="bool" value="false" />
         <property name="open_with_parent" type="bool" value="true" />
         <property name="generate_update_event" type="bool" value="false" />
@@ -49,326 +45,206 @@
             <property name="value" type="CGUISize" value="148,46" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
-        <property name="max_size" type="CGUISize" value="0,0" />
-        <property name="min_size" type="CGUISize" value="0,0" />
         <property name="anchor" type="CGUIVector2" value="0.5,0" />
         <property name="scale" type="CGUISize" value="1,1" />
         <property name="alpha" type="real" value="1" />
         <property name="rotation" type="CGUIVector3" value="0,0,0" />
         <property name="movable" type="bool" value="false" />
-        <property name="visible" type="bool" value="true" />
         <property name="activable" type="bool" value="false" />
         <property name="hitable" type="bool" value="true" />
         <property name="disable" type="bool" value="false" />
-        <property name="auto_play_as" type="bool" value="false" />
         <property name="clip_children" type="bool" value="false" />
         <property name="open_with_parent" type="bool" value="true" />
         <property name="generate_update_event" type="bool" value="false" />
         <property name="generate_parentsizechange_event" type="bool" value="false" />
-        <property name="textinfo_normal" type="CGUIStringRenderInfo">
-            <property name="scale" type="real" value="1" />
-          <property name="font" type="CGUIFont" value="0" />
-          <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
         <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
         <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
-        <property name="textinfo_hover" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1.33" />
-          <property name="font" type="CGUIFont" value="0" />
-          <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="textinfo_push" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1.33" />
-          <property name="font" type="CGUIFont" value="0" />
-          <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="textinfo_disable" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1.33" />
-          <property name="font" type="CGUIFont" value="0" />
-          <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="text_offset" type="CGUIVector2" value="0,0" />
         <property name="text_normal" type="CGUILocalizedString" value="@sound/play_effect" />
         <property name="OnMouseLeftClick" type="CGUIEvent" value="btn_playeffect_se_yes_onclick" />
-      </property>
-      <property name="btn_playeffect_se_warning" type="CGUIWidgetDefine" value="CGUIWgtButton">
+        <property name="textinfo_normal" type="CGUIStringRenderInfo">
+            <property name="scale" type="real" value="1" />
+            <property name="font" type="CGUIFont" value="1" />
+            <property name="color" type="CGUIColor" value="255,255,255,255" />
+        </property>
+    </property>
+    <property name="btn_playeffect_se_warning" type="CGUIWidgetDefine" value="CGUIWgtButton">
         <property name="parent" type="CGUIString" value="panel_sound" />
         <property name="BTN_NORMAL" type="CGUIImage" value="button_red_normal" />
         <property name="BTN_HOVER" type="CGUIImage" value="button_red_hover" />
         <property name="BTN_PUSH" type="CGUIImage" value="button_red_push" />
         <property name="BTN_DISABLE" type="CGUIImage" value="button_red_disable" />
         <property name="position" type="CGUIWidgetPosition">
-          <property name="value" type="CGUIVector2" value="117.5,69" />
-          <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+            <property name="value" type="CGUIVector2" value="117.5,69" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">
-          <property name="value" type="CGUISize" value="148,46" />
-          <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+            <property name="value" type="CGUISize" value="148,46" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
-        <property name="max_size" type="CGUISize" value="0,0" />
-        <property name="min_size" type="CGUISize" value="0,0" />
         <property name="anchor" type="CGUIVector2" value="0.5,0" />
         <property name="scale" type="CGUISize" value="1,1" />
         <property name="alpha" type="real" value="1" />
         <property name="rotation" type="CGUIVector3" value="0,0,0" />
         <property name="movable" type="bool" value="false" />
-        <property name="visible" type="bool" value="true" />
         <property name="activable" type="bool" value="false" />
         <property name="hitable" type="bool" value="true" />
         <property name="disable" type="bool" value="false" />
-        <property name="auto_play_as" type="bool" value="false" />
         <property name="clip_children" type="bool" value="false" />
         <property name="open_with_parent" type="bool" value="true" />
         <property name="generate_update_event" type="bool" value="false" />
         <property name="generate_parentsizechange_event" type="bool" value="false" />
-        <property name="textinfo_normal" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1" />
-          <property name="font" type="CGUIFont" value="0" />
-          <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
         <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
         <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
-        <property name="textinfo_hover" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1.33" />
-          <property name="font" type="CGUIFont" value="0" />
-          <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="textinfo_push" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1.33" />
-          <property name="font" type="CGUIFont" value="0" />
-          <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="textinfo_disable" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1.33" />
-          <property name="font" type="CGUIFont" value="0" />
-          <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="text_offset" type="CGUIVector2" value="0,0" />
         <property name="text_normal" type="CGUILocalizedString" value="@sound/play_effect" />
         <property name="OnMouseLeftClick" type="CGUIEvent" value="btn_playeffect_se_warning_onclick" />
-      </property>
-      <property name="btn_playeffect_stereo" type="CGUIWidgetDefine" value="CGUIWgtButton">
+        <property name="textinfo_normal" type="CGUIStringRenderInfo">
+            <property name="scale" type="real" value="1" />
+            <property name="font" type="CGUIFont" value="1" />
+            <property name="color" type="CGUIColor" value="255,255,255,255" />
+        </property>
+    </property>
+    <property name="btn_playeffect_stereo" type="CGUIWidgetDefine" value="CGUIWgtButton">
         <property name="parent" type="CGUIString" value="panel_sound" />
         <property name="BTN_NORMAL" type="CGUIImage" value="button_red_normal" />
         <property name="BTN_HOVER" type="CGUIImage" value="button_red_hover" />
         <property name="BTN_PUSH" type="CGUIImage" value="button_red_push" />
         <property name="BTN_DISABLE" type="CGUIImage" value="button_red_disable" />
         <property name="position" type="CGUIWidgetPosition">
-          <property name="value" type="CGUIVector2" value="117.5,129" />
-          <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+            <property name="value" type="CGUIVector2" value="117.5,129" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">
-          <property name="value" type="CGUISize" value="148,46" />
-          <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+            <property name="value" type="CGUISize" value="148,46" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
-        <property name="max_size" type="CGUISize" value="0,0" />
-        <property name="min_size" type="CGUISize" value="0,0" />
         <property name="anchor" type="CGUIVector2" value="0.5,0" />
         <property name="scale" type="CGUISize" value="1,1" />
         <property name="alpha" type="real" value="1" />
         <property name="rotation" type="CGUIVector3" value="0,0,0" />
         <property name="movable" type="bool" value="false" />
-        <property name="visible" type="bool" value="true" />
         <property name="activable" type="bool" value="false" />
         <property name="hitable" type="bool" value="true" />
         <property name="disable" type="bool" value="false" />
-        <property name="auto_play_as" type="bool" value="false" />
         <property name="clip_children" type="bool" value="false" />
         <property name="open_with_parent" type="bool" value="true" />
         <property name="generate_update_event" type="bool" value="false" />
         <property name="generate_parentsizechange_event" type="bool" value="false" />
-        <property name="textinfo_normal" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1" />
-          <property name="font" type="CGUIFont" value="0" />
-          <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
         <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
         <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
-        <property name="textinfo_hover" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1.33" />
-          <property name="font" type="CGUIFont" value="0" />
-          <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="textinfo_push" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1.33" />
-          <property name="font" type="CGUIFont" value="0" />
-          <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="textinfo_disable" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1.33" />
-          <property name="font" type="CGUIFont" value="0" />
-          <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="text_offset" type="CGUIVector2" value="0,0" />
         <property name="text_normal" type="CGUILocalizedString" value="@sound/play_effect" />
         <property name="OnMouseLeftClick" type="CGUIEvent" value="btn_playeffect_stereo_onclick" />
-      </property>
-      <property name="btn_playmusic" type="CGUIWidgetDefine" value="CGUIWgtButton">
+        <property name="textinfo_normal" type="CGUIStringRenderInfo">
+            <property name="scale" type="real" value="1" />
+            <property name="font" type="CGUIFont" value="1" />
+            <property name="color" type="CGUIColor" value="255,255,255,255" />
+        </property>
+    </property>
+    <property name="btn_playmusic" type="CGUIWidgetDefine" value="CGUIWgtButton">
         <property name="parent" type="CGUIString" value="panel_sound" />
         <property name="BTN_NORMAL" type="CGUIImage" value="button_red_normal" />
         <property name="BTN_HOVER" type="CGUIImage" value="button_red_hover" />
         <property name="BTN_PUSH" type="CGUIImage" value="button_red_push" />
         <property name="BTN_DISABLE" type="CGUIImage" value="button_red_disable" />
         <property name="position" type="CGUIWidgetPosition">
-          <property name="value" type="CGUIVector2" value="117.5,250" />
-          <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+            <property name="value" type="CGUIVector2" value="117.5,250" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">
-          <property name="value" type="CGUISize" value="148,46" />
-          <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+            <property name="value" type="CGUISize" value="148,46" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
-        <property name="max_size" type="CGUISize" value="0,0" />
-        <property name="min_size" type="CGUISize" value="0,0" />
         <property name="anchor" type="CGUIVector2" value="0.5,0" />
         <property name="scale" type="CGUISize" value="1,1" />
         <property name="alpha" type="real" value="1" />
         <property name="rotation" type="CGUIVector3" value="0,0,0" />
         <property name="movable" type="bool" value="false" />
-        <property name="visible" type="bool" value="true" />
         <property name="activable" type="bool" value="false" />
         <property name="hitable" type="bool" value="true" />
         <property name="disable" type="bool" value="false" />
-        <property name="auto_play_as" type="bool" value="false" />
         <property name="clip_children" type="bool" value="false" />
         <property name="open_with_parent" type="bool" value="true" />
         <property name="generate_update_event" type="bool" value="false" />
         <property name="generate_parentsizechange_event" type="bool" value="false" />
-        <property name="textinfo_normal" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1" />
-          <property name="font" type="CGUIFont" value="0" />
-          <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
         <property name="text_normal" type="CGUILocalizedString" value="@sound/play_music" />
         <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
         <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
-        <property name="textinfo_hover" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1.33" />
-          <property name="font" type="CGUIFont" value="0" />
-          <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="textinfo_push" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1.33" />
-          <property name="font" type="CGUIFont" value="0" />
-          <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="textinfo_disable" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1.33" />
-          <property name="font" type="CGUIFont" value="0" />
-          <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="text_offset" type="CGUIVector2" value="0,0" />
         <property name="OnMouseLeftClick" type="CGUIEvent" value="btn_playmusic_onclick" />
-      </property>
-      <property name="btn_pausemusic" type="CGUIWidgetDefine" value="CGUIWgtButton">
+        <property name="textinfo_normal" type="CGUIStringRenderInfo">
+            <property name="scale" type="real" value="1" />
+            <property name="font" type="CGUIFont" value="1" />
+            <property name="color" type="CGUIColor" value="255,255,255,255" />
+        </property>
+    </property>
+    <property name="btn_pausemusic" type="CGUIWidgetDefine" value="CGUIWgtButton">
         <property name="parent" type="CGUIString" value="panel_sound" />
         <property name="BTN_NORMAL" type="CGUIImage" value="button_red_normal" />
         <property name="BTN_HOVER" type="CGUIImage" value="button_red_hover" />
         <property name="BTN_PUSH" type="CGUIImage" value="button_red_push" />
         <property name="BTN_DISABLE" type="CGUIImage" value="button_red_disable" />
         <property name="position" type="CGUIWidgetPosition">
-          <property name="value" type="CGUIVector2" value="117.5,301" />
-          <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+            <property name="value" type="CGUIVector2" value="117.5,301" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">
-          <property name="value" type="CGUISize" value="148,46" />
-          <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+            <property name="value" type="CGUISize" value="148,46" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
-        <property name="max_size" type="CGUISize" value="0,0" />
-        <property name="min_size" type="CGUISize" value="0,0" />
         <property name="anchor" type="CGUIVector2" value="0.5,0" />
         <property name="scale" type="CGUISize" value="1,1" />
         <property name="alpha" type="real" value="1" />
         <property name="rotation" type="CGUIVector3" value="0,0,0" />
         <property name="movable" type="bool" value="false" />
-        <property name="visible" type="bool" value="true" />
         <property name="activable" type="bool" value="false" />
         <property name="hitable" type="bool" value="true" />
         <property name="disable" type="bool" value="false" />
-        <property name="auto_play_as" type="bool" value="false" />
         <property name="clip_children" type="bool" value="false" />
         <property name="open_with_parent" type="bool" value="true" />
         <property name="generate_update_event" type="bool" value="false" />
         <property name="generate_parentsizechange_event" type="bool" value="false" />
-        <property name="textinfo_normal" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1" />
-          <property name="font" type="CGUIFont" value="0" />
-          <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
         <property name="text_normal" type="CGUILocalizedString" value="@sound/pause_music" />
         <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
         <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
-        <property name="textinfo_hover" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1.33" />
-          <property name="font" type="CGUIFont" value="0" />
-          <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="textinfo_push" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1.33" />
-          <property name="font" type="CGUIFont" value="0" />
-          <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="textinfo_disable" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1.33" />
-          <property name="font" type="CGUIFont" value="0" />
-          <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="text_offset" type="CGUIVector2" value="0,0" />
         <property name="OnMouseLeftClick" type="CGUIEvent" value="btn_pausemusic_onclick" />
-      </property>
-      <property name="btn_stopmusic" type="CGUIWidgetDefine" value="CGUIWgtButton">
+        <property name="textinfo_normal" type="CGUIStringRenderInfo">
+            <property name="scale" type="real" value="1" />
+            <property name="font" type="CGUIFont" value="1" />
+            <property name="color" type="CGUIColor" value="255,255,255,255" />
+        </property>
+    </property>
+    <property name="btn_stopmusic" type="CGUIWidgetDefine" value="CGUIWgtButton">
         <property name="parent" type="CGUIString" value="panel_sound" />
         <property name="BTN_NORMAL" type="CGUIImage" value="button_red_normal" />
         <property name="BTN_HOVER" type="CGUIImage" value="button_red_hover" />
         <property name="BTN_PUSH" type="CGUIImage" value="button_red_push" />
         <property name="BTN_DISABLE" type="CGUIImage" value="button_red_disable" />
         <property name="position" type="CGUIWidgetPosition">
-          <property name="value" type="CGUIVector2" value="117.5,350" />
-          <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+            <property name="value" type="CGUIVector2" value="117.5,350" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">
-          <property name="value" type="CGUISize" value="148,46" />
-          <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+            <property name="value" type="CGUISize" value="148,46" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
-        <property name="max_size" type="CGUISize" value="0,0" />
-        <property name="min_size" type="CGUISize" value="0,0" />
         <property name="anchor" type="CGUIVector2" value="0.5,0" />
         <property name="scale" type="CGUISize" value="1,1" />
         <property name="alpha" type="real" value="1" />
         <property name="rotation" type="CGUIVector3" value="0,0,0" />
         <property name="movable" type="bool" value="false" />
-        <property name="visible" type="bool" value="true" />
         <property name="activable" type="bool" value="false" />
         <property name="hitable" type="bool" value="true" />
         <property name="disable" type="bool" value="false" />
-        <property name="auto_play_as" type="bool" value="false" />
         <property name="clip_children" type="bool" value="false" />
         <property name="open_with_parent" type="bool" value="true" />
         <property name="generate_update_event" type="bool" value="false" />
         <property name="generate_parentsizechange_event" type="bool" value="false" />
-        <property name="textinfo_normal" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1" />
-          <property name="font" type="CGUIFont" value="0" />
-          <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
         <property name="text_normal" type="CGUILocalizedString" value="@sound/stop_music" />
         <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
         <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
-        <property name="textinfo_hover" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1.33" />
-          <property name="font" type="CGUIFont" value="0" />
-          <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="textinfo_push" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1.33" />
-          <property name="font" type="CGUIFont" value="0" />
-          <property name="color" type="CGUIColor" value="255,255,255,255" />
-        </property>
-        <property name="textinfo_disable" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1.33" />
-          <property name="font" type="CGUIFont" value="0" />
+        <property name="OnMouseLeftClick" type="CGUIEvent" value="btn_stopmusic_onclick" />
+        <property name="textinfo_normal" type="CGUIStringRenderInfo">
+            <property name="scale" type="real" value="1" />
+            <property name="font" type="CGUIFont" value="1" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
-        <property name="text_offset" type="CGUIVector2" value="0,0" />
-        <property name="OnMouseLeftClick" type="CGUIEvent" value="btn_stopmusic_onclick" />
     </property>
 </guiex>
