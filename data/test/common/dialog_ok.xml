@@ -52,7 +52,7 @@
         <property name="generate_update_event" type="bool" value="false" />
         <property name="textinfo" type="CGUIStringRenderInfo">
           <property name="scale" type="real" value="1.6" />
-            <property name="id" type="uint16" value="1" />
+            <property name="font" type="CGUIFont" value="1" />
             <property name="color" type="CGUIColor" value="216,200,40,255" />
         </property>
         <property name="text" type="CGUIString" value="dialog" />
@@ -70,13 +70,13 @@
         <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
         <property name="textinfo_hover" type="CGUIStringRenderInfo">
             <property name="scale" type="real" value="1.33" />
-            <property name="id" type="uint16" value="0" />
+            <property name="font" type="CGUIFont" value="0" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
         <property name="anchor" type="CGUIVector2" value="0.5,0" />
         <property name="textinfo_normal" type="CGUIStringRenderInfo">
             <property name="scale" type="real" value="1" />
-            <property name="id" type="uint16" value="0" />
+            <property name="font" type="CGUIFont" value="0" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
         <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
@@ -99,12 +99,12 @@
         <property name="text_offset" type="CGUIVector2" value="0,0" />
         <property name="textinfo_push" type="CGUIStringRenderInfo">
             <property name="scale" type="real" value="1.33" />
-            <property name="id" type="uint16" value="0" />
+            <property name="font" type="CGUIFont" value="0" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
         <property name="textinfo_disable" type="CGUIStringRenderInfo">
             <property name="scale" type="real" value="1.33" />
-            <property name="id" type="uint16" value="0" />
+            <property name="font" type="CGUIFont" value="0" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
         <property name="rotation" type="CGUIVector3" value="0,0,0" />

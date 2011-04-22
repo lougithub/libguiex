@@ -25,15 +25,22 @@ if( BUILD_PLATFORM_WIN32 )
 		wxeditorcanvas.h		
 		wxeditorcanvascontainer.cpp
 		wxeditorcanvascontainer.h			
+		wxeditorid.h		
+        )
+    source_group( widget FILES ${${target_name}_widget_SRCS} )
+
+	#resource select dialog
+    set( ${target_name}_resourceselectdlg_SRCS
+		wxfontselectdlg.cpp
+		wxfontselectdlg.h
 		wximageselectdlg.cpp
 		wximageselectdlg.h
 		wxlocalizedstringselectdlg.cpp
 		wxlocalizedstringselectdlg.h
 		wxsoundselectdlg.cpp
 		wxsoundselectdlg.h		
-		wxeditorid.h		
         )
-    source_group( widget FILES ${${target_name}_widget_SRCS} )
+    source_group( select_dialogs FILES ${${target_name}_resourceselectdlg_SRCS} )
     
     #property source
     set( ${target_name}_property_SRCS
@@ -71,6 +78,7 @@ if( BUILD_PLATFORM_WIN32 )
 		${${target_name}_widget_SRCS}
 		${${target_name}_utility_SRCS}
 		${${target_name}_property_SRCS}
+		${${target_name}_resourceselectdlg_SRCS}
 		)
 
     macro_include_directories()

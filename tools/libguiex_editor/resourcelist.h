@@ -33,13 +33,16 @@ public:
 
 	void UpdateResourceList();
 
-	const wxArrayString& GetImageList();
 	const wxArrayString& GetAsList();
 	const wxArrayString& GetParticle2DList();
 	const wxArrayString& GetSoundList();
 	const wxArrayString& GetLocalizationList();
 	const wxArrayString& GetTiledMapList();
 
+	const wxArrayString& GetFontList();
+	const wxString* GetFontDesc( const wxString& rFont );
+
+	const wxArrayString& GetImageList();
 	wxBitmap* GetImageThumbnail( const wxString& rImageName );
 	wxBitmap* GetOriginalImageThumbnail( const wxString& rImageName );
 
@@ -64,6 +67,10 @@ protected:
 	void UpdateSoundList();
 	void ResetSoundList();
 
+	//update font used in the system
+	void UpdateFontList();
+	void ResetFontList();
+
 	//update localization list used in the system
 	void UpdateLocalizationList();
 	void ResetLocalizationList();
@@ -80,6 +87,8 @@ private:
 	wxArrayString m_arrayParticle2DArray;
 	wxArrayString m_arrayTiledMapArray;
 	wxArrayString m_arraySoundArray;
+	wxArrayString m_arrayFontArray;
+	std::map<wxString,wxString> m_mapFontDesc;
 	wxArrayString m_arrayLocalizationArray;
 };
 

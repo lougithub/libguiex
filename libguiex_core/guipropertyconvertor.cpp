@@ -160,7 +160,7 @@ namespace guiex
 		/*
 		<property name="text_info" type="CGUIStringRenderInfo">
 			<property name="scale" type="real" value="1"/>
-			<property name="id" type="uint16" value="0"/>
+			<property name="font" type="CGUIFont" value="0"/>
 			<property name="color" type="CGUIColor" value="1.0,1.0,1.0,1.0"/>
 		</property>
 		*/
@@ -178,8 +178,8 @@ namespace guiex
 			PropertyToValue( *pScaleProperty, rValue.m_fFontScale );
 		}
 
-		const CGUIProperty* pIndexProperty = rProperty.GetProperty( "id", "uint16" );
-		if( !pIndexProperty )
+		const CGUIProperty* pFontProperty = rProperty.GetProperty( "font", "CGUIFont" );
+		if( !pFontProperty )
 		{
 			throw CGUIException(
 				"[PropertyToValue[CGUIStringRenderInfo]]: invalid property format" );
@@ -187,8 +187,8 @@ namespace guiex
 		}
 		else
 		{
-			GUI_PROPERTY_TEST( *pIndexProperty, ePropertyType_UInt16);
-			PropertyToValue( *pIndexProperty, rValue.m_uFontID );
+			GUI_PROPERTY_TEST( *pFontProperty, ePropertyType_Font);
+			PropertyToValue( *pFontProperty, rValue.m_uFontID );
 		}
 
 		const CGUIProperty* pColorProperty = rProperty.GetProperty( "color", "CGUIColor" );
@@ -212,7 +212,7 @@ namespace guiex
 		ValueToProperty( rValue.m_fFontScale, aScaleProperty );
 		AddOrReplaceProperty( rProperty, aScaleProperty );
 
-		CGUIProperty aIndexProperty ( "id", "uint16" );
+		CGUIProperty aIndexProperty ( "font", "CGUIFont" );
 		ValueToProperty( rValue.m_uFontID, aIndexProperty );
 		AddOrReplaceProperty( rProperty, aIndexProperty );
 

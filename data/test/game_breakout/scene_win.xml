@@ -61,7 +61,7 @@
         <property name="text" type="CGUIString" value="you win" />
         <property name="textinfo" type="CGUIStringRenderInfo">
           <property name="scale" type="real" value="2.6" />
-            <property name="id" type="uint16" value="0" />
+            <property name="font" type="CGUIFont" value="0" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
         <property name="multiline" type="bool" value="false" />
@@ -104,22 +104,22 @@
         <property name="text_normal" type="CGUILocalizedString" value="Replay" />
         <property name="textinfo_normal" type="CGUIStringRenderInfo">
             <property name="scale" type="real" value="1.33" />
-            <property name="id" type="uint16" value="0" />
+            <property name="font" type="CGUIFont" value="0" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
         <property name="textinfo_hover" type="CGUIStringRenderInfo">
             <property name="scale" type="real" value="1.33" />
-            <property name="id" type="uint16" value="0" />
+            <property name="font" type="CGUIFont" value="0" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
         <property name="textinfo_push" type="CGUIStringRenderInfo">
             <property name="scale" type="real" value="1.33" />
-            <property name="id" type="uint16" value="0" />
+            <property name="font" type="CGUIFont" value="0" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
         <property name="textinfo_disable" type="CGUIStringRenderInfo">
             <property name="scale" type="real" value="1.33" />
-            <property name="id" type="uint16" value="0" />
+            <property name="font" type="CGUIFont" value="0" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
     </property>

@@ -92,6 +92,12 @@ enum
 	ID_LocalizationListID,
 
 	//==================================================
+	//font select dialog
+	ID_FontSelect_BTN_OK,
+	ID_FontSelect_BTN_CANCEL,
+	ID_FontListID,
+
+	//==================================================
 	//save file dialog
 	ID_SaveFile_BTN_OK,
 	ID_SaveFile_BTN_NO,

@@ -29,6 +29,7 @@ CResourceList::~CResourceList()
 	ResetAsList();
 	ResetParticle2DList();
 	ResetSoundList();
+	ResetFontList();
 	ResetLocalizationList();
 	ResetTiledMapList();
 }
@@ -45,6 +46,7 @@ void CResourceList::UpdateResourceList()
 	UpdateAsList();
 	UpdateParticle2DList();
 	UpdateSoundList();
+	UpdateFontList();
 	UpdateLocalizationList();
 	UpdateTiledMapList();
 }
@@ -284,6 +286,29 @@ void CResourceList::UpdateSoundList()
 	m_arraySoundArray.Sort();
 }
 //------------------------------------------------------------------------------
+void CResourceList::ResetFontList()
+{
+	m_arrayFontArray.Clear();
+	m_mapFontDesc.clear();
+}
+//------------------------------------------------------------------------------
+void CResourceList::UpdateFontList()
+{
+	ResetFontList();
+
+	const std::map<CGUIString, CGUIFontData*>& rMapFontList = CGUIFontManager::Instance()->GetRegisterResourceMap();
+	for( std::map<CGUIString,CGUIFontData*>::const_iterator itor = rMapFontList.begin();
+		itor != rMapFontList.end();
+		++itor)
+	{
+		wxString strFontID;
+		strFontID<<itor->second->GetFontID();
+		m_arrayFontArray.Add(strFontID);
+		m_mapFontDesc.insert( std::make_pair(strFontID, Gui2wxString( itor->second->GetFontDesc())));
+	}
+	m_arrayFontArray.Sort();
+}
+//------------------------------------------------------------------------------
 const wxArrayString& CResourceList::GetImageList()
 {
 	return m_arrayImageArray;
@@ -307,6 +332,21 @@ const wxArrayString& CResourceList::GetParticle2DList()
 const wxArrayString& CResourceList::GetSoundList()
 {
 	return m_arraySoundArray;
+}
+//------------------------------------------------------------------------------
+const wxArrayString& CResourceList::GetFontList()
+{
+	return m_arrayFontArray;
+}
+//------------------------------------------------------------------------------
+const wxString* CResourceList::GetFontDesc( const wxString& rFont )
+{
+	std::map<wxString, wxString>::iterator itor = m_mapFontDesc.find( rFont );
+	if( itor != m_mapFontDesc.end() )
+	{
+		return &itor->second;
+	}
+	return NULL;
 }
 //------------------------------------------------------------------------------
 const wxArrayString& CResourceList::GetLocalizationList()

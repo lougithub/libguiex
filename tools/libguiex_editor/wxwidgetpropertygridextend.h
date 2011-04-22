@@ -194,4 +194,19 @@ protected:
 };
 
 
+// -----------------------------------------------------------------------
+// WxGUIFontProperty
+// -----------------------------------------------------------------------
+class WxGUIFontProperty : public wxPGProperty
+{
+	WX_PG_DECLARE_PROPERTY_CLASS(WxGUIFontProperty)
+public:
+	WxGUIFontProperty( const wxString& label = wxPG_LABEL, const wxString& name = wxPG_LABEL, guiex::uint16 uFontID = 0 );
+	virtual bool OnEvent( wxPropertyGrid* propgrid, wxWindow* primary, wxEvent& event );
+	virtual void OnSetValue();
+	virtual wxString ValueToString( wxVariant& value, int argFlags ) const;
+	virtual bool StringToValue( wxVariant& variant, const wxString& text, int argFlags ) const;
+};
+
+
 #endif	//__KEN_PROPERTY_GRID_EXTEND_20070920_H__

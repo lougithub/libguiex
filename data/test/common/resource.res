@@ -5,20 +5,23 @@
 		<property name="path" type="CGUIString" value="font/LTYPE.TTF"/>
 		<property name="size" type="uint16" value="12"/>
 		<property name="texture_size" type="CGUIIntSize" value="256,256"/>
-	</property>
+    <property name="desc" type="CGUIString" value="font:LTYPE.TTF size:12"/>
+  </property>
 
 	<property name="font_ltypeb_12" type="CGUIFontDefine" >
 		<property name="id" type="uint16" value="0"/>
 		<property name="path" type="CGUIString" value="font/LTYPEB.TTF"/>
 		<property name="size" type="uint16" value="12"/>
 		<property name="texture_size" type="CGUIIntSize" value="256,256"/>
-	</property>
+    <property name="desc" type="CGUIString" value="font:LTYPEB.TTF size:12"/>
+  </property>
 
   <property name="font_ltype_24" type="CGUIFontDefine" >
     <property name="id" type="uint16" value="2"/>
     <property name="path" type="CGUIString" value="font/LTYPE.TTF"/>
     <property name="size" type="uint16" value="24"/>
     <property name="texture_size" type="CGUIIntSize" value="256,256"/>
+    <property name="desc" type="CGUIString" value="font:LTYPE.TTF size:24"/>
   </property>
 
   <property name="font_ltypeb_24" type="CGUIFontDefine" >
@@ -26,6 +29,7 @@
     <property name="path" type="CGUIString" value="font/LTYPEB.TTF"/>
     <property name="size" type="uint16" value="24"/>
     <property name="texture_size" type="CGUIIntSize" value="256,256"/>
+    <property name="desc" type="CGUIString" value="font:LTYPEB.TTF size:24"/>
   </property>
 
 	<property name="color_white" type="CGUIImageDefine">

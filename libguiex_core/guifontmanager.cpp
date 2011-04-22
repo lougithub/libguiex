@@ -79,7 +79,7 @@ namespace guiex
 			aFontInfo.m_strPath = pPropPath->GetValue();
 		}
 
-		//index
+		//font id
 		{
 			const CGUIProperty* pPropId = rProperty.GetProperty("id", "uint16");
 			if( !pPropId )

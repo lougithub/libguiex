@@ -14,6 +14,7 @@
 #include "resourcelist.h"
 #include "wximageselectdlg.h"
 #include "wxsoundselectdlg.h"
+#include "wxfontselectdlg.h"
 #include "wxlocalizedstringselectdlg.h"
 
 #include <wx/colordlg.h>
@@ -224,7 +225,7 @@ WxGUIStringInfoProperty::WxGUIStringInfoProperty(
 	//ChangeFlag(wxPG_PROP_READONLY, true);
 	SetValue( WXVARIANT(value) );
 	AddPrivateChild( new wxFloatProperty(wxT("scale"), wxT("Scale"), value.m_fFontScale) );
-	AddPrivateChild( new wxUIntProperty(wxT("id"), wxT("FontID"),value.m_uFontID) );
+	AddPrivateChild( new WxGUIFontProperty(wxT("font"), wxT("FontID"),value.m_uFontID) );
 	AddPrivateChild( new WxGuiColorProperty(wxT("color"), wxT("Color"), value.m_aColor) );
 }
 
@@ -640,3 +641,60 @@ wxVariant WxGUIWidgetSizeProperty::ChildChanged( wxVariant& thisValue, int child
 }
 // -----------------------------------------------------------------------
 
+
+// -----------------------------------------------------------------------
+// WxGUIFontProperty
+// -----------------------------------------------------------------------
+WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGUIFontProperty,wxPGProperty,CGUIString,const CGUIString&,ChoiceAndButton );
+WxGUIFontProperty::WxGUIFontProperty( const wxString& label, const wxString& name, guiex::uint16 uFontID )
+: wxPGProperty(label,name)
+{
+	wxString strFont;
+	strFont<<uFontID;
+	SetValue( wxVariant( strFont) );
+	m_choices.Set(CResourceList::Instance()->GetFontList(), 0);
+}
+// -----------------------------------------------------------------------
+void WxGUIFontProperty::OnSetValue()
+{
+	wxString variantType = m_value.GetType();
+	if ( variantType == wxPG_VARIANT_TYPE_LONG )
+	{
+		//index of choice
+		wxString rFont = m_choices.GetLabel( m_value.GetInteger() );
+
+		m_value = rFont;
+	}
+}
+// -----------------------------------------------------------------------
+wxString WxGUIFontProperty::ValueToString( wxVariant& value, int argFlags ) const
+{
+	wxString s = value.GetString();
+	return s;
+}
+// -----------------------------------------------------------------------
+bool WxGUIFontProperty::StringToValue( wxVariant& variant, const wxString& text, int argFlags ) const
+{
+	if ( variant != text )
+	{
+		variant = text;
+		return true;
+	}
+
+	return false;
+}
+// -----------------------------------------------------------------------
+bool WxGUIFontProperty::OnEvent( wxPropertyGrid* propgrid, wxWindow* primary, wxEvent& event )
+{
+	if ( propgrid->IsMainButtonEvent(event) )
+	{
+		WxFontSelectDialog dialog( propgrid );
+		if ( dialog.ShowModal() == wxID_OK )
+		{
+			SetValueInEvent( dialog.GetFontName() );
+			return true;
+		}
+	}
+	return false;
+}
+// -----------------------------------------------------------------------

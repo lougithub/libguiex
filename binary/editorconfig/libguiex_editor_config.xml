@@ -123,7 +123,7 @@
       <property name="text" type="CGUIString" value=""  category="StaticText"/>
       <property name="textinfo" type="CGUIStringRenderInfo"  category="StaticText">
         <property name="scale" type="real" value="1"/>
-        <property name="id" type="uint16" value="0"/>
+        <property name="font" type="CGUIFont" value="0"/>
         <property name="color" type="CGUIColor" value="255,255,255,255"/>
       </property>
     </page>
@@ -138,25 +138,25 @@
       <property name="text_normal" type="CGUILocalizedString" value=""  category="Button"/>
       <property name="textinfo_normal" type="CGUIStringRenderInfo"  category="Button">
         <property name="scale" type="real" value="1"/>
-        <property name="id" type="uint16" value="0"/>
+        <property name="font" type="CGUIFont" value="0"/>
         <property name="color" type="CGUIColor" value="255,255,255,255"/>
       </property>
 			<property name="text_hover"	type="CGUILocalizedString" value=""  category="Button"/>
 			<property name="textinfo_hover" type="CGUIStringRenderInfo"  category="Button">
         <property name="scale" type="real" value="1"/>
-        <property name="id" type="uint16" value="0"/>
+        <property name="font" type="CGUIFont" value="0"/>
 				<property name="color" type="CGUIColor" value="255,255,255,255"/>
 			</property>
 			<property name="text_push" type="CGUILocalizedString" value=""  category="Button"/>
 			<property name="textinfo_push" type="CGUIStringRenderInfo"  category="Button">
         <property name="scale" type="real" value="1"/>
-        <property name="id" type="uint16" value="0"/>
+        <property name="font" type="CGUIFont" value="0"/>
 				<property name="color" type="CGUIColor" value="255,255,255,255"/>
 			</property>
 			<property name="text_disable" type="CGUILocalizedString" value=""  category="Button"/>
 			<property name="textinfo_disable" type="CGUIStringRenderInfo"  category="Button">
         <property name="scale" type="real" value="1"/>
-        <property name="id" type="uint16" value="0"/>
+        <property name="font" type="CGUIFont" value="0"/>
 				<property name="color" type="CGUIColor" value="255,255,255,255"/>
 			</property>
 		</page>
