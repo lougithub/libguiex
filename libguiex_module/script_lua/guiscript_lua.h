@@ -1,8 +1,6 @@
 /** 
 * @file guiscript_lua.h
 * @brief script module with lua.
-* implement lua script with tolua++.
-* tolua++ version is 1.0.91
 * lua version is 5.1
 *
 * @author ken

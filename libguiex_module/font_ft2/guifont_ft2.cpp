@@ -338,7 +338,6 @@ namespace guiex
 		}
 
 		m_arrayFontDatas[rFontInfo.m_uID] = new CGUIFontData_ft2( rName, rSceneName, rFontInfo, pFontFace );
-		m_arrayFontDatas[rFontInfo.m_uID]->Load();
 		return m_arrayFontDatas[rFontInfo.m_uID];
 	}
 	//------------------------------------------------------------------------------

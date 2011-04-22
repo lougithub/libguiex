@@ -1510,17 +1510,17 @@ SWIG_Lua_dostring(lua_State *L, const char* str) {
 #define SWIGTYPE_p_float swig_types[1]
 #define SWIGTYPE_p_guiex__CGUIAnimation swig_types[2]
 #define SWIGTYPE_p_guiex__CGUIAs swig_types[3]
-#define SWIGTYPE_p_guiex__CGUIAsAlpha swig_types[4]
-#define SWIGTYPE_p_guiex__CGUIAsColor swig_types[5]
-#define SWIGTYPE_p_guiex__CGUIAsContainer swig_types[6]
-#define SWIGTYPE_p_guiex__CGUIAsInterpolationT_float_t swig_types[7]
-#define SWIGTYPE_p_guiex__CGUIAsInterpolationT_guiex__CGUIColor_t swig_types[8]
-#define SWIGTYPE_p_guiex__CGUIAsInterpolationT_guiex__CGUISize_t swig_types[9]
-#define SWIGTYPE_p_guiex__CGUIAsInterpolationT_guiex__CGUIVector2_t swig_types[10]
-#define SWIGTYPE_p_guiex__CGUIAsInterpolationT_guiex__CGUIVector3_t swig_types[11]
-#define SWIGTYPE_p_guiex__CGUIAsPosition swig_types[12]
-#define SWIGTYPE_p_guiex__CGUIAsRotation swig_types[13]
-#define SWIGTYPE_p_guiex__CGUIAsScale swig_types[14]
+#define SWIGTYPE_p_guiex__CGUIAsContainer swig_types[4]
+#define SWIGTYPE_p_guiex__CGUIAsInterpolationT_float_t swig_types[5]
+#define SWIGTYPE_p_guiex__CGUIAsInterpolationT_guiex__CGUIColor_t swig_types[6]
+#define SWIGTYPE_p_guiex__CGUIAsInterpolationT_guiex__CGUISize_t swig_types[7]
+#define SWIGTYPE_p_guiex__CGUIAsInterpolationT_guiex__CGUIVector2_t swig_types[8]
+#define SWIGTYPE_p_guiex__CGUIAsInterpolationT_guiex__CGUIVector3_t swig_types[9]
+#define SWIGTYPE_p_guiex__CGUIAsWidgetAlpha swig_types[10]
+#define SWIGTYPE_p_guiex__CGUIAsWidgetColor swig_types[11]
+#define SWIGTYPE_p_guiex__CGUIAsWidgetPosition swig_types[12]
+#define SWIGTYPE_p_guiex__CGUIAsWidgetRotation swig_types[13]
+#define SWIGTYPE_p_guiex__CGUIAsWidgetScale swig_types[14]
 #define SWIGTYPE_p_guiex__CGUIColor swig_types[15]
 #define SWIGTYPE_p_guiex__CGUIColorRect swig_types[16]
 #define SWIGTYPE_p_guiex__CGUIEvent swig_types[17]
@@ -5897,7 +5897,58 @@ static swig_lua_class *swig_guiex_CGUIProperty_bases[] = {0};
 static const char *swig_guiex_CGUIProperty_base_names[] = {0};
 static swig_lua_class _wrap_class_guiex_CGUIProperty = { "CGUIProperty", &SWIGTYPE_p_guiex__CGUIProperty,0,0, swig_guiex_CGUIProperty_methods, swig_guiex_CGUIProperty_attributes, swig_guiex_CGUIProperty_bases, swig_guiex_CGUIProperty_base_names };
 
+static int _wrap_CGUIAs_Reset(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIAs *arg1 = (guiex::CGUIAs *) 0 ;
+  
+  SWIG_check_num_args("Reset",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Reset",1,"guiex::CGUIAs *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIAs,0))){
+    SWIG_fail_ptr("CGUIAs_Reset",1,SWIGTYPE_p_guiex__CGUIAs);
+  }
+  
+  (arg1)->Reset();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIAs_SetReverse(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIAs *arg1 = (guiex::CGUIAs *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("SetReverse",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetReverse",1,"guiex::CGUIAs *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetReverse",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIAs,0))){
+    SWIG_fail_ptr("CGUIAs_SetReverse",1,SWIGTYPE_p_guiex__CGUIAs);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->SetReverse(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static swig_lua_method swig_guiex_CGUIAs_methods[] = {
+    {"Reset", _wrap_CGUIAs_Reset}, 
+    {"SetReverse", _wrap_CGUIAs_SetReverse}, 
     {0,0}
 };
 static swig_lua_attribute swig_guiex_CGUIAs_attributes[] = {
@@ -5957,55 +6008,55 @@ static swig_lua_class *swig_guiex_CGUIAsInterpolation_Sl_guiex_CGUIColor_Sg__bas
 static const char *swig_guiex_CGUIAsInterpolation_Sl_guiex_CGUIColor_Sg__base_names[] = {"guiex::CGUIAs *",0};
 static swig_lua_class _wrap_class_guiex_CGUIAsInterpolation_Sl_guiex_CGUIColor_Sg_ = { "CGUIInterpolationBase_Color", &SWIGTYPE_p_guiex__CGUIAsInterpolationT_guiex__CGUIColor_t,0,0, swig_guiex_CGUIAsInterpolation_Sl_guiex_CGUIColor_Sg__methods, swig_guiex_CGUIAsInterpolation_Sl_guiex_CGUIColor_Sg__attributes, swig_guiex_CGUIAsInterpolation_Sl_guiex_CGUIColor_Sg__bases, swig_guiex_CGUIAsInterpolation_Sl_guiex_CGUIColor_Sg__base_names };
 
-static swig_lua_method swig_guiex_CGUIAsAlpha_methods[] = {
+static swig_lua_method swig_guiex_CGUIAsWidgetAlpha_methods[] = {
     {0,0}
 };
-static swig_lua_attribute swig_guiex_CGUIAsAlpha_attributes[] = {
+static swig_lua_attribute swig_guiex_CGUIAsWidgetAlpha_attributes[] = {
     {0,0,0}
 };
-static swig_lua_class *swig_guiex_CGUIAsAlpha_bases[] = {0,0};
-static const char *swig_guiex_CGUIAsAlpha_base_names[] = {"guiex::CGUIAsInterpolation< guiex::real > *",0};
-static swig_lua_class _wrap_class_guiex_CGUIAsAlpha = { "CGUIAsAlpha", &SWIGTYPE_p_guiex__CGUIAsAlpha,0,0, swig_guiex_CGUIAsAlpha_methods, swig_guiex_CGUIAsAlpha_attributes, swig_guiex_CGUIAsAlpha_bases, swig_guiex_CGUIAsAlpha_base_names };
+static swig_lua_class *swig_guiex_CGUIAsWidgetAlpha_bases[] = {0,0};
+static const char *swig_guiex_CGUIAsWidgetAlpha_base_names[] = {"guiex::CGUIAsInterpolation< guiex::real > *",0};
+static swig_lua_class _wrap_class_guiex_CGUIAsWidgetAlpha = { "CGUIAsWidgetAlpha", &SWIGTYPE_p_guiex__CGUIAsWidgetAlpha,0,0, swig_guiex_CGUIAsWidgetAlpha_methods, swig_guiex_CGUIAsWidgetAlpha_attributes, swig_guiex_CGUIAsWidgetAlpha_bases, swig_guiex_CGUIAsWidgetAlpha_base_names };
 
-static swig_lua_method swig_guiex_CGUIAsScale_methods[] = {
+static swig_lua_method swig_guiex_CGUIAsWidgetScale_methods[] = {
     {0,0}
 };
-static swig_lua_attribute swig_guiex_CGUIAsScale_attributes[] = {
+static swig_lua_attribute swig_guiex_CGUIAsWidgetScale_attributes[] = {
     {0,0,0}
 };
-static swig_lua_class *swig_guiex_CGUIAsScale_bases[] = {0,0};
-static const char *swig_guiex_CGUIAsScale_base_names[] = {"guiex::CGUIAsInterpolation< guiex::CGUISize > *",0};
-static swig_lua_class _wrap_class_guiex_CGUIAsScale = { "CGUIAsScale", &SWIGTYPE_p_guiex__CGUIAsScale,0,0, swig_guiex_CGUIAsScale_methods, swig_guiex_CGUIAsScale_attributes, swig_guiex_CGUIAsScale_bases, swig_guiex_CGUIAsScale_base_names };
+static swig_lua_class *swig_guiex_CGUIAsWidgetScale_bases[] = {0,0};
+static const char *swig_guiex_CGUIAsWidgetScale_base_names[] = {"guiex::CGUIAsInterpolation< guiex::CGUISize > *",0};
+static swig_lua_class _wrap_class_guiex_CGUIAsWidgetScale = { "CGUIAsWidgetScale", &SWIGTYPE_p_guiex__CGUIAsWidgetScale,0,0, swig_guiex_CGUIAsWidgetScale_methods, swig_guiex_CGUIAsWidgetScale_attributes, swig_guiex_CGUIAsWidgetScale_bases, swig_guiex_CGUIAsWidgetScale_base_names };
 
-static swig_lua_method swig_guiex_CGUIAsRotation_methods[] = {
+static swig_lua_method swig_guiex_CGUIAsWidgetRotation_methods[] = {
     {0,0}
 };
-static swig_lua_attribute swig_guiex_CGUIAsRotation_attributes[] = {
+static swig_lua_attribute swig_guiex_CGUIAsWidgetRotation_attributes[] = {
     {0,0,0}
 };
-static swig_lua_class *swig_guiex_CGUIAsRotation_bases[] = {0,0};
-static const char *swig_guiex_CGUIAsRotation_base_names[] = {"guiex::CGUIAsInterpolation< guiex::CGUIVector3 > *",0};
-static swig_lua_class _wrap_class_guiex_CGUIAsRotation = { "CGUIAsRotation", &SWIGTYPE_p_guiex__CGUIAsRotation,0,0, swig_guiex_CGUIAsRotation_methods, swig_guiex_CGUIAsRotation_attributes, swig_guiex_CGUIAsRotation_bases, swig_guiex_CGUIAsRotation_base_names };
+static swig_lua_class *swig_guiex_CGUIAsWidgetRotation_bases[] = {0,0};
+static const char *swig_guiex_CGUIAsWidgetRotation_base_names[] = {"guiex::CGUIAsInterpolation< guiex::CGUIVector3 > *",0};
+static swig_lua_class _wrap_class_guiex_CGUIAsWidgetRotation = { "CGUIAsWidgetRotation", &SWIGTYPE_p_guiex__CGUIAsWidgetRotation,0,0, swig_guiex_CGUIAsWidgetRotation_methods, swig_guiex_CGUIAsWidgetRotation_attributes, swig_guiex_CGUIAsWidgetRotation_bases, swig_guiex_CGUIAsWidgetRotation_base_names };
 
-static swig_lua_method swig_guiex_CGUIAsPosition_methods[] = {
+static swig_lua_method swig_guiex_CGUIAsWidgetPosition_methods[] = {
     {0,0}
 };
-static swig_lua_attribute swig_guiex_CGUIAsPosition_attributes[] = {
+static swig_lua_attribute swig_guiex_CGUIAsWidgetPosition_attributes[] = {
     {0,0,0}
 };
-static swig_lua_class *swig_guiex_CGUIAsPosition_bases[] = {0,0};
-static const char *swig_guiex_CGUIAsPosition_base_names[] = {"guiex::CGUIAsInterpolation< guiex::CGUIVector2 > *",0};
-static swig_lua_class _wrap_class_guiex_CGUIAsPosition = { "CGUIAsPosition", &SWIGTYPE_p_guiex__CGUIAsPosition,0,0, swig_guiex_CGUIAsPosition_methods, swig_guiex_CGUIAsPosition_attributes, swig_guiex_CGUIAsPosition_bases, swig_guiex_CGUIAsPosition_base_names };
+static swig_lua_class *swig_guiex_CGUIAsWidgetPosition_bases[] = {0,0};
+static const char *swig_guiex_CGUIAsWidgetPosition_base_names[] = {"guiex::CGUIAsInterpolation< guiex::CGUIVector2 > *",0};
+static swig_lua_class _wrap_class_guiex_CGUIAsWidgetPosition = { "CGUIAsWidgetPosition", &SWIGTYPE_p_guiex__CGUIAsWidgetPosition,0,0, swig_guiex_CGUIAsWidgetPosition_methods, swig_guiex_CGUIAsWidgetPosition_attributes, swig_guiex_CGUIAsWidgetPosition_bases, swig_guiex_CGUIAsWidgetPosition_base_names };
 
-static swig_lua_method swig_guiex_CGUIAsColor_methods[] = {
+static swig_lua_method swig_guiex_CGUIAsWidgetColor_methods[] = {
     {0,0}
 };
-static swig_lua_attribute swig_guiex_CGUIAsColor_attributes[] = {
+static swig_lua_attribute swig_guiex_CGUIAsWidgetColor_attributes[] = {
     {0,0,0}
 };
-static swig_lua_class *swig_guiex_CGUIAsColor_bases[] = {0,0};
-static const char *swig_guiex_CGUIAsColor_base_names[] = {"guiex::CGUIAsInterpolation< guiex::CGUIColor > *",0};
-static swig_lua_class _wrap_class_guiex_CGUIAsColor = { "CGUIAsColor", &SWIGTYPE_p_guiex__CGUIAsColor,0,0, swig_guiex_CGUIAsColor_methods, swig_guiex_CGUIAsColor_attributes, swig_guiex_CGUIAsColor_bases, swig_guiex_CGUIAsColor_base_names };
+static swig_lua_class *swig_guiex_CGUIAsWidgetColor_bases[] = {0,0};
+static const char *swig_guiex_CGUIAsWidgetColor_base_names[] = {"guiex::CGUIAsInterpolation< guiex::CGUIColor > *",0};
+static swig_lua_class _wrap_class_guiex_CGUIAsWidgetColor = { "CGUIAsWidgetColor", &SWIGTYPE_p_guiex__CGUIAsWidgetColor,0,0, swig_guiex_CGUIAsWidgetColor_methods, swig_guiex_CGUIAsWidgetColor_attributes, swig_guiex_CGUIAsWidgetColor_bases, swig_guiex_CGUIAsWidgetColor_base_names };
 
 static swig_lua_method swig_guiex_CGUIAsContainer_methods[] = {
     {0,0}
@@ -8839,7 +8890,7 @@ fail:
 }
 
 
-static int _wrap_CGUIWidget_SetPosition__SWIG_0(lua_State* L) {
+static int _wrap_CGUIWidget_SetPosition(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
   guiex::real arg2 ;
@@ -8868,100 +8919,6 @@ fail:
 }
 
 
-static int _wrap_CGUIWidget_SetPosition__SWIG_1(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
-  guiex::CGUIVector2 *arg2 = 0 ;
-  
-  SWIG_check_num_args("SetPosition",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetPosition",1,"guiex::CGUIWidget *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("SetPosition",2,"guiex::CGUIVector2 const &");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
-    SWIG_fail_ptr("CGUIWidget_SetPosition",1,SWIGTYPE_p_guiex__CGUIWidget);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIVector2,0))){
-    SWIG_fail_ptr("CGUIWidget_SetPosition",2,SWIGTYPE_p_guiex__CGUIVector2);
-  }
-  
-  (arg1)->SetPosition((guiex::CGUIVector2 const &)*arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_CGUIWidget_SetPosition(lua_State* L) {
-  int argc;
-  int argv[4]={
-    1,2,3,4
-  };
-  
-  argc = lua_gettop(L);
-  if (argc == 2) {
-    int _v;
-    {
-      void *ptr;
-      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      {
-        void *ptr;
-        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_guiex__CGUIVector2, 0)) {
-          _v = 0;
-        } else {
-          _v = 1;
-        }
-      }
-      if (_v) {
-        return _wrap_CGUIWidget_SetPosition__SWIG_1(L);
-      }
-    }
-  }
-  if (argc == 3) {
-    int _v;
-    {
-      void *ptr;
-      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      {
-        _v = lua_isnumber(L,argv[1]);
-      }
-      if (_v) {
-        {
-          _v = lua_isnumber(L,argv[2]);
-        }
-        if (_v) {
-          return _wrap_CGUIWidget_SetPosition__SWIG_0(L);
-        }
-      }
-    }
-  }
-  
-  lua_pushstring(L,"Wrong arguments for overloaded function 'CGUIWidget_SetPosition'\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    SetPosition(guiex::CGUIWidget *,guiex::real,guiex::real)\n"
-    "    SetPosition(guiex::CGUIWidget *,guiex::CGUIVector2 const &)\n");
-  lua_error(L);return 0;
-}
-
-
 static int _wrap_CGUIWidget_GetPosition(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
@@ -8986,37 +8943,7 @@ fail:
 }
 
 
-static int _wrap_CGUIWidget_SetPixelPosition__SWIG_0(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
-  guiex::CGUIVector2 *arg2 = 0 ;
-  
-  SWIG_check_num_args("SetPixelPosition",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetPixelPosition",1,"guiex::CGUIWidget *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("SetPixelPosition",2,"guiex::CGUIVector2 const &");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
-    SWIG_fail_ptr("CGUIWidget_SetPixelPosition",1,SWIGTYPE_p_guiex__CGUIWidget);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIVector2,0))){
-    SWIG_fail_ptr("CGUIWidget_SetPixelPosition",2,SWIGTYPE_p_guiex__CGUIVector2);
-  }
-  
-  (arg1)->SetPixelPosition((guiex::CGUIVector2 const &)*arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_CGUIWidget_SetPixelPosition__SWIG_1(lua_State* L) {
+static int _wrap_CGUIWidget_SetPixelPosition(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
   guiex::real arg2 ;
@@ -9042,70 +8969,6 @@ static int _wrap_CGUIWidget_SetPixelPosition__SWIG_1(lua_State* L) {
 fail:
   lua_error(L);
   return SWIG_arg;
-}
-
-
-static int _wrap_CGUIWidget_SetPixelPosition(lua_State* L) {
-  int argc;
-  int argv[4]={
-    1,2,3,4
-  };
-  
-  argc = lua_gettop(L);
-  if (argc == 2) {
-    int _v;
-    {
-      void *ptr;
-      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      {
-        void *ptr;
-        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_guiex__CGUIVector2, 0)) {
-          _v = 0;
-        } else {
-          _v = 1;
-        }
-      }
-      if (_v) {
-        return _wrap_CGUIWidget_SetPixelPosition__SWIG_0(L);
-      }
-    }
-  }
-  if (argc == 3) {
-    int _v;
-    {
-      void *ptr;
-      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      {
-        _v = lua_isnumber(L,argv[1]);
-      }
-      if (_v) {
-        {
-          _v = lua_isnumber(L,argv[2]);
-        }
-        if (_v) {
-          return _wrap_CGUIWidget_SetPixelPosition__SWIG_1(L);
-        }
-      }
-    }
-  }
-  
-  lua_pushstring(L,"Wrong arguments for overloaded function 'CGUIWidget_SetPixelPosition'\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    SetPixelPosition(guiex::CGUIWidget *,guiex::CGUIVector2 const &)\n"
-    "    SetPixelPosition(guiex::CGUIWidget *,guiex::real,guiex::real)\n");
-  lua_error(L);return 0;
 }
 
 
@@ -9183,7 +9046,7 @@ fail:
 }
 
 
-static int _wrap_CGUIWidget_SetSize__SWIG_0(lua_State* L) {
+static int _wrap_CGUIWidget_SetSize(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
   guiex::real arg2 ;
@@ -9212,100 +9075,6 @@ fail:
 }
 
 
-static int _wrap_CGUIWidget_SetSize__SWIG_1(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
-  guiex::CGUISize *arg2 = 0 ;
-  
-  SWIG_check_num_args("SetSize",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetSize",1,"guiex::CGUIWidget *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("SetSize",2,"guiex::CGUISize const &");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
-    SWIG_fail_ptr("CGUIWidget_SetSize",1,SWIGTYPE_p_guiex__CGUIWidget);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUISize,0))){
-    SWIG_fail_ptr("CGUIWidget_SetSize",2,SWIGTYPE_p_guiex__CGUISize);
-  }
-  
-  (arg1)->SetSize((guiex::CGUISize const &)*arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_CGUIWidget_SetSize(lua_State* L) {
-  int argc;
-  int argv[4]={
-    1,2,3,4
-  };
-  
-  argc = lua_gettop(L);
-  if (argc == 2) {
-    int _v;
-    {
-      void *ptr;
-      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      {
-        void *ptr;
-        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_guiex__CGUISize, 0)) {
-          _v = 0;
-        } else {
-          _v = 1;
-        }
-      }
-      if (_v) {
-        return _wrap_CGUIWidget_SetSize__SWIG_1(L);
-      }
-    }
-  }
-  if (argc == 3) {
-    int _v;
-    {
-      void *ptr;
-      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      {
-        _v = lua_isnumber(L,argv[1]);
-      }
-      if (_v) {
-        {
-          _v = lua_isnumber(L,argv[2]);
-        }
-        if (_v) {
-          return _wrap_CGUIWidget_SetSize__SWIG_0(L);
-        }
-      }
-    }
-  }
-  
-  lua_pushstring(L,"Wrong arguments for overloaded function 'CGUIWidget_SetSize'\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    SetSize(guiex::CGUIWidget *,guiex::real,guiex::real)\n"
-    "    SetSize(guiex::CGUIWidget *,guiex::CGUISize const &)\n");
-  lua_error(L);return 0;
-}
-
-
 static int _wrap_CGUIWidget_GetSize(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
@@ -9330,7 +9099,7 @@ fail:
 }
 
 
-static int _wrap_CGUIWidget_SetPixelSize__SWIG_0(lua_State* L) {
+static int _wrap_CGUIWidget_SetPixelSize(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
   guiex::real arg2 ;
@@ -9356,100 +9125,6 @@ static int _wrap_CGUIWidget_SetPixelSize__SWIG_0(lua_State* L) {
 fail:
   lua_error(L);
   return SWIG_arg;
-}
-
-
-static int _wrap_CGUIWidget_SetPixelSize__SWIG_1(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
-  guiex::CGUISize *arg2 = 0 ;
-  
-  SWIG_check_num_args("SetPixelSize",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetPixelSize",1,"guiex::CGUIWidget *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("SetPixelSize",2,"guiex::CGUISize const &");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
-    SWIG_fail_ptr("CGUIWidget_SetPixelSize",1,SWIGTYPE_p_guiex__CGUIWidget);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUISize,0))){
-    SWIG_fail_ptr("CGUIWidget_SetPixelSize",2,SWIGTYPE_p_guiex__CGUISize);
-  }
-  
-  (arg1)->SetPixelSize((guiex::CGUISize const &)*arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_CGUIWidget_SetPixelSize(lua_State* L) {
-  int argc;
-  int argv[4]={
-    1,2,3,4
-  };
-  
-  argc = lua_gettop(L);
-  if (argc == 2) {
-    int _v;
-    {
-      void *ptr;
-      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      {
-        void *ptr;
-        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_guiex__CGUISize, 0)) {
-          _v = 0;
-        } else {
-          _v = 1;
-        }
-      }
-      if (_v) {
-        return _wrap_CGUIWidget_SetPixelSize__SWIG_1(L);
-      }
-    }
-  }
-  if (argc == 3) {
-    int _v;
-    {
-      void *ptr;
-      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      {
-        _v = lua_isnumber(L,argv[1]);
-      }
-      if (_v) {
-        {
-          _v = lua_isnumber(L,argv[2]);
-        }
-        if (_v) {
-          return _wrap_CGUIWidget_SetPixelSize__SWIG_0(L);
-        }
-      }
-    }
-  }
-  
-  lua_pushstring(L,"Wrong arguments for overloaded function 'CGUIWidget_SetPixelSize'\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    SetPixelSize(guiex::CGUIWidget *,guiex::real,guiex::real)\n"
-    "    SetPixelSize(guiex::CGUIWidget *,guiex::CGUISize const &)\n");
-  lua_error(L);return 0;
 }
 
 
@@ -9527,7 +9202,7 @@ fail:
 }
 
 
-static int _wrap_CGUIWidget_SetRotation__SWIG_0(lua_State* L) {
+static int _wrap_CGUIWidget_SetRotation(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
   guiex::real arg2 ;
@@ -9556,105 +9231,6 @@ static int _wrap_CGUIWidget_SetRotation__SWIG_0(lua_State* L) {
 fail:
   lua_error(L);
   return SWIG_arg;
-}
-
-
-static int _wrap_CGUIWidget_SetRotation__SWIG_1(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
-  guiex::CGUIVector3 *arg2 = 0 ;
-  
-  SWIG_check_num_args("SetRotation",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetRotation",1,"guiex::CGUIWidget *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("SetRotation",2,"guiex::CGUIVector3 const &");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
-    SWIG_fail_ptr("CGUIWidget_SetRotation",1,SWIGTYPE_p_guiex__CGUIWidget);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIVector3,0))){
-    SWIG_fail_ptr("CGUIWidget_SetRotation",2,SWIGTYPE_p_guiex__CGUIVector3);
-  }
-  
-  (arg1)->SetRotation((guiex::CGUIVector3 const &)*arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_CGUIWidget_SetRotation(lua_State* L) {
-  int argc;
-  int argv[5]={
-    1,2,3,4,5
-  };
-  
-  argc = lua_gettop(L);
-  if (argc == 2) {
-    int _v;
-    {
-      void *ptr;
-      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      {
-        void *ptr;
-        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_guiex__CGUIVector3, 0)) {
-          _v = 0;
-        } else {
-          _v = 1;
-        }
-      }
-      if (_v) {
-        return _wrap_CGUIWidget_SetRotation__SWIG_1(L);
-      }
-    }
-  }
-  if (argc == 4) {
-    int _v;
-    {
-      void *ptr;
-      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      {
-        _v = lua_isnumber(L,argv[1]);
-      }
-      if (_v) {
-        {
-          _v = lua_isnumber(L,argv[2]);
-        }
-        if (_v) {
-          {
-            _v = lua_isnumber(L,argv[3]);
-          }
-          if (_v) {
-            return _wrap_CGUIWidget_SetRotation__SWIG_0(L);
-          }
-        }
-      }
-    }
-  }
-  
-  lua_pushstring(L,"Wrong arguments for overloaded function 'CGUIWidget_SetRotation'\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    SetRotation(guiex::CGUIWidget *,guiex::real,guiex::real,guiex::real)\n"
-    "    SetRotation(guiex::CGUIWidget *,guiex::CGUIVector3 const &)\n");
-  lua_error(L);return 0;
 }
 
 
@@ -10074,37 +9650,7 @@ fail:
 }
 
 
-static int _wrap_CGUIWidget_SetAnchorPoint__SWIG_0(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
-  guiex::CGUIVector2 *arg2 = 0 ;
-  
-  SWIG_check_num_args("SetAnchorPoint",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetAnchorPoint",1,"guiex::CGUIWidget *");
-  if(!lua_isuserdata(L,2)) SWIG_fail_arg("SetAnchorPoint",2,"guiex::CGUIVector2 const &");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
-    SWIG_fail_ptr("CGUIWidget_SetAnchorPoint",1,SWIGTYPE_p_guiex__CGUIWidget);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIVector2,0))){
-    SWIG_fail_ptr("CGUIWidget_SetAnchorPoint",2,SWIGTYPE_p_guiex__CGUIVector2);
-  }
-  
-  (arg1)->SetAnchorPoint((guiex::CGUIVector2 const &)*arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_CGUIWidget_SetAnchorPoint__SWIG_1(lua_State* L) {
+static int _wrap_CGUIWidget_SetAnchorPoint(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
   guiex::real arg2 ;
@@ -10130,70 +9676,6 @@ static int _wrap_CGUIWidget_SetAnchorPoint__SWIG_1(lua_State* L) {
 fail:
   lua_error(L);
   return SWIG_arg;
-}
-
-
-static int _wrap_CGUIWidget_SetAnchorPoint(lua_State* L) {
-  int argc;
-  int argv[4]={
-    1,2,3,4
-  };
-  
-  argc = lua_gettop(L);
-  if (argc == 2) {
-    int _v;
-    {
-      void *ptr;
-      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      {
-        void *ptr;
-        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_guiex__CGUIVector2, 0)) {
-          _v = 0;
-        } else {
-          _v = 1;
-        }
-      }
-      if (_v) {
-        return _wrap_CGUIWidget_SetAnchorPoint__SWIG_0(L);
-      }
-    }
-  }
-  if (argc == 3) {
-    int _v;
-    {
-      void *ptr;
-      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      {
-        _v = lua_isnumber(L,argv[1]);
-      }
-      if (_v) {
-        {
-          _v = lua_isnumber(L,argv[2]);
-        }
-        if (_v) {
-          return _wrap_CGUIWidget_SetAnchorPoint__SWIG_1(L);
-        }
-      }
-    }
-  }
-  
-  lua_pushstring(L,"Wrong arguments for overloaded function 'CGUIWidget_SetAnchorPoint'\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    SetAnchorPoint(guiex::CGUIWidget *,guiex::CGUIVector2 const &)\n"
-    "    SetAnchorPoint(guiex::CGUIWidget *,guiex::real,guiex::real)\n");
-  lua_error(L);return 0;
 }
 
 
@@ -10980,6 +10462,29 @@ fail:
 }
 
 
+static int _wrap_CGUIWidget_Refresh(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
+  
+  SWIG_check_num_args("Refresh",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Refresh",1,"guiex::CGUIWidget *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
+    SWIG_fail_ptr("CGUIWidget_Refresh",1,SWIGTYPE_p_guiex__CGUIWidget);
+  }
+  
+  (arg1)->Refresh();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static swig_lua_method swig_guiex_CGUIWidget_methods[] = {
     {"IsCreate", _wrap_CGUIWidget_IsCreate}, 
     {"Open", _wrap_CGUIWidget_Open}, 
@@ -11100,6 +10605,7 @@ static swig_lua_method swig_guiex_CGUIWidget_methods[] = {
     {"IsGenerateMultiClickEvent", _wrap_CGUIWidget_IsGenerateMultiClickEvent}, 
     {"SetTextContentUTF8", _wrap_CGUIWidget_SetTextContentUTF8}, 
     {"GetTextContentUTF8", _wrap_CGUIWidget_GetTextContentUTF8}, 
+    {"Refresh", _wrap_CGUIWidget_Refresh}, 
     {0,0}
 };
 static swig_lua_attribute swig_guiex_CGUIWidget_attributes[] = {
@@ -12049,6 +11555,56 @@ fail:
 }
 
 
+static int _wrap_CGUISystem_EnableClip(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  bool arg2 ;
+  
+  SWIG_check_num_args("EnableClip",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("EnableClip",1,"guiex::CGUISystem *");
+  if(!lua_isboolean(L,2)) SWIG_fail_arg("EnableClip",2,"bool");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_EnableClip",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  arg2 = (lua_toboolean(L, 2)!=0);
+  (arg1)->EnableClip(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUISystem_IsEnableClip(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
+  bool result;
+  
+  SWIG_check_num_args("IsEnableClip",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsEnableClip",1,"guiex::CGUISystem const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUISystem,0))){
+    SWIG_fail_ptr("CGUISystem_IsEnableClip",1,SWIGTYPE_p_guiex__CGUISystem);
+  }
+  
+  result = (bool)((guiex::CGUISystem const *)arg1)->IsEnableClip();
+  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_CGUISystem_GetDataPath(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUISystem *arg1 = (guiex::CGUISystem *) 0 ;
@@ -12443,6 +11999,8 @@ fail:
 static swig_lua_method swig_guiex_CGUISystem_methods[] = {
     {"SetDrawExtraInfo", _wrap_CGUISystem_SetDrawExtraInfo}, 
     {"IsDrawExtraInfo", _wrap_CGUISystem_IsDrawExtraInfo}, 
+    {"EnableClip", _wrap_CGUISystem_EnableClip}, 
+    {"IsEnableClip", _wrap_CGUISystem_IsEnableClip}, 
     {"GetDataPath", _wrap_CGUISystem_GetDataPath}, 
     {"GenerateAnonymousName", _wrap_CGUISystem_GenerateAnonymousName}, 
     {"GetFocusWidget", _wrap_CGUISystem_GetFocusWidget}, 
@@ -13358,8 +12916,8 @@ static void *_p_guiex__CGUIWgtEditBoxTo_p_guiex__CGUIWgtTextBase(void *x, int *S
 static void *_p_guiex__CGUIWgtStaticTextTo_p_guiex__CGUIWgtTextBase(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((guiex::CGUIWgtTextBase *)  ((guiex::CGUIWgtStaticText *) x));
 }
-static void *_p_guiex__CGUIAsRotationTo_p_guiex__CGUIAsInterpolationT_guiex__CGUIVector3_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((guiex::CGUIAsInterpolation< guiex::CGUIVector3 > *)  ((guiex::CGUIAsRotation *) x));
+static void *_p_guiex__CGUIAsWidgetRotationTo_p_guiex__CGUIAsInterpolationT_guiex__CGUIVector3_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIAsInterpolation< guiex::CGUIVector3 > *)  ((guiex::CGUIAsWidgetRotation *) x));
 }
 static void *_p_guiex__CGUIAsInterpolationT_guiex__CGUIVector2_tTo_p_guiex__CGUIAs(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((guiex::CGUIAs *)  ((guiex::CGUIAsInterpolation< guiex::CGUIVector2 > *) x));
@@ -13367,11 +12925,11 @@ static void *_p_guiex__CGUIAsInterpolationT_guiex__CGUIVector2_tTo_p_guiex__CGUI
 static void *_p_guiex__CGUIAsInterpolationT_guiex__CGUISize_tTo_p_guiex__CGUIAs(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((guiex::CGUIAs *)  ((guiex::CGUIAsInterpolation< guiex::CGUISize > *) x));
 }
-static void *_p_guiex__CGUIAsPositionTo_p_guiex__CGUIAs(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((guiex::CGUIAs *) (guiex::CGUIAsInterpolation< guiex::CGUIVector2 > *) ((guiex::CGUIAsPosition *) x));
+static void *_p_guiex__CGUIAsWidgetScaleTo_p_guiex__CGUIAs(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIAs *) (guiex::CGUIAsInterpolation< guiex::CGUISize > *) ((guiex::CGUIAsWidgetScale *) x));
 }
-static void *_p_guiex__CGUIAsColorTo_p_guiex__CGUIAs(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((guiex::CGUIAs *) (guiex::CGUIAsInterpolation< guiex::CGUIColor > *) ((guiex::CGUIAsColor *) x));
+static void *_p_guiex__CGUIAsWidgetPositionTo_p_guiex__CGUIAs(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIAs *) (guiex::CGUIAsInterpolation< guiex::CGUIVector2 > *) ((guiex::CGUIAsWidgetPosition *) x));
 }
 static void *_p_guiex__CGUIAsInterpolationT_float_tTo_p_guiex__CGUIAs(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((guiex::CGUIAs *)  ((guiex::CGUIAsInterpolation< float > *) x));
@@ -13379,8 +12937,11 @@ static void *_p_guiex__CGUIAsInterpolationT_float_tTo_p_guiex__CGUIAs(void *x, i
 static void *_p_guiex__CGUIAsInterpolationT_guiex__CGUIVector3_tTo_p_guiex__CGUIAs(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((guiex::CGUIAs *)  ((guiex::CGUIAsInterpolation< guiex::CGUIVector3 > *) x));
 }
-static void *_p_guiex__CGUIAsAlphaTo_p_guiex__CGUIAs(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((guiex::CGUIAs *) (guiex::CGUIAsInterpolation< guiex::real > *) ((guiex::CGUIAsAlpha *) x));
+static void *_p_guiex__CGUIAsWidgetColorTo_p_guiex__CGUIAs(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIAs *) (guiex::CGUIAsInterpolation< guiex::CGUIColor > *) ((guiex::CGUIAsWidgetColor *) x));
+}
+static void *_p_guiex__CGUIAsWidgetAlphaTo_p_guiex__CGUIAs(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIAs *) (guiex::CGUIAsInterpolation< guiex::real > *) ((guiex::CGUIAsWidgetAlpha *) x));
 }
 static void *_p_guiex__CGUIAsInterpolationT_guiex__CGUIColor_tTo_p_guiex__CGUIAs(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((guiex::CGUIAs *)  ((guiex::CGUIAsInterpolation< guiex::CGUIColor > *) x));
@@ -13388,11 +12949,8 @@ static void *_p_guiex__CGUIAsInterpolationT_guiex__CGUIColor_tTo_p_guiex__CGUIAs
 static void *_p_guiex__CGUIAsContainerTo_p_guiex__CGUIAs(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((guiex::CGUIAs *)  ((guiex::CGUIAsContainer *) x));
 }
-static void *_p_guiex__CGUIAsScaleTo_p_guiex__CGUIAs(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((guiex::CGUIAs *) (guiex::CGUIAsInterpolation< guiex::CGUISize > *) ((guiex::CGUIAsScale *) x));
-}
-static void *_p_guiex__CGUIAsRotationTo_p_guiex__CGUIAs(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((guiex::CGUIAs *) (guiex::CGUIAsInterpolation< guiex::CGUIVector3 > *) ((guiex::CGUIAsRotation *) x));
+static void *_p_guiex__CGUIAsWidgetRotationTo_p_guiex__CGUIAs(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIAs *) (guiex::CGUIAsInterpolation< guiex::CGUIVector3 > *) ((guiex::CGUIAsWidgetRotation *) x));
 }
 static void *_p_guiex__CGUIWgtBox2DBodyBaseTo_p_guiex__CGUIWgtBox2DBase(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((guiex::CGUIWgtBox2DBase *)  ((guiex::CGUIWgtBox2DBodyBase *) x));
@@ -13403,8 +12961,8 @@ static void *_p_guiex__CGUIWgtBox2DDynamicBodyTo_p_guiex__CGUIWgtBox2DBase(void 
 static void *_p_guiex__CGUIWgtBox2DStaticBodyTo_p_guiex__CGUIWgtBox2DBase(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((guiex::CGUIWgtBox2DBase *) (guiex::CGUIWgtBox2DBodyBase *) ((guiex::CGUIWgtBox2DStaticBody *) x));
 }
-static void *_p_guiex__CGUIAsScaleTo_p_guiex__CGUIAsInterpolationT_guiex__CGUISize_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((guiex::CGUIAsInterpolation< guiex::CGUISize > *)  ((guiex::CGUIAsScale *) x));
+static void *_p_guiex__CGUIAsWidgetScaleTo_p_guiex__CGUIAsInterpolationT_guiex__CGUISize_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIAsInterpolation< guiex::CGUISize > *)  ((guiex::CGUIAsWidgetScale *) x));
 }
 static void *_p_guiex__CGUIEventTimerTo_p_guiex__CGUIEvent(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((guiex::CGUIEvent *)  ((guiex::CGUIEventTimer *) x));
@@ -13433,14 +12991,14 @@ static void *_p_guiex__CGUIEventDragTo_p_guiex__CGUIEvent(void *x, int *SWIGUNUS
 static void *_p_guiex__CGUIEventUITo_p_guiex__CGUIEvent(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((guiex::CGUIEvent *)  ((guiex::CGUIEventUI *) x));
 }
-static void *_p_guiex__CGUIAsColorTo_p_guiex__CGUIAsInterpolationT_guiex__CGUIColor_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((guiex::CGUIAsInterpolation< guiex::CGUIColor > *)  ((guiex::CGUIAsColor *) x));
+static void *_p_guiex__CGUIAsWidgetColorTo_p_guiex__CGUIAsInterpolationT_guiex__CGUIColor_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIAsInterpolation< guiex::CGUIColor > *)  ((guiex::CGUIAsWidgetColor *) x));
 }
-static void *_p_guiex__CGUIAsPositionTo_p_guiex__CGUIAsInterpolationT_guiex__CGUIVector2_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((guiex::CGUIAsInterpolation< guiex::CGUIVector2 > *)  ((guiex::CGUIAsPosition *) x));
+static void *_p_guiex__CGUIAsWidgetPositionTo_p_guiex__CGUIAsInterpolationT_guiex__CGUIVector2_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIAsInterpolation< guiex::CGUIVector2 > *)  ((guiex::CGUIAsWidgetPosition *) x));
 }
-static void *_p_guiex__CGUIAsAlphaTo_p_guiex__CGUIAsInterpolationT_float_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((guiex::CGUIAsInterpolation< float > *)  ((guiex::CGUIAsAlpha *) x));
+static void *_p_guiex__CGUIAsWidgetAlphaTo_p_guiex__CGUIAsInterpolationT_float_t(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIAsInterpolation< float > *)  ((guiex::CGUIAsWidgetAlpha *) x));
 }
 static void *_p_guiex__CGUIWgtStaticImageTo_p_guiex__CGUIWidget(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((guiex::CGUIWidget *)  ((guiex::CGUIWgtStaticImage *) x));
@@ -13491,17 +13049,17 @@ static swig_type_info _swigt__p_char = {"_p_char", "char *|guiex::int8 *", 0, 0,
 static swig_type_info _swigt__p_float = {"_p_float", "guiex::real *|float *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_guiex__CGUIAnimation = {"_p_guiex__CGUIAnimation", "guiex::CGUIAnimation *", 0, 0, (void*)&_wrap_class_guiex_CGUIAnimation, 0};
 static swig_type_info _swigt__p_guiex__CGUIAs = {"_p_guiex__CGUIAs", "guiex::CGUIAs *", 0, 0, (void*)&_wrap_class_guiex_CGUIAs, 0};
-static swig_type_info _swigt__p_guiex__CGUIAsAlpha = {"_p_guiex__CGUIAsAlpha", "guiex::CGUIAsAlpha *", 0, 0, (void*)&_wrap_class_guiex_CGUIAsAlpha, 0};
-static swig_type_info _swigt__p_guiex__CGUIAsColor = {"_p_guiex__CGUIAsColor", "guiex::CGUIAsColor *", 0, 0, (void*)&_wrap_class_guiex_CGUIAsColor, 0};
 static swig_type_info _swigt__p_guiex__CGUIAsContainer = {"_p_guiex__CGUIAsContainer", "guiex::CGUIAsContainer *", 0, 0, (void*)&_wrap_class_guiex_CGUIAsContainer, 0};
 static swig_type_info _swigt__p_guiex__CGUIAsInterpolationT_float_t = {"_p_guiex__CGUIAsInterpolationT_float_t", "guiex::CGUIAsInterpolation< float > *|guiex::CGUIAsInterpolation< guiex::real > *", 0, 0, (void*)&_wrap_class_guiex_CGUIAsInterpolation_Sl_guiex_real_Sg_, 0};
 static swig_type_info _swigt__p_guiex__CGUIAsInterpolationT_guiex__CGUIColor_t = {"_p_guiex__CGUIAsInterpolationT_guiex__CGUIColor_t", "guiex::CGUIAsInterpolation< guiex::CGUIColor > *", 0, 0, (void*)&_wrap_class_guiex_CGUIAsInterpolation_Sl_guiex_CGUIColor_Sg_, 0};
 static swig_type_info _swigt__p_guiex__CGUIAsInterpolationT_guiex__CGUISize_t = {"_p_guiex__CGUIAsInterpolationT_guiex__CGUISize_t", "guiex::CGUIAsInterpolation< guiex::CGUISize > *", 0, 0, (void*)&_wrap_class_guiex_CGUIAsInterpolation_Sl_guiex_CGUISize_Sg_, 0};
 static swig_type_info _swigt__p_guiex__CGUIAsInterpolationT_guiex__CGUIVector2_t = {"_p_guiex__CGUIAsInterpolationT_guiex__CGUIVector2_t", "guiex::CGUIAsInterpolation< guiex::CGUIVector2 > *", 0, 0, (void*)&_wrap_class_guiex_CGUIAsInterpolation_Sl_guiex_CGUIVector2_Sg_, 0};
 static swig_type_info _swigt__p_guiex__CGUIAsInterpolationT_guiex__CGUIVector3_t = {"_p_guiex__CGUIAsInterpolationT_guiex__CGUIVector3_t", "guiex::CGUIAsInterpolation< guiex::CGUIVector3 > *", 0, 0, (void*)&_wrap_class_guiex_CGUIAsInterpolation_Sl_guiex_CGUIVector3_Sg_, 0};
-static swig_type_info _swigt__p_guiex__CGUIAsPosition = {"_p_guiex__CGUIAsPosition", "guiex::CGUIAsPosition *", 0, 0, (void*)&_wrap_class_guiex_CGUIAsPosition, 0};
-static swig_type_info _swigt__p_guiex__CGUIAsRotation = {"_p_guiex__CGUIAsRotation", "guiex::CGUIAsRotation *", 0, 0, (void*)&_wrap_class_guiex_CGUIAsRotation, 0};
-static swig_type_info _swigt__p_guiex__CGUIAsScale = {"_p_guiex__CGUIAsScale", "guiex::CGUIAsScale *", 0, 0, (void*)&_wrap_class_guiex_CGUIAsScale, 0};
+static swig_type_info _swigt__p_guiex__CGUIAsWidgetAlpha = {"_p_guiex__CGUIAsWidgetAlpha", "guiex::CGUIAsWidgetAlpha *", 0, 0, (void*)&_wrap_class_guiex_CGUIAsWidgetAlpha, 0};
+static swig_type_info _swigt__p_guiex__CGUIAsWidgetColor = {"_p_guiex__CGUIAsWidgetColor", "guiex::CGUIAsWidgetColor *", 0, 0, (void*)&_wrap_class_guiex_CGUIAsWidgetColor, 0};
+static swig_type_info _swigt__p_guiex__CGUIAsWidgetPosition = {"_p_guiex__CGUIAsWidgetPosition", "guiex::CGUIAsWidgetPosition *", 0, 0, (void*)&_wrap_class_guiex_CGUIAsWidgetPosition, 0};
+static swig_type_info _swigt__p_guiex__CGUIAsWidgetRotation = {"_p_guiex__CGUIAsWidgetRotation", "guiex::CGUIAsWidgetRotation *", 0, 0, (void*)&_wrap_class_guiex_CGUIAsWidgetRotation, 0};
+static swig_type_info _swigt__p_guiex__CGUIAsWidgetScale = {"_p_guiex__CGUIAsWidgetScale", "guiex::CGUIAsWidgetScale *", 0, 0, (void*)&_wrap_class_guiex_CGUIAsWidgetScale, 0};
 static swig_type_info _swigt__p_guiex__CGUIColor = {"_p_guiex__CGUIColor", "guiex::CGUIColor *", 0, 0, (void*)&_wrap_class_guiex_CGUIColor, 0};
 static swig_type_info _swigt__p_guiex__CGUIColorRect = {"_p_guiex__CGUIColorRect", "guiex::CGUIColorRect *", 0, 0, (void*)&_wrap_class_guiex_CGUIColorRect, 0};
 static swig_type_info _swigt__p_guiex__CGUIEvent = {"_p_guiex__CGUIEvent", "guiex::CGUIEvent *", 0, 0, (void*)&_wrap_class_guiex_CGUIEvent, 0};
@@ -13557,17 +13115,17 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_float,
   &_swigt__p_guiex__CGUIAnimation,
   &_swigt__p_guiex__CGUIAs,
-  &_swigt__p_guiex__CGUIAsAlpha,
-  &_swigt__p_guiex__CGUIAsColor,
   &_swigt__p_guiex__CGUIAsContainer,
   &_swigt__p_guiex__CGUIAsInterpolationT_float_t,
   &_swigt__p_guiex__CGUIAsInterpolationT_guiex__CGUIColor_t,
   &_swigt__p_guiex__CGUIAsInterpolationT_guiex__CGUISize_t,
   &_swigt__p_guiex__CGUIAsInterpolationT_guiex__CGUIVector2_t,
   &_swigt__p_guiex__CGUIAsInterpolationT_guiex__CGUIVector3_t,
-  &_swigt__p_guiex__CGUIAsPosition,
-  &_swigt__p_guiex__CGUIAsRotation,
-  &_swigt__p_guiex__CGUIAsScale,
+  &_swigt__p_guiex__CGUIAsWidgetAlpha,
+  &_swigt__p_guiex__CGUIAsWidgetColor,
+  &_swigt__p_guiex__CGUIAsWidgetPosition,
+  &_swigt__p_guiex__CGUIAsWidgetRotation,
+  &_swigt__p_guiex__CGUIAsWidgetScale,
   &_swigt__p_guiex__CGUIColor,
   &_swigt__p_guiex__CGUIColorRect,
   &_swigt__p_guiex__CGUIEvent,
@@ -13622,18 +13180,18 @@ static swig_type_info *swig_type_initial[] = {
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_float[] = {  {&_swigt__p_float, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUIAnimation[] = {  {&_swigt__p_guiex__CGUIAnimation, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_guiex__CGUIAs[] = {  {&_swigt__p_guiex__CGUIAs, 0, 0, 0},  {&_swigt__p_guiex__CGUIAsPosition, _p_guiex__CGUIAsPositionTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIAsColor, _p_guiex__CGUIAsColorTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIAsInterpolationT_guiex__CGUIVector3_t, _p_guiex__CGUIAsInterpolationT_guiex__CGUIVector3_tTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIAsAlpha, _p_guiex__CGUIAsAlphaTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIAsInterpolationT_guiex__CGUIColor_t, _p_guiex__CGUIAsInterpolationT_guiex__CGUIColor_tTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIAsInterpolationT_guiex__CGUIVector2_t, _p_guiex__CGUIAsInterpolationT_guiex__CGUIVector2_tTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIAsInterpolationT_guiex__CGUISize_t, _p_guiex__CGUIAsInterpolationT_guiex__CGUISize_tTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIAsContainer, _p_guiex__CGUIAsContainerTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIAsRotation, _p_guiex__CGUIAsRotationTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIAsScale, _p_guiex__CGUIAsScaleTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIAsInterpolationT_float_t, _p_guiex__CGUIAsInterpolationT_float_tTo_p_guiex__CGUIAs, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_guiex__CGUIAsAlpha[] = {  {&_swigt__p_guiex__CGUIAsAlpha, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_guiex__CGUIAsColor[] = {  {&_swigt__p_guiex__CGUIAsColor, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIAs[] = {  {&_swigt__p_guiex__CGUIAs, 0, 0, 0},  {&_swigt__p_guiex__CGUIAsWidgetScale, _p_guiex__CGUIAsWidgetScaleTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIAsWidgetPosition, _p_guiex__CGUIAsWidgetPositionTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIAsInterpolationT_guiex__CGUIVector3_t, _p_guiex__CGUIAsInterpolationT_guiex__CGUIVector3_tTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIAsInterpolationT_guiex__CGUIColor_t, _p_guiex__CGUIAsInterpolationT_guiex__CGUIColor_tTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIAsWidgetColor, _p_guiex__CGUIAsWidgetColorTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIAsWidgetAlpha, _p_guiex__CGUIAsWidgetAlphaTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIAsInterpolationT_guiex__CGUIVector2_t, _p_guiex__CGUIAsInterpolationT_guiex__CGUIVector2_tTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIAsInterpolationT_guiex__CGUISize_t, _p_guiex__CGUIAsInterpolationT_guiex__CGUISize_tTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIAsContainer, _p_guiex__CGUIAsContainerTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIAsWidgetRotation, _p_guiex__CGUIAsWidgetRotationTo_p_guiex__CGUIAs, 0, 0},  {&_swigt__p_guiex__CGUIAsInterpolationT_float_t, _p_guiex__CGUIAsInterpolationT_float_tTo_p_guiex__CGUIAs, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUIAsContainer[] = {  {&_swigt__p_guiex__CGUIAsContainer, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_guiex__CGUIAsInterpolationT_float_t[] = {  {&_swigt__p_guiex__CGUIAsAlpha, _p_guiex__CGUIAsAlphaTo_p_guiex__CGUIAsInterpolationT_float_t, 0, 0},  {&_swigt__p_guiex__CGUIAsInterpolationT_float_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_guiex__CGUIAsInterpolationT_guiex__CGUIColor_t[] = {  {&_swigt__p_guiex__CGUIAsColor, _p_guiex__CGUIAsColorTo_p_guiex__CGUIAsInterpolationT_guiex__CGUIColor_t, 0, 0},  {&_swigt__p_guiex__CGUIAsInterpolationT_guiex__CGUIColor_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_guiex__CGUIAsInterpolationT_guiex__CGUISize_t[] = {  {&_swigt__p_guiex__CGUIAsInterpolationT_guiex__CGUISize_t, 0, 0, 0},  {&_swigt__p_guiex__CGUIAsScale, _p_guiex__CGUIAsScaleTo_p_guiex__CGUIAsInterpolationT_guiex__CGUISize_t, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_guiex__CGUIAsInterpolationT_guiex__CGUIVector2_t[] = {  {&_swigt__p_guiex__CGUIAsPosition, _p_guiex__CGUIAsPositionTo_p_guiex__CGUIAsInterpolationT_guiex__CGUIVector2_t, 0, 0},  {&_swigt__p_guiex__CGUIAsInterpolationT_guiex__CGUIVector2_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_guiex__CGUIAsInterpolationT_guiex__CGUIVector3_t[] = {  {&_swigt__p_guiex__CGUIAsInterpolationT_guiex__CGUIVector3_t, 0, 0, 0},  {&_swigt__p_guiex__CGUIAsRotation, _p_guiex__CGUIAsRotationTo_p_guiex__CGUIAsInterpolationT_guiex__CGUIVector3_t, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_guiex__CGUIAsPosition[] = {  {&_swigt__p_guiex__CGUIAsPosition, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_guiex__CGUIAsRotation[] = {  {&_swigt__p_guiex__CGUIAsRotation, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_guiex__CGUIAsScale[] = {  {&_swigt__p_guiex__CGUIAsScale, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIAsInterpolationT_float_t[] = {  {&_swigt__p_guiex__CGUIAsWidgetAlpha, _p_guiex__CGUIAsWidgetAlphaTo_p_guiex__CGUIAsInterpolationT_float_t, 0, 0},  {&_swigt__p_guiex__CGUIAsInterpolationT_float_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIAsInterpolationT_guiex__CGUIColor_t[] = {  {&_swigt__p_guiex__CGUIAsInterpolationT_guiex__CGUIColor_t, 0, 0, 0},  {&_swigt__p_guiex__CGUIAsWidgetColor, _p_guiex__CGUIAsWidgetColorTo_p_guiex__CGUIAsInterpolationT_guiex__CGUIColor_t, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIAsInterpolationT_guiex__CGUISize_t[] = {  {&_swigt__p_guiex__CGUIAsWidgetScale, _p_guiex__CGUIAsWidgetScaleTo_p_guiex__CGUIAsInterpolationT_guiex__CGUISize_t, 0, 0},  {&_swigt__p_guiex__CGUIAsInterpolationT_guiex__CGUISize_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIAsInterpolationT_guiex__CGUIVector2_t[] = {  {&_swigt__p_guiex__CGUIAsWidgetPosition, _p_guiex__CGUIAsWidgetPositionTo_p_guiex__CGUIAsInterpolationT_guiex__CGUIVector2_t, 0, 0},  {&_swigt__p_guiex__CGUIAsInterpolationT_guiex__CGUIVector2_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIAsInterpolationT_guiex__CGUIVector3_t[] = {  {&_swigt__p_guiex__CGUIAsInterpolationT_guiex__CGUIVector3_t, 0, 0, 0},  {&_swigt__p_guiex__CGUIAsWidgetRotation, _p_guiex__CGUIAsWidgetRotationTo_p_guiex__CGUIAsInterpolationT_guiex__CGUIVector3_t, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIAsWidgetAlpha[] = {  {&_swigt__p_guiex__CGUIAsWidgetAlpha, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIAsWidgetColor[] = {  {&_swigt__p_guiex__CGUIAsWidgetColor, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIAsWidgetPosition[] = {  {&_swigt__p_guiex__CGUIAsWidgetPosition, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIAsWidgetRotation[] = {  {&_swigt__p_guiex__CGUIAsWidgetRotation, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIAsWidgetScale[] = {  {&_swigt__p_guiex__CGUIAsWidgetScale, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUIColor[] = {  {&_swigt__p_guiex__CGUIColor, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUIColorRect[] = {  {&_swigt__p_guiex__CGUIColorRect, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUIEvent[] = {  {&_swigt__p_guiex__CGUIEventTimer, _p_guiex__CGUIEventTimerTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEventNotification, _p_guiex__CGUIEventNotificationTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEventKeyboard, _p_guiex__CGUIEventKeyboardTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEvent, 0, 0, 0},  {&_swigt__p_guiex__CGUIEventScrollbar, _p_guiex__CGUIEventScrollbarTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEventSize, _p_guiex__CGUIEventSizeTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEventMouse, _p_guiex__CGUIEventMouseTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEventAlpha, _p_guiex__CGUIEventAlphaTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEventDrag, _p_guiex__CGUIEventDragTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEventUI, _p_guiex__CGUIEventUITo_p_guiex__CGUIEvent, 0, 0},{0, 0, 0, 0}};
@@ -13689,17 +13247,17 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_float,
   _swigc__p_guiex__CGUIAnimation,
   _swigc__p_guiex__CGUIAs,
-  _swigc__p_guiex__CGUIAsAlpha,
-  _swigc__p_guiex__CGUIAsColor,
   _swigc__p_guiex__CGUIAsContainer,
   _swigc__p_guiex__CGUIAsInterpolationT_float_t,
   _swigc__p_guiex__CGUIAsInterpolationT_guiex__CGUIColor_t,
   _swigc__p_guiex__CGUIAsInterpolationT_guiex__CGUISize_t,
   _swigc__p_guiex__CGUIAsInterpolationT_guiex__CGUIVector2_t,
   _swigc__p_guiex__CGUIAsInterpolationT_guiex__CGUIVector3_t,
-  _swigc__p_guiex__CGUIAsPosition,
-  _swigc__p_guiex__CGUIAsRotation,
-  _swigc__p_guiex__CGUIAsScale,
+  _swigc__p_guiex__CGUIAsWidgetAlpha,
+  _swigc__p_guiex__CGUIAsWidgetColor,
+  _swigc__p_guiex__CGUIAsWidgetPosition,
+  _swigc__p_guiex__CGUIAsWidgetRotation,
+  _swigc__p_guiex__CGUIAsWidgetScale,
   _swigc__p_guiex__CGUIColor,
   _swigc__p_guiex__CGUIColorRect,
   _swigc__p_guiex__CGUIEvent,

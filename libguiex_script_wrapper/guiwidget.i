@@ -114,9 +114,7 @@ namespace guiex
 		const CGUIString& GetScriptCallbackFunc(const CGUIString& strEventName) const;
 
 		void SetPosition( real x, real y );
-		void SetPosition( const CGUIVector2&rPos );
 		const CGUIVector2& GetPosition() const; 
-		void SetPixelPosition( const CGUIVector2& rPixelPos );
 		void SetPixelPosition( real x, real y );
 		const CGUIVector2& GetPixelPosition() const;
 
@@ -124,17 +122,14 @@ namespace guiex
 		EScreenValue GetPositionType( ) const; 
 
 		void SetSize( real width, real height );
-		void SetSize( const CGUISize& rSize );
 		const CGUISize&	GetSize() const;
 		void SetPixelSize( real width, real height );
-		void SetPixelSize( const CGUISize& rPixelSize );
 		const CGUISize&	GetPixelSize() const;
 
 		void SetSizeType( EScreenValue eValueType );
 		EScreenValue GetSizeType( ) const;
 
 		void SetRotation(real x, real y, real z);
-		void SetRotation(const CGUIVector3& rRotation);
 		const CGUIVector3& GetRotation( ) const;
 
 		void LocalToWorld( CGUIVector2& rPos );
@@ -151,7 +146,6 @@ namespace guiex
 
 
 		const CGUIVector2& GetAnchorPoint();
-		void SetAnchorPoint(const CGUIVector2&rAnchorPoint);
 		void SetAnchorPoint(real x, real y);
 
 		void SetMaximumSize(const CGUISize& rSize);	
@@ -198,6 +192,8 @@ namespace guiex
 		
 		void SetTextContentUTF8( const CGUIString& rString);
 		CGUIString GetTextContentUTF8( ) const;	
+
+		virtual void Refresh( );
 
 	protected:
 		CGUIWidget();

@@ -71,11 +71,12 @@ namespace guiex
 		RegisterPropertyType( ePropertyType_As, "CGUIAs" );
 		RegisterPropertyType( ePropertyType_Animation, "CGUIAnimation" );
 
-		RegisterPropertyType( ePropertyType_AsColor, "CGUIAsColor" );
-		RegisterPropertyType( ePropertyType_AsScale, "CGUIAsScale" );
-		RegisterPropertyType( ePropertyType_AsPosition, "CGUIAsPosition" );
-		RegisterPropertyType( ePropertyType_AsRotation, "CGUIAsRotation" );
-		RegisterPropertyType( ePropertyType_AsAlpha, "CGUIAsAlpha" );
+		RegisterPropertyType( ePropertyType_AsWidgetColor, "CGUIAsWidgetColor" );
+		RegisterPropertyType( ePropertyType_AsWidgetScale, "CGUIAsWidgetScale" );
+		RegisterPropertyType( ePropertyType_AsWidgetPosition, "CGUIAsWidgetPosition" );
+		RegisterPropertyType( ePropertyType_AsWidgetRotation, "CGUIAsWidgetRotation" );
+		RegisterPropertyType( ePropertyType_AsWidgetAlpha, "CGUIAsWidgetAlpha" );
+		RegisterPropertyType( ePropertyType_AsWidgetSize, "CGUIAsWidgetSize" );
 		RegisterPropertyType( ePropertyType_AsContainer, "CGUIAsContainer" );
 		RegisterPropertyType( ePropertyType_AsContainerItemInfo, "CGUIAsContainerItemInfo" );
 

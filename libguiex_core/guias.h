@@ -191,189 +191,6 @@ namespace guiex
 		GUI_AS_GENERATOR_DECLARE( CGUIAsInterpolation );
 	};
 
-	//*****************************************************************************
-	//	CGUIAsInterpolationQueue
-	//*****************************************************************************
-	template< class T >
-	class CGUIAsInterpolationQueue : public CGUIAs
-	{
-	protected:
-		CGUIAsInterpolationQueue(const CGUIString& rAsName, const CGUIString& rSceneName);
-		virtual ~CGUIAsInterpolationQueue( );
-
-	public:
-		virtual void Reset( );
-
-		void AddItem( CGUIAsInterpolation<T>* pAs );
-		const T& GetCurrentValue() const;
-
-	protected:
-		virtual void OnUpdate();
-
-	private:
-		class CGUIQueueItemInfo
-		{
-		public:
-			CGUIAsInterpolation<T>* m_pAs;
-			real m_fBeginTime;
-			CGUIQueueItemInfo()
-				:m_fBeginTime( 0.0f )
-				,m_pAs(NULL)
-			{
-			}
-		};
-		typedef std::vector<CGUIQueueItemInfo> TAsQueue;
-		TAsQueue m_vAsQueue;
-
-		T m_aCurValue;
-
-		GUI_AS_GENERATOR_DECLARE( CGUIAsInterpolationQueue );
-	};
-
-
-	//*****************************************************************************
-	//	CGUIAsAlpha
-	//*****************************************************************************
-	/**
-	* @class CGUIAsAlpha
-	* @brief the as, change alpha of widget
-	*/
-	class GUIEXPORT CGUIAsAlpha : public CGUIAsInterpolation<real>
-	{
-	protected:
-		CGUIAsAlpha(const CGUIString& rAsName, const CGUIString& rSceneName);
-
-	protected:
-		virtual void OnUpdate();
-
-		GUI_AS_GENERATOR_DECLARE( CGUIAsAlpha);
-	};
-
-
-	//*****************************************************************************
-	//	CGUIAsScale
-	//*****************************************************************************
-	/**
-	* @class CGUIAsScale
-	* @brief the as, change scale of widget
-	*/
-	class GUIEXPORT CGUIAsScale : public CGUIAsInterpolation<CGUISize>
-	{
-	protected:
-		CGUIAsScale(const CGUIString& rAsName, const CGUIString& rSceneName);
-
-	protected:
-		virtual void OnUpdate();
-
-		GUI_AS_GENERATOR_DECLARE( CGUIAsScale);
-	};
-
-
-	//*****************************************************************************
-	//	CGUIAsRotation
-	//*****************************************************************************
-	/**
-	* @class CGUIAsRotation
-	* @brief the as, change rotation of widget
-	*/
-	class GUIEXPORT CGUIAsRotation : public CGUIAsInterpolation<CGUIVector3>
-	{
-	protected:
-		CGUIAsRotation(const CGUIString& rAsName, const CGUIString& rSceneName);
-
-	protected:
-		virtual void OnUpdate();
-
-		GUI_AS_GENERATOR_DECLARE( CGUIAsRotation);
-	};
-
-
-	//*****************************************************************************
-	//	CGUIAsPosition
-	//*****************************************************************************
-	/**
-	* @class CGUIAsPosition
-	* @brief the as, change scale of widget
-	*/
-	class GUIEXPORT CGUIAsPosition : public CGUIAsInterpolation<CGUIVector2>
-	{
-	protected:
-		CGUIAsPosition(const CGUIString& rAsName, const CGUIString& rSceneName);
-
-	protected:
-		virtual void OnUpdate();
-
-		GUI_AS_GENERATOR_DECLARE( CGUIAsPosition);
-	};
-
-
-	//*****************************************************************************
-	//	CGUIAsColor
-	//*****************************************************************************
-	/**
-	* @class CGUIAsColor
-	* @brief the as, change color of widget
-	*/
-	class GUIEXPORT CGUIAsColor : public CGUIAsInterpolation<CGUIColor>
-	{
-	protected:
-		CGUIAsColor(const CGUIString& rAsName, const CGUIString& rSceneName);
-
-	protected:
-		virtual void OnUpdate();
-
-		GUI_AS_GENERATOR_DECLARE( CGUIAsColor);
-	};
-
-
-	//*****************************************************************************
-	//	CGUIAsContainer
-	//*****************************************************************************
-	class CGUIAsContainItemInfo
-	{
-	public:
-		CGUIAs* m_pAs;
-		real m_fBeginTime;
-
-		CGUIAsContainItemInfo()
-			:m_pAs( NULL )
-			,m_fBeginTime( 0.0f )
-		{
-		}
-	};
-
-
-	//*****************************************************************************
-	//	CGUIAsContainer
-	//*****************************************************************************
-	class GUIEXPORT CGUIAsContainer : public CGUIAs
-	{
-	protected:
-		CGUIAsContainer(const CGUIString& rAsName, const CGUIString& rSceneName);
-		virtual ~CGUIAsContainer( );
-
-	public:
-		virtual void Reset( );
-
-		virtual int32 ProcessProperty( const CGUIProperty& rProperty );
-		virtual int32 GenerateProperty( CGUIProperty& rProperty );
-
-		virtual void SetReceiver(CGUIWidget* pReceiver);
-
-		void AddItem( CGUIAsContainItemInfo& rItemInfo );
-		void AddItem( CGUIAs* pAs, real fBeginTime );
-
-	protected:
-		virtual void OnUpdate();
-
-	private:
-		typedef std::vector<CGUIAsContainItemInfo> TAsList;
-		TAsList m_vAsList;//the as in this list should be sorted by begin time
-
-		GUI_AS_GENERATOR_DECLARE( CGUIAsContainer);
-	};
-
-	
 
 	//*****************************************************************************
 	//	CGUIAsCallFunc
@@ -397,32 +214,6 @@ namespace guiex
 		GUI_AS_GENERATOR_DECLARE( CGUIAsCallFunc);
 	};
 
-	//*****************************************************************************
-	//	CGUIAsMoveTo
-	//*****************************************************************************
-	/**
-	* @class CGUIAsMoveTo
-	* @brief move widget to destination with given velocity.
-	*/
-	class GUIEXPORT CGUIAsMoveTo : public CGUIAs
-	{
-	public:
-		void SetVelocity( real fVelocity );
-		real GetVelocity( ) const;
-		void SetDestination( const CGUIVector2& rDestination );
-		const CGUIVector2& GetDestination( ) const;
-
-		virtual real Update( real fDeltaTime );
-
-	protected:
-		CGUIAsMoveTo(const CGUIString& rAsName, const CGUIString& rSceneName);
-
-	private:
-		real m_fVelocity; //velocity per second
-		CGUIVector2 m_aDestination;
-
-		GUI_AS_GENERATOR_DECLARE( CGUIAsMoveTo);
-	};
 }//namespace guiex
 
 
@@ -527,7 +318,7 @@ namespace guiex
 	inline int32 CGUIAsInterpolation<T>::ProcessProperty( const CGUIProperty& rProperty )
 	{
 		/*
-		*<property name="asname" type="CGUIAsColor">
+		*<property name="asname" type="CGUIAsWidgetColor">
 		*		<property name="loop" type="bool" value="false"/>
 		*		<property name="total_time" type="real" value="10" />
 		*		<property name="elapsed_time" type="real" value="5" />
@@ -590,12 +381,12 @@ namespace guiex
 	inline int32 CGUIAsInterpolation<T>::GenerateProperty( CGUIProperty& rProperty )
 	{
 		/*
-		*<property name="asname" type="CGUIAsColor">
+		*<property name="asname" type="CGUIAsWidgetColor">
 		*		<property name="loop" type="bool" value="false"/>
 		*		<property name="total_time" type="real" value="10" />
 		*		<property name="elapsed_time" type="real" value="5" />
 		*
-		*		<property name="interpolation" type="EInterpolationType" value="0,0,0" />
+		*		<property name="interpolation" type="EInterpolationType" value="eInterpolationType_Linear" />
 		*		<property name="begin_value" type="CGUIVector3" value="0,0,0" />
 		*		<property name="end_value" type="CGUIVector3" value="0,0,0" />
 		*</property>
@@ -624,98 +415,6 @@ namespace guiex
 			rProperty.AddProperty( aProperty );
 		}
 		return 0;
-	}
-	//------------------------------------------------------------------------------
-
-
-	//------------------------------------------------------------------------------
-	// CGUIAsInterpolationQueue
-	//------------------------------------------------------------------------------
-	template< class T >
-	inline CGUIAsInterpolationQueue<T>::CGUIAsInterpolationQueue( const CGUIString& rAsName, const CGUIString& rSceneName )
-		:CGUIAs("CGUIAsInterpolationQueue", rAsName, rSceneName)
-	{
-	}
-	//------------------------------------------------------------------------------
-	template< class T >
-	inline CGUIAsInterpolationQueue<T>::~CGUIAsInterpolationQueue( )
-	{
-		for( typename TAsQueue::iterator itor = m_vAsQueue.begin();
-			itor != m_vAsQueue.end();
-			++itor )
-		{
-			(*itor).m_pAs->RefRelease();
-		}
-		m_vAsQueue.clear();
-	}
-	//------------------------------------------------------------------------------
-	template< class T >
-	inline void CGUIAsInterpolationQueue<T>::Reset( )
-	{
-		CGUIAs::Reset();
-		for( typename TAsQueue::iterator itor = m_vAsQueue.begin();
-			itor != m_vAsQueue.end();
-			++itor )
-		{
-			(*itor).m_pAs->Reset();
-		}
-	}
-	//------------------------------------------------------------------------------
-	template< class T >
-	inline void CGUIAsInterpolationQueue<T>::OnUpdate( )
-	{
-		CGUIAs::OnUpdate( );
-
-		for( typename TAsQueue::iterator itor = m_vAsQueue.begin();
-			itor != m_vAsQueue.end();
-			++itor )
-		{
-			CGUIQueueItemInfo &rInfo = *itor;
-			if( rInfo.m_fBeginTime > GetElapsedTime() )
-			{
-				//update done
-				break;
-			}
-
-			if( rInfo.m_fBeginTime + rInfo.m_pAs->GetTotalTime() < GetElapsedTime() )
-			{
-				continue;
-			}
-
-			rInfo.m_pAs->SetElapsedTime( GetElapsedTime() - rInfo.m_fBeginTime );
-			rInfo.m_pAs->Update( 0.0f );
-			m_aCurValue = rInfo.m_pAs->GetCurrentValue();
-		}
-	}
-	//------------------------------------------------------------------------------
-	template< class T >
-	inline void CGUIAsInterpolationQueue<T>::AddItem( CGUIAsInterpolation<T>* pAs )
-	{
-		CGUIQueueItemInfo aNewInfo;
-		aNewInfo.m_pAs = pAs;
-
-		//retain
-		aNewInfo.m_pAs->RefRetain();
-
-		if( m_vAsQueue.empty() )
-		{
-			aNewInfo.m_fBeginTime = 0.0f;
-			SetTotalTime( pAs->GetTotalTime() );
-		}
-		else
-		{
-			aNewInfo.m_fBeginTime = GetTotalTime();
-			SetTotalTime( GetTotalTime() + pAs->GetTotalTime() );
-		}
-
-		//insert
-		m_vAsQueue.push_back( aNewInfo );
-	}
-	//------------------------------------------------------------------------------
-	template< class T >
-	inline const T& CGUIAsInterpolationQueue<T>::GetCurrentValue() const
-	{
-		return m_aCurValue;
 	}
 	//------------------------------------------------------------------------------
 

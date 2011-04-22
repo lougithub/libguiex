@@ -303,7 +303,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 
 	CGUIAsManager* pAsManager = CGUIAsManager::Instance();
 	{
-		CGUIAsAlpha* pAsAlpha = pAsManager->AllocateResource<CGUIAsAlpha>( );
+		CGUIAsWidgetAlpha* pAsAlpha = pAsManager->AllocateResource<CGUIAsWidgetAlpha>( );
 		pAsAlpha->SetInterpolationValue( 0, 1, 2 );
 		pAsAlpha->SetReceiver( pWidgetRoot );
 		pWidgetRoot->PlayAs( pAsAlpha );
@@ -311,14 +311,14 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	}
 
 	{
-		CGUIAsScale* pAsScale = pAsManager->AllocateResource<CGUIAsScale>( );
+		CGUIAsWidgetScale* pAsScale = pAsManager->AllocateResource<CGUIAsWidgetScale>( );
 		pAsScale->SetInterpolationValue( CGUISize(0.2f,0.2f), CGUISize(1,1), 4 );
 		pAsScale->SetReceiver( pWidget_panel );
 		pAsScale->SetInterpolationType( eInterpolationType_EaseInOut );
 		pWidget_panel->PlayAs( pAsScale );
 		pAsScale->RefRelease();
 
-		CGUIAsRotation* pAsRotation = pAsManager->AllocateResource<CGUIAsRotation>( );
+		CGUIAsWidgetRotation* pAsRotation = pAsManager->AllocateResource<CGUIAsWidgetRotation>( );
 		pAsRotation->SetInterpolationValue( CGUIVector3(0,0,360*5), CGUIVector3(), 4 );
 		pAsRotation->SetReceiver( pWidget_panel );
 		pWidget_panel->PlayAs( pAsRotation );
@@ -326,13 +326,13 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	}
 
 	{
-		CGUIAsPosition* pAsPos1 = pAsManager->AllocateResource<CGUIAsPosition>( );
+		CGUIAsWidgetPosition* pAsPos1 = pAsManager->AllocateResource<CGUIAsWidgetPosition>( );
 		pAsPos1->SetInterpolationValue( CGUIVector2(0,0), CGUIVector2(500,500), 3 );
 		pAsPos1->SetReceiver( pWidget_staticimage );
 		pWidget_staticimage->PlayAs( pAsPos1 );
 		pAsPos1->RefRelease();
 
-		CGUIAsPosition* pAsPos2 = pAsManager->AllocateResource<CGUIAsPosition>( );
+		CGUIAsWidgetPosition* pAsPos2 = pAsManager->AllocateResource<CGUIAsWidgetPosition>( );
 		pAsPos2->SetInterpolationValue( CGUIVector2(500,500), CGUIVector2(100,500), 2 );
 		pAsPos2->SetReceiver( pWidget_staticimage );
 		pAsPos1->AddSuccessor(pAsPos2);
@@ -341,24 +341,24 @@ int32 CGUIFrameworkTest::InitializeGame( )
 
 	{
 		CGUIAsContainer* pAsContainer = pAsManager->AllocateResource<CGUIAsContainer>( );
-		CGUIAsColor* pAsColor = NULL;
+		CGUIAsWidgetColor* pAsColor = NULL;
 		CGUIAsContainItemInfo aItem;
 
-		pAsColor = pAsManager->AllocateResource<CGUIAsColor>( );
+		pAsColor = pAsManager->AllocateResource<CGUIAsWidgetColor>( );
 		pAsColor->SetInterpolationValue( CGUIColor(1,0,0, 1), CGUIColor(0,1,0,1), 2 );
 		aItem.m_pAs = pAsColor;
 		aItem.m_fBeginTime = 0;
 		pAsContainer->AddItem( aItem );
 		pAsColor->RefRelease();
 
-		pAsColor = pAsManager->AllocateResource<CGUIAsColor>( );
+		pAsColor = pAsManager->AllocateResource<CGUIAsWidgetColor>( );
 		pAsColor->SetInterpolationValue( CGUIColor(0,1,0, 1), CGUIColor(0,0,1,1), 2 );
 		aItem.m_pAs = pAsColor;
 		aItem.m_fBeginTime = 2;
 		pAsContainer->AddItem( aItem );
 		pAsColor->RefRelease();
 
-		pAsColor = pAsManager->AllocateResource<CGUIAsColor>( );
+		pAsColor = pAsManager->AllocateResource<CGUIAsWidgetColor>( );
 		pAsColor->SetInterpolationValue( CGUIColor(0,0,1, 1), CGUIColor(1,0,0,1), 2 );
 		aItem.m_pAs = pAsColor;
 		aItem.m_fBeginTime = 4;
@@ -372,7 +372,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	}
 
 	{
-		CGUIAsRotation* pAsRotation = pAsManager->AllocateResource<CGUIAsRotation>( );
+		CGUIAsWidgetRotation* pAsRotation = pAsManager->AllocateResource<CGUIAsWidgetRotation>( );
 		pAsRotation->SetInterpolationValue( CGUIVector3(0,0,360), CGUIVector3(), 4 );
 		pAsRotation->SetReceiver( pWidget_staticimage );
 		pAsRotation->SetLooping( true );
@@ -381,19 +381,19 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	}
 
 	{
-		CGUIAsScale* pAsScale = pAsManager->AllocateResource<CGUIAsScale>( );
+		CGUIAsWidgetScale* pAsScale = pAsManager->AllocateResource<CGUIAsWidgetScale>( );
 		pAsScale->SetInterpolationValue( CGUISize(5,5), CGUISize(1,1), 6 );
 		pAsScale->SetReceiver( pWidget_staticimage2 );
 		pWidget_staticimage2->PlayAs( pAsScale );
 		pAsScale->RefRelease();
 
-		CGUIAsAlpha* pAsAlpha = pAsManager->AllocateResource<CGUIAsAlpha>( );
+		CGUIAsWidgetAlpha* pAsAlpha = pAsManager->AllocateResource<CGUIAsWidgetAlpha>( );
 		pAsAlpha->SetInterpolationValue( 0, 1, 3 );
 		pAsAlpha->SetReceiver( pWidget_staticimage2 );
 		pWidget_staticimage2->PlayAs( pAsAlpha );
 		pAsAlpha->RefRelease();
 
-		CGUIAsRotation* pAsRotation = pAsManager->AllocateResource<CGUIAsRotation>( );
+		CGUIAsWidgetRotation* pAsRotation = pAsManager->AllocateResource<CGUIAsWidgetRotation>( );
 		pAsRotation->SetInterpolationValue( CGUIVector3(0,0,360*2), CGUIVector3(), 4 );
 		pAsRotation->SetReceiver( pWidget_staticimage2 );
 		pWidget_staticimage2->PlayAs( pAsRotation );
@@ -401,19 +401,19 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	}
 
 	{
-		CGUIAsRotation* pAsRotation = pAsManager->AllocateResource<CGUIAsRotation>( );
+		CGUIAsWidgetRotation* pAsRotation = pAsManager->AllocateResource<CGUIAsWidgetRotation>( );
 		pAsRotation->SetInterpolationValue( CGUIVector3(0,0,360*5), CGUIVector3(), 1 );
 		pAsRotation->SetReceiver( pWidget_statictext );
 		pWidget_statictext->PlayAs( pAsRotation );
 		pAsRotation->RefRelease();
 
-		CGUIAsAlpha* pAsAlpha = pAsManager->AllocateResource<CGUIAsAlpha>( );
+		CGUIAsWidgetAlpha* pAsAlpha = pAsManager->AllocateResource<CGUIAsWidgetAlpha>( );
 		pAsAlpha->SetInterpolationValue( 0, 1, 1 );
 		pAsAlpha->SetReceiver( pWidget_statictext );
 		pWidget_statictext->PlayAs( pAsAlpha );
 		pAsAlpha->RefRelease();
 
-		CGUIAsScale* pAsScale = pAsManager->AllocateResource<CGUIAsScale>( );
+		CGUIAsWidgetScale* pAsScale = pAsManager->AllocateResource<CGUIAsWidgetScale>( );
 		pAsScale->SetInterpolationValue( CGUISize(0,0), CGUISize(2,2), 1 );
 		pAsScale->SetReceiver( pWidget_statictext );
 		pWidget_statictext->PlayAs( pAsScale );

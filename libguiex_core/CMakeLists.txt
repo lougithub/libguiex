@@ -134,6 +134,10 @@ source_group( "resource" FILES ${${target_name}_resource_SRCS} )
 set( ${target_name}_as_SRCS 
 	guias.cpp
 	guias.h
+	guiascontainer.cpp
+	guiascontainer.h
+	guiaswidget.cpp
+	guiaswidget.h
 	guiasgridbase.cpp
 	guiasgridbase.h
 	guiasgrid3d.cpp

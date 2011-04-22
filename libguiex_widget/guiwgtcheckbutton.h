@@ -44,60 +44,34 @@ namespace guiex
 		*/
 		CGUIWgtCheckButton( const CGUIString& rName, const CGUIString& rSceneName );
 
-		/**
-		* @brief set widget to check state
-		* @notice this function won't generate OnCheck event
-		*/
-		virtual void SetCheck(bool bChecked);
 
-		/**
-		* @brief get state of checkbutton
-		*/
-		bool IsCheck() const;
-
-		/**
-		* @brief load widget config from property
-		*/
-		virtual CGUIProperty* GenerateProperty(const CGUIString& rName, const CGUIString& rType );
-
-		/**
-		* @brief load widget config from property
-		*/
-		virtual void ProcessProperty( const CGUIProperty* pProperty);
-
-		static CGUIWgtCheckButton* FromWidget( CGUIWidget* pWidget );
+		virtual void SetChecked(bool bChecked);
+		bool IsChecked() const;
 
 	protected:
-		/**
-		* @brief constructor
-		* for derived class
-		*/
 		CGUIWgtCheckButton( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
-
-		/// render
-		virtual void RenderSelf(IGUIInterfaceRender* pRender);
-
-		///initialize check button
+		
 		void InitCheckButton();
 
-		/**
-		* @brief override the OnSetImage function
-		*/
+		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage );
 
+		virtual int32 GenerateProperty( CGUIProperty& rProperty );
+		virtual void ProcessProperty( const CGUIProperty& rProperty);
+
 	protected:	//!< callback function
-		virtual uint32		OnMouseEnter( CGUIEventMouse* pEvent );
-		virtual uint32		OnMouseLeave( CGUIEventMouse* pEvent );
-		virtual uint32		OnMouseLeftDown( CGUIEventMouse* pEvent );
-		virtual uint32		OnMouseLeftUp( CGUIEventMouse* pEvent );
-		virtual uint32		OnMouseLeftClick(CGUIEventMouse* pEvent);
-		virtual uint32		OnChecked( CGUIEventNotification* pEvent );
-		virtual uint32		OnUnchecked( CGUIEventNotification* pEvent );
+		virtual uint32 OnMouseEnter( CGUIEventMouse* pEvent );
+		virtual uint32 OnMouseLeave( CGUIEventMouse* pEvent );
+		virtual uint32 OnMouseLeftDown( CGUIEventMouse* pEvent );
+		virtual uint32 OnMouseLeftUp( CGUIEventMouse* pEvent );
+		virtual uint32 OnMouseLeftClick(CGUIEventMouse* pEvent);
+		virtual uint32 OnChecked( CGUIEventNotification* pEvent );
+		virtual uint32 OnUnchecked( CGUIEventNotification* pEvent );
 
 	protected:
-		bool	m_bHovering;	///whether in hovering state
-		bool	m_bPushing;		///whether button is pushed
-		bool	m_bChecked;		///whether button is checked
+		bool m_bHovering; ///whether in hovering state
+		bool m_bPushing; ///whether button is pushed
+		bool m_bChecked; ///whether button is checked
 
 		CGUIImage* m_pImageNormal;
 		CGUIImage* m_pImageHovering;
@@ -114,11 +88,7 @@ namespace guiex
 		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtCheckButton);
 	};
 
-
-
-
 }//namespace libguiex
-
 
 
 #endif //__GUI_WGTCHECKBUTTON_20060803_H__

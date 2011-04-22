@@ -16,6 +16,7 @@
 #include <libguiex_core/guistringconvertor.h>
 #include <libguiex_core/guipropertymanager.h>
 #include <libguiex_core/guiimage.h>
+#include <libguiex_core/guipropertyconvertor.h>
 
 //============================================================================//
 // function
@@ -108,7 +109,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtCheckButton::RenderSelf(IGUIInterfaceRender* pRender)
+	void CGUIWgtCheckButton::RenderSelf(IGUIInterfaceRender* pRender)
 	{
 		CGUIImage* pImage = NULL;
 
@@ -164,58 +165,49 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtCheckButton::SetCheck(bool bChecked)
+	/**
+	* @brief set widget to check state
+	* @notice this function won't generate OnCheck event
+	*/
+	void CGUIWgtCheckButton::SetChecked(bool bChecked)
 	{
 		m_bChecked = bChecked;
 	}
 	//------------------------------------------------------------------------------	
-	bool	CGUIWgtCheckButton::IsCheck() const
+	bool CGUIWgtCheckButton::IsChecked() const
 	{
 		return m_bChecked;
 	}
 	//------------------------------------------------------------------------------
-	CGUIWgtCheckButton*	CGUIWgtCheckButton::FromWidget( CGUIWidget* pWidget )
-	{
-		if( !pWidget )
-		{
-			throw CGUIException("[CGUIWgtCheckButton::FromWidget]: the given widget is nil" );
-		}
-		if( pWidget->GetType() != StaticGetType() )
-		{
-			throw CGUIException("[CGUIWgtCheckButton::FromWidget]: the real type of given widget is <%s>!", pWidget->GetType().c_str());
-		}
-		return dynamic_cast<CGUIWgtCheckButton *>(pWidget);
-	}
-	//------------------------------------------------------------------------------
-	uint32		CGUIWgtCheckButton::OnMouseEnter( CGUIEventMouse* pEvent )
+	uint32 CGUIWgtCheckButton::OnMouseEnter( CGUIEventMouse* pEvent )
 	{
 		m_bHovering = true;
 
 		return CGUIWidget::OnMouseEnter( pEvent );
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWgtCheckButton::OnMouseLeave( CGUIEventMouse* pEvent )
+	uint32 CGUIWgtCheckButton::OnMouseLeave( CGUIEventMouse* pEvent )
 	{
 		m_bHovering = false;
 
 		return CGUIWidget::OnMouseLeave( pEvent );
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWgtCheckButton::OnMouseLeftDown( CGUIEventMouse* pEvent )
+	uint32 CGUIWgtCheckButton::OnMouseLeftDown( CGUIEventMouse* pEvent )
 	{
 		m_bPushing = true;
 
 		return CGUIWidget::OnMouseLeftDown( pEvent );
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWgtCheckButton::OnMouseLeftUp( CGUIEventMouse* pEvent )
+	uint32 CGUIWgtCheckButton::OnMouseLeftUp( CGUIEventMouse* pEvent )
 	{
 		m_bPushing = false;
 
 		return CGUIWidget::OnMouseLeftUp( pEvent );
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWgtCheckButton::OnMouseLeftClick(CGUIEventMouse* pEvent)
+	uint32 CGUIWgtCheckButton::OnMouseLeftClick(CGUIEventMouse* pEvent)
 	{
 		CGUIEventNotification aCheckEvent;
 		aCheckEvent.SetEventId((!m_bChecked)?eEVENT_CHECKED:eEVENT_UNCHECKED);
@@ -225,48 +217,46 @@ namespace guiex
 		return CGUIWidget::OnMouseLeftClick(pEvent);
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWgtCheckButton::OnUnchecked(CGUIEventNotification* pEvent)
+	uint32 CGUIWgtCheckButton::OnUnchecked(CGUIEventNotification* pEvent)
 	{
 		m_bChecked = false;
 
 		return CGUIWidget::OnUnchecked(pEvent);
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWgtCheckButton::OnChecked(CGUIEventNotification* pEvent)
+	uint32 CGUIWgtCheckButton::OnChecked(CGUIEventNotification* pEvent)
 	{
 		m_bChecked = true;
 
 		return CGUIWidget::OnChecked(pEvent);
 	}
 	//------------------------------------------------------------------------------
-	CGUIProperty*	CGUIWgtCheckButton::GenerateProperty(const CGUIString& rName, const CGUIString& rType )
+	int32 CGUIWgtCheckButton::GenerateProperty( CGUIProperty& rProperty )
 	{
-		//CGUIProperty* pProperty = NULL;
-		//
-		//if( rName == "CHECKED" && rType == "BOOL" )
-		//{
-		//	pProperty = CGUIPropertyManager::Instance()->CreateProperty(
-		//		rName, 
-		//		rType, 
-		//		CGUIStringConvertor::BoolToString(IsCheck( )));
-		//}
+		if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "checked" )
+		{
+			ValueToProperty( IsChecked(), rProperty );
+		}
+		else
+		{
+			return CGUIWidget::GenerateProperty( rProperty );
+		}
 
-		//return pProperty ? pProperty : CGUIWidget::GenerateProperty(rName, rType);
-		return NULL;
+		return 0;
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtCheckButton::ProcessProperty( const CGUIProperty* pProperty)
+	void CGUIWgtCheckButton::ProcessProperty( const CGUIProperty& rProperty)
 	{
-		//CGUIWidget::ProcessProperty(pProperty);
-		//////////////////////////////////////////////////////////////////////////////////////////////////////
-		////property for CHECKED
-		///*
-		//*<property name="CHECKED" type="BOOL" value="true" />
-		//*/
-		//if( pProperty->GetName() == "CHECKED" && pProperty->GetType()=="BOOL")
-		//{
-		//	SetCheck(StringToValue(pProperty->GetValue()));
-		//}
+		if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "checked")
+		{
+			bool bChecked;
+			PropertyToValue( rProperty, bChecked);
+			SetChecked( bChecked );
+		}
+		else
+		{
+			CGUIWidget::ProcessProperty( rProperty );
+		}
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

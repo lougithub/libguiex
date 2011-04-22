@@ -68,7 +68,6 @@ namespace guiex
 		CGUIWgtScrollbar( const CGUIString& rName, const CGUIString& rSceneName );
 		virtual ~CGUIWgtScrollbar();
 
-		static CGUIWgtScrollbar* FromWidget( CGUIWidget* pWidget );
 
 		///////////////////////////////////////////////////////////
 		// value related function

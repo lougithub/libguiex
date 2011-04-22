@@ -38,19 +38,6 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	CGUIWgtRadioButton*	CGUIWgtRadioButton::FromWidget( CGUIWidget* pWidget )
-	{
-		if( !pWidget )
-		{
-			throw CGUIException("[CGUIWgtRadioButton::FromWidget]: the given widget is nil" );
-		}
-		if( pWidget->GetType() != StaticGetType() )
-		{
-			throw CGUIException("[CGUIWgtRadioButton::FromWidget]: the real type of given widget is <%s>!", pWidget->GetType().c_str());
-		}
-		return dynamic_cast<CGUIWgtRadioButton *>(pWidget);
-	}
-	//------------------------------------------------------------------------------
 	uint32		CGUIWgtRadioButton::OnMouseLeftClick(CGUIEventMouse* pEvent)
 	{
 		if( m_bChecked == false )

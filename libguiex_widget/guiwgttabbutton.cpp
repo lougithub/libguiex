@@ -55,7 +55,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	bool CGUIWgtTabButton::IsSelected(void) const
 	{
-		return IsCheck();
+		return IsChecked();
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtTabButton::OnMouseLeftClick(CGUIEventMouse* pEvent)

@@ -340,6 +340,9 @@ namespace guiex
 		void SetGenerateClickEvent( bool bFlag ); 
 		bool IsGenerateClickEvent( ) const;
 
+		void SetGenerateLoadEvent( bool bFlag ); 
+		bool IsGenerateLoadEvent( ) const;
+
 		void SetGenerateDBClickEvent( bool bFlag ); 
 		bool IsGenerateDBClickEvent( ) const;
 
@@ -550,6 +553,7 @@ namespace guiex
 		bool m_bIsHitable;
 		bool m_bIsMouseConsumed;
 
+		bool m_bIsGenerateLoadEvent;
 		bool m_bIsGenerateClickEvent; 
 		bool m_bIsGenerateDBClickEvent; 
 		bool m_bIsGenerateMultiClickEvent; 

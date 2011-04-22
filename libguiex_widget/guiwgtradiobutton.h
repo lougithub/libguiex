@@ -44,8 +44,6 @@ namespace guiex
 		*/
 		CGUIWgtRadioButton( const CGUIString& rName, const CGUIString& rSceneName );
 
-		static CGUIWgtRadioButton*	FromWidget( CGUIWidget* pWidget );
-
 	protected:
 		/**
 		* @brief constructor

@@ -61,11 +61,13 @@ namespace guiex
 		ePropertyType_As,
 		ePropertyType_Sound,
 
-		ePropertyType_AsColor,
-		ePropertyType_AsScale,
-		ePropertyType_AsPosition,
-		ePropertyType_AsRotation,
-		ePropertyType_AsAlpha,
+		//as define
+		ePropertyType_AsWidgetColor,
+		ePropertyType_AsWidgetScale,
+		ePropertyType_AsWidgetPosition,
+		ePropertyType_AsWidgetSize,
+		ePropertyType_AsWidgetRotation,
+		ePropertyType_AsWidgetAlpha,
 		ePropertyType_AsContainer,
 		ePropertyType_AsContainerItemInfo,
 

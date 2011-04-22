@@ -37,12 +37,16 @@
 			<property name="activable" type="bool" value="false"  category="Default"/>
 			<property name="hitable" type="bool" value="true"  category="Default"/>
 			<property name="disable" type="bool" value="false"  category="Default"/>
-			<property name="auto_play_as" type="bool" value="false"  category="Default"/>
+      <property name="clip_text" type="bool" value="false" category="Default"/>
+      <property name="auto_play_as" type="bool" value="false"  category="Default"/>
 			<property name="clip_children" type="bool" value="false"  category="Default"/>
 			<property name="open_with_parent" type="bool" value="true"  category="Default"/>
-      <property name="generate_update_event" type="bool" value="false"  category="Default"/>
-      <property name="generate_click_event" type="bool" value="false"  category="Default"/>
-			<property name="generate_parentsizechange_event" type="bool" value="false"  category="Default"/>
+      
+      <property name="generate_update_event" type="bool" value="false"  category="GenerateEvent"/>
+      <property name="generate_click_event" type="bool" value="false"  category="GenerateEvent"/>
+      <property name="generate_load_event" type="bool" value="false"  category="GenerateEvent"/>
+			<property name="generate_parentsizechange_event" type="bool" value="false"  category="GenerateEvent"/>
+      
 			<property name="default_as" type="CGUIAs" value=""/>
 		</page>
 
@@ -169,6 +173,25 @@
 		</page>
 	</widget>
 
+  <widget type="CGUIWgtCheckButton" inherit="CGUIWidget">
+    <page name="Appearance">
+      <property name="generate_click_event" type="bool" value="true"  category="Default"/>
+      <property name="checked" type="bool" value="false"  category="Default"/>
+    </page>
+    <page name="Image">
+      <property name="BTN_NORMAL" type="CGUIImage" value="" must_exist="true"/>
+      <property name="BTN_NORMAL_CHECKED" type="CGUIImage" value=""/>
+      <property name="BTN_HOVER" type="CGUIImage" value=""/>
+      <property name="BTN_HOVER_CHECKED" type="CGUIImage" value=""/>
+      <property name="BTN_PUSH" type="CGUIImage" value=""/>
+      <property name="BTN_PUSH_CHECKED" type="CGUIImage" value=""/>
+      <property name="BTN_DISABLE" type="CGUIImage" value=""/>
+      <property name="BTN_DISABLE_CHECKED" type="CGUIImage" value=""/>
+      <property name="BTN_HOVER_OVERLAY" type="CGUIImage" value=""/>
+      <property name="BTN_CHECKED_OVERLAY" type="CGUIImage" value=""/>
+    </page>
+  </widget>
+  
   <widget type="CGUIWgtTag" inherit="CGUIWidget">		
     <page name="Appearance">
       <property name="size" type="CGUIWidgetSize" category="Default">

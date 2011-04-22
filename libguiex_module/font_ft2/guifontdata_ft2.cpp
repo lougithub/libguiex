@@ -73,6 +73,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	SCharData_ft2* CGUIFontData_ft2::GetCharData( wchar_t charCode )
 	{
+		Load();
+
 		//get font
 		TMapCharData::iterator itorCharData = m_mapCharsData.find(charCode);
 		if( itorCharData != m_mapCharsData.end() )

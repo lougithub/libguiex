@@ -88,7 +88,7 @@ namespace guiex
 									   real fAlpha)
 	{
 		CGUIFontData_dummy* pFontData = GetFontData( rInfo.m_uFontID );
-		uint16 fFontSize = pFontData->GetFontSize()*rInfo.m_fFontScale;
+		real fFontSize = pFontData->GetFontSize()*rInfo.m_fFontScale;
 		CGUIRect aCharRect( CGUIVector2(rPos.x, rPos.y-fFontSize),
 						   CGUISize(fFontSize,fFontSize));
 		
@@ -117,7 +117,7 @@ namespace guiex
 
 		CGUIFontData_dummy* pFontData = GetFontData( rInfo.m_uFontID );
 		real fStringWidth = GetStringWidth(rString);
-		uint16 fFontSize = pFontData->GetFontSize()*rInfo.m_fFontScale;
+		real fFontSize = pFontData->GetFontSize()*rInfo.m_fFontScale;
 
 		CGUIVector2 aPos;
 		switch( uTextAlignmentHorz )
@@ -193,7 +193,7 @@ namespace guiex
 		
 		const CGUIStringRenderInfo& rInfo = rString.m_aStringInfo;
 		CGUIFontData_dummy* pFontData = GetFontData( rInfo.m_uFontID );
-		uint16 fFontSize = pFontData->GetFontSize()*rInfo.m_fFontScale;
+		real fFontSize = pFontData->GetFontSize()*rInfo.m_fFontScale;
 		CGUISize aFontSize(fFontSize,fFontSize);
 		CGUIVector2 aPos = rPos;
 	
@@ -222,7 +222,7 @@ namespace guiex
 	CGUISize IGUIFont_dummy::GetCharacterSize( wchar_t charCode, const CGUIStringRenderInfo& rInfo )
 	{
 		CGUIFontData_dummy* pFontData = GetFontData( rInfo.m_uFontID );
-		uint16 fFontSize = pFontData->GetFontSize()*rInfo.m_fFontScale;
+		real fFontSize = pFontData->GetFontSize()*rInfo.m_fFontScale;
 		return CGUISize(fFontSize,fFontSize);
 	}
 	//------------------------------------------------------------------------------
@@ -240,7 +240,6 @@ namespace guiex
 		}
 
 		m_arrayFontDatas[rFontInfo.m_uID] = new CGUIFontData_dummy( rName, rSceneName, rFontInfo );
-		m_arrayFontDatas[rFontInfo.m_uID]->Load();
 		return m_arrayFontDatas[rFontInfo.m_uID];
 	}
 	//------------------------------------------------------------------------------

@@ -66,7 +66,7 @@ void CMyMonster::InitMonster( CGUIWidget* pParent, bool bStrong, CGUIWgtStaticIm
 	pAsCallFunc->SetReceiver( this );
 	pAsCallFunc->SetFuncCallback( FunCallback_TargetMoveto );
 
-	CGUIAsMoveTo* pAsMoveTo = CGUIAsManager::Instance()->AllocateResource<CGUIAsMoveTo>();
+	CGUIAsWidgetMoveTo* pAsMoveTo = CGUIAsManager::Instance()->AllocateResource<CGUIAsWidgetMoveTo>();
 	pAsMoveTo->SetReceiver( this );
 	pAsMoveTo->SetVelocity( m_fVelocity );
 	pAsMoveTo->SetDestination( GenerateTargetPosition() );
@@ -96,7 +96,7 @@ void CMyMonster::FunCallback_TargetMoveto(CGUIAs* pAs)
 //------------------------------------------------------------------------------
 void CMyMonster::ResetTargetPosition( )
 {
-	CGUIAsMoveTo* pAsMoveTo = static_cast<CGUIAsMoveTo*>(GetAs( "As_MoveTo" ));
+	CGUIAsWidgetMoveTo* pAsMoveTo = static_cast<CGUIAsWidgetMoveTo*>(GetAs( "As_MoveTo" ));
 	pAsMoveTo->Reset();
 	pAsMoveTo->SetVelocity( m_fVelocity );
 	pAsMoveTo->SetDestination( GenerateTargetPosition() );
@@ -196,7 +196,7 @@ void CMyProjectile::InitProjectile( CGUIWidget* pParent,CGUIWgtStaticImage* pTur
 	pAsCallFunc->SetReceiver( this );
 	pAsCallFunc->SetFuncCallback( FunCallback_ProjectileFinish );
 
-	CGUIAsMoveTo* pAsMoveTo = CGUIAsManager::Instance()->AllocateResource<CGUIAsMoveTo>();
+	CGUIAsWidgetMoveTo* pAsMoveTo = CGUIAsManager::Instance()->AllocateResource<CGUIAsWidgetMoveTo>();
 	pAsMoveTo->SetReceiver( this );
 	pAsMoveTo->SetVelocity( 480.f );
 	pAsMoveTo->SetDestination( aFinalPos );
@@ -359,7 +359,7 @@ void CMyCanvasLayer_TurretGame::InitTurret()
 	pAsShoot->SetReceiver( m_pTurret );
 	pAsShoot->RefRetain();
 
-	CGUIAsRotation* pAsTurnTo = CGUIAsManager::Instance()->AllocateResource<CGUIAsRotation>();
+	CGUIAsWidgetRotation* pAsTurnTo = CGUIAsManager::Instance()->AllocateResource<CGUIAsWidgetRotation>();
 	pAsTurnTo->SetReceiver( m_pTurret );
 	CGUIVector3 aCurRotation = m_pTurret->GetRotation();
 	CGUIVector3 aDestRotation = aCurRotation;
@@ -387,7 +387,7 @@ void CMyCanvasLayer_TurretGame::BeginShoot( const CGUIVector2& rShootPos )
 	real angleDegrees = CGUIMath::RadiansToDegrees(angleRadians);
 
 	//set turret as
-	CGUIAsRotation* pAsTurnTo = (CGUIAsRotation*)m_pTurret->GetAs("As_TurnTo");
+	CGUIAsWidgetRotation* pAsTurnTo = (CGUIAsWidgetRotation*)m_pTurret->GetAs("As_TurnTo");
 	pAsTurnTo->Reset();
 	CGUIVector3 aCurRotation = m_pTurret->GetRotation();
 	CGUIVector3 aDestRotation = aCurRotation;

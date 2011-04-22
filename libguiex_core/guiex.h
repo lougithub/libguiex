@@ -100,6 +100,8 @@
 
 //as
 #include "guias.h"
+#include "guiaswidget.h"
+#include "guiascontainer.h"
 #include "guiasgrid3d.h"
 #include "guiastiledgrid3d.h"
 #include "guiasmanager.h"

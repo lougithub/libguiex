@@ -2,6 +2,10 @@ namespace guiex
 {
 	class CGUIAs
 	{
+	public:
+		virtual void Reset( );
+		void SetReverse( bool bReverse );
+
 	protected:
 		CGUIAs();
 		virtual ~CGUIAs();
@@ -20,39 +24,39 @@ namespace guiex
 	%template(CGUIInterpolationBase_Vector2) CGUIAsInterpolation<CGUIVector2>;
 	%template(CGUIInterpolationBase_Color) CGUIAsInterpolation<CGUIColor>;
 	
-	class CGUIAsAlpha : public CGUIAsInterpolation<real>
+	class CGUIAsWidgetAlpha : public CGUIAsInterpolation<real>
 	{
 	protected:
-		CGUIAsAlpha();
-		virtual ~CGUIAsAlpha();
+		CGUIAsWidgetAlpha();
+		virtual ~CGUIAsWidgetAlpha();
 	};
 
-	class CGUIAsScale : public CGUIAsInterpolation<CGUISize>
+	class CGUIAsWidgetScale : public CGUIAsInterpolation<CGUISize>
 	{
 	protected:
-		CGUIAsScale();
-		virtual ~CGUIAsScale();
+		CGUIAsWidgetScale();
+		virtual ~CGUIAsWidgetScale();
 	};
 	
-	class CGUIAsRotation: public CGUIAsInterpolation<CGUIVector3>
+	class CGUIAsWidgetRotation: public CGUIAsInterpolation<CGUIVector3>
 	{
 	protected:
-		CGUIAsRotation();
-		virtual ~CGUIAsRotation();
+		CGUIAsWidgetRotation();
+		virtual ~CGUIAsWidgetRotation();
 	};	
 	
-	class CGUIAsPosition : public CGUIAsInterpolation<CGUIVector2>
+	class CGUIAsWidgetPosition : public CGUIAsInterpolation<CGUIVector2>
 	{
 	protected:
-		CGUIAsPosition();
-		virtual ~CGUIAsPosition();
+		CGUIAsWidgetPosition();
+		virtual ~CGUIAsWidgetPosition();
 	};
 	
-	class CGUIAsColor : public CGUIAsInterpolation<CGUIColor>
+	class CGUIAsWidgetColor : public CGUIAsInterpolation<CGUIColor>
 	{
 	protected:
-		CGUIAsColor();
-		virtual ~CGUIAsColor();
+		CGUIAsWidgetColor();
+		virtual ~CGUIAsWidgetColor();
 	};
 	
 	class CGUIAsContainer : public CGUIAs

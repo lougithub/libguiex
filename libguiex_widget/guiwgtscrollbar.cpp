@@ -308,19 +308,6 @@ namespace guiex
 		SetGenerateClickEvent( true );
 	}
 	//------------------------------------------------------------------------------
-	CGUIWgtScrollbar* CGUIWgtScrollbar::FromWidget( CGUIWidget* pWidget )
-	{
-		if( !pWidget )
-		{
-			throw CGUIException("[CGUIWgtScrollbar::FromWidget]: the given widget is nil" );
-		}
-		if( pWidget->GetType() != StaticGetType() )
-		{
-			throw CGUIException("[CGUIWgtScrollbar::FromWidget]: the real type of given widget is <%s>!", pWidget->GetType().c_str());
-		}
-		return dynamic_cast<CGUIWgtScrollbar *>(pWidget);
-	}
-	//------------------------------------------------------------------------------
 	void CGUIWgtScrollbar::SetScrollbarHost( CGUIWidget* pWgtHost )
 	{
 		m_pWgtHost = pWgtHost;

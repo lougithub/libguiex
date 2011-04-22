@@ -49,12 +49,12 @@ namespace guiex
 			CGUIWgtTabButton* pBtn = *itor;
 			if( pBtn->GetName() == name)
 			{
-				pBtn->SetCheck(true);
+				pBtn->SetChecked(true);
 				pBtn->GetChild()->SetVisible( true );
 			}
 			else
 			{
-				pBtn->SetCheck(false);
+				pBtn->SetChecked(false);
 				pBtn->GetChild()->SetVisible( false );
 			}
 		}
@@ -69,12 +69,12 @@ namespace guiex
 			CGUIWgtTabButton* pBtn = m_vecButtons[i];
 			if( i == index)
 			{
-				pBtn->SetCheck(true);
+				pBtn->SetChecked(true);
 				pBtn->SetVisible( true );
 			}
 			else
 			{
-				pBtn->SetCheck(false);
+				pBtn->SetChecked(false);
 				pBtn->SetVisible( false );
 			}
 		}

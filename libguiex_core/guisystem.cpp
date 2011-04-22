@@ -322,6 +322,28 @@ namespace guiex
 		return m_bDrawExtraInfo;
 	}
 	//------------------------------------------------------------------------------
+	void CGUISystem::EnableClip( bool bEnable )
+	{
+		IGUIInterfaceRender* pRender = CGUIInterfaceManager::Instance()->GetInterfaceRender();
+		if( pRender )
+		{
+			pRender->EnableClip( bEnable );
+		}
+	}
+	//------------------------------------------------------------------------------
+	bool CGUISystem::IsEnableClip() const
+	{
+		IGUIInterfaceRender* pRender = CGUIInterfaceManager::Instance()->GetInterfaceRender();
+		if( pRender )
+		{
+			return pRender->IsEnableClip( );
+		}
+		else
+		{
+			return false;
+		}
+	}
+	//------------------------------------------------------------------------------
 	void CGUISystem::SetPlayingAs( bool bPlaying )
 	{
 		m_bPlayingAs = bPlaying;

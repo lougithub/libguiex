@@ -91,6 +91,9 @@ namespace guiex
 		void SetDrawExtraInfo( bool bDraw );
 		bool IsDrawExtraInfo() const;
 
+		void EnableClip( bool bEnable );
+		bool IsEnableClip() const;
+
 		void SetPlayingAs( bool bPlaying );
 		bool IsPlayingAs() const;
 

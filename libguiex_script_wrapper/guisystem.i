@@ -6,6 +6,9 @@ namespace guiex
 		void SetDrawExtraInfo( bool bDraw );
 		bool IsDrawExtraInfo() const;
 
+		void EnableClip( bool bEnable );
+		bool IsEnableClip() const;
+
 		const CGUIString& GetDataPath() const;
 
 		const char* GenerateAnonymousName();

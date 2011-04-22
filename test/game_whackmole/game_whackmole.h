@@ -55,7 +55,7 @@ protected:
 
 	CGUIVector2 m_aHidePosition;
 	CGUIVector2 m_aPopPosition;
-	CGUIAsMoveTo* m_pAs;
+	CGUIAsWidgetMoveTo* m_pAs;
 
 	real m_fPoppedTime;
 

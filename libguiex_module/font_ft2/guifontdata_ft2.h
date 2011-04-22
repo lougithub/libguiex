@@ -66,7 +66,6 @@ namespace guiex
 	public:
 		virtual ~CGUIFontData_ft2();
 
-		FT_Face GetFontFace();
 		SCharData_ft2* GetCharData( wchar_t charCode );
 
 	protected:
@@ -81,6 +80,7 @@ namespace guiex
 		virtual void DoUnload();
 
 		SCharData_ft2* LoadCharData( wchar_t charCode );
+		FT_Face GetFontFace();
 
 	protected:
 		CGUIFontFace_ft2* m_pFontFace; //font face

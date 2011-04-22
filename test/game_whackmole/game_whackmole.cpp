@@ -74,7 +74,7 @@ void CMyMole::InitMole( CGUIWgtTag* pTag )
 	m_aPopPosition.y -= (aMoleSize.GetHeight() / GetParent()->GetPixelSize().GetHeight() );
 
 	//set as
-	m_pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsMoveTo>();
+	m_pAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsWidgetMoveTo>();
 	m_pAs->SetReceiver( this );
 	m_pAs->SetVelocity( (m_aHidePosition.y - m_aPopPosition.y) );
 	SetAs( "working_as", m_pAs );

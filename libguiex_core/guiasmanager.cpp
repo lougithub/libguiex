@@ -10,6 +10,8 @@
 //============================================================================// 
 #include "guiasmanager.h"
 #include "guias.h"
+#include "guiaswidget.h"
+#include "guiascontainer.h"
 #include "guiasgrid3d.h"
 #include "guiastiledgrid3d.h"
 
@@ -151,14 +153,15 @@ namespace guiex
 	{
 #define REGISTER_AS( as ) m_mapAsGenerator[#as] = as::GenerateAs;
 
-		REGISTER_AS( CGUIAsAlpha );
-		REGISTER_AS( CGUIAsScale );
-		REGISTER_AS( CGUIAsPosition );
-		REGISTER_AS( CGUIAsRotation );
-		REGISTER_AS( CGUIAsColor );
+		REGISTER_AS( CGUIAsWidgetAlpha );
+		REGISTER_AS( CGUIAsWidgetScale );
+		REGISTER_AS( CGUIAsWidgetPosition );
+		REGISTER_AS( CGUIAsWidgetSize );
+		REGISTER_AS( CGUIAsWidgetRotation );
+		REGISTER_AS( CGUIAsWidgetColor );
 		REGISTER_AS( CGUIAsContainer );
 		REGISTER_AS( CGUIAsCallFunc );
-		REGISTER_AS( CGUIAsMoveTo );
+		REGISTER_AS( CGUIAsWidgetMoveTo );
 		
 
 		//grid 3d

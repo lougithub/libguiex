@@ -83,11 +83,12 @@ namespace guiex
 		,m_bIsGenerateParentSizeChangeEvent(false)
 		,m_bIsGenerateParentChangeEvent(false)
 		,m_bIsGenerateAddChildEvent(false )
-		,m_bIsGenerateClickEvent(true)
+		,m_bIsGenerateClickEvent(false)
+		,m_bIsGenerateLoadEvent(false)
 		,m_bIsGenerateDBClickEvent(false)
 		,m_bIsGenerateMultiClickEvent(false)
 		,m_bIsAutoPlayAs(false)
-		,m_bIsClipChildren(true)
+		,m_bIsClipChildren(false)
 		,m_pSceneEffect( NULL )
 	{
 	}
@@ -154,11 +155,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWidget::NotifyLoaded()
 	{
-		//notify self
-		CGUIEventNotification aEvent;
-		aEvent.SetEventId(eEVENT_LOAD);
-		aEvent.SetReceiver(this);
-		GSystem->SendEvent( &aEvent);
+		if( IsGenerateLoadEvent() )
+		{
+			//notify self
+			CGUIEventNotification aEvent;
+			aEvent.SetEventId(eEVENT_LOAD);
+			aEvent.SetReceiver(this);
+			GSystem->SendEvent( &aEvent);
+		}
 
 		//children's
 		CGUIWidget*	pWidget = GetChild();
@@ -1833,6 +1837,11 @@ namespace guiex
 			ValueToProperty( IsGenerateClickEvent(), rProperty);
 		}		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
+		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "generate_load_event" )
+		{
+			ValueToProperty( IsGenerateLoadEvent(), rProperty);
+		}		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "generate_parentsizechange_event" )
 		{
 			ValueToProperty( IsGenerateParentSizeChangeEvent(), rProperty);
@@ -2072,19 +2081,19 @@ namespace guiex
 			PropertyToValue(rProperty, bValue );
 			SetGenerateClickEvent(bValue );
 		}
+		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="generate_load_event" )
+		{
+			bool bValue = false;
+			PropertyToValue(rProperty, bValue );
+			SetGenerateLoadEvent(bValue );
+		}
 		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="generate_parentsizechange_event" )
 		{
 			bool bValue = false;
 			PropertyToValue(rProperty, bValue );
 			SetGenerateParentSizeChangeEvent(bValue );
 		}		
-		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="EVENT_CLICK" )
-		{
-			bool bValue = false;
-			PropertyToValue(rProperty, bValue );
-			SetGenerateClickEvent( bValue );
-		}		
-		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="EVENT_DBCLICK" )
+		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="generate_dbclick_event" )
 		{
 			bool bValue = false;
 			PropertyToValue(rProperty, bValue );
@@ -2935,6 +2944,16 @@ namespace guiex
 	bool CGUIWidget::IsGenerateClickEvent( ) const
 	{
 		return m_bIsGenerateClickEvent;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::SetGenerateLoadEvent( bool bFlag )
+	{
+		m_bIsGenerateLoadEvent = bFlag;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWidget::IsGenerateLoadEvent( ) const
+	{
+		return m_bIsGenerateLoadEvent;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::SetGenerateDBClickEvent( bool bFlag )
