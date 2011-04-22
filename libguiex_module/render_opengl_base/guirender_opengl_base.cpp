@@ -158,7 +158,7 @@ namespace guiex
 	IGUIRender_opengl_base::IGUIRender_opengl_base( const char* szModuleName )
 		:IGUIInterfaceRender( szModuleName )
 		,m_maxTextureSize(0)
-		,m_bEnableClip(false)
+		,m_bEnableClip(true)
 		,m_pCamera(NULL)
 	{
 	}

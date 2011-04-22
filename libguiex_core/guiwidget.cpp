@@ -87,7 +87,7 @@ namespace guiex
 		,m_bIsGenerateDBClickEvent(false)
 		,m_bIsGenerateMultiClickEvent(false)
 		,m_bIsAutoPlayAs(false)
-		,m_bIsClipChildren(false)
+		,m_bIsClipChildren(true)
 		,m_pSceneEffect( NULL )
 	{
 	}

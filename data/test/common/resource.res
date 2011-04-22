@@ -1,36 +1,48 @@
 <?xml version="1.0" ?>
 <guiex>
-	<property name="font_ltype_12" type="CGUIFontDefine" >
-		<property name="id" type="uint16" value="1"/>
-		<property name="path" type="CGUIString" value="font/LTYPE.TTF"/>
-		<property name="size" type="uint16" value="12"/>
-		<property name="texture_size" type="CGUIIntSize" value="256,256"/>
-    <property name="desc" type="CGUIString" value="font:LTYPE.TTF size:12"/>
+
+  <property name="font_times_12" type="CGUIFontDefine" >
+    <property name="id" type="uint16" value="0"/>
+    <property name="path" type="CGUIString" value="font/times.ttf"/>
+    <property name="size" type="uint16" value="12"/>
+    <property name="texture_size" type="CGUIIntSize" value="128,128"/>
+    <property name="desc" type="CGUIString" value="font:times size:12"/>
+  </property>
+  
+  <property name="font_times_18" type="CGUIFontDefine" >
+    <property name="id" type="uint16" value="1"/>
+    <property name="path" type="CGUIString" value="font/times.ttf"/>
+    <property name="size" type="uint16" value="18"/>
+    <property name="texture_size" type="CGUIIntSize" value="256,256"/>
+    <property name="desc" type="CGUIString" value="font:times size:18"/>
   </property>
 
-	<property name="font_ltypeb_12" type="CGUIFontDefine" >
-		<property name="id" type="uint16" value="0"/>
-		<property name="path" type="CGUIString" value="font/LTYPEB.TTF"/>
-		<property name="size" type="uint16" value="12"/>
-		<property name="texture_size" type="CGUIIntSize" value="256,256"/>
-    <property name="desc" type="CGUIString" value="font:LTYPEB.TTF size:12"/>
-  </property>
-
-  <property name="font_ltype_24" type="CGUIFontDefine" >
+  <property name="font_times_36" type="CGUIFontDefine" >
     <property name="id" type="uint16" value="2"/>
-    <property name="path" type="CGUIString" value="font/LTYPE.TTF"/>
-    <property name="size" type="uint16" value="24"/>
+    <property name="path" type="CGUIString" value="font/times.ttf"/>
+    <property name="size" type="uint16" value="36"/>
     <property name="texture_size" type="CGUIIntSize" value="256,256"/>
-    <property name="desc" type="CGUIString" value="font:LTYPE.TTF size:24"/>
+    <property name="desc" type="CGUIString" value="font:times size:36"/>
   </property>
 
-  <property name="font_ltypeb_24" type="CGUIFontDefine" >
+  <property name="font_LHANDW_18" type="CGUIFontDefine" >
     <property name="id" type="uint16" value="3"/>
-    <property name="path" type="CGUIString" value="font/LTYPEB.TTF"/>
-    <property name="size" type="uint16" value="24"/>
+    <property name="path" type="CGUIString" value="font/LHANDW.TTF"/>
+    <property name="size" type="uint16" value="18"/>
     <property name="texture_size" type="CGUIIntSize" value="256,256"/>
-    <property name="desc" type="CGUIString" value="font:LTYPEB.TTF size:24"/>
+    <property name="desc" type="CGUIString" value="font:LHANDW size:18"/>
   </property>
+  
+  <property name="font_LHANDW_36" type="CGUIFontDefine" >
+    <property name="id" type="uint16" value="4"/>
+    <property name="path" type="CGUIString" value="font/LHANDW.TTF"/>
+    <property name="size" type="uint16" value="36"/>
+    <property name="texture_size" type="CGUIIntSize" value="256,256"/>
+    <property name="desc" type="CGUIString" value="font:LHANDW size:36"/>
+  </property>
+  
+  
+  
 
 	<property name="color_white" type="CGUIImageDefine">
 		<property name="color" type="CGUIColor" value="255,255,255,255"/>

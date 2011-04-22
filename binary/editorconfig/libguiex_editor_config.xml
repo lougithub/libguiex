@@ -184,7 +184,8 @@
 
 	<widget type="CGUIWgtStaticText" inherit="CGUIWgtTextBase">
 		<page name="Appearance">
-			<property name="multiline" type="bool" value="false" category="StaticText"/>
+      <property name="multiline" type="bool" value="false" category="StaticText"/>
+      <property name="clip_text" type="bool" value="false" category="StaticText"/>
     </page>
 	</widget>
 

@@ -130,7 +130,7 @@ namespace guiex
 			break;
 		case eTextAlignment_Horz_Center:
 		default:
-			aPos.x = rStringRect.m_fLeft+(rStringRect.GetWidth()-fStringWidth)/2;
+			aPos.x = floor(rStringRect.m_fLeft+(rStringRect.GetWidth()-fStringWidth)/2);
 			break;
 		}
 
@@ -144,7 +144,7 @@ namespace guiex
 			break;
 		case eTextAlignment_Vert_Center:
 		default:
-			aPos.y = rStringRect.m_fTop + (rStringRect.GetHeight() - fFontSize) / 2;
+			aPos.y = ceil(rStringRect.m_fTop + (rStringRect.GetHeight() - fFontSize) / 2);
 			break;
 		}
 

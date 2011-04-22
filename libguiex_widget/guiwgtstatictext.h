@@ -37,6 +37,9 @@ namespace guiex
 		void SetMultiLine( bool bMultiLine );
 		bool IsMultiLine( ) const;
 
+		void SetClipText( bool bClip );
+		bool IsClipText( ) const;
+
 		virtual int32 GenerateProperty( CGUIProperty& rProperty );
 		virtual void ProcessProperty( const CGUIProperty& rProperty);
 
@@ -69,6 +72,7 @@ namespace guiex
 		typedef std::vector<SLineInfo>   TLineList;  //!< Type for collection of LineInfos.
 		TLineList m_aLineList;			//!< line list
 		bool m_bMultiLine;
+		bool m_bClipText;
 	
 	protected:
 		static wchar_t ms_wLineBreak;

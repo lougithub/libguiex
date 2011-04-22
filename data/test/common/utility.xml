@@ -61,7 +61,7 @@
         <property name="generate_update_event" type="bool" value="true" />
         <property name="generate_parentsizechange_event" type="bool" value="false" />
         <property name="textinfo" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="0.8" />
+          <property name="scale" type="real" value="1" />
           <property name="font" type="CGUIFont" value="0" />
           <property name="color" type="CGUIColor" value="0,255,0,255" />
         </property>
@@ -103,7 +103,7 @@
         <property name="generate_update_event" type="bool" value="false" />
         <property name="generate_parentsizechange_event" type="bool" value="false" />
         <property name="textinfo_normal" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="0.66" />
+          <property name="scale" type="real" value="1" />
           <property name="font" type="CGUIFont" value="0" />
           <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
@@ -111,17 +111,17 @@
         <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
         <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
         <property name="textinfo_hover" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1.33" />
+          <property name="scale" type="real" value="1" />
           <property name="font" type="CGUIFont" value="0" />
           <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
         <property name="textinfo_push" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1.33" />
+          <property name="scale" type="real" value="1" />
           <property name="font" type="CGUIFont" value="0" />
           <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
         <property name="textinfo_disable" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1.33" />
+          <property name="scale" type="real" value="1" />
           <property name="font" type="CGUIFont" value="0" />
           <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
@@ -160,7 +160,7 @@
         <property name="generate_update_event" type="bool" value="false" />
         <property name="generate_parentsizechange_event" type="bool" value="false" />
         <property name="textinfo_normal" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="0.66" />
+          <property name="scale" type="real" value="1" />
           <property name="font" type="CGUIFont" value="0" />
           <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
@@ -168,17 +168,17 @@
         <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
         <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
         <property name="textinfo_hover" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1.33" />
+          <property name="scale" type="real" value="1" />
           <property name="font" type="CGUIFont" value="0" />
           <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
         <property name="textinfo_push" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1.33" />
+          <property name="scale" type="real" value="1" />
           <property name="font" type="CGUIFont" value="0" />
           <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
         <property name="textinfo_disable" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1.33" />
+          <property name="scale" type="real" value="1" />
           <property name="font" type="CGUIFont" value="0" />
           <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
@@ -217,7 +217,7 @@
         <property name="generate_update_event" type="bool" value="false" />
         <property name="generate_parentsizechange_event" type="bool" value="false" />
         <property name="textinfo_normal" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="0.66" />
+          <property name="scale" type="real" value="1" />
           <property name="font" type="CGUIFont" value="0" />
           <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
@@ -225,17 +225,17 @@
         <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" />
         <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" />
         <property name="textinfo_hover" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1.33" />
+          <property name="scale" type="real" value="1" />
           <property name="font" type="CGUIFont" value="0" />
           <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
         <property name="textinfo_push" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1.33" />
+          <property name="scale" type="real" value="1" />
           <property name="font" type="CGUIFont" value="0" />
           <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
         <property name="textinfo_disable" type="CGUIStringRenderInfo">
-          <property name="scale" type="real" value="1.33" />
+          <property name="scale" type="real" value="1" />
           <property name="font" type="CGUIFont" value="0" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>

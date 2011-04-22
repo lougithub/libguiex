@@ -43,6 +43,7 @@ namespace guiex
 	void CGUIWgtStaticText::InitStaticText()
 	{
 		m_bMultiLine = false;
+		m_bClipText = false;
 
 		SetFocusable(false);
 		SetActivable(false);
@@ -51,7 +52,6 @@ namespace guiex
 	void CGUIWgtStaticText::OnCreate()
 	{
 		CGUIWgtTextBase::OnCreate();
-
 		UpdateStringContent();
 	}
 	//------------------------------------------------------------------------------
@@ -67,6 +67,12 @@ namespace guiex
 		{
 			return;
 		}
+
+		if( IsClipText() )
+		{
+			pRender->PushClipRect( GetClipArea() );
+		}
+
 		if(m_bMultiLine)
 		{
 			////////////////////////////////////////////////////////////////////////////
@@ -82,7 +88,7 @@ namespace guiex
 				aDestRect.m_fBottom = aDestRect.m_fTop + aLineInfo.m_fLineHeight * GetDerivedScale().m_fHeight;
 
 				//no selection
-				DrawString( pRender, m_strText, aDestRect, m_eTextAlignmentHorz,m_eTextAlignmentVert, aLineInfo.m_nStartIdx, aLineInfo.m_nStartIdx+aLineInfo.m_nLength );
+				DrawString( pRender, m_strText, aDestRect, m_eTextAlignmentHorz, m_eTextAlignmentVert, aLineInfo.m_nStartIdx, aLineInfo.m_nStartIdx+aLineInfo.m_nLength );
 				
 				aDestRect.m_fTop = aDestRect.m_fBottom;
 			}
@@ -90,6 +96,11 @@ namespace guiex
 		else
 		{
 			DrawString( pRender, m_strText, GetClientArea(), m_eTextAlignmentHorz,m_eTextAlignmentVert);
+		}
+
+		if( IsClipText() )
+		{
+			pRender->PopClipRect( );
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -102,6 +113,16 @@ namespace guiex
 	bool CGUIWgtStaticText::IsMultiLine( ) const
 	{
 		return m_bMultiLine;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtStaticText::SetClipText( bool bClip )
+	{
+		m_bClipText = bClip;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWgtStaticText::IsClipText( ) const
+	{
+		return m_bClipText;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtStaticText::SetTextContent(const CGUIStringW& rText)
@@ -186,7 +207,6 @@ namespace guiex
 			m_aLineList.push_back(aLine);
 			fTotalHeight += aLine.m_fLineHeight;
 		}
-
 	}
 	//------------------------------------------------------------------------------
 	int32 CGUIWgtStaticText::GenerateProperty( CGUIProperty& rProperty )
@@ -194,6 +214,10 @@ namespace guiex
 		if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "multiline")
 		{
 			ValueToProperty( IsMultiLine(), rProperty);
+		}
+		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "clip_text")
+		{
+			ValueToProperty( IsClipText(), rProperty);
 		}
 		else
 		{
@@ -209,6 +233,12 @@ namespace guiex
 			bool bValue;
 			PropertyToValue( rProperty, bValue);
 			SetMultiLine( bValue );
+		}
+		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "clip_text")
+		{
+			bool bValue;
+			PropertyToValue( rProperty, bValue);
+			SetClipText( bValue );
 		}
 		else
 		{
