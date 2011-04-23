@@ -25,10 +25,10 @@
 // declare
 //============================================================================// 
 //using namespace guiex;
-//const int32 g_nScreenWidth = 1024;
-//const int32 g_nScreenHeight = 768;
-const guiex::int32 g_nScreenWidth = 640;
-const guiex::int32 g_nScreenHeight = 480;
+const guiex::int32 g_nScreenWidth = 1024;
+const guiex::int32 g_nScreenHeight = 768;
+//const guiex::int32 g_nScreenWidth = 640;
+//const guiex::int32 g_nScreenHeight = 480;
 guiex::CGUIFrameworkBase* g_pFramework = NULL;
 std::map<int,guiex::EKeyCode> g_mapKey_Glut2Guiex;
 guiex::CGUITimer g_aOldTimer;
@@ -139,7 +139,6 @@ void mouseCB(int button, int state, int x, int y)
 void keyboardCB(unsigned char key, int x, int y)
 {
 	// extract some keys may be handled via key code and generate those too
-	int k = key;
 	switch (key)
 	{
 	case 0x1B:  // Escape

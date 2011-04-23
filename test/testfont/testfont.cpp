@@ -118,8 +118,11 @@ void CMyCanvasLayer_DrawFont::RenderSelf(IGUIInterfaceRender* pRender)
 		aStringRender.m_aStringInfo.m_uFontID = itor->second->GetFontID();
 		aPos.y += pFont->GetFontHeight( aStringRender.m_aStringInfo );
 		DrawString( pRender, aStringRender, aPos );
-		pRender->DrawLine( aPos, CGUIVector2( aPos.x+pFont->GetStringWidth( aStringRender), aPos.y), 1, 0, CGUIColor::Green, CGUIColor::Green);
-	
+		//pRender->DrawLine( aPos, CGUIVector2( aPos.x+pFont->GetStringWidth( aStringRender), aPos.y), 1, 0, CGUIColor::Green, CGUIColor::Green);
+
+		CGUIRect aRect( aPos.x, aPos.y - pFont->GetFontHeight( aStringRender.m_aStringInfo ), aPos.x+pFont->GetStringWidth( aStringRender), aPos.y );
+		pRender->DrawRect( aRect, 1, 0, CGUIColor::Green );
+		
 		aPos.y += pFont->GetFontHeight( aStringRender.m_aStringInfo );
 	}
 

@@ -9,6 +9,7 @@
 // include
 //============================================================================// 
 #include <libguiex_module/render_opengl_base/guitexture_opengl_base.h>
+#include <libguiex_module/render_opengl_base/guirender_opengl_base.h>
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guidatachunk.h>
 #include <libguiex_core/guiinterfacemanager.h>
@@ -50,6 +51,8 @@ namespace guiex
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);	// GL_CLAMP_TO_EDGE GL_CLAMP
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);	// GL_CLAMP_TO_EDGE GL_CLAMP
 		//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+		
+		TRY_THROW_OPENGL_ERROR("CGUITexture_opengl_base::CGUITexture_opengl_base");
 	}
 	//------------------------------------------------------------------------------
 	CGUITexture_opengl_base::~CGUITexture_opengl_base()
@@ -123,6 +126,8 @@ namespace guiex
 
 		int32 ret = LoadFromMemory( pImageData->GetData(), pImageData->GetWidth(), pImageData->GetHeight(), pImageData->GetPixelFormat());
 		delete pImageData;
+		
+		TRY_THROW_OPENGL_ERROR("CGUITexture_opengl_base::LoadFromFile");
 		return ret;
 	}
 	//------------------------------------------------------------------------------
@@ -137,15 +142,15 @@ namespace guiex
 		switch(ePixelFormat)
 		{
 		case GUI_PF_RGBA_32:
-			glTexImage2D(GL_TEXTURE_2D, 0, m_nBytesPerPixel, buffWidth, buffHeight, 0, GL_RGBA ,GL_UNSIGNED_BYTE, buffPtr);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, buffWidth, buffHeight, 0, GL_RGBA ,GL_UNSIGNED_BYTE, buffPtr);
 			break;
 
 		case GUI_PF_RGB_24:
-			glTexImage2D(GL_TEXTURE_2D, 0, m_nBytesPerPixel, buffWidth, buffHeight, 0, GL_RGB ,GL_UNSIGNED_BYTE, buffPtr);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, buffWidth, buffHeight, 0, GL_RGB ,GL_UNSIGNED_BYTE, buffPtr);
 			break;
 
 		case GUI_PF_ALPHA_8:
-			glTexImage2D(GL_TEXTURE_2D, 0, m_nBytesPerPixel, buffWidth, buffHeight, 0, GL_ALPHA ,GL_UNSIGNED_BYTE, buffPtr);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, buffWidth, buffHeight, 0, GL_ALPHA ,GL_UNSIGNED_BYTE, buffPtr);
 			break;
 
 		//case GUI_PF_LUMINANCE_ALPHA_16:
@@ -163,6 +168,7 @@ namespace guiex
 		m_nTextureWidth  = static_cast<uint16>(buffWidth);
 		m_nTextureHeight = static_cast<uint16>(buffHeight);
 
+		TRY_THROW_OPENGL_ERROR("CGUITexture_opengl_base::LoadFromMemory");
 		return 0;
 	}
 	//------------------------------------------------------------------------------
@@ -171,7 +177,6 @@ namespace guiex
 		GUI_ASSERT( m_ePixelFormat == ePixelFormat, "invalid pixel format" );
 
 		glBindTexture( GL_TEXTURE_2D, m_ogltexture );
-		//glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
 		switch(ePixelFormat)
 		{
@@ -198,15 +203,8 @@ namespace guiex
 		default:
 			throw CGUIException("[CGUITexture_opengl_base::CopySubImage]: unsupported pixel format;");
 		}
-
-
-		int errorCode = glGetError();
-		if( errorCode != GL_NO_ERROR)
-		{
-			throw CGUIException("[CGUITexture_opengl_base::CopySubImage]: failed to run function <glTexSubImage2D>, error code <%d>;",glGetError());
-		}
-
-		//glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+		
+		TRY_THROW_OPENGL_ERROR("CGUITexture_opengl_base::CopySubImage");
 	}
 	//------------------------------------------------------------------------------
 	void CGUITexture_opengl_base::SetOpenglTextureSize(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat)
@@ -232,6 +230,8 @@ namespace guiex
 
 		m_nTextureWidth = nWidth;
 		m_nTextureHeight = nHeight;
+		
+		TRY_THROW_OPENGL_ERROR("CGUITexture_opengl_base::SetOpenglTextureSize");
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

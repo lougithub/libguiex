@@ -37,6 +37,7 @@ namespace guiex
 		,m_pFontFace(pFontFace)
 		,m_uTexturePosX(0)
 		,m_uTexturePosY(0)
+		,m_uMaxHeight(0)
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -160,11 +161,13 @@ namespace guiex
 		if( m_uTexturePosX + (glyph->bitmap.width+1) >= nTextureWidth)
 		{
 			m_uTexturePosX = 0;
-			m_uTexturePosY += (uFontSize+1);
+			m_uTexturePosY += (m_uMaxHeight+1);
+			m_uMaxHeight = uFontSize;
 		}
-		if( m_vecTexture.empty() || m_uTexturePosY + uFontSize > nTextureHeight )
+		if( m_vecTexture.empty() || m_uTexturePosY + glyph->bitmap.rows > nTextureHeight )
 		{
 			m_uTexturePosX = m_uTexturePosY = 0;
+			m_uMaxHeight = uFontSize;
 			CGUITexture* pNewTexture = CGUITextureManager::Instance()->CreateTexture(nTextureWidth,nTextureHeight,GUI_PF_LUMINANCE_ALPHA_16);
 			m_vecTexture.push_back(pNewTexture);
 		}
@@ -194,6 +197,10 @@ namespace guiex
 			real(m_uTexturePosY+glyph->bitmap.rows) / nTextureHeight);
 
 		m_uTexturePosX += (glyph->bitmap.width+1);
+		if( glyph->bitmap.rows > m_uMaxHeight )
+		{
+			m_uMaxHeight = glyph->bitmap.rows;
+		}
 
 		//add to map
 		m_mapCharsData.insert(std::make_pair(charCode, pCharData));

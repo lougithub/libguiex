@@ -169,6 +169,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int IGUIRender_opengl_base::DoInitialize(void* )
 	{
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DoInitialize: begin");
+		
 		// get the maximum available texture size.
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &m_maxTextureSize);
 
@@ -219,6 +221,8 @@ namespace guiex
 		m_nCurrentStencilRef = 0;
 
 		OnScreenSizeChange( GSystem->GetRawScreenSize() );
+		
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DoInitialize: end");
 		return 0;
 	}
 	//------------------------------------------------------------------------------
@@ -356,6 +360,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::BeginRender(void)
 	{
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::BeginRender: begin");
+		
 		//clear screen
 		glClearColor( 0.5f, 0.5f, 0.5f, 1 );
 		glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );	// clear screen and depth buffer 
@@ -364,10 +370,13 @@ namespace guiex
 		UpdateCamera();
 
 		m_nCurrentStencilRef = 0;
+		
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::BeginRender: end");		
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::EndRender(void)
 	{		
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::EndRender: ");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::UpdateCamera( )

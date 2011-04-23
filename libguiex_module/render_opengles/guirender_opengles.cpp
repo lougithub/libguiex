@@ -46,7 +46,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int32 IGUIRender_opengles::DoInitialize(void* pData )
 	{
-		TRY_THROW_OPENGL_ERROR( "render interface initialize start" );
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles::DoInitialize: begin");
 
 		// Create the framebuffer object and attach the color buffer.
 		GLuint framebuffer;
@@ -78,8 +78,7 @@ namespace guiex
 		
 
 		
-		TRY_THROW_OPENGL_ERROR( "render interface initialize end" );
-		
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles::DoInitialize: end");		
 
 		return 0;
 	}
@@ -147,20 +146,21 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::BeginRender(void)
 	{
-		TRY_THROW_OPENGL_ERROR("BeginRender start");
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles::BeginRender: begin");
+
 
 		IGUIRender_opengl_base::BeginRender();
 
-		TRY_THROW_OPENGL_ERROR("BeginRender end");
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles::BeginRender: end");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles::EndRender(void)
 	{		
-		TRY_THROW_OPENGL_ERROR("EndRender start");
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles::EndRender: begin");
 		
 		IGUIRender_opengl_base::EndRender();
-
-		TRY_THROW_OPENGL_ERROR("EndRender end");
+		
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles::EndRender: end");
 	}	
 	//------------------------------------------------------------------------------
 

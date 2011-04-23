@@ -89,6 +89,7 @@ namespace guiex
 		TVecTexture m_vecTexture;
 		uint32 m_uTexturePosX;
 		uint32 m_uTexturePosY;
+		uint32 m_uMaxHeight;
 
 		typedef std::map<wchar_t, SCharData_ft2*> TMapCharData;
 		TMapCharData m_mapCharsData;
