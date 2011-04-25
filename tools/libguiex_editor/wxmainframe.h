@@ -183,6 +183,9 @@ protected:
 	void OnUpdateParseScript(wxUpdateUIEvent& event);
 	void OnParseScript(wxCommandEvent& evt);
 
+	void OnSetDefaultEditor(wxCommandEvent& evt);
+
+
 	void On800x600(wxCommandEvent& evt);
 	void On1024x786(wxCommandEvent& evt);
 	void On1280x800(wxCommandEvent& evt);

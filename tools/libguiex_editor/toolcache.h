@@ -45,6 +45,18 @@ public:
 		m_nMaxSize = nSize;
 	}
 
+	void SetDefaultEditor(const std::string& rEditor)
+	{
+		m_strDefaultEditor = rEditor;
+
+		SaveFile();
+		UpdateMenu();
+	}
+	const std::string& GetDefaultEditor() const
+	{
+		return m_strDefaultEditor;
+	}
+
 	void UpdateMenu( );
 
 protected:
@@ -52,6 +64,8 @@ protected:
 
 public:
 	std::string	m_strCacheFile;
+	
+	std::string m_strDefaultEditor;
 
 	std::vector<std::pair< std::string, std::string> >	m_sceneHistory;	//<Scene, path>
 	std::vector<std::string> m_pathHistory;

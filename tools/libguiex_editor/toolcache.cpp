@@ -94,12 +94,17 @@ void	CToolCache::ParseCache( const std::string& rCacheFile )
 				pHistoryNode = pHistoryNode->NextSiblingElement();
 			}
 		}
+		else if( std::string("default_editor") == pNode->Value() )
+		{
+			const char* path = pNode->Attribute("path");
+			m_strDefaultEditor = path;
+		}
 
 		pNode = pNode->NextSiblingElement();
 	}
 }
 //------------------------------------------------------------------------------
-void	CToolCache::AddCache( const std::string& rScene, const std::string& rPath )
+void CToolCache::AddCache( const std::string& rScene, const std::string& rPath )
 {
 	bool bChanged = false;
 
@@ -133,7 +138,7 @@ void	CToolCache::AddCache( const std::string& rScene, const std::string& rPath )
 	}
 }
 //------------------------------------------------------------------------------
-void	CToolCache::UpdateMenu( )
+void CToolCache::UpdateMenu( )
 {
 	// Remove all existing menu items.
 	for( unsigned x = 0 ; x < m_nMaxSize ; ++x )
@@ -163,7 +168,7 @@ void	CToolCache::UpdateMenu( )
 	}
 }
 //------------------------------------------------------------------------------
-void	CToolCache::SaveFile(  )
+void CToolCache::SaveFile(  )
 {
 	TiXmlDocument aDoc;
 	TiXmlNode* pRootNode = aDoc.InsertEndChild( TiXmlElement( "cache" ));
@@ -187,6 +192,11 @@ void	CToolCache::SaveFile(  )
 		aHistoryNode.SetAttribute("path", m_pathHistory[i].c_str());
 		pPathsNode->InsertEndChild(aHistoryNode);
 	}
+
+	//default editor
+	TiXmlElement aEditorNode("default_editor");
+	aEditorNode.SetAttribute("path", m_strDefaultEditor.c_str());
+	pRootNode->InsertEndChild(aEditorNode);
 
 	aDoc.SaveFile(m_strCacheFile.c_str());
 }

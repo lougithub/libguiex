@@ -40,6 +40,9 @@ enum
 	ID_Localization_begin,
 	ID_Localization_end = ID_Localization_begin+10,
 
+	//tool
+	ID_SetDefaultEditor,
+
 	//view
 	ID_VIEW_Fullscreen,
 	ID_VIEW_800x600,

@@ -125,6 +125,8 @@ EVT_UPDATE_UI(ID_ParseScript, WxMainFrame::OnUpdateParseScript)
 EVT_MENU(ID_ParseScript, WxMainFrame::OnParseScript)
 
 
+EVT_MENU(ID_SetDefaultEditor, WxMainFrame::OnSetDefaultEditor)
+
 EVT_MENU(ID_VIEW_Fullscreen, WxMainFrame::OnFullscreen)
 
 EVT_UPDATE_UI(ID_VIEW_800x600, WxMainFrame::OnUpdateResolution)
@@ -1147,6 +1149,19 @@ void WxMainFrame::OnFullscreen(wxCommandEvent& evt)
 	Refresh();
 }
 //------------------------------------------------------------------------------
+void WxMainFrame::OnSetDefaultEditor(wxCommandEvent& evt)
+{
+	wxFileDialog aDialog( this, wxT("select editor"), wxT(""), wxT(""), wxT("exe files (*.exe)|*.exe"), wxFD_OPEN );
+	if( wxID_OK  == aDialog.ShowModal() )
+	{
+		CToolCache::Instance()->SetDefaultEditor( wx2GuiString( aDialog.GetPath() ));
+	}
+	else
+	{
+		CToolCache::Instance()->SetDefaultEditor( "" );
+	}
+}
+//------------------------------------------------------------------------------
 void WxMainFrame::OnUpdateResolution(wxUpdateUIEvent& event)
 {
 	event.Enable( GSystem->IsInitialized());
@@ -1564,13 +1579,29 @@ void WxMainFrame::EditFileExternal( const std::string& rFileName )
 	std::string strAbsPath = GSystem->GetDataPath() + pScene->GetScenePath();
 	std::string strAbsFileName = strAbsPath + rFileName;
 
-	::ShellExecute( 
-		NULL, 
-		_T("open"),
-		Gui2wxString( strAbsFileName).data(), 
-		NULL, 
-		Gui2wxString( strAbsPath).data(),
-		SW_SHOWDEFAULT);
+	wxString strCommand = wxString::Format( _T("%s %s"), _T("notepad"), Gui2wxString( strAbsFileName).c_str() );
+
+	if( !CToolCache::Instance()->GetDefaultEditor().empty() )
+	{
+		wxString strEditor = Gui2wxString(CToolCache::Instance()->GetDefaultEditor());
+		if( wxFileExists( strEditor ))
+		{
+			strCommand = wxString::Format( _T("%s %s"), strEditor.c_str(), Gui2wxString( strAbsFileName).c_str() );
+		}
+		else
+		{
+			CToolCache::Instance()->SetDefaultEditor("");
+		}
+	}
+
+	wxExecute( strCommand );
+	//::ShellExecute( 
+	//	NULL, 
+	//	_T("open"),
+	//	Gui2wxString( strAbsFileName).c_str(), 
+	//	NULL, 
+	//	Gui2wxString( strAbsPath).c_str(),
+	//	SW_SHOWDEFAULT);
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::EditFile( const std::string& rFileName, EFileType eFileType )
@@ -1698,7 +1729,7 @@ void WxMainFrame::UpdateStatusBar (wxChar *format, ...)
 	GetStatusBar()->SetStatusText(buffer);
 }
 //------------------------------------------------------------------------------
-void			WxMainFrame::CreateMenu()
+void WxMainFrame::CreateMenu()
 {
 	//update cache file
 	CToolCache::Instance()->ParseCache(wxGetApp().GetBaseDir() + ".\\libguiex_editor_cache.xml");
@@ -1741,7 +1772,9 @@ void			WxMainFrame::CreateMenu()
 	edit_menu->Append(ID_WidgetUp, _("Widget Up"));
 	edit_menu->Append(ID_WidgetDown, _("Widget Down"));
 
-
+	//menu-tool
+	wxMenu*	tool_menu = new wxMenu;
+	tool_menu->Append(ID_SetDefaultEditor, wxT("Set Default Editor"), wxT("Set Default Editor"));
 
 	//menu-view
 	wxMenu*	view_menu = new wxMenu;
@@ -1773,6 +1806,7 @@ void			WxMainFrame::CreateMenu()
 	mb->Append(file_menu, _("File"));
 	mb->Append(edit_menu, _("Edit"));
 	mb->Append(view_menu, _("View"));
+	mb->Append(tool_menu, _("Tool"));
 	mb->Append(help_menu, _("Help"));
 
 	SetMenuBar(mb);
