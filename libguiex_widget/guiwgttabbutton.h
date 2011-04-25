@@ -27,14 +27,14 @@ namespace guiex
 	* @class CGUIWgtTabButton
 	* @brief button class.
 	* used image name:
-	*		-BTN_NORMAL
-	*		-BTN_NORMAL_CHECKED
-	*		-BTN_HOVER
-	*		-BTN_HOVER_CHECKED
-	*		-BTN_DISABLE
-	*		-BTN_DISABLE_CHECKED
-	*		-BTN_PUSH
-	*		-BTN_PUSH_CHECKED
+	*		-normal
+	*		-normal_checked
+	*		-hover
+	*		-hover_checked
+	*		-disable
+	*		-disable_checked
+	*		-push
+	*		-push_checked
 	*/
 	class GUIEXPORT CGUIWgtTabButton : public CGUIWgtCheckButton
 	{

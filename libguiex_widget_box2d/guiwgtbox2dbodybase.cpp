@@ -31,6 +31,8 @@ namespace guiex
 	void CGUIWgtBox2DBodyBase::InitBox2DBodyBase()
 	{
 		m_pBody = NULL;
+
+		SetAnchorPoint( 0.5f, 0.5f );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtBox2DBodyBase::ReleaseBox2D()

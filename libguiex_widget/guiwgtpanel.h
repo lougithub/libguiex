@@ -27,15 +27,15 @@ namespace guiex
 	* @brief the panel's size will be resize automatically
 	* by parent's client size
 	* used image name:
-	*	- BGIMAGE
-	*	- PANEL_BORDER_LEFT
-	*	- PANEL_BORDER_TOP
-	*	- PANEL_BORDER_BOTTOM
-	*	- PANEL_BORDER_RIGHT
-	*	- PANEL_BORDER_TOPLEFT
-	*	- PANEL_BORDER_TOPRIGHT
-	*	- PANEL_BORDER_BOTTOMLEFT
-	*	- PANEL_BORDER_BOTTOMRIGHT
+	*	- bg
+	*	- border_left
+	*	- border_top
+	*	- border_bottom
+	*	- border_right
+	*	- border_topleft
+	*	- border_topright
+	*	- border_bottomleft
+	*	- border_bottomright
 	*/
 	class GUIEXPORT CGUIWgtPanel : public CGUIWidget
 	{
@@ -69,14 +69,14 @@ namespace guiex
 
 		enum EPanelBorderLocation
 		{
-			PANEL_BORDER_TOPLEFT = 0,			
-			PANEL_BORDER_TOPRIGHT,		
-			PANEL_BORDER_BOTTOMLEFT,		
-			PANEL_BORDER_BOTTOMRIGHT,		
-			PANEL_BORDER_TOP,				
-			PANEL_BORDER_LEFT,			
-			PANEL_BORDER_BOTTOM,			
-			PANEL_BORDER_RIGHT,
+			border_topleft = 0,			
+			border_topright,		
+			border_bottomleft,		
+			border_bottomright,		
+			border_top,				
+			border_left,			
+			border_bottom,			
+			border_right,
 			PANEL_BORDER_NONE,			
 		};
 

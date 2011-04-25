@@ -75,7 +75,7 @@ namespace guiex
 		,m_bOpenWithParent(true)
 		,m_bInheritAlpha(true)
 		,m_bIsFocusAgency(false)
-		,m_bIsFocusable(true)
+		,m_bIsFocusable(false)
 		,m_bIsMovable(false)
 		,m_bIsHitable(true)
 		,m_bIsMouseConsumed(true)
@@ -1867,6 +1867,11 @@ namespace guiex
 			ValueToProperty( IsHitable(), rProperty);
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////
+		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="focusable" )
+		{
+			ValueToProperty( IsFocusable(), rProperty);
+		}
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "clip_children" )
 		{
 			ValueToProperty( IsClipChildren(), rProperty);
@@ -2050,6 +2055,12 @@ namespace guiex
 			bool bValue = false;
 			PropertyToValue(rProperty, bValue );
 			SetHitable( bValue );
+		}
+		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="focusable" )
+		{
+			bool bValue = false;
+			PropertyToValue(rProperty, bValue );
+			SetFocusable( bValue );
 		}
 		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="clip_children" )
 		{
@@ -2839,7 +2850,7 @@ namespace guiex
 		return m_bIsFocusable;
 	}
 	//------------------------------------------------------------------------------
-	bool	CGUIWidget::IsDerivedFocusable() const
+	bool CGUIWidget::IsDerivedFocusable() const
 	{
 		if( IsFocusAgency())
 		{

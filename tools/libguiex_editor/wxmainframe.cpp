@@ -77,7 +77,6 @@ static void EditorWarningCB(const char* message, void*)
 	GetMainFrame()->OutputString(message);
 }
 
-
 //============================================================================//
 // function
 //============================================================================// 
@@ -1433,7 +1432,7 @@ void WxMainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 	CToolCache::Instance()->AddCache( strSceneFileName, strDataPath );
 }
 //------------------------------------------------------------------------------
-void	WxMainFrame::CloseCanvas()
+void WxMainFrame::CloseCanvas()
 {
 	if( m_pCanvas)
 	{
@@ -1484,7 +1483,7 @@ void WxMainFrame::RenderFile( const std::string& rFileName )
 	}
 }
 //------------------------------------------------------------------------------
-void	WxMainFrame::EditFileExternal( const std::string& rFileName )
+void WxMainFrame::EditFileExternal( const std::string& rFileName )
 {
 	CGUIScene* pScene = CGUISceneManager::Instance()->GetScene(m_strCurrentSceneName);
 
@@ -1500,7 +1499,7 @@ void	WxMainFrame::EditFileExternal( const std::string& rFileName )
 		SW_SHOWDEFAULT);
 }
 //------------------------------------------------------------------------------
-void	WxMainFrame::EditFile( const std::string& rFileName, EFileType eFileType )
+void WxMainFrame::EditFile( const std::string& rFileName, EFileType eFileType )
 {
 	CGUIScene* pScene = CGUISceneManager::Instance()->GetScene(m_strCurrentSceneName);
 

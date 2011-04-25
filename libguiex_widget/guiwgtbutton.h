@@ -24,12 +24,12 @@ namespace guiex
 	* @class CGUIWgtButton
 	* @brief button class.
 	* used image name:
-	*		-BTN_NORMAL
-	*		-BTN_HOVER
-	*		-BTN_DISABLE
-	*		-BTN_PUSH
-	*		-BTN_HOVER_OVERLAY
-	*		-BTN_PUSH_OVERLAY
+	*		-normal
+	*		-hover
+	*		-disable
+	*		-push
+	*		-hover_overlay
+	*		-push_overlay
 	*/
 	class GUIEXPORT CGUIWgtButton : public CGUIWidget
 	{

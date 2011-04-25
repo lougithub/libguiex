@@ -46,7 +46,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtDialog::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
-		if( rName == "BGIMAGE")
+		if( rName == "bg")
 		{
 			m_pImageBG = pImage;
 			if( pImage && GetSize().IsEqualZero() )

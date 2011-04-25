@@ -84,7 +84,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtMultiEditBox::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
-		if( rName == "EDIT_BG")
+		if( rName == "bg")
 		{
 			m_pBG = pImage;
 			if( GetSize().IsEqualZero() && pImage )
@@ -92,11 +92,11 @@ namespace guiex
 				SetPixelSize(pImage->GetSize());
 			}
 		}
-		else if( rName == "EDIT_BGFOCUS")
+		else if( rName == "bg_focus")
 		{
 			m_pBGFocus = pImage;
 		}
-		else if( rName == "EDIT_CURSOR")
+		else if( rName == "cursor")
 		{
 			m_pCursor = pImage;
 			if( GetCursorSize().IsEqualZero() && pImage)

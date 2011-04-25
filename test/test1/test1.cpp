@@ -43,7 +43,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	CGUIWgtStaticImage* pWidget_staticimage =  
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtStaticImage>( "staticimage_0", "testscene");
 	pWidget_staticimage->SetParent( pWidgetRoot );
-	pWidget_staticimage->SetImage( "BGIMAGE", "color_white" );
+	pWidget_staticimage->SetImage( "bg", "color_white" );
 	pWidget_staticimage->SetSize( 50, 50 );
 	pWidget_staticimage->SetPosition( 100, 100 );
 	pWidget_staticimage->SetAnchorPoint( 0.5, 0.5 );
@@ -53,7 +53,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	CGUIWgtStaticImage* pWidget_staticimage2 = 
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtStaticImage>( "staticimage_1", "testscene");
 	pWidget_staticimage2->SetParent( pWidget_staticimage );
-	pWidget_staticimage2->SetImage( "BGIMAGE", "checkbutton_glow_checked" );
+	pWidget_staticimage2->SetImage( "bg", "checkbutton_glow_checked" );
 	pWidget_staticimage2->SetAnchorPoint( 0.5, 0.5 );
 	pWidget_staticimage2->SetSize( 25, 25 );
 	pWidget_staticimage2->SetPosition( 0, 0 );
@@ -72,10 +72,10 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	CGUIWgtButton* pWidget_button = 
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtButton>( "button", "testscene");
 	pWidget_button->SetParent( pWidgetRoot );
-	pWidget_button->SetImage( "BTN_NORMAL", "button_blue_normal" );
-	pWidget_button->SetImage( "BTN_HOVER", "button_blue_hover" );
-	pWidget_button->SetImage( "BTN_PUSH", "button_blue_push" );
-	pWidget_button->SetImage( "BTN_DISABLE", "button_blue_disable" );
+	pWidget_button->SetImage( "normal", "button_blue_normal" );
+	pWidget_button->SetImage( "hover", "button_blue_hover" );
+	pWidget_button->SetImage( "push", "button_blue_push" );
+	pWidget_button->SetImage( "disable", "button_blue_disable" );
 	pWidget_button->SetAnchorPoint( 0.5, 0.5 );
 	pWidget_button->SetPosition( 400, 200 );
 	pWidget_button->SetTextContentUTF8("ok", CGUIWgtButton::eButtonState_Normal);
@@ -85,10 +85,10 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	CGUIWgtButton* pWidget_button2 = 
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtButton>( "button2", "testscene");
 	pWidget_button2->SetParent( pWidgetRoot );
-	pWidget_button2->SetImage( "BTN_NORMAL", "button_blue_normal" );
-	pWidget_button2->SetImage( "BTN_HOVER", "button_blue_hover" );
-	pWidget_button2->SetImage( "BTN_PUSH", "button_blue_push" );
-	pWidget_button2->SetImage( "BTN_DISABLE", "button_blue_disable" );
+	pWidget_button2->SetImage( "normal", "button_blue_normal" );
+	pWidget_button2->SetImage( "hover", "button_blue_hover" );
+	pWidget_button2->SetImage( "push", "button_blue_push" );
+	pWidget_button2->SetImage( "disable", "button_blue_disable" );
 	pWidget_button2->SetAnchorPoint( 0.5, 0.5 );
 	pWidget_button2->SetPosition( 600, 200 );
 	pWidget_button2->SetTextContentUTF8("cancel", CGUIWgtButton::eButtonState_Normal);
@@ -99,8 +99,8 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	CGUIWgtCheckButton* pWidget_checkbutton = 
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtCheckButton>( "checkbutton", "testscene");
 	pWidget_checkbutton->SetParent( pWidgetRoot );
-	pWidget_checkbutton->SetImage( "BTN_NORMAL", "button_hilight_square" );
-	pWidget_checkbutton->SetImage( "BTN_NORMAL_CHECKED", "checkbutton_glow_checked" );
+	pWidget_checkbutton->SetImage( "normal", "button_hilight_square" );
+	pWidget_checkbutton->SetImage( "normal_checked", "checkbutton_glow_checked" );
 	pWidget_checkbutton->SetSize( 20, 20 );
 	pWidget_checkbutton->SetAnchorPoint( 0.5, 0.5 );
 	pWidget_checkbutton->SetPosition( 400, 300 );
@@ -109,8 +109,8 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	CGUIWgtCheckButton* pWidget_checkbutton2 = 
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtCheckButton>( "checkbutton2", "testscene");
 	pWidget_checkbutton2->SetParent( pWidgetRoot );
-	pWidget_checkbutton2->SetImage( "BTN_NORMAL", "button_hilight_square" );
-	pWidget_checkbutton2->SetImage( "BTN_NORMAL_CHECKED", "checkbutton_glow_checked" );
+	pWidget_checkbutton2->SetImage( "normal", "button_hilight_square" );
+	pWidget_checkbutton2->SetImage( "normal_checked", "checkbutton_glow_checked" );
 	pWidget_checkbutton2->SetSize( 20, 20 );
 	pWidget_checkbutton2->SetAnchorPoint( 0.5, 0.5 );
 	pWidget_checkbutton2->SetPosition( 450, 300 );
@@ -124,8 +124,8 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	CGUIWgtRadioButton* pWidget_radiobutton = 
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtRadioButton>( "radiobutton", "testscene");
 	pWidget_radiobutton->SetParent( pWidgetRadioGroup );
-	pWidget_radiobutton->SetImage( "BTN_NORMAL", "button_hilight_square" );
-	pWidget_radiobutton->SetImage( "BTN_NORMAL_CHECKED", "checkbutton_glow_checked" );
+	pWidget_radiobutton->SetImage( "normal", "button_hilight_square" );
+	pWidget_radiobutton->SetImage( "normal_checked", "checkbutton_glow_checked" );
 	pWidget_radiobutton->SetSize( 20, 20 );
 	pWidget_radiobutton->SetAnchorPoint( 0.5, 0.5 );
 	pWidget_radiobutton->SetPosition( 400, 350 );
@@ -134,8 +134,8 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	CGUIWgtRadioButton* pWidget_radiobutton2 =
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtRadioButton>( "radiobutton2", "testscene");
 	pWidget_radiobutton2->SetParent( pWidgetRadioGroup );
-	pWidget_radiobutton2->SetImage( "BTN_NORMAL", "button_hilight_square" );
-	pWidget_radiobutton2->SetImage( "BTN_NORMAL_CHECKED", "checkbutton_glow_checked" );
+	pWidget_radiobutton2->SetImage( "normal", "button_hilight_square" );
+	pWidget_radiobutton2->SetImage( "normal_checked", "checkbutton_glow_checked" );
 	pWidget_radiobutton2->SetSize( 20, 20 );
 	pWidget_radiobutton2->SetAnchorPoint( 0.5, 0.5 );
 	pWidget_radiobutton2->SetPosition( 450, 350 );
@@ -145,8 +145,8 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	CGUIWgtEditBox* pWidget_editbox = 
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtEditBox>( "editbox", "testscene");
 	pWidget_editbox->SetParent( pWidgetRoot );
-	pWidget_editbox->SetImage( "EDIT_BG", "edit_bg" );
-	pWidget_editbox->SetImage( "EDIT_CURSOR", "color_white" );
+	pWidget_editbox->SetImage( "bg", "edit_bg" );
+	pWidget_editbox->SetImage( "cursor", "color_white" );
 	pWidget_editbox->SetSize( 150, 25 );
 	pWidget_editbox->SetAnchorPoint( 0.5, 0.5 );
 	pWidget_editbox->SetPosition( 400, 400 );
@@ -157,8 +157,8 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	CGUIWgtMultiEditBox* pWidget_multieditbox = 
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtMultiEditBox>( "multieditbox", "testscene");
 	pWidget_multieditbox->SetParent( pWidgetRoot );
-	pWidget_multieditbox->SetImage( "EDIT_BG", "edit_bg" );
-	pWidget_multieditbox->SetImage( "EDIT_CURSOR", "color_white" );
+	pWidget_multieditbox->SetImage( "bg", "edit_bg" );
+	pWidget_multieditbox->SetImage( "cursor", "color_white" );
 	pWidget_multieditbox->SetImage( "SCROLLBAR_VERTIC_ARROW_NORMAL_0", "scrollbar_downbutton_down" );
 	pWidget_multieditbox->SetImage( "SCROLLBAR_VERTIC_ARROW_HOVER_0", "scrollbar_downbutton_highlight" );
 	pWidget_multieditbox->SetImage( "SCROLLBAR_VERTIC_ARROW_DISABLE_0", "scrollbar_downbutton_disable" );
@@ -192,15 +192,15 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	CGUIWgtPanel* pWidget_panel= 
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtPanel>( "panel", "testscene");
 	pWidget_panel->SetParent( pWidgetRoot );
-	pWidget_panel->SetImage( "BGIMAGE", "panel_bg_grade_blue" );
-	pWidget_panel->SetImage( "PANEL_BORDER_TOP", "panel_border_top" );
-	pWidget_panel->SetImage( "PANEL_BORDER_BOTTOM", "panel_border_bottom" );
-	pWidget_panel->SetImage( "PANEL_BORDER_LEFT", "panel_border_left" );
-	pWidget_panel->SetImage( "PANEL_BORDER_RIGHT", "panel_border_right" );
-	pWidget_panel->SetImage( "PANEL_BORDER_TOPLEFT", "panel_border_topleft" );
-	pWidget_panel->SetImage( "PANEL_BORDER_TOPRIGHT", "panel_border_topright" );
-	pWidget_panel->SetImage( "PANEL_BORDER_BOTTOMLEFT", "panel_border_bottomleft" );
-	pWidget_panel->SetImage( "PANEL_BORDER_BOTTOMRIGHT", "panel_border_bottomright" );
+	pWidget_panel->SetImage( "bg", "panel_bg_grade_blue" );
+	pWidget_panel->SetImage( "border_top", "panel_border_top" );
+	pWidget_panel->SetImage( "border_bottom", "panel_border_bottom" );
+	pWidget_panel->SetImage( "border_left", "panel_border_left" );
+	pWidget_panel->SetImage( "border_right", "panel_border_right" );
+	pWidget_panel->SetImage( "border_topleft", "panel_border_topleft" );
+	pWidget_panel->SetImage( "border_topright", "panel_border_topright" );
+	pWidget_panel->SetImage( "border_bottomleft", "panel_border_bottomleft" );
+	pWidget_panel->SetImage( "border_bottomright", "panel_border_bottomright" );
 	pWidget_panel->SetSize( 150, 200 );
 	pWidget_panel->SetPosition( 700, 200 );
 	pWidget_panel->SetAnchorPoint( 0.5f, 0.5f );
@@ -217,8 +217,8 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	CGUIWgtTabButton* pWidget_tabbutton = 
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtTabButton>( "tabbutton", "testscene");
 	pWidget_tabbutton->SetParent( pWidget_tabcontroll );
-	pWidget_tabbutton->SetImage( "BTN_NORMAL", "button_hilight_square" );
-	pWidget_tabbutton->SetImage( "BTN_NORMAL_CHECKED", "checkbutton_glow_checked" );
+	pWidget_tabbutton->SetImage( "normal", "button_hilight_square" );
+	pWidget_tabbutton->SetImage( "normal_checked", "checkbutton_glow_checked" );
 	pWidget_tabbutton->SetSizeType( eScreenValue_Percentage );
 	pWidget_tabbutton->SetPositionType( eScreenValue_Percentage );
 	pWidget_tabbutton->SetSize( 0.33f,0.1f );
@@ -230,7 +230,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	CGUIWgtPanel* pWidget_panel1= 
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtPanel>( "panel1", "testscene");
 	pWidget_panel1->SetParent( pWidget_tabbutton );
-	pWidget_panel1->SetImage( "BGIMAGE", "color_white" );
+	pWidget_panel1->SetImage( "bg", "color_white" );
 	pWidget_panel1->SetSizeType( eScreenValue_Percentage );
 	pWidget_panel1->SetSize( 1.0f, 0.5f);
 	pWidget_panel1->SetColor(CGUIColor(1,0,0,1));
@@ -239,8 +239,8 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	CGUIWgtTabButton* pWidget_tabbutton2 = 
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtTabButton>( "tabbutton2", "testscene");
 	pWidget_tabbutton2->SetParent( pWidget_tabcontroll );
-	pWidget_tabbutton2->SetImage( "BTN_NORMAL", "button_hilight_square" );
-	pWidget_tabbutton2->SetImage( "BTN_NORMAL_CHECKED", "checkbutton_glow_checked" );
+	pWidget_tabbutton2->SetImage( "normal", "button_hilight_square" );
+	pWidget_tabbutton2->SetImage( "normal_checked", "checkbutton_glow_checked" );
 	pWidget_tabbutton2->SetSizeType( eScreenValue_Percentage );
 	pWidget_tabbutton2->SetPositionType( eScreenValue_Percentage );
 	pWidget_tabbutton2->SetSize( 0.33f, 0.1f );
@@ -250,7 +250,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	CGUIWgtPanel* pWidget_panel2=
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtPanel>( "panel2", "testscene");
 	pWidget_panel2->SetParent( pWidget_tabbutton2 );
-	pWidget_panel2->SetImage( "BGIMAGE", "color_white" );
+	pWidget_panel2->SetImage( "bg", "color_white" );
 	pWidget_panel2->SetSizeType( eScreenValue_Percentage );
 	pWidget_panel2->SetSize( 1.0f, 0.5f);
 	pWidget_panel2->SetColor(CGUIColor(0,1,0,1));
@@ -260,8 +260,8 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	CGUIWgtTabButton* pWidget_tabbutton3 = 
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtTabButton>( "tabbutton3", "testscene");
 	pWidget_tabbutton3->SetParent( pWidget_tabcontroll );
-	pWidget_tabbutton3->SetImage( "BTN_NORMAL", "button_hilight_square" );
-	pWidget_tabbutton3->SetImage( "BTN_NORMAL_CHECKED", "checkbutton_glow_checked" );
+	pWidget_tabbutton3->SetImage( "normal", "button_hilight_square" );
+	pWidget_tabbutton3->SetImage( "normal_checked", "checkbutton_glow_checked" );
 	pWidget_tabbutton3->SetSizeType( eScreenValue_Percentage );
 	pWidget_tabbutton3->SetPositionType( eScreenValue_Percentage );
 	pWidget_tabbutton3->SetSize( 0.33f, 0.1f );
@@ -272,7 +272,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	CGUIWgtPanel* pWidget_panel3= 
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtPanel>( "panel3", "testscene");
 	pWidget_panel3->SetParent( pWidget_tabbutton3 );
-	pWidget_panel3->SetImage( "BGIMAGE", "color_white" );
+	pWidget_panel3->SetImage( "bg", "color_white" );
 	pWidget_panel3->SetSizeType( eScreenValue_Percentage );
 	pWidget_panel3->SetSize( 1.0f, 0.5f);
 	pWidget_panel3->SetColor(CGUIColor(0,0,1,1));

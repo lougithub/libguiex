@@ -1,17 +1,17 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1 " encoding="utf-8"?>
 
 <config>
 
 	<widget type="CGUIWgtParticle2D" inherit="CGUIWidget">
 		<page name="Appearance">
-			<property name="particle2d" type="CGUIParticle2D" value="" category="particle"/>
-      <property name="offset" type="CGUIVector2" value="0.5,0.5"  category="particle"/>
+			<property name="particle2d" type="CGUIParticle2D" value="" category="particle" alternative_save="true"/>
+      <property name="offset" type="CGUIVector2" value="0.5,0.5"  category="particle" alternative_save="true"/>
     </page>
 	</widget>
 
 	<widget type="CGUIWgtTiledMap" inherit="CGUIWidget">
 		<page name="Appearance">
-			<property name="tiledmap" type="CGUITiledMap" value="" category="tiledmap_category"/>
+			<property name="tiledmap" type="CGUITiledMap" value="" category="tiledmap_category" alternative_save="true"/>
 		</page>
 	</widget>
 </config>

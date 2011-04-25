@@ -51,13 +51,12 @@ namespace guiex
 		m_eTextAlignmentVert = eTextAlignment_Vert_Center;
 
 		SetFocusable(true);
-		SetActivable(false);
 		SetGenerateClickEvent( true );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtButton::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
-		if( rName == "BTN_NORMAL")
+		if( rName == "normal")
 		{
 			m_pImage[eButtonState_Normal] = pImage;
 			if( pImage && GetSize().IsEqualZero())
@@ -65,19 +64,19 @@ namespace guiex
 				SetPixelSize(pImage->GetSize());
 			}
 		}
-		else if( rName == "BTN_HOVER")
+		else if( rName == "hover")
 		{
 			m_pImage[eButtonState_Hover] = pImage;
 		}
-		else if( rName == "BTN_PUSH")
+		else if( rName == "push")
 		{
 			m_pImage[eButtonState_Push] = pImage;
 		}
-		else if( rName == "BTN_DISABLE")
+		else if( rName == "disable")
 		{
 			m_pImage[eButtonState_Disable] = pImage;
 		}
-		else if( rName == "BTN_HOVER_OVERLAY")
+		else if( rName == "hover_overlay")
 		{
 			m_pImageHoverOverlay = pImage;
 		}

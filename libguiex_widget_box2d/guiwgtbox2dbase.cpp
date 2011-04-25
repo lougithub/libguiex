@@ -29,13 +29,11 @@ namespace guiex
 	void CGUIWgtBox2DBase::InitBox2DBase()
 	{
 		m_pImageBG = NULL;
-		SetFocusable(false);
-		SetActivable(false);
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtBox2DBase::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
-		if( rName == "BGIMAGE")
+		if( rName == "bg")
 		{
 			m_pImageBG = pImage;
 			if( GetSize().IsEqualZero() && m_pImageBG )

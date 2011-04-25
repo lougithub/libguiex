@@ -37,13 +37,11 @@ namespace guiex
 	void CGUIWgtStaticImage::InitStaticImage()
 	{
 		m_pImageBG = NULL;
-		SetFocusable(false);
-		SetActivable(false);
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtStaticImage::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
-		if( rName == "BGIMAGE")
+		if( rName == "bg")
 		{
 			m_pImageBG = pImage;
 			if( GetSize().IsEqualZero() && m_pImageBG )

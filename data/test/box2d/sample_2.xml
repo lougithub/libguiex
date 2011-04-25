@@ -27,7 +27,7 @@
     </property>
     <property name="sample_2_root\" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
         <property name="parent" type="CGUIString" value="sample_2_root" />
-        <property name="BGIMAGE" type="CGUIImage" value="bg_blue" />
+        <property name="bg" type="CGUIImage" value="bg_blue" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="55,53" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />

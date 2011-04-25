@@ -44,9 +44,6 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtTiledMap::InitTiledMap()
 	{
-		SetFocusable(false);
-		SetActivable(false);
-
 		m_pTiledMap = NULL;
 	}
 	//------------------------------------------------------------------------------

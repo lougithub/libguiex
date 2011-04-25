@@ -1,6 +1,6 @@
 <guiex>
     <property name="game_background" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
-        <property name="BGIMAGE" type="CGUIImage" value="dialog_bg" />
+        <property name="bg" type="CGUIImage" value="dialog_bg" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="0,0" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />

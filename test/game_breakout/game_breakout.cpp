@@ -88,7 +88,7 @@ CMyBall::CMyBall( const guiex::CGUIString& rName, const guiex::CGUIString& rScen
 void CMyBall::InitBall( guiex::CGUIWidget* pParent )
 {
 	SetParent( pParent );
-	SetImage( "BGIMAGE", "Ball" );
+	SetImage( "bg", "Ball" );
 	SetAnchorPoint( 0.5f, 0.5f );
 	SetPixelPosition( 100, guiex::GSystem->GetScreenHeight() - 100.0f );
 	Refresh();
@@ -170,7 +170,7 @@ CMyPaddle::CMyPaddle( const guiex::CGUIString& rName, const guiex::CGUIString& r
 void CMyPaddle::InitPaddle( guiex::CGUIWidget* pParent )
 {
 	SetParent( pParent );
-	SetImage( "BGIMAGE", "Paddle" );
+	SetImage( "bg", "Paddle" );
 	SetHitable( true );
 	SetMovable( true );
 	SetAnchorPoint( 0.5f, 0.5f );
@@ -283,7 +283,7 @@ CMyBlock::CMyBlock( const guiex::CGUIString& rName, const guiex::CGUIString& rSc
 void CMyBlock::InitBlock( guiex::CGUIWidget* pParent, const guiex::CGUIVector2& rPos )
 {
 	SetParent( pParent );
-	SetImage( "BGIMAGE", "Block" );
+	SetImage( "bg", "Block" );
 	SetAnchorPoint( 0.5f, 0.5f );
 	SetPixelPosition( rPos );
 	Refresh();

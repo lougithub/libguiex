@@ -289,7 +289,7 @@ namespace guiex
 
 		if ( x0 > x1 )
 		{
-			// Normal Grid
+			// normal Grid
 			a.SetValue(0,0);
 			b.SetValue(0,1);
 			c.SetValue(1,0);
@@ -368,7 +368,7 @@ namespace guiex
 
 		if ( y0 > y1 )
 		{
-			// Normal Grid
+			// normal Grid
 			a.SetValue(0,0);
 			b.SetValue(0,1);
 			c.SetValue(1,0);

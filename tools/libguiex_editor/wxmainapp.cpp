@@ -95,6 +95,13 @@ bool WxMainApp::OnInit()
 		return false;
 	}
 
+	//check default property
+	if( false == CheckProperty() )
+	{
+		wxMessageBox(_T("check default property!"), _T("error"));
+		return false;
+	}
+
 	//create frame
 	wxFrame* frame = new WxMainFrame(NULL,
 		wxID_ANY,
@@ -133,6 +140,58 @@ int WxMainApp::OnExit()
 const std::string& WxMainApp::GetBaseDir( ) const 
 {
 	return m_strBaseDir;
+}
+//------------------------------------------------------------------------------
+bool WxMainApp::CheckProperty() const
+{
+	const CPropertyConfigMgr::TSetType& rTypes = CPropertyConfigMgr::Instance()->GetWidgetTypes( );
+	for( CPropertyConfigMgr::TSetType::const_iterator itor = rTypes.begin();
+		itor != rTypes.end();
+		++itor )
+	{
+		const std::string& rWidgetType = *itor;
+		guiex::CGUIWidget* pWidget = guiex::CGUIWidgetManager::Instance()->CreateWidget( rWidgetType,"__template4check__", "" );
+		const CGUIProperty& rDefaultProperty = CPropertyConfigMgr::Instance()->GetPropertySet( rWidgetType );
+		
+		for( uint32 i=0; i<rDefaultProperty.GetPropertyNum(); ++i )
+		{
+			const guiex::CGUIProperty* pDefaultProperty = rDefaultProperty.GetProperty(i);
+			if( CPropertyData::GetPropertyData(*pDefaultProperty)->IsAlternaitiveSave() == false )
+			{
+				continue;
+			}
+
+			guiex::CGUIProperty aWidgetProperty;
+			aWidgetProperty.SetName( pDefaultProperty->GetName() );
+			aWidgetProperty.SetType( pDefaultProperty->GetTypeAsString() );
+			if( 0 != pWidget->GenerateProperty( aWidgetProperty ))
+			{
+				wxString strError = wxString::Format( 
+					_T("failed to create property <%s:%s> in widget <%s>!"), 
+					Gui2wxString(aWidgetProperty.GetName()).c_str(),
+					Gui2wxString(aWidgetProperty.GetTypeAsString()).c_str(),
+					Gui2wxString(pWidget->GetType()).c_str()
+					);
+				wxMessageBox(strError, _T("error"));
+				return false;
+			}
+
+			if( aWidgetProperty != *pDefaultProperty )
+			{
+				wxString strError = wxString::Format( 
+					_T("failed to check property <%s:%s> in widget <%s>!"), 
+					Gui2wxString(aWidgetProperty.GetName()).c_str(),
+					Gui2wxString(aWidgetProperty.GetTypeAsString()).c_str(),
+					Gui2wxString(pWidget->GetType()).c_str()
+					);
+				wxMessageBox(strError, _T("error"));
+				return false;
+			}
+		}
+
+		guiex::CGUIWidgetManager::Instance()->DestroyWidget( pWidget );
+	}
+	return true;
 }
 //------------------------------------------------------------------------------
 

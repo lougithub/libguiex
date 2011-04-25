@@ -107,7 +107,7 @@ void CGUIFrameworkTest::CreateBox2dSample_hellobox2d()
 	CGUIWidget* pWidget_staticbody= GUI_CREATE_WIDGET("CGUIWgtStaticImage", CGUIUtility::GenerateWidgetName(), "testproject");
 	{
 		pWidget_staticbody->SetParent( m_pWidgetRoot );
-		pWidget_staticbody->SetImage( "BGIMAGE", "color_white" );
+		pWidget_staticbody->SetImage( "bg", "color_white" );
 		const b2Fixture* pFixtureList = groundBody->GetFixtureList();
 		b2Vec2 vExtents = pFixtureList->GetAABB().GetExtents();
 		pWidget_staticbody->SetSize( METER2PIXEL(vExtents.x*2), METER2PIXEL(vExtents.y*2) );
@@ -136,7 +136,7 @@ void CGUIFrameworkTest::CreateBox2dSample_hellobox2d()
 	CGUIWidget* pWidget_dynamicbody = GUI_CREATE_WIDGET("CGUIWgtStaticImage", CGUIUtility::GenerateWidgetName(), "testproject");
 	{
 		pWidget_dynamicbody->SetParent( m_pWidgetRoot );
-		pWidget_dynamicbody->SetImage( "BGIMAGE", "color_white" );
+		pWidget_dynamicbody->SetImage( "bg", "color_white" );
 		const b2Fixture* pFixtureList = m_pBody->GetFixtureList();
 		b2Vec2 vExtents = pFixtureList->GetAABB().GetExtents();
 		//pWidget_dynamicbody->SetSize( METER2PIXEL(vExtents.x*2), METER2PIXEL(vExtents.y*2) );
@@ -164,7 +164,7 @@ void CGUIFrameworkTest::CreateBox2dSample_joints()
 	CGUIWidget* pWidget_staticbody= GUI_CREATE_WIDGET("CGUIWgtStaticImage", CGUIUtility::GenerateWidgetName(), "testproject");
 	{
 		pWidget_staticbody->SetParent( m_pWidgetRoot );
-		pWidget_staticbody->SetImage( "BGIMAGE", "color_white" );
+		pWidget_staticbody->SetImage( "bg", "color_white" );
 		const b2Fixture* pFixtureList = groundBody->GetFixtureList();
 		b2Vec2 vExtents = pFixtureList->GetAABB().GetExtents();
 		pWidget_staticbody->SetSize( METER2PIXEL(vExtents.x*2), METER2PIXEL(vExtents.y*2) );
@@ -192,7 +192,7 @@ void CGUIFrameworkTest::CreateBox2dSample_joints()
 	CGUIWgtStaticImage* pWidget_dynamicbody = CGUIWidgetManager::Instance() ->CreateWidget<CGUIWgtStaticImage>(CGUIUtility::GenerateWidgetName(), "testproject");
 	{
 		pWidget_dynamicbody->SetParent( m_pWidgetRoot );
-		pWidget_dynamicbody->SetImage( "BGIMAGE", "color_white" );
+		pWidget_dynamicbody->SetImage( "bg", "color_white" );
 		const b2Fixture* pFixtureList = m_pBody2->GetFixtureList();
 		b2Vec2 vExtents = pFixtureList->GetAABB().GetExtents();
 		//pWidget_dynamicbody->SetSize( METER2PIXEL(vExtents.x*2), METER2PIXEL(vExtents.y*2) );

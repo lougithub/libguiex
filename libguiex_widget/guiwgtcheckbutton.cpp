@@ -57,13 +57,11 @@ namespace guiex
 
 		SetGenerateClickEvent( true );
 		SetFocusable(true);
-		SetActivable(false);
-
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtCheckButton::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
-		if( rName == "BTN_NORMAL")
+		if( rName == "normal")
 		{
 			m_pImageNormal = pImage;
 			if( GetPixelSize().IsEqualZero() && pImage )
@@ -71,39 +69,39 @@ namespace guiex
 				SetPixelSize(pImage->GetSize());
 			}
 		}
-		else if( rName == "BTN_HOVER")
+		else if( rName == "hover")
 		{
 			m_pImageHovering = pImage;
 		}
-		else if( rName == "BTN_DISABLE")
+		else if( rName == "disable")
 		{
 			m_pImageDisable = pImage;
 		}
-		else if( rName == "BTN_PUSH")
+		else if( rName == "push")
 		{
 			m_pImagePush = pImage;
 		}
-		else if( rName == "BTN_NORMAL_CHECKED")
+		else if( rName == "normal_checked")
 		{
 			m_pImageNormalChecked = pImage;
 		}
-		else if( rName == "BTN_HOVER_CHECKED")
+		else if( rName == "hover_checked")
 		{
 			m_pImageHoveringChecked = pImage;
 		}
-		else if( rName == "BTN_DISABLE_CHECKED")
+		else if( rName == "disable_checked")
 		{
 			m_pImageDisableChecked = pImage;
 		}
-		else if( rName == "BTN_PUSH_CHECKED")
+		else if( rName == "push_checked")
 		{
 			m_pImagePushChecked = pImage;
 		}
-		else if( rName == "BTN_HOVER_OVERLAY")
+		else if( rName == "hover_overlay")
 		{
 			m_pImageHoverOverlay = pImage;
 		}
-		else if( rName == "BTN_CHECKED_OVERLAY")
+		else if( rName == "checked_overlay")
 		{
 			m_pImageCheckedOverlay = pImage;
 		}

@@ -1,6 +1,6 @@
 <guiex>
     <property name="lose_background" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
-        <property name="BGIMAGE" type="CGUIImage" value="bg_blue" />
+        <property name="bg" type="CGUIImage" value="bg_blue" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="0,0" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
@@ -68,10 +68,10 @@
     </property>
     <property name="btn_replay_lose" type="CGUIWidgetDefine" value="CGUIWgtButton">
         <property name="parent" type="CGUIString" value="lose_background" />
-        <property name="BTN_NORMAL" type="CGUIImage" value="button_red_normal" />
-        <property name="BTN_HOVER" type="CGUIImage" value="button_red_hover" />
-        <property name="BTN_PUSH" type="CGUIImage" value="button_red_push" />
-        <property name="BTN_DISABLE" type="CGUIImage" value="button_red_disable" />
+        <property name="normal" type="CGUIImage" value="button_red_normal" />
+        <property name="hover" type="CGUIImage" value="button_red_hover" />
+        <property name="push" type="CGUIImage" value="button_red_push" />
+        <property name="disable" type="CGUIImage" value="button_red_disable" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="0.5,0.654948" />
             <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />

@@ -40,8 +40,6 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtAnimation::InitAnimation()
 	{
-		SetFocusable(false);
-
 		m_pAnimationName = "ANIMATION_DEFAULT";
 	}
 	//------------------------------------------------------------------------------

@@ -28,9 +28,9 @@ namespace guiex
 	* @class CGUIWgtMultiEditBox
 	* @brief edit box, used to edit test
 	* used image name:
-	*		-EDIT_BGFOCUS
-	*		-EDIT_BG
-	*		-EDIT_CURSOR
+	*		-bg_focus
+	*		-bg
+	*		-cursor
 	*/
 	class GUIEXPORT CGUIWgtMultiEditBox : public CGUIWgtScrollbarContainer
 	{

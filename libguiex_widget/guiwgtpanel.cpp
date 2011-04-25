@@ -43,9 +43,6 @@ namespace guiex
 		m_pImageBG = NULL;
 
 		//flag
-		SetFocusable(false);
-		SetActivable(false);
-
 		for( int i=0; i<PANEL_BORDER_NONE; ++i)
 		{
 			m_aBorderInfo[i].m_pImageInfo = NULL;
@@ -54,7 +51,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtPanel::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
-		if( rName == "BGIMAGE")
+		if( rName == "bg")
 		{
 			m_pImageBG = pImage;
 			if( m_pImageBG && GetSize().IsEqualZero())
@@ -62,108 +59,108 @@ namespace guiex
 				SetPixelSize(pImage->GetSize());
 			}
 		}
-		else if( rName == "PANEL_BORDER_TOP")
+		else if( rName == "border_top")
 		{
 			if( pImage )
 			{
-				m_aBorderInfo[PANEL_BORDER_TOP].m_aSize.SetSize(pImage->GetSize());
-				m_aBorderInfo[PANEL_BORDER_TOP].m_pImageInfo = pImage;
+				m_aBorderInfo[border_top].m_aSize.SetSize(pImage->GetSize());
+				m_aBorderInfo[border_top].m_pImageInfo = pImage;
 			}
 			else
 			{
-				m_aBorderInfo[PANEL_BORDER_TOP].m_aSize.SetSize(CGUISize(0.f,0.f));
-				m_aBorderInfo[PANEL_BORDER_TOP].m_pImageInfo = NULL;
+				m_aBorderInfo[border_top].m_aSize.SetSize(CGUISize(0.f,0.f));
+				m_aBorderInfo[border_top].m_pImageInfo = NULL;
 			}
 		}
-		else if( rName == "PANEL_BORDER_BOTTOM")
+		else if( rName == "border_bottom")
 		{
 			if( pImage )
 			{
-				m_aBorderInfo[PANEL_BORDER_BOTTOM].m_aSize.SetSize(pImage->GetSize());
-				m_aBorderInfo[PANEL_BORDER_BOTTOM].m_pImageInfo = pImage;
+				m_aBorderInfo[border_bottom].m_aSize.SetSize(pImage->GetSize());
+				m_aBorderInfo[border_bottom].m_pImageInfo = pImage;
 			}
 			else
 			{
-				m_aBorderInfo[PANEL_BORDER_BOTTOM].m_aSize.SetSize(CGUISize(0.f,0.f));
-				m_aBorderInfo[PANEL_BORDER_BOTTOM].m_pImageInfo = NULL;
+				m_aBorderInfo[border_bottom].m_aSize.SetSize(CGUISize(0.f,0.f));
+				m_aBorderInfo[border_bottom].m_pImageInfo = NULL;
 			}
 		}
-		else if( rName == "PANEL_BORDER_LEFT")
+		else if( rName == "border_left")
 		{
 			if( pImage )
 			{
-				m_aBorderInfo[PANEL_BORDER_LEFT].m_aSize.SetSize(pImage->GetSize());
-				m_aBorderInfo[PANEL_BORDER_LEFT].m_pImageInfo = pImage;
+				m_aBorderInfo[border_left].m_aSize.SetSize(pImage->GetSize());
+				m_aBorderInfo[border_left].m_pImageInfo = pImage;
 			}
 			else
 			{
-				m_aBorderInfo[PANEL_BORDER_LEFT].m_aSize.SetSize(CGUISize(0.f,0.f));
-				m_aBorderInfo[PANEL_BORDER_LEFT].m_pImageInfo = NULL;
+				m_aBorderInfo[border_left].m_aSize.SetSize(CGUISize(0.f,0.f));
+				m_aBorderInfo[border_left].m_pImageInfo = NULL;
 			}
 		}
-		else if( rName == "PANEL_BORDER_RIGHT")
+		else if( rName == "border_right")
 		{
 			if( pImage )
 			{
-				m_aBorderInfo[PANEL_BORDER_RIGHT].m_aSize.SetSize(pImage->GetSize());
-				m_aBorderInfo[PANEL_BORDER_RIGHT].m_pImageInfo = pImage;
+				m_aBorderInfo[border_right].m_aSize.SetSize(pImage->GetSize());
+				m_aBorderInfo[border_right].m_pImageInfo = pImage;
 			}
 			else
 			{
-				m_aBorderInfo[PANEL_BORDER_RIGHT].m_aSize.SetSize(CGUISize(0.f,0.f));
-				m_aBorderInfo[PANEL_BORDER_RIGHT].m_pImageInfo = NULL;
+				m_aBorderInfo[border_right].m_aSize.SetSize(CGUISize(0.f,0.f));
+				m_aBorderInfo[border_right].m_pImageInfo = NULL;
 			}
 		}
-		else if( rName == "PANEL_BORDER_TOPLEFT")
+		else if( rName == "border_topleft")
 		{
 			if( pImage )
 			{
-				m_aBorderInfo[PANEL_BORDER_TOPLEFT].m_aSize.SetSize(pImage->GetSize());
-				m_aBorderInfo[PANEL_BORDER_TOPLEFT].m_pImageInfo = pImage;
+				m_aBorderInfo[border_topleft].m_aSize.SetSize(pImage->GetSize());
+				m_aBorderInfo[border_topleft].m_pImageInfo = pImage;
 			}
 			else
 			{
-				m_aBorderInfo[PANEL_BORDER_TOPLEFT].m_aSize.SetSize(CGUISize(0.f,0.f));
-				m_aBorderInfo[PANEL_BORDER_TOPLEFT].m_pImageInfo = NULL;
+				m_aBorderInfo[border_topleft].m_aSize.SetSize(CGUISize(0.f,0.f));
+				m_aBorderInfo[border_topleft].m_pImageInfo = NULL;
 			}
 		}
-		else if( rName == "PANEL_BORDER_TOPRIGHT")
+		else if( rName == "border_topright")
 		{
 			if( pImage )
 			{
-				m_aBorderInfo[PANEL_BORDER_TOPRIGHT].m_aSize.SetSize(pImage->GetSize());
-				m_aBorderInfo[PANEL_BORDER_TOPRIGHT].m_pImageInfo = pImage;
+				m_aBorderInfo[border_topright].m_aSize.SetSize(pImage->GetSize());
+				m_aBorderInfo[border_topright].m_pImageInfo = pImage;
 			}
 			else
 			{
-				m_aBorderInfo[PANEL_BORDER_TOPRIGHT].m_aSize.SetSize(CGUISize(0.f,0.f));
-				m_aBorderInfo[PANEL_BORDER_TOPRIGHT].m_pImageInfo = NULL;
+				m_aBorderInfo[border_topright].m_aSize.SetSize(CGUISize(0.f,0.f));
+				m_aBorderInfo[border_topright].m_pImageInfo = NULL;
 			}
 		}
-		else if( rName == "PANEL_BORDER_BOTTOMLEFT")
+		else if( rName == "border_bottomleft")
 		{
 			if( pImage )
 			{
-				m_aBorderInfo[PANEL_BORDER_BOTTOMLEFT].m_aSize.SetSize(pImage->GetSize());
-				m_aBorderInfo[PANEL_BORDER_BOTTOMLEFT].m_pImageInfo = pImage;
+				m_aBorderInfo[border_bottomleft].m_aSize.SetSize(pImage->GetSize());
+				m_aBorderInfo[border_bottomleft].m_pImageInfo = pImage;
 			}
 			else
 			{
-				m_aBorderInfo[PANEL_BORDER_BOTTOMLEFT].m_aSize.SetSize(CGUISize(0.f,0.f));
-				m_aBorderInfo[PANEL_BORDER_BOTTOMLEFT].m_pImageInfo = NULL;
+				m_aBorderInfo[border_bottomleft].m_aSize.SetSize(CGUISize(0.f,0.f));
+				m_aBorderInfo[border_bottomleft].m_pImageInfo = NULL;
 			}
 		}
-		else if( rName == "PANEL_BORDER_BOTTOMRIGHT")
+		else if( rName == "border_bottomright")
 		{
 			if( pImage )
 			{
-				m_aBorderInfo[PANEL_BORDER_BOTTOMRIGHT].m_aSize.SetSize(pImage->GetSize());
-				m_aBorderInfo[PANEL_BORDER_BOTTOMRIGHT].m_pImageInfo = pImage;
+				m_aBorderInfo[border_bottomright].m_aSize.SetSize(pImage->GetSize());
+				m_aBorderInfo[border_bottomright].m_pImageInfo = pImage;
 			}
 			else
 			{
-				m_aBorderInfo[PANEL_BORDER_BOTTOMRIGHT].m_aSize.SetSize(CGUISize(0.f,0.f));
-				m_aBorderInfo[PANEL_BORDER_BOTTOMRIGHT].m_pImageInfo = NULL;
+				m_aBorderInfo[border_bottomright].m_aSize.SetSize(CGUISize(0.f,0.f));
+				m_aBorderInfo[border_bottomright].m_pImageInfo = NULL;
 			}
 		}
 	}
@@ -173,85 +170,85 @@ namespace guiex
 		CGUIWidget::RefreshSelf();
 
 		//client rect
-		m_aClientArea.m_fTop +=  GetBorderHeight(PANEL_BORDER_TOP);
-		m_aClientArea.m_fLeft += GetBorderWidth(PANEL_BORDER_LEFT);
-		m_aClientArea.m_fRight -= GetBorderWidth(PANEL_BORDER_RIGHT);
-		m_aClientArea.m_fBottom -= GetBorderHeight(PANEL_BORDER_BOTTOM);
+		m_aClientArea.m_fTop +=  GetBorderHeight(border_top);
+		m_aClientArea.m_fLeft += GetBorderWidth(border_left);
+		m_aClientArea.m_fRight -= GetBorderWidth(border_right);
+		m_aClientArea.m_fBottom -= GetBorderHeight(border_bottom);
 
 		//clip rect for client
 		m_aClipArea = m_aClientArea;
 
 		//border rect
-		if( m_aBorderInfo[PANEL_BORDER_TOPLEFT].m_pImageInfo )
+		if( m_aBorderInfo[border_topleft].m_pImageInfo )
 		{
-			m_aBorderInfo[PANEL_BORDER_TOPLEFT].m_aRenderRect.SetPosition(CGUIVector2(
-				GetClientArea().m_fLeft - GetBorderWidth(PANEL_BORDER_LEFT),
-				GetClientArea().m_fTop - GetBorderHeight(PANEL_BORDER_TOP)));
-			m_aBorderInfo[PANEL_BORDER_TOPLEFT].m_aRenderRect.SetSize( GetBorderSize(PANEL_BORDER_TOPLEFT) );
+			m_aBorderInfo[border_topleft].m_aRenderRect.SetPosition(CGUIVector2(
+				GetClientArea().m_fLeft - GetBorderWidth(border_left),
+				GetClientArea().m_fTop - GetBorderHeight(border_top)));
+			m_aBorderInfo[border_topleft].m_aRenderRect.SetSize( GetBorderSize(border_topleft) );
 		}
 
-		if( m_aBorderInfo[PANEL_BORDER_TOPRIGHT].m_pImageInfo )
+		if( m_aBorderInfo[border_topright].m_pImageInfo )
 		{
-			m_aBorderInfo[PANEL_BORDER_TOPRIGHT].m_aRenderRect.SetPosition(CGUIVector2(
-				GetClientArea().m_fRight+GetBorderWidth(PANEL_BORDER_RIGHT)-GetBorderWidth(PANEL_BORDER_TOPRIGHT),
-				GetClientArea().m_fTop - GetBorderHeight(PANEL_BORDER_TOP)));
-			m_aBorderInfo[PANEL_BORDER_TOPRIGHT].m_aRenderRect.SetSize( GetBorderSize(PANEL_BORDER_TOPRIGHT));
+			m_aBorderInfo[border_topright].m_aRenderRect.SetPosition(CGUIVector2(
+				GetClientArea().m_fRight+GetBorderWidth(border_right)-GetBorderWidth(border_topright),
+				GetClientArea().m_fTop - GetBorderHeight(border_top)));
+			m_aBorderInfo[border_topright].m_aRenderRect.SetSize( GetBorderSize(border_topright));
 		}
 
-		if( m_aBorderInfo[PANEL_BORDER_BOTTOMLEFT].m_pImageInfo )
+		if( m_aBorderInfo[border_bottomleft].m_pImageInfo )
 		{
-			m_aBorderInfo[PANEL_BORDER_BOTTOMLEFT].m_aRenderRect.SetPosition(CGUIVector2(
-				GetClientArea().m_fLeft - GetBorderWidth(PANEL_BORDER_LEFT),
-				GetClientArea().m_fBottom+GetBorderHeight(PANEL_BORDER_BOTTOM)-GetBorderHeight(PANEL_BORDER_BOTTOMLEFT)));
-			m_aBorderInfo[PANEL_BORDER_BOTTOMLEFT].m_aRenderRect.SetSize( GetBorderSize(PANEL_BORDER_BOTTOMLEFT) );
+			m_aBorderInfo[border_bottomleft].m_aRenderRect.SetPosition(CGUIVector2(
+				GetClientArea().m_fLeft - GetBorderWidth(border_left),
+				GetClientArea().m_fBottom+GetBorderHeight(border_bottom)-GetBorderHeight(border_bottomleft)));
+			m_aBorderInfo[border_bottomleft].m_aRenderRect.SetSize( GetBorderSize(border_bottomleft) );
 		}
 
-		if( m_aBorderInfo[PANEL_BORDER_BOTTOMRIGHT].m_pImageInfo )
+		if( m_aBorderInfo[border_bottomright].m_pImageInfo )
 		{
-			m_aBorderInfo[PANEL_BORDER_BOTTOMRIGHT].m_aRenderRect.SetPosition(CGUIVector2(
-				GetClientArea().m_fRight+GetBorderWidth(PANEL_BORDER_RIGHT)-GetBorderWidth(PANEL_BORDER_BOTTOMRIGHT),
-				GetClientArea().m_fBottom+GetBorderHeight(PANEL_BORDER_BOTTOM)-GetBorderHeight(PANEL_BORDER_BOTTOMRIGHT)));
-			m_aBorderInfo[PANEL_BORDER_BOTTOMRIGHT].m_aRenderRect.SetSize( GetBorderSize(PANEL_BORDER_BOTTOMRIGHT));
+			m_aBorderInfo[border_bottomright].m_aRenderRect.SetPosition(CGUIVector2(
+				GetClientArea().m_fRight+GetBorderWidth(border_right)-GetBorderWidth(border_bottomright),
+				GetClientArea().m_fBottom+GetBorderHeight(border_bottom)-GetBorderHeight(border_bottomright)));
+			m_aBorderInfo[border_bottomright].m_aRenderRect.SetSize( GetBorderSize(border_bottomright));
 		}
 
-		if( m_aBorderInfo[PANEL_BORDER_TOP].m_pImageInfo )
+		if( m_aBorderInfo[border_top].m_pImageInfo )
 		{
-			m_aBorderInfo[PANEL_BORDER_TOP].m_aRenderRect.SetPosition( CGUIVector2(
-				GetClientArea().m_fLeft-GetBorderWidth(PANEL_BORDER_LEFT)+GetBorderWidth(PANEL_BORDER_TOPLEFT),
-				GetClientArea().m_fTop - GetBorderHeight(PANEL_BORDER_TOP)));
-			m_aBorderInfo[PANEL_BORDER_TOP].m_aRenderRect.SetSize( CGUISize(
-				GetClientArea().GetWidth()-GetBorderWidth(PANEL_BORDER_TOPLEFT)-GetBorderWidth(PANEL_BORDER_TOPRIGHT)+GetBorderWidth(PANEL_BORDER_LEFT)+GetBorderWidth(PANEL_BORDER_RIGHT),
-				GetBorderHeight(PANEL_BORDER_TOP)));
+			m_aBorderInfo[border_top].m_aRenderRect.SetPosition( CGUIVector2(
+				GetClientArea().m_fLeft-GetBorderWidth(border_left)+GetBorderWidth(border_topleft),
+				GetClientArea().m_fTop - GetBorderHeight(border_top)));
+			m_aBorderInfo[border_top].m_aRenderRect.SetSize( CGUISize(
+				GetClientArea().GetWidth()-GetBorderWidth(border_topleft)-GetBorderWidth(border_topright)+GetBorderWidth(border_left)+GetBorderWidth(border_right),
+				GetBorderHeight(border_top)));
 		}
 
-		if( m_aBorderInfo[PANEL_BORDER_BOTTOM].m_pImageInfo )
+		if( m_aBorderInfo[border_bottom].m_pImageInfo )
 		{
-			m_aBorderInfo[PANEL_BORDER_BOTTOM].m_aRenderRect.SetPosition( CGUIVector2(
-				GetClientArea().m_fLeft-GetBorderWidth(PANEL_BORDER_LEFT)+GetBorderWidth(PANEL_BORDER_BOTTOMLEFT),
+			m_aBorderInfo[border_bottom].m_aRenderRect.SetPosition( CGUIVector2(
+				GetClientArea().m_fLeft-GetBorderWidth(border_left)+GetBorderWidth(border_bottomleft),
 				GetClientArea().m_fBottom));
-			m_aBorderInfo[PANEL_BORDER_BOTTOM].m_aRenderRect.SetSize( CGUISize(
-				GetClientArea().GetWidth()-GetBorderWidth(PANEL_BORDER_BOTTOMLEFT)-GetBorderWidth(PANEL_BORDER_BOTTOMRIGHT)+GetBorderWidth(PANEL_BORDER_LEFT)+GetBorderWidth(PANEL_BORDER_RIGHT),
-				GetBorderHeight(PANEL_BORDER_BOTTOM)));
+			m_aBorderInfo[border_bottom].m_aRenderRect.SetSize( CGUISize(
+				GetClientArea().GetWidth()-GetBorderWidth(border_bottomleft)-GetBorderWidth(border_bottomright)+GetBorderWidth(border_left)+GetBorderWidth(border_right),
+				GetBorderHeight(border_bottom)));
 		}
 
-		if( m_aBorderInfo[PANEL_BORDER_LEFT].m_pImageInfo )
+		if( m_aBorderInfo[border_left].m_pImageInfo )
 		{
-			m_aBorderInfo[PANEL_BORDER_LEFT].m_aRenderRect.SetPosition( CGUIVector2(
-				GetClientArea().m_fLeft-GetBorderWidth(PANEL_BORDER_LEFT),
-				GetClientArea().m_fTop-GetBorderHeight(PANEL_BORDER_TOP)+GetBorderHeight(PANEL_BORDER_TOPLEFT)));
-			m_aBorderInfo[PANEL_BORDER_LEFT].m_aRenderRect.SetSize( CGUISize(
-				GetBorderWidth(PANEL_BORDER_LEFT),
-				GetClientArea().GetHeight()-GetBorderHeight(PANEL_BORDER_TOPLEFT)-GetBorderHeight(PANEL_BORDER_BOTTOMLEFT)+GetBorderHeight(PANEL_BORDER_TOP)+GetBorderHeight(PANEL_BORDER_BOTTOM)));
+			m_aBorderInfo[border_left].m_aRenderRect.SetPosition( CGUIVector2(
+				GetClientArea().m_fLeft-GetBorderWidth(border_left),
+				GetClientArea().m_fTop-GetBorderHeight(border_top)+GetBorderHeight(border_topleft)));
+			m_aBorderInfo[border_left].m_aRenderRect.SetSize( CGUISize(
+				GetBorderWidth(border_left),
+				GetClientArea().GetHeight()-GetBorderHeight(border_topleft)-GetBorderHeight(border_bottomleft)+GetBorderHeight(border_top)+GetBorderHeight(border_bottom)));
 		}
 
-		if( m_aBorderInfo[PANEL_BORDER_RIGHT].m_pImageInfo )
+		if( m_aBorderInfo[border_right].m_pImageInfo )
 		{
-			m_aBorderInfo[PANEL_BORDER_RIGHT].m_aRenderRect.SetPosition( CGUIVector2(
+			m_aBorderInfo[border_right].m_aRenderRect.SetPosition( CGUIVector2(
 				GetClientArea().m_fRight,
-				GetClientArea().m_fTop-GetBorderHeight(PANEL_BORDER_TOP)+GetBorderHeight(PANEL_BORDER_TOPRIGHT)));
-			m_aBorderInfo[PANEL_BORDER_RIGHT].m_aRenderRect.SetSize( CGUISize(
-				GetBorderWidth(PANEL_BORDER_RIGHT),
-				GetClientArea().GetHeight()-GetBorderHeight(PANEL_BORDER_TOPRIGHT)-GetBorderHeight(PANEL_BORDER_BOTTOMRIGHT)+GetBorderHeight(PANEL_BORDER_TOP)+GetBorderHeight(PANEL_BORDER_BOTTOM)));
+				GetClientArea().m_fTop-GetBorderHeight(border_top)+GetBorderHeight(border_topright)));
+			m_aBorderInfo[border_right].m_aRenderRect.SetSize( CGUISize(
+				GetBorderWidth(border_right),
+				GetClientArea().GetHeight()-GetBorderHeight(border_topright)-GetBorderHeight(border_bottomright)+GetBorderHeight(border_top)+GetBorderHeight(border_bottom)));
 		}
 	}
 	//------------------------------------------------------------------------------

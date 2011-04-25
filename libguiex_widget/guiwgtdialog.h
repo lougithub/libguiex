@@ -25,7 +25,7 @@ namespace guiex
 	* @brief dialog is a exclusive widget, which means all 
 	* sibling of this dialog won't receive any input
 	* used image name:
-	*		-BGIMAGE
+	*		-bg
 	*/
 	class GUIEXPORT CGUIWgtDialog : public CGUIWidget
 	{

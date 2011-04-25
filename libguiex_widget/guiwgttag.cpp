@@ -42,9 +42,6 @@ namespace guiex
 		
 		SetAnchorPoint( 0.5f, 0.5f );
 		SetPixelSize(17.0f, 17.0f );
-		SetFocusable(false);
-		SetActivable(false);
-		
 		SetMouseConsumed(false);
 		SetHitable( false );				
 	}
@@ -77,7 +74,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtTag::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
-		if( rName == "BGIMAGE")
+		if( rName == "bg")
 		{
 			m_pImageBG = pImage;
 			if( GetSize().IsEqualZero() && m_pImageBG )

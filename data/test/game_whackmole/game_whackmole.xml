@@ -1,6 +1,6 @@
 <guiex>
     <property name="background" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
-        <property name="BGIMAGE" type="CGUIImage" value="bg_dirt" />
+        <property name="bg" type="CGUIImage" value="bg_dirt" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="0,0" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
@@ -30,7 +30,7 @@
     </property>
     <property name="grass_upper" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
         <property name="parent" type="CGUIString" value="background" />
-        <property name="BGIMAGE" type="CGUIImage" value="grass_upper" />
+        <property name="bg" type="CGUIImage" value="grass_upper" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="0,0" />
             <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
@@ -60,7 +60,7 @@
     </property>
     <property name="tag_mole_0" type="CGUIWidgetDefine" value="CGUIWgtTag">
         <property name="parent" type="CGUIString" value="background" />
-        <property name="BGIMAGE" type="CGUIImage" value="TagIcon" />
+        <property name="bg" type="CGUIImage" value="TagIcon" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="0.195703,0.570052" />
             <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
@@ -90,7 +90,7 @@
     </property>
     <property name="tag_mole_1" type="CGUIWidgetDefine" value="CGUIWgtTag">
         <property name="parent" type="CGUIString" value="background" />
-        <property name="BGIMAGE" type="CGUIImage" value="TagIcon" />
+        <property name="bg" type="CGUIImage" value="TagIcon" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="0.50586,0.570052" />
             <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
@@ -120,7 +120,7 @@
     </property>
     <property name="tag_mole_2" type="CGUIWidgetDefine" value="CGUIWgtTag">
         <property name="parent" type="CGUIString" value="background" />
-        <property name="BGIMAGE" type="CGUIImage" value="TagIcon" />
+        <property name="bg" type="CGUIImage" value="TagIcon" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="0.800781,0.570052" />
             <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
@@ -150,7 +150,7 @@
     </property>
     <property name="grass_lower" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
         <property name="parent" type="CGUIString" value="background" />
-        <property name="BGIMAGE" type="CGUIImage" value="grass_lower" />
+        <property name="bg" type="CGUIImage" value="grass_lower" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="0,0.5" />
             <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />

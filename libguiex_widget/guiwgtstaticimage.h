@@ -24,7 +24,7 @@ namespace guiex
 	* @class CGUIWgtStaticImage
 	* @brief to show a static image
 	* used image name:
-	*		-BGIMAGE
+	*		-bg
 	*/
 	class GUIEXPORT CGUIWgtStaticImage : public CGUIWidget
 	{

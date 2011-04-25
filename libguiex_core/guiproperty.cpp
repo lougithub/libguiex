@@ -49,6 +49,11 @@ namespace guiex
 		*this = other;
 	}
 	//------------------------------------------------------------------------------
+	bool CGUIProperty::operator!=(const CGUIProperty& other ) const
+	{
+		return !(*this == other);
+	}
+	//------------------------------------------------------------------------------
 	bool CGUIProperty::operator==(const CGUIProperty& other ) const
 	{
 		if( m_strName == other.m_strName &&		/// name of this property

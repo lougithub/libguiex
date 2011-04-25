@@ -53,9 +53,9 @@ namespace guiex
 	{
 		m_pEdit = new CGUIWgtEdit(GetName()+"__EDIT"+ GUI_INTERNAL_WIDGET_FLAG, GetSceneName());
 		m_pEdit->SetParent(this);
+		m_pEdit->SetCursorSize( CGUISize( 2.0f, 16.0f) );
 
 		SetFocusable(true);
-		SetActivable(false);
 		m_nMaxString = 100;		///< max number of string
 		m_nCursorIdx = 0;			///< cursor's position in edited string, the first is 0.
 		m_fTextWidthRel = 0.0f;
@@ -85,7 +85,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtEditBox::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
-		if( rName == "EDIT_BG")
+		if( rName == "bg")
 		{
 			m_pBG = pImage;
 			if( GetSize().IsEqualZero() && pImage )
@@ -93,17 +93,13 @@ namespace guiex
 				SetPixelSize(pImage->GetSize());
 			}
 		}
-		if( rName == "EDIT_BGFOCUS")
+		if( rName == "bg_focus")
 		{
 			m_pBGFocus = pImage;
 		}
-		if( rName == "EDIT_CURSOR")
+		if( rName == "cursor")
 		{
 			m_pCursor = pImage;
-			if( GetCursorSize().IsEqualZero() && pImage)
-			{
-				SetCursorSize(pImage->GetSize());
-			}
 		}
 	}
 	//------------------------------------------------------------------------------

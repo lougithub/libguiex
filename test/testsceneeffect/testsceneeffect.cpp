@@ -221,10 +221,10 @@ CMyCanvasLayer_DrawWidget::CMyCanvasLayer_DrawWidget( const char* szLayerName )
 
 	CGUIWgtButton* pButtonWidget = CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtButton>( "btnToggleEffect", "");
 	pButtonWidget->SetParent( this );
-	pButtonWidget->SetImage( "BTN_NORMAL", "button_blue_normal" );
-	pButtonWidget->SetImage( "BTN_HOVER", "button_blue_hover" );
-	pButtonWidget->SetImage( "BTN_PUSH", "button_blue_push" );
-	pButtonWidget->SetImage( "BTN_DISABLE", "button_blue_disable" );
+	pButtonWidget->SetImage( "normal", "button_blue_normal" );
+	pButtonWidget->SetImage( "hover", "button_blue_hover" );
+	pButtonWidget->SetImage( "push", "button_blue_push" );
+	pButtonWidget->SetImage( "disable", "button_blue_disable" );
 	pButtonWidget->SetPosition( 0, 0 );
 	pButtonWidget->SetTextContentUTF8("effect", CGUIWgtButton::eButtonState_Normal);
 	pButtonWidget->Create();

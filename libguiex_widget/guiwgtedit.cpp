@@ -28,10 +28,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtEdit::InitEdit()
 	{
-		SetFocusable(false);
 		SetSizeType(eScreenValue_Percentage);
 		SetSize( 1.0f, 1.0f );
-		SetActivable(false);
 		SetOpenWithParent(false);
 		SetMouseConsumed(false);
 		SetHitable( false );	

@@ -22,8 +22,8 @@
     </property>
     <property name="input_username" type="CGUIWidgetDefine" value="CGUIWgtEditBox">
         <property name="parent" type="CGUIString" value="node_main" />
-        <property name="EDIT_BG" type="CGUIImage" value="edit_bg" />
-        <property name="EDIT_CURSOR" type="CGUIImage" value="color_white" />
+        <property name="bg" type="CGUIImage" value="edit_bg" />
+        <property name="cursor" type="CGUIImage" value="color_white" />
         <property name="anchor" type="CGUIVector2" value="0.5,0" />
         <property name="alpha" type="real" value="1" />
         <property name="movable" type="bool" value="false" />
@@ -53,10 +53,10 @@
     </property>
     <property name="btn_login" type="CGUIWidgetDefine" value="CGUIWgtButton">
         <property name="parent" type="CGUIString" value="node_main" />
-        <property name="BTN_NORMAL" type="CGUIImage" value="button_blue_normal" />
-        <property name="BTN_HOVER" type="CGUIImage" value="button_blue_hover" />
-        <property name="BTN_PUSH" type="CGUIImage" value="button_blue_push" />
-        <property name="BTN_DISABLE" type="CGUIImage" value="button_blue_disable" />
+        <property name="normal" type="CGUIImage" value="button_blue_normal" />
+        <property name="hover" type="CGUIImage" value="button_blue_hover" />
+        <property name="push" type="CGUIImage" value="button_blue_push" />
+        <property name="disable" type="CGUIImage" value="button_blue_disable" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
             <property name="value" type="CGUIVector2" value="0.5,0.558333" />
@@ -101,8 +101,8 @@
       </property>
       <property name="input_password" type="CGUIWidgetDefine" value="CGUIWgtEditBox">
         <property name="parent" type="CGUIString" value="node_main" />
-        <property name="EDIT_BG" type="CGUIImage" value="edit_bg" />
-        <property name="EDIT_CURSOR" type="CGUIImage" value="color_white" />
+        <property name="bg" type="CGUIImage" value="edit_bg" />
+        <property name="cursor" type="CGUIImage" value="color_white" />
         <property name="position" type="CGUIWidgetPosition">
           <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
           <property name="value" type="CGUIVector2" value="0.496523,0.466719" />
@@ -189,7 +189,7 @@
       </property>
       <property name="Glues-BlizzardLogo" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
         <property name="parent" type="CGUIString" value="node_main" />
-        <property name="BGIMAGE" type="CGUIImage" value="Glues-BlizzardLogo" />
+        <property name="bg" type="CGUIImage" value="Glues-BlizzardLogo" />
         <property name="position" type="CGUIWidgetPosition">
           <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
           <property name="value" type="CGUIVector2" value="0.459843,0.820313" />
@@ -211,7 +211,7 @@
       </property>
       <property name="Glues-WoW-TaiwanWotLKLogo" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
         <property name="parent" type="CGUIString" value="node_main" />
-        <property name="BGIMAGE" type="CGUIImage" value="Glues-WoW-TaiwanWotLKLogo" />
+        <property name="bg" type="CGUIImage" value="Glues-WoW-TaiwanWotLKLogo" />
         <property name="position" type="CGUIWidgetPosition">
           <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
           <property name="value" type="CGUIVector2" value="-0.00292969,-0.00479201" />
@@ -232,10 +232,10 @@
       </property>
       <property name="btn_quit" type="CGUIWidgetDefine" value="CGUIWgtButton">
         <property name="parent" type="CGUIString" value="node_main" />
-        <property name="BTN_NORMAL" type="CGUIImage" value="button_blue_normal" />
-        <property name="BTN_HOVER" type="CGUIImage" value="button_red_hover" />
-        <property name="BTN_PUSH" type="CGUIImage" value="button_red_push" />
-        <property name="BTN_DISABLE" type="CGUIImage" value="button_red_disable" />
+        <property name="normal" type="CGUIImage" value="button_blue_normal" />
+        <property name="hover" type="CGUIImage" value="button_red_hover" />
+        <property name="push" type="CGUIImage" value="button_red_push" />
+        <property name="disable" type="CGUIImage" value="button_red_disable" />
         <property name="position" type="CGUIWidgetPosition">
           <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
           <property name="value" type="CGUIVector2" value="0.845703,0.893229" />
@@ -280,10 +280,10 @@
       </property>
       <property name="btn_text" type="CGUIWidgetDefine" value="CGUIWgtButton">
         <property name="parent" type="CGUIString" value="node_main" />
-        <property name="BTN_NORMAL" type="CGUIImage" value="button_blue_normal" />
-        <property name="BTN_HOVER" type="CGUIImage" value="button_blue_hover" />
-        <property name="BTN_PUSH" type="CGUIImage" value="button_blue_push" />
-        <property name="BTN_DISABLE" type="CGUIImage" value="button_blue_disable" />
+        <property name="normal" type="CGUIImage" value="button_blue_normal" />
+        <property name="hover" type="CGUIImage" value="button_blue_hover" />
+        <property name="push" type="CGUIImage" value="button_blue_push" />
+        <property name="disable" type="CGUIImage" value="button_blue_disable" />
         <property name="position" type="CGUIWidgetPosition">
           <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
           <property name="value" type="CGUIVector2" value="0.844727,0.561198" />
@@ -328,10 +328,10 @@
       </property>
       <property name="btn_text2" type="CGUIWidgetDefine" value="CGUIWgtButton">
         <property name="parent" type="CGUIString" value="node_main" />
-        <property name="BTN_NORMAL" type="CGUIImage" value="button_blue_normal" />
-        <property name="BTN_HOVER" type="CGUIImage" value="button_blue_normal" />
-        <property name="BTN_PUSH" type="CGUIImage" value="button_blue_push" />
-        <property name="BTN_DISABLE" type="CGUIImage" value="button_blue_disable" />
+        <property name="normal" type="CGUIImage" value="button_blue_normal" />
+        <property name="hover" type="CGUIImage" value="button_blue_normal" />
+        <property name="push" type="CGUIImage" value="button_blue_push" />
+        <property name="disable" type="CGUIImage" value="button_blue_disable" />
         <property name="position" type="CGUIWidgetPosition">
           <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
           <property name="value" type="CGUIVector2" value="0.84375,0.617188" />
@@ -376,10 +376,10 @@
       </property>
       <property name="btn_text3" type="CGUIWidgetDefine" value="CGUIWgtButton">
         <property name="parent" type="CGUIString" value="node_main" />
-        <property name="BTN_NORMAL" type="CGUIImage" value="button_blue_normal" />
-        <property name="BTN_HOVER" type="CGUIImage" value="button_blue_hover" />
-        <property name="BTN_PUSH" type="CGUIImage" value="button_blue_push" />
-        <property name="BTN_DISABLE" type="CGUIImage" value="button_blue_disable" />
+        <property name="normal" type="CGUIImage" value="button_blue_normal" />
+        <property name="hover" type="CGUIImage" value="button_blue_hover" />
+        <property name="push" type="CGUIImage" value="button_blue_push" />
+        <property name="disable" type="CGUIImage" value="button_blue_disable" />
         <property name="position" type="CGUIWidgetPosition">
           <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
           <property name="value" type="CGUIVector2" value="0.84375,0.670573" />
@@ -424,10 +424,10 @@
       </property>
       <property name="btn_text4" type="CGUIWidgetDefine" value="CGUIWgtButton">
         <property name="parent" type="CGUIString" value="node_main" />
-        <property name="BTN_NORMAL" type="CGUIImage" value="button_blue_normal" />
-        <property name="BTN_HOVER" type="CGUIImage" value="button_blue_hover" />
-        <property name="BTN_PUSH" type="CGUIImage" value="button_blue_push" />
-        <property name="BTN_DISABLE" type="CGUIImage" value="button_blue_disable" />
+        <property name="normal" type="CGUIImage" value="button_blue_normal" />
+        <property name="hover" type="CGUIImage" value="button_blue_hover" />
+        <property name="push" type="CGUIImage" value="button_blue_push" />
+        <property name="disable" type="CGUIImage" value="button_blue_disable" />
         <property name="position" type="CGUIWidgetPosition">
           <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
           <property name="value" type="CGUIVector2" value="0.84375,0.723958" />
@@ -501,10 +501,10 @@
       </property>
       <property name="btn_text5" type="CGUIWidgetDefine" value="CGUIWgtButton">
         <property name="parent" type="CGUIString" value="node_main" />
-        <property name="BTN_NORMAL" type="CGUIImage" value="button_blue_normal" />
-        <property name="BTN_HOVER" type="CGUIImage" value="button_blue_hover" />
-        <property name="BTN_PUSH" type="CGUIImage" value="button_blue_push" />
-        <property name="BTN_DISABLE" type="CGUIImage" value="button_blue_disable" />
+        <property name="normal" type="CGUIImage" value="button_blue_normal" />
+        <property name="hover" type="CGUIImage" value="button_blue_hover" />
+        <property name="push" type="CGUIImage" value="button_blue_push" />
+        <property name="disable" type="CGUIImage" value="button_blue_disable" />
         <property name="position" type="CGUIWidgetPosition">
           <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
           <property name="value" type="CGUIVector2" value="0.0184371,0.638021" />
@@ -549,10 +549,10 @@
       </property>
       <property name="btn_text6" type="CGUIWidgetDefine" value="CGUIWgtButton">
         <property name="parent" type="CGUIString" value="node_main" />
-        <property name="BTN_NORMAL" type="CGUIImage" value="button_blue_normal" />
-        <property name="BTN_HOVER" type="CGUIImage" value="button_blue_hover" />
-        <property name="BTN_PUSH" type="CGUIImage" value="button_blue_push" />
-        <property name="BTN_DISABLE" type="CGUIImage" value="button_blue_disable" />
+        <property name="normal" type="CGUIImage" value="button_blue_normal" />
+        <property name="hover" type="CGUIImage" value="button_blue_hover" />
+        <property name="push" type="CGUIImage" value="button_blue_push" />
+        <property name="disable" type="CGUIImage" value="button_blue_disable" />
         <property name="position" type="CGUIWidgetPosition">
           <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
           <property name="value" type="CGUIVector2" value="0.0174606,0.703125" />

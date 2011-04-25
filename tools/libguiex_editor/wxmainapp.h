@@ -33,7 +33,10 @@ public:
 	const std::string& GetBaseDir( ) const;
 
 protected:
-	HMODULE		m_hSciDll;
+	bool CheckProperty() const;
+
+protected:
+	HMODULE	m_hSciDll;
 	std::string	m_strBaseDir;
 };
 

@@ -109,7 +109,7 @@ CMyCanvasLayer_TiledMapGame::CMyCanvasLayer_TiledMapGame( const char* szLayerNam
 	//init player
 	m_pPlayer = CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtStaticImage>( "player", "");
 	m_pPlayer->SetParent( this );
-	m_pPlayer->SetImage( "BGIMAGE", "player" );
+	m_pPlayer->SetImage( "bg", "player" );
 	m_pPlayer->SetPixelPosition( real(pObjectInfo->GetPosition().x), real(pObjectInfo->GetPosition().y ));
 	m_pPlayer->SetAnchorPoint( 0.5f, 0.5f );
 	m_pPlayer->Create();

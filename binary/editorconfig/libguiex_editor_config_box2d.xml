@@ -3,14 +3,14 @@
 <config>
 	<widget type="CGUIWgtBox2DBase" inherit="CGUIWidget" template="true">
 		<page name="Image">
-			<property name="BGIMAGE" type="CGUIImage" value="" must_exist="true"/>
+			<property name="bg" type="CGUIImage" value="" must_exist="true" alternative_save="true"/>
 		</page>
 	</widget>
 
 
 	<widget type="CGUIWgtBox2DBodyBase" inherit="CGUIWgtBox2DBase" template="true">
 		<page name="Appearance">
-			<property name="anchor" type="CGUIVector2" value="0.5,0.5"  category="Default" readonly="true"/>
+			<property name="anchor" type="CGUIVector2" value="0.5,0.5"  category="Default" readonly="true" alternative_save="true"/>
 		</page>
 	</widget>
 

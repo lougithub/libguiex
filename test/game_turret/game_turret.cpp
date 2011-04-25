@@ -46,13 +46,13 @@ void CMyMonster::InitMonster( CGUIWidget* pParent, bool bStrong, CGUIWgtStaticIm
 	if( m_bStrongMonster )
 	{
 		m_fVelocity = 50.0f + rand() % 10;
-		SetImage( "BGIMAGE", "target2" );
+		SetImage( "bg", "target2" );
 		m_uHp = 3;
 	}
 	else
 	{
 		m_fVelocity = 30.0f + rand() % 10;
-		SetImage( "BGIMAGE", "target" );
+		SetImage( "bg", "target" );
 		m_uHp = 1;
 	}
 
@@ -185,7 +185,7 @@ void CMyProjectile::InitProjectile( CGUIWidget* pParent,CGUIWgtStaticImage* pTur
 
 	//create projectile
 	SetParent( pParent );
-	SetImage( "BGIMAGE", "projectile" );
+	SetImage( "bg", "projectile" );
 	SetPixelPosition( aBeginPos );
 	SetAnchorPoint( 0.5f, 0.5f );
 	Create();

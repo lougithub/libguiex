@@ -27,7 +27,7 @@
     </property>
     <property name="sample_1_staticbody_2" type="CGUIWidgetDefine" value="CGUIWgtBox2DStaticBody">
         <property name="parent" type="CGUIString" value="sample_1_root" />
-        <property name="BGIMAGE" type="CGUIImage" value="bg_blue" />
+        <property name="bg" type="CGUIImage" value="bg_blue" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="512,759" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
@@ -55,7 +55,7 @@
     </property>
     <property name="sample_1_dynamicbody_1" type="CGUIWidgetDefine" value="CGUIWgtBox2DDynamicBody">
         <property name="parent" type="CGUIString" value="sample_1_root" />
-        <property name="BGIMAGE" type="CGUIImage" value="panel_bg_grade_green" />
+        <property name="bg" type="CGUIImage" value="panel_bg_grade_green" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="161,90" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
@@ -84,7 +84,7 @@
     </property>
     <property name="sample_1_dynamicbody_2" type="CGUIWidgetDefine" value="CGUIWgtBox2DDynamicBody">
         <property name="parent" type="CGUIString" value="sample_1_root" />
-        <property name="BGIMAGE" type="CGUIImage" value="panel_bg_grade_green" />
+        <property name="bg" type="CGUIImage" value="panel_bg_grade_green" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="663,97" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
@@ -113,7 +113,7 @@
     </property>
     <property name="sample_1_staticbody_4" type="CGUIWidgetDefine" value="CGUIWgtBox2DStaticBody">
         <property name="parent" type="CGUIString" value="sample_1_root" />
-        <property name="BGIMAGE" type="CGUIImage" value="bg_blue" />
+        <property name="bg" type="CGUIImage" value="bg_blue" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="512,10" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
@@ -141,7 +141,7 @@
     </property>
     <property name="sample_1_staticbody_1" type="CGUIWidgetDefine" value="CGUIWgtBox2DStaticBody">
         <property name="parent" type="CGUIString" value="sample_1_root" />
-        <property name="BGIMAGE" type="CGUIImage" value="bg_blue" />
+        <property name="bg" type="CGUIImage" value="bg_blue" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="12,384" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
@@ -169,7 +169,7 @@
     </property>
     <property name="sample_1_staticbody_3" type="CGUIWidgetDefine" value="CGUIWgtBox2DStaticBody">
         <property name="parent" type="CGUIString" value="sample_1_root" />
-        <property name="BGIMAGE" type="CGUIImage" value="bg_blue" />
+        <property name="bg" type="CGUIImage" value="bg_blue" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="1016,384" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />

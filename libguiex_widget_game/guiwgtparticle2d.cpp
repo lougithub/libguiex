@@ -49,9 +49,6 @@ namespace guiex
 		m_aOffsetMatrix = CGUIMatrix4::IDENTITY;
 		m_bAutoDestoryOnFinish = false;
 		m_aParticleOffset.x = m_aParticleOffset.y = 0.5f;
-
-		SetFocusable(false);
-		SetActivable(false);
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtParticle2D::OnDestroy()

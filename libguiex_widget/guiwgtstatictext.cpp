@@ -44,9 +44,6 @@ namespace guiex
 	{
 		m_bMultiLine = false;
 		m_bClipText = false;
-
-		SetFocusable(false);
-		SetActivable(false);
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtStaticText::OnCreate()

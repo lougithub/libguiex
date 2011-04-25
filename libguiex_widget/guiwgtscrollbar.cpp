@@ -29,12 +29,12 @@ namespace guiex
 	* @class CGUIWgtScrollbarArrow
 	* @brief scrollbar's button
 	* used image name: (Same as button)
-	*		-BTN_NORMAL
-	*		-BTN_HOVER
-	*		-BTN_DISABLE
-	*		-BTN_PUSH
-	*		-BTN_HOVER_OVERLAY
-	*		-BTN_PUSH_OVERLAY
+	*		-normal
+	*		-hover
+	*		-disable
+	*		-push
+	*		-hover_overlay
+	*		-push_overlay
 	*/ 
 	class GUIEXPORT CGUIWgtScrollbarArrow : public CGUIWgtButton
 	{
@@ -61,12 +61,12 @@ namespace guiex
 	* @class CGUIWgtScrollbarSlide
 	* @brief scrollbar's slide
 	* used image name: (Same as button)
-	*		-BTN_NORMAL
-	*		-BTN_HOVER
-	*		-BTN_DISABLE
-	*		-BTN_PUSH
-	*		-BTN_HOVER_OVERLAY
-	*		-BTN_PUSH_OVERLAY
+	*		-normal
+	*		-hover
+	*		-disable
+	*		-push
+	*		-hover_overlay
+	*		-push_overlay
 	*/ 
 	class GUIEXPORT CGUIWgtScrollbarSlide : public CGUIWgtButton
 	{
@@ -303,7 +303,6 @@ namespace guiex
 		m_pImageBg = NULL;
 
 		SetFocusable( true );
-		SetActivable( false );
 		SetGenerateParentSizeChangeEvent( true );
 		SetGenerateClickEvent( true );
 	}
@@ -337,7 +336,7 @@ namespace guiex
 		}
 		else if( rName == "SCROLLBAR_ARROW_NORMAL_0") 
 		{
-			m_pArrow[0]->SetImage("BTN_NORMAL", pImage);
+			m_pArrow[0]->SetImage("normal", pImage);
 			if( pImage && GetSize().IsEqualZero() )
 			{
 				SetPixelSize(pImage->GetSize());
@@ -345,71 +344,71 @@ namespace guiex
 		}
 		else if( rName == "SCROLLBAR_ARROW_HOVER_0")
 		{
-			m_pArrow[0]->SetImage("BTN_HOVER", pImage);
+			m_pArrow[0]->SetImage("hover", pImage);
 		}
 		else if( rName == "SCROLLBAR_ARROW_DISABLE_0")
 		{
-			m_pArrow[0]->SetImage("BTN_DISABLE", pImage);
+			m_pArrow[0]->SetImage("disable", pImage);
 		}
 		else if( rName == "SCROLLBAR_ARROW_PUSH_0")
 		{
-			m_pArrow[0]->SetImage("BTN_PUSH", pImage);
+			m_pArrow[0]->SetImage("push", pImage);
 		}
 		else if( rName == "SCROLLBAR_ARROW_HOVER_OVERLAY_0")
 		{
-			m_pArrow[0]->SetImage("BTN_HOVER_OVERLAY", pImage);
+			m_pArrow[0]->SetImage("hover_overlay", pImage);
 		}
 		else if( rName == "SCROLLBAR_ARROW_PUSH_OVERLAY_0")
 		{
-			m_pArrow[0]->SetImage("BTN_PUSH_OVERLAY", pImage);
+			m_pArrow[0]->SetImage("push_overlay", pImage);
 		}
 		else if( rName == "SCROLLBAR_ARROW_NORMAL_1")
 		{
-			m_pArrow[1]->SetImage("BTN_NORMAL", pImage);
+			m_pArrow[1]->SetImage("normal", pImage);
 		}
 		else if( rName == "SCROLLBAR_ARROW_HOVER_1")
 		{
-			m_pArrow[1]->SetImage("BTN_HOVER", pImage);
+			m_pArrow[1]->SetImage("hover", pImage);
 		}
 		else if( rName == "SCROLLBAR_ARROW_DISABLE_1")
 		{
-			m_pArrow[1]->SetImage("BTN_DISABLE", pImage);
+			m_pArrow[1]->SetImage("disable", pImage);
 		}
 		else if( rName == "SCROLLBAR_ARROW_PUSH_1")
 		{
-			m_pArrow[1]->SetImage("BTN_PUSH", pImage);
+			m_pArrow[1]->SetImage("push", pImage);
 		}
 		else if( rName == "SCROLLBAR_ARROW_HOVER_OVERLAY_1")
 		{
-			m_pArrow[1]->SetImage("BTN_HOVER_OVERLAY", pImage);
+			m_pArrow[1]->SetImage("hover_overlay", pImage);
 		}
 		else if( rName == "SCROLLBAR_ARROW_PUSH_OVERLAY_1")
 		{
-			m_pArrow[1]->SetImage("BTN_PUSH_OVERLAY", pImage);
+			m_pArrow[1]->SetImage("push_overlay", pImage);
 		}
 		else if( rName == "SCROLLBAR_SLIDE_NORMAL")
 		{
-			m_pSlide->SetImage("BTN_NORMAL", pImage);
+			m_pSlide->SetImage("normal", pImage);
 		}
 		else if( rName == "SCROLLBAR_SLIDE_HOVER")
 		{
-			m_pSlide->SetImage("BTN_HOVER", pImage);
+			m_pSlide->SetImage("hover", pImage);
 		}
 		else if( rName == "SCROLLBAR_SLIDE_DISABLE")
 		{
-			m_pSlide->SetImage("BTN_DISABLE", pImage);
+			m_pSlide->SetImage("disable", pImage);
 		}
 		else if( rName == "SCROLLBAR_SLIDE_PUSH")
 		{
-			m_pSlide->SetImage("BTN_PUSH", pImage);
+			m_pSlide->SetImage("push", pImage);
 		}
 		else if( rName == "SCROLLBAR_SLIDE_HOVER_OVERLAY")
 		{
-			m_pSlide->SetImage("BTN_HOVER_OVERLAY", pImage);
+			m_pSlide->SetImage("hover_overlay", pImage);
 		}
 		else if( rName == "SCROLLBAR_SLIDE_PUSH_OVERLAY")
 		{
-			m_pSlide->SetImage("BTN_PUSH_OVERLAY", pImage);
+			m_pSlide->SetImage("push_overlay", pImage);
 		}
 		else
 		{

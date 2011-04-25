@@ -25,16 +25,16 @@ namespace guiex
 	* @class CGUIWgtCheckButton
 	* @brief button class.
 	* used image name:
-	*		-BTN_NORMAL
-	*		-BTN_NORMAL_CHECKED
-	*		-BTN_HOVER
-	*		-BTN_HOVER_CHECKED
-	*		-BTN_DISABLE
-	*		-BTN_DISABLE_CHECKED
-	*		-BTN_PUSH
-	*		-BTN_PUSH_CHECKED
-	*		-BTN_HOVER_OVERLAY
-	*		-BTN_CHECKED_OVERLAY
+	*		-normal
+	*		-normal_checked
+	*		-hover
+	*		-hover_checked
+	*		-disable
+	*		-disable_checked
+	*		-push
+	*		-push_checked
+	*		-hover_overlay
+	*		-checked_overlay
 	*/
 	class GUIEXPORT CGUIWgtCheckButton : public CGUIWidget
 	{
