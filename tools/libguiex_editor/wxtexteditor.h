@@ -29,7 +29,7 @@
 //============================================================================// 
 enum EFileType
 {
-	EFT_IMAGE,
+	EFT_RESOURCE,
 	EFT_WIDGET,
 	EFT_SCRIPT
 };
@@ -41,13 +41,7 @@ enum EFileType
 class WxTextEditor : public wxPanel, public CSaveFileBase
 {
 public:
-	WxTextEditor(wxWindow *parent,
-		const std::string& rFileName,
-		wxWindowID winid = wxID_ANY,
-		const wxPoint& pos = wxDefaultPosition,
-		const wxSize& size = wxDefaultSize,
-		long style = wxTAB_TRAVERSAL | wxNO_BORDER,
-		const wxString& name = wxPanelNameStr);
+	WxTextEditor(wxWindow *parent,const std::string& rFileName);
 
 	virtual ~WxTextEditor();
 
@@ -60,9 +54,12 @@ public:
 	//save file to a new place
 	virtual int SaveFileAs(const std::string& rNewFileName);
 
-
 	virtual WXLRESULT MSWWindowProc(WXUINT nMsg, WXWPARAM wParam, WXLPARAM lParam);
-	
+
+	EFileType GetFileType() const;
+
+	std::string GetFileContent();
+
 protected:
 	/** 
 	 * @brief open file
@@ -111,6 +108,8 @@ protected:
 	//for scintilla
 	SciFnDirect fnEditor;
 	long ptrEditor;
+
+	EFileType m_eFileType;
 };
 
 

@@ -97,8 +97,9 @@ if( BUILD_PLATFORM_WIN32 )
     
 	macro_set_target_output_dir( ${target_name} )
 	macro_set_target_link_libraries_wx_win32( ${target_name} )
-        
+     
+	set_target_properties(${target_name} PROPERTIES FOLDER editor) 
+  
 endif()
 
-set_target_properties(${target_name} PROPERTIES FOLDER editor)
 

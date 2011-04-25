@@ -17,7 +17,11 @@
 //============================================================================//
 // declare
 //============================================================================// 
-
+enum ESaveFileMode
+{
+	ESaveFileMode_Canvas = 0,
+	ESaveFileMode_Text
+};
 
 
 //============================================================================//
@@ -26,13 +30,13 @@
 class CSaveFileBase
 {
 public:
-	CSaveFileBase(const std::string& rFilename)
+	CSaveFileBase(const std::string& rFilename, ESaveFileMode eFileMode )
 		:m_bSaveFlag(false)
 		,m_strFileName(rFilename)
+		,m_eSaveFileMode( eFileMode )
 	{
 
 	}
-
 
 	virtual ~CSaveFileBase()
 	{
@@ -44,12 +48,17 @@ public:
 		}
 	}
 
-	void	SetSaveFlag( bool bFlag )
+	ESaveFileMode GetSaveFileMode() const
+	{
+		return m_eSaveFileMode;
+	}
+
+	void SetSaveFlag( bool bFlag )
 	{
 		m_bSaveFlag = bFlag;
 	}
 
-	bool	ShouldSaveFile() const
+	bool ShouldSaveFile() const
 	{
 		return m_bSaveFlag;
 	}
@@ -73,7 +82,8 @@ public:
 
 
 private:
-	bool		m_bSaveFlag;
+	bool m_bSaveFlag;
+	ESaveFileMode m_eSaveFileMode;
 	std::string	m_strFileName;
 };
 

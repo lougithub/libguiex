@@ -180,6 +180,8 @@ protected:
 	void OnSetBGColor(wxCommandEvent& evt);
 	void OnRefresh(wxCommandEvent& evt);
 	void OnFullscreen(wxCommandEvent& evt);
+	void OnUpdateParseScript(wxUpdateUIEvent& event);
+	void OnParseScript(wxCommandEvent& evt);
 
 	void On800x600(wxCommandEvent& evt);
 	void On1024x786(wxCommandEvent& evt);
@@ -225,8 +227,7 @@ protected:
 protected:
 	wxAuiManager m_mgr;
 	WxEditorCanvasContainer*m_pCanvas;
-	wxAuiNotebook*m_pNoteBook_Canvas;
-	//wxAuiNotebook*m_pNoteBook_Config;
+	wxAuiNotebook*m_pAuiNoteBook;
 	wxTreeCtrl*m_pTreeCtrl_File;
 	
 	//widget tree

@@ -16,7 +16,8 @@
 //============================================================================//
 // declare
 //============================================================================// 
-static const int MARGIN_SCRIPT_FOLD_INDEX = 1;
+static const int MARGIN_NUMBER_INDEX = 0;
+static const int MARGIN_FOLD_INDEX = 1;
 
 //============================================================================//
 // function
@@ -27,9 +28,9 @@ BEGIN_EVENT_TABLE(WxTextEditor, wxPanel)
 EVT_SIZE(WxTextEditor::OnSize)
 END_EVENT_TABLE()
 //------------------------------------------------------------------------------
-WxTextEditor::WxTextEditor(wxWindow *parent,const std::string& rFileName,wxWindowID winid,const wxPoint& pos,const wxSize& size,long style,const wxString& name)
-:wxPanel(parent, winid, pos,size, style, name )
-,CSaveFileBase(rFileName)
+WxTextEditor::WxTextEditor(wxWindow *parent,const std::string& rFileName)
+:wxPanel(parent, wxID_ANY, wxDefaultPosition,wxDefaultSize, wxTAB_TRAVERSAL | wxNO_BORDER)
+,CSaveFileBase(rFileName, ESaveFileMode_Text)
 {
 	wordCharacters = "_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	autoCompleteIgnoreCase = false;
@@ -43,6 +44,7 @@ WxTextEditor::~WxTextEditor()
 int WxTextEditor::InitEditor(const std::string& rFileName, EFileType eFileType )
 {
 	m_strFilename = rFileName;
+	m_eFileType = eFileType;
 
 	m_hScintillaWnd = CreateWindowEx(
 		0,
@@ -67,7 +69,7 @@ int WxTextEditor::InitEditor(const std::string& rFileName, EFileType eFileType )
 	}
 
 	::ShowWindow( m_hScintillaWnd, SW_SHOWNOACTIVATE );
-	SendEditor(SCI_USEPOPUP, 0);
+	SendEditor(SCI_USEPOPUP, 1);
 	::SendMessage(m_hScintillaWnd, SCI_GRABFOCUS, 0, 0 );
 	::SetFocus(m_hScintillaWnd);
 
@@ -79,6 +81,11 @@ int WxTextEditor::InitEditor(const std::string& rFileName, EFileType eFileType )
 	}
 
 	return 0;
+}
+//------------------------------------------------------------------------------
+EFileType WxTextEditor::GetFileType() const
+{
+	return m_eFileType;
 }
 //------------------------------------------------------------------------------
 sptr_t WxTextEditor::SendEditor(unsigned int msg, uptr_t wParam, sptr_t lParam)
@@ -169,6 +176,24 @@ int WxTextEditor::SaveFileAs(const std::string& rNewFileName)
 	return 0;
 }
 //------------------------------------------------------------------------------
+std::string WxTextEditor::GetFileContent()
+{
+	std::string strContent;
+	const int blockSize = 128 * 1024;
+	char data[blockSize + 1];
+	int lengthDoc = SendEditor(SCI_GETLENGTH);
+	for (int i = 0; i < lengthDoc; i += blockSize)
+	{
+		int grabSize = lengthDoc - i;
+		if (grabSize > blockSize)
+			grabSize = blockSize;
+		GetRange(i, i + grabSize, data);
+		data[grabSize+1] = 0;
+		strContent += data;
+	}
+	return strContent;
+}
+//------------------------------------------------------------------------------
 void WxTextEditor::OnSize(wxSizeEvent& event)
 {
 	if( m_hScintillaWnd )
@@ -244,7 +269,7 @@ void WxTextEditor::OnNotify(SCNotification *notification)
 //------------------------------------------------------------------------------
 void WxTextEditor::OnMarginClick( SCNotification *notification ) 
 {
-	if( notification->margin != MARGIN_SCRIPT_FOLD_INDEX )
+	if( notification->margin != MARGIN_FOLD_INDEX )
 	{
 		return;
 	}
@@ -353,6 +378,7 @@ struct SStyle
 void WxTextEditor::InitialiseEditor( EFileType eFileType )
 {		
 	const COLORREF black = RGB(0,0,0);
+	const COLORREF green = RGB(0,0xff,0);
 	const COLORREF white = RGB(0xff,0xff,0xff);
 	const COLORREF red = RGB(0xFF, 0, 0);
 	const COLORREF offWhite = RGB(0xFF, 0xFB, 0xF0);
@@ -363,7 +389,7 @@ void WxTextEditor::InitialiseEditor( EFileType eFileType )
 
 	switch( eFileType )
 	{
-	case EFT_IMAGE:
+	case EFT_RESOURCE:
 	case EFT_WIDGET:
 		SendEditor(SCI_SETLEXER, SCLEX_XML );
 		break;
@@ -377,16 +403,16 @@ void WxTextEditor::InitialiseEditor( EFileType eFileType )
 		break;
 	}
 
-	SendEditor(SCI_SETSTYLEBITS, 5);
+	//SendEditor(SCI_SETSTYLEBITS, 5);
 
 	//******************************************************************
 	// Set up the global default style. These attributes are used wherever no 
 	//explicit choices are made.
-	SetAStyle(STYLE_DEFAULT, black, white, 11, "Times New Roman");
-	SendEditor(SCI_STYLECLEARALL);	// Copies global style to all others
-	SetAStyle( STYLE_LINENUMBER,darkGreen,RGB(0xF6,0xF4,0xEC), 11, "Times New Roman");
-	SendEditor(SCI_STYLESETBOLD, 1);	
-	SetAStyle( STYLE_INDENTGUIDE,red,yellow, 11, "Times New Roman");
+	//SetAStyle(STYLE_DEFAULT, black, white, 11, "Times New Roman");
+	//SendEditor(SCI_STYLECLEARALL);	// Copies global style to all others
+	//SetAStyle( STYLE_LINENUMBER,darkGreen,RGB(0xF6,0xF4,0xEC), 11, "Times New Roman");
+	//SendEditor(SCI_STYLESETBOLD, 1);	
+	//SetAStyle( STYLE_INDENTGUIDE,red,yellow, 11, "Times New Roman");
 
 
 	//******************************************************************
@@ -410,27 +436,29 @@ void WxTextEditor::InitialiseEditor( EFileType eFileType )
 	//set fold
 	//Set some properties so the lexer knows what we want
 	SendEditor(SCI_SETPROPERTY, (WPARAM)"fold", (LPARAM)"1");
-	SendEditor(SCI_SETPROPERTY, (WPARAM)"fold.compact", (LPARAM)"0");
-
+	SendEditor(SCI_SETPROPERTY, (WPARAM)"fold.compact", (LPARAM)"1");
 	SendEditor(SCI_SETPROPERTY, (WPARAM)"fold.comment", (LPARAM)"1");
 	SendEditor(SCI_SETPROPERTY, (WPARAM)"fold.preprocessor", (LPARAM)"1");
-
-	SendEditor(SCI_SETPROPERTY, (WPARAM)"fold.at.else", (LPARAM)"0");
-	SendEditor(SCI_SETPROPERTY, (WPARAM)"fold.comment.yaml", (LPARAM)"0");
-	SendEditor(SCI_SETPROPERTY, (WPARAM)"fold.directive", (LPARAM)"0");
+	SendEditor(SCI_SETPROPERTY, (WPARAM)"fold.at.else", (LPARAM)"1");
+	SendEditor(SCI_SETPROPERTY, (WPARAM)"fold.comment.yaml", (LPARAM)"1");
+	SendEditor(SCI_SETPROPERTY, (WPARAM)"fold.directive", (LPARAM)"1");
 	SendEditor(SCI_SETPROPERTY, (WPARAM)"fold.html", (LPARAM)"1");
 	SendEditor(SCI_SETPROPERTY, (WPARAM)"fold.preprocessor", (LPARAM)"1");
-	SendEditor(SCI_SETPROPERTY, (WPARAM)"fold.verilog.flags", (LPARAM)"0");
-
-
+	SendEditor(SCI_SETPROPERTY, (WPARAM)"fold.verilog.flags", (LPARAM)"1");
 	SendEditor(SCI_SETPROPERTY, (WPARAM)"fold.preprocessor", (LPARAM)"1");
 
 
-	//set margin
-	SendEditor(SCI_SETMARGINWIDTHN, MARGIN_SCRIPT_FOLD_INDEX, 0);
-	SendEditor(SCI_SETMARGINTYPEN,  MARGIN_SCRIPT_FOLD_INDEX, SC_MARGIN_SYMBOL);
-	SendEditor(SCI_SETMARGINMASKN, MARGIN_SCRIPT_FOLD_INDEX, SC_MASK_FOLDERS);
-	SendEditor(SCI_SETMARGINWIDTHN, MARGIN_SCRIPT_FOLD_INDEX, 20);
+	// Create a margin column for line number
+	SendEditor(SCI_SETMARGINTYPEN, MARGIN_NUMBER_INDEX, SC_MARGIN_NUMBER);
+	SendEditor(SCI_SETMARGINWIDTHN, MARGIN_NUMBER_INDEX, 30);
+	int pixelWidth = 4 + 4 *SendEditor(SCI_TEXTWIDTH, STYLE_LINENUMBER, (LPARAM)"9");
+	SendEditor(SCI_SETMARGINWIDTHN, MARGIN_NUMBER_INDEX, pixelWidth);
+
+	// Create a margin column for the folding symbols
+	SendEditor(SCI_SETMARGINTYPEN, MARGIN_FOLD_INDEX, SC_MARGIN_SYMBOL);
+	SendEditor(SCI_SETMARGINWIDTHN, MARGIN_FOLD_INDEX, 14);
+	SendEditor(SCI_SETMARGINMASKN, MARGIN_FOLD_INDEX, SC_MASK_FOLDERS);
+	SendEditor(SCI_SETMARGINSENSITIVEN, MARGIN_FOLD_INDEX, 1);
 
 	//Set some visual preferences
 	SendEditor(SCI_MARKERDEFINE, SC_MARKNUM_FOLDER, SC_MARK_PLUS);
@@ -442,10 +470,6 @@ void WxTextEditor::InitialiseEditor( EFileType eFileType )
 	SendEditor(SCI_MARKERDEFINE, SC_MARKNUM_FOLDERTAIL, SC_MARK_EMPTY);
 
 	SendEditor(SCI_SETFOLDFLAGS, 16, 0); // 16  	Draw line below if not expanded
-
-	//Tell scintilla we want to be notified about mouse clicks in the margin
-	SendEditor(SCI_SETMARGINSENSITIVEN, MARGIN_SCRIPT_FOLD_INDEX, 1);
-
 }
 //------------------------------------------------------------------------------
 void WxTextEditor::SetAStyle(int style, COLORREF fore, COLORREF back, int size, const char *face) 
@@ -792,4 +816,5 @@ int WxTextEditor::IndentOfBlock(int line)
 	int indentBlock = SendEditor(SCI_GETLINEINDENTATION, line);
 	return indentBlock;
 }
+//------------------------------------------------------------------------------
 

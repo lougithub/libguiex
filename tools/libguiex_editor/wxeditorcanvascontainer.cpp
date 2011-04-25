@@ -35,7 +35,7 @@ END_EVENT_TABLE()
 
 WxEditorCanvasContainer::WxEditorCanvasContainer( wxWindow *parent, const std::string& rFilename )
 : wxScrolledWindow( parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER | wxTAB_TRAVERSAL, _T("canvas container") )
-,CSaveFileBase(rFilename)
+,CSaveFileBase(rFilename, ESaveFileMode_Canvas)
 {
 	SetScrollRate( 10, 10 );
 	SetVirtualSize( GSystem->GetScreenWidth(), GSystem->GetScreenHeight() );

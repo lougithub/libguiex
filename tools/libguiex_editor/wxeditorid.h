@@ -35,6 +35,7 @@ enum
 	ID_DeleteWidget,
 	ID_WidgetUp,
 	ID_WidgetDown,
+	ID_ParseScript,
 
 	ID_Localization_begin,
 	ID_Localization_end = ID_Localization_begin+10,

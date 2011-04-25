@@ -24,6 +24,17 @@
 #include "wxtoolspgmanager.h"
 #include "propertyconvertor.h"
 
+//lua
+
+#ifdef __cplusplus
+extern "C" {
+#endif //#ifdef __cplusplus
+#include "lua.h"
+#include "lauxlib.h"
+#ifdef __cplusplus
+}
+#endif //#ifdef __cplusplus
+
 //wxwidgets
 #include <wx/treectrl.h>
 #include <wx/artprov.h>
@@ -110,6 +121,10 @@ EVT_MENU(ID_WidgetUp, WxMainFrame::OnWidgetUp)
 EVT_UPDATE_UI(ID_WidgetDown, WxMainFrame::OnUpdateWidgetDown)
 EVT_MENU(ID_WidgetDown, WxMainFrame::OnWidgetDown)
 
+EVT_UPDATE_UI(ID_ParseScript, WxMainFrame::OnUpdateParseScript)
+EVT_MENU(ID_ParseScript, WxMainFrame::OnParseScript)
+
+
 EVT_MENU(ID_VIEW_Fullscreen, WxMainFrame::OnFullscreen)
 
 EVT_UPDATE_UI(ID_VIEW_800x600, WxMainFrame::OnUpdateResolution)
@@ -182,7 +197,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 				 ,m_pToolbar(NULL)
 				 ,m_pTreeCtrl_Widget(NULL)
 				 ,m_pTreeCtrl_File(NULL)
-				 ,m_pNoteBook_Canvas(NULL)
+				 ,m_pAuiNoteBook(NULL)
 				 ,m_aBGColor(128,128,128,255)
 				 ,m_pCurrentEditingWidget( NULL )
 {
@@ -213,7 +228,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	// create notebook
-	m_pNoteBook_Canvas = CreateCanvasNotebook();
+	m_pAuiNoteBook = CreateCanvasNotebook();
 	//m_pNoteBook_Config = CreateConfigNotebook();
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -242,7 +257,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 		ToolbarPane().Top().Row(1).
 		LeftDockable(false).RightDockable(false));
 
-	m_mgr.AddPane(m_pNoteBook_Canvas, wxAuiPaneInfo().Name(wxT("notebook_content")).
+	m_mgr.AddPane(m_pAuiNoteBook, wxAuiPaneInfo().Name(wxT("notebook_content")).
 		CenterPane().PaneBorder(false));
 
 	m_mgr.AddPane(m_pOutput, wxAuiPaneInfo().
@@ -500,6 +515,7 @@ wxToolBar* WxMainFrame::CreateToolbar()
 	tb1->AddTool(ID_WidgetUp, wxBitmap (bookmarkBluegem), _T("move widget up"));
 	tb1->AddTool(ID_WidgetDown, wxBitmap (bookmarkRedgem), _T("move widget down"));
 	tb1->AddSeparator();
+	tb1->AddTool(ID_ParseScript, wxBitmap (icon_xpm), _T("parse script"));
 	tb1->AddTool(ID_About, wxBitmap (help_xpm));
 
 	// Don't forget this one!
@@ -636,7 +652,7 @@ void WxMainFrame::OnTreeItemImageEdit(wxCommandEvent& event)
 	wxTreeItemId id = m_pTreeCtrl_File->GetSelection();
 	CHECK_ITEM( id );
 
-	EditFile( m_pTreeCtrl_File->GetItemText(id).char_str(wxConvUTF8).data(), EFT_IMAGE);
+	EditFile( m_pTreeCtrl_File->GetItemText(id).char_str(wxConvUTF8).data(), EFT_RESOURCE);
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::OnTreeItemScriptEdit(wxCommandEvent& event)
@@ -861,9 +877,9 @@ CSaveFileBase* WxMainFrame::GetSaveFilePtr( const wxWindow* pWindows )
 //------------------------------------------------------------------------------
 void WxMainFrame::OnSave(wxCommandEvent& evt)
 {
-	if(m_pNoteBook_Canvas && m_pNoteBook_Canvas->GetSelection() >=0)
+	if(m_pAuiNoteBook && m_pAuiNoteBook->GetSelection() >=0)
 	{
-		CSaveFileBase* pSave = GetSaveFilePtr(m_pNoteBook_Canvas->GetPage(m_pNoteBook_Canvas->GetSelection()));
+		CSaveFileBase* pSave = GetSaveFilePtr(m_pAuiNoteBook->GetPage(m_pAuiNoteBook->GetSelection()));
 
 		//if( pSave->ShouldSaveFile())
 		{
@@ -874,7 +890,7 @@ void WxMainFrame::OnSave(wxCommandEvent& evt)
 //------------------------------------------------------------------------------
 void WxMainFrame::OnUpdateSave(wxUpdateUIEvent& event)
 {
-	if( m_bIsSceneOpened && m_pNoteBook_Canvas && m_pNoteBook_Canvas->GetSelection() >=0 )
+	if( m_bIsSceneOpened && m_pAuiNoteBook && m_pAuiNoteBook->GetSelection() >=0 )
 	{
 		event.Enable(true);
 	}
@@ -890,9 +906,9 @@ void WxMainFrame::OnSaveAs(wxCommandEvent& evt)
 	if( wxID_OK == aDlg.ShowModal())
 	{
 		//select file
-		if(m_pNoteBook_Canvas && m_pNoteBook_Canvas->GetSelection() >=0)
+		if(m_pAuiNoteBook && m_pAuiNoteBook->GetSelection() >=0)
 		{
-			CSaveFileBase* pSave = GetSaveFilePtr(m_pNoteBook_Canvas->GetPage(m_pNoteBook_Canvas->GetSelection()));
+			CSaveFileBase* pSave = GetSaveFilePtr(m_pAuiNoteBook->GetPage(m_pAuiNoteBook->GetSelection()));
 
 			pSave->SaveFileAs(aDlg.GetPath().char_str(wxConvUTF8).data());
 		}
@@ -905,7 +921,7 @@ void WxMainFrame::OnSaveAs(wxCommandEvent& evt)
 //------------------------------------------------------------------------------
 void WxMainFrame::OnUpdateSaveAs(wxUpdateUIEvent& event)
 {
-	if( m_bIsSceneOpened && m_pNoteBook_Canvas && m_pNoteBook_Canvas->GetSelection() >=0 )
+	if( m_bIsSceneOpened && m_pAuiNoteBook && m_pAuiNoteBook->GetSelection() >=0 )
 	{
 		event.Enable(true);
 	}
@@ -939,6 +955,64 @@ void WxMainFrame::OnUpdateWidgetDown(wxUpdateUIEvent& event)
 	else
 	{
 		event.Enable(false);
+	}
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnUpdateParseScript(wxUpdateUIEvent& event)
+{
+	if(m_pAuiNoteBook && m_pAuiNoteBook->GetSelection() >=0)
+	{
+		CSaveFileBase* pSave = GetSaveFilePtr(m_pAuiNoteBook->GetPage(m_pAuiNoteBook->GetSelection()));
+		if( pSave)
+		{
+			if( pSave->GetSaveFileMode() == ESaveFileMode_Text )
+			{
+				WxTextEditor* pTextEditor = (WxTextEditor*)(pSave);
+				if( pTextEditor->GetFileType() == EFT_SCRIPT )
+				{
+					event.Enable(true);
+					return;
+				}
+			}
+		}
+	}
+	event.Enable(false);
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnParseScript(wxCommandEvent& evt)
+{
+	if(m_pAuiNoteBook && m_pAuiNoteBook->GetSelection() >=0)
+	{
+		CSaveFileBase* pSave = GetSaveFilePtr(m_pAuiNoteBook->GetPage(m_pAuiNoteBook->GetSelection()));
+		if( pSave)
+		{
+			if( pSave->GetSaveFileMode() == ESaveFileMode_Text )
+			{
+				WxTextEditor* pTextEditor = (WxTextEditor*)(pSave);
+				if( pTextEditor->GetFileType() == EFT_SCRIPT )
+				{
+					std::string strContent = pTextEditor->GetFileContent();
+					lua_State* L=lua_open();
+					if (L==NULL)
+					{
+						wxMessageBox( _T("failed to init lua"), _T("error") );
+						return;
+					}
+
+					int error =	luaL_loadbuffer(L,strContent.c_str(),strContent.size(),"script check");
+					if ( error )
+					{
+						std::string strError = lua_tostring(L,-1);
+						wxMessageBox( Gui2wxString( strError ).c_str(), _T("check script") );
+					}
+					else
+					{
+						wxMessageBox( _T("no error"), _T("check script") );
+					}
+					lua_close(L);
+				}
+			}
+		}
 	}
 }
 //------------------------------------------------------------------------------
@@ -1207,11 +1281,11 @@ void WxMainFrame::OnKeyDown(wxKeyEvent& event)
 //------------------------------------------------------------------------------
 void WxMainFrame::OnSaveAll(wxCommandEvent& evt)
 {
-	if(m_pNoteBook_Canvas)
+	if(m_pAuiNoteBook)
 	{
-		for( unsigned i=0; i< m_pNoteBook_Canvas->GetPageCount(); ++i)
+		for( unsigned i=0; i< m_pAuiNoteBook->GetPageCount(); ++i)
 		{
-			CSaveFileBase* pSave = GetSaveFilePtr(m_pNoteBook_Canvas->GetPage(i));
+			CSaveFileBase* pSave = GetSaveFilePtr(m_pAuiNoteBook->GetPage(i));
 			
 			if( pSave->ShouldSaveFile())
 			{
@@ -1436,11 +1510,11 @@ void WxMainFrame::CloseCanvas()
 {
 	if( m_pCanvas)
 	{
-		int idx = m_pNoteBook_Canvas->GetPageIndex(m_pCanvas);
+		int idx = m_pAuiNoteBook->GetPageIndex(m_pCanvas);
 		if( wxNOT_FOUND != idx )
 		{
 			SaveFileProcess(idx);
-			m_pNoteBook_Canvas->DeletePage(idx);
+			m_pAuiNoteBook->DeletePage(idx);
 		}
 		m_pCanvas = NULL;
 	}
@@ -1453,9 +1527,9 @@ void WxMainFrame::RenderFile( const std::string& rFileName )
 
 	std::string strAbsFileName = GSystem->GetDataPath() + pScene->GetScenePath() + rFileName;
 
-	m_pCanvas = new WxEditorCanvasContainer(m_pNoteBook_Canvas, strAbsFileName);
-	m_pNoteBook_Canvas->AddPage( m_pCanvas, Gui2wxString(rFileName), true );
-	//m_pCanvas->SetNextHandler( m_pNoteBook_Canvas );
+	m_pCanvas = new WxEditorCanvasContainer(m_pAuiNoteBook, strAbsFileName);
+	m_pAuiNoteBook->AddPage( m_pCanvas, Gui2wxString(rFileName), true );
+	//m_pCanvas->SetNextHandler( m_pAuiNoteBook );
 
 	//update resource for editor
 	CResourceList::Instance()->UpdateResourceList();
@@ -1506,19 +1580,19 @@ void WxMainFrame::EditFile( const std::string& rFileName, EFileType eFileType )
 	std::string strAbsPath = GSystem->GetDataPath() + pScene->GetScenePath() + rFileName;
 
 	//check
-	for( unsigned i=0; i< m_pNoteBook_Canvas->GetPageCount(); ++i)
+	for( unsigned i=0; i< m_pAuiNoteBook->GetPageCount(); ++i)
 	{
-		CSaveFileBase* pSave = GetSaveFilePtr(m_pNoteBook_Canvas->GetPage(i));
+		CSaveFileBase* pSave = GetSaveFilePtr(m_pAuiNoteBook->GetPage(i));
 
 		if( pSave->GetFileName() == strAbsPath)
 		{
-			m_pNoteBook_Canvas->SetSelection(i);
+			m_pAuiNoteBook->SetSelection(i);
 			return;
 		}
 	}
 
 
-	WxTextEditor* pTextEditor = new WxTextEditor( m_pNoteBook_Canvas, strAbsPath );
+	WxTextEditor* pTextEditor = new WxTextEditor( m_pAuiNoteBook, strAbsPath );
 
 	if( 0 != pTextEditor->InitEditor(strAbsPath, eFileType))
 	{
@@ -1526,7 +1600,7 @@ void WxMainFrame::EditFile( const std::string& rFileName, EFileType eFileType )
 		delete pTextEditor;
 		return;
 	}
-	m_pNoteBook_Canvas->AddPage( pTextEditor, Gui2wxString(rFileName),true);
+	m_pAuiNoteBook->AddPage( pTextEditor, Gui2wxString(rFileName),true);
 }
 //------------------------------------------------------------------------------
 bool	WxMainFrame::SaveFileProcess(int nIdx)
@@ -1537,10 +1611,10 @@ bool	WxMainFrame::SaveFileProcess(int nIdx)
 	if( nIdx == -1 )
 	{
 		//save all page
-		for( unsigned i=0; i< m_pNoteBook_Canvas->GetPageCount(); ++i)
+		for( unsigned i=0; i< m_pAuiNoteBook->GetPageCount(); ++i)
 		{
 			//get save file base class
-			CSaveFileBase* pSave = GetSaveFilePtr(m_pNoteBook_Canvas->GetPage(i));
+			CSaveFileBase* pSave = GetSaveFilePtr(m_pAuiNoteBook->GetPage(i));
 			
 			if( pSave->ShouldSaveFile())
 			{
@@ -1552,8 +1626,8 @@ bool	WxMainFrame::SaveFileProcess(int nIdx)
 	else
 	{
 		//save selected page
-		wxASSERT(m_pNoteBook_Canvas->GetPageCount() > size_t(nIdx ));
-		CSaveFileBase* pSave = GetSaveFilePtr(m_pNoteBook_Canvas->GetPage(nIdx));
+		wxASSERT(m_pAuiNoteBook->GetPageCount() > size_t(nIdx ));
+		CSaveFileBase* pSave = GetSaveFilePtr(m_pAuiNoteBook->GetPage(nIdx));
 
 		if( pSave->ShouldSaveFile())
 		{
