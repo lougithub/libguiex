@@ -1,5 +1,61 @@
 #include <libguiex_framework/guiframework.h>
+#include <libguiex_core/pathfinderastar.h>
 using namespace guiex;
+
+
+
+
+//*****************************************************************************
+//	CMyPlayer
+//*****************************************************************************
+class CMyPlayer : public CGUIWgtStaticImage
+{
+public:
+	CMyPlayer( const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWgtStaticImage( StaticGetType(), rName, rSceneName )
+		,m_pMoveAs(NULL)
+		,m_pLayer(NULL)
+	{
+	}
+
+	void InitPlayer( class CMyCanvasLayer_TiledMapGame* pParent, const CGUIIntSize& rTileSize, const CGUIIntVector2& rPlayerPixelPos );
+
+	void SetMovePath( const std::vector<CGUIUIntVector2>& rPaths )
+	{
+		m_vMovePaths = rPaths;
+
+		UpdatePath();
+	}
+	CGUIIntVector2 GetCurrentCoord() const
+	{
+		uint32 x = uint32( GetPixelPosition().x / m_aTileSize.GetWidth());
+		uint32 y = uint32( GetPixelPosition().y / m_aTileSize.GetHeight());
+		return CGUIIntVector2(x, y);
+	}
+
+protected:
+	virtual void UpdateSelf( real fDeltaTime );
+
+	void UpdatePath();
+	static void FunCallback_PlayerMoveto(CGUIAs* pAs)
+	{
+		((CMyPlayer*)pAs->GetReceiver())->UpdatePath();
+	}
+	
+protected:
+	std::vector<CGUIUIntVector2> m_vMovePaths;
+	CGUIIntSize m_aTileSize;
+	CGUIIntVector2 m_aPixelOffset;
+	CGUIAsWidgetMoveTo* m_pMoveAs;
+	class CMyCanvasLayer_TiledMapGame* m_pLayer;
+
+protected:
+	GUI_CUSTOM_WIDGET_DECLARE( CMyPlayer );
+};
+GUI_CUSTOM_WIDGET_IMPLEMENT( CMyPlayer );
+
+
+
 
 class CMyCanvasLayer_TiledMapGame : public CGUICanvasLayer
 {
@@ -8,6 +64,7 @@ public:
 	~CMyCanvasLayer_TiledMapGame(  );
 
 	virtual void DestroySelf( );
+	void SetViewpointCenter( const CGUIVector2& rPos );
 
 protected:
 	virtual void BeginRender( class IGUIInterfaceRender* pRender );
@@ -17,17 +74,18 @@ protected:
 
 	virtual uint32 OnMouseLeftClick( CGUIEventMouse* pEvent );
 
-	void SetViewpointCenter( const CGUIVector2& rPos );
 	CGUIIntVector2 TileCoordForPosition( const CGUIVector2& rPos );
-	void SetPlayerPosition( const CGUIVector2& rPos );
 
 protected:
+	friend class CMyPlayer;
+
 	CGUITiledMap* m_pTiledMap;
 	CGUITiledMapLayer* m_pMetaLayer;
 	CGUITiledMapLayer* m_pForeGroundLayer;
-	CGUIWgtStaticImage* m_pPlayer;
+	CMyPlayer* m_pPlayer;
 	CGUIWgtStaticText* m_pScore;
 
+	CPathFinder_AStar* m_pPathFinder;
 	//CGUICamera m_aCamera;
 	//CGUICamera* m_pOldCamera;
 };
@@ -81,7 +139,8 @@ CMyCanvasLayer_TiledMapGame::CMyCanvasLayer_TiledMapGame( const char* szLayerNam
 ,m_pMetaLayer( NULL )
 ,m_pForeGroundLayer( NULL )
 ,m_pPlayer( NULL )
-,m_pScore(NULL)
+,m_pScore( NULL)
+,m_pPathFinder( NULL )
 //,m_pOldCamera(NULL)
 {
 	//set attribute
@@ -106,20 +165,40 @@ CMyCanvasLayer_TiledMapGame::CMyCanvasLayer_TiledMapGame( const char* szLayerNam
 	const CGUITiledMapObjectInfo* pObjectInfo = pObjects->GetObjectInfo( "SpawnPoint" );
 	GUI_ASSERT( pObjectInfo, "invalid tiled map data");
 
+	//init pathfinder
+	m_pPathFinder = new CPathFinder_AStar( rMapSize.GetWidth(), rMapSize.GetHeight() );
+	for( uint32 x=0; x<rMapSize.GetWidth(); ++x )
+	{
+		for( uint32 y=0; y<rMapSize.GetHeight(); ++y )
+		{
+			uint32 tileGid = m_pMetaLayer->GetTileGID( x, y );
+			if (tileGid) 
+			{
+				const std::map<CGUIString, CGUIString>* pProperties = m_pTiledMap->GetTileProperties( tileGid );
+				if( pProperties )
+				{
+					//check collidable
+					std::map<CGUIString, CGUIString>::const_iterator itorCollide = pProperties->find( "Collidable" );
+					if( itorCollide != pProperties->end() && itorCollide->second == "True" )
+					{
+						m_pPathFinder->SetMapWalkable(x,y,false);
+					}
+				}
+			}
+		}
+	}
+
+
 	//init player
-	m_pPlayer = CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtStaticImage>( "player", "");
-	m_pPlayer->SetParent( this );
-	m_pPlayer->SetImage( "bg", "player" );
-	m_pPlayer->SetPixelPosition( real(pObjectInfo->GetPosition().x), real(pObjectInfo->GetPosition().y ));
-	m_pPlayer->SetAnchorPoint( 0.5f, 0.5f );
-	m_pPlayer->Create();
+	m_pPlayer = CGUIWidgetManager::Instance()->CreateCustomWidget<CMyPlayer>( "player", "");
+	m_pPlayer->InitPlayer( this, rTileSize, pObjectInfo->GetPosition() );
 
 	//init score
 	m_pScore = CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtStaticText>( "score", "");
 	m_pScore->SetParent( GSystem->GetUICanvas() );
 	m_pScore->SetSize( 50, 25 );
 	m_pScore->SetPosition( 0,0 );
-	m_pScore->SetTextInfo(CGUIStringRenderInfo(0, 16, CGUIColor(1,1,1,1)));
+	m_pScore->SetTextInfo(CGUIStringRenderInfo(2, 1, CGUIColor(1,1,1,1)));
 	m_pScore->SetTextAlignmentHorz( eTextAlignment_Horz_Left );
 	m_pScore->SetTextContent(L"0");
 	m_pScore->Create();
@@ -127,12 +206,20 @@ CMyCanvasLayer_TiledMapGame::CMyCanvasLayer_TiledMapGame( const char* szLayerNam
 
 	SetViewpointCenter( m_pPlayer->GetPixelPosition() );
 }
-
 //------------------------------------------------------------------------------
 CMyCanvasLayer_TiledMapGame::~CMyCanvasLayer_TiledMapGame(  )
 {
-	m_pTiledMap->RefRelease();
-	m_pTiledMap = NULL;
+	if( m_pTiledMap )
+	{
+		m_pTiledMap->RefRelease();
+		m_pTiledMap = NULL;
+	}
+
+	if( m_pPathFinder )
+	{
+		delete m_pPathFinder;
+		m_pPathFinder = NULL;
+	}
 }
 
 //------------------------------------------------------------------------------
@@ -160,87 +247,43 @@ void CMyCanvasLayer_TiledMapGame::DestroySelf( )
 uint32 CMyCanvasLayer_TiledMapGame::OnMouseLeftClick( CGUIEventMouse* pEvent )
 {
 	CGUIVector2 touchLocation = pEvent->GetLocalPosition();		
+	if (touchLocation.x <= GetPixelSize().GetWidth() &&
+		touchLocation.y <= GetPixelSize().GetHeight() &&
+		touchLocation.y >= 0 &&
+		touchLocation.x >= 0 ) 
+	{
+		CGUIIntVector2 targetCoord = TileCoordForPosition(touchLocation);
+		uint32 tileGid = m_pMetaLayer->GetTileGID( targetCoord.x, targetCoord.y );
+		if (tileGid) 
+		{
+			const std::map<CGUIString, CGUIString>* pProperties = m_pTiledMap->GetTileProperties( tileGid );
+			if( pProperties )
+			{
+				//check collidable
+				std::map<CGUIString, CGUIString>::const_iterator itorCollide = pProperties->find( "Collidable" );
+				if( itorCollide != pProperties->end() && itorCollide->second == "True" )
+				{
+					return CGUIWidget::OnMouseLeftClick(pEvent);
+				}
+			}
+		}
 
-	CGUIVector2 playerPos = m_pPlayer->GetPixelPosition();
-	CGUIVector2 diff = touchLocation - playerPos;
-	if (abs(diff.x) > abs(diff.y)) 
-	{
-		if (diff.x > 0) 
+		CGUIIntVector2 aPlayerCoord = m_pPlayer->GetCurrentCoord();
+		std::vector<CGUIUIntVector2> aPath;
+		if( eFindPathResult_Success != m_pPathFinder->FindPath( aPlayerCoord.x, aPlayerCoord.y, targetCoord.x, targetCoord.y, aPath) )
 		{
-			playerPos.x += m_pTiledMap->GetMapInfo()->GetTileSize().GetWidth();
+			return CGUIWidget::OnMouseLeftClick(pEvent);
 		}
-		else 
-		{
-			playerPos.x -= m_pTiledMap->GetMapInfo()->GetTileSize().GetWidth(); 
-		}    
-	} 
-	else 
-	{
-		if (diff.y > 0) 
-		{
-			playerPos.y += m_pTiledMap->GetMapInfo()->GetTileSize().GetHeight();
-		}
-		else
-		{
-			playerPos.y -= m_pTiledMap->GetMapInfo()->GetTileSize().GetHeight();
-		}
-	}
-
-	if (playerPos.x <= GetPixelSize().GetWidth() &&
-		playerPos.y <= GetPixelSize().GetHeight() &&
-		playerPos.y >= 0 &&
-		playerPos.x >= 0 ) 
-	{
-		SetPlayerPosition( playerPos );
+		m_pPlayer->SetMovePath( aPath );
 	}
 
 
 	return CGUIWidget::OnMouseLeftClick(pEvent);
 }
 //------------------------------------------------------------------------------
-void CMyCanvasLayer_TiledMapGame::SetPlayerPosition( const CGUIVector2& rPos )
-{
-	CGUIIntVector2 tileCoord = TileCoordForPosition(rPos);
-	uint32 tileGid = m_pMetaLayer->GetTileGID( tileCoord.x, tileCoord.y );
-	if (tileGid) 
-	{
-		const std::map<CGUIString, CGUIString>* pProperties = m_pTiledMap->GetTileProperties( tileGid );
-		if( pProperties )
-		{
-			//check collidable
-			std::map<CGUIString, CGUIString>::const_iterator itorCollide = pProperties->find( "Collidable" );
-			if( itorCollide != pProperties->end() && itorCollide->second == "True" )
-			{
-				return;
-			}
-
-			//check collectable
-			std::map<CGUIString, CGUIString>::const_iterator itorCollect = pProperties->find( "Collectable" );
-			if( itorCollect != pProperties->end() && itorCollect->second == "True" )
-			{
-				//eat one
-				//update map
-				m_pMetaLayer->RemoveTileAt( tileCoord.x, tileCoord.y );
-				m_pForeGroundLayer->RemoveTileAt( tileCoord.x, tileCoord.y );
-				//update score
-				CGUIString strScroe = m_pScore->GetTextContentUTF8();
-				uint32 uScore;
-				StringToValue( strScroe, uScore );
-				++uScore;
-				ValueToString( uScore, strScroe );
-				m_pScore->SetTextContentUTF8( strScroe );
-			}
-		}
-	}
-	m_pPlayer->SetPixelPosition( rPos );
-	m_pPlayer->Refresh();
-	SetViewpointCenter( m_pPlayer->GetPixelPosition() );
-}
-//------------------------------------------------------------------------------
 CGUIIntVector2 CMyCanvasLayer_TiledMapGame::TileCoordForPosition( const CGUIVector2& rPos )
 {
 	const CGUIIntSize& rTileSize = m_pTiledMap->GetMapInfo()->GetTileSize();
-	const CGUIIntSize& rMapSize = m_pTiledMap->GetMapInfo()->GetMapSize();
 	uint32 x = uint32( rPos.x / rTileSize.GetWidth());
 	uint32 y = uint32( rPos.y / rTileSize.GetHeight());
 	return CGUIIntVector2(x, y);
@@ -264,5 +307,89 @@ void CMyCanvasLayer_TiledMapGame::SetViewpointCenter( const CGUIVector2& rPos )
 
 	//m_aCamera.SetOffsetCenter( CGUIVector3( viewPoint.x, viewPoint.y, m_aCamera.GetOffsetCenter().z ));
 	//m_aCamera.SetOffsetEye( CGUIVector3( viewPoint.x, viewPoint.y, m_aCamera.GetOffsetEye().z ));
+}
+//------------------------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------
+void CMyPlayer::UpdatePath()
+{
+	if( !m_vMovePaths.empty() )
+	{
+		CGUIVector2 aTargetPos;
+		CGUIUIntVector2 aTargetCoord = m_vMovePaths[0];
+		m_vMovePaths.erase( m_vMovePaths.begin());
+		aTargetPos.x = aTargetCoord.x * m_aTileSize.GetWidth() + m_aPixelOffset.x;
+		aTargetPos.y =aTargetCoord.y * m_aTileSize.GetHeight() + m_aPixelOffset.y;
+
+		m_pMoveAs->Reset();
+		m_pMoveAs->SetDestination( aTargetPos );
+		PlayAs( m_pMoveAs );
+
+		uint32 tileGid = m_pLayer->m_pMetaLayer->GetTileGID( aTargetCoord.x, aTargetCoord.y );
+		if (tileGid) 
+		{
+			const std::map<CGUIString, CGUIString>* pProperties = m_pLayer->m_pTiledMap->GetTileProperties( tileGid );
+			if( pProperties )
+			{
+				//check collectable
+				std::map<CGUIString, CGUIString>::const_iterator itorCollect = pProperties->find( "Collectable" );
+				if( itorCollect != pProperties->end() && itorCollect->second == "True" )
+				{
+					//eat one
+					//update map
+					m_pLayer->m_pMetaLayer->RemoveTileAt( aTargetCoord.x, aTargetCoord.y );
+					m_pLayer->m_pForeGroundLayer->RemoveTileAt( aTargetCoord.x, aTargetCoord.y );
+					//update score
+					CGUIString strScroe = m_pLayer->m_pScore->GetTextContentUTF8();
+					uint32 uScore;
+					StringToValue( strScroe, uScore );
+					++uScore;
+					ValueToString( uScore, strScroe );
+					m_pLayer->m_pScore->SetTextContentUTF8( strScroe );
+				}
+			}
+		}
+	}
+}
+//------------------------------------------------------------------------------
+void CMyPlayer::InitPlayer( class CMyCanvasLayer_TiledMapGame* pParent, const CGUIIntSize& rTileSize, const CGUIIntVector2& rPlayerPixelPos )
+{
+	m_aTileSize = rTileSize;
+	m_aPixelOffset.x = rPlayerPixelPos.x % rTileSize.GetWidth();
+	m_aPixelOffset.y = rPlayerPixelPos.y % rTileSize.GetHeight();
+
+	SetParent( pParent );
+	m_pLayer = pParent;
+	SetImage( "bg", "player" );
+	SetAnchorPoint( 0.5f, 0.5f );
+	SetPixelPosition( real(rPlayerPixelPos.x), real(rPlayerPixelPos.y ));
+	Create();
+
+	//add as
+	CGUIAsCallFunc* pAsCallFunc = CGUIAsManager::Instance()->AllocateResource<CGUIAsCallFunc>();
+	pAsCallFunc->SetReceiver( this );
+	pAsCallFunc->SetFuncCallback( FunCallback_PlayerMoveto );
+
+	m_pMoveAs = CGUIAsManager::Instance()->AllocateResource<CGUIAsWidgetMoveTo>();
+	m_pMoveAs->SetReceiver( this );
+	m_pMoveAs->SetVelocity( 90.0f );
+	m_pMoveAs->SetDestination( GetPixelPosition() );
+	m_pMoveAs->AddSuccessor( pAsCallFunc );
+	pAsCallFunc->RefRelease();
+
+	SetAs( "As_MoveTo", m_pMoveAs );
+	m_pMoveAs->RefRelease();
+}
+//------------------------------------------------------------------------------
+void CMyPlayer::UpdateSelf( real fDeltaTime )
+{
+	if( IsAsPlaying( m_pMoveAs ))
+	{
+		m_pLayer->SetViewpointCenter( GetPixelPosition() );
+	}
+
+	CGUIWgtStaticImage::UpdateSelf( fDeltaTime );
 }
 //------------------------------------------------------------------------------

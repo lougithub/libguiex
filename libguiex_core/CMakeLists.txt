@@ -36,6 +36,8 @@ set( ${target_name}_base_SRCS
 	guireference.cpp
 	guilocalizationmanager.h
 	guilocalizationmanager.cpp
+	pathfinderastar.h
+	pathfinderastar.cpp
 	)
 source_group( "base" FILES ${${target_name}_base_SRCS} )
 
@@ -62,7 +64,6 @@ source_group( canvas FILES ${${target_name}_canvas_SRCS} )
 set( ${target_name}_math_SRCS 
 	guivector2.cpp
 	guivector2.h
-	guiintvector2.cpp
 	guiintvector2.h
 	guivector3.cpp
 	guivector3.h
