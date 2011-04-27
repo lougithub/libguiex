@@ -158,6 +158,7 @@ add_subdirectory( ${PROJECT_SOURCE_DIR}/external/Box2D/cmakelist projects/box2d 
 add_subdirectory( ${PROJECT_SOURCE_DIR}/external/freetype/cmakelist projects/freetype )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/external/libogg/cmakelist projects/libogg )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/external/libvorbis/cmakelist projects/libvorbis )
+add_subdirectory( ${PROJECT_SOURCE_DIR}/external/jsoncpp/cmakelist projects/jsoncpp)
 if( BUILD_PLATFORM_WIN32)
 	add_subdirectory( ${PROJECT_SOURCE_DIR}/external/zlib/cmakelist projects/zlib )
 	add_subdirectory( ${PROJECT_SOURCE_DIR}/external/glew/cmakelist projects/glew )
