@@ -8,7 +8,7 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core/guiexception.h>
+#include "guiexception.h"
 #include <stdio.h>
 #include <stdarg.h>
 
@@ -28,11 +28,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void ThrowException(const char* szError)
 	{
-		throw CGUIException(szError);
+#if GUI_USE_EXCEPTION
+		throw CGUIException( szError );
+#else
+		GUI_FORCE_ASSERT( szError );
+#endif
 	}
 	//------------------------------------------------------------------------------
-	
-	
+
 	//------------------------------------------------------------------------------
 	CGUIBaseException::CGUIBaseException( const char* szError ) throw()
 	:std::exception()
@@ -66,7 +69,21 @@ namespace guiex
 #	endif
 #endif
 	}
-	
+	//------------------------------------------------------------------------------
+	void CGUIException::ThrowException(const char *szError, ...)
+	{
+		char szBuffer[4097];
+		va_list argp;
+		va_start (argp, szError);
+		::vsnprintf( szBuffer, 4096, szError, argp );
+		va_end(argp);
+
+#if GUI_USE_EXCEPTION
+		throw CGUIException( szBuffer );
+#else
+		GUI_FORCE_ASSERT( szBuffer );
+#endif
+	}
 	//------------------------------------------------------------------------------
 
 	
@@ -80,6 +97,21 @@ namespace guiex
 		::vsnprintf( szBuffer, 4096, format, argp );
 		m_strError = szBuffer;
 		va_end(argp);
+	}
+	//------------------------------------------------------------------------------
+	void CGUIException_Script::ThrowException(const char *szError, ...)
+	{
+		char szBuffer[4097];
+		va_list argp;
+		va_start (argp, szError);
+		::vsnprintf( szBuffer, 4096, szError, argp );
+		va_end(argp);
+
+#if GUI_USE_EXCEPTION
+		throw CGUIException_Script( szBuffer );
+#else
+		GUI_FORCE_ASSERT( szBuffer );
+#endif
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

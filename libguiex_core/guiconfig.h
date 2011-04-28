@@ -82,17 +82,18 @@
 *************************************************************************/
 #if !defined (PATH_MAX)
 #  if defined (_MAX_PATH)
-#    define PATH_MAX _MAX_PATH
+#    define GUI_MAXPATHLEN _MAX_PATH
 #  elif defined (MAX_PATH)
-#    define PATH_MAX MAX_PATH
+#    define GUI_MAXPATHLEN MAX_PATH
 #  elif defined(MAXPATHLEN)
-#    define PATH_MAX MAXPATHLEN
+#    define GUI_MAXPATHLEN MAXPATHLEN
 #  else /* !_MAX_PATH */
-#    define PATH_MAX 1024
+#    define GUI_MAXPATHLEN 1024
 #  endif /* _MAX_PATH */
+#else
+#	define GUI_MAXPATHLEN  PATH_MAX
 #endif /* !PATH_MAX */
 
-#define GUI_MAXPATHLEN  PATH_MAX
 
 /*************************************************************************
 // Endian Settings
@@ -122,6 +123,9 @@
 /*************************************************************************
 	exception
 *************************************************************************/
+//use real exception or just a assert.
+#define GUI_USE_EXCEPTION	0
+
 //assert it if any exception happens
 #define GUI_EXCEPTION_ASSERT	0
 

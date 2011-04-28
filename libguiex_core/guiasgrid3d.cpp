@@ -42,7 +42,7 @@ namespace guiex
 		if( 0 != pGrid->Initialize() )
 		{
 			pGrid->RefRelease();
-			throw CGUIException( "[CGUIAsGrid3D::GenerateGrid]: failed to init effect grid3d!" );
+			CGUIException::ThrowException( "[CGUIAsGrid3D::GenerateGrid]: failed to init effect grid3d!" );
 			return NULL;
 		}
 		return pGrid;
@@ -263,7 +263,7 @@ namespace guiex
 		
 		if( m_aGridSize.GetHeight() !=1 || m_aGridSize.GetWidth() != 1 )
 		{
-			throw CGUIException("CGUIAsFlipX3D::OnInitGrid: grid size should be (1,1)");
+			CGUIException::ThrowException("CGUIAsFlipX3D::OnInitGrid: grid size should be (1,1)");
 			return -1;
 		}
 

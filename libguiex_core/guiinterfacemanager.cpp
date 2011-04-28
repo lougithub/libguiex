@@ -9,10 +9,10 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core/guiinterfacemanager.h>
-#include <libguiex_core/guiinterface.h>
-#include <libguiex_core/guiexception.h>
-#include <libguiex_core/guilogmsgmanager.h>
+#include "guiinterfacemanager.h"
+#include "guiinterface.h"
+#include "guiexception.h"
+#include "guilogmsgmanager.h"
 
 
 //============================================================================//
@@ -47,6 +47,7 @@ namespace guiex
 		,m_pInterfaceScript(NULL)
 		,m_pInterfaceConfigFile(NULL)
 		,m_pInterfaceFileSys(NULL)
+		,m_pInterfaceLocalizationLoader(NULL)
 		,m_pInterfaceMouse(NULL)
 		,m_pInterfaceKeyboard(NULL)
 		,m_pInterfaceSound(NULL)
@@ -77,7 +78,7 @@ namespace guiex
 	{
 		if( m_mapInterface.find( rInterface) != m_mapInterface.end())
 		{
-			throw CGUIException(
+			CGUIException::ThrowException(
 				"[CGUIInterfaceManager::DoRegisterInterface] the interface <%s> has been registed",
 				rInterface.c_str());
 			return -1;
@@ -113,6 +114,10 @@ namespace guiex
 		else if( rInterface == "IGUIFileSys" )
 		{
 			m_pInterfaceFileSys = (IGUIInterfaceFileSys*)rInterfaceData.m_pInterface;
+		}
+		else if( rInterface == "IGUILocalizationLoader" )
+		{
+			m_pInterfaceLocalizationLoader = (IGUIInterfaceLocalizationLoader*)rInterfaceData.m_pInterface;
 		}
 		else if( rInterface == "IGUISound" )
 		{
@@ -166,7 +171,7 @@ namespace guiex
 			GUI_DYNLIB_HANDLE d_handle = GUI_DYNLIB_LOAD(rModuleName.c_str());
 			if (d_handle == NULL)
 			{
-				throw CGUIException(
+				CGUIException::ThrowException(
 					"[CGUIInterfaceManager::RegisterInterface] failed to load module <%s>",
 					rModuleName.c_str());
 				return -1;
@@ -177,7 +182,7 @@ namespace guiex
 			if( !pFunc )
 			{
 				GUI_DYNLIB_UNLOAD(d_handle);
-				throw CGUIException(
+				CGUIException::ThrowException(
 					"[CGUIInterfaceManager::RegisterInterface] failed to get function <GetInterfaceInstance> for interface <%s> from module <%s>",
 					rInterface.c_str(),
 					rModuleName.c_str());
@@ -189,7 +194,7 @@ namespace guiex
 			if( !pInterface )
 			{
 				GUI_DYNLIB_UNLOAD(d_handle);
-				throw CGUIException(
+				CGUIException::ThrowException(
 					"[CGUIInterfaceManager::RegisterInterface] failed to get interface <GetInterfaceInstance> for interface <%s> from module <%s>",
 					rInterface.c_str(),
 					rModuleName.c_str());
@@ -203,7 +208,7 @@ namespace guiex
 		}
 		else
 		{
-			throw CGUIException(
+			CGUIException::ThrowException(
 				"[CGUIInterfaceManager::RegisterInterface] the interface <%s> has been registed",
 				rInterface.c_str());
 			return -1;
@@ -249,7 +254,7 @@ namespace guiex
 		TMapInterface::iterator itor = m_mapInterface.find( rInterface );
 		if( itor == m_mapInterface.end() )
 		{
-			throw CGUIException(
+			CGUIException::ThrowException(
 				"[CGUIInterfaceManager::UnregisterInterface] the interface <%s> has been unregisted",
 				rInterface.c_str());
 			return -1;
@@ -371,7 +376,7 @@ namespace guiex
 		TMapInterface::iterator itor = m_mapInterface.find( rInterface );
 		if( itor == m_mapInterface.end() )
 		{
-			throw CGUIException(
+			CGUIException::ThrowException(
 				"[CGUIInterfaceManager::GetInterface] the interface <%s> hasn't been unregisted",
 				rInterface.c_str());
 			return NULL;

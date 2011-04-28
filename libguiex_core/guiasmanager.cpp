@@ -78,7 +78,7 @@ namespace guiex
 		CGUIAsData* pAsData = CGUIResourceManager<CGUIAsData, CGUIAs>::GetRegisterResource( rResName );
 		if( !pAsData )
 		{
-			throw CGUIException( 
+			CGUIException::ThrowException( 
 				"[CGUIAsManager::AllocateResource]: failed to get as data by name <%s>",
 				rResName.c_str());
 			return NULL;
@@ -87,7 +87,7 @@ namespace guiex
 		TMapAsGenerator::iterator itorFind = m_mapAsGenerator.find( pAsData->GetAsData().GetValue() );
 		if( itorFind == m_mapAsGenerator.end() )
 		{
-			throw CGUIException(
+			CGUIException::ThrowException(
 				"[CGUIAsManager::AllocateResource] failed to find as generator <%s>",
 				pAsData->GetAsData().GetValue().c_str());
 			return NULL;
@@ -96,7 +96,7 @@ namespace guiex
 		CGUIAs* pAs = itorFind->second( pAsData->GetAsData().GetName(), pAsData->GetSceneName() );
 		if( 0 != pAs->ProcessProperty( pAsData->GetAsData() ))
 		{
-			throw CGUIException(
+			CGUIException::ThrowException(
 				"[CGUIAsManager::AllocateResource]: invalid property: <%s> <%s> <%s>", 
 				pAsData->GetAsData().GetName().c_str(), 
 				pAsData->GetAsData().GetTypeAsString().c_str(),
@@ -115,7 +115,7 @@ namespace guiex
 		TMapAsGenerator::iterator itorFind = m_mapAsGenerator.find( rAsType );
 		if( itorFind == m_mapAsGenerator.end() )
 		{
-			throw CGUIException(
+			CGUIException::ThrowException(
 				"[CGUIAsManager::AllocateResource] failed to find as generator <%s>",
 				rAsType.c_str());
 			return NULL;

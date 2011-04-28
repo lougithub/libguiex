@@ -9,9 +9,9 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core/guiproperty.h>
-#include <libguiex_core/guipropertymanager.h>
-#include <libguiex_core/guiexception.h>
+#include "guiproperty.h"
+#include "guipropertymanager.h"
+#include "guiexception.h"
 
 //------------------------------------------------------------------------------ 
 
@@ -154,7 +154,7 @@ namespace guiex
 	{
 		if( uint32(nIdx) >= m_setProperty.size())
 		{
-			throw CGUIException( 
+			CGUIException::ThrowException( 
 				"[CGUIPropertySet::RemoveProperty]: error!the total size of sub-property is <%d>, you wanted is <%d>",
 				m_setProperty.size(),
 				nIdx);
@@ -190,7 +190,7 @@ namespace guiex
 				return int32(i);
 			}
 		}
-		throw CGUIException( 
+		CGUIException::ThrowException( 
 			"[CGUIProperty::GetPropertyIndex]: failed to get property index by property name <%s:%s>",
 			rName.c_str(),
 			rType.c_str());
@@ -206,7 +206,7 @@ namespace guiex
 				return int32(i);
 			}
 		}
-		throw CGUIException( 
+		CGUIException::ThrowException( 
 			"[CGUIProperty::GetPropertyIndex]: failed to get property index by property name <%s>",
 			rName.c_str());
 		return -1;
@@ -216,7 +216,7 @@ namespace guiex
 	{
 		if( nIdx >= m_setProperty.size())
 		{
-			throw CGUIException( 
+			CGUIException::ThrowException( 
 				"[CGUIPropertySet::GetProperty]: error!the total size of sub-property is <%d>, you wanted is <%d>",
 				m_setProperty.size(),
 				nIdx);
@@ -231,7 +231,7 @@ namespace guiex
 	{
 		if( nIdx >= m_setProperty.size())
 		{
-			throw CGUIException( 
+			CGUIException::ThrowException( 
 				"[CGUIPropertySet::GetProperty]: error!the total size of sub-property is <%d>, you wanted is <%d>",
 				m_setProperty.size(),
 				nIdx);
@@ -340,7 +340,7 @@ namespace guiex
 			}
 		}
 
-		throw CGUIException( 
+		CGUIException::ThrowException( 
 			"[CGUIPropertySet::GetPropertyChecked]: failed to get property by name <%s> and type <%s>",
 			rName.c_str(),
 			rType.c_str());

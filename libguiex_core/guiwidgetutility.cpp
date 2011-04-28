@@ -9,10 +9,10 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core/guiwidgetutility.h>
-#include <libguiex_core/guisystem.h>
-#include <libguiex_core/guiexception.h>
-#include <libguiex_core/guiwidgetmanager.h>
+#include "guiwidgetutility.h"
+#include "guisystem.h"
+#include "guiexception.h"
+#include "guiwidgetmanager.h"
 #include <sstream>
 
 //============================================================================//
@@ -25,7 +25,7 @@ namespace guiex
 	{
 		if( !pWidget )
 		{
-			throw CGUIException("[CGUIWidgetUtility::GetWidgetInfo]: invalid parameter!");
+			CGUIException::ThrowException("[CGUIWidgetUtility::GetWidgetInfo]: invalid parameter!");
 		}
 
 		//NAME<> TYPE<>	STATE<>

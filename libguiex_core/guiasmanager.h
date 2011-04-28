@@ -94,7 +94,7 @@ namespace guiex
 		T* pAs = new T( rAsName, rSceneName );
 		if( !pAs || pAs->GetType() != T::StaticGetType() )
 		{
-			throw CGUIException(
+			CGUIException::ThrowException(
 				"[CGUIAsManager::AllocateResource] failed to generate as <%s>",
 				T::StaticGetType());
 			return NULL;	

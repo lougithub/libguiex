@@ -53,7 +53,7 @@ namespace guiex
 		CGUISoundData* pSound = CGUISoundManager::Instance()->AllocateResource( rSoundName );
 		if( !pSound )
 		{
-			throw CGUIException( "[IGUIInterfaceSound::PlayMusic]: failed to get music by name <%s>", rSoundName.c_str());
+			CGUIException::ThrowException( "[IGUIInterfaceSound::PlayMusic]: failed to get music by name <%s>", rSoundName.c_str());
 			return;
 		};
 		pSound->Load();
@@ -66,7 +66,7 @@ namespace guiex
 		CGUIMusicData* pMusic = CGUIMusicManager::Instance()->AllocateResource( rMusicName );
 		if( !pMusic )
 		{
-			throw CGUIException( "[IGUIInterfaceSound::PlayMusic]: failed to get music by name <%s>", rMusicName.c_str());
+			CGUIException::ThrowException( "[IGUIInterfaceSound::PlayMusic]: failed to get music by name <%s>", rMusicName.c_str());
 			return;
 		};
 		pMusic->Load();

@@ -8,11 +8,11 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core/guitexturemanager.h>
-#include <libguiex_core/guiimagemanager.h>
-#include <libguiex_core/guitexture.h>
-#include <libguiex_core/guiexception.h>
-#include <libguiex_core/guicolor.h>
+#include "guitexturemanager.h"
+#include "guiimagemanager.h"
+#include "guitexture.h"
+#include "guiexception.h"
+#include "guicolor.h"
 #include <algorithm>
 
 //============================================================================//
@@ -40,15 +40,15 @@ namespace guiex
 	{
 		if( m_pDefaultTexture )
 		{
-			throw CGUIException("[CGUITextureManager::~CGUITextureManager]: default texture havn't been released!");
+			CGUIException::ThrowException("[CGUITextureManager::~CGUITextureManager]: default texture havn't been released!");
 		}
 		if( !m_aMapTexture.empty() )
 		{
-			throw CGUIException("[CGUITextureManager::~CGUITextureManager]: texture load from file havn't been released!");
+			CGUIException::ThrowException("[CGUITextureManager::~CGUITextureManager]: texture load from file havn't been released!");
 		}
 		if( !m_aSetTexture.empty() )
 		{
-			throw CGUIException("[CGUITextureManager::~CGUITextureManager]: texture load from memoryhavn't been released!");
+			CGUIException::ThrowException("[CGUITextureManager::~CGUITextureManager]: texture load from memoryhavn't been released!");
 		}
 
 		m_pSingleton = NULL; 
@@ -74,7 +74,7 @@ namespace guiex
 			if( pTexture->CreateTextureByFile(rImageName) != 0 )
 			{
 				delete pTexture;
-				throw CGUIException("[CGUITextureManager::CreateTexture]: failed to load image <%s>!", rImageName.c_str());
+				CGUIException::ThrowException("[CGUITextureManager::CreateTexture]: failed to load image <%s>!", rImageName.c_str());
 				return NULL;
 			}
 			m_aMapTexture.insert( std::make_pair( rImageName,  pTexture ));
@@ -101,7 +101,7 @@ namespace guiex
 			GUIARGB argb = 0xFFFFFFFF;
 			if( 0 != m_pDefaultTexture->CreateTextureByMemory(&argb,1,1,GUI_PF_RGBA_32))
 			{
-				throw CGUIException("[CGUITextureManager::CreateDefaultTexture]: failed to load texture from memory!");
+				CGUIException::ThrowException("[CGUITextureManager::CreateDefaultTexture]: failed to load texture from memory!");
 				return NULL;
 			}
 		}
@@ -123,7 +123,7 @@ namespace guiex
 
 		if( 0 != pTexture->CreateTextureBySize(nWidth,nHeight,ePixelFormat))
 		{
-			throw CGUIException("[CGUITextureManager::CreateTexture]: failed to load texture by given size!");
+			CGUIException::ThrowException("[CGUITextureManager::CreateTexture]: failed to load texture by given size!");
 			return NULL;
 		}
 		pTexture->RefRetain();
@@ -145,7 +145,7 @@ namespace guiex
 
 		if( 0 != pTexture->CreateTextureByMemory(buffPtr,buffWidth,buffHeight,ePixelFormat))
 		{
-			throw CGUIException("[CGUITextureManager::CreateTexture]: failed to load texture from memory!");
+			CGUIException::ThrowException("[CGUITextureManager::CreateTexture]: failed to load texture from memory!");
 			return NULL;
 		}
 		pTexture->RefRetain();
@@ -222,7 +222,7 @@ namespace guiex
 		}
 
 
-		throw CGUIException("[CGUITextureManager::DestroyTexture]: the image has been destroyed");
+		CGUIException::ThrowException("[CGUITextureManager::DestroyTexture]: the image has been destroyed");
 		return -1;
 	}
 	//------------------------------------------------------------------------------

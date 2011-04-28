@@ -107,7 +107,7 @@ namespace guiex
 					const CGUIProperty* pPptAs = pProperty->GetProperty("item", "CGUIAsDefine");
 					if( !pPptAs )
 					{
-						throw CGUIException(
+						CGUIException::ThrowException(
 							"[CGUIAsContainer::ProcessProperty]: invalid property: <%s> <%s>", 
 							pProperty->GetName().c_str(), 
 							pProperty->GetTypeAsString().c_str());
@@ -120,7 +120,7 @@ namespace guiex
 						CGUIAs* pAs = CGUIAsManager::Instance()->AllocateResource( pPptAs->GetValue() );
 						if( !pAs )
 						{
-							throw CGUIException(
+							CGUIException::ThrowException(
 								"[CGUIAsContainer::ProcessProperty]: invalid property: <%s> <%s>", 
 								pProperty->GetName().c_str(), 
 								pProperty->GetTypeAsString().c_str());
@@ -134,7 +134,7 @@ namespace guiex
 						CGUIAs* pAs = CGUIAsManager::Instance()->AllocateResource( pPptAs->GetValue(), "", "" );
 						if( !pAs )
 						{
-							throw CGUIException(
+							CGUIException::ThrowException(
 								"[CGUIAsContainer::ProcessProperty]: invalid property: <%s> <%s>", 
 								pProperty->GetName().c_str(), 
 								pProperty->GetTypeAsString().c_str());
@@ -143,7 +143,7 @@ namespace guiex
 						int32 ret = pAs->ProcessProperty( *pPptAs );
 						if( 0 != ret )
 						{
-							throw CGUIException(
+							CGUIException::ThrowException(
 								"[CGUIAsContainer::ProcessProperty]: invalid property: <%s> <%s>", 
 								pProperty->GetName().c_str(), 
 								pProperty->GetTypeAsString().c_str());
@@ -153,7 +153,7 @@ namespace guiex
 					}
 					else
 					{
-						throw CGUIException(
+						CGUIException::ThrowException(
 							"[CGUIAsContainer::ProcessProperty]: invalid property: <%s> <%s> <%s>", 
 							pProperty->GetName().c_str(), 
 							pProperty->GetTypeAsString().c_str(),

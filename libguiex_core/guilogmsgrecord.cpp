@@ -11,8 +11,8 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core/guilogmsgrecord.h>
-#include <libguiex_core/guiutility.h>
+#include "guilogmsgrecord.h"
+#include "guiutility.h"
 #include <string.h>
 
 //============================================================================//

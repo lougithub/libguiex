@@ -75,7 +75,7 @@ namespace guiex
 		CGUIAnimationData* pAnimationData = CGUIResourceManager<CGUIAnimationData, CGUIAnimation>::GetRegisterResource( rResName );
 		if( !pAnimationData )
 		{
-			throw CGUIException( 
+			CGUIException::ThrowException( 
 				"[CGUIAnimationManager::AllocateResource]: failed to get as data by name <%s>",
 				rResName.c_str());
 			return NULL;
@@ -149,7 +149,7 @@ namespace guiex
 					}
 					else
 					{
-						throw CGUIException( 
+						CGUIException::ThrowException( 
 							"[CGUIAnimationManager::AllocateResource]: failed to parse animation data <%s>",
 							rRootProperty.GetName().c_str());
 					}

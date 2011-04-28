@@ -14,8 +14,8 @@
 //====================================================================================//
 // include
 //====================================================================================// 
-#include <libguiex_core/guiperfmonitor.h>
-#include <libguiex_core/guitimer.h>
+#include "guiperfmonitor.h"
+#include "guitimer.h"
 #include <string>
 
 

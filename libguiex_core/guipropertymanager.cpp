@@ -8,10 +8,10 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core/guipropertymanager.h>
-#include <libguiex_core/guiproperty.h>
-#include <libguiex_core/guistring.h>
-#include <libguiex_core/guiexception.h>
+#include "guipropertymanager.h"
+#include "guiproperty.h"
+#include "guistring.h"
+#include "guiexception.h"
 
 
 //------------------------------------------------------------------------------
@@ -118,14 +118,14 @@ namespace guiex
 		TMapPropertyType2String::iterator itorFindType2String = m_mapPropertyType2String.find( uPropertyType );
 		if( itorFindType2String  != m_mapPropertyType2String.end() )
 		{
-			throw CGUIException( "[CGUIPropertyManager::RegisterPropertyType]: the property <%s:%d> has existed!",
+			CGUIException::ThrowException( "[CGUIPropertyManager::RegisterPropertyType]: the property <%s:%d> has existed!",
 				rStringValue.c_str(), 
 				uPropertyType);
 		}
 		TMapString2PropertyType::iterator itorFindString2Type = m_mapString2PropertyType.find( rStringValue );
 		if( itorFindString2Type  != m_mapString2PropertyType.end() )
 		{
-			throw CGUIException( "[CGUIPropertyManager::RegisterPropertyType]: the property <%s:%d> has existed!",
+			CGUIException::ThrowException( "[CGUIPropertyManager::RegisterPropertyType]: the property <%s:%d> has existed!",
 				rStringValue.c_str(), 
 				uPropertyType);
 		}
@@ -138,7 +138,7 @@ namespace guiex
 		TMapString2PropertyType::iterator itorFindString2Type = m_mapString2PropertyType.find( rStringValue );
 		if( itorFindString2Type == m_mapString2PropertyType.end() )
 		{
-			throw CGUIException( "[CGUIPropertyManager::StringToPropertyType]: failed to find property type by string value <%s>",
+			CGUIException::ThrowException( "[CGUIPropertyManager::StringToPropertyType]: failed to find property type by string value <%s>",
 				rStringValue.c_str());
 			return ePropertyType_Unknown;
 		}
@@ -150,7 +150,7 @@ namespace guiex
 		TMapPropertyType2String::iterator itorFindType2String = m_mapPropertyType2String.find( uPropertyType );
 		if( itorFindType2String  != m_mapPropertyType2String.end() )
 		{
-			throw CGUIException( "[CGUIPropertyManager::PropertyTypeToString]: failed to find string value by property type <%d>",
+			CGUIException::ThrowException( "[CGUIPropertyManager::PropertyTypeToString]: failed to find string value by property type <%d>",
 				uPropertyType);
 		}
 		return itorFindType2String->second;
@@ -163,7 +163,7 @@ namespace guiex
 	{
 		if( m_mapPropertySet.find(rSetName) != m_mapPropertySet.end())
 		{
-			throw CGUIException( "[CGUIPropertyManager::RegisterSet]: the property <%s> has existed!",rSetName.c_str());
+			CGUIException::ThrowException( "[CGUIPropertyManager::RegisterSet]: the property <%s> has existed!",rSetName.c_str());
 		}
 		m_mapPropertySet.insert( std::make_pair(rSetName,rPropertySet) );
 	}
@@ -176,7 +176,7 @@ namespace guiex
 		TMapPropertySet::iterator itor = m_mapPropertySet.find(rSetName);
 		if( itor == m_mapPropertySet.end())
 		{
-			throw CGUIException( "[CGUIPropertyManager::UnregisterSet]: the property <%s> doesn't existed!",rSetName.c_str());
+			CGUIException::ThrowException( "[CGUIPropertyManager::UnregisterSet]: the property <%s> doesn't existed!",rSetName.c_str());
 		}
 		m_mapPropertySet.erase( itor );
 	}
@@ -189,7 +189,7 @@ namespace guiex
 		TMapPropertySet::const_iterator itor = m_mapPropertySet.find(rSetName);
 		if( itor == m_mapPropertySet.end())
 		{
-			throw CGUIException( "[CGUIPropertyManager::GetSet]: the property <%s> doesn't existed!",rSetName.c_str());
+			CGUIException::ThrowException( "[CGUIPropertyManager::GetSet]: the property <%s> doesn't existed!",rSetName.c_str());
 		}
 		return itor->second;
 	}

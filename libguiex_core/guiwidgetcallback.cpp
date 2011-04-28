@@ -8,10 +8,10 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core/guiwidget.h>
-#include <libguiex_core/guilogmsgmanager.h>
-#include <libguiex_core/guievent.h>
-#include <libguiex_core/guisystem.h>
+#include "guiwidget.h"
+#include "guilogmsgmanager.h"
+#include "guievent.h"
+#include "guisystem.h"
 
 //------------------------------------------------------------------------------
 /************ event list *******************

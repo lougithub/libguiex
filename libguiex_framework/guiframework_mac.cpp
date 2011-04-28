@@ -28,6 +28,7 @@
 #include <libguiex_module/ime_dummy/guiime_dummy.h>
 #include <libguiex_module/sound_openal/guisound_openal.h>
 #include <libguiex_module/mouse_default/guimouse_default.h>
+#include <libguiex_module/localizationloader_tinyxml/guilocalizationloader_tinyxml.h>
 
 //============================================================================//
 // function
@@ -106,6 +107,7 @@ namespace guiex
 		GUI_REGISTER_INTERFACE_LIB( IGUIPhysics_box2d );
 		GUI_REGISTER_INTERFACE_LIB( IGUISound_openal ); 
 		GUI_REGISTER_INTERFACE_LIB( IGUIMouse_default); 
+		GUI_REGISTER_INTERFACE_LIB( IGUILocalizationLoader_tinyxml); 
 	}
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_Mac::RegisterWidgetGenerators( )

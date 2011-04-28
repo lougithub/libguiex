@@ -7,14 +7,14 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core/guimusicmanager.h>
-#include <libguiex_core/guiinterfacemanager.h>
-#include <libguiex_core/guiinterfacesound.h>
-#include <libguiex_core/guisounddata.h>
-#include <libguiex_core/guipropertyconvertor.h>
-#include <libguiex_core/guistringconvertor.h>
-#include <libguiex_core/guiexception.h>
-#include <libguiex_core/guiproperty.h>
+#include "guimusicmanager.h"
+#include "guiinterfacemanager.h"
+#include "guiinterfacesound.h"
+#include "guisounddata.h"
+#include "guipropertyconvertor.h"
+#include "guistringconvertor.h"
+#include "guiexception.h"
+#include "guiproperty.h"
 
 //============================================================================//
 // function
@@ -46,7 +46,7 @@ namespace guiex
 		const CGUIProperty* pPropPath = rProperty.GetProperty("path", "CGUIString");
 		if( !pPropPath )
 		{
-			throw guiex::CGUIException(
+			CGUIException::ThrowException(
 				"[CGUIMusicManager::RegisterResource], invalid property <%s:%s:%s>!", 
 				rProperty.GetName().c_str(),
 				rProperty.GetTypeAsString().c_str(),
@@ -68,7 +68,7 @@ namespace guiex
 		IGUIInterfaceSound* pSound = CGUIInterfaceManager::Instance()->GetInterfaceSound();
 		if( !pSound )
 		{
-			throw CGUIException("[CGUIMusicManager::DoCreateMusic]: failed to get sound interface");
+			CGUIException::ThrowException("[CGUIMusicManager::DoCreateMusic]: failed to get sound interface");
 			return NULL;
 		}
 		CGUIMusicData* pMusicData = pSound->CreateMusicData( rName, rSceneName, rPath );
@@ -80,7 +80,7 @@ namespace guiex
 		IGUIInterfaceSound* pSound = CGUIInterfaceManager::Instance()->GetInterfaceSound();
 		if( !pSound )
 		{
-			throw CGUIException("[CGUIMusicManager::DestroyResourceImp]: failed to get sound interface");
+			CGUIException::ThrowException("[CGUIMusicManager::DestroyResourceImp]: failed to get sound interface");
 		}
 		pSound->DestroyMusicData( (CGUIMusicData*)pRes );
 	}
@@ -90,7 +90,7 @@ namespace guiex
 		IGUIInterfaceSound* pSound = CGUIInterfaceManager::Instance()->GetInterfaceSound();
 		if( !pSound )
 		{
-			throw CGUIException("[CGUIMusicManager::DestroyResourceImp]: failed to get sound interface");
+			CGUIException::ThrowException("[CGUIMusicManager::DestroyResourceImp]: failed to get sound interface");
 		}
 		pSound->DestroyMusicData( (CGUIMusicData*)pRes );
 	}
@@ -100,7 +100,7 @@ namespace guiex
 		CGUIMusicData* pMusic = CGUIResourceManager<CGUIMusicData,CGUIMusicData>::GetRegisterResource( rResName );
 		if( !pMusic )
 		{
-			throw CGUIException( 
+			CGUIException::ThrowException( 
 				"[CGUIMusicDataManager::AllocateResource]: failed to get sound by name <%s>",
 				rResName.c_str());
 			return NULL;
@@ -117,7 +117,7 @@ namespace guiex
 		if( pRes->GetRefCount() == 0 )
 		{
 			//music's reference count shouldn't be zero, which is retained by register function
-			throw CGUIException(
+			CGUIException::ThrowException(
 				"[CGUIMusicManager::DeallocateResource]: invalid reference count [%d] for resource: <%s:%s:%s>", 
 				pRes->GetRefCount(),
 				pRes->GetName().c_str(), 

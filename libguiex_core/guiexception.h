@@ -44,6 +44,7 @@ namespace guiex
 	{
 	public:
 		CGUIException( const char *format, ... ) throw();
+		static void ThrowException(const char *szError, ...);
 	};
 	
 	/**
@@ -54,6 +55,7 @@ namespace guiex
 	{
 	public:
 		CGUIException_Script( const char *format, ... ) throw();
+		static void ThrowException(const char *szError, ...);
 	};
 }//namespace guiex
 
@@ -66,6 +68,7 @@ namespace guiex
 	* @brief throw a exception
 	*/
 	GUIEXPORT void ThrowException(const char* szError);
+
 }//namespace guiex
 
 #endif //__GUI_EXCEPTION_H_20060526__

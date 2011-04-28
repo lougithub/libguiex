@@ -9,8 +9,8 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core/guiinterfacestringconv.h>
-#include <libguiex_core/guiinterfacemanager.h>
+#include "guiinterfacestringconv.h"
+#include "guiinterfacemanager.h"
 
 //============================================================================//
 // function

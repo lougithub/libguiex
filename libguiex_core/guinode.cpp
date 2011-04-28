@@ -10,10 +10,10 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core/guinode.h>
-#include <libguiex_core/guimath.h>
-#include <libguiex_core/guiexception.h>
-#include <libguiex_core/guistring.h>
+#include "guinode.h"
+#include "guimath.h"
+#include "guiexception.h"
+#include "guistring.h"
 
 
 namespace guiex 

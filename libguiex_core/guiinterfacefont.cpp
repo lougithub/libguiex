@@ -8,8 +8,8 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core/guiinterfacefont.h>
-#include <libguiex_core/guiinterfacemanager.h>
+#include "guiinterfacefont.h"
+#include "guiinterfacemanager.h"
 
 //============================================================================//
 // function

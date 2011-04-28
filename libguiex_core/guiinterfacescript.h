@@ -82,5 +82,5 @@ namespace guiex
 }//namespace guiex
 
 
-#endif __GUI_INTERFACE_SCRIPT_20060404_H_
+#endif //__GUI_INTERFACE_SCRIPT_20060404_H_
 

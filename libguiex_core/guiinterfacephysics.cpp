@@ -9,8 +9,8 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core/guiinterfacephysics.h>
-#include <libguiex_core/guiinterfacemanager.h>
+#include "guiinterfacephysics.h"
+#include "guiinterfacemanager.h"
 
 //============================================================================//
 // function

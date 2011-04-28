@@ -8,8 +8,8 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core/guiinterfacekeyboard.h>
-#include <libguiex_core/guisystem.h>
+#include "guiinterfacekeyboard.h"
+#include "guisystem.h"
 
 //============================================================================//
 // function

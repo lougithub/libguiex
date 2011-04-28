@@ -46,7 +46,7 @@ namespace guiex
 	{
 		if( x >= m_mapWidth || y >= m_mapHeight )
 		{
-			GUI_ASSERT( 0, "invalid parameter") ;
+			GUI_FORCE_ASSERT( "invalid parameter") ;
 			return;
 		}
 		m_walkability[x][y] = (bWalkable ? walkable : unwalkable);

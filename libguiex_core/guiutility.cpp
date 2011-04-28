@@ -9,7 +9,7 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core/guiutility.h>
+#include "guiutility.h"
 #include <string.h>
 #if defined(GUIEX_PLATFORM_WIN32)
 #include <windows.h>

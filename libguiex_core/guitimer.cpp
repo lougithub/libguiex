@@ -8,8 +8,8 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core/guitimer.h>
-#include <libguiex_core/guiexception.h>
+#include "guitimer.h"
+#include "guiexception.h"
 
 
 //============================================================================//
@@ -66,12 +66,12 @@ namespace guiex
 		{
 			if( !QueryPerformanceFrequency(&m_aFrequency))
 			{
-				throw CGUIException("[CGUITimer::UpdateTime]: failed in function QueryPerformanceFrequency()!");
+				CGUIException::ThrowException("[CGUITimer::UpdateTime]: failed in function QueryPerformanceFrequency()!");
 			}
 		}
 		if( !QueryPerformanceCounter(&m_aTimeCounter))
 		{
-			throw CGUIException("[CGUITimer::UpdateTime]: failed in function QueryPerformanceCounter()!");		
+			CGUIException::ThrowException("[CGUITimer::UpdateTime]: failed in function QueryPerformanceCounter()!");		
 		}
 	}
 	//------------------------------------------------------------------------------

@@ -8,14 +8,14 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core/guifontmanager.h>
-#include <libguiex_core/guiinterfacemanager.h>
-#include <libguiex_core/guiinterfacefont.h>
-#include <libguiex_core/guifontdata.h>
-#include <libguiex_core/guipropertyconvertor.h>
-#include <libguiex_core/guistringconvertor.h>
-#include <libguiex_core/guiexception.h>
-#include <libguiex_core/guiproperty.h>
+#include "guifontmanager.h"
+#include "guiinterfacemanager.h"
+#include "guiinterfacefont.h"
+#include "guifontdata.h"
+#include "guipropertyconvertor.h"
+#include "guistringconvertor.h"
+#include "guiexception.h"
+#include "guiproperty.h"
 
 
 //============================================================================//
@@ -69,7 +69,7 @@ namespace guiex
 			const CGUIProperty* pPropPath = rProperty.GetProperty("path", "CGUIString");
 			if( !pPropPath )
 			{
-				throw guiex::CGUIException(
+				CGUIException::ThrowException(
 					"[CGUIFontManager::RegisterResource], invalid property <%s:%s:%s>!", 
 					rProperty.GetName().c_str(),
 					rProperty.GetTypeAsString().c_str(),
@@ -84,7 +84,7 @@ namespace guiex
 			const CGUIProperty* pPropId = rProperty.GetProperty("id", "uint16");
 			if( !pPropId )
 			{
-				throw guiex::CGUIException(
+				CGUIException::ThrowException(
 					"[CGUIFontManager::RegisterResource], invalid property <%s:%s:%s>!", 
 					rProperty.GetName().c_str(),
 					rProperty.GetTypeAsString().c_str(),
@@ -99,7 +99,7 @@ namespace guiex
 			const CGUIProperty* pPropSize = rProperty.GetProperty("size", "uint16");
 			if( !pPropSize )
 			{
-				throw guiex::CGUIException(
+				CGUIException::ThrowException(
 					"[CGUIFontManager::RegisterResource], invalid property <%s:%s:%s>!", 
 					rProperty.GetName().c_str(),
 					rProperty.GetTypeAsString().c_str(),
@@ -143,14 +143,14 @@ namespace guiex
 	{
 		if( rFontInfo.m_uID >= GUI_FONT_MAX_NUM )
 		{
-			throw CGUIException("[CGUIFontManager::CreateGUIFont]: nFontID should be smaller than %d", GUI_FONT_MAX_NUM );
+			CGUIException::ThrowException("[CGUIFontManager::CreateGUIFont]: nFontID should be smaller than %d", GUI_FONT_MAX_NUM );
 			return NULL;
 		}
 
 		IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
 		if( !pFont )
 		{
-			throw CGUIException("[CGUIFontManager::CreateGUIFont]: failed to get font interface");
+			CGUIException::ThrowException("[CGUIFontManager::CreateGUIFont]: failed to get font interface");
 			return NULL;
 		}
 		CGUIFontData* pFontData = pFont->CreateFontData( rName, rSceneName, rFontInfo );
@@ -162,7 +162,7 @@ namespace guiex
 		IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
 		if( !pFont )
 		{
-			throw CGUIException("[CGUIFontManager::DestroyResourceImp]: failed to get font interface");
+			CGUIException::ThrowException("[CGUIFontManager::DestroyResourceImp]: failed to get font interface");
 		}
 		pFont->DestroyFontData( (CGUIFontData*)pRes );
 	}
@@ -172,14 +172,14 @@ namespace guiex
 		IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
 		if( !pFont )
 		{
-			throw CGUIException("[CGUIFontManager::DestroyResourceImp]: failed to get font interface");
+			CGUIException::ThrowException("[CGUIFontManager::DestroyResourceImp]: failed to get font interface");
 		}
 		pFont->DestroyFontData( (CGUIFontData*)pRes );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIFontManager::DeallocateResource( CGUIResource* /*pRes*/ )
 	{
-		throw CGUIException("[CGUIFontManager::DeallocateResource]: shouldn't call here");
+		CGUIException::ThrowException("[CGUIFontManager::DeallocateResource]: shouldn't call here");
 	}	
 	//------------------------------------------------------------------------------
 }//namespace guiex

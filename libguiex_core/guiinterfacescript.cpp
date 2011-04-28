@@ -8,8 +8,8 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core/guiinterfacescript.h>
-#include <libguiex_core/guiinterfacemanager.h>
+#include "guiinterfacescript.h"
+#include "guiinterfacemanager.h"
 
 //============================================================================//
 // function

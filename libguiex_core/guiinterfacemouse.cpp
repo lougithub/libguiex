@@ -8,9 +8,9 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core/guiinterfacemouse.h>
-#include <libguiex_core/guisystem.h>
-#include <libguiex_core/guiexception.h>
+#include "guiinterfacemouse.h"
+#include "guisystem.h"
+#include "guiexception.h"
 
 //============================================================================//
 // function
@@ -71,7 +71,7 @@ namespace guiex
 				ret.y = rPos.x;
 				break;
 			default:
-				throw CGUIException(" IGUIInterfaceMouse::ConvertPosToEngine: unknown screen orientation");
+				CGUIException::ThrowException(" IGUIInterfaceMouse::ConvertPosToEngine: unknown screen orientation");
 				break;
 		}
 		

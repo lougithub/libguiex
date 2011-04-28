@@ -17,6 +17,13 @@ set( ${target_name}_configfile_tinyxml_SRCS
 	)
 source_group(configfile_tinyxml FILES ${${target_name}_configfile_tinyxml_SRCS} )
 
+#localizationloader_tinyxml
+set( ${target_name}_localizationloader_tinyxml_SRCS 
+	localizationloader_tinyxml/guilocalizationloader_tinyxml.cpp
+	localizationloader_tinyxml/guilocalizationloader_tinyxml.h
+	)
+source_group(localizationloader_tinyxml FILES ${${target_name}_localizationloader_tinyxml_SRCS} )
+
 
 #sound_cocoa
 set( ${target_name}_sound_dummy_SRCS 
@@ -200,6 +207,7 @@ if( BUILD_PLATFORM_WIN32 )
 
 	set( ${target_name}_SRCS 
 		${${target_name}_configfile_tinyxml_SRCS}
+		${${target_name}_localizationloader_tinyxml_SRCS}
 		${${target_name}_filesys_stdio_SRCS}
 		${${target_name}_font_ft2_SRCS}
 		${${target_name}_font_dummy_SRCS}
@@ -225,6 +233,7 @@ elseif( BUILD_PLATFORM_IOS )
 
 	set( ${target_name}_SRCS 
 		${${target_name}_configfile_tinyxml_SRCS}
+		${${target_name}_localizationloader_tinyxml_SRCS}
 		${${target_name}_filesys_cocoa_SRCS}
 		${${target_name}_font_ft2_SRCS}
 		${${target_name}_font_dummy_SRCS}
@@ -245,6 +254,7 @@ elseif( BUILD_PLATFORM_MACOS )
 
 	set( ${target_name}_SRCS 
 		${${target_name}_configfile_tinyxml_SRCS}
+		${${target_name}_localizationloader_tinyxml_SRCS}
 		${${target_name}_filesys_cocoa_SRCS}
 		${${target_name}_font_ft2_SRCS}
 		${${target_name}_font_dummy_SRCS}

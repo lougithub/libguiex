@@ -35,7 +35,7 @@ namespace guiex
 	{
 		if( m_eIsLoaded != LOADSTATE_Unloaded )
 		{
-			throw CGUIException( 
+			CGUIException::ThrowException( 
 				"[CGUIResource::~CGUIResource]:resource <%s:%s:%s> hasn't been unloaded", 
 				GetName().c_str(), 
 				GetResourceType().c_str(),
@@ -62,7 +62,7 @@ namespace guiex
 		int32 ret = DoLoad();
 		if( ret != 0 )
 		{
-			throw CGUIException( "[CGUIResource::Load]: failed to load resource <%s: %s>",
+			CGUIException::ThrowException( "[CGUIResource::Load]: failed to load resource <%s: %s>",
 				m_strSceneName.c_str(),
 				m_strName.c_str());
 			return ret;

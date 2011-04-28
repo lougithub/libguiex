@@ -1,14 +1,14 @@
 /** 
-* @file guiinterfaceconfigfile.cpp
-* @brief file config file for widget
-* @author ken
-* @date 2006-09-13
-*/
+ * @file guiinterfacelocalizationloader.cpp
+ * @brief load localization file
+ * @author ken
+ * @date 2011-04-28
+ */
 
 //============================================================================//
 // include
 //============================================================================// 
-#include "guiinterfaceconfigfile.h"
+#include "guiinterfacelocalizationloader.h"
 
 //============================================================================//
 // function
@@ -17,17 +17,17 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	const char* IGUIInterfaceConfigFile::StaticGetModuleType()
+	const char* IGUIInterfaceLocalizationLoader::StaticGetModuleType()
 	{ 
-		return "IGUIConfigFile";
+		return "IGUILocalizationLoader";
 	}
 	//------------------------------------------------------------------------------
-	IGUIInterfaceConfigFile::IGUIInterfaceConfigFile( const char* szModuleName )
+	IGUIInterfaceLocalizationLoader::IGUIInterfaceLocalizationLoader( const char* szModuleName )
 		:IGUIInterface( StaticGetModuleType(), szModuleName )
 	{
 	}
 	//------------------------------------------------------------------------------
-	IGUIInterfaceConfigFile::~IGUIInterfaceConfigFile()
+	IGUIInterfaceLocalizationLoader::~IGUIInterfaceLocalizationLoader()
 	{
 	}
 	//------------------------------------------------------------------------------

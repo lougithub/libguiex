@@ -9,8 +9,8 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core/guiobjectmanager.h>
-#include <libguiex_core/guicleanup.h>
+#include "guiobjectmanager.h"
+#include "guicleanup.h"
 
 
 namespace guiex

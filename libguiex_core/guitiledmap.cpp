@@ -89,7 +89,7 @@ namespace guiex
 		m_pMapInfo = new CGUITiledMapInfo;
 		if( 0 != m_pMapInfo->InitWithTMXFile( rFileName ) )
 		{
-			throw CGUIException("[CGUITiledMap::ParseTMXFile]: failed parse tmx file %s", rFileName.c_str() );
+			CGUIException::ThrowException("[CGUITiledMap::ParseTMXFile]: failed parse tmx file %s", rFileName.c_str() );
 			return -1;
 		}
 

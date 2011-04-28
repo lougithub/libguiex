@@ -132,7 +132,7 @@ namespace guiex
 	{
 		if( m_arrayCanvasLayers.empty() )
 		{
-			throw CGUIException( "[CGUICanvasLayerManager::PopCanvasLayer]: want to pop canvaslayer but there isn't any layer" );
+			CGUIException::ThrowException( "[CGUICanvasLayerManager::PopCanvasLayer]: want to pop canvaslayer but there isn't any layer" );
 			return NULL;
 		}
 		CGUICanvasLayer* pLayer = m_arrayCanvasLayers.back();
@@ -157,7 +157,7 @@ namespace guiex
 			m_bCacheDirtyFlag = true;
 			return;
 		}
-		throw CGUIException("[CGUICanvasLayerManager::RemoveCanvasLayer]: not found given layer");
+		CGUIException::ThrowException("[CGUICanvasLayerManager::RemoveCanvasLayer]: not found given layer");
 	}
 	//------------------------------------------------------------------------------
 	void CGUICanvasLayerManager::DestroyCanvasLayer( CGUICanvasLayer* pLayer )
@@ -171,7 +171,7 @@ namespace guiex
 			pLayer->DestroySelf();
 			return;
 		}
-		throw CGUIException("[CGUICanvasLayerManager::DestroyCanvasLayer]: not found given layer");
+		CGUIException::ThrowException("[CGUICanvasLayerManager::DestroyCanvasLayer]: not found given layer");
 	}
 	//------------------------------------------------------------------------------
 	void CGUICanvasLayerManager::DelayedDestroyCanvasLayer( CGUICanvasLayer* pLayer )
@@ -184,7 +184,7 @@ namespace guiex
 			m_vecGarbage.push_back( pLayer );
 			return;
 		}
-		throw CGUIException("[CGUICanvasLayerManager::DelayedDestroyCanvasLayer]: not found given layer");
+		CGUIException::ThrowException("[CGUICanvasLayerManager::DelayedDestroyCanvasLayer]: not found given layer");
 	}
 	//------------------------------------------------------------------------------
 	void CGUICanvasLayerManager::DestroyAllCanvasLayer( )
@@ -229,7 +229,7 @@ namespace guiex
 	{
 		if( nIndex >= uint32( m_arrayCanvasLayers.size()))
 		{
-			throw CGUIException("[CGUICanvasLayerManager::GetCanvasLayer]: not finding layer by index");
+			CGUIException::ThrowException("[CGUICanvasLayerManager::GetCanvasLayer]: not finding layer by index");
 			return NULL;
 		}
 
@@ -253,7 +253,7 @@ namespace guiex
 			}
 		}
 
-		throw CGUIException("[CGUICanvasLayerManager::GetCanvasLayer]: not finding layer by name");
+		CGUIException::ThrowException("[CGUICanvasLayerManager::GetCanvasLayer]: not finding layer by name");
 		return NULL;	
 	}
 	//------------------------------------------------------------------------------

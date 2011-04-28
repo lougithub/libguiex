@@ -8,14 +8,14 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core/guiimagemanager.h>
-#include <libguiex_core/guiimage.h>
-#include <libguiex_core/guiproperty.h>
-#include <libguiex_core/guistringconvertor.h>
-#include <libguiex_core/guiscene.h>
-#include <libguiex_core/guiscenemanager.h>
-#include <libguiex_core/guiexception.h>
-#include <libguiex_core/guipropertyconvertor.h>
+#include "guiimagemanager.h"
+#include "guiimage.h"
+#include "guiproperty.h"
+#include "guistringconvertor.h"
+#include "guiscene.h"
+#include "guiscenemanager.h"
+#include "guiexception.h"
+#include "guipropertyconvertor.h"
 #include <algorithm>
 
 //============================================================================//
@@ -104,7 +104,7 @@ namespace guiex
 
 			if( !pPptPath )
 			{
-				throw CGUIException("[CGUIImageManager::CreateImage]: invalid image property: <%s> <%s>", rProperty.GetName().c_str(), rProperty.GetTypeAsString().c_str());
+				CGUIException::ThrowException("[CGUIImageManager::CreateImage]: invalid image property: <%s> <%s>", rProperty.GetName().c_str(), rProperty.GetTypeAsString().c_str());
 				return NULL;
 			}
 
@@ -139,7 +139,7 @@ namespace guiex
 			
 			if( !pPptColor )
 			{
-				throw CGUIException("[CGUIImageManager::CreateImage]: invalid image property: <%s> <%s>", rProperty.GetName().c_str(), rProperty.GetTypeAsString().c_str());
+				CGUIException::ThrowException("[CGUIImageManager::CreateImage]: invalid image property: <%s> <%s>", rProperty.GetName().c_str(), rProperty.GetTypeAsString().c_str());
 				return NULL;
 			}
 			//size
@@ -155,7 +155,7 @@ namespace guiex
 		}
 		else
 		{
-			throw CGUIException("[CGUIImageManager::CreateImage]: invalid image property: <%s> <%s>", rProperty.GetName().c_str(), rProperty.GetTypeAsString().c_str());
+			CGUIException::ThrowException("[CGUIImageManager::CreateImage]: invalid image property: <%s> <%s>", rProperty.GetName().c_str(), rProperty.GetTypeAsString().c_str());
 			return NULL;
 		}
 	}
@@ -229,7 +229,7 @@ namespace guiex
 		CGUIImage* pImage = CGUIResourceManager<CGUIImage, CGUIImage>::GetRegisterResource( rResName );
 		if( !pImage )
 		{
-			throw CGUIException( 
+			CGUIException::ThrowException( 
 				"[CGUIImageManager::AllocateResource]: failed to get image by name <%s>",
 				rResName.c_str());
 			return NULL;
@@ -303,7 +303,7 @@ namespace guiex
 			else
 			{
 				//named image's reference count shouldn't be zero, which is retained by register function
-				throw CGUIException(
+				CGUIException::ThrowException(
 					"[CGUIImageManager::DeallocateResource]: invalid reference count [%d] for resource: <%s:%s:%s>", 
 					pRes->GetRefCount(),
 					pRes->GetName().c_str(), 

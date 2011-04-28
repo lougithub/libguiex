@@ -5,14 +5,11 @@
 * @date 2007-11-23
 */
 
-
-
-
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core/guiplane.h>
-#include <libguiex_core/guivector3.h>
+#include "guiplane.h"
+#include "guivector3.h"
 
 
 namespace guiex

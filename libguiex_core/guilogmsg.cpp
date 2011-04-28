@@ -10,10 +10,10 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core/guilogmsg.h>
-#include <libguiex_core/guiutility.h>
-#include <libguiex_core/guilogmsgcallback.h>
-#include <libguiex_core/guilogmsgrecord.h>
+#include "guilogmsg.h"
+#include "guiutility.h"
+#include "guilogmsgcallback.h"
+#include "guilogmsgrecord.h"
 #include <ostream>
 
 //============================================================================//

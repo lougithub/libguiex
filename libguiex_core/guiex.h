@@ -94,6 +94,7 @@
 #include "guiinterfacescript.h"
 #include "guiinterfacefilesys.h"
 #include "guiinterfaceimageloader.h"
+#include "guiinterfacelocalizationloader.h"
 
 //event
 #include "guievent.h"

@@ -116,5 +116,5 @@ namespace guiex
 }//namespace guiex
 
 
-#endif __GUI_INTERFACE_MOUSE_20060426_H_
+#endif //__GUI_INTERFACE_MOUSE_20060426_H_
 

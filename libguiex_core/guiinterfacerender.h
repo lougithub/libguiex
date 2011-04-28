@@ -261,5 +261,5 @@ namespace guiex
 }//namespace guiex
 
 
-#endif __GUI_INTERFACE_RENDER_20060704_H_
+#endif //__GUI_INTERFACE_RENDER_20060704_H_
 

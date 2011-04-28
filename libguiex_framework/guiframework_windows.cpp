@@ -28,6 +28,7 @@
 #include <libguiex_module/stringconv_winapi/guistringconv_winapi.h>
 #include <libguiex_module/physics_box2d/guiphysics_box2d.h>
 #include <libguiex_module/sound_openal/guisound_openal.h>
+#include <libguiex_module/localizationloader_tinyxml/guilocalizationloader_tinyxml.h>
 
 #include <windows.h>
 #include <fstream>
@@ -112,6 +113,7 @@ namespace guiex
 		GUI_REGISTER_INTERFACE_LIB( IGUIPhysics_box2d );
 		GUI_REGISTER_INTERFACE_LIB( IGUISound_openal );
 		GUI_REGISTER_INTERFACE_LIB_ARG( IGUIIme_winapi, ::GetForegroundWindow() );
+		GUI_REGISTER_INTERFACE_LIB( IGUILocalizationLoader_tinyxml); 
 	}
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_Windows::RegisterWidgetGenerators( )

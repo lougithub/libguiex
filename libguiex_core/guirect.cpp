@@ -9,9 +9,9 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core/guirect.h>
-#include <libguiex_core/guisize.h>
-#include <libguiex_core/guivector2.h>
+#include "guirect.h"
+#include "guisize.h"
+#include "guivector2.h"
 
 
 //============================================================================//

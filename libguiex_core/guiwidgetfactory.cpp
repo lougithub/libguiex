@@ -10,11 +10,11 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core/guiwidgetfactory.h>
-#include <libguiex_core/guiwidgetgenerator.h>
-#include <libguiex_core/guiexception.h>
-#include <libguiex_core/guiwidget.h>
-#include <libguiex_core/guilogmsgmanager.h>
+#include "guiwidgetfactory.h"
+#include "guiwidgetgenerator.h"
+#include "guiexception.h"
+#include "guiwidget.h"
+#include "guilogmsgmanager.h"
 
 //============================================================================//
 // function
@@ -81,7 +81,7 @@ namespace guiex
 			GUI_DYNLIB_HANDLE d_handle = GUI_DYNLIB_LOAD(rModuleName.c_str());
 			if (d_handle == NULL)
 			{
-				throw CGUIException(
+				CGUIException::ThrowException(
 					"[CGUIWidgetFactory::RegisterModule] failed to load module <%s>",
 					rModuleName.c_str());
 				return -1;
@@ -94,7 +94,7 @@ namespace guiex
 		}
 		else
 		{
-			throw CGUIException(
+			CGUIException::ThrowException(
 				"[CGUIWidgetFactory::RegisterModule] the module <%s> has been registed",
 				rModuleName.c_str());
 			return -1;
@@ -116,7 +116,7 @@ namespace guiex
 		TMapModule::iterator itor = m_mapModule.find( rModuleName );
 		if( itor == m_mapModule.end() )
 		{
-			throw CGUIException(
+			CGUIException::ThrowException(
 				"[CGUIWidgetFactory::UnregisterModule] the module <%s> has been unregisted",
 				rModuleName.c_str());
 			return -1;
@@ -170,7 +170,7 @@ namespace guiex
 		FunRegisterAllWidgets pFunc = (FunRegisterAllWidgets)GUI_DYNLIB_GETSYM((*itor).second, strFunName.c_str());
 		if( !pFunc )
 		{
-			throw CGUIException(
+			CGUIException::ThrowException(
 				"[CGUIWidgetFactory::RegisterAllGenerator] failed to get function <%s> from module <%s>",
 				strFunName.c_str(),
 				rModuleName.c_str());
@@ -232,7 +232,7 @@ namespace guiex
 		FunCreateGenerator pFunc = (FunCreateGenerator)GUI_DYNLIB_GETSYM((*itor).second, strFunName.c_str());
 		if( !pFunc )
 		{
-			throw CGUIException(
+			CGUIException::ThrowException(
 				"[CGUIWidgetFactory::RegisterGenerator] failed to get function <%s> for widget <%s> from module <%s>",
 				strFunName.c_str(),
 				rWidgetType.c_str(),
@@ -276,7 +276,7 @@ namespace guiex
 		}
 		else
 		{
-			throw CGUIException(
+			CGUIException::ThrowException(
 				"[CGUIWidgetFactory::RegisterGenerator] the generator <%s> has been registed",
 				pGenerator->GetWidgetType().c_str());
 			return -1;
@@ -297,7 +297,7 @@ namespace guiex
 		TMapGenerator::iterator itor = m_mapGenerator.find( pGenerator->GetWidgetType());
 		if( itor == m_mapGenerator.end() )
 		{
-			throw CGUIException(
+			CGUIException::ThrowException(
 				"[CGUIWidgetFactory::UnregisterGenerator] the generator <%s> has been unregisted",
 				pGenerator->GetWidgetType().c_str());
 			return -1;
@@ -325,7 +325,7 @@ namespace guiex
 		TMapGenerator::iterator itor = m_mapGenerator.find( rType );
 		if( itor == m_mapGenerator.end() )
 		{
-			throw CGUIException(
+			CGUIException::ThrowException(
 				"[CGUIWidgetFactory::UnregisterGenerator] the generator <%s> has been unregisted",
 				rType.c_str());
 			return -1;
@@ -368,7 +368,7 @@ namespace guiex
 		TMapGenerator::iterator itor = m_mapGenerator.find( rType );
 		if( itor == m_mapGenerator.end())
 		{
-			throw CGUIException(
+			CGUIException::ThrowException(
 				"[CGUIWidgetFactory::CreateWidget] failed to find widget generator <%s>",
 				rType.c_str());
 			return NULL;			
@@ -378,7 +378,7 @@ namespace guiex
 			CGUIWidget* pWidget = (*itor).second->GenerateWidget( rName, rSceneName);
 			if( !pWidget )
 			{
-				throw CGUIException(
+				CGUIException::ThrowException(
 					"[CGUIWidgetFactory::CreateWidget] failed to create widget <%s>",
 					rType.c_str());
 				return NULL;

@@ -81,7 +81,7 @@ namespace guiex
 				if (!tmp )
 				{
 					inflateEnd(&d_stream);
-					throw CGUIException("[inflateMemory_]: realloc failed");
+					CGUIException::ThrowException("[inflateMemory_]: realloc failed");
 					return Z_MEM_ERROR;
 				}
 				/* only assign to *out if tmp is valid. it's not guaranteed that realloc will reuse the memory */
@@ -112,16 +112,16 @@ namespace guiex
 			switch(err)
 			{
 			case Z_MEM_ERROR:
-				throw CGUIException("[InflateMemory]: Out of memory while decompressing map data!");
+				CGUIException::ThrowException("[InflateMemory]: Out of memory while decompressing map data!");
 				break;
 			case Z_VERSION_ERROR:
-				throw CGUIException("[InflateMemory]: Incompatible zlib version!");
+				CGUIException::ThrowException("[InflateMemory]: Incompatible zlib version!");
 				break;
 			case Z_DATA_ERROR:
-				throw CGUIException("[InflateMemory]: Incorrect zlib compressed data!");
+				CGUIException::ThrowException("[InflateMemory]: Incorrect zlib compressed data!");
 				break;
 			default:
-				throw CGUIException("[InflateMemory]: Unknown error while decompressing map data!");
+				CGUIException::ThrowException("[InflateMemory]: Unknown error while decompressing map data!");
 				break;
 			}
 		}
@@ -341,7 +341,7 @@ namespace guiex
 		if( 0 != pFileSys->ReadFile( tmxFile, aDataChunk, IGUIInterfaceFileSys::eOpenMode_String ))
 		{
 			//failed
-			throw CGUIException("[CGUITiledMapInfo::ParseXMLFile]: failed to read file <%s>!", tmxFile.c_str());
+			CGUIException::ThrowException("[CGUITiledMapInfo::ParseXMLFile]: failed to read file <%s>!", tmxFile.c_str());
 			return -1;
 		}
 
@@ -351,7 +351,7 @@ namespace guiex
 		if( aDoc.Error())
 		{
 			//failed to parse
-			throw CGUIException(
+			CGUIException::ThrowException(
 				"[CGUITiledMapInfo::ParseXMLFile]: failed to parse file <%s>!\n\n<%s>", 
 				tmxFile.c_str(),
 				aDoc.ErrorDesc());
@@ -362,7 +362,7 @@ namespace guiex
 		TiXmlElement* pRootNode = aDoc.RootElement();
 		if( !pRootNode )
 		{
-			throw guiex::CGUIException("[CGUITiledMapInfo::ParseXMLFile], failed to get root node from file <%s>!", tmxFile.c_str());
+			CGUIException::ThrowException("[CGUITiledMapInfo::ParseXMLFile], failed to get root node from file <%s>!", tmxFile.c_str());
 			return -1;
 		}
 
@@ -381,7 +381,7 @@ namespace guiex
 		CGUIString strVersion = pMapNode->Attribute("version");
 		if( strVersion != "1.0" )
 		{
-			throw CGUIException("[CGUITiledMapInfo::ParseNode_map]: Unsupported TMX version %s", strVersion.c_str());
+			CGUIException::ThrowException("[CGUITiledMapInfo::ParseNode_map]: Unsupported TMX version %s", strVersion.c_str());
 			return -1;
 		}
 
@@ -401,7 +401,7 @@ namespace guiex
 		}
 		else
 		{
-			throw CGUIException( "[CGUITiledMapInfo::ParseNode_map]: Unsupported orientation: %s", strOrientation.c_str() );
+			CGUIException::ThrowException( "[CGUITiledMapInfo::ParseNode_map]: Unsupported orientation: %s", strOrientation.c_str() );
 			return -1;
 		}
 
@@ -452,7 +452,7 @@ namespace guiex
 			}
 			else
 			{
-				throw CGUIException( "[CGUITiledMapInfo::ParseXMLFile]: unknown tmx file node <%s>", pChildNode->Value());
+				CGUIException::ThrowException( "[CGUITiledMapInfo::ParseXMLFile]: unknown tmx file node <%s>", pChildNode->Value());
 				return -1;
 			}
 
@@ -465,7 +465,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int32 CGUITiledMapInfo::ParseSourceFile( const CGUIString& tmxFile )
 	{
-		throw CGUIException( "[CGUITiledMapInfo::ParseSourceFile]: unsupport to parse source file now");
+		CGUIException::ThrowException( "[CGUITiledMapInfo::ParseSourceFile]: unsupport to parse source file now");
 		return -1;
 	}
 	//------------------------------------------------------------------------------
@@ -535,7 +535,7 @@ namespace guiex
 			}
 			else
 			{
-				throw CGUIException( "[CGUITiledMapInfo::ParseXMLFile]: unknown tmx file node <%s>", pChildNode->Value());
+				CGUIException::ThrowException( "[CGUITiledMapInfo::ParseXMLFile]: unknown tmx file node <%s>", pChildNode->Value());
 				return -1;
 			}
 
@@ -550,7 +550,7 @@ namespace guiex
 	{
 		if( m_vTilesets.empty() )
 		{
-			throw CGUIException("[CGUITiledMapInfo::ParseNode_image]: not find tileset when process tile node" );
+			CGUIException::ThrowException("[CGUITiledMapInfo::ParseNode_image]: not find tileset when process tile node" );
 			return -1;
 		}
 		CGUITiledMapTilesetInfo& info = m_vTilesets.back();
@@ -571,7 +571,7 @@ namespace guiex
 	{
 		if( m_vTilesets.empty() )
 		{
-			throw CGUIException("[CGUITiledMapInfo::ParseNode_tile]: not find tileset when process tile node" );
+			CGUIException::ThrowException("[CGUITiledMapInfo::ParseNode_tile]: not find tileset when process tile node" );
 			return -1;
 		}
 		CGUITiledMapTilesetInfo& info = m_vTilesets.back();
@@ -596,7 +596,7 @@ namespace guiex
 			}
 			else
 			{
-				throw CGUIException( "[CGUITiledMapInfo::ParseNode_tile]: unknown tmx file node <%s>", pChildNode->Value());
+				CGUIException::ThrowException( "[CGUITiledMapInfo::ParseNode_tile]: unknown tmx file node <%s>", pChildNode->Value());
 				return -1;
 			}
 			//for next node
@@ -622,7 +622,7 @@ namespace guiex
 			}
 			else
 			{
-				throw CGUIException( "[CGUITiledMapInfo::ParseNode_tile]: unknown tmx file node <%s>", pChildNode->Value());
+				CGUIException::ThrowException( "[CGUITiledMapInfo::ParseNode_tile]: unknown tmx file node <%s>", pChildNode->Value());
 				return -1;
 			}
 
@@ -710,7 +710,7 @@ namespace guiex
 			}
 			else
 			{
-				throw CGUIException( "[CGUITiledMapInfo::ParseNode_layer]: unknown tmx file node <%s>", pChildNode->Value());
+				CGUIException::ThrowException( "[CGUITiledMapInfo::ParseNode_layer]: unknown tmx file node <%s>", pChildNode->Value());
 				return -1;
 			}
 
@@ -728,7 +728,7 @@ namespace guiex
 
 		if( strEncoding != "base64" )
 		{
-			throw CGUIException("[CGUITiledMapInfo::ParseNode_data]: date only support base64 now");
+			CGUIException::ThrowException("[CGUITiledMapInfo::ParseNode_data]: date only support base64 now");
 			return -1;
 		}
 		const char* data = pDataNode->GetText();
@@ -737,7 +737,7 @@ namespace guiex
 		{
 			if( m_vLayers.empty() )
 			{
-				throw CGUIException("[CGUITiledMapInfo::ParseNode_data]: not find layers when process data node" );
+				CGUIException::ThrowException("[CGUITiledMapInfo::ParseNode_data]: not find layers when process data node" );
 				return -1;
 			}
 			CGUITiledMapLayerInfo& layer = m_vLayers.back();
@@ -747,7 +747,7 @@ namespace guiex
 			len = base64Decode( (const unsigned char*)data, strlen(data), &buffer);
 			if( !buffer )
 			{
-				throw CGUIException("[CGUITiledMapInfo::ParseNode_data]: TiledMap decode data error");
+				CGUIException::ThrowException("[CGUITiledMapInfo::ParseNode_data]: TiledMap decode data error");
 				return -1;
 			}
 
@@ -761,7 +761,7 @@ namespace guiex
 
 				if( !deflated )
 				{
-					throw CGUIException("[CGUITiledMapInfo::ParseNode_data]: inflate data error");
+					CGUIException::ThrowException("[CGUITiledMapInfo::ParseNode_data]: inflate data error");
 					return -1;
 				}
 
@@ -776,7 +776,7 @@ namespace guiex
 			if( nTileNum <= 0 )
 			{
 				free( pTiles );
-				throw CGUIException("[CGUITiledMapInfo::ParseNode_data]: invalid tile num");
+				CGUIException::ThrowException("[CGUITiledMapInfo::ParseNode_data]: invalid tile num");
 				return -1;
 			}
 			layer.m_vTiles.resize( nTileNum, 0 );
@@ -837,7 +837,7 @@ namespace guiex
 			}
 			else
 			{
-				throw CGUIException( "[CGUITiledMapInfo::ParseNode_objectgroup]: unknown tmx file node <%s>", pChildNode->Value());
+				CGUIException::ThrowException( "[CGUITiledMapInfo::ParseNode_objectgroup]: unknown tmx file node <%s>", pChildNode->Value());
 				return -1;
 			}
 
@@ -851,7 +851,7 @@ namespace guiex
 	{
 		if( m_vObjectGroups.empty() )
 		{
-			throw CGUIException("[CGUITiledMapInfo::ParseNode_object]: not find object group when process objectgroup node" );
+			CGUIException::ThrowException("[CGUITiledMapInfo::ParseNode_object]: not find object group when process objectgroup node" );
 			return -1;
 		}
 		CGUITiledMapObjectGroup& objectGroup = m_vObjectGroups.back();
@@ -898,7 +898,7 @@ namespace guiex
 			}
 			else
 			{
-				throw CGUIException( "[CGUITiledMapInfo::ParseNode_object]: unknown tmx file node <%s>", pChildNode->Value());
+				CGUIException::ThrowException( "[CGUITiledMapInfo::ParseNode_object]: unknown tmx file node <%s>", pChildNode->Value());
 				return -1;
 			}
 
@@ -925,7 +925,7 @@ namespace guiex
 				return &(*itor);
 			}
 		}
-		throw CGUIException("[CGUITiledMapInfo::GetLayerInfo]: failed to find layer named <%s>", rLayerName.c_str());
+		CGUIException::ThrowException("[CGUITiledMapInfo::GetLayerInfo]: failed to find layer named <%s>", rLayerName.c_str());
 		return NULL;
 	}
 	//------------------------------------------------------------------------------

@@ -58,7 +58,7 @@ namespace guiex
 				delete[] m_pIndices;
 				m_pIndices = NULL;
 			}
-			throw CGUIException(" Particle system: not enough memory");
+			CGUIException::ThrowException(" Particle system: not enough memory");
 			return -1;
 		}
 

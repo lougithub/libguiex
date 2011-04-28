@@ -157,6 +157,8 @@ set( ${target_name}_interface_SRCS
 	guiinterfacecommand.h
 	guiinterfaceconfigfile.cpp
 	guiinterfaceconfigfile.h
+	guiinterfacelocalizationloader.cpp
+	guiinterfacelocalizationloader.h
 	guiinterfacefilesys.cpp
 	guiinterfacefilesys.h
 	guiinterfacefont.cpp

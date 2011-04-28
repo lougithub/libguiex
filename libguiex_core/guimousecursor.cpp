@@ -9,13 +9,13 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core/guimousecursor.h>
-#include <libguiex_core/guiinterfacerender.h>
-#include <libguiex_core/guiexception.h>
-#include <libguiex_core/guiimagemanager.h>
-#include <libguiex_core/guiimage.h>
-#include <libguiex_core/guianimation.h>
-#include <libguiex_core/guisystem.h>
+#include "guimousecursor.h"
+#include "guiinterfacerender.h"
+#include "guiexception.h"
+#include "guiimagemanager.h"
+#include "guiimage.h"
+#include "guianimation.h"
+#include "guisystem.h"
 
 
 //============================================================================//

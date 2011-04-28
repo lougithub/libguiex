@@ -8,23 +8,23 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_core/guiconfigfileloader.h>
-#include <libguiex_core/guiexception.h>
-#include <libguiex_core/guiinterfacemanager.h>
-#include <libguiex_core/guiinterfaceconfigfile.h>
-#include <libguiex_core/guiinterfacescript.h>
-#include <libguiex_core/guipropertymanager.h>
-#include <libguiex_core/guiwidgetmanager.h>
-#include <libguiex_core/guisystem.h>
-#include <libguiex_core/guifontmanager.h>
-#include <libguiex_core/guiimagemanager.h>
-#include <libguiex_core/guiasmanager.h>
-#include <libguiex_core/guianimationmanager.h>
-#include <libguiex_core/guisoundmanager.h>
-#include <libguiex_core/guimusicmanager.h>
-#include <libguiex_core/guiparticle2dmanager.h>
-#include <libguiex_core/guitiledmapmanager.h>
-#include <libguiex_core/guiscenemanager.h>
+#include "guiconfigfileloader.h"
+#include "guiexception.h"
+#include "guiinterfacemanager.h"
+#include "guiinterfaceconfigfile.h"
+#include "guiinterfacescript.h"
+#include "guipropertymanager.h"
+#include "guiwidgetmanager.h"
+#include "guisystem.h"
+#include "guifontmanager.h"
+#include "guiimagemanager.h"
+#include "guiasmanager.h"
+#include "guianimationmanager.h"
+#include "guisoundmanager.h"
+#include "guimusicmanager.h"
+#include "guiparticle2dmanager.h"
+#include "guitiledmapmanager.h"
+#include "guiscenemanager.h"
 
 
 //============================================================================//
@@ -44,7 +44,7 @@ namespace guiex
 		CGUIWidget* pWidget = CGUIWidgetManager::Instance()->CreateWidget(strWidgetType, strWidgetName, rSceneName);
 		if( !pWidget )
 		{
-			throw CGUIException(
+			CGUIException::ThrowException(
 				"[DoLoadConfig_Widget]: failed to create widget <%s:%s>!",
 				strWidgetType.c_str(),
 				strWidgetName.c_str());
@@ -80,14 +80,14 @@ namespace guiex
 		IGUIInterfaceConfigFile* pConfigFile = CGUIInterfaceManager::Instance()->GetInterfaceConfigFile();
 		if( !pConfigFile )
 		{
-			throw CGUIException("[LoadResourceConfigFile]: failed to get interface <IGUIConfigFile>!");
+			CGUIException::ThrowException("[LoadResourceConfigFile]: failed to get interface <IGUIConfigFile>!");
 		}
 
 		//get property set
 		CGUIProperty aPropertySet;
 		if( 0 != pConfigFile->LoadConfigFile(rPath, aPropertySet) )
 		{
-			throw CGUIException(
+			CGUIException::ThrowException(
 				"[LoadResourceConfigFile]: failed to load config file <%s : %s>!", 
 				rSceneName.c_str(), 
 				rPath.c_str());
@@ -142,7 +142,7 @@ namespace guiex
 
 			default:
 				{
-					throw guiex::CGUIException(
+					CGUIException::ThrowException(
 						"[LoadResourceConfigFile], unknown property type <%s:%s:%s>", 
 						pProperty->GetName().c_str(),
 						pProperty->GetTypeAsString().c_str(),
@@ -155,7 +155,7 @@ namespace guiex
 			{
 				if( 0 != pResourceManager->RegisterResource( rSceneName, *pProperty ) )
 				{
-					throw guiex::CGUIException(
+					CGUIException::ThrowException(
 						"[CGUIConfigFileLoader::LoadResourceConfigFile], failed to register resource with name <%s:%s:%s>!", 
 						pProperty->GetName().c_str(),
 						pProperty->GetTypeAsString().c_str(),
@@ -177,14 +177,14 @@ namespace guiex
 		IGUIInterfaceConfigFile* pConfigFile = CGUIInterfaceManager::Instance()->GetInterfaceConfigFile();
 		if( !pConfigFile )
 		{
-			throw CGUIException("[LoadWidgetConfigFile]: failed to get interface <IGUIConfigFile>!");
+			CGUIException::ThrowException("[LoadWidgetConfigFile]: failed to get interface <IGUIConfigFile>!");
 		}
 
 		//get property set
 		CGUIProperty aPropertySet;
 		if( 0 != pConfigFile->LoadConfigFile(rPath, aPropertySet) )
 		{
-			throw CGUIException(
+			CGUIException::ThrowException(
 				"[LoadWidgetConfigFile]: failed to load config file <%s : %s>!", 
 				rSceneName.c_str(), 
 				rPath.c_str());
@@ -209,7 +209,7 @@ namespace guiex
 					{
 						if( pWidget->GetParent() != NULL )
 						{
-							throw guiex::CGUIException(
+							CGUIException::ThrowException(
 								"[LoadWidgetConfigFile], first widget <%s:%s> is not the root of page", 
 								pWidget->GetName().c_str(),
 								pWidget->GetType().c_str());
@@ -224,7 +224,7 @@ namespace guiex
 					{
 						if( pWidget->GetParent() == NULL )
 						{
-							throw guiex::CGUIException(
+							CGUIException::ThrowException(
 								"[LoadWidgetConfigFile], the widget <%s:%s> hasn't parent", 
 								pWidget->GetName().c_str(),
 								pWidget->GetType().c_str());
@@ -236,7 +236,7 @@ namespace guiex
 
 			default:
 				{
-					throw guiex::CGUIException(
+					CGUIException::ThrowException(
 						"[LoadWidgetConfigFile], unknown property type <%s:%s:%s>", 
 						pProperty->GetName().c_str(),
 						pProperty->GetTypeAsString().c_str(),

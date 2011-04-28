@@ -10,8 +10,8 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core/guiinterfacecommand.h>
-#include <libguiex_core/guiinterfacemanager.h>
+#include "guiinterfacecommand.h"
+#include "guiinterfacemanager.h"
 
 //============================================================================//
 // function

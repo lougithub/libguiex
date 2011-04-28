@@ -9,9 +9,9 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core/guitextureimp.h>
-#include <libguiex_core/guitexture.h>
-#include <libguiex_core/guiinterfacerender.h>
+#include "guitextureimp.h"
+#include "guitexture.h"
+#include "guiinterfacerender.h"
 
 
 

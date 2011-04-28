@@ -58,7 +58,7 @@ namespace guiex
 			bytesPerPixel = 4;
 			break;
 		default:
-			throw CGUIException("[CGUIImageData_tga::SetImageData] - unknown pixel format!");
+			CGUIException::ThrowException("[CGUIImageData_tga::SetImageData] - unknown pixel format!");
 			return 0;
 		}
 

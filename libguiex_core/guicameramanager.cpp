@@ -118,7 +118,7 @@ namespace guiex
 				break;
 				
 			default:
-				throw CGUIException("CGUICamera::SetDefaultValue: unknown screen orientation.");
+				CGUIException::ThrowException("CGUICamera::SetDefaultValue: unknown screen orientation.");
 				break;
 		}
 		

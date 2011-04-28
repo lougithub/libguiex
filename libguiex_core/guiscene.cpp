@@ -85,14 +85,14 @@ namespace guiex
 		IGUIInterfaceConfigFile* pConfigFile = CGUIInterfaceManager::Instance()->GetInterfaceConfigFile();
 		if( !pConfigFile )
 		{
-			throw CGUIException( "[CGUIScene::LoadConfigFile]: failed to get config file interface." );
+			CGUIException::ThrowException( "[CGUIScene::LoadConfigFile]: failed to get config file interface." );
 			return -1;
 		}
 
 		CGUIProperty aPropertySet;
 		if( 0 != pConfigFile->LoadConfigFile( m_strSceneConfigFileName, aPropertySet ))
 		{
-			throw CGUIException( 
+			CGUIException::ThrowException( 
 				"[CGUIScene::LoadConfigFile]: failed to read scene info config file <%s>.",
 				m_strSceneConfigFileName.c_str() );
 			return -1;
@@ -123,7 +123,7 @@ namespace guiex
 				m_vecLocalizationFiles.push_back(pProperty->GetName());
 				break;
 			default:
-				throw CGUIException("[CGUIScene::LoadConfigFile]: unknown property <%s:%s> in scene <%s>",
+				CGUIException::ThrowException("[CGUIScene::LoadConfigFile]: unknown property <%s:%s> in scene <%s>",
 					pProperty->GetName().c_str(),
 					pProperty->GetTypeAsString().c_str(),
 					m_strSceneConfigFileName.c_str() );
@@ -133,7 +133,7 @@ namespace guiex
 
 		if( m_strSceneName.empty() )
 		{
-			throw CGUIException("[CGUIScene::LoadConfigFile]: unknown scene name in scene <%s>",
+			CGUIException::ThrowException("[CGUIScene::LoadConfigFile]: unknown scene name in scene <%s>",
 				m_strSceneConfigFileName.c_str() );
 			return -1;
 		}

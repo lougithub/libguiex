@@ -8,8 +8,8 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core/guiresourcemanager.h>
-#include <libguiex_core/guisystem.h>
+#include "guiresourcemanager.h"
+#include "guisystem.h"
 
 //============================================================================//
 // function

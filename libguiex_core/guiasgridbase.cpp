@@ -108,7 +108,7 @@ namespace guiex
 		//check grid
 		if( IsGridInit() )
 		{
-			throw CGUIException("[CGUIAsGridBase::InitGrid]: grid has been initialized!" );
+			CGUIException::ThrowException("[CGUIAsGridBase::InitGrid]: grid has been initialized!" );
 			return -1;
 		}
 
@@ -116,14 +116,14 @@ namespace guiex
 		CGUIWidget* pReceiver = GetReceiver();
 		if( !pReceiver )
 		{
-			throw CGUIException("[CGUIAsGridBase::InitGrid]: no receiver!" );
+			CGUIException::ThrowException("[CGUIAsGridBase::InitGrid]: no receiver!" );
 			return -1;
 		}
 
 		m_pEffectGrid = GenerateGrid( GetReceiver()->GetPixelSize(), m_aGridSize );
 		if( !m_pEffectGrid )
 		{
-			throw CGUIException("[CGUIAsGridBase::InitGrid]: failed to create grid!" );
+			CGUIException::ThrowException("[CGUIAsGridBase::InitGrid]: failed to create grid!" );
 			return -1;
 		}
 
@@ -131,7 +131,7 @@ namespace guiex
 
 		if( 0 != OnInitGrid() )
 		{
-			throw CGUIException("[CGUIAsGridBase::InitGrid]: failed in OnInitGrid!" );
+			CGUIException::ThrowException("[CGUIAsGridBase::InitGrid]: failed in OnInitGrid!" );
 			return -1;
 		}
 

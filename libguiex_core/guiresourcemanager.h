@@ -137,7 +137,7 @@ namespace guiex
 
 		if( m_mapRegisterResource.find( pRes->GetName()) != m_mapRegisterResource.end())
 		{
-			throw CGUIException( "the resource <%s> has existed", pRes->GetName().c_str());
+			CGUIException::ThrowException( "the resource <%s> has existed", pRes->GetName().c_str());
 			return -1;
 		}
 
@@ -270,7 +270,7 @@ namespace guiex
 		}
 		else
 		{
-			throw CGUIException("[CGUIResourceManager::ReleaseRegisterResource]: failed to find resource by name <%s>", rResName.c_str());
+			CGUIException::ThrowException("[CGUIResourceManager::ReleaseRegisterResource]: failed to find resource by name <%s>", rResName.c_str());
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -281,7 +281,7 @@ namespace guiex
 		if( itorFind != m_setAllocateResource.end() )
 		{
 			//not found
-			throw CGUIException("[CGUIResourceManager::AddToAllocatePool]: failed to add resource <%s:%s> to allocate pool", 
+			CGUIException::ThrowException("[CGUIResourceManager::AddToAllocatePool]: failed to add resource <%s:%s> to allocate pool", 
 				pRes->GetName().c_str(),
 				pRes->GetResourceType().c_str());
 			return;
@@ -292,11 +292,11 @@ namespace guiex
 	template< class TRegisterResType, class TAllocateResType >
 	inline int32 CGUIResourceManager<TRegisterResType, TAllocateResType>::ReleaseFromAllocatePool( CGUIResource* pRes )
 	{
-		typename TSetResource::const_iterator itorFind = m_setAllocateResource.find( pRes );
+		typename TSetResource::iterator itorFind = m_setAllocateResource.find( pRes );
 		if( itorFind == m_setAllocateResource.end() )
 		{
 			//not found
-			throw CGUIException("[CGUIResourceManager::ReleaseFromAllocatePool]: failed to remove resource <%s:%s> from allocate pool" );
+			CGUIException::ThrowException("[CGUIResourceManager::ReleaseFromAllocatePool]: failed to remove resource <%s:%s> from allocate pool" );
 			return -1;
 		}
 		CheckResourceReference( *itorFind );
@@ -324,7 +324,7 @@ namespace guiex
 	{
 		if( pRes->GetRefCount() != 0 )
 		{
-			throw CGUIException( "[CGUIResourceManager::CheckResourceReference]:resource reference is still in using[%d]: <%s:%s:%s>", 
+			CGUIException::ThrowException( "[CGUIResourceManager::CheckResourceReference]:resource reference is still in using[%d]: <%s:%s:%s>", 
 				pRes->GetRefCount(),
 				pRes->GetName().c_str(), 
 				pRes->GetResourceType().c_str(),

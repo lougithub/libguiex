@@ -8,11 +8,11 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core/guievent.h>
-#include <libguiex_core/guiwidget.h>
-#include <libguiex_core/guisystem.h>
-#include <libguiex_core/guiinterfacemouse.h>
-#include <libguiex_core/guiinterfacekeyboard.h>
+#include "guievent.h"
+#include "guiwidget.h"
+#include "guisystem.h"
+#include "guiinterfacemouse.h"
+#include "guiinterfacekeyboard.h"
 
 //------------------------------------------------------------------------------
 

@@ -98,7 +98,7 @@ namespace guiex
 		case GL_SRC_ALPHA_SATURATE:
 			return eBlendFunc_SRC_ALPHA_SATURATE;
 		default:
-			GUI_ASSERT( 0, "unknown blend func type" );
+			GUI_FORCE_ASSERT( "unknown blend func type" );
 			return eBlendFunc_ONE;
 		}
 	}
@@ -130,7 +130,7 @@ namespace guiex
 		case eBlendFunc_SRC_ALPHA_SATURATE:
 			return GL_SRC_ALPHA_SATURATE;
 		default:
-			GUI_ASSERT( 0, "unknown blend func type" );
+			GUI_FORCE_ASSERT( "unknown blend func type" );
 			return GL_ONE;
 		}
 	}
@@ -144,7 +144,7 @@ namespace guiex
 	//	case eBufferMode_Front:
 	//		return GL_FRONT;
 	//	default:
-	//		GUI_ASSERT( 0, "unknown buffer mode" );
+	//		GUI_FORCE_ASSERT( "unknown buffer mode" );
 	//		return GL_BACK;
 	//	}
 	//}

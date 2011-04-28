@@ -11,11 +11,9 @@
 //============================================================================// 
 #include "guilocalizationmanager.h"
 #include "guiexception.h"
-#include "guiinterfacefilesys.h"
+#include "guiinterfacelocalizationloader.h"
 #include "guiinterfacemanager.h"
 #include "guistringconvertor.h"
-
-#include <tinyxml.h>
 
 
 //============================================================================//
@@ -56,36 +54,17 @@ namespace guiex
 	int32 CGUILocalizationManager::LoadLocalization( const CGUIString& rFileName, const CGUIString& rSceneName)
 	{
 		///read file
-		IGUIInterfaceFileSys* pFileSys =  CGUIInterfaceManager::Instance()->GetInterfaceFileSys();
-		CGUIDataChunk aDataChunk;
-		if( 0 != pFileSys->ReadFile( rFileName, aDataChunk, IGUIInterfaceFileSys::eOpenMode_String ))
-		{
-			//failed
-			throw CGUIException("[CGUILocalizationManager::LoadLocalization]: failed to read file <%s>!", rFileName.c_str());
-			return -1;
-		}
+		IGUIInterfaceLocalizationLoader* pLoader = CGUIInterfaceManager::Instance()->GetInterfaceLocalizationLoader();
 
-		///parse file
-		TiXmlDocument aDoc;
-		aDoc.Parse( (const char*)aDataChunk.GetDataPtr(), 0, TIXML_ENCODING_UTF8 );
-		if( aDoc.Error())
+		std::vector<std::pair<CGUIString, CGUIStringW> > arrayLocalizations;
+		if( 0 != pLoader->LoadLocalizationFile(rFileName, m_strCurrentLocalConfig, arrayLocalizations ))
 		{
 			//failed to parse
-			throw CGUIException(
-				"[CGUILocalizationManager::LoadLocalization]: failed to parse file <%s>!\n\n<%s>", 
-				rFileName.c_str(),
-				aDoc.ErrorDesc());
+			CGUIException::ThrowException(
+				"[CGUILocalizationManager::LoadLocalization]: failed to parse file <%s>!\n", 
+				rFileName.c_str());
 			return -1;
 		}
-
-		///get root node
-		TiXmlElement* pRootNode = aDoc.RootElement();
-		if( !pRootNode )
-		{
-			throw guiex::CGUIException("[CGUILocalizationManager::LoadLocalization], failed to get root node from file <%s>!", rFileName.c_str());
-			return -1;
-		}
-
 
 		TMapKeys* pMapKeys  = NULL;
 		TMapScenes::iterator itorLoc = m_mapScenes.find( rSceneName );
@@ -98,51 +77,20 @@ namespace guiex
 			pMapKeys = &(m_mapScenes.insert( std::make_pair(rSceneName, TMapKeys())).first->second);
 		}
 
-		//	<localization language="english">
-		TiXmlElement* pLocalizationNode = pRootNode->FirstChildElement();
-		while( pLocalizationNode )
+
+		for( std::vector<std::pair<CGUIString, CGUIStringW> >::iterator itor = arrayLocalizations.begin();
+			itor != arrayLocalizations.end();
+			++itor )
 		{
-			const char* szLocal = pLocalizationNode->Attribute("local");
-			if( szLocal && m_strCurrentLocalConfig == szLocal )
-			{
-				//import this local:  <string name="ok"> ok </string>
-				TiXmlElement* pStringNode = pLocalizationNode->FirstChildElement();
-				while( pStringNode )
-				{
-					const char* szKey = pStringNode->Attribute("key");
-					if( !szKey )
-					{
-						throw guiex::CGUIException("[CGUILocalizationManager::LoadLocalization], failed to get localization name from local <%s>!", m_strCurrentLocalConfig.c_str());
-						return -1;
-					}
+			std::pair<CGUIString, CGUIStringW>& rLocal = *itor;
 #if GUI_DEBUG
-					if( pMapKeys->find( szKey ) != pMapKeys->end() )
-					{
-						throw guiex::CGUIException("[CGUILocalizationManager::LoadLocalization], <%s> has existed in localization <%s>!", szKey, m_strCurrentLocalConfig.c_str());
-						return -1;
-					}
-#endif
-					const char* szContent = pStringNode->GetText();
-					if( !szContent )
-					{
-						throw guiex::CGUIException("[CGUILocalizationManager::LoadLocalization], failed to get localization content from name from local <%s>!", szKey, m_strCurrentLocalConfig.c_str());
-						return -1;
-					}
-					CGUIStringW strContentW;
-					AppMultiByteToWideChar( szContent, strContentW );
-					if( strContentW.empty() )
-					{
-						throw guiex::CGUIException("[CGUILocalizationManager::LoadLocalization], failed to get localization content from name from local <%s>!", szKey, m_strCurrentLocalConfig.c_str());
-						return -1;
-					}
-
-					pMapKeys->insert( std::make_pair( CGUIString(szKey), strContentW ));
-
-					pStringNode = pStringNode->NextSiblingElement();
-				}
+			if( pMapKeys->find( rLocal.first ) != pMapKeys->end() )
+			{
+				CGUIException::ThrowException("[CGUILocalizationManager::LoadLocalization], <%s> has existed in localization <%s>!", rLocal.first.c_str(), m_strCurrentLocalConfig.c_str());
+				return -1;
 			}
-
-			pLocalizationNode = pLocalizationNode->NextSiblingElement();
+#endif
+			pMapKeys->insert( rLocal );
 		}
 
 		return 0;

@@ -1197,7 +1197,7 @@ void WxMainFrame::OnCreateWidget(wxCommandEvent& evt)
 	}
 	else
 	{
-		GUI_ASSERT( 0, "failed to create widget");
+		GUI_FORCE_ASSERT( "failed to create widget");
 	}
 
 	RefreshWidgetTreeCtrl();

@@ -914,7 +914,7 @@ namespace guiex
 				return;
 			}
 		}
-		throw CGUIException("[CGUISystem::UngisterGlobalKeyByRoot]: failed to ungister global key!");
+		CGUIException::ThrowException("[CGUISystem::UngisterGlobalKeyByRoot]: failed to ungister global key!");
 	}
 	//------------------------------------------------------------------------------
 	/** 

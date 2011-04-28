@@ -27,7 +27,8 @@
 #include "guiinterfacestringconv.h"
 #include "guiinterfacekeyboard.h"
 #include "guiinterfacemouse.h"
-#include "guiinterfaceImageLoader.h"
+#include "guiinterfaceimageLoader.h"
+#include "guiinterfacelocalizationloader.h"
 #include "guiinterfacephysics.h"
 
 
@@ -49,7 +50,7 @@ namespace guiex
 	::guiex::classname* pInterface = new ::guiex::classname;	\
 	if( 0 != pInterface->Initialize(NULL))						\
 	{															\
-		throw ::guiex::CGUIException( "Failed to initialize interface <%s>", pInterface->GetModuleType().c_str());	\
+	::guiex::CGUIException::ThrowException( "Failed to initialize interface <%s>", pInterface->GetModuleType().c_str());	\
 	}															\
 	::guiex::CGUIInterfaceManager::Instance()->RegisterInterface(pInterface->GetModuleType(), pInterface);	\
 }
@@ -64,7 +65,7 @@ namespace guiex
 	::guiex::classname* pInterface = new ::guiex::classname;	\
 	if( 0 != pInterface->Initialize(arg))						\
 	{															\
-		throw ::guiex::CGUIException( "Failed to initialize interface <%s>", pInterface->GetModuleType().c_str());	\
+		::guiex::CGUIException::ThrowException( "Failed to initialize interface <%s>", pInterface->GetModuleType().c_str());	\
 	}															\
 	::guiex::CGUIInterfaceManager::Instance()->RegisterInterface(pInterface->GetModuleType(), pInterface);	\
 }
@@ -111,6 +112,7 @@ namespace guiex
 		IGUIInterfaceScript* GetInterfaceScript();
 		IGUIInterfaceConfigFile* GetInterfaceConfigFile();
 		IGUIInterfaceFileSys* GetInterfaceFileSys();
+		IGUIInterfaceLocalizationLoader* GetInterfaceLocalizationLoader();
 		IGUIInterfaceMouse* GetInterfaceMouse();
 		IGUIInterfaceKeyboard* GetInterfaceKeyboard();
 		IGUIInterfaceSound* GetInterfaceSound();
@@ -125,6 +127,7 @@ namespace guiex
 		template <class T> T* GetInterfaceScriptWithTypeCheck();
 		template <class T> T* GetInterfaceConfigFileWithTypeCheck();
 		template <class T> T* GetInterfaceFileSysWithTypeCheck();
+		template <class T> T* GetInterfaceLocalizationLoaderWithTypeCheck();
 		template <class T> T* GetInterfaceMouseWithTypeCheck();
 		template <class T> T* GetInterfaceKeyboardWithTypeCheck();
 		template <class T> T* GetInterfaceSoundWithTypeCheck();
@@ -157,6 +160,7 @@ namespace guiex
 		IGUIInterfaceScript* m_pInterfaceScript;
 		IGUIInterfaceConfigFile* m_pInterfaceConfigFile;
 		IGUIInterfaceFileSys* m_pInterfaceFileSys;
+		IGUIInterfaceLocalizationLoader* m_pInterfaceLocalizationLoader;
 		IGUIInterfaceMouse* m_pInterfaceMouse;
 		IGUIInterfaceKeyboard* m_pInterfaceKeyboard;
 		IGUIInterfaceSound* m_pInterfaceSound;
@@ -189,6 +193,10 @@ namespace guiex
 	inline IGUIInterfaceFileSys* CGUIInterfaceManager::GetInterfaceFileSys()
 	{
 		return m_pInterfaceFileSys;
+	}
+	inline IGUIInterfaceLocalizationLoader* CGUIInterfaceManager::GetInterfaceLocalizationLoader()
+	{
+		return m_pInterfaceLocalizationLoader;
 	}
 	inline IGUIInterfaceMouse* CGUIInterfaceManager::GetInterfaceMouse()
 	{
@@ -257,6 +265,13 @@ namespace guiex
 		GUI_ASSERT( m_pInterfaceFileSys->GetModuleType() == T::StaticGetModuleType(), "wrong interface type" );
 		GUI_ASSERT( m_pInterfaceFileSys->GetModuleName() == T::StaticGetModuleName(), "wrong interface name" );
 		return static_cast<T*>( m_pInterfaceFileSys );
+	}
+	template<class T> 
+	inline T* CGUIInterfaceManager::GetInterfaceLocalizationLoaderWithTypeCheck()
+	{
+		GUI_ASSERT( m_pInterfaceLocalizationLoader->GetModuleType() == T::StaticGetModuleType(), "wrong interface type" );
+		GUI_ASSERT( m_pInterfaceLocalizationLoader->GetModuleName() == T::StaticGetModuleName(), "wrong interface name" );
+		return static_cast<T*>( m_pInterfaceLocalizationLoader );
 	}
 	template<class T> 
 	inline T* CGUIInterfaceManager::GetInterfaceMouseWithTypeCheck()

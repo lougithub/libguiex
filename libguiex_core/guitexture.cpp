@@ -9,10 +9,10 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core/guitexture.h>
-#include <libguiex_core/guitextureimp.h>
-#include <libguiex_core/guiinterfacemanager.h>
-#include <libguiex_core/guiinterfacerender.h>
+#include "guitexture.h"
+#include "guitextureimp.h"
+#include "guiinterfacemanager.h"
+#include "guiinterfacerender.h"
 
 
 //------------------------------------------------------------------------------
@@ -131,7 +131,7 @@ namespace guiex
 	/**
 	* @brief Loads the specified image file into the texture.  The texture is resized 
 	* as required to hold the image.
-	* @exception throw CGUIException if failed.
+	* @exception CGUIException::ThrowException if failed.
 	* @return -1 for failed
 	*/
 	int32 CGUITexture::CreateTextureByFile(const CGUIString& filename )
@@ -146,7 +146,7 @@ namespace guiex
 	* @brief Loads (copies) an image from memory into the texture.  The texture is resized as 
 	required to hold the image.
 	* @param ePixelFormat pixel format.
-	* @exception throw CGUIException if failed.
+	* @exception CGUIException::ThrowException if failed.
 	* @return -1 for failed
 	*/
 	int32 CGUITexture::CreateTextureByMemory(
