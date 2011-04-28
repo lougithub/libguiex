@@ -152,18 +152,18 @@ add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_script_wrapper projects/libguie
 add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_framework projects/libguiex_framework)
 
 #external library
-add_subdirectory( ${PROJECT_SOURCE_DIR}/external/tinyxml/cmakelist projects/tinyxml )
-add_subdirectory( ${PROJECT_SOURCE_DIR}/external/lua/cmakelist projects/lua )
-add_subdirectory( ${PROJECT_SOURCE_DIR}/external/Box2D/cmakelist projects/box2d )
-add_subdirectory( ${PROJECT_SOURCE_DIR}/external/freetype/cmakelist projects/freetype )
-add_subdirectory( ${PROJECT_SOURCE_DIR}/external/libogg/cmakelist projects/libogg )
-add_subdirectory( ${PROJECT_SOURCE_DIR}/external/libvorbis/cmakelist projects/libvorbis )
-add_subdirectory( ${PROJECT_SOURCE_DIR}/external/jsoncpp/cmakelist projects/jsoncpp)
+add_subdirectory( ${PROJECT_SOURCE_DIR}/external/tinyxml projects/tinyxml )
+add_subdirectory( ${PROJECT_SOURCE_DIR}/external/lua projects/lua )
+add_subdirectory( ${PROJECT_SOURCE_DIR}/external/Box2D projects/box2d )
+add_subdirectory( ${PROJECT_SOURCE_DIR}/external/freetype projects/freetype )
+add_subdirectory( ${PROJECT_SOURCE_DIR}/external/libogg projects/libogg )
+add_subdirectory( ${PROJECT_SOURCE_DIR}/external/libvorbis projects/libvorbis )
+add_subdirectory( ${PROJECT_SOURCE_DIR}/external/jsoncpp projects/jsoncpp)
 if( BUILD_PLATFORM_WIN32)
-	add_subdirectory( ${PROJECT_SOURCE_DIR}/external/zlib/cmakelist projects/zlib )
-	add_subdirectory( ${PROJECT_SOURCE_DIR}/external/glew/cmakelist projects/glew )
+	add_subdirectory( ${PROJECT_SOURCE_DIR}/external/zlib projects/zlib )
+	add_subdirectory( ${PROJECT_SOURCE_DIR}/external/glew projects/glew )
 elseif( BUILD_PLATFORM_MACOS )
-	add_subdirectory( ${PROJECT_SOURCE_DIR}/external/glew/cmakelist projects/glew )
+	add_subdirectory( ${PROJECT_SOURCE_DIR}/external/glew projects/glew )
 endif()
 
 #test

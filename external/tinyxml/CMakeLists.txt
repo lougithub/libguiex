@@ -2,15 +2,15 @@ set( target_name "tinyxml" )
 message( STATUS "generate library: " ${target_name} )
 
 set( src_list 
-    ../tinystr.cpp
-    ../tinyxml.cpp
-    ../tinyxmlerror.cpp
-    ../tinyxmlparser.cpp
+    tinystr.cpp
+    tinyxml.cpp
+    tinyxmlerror.cpp
+    tinyxmlparser.cpp
     )
 
 set( inc_list
-    ../tinystr.h
-    ../tinyxml.h
+    tinystr.h
+    tinyxml.h
     )
 			
 	
