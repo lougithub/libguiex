@@ -50,7 +50,7 @@ namespace guiex
 		//init system
 		if( GSystem != NULL )
 		{
-			throw CGUIException( "[CGUIFramework_Mac::InitializeSystem] GSystem has been created!" );
+			CGUIException::ThrowException( "[CGUIFramework_Mac::InitializeSystem] GSystem has been created!" );
 			return -1;
 		}
 		GSystem = new CGUISystem;
@@ -87,7 +87,7 @@ namespace guiex
 		//release system
 		if( GSystem == NULL )
 		{
-			throw CGUIException( "[CGUIFramework_Mac::ReleaseSystem] GSystem has been released!" );
+			CGUIException::ThrowException( "[CGUIFramework_Mac::ReleaseSystem] GSystem has been released!" );
 			return;
 		}
 		GSystem->Release();

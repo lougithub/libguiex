@@ -26,13 +26,15 @@ namespace guiex
 	{
 		if( m_bIsInitialized )
 		{
-			throw CGUIException("[CGUIFrameworkBase::~CGUIFrameworkBase]: CGUIFrameworkBase is deleted but not released" );
+			CGUIException::ThrowException("[CGUIFrameworkBase::~CGUIFrameworkBase]: CGUIFrameworkBase is deleted but not released" );
 		}
 	}
 	//------------------------------------------------------------------------------
 	int32 CGUIFrameworkBase::Initialize( const CGUIIntSize& rScreenSize, const char* pDataPath )
 	{
+#if GUI_USE_EXCEPTION
 		try
+#endif
 		{
 			if( m_bIsInitialized )
 			{
@@ -59,6 +61,7 @@ namespace guiex
 				return 0;
 			}
 		}		
+#if GUI_USE_EXCEPTION
 		catch (std::exception& rError)
 		{
 			OutputFatalError( rError.what() );
@@ -69,11 +72,14 @@ namespace guiex
 			OutputFatalError( "unknown error" );
 			return -1;
 		}
+#endif
 	}
 	//------------------------------------------------------------------------------ 
 	void CGUIFrameworkBase::Release()
 	{
+#if GUI_USE_EXCEPTION
 		try
+#endif
 		{
 			if( m_bIsInitialized )
 			{
@@ -82,6 +88,7 @@ namespace guiex
 				m_bIsInitialized = false;
 			}	
 		}
+#if GUI_USE_EXCEPTION
 		catch (std::exception& rError)
 		{
 			OutputFatalError( rError.what() );
@@ -90,16 +97,20 @@ namespace guiex
 		{
 			OutputFatalError( "unknown error" );
 		}
+#endif
 	}
 	//------------------------------------------------------------------------------
 	void CGUIFrameworkBase::Update( real fDeltaTime )
 	{
+#if GUI_USE_EXCEPTION
 		try
+#endif
 		{
 			PreUpdate( fDeltaTime );
 			UpdateSystem( fDeltaTime );
 			PostUpdate( fDeltaTime );
 		}
+#if GUI_USE_EXCEPTION
 		catch (std::exception& rError)
 		{
 			OutputFatalError( rError.what() );
@@ -108,6 +119,7 @@ namespace guiex
 		{
 			OutputFatalError( "unknown error" );
 		}
+#endif
 	}
 	//------------------------------------------------------------------------------
 	void CGUIFrameworkBase::UpdateSystem( real fDeltaTime )
@@ -127,12 +139,15 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIFrameworkBase::Render( )
 	{
+#if GUI_USE_EXCEPTION
 		try
+#endif
 		{
 			PreRender( );
 			GSystem->Render();
 			PostRender( );
 		}
+#if GUI_USE_EXCEPTION
 		catch (std::exception& rError)
 		{
 			OutputFatalError( rError.what() );
@@ -141,6 +156,7 @@ namespace guiex
 		{
 			OutputFatalError( "unknown error" );
 		}
+#endif
 	}
 	//------------------------------------------------------------------------------
 

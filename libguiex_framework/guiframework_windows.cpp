@@ -53,7 +53,7 @@ namespace guiex
 		//init system
 		if( GSystem != NULL )
 		{
-			throw CGUIException( "[CGUIFramework_Windows::InitializeSystem] GSystem has been created!" );
+			CGUIException::ThrowException( "[CGUIFramework_Windows::InitializeSystem] GSystem has been created!" );
 			return -1;
 		}
 		GSystem = new CGUISystem;
@@ -91,7 +91,7 @@ namespace guiex
 		//release system
 		if( GSystem == NULL )
 		{
-			throw CGUIException( "[CGUIFramework_Windows::ReleaseSystem] GSystem has been released!" );
+			CGUIException::ThrowException( "[CGUIFramework_Windows::ReleaseSystem] GSystem has been released!" );
 			return;
 		}
 		GSystem->Release();

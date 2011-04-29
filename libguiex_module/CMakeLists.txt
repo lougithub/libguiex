@@ -161,14 +161,14 @@ set( ${target_name}_render_opengl_SRCS
 	)
 source_group(render_opengl FILES ${${target_name}_render_opengl_SRCS} )
 
-#render_opengles
-set( ${target_name}_render_opengles_SRCS 
-	render_opengles/guirender_opengles.cpp
-	render_opengles/guirender_opengles.h
-	render_opengles/guitexture_opengles.cpp
-	render_opengles/guitexture_opengles.h
+#render_opengles_ios
+set( ${target_name}_render_opengles_ios_SRCS 
+	render_opengles_ios/guirender_opengles_ios.cpp
+	render_opengles_ios/guirender_opengles_ios.h
+	render_opengles_ios/guitexture_opengles_ios.cpp
+	render_opengles_ios/guitexture_opengles_ios.h
 	)
-source_group(render_opengles FILES ${${target_name}_render_opengles_SRCS} )
+source_group(render_opengles_ios FILES ${${target_name}_render_opengles_ios_SRCS} )
 
 #stringconv_winapi
 set( ${target_name}_stringconv_winapi_SRCS 
@@ -228,7 +228,7 @@ elseif( BUILD_PLATFORM_IOS )
 		${${target_name}_font_dummy_SRCS}
 		${${target_name}_ime_dummy_SRCS}
 		${${target_name}_imageloader_tga_SRCS}
-		${${target_name}_render_opengles_SRCS}
+		${${target_name}_render_opengles_ios_SRCS}
 		${${target_name}_render_opengl_base_SRCS}
 		${${target_name}_stringconv_iconv_SRCS}
 		${${target_name}_stringconv_cocoa_SRCS}

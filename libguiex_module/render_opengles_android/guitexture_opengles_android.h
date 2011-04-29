@@ -1,12 +1,12 @@
 /** 
-* @file guitexture_opengles_ios.h
+* @file guitexture_opengles.h
 * @brief use opengl to render gui
 * @author ken
-* @date 2010-11-09
+* @date 2011-04-29
 */
 
-#ifndef __GUI_TEXTURE_OPENGLES_IOS_20101109_H__
-#define __GUI_TEXTURE_OPENGLES_IOS_20101109_H__
+#ifndef __GUI_TEXTURE_OPENGLES_ANDROID_20110429_H__
+#define __GUI_TEXTURE_OPENGLES_ANDROID_20110429_H__
 
 //============================================================================//
 // include
@@ -28,22 +28,22 @@ namespace guiex
 namespace guiex
 {
 
-	class GUIEXPORT CGUITexture_opengles_ios : public CGUITexture_opengl_base
+	class GUIEXPORT CGUITexture_opengles_android : public CGUITexture_opengl_base
 	{
 	public:
 		/**
 		* @brief destructor
 		*/
-		virtual ~CGUITexture_opengles_ios();
+		virtual ~CGUITexture_opengles_android();
 
 	protected:
-		friend class IGUIRender_opengles_ios;
+		friend class IGUIRender_opengles_android;
 		/**
 		* @brief constructor
 		*/
-		CGUITexture_opengles_ios(IGUIInterfaceRender* pRender);
+		CGUITexture_opengles_android(IGUIInterfaceRender* pRender);
 	};
 
 }//namespace guiex
 
-#endif //__GUI_TEXTURE_OPENGLES_IOS_20101109_H__
+#endif //__GUI_TEXTURE_OPENGLES_ANDROID_20110429_H__

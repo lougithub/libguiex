@@ -31,8 +31,10 @@
 #include <OpenGL/gl.h>
 #include <OpenGL/glu.h>
 #elif defined(GUIEX_TARGET_ANDROID)
-#include <GLES2/gl2.h>
-#include <GLES2/gl2ext.h>
+#include <GLES/gl.h>
+#include <GLES/glext.h>
+#else
+#error "unknown target"	
 #endif
 
 

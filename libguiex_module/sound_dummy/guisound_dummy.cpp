@@ -94,19 +94,24 @@ namespace guiex
 
 	}
 	//------------------------------------------------------------------------------
-		void IGUISound_dummy::StopMusic( CGUIMusicData* pSoundData )
+	void IGUISound_dummy::StopMusic(  )
 	{
 
 	}
 	//------------------------------------------------------------------------------
-	void IGUISound_dummy::PauseMusic( CGUIMusicData* pSoundData )
+	void IGUISound_dummy::PauseMusic(  )
 	{
 
 	}
 	//------------------------------------------------------------------------------
-	bool IGUISound_dummy::IsPlayingMusic( CGUIMusicData* pSoundData )
+	bool IGUISound_dummy::IsPlayingMusic(  )
 	{
 		return false;
+	}
+	//------------------------------------------------------------------------------
+	CGUIMusicData* IGUISound_dummy::GetMusicPlaying()
+	{
+		return NULL;
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

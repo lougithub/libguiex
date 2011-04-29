@@ -27,6 +27,11 @@
 #elif defined(GUIEX_TARGET_MACOS)
 #include <OpenGL/gl.h>
 #include <OpenGL/glu.h>
+#elif defined(GUIEX_TARGET_ANDROID)
+#include <GLES/gl.h>
+#include <GLES/glext.h>
+#else
+#error "unknown target"	
 #endif
 
 //============================================================================//

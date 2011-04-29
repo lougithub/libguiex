@@ -1,14 +1,14 @@
 /** 
-* @file guitexture_opengles_ios.cpp
+* @file guitexture_opengles_android.cpp
 * @brief use opengl to render gui
 * @author ken
-* @date 2010-11-09
+* @date 2011-04-29
 */
 
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_module/render_opengles_ios/guitexture_opengles_ios.h>
+#include <libguiex_module/render_opengles_android/guitexture_opengles_android.h>
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guidatachunk.h>
 #include <libguiex_core/guiinterfacemanager.h>
@@ -23,12 +23,12 @@ namespace guiex
 {
 
 	//------------------------------------------------------------------------------
-	CGUITexture_opengles_ios::CGUITexture_opengles_ios(IGUIInterfaceRender* pRender)
+	CGUITexture_opengles_android::CGUITexture_opengles_android(IGUIInterfaceRender* pRender)
 		:CGUITexture_opengl_base(pRender)
 	{
 	}
 	//------------------------------------------------------------------------------
-	CGUITexture_opengles_ios::~CGUITexture_opengles_ios()
+	CGUITexture_opengles_android::~CGUITexture_opengles_android()
 	{
 
 	}

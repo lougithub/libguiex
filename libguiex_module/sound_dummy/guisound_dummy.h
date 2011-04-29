@@ -38,25 +38,16 @@ namespace guiex
 		virtual bool IsPlayingEffect( CGUISoundData* pSoundData );
 
 		virtual void PlayMusic( CGUIMusicData* pSoundData );
-		virtual void StopMusic( CGUIMusicData* pSoundData );
-		virtual void PauseMusic( CGUIMusicData* pSoundData );
-		virtual bool IsPlayingMusic( CGUIMusicData* pSoundData );
+		virtual void StopMusic(  );
+		virtual void PauseMusic(  );
+		virtual bool IsPlayingMusic(  );
+		virtual CGUIMusicData* GetMusicPlaying();
 
 		virtual void DeleteSelf();
 
 	protected:
-		/** 
-		 * @brief initialize sound
-		 * @return 0 for success
-		 */
 		virtual int DoInitialize(void* );
-		
-		/** 
-		 * @brief destroy sound 
-		 * @return 0 for success
-		 */
 		virtual void DoDestroy();
-		
 	
 	public:
 		static const char* StaticGetModuleName();
