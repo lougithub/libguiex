@@ -1,5 +1,5 @@
 LOCAL_PATH := $(call my-dir)
-GUIEX_Root := $(LOCAL_PATH)/../../
+GUIEX_Root := $(LOCAL_PATH)/../..
 
 include $(CLEAR_VARS)
 

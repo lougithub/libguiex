@@ -1,4 +1,5 @@
 APP_STL := stlport_static
+APP_PLATFORM := android-8
 APP_MODULES := \
 	libguiex_core \
 	libguiex_widget \
