@@ -60,7 +60,7 @@ namespace guiex
 		/**
 		* @brief Loads the specified image file into the texture.  The texture is resized 
 		* as required to hold the image.
-		* @exception throw CGUIException if failed.
+		* @exception CGUIException::ThrowException if failed.
 		* @return -1 for failed
 		*/
 		virtual int32 LoadFromFile(const CGUIString& filename );
@@ -68,7 +68,7 @@ namespace guiex
 		/**
 		* @brief Loads (copies) an image from memory into the texture.  The texture is resized as 
 		required to hold the image.
-		* @exception throw CGUIException if failed.
+		* @exception CGUIException::ThrowException if failed.
 		* @return -1 for failed
 		*/
 		virtual int32 LoadFromMemory(const void* buffPtr, int32 buffWidth, int32 buffHeight,EGuiPixelFormat ePixelFormat );

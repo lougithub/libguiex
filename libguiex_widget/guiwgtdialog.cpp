@@ -10,7 +10,7 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_widget/guiwgtdialog.h>
+#include "guiwgtdialog.h"
 #include <libguiex_core/guiinterfacerender.h>
 #include <libguiex_core/guisystem.h>
 #include <libguiex_core/guiexception.h>

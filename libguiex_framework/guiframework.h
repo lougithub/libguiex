@@ -34,8 +34,14 @@ namespace guiex
 {
 	typedef CGUIFramework_Mac CGUIFramework;
 }
+#elif defined(GUIEX_TARGET_ANDROID)
+#include "guiframework_android.h"
+namespace guiex
+{
+	typedef CGUIFramework_Android CGUIFramework;
+}
 #else
-#	error "unknown platform"
+#	error "unknown target"
 #endif
 
 #endif	//__GUI_FRAMEWORK_20101210_H__

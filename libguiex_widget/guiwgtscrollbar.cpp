@@ -8,8 +8,8 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_widget/guiwgtbutton.h>
-#include <libguiex_widget/guiwgtscrollbar.h>
+#include "guiwgtbutton.h"
+#include "guiwgtscrollbar.h"
 #include <libguiex_core/guiinterfacerender.h>
 #include <libguiex_core/guisystem.h>
 #include <libguiex_core/guistringconvertor.h>
@@ -140,7 +140,7 @@ namespace guiex
 			m_pScrollbar->GenerateNotifyEvent();
 			break;
 		default:
-			throw CGUIException("[CGUIWgtScrollbarArrow::OnMouseLeftDown]: unknown scrollbar arrow type!");
+			CGUIException::ThrowException("[CGUIWgtScrollbarArrow::OnMouseLeftDown]: unknown scrollbar arrow type!");
 			break;
 		}
 
@@ -826,7 +826,7 @@ namespace guiex
 		//	}
 		//	else
 		//	{
-		//		throw CGUIException("[CGUIWgtScrollbar::ProcessProperty]: unknown scrollbar type <%s>!", pProperty->GetValue().c_str());
+		//		CGUIException::ThrowException("[CGUIWgtScrollbar::ProcessProperty]: unknown scrollbar type <%s>!", pProperty->GetValue().c_str());
 		//	}
 		//}
 		//else if( pProperty->GetName() == "AUTO_POSITION" && pProperty->GetType()=="BOOL")

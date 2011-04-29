@@ -16,6 +16,8 @@
 
 #if GUIEX_PLATFORM_WIN32
 #include <windows.h>
+#elif GUIEX_PLATFORM_LINUX
+#include <ctype.h>
 #endif
 //============================================================================//
 // function
@@ -55,7 +57,7 @@ namespace guiex
 			//load ogg file
 			if( LoadOggFile( strFullPath ) != true)
 			{
-				throw CGUIException("[CGUISoundData_openal::DoLoad]: failed to load ogg file <%s>!", m_strPath.c_str());
+				CGUIException::ThrowException("[CGUISoundData_openal::DoLoad]: failed to load ogg file <%s>!", m_strPath.c_str());
 				return -1;
 			}
 		}
@@ -65,14 +67,14 @@ namespace guiex
 			//load wav file
 			if( LoadWavFile( strFullPath ) != true)
 			{
-				throw CGUIException("[CGUISoundData_openal::DoLoad]: failed to load wav file <%s>!", m_strPath.c_str());
+				CGUIException::ThrowException("[CGUISoundData_openal::DoLoad]: failed to load wav file <%s>!", m_strPath.c_str());
 				return -1;
 			}
 		}	
 #endif
 		else
 		{
-			throw CGUIException("[CGUISoundData_openal::DoLoad]: doesn't support the sound type <%s>!", strExt.c_str());
+			CGUIException::ThrowException("[CGUISoundData_openal::DoLoad]: doesn't support the sound type <%s>!", strExt.c_str());
 			return -1;
 		}
 

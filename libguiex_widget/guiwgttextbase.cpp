@@ -9,7 +9,7 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_widget/guiwgttextbase.h>
+#include "guiwgttextbase.h"
 #include <libguiex_core/guiinterfacerender.h>
 #include <libguiex_core/guiinterfacemanager.h>
 #include <libguiex_core/guiinterfacefont.h>

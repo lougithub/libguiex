@@ -45,14 +45,14 @@ namespace guiex
 		IGUIFont_ft2* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFontWithTypeCheck<IGUIFont_ft2>();
 		if( !pFont )
 		{
-			throw CGUIException( "[CGUIFontData::DoLoad]: failed to get font interface" );
+			CGUIException::ThrowException( "[CGUIFontData::DoLoad]: failed to get font interface" );
 		}
 
 #if 1
 		FT_Error ret = FT_New_Face( pFont->GetFTLibrary( ), (GSystem->GetDataPath() + rFullPath).c_str(), 0, &m_aFtFace );
 		if(  ret != 0 )
 		{
-			throw CGUIException(
+			CGUIException::ThrowException(
 				"[CGUIFontData_ft2::DoLoad]:Could not get font face from file <%s>!",
 				rFullPath.c_str());
 		}
@@ -61,13 +61,13 @@ namespace guiex
 		CGUIDataChunk aDataChunk;
 		if( 0 != pFileSys->ReadFile( rFullPath, aDataChunk ))
 		{
-			throw CGUIException("[IGUIFont_ft2::LoadFontFace]:Could not get font face from file <%s>!",
+			CGUIException::ThrowException("[IGUIFont_ft2::LoadFontFace]:Could not get font face from file <%s>!",
 				rFullPath.c_str());
 		}
 		FT_Error ret = FT_New_Memory_Face( pFont->GetFTLibrary( ), aDataChunk.GetDataPtr(),aDataChunk.GetSize(), 0, &m_aFtFace );
 		if(  ret != 0 )
 		{
-			throw CGUIException("[IGUIFont_ft2::LoadFontFace]:Could not get font face from file <%s>!",
+			CGUIException::ThrowException("[IGUIFont_ft2::LoadFontFace]:Could not get font face from file <%s>!",
 				rFullPath.c_str());
 		}
 #endif

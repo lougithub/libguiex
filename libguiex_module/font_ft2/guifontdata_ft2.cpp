@@ -121,25 +121,25 @@ namespace guiex
 		if( FT_Set_Char_Size( pFontFace, uFontSize << 6, uFontSize << 6, 96, 96) )
 #endif
 		{
-			throw CGUIException( "[IGUIFont_ft2::LoadFontFace]:Could not set char size!");
+			CGUIException::ThrowException( "[IGUIFont_ft2::LoadFontFace]:Could not set char size!");
 		}
 		//load this font
 #if 0
 		if( FT_Load_Char( pFontFace, charCode, FT_LOAD_RENDER ))
 		{
-			throw CGUIException("[CGUIFontData_ft2::LoadCharData]:Failed to load char, the code is <%x>!", charCode );
+			CGUIException::ThrowException("[CGUIFontData_ft2::LoadCharData]:Failed to load char, the code is <%x>!", charCode );
 		}
 #else
 		uint32 uGlyphIdx = FT_Get_Char_Index( pFontFace, charCode );
 
 		if( FT_Load_Glyph( pFontFace, uGlyphIdx, /*FT_LOAD_DEFAULT*/FT_LOAD_RENDER ))
 		{
-			throw CGUIException("[CGUIFontData_ft2::LoadCharData]:Failed to load glyph, the code is <%x>!", charCode );
+			CGUIException::ThrowException("[CGUIFontData_ft2::LoadCharData]:Failed to load glyph, the code is <%x>!", charCode );
 		}
 
 		if( FT_Render_Glyph( pFontFace->glyph, FT_RENDER_MODE_NORMAL ))
 		{
-			throw CGUIException("[CGUIFontData_ft2::LoadCharData]:Failed to render glyph, the code is <%x>!", charCode );
+			CGUIException::ThrowException("[CGUIFontData_ft2::LoadCharData]:Failed to render glyph, the code is <%x>!", charCode );
 		}
 #endif
 

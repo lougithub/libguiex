@@ -36,17 +36,6 @@ set( ${target_name}_sound_dummy_SRCS
 	)
 source_group(sound_dummy FILES ${${target_name}_sound_dummy_SRCS} )
 
-#sound_cocoa
-set( ${target_name}_sound_cocoa_SRCS 
-	sound_cocoa/guisound_cocoa.mm
-	sound_cocoa/guisound_cocoa.h
-	sound_cocoa/guisounddata_cocoa.mm
-	sound_cocoa/guisounddata_cocoa.h	
-	sound_cocoa/guimusicdata_cocoa.cpp
-	sound_cocoa/guimusicdata_cocoa.h		
-	)
-source_group(sound_cocoa FILES ${${target_name}_sound_cocoa_SRCS} )
-
 #sound_openal
 set( ${target_name}_sound_openal_SRCS 
 	sound_openal/guisound_openal.cpp

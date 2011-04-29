@@ -23,6 +23,15 @@
 #include <sys/param.h>  
 #include <sys/types.h>  
 #include <unistd.h> 
+#elif defined(GUIEX_PLATFORM_LINUX)
+#include <stdio.h>  
+#include <dirent.h>  
+#include <string.h>  
+#include <sys/stat.h>  
+#include <sys/param.h>  
+#include <sys/types.h>  
+#include <unistd.h> 
+#include <libgen.h> 
 #else
 #error "unknown platform"	
 #endif
@@ -202,6 +211,51 @@ namespace guiex
 		chdir("..");
 		closedir(dp); 
 	}
+#elif defined(GUIEX_PLATFORM_LINUX)
+void IGUIFileSys_stdio::FindFiles( const CGUIString& rPath,
+								  const CGUIString& rSuffix,
+								  std::vector<CGUIString>& rArrayStrings )
+{	
+	DIR *dp = NULL; 
+	struct dirent *entry = NULL; 
+	struct stat statbuf; 
+
+	CGUIString	strFullPath = GSystem->GetDataPath() + rPath;
+	if((dp = opendir(strFullPath.c_str())) == NULL) 
+	{  
+		return; 
+	}  
+	chdir(strFullPath.c_str());
+	while((entry = readdir(dp)) != NULL)
+	{ 
+		stat(entry->d_name,&statbuf); 
+		if(S_ISDIR(statbuf.st_mode)) 
+		{ 
+			if(strcmp( ".",entry->d_name) == 0 ||strcmp( "..",entry->d_name) == 0) 
+			{
+				continue; 
+			}
+
+			FindFiles( rPath + entry->d_name + "/", rSuffix, rArrayStrings );
+		}
+		else
+		{ 
+			//is a file 
+			CGUIString strFilename(entry->d_name);
+			if( strFilename.size() > rSuffix.size() )
+			{
+				if( strFilename.rfind( rSuffix ) == strFilename.size() - rSuffix.size() )
+				{
+					//is a file
+					CGUIString strResult = rPath + entry->d_name;
+					rArrayStrings.push_back(strResult);	
+				}
+			}
+		} 
+	} 
+	chdir("..");
+	closedir(dp); 
+}
 #else
 #	error "unknown platform"	
 #endif
@@ -219,6 +273,13 @@ namespace guiex
 		CGUIString aBaseName(basename( pBuf));
 		delete[] pBuf;
 		return aBaseName;
+		return CGUIString( fname ) + fext;
+#elif defined( GUIEX_PLATFORM_LINUX )
+		char* pBuf = new char[rPath.size()+1];
+		strcpy( pBuf, rPath.c_str() );
+		CGUIString aBaseName(basename( pBuf));
+		delete[] pBuf;
+		return aBaseName;
 #else
 #	error "unknown platform"		
 #endif
@@ -231,6 +292,13 @@ namespace guiex
 		_splitpath( rPath.c_str(), NULL, fdir, NULL, NULL ); 
 		return CGUIString( fdir );
 #elif defined( GUIEX_PLATFORM_MAC )
+		char* pBuf = new char[rPath.size()+1];
+		strcpy( pBuf, rPath.c_str() );
+		CGUIString aDirName(dirname( pBuf));
+		aDirName += "/";
+		delete[] pBuf;
+		return aDirName;
+#elif defined( GUIEX_PLATFORM_LINUX )
 		char* pBuf = new char[rPath.size()+1];
 		strcpy( pBuf, rPath.c_str() );
 		CGUIString aDirName(dirname( pBuf));

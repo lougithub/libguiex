@@ -51,6 +51,7 @@ source_group( static FILES ${${target_name}_static_SRCS} )
 set( ${target_name}_utility_SRCS 
         guiwgtgeneratewidgets.cpp
         guiwgtgeneratewidgets.h
+        guiwgt.h
 	)
 source_group( utility FILES ${${target_name}_utility_SRCS} )
 

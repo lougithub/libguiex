@@ -9,8 +9,8 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_widget/guiwgtscrollbarcontainer.h>
-#include <libguiex_widget/guiwgtscrollbar.h>
+#include "guiwgtscrollbarcontainer.h"
+#include "guiwgtscrollbar.h"
 #include <libguiex_core/guiinterfacerender.h>
 #include <libguiex_core/guisystem.h>
 #include <libguiex_core/guiwidgetmanager.h>

@@ -72,7 +72,7 @@ namespace guiex
 		//initialize library
 		if ( FT_Init_FreeType( &m_pFtLib ))
 		{
-			throw CGUIException("[IGUIFont_ft2::DoInitialize]:Could not init FreeType library!");
+			CGUIException::ThrowException("[IGUIFont_ft2::DoInitialize]:Could not init FreeType library!");
 		}
 
 		//init datas
@@ -110,20 +110,20 @@ namespace guiex
 		CGUIFontData_ft2* pFontData = m_arrayFontDatas[uFontID];
 		if( !pFontData )
 		{
-			throw CGUIException("[IGUIFont_ft2::GetKerningGap]:The Font which index is <%d> hasn't been loaded!", uFontID );
+			CGUIException::ThrowException("[IGUIFont_ft2::GetKerningGap]:The Font which index is <%d> hasn't been loaded!", uFontID );
 		}
 		pFontData->Load();
 
 		//set size
 		if( FT_Set_Pixel_Sizes( pFontData->GetFontFace(), nSize, nSize) )
 		{
-			throw CGUIException("[IGUIFont_ft2::GetKerningGap]:Failed to set pixel size!");
+			CGUIException::ThrowException("[IGUIFont_ft2::GetKerningGap]:Failed to set pixel size!");
 		}
 
 		FT_Vector  kerning;
 		if( FT_Get_Kerning( pFontData->GetFontFace(), pLeftData->m_nGlyphIdx,pRightData->m_nGlyphIdx,FT_KERNING_DEFAULT , &kerning ))
 		{
-			throw CGUIException("[IGUIFont_ft2::GetKerningGap]:Failed to get kerning!");
+			CGUIException::ThrowException("[IGUIFont_ft2::GetKerningGap]:Failed to get kerning!");
 		}
 
 		return kerning.x>>6;
@@ -317,7 +317,7 @@ namespace guiex
 		if( rFontInfo.m_uID >= m_arrayFontDatas.size() ||
 			m_arrayFontDatas[rFontInfo.m_uID] != NULL )
 		{
-			throw CGUIException("[IGUIFont_ft2::CreateFontData]: invalid font id <%d>", rFontInfo.m_uID );
+			CGUIException::ThrowException("[IGUIFont_ft2::CreateFontData]: invalid font id <%d>", rFontInfo.m_uID );
 			return NULL;
 		}
 
@@ -349,7 +349,7 @@ namespace guiex
 		CGUIFontData_ft2* pFontData = m_arrayFontDatas[pData->GetFontID()];
 		if( pFontData != pData )
 		{
-			throw CGUIException(
+			CGUIException::ThrowException(
 				"[IGUIFont_ft2::DestroyFontData]: the font<%s:%s> doesn't existing", 
 				pData->GetName().c_str(),
 				pData->GetSceneName().c_str());
@@ -360,7 +360,7 @@ namespace guiex
 		TMapFontFace::iterator itor = m_mapFontFace.find( pData->GetFontPath() );
 		if( itor == m_mapFontFace.end() )
 		{
-			throw CGUIException(
+			CGUIException::ThrowException(
 				"[IGUIFont_ft2::DestroyFontData]: failed to font font face by path <%s>", 
 				pData->GetFontPath().c_str());
 			return;
@@ -384,7 +384,7 @@ namespace guiex
 		if( uFontID >= m_arrayFontDatas.size() ||
 			m_arrayFontDatas[uFontID] == NULL )
 		{
-			throw CGUIException("[IGUIFont_ft2::GetFontData]: invalid font id <%d>", uFontID );
+			CGUIException::ThrowException("[IGUIFont_ft2::GetFontData]: invalid font id <%d>", uFontID );
 			return NULL;
 		}
 		return m_arrayFontDatas[uFontID];

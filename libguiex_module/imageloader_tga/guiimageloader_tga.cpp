@@ -114,7 +114,7 @@ namespace guiex
 		}
 		else															
 		{
-			throw CGUIException("[IGUIImageLoader_tga::LoadFromMemory] - Failed to load tga image!");
+			CGUIException::ThrowException("[IGUIImageLoader_tga::LoadFromMemory] - Failed to load tga image!");
 			return NULL;
 		}
 	}
@@ -130,7 +130,7 @@ namespace guiex
 		uint32 uHeadSize = sizeof(tga.header);
 		if( nSize < uHeadSize )
 		{
-			throw CGUIException("[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
+			CGUIException::ThrowException("[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
 			return NULL;
 		}
 		memcpy( tga.header, pFileData, uHeadSize );
@@ -143,7 +143,7 @@ namespace guiex
 
 		if(tga.Width <= 0 || tga.Height <= 0)
 		{
-			throw CGUIException("[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
+			CGUIException::ThrowException("[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
 			return NULL;
 		}
 
@@ -159,7 +159,7 @@ namespace guiex
 			tga.type = GUI_PF_ALPHA_8;
 			break;
 		default:
-			throw CGUIException("[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
+			CGUIException::ThrowException("[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
 			return NULL;
 		}
 
@@ -167,7 +167,7 @@ namespace guiex
 		tga.imageSize = (tga.bytesPerPixel * tga.Width * tga.Height);	
 		if( nSize < tga.imageSize )
 		{
-			throw CGUIException("[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
+			CGUIException::ThrowException("[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
 			return NULL;
 		}
 		//create image data
@@ -193,7 +193,7 @@ namespace guiex
 		uint32 uHeadSize = sizeof(tga.header);
 		if( nSize < uHeadSize )
 		{
-			throw CGUIException("[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
+			CGUIException::ThrowException("[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
 			return NULL;
 		}
 		memcpy( tga.header, pFileData, uHeadSize );
@@ -206,7 +206,7 @@ namespace guiex
 
 		if((tga.Width <= 0) || (tga.Height <= 0) || ((tga.Bpp != 24) && (tga.Bpp !=32)))
 		{
-			throw CGUIException("[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
+			CGUIException::ThrowException("[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
 			return NULL;
 		}
 
@@ -235,7 +235,7 @@ namespace guiex
 			{
 				delete pImageData;
 				free( colorbuffer );
-				throw CGUIException("[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
+				CGUIException::ThrowException("[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
 				return NULL;
 			}
 			memcpy( &chunkheader, pFileData, uChunkHeadSize );
@@ -251,7 +251,7 @@ namespace guiex
 					{
 						delete pImageData;
 						free( colorbuffer );
-						throw CGUIException("[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
+						CGUIException::ThrowException("[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
 						return NULL;
 					}
 					memcpy( colorbuffer, pFileData, tga.bytesPerPixel );
@@ -275,7 +275,7 @@ namespace guiex
 					{
 						delete pImageData;
 						free( colorbuffer );
-						throw CGUIException("[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
+						CGUIException::ThrowException("[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
 						return NULL;													// Return failed
 					}
 				}
@@ -287,7 +287,7 @@ namespace guiex
 				{
 					delete pImageData;
 					free( colorbuffer );
-					throw CGUIException("[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
+					CGUIException::ThrowException("[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
 					return NULL;
 				}
 				memcpy( colorbuffer, pFileData, tga.bytesPerPixel );
@@ -312,7 +312,7 @@ namespace guiex
 					{
 						delete pImageData;
 						free( colorbuffer );
-						throw CGUIException("[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
+						CGUIException::ThrowException("[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
 						return NULL;													// Return failed
 					}
 				}

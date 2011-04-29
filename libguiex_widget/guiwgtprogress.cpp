@@ -9,7 +9,7 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_widget/guiwgtprogress.h>
+#include "guiwgtprogress.h"
 #include <libguiex_core/guiinterfacerender.h>
 #include <libguiex_core/guisystem.h>
 #include <libguiex_core/guiexception.h>
@@ -51,11 +51,11 @@ namespace guiex
 
 		if( !m_pImageBg )
 		{
-			throw CGUIException("[CGUIWgtProgress::OnCreate]: the image <BACKGROUND_IMG> hasn't been found!");
+			CGUIException::ThrowException("[CGUIWgtProgress::OnCreate]: the image <BACKGROUND_IMG> hasn't been found!");
 		}
 		if( !m_pImageFg )
 		{
-			throw CGUIException("[CGUIWgtProgress::OnCreate]: the image <FOREGROUND_IMG> hasn't been found!");
+			CGUIException::ThrowException("[CGUIWgtProgress::OnCreate]: the image <FOREGROUND_IMG> hasn't been found!");
 		}
 	}
 	//------------------------------------------------------------------------------

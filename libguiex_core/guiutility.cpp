@@ -13,6 +13,8 @@
 #include <string.h>
 #if defined(GUIEX_PLATFORM_WIN32)
 #include <windows.h>
+#else
+#include <ctype.h>
 #endif
 #include <stdio.h>
 #include <locale.h>
@@ -23,11 +25,8 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	char * CGUIUtility::timestamp (char date_and_time[],
-		int32 date_and_timelen,
-		int32 return_pointer_to_first_digit)
+	char * CGUIUtility::timestamp (char date_and_time[],int32 date_and_timelen,int32 return_pointer_to_first_digit)
 	{
-
 		if (date_and_timelen < 35)
 		{
 			return NULL;
@@ -82,14 +81,14 @@ namespace guiex
 		char timebuf[40];
 		now=(long)time((time_t *)0);
 		ctime_r (&now,timebuf);
-		
+
 		// date_and_timelen > sizeof timebuf!
 		strncpy (date_and_time,timebuf,date_and_timelen);
 		char yeartmp[5];
 		strncpy (yeartmp,&date_and_time[20],5);
 		char timetmp[9];
 		strncpy (timetmp,&date_and_time[11],9);
-		sprintf (&date_and_time[11], ("%s %s.%06ld"),yeartmp,timetmp,cur_time.usec ());
+		sprintf (&date_and_time[11], ("%s %s.%06ld"),yeartmp,timetmp,now );
 		date_and_time[33] = '\0';
 		return &date_and_time[15 + (return_pointer_to_first_digit != 0)];
 #elif defined( GUIEX_PLATFORM_MAC)
@@ -113,10 +112,7 @@ namespace guiex
 		//------------------------------------------------------------------------------
 	}
 	//------------------------------------------------------------------------------
-	size_t CGUIUtility::format_hexdump (const char *buffer,
-		size_t size,
-		char *obuf,
-		size_t obuf_sz)
+	size_t CGUIUtility::format_hexdump (const char *buffer,size_t size,char *obuf,size_t obuf_sz)
 	{
 		unsigned char c;
 		char textver[16 + 1];

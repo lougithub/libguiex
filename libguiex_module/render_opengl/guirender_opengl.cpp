@@ -62,7 +62,7 @@ namespace guiex
 		if (GLEW_OK != err)
 		{
 			/* Problem: glewInit failed, something is seriously wrong. */
-			throw CGUIException("[IGUIRender_opengl::DoInitialize]: failed to init glew: %s", glewGetErrorString(err));
+			CGUIException::ThrowException("[IGUIRender_opengl::DoInitialize]: failed to init glew: %s", glewGetErrorString(err));
 			return -1;
 		}
 

@@ -41,7 +41,7 @@
 #	include "guicollistheader.h"
 #	include "guicollistheadersegment.h"
 #	include "guicollisttextitem.h"
-#elif defined(GUIEX_PLATFORM_MAC)
+#else
 #	include "guiwgttag.h"
 #	include "guiwgtanimation.h" 
 #	include "guiwgtscrollbar.h"
@@ -55,8 +55,6 @@
 #	include "guiwgtcheckbutton.h"
 #	include "guiwgtradiobutton.h"
 #	include "guiwgtemptynode.h"
-#else
-#	error "unknown platform"	
 #endif
 
 

@@ -10,7 +10,7 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_widget/guiwgttag.h>
+#include "guiwgttag.h"
 #include <libguiex_core/guiinterfacerender.h>
 #include <libguiex_core/guisystem.h>
 #include <libguiex_core/guiexception.h>
@@ -67,7 +67,7 @@ namespace guiex
 #if GUI_DEBUG
 		if( GetChild() )
 		{
-			throw CGUIException( "[CGUIWgtTag::Update]: CGUIWgtTag shouldn't has any child!" );
+			CGUIException::ThrowException( "[CGUIWgtTag::Update]: CGUIWgtTag shouldn't has any child!" );
 		}
 #endif
 	}

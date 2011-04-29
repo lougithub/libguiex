@@ -75,7 +75,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	int32	CGUITimer::operator-(const CGUITimer& rTimer) const 
+	int32 CGUITimer::operator-(const CGUITimer& rTimer) const 
 	{
 		LONGLONG newTicks = (m_aTimeCounter.QuadPart - rTimer.m_aTimeCounter.QuadPart);
 		// Scale by 1000 in order to get millisecond precision
@@ -94,7 +94,7 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	void	CGUITimer::Assign( const CGUITimer& rTimer )
+	void CGUITimer::Assign( const CGUITimer& rTimer )
 	{
 		if( this != &rTimer)
 		{
@@ -111,17 +111,17 @@ namespace guiex
 		return *this;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUITimer::UpdateTime()
+	void CGUITimer::UpdateTime()
 	{
 		gettimeofday(&m_aTimeVal,NULL);
 	}
 	//------------------------------------------------------------------------------
-	int32	CGUITimer::operator-(const CGUITimer& rTimer)
+	int32 CGUITimer::operator-(const CGUITimer& rTimer) const
 	{
-		int32 nMicroseconds = 1000 * ( m_aTimeVal.tv_sec - rTimer.m_aTimeVal.tv_sec ) 
+		int32 nMillSeconds = 1000 * ( m_aTimeVal.tv_sec - rTimer.m_aTimeVal.tv_sec ) 
 			+ (m_aTimeVal.tv_usec - rTimer.m_aTimeVal.tv_usec)/1000;
 
-		return nMicroseconds;
+		return nMillSeconds;
 	}
 #elif defined(GUIEX_PLATFORM_MAC)
 	//------------------------------------------------------------------------------
@@ -134,7 +134,7 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	void	CGUITimer::Assign( const CGUITimer& rTimer )
+	void CGUITimer::Assign( const CGUITimer& rTimer )
 	{
 		if( this != &rTimer)
 		{
@@ -151,17 +151,17 @@ namespace guiex
 		return *this;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUITimer::UpdateTime()
+	void CGUITimer::UpdateTime()
 	{
 		gettimeofday(&m_aTimeVal,NULL);
 	}
 	//------------------------------------------------------------------------------
-	int32	CGUITimer::operator-(const CGUITimer& rTimer) const
+	int32 CGUITimer::operator-(const CGUITimer& rTimer) const
 	{
-		int32 nMicroseconds = 1000 * ( m_aTimeVal.tv_sec - rTimer.m_aTimeVal.tv_sec ) 
+		int32 nMillSeconds = 1000 * ( m_aTimeVal.tv_sec - rTimer.m_aTimeVal.tv_sec ) 
 			+ (m_aTimeVal.tv_usec - rTimer.m_aTimeVal.tv_usec)/1000;
 
-		return nMicroseconds;
+		return nMillSeconds;
 	}
 #else
 #	error "unknown platform"

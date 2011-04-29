@@ -30,6 +30,9 @@
 #elif defined(GUIEX_TARGET_MACOS)
 #include <OpenGL/gl.h>
 #include <OpenGL/glu.h>
+#elif defined(GUIEX_TARGET_ANDROID)
+#include <GLES2/gl2.h>
+#include <GLES2/gl2ext.h>
 #endif
 
 
@@ -47,25 +50,25 @@ namespace guiex
 			switch( errorcode )
 			{
 			case GL_INVALID_ENUM:
-				throw CGUIException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_INVALID_ENUM");
+				CGUIException::ThrowException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_INVALID_ENUM");
 				break;
 			case GL_INVALID_VALUE:
-				throw CGUIException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_INVALID_VALUE");
+				CGUIException::ThrowException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_INVALID_VALUE");
 				break;
 			case GL_INVALID_OPERATION:
-				throw CGUIException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_INVALID_OPERATION");
+				CGUIException::ThrowException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_INVALID_OPERATION");
 				break;
 			case GL_STACK_OVERFLOW:
-				throw CGUIException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_STACK_OVERFLOW");
+				CGUIException::ThrowException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_STACK_OVERFLOW");
 				break;
 			case GL_STACK_UNDERFLOW:
-				throw CGUIException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_STACK_UNDERFLOW");
+				CGUIException::ThrowException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_STACK_UNDERFLOW");
 				break;
 			case GL_OUT_OF_MEMORY:
-				throw CGUIException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_OUT_OF_MEMORY");
+				CGUIException::ThrowException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_OUT_OF_MEMORY");
 				break;			
 			default:
-				throw CGUIException("error find in opengl in <%s>, error is <0x%x>!" ,info, errorcode);
+				CGUIException::ThrowException("error find in opengl in <%s>, error is <0x%x>!" ,info, errorcode);
 			}
 		}
 	}
@@ -336,7 +339,7 @@ namespace guiex
 			return;
 
 		default:
-			throw CGUIException("IGUIRender_opengl_base::MatrixMode: unknown matrix mode");
+			CGUIException::ThrowException("IGUIRender_opengl_base::MatrixMode: unknown matrix mode");
 			return;
 
 		}

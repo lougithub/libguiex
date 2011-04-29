@@ -8,7 +8,7 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_widget/guiwgtedit.h>
+#include "guiwgtedit.h"
 #include <libguiex_core/guiinterfacemanager.h>
 #include <libguiex_core/guiinterfaceime.h>
 

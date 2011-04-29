@@ -41,6 +41,8 @@
 #define GUIEX_TARGET_MACOS 1
 #elif defined(_GUIEX_TARGET_WIN32)
 #define GUIEX_TARGET_WIN32 1
+#else
+#define GUIEX_TARGET_ANDROID 1
 #endif
 
 /*************************************************************************
@@ -124,7 +126,11 @@
 	exception
 *************************************************************************/
 //use real exception or just a assert.
+#if GUIEX_TARGET_ANDROID
 #define GUI_USE_EXCEPTION	0
+#else
+#define GUI_USE_EXCEPTION	1
+#endif 
 
 //assert it if any exception happens
 #define GUI_EXCEPTION_ASSERT	0

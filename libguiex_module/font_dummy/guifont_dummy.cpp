@@ -235,7 +235,7 @@ namespace guiex
 		if( rFontInfo.m_uID >= m_arrayFontDatas.size() ||
 			m_arrayFontDatas[rFontInfo.m_uID] != NULL )
 		{
-			throw CGUIException("[IGUIFont_dummy::CreateFontData]: invalid font id <%d>", rFontInfo.m_uID );
+			CGUIException::ThrowException("[IGUIFont_dummy::CreateFontData]: invalid font id <%d>", rFontInfo.m_uID );
 			return NULL;
 		}
 
@@ -251,7 +251,7 @@ namespace guiex
 		CGUIFontData_dummy* pFontData = m_arrayFontDatas[pData->GetFontID()];
 		if( pFontData != pData )
 		{
-			throw CGUIException(
+			CGUIException::ThrowException(
 				"[IGUIFont_dummy::DestroyFontData]: the font<%s:%s> doesn't existing", 
 				pData->GetName().c_str(),
 				pData->GetSceneName().c_str());
@@ -269,7 +269,7 @@ namespace guiex
 		if( uFontID >= m_arrayFontDatas.size() ||
 			m_arrayFontDatas[uFontID] == NULL )
 		{
-			throw CGUIException("[IGUIFont_dummy::GetFontData]: invalid font id <%d>", uFontID );
+			CGUIException::ThrowException("[IGUIFont_dummy::GetFontData]: invalid font id <%d>", uFontID );
 			return NULL;
 		}
 		return m_arrayFontDatas[uFontID];

@@ -10,9 +10,9 @@
 //============================================================================//
 // include
 //============================================================================// 
+#include "guiwgt.h"
 #include <vector>
 #include <libguiex_core/guiwidgetgenerator.h>
-#include <libguiex_widget/guiwgt.h>
 
 //============================================================================//
 // implement
@@ -45,15 +45,15 @@ namespace guiex
 		//GUI_ADD_WIDGET_GENERATOR(CGUIWgtScrollPanel);
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtEmptyNode);
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtAnimation);
-		GUI_ADD_WIDGET_GENERATOR(CGUIWgtDialog);
+		//GUI_ADD_WIDGET_GENERATOR(CGUIWgtDialog);
 		//GUI_ADD_WIDGET_GENERATOR(CGUIWgtListBox);
 		//GUI_ADD_WIDGET_GENERATOR(CGUIWgtComboBox);
-		GUI_ADD_WIDGET_GENERATOR(CGUIWgtProgress);
+		//GUI_ADD_WIDGET_GENERATOR(CGUIWgtProgress);
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtScrollbarContainer);
 		//GUI_ADD_WIDGET_GENERATOR(CGUIListBoxTextItem);
 		//GUI_ADD_WIDGET_GENERATOR(CGUIMenuTextItem);
-		GUI_ADD_WIDGET_GENERATOR(CGUIWgtTabControl);
-		GUI_ADD_WIDGET_GENERATOR(CGUIWgtTabButton);
+		//GUI_ADD_WIDGET_GENERATOR(CGUIWgtTabControl);
+		//GUI_ADD_WIDGET_GENERATOR(CGUIWgtTabButton);
 		//GUI_ADD_WIDGET_GENERATOR(CGUIWgtPopupMenu);
 		//GUI_ADD_WIDGET_GENERATOR(CGUIWgtColumnList);
 		//GUI_ADD_WIDGET_GENERATOR(CGUIColListHeader);
@@ -64,7 +64,7 @@ namespace guiex
 		return (CGUIWidgetGenerator**)&aList[0];
 	}
 
-#elif defined(GUIEX_PLATFORM_MAC)
+#else
 	extern "C"  GUIEXPORT CGUIWidgetGenerator** GetAllWidgetGenerators() 
 	{ 
 		static std::vector<CGUIWidgetGenerator*> aList; 
@@ -87,8 +87,6 @@ namespace guiex
 		aList.push_back(NULL);
 		return (CGUIWidgetGenerator**)&aList[0];
 	}
-#else
-#	error "unknown platform"	
 #endif
 
 #undef GUI_ADD_WIDGET_GENERATOR

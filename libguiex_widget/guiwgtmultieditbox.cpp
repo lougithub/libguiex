@@ -8,7 +8,7 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_widget/guiwgtmultieditbox.h>
+#include "guiwgtmultieditbox.h"
 #include <libguiex_core/guiinterfacemanager.h>
 #include <libguiex_core/guiinterfacefont.h>
 #include <libguiex_core/guiinterfacerender.h>
@@ -652,7 +652,8 @@ namespace guiex
 				}
 			}
 		}
-		throw CGUIException("[CGUIWgtMultiEditBox::GetLineNumberFromIndex] - Unable to identify a line from the given index <%d>.", index);
+		CGUIException::ThrowException("[CGUIWgtMultiEditBox::GetLineNumberFromIndex] - Unable to identify a line from the given index <%d>.", index);
+		return 0;
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtMultiEditBox::SetCursorIndexByPos( const CGUIVector2& rPos)

@@ -96,7 +96,7 @@ namespace guiex
 		//	break;
 
 		default:
-			throw CGUIException("[CGUITexture_opengl_base::LoadFromMemory]: unsupported pixel format;");
+			CGUIException::ThrowException("[CGUITexture_opengl_base::LoadFromMemory]: unsupported pixel format;");
 		}
 
 		glBindTexture(GL_TEXTURE_2D, m_ogltexture);
@@ -113,14 +113,14 @@ namespace guiex
 		IGUIInterfaceImageLoader* pImageLoader = static_cast<IGUIInterfaceImageLoader*>(CGUIInterfaceManager::Instance()->GetInterface("IGUIImageLoader"));
 		if( !pImageLoader )
 		{
-			throw CGUIException("[CGUITexture_opengl_base::LoadFromFile]: - failed to get image loader!");
+			CGUIException::ThrowException("[CGUITexture_opengl_base::LoadFromFile]: - failed to get image loader!");
 			return -1;
 		}
 
 		CGUIImageData* pImageData = pImageLoader->LoadFromFile( filename );
 		if( !pImageData )
 		{
-			throw CGUIException("[CGUITexture_opengl_base::LoadFromFile]: - failed to Load image file <%s>!", filename.c_str());
+			CGUIException::ThrowException("[CGUITexture_opengl_base::LoadFromFile]: - failed to Load image file <%s>!", filename.c_str());
 			return -1;
 		}
 
@@ -160,7 +160,7 @@ namespace guiex
 		//	break;
 
 		default:
-			throw CGUIException("[CGUITexture_opengl_base::LoadFromMemory]: unsupported pixel format;");
+			CGUIException::ThrowException("[CGUITexture_opengl_base::LoadFromMemory]: unsupported pixel format;");
 		}
 
 		//glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
@@ -201,7 +201,7 @@ namespace guiex
 			break;
 
 		default:
-			throw CGUIException("[CGUITexture_opengl_base::CopySubImage]: unsupported pixel format;");
+			CGUIException::ThrowException("[CGUITexture_opengl_base::CopySubImage]: unsupported pixel format;");
 		}
 		
 		TRY_THROW_OPENGL_ERROR("CGUITexture_opengl_base::CopySubImage");
@@ -225,7 +225,7 @@ namespace guiex
 			break;
 
 		default:
-			throw CGUIException("[CGUITexture_opengl_base::LoadFromMemory]: unsupported pixel format;");
+			CGUIException::ThrowException("[CGUITexture_opengl_base::LoadFromMemory]: unsupported pixel format;");
 		}
 
 		m_nTextureWidth = nWidth;

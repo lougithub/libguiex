@@ -8,7 +8,7 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_widget/guiwgtanimation.h>
+#include "guiwgtanimation.h"
 #include <libguiex_core/guianimation.h>
 #include <libguiex_core/guiinterfacerender.h>
 #include <libguiex_core/guiexception.h>
@@ -64,7 +64,7 @@ namespace guiex
 		else
 		{
 			//error
-			throw CGUIException("[CGUIWgtAnimation::SetCurrentAnimation]: failed to get animation by name <%s>!",rAnimationName.c_str());
+			CGUIException::ThrowException("[CGUIWgtAnimation::SetCurrentAnimation]: failed to get animation by name <%s>!",rAnimationName.c_str());
 		}
 	}
 	//------------------------------------------------------------------------------
