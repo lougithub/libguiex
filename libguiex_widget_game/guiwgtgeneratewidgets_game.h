@@ -19,7 +19,7 @@
 //============================================================================// 
 namespace guiex
 {
-	extern "C"  GUIEXPORT CGUIWidgetGenerator** GetAllWidgetGenerators_Game();
+	GUIEXPORT CGUIWidgetGenerator** GetAllWidgetGenerators_Game();
 }
 
 

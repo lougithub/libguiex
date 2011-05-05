@@ -18,7 +18,7 @@
 //============================================================================// 
 namespace guiex
 {
-	extern "C"  GUIEXPORT CGUIWidgetGenerator** GetAllWidgetGenerators_Game() 
+	GUIEXPORT CGUIWidgetGenerator** GetAllWidgetGenerators_Game() 
 	{ 
 		static std::vector<CGUIWidgetGenerator*> aList; 
 		aList.clear();

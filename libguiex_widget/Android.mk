@@ -14,6 +14,7 @@ LOCAL_SRC_FILES := \
 	guiwgtdialog.cpp \
 	guiwgtedit.cpp \
 	guiwgteditbox.cpp \
+	guiwgtmultieditbox.cpp \
 	guiwgtemptynode.cpp \
 	guiwgtgeneratewidgets.cpp \
 	guiwgtpanel.cpp \

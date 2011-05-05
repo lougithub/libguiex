@@ -3,6 +3,8 @@ GUIEX_Root := $(LOCAL_PATH)/../..
 
 include $(CLEAR_VARS)
 
+LOCAL_NO_MANIFEST := true
+
 #lib
 include $(GUIEX_Root)/libguiex_core/Android.mk
 include $(GUIEX_Root)/libguiex_widget/Android.mk

@@ -24,12 +24,10 @@ namespace guiex
 	aList.push_back( widget::widget##_Generator::GenerateSelf());
 
 #if defined( GUIEX_PLATFORM_WIN32)
-	extern "C"  GUIEXPORT CGUIWidgetGenerator** GetAllWidgetGenerators() 
+	GUIEXPORT CGUIWidgetGenerator** GetAllWidgetGenerators() 
 	{ 
 		static std::vector<CGUIWidgetGenerator*> aList; 
 		aList.clear();
-
-
 
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtTag);		
 		GUI_ADD_WIDGET_GENERATOR(CGUIWgtButton);
@@ -65,7 +63,7 @@ namespace guiex
 	}
 
 #else
-	extern "C"  GUIEXPORT CGUIWidgetGenerator** GetAllWidgetGenerators() 
+	GUIEXPORT CGUIWidgetGenerator** GetAllWidgetGenerators() 
 	{ 
 		static std::vector<CGUIWidgetGenerator*> aList; 
 		aList.clear();

@@ -18,7 +18,7 @@
 //============================================================================// 
 namespace guiex
 {
-	extern "C"  GUIEXPORT CGUIWidgetGenerator** GetAllWidgetGenerators();
+	GUIEXPORT CGUIWidgetGenerator** GetAllWidgetGenerators();
 }
 
 

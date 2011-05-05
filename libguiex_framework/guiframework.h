@@ -16,7 +16,7 @@
 #include <libguiex_widget_box2d/guiwgt_box2d.h>
 #include <libguiex_widget_game/guiwgt_game.h>
 
-#if defined( _GUIEX_TARGET_WIN32 )
+#if defined( GUIEX_TARGET_WIN32 )
 #include "guiframework_windows.h"
 namespace guiex
 {
