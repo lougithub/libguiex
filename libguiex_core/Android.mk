@@ -5,7 +5,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := libguiex_core
 
 
-LOCAL_C_INCLUDES := $(GUIEX_Root)/external/tinyxml
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../external/tinyxml
 
 LOCAL_SRC_FILES := \
 	base64.cpp\
@@ -117,6 +117,7 @@ LOCAL_SRC_FILES := \
 	guiwidgetutility.cpp\
 	pathfinderastar.cpp\
 	guiinterfacelocalizationloader.cpp
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
 
 include $(BUILD_STATIC_LIBRARY)
 

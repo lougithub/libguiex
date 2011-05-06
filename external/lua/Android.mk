@@ -36,6 +36,8 @@ LOCAL_SRC_FILES := \
     src/lvm.c \
     src/lzio.c
 
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/src
+
 
 include $(BUILD_STATIC_LIBRARY)
 

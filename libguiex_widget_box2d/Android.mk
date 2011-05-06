@@ -17,5 +17,7 @@ LOCAL_SRC_FILES := \
 	guiwgtbox2dstaticbody.cpp \
 	guiwgtgeneratewidgets_box2d.cpp
 
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
+
 include $(BUILD_STATIC_LIBRARY)
 

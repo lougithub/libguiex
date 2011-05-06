@@ -44,6 +44,8 @@ LOCAL_SRC_FILES := \
 	Box2D/Dynamics/Joints/b2RevoluteJoint.cpp \
 	Box2D/Dynamics/Joints/b2WeldJoint.cpp
 
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
+
 
 include $(BUILD_STATIC_LIBRARY)
 

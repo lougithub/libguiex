@@ -39,5 +39,7 @@ LOCAL_SRC_FILES := \
 	render_opengles_android/guitexture_opengles_android.cpp \
 	stringconv_android/guistringconv_android.cpp
 
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
+
 include $(BUILD_STATIC_LIBRARY)
 
