@@ -5,14 +5,14 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := libguiex_framework
 
 LOCAL_C_INCLUDES := \
-	$(GUIEX_Root)/ \
-	$(GUIEX_Root)/external/lua/src \
-	$(GUIEX_Root)/external/Box2D \
-	$(GUIEX_Root)/external/tinyxml \
-	$(GUIEX_Root)/external/freetype/include \
-	$(GUIEX_Root)/external/libvorbis/include \
-	$(GUIEX_Root)/external/libogg/include \
-	$(GUIEX_Root)/external/freealut/include 
+	$(LOCAL_PATH)/../ \
+	$(LOCAL_PATH)/../external/lua/src \
+	$(LOCAL_PATH)/../external/Box2D \
+	$(LOCAL_PATH)/../external/tinyxml \
+	$(LOCAL_PATH)/../external/freetype/include \
+	$(LOCAL_PATH)/../external/libvorbis/include \
+	$(LOCAL_PATH)/../external/libogg/include \
+	$(LOCAL_PATH)/../external/freealut/include 
 
 LOCAL_SRC_FILES := \
 	guiframeworkbase.cpp \

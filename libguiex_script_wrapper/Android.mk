@@ -6,9 +6,9 @@ LOCAL_MODULE := libguiex_script_wrapper
 
 
 LOCAL_C_INCLUDES := \
-	$(GUIEX_Root)/ \
-	$(GUIEX_Root)/external/lua/src \
-	$(GUIEX_Root)/external/Box2D
+	$(LOCAL_PATH)/../ \
+	$(LOCAL_PATH)/../external/lua/src \
+	$(LOCAL_PATH)/../external/Box2D
 
 LOCAL_SRC_FILES := \
 	guiex_wrapper.cpp 

@@ -5,7 +5,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := libguiex_widget_game
 
 
-LOCAL_C_INCLUDES := $(GUIEX_Root)/
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../
 
 LOCAL_SRC_FILES := \
 	guiwgtgeneratewidgets_game.cpp \
