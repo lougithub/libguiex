@@ -6,13 +6,13 @@ LOCAL_SRC_FILES := ../../hello_ipad.cpp
 
 
 LOCAL_STATIC_LIBRARIES := \
-	libguiex_core \
-	libguiex_module \
-	libguiex_widget \
-	libguiex_widget_game \
-	libguiex_widget_box2d \
-	libguiex_script_wrapper \
 	libguiex_framework \
+	libguiex_script_wrapper \
+	libguiex_widget_box2d \
+	libguiex_widget_game \
+	libguiex_widget \
+	libguiex_module \
+	libguiex_core \
 	lua \
 	tinyxml \
 	box2d 
