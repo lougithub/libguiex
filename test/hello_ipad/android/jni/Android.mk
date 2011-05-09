@@ -1,23 +1,23 @@
 LOCAL_PATH:=$(call my-dir)
 include $(CLEAR_VARS)
 
-LOCAL_MODULE:=hello_ipad
+LOCAL_MODULE:=guiex_sample
 LOCAL_SRC_FILES := ../../hello_ipad.cpp
 
 
 LOCAL_STATIC_LIBRARIES := \
 	libguiex_framework \
+	libguiex_module \
 	libguiex_script_wrapper \
 	libguiex_widget_box2d \
 	libguiex_widget_game \
 	libguiex_widget \
-	libguiex_module \
 	libguiex_core \
 	lua \
 	tinyxml \
 	box2d 
 
-LOCAL_LDLIBS:=-lz
+LOCAL_LDLIBS:=-lz -lGLESv1_CM
 
 include $(BUILD_SHARED_LIBRARY)
 $(call import-module, libguiex_core)
