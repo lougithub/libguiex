@@ -2,7 +2,7 @@ LOCAL_PATH:=$(call my-dir)
 include $(CLEAR_VARS)
 
 LOCAL_MODULE:=guiex_sample
-LOCAL_SRC_FILES := ../../hello_ipad.cpp
+LOCAL_SRC_FILES := ../../hello_ipad.cpp ../../../common_android/common_android.cpp
 
 
 LOCAL_STATIC_LIBRARIES := \
@@ -17,7 +17,7 @@ LOCAL_STATIC_LIBRARIES := \
 	tinyxml \
 	box2d 
 
-LOCAL_LDLIBS:=-lz -lGLESv1_CM
+LOCAL_LDLIBS:=-lz -lGLESv1_CM -llog
 
 include $(BUILD_SHARED_LIBRARY)
 $(call import-module, libguiex_core)
