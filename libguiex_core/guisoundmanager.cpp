@@ -25,6 +25,7 @@ namespace guiex
 	CGUISoundManager * CGUISoundManager::m_pSingleton = NULL; 
 	//------------------------------------------------------------------------------
 	CGUISoundManager::CGUISoundManager()
+		:CGUIResourceManager <CGUISoundData, CGUISoundData>("Sound")
 	{
 		GUI_ASSERT( !m_pSingleton, "[CGUISoundManager::CGUISoundManager]:instance has been created" ); 
 		m_pSingleton = this; 

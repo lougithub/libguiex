@@ -37,7 +37,7 @@ namespace guiex
 	class GUIEXPORT CGUIResourceManagerBase
 	{
 	public:
-		CGUIResourceManagerBase();
+		CGUIResourceManagerBase( const char* szResMgrType );
 		virtual ~CGUIResourceManagerBase();
 
 		virtual int32 RegisterResource( const CGUIString& rSceneName, const CGUIProperty& rProperty ) = 0;
@@ -47,12 +47,17 @@ namespace guiex
 
 		virtual void DeallocateResource( CGUIResource* pRes ) = 0;
 
+		const CGUIString& GetManagerType() const;
+
 	protected:
 		virtual	void DestroyRegisterResourceImp( CGUIResource* pRes ) = 0; 
 		virtual	void DestroyAllocateResourceImp( CGUIResource* pRes ) = 0; 
 		virtual void ReleaseAllRegisterResources( ) = 0;
 
 		void DoRefRelease( CGUIResource* pRes );
+
+	protected:
+		CGUIString m_strMgrType;
 	};
 
 	/**
@@ -65,7 +70,7 @@ namespace guiex
 		typedef TRegisterResType TRegisterResourceType;
 		typedef TAllocateResType TAllocateResourceType;
 
-		CGUIResourceManager();
+		CGUIResourceManager(const char* szResMgrType);
 		virtual ~CGUIResourceManager();
 
 	public:
@@ -114,7 +119,8 @@ namespace guiex
 {
 	//------------------------------------------------------------------------------
 	template< class TRegisterResType, class TAllocateResType >
-	inline CGUIResourceManager<TRegisterResType, TAllocateResType>::CGUIResourceManager()
+	inline CGUIResourceManager<TRegisterResType, TAllocateResType>::CGUIResourceManager( const char* szResMgrType )
+		:CGUIResourceManagerBase( szResMgrType )
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -133,7 +139,7 @@ namespace guiex
 	template< class TRegisterResType, class TAllocateResType >
 	inline int32 CGUIResourceManager<TRegisterResType, TAllocateResType>::RegisterResourceImp( TRegisterResType* pRes )
 	{
-		GUI_ASSERT( pRes, "invalid parameter" );
+		GUI_ASSERT( pRes, GUI_FORMAT("[ResourceManager] type:%s, invalid parameter", GetManagerType().c_str()));
 
 		if( m_mapRegisterResource.find( pRes->GetName()) != m_mapRegisterResource.end())
 		{

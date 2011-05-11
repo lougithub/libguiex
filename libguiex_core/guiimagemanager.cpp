@@ -27,6 +27,7 @@ namespace guiex
 	CGUIImageManager * CGUIImageManager::m_pSingleton = NULL; 
 	//------------------------------------------------------------------------------
 	CGUIImageManager::CGUIImageManager()
+		:CGUIResourceManager <CGUIImage, CGUIImage>("Image")
 	{
 		GUI_ASSERT( !m_pSingleton, "[CGUIImageManager::CGUIImageManage]:instance has been created" ); 
 		m_pSingleton = this; 

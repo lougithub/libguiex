@@ -25,6 +25,7 @@ namespace guiex
 	CGUIMusicManager * CGUIMusicManager::m_pSingleton = NULL; 
 	//------------------------------------------------------------------------------
 	CGUIMusicManager::CGUIMusicManager()
+		:CGUIResourceManager <CGUIMusicData, CGUIMusicData>("Music")
 	{
 		GUI_ASSERT( !m_pSingleton, "[CGUIMusicManager::CGUIMusicManager]:instance has been created" ); 
 		m_pSingleton = this; 

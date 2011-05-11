@@ -99,6 +99,12 @@ namespace guiex
 
 		void SetDataPath(const CGUIString& rDataPath);
 		const CGUIString& GetDataPath() const;
+		void GenerateFullPath( const CGUIString& rPath, CGUIString& rFullPath );
+
+#if defined(GUIEX_TARGET_ANDROID)
+		void SetApkPath(const CGUIString& rApkPath);
+		const CGUIString& GetApkPath() const;
+#endif
 
 		bool IsEditorMode( ) const;
 		void SetEditorMode( bool bEditorMode );
@@ -187,7 +193,7 @@ namespace guiex
 		CGUIWidgetFactory* GetWidgetFactory();
 		CGUISceneManager* GetSceneManager();
 		CGUIAsFactory* GetAsFactory();
-		CGUILogMsgManager* GetLogMsgManager();
+		//CGUILogMsgManager* GetLogMsgManager();
 		CGUIWidgetManager* GetWidgetManager();
 		CGUICameraManager* GetCameraManager();
 		CGUICanvasLayerManager* GetCanvasLayerManager();
@@ -258,6 +264,10 @@ namespace guiex
 
 		CGUIString m_strDataPath; //data path
 
+#if defined(GUIEX_TARGET_ANDROID)
+		CGUIString m_strApkPath; //apk path in android
+#endif
+
 		friend class CGUIUICanvasLayer;
 		CGUIUICanvasLayer* m_pUICanvas; //ui canvas
 
@@ -291,7 +301,7 @@ namespace guiex
 		CGUIPropertyManager* m_pPropertyManager;
 		CGUIWidgetFactory* m_pWidgetFactory;
 		CGUISceneManager* m_pSceneInfoManager;
-		CGUILogMsgManager* m_pLogMsgManager;
+		//CGUILogMsgManager* m_pLogMsgManager;
 		CGUIWidgetManager* m_pWidgetManager;
 		CGUICameraManager* m_pCameraManager;
 		CGUICanvasLayerManager* m_pCanvasLayerManager;
@@ -376,10 +386,10 @@ namespace guiex
 		return m_pSceneInfoManager;
 	}
 
-	inline CGUILogMsgManager* CGUISystem::GetLogMsgManager()
-	{
-		return m_pLogMsgManager;
-	}
+	//inline CGUILogMsgManager* CGUISystem::GetLogMsgManager()
+	//{
+	//	return m_pLogMsgManager;
+	//}
 
 	inline CGUIWidgetManager* CGUISystem::GetWidgetManager()
 	{

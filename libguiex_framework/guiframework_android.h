@@ -25,6 +25,7 @@ namespace guiex
 		CGUIFramework_Android( );
 		virtual ~CGUIFramework_Android();
 
+		static void SetApkPath( const char* szApkPath );
 
 	protected:
 		virtual int32 InitializeGame( );
@@ -41,6 +42,9 @@ namespace guiex
 		virtual void PostUpdate( real fDeltaTime );
 
 		virtual void OutputFatalError( const char* pErrorDesc );
+
+	protected:
+		static CGUIString ms_strApkPath;
 
 	private:
 	};

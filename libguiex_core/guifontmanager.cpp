@@ -32,6 +32,7 @@ namespace guiex
 	CGUIFontManager * CGUIFontManager::m_pSingleton = NULL; 
 	//------------------------------------------------------------------------------
 	CGUIFontManager::CGUIFontManager()
+		:CGUIResourceManager<CGUIFontData, CGUIFontData>("Font")
 	{
 		GUI_ASSERT( !m_pSingleton, "[CGUIFontManager::CGUIFontManager]:instance has been created" ); 
 		m_pSingleton = this; 

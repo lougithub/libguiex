@@ -70,7 +70,7 @@ namespace guiex
 		CGUILogMsg* m_pMsgInstance;
 
 	private:
-		static CGUILogMsgManager* m_pSingleton;
+		//static CGUILogMsgManager* m_pSingleton;
 	};
 }//namespace guiex
 

@@ -18,7 +18,8 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	CGUIResourceManagerBase::CGUIResourceManagerBase()
+	CGUIResourceManagerBase::CGUIResourceManagerBase( const char* szResMgrType )
+		:m_strMgrType( szResMgrType )
 	{
 		GSystem->RegisterResourceManager( this );
 	}
@@ -26,6 +27,11 @@ namespace guiex
 	CGUIResourceManagerBase::~CGUIResourceManagerBase()
 	{
 		GSystem->UnregisterResourceManager( this );
+	}
+	//------------------------------------------------------------------------------
+	const CGUIString& CGUIResourceManagerBase::GetManagerType() const
+	{
+		return m_strMgrType;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIResourceManagerBase::DoRefRelease( CGUIResource* pRes )

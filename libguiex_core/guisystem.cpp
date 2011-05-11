@@ -119,7 +119,7 @@ namespace guiex
 		,m_pPropertyManager( NULL )
 		,m_pWidgetFactory( NULL )
 		,m_pSceneInfoManager( NULL )
-		,m_pLogMsgManager( NULL )
+		//,m_pLogMsgManager( NULL )
 		,m_pWidgetManager( NULL )
 		,m_pCameraManager( NULL )
 		,m_pLocalizationManager( NULL )
@@ -152,7 +152,7 @@ namespace guiex
 	void CGUISystem::InitializeSingletons()
 	{
 		//init singleton classes
-		m_pLogMsgManager = new CGUILogMsgManager;
+		//m_pLogMsgManager = new CGUILogMsgManager;
 		m_pWidgetManager = new CGUIWidgetManager;
 		m_pImageManager = new CGUIImageManager;
 		m_pAnimationManager = new CGUIAnimationManager;
@@ -212,8 +212,8 @@ namespace guiex
 		delete m_pLocalizationManager;
 		m_pLocalizationManager = NULL;
 
-		delete m_pLogMsgManager;
-		m_pLogMsgManager = NULL;
+		//delete m_pLogMsgManager;
+		//m_pLogMsgManager = NULL;
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -961,6 +961,49 @@ namespace guiex
 	{
 		return m_strDataPath;
 	}
+	//------------------------------------------------------------------------------
+	void CGUISystem::GenerateFullPath( const CGUIString& rPath, CGUIString& rFullPath )
+	{
+		if( rPath.empty() )
+		{
+			rFullPath = m_strDataPath;
+		}
+		else if( m_strDataPath.empty() )
+		{
+			rFullPath = rPath;
+		}
+		else
+		{
+			char lastChar = m_strDataPath[m_strDataPath.size()-1];
+			char firstChar = rPath[rPath.size()-1];
+			if( (lastChar == '\\' || lastChar == '/') &&
+				(firstChar == '\\' || firstChar == '/'))
+			{
+				rFullPath = m_strDataPath + (rPath.c_str()+1);
+			}
+			else if( !(lastChar == '\\' || lastChar == '/') &&
+				!(firstChar == '\\' || firstChar == '/'))
+			{
+				rFullPath = m_strDataPath + '/' + rPath;
+			}
+			else
+			{
+				rFullPath = m_strDataPath + rPath;
+			}
+		}
+	}
+	//------------------------------------------------------------------------------
+#if defined(GUIEX_TARGET_ANDROID)
+	void CGUISystem::SetApkPath(const CGUIString& rApkPath)
+	{
+		m_strApkPath = rApkPath;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIString& CGUISystem::GetApkPath() const
+	{
+		return m_strApkPath;
+	}
+#endif
 	//------------------------------------------------------------------------------
 	void CGUISystem::OnWidgetDestroyed( CGUIWidget* pWidget )
 	{

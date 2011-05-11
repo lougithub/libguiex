@@ -130,7 +130,7 @@ namespace guiex
 		EScreenValue GetSizeType( ) const;
 
 		void SetRotation(real x, real y, real z);
-		const CGUIVector3& GetRotation( ) const;
+		CGUIVector3 GetRotation( ) const;
 
 		void LocalToWorld( CGUIVector2& rPos );
 		void WorldToLocal( CGUIVector2& rPos );

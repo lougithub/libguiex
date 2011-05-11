@@ -60,7 +60,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIMusicData* IGUISound_dummy::CreateMusicData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath )
 	{
-		return NULL;
+		CGUIMusicData_dummy* pSoundData = new CGUIMusicData_dummy( rName, rSceneName, rPath );
+		return pSoundData;
 	}
 	//------------------------------------------------------------------------------
 	void IGUISound_dummy::DestroyMusicData( CGUIMusicData* pData )

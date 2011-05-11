@@ -112,11 +112,6 @@ namespace guiex
 					}
 					CGUIStringW strContentW;
 					AppMultiByteToWideChar( szContent, strContentW );
-					if( strContentW.empty() )
-					{
-						CGUIException::ThrowException("[IGUILocalizationLoader_tinyxml::LoadLocalizationFile], failed to get localization content from name from local <%s>!", szKey, rCurrentLocalConfig.c_str());
-						return -1;
-					}
 
 					rLocalizations.push_back( std::make_pair( CGUIString(szKey), strContentW ));
 

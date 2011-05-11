@@ -47,6 +47,9 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int32 CGUIFramework_Mac::InitializeSystem( const CGUIIntSize& rScreenSize, const char* pDataPath )
 	{
+		//setup log system
+		SetupLogSystem();
+
 		//init system
 		if( GSystem != NULL )
 		{
@@ -59,10 +62,10 @@ namespace guiex
 			return -1;
 		}
 
-		//setup log system
-		SetupLogSystem();
-
 		GSystem->SetRawScreenSize( rScreenSize );
+
+		//set date path
+		GSystem->SetDataPath( pDataPath );
 
 		//register interface
 		RegisterInterfaces();
@@ -70,8 +73,6 @@ namespace guiex
 		//register widget
 		RegisterWidgetGenerators();
 
-		//set date path
-		GSystem->SetDataPath( pDataPath );
 
 		return 0;
 	}

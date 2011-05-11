@@ -47,6 +47,9 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int32 CGUIFramework_IOS::InitializeSystem( const CGUIIntSize& rScreenSize, const char* pDataPath )
 	{
+		//setup log system
+		SetupLogSystem();
+
 		//init system
 		if( GSystem != NULL )
 		{
@@ -59,19 +62,17 @@ namespace guiex
 			return -1;
 		}
 
-		//setup log system
-		SetupLogSystem();
-
+		//set screen size
 		GSystem->SetRawScreenSize( rScreenSize );
+
+		//set date path
+		GSystem->SetDataPath( pDataPath );
 
 		//register interface
 		RegisterInterfaces();
 
 		//register widget
 		RegisterWidgetGenerators();
-
-		//set date path
-		GSystem->SetDataPath( pDataPath );
 
 		return 0;
 	}

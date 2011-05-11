@@ -13,7 +13,8 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/../external/freetype/include \
 	$(LOCAL_PATH)/../external/libvorbis/include \
 	$(LOCAL_PATH)/../external/libogg/include \
-	$(LOCAL_PATH)/../external/freealut/include 
+	$(LOCAL_PATH)/../external/freealut/include \
+	$(LOCAL_PATH)/../external/libzip 
 
 LOCAL_SRC_FILES := \
 	configfile_tinyxml/guiconfigfile_tinyxml.cpp \
@@ -21,7 +22,7 @@ LOCAL_SRC_FILES := \
 	sound_dummy/guisound_dummy.cpp \
 	sound_dummy/guisounddata_dummy.cpp \
 	sound_dummy/guimusicdata_dummy.cpp \
-	filesys_stdio/guifilesys_stdio.cpp \
+	filesys_android/guifilesys_android.cpp \
 	font_dummy/guifont_dummy.cpp \
 	font_dummy/guifontdata_dummy.cpp \
 	imageloader_tga/guiimagedata_tga.cpp \

@@ -47,6 +47,7 @@ namespace guiex
 	CGUIAnimationManager * CGUIAnimationManager::m_pSingleton = NULL; 
 	//------------------------------------------------------------------------------
 	CGUIAnimationManager::CGUIAnimationManager()
+		:CGUIResourceManager<CGUIAnimationData, CGUIAnimation>("Animation")
 	{
 		GUI_ASSERT( !m_pSingleton, "[CGUIAnimationManager::CGUIAnimationManager]:instance has been created" ); 
 		m_pSingleton = this; 

@@ -53,6 +53,7 @@ namespace guiex
 	CGUIParticle2DManager * CGUIParticle2DManager::m_pSingleton = NULL; 
 	//------------------------------------------------------------------------------
 	CGUIParticle2DManager::CGUIParticle2DManager()
+		:CGUIResourceManager <CGUIParticle2DData, CGUIParticle2DSystem>("Particle2D")
 	{
 		GUI_ASSERT( !m_pSingleton, "[CGUIParticle2DManager::CGUIParticle2DManager]:instance has been created" ); 
 		m_pSingleton = this; 

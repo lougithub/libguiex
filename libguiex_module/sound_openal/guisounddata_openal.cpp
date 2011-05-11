@@ -51,7 +51,10 @@ namespace guiex
 			strExt[i] = tolower(strExt[i]);
 		}
 
-		CGUIString strFullPath = GSystem->GetDataPath() + CGUISceneManager::Instance()->GetScenePath( m_strSceneName ) + m_strPath;
+		CGUIString	strScenePath = CGUISceneManager::Instance()->GetScenePath( m_strSceneName ) + m_strPath;
+		CGUIString	strFullPath;
+		GSystem->GenerateFullPath( strScenePath, strFullPath );
+
 		if (strExt == ".ogg")
 		{
 			//load ogg file

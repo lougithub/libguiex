@@ -12,7 +12,8 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/../external/freetype/include \
 	$(LOCAL_PATH)/../external/libvorbis/include \
 	$(LOCAL_PATH)/../external/libogg/include \
-	$(LOCAL_PATH)/../external/freealut/include 
+	$(LOCAL_PATH)/../external/freealut/include \
+	$(LOCAL_PATH)/../external/libzip 
 
 LOCAL_SRC_FILES := \
 	guiframeworkbase.cpp \

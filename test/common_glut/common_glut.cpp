@@ -322,10 +322,10 @@ int main(int argc, char** argv)
 	char fdir[_MAX_DIR];
 	_splitpath( argv[0], NULL, fdir, NULL, NULL ); 
 	guiex::CGUIString rDir = fdir;
-	rDir += "../../data/test/";
+	rDir += "../../data/test";
 #elif defined( GUIEX_PLATFORM_MAC )
 	guiex::CGUIString rDir(dirname( argv[0]));
-	rDir += "/../../test/";
+	rDir += "/../../test";
 #else
 #	error "unknown platform"		
 #endif

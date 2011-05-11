@@ -18,7 +18,7 @@
 //libguiex module
 #include <libguiex_module/font_dummy/guifont_dummy.h>
 #include <libguiex_module/imageloader_tga/guiimageloader_tga.h>
-#include <libguiex_module/filesys_stdio/guifilesys_stdio.h>
+#include <libguiex_module/filesys_android/guifilesys_android.h>
 #include <libguiex_module/configfile_tinyxml/guiconfigfile_tinyxml.h>
 #include <libguiex_module/render_opengles_android/guirender_opengles_android.h>
 #include <libguiex_module/stringconv_android/guistringconv_android.h>
@@ -29,11 +29,33 @@
 #include <libguiex_module/mouse_default/guimouse_default.h>
 #include <libguiex_module/localizationloader_tinyxml/guilocalizationloader_tinyxml.h>
 
+#include <android/log.h>
+
 //============================================================================//
 // function
 //============================================================================// 
 namespace guiex
 {
+	class CAndroidLogMsgCallback : public CGUILogMsgCallback
+	{
+		public:
+			virtual void Log( const CGUILogMsgRecord& rRecord )
+			{
+				__android_log_print( ANDROID_LOG_INFO, "guiex", rRecord.GetMsgData());
+			}
+
+			static CAndroidLogMsgCallback g_MsgCallback;
+	};
+	CAndroidLogMsgCallback CAndroidLogMsgCallback::g_MsgCallback;
+}
+
+//============================================================================//
+// function
+//============================================================================// 
+namespace guiex
+{
+	//------------------------------------------------------------------------------
+	CGUIString CGUIFramework_Android::ms_strApkPath;
 	//------------------------------------------------------------------------------
 	CGUIFramework_Android::CGUIFramework_Android( )
 		:CGUIFrameworkBase( )
@@ -44,8 +66,16 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
+	void CGUIFramework_Android::SetApkPath( const char* szApkPath )
+	{
+		ms_strApkPath = szApkPath;
+	}
+	//------------------------------------------------------------------------------
 	int32 CGUIFramework_Android::InitializeSystem( const CGUIIntSize& rScreenSize, const char* pDataPath )
 	{
+		//setup log system
+		SetupLogSystem();
+
 		//init system
 		if( GSystem != NULL )
 		{
@@ -53,15 +83,18 @@ namespace guiex
 			return -1;
 		}
 		GSystem = new CGUISystem;
+
 		if( 0 != GSystem->Initialize())
 		{
 			return -1;
 		}
 
-		//setup log system
-		SetupLogSystem();
-
+		//set screen size
 		GSystem->SetRawScreenSize( rScreenSize );
+
+		//set date path
+		GSystem->SetDataPath( pDataPath );
+		GSystem->SetApkPath( ms_strApkPath );
 
 		//register interface
 		RegisterInterfaces();
@@ -69,16 +102,14 @@ namespace guiex
 		//register widget
 		RegisterWidgetGenerators();
 
-		//set date path
-		GSystem->SetDataPath( pDataPath );
-
 		return 0;
 	}
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_Android::SetupLogSystem( )
 	{
-		GUI_LOG->Open( "gui_framework_log", CGUILogMsg::FLAG_STDERR);
+		GUI_LOG->Open( "gui_framework_log", CGUILogMsg::FLAG_STDERR | CGUILogMsg::FLAG_MSG_CALLBACK);
 		GUI_LOG->SetPriorityMask( GUI_LM_DEBUG | GUI_LM_TRACE | GUI_LM_WARNING|GUI_LM_ERROR );
+		GUI_LOG->SetCallbackMsg( &CAndroidLogMsgCallback::g_MsgCallback );
 	}
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_Android::ReleaseSystem()
@@ -98,7 +129,7 @@ namespace guiex
 		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengles_android);
 		GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_tga);
 		GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_android);
-		GUI_REGISTER_INTERFACE_LIB( IGUIFileSys_stdio);
+		GUI_REGISTER_INTERFACE_LIB( IGUIFileSys_android );
 		GUI_REGISTER_INTERFACE_LIB( IGUIFont_dummy);
 		GUI_REGISTER_INTERFACE_LIB( IGUIIme_dummy);
 		GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);

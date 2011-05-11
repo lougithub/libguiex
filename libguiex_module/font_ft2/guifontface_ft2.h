@@ -34,10 +34,10 @@ namespace guiex
 
 	protected:
 		friend class IGUIFont_ft2;
-		CGUIFontFace_ft2( const CGUIString& rFullPath );
+		CGUIFontFace_ft2( const CGUIString& rFontPath );
 		virtual ~CGUIFontFace_ft2();
 
-		void LoadFont( const CGUIString& rFullPath );
+		void LoadFont( const CGUIString& rFontPath );
 		void UnloadFont();
 
 	protected:

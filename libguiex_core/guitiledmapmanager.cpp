@@ -52,6 +52,7 @@ namespace guiex
 	CGUITiledMapManager * CGUITiledMapManager::m_pSingleton = NULL; 
 	//------------------------------------------------------------------------------
 	CGUITiledMapManager::CGUITiledMapManager()
+		:CGUIResourceManager <CGUITiledMapData, CGUITiledMap>("TiledMap")
 	{
 		GUI_ASSERT( !m_pSingleton, "[CGUITiledMapManager::CGUITiledMapManager]:instance has been created" ); 
 		m_pSingleton = this; 

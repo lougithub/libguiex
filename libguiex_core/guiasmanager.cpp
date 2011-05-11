@@ -47,6 +47,7 @@ namespace guiex
 	CGUIAsManager * CGUIAsManager::m_pSingleton = NULL; 
 	//------------------------------------------------------------------------------
 	CGUIAsManager::CGUIAsManager()
+		:CGUIResourceManager <CGUIAsData, CGUIAs>("As")
 	{
 		GUI_ASSERT( !m_pSingleton, "[CGUIAsManager::CGUIAsManager]:instance has been created" ); 
 		m_pSingleton = this; 

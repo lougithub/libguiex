@@ -31,23 +31,24 @@ namespace guiex
 		CGUILogMsgManager::Instance()->Msg()->Log( GUI_LM_DEBUG, format.c_str() );
 	}
 	//------------------------------------------------------------------------------
-	CGUILogMsgManager* CGUILogMsgManager::m_pSingleton = NULL;
+	//CGUILogMsgManager* CGUILogMsgManager::m_pSingleton = NULL;
 	//------------------------------------------------------------------------------
 	CGUILogMsgManager::CGUILogMsgManager()
 		:m_pMsgInstance(NULL)
 	{
-		GUI_ASSERT( !m_pSingleton, "[CGUILogMsgManager::CGUILogMsgManager]:instance has been created" ); 
-		m_pSingleton = this; 
+		//GUI_ASSERT( !m_pSingleton, "[CGUILogMsgManager::CGUILogMsgManager]:instance has been created" ); 
+		//m_pSingleton = this; 
 	}
 	//------------------------------------------------------------------------------
 	CGUILogMsgManager::~CGUILogMsgManager()
 	{
-		m_pSingleton = NULL;
+		//m_pSingleton = NULL;
 	}
 	//------------------------------------------------------------------------------
 	CGUILogMsgManager* CGUILogMsgManager::Instance()
 	{
-		return m_pSingleton;
+		static CGUILogMsgManager s_msgManager;
+		return &s_msgManager;
 	}
 	//------------------------------------------------------------------------------
 	/**

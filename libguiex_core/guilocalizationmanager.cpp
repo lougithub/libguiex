@@ -14,7 +14,7 @@
 #include "guiinterfacelocalizationloader.h"
 #include "guiinterfacemanager.h"
 #include "guistringconvertor.h"
-
+#include "guilogmsgmanager.h"
 
 //============================================================================//
 // function
@@ -53,6 +53,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int32 CGUILocalizationManager::LoadLocalization( const CGUIString& rFileName, const CGUIString& rSceneName)
 	{
+		GUI_TRACE( GUI_FORMAT("[CGUILocalizationManager::LoadLocalization] name:%s, scene:%s", rFileName.c_str(), rSceneName.c_str()) );
 		///read file
 		IGUIInterfaceLocalizationLoader* pLoader = CGUIInterfaceManager::Instance()->GetInterfaceLocalizationLoader();
 

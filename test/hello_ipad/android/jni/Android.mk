@@ -15,7 +15,8 @@ LOCAL_STATIC_LIBRARIES := \
 	libguiex_core \
 	lua \
 	tinyxml \
-	box2d 
+	box2d \
+	libzip
 
 LOCAL_LDLIBS:=-lz -lGLESv1_CM -llog
 
@@ -30,4 +31,5 @@ $(call import-module, libguiex_framework)
 $(call import-module, external/Box2D)
 $(call import-module, external/lua)
 $(call import-module, external/tinyxml)
+$(call import-module, external/libzip)
 

@@ -9237,7 +9237,7 @@ fail:
 static int _wrap_CGUIWidget_GetRotation(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
-  guiex::CGUIVector3 *result = 0 ;
+  guiex::CGUIVector3 result;
   
   SWIG_check_num_args("GetRotation",1,1)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetRotation",1,"guiex::CGUIWidget const *");
@@ -9246,8 +9246,11 @@ static int _wrap_CGUIWidget_GetRotation(lua_State* L) {
     SWIG_fail_ptr("CGUIWidget_GetRotation",1,SWIGTYPE_p_guiex__CGUIWidget);
   }
   
-  result = (guiex::CGUIVector3 *) &((guiex::CGUIWidget const *)arg1)->GetRotation();
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIVector3,0); SWIG_arg++; 
+  result = ((guiex::CGUIWidget const *)arg1)->GetRotation();
+  {
+    guiex::CGUIVector3 * resultptr = new guiex::CGUIVector3((const guiex::CGUIVector3 &) result);
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_guiex__CGUIVector3,1); SWIG_arg++;
+  }
   return SWIG_arg;
   
   if(0) SWIG_fail;

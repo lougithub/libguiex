@@ -48,35 +48,12 @@ namespace guiex
 	{
 		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_android::DoInitialize: begin");
 
-		// Create the framebuffer object and attach the color buffer.
-		GLuint framebuffer;
-		GLuint renderbuffer;
-		glGenRenderbuffersOES(1, &renderbuffer);
-		glBindRenderbufferOES(GL_RENDERBUFFER_OES, renderbuffer);		
-		glGenFramebuffersOES(1, &framebuffer);
-		glBindFramebufferOES(GL_FRAMEBUFFER_OES, framebuffer);
-		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES,
-									 GL_COLOR_ATTACHMENT0_OES,
-									 GL_RENDERBUFFER_OES,
-									 renderbuffer);
-		glBindRenderbufferOES(GL_RENDERBUFFER_OES, renderbuffer);	
-		
 		//call parent initialize
 		if( 0 != IGUIRender_opengl_base::DoInitialize( pData ) )
 		{
 			return -1;
 		}
 		
-		////set texture
-		//glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-		//glEnable(GL_TEXTURE_2D);
-		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		//glPixelStorei(GL_UNPACK_ALIGNMENT, 1);		
-		
-
 		
 		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_android::DoInitialize: end");		
 
