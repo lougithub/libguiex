@@ -125,7 +125,6 @@ namespace guiex
 	{
 		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_android::BeginRender: begin");
 
-
 		IGUIRender_opengl_base::BeginRender();
 
 		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_android::BeginRender: end");

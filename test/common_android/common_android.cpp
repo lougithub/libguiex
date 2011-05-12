@@ -28,6 +28,9 @@ extern "C"
     JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_Init(JNIEnv * env, jobject obj,  jint width, jint height);
     JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_Step(JNIEnv * env, jobject obj);
     JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_SetApkPath(JNIEnv * env, jobject obj, jstring apkPath);
+    JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_OnFingerUp(JNIEnv * env, jobject obj, float x, float y);
+    JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_OnFingerDown(JNIEnv * env, jobject obj, float x, float y);
+    JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_OnFingerMove(JNIEnv * env, jobject obj, float x, float y);
 };
 
 //============================================================================//
@@ -65,5 +68,22 @@ JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_Step(JNIEnv *
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT );
 
 	g_pFramework->Render();
+}
+//------------------------------------------------------------------------------
+JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_OnFingerUp(JNIEnv * env, jobject obj, float x, float y)
+{
+	guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeMousePos(guiex::CGUIVector2(x,y));
+	guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( guiex::MOUSE_LEFT, guiex::MOUSE_UP );
+}
+//------------------------------------------------------------------------------
+JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_OnFingerDown(JNIEnv * env, jobject obj, float x, float y)
+{
+	guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeMousePos(guiex::CGUIVector2(x,y));
+	guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( guiex::MOUSE_LEFT, guiex::MOUSE_DOWN );
+}
+//------------------------------------------------------------------------------
+JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_OnFingerMove(JNIEnv * env, jobject obj, float x, float y)
+{
+	guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeMousePos(guiex::CGUIVector2(x,y));
 }
 //------------------------------------------------------------------------------

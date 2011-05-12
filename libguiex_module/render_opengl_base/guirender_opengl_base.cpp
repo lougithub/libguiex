@@ -279,6 +279,8 @@ namespace guiex
 		{
 			glDisable( GL_DEPTH_TEST );
 		}
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::SetDepthTest");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::SetBlendFunc( const SGUIBlendFunc& rBlendFuncType )
@@ -286,16 +288,19 @@ namespace guiex
 		GLenum src = BlendFunc_Engin2GL( rBlendFuncType.src );
 		GLenum dst = BlendFunc_Engin2GL( rBlendFuncType.dst );
 		glBlendFunc( src, dst );
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::SetBlendFunc");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::GetBlendFunc( SGUIBlendFunc& rBlendFuncType )
 	{
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::GetBlendFunc: begin");
 		GLint src = 0;
 		GLint dst = 0;
 		glGetIntegerv( GL_BLEND_SRC, &src );
 		glGetIntegerv( GL_BLEND_DST, &dst );
 		rBlendFuncType.src = BlendFunc_GL2Engin( src );
 		rBlendFuncType.dst = BlendFunc_GL2Engin( dst );
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::GetBlendFunc: end");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::SetViewport( int32 x, int32 y, uint32 width, uint32 height)
@@ -306,6 +311,7 @@ namespace guiex
 	void IGUIRender_opengl_base::CopyTexSubImage2D ( int32 level, int32 xoffset, int32 yoffset, int32 x, int32 y, uint32 width, uint32 height)
 	{
 		glCopyTexSubImage2D(GL_TEXTURE_2D, level, xoffset, yoffset, x, y, width, height);
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::CopyTexSubImage2D");
 	}
 	//------------------------------------------------------------------------------
 	//void IGUIRender_opengl_base::DrawBuffer( EBufferMode mode )
@@ -400,6 +406,7 @@ namespace guiex
 			glMatrixMode(GL_MODELVIEW);
 			glLoadIdentity();
 		}
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::UpdateCamera: ");
 	}
 	//------------------------------------------------------------------------------
 	CGUICamera* IGUIRender_opengl_base::ApplyCamera( CGUICamera* pCamera )
@@ -474,6 +481,8 @@ namespace guiex
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glEnable(GL_TEXTURE_2D);
 		glLineWidth( 1.0f );
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DrawRect: ");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::DrawLine(
@@ -514,6 +523,8 @@ namespace guiex
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glEnable(GL_TEXTURE_2D);
 		glLineWidth( 1.0f );
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DrawLine: ");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::DrawGrid( 
@@ -536,6 +547,8 @@ namespace guiex
 
 		// restore GL default state
 		glEnableClientState(GL_COLOR_ARRAY);
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DrawGrid: ");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::DrawQuads(
@@ -565,6 +578,8 @@ namespace guiex
 		//glDrawArrays( GL_TRIANGLE_STRIP, 0, nQuadNum * 4 );
 
 		glDrawElements(GL_TRIANGLES, nQuadNum*6, GL_UNSIGNED_SHORT, pIndices);
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DrawQuads: ");
 	}
 
 
@@ -580,6 +595,8 @@ namespace guiex
 		{
 			glBindTexture(GL_TEXTURE_2D, ((const CGUITexture_opengl_base*)pTexture->GetTextureImplement())->GetOGLTexid());
 		}
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::BindTexture: ");
 
 	}
 	//------------------------------------------------------------------------------
@@ -647,6 +664,8 @@ namespace guiex
 		glTexCoordPointer(2, GL_FLOAT, kSize, (GLvoid*) (offset+diff));
 
 		glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DrawTile: ");
 	}
 	//------------------------------------------------------------------------------
 	/** 
@@ -717,6 +736,8 @@ namespace guiex
 		//reset stencil state
 		glStencilFunc( GL_EQUAL, m_nCurrentStencilRef, m_nCurrentStencilRef );
 		glStencilOp( GL_KEEP, GL_KEEP, GL_KEEP );
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::UpdateStencil: ");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::RenderRectForStencil( const SClipRect& rRect )
@@ -761,6 +782,8 @@ namespace guiex
 
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glEnableClientState(GL_COLOR_ARRAY);
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::RenderRectForStencil: ");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::SetTexCoordinate(SR_T2F_C4UB_V3F* pVertexInfo, CGUIRect tex, const CGUITexture* pTexture, EImageOrientation eImageOrientation)

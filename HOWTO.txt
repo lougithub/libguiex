@@ -1,11 +1,17 @@
 Q: how to use CMake to compile project.
-A: use command line
-	in windows: 
-		cd .../build
-		cmake ../
-	in Mac:
-		cd .../build
-		cmake ../ -G Xcode
+A: use CMake-gui, and select platform.
 
 Q: where to get CMake tools.
 A: http://www.cmake.org
+
+Q: how to build android.
+A: set environment NDK_MODULE_PATH to this directory. and go to android directory, such as ./test/hello_ipad/android/, and type ndk-build.
+
+Q: how to add new android project.
+A: copy ./test/_android_project_template_ to your project directory, and change Android.mk, at last, add data to assets.
+
+Q: how to set debug or release in android project.
+A: modify android:debuggable="true" in AndroidManifest.xml
+
+Q: how to get function name from callstack
+A: arm-eabi-addr2line -C -f -e /path/to/lib/with/symbols.so
