@@ -234,6 +234,8 @@ namespace guiex
 	void IGUIRender_opengl_base::OnScreenSizeChange( const CGUIIntSize& rSize )
 	{
 		glViewport(0,0,rSize.GetWidth(),rSize.GetHeight());
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::OnScreenSizeChange");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::DeleteSelf()
@@ -244,11 +246,15 @@ namespace guiex
 	void IGUIRender_opengl_base::DoDestroy()
 	{
 		DestroyAllTexture();
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DoDestroy");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::ClearColor( real red, real green, real blue, real alpha )
 	{
 		glClearColor( red, green, blue, alpha );
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::ClearColor");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::Clear( uint32 uFlag )
@@ -267,6 +273,8 @@ namespace guiex
 			bitfield |= GL_STENCIL_BUFFER_BIT;
 		}
 		glClear( bitfield );
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::Clear");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::SetDepthTest( bool bEnable )
@@ -306,11 +314,14 @@ namespace guiex
 	void IGUIRender_opengl_base::SetViewport( int32 x, int32 y, uint32 width, uint32 height)
 	{
 		glViewport( x, y, width, height );
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::SetViewport");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::CopyTexSubImage2D ( int32 level, int32 xoffset, int32 yoffset, int32 x, int32 y, uint32 width, uint32 height)
 	{
 		glCopyTexSubImage2D(GL_TEXTURE_2D, level, xoffset, yoffset, x, y, width, height);
+
 		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::CopyTexSubImage2D");
 	}
 	//------------------------------------------------------------------------------
@@ -327,11 +338,15 @@ namespace guiex
 	void IGUIRender_opengl_base::PushMatrix()
 	{
 		glPushMatrix();
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::PushMatrix");
 	}	
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::PopMatrix()
 	{
 		glPopMatrix();
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::PopMatrix");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::MatrixMode( EMatrixMode eMode )
@@ -349,19 +364,25 @@ namespace guiex
 		default:
 			CGUIException::ThrowException("IGUIRender_opengl_base::MatrixMode: unknown matrix mode");
 			return;
-
 		}
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::MatrixMode");
+
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::LoadIdentityMatrix( )
 	{
 		glLoadIdentity();
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::LoadIdentityMatrix");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::MultMatrix( const CGUIMatrix4& rMatrix )
 	{
 		makeGLMatrix( m_gl_matrix, rMatrix );
 		glMultMatrixf( m_gl_matrix );
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::MultMatrix");
 	}
 	//------------------------------------------------------------------------------
 	bool IGUIRender_opengl_base::IsSupportStencil()
@@ -420,6 +441,7 @@ namespace guiex
 
 		UpdateCamera();
 
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::ApplyCamera");
 		return pOldCamera;
 	}
 
@@ -889,6 +911,8 @@ namespace guiex
 		{
 			DestroyTexture(*m_setTexture.begin());
 		}
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DestroyAllTexture");
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -976,6 +1000,8 @@ namespace guiex
 			const CGUIIntSize& rSize = GSystem->GetScreenSize();
 			m_aWholeScreenRect.m_aClipRect.SetSize( rSize );
 		}
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::EnableClip");
 	}
 	//------------------------------------------------------------------------------
 	bool IGUIRender_opengl_base::IsEnableClip( ) const

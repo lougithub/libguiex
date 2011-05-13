@@ -89,8 +89,8 @@ namespace guiex
 	{
 		CGUIFontData_dummy* pFontData = GetFontData( rInfo.m_uFontID );
 		real fFontSize = pFontData->GetFontSize()*rInfo.m_fFontScale;
-		CGUIRect aCharRect( CGUIVector2(rPos.x, rPos.y-fFontSize),
-						   CGUISize(fFontSize,fFontSize));
+		CGUIRect aCharRect( CGUIVector2(rPos.x, rPos.y),
+						   CGUISize(fFontSize*rInfo.m_fFontScale,fFontSize*rInfo.m_fFontScale));
 		
 		pRender->DrawRect( aCharRect, 1, 0,
 						  rInfo.m_aColor,
@@ -158,8 +158,8 @@ namespace guiex
 		{
 			
 			CGUIRect aCharRect(
-							   CGUIVector2(aPos.x, aPos.y-fFontSize),
-							   aFontSize);
+							   CGUIVector2(aPos.x, aPos.y),
+							   aFontSize*rInfo.m_fFontScale);
 			
 			//dest area size
 			pRender->DrawRect( aCharRect, 1, 0,
@@ -200,8 +200,8 @@ namespace guiex
 		for( int32 i=nStartPos; i<nEndPos; ++i)
 		{
 			CGUIRect aCharRect(
-							   CGUIVector2(aPos.x, aPos.y-fFontSize),
-							   aFontSize);
+							   CGUIVector2(aPos.x, aPos.y),
+							   aFontSize*rInfo.m_fFontScale);
 			
 			pRender->DrawRect( aCharRect, 1, 0,
 							  rInfo.m_aColor,

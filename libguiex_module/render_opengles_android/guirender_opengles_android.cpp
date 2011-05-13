@@ -63,62 +63,86 @@ namespace guiex
 	void IGUIRender_opengles_android::GenRenderbuffers(uint32 n, uint32* renderbuffers)
 	{
 		glGenRenderbuffersOES(n, renderbuffers);
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_android::GenRenderbuffers");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles_android::BindRenderbuffer( uint32 renderbuffer)
 	{
 		glBindRenderbufferOES(GL_RENDERBUFFER_OES, renderbuffer);
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_android::BindRenderbuffer");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles_android::GetBindingRenderBuffer( int32* renderbuffer )
 	{
 		glGetIntegerv(GL_RENDERBUFFER_BINDING_OES, renderbuffer);
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_android::GetBindingRenderBuffer");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles_android::DeleteRenderbuffers(uint32 n, const uint32* renderbuffers)
 	{
 		glDeleteRenderbuffersOES(n, renderbuffers);
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_android::DeleteRenderbuffers");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles_android::RenderbufferStorage_Depth( uint32 width, uint32 height)
 	{
 		glRenderbufferStorageOES( GL_RENDERBUFFER_OES, GL_DEPTH_COMPONENT16_OES, width, height);
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_android::RenderbufferStorage_Depth");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles_android::FramebufferRenderbuffer_Depth( uint32 renderbuffer )
 	{
 		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_DEPTH_ATTACHMENT_OES, GL_RENDERBUFFER_OES, renderbuffer);
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_android::FramebufferRenderbuffer_Depth");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles_android::GenFramebuffers( uint32 n, uint32* framebuffers )
 	{
 		glGenFramebuffersOES( n, framebuffers );
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_android::GenFramebuffers");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles_android::DeleteFramebuffers( uint32 n, const uint32* framebuffers )
 	{
 		glDeleteFramebuffersOES( n, framebuffers );
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_android::DeleteFramebuffers");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles_android::BindFramebuffer( uint32 framebuffer )
 	{
 		glBindFramebufferOES( GL_FRAMEBUFFER_OES, framebuffer );
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_android::BindFramebuffer");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles_android::GetBindingFrameBuffer( int32* framebuffer )
 	{
 		glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, framebuffer);
+		
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_android::GetBindingFrameBuffer");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles_android::FramebufferTexture2D_Color( const CGUITexture* pTexture, int32 level )
 	{
 		glFramebufferTexture2DOES( GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_TEXTURE_2D, ((const CGUITexture_opengles_android*)pTexture->GetTextureImplement())->GetOGLTexid(), level );
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_android::FramebufferTexture2D_Color");
 	}
 	//------------------------------------------------------------------------------
 	bool IGUIRender_opengles_android::CheckFramebufferStatus( )
 	{
 		GLuint status = glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES);
 		return status == GL_FRAMEBUFFER_COMPLETE_OES;
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_android::CheckFramebufferStatus");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles_android::BeginRender(void)
@@ -173,7 +197,11 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles_android::ClearDepth(real depth)
 	{
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_android::ClearDepth: begin");
+
 		glClearDepthf( depth );
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_android::ClearDepth: end");
 	}
 	//-----------------------------------------------------------------------------
 	void IGUIRender_opengles_android::Perspective(GLfloat fovy, GLfloat aspect, GLfloat zNear, GLfloat zFar)

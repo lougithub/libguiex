@@ -46,6 +46,8 @@ namespace guiex
 		,m_nTextureHeight(0)
 		,m_nBytesPerPixel(0)
 	{
+		TRY_THROW_OPENGL_ERROR("CGUITexture_opengl_base::CGUITexture_opengl_base: begin");
+
 		// generate a OGL texture that we will use.
 		glGenTextures(1, &m_ogltexture);
 
@@ -57,7 +59,7 @@ namespace guiex
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);	// GL_CLAMP_TO_EDGE GL_CLAMP
 		//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 		
-		TRY_THROW_OPENGL_ERROR("CGUITexture_opengl_base::CGUITexture_opengl_base");
+		TRY_THROW_OPENGL_ERROR("CGUITexture_opengl_base::CGUITexture_opengl_base: end");
 	}
 	//------------------------------------------------------------------------------
 	CGUITexture_opengl_base::~CGUITexture_opengl_base()
@@ -65,6 +67,8 @@ namespace guiex
 		// otherwise delete OGL texture associated with this object.
 		glDeleteTextures(1, &m_ogltexture);
 		m_ogltexture = 0;
+
+		TRY_THROW_OPENGL_ERROR("CGUITexture_opengl_base::~CGUITexture_opengl_base");
 	}
 	//------------------------------------------------------------------------------
 	uint16	CGUITexture_opengl_base::GetWidth(void) const
