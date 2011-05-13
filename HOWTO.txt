@@ -5,10 +5,12 @@ Q: where to get CMake tools.
 A: http://www.cmake.org
 
 Q: how to build android.
-A: set environment NDK_MODULE_PATH to this directory. and go to android directory, such as ./test/hello_ipad/android/, and type ndk-build.
+A: 1.set environment NDK_MODULE_PATH to this directory.
+   2.set GUIEX_CURRENT_PROJECT to the project name which you want to build.
+   3.and go to android directory, such as ./test/hello_ipad/android/, and type ndk-build.
 
 Q: how to add new android project.
-A: copy ./test/_android_project_template_ to your project directory, and change Android.mk, at last, add data to assets.
+A: add PROJECT_NAME.mk an ./test/_android_project_/jni/
 
 Q: how to set debug or release in android project.
 A: modify android:debuggable="true" in AndroidManifest.xml
