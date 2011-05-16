@@ -17,6 +17,9 @@ public class GuiexSampleLib {
      public static native void Step();
      public static native void SetApkPath( String apkFilePath ); 
      
+     public static native void onPause();
+     public static native void onResume();
+     
      public static native void OnFingerUp( float x, float y );
      public static native void OnFingerDown( float x, float y );
      public static native void OnFingerMove( float x, float y );

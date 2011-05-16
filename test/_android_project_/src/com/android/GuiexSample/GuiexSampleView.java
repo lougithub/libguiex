@@ -80,4 +80,16 @@ class GuiexSampleView extends GLSurfaceView
         }
         return true;
     }
+	
+    @Override public void onPause()
+	{
+        super.onPause();
+        GuiexSampleLib.onPause( ); 
+    }
+
+    @Override public void onResume() 
+	{
+        super.onResume();
+        GuiexSampleLib.onResume( ); 
+    }	
 }
