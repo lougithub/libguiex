@@ -36,7 +36,7 @@ LOCAL_SRC_FILES := \
 	render_opengles_android/guirender_opengles_android.cpp \
 	render_opengles_android/guitexture_opengles_android.cpp \
 	physics_box2d/guiphysics_box2d.cpp \
-	stringconv_android/guistringconv_android.cpp
+	stringconv_internal/guistringconv_internal.cpp
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
 

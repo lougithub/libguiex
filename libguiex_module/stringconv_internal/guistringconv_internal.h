@@ -1,12 +1,12 @@
 /** 
-* @file guistringconv_android.h
+* @file guistringconv_internal.h
 * @brief used to convert string between different code
 * @author ken
-* @date 2011-04-29
+* @date 2011-05-16
 */
 
-#ifndef __GUI_STRINVCONV_ANDROID_H_20110429__
-#define __GUI_STRINVCONV_ANDROID_H_20110429__
+#ifndef __GUI_STRINVCONV_INTERNAL_H_20110516__
+#define __GUI_STRINVCONV_INTERNAL_H_20110516__
 
 //============================================================================//
 // include
@@ -20,11 +20,11 @@
 //============================================================================// 
 namespace guiex
 {
-	class GUIEXPORT IGUIStringConv_android : public IGUIInterfaceStringConv
+	class GUIEXPORT IGUIStringConv_internal : public IGUIInterfaceStringConv
 	{
 	public:
-		IGUIStringConv_android();
-		virtual ~IGUIStringConv_android();
+		IGUIStringConv_internal();
+		virtual ~IGUIStringConv_internal();
 
 		/**
 		* @brief convert utf8 to utf16
@@ -51,5 +51,5 @@ namespace guiex
 	GUI_INTERFACE_DECLARE();
 }
 
-#endif //__GUI_STRINVCONV_ANDROID_H_20110429__
+#endif //__GUI_STRINVCONV_INTERNAL_H_20110516__
 

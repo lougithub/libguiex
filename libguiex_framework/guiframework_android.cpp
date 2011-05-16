@@ -21,7 +21,7 @@
 #include <libguiex_module/filesys_android/guifilesys_android.h>
 #include <libguiex_module/configfile_tinyxml/guiconfigfile_tinyxml.h>
 #include <libguiex_module/render_opengles_android/guirender_opengles_android.h>
-#include <libguiex_module/stringconv_android/guistringconv_android.h>
+#include <libguiex_module/stringconv_internal/guistringconv_internal.h>
 #include <libguiex_module/script_lua/guiscript_lua.h>
 #include <libguiex_module/physics_box2d/guiphysics_box2d.h>
 #include <libguiex_module/sound_dummy/guisound_dummy.h>
@@ -128,7 +128,7 @@ namespace guiex
 	{
 		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengles_android);
 		GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_tga);
-		GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_android);
+		GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_internal);
 		GUI_REGISTER_INTERFACE_LIB( IGUIFileSys_android );
 		GUI_REGISTER_INTERFACE_LIB( IGUIFont_dummy);
 		GUI_REGISTER_INTERFACE_LIB( IGUIIme_dummy);

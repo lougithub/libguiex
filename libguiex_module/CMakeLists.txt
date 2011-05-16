@@ -192,6 +192,13 @@ set( ${target_name}_stringconv_cocoa_SRCS
 source_group(stringconv_cocoa FILES ${${target_name}_stringconv_cocoa_SRCS} )
 
 
+#stringconv_internal
+set( ${target_name}_stringconv_internal_SRCS 
+	stringconv_internal/guistringconv_internal.cpp
+	stringconv_internal/guistringconv_internal.h
+	)
+source_group(stringconv_internal FILES ${${target_name}_stringconv_internal_SRCS} )
+
 if( BUILD_PLATFORM_WIN32 )
 
 	set( ${target_name}_SRCS 
@@ -211,6 +218,7 @@ if( BUILD_PLATFORM_WIN32 )
 		${${target_name}_render_opengl_base_SRCS}
 		${${target_name}_render_opengl_SRCS}
 		${${target_name}_stringconv_winapi_SRCS}
+		${${target_name}_stringconv_internal_SRCS}
 		${${target_name}_physics_box2d_SRCS}
 		${${target_name}_sound_openal_SRCS}
 		${${target_name}_sound_dummy_SRCS}
@@ -232,6 +240,7 @@ elseif( BUILD_PLATFORM_IOS )
 		${${target_name}_render_opengl_base_SRCS}
 		${${target_name}_stringconv_iconv_SRCS}
 		${${target_name}_stringconv_cocoa_SRCS}
+		${${target_name}_stringconv_internal_SRCS}
 		${${target_name}_script_lua_SRCS}
 		${${target_name}_physics_box2d_SRCS}
 		${${target_name}_sound_openal_SRCS}

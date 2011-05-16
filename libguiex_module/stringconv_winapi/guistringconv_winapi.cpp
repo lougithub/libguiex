@@ -68,7 +68,7 @@ namespace guiex
 			return 0;
 		}
 
-		size_t buf_size = (rSrc.size()+1)*4;
+		size_t buf_size = (rSrc.size()*4)+1;
 		char* dst = (char*)(new char[buf_size]);
 		::WideCharToMultiByte(CP_UTF8,0,rSrc.c_str(),-1,dst,buf_size, NULL, NULL );
 		rDst.append(dst);

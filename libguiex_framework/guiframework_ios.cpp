@@ -22,6 +22,7 @@
 #include <libguiex_module/render_opengles_ios/guirender_opengles_ios.h>
 #include <libguiex_module/stringconv_cocoa/guistringconv_cocoa.h>
 #include <libguiex_module/stringconv_iconv/guistringconv_iconv.h>
+#include <libguiex_module/stringconv_internal/guistringconv_internal.h>
 #include <libguiex_module/script_lua/guiscript_lua.h>
 #include <libguiex_module/physics_box2d/guiphysics_box2d.h>
 #include <libguiex_module/sound_dummy/guisound_dummy.h>
@@ -99,7 +100,8 @@ namespace guiex
 	{
 		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengles_ios);
 		GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_tga);
-		GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_cocoa);
+		//GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_cocoa);
+		GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_internal);
 		GUI_REGISTER_INTERFACE_LIB( IGUIFileSys_cocoa);
 		GUI_REGISTER_INTERFACE_LIB( IGUIFont_ft2);
 		GUI_REGISTER_INTERFACE_LIB( IGUIIme_dummy);
