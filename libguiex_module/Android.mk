@@ -23,6 +23,9 @@ LOCAL_SRC_FILES := \
 	sound_dummy/guisounddata_dummy.cpp \
 	sound_dummy/guimusicdata_dummy.cpp \
 	filesys_android/guifilesys_android.cpp \
+	font_ft2/guifont_ft2.cpp \
+	font_ft2/guifontdata_ft2.cpp \
+	font_ft2/guifontface_ft2.cpp \
 	font_dummy/guifont_dummy.cpp \
 	font_dummy/guifontdata_dummy.cpp \
 	imageloader_tga/guiimagedata_tga.cpp \

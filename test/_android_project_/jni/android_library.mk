@@ -9,6 +9,7 @@ LOCAL_STATIC_LIBRARIES := \
 	lua \
 	tinyxml \
 	box2d \
+	freetype \
 	libzip
 
 LOCAL_LDLIBS:=-lz -lGLESv1_CM -llog

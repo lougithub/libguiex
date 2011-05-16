@@ -6,8 +6,8 @@ LOCAL_MODULE := vorbis
 
 
 LOCAL_C_INCLUDES := \
-	$(GUIEX_Root)/external/libogg/include \
-	$(GUIEX_Root)/external/libvorbis/include
+	$(LOCAL_PATH)/../libogg/include \
+	$(LOCAL_PATH)/include
 
 LOCAL_SRC_FILES := \
 	lib/analysis.c \

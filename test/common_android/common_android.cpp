@@ -49,8 +49,11 @@ JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_SetApkPath(JN
 //------------------------------------------------------------------------------
 JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_Init(JNIEnv * env, jobject obj,  jint width, jint height)
 {    
-	g_pFramework = CreateFramework( );
-	g_pFramework->Initialize( guiex::CGUIIntSize( guiex::uint32(width), guiex::uint32(height)), "assets" );
+	if( NULL == g_pFramework )
+	{
+		g_pFramework = CreateFramework( );
+		g_pFramework->Initialize( guiex::CGUIIntSize( guiex::uint32(width), guiex::uint32(height)), "assets" );
+	}
 
 	g_aOldTimer.UpdateTime();
 }

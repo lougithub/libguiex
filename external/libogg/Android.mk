@@ -5,7 +5,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := ogg
 
 
-LOCAL_C_INCLUDES := $(GUIEX_Root)/external/libogg/include
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/include
 
 LOCAL_SRC_FILES := \
     src/bitwise.c \

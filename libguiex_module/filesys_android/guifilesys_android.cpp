@@ -71,25 +71,26 @@ namespace guiex
 	{
 		CGUIString strFullPath;
 		GSystem->GenerateFullPath(rFileName, strFullPath );
-		zip_file* file = zip_fopen(m_pAPKArchive, strFullPath.c_str(), 0);
-		if( !file)
-		{
-			//failed to open file
-			return -1;
-		}
 
+		//get file size
 		struct zip_stat aZipStat;
 		if( 0 != zip_stat( m_pAPKArchive, strFullPath.c_str(), 0, &aZipStat ))
 		{
-			zip_fclose( file );
 			return -1;
 		}
 
 		uint32 nSize = aZipStat.size;
 		if( nSize == 0 )
 		{
-			zip_fclose( file );
 			return 0;
+		}
+
+		//open file
+		zip_file* file = zip_fopen(m_pAPKArchive, strFullPath.c_str(), 0);
+		if( !file)
+		{
+			//failed to open file
+			return -1;
 		}
 
 		///locate buffer
@@ -181,6 +182,11 @@ namespace guiex
 	void IGUIFileSys_android::DeleteSelf()
 	{
 		delete this;
+	}
+	//------------------------------------------------------------------------------
+	zip* IGUIFileSys_android::GetAPKArchive()
+	{
+		return m_pAPKArchive;
 	}
 	//------------------------------------------------------------------------------
 

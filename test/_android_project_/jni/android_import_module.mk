@@ -8,5 +8,6 @@ $(call import-module, libguiex_framework)
 $(call import-module, external/Box2D)
 $(call import-module, external/lua)
 $(call import-module, external/tinyxml)
+$(call import-module, external/freetype)
 $(call import-module, external/libzip)
 

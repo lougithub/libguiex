@@ -17,6 +17,7 @@
 
 //libguiex module
 #include <libguiex_module/font_dummy/guifont_dummy.h>
+#include <libguiex_module/font_ft2/guifont_ft2.h>
 #include <libguiex_module/imageloader_tga/guiimageloader_tga.h>
 #include <libguiex_module/filesys_android/guifilesys_android.h>
 #include <libguiex_module/configfile_tinyxml/guiconfigfile_tinyxml.h>
@@ -130,7 +131,7 @@ namespace guiex
 		GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_tga);
 		GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_internal);
 		GUI_REGISTER_INTERFACE_LIB( IGUIFileSys_android );
-		GUI_REGISTER_INTERFACE_LIB( IGUIFont_dummy);
+		GUI_REGISTER_INTERFACE_LIB( IGUIFont_ft2);
 		GUI_REGISTER_INTERFACE_LIB( IGUIIme_dummy);
 		GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
 		GUI_REGISTER_INTERFACE_LIB( IGUIScript_lua);

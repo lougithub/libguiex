@@ -175,7 +175,7 @@ struct zip;
 struct zip_file;
 struct zip_source;
 
-
+
 
 ZIP_EXTERN int zip_add(struct zip *, const char *, struct zip_source *);
 ZIP_EXTERN int zip_add_dir(struct zip *, const char *);

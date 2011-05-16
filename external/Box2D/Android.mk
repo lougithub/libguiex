@@ -4,9 +4,6 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := box2d
 
-
-LOCAL_C_INCLUDES := $(GUIEX_Root)/external/Box2D
-
 LOCAL_SRC_FILES := \
 	Box2D/Collision/b2BroadPhase.cpp \
 	Box2D/Collision/b2CollideCircle.cpp \

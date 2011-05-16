@@ -50,6 +50,8 @@ namespace guiex
 		*/
 		virtual void DeleteSelf();
 
+		zip* GetAPKArchive();
+
 	protected:
 		virtual int DoInitialize(void* );
 		virtual void DoDestroy();
