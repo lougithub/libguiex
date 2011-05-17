@@ -66,7 +66,7 @@ namespace guiex
 	public:
 		virtual ~CGUIFontData_ft2();
 
-		SCharData_ft2* GetCharData( wchar_t charCode );
+		SCharData_ft2* GetCharData( wchar charCode );
 
 	protected:
 		friend class IGUIFont_ft2;
@@ -79,7 +79,7 @@ namespace guiex
 		virtual int32 DoLoad();
 		virtual void DoUnload();
 
-		SCharData_ft2* LoadCharData( wchar_t charCode );
+		SCharData_ft2* LoadCharData( wchar charCode );
 		FT_Face GetFontFace();
 
 	protected:
@@ -91,7 +91,7 @@ namespace guiex
 		uint32 m_uTexturePosY;
 		uint32 m_uMaxHeight;
 
-		typedef std::map<wchar_t, SCharData_ft2*> TMapCharData;
+		typedef std::map<wchar, SCharData_ft2*> TMapCharData;
 		TMapCharData m_mapCharsData;
 	};
 

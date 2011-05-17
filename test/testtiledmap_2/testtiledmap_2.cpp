@@ -200,7 +200,7 @@ CMyCanvasLayer_TiledMapGame::CMyCanvasLayer_TiledMapGame( const char* szLayerNam
 	m_pScore->SetPosition( 0,0 );
 	m_pScore->SetTextInfo(CGUIStringRenderInfo(2, 1, CGUIColor(1,1,1,1)));
 	m_pScore->SetTextAlignmentHorz( eTextAlignment_Horz_Left );
-	m_pScore->SetTextContent(L"0");
+	m_pScore->SetTextContentUTF8("0");
 	m_pScore->Create();
 	m_pScore->Open();
 

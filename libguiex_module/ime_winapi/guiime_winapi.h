@@ -42,10 +42,10 @@ namespace guiex
 		virtual void CloseIme();
 
 		///get Result string
-		virtual const wchar_t* GetResultString() const;
+		virtual const wchar* GetResultString() const;
 
 		/// add result string
-		void AddResultString( const wchar_t* pString );
+		void AddResultString( const wchar* pString );
 
 		///clear Result string
 		virtual void ClearResultString();
@@ -85,7 +85,7 @@ namespace guiex
 
 	protected:
 		CGUIVector2 m_aPos; /// position of cursor
-		std::wstring m_strResult; /// result string of ime
+		CGUIStringW m_strResult; /// result string of ime
 
 		HWND m_hWnd; /// handle of the windows
 		bool m_bIsOpen;	/// flag, whether ime is opened

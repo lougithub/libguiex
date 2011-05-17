@@ -35,7 +35,7 @@ namespace guiex
 
 		while( idx < rString.size())
 		{
-			CGUIString::size_type ret = rString.find_first_of(",", idx);
+			CGUIString::size_type ret = rString.find(",", idx);
 			aListString.push_back(rString.substr(idx, ret));
 			if( ret == CGUIString::npos )
 			{
@@ -63,7 +63,7 @@ namespace guiex
 				"[AppWideByteToMultiChar]: not found interface to convert string code");
 			return -1;
 		}
-		return pStringConv->Utf16ToUtf8( rSrc, rDst );
+		return pStringConv->WCharToUtf8( rSrc, rDst );
 	}
 	//------------------------------------------------------------------------------
 	CGUIString AppWideByteToMultiChar( const CGUIStringW& rSrc )
@@ -82,7 +82,7 @@ namespace guiex
 				"[AppMultiByteToWideChar]: not found interface to convert string code");
 			return -1;
 		}
-		return pStringConv->Utf8ToUtf16( rSrc, rDst );
+		return pStringConv->Utf8ToWChar( rSrc, rDst );
 	}
 	//------------------------------------------------------------------------------
 	CGUIStringW AppMultiByteToWideChar( const CGUIString& rSrc )

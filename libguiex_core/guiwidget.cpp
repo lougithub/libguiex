@@ -2342,7 +2342,7 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::DrawCharacter(IGUIInterfaceRender* pRender, 
-		wchar_t charCode, 
+		wchar charCode, 
 		const CGUIStringRenderInfo& rInfo,
 		const CGUIVector2& rPos)
 	{

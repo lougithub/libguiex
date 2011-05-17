@@ -294,14 +294,4 @@ namespace guiex
 		glTranslatef(-eyex, -eyey, -eyez);
 	}
 	//-----------------------------------------------------------------------------	
-	void IGUIRender_opengles_ios::SetWireFrame( bool /*bWireFrame*/)
-	{
-		//TODO: implement later
-	}
-	//-----------------------------------------------------------------------------	
-	bool IGUIRender_opengles_ios::IsWireFrame( ) const
-	{
-		return false;
-	}
-	//-----------------------------------------------------------------------------	
 }//namespace guiex

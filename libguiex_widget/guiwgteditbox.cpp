@@ -190,7 +190,7 @@ namespace guiex
 	/** 
 	* @brief is text masked
 	*/
-	void CGUIWgtEditBox::SetMaskCode(wchar_t wMaskCode)
+	void CGUIWgtEditBox::SetMaskCode(wchar wMaskCode)
 	{
 		if( m_wMaskCodePoint != wMaskCode )
 		{
@@ -215,7 +215,7 @@ namespace guiex
 	/** 
 	* @brief is text masked
 	*/
-	wchar_t CGUIWgtEditBox::GetTextMasked() const
+	wchar CGUIWgtEditBox::GetTextMasked() const
 	{
 		return m_wMaskCodePoint;
 	}
@@ -309,7 +309,7 @@ namespace guiex
 			}
 			else
 			{
-				if( wcslen(m_pEdit->GetResult()) )
+				if( !m_pEdit->GetResult().empty() )
 				{
 					if( GetSelectionLength() != 0)
 					{

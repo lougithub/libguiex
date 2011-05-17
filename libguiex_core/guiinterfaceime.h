@@ -37,7 +37,7 @@ namespace guiex
 		virtual void CloseIme() = 0;
 
 		///get Result string
-		virtual const wchar_t* GetResultString() const= 0;
+		virtual const wchar* GetResultString() const= 0;
 
 		///clear Result string
 		virtual void ClearResultString() = 0;

@@ -298,14 +298,4 @@ namespace guiex
 		glTranslatef(-eyex, -eyey, -eyez);
 	}
 	//-----------------------------------------------------------------------------	
-	void IGUIRender_opengles_android::SetWireFrame( bool /*bWireFrame*/)
-	{
-		//TODO: implement later
-	}
-	//-----------------------------------------------------------------------------	
-	bool IGUIRender_opengles_android::IsWireFrame( ) const
-	{
-		return false;
-	}
-	//-----------------------------------------------------------------------------	
 }//namespace guiex

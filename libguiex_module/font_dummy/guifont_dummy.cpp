@@ -82,7 +82,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void IGUIFont_dummy::DrawCharacter(
 									   IGUIInterfaceRender* pRender, 
-									   wchar_t charCode, 
+									   wchar charCode, 
 									   const CGUIStringRenderInfo& rInfo,
 									   const CGUIVector2& rPos,
 									   real fAlpha)
@@ -219,7 +219,7 @@ namespace guiex
 		return pFontData->GetFontSize() * rInfo.m_fFontScale;
 	}
 	//------------------------------------------------------------------------------
-	CGUISize IGUIFont_dummy::GetCharacterSize( wchar_t charCode, const CGUIStringRenderInfo& rInfo )
+	CGUISize IGUIFont_dummy::GetCharacterSize( wchar charCode, const CGUIStringRenderInfo& rInfo )
 	{
 		CGUIFontData_dummy* pFontData = GetFontData( rInfo.m_uFontID );
 		real fFontSize = pFontData->GetFontSize()*rInfo.m_fFontScale;

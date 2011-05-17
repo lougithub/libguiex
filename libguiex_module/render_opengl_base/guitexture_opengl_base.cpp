@@ -64,11 +64,13 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUITexture_opengl_base::~CGUITexture_opengl_base()
 	{
+		TRY_THROW_OPENGL_ERROR("CGUITexture_opengl_base::~CGUITexture_opengl_base");
+
 		// otherwise delete OGL texture associated with this object.
 		glDeleteTextures(1, &m_ogltexture);
 		m_ogltexture = 0;
 
-		TRY_THROW_OPENGL_ERROR("CGUITexture_opengl_base::~CGUITexture_opengl_base");
+		glGetError();
 	}
 	//------------------------------------------------------------------------------
 	uint16	CGUITexture_opengl_base::GetWidth(void) const

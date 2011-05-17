@@ -32,7 +32,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtMultiEditBox);
 	//------------------------------------------------------------------------------
-	wchar_t CGUIWgtMultiEditBox::ms_wLineBreak = L'\n';
+	wchar CGUIWgtMultiEditBox::ms_wLineBreak = L'\n';
 	//------------------------------------------------------------------------------
 	CGUIWgtMultiEditBox::CGUIWgtMultiEditBox(const CGUIString& rName, const CGUIString& rSceneName)
 		:CGUIWgtScrollbarContainer(StaticGetType(), rName, rSceneName)
@@ -240,7 +240,7 @@ namespace guiex
 	{
 		if( IsFocus())
 		{
-			if( wcslen(m_pEdit->GetResult()) )
+			if( !m_pEdit->GetResult().empty() )
 			{
 				//TODO: only test here
 				InsertString(m_pEdit->GetResult());
@@ -322,7 +322,7 @@ namespace guiex
 		return m_bReadOnly;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtMultiEditBox::InsertString( const CGUIStringW& rText )
+	void CGUIWgtMultiEditBox::InsertString( const CGUIStringW& rText )
 	{
 		IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
 
@@ -892,13 +892,11 @@ namespace guiex
 			// if there is room
 			if (m_strText.m_strContent.size() < m_nMaxString)
 			{
-				InsertString(L"\n");
+				wchar szString[2] = {ms_wLineBreak, 0};
+				InsertString(szString);
 			}
 		}
 	}
-
-
-
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtMultiEditBox::OnGetFocus( CGUIEventNotification* pEvent )
 	{

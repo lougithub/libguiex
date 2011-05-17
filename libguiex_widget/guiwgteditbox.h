@@ -49,8 +49,8 @@ namespace guiex
 		void SetTextMasked(bool bMask);
 		bool IsTextMasked() const;
 
-		void SetMaskCode(wchar_t wMaskCode);
-		wchar_t GetTextMasked() const;
+		void SetMaskCode(wchar wMaskCode);
+		wchar GetTextMasked() const;
 
 		void SetReadOnly(bool bRead);
 		bool IsReadOnly() const;
@@ -123,7 +123,7 @@ namespace guiex
 
 		//for mask
 		bool m_bMaskText; //!< True if the editbox text should be rendered masked.
-		wchar_t m_wMaskCodePoint; //!< Code point to use when rendering masked text.
+		wchar m_wMaskCodePoint; //!< Code point to use when rendering masked text.
 		CGUIStringRender m_strMaskText; //!< mask text
 
 		//---------------------------------------------------

@@ -164,7 +164,7 @@ namespace guiex
 		};
 		typedef std::vector<SLineInfo>   TLineList;  //!< Type for collection of LineInfos.
 		TLineList m_aLineList; //!< line list
-		static wchar_t ms_wLineBreak; //!< Holds what we consider to be line break characters.
+		static wchar ms_wLineBreak; //!< Holds what we consider to be line break characters.
 
 	protected:
 		CGUIWgtEdit* m_pEdit; //!< edit control

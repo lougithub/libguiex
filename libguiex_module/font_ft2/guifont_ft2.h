@@ -61,7 +61,7 @@ namespace guiex
 
 		virtual void DrawCharacter(
 			IGUIInterfaceRender* pRender, 
-			wchar_t charCode, 
+			wchar charCode, 
 			const CGUIStringRenderInfo& rInfo,
 			const CGUIVector2& rPos,
 			real fAlpha);
@@ -85,7 +85,7 @@ namespace guiex
 			int32 nEndPos = -1);
 
 		virtual real GetFontHeight( const CGUIStringRenderInfo& rInfo );
-		virtual CGUISize GetCharacterSize( wchar_t charCode, const CGUIStringRenderInfo& rInfo );
+		virtual CGUISize GetCharacterSize( wchar charCode, const CGUIStringRenderInfo& rInfo );
 
 		virtual void DeleteSelf();
 

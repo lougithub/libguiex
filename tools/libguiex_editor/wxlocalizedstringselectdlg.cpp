@@ -73,6 +73,6 @@ void WxLocalizedstringSelectDialog::OnListBoxSelect(wxCommandEvent& event)
 	long sel = event.GetSelection();
 	m_strLocalizedString = m_pListBox->GetString( sel );
 
-	m_pTextBox->SetLabelText( CGUILocalizationManager::Instance()->Localize( wx2GuiString(m_strLocalizedString )));
+	m_pTextBox->SetLabelText( (wchar_t*)CGUILocalizationManager::Instance()->Localize( wx2GuiString(m_strLocalizedString )).c_str());
 }
 //------------------------------------------------------------------------------

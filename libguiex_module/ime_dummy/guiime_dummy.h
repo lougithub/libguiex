@@ -33,7 +33,7 @@ namespace guiex
 	public:
 		virtual void OpenIme();
 		virtual void CloseIme();
-		virtual const wchar_t* GetResultString() const;
+		virtual const wchar* GetResultString() const;
 		virtual void ClearResultString();
 		virtual void SetCursorPos( const CGUIVector2& rPos );
 		virtual const CGUIVector2& GetCursorPos() const;

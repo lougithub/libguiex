@@ -72,7 +72,7 @@ namespace guiex
 		return m_pFontFace->GetFontFace();
 	}
 	//------------------------------------------------------------------------------
-	SCharData_ft2* CGUIFontData_ft2::GetCharData( wchar_t charCode )
+	SCharData_ft2* CGUIFontData_ft2::GetCharData( wchar charCode )
 	{
 		Load();
 
@@ -89,7 +89,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	SCharData_ft2* CGUIFontData_ft2::LoadCharData( wchar_t charCode )
+	SCharData_ft2* CGUIFontData_ft2::LoadCharData( wchar charCode )
 	{
 		uint16 uFontSize = GetFontSize();
 		if( charCode == L'\n')

@@ -22,7 +22,11 @@
 namespace guiex
 {
 	typedef std::string CGUIString;
+#if GUI_USE_STANDARD_WCHAR_T
 	typedef std::wstring CGUIStringW;
+#else
+	typedef std::basic_string<wchar, std::char_traits<wchar>, std::allocator<wchar> > CGUIStringW;
+#endif
 }
  
 #endif //__GUI_STRING_20060407_H__

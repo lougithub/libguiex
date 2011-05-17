@@ -75,7 +75,7 @@ namespace guiex
 		bool m_bClipText;
 	
 	protected:
-		static wchar_t ms_wLineBreak;
+		static wchar ms_wLineBreak;
 
 		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtStaticText);
 	};

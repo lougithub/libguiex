@@ -131,10 +131,11 @@ namespace guiex
 
 		virtual void OnScreenSizeChange( const CGUIIntSize& rSize );
 
+		virtual void SetWireFrame( bool bWireFrame);
+		virtual bool IsWireFrame( ) const;
 
 	protected:
 		IGUIRender_opengl_base( const char* szModuleName );
-
 
 		virtual int DoInitialize(void* );
 		virtual void DoDestroy();
@@ -184,6 +185,10 @@ namespace guiex
 		std::vector<SClipRect>	m_arrayClipRects;
 
 		bool m_bEnableClip;
+		bool m_bDrawWireframe;
+
+		uint32 m_nRenderMode_TRIANGLE_STRIP;
+		uint32 m_nRenderMode_TRIANGLES;
 
 		int m_nStencilBits;
 		int m_nMaxStencilRef;

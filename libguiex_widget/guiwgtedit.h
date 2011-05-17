@@ -42,19 +42,19 @@ namespace guiex
 		CGUIWgtEdit( const CGUIString& rName, const CGUIString& rSceneName );
 
 		/// get result string
-		const wchar_t*	GetResult() const;
+		const CGUIStringW& GetResult() const;
 
 		/// clear result string, usually call it after get result string
-		void	ClearResult();
+		void ClearResult();
 
 		/// open this widget
-		virtual void	Open();
+		virtual void Open();
 
 		/// close this widget
-		virtual void	Close();
+		virtual void Close();
 
 		/// set position of cursor
-		void	SetCursorPos( const CGUIVector2& rPos );
+		void SetCursorPos( const CGUIVector2& rPos );
 
 		void SetCursorSize( const CGUISize& rSize );
 		const CGUISize& GetCursorSize() const;
@@ -75,7 +75,7 @@ namespace guiex
 	protected:	//!< callback function
 
 	protected:
-		std::wstring m_strResult;	///result string
+		CGUIStringW m_strResult;	///result string
 
 		IGUIInterfaceIme *m_pIme;	///interface of ime
 

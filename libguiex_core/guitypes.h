@@ -12,6 +12,7 @@
 //============================================================================//
 // include
 //============================================================================//
+#include "guitypes.h"
 #include <math.h>
 
 //============================================================================//
@@ -19,30 +20,35 @@
 //============================================================================// 
 namespace guiex
 {
-	typedef short			int16;
-	typedef int				int32;
-	typedef char			int8;
+	typedef short int16;
+	typedef int int32;
+	typedef char int8;
 
 
-	typedef unsigned short	uint16;
-	typedef unsigned int	uint32;
-	typedef unsigned char	uint8;
+	typedef unsigned short uint16;
+	typedef unsigned int uint32;
+	typedef unsigned char uint8;
 
-
-	typedef float			real;
+	typedef float real;
 
 #if defined(WIN32)
-	typedef unsigned __int64    uint64;
-	typedef		  __int64		int64;
-#	define	PRINTF_INT64		"%I64d"
-#	define	PRINTF_UINT64		"%I64u"
+	typedef unsigned __int64 uint64;
+	typedef __int64	int64;
+#	define	PRINTF_INT64 "%I64d"
+#	define	PRINTF_UINT64 "%I64u"
 
 #else
 	typedef unsigned long long  uint64;
-	typedef		  long long		int64;
-#	define	PRINTF_INT64		"%lld"
-#	define	PRINTF_UINT64		"%llu"
+	typedef long long int64;
+#	define PRINTF_INT64 "%lld"
+#	define PRINTF_UINT64 "%llu"
 
+#endif
+
+#if GUI_USE_STANDARD_WCHAR_T
+	typedef wchar_t wchar;
+#else
+	typedef uint16 wchar;
 #endif
 }//guiex
 

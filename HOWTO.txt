@@ -7,7 +7,11 @@ A: http://www.cmake.org
 Q: how to build android.
 A: 1.set environment NDK_MODULE_PATH to this directory.
    2.set GUIEX_CURRENT_PROJECT to the project name which you want to build.
-   3.and go to android directory, such as ./test/hello_ipad/android/, and type ndk-build.
+   3.and go to android directory, such as ./test/hello_ipad/android/, 
+   4.ndk-build.
+   5.ant debug
+   6.adb install -r ./bin/xxx.apk
+
 
 Q: how to add new android project.
 A: add PROJECT_NAME.mk an ./test/_android_project_/jni/
@@ -15,5 +19,16 @@ A: add PROJECT_NAME.mk an ./test/_android_project_/jni/
 Q: how to set debug or release in android project.
 A: modify android:debuggable="true" in AndroidManifest.xml
 
-Q: how to get function name from callstack
+Q: how to get function name from callstack in android
 A: arm-eabi-addr2line -C -f -e /path/to/lib/with/symbols.so
+
+Q: how to create android project
+A: android create project \
+	--target <target_ID> \
+	--name <your_project_name> \
+	--path path/to/your/project \
+	--activity <your_activity_name> \
+	--package <your_package_namespace>
+
+Q: how to update android project
+A: android update project --name <project_name> --target <target_ID> --path <path_to_your_project>

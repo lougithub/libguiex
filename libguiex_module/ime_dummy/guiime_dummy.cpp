@@ -67,7 +67,7 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	const wchar_t* IGUIIme_dummy::GetResultString() const
+	const wchar* IGUIIme_dummy::GetResultString() const
 	{
 		return NULL;
 	}

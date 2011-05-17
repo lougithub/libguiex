@@ -43,7 +43,7 @@ namespace guiex
 
 	}
 	//------------------------------------------------------------------------------
-	int IGUIStringConv_internal::Utf8ToUtf16( const CGUIString& rSrc, CGUIStringW& rDst )
+	int IGUIStringConv_internal::Utf8ToWChar( const CGUIString& rSrc, CGUIStringW& rDst )
 	{
 		if( rSrc.empty())
 		{
@@ -53,12 +53,12 @@ namespace guiex
 		const unsigned char* utf8 = (const unsigned char*)rSrc.c_str();
 	
 		size_t	buf_size = rSrc.size()+1;
-		wchar_t* dst = new wchar_t[buf_size];
+		wchar* dst = new wchar[buf_size];
 
 		uint32 nUtf16Count = 0;
 		for(uint32 count=0; count<rSrc.size(); )
 		{    
-			wchar_t integer = 0;
+			wchar integer = 0;
 			if( utf8[count] < 0x80 )
 			{
 				// <0x80
@@ -84,7 +84,7 @@ namespace guiex
 			else
 			{
 				delete dst;
-				CGUIException::ThrowException( "[IGUIStringConv_internal::Utf8ToUtf16]: error" );
+				CGUIException::ThrowException( "[IGUIStringConv_internal::Utf8ToWChar]: error" );
 				return -1;
 			}
 			dst[nUtf16Count] = integer;
@@ -96,13 +96,13 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int IGUIStringConv_internal::Utf16ToUtf8( const CGUIStringW& rSrc, CGUIString& rDst )
+	int IGUIStringConv_internal::WCharToUtf8( const CGUIStringW& rSrc, CGUIString& rDst )
 	{
 		if( rSrc.empty())
 		{
 			return 0;
 		}
-		const wchar_t* utf16 = rSrc.c_str();
+		const wchar* utf16 = rSrc.c_str();
 
 		size_t buf_size = (rSrc.size()*4)+1;
 		char* utf8 = (char*)(new char[buf_size]);
@@ -110,7 +110,7 @@ namespace guiex
 		uint32 count = 0;
 		for( uint32 i=0; i<rSrc.size(); ++i )
 		{    
-			wchar_t integer = utf16[i];
+			wchar integer = utf16[i];
 
 			if( integer<0x80)
 			{            
@@ -133,7 +133,7 @@ namespace guiex
 			else 
 			{
 				delete utf8;
-				CGUIException::ThrowException( "[IGUIStringConv_internal::Utf16ToUtf8]: error" );
+				CGUIException::ThrowException( "[IGUIStringConv_internal::WCharToUtf8]: error" );
 				return -1;
 			}
 		}

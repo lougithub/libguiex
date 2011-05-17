@@ -67,7 +67,7 @@ namespace guiex
 		//get result string
 		if( m_pIme && m_pIme->GetResultString() )
 		{
-			if( wcslen(m_pIme->GetResultString()) )
+			if( !m_pIme->GetResultString() )
 			{
 				m_strResult += m_pIme->GetResultString();
 				m_pIme->ClearResultString();
@@ -85,9 +85,9 @@ namespace guiex
 		CGUIWidget::UpdateSelf( fDeltaTime );
 	}
 	//------------------------------------------------------------------------------
-	const wchar_t*	CGUIWgtEdit::GetResult() const
+	const CGUIStringW& CGUIWgtEdit::GetResult() const
 	{
-		return m_strResult.c_str();
+		return m_strResult;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtEdit::ClearResult()

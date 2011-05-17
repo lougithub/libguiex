@@ -105,7 +105,7 @@ void CMyCanvasLayer_DrawFont::RenderSelf(IGUIInterfaceRender* pRender)
 {
 	CGUIVector2 aPos( 0.0f, 10.0f );
 	IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
-	CGUIStringRender aStringRender(L"1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+	CGUIStringRender aStringRender("1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
 	aStringRender.m_aStringInfo.m_uFontID = 0;
 	aStringRender.m_aStringInfo.m_aColor = CGUIColor( 1.0f,1.0f,1.0f,1.0f );
 	aStringRender.m_aStringInfo.m_fFontScale = 1.0f;

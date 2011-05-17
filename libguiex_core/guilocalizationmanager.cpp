@@ -132,7 +132,7 @@ namespace guiex
 			return AppMultiByteToWideChar( rFullKey );
 		}
 
-		uint32 index = rFullKey.find_first_of( "/", 1 );
+		uint32 index = rFullKey.find( "/", 1 );
 		if( index == uint32(CGUIString::npos ))
 		{
 			return AppMultiByteToWideChar( rFullKey );
@@ -166,7 +166,7 @@ namespace guiex
 			return rFullKey;
 		}
 
-		uint32 index = rFullKey.find_first_of( L"/", 1 );
+		uint32 index = rFullKey.find( L'/', 1 );
 		if( index == uint32(CGUIStringW::npos ))
 		{
 			return rFullKey; 

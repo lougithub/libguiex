@@ -165,6 +165,9 @@ namespace guiex
 		,m_maxTextureSize(0)
 		,m_bEnableClip(true)
 		,m_pCamera(NULL)
+		,m_bDrawWireframe(false)
+		,m_nRenderMode_TRIANGLE_STRIP(GL_TRIANGLE_STRIP)
+		,m_nRenderMode_TRIANGLES(GL_TRIANGLES)
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -565,7 +568,7 @@ namespace guiex
 		// tex coords
 		glTexCoordPointer(2, GL_FLOAT, sizeof(SR_T2F), pTextures);		
 
-		glDrawElements(GL_TRIANGLES, nGridNum*6, GL_UNSIGNED_SHORT, pIndices);
+		glDrawElements(m_nRenderMode_TRIANGLES, nGridNum*6, GL_UNSIGNED_SHORT, pIndices);
 
 		// restore GL default state
 		glEnableClientState(GL_COLOR_ARRAY);
@@ -599,7 +602,7 @@ namespace guiex
 
 		//glDrawArrays( GL_TRIANGLE_STRIP, 0, nQuadNum * 4 );
 
-		glDrawElements(GL_TRIANGLES, nQuadNum*6, GL_UNSIGNED_SHORT, pIndices);
+		glDrawElements(m_nRenderMode_TRIANGLES, nQuadNum*6, GL_UNSIGNED_SHORT, pIndices);
 
 		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DrawQuads: ");
 	}
@@ -685,7 +688,7 @@ namespace guiex
 		diff = offsetof( SR_T2F_C4UB_V3F, texCoords);
 		glTexCoordPointer(2, GL_FLOAT, kSize, (GLvoid*) (offset+diff));
 
-		glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+		glDrawArrays( m_nRenderMode_TRIANGLE_STRIP, 0, 4 );
 
 		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DrawTile: ");
 	}
@@ -800,7 +803,7 @@ namespace guiex
 		int32 offset = (int32) m_pVertexForStencil;
 		int32 diff = offsetof( SR_V3F, x);
 		glVertexPointer(3, GL_FLOAT, sizeof(SR_V3F), (GLvoid*) (offset+diff));
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+		glDrawArrays(m_nRenderMode_TRIANGLE_STRIP, 0, 4);
 
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glEnableClientState(GL_COLOR_ARRAY);
@@ -1007,6 +1010,26 @@ namespace guiex
 	bool IGUIRender_opengl_base::IsEnableClip( ) const
 	{
 		return m_bEnableClip;
+	}
+	//-----------------------------------------------------------------------------
+	void IGUIRender_opengl_base::SetWireFrame( bool bWireFrame)
+	{
+		m_bDrawWireframe = bWireFrame;
+		if( m_bDrawWireframe )
+		{
+			m_nRenderMode_TRIANGLE_STRIP = GL_LINE_LOOP;
+			m_nRenderMode_TRIANGLES = GL_LINE_LOOP;
+		}
+		else
+		{
+			m_nRenderMode_TRIANGLE_STRIP = GL_TRIANGLE_STRIP;
+			m_nRenderMode_TRIANGLES = GL_TRIANGLES;
+		}
+	}
+	//-----------------------------------------------------------------------------
+	bool IGUIRender_opengl_base::IsWireFrame( ) const
+	{
+		return m_bDrawWireframe;
 	}
 	//-----------------------------------------------------------------------------
 }//namespace guiex

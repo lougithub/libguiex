@@ -71,7 +71,7 @@ namespace guiex
 		/**
 		* @brief get string size
 		*/
-		virtual CGUISize GetCharacterSize( wchar_t charCode, const CGUIStringRenderInfo& rInfo ) = 0;
+		virtual CGUISize GetCharacterSize( wchar charCode, const CGUIStringRenderInfo& rInfo ) = 0;
 
 		/**
 		* @brief enable kerning
@@ -83,7 +83,7 @@ namespace guiex
 		* @param rPos left-bottom position
 		*/
 		virtual void DrawCharacter(IGUIInterfaceRender* pRender, 
-			wchar_t charCode, 
+			wchar charCode, 
 			const CGUIStringRenderInfo& rInfo,
 			const CGUIVector2& rPos,
 			real fAlpha) = 0;
