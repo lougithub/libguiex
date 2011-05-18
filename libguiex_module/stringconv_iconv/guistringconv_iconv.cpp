@@ -46,7 +46,7 @@ namespace guiex
 		
 	}	
 	//------------------------------------------------------------------------------
-	int IGUIStringConv_iconv::Utf8ToUtf16( const CGUIString& rSrc, CGUIStringW& rDst )
+	int IGUIStringConv_iconv::Utf8ToWChar( const CGUIString& rSrc, CGUIStringW& rDst )
 	{
 		if( rSrc.empty())
 		{
@@ -65,10 +65,10 @@ namespace guiex
 		}
 
 		//convert
-		size_t	buf_size = rSrc.size()+4;
+		size_t	buf_size = rSrc.size()+1;
 		size_t	inbytesleft = rSrc.size();
 		size_t	outbytesleft = buf_size;
-		char*	dst = (char*)(new wchar_t[buf_size]);
+		char*	dst = (char*)(new wchar[buf_size]);
 		char*	pOutBuf = NULL;
 		char*	pInBuf = (char*)(rSrc.c_str());
 
@@ -77,23 +77,24 @@ namespace guiex
 		while(inbytesleft > 0) 
 		{
 			pOutBuf = dst;
-			outbytesleft = buf_size*sizeof(wchar_t);
+			outbytesleft = buf_size*sizeof(wchar);
 
 			size_t retbytes = iconv(cd, &pInBuf, &inbytesleft, &pOutBuf, &outbytesleft);
 
 			if (dst != pOutBuf)  
 			{
-				// wchar_t is 4byte in mac, but iconv return a "utf-16" buff which is 2byte per code
-				if (sizeof(wchar_t) == 4) 
+				// wchar is 4byte in mac, but iconv return a "utf-16" buff which is 2byte per code
+				if (sizeof(wchar) == 4) 
 				{
-					for (int iChar = 0; iChar < (pOutBuf-dst)/2; iChar++) {
+					for (int iChar = 0; iChar < (pOutBuf-dst)/2; iChar++)
+					{
 						unsigned short* pU16Char = (unsigned short*)&dst[2*iChar];
-						rDst.push_back((wchar_t)*pU16Char);
+						rDst.push_back((wchar)*pU16Char);
 					}
 				}
-				else if (sizeof(wchar_t) == 2) 
+				else if (sizeof(wchar) == 2) 
 				{
-					rDst.append((wchar_t*)dst, (pOutBuf-dst)/sizeof(wchar_t));
+					rDst.append((wchar*)dst, (pOutBuf-dst)/sizeof(wchar));
 				}
 			} 
 
@@ -151,7 +152,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int IGUIStringConv_iconv::Utf16ToUtf8( const CGUIStringW& rSrc, CGUIString& rDst )
+	int IGUIStringConv_iconv::WCharToUtf8( const CGUIStringW& rSrc, CGUIString& rDst )
 	{
 		if( rSrc.empty())
 		{
@@ -164,7 +165,7 @@ namespace guiex
 		if( cd == (iconv_t)-1 )
 		{
 			throw CGUIException(
-				"[Utf16ToUtf8]: failed to open iconv, errno is %d",
+				"[WCharToUtf8]: failed to open iconv, errno is %d",
 				errno);
 			return -1;
 		}
@@ -220,15 +221,15 @@ namespace guiex
 			{
 			case EILSEQ:
 				throw CGUIException(
-					"[Utf16ToUtf8]: failed to iconv, errno is EILSEQ");
+					"[WCharToUtf8]: failed to iconv, errno is EILSEQ");
 				return -1;
 			case EINVAL:
 				throw CGUIException(
-					"[Utf16ToUtf8]: failed to iconv, errno is EINVAL");
+					"[WCharToUtf8]: failed to iconv, errno is EINVAL");
 				return -1;
 			default:
 				throw CGUIException(
-					"[Utf16ToUtf8]: failed to iconv, errno is %d",
+					"[WCharToUtf8]: failed to iconv, errno is %d",
 					errno);
 				return -1;
 			}
@@ -239,7 +240,7 @@ namespace guiex
 		if( ret == -1 )
 		{
 			throw CGUIException(
-				"[Utf16ToUtf8]: failed to close iconv, errno is %d",
+				"[WCharToUtf8]: failed to close iconv, errno is %d",
 				errno);
 			return -1;
 		}

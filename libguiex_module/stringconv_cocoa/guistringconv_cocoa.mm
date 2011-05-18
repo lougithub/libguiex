@@ -29,6 +29,9 @@ namespace guiex
 	IGUIStringConv_cocoa::IGUIStringConv_cocoa()
 		:IGUIInterfaceStringConv(StaticGetModuleName())
 	{
+#if !GUI_USE_STANDARD_WCHAR_T
+#error "IGUIStringConv_cocoa only support wchar_t mode"	
+#endif	
 	}
 	//------------------------------------------------------------------------------
 	IGUIStringConv_cocoa::~IGUIStringConv_cocoa()
@@ -45,7 +48,7 @@ namespace guiex
 
 	}
 	//------------------------------------------------------------------------------
-	int IGUIStringConv_cocoa::Utf8ToUtf16( const CGUIString& rSrc, CGUIStringW& rDst )
+	int IGUIStringConv_cocoa::Utf8ToWChar( const CGUIString& rSrc, CGUIStringW& rDst )
 	{
 		if( rSrc.empty())
 		{
@@ -63,7 +66,7 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	int IGUIStringConv_cocoa::Utf16ToUtf8( const CGUIStringW& rSrc, CGUIString& rDst )
+	int IGUIStringConv_cocoa::WCharToUtf8( const CGUIStringW& rSrc, CGUIString& rDst )
 	{
 		if( rSrc.empty())
 		{

@@ -37,16 +37,16 @@ namespace guiex
 		virtual ~IGUIStringConv_cocoa();
 
 		/**
-		* @brief convert utf8 to utf16
+		* @brief convert utf8 to wchar
 		* @return zero for success
 		*/
-		virtual int Utf8ToUtf16( const CGUIString& rSrc, CGUIStringW& rDst );
+		virtual int Utf8ToWChar( const CGUIString& rSrc, CGUIStringW& rDst );
 
 		/**
-		* @brief convert utf16 to utf8
+		* @brief convert wchar to utf8
 		* @return zero for success
 		*/
-		virtual int Utf16ToUtf8( const CGUIStringW& rSrc, CGUIString& rDst );
+		virtual int WCharToUtf8( const CGUIStringW& rSrc, CGUIString& rDst );
 
 		virtual void DeleteSelf();
 
