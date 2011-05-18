@@ -93,6 +93,10 @@ namespace guiex
 
 	//------------------------------------------------------------------------------
 	CGUISystem * CGUISystem::m_pSingleton = NULL; 
+
+#if defined(GUIEX_TARGET_ANDROID)
+	JavaVM * CGUISystem::ms_pJavaVM = NULL;
+#endif
 	//------------------------------------------------------------------------------
 	CGUISystem::CGUISystem()
 		:m_pWgtFocus(NULL)
@@ -119,7 +123,6 @@ namespace guiex
 		,m_pPropertyManager( NULL )
 		,m_pWidgetFactory( NULL )
 		,m_pSceneInfoManager( NULL )
-		//,m_pLogMsgManager( NULL )
 		,m_pWidgetManager( NULL )
 		,m_pCameraManager( NULL )
 		,m_pLocalizationManager( NULL )
@@ -1003,6 +1006,61 @@ namespace guiex
 	{
 		return m_strApkPath;
 	}
+	//------------------------------------------------------------------------------
+	void CGUISystem::SetJavaVM( JavaVM* pJavaVM )
+	{
+		ms_pJavaVM = pJavaVM;
+	}
+	//------------------------------------------------------------------------------
+	JavaVM* CGUISystem::GetJavaVM()
+	{
+		return ms_pJavaVM;
+	}
+	//------------------------------------------------------------------------------
+	jmethodID CGUISystem::GetJavaMethodID(const char *methodName, const char *paramCode)
+	{
+		if( !ms_pJavaVM )
+		{
+			GUI_FORCE_ASSERT("[CGUISystem::GetJavaMethodID]:invalid java vm pointer");
+			return 0;
+		}
+
+
+   /*     // get jni environment and java class for Cocos2dxActivity*/
+		//if (gJavaVM->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK)
+		//{
+			//GUI_FORCE_ASSERT("Failed to get the environment using GetEnv()");
+			//return 0;
+		//}
+
+		//if (gJavaVM->AttachCurrentThread(&env, 0) < 0)
+		//{
+			//GUI_FORCE_ASSERT("Failed to get the environment using AttachCurrentThread()");
+			//return 0;
+		//}
+
+		//classOfCocos2dxActivity = env->FindClass("org/cocos2dx/lib/Cocos2dxActivity");
+		//if (! classOfCocos2dxActivity)
+		//{
+			//GUI_FORCE_ASSERT("Failed to find class of org/cocos2dx/lib/Cocos2dxActivity");
+			//return 0;
+		//}
+
+
+		//jmethodID ret = 0;
+		//if (env != 0 && classOfCocos2dxActivity != 0)
+		//{
+			//ret = env->GetStaticMethodID(classOfCocos2dxActivity, methodName, paramCode);
+		//}
+
+		//if (! ret)
+		//{
+			//GUI_FORCE_ASSERT("get method id of %s error", methodName);
+		/*}*/
+
+		return 0;
+	}
+
 #endif
 	//------------------------------------------------------------------------------
 	void CGUISystem::OnWidgetDestroyed( CGUIWidget* pWidget )

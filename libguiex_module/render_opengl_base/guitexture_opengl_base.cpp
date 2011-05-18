@@ -64,7 +64,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUITexture_opengl_base::~CGUITexture_opengl_base()
 	{
-		TRY_THROW_OPENGL_ERROR("CGUITexture_opengl_base::~CGUITexture_opengl_base");
+		TRY_THROW_OPENGL_ERROR("CGUITexture_opengl_base::~CGUITexture_opengl_base:begin");
 
 		// otherwise delete OGL texture associated with this object.
 		glDeleteTextures(1, &m_ogltexture);

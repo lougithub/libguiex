@@ -1,11 +1,5 @@
-LOCAL_PATH:=$(call my-dir)
-include $(CLEAR_VARS)
-
-LOCAL_MODULE:=guiex_sample
 LOCAL_SRC_FILES := ../../common_android/common_android.cpp \
 	../../game_whackmole/game_whackmole.cpp
-
-
 
 include $(LOCAL_PATH)/android_library.mk
 

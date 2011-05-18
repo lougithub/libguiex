@@ -25,7 +25,9 @@
 #include <list>
 #include <vector>
 
-
+#if defined(GUIEX_TARGET_ANDROID)
+#include <jni.h>
+#endif
 
 //============================================================================//
 // declare
@@ -104,6 +106,10 @@ namespace guiex
 #if defined(GUIEX_TARGET_ANDROID)
 		void SetApkPath(const CGUIString& rApkPath);
 		const CGUIString& GetApkPath() const;
+
+		static void SetJavaVM( JavaVM* pJavaVM );
+		static JavaVM* GetJavaVM();
+		static jmethodID GetJavaMethodID(const char *methodName, const char *paramCode);
 #endif
 
 		bool IsEditorMode( ) const;
@@ -266,6 +272,7 @@ namespace guiex
 
 #if defined(GUIEX_TARGET_ANDROID)
 		CGUIString m_strApkPath; //apk path in android
+		static JavaVM *ms_pJavaVM;
 #endif
 
 		friend class CGUIUICanvasLayer;

@@ -23,24 +23,18 @@ guiex::CGUITimer g_aOldTimer;
 
 extern guiex::CGUIFrameworkBase* CreateFramework( );
 
-extern "C"
-{
-    JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_Init(JNIEnv * env, jobject obj,  jint width, jint height);
-    JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_Step(JNIEnv * env, jobject obj);
-    JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_onPause(JNIEnv * env, jobject obj);
-    JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_onResume(JNIEnv * env, jobject obj);
-    JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_SetApkPath(JNIEnv * env, jobject obj, jstring apkPath);
-    JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_OnFingerUp(JNIEnv * env, jobject obj, float x, float y);
-    JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_OnFingerDown(JNIEnv * env, jobject obj, float x, float y);
-    JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_OnFingerMove(JNIEnv * env, jobject obj, float x, float y);
-};
-
 //============================================================================//
 // function
 //============================================================================// 
+extern "C" jint JNI_OnLoad(JavaVM *vm, void *reserved)
+{
+	guiex::CGUISystem::SetJavaVM( vm );
+
+	return JNI_VERSION_1_4;
+}
 
 //------------------------------------------------------------------------------
-JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_SetApkPath(JNIEnv * env, jobject obj, jstring apkPath)
+extern "C" JNIEXPORT void JNICALL Java_org_guiex_lib_GuiexLibNative_SetApkPath(JNIEnv * env, jobject obj, jstring apkPath)
 {
 	const char* str;
 	jboolean isCopy;
@@ -49,7 +43,7 @@ JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_SetApkPath(JN
 	env->ReleaseStringUTFChars(apkPath, str);
 }
 //------------------------------------------------------------------------------
-JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_Init(JNIEnv * env, jobject obj,  jint width, jint height)
+extern "C" JNIEXPORT void JNICALL Java_org_guiex_lib_GuiexLibNative_Init(JNIEnv * env, jobject obj,  jint width, jint height)
 {    
 	if( NULL == g_pFramework )
 	{
@@ -60,7 +54,7 @@ JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_Init(JNIEnv *
 	g_aOldTimer.UpdateTime();
 }
 //------------------------------------------------------------------------------
-JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_Step(JNIEnv * env, jobject obj)
+extern "C" JNIEXPORT void JNICALL Java_org_guiex_lib_GuiexLibNative_Step(JNIEnv * env, jobject obj)
 {
 	guiex::CGUITimer aCurTimer;
 	aCurTimer.UpdateTime();
@@ -75,28 +69,28 @@ JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_Step(JNIEnv *
 	g_pFramework->Render();
 }
 //------------------------------------------------------------------------------
-JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_onPause(JNIEnv * env, jobject obj)
+extern "C" JNIEXPORT void JNICALL Java_org_guiex_lib_GuiexLibNative_onPause(JNIEnv * env, jobject obj)
 {
 	guiex::GSystem->UnloadAllResource();
 }
 //------------------------------------------------------------------------------
-JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_onResume(JNIEnv * env, jobject obj)
+extern "C" JNIEXPORT void JNICALL Java_org_guiex_lib_GuiexLibNative_onResume(JNIEnv * env, jobject obj)
 {
 }
 //------------------------------------------------------------------------------
-JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_OnFingerUp(JNIEnv * env, jobject obj, float x, float y)
+extern "C" JNIEXPORT void JNICALL Java_org_guiex_lib_GuiexLibNative_OnFingerUp(JNIEnv * env, jobject obj, float x, float y)
 {
 	guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeMousePos(guiex::CGUIVector2(x,y));
 	guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( guiex::MOUSE_LEFT, guiex::MOUSE_UP );
 }
 //------------------------------------------------------------------------------
-JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_OnFingerDown(JNIEnv * env, jobject obj, float x, float y)
+extern "C" JNIEXPORT void JNICALL Java_org_guiex_lib_GuiexLibNative_OnFingerDown(JNIEnv * env, jobject obj, float x, float y)
 {
 	guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeMousePos(guiex::CGUIVector2(x,y));
 	guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( guiex::MOUSE_LEFT, guiex::MOUSE_DOWN );
 }
 //------------------------------------------------------------------------------
-JNIEXPORT void JNICALL Java_com_android_GuiexSample_GuiexSampleLib_OnFingerMove(JNIEnv * env, jobject obj, float x, float y)
+extern "C" JNIEXPORT void JNICALL Java_org_guiex_lib_GuiexLibNative_OnFingerMove(JNIEnv * env, jobject obj, float x, float y)
 {
 	guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeMousePos(guiex::CGUIVector2(x,y));
 }
