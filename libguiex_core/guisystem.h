@@ -109,7 +109,14 @@ namespace guiex
 
 		static void SetJavaVM( JavaVM* pJavaVM );
 		static JavaVM* GetJavaVM();
-		static jmethodID GetJavaMethodID(const char *methodName, const char *paramCode);
+		static JNIEnv* GetJavaMethod( const char* className, const char* methodName, const char* paramCode, jclass& r_jclassID, jmethodID& r_jmethodID );
+		static void CallJavaMethod( const char* className, const char *methodName );
+		static void CallJavaMethod( const char* className, const char *methodName, const char* paramString );
+		static void CallJavaMethod( const char* className, const char *methodName, int paramInt);
+		static void CallJavaMethod( const char* className, const char *methodName, bool paramBool );
+		static void CallJavaMethod_int( const char* className, const char *methodName,int& rRet, const char *paramString);
+		static void CallJavaMethod_bool( const char* className, const char *methodName,bool& rRet, int paramInt);
+		static void CallJavaMethod_bool( const char* className, const char *methodName,bool& rRet);
 #endif
 
 		bool IsEditorMode( ) const;

@@ -7,16 +7,17 @@ import android.util.Log;
 public class GuiexLibActivity extends Activity
 {
     GuiexLibView mView;
-    
-//    abstract public GuiexLibView CreateView();
 
     /** Called when the activity is first created. */
     @Override public void onCreate(Bundle savedInstanceState)
     {
     	Log.v("GuiexLibActivity", "onCreate");
     	
+    	//init sound
+    	GuiexLibSound.SetContext(getApplication());
+    	
+    	//init view
         super.onCreate(savedInstanceState);
-        //mView = CreateView();
         mView = new GuiexLibView(getApplication());
         setContentView(mView);
     }

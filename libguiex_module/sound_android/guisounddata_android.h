@@ -28,6 +28,8 @@ namespace guiex
 	public:
 		virtual ~CGUISoundData_android();
 
+		int GetEffectID();
+
 	protected:
 		friend class IGUISound_android;
 		CGUISoundData_android( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath );
@@ -36,6 +38,8 @@ namespace guiex
 		virtual void DoUnload();
 
 	protected:
+		CGUIString m_strPath; //sound file path
+		int m_nEffectID;
 	};
 }
 

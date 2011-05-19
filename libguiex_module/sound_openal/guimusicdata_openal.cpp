@@ -201,7 +201,10 @@ namespace guiex
 		// or the Source was starved of audio data, and needs to be restarted.
 		ALint iState = 0;
 		alGetSourcei(m_nSourceId, AL_SOURCE_STATE, &iState);
-		if (iState != AL_PLAYING)
+		if (iState == AL_PAUSED)
+		{
+		}
+		else if (iState != AL_PLAYING)
 		{
 			// If there are Buffers in the Source Queue then the Source was starved of audio
 			// data, so needs to be restarted (because there is more audio data to play)

@@ -37,6 +37,7 @@ namespace guiex
 		virtual void DoUnload();
 
 	protected:
+		CGUIString m_strPath; //sound file path
 	};
 }
 

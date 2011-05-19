@@ -1,5 +1,5 @@
 function panel_onopen(self, event)
-	guiex.CGUIInterfaceManager_Instance():GetInterfaceSound():PlayMusic( "music.ogg" );
+	guiex.CGUIInterfaceManager_Instance():GetInterfaceSound():PlayMusic( "music.ogg", true );
 end
 
 function btn_playeffect_se_yes_onclick(self, event)
@@ -15,11 +15,15 @@ function btn_playeffect_stereo_onclick(self, event)
 end
 
 function btn_playmusic_onclick(self, event)
-	guiex.CGUIInterfaceManager_Instance():GetInterfaceSound():PlayMusic( "music.ogg" );
+	guiex.CGUIInterfaceManager_Instance():GetInterfaceSound():PlayMusic( "music.ogg", true );
 end
 
 function btn_pausemusic_onclick(self, event)
-	guiex.CGUIInterfaceManager_Instance():GetInterfaceSound():PauseMusic( );
+	if guiex.CGUIInterfaceManager_Instance():GetInterfaceSound():IsPlayingMusic() == true then
+		guiex.CGUIInterfaceManager_Instance():GetInterfaceSound():PauseMusic( );
+	else
+		guiex.CGUIInterfaceManager_Instance():GetInterfaceSound():ResumeMusic( );
+	end
 end
 
 function btn_stopmusic_onclick(self, event)

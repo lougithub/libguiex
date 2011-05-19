@@ -1017,50 +1017,137 @@ namespace guiex
 		return ms_pJavaVM;
 	}
 	//------------------------------------------------------------------------------
-	jmethodID CGUISystem::GetJavaMethodID(const char *methodName, const char *paramCode)
+	// return 0 for success, vice versa
+	JNIEnv* CGUISystem::GetJavaMethod( const char* className, const char* methodName, const char* paramCode, jclass& r_jclassID, jmethodID& r_jmethodID )
 	{
 		if( !ms_pJavaVM )
 		{
-			GUI_FORCE_ASSERT("[CGUISystem::GetJavaMethodID]:invalid java vm pointer");
-			return 0;
+			CGUIException::ThrowException("[CGUISystem::GetJavaMethod]:invalid java vm pointer");
+			return NULL;
 		}
 
+		JNIEnv *env = NULL;
+		// get jni environment and java class for Cocos2dxActivity
+		if (ms_pJavaVM->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK)
+		{
+			CGUIException::ThrowException("[CGUISystem::GetJavaMethod]:Failed to get the environment using GetEnv()");
+			return NULL;
+		}
+		if( !env )
+		{
+			CGUIException::ThrowException("[CGUISystem::GetJavaMethod]:Failed to get the environment.");
+			return NULL;
+		}
 
-   /*     // get jni environment and java class for Cocos2dxActivity*/
-		//if (gJavaVM->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK)
-		//{
-			//GUI_FORCE_ASSERT("Failed to get the environment using GetEnv()");
-			//return 0;
-		//}
+		if (ms_pJavaVM->AttachCurrentThread(&env, 0) < 0)
+		{
+			CGUIException::ThrowException("[CGUISystem::GetJavaMethod]:Failed in AttachCurrentThread()");
+			return NULL;
+		}
 
-		//if (gJavaVM->AttachCurrentThread(&env, 0) < 0)
-		//{
-			//GUI_FORCE_ASSERT("Failed to get the environment using AttachCurrentThread()");
-			//return 0;
-		//}
+		r_jclassID = env->FindClass(className);
+		if (!r_jclassID)
+		{
+			CGUIException::ThrowException(GUI_FORMAT("[CGUISystem::GetJavaMethod]:Failed to find class of %s", className) );
+			return NULL;
+		}
 
-		//classOfCocos2dxActivity = env->FindClass("org/cocos2dx/lib/Cocos2dxActivity");
-		//if (! classOfCocos2dxActivity)
-		//{
-			//GUI_FORCE_ASSERT("Failed to find class of org/cocos2dx/lib/Cocos2dxActivity");
-			//return 0;
-		//}
+		r_jmethodID = env->GetStaticMethodID(r_jclassID, methodName, paramCode);
+		if (!r_jmethodID)
+		{
+			CGUIException::ThrowException(GUI_FORMAT("[CGUISystem::GetJavaMethod]: get method id of %s error", methodName));
+			return NULL;
+		}
 
+		return env;
+	}	
+	//------------------------------------------------------------------------------
+	void CGUISystem::CallJavaMethod( const char* className, const char *methodName )
+	{
+		jclass jclassID = 0;
+		jmethodID methodID = 0;
+		JNIEnv* env = GetJavaMethod( className, methodName, "()V", jclassID, methodID );
 
-		//jmethodID ret = 0;
-		//if (env != 0 && classOfCocos2dxActivity != 0)
-		//{
-			//ret = env->GetStaticMethodID(classOfCocos2dxActivity, methodName, paramCode);
-		//}
-
-		//if (! ret)
-		//{
-			//GUI_FORCE_ASSERT("get method id of %s error", methodName);
-		/*}*/
-
-		return 0;
+		if( env )
+		{
+			env->CallStaticVoidMethod(jclassID, methodID);
+		}
 	}
+	//------------------------------------------------------------------------------
+	void CGUISystem::CallJavaMethod( const char* className, const char *methodName, int paramInt )
+	{
+		jclass jclassID = 0;
+		jmethodID methodID = 0;
+		JNIEnv* env = GetJavaMethod( className, methodName, "(I)V", jclassID, methodID );
 
+		if( env )
+		{
+			env->CallStaticVoidMethod(jclassID, methodID, paramInt);
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUISystem::CallJavaMethod( const char* className, const char *methodName, const char* paramString )
+	{	
+		jclass jclassID = 0;
+		jmethodID methodID = 0;
+		JNIEnv* env = GetJavaMethod( className, methodName, "(Ljava/lang/String;)V", jclassID, methodID );
+
+		if( env )
+		{
+			jstring StringArg = env->NewStringUTF(paramString);
+			env->CallStaticVoidMethod(jclassID, methodID, StringArg);
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUISystem::CallJavaMethod( const char* className, const char *methodName, bool paramBool)
+	{
+		jclass jclassID = 0;
+		jmethodID methodID = 0;
+		JNIEnv* env = GetJavaMethod( className, methodName, "(Z)V", jclassID, methodID );
+
+		if( env )
+		{
+			env->CallStaticVoidMethod(jclassID, methodID, paramBool );
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUISystem::CallJavaMethod_bool( const char* className, const char *methodName,bool& rRet)
+	{
+		jclass jclassID = 0;
+		jmethodID methodID = 0;
+		JNIEnv* env = GetJavaMethod( className, methodName, "()Z", jclassID, methodID );
+
+		if( env )
+		{
+			rRet = env->CallStaticBooleanMethod(jclassID, methodID );
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUISystem::CallJavaMethod_bool( const char* className, const char *methodName,bool& rRet, int paramInt)
+	{	
+		jclass jclassID = 0;
+		jmethodID methodID = 0;
+		JNIEnv* env = GetJavaMethod( className, methodName, "(I)Z", jclassID, methodID );
+
+		if( env )
+		{
+			rRet = env->CallStaticBooleanMethod(jclassID, methodID, paramInt);
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUISystem::CallJavaMethod_int( const char* className, const char *methodName,int& rRet, const char *paramString)
+	{	
+		jclass jclassID = 0;
+		jmethodID methodID = 0;
+		JNIEnv* env = GetJavaMethod( className, methodName, "(Ljava/lang/String;)I", jclassID, methodID );
+
+		if( env )
+		{
+			jstring StringArg = env->NewStringUTF(paramString);
+			rRet = env->CallStaticIntMethod(jclassID, methodID, StringArg);
+		}
+	}
+	//------------------------------------------------------------------------------
 #endif
 	//------------------------------------------------------------------------------
 	void CGUISystem::OnWidgetDestroyed( CGUIWidget* pWidget )

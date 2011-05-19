@@ -90,7 +90,7 @@ namespace guiex
 		return false;
 	}
 	//------------------------------------------------------------------------------
-	void IGUISound_dummy::PlayMusic( CGUIMusicData* pSoundData )
+	void IGUISound_dummy::PlayMusic( CGUIMusicData* /*pSoundData*/, bool /*bLoop*/ )
 	{
 
 	}
@@ -101,6 +101,16 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	void IGUISound_dummy::PauseMusic(  )
+	{
+
+	}
+	//------------------------------------------------------------------------------
+	void IGUISound_dummy::RewindMusic(  )
+	{
+
+	}
+	//------------------------------------------------------------------------------
+	void IGUISound_dummy::ResumeMusic( )
 	{
 
 	}

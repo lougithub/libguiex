@@ -49,16 +49,18 @@ namespace guiex
 		virtual void PauseEffect( CGUISoundData* pSoundData ) = 0;
 		virtual bool IsPlayingEffect( CGUISoundData* pSoundData ) = 0;
 
-		virtual void PlayMusic( CGUIMusicData* pSoundData ) = 0;
+		virtual void PlayMusic( CGUIMusicData* pSoundData, bool bLoop ) = 0;
 		virtual void StopMusic( ) = 0;
 		virtual void PauseMusic( ) = 0;
+		virtual void ResumeMusic( ) = 0;
+		virtual void RewindMusic( ) = 0;
 		virtual bool IsPlayingMusic( ) = 0;
 		virtual CGUIMusicData* GetMusicPlaying() = 0;
 
 		virtual void Update( real fDeltaTime );
 
 		void PlayEffect( const CGUIString& rSoundName );
-		void PlayMusic( const CGUIString& rMusicName );
+		void PlayMusic( const CGUIString& rMusicName, bool bLoop );
 
 	public: 
 		static const char* StaticGetModuleType();

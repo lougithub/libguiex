@@ -36,15 +36,4 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	void CGUIMusicData::Play()
-	{
-		Load();
-
-		IGUIInterfaceSound* pInterfaceSound = CGUIInterfaceManager::Instance()->GetInterfaceSound();
-		if( pInterfaceSound )
-		{
-			pInterfaceSound->PlayMusic( this );
-		}
-	}
-	//------------------------------------------------------------------------------
 }

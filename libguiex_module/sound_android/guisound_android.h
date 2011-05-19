@@ -37,9 +37,11 @@ namespace guiex
 		virtual void PauseEffect( CGUISoundData* pSoundData );
 		virtual bool IsPlayingEffect( CGUISoundData* pSoundData );
 
-		virtual void PlayMusic( CGUIMusicData* pSoundData );
+		virtual void PlayMusic( CGUIMusicData* pSoundData, bool bLoop  );
 		virtual void StopMusic(  );
 		virtual void PauseMusic(  );
+		virtual void ResumeMusic(  );
+		virtual void RewindMusic(  );
 		virtual bool IsPlayingMusic(  );
 		virtual CGUIMusicData* GetMusicPlaying();
 
@@ -48,6 +50,9 @@ namespace guiex
 	protected:
 		virtual int DoInitialize(void* );
 		virtual void DoDestroy();
+
+	protected:
+		class CGUIMusicData_android* m_pCurrentMusic;
 	
 	public:
 		static const char* StaticGetModuleName();

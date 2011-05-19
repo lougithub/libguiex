@@ -193,7 +193,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void IGUISound_openal::PlayMusic( CGUIMusicData* pSoundData )
+	void IGUISound_openal::PlayMusic( CGUIMusicData* pSoundData, bool /*bLoop*/ )
 	{
 		if( m_pCurrentMusic != pSoundData )
 		{
@@ -206,7 +206,6 @@ namespace guiex
 			return;
 		}
 
-		//tell the sound to loop continuously
 		alSourcei( m_pCurrentMusic->m_nSourceId, AL_LOOPING, AL_FALSE );
 
 		//play the sound
@@ -228,9 +227,26 @@ namespace guiex
 	{
 		if( m_pCurrentMusic )
 		{
-			// To stop the sound
+			// To pause the sound
 			alSourcePause( m_pCurrentMusic->m_nSourceId );
-			m_pCurrentMusic = NULL;
+		}
+	}
+	//------------------------------------------------------------------------------
+	void IGUISound_openal::ResumeMusic(  )
+	{
+		if( m_pCurrentMusic )
+		{
+			// To resume the sound
+			alSourcePlay( m_pCurrentMusic->m_nSourceId );
+		}
+	}
+	//------------------------------------------------------------------------------
+	void IGUISound_openal::RewindMusic(  )
+	{
+		if( m_pCurrentMusic )
+		{
+			// To rewind the sound
+			alSourceRewind( m_pCurrentMusic->m_nSourceId );
 		}
 	}
 	//------------------------------------------------------------------------------

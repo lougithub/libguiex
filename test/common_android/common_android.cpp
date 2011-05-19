@@ -32,7 +32,11 @@ extern "C" jint JNI_OnLoad(JavaVM *vm, void *reserved)
 
 	return JNI_VERSION_1_4;
 }
-
+//------------------------------------------------------------------------------
+extern "C" void JNI_OnUnload(JavaVM *vm, void *reserved)
+{
+	guiex::CGUISystem::SetJavaVM( NULL );
+}
 //------------------------------------------------------------------------------
 extern "C" JNIEXPORT void JNICALL Java_org_guiex_lib_GuiexLibNative_SetApkPath(JNIEnv * env, jobject obj, jstring apkPath)
 {

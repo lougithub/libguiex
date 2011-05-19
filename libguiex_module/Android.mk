@@ -22,6 +22,9 @@ LOCAL_SRC_FILES := \
 	sound_dummy/guisound_dummy.cpp \
 	sound_dummy/guisounddata_dummy.cpp \
 	sound_dummy/guimusicdata_dummy.cpp \
+	sound_android/guisound_android.cpp \
+	sound_android/guisounddata_android.cpp \
+	sound_android/guimusicdata_android.cpp \
 	filesys_android/guifilesys_android.cpp \
 	font_ft2/guifont_ft2.cpp \
 	font_ft2/guifontdata_ft2.cpp \

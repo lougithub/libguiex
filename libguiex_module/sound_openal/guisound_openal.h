@@ -29,14 +29,7 @@ namespace guiex
 	class GUIEXPORT IGUISound_openal : public IGUIInterfaceSound
 	{
 	public:
-		/** 
-		 * @brief constructor
-		 */
 		IGUISound_openal();
-		
-		/** 
-		 * @brief destructor
-		 */
 		virtual ~IGUISound_openal();
 		
 		virtual CGUISoundData* CreateSoundData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIString& rPath );
@@ -49,9 +42,11 @@ namespace guiex
 		virtual void PauseEffect( CGUISoundData* pSoundData );
 		virtual bool IsPlayingEffect( CGUISoundData* pSoundData );
 		
-		virtual void PlayMusic( CGUIMusicData* pSoundData );
+		virtual void PlayMusic( CGUIMusicData* pSoundData, bool bLoop );
 		virtual void StopMusic(  );
 		virtual void PauseMusic(  );
+		virtual void ResumeMusic( );
+		virtual void RewindMusic(  );
 		virtual bool IsPlayingMusic(  );
 		virtual CGUIMusicData* GetMusicPlaying();
 

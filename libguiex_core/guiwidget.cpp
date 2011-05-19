@@ -1154,7 +1154,11 @@ namespace guiex
 		TMapSound::iterator itor = m_mapEventSound.find( strEventName );
 		if( itor != m_mapEventSound.end())
 		{
-			itor->second->Play();
+			IGUIInterfaceSound* pInterfaceSound = CGUIInterfaceManager::Instance()->GetInterfaceSound();
+			if( pInterfaceSound )
+			{
+				pInterfaceSound->PlayEffect( itor->second );
+			}
 		}
 	}
 	//------------------------------------------------------------------------------

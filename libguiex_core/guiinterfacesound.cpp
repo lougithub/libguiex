@@ -61,7 +61,7 @@ namespace guiex
 		pSound->RefRelease();
 	}
 	//------------------------------------------------------------------------------ 
-	void IGUIInterfaceSound::PlayMusic( const CGUIString& rMusicName )
+	void IGUIInterfaceSound::PlayMusic( const CGUIString& rMusicName, bool bLoop )
 	{
 		CGUIMusicData* pMusic = CGUIMusicManager::Instance()->AllocateResource( rMusicName );
 		if( !pMusic )
@@ -70,7 +70,7 @@ namespace guiex
 			return;
 		};
 		pMusic->Load();
-		PlayMusic( pMusic );
+		PlayMusic( pMusic, bLoop );
 		pMusic->RefRelease();
 	}
 	//------------------------------------------------------------------------------ 

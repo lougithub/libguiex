@@ -6298,6 +6298,52 @@ fail:
 }
 
 
+static int _wrap_IGUIInterfaceSound_ResumeMusic(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::IGUIInterfaceSound *arg1 = (guiex::IGUIInterfaceSound *) 0 ;
+  
+  SWIG_check_num_args("ResumeMusic",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ResumeMusic",1,"guiex::IGUIInterfaceSound *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__IGUIInterfaceSound,0))){
+    SWIG_fail_ptr("IGUIInterfaceSound_ResumeMusic",1,SWIGTYPE_p_guiex__IGUIInterfaceSound);
+  }
+  
+  (arg1)->ResumeMusic();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_IGUIInterfaceSound_RewindMusic(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::IGUIInterfaceSound *arg1 = (guiex::IGUIInterfaceSound *) 0 ;
+  
+  SWIG_check_num_args("RewindMusic",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("RewindMusic",1,"guiex::IGUIInterfaceSound *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__IGUIInterfaceSound,0))){
+    SWIG_fail_ptr("IGUIInterfaceSound_RewindMusic",1,SWIGTYPE_p_guiex__IGUIInterfaceSound);
+  }
+  
+  (arg1)->RewindMusic();
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static int _wrap_IGUIInterfaceSound_IsPlayingMusic(lua_State* L) {
   int SWIG_arg = 0;
   guiex::IGUIInterfaceSound *arg1 = (guiex::IGUIInterfaceSound *) 0 ;
@@ -6353,18 +6399,21 @@ static int _wrap_IGUIInterfaceSound_PlayMusic(lua_State* L) {
   int SWIG_arg = 0;
   guiex::IGUIInterfaceSound *arg1 = (guiex::IGUIInterfaceSound *) 0 ;
   guiex::CGUIString *arg2 = 0 ;
+  bool arg3 ;
   std::string temp2 ;
   
-  SWIG_check_num_args("PlayMusic",2,2)
+  SWIG_check_num_args("PlayMusic",3,3)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PlayMusic",1,"guiex::IGUIInterfaceSound *");
   if(!lua_isstring(L,2)) SWIG_fail_arg("PlayMusic",2,"guiex::CGUIString const &");
+  if(!lua_isboolean(L,3)) SWIG_fail_arg("PlayMusic",3,"bool");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__IGUIInterfaceSound,0))){
     SWIG_fail_ptr("IGUIInterfaceSound_PlayMusic",1,SWIGTYPE_p_guiex__IGUIInterfaceSound);
   }
   
   temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
-  (arg1)->PlayMusic((guiex::CGUIString const &)*arg2);
+  arg3 = (lua_toboolean(L, 3)!=0);
+  (arg1)->PlayMusic((guiex::CGUIString const &)*arg2,arg3);
   
   return SWIG_arg;
   
@@ -6379,6 +6428,8 @@ fail:
 static swig_lua_method swig_guiex_IGUIInterfaceSound_methods[] = {
     {"StopMusic", _wrap_IGUIInterfaceSound_StopMusic}, 
     {"PauseMusic", _wrap_IGUIInterfaceSound_PauseMusic}, 
+    {"ResumeMusic", _wrap_IGUIInterfaceSound_ResumeMusic}, 
+    {"RewindMusic", _wrap_IGUIInterfaceSound_RewindMusic}, 
     {"IsPlayingMusic", _wrap_IGUIInterfaceSound_IsPlayingMusic}, 
     {"PlayEffect", _wrap_IGUIInterfaceSound_PlayEffect}, 
     {"PlayMusic", _wrap_IGUIInterfaceSound_PlayMusic}, 
