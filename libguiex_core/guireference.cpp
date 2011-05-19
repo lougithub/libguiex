@@ -31,7 +31,7 @@ namespace guiex
 	{
 		if( m_nReferenceCount != 0 )
 		{
-			CGUIException::ThrowException("[CGUIReference::~CGUIReference]: the reference count is not equal zero");
+			GUI_THROW( "[CGUIReference::~CGUIReference]: the reference count is not equal zero");
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -64,7 +64,7 @@ namespace guiex
 	{
 		if( m_nReferenceCount == 0)
 		{
-			CGUIException::ThrowException( "[CGUIReference::DoDecreaseReference]:invalid reference count" );
+			GUI_THROW( "[CGUIReference::DoDecreaseReference]:invalid reference count" );
 			return;
 		}
 		--m_nReferenceCount;

@@ -101,7 +101,7 @@ namespace guiex
 
 			if( !m_pTexture )
 			{
-				CGUIException::ThrowException("[CGUIImage::DoLoad]: failed to create texture from path <%s>",strFullPath.c_str());
+				GUI_THROW( GUI_FORMAT("[CGUIImage::DoLoad]: failed to create texture from path <%s>",strFullPath.c_str()));
 				return -1;
 			}
 		}
@@ -110,7 +110,7 @@ namespace guiex
 			m_pTexture = CGUITextureManager::Instance()->CreateDefaultTexture();
 			if( !m_pTexture )
 			{
-				CGUIException::ThrowException("[CGUIImage::DoLoad]: failed to create texture from color");
+				GUI_THROW( "[CGUIImage::DoLoad]: failed to create texture from color");
 				return -1;
 			}
 		}
@@ -119,13 +119,13 @@ namespace guiex
 			m_pTexture = CGUITextureManager::Instance()->CreateTexture(m_pBuffPtr, m_nBuffWidth, m_nBuffHeight, m_ePixelFormat);
 			if( !m_pTexture )
 			{
-				CGUIException::ThrowException("[CGUIImage::DoLoad]: failed to create texture from memory");
+				GUI_THROW( "[CGUIImage::DoLoad]: failed to create texture from memory");
 				return -1;
 			}
 		}
 		else
 		{
-			CGUIException::ThrowException("[CGUIImage::DoLoad]: unknown image data type");
+			GUI_THROW( "[CGUIImage::DoLoad]: unknown image data type");
 			return -1;
 		}
 

@@ -52,25 +52,25 @@ namespace guiex
 			switch( errorcode )
 			{
 			case GL_INVALID_ENUM:
-				CGUIException::ThrowException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_INVALID_ENUM");
+				GUI_THROW( GUI_FORMAT("error find in opengl in <%s>, error is <%s>!" ,info, "GL_INVALID_ENUM"));
 				break;
 			case GL_INVALID_VALUE:
-				CGUIException::ThrowException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_INVALID_VALUE");
+				GUI_THROW( GUI_FORMAT("error find in opengl in <%s>, error is <%s>!" ,info, "GL_INVALID_VALUE"));
 				break;
 			case GL_INVALID_OPERATION:
-				CGUIException::ThrowException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_INVALID_OPERATION");
+				GUI_THROW( GUI_FORMAT("error find in opengl in <%s>, error is <%s>!" ,info, "GL_INVALID_OPERATION"));
 				break;
 			case GL_STACK_OVERFLOW:
-				CGUIException::ThrowException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_STACK_OVERFLOW");
+				GUI_THROW( GUI_FORMAT("error find in opengl in <%s>, error is <%s>!" ,info, "GL_STACK_OVERFLOW"));
 				break;
 			case GL_STACK_UNDERFLOW:
-				CGUIException::ThrowException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_STACK_UNDERFLOW");
+				GUI_THROW( GUI_FORMAT("error find in opengl in <%s>, error is <%s>!" ,info, "GL_STACK_UNDERFLOW"));
 				break;
 			case GL_OUT_OF_MEMORY:
-				CGUIException::ThrowException("error find in opengl in <%s>, error is <%s>!" ,info, "GL_OUT_OF_MEMORY");
+				GUI_THROW( GUI_FORMAT("error find in opengl in <%s>, error is <%s>!" ,info, "GL_OUT_OF_MEMORY"));
 				break;			
 			default:
-				CGUIException::ThrowException("error find in opengl in <%s>, error is <0x%x>!" ,info, errorcode);
+				GUI_THROW( GUI_FORMAT("error find in opengl in <%s>, error is <0x%x>!" ,info, errorcode));
 			}
 		}
 	}
@@ -201,7 +201,9 @@ namespace guiex
 		glPixelStorei(GL_PACK_ALIGNMENT, 1);
 
 		glEnable( GL_BLEND );
-		glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA ); 
+		m_aBlendFunc.src = eBlendFunc_SRC_ALPHA;
+		m_aBlendFunc.dst = eBlendFunc_ONE_MINUS_SRC_ALPHA;
+		SetBlendFunc( m_aBlendFunc );
 
 		//glEnable( GL_DEPTH_TEST );
 		glDisable( GL_DEPTH_TEST );
@@ -296,6 +298,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::SetBlendFunc( const SGUIBlendFunc& rBlendFuncType )
 	{
+		m_aBlendFunc = rBlendFuncType;
 		GLenum src = BlendFunc_Engin2GL( rBlendFuncType.src );
 		GLenum dst = BlendFunc_Engin2GL( rBlendFuncType.dst );
 		glBlendFunc( src, dst );
@@ -304,14 +307,15 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::GetBlendFunc( SGUIBlendFunc& rBlendFuncType )
 	{
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::GetBlendFunc: begin");
-		GLint src = 0;
-		GLint dst = 0;
-		glGetIntegerv( GL_BLEND_SRC, &src );
-		glGetIntegerv( GL_BLEND_DST, &dst );
-		rBlendFuncType.src = BlendFunc_GL2Engin( src );
-		rBlendFuncType.dst = BlendFunc_GL2Engin( dst );
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::GetBlendFunc: end");
+		//TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::GetBlendFunc: begin");
+		//GLint src = 0;
+		//GLint dst = 0;
+		//glGetIntegerv( GL_BLEND_SRC, &src );
+		//glGetIntegerv( GL_BLEND_DST, &dst );
+		//rBlendFuncType.src = BlendFunc_GL2Engin( src );
+		//rBlendFuncType.dst = BlendFunc_GL2Engin( dst );
+		//TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::GetBlendFunc: end");
+		rBlendFuncType = m_aBlendFunc;
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::SetViewport( int32 x, int32 y, uint32 width, uint32 height)
@@ -365,7 +369,7 @@ namespace guiex
 			return;
 
 		default:
-			CGUIException::ThrowException("IGUIRender_opengl_base::MatrixMode: unknown matrix mode");
+			GUI_THROW( "IGUIRender_opengl_base::MatrixMode: unknown matrix mode");
 			return;
 		}
 

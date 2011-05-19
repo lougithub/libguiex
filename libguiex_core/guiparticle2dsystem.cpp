@@ -267,7 +267,7 @@ namespace guiex
 		}
 		else
 		{
-			CGUIException::ThrowException( "[CGUIParticle2DSystem::LoadValueFromProperty]: unknown emitter mode!" );
+			GUI_THROW(  "[CGUIParticle2DSystem::LoadValueFromProperty]: unknown emitter mode!" );
 			return -1;
 		}
 
@@ -279,13 +279,13 @@ namespace guiex
 		GUI_ASSERT( particles==NULL, "invalid pointer");
 		if( totalParticles <= 0 )
 		{
-			CGUIException::ThrowException( "CGUIParticle2DSystem::DoLoad: totalparticles shouldn't be zero" );
+			GUI_THROW(  "CGUIParticle2DSystem::DoLoad: totalparticles shouldn't be zero" );
 			return -1;
 		}
 		particles = (CGUIParticle2D*)calloc( totalParticles, sizeof(CGUIParticle2D) );
 		if( !particles ) 
 		{
-			CGUIException::ThrowException( "[CGUIParticle2DSystem::CGUIParticle2DSystem]: not enough memory" );
+			GUI_THROW( "[CGUIParticle2DSystem::CGUIParticle2DSystem]: not enough memory" );
 			return -1;
 		}
 
@@ -293,7 +293,7 @@ namespace guiex
 		texture = CGUITextureManager::Instance()->CreateTexture( m_strFullTexturePath );
 		if( !texture )
 		{
-			CGUIException::ThrowException("[CGUIParticle2DSystem::DoLoad]: failed to create texture from path <%s>", m_strFullTexturePath.c_str());
+			GUI_THROW( GUI_FORMAT("[CGUIParticle2DSystem::DoLoad]: failed to create texture from path <%s>", m_strFullTexturePath.c_str()));
 			return -1;
 		}
 
@@ -620,7 +620,7 @@ namespace guiex
 		m_strFullTexturePath = rTexturePath;
 		if( IsLoaded() )
 		{
-			CGUIException::ThrowException( "[CGUIParticle2DSystem::SetTexture]: system has been loaded.");
+			GUI_THROW( "[CGUIParticle2DSystem::SetTexture]: system has been loaded.");
 		}
 	}
 	//------------------------------------------------------------------------------

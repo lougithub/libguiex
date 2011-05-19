@@ -28,7 +28,7 @@ namespace guiex
 		CGUIScene* pSceneInfo = CGUISceneManager::Instance()->GetScene( strSceneName );
 		if( !pSceneInfo )
 		{
-			CGUIException::ThrowException( "[CGUISceneUtility::LoadPages] failed to load resource by scene name <%s>", strSceneName.c_str());
+			GUI_THROW( GUI_FORMAT( "[CGUISceneUtility::LoadPages] failed to load resource by scene name <%s>", strSceneName.c_str()));
 			return -1;
 		}
 		const std::vector<CGUIString>& vecPageFiles = pSceneInfo->GetWidgetFiles();

@@ -47,11 +47,11 @@ namespace guiex
 		const CGUIProperty* pPropPath = rProperty.GetProperty("path", "CGUIString");
 		if( !pPropPath )
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[CGUIMusicManager::RegisterResource], invalid property <%s:%s:%s>!", 
 				rProperty.GetName().c_str(),
 				rProperty.GetTypeAsString().c_str(),
-				rProperty.GetValue().c_str());
+				rProperty.GetValue().c_str()));
 			return -1;
 		}
 		CGUIString strPath = pPropPath->GetValue();
@@ -69,7 +69,7 @@ namespace guiex
 		IGUIInterfaceSound* pSound = CGUIInterfaceManager::Instance()->GetInterfaceSound();
 		if( !pSound )
 		{
-			CGUIException::ThrowException("[CGUIMusicManager::DoCreateMusic]: failed to get sound interface");
+			GUI_THROW( "[CGUIMusicManager::DoCreateMusic]: failed to get sound interface");
 			return NULL;
 		}
 		CGUIMusicData* pMusicData = pSound->CreateMusicData( rName, rSceneName, rPath );
@@ -81,7 +81,7 @@ namespace guiex
 		IGUIInterfaceSound* pSound = CGUIInterfaceManager::Instance()->GetInterfaceSound();
 		if( !pSound )
 		{
-			CGUIException::ThrowException("[CGUIMusicManager::DestroyResourceImp]: failed to get sound interface");
+			GUI_THROW( "[CGUIMusicManager::DestroyResourceImp]: failed to get sound interface");
 		}
 		pSound->DestroyMusicData( (CGUIMusicData*)pRes );
 	}
@@ -91,7 +91,7 @@ namespace guiex
 		IGUIInterfaceSound* pSound = CGUIInterfaceManager::Instance()->GetInterfaceSound();
 		if( !pSound )
 		{
-			CGUIException::ThrowException("[CGUIMusicManager::DestroyResourceImp]: failed to get sound interface");
+			GUI_THROW( "[CGUIMusicManager::DestroyResourceImp]: failed to get sound interface");
 		}
 		pSound->DestroyMusicData( (CGUIMusicData*)pRes );
 	}
@@ -101,9 +101,9 @@ namespace guiex
 		CGUIMusicData* pMusic = CGUIResourceManager<CGUIMusicData,CGUIMusicData>::GetRegisterResource( rResName );
 		if( !pMusic )
 		{
-			CGUIException::ThrowException( 
+			GUI_THROW( GUI_FORMAT( 
 				"[CGUIMusicDataManager::AllocateResource]: failed to get sound by name <%s>",
-				rResName.c_str());
+				rResName.c_str()));
 			return NULL;
 		}
 		pMusic->RefRetain();
@@ -118,12 +118,12 @@ namespace guiex
 		if( pRes->GetRefCount() == 0 )
 		{
 			//music's reference count shouldn't be zero, which is retained by register function
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[CGUIMusicManager::DeallocateResource]: invalid reference count [%d] for resource: <%s:%s:%s>", 
 				pRes->GetRefCount(),
 				pRes->GetName().c_str(), 
 				pRes->GetResourceType().c_str(),
-				pRes->GetSceneName().c_str() );
+				pRes->GetSceneName().c_str()));
 		}
 	}
 	//------------------------------------------------------------------------------

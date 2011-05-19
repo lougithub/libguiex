@@ -71,7 +71,7 @@ namespace guiex
 
 		if( pWidget->GetName().empty() )
 		{
-			CGUIException::ThrowException( "CGUIWidgetManager::TryAddToWidgetPool: lack name for type <%s>!", pWidget->GetType().c_str());
+			GUI_THROW( GUI_FORMAT( "CGUIWidgetManager::TryAddToWidgetPool: lack name for type <%s>!", pWidget->GetType().c_str()));
 			return false;
 		}
 
@@ -82,7 +82,7 @@ namespace guiex
 		{
 			if( itorScene->second.find( pWidget->GetName() ) != itorScene->second.end())
 			{
-				CGUIException::ThrowException( "[CGUIWidgetManager::TryAddToWidgetPool]: the widget [%s : %s] has existed!", pWidget->GetSceneName().c_str(), pWidget->GetName().c_str());
+				GUI_THROW( GUI_FORMAT( "[CGUIWidgetManager::TryAddToWidgetPool]: the widget [%s : %s] has existed!", pWidget->GetSceneName().c_str(), pWidget->GetName().c_str()));
 				return false;
 			}
 			pSceneWidgetMap = &itorScene->second;
@@ -120,7 +120,7 @@ namespace guiex
 	{
 		if( !pWidget )
 		{
-			CGUIException::ThrowException( "[CGUIWidgetManager::DestroyWidget]: Invalid parameter");
+			GUI_THROW(  "[CGUIWidgetManager::DestroyWidget]: Invalid parameter");
 		}
 
 		if( !pWidget->GetName().empty() )
@@ -129,12 +129,12 @@ namespace guiex
 			TMapWidget::iterator itor = m_aMapWidget.find( pWidget->GetSceneName());
 			if( itor == m_aMapWidget.end())
 			{
-				CGUIException::ThrowException( "[CGUIWidgetManager::DestroyWidget]: the widget <%s : %s> doesn't exist!", pWidget->GetSceneName().c_str(), pWidget->GetName().c_str());
+				GUI_THROW( GUI_FORMAT( "[CGUIWidgetManager::DestroyWidget]: the widget <%s : %s> doesn't exist!", pWidget->GetSceneName().c_str(), pWidget->GetName().c_str()));
 			}
 			std::map<CGUIString, CGUIWidget*>::iterator  itor_widget = itor->second.find(pWidget->GetName());
 			if( itor_widget == itor->second.end())
 			{
-				CGUIException::ThrowException( "[CGUIWidgetManager::DestroyWidget]: the widget <%s : %s> doesn't exist!", pWidget->GetSceneName().c_str(), pWidget->GetName().c_str());
+				GUI_THROW( GUI_FORMAT( "[CGUIWidgetManager::DestroyWidget]: the widget <%s : %s> doesn't exist!", pWidget->GetSceneName().c_str(), pWidget->GetName().c_str()));
 			}
 
 			//clear widget pool
@@ -163,7 +163,7 @@ namespace guiex
 		}
 		else
 		{
-			CGUIException::ThrowException( "CGUIWidgetManager::DestroyWidget: lack name for type <%s>!", pWidget->GetType().c_str());
+			GUI_THROW( GUI_FORMAT( "CGUIWidgetManager::DestroyWidget: lack name for type <%s>!", pWidget->GetType().c_str()));
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -210,7 +210,7 @@ namespace guiex
 			}
 		}
 
-		CGUIException::ThrowException("[CGUIWidgetManager::GetWidget]: failed to get widget by name [%s : %s]",rSceneName.c_str(), rWidgetName.c_str());
+		GUI_THROW( GUI_FORMAT("[CGUIWidgetManager::GetWidget]: failed to get widget by name [%s : %s]",rSceneName.c_str(), rWidgetName.c_str()));
 		return NULL;
 	}
 	//------------------------------------------------------------------------------
@@ -269,7 +269,7 @@ namespace guiex
 			}
 		}
 
-		CGUIException::ThrowException( "[CGUIWidgetManager::GetPage]: failed to get page whose name is <%s : %s>!", rSceneName.c_str(), rWidgetName.c_str());
+		GUI_THROW( GUI_FORMAT( "[CGUIWidgetManager::GetPage]: failed to get page whose name is <%s : %s>!", rSceneName.c_str(), rWidgetName.c_str()));
 		return NULL;
 	}
 	//------------------------------------------------------------------------------
@@ -360,7 +360,7 @@ namespace guiex
 		//check
 		if( HasPage( pPage->GetName(), pPage->GetSceneName()))
 		{
-			CGUIException::ThrowException( "[CGUIWidgetManager::AddPage]: the page name <%s> has existed!", pPage->GetName().c_str());
+			GUI_THROW( GUI_FORMAT( "[CGUIWidgetManager::AddPage]: the page name <%s> has existed!", pPage->GetName().c_str()));
 		}
 		for( TVecPage::iterator itor = m_vecPage.begin();
 			itor != m_vecPage.end();
@@ -370,7 +370,7 @@ namespace guiex
 			if( rPageInfo.m_strPageName == rPageName && 
 				rPageInfo.m_pPage->GetSceneName() == pPage->GetSceneName() )
 			{
-				CGUIException::ThrowException( "[CGUIWidgetManager::AddPage]: the page's <%s> has existed!", rPageName.c_str());
+				GUI_THROW( GUI_FORMAT( "[CGUIWidgetManager::AddPage]: the page's <%s> has existed!", rPageName.c_str()));
 			}
 		}
 
@@ -394,9 +394,9 @@ namespace guiex
 		CGUIWidget* pPage = CGUIConfigFileLoader::LoadWidgetConfigFile( strRelPath, strDynamicSceneName, rPageName );
 		if( !pPage )
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[CGUIWidgetManager::LoadDynamicPage]: failed to load config file <%s>!",
-				strRelPath.c_str());
+				strRelPath.c_str()));
 			return NULL;
 		}
 

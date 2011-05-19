@@ -66,12 +66,12 @@ namespace guiex
 		{
 			if( !QueryPerformanceFrequency(&m_aFrequency))
 			{
-				CGUIException::ThrowException("[CGUITimer::UpdateTime]: failed in function QueryPerformanceFrequency()!");
+				GUI_THROW( "[CGUITimer::UpdateTime]: failed in function QueryPerformanceFrequency()!");
 			}
 		}
 		if( !QueryPerformanceCounter(&m_aTimeCounter))
 		{
-			CGUIException::ThrowException("[CGUITimer::UpdateTime]: failed in function QueryPerformanceCounter()!");		
+			GUI_THROW( "[CGUITimer::UpdateTime]: failed in function QueryPerformanceCounter()!");		
 		}
 	}
 	//------------------------------------------------------------------------------

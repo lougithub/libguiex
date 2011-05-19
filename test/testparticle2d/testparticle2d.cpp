@@ -105,9 +105,11 @@ void CMyCanvasLayer_Particle::DestroySelf( )
 //------------------------------------------------------------------------------
 void CMyCanvasLayer_Particle::ApplyEffect()
 {
-	static int i=m_vecParticlePlayers.size() - 1;
+	static int i=0;
 
+	GUI_TRACE( GUI_FORMAT( "[CMyCanvasLayer_Particle::ApplyEffect]: %s begin", m_vecParticlePlayers[i].c_str()));
 	m_pWidgetParticle->SetParticle2D( m_vecParticlePlayers[i] );
+	GUI_TRACE( GUI_FORMAT( "[CMyCanvasLayer_Particle::ApplyEffect]: %s end", m_vecParticlePlayers[i].c_str()));
 
 	i = (i+1)%m_vecParticlePlayers.size();
 }
@@ -126,8 +128,8 @@ uint32 CMyCanvasLayer_Particle::OnKeyClicked( CGUIEventKeyboard* pEvent )
 //------------------------------------------------------------------------------
 void CMyCanvasLayer_Particle::RegisterParticlePlayer()
 {
-	m_vecParticlePlayers.push_back( "DemoRain" );
 	m_vecParticlePlayers.push_back( "DemoGalaxy" );
+	m_vecParticlePlayers.push_back( "DemoRain" );
 	m_vecParticlePlayers.push_back( "DemoSpiral" );
 	m_vecParticlePlayers.push_back( "DemoFlower" );
 	m_vecParticlePlayers.push_back( "DemoFirework" );

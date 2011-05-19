@@ -40,15 +40,15 @@ namespace guiex
 	{
 		if( m_pDefaultTexture )
 		{
-			CGUIException::ThrowException("[CGUITextureManager::~CGUITextureManager]: default texture havn't been released!");
+			GUI_THROW( "[CGUITextureManager::~CGUITextureManager]: default texture havn't been released!");
 		}
 		if( !m_aMapTexture.empty() )
 		{
-			CGUIException::ThrowException("[CGUITextureManager::~CGUITextureManager]: texture load from file havn't been released!");
+			GUI_THROW( "[CGUITextureManager::~CGUITextureManager]: texture load from file havn't been released!");
 		}
 		if( !m_aSetTexture.empty() )
 		{
-			CGUIException::ThrowException("[CGUITextureManager::~CGUITextureManager]: texture load from memoryhavn't been released!");
+			GUI_THROW( "[CGUITextureManager::~CGUITextureManager]: texture load from memoryhavn't been released!");
 		}
 
 		m_pSingleton = NULL; 
@@ -74,7 +74,7 @@ namespace guiex
 			if( pTexture->CreateTextureByFile(rImageName) != 0 )
 			{
 				delete pTexture;
-				CGUIException::ThrowException("[CGUITextureManager::CreateTexture]: failed to load image <%s>!", rImageName.c_str());
+				GUI_THROW( GUI_FORMAT("[CGUITextureManager::CreateTexture]: failed to load image <%s>!", rImageName.c_str()));
 				return NULL;
 			}
 			m_aMapTexture.insert( std::make_pair( rImageName,  pTexture ));
@@ -101,7 +101,7 @@ namespace guiex
 			GUIARGB argb = 0xFFFFFFFF;
 			if( 0 != m_pDefaultTexture->CreateTextureByMemory(&argb,1,1,GUI_PF_RGBA_32))
 			{
-				CGUIException::ThrowException("[CGUITextureManager::CreateDefaultTexture]: failed to load texture from memory!");
+				GUI_THROW( "[CGUITextureManager::CreateDefaultTexture]: failed to load texture from memory!");
 				return NULL;
 			}
 		}
@@ -123,7 +123,7 @@ namespace guiex
 
 		if( 0 != pTexture->CreateTextureBySize(nWidth,nHeight,ePixelFormat))
 		{
-			CGUIException::ThrowException("[CGUITextureManager::CreateTexture]: failed to load texture by given size!");
+			GUI_THROW( "[CGUITextureManager::CreateTexture]: failed to load texture by given size!");
 			return NULL;
 		}
 		pTexture->RefRetain();
@@ -145,7 +145,7 @@ namespace guiex
 
 		if( 0 != pTexture->CreateTextureByMemory(buffPtr,buffWidth,buffHeight,ePixelFormat))
 		{
-			CGUIException::ThrowException("[CGUITextureManager::CreateTexture]: failed to load texture from memory!");
+			GUI_THROW( "[CGUITextureManager::CreateTexture]: failed to load texture from memory!");
 			return NULL;
 		}
 		pTexture->RefRetain();
@@ -222,7 +222,7 @@ namespace guiex
 		}
 
 
-		CGUIException::ThrowException("[CGUITextureManager::DestroyTexture]: the image has been destroyed");
+		GUI_THROW( "[CGUITextureManager::DestroyTexture]: the image has been destroyed");
 		return -1;
 	}
 	//------------------------------------------------------------------------------

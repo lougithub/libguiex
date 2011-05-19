@@ -107,10 +107,10 @@ namespace guiex
 					const CGUIProperty* pPptAs = pProperty->GetProperty("item", "CGUIAsDefine");
 					if( !pPptAs )
 					{
-						CGUIException::ThrowException(
+						GUI_THROW( GUI_FORMAT(
 							"[CGUIAsContainer::ProcessProperty]: invalid property: <%s> <%s>", 
 							pProperty->GetName().c_str(), 
-							pProperty->GetTypeAsString().c_str());
+							pProperty->GetTypeAsString().c_str()));
 						return -1;
 					}
 
@@ -120,10 +120,10 @@ namespace guiex
 						CGUIAs* pAs = CGUIAsManager::Instance()->AllocateResource( pPptAs->GetValue() );
 						if( !pAs )
 						{
-							CGUIException::ThrowException(
+							GUI_THROW( GUI_FORMAT(
 								"[CGUIAsContainer::ProcessProperty]: invalid property: <%s> <%s>", 
 								pProperty->GetName().c_str(), 
-								pProperty->GetTypeAsString().c_str());
+								pProperty->GetTypeAsString().c_str()));
 							return -1;
 						}
 						aItemInfo.m_pAs = pAs;
@@ -134,30 +134,30 @@ namespace guiex
 						CGUIAs* pAs = CGUIAsManager::Instance()->AllocateResource( pPptAs->GetValue(), "", "" );
 						if( !pAs )
 						{
-							CGUIException::ThrowException(
+							GUI_THROW( GUI_FORMAT(
 								"[CGUIAsContainer::ProcessProperty]: invalid property: <%s> <%s>", 
 								pProperty->GetName().c_str(), 
-								pProperty->GetTypeAsString().c_str());
+								pProperty->GetTypeAsString().c_str()));
 							return -1;
 						}
 						int32 ret = pAs->ProcessProperty( *pPptAs );
 						if( 0 != ret )
 						{
-							CGUIException::ThrowException(
+							GUI_THROW( GUI_FORMAT(
 								"[CGUIAsContainer::ProcessProperty]: invalid property: <%s> <%s>", 
 								pProperty->GetName().c_str(), 
-								pProperty->GetTypeAsString().c_str());
+								pProperty->GetTypeAsString().c_str()));
 							return ret;
 						}
 						aItemInfo.m_pAs = pAs;
 					}
 					else
 					{
-						CGUIException::ThrowException(
+						GUI_THROW( GUI_FORMAT(
 							"[CGUIAsContainer::ProcessProperty]: invalid property: <%s> <%s> <%s>", 
 							pProperty->GetName().c_str(), 
 							pProperty->GetTypeAsString().c_str(),
-							pProperty->GetValue().c_str());
+							pProperty->GetValue().c_str()));
 						return -1;
 					}
 				}

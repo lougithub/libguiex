@@ -92,9 +92,9 @@ namespace guiex
 		if( pTiledMap->LoadValueFromProperty( rProperty ) != 0 )
 		{
 			delete pTiledMap;
-			CGUIException::ThrowException( 
+			GUI_THROW( GUI_FORMAT( 
 				"[CGUITiledMapManager::DoCreateTiledMap]: failed to load particle <%s> from property",
-				rProperty.GetName().c_str() );
+				rProperty.GetName().c_str()));
 			return NULL;
 		}
 		pTiledMap->Load();
@@ -106,9 +106,9 @@ namespace guiex
 		CGUITiledMapData* pTiledMapData = CGUIResourceManager<CGUITiledMapData, CGUITiledMap>::GetRegisterResource( rResName );
 		if( !pTiledMapData )
 		{
-			CGUIException::ThrowException( 
+			GUI_THROW( GUI_FORMAT( 
 				"[CGUITiledMapManager::AllocateResource]: failed to get sound by name <%s>",
-				rResName.c_str());
+				rResName.c_str()));
 			return NULL;
 		}
 

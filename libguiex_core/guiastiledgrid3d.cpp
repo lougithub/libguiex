@@ -42,7 +42,7 @@ namespace guiex
 		if( 0 != pGrid->Initialize() )
 		{
 			pGrid->RefRelease();
-			CGUIException::ThrowException( "[CGUIAsTiledGrid3D::GenerateGrid]: failed to init effect grid3d!" );
+			GUI_THROW( GUI_FORMAT( "[CGUIAsTiledGrid3D::GenerateGrid]: failed to init effect grid3d!" ));
 			return NULL;
 		}
 		return pGrid;

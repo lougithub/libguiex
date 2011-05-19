@@ -62,7 +62,7 @@ namespace guiex
 		if( 0 != pFileSys->ReadFile( rFileName, aDataChunk, IGUIInterfaceFileSys::eOpenMode_String ))
 		{
 			//failed
-			CGUIException::ThrowException("[IGUILocalizationLoader_tinyxml::LoadLocalizationFile]: failed to read file <%s>!", rFileName.c_str());
+			GUI_THROW( GUI_FORMAT("[IGUILocalizationLoader_tinyxml::LoadLocalizationFile]: failed to read file <%s>!", rFileName.c_str()));
 			return -1;
 		}
 
@@ -72,10 +72,10 @@ namespace guiex
 		if( aDoc.Error())
 		{
 			//failed to parse
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[IGUILocalizationLoader_tinyxml::LoadLocalizationFile]: failed to parse file <%s>!\n\n<%s>", 
 				rFileName.c_str(),
-				aDoc.ErrorDesc());
+				aDoc.ErrorDesc()));
 			return -1;
 		}
 
@@ -83,7 +83,7 @@ namespace guiex
 		TiXmlElement* pRootNode = aDoc.RootElement();
 		if( !pRootNode )
 		{
-			CGUIException::ThrowException("[IGUILocalizationLoader_tinyxml::LoadLocalizationFile], failed to get root node from file <%s>!", rFileName.c_str());
+			GUI_THROW( GUI_FORMAT("[IGUILocalizationLoader_tinyxml::LoadLocalizationFile], failed to get root node from file <%s>!", rFileName.c_str()));
 			return -1;
 		}
 
@@ -101,13 +101,13 @@ namespace guiex
 					const char* szKey = pStringNode->Attribute("key");
 					if( !szKey )
 					{
-						CGUIException::ThrowException("[IGUILocalizationLoader_tinyxml::LoadLocalizationFile], failed to get localization name from local <%s>!", rCurrentLocalConfig.c_str());
+						GUI_THROW( GUI_FORMAT("[IGUILocalizationLoader_tinyxml::LoadLocalizationFile], failed to get localization name from local <%s>!", rCurrentLocalConfig.c_str()));
 						return -1;
 					}
 					const char* szContent = pStringNode->GetText();
 					if( !szContent )
 					{
-						CGUIException::ThrowException("[IGUILocalizationLoader_tinyxml::LoadLocalizationFile], failed to get localization content from name from local <%s>!", szKey, rCurrentLocalConfig.c_str());
+						GUI_THROW( GUI_FORMAT("[IGUILocalizationLoader_tinyxml::LoadLocalizationFile], failed to get localization content from name from local <%s>!", szKey, rCurrentLocalConfig.c_str()));
 						return -1;
 					}
 					CGUIStringW strContentW;

@@ -93,9 +93,9 @@ namespace guiex
 		if( pParticle2D->LoadValueFromProperty( rProperty ) != 0 )
 		{
 			delete pParticle2D;
-			CGUIException::ThrowException( 
+			GUI_THROW( GUI_FORMAT( 
 				"[CGUIParticle2DManager::DoCreateParticle2D]: failed to load particle <%s> from property",
-				rProperty.GetName().c_str() );
+				rProperty.GetName().c_str()));
 			return NULL;
 		}
 		return pParticle2D;
@@ -106,9 +106,9 @@ namespace guiex
 		CGUIParticle2DData* pParticle2DData = CGUIResourceManager<CGUIParticle2DData, CGUIParticle2DSystem>::GetRegisterResource( rResName );
 		if( !pParticle2DData )
 		{
-			CGUIException::ThrowException( 
+			GUI_THROW( GUI_FORMAT( 
 				"[CGUIParticle2DManager::AllocateResource]: failed to get sound by name <%s>",
-				rResName.c_str());
+				rResName.c_str()));
 			return NULL;
 		}
 

@@ -107,7 +107,7 @@ namespace guiex
 			CGUITexture* pTexture = CGUITextureManager::Instance()->CreateTexture(strFullPath);
 			if( !pTexture )
 			{
-				CGUIException::ThrowException("[CGUIAnimation::DoLoad]: failed to create texture from path <%s>",strFullPath.c_str());
+				GUI_THROW( GUI_FORMAT("[CGUIAnimation::DoLoad]: failed to create texture from path <%s>",strFullPath.c_str()));
 				return -1;
 			}
 			m_vecTextures.push_back( pTexture );
@@ -115,7 +115,7 @@ namespace guiex
 
 		if( m_vecTextures.empty() )
 		{
-			CGUIException::ThrowException("[CGUIAnimation::DoLoad]: failed to load texture" );
+			GUI_THROW( "[CGUIAnimation::DoLoad]: failed to load texture" );
 			return -1;
 		}
 

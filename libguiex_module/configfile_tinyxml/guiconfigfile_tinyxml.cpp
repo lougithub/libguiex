@@ -59,7 +59,7 @@ namespace guiex
 		if( 0 != pFileSys->ReadFile( rFileName, aDataChunk, IGUIInterfaceFileSys::eOpenMode_String ))
 		{
 			//failed
-			CGUIException::ThrowException("[IGUIConfigFile_tinyxml::LoadResourceConfigFile]: failed to read file <%s>!", rFileName.c_str());
+			GUI_THROW( GUI_FORMAT("[IGUIConfigFile_tinyxml::LoadResourceConfigFile]: failed to read file <%s>!", rFileName.c_str()));
 			return -1;
 		}
 
@@ -69,10 +69,10 @@ namespace guiex
 		if( aDoc.Error())
 		{
 			//failed to parse
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[IGUIConfigFile_tinyxml::LoadResourceConfigFile]: failed to parse file <%s>!\n\n<%s>", 
 				rFileName.c_str(),
-				aDoc.ErrorDesc());
+				aDoc.ErrorDesc()));
 			return -1;
 		}
 
@@ -80,7 +80,7 @@ namespace guiex
 		TiXmlElement* pRootNode = aDoc.RootElement();
 		if( !pRootNode )
 		{
-			CGUIException::ThrowException("[IGUIConfigFile_tinyxml::LoadResourceConfigFile], failed to get root node from file <%s>!", rFileName.c_str());
+			GUI_THROW( GUI_FORMAT("[IGUIConfigFile_tinyxml::LoadResourceConfigFile], failed to get root node from file <%s>!", rFileName.c_str()));
 			return -1;
 		}
 
@@ -118,7 +118,7 @@ namespace guiex
 				const char* pName = pPropertyNode->Attribute("name");
 				if( !pName )
 				{
-					CGUIException::ThrowException("[IGUIConfigFile_tinyxml::ProcessProperty]: property node lack attribute <name>!" );
+					GUI_THROW( "[IGUIConfigFile_tinyxml::ProcessProperty]: property node lack attribute <name>!" );
 					return -1;
 				}
 				aProperty.SetName(pName);
@@ -126,7 +126,7 @@ namespace guiex
 				const char* pType = pPropertyNode->Attribute("type");
 				if( !pType )
 				{
-					CGUIException::ThrowException("[IGUIConfigFile_tinyxml::ProcessProperty]: property node lack attribute <type>!" );
+					GUI_THROW( "[IGUIConfigFile_tinyxml::ProcessProperty]: property node lack attribute <type>!" );
 					return -1;
 				}
 				aProperty.SetType(pType);
@@ -148,9 +148,9 @@ namespace guiex
 			else
 			{
 				//unknown node
-				CGUIException::ThrowException(
+				GUI_THROW( GUI_FORMAT(
 					"[IGUIConfigFile_tinyxml::ProcessProperty]: unknown property <%s>!",
-					pPropertyNode->Value());
+					pPropertyNode->Value()));
 				return -1;
 			}
 

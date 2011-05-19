@@ -16,6 +16,15 @@
 #include <exception>
 
 //============================================================================//
+// declare
+//============================================================================// 
+namespace guiex
+{	
+#define GUI_THROW(X) CGUIException::ThrowException(__FILE__, __LINE__,(X))
+#define GUI_SCRIPT_THROW(X) CGUIException_Script::ThrowException(__FILE__, __LINE__,(X))
+}
+
+//============================================================================//
 // class
 //============================================================================// 
 namespace guiex
@@ -44,7 +53,7 @@ namespace guiex
 	{
 	public:
 		CGUIException( const char *format, ... ) throw();
-		static void ThrowException(const char *szError, ...);
+		static void ThrowException( const char *filename, uint32 line,const char *szError );
 	};
 	
 	/**
@@ -55,7 +64,7 @@ namespace guiex
 	{
 	public:
 		CGUIException_Script( const char *format, ... ) throw();
-		static void ThrowException(const char *szError, ...);
+		static void ThrowException(const char *filename, uint32 line,const char *szError );
 	};
 }//namespace guiex
 

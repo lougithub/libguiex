@@ -60,7 +60,7 @@ namespace guiex
 			//load ogg file
 			if( LoadOggFile( strFullPath ) != true)
 			{
-				CGUIException::ThrowException("[CGUISoundData_openal::DoLoad]: failed to load ogg file <%s>!", m_strPath.c_str());
+				GUI_THROW( GUI_FORMAT("[CGUISoundData_openal::DoLoad]: failed to load ogg file <%s>!", m_strPath.c_str()));
 				return -1;
 			}
 		}
@@ -70,14 +70,14 @@ namespace guiex
 			//load wav file
 			if( LoadWavFile( strFullPath ) != true)
 			{
-				CGUIException::ThrowException("[CGUISoundData_openal::DoLoad]: failed to load wav file <%s>!", m_strPath.c_str());
+				GUI_THROW( GUI_FORMAT("[CGUISoundData_openal::DoLoad]: failed to load wav file <%s>!", m_strPath.c_str()));
 				return -1;
 			}
 		}	
 #endif
 		else
 		{
-			CGUIException::ThrowException("[CGUISoundData_openal::DoLoad]: doesn't support the sound type <%s>!", strExt.c_str());
+			GUI_THROW( GUI_FORMAT("[CGUISoundData_openal::DoLoad]: doesn't support the sound type <%s>!", strExt.c_str()));
 			return -1;
 		}
 

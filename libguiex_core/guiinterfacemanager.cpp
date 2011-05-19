@@ -78,9 +78,9 @@ namespace guiex
 	{
 		if( m_mapInterface.find( rInterface) != m_mapInterface.end())
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[CGUIInterfaceManager::DoRegisterInterface] the interface <%s> has been registed",
-				rInterface.c_str());
+				rInterface.c_str()));
 			return -1;
 		}
 
@@ -171,9 +171,9 @@ namespace guiex
 			GUI_DYNLIB_HANDLE d_handle = GUI_DYNLIB_LOAD(rModuleName.c_str());
 			if (d_handle == NULL)
 			{
-				CGUIException::ThrowException(
+				GUI_THROW( GUI_FORMAT(
 					"[CGUIInterfaceManager::RegisterInterface] failed to load module <%s>",
-					rModuleName.c_str());
+					rModuleName.c_str()));
 				return -1;
 			}
 
@@ -182,10 +182,10 @@ namespace guiex
 			if( !pFunc )
 			{
 				GUI_DYNLIB_UNLOAD(d_handle);
-				CGUIException::ThrowException(
+				GUI_THROW( GUI_FORMAT(
 					"[CGUIInterfaceManager::RegisterInterface] failed to get function <GetInterfaceInstance> for interface <%s> from module <%s>",
 					rInterface.c_str(),
-					rModuleName.c_str());
+					rModuleName.c_str()));
 				return -1;
 			}
 
@@ -194,10 +194,10 @@ namespace guiex
 			if( !pInterface )
 			{
 				GUI_DYNLIB_UNLOAD(d_handle);
-				CGUIException::ThrowException(
+				GUI_THROW( GUI_FORMAT(
 					"[CGUIInterfaceManager::RegisterInterface] failed to get interface <GetInterfaceInstance> for interface <%s> from module <%s>",
 					rInterface.c_str(),
-					rModuleName.c_str());
+					rModuleName.c_str()));
 				return -1;
 			}
 
@@ -208,9 +208,9 @@ namespace guiex
 		}
 		else
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[CGUIInterfaceManager::RegisterInterface] the interface <%s> has been registed",
-				rInterface.c_str());
+				rInterface.c_str()));
 			return -1;
 		}		
 
@@ -254,9 +254,9 @@ namespace guiex
 		TMapInterface::iterator itor = m_mapInterface.find( rInterface );
 		if( itor == m_mapInterface.end() )
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[CGUIInterfaceManager::UnregisterInterface] the interface <%s> has been unregisted",
-				rInterface.c_str());
+				rInterface.c_str()));
 			return -1;
 		}
 		else
@@ -376,9 +376,9 @@ namespace guiex
 		TMapInterface::iterator itor = m_mapInterface.find( rInterface );
 		if( itor == m_mapInterface.end() )
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[CGUIInterfaceManager::GetInterface] the interface <%s> hasn't been unregisted",
-				rInterface.c_str());
+				rInterface.c_str()));
 			return NULL;
 		}
 		else

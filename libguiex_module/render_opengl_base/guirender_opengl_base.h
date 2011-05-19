@@ -195,6 +195,8 @@ namespace guiex
 		int m_nCurrentStencilRef;
 		SClipRect m_aWholeScreenRect;
 
+		SGUIBlendFunc m_aBlendFunc;
+
 		//current camera
 		CGUICamera* m_pCamera;
 	};

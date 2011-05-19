@@ -187,7 +187,7 @@ namespace guiex
 
 		if( !CGUIWidgetManager::Instance()->HasDynamicPage( pDlg ))
 		{
-			CGUIException::ThrowException( "[CGUIUICanvasLayer::OpenDialog]: the dialog <%s:%s> isn't a page", pDlg->GetSceneName().c_str(), pDlg->GetName().c_str());
+			GUI_THROW( GUI_FORMAT( "[CGUIUICanvasLayer::OpenDialog]: the dialog <%s:%s> isn't a page", pDlg->GetSceneName().c_str(), pDlg->GetName().c_str()));
 		}
 
 		pDlg->SetParent( NULL );
@@ -195,7 +195,7 @@ namespace guiex
 		TArrayWidget::iterator itor = std::find(m_arrayOpenedDlg.begin(), m_arrayOpenedDlg.end(), pDlg );
 		if( itor != m_arrayOpenedDlg.end() )
 		{
-			CGUIException::ThrowException( "[CGUIUICanvasLayer::OpenDialog]: failed to open dialog<%s:%s>, it has opened!", pDlg->GetSceneName().c_str(), pDlg->GetName().c_str());
+			GUI_THROW( GUI_FORMAT( "[CGUIUICanvasLayer::OpenDialog]: failed to open dialog<%s:%s>, it has opened!", pDlg->GetSceneName().c_str(), pDlg->GetName().c_str()));
 		}
 
 		m_arrayOpenedDlg.push_back(pDlg);
@@ -221,7 +221,7 @@ namespace guiex
 			return;
 		}
 
-		CGUIException::ThrowException( "[CGUIUICanvasLayer::CloseDialog]: failed to close dialog <%s : %s>.", pDlg->GetSceneName().c_str(), pDlg->GetName().c_str());
+		GUI_THROW( GUI_FORMAT( "[CGUIUICanvasLayer::CloseDialog]: failed to close dialog <%s : %s>.", pDlg->GetSceneName().c_str(), pDlg->GetName().c_str()));
 	}
 	//------------------------------------------------------------------------------
 	CGUIWidget*	CGUIUICanvasLayer::GetTopestDialog( ) const 
@@ -307,7 +307,7 @@ namespace guiex
 
 		if( CGUIWidgetManager::Instance()->HasPage( pPage ) == false )
 		{
-			CGUIException::ThrowException( "[CGUIUICanvasLayer::OpenUIPage]: the widget <%s> isn't a page!", pPage->GetName().c_str());
+			GUI_THROW( GUI_FORMAT( "[CGUIUICanvasLayer::OpenUIPage]: the widget <%s> isn't a page!", pPage->GetName().c_str()));
 		}
 
 		pPage->SetParent( this );
@@ -323,18 +323,18 @@ namespace guiex
 
 		if( CGUIWidgetManager::Instance()->HasPage( pPage ) == false )
 		{
-			CGUIException::ThrowException( "[CGUIUICanvasLayer::CloseUIPage]: the widget <%s> isn't a page!", pPage->GetName().c_str());
+			GUI_THROW( GUI_FORMAT( "[CGUIUICanvasLayer::CloseUIPage]: the widget <%s> isn't a page!", pPage->GetName().c_str()));
 		}
 
 		if( pPage->IsOpen() == false )
 		{
-			CGUIException::ThrowException( "[CGUIUICanvasLayer::CloseUIPage]: the page <%s> has closed!", pPage->GetName().c_str());
+			GUI_THROW( GUI_FORMAT( "[CGUIUICanvasLayer::CloseUIPage]: the page <%s> has closed!", pPage->GetName().c_str()));
 		}
 
 		TArrayWidget::iterator itor = std::find(m_arrayOpenedPage.begin(), m_arrayOpenedPage.end(), pPage );
 		if( itor == m_arrayOpenedPage.end())
 		{
-			CGUIException::ThrowException( "[CGUIUICanvasLayer::CloseUIPage]: can't find page in opend page <%s> list!", pPage->GetName().c_str());
+			GUI_THROW( GUI_FORMAT( "[CGUIUICanvasLayer::CloseUIPage]: can't find page in opend page <%s> list!", pPage->GetName().c_str()));
 		}
 		m_arrayOpenedPage.erase( itor );
 		pPage->Close();
@@ -358,8 +358,9 @@ namespace guiex
 	{
 		if( nIdx >= m_arrayOpenedPage.size())
 		{
-			CGUIException::ThrowException( "[CGUIUICanvasLayer::GetOpenedPageByIndex]: the given index <%d> is overflow, total opened page size is <%d>",
-				nIdx, m_arrayOpenedPage.size());
+			GUI_THROW( GUI_FORMAT( 
+				"[CGUIUICanvasLayer::GetOpenedPageByIndex]: the given index <%d> is overflow, total opened page size is <%d>",
+				nIdx, m_arrayOpenedPage.size()));
 		}
 
 		return m_arrayOpenedPage[nIdx];

@@ -67,7 +67,7 @@ namespace guiex
 #if GUI_DEBUG
 		if( GetChild() )
 		{
-			CGUIException::ThrowException( "[CGUIWgtTag::Update]: CGUIWgtTag shouldn't has any child!" );
+			GUI_THROW( "[CGUIWgtTag::Update]: CGUIWgtTag shouldn't has any child!" );
 		}
 #endif
 	}

@@ -44,10 +44,10 @@ namespace guiex
 		CGUIWidget* pWidget = CGUIWidgetManager::Instance()->CreateWidget(strWidgetType, strWidgetName, rSceneName);
 		if( !pWidget )
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[DoLoadConfig_Widget]: failed to create widget <%s:%s>!",
 				strWidgetType.c_str(),
-				strWidgetName.c_str());
+				strWidgetName.c_str()));
 			return NULL;
 		}
 		/// set property to widget
@@ -80,17 +80,17 @@ namespace guiex
 		IGUIInterfaceConfigFile* pConfigFile = CGUIInterfaceManager::Instance()->GetInterfaceConfigFile();
 		if( !pConfigFile )
 		{
-			CGUIException::ThrowException("[LoadResourceConfigFile]: failed to get interface <IGUIConfigFile>!");
+			GUI_THROW( "[LoadResourceConfigFile]: failed to get interface <IGUIConfigFile>!");
 		}
 
 		//get property set
 		CGUIProperty aPropertySet;
 		if( 0 != pConfigFile->LoadConfigFile(rPath, aPropertySet) )
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[LoadResourceConfigFile]: failed to load config file <%s : %s>!", 
 				rSceneName.c_str(), 
-				rPath.c_str());
+				rPath.c_str()));
 		}
 
 		//parse it
@@ -142,11 +142,11 @@ namespace guiex
 
 			default:
 				{
-					CGUIException::ThrowException(
+					GUI_THROW( GUI_FORMAT(
 						"[LoadResourceConfigFile], unknown property type <%s:%s:%s>", 
 						pProperty->GetName().c_str(),
 						pProperty->GetTypeAsString().c_str(),
-						pProperty->GetValue().c_str());
+						pProperty->GetValue().c_str()));
 				}
 				return -1;
 			}
@@ -155,11 +155,11 @@ namespace guiex
 			{
 				if( 0 != pResourceManager->RegisterResource( rSceneName, *pProperty ) )
 				{
-					CGUIException::ThrowException(
+					GUI_THROW( GUI_FORMAT(
 						"[CGUIConfigFileLoader::LoadResourceConfigFile], failed to register resource with name <%s:%s:%s>!", 
 						pProperty->GetName().c_str(),
 						pProperty->GetTypeAsString().c_str(),
-						pProperty->GetValue().c_str());
+						pProperty->GetValue().c_str()));
 					return -1;
 				}
 			}
@@ -177,17 +177,17 @@ namespace guiex
 		IGUIInterfaceConfigFile* pConfigFile = CGUIInterfaceManager::Instance()->GetInterfaceConfigFile();
 		if( !pConfigFile )
 		{
-			CGUIException::ThrowException("[LoadWidgetConfigFile]: failed to get interface <IGUIConfigFile>!");
+			GUI_THROW( GUI_FORMAT("[LoadWidgetConfigFile]: failed to get interface <IGUIConfigFile>!"));
 		}
 
 		//get property set
 		CGUIProperty aPropertySet;
 		if( 0 != pConfigFile->LoadConfigFile(rPath, aPropertySet) )
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[LoadWidgetConfigFile]: failed to load config file <%s : %s>!", 
 				rSceneName.c_str(), 
-				rPath.c_str());
+				rPath.c_str()));
 		}
 
 		//parse it
@@ -209,10 +209,10 @@ namespace guiex
 					{
 						if( pWidget->GetParent() != NULL )
 						{
-							CGUIException::ThrowException(
+							GUI_THROW( GUI_FORMAT(
 								"[LoadWidgetConfigFile], first widget <%s:%s> is not the root of page", 
 								pWidget->GetName().c_str(),
-								pWidget->GetType().c_str());
+								pWidget->GetType().c_str()));
 							return NULL;
 						}
 						else
@@ -224,10 +224,10 @@ namespace guiex
 					{
 						if( pWidget->GetParent() == NULL )
 						{
-							CGUIException::ThrowException(
+							GUI_THROW( GUI_FORMAT(
 								"[LoadWidgetConfigFile], the widget <%s:%s> hasn't parent", 
 								pWidget->GetName().c_str(),
-								pWidget->GetType().c_str());
+								pWidget->GetType().c_str()));
 							return NULL;
 						}
 					}
@@ -236,11 +236,11 @@ namespace guiex
 
 			default:
 				{
-					CGUIException::ThrowException(
+					GUI_THROW( GUI_FORMAT(
 						"[LoadWidgetConfigFile], unknown property type <%s:%s:%s>", 
 						pProperty->GetName().c_str(),
 						pProperty->GetTypeAsString().c_str(),
-						pProperty->GetValue().c_str());
+						pProperty->GetValue().c_str()));
 				}
 				return NULL;
 			}

@@ -129,10 +129,10 @@ namespace guiex
 		//create self
 		if( IsCreate())
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[CGUIWidget::Create]: the widget has been created. TYPE<%s>  NAME<%s>",
 				GetType().c_str(), 
-				GetName().c_str());
+				GetName().c_str()));
 		}
 		m_bIsCreate = true;
 
@@ -181,8 +181,8 @@ namespace guiex
 		//open self
 		if( IsOpen())
 		{
-			CGUIException::ThrowException("[CGUIWidget::Open]: the widget isn't in closed state. TYPE<%s>  NAME<%s>",
-				GetType().c_str(), GetName().c_str());
+			GUI_THROW( GUI_FORMAT("[CGUIWidget::Open]: the widget isn't in closed state. TYPE<%s>  NAME<%s>",
+				GetType().c_str(), GetName().c_str()));
 		}
 
 		m_bIsOpen = true;
@@ -605,8 +605,8 @@ namespace guiex
 			}
 			if( !bFind ) 
 			{
-				CGUIException::ThrowException("[CGUIWidget::RemoveChild]: failed to find widget, type <%s>, name<%s>!",
-					pChild->GetType().c_str(), pChild->GetName().c_str());
+				GUI_THROW( GUI_FORMAT("[CGUIWidget::RemoveChild]: failed to find widget, type <%s>, name<%s>!",
+					pChild->GetType().c_str(), pChild->GetName().c_str()));
 			}
 		}
 		pChild->SetParentImpl( NULL );
@@ -694,8 +694,8 @@ namespace guiex
 				}
 			}
 
-			CGUIException::ThrowException("[CGUIWidget::InsertChild]: failed to find where to insert child! TYPE<%s>  NAME<%s>",
-				pWhere->GetType().c_str(),pWhere->GetName().c_str());
+			GUI_THROW( GUI_FORMAT("[CGUIWidget::InsertChild]: failed to find where to insert child! TYPE<%s>  NAME<%s>",
+				pWhere->GetType().c_str(),pWhere->GetName().c_str()));
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -724,8 +724,8 @@ namespace guiex
 				GetParent()->SetFocus( bFocus);
 				return;
 			}
-			CGUIException::ThrowException("[CGUIWidget::SetFocus]: lack of parent! TYPE<%s>  NAME<%s>",
-				GetType().c_str(),GetName().c_str());
+			GUI_THROW( GUI_FORMAT("[CGUIWidget::SetFocus]: lack of parent! TYPE<%s>  NAME<%s>",
+				GetType().c_str(),GetName().c_str()));
 		}
 
 		if( !bFocus )
@@ -774,8 +774,8 @@ namespace guiex
 			{
 				return GetParent()->IsFocus( );
 			}
-			CGUIException::ThrowException("[CGUIWidget::IsFocus]: lack of parent! TYPE<%s>  NAME<%s>",
-				GetType().c_str(),GetName().c_str());
+			GUI_THROW( GUI_FORMAT("[CGUIWidget::IsFocus]: lack of parent! TYPE<%s>  NAME<%s>",
+				GetType().c_str(),GetName().c_str()));
 		}
 
 		return GSystem->GetFocusWidget() == this;
@@ -1047,7 +1047,7 @@ namespace guiex
 		CGUISoundData* pSound = CGUISoundManager::Instance()->AllocateResource( rSoundName );
 		if( !pSound )
 		{
-			CGUIException::ThrowException( "failed to get sound by name <%s>", rSoundName.c_str());
+			GUI_THROW( GUI_FORMAT( "failed to get sound by name <%s>", rSoundName.c_str()));
 			return NULL;
 		};
 		m_mapEventSound.insert( std::make_pair( strEventName, pSound ) );
@@ -1101,7 +1101,7 @@ namespace guiex
 		TMapScriptFunc::const_iterator itor = m_mapScriptFunc.find(strEventName);
 		if( itor == m_mapScriptFunc.end())
 		{
-			CGUIException::ThrowException("[CGUIWidget::GetScriptCallbackFunc]: failed to find event function by name <%s>!", strEventName.c_str());
+			GUI_THROW( GUI_FORMAT("[CGUIWidget::GetScriptCallbackFunc]: failed to find event function by name <%s>!", strEventName.c_str()));
 		}
 		return itor->second;
 	}
@@ -1112,7 +1112,7 @@ namespace guiex
 		TMapGlobalFunc::iterator itor2 = m_mapNativeFunc.find(strEventName);
 		if( itor1 == m_aMapTimer.end() || itor2 == m_mapNativeFunc.end())
 		{
-			CGUIException::ThrowException("[CGUIWidget::UnregisterNativeTimerFunc]: failed to find event <%s>!", strEventName.c_str());
+			GUI_THROW( GUI_FORMAT("[CGUIWidget::UnregisterNativeTimerFunc]: failed to find event <%s>!", strEventName.c_str()));
 		}
 		m_aMapTimer.erase(itor1);
 		m_mapNativeFunc.erase(itor2);
@@ -1124,7 +1124,7 @@ namespace guiex
 		TMapScriptFunc::iterator itor2 = m_mapScriptFunc.find(strEventName);
 		if( itor1 == m_aMapTimer.end() || itor2 == m_mapScriptFunc.end())
 		{
-			CGUIException::ThrowException("[CGUIWidget::UnregisterScriptTimerFunc]: failed to find event <%s>!", strEventName.c_str());
+			GUI_THROW( GUI_FORMAT("[CGUIWidget::UnregisterScriptTimerFunc]: failed to find event <%s>!", strEventName.c_str()));
 		}
 		m_aMapTimer.erase(itor1);
 		m_mapScriptFunc.erase(itor2);
@@ -1320,7 +1320,7 @@ namespace guiex
 		CGUIImage* pImage = CGUIImageManager::Instance()->AllocateResource( rImageName );
 		if( !pImage )
 		{
-			CGUIException::ThrowException( "failed to get image by name <%s>", rImageName.c_str());
+			GUI_THROW( GUI_FORMAT( "failed to get image by name <%s>", rImageName.c_str()));
 			return NULL;
 		};
 		SetImage(rName, pImage);
@@ -1352,7 +1352,7 @@ namespace guiex
 		CGUIAnimation* pAnimation = CGUIAnimationManager::Instance()->AllocateResource( rAnimationName );
 		if( !pAnimation )
 		{
-			CGUIException::ThrowException( "failed to get animation by name <%s>", rAnimationName.c_str());
+			GUI_THROW( GUI_FORMAT( "failed to get animation by name <%s>", rAnimationName.c_str()));
 			return NULL;
 		};
 		SetAnimation(rName, pAnimation);
@@ -1379,7 +1379,7 @@ namespace guiex
 		CGUIAs* pAs = CGUIAsManager::Instance()->AllocateResource( rAsName );
 		if( !pAs )
 		{
-			CGUIException::ThrowException( "failed to get as by name <%s>", rAsName.c_str());
+			GUI_THROW( GUI_FORMAT( "failed to get as by name <%s>", rAsName.c_str()));
 			return NULL;
 		};
 		pAs->SetReceiver( this );
@@ -1440,9 +1440,9 @@ namespace guiex
 		CGUIAs* pAs = GetAs( rName );
 		if( !pAs )
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[CGUIWidget::PlayAs]: failed to play as <%s>",
-				rName.c_str() );
+				rName.c_str()));
 			return;
 		}
 		PlayAs( pAs );
@@ -1453,9 +1453,9 @@ namespace guiex
 		CGUIAs* pAs = GetAs( rName );
 		if( !pAs )
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[CGUIWidget::IsAsPlaying]: failed to check whether as <%s> is playing",
-				rName.c_str() );
+				rName.c_str()));
 			return false;
 		}
 		return IsAsPlaying(pAs);
@@ -1466,9 +1466,9 @@ namespace guiex
 		CGUIAs* pAs = GetAs( rName );
 		if( !pAs )
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[CGUIWidget::StopAs]: failed to stop as <%s>",
-				rName.c_str() );
+				rName.c_str()));
 			return;
 		}
 		StopAs( pAs );
@@ -1672,10 +1672,10 @@ namespace guiex
 		CGUIString strTempName;
 		if( m_aPropertySet.HasDuplicatedNames( &strTempName ) )
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[CGUIWidget::SetProperty]: widget <%s> find duplicated name <%s> in property", 
 				GetName().c_str(), 
-				strTempName.c_str());
+				strTempName.c_str()));
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -1895,9 +1895,9 @@ namespace guiex
 		else
 		{
 			//failed
-			CGUIException::ThrowException("[CGUIWidget::GenerateProperty]: failed to generate property: name=[%s] type=[%s]!", 
+			GUI_THROW( GUI_FORMAT("[CGUIWidget::GenerateProperty]: failed to generate property: name=[%s] type=[%s]!", 
 				rProperty.GetName().c_str(),
-				rProperty.GetTypeAsString().c_str());
+				rProperty.GetTypeAsString().c_str()));
 
 			return -1;
 		}
@@ -2122,11 +2122,11 @@ namespace guiex
 		}
 		else
 		{ 
-			CGUIException::ThrowException("[CGUIWidget::ProcessProperty]: widget <%s> failed to process property: name=[%s] type=[%s] value=[%s]!", 
+			GUI_THROW( GUI_FORMAT("[CGUIWidget::ProcessProperty]: widget <%s> failed to process property: name=[%s] type=[%s] value=[%s]!", 
 				GetName().c_str(),
 				rProperty.GetName().c_str(),
 				rProperty.GetTypeAsString().c_str(),
-				rProperty.GetValue().c_str());
+				rProperty.GetValue().c_str()));
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -2864,8 +2864,8 @@ namespace guiex
 				return GetParent()->IsDerivedFocusable( );
 			}
 
-			CGUIException::ThrowException("[CGUIWidget::IsDerivedFocusable]: lack of parent! TYPE<%s>  NAME<%s>",
-				GetType().c_str(),GetName().c_str());
+			GUI_THROW( GUI_FORMAT("[CGUIWidget::IsDerivedFocusable]: lack of parent! TYPE<%s>  NAME<%s>",
+				GetType().c_str(),GetName().c_str()));
 		}
 
 		return IsFocusable();

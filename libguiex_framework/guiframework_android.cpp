@@ -81,7 +81,7 @@ namespace guiex
 		//init system
 		if( GSystem != NULL )
 		{
-			CGUIException::ThrowException( "[CGUIFramework_Android::InitializeSystem] GSystem has been created!" );
+			GUI_THROW( "[CGUIFramework_Android::InitializeSystem] GSystem has been created!" );
 			return -1;
 		}
 		GSystem = new CGUISystem;
@@ -119,7 +119,7 @@ namespace guiex
 		//release system
 		if( GSystem == NULL )
 		{
-			CGUIException::ThrowException( "[CGUIFramework_Android::ReleaseSystem] GSystem has been released!" );
+			GUI_THROW( "[CGUIFramework_Android::ReleaseSystem] GSystem has been released!" );
 			return;
 		}
 		GSystem->Release();

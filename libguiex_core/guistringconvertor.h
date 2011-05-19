@@ -35,9 +35,9 @@ namespace guiex
 	template< class ValueType >
 	int32 StringToValue( const CGUIString& rString, ValueType& rValue)
 	{
-		CGUIException::ThrowException(
+		GUI_THROW( GUI_FORMAT(
 			"[StringToValue]: unknown value type for ! <%s>",
-			rString.c_str());
+			rString.c_str()));
 		return -1;
 	}
 	
@@ -45,16 +45,14 @@ namespace guiex
 	template< class ValueType >
 	int32 ValueToString( const ValueType& rValue, CGUIString& rString )
 	{
-		CGUIException::ThrowException(
-			"[ValueToString]: unknown value type");
+		GUI_THROW( "[ValueToString]: unknown value type");
 		return -1;
 	}
 
 	template< class ValueType >
 	CGUIString GetValueType(  )
 	{
-		CGUIException::ThrowException(
-			"[GetValueType]: unknown value type");
+		GUI_THROW( "[GetValueType]: unknown value type");
 		return CGUIString();
 	}
 

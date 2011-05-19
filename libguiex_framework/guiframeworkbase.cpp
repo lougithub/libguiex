@@ -26,7 +26,7 @@ namespace guiex
 	{
 		if( m_bIsInitialized )
 		{
-			CGUIException::ThrowException("[CGUIFrameworkBase::~CGUIFrameworkBase]: CGUIFrameworkBase is deleted but not released" );
+			GUI_THROW( "[CGUIFrameworkBase::~CGUIFrameworkBase]: CGUIFrameworkBase is deleted but not released" );
 		}
 	}
 	//------------------------------------------------------------------------------

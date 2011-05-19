@@ -50,7 +50,7 @@ namespace guiex
 	::guiex::classname* pInterface = new ::guiex::classname;	\
 	if( 0 != pInterface->Initialize(NULL))						\
 	{															\
-	::guiex::CGUIException::ThrowException( "Failed to initialize interface <%s>", pInterface->GetModuleType().c_str());	\
+	GUI_THROW( GUI_FORMAT( "Failed to initialize interface <%s>", pInterface->GetModuleType().c_str()));	\
 	}															\
 	::guiex::CGUIInterfaceManager::Instance()->RegisterInterface(pInterface->GetModuleType(), pInterface);	\
 }
@@ -65,7 +65,7 @@ namespace guiex
 	::guiex::classname* pInterface = new ::guiex::classname;	\
 	if( 0 != pInterface->Initialize(arg))						\
 	{															\
-		::guiex::CGUIException::ThrowException( "Failed to initialize interface <%s>", pInterface->GetModuleType().c_str());	\
+		GUI_THROW( GUI_FORMAT( "Failed to initialize interface <%s>", pInterface->GetModuleType().c_str()));	\
 	}															\
 	::guiex::CGUIInterfaceManager::Instance()->RegisterInterface(pInterface->GetModuleType(), pInterface);	\
 }

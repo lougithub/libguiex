@@ -13,6 +13,7 @@ public class GuiexLibNative
      * @param height the current view height
      */
      public static native void Init(int width, int height);
+     public static native void Exit( ); 
      public static native void Step();
      public static native void SetApkPath( String apkFilePath ); 
      

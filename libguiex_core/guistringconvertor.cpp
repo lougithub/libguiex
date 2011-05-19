@@ -59,8 +59,7 @@ namespace guiex
 		IGUIInterfaceStringConv* pStringConv = CGUIInterfaceManager::Instance()->GetInterfaceStringConv();
 		if( !pStringConv )
 		{
-			CGUIException::ThrowException(
-				"[AppWideByteToMultiChar]: not found interface to convert string code");
+			GUI_THROW( "[AppWideByteToMultiChar]: not found interface to convert string code");
 			return -1;
 		}
 		return pStringConv->WCharToUtf8( rSrc, rDst );
@@ -78,8 +77,7 @@ namespace guiex
 		IGUIInterfaceStringConv* pStringConv = CGUIInterfaceManager::Instance()->GetInterfaceStringConv();
 		if( !pStringConv )
 		{
-			CGUIException::ThrowException(
-				"[AppMultiByteToWideChar]: not found interface to convert string code");
+			GUI_THROW( "[AppMultiByteToWideChar]: not found interface to convert string code");
 			return -1;
 		}
 		return pStringConv->Utf8ToWChar( rSrc, rDst );
@@ -113,9 +111,9 @@ namespace guiex
 		}
 		else
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[StringToValue[bool]]: string value format is wrong! <%s>",
-				rString.c_str());
+				rString.c_str()));
 			return -1;
 		}
 	}
@@ -139,9 +137,9 @@ namespace guiex
 		unsigned long value = strtoul(rString.c_str(), 0, 10);
 		if( value > std::numeric_limits<uint32>::max() )
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[StringToValue[uint32]]: Value <%s> exceeds range of destination type",
-				rString.c_str());
+				rString.c_str()));
 			return -1;
 		}
 		rValue = static_cast<uint32>(value);
@@ -173,9 +171,9 @@ namespace guiex
 		unsigned long value = strtoul(rString.c_str(), 0, 10);
 		if( value > (unsigned long)(std::numeric_limits<int32>::max()))
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[StringToValue[int32]]: Value <%s> exceeds range of destination type",
-				rString.c_str());
+				rString.c_str()));
 			return -1;
 		}
 		rValue = static_cast<int32>(value);
@@ -206,9 +204,9 @@ namespace guiex
 		unsigned long value = strtoul(rString.c_str(), 0, 10);
 		if( value > std::numeric_limits<uint16>::max() )
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[StringToValue[uint16]]: Value <%s> exceeds range of destination type",
-				rString.c_str());
+				rString.c_str()));
 			return -1;
 		}
 		rValue = static_cast<uint16>(value);
@@ -239,9 +237,9 @@ namespace guiex
 		unsigned long value = strtoul(rString.c_str(), 0, 10);
 		if( value > (unsigned long)(std::numeric_limits<int16>::max()))
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[StringToValue[int16]]: Value <%s> exceeds range of destination type",
-				rString.c_str());
+				rString.c_str()));
 			return -1;
 		}
 		rValue = static_cast<int16>(value);
@@ -272,9 +270,9 @@ namespace guiex
 		unsigned long value = strtoul(rString.c_str(), 0, 10);
 		if( value > std::numeric_limits<uint8>::max() )
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[StringToValue[uint8]]: Value <%s> exceeds range of destination type",
-				rString.c_str());
+				rString.c_str()));
 			return -1;
 		}
 		rValue = static_cast<uint8>(value);
@@ -332,9 +330,9 @@ namespace guiex
 		std::vector<CGUIString> aListString= StringToVector(rString);
 		if( aListString.size() != 4 )
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[StringToValue[CGUIRect]]: string value format is wrong! <%s>",
-				rString.c_str());
+				rString.c_str()));
 			return -1;
 		}
 
@@ -370,9 +368,9 @@ namespace guiex
 
 		if( aListString.size() != 2 )
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[StringToValue[CGUISize]]: string value format is wrong! <%s>",
-				rString.c_str());
+				rString.c_str()));
 			return -1;
 		}
 
@@ -406,9 +404,9 @@ namespace guiex
 
 		if( aListString.size() != 2 )
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[StringToValue[CGUIIntSize]]: string value format is wrong! <%s>",
-				rString.c_str());
+				rString.c_str()));
 			return -1;
 		}
 
@@ -442,9 +440,9 @@ namespace guiex
 
 		if( aListString.size() != 2 )
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[StringToValue[StringToValue]]: string value format is wrong! <%s>",
-				rString.c_str());
+				rString.c_str()));
 			return -1;
 		}
 
@@ -478,9 +476,9 @@ namespace guiex
 
 		if( aListString.size() != 3 )
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[StringToValue[StringToValue]]: string value format is wrong! <%s>",
-				rString.c_str());
+				rString.c_str()));
 			return -1;
 		}
 
@@ -515,9 +513,9 @@ namespace guiex
 
 		if( aListString.size() != 4 )
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[StringToValue[CGUIColor]]: string value format is wrong! <%s>",
-				rString.c_str());
+				rString.c_str()));
 			return -1;
 		}
 
@@ -578,9 +576,9 @@ namespace guiex
 		}
 		else
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[StringToValue[EImageOrientation]]: string value format is wrong! <%s>",
-				rString.c_str());
+				rString.c_str()));
 			return -1;
 		}
 		return 0;
@@ -607,9 +605,9 @@ namespace guiex
 			rString =  CGUIString("eImageOrientation_FlipVertical");
 			break;
 		default:
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[ValueToString[EImageOrientation]]: unknown image orientation <%d>",
-				rValue);
+				rValue));
 			return -1;
 		}
 		return 0;
@@ -634,9 +632,9 @@ namespace guiex
 		}
 		else
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[StringToValue[EScreenValue]]: string value format is wrong! <%s>",
-				rString.c_str());
+				rString.c_str()));
 			return -1;
 		}
 		return 0;
@@ -654,9 +652,9 @@ namespace guiex
 			rString = CGUIString("eScreenValue_Percentage");
 			break;
 		default:
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[ValueToString[EScreenValue]]: unknown image orientation <%d>",
-				rValue);
+				rValue));
 			return -1;
 		}
 		return 0;
@@ -685,9 +683,9 @@ namespace guiex
 		}
 		else
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[StringToValue[ETextAlignmentHorz]]: string value format is wrong! <%s>",
-				rString.c_str());
+				rString.c_str()));
 			return -1;
 		}
 		return 0;
@@ -708,9 +706,9 @@ namespace guiex
 			rString = CGUIString("eTextAlignment_Horz_Center");
 			break;
 		default:
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[ValueToString[ETextAlignmentHorz]]: unknown ETextAlignmentHorz enum <%d>",
-				rValue);
+				rValue));
 			return -1;
 		}
 		return 0;
@@ -739,9 +737,9 @@ namespace guiex
 		}
 		else
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[StringToValue[ETextAlignmentVert]]: string value format is wrong! <%s>",
-				rString.c_str());
+				rString.c_str()));
 			return -1;
 		}
 		return 0;
@@ -762,9 +760,9 @@ namespace guiex
 			rString = CGUIString("eTextAlignment_Vert_Center");
 			break;
 		default:
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[ValueToString[ETextAlignmentVert]]: unknown ETextAlignmentVert enum <%d>",
-				rValue);
+				rValue));
 			return -1;
 		}
 		return 0;
@@ -793,9 +791,9 @@ namespace guiex
 		}
 		else
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[StringToValue[EInterpolationType]]: string value format is wrong! <%s>",
-				rString.c_str());
+				rString.c_str()));
 			return -1;
 		}
 		return 0;
@@ -816,9 +814,9 @@ namespace guiex
 			rString = CGUIString("eInterpolationType_EaseInOut");
 			break;
 		default:
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[ValueToString[EInterpolationType]]: unknown EInterpolationType enum <%d>",
-				rValue);
+				rValue));
 			return -1;
 		}
 		return 0;
@@ -843,9 +841,9 @@ namespace guiex
 		}
 		else
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[StringToValue[EParticle2DSystemMode]]: string value format is wrong! <%s>",
-				rString.c_str());
+				rString.c_str()));
 			return -1;
 		}
 		return 0;
@@ -863,9 +861,9 @@ namespace guiex
 			rString = CGUIString("eParticle2DSystemMode_Radius");
 			break;
 		default:
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[ValueToString[EParticle2DSystemMode]]: unknown EParticle2DSystemMode enum <%d>",
-				rValue);
+				rValue));
 			return -1;
 		}
 		return 0;
@@ -914,9 +912,9 @@ namespace guiex
 		}
 		else
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[StringToValue[EBlendFunc]]: string value format is wrong! <%s>",
-				rString.c_str());
+				rString.c_str()));
 			return -1;
 		}
 		return 0;
@@ -952,9 +950,9 @@ namespace guiex
 			rString = CGUIString("eBlendFunc_ONE_MINUS_DST_ALPHA");
 			break;
 		default:
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[ValueToString[EBlendFunc]]: unknown EBlendFunc enum <%d>",
-				rValue);
+				rValue));
 			return -1;
 		}
 		return 0;

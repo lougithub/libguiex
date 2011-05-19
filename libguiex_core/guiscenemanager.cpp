@@ -59,7 +59,7 @@ namespace guiex
 		IGUIInterfaceFileSys* pFileSys = CGUIInterfaceManager::Instance()->GetInterfaceFileSys();
 		if( !pFileSys )
 		{
-			CGUIException::ThrowException( "[CGUISceneManager::RegisterScene]: failed to get file sys interface." );
+			GUI_THROW( "[CGUISceneManager::RegisterScene]: failed to get file sys interface." );
 			return -1;
 		}
 
@@ -75,9 +75,9 @@ namespace guiex
 		if( itor != m_mapScenes.end() )
 		{
 			DestroyScene( pScene );
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[CGUISceneManager::RegisterScene]: has duplicated scene <%s>", 
-				pScene->GetSceneName().c_str());
+				pScene->GetSceneName().c_str()));
 			return -1;
 		}
 		m_mapScenes.insert( std::make_pair( pScene->GetSceneName(), pScene));
@@ -128,7 +128,7 @@ namespace guiex
 		//check dependencies
 		if( pScene->IsDependenciesLoaded() == false )
 		{
-			CGUIException::ThrowException( "[CGUISceneManager::CheckScenesDependenc] scene <%s>'s dependencies is not loaded" );
+			GUI_THROW( "[CGUISceneManager::CheckScenesDependenc] scene <%s>'s dependencies is not loaded" );
 			return -1;
 		}
 
@@ -185,9 +185,9 @@ namespace guiex
 			CGUIScene* pScene = itor->second;
 			if( pScene->GetRefCount() != 0 )
 			{
-				CGUIException::ThrowException(
+				GUI_THROW( GUI_FORMAT(
 					"[CGUISceneManager::UnregisterAllScenes]: the scene <%s> which will be unregistered still has some reference.",
-					pScene->GetSceneName().c_str());
+					pScene->GetSceneName().c_str()));
 				return;
 			}
 			DestroyScene( pScene );
@@ -202,9 +202,9 @@ namespace guiex
 		std::map<CGUIString, CGUIScene*>::iterator itorScene = m_mapScenes.find( rSceneName );
 		if( itorScene == m_mapScenes.end() )
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[CGUISceneManager::UnregisterScene]: failed to unregister scene <%s> for not finding it.",
-				rSceneName.c_str());
+				rSceneName.c_str()));
 			return;
 		}
 
@@ -212,9 +212,9 @@ namespace guiex
 		CGUIScene* pScene = itorScene->second;
 		if( pScene->GetRefCount() != 0 )
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[CGUISceneManager::UnregisterScene]: the scene <%s> which will be unregistered still has some reference.",
-				pScene->GetSceneName().c_str());
+				pScene->GetSceneName().c_str()));
 			return;
 		}
 		DestroyScene( pScene );
@@ -228,9 +228,9 @@ namespace guiex
 		}
 		else
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[CGUISceneManager::UnregisterScene]: can't find scene <%s> in scene list.",
-				pScene->GetSceneName().c_str());
+				pScene->GetSceneName().c_str()));
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -243,7 +243,7 @@ namespace guiex
 		}
 		else
 		{
-			CGUIException::ThrowException( "[CGUISceneManager::GetScene] failed to get scene by name <%s>", rSceneName.c_str() );
+			GUI_THROW( GUI_FORMAT( "[CGUISceneManager::GetScene] failed to get scene by name <%s>", rSceneName.c_str() ));
 			return NULL;
 		}
 	}
@@ -253,7 +253,7 @@ namespace guiex
 		CGUIScene * pScene = GetScene( rSceneName );
 		if( !pScene )
 		{
-			CGUIException::ThrowException("[CGUISceneManager::GetScenePath]: failed to get scene info by name %s", rSceneName.c_str());
+			GUI_THROW( GUI_FORMAT("[CGUISceneManager::GetScenePath]: failed to get scene info by name %s", rSceneName.c_str()));
 		}
 		return pScene->GetScenePath();
 	}
@@ -278,7 +278,7 @@ namespace guiex
 		CGUIScene* pScene = GetScene( rSceneName );
 		if( !pScene )
 		{
-			CGUIException::ThrowException( "[CGUISceneManager::LoadWidgets] failed to get scene <%s>", rSceneName.c_str());
+			GUI_THROW( GUI_FORMAT( "[CGUISceneManager::LoadWidgets] failed to get scene <%s>", rSceneName.c_str()));
 			return -1;
 		}
 
@@ -288,9 +288,9 @@ namespace guiex
 			CGUIWidget* pPageWidget = CGUIWidgetManager::Instance()->LoadPage( rWidgetFile[i], rSceneName );
 			if( !pPageWidget )
 			{
-				CGUIException::ThrowException(
+				GUI_THROW( GUI_FORMAT(
 					"[CGUISceneManager::LoadWidgets] failed to create page <%s> in scene <%s>", 
-					rWidgetFile[i].c_str(), rSceneName.c_str());
+					rWidgetFile[i].c_str(), rSceneName.c_str()));
 				return -1;
 			}
 		}
@@ -303,7 +303,7 @@ namespace guiex
 		CGUIScene* pScene = GetScene( rSceneName );
 		if( !pScene )
 		{
-			CGUIException::ThrowException( "[CGUISceneManager::ReleaseWidgets] failed to get scene <%s>", rSceneName.c_str());
+			GUI_THROW( GUI_FORMAT( "[CGUISceneManager::ReleaseWidgets] failed to get scene <%s>", rSceneName.c_str()));
 			return;
 		}
 
@@ -330,9 +330,9 @@ namespace guiex
 		CGUIScene* pScene = GetScene( strSceneName );
 		if( !pScene )
 		{
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[CGUISceneManager::LoadResources] failed to load resource by scene name <%s>", 
-				strSceneName.c_str());
+				strSceneName.c_str()));
 			return -1;
 		}
 
@@ -370,9 +370,9 @@ namespace guiex
 		CGUIScene* pScene = GetScene( strSceneName );
 		if( !pScene )
 		{
-			CGUIException::ThrowException( 
+			GUI_THROW( GUI_FORMAT( 
 				"[CGUISceneManager::ReleaseResources] failed to load resource by scene name <%s>", 
-				strSceneName.c_str());
+				strSceneName.c_str()));
 			return;
 		}
 
@@ -402,9 +402,9 @@ namespace guiex
 			CGUIString strResourceFilePath = pScene->GetScenePath() + rResourceFiles[i];	
 			if( 0 != CGUIConfigFileLoader::LoadResourceConfigFile(strResourceFilePath, pScene->GetSceneName()))
 			{
-				CGUIException::ThrowException( 
+				GUI_THROW( GUI_FORMAT( 
 					"[CGUISceneManager::LoadResourceImp] failed to load resource by scene name <%s : %s>",
-					strResourceFilePath.c_str(), pScene->GetSceneName().c_str());
+					strResourceFilePath.c_str(), pScene->GetSceneName().c_str()));
 			}
 		}
 
@@ -415,9 +415,9 @@ namespace guiex
 			CGUIString strLocalizationFilePath = pScene->GetScenePath() + rLocalizationFiles[i];	
 			if( 0 != CGUILocalizationManager::Instance()->LoadLocalization(strLocalizationFilePath, pScene->GetSceneName()))
 			{
-				CGUIException::ThrowException( 
+				GUI_THROW( GUI_FORMAT( 
 					"[CGUISceneManager::LoadResourceImp] failed to load localization by scene name <%s : %s>",
-					strLocalizationFilePath.c_str(), pScene->GetSceneName().c_str());
+					strLocalizationFilePath.c_str(), pScene->GetSceneName().c_str()));
 			}
 		}
 

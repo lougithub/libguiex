@@ -38,7 +38,7 @@ namespace guiex
 		//check layer index
 		if( m_pOwnerMap->GetMapInfo()->GetLayerInfos().size() <= nLayerIndex )
 		{
-			CGUIException::ThrowException("[CGUITiledMapLayer::CGUITiledMapLayer]: invalid tile map layer index");
+			GUI_THROW( "[CGUITiledMapLayer::CGUITiledMapLayer]: invalid tile map layer index");
 			return;
 		}
 
@@ -51,7 +51,7 @@ namespace guiex
 		//init layer
 		if( 0 != InitLayer() )
 		{
-			CGUIException::ThrowException("[CGUITiledMapLayer::CGUITiledMapLayer]: failed to init layer");
+			GUI_THROW( "[CGUITiledMapLayer::CGUITiledMapLayer]: failed to init layer");
 			return;
 		}
 	}
@@ -210,7 +210,7 @@ namespace guiex
 			}		
 		}
 
-		CGUIException::ThrowException("[CGUITiledMapLayer::GetTilesetForLayer]: Layer '%s' has no tiles", GetLayerName().c_str());
+		GUI_THROW( GUI_FORMAT("[CGUITiledMapLayer::GetTilesetForLayer]: Layer '%s' has no tiles", GetLayerName().c_str()));
 		return NULL;
 	}
 	//------------------------------------------------------------------------------
@@ -232,7 +232,7 @@ namespace guiex
 		m_pTexture = CGUITextureManager::Instance()->CreateTexture(strFullPath);
 		if( !m_pTexture )
 		{
-			CGUIException::ThrowException("[CGUITiledMapLayer::InitLayer]: failed to create texture from path <%s>",strFullPath.c_str());
+			GUI_THROW( GUI_FORMAT("[CGUITiledMapLayer::InitLayer]: failed to create texture from path <%s>",strFullPath.c_str()));
 			return -1;
 		}
 
@@ -266,7 +266,7 @@ namespace guiex
 
 		if( maxGID < m_pTileSetInfo->GetFirstGid() || minGID > m_pTileSetInfo->GetFirstGid() )
 		{
-			CGUIException::ThrowException("[CGUITiledMapLayer::InitLayer]: Only 1 tilset per layer is supported");
+			GUI_THROW( "[CGUITiledMapLayer::InitLayer]: Only 1 tilset per layer is supported");
 			return -1;
 		}
 

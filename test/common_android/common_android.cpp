@@ -58,6 +58,16 @@ extern "C" JNIEXPORT void JNICALL Java_org_guiex_lib_GuiexLibNative_Init(JNIEnv 
 	g_aOldTimer.UpdateTime();
 }
 //------------------------------------------------------------------------------
+extern "C" JNIEXPORT void JNICALL Java_org_guiex_lib_GuiexLibNative_Exit(JNIEnv * env, jobject obj )
+{    
+	if( g_pFramework )
+	{
+		g_pFramework->Release();
+		delete g_pFramework;
+		g_pFramework = NULL;
+	}
+}
+//------------------------------------------------------------------------------
 extern "C" JNIEXPORT void JNICALL Java_org_guiex_lib_GuiexLibNative_Step(JNIEnv * env, jobject obj)
 {
 	guiex::CGUITimer aCurTimer;

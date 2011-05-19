@@ -61,9 +61,9 @@ namespace guiex
 		if( 0 != pLoader->LoadLocalizationFile(rFileName, m_strCurrentLocalConfig, arrayLocalizations ))
 		{
 			//failed to parse
-			CGUIException::ThrowException(
+			GUI_THROW( GUI_FORMAT(
 				"[CGUILocalizationManager::LoadLocalization]: failed to parse file <%s>!\n", 
-				rFileName.c_str());
+				rFileName.c_str()));
 			return -1;
 		}
 
@@ -87,7 +87,7 @@ namespace guiex
 #if GUI_DEBUG
 			if( pMapKeys->find( rLocal.first ) != pMapKeys->end() )
 			{
-				CGUIException::ThrowException("[CGUILocalizationManager::LoadLocalization], <%s> has existed in localization <%s>!", rLocal.first.c_str(), m_strCurrentLocalConfig.c_str());
+				GUI_THROW( GUI_FORMAT("[CGUILocalizationManager::LoadLocalization], <%s> has existed in localization <%s>!", rLocal.first.c_str(), m_strCurrentLocalConfig.c_str()));
 				return -1;
 			}
 #endif

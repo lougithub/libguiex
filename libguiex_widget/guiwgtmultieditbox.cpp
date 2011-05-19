@@ -652,7 +652,7 @@ namespace guiex
 				}
 			}
 		}
-		CGUIException::ThrowException("[CGUIWgtMultiEditBox::GetLineNumberFromIndex] - Unable to identify a line from the given index <%d>.", index);
+		GUI_THROW( GUI_FORMAT("[CGUIWgtMultiEditBox::GetLineNumberFromIndex] - Unable to identify a line from the given index <%d>.", index));
 		return 0;
 	}
 	//------------------------------------------------------------------------------

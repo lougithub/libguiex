@@ -23,9 +23,9 @@ namespace guiex
 #	define GUI_PROPERTY_TEST( property, type )	\
 	if( (property).GetType() != type )	\
 	{									\
-		CGUIException::ThrowException(			\
+		GUI_THROW( GUI_FORMAT(			\
 		"[GUI_PROPERTY_TEST: invalid property type, name=[%s] type=[%s] value=[%s] ",\
-		(property).GetName().c_str(), (property).GetTypeAsString().c_str(), (property).GetValue().c_str());\
+		(property).GetName().c_str(), (property).GetTypeAsString().c_str(), (property).GetValue().c_str()));\
 		return;\
 	}
 #else	//#if GUI_DEBUG
@@ -67,8 +67,7 @@ namespace guiex
 		const CGUIProperty* pValueProperty = rProperty.GetProperty( "value", "CGUIVector2" );
 		if( !pValueProperty )
 		{
-			CGUIException::ThrowException(
-				"[PropertyToValue[CGUIWidgetPosition]]: invalid property format" );
+			GUI_THROW( "[PropertyToValue[CGUIWidgetPosition]]: invalid property format" );
 			return;
 		}
 		else
@@ -80,8 +79,7 @@ namespace guiex
 		const CGUIProperty* pTypeProperty = rProperty.GetProperty( "type", "EScreenValue" );
 		if( !pTypeProperty )
 		{
-			CGUIException::ThrowException(
-				"[PropertyToValue[CGUIWidgetPosition]]: invalid property format" );
+			GUI_THROW( "[PropertyToValue[CGUIWidgetPosition]]: invalid property format" );
 			return;
 		}
 		else
@@ -117,8 +115,7 @@ namespace guiex
 		const CGUIProperty* pValueProperty = rProperty.GetProperty( "value", "CGUISize" );
 		if( !pValueProperty )
 		{
-			CGUIException::ThrowException(
-				"[PropertyToValue[CGUIWidgetSize]]: invalid property format" );
+			GUI_THROW( "[PropertyToValue[CGUIWidgetSize]]: invalid property format" );
 			return;
 		}
 		else
@@ -130,8 +127,7 @@ namespace guiex
 		const CGUIProperty* pTypeProperty = rProperty.GetProperty( "type", "EScreenValue");
 		if( !pTypeProperty )
 		{
-			CGUIException::ThrowException(
-				"[PropertyToValue[CGUIWidgetSize]]: invalid property format" );
+			GUI_THROW( "[PropertyToValue[CGUIWidgetSize]]: invalid property format" );
 			return;
 		}
 		else
@@ -168,8 +164,7 @@ namespace guiex
 		const CGUIProperty* pScaleProperty = rProperty.GetProperty( "scale", "real" );
 		if( !pScaleProperty )
 		{
-			CGUIException::ThrowException(
-				"[PropertyToValue[CGUIStringRenderInfo]]: invalid property format" );
+			GUI_THROW( "[PropertyToValue[CGUIStringRenderInfo]]: invalid property format" );
 			return;
 		}
 		else
@@ -181,8 +176,7 @@ namespace guiex
 		const CGUIProperty* pFontProperty = rProperty.GetProperty( "font", "CGUIFont" );
 		if( !pFontProperty )
 		{
-			CGUIException::ThrowException(
-				"[PropertyToValue[CGUIStringRenderInfo]]: invalid property format" );
+			GUI_THROW( "[PropertyToValue[CGUIStringRenderInfo]]: invalid property format" );
 			return;
 		}
 		else
@@ -194,8 +188,7 @@ namespace guiex
 		const CGUIProperty* pColorProperty = rProperty.GetProperty( "color", "CGUIColor" );
 		if( !pColorProperty )
 		{
-			CGUIException::ThrowException(
-				"[PropertyToValue[CGUIStringRenderInfo]]: invalid property format" );
+			GUI_THROW( "[PropertyToValue[CGUIStringRenderInfo]]: invalid property format" );
 			return;
 		}
 		else
@@ -236,8 +229,7 @@ namespace guiex
 		const CGUIProperty* pSrcProperty = rProperty.GetProperty( "src", "EBlendFunc" );
 		if( !pSrcProperty )
 		{
-			CGUIException::ThrowException(
-				"[PropertyToValue[SGUIBlendFunc]]: invalid property format" );
+			GUI_THROW( "[PropertyToValue[SGUIBlendFunc]]: invalid property format" );
 			return;
 		}
 		else
@@ -249,8 +241,7 @@ namespace guiex
 		const CGUIProperty* pDstProperty = rProperty.GetProperty( "dst", "EBlendFunc" );
 		if( !pDstProperty )
 		{
-			CGUIException::ThrowException(
-				"[PropertyToValue[SGUIBlendFunc]]: invalid property format" );
+			GUI_THROW( "[PropertyToValue[SGUIBlendFunc]]: invalid property format" );
 			return;
 		}
 		else

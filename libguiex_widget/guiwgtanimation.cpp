@@ -64,7 +64,7 @@ namespace guiex
 		else
 		{
 			//error
-			CGUIException::ThrowException("[CGUIWgtAnimation::SetCurrentAnimation]: failed to get animation by name <%s>!",rAnimationName.c_str());
+			GUI_THROW( GUI_FORMAT("[CGUIWgtAnimation::SetCurrentAnimation]: failed to get animation by name <%s>!",rAnimationName.c_str()));
 		}
 	}
 	//------------------------------------------------------------------------------

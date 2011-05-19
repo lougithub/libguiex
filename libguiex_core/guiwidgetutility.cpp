@@ -25,7 +25,7 @@ namespace guiex
 	{
 		if( !pWidget )
 		{
-			CGUIException::ThrowException("[CGUIWidgetUtility::GetWidgetInfo]: invalid parameter!");
+			GUI_THROW( GUI_FORMAT("[CGUIWidgetUtility::GetWidgetInfo]: invalid parameter!"));
 		}
 
 		//NAME<> TYPE<>	STATE<>

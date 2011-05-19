@@ -140,7 +140,7 @@ namespace guiex
 			m_pScrollbar->GenerateNotifyEvent();
 			break;
 		default:
-			CGUIException::ThrowException("[CGUIWgtScrollbarArrow::OnMouseLeftDown]: unknown scrollbar arrow type!");
+			GUI_THROW( "[CGUIWgtScrollbarArrow::OnMouseLeftDown]: unknown scrollbar arrow type!");
 			break;
 		}
 
@@ -826,7 +826,7 @@ namespace guiex
 		//	}
 		//	else
 		//	{
-		//		CGUIException::ThrowException("[CGUIWgtScrollbar::ProcessProperty]: unknown scrollbar type <%s>!", pProperty->GetValue().c_str());
+		//		GUI_THROW( GUI_FORMAT("[CGUIWgtScrollbar::ProcessProperty]: unknown scrollbar type <%s>!", pProperty->GetValue().c_str()));
 		//	}
 		//}
 		//else if( pProperty->GetName() == "AUTO_POSITION" && pProperty->GetType()=="BOOL")

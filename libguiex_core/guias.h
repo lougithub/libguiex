@@ -347,10 +347,10 @@ namespace guiex
 			const CGUIProperty* pPPtBeginValue = rProperty.GetProperty("begin_value", "");
 			if( !pPPtBeginValue )
 			{
-				CGUIException::ThrowException(
+				GUI_THROW( GUI_FORMAT(
 					"[CGUIAsInterpolation::ProcessProperty]: invalid property: <%s> <%s>", 
 					rProperty.GetName().c_str(), 
-					rProperty.GetTypeAsString().c_str());
+					rProperty.GetTypeAsString().c_str()));
 				return -1;
 			}
 			T aBeginValue;
@@ -362,10 +362,10 @@ namespace guiex
 			const CGUIProperty* pPPtEndValue = rProperty.GetProperty("end_value","");
 			if( !pPPtEndValue )
 			{
-				CGUIException::ThrowException(
+				GUI_THROW( GUI_FORMAT(
 					"[CGUIAsInterpolation::ProcessProperty]: invalid property: <%s> <%s>", 
 					rProperty.GetName().c_str(), 
-					rProperty.GetTypeAsString().c_str());
+					rProperty.GetTypeAsString().c_str()));
 				return -1;
 			}
 			T aEndValue;

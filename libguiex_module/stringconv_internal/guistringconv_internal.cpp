@@ -84,7 +84,7 @@ namespace guiex
 			else
 			{
 				delete dst;
-				CGUIException::ThrowException( "[IGUIStringConv_internal::Utf8ToWChar]: error" );
+				GUI_THROW( "[IGUIStringConv_internal::Utf8ToWChar]: error" );
 				return -1;
 			}
 			dst[nUtf16Count] = integer;
@@ -133,7 +133,7 @@ namespace guiex
 			else 
 			{
 				delete utf8;
-				CGUIException::ThrowException( "[IGUIStringConv_internal::WCharToUtf8]: error" );
+				GUI_THROW( "[IGUIStringConv_internal::WCharToUtf8]: error" );
 				return -1;
 			}
 		}

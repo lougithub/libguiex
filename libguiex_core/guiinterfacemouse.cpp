@@ -71,7 +71,7 @@ namespace guiex
 				ret.y = rPos.x;
 				break;
 			default:
-				CGUIException::ThrowException(" IGUIInterfaceMouse::ConvertPosToEngine: unknown screen orientation");
+				GUI_THROW( " IGUIInterfaceMouse::ConvertPosToEngine: unknown screen orientation");
 				break;
 		}
 		

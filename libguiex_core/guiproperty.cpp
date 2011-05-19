@@ -154,10 +154,10 @@ namespace guiex
 	{
 		if( uint32(nIdx) >= m_setProperty.size())
 		{
-			CGUIException::ThrowException( 
+			GUI_THROW( GUI_FORMAT( 
 				"[CGUIPropertySet::RemoveProperty]: error!the total size of sub-property is <%d>, you wanted is <%d>",
 				m_setProperty.size(),
-				nIdx);
+				nIdx));
 		}
 
 		m_setProperty.erase( m_setProperty.begin() + nIdx );
@@ -190,10 +190,10 @@ namespace guiex
 				return int32(i);
 			}
 		}
-		CGUIException::ThrowException( 
+		GUI_THROW( GUI_FORMAT( 
 			"[CGUIProperty::GetPropertyIndex]: failed to get property index by property name <%s:%s>",
 			rName.c_str(),
-			rType.c_str());
+			rType.c_str()));
 		return -1;
 	}
 	//------------------------------------------------------------------------------
@@ -206,9 +206,9 @@ namespace guiex
 				return int32(i);
 			}
 		}
-		CGUIException::ThrowException( 
+		GUI_THROW( GUI_FORMAT( 
 			"[CGUIProperty::GetPropertyIndex]: failed to get property index by property name <%s>",
-			rName.c_str());
+			rName.c_str()));
 		return -1;
 	}
 	//------------------------------------------------------------------------------
@@ -216,10 +216,10 @@ namespace guiex
 	{
 		if( nIdx >= m_setProperty.size())
 		{
-			CGUIException::ThrowException( 
+			GUI_THROW( GUI_FORMAT( 
 				"[CGUIPropertySet::GetProperty]: error!the total size of sub-property is <%d>, you wanted is <%d>",
 				m_setProperty.size(),
-				nIdx);
+				nIdx));
 			return NULL;
 		}
 
@@ -231,10 +231,10 @@ namespace guiex
 	{
 		if( nIdx >= m_setProperty.size())
 		{
-			CGUIException::ThrowException( 
+			GUI_THROW( GUI_FORMAT( 
 				"[CGUIPropertySet::GetProperty]: error!the total size of sub-property is <%d>, you wanted is <%d>",
 				m_setProperty.size(),
-				nIdx);
+				nIdx));
 			return NULL;
 		}
 
@@ -340,10 +340,10 @@ namespace guiex
 			}
 		}
 
-		CGUIException::ThrowException( 
+		GUI_THROW( GUI_FORMAT( 
 			"[CGUIPropertySet::GetPropertyChecked]: failed to get property by name <%s> and type <%s>",
 			rName.c_str(),
-			rType.c_str());
+			rType.c_str()));
 		return NULL;
 	}
 	//------------------------------------------------------------------------------

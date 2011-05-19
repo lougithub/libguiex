@@ -25,6 +25,9 @@ public class GuiexLibActivity extends Activity
     @Override protected void onDestroy()
 	 {
     	Log.v("GuiexLibActivity", "onDestroy");
+    	
+    	GuiexLibNative.Exit( ); 
+    	
 		super.onDestroy();
 		 
 		android.os.Process.killProcess(android.os.Process.myPid());

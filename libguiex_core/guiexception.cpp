@@ -70,18 +70,12 @@ namespace guiex
 #endif
 	}
 	//------------------------------------------------------------------------------
-	void CGUIException::ThrowException(const char *szError, ...)
+	void CGUIException::ThrowException(const char *filename, uint32 line, const char *szError )
 	{
-		char szBuffer[4097];
-		va_list argp;
-		va_start (argp, szError);
-		::vsnprintf( szBuffer, 4096, szError, argp );
-		va_end(argp);
-
 #if GUI_USE_EXCEPTION
-		throw CGUIException( szBuffer );
+		throw CGUIException( szError );
 #else
-		GUI_FORCE_ASSERT( szBuffer );
+		::guiex::CGUIAssert::Assert(filename, line, szError, "");
 #endif
 	}
 	//------------------------------------------------------------------------------
@@ -99,18 +93,12 @@ namespace guiex
 		va_end(argp);
 	}
 	//------------------------------------------------------------------------------
-	void CGUIException_Script::ThrowException(const char *szError, ...)
+	void CGUIException_Script::ThrowException(const char *filename, uint32 line, const char *szError )
 	{
-		char szBuffer[4097];
-		va_list argp;
-		va_start (argp, szError);
-		::vsnprintf( szBuffer, 4096, szError, argp );
-		va_end(argp);
-
 #if GUI_USE_EXCEPTION
-		throw CGUIException_Script( szBuffer );
+		throw CGUIException_Script( szError );
 #else
-		GUI_FORCE_ASSERT( szBuffer );
+		::guiex::CGUIAssert::Assert(filename, line, szError, "");
 #endif
 	}
 	//------------------------------------------------------------------------------

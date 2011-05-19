@@ -917,7 +917,7 @@ namespace guiex
 				return;
 			}
 		}
-		CGUIException::ThrowException("[CGUISystem::UngisterGlobalKeyByRoot]: failed to ungister global key!");
+		GUI_THROW( "[CGUISystem::UngisterGlobalKeyByRoot]: failed to ungister global key!");
 	}
 	//------------------------------------------------------------------------------
 	/** 
@@ -1022,7 +1022,7 @@ namespace guiex
 	{
 		if( !ms_pJavaVM )
 		{
-			CGUIException::ThrowException("[CGUISystem::GetJavaMethod]:invalid java vm pointer");
+			GUI_THROW( "[CGUISystem::GetJavaMethod]:invalid java vm pointer");
 			return NULL;
 		}
 
@@ -1030,32 +1030,32 @@ namespace guiex
 		// get jni environment and java class for Cocos2dxActivity
 		if (ms_pJavaVM->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK)
 		{
-			CGUIException::ThrowException("[CGUISystem::GetJavaMethod]:Failed to get the environment using GetEnv()");
+			GUI_THROW( "[CGUISystem::GetJavaMethod]:Failed to get the environment using GetEnv()");
 			return NULL;
 		}
 		if( !env )
 		{
-			CGUIException::ThrowException("[CGUISystem::GetJavaMethod]:Failed to get the environment.");
+			GUI_THROW( "[CGUISystem::GetJavaMethod]:Failed to get the environment.");
 			return NULL;
 		}
 
 		if (ms_pJavaVM->AttachCurrentThread(&env, 0) < 0)
 		{
-			CGUIException::ThrowException("[CGUISystem::GetJavaMethod]:Failed in AttachCurrentThread()");
+			GUI_THROW( "[CGUISystem::GetJavaMethod]:Failed in AttachCurrentThread()");
 			return NULL;
 		}
 
 		r_jclassID = env->FindClass(className);
 		if (!r_jclassID)
 		{
-			CGUIException::ThrowException(GUI_FORMAT("[CGUISystem::GetJavaMethod]:Failed to find class of %s", className) );
+			GUI_THROW( GUI_FORMAT("[CGUISystem::GetJavaMethod]:Failed to find class of %s", className));
 			return NULL;
 		}
 
 		r_jmethodID = env->GetStaticMethodID(r_jclassID, methodName, paramCode);
 		if (!r_jmethodID)
 		{
-			CGUIException::ThrowException(GUI_FORMAT("[CGUISystem::GetJavaMethod]: get method id of %s error", methodName));
+			GUI_THROW( GUI_FORMAT("[CGUISystem::GetJavaMethod]: get method id of %s error", methodName));
 			return NULL;
 		}
 

@@ -51,11 +51,11 @@ namespace guiex
 
 		if( !m_pImageBg )
 		{
-			CGUIException::ThrowException("[CGUIWgtProgress::OnCreate]: the image <BACKGROUND_IMG> hasn't been found!");
+			GUI_THROW( "[CGUIWgtProgress::OnCreate]: the image <BACKGROUND_IMG> hasn't been found!");
 		}
 		if( !m_pImageFg )
 		{
-			CGUIException::ThrowException("[CGUIWgtProgress::OnCreate]: the image <FOREGROUND_IMG> hasn't been found!");
+			GUI_THROW( "[CGUIWgtProgress::OnCreate]: the image <FOREGROUND_IMG> hasn't been found!");
 		}
 	}
 	//------------------------------------------------------------------------------

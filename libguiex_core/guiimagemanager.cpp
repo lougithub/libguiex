@@ -105,7 +105,7 @@ namespace guiex
 
 			if( !pPptPath )
 			{
-				CGUIException::ThrowException("[CGUIImageManager::CreateImage]: invalid image property: <%s> <%s>", rProperty.GetName().c_str(), rProperty.GetTypeAsString().c_str());
+				GUI_THROW( GUI_FORMAT("[CGUIImageManager::CreateImage]: invalid image property: <%s> <%s>", rProperty.GetName().c_str(), rProperty.GetTypeAsString().c_str()));
 				return NULL;
 			}
 
@@ -140,7 +140,7 @@ namespace guiex
 			
 			if( !pPptColor )
 			{
-				CGUIException::ThrowException("[CGUIImageManager::CreateImage]: invalid image property: <%s> <%s>", rProperty.GetName().c_str(), rProperty.GetTypeAsString().c_str());
+				GUI_THROW( GUI_FORMAT("[CGUIImageManager::CreateImage]: invalid image property: <%s> <%s>", rProperty.GetName().c_str(), rProperty.GetTypeAsString().c_str()));
 				return NULL;
 			}
 			//size
@@ -156,7 +156,7 @@ namespace guiex
 		}
 		else
 		{
-			CGUIException::ThrowException("[CGUIImageManager::CreateImage]: invalid image property: <%s> <%s>", rProperty.GetName().c_str(), rProperty.GetTypeAsString().c_str());
+			GUI_THROW( GUI_FORMAT("[CGUIImageManager::CreateImage]: invalid image property: <%s> <%s>", rProperty.GetName().c_str(), rProperty.GetTypeAsString().c_str()));
 			return NULL;
 		}
 	}
@@ -230,9 +230,9 @@ namespace guiex
 		CGUIImage* pImage = CGUIResourceManager<CGUIImage, CGUIImage>::GetRegisterResource( rResName );
 		if( !pImage )
 		{
-			CGUIException::ThrowException( 
+			GUI_THROW( GUI_FORMAT( 
 				"[CGUIImageManager::AllocateResource]: failed to get image by name <%s>",
-				rResName.c_str());
+				rResName.c_str()));
 			return NULL;
 		}
 		pImage->RefRetain();
@@ -304,12 +304,12 @@ namespace guiex
 			else
 			{
 				//named image's reference count shouldn't be zero, which is retained by register function
-				CGUIException::ThrowException(
+				GUI_THROW( GUI_FORMAT(
 					"[CGUIImageManager::DeallocateResource]: invalid reference count [%d] for resource: <%s:%s:%s>", 
 					pRes->GetRefCount(),
 					pRes->GetName().c_str(), 
 					pRes->GetResourceType().c_str(),
-					pRes->GetSceneName().c_str() );
+					pRes->GetSceneName().c_str()));
 			}
 		}
 	}

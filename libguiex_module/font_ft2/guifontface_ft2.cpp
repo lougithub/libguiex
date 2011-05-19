@@ -71,7 +71,7 @@ namespace guiex
 		IGUIFont_ft2* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFontWithTypeCheck<IGUIFont_ft2>();
 		if( !pFont )
 		{
-			CGUIException::ThrowException( "[CGUIFontFace_ft2::LoadFont]: failed to get font interface" );
+			GUI_THROW(  "[CGUIFontFace_ft2::LoadFont]: failed to get font interface" );
 			return;
 		}
 
@@ -81,7 +81,7 @@ namespace guiex
 		FT_Error ret = FT_New_Face( pFont->GetFTLibrary( ), strFullPath.c_str(), 0, &m_aFtFace );
 		if(  ret != 0 )
 		{
-			CGUIException::ThrowException( "[CGUIFontFace_ft2::LoadFont]:Could not get font face from file <%s>!", rFontPath.c_str());
+			GUI_THROW( GUI_FORMAT( "[CGUIFontFace_ft2::LoadFont]:Could not get font face from file <%s>!", rFontPath.c_str()));
 			return;
 		}
 #elif defined(GUIEX_TARGET_ANDROID)
@@ -90,21 +90,21 @@ namespace guiex
 		FT_Error ret = FT_New_Face( pFont->GetFTLibrary( ), aTmpFontPath.c_str(), 0, &m_aFtFace );
 		if(  ret != 0 )
 		{
-			CGUIException::ThrowException( "[CGUIFontFace_ft2::LoadFont]:Could not get font face from file <%s>!", aTmpFontPath.c_str());
+			GUI_THROW( GUI_FORMAT( "[CGUIFontFace_ft2::LoadFont]:Could not get font face from file <%s>!", aTmpFontPath.c_str()));
 			return;
 		}
 #else
 		IGUIFileSys_android* pFileSys = CGUIInterfaceManager::Instance()->GetInterfaceFileSysWithTypeCheck<IGUIFileSys_android>();
 		if( !pFileSys )
 		{
-			CGUIException::ThrowException("[IGUIFont_ft2::LoadFontFace]:Could not get font face from file <%s>!",rFontPath.c_str());
+			GUI_THROW( GUI_FORMAT("[IGUIFont_ft2::LoadFontFace]:Could not get font face from file <%s>!",rFontPath.c_str()));
 			return;
 		}
 
 		zip* pAPKArchive = pFileSys->GetAPKArchive();
 		if( !zip )
 		{
-			CGUIException::ThrowException("[IGUIFont_ft2::LoadFontFace]:Could not get apk archive!" );
+			GUI_THROW( "[IGUIFont_ft2::LoadFontFace]:Could not get apk archive!" );
 			return;
 		}
 
@@ -115,21 +115,21 @@ namespace guiex
 		struct zip_stat aZipStat;
 		if( 0 != zip_stat( pAPKArchive, strFullPath.c_str(), 0, &aZipStat ))
 		{
-			CGUIException::ThrowException("[IGUIFont_ft2::LoadFontFace]:failed in zip_stat, file %s!", strFullPath.c_str() );
+			GUI_THROW( GUI_FORMAT("[IGUIFont_ft2::LoadFontFace]:failed in zip_stat, file %s!", strFullPath.c_str() ));
 			return;
 		}
 
 		uint32 nSize = aZipStat.size;
 		if( nSize == 0 )
 		{
-			CGUIException::ThrowException("[IGUIFont_ft2::LoadFontFace]:file size is zeor, file %s!", strFullPath.c_str() );
+			GUI_THROW( GUI_FORMAT("[IGUIFont_ft2::LoadFontFace]:file size is zeor, file %s!", strFullPath.c_str() ));
 			return;
 		}
 
 		zip_file* zip_file = zip_fopen( pAPKArchive, strFullPath.c_str(), 0);
 		if( !zip_file )
 		{
-			CGUIException::ThrowException("[IGUIFont_ft2::LoadFontFace]:Could not open %s in apk archive!", strFullPath.c_str() );
+			GUI_THROW( GUI_FORMAT("[IGUIFont_ft2::LoadFontFace]:Could not open %s in apk archive!", strFullPath.c_str() ));
 			return;
 		}
 
@@ -153,7 +153,7 @@ namespace guiex
 		FT_Error ret = FT_Open_Face(pFont->GetFTLibrary( ), &args, 0, &m_aFtFace);
 		if( ret != 0 )
 		{
-			CGUIException::ThrowException( "[CGUIFontFace_ft2::LoadFont]:Could not get font face from file <%s>!", rFontPath.c_str());
+			GUI_THROW( GUI_FORMAT( "[CGUIFontFace_ft2::LoadFont]:Could not get font face from file <%s>!", rFontPath.c_str()));
 			return;
 		}
 #endif

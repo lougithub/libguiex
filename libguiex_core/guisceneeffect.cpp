@@ -55,7 +55,7 @@ namespace guiex
 	{
 		if( m_pTexture )
 		{
-			CGUIException::ThrowException("[CGUISceneEffect::~CGUISceneEffect]: texture not cleared");
+			GUI_THROW( "[CGUISceneEffect::~CGUISceneEffect]: texture not cleared");
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -64,7 +64,7 @@ namespace guiex
 		IGUIInterfaceRender* pRender = CGUIInterfaceManager::Instance()->GetInterfaceRender();
 		if( !pRender )
 		{
-			CGUIException::ThrowException("[CGUISceneEffect::Initialize]: failed to get render interface!");
+			GUI_THROW( "[CGUISceneEffect::Initialize]: failed to get render interface!");
 			return -1;
 		}
 
@@ -76,7 +76,7 @@ namespace guiex
 		m_pTexture = CGUITextureManager::Instance()->CreateTexture( uTextureWidthUse, uTextureHeightUse, GUI_PF_RGBA_32 );
 		if( !m_pTexture )
 		{
-			CGUIException::ThrowException("[CGUISceneEffect::Initialize]: failed to create texture!");
+			GUI_THROW( "[CGUISceneEffect::Initialize]: failed to create texture!");
 			return -1;
 		}
 		m_pTexture->SetBottomUp( true );
@@ -106,7 +106,7 @@ namespace guiex
 		// check if it worked
 		if( !pRender->CheckFramebufferStatus( ) )
 		{
-			CGUIException::ThrowException("[CGUISceneEffect::Initialize]: Could not attach texture to framebuffer!");
+			GUI_THROW( "[CGUISceneEffect::Initialize]: Could not attach texture to framebuffer!");
 			return -1;
 		}
 
@@ -128,7 +128,7 @@ namespace guiex
 			IGUIInterfaceRender* pRender = CGUIInterfaceManager::Instance()->GetInterfaceRender();
 			if( !pRender )
 			{
-				CGUIException::ThrowException("[CGUISceneEffect::Release]: failed to get render interface!");
+				GUI_THROW( "[CGUISceneEffect::Release]: failed to get render interface!");
 				return;
 			}
 

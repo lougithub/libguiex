@@ -80,7 +80,7 @@ namespace guiex
 		lua_State *pState = lua_open();
 		if( !pState )
 		{
-			CGUIException_Script::ThrowException( "[IGUIScript_lua::CreateScript]: failed to create script for scene <%s>!", rSceneName.c_str() );
+			GUI_SCRIPT_THROW( GUI_FORMAT("[IGUIScript_lua::CreateScript]: failed to create script for scene <%s>!", rSceneName.c_str() ));
 		}
 
 		// init all standard libraries
@@ -169,7 +169,7 @@ namespace guiex
 		}
 		else
 		{
-			CGUIException_Script::ThrowException( "[IGUIScript_lua::GetLuaState]: failed to get script by scene name <%s>!", rSceneName.c_str() );
+			GUI_SCRIPT_THROW( GUI_FORMAT( "[IGUIScript_lua::GetLuaState]: failed to get script by scene name <%s>!", rSceneName.c_str() ));
 			return NULL;
 		}
 	}
@@ -188,7 +188,7 @@ namespace guiex
 		if( 0 != pFileSys->ReadFile( filename, aDataChunk ))
 		{
 			//failed
-			CGUIException_Script::ThrowException( "[IGUIScript_lua::ExecuteFile]: failed to open file <%s>!", filename.c_str() );
+			GUI_SCRIPT_THROW( GUI_FORMAT( "[IGUIScript_lua::ExecuteFile]: failed to open file <%s>!", filename.c_str() ));
 		}
 
 		// load code into lua and call it
@@ -200,7 +200,7 @@ namespace guiex
 		{
 			CGUIString msg = CGUIString("(IGUIScript_lua::ExecuteFile) Unable to execute script file: ")+"\n"+lua_tostring(L,-1)+"\n";
 			lua_pop(L,1);
-			CGUIException_Script::ThrowException( msg.c_str() );
+			GUI_SCRIPT_THROW( msg.c_str() );
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -220,7 +220,7 @@ namespace guiex
 		{
 			CGUIString msg = CGUIString("(IGUIScript_lua::ExecuteBuffer) Unable to execute script buffer: ")+"\n"+lua_tostring(L,-1)+"\n";
 			lua_pop(L,1);
-			CGUIException_Script::ThrowException( msg.c_str() );
+			GUI_SCRIPT_THROW(  msg.c_str() );
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -239,7 +239,7 @@ namespace guiex
 		{
 			CGUIString msg = CGUIString("(IGUIScript_lua::ExecuteString) Unable to execute script string: ")+pString+"\n"+lua_tostring(L,-1)+"\n";
 			lua_pop(L,1);
-			CGUIException_Script::ThrowException( msg.c_str() );
+			GUI_SCRIPT_THROW( msg.c_str() );
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -285,7 +285,7 @@ namespace guiex
 			CGUIString msg = CGUIString("(IGUIScript_lua::ExecuteFunction) Unable to execute script function: ")+
 				pFunName+"\n"+lua_tostring(L,-1)+"\n";
 			lua_pop(L,1);
-			CGUIException_Script::ThrowException( msg.c_str() );
+			GUI_SCRIPT_THROW( msg.c_str() );
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -329,13 +329,13 @@ namespace guiex
 		if ( !lua_isfunction(L,-1) )
 		{
 			lua_pop(L,1);
-			CGUIException_Script::ThrowException( "(IGUIScript_lua::ExecuteFunction) Unable to find function in script <%s>\n",pFunName.c_str() );
+			GUI_SCRIPT_THROW( GUI_FORMAT( "(IGUIScript_lua::ExecuteFunction) Unable to find function in script <%s>\n",pFunName.c_str()));
 		}
 
 		if( PushParToLua(pPara1, rParaType1, pLuaState) != true )
 		{
 			lua_pop(L,1);
-			CGUIException_Script::ThrowException( "(IGUIScript_lua::ExecuteFunction) Unable to push parameter <%s>\n",rParaType1.c_str() );
+			GUI_SCRIPT_THROW( GUI_FORMAT( "(IGUIScript_lua::ExecuteFunction) Unable to push parameter <%s>\n",rParaType1.c_str() ));
 		}
 
 		// call it
@@ -347,7 +347,7 @@ namespace guiex
 			CGUIString msg = CGUIString("(IGUIScript_lua::ExecuteFunction) Unable to execute script function: ")+
 				pFunName+"\n"+lua_tostring(L,-1)+"\n";
 			lua_pop(L,1);
-			CGUIException_Script::ThrowException( msg.c_str() );
+			GUI_SCRIPT_THROW(  msg.c_str() );
 		}
 
 		int nNewTop = lua_gettop(L);
@@ -371,18 +371,18 @@ namespace guiex
 		if ( !lua_isfunction(L,-1) )
 		{
 			lua_pop(L,1);
-			CGUIException_Script::ThrowException( "(IGUIScript_lua::ExecuteFunction) Unable to find function in script <%s>\n",pFunName.c_str() );
+			GUI_SCRIPT_THROW( GUI_FORMAT( "(IGUIScript_lua::ExecuteFunction) Unable to find function in script <%s>\n",pFunName.c_str() ));
 		}
 
 		if( PushParToLua(pPara1, rParaType1, pLuaState) != true )
 		{
 			lua_pop(L,1);
-			CGUIException_Script::ThrowException( "(IGUIScript_lua::ExecuteFunction) Unable to push parameter <%s>\n",rParaType1.c_str() );
+			GUI_SCRIPT_THROW( GUI_FORMAT( "(IGUIScript_lua::ExecuteFunction) Unable to push parameter <%s>\n",rParaType1.c_str() ));
 		}
 		if( PushParToLua(pPara2, rParaType2, pLuaState) != true )
 		{
 			lua_pop(L,2);
-			CGUIException_Script::ThrowException( "(IGUIScript_lua::ExecuteFunction) Unable to push parameter <%s>\n",rParaType2.c_str() );
+			GUI_SCRIPT_THROW( GUI_FORMAT( "(IGUIScript_lua::ExecuteFunction) Unable to push parameter <%s>\n",rParaType2.c_str() ));
 		}
 
 		// call it
@@ -394,7 +394,7 @@ namespace guiex
 			CGUIString msg = CGUIString("(IGUIScript_lua::ExecuteFunction) Unable to execute script function: ")+
 				pFunName+"\n"+lua_tostring(L,-1)+"\n";
 			lua_pop(L,1);
-			CGUIException_Script::ThrowException( msg.c_str() );
+			GUI_SCRIPT_THROW( msg.c_str() );
 		}
 
 		int nNewTop = lua_gettop(L);
@@ -411,14 +411,14 @@ namespace guiex
 		if( !head_module )
 		{
 			lua_pop(L,1);
-			CGUIException_Script::ThrowException( "(IGUIScript_lua::RegisterWidget) Unable to find swig module\n" );
+			GUI_SCRIPT_THROW( "(IGUIScript_lua::RegisterWidget) Unable to find swig module\n" );
 		}
 		CGUIString strWidgetType = "guiex::" + pWidget->GetType() + " *";
 		swig_type_info* pInfo = SWIG_TypeQueryModule( head_module, head_module, strWidgetType.c_str());
 		if( !pInfo )
 		{
 			lua_pop(L,1);
-			CGUIException_Script::ThrowException( "(IGUIScript_lua::RegisterWidget) Unable to find swig_type_info for <%s>\n",strWidgetType.c_str() );
+			GUI_SCRIPT_THROW( GUI_FORMAT( "(IGUIScript_lua::RegisterWidget) Unable to find swig_type_info for <%s>\n",strWidgetType.c_str() ));
 		}
 
 		SWIG_Lua_NewPointerObj( L, (void*)pWidget, pInfo, 0 );

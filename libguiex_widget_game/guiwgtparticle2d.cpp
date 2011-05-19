@@ -17,7 +17,8 @@
 #include <libguiex_core/guipropertymanager.h>
 #include <libguiex_core/guiwidgetmanager.h>
 #include <libguiex_core/guipropertyconvertor.h>
-
+#include <libguiex_core/guilogmsgmanager.h>
+ 
 //============================================================================//
 // function
 //============================================================================// 
@@ -100,6 +101,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtParticle2D::SetParticle2D( const CGUIString& rParticle2DName )
 	{
+		GUI_TRACE( GUI_FORMAT( "[CGUIWgtParticle2D::SetParticle2D]: play particle %s", rParticle2DName.c_str()));
+
 		if( rParticle2DName.empty() )
 		{
 			//clear

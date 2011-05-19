@@ -143,7 +143,7 @@ namespace guiex
 
 		if( m_mapRegisterResource.find( pRes->GetName()) != m_mapRegisterResource.end())
 		{
-			CGUIException::ThrowException( "the resource <%s> has existed", pRes->GetName().c_str());
+			GUI_THROW( GUI_FORMAT( "the resource <%s> has existed", pRes->GetName().c_str()));
 			return -1;
 		}
 
@@ -276,7 +276,7 @@ namespace guiex
 		}
 		else
 		{
-			CGUIException::ThrowException("[CGUIResourceManager::ReleaseRegisterResource]: failed to find resource by name <%s>", rResName.c_str());
+			GUI_THROW( GUI_FORMAT("[CGUIResourceManager::ReleaseRegisterResource]: failed to find resource by name <%s>", rResName.c_str()));
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -287,9 +287,9 @@ namespace guiex
 		if( itorFind != m_setAllocateResource.end() )
 		{
 			//not found
-			CGUIException::ThrowException("[CGUIResourceManager::AddToAllocatePool]: failed to add resource <%s:%s> to allocate pool", 
+			GUI_THROW( GUI_FORMAT("[CGUIResourceManager::AddToAllocatePool]: failed to add resource <%s:%s> to allocate pool", 
 				pRes->GetName().c_str(),
-				pRes->GetResourceType().c_str());
+				pRes->GetResourceType().c_str()));
 			return;
 		}
 		m_setAllocateResource.insert( pRes );
@@ -302,7 +302,7 @@ namespace guiex
 		if( itorFind == m_setAllocateResource.end() )
 		{
 			//not found
-			CGUIException::ThrowException("[CGUIResourceManager::ReleaseFromAllocatePool]: failed to remove resource <%s:%s> from allocate pool" );
+			GUI_THROW( "CGUIResourceManager::ReleaseFromAllocatePool]: failed to remove resource <%s:%s> from allocate pool" );
 			return -1;
 		}
 		CheckResourceReference( *itorFind );
@@ -330,11 +330,11 @@ namespace guiex
 	{
 		if( pRes->GetRefCount() != 0 )
 		{
-			CGUIException::ThrowException( "[CGUIResourceManager::CheckResourceReference]:resource reference is still in using[%d]: <%s:%s:%s>", 
+			GUI_THROW( GUI_FORMAT( "[CGUIResourceManager::CheckResourceReference]:resource reference is still in using[%d]: <%s:%s:%s>", 
 				pRes->GetRefCount(),
 				pRes->GetName().c_str(), 
 				pRes->GetResourceType().c_str(),
-				pRes->GetSceneName().c_str() );
+				pRes->GetSceneName().c_str()));
 		}
 	}
 	//------------------------------------------------------------------------------
