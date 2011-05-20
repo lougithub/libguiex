@@ -65,25 +65,13 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUITexture_opengl_base::~CGUITexture_opengl_base()
 	{
-#if defined(GUIEX_TARGET_ANDROID)
-		//while( 0 != glGetError() )
-		//{
-		//}
-#else
 		TRY_THROW_OPENGL_ERROR("CGUITexture_opengl_base::~CGUITexture_opengl_base:begin");
-#endif
 
 		// otherwise delete OGL texture associated with this object.
 		glDeleteTextures(1, &m_ogltexture);
 		m_ogltexture = 0;
 
-#if defined(GUIEX_TARGET_ANDROID)
-		//while( 0 != glGetError() )
-		//{
-		//}
-#else
 		TRY_THROW_OPENGL_ERROR("CGUITexture_opengl_base::~CGUITexture_opengl_base:end");
-#endif
 	}
 	//------------------------------------------------------------------------------
 	uint16	CGUITexture_opengl_base::GetWidth(void) const

@@ -129,6 +129,7 @@ namespace guiex
 		,m_pCanvasLayerManager( NULL )
 		,m_pUICanvas( NULL )
 		,m_eScreenOrientation( eScreenOrientation_Portrait )
+		,m_bFixedScreenOrientation( true )
 	{
 		GUI_ASSERT( !m_pSingleton, "[CGUISystem::CGUISystem]:instance has been created" ); 
 		GUI_ASSERT( !GSystem, "[CGUISystem::CGUISystem]:GSystem has been set" ); 
@@ -577,6 +578,16 @@ namespace guiex
 	EScreenOrientation CGUISystem::GetScreenOrientation( ) const
 	{
 		return m_eScreenOrientation;
+	}
+	//------------------------------------------------------------------------------
+	void CGUISystem::FixScreenOrientation( bool bFixed )
+	{
+		m_bFixedScreenOrientation = bFixed;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUISystem::IsFixedScreenOrientation( ) const
+	{
+		return m_bFixedScreenOrientation;
 	}
 	//------------------------------------------------------------------------------
 	void CGUISystem::RefreshScreenSize()

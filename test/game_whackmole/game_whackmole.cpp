@@ -261,6 +261,8 @@ CMyCanvasLayer_WhackMoleGame* CGUIFrameworkTest::GetGameLayer()
 //------------------------------------------------------------------------------
 int32 CGUIFrameworkTest::InitializeGame()
 {
+	GSystem->SetScreenOrientation( eScreenOrientation_LandscapeLeft );
+
 	CGUISceneManager::Instance()->RegisterScenesFromDir("/", ".uip");
 
 	CGUISceneManager::Instance()->LoadResources( "common" );	

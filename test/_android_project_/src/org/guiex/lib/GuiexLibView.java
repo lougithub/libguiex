@@ -22,7 +22,9 @@ public class GuiexLibView extends GLSurfaceView
 
     private void init( Context context ) 
 	{
-    	setEGLConfigChooser(5, 6, 5, 0, 0, 0); 
+    	//setEGLConfigChooser(5, 6, 5, 0, 0, 8); 
+		setEGLConfigChooser(8, 8, 8, 8, 8, 0); 
+   	
     	
 		String apkFilePath = null;
 		ApplicationInfo appInfo = null;
@@ -39,6 +41,8 @@ public class GuiexLibView extends GLSurfaceView
 	    }
 		apkFilePath = appInfo.sourceDir;
 	    GuiexLibNative.SetApkPath( apkFilePath ); 
+	    
+	    setFocusableInTouchMode(true);
 			
         /* Set the renderer responsible for frame rendering */
         setRenderer(new Renderer());

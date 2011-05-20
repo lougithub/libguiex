@@ -77,6 +77,11 @@ void CLibGuiexEngine::Update( float deltaTime )
 
 void CLibGuiexEngine::OnRotate( EDeviceOrientation newOrientation )
 {
+	if( GSystem->IsFixedScreenOrientation() )
+	{
+		return;
+	}
+
 	switch( newOrientation )
 	{
 		case eDeviceOrientation_Portrait:

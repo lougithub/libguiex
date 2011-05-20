@@ -125,9 +125,12 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles_android::GetBindingFrameBuffer( int32* framebuffer )
 	{
-		glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, framebuffer);
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_android::GetBindingFrameBuffer: begin");
+
+		//glGetIntegerv(GL_FRAMEBUFFER_BINDING_OES, framebuffer);
+		*framebuffer = 0;
 		
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_android::GetBindingFrameBuffer");
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_android::GetBindingFrameBuffer: end");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles_android::FramebufferTexture2D_Color( const CGUITexture* pTexture, int32 level )
@@ -140,9 +143,14 @@ namespace guiex
 	bool IGUIRender_opengles_android::CheckFramebufferStatus( )
 	{
 		GLuint status = glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES);
-		return status == GL_FRAMEBUFFER_COMPLETE_OES;
-
+		
 		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_android::CheckFramebufferStatus");
+		if( status != GL_FRAMEBUFFER_COMPLETE_OES )
+		{
+			GUI_TRACE(GUI_FORMAT( "[IGUIRender_opengles_android::CheckFramebufferStatus]: status is %x", status ));
+		}
+		//return status == GL_FRAMEBUFFER_COMPLETE_OES;
+		return true;
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengles_android::BeginRender(void)

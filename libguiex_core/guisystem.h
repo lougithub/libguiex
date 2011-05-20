@@ -148,6 +148,9 @@ namespace guiex
 		void SetScreenOrientation( EScreenOrientation eOrientation );
 		EScreenOrientation GetScreenOrientation( ) const;
 
+		void FixScreenOrientation( bool bFixed );
+		bool IsFixedScreenOrientation( ) const;
+
 		const CGUIIntSize& GetScreenSize( ) const;
 		uint32 GetScreenWidth( ) const;
 		uint32 GetScreenHeight( ) const;
@@ -248,6 +251,7 @@ namespace guiex
 		CGUIIntSize m_aRawScreenSize; //!< raw size of screen
 		CGUIIntSize m_aScreenSize; //!< size of screen
 		EScreenOrientation m_eScreenOrientation; //!< screen orientation
+		bool m_bFixedScreenOrientation;
 		//----------------------------------------------------------------------
 
 		//----------------------------------------------------------------------

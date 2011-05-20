@@ -78,7 +78,7 @@ public class GuiexLibSound
 		return soundId;
 	}
 	
-	public void UnloadEffect(String path)
+	static public void UnloadEffect(String path)
 	{
 		Log.i("guiex", "in java: unload effect" + path );
 		

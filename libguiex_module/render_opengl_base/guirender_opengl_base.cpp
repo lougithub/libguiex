@@ -44,6 +44,12 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
+
+#if defined(GUIEX_TARGET_ANDROID)
+#define OPENGL_ERROR GUI_TRACE
+#else
+#define OPENGL_ERROR GUI_THROW
+#endif
 	void TryThrowOpenglError( const char* info )
 	{
 		int errorcode = glGetError();
@@ -52,25 +58,25 @@ namespace guiex
 			switch( errorcode )
 			{
 			case GL_INVALID_ENUM:
-				GUI_THROW( GUI_FORMAT("error find in opengl in <%s>, error is <%s>!" ,info, "GL_INVALID_ENUM"));
+				OPENGL_ERROR( GUI_FORMAT("error find in opengl in <%s>, error is <%s>!" ,info, "GL_INVALID_ENUM"));
 				break;
 			case GL_INVALID_VALUE:
-				GUI_THROW( GUI_FORMAT("error find in opengl in <%s>, error is <%s>!" ,info, "GL_INVALID_VALUE"));
+				OPENGL_ERROR( GUI_FORMAT("error find in opengl in <%s>, error is <%s>!" ,info, "GL_INVALID_VALUE"));
 				break;
 			case GL_INVALID_OPERATION:
-				GUI_THROW( GUI_FORMAT("error find in opengl in <%s>, error is <%s>!" ,info, "GL_INVALID_OPERATION"));
+				OPENGL_ERROR( GUI_FORMAT("error find in opengl in <%s>, error is <%s>!" ,info, "GL_INVALID_OPERATION"));
 				break;
 			case GL_STACK_OVERFLOW:
-				GUI_THROW( GUI_FORMAT("error find in opengl in <%s>, error is <%s>!" ,info, "GL_STACK_OVERFLOW"));
+				OPENGL_ERROR( GUI_FORMAT("error find in opengl in <%s>, error is <%s>!" ,info, "GL_STACK_OVERFLOW"));
 				break;
 			case GL_STACK_UNDERFLOW:
-				GUI_THROW( GUI_FORMAT("error find in opengl in <%s>, error is <%s>!" ,info, "GL_STACK_UNDERFLOW"));
+				OPENGL_ERROR( GUI_FORMAT("error find in opengl in <%s>, error is <%s>!" ,info, "GL_STACK_UNDERFLOW"));
 				break;
 			case GL_OUT_OF_MEMORY:
-				GUI_THROW( GUI_FORMAT("error find in opengl in <%s>, error is <%s>!" ,info, "GL_OUT_OF_MEMORY"));
+				OPENGL_ERROR( GUI_FORMAT("error find in opengl in <%s>, error is <%s>!" ,info, "GL_OUT_OF_MEMORY"));
 				break;			
 			default:
-				GUI_THROW( GUI_FORMAT("error find in opengl in <%s>, error is <0x%x>!" ,info, errorcode));
+				OPENGL_ERROR( GUI_FORMAT("error find in opengl in <%s>, error is <0x%x>!" ,info, errorcode));
 			}
 		}
 	}
