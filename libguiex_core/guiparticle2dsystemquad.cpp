@@ -16,6 +16,7 @@
 #include "guiinterfacerender.h"
 #include "guimatrix4.h"
 #include "guitexture.h"
+#include "guilogmsgmanager.h"
 
 //============================================================================//
 // function
@@ -43,8 +44,8 @@ namespace guiex
 		}
 
 		// allocating data space
-		m_pQuads = new SR_V2F_C4F_T2F_Quad[totalParticles];
-		m_pIndices = new uint16[totalParticles * 6];
+		m_pQuads = new SR_V2F_C4F_T2F_Quad[m_uTotalParticles];
+		m_pIndices = new uint16[m_uTotalParticles * 6];
 
 		if( !m_pQuads || !m_pIndices ) 
 		{
@@ -72,7 +73,7 @@ namespace guiex
 
 		// initial binding
 		glBindBuffer(GL_ARRAY_BUFFER, m_pQuadsID);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0])*totalParticles, m_pQuads,GL_DYNAMIC_DRAW);	
+		glBufferData(GL_ARRAY_BUFFER, sizeof(m_pQuads[0])*m_uTotalParticles, m_pQuads,GL_DYNAMIC_DRAW);	
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 #endif
 
@@ -101,7 +102,7 @@ namespace guiex
 	// rect is in Points coordinates.
 	void CGUIParticle2DSystemQuad::InitTexCoordsWithUVRect( const CGUIRect& rUVRect ) const
 	{
-		for( uint32 i=0; i<totalParticles; i++) 
+		for( uint32 i=0; i<m_uTotalParticles; i++) 
 		{
 			// bottom-left vertex:
 			m_pQuads[i].bl.texCoords.u = rUVRect.m_fLeft;
@@ -120,7 +121,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIParticle2DSystemQuad::InitIndices() const
 	{
-		for( int16 i=0;i<int16(totalParticles);i++) 
+		for( int16 i=0;i<int16(m_uTotalParticles);i++) 
 		{
 			const int16 i6 = i*6;
 			const int16 i4 = i*4;
@@ -136,6 +137,9 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIParticle2DSystemQuad::UpdateQuadWithParticle( CGUIParticle2D* particle, const CGUIVector2& rNewPos )
 	{
+		uint32 particleIdx = particle - m_pParticles;
+		GUI_ASSERT( particleIdx < m_uParticleCount, "invalid particle" );
+
 		// colors
 		SR_V2F_C4F_T2F_Quad *quad = &(m_pQuads[particleIdx]);
 		ConvGUIColor_2_C4f( particle->color, quad->bl.colors);
@@ -226,10 +230,10 @@ namespace guiex
 		}
 
 		pRender->DrawQuads(
-			texture, 
+			m_pTexture, 
 			m_pQuads,
 			m_pIndices,
-			particleCount );
+			m_uParticleCount );
 
 		if( blendFunc.src != oldBlendFunc.src ||
 			blendFunc.dst != oldBlendFunc.dst )

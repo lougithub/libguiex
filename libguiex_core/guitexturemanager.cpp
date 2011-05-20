@@ -158,6 +158,8 @@ namespace guiex
 	*/
 	int32 CGUITextureManager::DestroyTexture(CGUITexture* pTexture)
 	{
+		GUI_ASSERT( pTexture, "invalid texture pointer" );
+
 		switch( pTexture->GetTextureType())
 		{
 		case eTT_Default:
@@ -218,11 +220,12 @@ namespace guiex
 			break;
 
 		default:
-			break;
+			GUI_THROW( "[CGUITextureManager::DestroyTexture]: unknown texture type");
+			return -1;
 		}
 
 
-		GUI_THROW( "[CGUITextureManager::DestroyTexture]: the image has been destroyed");
+		GUI_THROW( "[CGUITextureManager::DestroyTexture]: the texture has been destroyed");
 		return -1;
 	}
 	//------------------------------------------------------------------------------

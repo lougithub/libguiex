@@ -15,6 +15,7 @@
 #include <libguiex_core/guiinterfacemanager.h>
 #include <libguiex_core/guiinterfacefilesys.h>
 #include <libguiex_core/guiinterfaceimageloader.h>
+#include <libguiex_core/guilogmsgmanager.h>
 
 #if defined(GUIEX_TARGET_WIN32)
 #include <windows.h>
@@ -65,9 +66,9 @@ namespace guiex
 	CGUITexture_opengl_base::~CGUITexture_opengl_base()
 	{
 #if defined(GUIEX_TARGET_ANDROID)
-		while( 0 != glGetError() )
-		{
-		}
+		//while( 0 != glGetError() )
+		//{
+		//}
 #else
 		TRY_THROW_OPENGL_ERROR("CGUITexture_opengl_base::~CGUITexture_opengl_base:begin");
 #endif
@@ -77,9 +78,9 @@ namespace guiex
 		m_ogltexture = 0;
 
 #if defined(GUIEX_TARGET_ANDROID)
-		while( 0 != glGetError() )
-		{
-		}
+		//while( 0 != glGetError() )
+		//{
+		//}
 #else
 		TRY_THROW_OPENGL_ERROR("CGUITexture_opengl_base::~CGUITexture_opengl_base:end");
 #endif

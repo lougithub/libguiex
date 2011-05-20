@@ -107,9 +107,7 @@ void CMyCanvasLayer_Particle::ApplyEffect()
 {
 	static int i=0;
 
-	GUI_TRACE( GUI_FORMAT( "[CMyCanvasLayer_Particle::ApplyEffect]: %s begin", m_vecParticlePlayers[i].c_str()));
 	m_pWidgetParticle->SetParticle2D( m_vecParticlePlayers[i] );
-	GUI_TRACE( GUI_FORMAT( "[CMyCanvasLayer_Particle::ApplyEffect]: %s end", m_vecParticlePlayers[i].c_str()));
 
 	i = (i+1)%m_vecParticlePlayers.size();
 }

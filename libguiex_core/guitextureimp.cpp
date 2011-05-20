@@ -12,7 +12,7 @@
 #include "guitextureimp.h"
 #include "guitexture.h"
 #include "guiinterfacerender.h"
-
+#include "guilogmsgmanager.h"
 
 
 //============================================================================//
@@ -40,6 +40,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUITextureImp::Destroy()
 	{
+		GUI_ASSERT( m_pRender, "invalid render pointer" );
 		m_pRender->DestroyTexture( this );
 	}
 	//------------------------------------------------------------------------------

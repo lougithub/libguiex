@@ -13,6 +13,7 @@
 #include "guitextureimp.h"
 #include "guiinterfacemanager.h"
 #include "guiinterfacerender.h"
+#include "guilogmsGmanager.h"
 
 
 //------------------------------------------------------------------------------
@@ -110,7 +111,7 @@ namespace guiex
 			m_pTextureImp->SetTexture(this);
 
 			GUI_ASSERT(m_pTextureImp, "failed to create texture");
-			return m_pTextureImp?0:-1;
+			return 0;
 		}
 		return 0;
 	}

@@ -170,7 +170,7 @@ namespace guiex
 
 	protected:
 		// is the particle system active ?
-		bool active;
+		bool m_bActive;
 		// duration in seconds of the system. -1 is infinity
 		real duration;
 		// time elapsed since the start of the system (in seconds)
@@ -265,11 +265,11 @@ namespace guiex
 
 
 		// Array of particles
-		CGUIParticle2D *particles;
+		CGUIParticle2D *m_pParticles;
 		// Maximum particles
-		uint32 totalParticles;
+		uint32 m_uTotalParticles;
 		// Count of active particles
-		uint32 particleCount;
+		uint32 m_uParticleCount;
 
 		// How many particles can be emitted per second
 		real emissionRate;
@@ -277,12 +277,10 @@ namespace guiex
 
 		// Texture of the particles
 		CGUIString m_strFullTexturePath;
-		class CGUITexture *texture;
+		class CGUITexture *m_pTexture;
+
 		// blend type
 		SGUIBlendFunc blendFunc;
-
-		//  particle idx
-		uint32 particleIdx;
 	};
 
 }

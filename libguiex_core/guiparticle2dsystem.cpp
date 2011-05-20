@@ -17,6 +17,7 @@
 #include "guiproperty.h"
 #include "guipropertyconvertor.h"
 #include "guiparticle2dmanager.h"
+#include "guilogmsgmanager.h"
 
 
 //============================================================================//
@@ -62,11 +63,10 @@ namespace guiex
 		:CGUIResource( rName, rSceneName, "PARTICLE2D", GSystem->GetParticle2DManager())
 		,emissionRate( 0.0f )
 		,emitCounter( 0.0f )
-		,totalParticles( 0 )
-		,particleCount( 0 )
-		,particleIdx( 0 )
-		,texture( NULL )
-		,particles( NULL)
+		,m_uTotalParticles( 0 )
+		,m_uParticleCount( 0 )
+		,m_pTexture( NULL )
+		,m_pParticles( NULL)
 		,endSpin( 0.0f )
 		,endSpinVar( 0.0f )
 		,startSpin( 0.0f )
@@ -81,14 +81,13 @@ namespace guiex
 		,angleVar( 0.0f )
 		,duration( -1.0f )
 		,elapsed( 0.0f )
-		,active( true )
+		,m_bActive( true )
 		,emitterMode( eParticle2DSystemMode_Gravity )
 	{
 	}
 	//------------------------------------------------------------------------------
 	CGUIParticle2DSystem::~CGUIParticle2DSystem()
 	{
-
 	}
 	//------------------------------------------------------------------------------
 	int32 CGUIParticle2DSystem::LoadValueFromProperty( const class CGUIProperty& rProperty )
@@ -118,7 +117,7 @@ namespace guiex
 		//maxParticles
 		{
 			const CGUIProperty* pPpt_maxParticles = rProperty.GetPropertyChecked("maxParticles", "uint32");
-			PropertyToValue( *pPpt_maxParticles, totalParticles );
+			PropertyToValue( *pPpt_maxParticles, m_uTotalParticles );
 		}
 
 
@@ -206,7 +205,7 @@ namespace guiex
 			PropertyToValue( *pPpt_particleLifespanVariance, lifeVar );
 		}
 
-		emissionRate = totalParticles/life;
+		emissionRate = m_uTotalParticles/life;
 
 		// Mode A: Gravity + tangential accel + radial accel
 		if( emitterMode == eParticle2DSystemMode_Gravity )
@@ -276,22 +275,24 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int32 CGUIParticle2DSystem::DoLoad()
 	{
-		GUI_ASSERT( particles==NULL, "invalid pointer");
-		if( totalParticles <= 0 )
+		//particle pool
+		GUI_ASSERT( m_pParticles==NULL, "invalid pointer");
+		if( m_uTotalParticles <= 0 )
 		{
 			GUI_THROW(  "CGUIParticle2DSystem::DoLoad: totalparticles shouldn't be zero" );
 			return -1;
 		}
-		particles = (CGUIParticle2D*)calloc( totalParticles, sizeof(CGUIParticle2D) );
-		if( !particles ) 
+		m_pParticles = new CGUIParticle2D[m_uTotalParticles];
+		if( !m_pParticles ) 
 		{
 			GUI_THROW( "[CGUIParticle2DSystem::CGUIParticle2DSystem]: not enough memory" );
 			return -1;
 		}
 
-		GUI_ASSERT( texture == NULL, "invalid pointer" );
-		texture = CGUITextureManager::Instance()->CreateTexture( m_strFullTexturePath );
-		if( !texture )
+		//m_pTexture
+		GUI_ASSERT( m_pTexture == NULL, "invalid pointer" );
+		m_pTexture = CGUITextureManager::Instance()->CreateTexture( m_strFullTexturePath );
+		if( !m_pTexture )
 		{
 			GUI_THROW( GUI_FORMAT("[CGUIParticle2DSystem::DoLoad]: failed to create texture from path <%s>", m_strFullTexturePath.c_str()));
 			return -1;
@@ -302,21 +303,23 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIParticle2DSystem::DoUnload()
 	{
-		if( particles )
+		if( m_pParticles )
 		{
-			free( particles );
-			particles = NULL;
+			delete[] m_pParticles;
+			m_pParticles = NULL;
 		}
 
-		if( texture )
+		if( m_pTexture )
 		{
-			CGUITextureManager::Instance()->DestroyTexture(texture);
-			texture = NULL;
+			CGUITextureManager::Instance()->DestroyTexture(m_pTexture);
+			m_pTexture = NULL;
 		}
 	}
 	//------------------------------------------------------------------------------
 	void CGUIParticle2DSystem::InitParticle( CGUIParticle2D* particle )
 	{
+		GUI_ASSERT( particle, "invalid particle pointer");
+
 		// timeToLive
 		// no negative life. prevent division by 0
 		particle->timeToLive = GUIMax(0.0f, life + lifeVar * CGUIMath::RangeRandom(-1.0f,1.0f) );
@@ -417,33 +420,33 @@ namespace guiex
 			return false;
 		}
 
-		CGUIParticle2D * particle = &particles[ particleCount ];
+		CGUIParticle2D * particle = m_pParticles + m_uParticleCount;
+		m_uParticleCount++;
 
 		InitParticle( particle );		
-		particleCount++;
 
 		return true;
 	}
 	//------------------------------------------------------------------------------
 	bool CGUIParticle2DSystem::IsActive() const
 	{
-		return active;
+		return m_bActive;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIParticle2DSystem::StopSystem()
 	{
-		active = false;
+		m_bActive = false;
 		elapsed = duration;
 		emitCounter = 0;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIParticle2DSystem::ResetSystem()
 	{
-		active = true;
+		m_bActive = true;
 		elapsed = 0;
-		for(particleIdx = 0; particleIdx < particleCount; ++particleIdx)
+		for( uint32 i = 0; i < m_uParticleCount; ++i)
 		{
-			CGUIParticle2D *p = &particles[particleIdx];
+			CGUIParticle2D *p = m_pParticles + i;
 			p->timeToLive = 0;
 		}
 	}
@@ -452,11 +455,11 @@ namespace guiex
 	{
 		Load();
 
-		if( active && emissionRate > 0.0f ) 
+		if( m_bActive && emissionRate > 0.0f ) 
 		{
 			real rate = 1.0f / emissionRate;
 			emitCounter += rDeltaTime;
-			while( particleCount < totalParticles && emitCounter > rate ) 
+			while( m_uParticleCount < m_uTotalParticles && emitCounter > rate ) 
 			{
 				AddParticle();
 				emitCounter -= rate;
@@ -473,10 +476,10 @@ namespace guiex
 		//position
 		CGUIVector2 currentPosition = CGUIVector2::ZERO;
 
-		particleIdx = 0;
-		while( particleIdx < particleCount )
+		uint32 particleIdx = 0;
+		while( particleIdx < m_uParticleCount )
 		{
-			CGUIParticle2D *p = &particles[particleIdx];
+			CGUIParticle2D *p = m_pParticles + particleIdx;
 
 			// life
 			p->timeToLive -= rDeltaTime;
@@ -549,15 +552,15 @@ namespace guiex
 			else
 			{
 				// life < 0
-				if( particleIdx != particleCount-1 )
+				if( particleIdx != m_uParticleCount-1 )
 				{
-					particles[particleIdx] = particles[particleCount-1];
+					m_pParticles[particleIdx] = m_pParticles[m_uParticleCount-1];
 				}
-				particleCount--;
+				m_uParticleCount--;
 
-				if( particleCount == 0  )
+				if( m_uParticleCount == 0  )
 				{
-					active = false;
+					m_bActive = false;
 					return;
 				}
 			}
@@ -582,7 +585,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	bool CGUIParticle2DSystem::IsFull()
 	{
-		return (particleCount == totalParticles);
+		return (m_uParticleCount == m_uTotalParticles);
 	}
 	//------------------------------------------------------------------------------
 	void CGUIParticle2DSystem::SetAngle( real fAngle )
@@ -835,7 +838,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIParticle2DSystem::SetTotalParticles( uint32 nTotalParticle )
 	{
-		totalParticles = nTotalParticle;
+		m_uTotalParticles = nTotalParticle;
 	}
 	//------------------------------------------------------------------------------
 }

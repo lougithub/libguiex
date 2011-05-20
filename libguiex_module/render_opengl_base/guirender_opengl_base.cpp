@@ -896,12 +896,13 @@ namespace guiex
 	void IGUIRender_opengl_base::RemoveTexture( CGUITextureImp* pTexture )
 	{
 		TSetTexture::iterator itor = m_setTexture.find(pTexture);
-		GUI_ASSERT( itor!= m_setTexture.end(),"failed to destroy texture");
+		GUI_ASSERT( itor!= m_setTexture.end(), "failed to destroy texture");
 		m_setTexture.erase(itor);
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::DestroyTexture(CGUITextureImp* texture)
 	{
+		GUI_ASSERT( texture, "invalid texture pointer" );
 		if (texture != NULL)
 		{
 			RemoveTexture( texture );
