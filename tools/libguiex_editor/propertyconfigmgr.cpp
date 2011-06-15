@@ -146,7 +146,7 @@ const wxArrayString& CPropertyConfigMgr::GetEnumDefine( const guiex::CGUIString&
 	return itor->second;
 }
 //------------------------------------------------------------------------------
-std::string* CPropertyConfigMgr::GetTypePtr( const std::string& rType )
+const std::string* CPropertyConfigMgr::GetTypePtr( const std::string& rType )
 {
 	std::set<std::string>::iterator itor = m_setType.find( rType );
 	if(itor == m_setType.end())

@@ -47,7 +47,7 @@ public:
 		//set type as client data
 		if( pPGTop)
 		{
-			pSheetMgr->SetPropertyClientData( pPGTop, CPropertyConfigMgr::Instance()->GetTypePtr(aProp.GetTypeAsString()));
+			pSheetMgr->SetPropertyClientData( pPGTop, (void*)CPropertyConfigMgr::Instance()->GetTypePtr(aProp.GetTypeAsString()));
 
 			if( CPropertyData::GetPropertyData(aProp)->IsMustExist())
 			{

@@ -127,7 +127,7 @@ public:
 	const std::vector<wxString>& GetLocalizations() const;
 
 	void AddType( const std::string& rType );
-	std::string* GetTypePtr( const std::string& rType );
+	const std::string* GetTypePtr( const std::string& rType );
 
 protected:
 	int	ProcessWidgetNode(TiXmlElement* pWidgetNode);
