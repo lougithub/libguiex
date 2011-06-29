@@ -258,7 +258,7 @@ CMyCanvasLayer_TurretGame::CMyCanvasLayer_TurretGame( const char* szLayerName )
 	m_pScore->SetParent( GSystem->GetUICanvas() );
 	m_pScore->SetSize( 50, 25 );
 	m_pScore->SetPosition( 0,0 );
-	m_pScore->SetTextInfo(CGUIStringRenderInfo(0, 16, CGUIColor(1,1,1,1)));
+	m_pScore->SetTextInfo(CGUIStringRenderInfo(1, 1, CGUIColor(1,1,1,1)));
 	m_pScore->SetTextAlignmentHorz( eTextAlignment_Horz_Left );
 	m_pScore->SetTextContentUTF8("0");
 	m_pScore->Create();

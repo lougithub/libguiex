@@ -54,7 +54,7 @@ namespace guiex
 		}
 
 #ifdef WIN32
-		__asm int 3;
+		DebugBreak();
 #endif
 		::abort ();
 	}
@@ -83,7 +83,7 @@ namespace guiex
 		}
 
 #ifdef WIN32
-		__asm int 3;
+		DebugBreak();
 #endif
 	}
 	//------------------------------------------------------------------------------

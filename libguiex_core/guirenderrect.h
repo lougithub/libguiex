@@ -37,21 +37,20 @@ namespace guiex
 	public:
 		struct SVertex
 		{
-			CGUIVector3		m_aVector;
-			CGUIColor		m_aColor;
+			CGUIVector3	m_aVector;
+			CGUIColor m_aColor;
 		};
 
 	public:
 		CGUIRenderRect()
 		{
-
 		}
 
 		//!< whether a 2d point in this rect
-		bool	IsPointInRect( const CGUIVector2& rPos) const;
+		bool IsPointInRect( const CGUIVector2& rPos) const;
 
 	public:
-		SVertex		m_vecVertex[4];	//!<the render vector list, the sequence of vector is top_left, top_right, bottom_right, bottom_left
+		SVertex	m_vecVertex[4];	//!<the render vector list, the sequence of vector is top_left, top_right, bottom_right, bottom_left
 	};
 }
 

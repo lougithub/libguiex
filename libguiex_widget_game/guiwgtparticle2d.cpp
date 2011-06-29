@@ -94,7 +94,9 @@ namespace guiex
 			m_pParticle2DSystem->Update( fDeltaTime );
 			if( !m_pParticle2DSystem->IsActive() )
 			{
-				CGUIWidgetManager::Instance()->DelayedDestroyWidget( this );
+				m_pParticle2DSystem->RefRelease();
+				m_pParticle2DSystem = NULL;
+				//CGUIWidgetManager::Instance()->DelayedDestroyWidget( this );
 			}
 		}
 	}

@@ -102,7 +102,7 @@ namespace guiex
 		CGUIWidget* GetChild( ) const;
 		CGUIWidget* GetChild( const CGUIString& rChildName ) const;
 		CGUIWidget* GetNextSibling( ) const;
-		//CGUIWidget* GetExclusiveChild( ) const;
+		CGUIWidget* GetPrevSibling( ) const;
 
 		void MoveToTop();
 		void MoveDown();
@@ -528,7 +528,7 @@ namespace guiex
 
 		CGUIVector3 m_vRotation;
 
-		CGUIRenderRect m_aBound; //!< bound of this rect.
+		CGUIRenderRect m_aHitTestArea; //!< hit test area of this rect.
 
 		///////////////////////////////////////////////////////////////////////
 		/// widget callback function								
@@ -624,6 +624,7 @@ namespace guiex
 		CGUIWidget* m_pParent; //!< parent
 		CGUIWidget* m_pChild; //!< child
 		CGUIWidget* m_pNextSibling; //!< sibling
+		CGUIWidget* m_pPrevSibling; //!< sibling
 	};
 
 

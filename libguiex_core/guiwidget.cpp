@@ -61,6 +61,7 @@ namespace guiex
 		,m_pParent(NULL)
 		,m_pChild(NULL)
 		,m_pNextSibling(NULL)
+		,m_pPrevSibling(NULL)
 		,m_pWidgetGenerator(NULL)
 		,m_aParamScale(CGUISize(1.0f,1.0f))
 		,m_aParamAlpha(1.0f)
@@ -342,7 +343,15 @@ namespace guiex
 	/// set next sibling
 	void CGUIWidget::SetNextSiblingImpl( CGUIWidget* pNextSibling )
 	{
+		if( m_pNextSibling )
+		{
+			m_pNextSibling->m_pPrevSibling = NULL;
+		}
 		m_pNextSibling = pNextSibling;
+		if( m_pNextSibling )
+		{
+			m_pNextSibling->m_pPrevSibling = this;
+		}
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -414,6 +423,10 @@ namespace guiex
 	CGUIWidget*	CGUIWidget::GetNextSibling( ) const
 	{
 		return m_pNextSibling;
+	}
+	CGUIWidget* CGUIWidget::GetPrevSibling( ) const
+	{
+		return m_pPrevSibling;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::SetWorkingSceneName(const CGUIString& rWorkingProjName)
@@ -986,6 +999,47 @@ namespace guiex
 	*/
 	CGUIWidget* CGUIWidget::GetWidgetAtPoint(const CGUIVector2& rPos)
 	{
+#if 1
+		if( !IsOpen() || !IsDerivedVisible() ) 
+		{
+			return NULL;
+		}
+
+		if( !HitTest(rPos))
+		{
+			return NULL;
+		}
+
+		if( GetChild() )
+		{
+			CGUIWidget* pSibling = GetChild();
+
+			//find last one
+			while( pSibling->GetNextSibling() )
+			{
+				pSibling = pSibling->GetNextSibling();
+			}
+
+			while( pSibling )
+			{
+				CGUIWidget* pHitedWidget = pSibling->GetWidgetAtPoint( rPos );
+				if( pHitedWidget )
+				{
+					return pHitedWidget;
+				}
+				pSibling = pSibling->GetPrevSibling();
+			}
+		}
+		
+		if( IsHitable() || GSystem->IsEditorMode() )
+		{
+			return this;
+		}
+		else
+		{
+			return NULL;
+		}
+#else
 		//check sibling first
 		if( GetNextSibling() )
 		{
@@ -1016,8 +1070,8 @@ namespace guiex
 				return this;
 			}
 		}
-
 		return NULL;
+#endif
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -1026,14 +1080,7 @@ namespace guiex
 	*/
 	bool CGUIWidget::HitTest( const CGUIVector2& rPos)
 	{
-		if( IsHitable() || GSystem->IsEditorMode() )
-		{
-			return m_aBound.IsPointInRect(rPos);
-		}
-		else
-		{
-			return false;
-		}
+		return m_aHitTestArea.IsPointInRect(rPos);
 	}
 	//------------------------------------------------------------------------------
 	CGUISoundData* CGUIWidget::RegisterSound( const CGUIString& strEventName, const CGUIString& rSoundName )
@@ -2810,8 +2857,8 @@ namespace guiex
 
 		NodeUpdateFromParent( );
 
-		//refresh render rect
-		LocalToWorld( m_aBoundArea, m_aBound );
+		//refresh bound rect for hittest
+		LocalToWorld( m_aBoundArea, m_aHitTestArea );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::SetOpenWithParent( bool bFlag )
