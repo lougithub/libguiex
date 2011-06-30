@@ -86,8 +86,8 @@ namespace guiex
 		virtual void Render( class IGUIInterfaceRender* pRender );
 
 		bool IsActive() const;
+		void StartSystem( bool bReset = true );
 		void StopSystem();
-		void ResetSystem();
 		bool IsFull();
 
 		void Update( real rDeltaTime );
@@ -157,6 +157,9 @@ namespace guiex
 
 		void SetTotalParticles( uint32 nTotalParticle );
 
+		void SetRelativePosition( const CGUIVector2& rRelativePos );
+		const CGUIVector2& GetRelativePosition(  ) const;
+
 	protected:
 		CGUIParticle2DSystem( const CGUIString& rName, const CGUIString& rSceneName );
 
@@ -179,6 +182,7 @@ namespace guiex
 		CGUIVector2 sourcePosition;
 		// Position variance
 		CGUIVector2 posVar;
+		CGUIVector2 relativePosition;
 
 		// The angle (direction) of the particles measured in degrees
 		real angle;

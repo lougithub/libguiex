@@ -939,6 +939,21 @@ namespace guiex
 		m_vecGlobalKeyObj.clear();
 	}
 	//------------------------------------------------------------------------------
+	void CGUISystem::AddMouseListener( CGUIMouseListener* pListener )
+	{
+		m_aInputProcessor.AddMouseListener( pListener );
+	}
+	//------------------------------------------------------------------------------
+	void CGUISystem::ClearMouseListener(CGUIMouseListener* pListener )
+	{
+		m_aInputProcessor.ClearMouseListener( pListener );
+	}
+	//------------------------------------------------------------------------------
+	void CGUISystem::ClearAllMouseListener( )
+	{
+		m_aInputProcessor.ClearAllMouseListener( );
+	}
+	//------------------------------------------------------------------------------
 	/** 
 	* @brief process the global key event
 	* @return whether this event is comsumed

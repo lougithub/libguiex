@@ -21,10 +21,6 @@
 #include "guiinterfacekeyboard.h"
 #include "sigslot.h"
 
-//------------------------------------------------------------------------------
-
-//------------------------------------------------------------------------------ 
-
 
 //============================================================================//
 // internal use class
@@ -253,14 +249,22 @@ namespace guiex
 	{
 		delete m_pMouseTracker;
 		delete m_pDragTracker;
+		ClearAllMouseListener();
 	}
 	//------------------------------------------------------------------------------
+	/** 
+	* @brief reset the input processor
+	*/
 	void CGUIInputProcessor::Reset()
 	{
 		m_pMouseTracker->Reset();	
 		m_pDragTracker->Reset();
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief process keyboard and generate relative event
+	* @return whether this keyboard event has been processed
+	*/
 	bool CGUIInputProcessor::ProcessKeyboard(const IGUIInterfaceKeyboard::SKeyEvent& rKeyEvent)
 	{
 		IGUIInterfaceKeyboard* pKeyboard = CGUIInterfaceManager::Instance()->GetInterfaceKeyboard();
@@ -313,8 +317,43 @@ namespace guiex
 
 		return aEvent.IsConsumed();
 	}
-
 	//------------------------------------------------------------------------------
+	void CGUIInputProcessor::AddMouseListener( CGUIMouseListener* pListener )
+	{
+		m_vecMouseListener.push_back( pListener );
+	}
+	//------------------------------------------------------------------------------
+	void CGUIInputProcessor::ClearMouseListener(CGUIMouseListener* pListener )
+	{
+		for( std::vector<CGUIMouseListener*>::iterator itor = m_vecMouseListener.begin();
+			itor != m_vecMouseListener.end();
+			++itor )
+		{
+			if( *itor == pListener )
+			{
+				delete *itor;
+				m_vecMouseListener.erase( itor );
+				return;
+			}
+		}
+		GUI_THROW( "CGUIInputProcessor::ClearMouseListener: invalid CGUIMouseListener pointer!");
+	}
+	//------------------------------------------------------------------------------
+	void CGUIInputProcessor::ClearAllMouseListener( )
+	{
+		for( std::vector<CGUIMouseListener*>::iterator itor = m_vecMouseListener.begin();
+			itor != m_vecMouseListener.end();
+			++itor )
+		{
+			delete *itor;
+		}
+		m_vecMouseListener.clear();
+	}
+	//------------------------------------------------------------------------------
+	/**
+	* @brief process mouse and generate relative event
+	* @return whether this mouse event has been processed
+	*/
 	bool CGUIInputProcessor::ProcessMouse(const IGUIInterfaceMouse::SMouseEvent& rMouseEvent)
 	{
 		IGUIInterfaceMouse* pMouse = CGUIInterfaceManager::Instance()->GetInterfaceMouse();
@@ -325,12 +364,30 @@ namespace guiex
 		switch(rMouseEvent.m_eMouseEvent)
 		{
 		case MOUSE_EVENT_MOVE:
+			for( std::vector<CGUIMouseListener*>::iterator itor = m_vecMouseListener.begin();
+				itor != m_vecMouseListener.end();
+				++itor )
+			{
+				(*itor)->OnMouseMove( rMouseEvent );
+			}
 			bConsumed = OnMouseMove(rMouseEvent);
 			break;
 		case MOUSE_EVENT_DOWN:
+			for( std::vector<CGUIMouseListener*>::iterator itor = m_vecMouseListener.begin();
+				itor != m_vecMouseListener.end();
+				++itor )
+			{
+				(*itor)->OnMouseButtonDown( rMouseEvent );
+			}
 			bConsumed = OnMouseButtonDown(rMouseEvent);
 			break;
 		case MOUSE_EVENT_UP:
+			for( std::vector<CGUIMouseListener*>::iterator itor = m_vecMouseListener.begin();
+				itor != m_vecMouseListener.end();
+				++itor )
+			{
+				(*itor)->OnMouseButtonUp( rMouseEvent );
+			}
 			bConsumed = OnMouseButtonUp(rMouseEvent);
 			break;
 		case MOUSE_EVENT_WHEEL:
@@ -441,7 +498,7 @@ namespace guiex
 				aEventDrag.SetMouseGlobalPos(rMouseEvent.m_aMousePos);
 				GSystem->SendEvent(&aEventDrag);
 				bConsumed |= aEventDrag.IsConsumed();
-				
+
 				if( !aEventDrag.IsExpired())
 				{
 					//set drag tracker
@@ -556,7 +613,7 @@ namespace guiex
 			aEventDrag.SetMouseGlobalPos(rMouseEvent.m_aMousePos);
 			GSystem->SendEvent(&aEventDrag);
 			bConsumed |= aEventDrag.IsConsumed();
-			
+
 			EndDrag();
 		}
 
@@ -653,7 +710,7 @@ namespace guiex
 			}
 			else if( m_pMouseTracker->GetWidgetUnderMouse() )
 			{
-				//mouse move event for curent target
+				//mouse move event for current target
 				CGUIEventMouse aEventMouse;
 				aEventMouse.SetEventId(eEVENT_MOUSE_MOVE);
 				aEventMouse.SetReceiver(m_pMouseTracker->GetWidgetUnderMouse());

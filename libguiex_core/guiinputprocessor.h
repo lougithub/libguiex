@@ -36,64 +36,57 @@ namespace guiex
 //============================================================================// 
 namespace guiex
 {
+	class GUIEXPORT CGUIMouseListener
+	{
+	public:
+		CGUIMouseListener()
+		{
+		}
+		virtual ~CGUIMouseListener()
+		{
+		}
+
+		virtual void OnMouseButtonDown( const IGUIInterfaceMouse::SMouseEvent& rMouseEvent )
+		{
+		}
+		virtual void OnMouseButtonUp( const IGUIInterfaceMouse::SMouseEvent& rMouseEvent )
+		{
+		}
+		virtual void OnMouseMove(const IGUIInterfaceMouse::SMouseEvent& rMouseEvent)
+		{
+		}
+	};
+
 	class GUIEXPORT CGUIInputProcessor
 	{
 	public:
 		CGUIInputProcessor();
 		~CGUIInputProcessor();
 
-		/** 
-		 * @brief reset the input processor
-		 */
 		void Reset();
 
-		/**
-		* @brief process mouse and generate relative event
-		* @return whether this mouse event has been processed
-		*/
 		bool ProcessMouse(const IGUIInterfaceMouse::SMouseEvent& rMouseEvent);
-
-		/**
-		* @brief process keyboard and generate relative event
-		* @return whether this keyboard event has been processed
-		*/
 		bool ProcessKeyboard( const IGUIInterfaceKeyboard::SKeyEvent& rKeyEvent );
 
+		void AddMouseListener( CGUIMouseListener* pListener );
+		void ClearMouseListener(CGUIMouseListener* pListener );
+		void ClearAllMouseListener( );
+
 	protected:
-		/**
-		* @brief respond to mouse button down event.
-		*/
 		bool OnMouseButtonDown(const IGUIInterfaceMouse::SMouseEvent& rMouseEvent);
-
-		/**
-		* @brief respond to mouse button up event.
-		*/
 		bool OnMouseButtonUp(const IGUIInterfaceMouse::SMouseEvent& rMouseEvent);
-
-		/**
-		* @brief respond to mouse wheel changed event
-		*/
 		bool OnMouseWheelChange(const IGUIInterfaceMouse::SMouseEvent& rMouseEvent);
-
-		/**
-		* @brief respond to mouse move event
-		*/
 		bool OnMouseMove(const IGUIInterfaceMouse::SMouseEvent& rMouseEvent);
-
-		/**
-		* @brief begin to drag
-		*/
+		
 		void BeginDrag(CGUIWidget* pWidget, const CGUIVector2& rDeltaPos, uint32 nButton );
-
-		/**
-		* @brief end to drag
-		*/
 		void EndDrag( );
 
 	protected:
 		CMouseTracker* m_pMouseTracker; ///tracker used for mouse
 		CDragTracker* m_pDragTracker; ///tracker used for drag
 		real m_fDbClickTimeout; ///timeout of 
+
+		std::vector<CGUIMouseListener*> m_vecMouseListener;
 	};
 }//namespace guiex
 

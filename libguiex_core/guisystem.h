@@ -173,6 +173,13 @@ namespace guiex
 		void UngisterGlobalKeyReceiver( CGUIWidget* pReceiver);	
 		void UngisterAllGlobalKey( );
 
+		//********************************************************
+		//	global mouse listener
+		//********************************************************
+		void AddMouseListener( CGUIMouseListener* pListener );
+		void ClearMouseListener(CGUIMouseListener* pListener );
+		void ClearAllMouseListener( );
+
 		void RegisterResourceManager( class CGUIResourceManagerBase* pMgr );
 		void UnregisterResourceManager( class CGUIResourceManagerBase* pMgr );
 		//void FreeResource( const CGUIString& rSceneName );

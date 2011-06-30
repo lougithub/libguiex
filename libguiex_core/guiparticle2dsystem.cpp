@@ -325,8 +325,8 @@ namespace guiex
 		particle->timeToLive = GUIMax(0.0f, life + lifeVar * CGUIMath::RangeRandom(-1.0f,1.0f) );
 
 		// position
-		particle->pos.x = sourcePosition.x + posVar.x * CGUIMath::RangeRandom(-1.0f,1.0f);
-		particle->pos.y = sourcePosition.y + posVar.y * CGUIMath::RangeRandom(-1.0f,1.0f);
+		particle->pos.x = relativePosition.x + sourcePosition.x + posVar.x * CGUIMath::RangeRandom(-1.0f,1.0f);
+		particle->pos.y = relativePosition.y + sourcePosition.y + posVar.y * CGUIMath::RangeRandom(-1.0f,1.0f);
 
 		// Color
 		CGUIColor start( 
@@ -440,14 +440,17 @@ namespace guiex
 		emitCounter = 0;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIParticle2DSystem::ResetSystem()
+	void CGUIParticle2DSystem::StartSystem( bool bReset )
 	{
 		m_bActive = true;
 		elapsed = 0;
-		for( uint32 i = 0; i < m_uParticleCount; ++i)
+		if( bReset )
 		{
-			CGUIParticle2D *p = m_pParticles + i;
-			p->timeToLive = 0;
+			for( uint32 i = 0; i < m_uParticleCount; ++i)
+			{
+				CGUIParticle2D *p = m_pParticles + i;
+				p->timeToLive = 0;
+			}
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -839,6 +842,16 @@ namespace guiex
 	void CGUIParticle2DSystem::SetTotalParticles( uint32 nTotalParticle )
 	{
 		m_uTotalParticles = nTotalParticle;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIParticle2DSystem::SetRelativePosition( const CGUIVector2& rRelativePos )
+	{
+		relativePosition = rRelativePos;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIVector2& CGUIParticle2DSystem::GetRelativePosition(  ) const
+	{
+		return relativePosition;
 	}
 	//------------------------------------------------------------------------------
 }
