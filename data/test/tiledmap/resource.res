@@ -14,7 +14,8 @@
 
 	<property name="player" type="CGUIImageDefine">
 		<property  name="path" type="CGUIString" value="image/Player.tga" />
-		<property name="uv" type="CGUIRect" value="0,0,0.84375,0.625" />
+		<property name="uv" type="CGUIRect" value="0,0,27,40" />
+		<property name="size" type="CGUISize" value="32,64" />
 	</property>
 
 </guiex>
