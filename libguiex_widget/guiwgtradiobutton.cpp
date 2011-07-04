@@ -38,7 +38,7 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWgtRadioButton::OnMouseLeftClick(CGUIEventMouse* pEvent)
+	uint32 CGUIWgtRadioButton::OnMouseLeftClick(CGUIEventMouse* pEvent)
 	{
 		if( m_bChecked == false )
 		{

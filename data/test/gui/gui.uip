@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<libguiex_project>
+	<property name="gui" type="SceneName" />
+	<property name="common" type="Dependency"/>
+	<property name="gui.xml" type="WidgetFile" />
+	<property name="gui.lua" type="ScriptFile" />
+	<property name="resource.res" type="ResourceFile" />
+</libguiex_project>
+

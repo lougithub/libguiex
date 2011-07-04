@@ -1,0 +1,91 @@
+<guiex>
+    <property name="node_root" type="CGUIWidgetDefine" value="CGUIWgtEmptyNode">
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0,0" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="1,1" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+        </property>
+    </property>
+    <property name="group_radiobutton1" type="CGUIWidgetDefine" value="CGUIWgtEmptyNode">
+        <property name="parent" type="CGUIString" value="node_root" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0,0" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="1,1" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+        </property>
+    </property>
+    <property name="radiobtn_1_1" type="CGUIWidgetDefine" value="CGUIWgtRadioButton">
+        <property name="parent" type="CGUIString" value="group_radiobutton1" />
+        <property name="normal" type="CGUIImage" value="button_hilight_square" />
+        <property name="normal_checked" type="CGUIImage" value="checkbutton_glow_checked" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="43,173" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="32,32" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="checked" type="bool" value="true" />
+    </property>
+    <property name="radiobtn_1_2" type="CGUIWidgetDefine" value="CGUIWgtRadioButton">
+        <property name="parent" type="CGUIString" value="group_radiobutton1" />
+        <property name="normal" type="CGUIImage" value="button_hilight_square" />
+        <property name="normal_checked" type="CGUIImage" value="checkbutton_glow_checked" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="113,173" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="32,32" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+    </property>
+    <property name="btn_test1" type="CGUIWidgetDefine" value="CGUIWgtButton">
+        <property name="parent" type="CGUIString" value="node_root" />
+        <property name="normal" type="CGUIImage" value="button_red_normal" />
+        <property name="hover" type="CGUIImage" value="button_red_hover" />
+        <property name="push" type="CGUIImage" value="button_red_push" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="26,30" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="148,46" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="text_normal" type="CGUILocalizedString" value="button" />
+    </property>
+    <property name="checkbtn_1" type="CGUIWidgetDefine" value="CGUIWgtCheckButton">
+        <property name="parent" type="CGUIString" value="node_root" />
+        <property name="normal" type="CGUIImage" value="button_hilight_square" />
+        <property name="normal_checked" type="CGUIImage" value="checkbutton_glow_checked" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="42,107" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="32,32" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+    </property>
+    <property name="checkbtn_2" type="CGUIWidgetDefine" value="CGUIWgtCheckButton">
+        <property name="parent" type="CGUIString" value="node_root" />
+        <property name="normal" type="CGUIImage" value="button_hilight_square" />
+        <property name="normal_checked" type="CGUIImage" value="checkbutton_glow_checked" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="117,107" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="32,32" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+    </property>
+</guiex>

@@ -1200,6 +1200,11 @@ void WxMainFrame::OnCreateWidget(wxCommandEvent& evt)
 		GUI_FORCE_ASSERT( "failed to create widget");
 	}
 
+	pWidget->Refresh();
+	CGUIProperty aProp( "size", "CGUIWidgetSize" );
+	pWidget->GenerateProperty( aProp );
+	pWidget->InsertProperty( aProp );
+
 	RefreshWidgetTreeCtrl();
 	m_pCanvas->SetSaveFlag(true);
 	m_pCanvas->SetSelectedWidget(pWidget);

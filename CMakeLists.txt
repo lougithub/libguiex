@@ -174,6 +174,7 @@ add_subdirectory( ${PROJECT_SOURCE_DIR}/test/canvaslayer_test projects/canvaslay
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/canvaslayer_test_2 projects/canvaslayer_test_2 )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/testsound projects/testsound)
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/testfont projects/testfont)
+add_subdirectory( ${PROJECT_SOURCE_DIR}/test/testgui projects/testgui)
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/testbox2d_2 projects/testbox2d_2)
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/testparticle2d projects/testparticle2d)
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/testtiledmap projects/testtiledmap)

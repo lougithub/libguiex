@@ -39,24 +39,16 @@ namespace guiex
 	class GUIEXPORT CGUIWgtRadioButton : public CGUIWgtCheckButton
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUIWgtRadioButton( const CGUIString& rName, const CGUIString& rSceneName );
 
 	protected:
-		/**
-		* @brief constructor
-		* for derived class
-		*/
 		CGUIWgtRadioButton( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
 		/// initialize radio button
 		void InitRadioButton();
 
-
 	protected:	//!< callback function
-		virtual uint32		OnMouseLeftClick( CGUIEventMouse* pEvent );
+		virtual uint32 OnMouseLeftClick( CGUIEventMouse* pEvent );
 
 	private:
 		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtRadioButton);

@@ -338,15 +338,15 @@ namespace guiex
 	void CGUIWidget::SetChildImpl( CGUIWidget* pChild )
 	{
 		m_pChild = pChild;
+		if( m_pChild )
+		{
+			m_pChild->m_pPrevSibling = NULL;
+		}
 	}
 	//-----------------------------------------------------------------------	
 	/// set next sibling
 	void CGUIWidget::SetNextSiblingImpl( CGUIWidget* pNextSibling )
 	{
-		if( m_pNextSibling )
-		{
-			m_pNextSibling->m_pPrevSibling = NULL;
-		}
 		m_pNextSibling = pNextSibling;
 		if( m_pNextSibling )
 		{

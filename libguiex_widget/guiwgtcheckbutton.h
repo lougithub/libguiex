@@ -39,11 +39,7 @@ namespace guiex
 	class GUIEXPORT CGUIWgtCheckButton : public CGUIWidget
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUIWgtCheckButton( const CGUIString& rName, const CGUIString& rSceneName );
-
 
 		virtual void SetChecked(bool bChecked);
 		bool IsChecked() const;
