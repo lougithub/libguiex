@@ -16,7 +16,9 @@
 #include <libguiex_core/guistringconvertor.h>
 #include <libguiex_core/guipropertymanager.h>
 #include <libguiex_core/guiimage.h>
-
+#include <libguiex_core/guiproperty.h>
+#include <libguiex_core/guipropertyconvertor.h>
+#include <libguiex_core/guistringconvertor.h>
 
 //============================================================================//
 // function
@@ -47,8 +49,16 @@ namespace guiex
 		{
 			m_aBorderInfo[i].m_pImageInfo = NULL;
 		}
+
+		m_nBGAdjustLeft = 0;
+		m_nBGAdjustRight = 0;
+		m_nBGAdjustTop = 0;
+		m_nBGAdjustBottom = 0;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief override the OnSetImage function
+	*/
 	void CGUIWgtPanel::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
 		if( rName == "bg")
@@ -165,7 +175,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtPanel::RefreshSelf()
+	void CGUIWgtPanel::RefreshSelf()
 	{
 		CGUIWidget::RefreshSelf();
 
@@ -250,11 +260,17 @@ namespace guiex
 				GetBorderWidth(border_right),
 				GetClientArea().GetHeight()-GetBorderHeight(border_topright)-GetBorderHeight(border_bottomright)+GetBorderHeight(border_top)+GetBorderHeight(border_bottom)));
 		}
+
+		m_aBgRenderArea = GetClientArea();
+		m_aBgRenderArea.m_fLeft += m_nBGAdjustLeft;
+		m_aBgRenderArea.m_fRight += m_nBGAdjustRight;
+		m_aBgRenderArea.m_fTop += m_nBGAdjustTop;
+		m_aBgRenderArea.m_fBottom += m_nBGAdjustBottom;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtPanel::RenderSelf(IGUIInterfaceRender* pRender)
 	{
-		DrawImage( pRender, m_pImageBG, GetClientArea( ));
+		DrawImage( pRender, m_pImageBG, m_aBgRenderArea );
 		for( int i=0; i<PANEL_BORDER_NONE; ++i)
 		{
 			DrawImage(pRender, m_aBorderInfo[i].m_pImageInfo, GetBorderRect(i) );
@@ -265,6 +281,55 @@ namespace guiex
 	{
 		GUI_ASSERT( eBorder < PANEL_BORDER_NONE , "[CGUIWgtPanel::GetBorderRect]:invalid border index");
 		return m_aBorderInfo[eBorder].m_aRenderRect;
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUIWgtPanel::GenerateProperty( CGUIProperty& rProperty )
+	{
+		if( rProperty.GetType() == ePropertyType_Int16 && rProperty.GetName() == "bg_adjust_left" )
+		{
+			ValueToProperty( m_nBGAdjustLeft, rProperty);
+		}
+		else if( rProperty.GetType() == ePropertyType_Int16 && rProperty.GetName() == "bg_adjust_right" )
+		{
+			ValueToProperty( m_nBGAdjustRight, rProperty);
+		}
+		else if( rProperty.GetType() == ePropertyType_Int16 && rProperty.GetName() == "bg_adjust_top" )
+		{
+			ValueToProperty( m_nBGAdjustTop, rProperty);
+		}
+		else if( rProperty.GetType() == ePropertyType_Int16 && rProperty.GetName() == "bg_adjust_bottom" )
+		{
+			ValueToProperty( m_nBGAdjustBottom, rProperty);
+		}
+		else
+		{
+			return CGUIWidget::GenerateProperty( rProperty );
+		}
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtPanel::ProcessProperty( const CGUIProperty& rProperty)
+	{
+		if( rProperty.GetType() == ePropertyType_Int16 && rProperty.GetName() == "bg_adjust_left")
+		{
+			PropertyToValue( rProperty, m_nBGAdjustLeft);
+		}
+		else if( rProperty.GetType() == ePropertyType_Int16 && rProperty.GetName() == "bg_adjust_right")
+		{
+			PropertyToValue( rProperty, m_nBGAdjustRight);
+		}
+		else if( rProperty.GetType() == ePropertyType_Int16 && rProperty.GetName() == "bg_adjust_top")
+		{
+			PropertyToValue( rProperty, m_nBGAdjustTop);
+		}
+		else if( rProperty.GetType() == ePropertyType_Int16 && rProperty.GetName() == "bg_adjust_bottom")
+		{
+			PropertyToValue( rProperty, m_nBGAdjustBottom);
+		}
+		else
+		{
+			CGUIWidget::ProcessProperty( rProperty );
+		}
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

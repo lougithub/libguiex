@@ -23,6 +23,8 @@
             <property name="value" type="CGUISize" value="369,87" />
         </property>
         <property name="auto_play_as" type="bool" value="true" />
+        <property name="bg_adjust_top" type="int16" value="-5" />
+        <property name="bg_adjust_bottom" type="int16" value="5" />
     </property>
     <property name="dlg_okcancel_content" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
         <property name="parent" type="CGUIString" value="dlg_okcancel" />

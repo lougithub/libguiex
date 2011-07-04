@@ -51,7 +51,7 @@ namespace guiex
 		EImageOrientation eImageOrientation,
 		const CGUISize& rSize ) const
 	{
-		CGUIImage* pImage = new CGUIImage( rName, rSceneName, rPath, rUVRect, eImageOrientation );
+		CGUIImage* pImage = new CGUIImage( rName, rSceneName, rPath, rUVRect, eImageOrientation, rSize );
 		return pImage;
 	}
 	//------------------------------------------------------------------------------
@@ -61,7 +61,7 @@ namespace guiex
 		const CGUIColor& rColor,
 		const CGUISize& rSize) const
 	{
-		CGUIImage* pImage = new CGUIImage( rName, rSceneName, rColor );
+		CGUIImage* pImage = new CGUIImage( rName, rSceneName, rColor, rSize );
 		return pImage;
 	}
 	//------------------------------------------------------------------------------
@@ -74,7 +74,7 @@ namespace guiex
 		EGuiPixelFormat ePixelFormat,
 		const CGUISize& rSize) const
 	{
-		CGUIImage* pImage = new CGUIImage( rName, rSceneName, buffPtr, buffWidth, buffHeight, ePixelFormat  );
+		CGUIImage* pImage = new CGUIImage( rName, rSceneName, buffPtr, buffWidth, buffHeight, ePixelFormat, rSize  );
 		return pImage;
 	}
 	//------------------------------------------------------------------------------
@@ -124,13 +124,26 @@ namespace guiex
 			}
 
 			//size
-			CGUISize aSize( 0.f,0.f );
-			if( pSize )
+			CGUISize aTextureSize( 0.f,0.f );
+			if( !pPptPath )
 			{
-				PropertyToValue( *pSize, aSize );
+				GUI_THROW( GUI_FORMAT("[CGUIImageManager::CreateImage]: invalid image property: <%s> <%s>", rProperty.GetName().c_str(), rProperty.GetTypeAsString().c_str()));
+				return NULL;
+			}
+			PropertyToValue( *pSize, aTextureSize );
+			CGUISize aImageSize = aUVRect.GetSize();
+			if( eImageOrientation == eImageOrientation_90CW ||
+				eImageOrientation == eImageOrientation_90CCW )
+			{
+				std::swap( aImageSize.m_fWidth, aImageSize.m_fHeight );
 			}
 
-			return DoCreateImage( rProperty.GetName(), rSceneName, pPptPath->GetValue(), aUVRect, eImageOrientation, aSize);
+			aUVRect.m_fLeft /= aTextureSize.GetWidth();
+			aUVRect.m_fRight /= aTextureSize.GetWidth();
+			aUVRect.m_fTop /= aTextureSize.GetHeight();
+			aUVRect.m_fBottom /= aTextureSize.GetHeight();
+
+			return DoCreateImage( rProperty.GetName(), rSceneName, pPptPath->GetValue(), aUVRect, eImageOrientation, aImageSize);
 		}
 		else if(rProperty.HasProperty("color", "CGUIColor"))
 		{

@@ -214,6 +214,10 @@
 
 	<widget type="CGUIWgtStaticText" inherit="CGUIWgtTextBase">
 		<page name="Appearance">
+      <property name="size" type="CGUIWidgetSize" category="Default">
+        <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        <property name="value" type="CGUISize" value="100,20" />
+      </property>
       <property name="multiline" type="bool" value="false" category="StaticText" alternative_save="true"/>
       <property name="clip_text" type="bool" value="false" category="StaticText" alternative_save="true"/>
     </page>
@@ -230,7 +234,16 @@
 
 	<widget type="CGUIWgtPanel" inherit="CGUIWidget">
 		<page name="Appearance">
-		</page>
+      <property name="size" type="CGUIWidgetSize" category="Default">
+        <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        <property name="value" type="CGUISize" value="200,200" />
+      </property>
+      <property name="bg_adjust_left" type="int16" value="0"  category="Panel" alternative_save="true"/>
+      <property name="bg_adjust_right" type="int16" value="0"  category="Panel" alternative_save="true"/>
+      <property name="bg_adjust_top" type="int16" value="0"  category="Panel" alternative_save="true"/>
+      <property name="bg_adjust_bottom" type="int16" value="0"  category="Panel" alternative_save="true"/>
+
+    </page>
 		<page name="Image">
 			<property name="bg" type="CGUIImage" value="color_translucent" must_exist="true" />
 			<property name="border_top" type="CGUIImage" value="panel_border_top" />

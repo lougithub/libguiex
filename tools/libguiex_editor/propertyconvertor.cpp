@@ -801,7 +801,7 @@ public:
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGCategory,-1, new wxUIntProperty( CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()),aValue ) );
+			pPGTop = pSheetMgr->Insert( pPGCategory,-1, new wxIntProperty( CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()),aValue ) );
 		}					
 	}
 	virtual void DoGridProperty2GuiProperty( WxToolsPGManager* pSheetMgr, wxPGProperty* pPGProperty, CGUIProperty& rProperty )
@@ -811,6 +811,35 @@ public:
 	}
 };
 
+//------------------------------------------------------------------------------
+class CEditorPropertyConvertor_Int16 : public CEditorPropertyConvertorBase
+{
+public:
+	CEditorPropertyConvertor_Int16()
+		:CEditorPropertyConvertorBase( ePropertyType_Int16 )
+	{
+
+	}
+	virtual void DoGuiProperty2GridProperty(WxToolsPGManager* pSheetMgr, wxPGProperty* pPGCategory, wxPGProperty*& pPGTop, const CGUIProperty& aProp)
+	{
+		int16 aValue = 0;
+		PropertyToValue( aProp, aValue );
+
+		if( pPGTop )
+		{
+			pPGTop->SetValue( int(aValue));
+		}
+		else
+		{
+			pPGTop = pSheetMgr->Insert( pPGCategory,-1, new wxIntProperty( CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()),aValue ) );
+		}					
+	}
+	virtual void DoGridProperty2GuiProperty( WxToolsPGManager* pSheetMgr, wxPGProperty* pPGProperty, CGUIProperty& rProperty )
+	{
+		int16 aValue = pSheetMgr->GetPropertyValueAsInt(pPGProperty);
+		ValueToProperty( aValue, rProperty );
+	}
+};
 
 //------------------------------------------------------------------------------
 CPropertyConvertorMgr::CPropertyConvertorMgr()
@@ -839,6 +868,7 @@ CPropertyConvertorMgr::CPropertyConvertorMgr()
 	RegisterConvertor( new CEditorPropertyConvertor_UInt32 );
 	RegisterConvertor( new CEditorPropertyConvertor_Bool );
 	RegisterConvertor( new CEditorPropertyConvertor_Int32 );
+	RegisterConvertor( new CEditorPropertyConvertor_Int16 );
 }
 //------------------------------------------------------------------------------
 CPropertyConvertorMgr::~CPropertyConvertorMgr()

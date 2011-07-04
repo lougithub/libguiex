@@ -51,13 +51,15 @@
 
   <property name="bg_blue" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/BLUEGRAD64.tga" />
-    <property name="uv" type="CGUIRect" value="0,0,1,1" />
+    <property name="uv" type="CGUIRect" value="0,0,64,64" />
+    <property name="size" type="CGUISize" value="64,64"/>
   </property>
 
   <property name="TagIcon" type="CGUIImageDefine">
     <property name="size" type="CGUISize" value="16,16"/>
     <property  name="path" type="CGUIString" value="image/TagIcon.tga" />
-    <property name="uv" type="CGUIRect" value="0,0,1,1" />
+    <property name="uv" type="CGUIRect" value="0,0,16,16" />
+    <property name="size" type="CGUISize" value="16,16"/>
   </property>
 
   <property name="color_translucent" type="CGUIImageDefine">
@@ -67,184 +69,222 @@
 
   <property name="button_red_normal" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/Glue-Panel-Button-Up.tga" />
-    <property name="uv" type="CGUIRect" value="0,0,0.578125,0.71875" />
+    <property name="uv" type="CGUIRect" value="0,0,148,46" />
+    <property name="size" type="CGUISize" value="256,64"/>
   </property>
 
   <property name="button_red_push" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/Glue-Panel-Button-Down.tga" />
-    <property name="uv" type="CGUIRect" value="0,0,0.578125,0.71875" />
+    <property name="uv" type="CGUIRect" value="0,0,148,46" />
+    <property name="size" type="CGUISize" value="256,64"/>
   </property>
 
   <property name="button_red_hover" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/Glue-Panel-Button-Highlight.tga" />
-    <property name="uv" type="CGUIRect" value="0,0,0.578125,0.71875" />
+    <property name="uv" type="CGUIRect" value="0,0,148,46" />
+    <property name="size" type="CGUISize" value="256,64"/>
   </property>
 
   <property name="button_red_disable" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/Glue-Panel-Button-Disabled.tga" />
-    <property name="uv" type="CGUIRect" value="0,0,0.578125,0.71875" />
+    <property name="uv" type="CGUIRect" value="0,0,148,46" />
+    <property name="size" type="CGUISize" value="256,64"/>
   </property>
 
   <property name="button_blue_normal" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/Glue-Panel-Button-Up-Blue.tga" />
-    <property name="uv" type="CGUIRect" value="0,0,0.578125,0.71875" />
+    <property name="uv" type="CGUIRect" value="0,0,148,46" />
+    <property name="size" type="CGUISize" value="256,64"/>
   </property>
 
   <property name="button_blue_push" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/Glue-Panel-Button-Down-Blue.tga" />
-    <property name="uv" type="CGUIRect" value="0,0,0.578125,0.71875" />
+    <property name="uv" type="CGUIRect" value="0,0,148,46" />
+    <property name="size" type="CGUISize" value="256,64"/>
   </property>
 
   <property name="button_blue_hover" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/Glue-Panel-Button-Highlight-Blue.tga" />
-    <property name="uv" type="CGUIRect" value="0,0,0.578125,0.71875" />
+    <property name="uv" type="CGUIRect" value="0,0,148,46" />
+    <property name="size" type="CGUISize" value="256,64"/>
   </property>
 
   <property name="button_blue_disable" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/Glue-Panel-Button-Disabled.tga" />
-    <property name="uv" type="CGUIRect" value="0,0,0.578125,0.71875" />
+    <property name="uv" type="CGUIRect" value="0,0,148,46" />
+    <property name="size" type="CGUISize" value="256,64"/>
   </property>
 
   <property name="button_hilight_square" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/ButtonHilight-Square.tga" />
-    <property name="uv" type="CGUIRect" value="0,0,1,1" />
+    <property name="uv" type="CGUIRect" value="0,0,64,64" />
+    <property name="size" type="CGUISize" value="64,64"/>
   </property>
 
   <property name="scrollbar_downbutton_disable" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/UI-ScrollBar-ScrollDownButton-Disabled.tga" />
-    <property name="uv" type="CGUIRect" value="0.1875,0.21875,0.78125,0.75" />
+    <property name="uv" type="CGUIRect" value="6,7,25,24" />
+    <property name="size" type="CGUISize" value="32,32"/>
   </property>
   <property name="scrollbar_downbutton_down" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/UI-ScrollBar-ScrollDownButton-Down.tga" />
-    <property name="uv" type="CGUIRect" value="0.1875,0.21875,0.78125,0.75" />
+    <property name="uv" type="CGUIRect" value="6,7,25,24" />
+    <property name="size" type="CGUISize" value="32,32"/>
   </property>
   <property name="scrollbar_downbutton_highlight" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/UI-ScrollBar-ScrollDownButton-Highlight.tga" />
-    <property name="uv" type="CGUIRect" value="0.1875,0.21875,0.78125,0.75" />
+    <property name="uv" type="CGUIRect" value="6,7,25,24" />
+    <property name="size" type="CGUISize" value="32,32"/>
   </property>
   <property name="scrollbar_downbutton_up" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/UI-ScrollBar-ScrollDownButton-Up.tga" />
-    <property name="uv" type="CGUIRect" value="0.1875,0.21875,0.78125,0.75" />
+    <property name="uv" type="CGUIRect" value="6,7,25,24" />
+    <property name="size" type="CGUISize" value="32,32"/>
   </property>
   <property name="scrollbar_upbutton_disable" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/UI-ScrollBar-ScrollUpButton-Disabled.tga" />
-    <property name="uv" type="CGUIRect" value="0.1875,0.21875,0.78125,0.75" />
+    <property name="uv" type="CGUIRect" value="6,7,25,24" />
+    <property name="size" type="CGUISize" value="32,32"/>
   </property>
   <property name="scrollbar_upbutton_down" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/UI-ScrollBar-ScrollUpButton-Down.tga" />
-    <property name="uv" type="CGUIRect" value="0.1875,0.21875,0.78125,0.75" />
+    <property name="uv" type="CGUIRect" value="6,7,25,24" />
+    <property name="size" type="CGUISize" value="32,32"/>
   </property>
   <property name="scrollbar_upbutton_highlight" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/UI-ScrollBar-ScrollUpButton-Highlight.tga" />
-    <property name="uv" type="CGUIRect" value="0.1875,0.21875,0.78125,0.75" />
+    <property name="uv" type="CGUIRect" value="6,7,25,24" />
+    <property name="size" type="CGUISize" value="32,32"/>
   </property>
   <property name="scrollbar_upbutton_up" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/UI-ScrollBar-ScrollUpButton-Up.tga" />
-    <property name="uv" type="CGUIRect" value="0.1875,0.21875,0.78125,0.75" />
+    <property name="uv" type="CGUIRect" value="6,7,25,24" />
+    <property name="size" type="CGUISize" value="32,32"/>
   </property>
   <property name="scrollbar_knob" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/UI-ScrollBar-Knob.tga" />
-    <property name="uv" type="CGUIRect" value="0.15625,0.1875,0.8125,0.78125" />
+    <property name="uv" type="CGUIRect" value="5,6,26,25" />
+    <property name="size" type="CGUISize" value="32,32"/>
   </property>
   <property name="panel_bg_grade_blue" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/BLUEGRAD64.tga" />
-    <property name="uv" type="CGUIRect" value="0,0,1,1" />
+    <property name="uv" type="CGUIRect" value="0,0,64,64" />
+    <property name="size" type="CGUISize" value="64,64"/>
   </property>
   <property name="panel_bg_grade_green" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/GREENGRAD64.tga" />
-    <property name="uv" type="CGUIRect" value="0,0,1,1" />
+    <property name="uv" type="CGUIRect" value="0,0,64,64" />
+    <property name="size" type="CGUISize" value="64,64"/>
   </property>
 
   <property name="panel_border_left" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/TextPanel-Border.tga" />
-    <property name="uv" type="CGUIRect" value="0,0,0.05078125,1" />
+    <property name="uv" type="CGUIRect" value="0,0,13,32" />
+    <property name="size" type="CGUISize" value="256,32"/>
   </property>
   <property name="panel_border_right" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/TextPanel-Border.tga" />
-    <property name="uv" type="CGUIRect" value="0.203125,0,0.25,1" />
+    <property name="uv" type="CGUIRect" value="52,0,64,32" />
+    <property name="size" type="CGUISize" value="256,32"/>
   </property>
   <property name="panel_border_top" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/TextPanel-Border.tga" />
-    <property name="uv" type="CGUIRect" value="0.25,0,0.29296875,1" />
-    <property name="orientation" type="EImageOrientation" value="eImageOrientation_90CW" />
+    <property name="uv" type="CGUIRect" value="144,0,178,10" />
+    <property name="size" type="CGUISize" value="256,32"/>
   </property>
   <property name="panel_border_bottom" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/TextPanel-Border.tga" />
-    <property name="uv" type="CGUIRect" value="0.453125,0,0.5,1" />
+    <property name="uv" type="CGUIRect" value="116,0,128,32" />
+    <property name="size" type="CGUISize" value="256,32"/>
     <property name="orientation" type="EImageOrientation" value="eImageOrientation_90CW" />
   </property>
   <property name="panel_border_topleft" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/TextPanel-Border.tga" />
-    <property name="uv" type="CGUIRect" value="0.5,0,0.625,1" />
+    <property name="uv" type="CGUIRect" value="128,0,160,32" />
+    <property name="size" type="CGUISize" value="256,32"/>
   </property>
   <property name="panel_border_topright" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/TextPanel-Border.tga" />
-    <property name="uv" type="CGUIRect" value="0.625,0,0.75,1" />
+    <property name="uv" type="CGUIRect" value="160,0,192,32" />
+    <property name="size" type="CGUISize" value="256,32"/>
   </property>
   <property name="panel_border_bottomleft" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/TextPanel-Border.tga" />
-    <property name="uv" type="CGUIRect" value="0.75,0,0.875,1" />
+    <property name="uv" type="CGUIRect" value="192,0,224,32" />
+    <property name="size" type="CGUISize" value="256,32"/>
   </property>
   <property name="panel_border_bottomright" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/TextPanel-Border.tga" />
-    <property name="uv" type="CGUIRect" value="0.875,0,1,1" />
+    <property name="uv" type="CGUIRect" value="224,0,256,32" />
+    <property name="size" type="CGUISize" value="256,32"/>
   </property>
   <property name="dialog_bg" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/UI-DialogBox-Background.tga" />
-    <property name="uv" type="CGUIRect" value="0,0,1,1" />
+    <property name="uv" type="CGUIRect" value="0,0,64,64" />
+    <property name="size" type="CGUISize" value="64,64"/>
   </property>
   <property name="dialog_header" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/UI-DialogBox-Header.tga" />
-    <property name="uv" type="CGUIRect" value="0.2265625,0,0.76953125,0.625" />
+    <property name="uv" type="CGUIRect" value="58,0,197,40" />
+    <property name="size" type="CGUISize" value="256,64"/>
   </property>
 
   <property name="dialog_border_left" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/UI-DialogBox-Border.tga" />
-    <property name="uv" type="CGUIRect" value="0,0,0.05078125,1" />
+    <property name="uv" type="CGUIRect" value="0,0,13,32" />
+    <property name="size" type="CGUISize" value="256,32"/>
   </property>
   <property name="dialog_border_right" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/UI-DialogBox-Border.tga" />
-    <property name="uv" type="CGUIRect" value="0.203125,0,0.25,1" />
+    <property name="uv" type="CGUIRect" value="52,0,64,32" />
+    <property name="size" type="CGUISize" value="256,32"/>
   </property>
   <property name="dialog_border_top" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/UI-DialogBox-Border.tga" />
-    <property name="uv" type="CGUIRect" value="0.25,0,0.29296875,1" />
-    <property name="orientation" type="EImageOrientation" value="eImageOrientation_90CW" />
+    <property name="uv" type="CGUIRect" value="145,0,174,16" />
+    <property name="size" type="CGUISize" value="256,32"/>
   </property>
   <property name="dialog_border_bottom" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/UI-DialogBox-Border.tga" />
-    <property name="uv" type="CGUIRect" value="0.453125,0,0.5,1" />
-    <property name="orientation" type="EImageOrientation" value="eImageOrientation_90CW" />
+    <property name="uv" type="CGUIRect" value="209,16,238,31" />
+    <property name="size" type="CGUISize" value="256,32"/>
   </property>
   <property name="dialog_border_topleft" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/UI-DialogBox-Border.tga" />
-    <property name="uv" type="CGUIRect" value="0.5,0,0.625,1" />
+    <property name="uv" type="CGUIRect" value="128,0,160,32" />
+    <property name="size" type="CGUISize" value="256,32"/>
   </property>
   <property name="dialog_border_topright" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/UI-DialogBox-Border.tga" />
-    <property name="uv" type="CGUIRect" value="0.625,0,0.75,1" />
+    <property name="uv" type="CGUIRect" value="160,0,192,32" />
+    <property name="size" type="CGUISize" value="256,32"/>
   </property>
   <property name="dialog_border_bottomleft" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/UI-DialogBox-Border.tga" />
-    <property name="uv" type="CGUIRect" value="0.75,0,0.875,1" />
+    <property name="uv" type="CGUIRect" value="192,0,224,31" />
+    <property name="size" type="CGUISize" value="256,32"/>
   </property>
   <property name="dialog_border_bottomright" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/UI-DialogBox-Border.tga" />
-    <property name="uv" type="CGUIRect" value="0.875,0,1,1" />
+    <property name="uv" type="CGUIRect" value="224,0,256,31" />
+    <property name="size" type="CGUISize" value="256,32"/>
   </property>
 
 
   <property name="checkbutton_glow_normal" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/CheckButtonGlowNormal.tga" />
-    <property name="uv" type="CGUIRect" value="0.140625,0.140625,0.859375,0.859375" />
+    <property name="uv" type="CGUIRect" value="9,9,55,55" />
+    <property name="size" type="CGUISize" value="64,64"/>
   </property>
   <property name="checkbutton_glow_checked" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/CheckButtonGlowChecked.tga" />
-    <property name="uv" type="CGUIRect" value="0.140625,0.140625,0.859375,0.859375" />
+    <property name="uv" type="CGUIRect" value="9,9,55,55" />
+    <property name="size" type="CGUISize" value="64,64"/>
   </property>
   <property name="edit_bg" type="CGUIImageDefine">
     <property  name="path" type="CGUIString" value="image/Common-Input-Border.tga" />
-    <property name="uv" type="CGUIRect" value="0,0,1,0.625" />
+    <property name="uv" type="CGUIRect" value="0,0,128,20" />
+    <property name="size" type="CGUISize" value="128,32"/>
   </property>
 
 

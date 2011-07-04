@@ -40,29 +40,15 @@ namespace guiex
 	class GUIEXPORT CGUIWgtPanel : public CGUIWidget
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUIWgtPanel( const CGUIString& rName, const CGUIString& rSceneName );
 
 	protected:
-		/**
-		* @brief constructor
-		* for derived class
-		*/
 		CGUIWgtPanel( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
-
-		/// render
-		virtual void RenderSelf(IGUIInterfaceRender* pRender);
-
-		///initialize check button
 		void InitPanel();
-		
+
+		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 		virtual void RefreshSelf();
 
-		/**
-		* @brief override the OnSetImage function
-		*/
 		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage );
 
 		const CGUIRect&	GetBorderRect(int32 eBorder);
@@ -96,8 +82,11 @@ namespace guiex
 		CGUISize GetBorderSize(EPanelBorderLocation eBorder)
 		{
 			return	m_aBorderInfo[eBorder].m_aSize;
-
 		}
+
+	protected:
+		virtual int32 GenerateProperty( CGUIProperty& rProperty );
+		virtual void ProcessProperty( const CGUIProperty& rProperty);
 
 	protected:
 		struct
@@ -110,6 +99,11 @@ namespace guiex
 		CGUIImage* m_pImageBG;
 
 		bool m_bAutoResize;
+		int16 m_nBGAdjustLeft;
+		int16 m_nBGAdjustRight;
+		int16 m_nBGAdjustTop;
+		int16 m_nBGAdjustBottom;
+		CGUIRect m_aBgRenderArea;
 
 	private:
 		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtPanel);
@@ -117,7 +111,4 @@ namespace guiex
 
 }//namespace libguiex
 
-
-
 #endif //__GUI_WGTPANEL_20060802_H__
-

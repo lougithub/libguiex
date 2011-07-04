@@ -57,10 +57,11 @@
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">
-            <property name="value" type="CGUISize" value="148,46" />
+            <property name="value" type="CGUISize" value="124,46" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
-        <property name="text_normal" type="CGUILocalizedString" value="button" />
+        <property name="text_normal" type="CGUILocalizedString" value="open dialog" />
+        <property name="OnMouseLeftClick" type="CGUIEvent" value="OnBtnClick_test1" />
     </property>
     <property name="checkbtn_1" type="CGUIWidgetDefine" value="CGUIWgtCheckButton">
         <property name="parent" type="CGUIString" value="node_root" />
@@ -87,5 +88,56 @@
             <property name="value" type="CGUISize" value="32,32" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
+    </property>
+    <property name="panel_1" type="CGUIWidgetDefine" value="CGUIWgtPanel">
+        <property name="parent" type="CGUIString" value="node_root" />
+        <property name="bg" type="CGUIImage" value="dialog_bg" />
+        <property name="border_top" type="CGUIImage" value="panel_border_top" />
+        <property name="border_bottom" type="CGUIImage" value="panel_border_bottom" />
+        <property name="border_left" type="CGUIImage" value="panel_border_left" />
+        <property name="border_right" type="CGUIImage" value="panel_border_right" />
+        <property name="border_topleft" type="CGUIImage" value="panel_border_topleft" />
+        <property name="border_topright" type="CGUIImage" value="panel_border_topright" />
+        <property name="border_bottomleft" type="CGUIImage" value="panel_border_bottomleft" />
+        <property name="border_bottomright" type="CGUIImage" value="panel_border_bottomright" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="32,229" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="127,90" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="movable" type="bool" value="true" />
+        <property name="bg_adjust_left" type="int16" value="-3" />
+        <property name="bg_adjust_right" type="int16" value="4" />
+        <property name="bg_adjust_top" type="int16" value="-3" />
+        <property name="bg_adjust_bottom" type="int16" value="3" />
+    </property>
+    <property name="label_1" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
+        <property name="parent" type="CGUIString" value="panel_1" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="3,0" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="100,20" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="text" type="CGUIString" value="Hello Panel" />
+        <property name="hitable" type="bool" value="false" />
+    </property>
+    <property name="image_1" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
+        <property name="parent" type="CGUIString" value="panel_1" />
+        <property name="bg" type="CGUIImage" value="bg_blue" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="2,25" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="99,42" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="hitable" type="bool" value="false" />
     </property>
 </guiex>
