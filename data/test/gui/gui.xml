@@ -53,7 +53,7 @@
         <property name="hover" type="CGUIImage" value="button_red_hover" />
         <property name="push" type="CGUIImage" value="button_red_push" />
         <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="26,30" />
+            <property name="value" type="CGUIVector2" value="30,42" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">
@@ -139,5 +139,41 @@
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="hitable" type="bool" value="false" />
+    </property>
+    <property name="tag_test1" type="CGUIWidgetDefine" value="CGUIWgtTag">
+        <property name="parent" type="CGUIString" value="node_root" />
+        <property name="bg" type="CGUIImage" value="TagIcon" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="86,21" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="32,32" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+    </property>
+    <property name="progress_1" type="CGUIWidgetDefine" value="CGUIWgtProgress">
+        <property name="parent" type="CGUIString" value="node_root" />
+        <property name="background" type="CGUIImage" value="progress_bg" />
+        <property name="foreground" type="CGUIImage" value="progress_fg" />
+        <property name="border" type="CGUIImage" value="progress_border" />
+        <property name="spark" type="CGUIImage" value="progress_spark" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="8,330" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="512,64" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="bg_adjust_left" type="int16" value="27" />
+        <property name="bg_adjust_right" type="int16" value="-27" />
+        <property name="bg_adjust_top" type="int16" value="15" />
+        <property name="bg_adjust_bottom" type="int16" value="-15" />
+        <property name="max_value" type="real" value="100" />
+        <property name="current_value" type="real" value="50" />
+        <property name="OnLoad" type="CGUIEvent" value="OnLoad_Progress1" />
+        <property name="OnTimer" type="CGUIEvent" value="OnTimer_Progress1" />
+        <property name="generate_load_event" type="bool" value="true" />
     </property>
 </guiex>

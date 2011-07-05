@@ -608,7 +608,7 @@ namespace guiex
 	uint32 CGUIWidget::OnTimer( CGUIEventTimer* pEvent )
 	{
 		//call callback function
-		CallbackFunction(pEvent->GetTimerName(), pEvent);
+		CallbackFunction("OnTimer", pEvent);
 
 		return 0;
 	}

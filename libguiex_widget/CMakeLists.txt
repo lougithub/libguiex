@@ -93,13 +93,6 @@ set( ${target_name}_scrollbar_SRCS
 	)
 source_group( scrollbar FILES ${${target_name}_scrollbar_SRCS} )
 
-#dialog
-set( ${target_name}_dialog_SRCS 
-        guiwgtdialog.cpp
-        guiwgtdialog.h
-	)
-source_group( dialog FILES ${${target_name}_dialog_SRCS} )
-
 #progress
 set( ${target_name}_progress_SRCS 
         guiwgtprogress.cpp
@@ -119,7 +112,6 @@ if( BUILD_PLATFORM_WIN32 )
 		${${target_name}_editbox_SRCS}
 		${${target_name}_tabcontrol_SRCS}
 		${${target_name}_scrollbar_SRCS}
-		${${target_name}_dialog_SRCS}
 		${${target_name}_progress_SRCS}
 		${${target_name}_utility_SRCS}
         )

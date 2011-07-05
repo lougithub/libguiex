@@ -282,8 +282,8 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	CGUIWgtProgress* pWidget_progress= 
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtProgress>( "progress", "testscene");
 	pWidget_progress->SetParent( pWidgetRoot );
-	pWidget_progress->SetImage( "BACKGROUND_IMG", "color_white" );
-	pWidget_progress->SetImage( "FOREGROUND_IMG", "panel_bg_grade_green" );
+	pWidget_progress->SetImage( "background", "color_white" );
+	pWidget_progress->SetImage( "foreground", "panel_bg_grade_green" );
 	pWidget_progress->SetSize( 200, 25);
 	pWidget_progress->SetMaximumProgress( 100 );
 	pWidget_progress->SetCurrentProgress( 50 );

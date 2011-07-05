@@ -61,6 +61,7 @@ WxEditorCanvas::WxEditorCanvas(wxWindow *parent, int* args, wxWindowID id,
 //------------------------------------------------------------------------------
 WxEditorCanvas::~WxEditorCanvas()
 {
+	m_timer.Stop();
 	DestroyCanvas();
 }
 //------------------------------------------------------------------------------

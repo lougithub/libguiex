@@ -6,7 +6,6 @@
 */
 
 
-
 #ifndef __GUI_WGTPROGRESS_20060924_H__
 #define __GUI_WGTPROGRESS_20060924_H__
 
@@ -25,66 +24,58 @@ namespace guiex
 	* @class CGUIWgtProgress
 	* @brief button class.
 	* used image name:
-	*		- BACKGROUND_IMG
-	*		- FOREGROUND_IMG
+	*		- background
+	*		- foreground
+	*		- border
+	*		- spark
 	*/
 	class GUIEXPORT CGUIWgtProgress : public CGUIWidget
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUIWgtProgress( const CGUIString& rName, const CGUIString& rSceneName );
 
-		/**
-		* @brief set maximum value of progress
-		*/
-		void SetMaximumProgress( real nMaxmium );
+		void SetMaxValue( real nMaxmium );
+		real GetMaxValue() const;
 
-		/**
-		* @brief get maximum value of progress
-		*/
-		real GetMaximumProgress() const;
-
-		/**
-		* @brief set current value of progress
-		*/
-		void SetCurrentProgress( real fValue );
-
-		/**
-		* @brief set current value of progress
-		*/
-		real GetCurrentProgress( ) const;
+		void SetCurrentValue( real fValue );
+		real GetCurrentValue( ) const;
 
 
 	protected:
-		/**
-		* @brief constructor
-		* for derived class
-		*/
 		CGUIWgtProgress( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 		void InitProgress();
 
+		virtual void RefreshSelf();
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 		virtual void OnCreate();
 		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage );
 
-	protected:	//!< callback function
+	protected:
+		virtual int32 GenerateProperty( CGUIProperty& rProperty );
+		virtual void ProcessProperty( const CGUIProperty& rProperty);
 
+	protected:	//!< callback function
 
 	protected:
 		CGUIImage* m_pImageBg; ///< background
 		CGUIImage* m_pImageFg; ///< foreground
+		CGUIImage* m_pImageSpark; ///< spark
+		CGUIImage* m_pImageBorder; ///< border
 
 		real m_fMaximumValue; ///< maximum value of progress
 		real m_fCurrentValue; ///< current value of progress
+
+		int16 m_nBGAdjustLeft;
+		int16 m_nBGAdjustRight;
+		int16 m_nBGAdjustTop;
+		int16 m_nBGAdjustBottom;
+		CGUIRect m_aBgRenderArea;
 
 	private:
 		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtProgress);
 	};
 
 }//namespace libguiex
-
 
 
 #endif //__GUI_WGTPROGRESS_20060924_H__

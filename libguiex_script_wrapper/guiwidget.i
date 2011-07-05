@@ -113,6 +113,9 @@ namespace guiex
 		bool HasScriptCallbackFunc(const CGUIString& strEventName) const;
 		const CGUIString& GetScriptCallbackFunc(const CGUIString& strEventName) const;
 
+		void RegisterTimer( const CGUIString& strEventName, real rWaitingTime );
+		void UnregisterTimer(const CGUIString& strEventName);
+
 		void SetPosition( real x, real y );
 		const CGUIVector2& GetPosition() const; 
 		void SetPixelPosition( real x, real y );
@@ -278,6 +281,27 @@ namespace guiex
 	public:
 	};
 
+	//============================================================================//
+	// CGUIWgtScrollbar
+	//============================================================================// 
+	class CGUIWgtTag : public CGUIWidget
+	{
+	public:
+
+	};
+
+	//============================================================================//
+	// CGUIWgtProgress
+	//============================================================================// 
+	class CGUIWgtProgress : public CGUIWidget
+	{
+	public:
+		void SetMaxValue( real nMaxmium );
+		real GetMaxValue() const;
+
+		void SetCurrentValue( real fValue );
+		real GetCurrentValue( ) const;
+	};
 
 	//============================================================================//
 	// CGUIWgtScrollbar

@@ -231,10 +231,8 @@ namespace guiex
 		bool HasScriptCallbackFunc(const CGUIString& strEventName) const;
 		const CGUIString& GetScriptCallbackFunc(const CGUIString& strEventName) const;
 		
-		void RegisterNativeTimerFunc( real rWaitingTime, const CGUIString& strEventName, void (*pFunc)(CGUIEventTimer*) );
-		void RegisterScriptTimerFunc( real rWaitingTime, const CGUIString& strEventName, const CGUIString& strFunc );
-		void UnregisterNativeTimerFunc(const CGUIString& strEventName);
-		void UnregisterScriptTimerFunc(const CGUIString& strEventName);
+		void RegisterTimer( const CGUIString& strEventName, real rWaitingTime );
+		void UnregisterTimer(const CGUIString& strEventName);
 
 	public:
 		////////////////////////////////////////////////////////////////////////////
@@ -574,15 +572,17 @@ namespace guiex
 		///////////////////////////////////////////////////////////////////////
 		struct STimer
 		{
+			CGUIString m_strTimerName;
 			real m_fTimeWaiting; // by second
 			real m_fTimeLeft;
-			STimer( real fTimeWaiting )
-				:m_fTimeWaiting( fTimeWaiting )
+			STimer( const CGUIString& rTimerName, real fTimeWaiting )
+				:m_strTimerName(rTimerName)
+				,m_fTimeWaiting( fTimeWaiting )
 			{
 			}
 		};
-		typedef std::map<CGUIString, STimer> TMapTimer;
-		TMapTimer m_aMapTimer;	/// key is event name
+		typedef std::vector<STimer> TVecTimer;
+		TVecTimer m_arrayTimer;
 
 		///////////////////////////////////////////////////////////////////////
 		/// for image and animation											

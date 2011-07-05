@@ -1153,46 +1153,35 @@ namespace guiex
 		return itor->second;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::UnregisterNativeTimerFunc(const CGUIString& strEventName)
+	void CGUIWidget::UnregisterTimer(const CGUIString& strEventName)
 	{
-		TMapTimer::iterator itor1 = m_aMapTimer.find(strEventName);
-		TMapGlobalFunc::iterator itor2 = m_mapNativeFunc.find(strEventName);
-		if( itor1 == m_aMapTimer.end() || itor2 == m_mapNativeFunc.end())
+		for( TVecTimer::iterator itor = m_arrayTimer.begin();
+			itor != m_arrayTimer.end();
+			++itor )
 		{
-			GUI_THROW( GUI_FORMAT("[CGUIWidget::UnregisterNativeTimerFunc]: failed to find event <%s>!", strEventName.c_str()));
+			if( (*itor).m_strTimerName == strEventName )
+			{
+				m_arrayTimer.erase( itor );
+				return;
+			}
 		}
-		m_aMapTimer.erase(itor1);
-		m_mapNativeFunc.erase(itor2);
+		GUI_THROW( GUI_FORMAT("[CGUIWidget::UnregisterTimer]: failed to find event <%s>!", strEventName.c_str()));
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::UnregisterScriptTimerFunc(const CGUIString& strEventName)
+	void CGUIWidget::RegisterTimer( const CGUIString& strEventName, real rWaitingTime )
 	{
-		TMapTimer::iterator itor1 = m_aMapTimer.find(strEventName);
-		TMapScriptFunc::iterator itor2 = m_mapScriptFunc.find(strEventName);
-		if( itor1 == m_aMapTimer.end() || itor2 == m_mapScriptFunc.end())
+		for( TVecTimer::iterator itor = m_arrayTimer.begin();
+			itor != m_arrayTimer.end();
+			++itor )
 		{
-			GUI_THROW( GUI_FORMAT("[CGUIWidget::UnregisterScriptTimerFunc]: failed to find event <%s>!", strEventName.c_str()));
+			if( (*itor).m_strTimerName == strEventName )
+			{
+				m_arrayTimer.erase( itor );
+				GUI_THROW( GUI_FORMAT("[CGUIWidget::RegisterTimer]: multiple register event <%s>!", strEventName.c_str()));
+				return;
+			}
 		}
-		m_aMapTimer.erase(itor1);
-		m_mapScriptFunc.erase(itor2);
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWidget::RegisterScriptTimerFunc( 
-		real rWaitingTime, 
-		const CGUIString&strEventName, 
-		const CGUIString& strFunc )
-	{
-		m_aMapTimer.insert( std::make_pair(strEventName, STimer(rWaitingTime)));
-		m_mapScriptFunc.insert( std::make_pair(strEventName, strFunc));
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWidget::RegisterNativeTimerFunc( 		
-		real rWaitingTime, 
-		const CGUIString& strEventName,  
-		void (*pFunc)(CGUIEventTimer*) )
-	{
-		m_aMapTimer.insert( std::make_pair(strEventName, STimer(rWaitingTime)));
-		m_mapNativeFunc.insert( std::make_pair(strEventName, reinterpret_cast<CallbackEventFunc>(pFunc)));
+		m_arrayTimer.push_back( STimer(strEventName, rWaitingTime));
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::PlaySound(const CGUIString& strEventName, CGUIEvent* pEvent)
@@ -2366,13 +2355,13 @@ namespace guiex
 		}
 
 		//for timer event
-		if( !m_aMapTimer.empty())
+		if( !m_arrayTimer.empty())
 		{
-			TMapTimer::iterator itor = m_aMapTimer.begin();
-			TMapTimer::iterator itorEnd = m_aMapTimer.end();
-			for( ; itor!=itorEnd; ++itor )
+			for( TVecTimer::iterator itor = m_arrayTimer.begin();
+				itor != m_arrayTimer.end();
+				++itor )
 			{
-				STimer& rCurrentTimer = itor->second;
+				STimer& rCurrentTimer = *itor;
 				rCurrentTimer.m_fTimeLeft -= fDeltaTime;
 				if( rCurrentTimer.m_fTimeLeft <= 0.0f )
 				{
@@ -2382,7 +2371,7 @@ namespace guiex
 					CGUIEventTimer aEvent;
 					aEvent.SetEventId(eEVENT_TIMER);
 					aEvent.SetReceiver(this);
-					aEvent.SetTimerName(itor->first);
+					aEvent.SetTimerName(rCurrentTimer.m_strTimerName);
 					aEvent.SetDuration( rCurrentTimer.m_fTimeWaiting );
 					GSystem->SendEvent( &aEvent);
 				}

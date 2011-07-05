@@ -211,7 +211,8 @@ CMyCanvasLayer_WhackMoleGame::CMyCanvasLayer_WhackMoleGame( const char* szLayerN
 	}
 
 	//init timer
-	RegisterNativeTimerFunc( 0.5f, "UpdateTimer", CMyCanvasLayer_WhackMoleGame::FunOnTimer );
+	RegisterNativeCallbackFunc( "OnTimer", CMyCanvasLayer_WhackMoleGame::FunOnTimer );
+	RegisterTimer( "UpdateTimer", 0.5f );
 
 }
 //------------------------------------------------------------------------------
@@ -227,9 +228,16 @@ void CMyCanvasLayer_WhackMoleGame::OnUpdate(real fDeltaTime)
 //------------------------------------------------------------------------------
 void CMyCanvasLayer_WhackMoleGame::FunOnTimer(CGUIEventTimer* pEvent )
 {
-	for( uint32 i=0; i<uint32(CGUIFrameworkTest::ms_pFrameWork->GetGameLayer()->m_vecMole.size()); ++i )
+	if( pEvent->GetTimerName() == "UpdateTimer")
 	{
-		CGUIFrameworkTest::ms_pFrameWork->GetGameLayer()->m_vecMole[i]->UpdateMole( pEvent->GetDuration() );
+		for( uint32 i=0; i<uint32(CGUIFrameworkTest::ms_pFrameWork->GetGameLayer()->m_vecMole.size()); ++i )
+		{
+			CGUIFrameworkTest::ms_pFrameWork->GetGameLayer()->m_vecMole[i]->UpdateMole( pEvent->GetDuration() );
+		}
+	}
+	else
+	{
+		GUI_FORCE_ASSERT("unknown timer name" );
 	}
 }
 //------------------------------------------------------------------------------

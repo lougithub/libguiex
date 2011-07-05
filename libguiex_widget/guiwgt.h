@@ -25,7 +25,6 @@
 #	include "guiwgtmultieditbox.h"
 #	include "guiwgtscrollbar.h"
 #	include "guiwgtscrollpanel.h"
-#	include "guiwgtdialog.h"
 #	include "guiwgtemptynode.h"
 #	include "guiwgtanimation.h"
 #	include "guilistboxtextitem.h"
@@ -55,6 +54,7 @@
 #	include "guiwgtcheckbutton.h"
 #	include "guiwgtradiobutton.h"
 #	include "guiwgtemptynode.h"
+#	include "guiwgtprogress.h"
 #endif
 
 
