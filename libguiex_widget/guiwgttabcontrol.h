@@ -38,46 +38,34 @@ namespace guiex
 	class GUIEXPORT CGUIWgtTabControl : public CGUIWidget
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		CGUIWgtTabControl( const CGUIString& rName, const CGUIString& rSceneName );
 
 		/**
 		* @brief Set the selected tab by the name of the tab button.
 		*/
-		void    SetSelectedTab(const CGUIString &name);
+		void SetSelectedTab(const CGUIString &name);
 
 		/**
 		 * @brief Set the selected tab by the index position in the tab control.
 		 */
-		void    SetSelectedTab(uint32 index);
-
-
+		void SetSelectedTab(uint32 index);
+		
 	protected:
-		/**
-		* @brief constructor
-		* for derived class
-		*/
 		CGUIWgtTabControl( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
-		/// initialize tab control
 		void InitTabControl();
 
 	protected:	//!< callback function
-		virtual uint32		OnAddChild( CGUIEventRelativeChange* pEvent );
-		virtual uint32		OnRemoveChild( CGUIEventRelativeChange* pEvent );
+		virtual uint32 OnAddChild( CGUIEventRelativeChange* pEvent );
+		virtual uint32 OnRemoveChild( CGUIEventRelativeChange* pEvent );
 
 	protected:
 		typedef	std::vector<CGUIWgtTabButton*>	TVecBtn;
-		TVecBtn			m_vecButtons;			//only tab button could become control's child
+		TVecBtn	m_vecButtons;			//only tab button could become control's child
 
 	private:
 		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtTabControl);
 	};
 }//namespace libguiex
 
-
-
 #endif //__GUI_WGTTABCONTROL_20070709_H__
-

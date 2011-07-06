@@ -1,12 +1,12 @@
 set( target_name "libguiex_widget" )
 message( STATUS "generate library: " ${target_name} )
 
-#button
-set( ${target_name}_utilitywidget_SRCS 
+#text base
+set( ${target_name}_textbase_SRCS 
         guiwgttextbase.cpp
         guiwgttextbase.h
 	)
-source_group( utilitywidget FILES ${${target_name}_utilitywidget_SRCS} )
+source_group( textbase FILES ${${target_name}_textbase_SRCS} )
 
 #button
 set( ${target_name}_button_SRCS 
@@ -55,14 +55,20 @@ set( ${target_name}_utility_SRCS
 	)
 source_group( utility FILES ${${target_name}_utility_SRCS} )
 
-#utility node
-set( ${target_name}_utilitynode_SRCS 
+#empty node
+set( ${target_name}_emptynode_SRCS 
         guiwgtemptynode.cpp
         guiwgtemptynode.h
+	)
+source_group( emptynode FILES ${${target_name}_emptynode_SRCS} )
+
+#tag
+set( ${target_name}_tag_SRCS 
         guiwgttag.cpp
         guiwgttag.h
 	)
-source_group( utilitynode FILES ${${target_name}_utilitynode_SRCS} )
+source_group( tag FILES ${${target_name}_tag_SRCS} )
+
 
 #edit box
 set( ${target_name}_editbox_SRCS 
@@ -102,13 +108,14 @@ source_group( progress FILES ${${target_name}_progress_SRCS} )
 
 if( BUILD_PLATFORM_WIN32 )
     set( ${target_name}_SRCS 
-		${${target_name}_utilitywidget_SRCS}
+		${${target_name}_textbase_SRCS}
 		${${target_name}_button_SRCS}
 		${${target_name}_checkbutton_SRCS}
 		${${target_name}_radioutton_SRCS}
 		${${target_name}_panel_SRCS}
 		${${target_name}_static_SRCS}
-		${${target_name}_utilitynode_SRCS}
+		${${target_name}_emptynode_SRCS}
+		${${target_name}_tag_SRCS}
 		${${target_name}_editbox_SRCS}
 		${${target_name}_tabcontrol_SRCS}
 		${${target_name}_scrollbar_SRCS}
@@ -117,11 +124,12 @@ if( BUILD_PLATFORM_WIN32 )
         )
 elseif( BUILD_PLATFORM_IOS)
     set( ${target_name}_SRCS 
-		${${target_name}_utilitywidget_SRCS}
+		${${target_name}_textbase_SRCS}
     	${${target_name}_button_SRCS}
 		${${target_name}_checkbutton_SRCS}
 		${${target_name}_radioutton_SRCS}
-		${${target_name}_utilitynode_SRCS}
+		${${target_name}_emptynode_SRCS}
+		${${target_name}_tag_SRCS}
 		${${target_name}_panel_SRCS}
 		${${target_name}_editbox_SRCS}
 		${${target_name}_scrollbar_SRCS}
@@ -130,11 +138,12 @@ elseif( BUILD_PLATFORM_IOS)
         )
 elseif( BUILD_PLATFORM_MACOS )
     set( ${target_name}_SRCS 
-		${${target_name}_utilitywidget_SRCS}
+		${${target_name}_textbase_SRCS}
     	${${target_name}_button_SRCS}
 		${${target_name}_checkbutton_SRCS}
 		${${target_name}_radioutton_SRCS}
-		${${target_name}_utilitynode_SRCS}
+		${${target_name}_emptynode_SRCS}
+		${${target_name}_tag_SRCS}
 		${${target_name}_panel_SRCS}
 		${${target_name}_editbox_SRCS}
 		${${target_name}_scrollbar_SRCS}

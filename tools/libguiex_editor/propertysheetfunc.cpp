@@ -34,6 +34,10 @@ std::vector<CGUIString> g_vecPropertyPages;
 void UpdateGridProperties( WxToolsPGManager* pSheetMgr, const std::string& rType, CGUIWidget* pWidget )
 {
 	//get property set
+	if( pWidget )
+	{
+		pWidget->DumpToProperty();
+	}
 	const CGUIProperty& rSet = CPropertyConfigMgr::Instance()->GetPropertySet(rType);
 
 	//save current page index

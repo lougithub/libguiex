@@ -53,6 +53,10 @@ namespace guiex
 		m_aClipArea = m_aClientArea;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief
+	* Return whether this tab button is selected or not
+	*/
 	bool CGUIWgtTabButton::IsSelected(void) const
 	{
 		return IsChecked();

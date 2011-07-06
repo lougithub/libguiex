@@ -55,7 +55,7 @@ extern "C" {
 #include "bitmaps/icon.xpm"
 #include "bitmaps/gem_blue.xpm"
 #include "bitmaps/gem_red.xpm"
-
+#include "bitmaps/changeparent.xpm"
 
 //============================================================================//
 // define
@@ -120,6 +120,8 @@ EVT_UPDATE_UI(ID_WidgetUp, WxMainFrame::OnUpdateWidgetUp)
 EVT_MENU(ID_WidgetUp, WxMainFrame::OnWidgetUp)
 EVT_UPDATE_UI(ID_WidgetDown, WxMainFrame::OnUpdateWidgetDown)
 EVT_MENU(ID_WidgetDown, WxMainFrame::OnWidgetDown)
+EVT_UPDATE_UI(ID_WidgetChangeParent, WxMainFrame::OnUpdateWidgetChangeParent)
+EVT_MENU(ID_WidgetChangeParent, WxMainFrame::OnWidgetChangeParent)
 
 EVT_UPDATE_UI(ID_ParseScript, WxMainFrame::OnUpdateParseScript)
 EVT_MENU(ID_ParseScript, WxMainFrame::OnParseScript)
@@ -366,9 +368,9 @@ void WxMainFrame::UpdateWidgetSizeAndPos()
 	UpdateGridAndGuiProperty( m_pPropGridMan, m_pCurrentEditingWidget, "position", "CGUIWidgetPosition" );
 }
 //------------------------------------------------------------------------------
-void WxMainFrame::SetPropGridWidget(CGUIWidget* pWidget)
+void WxMainFrame::SetPropGridWidget(CGUIWidget* pWidget, bool bForceRefresh/*=false*/)
 {
-	if( m_pCurrentEditingWidget != pWidget )
+	if( bForceRefresh || m_pCurrentEditingWidget != pWidget )
 	{
 		m_pPropGridMan->ToolsClearPage();
 		m_pCurrentEditingWidget = pWidget;
@@ -509,13 +511,14 @@ wxToolBar* WxMainFrame::CreateToolbar()
 	wxToolBar* tb1 = new wxToolBar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_FLAT|wxTB_NODIVIDER);
 
 	//tb1->AddTool(wxID_NEW, wxBitmap (new_xpm));
-	tb1->AddTool(ID_Open, wxBitmap (open_xpm));
-	tb1->AddTool(ID_Save, wxBitmap (save_xpm));
+	tb1->AddTool(ID_Open, wxBitmap (open_xpm), _T("open"));
+	tb1->AddTool(ID_Save, wxBitmap (save_xpm), _T("save"));
 	tb1->AddSeparator();
-	tb1->AddTool(ID_CreateWidget, wxBitmap (new_xpm));
-	tb1->AddTool(ID_DeleteWidget, wxBitmap (delete_xpm));
+	tb1->AddTool(ID_CreateWidget, wxBitmap (new_xpm), _T("add widget"));
+	tb1->AddTool(ID_DeleteWidget, wxBitmap (delete_xpm), _T("delete widget"));
 	tb1->AddTool(ID_WidgetUp, wxBitmap (bookmarkBluegem), _T("move widget up"));
 	tb1->AddTool(ID_WidgetDown, wxBitmap (bookmarkRedgem), _T("move widget down"));
+	tb1->AddTool(ID_WidgetChangeParent, wxBitmap (changeparent), _T("change parent"));
 	tb1->AddSeparator();
 	tb1->AddTool(ID_ParseScript, wxBitmap (icon_xpm), _T("parse script"));
 	tb1->AddTool(ID_About, wxBitmap (help_xpm));
@@ -960,6 +963,74 @@ void WxMainFrame::OnUpdateWidgetDown(wxUpdateUIEvent& event)
 	}
 }
 //------------------------------------------------------------------------------
+static void DoGetWidgetName( const CGUIWidget* pWidget, wxArrayString& rArray )
+{
+	rArray.push_back( Gui2wxString(pWidget->GetName()) );
+	CGUIWidget* pChild = pWidget->GetChild();
+	while( pChild )
+	{
+		if( !CGUIWidgetManager::IsInternalWidget( pChild->GetName()))
+		{
+			DoGetWidgetName( pChild, rArray );
+		}
+		pChild = pChild->GetNextSibling();
+	}
+}
+void WxMainFrame::OnWidgetChangeParent(wxCommandEvent& evt)
+{
+	CGUIWidget* pWidget = m_pCanvas->GetSelectedWidget();
+	//empty
+	if( !pWidget)
+	{
+		return;
+	}
+
+	//change parent here
+	wxArrayString arrayWidgetName;
+	if( GSystem->GetUICanvas()->GetOpenedPageNum() != 1 )
+	{
+		return;
+	}
+	CGUIWidget* pWidgetRoot = GSystem->GetUICanvas()->GetOpenedPageByIndex(0);
+	if( !pWidgetRoot)
+	{
+		return;
+	}
+	DoGetWidgetName(pWidgetRoot, arrayWidgetName);
+	arrayWidgetName.push_back( pWidgetRoot->GetName() );
+
+	wxSingleChoiceDialog aChoiceDlg( this, _T("select parent"), _T("select parent"), arrayWidgetName );
+	if( aChoiceDlg.ShowModal() != wxID_OK )
+	{
+		return;
+	}
+	CGUIString strWidgetName = arrayWidgetName[aChoiceDlg.GetSelection()];
+	if( strWidgetName == pWidget->GetName() )
+	{
+		return;
+	}
+	pWidget->SetParent( CGUIWidgetManager::Instance()->GetWidget( strWidgetName, pWidget->GetSceneName()));
+	pWidget->Refresh();
+
+	m_pCanvas->UpdateWindowBox();
+	m_pCanvas->SetSaveFlag(true);
+
+	RefreshWidgetTreeCtrl();
+	SetPropGridWidget( pWidget, true );
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnUpdateWidgetChangeParent(wxUpdateUIEvent& event)
+{
+	if( m_pCanvas && m_pCanvas->GetSelectedWidget() )
+	{
+		event.Enable(true);
+	}
+	else
+	{
+		event.Enable(false);
+	}
+}
+//------------------------------------------------------------------------------
 void WxMainFrame::OnUpdateParseScript(wxUpdateUIEvent& event)
 {
 	if(m_pAuiNoteBook && m_pAuiNoteBook->GetSelection() >=0)
@@ -1201,9 +1272,6 @@ void WxMainFrame::OnCreateWidget(wxCommandEvent& evt)
 	}
 
 	pWidget->Refresh();
-	CGUIProperty aProp( "size", "CGUIWidgetSize" );
-	pWidget->GenerateProperty( aProp );
-	pWidget->InsertProperty( aProp );
 
 	RefreshWidgetTreeCtrl();
 	m_pCanvas->SetSaveFlag(true);
@@ -1776,7 +1844,8 @@ void WxMainFrame::CreateMenu()
 
 	edit_menu->Append(ID_WidgetUp, _("Widget Up"));
 	edit_menu->Append(ID_WidgetDown, _("Widget Down"));
-
+	edit_menu->Append(ID_WidgetChangeParent, _("change widget parent"));
+	
 	//menu-tool
 	wxMenu*	tool_menu = new wxMenu;
 	tool_menu->Append(ID_SetDefaultEditor, wxT("Set Default Editor"), wxT("Set Default Editor"));

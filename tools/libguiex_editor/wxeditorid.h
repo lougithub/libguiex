@@ -35,6 +35,7 @@ enum
 	ID_DeleteWidget,
 	ID_WidgetUp,
 	ID_WidgetDown,
+	ID_WidgetChangeParent,
 	ID_ParseScript,
 
 	ID_Localization_begin,

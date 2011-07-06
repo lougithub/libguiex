@@ -63,7 +63,7 @@ public:
 	void UpdateWidgetSizeAndPos();
 
 	//set property grid related widget
-	void SetPropGridWidget(CGUIWidget* pWidget);
+	void SetPropGridWidget(CGUIWidget* pWidget, bool bForceRefresh=false);
 
 	//get current canvas
 	WxEditorCanvasContainer* GetCanvasContainer();
@@ -173,6 +173,8 @@ protected:
 	void OnUpdateWidgetUp(wxUpdateUIEvent& event);
 	void OnWidgetDown(wxCommandEvent& evt);
 	void OnUpdateWidgetDown(wxUpdateUIEvent& event);
+	void OnWidgetChangeParent(wxCommandEvent& evt);
+	void OnUpdateWidgetChangeParent(wxUpdateUIEvent& event);
 	void OnToggleScissor(wxCommandEvent& evt);
 	void OnToggleExtraInfo(wxCommandEvent& evt);
 	void OnToggleWireframe(wxCommandEvent& evt);

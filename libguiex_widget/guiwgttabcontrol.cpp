@@ -35,13 +35,14 @@ namespace guiex
 		InitTabControl();
 	}
 	//------------------------------------------------------------------------------
+	// initialize tab control
 	void CGUIWgtTabControl::InitTabControl()
 	{
 		SetSizeType(eScreenValue_Percentage);
 		SetSize( 1.0f, 1.0f );
 	}
 	//------------------------------------------------------------------------------
-	void    CGUIWgtTabControl::SetSelectedTab(const CGUIString &name)
+	void CGUIWgtTabControl::SetSelectedTab(const CGUIString &name)
 	{
 		for( TVecBtn::iterator itor=m_vecButtons.begin(); 
 			itor!=m_vecButtons.end(); ++itor)

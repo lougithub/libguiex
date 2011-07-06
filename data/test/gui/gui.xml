@@ -114,10 +114,23 @@
         <property name="bg_adjust_top" type="int16" value="-3" />
         <property name="bg_adjust_bottom" type="int16" value="3" />
     </property>
+    <property name="image_1" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
+        <property name="parent" type="CGUIString" value="panel_1" />
+        <property name="bg" type="CGUIImage" value="bg_blue" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="1,4" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="99,59" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="hitable" type="bool" value="false" />
+    </property>
     <property name="label_1" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
         <property name="parent" type="CGUIString" value="panel_1" />
         <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="3,0" />
+            <property name="value" type="CGUIVector2" value="0,19" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">
@@ -125,19 +138,6 @@
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="text" type="CGUIString" value="Hello Panel" />
-        <property name="hitable" type="bool" value="false" />
-    </property>
-    <property name="image_1" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
-        <property name="parent" type="CGUIString" value="panel_1" />
-        <property name="bg" type="CGUIImage" value="bg_blue" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="2,25" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="value" type="CGUISize" value="99,42" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        </property>
         <property name="hitable" type="bool" value="false" />
     </property>
     <property name="tag_test1" type="CGUIWidgetDefine" value="CGUIWgtTag">
