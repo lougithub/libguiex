@@ -96,20 +96,68 @@ namespace guiex
 		delete GSystem;
 	}
 	//------------------------------------------------------------------------------ 
-	void CGUIFramework_Mac::RegisterInterfaces( )
+	void CGUIFramework_Mac::RegisterInterfaces_Render( )
 	{
 		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl);
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Mac::RegisterInterfaces_ImageLoader( )
+	{
 		GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_tga);
-		//GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_cocoa);
-		GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_internal);
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Mac::RegisterInterfaces_FileSys( )
+	{
 		GUI_REGISTER_INTERFACE_LIB( IGUIFileSys_cocoa);
-		GUI_REGISTER_INTERFACE_LIB( IGUIFont_ft2);
-		GUI_REGISTER_INTERFACE_LIB( IGUIIme_dummy);
-		GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
-		GUI_REGISTER_INTERFACE_LIB( IGUIScript_lua);
-		GUI_REGISTER_INTERFACE_LIB( IGUIPhysics_box2d );
-		GUI_REGISTER_INTERFACE_LIB( IGUISound_openal ); 
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Mac::RegisterInterfaces_Mouse( )
+	{
 		GUI_REGISTER_INTERFACE_LIB( IGUIMouse_default); 
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Mac::RegisterInterfaces_Keyboard( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUIKeyboard_default);
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Mac::RegisterInterfaces_Font( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUIFont_ft2);
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Mac::RegisterInterfaces_ConfigFile( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Mac::RegisterInterfaces_StringConv( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_internal);
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Mac::RegisterInterfaces_Script( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUIScript_lua );
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Mac::RegisterInterfaces_Physics( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUIPhysics_box2d );
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Mac::RegisterInterfaces_Sound( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUISound_openal );
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Mac::RegisterInterfaces_Ime( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUIIme_dummy);
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Mac::RegisterInterfaces_LocalizationLoader( )
+	{
 		GUI_REGISTER_INTERFACE_LIB( IGUILocalizationLoader_tinyxml); 
 	}
 	//------------------------------------------------------------------------------ 
@@ -124,7 +172,6 @@ namespace guiex
 				pGenerator ++;
 			}
 		}
-		
 		
 		//box2d widgets
 		{

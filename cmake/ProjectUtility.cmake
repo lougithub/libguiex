@@ -46,6 +46,7 @@ macro( macro_set_target_link_libraries targetname )
 			general libguiex_script_wrapper
 			general libguiex_framework
 			general tinyxml
+			general libpng
 			general lua
 			general freetype
 			general box2d
@@ -65,6 +66,7 @@ macro( macro_set_target_link_libraries targetname )
 			general libguiex_script_wrapper
 			general libguiex_framework
 			general tinyxml
+			general libpng
 			general lua
 			general freetype
 			general box2d
@@ -82,6 +84,7 @@ macro( macro_set_target_link_libraries targetname )
 			general libguiex_script_wrapper
 			general libguiex_framework
 			general tinyxml
+			general libpng
 			general lua
 			general freetype
 			general box2d
@@ -127,6 +130,7 @@ macro( macro_set_target_link_libraries_wx_win32 targetname )
 		general libguiex_framework
 		general libguiex_module
 		general tinyxml
+		general libpng
 		general lua
 		general freetype
 		general box2d
@@ -178,6 +182,7 @@ macro( macro_include_directories )
 		include_directories( "${PROJECT_SOURCE_DIR}/external/wxWidgets/include" )
 		include_directories( "${PROJECT_SOURCE_DIR}/external/wxWidgets/include/msvc" )
 		include_directories( "${PROJECT_SOURCE_DIR}/external/openal/include" )
+		include_directories( "${PROJECT_SOURCE_DIR}/external/libpng" )
 		include_directories( "${PROJECT_SOURCE_DIR}/external/zlib" )
 		include_directories( "${PROJECT_SOURCE_DIR}/external/glew/include" )
 	elseif( BUILD_PLATFORM_IOS)
@@ -185,12 +190,14 @@ macro( macro_include_directories )
 		include_directories( "${PROJECT_SOURCE_DIR}/external/lua/src" )
 		include_directories( "${PROJECT_SOURCE_DIR}/external/freetype/include" )
 		include_directories( "${PROJECT_SOURCE_DIR}/external/Box2D" )
+		include_directories( "${PROJECT_SOURCE_DIR}/external/libpng" )
 	elseif( BUILD_PLATFORM_MACOS)
 		include_directories( "${PROJECT_SOURCE_DIR}/external/tinyxml" )
 		include_directories( "${PROJECT_SOURCE_DIR}/external/lua/src" )
 		include_directories( "${PROJECT_SOURCE_DIR}/external/freetype/include" )
 		include_directories( "${PROJECT_SOURCE_DIR}/external/Box2D" )
 		include_directories( "${PROJECT_SOURCE_DIR}/external/glew/include" )
+		include_directories( "${PROJECT_SOURCE_DIR}/external/libpng" )
 	else()
 		message( FATAL_ERROR "unsupport platform" )
 	endif()

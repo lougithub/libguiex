@@ -126,23 +126,71 @@ namespace guiex
 		delete GSystem;
 	}
 	//------------------------------------------------------------------------------ 
-	void CGUIFramework_Android::RegisterInterfaces( )
+	void CGUIFramework_Android::RegisterInterfaces_Render( )
 	{
 		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengles_android);
-		GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_tga);
-		GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_internal);
-		GUI_REGISTER_INTERFACE_LIB( IGUIFileSys_android );
-		GUI_REGISTER_INTERFACE_LIB( IGUIFont_ft2);
-		GUI_REGISTER_INTERFACE_LIB( IGUIIme_dummy);
-		GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
-		GUI_REGISTER_INTERFACE_LIB( IGUIScript_lua);
-		GUI_REGISTER_INTERFACE_LIB( IGUIPhysics_box2d );
-		//GUI_REGISTER_INTERFACE_LIB( IGUISound_dummy ); 
-		GUI_REGISTER_INTERFACE_LIB( IGUISound_android ); 
-		GUI_REGISTER_INTERFACE_LIB( IGUIMouse_default); 
-		GUI_REGISTER_INTERFACE_LIB( IGUILocalizationLoader_tinyxml); 
 	}
 	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Android::RegisterInterfaces_ImageLoader( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_tga);
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Android::RegisterInterfaces_FileSys( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUIFileSys_android );
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Android::RegisterInterfaces_Mouse( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUIMouse_default); 
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Android::RegisterInterfaces_Keyboard( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUIKeyboard_default);
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Android::RegisterInterfaces_Font( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUIFont_ft2);
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Android::RegisterInterfaces_ConfigFile( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Android::RegisterInterfaces_StringConv( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_internal);
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Android::RegisterInterfaces_Script( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUIScript_lua );
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Android::RegisterInterfaces_Physics( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUIPhysics_box2d );
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Android::RegisterInterfaces_Sound( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUISound_android );
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Android::RegisterInterfaces_Ime( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUIIme_dummy);
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Android::RegisterInterfaces_LocalizationLoader( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUILocalizationLoader_tinyxml); 
+	}
+	//------------------------------------------------------------------------------  
 	void CGUIFramework_Android::RegisterWidgetGenerators( )
 	{
 		//basic widgets

@@ -16,7 +16,7 @@
 
 //libguiex module
 #include <libguiex_module/render_opengl/guirender_opengl.h>
-#include <libguiex_module/imageloader_tga/guiimageloader_tga.h>
+#include <libguiex_module/imageloader_png_tga/guiimageloader_png_tga.h>
 #include <libguiex_module/keyboard_winapi/guikeyboard_winapi.h>
 #include <libguiex_module/mouse_winapi/guimouse_winapi.h>
 #include <libguiex_module/ime_winapi/guiime_winapi.h>
@@ -100,22 +100,68 @@ namespace guiex
 		delete GSystem;
 	}
 	//------------------------------------------------------------------------------ 
-	void CGUIFramework_Windows::RegisterInterfaces( )
+	void CGUIFramework_Windows::RegisterInterfaces_Render( )
 	{
 		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl);
-		GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_tga);
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Windows::RegisterInterfaces_ImageLoader( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_png_tga);
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Windows::RegisterInterfaces_FileSys( )
+	{
 		GUI_REGISTER_INTERFACE_LIB( IGUIFileSys_stdio);
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Windows::RegisterInterfaces_Mouse( )
+	{
 		GUI_REGISTER_INTERFACE_LIB( IGUIMouse_winapi);
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Windows::RegisterInterfaces_Keyboard( )
+	{
 		GUI_REGISTER_INTERFACE_LIB( IGUIKeyboard_winapi);
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Windows::RegisterInterfaces_Font( )
+	{
 		GUI_REGISTER_INTERFACE_LIB( IGUIFont_ft2);
-		//GUI_REGISTER_INTERFACE_LIB( IGUIFont_dummy);
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Windows::RegisterInterfaces_ConfigFile( )
+	{
 		GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
-		//GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_winapi);
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Windows::RegisterInterfaces_StringConv( )
+	{
 		GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_internal);
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Windows::RegisterInterfaces_Script( )
+	{
 		GUI_REGISTER_INTERFACE_LIB( IGUIScript_lua );
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Windows::RegisterInterfaces_Physics( )
+	{
 		GUI_REGISTER_INTERFACE_LIB( IGUIPhysics_box2d );
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Windows::RegisterInterfaces_Sound( )
+	{
 		GUI_REGISTER_INTERFACE_LIB( IGUISound_openal );
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Windows::RegisterInterfaces_Ime( )
+	{
 		GUI_REGISTER_INTERFACE_LIB_ARG( IGUIIme_winapi, ::GetForegroundWindow() );
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_Windows::RegisterInterfaces_LocalizationLoader( )
+	{
 		GUI_REGISTER_INTERFACE_LIB( IGUILocalizationLoader_tinyxml); 
 	}
 	//------------------------------------------------------------------------------ 

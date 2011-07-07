@@ -1919,7 +1919,7 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "parent" )
 		{
-			if( GetParent() )
+			if( GetParent() && !CGUIWidgetManager::Instance()->IsInternalWidget( GetParent()->GetName()) )
 			{
 				rProperty.SetValue(GetParent()->GetName());
 			}

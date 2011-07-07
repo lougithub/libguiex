@@ -1,0 +1,13 @@
+<guiex>
+    <property name="image_pngtext" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
+        <property name="bg" type="CGUIImage" value="Glues-WoW-TaiwanWotLKLogo_png" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0,0" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="512,256" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+    </property>
+</guiex>

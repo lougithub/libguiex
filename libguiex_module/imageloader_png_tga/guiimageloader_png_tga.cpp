@@ -1,24 +1,32 @@
 /** 
-* @file guiimageloader_tga.cpp
+* @file guiimageloader_png_tga.cpp
 * @brief interface to load image from file or memory.
 * @author ken
-* @date 2006-07-13
+* @date 2011-07-06
 */
 
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_module/imageloader_tga/guiimageloader_tga.h>
-#include <libguiex_module/imageloader_tga/guiimagedata_tga.h>
+#include <libguiex_module/imageloader_png_tga/guiimageloader_png_tga.h>
+#include <libguiex_module/imageloader_png_tga/guiimagedata_png_tga.h>
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guiinterfacemanager.h>
 #include <libguiex_core/guiinterfacefilesys.h>
+#include <png.h>
 
 //============================================================================//
 // declare
 //============================================================================// 
+#define PNG_SIG_BYTES 8
 namespace guiex
 {
+	struct SPngFileData
+	{
+		uint8* m_pData;
+		uint32 m_uSize;
+	};
+
 	typedef struct
 	{
 		uint8 Header[12];									// TGA File Header
@@ -43,26 +51,25 @@ namespace guiex
 	static uint8 cTGAcompare2[12] = {0,0,11,0,0,0,0,0,0,0,0,0};	// Compressed, black and white images.
 }
 
-
 //============================================================================//
 // function
 //============================================================================// 
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	GUI_INTERFACE_IMPLEMENT(IGUIImageLoader_tga);
+	GUI_INTERFACE_IMPLEMENT(IGUIImageLoader_png_tga);
 	//------------------------------------------------------------------------------
-	const char* IGUIImageLoader_tga::StaticGetModuleName()
+	const char* IGUIImageLoader_png_tga::StaticGetModuleName()
 	{
-		return "IGUIImageLoader_tga";
+		return "IGUIImageLoader_png_tga";
 	}
 	//------------------------------------------------------------------------------
-	IGUIImageLoader_tga::IGUIImageLoader_tga()
+	IGUIImageLoader_png_tga::IGUIImageLoader_png_tga()
 		:IGUIInterfaceImageLoader( StaticGetModuleName() )
 	{
 	}
 	//------------------------------------------------------------------------------
-	IGUIImageLoader_tga::~IGUIImageLoader_tga()
+	IGUIImageLoader_png_tga::~IGUIImageLoader_png_tga()
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -70,17 +77,12 @@ namespace guiex
 	* @brief initialize render
 	* @return 0 for success
 	*/
-	int	IGUIImageLoader_tga::DoInitialize(void* )
+	int	IGUIImageLoader_png_tga::DoInitialize(void* )
 	{
-
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	/** 
-	* @brief destroy render
-	* @return 0 for success
-	*/
-	void IGUIImageLoader_tga::DoDestroy()
+	void IGUIImageLoader_png_tga::DoDestroy()
 	{
 
 	}
@@ -89,7 +91,7 @@ namespace guiex
 	* @brief load image from file
 	* @return pointer of CGUIImageData, NULL for failed
 	*/
-	CGUIImageData* IGUIImageLoader_tga::LoadFromFile( const CGUIString& rFileName  )
+	CGUIImageData* IGUIImageLoader_png_tga::LoadFromFile( const CGUIString& rFileName  )
 	{
 		IGUIInterfaceFileSys* pFileSys =  CGUIInterfaceManager::Instance()->GetInterfaceFileSys();;
 		CGUIDataChunk aDataChunk;
@@ -101,11 +103,167 @@ namespace guiex
 		return NULL;
 	}
 	//------------------------------------------------------------------------------
+	static void user_read_data(png_structp png_ptr, png_bytep data, png_size_t length)
+	{
+		png_voidp a = png_get_io_ptr(png_ptr);
+		SPngFileData* pFileData = (SPngFileData*)a;
+		if (length > pFileData->m_uSize)
+		{
+			png_error(png_ptr, "EOF");
+			return;
+		}
+		
+		memcpy( data, pFileData->m_pData, length );
+		pFileData->m_pData += length;
+		pFileData->m_uSize -= length;
+	}
 	/**
 	* @brief load image from memory
 	* @return pointer of CGUIImageData, NULL for failed
 	*/
-	CGUIImageData* IGUIImageLoader_tga::LoadFromMemory( uint8* pFileData, size_t nSize )
+	CGUIImageData* IGUIImageLoader_png_tga::LoadFromMemory( uint8* pFileData, size_t nSize )
+	{
+		if( !pFileData )
+		{
+			return NULL;
+		}
+
+		if( nSize >= PNG_SIG_BYTES )
+		{
+			if( 0 == png_sig_cmp(pFileData, 0, PNG_SIG_BYTES) )
+			{
+				return LoadPng(pFileData, nSize);
+			}
+		}
+		return LoadTga( pFileData, nSize );
+	}
+	//------------------------------------------------------------------------------
+	CGUIImageData* IGUIImageLoader_png_tga::LoadPng( uint8* pFileData, size_t nSize )
+	{
+		if( !pFileData || nSize <= PNG_SIG_BYTES )
+		{
+			return NULL;
+		}
+
+		if( 0 != png_sig_cmp(pFileData, 0, PNG_SIG_BYTES) )
+		{
+			GUI_THROW( "[IGUIImageLoader_png::LoadFromMemory] - not a png image file!");
+			return NULL;
+		}
+
+		png_structp png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+		if (!png_ptr)
+		{
+			return NULL;
+		}
+
+		png_infop info_ptr = png_create_info_struct(png_ptr);
+		if (!info_ptr)
+		{
+			png_destroy_read_struct(&png_ptr, (png_infopp)NULL, (png_infopp)NULL);
+			return NULL;
+		}
+
+		png_infop end_info = png_create_info_struct(png_ptr);
+		if (!end_info)
+		{
+			png_destroy_read_struct(&png_ptr, &info_ptr,(png_infopp)NULL);
+			return NULL;
+		}
+
+		if (setjmp(png_jmpbuf(png_ptr)))
+		{
+			png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
+			return NULL;
+		}
+
+		SPngFileData aFileData;
+		aFileData.m_pData = pFileData + PNG_SIG_BYTES;
+		aFileData.m_uSize = nSize - PNG_SIG_BYTES;
+		png_set_read_fn(png_ptr, &aFileData, user_read_data);
+
+		png_set_sig_bytes(png_ptr, PNG_SIG_BYTES);
+
+		png_read_info(png_ptr, info_ptr);
+
+		png_uint_32 width, height;
+		width = png_get_image_width(png_ptr, info_ptr);
+		height = png_get_image_height(png_ptr, info_ptr);
+
+		int bit_depth, color_type;
+		bit_depth = png_get_bit_depth(png_ptr, info_ptr);
+		color_type = png_get_color_type(png_ptr, info_ptr);
+
+		if( color_type == PNG_COLOR_TYPE_PALETTE )
+		{
+			png_set_palette_to_rgb( png_ptr );
+		}
+
+		if( color_type == PNG_COLOR_TYPE_GRAY && bit_depth < 8 )
+		{
+			png_set_expand_gray_1_2_4_to_8( png_ptr );
+		}
+
+		if( png_get_valid( png_ptr, info_ptr, PNG_INFO_tRNS ) )
+		{
+			png_set_tRNS_to_alpha (png_ptr);
+		}
+
+		if( bit_depth == 16 )
+		{
+			png_set_strip_16( png_ptr );
+		}
+
+		else if( bit_depth < 8 )
+		{
+			png_set_packing( png_ptr );
+		}
+
+		png_read_update_info(png_ptr, info_ptr);
+
+		png_get_IHDR( png_ptr, info_ptr,&width, &height, &bit_depth, &color_type,NULL, NULL, NULL );
+
+		EGuiPixelFormat type = GUI_PF_UNKNOEWN;
+		switch( color_type )
+		{
+		case PNG_COLOR_TYPE_GRAY:
+			type = GUI_PF_ALPHA_8;
+			break;
+
+		case PNG_COLOR_TYPE_GRAY_ALPHA:
+			type = GUI_PF_LUMINANCE_ALPHA_16;
+			break;
+
+		case PNG_COLOR_TYPE_RGB:
+			type = GUI_PF_RGB_24;
+			break;
+
+		case PNG_COLOR_TYPE_RGB_ALPHA:
+			type = GUI_PF_RGBA_32;
+			break;
+		}
+
+		CGUIImageData_png_tga * pImageData = new CGUIImageData_png_tga(this);
+		uint8* pixels = pImageData->SetImageData(width, height, type);
+
+		// since Texture2D loads the image "upside-down", there's no need
+		// to flip the image here
+		png_byte** row_ptrs = (png_bytep*)malloc(height * sizeof(png_bytep));
+		for (png_uint_32 i=0; i<height; i++)
+		{
+			row_ptrs[i] = pixels + i*width*pImageData->GetBytePerPixel();
+		}
+
+		png_read_image(png_ptr, row_ptrs);	
+		png_read_end( png_ptr, NULL );
+		png_destroy_read_struct( &png_ptr, &info_ptr, &end_info );
+
+		free( row_ptrs );
+
+		return pImageData;
+	}
+	//------------------------------------------------------------------------------
+	CGUIImageData* IGUIImageLoader_png_tga::LoadTga( uint8* pFileData, size_t nSize )
 	{
 		if( !pFileData || nSize <= sizeof( TGAHeader) )
 		{
@@ -130,12 +288,12 @@ namespace guiex
 		}
 		else															
 		{
-			GUI_THROW( "[IGUIImageLoader_tga::LoadFromMemory] - Failed to load tga image!");
+			GUI_THROW( "[IGUIImageLoader_png_tga::LoadFromMemory] - Failed to load tga image!");
 			return NULL;
 		}
 	}
 	//------------------------------------------------------------------------------
-	CGUIImageData* IGUIImageLoader_tga::LoadUncompressedTGA( uint8* pFileData, size_t nSize )
+	CGUIImageData* IGUIImageLoader_png_tga::LoadUncompressedTGA( uint8* pFileData, size_t nSize )
 	{
 		if( !pFileData || nSize <= 0 )
 		{
@@ -146,7 +304,7 @@ namespace guiex
 		uint32 uHeadSize = sizeof(tga.header);
 		if( nSize < uHeadSize )
 		{
-			GUI_THROW( "[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
+			GUI_THROW( "[IGUIImageLoader_png_tga::LoadUncompressedTGA] - Invalid texture information!");
 			return NULL;
 		}
 		memcpy( tga.header, pFileData, uHeadSize );
@@ -159,7 +317,7 @@ namespace guiex
 
 		if(tga.Width <= 0 || tga.Height <= 0)
 		{
-			GUI_THROW( "[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
+			GUI_THROW( "[IGUIImageLoader_png_tga::LoadUncompressedTGA] - Invalid texture information!");
 			return NULL;
 		}
 
@@ -175,7 +333,7 @@ namespace guiex
 			tga.type = GUI_PF_ALPHA_8;
 			break;
 		default:
-			GUI_THROW( "[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
+			GUI_THROW( "[IGUIImageLoader_png_tga::LoadUncompressedTGA] - Invalid texture information!");
 			return NULL;
 		}
 
@@ -183,11 +341,11 @@ namespace guiex
 		tga.imageSize = (tga.bytesPerPixel * tga.Width * tga.Height);	
 		if( nSize < tga.imageSize )
 		{
-			GUI_THROW( "[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
+			GUI_THROW( "[IGUIImageLoader_png_tga::LoadUncompressedTGA] - Invalid texture information!");
 			return NULL;
 		}
 		//create image data
-		CGUIImageData_tga * pImageData = new CGUIImageData_tga(this);
+		CGUIImageData_png_tga * pImageData = new CGUIImageData_png_tga(this);
 		uint8* tmpBuff = pImageData->SetImageData(tga.Width, tga.Height, tga.type);
 		memcpy( tmpBuff, pFileData, tga.imageSize);
 
@@ -203,13 +361,13 @@ namespace guiex
 		return pImageData;
 	}
 	//------------------------------------------------------------------------------
-	CGUIImageData* IGUIImageLoader_tga::LoadCompressedTGA( uint8* pFileData, size_t nSize )
+	CGUIImageData* IGUIImageLoader_png_tga::LoadCompressedTGA( uint8* pFileData, size_t nSize )
 	{
 		TGA tga;
 		uint32 uHeadSize = sizeof(tga.header);
 		if( nSize < uHeadSize )
 		{
-			GUI_THROW( "[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
+			GUI_THROW( "[IGUIImageLoader_png_tga::LoadUncompressedTGA] - Invalid texture information!");
 			return NULL;
 		}
 		memcpy( tga.header, pFileData, uHeadSize );
@@ -222,7 +380,7 @@ namespace guiex
 
 		if((tga.Width <= 0) || (tga.Height <= 0) || ((tga.Bpp != 24) && (tga.Bpp !=32)))
 		{
-			GUI_THROW( "[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
+			GUI_THROW( "[IGUIImageLoader_png_tga::LoadUncompressedTGA] - Invalid texture information!");
 			return NULL;
 		}
 
@@ -234,7 +392,7 @@ namespace guiex
 		tga.bytesPerPixel	= (tga.Bpp / 8);									// Compute BYTES per pixel
 		tga.imageSize		= (tga.bytesPerPixel * tga.Width * tga.Height);		// Compute amout of memory needed to store image
 		//create image data
-		CGUIImageData_tga * pImageData = new CGUIImageData_tga(this);
+		CGUIImageData_png_tga * pImageData = new CGUIImageData_png_tga(this);
 		uint8* tmpBuff = pImageData->SetImageData(tga.Width, tga.Height, tga.type);
 
 		uint32 pixelcount	= tga.Height * tga.Width;							// Nuber of pixels in the image
@@ -251,7 +409,7 @@ namespace guiex
 			{
 				delete pImageData;
 				free( colorbuffer );
-				GUI_THROW( "[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
+				GUI_THROW( "[IGUIImageLoader_png_tga::LoadUncompressedTGA] - Invalid texture information!");
 				return NULL;
 			}
 			memcpy( &chunkheader, pFileData, uChunkHeadSize );
@@ -267,7 +425,7 @@ namespace guiex
 					{
 						delete pImageData;
 						free( colorbuffer );
-						GUI_THROW( "[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
+						GUI_THROW( "[IGUIImageLoader_png_tga::LoadUncompressedTGA] - Invalid texture information!");
 						return NULL;
 					}
 					memcpy( colorbuffer, pFileData, tga.bytesPerPixel );
@@ -291,7 +449,7 @@ namespace guiex
 					{
 						delete pImageData;
 						free( colorbuffer );
-						GUI_THROW( "[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
+						GUI_THROW( "[IGUIImageLoader_png_tga::LoadUncompressedTGA] - Invalid texture information!");
 						return NULL;													// Return failed
 					}
 				}
@@ -303,7 +461,7 @@ namespace guiex
 				{
 					delete pImageData;
 					free( colorbuffer );
-					GUI_THROW( "[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
+					GUI_THROW( "[IGUIImageLoader_png_tga::LoadUncompressedTGA] - Invalid texture information!");
 					return NULL;
 				}
 				memcpy( colorbuffer, pFileData, tga.bytesPerPixel );
@@ -328,7 +486,7 @@ namespace guiex
 					{
 						delete pImageData;
 						free( colorbuffer );
-						GUI_THROW( "[IGUIImageLoader_tga::LoadUncompressedTGA] - Invalid texture information!");
+						GUI_THROW( "[IGUIImageLoader_png_tga::LoadUncompressedTGA] - Invalid texture information!");
 						return NULL;													// Return failed
 					}
 				}
@@ -343,7 +501,7 @@ namespace guiex
 	/**
 	* @brief destroy image data
 	*/
-	void IGUIImageLoader_tga::DestroyImageData(CGUIImageData* pImageData)
+	void IGUIImageLoader_png_tga::DestroyImageData(CGUIImageData* pImageData)
 	{
 		delete pImageData;
 	}
@@ -351,12 +509,11 @@ namespace guiex
 	/**
 	* @brief used to delete this object
 	*/
-	void IGUIImageLoader_tga::DeleteSelf()
+	void IGUIImageLoader_png_tga::DeleteSelf()
 	{
 		delete this;
 	}
 	//------------------------------------------------------------------------------
-
 
 }//namespace guiex
 

@@ -12,6 +12,13 @@
 		<property name="size" type="CGUISize" value="512,256" />
 	</property>     
 
+	<property name="Glues-WoW-TaiwanWotLKLogo_png" type="CGUIImageDefine">
+		<property  name="path" type="CGUIString" value="image/Glues-WoW-TaiwanWotLKLogo.png" />
+		<property name="uv" type="CGUIRect" value="0,0,512,256" />
+		<property name="size" type="CGUISize" value="512,256" />
+	</property>     
+
+
 </guiex>
 
 

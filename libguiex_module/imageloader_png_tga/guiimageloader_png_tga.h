@@ -1,19 +1,18 @@
 /** 
-* @file guiimageloader_tga.h
+* @file guiimageloader_png_tga.h
 * @brief interface to load image from file or memory.
 * @author ken
-* @date 2010-11-10
+* @date 2011-07-06
 */
 
 
-#ifndef __GUI_INTERFACE_IMAGELOADER_TGA_H_20101110__
-#define __GUI_INTERFACE_IMAGELOADER_TGA_H_20101110__
+#ifndef __GUI_INTERFACE_IMAGELOADER_PNG_TGA_H_20110706__
+#define __GUI_INTERFACE_IMAGELOADER_PNG_TGA_H_20110706__
 
 //============================================================================//
 // include
 //============================================================================// 
 #include <libguiex_core/guiinterfaceimageloader.h>
-
 
 //============================================================================//
 // class
@@ -22,28 +21,31 @@ namespace guiex
 {
 
 	/**
-	* @class IGUIImageLoader_tga
+	* @class IGUIImageLoader_png_tga
 	* @brief interface for load image by using devil library
 	*/
-	class GUIEXPORT IGUIImageLoader_tga : public IGUIInterfaceImageLoader
+	class GUIEXPORT IGUIImageLoader_png_tga : public IGUIInterfaceImageLoader
 	{
 	public:
-		IGUIImageLoader_tga();
-		virtual ~IGUIImageLoader_tga();
+		IGUIImageLoader_png_tga();
+		virtual ~IGUIImageLoader_png_tga();
 
 		virtual CGUIImageData* LoadFromFile( const CGUIString& rFileName  );
 		virtual CGUIImageData* LoadFromMemory( uint8* pFileData, size_t nSize );
-
 		virtual void DestroyImageData(CGUIImageData* pImageData);
 
 		virtual void DeleteSelf();
 
 	protected:
-		virtual int DoInitialize(void* );
-		virtual void DoDestroy();
+		CGUIImageData* LoadPng( uint8* pFileData, size_t nSize );
+		CGUIImageData* LoadTga( uint8* pFileData, size_t nSize );
 
 		CGUIImageData* LoadUncompressedTGA( uint8* pFileData, size_t nSize );
 		CGUIImageData* LoadCompressedTGA( uint8* pFileData, size_t nSize );
+
+	protected:
+		virtual int DoInitialize(void* );
+		virtual void DoDestroy();
 
 	public: 
 		static const char* StaticGetModuleName();
@@ -54,5 +56,5 @@ namespace guiex
 
 }//namespace guiex
 
-#endif //__GUI_INTERFACE_IMAGELOADER_TGA_H_20101110__
+#endif //__GUI_INTERFACE_IMAGELOADER_PNG_TGA_H_20110706__
 

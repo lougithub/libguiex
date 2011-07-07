@@ -2,6 +2,7 @@
 <libguiex_project>
 	<property name="login" type="SceneName" />
 	<property name="common" type="Dependency"/>
+	<property name="pngtest.xml" type="WidgetFile" />
 	<property name="login.xml" type="WidgetFile" />
 	<property name="login.lua" type="ScriptFile" />
 	<property name="resource.res" type="ResourceFile" />

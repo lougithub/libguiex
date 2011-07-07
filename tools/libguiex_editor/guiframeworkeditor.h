@@ -29,9 +29,10 @@ public:
 	void EditorSetupLogSystem( );
 
 protected:
-	virtual void RegisterInterfaces( );
 	virtual void PostRender( );
 	virtual void SetupLogSystem( );
+
+	virtual void RegisterInterfaces_Render( );
 
 protected:
 	class WxEditorCanvas* m_pCurrentCanvas;

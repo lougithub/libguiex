@@ -100,6 +100,23 @@ namespace guiex
 #endif
 	}
 	//------------------------------------------------------------------------------
+	void CGUIFrameworkBase::RegisterInterfaces( )
+	{
+		RegisterInterfaces_Render( );
+		RegisterInterfaces_ImageLoader( );
+		RegisterInterfaces_FileSys( );
+		RegisterInterfaces_Mouse( );
+		RegisterInterfaces_Keyboard( );
+		RegisterInterfaces_Font( );
+		RegisterInterfaces_ConfigFile( );
+		RegisterInterfaces_StringConv( );
+		RegisterInterfaces_Script( );
+		RegisterInterfaces_Physics( );
+		RegisterInterfaces_Sound( );
+		RegisterInterfaces_Ime( );
+		RegisterInterfaces_LocalizationLoader( );
+	}
+	//------------------------------------------------------------------------------
 	void CGUIFrameworkBase::Update( real fDeltaTime )
 	{
 #if GUI_USE_EXCEPTION

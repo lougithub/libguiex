@@ -35,8 +35,21 @@ namespace guiex
 		virtual void ReleaseSystem( );
 
 		virtual void SetupLogSystem( );
-		virtual void RegisterInterfaces( );
 		virtual void RegisterWidgetGenerators( );
+
+		virtual void RegisterInterfaces_Render( );
+		virtual void RegisterInterfaces_ImageLoader( );
+		virtual void RegisterInterfaces_FileSys( );
+		virtual void RegisterInterfaces_Mouse( );
+		virtual void RegisterInterfaces_Keyboard( );
+		virtual void RegisterInterfaces_Font( );
+		virtual void RegisterInterfaces_ConfigFile( );
+		virtual void RegisterInterfaces_StringConv( );
+		virtual void RegisterInterfaces_Script( );
+		virtual void RegisterInterfaces_Physics( );
+		virtual void RegisterInterfaces_Sound( );
+		virtual void RegisterInterfaces_Ime( );
+		virtual void RegisterInterfaces_LocalizationLoader( );
 
 		virtual void PreUpdate( real fDeltaTime );
 		virtual void PostUpdate( real fDeltaTime );

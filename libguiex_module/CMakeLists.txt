@@ -92,6 +92,24 @@ set( ${target_name}_imageloader_tga_SRCS
 	)
 source_group(imageloader_tga FILES ${${target_name}_imageloader_tga_SRCS} )
 
+#imageloader_png
+set( ${target_name}_imageloader_png_SRCS 
+	imageloader_png/guiimagedata_png.cpp
+	imageloader_png/guiimagedata_png.h
+	imageloader_png/guiimageloader_png.cpp
+	imageloader_png/guiimageloader_png.h
+	)
+source_group(imageloader_png FILES ${${target_name}_imageloader_png_SRCS} )
+
+#imageloader_png_tga
+set( ${target_name}_imageloader_png_tga_SRCS 
+	imageloader_png_tga/guiimagedata_png_tga.cpp
+	imageloader_png_tga/guiimagedata_png_tga.h
+	imageloader_png_tga/guiimageloader_png_tga.cpp
+	imageloader_png_tga/guiimageloader_png_tga.h
+	)
+source_group(imageloader_png_tga FILES ${${target_name}_imageloader_png_tga_SRCS} )
+
 #ime_winapi
 set( ${target_name}_ime_winapi_SRCS 
 	ime_winapi/guiime_winapi.cpp
@@ -208,6 +226,8 @@ if( BUILD_PLATFORM_WIN32 )
 		${${target_name}_font_ft2_SRCS}
 		${${target_name}_font_dummy_SRCS}
 		${${target_name}_imageloader_tga_SRCS}
+		${${target_name}_imageloader_png_SRCS}
+		${${target_name}_imageloader_png_tga_SRCS}
 		${${target_name}_ime_winapi_SRCS}
 		${${target_name}_ime_dummy_SRCS}
 		${${target_name}_keyboard_winapi_SRCS}
@@ -236,6 +256,8 @@ elseif( BUILD_PLATFORM_IOS )
 		${${target_name}_font_dummy_SRCS}
 		${${target_name}_ime_dummy_SRCS}
 		${${target_name}_imageloader_tga_SRCS}
+		${${target_name}_imageloader_png_SRCS}
+		${${target_name}_imageloader_png_tga_SRCS}
 		${${target_name}_render_opengles_ios_SRCS}
 		${${target_name}_render_opengl_base_SRCS}
 		${${target_name}_stringconv_iconv_SRCS}
@@ -258,6 +280,8 @@ elseif( BUILD_PLATFORM_MACOS )
 		${${target_name}_font_dummy_SRCS}
 		${${target_name}_ime_dummy_SRCS}
 		${${target_name}_imageloader_tga_SRCS}
+		${${target_name}_imageloader_png_SRCS}
+		${${target_name}_imageloader_png_tga_SRCS}
 		${${target_name}_render_opengl_SRCS}
 		${${target_name}_render_opengl_base_SRCS}
 		${${target_name}_stringconv_iconv_SRCS}
@@ -283,6 +307,7 @@ include_directories( "${PROJECT_SOURCE_DIR}/external/tinyxml" )
 include_directories( "${PROJECT_SOURCE_DIR}/external/lua/src" )
 include_directories( "${PROJECT_SOURCE_DIR}/external/freetype/include" )
 include_directories( "${PROJECT_SOURCE_DIR}/external/Box2D" )
+include_directories( "${PROJECT_SOURCE_DIR}/external/libpng" )
 include_directories( "${PROJECT_SOURCE_DIR}/external/libvorbis/include" )
 include_directories( "${PROJECT_SOURCE_DIR}/external/libogg/include" )
 include_directories( "${PROJECT_SOURCE_DIR}/external/freealut/include" )

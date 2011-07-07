@@ -93,7 +93,16 @@ void CResourceList::UpdateImageList()
 		wxFileName filename( rImagePath );
 		if ( filename.FileExists() )
 		{
-			wxImage* pWxImage = new wxImage( filename.GetFullPath(), wxBITMAP_TYPE_TGA );
+			wxImage* pWxImage = NULL;
+			if( filename.GetExt().CmpNoCase(L"tga") == 0)
+			{
+				pWxImage = new wxImage( filename.GetFullPath(), wxBITMAP_TYPE_TGA );
+			}
+			else if( filename.GetExt().CmpNoCase(L"png") == 0)
+			{
+				pWxImage = new wxImage( filename.GetFullPath(), wxBITMAP_TYPE_PNG );
+			}
+
 			if ( pWxImage && pWxImage->Ok() )
 			{
 				const CGUIRect& rRect = pGuiImage->GetUVRect();
@@ -155,7 +164,10 @@ void CResourceList::UpdateImageList()
 
 				wxBitmap* pBitmap = new wxBitmap( *pWxImage );
 				m_mapImageThumbnails[rWxImageName] = pBitmap;
+			}
 
+			if( pWxImage )
+			{
 				delete pWxImage;
 			}
 		}

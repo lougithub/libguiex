@@ -56,10 +56,15 @@ namespace guiex
 		*/
 		virtual uint8*	GetData() = 0;
 
+		uint32 GetBytePerPixel() const
+		{
+			return GetBytePerPixel(m_ePixelFormat);
+		}
+
 		/**
 		* @brief set pixel format
 		*/
-		void	SetPixelFormat(EGuiPixelFormat ePixelFormat)
+		void SetPixelFormat(EGuiPixelFormat ePixelFormat)
 		{
 			m_ePixelFormat = ePixelFormat;
 		}
@@ -74,11 +79,10 @@ namespace guiex
 
 		static uint32 GetBytePerPixel( EGuiPixelFormat ePixelFormat );
 
-
 		/**
 		* @brief release this data
 		*/
-		void	Release();
+		void Release();
 
 	protected:
 		/**

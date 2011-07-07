@@ -11,20 +11,7 @@
 #include "guiframeworkeditor.h"
 
 #include <libguiex_module\render_opengl\guirender_opengl.h>
-#include <libguiex_module\imageloader_tga\guiimageloader_tga.h>
-#include <libguiex_module\keyboard_winapi\guikeyboard_winapi.h>
-#include <libguiex_module\mouse_winapi\guimouse_winapi.h>
-#include <libguiex_module\font_ft2\guifont_ft2.h>
-#include <libguiex_module\font_dummy\guifont_dummy.h>
-#include <libguiex_module\filesys_stdio\guifilesys_stdio.h>
-#include <libguiex_module\configfile_tinyxml\guiconfigfile_tinyxml.h>
-#include <libguiex_module\script_lua\guiscript_lua.h>
-#include <libguiex_module\ime_winapi\guiime_winapi.h>
-#include <libguiex_module\stringconv_winapi\guistringconv_winapi.h>
-#include <libguiex_module/stringconv_internal/guistringconv_internal.h>
-#include <libguiex_module/physics_box2d/guiphysics_box2d.h>
-#include <libguiex_module/sound_openal/guisound_openal.h>
-#include <libguiex_module/localizationloader_tinyxml/guilocalizationloader_tinyxml.h>
+#include <libguiex_module\imageloader_png\guiimageloader_png.h>
 
 #include "wxeditorcanvas.h"
 #include "wxmainapp.h"
@@ -56,22 +43,10 @@ CGUIFrameworkEditor::CGUIFrameworkEditor( )
 {
 }
 //------------------------------------------------------------------------------
-void CGUIFrameworkEditor::RegisterInterfaces( )
+void CGUIFrameworkEditor::RegisterInterfaces_Render( )
 {
-	//register interface
-	GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_tga);
-	GUI_REGISTER_INTERFACE_LIB( IGUIFileSys_stdio);
-	GUI_REGISTER_INTERFACE_LIB( IGUIMouse_winapi);
-	GUI_REGISTER_INTERFACE_LIB( IGUIFont_ft2);
-	GUI_REGISTER_INTERFACE_LIB( IGUIKeyboard_winapi);
-	GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
-	GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_internal);
-	GUI_REGISTER_INTERFACE_LIB( IGUIPhysics_box2d);
-	GUI_REGISTER_INTERFACE_LIB( IGUISound_openal );
-	GUI_REGISTER_INTERFACE_LIB_ARG( IGUIIme_winapi, ::GetForegroundWindow() );
-	GUI_REGISTER_INTERFACE_LIB( IGUILocalizationLoader_tinyxml); 
 }
-//------------------------------------------------------------------------------ 
+//------------------------------------------------------------------------------
 void CGUIFrameworkEditor::EditorSetupLogSystem( )
 {
 	GUI_LOG->SetCallbackMsg( &CEditorLogMsgCallback::g_MsgCallback );

@@ -96,20 +96,68 @@ namespace guiex
 		delete GSystem;
 	}
 	//------------------------------------------------------------------------------ 
-	void CGUIFramework_IOS::RegisterInterfaces( )
+	void CGUIFramework_IOS::RegisterInterfaces_Render( )
 	{
 		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengles_ios);
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_IOS::RegisterInterfaces_ImageLoader( )
+	{
 		GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_tga);
-		//GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_cocoa);
-		GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_internal);
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_IOS::RegisterInterfaces_FileSys( )
+	{
 		GUI_REGISTER_INTERFACE_LIB( IGUIFileSys_cocoa);
-		GUI_REGISTER_INTERFACE_LIB( IGUIFont_ft2);
-		GUI_REGISTER_INTERFACE_LIB( IGUIIme_dummy);
-		GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
-		GUI_REGISTER_INTERFACE_LIB( IGUIScript_lua);
-		GUI_REGISTER_INTERFACE_LIB( IGUIPhysics_box2d );
-		GUI_REGISTER_INTERFACE_LIB( IGUISound_openal ); 
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_IOS::RegisterInterfaces_Mouse( )
+	{
 		GUI_REGISTER_INTERFACE_LIB( IGUIMouse_default); 
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_IOS::RegisterInterfaces_Keyboard( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUIKeyboard_default);
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_IOS::RegisterInterfaces_Font( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUIFont_ft2);
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_IOS::RegisterInterfaces_ConfigFile( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUIConfigFile_tinyxml);
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_IOS::RegisterInterfaces_StringConv( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUIStringConv_internal);
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_IOS::RegisterInterfaces_Script( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUIScript_lua );
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_IOS::RegisterInterfaces_Physics( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUIPhysics_box2d );
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_IOS::RegisterInterfaces_Sound( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUISound_openal );
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_IOS::RegisterInterfaces_Ime( )
+	{
+		GUI_REGISTER_INTERFACE_LIB( IGUIIme_dummy);
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIFramework_IOS::RegisterInterfaces_LocalizationLoader( )
+	{
 		GUI_REGISTER_INTERFACE_LIB( IGUILocalizationLoader_tinyxml); 
 	}
 	//------------------------------------------------------------------------------ 
