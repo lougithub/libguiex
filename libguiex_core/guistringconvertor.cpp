@@ -958,7 +958,53 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
+	//convert for EOrientation
+	template< >
+	CGUIString GetValueType<EOrientation>( )
+	{
+		return "EOrientation";
+	}
+	template<  >
+	int32 StringToValue<EOrientation>( const CGUIString& rString, EOrientation& rValue)
+	{
+		if( rString == "eOrientation_Vertical" )
+		{
+			rValue = eOrientation_Vertical;
+		}
+		else if( rString == "eOrientation_Horizonal" )
+		{
+			rValue = eOrientation_Horizonal;
+		}
+		else
+		{
+			GUI_THROW( GUI_FORMAT(
+				"[StringToValue[EOrientation]]: string value format is wrong! <%s>",
+				rString.c_str()));
+			return -1;
+		}
+		return 0;
+	}
 
+	template<  >
+	int32 ValueToString<EOrientation>( const EOrientation& rValue, CGUIString& rString )
+	{
+		switch(rValue)
+		{
+		case eOrientation_Vertical:
+			rString = CGUIString("eOrientation_Vertical");
+			break;
+		case eOrientation_Horizonal:
+			rString = CGUIString("eOrientation_Horizonal");
+			break;
+		default:
+			GUI_THROW( GUI_FORMAT(
+				"[ValueToString[EOrientation]]: unknown EOrientation enum <%d>",
+				rValue));
+			return -1;
+		}
+		return 0;
+	}
+	//------------------------------------------------------------------------------
 
 }//namespace guiex
  

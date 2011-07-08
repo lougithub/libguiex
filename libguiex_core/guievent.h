@@ -246,9 +246,8 @@ namespace guiex
 		CGUIEventScrollbar();
 		virtual uint32 Process();
 
-		void SetScrollbarType( bool bVertical );
-		bool IsVertical() const;
-		bool IsHorizontal() const;
+		void SetOrientation( EOrientation eOrientation );
+		EOrientation GetOrientation( ) const;
 		
 		void SetScrollbar(CGUIWidget * pScrollbar);
 		CGUIWidget*	GetScrollbar() const;
@@ -260,7 +259,7 @@ namespace guiex
 		uint32 GetRange() const;
 
 	protected:
-		bool m_bTypeVertical; /// the type of scrollbar
+		EOrientation m_eOrientation; /// the orientation of scrollbar
 		uint32	m_nCurrentPos; /// current position
 		uint32	m_nRange; /// range
 		CGUIWidget*	m_pScrollbar; ///scrollbar

@@ -79,6 +79,7 @@ namespace guiex
 		ePropertyType_Interpolation,
 		ePropertyType_Particle2DSystemMode,
 		ePropertyType_BlendFunc,
+		ePropertyType_Orientation,
 
 		ePropertyType_Set,
 		ePropertyType_Widget,

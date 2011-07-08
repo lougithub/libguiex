@@ -1556,26 +1556,27 @@ SWIG_Lua_dostring(lua_State *L, const char* str) {
 #define SWIGTYPE_p_guiex__CGUIWgtPanel swig_types[47]
 #define SWIGTYPE_p_guiex__CGUIWgtProgress swig_types[48]
 #define SWIGTYPE_p_guiex__CGUIWgtRadioButton swig_types[49]
-#define SWIGTYPE_p_guiex__CGUIWgtStaticImage swig_types[50]
-#define SWIGTYPE_p_guiex__CGUIWgtStaticText swig_types[51]
-#define SWIGTYPE_p_guiex__CGUIWgtTag swig_types[52]
-#define SWIGTYPE_p_guiex__CGUIWgtTextBase swig_types[53]
-#define SWIGTYPE_p_guiex__CGUIWidget swig_types[54]
-#define SWIGTYPE_p_guiex__CGUIWidgetManager swig_types[55]
-#define SWIGTYPE_p_guiex__CGUIWidgetUtility swig_types[56]
-#define SWIGTYPE_p_guiex__IGUIInterfaceCommand swig_types[57]
-#define SWIGTYPE_p_guiex__IGUIInterfaceKeyboard swig_types[58]
-#define SWIGTYPE_p_guiex__IGUIInterfaceRender swig_types[59]
-#define SWIGTYPE_p_guiex__IGUIInterfaceSound swig_types[60]
-#define SWIGTYPE_p_int swig_types[61]
-#define SWIGTYPE_p_short swig_types[62]
-#define SWIGTYPE_p_std__string swig_types[63]
-#define SWIGTYPE_p_unsigned_char swig_types[64]
-#define SWIGTYPE_p_unsigned_int swig_types[65]
-#define SWIGTYPE_p_unsigned_short swig_types[66]
-#define SWIGTYPE_p_void swig_types[67]
-static swig_type_info *swig_types[69];
-static swig_module_info swig_module = {swig_types, 68, 0, 0, 0, 0};
+#define SWIGTYPE_p_guiex__CGUIWgtScrollbar swig_types[50]
+#define SWIGTYPE_p_guiex__CGUIWgtStaticImage swig_types[51]
+#define SWIGTYPE_p_guiex__CGUIWgtStaticText swig_types[52]
+#define SWIGTYPE_p_guiex__CGUIWgtTag swig_types[53]
+#define SWIGTYPE_p_guiex__CGUIWgtTextBase swig_types[54]
+#define SWIGTYPE_p_guiex__CGUIWidget swig_types[55]
+#define SWIGTYPE_p_guiex__CGUIWidgetManager swig_types[56]
+#define SWIGTYPE_p_guiex__CGUIWidgetUtility swig_types[57]
+#define SWIGTYPE_p_guiex__IGUIInterfaceCommand swig_types[58]
+#define SWIGTYPE_p_guiex__IGUIInterfaceKeyboard swig_types[59]
+#define SWIGTYPE_p_guiex__IGUIInterfaceRender swig_types[60]
+#define SWIGTYPE_p_guiex__IGUIInterfaceSound swig_types[61]
+#define SWIGTYPE_p_int swig_types[62]
+#define SWIGTYPE_p_short swig_types[63]
+#define SWIGTYPE_p_std__string swig_types[64]
+#define SWIGTYPE_p_unsigned_char swig_types[65]
+#define SWIGTYPE_p_unsigned_int swig_types[66]
+#define SWIGTYPE_p_unsigned_short swig_types[67]
+#define SWIGTYPE_p_void swig_types[68]
+static swig_type_info *swig_types[70];
+static swig_module_info swig_module = {swig_types, 69, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -4978,80 +4979,6 @@ static swig_lua_class *swig_guiex_CGUIEvent_bases[] = {0};
 static const char *swig_guiex_CGUIEvent_base_names[] = {0};
 static swig_lua_class _wrap_class_guiex_CGUIEvent = { "CGUIEvent", &SWIGTYPE_p_guiex__CGUIEvent,0, swig_delete_CGUIEvent, swig_guiex_CGUIEvent_methods, swig_guiex_CGUIEvent_attributes, swig_guiex_CGUIEvent_bases, swig_guiex_CGUIEvent_base_names };
 
-static int _wrap_CGUIEventScrollbar_SetScrollbarType(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::CGUIEventScrollbar *arg1 = (guiex::CGUIEventScrollbar *) 0 ;
-  bool arg2 ;
-  
-  SWIG_check_num_args("SetScrollbarType",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetScrollbarType",1,"guiex::CGUIEventScrollbar *");
-  if(!lua_isboolean(L,2)) SWIG_fail_arg("SetScrollbarType",2,"bool");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventScrollbar,0))){
-    SWIG_fail_ptr("CGUIEventScrollbar_SetScrollbarType",1,SWIGTYPE_p_guiex__CGUIEventScrollbar);
-  }
-  
-  arg2 = (lua_toboolean(L, 2)!=0);
-  (arg1)->SetScrollbarType(arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_CGUIEventScrollbar_IsVertical(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::CGUIEventScrollbar *arg1 = (guiex::CGUIEventScrollbar *) 0 ;
-  bool result;
-  
-  SWIG_check_num_args("IsVertical",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsVertical",1,"guiex::CGUIEventScrollbar const *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventScrollbar,0))){
-    SWIG_fail_ptr("CGUIEventScrollbar_IsVertical",1,SWIGTYPE_p_guiex__CGUIEventScrollbar);
-  }
-  
-  result = (bool)((guiex::CGUIEventScrollbar const *)arg1)->IsVertical();
-  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_CGUIEventScrollbar_IsHorizontal(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::CGUIEventScrollbar *arg1 = (guiex::CGUIEventScrollbar *) 0 ;
-  bool result;
-  
-  SWIG_check_num_args("IsHorizontal",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("IsHorizontal",1,"guiex::CGUIEventScrollbar const *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventScrollbar,0))){
-    SWIG_fail_ptr("CGUIEventScrollbar_IsHorizontal",1,SWIGTYPE_p_guiex__CGUIEventScrollbar);
-  }
-  
-  result = (bool)((guiex::CGUIEventScrollbar const *)arg1)->IsHorizontal();
-  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static int _wrap_CGUIEventScrollbar_SetScrollbar(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIEventScrollbar *arg1 = (guiex::CGUIEventScrollbar *) 0 ;
@@ -5213,9 +5140,6 @@ guiex::CGUIEventScrollbar *arg1 = (guiex::CGUIEventScrollbar *) obj;
 delete arg1;
 }
 static swig_lua_method swig_guiex_CGUIEventScrollbar_methods[] = {
-    {"SetScrollbarType", _wrap_CGUIEventScrollbar_SetScrollbarType}, 
-    {"IsVertical", _wrap_CGUIEventScrollbar_IsVertical}, 
-    {"IsHorizontal", _wrap_CGUIEventScrollbar_IsHorizontal}, 
     {"SetScrollbar", _wrap_CGUIEventScrollbar_SetScrollbar}, 
     {"GetScrollbar", _wrap_CGUIEventScrollbar_GetScrollbar}, 
     {"SetCurrentPos", _wrap_CGUIEventScrollbar_SetCurrentPos}, 
@@ -11074,6 +10998,73 @@ static swig_lua_class *swig_guiex_CGUIWgtListBoxItem_bases[] = {0,0};
 static const char *swig_guiex_CGUIWgtListBoxItem_base_names[] = {"guiex::CGUIWidget *",0};
 static swig_lua_class _wrap_class_guiex_CGUIWgtListBoxItem = { "CGUIWgtListBoxItem", &SWIGTYPE_p_guiex__CGUIWgtListBoxItem,0, swig_delete_CGUIWgtListBoxItem, swig_guiex_CGUIWgtListBoxItem_methods, swig_guiex_CGUIWgtListBoxItem_attributes, swig_guiex_CGUIWgtListBoxItem_bases, swig_guiex_CGUIWgtListBoxItem_base_names };
 
+static int _wrap_CGUIWgtScrollbar_SetCurrentPos(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWgtScrollbar *arg1 = (guiex::CGUIWgtScrollbar *) 0 ;
+  guiex::uint32 arg2 ;
+  
+  SWIG_check_num_args("SetCurrentPos",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SetCurrentPos",1,"guiex::CGUIWgtScrollbar *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SetCurrentPos",2,"guiex::uint32");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWgtScrollbar,0))){
+    SWIG_fail_ptr("CGUIWgtScrollbar_SetCurrentPos",1,SWIGTYPE_p_guiex__CGUIWgtScrollbar);
+  }
+  
+  SWIG_contract_assert((lua_tonumber(L,2)>=0),"number must not be negative")
+  arg2 = (guiex::uint32)lua_tonumber(L, 2);
+  (arg1)->SetCurrentPos(arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWgtScrollbar_GetCurrentPos(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWgtScrollbar *arg1 = (guiex::CGUIWgtScrollbar *) 0 ;
+  guiex::uint32 result;
+  
+  SWIG_check_num_args("GetCurrentPos",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetCurrentPos",1,"guiex::CGUIWgtScrollbar const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWgtScrollbar,0))){
+    SWIG_fail_ptr("CGUIWgtScrollbar_GetCurrentPos",1,SWIGTYPE_p_guiex__CGUIWgtScrollbar);
+  }
+  
+  result = (guiex::uint32)((guiex::CGUIWgtScrollbar const *)arg1)->GetCurrentPos();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_CGUIWgtScrollbar(void *obj) {
+guiex::CGUIWgtScrollbar *arg1 = (guiex::CGUIWgtScrollbar *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUIWgtScrollbar_methods[] = {
+    {"SetCurrentPos", _wrap_CGUIWgtScrollbar_SetCurrentPos}, 
+    {"GetCurrentPos", _wrap_CGUIWgtScrollbar_GetCurrentPos}, 
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIWgtScrollbar_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIWgtScrollbar_bases[] = {0,0};
+static const char *swig_guiex_CGUIWgtScrollbar_base_names[] = {"guiex::CGUIWidget *",0};
+static swig_lua_class _wrap_class_guiex_CGUIWgtScrollbar = { "CGUIWgtScrollbar", &SWIGTYPE_p_guiex__CGUIWgtScrollbar,0, swig_delete_CGUIWgtScrollbar, swig_guiex_CGUIWgtScrollbar_methods, swig_guiex_CGUIWgtScrollbar_attributes, swig_guiex_CGUIWgtScrollbar_bases, swig_guiex_CGUIWgtScrollbar_base_names };
+
 static void swig_delete_CGUIWgtBox2DBase(void *obj) {
 guiex::CGUIWgtBox2DBase *arg1 = (guiex::CGUIWgtBox2DBase *) obj;
 delete arg1;
@@ -11442,8 +11433,41 @@ fail:
 }
 
 
+static int _wrap_CGUIWidgetManager_GetWidget(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWidgetManager *arg1 = (guiex::CGUIWidgetManager *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  guiex::CGUIString *arg3 = 0 ;
+  std::string temp2 ;
+  std::string temp3 ;
+  guiex::CGUIWidget *result = 0 ;
+  
+  SWIG_check_num_args("GetWidget",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetWidget",1,"guiex::CGUIWidgetManager *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("GetWidget",2,"guiex::CGUIString const &");
+  if(!lua_isstring(L,3)) SWIG_fail_arg("GetWidget",3,"guiex::CGUIString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidgetManager,0))){
+    SWIG_fail_ptr("CGUIWidgetManager_GetWidget",1,SWIGTYPE_p_guiex__CGUIWidgetManager);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  temp3.assign(lua_tostring(L,3),lua_strlen(L,3)); arg3=&temp3;
+  result = (guiex::CGUIWidget *)(arg1)->GetWidget((guiex::CGUIString const &)*arg2,(guiex::CGUIString const &)*arg3);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIWidget,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static swig_lua_method swig_guiex_CGUIWidgetManager_methods[] = {
     {"LoadDynamicPage", _wrap_CGUIWidgetManager_LoadDynamicPage}, 
+    {"GetWidget", _wrap_CGUIWidgetManager_GetWidget}, 
     {0,0}
 };
 static swig_lua_attribute swig_guiex_CGUIWidgetManager_attributes[] = {
@@ -13280,6 +13304,9 @@ static void *_p_guiex__CGUIWgtEmptyNodeTo_p_guiex__CGUIWidget(void *x, int *SWIG
 static void *_p_guiex__CGUIWgtBox2DDynamicBodyTo_p_guiex__CGUIWidget(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((guiex::CGUIWidget *) (guiex::CGUIWgtBox2DBase *)(guiex::CGUIWgtBox2DBodyBase *) ((guiex::CGUIWgtBox2DDynamicBody *) x));
 }
+static void *_p_guiex__CGUIWgtScrollbarTo_p_guiex__CGUIWidget(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIWidget *)  ((guiex::CGUIWgtScrollbar *) x));
+}
 static void *_p_guiex__CGUIWgtProgressTo_p_guiex__CGUIWidget(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((guiex::CGUIWidget *)  ((guiex::CGUIWgtProgress *) x));
 }
@@ -13384,6 +13411,7 @@ static swig_type_info _swigt__p_guiex__CGUIWgtListBoxItem = {"_p_guiex__CGUIWgtL
 static swig_type_info _swigt__p_guiex__CGUIWgtPanel = {"_p_guiex__CGUIWgtPanel", "guiex::CGUIWgtPanel *", 0, 0, (void*)&_wrap_class_guiex_CGUIWgtPanel, 0};
 static swig_type_info _swigt__p_guiex__CGUIWgtProgress = {"_p_guiex__CGUIWgtProgress", "guiex::CGUIWgtProgress *", 0, 0, (void*)&_wrap_class_guiex_CGUIWgtProgress, 0};
 static swig_type_info _swigt__p_guiex__CGUIWgtRadioButton = {"_p_guiex__CGUIWgtRadioButton", "guiex::CGUIWgtRadioButton *", 0, 0, (void*)&_wrap_class_guiex_CGUIWgtRadioButton, 0};
+static swig_type_info _swigt__p_guiex__CGUIWgtScrollbar = {"_p_guiex__CGUIWgtScrollbar", "guiex::CGUIWgtScrollbar *", 0, 0, (void*)&_wrap_class_guiex_CGUIWgtScrollbar, 0};
 static swig_type_info _swigt__p_guiex__CGUIWgtStaticImage = {"_p_guiex__CGUIWgtStaticImage", "guiex::CGUIWgtStaticImage *", 0, 0, (void*)&_wrap_class_guiex_CGUIWgtStaticImage, 0};
 static swig_type_info _swigt__p_guiex__CGUIWgtStaticText = {"_p_guiex__CGUIWgtStaticText", "guiex::CGUIWgtStaticText *", 0, 0, (void*)&_wrap_class_guiex_CGUIWgtStaticText, 0};
 static swig_type_info _swigt__p_guiex__CGUIWgtTag = {"_p_guiex__CGUIWgtTag", "guiex::CGUIWgtTag *", 0, 0, (void*)&_wrap_class_guiex_CGUIWgtTag, 0};
@@ -13454,6 +13482,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_guiex__CGUIWgtPanel,
   &_swigt__p_guiex__CGUIWgtProgress,
   &_swigt__p_guiex__CGUIWgtRadioButton,
+  &_swigt__p_guiex__CGUIWgtScrollbar,
   &_swigt__p_guiex__CGUIWgtStaticImage,
   &_swigt__p_guiex__CGUIWgtStaticText,
   &_swigt__p_guiex__CGUIWgtTag,
@@ -13524,11 +13553,12 @@ static swig_cast_info _swigc__p_guiex__CGUIWgtListBoxItem[] = {  {&_swigt__p_gui
 static swig_cast_info _swigc__p_guiex__CGUIWgtPanel[] = {  {&_swigt__p_guiex__CGUIWgtPanel, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUIWgtProgress[] = {  {&_swigt__p_guiex__CGUIWgtProgress, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUIWgtRadioButton[] = {  {&_swigt__p_guiex__CGUIWgtRadioButton, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIWgtScrollbar[] = {  {&_swigt__p_guiex__CGUIWgtScrollbar, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUIWgtStaticImage[] = {  {&_swigt__p_guiex__CGUIWgtStaticImage, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUIWgtStaticText[] = {  {&_swigt__p_guiex__CGUIWgtStaticText, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUIWgtTag[] = {  {&_swigt__p_guiex__CGUIWgtTag, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUIWgtTextBase[] = {  {&_swigt__p_guiex__CGUIWgtEditBox, _p_guiex__CGUIWgtEditBoxTo_p_guiex__CGUIWgtTextBase, 0, 0},  {&_swigt__p_guiex__CGUIWgtStaticText, _p_guiex__CGUIWgtStaticTextTo_p_guiex__CGUIWgtTextBase, 0, 0},  {&_swigt__p_guiex__CGUIWgtTextBase, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_guiex__CGUIWidget[] = {  {&_swigt__p_guiex__CGUIWgtListBox, _p_guiex__CGUIWgtListBoxTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtBox2DBase, _p_guiex__CGUIWgtBox2DBaseTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtTextBase, _p_guiex__CGUIWgtTextBaseTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtRadioButton, _p_guiex__CGUIWgtRadioButtonTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtCheckButton, _p_guiex__CGUIWgtCheckButtonTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtTag, _p_guiex__CGUIWgtTagTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtEditBox, _p_guiex__CGUIWgtEditBoxTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtPanel, _p_guiex__CGUIWgtPanelTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtBox2DStaticBody, _p_guiex__CGUIWgtBox2DStaticBodyTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWidget, 0, 0, 0},  {&_swigt__p_guiex__CGUIWgtStaticImage, _p_guiex__CGUIWgtStaticImageTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtButton, _p_guiex__CGUIWgtButtonTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtBox2DBodyBase, _p_guiex__CGUIWgtBox2DBodyBaseTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtEmptyNode, _p_guiex__CGUIWgtEmptyNodeTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtBox2DDynamicBody, _p_guiex__CGUIWgtBox2DDynamicBodyTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtProgress, _p_guiex__CGUIWgtProgressTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtStaticText, _p_guiex__CGUIWgtStaticTextTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtListBoxItem, _p_guiex__CGUIWgtListBoxItemTo_p_guiex__CGUIWidget, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIWidget[] = {  {&_swigt__p_guiex__CGUIWgtListBox, _p_guiex__CGUIWgtListBoxTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtBox2DBase, _p_guiex__CGUIWgtBox2DBaseTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtTextBase, _p_guiex__CGUIWgtTextBaseTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtRadioButton, _p_guiex__CGUIWgtRadioButtonTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtCheckButton, _p_guiex__CGUIWgtCheckButtonTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtTag, _p_guiex__CGUIWgtTagTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtEditBox, _p_guiex__CGUIWgtEditBoxTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtPanel, _p_guiex__CGUIWgtPanelTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtBox2DStaticBody, _p_guiex__CGUIWgtBox2DStaticBodyTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWidget, 0, 0, 0},  {&_swigt__p_guiex__CGUIWgtStaticImage, _p_guiex__CGUIWgtStaticImageTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtButton, _p_guiex__CGUIWgtButtonTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtBox2DBodyBase, _p_guiex__CGUIWgtBox2DBodyBaseTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtEmptyNode, _p_guiex__CGUIWgtEmptyNodeTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtBox2DDynamicBody, _p_guiex__CGUIWgtBox2DDynamicBodyTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtScrollbar, _p_guiex__CGUIWgtScrollbarTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtProgress, _p_guiex__CGUIWgtProgressTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtStaticText, _p_guiex__CGUIWgtStaticTextTo_p_guiex__CGUIWidget, 0, 0},  {&_swigt__p_guiex__CGUIWgtListBoxItem, _p_guiex__CGUIWgtListBoxItemTo_p_guiex__CGUIWidget, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUIWidgetManager[] = {  {&_swigt__p_guiex__CGUIWidgetManager, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUIWidgetUtility[] = {  {&_swigt__p_guiex__CGUIWidgetUtility, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__IGUIInterfaceCommand[] = {  {&_swigt__p_guiex__IGUIInterfaceCommand, 0, 0, 0},{0, 0, 0, 0}};
@@ -13594,6 +13624,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_guiex__CGUIWgtPanel,
   _swigc__p_guiex__CGUIWgtProgress,
   _swigc__p_guiex__CGUIWgtRadioButton,
+  _swigc__p_guiex__CGUIWgtScrollbar,
   _swigc__p_guiex__CGUIWgtStaticImage,
   _swigc__p_guiex__CGUIWgtStaticText,
   _swigc__p_guiex__CGUIWgtTag,

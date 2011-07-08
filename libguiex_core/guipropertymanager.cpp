@@ -63,7 +63,8 @@ namespace guiex
 		RegisterPropertyType( ePropertyType_Interpolation, "EInterpolationType" );
 		RegisterPropertyType( ePropertyType_Particle2DSystemMode, "EParticle2DSystemMode" );
 		RegisterPropertyType( ePropertyType_BlendFunc, "EBlendFunc" );
-
+		RegisterPropertyType( ePropertyType_Orientation, "EOrientation" );
+		
 
 		RegisterPropertyType( ePropertyType_Font, "CGUIFont" );		
 		RegisterPropertyType( ePropertyType_Image, "CGUIImage" );

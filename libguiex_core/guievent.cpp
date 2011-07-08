@@ -112,7 +112,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIEventScrollbar::CGUIEventScrollbar()
 		:CGUIEvent("CGUIEventScrollbar")
-		,m_bTypeVertical(true)
+		,m_eOrientation(eOrientation_Vertical)
 		,m_nRange(0)
 		,m_nCurrentPos(0)
 		,m_pScrollbar(NULL)
@@ -136,19 +136,14 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUIEventScrollbar::SetScrollbarType( bool bVertical )
+	void CGUIEventScrollbar::SetOrientation( EOrientation eOrientation )
 	{
-		m_bTypeVertical = bVertical;
+		m_eOrientation = eOrientation;
 	}
 	//------------------------------------------------------------------------------
-	bool CGUIEventScrollbar::IsVertical() const
+	EOrientation CGUIEventScrollbar::GetOrientation( ) const
 	{
-		return m_bTypeVertical;
-	}
-	//------------------------------------------------------------------------------
-	bool CGUIEventScrollbar::IsHorizontal() const
-	{
-		return !m_bTypeVertical;
+		return m_eOrientation;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIEventScrollbar::SetScrollbar(CGUIWidget * pScrollbar)

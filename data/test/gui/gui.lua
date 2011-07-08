@@ -27,3 +27,22 @@ function OnTimer_Progress1( self, event )
 	self:SetCurrentValue( curValue );
 end
 
+--scrollbar test
+function OnLoad_ScrollbarBar_1( self, event )
+	local label = guiex.GetSystem():GetWidgetManager():GetWidget( "label_scrollbar_1", self:GetSceneName() );
+	label:SetTextContentUTF8( ""..self:GetCurrentPos() );
+end
+function OnScrollbarScroll_1( self, event )
+	local label = guiex.GetSystem():GetWidgetManager():GetWidget( "label_scrollbar_1", self:GetSceneName() );
+	label:SetTextContentUTF8( ""..event:GetCurrentPos() );
+end
+
+function OnLoad_ScrollbarBar_2( self, event )
+	local label = guiex.GetSystem():GetWidgetManager():GetWidget( "label_scrollbar_2", self:GetSceneName() );
+	label:SetTextContentUTF8( ""..self:GetCurrentPos() );
+end
+function OnScrollbarScroll_2( self, event )
+	local label = guiex.GetSystem():GetWidgetManager():GetWidget( "label_scrollbar_2", self:GetSceneName() );
+	label:SetTextContentUTF8( ""..event:GetCurrentPos() );
+end
+

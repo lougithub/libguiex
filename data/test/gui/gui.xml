@@ -188,7 +188,7 @@
         <property name="border_bottomleft" type="CGUIImage" value="panel_border_bottomleft" />
         <property name="border_bottomright" type="CGUIImage" value="panel_border_bottomright" />
         <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="201,120" />
+            <property name="value" type="CGUIVector2" value="35,406" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">
@@ -293,7 +293,7 @@
         <property name="hover" type="CGUIImage" value="button_red_hover" />
         <property name="push" type="CGUIImage" value="button_red_push" />
         <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="163,42" />
+            <property name="value" type="CGUIVector2" value="171,42" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">
@@ -302,5 +302,87 @@
         </property>
         <property name="text_normal" type="CGUILocalizedString" value="open dialog" />
         <property name="OnMouseLeftClick" type="CGUIEvent" value="OnBtnClick_test1" />
+    </property>
+    <property name="scrollbar_1" type="CGUIWidgetDefine" value="CGUIWgtScrollbar">
+        <property name="parent" type="CGUIString" value="node_root" />
+        <property name="background" type="CGUIImage" value="progress_bg" />
+        <property name="arrow_0_normal" type="CGUIImage" value="scrollbar_upbutton_up" />
+        <property name="arrow_0_hover" type="CGUIImage" value="scrollbar_upbutton_highlight" />
+        <property name="arrow_0_disable" type="CGUIImage" value="scrollbar_upbutton_disable" />
+        <property name="arrow_0_push" type="CGUIImage" value="scrollbar_upbutton_down" />
+        <property name="arrow_1_normal" type="CGUIImage" value="scrollbar_downbutton_up" />
+        <property name="arrow_1_hover" type="CGUIImage" value="scrollbar_downbutton_highlight" />
+        <property name="arrow_1_disable" type="CGUIImage" value="scrollbar_downbutton_disable" />
+        <property name="arrow_1_push" type="CGUIImage" value="scrollbar_downbutton_down" />
+        <property name="slide_normal" type="CGUIImage" value="scrollbar_knob" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="207,107" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="19,100" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="page_size" type="uint32" value="20" />
+        <property name="max_pos" type="uint32" value="100" />
+        <property name="current_pos" type="uint32" value="50" />
+        <property name="force_hittest" type="bool" value="true" />
+        <property name="OnScrollbarScroll" type="CGUIEvent" value="OnScrollbarScroll_1" />
+        <property name="OnLoad" type="CGUIEvent" value="OnLoad_ScrollbarBar_1" />
+        <property name="generate_load_event" type="bool" value="true" />
+    </property>
+    <property name="label_scrollbar_1" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
+        <property name="parent" type="CGUIString" value="scrollbar_1" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="26,40" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="36,20" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="text" type="CGUIString" value="0" />
+        <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Left" />
+    </property>
+    <property name="scrollbar_2" type="CGUIWidgetDefine" value="CGUIWgtScrollbar">
+        <property name="parent" type="CGUIString" value="node_root" />
+        <property name="background" type="CGUIImage" value="progress_bg" />
+        <property name="arrow_0_normal" type="CGUIImage" value="h_scrollbar_upbutton_up" />
+        <property name="arrow_0_hover" type="CGUIImage" value="h_scrollbar_upbutton_highlight" />
+        <property name="arrow_0_disable" type="CGUIImage" value="h_scrollbar_upbutton_disable" />
+        <property name="arrow_0_push" type="CGUIImage" value="h_scrollbar_upbutton_down" />
+        <property name="arrow_1_normal" type="CGUIImage" value="h_scrollbar_downbutton_up" />
+        <property name="arrow_1_hover" type="CGUIImage" value="h_scrollbar_downbutton_highlight" />
+        <property name="arrow_1_disable" type="CGUIImage" value="h_scrollbar_downbutton_disable" />
+        <property name="arrow_1_push" type="CGUIImage" value="h_scrollbar_downbutton_down" />
+        <property name="slide_normal" type="CGUIImage" value="h_scrollbar_knob" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="283,171" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="100,19" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="orientation" type="EOrientation" value="eOrientation_Horizonal" />
+        <property name="page_size" type="uint32" value="10" />
+        <property name="max_pos" type="uint32" value="100" />
+        <property name="current_pos" type="uint32" value="40" />
+        <property name="force_hittest" type="bool" value="true" />
+        <property name="OnScrollbarScroll" type="CGUIEvent" value="OnScrollbarScroll_2" />
+        <property name="OnLoad" type="CGUIEvent" value="OnLoad_ScrollbarBar_2" />
+        <property name="generate_load_event" type="bool" value="true" />
+    </property>
+    <property name="label_scrollbar_2" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
+        <property name="parent" type="CGUIString" value="scrollbar_2" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="28,-27" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="36,20" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="text" type="CGUIString" value="0" />
     </property>
 </guiex>

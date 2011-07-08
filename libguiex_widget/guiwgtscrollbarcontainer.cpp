@@ -49,16 +49,12 @@ namespace guiex
 		m_pScrollbarVert = static_cast<CGUIWgtScrollbar*>(GUI_CREATE_WIDGET("CGUIWgtScrollbar", GetName()+"_scrollbar_vert" + GUI_INTERNAL_WIDGET_FLAG, GetSceneName()));
 		m_pScrollbarVert->SetParent(this);
 		m_pScrollbarVert->SetFocusAgency( true );
-		m_pScrollbarVert->EnableNotifyParent(true);
-		m_pScrollbarVert->EnableAutoPosition(true);
-		m_pScrollbarVert->SetScrollbarType(eSB_VERTICAL);
+		m_pScrollbarVert->SetOrientation(eOrientation_Vertical);
 
 		m_pScrollbarHorz = static_cast<CGUIWgtScrollbar*>(GUI_CREATE_WIDGET("CGUIWgtScrollbar", GetName()+"_scrollbar_hort" + GUI_INTERNAL_WIDGET_FLAG, GetSceneName()));
 		m_pScrollbarHorz->SetParent(this);
 		m_pScrollbarHorz->SetFocusAgency( true );
-		m_pScrollbarHorz->EnableNotifyParent(true);
-		m_pScrollbarHorz->EnableAutoPosition(true);
-		m_pScrollbarHorz->SetScrollbarType(eSB_HORIZONAL);
+		m_pScrollbarHorz->SetOrientation(eOrientation_Horizonal);
 
 		//set flag
 		SetFocusable(true);

@@ -692,6 +692,38 @@ public:
 };
 
 
+
+class CEditorPropertyConvertor_Orientation : public CEditorPropertyConvertorBase
+{
+public:
+	CEditorPropertyConvertor_Orientation()
+		:CEditorPropertyConvertorBase( ePropertyType_Orientation )
+	{
+
+	}
+	virtual void DoGuiProperty2GridProperty(WxToolsPGManager* pSheetMgr, wxPGProperty* pPGCategory, wxPGProperty*& pPGTop, const CGUIProperty& aProp)
+	{
+		EOrientation aValue;
+		PropertyToValue( aProp, aValue );
+
+		if( pPGTop )
+		{
+			pPGTop->SetValue(aValue);
+		}
+		else
+		{
+			const wxArrayString& arrEnums = CPropertyConfigMgr::Instance()->GetEnumDefine(aProp.GetTypeAsString());
+			pPGTop = pSheetMgr->Insert( pPGCategory, -1, new wxEnumProperty(CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()), arrEnums));
+			pSheetMgr->SetPropertyValue(pPGTop, aValue);
+		}
+	}
+	virtual void DoGridProperty2GuiProperty( WxToolsPGManager* pSheetMgr, wxPGProperty* pPGProperty, CGUIProperty& rProperty )
+	{
+		CGUIString aValue = wx2GuiString(pSheetMgr->GetPropertyValueAsString( pPGProperty ));
+		rProperty.SetValue( aValue );
+	}
+};
+
 class CEditorPropertyConvertor_Real : public CEditorPropertyConvertorBase
 {
 public:
@@ -864,6 +896,7 @@ CPropertyConvertorMgr::CPropertyConvertorMgr()
 	RegisterConvertor( new CEditorPropertyConvertor_TextAlignmentHorz );
 	RegisterConvertor( new CEditorPropertyConvertor_TextAlignmentVert );
 	RegisterConvertor( new CEditorPropertyConvertor_ImageOrientation );
+	RegisterConvertor( new CEditorPropertyConvertor_Orientation );
 	RegisterConvertor( new CEditorPropertyConvertor_Real );
 	RegisterConvertor( new CEditorPropertyConvertor_UInt32 );
 	RegisterConvertor( new CEditorPropertyConvertor_Bool );

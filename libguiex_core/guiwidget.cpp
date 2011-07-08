@@ -80,6 +80,7 @@ namespace guiex
 		,m_bIsMovable(false)
 		,m_bIsHitable(true)
 		,m_bIsMouseConsumed(true)
+		,m_bForceHitTest(false)
 		,m_bIsGenerateUpdateEvent(false)
 		,m_bIsGenerateParentSizeChangeEvent(false)
 		,m_bIsGenerateParentChildEvent(false )
@@ -139,16 +140,20 @@ namespace guiex
 		Refresh();
 
 		//register to script
-		bool bHasScript = false;
-		guiex::IGUIInterfaceScript* pInterfaceScript = CGUIInterfaceManager::Instance()->GetInterfaceScript();
-		if( pInterfaceScript && !GSystem->IsEditorMode())
+		if( !CGUIWidgetManager::Instance()->IsInternalWidget( GetName()) )
 		{
-			bHasScript = pInterfaceScript->HasScript( GetSceneName() );
+			bool bHasScript = false;
+			guiex::IGUIInterfaceScript* pInterfaceScript = CGUIInterfaceManager::Instance()->GetInterfaceScript();
+			if( pInterfaceScript && !GSystem->IsEditorMode())
+			{
+				bHasScript = pInterfaceScript->HasScript( GetSceneName() );
+			}
+			if( bHasScript )
+			{
+				pInterfaceScript->RegisterWidget( this );
+			}
 		}
-		if( bHasScript )
-		{
-			pInterfaceScript->RegisterWidget( this );
-		}
+
 
 		OnCreate();
 	}
@@ -313,7 +318,7 @@ namespace guiex
 			m_pParent->m_aParamVisible.AddChild(&(m_aParamVisible));
 
 			//send event for add child
-			if( IsGenerateParentChildEvent() )
+			if( m_pParent->IsGenerateParentChildEvent() )
 			{
 				CGUIEventRelativeChange aEvent;
 				aEvent.SetEventId(eEVENT_ADD_CHILD);
@@ -1000,13 +1005,13 @@ namespace guiex
 	*/
 	CGUIWidget* CGUIWidget::GetWidgetAtPoint(const CGUIVector2& rPos)
 	{
-#if 1
 		if( !IsOpen() || !IsDerivedVisible() ) 
 		{
 			return NULL;
 		}
 
-		if( !HitTest(rPos))
+		bool bHitSelf = HitTest( rPos );
+		if( !bHitSelf && !IsForceHitTest())
 		{
 			return NULL;
 		}
@@ -1032,7 +1037,7 @@ namespace guiex
 			}
 		}
 		
-		if( IsHitable() || GSystem->IsEditorMode() )
+		if( bHitSelf && (IsHitable() || GSystem->IsEditorMode()))
 		{
 			return this;
 		}
@@ -1040,39 +1045,6 @@ namespace guiex
 		{
 			return NULL;
 		}
-#else
-		//check sibling first
-		if( GetNextSibling() )
-		{
-			CGUIWidget* pWidget = GetNextSibling()->GetWidgetAtPoint(rPos);
-			if( pWidget )
-			{
-				//find one
-				return pWidget;
-			}
-		}
-
-		if( IsOpen() && IsDerivedVisible() ) 
-		{
-			//check child
-			if( GetChild() )
-			{
-				CGUIWidget* pWidget = GetChild()->GetWidgetAtPoint(rPos);
-				if( pWidget )
-				{
-					//find one
-					return pWidget;
-				}
-			}
-
-			//check self
-			if( HitTest(rPos) )
-			{
-				return this;
-			}
-		}
-		return NULL;
-#endif
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -1751,42 +1723,34 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int32 CGUIWidget::GenerateProperty( CGUIProperty& rProperty )
 	{
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		if( rProperty.GetType() == ePropertyType_WidgetPosition && rProperty.GetName() == "position")
 		{
 			ValueToProperty( m_aWidgetPosition, rProperty );
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_WidgetSize && rProperty.GetName() == "size")
 		{
 			ValueToProperty( m_aWidgetSize, rProperty );
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Color && rProperty.GetName() == "color")
 		{
 			ValueToProperty( m_aColor, rProperty );
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Vector2 && rProperty.GetName() == "anchor" )
 		{
 			ValueToProperty( m_aWidgetAnchorPoint, rProperty );
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if(  rProperty.GetType()== ePropertyType_Size && rProperty.GetName() == "scale" )
 		{
 			ValueToProperty( GetScale(), rProperty );
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Size && rProperty.GetName() == "max_size" )
 		{
 			ValueToProperty( m_aMaxSize, rProperty );
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Size && rProperty.GetName() == "min_size" )
 		{
 			ValueToProperty( m_aMinSize, rProperty );
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Image  )
 		{
 			CGUIImage* pImage = GetImage(rProperty.GetName());
@@ -1799,7 +1763,6 @@ namespace guiex
 				rProperty.SetValue( "" );
 			}
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Sound  )
 		{
 			CGUISoundData* pSound = GetSound( rProperty.GetName() );
@@ -1812,7 +1775,6 @@ namespace guiex
 				rProperty.SetValue( "" );
 			}
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Event  )
 		{
 			if( HasScriptCallbackFunc(rProperty.GetName()) )
@@ -1824,7 +1786,6 @@ namespace guiex
 				rProperty.SetValue( "" );
 			}
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_As  )
 		{
 			CGUIAs* pAs = GetAs(rProperty.GetName());
@@ -1837,87 +1798,74 @@ namespace guiex
 				rProperty.SetValue( "" );
 			}
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Real && rProperty.GetName() == "alpha" )
 		{
 			ValueToProperty( GetAlpha(), rProperty);
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Vector3 && rProperty.GetName() == "rotation" )
 		{
 			ValueToProperty( GetRotation(), rProperty);
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "activable" )
 		{
 			ValueToProperty( IsActivable(), rProperty);
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "disable" )
 		{
 			ValueToProperty( IsDisable(), rProperty);
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "auto_play_as" )
 		{
 			ValueToProperty( IsAutoPlayAs(), rProperty);
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "open_with_parent" )
 		{
 			ValueToProperty( IsOpenWithParent(), rProperty);
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "generate_update_event" )
 		{
 			ValueToProperty( IsGenerateUpdateEvent(), rProperty);
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "generate_click_event" )
 		{
 			ValueToProperty( IsGenerateClickEvent(), rProperty);
 		}		
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "generate_load_event" )
 		{
 			ValueToProperty( IsGenerateLoadEvent(), rProperty);
 		}		
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "generate_parentsizechange_event" )
 		{
 			ValueToProperty( IsGenerateParentSizeChangeEvent(), rProperty);
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "movable" )
 		{
 			ValueToProperty( IsMovable(), rProperty);
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "visible" )
 		{
 			ValueToProperty( IsVisible(), rProperty);
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "disable" )
 		{
 			ValueToProperty( IsDisable(), rProperty);
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
+		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "force_hittest" )
+		{
+			ValueToProperty( IsForceHitTest(), rProperty);
+		}
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "hitable" )
 		{
 			ValueToProperty( IsHitable(), rProperty);
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="focusable" )
 		{
 			ValueToProperty( IsFocusable(), rProperty);
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "clip_children" )
 		{
 			ValueToProperty( IsClipChildren(), rProperty);
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "parent" )
 		{
 			if( GetParent() && !CGUIWidgetManager::Instance()->IsInternalWidget( GetParent()->GetName()) )
@@ -1944,8 +1892,6 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWidget::ProcessProperty( const CGUIProperty& rProperty )
 	{
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//property for parent
 		if(rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "parent")
 		{
 			CGUIWidget* pParent = NULL;
@@ -1955,29 +1901,22 @@ namespace guiex
 			}
 			SetParent( pParent);
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_WidgetPosition && rProperty.GetName() == "position")
 		{
 			PropertyToValue( rProperty, m_aWidgetPosition);
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_WidgetSize && rProperty.GetName() == "size")
 		{
 			PropertyToValue( rProperty, m_aWidgetSize);
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if( rProperty.GetType() == ePropertyType_Color && rProperty.GetName() == "color")
 		{
 			PropertyToValue( rProperty, m_aColor );
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//property for sound
 		else if(  rProperty.GetType()== ePropertyType_Sound)
 		{
 			RegisterSound( rProperty.GetName(), rProperty.GetValue());
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		/// load image
 		else if( rProperty.GetType() == ePropertyType_Image )
 		{
 			if(!rProperty.GetValue().empty())
@@ -1990,8 +1929,6 @@ namespace guiex
 				SetImage( rProperty.GetName(), NULL);
 			}
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		/// load as
 		else if( rProperty.GetType() == ePropertyType_As )
 		{
 			if( !rProperty.GetValue().empty() )
@@ -2004,8 +1941,6 @@ namespace guiex
 				SetAs( rProperty.GetName(), NULL);
 			}
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//property for script event
 		else if( rProperty.GetType()== ePropertyType_Event )
 		{
 			if( rProperty.GetValue().empty())
@@ -2017,23 +1952,18 @@ namespace guiex
 				RegisterScriptCallbackFunc( rProperty.GetName(), rProperty.GetValue());
 			}
 		}
-		//property for anchor point
 		else if(  rProperty.GetType()== ePropertyType_Vector2 && rProperty.GetName() == "anchor" )
 		{
 			CGUIVector2 aValue;
 			PropertyToValue( rProperty, aValue );
 			SetAnchorPoint( aValue );
 		}
-		//property for scale
 		else if(  rProperty.GetType()== ePropertyType_Size && rProperty.GetName() == "scale" )
 		{
 			CGUISize aValue;
 			PropertyToValue( rProperty, aValue );
 			SetScale( aValue );
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//property for size
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if(  rProperty.GetType()== ePropertyType_Size && rProperty.GetName() == "max_size" )
 		{
 			CGUISize aSize;
@@ -2046,27 +1976,18 @@ namespace guiex
 			PropertyToValue( rProperty, aSize );
 			SetMaximumSize( aSize );
 		}
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//property for alpha
 		else if(  rProperty.GetType()== ePropertyType_Real && rProperty.GetName()=="alpha" )
 		{
 			real fAlpha = 0.f;
 			PropertyToValue( rProperty, fAlpha );
 			SetAlpha( fAlpha );
 		}
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//property for rotation
 		else if(  rProperty.GetType()== ePropertyType_Vector3 && rProperty.GetName()=="rotation" )
 		{
 			CGUIVector3 vRotation;
 			PropertyToValue( rProperty, vRotation );
 			SetRotation( vRotation );
 		}
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//property for flag
 		else if(  rProperty.GetType()== ePropertyType_Bool &&  rProperty.GetName()=="movable" )
 		{
 			bool bValue = false;
@@ -2090,6 +2011,12 @@ namespace guiex
 			bool bValue = false;
 			PropertyToValue(rProperty, bValue );
 			SetAutoPlayAs( bValue );
+		}
+		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "force_hittest" )
+		{
+			bool bValue = false;
+			PropertyToValue(rProperty, bValue );
+			SetForceHitTest( bValue );
 		}
 		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName()=="hitable" )
 		{
@@ -2936,6 +2863,16 @@ namespace guiex
 	bool CGUIWidget::IsMouseConsumed( ) const
 	{
 		return m_bIsMouseConsumed;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::SetForceHitTest( bool bFlag )
+	{
+		m_bForceHitTest = bFlag;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWidget::IsForceHitTest( ) const
+	{
+		return m_bForceHitTest;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::SetGenerateUpdateEvent( bool bFlag )

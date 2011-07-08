@@ -322,11 +322,12 @@ namespace guiex
 	//============================================================================//
 	// CGUIWgtScrollbar
 	//============================================================================// 
-	//class CGUIWgtScrollbar : public CGUIWidget
-	//{
-	//public:
-
-	//};
+	class CGUIWgtScrollbar : public CGUIWidget
+	{
+	public:
+		void SetCurrentPos(uint32 nPos);
+		uint32 GetCurrentPos() const; 
+	};
 
 
 	//============================================================================//

@@ -80,6 +80,8 @@ namespace guiex
 		void DoRemoveItem( CGUIWgtListBoxItem* pItem);
 
 	protected:	//!< callback function
+		virtual uint32 OnAddChild( CGUIEventRelativeChange* pEvent );
+		virtual uint32 OnRemoveChild( CGUIEventRelativeChange* pEvent );
 
 		friend class CGUIWgtListBoxItem;
 		virtual void ProcessMouseLeftDown(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent);

@@ -1,329 +1,369 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <config>
-  <enum>
-    <property name="EScreenValue" type="enum" value="eScreenValue_Pixel;eScreenValue_Percentage;"/>
-    <property name="ETextAlignmentHorz" type="enum" value="eTextAlignment_Horz_Center;eTextAlignment_Horz_Left;eTextAlignment_Horz_Right;"/>
-    <property name="ETextAlignmentVert" type="enum" value="eTextAlignment_Vert_Center;eTextAlignment_Vert_Up;eTextAlignment_Vert_Down;"/>
-  </enum>
+	<enum>
+		<property name="EScreenValue" type="enum" value="eScreenValue_Pixel;eScreenValue_Percentage;"/>
+		<property name="ETextAlignmentHorz" type="enum" value="eTextAlignment_Horz_Center;eTextAlignment_Horz_Left;eTextAlignment_Horz_Right;"/>
+		<property name="ETextAlignmentVert" type="enum" value="eTextAlignment_Vert_Center;eTextAlignment_Vert_Up;eTextAlignment_Vert_Down;"/>
+		<property name="EOrientation" type="enum" value="eOrientation_Vertical;eOrientation_Horizonal;"/>
+	</enum>
 
-  <widget type="CGUIWidgetRoot" template="true">
-  </widget>
+	<widget type="CGUIWidgetRoot" template="true">
+	</widget>
 
-  <widget type="CGUIWidget" template="true">
-    <page name="Appearance">
-      <property name="parent" type="CGUIString" value="" readonly="true"/>
-      <property name="position" type="CGUIWidgetPosition" category="Default">
-        <property name="type" type="EScreenValue" value="eScreenValue_Pixel"/>
-        <property name="value" type="CGUIVector2" value="0,0" />
-      </property>
+	<widget type="CGUIWidget" template="true">
+		<page name="Appearance">
+			<property name="parent" type="CGUIString" value="" readonly="true"/>
+			<property name="position" type="CGUIWidgetPosition" category="Default">
+				<property name="type" type="EScreenValue" value="eScreenValue_Pixel"/>
+				<property name="value" type="CGUIVector2" value="0,0" />
+			</property>
 
-      <property name="size" type="CGUIWidgetSize" category="Default">
-        <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        <property name="value" type="CGUISize" value="0,0" />
-      </property>
+			<property name="size" type="CGUIWidgetSize" category="Default">
+				<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+				<property name="value" type="CGUISize" value="0,0" />
+			</property>
 
-      <property name="max_size" type="CGUISize" value="0,0" alternative_save="true" />
-      <property name="min_size" type="CGUISize" value="0,0" alternative_save="true" />
+			<property name="max_size" type="CGUISize" value="0,0" alternative_save="true" />
+			<property name="min_size" type="CGUISize" value="0,0" alternative_save="true" />
 
-      <property name="anchor" type="CGUIVector2" value="0,0"  category="Default" alternative_save="true" />
+			<property name="anchor" type="CGUIVector2" value="0,0"  category="Default" alternative_save="true" />
 
-      <property name="scale" type="CGUISize" value="1,1"  category="Default" alternative_save="true"/>
-      <property name="alpha" type="real" value="1"  category="Default" alternative_save="true"/>
-      <property name="rotation" type="CGUIVector3" value="0,0,0"  category="Default" alternative_save="true"/>
-      <property name="movable" type="bool" value="false"  category="Default" alternative_save="true"/>
-      <property name="color" type="CGUIColor" value="255,255,255,255"  category="Default" alternative_save="true"/>
-      <property name="visible" type="bool" value="true"  category="Default" alternative_save="true"/>
-      <property name="activable" type="bool" value="false"  category="Default" alternative_save="true"/>
+			<property name="scale" type="CGUISize" value="1,1"  category="Default" alternative_save="true"/>
+			<property name="alpha" type="real" value="1"  category="Default" alternative_save="true"/>
+			<property name="rotation" type="CGUIVector3" value="0,0,0"  category="Default" alternative_save="true"/>
+			<property name="movable" type="bool" value="false"  category="Default" alternative_save="true"/>
+			<property name="color" type="CGUIColor" value="255,255,255,255"  category="Default" alternative_save="true"/>
+			<property name="visible" type="bool" value="true"  category="Default" alternative_save="true"/>
+			<property name="activable" type="bool" value="false"  category="Default" alternative_save="true"/>
       <property name="hitable" type="bool" value="true"  category="Default" alternative_save="true"/>
-      <property name="focusable" type="bool" value="false"  category="Default" alternative_save="true"/>
-      <property name="disable" type="bool" value="false"  category="Default" alternative_save="true"/>
-      <property name="auto_play_as" type="bool" value="false"  category="Default" alternative_save="true"/>
-      <property name="clip_children" type="bool" value="false"  category="Default" alternative_save="true"/>
-      <property name="open_with_parent" type="bool" value="true"  category="Default" alternative_save="true"/>
+      <property name="force_hittest" type="bool" value="false"  category="Default" alternative_save="true"/>
+			<property name="focusable" type="bool" value="false"  category="Default" alternative_save="true"/>
+			<property name="disable" type="bool" value="false"  category="Default" alternative_save="true"/>
+			<property name="auto_play_as" type="bool" value="false"  category="Default" alternative_save="true"/>
+			<property name="clip_children" type="bool" value="false"  category="Default" alternative_save="true"/>
+			<property name="open_with_parent" type="bool" value="true"  category="Default" alternative_save="true"/>
 
-      <property name="generate_update_event" type="bool" value="false"  category="GenerateEvent" alternative_save="true"/>
-      <property name="generate_click_event" type="bool" value="false"  category="GenerateEvent" alternative_save="true"/>
-      <property name="generate_load_event" type="bool" value="false"  category="GenerateEvent" alternative_save="true"/>
-      <property name="generate_parentsizechange_event" type="bool" value="false"  category="GenerateEvent" alternative_save="true"/>
+			<property name="generate_update_event" type="bool" value="false"  category="GenerateEvent" alternative_save="true"/>
+			<property name="generate_click_event" type="bool" value="false"  category="GenerateEvent" alternative_save="true"/>
+			<property name="generate_load_event" type="bool" value="false"  category="GenerateEvent" alternative_save="true"/>
+			<property name="generate_parentsizechange_event" type="bool" value="false"  category="GenerateEvent" alternative_save="true"/>
 
-      <property name="default_as" type="CGUIAs" value="" alternative_save="true"/>
-    </page>
+			<property name="default_as" type="CGUIAs" value="" alternative_save="true"/>
+		</page>
 
-    <page name="Image">
-    </page>
+		<page name="Image">
+		</page>
 
-    <page name="Event">
-      <property name="OnLoad" type="CGUIEvent" value="" alternative_save="true"/>
-      <property name="OnOpen" type="CGUIEvent" value="" alternative_save="true"/>
-      <property name="OnClose" type="CGUIEvent" value="" alternative_save="true"/>
-      <property name="OnUpdate" type="CGUIEvent" value="" alternative_save="true"/>
-      <property name="OnTimer" type="CGUIEvent" value="" alternative_save="true"/>
+		<page name="Event">
+			<property name="OnLoad" type="CGUIEvent" value="" alternative_save="true"/>
+			<property name="OnOpen" type="CGUIEvent" value="" alternative_save="true"/>
+			<property name="OnClose" type="CGUIEvent" value="" alternative_save="true"/>
+			<property name="OnUpdate" type="CGUIEvent" value="" alternative_save="true"/>
+			<property name="OnTimer" type="CGUIEvent" value="" alternative_save="true"/>
 
-      <property name="OnParentSizeChange" type="CGUIEvent" value="" alternative_save="true"/>
-      <property name="OnAlphaChangeBefore" type="CGUIEvent" value="" alternative_save="true"/>
-      <property name="OnAlphaChangeAfter" type="CGUIEvent" value="" alternative_save="true"/>
-      <property name="OnSizeChangeBefore" type="CGUIEvent" value="" alternative_save="true"/>
-      <property name="OnSizeChangeAfter" type="CGUIEvent" value="" alternative_save="true"/>
+			<property name="OnParentSizeChange" type="CGUIEvent" value="" alternative_save="true"/>
+			<property name="OnAlphaChangeBefore" type="CGUIEvent" value="" alternative_save="true"/>
+			<property name="OnAlphaChangeAfter" type="CGUIEvent" value="" alternative_save="true"/>
+			<property name="OnSizeChangeBefore" type="CGUIEvent" value="" alternative_save="true"/>
+			<property name="OnSizeChangeAfter" type="CGUIEvent" value="" alternative_save="true"/>
 
-      <property name="OnActive" type="CGUIEvent" value="" alternative_save="true"/>
-      <property name="OnInactive" type="CGUIEvent" value="" alternative_save="true"/>
-      <property name="OnGetFocus" type="CGUIEvent" value="" alternative_save="true"/>
-      <property name="OnLostFocus" type="CGUIEvent" value="" alternative_save="true"/>
-      <property name="OnVisible" type="CGUIEvent" value="" alternative_save="true"/>
-      <property name="OnInvisible" type="CGUIEvent" value="" alternative_save="true"/>
-      <property name="OnScaleChange" type="CGUIEvent" value="" alternative_save="true"/>
-      <property name="OnEnable" type="CGUIEvent" value="" alternative_save="true"/>
-      <property name="OnDisable" type="CGUIEvent" value="" alternative_save="true"/>
-      <property name="OnKeyClicked" type="CGUIEvent" value="" alternative_save="true"/>
-      <property name="OnUIEvent" type="CGUIEvent" value="" alternative_save="true"/>
-      <property name="OnAddChild" type="CGUIEvent" value="" alternative_save="true"/>
-      <property name="OnRemoveChild" type="CGUIEvent" value="" alternative_save="true"/>
-      <property name="OnChangeParent" type="CGUIEvent" value="" alternative_save="true"/>
+			<property name="OnActive" type="CGUIEvent" value="" alternative_save="true"/>
+			<property name="OnInactive" type="CGUIEvent" value="" alternative_save="true"/>
+			<property name="OnGetFocus" type="CGUIEvent" value="" alternative_save="true"/>
+			<property name="OnLostFocus" type="CGUIEvent" value="" alternative_save="true"/>
+			<property name="OnVisible" type="CGUIEvent" value="" alternative_save="true"/>
+			<property name="OnInvisible" type="CGUIEvent" value="" alternative_save="true"/>
+			<property name="OnScaleChange" type="CGUIEvent" value="" alternative_save="true"/>
+			<property name="OnEnable" type="CGUIEvent" value="" alternative_save="true"/>
+			<property name="OnDisable" type="CGUIEvent" value="" alternative_save="true"/>
+			<property name="OnKeyClicked" type="CGUIEvent" value="" alternative_save="true"/>
+			<property name="OnUIEvent" type="CGUIEvent" value="" alternative_save="true"/>
+			<property name="OnAddChild" type="CGUIEvent" value="" alternative_save="true"/>
+			<property name="OnRemoveChild" type="CGUIEvent" value="" alternative_save="true"/>
+			<property name="OnChangeParent" type="CGUIEvent" value="" alternative_save="true"/>
 
-      <property name="OnScrollbarScroll" type="CGUIEvent" value="" alternative_save="true"/>
+			<property name="OnScrollbarScroll" type="CGUIEvent" value="" alternative_save="true"/>
 
-      <property name="OnMouseEnter" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
-      <property name="OnMouseLeave" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
-      <property name="OnMouseMove" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
-      <property name="OnMouseLeftDown" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
-      <property name="OnMouseLeftUp" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
-      <property name="OnMouseLeftClick" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
-      <property name="OnMouseLeftDbClick" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
-      <property name="OnMouseLeftMultiClick" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
-      <property name="OnMouseRightDown" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
-      <property name="OnMouseRightUp" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
-      <property name="OnMouseRightClick" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
-      <property name="OnMouseRightDbClick" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
-      <property name="OnMouseRightMultiClick" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
-      <property name="OnMouseMiddleDown" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
-      <property name="OnMouseMiddleUp" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
-      <property name="OnMouseMiddleClick" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
-      <property name="OnMouseMiddleDbClick" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
-      <property name="OnMouseMiddleMultiClick" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
-      <property name="OnMouseWheel" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
-      <property name="OnDragBegin" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
-      <property name="OnDragProcess" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
-      <property name="OnDragEnd" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
+			<property name="OnMouseEnter" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
+			<property name="OnMouseLeave" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
+			<property name="OnMouseMove" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
+			<property name="OnMouseLeftDown" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
+			<property name="OnMouseLeftUp" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
+			<property name="OnMouseLeftClick" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
+			<property name="OnMouseLeftDbClick" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
+			<property name="OnMouseLeftMultiClick" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
+			<property name="OnMouseRightDown" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
+			<property name="OnMouseRightUp" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
+			<property name="OnMouseRightClick" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
+			<property name="OnMouseRightDbClick" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
+			<property name="OnMouseRightMultiClick" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
+			<property name="OnMouseMiddleDown" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
+			<property name="OnMouseMiddleUp" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
+			<property name="OnMouseMiddleClick" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
+			<property name="OnMouseMiddleDbClick" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
+			<property name="OnMouseMiddleMultiClick" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
+			<property name="OnMouseWheel" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
+			<property name="OnDragBegin" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
+			<property name="OnDragProcess" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
+			<property name="OnDragEnd" type="CGUIEvent" value="" category="Mouse" alternative_save="true"/>
 
-      <property name="OnChecked" type="CGUIEvent" value="" category="Check" alternative_save="true"/>
-      <property name="OnUnchecked" type="CGUIEvent" value="" category="Check" alternative_save="true"/>
+			<property name="OnChecked" type="CGUIEvent" value="" category="Check" alternative_save="true"/>
+			<property name="OnUnchecked" type="CGUIEvent" value="" category="Check" alternative_save="true"/>
 
-      <property name="OnKeyDown" type="CGUIEvent" value="" category="Keyboard" alternative_save="true"/>
-      <property name="OnKeyUp" type="CGUIEvent" value="" category="Keyboard" alternative_save="true"/>
-      <property name="OnKeyPressed" type="CGUIEvent" value="" category="Keyboard" alternative_save="true"/>
-    </page>
+			<property name="OnKeyDown" type="CGUIEvent" value="" category="Keyboard" alternative_save="true"/>
+			<property name="OnKeyUp" type="CGUIEvent" value="" category="Keyboard" alternative_save="true"/>
+			<property name="OnKeyPressed" type="CGUIEvent" value="" category="Keyboard" alternative_save="true"/>
+		</page>
 
-    <page name="Sound">
-      <property name="OnOpen" type="CGUISound" value="" alternative_save="true"/>
-      <property name="OnClose" type="CGUISound" value="" alternative_save="true"/>
-      <property name="OnMouseLeftDown" type="CGUISound" value="" category="Mouse" alternative_save="true"/>
-    </page>
-  </widget>
+		<page name="Sound">
+			<property name="OnOpen" type="CGUISound" value="" alternative_save="true"/>
+			<property name="OnClose" type="CGUISound" value="" alternative_save="true"/>
+			<property name="OnMouseLeftDown" type="CGUISound" value="" category="Mouse" alternative_save="true"/>
+		</page>
+	</widget>
 
-  <widget type="CGUIWgtTextBase"  inherit="CGUIWidget" template="true">
-    <page name="Appearance">
-      <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" category="EditBox" alternative_save="true"/>
-      <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" category="EditBox" alternative_save="true"/>
-      <property name="text" type="CGUIString" value=""  category="StaticText" alternative_save="true"/>
-      <property name="textinfo" type="CGUIStringRenderInfo"  category="StaticText" alternative_save="true">
-        <property name="scale" type="real" value="1"/>
-        <property name="font" type="CGUIFont" value="0"/>
-        <property name="color" type="CGUIColor" value="255,255,255,255"/>
-      </property>
-    </page>
-  </widget>
+	<widget type="CGUIWgtTextBase"  inherit="CGUIWidget" template="true">
+		<page name="Appearance">
+			<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" category="EditBox" alternative_save="true"/>
+			<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" category="EditBox" alternative_save="true"/>
+			<property name="text" type="CGUIString" value=""  category="StaticText" alternative_save="true"/>
+			<property name="textinfo" type="CGUIStringRenderInfo"  category="StaticText" alternative_save="true">
+				<property name="scale" type="real" value="1"/>
+				<property name="font" type="CGUIFont" value="0"/>
+				<property name="color" type="CGUIColor" value="255,255,255,255"/>
+			</property>
+		</page>
+	</widget>
 
-  <widget type="CGUIWgtButton" inherit="CGUIWidget">
-    <page name="Appearance">
-      <property name="generate_click_event" type="bool" value="true"  category="Default" alternative_save="true"/>
-      <property name="focusable" type="bool" value="true"  category="Default" alternative_save="true"/>
-      <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" category="EditBox" alternative_save="true"/>
-      <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" category="EditBox" alternative_save="true"/>
-      <property name="text_offset" type="CGUIVector2" value="0,0"  category="Button" alternative_save="true"/>
-      <property name="text_normal" type="CGUILocalizedString" value=""  category="Button" alternative_save="true"/>
-      <property name="textinfo_normal" type="CGUIStringRenderInfo"  category="Button" alternative_save="true">
-        <property name="scale" type="real" value="1"/>
-        <property name="font" type="CGUIFont" value="0"/>
-        <property name="color" type="CGUIColor" value="255,255,255,255"/>
-      </property>
-      <property name="text_hover"	type="CGUILocalizedString" value=""  category="Button" alternative_save="true"/>
-      <property name="textinfo_hover" type="CGUIStringRenderInfo"  category="Button" alternative_save="true">
-        <property name="scale" type="real" value="1"/>
-        <property name="font" type="CGUIFont" value="0"/>
-        <property name="color" type="CGUIColor" value="255,255,255,255"/>
-      </property>
-      <property name="text_push" type="CGUILocalizedString" value=""  category="Button" alternative_save="true"/>
-      <property name="textinfo_push" type="CGUIStringRenderInfo"  category="Button" alternative_save="true">
-        <property name="scale" type="real" value="1"/>
-        <property name="font" type="CGUIFont" value="0"/>
-        <property name="color" type="CGUIColor" value="255,255,255,255"/>
-      </property>
-      <property name="text_disable" type="CGUILocalizedString" value=""  category="Button" alternative_save="true"/>
-      <property name="textinfo_disable" type="CGUIStringRenderInfo"  category="Button" alternative_save="true">
-        <property name="scale" type="real" value="1"/>
-        <property name="font" type="CGUIFont" value="0"/>
-        <property name="color" type="CGUIColor" value="255,255,255,255"/>
-      </property>
-    </page>
-    <page name="Image">
-      <property name="normal" type="CGUIImage" value="button_red_normal" must_exist="true" />
-      <property name="hover" type="CGUIImage" value="button_red_hover" />
-      <property name="push" type="CGUIImage" value="button_red_push" />
-      <property name="disable" type="CGUIImage" value="button_red_disable" />
-      <property name="hover_overlay" type="CGUIImage" value="" />
-    </page>
-  </widget>
+	<widget type="CGUIWgtButton" inherit="CGUIWidget">
+		<page name="Appearance">
+			<property name="generate_click_event" type="bool" value="true"  category="Default" alternative_save="true"/>
+			<property name="focusable" type="bool" value="true"  category="Default" alternative_save="true"/>
+			<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Center" category="EditBox" alternative_save="true"/>
+			<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" category="EditBox" alternative_save="true"/>
+			<property name="text_offset" type="CGUIVector2" value="0,0"  category="Button" alternative_save="true"/>
+			<property name="text_normal" type="CGUILocalizedString" value=""  category="Button" alternative_save="true"/>
+			<property name="textinfo_normal" type="CGUIStringRenderInfo"  category="Button" alternative_save="true">
+				<property name="scale" type="real" value="1"/>
+				<property name="font" type="CGUIFont" value="0"/>
+				<property name="color" type="CGUIColor" value="255,255,255,255"/>
+			</property>
+			<property name="text_hover"	type="CGUILocalizedString" value=""  category="Button" alternative_save="true"/>
+			<property name="textinfo_hover" type="CGUIStringRenderInfo"  category="Button" alternative_save="true">
+				<property name="scale" type="real" value="1"/>
+				<property name="font" type="CGUIFont" value="0"/>
+				<property name="color" type="CGUIColor" value="255,255,255,255"/>
+			</property>
+			<property name="text_push" type="CGUILocalizedString" value=""  category="Button" alternative_save="true"/>
+			<property name="textinfo_push" type="CGUIStringRenderInfo"  category="Button" alternative_save="true">
+				<property name="scale" type="real" value="1"/>
+				<property name="font" type="CGUIFont" value="0"/>
+				<property name="color" type="CGUIColor" value="255,255,255,255"/>
+			</property>
+			<property name="text_disable" type="CGUILocalizedString" value=""  category="Button" alternative_save="true"/>
+			<property name="textinfo_disable" type="CGUIStringRenderInfo"  category="Button" alternative_save="true">
+				<property name="scale" type="real" value="1"/>
+				<property name="font" type="CGUIFont" value="0"/>
+				<property name="color" type="CGUIColor" value="255,255,255,255"/>
+			</property>
+		</page>
+		<page name="Image">
+			<property name="normal" type="CGUIImage" value="button_red_normal" must_exist="true" />
+			<property name="hover" type="CGUIImage" value="button_red_hover" />
+			<property name="push" type="CGUIImage" value="button_red_push" />
+			<property name="disable" type="CGUIImage" value="button_red_disable" />
+			<property name="hover_overlay" type="CGUIImage" value="" />
+		</page>
+	</widget>
 
-  <widget type="CGUIWgtCheckButton" inherit="CGUIWidget">
-    <page name="Appearance">
-      <property name="generate_click_event" type="bool" value="true"  category="Default" alternative_save="true"/>
-      <property name="focusable" type="bool" value="true"  category="Default" alternative_save="true"/>
-      <property name="checked" type="bool" value="false"  category="Default" alternative_save="true"/>
-    </page>
-    <page name="Image">
-      <property name="normal" type="CGUIImage" value="button_hilight_square" must_exist="true" />
-      <property name="normal_checked" type="CGUIImage" value="checkbutton_glow_checked" />
-      <property name="hover" type="CGUIImage" value="" />
-      <property name="hover_checked" type="CGUIImage" value="" />
-      <property name="push" type="CGUIImage" value="" />
-      <property name="push_checked" type="CGUIImage" value="" />
-      <property name="Disable" type="CGUIImage" value="" />
-      <property name="disable_checked" type="CGUIImage" value="" />
-      <property name="hover_overlay" type="CGUIImage" value="" />
-      <property name="checked_overlay" type="CGUIImage" value="" />
-    </page>
-  </widget>
+	<widget type="CGUIWgtCheckButton" inherit="CGUIWidget">
+		<page name="Appearance">
+			<property name="generate_click_event" type="bool" value="true"  category="Default" alternative_save="true"/>
+			<property name="focusable" type="bool" value="true"  category="Default" alternative_save="true"/>
+			<property name="checked" type="bool" value="false"  category="Default" alternative_save="true"/>
+		</page>
+		<page name="Image">
+			<property name="normal" type="CGUIImage" value="button_hilight_square" must_exist="true" />
+			<property name="normal_checked" type="CGUIImage" value="checkbutton_glow_checked" />
+			<property name="hover" type="CGUIImage" value="" />
+			<property name="hover_checked" type="CGUIImage" value="" />
+			<property name="push" type="CGUIImage" value="" />
+			<property name="push_checked" type="CGUIImage" value="" />
+			<property name="Disable" type="CGUIImage" value="" />
+			<property name="disable_checked" type="CGUIImage" value="" />
+			<property name="hover_overlay" type="CGUIImage" value="" />
+			<property name="checked_overlay" type="CGUIImage" value="" />
+		</page>
+	</widget>
 
-  <widget type="CGUIWgtRadioButton" inherit="CGUIWgtCheckButton">
-  </widget>
-
-
-  <widget type="CGUIWgtTag" inherit="CGUIWidget">
-    <page name="Appearance">
-      <property name="size" type="CGUIWidgetSize" category="Default">
-        <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        <property name="value" type="CGUISize" value="17,17" />
-      </property>
-      <property name="anchor" type="CGUIVector2" value="0.5,0.5"  category="Default" alternative_save="true"/>
-      <property name="hitable" type="bool" value="false"  category="Default" alternative_save="true"/>
-    </page>
-    <page name="Image">
-      <property name="bg" type="CGUIImage" value="TagIcon" must_exist="true" />
-    </page>
-  </widget>
-
-  <widget type="CGUIWgtStaticText" inherit="CGUIWgtTextBase">
-    <page name="Appearance">
-      <property name="size" type="CGUIWidgetSize" category="Default">
-        <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        <property name="value" type="CGUISize" value="100,20" />
-      </property>
-      <property name="multiline" type="bool" value="false" category="StaticText" alternative_save="true"/>
-      <property name="clip_text" type="bool" value="false" category="StaticText" alternative_save="true"/>
-    </page>
-  </widget>
+	<widget type="CGUIWgtRadioButton" inherit="CGUIWgtCheckButton">
+	</widget>
 
 
-  <widget type="CGUIWgtStaticImage" inherit="CGUIWidget">
-    <page name="Appearance">
-    </page>
-    <page name="Image">
-      <property name="bg" type="CGUIImage" value="" must_exist="true" alternative_save="true"/>
-    </page>
-  </widget>
+	<widget type="CGUIWgtTag" inherit="CGUIWidget">
+		<page name="Appearance">
+			<property name="size" type="CGUIWidgetSize" category="Default">
+				<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+				<property name="value" type="CGUISize" value="17,17" />
+			</property>
+			<property name="anchor" type="CGUIVector2" value="0.5,0.5"  category="Default" alternative_save="true"/>
+			<property name="hitable" type="bool" value="false"  category="Default" alternative_save="true"/>
+		</page>
+		<page name="Image">
+			<property name="bg" type="CGUIImage" value="TagIcon" must_exist="true" />
+		</page>
+	</widget>
 
-  <widget type="CGUIWgtPanel" inherit="CGUIWidget">
-    <page name="Appearance">
-      <property name="size" type="CGUIWidgetSize" category="Default">
-        <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        <property name="value" type="CGUISize" value="200,200" />
-      </property>
-      <property name="bg_adjust_left" type="int16" value="0"  category="Panel" alternative_save="true"/>
-      <property name="bg_adjust_right" type="int16" value="0"  category="Panel" alternative_save="true"/>
-      <property name="bg_adjust_top" type="int16" value="0"  category="Panel" alternative_save="true"/>
-      <property name="bg_adjust_bottom" type="int16" value="0"  category="Panel" alternative_save="true"/>
-
-    </page>
-    <page name="Image">
-      <property name="bg" type="CGUIImage" value="color_translucent" must_exist="true" />
-      <property name="border_top" type="CGUIImage" value="panel_border_top" />
-      <property name="border_bottom" type="CGUIImage" value="panel_border_bottom" />
-      <property name="border_left" type="CGUIImage" value="panel_border_left" />
-      <property name="border_right" type="CGUIImage" value="panel_border_right" />
-      <property name="border_topleft" type="CGUIImage" value="panel_border_topleft" />
-      <property name="border_topright" type="CGUIImage" value="panel_border_topright" />
-      <property name="border_bottomleft" type="CGUIImage" value="panel_border_bottomleft" />
-      <property name="border_bottomright" type="CGUIImage" value="panel_border_bottomright" />
-    </page>
-  </widget>
+	<widget type="CGUIWgtStaticText" inherit="CGUIWgtTextBase">
+		<page name="Appearance">
+			<property name="size" type="CGUIWidgetSize" category="Default">
+				<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+				<property name="value" type="CGUISize" value="100,20" />
+			</property>
+			<property name="multiline" type="bool" value="false" category="StaticText" alternative_save="true"/>
+			<property name="clip_text" type="bool" value="false" category="StaticText" alternative_save="true"/>
+		</page>
+	</widget>
 
 
-  <widget type="CGUIWgtEditBox" inherit="CGUIWgtTextBase">
-    <page name="Appearance">
-      <property name="size" type="CGUIWidgetSize" category="Default">
-        <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        <property name="value" type="CGUISize" value="128,20" />
-      </property>
-      <property name="client_area" type="CGUIRect" value="0,0,1,1"  category="EditBox" alternative_save="true"/>
-      <property name="focusable" type="bool" value="true"  category="Default" alternative_save="true"/>
-      <property name="mask" type="bool" value="false"  category="EditBox" alternative_save="true"/>
-      <property name="max_text_num" type="uint32" value="100"  category="EditBox" alternative_save="true"/>
-      <property name="readonly" type="bool" value="false"  category="EditBox" alternative_save="true"/>
-      <property name="cursor_size" type="CGUISize" value="2,16"  category="EditBox" alternative_save="true"/>
-      <property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Left" category="EditBox" alternative_save="true"/>
-      <property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" category="EditBox" alternative_save="true"/>
-    </page>
-    <page name="Image">
-      <property name="bg_focus" type="CGUIImage" value="" />
-      <property name="bg" type="CGUIImage" value="edit_bg" must_exist="true" />
-      <property name="cursor" type="CGUIImage" value="color_white" must_exist="true" />
-    </page>
-  </widget>
+	<widget type="CGUIWgtStaticImage" inherit="CGUIWidget">
+		<page name="Appearance">
+		</page>
+		<page name="Image">
+			<property name="bg" type="CGUIImage" value="" must_exist="true" alternative_save="true"/>
+		</page>
+	</widget>
 
-  <widget type="CGUIWgtEmptyNode" inherit="CGUIWidget">
-    <page name="Appearance">
-      <property name="size" type="CGUIWidgetSize" category="Default">
-        <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
-        <property name="value" type="CGUISize" value="1,1" />
-      </property>
-      <property name="hitable" type="bool" value="false"  category="Default" alternative_save="true"/>
-    </page>
-  </widget>
+	<widget type="CGUIWgtPanel" inherit="CGUIWidget">
+		<page name="Appearance">
+			<property name="size" type="CGUIWidgetSize" category="Default">
+				<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+				<property name="value" type="CGUISize" value="200,200" />
+			</property>
+			<property name="bg_adjust_left" type="int16" value="0"  category="Panel" alternative_save="true"/>
+			<property name="bg_adjust_right" type="int16" value="0"  category="Panel" alternative_save="true"/>
+			<property name="bg_adjust_top" type="int16" value="0"  category="Panel" alternative_save="true"/>
+			<property name="bg_adjust_bottom" type="int16" value="0"  category="Panel" alternative_save="true"/>
 
-  <widget type="CGUIWgtProgress" inherit="CGUIWidget">
-    <page name="Appearance">
-      <property name="max_value" type="real" value="0"  category="Progress" alternative_save="true" />
-      <property name="current_value" type="real" value="0"  category="Progress" alternative_save="true" />
-      <property name="bg_adjust_left" type="int16" value="0"  category="Progress" alternative_save="true"/>
-      <property name="bg_adjust_right" type="int16" value="0"  category="Progress" alternative_save="true"/>
-      <property name="bg_adjust_top" type="int16" value="0"  category="Progress" alternative_save="true"/>
-      <property name="bg_adjust_bottom" type="int16" value="0"  category="Progress" alternative_save="true"/>
-    </page>
-    <page name="Image">
-      <property name="background" type="CGUIImage" value="progress_bg" must_exist="true" />
-      <property name="foreground" type="CGUIImage" value="progress_fg" must_exist="true" />
-      <property name="border" type="CGUIImage" value="progress_border" />
-      <property name="spark" type="CGUIImage" value="progress_spark" />
-    </page>
-  </widget>
+		</page>
+		<page name="Image">
+			<property name="bg" type="CGUIImage" value="color_translucent" must_exist="true" />
+			<property name="border_top" type="CGUIImage" value="panel_border_top" />
+			<property name="border_bottom" type="CGUIImage" value="panel_border_bottom" />
+			<property name="border_left" type="CGUIImage" value="panel_border_left" />
+			<property name="border_right" type="CGUIImage" value="panel_border_right" />
+			<property name="border_topleft" type="CGUIImage" value="panel_border_topleft" />
+			<property name="border_topright" type="CGUIImage" value="panel_border_topright" />
+			<property name="border_bottomleft" type="CGUIImage" value="panel_border_bottomleft" />
+			<property name="border_bottomright" type="CGUIImage" value="panel_border_bottomright" />
+		</page>
+	</widget>
 
-  <widget type="CGUIWgtListBox" inherit="CGUIWidget">
-    <page name="Appearance">
-    </page>
-    <page name="Image">
-      <property name="background" type="CGUIImage" value=""/>
-    </page>
-  </widget>
 
-  <widget type="CGUIWgtListBoxItem" inherit="CGUIWidget">
-    <page name="Appearance">
-    </page>
-    <page name="Image">
-      <property name="normal" type="CGUIImage" value=""/>
-      <property name="selected" type="CGUIImage" value=""/>
-    </page>
-  </widget>
+	<widget type="CGUIWgtEditBox" inherit="CGUIWgtTextBase">
+		<page name="Appearance">
+			<property name="size" type="CGUIWidgetSize" category="Default">
+				<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+				<property name="value" type="CGUISize" value="128,20" />
+			</property>
+			<property name="client_area" type="CGUIRect" value="0,0,1,1"  category="EditBox" alternative_save="true"/>
+			<property name="focusable" type="bool" value="true"  category="Default" alternative_save="true"/>
+			<property name="mask" type="bool" value="false"  category="EditBox" alternative_save="true"/>
+			<property name="max_text_num" type="uint32" value="100"  category="EditBox" alternative_save="true"/>
+			<property name="readonly" type="bool" value="false"  category="EditBox" alternative_save="true"/>
+			<property name="cursor_size" type="CGUISize" value="2,16"  category="EditBox" alternative_save="true"/>
+			<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Left" category="EditBox" alternative_save="true"/>
+			<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" category="EditBox" alternative_save="true"/>
+		</page>
+		<page name="Image">
+			<property name="bg_focus" type="CGUIImage" value="" />
+			<property name="bg" type="CGUIImage" value="edit_bg" must_exist="true" />
+			<property name="cursor" type="CGUIImage" value="color_white" must_exist="true" />
+		</page>
+	</widget>
+
+	<widget type="CGUIWgtEmptyNode" inherit="CGUIWidget">
+		<page name="Appearance">
+			<property name="size" type="CGUIWidgetSize" category="Default">
+				<property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+				<property name="value" type="CGUISize" value="1,1" />
+			</property>
+			<property name="hitable" type="bool" value="false"  category="Default" alternative_save="true"/>
+		</page>
+	</widget>
+
+	<widget type="CGUIWgtProgress" inherit="CGUIWidget">
+		<page name="Appearance">
+			<property name="max_value" type="real" value="0"  category="Progress" alternative_save="true" />
+			<property name="current_value" type="real" value="0"  category="Progress" alternative_save="true" />
+			<property name="bg_adjust_left" type="int16" value="0"  category="Progress" alternative_save="true"/>
+			<property name="bg_adjust_right" type="int16" value="0"  category="Progress" alternative_save="true"/>
+			<property name="bg_adjust_top" type="int16" value="0"  category="Progress" alternative_save="true"/>
+			<property name="bg_adjust_bottom" type="int16" value="0"  category="Progress" alternative_save="true"/>
+		</page>
+		<page name="Image">
+			<property name="background" type="CGUIImage" value="progress_bg" must_exist="true" />
+			<property name="foreground" type="CGUIImage" value="progress_fg" must_exist="true" />
+			<property name="border" type="CGUIImage" value="progress_border" />
+			<property name="spark" type="CGUIImage" value="progress_spark" />
+		</page>
+	</widget>
+
+	<widget type="CGUIWgtListBox" inherit="CGUIWidget">
+		<page name="Appearance">
+		</page>
+		<page name="Image">
+			<property name="background" type="CGUIImage" value=""/>
+		</page>
+	</widget>
+
+	<widget type="CGUIWgtListBoxItem" inherit="CGUIWidget">
+		<page name="Appearance">
+		</page>
+		<page name="Image">
+			<property name="normal" type="CGUIImage" value=""/>
+			<property name="selected" type="CGUIImage" value=""/>
+		</page>
+	</widget>
+
+	<widget type="CGUIWgtScrollbar" inherit="CGUIWidget">
+		<page name="Appearance">
+			<property name="size" type="CGUIWidgetSize" category="Default">
+				<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+				<property name="value" type="CGUISize" value="19,100" />
+			</property>
+			<property name="focusable" type="bool" value="true"  category="Default" alternative_save="true"/>
+			<property name="generate_click_event" type="bool" value="true"  category="GenerateEvent" alternative_save="true"/>
+
+			<property name="orientation" type="EOrientation" value="eOrientation_Vertical" category="Scrollbar" alternative_save="true"/>
+			<property name="min_pos" type="uint32" value="0" category="Scrollbar" alternative_save="true"/>
+			<property name="max_pos" type="uint32" value="0" category="Scrollbar" alternative_save="true"/>
+			<property name="current_pos" type="uint32" value="0" category="Scrollbar" alternative_save="true"/>
+			<property name="page_size" type="uint32" value="1" category="Scrollbar" alternative_save="true"/>
+		</page>
+		<page name="Image">
+			<property name="background" type="CGUIImage" value=""/>
+			<property name="arrow_0_normal" type="CGUIImage" value="scrollbar_upbutton_up"/>
+			<property name="arrow_0_hover" type="CGUIImage" value="scrollbar_upbutton_highlight"/>
+			<property name="arrow_0_disable" type="CGUIImage" value="scrollbar_upbutton_disable"/>
+			<property name="arrow_0_push" type="CGUIImage" value="scrollbar_upbutton_down"/>
+			<property name="arrow_0_hover_overlay" type="CGUIImage" value=""/>
+			<property name="arrow_0_push_overlay" type="CGUIImage" value=""/>
+			<property name="arrow_1_normal" type="CGUIImage" value="scrollbar_downbutton_up"/>
+			<property name="arrow_1_hover" type="CGUIImage" value="scrollbar_downbutton_highlight"/>
+			<property name="arrow_1_disable" type="CGUIImage" value="scrollbar_downbutton_disable"/>
+			<property name="arrow_1_push" type="CGUIImage" value="scrollbar_downbutton_down"/>
+			<property name="arrow_1_hover_overlay" type="CGUIImage" value=""/>
+			<property name="arrow_1_push_overlay" type="CGUIImage" value=""/>
+			<property name="slide_normal" type="CGUIImage" value="scrollbar_knob"/>
+			<property name="slide_hover" type="CGUIImage" value=""/>
+			<property name="slide_disable" type="CGUIImage" value=""/>
+			<property name="slide_push" type="CGUIImage" value=""/>
+			<property name="slide_hover_overlay" type="CGUIImage" value=""/>
+			<property name="slide_push_overlay" type="CGUIImage" value=""/>
+		</page>
+	</widget>
 
 </config>
 

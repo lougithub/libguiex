@@ -166,6 +166,63 @@
 		<property name="uv" type="CGUIRect" value="5,6,26,25" />
 		<property name="size" type="CGUISize" value="32,32"/>
 	</property>
+
+	<property name="h_scrollbar_downbutton_disable" type="CGUIImageDefine">
+		<property  name="path" type="CGUIString" value="image/UI-ScrollBar-ScrollDownButton-Disabled.tga" />
+		<property name="uv" type="CGUIRect" value="6,7,25,24" />
+		<property name="size" type="CGUISize" value="32,32"/>
+		<property name="orientation" type="EImageOrientation" value="eImageOrientation_90CCW" />
+	</property>
+	<property name="h_scrollbar_downbutton_down" type="CGUIImageDefine">
+		<property  name="path" type="CGUIString" value="image/UI-ScrollBar-ScrollDownButton-Down.tga" />
+		<property name="uv" type="CGUIRect" value="6,7,25,24" />
+		<property name="size" type="CGUISize" value="32,32"/>
+		<property name="orientation" type="EImageOrientation" value="eImageOrientation_90CCW" />
+	</property>
+	<property name="h_scrollbar_downbutton_highlight" type="CGUIImageDefine">
+		<property  name="path" type="CGUIString" value="image/UI-ScrollBar-ScrollDownButton-Highlight.tga" />
+		<property name="uv" type="CGUIRect" value="6,7,25,24" />
+		<property name="size" type="CGUISize" value="32,32"/>
+		<property name="orientation" type="EImageOrientation" value="eImageOrientation_90CCW" />
+	</property>
+	<property name="h_scrollbar_downbutton_up" type="CGUIImageDefine">
+		<property  name="path" type="CGUIString" value="image/UI-ScrollBar-ScrollDownButton-Up.tga" />
+		<property name="uv" type="CGUIRect" value="6,7,25,24" />
+		<property name="size" type="CGUISize" value="32,32"/>
+		<property name="orientation" type="EImageOrientation" value="eImageOrientation_90CCW" />
+	</property>
+	<property name="h_scrollbar_upbutton_disable" type="CGUIImageDefine">
+		<property  name="path" type="CGUIString" value="image/UI-ScrollBar-ScrollUpButton-Disabled.tga" />
+		<property name="uv" type="CGUIRect" value="6,7,25,24" />
+		<property name="size" type="CGUISize" value="32,32"/>
+		<property name="orientation" type="EImageOrientation" value="eImageOrientation_90CCW" />
+	</property>
+	<property name="h_scrollbar_upbutton_down" type="CGUIImageDefine">
+		<property  name="path" type="CGUIString" value="image/UI-ScrollBar-ScrollUpButton-Down.tga" />
+		<property name="uv" type="CGUIRect" value="6,7,25,24" />
+		<property name="size" type="CGUISize" value="32,32"/>
+		<property name="orientation" type="EImageOrientation" value="eImageOrientation_90CCW" />
+	</property>
+	<property name="h_scrollbar_upbutton_highlight" type="CGUIImageDefine">
+		<property  name="path" type="CGUIString" value="image/UI-ScrollBar-ScrollUpButton-Highlight.tga" />
+		<property name="uv" type="CGUIRect" value="6,7,25,24" />
+		<property name="size" type="CGUISize" value="32,32"/>
+		<property name="orientation" type="EImageOrientation" value="eImageOrientation_90CCW" />
+	</property>
+	<property name="h_scrollbar_upbutton_up" type="CGUIImageDefine">
+		<property  name="path" type="CGUIString" value="image/UI-ScrollBar-ScrollUpButton-Up.tga" />
+		<property name="uv" type="CGUIRect" value="6,7,25,24" />
+		<property name="size" type="CGUISize" value="32,32"/>
+		<property name="orientation" type="EImageOrientation" value="eImageOrientation_90CCW" />
+	</property>
+	<property name="h_scrollbar_knob" type="CGUIImageDefine">
+		<property  name="path" type="CGUIString" value="image/UI-ScrollBar-Knob.tga" />
+		<property name="uv" type="CGUIRect" value="5,6,26,25" />
+		<property name="size" type="CGUISize" value="32,32"/>
+		<property name="orientation" type="EImageOrientation" value="eImageOrientation_90CCW" />
+	</property>
+
+
 	<property name="panel_bg_grade_blue" type="CGUIImageDefine">
 		<property  name="path" type="CGUIString" value="image/BLUEGRAD64.tga" />
 		<property name="uv" type="CGUIRect" value="0,0,64,64" />

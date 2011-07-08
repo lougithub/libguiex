@@ -134,12 +134,11 @@ namespace guiex
 		//eScreenOrientation_FaceDown,
 	};
 
-	//enum EBufferMode
-	//{
-	//	eBufferMode_Back = 0,
-	//	eBufferMode_Front,
-
-	//};
+	enum EOrientation
+	{
+		eOrientation_Vertical = 0,
+		eOrientation_Horizonal,
+	};
 
 }//namespace guiex
 

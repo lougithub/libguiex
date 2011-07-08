@@ -83,23 +83,6 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtListBoxItem::SetParentImpl( CGUIWidget* pParent )
-	{
-		CGUIWidget* pOldParent = GetParent();
-		CGUIWidget::SetParentImpl( pParent );
-		if( pOldParent != GetParent() )
-		{
-			if( pOldParent && pOldParent->GetType() == "CGUIWgtListBox")
-			{
-				static_cast<CGUIWgtListBox*>(pOldParent)->DoRemoveItem(this);
-			}
-			if( GetParent() && GetParent()->GetType() == "CGUIWgtListBox")
-			{
-				static_cast<CGUIWgtListBox*>(GetParent())->DoAddItem(this);
-			}
-		}
-	}
-	//------------------------------------------------------------------------------
 	bool CGUIWgtListBoxItem::IsSelected( void ) const
 	{
 		return m_bSelected;

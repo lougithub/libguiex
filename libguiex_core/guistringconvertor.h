@@ -233,6 +233,14 @@ namespace guiex
 	template< >
 	CGUIString GetValueType<EBlendFunc>( );
 	//------------------------------------------------------------------------------
+	//convert for EOrientation
+	template<  >
+	int32 StringToValue<EOrientation>( const CGUIString& rString, EOrientation& rValue);
+	template<  >
+	int32 ValueToString<EOrientation>( const EOrientation& rValue, CGUIString& rString );
+	template< >
+	CGUIString GetValueType<EOrientation>( );
+	//------------------------------------------------------------------------------
 }	//namespace guiex
 
 #endif //__GUI_STRING_CONVERTOR_200608030_H__

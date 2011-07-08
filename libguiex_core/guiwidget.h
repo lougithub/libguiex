@@ -320,6 +320,9 @@ namespace guiex
 		void SetMouseConsumed( bool bFlag ); 
 		bool IsMouseConsumed( ) const;
 
+		void SetForceHitTest( bool bFlag ); 
+		bool IsForceHitTest( ) const;
+
 		void SetGenerateParentSizeChangeEvent( bool bFlag ); 
 		bool IsGenerateParentSizeChangeEvent( ) const;
 
@@ -385,7 +388,8 @@ namespace guiex
 
 		virtual CGUINode* NodeGetParent();
 
-		virtual void SetParentImpl( CGUIWidget* pParent );
+	private:
+		void SetParentImpl( CGUIWidget* pParent );
 		void SetChildImpl( CGUIWidget* pChild );
 		void SetNextSiblingImpl( CGUIWidget* pNextSibling );
 
@@ -545,6 +549,7 @@ namespace guiex
 		bool m_bIsExclusive;
 		bool m_bIsHitable;
 		bool m_bIsMouseConsumed;
+		bool m_bForceHitTest;
 
 		bool m_bIsGenerateLoadEvent;
 		bool m_bIsGenerateClickEvent; 

@@ -55,6 +55,8 @@ namespace guiex
 
 		m_pImageBG = NULL;
 		m_pLastOperateItem = NULL;
+
+		SetGenerateParentChildEvent( true );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtListBox::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
@@ -561,6 +563,26 @@ namespace guiex
 	void CGUIWgtListBox::ProcessMouseMove(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent)
 	{
 
+	}
+	//------------------------------------------------------------------------------
+	uint32 CGUIWgtListBox::OnAddChild( CGUIEventRelativeChange* pEvent )
+	{
+		if( pEvent->GetRelative()->GetType() == "CGUIWgtListBoxItem")
+		{
+			DoAddItem(static_cast<CGUIWgtListBoxItem*>(pEvent->GetRelative()));
+		}
+
+		return CGUIWidget::OnAddChild(pEvent);
+	}
+	//------------------------------------------------------------------------------
+	uint32 CGUIWgtListBox::OnRemoveChild( CGUIEventRelativeChange* pEvent )
+	{
+		if( pEvent->GetRelative()->GetType() == "CGUIWgtListBoxItem")
+		{
+			DoRemoveItem(static_cast<CGUIWgtListBoxItem*>(pEvent->GetRelative()));
+		}
+
+		return CGUIWidget::OnRemoveChild(pEvent);
 	}
 	//------------------------------------------------------------------------------
 }

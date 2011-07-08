@@ -55,7 +55,6 @@ namespace guiex
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage );
 
-		virtual void SetParentImpl( CGUIWidget* pParent );
 
 	protected:	//!< callback function
 		virtual uint32 OnMouseLeftDown( CGUIEventMouse* pEvent );

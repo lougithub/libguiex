@@ -16,10 +16,6 @@ namespace guiex
 	class CGUIEventScrollbar : public CGUIEvent
 	{
 	public:
-		void SetScrollbarType( bool bVertical );
-		bool IsVertical() const;
-		bool IsHorizontal() const;
-		
 		void SetScrollbar(CGUIWidget * pScrollbar);
 		CGUIWidget*	GetScrollbar() const;
 
