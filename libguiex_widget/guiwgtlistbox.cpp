@@ -8,14 +8,14 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_widget/guiwgtlistbox.h>
-#include <libguiex_widget/guiwgtscrollbar.h>
-#include <libguiex_widget/guilistboxitem.h>
+#include "guiwgtlistbox.h"
+#include "guiwgtlistboxitem.h"
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guiinterfacerender.h>
 #include <libguiex_core/guiinterfacekeyboard.h>
-#include <libguiex_core/guiwidgetsystem.h>
 #include <libguiex_core/guistringconvertor.h>
+#include <libguiex_core/guiimage.h>
+#include <libguiex_core/guiwidgetmanager.h>
 
 #include <algorithm>
 
@@ -29,88 +29,60 @@ namespace guiex
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtListBox);
 	//------------------------------------------------------------------------------
 	CGUIWgtListBox::CGUIWgtListBox( const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIWgtScrollbarContainer(StaticGetType(), rName, rSceneName)
-	{
-		InitListBox();
-	}
-	//------------------------------------------------------------------------------
-	CGUIWgtListBox::CGUIWgtListBox( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIWgtScrollbarContainer(rType, rName, rSceneName)
+		:CGUIWidget(StaticGetType(), rName, rSceneName)
 	{
 		InitListBox();
 	}
 	//------------------------------------------------------------------------------
 	CGUIWgtListBox::~CGUIWgtListBox( )
 	{
+		//delete child
+		CGUIWidget* pChild = GetChild();
+		CGUIWidget* pChildTmp = NULL;
+		while( pChild && pChild->GetType() == "CGUIWgtListBoxItem" )
+		{
+			pChildTmp = pChild;
+			pChild = pChild->GetNextSibling();
+
+			//destroy it
+			CGUIWidgetManager::Instance()->DestroyWidget(pChildTmp);		
+		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::InitListBox()
+	void CGUIWgtListBox::InitListBox()
 	{
-		m_bSorted = false;
 		m_bMultiselect = false;
-		m_bItemTooltips = false;
 
 		m_pImageBG = NULL;
-		m_pImageSelection = NULL;
 		m_pLastOperateItem = NULL;
-
-		m_strItemType = "CGUIListBoxTextItem";
-
-		//set flag
-		SetFocusable(true);
-		SetGenerateClickEvent(true);
-	}
-	//------------------------------------------------------------------------------
-	void CGUIWgtListBox::Create()
-	{
-		if( !m_pImageBG )
-		{
-			throw CGUIException("[CGUIWgtCheckButton::Create]: the image <BGIMAGE> hasn't been found!");
-		}
-		if( !m_pImageSelection)
-		{
-			throw CGUIException("[CGUIWgtCheckButton::Create]: the image <SELECTION_COLOR> hasn't been found!");
-		}
-
-		CGUIWidget::Create();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtListBox::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
-		if( rName == "BGIMAGE")
+		if( rName == "background")
 		{
 			m_pImageBG = pImage;
-			SetSize(pImage->GetSize());
-		}
-		else if( rName == "SELECTION_COLOR")
-		{
-			m_pImageSelection = pImage;
-		}
-		else 
-		{
-			CGUIWgtScrollbarContainer::OnSetImage(rName, pImage );
+			if( pImage && GetSize().IsEqualZero())
+			{
+				SetPixelSize(pImage->GetSize());
+			}
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::SetValue(const CGUIString& rName, const CGUIString& rValue)
-	{
-		CGUIWidget::SetValue(rName, rValue);
-	}
-	//------------------------------------------------------------------------------
-	CGUIString	CGUIWgtListBox::GetValue(const CGUIString& rName) const
-	{
-		return CGUIWidget::GetValue( rName );
-	}
-	//------------------------------------------------------------------------------
-	uint32	CGUIWgtListBox::GetItemCount(void) const	
+	/**
+	* @brief Return number of items attached to the list box
+	*/
+	uint32 CGUIWgtListBox::GetItemCount(void) const	
 	{
 		return static_cast<uint32>(m_aListItems.size());
 	}
 	//------------------------------------------------------------------------------
-	uint32	CGUIWgtListBox::GetSelectedCount(void) const
+	/**
+	* @brief Return number of selected items attached to the list box
+	*/
+	uint32	CGUIWgtListBox::GetSelectedItemCount(void) const
 	{
 		uint32 count = 0;
-
 		for (size_t index = 0; index < m_aListItems.size(); ++index)
 		{
 			if (m_aListItems[index]->IsSelected())
@@ -118,55 +90,32 @@ namespace guiex
 				++count;
 			}
 		}
-
 		return count;
 	}
 	//------------------------------------------------------------------------------
-	CGUIListBoxItem*	CGUIWgtListBox::GetFirstSelectedItem(void) const
+	/**
+	* @brief get the selected item by index
+	*/
+	void CGUIWgtListBox::GetSelectedItems( std::vector<CGUIWgtListBoxItem*>& rItems) const
 	{
-		return GetNextSelectedItem(NULL);
-	}
-	//------------------------------------------------------------------------------
-	CGUIListBoxItem*	CGUIWgtListBox::GetNextSelectedItem(const CGUIListBoxItem* pStartItem) const
-	{
-		for(size_t index = (pStartItem == NULL) ? 0 : (GetItemIndex(pStartItem) + 1);
-			index < m_aListItems.size();
-			++index)
-		{
-			// return pointer to this item if it's selected.
-			if (m_aListItems[index]->IsSelected())
-			{
-				return m_aListItems[index];
-			}
-		}
-
-		// no more selected items.
-		return NULL;
-	}
-	//------------------------------------------------------------------------------
-	CGUIListBoxItem*	CGUIWgtListBox::GetSelectedItem( uint32 nIdx) const
-	{
-		uint32 count = 0;
+		rItems.clear();
 		for(size_t index = 0; index < m_aListItems.size(); ++index)
 		{
 			// return pointer to this item if it's selected.
 			if (m_aListItems[index]->IsSelected())
 			{
-				if( count == nIdx )
-				{
-					return m_aListItems[index];
-				}
-				else
-				{
-					++count;
-				}
+				rItems.push_back(m_aListItems[index]);
 			}
 		}
-
-		return NULL;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::SetItemSelected(CGUIListBoxItem* pItem, bool bSelected)
+	/**
+	* @brief Set the select state of an attached CGUIWgtListBoxItem.
+	* @param bSelected
+	*		- true to select the item, 
+	*		- false to de-select the item.
+	*/
+	void CGUIWgtListBox::SetItemSelected(CGUIWgtListBoxItem* pItem, bool bSelected)
 	{
 		TListItem::iterator itor = std::find(m_aListItems.begin(), m_aListItems.end(), pItem);
 
@@ -180,7 +129,10 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::SetItemSelected(uint32 nItemIndex, bool bSelected)
+	/**
+	* @brief Set the select state of an attached CGUIWgtListBoxItem.
+	*/
+	void CGUIWgtListBox::SetItemSelected(uint32 nItemIndex, bool bSelected)
 	{	
 		if (nItemIndex < m_aListItems.size())
 		{
@@ -195,7 +147,7 @@ namespace guiex
 
 				m_aListItems[nItemIndex]->SetSelected(bSelected);
 
-				/// send event for select changed
+				// send event for select changed
 				{
 					CGUIEventListBox aEvent;
 					aEvent.SetEventId(eEVENT_LISTBOX_SELECTED);
@@ -213,7 +165,6 @@ namespace guiex
 					GSystem->SendEvent( &aEvent);
 				}
 			}
-
 		}
 		else
 		{
@@ -221,7 +172,10 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::ClearAllSelections(void)
+	/**
+	* @brief Clear the selected state for all items.
+	*/
+	void CGUIWgtListBox::ClearAllSelections(void)
 	{
 		if (ClearAllSelections_impl())
 		{
@@ -232,7 +186,10 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	CGUIListBoxItem*	CGUIWgtListBox::GetItemFromIndex(uint32 nIndex) const
+	/**
+	*	@brief get the item at position by given index
+	*/
+	CGUIWgtListBoxItem*	CGUIWgtListBox::GetItemByIndex(uint32 nIndex) const
 	{
 		if (nIndex < m_aListItems.size())
 		{
@@ -240,11 +197,14 @@ namespace guiex
 		}
 		else
 		{
-			throw CGUIException("[CGUIWgtListBox::GetItemFromIndex]: the index <%d> of Item is out of range.", nIndex);
+			throw CGUIException("[CGUIWgtListBox::GetItemByIndex]: the index <%d> of Item is out of range.", nIndex);
 		}
 	}
 	//------------------------------------------------------------------------------
-	uint32	CGUIWgtListBox::GetItemIndex(const CGUIListBoxItem* pItem) const
+	/**
+	* @brief Return the index of CGUIWgtListBoxItem item
+	*/
+	uint32	CGUIWgtListBox::GetItemIndex(const CGUIWgtListBoxItem* pItem) const
 	{
 		TListItem::const_iterator itor = std::find(m_aListItems.begin(), m_aListItems.end(), pItem);
 
@@ -258,317 +218,134 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	CGUIListBoxItem* CGUIWgtListBox::CreateItem_Imp(const CGUIStringW& rText)
+	void CGUIWgtListBox::DoAddItem(CGUIWgtListBoxItem* pItem)
 	{
-		CGUIString strItemName = CGUIString("listitem_")+GSystem->GenerateAnonymousName();
-		CGUIListBoxItem * pItem = static_cast<CGUIListBoxItem*>(GUI_CREATE_WIDGET(m_strItemType.c_str(), strItemName, GetSceneName()));
-		pItem->SetItemInfo(rText, GetTextInfo());
-		return pItem;
-	}
-	//------------------------------------------------------------------------------
-	bool listboxitem_less(const CGUIListBoxItem* a, const CGUIListBoxItem* b)
-	{
-		return *a < *b;
-	}
-	void	CGUIWgtListBox::AddItem(CGUIListBoxItem* pItem)
-	{
-		if (pItem != NULL)
-		{
-			if (IsSorting())
-			{
-				// if sorting is enabled, re-sort the list
-				m_aListItems.insert(std::upper_bound(m_aListItems.begin(), m_aListItems.end(), pItem, listboxitem_less), pItem);
-				AddChild_Imp(pItem);
-				UpdateItemPos();
-			}
-			else
-			{
-				// not sorted, just stick it on the end.
-				m_aListItems.push_back(pItem);
-				AddChild_Imp(pItem);
-				UpdateItemPos();
+		GUI_ASSERT( pItem, "[CGUIWgtListBox::DoAddItem] invalid pointer" );
 
-			}
-
-//			SetRectDirty();
-			UpdateScrollbars();
-		}
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::AddItem( const CGUIStringW& rText )
-	{
-		CGUIListBoxItem* pItem= CreateItem_Imp(pText);
-		pItem->SetSelectionImage( m_pImageSelection );
-		AddItem( pItem );
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::AddChild_Imp(CGUIListBoxItem* pItem)
-	{
-		AddChild(pItem);
+		m_aListItems.push_back(pItem);
 		if( IsOpen())
 		{
 			pItem->Open();
 		}
+
+		Refresh();
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::InsertItem(CGUIListBoxItem* pItem, uint32 nIndex )
+	void CGUIWgtListBox::DoRemoveItem( CGUIWgtListBoxItem* pItem)
 	{
-		InsertItem( pItem, GetItemFromIndex(nIndex));
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::InsertItem( const CGUIStringW& rText, const CGUIListBoxItem* pPosition)
-	{
-		CGUIListBoxItem* pItem= CreateItem_Imp(pText);
-		pItem->SetSelectionImage( m_pImageSelection );
-		InsertItem( pItem, pPosition);
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::InsertItem( const CGUIStringW& rText, uint32 nIndex )
-	{
-		CGUIListBoxItem* pItem= CreateItem_Imp(pText);
-		pItem->SetSelectionImage( m_pImageSelection );
-		InsertItem( pItem, GetItemFromIndex(nIndex));
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::InsertItem(CGUIListBoxItem* pItem, const CGUIListBoxItem* pPosition)
-	{
-		// if the list is sorted, it's the same as a normal add operation
-		if (IsSorting())
+		GUI_ASSERT( pItem, "[CGUIWgtListBox::DoRemoveItem] invalid pointer" );
+
+		TListItem::iterator itor = std::find(m_aListItems.begin(), m_aListItems.end(), pItem);
+		if (itor != m_aListItems.end())
 		{
-			AddItem(pItem);
+			m_aListItems.erase(itor);
 		}
-		else if (pItem != NULL)
+		else
 		{
-			// if position is NULL begin insert at begining, else insert after item 'position'
-			TListItem::iterator itor;
-			if (pPosition == NULL)
-			{
-				itor = m_aListItems.begin();
-			}
-			else
-			{
-				itor = std::find(m_aListItems.begin(), m_aListItems.end(), pPosition);
-				if (itor == m_aListItems.end())
-				{
-					throw CGUIException("[CGUIWgtListBox::InsertItem]: the specified Item for parameter 'pPosition' is not attached to this Listbox.");
-				}
-			}
-
-			m_aListItems.insert(itor, pItem);
-			AddChild_Imp(pItem);
-			UpdateItemPos();
-
-
-//			SetRectDirty();
-			UpdateScrollbars();
-		}
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::RemoveItem( CGUIListBoxItem* pItem)
-	{
-		if (pItem != NULL)
-		{
-			TListItem::iterator itor = std::find(m_aListItems.begin(), m_aListItems.end(), pItem);
-
-			// if item is in the list
-			if (itor != m_aListItems.end())
-			{
-				// remove item
-				m_aListItems.erase(itor);
-
-				RemoveChild(pItem);
-				UpdateItemPos();
-
-				//// if item was the last selected item, reset that to NULL
-				//if (pItem == m_aLastSelected)
-				//{
-				//	m_aLastSelected = NULL;
-				//}
-
-				// if item is supposed to be deleted by us
-				GSystem->DestroyWidget(pItem);
-
-//				SetRectDirty();
-				UpdateScrollbars();
-
-				if( m_pLastOperateItem  == pItem )
-				{
-					m_pLastOperateItem = NULL;
-				}
-			}
-		}
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::RemoveItem( uint32 nIndex)
-	{
-		RemoveItem(GetItemFromIndex(nIndex) );
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::ClearList(void)
-	{
-		if (ClearList_impl())
-		{
-
+			GUI_THROW( GUI_FORMAT("[CGUIWgtListBox::DoRemoveItem]: failed to find item, type <%s>, name<%s>!", 
+				pItem->GetType().c_str(), pItem->GetName().c_str()));
 		}
 
-//		SetRectDirty();
-		UpdateScrollbars();
+		if( m_pLastOperateItem == pItem )
+		{
+			m_pLastOperateItem = NULL;
+		}
+
+		Refresh();
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::EnableMultiselect(bool bEnable)
+	/**
+	* @brief Add the given CGUIWgtListBoxItem to the list.
+	*/
+	void CGUIWgtListBox::AddItem(CGUIWgtListBoxItem* pItem)
+	{
+		GUI_ASSERT( pItem, "[CGUIWgtListBox::AddItem] invalid pointer" );
+
+		AddChild( pItem );
+	}
+	//------------------------------------------------------------------------------
+	/** 
+	* @brief Removes the given item from the list box. 
+	* If the item is has the auto delete state set, the item will be deleted.
+	*/
+	void CGUIWgtListBox::RemoveItem( CGUIWgtListBoxItem* pItem)
+	{
+		GUI_ASSERT( pItem, "[CGUIWgtListBox::RemoveItem] invalid pointer" );
+
+		RemoveChild( pItem );
+
+		CGUIWidgetManager::Instance()->DestroyWidget( pItem );
+	}
+	//------------------------------------------------------------------------------
+	/** 
+	* @brief Removes the given item from the list box. 
+	* If the item is has the auto delete state set, the item will be deleted.
+	*/
+	void CGUIWgtListBox::RemoveItem( uint32 nIndex)
+	{
+		RemoveItem(GetItemByIndex(nIndex) );
+	}
+	//------------------------------------------------------------------------------
+	/**
+	* @brief Remove all items from the list.
+	*/
+	void CGUIWgtListBox::RemoveAllItems(void)
+	{
+		while( !m_aListItems.empty() )
+		{
+			RemoveChild(m_aListItems[0]);
+		}
+		m_pLastOperateItem = NULL;
+	}
+	//------------------------------------------------------------------------------
+	/**
+	* @brief Set whether the list should allow multiple selections or just a single selection
+	*/
+	void CGUIWgtListBox::EnableMultiselect(bool bEnable)
 	{
 		if (m_bMultiselect != bEnable)
 		{
 			m_bMultiselect = bEnable;
 
 			// if we change to single-select, deselect all except the first selected item.
-			bool bDeselected = false;
-			if ((!m_bMultiselect) && (GetSelectedCount() > 1))
+			if( m_bMultiselect )
 			{
-				CGUIListBoxItem* itm = GetFirstSelectedItem();
-
-				while ((itm = GetNextSelectedItem(itm)))
+				bool bFirstSelectedItem = true;
+				bool bDeselected = false;
+				for (size_t index = 0; index < m_aListItems.size(); ++index)
 				{
-					itm->SetSelected(false);
-					bDeselected = true;
+					if (m_aListItems[index]->IsSelected())
+					{
+						if( bFirstSelectedItem )
+						{
+							bFirstSelectedItem = false;
+						}
+						else
+						{
+							m_aListItems[index]->SetSelected(false);
+							bDeselected = true;
+						}
+					}
+				}
+
+				// send event
+				if( bDeselected )
+				{
+					CGUIEventListBox aEvent;
+					aEvent.SetEventId(eEVENT_LISTBOX_SELECTCHANGED);
+					aEvent.SetReceiver(this);
+					GSystem->SendEvent( &aEvent);
 				}
 			}
-
-			// send event
-			if( bDeselected )
-			{
-				CGUIEventListBox aEvent;
-				aEvent.SetEventId(eEVENT_LISTBOX_SELECTCHANGED);
-				aEvent.SetReceiver(this);
-				GSystem->SendEvent( &aEvent);
-			}
 		}
-
 	}
 	//------------------------------------------------------------------------------
-	bool	CGUIWgtListBox::IsMultiselectEnabled(void) const
+	/**
+	* @brief return whether multi-select is enabled
+	*/
+	bool CGUIWgtListBox::IsMultiselectEnabled(void) const
 	{
 		return m_bMultiselect;
-	}
-	//------------------------------------------------------------------------------
-	bool	CGUIWgtListBox::IsItemTooltipsEnabled(void) const
-	{
-		return m_bItemTooltips;
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::EnableItemTooltips(bool bEnable)
-	{
-		m_bItemTooltips = bEnable;
-	}
-	//------------------------------------------------------------------------------
-	bool	CGUIWgtListBox::IsItemSelected(uint32 nIndex) const
-	{
-		if (nIndex < m_aListItems.size())
-		{
-			return m_aListItems[nIndex]->IsSelected();
-		}
-		else
-		{
-			throw CGUIException("[CGUIWgtListBox::]: the specified index <%d> is out of range for this Listbox.", nIndex);
-		}
-	}
-	//------------------------------------------------------------------------------
-	CGUIListBoxItem*	CGUIWgtListBox::FindItemWithText(
-		const CGUIStringW& rText, const CGUIListBoxItem* pStartItem)
-	{
-		size_t index = (pStartItem == NULL) ? 0 : (GetItemIndex(pStartItem) + 1);
-
-		for( TListItem::iterator itor = m_aListItems.begin() + index;
-			itor != m_aListItems.end();
-			++itor)
-		{
-			if( wcscmp((*itor)->GetTextContent(), pText)==0)
-			{
-				return *itor;
-			}
-		}
-
-		// no items matched.
-		return NULL;
-	}
-	//------------------------------------------------------------------------------
-	bool	CGUIWgtListBox::IsListboxItemInList(const CGUIListBoxItem* pItem) const
-	{
-		return std::find(m_aListItems.begin(), m_aListItems.end(), pItem) != m_aListItems.end();
-	}
-	//------------------------------------------------------------------------------
-	bool listboxitem_greater(const CGUIListBoxItem* a, const CGUIListBoxItem* b)
-	{
-		return *a > *b;
-	}
-	void	CGUIWgtListBox::SetSorting(bool bSorting)
-	{
-		// only react if the setting will change
-		if (m_bSorted != bSorting)
-		{
-			m_bSorted = bSorting;
-
-			// if we are enabling sorting, we need to sort the list
-			if (m_bSorted)
-			{
-				std::sort(m_aListItems.begin(), m_aListItems.end(), listboxitem_greater);
-			}
-		}
-	}
-	//------------------------------------------------------------------------------
-	bool 	CGUIWgtListBox::IsSorting() const
-	{
-		return m_bSorted;
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::MakeItemVisible(uint32 nItemIndex)
-	{
-		//// handle simple "scroll to the bottom" case
-		//if (nItemIndex >= GetItemCount())
-		//{
-		//	//d_vertScrollbar->setScrollPosition(d_vertScrollbar->getDocumentSize() - d_vertScrollbar->getPageSize());
-		//}
-		//else
-		//{
-		//	real bottom;
-		//	real listHeight = GetClientRect.GetHeight();//getListRenderArea().getHeight();
-		//	real top = 0;
-
-		//	// get height to top of item
-		//	size_t i;
-		//	for (i = 0; i < nItemIndex; ++i)
-		//	{
-		//		top += m_aListItems[i]->GetSize().GetHeight();
-		//	}
-
-		//	// calculate height to bottom of item
-		//	bottom = top + m_aListItems[i]->GetSize().GetHeight();
-
-		//	// account for current scrollbar value
-		//	real currPos = d_vertScrollbar->getScrollPosition();
-		//	top		-= currPos;
-		//	bottom	-= currPos;
-
-		//	// if top is above the view area, or if item is too big to fit
-		//	if ((top < 0.0f) || ((bottom - top) > listHeight))
-		//	{
-		//		// scroll top of item to top of box.
-		//		d_vertScrollbar->setScrollPosition(currPos + top);
-		//	}
-		//	// if bottom is below the view area
-		//	else if (bottom >= listHeight)
-		//	{
-		//		// position bottom of item at the bottom of the list
-		//		d_vertScrollbar->setScrollPosition(currPos + bottom - listHeight);		
-		//	}
-		//	
-		//	// Item is already fully visible - nothing more to do.
-		//}
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::MakeItemVisible(const CGUIListBoxItem* pItem)
-	{
-		MakeItemVisible(GetItemIndex(pItem));
 	}
 	//------------------------------------------------------------------------------
 	//void	CGUIWgtListBox::UpdateDirtyRect()
@@ -594,10 +371,15 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtListBox::RenderSelf(IGUIInterfaceRender* pRender)
 	{
+		CGUIWidget::RenderSelf(pRender);
 		/// draw bg
-		DrawImage( pRender, m_pImageBG, GetRect());
+		DrawImage( pRender, m_pImageBG, GetBoundArea());
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief clear all selected item and don't send event for selected item change
+	* @return true if selected item changes
+	*/
 	bool CGUIWgtListBox::ClearAllSelections_impl(void)
 	{
 		// flag used so we can track if we did anything.
@@ -615,175 +397,54 @@ namespace guiex
 		return bModified;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::UpdateItemPos()
+	void CGUIWgtListBox::RefreshSelf()
 	{
+		CGUIWidget::RefreshSelf();
+
 		CGUIVector2	m_posLeftTop(0.0f,0);
 		for( TListItem::iterator itor = m_aListItems.begin(); itor != m_aListItems.end(); ++itor)
 		{
-			CGUIListBoxItem* pItem = *itor;
-			pItem->SetLocalPosition(m_posLeftTop);
-			m_posLeftTop.y += pItem->GetHeight();
+			CGUIWgtListBoxItem* pItem = *itor;
+			pItem->SetPixelPosition(m_posLeftTop);
+			m_posLeftTop.y += pItem->GetPixelSize().GetHeight();
 		}
 	}
 	//------------------------------------------------------------------------------
-	bool CGUIWgtListBox::ClearList_impl(void)
-	{
-		if (GetItemCount() == 0)
-		{
-			return false;
-		}
-		else
-		{
-			// delete any items we are supposed to
-			for (size_t i = 0; i < m_aListItems.size(); ++i)
-			{
-				RemoveChild(m_aListItems[i]);
-				GSystem->DestroyWidget(m_aListItems[i]);
-			}
-
-			// clear out the list.
-			m_aListItems.clear();
-
-			UpdateItemPos();
-
-			//m_aLastSelected = NULL;
-
-			return true;
-		}
-
-		m_pLastOperateItem = NULL;
-	}
-	//------------------------------------------------------------------------------
-	real	CGUIWgtListBox::GetTotalItemsHeight() const
+	/**
+	* @brief get total height of items
+	*/
+	real CGUIWgtListBox::GetTotalItemsHeight() const
 	{
 		real fHeight = 0.0f;
 		for( size_t i=0; i<m_aListItems.size(); ++i )
 		{
-			fHeight += m_aListItems[i]->GetHeight();
+			fHeight += m_aListItems[i]->GetPixelSize().GetHeight();
 		}
 
 		return fHeight;
 	}
 	//------------------------------------------------------------------------------
-	real	CGUIWgtListBox::GetWidestItemsWidth() const
+	/**
+	* @brief get widest width of items
+	*/
+	real CGUIWgtListBox::GetItemsWidth() const
 	{
 		real fWidth = 0.0f;
 		for( size_t i=0; i<m_aListItems.size(); ++i )
 		{
-			if( m_aListItems[i]->GetWidth() > fWidth )
+			if( m_aListItems[i]->GetPixelSize().GetWidth() > fWidth )
 			{
-				fWidth = m_aListItems[i]->GetWidth();
+				fWidth = m_aListItems[i]->GetPixelSize().GetWidth();
 			}
 		}
 
 		return fWidth;
 	}
 	//------------------------------------------------------------------------------
-	CGUIListBoxItem*	CGUIWgtListBox::GetItemUnderPoint(const CGUIVector2& rPos)
-	{
-		for( TListItem::iterator itor = m_aListItems.begin();
-			itor != m_aListItems.end();
-			++itor)
-		{
-			CGUIListBoxItem* pItem = *itor;
-			const CGUIRect& rItemRect = pItem->GetRect();
-			if( rItemRect.m_fTop <= rPos.y && rItemRect.m_fBottom >= rPos.y)
-			{
-				return pItem;
-			}
-		}
-		return NULL;
-	}
-	//------------------------------------------------------------------------------
-
 
 
 	//------------------------------------------------------------------------------
-	uint32	CGUIWgtListBox::OnMouseMove( CGUIEventMouse* pEvent )
-	{
-		CGUIListBoxItem* pItem = GetItemUnderPoint( pEvent->GetPosition());
-		if( pItem )
-		{
-			CGUIEventMouse aEventMouse;
-			aEventMouse.SetEventId(eEVENT_MOUSE_MOVE);
-			aEventMouse.SetReceiver(pItem);
-			aEventMouse.SetPosition(pEvent->GetPosition());
-			aEventMouse.SetKeyboardInterface(pEvent->GetKeyboardInterface());
-			GSystem->SendEvent(&aEventMouse);
-		}
-
-		return CGUIWidget::OnMouseMove(pEvent);
-	}
-	//------------------------------------------------------------------------------
-	uint32	CGUIWgtListBox::OnMouseLeftDown( CGUIEventMouse* pEvent )
-	{
-		CGUIListBoxItem* pItem = GetItemUnderPoint( pEvent->GetPosition());
-		if( pItem )
-		{
-			CGUIEventMouse aEventMouse;
-			aEventMouse.SetEventId(eEVENT_MOUSE_DOWN);
-			aEventMouse.SetButton( pEvent->GetButton() );
-			aEventMouse.SetReceiver(pItem);
-			aEventMouse.SetPosition(pEvent->GetPosition());
-			aEventMouse.SetKeyboardInterface(pEvent->GetKeyboardInterface());
-			GSystem->SendEvent(&aEventMouse);
-		}
-
-		return CGUIWidget::OnMouseLeftDown(pEvent);
-	}
-	//------------------------------------------------------------------------------
-	uint32	CGUIWgtListBox::OnMouseLeftUp( CGUIEventMouse* pEvent )
-	{
-		CGUIListBoxItem* pItem = GetItemUnderPoint( pEvent->GetPosition());
-		if( pItem )
-		{
-			CGUIEventMouse aEventMouse;
-			aEventMouse.SetEventId(eEVENT_MOUSE_UP);
-			aEventMouse.SetButton( pEvent->GetButton() );
-			aEventMouse.SetReceiver(pItem);
-			aEventMouse.SetPosition(pEvent->GetPosition());
-			aEventMouse.SetKeyboardInterface(pEvent->GetKeyboardInterface());
-			GSystem->SendEvent(&aEventMouse);
-		}
-
-		return CGUIWidget::OnMouseLeftUp(pEvent);
-	}
-	//------------------------------------------------------------------------------
-	uint32	CGUIWgtListBox::OnMouseRightDown( CGUIEventMouse* pEvent )
-	{
-		CGUIListBoxItem* pItem = GetItemUnderPoint( pEvent->GetPosition());
-		if( pItem )
-		{
-			CGUIEventMouse aEventMouse;
-			aEventMouse.SetEventId(eEVENT_MOUSE_DOWN);
-			aEventMouse.SetButton( pEvent->GetButton() );
-			aEventMouse.SetReceiver(pItem);
-			aEventMouse.SetPosition(pEvent->GetPosition());
-			aEventMouse.SetKeyboardInterface(pEvent->GetKeyboardInterface());
-			GSystem->SendEvent(&aEventMouse);
-		}
-
-		return CGUIWidget::OnMouseRightDown(pEvent);
-	}
-	//------------------------------------------------------------------------------
-	uint32	CGUIWgtListBox::OnMouseRightUp( CGUIEventMouse* pEvent )
-	{
-		CGUIListBoxItem* pItem = GetItemUnderPoint( pEvent->GetPosition());
-		if( pItem )
-		{
-			CGUIEventMouse aEventMouse;
-			aEventMouse.SetEventId(eEVENT_MOUSE_UP);
-			aEventMouse.SetButton( pEvent->GetButton() );
-			aEventMouse.SetReceiver(pItem);
-			aEventMouse.SetPosition(pEvent->GetPosition());
-			aEventMouse.SetKeyboardInterface(pEvent->GetKeyboardInterface());
-			GSystem->SendEvent(&aEventMouse);
-		}
-
-		return CGUIWidget::OnMouseRightUp(pEvent);
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::ProcessMouseLeftDown(CGUIListBoxItem* pItem, CGUIEventMouse* pEvent)
+	void CGUIWgtListBox::ProcessMouseLeftDown(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent)
 	{
 		if( IsMultiselectEnabled())
 		{
@@ -832,24 +493,24 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtListBox::ProcessMouseLeftUp(CGUIListBoxItem* pItem, CGUIEventMouse* pEvent)
+	void		CGUIWgtListBox::ProcessMouseLeftUp(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent)
 	{
 
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::ProcessMouseRightDown(CGUIListBoxItem* pItem, CGUIEventMouse* pEvent)
+	void	CGUIWgtListBox::ProcessMouseRightDown(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent)
 	{
 		ClearAllSelections_impl();
 		SetItemSelected(pItem, true);
 		m_pLastOperateItem = pItem;
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtListBox::ProcessMouseRightUp(CGUIListBoxItem* pItem, CGUIEventMouse* pEvent)
+	void CGUIWgtListBox::ProcessMouseRightUp(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent)
 	{
 
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::ProcessMouseLeftClick(CGUIListBoxItem* pItem, CGUIEventMouse* pEvent)
+	void	CGUIWgtListBox::ProcessMouseLeftClick(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent)
 	{
 		if( pItem == m_pLastOperateItem )
 		{
@@ -861,7 +522,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::ProcessMouseRightClick(CGUIListBoxItem* pItem, CGUIEventMouse* pEvent)
+	void	CGUIWgtListBox::ProcessMouseRightClick(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent)
 	{
 		if( pItem == m_pLastOperateItem )
 		{
@@ -873,7 +534,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::ProcessMouseLeftDbClick(CGUIListBoxItem* pItem, CGUIEventMouse* pEvent)
+	void	CGUIWgtListBox::ProcessMouseLeftDbClick(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent)
 	{
 		if( pItem == m_pLastOperateItem )
 		{
@@ -885,7 +546,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::ProcessMouseRightDbClick(CGUIListBoxItem* pItem, CGUIEventMouse* pEvent)
+	void	CGUIWgtListBox::ProcessMouseRightDbClick(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent)
 	{
 		if( pItem == m_pLastOperateItem )
 		{
@@ -897,46 +558,9 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtListBox::ProcessMouseMove(CGUIListBoxItem* pItem, CGUIEventMouse* pEvent)
+	void CGUIWgtListBox::ProcessMouseMove(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent)
 	{
 
-	}
-	//------------------------------------------------------------------------------
-	void		CGUIWgtListBox::ProcessProperty( const CGUIProperty* pProperty)
-	{
-		CGUIWgtScrollbarContainer::ProcessProperty(pProperty);
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//property for MULTI_SELECT
-		/*
-		*<property name="MULTI_SELECT" type="BOOL" value="false" />
-		*/
-		if( pProperty->GetName() == "MULTI_SELECT" && pProperty->GetType()=="BOOL")
-		{
-			EnableMultiselect(StringToValue(pProperty->GetValue()));
-		}
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//property for SORT
-		/*
-		*<property name="SORT" type="BOOL" value="false" />
-		*/
-		else if( pProperty->GetName() == "SORT" && pProperty->GetType()=="BOOL")
-		{
-			SetSorting(StringToValue(pProperty->GetValue()));
-		}
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//property for text item
-		/*
-		*<property name="TEXT_ITEM" type="STRING" value="abc" />
-		*/
-		else if( pProperty->GetName() == "TEXT_ITEM" && pProperty->GetType()=="STRING")
-		{
-			CGUIStringEx aString;
-			CGUIStringConvertor::MultiByteToWideChar(pProperty->GetValue(), aString);
-			AddItem(aString.GetContent());
-		}
 	}
 	//------------------------------------------------------------------------------
 }

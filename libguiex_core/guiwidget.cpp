@@ -82,8 +82,7 @@ namespace guiex
 		,m_bIsMouseConsumed(true)
 		,m_bIsGenerateUpdateEvent(false)
 		,m_bIsGenerateParentSizeChangeEvent(false)
-		,m_bIsGenerateParentChangeEvent(false)
-		,m_bIsGenerateAddChildEvent(false )
+		,m_bIsGenerateParentChildEvent(false )
 		,m_bIsGenerateClickEvent(false)
 		,m_bIsGenerateLoadEvent(false)
 		,m_bIsGenerateDBClickEvent(false)
@@ -182,8 +181,9 @@ namespace guiex
 		//open self
 		if( IsOpen())
 		{
-			GUI_THROW( GUI_FORMAT("[CGUIWidget::Open]: the widget isn't in closed state. TYPE<%s>  NAME<%s>",
-				GetType().c_str(), GetName().c_str()));
+			return;
+			//GUI_THROW( GUI_FORMAT("[CGUIWidget::Open]: the widget isn't in closed state. TYPE<%s>  NAME<%s>",
+			//	GetType().c_str(), GetName().c_str()));
 		}
 
 		m_bIsOpen = true;
@@ -282,7 +282,7 @@ namespace guiex
 		m_pWidgetGenerator = pGenerator;
 	}
 	//------------------------------------------------------------------------------
-	const	CGUIWidgetGenerator* CGUIWidget::GetGenerator() const
+	const CGUIWidgetGenerator* CGUIWidget::GetGenerator() const
 	{
 		return m_pWidgetGenerator;
 	}
@@ -313,7 +313,7 @@ namespace guiex
 			m_pParent->m_aParamVisible.AddChild(&(m_aParamVisible));
 
 			//send event for add child
-			if( IsGenerateAddChildEvent() )
+			if( IsGenerateParentChildEvent() )
 			{
 				CGUIEventRelativeChange aEvent;
 				aEvent.SetEventId(eEVENT_ADD_CHILD);
@@ -324,7 +324,7 @@ namespace guiex
 		}
 
 		//send event for change parent
-		if( IsGenerateParentChangeEvent() )
+		if( IsGenerateParentChildEvent() )
 		{
 			CGUIEventRelativeChange aEvent;
 			aEvent.SetEventId(eEVENT_PARENT_CHANGED);
@@ -625,7 +625,8 @@ namespace guiex
 		pChild->SetParentImpl( NULL );
 		pChild->SetNextSiblingImpl( NULL );
 
-		//send event for add child
+		//send event for remove child
+		if( IsGenerateParentChildEvent() )
 		{
 			CGUIEventRelativeChange aEvent;
 			aEvent.SetEventId(eEVENT_REMOVE_CHILD);
@@ -2967,24 +2968,14 @@ namespace guiex
 		return m_bIsGenerateParentSizeChangeEvent;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWidget::SetGenerateParentChangeEvent( bool bFlag )
+	void CGUIWidget::SetGenerateParentChildEvent( bool bFlag )
 	{
-		m_bIsGenerateParentChangeEvent = bFlag;
+		m_bIsGenerateParentChildEvent = bFlag;
 	}
 	//------------------------------------------------------------------------------
-	bool CGUIWidget::IsGenerateParentChangeEvent( ) const
+	bool CGUIWidget::IsGenerateParentChildEvent( ) const
 	{
-		return m_bIsGenerateParentChangeEvent;
-	}
-	//------------------------------------------------------------------------------
-	void CGUIWidget::SetGenerateAddChildEvent( bool bFlag )
-	{
-		m_bIsGenerateAddChildEvent = bFlag;
-	}
-	//------------------------------------------------------------------------------
-	bool CGUIWidget::IsGenerateAddChildEvent( ) const
-	{
-		return m_bIsGenerateAddChildEvent;
+		return m_bIsGenerateParentChildEvent;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::SetGenerateClickEvent( bool bFlag )

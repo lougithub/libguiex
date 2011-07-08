@@ -307,6 +307,24 @@
       <property name="spark" type="CGUIImage" value="progress_spark" />
     </page>
   </widget>
+
+  <widget type="CGUIWgtListBox" inherit="CGUIWidget">
+    <page name="Appearance">
+    </page>
+    <page name="Image">
+      <property name="background" type="CGUIImage" value=""/>
+    </page>
+  </widget>
+
+  <widget type="CGUIWgtListBoxItem" inherit="CGUIWidget">
+    <page name="Appearance">
+    </page>
+    <page name="Image">
+      <property name="normal" type="CGUIImage" value=""/>
+      <property name="selected" type="CGUIImage" value=""/>
+    </page>
+  </widget>
+
 </config>
 
 

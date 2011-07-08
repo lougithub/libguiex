@@ -116,7 +116,7 @@ namespace guiex
 	void CGUIWgtScrollbarArrow::InitScrollbarArrow()
 	{
 		SetFocusAgency( true );
-		SetGenerateParentChangeEvent( true );
+		SetGenerateParentChildEvent( true );
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtScrollbarArrow::OnParentChanged( CGUIEventRelativeChange* pEvent )
@@ -164,7 +164,7 @@ namespace guiex
 	{
 		SetMovable(true);
 		SetFocusAgency( true );
-		SetGenerateParentChangeEvent( true );
+		SetGenerateParentChildEvent( true );
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtScrollbarSlide::OnParentChanged( CGUIEventRelativeChange* pEvent )

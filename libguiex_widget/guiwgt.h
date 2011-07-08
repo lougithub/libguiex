@@ -29,7 +29,6 @@
 #	include "guiwgtanimation.h"
 #	include "guilistboxtextitem.h"
 #	include "guimenutextitem.h"
-#	include "guiwgtlistbox.h"
 #	include "guiwgtcombobox.h"
 #	include "guiwgtprogress.h"
 #	include "guiwgtscrollbarcontainer.h"
@@ -40,6 +39,8 @@
 #	include "guicollistheader.h"
 #	include "guicollistheadersegment.h"
 #	include "guicollisttextitem.h"
+#	include "guiwgtlistbox.h"
+#	include "guiwgtlistboxitem.h"
 #else
 #	include "guiwgttag.h"
 #	include "guiwgtanimation.h" 
@@ -55,6 +56,8 @@
 #	include "guiwgtradiobutton.h"
 #	include "guiwgtemptynode.h"
 #	include "guiwgtprogress.h"
+#	include "guiwgtlistbox.h"
+#	include "guiwgtlistboxitem.h"
 #endif
 
 

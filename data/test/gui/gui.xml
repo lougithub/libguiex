@@ -176,4 +176,131 @@
         <property name="OnTimer" type="CGUIEvent" value="OnTimer_Progress1" />
         <property name="generate_load_event" type="bool" value="true" />
     </property>
+    <property name="panel_listtest" type="CGUIWidgetDefine" value="CGUIWgtPanel">
+        <property name="parent" type="CGUIString" value="node_root" />
+        <property name="bg" type="CGUIImage" value="dialog_bg" />
+        <property name="border_top" type="CGUIImage" value="panel_border_top" />
+        <property name="border_bottom" type="CGUIImage" value="panel_border_bottom" />
+        <property name="border_left" type="CGUIImage" value="panel_border_left" />
+        <property name="border_right" type="CGUIImage" value="panel_border_right" />
+        <property name="border_topleft" type="CGUIImage" value="panel_border_topleft" />
+        <property name="border_topright" type="CGUIImage" value="panel_border_topright" />
+        <property name="border_bottomleft" type="CGUIImage" value="panel_border_bottomleft" />
+        <property name="border_bottomright" type="CGUIImage" value="panel_border_bottomright" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="201,120" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="189,200" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="movable" type="bool" value="true" />
+    </property>
+    <property name="listbox_1" type="CGUIWidgetDefine" value="CGUIWgtListBox">
+        <property name="parent" type="CGUIString" value="panel_listtest" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0,0" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="1,1" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+        </property>
+        <property name="hitable" type="bool" value="false" />
+    </property>
+    <property name="listboxitem_1" type="CGUIWidgetDefine" value="CGUIWgtListBoxItem">
+        <property name="parent" type="CGUIString" value="listbox_1" />
+        <property name="normal" type="CGUIImage" value="button_blue_normal" />
+        <property name="selected" type="CGUIImage" value="button_blue_hover" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0,0" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="165,46" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+    </property>
+    <property name="listboxitem_text_1" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
+        <property name="parent" type="CGUIString" value="listboxitem_1" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="35,11" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="100,20" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="hitable" type="bool" value="false" />
+        <property name="text" type="CGUIString" value="list item 1" />
+    </property>
+    <property name="listboxitem_2" type="CGUIWidgetDefine" value="CGUIWgtListBoxItem">
+        <property name="parent" type="CGUIString" value="listbox_1" />
+        <property name="normal" type="CGUIImage" value="button_blue_normal" />
+        <property name="selected" type="CGUIImage" value="button_blue_hover" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0,46" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="165,46" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+    </property>
+    <property name="listboxitem_text_2" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
+        <property name="parent" type="CGUIString" value="listboxitem_2" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="35,11" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="100,20" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="hitable" type="bool" value="false" />
+        <property name="text" type="CGUIString" value="list item 2" />
+    </property>
+    <property name="listboxitem_3" type="CGUIWidgetDefine" value="CGUIWgtListBoxItem">
+        <property name="parent" type="CGUIString" value="listbox_1" />
+        <property name="normal" type="CGUIImage" value="button_blue_normal" />
+        <property name="selected" type="CGUIImage" value="button_blue_hover" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0,92" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="165,46" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+    </property>
+    <property name="listboxitem_text_3" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
+        <property name="parent" type="CGUIString" value="listboxitem_3" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="35,11" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="100,20" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="hitable" type="bool" value="false" />
+        <property name="text" type="CGUIString" value="list item 3" />
+    </property>
+    <property name="btn_test2" type="CGUIWidgetDefine" value="CGUIWgtButton">
+        <property name="parent" type="CGUIString" value="node_root" />
+        <property name="normal" type="CGUIImage" value="button_red_normal" />
+        <property name="hover" type="CGUIImage" value="button_red_hover" />
+        <property name="push" type="CGUIImage" value="button_red_push" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="163,42" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="124,46" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="text_normal" type="CGUILocalizedString" value="open dialog" />
+        <property name="OnMouseLeftClick" type="CGUIEvent" value="OnBtnClick_test1" />
+    </property>
 </guiex>

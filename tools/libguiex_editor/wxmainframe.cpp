@@ -518,7 +518,7 @@ wxToolBar* WxMainFrame::CreateToolbar()
 	tb1->AddTool(ID_Open, wxBitmap (open_xpm), _T("open"));
 	tb1->AddTool(ID_Save, wxBitmap (save_xpm), _T("save"));
 	tb1->AddSeparator();
-	tb1->AddTool(ID_CreateWidget, wxBitmap (new_xpm), _T("add widget"));
+	tb1->AddTool(ID_CreateWidget, wxBitmap (new_xpm), _T("new widget"));
 	tb1->AddTool(ID_DeleteWidget, wxBitmap (delete_xpm), _T("delete widget"));
 	tb1->AddSeparator();
 	tb1->AddTool(ID_WidgetChangeParent, wxBitmap (changeparent_xpm), _T("change parent"));
@@ -1088,10 +1088,11 @@ void WxMainFrame::OnWidgetPaste(wxCommandEvent& evt)
 	try
 	{
 		pNewWidget = CGUIWidgetManager::Instance()->CreateWidget( m_aPasteCache.m_aWidgetType, wx2GuiString(aTextDlg.GetValue()), GetCurrentSceneName());
-		pNewWidget->SetParent( pWidget );
-		m_aPasteCache.m_aProperty.GetProperty("parent", "CGUIString")->SetValue( pWidget->GetName() );
+		m_aPasteCache.m_aProperty.GetProperty("parent", "CGUIString")->SetValue( "" );
 		pNewWidget->SetProperty(m_aPasteCache.m_aProperty);
 		pNewWidget->LoadFromProperty();
+		pNewWidget->SetParent( pWidget );
+		m_aPasteCache.m_aProperty.GetProperty("parent", "CGUIString")->SetValue( pWidget->GetName() );
 		pNewWidget->Create();
 		pNewWidget->Open();
 	}

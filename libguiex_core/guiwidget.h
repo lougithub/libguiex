@@ -323,11 +323,8 @@ namespace guiex
 		void SetGenerateParentSizeChangeEvent( bool bFlag ); 
 		bool IsGenerateParentSizeChangeEvent( ) const;
 
-		void SetGenerateParentChangeEvent( bool bFlag ); 
-		bool IsGenerateParentChangeEvent( ) const;
-
-		void SetGenerateAddChildEvent( bool bFlag ); 
-		bool IsGenerateAddChildEvent( ) const;
+		void SetGenerateParentChildEvent( bool bFlag ); 
+		bool IsGenerateParentChildEvent( ) const;
 
 		void SetGenerateUpdateEvent( bool bFlag ); 
 		bool IsGenerateUpdateEvent( ) const;
@@ -388,9 +385,7 @@ namespace guiex
 
 		virtual CGUINode* NodeGetParent();
 
-
-	private:
-		void SetParentImpl( CGUIWidget* pParent );
+		virtual void SetParentImpl( CGUIWidget* pParent );
 		void SetChildImpl( CGUIWidget* pChild );
 		void SetNextSiblingImpl( CGUIWidget* pNextSibling );
 
@@ -555,8 +550,7 @@ namespace guiex
 		bool m_bIsGenerateClickEvent; 
 		bool m_bIsGenerateDBClickEvent; 
 		bool m_bIsGenerateMultiClickEvent; 
-		bool m_bIsGenerateParentChangeEvent; 
-		bool m_bIsGenerateAddChildEvent;
+		bool m_bIsGenerateParentChildEvent;
 		bool m_bIsGenerateParentSizeChangeEvent; 
 		bool m_bIsGenerateUpdateEvent; 
 		bool m_bIsGenerateScaleChangeEvent; 

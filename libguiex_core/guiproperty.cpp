@@ -364,37 +364,6 @@ namespace guiex
 
 		return NULL;
 	}
-	////------------------------------------------------------------------------------
-	/////get a sub-property by name
-	//CGUIProperty* CGUIProperty::GetProperty( const CGUIString& rName )
-	//{
-	//	for( TSetProperty::iterator itor = m_setProperty.begin();
-	//		itor != m_setProperty.end();
-	//		++itor)
-	//	{
-	//		if( (*itor).GetName() == rName )
-	//		{
-	//			return &(*itor);
-	//		}
-	//	}
-
-	//	return NULL;
-	//}
-	////------------------------------------------------------------------------------
-	//const CGUIProperty*	CGUIProperty::GetProperty( const CGUIString& rName ) const
-	//{
-	//	for( TSetProperty::const_iterator itor = m_setProperty.begin();
-	//		itor != m_setProperty.end();
-	//		++itor)
-	//	{
-	//		if( (*itor).GetName() == rName )
-	//		{
-	//			return &(*itor);
-	//		}
-	//	}
-
-	//	return NULL;
-	//}
 	//------------------------------------------------------------------------------
 	bool CGUIProperty::HasProperty( const CGUIString& rName, const CGUIString& rType ) const
 	{
@@ -427,21 +396,6 @@ namespace guiex
 		}
 		return false;
 	}
-	//------------------------------------------------------------------------------
-	///whether this sub-property contain this property
-	//bool CGUIProperty::HasProperty( const CGUIString& rName ) const
-	//{
-	//	for( TSetProperty::const_iterator itor = m_setProperty.begin();
-	//		itor != m_setProperty.end();
-	//		++itor)
-	//	{
-	//		if( (*itor).GetName() == rName )
-	//		{
-	//			return true;
-	//		}
-	//	}
-	//	return false;
-	//}
 	//------------------------------------------------------------------------------
 	void CGUIProperty::SetData( void* pData )
 	{
