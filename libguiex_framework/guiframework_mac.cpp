@@ -118,7 +118,7 @@ namespace guiex
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_Mac::RegisterInterfaces_Keyboard( )
 	{
-		GUI_REGISTER_INTERFACE_LIB( IGUIKeyboard_default);
+//		GUI_REGISTER_INTERFACE_LIB( IGUIKeyboard_default);
 	}
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_Mac::RegisterInterfaces_Font( )
