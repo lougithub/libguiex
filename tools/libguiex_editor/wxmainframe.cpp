@@ -122,6 +122,10 @@ EVT_UPDATE_UI(ID_WidgetDown, WxMainFrame::OnUpdateWidgetDown)
 EVT_MENU(ID_WidgetDown, WxMainFrame::OnWidgetDown)
 EVT_UPDATE_UI(ID_WidgetChangeParent, WxMainFrame::OnUpdateWidgetChangeParent)
 EVT_MENU(ID_WidgetChangeParent, WxMainFrame::OnWidgetChangeParent)
+EVT_UPDATE_UI(ID_WidgetCopy, WxMainFrame::OnUpdateWidgetCopy)
+EVT_MENU(ID_WidgetCopy, WxMainFrame::OnWidgetCopy)
+EVT_UPDATE_UI(ID_WidgetPaste, WxMainFrame::OnUpdateWidgetPaste)
+EVT_MENU(ID_WidgetPaste, WxMainFrame::OnWidgetPaste)
 
 EVT_UPDATE_UI(ID_ParseScript, WxMainFrame::OnUpdateParseScript)
 EVT_MENU(ID_ParseScript, WxMainFrame::OnParseScript)
@@ -516,9 +520,13 @@ wxToolBar* WxMainFrame::CreateToolbar()
 	tb1->AddSeparator();
 	tb1->AddTool(ID_CreateWidget, wxBitmap (new_xpm), _T("add widget"));
 	tb1->AddTool(ID_DeleteWidget, wxBitmap (delete_xpm), _T("delete widget"));
+	tb1->AddSeparator();
+	tb1->AddTool(ID_WidgetChangeParent, wxBitmap (changeparent_xpm), _T("change parent"));
+	tb1->AddTool(ID_WidgetCopy, wxBitmap (copy_xpm), _T("copy widget"));
+	tb1->AddTool(ID_WidgetPaste, wxBitmap (paste_xpm), _T("paste widget"));
+	tb1->AddSeparator();
 	tb1->AddTool(ID_WidgetUp, wxBitmap (bookmarkBluegem), _T("move widget up"));
 	tb1->AddTool(ID_WidgetDown, wxBitmap (bookmarkRedgem), _T("move widget down"));
-	tb1->AddTool(ID_WidgetChangeParent, wxBitmap (changeparent), _T("change parent"));
 	tb1->AddSeparator();
 	tb1->AddTool(ID_ParseScript, wxBitmap (icon_xpm), _T("parse script"));
 	tb1->AddTool(ID_About, wxBitmap (help_xpm));
@@ -1022,6 +1030,93 @@ void WxMainFrame::OnWidgetChangeParent(wxCommandEvent& evt)
 void WxMainFrame::OnUpdateWidgetChangeParent(wxUpdateUIEvent& event)
 {
 	if( m_pCanvas && m_pCanvas->GetSelectedWidget() )
+	{
+		event.Enable(true);
+	}
+	else
+	{
+		event.Enable(false);
+	}
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnWidgetCopy(wxCommandEvent& evt)
+{
+	CGUIWidget* pWidget = m_pCanvas->GetSelectedWidget();
+	//empty
+	if( !pWidget)
+	{
+		return;
+	}
+
+	m_aPasteCache.m_aProperty = pWidget->GetProperty();
+	m_aPasteCache.m_aWidgetType = pWidget->GetType();
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnUpdateWidgetCopy(wxUpdateUIEvent& event)
+{
+	if( m_pCanvas && m_pCanvas->GetSelectedWidget() )
+	{
+		event.Enable(true);
+	}
+	else
+	{
+		event.Enable(false);
+	}
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnWidgetPaste(wxCommandEvent& evt)
+{
+	CGUIWidget* pWidget = m_pCanvas->GetSelectedWidget();
+	//empty
+	if( !pWidget)
+	{
+		return;
+	}
+	if( m_aPasteCache.m_aProperty.GetPropertyNum() == 0 )
+	{
+		return;
+	}
+
+	//get name of new widget.
+	wxTextEntryDialog aTextDlg( this, _T("input widget name"),wxString::Format( _T("input name of widget <%s>"), Gui2wxString( m_aPasteCache.m_aWidgetType).c_str()) );
+	if(  wxID_OK != aTextDlg.ShowModal())
+	{
+		return;
+	}
+
+	CGUIWidget* pNewWidget = NULL;
+	try
+	{
+		pNewWidget = CGUIWidgetManager::Instance()->CreateWidget( m_aPasteCache.m_aWidgetType, wx2GuiString(aTextDlg.GetValue()), GetCurrentSceneName());
+		pNewWidget->SetParent( pWidget );
+		m_aPasteCache.m_aProperty.GetProperty("parent", "CGUIString")->SetValue( pWidget->GetName() );
+		pNewWidget->SetProperty(m_aPasteCache.m_aProperty);
+		pNewWidget->LoadFromProperty();
+		pNewWidget->Create();
+		pNewWidget->Open();
+	}
+	catch (CGUIBaseException& rError)
+	{
+		wxMessageBox( Gui2wxString(rError.what()), _T("error") );
+
+		if( pNewWidget )
+		{
+			CGUIWidgetManager::Instance()->DestroyWidget(pNewWidget);
+			pNewWidget = NULL;
+		}
+	}
+
+	if( pNewWidget )
+	{
+		RefreshWidgetTreeCtrl();
+		m_pCanvas->SetSelectedWidget(pNewWidget);
+		m_pCanvas->SetSaveFlag(true);
+	}
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnUpdateWidgetPaste(wxUpdateUIEvent& event)
+{
+		if( m_pCanvas && m_pCanvas->GetSelectedWidget() )
 	{
 		event.Enable(true);
 	}
@@ -1842,9 +1937,12 @@ void WxMainFrame::CreateMenu()
 	edit_menu->Append(ID_CreateWidget, _("Create Widget"));
 	edit_menu->Append(ID_DeleteWidget, _("Delete Widget"));
 
+	edit_menu->Append(ID_WidgetChangeParent, _("Change parent"));
+	edit_menu->Append(ID_WidgetCopy, _("Copy Widget"));
+	edit_menu->Append(ID_WidgetPaste, _("Paste Widget"));
+	file_menu->AppendSeparator();
 	edit_menu->Append(ID_WidgetUp, _("Widget Up"));
 	edit_menu->Append(ID_WidgetDown, _("Widget Down"));
-	edit_menu->Append(ID_WidgetChangeParent, _("change widget parent"));
 	
 	//menu-tool
 	wxMenu*	tool_menu = new wxMenu;

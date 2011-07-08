@@ -36,6 +36,8 @@ enum
 	ID_WidgetUp,
 	ID_WidgetDown,
 	ID_WidgetChangeParent,
+	ID_WidgetCopy,
+	ID_WidgetPaste,
 	ID_ParseScript,
 
 	ID_Localization_begin,

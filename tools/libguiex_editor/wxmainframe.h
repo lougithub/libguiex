@@ -175,6 +175,10 @@ protected:
 	void OnUpdateWidgetDown(wxUpdateUIEvent& event);
 	void OnWidgetChangeParent(wxCommandEvent& evt);
 	void OnUpdateWidgetChangeParent(wxUpdateUIEvent& event);
+	void OnWidgetCopy(wxCommandEvent& evt);
+	void OnUpdateWidgetCopy(wxUpdateUIEvent& event);
+	void OnWidgetPaste(wxCommandEvent& evt);
+	void OnUpdateWidgetPaste(wxUpdateUIEvent& event);
 	void OnToggleScissor(wxCommandEvent& evt);
 	void OnToggleExtraInfo(wxCommandEvent& evt);
 	void OnToggleWireframe(wxCommandEvent& evt);
@@ -251,6 +255,12 @@ protected:
 	wxColor m_aBGColor;
 
 	CGUIWidget* m_pCurrentEditingWidget;
+
+	struct
+	{
+		CGUIProperty m_aProperty;
+		CGUIString m_aWidgetType;
+	} m_aPasteCache;
 
 	DECLARE_EVENT_TABLE()
 };
