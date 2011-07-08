@@ -29,6 +29,7 @@
 #include <libguiex_module/ime_dummy/guiime_dummy.h>
 #include <libguiex_module/sound_openal/guisound_openal.h>
 #include <libguiex_module/mouse_default/guimouse_default.h>
+#include <libguiex_module/keyboard_default/guikeyboard_default.h>
 #include <libguiex_module/localizationloader_tinyxml/guilocalizationloader_tinyxml.h>
 
 //============================================================================//
@@ -118,7 +119,7 @@ namespace guiex
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_IOS::RegisterInterfaces_Keyboard( )
 	{
-		GUI_REGISTER_INTERFACE_LIB( IGUIKeyboard_default);
+		//GUI_REGISTER_INTERFACE_LIB( IGUIKeyboard_default);
 	}
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_IOS::RegisterInterfaces_Font( )

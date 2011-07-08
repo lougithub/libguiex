@@ -261,7 +261,7 @@ elseif( BUILD_PLATFORM_IOS )
 		${${target_name}_render_opengles_ios_SRCS}
 		${${target_name}_render_opengl_base_SRCS}
 		${${target_name}_stringconv_iconv_SRCS}
-		${${target_name}_stringconv_cocoa_SRCS}
+		${${target_name}_stringconv_internal_SRCS}
 		${${target_name}_stringconv_internal_SRCS}
 		${${target_name}_script_lua_SRCS}
 		${${target_name}_physics_box2d_SRCS}
@@ -285,7 +285,7 @@ elseif( BUILD_PLATFORM_MACOS )
 		${${target_name}_render_opengl_SRCS}
 		${${target_name}_render_opengl_base_SRCS}
 		${${target_name}_stringconv_iconv_SRCS}
-		${${target_name}_stringconv_cocoa_SRCS}
+		${${target_name}_stringconv_internal_SRCS}
 		${${target_name}_script_lua_SRCS}
 		${${target_name}_physics_box2d_SRCS}
 		${${target_name}_sound_openal_SRCS}
