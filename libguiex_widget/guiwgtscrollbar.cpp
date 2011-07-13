@@ -125,6 +125,11 @@ namespace guiex
 	{
 		GUI_ASSERT( m_pScrollbar, "haven't parent" );
 
+		if( IsDisable() )
+		{
+			return CGUIWgtButton::OnMouseLeftDown(pEvent);
+		}
+
 		switch( m_nArrowType)
 		{
 		case 0:
@@ -406,14 +411,7 @@ namespace guiex
 		m_pSlide->Create();
 	}
 	//------------------------------------------------------------------------------
-	bool CGUIWgtScrollbar::IsIgnoreParentClipRect() const
-	{
-		if( IsNotifyParent() )
-		{
-			return true;
-		}
-		return false;
-	}
+
 	//------------------------------------------------------------------------------
 	void CGUIWgtScrollbar::RenderSelf(IGUIInterfaceRender* pRender)
 	{
@@ -470,9 +468,16 @@ namespace guiex
 		return aRect;
 	}
 	//------------------------------------------------------------------------------
+	void CGUIWgtScrollbar::AdjustScrollbarPosAndSize()
+	{
+
+	}
+	//------------------------------------------------------------------------------
 	void CGUIWgtScrollbar::RefreshSelf()
 	{
 		CGUIWidget::RefreshSelf();
+
+		AdjustScrollbarPosAndSize();
 
 		//set children's pos
 		switch(m_eOrientation)
@@ -528,7 +533,7 @@ namespace guiex
 			}
 			break;
 
-			//for horizonal scroll bar
+			//for horizontal scroll bar
 		case eOrientation_Horizontal:
 			{
 				aSlideArea.m_fLeft += aSlideSize.m_fWidth / 2;
@@ -667,7 +672,10 @@ namespace guiex
 	///increase position of scrollbar slide
 	void CGUIWgtScrollbar::DecreasePos()
 	{
-		SetCurrentPos(GetCurrentPos()-1);
+		if( GetCurrentPos() > 0 )
+		{
+			SetCurrentPos(GetCurrentPos()-1);
+		}
 	}
 	//------------------------------------------------------------------------------
 	///whether notify parent when scroll value change
@@ -684,6 +692,11 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtScrollbar::OnMouseLeftDown( CGUIEventMouse* pEvent )
 	{
+		if( IsDisable() )
+		{
+			return CGUIWidget::OnMouseLeftDown(pEvent);
+		}
+
 		CGUIVector2	aMousePoint = pEvent->GetLocalPosition();
 		CGUIVector2	aSlidePoint = m_pSlide->GetPixelPosition( );
 

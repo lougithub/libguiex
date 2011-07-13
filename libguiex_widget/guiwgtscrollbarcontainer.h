@@ -75,7 +75,6 @@ namespace guiex
 	class GUIEXPORT CGUIWgtScrollbarContainer : public CGUIWidget
 	{
 	public:
-		CGUIWgtScrollbarContainer( const CGUIString& rName, const CGUIString& rSceneName );
 		virtual ~CGUIWgtScrollbarContainer(  );
 
 		virtual int32 GenerateProperty( CGUIProperty& rProperty );
@@ -84,6 +83,12 @@ namespace guiex
 		virtual const CGUIRect*	GetClipArea() const;
 
 	public:
+		void ForceShowVertScrollbar( bool bForce );
+		bool IsForceShowVertScrollbar() const;
+
+		void ForceShowHorzScrollbar( bool bForce );
+		bool IsForceShowHorzScrollbar() const;
+
 		void ShowVertScrollbar(bool bShow);
 		bool IsVertScrollbarShow(void) const;
 
@@ -114,21 +119,21 @@ namespace guiex
 		void SetHorzPageSize( uint32 nPage );
 		uint32 GetHorzPageSize( ) const;
 
-		const CGUIRect& GetVirtualClientArea() const;
 		const CGUIRect& GetVisibleClientArea() const;
 
 	protected:
 		CGUIWgtScrollbarContainer( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 		void InitScrollbarContainer();
 
-		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 		virtual void RenderExtraSelfInfo(IGUIInterfaceRender* pRender);
+		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 		virtual void RefreshSelf();
 		virtual void OnCreate();
 		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage );
 
 		virtual bool IsAddChildToTail() const;
 		
+		virtual CGUISize GetDesiredVirtualClientSize( ) = 0;
 
 	protected:	//!< callback function
 		virtual uint32 OnScrollbarScroll( CGUIEventScrollbar* pEvent );
@@ -140,11 +145,13 @@ namespace guiex
 		uint32 m_nPixelPerVertValue;
 		uint32 m_nPixelPerHorzValue;
 
-		CGUIRect m_aVirtualClientArea;
 		CGUIRect m_aVisibleClientArea;
 
+		bool m_bForceShowVertScrollbar;
+		bool m_bForceShowHorzScrollbar;
+
 	private:
-		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtScrollbarContainer);
+		//GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtScrollbarContainer);
 	};
 
 }//namespace libguiex

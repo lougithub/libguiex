@@ -24,7 +24,6 @@ namespace guiex
 		m_aOrientation = m_aDerivedOrientation = CGUIQuaternion::IDENTITY;
 		m_aPosition = m_aDerivedPosition = CGUIVector3::ZERO;
 		m_aScale = m_aDerivedScale = CGUIVector3::UNIT_SCALE;
-		m_bInheritScale = true;
 	}
 
 	//-----------------------------------------------------------------------
@@ -32,10 +31,10 @@ namespace guiex
 	{
 	}    
 	//-----------------------------------------------------------------------
-	const CGUIMatrix4& CGUINode::NodeGetTransform(void)
-	{
-		return mCachedTransform;
-	}
+	//const CGUIMatrix4& CGUINode::NodeGetTransform(void)
+	//{
+	//	return mCachedTransform;
+	//}
 	//-----------------------------------------------------------------------
 	/** Gets the full transformation matrix for this node.
 	@remarks This method returns the full transformation matrix
@@ -68,16 +67,8 @@ namespace guiex
 
 			// Update scale
 			CGUIVector3 parentScale = NodeGetParent()->NodeGetDerivedScale();
-			if (m_bInheritScale)
-			{
-				// Scale own position by parent scale
-				m_aDerivedScale = m_aScale * parentScale;
-			}
-			else
-			{
-				// No inheritence
-				m_aDerivedScale = m_aScale;
-			}
+			// Scale own position by parent scale
+			m_aDerivedScale = m_aScale * parentScale;
 
 			// Change position vector based on parent's orientation & scale
 			m_aDerivedPosition = parentOrientation * (m_aPosition * parentScale);
@@ -93,7 +84,7 @@ namespace guiex
 			m_aDerivedScale = m_aScale;
 		}
 
-		NodeMakeTransform( NodeGetPosition(), NodeGetScale(), NodeGetOrientation(), mCachedTransform);
+		//NodeMakeTransform( NodeGetPosition(), NodeGetScale(), NodeGetOrientation(), mCachedTransform);
 		NodeMakeTransform( NodeGetDerivedPosition(), NodeGetDerivedScale(), NodeGetDerivedOrientation(), mCachedFullTransform);
 		mCachedFullInverseTransform = mCachedFullTransform.inverse();
 	}
@@ -356,32 +347,6 @@ namespace guiex
 	const CGUIVector3 & CGUINode::NodeGetScale(void) const
 	{
 		return m_aScale;
-	}
-	//-----------------------------------------------------------------------
-	/** Tells the node whether it should inherit scaling factors from it's parent node.
-	@remarks
-	Scaling factors, unlike other transforms, are not always inherited by child nodes. 
-	Whether or not scalings affect both the size and position of the child nodes depends on
-	the NodeSetInheritScale option of the child. In some cases you want a scaling factor of a parent node
-	to apply to a child node (e.g. where the child node is a part of the same object, so you
-	want it to be the same relative size and position based on the parent's size), but
-	not in other cases (e.g. where the child node is just for positioning another object,
-	you want it to maintain it's own size and relative position). The default is to inherit
-	as with other transforms.
-	@param inherit If true, this node's scale and position will be affected by its parent's scale. If false,
-	it will not be affected.
-	*/
-	void CGUINode::NodeSetInheritScale(bool inherit)
-	{
-		m_bInheritScale = inherit;
-	}
-	//-----------------------------------------------------------------------
-	/** Returns true if this node is affected by scaling factors applied to the parent node. 
-	@remarks See NodeSetInheritScale for more info.
-	*/
-	bool CGUINode::NodeGetInheritScale(void) const
-	{
-		return m_bInheritScale;
 	}
 	//-----------------------------------------------------------------------
 	/** Scales the node, combining it's current scale with the passed in scaling factor. 

@@ -72,7 +72,7 @@ namespace guiex
 			return -1;
 		}
 		fin.seekg(0, std::ios::end);
-		std::streamsize nSize = fin.tellg();
+		uint32 nSize = (uint32)fin.tellg();
 		if( nSize == 0 )
 		{
 			//failed to load file

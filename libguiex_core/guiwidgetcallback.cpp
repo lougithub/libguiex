@@ -62,6 +62,16 @@ namespace guiex
 		return 0;	
 	}
 	//------------------------------------------------------------------------------
+	uint32 CGUIWidget::OnChildSizeChange( CGUIEventSize* pEvent )
+	{
+		//WIDGET_EVENT_TRACE("OnChildSizeChange");
+
+		//call callback function
+		CallbackFunction("OnChildSizeChange", pEvent);
+
+		return 0;	
+	}
+	//------------------------------------------------------------------------------
 	uint32 CGUIWidget::OnSizeChanged( CGUIEventSize* pEvent )
 	{
 		//WIDGET_EVENT_TRACE("OnSizeChanged");
@@ -70,18 +80,33 @@ namespace guiex
 		CallbackFunction("OnSizeChanged", pEvent);
 
 		//send parent's change event to child
-		CGUIWidget* pWidget = GetChild();
-		while( pWidget )
+		if( IsGenerateParentSizeChangeEvent() )
 		{
-			if( pWidget->IsOpen() && pWidget->IsGenerateParentSizeChangeEvent())
+			CGUIWidget* pWidget = GetChild();
+			while( pWidget )
+			{
+				if( pWidget->IsOpen() )
+				{
+					CGUIEventSize aEvent;
+					aEvent.SetEventId(eEVENT_PARENT_SIZE_CHANGE);
+					aEvent.SetSize(pEvent->GetSize());
+					aEvent.SetReceiver(pWidget);
+					GSystem->SendEvent( &aEvent );
+				}
+				pWidget = pWidget->GetNextSibling();
+			}
+		}
+
+		if( IsGenerateChildSizeChangeEvent() )
+		{
+			if( GetParent() && GetParent()->IsOpen() )
 			{
 				CGUIEventSize aEvent;
-				aEvent.SetEventId(eEVENT_PARENT_CHANGE_SIZE);
+				aEvent.SetEventId(eEVENT_CHILD_SIZE_CHANGE);
 				aEvent.SetSize(pEvent->GetSize());
-				aEvent.SetReceiver(pWidget);
+				aEvent.SetReceiver(GetParent());
 				GSystem->SendEvent( &aEvent );
 			}
-			pWidget = pWidget->GetNextSibling();
 		}
 
 		return 0;	

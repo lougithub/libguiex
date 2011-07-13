@@ -58,14 +58,11 @@ namespace guiex
 		m_pEdit->SetParent(this);
 
 		SetFocusable(true);
+
 		m_nMaxString = 100;	///< max number of string
 		m_nCursorIdx = 0; ///< cursor's position in edited string, the first is 0.
 		m_nCursorLine = 0;
 		m_bReadOnly = false;
-
-		//size ratio
-		m_aStringAreaRatio.m_fLeft = m_aStringAreaRatio.m_fTop = 0.0f;
-		m_aStringAreaRatio.m_fRight = m_aStringAreaRatio.m_fBottom = 1.0f;
 
 		//for drag
 		m_nSelectionStart = 0;
@@ -106,52 +103,41 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	CGUISize CGUIWgtMultiEditBox::GetDesiredVirtualClientSize( )
+	{
+		return m_aTotalTextSize;
+	}
+	//------------------------------------------------------------------------------
 	void CGUIWgtMultiEditBox::RefreshSelf()
 	{
 		CGUIWgtScrollbarContainer::RefreshSelf();
-
-		//// calculate line height and reset client area size.
-		//real fHeight = 0.0f;
-		//for( TLineList::iterator itor= m_aLineList.begin();
-		//	itor != m_aLineList.end();
-		//	++itor)
-		//{
-		//	fHeight += (*itor).m_fLineHeight;
-		//}
-		//m_aClientArea.SetHeight(fHeight);
-		//m_aClientArea.SetWidth( GetClipArea().GetWidth() );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtMultiEditBox::RenderSelf(IGUIInterfaceRender* pRender)
 	{
 		CGUIWgtScrollbarContainer::RenderSelf(pRender);
 
-		////////////////////////////////////////////////////////////////////////////
 		//render bg
-		if( m_pBG )
-		{
-			DrawImage( pRender, m_pBG, GetBoundArea());
-		}
+		DrawImage( pRender, m_pBG, GetBoundArea());
 
 		//render focus bg 
-		if( m_pBGFocus && IsFocus())
+		if( IsFocus() )
 		{
 			DrawImage( pRender, m_pBGFocus, GetBoundArea());
 		}
 
-
-		////////////////////////////////////////////////////////////////////////////
-		//render cursor
-		if( m_pCursor && IsFocus() )
+		//push clip rect
+		if( GetClipArea() )
 		{
-			//render
-			if( m_pEdit->IsShowCursor() )
-			{
-				DrawImage( pRender, m_pCursor, GetCursorRect());
-			}
+			pRender->PushClipRect( *GetClipArea() );
 		}
 
-		////////////////////////////////////////////////////////////////////////////
+		//render cursor
+		if( IsFocus() && m_pEdit->IsShowCursor() )
+		{
+			DrawImage( pRender, m_pCursor, GetCursorRect());
+		}
+
 		//render string
 		CGUIVector2 aPos = GetClientArea().GetPosition();
 		if( !m_strText.m_strContent.empty())
@@ -225,6 +211,12 @@ namespace guiex
 				}
 			}
 		}
+
+		//push clip rect
+		if( GetClipArea() )
+		{
+			pRender->PopClipRect( );
+		}
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtMultiEditBox::UpdateSelf( real fDeltaTime )
@@ -233,7 +225,6 @@ namespace guiex
 		{
 			if( !m_pEdit->GetResult().empty() )
 			{
-				//TODO: only test here
 				InsertString(m_pEdit->GetResult());
 				m_pEdit->ClearResult();
 			}
@@ -245,7 +236,11 @@ namespace guiex
 	void CGUIWgtMultiEditBox::SetTextContent(const CGUIStringW& rText)
 	{
 		ClearSelection( );
-		DeleteString(0, -1);
+
+		m_strText.m_strContent.clear( );
+		m_vecStringSize.clear( );
+		m_aLineList.clear();
+
 		InsertString( rText );
 	}
 	//------------------------------------------------------------------------------
@@ -318,19 +313,10 @@ namespace guiex
 		IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
 
 		uint32 len = rText.size();
-		if( m_strText.m_strContent.size() + len > m_nMaxString-1 )
+		if( m_strText.m_strContent.size() + len > m_nMaxString )
 		{
 			//reach max number of string
 			return;
-		}
-
-		if( m_strText.m_strContent.empty())
-		{
-			//add a line break at last if the string is empty
-			m_strText.m_strContent.append( 1, ms_wLineBreak );
-			m_vecStringSize.insert(
-				m_vecStringSize.begin(), 
-				pFont->GetCharacterSize( ms_wLineBreak, m_strText.GetStringInfo()));
 		}
 
 		m_strText.m_strContent.insert(m_nCursorIdx, rText );
@@ -424,7 +410,7 @@ namespace guiex
 		return fWidth;
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtMultiEditBox::DeleteString( int32 nBeginPos, int32 nEndPos)
+	void CGUIWgtMultiEditBox::DeleteString( int32 nBeginPos, int32 nEndPos)
 	{
 		if( m_strText.m_strContent.empty())
 		{
@@ -432,7 +418,7 @@ namespace guiex
 		}
 
 		nBeginPos = static_cast<int32>(nBeginPos<0?0:nBeginPos);
-		uint32 nTextSize = m_strText.m_strContent.size()-1;
+		uint32 nTextSize = m_strText.m_strContent.size();
 		nEndPos = static_cast<int32>(nEndPos<0?nTextSize:nEndPos);
 		nEndPos = static_cast<int32>(nEndPos>static_cast<int32>(nTextSize)?nTextSize:nEndPos);
 		if( nBeginPos >= nEndPos)
@@ -463,7 +449,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtMultiEditBox::SetCursorIndex( int32 nIdx, int32 nForceLineIdx )
+	void CGUIWgtMultiEditBox::SetCursorIndex( int32 nIdx )
 	{
 		if( m_strText.m_strContent.empty())
 		{
@@ -471,7 +457,7 @@ namespace guiex
 		}
 		else
 		{
-			uint32 nTextSize = m_strText.m_strContent.size()-1;
+			uint32 nTextSize = m_strText.m_strContent.size();
 			nIdx = static_cast<int32>(nIdx <0?nTextSize:nIdx);
 			nIdx = static_cast<int32>(nIdx > static_cast<int32>(nTextSize)?nTextSize:nIdx);
 		}
@@ -479,42 +465,13 @@ namespace guiex
 		m_nCursorIdx = nIdx;
 
 		//update cursor line number
-		if( nForceLineIdx != -1)
-		{
-			m_nCursorLine = nForceLineIdx;
-		}
-		else
-		{
-			m_nCursorLine = GetLineNumberFromIndex(m_nCursorIdx);
-		}
+		m_nCursorLine = GetLineIndexByIndex(m_nCursorIdx);
 
 		//set cursor position for edit
 		m_pEdit->SetCursorPos(GetCursorPos());
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtMultiEditBox::SetStringAreaRatio(const CGUIRect& rStringAreaRatio)
-	{
-		m_aStringAreaRatio = rStringAreaRatio;
-//		SetRectDirty();
-	}
-	//------------------------------------------------------------------------------
 	void CGUIWgtMultiEditBox::FormatText()
-	{
-		real fOldClientRectWidth = GetClientArea().GetWidth();
-		FormatText_Imp();
-//		SetRectDirty();
-		//UpdateScrollbars();
-		real fNewClientRectWidth = GetClientArea().GetWidth();
-
-		if( !GUI_REAL_EQUAL( fNewClientRectWidth, fOldClientRectWidth))
-		{
-			//vertical scrollbar changed
-			FormatText_Imp();
-//			SetRectDirty();
-		}
-	}
-	//------------------------------------------------------------------------------
-	void CGUIWgtMultiEditBox::FormatText_Imp()
 	{
 		// clear old formatting data
 		m_aLineList.clear();
@@ -570,7 +527,14 @@ namespace guiex
 			m_aLineList.push_back(aLine);
 		}
 
-	
+		m_aTotalTextSize.SetValue(fLineMaxWidth,0);
+		for( TLineList::iterator itor = m_aLineList.begin(); itor != m_aLineList.end(); ++itor)
+		{
+			const SLineInfo& rInfo = *itor;
+			m_aTotalTextSize.m_fHeight += rInfo.m_fLineHeight;
+		}
+
+		Refresh();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtMultiEditBox::ClearSelection()
@@ -596,7 +560,7 @@ namespace guiex
 		}
 		else
 		{
-			uint32 nTextSize = m_strText.m_strContent.size()-1;
+			uint32 nTextSize = m_strText.m_strContent.size();
 			if (start_pos > nTextSize)
 			{
 				start_pos = nTextSize;
@@ -633,7 +597,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	uint32 CGUIWgtMultiEditBox::GetLineNumberFromIndex(uint32 index) const
+	uint32 CGUIWgtMultiEditBox::GetLineIndexByIndex(uint32 index) const
 	{
 		if( m_aLineList.empty())
 		{
@@ -653,11 +617,11 @@ namespace guiex
 				}
 			}
 		}
-		GUI_THROW( GUI_FORMAT("[CGUIWgtMultiEditBox::GetLineNumberFromIndex] - Unable to identify a line from the given index <%d>.", index));
+		GUI_THROW( GUI_FORMAT("[CGUIWgtMultiEditBox::GetLineIndexByIndex] - Unable to identify a line from the given index <%d>.", index));
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32 CGUIWgtMultiEditBox::SetCursorIndexByPos( const CGUIVector2& rPos)
+	void CGUIWgtMultiEditBox::UpdateCursorIndexByPos( const CGUIVector2& rPos)
 	{
 		if( m_aLineList.empty())
 		{
@@ -710,8 +674,6 @@ namespace guiex
 
 		//set cursor position for edit
 		m_pEdit->SetCursorPos(GetCursorPos());
-
-		return m_nCursorIdx;
 	}
 	//------------------------------------------------------------------------------
 
@@ -745,7 +707,7 @@ namespace guiex
 		if( m_strText.m_strContent.empty())
 			return;
 
-		if( uint32(m_nCursorIdx) < m_strText.m_strContent.size()-1)
+		if( uint32(m_nCursorIdx) < m_strText.m_strContent.size())
 		{
 			SetCursorIndex(m_nCursorIdx+1);
 		}
@@ -771,7 +733,7 @@ namespace guiex
 		{
 			CGUIVector2 aPos = GetCursorPos();
 			aPos.y -= m_aLineList[m_nCursorLine-1].m_fLineHeight;
-			SetCursorIndexByPos(aPos);
+			UpdateCursorIndexByPos(aPos);
 		}
 
 		if (pEvent->GetKeyboardInterface()->IsKeyPressed(KC_SHIFT))
@@ -795,7 +757,7 @@ namespace guiex
 		{
 			CGUIVector2 aPos = GetCursorPos();
 			aPos.y += m_aLineList[m_nCursorLine].m_fLineHeight;
-			SetCursorIndexByPos(aPos);
+			UpdateCursorIndexByPos(aPos);
 		}
 
 		if (pEvent->GetKeyboardInterface()->IsKeyPressed(KC_SHIFT))
@@ -865,11 +827,11 @@ namespace guiex
 			const SLineInfo& rLineInfo = m_aLineList[m_nCursorLine];
 			if( m_strText.m_strContent[rLineInfo.m_nStartIdx + rLineInfo.m_nLength-1] == ms_wLineBreak)
 			{
-				SetCursorIndex(rLineInfo.m_nStartIdx + rLineInfo.m_nLength-1, m_nCursorLine);
+				SetCursorIndex(rLineInfo.m_nStartIdx + rLineInfo.m_nLength-1);
 			}
 			else
 			{
-				SetCursorIndex(rLineInfo.m_nStartIdx + rLineInfo.m_nLength, m_nCursorLine);
+				SetCursorIndex(rLineInfo.m_nStartIdx + rLineInfo.m_nLength);
 			}
 			
 			if (pEvent->GetKeyboardInterface()->IsKeyPressed(KC_SHIFT))
@@ -977,13 +939,14 @@ namespace guiex
 	{
 		CGUIVector2 aMousePos = pEvent->GetLocalPosition();
 
-		if( GetClientArea().IsPointInRect(aMousePos) == true)
+		if( GetVisibleClientArea().IsPointInRect(aMousePos) == true)
 		{
 			ClearSelection();
 			m_bDraging = true;
 
 			//set cursor index
-			m_nDragAnchorIdx = SetCursorIndexByPos(aMousePos);
+			UpdateCursorIndexByPos(aMousePos);
+			m_nDragAnchorIdx = m_nCursorIdx;
 		}
 
 		return CGUIWgtScrollbarContainer::OnMouseLeftDown(pEvent);
@@ -1001,7 +964,7 @@ namespace guiex
 		CGUIVector2 aMousePos = pEvent->GetLocalPosition();
 
 		//set cursor
-		if( GetClientArea().IsPointInRect(aMousePos) == true)
+		if( GetVisibleClientArea().IsPointInRect(aMousePos) == true)
 		{
 			CGUIMouseCursor::Instance()->SetCursor("CURSOR_EDIT");
 		}
@@ -1010,10 +973,10 @@ namespace guiex
 			CGUIMouseCursor::Instance()->SetCursor("CURSOR_DEFAULT");
 		}
 
-		//for draging
+		//for dragging
 		if (m_bDraging)
 		{
-			SetCursorIndexByPos(aMousePos);
+			UpdateCursorIndexByPos(aMousePos);
 			SetSelection(m_nCursorIdx, m_nDragAnchorIdx);
 		}
 
@@ -1110,5 +1073,3 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex
-
-

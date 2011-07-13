@@ -58,11 +58,10 @@ namespace guiex
 		void SetReadOnly(bool bRead);
 		bool IsReadOnly() const;
 
-		void SetStringAreaRatio(const CGUIRect& rStringAreaRatio);
 		void SetSelectedTextColor( const CGUIColor& rColor);
 
-		const CGUISize& GetCursorSize() const;
 		void SetCursorSize( const CGUISize& rSize );
+		const CGUISize& GetCursorSize() const;
 
 		void SetMaxTextNum( uint32 num);
 		uint32 GetMaxTextNum( ) const;
@@ -77,6 +76,7 @@ namespace guiex
 		void InitMultiEditbox();
 
 		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage );
+		virtual CGUISize GetDesiredVirtualClientSize( );
 
 	protected://string related function
 		CGUIVector2 GetCursorPos();
@@ -85,16 +85,16 @@ namespace guiex
 		uint32 GetSelectionLength(void) const;
 		void EraseSelectedText( );
 		void SetSelection(size_t start_pos, size_t end_pos);
-		uint32 SetCursorIndexByPos( const CGUIVector2& rPos);
 
-		uint32 GetLineNumberFromIndex(uint32 index) const;
 
 		void InsertString( const CGUIStringW& rText );
 		void DeleteString( int32 nBeginPos, int32 nEndPos);
 		real GetStringWidth(int32 nBeginPos, int32 nEndPos) const;
-		void SetCursorIndex( int32 nIdx, int32 nForceLineIdx = -1 );
 
-		void FormatText_Imp();
+		void SetCursorIndex( int32 nIdx );
+		void UpdateCursorIndexByPos( const CGUIVector2& rPos);
+		uint32 GetLineIndexByIndex(uint32 index) const;
+
 		void FormatText();
 
 	protected: //callback function
@@ -117,36 +117,24 @@ namespace guiex
 		void OnKeyPressed_Enter(CGUIEventKeyboard* pEvent);
 
 	protected:
-		//---------------------------------------------------
-		//string
+
 		uint32 m_nMaxString; //!< max number of string
 		int32 m_nCursorIdx; //!< cursor's position in edited string, the first is 0.
 		int32 m_nCursorLine; //!< the line where cursor is
-		std::vector<CGUISize> m_vecStringSize;//!< size of each string.
 		bool m_bReadOnly; //!< is text readonly
+		ETextAlignmentHorz m_eTextAlignmentHorz;
+		ETextAlignmentVert m_eTextAlignmentVert;
 
-		//---------------------------------------------------
-		//select state
 		uint32 m_nSelectionStart; //!< Start of selection area.
 		uint32 m_nSelectionEnd; //!< End of selection area.
 		bool m_bDraging; //!< true when a selection is being dragged.
 		uint32 m_nDragAnchorIdx; //!< Selection index for drag selection anchor point.
 		CGUIColor m_aSelectedTextColor; //!< selected text color
 
-		//---------------------------------------------------
-		//image
 		CGUIImage* m_pBG; //!< bg image
 		CGUIImage* m_pBGFocus; //!< bg image rendered when this widget is focusable
 		CGUIImage* m_pCursor; //!< cursor 
-
-		CGUIRect m_aStringAreaRatio; //!< the ratio of string area, the (0,0,1,1) equal whole client area
-
-		//text
-		CGUIStringRender m_strText;
-		ETextAlignmentHorz m_eTextAlignmentHorz;
-		ETextAlignmentVert m_eTextAlignmentVert;
-
-		//line break
+		
 		/**
 		* @brief struct used to store information about a formatted line within the paragraph.
 		*/
@@ -157,8 +145,12 @@ namespace guiex
 			real m_fLineHeight;   //!< line height
 		};
 		typedef std::vector<SLineInfo>   TLineList;  //!< Type for collection of LineInfos.
-		TLineList m_aLineList; //!< line list
 		static wchar ms_wLineBreak; //!< Holds what we consider to be line break characters.
+		CGUISize m_aTotalTextSize;
+	
+		CGUIStringRender m_strText; //!< text content
+		std::vector<CGUISize> m_vecStringSize;//!< size of each string.
+		TLineList m_aLineList; //!< line list
 
 	protected:
 		CGUIWgtEdit* m_pEdit; //!< edit control

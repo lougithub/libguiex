@@ -23,14 +23,77 @@
 //============================================================================// 
 namespace guiex
 {
-	//------------------------------------------------------------------------------
-	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtScrollbarContainer);
-	//------------------------------------------------------------------------------
-	CGUIWgtScrollbarContainer::CGUIWgtScrollbarContainer(const CGUIString& rName, const CGUIString& rSceneName)
-		:CGUIWidget(StaticGetType(), rName, rSceneName)
+	class GUIEXPORT CGUIWgtScrollbarForContainer : public CGUIWgtScrollbar
 	{
-		InitScrollbarContainer();
+	public:
+		CGUIWgtScrollbarForContainer( const CGUIString& rName,const CGUIString& rSceneName );
+
+	protected:
+		void InitScrollbarForContainer();
+		virtual bool IsIgnoreParentClipRect() const;
+		virtual void AdjustScrollbarPosAndSize();
+
+	protected:	//!< callback function
+		virtual uint32 OnParentChanged( CGUIEventRelativeChange* pEvent );
+
+	protected:
+		CGUIWgtScrollbarContainer* m_pContainer;
+		CGUIMatrix4 aOffsetMatrix;
+
+	private:
+		static CGUIString ms_strType;
+	};
+	//------------------------------------------------------------------------------
+	CGUIString CGUIWgtScrollbarForContainer::ms_strType = "CGUIWgtScrollbarForContainer";
+	//------------------------------------------------------------------------------
+	CGUIWgtScrollbarForContainer::CGUIWgtScrollbarForContainer( const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWgtScrollbar(ms_strType, rName, rSceneName)
+		,m_pContainer(NULL)
+	{
+		InitScrollbarForContainer();
 	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtScrollbarForContainer::InitScrollbarForContainer()
+	{
+		SetGenerateParentChildEvent( true );
+		SetNotifyParent(true);
+	}
+	//------------------------------------------------------------------------------
+	uint32 CGUIWgtScrollbarForContainer::OnParentChanged( CGUIEventRelativeChange* pEvent )
+	{
+		m_pContainer = static_cast<CGUIWgtScrollbarContainer*>(pEvent->GetRelative());
+		return CGUIWgtScrollbar::OnParentChanged(pEvent);
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWgtScrollbarForContainer::IsIgnoreParentClipRect() const
+	{
+		return true;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtScrollbarForContainer::AdjustScrollbarPosAndSize()
+	{
+		if( !m_pContainer )
+		{
+			return;
+		}
+		if( m_eOrientation == eOrientation_Vertical )
+		{
+			SetPixelPosition(
+				m_pContainer->GetVisibleClientArea().m_fRight - m_pContainer->GetClientArea().m_fLeft,
+				m_pContainer->GetVisibleClientArea().m_fTop - m_pContainer->GetClientArea().m_fTop );
+		}
+		else
+		{
+			SetPixelPosition(
+				m_pContainer->GetVisibleClientArea().m_fLeft - m_pContainer->GetClientArea().m_fLeft, 
+				m_pContainer->GetVisibleClientArea().m_fBottom - m_pContainer->GetClientArea().m_fTop );
+		}
+	}
+	//------------------------------------------------------------------------------
+
+
+	//------------------------------------------------------------------------------
+	//GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtScrollbarContainer);
 	//------------------------------------------------------------------------------
 	CGUIWgtScrollbarContainer::CGUIWgtScrollbarContainer( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
 		:CGUIWidget(rType, rName, rSceneName)
@@ -54,23 +117,18 @@ namespace guiex
 		m_nPixelPerVertValue = 1;
 		m_nPixelPerHorzValue = 1;
 
+		m_bForceShowVertScrollbar = false;
+		m_bForceShowHorzScrollbar = false;
+
 		//create scrollbar
-		m_pScrollbarVert = new CGUIWgtScrollbar(CGUIWidgetManager::MakeInternalName(GetName()+"_scrollbar_vert"), GetSceneName());
+		m_pScrollbarVert = new CGUIWgtScrollbarForContainer(CGUIWidgetManager::MakeInternalName(GetName()+"_scrollbar_vert"), GetSceneName());
 		m_pScrollbarVert->SetParent(this);
-		m_pScrollbarVert->SetNotifyParent(true);
-		m_pScrollbarVert->SetPositionType( eScreenValue_Percentage );
-		m_pScrollbarVert->SetAnchorPoint( 1.0f, 0.0f );
-		m_pScrollbarVert->SetPosition( 1.0f, 0.0f );
 		m_pScrollbarVert->SetFocusAgency( true );
 		m_pScrollbarVert->SetOrientation(eOrientation_Vertical);
 		m_pScrollbarVert->SetVisible( false );
 
-		m_pScrollbarHorz = new CGUIWgtScrollbar(CGUIWidgetManager::MakeInternalName(GetName()+"_scrollbar_hort"), GetSceneName());
+		m_pScrollbarHorz = new CGUIWgtScrollbarForContainer(CGUIWidgetManager::MakeInternalName(GetName()+"_scrollbar_hort"), GetSceneName());
 		m_pScrollbarHorz->SetParent(this);
-		m_pScrollbarHorz->SetNotifyParent(true);
-		m_pScrollbarHorz->SetPositionType( eScreenValue_Percentage );
-		m_pScrollbarHorz->SetAnchorPoint( 0.0f, 1.0f );
-		m_pScrollbarHorz->SetPosition( 0.0f, 1.0f );
 		m_pScrollbarHorz->SetFocusAgency( true );
 		m_pScrollbarHorz->SetOrientation(eOrientation_Horizontal);
 		m_pScrollbarHorz->SetVisible( false );
@@ -109,9 +167,6 @@ namespace guiex
 	void CGUIWgtScrollbarContainer::RenderExtraSelfInfo(IGUIInterfaceRender* pRender)
 	{
 		CGUIWidget::RenderExtraSelfInfo( pRender );
-
-		//draw client area
-		pRender->DrawRect( GetVirtualClientArea(), 1.0f, 0.0f, CGUIColor( 0.f,1.f,1.f,0.8f) );
 	}
 
 	//------------------------------------------------------------------------------
@@ -151,6 +206,44 @@ namespace guiex
 		{
 			m_pScrollbarHorz->SetVisible( bShow );
 		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtScrollbarContainer::ForceShowVertScrollbar( bool bForce )
+	{
+		if( m_bForceShowVertScrollbar != bForce )
+		{
+			m_bForceShowVertScrollbar = bForce;
+
+			if( bForce )
+			{
+				ShowVertScrollbar( true );
+			}
+			Refresh();
+		}
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWgtScrollbarContainer::IsForceShowVertScrollbar() const
+	{
+		return m_bForceShowVertScrollbar;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtScrollbarContainer::ForceShowHorzScrollbar( bool bForce )
+	{
+		if( m_bForceShowHorzScrollbar != bForce )
+		{
+			m_bForceShowHorzScrollbar = bForce;
+
+			if( bForce )
+			{
+				ShowHorzScrollbar( true );
+			}
+			Refresh();
+		}
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWgtScrollbarContainer::IsForceShowHorzScrollbar() const
+	{
+		return m_bForceShowHorzScrollbar;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtScrollbarContainer::SetPixelPerVertValue( uint32 nPixelPerValue )
@@ -233,11 +326,6 @@ namespace guiex
 		return m_pScrollbarHorz->GetPageSize();
 	}
 	//------------------------------------------------------------------------------
-	const CGUIRect& CGUIWgtScrollbarContainer::GetVirtualClientArea() const
-	{
-		return m_aVirtualClientArea;
-	}
-	//------------------------------------------------------------------------------
 	const CGUIRect& CGUIWgtScrollbarContainer::GetVisibleClientArea() const
 	{
 		return m_aVisibleClientArea;
@@ -257,42 +345,77 @@ namespace guiex
 	{
 		CGUIWidget::RefreshSelf();
 
-		CGUISize aVirtualClientAreaSize = GetClientArea().GetSize();
-		CGUIVector2 aVirtualClientAreaPos = GetClientArea().GetPosition();
+		CGUIVector2 aVirtualClientPos = GetClientArea().GetPosition();
+		CGUISize aDesiredVirtualClientSize = GetDesiredVirtualClientSize();
 		m_aVisibleClientArea = GetClientArea();
 
-		//client area size
 		if( IsVertScrollbarShow() )
 		{
 			m_aVisibleClientArea.m_fRight -= m_pScrollbarVert->GetPixelSize().GetWidth();
-			aVirtualClientAreaSize.m_fWidth -= m_pScrollbarVert->GetPixelSize().GetWidth();
-			aVirtualClientAreaSize.m_fHeight += m_pScrollbarVert->GetRange() * GetPixelPerVertValue();
 		}
 		if( IsHorzScrollbarShow() )
 		{
 			m_aVisibleClientArea.m_fBottom -= m_pScrollbarHorz->GetPixelSize().GetHeight();
-			aVirtualClientAreaSize.m_fHeight -= m_pScrollbarHorz->GetPixelSize().GetHeight();
-			aVirtualClientAreaSize.m_fWidth += m_pScrollbarHorz->GetRange() * GetPixelPerHorzValue();
+		}
+
+		//virtual client size
+		if( aDesiredVirtualClientSize.GetWidth() < m_aVisibleClientArea.GetWidth() )
+		{
+			aDesiredVirtualClientSize.SetWidth( m_aVisibleClientArea.GetWidth());
+		}
+		if( aDesiredVirtualClientSize.GetHeight() < m_aVisibleClientArea.GetHeight() )
+		{
+			aDesiredVirtualClientSize.SetHeight( m_aVisibleClientArea.GetHeight());
 		}
 
 		//client area position
-		aVirtualClientAreaPos.x -=  m_pScrollbarHorz->GetCurrentPos()*GetPixelPerHorzValue();
-		aVirtualClientAreaPos.y -= m_pScrollbarVert->GetCurrentPos()*GetPixelPerVertValue();
+		aVirtualClientPos.x -=  m_pScrollbarHorz->GetCurrentPos()*GetPixelPerHorzValue();
+		aVirtualClientPos.y -= m_pScrollbarVert->GetCurrentPos()*GetPixelPerVertValue();
 
 		//set virtual area rect
-		m_aVirtualClientArea.SetPosition( aVirtualClientAreaPos );
-		m_aVirtualClientArea.SetSize( aVirtualClientAreaSize );
+		m_aClientArea.SetPosition( aVirtualClientPos );
+		m_aClientArea.SetSize( aDesiredVirtualClientSize );
 
 		//update scrollbar's size
-		if( IsVertScrollbarShow() )
+		m_pScrollbarVert->SetPixelSize( m_pScrollbarVert->GetPixelSize().GetWidth(), m_aVisibleClientArea.GetHeight());
+		m_pScrollbarHorz->SetPixelSize( m_aVisibleClientArea.GetWidth(), m_pScrollbarHorz->GetPixelSize().GetHeight() );
+
+		//update vertical scrollbar range
+		if( aDesiredVirtualClientSize.GetHeight() > GetVisibleClientArea().GetHeight() )
 		{
-			real fHeight = IsHorzScrollbarShow() ? GetClientArea().GetHeight() - m_pScrollbarHorz->GetPixelSize().GetHeight() : GetClientArea().GetHeight();
-			m_pScrollbarVert->SetPixelSize( m_pScrollbarVert->GetPixelSize().GetWidth(), fHeight);
+			ShowVertScrollbar( true );
+			real fPixelDif = aDesiredVirtualClientSize.GetHeight() - GetVisibleClientArea().GetHeight();
+			SetVertRange( GUI_FLOAT2UINT_ROUND(ceil(fPixelDif / GetPixelPerVertValue())));
 		}
-		if( IsHorzScrollbarShow() )
+		else
 		{
-			real fWidth = IsVertScrollbarShow() ? GetClientArea().GetWidth() - m_pScrollbarVert->GetPixelSize().GetWidth() : GetClientArea().GetWidth();
-			m_pScrollbarHorz->SetPixelSize( fWidth, m_pScrollbarHorz->GetPixelSize().GetHeight() );
+			if( IsForceShowVertScrollbar() )
+			{
+				SetVertRange( 0 );
+			}
+			else
+			{
+				ShowVertScrollbar( false );
+			}
+		}
+
+		//update horizontal scrollbar range
+		if( aDesiredVirtualClientSize.GetWidth() > GetVisibleClientArea().GetWidth() )
+		{
+			ShowHorzScrollbar( true );
+			real fPixelDif = aDesiredVirtualClientSize.GetWidth() - GetVisibleClientArea().GetWidth();
+			SetHorzRange( GUI_FLOAT2UINT_ROUND(ceil(fPixelDif / GetPixelPerHorzValue())));
+		}
+		else
+		{
+			if(IsForceShowHorzScrollbar() )
+			{
+				SetHorzRange( 0 );
+			}
+			else
+			{
+				ShowHorzScrollbar( false );
+			}
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -311,6 +434,14 @@ namespace guiex
 		else if( rProperty.GetType() == ePropertyType_UInt32&& rProperty.GetName() == "pixel_per_horz" )
 		{
 			ValueToProperty( GetPixelPerHorzValue(), rProperty );
+		}
+		else if( rProperty.GetType() == ePropertyType_Bool&& rProperty.GetName() == "force_vert_scrollbar" )
+		{
+			ValueToProperty( IsForceShowVertScrollbar(), rProperty );
+		}
+		else if( rProperty.GetType() == ePropertyType_Bool&& rProperty.GetName() == "force_horz_scrollbar" )
+		{
+			ValueToProperty( IsForceShowHorzScrollbar(), rProperty );
 		}
 		else
 		{
@@ -332,6 +463,18 @@ namespace guiex
 			uint32 uValue = 1;
 			PropertyToValue( rProperty, uValue );
 			SetPixelPerHorzValue( uValue );
+		}
+		else if( rProperty.GetType() == ePropertyType_Bool&& rProperty.GetName() == "force_vert_scrollbar" )
+		{
+			bool bForceShow = false;
+			PropertyToValue( rProperty, bForceShow );
+			ForceShowVertScrollbar( bForceShow );
+		}
+		else if( rProperty.GetType() == ePropertyType_Bool&& rProperty.GetName() == "force_horz_scrollbar" )
+		{
+			bool bForceShow = false;
+			PropertyToValue( rProperty, bForceShow );
+			ForceShowHorzScrollbar( bForceShow );
 		}
 		else
 		{

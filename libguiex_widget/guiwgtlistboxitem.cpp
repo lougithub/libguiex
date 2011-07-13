@@ -38,6 +38,8 @@ namespace guiex
 		m_pUserData = NULL;
 
 		m_bSelected = false;
+
+		SetGenerateChildSizeChangeEvent(true);
 	}
 	//------------------------------------------------------------------------------
 	CGUIWgtListBox*	CGUIWgtListBoxItem::GetListBox()

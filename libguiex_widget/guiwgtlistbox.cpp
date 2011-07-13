@@ -54,8 +54,6 @@ namespace guiex
 	void CGUIWgtListBox::InitListBox()
 	{
 		m_bMultiselect = false;
-		m_bForceShowVertScrollbar = false;
-		m_bForceShowHorzScrollbar = false;
 
 		m_pImageBG = NULL;
 		m_pLastOperateItem = NULL;
@@ -238,8 +236,7 @@ namespace guiex
 			pItem->Open();
 		}
 
-		//UpdateItems();
-		Refresh();
+		UpdateTotalItems();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtListBox::DoRemoveItem( CGUIWgtListBoxItem* pItem)
@@ -262,30 +259,29 @@ namespace guiex
 			m_pLastOperateItem = NULL;
 		}
 
-		//UpdateItems();
-		Refresh();
+		UpdateTotalItems();
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtListBox::UpdateItems( )
+	void CGUIWgtListBox::UpdateTotalItems( )
 	{
-		m_aItemsSize.SetValue( 0, 0 );
-
-		CGUIVector2 aPosDiffer = GetVirtualClientArea().GetPosition() - GetVisibleClientArea().GetPosition();
+		m_aTotalItemSize.SetValue( 0, 0 );
 
 		//update item position
 		CGUIVector2	posLeftTop(0.0f,0);
 		for( TListItem::iterator itor = m_aListItems.begin(); itor != m_aListItems.end(); ++itor)
 		{
 			CGUIWgtListBoxItem* pItem = *itor;
-			pItem->SetPixelPosition(posLeftTop + aPosDiffer);
+			pItem->SetPixelPosition(posLeftTop );
 			posLeftTop.y += pItem->GetPixelSize().GetHeight();
 
-			if( pItem->GetPixelSize().GetWidth() > m_aItemsSize.m_fWidth )
+			if( pItem->GetPixelSize().GetWidth() > m_aTotalItemSize.m_fWidth )
 			{
-				m_aItemsSize.m_fWidth = pItem->GetPixelSize().GetWidth();
+				m_aTotalItemSize.m_fWidth = pItem->GetPixelSize().GetWidth();
 			}
 		}
-		m_aItemsSize.m_fHeight = posLeftTop.y;
+		m_aTotalItemSize.m_fHeight = posLeftTop.y;
+
+		Refresh();
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -382,50 +378,6 @@ namespace guiex
 		return m_bMultiselect;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtListBox::ForceShowVertScrollbar( bool bForce )
-	{
-		if( m_bForceShowVertScrollbar != bForce )
-		{
-			m_bForceShowVertScrollbar = bForce;
-			
-			if( bForce )
-			{
-				ShowVertScrollbar( true );
-			}
-			else
-			{
-				Refresh();
-			}
-		}
-	}
-	//------------------------------------------------------------------------------
-	bool CGUIWgtListBox::IsForceShowVertScrollbar() const
-	{
-		return m_bForceShowVertScrollbar;
-	}
-	//------------------------------------------------------------------------------
-	void CGUIWgtListBox::ForceShowHorzScrollbar( bool bForce )
-	{
-		if( m_bForceShowHorzScrollbar != bForce )
-		{
-			m_bForceShowHorzScrollbar = bForce;
-
-			if( bForce )
-			{
-				ShowHorzScrollbar( true );
-			}
-			else
-			{
-				Refresh();
-			}
-		}
-	}
-	//------------------------------------------------------------------------------
-	bool CGUIWgtListBox::IsForceShowHorzScrollbar() const
-	{
-		return m_bForceShowHorzScrollbar;
-	}
-	//------------------------------------------------------------------------------
 	void CGUIWgtListBox::RenderSelf(IGUIInterfaceRender* pRender)
 	{
 		CGUIWgtScrollbarContainer::RenderSelf(pRender);
@@ -454,47 +406,14 @@ namespace guiex
 		return bModified;
 	}
 	//------------------------------------------------------------------------------
+	CGUISize CGUIWgtListBox::GetDesiredVirtualClientSize( )
+	{
+		return m_aTotalItemSize;
+	}
+	//------------------------------------------------------------------------------
 	void CGUIWgtListBox::RefreshSelf()
 	{
 		CGUIWgtScrollbarContainer::RefreshSelf();
-		
-		UpdateItems();
-
-		if( m_aItemsSize.GetHeight() > GetVisibleClientArea().GetHeight() )
-		{
-			ShowVertScrollbar( true );
-			real fPixelDif = m_aItemsSize.GetHeight() - GetVisibleClientArea().GetHeight();
-			SetVertRange( GUI_FLOAT2UINT_ROUND(ceil(fPixelDif / GetPixelPerVertValue())));
-		}
-		else
-		{
-			if( IsForceShowVertScrollbar() )
-			{
-				SetVertRange( 0 );
-			}
-			else
-			{
-				ShowVertScrollbar( false );
-			}
-		}
-
-		if( m_aItemsSize.GetWidth() > GetVisibleClientArea().GetWidth() )
-		{
-			ShowHorzScrollbar( true );
-			real fPixelDif = m_aItemsSize.GetWidth() - GetVisibleClientArea().GetWidth();
-			SetHorzRange( GUI_FLOAT2UINT_ROUND(ceil(fPixelDif / GetPixelPerHorzValue())));
-		}
-		else
-		{
-			if(IsForceShowHorzScrollbar() )
-			{
-				SetHorzRange( 0 );
-			}
-			else
-			{
-				ShowHorzScrollbar( false );
-			}
-		}
 	}
 	//------------------------------------------------------------------------------
 
@@ -639,17 +558,21 @@ namespace guiex
 		return CGUIWgtScrollbarContainer::OnRemoveChild(pEvent);
 	}
 	//------------------------------------------------------------------------------
+	uint32 CGUIWgtListBox::OnChildSizeChange( CGUIEventSize* pEvent )
+	{
+		UpdateTotalItems();
+		return CGUIWgtScrollbarContainer::OnChildSizeChange(pEvent);
+	}
+	//------------------------------------------------------------------------------
+	uint32 CGUIWgtListBox::OnOpen( CGUIEventNotification* pEvent )
+	{
+		UpdateTotalItems();
+		return CGUIWgtScrollbarContainer::OnOpen(pEvent);
+	}
+	//------------------------------------------------------------------------------
 	int32 CGUIWgtListBox::GenerateProperty( CGUIProperty& rProperty )
 	{
-		if( rProperty.GetType() == ePropertyType_Bool&& rProperty.GetName() == "force_vert_scrollbar" )
-		{
-			ValueToProperty( IsForceShowVertScrollbar(), rProperty );
-		}
-		else if( rProperty.GetType() == ePropertyType_Bool&& rProperty.GetName() == "force_horz_scrollbar" )
-		{
-			ValueToProperty( IsForceShowHorzScrollbar(), rProperty );
-		}
-		else
+		//else
 		{
 			return CGUIWgtScrollbarContainer::GenerateProperty( rProperty );
 		}
@@ -658,19 +581,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtListBox::ProcessProperty( const CGUIProperty& rProperty)
 	{
-		if( rProperty.GetType() == ePropertyType_Bool&& rProperty.GetName() == "force_vert_scrollbar" )
-		{
-			bool bForceShow = false;
-			PropertyToValue( rProperty, bForceShow );
-			ForceShowVertScrollbar( bForceShow );
-		}
-		else if( rProperty.GetType() == ePropertyType_Bool&& rProperty.GetName() == "force_horz_scrollbar" )
-		{
-			bool bForceShow = false;
-			PropertyToValue( rProperty, bForceShow );
-			ForceShowHorzScrollbar( bForceShow );
-		}
-		else
+		//else
 		{
 			CGUIWgtScrollbarContainer::ProcessProperty( rProperty );
 		}

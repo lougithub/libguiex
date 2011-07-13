@@ -326,6 +326,9 @@ namespace guiex
 		void SetGenerateParentSizeChangeEvent( bool bFlag ); 
 		bool IsGenerateParentSizeChangeEvent( ) const;
 
+		void SetGenerateChildSizeChangeEvent( bool bFlag ); 
+		bool IsGenerateChildSizeChangeEvent( ) const;
+
 		void SetGenerateParentChildEvent( bool bFlag ); 
 		bool IsGenerateParentChildEvent( ) const;
 
@@ -380,6 +383,8 @@ namespace guiex
 		void DrawImage( IGUIInterfaceRender* pRender, CGUIImage* pImage, const CGUIRect& rDestRect );
 		void DrawAnimation( IGUIInterfaceRender* pRender, CGUIAnimation* pAnimation, const CGUIRect& rDestRect );
 
+		void RefreshNode();
+
 		friend class CGUIWidgetFactory;
 		void SetGenerator( const CGUIWidgetGenerator* pGenerator);
 		const CGUIWidgetGenerator* GetGenerator() const;
@@ -407,6 +412,7 @@ namespace guiex
 		/// callback function: for change size
 		virtual uint32 OnSizeChanged( CGUIEventSize* pEvent );
 		virtual uint32 OnParentSizeChange( CGUIEventSize* pEvent );
+		virtual uint32 OnChildSizeChange( CGUIEventSize* pEvent );
 
 		/// callback function: for mouse event
 		virtual uint32 OnMouseEnter( CGUIEventMouse* pEvent );
@@ -559,6 +565,7 @@ namespace guiex
 		bool m_bIsGenerateMultiClickEvent; 
 		bool m_bIsGenerateParentChildEvent;
 		bool m_bIsGenerateParentSizeChangeEvent; 
+		bool m_bIsGenerateChildSizeChangeEvent;
 		bool m_bIsGenerateUpdateEvent; 
 		bool m_bIsGenerateScaleChangeEvent; 
 

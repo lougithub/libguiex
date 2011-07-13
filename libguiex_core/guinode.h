@@ -71,7 +71,6 @@ namespace guiex
 		const CGUIVector3 & NodeGetScale(void) const;
 
 		void NodeSetInheritScale(bool inherit);
-		bool NodeGetInheritScale(void) const;
 
 		void NodeScale(const CGUIVector3& scale);
 		void NodeScale(real x, real y, real z);
@@ -96,7 +95,7 @@ namespace guiex
 
 		const CGUIMatrix4& NodeGetFullTransform(void);
 		const CGUIMatrix4& NodeGetFullInverseTransform(void);
-		const CGUIMatrix4& NodeGetTransform(void);
+		//const CGUIMatrix4& NodeGetTransform(void);
 
 		void NodeGetWorldTransforms(CGUIMatrix4* xform);
 		const CGUIQuaternion& NodeGetWorldOrientation(void);
@@ -122,13 +121,12 @@ namespace guiex
 		CGUIQuaternion m_aOrientation; //!< Stores the orientation of the node relative to it's parent.
 		CGUIVector3	m_aPosition; //!< Stores the position/translation of the node relative to its parent.
 		CGUIVector3	m_aScale; //!< Stores the scaling factor applied to this node
-		bool m_bInheritScale; //!< Stores whether this node inherits scale from it's parent
 
 		CGUIQuaternion m_aDerivedOrientation; //Cached combined orientation.
 		CGUIVector3 m_aDerivedPosition; //Cached combined position.
 		CGUIVector3 m_aDerivedScale; //Cached combined scale.
 		
-		CGUIMatrix4 mCachedTransform; //!< Cached transform as a 4x4 matrix
+		//CGUIMatrix4 mCachedTransform; //!< Cached transform as a 4x4 matrix
 		CGUIMatrix4 mCachedFullTransform; //!< Cached derived transform as a 4x4 matrix
 		CGUIMatrix4 mCachedFullInverseTransform; //!< Cached inverse derived transform as a 4x4 matrix
 	};

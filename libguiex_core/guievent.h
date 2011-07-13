@@ -54,7 +54,8 @@ namespace guiex
 		///when the size of widget is changed, this event will be sent
 		///CGUIEventSize
 		eEVENT_SIZE_CHANGE = 0,	
-		eEVENT_PARENT_CHANGE_SIZE,
+		eEVENT_PARENT_SIZE_CHANGE,
+		eEVENT_CHILD_SIZE_CHANGE,
 
 		///event for changing tree struct, such as adding or removing child
 		///CGUIEventRelativeChange

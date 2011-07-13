@@ -339,9 +339,12 @@ namespace guiex
 			GUI_ASSERT( m_pReceiver,"havn't receiver" );
 			return m_pReceiver->OnSizeChanged(this);
 
-		case eEVENT_PARENT_CHANGE_SIZE:
+		case eEVENT_PARENT_SIZE_CHANGE:
 			return m_pReceiver->OnParentSizeChange(this);
 
+		case eEVENT_CHILD_SIZE_CHANGE:
+			return m_pReceiver->OnChildSizeChange(this);
+			
 		default:
 			return GUI_INVALID;
 		}

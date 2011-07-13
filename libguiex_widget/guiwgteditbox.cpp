@@ -51,7 +51,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtEditBox::InitEditbox()
 	{
-		m_pEdit = new CGUIWgtEdit(GetName()+"__EDIT"+ GUI_INTERNAL_WIDGET_FLAG, GetSceneName());
+		m_pEdit = new CGUIWgtEdit(CGUIWidgetManager::MakeInternalName(GetName()+"__EDIT"), GetSceneName());
 		m_pEdit->SetParent(this);
 		m_pEdit->SetCursorSize( CGUISize( 2.0f, 16.0f) );
 

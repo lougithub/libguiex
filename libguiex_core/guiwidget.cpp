@@ -83,6 +83,7 @@ namespace guiex
 		,m_bForceHitTest(false)
 		,m_bIsGenerateUpdateEvent(false)
 		,m_bIsGenerateParentSizeChangeEvent(false)
+		,m_bIsGenerateChildSizeChangeEvent(false)
 		,m_bIsGenerateParentChildEvent(false )
 		,m_bIsGenerateClickEvent(false)
 		,m_bIsGenerateLoadEvent(false)
@@ -2152,7 +2153,8 @@ namespace guiex
 		}
 
 		pRender->PushMatrix();
-		pRender->MultMatrix( NodeGetTransform() );
+		pRender->LoadIdentityMatrix();
+		pRender->MultMatrix(GetFullTransform());
 
 		// perform render for 'this' Window
 		RenderExtraSelfInfo(pRender);
@@ -2182,7 +2184,8 @@ namespace guiex
 		}
 
 		pRender->PushMatrix();
-		pRender->MultMatrix( NodeGetTransform() );
+		pRender->LoadIdentityMatrix();
+		pRender->MultMatrix(GetFullTransform());
 
 		if( m_pSceneEffect )
 		{
@@ -2737,6 +2740,7 @@ namespace guiex
 	void CGUIWidget::Refresh( )
 	{
 		RefreshSelf();
+		RefreshNode();
 
 		CGUIWidget*	pWidget = GetChild();
 		while(pWidget)
@@ -2744,6 +2748,38 @@ namespace guiex
 			pWidget->Refresh();
 			pWidget = pWidget->GetNextSibling();
 		}	
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::RefreshNode()
+	{
+		//refresh node
+		CGUIVector2 aParentOffsetPos( 0.0f, 0.0f );
+		if( GetParent() )
+		{
+			aParentOffsetPos.x = GetParent()->m_aWidgetSize.m_aPixelValue.m_fWidth*GetParent()->m_aWidgetAnchorPoint.x;
+			aParentOffsetPos.y = GetParent()->m_aWidgetSize.m_aPixelValue.m_fHeight*GetParent()->m_aWidgetAnchorPoint.y;
+
+			aParentOffsetPos.x -= (GetParent()->GetClientArea().m_fLeft - GetParent()->GetBoundArea().m_fLeft);
+			aParentOffsetPos.y -= (GetParent()->GetClientArea().m_fTop - GetParent()->GetBoundArea().m_fTop);
+		}
+		CGUIVector3 aPos( m_aWidgetPosition.m_aPixelValue.x - aParentOffsetPos.x,
+			m_aWidgetPosition.m_aPixelValue.y - aParentOffsetPos.y,
+			0.0f);
+		const CGUISize& rScale = m_aParamScale.GetSelfValue( );
+
+		//pos
+		NodeSetPosition( aPos );
+		//scale
+		NodeSetScale( rScale.m_fWidth, rScale.m_fHeight, 1.0f );
+		//rotation
+		CGUIMatrix3 aRotMat;
+		aRotMat.FromEulerAnglesXYZ( m_vRotation.x, m_vRotation.y, m_vRotation.z );
+		NodeSetOrientation( CGUIQuaternion( aRotMat) );
+
+		NodeUpdateFromParent( );
+
+		//refresh bound rect for hittest
+		LocalToWorld( m_aBoundArea, m_aHitTestArea );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::RefreshSelf()
@@ -2783,35 +2819,6 @@ namespace guiex
 		CGUIVector2 aOffsetPos( -GetPixelSize().m_fWidth*m_aWidgetAnchorPoint.x, -GetPixelSize().m_fHeight*m_aWidgetAnchorPoint.y );
 		m_aBoundArea.SetRect( aOffsetPos, m_aWidgetSize.m_aPixelValue );
 		m_aClientArea = m_aBoundArea;
-
-		//refresh node
-		CGUIVector2 aParentOffsetPos( 0.0f, 0.0f );
-		if( GetParent() )
-		{
-			aParentOffsetPos.x = GetParent()->m_aWidgetSize.m_aPixelValue.m_fWidth*GetParent()->m_aWidgetAnchorPoint.x;
-			aParentOffsetPos.y = GetParent()->m_aWidgetSize.m_aPixelValue.m_fHeight*GetParent()->m_aWidgetAnchorPoint.y;
-
-			aParentOffsetPos.x -= (GetParent()->GetClientArea().m_fLeft - GetParent()->GetBoundArea().m_fLeft);
-			aParentOffsetPos.y -= (GetParent()->GetClientArea().m_fTop - GetParent()->GetBoundArea().m_fTop);
-		}
-		CGUIVector3 aPos( m_aWidgetPosition.m_aPixelValue.x - aParentOffsetPos.x,
-			m_aWidgetPosition.m_aPixelValue.y - aParentOffsetPos.y,
-			0.0f);
-		const CGUISize& rScale = m_aParamScale.GetSelfValue( );
-		
-		//pos
-		NodeSetPosition( aPos );
-		//scale
-		NodeSetScale( rScale.m_fWidth, rScale.m_fHeight, 1.0f );
-		//rotation
-		CGUIMatrix3 aRotMat;
-		aRotMat.FromEulerAnglesXYZ( m_vRotation.x, m_vRotation.y, m_vRotation.z );
-		NodeSetOrientation( CGUIQuaternion( aRotMat) );
-
-		NodeUpdateFromParent( );
-
-		//refresh bound rect for hittest
-		LocalToWorld( m_aBoundArea, m_aHitTestArea );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::SetOpenWithParent( bool bFlag )
@@ -2939,6 +2946,16 @@ namespace guiex
 	bool CGUIWidget::IsGenerateParentSizeChangeEvent( ) const
 	{
 		return m_bIsGenerateParentSizeChangeEvent;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::SetGenerateChildSizeChangeEvent( bool bFlag )
+	{
+		m_bIsGenerateChildSizeChangeEvent = bFlag;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWidget::IsGenerateChildSizeChangeEvent( ) const
+	{
+		return m_bIsGenerateChildSizeChangeEvent;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::SetGenerateParentChildEvent( bool bFlag )

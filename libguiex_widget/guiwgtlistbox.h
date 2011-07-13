@@ -67,13 +67,6 @@ namespace guiex
 		void EnableMultiselect(bool bEnable);
 		bool IsMultiselectEnabled(void) const;
 
-		void ForceShowVertScrollbar( bool bForce );
-		bool IsForceShowVertScrollbar() const;
-
-		void ForceShowHorzScrollbar( bool bForce );
-		bool IsForceShowHorzScrollbar() const;
-
-
 	protected:
 		void InitListBox();
 
@@ -87,11 +80,15 @@ namespace guiex
 		void DoAddItem(CGUIWgtListBoxItem* pItem);
 		void DoRemoveItem( CGUIWgtListBoxItem* pItem);
 
-		void UpdateItems( );
+		void UpdateTotalItems( );
+
+		virtual CGUISize GetDesiredVirtualClientSize( );
 
 	protected:	//!< callback function
 		virtual uint32 OnAddChild( CGUIEventRelativeChange* pEvent );
 		virtual uint32 OnRemoveChild( CGUIEventRelativeChange* pEvent );
+		virtual uint32 OnOpen( CGUIEventNotification* pEvent );
+		virtual uint32 OnChildSizeChange( CGUIEventSize* pEvent );
 
 		friend class CGUIWgtListBoxItem;
 		virtual void ProcessMouseLeftDown(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent);
@@ -114,10 +111,7 @@ namespace guiex
 
 		CGUIWgtListBoxItem*	m_pLastOperateItem; /// the last item which is been operated.for multiselect
 
-		bool m_bForceShowVertScrollbar;
-		bool m_bForceShowHorzScrollbar;
-
-		CGUISize m_aItemsSize;
+		CGUISize m_aTotalItemSize;
 
 	private:
 		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtListBox);

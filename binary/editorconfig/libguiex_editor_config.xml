@@ -287,6 +287,8 @@
     <page name="Appearance">
       <property name="focusable" type="bool" value="true"  category="Default" alternative_save="true"/>
       <property name="clip_children" type="bool" value="true"  category="Default" alternative_save="true"/>
+      <property name="force_vert_scrollbar" type="bool" value="false"  category="ScrollbarContainer" alternative_save="true"/>
+      <property name="force_horz_scrollbar" type="bool" value="false"  category="ScrollbarContainer" alternative_save="true"/>
       <property name="pixel_per_vert" type="uint32" value="1"  category="ScrollbarContainer" alternative_save="true"/>
       <property name="pixel_per_horz" type="uint32" value="1"  category="ScrollbarContainer" alternative_save="true"/>
     </page>
@@ -386,8 +388,6 @@
 
 	<widget type="CGUIWgtListBox" inherit="CGUIWgtScrollbarContainer">
 		<page name="Appearance">
-      <property name="force_vert_scrollbar" type="bool" value="false"  category="ListBox" alternative_save="true"/>
-      <property name="force_horz_scrollbar" type="bool" value="false"  category="ListBox" alternative_save="true"/>
     </page>
 		<page name="Image">
 			<property name="background" type="CGUIImage" value=""/>

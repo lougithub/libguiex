@@ -96,7 +96,8 @@ namespace guiex
 		virtual void RefreshSelf();
 		virtual void OnCreate();
 		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage );
-		virtual bool IsIgnoreParentClipRect() const;
+
+		virtual void AdjustScrollbarPosAndSize();
 
 		void GenerateNotifyEvent();
 
