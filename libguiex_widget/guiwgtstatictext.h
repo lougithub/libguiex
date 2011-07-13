@@ -30,7 +30,10 @@ namespace guiex
 	{
 	public:
 		CGUIWgtStaticText( const CGUIString& rName, const CGUIString& rSceneName );
-	
+
+		virtual int32 GenerateProperty( CGUIProperty& rProperty );
+		virtual void ProcessProperty( const CGUIProperty& rProperty);
+
 		virtual void SetTextContent(const CGUIStringW& rText);
 		virtual void SetTextInfo(const CGUIStringRenderInfo& rInfo);
 
@@ -39,11 +42,7 @@ namespace guiex
 
 		void SetClipText( bool bClip );
 		bool IsClipText( ) const;
-
-		virtual int32 GenerateProperty( CGUIProperty& rProperty );
-		virtual void ProcessProperty( const CGUIProperty& rProperty);
-
-
+		
 	protected:
 		CGUIWgtStaticText( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 

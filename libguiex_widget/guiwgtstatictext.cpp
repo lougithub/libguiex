@@ -65,9 +65,9 @@ namespace guiex
 			return;
 		}
 
-		if( IsClipText() )
+		if( IsClipText() && GetClipArea() )
 		{
-			pRender->PushClipRect( GetClipArea() );
+			pRender->PushClipRect( *GetClipArea() );
 		}
 
 		if(m_bMultiLine)
@@ -95,7 +95,7 @@ namespace guiex
 			DrawString( pRender, m_strText, GetClientArea(), m_eTextAlignmentHorz,m_eTextAlignmentVert);
 		}
 
-		if( IsClipText() )
+		if( IsClipText() && GetClipArea() )
 		{
 			pRender->PopClipRect( );
 		}

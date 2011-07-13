@@ -34,6 +34,9 @@ namespace guiex
 	public:
 		CGUIWgtProgress( const CGUIString& rName, const CGUIString& rSceneName );
 
+		virtual int32 GenerateProperty( CGUIProperty& rProperty );
+		virtual void ProcessProperty( const CGUIProperty& rProperty);
+
 		void SetMaxValue( real nMaxmium );
 		real GetMaxValue() const;
 
@@ -49,10 +52,6 @@ namespace guiex
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 		virtual void OnCreate();
 		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage );
-
-	protected:
-		virtual int32 GenerateProperty( CGUIProperty& rProperty );
-		virtual void ProcessProperty( const CGUIProperty& rProperty);
 
 	protected:	//!< callback function
 

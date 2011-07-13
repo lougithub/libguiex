@@ -39,6 +39,7 @@ namespace guiex
 	IGUIIme_winapi::IGUIIme_winapi()
 		:IGUIInterfaceIme( StaticGetModuleName() )
 		,m_hWnd(NULL)
+		,m_pIMC(NULL)
 		,m_bIsOpen(false)
 	{
 	}
@@ -50,12 +51,23 @@ namespace guiex
 	int IGUIIme_winapi::DoInitialize(void* pData )
 	{
 		m_hWnd = HWND(pData);
+		m_pIMC = ::ImmCreateContext();
+		if (NULL == m_pIMC)
+		{
+			return -1;
+		}
+		::ImmAssociateContext(m_hWnd, m_pIMC);
 		return 0;
 	}
 	//------------------------------------------------------------------------------
 	void IGUIIme_winapi::DoDestroy()
 	{
-	}
+		if( m_pIMC )
+		{
+			::ImmDestroyContext( m_pIMC);
+			m_pIMC = NULL;
+		}
+	}		
 	//------------------------------------------------------------------------------
 	void IGUIIme_winapi::DeleteSelf()
 	{
@@ -107,7 +119,14 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	const wchar* IGUIIme_winapi::GetResultString() const
 	{
-		return m_strResult.c_str();
+		if( m_strResult.empty() )
+		{
+			return NULL;
+		}
+		else
+		{
+			return m_strResult.c_str();
+		}
 	}
 	//------------------------------------------------------------------------------
 	void IGUIIme_winapi::AddResultString( const wchar* pString )
@@ -130,7 +149,7 @@ namespace guiex
 		return m_aPos;
 	}
 	//------------------------------------------------------------------------------
-	bool		 IGUIIme_winapi::ProcessWindowMessage(
+	bool IGUIIme_winapi::ProcessWindowMessage(
 		HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		if( IsOpen() == false )
@@ -278,7 +297,7 @@ namespace guiex
 		return false;
 	}
 	//------------------------------------------------------------------------------
-	bool	IGUIIme_winapi::OnWM_IME_NOTIFY(UINT message, WPARAM wParam, LPARAM lParam)
+	bool IGUIIme_winapi::OnWM_IME_NOTIFY(UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		/*
 		The WM_IME_NOTIFY message is sent to an application to notify it of changes to 
@@ -404,7 +423,7 @@ namespace guiex
 		return false;
 	}
 	//------------------------------------------------------------------------------
-	bool	IGUIIme_winapi::OnWM_IME_COMPOSITION(UINT message, WPARAM wParam, LPARAM lParam)
+	bool IGUIIme_winapi::OnWM_IME_COMPOSITION(UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		/*
 		The WM_IME_COMPOSITION message is sent to an application when the IME changes 
@@ -513,7 +532,12 @@ namespace guiex
 			*/
 			WINIME_SHOW_MSG("\tGCS_RESULTSTR");
 
-			HIMC hIMC =  ImmGetContext( m_hWnd );
+			HIMC hIMC = ImmGetContext( m_hWnd );
+			if( !hIMC )
+			{
+				return false;
+			}
+
 			// Get the size of the result string.
 			DWORD dwSize = ImmGetCompositionStringW(hIMC, GCS_RESULTSTR, NULL, 0);
 			// Increase buffer size for NULL terminator; 
@@ -536,7 +560,7 @@ namespace guiex
 		return bRet;
 	}
 	//------------------------------------------------------------------------------
-	bool	IGUIIme_winapi::On_WM_CHAR( WPARAM wParam )
+	bool IGUIIme_winapi::On_WM_CHAR( WPARAM wParam )
 	{
 		if( !IsOpen() )
 		{

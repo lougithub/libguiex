@@ -54,12 +54,12 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtMultiEditBox::InitMultiEditbox()
 	{
-		m_pEdit = new CGUIWgtEdit(GetName() + "__EDIT" + GUI_INTERNAL_WIDGET_FLAG, GetSceneName());
+		m_pEdit = new CGUIWgtEdit( CGUIWidgetManager::MakeInternalName(GetName() + "__EDIT"), GetSceneName());
 		m_pEdit->SetParent(this);
 
 		SetFocusable(true);
-		m_nMaxString = 100;		///< max number of string
-		m_nCursorIdx = 0;			///< cursor's position in edited string, the first is 0.
+		m_nMaxString = 100;	///< max number of string
+		m_nCursorIdx = 0; ///< cursor's position in edited string, the first is 0.
 		m_nCursorLine = 0;
 		m_bReadOnly = false;
 
@@ -99,10 +99,6 @@ namespace guiex
 		else if( rName == "cursor")
 		{
 			m_pCursor = pImage;
-			if( GetCursorSize().IsEqualZero() && pImage)
-			{
-				SetCursorSize(pImage->GetSize());
-			}
 		}
 		else 
 		{
@@ -113,22 +109,17 @@ namespace guiex
 	void CGUIWgtMultiEditBox::RefreshSelf()
 	{
 		CGUIWgtScrollbarContainer::RefreshSelf();
-	}
-	//------------------------------------------------------------------------------
-	void CGUIWgtMultiEditBox::UpdateClientArea(void)
-	{
-		CGUIWgtScrollbarContainer::UpdateClientArea( );
 
-		// calculate line height and reset client area size.
-		real fHeight = 0.0f;
-		for( TLineList::iterator itor= m_aLineList.begin();
-			itor != m_aLineList.end();
-			++itor)
-		{
-			fHeight += (*itor).m_fLineHeight;
-		}
-		m_aClientArea.SetHeight(fHeight);
-		m_aClientArea.SetWidth( GetClipArea().GetWidth() );
+		//// calculate line height and reset client area size.
+		//real fHeight = 0.0f;
+		//for( TLineList::iterator itor= m_aLineList.begin();
+		//	itor != m_aLineList.end();
+		//	++itor)
+		//{
+		//	fHeight += (*itor).m_fLineHeight;
+		//}
+		//m_aClientArea.SetHeight(fHeight);
+		//m_aClientArea.SetWidth( GetClipArea().GetWidth() );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtMultiEditBox::RenderSelf(IGUIInterfaceRender* pRender)
@@ -367,6 +358,16 @@ namespace guiex
 		m_pEdit->SetCursorSize(rSize);
 	}
 	//------------------------------------------------------------------------------
+	void CGUIWgtMultiEditBox::SetMaxTextNum( uint32 num)
+	{
+		m_nMaxString = num;
+	}
+	//------------------------------------------------------------------------------
+	uint32 CGUIWgtMultiEditBox::GetMaxTextNum( ) const
+	{
+		return m_nMaxString;
+	}
+	//------------------------------------------------------------------------------
 	CGUIVector2	CGUIWgtMultiEditBox::GetCursorPos()
 	{
 		real fWidth = 0.0f;
@@ -502,7 +503,7 @@ namespace guiex
 		real fOldClientRectWidth = GetClientArea().GetWidth();
 		FormatText_Imp();
 //		SetRectDirty();
-		UpdateScrollbars();
+		//UpdateScrollbars();
 		real fNewClientRectWidth = GetClientArea().GetWidth();
 
 		if( !GUI_REAL_EQUAL( fNewClientRectWidth, fOldClientRectWidth))
@@ -976,7 +977,7 @@ namespace guiex
 	{
 		CGUIVector2 aMousePos = pEvent->GetLocalPosition();
 
-		if( GetClipArea().IsPointInRect(aMousePos) == true)
+		if( GetClientArea().IsPointInRect(aMousePos) == true)
 		{
 			ClearSelection();
 			m_bDraging = true;
@@ -1000,7 +1001,7 @@ namespace guiex
 		CGUIVector2 aMousePos = pEvent->GetLocalPosition();
 
 		//set cursor
-		if( GetClipArea().IsPointInRect(aMousePos) == true)
+		if( GetClientArea().IsPointInRect(aMousePos) == true)
 		{
 			CGUIMouseCursor::Instance()->SetCursor("CURSOR_EDIT");
 		}
@@ -1039,6 +1040,10 @@ namespace guiex
 			AppWideByteToMultiChar( m_strText.GetContent(), aStrText);
 			rProperty.SetValue(aStrText);
 		}
+		else if( rProperty.GetType() == ePropertyType_UInt32 && rProperty.GetName() == "max_text_num" )
+		{
+			ValueToProperty( GetMaxTextNum(), rProperty);
+		}
 		else if( rProperty.GetType() == ePropertyType_TextAlignmentHorz && rProperty.GetName() == "text_alignment_horz" )
 		{
 			ValueToProperty( GetTextAlignmentHorz(), rProperty);
@@ -1056,16 +1061,12 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtMultiEditBox::ProcessProperty( const CGUIProperty& rProperty )
 	{
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//property for readonly
 		if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "readonly")
 		{
 			bool bValue = false;
 			PropertyToValue( rProperty, bValue);
 			SetReadOnly( bValue );
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//property for cursor size
 		else if( rProperty.GetType() == ePropertyType_Size && rProperty.GetName() == "cursor_size")
 		{
 			CGUISize aValue;
@@ -1084,6 +1085,12 @@ namespace guiex
 			AppMultiByteToWideChar(rProperty.GetValue(), aStrText.m_strContent);
 			SetTextContent(aStrText.GetContent());
 		}		
+		else if( rProperty.GetType() == ePropertyType_UInt32 && rProperty.GetName() == "max_text_num" )
+		{
+			uint32 uValue = 0;
+			PropertyToValue( rProperty, uValue);
+			SetMaxTextNum( uValue );
+		}
 		else if( rProperty.GetType() == ePropertyType_TextAlignmentHorz && rProperty.GetName() == "text_alignment_horz" )
 		{
 			ETextAlignmentHorz eTextAlignmentH = eTextAlignment_Horz_Center;

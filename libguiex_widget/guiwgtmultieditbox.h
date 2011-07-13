@@ -35,16 +35,11 @@ namespace guiex
 	class GUIEXPORT CGUIWgtMultiEditBox : public CGUIWgtScrollbarContainer
 	{
 	public:
-		/**
-		* @brief constructor
-		* for derived class
-		*/
 		CGUIWgtMultiEditBox( const CGUIString& rName, const CGUIString& rSceneName );
-
-		/** 
-		 * @brief destructor
-		 */
 		virtual ~CGUIWgtMultiEditBox( );
+
+		virtual int32 GenerateProperty( CGUIProperty& rProperty );
+		virtual void ProcessProperty( const CGUIProperty& rProperty);
 
 		void SetTextContent(const CGUIStringW& rText);
 		const CGUIStringW& GetTextContent( ) const;
@@ -59,10 +54,7 @@ namespace guiex
 		void SetTextAlignmentHorz( ETextAlignmentHorz eAlignment );
 		ETextAlignmentHorz GetTextAlignmentHorz( ) const;
 		ETextAlignmentVert GetTextAlignmentVert( ) const;
-
-		virtual int32 GenerateProperty( CGUIProperty& rProperty );
-		virtual void ProcessProperty( const CGUIProperty& rProperty);
-
+		
 		void SetReadOnly(bool bRead);
 		bool IsReadOnly() const;
 
@@ -72,13 +64,15 @@ namespace guiex
 		const CGUISize& GetCursorSize() const;
 		void SetCursorSize( const CGUISize& rSize );
 
+		void SetMaxTextNum( uint32 num);
+		uint32 GetMaxTextNum( ) const;
+
 	protected:
 		CGUIWgtMultiEditBox( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 		virtual void UpdateSelf( real fDeltaTime );
 		virtual void RefreshSelf();
-		virtual void UpdateClientArea(void);
 
 		void InitMultiEditbox();
 

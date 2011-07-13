@@ -158,12 +158,12 @@ namespace guiex
 		m_mapVkIk.clear();
 	}
 	//------------------------------------------------------------------------------
-	void	IGUIKeyboard_winapi::DeleteSelf()
+	void IGUIKeyboard_winapi::DeleteSelf()
 	{
 		delete this;
 	}
 	//------------------------------------------------------------------------------
-	bool			IGUIKeyboard_winapi::ProcessWindowMessage(
+	bool IGUIKeyboard_winapi::ProcessWindowMessage(
 		HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		switch(message)

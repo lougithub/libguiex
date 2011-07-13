@@ -42,6 +42,9 @@ namespace guiex
 	public:
 		CGUIWgtPanel( const CGUIString& rName, const CGUIString& rSceneName );
 
+		virtual int32 GenerateProperty( CGUIProperty& rProperty );
+		virtual void ProcessProperty( const CGUIProperty& rProperty);
+
 	protected:
 		CGUIWgtPanel( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 		void InitPanel();
@@ -84,9 +87,6 @@ namespace guiex
 			return	m_aBorderInfo[eBorder].m_aSize;
 		}
 
-	protected:
-		virtual int32 GenerateProperty( CGUIProperty& rProperty );
-		virtual void ProcessProperty( const CGUIProperty& rProperty);
 
 	protected:
 		struct

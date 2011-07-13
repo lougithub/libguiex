@@ -30,39 +30,46 @@ namespace guiex
 	/**
 	* @class CGUIWgtScrollbarContainer
 	* @brief scrollbar container class.
-	* used image name.
-	* usage:	GetClientArea(): the area where the client widget can render, maybe 
-	*			bigger than container bounds.
-	*			GetClipArea(): the area where the client can show, 
-	*			clip)area = bound_area - scrollbar_area
 	*
-	* - SCROLLBAR_VERTIC_BG
-	* - SCROLLBAR_VERTIC_ARROW_NORMAL_0
-	* - SCROLLBAR_VERTIC_ARROW_HOVER_0
-	* - SCROLLBAR_VERTIC_ARROW_DISABLE_0
-	* - SCROLLBAR_VERTIC_ARROW_PUSH_0
-	* - SCROLLBAR_VERTIC_ARROW_NORMAL_1
-	* - SCROLLBAR_VERTIC_ARROW_HOVER_1
-	* - SCROLLBAR_VERTIC_ARROW_DISABLE_1
-	* - SCROLLBAR_VERTIC_ARROW_PUSH_1
-	* - SCROLLBAR_VERTIC_SLIDE_NORMAL
-	* - SCROLLBAR_VERTIC_SLIDE_HOVER
-	* - SCROLLBAR_VERTIC_SLIDE_DISABLE
-	* - SCROLLBAR_VERTIC_SLIDE_PUSH
+	* scrollbar_v_background
+	* scrollbar_v_arrow_0_normal
+	* scrollbar_v_arrow_0_hover
+	* scrollbar_v_arrow_0_disable
+	* scrollbar_v_arrow_0_push
+	* scrollbar_v_arrow_0_hover_overlay
+	* scrollbar_v_arrow_0_push_overlay
+	* scrollbar_v_arrow_1_normal
+	* scrollbar_v_arrow_1_hover
+	* scrollbar_v_arrow_1_disable
+	* scrollbar_v_arrow_1_push
+	* scrollbar_v_arrow_1_hover_overlay
+	* scrollbar_v_arrow_1_push_overlay
+	* scrollbar_v_slide_normal
+	* scrollbar_v_slide_hover
+	* scrollbar_v_slide_disable
+	* scrollbar_v_slide_push
+	* scrollbar_v_slide_hover_overlay
+	* scrollbar_v_slide_push_overlay
 	*
-	* - SCROLLBAR_HORIZON_BG
-	* - SCROLLBAR_HORIZON_ARROW_NORMAL_0
-	* - SCROLLBAR_HORIZON_ARROW_HOVER_0
-	* - SCROLLBAR_HORIZON_ARROW_DISABLE_0
-	* - SCROLLBAR_HORIZON_ARROW_PUSH_0
-	* - SCROLLBAR_HORIZON_ARROW_NORMAL_1
-	* - SCROLLBAR_HORIZON_ARROW_HOVER_1
-	* - SCROLLBAR_HORIZON_ARROW_DISABLE_1
-	* - SCROLLBAR_HORIZON_ARROW_PUSH_1
-	* - SCROLLBAR_HORIZON_SLIDE_NORMAL
-	* - SCROLLBAR_HORIZON_SLIDE_HOVER
-	* - SCROLLBAR_HORIZON_SLIDE_DISABLE
-	* - SCROLLBAR_HORIZON_SLIDE_PUSH
+	* scrollbar_h_background
+	* scrollbar_h_arrow_0_normal
+	* scrollbar_h_arrow_0_hover
+	* scrollbar_h_arrow_0_disable
+	* scrollbar_h_arrow_0_push
+	* scrollbar_h_arrow_0_hover_overlay
+	* scrollbar_h_arrow_0_push_overlay
+	* scrollbar_h_arrow_1_normal
+	* scrollbar_h_arrow_1_hover
+	* scrollbar_h_arrow_1_disable
+	* scrollbar_h_arrow_1_push
+	* scrollbar_h_arrow_1_hover_overlay
+	* scrollbar_h_arrow_1_push_overlay
+	* scrollbar_h_slide_normal
+	* scrollbar_h_slide_hover
+	* scrollbar_h_slide_disable
+	* scrollbar_h_slide_push
+	* scrollbar_h_slide_hover_overlay
+	* scrollbar_h_slide_push_overlay
 	*
 	*/
 	class GUIEXPORT CGUIWgtScrollbarContainer : public CGUIWidget
@@ -71,58 +78,70 @@ namespace guiex
 		CGUIWgtScrollbarContainer( const CGUIString& rName, const CGUIString& rSceneName );
 		virtual ~CGUIWgtScrollbarContainer(  );
 
+		virtual int32 GenerateProperty( CGUIProperty& rProperty );
+		virtual void ProcessProperty( const CGUIProperty& rProperty );
+
+		virtual const CGUIRect*	GetClipArea() const;
 
 	public:
-		/** 
-		* @brief Return whether the vertical scroll bar is always shown.
-		*/
-		bool IsVertScrollbarAlwaysShown(void) const;
+		void ShowVertScrollbar(bool bShow);
+		bool IsVertScrollbarShow(void) const;
 
-		/**
-		* @brief Set whether the vertical scroll bar should always be shown.
-		*/
-		void ForceVertScrollbar(bool bShow);
+		void ShowHorzScrollbar(bool bShow);
+		bool IsHorzScrollbarShow(void) const;
 
-		/**
-		* @brief Return whether the horizontal scroll bar is always shown.
-		*/
-		bool IsHorzScrollbarAlwaysShown(void) const;
+		void SetPixelPerVertValue(uint32 nPixelPerValue);
+		uint32 GetPixelPerVertValue( ) const;
 
-		/**
-		* @brief Set whether the horizontal scroll bar should always be shown.
-		*/
-		void ForceHorzScrollbar(bool bShow);
+		void SetPixelPerHorzValue(uint32 nPixelPerValue);
+		uint32 GetPixelPerHorzValue( ) const;
 
-		void SetScrollbarAutoPosition( bool bFlag ); 
-		bool IsScrollbarAutoPosition( ) const;
+		void SetVertRange( uint32 nRange );
+		uint32 GetVertRange( ) const;
 
+		void SetHorzRange( uint32 nRange );
+		uint32 GetHorzRange( ) const;
+
+		void SetVertPos( uint32 nPos );
+		uint32 GetVertPos( ) const;
+
+		void SetHorzPos( uint32 nPos );
+		uint32 GetHorzPos( ) const;
+
+		void SetVertPageSize( uint32 nPage );
+		uint32 GetVertPageSize( ) const;
+
+		void SetHorzPageSize( uint32 nPage );
+		uint32 GetHorzPageSize( ) const;
+
+		const CGUIRect& GetVirtualClientArea() const;
+		const CGUIRect& GetVisibleClientArea() const;
 
 	protected:
 		CGUIWgtScrollbarContainer( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 		void InitScrollbarContainer();
 
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
+		virtual void RenderExtraSelfInfo(IGUIInterfaceRender* pRender);
 		virtual void RefreshSelf();
 		virtual void OnCreate();
 		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage );
 
-		//get actual page size
-		void UpdateScrollbars(void);
+		virtual bool IsAddChildToTail() const;
 		
-		virtual void UpdateClientArea(void);
 
 	protected:	//!< callback function
 		virtual uint32 OnScrollbarScroll( CGUIEventScrollbar* pEvent );
 
-
 	protected:
-		//scrollbar relative
 		CGUIWgtScrollbar* m_pScrollbarVert; //!< vertical scroll-bar widget
 		CGUIWgtScrollbar* m_pScrollbarHorz; //!< horizontal scroll-bar widget
-		bool m_bForceVertScroll; //!< true if vertical scrollbar should always be displayed
-		bool m_bForceHorzScroll; //!< true if horizontal scrollbar should always be displayed
 
-		bool m_bIsScrollbarAutoPosition;
+		uint32 m_nPixelPerVertValue;
+		uint32 m_nPixelPerHorzValue;
+
+		CGUIRect m_aVirtualClientArea;
+		CGUIRect m_aVisibleClientArea;
 
 	private:
 		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtScrollbarContainer);

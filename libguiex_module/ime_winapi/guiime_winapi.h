@@ -88,6 +88,7 @@ namespace guiex
 		CGUIStringW m_strResult; /// result string of ime
 
 		HWND m_hWnd; /// handle of the windows
+		HIMC m_pIMC;
 		bool m_bIsOpen;	/// flag, whether ime is opened
 
 	public: 

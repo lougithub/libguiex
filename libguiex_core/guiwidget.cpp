@@ -140,7 +140,7 @@ namespace guiex
 		Refresh();
 
 		//register to script
-		if( !CGUIWidgetManager::Instance()->IsInternalWidget( GetName()) )
+		if( !CGUIWidgetManager::Instance()->IsInternalName( GetName()) )
 		{
 			bool bHasScript = false;
 			guiex::IGUIInterfaceScript* pInterfaceScript = CGUIInterfaceManager::Instance()->GetInterfaceScript();
@@ -429,6 +429,7 @@ namespace guiex
 	{
 		return m_pNextSibling;
 	}
+	//------------------------------------------------------------------------------
 	CGUIWidget* CGUIWidget::GetPrevSibling( ) const
 	{
 		return m_pPrevSibling;
@@ -666,16 +667,32 @@ namespace guiex
 		GUI_ASSERT( pChild, "invalid parameter");
 		GUI_ASSERT( pChild->GetParent() == NULL, "the child has haven a parent!");
 
-		CGUIWidget* pLastChild = GetLastChild();
-		if( pLastChild )
+		if( IsAddChildToTail() )
 		{
-			pLastChild->SetNextSiblingImpl( pChild );
+			CGUIWidget* pLastChild = GetLastChild();
+			if( pLastChild )
+			{
+				pLastChild->SetNextSiblingImpl( pChild );
+			}
+			else
+			{
+				SetChildImpl( pChild );
+			}
+			pChild->SetNextSiblingImpl( NULL );
 		}
 		else
 		{
-			SetChildImpl( pChild );
+			CGUIWidget* pFirstChild = GetChild();
+			if( pFirstChild )
+			{
+				SetChildImpl( pChild );
+				pChild->SetNextSiblingImpl( pFirstChild );
+			}
+			else
+			{
+				SetChildImpl( pChild );
+			}
 		}
-		pChild->SetNextSiblingImpl( NULL );
 
 		//set parent
 		pChild->SetParentImpl( this );
@@ -1868,7 +1885,7 @@ namespace guiex
 		}
 		else if( rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "parent" )
 		{
-			if( GetParent() && !CGUIWidgetManager::Instance()->IsInternalWidget( GetParent()->GetName()) )
+			if( GetParent() && !CGUIWidgetManager::Instance()->IsInternalName( GetParent()->GetName()) )
 			{
 				rProperty.SetValue(GetParent()->GetName());
 			}
@@ -2181,7 +2198,17 @@ namespace guiex
 		CGUIWidget* pWidget = GetChild();
 		while( pWidget )
 		{
+			if( pWidget->IsIgnoreParentClipRect() )
+			{
+				PopClipRect( pRender );
+			}
+			
 			pWidget->Render(pRender);
+
+			if( pWidget->IsIgnoreParentClipRect() )
+			{
+				PushClipRect( pRender );
+			}
 			pWidget = pWidget->GetNextSibling();
 		}
 
@@ -2232,37 +2259,47 @@ namespace guiex
 	{
 		if( IsFocus() )
 		{
-			pRender->DrawRect( GetBoundArea(), 7.0f, 0.0f, CGUIColor( 1.f,1.f,1.f, 1.0f) );
+			pRender->DrawRect( GetBoundArea(), 7.0f, 0.0f, CGUIColor( 1.f,1.f,1.f, 0.8f) );
 		}
 
 		//draw bound
 		if( IsFocusable() )
 		{
-			pRender->DrawRect( GetBoundArea(), 3.0f, 0.0f, CGUIColor( 0.f,1.f,0.f,1.f) );
+			pRender->DrawRect( GetBoundArea(), 3.0f, 0.0f, CGUIColor( 0.f,1.f,0.f,0.8f) );
 		}
 		else
 		{
-			pRender->DrawRect( GetBoundArea(), 3.0f, 0.0f, CGUIColor( 0.f,0.f,1.f,1.f) );
+			pRender->DrawRect( GetBoundArea(), 3.0f, 0.0f, CGUIColor( 0.f,0.f,1.f,0.8f) );
 		}
 
 		//draw client area
-		pRender->DrawRect( GetBoundArea(), 1.0f, 0.0f, CGUIColor( 1.f,0.f,0.f,1.f) );
+		pRender->DrawRect( GetBoundArea(), 1.0f, 0.0f, CGUIColor( 1.f,0.f,0.f,0.8f) );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::PushClipRect( IGUIInterfaceRender* pRender )
 	{
-		if( IsClipChildren() )
+		if( IsClipChildren() && GetClipArea() )
 		{
-			pRender->PushClipRect( GetClipArea() );
+			pRender->PushClipRect( *GetClipArea() );
 		}
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::PopClipRect( IGUIInterfaceRender* pRender )
 	{
-		if( IsClipChildren() )
+		if( IsClipChildren() && GetClipArea() )
 		{
 			pRender->PopClipRect( );
 		}
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWidget::IsIgnoreParentClipRect() const
+	{
+		return false;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWidget::IsAddChildToTail() const
+	{
+		return true;
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -2360,7 +2397,7 @@ namespace guiex
 		pRender->DrawRect( rDestRect, fLineWidth, 0, rColor );
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::DrawAnimation(IGUIInterfaceRender* pRender, 
+	void CGUIWidget::DrawAnimation(IGUIInterfaceRender* pRender, 
 		CGUIAnimation* pAnimation, 
 		const CGUIRect& rDestRect)
 	{
@@ -2370,9 +2407,9 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	const CGUIRect&	CGUIWidget::GetClipArea() const
+	const CGUIRect*	CGUIWidget::GetClipArea() const
 	{
-		return m_aClipArea;
+		return &m_aClientArea;
 	}
 	//------------------------------------------------------------------------------
 	const CGUIRect&	CGUIWidget::GetClientArea() const
@@ -2746,7 +2783,6 @@ namespace guiex
 		CGUIVector2 aOffsetPos( -GetPixelSize().m_fWidth*m_aWidgetAnchorPoint.x, -GetPixelSize().m_fHeight*m_aWidgetAnchorPoint.y );
 		m_aBoundArea.SetRect( aOffsetPos, m_aWidgetSize.m_aPixelValue );
 		m_aClientArea = m_aBoundArea;
-		m_aClipArea = m_aClientArea;
 
 		//refresh node
 		CGUIVector2 aParentOffsetPos( 0.0f, 0.0f );

@@ -41,6 +41,9 @@ namespace guiex
 	public:
 		CGUIWgtCheckButton( const CGUIString& rName, const CGUIString& rSceneName );
 
+		virtual int32 GenerateProperty( CGUIProperty& rProperty );
+		virtual void ProcessProperty( const CGUIProperty& rProperty);
+
 		virtual void SetChecked(bool bChecked);
 		bool IsChecked() const;
 
@@ -52,8 +55,6 @@ namespace guiex
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage );
 
-		virtual int32 GenerateProperty( CGUIProperty& rProperty );
-		virtual void ProcessProperty( const CGUIProperty& rProperty);
 
 	protected:	//!< callback function
 		virtual uint32 OnMouseEnter( CGUIEventMouse* pEvent );

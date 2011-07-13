@@ -240,7 +240,7 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////
 		const CGUIRect& GetBoundArea() const;
 		const CGUIRect&	GetClientArea() const;
-		const CGUIRect&	GetClipArea() const;
+		virtual const CGUIRect*	GetClipArea() const;
 
 		void SetPosition( real x, real y );
 		void SetPosition( const CGUIVector2&rPos );
@@ -356,6 +356,9 @@ namespace guiex
 	protected:
 		virtual void PushClipRect( IGUIInterfaceRender* pRender  );
 		virtual void PopClipRect( IGUIInterfaceRender* pRender );
+
+		virtual bool IsIgnoreParentClipRect() const;
+		virtual bool IsAddChildToTail() const;
 
 		virtual void UpdateSelf( real fDeltaTime );
 		virtual void RefreshSelf( );
@@ -518,7 +521,6 @@ namespace guiex
 
 		CGUIRect m_aBoundArea; //widget bound, local
 		CGUIRect m_aClientArea; //client area, local
-		CGUIRect m_aClipArea; //client area, local
 
 		CGUISize m_aMaxSize; //maximum size of widget,it doesn't work if the value is (0,0)
 		CGUISize m_aMinSize; //minimum size of widget,it doesn't work if the value is (0,0)

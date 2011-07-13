@@ -179,10 +179,12 @@ bool WxMainApp::CheckProperty() const
 			if( aWidgetProperty != *pDefaultProperty )
 			{
 				wxString strError = wxString::Format( 
-					_T("failed to check property <%s:%s> in widget <%s>!"), 
+					_T("failed to check property <%s:%s> in widget <%s>!\r\nwidget value <%s>\r\ndefault value <%s>"), 
 					Gui2wxString(aWidgetProperty.GetName()).c_str(),
 					Gui2wxString(aWidgetProperty.GetTypeAsString()).c_str(),
-					Gui2wxString(pWidget->GetType()).c_str()
+					Gui2wxString(pWidget->GetType()).c_str(),
+					Gui2wxString(aWidgetProperty.GetValue()).c_str(),
+					Gui2wxString((*pDefaultProperty).GetValue()).c_str()
 					);
 				wxMessageBox(strError, _T("error"));
 				return false;

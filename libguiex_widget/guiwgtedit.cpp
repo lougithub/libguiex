@@ -67,11 +67,8 @@ namespace guiex
 		//get result string
 		if( m_pIme && m_pIme->GetResultString() )
 		{
-			if( !m_pIme->GetResultString() )
-			{
-				m_strResult += m_pIme->GetResultString();
-				m_pIme->ClearResultString();
-			}
+			m_strResult += m_pIme->GetResultString();
+			m_pIme->ClearResultString();
 		}
 
 		//update cursor show time

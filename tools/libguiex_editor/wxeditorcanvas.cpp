@@ -43,7 +43,7 @@ END_EVENT_TABLE()
 //------------------------------------------------------------------------------
 WxEditorCanvas::WxEditorCanvas(wxWindow *parent, int* args, wxWindowID id,
 					   const wxPoint& pos, const wxSize& size, long style, const wxString& name)
-					   : wxGLCanvas(parent, (wxGLCanvas*) NULL, id, pos, size, style|wxFULL_REPAINT_ON_RESIZE , name )
+					   : wxGLCanvas(parent, (wxGLCanvas*) NULL, id, pos, size, style|wxFULL_REPAINT_ON_RESIZE , name, args )
 					   ,m_timer(this, 100)
 					   ,m_hoveredResizePoint(RESIZE_POINT_NONE)
 					   ,m_previousHoveredResizePoint(RESIZE_POINT_NONE)
@@ -436,7 +436,7 @@ void WxEditorCanvas::HandleMouseMoved (int aMouseX, int aMouseY)
 		m_hoveredResizePoint = RESIZE_POINT_NONE;
 		wxSnprintf (statusInfo, 100, wxT("%s Window: %s"), statusInfo, Gui2wxString(m_hoveredWindow->GetName()).data());
 		// Selectable?
-		if( CGUIWidgetManager::IsInternalWidget( m_hoveredWindow->GetName()))
+		if( CGUIWidgetManager::IsInternalName( m_hoveredWindow->GetName()))
 		{
 			// No, add to status info
 			wxSnprintf (statusInfo, 100, wxT("%s (not selectable)"), statusInfo);
@@ -465,7 +465,7 @@ void WxEditorCanvas::SelectWidget( CGUIWidget* pWidget )
 //------------------------------------------------------------------------------
 void WxEditorCanvas::OnMouseLeftDown(wxMouseEvent& event)
 {
-	while(m_hoveredWindow && CGUIWidgetManager::IsInternalWidget( m_hoveredWindow->GetName()) )
+	while(m_hoveredWindow && CGUIWidgetManager::IsInternalName( m_hoveredWindow->GetName()) )
 	{   
 		// Current window is an internal widget, goto parent (if any)
 		SetHoveredWindow( m_hoveredWindow->GetParent() );

@@ -11,9 +11,11 @@
 #include "guiwgtlistbox.h"
 #include "guiwgtlistboxitem.h"
 #include <libguiex_core/guiexception.h>
+#include <libguiex_core/guiproperty.h>
+#include <libguiex_core/guipropertyconvertor.h>
+#include <libguiex_core/guistringconvertor.h>
 #include <libguiex_core/guiinterfacerender.h>
 #include <libguiex_core/guiinterfacekeyboard.h>
-#include <libguiex_core/guistringconvertor.h>
 #include <libguiex_core/guiimage.h>
 #include <libguiex_core/guiwidgetmanager.h>
 
@@ -29,7 +31,7 @@ namespace guiex
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtListBox);
 	//------------------------------------------------------------------------------
 	CGUIWgtListBox::CGUIWgtListBox( const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIWidget(StaticGetType(), rName, rSceneName)
+		:CGUIWgtScrollbarContainer(StaticGetType(), rName, rSceneName)
 	{
 		InitListBox();
 	}
@@ -52,6 +54,8 @@ namespace guiex
 	void CGUIWgtListBox::InitListBox()
 	{
 		m_bMultiselect = false;
+		m_bForceShowVertScrollbar = false;
+		m_bForceShowHorzScrollbar = false;
 
 		m_pImageBG = NULL;
 		m_pLastOperateItem = NULL;
@@ -68,6 +72,10 @@ namespace guiex
 			{
 				SetPixelSize(pImage->GetSize());
 			}
+		}
+		else
+		{
+			CGUIWgtScrollbarContainer::OnSetImage( rName, pImage );
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -230,6 +238,7 @@ namespace guiex
 			pItem->Open();
 		}
 
+		//UpdateItems();
 		Refresh();
 	}
 	//------------------------------------------------------------------------------
@@ -253,7 +262,30 @@ namespace guiex
 			m_pLastOperateItem = NULL;
 		}
 
+		//UpdateItems();
 		Refresh();
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtListBox::UpdateItems( )
+	{
+		m_aItemsSize.SetValue( 0, 0 );
+
+		CGUIVector2 aPosDiffer = GetVirtualClientArea().GetPosition() - GetVisibleClientArea().GetPosition();
+
+		//update item position
+		CGUIVector2	posLeftTop(0.0f,0);
+		for( TListItem::iterator itor = m_aListItems.begin(); itor != m_aListItems.end(); ++itor)
+		{
+			CGUIWgtListBoxItem* pItem = *itor;
+			pItem->SetPixelPosition(posLeftTop + aPosDiffer);
+			posLeftTop.y += pItem->GetPixelSize().GetHeight();
+
+			if( pItem->GetPixelSize().GetWidth() > m_aItemsSize.m_fWidth )
+			{
+				m_aItemsSize.m_fWidth = pItem->GetPixelSize().GetWidth();
+			}
+		}
+		m_aItemsSize.m_fHeight = posLeftTop.y;
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -350,30 +382,53 @@ namespace guiex
 		return m_bMultiselect;
 	}
 	//------------------------------------------------------------------------------
-	//void	CGUIWgtListBox::UpdateDirtyRect()
-	//{
-	//	CGUIWgtScrollbarContainer::UpdateDirtyRect_SC_Begin();
+	void CGUIWgtListBox::ForceShowVertScrollbar( bool bForce )
+	{
+		if( m_bForceShowVertScrollbar != bForce )
+		{
+			m_bForceShowVertScrollbar = bForce;
+			
+			if( bForce )
+			{
+				ShowVertScrollbar( true );
+			}
+			else
+			{
+				Refresh();
+			}
+		}
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWgtListBox::IsForceShowVertScrollbar() const
+	{
+		return m_bForceShowVertScrollbar;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtListBox::ForceShowHorzScrollbar( bool bForce )
+	{
+		if( m_bForceShowHorzScrollbar != bForce )
+		{
+			m_bForceShowHorzScrollbar = bForce;
 
-	//	m_aClientRect.SetWidth(0.0f);
-	//	m_aClientRect.SetHeight(0.0f);
-
-	//	// loop through the items
-	//	uint32 itemCount = static_cast<uint32>(m_aListItems.size());
-	//	for (uint32 i = 0; i < itemCount; ++i)
-	//	{
-	//		if( m_aListItems[i]->GetWidth() > m_aClientRect.GetWidth())
-	//		{
-	//			m_aClientRect.SetWidth( m_aListItems[i]->GetWidth());
-	//		}
-	//		m_aClientRect.SetHeight(m_aClientRect.GetHeight() + m_aListItems[i]->GetHeight());
-	//	}
-
-	//	CGUIWgtScrollbarContainer::UpdateDirtyRect_SC_End();
-	//}
+			if( bForce )
+			{
+				ShowHorzScrollbar( true );
+			}
+			else
+			{
+				Refresh();
+			}
+		}
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWgtListBox::IsForceShowHorzScrollbar() const
+	{
+		return m_bForceShowHorzScrollbar;
+	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtListBox::RenderSelf(IGUIInterfaceRender* pRender)
 	{
-		CGUIWidget::RenderSelf(pRender);
+		CGUIWgtScrollbarContainer::RenderSelf(pRender);
 		/// draw bg
 		DrawImage( pRender, m_pImageBG, GetBoundArea());
 	}
@@ -401,46 +456,45 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtListBox::RefreshSelf()
 	{
-		CGUIWidget::RefreshSelf();
+		CGUIWgtScrollbarContainer::RefreshSelf();
+		
+		UpdateItems();
 
-		CGUIVector2	m_posLeftTop(0.0f,0);
-		for( TListItem::iterator itor = m_aListItems.begin(); itor != m_aListItems.end(); ++itor)
+		if( m_aItemsSize.GetHeight() > GetVisibleClientArea().GetHeight() )
 		{
-			CGUIWgtListBoxItem* pItem = *itor;
-			pItem->SetPixelPosition(m_posLeftTop);
-			m_posLeftTop.y += pItem->GetPixelSize().GetHeight();
+			ShowVertScrollbar( true );
+			real fPixelDif = m_aItemsSize.GetHeight() - GetVisibleClientArea().GetHeight();
+			SetVertRange( GUI_FLOAT2UINT_ROUND(ceil(fPixelDif / GetPixelPerVertValue())));
 		}
-	}
-	//------------------------------------------------------------------------------
-	/**
-	* @brief get total height of items
-	*/
-	real CGUIWgtListBox::GetTotalItemsHeight() const
-	{
-		real fHeight = 0.0f;
-		for( size_t i=0; i<m_aListItems.size(); ++i )
+		else
 		{
-			fHeight += m_aListItems[i]->GetPixelSize().GetHeight();
-		}
-
-		return fHeight;
-	}
-	//------------------------------------------------------------------------------
-	/**
-	* @brief get widest width of items
-	*/
-	real CGUIWgtListBox::GetItemsWidth() const
-	{
-		real fWidth = 0.0f;
-		for( size_t i=0; i<m_aListItems.size(); ++i )
-		{
-			if( m_aListItems[i]->GetPixelSize().GetWidth() > fWidth )
+			if( IsForceShowVertScrollbar() )
 			{
-				fWidth = m_aListItems[i]->GetPixelSize().GetWidth();
+				SetVertRange( 0 );
+			}
+			else
+			{
+				ShowVertScrollbar( false );
 			}
 		}
 
-		return fWidth;
+		if( m_aItemsSize.GetWidth() > GetVisibleClientArea().GetWidth() )
+		{
+			ShowHorzScrollbar( true );
+			real fPixelDif = m_aItemsSize.GetWidth() - GetVisibleClientArea().GetWidth();
+			SetHorzRange( GUI_FLOAT2UINT_ROUND(ceil(fPixelDif / GetPixelPerHorzValue())));
+		}
+		else
+		{
+			if(IsForceShowHorzScrollbar() )
+			{
+				SetHorzRange( 0 );
+			}
+			else
+			{
+				ShowHorzScrollbar( false );
+			}
+		}
 	}
 	//------------------------------------------------------------------------------
 
@@ -495,12 +549,12 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtListBox::ProcessMouseLeftUp(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent)
+	void CGUIWgtListBox::ProcessMouseLeftUp(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent)
 	{
 
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::ProcessMouseRightDown(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent)
+	void CGUIWgtListBox::ProcessMouseRightDown(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent)
 	{
 		ClearAllSelections_impl();
 		SetItemSelected(pItem, true);
@@ -512,7 +566,7 @@ namespace guiex
 
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::ProcessMouseLeftClick(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent)
+	void CGUIWgtListBox::ProcessMouseLeftClick(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent)
 	{
 		if( pItem == m_pLastOperateItem )
 		{
@@ -524,7 +578,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::ProcessMouseRightClick(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent)
+	void CGUIWgtListBox::ProcessMouseRightClick(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent)
 	{
 		if( pItem == m_pLastOperateItem )
 		{
@@ -536,7 +590,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::ProcessMouseLeftDbClick(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent)
+	void CGUIWgtListBox::ProcessMouseLeftDbClick(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent)
 	{
 		if( pItem == m_pLastOperateItem )
 		{
@@ -548,7 +602,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtListBox::ProcessMouseRightDbClick(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent)
+	void CGUIWgtListBox::ProcessMouseRightDbClick(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent)
 	{
 		if( pItem == m_pLastOperateItem )
 		{
@@ -572,7 +626,7 @@ namespace guiex
 			DoAddItem(static_cast<CGUIWgtListBoxItem*>(pEvent->GetRelative()));
 		}
 
-		return CGUIWidget::OnAddChild(pEvent);
+		return CGUIWgtScrollbarContainer::OnAddChild(pEvent);
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtListBox::OnRemoveChild( CGUIEventRelativeChange* pEvent )
@@ -582,7 +636,44 @@ namespace guiex
 			DoRemoveItem(static_cast<CGUIWgtListBoxItem*>(pEvent->GetRelative()));
 		}
 
-		return CGUIWidget::OnRemoveChild(pEvent);
+		return CGUIWgtScrollbarContainer::OnRemoveChild(pEvent);
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUIWgtListBox::GenerateProperty( CGUIProperty& rProperty )
+	{
+		if( rProperty.GetType() == ePropertyType_Bool&& rProperty.GetName() == "force_vert_scrollbar" )
+		{
+			ValueToProperty( IsForceShowVertScrollbar(), rProperty );
+		}
+		else if( rProperty.GetType() == ePropertyType_Bool&& rProperty.GetName() == "force_horz_scrollbar" )
+		{
+			ValueToProperty( IsForceShowHorzScrollbar(), rProperty );
+		}
+		else
+		{
+			return CGUIWgtScrollbarContainer::GenerateProperty( rProperty );
+		}
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtListBox::ProcessProperty( const CGUIProperty& rProperty)
+	{
+		if( rProperty.GetType() == ePropertyType_Bool&& rProperty.GetName() == "force_vert_scrollbar" )
+		{
+			bool bForceShow = false;
+			PropertyToValue( rProperty, bForceShow );
+			ForceShowVertScrollbar( bForceShow );
+		}
+		else if( rProperty.GetType() == ePropertyType_Bool&& rProperty.GetName() == "force_horz_scrollbar" )
+		{
+			bool bForceShow = false;
+			PropertyToValue( rProperty, bForceShow );
+			ForceShowHorzScrollbar( bForceShow );
+		}
+		else
+		{
+			CGUIWgtScrollbarContainer::ProcessProperty( rProperty );
+		}
 	}
 	//------------------------------------------------------------------------------
 }

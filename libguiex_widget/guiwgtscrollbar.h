@@ -34,6 +34,7 @@ namespace guiex
 	* @class CGUIWgtScrollbar
 	* @brief scrollbar,will send scroll message to parent
 	* used image name:
+	*
 	* background
 	* arrow_0_normal
 	* arrow_0_hover
@@ -59,6 +60,9 @@ namespace guiex
 	public:
 		CGUIWgtScrollbar( const CGUIString& rName, const CGUIString& rSceneName );
 		virtual ~CGUIWgtScrollbar();
+
+		virtual int32 GenerateProperty( CGUIProperty& rProperty );
+		virtual void ProcessProperty( const CGUIProperty& rProperty);
 
 		void SetPageSize(uint32 nPageSize);
 		uint32 GetPageSize() const;
@@ -92,17 +96,13 @@ namespace guiex
 		virtual void RefreshSelf();
 		virtual void OnCreate();
 		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage );
-
-		void UpdateScrollbar();
+		virtual bool IsIgnoreParentClipRect() const;
 
 		void GenerateNotifyEvent();
 
 		/// get rect of area where slide could stay.it's a local rect
 		CGUIRect GetSlideArea( );
 
-	protected:
-		virtual int32 GenerateProperty( CGUIProperty& rProperty );
-		virtual void ProcessProperty( const CGUIProperty& rProperty);
 
 	protected:	//!< callback function
 		virtual uint32 OnMouseLeftDown( CGUIEventMouse* pEvent );

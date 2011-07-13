@@ -53,7 +53,7 @@
         <property name="hover" type="CGUIImage" value="button_red_hover" />
         <property name="push" type="CGUIImage" value="button_red_push" />
         <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="30,42" />
+            <property name="value" type="CGUIVector2" value="28,42" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">
@@ -188,17 +188,36 @@
         <property name="border_bottomleft" type="CGUIImage" value="panel_border_bottomleft" />
         <property name="border_bottomright" type="CGUIImage" value="panel_border_bottomright" />
         <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="35,406" />
+            <property name="value" type="CGUIVector2" value="14,401" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">
-            <property name="value" type="CGUISize" value="189,200" />
+            <property name="value" type="CGUISize" value="193,148" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="movable" type="bool" value="true" />
+        <property name="activable" type="bool" value="true" />
     </property>
     <property name="listbox_1" type="CGUIWidgetDefine" value="CGUIWgtListBox">
         <property name="parent" type="CGUIString" value="panel_listtest" />
+        <property name="scrollbar_v_arrow_0_normal" type="CGUIImage" value="scrollbar_upbutton_up" />
+        <property name="scrollbar_v_arrow_0_hover" type="CGUIImage" value="scrollbar_upbutton_highlight" />
+        <property name="scrollbar_v_arrow_0_disable" type="CGUIImage" value="scrollbar_upbutton_disable" />
+        <property name="scrollbar_v_arrow_0_push" type="CGUIImage" value="scrollbar_upbutton_down" />
+        <property name="scrollbar_v_arrow_1_normal" type="CGUIImage" value="scrollbar_downbutton_up" />
+        <property name="scrollbar_v_arrow_1_hover" type="CGUIImage" value="scrollbar_downbutton_highlight" />
+        <property name="scrollbar_v_arrow_1_disable" type="CGUIImage" value="scrollbar_downbutton_disable" />
+        <property name="scrollbar_v_arrow_1_push" type="CGUIImage" value="scrollbar_downbutton_down" />
+        <property name="scrollbar_v_slide_normal" type="CGUIImage" value="scrollbar_knob" />
+        <property name="scrollbar_h_arrow_0_normal" type="CGUIImage" value="h_scrollbar_upbutton_up" />
+        <property name="scrollbar_h_arrow_0_hover" type="CGUIImage" value="h_scrollbar_upbutton_highlight" />
+        <property name="scrollbar_h_arrow_0_disable" type="CGUIImage" value="h_scrollbar_upbutton_disable" />
+        <property name="scrollbar_h_arrow_0_push" type="CGUIImage" value="h_scrollbar_upbutton_down" />
+        <property name="scrollbar_h_arrow_1_normal" type="CGUIImage" value="h_scrollbar_downbutton_up" />
+        <property name="scrollbar_h_arrow_1_hover" type="CGUIImage" value="h_scrollbar_downbutton_highlight" />
+        <property name="scrollbar_h_arrow_1_disable" type="CGUIImage" value="h_scrollbar_downbutton_disable" />
+        <property name="scrollbar_h_arrow_1_push" type="CGUIImage" value="h_scrollbar_downbutton_down" />
+        <property name="scrollbar_h_slide_normal" type="CGUIImage" value="h_scrollbar_knob" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="0,0" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
@@ -208,6 +227,7 @@
             <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
         </property>
         <property name="hitable" type="bool" value="false" />
+        <property name="pixel_per_vert" type="uint32" value="46" />
     </property>
     <property name="listboxitem_1" type="CGUIWidgetDefine" value="CGUIWgtListBoxItem">
         <property name="parent" type="CGUIString" value="listbox_1" />
@@ -364,7 +384,7 @@
             <property name="value" type="CGUISize" value="100,19" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
-        <property name="orientation" type="EOrientation" value="eOrientation_Horizonal" />
+        <property name="orientation" type="EOrientation" value="eOrientation_Horizontal" />
         <property name="page_size" type="uint32" value="10" />
         <property name="max_pos" type="uint32" value="100" />
         <property name="current_pos" type="uint32" value="40" />
@@ -384,5 +404,59 @@
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="text" type="CGUIString" value="0" />
+    </property>
+    <property name="panel_multieditbox" type="CGUIWidgetDefine" value="CGUIWgtPanel">
+        <property name="parent" type="CGUIString" value="node_root" />
+        <property name="bg" type="CGUIImage" value="dialog_bg" />
+        <property name="border_top" type="CGUIImage" value="panel_border_top" />
+        <property name="border_bottom" type="CGUIImage" value="panel_border_bottom" />
+        <property name="border_left" type="CGUIImage" value="panel_border_left" />
+        <property name="border_right" type="CGUIImage" value="panel_border_right" />
+        <property name="border_topleft" type="CGUIImage" value="panel_border_topleft" />
+        <property name="border_topright" type="CGUIImage" value="panel_border_topright" />
+        <property name="border_bottomleft" type="CGUIImage" value="panel_border_bottomleft" />
+        <property name="border_bottomright" type="CGUIImage" value="panel_border_bottomright" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="235,406" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="189,200" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="movable" type="bool" value="true" />
+        <property name="activable" type="bool" value="true" />
+    </property>
+    <property name="multieditbox_1" type="CGUIWidgetDefine" value="CGUIWgtMultiEditBox">
+        <property name="parent" type="CGUIString" value="panel_multieditbox" />
+        <property name="scrollbar_v_arrow_0_normal" type="CGUIImage" value="scrollbar_upbutton_up" />
+        <property name="scrollbar_v_arrow_0_hover" type="CGUIImage" value="scrollbar_upbutton_highlight" />
+        <property name="scrollbar_v_arrow_0_disable" type="CGUIImage" value="scrollbar_upbutton_disable" />
+        <property name="scrollbar_v_arrow_0_push" type="CGUIImage" value="scrollbar_upbutton_down" />
+        <property name="scrollbar_v_arrow_1_normal" type="CGUIImage" value="scrollbar_downbutton_up" />
+        <property name="scrollbar_v_arrow_1_hover" type="CGUIImage" value="scrollbar_downbutton_highlight" />
+        <property name="scrollbar_v_arrow_1_disable" type="CGUIImage" value="scrollbar_downbutton_disable" />
+        <property name="scrollbar_v_arrow_1_push" type="CGUIImage" value="scrollbar_downbutton_down" />
+        <property name="scrollbar_v_slide_normal" type="CGUIImage" value="scrollbar_knob" />
+        <property name="scrollbar_h_arrow_0_normal" type="CGUIImage" value="h_scrollbar_upbutton_up" />
+        <property name="scrollbar_h_arrow_0_hover" type="CGUIImage" value="h_scrollbar_upbutton_highlight" />
+        <property name="scrollbar_h_arrow_0_disable" type="CGUIImage" value="h_scrollbar_upbutton_disable" />
+        <property name="scrollbar_h_arrow_0_push" type="CGUIImage" value="h_scrollbar_upbutton_down" />
+        <property name="scrollbar_h_arrow_1_normal" type="CGUIImage" value="h_scrollbar_downbutton_up" />
+        <property name="scrollbar_h_arrow_1_hover" type="CGUIImage" value="h_scrollbar_downbutton_highlight" />
+        <property name="scrollbar_h_arrow_1_disable" type="CGUIImage" value="h_scrollbar_downbutton_disable" />
+        <property name="scrollbar_h_arrow_1_push" type="CGUIImage" value="h_scrollbar_downbutton_down" />
+        <property name="scrollbar_h_slide_normal" type="CGUIImage" value="h_scrollbar_knob" />
+        <property name="cursor" type="CGUIImage" value="color_white" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0,0" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="1,1" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+        </property>
+        <property name="cursor_size" type="CGUISize" value="2,16" />
+        <property name="max_text_num" type="uint32" value="10000" />
     </property>
 </guiex>

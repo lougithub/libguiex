@@ -45,6 +45,9 @@ namespace guiex
 		};
 		CGUIWgtButton( const CGUIString& rName, const CGUIString& rSceneName );
 
+		virtual int32 GenerateProperty( CGUIProperty& rProperty );
+		virtual void ProcessProperty( const CGUIProperty& rProperty);
+
 		void SetTextContent( const CGUIStringW& rText, EButtonState eButtonState );
 		const CGUIStringW& GetTextContent( EButtonState eButtonState ) const;
 
@@ -67,10 +70,6 @@ namespace guiex
 		void SetTextAlignmentHorz( ETextAlignmentHorz eAlignment );
 		ETextAlignmentHorz GetTextAlignmentHorz( ) const;
 		ETextAlignmentVert GetTextAlignmentVert( ) const;
-
-	protected:
-		virtual int32 GenerateProperty( CGUIProperty& rProperty );
-		virtual void ProcessProperty( const CGUIProperty& rProperty);
 
 	protected:
 		CGUIWgtButton( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );

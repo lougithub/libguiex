@@ -54,9 +54,18 @@ namespace guiex
 		m_pSingleton = NULL; 
 	}
 	//------------------------------------------------------------------------------
-	bool CGUIWidgetManager::IsInternalWidget( const CGUIString& rWidgetName )
+	bool CGUIWidgetManager::IsInternalName( const CGUIString& rWidgetName )
 	{
 		return (rWidgetName.find(GUI_INTERNAL_WIDGET_FLAG) != CGUIString::npos);
+	}
+	//------------------------------------------------------------------------------
+	const CGUIString& CGUIWidgetManager::MakeInternalName( CGUIString& rWidgetName )
+	{
+		if( !IsInternalName( rWidgetName ))
+		{
+			rWidgetName += GUI_INTERNAL_WIDGET_FLAG;
+		}
+		return rWidgetName;
 	}
 	//------------------------------------------------------------------------------
 	CGUIWidgetManager* CGUIWidgetManager::Instance()

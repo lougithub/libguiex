@@ -38,7 +38,7 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtTabButton::RefreshSelf()
+	void CGUIWgtTabButton::RefreshSelf()
 	{
 		CGUIWgtCheckButton::RefreshSelf();
 
@@ -46,11 +46,8 @@ namespace guiex
 		CGUIVector2 aParentPos = GetParent()->GetClientArea().GetPosition();
 		ParentToLocal( aParentPos );
 		m_aClientArea.SetPosition( aParentPos );
-		m_aClientArea.SetSize( GetParent()->GetClipArea().GetSize() );
+		m_aClientArea.SetSize( GetParent()->GetClientArea().GetSize() );
 		m_aClientArea.m_fTop += GetPixelSize().GetHeight();
-
-		//clip rect for client
-		m_aClipArea = m_aClientArea;
 	}
 	//------------------------------------------------------------------------------
 	/**

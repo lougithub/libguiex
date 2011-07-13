@@ -137,7 +137,7 @@ namespace guiex
 	enum EOrientation
 	{
 		eOrientation_Vertical = 0,
-		eOrientation_Horizonal,
+		eOrientation_Horizontal,
 	};
 
 }//namespace guiex

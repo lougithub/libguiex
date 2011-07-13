@@ -5,7 +5,7 @@
 		<property name="EScreenValue" type="enum" value="eScreenValue_Pixel;eScreenValue_Percentage;"/>
 		<property name="ETextAlignmentHorz" type="enum" value="eTextAlignment_Horz_Center;eTextAlignment_Horz_Left;eTextAlignment_Horz_Right;"/>
 		<property name="ETextAlignmentVert" type="enum" value="eTextAlignment_Vert_Center;eTextAlignment_Vert_Up;eTextAlignment_Vert_Down;"/>
-		<property name="EOrientation" type="enum" value="eOrientation_Vertical;eOrientation_Horizonal;"/>
+		<property name="EOrientation" type="enum" value="eOrientation_Vertical;eOrientation_Horizontal;"/>
 	</enum>
 
 	<widget type="CGUIWidgetRoot" template="true">
@@ -272,7 +272,7 @@
 			<property name="mask" type="bool" value="false"  category="EditBox" alternative_save="true"/>
 			<property name="max_text_num" type="uint32" value="100"  category="EditBox" alternative_save="true"/>
 			<property name="readonly" type="bool" value="false"  category="EditBox" alternative_save="true"/>
-			<property name="cursor_size" type="CGUISize" value="2,16"  category="EditBox" alternative_save="true"/>
+			<property name="cursor_size" type="CGUISize" value="2,16"  category="EditBox" />
 			<property name="text_alignment_horz" type="ETextAlignmentHorz" value="eTextAlignment_Horz_Left" category="EditBox" alternative_save="true"/>
 			<property name="text_alignment_vert" type="ETextAlignmentVert" value="eTextAlignment_Vert_Center" category="EditBox" alternative_save="true"/>
 		</page>
@@ -283,7 +283,81 @@
 		</page>
 	</widget>
 
-	<widget type="CGUIWgtEmptyNode" inherit="CGUIWidget">
+  <widget type="CGUIWgtScrollbarContainer"  inherit="CGUIWidget" template="true">
+    <page name="Appearance">
+      <property name="focusable" type="bool" value="true"  category="Default" alternative_save="true"/>
+      <property name="clip_children" type="bool" value="true"  category="Default" alternative_save="true"/>
+      <property name="pixel_per_vert" type="uint32" value="1"  category="ScrollbarContainer" alternative_save="true"/>
+      <property name="pixel_per_horz" type="uint32" value="1"  category="ScrollbarContainer" alternative_save="true"/>
+    </page>
+    <page name="Image">
+      <property name="scrollbar_v_background" type="CGUIImage" value=""/>
+      <property name="scrollbar_v_arrow_0_normal" type="CGUIImage" value="scrollbar_upbutton_up"/>
+      <property name="scrollbar_v_arrow_0_hover" type="CGUIImage" value="scrollbar_upbutton_highlight"/>
+      <property name="scrollbar_v_arrow_0_disable" type="CGUIImage" value="scrollbar_upbutton_disable"/>
+      <property name="scrollbar_v_arrow_0_push" type="CGUIImage" value="scrollbar_upbutton_down"/>
+      <property name="scrollbar_v_arrow_0_hover_overlay" type="CGUIImage" value=""/>
+      <property name="scrollbar_v_arrow_0_push_overlay" type="CGUIImage" value=""/>
+      <property name="scrollbar_v_arrow_1_normal" type="CGUIImage" value="scrollbar_downbutton_up"/>
+      <property name="scrollbar_v_arrow_1_hover" type="CGUIImage" value="scrollbar_downbutton_highlight"/>
+      <property name="scrollbar_v_arrow_1_disable" type="CGUIImage" value="scrollbar_downbutton_disable"/>
+      <property name="scrollbar_v_arrow_1_push" type="CGUIImage" value="scrollbar_downbutton_down"/>
+      <property name="scrollbar_v_arrow_1_hover_overlay" type="CGUIImage" value=""/>
+      <property name="scrollbar_v_arrow_1_push_overlay" type="CGUIImage" value=""/>
+      <property name="scrollbar_v_slide_normal" type="CGUIImage" value="scrollbar_knob"/>
+      <property name="scrollbar_v_slide_hover" type="CGUIImage" value=""/>
+      <property name="scrollbar_v_slide_disable" type="CGUIImage" value=""/>
+      <property name="scrollbar_v_slide_push" type="CGUIImage" value=""/>
+      <property name="scrollbar_v_slide_hover_overlay" type="CGUIImage" value=""/>
+      <property name="scrollbar_v_slide_push_overlay" type="CGUIImage" value=""/>      
+      <property name="scrollbar_h_background" type="CGUIImage" value=""/>
+      <property name="scrollbar_h_arrow_0_normal" type="CGUIImage" value="h_scrollbar_upbutton_up"/>
+      <property name="scrollbar_h_arrow_0_hover" type="CGUIImage" value="h_scrollbar_upbutton_highlight"/>
+      <property name="scrollbar_h_arrow_0_disable" type="CGUIImage" value="h_scrollbar_upbutton_disable"/>
+      <property name="scrollbar_h_arrow_0_push" type="CGUIImage" value="h_scrollbar_upbutton_down"/>
+      <property name="scrollbar_h_arrow_0_hover_overlay" type="CGUIImage" value=""/>
+      <property name="scrollbar_h_arrow_0_push_overlay" type="CGUIImage" value=""/>
+      <property name="scrollbar_h_arrow_1_normal" type="CGUIImage" value="h_scrollbar_downbutton_up"/>
+      <property name="scrollbar_h_arrow_1_hover" type="CGUIImage" value="h_scrollbar_downbutton_highlight"/>
+      <property name="scrollbar_h_arrow_1_disable" type="CGUIImage" value="h_scrollbar_downbutton_disable"/>
+      <property name="scrollbar_h_arrow_1_push" type="CGUIImage" value="h_scrollbar_downbutton_down"/>
+      <property name="scrollbar_h_arrow_1_hover_overlay" type="CGUIImage" value=""/>
+      <property name="scrollbar_h_arrow_1_push_overlay" type="CGUIImage" value=""/>
+      <property name="scrollbar_h_slide_normal" type="CGUIImage" value="h_scrollbar_knob"/>
+      <property name="scrollbar_h_slide_hover" type="CGUIImage" value=""/>
+      <property name="scrollbar_h_slide_disable" type="CGUIImage" value=""/>
+      <property name="scrollbar_h_slide_push" type="CGUIImage" value=""/>
+      <property name="scrollbar_h_slide_hover_overlay" type="CGUIImage" value=""/>
+      <property name="scrollbar_h_slide_push_overlay" type="CGUIImage" value=""/>
+    </page> 
+  </widget>
+  
+  <widget type="CGUIWgtMultiEditBox" inherit="CGUIWgtScrollbarContainer">
+    <page name="Appearance">
+      <property name="size" type="CGUIWidgetSize" category="Default">
+        <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        <property name="value" type="CGUISize" value="128,80" />
+      </property>
+      
+      <property name="cursor_size" type="CGUISize" value="2,16"  category="MultiEditBox" />
+      <property name="readonly" type="bool" value="false"  category="MultiEditBox" alternative_save="true"/>
+      <property name="max_text_num" type="uint32" value="100"  category="MultiEditBox" alternative_save="true"/>
+      <property name="text" type="CGUIString" value=""  category="MultiEditBox" alternative_save="true"/>
+      <property name="textinfo" type="CGUIStringRenderInfo"  category="MultiEditBox" alternative_save="true">
+        <property name="scale" type="real" value="1"/>
+        <property name="font" type="CGUIFont" value="0"/>
+        <property name="color" type="CGUIColor" value="255,255,255,255"/>
+      </property>
+    </page>
+    <page name="Image">
+      <property name="bg_focus" type="CGUIImage" value="" />
+      <property name="bg" type="CGUIImage" value="edit_bg" must_exist="true" />
+      <property name="cursor" type="CGUIImage" value="color_white" must_exist="true" />
+    </page>
+  </widget>
+  
+  
+  <widget type="CGUIWgtEmptyNode" inherit="CGUIWidget">
 		<page name="Appearance">
 			<property name="size" type="CGUIWidgetSize" category="Default">
 				<property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
@@ -310,9 +384,11 @@
 		</page>
 	</widget>
 
-	<widget type="CGUIWgtListBox" inherit="CGUIWidget">
+	<widget type="CGUIWgtListBox" inherit="CGUIWgtScrollbarContainer">
 		<page name="Appearance">
-		</page>
+      <property name="force_vert_scrollbar" type="bool" value="false"  category="ListBox" alternative_save="true"/>
+      <property name="force_horz_scrollbar" type="bool" value="false"  category="ListBox" alternative_save="true"/>
+    </page>
 		<page name="Image">
 			<property name="background" type="CGUIImage" value=""/>
 		</page>

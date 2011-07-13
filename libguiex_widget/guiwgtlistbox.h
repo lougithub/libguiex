@@ -13,6 +13,7 @@
 #include <libguiex_core/guiwidget.h>
 #include <libguiex_core/guiwidgetgenerator.h>
 #include "guiwgtscrollbarcontainer.h"
+#include "guiwgtscrollbarcontainer.h"
 
 #include <vector>
 
@@ -37,11 +38,14 @@ namespace guiex
 	* used image name:
 	* - background
 	*/
-	class GUIEXPORT CGUIWgtListBox : public CGUIWidget
+	class GUIEXPORT CGUIWgtListBox : public CGUIWgtScrollbarContainer
 	{
 	public:
 		CGUIWgtListBox( const CGUIString& rName, const CGUIString& rSceneName );
 		virtual ~CGUIWgtListBox( );
+
+		virtual int32 GenerateProperty( CGUIProperty& rProperty );
+		virtual void ProcessProperty( const CGUIProperty& rProperty );
 
 		uint32 GetItemCount(void) const;
 
@@ -63,6 +67,13 @@ namespace guiex
 		void EnableMultiselect(bool bEnable);
 		bool IsMultiselectEnabled(void) const;
 
+		void ForceShowVertScrollbar( bool bForce );
+		bool IsForceShowVertScrollbar() const;
+
+		void ForceShowHorzScrollbar( bool bForce );
+		bool IsForceShowHorzScrollbar() const;
+
+
 	protected:
 		void InitListBox();
 
@@ -72,12 +83,11 @@ namespace guiex
 
 		bool ClearAllSelections_impl(void);
 
-		real GetTotalItemsHeight() const;
-		real GetItemsWidth() const;
-
 		friend class CGUIWgtListBoxItem;
 		void DoAddItem(CGUIWgtListBoxItem* pItem);
 		void DoRemoveItem( CGUIWgtListBoxItem* pItem);
+
+		void UpdateItems( );
 
 	protected:	//!< callback function
 		virtual uint32 OnAddChild( CGUIEventRelativeChange* pEvent );
@@ -103,6 +113,11 @@ namespace guiex
 		CGUIImage* m_pImageBG; /// image for listbox's background
 
 		CGUIWgtListBoxItem*	m_pLastOperateItem; /// the last item which is been operated.for multiselect
+
+		bool m_bForceShowVertScrollbar;
+		bool m_bForceShowHorzScrollbar;
+
+		CGUISize m_aItemsSize;
 
 	private:
 		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtListBox);

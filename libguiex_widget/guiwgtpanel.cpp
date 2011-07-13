@@ -185,9 +185,6 @@ namespace guiex
 		m_aClientArea.m_fRight -= GetBorderWidth(border_right);
 		m_aClientArea.m_fBottom -= GetBorderHeight(border_bottom);
 
-		//clip rect for client
-		m_aClipArea = m_aClientArea;
-
 		//border rect
 		if( m_aBorderInfo[border_topleft].m_pImageInfo )
 		{

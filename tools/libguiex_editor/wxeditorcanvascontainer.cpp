@@ -94,7 +94,7 @@ int WxEditorCanvasContainer::SaveFileAs(const std::string& rNewFileName)
 int WxEditorCanvasContainer::SaveWidgetNodeToDoc( CGUIWidget* pWidget, TiXmlDocument& rDoc )
 {
 	wxASSERT( pWidget );
-	if(CGUIWidgetManager::IsInternalWidget( pWidget->GetName()))
+	if(CGUIWidgetManager::IsInternalName( pWidget->GetName()))
 	{
 		//internal widget should be ignored
 		return 0;

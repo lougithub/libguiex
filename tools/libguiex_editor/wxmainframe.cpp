@@ -473,7 +473,7 @@ void WxMainFrame::AddWidgetToTreeCtrl(CGUIWidget* pWidget, wxTreeItemId aParentI
 	CGUIWidget* pChild = pWidget->GetChild();
 	while( pChild )
 	{
-		if( !CGUIWidgetManager::IsInternalWidget( pChild->GetName()))
+		if( !CGUIWidgetManager::IsInternalName( pChild->GetName()))
 		{
 			AddWidgetToTreeCtrl( pChild, aItemId );
 		}
@@ -977,7 +977,7 @@ static void DoGetWidgetName( const CGUIWidget* pWidget, wxArrayString& rArray )
 	CGUIWidget* pChild = pWidget->GetChild();
 	while( pChild )
 	{
-		if( !CGUIWidgetManager::IsInternalWidget( pChild->GetName()))
+		if( !CGUIWidgetManager::IsInternalName( pChild->GetName()))
 		{
 			DoGetWidgetName( pChild, rArray );
 		}
@@ -1261,7 +1261,7 @@ void WxMainFrame::OnToggleScissor(wxCommandEvent& evt)
 
 	if( CGUIInterfaceManager::Instance()->GetInterfaceRender())
 	{
-		CGUIInterfaceManager::Instance()->GetInterfaceRender()->EnableClip(bIsChecked);
+		CGUIInterfaceManager::Instance()->GetInterfaceRender()->EnableClip(!bIsChecked);
 	}
 }
 //------------------------------------------------------------------------------

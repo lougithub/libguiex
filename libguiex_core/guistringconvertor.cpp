@@ -971,9 +971,9 @@ namespace guiex
 		{
 			rValue = eOrientation_Vertical;
 		}
-		else if( rString == "eOrientation_Horizonal" )
+		else if( rString == "eOrientation_Horizontal" )
 		{
-			rValue = eOrientation_Horizonal;
+			rValue = eOrientation_Horizontal;
 		}
 		else
 		{
@@ -993,8 +993,8 @@ namespace guiex
 		case eOrientation_Vertical:
 			rString = CGUIString("eOrientation_Vertical");
 			break;
-		case eOrientation_Horizonal:
-			rString = CGUIString("eOrientation_Horizonal");
+		case eOrientation_Horizontal:
+			rString = CGUIString("eOrientation_Horizontal");
 			break;
 		default:
 			GUI_THROW( GUI_FORMAT(

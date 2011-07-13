@@ -75,7 +75,8 @@ namespace guiex
 
 		void RefreshGarbage();
 
-		static bool IsInternalWidget( const CGUIString& rWidgetName );
+		static bool IsInternalName( const CGUIString& rWidgetName );
+		static const CGUIString& MakeInternalName( CGUIString& rWidgetName );
 
 	protected:
 		bool TryRemovePage( CGUIWidget* pWidget );

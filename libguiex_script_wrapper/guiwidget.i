@@ -302,11 +302,20 @@ namespace guiex
 		void SetCurrentValue( real fValue );
 		real GetCurrentValue( ) const;
 	};
+		
+	//============================================================================//
+	// CGUIWgtScrollbarContainer
+	//============================================================================// 
+	class CGUIWgtScrollbarContainer : public CGUIWidget
+	{
+	public:
+
+	};
 
 	//============================================================================//
 	// CGUIWgtListBox
 	//============================================================================// 
-	class CGUIWgtListBox : public CGUIWidget
+	class CGUIWgtListBox : public CGUIWgtScrollbarContainer
 	{
 	public:
 	};
@@ -328,14 +337,13 @@ namespace guiex
 		void SetCurrentPos(uint32 nPos);
 		uint32 GetCurrentPos() const; 
 	};
-
-
+	
 	//============================================================================//
-	// CGUIWgtScrollPanel
+	// CGUIWgtScrollbarContainer
 	//============================================================================// 
-	//class CGUIWgtScrollPanel : public CGUIWidget
-	//{
-	//public:
+	class CGUIWgtMultiEditBox : public CGUIWgtScrollbarContainer
+	{
+	public:
 
-	//};
+	};
 }
