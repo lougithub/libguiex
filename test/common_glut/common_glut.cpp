@@ -15,7 +15,10 @@
 #include <time.h>
 #include <GLUT/glut.h>
 
-#if defined(GUIEX_PLATFORM_MAC)
+#if defined(GUIEX_PLATFORM_WIN32)
+#include <windows.h>
+#include <libguiex_module/ime_winapi/guiime_winapi.h>
+#elif defined(GUIEX_PLATFORM_MAC)
 #include <libgen.h>  
 #include <OpenGL/OpenGL.h>
 #include <OpenGL/CGLCurrent.h>
@@ -226,6 +229,15 @@ void keySpecialCB(int key, int x, int y)
 	}
 }
 //------------------------------------------------------------------------------
+void keyUpSpecialCB(int key, int x, int y)
+{
+	std::map<int,guiex::EKeyCode>::iterator itor = g_mapKey_Glut2Guiex.find(key);
+	if( itor != g_mapKey_Glut2Guiex.end())
+	{
+		guiex::CGUIInterfaceManager::Instance()->GetInterfaceKeyboard()->ChangeKeyState(itor->second, guiex::KEY_UP);
+	}
+}
+//------------------------------------------------------------------------------
 void displayCB(void)
 {
 	// do updates
@@ -253,14 +265,6 @@ void reshapeCB(int width, int height)
 	guiex::GSystem->SetRawScreenSize(width,height);
 }
 //------------------------------------------------------------------------------
-void keyUpSpecialCB(int key, int x, int y)
-{
-	std::map<int,guiex::EKeyCode>::iterator itor = g_mapKey_Glut2Guiex.find(key);
-	if( itor != g_mapKey_Glut2Guiex.end())
-	{
-		guiex::CGUIInterfaceManager::Instance()->GetInterfaceKeyboard()->ChangeKeyState(itor->second, guiex::KEY_UP);
-	}
-}
 void RegisterKeyboard()
 {
 	g_mapKey_Glut2Guiex[GLUT_KEY_F1] = guiex::KC_F1;
@@ -291,6 +295,15 @@ void exitCB()
 }
 
 //------------------------------------------------------------------------------
+#if defined(GUIEX_PLATFORM_WIN32)
+WNDPROC g_pfOldProc = NULL;
+LRESULT CALLBACK MsgWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	guiex::CGUIInterfaceManager::Instance()->GetInterfaceImeWithTypeCheck<guiex::IGUIIme_winapi>()->ProcessWindowMessage(hwnd, uMsg, wParam, lParam );
+	return(CallWindowProc(g_pfOldProc, hwnd, uMsg, wParam, lParam));
+}
+#endif
+//------------------------------------------------------------------------------
 int main(int argc, char** argv)
 {
 	srand( time(NULL) );
@@ -301,7 +314,7 @@ int main(int argc, char** argv)
 	glutInitDisplayMode( GLUT_DEPTH | GLUT_STENCIL | GLUT_DOUBLE | GLUT_RGBA );
 	glutInitWindowSize( g_nScreenWidth, g_nScreenHeight );
 	glutInitWindowPosition( 100, 100 );
-	glutCreateWindow( "libguiex test" );
+	glutCreateWindow( "libguiex demo" );
 	glutSetCursor( GLUT_CURSOR_INHERIT );
 	glutDisplayFunc( displayCB );
 	glutIdleFunc(idleCB);
@@ -333,6 +346,11 @@ int main(int argc, char** argv)
 	g_pFramework = CreateFramework( );
 	g_pFramework->Initialize( guiex::CGUIIntSize( g_nScreenWidth, g_nScreenHeight ), rDir.c_str() );
 	RegisterKeyboard();
+
+#if defined(GUIEX_PLATFORM_WIN32)
+	HWND hWnd = FindWindowA("GLUT", "libguiex demo");
+	g_pfOldProc = (WNDPROC)SetWindowLong(hWnd, GWL_WNDPROC, (LONG)MsgWindowProc);
+#endif
 
 	g_aOldTimer.UpdateTime();
 	glutMainLoop();
