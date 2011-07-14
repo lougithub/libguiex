@@ -229,6 +229,12 @@ namespace guiex
 		aEvent.SetReceiver(this);
 		GSystem->SendEvent( &aEvent);
 
+		//destroy self if it's a dynamic page
+		if( CGUIWidgetManager::Instance()->HasDynamicPage( this ) )
+		{
+			CGUIWidgetManager::Instance()->DelayedDestroyWidget( this );
+		}
+
 		//close child
 		CGUIWidget* pWidget = GetChild();
 		while( pWidget )
@@ -411,7 +417,7 @@ namespace guiex
 	/**
 	* @brief get child by given name
 	*/
-	CGUIWidget*	CGUIWidget::GetChild( const CGUIString& rChildName ) const
+	CGUIWidget*	CGUIWidget::FindChildByName( const CGUIString& rChildName ) const
 	{
 		CGUIWidget* pWidget = GetChild();
 		while( pWidget )
@@ -1926,6 +1932,10 @@ namespace guiex
 		else if( rProperty.GetType() == ePropertyType_WidgetSize && rProperty.GetName() == "size")
 		{
 			PropertyToValue( rProperty, m_aWidgetSize);
+			CGUIEventSize aEvent;
+			aEvent.SetEventId(eEVENT_SIZE_CHANGE);
+			aEvent.SetReceiver(this);
+			GSystem->SendEvent( &aEvent);
 		}
 		else if( rProperty.GetType() == ePropertyType_Color && rProperty.GetName() == "color")
 		{

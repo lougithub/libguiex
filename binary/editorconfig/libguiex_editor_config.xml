@@ -392,6 +392,14 @@
 		<page name="Image">
 			<property name="background" type="CGUIImage" value=""/>
 		</page>
+
+    <page name="Event">
+      <property name="OnListBoxSelected" type="CGUIEvent" value="" category="ListBox" alternative_save="true"/>
+      <property name="OnListBoxSelectChanged" type="CGUIEvent" value="" category="ListBox" alternative_save="true"/>
+      <property name="OnListBoxLeftClick" type="CGUIEvent" value="" category="ListBox" alternative_save="true"/>
+      <property name="OnListBoxRightClick" type="CGUIEvent" value="" category="ListBox" alternative_save="true"/>
+      <property name="OnListBoxLeftDbClick" type="CGUIEvent" value="" category="ListBox" alternative_save="true"/>
+    </page>
 	</widget>
 
 	<widget type="CGUIWgtListBoxItem" inherit="CGUIWidget">

@@ -434,7 +434,7 @@ namespace guiex
 		}
 
 		//erase string
-		m_strText.m_strContent.erase( nBeginPos, nEndPos);
+		m_strText.m_strContent.erase( m_strText.m_strContent.begin() + nBeginPos, m_strText.m_strContent.begin() + nEndPos);
 		if(m_bMaskText)
 		{
 			m_strMaskText.m_strContent.erase( nBeginPos, nEndPos);

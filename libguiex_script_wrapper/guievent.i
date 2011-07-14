@@ -106,5 +106,12 @@ namespace guiex
 
 		const CGUIString& GetArg(int nIndex) const;
 	};
+
+	class CGUIEventListBox: public CGUIEvent
+	{
+	public:
+		uint32 GetDbClickedItemIdx( ) const;
+		uint32 GetSelectedItemIdx( ) const;
+	};
 }
 

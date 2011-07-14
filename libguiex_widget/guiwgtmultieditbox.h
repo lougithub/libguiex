@@ -104,6 +104,7 @@ namespace guiex
 		virtual uint32 OnMouseLeftDown( CGUIEventMouse* pEvent );
 		virtual uint32 OnMouseLeftUp( CGUIEventMouse* pEvent );
 		virtual uint32 OnMouseMove( CGUIEventMouse* pEvent );
+		virtual uint32 OnSizeChanged( CGUIEventSize* pEvent );
 
 		//keyboard event
 		void OnKeyPressed_Left(CGUIEventKeyboard* pEvent);

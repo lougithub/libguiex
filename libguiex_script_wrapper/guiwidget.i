@@ -13,7 +13,7 @@ namespace guiex
 		void SetParent( CGUIWidget *pParent);
 		CGUIWidget* GetParent()  const;
 		CGUIWidget* GetChild( ) const;
-		CGUIWidget* GetChild( const CGUIString& rChildName ) const;
+		CGUIWidget* FindChildByName( const CGUIString& rChildName ) const;
 		CGUIWidget* GetNextSibling( ) const;
 		//CGUIWidget* GetExclusiveChild( ) const;
 

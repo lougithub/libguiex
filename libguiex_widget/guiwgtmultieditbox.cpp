@@ -427,7 +427,7 @@ namespace guiex
 		}
 
 		//erase string
-		m_strText.m_strContent.erase( nBeginPos, nEndPos);
+		m_strText.m_strContent.erase( m_strText.m_strContent.begin() + nBeginPos, m_strText.m_strContent.begin() + nEndPos);
 		m_vecStringSize.erase( m_vecStringSize.begin()+nBeginPos, m_vecStringSize.begin()+nEndPos);
 
 
@@ -859,6 +859,12 @@ namespace guiex
 				InsertString(szString);
 			}
 		}
+	}
+	//------------------------------------------------------------------------------
+	uint32 CGUIWgtMultiEditBox::OnSizeChanged( CGUIEventSize* pEvent )
+	{
+		FormatText();
+		return CGUIWgtScrollbarContainer::OnSizeChanged(pEvent);
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtMultiEditBox::OnGetFocus( CGUIEventNotification* pEvent )

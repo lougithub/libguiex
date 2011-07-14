@@ -34,7 +34,7 @@ namespace guiex
 	* @brief constructor
 	*/
 	CGUIEvent::CGUIEvent(const char* pEventName)
-		:m_uEventId(eEVENT_UNKNOW_EVENT)
+		:m_uEventId(-1)
 		,m_strEventType(pEventName)
 		,m_pReceiver(NULL)
 		,m_bConsumed(false)
@@ -944,6 +944,7 @@ namespace guiex
 	{
 		return m_pRelative;
 	}
+	//------------------------------------------------------------------------------
 }//namespace guiex
 
 

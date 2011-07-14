@@ -100,7 +100,7 @@ namespace guiex
 		void InsertChild( CGUIWidget* pWhere, CGUIWidget* pChild );
 		CGUIWidget* GetParent()  const;
 		CGUIWidget* GetChild( ) const;
-		CGUIWidget* GetChild( const CGUIString& rChildName ) const;
+		CGUIWidget* FindChildByName( const CGUIString& rChildName ) const;
 		CGUIWidget* GetNextSibling( ) const;
 		CGUIWidget* GetPrevSibling( ) const;
 

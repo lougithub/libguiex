@@ -46,3 +46,10 @@ function OnScrollbarScroll_2( self, event )
 	label:SetTextContentUTF8( ""..event:GetCurrentPos() );
 end
 
+
+--listbox test
+function OnListBoxSelected_1( self, event )
+	local label = guiex.GetSystem():GetWidgetManager():GetWidget( "label_listboxoutput", self:GetSceneName() );
+	label:SetTextContentUTF8( "item "..event:GetSelectedItemIdx().." selected" );
+end
+

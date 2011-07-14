@@ -185,7 +185,8 @@ namespace guiex
 		GUI_ASSERT( pDlg, "invalid parameter" );
 		GUI_ASSERT( pDlg->GetParent() == false, "the modal dialog shouldn't have a parent");
 
-		if( !CGUIWidgetManager::Instance()->HasDynamicPage( pDlg ))
+		if( !CGUIWidgetManager::Instance()->HasPage( pDlg ) &&
+			!CGUIWidgetManager::Instance()->HasDynamicPage( pDlg ))
 		{
 			GUI_THROW( GUI_FORMAT( "[CGUIUICanvasLayer::OpenDialog]: the dialog <%s:%s> isn't a page", pDlg->GetSceneName().c_str(), pDlg->GetName().c_str()));
 		}
@@ -213,11 +214,6 @@ namespace guiex
 		{		
 			m_arrayOpenedDlg.erase(itor);
 			pDlg->Close();
-
-			if( CGUIWidgetManager::Instance()->HasDynamicPage( pDlg ) )
-			{
-				CGUIWidgetManager::Instance()->DelayedDestroyWidget( pDlg );
-			}
 			return;
 		}
 
@@ -305,7 +301,8 @@ namespace guiex
 	{
 		GUI_ASSERT( pPage, "invalid parameter" );
 
-		if( CGUIWidgetManager::Instance()->HasPage( pPage ) == false )
+		if( !CGUIWidgetManager::Instance()->HasPage( pPage ) &&
+			!CGUIWidgetManager::Instance()->HasDynamicPage( pPage ))
 		{
 			GUI_THROW( GUI_FORMAT( "[CGUIUICanvasLayer::OpenUIPage]: the widget <%s> isn't a page!", pPage->GetName().c_str()));
 		}
@@ -339,11 +336,6 @@ namespace guiex
 		m_arrayOpenedPage.erase( itor );
 		pPage->Close();
 		pPage->SetParent(NULL);
-
-		if( CGUIWidgetManager::Instance()->HasDynamicPage( pPage ) )
-		{
-			CGUIWidgetManager::Instance()->DelayedDestroyWidget( pPage );
-		}
 		return;
 	}
 	//------------------------------------------------------------------------------

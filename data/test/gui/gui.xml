@@ -188,11 +188,11 @@
         <property name="border_bottomleft" type="CGUIImage" value="panel_border_bottomleft" />
         <property name="border_bottomright" type="CGUIImage" value="panel_border_bottomright" />
         <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="14,401" />
+            <property name="value" type="CGUIVector2" value="15,428" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">
-            <property name="value" type="CGUISize" value="193,148" />
+            <property name="value" type="CGUISize" value="193,167" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="movable" type="bool" value="true" />
@@ -219,8 +219,8 @@
         <property name="scrollbar_h_arrow_1_push" type="CGUIImage" value="h_scrollbar_downbutton_down" />
         <property name="scrollbar_h_slide_normal" type="CGUIImage" value="h_scrollbar_knob" />
         <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="0,0" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+            <property name="value" type="CGUIVector2" value="0,1" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
         </property>
         <property name="size" type="CGUIWidgetSize">
             <property name="value" type="CGUISize" value="1,1" />
@@ -228,13 +228,15 @@
         </property>
         <property name="hitable" type="bool" value="false" />
         <property name="pixel_per_vert" type="uint32" value="46" />
+        <property name="anchor" type="CGUIVector2" value="0,1" />
+        <property name="OnListBoxSelected" type="CGUIEvent" value="OnListBoxSelected_1" />
     </property>
-    <property name="listboxitem_1" type="CGUIWidgetDefine" value="CGUIWgtListBoxItem">
+    <property name="listboxitem_3" type="CGUIWidgetDefine" value="CGUIWgtListBoxItem">
         <property name="parent" type="CGUIString" value="listbox_1" />
         <property name="normal" type="CGUIImage" value="button_blue_normal" />
         <property name="selected" type="CGUIImage" value="button_blue_hover" />
         <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="0,0" />
+            <property name="value" type="CGUIVector2" value="0,92" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">
@@ -242,8 +244,8 @@
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
     </property>
-    <property name="listboxitem_text_1" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
-        <property name="parent" type="CGUIString" value="listboxitem_1" />
+    <property name="listboxitem_text_3" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
+        <property name="parent" type="CGUIString" value="listboxitem_3" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="35,11" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
@@ -253,7 +255,7 @@
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="hitable" type="bool" value="false" />
-        <property name="text" type="CGUIString" value="list item 1" />
+        <property name="text" type="CGUIString" value="list item 3" />
     </property>
     <property name="listboxitem_2" type="CGUIWidgetDefine" value="CGUIWgtListBoxItem">
         <property name="parent" type="CGUIString" value="listbox_1" />
@@ -281,12 +283,12 @@
         <property name="hitable" type="bool" value="false" />
         <property name="text" type="CGUIString" value="list item 2" />
     </property>
-    <property name="listboxitem_3" type="CGUIWidgetDefine" value="CGUIWgtListBoxItem">
+    <property name="listboxitem_1" type="CGUIWidgetDefine" value="CGUIWgtListBoxItem">
         <property name="parent" type="CGUIString" value="listbox_1" />
         <property name="normal" type="CGUIImage" value="button_blue_normal" />
         <property name="selected" type="CGUIImage" value="button_blue_hover" />
         <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="0,92" />
+            <property name="value" type="CGUIVector2" value="0,0" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">
@@ -294,8 +296,8 @@
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
     </property>
-    <property name="listboxitem_text_3" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
-        <property name="parent" type="CGUIString" value="listboxitem_3" />
+    <property name="listboxitem_text_1" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
+        <property name="parent" type="CGUIString" value="listboxitem_1" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="35,11" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
@@ -305,7 +307,19 @@
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="hitable" type="bool" value="false" />
-        <property name="text" type="CGUIString" value="list item 3" />
+        <property name="text" type="CGUIString" value="list item 1" />
+    </property>
+    <property name="label_listboxoutput" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
+        <property name="parent" type="CGUIString" value="panel_listtest" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="11,-25" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="152,20" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="hitable" type="bool" value="false" />
     </property>
     <property name="btn_test2" type="CGUIWidgetDefine" value="CGUIWgtButton">
         <property name="parent" type="CGUIString" value="node_root" />
@@ -458,5 +472,6 @@
         </property>
         <property name="cursor_size" type="CGUISize" value="2,16" />
         <property name="max_text_num" type="uint32" value="10000" />
+        <property name="text" type="CGUIString" value="hello multieditbox" />
     </property>
 </guiex>

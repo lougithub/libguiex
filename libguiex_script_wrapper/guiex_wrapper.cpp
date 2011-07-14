@@ -1527,58 +1527,59 @@ SWIG_Lua_dostring(lua_State *L, const char* str) {
 #define SWIGTYPE_p_guiex__CGUIEventAlpha swig_types[18]
 #define SWIGTYPE_p_guiex__CGUIEventDrag swig_types[19]
 #define SWIGTYPE_p_guiex__CGUIEventKeyboard swig_types[20]
-#define SWIGTYPE_p_guiex__CGUIEventMouse swig_types[21]
-#define SWIGTYPE_p_guiex__CGUIEventNotification swig_types[22]
-#define SWIGTYPE_p_guiex__CGUIEventScrollbar swig_types[23]
-#define SWIGTYPE_p_guiex__CGUIEventSize swig_types[24]
-#define SWIGTYPE_p_guiex__CGUIEventTimer swig_types[25]
-#define SWIGTYPE_p_guiex__CGUIEventUI swig_types[26]
-#define SWIGTYPE_p_guiex__CGUIImage swig_types[27]
-#define SWIGTYPE_p_guiex__CGUIInterfaceManager swig_types[28]
-#define SWIGTYPE_p_guiex__CGUIProperty swig_types[29]
-#define SWIGTYPE_p_guiex__CGUIRect swig_types[30]
-#define SWIGTYPE_p_guiex__CGUISize swig_types[31]
-#define SWIGTYPE_p_guiex__CGUISystem swig_types[32]
-#define SWIGTYPE_p_guiex__CGUITimer swig_types[33]
-#define SWIGTYPE_p_guiex__CGUIUICanvasLayer swig_types[34]
-#define SWIGTYPE_p_guiex__CGUIVector2 swig_types[35]
-#define SWIGTYPE_p_guiex__CGUIVector3 swig_types[36]
-#define SWIGTYPE_p_guiex__CGUIWgtBox2DBase swig_types[37]
-#define SWIGTYPE_p_guiex__CGUIWgtBox2DBodyBase swig_types[38]
-#define SWIGTYPE_p_guiex__CGUIWgtBox2DDynamicBody swig_types[39]
-#define SWIGTYPE_p_guiex__CGUIWgtBox2DStaticBody swig_types[40]
-#define SWIGTYPE_p_guiex__CGUIWgtButton swig_types[41]
-#define SWIGTYPE_p_guiex__CGUIWgtCheckButton swig_types[42]
-#define SWIGTYPE_p_guiex__CGUIWgtEditBox swig_types[43]
-#define SWIGTYPE_p_guiex__CGUIWgtEmptyNode swig_types[44]
-#define SWIGTYPE_p_guiex__CGUIWgtListBox swig_types[45]
-#define SWIGTYPE_p_guiex__CGUIWgtListBoxItem swig_types[46]
-#define SWIGTYPE_p_guiex__CGUIWgtMultiEditBox swig_types[47]
-#define SWIGTYPE_p_guiex__CGUIWgtPanel swig_types[48]
-#define SWIGTYPE_p_guiex__CGUIWgtProgress swig_types[49]
-#define SWIGTYPE_p_guiex__CGUIWgtRadioButton swig_types[50]
-#define SWIGTYPE_p_guiex__CGUIWgtScrollbar swig_types[51]
-#define SWIGTYPE_p_guiex__CGUIWgtScrollbarContainer swig_types[52]
-#define SWIGTYPE_p_guiex__CGUIWgtStaticImage swig_types[53]
-#define SWIGTYPE_p_guiex__CGUIWgtStaticText swig_types[54]
-#define SWIGTYPE_p_guiex__CGUIWgtTag swig_types[55]
-#define SWIGTYPE_p_guiex__CGUIWgtTextBase swig_types[56]
-#define SWIGTYPE_p_guiex__CGUIWidget swig_types[57]
-#define SWIGTYPE_p_guiex__CGUIWidgetManager swig_types[58]
-#define SWIGTYPE_p_guiex__CGUIWidgetUtility swig_types[59]
-#define SWIGTYPE_p_guiex__IGUIInterfaceCommand swig_types[60]
-#define SWIGTYPE_p_guiex__IGUIInterfaceKeyboard swig_types[61]
-#define SWIGTYPE_p_guiex__IGUIInterfaceRender swig_types[62]
-#define SWIGTYPE_p_guiex__IGUIInterfaceSound swig_types[63]
-#define SWIGTYPE_p_int swig_types[64]
-#define SWIGTYPE_p_short swig_types[65]
-#define SWIGTYPE_p_std__string swig_types[66]
-#define SWIGTYPE_p_unsigned_char swig_types[67]
-#define SWIGTYPE_p_unsigned_int swig_types[68]
-#define SWIGTYPE_p_unsigned_short swig_types[69]
-#define SWIGTYPE_p_void swig_types[70]
-static swig_type_info *swig_types[72];
-static swig_module_info swig_module = {swig_types, 71, 0, 0, 0, 0};
+#define SWIGTYPE_p_guiex__CGUIEventListBox swig_types[21]
+#define SWIGTYPE_p_guiex__CGUIEventMouse swig_types[22]
+#define SWIGTYPE_p_guiex__CGUIEventNotification swig_types[23]
+#define SWIGTYPE_p_guiex__CGUIEventScrollbar swig_types[24]
+#define SWIGTYPE_p_guiex__CGUIEventSize swig_types[25]
+#define SWIGTYPE_p_guiex__CGUIEventTimer swig_types[26]
+#define SWIGTYPE_p_guiex__CGUIEventUI swig_types[27]
+#define SWIGTYPE_p_guiex__CGUIImage swig_types[28]
+#define SWIGTYPE_p_guiex__CGUIInterfaceManager swig_types[29]
+#define SWIGTYPE_p_guiex__CGUIProperty swig_types[30]
+#define SWIGTYPE_p_guiex__CGUIRect swig_types[31]
+#define SWIGTYPE_p_guiex__CGUISize swig_types[32]
+#define SWIGTYPE_p_guiex__CGUISystem swig_types[33]
+#define SWIGTYPE_p_guiex__CGUITimer swig_types[34]
+#define SWIGTYPE_p_guiex__CGUIUICanvasLayer swig_types[35]
+#define SWIGTYPE_p_guiex__CGUIVector2 swig_types[36]
+#define SWIGTYPE_p_guiex__CGUIVector3 swig_types[37]
+#define SWIGTYPE_p_guiex__CGUIWgtBox2DBase swig_types[38]
+#define SWIGTYPE_p_guiex__CGUIWgtBox2DBodyBase swig_types[39]
+#define SWIGTYPE_p_guiex__CGUIWgtBox2DDynamicBody swig_types[40]
+#define SWIGTYPE_p_guiex__CGUIWgtBox2DStaticBody swig_types[41]
+#define SWIGTYPE_p_guiex__CGUIWgtButton swig_types[42]
+#define SWIGTYPE_p_guiex__CGUIWgtCheckButton swig_types[43]
+#define SWIGTYPE_p_guiex__CGUIWgtEditBox swig_types[44]
+#define SWIGTYPE_p_guiex__CGUIWgtEmptyNode swig_types[45]
+#define SWIGTYPE_p_guiex__CGUIWgtListBox swig_types[46]
+#define SWIGTYPE_p_guiex__CGUIWgtListBoxItem swig_types[47]
+#define SWIGTYPE_p_guiex__CGUIWgtMultiEditBox swig_types[48]
+#define SWIGTYPE_p_guiex__CGUIWgtPanel swig_types[49]
+#define SWIGTYPE_p_guiex__CGUIWgtProgress swig_types[50]
+#define SWIGTYPE_p_guiex__CGUIWgtRadioButton swig_types[51]
+#define SWIGTYPE_p_guiex__CGUIWgtScrollbar swig_types[52]
+#define SWIGTYPE_p_guiex__CGUIWgtScrollbarContainer swig_types[53]
+#define SWIGTYPE_p_guiex__CGUIWgtStaticImage swig_types[54]
+#define SWIGTYPE_p_guiex__CGUIWgtStaticText swig_types[55]
+#define SWIGTYPE_p_guiex__CGUIWgtTag swig_types[56]
+#define SWIGTYPE_p_guiex__CGUIWgtTextBase swig_types[57]
+#define SWIGTYPE_p_guiex__CGUIWidget swig_types[58]
+#define SWIGTYPE_p_guiex__CGUIWidgetManager swig_types[59]
+#define SWIGTYPE_p_guiex__CGUIWidgetUtility swig_types[60]
+#define SWIGTYPE_p_guiex__IGUIInterfaceCommand swig_types[61]
+#define SWIGTYPE_p_guiex__IGUIInterfaceKeyboard swig_types[62]
+#define SWIGTYPE_p_guiex__IGUIInterfaceRender swig_types[63]
+#define SWIGTYPE_p_guiex__IGUIInterfaceSound swig_types[64]
+#define SWIGTYPE_p_int swig_types[65]
+#define SWIGTYPE_p_short swig_types[66]
+#define SWIGTYPE_p_std__string swig_types[67]
+#define SWIGTYPE_p_unsigned_char swig_types[68]
+#define SWIGTYPE_p_unsigned_int swig_types[69]
+#define SWIGTYPE_p_unsigned_short swig_types[70]
+#define SWIGTYPE_p_void swig_types[71]
+static swig_type_info *swig_types[73];
+static swig_module_info swig_module = {swig_types, 72, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -5817,6 +5818,70 @@ static swig_lua_class *swig_guiex_CGUIEventUI_bases[] = {0,0};
 static const char *swig_guiex_CGUIEventUI_base_names[] = {"guiex::CGUIEvent *",0};
 static swig_lua_class _wrap_class_guiex_CGUIEventUI = { "CGUIEventUI", &SWIGTYPE_p_guiex__CGUIEventUI,0, swig_delete_CGUIEventUI, swig_guiex_CGUIEventUI_methods, swig_guiex_CGUIEventUI_attributes, swig_guiex_CGUIEventUI_bases, swig_guiex_CGUIEventUI_base_names };
 
+static int _wrap_CGUIEventListBox_GetDbClickedItemIdx(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventListBox *arg1 = (guiex::CGUIEventListBox *) 0 ;
+  guiex::uint32 result;
+  
+  SWIG_check_num_args("GetDbClickedItemIdx",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetDbClickedItemIdx",1,"guiex::CGUIEventListBox const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventListBox,0))){
+    SWIG_fail_ptr("CGUIEventListBox_GetDbClickedItemIdx",1,SWIGTYPE_p_guiex__CGUIEventListBox);
+  }
+  
+  result = (guiex::uint32)((guiex::CGUIEventListBox const *)arg1)->GetDbClickedItemIdx();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIEventListBox_GetSelectedItemIdx(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIEventListBox *arg1 = (guiex::CGUIEventListBox *) 0 ;
+  guiex::uint32 result;
+  
+  SWIG_check_num_args("GetSelectedItemIdx",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetSelectedItemIdx",1,"guiex::CGUIEventListBox const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIEventListBox,0))){
+    SWIG_fail_ptr("CGUIEventListBox_GetSelectedItemIdx",1,SWIGTYPE_p_guiex__CGUIEventListBox);
+  }
+  
+  result = (guiex::uint32)((guiex::CGUIEventListBox const *)arg1)->GetSelectedItemIdx();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_CGUIEventListBox(void *obj) {
+guiex::CGUIEventListBox *arg1 = (guiex::CGUIEventListBox *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUIEventListBox_methods[] = {
+    {"GetDbClickedItemIdx", _wrap_CGUIEventListBox_GetDbClickedItemIdx}, 
+    {"GetSelectedItemIdx", _wrap_CGUIEventListBox_GetSelectedItemIdx}, 
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIEventListBox_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIEventListBox_bases[] = {0,0};
+static const char *swig_guiex_CGUIEventListBox_base_names[] = {"guiex::CGUIEvent *",0};
+static swig_lua_class _wrap_class_guiex_CGUIEventListBox = { "CGUIEventListBox", &SWIGTYPE_p_guiex__CGUIEventListBox,0, swig_delete_CGUIEventListBox, swig_guiex_CGUIEventListBox_methods, swig_guiex_CGUIEventListBox_attributes, swig_guiex_CGUIEventListBox_bases, swig_guiex_CGUIEventListBox_base_names };
+
 static swig_lua_method swig_guiex_CGUIProperty_methods[] = {
     {0,0}
 };
@@ -6645,7 +6710,7 @@ fail:
 }
 
 
-static int _wrap_CGUIWidget_GetChild__SWIG_0(lua_State* L) {
+static int _wrap_CGUIWidget_GetChild(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
   guiex::CGUIWidget *result = 0 ;
@@ -6669,23 +6734,23 @@ fail:
 }
 
 
-static int _wrap_CGUIWidget_GetChild__SWIG_1(lua_State* L) {
+static int _wrap_CGUIWidget_FindChildByName(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
   guiex::CGUIString *arg2 = 0 ;
   std::string temp2 ;
   guiex::CGUIWidget *result = 0 ;
   
-  SWIG_check_num_args("GetChild",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("GetChild",1,"guiex::CGUIWidget const *");
-  if(!lua_isstring(L,2)) SWIG_fail_arg("GetChild",2,"guiex::CGUIString const &");
+  SWIG_check_num_args("FindChildByName",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FindChildByName",1,"guiex::CGUIWidget const *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("FindChildByName",2,"guiex::CGUIString const &");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
-    SWIG_fail_ptr("CGUIWidget_GetChild",1,SWIGTYPE_p_guiex__CGUIWidget);
+    SWIG_fail_ptr("CGUIWidget_FindChildByName",1,SWIGTYPE_p_guiex__CGUIWidget);
   }
   
   temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
-  result = (guiex::CGUIWidget *)((guiex::CGUIWidget const *)arg1)->GetChild((guiex::CGUIString const &)*arg2);
+  result = (guiex::CGUIWidget *)((guiex::CGUIWidget const *)arg1)->FindChildByName((guiex::CGUIString const &)*arg2);
   SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIWidget,0); SWIG_arg++; 
   return SWIG_arg;
   
@@ -6694,55 +6759,6 @@ static int _wrap_CGUIWidget_GetChild__SWIG_1(lua_State* L) {
 fail:
   lua_error(L);
   return SWIG_arg;
-}
-
-
-static int _wrap_CGUIWidget_GetChild(lua_State* L) {
-  int argc;
-  int argv[3]={
-    1,2,3
-  };
-  
-  argc = lua_gettop(L);
-  if (argc == 1) {
-    int _v;
-    {
-      void *ptr;
-      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      return _wrap_CGUIWidget_GetChild__SWIG_0(L);
-    }
-  }
-  if (argc == 2) {
-    int _v;
-    {
-      void *ptr;
-      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
-        _v = 0;
-      } else {
-        _v = 1;
-      }
-    }
-    if (_v) {
-      {
-        _v = lua_isstring(L,argv[1]);
-      }
-      if (_v) {
-        return _wrap_CGUIWidget_GetChild__SWIG_1(L);
-      }
-    }
-  }
-  
-  lua_pushstring(L,"Wrong arguments for overloaded function 'CGUIWidget_GetChild'\n"
-    "  Possible C/C++ prototypes are:\n"
-    "    GetChild(guiex::CGUIWidget const *)\n"
-    "    GetChild(guiex::CGUIWidget const *,guiex::CGUIString const &)\n");
-  lua_error(L);return 0;
 }
 
 
@@ -10534,6 +10550,7 @@ static swig_lua_method swig_guiex_CGUIWidget_methods[] = {
     {"SetParent", _wrap_CGUIWidget_SetParent}, 
     {"GetParent", _wrap_CGUIWidget_GetParent}, 
     {"GetChild", _wrap_CGUIWidget_GetChild}, 
+    {"FindChildByName", _wrap_CGUIWidget_FindChildByName}, 
     {"GetNextSibling", _wrap_CGUIWidget_GetNextSibling}, 
     {"MoveToTop", _wrap_CGUIWidget_MoveToTop}, 
     {"MoveDown", _wrap_CGUIWidget_MoveDown}, 
@@ -13265,6 +13282,9 @@ static void *_p_guiex__CGUIEventSizeTo_p_guiex__CGUIEvent(void *x, int *SWIGUNUS
 static void *_p_guiex__CGUIEventMouseTo_p_guiex__CGUIEvent(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((guiex::CGUIEvent *)  ((guiex::CGUIEventMouse *) x));
 }
+static void *_p_guiex__CGUIEventListBoxTo_p_guiex__CGUIEvent(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((guiex::CGUIEvent *)  ((guiex::CGUIEventListBox *) x));
+}
 static void *_p_guiex__CGUIEventAlphaTo_p_guiex__CGUIEvent(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((guiex::CGUIEvent *)  ((guiex::CGUIEventAlpha *) x));
 }
@@ -13424,6 +13444,7 @@ static swig_type_info _swigt__p_guiex__CGUIEvent = {"_p_guiex__CGUIEvent", "guie
 static swig_type_info _swigt__p_guiex__CGUIEventAlpha = {"_p_guiex__CGUIEventAlpha", "guiex::CGUIEventAlpha *", 0, 0, (void*)&_wrap_class_guiex_CGUIEventAlpha, 0};
 static swig_type_info _swigt__p_guiex__CGUIEventDrag = {"_p_guiex__CGUIEventDrag", "guiex::CGUIEventDrag *", 0, 0, (void*)&_wrap_class_guiex_CGUIEventDrag, 0};
 static swig_type_info _swigt__p_guiex__CGUIEventKeyboard = {"_p_guiex__CGUIEventKeyboard", "guiex::CGUIEventKeyboard *", 0, 0, (void*)&_wrap_class_guiex_CGUIEventKeyboard, 0};
+static swig_type_info _swigt__p_guiex__CGUIEventListBox = {"_p_guiex__CGUIEventListBox", "guiex::CGUIEventListBox *", 0, 0, (void*)&_wrap_class_guiex_CGUIEventListBox, 0};
 static swig_type_info _swigt__p_guiex__CGUIEventMouse = {"_p_guiex__CGUIEventMouse", "guiex::CGUIEventMouse *", 0, 0, (void*)&_wrap_class_guiex_CGUIEventMouse, 0};
 static swig_type_info _swigt__p_guiex__CGUIEventNotification = {"_p_guiex__CGUIEventNotification", "guiex::CGUIEventNotification *", 0, 0, (void*)&_wrap_class_guiex_CGUIEventNotification, 0};
 static swig_type_info _swigt__p_guiex__CGUIEventScrollbar = {"_p_guiex__CGUIEventScrollbar", "guiex::CGUIEventScrollbar *", 0, 0, (void*)&_wrap_class_guiex_CGUIEventScrollbar, 0};
@@ -13497,6 +13518,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_guiex__CGUIEventAlpha,
   &_swigt__p_guiex__CGUIEventDrag,
   &_swigt__p_guiex__CGUIEventKeyboard,
+  &_swigt__p_guiex__CGUIEventListBox,
   &_swigt__p_guiex__CGUIEventMouse,
   &_swigt__p_guiex__CGUIEventNotification,
   &_swigt__p_guiex__CGUIEventScrollbar,
@@ -13566,10 +13588,11 @@ static swig_cast_info _swigc__p_guiex__CGUIAsWidgetRotation[] = {  {&_swigt__p_g
 static swig_cast_info _swigc__p_guiex__CGUIAsWidgetScale[] = {  {&_swigt__p_guiex__CGUIAsWidgetScale, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUIColor[] = {  {&_swigt__p_guiex__CGUIColor, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUIColorRect[] = {  {&_swigt__p_guiex__CGUIColorRect, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_guiex__CGUIEvent[] = {  {&_swigt__p_guiex__CGUIEventTimer, _p_guiex__CGUIEventTimerTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEventNotification, _p_guiex__CGUIEventNotificationTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEventKeyboard, _p_guiex__CGUIEventKeyboardTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEvent, 0, 0, 0},  {&_swigt__p_guiex__CGUIEventScrollbar, _p_guiex__CGUIEventScrollbarTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEventSize, _p_guiex__CGUIEventSizeTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEventMouse, _p_guiex__CGUIEventMouseTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEventAlpha, _p_guiex__CGUIEventAlphaTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEventDrag, _p_guiex__CGUIEventDragTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEventUI, _p_guiex__CGUIEventUITo_p_guiex__CGUIEvent, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIEvent[] = {  {&_swigt__p_guiex__CGUIEventTimer, _p_guiex__CGUIEventTimerTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEventNotification, _p_guiex__CGUIEventNotificationTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEventKeyboard, _p_guiex__CGUIEventKeyboardTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEvent, 0, 0, 0},  {&_swigt__p_guiex__CGUIEventScrollbar, _p_guiex__CGUIEventScrollbarTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEventSize, _p_guiex__CGUIEventSizeTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEventMouse, _p_guiex__CGUIEventMouseTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEventListBox, _p_guiex__CGUIEventListBoxTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEventAlpha, _p_guiex__CGUIEventAlphaTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEventDrag, _p_guiex__CGUIEventDragTo_p_guiex__CGUIEvent, 0, 0},  {&_swigt__p_guiex__CGUIEventUI, _p_guiex__CGUIEventUITo_p_guiex__CGUIEvent, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUIEventAlpha[] = {  {&_swigt__p_guiex__CGUIEventAlpha, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUIEventDrag[] = {  {&_swigt__p_guiex__CGUIEventDrag, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUIEventKeyboard[] = {  {&_swigt__p_guiex__CGUIEventKeyboard, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIEventListBox[] = {  {&_swigt__p_guiex__CGUIEventListBox, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUIEventMouse[] = {  {&_swigt__p_guiex__CGUIEventMouse, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUIEventNotification[] = {  {&_swigt__p_guiex__CGUIEventNotification, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUIEventScrollbar[] = {  {&_swigt__p_guiex__CGUIEventScrollbar, 0, 0, 0},{0, 0, 0, 0}};
@@ -13643,6 +13666,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_guiex__CGUIEventAlpha,
   _swigc__p_guiex__CGUIEventDrag,
   _swigc__p_guiex__CGUIEventKeyboard,
+  _swigc__p_guiex__CGUIEventListBox,
   _swigc__p_guiex__CGUIEventMouse,
   _swigc__p_guiex__CGUIEventNotification,
   _swigc__p_guiex__CGUIEventScrollbar,

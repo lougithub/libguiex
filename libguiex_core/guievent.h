@@ -165,8 +165,6 @@ namespace guiex
 		///this event is user defined event, the event id should be (eEVENT_USER_DEFINE_BEGINING+num)
 		///CGUIWE_UserDefine
 		eEVENT_USER_DEFINE_BEGINING,
-
-		eEVENT_UNKNOW_EVENT,
 	};
 
 }//namespace guiex
