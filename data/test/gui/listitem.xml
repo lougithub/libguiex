@@ -1,0 +1,98 @@
+<guiex>
+    <property name="listboxitem_root" type="CGUIWidgetDefine" value="CGUIWgtListBoxItem">
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0,0" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="200,70" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+    </property>
+    <property name="panel_item" type="CGUIWidgetDefine" value="CGUIWgtPanel">
+        <property name="parent" type="CGUIString" value="listboxitem_root" />
+        <property name="bg" type="CGUIImage" value="color_translucent" />
+        <property name="border_top" type="CGUIImage" value="panel_border_top" />
+        <property name="border_bottom" type="CGUIImage" value="panel_border_bottom" />
+        <property name="border_left" type="CGUIImage" value="panel_border_left" />
+        <property name="border_right" type="CGUIImage" value="panel_border_right" />
+        <property name="border_topleft" type="CGUIImage" value="panel_border_topleft" />
+        <property name="border_topright" type="CGUIImage" value="panel_border_topright" />
+        <property name="border_bottomleft" type="CGUIImage" value="panel_border_bottomleft" />
+        <property name="border_bottomright" type="CGUIImage" value="panel_border_bottomright" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0,0" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="1,1" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+        </property>
+        <property name="hitable" type="bool" value="false" />
+    </property>
+    <property name="img_head" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
+        <property name="parent" type="CGUIString" value="panel_item" />
+        <property name="bg" type="CGUIImage" value="panel_bg_grade_blue" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="7,4" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="51,40" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+    </property>
+    <property name="label_name" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
+        <property name="parent" type="CGUIString" value="img_head" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0,0" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="1,1" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+        </property>
+        <property name="hitable" type="bool" value="false" />
+        <property name="text" type="CGUIString" value="apple" />
+    </property>
+    <property name="radiobox_1" type="CGUIWidgetDefine" value="CGUIWgtRadioButton">
+        <property name="parent" type="CGUIString" value="panel_item" />
+        <property name="normal" type="CGUIImage" value="button_hilight_square" />
+        <property name="checked_overlay" type="CGUIImage" value="checkbutton_glow_checked" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="78,16" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="20,20" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+    </property>
+    <property name="radiobox_2" type="CGUIWidgetDefine" value="CGUIWgtRadioButton">
+        <property name="parent" type="CGUIString" value="panel_item" />
+        <property name="normal" type="CGUIImage" value="button_hilight_square" />
+        <property name="checked_overlay" type="CGUIImage" value="checkbutton_glow_checked" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="114,16" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="20,20" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+    </property>
+    <property name="radiobox_3" type="CGUIWidgetDefine" value="CGUIWgtRadioButton">
+        <property name="parent" type="CGUIString" value="panel_item" />
+        <property name="normal" type="CGUIImage" value="button_hilight_square" />
+        <property name="checked_overlay" type="CGUIImage" value="checkbutton_glow_checked" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="149,16" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="20,20" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="checked" type="bool" value="true" />
+    </property>
+</guiex>

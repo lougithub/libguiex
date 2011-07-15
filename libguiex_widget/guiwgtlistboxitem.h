@@ -66,6 +66,7 @@ namespace guiex
 		virtual uint32 OnMouseRightDbClick( CGUIEventMouse* pEvent );
 		virtual uint32 OnMouseLeftDbClick( CGUIEventMouse* pEvent );
 		virtual uint32 OnMouseMove( CGUIEventMouse* pEvent );
+		virtual uint32 OnParentChanged( CGUIEventRelativeChange* pEvent );
 
 	protected:
 		void* m_pUserData; //!< user data
@@ -73,6 +74,8 @@ namespace guiex
 
 		CGUIImage* m_pImageNormal; //!< normal bg image 
 		CGUIImage* m_pImageSelected; //!< selected bg image 
+
+		CGUIWgtListBox* m_pListBox;
 
 	private:
 		GUI_WIDGET_GENERATOR_DECLARE(CGUIWgtListBoxItem);

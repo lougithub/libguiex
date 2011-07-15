@@ -27,7 +27,6 @@
 #	include "guiwgtscrollpanel.h"
 #	include "guiwgtemptynode.h"
 #	include "guiwgtanimation.h"
-#	include "guilistboxtextitem.h"
 #	include "guimenutextitem.h"
 #	include "guiwgtcombobox.h"
 #	include "guiwgtprogress.h"

@@ -36,7 +36,12 @@ namespace guiex
 	{
 	public:
 		static int32 LoadResourceConfigFile( const CGUIString& rPath, const CGUIString& rSceneName );
-		static CGUIWidget* LoadWidgetConfigFile( const CGUIString& rPath, const CGUIString& rSceneName, const CGUIString& rFileName );
+		static CGUIWidget* LoadWidgetConfigFile( 
+			const CGUIString& rPath, 
+			const CGUIString& rPageFileName,
+			const CGUIString& rOwnSceneName,
+			const CGUIString& rWorkingSceneName,
+			bool bIsDynamicPage );
 	};
 }//namespace guiex
 

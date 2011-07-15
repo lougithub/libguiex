@@ -100,9 +100,12 @@ namespace guiex
 		void InsertChild( CGUIWidget* pWhere, CGUIWidget* pChild );
 		CGUIWidget* GetParent()  const;
 		CGUIWidget* GetChild( ) const;
-		CGUIWidget* FindChildByName( const CGUIString& rChildName ) const;
+		CGUIWidget* FindWidgetByName( const CGUIString& rWidgetName );
 		CGUIWidget* GetNextSibling( ) const;
 		CGUIWidget* GetPrevSibling( ) const;
+
+		void SetPage( CGUIWidget *pPage );
+		CGUIWidget* GetPage();
 
 		void MoveToTop();
 		void MoveDown();
@@ -110,9 +113,8 @@ namespace guiex
 
 		const CGUIString& GetName() const;
 		const CGUIString& GetSceneName( ) const;
-
-		void SetWorkingSceneName(const CGUIString& rWorkingProjName);
 		const CGUIString& GetWorkingSceneName( ) const;
+		void SetWorkingSceneName( const CGUIString& rWorkingSceneName );
 
 		const CGUIString& GetType() const;
 
@@ -137,6 +139,9 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////
 		// flag
 		////////////////////////////////////////////////////////////////////////////
+		void SetDynamic( bool bDynamic );
+		bool IsDynamic( ) const;
+
 		void SetClipChildren( bool bClip );
 		bool IsClipChildren( ) const;
 
@@ -549,6 +554,7 @@ namespace guiex
 		///////////////////////////////////////////////////////////////////////
 		bool m_bOpenWithParent;
 		bool m_bIsAutoPlayAs;
+		bool m_bIsDynamic;
 		bool m_bIsClipChildren;
 		bool m_bInheritAlpha;
 		bool m_bIsFocusAgency;
@@ -612,8 +618,9 @@ namespace guiex
 		///////////////////////////////////////////////////////////////////////
 		CGUIString m_strType; //!< widget type
 		CGUIString m_strName; //!< widget name, should be a unique name in same scene
-		CGUIString m_strOwnerSceneName; //!< scene name, should be a unique name
-		CGUIString m_strWorkingSceneName; //!< working scene name, should be a unique name
+		CGUIString m_strOwnerSceneName; //!< owner scene name
+		CGUIString m_strWorkingSceneName; //!< working scene name
+		
 
 		CGUISceneEffect* m_pSceneEffect;
 
@@ -633,6 +640,8 @@ namespace guiex
 		CGUIWidget* m_pChild; //!< child
 		CGUIWidget* m_pNextSibling; //!< sibling
 		CGUIWidget* m_pPrevSibling; //!< sibling
+
+		CGUIWidget* m_pPage; //!< page widget in this page.
 	};
 
 

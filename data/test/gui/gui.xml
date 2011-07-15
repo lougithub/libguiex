@@ -23,7 +23,7 @@
     <property name="radiobtn_1_1" type="CGUIWidgetDefine" value="CGUIWgtRadioButton">
         <property name="parent" type="CGUIString" value="group_radiobutton1" />
         <property name="normal" type="CGUIImage" value="button_hilight_square" />
-        <property name="normal_checked" type="CGUIImage" value="checkbutton_glow_checked" />
+        <property name="checked_overlay" type="CGUIImage" value="checkbutton_glow_checked" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="43,173" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
@@ -37,7 +37,7 @@
     <property name="radiobtn_1_2" type="CGUIWidgetDefine" value="CGUIWgtRadioButton">
         <property name="parent" type="CGUIString" value="group_radiobutton1" />
         <property name="normal" type="CGUIImage" value="button_hilight_square" />
-        <property name="normal_checked" type="CGUIImage" value="checkbutton_glow_checked" />
+        <property name="checked_overlay" type="CGUIImage" value="checkbutton_glow_checked" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="113,173" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
@@ -66,7 +66,7 @@
     <property name="checkbtn_1" type="CGUIWidgetDefine" value="CGUIWgtCheckButton">
         <property name="parent" type="CGUIString" value="node_root" />
         <property name="normal" type="CGUIImage" value="button_hilight_square" />
-        <property name="normal_checked" type="CGUIImage" value="checkbutton_glow_checked" />
+        <property name="checked_overlay" type="CGUIImage" value="checkbutton_glow_checked" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="42,107" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
@@ -79,7 +79,7 @@
     <property name="checkbtn_2" type="CGUIWidgetDefine" value="CGUIWgtCheckButton">
         <property name="parent" type="CGUIString" value="node_root" />
         <property name="normal" type="CGUIImage" value="button_hilight_square" />
-        <property name="normal_checked" type="CGUIImage" value="checkbutton_glow_checked" />
+        <property name="checked_overlay" type="CGUIImage" value="checkbutton_glow_checked" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="117,107" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
@@ -195,7 +195,6 @@
             <property name="value" type="CGUISize" value="193,167" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
-        <property name="movable" type="bool" value="true" />
         <property name="activable" type="bool" value="true" />
     </property>
     <property name="listbox_1" type="CGUIWidgetDefine" value="CGUIWgtListBox">
@@ -391,7 +390,7 @@
         <property name="arrow_1_push" type="CGUIImage" value="h_scrollbar_downbutton_down" />
         <property name="slide_normal" type="CGUIImage" value="h_scrollbar_knob" />
         <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="283,171" />
+            <property name="value" type="CGUIVector2" value="183,266" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">
@@ -431,7 +430,7 @@
         <property name="border_bottomleft" type="CGUIImage" value="panel_border_bottomleft" />
         <property name="border_bottomright" type="CGUIImage" value="panel_border_bottomright" />
         <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="235,406" />
+            <property name="value" type="CGUIVector2" value="303,106" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">
@@ -473,5 +472,88 @@
         <property name="cursor_size" type="CGUISize" value="2,16" />
         <property name="max_text_num" type="uint32" value="10000" />
         <property name="text" type="CGUIString" value="hello multieditbox" />
+    </property>
+    <property name="panel_listbox2" type="CGUIWidgetDefine" value="CGUIWgtPanel">
+        <property name="parent" type="CGUIString" value="node_root" />
+        <property name="bg" type="CGUIImage" value="dialog_bg" />
+        <property name="border_top" type="CGUIImage" value="panel_border_top" />
+        <property name="border_bottom" type="CGUIImage" value="panel_border_bottom" />
+        <property name="border_left" type="CGUIImage" value="panel_border_left" />
+        <property name="border_right" type="CGUIImage" value="panel_border_right" />
+        <property name="border_topleft" type="CGUIImage" value="panel_border_topleft" />
+        <property name="border_topright" type="CGUIImage" value="panel_border_topright" />
+        <property name="border_bottomleft" type="CGUIImage" value="panel_border_bottomleft" />
+        <property name="border_bottomright" type="CGUIImage" value="panel_border_bottomright" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="224,426" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="246,213" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="activable" type="bool" value="true" />
+    </property>
+    <property name="listbox_2" type="CGUIWidgetDefine" value="CGUIWgtListBox">
+        <property name="parent" type="CGUIString" value="panel_listbox2" />
+        <property name="scrollbar_v_arrow_0_normal" type="CGUIImage" value="scrollbar_upbutton_up" />
+        <property name="scrollbar_v_arrow_0_hover" type="CGUIImage" value="scrollbar_upbutton_highlight" />
+        <property name="scrollbar_v_arrow_0_disable" type="CGUIImage" value="scrollbar_upbutton_disable" />
+        <property name="scrollbar_v_arrow_0_push" type="CGUIImage" value="scrollbar_upbutton_down" />
+        <property name="scrollbar_v_arrow_1_normal" type="CGUIImage" value="scrollbar_downbutton_up" />
+        <property name="scrollbar_v_arrow_1_hover" type="CGUIImage" value="scrollbar_downbutton_highlight" />
+        <property name="scrollbar_v_arrow_1_disable" type="CGUIImage" value="scrollbar_downbutton_disable" />
+        <property name="scrollbar_v_arrow_1_push" type="CGUIImage" value="scrollbar_downbutton_down" />
+        <property name="scrollbar_v_slide_normal" type="CGUIImage" value="scrollbar_knob" />
+        <property name="scrollbar_h_arrow_0_normal" type="CGUIImage" value="h_scrollbar_upbutton_up" />
+        <property name="scrollbar_h_arrow_0_hover" type="CGUIImage" value="h_scrollbar_upbutton_highlight" />
+        <property name="scrollbar_h_arrow_0_disable" type="CGUIImage" value="h_scrollbar_upbutton_disable" />
+        <property name="scrollbar_h_arrow_0_push" type="CGUIImage" value="h_scrollbar_upbutton_down" />
+        <property name="scrollbar_h_arrow_1_normal" type="CGUIImage" value="h_scrollbar_downbutton_up" />
+        <property name="scrollbar_h_arrow_1_hover" type="CGUIImage" value="h_scrollbar_downbutton_highlight" />
+        <property name="scrollbar_h_arrow_1_disable" type="CGUIImage" value="h_scrollbar_downbutton_disable" />
+        <property name="scrollbar_h_arrow_1_push" type="CGUIImage" value="h_scrollbar_downbutton_down" />
+        <property name="scrollbar_h_slide_normal" type="CGUIImage" value="h_scrollbar_knob" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0,0" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="1,1" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+        </property>
+        <property name="force_vert_scrollbar" type="bool" value="true" />
+    </property>
+    <property name="button_additem" type="CGUIWidgetDefine" value="CGUIWgtButton">
+        <property name="parent" type="CGUIString" value="node_root" />
+        <property name="normal" type="CGUIImage" value="button_red_normal" />
+        <property name="hover" type="CGUIImage" value="button_red_hover" />
+        <property name="push" type="CGUIImage" value="button_red_push" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="223,639" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="124,46" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="text_normal" type="CGUILocalizedString" value="add item" />
+        <property name="OnMouseLeftClick" type="CGUIEvent" value="OnBtnClick_additem" />
+    </property>
+    <property name="button_removeitem" type="CGUIWidgetDefine" value="CGUIWgtButton">
+        <property name="parent" type="CGUIString" value="node_root" />
+        <property name="normal" type="CGUIImage" value="button_red_normal" />
+        <property name="hover" type="CGUIImage" value="button_red_hover" />
+        <property name="push" type="CGUIImage" value="button_red_push" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="346,638" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="124,46" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="text_normal" type="CGUILocalizedString" value="remove item" />
+        <property name="OnMouseLeftClick" type="CGUIEvent" value="OnBtnClick_removeitem" />
     </property>
 </guiex>

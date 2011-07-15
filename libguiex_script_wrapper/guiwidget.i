@@ -13,7 +13,7 @@ namespace guiex
 		void SetParent( CGUIWidget *pParent);
 		CGUIWidget* GetParent()  const;
 		CGUIWidget* GetChild( ) const;
-		CGUIWidget* FindChildByName( const CGUIString& rChildName ) const;
+		CGUIWidget* FindWidgetByName( const CGUIString& rWidgetName );
 		CGUIWidget* GetNextSibling( ) const;
 		//CGUIWidget* GetExclusiveChild( ) const;
 
@@ -23,7 +23,6 @@ namespace guiex
 
 		const CGUIString& GetName() const;
 		const CGUIString& GetSceneName( ) const;
-
 		const CGUIString& GetWorkingSceneName( ) const;
 
 		const CGUIString& GetType() const;
@@ -247,6 +246,7 @@ namespace guiex
 	//============================================================================// 
 	class CGUIWgtEmptyNode : public CGUIWidget
 	{
+	public:
 	};
 
 
@@ -255,6 +255,7 @@ namespace guiex
 	//============================================================================// 
 	class CGUIWgtPanel : public CGUIWidget
 	{
+	public:
 	};
 
 
@@ -263,6 +264,7 @@ namespace guiex
 	//============================================================================// 
 	class CGUIWgtStaticImage : public CGUIWidget
 	{
+	public:
 	};
 
 	//============================================================================//
@@ -301,6 +303,7 @@ namespace guiex
 
 		void SetCurrentValue( real fValue );
 		real GetCurrentValue( ) const;
+
 	};
 		
 	//============================================================================//
@@ -313,20 +316,27 @@ namespace guiex
 	};
 
 	//============================================================================//
-	// CGUIWgtListBox
-	//============================================================================// 
-	class CGUIWgtListBox : public CGUIWgtScrollbarContainer
-	{
-	public:
-	};
-
-	//============================================================================//
 	// CGUIWgtListBoxItem
 	//============================================================================// 
 	class CGUIWgtListBoxItem : public CGUIWidget
 	{
 	public:
 	};
+
+	//============================================================================//
+	// CGUIWgtListBox
+	//============================================================================// 
+	class CGUIWgtListBox : public CGUIWgtScrollbarContainer
+	{
+	public:
+		void AddItem(CGUIWidget* pItem);
+		void RemoveItem( CGUIWidget* pItem);
+		void RemoveItem( uint32 nIndex);
+
+		uint32 GetItemCount(void) const;
+
+	};
+
 
 	//============================================================================//
 	// CGUIWgtScrollbar
@@ -336,6 +346,7 @@ namespace guiex
 	public:
 		void SetCurrentPos(uint32 nPos);
 		uint32 GetCurrentPos() const; 
+
 	};
 	
 	//============================================================================//
@@ -344,6 +355,5 @@ namespace guiex
 	class CGUIWgtMultiEditBox : public CGUIWgtScrollbarContainer
 	{
 	public:
-
 	};
 }

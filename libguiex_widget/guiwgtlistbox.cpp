@@ -287,24 +287,26 @@ namespace guiex
 	/**
 	* @brief Add the given CGUIWgtListBoxItem to the list.
 	*/
-	void CGUIWgtListBox::AddItem(CGUIWgtListBoxItem* pItem)
+	void CGUIWgtListBox::AddItem(CGUIWidget* pItem)
 	{
 		GUI_ASSERT( pItem, "[CGUIWgtListBox::AddItem] invalid pointer" );
+		GUI_ASSERT( pItem->GetType() == "CGUIWgtListBoxItem", "[CGUIWgtListBox::AddItem] invalid pointer" );
 
 		AddChild( pItem );
+		pItem->Open();
 	}
 	//------------------------------------------------------------------------------
 	/** 
 	* @brief Removes the given item from the list box. 
 	* If the item is has the auto delete state set, the item will be deleted.
 	*/
-	void CGUIWgtListBox::RemoveItem( CGUIWgtListBoxItem* pItem)
+	void CGUIWgtListBox::RemoveItem( CGUIWidget* pItem)
 	{
 		GUI_ASSERT( pItem, "[CGUIWgtListBox::RemoveItem] invalid pointer" );
+		GUI_ASSERT( pItem->GetType() == "CGUIWgtListBoxItem", "[CGUIWgtListBox::RemoveItem] invalid pointer" );
 
 		RemoveChild( pItem );
-
-		CGUIWidgetManager::Instance()->DestroyWidget( pItem );
+		pItem->Close();
 	}
 	//------------------------------------------------------------------------------
 	/** 

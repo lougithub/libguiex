@@ -185,7 +185,7 @@
 		</page>
 		<page name="Image">
 			<property name="normal" type="CGUIImage" value="button_hilight_square" must_exist="true" />
-			<property name="normal_checked" type="CGUIImage" value="checkbutton_glow_checked" />
+			<property name="normal_checked" type="CGUIImage" value="" />
 			<property name="hover" type="CGUIImage" value="" />
 			<property name="hover_checked" type="CGUIImage" value="" />
 			<property name="push" type="CGUIImage" value="" />
@@ -193,7 +193,7 @@
 			<property name="Disable" type="CGUIImage" value="" />
 			<property name="disable_checked" type="CGUIImage" value="" />
 			<property name="hover_overlay" type="CGUIImage" value="" />
-			<property name="checked_overlay" type="CGUIImage" value="" />
+			<property name="checked_overlay" type="CGUIImage" value="checkbutton_glow_checked" />
 		</page>
 	</widget>
 

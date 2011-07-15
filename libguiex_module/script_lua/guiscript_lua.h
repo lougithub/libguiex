@@ -64,6 +64,7 @@ namespace guiex
 		virtual void DoDestroy();
 
 		bool PushParToLua( void* pPara, const CGUIString& rParaType, void* pLuaState);
+		void RegisterGlobalFunction( void* pLuaState, const CGUIString& rSceneName );
 
 	private:
 		std::map<CGUIString, void*> m_mapLuaState;///< The lua_State used by this module

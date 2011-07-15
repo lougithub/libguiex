@@ -4,6 +4,7 @@
 	<property name="common" type="Dependency"/>
 	<property name="gui.xml" type="WidgetFile" />
 	<property name="gui.lua" type="ScriptFile" />
+	<property name="listitem.xml" type="WidgetFile" />
 	<property name="resource.res" type="ResourceFile" />
 </libguiex_project>
 

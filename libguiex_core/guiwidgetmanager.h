@@ -47,13 +47,14 @@ namespace guiex
 		static CGUIWidgetManager* Instance(); 
 
 		//widget related function
-		CGUIWidget* CreateWidget( const CGUIString& rType, const CGUIString& rWidgetName, const CGUIString& rSceneName );
+		CGUIWidget* CreateWidget( const CGUIString& rType, const CGUIString& rWidgetName, const CGUIString& rSceneName, bool bAddToWidgetMap = true );
 		template<class T>
 		T* CreateWidget( const CGUIString& rWidgetName, const CGUIString& rSceneName );
 		template<class T>
-		T* CreateCustomWidget( const CGUIString& rWidgetName, const CGUIString& rSceneName );
+		T* CreateCustomWidget( const CGUIString& rWidgetName, const CGUIString& rSceneName, bool bAddToWidgetMap );
 		bool HasWidget(  const CGUIString& rWidgetName, const CGUIString& rSceneName );
 		CGUIWidget* GetWidget( const CGUIString& rWidgetName, const CGUIString& rSceneName );
+		CGUIWidget* TryGetWidget(  const CGUIString& rWidgetName, const CGUIString& rSceneName );
 		void DestroyWidget( CGUIWidget* pWidget );
 		void DelayedDestroyWidget( CGUIWidget* pWidget );
 		template<class T>
@@ -81,14 +82,20 @@ namespace guiex
 	protected:
 		bool TryRemovePage( CGUIWidget* pWidget );
 		bool TryRemoveDynamicPage( CGUIWidget* pWidget );
-		bool TryAddToWidgetPool( CGUIWidget* pWidget );
+		bool AddToWidgetMap( CGUIWidget* pWidget );
+		void TryRemoveFromWidgetMap( CGUIWidget* pWidget );
+		void AddToWidgetSet( CGUIWidget* pWidget );
+		void RemoveFromWidgetSet( CGUIWidget* pWidget );
 
 	protected:
 
 	protected:
 		//widget list
-		typedef std::map<CGUIString , std::map<CGUIString, CGUIWidget*> > TMapWidget; //scene name, widget name, widget
+		typedef std::map<CGUIString , CGUIWidget* > TMapWidget; //<scene name @@ widget name>, <widget>
 		TMapWidget m_aMapWidget; ///contain all widget create by system which has name
+
+		typedef std::set<CGUIWidget* > TSetWidget; 
+		TSetWidget m_aSetWidget; ///contain all widget
 		
 		struct SPageInfo
 		{
@@ -116,15 +123,20 @@ namespace guiex
 	}	
 
 	template< class T >
-	inline T* CGUIWidgetManager::CreateCustomWidget( const CGUIString& rWidgetName, const CGUIString& rSceneName )
+	inline T* CGUIWidgetManager::CreateCustomWidget( const CGUIString& rWidgetName, const CGUIString& rSceneName, bool bAddToWidgetMap )
 	{
 		T* pWidget = new T( rWidgetName, rSceneName );
 		GUI_ASSERT( pWidget->GetType() == T::StaticGetType(), "wrong Widget type" );
-		if( false == TryAddToWidgetPool( pWidget ))
+		if( bAddToWidgetMap )
 		{
-			CGUIWidgetFactory::Instance()->DestoryWidget( pWidget );
-			return NULL;
+			if( false == AddToWidgetMap( pWidget ))
+			{
+				CGUIWidgetFactory::Instance()->DestoryWidget( pWidget );
+				return NULL;
+			}
 		}
+		AddToWidgetSet( pWidget );
+
 		return pWidget;
 	}	
 

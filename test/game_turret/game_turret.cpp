@@ -248,7 +248,7 @@ CMyCanvasLayer_TurretGame::CMyCanvasLayer_TurretGame( const char* szLayerName )
 	{
 		char szTargetName[32];
 		snprintf( szTargetName, 32, "monster_%d", i );
-		CMyMonster* pMonster = CGUIWidgetManager::Instance()->CreateCustomWidget<CMyMonster>( szTargetName, "" );
+		CMyMonster* pMonster = CGUIWidgetManager::Instance()->CreateCustomWidget<CMyMonster>( szTargetName, "", false );
 		pMonster->InitMonster( m_pTurret->GetParent(), (i%2)==0, m_pTurret );
 		m_vecTarget.push_back( pMonster );
 	}
@@ -406,7 +406,7 @@ void CMyCanvasLayer_TurretGame::Shoot( const CGUIVector2& rShootPos )
 	static uint32 uProjectileIdx = 0;
 	char szProjectileName[32];
 	snprintf( szProjectileName, 32, "projectile_%d", uProjectileIdx++ );
-	CMyProjectile* pProjectile = CGUIWidgetManager::Instance()->CreateCustomWidget<CMyProjectile>( szProjectileName, "");
+	CMyProjectile* pProjectile = CGUIWidgetManager::Instance()->CreateCustomWidget<CMyProjectile>( szProjectileName, "", false);
 	pProjectile->InitProjectile( m_pTurret->GetParent(), m_pTurret, rShootPos );
 	m_vecProjectile.push_back(pProjectile);
 }

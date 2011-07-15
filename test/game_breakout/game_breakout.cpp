@@ -431,11 +431,11 @@ void CMyCanvasLayer_GameLayer::Initialize( )
 	m_pBackground->SetParent( this );
 
 	// Create sprite and add it to the layer
-	m_pBall = guiex::CGUIWidgetManager::Instance()->CreateCustomWidget<CMyBall>( "ball", "" );
+	m_pBall = guiex::CGUIWidgetManager::Instance()->CreateCustomWidget<CMyBall>( "ball", "", false );
 	m_pBall->InitBall( m_pBackground );
 
 	// Create paddle and add it to the layer
-	CMyPaddle* pPaddle = guiex::CGUIWidgetManager::Instance()->CreateCustomWidget<CMyPaddle>( "paddle", "" );
+	CMyPaddle* pPaddle = guiex::CGUIWidgetManager::Instance()->CreateCustomWidget<CMyPaddle>( "paddle", "", false );
 	pPaddle->InitPaddle( m_pBackground );
 
 	// Create block and add it to the layer
@@ -448,7 +448,7 @@ void CMyCanvasLayer_GameLayer::Initialize( )
 		snprintf( szName, 32, "block_%d", i );
 		guiex::real xOffset = guiex::real(leftPadding+nBlockWidth/2+((nBlockWidth+padding)*i));
 		guiex::CGUIVector2 aPos( xOffset, 100.0f );
-		CMyBlock* pBlock = guiex::CGUIWidgetManager::Instance()->CreateCustomWidget<CMyBlock>( szName, "" );
+		CMyBlock* pBlock = guiex::CGUIWidgetManager::Instance()->CreateCustomWidget<CMyBlock>( szName, "", false );
 		pBlock->InitBlock( m_pBackground, aPos );
 
 		m_arrayBlocks.insert( pBlock );

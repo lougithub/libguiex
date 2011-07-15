@@ -190,7 +190,7 @@ CMyCanvasLayer_TiledMapGame::CMyCanvasLayer_TiledMapGame( const char* szLayerNam
 
 
 	//init player
-	m_pPlayer = CGUIWidgetManager::Instance()->CreateCustomWidget<CMyPlayer>( "player", "");
+	m_pPlayer = CGUIWidgetManager::Instance()->CreateCustomWidget<CMyPlayer>( "player", "", false);
 	m_pPlayer->InitPlayer( this, rTileSize, pObjectInfo->GetPosition() );
 
 	//init score

@@ -58,6 +58,7 @@ namespace guiex
 		,m_strName(rName)
 		,m_strOwnerSceneName(rSceneName)
 		,m_strWorkingSceneName(rSceneName)
+		,m_pPage(NULL)
 		,m_pParent(NULL)
 		,m_pChild(NULL)
 		,m_pNextSibling(NULL)
@@ -91,6 +92,7 @@ namespace guiex
 		,m_bIsGenerateMultiClickEvent(false)
 		,m_bIsAutoPlayAs(false)
 		,m_bIsClipChildren(false)
+		,m_bIsDynamic(false)
 		,m_pSceneEffect( NULL )
 	{
 	}
@@ -110,11 +112,14 @@ namespace guiex
 			pChildTmp = pChild;
 			pChild = pChild->GetNextSibling();
 
-			if( CGUIWidgetManager::Instance()->HasPage( pChildTmp))
+			if( pChildTmp->GetPage() == NULL )
 			{
-				//it's child is another page
-				pChildTmp->SetParent(NULL);
-				continue;
+				if( CGUIWidgetManager::Instance()->HasPage( pChildTmp))
+				{
+					//it's child is another page
+					pChildTmp->SetParent(NULL);
+					continue;
+				}
 			}
 
 			//destroy it
@@ -141,19 +146,19 @@ namespace guiex
 		Refresh();
 
 		//register to script
-		if( !CGUIWidgetManager::Instance()->IsInternalName( GetName()) )
-		{
-			bool bHasScript = false;
-			guiex::IGUIInterfaceScript* pInterfaceScript = CGUIInterfaceManager::Instance()->GetInterfaceScript();
-			if( pInterfaceScript && !GSystem->IsEditorMode())
-			{
-				bHasScript = pInterfaceScript->HasScript( GetSceneName() );
-			}
-			if( bHasScript )
-			{
-				pInterfaceScript->RegisterWidget( this );
-			}
-		}
+		//if( !CGUIWidgetManager::Instance()->IsInternalName( GetName()) )
+		//{
+		//	bool bHasScript = false;
+		//	guiex::IGUIInterfaceScript* pInterfaceScript = CGUIInterfaceManager::Instance()->GetInterfaceScript();
+		//	if( pInterfaceScript && !GSystem->IsEditorMode())
+		//	{
+		//		bHasScript = pInterfaceScript->HasScript( GetWorkingSceneName() );
+		//	}
+		//	if( bHasScript )
+		//	{
+		//		pInterfaceScript->RegisterWidget( this );
+		//	}
+		//}
 
 
 		OnCreate();
@@ -366,6 +371,16 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	void CGUIWidget::SetPage( CGUIWidget *pPage )
+	{
+		m_pPage = pPage;
+	}
+	//------------------------------------------------------------------------------
+	CGUIWidget* CGUIWidget::GetPage()
+	{
+		return m_pPage;
+	}
+	//------------------------------------------------------------------------------
 	/**
 	* @brief set parent
 	*/
@@ -417,16 +432,21 @@ namespace guiex
 	/**
 	* @brief get child by given name
 	*/
-	CGUIWidget*	CGUIWidget::FindChildByName( const CGUIString& rChildName ) const
+	CGUIWidget*	CGUIWidget::FindWidgetByName( const CGUIString& rWidgetName )
 	{
-		CGUIWidget* pWidget = GetChild();
-		while( pWidget )
+		if( GetName() == rWidgetName )
 		{
-			if( pWidget->GetName() == rChildName )
+			return this;
+		}
+		CGUIWidget* pChild = GetChild();
+		while( pChild )
+		{
+			CGUIWidget* pFind = pChild->FindWidgetByName( rWidgetName );
+			if( pFind)
 			{
-				return pWidget;
+				return pFind;
 			}
-			pWidget = pWidget->GetNextSibling();
+			pChild = pChild->GetNextSibling();
 		}
 		return NULL;
 	}
@@ -440,23 +460,6 @@ namespace guiex
 	CGUIWidget* CGUIWidget::GetPrevSibling( ) const
 	{
 		return m_pPrevSibling;
-	}
-	//------------------------------------------------------------------------------
-	void CGUIWidget::SetWorkingSceneName(const CGUIString& rWorkingProjName)
-	{
-		m_strWorkingSceneName = rWorkingProjName;
-
-		CGUIWidget* pWidget = GetChild();
-		while( pWidget )
-		{
-			pWidget->SetWorkingSceneName( rWorkingProjName );
-			pWidget = pWidget->GetNextSibling();
-		}
-	}
-	//------------------------------------------------------------------------------
-	const CGUIString& CGUIWidget::GetWorkingSceneName( ) const
-	{
-		return m_strWorkingSceneName;
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -878,6 +881,16 @@ namespace guiex
 		return m_bIsAutoPlayAs;
 	}
 	//------------------------------------------------------------------------------
+	void CGUIWidget::SetDynamic( bool bDynamic )
+	{
+		m_bIsDynamic = bDynamic;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWidget::IsDynamic( ) const
+	{
+		return m_bIsDynamic;
+	}
+	//------------------------------------------------------------------------------
 	void CGUIWidget::SetClipChildren( bool bClip )
 	{
 		m_bIsClipChildren = bClip;
@@ -1094,7 +1107,7 @@ namespace guiex
 			GUI_THROW( GUI_FORMAT( "failed to get sound by name <%s>", rSoundName.c_str()));
 			return NULL;
 		};
-		m_mapEventSound.insert( std::make_pair( strEventName, pSound ) );
+		m_mapEventSound.insert( std::make_pair(strEventName, pSound));
 
 		return pSound;
 	}
@@ -1119,11 +1132,15 @@ namespace guiex
 		return NULL;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::RegisterScriptCallbackFunc( 
+	void CGUIWidget::RegisterScriptCallbackFunc( 
 		const CGUIString& strEventName, 
 		const CGUIString& strFunc )
 	{
-		m_mapScriptFunc.insert( std::make_pair(strEventName, strFunc));
+		std::pair<TMapScriptFunc::iterator, bool> pr = m_mapScriptFunc.insert( std::make_pair(strEventName, strFunc));
+		if( !pr.second )
+		{
+			pr.first->second = strFunc;
+		}
 	}
 	//------------------------------------------------------------------------------
 	void	CGUIWidget::UnregisterScriptCallbackFunc(const CGUIString& strEventName)
@@ -1919,9 +1936,41 @@ namespace guiex
 		if(rProperty.GetType() == ePropertyType_String && rProperty.GetName() == "parent")
 		{
 			CGUIWidget* pParent = NULL;
-			if( !rProperty.GetValue().empty() )
+			if( rProperty.GetValue().empty() )
+			{
+				pParent = NULL;
+			}
+			else if( GetParent() && GetParent()->GetName() == rProperty.GetValue())
+			{
+				pParent = GetParent();
+			}
+			else if( GSystem->IsEditorMode() )
 			{
 				pParent = CGUIWidgetManager::Instance()->GetWidget( rProperty.GetValue(), GetSceneName());
+			}
+			else
+			{
+				if( !IsDynamic() )
+				{
+					pParent = CGUIWidgetManager::Instance()->TryGetWidget( rProperty.GetValue(), GetSceneName());
+				}
+				else
+				{
+					//dynamic widget
+					if( !pParent && GetPage() )
+					{
+						pParent = GetPage()->FindWidgetByName( rProperty.GetValue() );
+					}
+				}
+
+				if( !pParent )
+				{
+					GUI_THROW( GUI_FORMAT("[CGUIWidget::ProcessProperty]: widget <%s> failed to process property: name=[%s] type=[%s] value=[%s]!", 
+						GetName().c_str(),
+						rProperty.GetName().c_str(),
+						rProperty.GetTypeAsString().c_str(),
+						rProperty.GetValue().c_str()));
+				}
 			}
 			SetParent( pParent);
 		}
@@ -3046,6 +3095,16 @@ namespace guiex
 	const CGUIString& CGUIWidget::GetSceneName( ) const
 	{
 		return m_strOwnerSceneName;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIString& CGUIWidget::GetWorkingSceneName( ) const
+	{
+		return m_strWorkingSceneName;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::SetWorkingSceneName( const CGUIString& rWorkingSceneName )
+	{
+		m_strWorkingSceneName = rWorkingSceneName;
 	}
 	//------------------------------------------------------------------------------
 	const CGUIString& CGUIWidget::GetType() const

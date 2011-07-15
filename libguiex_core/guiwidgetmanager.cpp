@@ -49,8 +49,11 @@ namespace guiex
 	{
 		//check
 		GUI_ASSERT(m_vecGarbage.empty(), "[CGUIWidgetManager::~CGUIWidgetManager]: shouldn't has any garbate");
+		GUI_ASSERT(m_vecPage.empty(), "[CGUIWidgetManager::~CGUIWidgetManager]: shouldn't has any page");
+		GUI_ASSERT(m_setDynamicPageList.empty(), "[CGUIWidgetManager::~CGUIWidgetManager]: shouldn't has any dynamic page");
 		GUI_ASSERT(m_aMapWidget.empty(), "[CGUIWidgetManager::~CGUIWidgetManager]: shouldn't has any widget");
-
+		GUI_ASSERT(m_aSetWidget.empty(), "[CGUIWidgetManager::~CGUIWidgetManager]: shouldn't has any widget");
+		
 		m_pSingleton = NULL; 
 	}
 	//------------------------------------------------------------------------------
@@ -74,51 +77,93 @@ namespace guiex
 		return m_pSingleton; 
 	}
 	//------------------------------------------------------------------------------
-	bool CGUIWidgetManager::TryAddToWidgetPool( CGUIWidget* pWidget )
+	bool CGUIWidgetManager::AddToWidgetMap( CGUIWidget* pWidget )
 	{
 		GUI_ASSERT( pWidget, "invalid parameter" );
 
 		if( pWidget->GetName().empty() )
 		{
-			GUI_THROW( GUI_FORMAT( "CGUIWidgetManager::TryAddToWidgetPool: lack name for type <%s>!", pWidget->GetType().c_str()));
+			GUI_THROW( GUI_FORMAT( "CGUIWidgetManager::AddToWidgetMap: lack name for type <%s>!", pWidget->GetType().c_str()));
 			return false;
 		}
 
-		//check whether this widget has exist
-		TMapWidget::iterator itorScene = m_aMapWidget.find( pWidget->GetSceneName() );
-		std::map<CGUIString, CGUIWidget*>* pSceneWidgetMap = NULL;
-		if( itorScene != m_aMapWidget.end())
+		CGUIString strWidgetKey = pWidget->GetName() + "@@" + pWidget->GetSceneName();
+
+		TMapWidget::iterator itor = m_aMapWidget.find( strWidgetKey );
+		if( itor != m_aMapWidget.end())
 		{
-			if( itorScene->second.find( pWidget->GetName() ) != itorScene->second.end())
-			{
-				GUI_THROW( GUI_FORMAT( "[CGUIWidgetManager::TryAddToWidgetPool]: the widget [%s : %s] has existed!", pWidget->GetSceneName().c_str(), pWidget->GetName().c_str()));
-				return false;
-			}
-			pSceneWidgetMap = &itorScene->second;
+			GUI_THROW( GUI_FORMAT( "[CGUIWidgetManager::AddToWidgetMap]: the widget [%s : %s] has existed!", pWidget->GetSceneName().c_str(), pWidget->GetName().c_str()));
+			return false;
+		}
+
+		m_aMapWidget.insert(std::make_pair( strWidgetKey, pWidget ));
+		return true;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidgetManager::AddToWidgetSet( CGUIWidget* pWidget )
+	{
+		GUI_ASSERT( pWidget, "[CGUIWidgetManager::RemoveFromWidgetSet:] invalid pointer");
+		TSetWidget::iterator itor = m_aSetWidget.find( pWidget );
+		if( itor != m_aSetWidget.end())
+		{
+			GUI_THROW( GUI_FORMAT( "CGUIWidgetManager::AddToWidgetSet:] widget has existed <%s,%s>!", pWidget->GetSceneName().c_str(), pWidget->GetName().c_str()));
 		}
 		else
 		{
-			//add scene
-			itorScene = m_aMapWidget.insert( std::make_pair( pWidget->GetSceneName(), std::map<CGUIString, CGUIWidget*>())).first;
-			pSceneWidgetMap = &itorScene->second;
+			m_aSetWidget.insert( pWidget );
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidgetManager::RemoveFromWidgetSet( CGUIWidget* pWidget )
+	{
+		GUI_ASSERT( pWidget, "[CGUIWidgetManager::RemoveFromWidgetSet:] invalid pointer");
+		TSetWidget::iterator itor = m_aSetWidget.find( pWidget );
+		if( itor != m_aSetWidget.end())
+		{
+			m_aSetWidget.erase( itor );
+		}
+		else
+		{
+			GUI_THROW( GUI_FORMAT( "CGUIWidgetManager::RemoveFromWidgetSet:] failed to find widget <%s,%s>!", pWidget->GetSceneName().c_str(), pWidget->GetName().c_str()));
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidgetManager::TryRemoveFromWidgetMap( CGUIWidget* pWidget )
+	{
+		if( pWidget->GetName().empty() )
+		{
+			GUI_THROW( GUI_FORMAT( "CGUIWidgetManager::TryRemoveFromWidgetMap: lack name for type <%s>!", pWidget->GetType().c_str()));
+			return;
 		}
 
-		pSceneWidgetMap->insert(std::make_pair(pWidget->GetName(), pWidget));
-		return true;
+		CGUIString strWidgetKey = pWidget->GetName() + "@@" + pWidget->GetSceneName();
+		TMapWidget::iterator itor = m_aMapWidget.find( strWidgetKey );
+		if( itor != m_aMapWidget.end())
+		{
+			if( itor->second == pWidget )
+			{
+				m_aMapWidget.erase( itor );
+			}
+		}
 	}
 	//------------------------------------------------------------------------------
 	/**
 	* @brief create a widget by type and name
 	* @return pointer of created widget
 	*/
-	CGUIWidget* CGUIWidgetManager::CreateWidget( const CGUIString& rType, const CGUIString& rWidgetName, const CGUIString& rSceneName )
+	CGUIWidget* CGUIWidgetManager::CreateWidget( const CGUIString& rType, const CGUIString& rWidgetName, const CGUIString& rSceneName, bool bAddToWidgetMap /*= true*/ )
 	{
 		CGUIWidget* pWidget = CGUIWidgetFactory::Instance()->CreateWidget( rType, rWidgetName, rSceneName );
-		if( false == TryAddToWidgetPool( pWidget ))
+		if( bAddToWidgetMap )
 		{
-			CGUIWidgetFactory::Instance()->DestoryWidget( pWidget );
-			return NULL;
+			if( false == AddToWidgetMap( pWidget ))
+			{
+				CGUIWidgetFactory::Instance()->DestoryWidget( pWidget );
+				return NULL;
+			}
 		}
+		AddToWidgetSet( pWidget );
+
 		return pWidget;
 	}
 	//------------------------------------------------------------------------------
@@ -132,48 +177,30 @@ namespace guiex
 			GUI_THROW(  "[CGUIWidgetManager::DestroyWidget]: Invalid parameter");
 		}
 
-		if( !pWidget->GetName().empty() )
+		//remove from widget pool
+		TryRemoveFromWidgetMap( pWidget );
+		RemoveFromWidgetSet( pWidget );
+
+		//clear page pool
+		if( pWidget->GetPage() == NULL )
 		{
-			//check
-			TMapWidget::iterator itor = m_aMapWidget.find( pWidget->GetSceneName());
-			if( itor == m_aMapWidget.end())
+			if( pWidget->IsDynamic() )
 			{
-				GUI_THROW( GUI_FORMAT( "[CGUIWidgetManager::DestroyWidget]: the widget <%s : %s> doesn't exist!", pWidget->GetSceneName().c_str(), pWidget->GetName().c_str()));
+				TryRemoveDynamicPage( pWidget );
 			}
-			std::map<CGUIString, CGUIWidget*>::iterator  itor_widget = itor->second.find(pWidget->GetName());
-			if( itor_widget == itor->second.end())
+			else
 			{
-				GUI_THROW( GUI_FORMAT( "[CGUIWidgetManager::DestroyWidget]: the widget <%s : %s> doesn't exist!", pWidget->GetSceneName().c_str(), pWidget->GetName().c_str()));
+				TryRemovePage( pWidget );
 			}
-
-			//clear widget pool
-			itor->second.erase(itor_widget);
-			if( itor->second.empty())
-			{
-				m_aMapWidget.erase( itor );
-			}
-
-			//clear page pool
-			if( TryRemovePage( pWidget ) )
-			{
-				//is a page
-			}
-			else if( TryRemoveDynamicPage( pWidget ))
-			{
-				//is a dynamic page
-			}
-
-			//delete it
-			if( pWidget->GetParent())
-			{
-				pWidget->SetParent(NULL);
-			}
-			CGUIWidgetFactory::Instance()->DestoryWidget(pWidget);
 		}
-		else
+
+
+		//delete it
+		if( pWidget->GetParent())
 		{
-			GUI_THROW( GUI_FORMAT( "CGUIWidgetManager::DestroyWidget: lack name for type <%s>!", pWidget->GetType().c_str()));
+			pWidget->SetParent(NULL);
 		}
+		CGUIWidgetFactory::Instance()->DestoryWidget(pWidget);
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidgetManager::DelayedDestroyWidget( CGUIWidget* pWidget )
@@ -209,17 +236,24 @@ namespace guiex
 	*/
 	CGUIWidget* CGUIWidgetManager::GetWidget(  const CGUIString& rWidgetName, const CGUIString& rSceneName )
 	{
-		TMapWidget::iterator itor = m_aMapWidget.find(rSceneName);
+		CGUIWidget* pWidget = TryGetWidget(rWidgetName, rSceneName);
+		if( !pWidget )
+		{
+			GUI_THROW( GUI_FORMAT("[CGUIWidgetManager::GetWidget]: failed to get widget by name [%s : %s]",rSceneName.c_str(), rWidgetName.c_str()));
+		}
+		return pWidget;
+	}
+	//------------------------------------------------------------------------------
+	CGUIWidget* CGUIWidgetManager::TryGetWidget(  const CGUIString& rWidgetName, const CGUIString& rSceneName )
+	{
+		CGUIString strWidgetKey = rWidgetName + "@@" + rSceneName;
+
+		TMapWidget::iterator itor = m_aMapWidget.find(strWidgetKey);
 		if( itor != m_aMapWidget.end())
 		{
-			std::map<CGUIString, CGUIWidget*>::iterator itor_widget = itor->second.find( rWidgetName );
-			if( itor_widget != itor->second.end())
-			{
-				return itor_widget->second;
-			}
+			return itor->second;
 		}
 
-		GUI_THROW( GUI_FORMAT("[CGUIWidgetManager::GetWidget]: failed to get widget by name [%s : %s]",rSceneName.c_str(), rWidgetName.c_str()));
 		return NULL;
 	}
 	//------------------------------------------------------------------------------
@@ -229,14 +263,12 @@ namespace guiex
 	*/
 	bool CGUIWidgetManager::HasWidget(  const CGUIString& rWidgetName, const CGUIString& rSceneName )
 	{
-		TMapWidget::iterator itor = m_aMapWidget.find(rSceneName);
+		CGUIString strWidgetKey = rWidgetName + "@@" + rSceneName;
+
+		TMapWidget::iterator itor = m_aMapWidget.find(strWidgetKey);
 		if( itor != m_aMapWidget.end())
 		{
-			std::map<CGUIString, CGUIWidget*>::iterator itor_widget = itor->second.find( rWidgetName );
-			if( itor_widget != itor->second.end())
-			{
-				return true;
-			}
+			return true;
 		}
 
 		return false;
@@ -249,7 +281,7 @@ namespace guiex
 	{
 		//load file
 		CGUIString strRelPath = CGUISceneManager::Instance()->GetScenePath( rSceneName ) + rPageName;
-		CGUIWidget* pPage = CGUIConfigFileLoader::LoadWidgetConfigFile( strRelPath, rSceneName, rPageName );
+		CGUIWidget* pPage = CGUIConfigFileLoader::LoadWidgetConfigFile( strRelPath, rPageName, rSceneName,rSceneName, false );
 		if( !pPage )
 		{
 			return NULL;
@@ -365,6 +397,7 @@ namespace guiex
 	void CGUIWidgetManager::AddPage( CGUIWidget* pPage, const CGUIString& rPageName )
 	{
 		GUI_ASSERT( pPage, "invalid parameter" );
+		GUI_ASSERT( !pPage->IsDynamic(), "static page is a dynamic widget" );
 
 		//check
 		if( HasPage( pPage->GetName(), pPage->GetSceneName()))
@@ -399,8 +432,7 @@ namespace guiex
 	{
 		//load file
 		CGUIString strRelPath = CGUISceneManager::Instance()->GetScenePath( rSceneName ) + rPageName;
-		CGUIString strDynamicSceneName = rSceneName + GSystem->GenerateAnonymousName();
-		CGUIWidget* pPage = CGUIConfigFileLoader::LoadWidgetConfigFile( strRelPath, strDynamicSceneName, rPageName );
+		CGUIWidget* pPage = CGUIConfigFileLoader::LoadWidgetConfigFile( strRelPath, rPageName, rSceneName, rWorkingSceneName, true );
 		if( !pPage )
 		{
 			GUI_THROW( GUI_FORMAT(
@@ -410,7 +442,6 @@ namespace guiex
 		}
 
 		//get page
-		pPage->SetWorkingSceneName(rWorkingSceneName);
 		AddDynamicPage( pPage );
 		pPage->NotifyLoaded();
 		return pPage;
@@ -419,6 +450,8 @@ namespace guiex
 	void CGUIWidgetManager::AddDynamicPage( CGUIWidget* pPage )
 	{
 		GUI_ASSERT( HasDynamicPage( pPage )==false, "the dynamic page has existed" );
+		GUI_ASSERT( pPage->IsDynamic()==true, "the dynamic page isn't a dynamic widget" );
+
 		m_setDynamicPageList.insert( pPage );
 	}
 	//------------------------------------------------------------------------------

@@ -20,6 +20,7 @@
 #include <libguiex_core/guiinterfacefilesys.h>
 #include <libguiex_core/guievent.h>
 #include <libguiex_core/guiwidget.h>
+#include <libguiex_core/guiwidgetmanager.h>
 #include <string.h>
 #include <cassert>
 #include <libguiex_script_wrapper/guiex_wrapper.h>
@@ -36,14 +37,76 @@ extern "C" {
 }
 #endif //#ifdef __cplusplus
 
+
+//============================================================================//
+// declare
+//============================================================================// 
+namespace guiex
+{
+	//global function called in lua
+	static int ExactType(lua_State* L);
+}
+
 //============================================================================//
 // function
 //============================================================================// 
 namespace guiex
 {
+	//------------------------------------------------------------------------------
+	static int ExactType(lua_State* L)
+	{
+		int SWIG_arg = 0;
+		guiex::CGUIWidget *pWidget = 0 ;
 
+		//get widget info
+		swig_module_info* head_module=SWIG_Lua_GetModule(L);
+		if( !head_module )
+		{
+			lua_pop(L,1);
+			GUI_SCRIPT_THROW( "(ExactType) Unable to find swig module\n" );
+		}
+		swig_type_info* pWidgetInfo = SWIG_TypeQueryModule( head_module, head_module, "guiex::CGUIWidget *");
+		if( !pWidgetInfo )
+		{
+			lua_pop(L,1);
+			GUI_SCRIPT_THROW( GUI_FORMAT( "(ExactType) Unable to find swig_type_info for <%s>\n","guiex::CGUIWidget *" ));
+		}
+
+		SWIG_check_num_args("ExactType",1,1);
+		if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ExactType",1,"guiex::CGUIWidget *");
+
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&pWidget,pWidgetInfo,0))){
+			SWIG_fail_ptr("ExactType",1,pWidgetInfo);
+		}
+
+		if( pWidget )
+		{
+			CGUIString strWidgetType = "guiex::" + pWidget->GetType() + " *";
+			pWidgetInfo = SWIG_TypeQueryModule( head_module, head_module, strWidgetType.c_str());
+			if( !pWidgetInfo )
+			{
+				lua_pop(L,1);
+				GUI_SCRIPT_THROW( GUI_FORMAT( "(ExactType) Unable to find swig_type_info for <%s>\n",strWidgetType.c_str() ));
+			}
+		}
+
+		SWIG_NewPointerObj( L, (void*)pWidget, pWidgetInfo, 0 );	
+
+		SWIG_arg++; 
+		return SWIG_arg;
+
+		if(0) SWIG_fail;
+
+fail:
+		lua_error(L);
+		return SWIG_arg;
+	}
+	//------------------------------------------------------------------------------
+
+
+
+	//------------------------------------------------------------------------------
 	GUI_INTERFACE_IMPLEMENT(IGUIScript_lua);
-
 	//------------------------------------------------------------------------------
 	const char* IGUIScript_lua::StaticGetModuleName()
 	{
@@ -68,6 +131,30 @@ namespace guiex
 	void IGUIScript_lua::DoDestroy()
 	{
 		DestroyAllScript();
+	}
+	//------------------------------------------------------------------------------
+	void IGUIScript_lua::RegisterGlobalFunction( void* pLuaState, const CGUIString& rSceneName )
+	{
+		lua_State *L = (lua_State *)pLuaState;
+
+		//register global function
+		lua_pushvalue(L,LUA_GLOBALSINDEX);
+		lua_pushstring(L,"guiex");
+		lua_rawget(L,-2);
+
+		SWIG_Lua_add_function(L,"ExactType",ExactType);
+
+		lua_pop(L, 2);
+
+
+		std::string strGlobalFunc = std::string("guiex.GetSceneName = function() return\"") + rSceneName +"\"; end";
+		int error =	luaL_loadbuffer(L,strGlobalFunc.c_str(),strGlobalFunc.length(),"script from string") || lua_pcall(L,0,0,0);
+		if ( error )
+		{
+			CGUIString msg = CGUIString("(IGUIScript_lua::CreateScript) Unable to execute script string: ")+strGlobalFunc+"\n"+lua_tostring(L,-1)+"\n";
+			lua_pop(L,1);
+			GUI_SCRIPT_THROW( msg.c_str() );
+		}
 	}
 	//------------------------------------------------------------------------------
 	void IGUIScript_lua::CreateScript( const CGUIString& rSceneName )
@@ -115,6 +202,8 @@ namespace guiex
 
 		//register swig.
 		luaopen_guiex( pState );
+
+		RegisterGlobalFunction( pState, rSceneName );
 
 		m_mapLuaState.insert( std::make_pair( rSceneName, pState ));
 	}
@@ -303,7 +392,7 @@ namespace guiex
 			return false;
 		}
 
-		SWIG_Lua_NewPointerObj( L,pPara, pInfo, 0 );
+		SWIG_NewPointerObj( L,pPara, pInfo, 0 );
 		return true;
 	}
 	//------------------------------------------------------------------------------
@@ -403,7 +492,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void IGUIScript_lua::RegisterWidget( const CGUIWidget* pWidget )
 	{
-		lua_State* L = (lua_State*)GetLuaState(pWidget->GetSceneName());
+		lua_State* L = (lua_State*)GetLuaState(pWidget->GetWorkingSceneName());
 
 		lua_pushstring( L, pWidget->GetName().c_str());
 
@@ -421,7 +510,7 @@ namespace guiex
 			GUI_SCRIPT_THROW( GUI_FORMAT( "(IGUIScript_lua::RegisterWidget) Unable to find swig_type_info for <%s>\n",strWidgetType.c_str() ));
 		}
 
-		SWIG_Lua_NewPointerObj( L, (void*)pWidget, pInfo, 0 );
+		SWIG_NewPointerObj( L, (void*)pWidget, pInfo, 0 );
 		lua_rawset( L, LUA_GLOBALSINDEX );
 	}
 	//------------------------------------------------------------------------------

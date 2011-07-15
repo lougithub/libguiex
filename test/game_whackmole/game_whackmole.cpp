@@ -205,7 +205,7 @@ CMyCanvasLayer_WhackMoleGame::CMyCanvasLayer_WhackMoleGame( const char* szLayerN
 
 		char szMoleName[32];
 		snprintf( szMoleName, 32, "mole_%d", i );
-		CMyMole* pMole = CGUIWidgetManager::Instance()->CreateCustomWidget<CMyMole>( szMoleName, "" );
+		CMyMole* pMole = CGUIWidgetManager::Instance()->CreateCustomWidget<CMyMole>( szMoleName, "", false );
 		pMole->InitMole( pTag );
 		m_vecMole.push_back( pMole );
 	}

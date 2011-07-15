@@ -35,7 +35,6 @@ namespace guiex
 		int32 GetFPS() const;
 
 		CGUIInterfaceManager* GetInterfaceManager();
-		CGUIWidgetManager* GetWidgetManager();
 
 	protected:
 		CGUISystem();

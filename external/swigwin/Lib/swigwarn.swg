@@ -3,8 +3,8 @@
 /* and use the command 'make Lib/swigwarn.swg' instead.                 */
 
 
-/* ----------------------------------------------------------------------------- 
- * This file is part of SWIG, which is licensed as a whole under version 3 
+/* -----------------------------------------------------------------------------
+ * This file is part of SWIG, which is licensed as a whole under version 3
  * (or any later version) of the GNU General Public License. Some additional
  * terms also apply to certain portions of SWIG. The full details of the SWIG
  * license and copyrights can be found in the LICENSE and COPYRIGHT files
@@ -63,6 +63,7 @@
 %define SWIGWARN_PP_INCLUDEALL_IMPORTALL 203 %enddef
 %define SWIGWARN_PP_CPP_WARNING 204 %enddef
 %define SWIGWARN_PP_CPP_ERROR 205 %enddef
+%define SWIGWARN_PP_UNEXPECTED_TOKENS 206 %enddef
 
 /* -- C/C++ Parser -- */
 
@@ -196,6 +197,7 @@
 %define SWIGWARN_LANG_DIRECTOR_ABSTRACT 517 %enddef
 %define SWIGWARN_LANG_PORTABILITY_FILENAME 518 %enddef
 %define SWIGWARN_LANG_TEMPLATE_METHOD_IGNORE 519 %enddef
+%define SWIGWARN_LANG_SMARTPTR_MISSING 520 %enddef
 
 /* -- Reserved (600-799) -- */
 
@@ -203,6 +205,23 @@
 
 /* Feel free to claim any number in this space that's not currently being used. Just make sure you
    add an entry here */
+
+%define SWIGWARN_D_TYPEMAP_CTYPE_UNDEF 700 %enddef
+%define SWIGWARN_D_TYPEMAP_IMTYPE_UNDEF 701 %enddef
+%define SWIGWARN_D_TYPEMAP_DTYPE_UNDEF 702 %enddef
+%define SWIGWARN_D_MULTIPLE_INHERITANCE 703 %enddef
+%define SWIGWARN_D_TYPEMAP_CLASSMOD_UNDEF 704 %enddef
+%define SWIGWARN_D_TYPEMAP_DBODY_UNDEF 705 %enddef
+%define SWIGWARN_D_TYPEMAP_DOUT_UNDEF 706 %enddef
+%define SWIGWARN_D_TYPEMAP_DIN_UNDEF 707 %enddef
+%define SWIGWARN_D_TYPEMAP_DDIRECTORIN_UNDEF 708 %enddef
+%define SWIGWARN_D_TYPEMAP_DCONSTRUCTOR_UNDEF 709 %enddef
+%define SWIGWARN_D_EXCODE_MISSING 710 %enddef
+%define SWIGWARN_D_CANTHROW_MISSING 711 %enddef
+%define SWIGWARN_D_NO_DIRECTORCONNECT_ATTR 712 %enddef
+%define SWIGWARN_D_NAME_COLLISION 713 %enddef
+
+/* please leave 700-719 free for D */
 
 %define SWIGWARN_RUBY_WRONG_NAME 801 %enddef
 %define SWIGWARN_RUBY_MULTIPLE_INHERITANCE 802 %enddef

@@ -32,16 +32,22 @@
 //============================================================================// 
 namespace guiex
 {
-	static CGUIWidget* DoLoadConfig_Widget( const CGUIProperty* pPropertySet, const CGUIString& rSceneName, const CGUIString& rFileName );
+	static CGUIWidget* DoLoadConfig_Widget( CGUIWidget* pPage, const CGUIProperty* pPropertySet, const CGUIString& rPageFileName, const CGUIString& rOwnSceneName, const CGUIString& rWorkingSceneName, bool bIsDynamicPage );
 	static int32 DoLoadConfig_Set( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
 
 	//------------------------------------------------------------------------------
-	CGUIWidget* DoLoadConfig_Widget( const CGUIProperty* pPropertySet, const CGUIString& rSceneName, const CGUIString& rFileName )
+	CGUIWidget* DoLoadConfig_Widget(
+		CGUIWidget* pPage, 
+		const CGUIProperty* pPropertySet,
+		const CGUIString& rPageFileName, 
+		const CGUIString& rOwnSceneName, 
+		const CGUIString& rWorkingSceneName, 
+		bool bIsDynamicPage )
 	{
 		/// create widget
 		const CGUIString& strWidgetType = pPropertySet->GetValue( );
 		const CGUIString& strWidgetName = pPropertySet->GetName( );
-		CGUIWidget* pWidget = CGUIWidgetManager::Instance()->CreateWidget(strWidgetType, strWidgetName, rSceneName);
+		CGUIWidget* pWidget = CGUIWidgetManager::Instance()->CreateWidget(strWidgetType, strWidgetName, rOwnSceneName, !bIsDynamicPage );
 		if( !pWidget )
 		{
 			GUI_THROW( GUI_FORMAT(
@@ -50,6 +56,9 @@ namespace guiex
 				strWidgetName.c_str()));
 			return NULL;
 		}
+		pWidget->SetWorkingSceneName( rWorkingSceneName );
+		pWidget->SetPage( pPage );
+		pWidget->SetDynamic( bIsDynamicPage );
 		/// set property to widget
 		pWidget->LoadFromProperty( *pPropertySet );
 		pWidget->Create();
@@ -171,7 +180,12 @@ namespace guiex
 	/**
 	* @brief read config file and load data
 	*/
-	CGUIWidget* CGUIConfigFileLoader::LoadWidgetConfigFile( const CGUIString& rPath, const CGUIString& rSceneName, const CGUIString& rFileName)
+	CGUIWidget* CGUIConfigFileLoader::LoadWidgetConfigFile( 
+		const CGUIString& rPath, 
+		const CGUIString& rPageFileName,
+		const CGUIString& rOwnSceneName, 
+		const CGUIString& rWorkingSceneName, 
+		bool bIsDynamicPage )
 	{
 		//get interface of config file
 		IGUIInterfaceConfigFile* pConfigFile = CGUIInterfaceManager::Instance()->GetInterfaceConfigFile();
@@ -186,7 +200,7 @@ namespace guiex
 		{
 			GUI_THROW( GUI_FORMAT(
 				"[LoadWidgetConfigFile]: failed to load config file <%s : %s>!", 
-				rSceneName.c_str(), 
+				rOwnSceneName.c_str(), 
 				rPath.c_str()));
 		}
 
@@ -200,7 +214,7 @@ namespace guiex
 			{
 			case ePropertyType_WidgetDefine:
 				{
-					CGUIWidget* pWidget = DoLoadConfig_Widget( pProperty, rSceneName, rFileName );
+					CGUIWidget* pWidget = DoLoadConfig_Widget( pPage, pProperty, rPageFileName, rOwnSceneName, rWorkingSceneName, bIsDynamicPage );
 					if( !pWidget )
 					{
 						return NULL;

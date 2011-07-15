@@ -102,40 +102,50 @@ void MouseWheel(int wheel, int direction, int x, int y)
 //------------------------------------------------------------------------------
 void mouseCB(int button, int state, int x, int y)
 {
-	switch(button)
+	try
 	{
-	case  GLUT_LEFT_BUTTON:
-		if (state == GLUT_UP)
-		{
-			guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( guiex::MOUSE_LEFT, guiex::MOUSE_UP );
-		}
-		else
-		{
-			guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( guiex::MOUSE_LEFT, guiex::MOUSE_DOWN );
-		}
-		break;
 
-	case GLUT_RIGHT_BUTTON:
-		if (state == GLUT_UP)
+		switch(button)
 		{
-			guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( guiex::MOUSE_RIGHT, guiex::MOUSE_UP );
-		}
-		else
-		{
-			guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( guiex::MOUSE_RIGHT, guiex::MOUSE_DOWN );
-		}
-		break;
+		case  GLUT_LEFT_BUTTON:
+			if (state == GLUT_UP)
+			{
+				guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( guiex::MOUSE_LEFT, guiex::MOUSE_UP );
+			}
+			else
+			{
+				guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( guiex::MOUSE_LEFT, guiex::MOUSE_DOWN );
+			}
+			break;
 
-	case GLUT_MIDDLE_BUTTON:
-		if (state == GLUT_UP)
-		{
-			guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( guiex::MOUSE_MIDDLE, guiex::MOUSE_UP );
+		case GLUT_RIGHT_BUTTON:
+			if (state == GLUT_UP)
+			{
+				guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( guiex::MOUSE_RIGHT, guiex::MOUSE_UP );
+			}
+			else
+			{
+				guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( guiex::MOUSE_RIGHT, guiex::MOUSE_DOWN );
+			}
+			break;
+
+		case GLUT_MIDDLE_BUTTON:
+			if (state == GLUT_UP)
+			{
+				guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( guiex::MOUSE_MIDDLE, guiex::MOUSE_UP );
+			}
+			else
+			{
+				guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( guiex::MOUSE_MIDDLE, guiex::MOUSE_DOWN );
+			}
+			break;
 		}
-		else
-		{
-			guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeButtonState( guiex::MOUSE_MIDDLE, guiex::MOUSE_DOWN );
-		}
-		break;
+	}
+	catch (guiex::CGUIBaseException& rError)
+	{
+#if defined(GUIEX_PLATFORM_WIN32)
+		MessageBoxA( NULL,rError.what(), "error", MB_OK | MB_ICONHAND );
+#endif
 	}
 }
 //------------------------------------------------------------------------------
@@ -299,7 +309,15 @@ void exitCB()
 WNDPROC g_pfOldProc = NULL;
 LRESULT CALLBACK MsgWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	guiex::CGUIInterfaceManager::Instance()->GetInterfaceImeWithTypeCheck<guiex::IGUIIme_winapi>()->ProcessWindowMessage(hwnd, uMsg, wParam, lParam );
+	try
+	{
+		guiex::CGUIInterfaceManager::Instance()->GetInterfaceImeWithTypeCheck<guiex::IGUIIme_winapi>()->ProcessWindowMessage(hwnd, uMsg, wParam, lParam );
+	}
+	catch (guiex::CGUIBaseException& rError)
+	{
+		MessageBoxA( NULL,rError.what(), "error", MB_OK | MB_ICONHAND );
+	}
+
 	return(CallWindowProc(g_pfOldProc, hwnd, uMsg, wParam, lParam));
 }
 #endif

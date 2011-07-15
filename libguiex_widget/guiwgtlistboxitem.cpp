@@ -40,14 +40,12 @@ namespace guiex
 		m_bSelected = false;
 
 		SetGenerateChildSizeChangeEvent(true);
+		SetGenerateParentChildEvent( true );
 	}
 	//------------------------------------------------------------------------------
 	CGUIWgtListBox*	CGUIWgtListBoxItem::GetListBox()
 	{
-		GUI_ASSERT( GetParent(), "CGUIWgtListBoxItem: this item havn't parent");
-		GUI_ASSERT( GetParent()->GetType() == "CGUIWgtListBox", "CGUIWgtListBoxItem: parent isn't a CGUIWgtListBox");
-		
-		return static_cast<CGUIWgtListBox*>(GetParent());
+		return m_pListBox;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtListBoxItem::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
@@ -107,59 +105,98 @@ namespace guiex
 	//------------------------------------------------------------------------------
 
 
-
+	//------------------------------------------------------------------------------
+	uint32 CGUIWgtListBoxItem::OnParentChanged( CGUIEventRelativeChange* pEvent )
+	{
+		if( GetParent() && GetParent()->GetType() == "CGUIWgtListBox")
+		{
+			m_pListBox = static_cast<CGUIWgtListBox*>(GetParent());
+		}
+		else
+		{
+			m_pListBox = NULL;
+		}
+		return CGUIWidget::OnParentChanged(pEvent);
+	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtListBoxItem::OnMouseLeftClick( CGUIEventMouse* pEvent )
 	{
-		GetListBox()->ProcessMouseLeftClick(this, pEvent);
+		if( GetListBox() )
+		{
+			GetListBox()->ProcessMouseLeftClick(this, pEvent);
+		}
 		return CGUIWidget::OnMouseLeftClick(pEvent);
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtListBoxItem::OnMouseRightClick( CGUIEventMouse* pEvent )
 	{
-		GetListBox()->ProcessMouseRightClick(this, pEvent);
+		if( GetListBox() )
+		{
+			GetListBox()->ProcessMouseRightClick(this, pEvent);
+		}
 		return CGUIWidget::OnMouseRightClick(pEvent);
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtListBoxItem::OnMouseLeftDbClick( CGUIEventMouse* pEvent )
 	{
-		GetListBox()->ProcessMouseLeftDbClick(this, pEvent);
+		if( GetListBox() )
+		{
+			GetListBox()->ProcessMouseLeftDbClick(this, pEvent);
+		}
 		return CGUIWidget::OnMouseLeftDbClick(pEvent);
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtListBoxItem::OnMouseRightDbClick( CGUIEventMouse* pEvent )
 	{
-		GetListBox()->ProcessMouseRightDbClick(this, pEvent);
+		if( GetListBox() )
+		{
+			GetListBox()->ProcessMouseRightDbClick(this, pEvent);
+		}
 		return CGUIWidget::OnMouseRightDbClick(pEvent);
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtListBoxItem::OnMouseLeftDown( CGUIEventMouse* pEvent )
 	{
-		GetListBox()->ProcessMouseLeftDown(this, pEvent);
+		if( GetListBox() )
+		{
+			GetListBox()->ProcessMouseLeftDown(this, pEvent);
+		}
 		return CGUIWidget::OnMouseLeftDown(pEvent);
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtListBoxItem::OnMouseLeftUp( CGUIEventMouse* pEvent )
 	{
-		GetListBox()->ProcessMouseLeftUp(this, pEvent);
+		if( GetListBox() )
+		{
+			GetListBox()->ProcessMouseLeftUp(this, pEvent);
+		}
 		return CGUIWidget::OnMouseLeftUp(pEvent);
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtListBoxItem::OnMouseRightDown( CGUIEventMouse* pEvent )
 	{
-		GetListBox()->ProcessMouseRightDown(this, pEvent);
+		if( GetListBox() )
+		{
+			GetListBox()->ProcessMouseRightDown(this, pEvent);
+		}
 		return CGUIWidget::OnMouseRightDown(pEvent);
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtListBoxItem::OnMouseRightUp( CGUIEventMouse* pEvent )
 	{
-		GetListBox()->ProcessMouseRightUp(this, pEvent);
+		if( GetListBox() )
+		{
+			GetListBox()->ProcessMouseRightUp(this, pEvent);
+		}
 		return CGUIWidget::OnMouseRightUp(pEvent);
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtListBoxItem::OnMouseMove( CGUIEventMouse* pEvent )
 	{
-		GetListBox()->ProcessMouseMove(this, pEvent);
+		if( GetListBox() )
+		{
+			GetListBox()->ProcessMouseMove(this, pEvent);
+		}
 		return CGUIWidget::OnMouseMove(pEvent);
 	}
 	//------------------------------------------------------------------------------

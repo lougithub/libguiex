@@ -52,8 +52,8 @@ namespace guiex
 		CGUIWgtListBoxItem*	GetItemByIndex(uint32 nIndex) const;
 		uint32	GetItemIndex(const CGUIWgtListBoxItem* pItem) const;
 
-		void AddItem(CGUIWgtListBoxItem* pItem);
-		void RemoveItem( CGUIWgtListBoxItem* pItem);
+		void AddItem(CGUIWidget* pItem);
+		void RemoveItem( CGUIWidget* pItem);
 		void RemoveItem( uint32 nIndex);
 		void RemoveAllItems(void);
 
@@ -90,7 +90,6 @@ namespace guiex
 		virtual uint32 OnOpen( CGUIEventNotification* pEvent );
 		virtual uint32 OnChildSizeChange( CGUIEventSize* pEvent );
 
-		friend class CGUIWgtListBoxItem;
 		virtual void ProcessMouseLeftDown(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent);
 		virtual void ProcessMouseLeftUp(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent);
 		virtual void ProcessMouseRightDown(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent);
