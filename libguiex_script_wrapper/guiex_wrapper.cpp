@@ -11866,114 +11866,6 @@ fail:
 }
 
 
-static int _wrap_CGUIUICanvasLayer_OpenPopupWidget(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::CGUIUICanvasLayer *arg1 = (guiex::CGUIUICanvasLayer *) 0 ;
-  guiex::CGUIWidget *arg2 = (guiex::CGUIWidget *) 0 ;
-  
-  SWIG_check_num_args("guiex::CGUIUICanvasLayer::OpenPopupWidget",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::CGUIUICanvasLayer::OpenPopupWidget",1,"guiex::CGUIUICanvasLayer *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("guiex::CGUIUICanvasLayer::OpenPopupWidget",2,"guiex::CGUIWidget *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIUICanvasLayer,0))){
-    SWIG_fail_ptr("CGUIUICanvasLayer_OpenPopupWidget",1,SWIGTYPE_p_guiex__CGUIUICanvasLayer);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIWidget,0))){
-    SWIG_fail_ptr("CGUIUICanvasLayer_OpenPopupWidget",2,SWIGTYPE_p_guiex__CGUIWidget);
-  }
-  
-  (arg1)->OpenPopupWidget(arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_CGUIUICanvasLayer_GetCurrentPopupWidget(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::CGUIUICanvasLayer *arg1 = (guiex::CGUIUICanvasLayer *) 0 ;
-  guiex::CGUIWidget *result = 0 ;
-  
-  SWIG_check_num_args("guiex::CGUIUICanvasLayer::GetCurrentPopupWidget",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::CGUIUICanvasLayer::GetCurrentPopupWidget",1,"guiex::CGUIUICanvasLayer const *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIUICanvasLayer,0))){
-    SWIG_fail_ptr("CGUIUICanvasLayer_GetCurrentPopupWidget",1,SWIGTYPE_p_guiex__CGUIUICanvasLayer);
-  }
-  
-  result = (guiex::CGUIWidget *)((guiex::CGUIUICanvasLayer const *)arg1)->GetCurrentPopupWidget();
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIWidget,0); SWIG_arg++; 
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_CGUIUICanvasLayer_ClosePopupWidget(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::CGUIUICanvasLayer *arg1 = (guiex::CGUIUICanvasLayer *) 0 ;
-  guiex::CGUIWidget *arg2 = (guiex::CGUIWidget *) 0 ;
-  
-  SWIG_check_num_args("guiex::CGUIUICanvasLayer::ClosePopupWidget",2,2)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::CGUIUICanvasLayer::ClosePopupWidget",1,"guiex::CGUIUICanvasLayer *");
-  if(!SWIG_isptrtype(L,2)) SWIG_fail_arg("guiex::CGUIUICanvasLayer::ClosePopupWidget",2,"guiex::CGUIWidget *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIUICanvasLayer,0))){
-    SWIG_fail_ptr("CGUIUICanvasLayer_ClosePopupWidget",1,SWIGTYPE_p_guiex__CGUIUICanvasLayer);
-  }
-  
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIWidget,0))){
-    SWIG_fail_ptr("CGUIUICanvasLayer_ClosePopupWidget",2,SWIGTYPE_p_guiex__CGUIWidget);
-  }
-  
-  (arg1)->ClosePopupWidget(arg2);
-  
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
-static int _wrap_CGUIUICanvasLayer_GetCurrentRootWidget(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::CGUIUICanvasLayer *arg1 = (guiex::CGUIUICanvasLayer *) 0 ;
-  guiex::CGUIWidget *result = 0 ;
-  
-  SWIG_check_num_args("guiex::CGUIUICanvasLayer::GetCurrentRootWidget",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::CGUIUICanvasLayer::GetCurrentRootWidget",1,"guiex::CGUIUICanvasLayer *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIUICanvasLayer,0))){
-    SWIG_fail_ptr("CGUIUICanvasLayer_GetCurrentRootWidget",1,SWIGTYPE_p_guiex__CGUIUICanvasLayer);
-  }
-  
-  result = (guiex::CGUIWidget *)(arg1)->GetCurrentRootWidget();
-  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIWidget,0); SWIG_arg++; 
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static void swig_delete_CGUIUICanvasLayer(void *obj) {
 guiex::CGUIUICanvasLayer *arg1 = (guiex::CGUIUICanvasLayer *) obj;
 delete arg1;
@@ -11986,10 +11878,6 @@ static swig_lua_method swig_guiex_CGUIUICanvasLayer_methods[] = {
     {"OpenDialog", _wrap_CGUIUICanvasLayer_OpenDialog}, 
     {"GetTopestDialog", _wrap_CGUIUICanvasLayer_GetTopestDialog}, 
     {"CloseDialog", _wrap_CGUIUICanvasLayer_CloseDialog}, 
-    {"OpenPopupWidget", _wrap_CGUIUICanvasLayer_OpenPopupWidget}, 
-    {"GetCurrentPopupWidget", _wrap_CGUIUICanvasLayer_GetCurrentPopupWidget}, 
-    {"ClosePopupWidget", _wrap_CGUIUICanvasLayer_ClosePopupWidget}, 
-    {"GetCurrentRootWidget", _wrap_CGUIUICanvasLayer_GetCurrentRootWidget}, 
     {0,0}
 };
 static swig_lua_attribute swig_guiex_CGUIUICanvasLayer_attributes[] = {

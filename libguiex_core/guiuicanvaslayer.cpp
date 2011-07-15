@@ -54,10 +54,10 @@ namespace guiex
 		}
 
 		//close all popup widget
-		while( GetCurrentPopupWidget())
-		{
-			ClosePopupWidget(GetCurrentPopupWidget());
-		}
+		//while( GetPopupWidget())
+		//{
+		//	ClosePopupWidget(GetPopupWidget());
+		//}
 
 		//close all modal dialog
 		while(GetTopestDialog())
@@ -232,70 +232,75 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUIUICanvasLayer::CloseByAutoSelect( CGUIWidget* pWidget )
+	//void CGUIUICanvasLayer::CloseByAutoSelect( CGUIWidget* pWidget )
+	//{
+	//	GUI_ASSERT( pWidget, "invalid parameter" );
+
+	//	//is page
+	//	TArrayWidget::iterator itorPage = std::find(m_arrayOpenedPage.begin(), m_arrayOpenedPage.end(), pWidget );
+	//	if( itorPage != m_arrayOpenedPage.end())
+	//	{
+	//		CloseUIPage( pWidget );
+	//		return;
+	//	}
+
+	//	//is dialog
+	//	TArrayWidget::iterator itorDlg = std::find(m_arrayOpenedDlg.begin(), m_arrayOpenedDlg.end(), pWidget );
+	//	if( itorDlg != m_arrayOpenedDlg.end())
+	//	{		
+	//		CloseDialog( pWidget );
+	//		return;
+	//	}
+
+	//	//is popup widget
+	//	if( pWidget == m_pPopupWidget )
+	//	{		
+	//		ClosePopupWidget( pWidget );
+	//		return;
+	//	}
+	//}
+	//------------------------------------------------------------------------------
+	void CGUIUICanvasLayer::SetPopupWidget(CGUIWidget* pWidget)
 	{
-		GUI_ASSERT( pWidget, "invalid parameter" );
-
-		//is page
-		TArrayWidget::iterator itorPage = std::find(m_arrayOpenedPage.begin(), m_arrayOpenedPage.end(), pWidget );
-		if( itorPage != m_arrayOpenedPage.end())
-		{
-			CloseUIPage( pWidget );
-			return;
-		}
-
-		//is dialog
-		TArrayWidget::iterator itorDlg = std::find(m_arrayOpenedDlg.begin(), m_arrayOpenedDlg.end(), pWidget );
-		if( itorDlg != m_arrayOpenedDlg.end())
-		{		
-			CloseDialog( pWidget );
-			return;
-		}
-
-		//is popup widget
-		if( pWidget == m_pPopupWidget )
-		{		
-			ClosePopupWidget( pWidget );
-			return;
-		}
+		m_pPopupWidget = pWidget;
 	}
 	//------------------------------------------------------------------------------
-	CGUIWidget* CGUIUICanvasLayer::GetCurrentPopupWidget( ) const
+	CGUIWidget* CGUIUICanvasLayer::GetPopupWidget( ) const
 	{
 		return m_pPopupWidget;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIUICanvasLayer::ClosePopupWidget(CGUIWidget* pWidget)
-	{
-		GUI_ASSERT(pWidget, "invalid parameter");
+	//void CGUIUICanvasLayer::ClosePopupWidget(CGUIWidget* pWidget)
+	//{
+	//	GUI_ASSERT(pWidget, "invalid parameter");
 
-		if( m_pPopupWidget = pWidget )
-		{
-			pWidget->Close();
-			m_pPopupWidget = NULL;
-			GUI_TRACE( GUI_FORMAT("ClosePopupWidget <%s> \n", pWidget->GetName().c_str()));
-			return;
-		}
-		else
-		{
-			GUI_FORCE_ASSERT(GUI_FORMAT("failed to close popup widget <%s>", pWidget->GetName().c_str()));
-		}
-	}
+	//	if( m_pPopupWidget = pWidget )
+	//	{
+	//		pWidget->Close();
+	//		m_pPopupWidget = NULL;
+	//		GUI_TRACE( GUI_FORMAT("ClosePopupWidget <%s> \n", pWidget->GetName().c_str()));
+	//		return;
+	//	}
+	//	else
+	//	{
+	//		GUI_FORCE_ASSERT(GUI_FORMAT("failed to close popup widget <%s>", pWidget->GetName().c_str()));
+	//	}
+	//}
 	//------------------------------------------------------------------------------
-	void CGUIUICanvasLayer::OpenPopupWidget(CGUIWidget* pWidget)
-	{
-		GUI_ASSERT(pWidget, "invalid parameter");
+	//void CGUIUICanvasLayer::OpenPopupWidget(CGUIWidget* pWidget)
+	//{
+	//	GUI_ASSERT(pWidget, "invalid parameter");
 
-		if( m_pPopupWidget )
-		{
-			GUI_FORCE_ASSERT(GUI_FORMAT("failed to open popup widget, a popup widget has opened! <%s>", m_pPopupWidget->GetName().c_str()));
-		}
+	//	if( m_pPopupWidget )
+	//	{
+	//		GUI_FORCE_ASSERT(GUI_FORMAT("failed to open popup widget, a popup widget has opened! <%s>", m_pPopupWidget->GetName().c_str()));
+	//	}
 
-		pWidget->Open();
-		m_pPopupWidget = pWidget;
+	//	pWidget->Open();
+	//	m_pPopupWidget = pWidget;
 
-		GUI_TRACE( GUI_FORMAT("OpenPopupWidget <%s> \n", pWidget->GetName().c_str()));
-	}
+	//	GUI_TRACE( GUI_FORMAT("OpenPopupWidget <%s> \n", pWidget->GetName().c_str()));
+	//}
 	//------------------------------------------------------------------------------
 	void CGUIUICanvasLayer::OpenUIPage(CGUIWidget* pPage)
 	{
@@ -361,7 +366,7 @@ namespace guiex
 	CGUIWidget*	CGUIUICanvasLayer::GetCurrentRootWidget( )
 	{
 		CGUIWidget* pDlgRoot = NULL;
-		if( pDlgRoot = GetCurrentPopupWidget())
+		if( pDlgRoot = GetPopupWidget())
 		{
 			return pDlgRoot;
 		}

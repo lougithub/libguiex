@@ -811,7 +811,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	bool	CGUIWidget::IsFocus() const
+	bool CGUIWidget::IsFocus() const
 	{
 		if( IsFocusAgency() )
 		{
@@ -827,7 +827,7 @@ namespace guiex
 		return GSystem->GetFocusWidget() == this;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::SetVisible(bool bVisible)
+	void CGUIWidget::SetVisible(bool bVisible)
 	{
 		if( bVisible != IsVisible() )
 		{
@@ -847,12 +847,12 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	bool	CGUIWidget::IsVisible() const
+	bool CGUIWidget::IsVisible() const
 	{
 		return m_aParamVisible.GetSelfValue();
 	}
 	//------------------------------------------------------------------------------
-	bool	CGUIWidget::IsDerivedVisible()
+	bool CGUIWidget::IsDerivedVisible()
 	{
 		return m_aParamVisible.GetFinalValue();
 	}
@@ -1143,7 +1143,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::UnregisterScriptCallbackFunc(const CGUIString& strEventName)
+	void CGUIWidget::UnregisterScriptCallbackFunc(const CGUIString& strEventName)
 	{
 		TMapScriptFunc::iterator itor = m_mapScriptFunc.find(strEventName);
 		if( itor != m_mapScriptFunc.end())
@@ -1152,7 +1152,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	bool	CGUIWidget::HasScriptCallbackFunc(const CGUIString& strEventName) const
+	bool CGUIWidget::HasScriptCallbackFunc(const CGUIString& strEventName) const
 	{
 		return m_mapScriptFunc.find(strEventName) != m_mapScriptFunc.end();
 	}

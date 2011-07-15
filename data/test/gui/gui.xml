@@ -230,12 +230,12 @@
         <property name="anchor" type="CGUIVector2" value="0,1" />
         <property name="OnListBoxSelected" type="CGUIEvent" value="OnListBoxSelected_1" />
     </property>
-    <property name="listboxitem_3" type="CGUIWidgetDefine" value="CGUIWgtListBoxItem">
+    <property name="listboxitem_1" type="CGUIWidgetDefine" value="CGUIWgtListBoxItem">
         <property name="parent" type="CGUIString" value="listbox_1" />
         <property name="normal" type="CGUIImage" value="button_blue_normal" />
         <property name="selected" type="CGUIImage" value="button_blue_hover" />
         <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="0,92" />
+            <property name="value" type="CGUIVector2" value="0,0" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">
@@ -243,8 +243,8 @@
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
     </property>
-    <property name="listboxitem_text_3" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
-        <property name="parent" type="CGUIString" value="listboxitem_3" />
+    <property name="listboxitem_text_1" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
+        <property name="parent" type="CGUIString" value="listboxitem_1" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="35,11" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
@@ -254,7 +254,7 @@
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="hitable" type="bool" value="false" />
-        <property name="text" type="CGUIString" value="list item 3" />
+        <property name="text" type="CGUIString" value="list item 1" />
     </property>
     <property name="listboxitem_2" type="CGUIWidgetDefine" value="CGUIWgtListBoxItem">
         <property name="parent" type="CGUIString" value="listbox_1" />
@@ -282,12 +282,12 @@
         <property name="hitable" type="bool" value="false" />
         <property name="text" type="CGUIString" value="list item 2" />
     </property>
-    <property name="listboxitem_1" type="CGUIWidgetDefine" value="CGUIWgtListBoxItem">
+    <property name="listboxitem_3" type="CGUIWidgetDefine" value="CGUIWgtListBoxItem">
         <property name="parent" type="CGUIString" value="listbox_1" />
         <property name="normal" type="CGUIImage" value="button_blue_normal" />
         <property name="selected" type="CGUIImage" value="button_blue_hover" />
         <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="0,0" />
+            <property name="value" type="CGUIVector2" value="0,92" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">
@@ -295,8 +295,8 @@
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
     </property>
-    <property name="listboxitem_text_1" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
-        <property name="parent" type="CGUIString" value="listboxitem_1" />
+    <property name="listboxitem_text_3" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
+        <property name="parent" type="CGUIString" value="listboxitem_3" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="35,11" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
@@ -306,7 +306,7 @@
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="hitable" type="bool" value="false" />
-        <property name="text" type="CGUIString" value="list item 1" />
+        <property name="text" type="CGUIString" value="list item 3" />
     </property>
     <property name="label_listboxoutput" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
         <property name="parent" type="CGUIString" value="panel_listtest" />
@@ -555,5 +555,36 @@
         </property>
         <property name="text_normal" type="CGUILocalizedString" value="remove item" />
         <property name="OnMouseLeftClick" type="CGUIEvent" value="OnBtnClick_removeitem" />
+    </property>
+    <property name="combobox_1" type="CGUIWidgetDefine" value="CGUIWgtComboBox">
+        <property name="parent" type="CGUIString" value="node_root" />
+        <property name="background" type="CGUIImage" value="button_blue_hover" />
+        <property name="droplist_background" type="CGUIImage" value="dialog_bg" />
+        <property name="droplist_scrollbar_v_arrow_0_normal" type="CGUIImage" value="scrollbar_upbutton_up" />
+        <property name="droplist_scrollbar_v_arrow_0_hover" type="CGUIImage" value="scrollbar_upbutton_highlight" />
+        <property name="droplist_scrollbar_v_arrow_0_disable" type="CGUIImage" value="scrollbar_upbutton_disable" />
+        <property name="droplist_scrollbar_v_arrow_0_push" type="CGUIImage" value="scrollbar_upbutton_down" />
+        <property name="droplist_scrollbar_v_arrow_1_normal" type="CGUIImage" value="scrollbar_downbutton_up" />
+        <property name="droplist_scrollbar_v_arrow_1_hover" type="CGUIImage" value="scrollbar_downbutton_highlight" />
+        <property name="droplist_scrollbar_v_arrow_1_disable" type="CGUIImage" value="scrollbar_downbutton_disable" />
+        <property name="droplist_scrollbar_v_arrow_1_push" type="CGUIImage" value="scrollbar_downbutton_down" />
+        <property name="droplist_scrollbar_v_slide_normal" type="CGUIImage" value="scrollbar_knob" />
+        <property name="droplist_scrollbar_h_arrow_0_normal" type="CGUIImage" value="h_scrollbar_upbutton_up" />
+        <property name="droplist_scrollbar_h_arrow_0_hover" type="CGUIImage" value="h_scrollbar_upbutton_highlight" />
+        <property name="droplist_scrollbar_h_arrow_0_disable" type="CGUIImage" value="h_scrollbar_upbutton_disable" />
+        <property name="droplist_scrollbar_h_arrow_0_push" type="CGUIImage" value="h_scrollbar_upbutton_down" />
+        <property name="droplist_scrollbar_h_arrow_1_normal" type="CGUIImage" value="h_scrollbar_downbutton_up" />
+        <property name="droplist_scrollbar_h_arrow_1_hover" type="CGUIImage" value="h_scrollbar_downbutton_highlight" />
+        <property name="droplist_scrollbar_h_arrow_1_disable" type="CGUIImage" value="h_scrollbar_downbutton_disable" />
+        <property name="droplist_scrollbar_h_arrow_1_push" type="CGUIImage" value="h_scrollbar_downbutton_down" />
+        <property name="droplist_scrollbar_h_slide_normal" type="CGUIImage" value="h_scrollbar_knob" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="14,616" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="194,52" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
     </property>
 </guiex>

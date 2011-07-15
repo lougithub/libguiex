@@ -125,8 +125,6 @@ namespace guiex
 		CGUIWgtScrollbarContainer( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 		void InitScrollbarContainer();
 
-		virtual void RenderExtraSelfInfo(IGUIInterfaceRender* pRender);
-		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 		virtual void RefreshSelf();
 		virtual void OnCreate();
 		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage );

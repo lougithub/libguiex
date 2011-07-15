@@ -449,6 +449,54 @@
 		</page>
 	</widget>
 
+  <widget type="CGUIWgtComboBox" inherit="CGUIWidget">
+    <page name="Appearance">
+      <property name="force_hittest" type="bool" value="true"  category="Default" alternative_save="true"/>
+      <property name="focusable" type="bool" value="true"  category="Default" alternative_save="true"/>
+    </page>
+    <page name="Image">
+      <property name="background" type="CGUIImage" value=""/>
+      <property name="droplist_background" type="CGUIImage" value=""/>
+      <property name="droplist_scrollbar_v_background" type="CGUIImage" value=""/>
+      <property name="droplist_scrollbar_v_arrow_0_normal" type="CGUIImage" value="scrollbar_upbutton_up"/>
+      <property name="droplist_scrollbar_v_arrow_0_hover" type="CGUIImage" value="scrollbar_upbutton_highlight"/>
+      <property name="droplist_scrollbar_v_arrow_0_disable" type="CGUIImage" value="scrollbar_upbutton_disable"/>
+      <property name="droplist_scrollbar_v_arrow_0_push" type="CGUIImage" value="scrollbar_upbutton_down"/>
+      <property name="droplist_scrollbar_v_arrow_0_hover_overlay" type="CGUIImage" value=""/>
+      <property name="droplist_scrollbar_v_arrow_0_push_overlay" type="CGUIImage" value=""/>
+      <property name="droplist_scrollbar_v_arrow_1_normal" type="CGUIImage" value="scrollbar_downbutton_up"/>
+      <property name="droplist_scrollbar_v_arrow_1_hover" type="CGUIImage" value="scrollbar_downbutton_highlight"/>
+      <property name="droplist_scrollbar_v_arrow_1_disable" type="CGUIImage" value="scrollbar_downbutton_disable"/>
+      <property name="droplist_scrollbar_v_arrow_1_push" type="CGUIImage" value="scrollbar_downbutton_down"/>
+      <property name="droplist_scrollbar_v_arrow_1_hover_overlay" type="CGUIImage" value=""/>
+      <property name="droplist_scrollbar_v_arrow_1_push_overlay" type="CGUIImage" value=""/>
+      <property name="droplist_scrollbar_v_slide_normal" type="CGUIImage" value="scrollbar_knob"/>
+      <property name="droplist_scrollbar_v_slide_hover" type="CGUIImage" value=""/>
+      <property name="droplist_scrollbar_v_slide_disable" type="CGUIImage" value=""/>
+      <property name="droplist_scrollbar_v_slide_push" type="CGUIImage" value=""/>
+      <property name="droplist_scrollbar_v_slide_hover_overlay" type="CGUIImage" value=""/>
+      <property name="droplist_scrollbar_v_slide_push_overlay" type="CGUIImage" value=""/>
+      <property name="droplist_scrollbar_h_background" type="CGUIImage" value=""/>
+      <property name="droplist_scrollbar_h_arrow_0_normal" type="CGUIImage" value="h_scrollbar_upbutton_up"/>
+      <property name="droplist_scrollbar_h_arrow_0_hover" type="CGUIImage" value="h_scrollbar_upbutton_highlight"/>
+      <property name="droplist_scrollbar_h_arrow_0_disable" type="CGUIImage" value="h_scrollbar_upbutton_disable"/>
+      <property name="droplist_scrollbar_h_arrow_0_push" type="CGUIImage" value="h_scrollbar_upbutton_down"/>
+      <property name="droplist_scrollbar_h_arrow_0_hover_overlay" type="CGUIImage" value=""/>
+      <property name="droplist_scrollbar_h_arrow_0_push_overlay" type="CGUIImage" value=""/>
+      <property name="droplist_scrollbar_h_arrow_1_normal" type="CGUIImage" value="h_scrollbar_downbutton_up"/>
+      <property name="droplist_scrollbar_h_arrow_1_hover" type="CGUIImage" value="h_scrollbar_downbutton_highlight"/>
+      <property name="droplist_scrollbar_h_arrow_1_disable" type="CGUIImage" value="h_scrollbar_downbutton_disable"/>
+      <property name="droplist_scrollbar_h_arrow_1_push" type="CGUIImage" value="h_scrollbar_downbutton_down"/>
+      <property name="droplist_scrollbar_h_arrow_1_hover_overlay" type="CGUIImage" value=""/>
+      <property name="droplist_scrollbar_h_arrow_1_push_overlay" type="CGUIImage" value=""/>
+      <property name="droplist_scrollbar_h_slide_normal" type="CGUIImage" value="h_scrollbar_knob"/>
+      <property name="droplist_scrollbar_h_slide_hover" type="CGUIImage" value=""/>
+      <property name="droplist_scrollbar_h_slide_disable" type="CGUIImage" value=""/>
+      <property name="droplist_scrollbar_h_slide_push" type="CGUIImage" value=""/>
+      <property name="droplist_scrollbar_h_slide_hover_overlay" type="CGUIImage" value=""/>
+      <property name="droplist_scrollbar_h_slide_push_overlay" type="CGUIImage" value=""/>      
+    </page>
+  </widget>
 </config>
 
 

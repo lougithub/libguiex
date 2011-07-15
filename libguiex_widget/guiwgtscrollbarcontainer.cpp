@@ -159,17 +159,6 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtScrollbarContainer::RenderSelf(IGUIInterfaceRender* pRender)
-	{
-		CGUIWidget::RenderSelf( pRender );
-	}
-	//------------------------------------------------------------------------------
-	void CGUIWgtScrollbarContainer::RenderExtraSelfInfo(IGUIInterfaceRender* pRender)
-	{
-		CGUIWidget::RenderExtraSelfInfo( pRender );
-	}
-
-	//------------------------------------------------------------------------------
 	/** 
 	* @brief Return whether the vertical scroll bar is always shown.
 	*/

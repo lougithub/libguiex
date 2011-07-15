@@ -15,10 +15,6 @@ namespace guiex
 		CGUIWidget* GetTopestDialog( ) const;
 		void CloseDialog(CGUIWidget* pDlg);
 
-		void OpenPopupWidget(CGUIWidget* pWidget);
-		CGUIWidget* GetCurrentPopupWidget( ) const;
-		void ClosePopupWidget(CGUIWidget* pWidget);
-		CGUIWidget* GetCurrentRootWidget( );
 	};
 }
 

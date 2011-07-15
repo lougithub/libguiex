@@ -36,6 +36,12 @@ namespace guiex
 		InitListBox();
 	}
 	//------------------------------------------------------------------------------
+	CGUIWgtListBox::CGUIWgtListBox( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
+		:CGUIWgtScrollbarContainer( rType, rName, rSceneName)
+	{
+		InitListBox();
+	}
+	//------------------------------------------------------------------------------
 	CGUIWgtListBox::~CGUIWgtListBox( )
 	{
 		//delete child
@@ -133,7 +139,7 @@ namespace guiex
 		}
 		else
 		{
-			throw CGUIException("[CGUIWgtListBox::SetItemSelected]: the specified Item is not attached to this Listbox.");
+			GUI_THROW("[CGUIWgtListBox::SetItemSelected]: the specified Item is not attached to this Listbox.");
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -176,7 +182,7 @@ namespace guiex
 		}
 		else
 		{
-			throw CGUIException("[CGUIWgtListBox::SetItemSelected]: the index <%d> of Item is out of range.", nItemIndex);
+			GUI_THROW(GUI_FORMAT("[CGUIWgtListBox::SetItemSelected]: the index <%d> of Item is out of range.", nItemIndex));
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -205,7 +211,8 @@ namespace guiex
 		}
 		else
 		{
-			throw CGUIException("[CGUIWgtListBox::GetItemByIndex]: the index <%d> of Item is out of range.", nIndex);
+			GUI_THROW(GUI_FORMAT("[CGUIWgtListBox::GetItemByIndex]: the index <%d> of Item is out of range.", nIndex));
+			return NULL;
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -222,7 +229,8 @@ namespace guiex
 		}
 		else
 		{
-			throw CGUIException("[CGUIWgtListBox::GetItemIndex]: the specified Item is not attached to this listbox.");
+			GUI_THROW("[CGUIWgtListBox::GetItemIndex]: the specified Item is not attached to this listbox.");
+			return -1;
 		}
 	}
 	//------------------------------------------------------------------------------

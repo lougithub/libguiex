@@ -115,6 +115,12 @@ set( ${target_name}_listbox_SRCS
 	)
 source_group( listbox FILES ${${target_name}_listbox_SRCS} )
 
+#combo box
+set( ${target_name}_combobox_SRCS 
+        guiwgtcombobox.cpp
+        guiwgtcombobox.h
+	)
+source_group( combobox FILES ${${target_name}_combobox_SRCS} )
 
 if( BUILD_PLATFORM_WIN32 )
     set( ${target_name}_SRCS 
@@ -131,6 +137,7 @@ if( BUILD_PLATFORM_WIN32 )
 		${${target_name}_scrollbar_SRCS}
 		${${target_name}_progress_SRCS}
 		${${target_name}_listbox_SRCS}
+		${${target_name}_combobox_SRCS}
 		${${target_name}_utility_SRCS}
         )
 elseif( BUILD_PLATFORM_IOS)
@@ -146,6 +153,7 @@ elseif( BUILD_PLATFORM_IOS)
 		${${target_name}_scrollbar_SRCS}
 		${${target_name}_progress_SRCS}
 		${${target_name}_listbox_SRCS}
+		${${target_name}_combobox_SRCS}
 		${${target_name}_static_SRCS}
 		${${target_name}_utility_SRCS}
         )
@@ -162,6 +170,7 @@ elseif( BUILD_PLATFORM_MACOS )
 		${${target_name}_scrollbar_SRCS}
 		${${target_name}_progress_SRCS}
 		${${target_name}_listbox_SRCS}
+		${${target_name}_combobox_SRCS}
 		${${target_name}_static_SRCS}
 		${${target_name}_utility_SRCS}
         )

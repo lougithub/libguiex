@@ -31,6 +31,46 @@ namespace guiex
 	*		-bg_focus
 	*		-bg
 	*		-cursor
+	*
+	* scrollbar_v_background
+	* scrollbar_v_arrow_0_normal
+	* scrollbar_v_arrow_0_hover
+	* scrollbar_v_arrow_0_disable
+	* scrollbar_v_arrow_0_push
+	* scrollbar_v_arrow_0_hover_overlay
+	* scrollbar_v_arrow_0_push_overlay
+	* scrollbar_v_arrow_1_normal
+	* scrollbar_v_arrow_1_hover
+	* scrollbar_v_arrow_1_disable
+	* scrollbar_v_arrow_1_push
+	* scrollbar_v_arrow_1_hover_overlay
+	* scrollbar_v_arrow_1_push_overlay
+	* scrollbar_v_slide_normal
+	* scrollbar_v_slide_hover
+	* scrollbar_v_slide_disable
+	* scrollbar_v_slide_push
+	* scrollbar_v_slide_hover_overlay
+	* scrollbar_v_slide_push_overlay
+	*
+	* scrollbar_h_background
+	* scrollbar_h_arrow_0_normal
+	* scrollbar_h_arrow_0_hover
+	* scrollbar_h_arrow_0_disable
+	* scrollbar_h_arrow_0_push
+	* scrollbar_h_arrow_0_hover_overlay
+	* scrollbar_h_arrow_0_push_overlay
+	* scrollbar_h_arrow_1_normal
+	* scrollbar_h_arrow_1_hover
+	* scrollbar_h_arrow_1_disable
+	* scrollbar_h_arrow_1_push
+	* scrollbar_h_arrow_1_hover_overlay
+	* scrollbar_h_arrow_1_push_overlay
+	* scrollbar_h_slide_normal
+	* scrollbar_h_slide_hover
+	* scrollbar_h_slide_disable
+	* scrollbar_h_slide_push
+	* scrollbar_h_slide_hover_overlay
+	* scrollbar_h_slide_push_overlay
 	*/
 	class GUIEXPORT CGUIWgtMultiEditBox : public CGUIWgtScrollbarContainer
 	{

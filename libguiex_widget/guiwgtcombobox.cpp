@@ -9,14 +9,18 @@
 //============================================================================//
 // include 
 //============================================================================// 
-#include <libguiex_widget/guiwgtcombobox.h>
-#include <libguiex_widget/guiwgtlistbox.h>
+#include "guiwgtcombobox.h"
+#include "guiwgtlistbox.h"
+#include "guiwgtlistboxitem.h"
 #include <libguiex_core/guiinterfacerender.h>
 #include <libguiex_core/guievent.h>
 #include <libguiex_core/guiexception.h>
-#include <libguiex_core/guiwidgetsystem.h>
+#include <libguiex_core/guisystem.h>
+#include <libguiex_core/guiimage.h>
 #include <libguiex_core/guistringconvertor.h>
+#include <libguiex_core/guiwidgetmanager.h>
 #include <libguiex_core/guipropertymanager.h>
+#include <libguiex_core/guiuicanvaslayer.h>
 
 
 //============================================================================//
@@ -30,21 +34,20 @@ namespace guiex
 		/// constructor
 		CGUIWgtComboBoxDropList(const CGUIString& rName, const CGUIString& rSceneName );
 
+		void ShowDropList();
+		void HideDropList();
+
 	protected:
 		///initialize
-		void	InitComboBoxDropList();
-
-		//update dirty rect
-		virtual void		PostUpdateDirtyRect();	
+		void InitComboBoxDropList();
 
 	protected:
-		virtual uint32		OnLostFocus( CGUIEventNotification* pEvent );
-
-		virtual void		ProcessMouseLeftUp(CGUIListBoxItem* pItem, CGUIEventMouse* pEvent);
-		virtual void		ProcessMouseMove(CGUIListBoxItem* pItem, CGUIEventMouse* pEvent);
+		virtual uint32 OnLostFocus( CGUIEventNotification* pEvent );
+		virtual void ProcessMouseLeftUp(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent);
+		virtual void ProcessMouseMove(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent);
 
 	private:
-		static CGUIString	ms_strType;
+		static CGUIString ms_strType;
 	};
 }
 
@@ -53,51 +56,53 @@ namespace guiex
 //============================================================================// 
 namespace guiex
 {
-
+	//------------------------------------------------------------------------------
+	CGUIString CGUIWgtComboBoxDropList::ms_strType = "CGUIWgtComboBoxDropList";
 	//------------------------------------------------------------------------------
 	CGUIWgtComboBoxDropList::CGUIWgtComboBoxDropList(const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIWgtListBox(StaticGetType(),rName, rSceneName )
+		:CGUIWgtListBox( ms_strType,rName, rSceneName )
 	{
 		InitComboBoxDropList();
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtComboBoxDropList::InitComboBoxDropList()
+	void CGUIWgtComboBoxDropList::InitComboBoxDropList()
 	{
+		SetVisible( false );
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtComboBoxDropList::PostUpdateDirtyRect()
+	void CGUIWgtComboBoxDropList::ShowDropList()
 	{
-		CGUIRect	aClientClipRect = m_aClientClipRect;
-
-		CGUIWgtListBox::PostUpdateDirtyRect();
-
-		m_aClipRect = GSystem->GetScreenRect().GetIntersection(m_aWidgetRect);
-		m_aClientClipRect = GSystem->GetScreenRect().GetIntersection(aClientClipRect);
+		SetVisible(true);
+		GSystem->GetUICanvas()->SetPopupWidget( this );
 	}
 	//------------------------------------------------------------------------------
-	uint32		CGUIWgtComboBoxDropList::OnLostFocus( CGUIEventNotification* pEvent )
+	void CGUIWgtComboBoxDropList::HideDropList()
 	{
-		if( IsOpen() )
+		SetVisible(false);
+		if( GSystem->GetUICanvas()->GetPopupWidget( ) == this )
 		{
-			Close();
+			GSystem->GetUICanvas()->SetPopupWidget( NULL );
 		}
+	}
+	//------------------------------------------------------------------------------
+	uint32 CGUIWgtComboBoxDropList::OnLostFocus( CGUIEventNotification* pEvent )
+	{
+		HideDropList( );
+		ClearAllSelections_impl();
 		return CGUIWidget::OnLostFocus(pEvent);
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtComboBoxDropList::ProcessMouseMove( CGUIListBoxItem* pItem,CGUIEventMouse* pEvent )
+	void CGUIWgtComboBoxDropList::ProcessMouseMove( CGUIWgtListBoxItem* pItem,CGUIEventMouse* pEvent )
 	{
 		ClearAllSelections_impl();
 		pItem->SetSelected(true);
-
 	}
 	//------------------------------------------------------------------------------
-	void		CGUIWgtComboBoxDropList::ProcessMouseLeftUp( CGUIListBoxItem* pItem, CGUIEventMouse* pEvent)
+	void CGUIWgtComboBoxDropList::ProcessMouseLeftUp( CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent)
 	{
 		static_cast<CGUIWgtComboBox*>(GetParent())->SetSelectedItem(pItem);
-		if( IsOpen() )
-		{
-			Close();
-		}
+		HideDropList();
+		ClearAllSelections_impl();
 	}
 	//------------------------------------------------------------------------------
 
@@ -105,10 +110,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtComboBox);
 	//------------------------------------------------------------------------------
-	CGUIString CGUIWgtComboBox::ms_strType = "CGUIWgtComboBox";
-	//------------------------------------------------------------------------------
 	CGUIWgtComboBox::CGUIWgtComboBox( const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIWidget(ms_strType, rName, rSceneName)
+		:CGUIWidget(StaticGetType(), rName, rSceneName)
 	{
 		InitComboBox();
 	}
@@ -124,95 +127,90 @@ namespace guiex
 		//delete drop list
 		m_pDropList->SetParent(NULL);
 		delete m_pDropList;
+		m_pDropList = NULL;
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtComboBox::InitComboBox()
+	void CGUIWgtComboBox::InitComboBox()
 	{
 		m_pImageBG = NULL;
 		m_pSelectedItem = NULL;
 
 		//create drop list
-		m_pDropList = new CGUIWgtComboBoxDropList(GetName()+"_DropList__auto__", GetSceneName());
+		m_pDropList = new CGUIWgtComboBoxDropList(CGUIWidgetManager::MakeInternalName(GetName()+"_DropList"), GetSceneName());
 		m_pDropList->SetParent( this);
-		m_pDropList->SetOpenWithParent( false );
+
+		SetForceHitTest(true);
+		SetFocusable(true);
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtComboBox::Create()
+	void CGUIWgtComboBox::OnCreate()
 	{
-		if( !m_pImageBG )
-		{
-			throw CGUIException("[CGUIWgtComboBox::Create]: the image <BGIMAGE> hasn't been found!");
-		}
+		CGUIWidget::OnCreate();
 
 		//drop list
-		m_pDropList->SetLocalPosition( 0.0f, GetSize().GetHeight());
+		m_pDropList->SetPosition( 0.0f, GetPixelSize().GetHeight());
 		m_pDropList->Create();
-
-		CGUIWidget::Create();
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtComboBox::OnSetImage( const CGUIString& rName, const CGUIImage* pImage)
+	void CGUIWgtComboBox::OnSetImage( const CGUIString& rName, CGUIImage* pImage)
 	{
-		if( rName == "BGIMAGE")
+		if( rName == "background")
 		{
 			m_pImageBG = pImage;
-			SetSize(pImage->GetSize());
+			if( pImage && GetSize().IsEqualZero())
+			{
+				SetPixelSize(pImage->GetSize());
+			}
 		}
-		else if( rName == "DROPLIST_BGIMAGE")
+		else if( rName.find( "droplist_" ) == 0 )
 		{
-			m_pDropList->SetImage("BGIMAGE", pImage);
-		}
-		else if( rName == "DROPLIST_SELECTION_COLOR")
-		{
-			m_pDropList->SetImage("SELECTION_COLOR", pImage);
-		}
-		else
-		{
-			m_pDropList->SetImage(rName, pImage);
+			m_pDropList->SetImage( rName.substr(strlen("droplist_")), pImage );
 		}
 	}	
 	//------------------------------------------------------------------------------
-	void CGUIWgtComboBox::SetTextInfo( const CGUIStringRenderInfo& rInfo)
-	{
-		m_pDropList->SetTextInfo(rInfo);
-		CGUIWidget::SetTextInfo(rInfo);
-	}
-	//------------------------------------------------------------------------------
 	void CGUIWgtComboBox::RenderSelf(IGUIInterfaceRender* pRender)
 	{
-		CGUIRect aClientArea = GetClientRect();
+		CGUIWidget::RenderSelf( pRender );
 
-		/// draw bg
-		DrawImage( pRender, m_pImageBG, GetRect() );
+		// draw bg
+		DrawImage( pRender, m_pImageBG, GetBoundArea() );
 
-		/// draw item
+		// draw item
 		if( m_pSelectedItem )
 		{
-			DrawString( pRender, GetText(),GetClientRect(), GetTextAlignment(), &GetClipRect());
+			CGUIVector2 rOldPos = m_pSelectedItem->GetPixelPosition();
+			m_pSelectedItem->SetPixelPosition( 0.0f, 0.0f );
+			m_pSelectedItem->Refresh();
+
+			m_pSelectedItem->Render( pRender );
+
+			m_pSelectedItem->SetPixelPosition( rOldPos );
+			m_pSelectedItem->Refresh();
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtComboBox::SetDropListSize( const CGUISize& rSize )
+	/**
+	* @brief set the size of drop list
+	*/
+	void CGUIWgtComboBox::SetDropListSize( const CGUISize& rSize )
 	{
-		m_pDropList->SetSize( rSize );
+		m_pDropList->SetPixelSize( rSize );
 	}
 	//------------------------------------------------------------------------------
 	const CGUISize&	CGUIWgtComboBox::GetDropListSize(  ) const
 	{
-		return m_pDropList->GetSize( );
+		return m_pDropList->GetPixelSize( );
 	}
 	//------------------------------------------------------------------------------
-	void			CGUIWgtComboBox::SetSelectedItem(CGUIListBoxItem* pItem)
+	void CGUIWgtComboBox::SetSelectedItem(CGUIWgtListBoxItem* pItem)
 	{
+		if( !pItem )
+		{
+			GUI_THROW(  "[CGUIWgtComboBox::SetSelectedItem]: the item doesn't exist!");
+		}
+
 		uint32 nIdx = m_pDropList->GetItemIndex(pItem);
 		m_pSelectedItem = pItem;
-		m_pSelectedItem->SetSelected(false);
-		if( !m_pSelectedItem )
-		{
-			throw CGUIException("[CGUIWgtComboBox::SetSelectedItem]: the item doesn't exist!");
-		}
-		SetTextContent(m_pSelectedItem->GetTextContent());
-		SetTextInfo(m_pSelectedItem->GetTextInfo());
 
 		//send event
 		CGUIEventComboBox aEvent;
@@ -222,204 +220,66 @@ namespace guiex
 		GSystem->SendEvent( &aEvent);
 	}
 	//------------------------------------------------------------------------------
-	void			CGUIWgtComboBox::SetSelectedItem(uint32 nIdx )
+	void CGUIWgtComboBox::SetSelectedItem(uint32 nIdx )
 	{
-		CGUIListBoxItem* pItem = m_pDropList->GetItemFromIndex(nIdx);
+		CGUIWgtListBoxItem* pItem = m_pDropList->GetItemByIndex(nIdx);
 		SetSelectedItem(pItem);
 	}
 	//------------------------------------------------------------------------------
-	uint32	CGUIWgtComboBox::GetSelectedItemIndex() const
+	bool CGUIWgtComboBox::HasSelectedItem() const
+	{
+		return m_pSelectedItem!= NULL;
+	}
+	//------------------------------------------------------------------------------
+	uint32 CGUIWgtComboBox::GetSelectedItemIndex() const
 	{
 		if( !m_pSelectedItem )
 		{
-			return GUI_INVALID;
+			GUI_THROW("[CGUIWgtComboBox::GetSelectedItemIndex]: no item selected!");
 		}
 
-		return  m_pDropList->GetItemIndex(m_pSelectedItem);
+		return m_pDropList->GetItemIndex(m_pSelectedItem);
 	}
 	//------------------------------------------------------------------------------
-	const CGUIListBoxItem*	CGUIWgtComboBox::GetSelectedItem() const
+	const CGUIWgtListBoxItem* CGUIWgtComboBox::GetSelectedItem() const
 	{
 		return m_pSelectedItem;
 	}
 	//------------------------------------------------------------------------------
-	uint32	CGUIWgtComboBox::GetItemCount(void) const
+	uint32 CGUIWgtComboBox::GetItemCount(void) const
 	{
 		return m_pDropList->GetItemCount();
 	}	
 	//------------------------------------------------------------------------------
-	CGUIListBoxItem*	CGUIWgtComboBox::GetItemFromIndex(uint32 nIndex) const
+	CGUIWgtListBoxItem* CGUIWgtComboBox::GetItemByIndex(uint32 nIndex) const
 	{
-		return m_pDropList->GetItemFromIndex(nIndex);
+		return m_pDropList->GetItemByIndex(nIndex);
 	}
 	//------------------------------------------------------------------------------
-	uint32	CGUIWgtComboBox::GetItemIndex(const CGUIListBoxItem* pItem) const
+	uint32	CGUIWgtComboBox::GetItemIndex(const CGUIWgtListBoxItem* pItem) const
 	{
 		return m_pDropList->GetItemIndex(pItem);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtComboBox::AddItem(CGUIListBoxItem* pItem)
+	void CGUIWgtComboBox::AddItem(CGUIWgtListBoxItem* pItem)
 	{
 		m_pDropList->AddItem(pItem);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtComboBox::AddItem( const CGUIStringW& rText )
-	{
-		m_pDropList->AddItem(pText);
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWgtComboBox::InsertItem(CGUIListBoxItem* pItem, const CGUIListBoxItem* pPosition)
-	{
-		m_pDropList->InsertItem(pItem,pPosition);
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWgtComboBox::InsertItem(CGUIListBoxItem* pItem, uint32 nIndex )
-	{
-		m_pDropList->InsertItem(pItem,nIndex);
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWgtComboBox::InsertItem( const CGUIStringW& rText, const CGUIListBoxItem* pPosition)
-	{
-		m_pDropList->InsertItem(pText,pPosition);
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWgtComboBox::InsertItem( const CGUIStringW& rText, uint32 nIndex )
-	{
-		m_pDropList->InsertItem(pText,nIndex);
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWgtComboBox::RemoveItem( CGUIListBoxItem* pItem)
+	void CGUIWgtComboBox::RemoveItem( CGUIWgtListBoxItem* pItem)
 	{
 		m_pDropList->RemoveItem(pItem);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtComboBox::RemoveItem( uint32 nIndex)
+	void CGUIWgtComboBox::RemoveItem( uint32 nIndex)
 	{
 		m_pDropList->RemoveItem(nIndex);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtComboBox::ClearList(void)
+	uint32 CGUIWgtComboBox::OnMouseLeftDown( CGUIEventMouse* pEvent )
 	{
-		m_pDropList->ClearList();
-	}
-	//------------------------------------------------------------------------------
-	bool	CGUIWgtComboBox::IsVertScrollbarAlwaysShown(void) const
-	{
-		return m_pDropList->IsVertScrollbarAlwaysShown();
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWgtComboBox::ForceVertScrollbar(bool bSetting)
-	{
-		m_pDropList->ForceVertScrollbar(bSetting);
-	}
-	//------------------------------------------------------------------------------
-	bool	CGUIWgtComboBox::IsHorzScrollbarAlwaysShown(void) const
-	{
-		return m_pDropList->IsHorzScrollbarAlwaysShown();
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWgtComboBox::ForceHorzScrollbar(bool bSetting)
-	{
-		m_pDropList->ForceHorzScrollbar(bSetting);
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWgtComboBox::SetSorting(bool bSorting)
-	{
-		m_pDropList->SetSorting(bSorting);
-	}
-	//------------------------------------------------------------------------------
-	bool 	CGUIWgtComboBox::IsSorting() const
-	{
-		return m_pDropList->IsSorting();
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWgtComboBox::MakeItemVisible(uint32 nItemIndex)
-	{
-		m_pDropList->MakeItemVisible(nItemIndex);
-	}
-	//------------------------------------------------------------------------------
-	void	CGUIWgtComboBox::MakeItemVisible(const CGUIListBoxItem* pItem)
-	{
-		m_pDropList->MakeItemVisible(pItem);
-	}
-	//------------------------------------------------------------------------------
-	CGUIProperty*	CGUIWgtComboBox::GenerateProperty(const CGUIString& rName, const CGUIString& rType )
-	{
-		CGUIProperty* pProperty = NULL;
-
-		if( rName == "DROPLIST_SIZE" && rType == "SIZE" )
-		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
-				rName, 
-				rType, 
-				CGUIStringConvertor::SizeToString(GetDropListSize( )));
-		}
-		else if( rName == "SORT" && rType == "BOOL" )
-		{
-			pProperty = CGUIPropertyManager::Instance()->CreateProperty(
-				rName, 
-				rType, 
-				CGUIStringConvertor::BoolToString(IsSorting( )));
-		}
-		else if( rName == "TEXT_ITEM" && rType == "CGUIString" )
-		{
-			GUI_ASSERT(0, "not support now");
-			/*pProperty = CGUIPropertyManager::Instance()->CreateProperty(
-				rName, 
-				rType, 
-				CGUIStringConvertor::SizeToString(IsSorting( )));*/
-		}
-		return pProperty ? pProperty : CGUIWidget::GenerateProperty(rName, rType);
-	}
-	//------------------------------------------------------------------------------
-	void		CGUIWgtComboBox::ProcessProperty( const CGUIProperty* pProperty)
-	{
-		CGUIWidget::ProcessProperty(pProperty);
-
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//property for DROPLIST_SIZE
-		/*
-		*<property name="DROPLIST_SIZE" type="SIZE" value="150,150" />
-		*/
-		if( pProperty->GetName() == "DROPLIST_SIZE" && pProperty->GetType()=="SIZE")
-		{
-			SetDropListSize(CGUIStringConvertor::StringToSize(pProperty->GetValue()));
-		}
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//property for SORT
-		/*
-		*<property name="SORT" type="BOOL" value="false" />
-		*/
-		else if( pProperty->GetName() == "SORT" && pProperty->GetType()=="BOOL")
-		{
-			SetSorting(StringToValue(pProperty->GetValue()));
-		}
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//property for text item
-		/*
-		*<property name="TEXT_ITEM" type="CGUIString" value="abc" />
-		*/
-		else if( pProperty->GetName() == "TEXT_ITEM" && pProperty->GetType()=="CGUIString")
-		{
-			CGUIStringEx aString;
-			CGUIStringConvertor::MultiByteToWideChar(pProperty->GetValue(), aString);
-			AddItem(aString.GetContent());
-		}
-	}
-	//------------------------------------------------------------------------------
-
-
-
-	//------------------------------------------------------------------------------
-	uint32		CGUIWgtComboBox::OnMouseLeftDown( CGUIEventMouse* pEvent )
-	{
-		if( m_pDropList->IsOpen()==false )
-		{
-			m_pDropList->Open();
-		}
+		m_pDropList->SetFocus( true );		
+		m_pDropList->ShowDropList( );
 		return CGUIWidget::OnMouseLeftDown(pEvent);
 	}
 	//------------------------------------------------------------------------------
