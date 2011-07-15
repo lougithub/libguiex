@@ -70,6 +70,7 @@ enum
 	ID_ITEM_Widget_Edit,
 	ID_ITEM_Edit_External,
 	ID_ITEM_Script_Edit,
+	ID_ITEM_Script_Check,
 	ID_ITEM_Image_Edit,
 
 	WIDGET_ID_PG, //id of grid manager

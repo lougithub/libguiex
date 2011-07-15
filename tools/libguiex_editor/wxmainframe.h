@@ -217,6 +217,7 @@ protected:
 	void OnTreeItemWidgetView(wxCommandEvent& event);
 	void OnTreeItemWidgetEdit(wxCommandEvent& event);
 	void OnTreeItemScriptEdit(wxCommandEvent& event);
+	void OnTreeItemScriptCheck(wxCommandEvent& event);
 	void OnTreeItemImageEdit(wxCommandEvent& event);
 	void OnTreeItemEditExternal(wxCommandEvent& event);
 	

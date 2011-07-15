@@ -176,6 +176,7 @@ EVT_MENU(ID_ITEM_Widget_View, WxMainFrame::OnTreeItemWidgetView)
 EVT_MENU(ID_ITEM_Widget_Edit, WxMainFrame::OnTreeItemWidgetEdit)
 EVT_MENU(ID_ITEM_Edit_External, WxMainFrame::OnTreeItemEditExternal)
 EVT_MENU(ID_ITEM_Script_Edit, WxMainFrame::OnTreeItemScriptEdit)
+EVT_MENU(ID_ITEM_Script_Check, WxMainFrame::OnTreeItemScriptCheck)
 EVT_MENU(ID_ITEM_Image_Edit, WxMainFrame::OnTreeItemImageEdit)
 
 //widget tree
@@ -668,6 +669,38 @@ void WxMainFrame::OnTreeItemImageEdit(wxCommandEvent& event)
 	EditFile( m_pTreeCtrl_File->GetItemText(id).char_str(wxConvUTF8).data(), EFT_RESOURCE);
 }
 //------------------------------------------------------------------------------
+void WxMainFrame::OnTreeItemScriptCheck(wxCommandEvent& event)
+{
+	wxTreeItemId id = m_pTreeCtrl_File->GetSelection();
+	CHECK_ITEM( id );
+
+
+	bool bHasError = false;
+	guiex::IGUIInterfaceScript* pInterfaceScript = CGUIInterfaceManager::Instance()->GetInterfaceScript();
+	try
+	{
+		// create script
+		pInterfaceScript->CreateScript( m_strCurrentSceneName );
+
+		// load script
+		std::string strScriptFile = m_pTreeCtrl_File->GetItemText(id).char_str(wxConvUTF8).data();
+		const CGUIScene* pScene = CGUISceneManager::Instance()->GetScene(m_strCurrentSceneName);
+		CGUIString strScriptFilePath = pScene->GetScenePath() + strScriptFile;	
+		pInterfaceScript->ExecuteFile(strScriptFilePath, pScene->GetSceneName());
+		pInterfaceScript->DestroyScript( m_strCurrentSceneName );
+	}
+	catch (CGUIBaseException rError)
+	{
+		bHasError = true;
+		pInterfaceScript->DestroyScript( m_strCurrentSceneName );
+		wxMessageBox( Gui2wxString( rError.what()), _T("script error"), wxICON_ERROR | wxOK | wxCENTRE );
+	}
+	if( !bHasError )
+	{
+		wxMessageBox( _T("there is no error in script!"), _T("success") );
+	}
+}
+//------------------------------------------------------------------------------
 void WxMainFrame::OnTreeItemScriptEdit(wxCommandEvent& event)
 {
 	wxTreeItemId id = m_pTreeCtrl_File->GetSelection();
@@ -839,6 +872,7 @@ void WxMainFrame::OnTreeItemMenu(wxTreeEvent& event)
 		wxMenu menu(_("Script File"));
 		menu.Append(ID_ITEM_Script_Edit, wxT("&Edit"));
 		menu.Append(ID_ITEM_Edit_External, wxT("&Edit External"));
+		menu.Append(ID_ITEM_Script_Check, wxT("&Check"));
 		m_pTreeCtrl_File->PopupMenu(&menu, event.GetPoint());
 	}
 	else if(pNode->m_strFileType == TITLE_RESOURCE_CONFIG )
