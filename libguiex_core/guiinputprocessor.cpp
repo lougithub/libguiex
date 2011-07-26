@@ -431,7 +431,7 @@ namespace guiex
 			//set focus
 			if( GSystem->GetFocusWidget() != pTargetWidget)
 			{
-				// if( pTargetWidget->IsFocusable())
+				if( pTargetWidget->IsFocusable())
 				{
 					pTargetWidget->SetFocus(true);
 				}

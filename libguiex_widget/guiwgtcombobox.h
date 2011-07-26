@@ -81,6 +81,9 @@ namespace guiex
 		CGUIWgtComboBox( const CGUIString& rName, const CGUIString& rSceneName );
 		~CGUIWgtComboBox( );
 
+		virtual int32 GenerateProperty( CGUIProperty& rProperty );
+		virtual void ProcessProperty( const CGUIProperty& rProperty );
+
 		void SetDropListSize( const CGUISize& rSize );
 		const CGUISize&	GetDropListSize(  ) const;
 
@@ -96,9 +99,8 @@ namespace guiex
 		CGUIWgtListBoxItem*	GetItemByIndex(uint32 nIndex) const;
 		uint32 GetItemIndex(const CGUIWgtListBoxItem* pItem) const;
 
-		void AddItem(CGUIWgtListBoxItem* pItem);
-
-		void RemoveItem( CGUIWgtListBoxItem* pItem);
+		void AddItem(CGUIWidget* pItem);
+		void RemoveItem( CGUIWidget* pItem);
 		void RemoveItem( uint32 nIndex);
 
 	protected:

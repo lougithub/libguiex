@@ -453,6 +453,7 @@
     <page name="Appearance">
       <property name="force_hittest" type="bool" value="true"  category="Default" alternative_save="true"/>
       <property name="focusable" type="bool" value="true"  category="Default" alternative_save="true"/>
+      <property name="droplist_size" type="CGUISize" value="100,100" category="ComboBox" alternative_save="true"/>
     </page>
     <page name="Image">
       <property name="background" type="CGUIImage" value=""/>

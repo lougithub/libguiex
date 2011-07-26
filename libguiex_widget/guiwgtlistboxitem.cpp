@@ -41,6 +41,7 @@ namespace guiex
 
 		SetGenerateChildSizeChangeEvent(true);
 		SetGenerateParentChildEvent( true );
+		SetFocusAgency( true );
 	}
 	//------------------------------------------------------------------------------
 	CGUIWgtListBox*	CGUIWgtListBoxItem::GetListBox()

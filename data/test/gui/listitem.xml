@@ -1,5 +1,6 @@
 <guiex>
     <property name="listboxitem_root" type="CGUIWidgetDefine" value="CGUIWgtListBoxItem">
+        <property name="selected" type="CGUIImage" value="panel_bg_grade_green" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="0,0" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
@@ -45,7 +46,7 @@
     <property name="label_name" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
         <property name="parent" type="CGUIString" value="img_head" />
         <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="0,0" />
+            <property name="value" type="CGUIVector2" value="0,1" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="size" type="CGUIWidgetSize">

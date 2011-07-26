@@ -211,6 +211,7 @@ namespace guiex
 	public:
 		bool IsTextContentEmpty() const;
 
+		void SetTextContentUTF8( const CGUIString& rString);
 		void SetTextColor(const CGUIColor& rColor );
 	};
 
@@ -355,5 +356,16 @@ namespace guiex
 	class CGUIWgtMultiEditBox : public CGUIWgtScrollbarContainer
 	{
 	public:
+	};
+
+	//============================================================================//
+	// CGUIWgtListBox
+	//============================================================================// 
+	class CGUIWgtComboBox : public CGUIWidget
+	{
+	public:
+		void AddItem(CGUIWidget* pItem);
+		void RemoveItem( CGUIWidget* pItem);
+		void RemoveItem( uint32 nIndex);
 	};
 }

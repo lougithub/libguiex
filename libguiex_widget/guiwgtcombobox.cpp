@@ -21,6 +21,7 @@
 #include <libguiex_core/guiwidgetmanager.h>
 #include <libguiex_core/guipropertymanager.h>
 #include <libguiex_core/guiuicanvaslayer.h>
+#include <libguiex_core/guipropertyconvertor.h>
 
 
 //============================================================================//
@@ -57,7 +58,7 @@ namespace guiex
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	CGUIString CGUIWgtComboBoxDropList::ms_strType = "CGUIWgtComboBoxDropList";
+	CGUIString CGUIWgtComboBoxDropList::ms_strType = "CGUIWgtListBox";
 	//------------------------------------------------------------------------------
 	CGUIWgtComboBoxDropList::CGUIWgtComboBoxDropList(const CGUIString& rName, const CGUIString& rSceneName )
 		:CGUIWgtListBox( ms_strType,rName, rSceneName )
@@ -139,6 +140,7 @@ namespace guiex
 		m_pDropList = new CGUIWgtComboBoxDropList(CGUIWidgetManager::MakeInternalName(GetName()+"_DropList"), GetSceneName());
 		m_pDropList->SetParent( this);
 
+		SetDropListSize( CGUISize( 100.f, 100.f ));
 		SetForceHitTest(true);
 		SetFocusable(true);
 	}
@@ -261,13 +263,17 @@ namespace guiex
 		return m_pDropList->GetItemIndex(pItem);
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtComboBox::AddItem(CGUIWgtListBoxItem* pItem)
+	void CGUIWgtComboBox::AddItem(CGUIWidget* pItem)
 	{
+		GUI_ASSERT( pItem, "[CGUIWgtComboBox::AddItem] invalid pointer" );
+		GUI_ASSERT( pItem->GetType() == "CGUIWgtListBoxItem", "[CGUIWgtComboBox::AddItem] invalid pointer" );
 		m_pDropList->AddItem(pItem);
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtComboBox::RemoveItem( CGUIWgtListBoxItem* pItem)
+	void CGUIWgtComboBox::RemoveItem( CGUIWidget* pItem)
 	{
+		GUI_ASSERT( pItem, "[CGUIWgtComboBox::RemoveItem] invalid pointer" );
+		GUI_ASSERT( pItem->GetType() == "CGUIWgtListBoxItem", "[CGUIWgtComboBox::RemoveItem] invalid pointer" );
 		m_pDropList->RemoveItem(pItem);
 	}
 	//------------------------------------------------------------------------------
@@ -281,6 +287,35 @@ namespace guiex
 		m_pDropList->SetFocus( true );		
 		m_pDropList->ShowDropList( );
 		return CGUIWidget::OnMouseLeftDown(pEvent);
+	}
+	//------------------------------------------------------------------------------
+
+	//------------------------------------------------------------------------------
+	int32 CGUIWgtComboBox::GenerateProperty( CGUIProperty& rProperty )
+	{
+		if( rProperty.GetType() == ePropertyType_Size && rProperty.GetName() == "droplist_size" )
+		{
+			ValueToProperty( GetDropListSize(), rProperty);
+		}
+		else
+		{
+			return CGUIWidget::GenerateProperty( rProperty );
+		}
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtComboBox::ProcessProperty( const CGUIProperty& rProperty )
+	{
+		if( rProperty.GetType() == ePropertyType_Size && rProperty.GetName() == "droplist_size" )
+		{
+			CGUISize aSize;
+			PropertyToValue( rProperty, aSize );
+			SetDropListSize( aSize );
+		}
+		else
+		{
+			CGUIWidget::ProcessProperty( rProperty );
+		}
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

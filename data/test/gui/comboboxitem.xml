@@ -1,0 +1,31 @@
+<guiex>
+    <property name="comboboxitem_root" type="CGUIWidgetDefine" value="CGUIWgtListBoxItem">
+        <property name="selected" type="CGUIImage" value="bg_blue" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0,0" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="164,32" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+    </property>
+    <property name="label_text" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
+        <property name="parent" type="CGUIString" value="comboboxitem_root" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0,0" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="1,1" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+        </property>
+        <property name="text" type="CGUIString" value="test" />
+        <property name="textinfo" type="CGUIStringRenderInfo">
+            <property name="scale" type="real" value="1" />
+            <property name="font" type="CGUIFont" value="1" />
+            <property name="color" type="CGUIColor" value="255,255,255,255" />
+        </property>
+        <property name="hitable" type="bool" value="false" />
+    </property>
+</guiex>

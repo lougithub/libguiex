@@ -71,3 +71,18 @@ function OnBtnClick_removeitem( self, event )
 	end
 end
 
+
+--combobox test
+function OnLoad_ComboBox( self, event )
+	local i;
+	for i=1,10,1 do
+		local item = guiex.LoadDynamicPage( "comboboxitem.xml", "gui", guiex.GetSceneName() );
+		local label = item:FindWidgetByName( "label_text" );
+		label = guiex.ExactType( label );
+		label:SetTextContentUTF8("item"..i );
+		self:AddItem( item );
+	end
+end
+
+
+

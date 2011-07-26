@@ -586,5 +586,8 @@
             <property name="value" type="CGUISize" value="194,52" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
+        <property name="droplist_size" type="CGUISize" value="194,100" />
+        <property name="generate_load_event" type="bool" value="true" />
+        <property name="OnLoad" type="CGUIEvent" value="OnLoad_ComboBox" />
     </property>
 </guiex>

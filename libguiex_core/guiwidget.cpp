@@ -770,8 +770,8 @@ namespace guiex
 				GetParent()->SetFocus( bFocus);
 				return;
 			}
-			GUI_THROW( GUI_FORMAT("[CGUIWidget::SetFocus]: lack of parent! TYPE<%s>  NAME<%s>",
-				GetType().c_str(),GetName().c_str()));
+			GUI_THROW( GUI_FORMAT("[CGUIWidget::SetFocus]: lack of parent! TYPE<%s>  NAME<%s>",GetType().c_str(),GetName().c_str()));
+			return;
 		}
 
 		if( !bFocus )
