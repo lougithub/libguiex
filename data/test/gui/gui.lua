@@ -76,10 +76,13 @@ end
 function OnLoad_ComboBox( self, event )
 	local i;
 	for i=1,10,1 do
+		local content = "item"..i;
 		local item = guiex.LoadDynamicPage( "comboboxitem.xml", "gui", guiex.GetSceneName() );
+		item = guiex.ExactType( item );
+		item:SetItemContentUTF8( content );
 		local label = item:FindWidgetByName( "label_text" );
 		label = guiex.ExactType( label );
-		label:SetTextContentUTF8("item"..i );
+		label:SetTextContentUTF8(content);
 		self:AddItem( item );
 	end
 end

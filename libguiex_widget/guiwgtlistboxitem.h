@@ -48,6 +48,11 @@ namespace guiex
 		void* GetUserData(void) const;
 		void SetUserData(void* pUserData);
 
+		void SetItemContent(const CGUIStringW& rText);
+		void SetItemContentUTF8( const CGUIString& rString);
+		CGUIString GetItemContentUTF8( ) const;
+		const CGUIStringW& GetItemContent( ) const;
+
 	protected:
 		//init item
 		void InitListboxItem();
@@ -71,6 +76,7 @@ namespace guiex
 
 	protected:
 		void* m_pUserData; //!< user data
+		CGUIStringW m_strItemContent;
 		bool m_bSelected; //!< whether this item is selected
 
 		CGUIImage* m_pImageNormal; //!< normal bg image 

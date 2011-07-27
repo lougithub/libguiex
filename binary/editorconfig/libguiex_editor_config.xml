@@ -449,7 +449,7 @@
 		</page>
 	</widget>
 
-  <widget type="CGUIWgtComboBox" inherit="CGUIWidget">
+  <widget type="CGUIWgtComboBox" inherit="CGUIWgtTextBase">
     <page name="Appearance">
       <property name="force_hittest" type="bool" value="true"  category="Default" alternative_save="true"/>
       <property name="focusable" type="bool" value="true"  category="Default" alternative_save="true"/>

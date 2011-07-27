@@ -11,6 +11,7 @@
 #include "guiwgtlistboxitem.h"
 #include "guiwgtlistbox.h"
 #include <libguiex_core/guiimage.h>
+#include <libguiex_core/guistringconvertor.h>
 
 //============================================================================//
 // function
@@ -104,8 +105,27 @@ namespace guiex
 		m_pUserData = pUserData;
 	}
 	//------------------------------------------------------------------------------
-
-
+	void CGUIWgtListBoxItem::SetItemContent(const CGUIStringW& rText)
+	{
+		m_strItemContent = rText;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIStringW& CGUIWgtListBoxItem::GetItemContent( ) const
+	{
+		return m_strItemContent;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtListBoxItem::SetItemContentUTF8( const CGUIString& rString)
+	{
+		AppMultiByteToWideChar( rString, m_strItemContent);
+	}
+	//------------------------------------------------------------------------------
+	CGUIString CGUIWgtListBoxItem::GetItemContentUTF8( ) const
+	{
+		CGUIString aContentUTF8;
+		AppWideByteToMultiChar( m_strItemContent, aContentUTF8 );
+		return aContentUTF8;
+	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtListBoxItem::OnParentChanged( CGUIEventRelativeChange* pEvent )
 	{

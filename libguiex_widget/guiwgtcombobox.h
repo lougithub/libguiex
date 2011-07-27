@@ -11,7 +11,7 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_core/guiwidget.h>
+#include "guiwgttextbase.h"
 #include <libguiex_core/guiwidgetgenerator.h>
 
 //============================================================================//
@@ -75,7 +75,7 @@ namespace guiex
 	* droplist_scrollbar_h_slide_hover_overlay
 	* droplist_scrollbar_h_slide_push_overlay
 	*/
-	class GUIEXPORT CGUIWgtComboBox : public CGUIWidget
+	class GUIEXPORT CGUIWgtComboBox : public CGUIWgtTextBase
 	{
 	public:
 		CGUIWgtComboBox( const CGUIString& rName, const CGUIString& rSceneName );
@@ -118,7 +118,7 @@ namespace guiex
 		friend class CGUIWgtComboBoxDropList;
 		CGUIWgtComboBoxDropList* m_pDropList;
 
-		CGUIWgtListBoxItem*	m_pSelectedItem; /// selected item
+		uint32 m_nSelectedItemIdx; /// selected item
 
 		CGUIImage* m_pImageBG; /// image for combobox's background
 

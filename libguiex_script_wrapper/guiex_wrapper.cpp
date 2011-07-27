@@ -11031,11 +11031,64 @@ static swig_lua_class *swig_guiex_CGUIWgtScrollbarContainer_bases[] = {0,0};
 static const char *swig_guiex_CGUIWgtScrollbarContainer_base_names[] = {"guiex::CGUIWidget *",0};
 static swig_lua_class _wrap_class_guiex_CGUIWgtScrollbarContainer = { "CGUIWgtScrollbarContainer", &SWIGTYPE_p_guiex__CGUIWgtScrollbarContainer,0, swig_delete_CGUIWgtScrollbarContainer, swig_guiex_CGUIWgtScrollbarContainer_methods, swig_guiex_CGUIWgtScrollbarContainer_attributes, swig_guiex_CGUIWgtScrollbarContainer_bases, swig_guiex_CGUIWgtScrollbarContainer_base_names };
 
+static int _wrap_CGUIWgtListBoxItem_SetItemContentUTF8(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWgtListBoxItem *arg1 = (guiex::CGUIWgtListBoxItem *) 0 ;
+  guiex::CGUIString *arg2 = 0 ;
+  std::string temp2 ;
+  
+  SWIG_check_num_args("guiex::CGUIWgtListBoxItem::SetItemContentUTF8",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::CGUIWgtListBoxItem::SetItemContentUTF8",1,"guiex::CGUIWgtListBoxItem *");
+  if(!lua_isstring(L,2)) SWIG_fail_arg("guiex::CGUIWgtListBoxItem::SetItemContentUTF8",2,"guiex::CGUIString const &");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWgtListBoxItem,0))){
+    SWIG_fail_ptr("CGUIWgtListBoxItem_SetItemContentUTF8",1,SWIGTYPE_p_guiex__CGUIWgtListBoxItem);
+  }
+  
+  temp2.assign(lua_tostring(L,2),lua_strlen(L,2)); arg2=&temp2;
+  (arg1)->SetItemContentUTF8((guiex::CGUIString const &)*arg2);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWgtListBoxItem_GetItemContentUTF8(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CGUIWgtListBoxItem *arg1 = (guiex::CGUIWgtListBoxItem *) 0 ;
+  guiex::CGUIString result;
+  
+  SWIG_check_num_args("guiex::CGUIWgtListBoxItem::GetItemContentUTF8",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::CGUIWgtListBoxItem::GetItemContentUTF8",1,"guiex::CGUIWgtListBoxItem const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWgtListBoxItem,0))){
+    SWIG_fail_ptr("CGUIWgtListBoxItem_GetItemContentUTF8",1,SWIGTYPE_p_guiex__CGUIWgtListBoxItem);
+  }
+  
+  result = ((guiex::CGUIWgtListBoxItem const *)arg1)->GetItemContentUTF8();
+  lua_pushlstring(L,(&result)->data(),(&result)->size()); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static void swig_delete_CGUIWgtListBoxItem(void *obj) {
 guiex::CGUIWgtListBoxItem *arg1 = (guiex::CGUIWgtListBoxItem *) obj;
 delete arg1;
 }
 static swig_lua_method swig_guiex_CGUIWgtListBoxItem_methods[] = {
+    {"SetItemContentUTF8", _wrap_CGUIWgtListBoxItem_SetItemContentUTF8}, 
+    {"GetItemContentUTF8", _wrap_CGUIWgtListBoxItem_GetItemContentUTF8}, 
     {0,0}
 };
 static swig_lua_attribute swig_guiex_CGUIWgtListBoxItem_attributes[] = {

@@ -2237,7 +2237,7 @@ namespace guiex
 	void CGUIWidget::Render(IGUIInterfaceRender* pRender)
 	{
 		// don't do anything if window is not visible or closed
-		if (IsOpen()==false || !IsDerivedVisible()) 
+		if (IsOpen()==false || !IsVisible()) 
 		{
 			return;
 		}

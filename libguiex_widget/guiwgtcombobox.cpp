@@ -112,13 +112,13 @@ namespace guiex
 	GUI_WIDGET_GENERATOR_IMPLEMENT(CGUIWgtComboBox);
 	//------------------------------------------------------------------------------
 	CGUIWgtComboBox::CGUIWgtComboBox( const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIWidget(StaticGetType(), rName, rSceneName)
+		:CGUIWgtTextBase(StaticGetType(), rName, rSceneName)
 	{
 		InitComboBox();
 	}
 	//------------------------------------------------------------------------------
 	CGUIWgtComboBox::CGUIWgtComboBox( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName )
-		:CGUIWidget(rType, rName, rSceneName)
+		:CGUIWgtTextBase(rType, rName, rSceneName)
 	{
 		InitComboBox();
 	}
@@ -134,7 +134,7 @@ namespace guiex
 	void CGUIWgtComboBox::InitComboBox()
 	{
 		m_pImageBG = NULL;
-		m_pSelectedItem = NULL;
+		m_nSelectedItemIdx = -1;
 
 		//create drop list
 		m_pDropList = new CGUIWgtComboBoxDropList(CGUIWidgetManager::MakeInternalName(GetName()+"_DropList"), GetSceneName());
@@ -147,7 +147,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtComboBox::OnCreate()
 	{
-		CGUIWidget::OnCreate();
+		CGUIWgtTextBase::OnCreate();
 
 		//drop list
 		m_pDropList->SetPosition( 0.0f, GetPixelSize().GetHeight());
@@ -171,24 +171,14 @@ namespace guiex
 	}	
 	//------------------------------------------------------------------------------
 	void CGUIWgtComboBox::RenderSelf(IGUIInterfaceRender* pRender)
-	{
-		CGUIWidget::RenderSelf( pRender );
+	{	
+		CGUIWgtTextBase::RenderSelf( pRender );
 
 		// draw bg
 		DrawImage( pRender, m_pImageBG, GetBoundArea() );
-
-		// draw item
-		if( m_pSelectedItem )
-		{
-			CGUIVector2 rOldPos = m_pSelectedItem->GetPixelPosition();
-			m_pSelectedItem->SetPixelPosition( 0.0f, 0.0f );
-			m_pSelectedItem->Refresh();
-
-			m_pSelectedItem->Render( pRender );
-
-			m_pSelectedItem->SetPixelPosition( rOldPos );
-			m_pSelectedItem->Refresh();
-		}
+		
+		//draw item content
+		DrawString( pRender, m_strText, GetClientArea(), m_eTextAlignmentHorz, m_eTextAlignmentVert);
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -212,40 +202,44 @@ namespace guiex
 		}
 
 		uint32 nIdx = m_pDropList->GetItemIndex(pItem);
-		m_pSelectedItem = pItem;
+		SetSelectedItem( nIdx );
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtComboBox::SetSelectedItem(uint32 nIdx )
+	{
+		m_nSelectedItemIdx = nIdx;
+
+		const CGUIWgtListBoxItem* pItem = GetSelectedItem();
+		if( pItem )
+		{
+			SetTextContent( pItem->GetItemContent() );
+		}
+		else
+		{
+			SetTextContent(CGUIStringW());
+		}
 
 		//send event
 		CGUIEventComboBox aEvent;
 		aEvent.SetEventId(eEVENT_COMBOBOX_SELECTED);
 		aEvent.SetReceiver(this);
-		aEvent.SetSelectedItemIdx( nIdx );
+		aEvent.SetSelectedItemIdx( m_nSelectedItemIdx );
 		GSystem->SendEvent( &aEvent);
-	}
-	//------------------------------------------------------------------------------
-	void CGUIWgtComboBox::SetSelectedItem(uint32 nIdx )
-	{
-		CGUIWgtListBoxItem* pItem = m_pDropList->GetItemByIndex(nIdx);
-		SetSelectedItem(pItem);
 	}
 	//------------------------------------------------------------------------------
 	bool CGUIWgtComboBox::HasSelectedItem() const
 	{
-		return m_pSelectedItem!= NULL;
+		return m_nSelectedItemIdx != static_cast<uint32>(-1);
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtComboBox::GetSelectedItemIndex() const
 	{
-		if( !m_pSelectedItem )
-		{
-			GUI_THROW("[CGUIWgtComboBox::GetSelectedItemIndex]: no item selected!");
-		}
-
-		return m_pDropList->GetItemIndex(m_pSelectedItem);
+		return m_nSelectedItemIdx;
 	}
 	//------------------------------------------------------------------------------
 	const CGUIWgtListBoxItem* CGUIWgtComboBox::GetSelectedItem() const
 	{
-		return m_pSelectedItem;
+		return m_pDropList->GetItemByIndex(m_nSelectedItemIdx);
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtComboBox::GetItemCount(void) const
@@ -286,7 +280,7 @@ namespace guiex
 	{
 		m_pDropList->SetFocus( true );		
 		m_pDropList->ShowDropList( );
-		return CGUIWidget::OnMouseLeftDown(pEvent);
+		return CGUIWgtTextBase::OnMouseLeftDown(pEvent);
 	}
 	//------------------------------------------------------------------------------
 
@@ -299,7 +293,7 @@ namespace guiex
 		}
 		else
 		{
-			return CGUIWidget::GenerateProperty( rProperty );
+			return CGUIWgtTextBase::GenerateProperty( rProperty );
 		}
 		return 0;
 	}
@@ -314,7 +308,7 @@ namespace guiex
 		}
 		else
 		{
-			CGUIWidget::ProcessProperty( rProperty );
+			CGUIWgtTextBase::ProcessProperty( rProperty );
 		}
 	}
 	//------------------------------------------------------------------------------

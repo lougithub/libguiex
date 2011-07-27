@@ -322,6 +322,8 @@ namespace guiex
 	class CGUIWgtListBoxItem : public CGUIWidget
 	{
 	public:
+		void SetItemContentUTF8( const CGUIString& rString);
+		CGUIString GetItemContentUTF8( ) const;
 	};
 
 	//============================================================================//

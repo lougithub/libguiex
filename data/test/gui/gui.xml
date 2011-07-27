@@ -589,5 +589,10 @@
         <property name="droplist_size" type="CGUISize" value="194,100" />
         <property name="generate_load_event" type="bool" value="true" />
         <property name="OnLoad" type="CGUIEvent" value="OnLoad_ComboBox" />
+        <property name="textinfo" type="CGUIStringRenderInfo">
+            <property name="scale" type="real" value="1" />
+            <property name="font" type="CGUIFont" value="0" />
+            <property name="color" type="CGUIColor" value="219,204,74,255" />
+        </property>
     </property>
 </guiex>
