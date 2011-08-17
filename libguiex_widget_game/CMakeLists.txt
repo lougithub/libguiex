@@ -23,10 +23,20 @@ set( ${target_name}_tiledmap_SRCS
 	)
 source_group( "tiledmap" FILES ${${target_name}_tiledmap_SRCS} )
 
+#pathnode
+set( ${target_name}_pathnode_SRCS 
+    guiwgtsimplepathnode.cpp
+    guiwgtsimplepathnode.h	
+    guiwgtsimplepathnodemgr.cpp
+    guiwgtsimplepathnodemgr.h	
+	)
+source_group( "pathnode" FILES ${${target_name}_pathnode_SRCS} )
+
 set( ${target_name}_SRCS 
 	${${target_name}_particle2d_SRCS}
 	${${target_name}_utility_SRCS}
 	${${target_name}_tiledmap_SRCS}
+	${${target_name}_pathnode_SRCS}
 	)
 
 #include directory

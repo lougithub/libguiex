@@ -176,8 +176,8 @@ void WxWizardCreateWidget::OnWizardFinished(wxWizardEvent& event)
 
 		m_pWidget = CGUIWidgetManager::Instance()->CreateWidget(strType, strName, GetMainFrame()->GetCurrentSceneName());
 
-		m_pWidget->SetProperty(aSet);
-		m_pWidget->LoadFromProperty();
+		m_pWidget->SetProperty( aSet );
+		m_pWidget->LoadFromProperty( aSet );
 		if( m_pParent )
 		{
 			m_pWidget->SetParent( m_pParent );

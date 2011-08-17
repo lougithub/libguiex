@@ -281,7 +281,7 @@ namespace guiex
 	{
 		//load file
 		CGUIString strRelPath = CGUISceneManager::Instance()->GetScenePath( rSceneName ) + rPageName;
-		CGUIWidget* pPage = CGUIConfigFileLoader::LoadWidgetConfigFile( strRelPath, rPageName, rSceneName,rSceneName, false );
+		CGUIWidget* pPage = CGUIConfigFileLoader::LoadWidgetConfigFile( strRelPath, rSceneName,rSceneName, false );
 		if( !pPage )
 		{
 			return NULL;
@@ -432,7 +432,7 @@ namespace guiex
 	{
 		//load file
 		CGUIString strRelPath = CGUISceneManager::Instance()->GetScenePath( rSceneName ) + rPageName;
-		CGUIWidget* pPage = CGUIConfigFileLoader::LoadWidgetConfigFile( strRelPath, rPageName, rSceneName, rWorkingSceneName, true );
+		CGUIWidget* pPage = CGUIConfigFileLoader::LoadWidgetConfigFile( strRelPath, rSceneName, rWorkingSceneName, true );
 		if( !pPage )
 		{
 			GUI_THROW( GUI_FORMAT(

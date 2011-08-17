@@ -14,6 +14,37 @@
 			<property name="tiledmap" type="CGUITiledMap" value="" category="tiledmap_category" alternative_save="true"/>
 		</page>
 	</widget>
+
+	<widget type="CGUIWgtSimplePathNode" inherit="CGUIWidget">
+		<page name="Appearance">
+			<property name="size" type="CGUIWidgetSize" category="Default">
+				<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+				<property name="value" type="CGUISize" value="17,17" />
+			</property>
+      <property name="position" type="CGUIWidgetPosition" category="Default">
+        <property name="type" type="EScreenValue" value="eScreenValue_Percentage"/>
+        <property name="value" type="CGUIVector2" value="0.5,0.5" />
+      </property>
+      <property name="anchor" type="CGUIVector2" value="0.5,0.5"  category="Default" alternative_save="true"/>
+			<property name="hitable" type="bool" value="false"  category="Default" alternative_save="true"/>
+
+			<property name="next_node" type="CGUIString" value=""  category="PathNode" alternative_save="true"/>
+		</page>
+		<page name="Image">
+			<property name="bg" type="CGUIImage" value="TagIcon" must_exist="true" />
+		</page>
+	</widget>
+
+	<widget type="CGUIWgtSimplePathNodeMgr" inherit="CGUIWidget">
+		<page name="Appearance">
+			<property name="size" type="CGUIWidgetSize" category="Default">
+				<property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+				<property name="value" type="CGUISize" value="1,1" />
+			</property>
+			<property name="hitable" type="bool" value="false"  category="Default" alternative_save="true"/>
+		</page>
+	</widget>
+
 </config>
 
 

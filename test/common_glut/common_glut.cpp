@@ -35,7 +35,8 @@ const guiex::int32 g_nScreenHeight = 768;
 guiex::CGUIFrameworkBase* g_pFramework = NULL;
 std::map<int,guiex::EKeyCode> g_mapKey_Glut2Guiex;
 guiex::CGUITimer g_aOldTimer;
-extern guiex::CGUIFrameworkBase* CreateFramework( );
+extern guiex::CGUIFrameworkBase* GUIEXCreateFramework( );
+extern const char* GUIEXGetDataDir();
 int g_nVSync = 1;
 
 //============================================================================//
@@ -353,15 +354,17 @@ int main(int argc, char** argv)
 	char fdir[_MAX_DIR];
 	_splitpath( argv[0], NULL, fdir, NULL, NULL ); 
 	guiex::CGUIString rDir = fdir;
-	rDir += "../../data/test";
+	rDir += "../../data/";
+	rDir += GUIEXGetDataDir();
 #elif defined( GUIEX_PLATFORM_MAC )
 	guiex::CGUIString rDir(dirname( argv[0]));
-	rDir += "/../../test";
+	rDir += "/../../";
+	rDir += GUIEXGetDataDir();
 #else
 #	error "unknown platform"		
 #endif
 
-	g_pFramework = CreateFramework( );
+	g_pFramework = GUIEXCreateFramework( );
 	g_pFramework->Initialize( guiex::CGUIIntSize( g_nScreenWidth, g_nScreenHeight ), rDir.c_str() );
 	RegisterKeyboard();
 

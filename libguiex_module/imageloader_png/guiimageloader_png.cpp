@@ -9,7 +9,6 @@
 // include 
 //============================================================================// 
 #include <libguiex_module/imageloader_png/guiimageloader_png.h>
-#include <libguiex_module/imageloader_png/guiimagedata_png.h>
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guiinterfacemanager.h>
 #include <libguiex_core/guiinterfacefilesys.h>
@@ -203,7 +202,7 @@ namespace guiex
 			break;
 		}
 
-		CGUIImageData_png * pImageData = new CGUIImageData_png(this);
+		CGUIImageData * pImageData = new CGUIImageData(this);
 		uint8* pixels = pImageData->SetImageData(width, height, type);
 
 		// since Texture2D loads the image "upside-down", there's no need

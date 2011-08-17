@@ -146,20 +146,21 @@ namespace guiex
 		Refresh();
 
 		//register to script
-		//if( !CGUIWidgetManager::Instance()->IsInternalName( GetName()) )
-		//{
-		//	bool bHasScript = false;
-		//	guiex::IGUIInterfaceScript* pInterfaceScript = CGUIInterfaceManager::Instance()->GetInterfaceScript();
-		//	if( pInterfaceScript && !GSystem->IsEditorMode())
-		//	{
-		//		bHasScript = pInterfaceScript->HasScript( GetWorkingSceneName() );
-		//	}
-		//	if( bHasScript )
-		//	{
-		//		pInterfaceScript->RegisterWidget( this );
-		//	}
-		//}
-
+#if 0
+		if( !CGUIWidgetManager::Instance()->IsInternalName( GetName()) )
+		{
+			bool bHasScript = false;
+			guiex::IGUIInterfaceScript* pInterfaceScript = CGUIInterfaceManager::Instance()->GetInterfaceScript();
+			if( pInterfaceScript && !GSystem->IsEditorMode())
+			{
+				bHasScript = pInterfaceScript->HasScript( GetWorkingSceneName() );
+			}
+			if( bHasScript )
+			{
+				pInterfaceScript->RegisterWidget( this );
+			}
+		}
+#endif
 
 		OnCreate();
 	}

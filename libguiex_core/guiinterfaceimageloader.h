@@ -31,14 +31,7 @@ namespace guiex
 	class GUIEXPORT IGUIInterfaceImageLoader : public IGUIInterface
 	{
 	public:
-		/** 
-		* @brief constructor
-		*/
 		IGUIInterfaceImageLoader( const char* szModuleName );
-
-		/** 
-		* @brief destructor
-		*/
 		virtual ~IGUIInterfaceImageLoader();
 
 	public:
@@ -57,7 +50,7 @@ namespace guiex
 		/**
 		* @brief destroy image data
 		*/
-		virtual void	DestroyImageData(CGUIImageData* pImageData) = 0;
+		virtual void DestroyImageData(CGUIImageData* pImageData) = 0;
 
 	public: 
 		static const char* StaticGetModuleType();

@@ -1,0 +1,74 @@
+<guiex>
+    <property name="node_root" type="CGUIWidgetDefine" value="CGUIWgtEmptyNode">
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0,0" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="1,1" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+        </property>
+    </property>
+    <property name="image_map" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
+        <property name="parent" type="CGUIString" value="node_root" />
+        <property name="bg" type="CGUIImage" value="Map001" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0.5,0.5" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="700,600" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
+    </property>
+    <property name="pathnodemgr" type="CGUIWidgetDefine" value="CGUIWgtSimplePathNodeMgr">
+        <property name="parent" type="CGUIString" value="image_map" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0,0" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="1,1" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+        </property>
+    </property>
+    <property name="pathnode_1_start" type="CGUIWidgetDefine" value="CGUIWgtSimplePathNode">
+        <property name="parent" type="CGUIString" value="pathnodemgr" />
+        <property name="bg" type="CGUIImage" value="PathNode" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0.467143,0.00666667" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="17,17" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="next_node" type="CGUIString" value="pathnode_1_1" />
+    </property>
+    <property name="pathnode_1_1" type="CGUIWidgetDefine" value="CGUIWgtSimplePathNode">
+        <property name="parent" type="CGUIString" value="pathnodemgr" />
+        <property name="bg" type="CGUIImage" value="PathNode" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0.467143,0.318333" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="17,17" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="next_node" type="CGUIString" value="pathnode_1_2" />
+    </property>
+    <property name="pathnode_1_2" type="CGUIWidgetDefine" value="CGUIWgtSimplePathNode">
+        <property name="parent" type="CGUIString" value="pathnodemgr" />
+        <property name="bg" type="CGUIImage" value="PathNode" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0.422857,0.391667" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="17,17" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+    </property>
+</guiex>

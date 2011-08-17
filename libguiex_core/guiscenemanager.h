@@ -24,6 +24,7 @@
 namespace guiex
 {
 	class CGUIScene;
+	class CGUIWidget;
 }
 
 //============================================================================//
@@ -51,6 +52,7 @@ namespace guiex
 		void ReleaseAllResources( );
 
 		int32 LoadWidgets( const CGUIString& rSceneName );
+		CGUIWidget* LoadWidgets( const CGUIString& rPageName, const CGUIString& rSceneName );
 		void ReleaseWidgets( const CGUIString& rSceneName );
 
 

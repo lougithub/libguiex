@@ -38,7 +38,6 @@ namespace guiex
 		static int32 LoadResourceConfigFile( const CGUIString& rPath, const CGUIString& rSceneName );
 		static CGUIWidget* LoadWidgetConfigFile( 
 			const CGUIString& rPath, 
-			const CGUIString& rPageFileName,
 			const CGUIString& rOwnSceneName,
 			const CGUIString& rWorkingSceneName,
 			bool bIsDynamicPage );

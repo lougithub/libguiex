@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<libguiex_project>
+	<property name="game_td_common" type="SceneName" />
+	<property name="common.xml" type="WidgetFile" />
+	<property name="resource.res" type="ResourceFile" />
+</libguiex_project>
+

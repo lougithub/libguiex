@@ -33,6 +33,7 @@ protected:
 	virtual void SetupLogSystem( );
 
 	virtual void RegisterInterfaces_Render( );
+	virtual void RegisterInterfaces_ImageLoader( );
 
 protected:
 	class WxEditorCanvas* m_pCurrentCanvas;

@@ -130,7 +130,6 @@ macro( macro_set_target_link_libraries_wx_win32 targetname )
 		general libguiex_framework
 		general libguiex_module
 		general tinyxml
-		general libpng
 		general lua
 		general freetype
 		general box2d
@@ -240,6 +239,19 @@ macro( macro_set_common_sources common_srcs )
 endmacro()
 
 macro( macro_add_project_dependencies targetname)
+	add_dependencies( 
+		${targetname} 
+		libguiex_core
+		libguiex_module 
+		libguiex_widget 
+		libguiex_widget_box2d
+		libguiex_widget_game
+		libguiex_script_wrapper 
+		libguiex_framework
+		)
+endmacro()
+
+macro( macro_add_project_dependencies_wx_win32 targetname)
 	add_dependencies( 
 		${targetname} 
 		libguiex_core

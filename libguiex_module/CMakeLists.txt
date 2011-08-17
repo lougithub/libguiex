@@ -85,8 +85,6 @@ source_group(font_dummy FILES ${${target_name}_font_dummy_SRCS} )
 
 #imageloader_tga
 set( ${target_name}_imageloader_tga_SRCS 
-	imageloader_tga/guiimagedata_tga.cpp
-	imageloader_tga/guiimagedata_tga.h
 	imageloader_tga/guiimageloader_tga.cpp
 	imageloader_tga/guiimageloader_tga.h
 	)
@@ -94,8 +92,6 @@ source_group(imageloader_tga FILES ${${target_name}_imageloader_tga_SRCS} )
 
 #imageloader_png
 set( ${target_name}_imageloader_png_SRCS 
-	imageloader_png/guiimagedata_png.cpp
-	imageloader_png/guiimagedata_png.h
 	imageloader_png/guiimageloader_png.cpp
 	imageloader_png/guiimageloader_png.h
 	)
@@ -103,8 +99,6 @@ source_group(imageloader_png FILES ${${target_name}_imageloader_png_SRCS} )
 
 #imageloader_png_tga
 set( ${target_name}_imageloader_png_tga_SRCS 
-	imageloader_png_tga/guiimagedata_png_tga.cpp
-	imageloader_png_tga/guiimagedata_png_tga.h
 	imageloader_png_tga/guiimageloader_png_tga.cpp
 	imageloader_png_tga/guiimageloader_png_tga.h
 	)

@@ -15,12 +15,16 @@
 // function
 //============================================================================// 
 
-CGUIFrameworkBase* CreateFramework( )
+CGUIFrameworkBase* GUIEXCreateFramework( )
 {
 	return new CGUIFrameworkTest( );
 }
 
-
+const char* GUIEXGetDataDir()
+{
+	//should relative to dir "data"
+	return "test";
+}
 
 //*****************************************************************************
 //	CMyMonster

@@ -528,7 +528,6 @@ namespace guiex
 		const CGUIColor& rColor_begin,
 		const CGUIColor& rColor_end )
 	{
-		glLineWidth( fLineWidth );
 
 		long oglcolor_topleft = ColorToOpengl(rColor_begin);
 		long oglcolor_bottomleft = ColorToOpengl(rColor_end);
@@ -545,6 +544,7 @@ namespace guiex
 		m_pVertexForLine[1].vertices.z = z;
 		m_pVertexForLine[1].color.abgr = oglcolor_bottomleft;     
 
+		glLineWidth( fLineWidth );
 		glDisable(GL_TEXTURE_2D);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 

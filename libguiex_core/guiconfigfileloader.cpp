@@ -32,16 +32,15 @@
 //============================================================================// 
 namespace guiex
 {
-	static CGUIWidget* DoLoadConfig_Widget( CGUIWidget* pPage, const CGUIProperty* pPropertySet, const CGUIString& rPageFileName, const CGUIString& rOwnSceneName, const CGUIString& rWorkingSceneName, bool bIsDynamicPage );
+	static CGUIWidget* DoCreateWidget( const CGUIProperty* pPropertySet, const CGUIString& rOwnSceneName,const CGUIString& rWorkingSceneName, bool bIsDynamicPage );
+	static void DoLoadWidgetConfig( CGUIWidget* pWidget, CGUIWidget* pPage, const CGUIProperty* pPropertySet );
 	static int32 DoLoadConfig_Set( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
 
 	//------------------------------------------------------------------------------
-	CGUIWidget* DoLoadConfig_Widget(
-		CGUIWidget* pPage, 
+	CGUIWidget* DoCreateWidget(
 		const CGUIProperty* pPropertySet,
-		const CGUIString& rPageFileName, 
 		const CGUIString& rOwnSceneName, 
-		const CGUIString& rWorkingSceneName, 
+		const CGUIString& rWorkingSceneName,
 		bool bIsDynamicPage )
 	{
 		/// create widget
@@ -51,24 +50,28 @@ namespace guiex
 		if( !pWidget )
 		{
 			GUI_THROW( GUI_FORMAT(
-				"[DoLoadConfig_Widget]: failed to create widget <%s:%s>!",
+				"[DoCreateWidget]: failed to create widget <%s:%s>!",
 				strWidgetType.c_str(),
 				strWidgetName.c_str()));
 			return NULL;
 		}
 		pWidget->SetWorkingSceneName( rWorkingSceneName );
-		pWidget->SetPage( pPage );
 		pWidget->SetDynamic( bIsDynamicPage );
-		/// set property to widget
+		return pWidget;
+	}
+	//------------------------------------------------------------------------------
+	void DoLoadWidgetConfig(
+		CGUIWidget* pWidget,
+		CGUIWidget* pPage, 
+		const CGUIProperty* pPropertySet )
+	{
+		pWidget->SetPage( pPage );
 		pWidget->LoadFromProperty( *pPropertySet );
-		pWidget->Create();
 
 		if( GSystem->IsEditorMode() )
 		{
 			pWidget->SetProperty( *pPropertySet );
 		}
-
-		return pWidget;
 	}
 	//------------------------------------------------------------------------------
 	int32 DoLoadConfig_Set( const CGUIProperty* pPropertySet, const CGUIString& rSceneName )
@@ -182,7 +185,6 @@ namespace guiex
 	*/
 	CGUIWidget* CGUIConfigFileLoader::LoadWidgetConfigFile( 
 		const CGUIString& rPath, 
-		const CGUIString& rPageFileName,
 		const CGUIString& rOwnSceneName, 
 		const CGUIString& rWorkingSceneName, 
 		bool bIsDynamicPage )
@@ -204,9 +206,9 @@ namespace guiex
 				rPath.c_str()));
 		}
 
-		//parse it
+		//create widget
 		uint32 nSize = aPropertySet.GetPropertyNum();
-		CGUIWidget* pPage = NULL;
+		std::vector< std::pair< CGUIWidget*, const CGUIProperty* > > vecWidgetList;
 		for( uint32 i=0; i<nSize; ++i )
 		{
 			const CGUIProperty* pProperty = aPropertySet.GetProperty(i);
@@ -214,37 +216,12 @@ namespace guiex
 			{
 			case ePropertyType_WidgetDefine:
 				{
-					CGUIWidget* pWidget = DoLoadConfig_Widget( pPage, pProperty, rPageFileName, rOwnSceneName, rWorkingSceneName, bIsDynamicPage );
+					CGUIWidget* pWidget = DoCreateWidget( pProperty, rOwnSceneName, rWorkingSceneName, bIsDynamicPage );
 					if( !pWidget )
 					{
 						return NULL;
-					}
-					if( !pPage )
-					{
-						if( pWidget->GetParent() != NULL )
-						{
-							GUI_THROW( GUI_FORMAT(
-								"[LoadWidgetConfigFile], first widget <%s:%s> is not the root of page", 
-								pWidget->GetName().c_str(),
-								pWidget->GetType().c_str()));
-							return NULL;
-						}
-						else
-						{
-							pPage = pWidget;
-						}
-					}
-					else
-					{
-						if( pWidget->GetParent() == NULL )
-						{
-							GUI_THROW( GUI_FORMAT(
-								"[LoadWidgetConfigFile], the widget <%s:%s> hasn't parent", 
-								pWidget->GetName().c_str(),
-								pWidget->GetType().c_str()));
-							return NULL;
-						}
-					}
+					}					
+					vecWidgetList.push_back( std::make_pair( pWidget, pProperty ) );
 				}
 				break;
 
@@ -258,6 +235,52 @@ namespace guiex
 				}
 				return NULL;
 			}
+		}
+
+		//process property
+		CGUIWidget* pPage = NULL;
+		for( std::vector< std::pair< CGUIWidget*, const CGUIProperty* > >::iterator itor = vecWidgetList.begin();
+			itor != vecWidgetList.end();
+			++itor )
+		{
+			CGUIWidget* pWidget = itor->first;
+			const CGUIProperty* pProperty = itor->second;
+			DoLoadWidgetConfig( pWidget, pPage, pProperty );
+			if( !pPage )
+			{
+				if( pWidget->GetParent() != NULL )
+				{
+					GUI_THROW( GUI_FORMAT(
+						"[LoadWidgetConfigFile], first widget <%s:%s> is not the root of page", 
+						pWidget->GetName().c_str(),
+						pWidget->GetType().c_str()));
+					return NULL;
+				}
+				else
+				{
+					pPage = pWidget;
+				}
+			}
+			else
+			{
+				if( pWidget->GetParent() == NULL )
+				{
+					GUI_THROW( GUI_FORMAT(
+						"[LoadWidgetConfigFile], the widget <%s:%s> hasn't parent", 
+						pWidget->GetName().c_str(),
+						pWidget->GetType().c_str()));
+					return NULL;
+				}
+			}
+		}
+
+		//create widget
+		for( std::vector< std::pair< CGUIWidget*, const CGUIProperty* > >::iterator itor = vecWidgetList.begin();
+			itor != vecWidgetList.end();
+			++itor )
+		{
+			CGUIWidget* pWidget = itor->first;
+			pWidget->Create();
 		}
 
 		if( !pPage )

@@ -36,64 +36,30 @@ namespace guiex
 	class GUIEXPORT CGUIImageData
 	{
 	public:
-		/**
-		* @brief destructor
-		*/
-		virtual ~CGUIImageData();
-
-		/**
-		* @brief get width of image
-		*/
-		virtual uint32 GetWidth() = 0;
-
-		/**
-		* @brief get height of image
-		*/
-		virtual uint32 GetHeight() = 0;
-
-		/**
-		* @brief get data of image
-		*/
-		virtual uint8*	GetData() = 0;
-
-		uint32 GetBytePerPixel() const
-		{
-			return GetBytePerPixel(m_ePixelFormat);
-		}
-
-		/**
-		* @brief set pixel format
-		*/
-		void SetPixelFormat(EGuiPixelFormat ePixelFormat)
-		{
-			m_ePixelFormat = ePixelFormat;
-		}
-
-		/**
-		* @brief get pixel format
-		*/
-		EGuiPixelFormat	GetPixelFormat()
-		{
-			return m_ePixelFormat;
-		}
-
+		CGUIImageData(IGUIInterfaceImageLoader* pLoader);
+		~CGUIImageData();
+		
+		uint8* SetImageData(uint32 uWidth, uint32 uHeight, EGuiPixelFormat ePixelFormat );
+		uint32 GetWidth();
+		uint32 GetHeight();
+		uint8* GetData();
+		uint32 GetBytePerPixel() const;
+		EGuiPixelFormat	GetPixelFormat();
 		static uint32 GetBytePerPixel( EGuiPixelFormat ePixelFormat );
 
-		/**
-		* @brief release this data
-		*/
 		void Release();
 
+
 	protected:
-		/**
-		* @brief constructor
-		*/
-		CGUIImageData(IGUIInterfaceImageLoader* pLoader);
+		void DestroyData();
 
 	private:
-		IGUIInterfaceImageLoader*		m_pLoader;
+		IGUIInterfaceImageLoader* m_pLoader;
 
-		EGuiPixelFormat					m_ePixelFormat;
+		uint32 m_uWidth;
+		uint32 m_uHeight;
+		uint8 *m_pData;
+		EGuiPixelFormat m_ePixelFormat;
 	};
 
 }//namespace guiex

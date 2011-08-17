@@ -171,7 +171,7 @@ namespace guiex
 
 		//cache for system
 		static const int VERTEX_PER_TEXTURE = 4;
-		static const int VERTEX_FOR_LINE = 1024;
+		static const int VERTEX_FOR_LINE = 4;
 		SR_T2F_C4UB_V3F m_pVertex[VERTEX_PER_TEXTURE];
 		SR_V3F m_pVertexForStencil[VERTEX_PER_TEXTURE];
 		SR_C4UB_V3F m_pVertexForLine[VERTEX_FOR_LINE];

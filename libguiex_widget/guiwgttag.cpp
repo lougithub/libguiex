@@ -1,10 +1,9 @@
 /** 
-* @file guiwgtemptynode.cpp
-* @brief empty node, used to manage widget
-* for example, used to group radio button
-* @author ken
-* @date 2006-08-03
-*/
+ * @file guiwgttag.cpp
+ * @brief used to get position info
+ * @author ken
+ * @date 2011-04-15
+ */
 
 
 //============================================================================//

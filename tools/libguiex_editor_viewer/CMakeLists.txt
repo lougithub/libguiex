@@ -16,14 +16,7 @@ if( BUILD_PLATFORM_WIN32 )
     set( WIN32_EXECUTABLE true )
     add_executable( ${target_name} WIN32 ${${target_name}_SRCS} )
     
-    add_dependencies( 
-		${target_name}
-		libguiex_module
-		libguiex_widget
-		libguiex_widget_box2d
-		libguiex_framework 
-       )
-       
+	macro_add_project_dependencies_wx_win32(${target_name})
 	macro_set_target_output_dir( ${target_name} )
     macro_set_target_link_libraries_wx_win32( ${target_name} )
         

@@ -298,6 +298,41 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
+	CGUIWidget* CGUISceneManager::LoadWidgets( const CGUIString& rPageName, const CGUIString& rSceneName )
+	{
+		CGUIScene* pScene = GetScene( rSceneName );
+		if( !pScene )
+		{
+			GUI_THROW( GUI_FORMAT( "[CGUISceneManager::LoadWidgets] failed to get scene <%s>", rSceneName.c_str()));
+			return NULL;
+		}
+
+		const std::vector<CGUIString>& rWidgetFile = pScene->GetWidgetFiles();
+		for( uint32 i=0; i<rWidgetFile.size(); ++i )
+		{
+			if( rWidgetFile[i] == rPageName )
+			{
+				CGUIWidget* pPageWidget = CGUIWidgetManager::Instance()->LoadPage( rWidgetFile[i], rSceneName );
+				if( !pPageWidget )
+				{
+					GUI_THROW( GUI_FORMAT(
+						"[CGUISceneManager::LoadWidgets] failed to create page <%s> in scene <%s>", 
+						rWidgetFile[i].c_str(), rSceneName.c_str()));
+					return NULL;
+				}
+				else
+				{
+					return pPageWidget;
+				}
+			}
+		}
+
+		GUI_THROW( GUI_FORMAT(
+			"[CGUISceneManager::LoadWidgets] failed to find page <%s> in scene <%s>", 
+			rPageName.c_str(), rSceneName.c_str()));
+		return NULL;
+	}
+	//------------------------------------------------------------------------------
 	void CGUISceneManager::ReleaseWidgets( const CGUIString& rSceneName )
 	{
 		CGUIScene* pScene = GetScene( rSceneName );

@@ -9,7 +9,6 @@
 // include 
 //============================================================================// 
 #include <libguiex_module/imageloader_png_tga/guiimageloader_png_tga.h>
-#include <libguiex_module/imageloader_png_tga/guiimagedata_png_tga.h>
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guiinterfacemanager.h>
 #include <libguiex_core/guiinterfacefilesys.h>
@@ -243,7 +242,7 @@ namespace guiex
 			break;
 		}
 
-		CGUIImageData_png_tga * pImageData = new CGUIImageData_png_tga(this);
+		CGUIImageData * pImageData = new CGUIImageData(this);
 		uint8* pixels = pImageData->SetImageData(width, height, type);
 
 		// since Texture2D loads the image "upside-down", there's no need
@@ -345,7 +344,7 @@ namespace guiex
 			return NULL;
 		}
 		//create image data
-		CGUIImageData_png_tga * pImageData = new CGUIImageData_png_tga(this);
+		CGUIImageData * pImageData = new CGUIImageData(this);
 		uint8* tmpBuff = pImageData->SetImageData(tga.Width, tga.Height, tga.type);
 		memcpy( tmpBuff, pFileData, tga.imageSize);
 
@@ -392,7 +391,7 @@ namespace guiex
 		tga.bytesPerPixel	= (tga.Bpp / 8);									// Compute BYTES per pixel
 		tga.imageSize		= (tga.bytesPerPixel * tga.Width * tga.Height);		// Compute amout of memory needed to store image
 		//create image data
-		CGUIImageData_png_tga * pImageData = new CGUIImageData_png_tga(this);
+		CGUIImageData * pImageData = new CGUIImageData(this);
 		uint8* tmpBuff = pImageData->SetImageData(tga.Width, tga.Height, tga.type);
 
 		uint32 pixelcount	= tga.Height * tga.Width;							// Nuber of pixels in the image

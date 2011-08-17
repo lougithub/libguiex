@@ -3,7 +3,7 @@ end
 
 function node_main_onopen(self, event)
     guiex.PrintDebug("opopen");
-    input_username:SetFocus(true);
+    guiex.GetWidget("input_username", guiex.GetSceneName() ):SetFocus(true);
 end
 
 function dlg_btn_ok_onclick(self, event)

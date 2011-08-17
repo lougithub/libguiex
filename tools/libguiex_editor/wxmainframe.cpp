@@ -1124,7 +1124,7 @@ void WxMainFrame::OnWidgetPaste(wxCommandEvent& evt)
 		pNewWidget = CGUIWidgetManager::Instance()->CreateWidget( m_aPasteCache.m_aWidgetType, wx2GuiString(aTextDlg.GetValue()), GetCurrentSceneName());
 		m_aPasteCache.m_aProperty.GetProperty("parent", "CGUIString")->SetValue( "" );
 		pNewWidget->SetProperty(m_aPasteCache.m_aProperty);
-		pNewWidget->LoadFromProperty();
+		pNewWidget->LoadFromProperty(m_aPasteCache.m_aProperty);
 		pNewWidget->SetParent( pWidget );
 		m_aPasteCache.m_aProperty.GetProperty("parent", "CGUIString")->SetValue( pWidget->GetName() );
 		pNewWidget->Create();

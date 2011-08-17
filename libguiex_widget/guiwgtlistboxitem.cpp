@@ -129,7 +129,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtListBoxItem::OnParentChanged( CGUIEventRelativeChange* pEvent )
 	{
-		if( GetParent() && GetParent()->GetType() == "CGUIWgtListBox")
+		if( GetParent() && GetParent()->GetType() == CGUIWgtListBox::StaticGetType())
 		{
 			m_pListBox = static_cast<CGUIWgtListBox*>(GetParent());
 		}

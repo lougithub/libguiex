@@ -21,7 +21,8 @@ guiex::CGUIFrameworkBase* g_pFramework = NULL;
 guiex::CGUITimer g_aOldTimer;
 
 
-extern guiex::CGUIFrameworkBase* CreateFramework( );
+extern guiex::CGUIFrameworkBase* GUIEXCreateFramework( );
+extern const char* GUIEXGetDataDir();
 
 //============================================================================//
 // function
@@ -51,7 +52,7 @@ extern "C" JNIEXPORT void JNICALL Java_org_guiex_lib_GuiexLibNative_Init(JNIEnv 
 {    
 	if( NULL == g_pFramework )
 	{
-		g_pFramework = CreateFramework( );
+		g_pFramework = GUIEXCreateFramework( );
 		g_pFramework->Initialize( guiex::CGUIIntSize( guiex::uint32(width), guiex::uint32(height)), "assets" );
 	}
 

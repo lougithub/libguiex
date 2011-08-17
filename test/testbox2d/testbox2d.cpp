@@ -45,9 +45,15 @@ class CGUIFrameworkTest : public CGUIFramework
 		CGUIWidget* m_pWidgetRoot;
 };
 
-CGUIFrameworkBase* CreateFramework( )
+CGUIFrameworkBase* GUIEXCreateFramework( )
 {
 	return new CGUIFrameworkTest( );
+}
+
+const char* GUIEXGetDataDir()
+{
+	//should relative to dir "data"
+	return "test";
 }
 
 guiex::int32 CGUIFrameworkTest::InitializeGame( )

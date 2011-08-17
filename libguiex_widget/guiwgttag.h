@@ -1,11 +1,9 @@
 /** 
- * @file guiwgttag.cpp
+ * @file guiwgttag.h
  * @brief used to get position info
  * @author ken
  * @date 2011-04-15
  */
-
-
 
 
 #ifndef __GUI_WGTTAG_20110415_H__
@@ -26,6 +24,8 @@ namespace guiex
 	/**
 	* @class CGUIWgtTag
 	* @brief used to get position info
+	* used image name:
+	*		-bg
 	*/
 	class GUIEXPORT CGUIWgtTag: public CGUIWidget
 	{

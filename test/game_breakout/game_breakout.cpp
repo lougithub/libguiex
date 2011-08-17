@@ -15,11 +15,16 @@
 // function
 //============================================================================// 
 
-guiex::CGUIFrameworkBase* CreateFramework( )
+guiex::CGUIFrameworkBase* GUIEXCreateFramework( )
 {
 	return new CGUIFrameworkTest( );
 }
 
+const char* GUIEXGetDataDir()
+{
+	//should relative to dir "data"
+	return "test";
+}
 
 //*****************************************************************************
 //	CMyBodyBase

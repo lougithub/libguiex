@@ -13,6 +13,8 @@
 //============================================================================// 
 #include "guiwgtparticle2d.h"
 #include "guiwgttiledmap.h"
+#include "guiwgtsimplepathnode.h"
+#include "guiwgtsimplepathnodemgr.h"
 
 #include "guiwgtgeneratewidgets_game.h"
 

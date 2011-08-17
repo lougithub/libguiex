@@ -492,6 +492,7 @@ fail:
 	//------------------------------------------------------------------------------
 	void IGUIScript_lua::RegisterWidget( const CGUIWidget* pWidget )
 	{
+#if 0
 		lua_State* L = (lua_State*)GetLuaState(pWidget->GetWorkingSceneName());
 
 		lua_pushstring( L, pWidget->GetName().c_str());
@@ -512,6 +513,7 @@ fail:
 
 		SWIG_NewPointerObj( L, (void*)pWidget, pInfo, 0 );
 		lua_rawset( L, LUA_GLOBALSINDEX );
+#endif
 	}
 	//------------------------------------------------------------------------------
 

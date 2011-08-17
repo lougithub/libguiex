@@ -550,7 +550,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtListBox::OnAddChild( CGUIEventRelativeChange* pEvent )
 	{
-		if( pEvent->GetRelative()->GetType() == "CGUIWgtListBoxItem")
+		if( pEvent->GetRelative()->GetType() == CGUIWgtListBoxItem::StaticGetType())
 		{
 			DoAddItem(static_cast<CGUIWgtListBoxItem*>(pEvent->GetRelative()));
 		}
@@ -560,7 +560,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtListBox::OnRemoveChild( CGUIEventRelativeChange* pEvent )
 	{
-		if( pEvent->GetRelative()->GetType() == "CGUIWgtListBoxItem")
+		if( pEvent->GetRelative()->GetType() == CGUIWgtListBoxItem::StaticGetType())
 		{
 			DoRemoveItem(static_cast<CGUIWgtListBoxItem*>(pEvent->GetRelative()));
 		}
