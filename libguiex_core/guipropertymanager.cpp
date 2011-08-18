@@ -37,7 +37,7 @@ namespace guiex
 		RegisterPropertyType( ePropertyType_UInt16, "uint16" );
 		RegisterPropertyType( ePropertyType_Real, "real" );
 
-		RegisterPropertyType( ePropertyType_Folder, "folder" );
+		RegisterPropertyType( ePropertyType_Array, "array" );
 
 		RegisterPropertyType( ePropertyType_Size, "CGUISize" );
 		RegisterPropertyType( ePropertyType_IntSize, "CGUIIntSize" );

@@ -203,11 +203,6 @@
 
 	<widget type="CGUIWgtTag" inherit="CGUIWidget">
 		<page name="Appearance">
-			<property name="size" type="CGUIWidgetSize" category="Default">
-				<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-				<property name="value" type="CGUISize" value="17,17" />
-			</property>
-			<property name="anchor" type="CGUIVector2" value="0.5,0.5"  category="Default" alternative_save="true"/>
 			<property name="hitable" type="bool" value="false"  category="Default" alternative_save="true"/>
 		</page>
 		<page name="Image">

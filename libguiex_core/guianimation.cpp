@@ -11,16 +11,13 @@
 #include "guianimation.h"
 #include "guisystem.h"
 #include "guiresource.h"
-#include "guitexture.h"
-#include "guitexturemanager.h"
 #include "guiexception.h"
 #include "guiscene.h"
 #include "guiscenemanager.h"
-#include "guicolor.h"
 #include "guiinterfacerender.h"
-#include "guirenderrect.h"
 #include "guisystem.h"
 #include "guianimationmanager.h"
+#include "guiimagemanager.h"
 
 
 //============================================================================//
@@ -29,94 +26,43 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	CGUIAnimation::CGUIAnimation( 
-		const CGUIString& rName, 
-		const CGUIString& rSceneName, 
-		const CGUIString& rFileName, 
-		const std::vector<CGUIRect>& rUVRects,
-		real fInterval,
-		bool bLooping,
-		const CGUISize& rSize )
-		:CGUIResource( rName, rSceneName, "ANIMATION", GSystem->GetAnimationManager() )
-		,m_vecUVRects( rUVRects )
-		,m_vecFileNames( rUVRects.size(), rFileName )
-		,m_fInterval( fInterval )
-		,m_fDeltaTime(0.0f)
-		,m_nFrame(0)
-		,eUVAnimType(eUVAnimType_SingleFile)
-		,m_aAnimationSize(rSize)
-		,m_bLooping(bLooping)
-	{
-
-	}
 	//------------------------------------------------------------------------------
 	CGUIAnimation::CGUIAnimation(
 		const CGUIString& rName, 
 		const CGUIString& rSceneName, 
-		const std::vector<CGUIString>& rFileNames,  
+		const std::vector<CGUIString>& rImageNames,  
 		real fInterval,
 		bool bLooping,
 		const CGUISize& rSize )
 		:CGUIResource( rName, rSceneName, "ANIMATION", GSystem->GetAnimationManager() )
-		,m_vecUVRects( rFileNames.size(), CGUIRect(0.f,0.f,1.f,1.f))
-		,m_vecFileNames( rFileNames )
 		,m_fInterval( fInterval )
 		,m_fDeltaTime(0.0f)
 		,m_nFrame(0)
-		,eUVAnimType(eUVAnimType_MultiFile)
 		,m_aAnimationSize(rSize)
 		,m_bLooping(bLooping)
 	{
-
-	}
-	//------------------------------------------------------------------------------
-	CGUIAnimation::CGUIAnimation(
-		const CGUIString& rName, 
-		const CGUIString& rSceneName, 
-		const std::vector<CGUIString>& rFileNames,  
-		const std::vector<CGUIRect>& rUVRects,
-		real fInterval,
-		bool bLooping,
-		const CGUISize& rSize )
-		:CGUIResource( rName, rSceneName, "ANIMATION", GSystem->GetAnimationManager() )
-		,m_vecUVRects( rUVRects )
-		,m_vecFileNames( rFileNames )
-		,m_fInterval( fInterval )
-		,m_fDeltaTime(0.0f)
-		,m_nFrame(0)
-		,eUVAnimType(eUVAnimType_MultiFile)
-		,m_aAnimationSize(rSize)
-		,m_bLooping(bLooping)
-	{
-		GUI_ASSERT( m_vecFileNames.size() == m_vecUVRects.size(), "invalid param" );
+		m_vecImages.resize( rImageNames.size(), NULL );
+		for( uint32 i = 0; i<rImageNames.size(); ++i )
+		{
+			CGUIImage* pImage = CGUIImageManager::Instance()->AllocateResource( rImageNames[i] );
+			m_vecImages[i] = pImage;
+		}
 	}
 	//------------------------------------------------------------------------------
 	CGUIAnimation::~CGUIAnimation()
 	{
+		for( TImageArray::iterator itor = m_vecImages.begin(); itor != m_vecImages.end(); ++itor )
+		{
+			(*itor)->RefRelease();
+		}
+		m_vecImages.clear();
 	}
 	//------------------------------------------------------------------------------
 	int32 CGUIAnimation::DoLoad()
 	{
-		//get full path
-		CGUIString strPrePath = CGUISceneManager::Instance()->GetScenePath( m_strSceneName );
-
-		//load texture
-		for( uint32 i=0; i<m_vecFileNames.size(); ++i )
+		for( TImageArray::iterator itor = m_vecImages.begin(); itor != m_vecImages.end(); ++itor )
 		{
-			CGUIString strFullPath = strPrePath+m_vecFileNames[i];
-			CGUITexture* pTexture = CGUITextureManager::Instance()->CreateTexture(strFullPath);
-			if( !pTexture )
-			{
-				GUI_THROW( GUI_FORMAT("[CGUIAnimation::DoLoad]: failed to create texture from path <%s>",strFullPath.c_str()));
-				return -1;
-			}
-			m_vecTextures.push_back( pTexture );
-		}
-
-		if( m_vecTextures.empty() )
-		{
-			GUI_THROW( "[CGUIAnimation::DoLoad]: failed to load texture" );
-			return -1;
+			(*itor)->Load();
 		}
 
 		return 0;
@@ -124,11 +70,10 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIAnimation::DoUnload()
 	{
-		for( uint32 i=0; i<m_vecTextures.size(); ++i )
+		for( TImageArray::iterator itor = m_vecImages.begin(); itor != m_vecImages.end(); ++itor )
 		{
-			CGUITextureManager::Instance()->DestroyTexture( m_vecTextures[i] );
+			(*itor)->Unload();
 		}
-		m_vecTextures.clear( );
 		m_nFrame = 0;
 	}
 	//------------------------------------------------------------------------------
@@ -140,7 +85,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	bool CGUIAnimation::IsPlaying() const
 	{
-		if( !m_bLooping && !m_vecTextures.empty() && m_nFrame == m_vecTextures.size()-1 )
+		if( !m_bLooping && !m_vecImages.empty() && m_nFrame == m_vecImages.size()-1 )
 		{
 			return false;
 		}
@@ -161,7 +106,7 @@ namespace guiex
 			while( m_fDeltaTime >= m_fInterval )
 			{
 				m_fDeltaTime -= m_fInterval;
-				m_nFrame = (m_nFrame+1) % m_vecTextures.size();
+				m_nFrame = (m_nFrame+1) % m_vecImages.size();
 			}
 		}
 		else
@@ -178,9 +123,9 @@ namespace guiex
 					m_fDeltaTime -= m_fInterval;
 					m_nFrame ++;
 				}
-				if( m_nFrame >= m_vecTextures.size() )
+				if( m_nFrame >= m_vecImages.size() )
 				{
-					m_nFrame = m_vecTextures.size() - 1;
+					m_nFrame = m_vecImages.size() - 1;
 				}
 			}
 		}
@@ -192,15 +137,13 @@ namespace guiex
 		{
 			Load();
 
-			if( m_vecTextures.empty())
+			if( m_vecImages.empty())
 			{
 				m_aAnimationSize.SetValue( 0.0f, 0.0f );
 			}
 			else
 			{
-				m_aAnimationSize.SetValue(
-					m_vecTextures[0]->GetWidth() * m_vecUVRects[0].GetWidth(),
-					m_vecTextures[0]->GetHeight() * m_vecUVRects[0].GetHeight() );
+				m_aAnimationSize = m_vecImages[0]->GetSize();
 			}
 		}
 		return m_aAnimationSize;
@@ -211,19 +154,12 @@ namespace guiex
 		real z, 
 		real fAlpha	)
 	{
+		if( m_vecImages.empty() )
+		{
+			return;
+		}
 		Load();
-
-		CGUIColor aColor(1.0f,1.0f,1.0f,1.0f);
-		aColor.SetAlpha(fAlpha);
-		pRender->DrawTile( rDestRect, 
-			z,
-			m_vecTextures[m_nFrame],
-			m_vecUVRects[m_nFrame], 
-			eImageOrientation_Normal,
-			aColor,
-			aColor,
-			aColor,
-			aColor);
+		m_vecImages[m_nFrame]->Draw( pRender, rDestRect, z, fAlpha );
 	}
 	//------------------------------------------------------------------------------
 	bool CGUIAnimation::IsLooping() const

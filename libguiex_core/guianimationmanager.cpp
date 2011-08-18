@@ -83,16 +83,15 @@ namespace guiex
 		}
 
 		/**
-		<property name="mole_laugh" type="CGUIImageDefine">
+		<property name="mole_laugh" type="CGUIAnimationDefine">
 			<property name="size" type="CGUISize" value="178,200"/>
-			<property name="interval" type="real" value="0.5"/>
+			<property name="interval" type="real" value="0.2"/>
 			<property name="loop" type="bool" value="false"/>
-			<property name="path" type="CGUIString" value="image/anim/mole_laugh1.tga" />
-			<property name="uv" type="CGUIRect" value="0,0,1,1" />
-			<property name="path" type="CGUIString" value="image/anim/mole_laugh2.tga" />
-			<property name="uv" type="CGUIRect" value="0,0,1,1" />
-			<property name="path" type="CGUIString" value="image/anim/mole_laugh3.tga" />
-			<property name="uv" type="CGUIRect" value="0,0,1,1" />
+			<property name="images" type="array" >
+				<property name="image" type="CGUIImage" value="mole_laugh_1" />
+				<property name="image" type="CGUIImage" value="mole_laugh_2" />
+				<property name="image" type="CGUIImage" value="mole_laugh_3" />
+			</property>
 		</property>
 		*/
 
@@ -129,24 +128,17 @@ namespace guiex
 		}
 
 		//images
-		std::vector<CGUIString> vecFilenames;
-		std::vector<CGUIRect> vecRects;
+		std::vector<CGUIString> vecImageName;
 		{
-			const CGUIProperty* pPropertyImages = rRootProperty.GetProperty("images", "folder" );
+			const CGUIProperty* pPropertyImages = rRootProperty.GetProperty("images", "array" );
 			if( pPropertyImages )
 			{
 				for( uint32 i=0; i<pPropertyImages->GetPropertyNum(); ++i )
 				{
 					const CGUIProperty* pProperty = pPropertyImages->GetProperty( i );
-					if( pProperty->GetType() == ePropertyType_String && pProperty->GetName() == "path" )
+					if( pProperty->GetType() == ePropertyType_Image && pProperty->GetName() == "image" )
 					{
-						vecFilenames.push_back( pProperty->GetValue() );
-					}
-					else if( pProperty->GetType() == ePropertyType_Rect && pProperty->GetName() == "uv" )
-					{
-						CGUIRect aRect;
-						PropertyToValue( *pProperty, aRect );
-						vecRects.push_back( aRect );
+						vecImageName.push_back( pProperty->GetValue() );
 					}
 					else
 					{
@@ -158,7 +150,7 @@ namespace guiex
 			}
 		}
 
-		CGUIAnimation* pAnimation = new CGUIAnimation( rRootProperty.GetName(), pAnimationData->GetSceneName(), vecFilenames, vecRects, fInterval, bLoop, aAnimationSize );
+		CGUIAnimation* pAnimation = new CGUIAnimation( rRootProperty.GetName(), pAnimationData->GetSceneName(), vecImageName, fInterval, bLoop, aAnimationSize );
 		pAnimation->RefRetain();
 		AddToAllocatePool( pAnimation );
 		return pAnimation;

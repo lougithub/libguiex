@@ -18,6 +18,8 @@
 #include "wxmainframe.h"
 #include "editorutility.h"
 
+#include "tdwgt_game_td.h"
+
 #include <fstream>
 
 class CEditorLogMsgCallback : public CGUILogMsgCallback
@@ -141,6 +143,21 @@ CGUIFrameworkEditor::CGUIFrameworkEditor( )
 :CGUIFramework( )
 ,m_pCurrentCanvas( NULL )
 {
+}
+//------------------------------------------------------------------------------
+void CGUIFrameworkEditor::RegisterWidgetGenerators( )
+{
+	CGUIFramework::RegisterWidgetGenerators();
+
+	//game_td widgets
+	{
+		CGUIWidgetGenerator** pGenerator = GetAllWidgetGenerators_Game_TD();
+		while(*pGenerator)
+		{
+			CGUIWidgetFactory::Instance()->RegisterGenerator( *pGenerator);
+			pGenerator ++;
+		}
+	}
 }
 //------------------------------------------------------------------------------
 void CGUIFrameworkEditor::RegisterInterfaces_Render( )

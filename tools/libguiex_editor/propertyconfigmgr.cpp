@@ -215,11 +215,11 @@ int	CPropertyConfigMgr::ReadLocalizationConfig(const std::string& rFileName)
 	return 0;
 }
 //------------------------------------------------------------------------------
-int CPropertyConfigMgr::ReadPropertyConfig(const std::string& rFileName)
+int CPropertyConfigMgr::ReadPropertyConfig(const wxString& rFileName)
 {
 	//parse file
 	TiXmlDocument aDoc;
-	aDoc.LoadFile( rFileName.c_str() );
+	aDoc.LoadFile( wx2GuiString(rFileName).c_str() );
 	if( aDoc.Error())
 	{
 		//failed to parse

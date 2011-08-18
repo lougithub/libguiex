@@ -1,3 +1,20 @@
+set( lib_name "example_game_td_lib" )
+message( STATUS "generate library: " ${lib_name} )
+
+set( ${lib_name}_SRCS 
+        lib/tdwgttower.cpp
+        lib/tdwgttower.h
+        lib/tdwgt_game_td.h
+        lib/tdwgtgeneratewidgets_game_td.cpp
+        lib/tdwgtgeneratewidgets_game_td.h
+	)
+
+#include directory
+add_library( ${lib_name} STATIC ${${lib_name}_SRCS} )
+set_target_properties(${lib_name} PROPERTIES FOLDER example)
+
+
+
 set( target_name "example_game_td" )
 message( STATUS "generate execute: " ${target_name} )
 
@@ -5,8 +22,8 @@ macro_set_common_sources( ${target_name}_common_SRCS )
 
 #test source
 set( ${target_name}_execute_SRCS
-	game_td.cpp
-	game_td.h
+	app/game_td.cpp
+	app/game_td.h
 	)
 source_group( test FILES ${${target_name}_execute_SRCS} )
 

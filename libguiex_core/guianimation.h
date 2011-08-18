@@ -24,10 +24,8 @@
 namespace guiex
 {
 	class IGUIInterfaceRender;
+	class CGUIImage;
 	class CGUIRect;
-	class CGUITexture;
-	class CGUIRenderRect;
-	class CGUIMatrix4;
 }
 
 //============================================================================//
@@ -38,14 +36,8 @@ namespace guiex
 	class GUIEXPORT CGUIAnimation : public CGUIResource
 	{
 	public:
-		/**
-		* @brief destructor
-		*/
 		virtual ~CGUIAnimation( );
 
-		/**
-		* @brief update the animation
-		*/
 		void Update( real fDeltaTime );
 
 		void Draw( IGUIInterfaceRender* pRender,
@@ -64,41 +56,12 @@ namespace guiex
 		/**
 		* @brief constructor
 		* @param nInterval interval time between two frame.in millisecond
-		* @param rFileName image name
-		* @param rListTexRect show which part of image will be considered as a frame of animation
-		*/
-		CGUIAnimation( 
-			const CGUIString& rName, 
-			const CGUIString& rSceneName, 
-			const CGUIString& rFileName, 
-			const std::vector<CGUIRect>& rUVRects,
-			real fInterval,
-			bool bLooping,
-			const CGUISize& rSize);
-
-		/**
-		* @brief constructor
-		* @param nInterval interval time between two frame.in millisecond
 		* @param rListFileName list contains all image's name
 		*/
 		CGUIAnimation(
 			const CGUIString& rName, 
 			const CGUIString& rSceneName, 
-			const std::vector<CGUIString>& rFileNames,  
-			real fInterval,
-			bool bLooping,
-			const CGUISize& rSize);
-
-		/**
-		* @brief constructor
-		* @param nInterval interval time between two frame.in millisecond
-		* @param rListFileName list contains all image's name
-		*/
-		CGUIAnimation(
-			const CGUIString& rName, 
-			const CGUIString& rSceneName, 
-			const std::vector<CGUIString>& rFileNames,  
-			const std::vector<CGUIRect>& rUVRects,
+			const std::vector<CGUIString>& rImageNames,  
 			real fInterval,
 			bool bLooping,
 			const CGUISize& rSize);
@@ -108,21 +71,13 @@ namespace guiex
 
 	protected:
 		friend class CGUIAnimationManager;
-		std::vector<CGUITexture*> m_vecTextures;
-		std::vector<CGUIRect> m_vecUVRects;
 
-		std::vector<CGUIString>	m_vecFileNames; //resource path
+		typedef std::vector<CGUIImage*> TImageArray;
+		TImageArray	m_vecImages; //images
 
-		real		m_fInterval;
-		real		m_fDeltaTime;			//!< used by animation
-		uint32		m_nFrame;				//!< current frame
-
-		enum EUVAnimType
-		{
-			eUVAnimType_SingleFile = 0,
-			eUVAnimType_MultiFile,
-		};
-		EUVAnimType eUVAnimType;
+		real m_fInterval;
+		real m_fDeltaTime; //!< used by animation
+		uint32 m_nFrame; //!< current frame
 
 		CGUISize m_aAnimationSize;
 

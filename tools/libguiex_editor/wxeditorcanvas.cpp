@@ -443,6 +443,11 @@ void WxEditorCanvas::HandleMouseMoved (int aMouseX, int aMouseY)
 		}
 	}
 
+	if( m_aWindowBox.GetWindow() )
+	{
+		wxSnprintf (statusInfo, 100, wxT("%s selected: %s"), statusInfo, Gui2wxString(m_aWindowBox.GetWindow()->GetName()).data());
+	}
+
 	GetMainFrame()->UpdateStatusBar (statusInfo);
 	UpdateCursor();
 

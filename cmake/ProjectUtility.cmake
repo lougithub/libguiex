@@ -137,6 +137,7 @@ macro( macro_set_target_link_libraries_wx_win32 targetname )
 		general vorbis
 		general zlib
 		general glew
+		${ARGN}
 		)
 endmacro()
 
@@ -261,6 +262,7 @@ macro( macro_add_project_dependencies_wx_win32 targetname)
 		libguiex_widget_game
 		libguiex_script_wrapper 
 		libguiex_framework
+		${ARGN}
 		)
 endmacro()
 

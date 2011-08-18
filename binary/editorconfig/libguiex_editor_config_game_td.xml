@@ -1,0 +1,11 @@
+﻿<?xml version="1 " encoding="utf-8"?>
+
+<config>
+	<widget type="TDWgtTower" inherit="CGUIWidget">
+		<page name="Appearance">
+		</page>
+	</widget>
+</config>
+
+
+

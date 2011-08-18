@@ -2,6 +2,7 @@
 <libguiex_project>
 	<property name="game_td_map_001" type="SceneName" />
 	<property name="game_td_common" type="Dependency"/>
+	<property name="game_td_map_base" type="Dependency"/>
 	<property name="map_001.xml" type="WidgetFile" />
 	<property name="resource.res" type="ResourceFile" />
 </libguiex_project>

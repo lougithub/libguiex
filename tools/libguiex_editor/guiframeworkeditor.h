@@ -34,6 +34,7 @@ protected:
 
 	virtual void RegisterInterfaces_Render( );
 	virtual void RegisterInterfaces_ImageLoader( );
+	virtual void RegisterWidgetGenerators( );
 
 protected:
 	class WxEditorCanvas* m_pCurrentCanvas;

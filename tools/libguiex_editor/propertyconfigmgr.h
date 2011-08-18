@@ -114,7 +114,7 @@ public:
 
 	void Clear();
 
-	int	ReadPropertyConfig(const std::string& rFileName);
+	int	ReadPropertyConfig(const wxString& rFileName);
 	int	ReadLocalizationConfig(const std::string& rFileName);
 
 	const CGUIProperty&	GetPropertySet(const std::string& rSetName ) const;

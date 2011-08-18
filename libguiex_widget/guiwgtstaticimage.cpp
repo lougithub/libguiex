@@ -51,7 +51,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWgtStaticImage::RenderSelf(IGUIInterfaceRender* pRender)
+	void CGUIWgtStaticImage::RenderSelf(IGUIInterfaceRender* pRender)
 	{
 		DrawImage( pRender, m_pImageBG, GetBoundArea( ));
 	}

@@ -39,8 +39,6 @@ namespace guiex
 	{
 		m_pImageBG = NULL;
 		
-		SetAnchorPoint( 0.5f, 0.5f );
-		SetPixelSize(17.0f, 17.0f );
 		SetMouseConsumed(false);
 		SetHitable( false );				
 	}

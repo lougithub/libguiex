@@ -12,6 +12,7 @@
 #include "wxmainframe.h"
 #include "propertyconfigmgr.h"
 #include "editorutility.h"
+#include <algorithm>
 
 
 //============================================================================//
@@ -74,25 +75,45 @@ bool WxMainApp::OnInit()
 		return false;
 	}
 
-	//load config file
-	if( 0 != CPropertyConfigMgr::Instance()->ReadPropertyConfig(GetBaseDir() + "../editorconfig/libguiex_editor_config.xml"))
+	//load base config file
+	std::vector<wxFileName> vecBaseConfigFile;
+	vecBaseConfigFile.push_back( Gui2wxString(GetBaseDir() + "../editorconfig/libguiex_editor_config.xml"));
+	vecBaseConfigFile.push_back( Gui2wxString(GetBaseDir() + "../editorconfig/libguiex_editor_config_box2d.xml"));
+	vecBaseConfigFile.push_back( Gui2wxString(GetBaseDir() + "../editorconfig/libguiex_editor_config_game.xml"));
+
+	for( uint32 i=0; i<vecBaseConfigFile.size(); ++i )
 	{
-		wxMessageBox(_T("failed to read property config filelibguiex_editor_config.xml!"), _T("error"));
-		return false;
+		if( 0 != CPropertyConfigMgr::Instance()->ReadPropertyConfig( vecBaseConfigFile[i].GetFullPath()))
+		{
+			wxMessageBox( wxString::Format( _T("failed to read property config file: %s"), vecBaseConfigFile[i].GetFullPath() ), _T("error"));
+			return false;
+		}
 	}
 
-	//load box2d config file
-	if( 0 != CPropertyConfigMgr::Instance()->ReadPropertyConfig(GetBaseDir() + "../editorconfig/libguiex_editor_config_box2d.xml"))
+	//load extend config file
+	if( wxMessageBox( _T("Do you want to load extend widget config file?"), _T("Questing"), wxYES_NO | wxICON_QUESTION) == wxYES )
 	{
-		wxMessageBox(_T("failed to read property config file <libguiex_editor_config_box2d.xml>!"), _T("error"));
-		return false;
-	}
+		wxFileDialog aDlg(NULL, _T("Choose widget config files"), Gui2wxString(GetBaseDir() + "../editorconfig/"), wxEmptyString, _T("widget config files (*.xml)|*.xml"), wxFD_OPEN | wxFD_MULTIPLE | wxFD_FILE_MUST_EXIST );
+		if( wxID_OK == aDlg.ShowModal())
+		{
+			//try load
+			wxArrayString arrayFiles;
+			aDlg.GetPaths( arrayFiles );
+			for( uint32 i=0; i<arrayFiles.size(); ++i )
+			{
+				if( std::find(vecBaseConfigFile.begin(), vecBaseConfigFile.end(), arrayFiles[i]) != vecBaseConfigFile.end() )
+				{
+					//base config file, ignore it
+					continue;
+				}
 
-	//load game config file
-	if( 0 != CPropertyConfigMgr::Instance()->ReadPropertyConfig(GetBaseDir() + "../editorconfig/libguiex_editor_config_game.xml"))
-	{
-		wxMessageBox(_T("failed to read property config file <libguiex_editor_config_game.xml>!"), _T("error"));
-		return false;
+				if( 0 != CPropertyConfigMgr::Instance()->ReadPropertyConfig( arrayFiles[i]))
+				{
+					wxMessageBox( wxString::Format( _T("failed to read property config file: %s"), arrayFiles[i] ), _T("error"));
+					return false;
+				}
+			}
+		}
 	}
 
 	//check default property
