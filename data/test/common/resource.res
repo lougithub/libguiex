@@ -408,7 +408,7 @@
 		<property name="total_time" type="real" value="6" />
 		<property name="elapsed_time" type="real" value="0" />
 
-		<property name="item_info" type="CGUIAsContainerItemInfo">
+		<property name="item_info" type="group">
 			<property name="begin_time" type="real" value="0"/>
 			<property name="item" type="CGUIAsDefine" value="CGUIAsWidgetAlpha">
 				<property name="loop" type="bool" value="false"/>
@@ -420,7 +420,7 @@
 			</property>
 		</property>
 
-		<property name="item_info" type="CGUIAsContainerItemInfo">
+		<property name="item_info" type="group">
 			<property name="begin_time" type="real" value="3"/>
 			<property name="item" type="CGUIAsDefine" value="CGUIAsWidgetAlpha">
 				<property name="loop" type="bool" value="false"/>

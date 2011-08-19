@@ -122,7 +122,7 @@ int WxEditorCanvasContainer::SaveWidgetNodeToDoc( CGUIWidget* pWidget, TiXmlDocu
 	if( aSet.HasProperty("parent", "CGUIString"))
 	{
 		CGUIProperty* pProperty = aSet.GetProperty("parent", "CGUIString");
-		AddTopPropertyElement(rPropertyTemplate, *pProperty, pWidgetNode);
+		AddTopPropertyElement(pWidget, rPropertyTemplate, *pProperty, pWidgetNode);
 		aSet.RemoveProperty(*pProperty);
 	}
 
@@ -140,7 +140,7 @@ int WxEditorCanvasContainer::SaveWidgetNodeToDoc( CGUIWidget* pWidget, TiXmlDocu
 		itor != aImgVector.end();
 		++itor )
 	{
-		AddTopPropertyElement(rPropertyTemplate, *itor, pWidgetNode);
+		AddTopPropertyElement(pWidget, rPropertyTemplate, *itor, pWidgetNode);
 		aSet.RemoveProperty(*itor);
 	}
 
@@ -148,7 +148,7 @@ int WxEditorCanvasContainer::SaveWidgetNodeToDoc( CGUIWidget* pWidget, TiXmlDocu
 	for( unsigned i=0; i<aSet.GetPropertyNum(); ++i)
 	{
 		const CGUIProperty* pProperty = aSet.GetProperty(i);
-		AddTopPropertyElement(rPropertyTemplate, *pProperty, pWidgetNode);
+		AddTopPropertyElement(pWidget, rPropertyTemplate, *pProperty, pWidgetNode);
 	}
 
 	//process it's child
@@ -166,7 +166,7 @@ int WxEditorCanvasContainer::SaveWidgetNodeToDoc( CGUIWidget* pWidget, TiXmlDocu
 	return 0;
 }
 //------------------------------------------------------------------------------
-void WxEditorCanvasContainer::AddTopPropertyElement( const CGUIProperty& rPropertyTemplate, const CGUIProperty& rProperty, TiXmlElement* pWidgetNode)
+void WxEditorCanvasContainer::AddTopPropertyElement( const CGUIWidget* pWidget, const CGUIProperty& rPropertyTemplate, const CGUIProperty& rProperty, TiXmlElement* pWidgetNode)
 {
 	//get exist's one
 	TiXmlElement* pOldNode = GetElementByName(_T("property"), Gui2wxString(rProperty.GetName()), pWidgetNode);
@@ -178,7 +178,16 @@ void WxEditorCanvasContainer::AddTopPropertyElement( const CGUIProperty& rProper
 		bIgnoreIt = true;
 	}
 	const CGUIProperty* pPropertyTemplate = rPropertyTemplate.GetProperty( rProperty.GetName(), rProperty.GetType() );
-	wxASSERT( pPropertyTemplate );
+	if( !pPropertyTemplate )
+	{
+		wxString errorinfo = wxString::Format(_T("failed to find property in property template: [%s:%s:%s], widget: [%s]"), 
+			Gui2wxString(rProperty.GetName()), 
+			Gui2wxString(rProperty.GetTypeAsString()), 
+			Gui2wxString( rProperty.GetValue()),
+			Gui2wxString(pWidget->GetName()));
+		wxMessageBox( errorinfo, _T("error") );
+		exit(0);
+	}
 	if( CPropertyData::GetPropertyData(*pPropertyTemplate)->IsAlternaitiveSave())
 	{
 		if( rProperty == *pPropertyTemplate )

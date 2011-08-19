@@ -3,5 +3,7 @@
 	<property name="game_td_map_base" type="SceneName" />
 	<property name="resource_monster001.res" type="ResourceFile" />
 	<property name="resource_tower.res" type="ResourceFile" />
+	<property name="resource_menu.res" type="ResourceFile" />
+	<property name="resource_as.res" type="ResourceFile" />
 </libguiex_project>
 

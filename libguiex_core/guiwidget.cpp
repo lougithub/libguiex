@@ -73,6 +73,7 @@ namespace guiex
 		,m_bIsOpen( false )
 		,m_bIsCreate( false )
 		,m_aColor(1.0f,1.0f,1.0f,1.0f)
+		,m_fZ(0.0f)
 		,m_vRotation(0.0f,0.0f,0.0f)
 		,m_bOpenWithParent(true)
 		,m_bInheritAlpha(true)
@@ -88,6 +89,7 @@ namespace guiex
 		,m_bIsGenerateParentChildEvent(false )
 		,m_bIsGenerateClickEvent(false)
 		,m_bIsGenerateLoadEvent(false)
+		,m_bIsGenerateOpenCloseEvent(false)
 		,m_bIsGenerateDBClickEvent(false)
 		,m_bIsGenerateMultiClickEvent(false)
 		,m_bIsAutoPlayAs(false)
@@ -175,14 +177,6 @@ namespace guiex
 			aEvent.SetReceiver(this);
 			GSystem->SendEvent( &aEvent);
 		}
-
-		//children's
-		CGUIWidget*	pWidget = GetChild();
-		while(pWidget)
-		{
-			pWidget->NotifyLoaded();
-			pWidget = pWidget->GetNextSibling();
-		}	
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -194,15 +188,17 @@ namespace guiex
 		if( IsOpen())
 		{
 			return;
-			//GUI_THROW( GUI_FORMAT("[CGUIWidget::Open]: the widget isn't in closed state. TYPE<%s>  NAME<%s>",
-			//	GetType().c_str(), GetName().c_str()));
 		}
 
 		m_bIsOpen = true;
-		CGUIEventNotification aEvent;
-		aEvent.SetEventId(eEVENT_OPEN);
-		aEvent.SetReceiver(this);
-		GSystem->SendEvent( &aEvent);
+
+		if( IsGenerateOpenCloseEvent() )
+		{
+			CGUIEventNotification aEvent;
+			aEvent.SetEventId(eEVENT_OPEN);
+			aEvent.SetReceiver(this);
+			GSystem->SendEvent( &aEvent);
+		}
 
 		//open child if it is set to "open with parent"
 		CGUIWidget*	pWidget = GetChild();
@@ -213,7 +209,19 @@ namespace guiex
 				pWidget->Open();
 			}
 			pWidget = pWidget->GetNextSibling();
-		}	
+		}
+
+		OnOpen();
+
+		//check auto play as
+		if(  IsAutoPlayAs() && !GSystem->IsEditorMode() )
+		{
+			CGUIAs* pAs = GetAs("default_as");
+			if( pAs )
+			{
+				PlayAs( pAs );
+			}
+		}
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -229,11 +237,17 @@ namespace guiex
 		}
 
 		m_bIsOpen = false;
-		//send event
-		CGUIEventNotification aEvent;
-		aEvent.SetEventId(eEVENT_CLOSE);
-		aEvent.SetReceiver(this);
-		GSystem->SendEvent( &aEvent);
+
+		OnClose();
+
+		if( IsGenerateOpenCloseEvent() )
+		{
+			//send event
+			CGUIEventNotification aEvent;
+			aEvent.SetEventId(eEVENT_CLOSE);
+			aEvent.SetReceiver(this);
+			GSystem->SendEvent( &aEvent);
+		}
 
 		//destroy self if it's a dynamic page
 		if( CGUIWidgetManager::Instance()->HasDynamicPage( this ) )
@@ -861,20 +875,6 @@ namespace guiex
 	void CGUIWidget::SetAutoPlayAs( bool bEnable )
 	{
 		m_bIsAutoPlayAs = bEnable;
-
-		//if( m_bIsAutoPlayAs )
-		//{
-		//	for( TMapAs::iterator itor = m_aMapAs.begin();
-		//		itor != m_aMapAs.end();
-		//		++itor )
-		//	{
-		//		CGUIAs* pAs = itor->second;
-		//		if( IsAsPlaying( pAs ) == false )
-		//		{
-		//			PlayAs( pAs );
-		//		}
-		//	}
-		//}
 	}
 	//------------------------------------------------------------------------------
 	bool CGUIWidget::IsAutoPlayAs( ) const
@@ -1338,6 +1338,14 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
+	void CGUIWidget::OnOpen()
+	{
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::OnClose()
+	{
+	}
+	//------------------------------------------------------------------------------
 	void CGUIWidget::OnUpdate( real fDeltaTime )
 	{
 	}
@@ -1453,11 +1461,6 @@ namespace guiex
 		{
 			pAs->RefRetain();
 			m_aMapAs.insert(std::make_pair(rName,pAs));
-
-			if( m_bIsAutoPlayAs )
-			{
-				PlayAs( pAs );
-			}
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -1777,6 +1780,11 @@ namespace guiex
 		{
 			ValueToProperty( m_aColor, rProperty );
 		}
+		else if( rProperty.GetType() == ePropertyType_Int32 && rProperty.GetName() == "z")
+		{
+			int32 z = GUI_FLOAT2INT_ROUND(m_fZ);
+			ValueToProperty( z, rProperty );
+		}
 		else if( rProperty.GetType() == ePropertyType_Vector2 && rProperty.GetName() == "anchor" )
 		{
 			ValueToProperty( m_aWidgetAnchorPoint, rProperty );
@@ -1990,6 +1998,12 @@ namespace guiex
 		else if( rProperty.GetType() == ePropertyType_Color && rProperty.GetName() == "color")
 		{
 			PropertyToValue( rProperty, m_aColor );
+		}
+		else if( rProperty.GetType() == ePropertyType_Int32 && rProperty.GetName() == "z")
+		{
+			int32 z = 0;
+			PropertyToValue( rProperty, z );
+			m_fZ = static_cast<real>(z);
 		}
 		else if(  rProperty.GetType()== ePropertyType_Sound)
 		{
@@ -2448,7 +2462,7 @@ namespace guiex
 	{
 		if( pImage )
 		{
-			pImage->Draw( pRender, rDestRect,0,m_aColor,GetDerivedAlpha() );
+			pImage->Draw( pRender, rDestRect,m_fZ,m_aColor,GetDerivedAlpha() );
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -2466,7 +2480,7 @@ namespace guiex
 	{
 		if( pAnimation )
 		{
-			pAnimation->Draw( pRender, rDestRect,0,GetDerivedAlpha() );
+			pAnimation->Draw( pRender, rDestRect, m_fZ, GetDerivedAlpha() );
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -3048,6 +3062,16 @@ namespace guiex
 		return m_bIsGenerateLoadEvent;
 	}
 	//------------------------------------------------------------------------------
+	void CGUIWidget::SetGenerateOpenCloseEvent( bool bFlag )
+	{
+		m_bIsGenerateOpenCloseEvent = bFlag;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWidget::IsGenerateOpenCloseEvent( ) const
+	{
+		return m_bIsGenerateOpenCloseEvent;
+	}
+	//------------------------------------------------------------------------------
 	void CGUIWidget::SetGenerateDBClickEvent( bool bFlag )
 	{
 		m_bIsGenerateDBClickEvent = bFlag;
@@ -3085,6 +3109,16 @@ namespace guiex
 	void CGUIWidget::SetColor(const CGUIColor& rColor )
 	{
 		m_aColor = rColor;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWidget::SetZ(real fZ )
+	{
+		m_fZ = fZ;
+	}
+	//------------------------------------------------------------------------------
+	real CGUIWidget::GetZ() const
+	{
+		return m_fZ;
 	}
 	//------------------------------------------------------------------------------
 	const CGUIString& CGUIWidget::GetName() const

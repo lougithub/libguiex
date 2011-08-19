@@ -155,6 +155,7 @@ namespace guiex
 #define REGISTER_AS( as ) m_mapAsGenerator[#as] = as::GenerateAs;
 
 		REGISTER_AS( CGUIAsWidgetAlpha );
+		REGISTER_AS( CGUIAsWidgetChildrenAlpha );
 		REGISTER_AS( CGUIAsWidgetScale );
 		REGISTER_AS( CGUIAsWidgetPosition );
 		REGISTER_AS( CGUIAsWidgetSize );
@@ -163,6 +164,8 @@ namespace guiex
 		REGISTER_AS( CGUIAsContainer );
 		REGISTER_AS( CGUIAsCallFunc );
 		REGISTER_AS( CGUIAsWidgetMoveTo );
+		REGISTER_AS( CGUIAsWidgetVisible );
+		REGISTER_AS( CGUIAsWidgetChildrenVisible );
 		
 
 		//grid 3d

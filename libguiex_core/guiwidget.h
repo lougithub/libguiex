@@ -171,6 +171,9 @@ namespace guiex
 		void SetColor(const CGUIColor& rColor );
 		const CGUIColor& GetColor() const;
 
+		void SetZ(real fZ );
+		real GetZ() const;
+
 		CGUIWidget* GetWidgetAtPoint(const CGUIVector2& rPos);
 		virtual bool HitTest( const CGUIVector2& rPos);
 
@@ -349,6 +352,9 @@ namespace guiex
 		void SetGenerateLoadEvent( bool bFlag ); 
 		bool IsGenerateLoadEvent( ) const;
 
+		void SetGenerateOpenCloseEvent( bool bFlag ); 
+		bool IsGenerateOpenCloseEvent( ) const;
+
 		void SetGenerateDBClickEvent( bool bFlag ); 
 		bool IsGenerateDBClickEvent( ) const;
 
@@ -378,6 +384,8 @@ namespace guiex
 		virtual void OnSetAnimation( const CGUIString& rName, CGUIAnimation* pAnimation ); 
 		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage ); 
 		virtual void OnCreate();
+		virtual void OnOpen();
+		virtual void OnClose();
 		virtual void OnUpdate( real fDeltaTime );
 		virtual void OnDestroy();
 
@@ -465,9 +473,9 @@ namespace guiex
 		virtual uint32 OnDisable( CGUIEventNotification* pEvent );
 
 		/// callback function: for open and close
-		virtual uint32 OnLoad( CGUIEventNotification* pEvent );
-		virtual uint32 OnOpen( CGUIEventNotification* pEvent );
-		virtual uint32 OnClose( CGUIEventNotification* pEvent );
+		virtual uint32 OnEventLoad( CGUIEventNotification* pEvent );
+		virtual uint32 OnEventOpen( CGUIEventNotification* pEvent );
+		virtual uint32 OnEventClose( CGUIEventNotification* pEvent );
 
 		/// callback function: for ui event
 		virtual uint32 OnUIEvent( CGUIEventUI* pEvent );
@@ -519,6 +527,7 @@ namespace guiex
 		CGUIWidgetParamAND<bool> m_aParamVisible;
 		CGUIWidgetParamOR<bool> m_aParamActivable;
 		CGUIColor m_aColor;
+		real m_fZ;
 
 		bool m_bIsOpen;	///widget state
 		bool m_bIsCreate; ///widget state
@@ -566,6 +575,7 @@ namespace guiex
 		bool m_bForceHitTest;
 
 		bool m_bIsGenerateLoadEvent;
+		bool m_bIsGenerateOpenCloseEvent;
 		bool m_bIsGenerateClickEvent; 
 		bool m_bIsGenerateDBClickEvent; 
 		bool m_bIsGenerateMultiClickEvent; 

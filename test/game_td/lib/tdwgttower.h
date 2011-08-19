@@ -37,8 +37,14 @@ namespace guiex
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage );
 
+	protected:	//!< callback function
+		virtual uint32 OnMouseEnter( CGUIEventMouse* pEvent );
+		virtual uint32 OnMouseLeave( CGUIEventMouse* pEvent );
+
 	protected:
 		CGUIImage* m_pImageTowerBase;
+
+		bool m_bHovering;
 
 	protected:
 		GUI_WIDGET_GENERATOR_DECLARE(TDWgtTower);

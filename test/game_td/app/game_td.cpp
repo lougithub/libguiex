@@ -11,11 +11,12 @@
 #include "game_td.h"
 #include <algorithm>
 
+using namespace guiex;
 //============================================================================//
 // function
 //============================================================================// 
 
-guiex::CGUIFrameworkBase* GUIEXCreateFramework( )
+CGUIFrameworkBase* GUIEXCreateFramework( )
 {
 	return new CGUIFrameworkTDGame( );
 }
@@ -45,20 +46,20 @@ CMyCanvasLayer_GameLayer::~CMyCanvasLayer_GameLayer(  )
 //------------------------------------------------------------------------------
 void CMyCanvasLayer_GameLayer::Initialize( )
 {
-	guiex::CGUICanvasLayer::Initialize();
+	CGUICanvasLayer::Initialize();
 
-	guiex::CGUISceneManager::Instance()->LoadResources( "game_td_map_001" );	
-	guiex::CGUIWidget* pMapWidget = guiex::CGUISceneManager::Instance()->LoadWidgets( "map_001.xml", "game_td_map_001" );
+	CGUISceneManager::Instance()->LoadResources( "game_td_map_001" );	
+	CGUIWidget* pMapWidget = CGUISceneManager::Instance()->LoadWidgets( "map_001.xml", "game_td_map_001" );
 	pMapWidget->SetParent( this );
 	pMapWidget->Open();
 }
 //------------------------------------------------------------------------------
 void CMyCanvasLayer_GameLayer::Finalize( )
 {
-	guiex::CGUICanvasLayer::Finalize();
+	CGUICanvasLayer::Finalize();
 }
 //------------------------------------------------------------------------------
-void CMyCanvasLayer_GameLayer::OnUpdate(guiex::real fDeltaTime)
+void CMyCanvasLayer_GameLayer::OnUpdate(real fDeltaTime)
 {
 	CGUICanvasLayer::OnUpdate(fDeltaTime );
 }
@@ -77,28 +78,43 @@ void CMyCanvasLayer_GameLayer::DestroySelf( )
 CGUIFrameworkTDGame* CGUIFrameworkTDGame::ms_pFrameWork = NULL;
 //------------------------------------------------------------------------------
 CGUIFrameworkTDGame::CGUIFrameworkTDGame(  )
-:guiex::CGUIFramework(  )
+:CGUIFramework(  )
 ,m_pGameLayer(NULL)
 {
 	ms_pFrameWork = this;
 }
 //------------------------------------------------------------------------------
-guiex::int32 CGUIFrameworkTDGame::InitializeGame()
+int32 CGUIFrameworkTDGame::InitializeGame()
 {
-	guiex::CGUISceneManager::Instance()->RegisterScenesFromDir("/", ".uip");
+	CGUISceneManager::Instance()->RegisterScenesFromDir("/", ".uip");
 
-	guiex::CGUISceneManager::Instance()->LoadResources( "common" );	
-	guiex::CGUIWidget* pUtilityWidget = guiex::CGUISceneManager::Instance()->LoadWidgets( "utility.xml", "common" );
+	CGUISceneManager::Instance()->LoadResources( "common" );	
+	CGUIWidget* pUtilityWidget = CGUISceneManager::Instance()->LoadWidgets( "utility.xml", "common" );
 
 	//add utility widget
-	guiex::GSystem->GetUICanvas()->OpenUIPage(pUtilityWidget);		
+	GSystem->GetUICanvas()->OpenUIPage(pUtilityWidget);		
 
 	//create game layer
 	m_pGameLayer = new CMyCanvasLayer_GameLayer( "td game layer" );
 	m_pGameLayer->Initialize();
-	guiex::CGUICanvasLayerManager::Instance()->PushCanvasLayer( m_pGameLayer );
+	CGUICanvasLayerManager::Instance()->PushCanvasLayer( m_pGameLayer );
 
 	return 0;
+}
+//------------------------------------------------------------------------------
+void CGUIFrameworkTDGame::RegisterWidgetGenerators( )
+{
+	CGUIFramework::RegisterWidgetGenerators();
+
+	//game_td widgets
+	{
+		CGUIWidgetGenerator** pGenerator = GetAllWidgetGenerators_Game_TD();
+		while(*pGenerator)
+		{
+			CGUIWidgetFactory::Instance()->RegisterGenerator( *pGenerator);
+			pGenerator ++;
+		}
+	}
 }
 //------------------------------------------------------------------------------
 

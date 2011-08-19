@@ -226,13 +226,13 @@ namespace guiex
 			return m_pReceiver->OnDisable(this);
 
 		case eEVENT_LOAD:
-			return m_pReceiver->OnLoad(this);
+			return m_pReceiver->OnEventLoad(this);
 
 		case eEVENT_OPEN:
-			return m_pReceiver->OnOpen(this);
+			return m_pReceiver->OnEventOpen(this);
 
 		case eEVENT_CLOSE:
-			return m_pReceiver->OnClose(this);
+			return m_pReceiver->OnEventClose(this);
 
 			//case eEVENT_CREATE:
 			//	return m_pReceiver->OnCreate(this);

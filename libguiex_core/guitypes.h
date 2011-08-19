@@ -85,6 +85,7 @@ namespace guiex
 
 
 #define GUI_FLOAT2UINT_ROUND(value)	static_cast<uint32>((value)+0.5f)
+#define GUI_FLOAT2INT_ROUND(value)	static_cast<int32>((value)>0?((value)+0.5f):((value)-0.5f))
 
 
 #if defined(WIN32)

@@ -168,10 +168,12 @@ namespace guiex
 		catch (std::exception& rError)
 		{
 			OutputFatalError( rError.what() );
+			exit(0);
 		}
 		catch (...)
 		{
 			OutputFatalError( "unknown error" );
+			exit(0);
 		}
 #endif
 	}

@@ -1,10 +1,18 @@
 ﻿<?xml version="1 " encoding="utf-8"?>
 
 <config>
-	<widget type="TDWgtTower" inherit="CGUIWidget">
-		<page name="Appearance">
-		</page>
-	</widget>
+  <widget type="TDWgtTower" inherit="CGUIWidget">
+    <page name="Appearance">
+    </page>
+    <page name="Image">
+      <property name="tower_base" type="CGUIImage" value="TowerBase" must_exist="true" />
+    </page>
+  </widget>
+
+  <widget type="TDWgtGameWorldLayer" inherit="CGUIWidget">
+    <page name="Appearance">
+    </page>
+  </widget>
 </config>
 
 

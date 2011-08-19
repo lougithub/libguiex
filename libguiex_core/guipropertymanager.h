@@ -38,6 +38,7 @@ namespace guiex
 		ePropertyType_Real,
 		
 		ePropertyType_Array,
+		ePropertyType_Group,
 
 		ePropertyType_String,
 		ePropertyType_LocalizedString,
@@ -69,7 +70,6 @@ namespace guiex
 		ePropertyType_AsWidgetRotation,
 		ePropertyType_AsWidgetAlpha,
 		ePropertyType_AsContainer,
-		ePropertyType_AsContainerItemInfo,
 
 		//enum
 		ePropertyType_ScreenValue,

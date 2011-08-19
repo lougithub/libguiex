@@ -283,6 +283,15 @@ namespace guiex
 			pWidget->Create();
 		}
 
+		//notify load
+		for( std::vector< std::pair< CGUIWidget*, const CGUIProperty* > >::iterator itor = vecWidgetList.begin();
+			itor != vecWidgetList.end();
+			++itor )
+		{
+			CGUIWidget* pWidget = itor->first;
+			pWidget->NotifyLoaded();
+		}
+
 		if( !pPage )
 		{
 			return NULL;

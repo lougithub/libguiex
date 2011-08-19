@@ -574,10 +574,10 @@ namespace guiex
 		return CGUIWgtScrollbarContainer::OnChildSizeChange(pEvent);
 	}
 	//------------------------------------------------------------------------------
-	uint32 CGUIWgtListBox::OnOpen( CGUIEventNotification* pEvent )
+	uint32 CGUIWgtListBox::OnEventOpen( CGUIEventNotification* pEvent )
 	{
 		UpdateTotalItems();
-		return CGUIWgtScrollbarContainer::OnOpen(pEvent);
+		return CGUIWgtScrollbarContainer::OnEventOpen(pEvent);
 	}
 	//------------------------------------------------------------------------------
 	int32 CGUIWgtListBox::GenerateProperty( CGUIProperty& rProperty )

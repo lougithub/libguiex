@@ -289,7 +289,6 @@ namespace guiex
 
 		//get page
 		AddPage( pPage, rPageName );
-		pPage->NotifyLoaded();
 		return pPage;
 	}
 	//------------------------------------------------------------------------------

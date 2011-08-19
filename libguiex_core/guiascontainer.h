@@ -38,6 +38,7 @@ namespace guiex
 
 	protected:
 		virtual void OnUpdate();
+		virtual void OnRetired();
 
 	private:
 		class CGUIQueueItemInfo
@@ -98,6 +99,7 @@ namespace guiex
 
 	protected:
 		virtual void OnUpdate();
+		virtual void OnRetired();
 
 	private:
 		typedef std::vector<CGUIAsContainItemInfo> TAsList;
@@ -145,6 +147,19 @@ namespace guiex
 			++itor )
 		{
 			(*itor).m_pAs->Reset();
+		}
+	}
+	//------------------------------------------------------------------------------
+	template< class T >
+	inline void CGUIAsInterpolationQueue<T>::OnRetired()
+	{
+		CGUIAs::OnRetired();
+
+		for( typename TAsQueue::iterator itor = m_vAsQueue.begin();
+			itor != m_vAsQueue.end();
+			++itor )
+		{
+			(*itor).m_pAs->Retire(true);
 		}
 	}
 	//------------------------------------------------------------------------------

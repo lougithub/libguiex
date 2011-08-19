@@ -11,6 +11,7 @@
 // include
 //============================================================================// 
 #include <libguiex_framework/guiframework.h>
+#include "tdwgt_game_td.h"
 #include <vector>
 #include <set>
 
@@ -49,6 +50,7 @@ public:
 
 protected:
 	virtual guiex::int32 InitializeGame( );
+	virtual void RegisterWidgetGenerators( );
 
 protected:
 	CMyCanvasLayer_GameLayer* m_pGameLayer;

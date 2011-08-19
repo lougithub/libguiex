@@ -179,6 +179,8 @@ namespace guiex
 
 	protected:
 		virtual void OnUpdate();
+		virtual void OnRetired();
+		virtual void ApplyValue();
 
 	private:
 		EInterpolationType	m_eInterpolationType;
@@ -276,6 +278,24 @@ namespace guiex
 	{
 		CGUIAs::OnUpdate( );
 		m_aCurValue = LinearTween( GetPercent(), m_aBeginValue, m_aEndValue );
+		ApplyValue();
+	}
+	//------------------------------------------------------------------------------
+	template< class T >
+	inline void CGUIAsInterpolation<T>::ApplyValue()
+	{
+		GUI_FORCE_ASSERT("CGUIAsInterpolation<T>::ApplyValue not implemented.")
+	}
+	//------------------------------------------------------------------------------
+	template< class T >
+	inline void CGUIAsInterpolation<T>::OnRetired( )
+	{
+		CGUIAs::OnRetired( );
+		if( !IsLooping() )
+		{
+			m_aCurValue = m_aEndValue;
+			ApplyValue();
+		}
 	}
 	//------------------------------------------------------------------------------
 	template< class T >

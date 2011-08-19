@@ -32,11 +32,28 @@ namespace guiex
 		CGUIAsWidgetAlpha(const CGUIString& rAsName, const CGUIString& rSceneName);
 
 	protected:
-		virtual void OnUpdate();
+		virtual void ApplyValue();
 
 		GUI_AS_GENERATOR_DECLARE( CGUIAsWidgetAlpha);
 	};
 
+	//*****************************************************************************
+	//	CGUIAsWidgetChildrenAlpha
+	//*****************************************************************************
+	/**
+	* @class CGUIAsWidgetChildrenAlpha
+	* @brief the as, change alpha of widget's children
+	*/
+	class GUIEXPORT CGUIAsWidgetChildrenAlpha : public CGUIAsInterpolation<real>
+	{
+	protected:
+		CGUIAsWidgetChildrenAlpha(const CGUIString& rAsName, const CGUIString& rSceneName);
+
+	protected:
+		virtual void ApplyValue();
+
+		GUI_AS_GENERATOR_DECLARE( CGUIAsWidgetChildrenAlpha);
+	};
 
 	//*****************************************************************************
 	//	CGUIAsWidgetScale
@@ -51,7 +68,7 @@ namespace guiex
 		CGUIAsWidgetScale(const CGUIString& rAsName, const CGUIString& rSceneName);
 
 	protected:
-		virtual void OnUpdate();
+		virtual void ApplyValue();
 
 		GUI_AS_GENERATOR_DECLARE( CGUIAsWidgetScale);
 	};
@@ -70,7 +87,7 @@ namespace guiex
 		CGUIAsWidgetRotation(const CGUIString& rAsName, const CGUIString& rSceneName);
 
 	protected:
-		virtual void OnUpdate();
+		virtual void ApplyValue();
 
 		GUI_AS_GENERATOR_DECLARE( CGUIAsWidgetRotation);
 	};
@@ -89,7 +106,7 @@ namespace guiex
 		CGUIAsWidgetPosition(const CGUIString& rAsName, const CGUIString& rSceneName);
 
 	protected:
-		virtual void OnUpdate();
+		virtual void ApplyValue();
 
 		GUI_AS_GENERATOR_DECLARE( CGUIAsWidgetPosition);
 	};
@@ -108,7 +125,7 @@ namespace guiex
 		CGUIAsWidgetSize(const CGUIString& rAsName, const CGUIString& rSceneName);
 
 	protected:
-		virtual void OnUpdate();
+		virtual void ApplyValue();
 
 		GUI_AS_GENERATOR_DECLARE( CGUIAsWidgetSize);
 	};
@@ -127,7 +144,7 @@ namespace guiex
 		CGUIAsWidgetColor(const CGUIString& rAsName, const CGUIString& rSceneName);
 
 	protected:
-		virtual void OnUpdate();
+		virtual void ApplyValue();
 
 		GUI_AS_GENERATOR_DECLARE( CGUIAsWidgetColor);
 	};
@@ -161,6 +178,61 @@ namespace guiex
 		GUI_AS_GENERATOR_DECLARE( CGUIAsWidgetMoveTo);
 	};
 
+	//*****************************************************************************
+	//	CGUIAsWidgetVisible
+	//*****************************************************************************
+	/**
+	* @class CGUIAsWidgetVisible
+	* @brief the as, change visible of widget
+	*/
+	class GUIEXPORT CGUIAsWidgetVisible : public CGUIAs
+	{
+	protected:
+		CGUIAsWidgetVisible(const CGUIString& rAsName, const CGUIString& rSceneName);
+
+	protected:
+		virtual void OnRetired();
+
+		virtual int32 ProcessProperty( const CGUIProperty& rProperty );
+		virtual int32 GenerateProperty( CGUIProperty& rProperty );
+
+	protected:
+		void SetVisible( bool bVisible );
+		bool IsVisible() const;
+
+	protected:
+		bool m_bVisible;
+
+		GUI_AS_GENERATOR_DECLARE( CGUIAsWidgetVisible);
+	};
+	
+	//*****************************************************************************
+	//	CGUIAsWidgetChildrenVisible
+	//*****************************************************************************
+	/**
+	* @class CGUIAsWidgetChildrenVisible
+	* @brief the as, change visible of widget children
+	*/
+	class GUIEXPORT CGUIAsWidgetChildrenVisible : public CGUIAs
+	{
+	protected:
+		CGUIAsWidgetChildrenVisible(const CGUIString& rAsName, const CGUIString& rSceneName);
+
+		virtual int32 ProcessProperty( const CGUIProperty& rProperty );
+		virtual int32 GenerateProperty( CGUIProperty& rProperty );
+
+	protected:
+		virtual void OnRetired();
+
+	protected:
+		void SetVisible( bool bVisible );
+		bool IsVisible() const;
+
+	protected:
+		bool m_bVisible;
+
+		GUI_AS_GENERATOR_DECLARE( CGUIAsWidgetChildrenVisible);
+	};
 }
 
 #endif //__GUI_ASWIDGET_20110422_H__

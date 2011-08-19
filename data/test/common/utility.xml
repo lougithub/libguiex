@@ -114,8 +114,8 @@
     <property name="checkbtn_mini" type="CGUIWidgetDefine" value="CGUIWgtCheckButton">
         <property name="parent" type="CGUIString" value="panel_utility" />
         <property name="normal" type="CGUIImage" value="scrollbar_downbutton_up" />
-        <property name="BTN_NORMAL_CHECKED" type="CGUIImage" value="scrollbar_downbutton_highlight" />
-        <property name="BTN_HOVER_OVERLAY" type="CGUIImage" value="checkbutton_glow_checked" />
+        <property name="normal_checked" type="CGUIImage" value="scrollbar_downbutton_highlight" />
+        <property name="hover_overlay" type="CGUIImage" value="checkbutton_glow_checked" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="71,2" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />

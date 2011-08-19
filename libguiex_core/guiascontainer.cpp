@@ -87,7 +87,7 @@ namespace guiex
 		for( uint32 i=0; i<rProperty.GetPropertyNum(); ++i )
 		{
 			const CGUIProperty* pProperty = rProperty.GetProperty( i );
-			if( pProperty->GetType() == ePropertyType_AsContainerItemInfo )
+			if( pProperty->GetType() == ePropertyType_Group && pProperty->GetName() == "item_info" )
 			{
 				CGUIAsContainItemInfo aItemInfo;
 
@@ -256,6 +256,18 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	void CGUIAsContainer::OnRetired()
+	{
+		CGUIAs::OnRetired();
+
+		for( TAsList::iterator itor = m_vAsList.begin();
+			itor != m_vAsList.end();
+			++itor )
+		{
+			(*itor).m_pAs->Retire( true );
+		}
+	}
+	//------------------------------------------------------------------------------
 	void CGUIAsContainer::OnUpdate( )
 	{
 		CGUIAs::OnUpdate( );
@@ -273,10 +285,13 @@ namespace guiex
 
 			if( rInfo.m_fBeginTime + rInfo.m_pAs->GetTotalTime() < GetElapsedTime() )
 			{
-				continue;
+				rInfo.m_pAs->SetElapsedTime( rInfo.m_pAs->GetTotalTime() );
+			}
+			else
+			{
+				rInfo.m_pAs->SetElapsedTime( GetElapsedTime() - rInfo.m_fBeginTime );
 			}
 
-			rInfo.m_pAs->SetElapsedTime( GetElapsedTime() - rInfo.m_fBeginTime );
 			rInfo.m_pAs->Update( 0.0f );
 		}
 	}

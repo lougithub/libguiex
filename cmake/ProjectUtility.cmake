@@ -54,6 +54,7 @@ macro( macro_set_target_link_libraries targetname )
 			general vorbis
 			general zlib
 			general glew
+			${ARGN}
 			)
 	elseif( BUILD_PLATFORM_IOS)
 		target_link_libraries(
@@ -249,6 +250,7 @@ macro( macro_add_project_dependencies targetname)
 		libguiex_widget_game
 		libguiex_script_wrapper 
 		libguiex_framework
+		${ARGN}
 		)
 endmacro()
 

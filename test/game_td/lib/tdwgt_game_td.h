@@ -12,6 +12,7 @@
 // include
 //============================================================================// 
 #include "tdwgttower.h"
+#include "tdwgtgameworldlayer.h"
 
 #include "tdwgtgeneratewidgets_game_td.h"
 

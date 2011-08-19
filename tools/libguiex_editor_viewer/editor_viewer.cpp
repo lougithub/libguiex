@@ -14,6 +14,9 @@
 #include <libguiex_module/mouse_winapi/guimouse_winapi.h>
 #include <libguiex_module/ime_winapi/guiime_winapi.h>
 
+//game specified
+#include "tdwgt_game_td.h"
+
 #include <algorithm>
 #include <fstream>
 
@@ -74,8 +77,123 @@ void setVSync(int interval=1)
 //------------------------------------------------------------------------------
 
 
+//============================================================================//
+// interface image loader
+//============================================================================//
+namespace guiex
+{
+	class GUIEXPORT IGUIImageLoader_Viewer : public IGUIInterfaceImageLoader
+	{
+	public:
+		IGUIImageLoader_Viewer();
+		virtual ~IGUIImageLoader_Viewer(){}
+
+		virtual CGUIImageData* LoadFromFile( const CGUIString& rFileName  );
+		virtual CGUIImageData* LoadFromMemory( uint8* pFileData, size_t nSize ){return NULL;}
+		virtual void DestroyImageData(CGUIImageData* pImageData){delete pImageData;}
+		virtual void DeleteSelf(){delete this;}
+
+	protected:
+		virtual int DoInitialize(void* ) {return 0;}
+		virtual void DoDestroy(){}
+
+	public: 
+		static const char* StaticGetModuleName();
+	};
+
+	//------------------------------------------------------------------------------
+	const char* IGUIImageLoader_Viewer::StaticGetModuleName()
+	{
+		return "IGUIImageLoader_Viewer";
+	}
+	//------------------------------------------------------------------------------
+	IGUIImageLoader_Viewer::IGUIImageLoader_Viewer()
+		:IGUIInterfaceImageLoader( StaticGetModuleName() )
+	{
+	}
+	//------------------------------------------------------------------------------
+	CGUIImageData* IGUIImageLoader_Viewer::LoadFromFile( const CGUIString& rFileName  )
+	{
+		wxString rImagePath = Gui2wxString( GSystem->GetDataPath() + rFileName );
+		wxFileName filename( rImagePath );
+		if ( !filename.FileExists() )
+		{
+			GUI_THROW( GUI_FORMAT("[IGUIImageLoader_Viewer::LoadFromFile] - Failed to load image: %s", rFileName.c_str()));
+			return NULL;
+		}
+
+		wxImage* pWxImage = NULL;
+		if( filename.GetExt().CmpNoCase(L"tga") == 0)
+		{
+			pWxImage = new wxImage( filename.GetFullPath(), wxBITMAP_TYPE_TGA );
+		}
+		else if( filename.GetExt().CmpNoCase(L"png") == 0)
+		{
+			pWxImage = new wxImage( filename.GetFullPath(), wxBITMAP_TYPE_PNG );
+		}
+
+		if ( !pWxImage || !pWxImage->Ok() )
+		{
+			GUI_THROW( GUI_FORMAT("[IGUIImageLoader_Viewer::LoadFromFile] - Failed to load image: %s", rFileName.c_str()));
+			if( pWxImage )
+			{
+				delete pWxImage;
+			}
+			return NULL;
+		}
+
+		CGUIImageData* pData = new CGUIImageData(this);
+		EGuiPixelFormat	eImageFormat;	
+		if( pWxImage->HasAlpha() )
+		{
+			eImageFormat = GUI_PF_RGBA_32;
+		}
+		else
+		{
+			eImageFormat = GUI_PF_RGB_24;
+		}
+
+		uint8* tmpBuff = pData->SetImageData( pWxImage->GetWidth(), pWxImage->GetHeight(), eImageFormat);
+		uint8* pRGB = pWxImage->GetData();
+		uint8* pAlpha = pWxImage->GetAlpha();
+		uint32 nPixelCount = pWxImage->GetWidth() * pWxImage->GetHeight();
+		for(uint32 i = 0; i < nPixelCount; ++i )
+		{
+			memcpy( tmpBuff, pRGB, 3 );
+			tmpBuff += 3;
+			pRGB += 3;
+			if( eImageFormat == GUI_PF_RGBA_32 )
+			{
+				*tmpBuff = *pAlpha;
+				++tmpBuff;
+				++pAlpha;
+			}
+		}
+
+		delete pWxImage;
+
+		return pData;
+	}
+	//------------------------------------------------------------------------------
+}
+
+
+
 //------------------------------------------------------------------------------
 //	CGUIFrameworkViewer
+//------------------------------------------------------------------------------
+class CGUIFrameworkViewer : public CGUIFramework
+{
+public:
+	CGUIFrameworkViewer( );
+
+	static CGUIFrameworkViewer* ms_pFramework;
+
+protected:
+	virtual void SetupLogSystem( );
+	virtual void RegisterWidgetGenerators( );
+	virtual void RegisterInterfaces_ImageLoader( );
+};
 //------------------------------------------------------------------------------
 CGUIFrameworkViewer* CGUIFrameworkViewer::ms_pFramework = NULL;
 //------------------------------------------------------------------------------
@@ -92,7 +210,26 @@ void CGUIFrameworkViewer::SetupLogSystem( )
 	GUI_LOG->SetCallbackMsg( &CViewerLogMsgCallback::g_MsgCallback );
 }
 //------------------------------------------------------------------------------
+void CGUIFrameworkViewer::RegisterWidgetGenerators( )
+{
+	CGUIFramework::RegisterWidgetGenerators();
 
+	//game_td widgets
+	{
+		CGUIWidgetGenerator** pGenerator = GetAllWidgetGenerators_Game_TD();
+		while(*pGenerator)
+		{
+			CGUIWidgetFactory::Instance()->RegisterGenerator( *pGenerator);
+			pGenerator ++;
+		}
+	}
+}
+//------------------------------------------------------------------------------
+void CGUIFrameworkViewer::RegisterInterfaces_ImageLoader( )
+{
+	GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_Viewer);
+}
+//------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
 //	WxMainApp
@@ -297,6 +434,9 @@ WxMainFrame::WxMainFrame(wxWindow* parent, wxWindowID id, const wxString& title,
 	// code. For now, just hard code a frame minimum size
 	SetMinSize(wxSize(100,100));
 	SetClientSize( 1024, 786 );
+
+	//initialize image
+	wxInitAllImageHandlers();
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	// create canvas

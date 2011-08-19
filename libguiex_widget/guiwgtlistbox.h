@@ -127,7 +127,7 @@ namespace guiex
 	protected:	//!< callback function
 		virtual uint32 OnAddChild( CGUIEventRelativeChange* pEvent );
 		virtual uint32 OnRemoveChild( CGUIEventRelativeChange* pEvent );
-		virtual uint32 OnOpen( CGUIEventNotification* pEvent );
+		virtual uint32 OnEventOpen( CGUIEventNotification* pEvent );
 		virtual uint32 OnChildSizeChange( CGUIEventSize* pEvent );
 
 		virtual void ProcessMouseLeftDown(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent);

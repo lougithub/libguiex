@@ -18,6 +18,7 @@
 #include "wxmainframe.h"
 #include "editorutility.h"
 
+//game specified
 #include "tdwgt_game_td.h"
 
 #include <fstream>
@@ -76,7 +77,7 @@ namespace guiex
 		wxFileName filename( rImagePath );
 		if ( !filename.FileExists() )
 		{
-			GUI_THROW( "[IGUIImageLoader_Editor::LoadFromFile] - Failed to load image!");
+			GUI_THROW( GUI_FORMAT("[IGUIImageLoader_Editor::LoadFromFile] - Failed to load image: %s", rFileName.c_str()));
 			return NULL;
 		}
 
@@ -92,7 +93,7 @@ namespace guiex
 
 		if ( !pWxImage || !pWxImage->Ok() )
 		{
-			GUI_THROW( "[IGUIImageLoader_Editor::LoadFromFile] - Failed to load image!");
+			GUI_THROW( GUI_FORMAT("[IGUIImageLoader_Editor::LoadFromFile] - Failed to load image: %s", rFileName.c_str()));
 			if( pWxImage )
 			{
 				delete pWxImage;
@@ -127,6 +128,8 @@ namespace guiex
 				++pAlpha;
 			}
 		}
+
+		delete pWxImage;
 
 		return pData;
 	}

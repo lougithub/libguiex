@@ -23,8 +23,9 @@
 				<property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
 				<property name="value" type="CGUISize" value="0,0" />
 			</property>
+      <property name="z" type="int32" value="0" alternative_save="true" />
 
-			<property name="max_size" type="CGUISize" value="0,0" alternative_save="true" />
+      <property name="max_size" type="CGUISize" value="0,0" alternative_save="true" />
 			<property name="min_size" type="CGUISize" value="0,0" alternative_save="true" />
 
 			<property name="anchor" type="CGUIVector2" value="0,0"  category="Default" alternative_save="true" />

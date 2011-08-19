@@ -552,9 +552,9 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32 CGUIWidget::OnLoad( CGUIEventNotification* pEvent )
+	uint32 CGUIWidget::OnEventLoad( CGUIEventNotification* pEvent )
 	{
-		WIDGET_EVENT_TRACE("OnLoad");
+		WIDGET_EVENT_TRACE("OnEventLoad");
 
 		//call callback function
 		CallbackFunction("OnLoad", pEvent);
@@ -562,9 +562,9 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32 CGUIWidget::OnOpen( CGUIEventNotification* pEvent )
+	uint32 CGUIWidget::OnEventOpen( CGUIEventNotification* pEvent )
 	{
-		WIDGET_EVENT_TRACE("OnOpen");
+		WIDGET_EVENT_TRACE("OnEventOpen");
 
 		//call callback function
 		CallbackFunction("OnOpen", pEvent);
@@ -577,9 +577,9 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
-	uint32 CGUIWidget::OnClose( CGUIEventNotification* pEvent )
+	uint32 CGUIWidget::OnEventClose( CGUIEventNotification* pEvent )
 	{
-		WIDGET_EVENT_TRACE("OnClose");
+		WIDGET_EVENT_TRACE("OnEventClose");
 
 		//call callback function
 		CallbackFunction("OnClose", pEvent);

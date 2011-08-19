@@ -22,6 +22,7 @@
 #include <wx/colordlg.h>
 #include <wx/dirdlg.h>
 #include <wx/choicdlg.h>
+#include <wx/filename.h>
 
 #include <libguiex_framework/guiframework.h>
 using namespace guiex;
@@ -29,22 +30,6 @@ using namespace guiex;
 //============================================================================//
 // class
 //============================================================================//
-
-//-----------------------------------------------------------------------------
-//	CGUIFrameworkViewer
-//-----------------------------------------------------------------------------
-class CGUIFrameworkViewer : public CGUIFramework
-{
-public:
-	CGUIFrameworkViewer( );
-
-	static CGUIFrameworkViewer* ms_pFramework;
-
-protected:
-	virtual void SetupLogSystem( );
-
-};
-
 
 //-----------------------------------------------------------------------------
 //	WxMainApp

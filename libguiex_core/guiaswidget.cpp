@@ -30,14 +30,33 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	void CGUIAsWidgetAlpha::OnUpdate( )
+	void CGUIAsWidgetAlpha::ApplyValue( )
 	{
-		CGUIAsInterpolation<real>::OnUpdate( );
 		GUI_ASSERT( GetReceiver(), "no receiver");
 		GetReceiver()->SetAlpha(GetCurrentValue());
 	}
 	//------------------------------------------------------------------------------
 
+	//*****************************************************************************
+	//	CGUIAsWidgetChildrenAlpha
+	//*****************************************************************************
+	//------------------------------------------------------------------------------
+	CGUIAsWidgetChildrenAlpha::CGUIAsWidgetChildrenAlpha( const CGUIString& rAsName, const CGUIString& rSceneName )
+		:CGUIAsInterpolation<real>("CGUIAsWidgetChildrenAlpha" , rAsName, rSceneName )
+	{
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsWidgetChildrenAlpha::ApplyValue( )
+	{
+		GUI_ASSERT( GetReceiver(), "no receiver");
+		CGUIWidget* pChild = GetReceiver()->GetChild();
+		while( pChild )
+		{
+			pChild->SetAlpha(GetCurrentValue());
+			pChild = pChild->GetNextSibling();
+		}
+	}
+	//------------------------------------------------------------------------------
 
 
 	//*****************************************************************************
@@ -49,9 +68,8 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	void CGUIAsWidgetRotation::OnUpdate( )
+	void CGUIAsWidgetRotation::ApplyValue( )
 	{
-		CGUIAsInterpolation<CGUIVector3>::OnUpdate( );
 		GUI_ASSERT( GetReceiver(), "no receiver");
 		GetReceiver()->SetRotation(GetCurrentValue());
 	}
@@ -67,9 +85,8 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	void CGUIAsWidgetScale::OnUpdate( )
+	void CGUIAsWidgetScale::ApplyValue( )
 	{
-		CGUIAsInterpolation<CGUISize>::OnUpdate( );
 		GUI_ASSERT( GetReceiver(), "no receiver");
 		GetReceiver()->SetScale(GetCurrentValue());
 	}
@@ -84,9 +101,8 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	void CGUIAsWidgetPosition::OnUpdate( )
+	void CGUIAsWidgetPosition::ApplyValue( )
 	{
-		CGUIAsInterpolation<CGUIVector2>::OnUpdate( );
 		GUI_ASSERT( GetReceiver(), "no receiver");
 		GetReceiver()->SetPosition(GetCurrentValue());
 	}
@@ -102,9 +118,8 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	void CGUIAsWidgetSize::OnUpdate( )
+	void CGUIAsWidgetSize::ApplyValue( )
 	{
-		CGUIAsInterpolation<CGUISize>::OnUpdate( );
 		GUI_ASSERT( GetReceiver(), "no receiver");
 		GetReceiver()->SetSize(GetCurrentValue());
 	}
@@ -119,9 +134,8 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	void CGUIAsWidgetColor::OnUpdate( )
+	void CGUIAsWidgetColor::ApplyValue( )
 	{
-		CGUIAsInterpolation<CGUIColor>::OnUpdate( );
 		GUI_ASSERT( GetReceiver(), "no receiver");
 		GetReceiver()->SetColor(GetCurrentValue());
 	}
@@ -185,6 +199,172 @@ namespace guiex
 		}
 
 		return 0.0f;
+	}
+	//------------------------------------------------------------------------------
+
+
+	//*****************************************************************************
+	//	CGUIAsWidgetVisible
+	//*****************************************************************************
+	//------------------------------------------------------------------------------
+	CGUIAsWidgetVisible::CGUIAsWidgetVisible(const CGUIString& rAsName, const CGUIString& rSceneName)
+		:CGUIAs("CGUIAsWidgetVisible", rAsName, rSceneName)
+		,m_bVisible( true )
+	{
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsWidgetVisible::SetVisible( bool bVisible )
+	{
+		m_bVisible = bVisible;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIAsWidgetVisible::IsVisible( ) const
+	{
+		return m_bVisible;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsWidgetVisible::OnRetired()
+	{
+		CGUIAs::OnRetired();
+
+		GetReceiver()->SetVisible( m_bVisible );
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUIAsWidgetVisible::ProcessProperty( const CGUIProperty& rProperty )
+	{
+		/*
+		*<property name="asname" type="CGUIAsWidgetChildrenVisible">
+		*		<property name="loop" type="bool" value="false"/>
+		*		<property name="total_time" type="real" value="0" />
+		*		<property name="elapsed_time" type="real" value="0" />
+		*		<property name="visibility" type="bool" value="false" />
+		*</property>
+		*/
+		int32 ret = CGUIAs::ProcessProperty( rProperty );
+		if( ret != 0 )
+		{
+			return ret;
+		}
+
+		{
+			const CGUIProperty* pPPtVisibility = rProperty.GetProperty("visibility", "bool" );
+			if( pPPtVisibility )
+			{
+				PropertyToValue( *pPPtVisibility, m_bVisible );
+			}
+		}
+
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUIAsWidgetVisible::GenerateProperty( CGUIProperty& rProperty )
+	{
+		/*
+		*<property name="asname" type="CGUIAsWidgetChildrenVisible">
+		*		<property name="loop" type="bool" value="false"/>
+		*		<property name="total_time" type="real" value="0" />
+		*		<property name="elapsed_time" type="real" value="0" />
+		*		<property name="visibility" type="bool" value="false" />
+		*</property>
+		*/
+		int32 ret = CGUIAs::GenerateProperty( rProperty );
+		if( ret != 0 )
+		{
+			return ret;
+		}
+
+		{
+			CGUIProperty aProperty( "visibility", "bool" );
+			ValueToProperty( m_bVisible, aProperty );
+			rProperty.AddProperty( aProperty );
+		}
+
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+
+	//*****************************************************************************
+	//	CGUIAsWidgetChildrenVisible
+	//*****************************************************************************
+	//------------------------------------------------------------------------------
+	CGUIAsWidgetChildrenVisible::CGUIAsWidgetChildrenVisible(const CGUIString& rAsName, const CGUIString& rSceneName)
+		:CGUIAs("CGUIAsWidgetChildrenVisible", rAsName, rSceneName)
+		,m_bVisible( true )
+	{
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsWidgetChildrenVisible::SetVisible( bool bVisible )
+	{
+		m_bVisible = bVisible;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIAsWidgetChildrenVisible::IsVisible( ) const
+	{
+		return m_bVisible;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAsWidgetChildrenVisible::OnRetired()
+	{
+		CGUIAs::OnRetired();
+
+		CGUIWidget* pChild = GetReceiver()->GetChild();
+		while( pChild )
+		{
+			pChild->SetVisible( m_bVisible );
+			pChild = pChild->GetNextSibling();
+		}
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUIAsWidgetChildrenVisible::ProcessProperty( const CGUIProperty& rProperty )
+	{
+		/*
+		*<property name="asname" type="CGUIAsWidgetChildrenVisible">
+		*		<property name="loop" type="bool" value="false"/>
+		*		<property name="total_time" type="real" value="0" />
+		*		<property name="elapsed_time" type="real" value="0" />
+		*		<property name="visibility" type="bool" value="false" />
+		*</property>
+		*/
+		int32 ret = CGUIAs::ProcessProperty( rProperty );
+		if( ret != 0 )
+		{
+			return ret;
+		}
+
+		{
+			const CGUIProperty* pPPtVisibility = rProperty.GetProperty("visibility", "bool" );
+			if( pPPtVisibility )
+			{
+				PropertyToValue( *pPPtVisibility, m_bVisible );
+			}
+		}
+
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUIAsWidgetChildrenVisible::GenerateProperty( CGUIProperty& rProperty )
+	{
+		/*
+		*<property name="asname" type="CGUIAsWidgetChildrenVisible">
+		*		<property name="loop" type="bool" value="false"/>
+		*		<property name="total_time" type="real" value="0" />
+		*		<property name="elapsed_time" type="real" value="0" />
+		*		<property name="visibility" type="bool" value="false" />
+		*</property>
+		*/
+		int32 ret = CGUIAs::GenerateProperty( rProperty );
+		if( ret != 0 )
+		{
+			return ret;
+		}
+
+		{
+			CGUIProperty aProperty( "visibility", "bool" );
+			ValueToProperty( m_bVisible, aProperty );
+			rProperty.AddProperty( aProperty );
+		}
+
+		return 0;
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

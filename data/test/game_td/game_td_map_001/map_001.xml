@@ -186,9 +186,9 @@
             <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
         </property>
     </property>
-    <property name="tag_tower001" type="CGUIWidgetDefine" value="CGUIWgtTag">
+    <property name="tower_tower001" type="CGUIWidgetDefine" value="TDWgtTower">
         <property name="parent" type="CGUIString" value="node_towers" />
-        <property name="bg" type="CGUIImage" value="TowerBase" />
+        <property name="tower_base" type="CGUIImage" value="TowerBase" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="230,179" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
@@ -199,9 +199,9 @@
         </property>
         <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
     </property>
-    <property name="tag_tower002" type="CGUIWidgetDefine" value="CGUIWgtTag">
+    <property name="tower_tower002" type="CGUIWidgetDefine" value="TDWgtTower">
         <property name="parent" type="CGUIString" value="node_towers" />
-        <property name="bg" type="CGUIImage" value="TowerBase" />
+        <property name="tower_base" type="CGUIImage" value="TowerBase" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="169,209" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
@@ -212,9 +212,9 @@
         </property>
         <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
     </property>
-    <property name="tag_tower003" type="CGUIWidgetDefine" value="CGUIWgtTag">
+    <property name="tower_tower003" type="CGUIWidgetDefine" value="TDWgtTower">
         <property name="parent" type="CGUIString" value="node_towers" />
-        <property name="bg" type="CGUIImage" value="TowerBase" />
+        <property name="tower_base" type="CGUIImage" value="TowerBase" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="256,312" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
@@ -225,9 +225,9 @@
         </property>
         <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
     </property>
-    <property name="tag_tower004" type="CGUIWidgetDefine" value="CGUIWgtTag">
+    <property name="tower_tower004" type="CGUIWidgetDefine" value="TDWgtTower">
         <property name="parent" type="CGUIString" value="node_towers" />
-        <property name="bg" type="CGUIImage" value="TowerBase" />
+        <property name="tower_base" type="CGUIImage" value="TowerBase" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="255,362" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
@@ -238,9 +238,9 @@
         </property>
         <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
     </property>
-    <property name="tag_tower005" type="CGUIWidgetDefine" value="CGUIWgtTag">
+    <property name="tower_tower005" type="CGUIWidgetDefine" value="TDWgtTower">
         <property name="parent" type="CGUIString" value="node_towers" />
-        <property name="bg" type="CGUIImage" value="TowerBase" />
+        <property name="tower_base" type="CGUIImage" value="TowerBase" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="332,359" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
@@ -251,9 +251,9 @@
         </property>
         <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
     </property>
-    <property name="tag_tower006" type="CGUIWidgetDefine" value="CGUIWgtTag">
+    <property name="tower_tower006" type="CGUIWidgetDefine" value="TDWgtTower">
         <property name="parent" type="CGUIString" value="node_towers" />
-        <property name="bg" type="CGUIImage" value="TowerBase" />
+        <property name="tower_base" type="CGUIImage" value="TowerBase" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="459,363" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
@@ -264,9 +264,9 @@
         </property>
         <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
     </property>
-    <property name="tag_tower007" type="CGUIWidgetDefine" value="CGUIWgtTag">
+    <property name="tower_tower007" type="CGUIWidgetDefine" value="TDWgtTower">
         <property name="parent" type="CGUIString" value="node_towers" />
-        <property name="bg" type="CGUIImage" value="TowerBase" />
+        <property name="tower_base" type="CGUIImage" value="TowerBase" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="380,461" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
@@ -277,9 +277,9 @@
         </property>
         <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
     </property>
-    <property name="tag_tower008" type="CGUIWidgetDefine" value="CGUIWgtTag">
+    <property name="tower_tower008" type="CGUIWidgetDefine" value="TDWgtTower">
         <property name="parent" type="CGUIString" value="node_towers" />
-        <property name="bg" type="CGUIImage" value="TowerBase" />
+        <property name="tower_base" type="CGUIImage" value="TowerBase" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="596,433" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
@@ -289,5 +289,55 @@
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
         <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
+    </property>
+    <property name="gameworldlayer" type="CGUIWidgetDefine" value="TDWgtGameWorldLayer">
+        <property name="parent" type="CGUIString" value="image_map" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0,0" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="1,1" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+        </property>
+    </property>
+    <property name="panel_lower" type="CGUIWidgetDefine" value="CGUIWgtPanel">
+        <property name="parent" type="CGUIString" value="image_map" />
+        <property name="bg" type="CGUIImage" value="PanelLower" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0,565" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="700,35" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="default_as" type="CGUIAs" value="as_panel_lower" />
+        <property name="auto_play_as" type="bool" value="true" />
+    </property>
+    <property name="image_startbtnbg" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
+        <property name="parent" type="CGUIString" value="panel_lower" />
+        <property name="bg" type="CGUIImage" value="ButtonBG" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="646,-15" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="46,44" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+    </property>
+    <property name="button_nextturn" type="CGUIWidgetDefine" value="CGUIWgtButton">
+        <property name="parent" type="CGUIString" value="image_startbtnbg" />
+        <property name="normal" type="CGUIImage" value="ButtonNextTurn" />
+        <property name="hover_overlay" type="CGUIImage" value="ButtonNextTurnHover" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="5,4" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="37,36" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
     </property>
 </guiex>

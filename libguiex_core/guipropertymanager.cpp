@@ -38,7 +38,8 @@ namespace guiex
 		RegisterPropertyType( ePropertyType_Real, "real" );
 
 		RegisterPropertyType( ePropertyType_Array, "array" );
-
+		RegisterPropertyType( ePropertyType_Group, "group" );
+		
 		RegisterPropertyType( ePropertyType_Size, "CGUISize" );
 		RegisterPropertyType( ePropertyType_IntSize, "CGUIIntSize" );
 		RegisterPropertyType( ePropertyType_Rect, "CGUIRect" );
@@ -79,7 +80,6 @@ namespace guiex
 		RegisterPropertyType( ePropertyType_AsWidgetAlpha, "CGUIAsWidgetAlpha" );
 		RegisterPropertyType( ePropertyType_AsWidgetSize, "CGUIAsWidgetSize" );
 		RegisterPropertyType( ePropertyType_AsContainer, "CGUIAsContainer" );
-		RegisterPropertyType( ePropertyType_AsContainerItemInfo, "CGUIAsContainerItemInfo" );
 
 		RegisterPropertyType( ePropertyType_Widget, "CGUIWidget" );
 		RegisterPropertyType( ePropertyType_Set, "set" );

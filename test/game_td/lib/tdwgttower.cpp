@@ -31,6 +31,8 @@ namespace guiex
 	void TDWgtTower::InitTower()
 	{
 		m_pImageTowerBase = NULL;
+
+		m_bHovering = false;
 	}
 	//------------------------------------------------------------------------------
 	void TDWgtTower::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
@@ -47,9 +49,32 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void TDWgtTower::RenderSelf(IGUIInterfaceRender* pRender)
 	{
-		DrawImage( pRender, m_pImageTowerBase, GetBoundArea( ));
+		if( m_pImageTowerBase )
+		{
+			if( m_bHovering )
+			{
+				m_pImageTowerBase->Draw( pRender, GetBoundArea(),m_fZ,CGUIColor( 1.0f,1.0f,0.5f,0.7f),GetDerivedAlpha() );
+			}
+			else
+			{
+				m_pImageTowerBase->Draw( pRender, GetBoundArea(),m_fZ,CGUIColor( 1.0f,1.0f,1.0f,1.0f),GetDerivedAlpha() );
+			}
+		}
 	}
 	//------------------------------------------------------------------------------
+	uint32 TDWgtTower::OnMouseEnter( CGUIEventMouse* pEvent )
+	{
+		m_bHovering = true;
 
+		return CGUIWidget::OnMouseEnter( pEvent );
+	}
+	//------------------------------------------------------------------------------
+	uint32 TDWgtTower::OnMouseLeave( CGUIEventMouse* pEvent )
+	{
+		m_bHovering = false;
+
+		return CGUIWidget::OnMouseLeave( pEvent );
+	}
+	//------------------------------------------------------------------------------
 }//namespace guiex
 
