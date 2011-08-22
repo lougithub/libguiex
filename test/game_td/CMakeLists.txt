@@ -4,16 +4,44 @@
 set( lib_name "example_game_td_lib" )
 message( STATUS "generate library: " ${lib_name} )
 
-set( ${lib_name}_SRCS 
-        lib/tdgameworldbase.cpp
-        lib/tdgameworldbase.h
+set( ${lib_name}_WIDGET_SRCS 
         lib/tdwgtgameworldlayer.cpp
         lib/tdwgtgameworldlayer.h
         lib/tdwgttower.cpp
         lib/tdwgttower.h
+ 	)
+source_group( "widget" FILES ${${lib_name}_WIDGET_SRCS} )
+
+set( ${lib_name}_GAME_SRCS 
+        lib/tdgameworldbase.cpp
+        lib/tdgameworldbase.h
+        lib/tdgameworld.cpp
+        lib/tdgameworld.h
+        lib/tdgameobject.h
+        lib/tdgameobject.cpp
+        lib/tdgameobjectmanager.h
+        lib/tdgameobjectmanager.cpp
+        lib/tdgameobjectmonster.h
+        lib/tdgameobjectmonster.cpp
+        lib/tdgameobjectbullet.h
+        lib/tdgameobjectbullet.cpp
+        lib/tdgameconfigdatamanager.cpp
+        lib/tdgameconfigdatamanager.h
+        lib/tdgametype.h
+	)
+source_group( "game" FILES ${${lib_name}_GAME_SRCS} )
+
+set( ${lib_name}_UTILITY_SRCS 
         lib/tdwgt_game_td.h
         lib/tdwgtgeneratewidgets_game_td.cpp
         lib/tdwgtgeneratewidgets_game_td.h
+	)
+source_group( "utility" FILES ${${lib_name}_UTILITY_SRCS} )
+
+set( ${lib_name}_SRCS
+	${${lib_name}_WIDGET_SRCS}
+	${${lib_name}_GAME_SRCS}
+	${${lib_name}_UTILITY_SRCS} 
 	)
 
 #include directory

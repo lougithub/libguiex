@@ -26,8 +26,8 @@ namespace guiex
 #define GUI_ADD_WIDGET_GENERATOR( widget ) \
 	aList.push_back( widget::widget##_Generator::GenerateSelf());
 
-		GUI_ADD_WIDGET_GENERATOR(TDWgtTower);
-		GUI_ADD_WIDGET_GENERATOR(TDWgtGameWorldLayer);
+		GUI_ADD_WIDGET_GENERATOR(CTDWgtTower);
+		GUI_ADD_WIDGET_GENERATOR(CTDWgtGameWorldLayer);
 
 #undef GUI_ADD_WIDGET_GENERATOR
 

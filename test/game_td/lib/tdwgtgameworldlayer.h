@@ -21,23 +21,31 @@
 namespace guiex
 {
 	/**
-	* @class TDWgtGameWorldLayer
+	* @class CTDWgtGameWorldLayer
 	* @brief used to render monster and other things.
 	*/
-	class GUIEXPORT TDWgtGameWorldLayer : public CGUIWidget
+	class GUIEXPORT CTDWgtGameWorldLayer : public CGUIWidget
 	{
 	public:
-		TDWgtGameWorldLayer( const CGUIString& rName, const CGUIString& rSceneName );
+		CTDWgtGameWorldLayer( const CGUIString& rName, const CGUIString& rSceneName );
+
+		void ApplyGameWorld( class CTDGameWorldBase* pWorld );
+		class CTDGameWorldBase* GetGameWorld( ) const;
 
 	protected:
 		void InitGameLayer();
 
+		virtual void RenderSelf(IGUIInterfaceRender* pRender);
+
+		virtual void OnUpdate( real fDeltaTime );
+
 	protected:	//!< callback function
 
 	protected:
+		class CTDGameWorldBase* m_pGameWorld;
 
 	protected:
-		GUI_WIDGET_GENERATOR_DECLARE(TDWgtGameWorldLayer);
+		GUI_WIDGET_GENERATOR_DECLARE(CTDWgtGameWorldLayer);
 	};
 }//namespace guiex
 

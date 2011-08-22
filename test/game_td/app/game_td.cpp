@@ -9,6 +9,7 @@
 // include
 //============================================================================// 
 #include "game_td.h"
+#include "tdwgt_game_td.h"
 #include <algorithm>
 
 using namespace guiex;
@@ -34,6 +35,7 @@ const char* GUIEXGetDataDir()
 //------------------------------------------------------------------------------
 CMyCanvasLayer_GameLayer::CMyCanvasLayer_GameLayer( const char* szLayerName )
 :CGUICanvasLayer( szLayerName )
+,m_pGameWorld(NULL)
 {
 	//set attribute
 	SetHitable( true );
@@ -48,20 +50,28 @@ void CMyCanvasLayer_GameLayer::Initialize( )
 {
 	CGUICanvasLayer::Initialize();
 
+	//load resource
 	CGUISceneManager::Instance()->LoadResources( "game_td_map_001" );	
+
+	//load widget
 	CGUIWidget* pMapWidget = CGUISceneManager::Instance()->LoadWidgets( "map_001.xml", "game_td_map_001" );
 	pMapWidget->SetParent( this );
 	pMapWidget->Open();
+
+	//init game world
+	m_pGameWorld = new CTDGameWorld( );
+	m_pGameWorld->InitGameWorld( pMapWidget );
 }
 //------------------------------------------------------------------------------
 void CMyCanvasLayer_GameLayer::Finalize( )
 {
+	if( m_pGameWorld )
+	{
+		m_pGameWorld->DestroyGameWorld();
+		delete m_pGameWorld;
+		m_pGameWorld = NULL;
+	}
 	CGUICanvasLayer::Finalize();
-}
-//------------------------------------------------------------------------------
-void CMyCanvasLayer_GameLayer::OnUpdate(real fDeltaTime)
-{
-	CGUICanvasLayer::OnUpdate(fDeltaTime );
 }
 //------------------------------------------------------------------------------
 void CMyCanvasLayer_GameLayer::DestroySelf( )

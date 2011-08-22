@@ -21,15 +21,15 @@
 namespace guiex
 {
 	/**
-	* @class TDWgtTower
+	* @class CTDWgtTower
 	* @brief tower of game
 	* used image name:
 	*		-tower_base
 	*/
-	class GUIEXPORT TDWgtTower : public CGUIWidget
+	class GUIEXPORT CTDWgtTower : public CGUIWidget
 	{
 	public:
-		TDWgtTower( const CGUIString& rName, const CGUIString& rSceneName );
+		CTDWgtTower( const CGUIString& rName, const CGUIString& rSceneName );
 
 	protected:
 		void InitTower();
@@ -47,7 +47,7 @@ namespace guiex
 		bool m_bHovering;
 
 	protected:
-		GUI_WIDGET_GENERATOR_DECLARE(TDWgtTower);
+		GUI_WIDGET_GENERATOR_DECLARE(CTDWgtTower);
 	};
 }//namespace guiex
 

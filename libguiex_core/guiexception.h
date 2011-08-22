@@ -20,8 +20,8 @@
 //============================================================================// 
 namespace guiex
 {	
-#define GUI_THROW(X) CGUIException::ThrowException(__FILE__, __LINE__,(X))
-#define GUI_SCRIPT_THROW(X) CGUIException_Script::ThrowException(__FILE__, __LINE__,(X))
+#define GUI_THROW(X) ::guiex::CGUIException::ThrowException(__FILE__, __LINE__,(X))
+#define GUI_SCRIPT_THROW(X) ::guiex::CGUIException_Script::ThrowException(__FILE__, __LINE__,(X))
 }
 
 //============================================================================//

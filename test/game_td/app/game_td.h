@@ -11,7 +11,7 @@
 // include
 //============================================================================// 
 #include <libguiex_framework/guiframework.h>
-#include "tdwgt_game_td.h"
+#include "tdgameworld.h"
 #include <vector>
 #include <set>
 
@@ -35,9 +35,7 @@ public:
 	virtual void DestroySelf( );
 
 protected:
-	virtual void OnUpdate( guiex::real fDeltaTime );
-
-protected:
+	guiex::CTDGameWorld* m_pGameWorld;
 };
 
 //*****************************************************************************

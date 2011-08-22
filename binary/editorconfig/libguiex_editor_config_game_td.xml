@@ -1,7 +1,7 @@
 ﻿<?xml version="1 " encoding="utf-8"?>
 
 <config>
-  <widget type="TDWgtTower" inherit="CGUIWidget">
+  <widget type="CTDWgtTower" inherit="CGUIWidget">
     <page name="Appearance">
     </page>
     <page name="Image">
@@ -9,7 +9,7 @@
     </page>
   </widget>
 
-  <widget type="TDWgtGameWorldLayer" inherit="CGUIWidget">
+  <widget type="CTDWgtGameWorldLayer" inherit="CGUIWidget">
     <page name="Appearance">
     </page>
   </widget>

@@ -101,6 +101,8 @@ namespace guiex
 		CGUIWidget* GetParent()  const;
 		CGUIWidget* GetChild( ) const;
 		CGUIWidget* FindWidgetByName( const CGUIString& rWidgetName );
+		CGUIWidget* FindWidgetByType( const CGUIString& rWidgetType );
+
 		CGUIWidget* GetNextSibling( ) const;
 		CGUIWidget* GetPrevSibling( ) const;
 
@@ -662,7 +664,6 @@ namespace guiex
 	{
 		m_mapNativeFunc.insert( std::make_pair(strEventName, reinterpret_cast<CallbackEventFunc>(pFunc)));
 	}
-	//------------------------------------------------------------------------------
 
 }//namespace guiex
 

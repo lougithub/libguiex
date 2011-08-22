@@ -466,6 +466,25 @@ namespace guiex
 		return NULL;
 	}
 	//------------------------------------------------------------------------------
+	CGUIWidget* CGUIWidget::FindWidgetByType( const CGUIString& rWidgetType )
+	{
+		if( GetType() == rWidgetType )
+		{
+			return this;
+		}
+		CGUIWidget* pChild = GetChild();
+		while( pChild )
+		{
+			CGUIWidget* pFind = pChild->FindWidgetByType( rWidgetType );
+			if( pFind)
+			{
+				return pFind;
+			}
+			pChild = pChild->GetNextSibling();
+		}
+		return NULL;
+	}
+	//------------------------------------------------------------------------------
 	/// get next sibling
 	CGUIWidget*	CGUIWidget::GetNextSibling( ) const
 	{

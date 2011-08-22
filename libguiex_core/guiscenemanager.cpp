@@ -155,7 +155,7 @@ namespace guiex
 		UnregisterAllScenes();
 
 		//get file interface
-		std::vector<CGUIString> vecSceneFilePaths; //absolute file paths
+		std::vector<CGUIString> vecSceneFilePaths; 
 		IGUIInterfaceFileSys* pFileSys = CGUIInterfaceManager::Instance()->GetInterfaceFileSys();
 		pFileSys->FindFiles( rSceneRootPath, rSuffix, vecSceneFilePaths );
 

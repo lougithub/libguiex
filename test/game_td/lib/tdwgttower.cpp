@@ -20,22 +20,22 @@
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	GUI_WIDGET_GENERATOR_IMPLEMENT(TDWgtTower);
+	GUI_WIDGET_GENERATOR_IMPLEMENT(CTDWgtTower);
 	//------------------------------------------------------------------------------
-	TDWgtTower::TDWgtTower( const CGUIString& rName, const CGUIString& rSceneName )
+	CTDWgtTower::CTDWgtTower( const CGUIString& rName, const CGUIString& rSceneName )
 		:CGUIWidget(StaticGetType(), rName, rSceneName)
 	{
 		InitTower();
 	}
 	//------------------------------------------------------------------------------
-	void TDWgtTower::InitTower()
+	void CTDWgtTower::InitTower()
 	{
 		m_pImageTowerBase = NULL;
 
 		m_bHovering = false;
 	}
 	//------------------------------------------------------------------------------
-	void TDWgtTower::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
+	void CTDWgtTower::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
 	{
 		if( rName == "tower_base")
 		{
@@ -47,7 +47,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void TDWgtTower::RenderSelf(IGUIInterfaceRender* pRender)
+	void CTDWgtTower::RenderSelf(IGUIInterfaceRender* pRender)
 	{
 		if( m_pImageTowerBase )
 		{
@@ -62,14 +62,14 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	uint32 TDWgtTower::OnMouseEnter( CGUIEventMouse* pEvent )
+	uint32 CTDWgtTower::OnMouseEnter( CGUIEventMouse* pEvent )
 	{
 		m_bHovering = true;
 
 		return CGUIWidget::OnMouseEnter( pEvent );
 	}
 	//------------------------------------------------------------------------------
-	uint32 TDWgtTower::OnMouseLeave( CGUIEventMouse* pEvent )
+	uint32 CTDWgtTower::OnMouseLeave( CGUIEventMouse* pEvent )
 	{
 		m_bHovering = false;
 

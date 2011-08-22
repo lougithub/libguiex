@@ -186,7 +186,7 @@
             <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
         </property>
     </property>
-    <property name="tower_tower001" type="CGUIWidgetDefine" value="TDWgtTower">
+    <property name="tower_tower001" type="CGUIWidgetDefine" value="CTDWgtTower">
         <property name="parent" type="CGUIString" value="node_towers" />
         <property name="tower_base" type="CGUIImage" value="TowerBase" />
         <property name="position" type="CGUIWidgetPosition">
@@ -199,7 +199,7 @@
         </property>
         <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
     </property>
-    <property name="tower_tower002" type="CGUIWidgetDefine" value="TDWgtTower">
+    <property name="tower_tower002" type="CGUIWidgetDefine" value="CTDWgtTower">
         <property name="parent" type="CGUIString" value="node_towers" />
         <property name="tower_base" type="CGUIImage" value="TowerBase" />
         <property name="position" type="CGUIWidgetPosition">
@@ -212,7 +212,7 @@
         </property>
         <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
     </property>
-    <property name="tower_tower003" type="CGUIWidgetDefine" value="TDWgtTower">
+    <property name="tower_tower003" type="CGUIWidgetDefine" value="CTDWgtTower">
         <property name="parent" type="CGUIString" value="node_towers" />
         <property name="tower_base" type="CGUIImage" value="TowerBase" />
         <property name="position" type="CGUIWidgetPosition">
@@ -225,7 +225,7 @@
         </property>
         <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
     </property>
-    <property name="tower_tower004" type="CGUIWidgetDefine" value="TDWgtTower">
+    <property name="tower_tower004" type="CGUIWidgetDefine" value="CTDWgtTower">
         <property name="parent" type="CGUIString" value="node_towers" />
         <property name="tower_base" type="CGUIImage" value="TowerBase" />
         <property name="position" type="CGUIWidgetPosition">
@@ -238,7 +238,7 @@
         </property>
         <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
     </property>
-    <property name="tower_tower005" type="CGUIWidgetDefine" value="TDWgtTower">
+    <property name="tower_tower005" type="CGUIWidgetDefine" value="CTDWgtTower">
         <property name="parent" type="CGUIString" value="node_towers" />
         <property name="tower_base" type="CGUIImage" value="TowerBase" />
         <property name="position" type="CGUIWidgetPosition">
@@ -251,7 +251,7 @@
         </property>
         <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
     </property>
-    <property name="tower_tower006" type="CGUIWidgetDefine" value="TDWgtTower">
+    <property name="tower_tower006" type="CGUIWidgetDefine" value="CTDWgtTower">
         <property name="parent" type="CGUIString" value="node_towers" />
         <property name="tower_base" type="CGUIImage" value="TowerBase" />
         <property name="position" type="CGUIWidgetPosition">
@@ -264,7 +264,7 @@
         </property>
         <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
     </property>
-    <property name="tower_tower007" type="CGUIWidgetDefine" value="TDWgtTower">
+    <property name="tower_tower007" type="CGUIWidgetDefine" value="CTDWgtTower">
         <property name="parent" type="CGUIString" value="node_towers" />
         <property name="tower_base" type="CGUIImage" value="TowerBase" />
         <property name="position" type="CGUIWidgetPosition">
@@ -277,7 +277,7 @@
         </property>
         <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
     </property>
-    <property name="tower_tower008" type="CGUIWidgetDefine" value="TDWgtTower">
+    <property name="tower_tower008" type="CGUIWidgetDefine" value="CTDWgtTower">
         <property name="parent" type="CGUIString" value="node_towers" />
         <property name="tower_base" type="CGUIImage" value="TowerBase" />
         <property name="position" type="CGUIWidgetPosition">
@@ -290,7 +290,7 @@
         </property>
         <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
     </property>
-    <property name="gameworldlayer" type="CGUIWidgetDefine" value="TDWgtGameWorldLayer">
+    <property name="gameworldlayer" type="CGUIWidgetDefine" value="CTDWgtGameWorldLayer">
         <property name="parent" type="CGUIString" value="image_map" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="0,0" />
