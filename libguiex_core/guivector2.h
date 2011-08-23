@@ -40,6 +40,8 @@ namespace guiex
 		real Length () const;
 		bool IsZeroLength(void) const;
 
+		bool Equal( const CGUIVector2& vec ) const;
+
 		real SquaredLength () const;
 		
 		real DotProduct(const CGUIVector2& vec) const;

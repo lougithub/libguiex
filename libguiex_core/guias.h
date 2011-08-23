@@ -284,7 +284,6 @@ namespace guiex
 	template< class T >
 	inline void CGUIAsInterpolation<T>::ApplyValue()
 	{
-		GUI_FORCE_ASSERT("CGUIAsInterpolation<T>::ApplyValue not implemented.")
 	}
 	//------------------------------------------------------------------------------
 	template< class T >

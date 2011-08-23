@@ -30,10 +30,12 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CTDGameObjectBullet::OnActive()
 	{
+		CTDGameObject::OnActive();
 	}
 	//------------------------------------------------------------------------------
 	void CTDGameObjectBullet::OnDeactive()
 	{
+		CTDGameObject::OnDeactive();
 	}
 	//------------------------------------------------------------------------------
 	void CTDGameObjectBullet::OnRender( IGUIInterfaceRender* pRender )

@@ -125,7 +125,7 @@ CMyCanvasLayer_DrawWidget::CMyCanvasLayer_DrawWidget( const char* szLayerName )
 //------------------------------------------------------------------------------
 CMyCanvasLayer_DrawWidget::~CMyCanvasLayer_DrawWidget(  )
 {
-	CGUIAsManager::Instance()->DeallocateResource( m_pAsQueue );
+	m_pAsQueue->RefRelease();
 	m_pAsQueue = NULL;
 }
 
@@ -212,7 +212,7 @@ CMyCanvasLayer_DrawRect::CMyCanvasLayer_DrawRect( const char* szLayerName, const
 
 CMyCanvasLayer_DrawRect::~CMyCanvasLayer_DrawRect( )
 {
-	CGUIAsManager::Instance()->DeallocateResource( m_pAsQueue );
+	m_pAsQueue->RefRelease();
 	m_pAsQueue = NULL;
 }
 

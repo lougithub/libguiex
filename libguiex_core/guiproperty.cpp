@@ -131,9 +131,9 @@ namespace guiex
 		return m_strType;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIProperty::AddProperty( const CGUIProperty& pProperty )
+	void CGUIProperty::AddProperty( const CGUIProperty& rProperty )
 	{
-		m_setProperty.push_back(pProperty);
+		m_setProperty.push_back(rProperty);
 	}
 	//------------------------------------------------------------------------------
 	void CGUIProperty::RemoveProperty( const CGUIProperty& rProperty )
@@ -155,7 +155,7 @@ namespace guiex
 		if( uint32(nIdx) >= m_setProperty.size())
 		{
 			GUI_THROW( GUI_FORMAT( 
-				"[CGUIPropertySet::RemoveProperty]: error!the total size of sub-property is <%d>, you wanted is <%d>",
+				"[CGUIProperty::RemoveProperty]: error!the total size of sub-property is <%d>, you wanted is <%d>",
 				m_setProperty.size(),
 				nIdx));
 		}
@@ -217,7 +217,7 @@ namespace guiex
 		if( nIdx >= m_setProperty.size())
 		{
 			GUI_THROW( GUI_FORMAT( 
-				"[CGUIPropertySet::GetProperty]: error!the total size of sub-property is <%d>, you wanted is <%d>",
+				"[CGUIProperty::GetProperty]: error!the total size of sub-property is <%d>, you wanted is <%d>",
 				m_setProperty.size(),
 				nIdx));
 			return NULL;
@@ -232,13 +232,45 @@ namespace guiex
 		if( nIdx >= m_setProperty.size())
 		{
 			GUI_THROW( GUI_FORMAT( 
-				"[CGUIPropertySet::GetProperty]: error!the total size of sub-property is <%d>, you wanted is <%d>",
+				"[CGUIProperty::GetProperty]: error!the total size of sub-property is <%d>, you wanted is <%d>",
 				m_setProperty.size(),
 				nIdx));
 			return NULL;
 		}
 
 		return &(m_setProperty[nIdx]);
+	}
+	//------------------------------------------------------------------------------
+	const CGUIProperty*	CGUIProperty::GetProperty( const CGUIString& rName ) const
+	{
+		for( TSetProperty::const_iterator itor = m_setProperty.begin();
+			itor != m_setProperty.end();
+			++itor)
+		{
+			const CGUIProperty& rProperty = *itor;
+			if( rProperty.GetName() == rName )
+			{
+				return &(*itor);
+			}
+		}
+
+		return NULL;
+	}
+	//------------------------------------------------------------------------------
+	CGUIProperty* CGUIProperty::GetProperty( const CGUIString& rName )
+	{
+		for( TSetProperty::iterator itor = m_setProperty.begin();
+			itor != m_setProperty.end();
+			++itor)
+		{
+			CGUIProperty& rProperty = *itor;
+			if( rProperty.GetName() == rName )
+			{
+				return &(*itor);
+			}
+		}
+
+		return NULL;
 	}
 	//------------------------------------------------------------------------------
 	///get a sub-property by name
@@ -341,7 +373,7 @@ namespace guiex
 		}
 
 		GUI_THROW( GUI_FORMAT( 
-			"[CGUIPropertySet::GetPropertyChecked]: failed to get property by name <%s> and type <%s>",
+			"[CGUIProperty::GetPropertyChecked]: failed to get property by name <%s> and type <%s>",
 			rName.c_str(),
 			rType.c_str()));
 		return NULL;
@@ -437,5 +469,24 @@ namespace guiex
 		return false;
 	}
 	//------------------------------------------------------------------------------
-
+	const CGUIProperty*	CGUIProperty::operator[]( const CGUIString& rName ) const
+	{
+		const CGUIProperty* pProperty = GetProperty( rName );
+		if( !pProperty )
+		{
+			GUI_THROW( GUI_FORMAT( "[CGUIProperty::operator[]]: failed to get sub property by name %s", rName.c_str() ));
+		}
+		return pProperty;
+	}
+	//------------------------------------------------------------------------------
+	CGUIProperty* CGUIProperty::operator[]( const CGUIString& rName )
+	{
+		CGUIProperty* pProperty = GetProperty( rName );
+		if( !pProperty )
+		{
+			GUI_THROW( GUI_FORMAT( "[CGUIProperty::operator[]]: failed to get sub property by name %s", rName.c_str() ));
+		}
+		return pProperty;
+	}
+	//------------------------------------------------------------------------------
 }//namespace guiex

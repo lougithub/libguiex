@@ -46,6 +46,9 @@ namespace guiex
 		void SetValue(const CGUIString& rValue);
 		const CGUIString& GetValue() const;
 
+		template <class T>
+		T GetSpecifiedValue() const;
+
 		void SetType(const CGUIString& rType);
 		uint32 GetType() const;
 		const CGUIString& GetTypeAsString() const;
@@ -57,6 +60,8 @@ namespace guiex
 		uint32 GetPropertyNum( ) const;
 		int32 GetPropertyIndex( const CGUIString& rName ) const;
 		int32 GetPropertyIndex( const CGUIString& rName, const CGUIString& rType ) const;
+		const CGUIProperty*	GetProperty( const CGUIString& rName ) const;
+		CGUIProperty* GetProperty( const CGUIString& rName );
 		const CGUIProperty*	GetProperty( uint32 nIdx ) const;
 		CGUIProperty* GetProperty( uint32 nIdx );
 		const CGUIProperty*	GetProperty( const CGUIString& rName, uint32 nType ) const;
@@ -66,6 +71,10 @@ namespace guiex
 		const CGUIProperty* GetPropertyChecked( const CGUIString& rName, const CGUIString& rType ) const;
 		bool HasProperty( const CGUIString& rName, uint32 nType ) const;
 		bool HasProperty( const CGUIString& rName, const CGUIString& rType ) const;
+
+		//operator
+		const CGUIProperty*	operator[]( const CGUIString& rName ) const;
+		CGUIProperty* operator[]( const CGUIString& rName );
 
 		//set extra data
 		void SetData( void* pData );
@@ -87,6 +96,14 @@ namespace guiex
 		TSetProperty m_setProperty;
 		void* m_pExtraData;
 	};
+
+	template <class T>
+	inline T CGUIProperty::GetSpecifiedValue() const
+	{
+		T aValue;
+		PropertyToValue( *this, aValue );
+		return aValue;
+	}
 
 }//namespace guiex
 

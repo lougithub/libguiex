@@ -459,6 +459,19 @@ namespace guiex
 		return (sqlen < (1e-06 * 1e-06));
 	}
 	//------------------------------------------------------------------------------
+	bool CGUIVector2::Equal( const CGUIVector2& vec ) const
+	{
+		if( GUI_REAL_EQUAL( x, vec.x) &&
+			GUI_REAL_EQUAL( y, vec.y) )
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	//------------------------------------------------------------------------------
 	/** 
 	* @brief As normalise, except that this vector is unaffected and the
 	* normalised vector is returned as a copy. 

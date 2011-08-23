@@ -26,11 +26,14 @@ namespace guiex
 
 		uint32 GetType() const;
 		CTDGameWorld* GetGameWorld() const;
+		bool IsAlive() const;
+
+		void KillObject();
 
 	protected:
 		friend class CTDGameObjectManager;
-		virtual void OnActive() = 0;
-		virtual void OnDeactive() = 0;
+		virtual void OnActive();
+		virtual void OnDeactive();
 
 		virtual void OnRender( IGUIInterfaceRender* pRender ) = 0;
 		virtual void OnUpdate( real fDeltaTime ) = 0;
@@ -38,6 +41,8 @@ namespace guiex
 	private:
 		uint32 m_uObjectType;
 		CTDGameWorld* m_pGameWorld;
+
+		bool m_bIsAlive;
 	};
 }
 

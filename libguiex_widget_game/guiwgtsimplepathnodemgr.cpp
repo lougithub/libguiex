@@ -90,41 +90,23 @@ namespace guiex
 
 		uint32 ret = CGUIWidget::OnAddChild(pEvent);
 
-		if( GSystem->IsEditorMode() )
-		{
-			RelinkPathNode();
-		}
+		m_mapNodes.insert( std::make_pair( pEvent->GetRelative()->GetName(), static_cast<CGUIWgtSimplePathNode*>( pEvent->GetRelative() ) ));
+
 		return ret;
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtSimplePathNodeMgr::OnRemoveChild( CGUIEventRelativeChange* pEvent )
 	{
+		if( pEvent->GetRelative()->GetType() != CGUIWgtSimplePathNode::StaticGetType())
+		{
+			GUI_THROW("[CGUIWgtSimplePathNodeMgr::OnRemoveChild]: don't accept child except CGUIWgtSimplePathNode.");
+		}
+
 		uint32 ret = CGUIWidget::OnRemoveChild(pEvent);
 
-		if( GSystem->IsEditorMode() )
-		{
-			RelinkPathNode();
-		}
+		m_mapNodes.erase( pEvent->GetRelative()->GetName() );
 
 		return ret;
-	}
-	//------------------------------------------------------------------------------
-	void CGUIWgtSimplePathNodeMgr::OnCreate()
-	{
-		CGUIWidget::OnCreate();
-
-		if( !GSystem->IsEditorMode() )
-		{
-			CGUIWidget* pChild = GetChild();
-			while( pChild )
-			{
-				m_vecStartNode.push_back( static_cast<CGUIWgtSimplePathNode*>( pChild) );
-
-				pChild = pChild->GetNextSibling();
-			}
-
-			RelinkPathNode();
-		}
 	}
 	//------------------------------------------------------------------------------
 	CGUIWgtSimplePathNode* CGUIWgtSimplePathNodeMgr::FindPathNode( const CGUIString& rNodeName )
@@ -138,18 +120,6 @@ namespace guiex
 		{
 			GUI_WARNING( GUI_FORMAT("[CGUIWgtSimplePathNodeMgr::FindPathNode]: failed to find pathnode by name %s", rNodeName.c_str()));
 			return NULL;
-		}
-	}
-	//------------------------------------------------------------------------------
-	void CGUIWgtSimplePathNodeMgr::RelinkPathNode()
-	{
-		m_mapNodes.clear();
-		CGUIWidget* pChild = GetChild();
-		while( pChild )
-		{
-			m_mapNodes.insert( std::make_pair( pChild->GetName(), static_cast<CGUIWgtSimplePathNode*>( pChild) ));
-
-			pChild = pChild->GetNextSibling();
 		}
 	}
 	//------------------------------------------------------------------------------

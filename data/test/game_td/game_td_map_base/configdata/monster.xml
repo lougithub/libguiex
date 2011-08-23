@@ -1,13 +1,15 @@
 <guiex>
 
 	<property name="monster001" type="group" >
-		<property name="AnimIdle" type="string" value="Monster001_Idle" />
-		<property name="AnimDie" type="string" value="Monster001_Die" />
-		<property name="AnimAtack" type="string" value="Monster001_Atack" />
-		<property name="AnimMoveLeft" type="string" value="Monster001_MoveLeft" />
-		<property name="AnimMoveRight" type="string" value="Monster001_MoveRight" />
-		<property name="AnimMoveDown" type="string" value="Monster001_MoveDown" />
-		<property name="AnimMoveUp" type="string" value="Monster001_MoveUp" />
+		<property name="AnimIdle" type="CGUIString" value="Monster001_Idle" />
+		<property name="AnimDie" type="CGUIString" value="Monster001_Die" />
+		<property name="AnimAttack" type="CGUIString" value="Monster001_Attack" />
+		<property name="AnimMoveLeft" type="CGUIString" value="Monster001_MoveLeft" />
+		<property name="AnimMoveRight" type="CGUIString" value="Monster001_MoveRight" />
+		<property name="AnimMoveDown" type="CGUIString" value="Monster001_MoveDown" />
+		<property name="AnimMoveUp" type="CGUIString" value="Monster001_MoveUp" />
+
+		<property name="Speed" type="real" value="30" />
 	</property>
 		
 	

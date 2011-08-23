@@ -1,48 +1,48 @@
 <?xml version="1.0" ?>
 <guiex>
-<!-- atack -->
-	<property name="Monster001_Atack001" type="CGUIImageDefine">
-		<property  name="path" type="CGUIString" value="image/monst_001/Atack001.png" />
+<!-- attack -->
+	<property name="Monster001_Attack001" type="CGUIImageDefine">
+		<property  name="path" type="CGUIString" value="image/monst_001/Attack001.png" />
 		<property name="uv" type="CGUIRect" value="0,0,35,30" />
 		<property name="size" type="CGUISize" value="35,30" />
 	</property>
-	<property name="Monster001_Atack002" type="CGUIImageDefine">
-		<property  name="path" type="CGUIString" value="image/monst_001/Atack002.png" />
+	<property name="Monster001_Attack002" type="CGUIImageDefine">
+		<property  name="path" type="CGUIString" value="image/monst_001/Attack002.png" />
 		<property name="uv" type="CGUIRect" value="0,0,35,30" />
 		<property name="size" type="CGUISize" value="35,30" />
 	</property>
-	<property name="Monster001_Atack003" type="CGUIImageDefine">
-		<property  name="path" type="CGUIString" value="image/monst_001/Atack003.png" />
+	<property name="Monster001_Attack003" type="CGUIImageDefine">
+		<property  name="path" type="CGUIString" value="image/monst_001/Attack003.png" />
 		<property name="uv" type="CGUIRect" value="0,0,35,30" />
 		<property name="size" type="CGUISize" value="35,30" />
 	</property>
-	<property name="Monster001_Atack004" type="CGUIImageDefine">
-		<property  name="path" type="CGUIString" value="image/monst_001/Atack004.png" />
+	<property name="Monster001_Attack004" type="CGUIImageDefine">
+		<property  name="path" type="CGUIString" value="image/monst_001/Attack004.png" />
 		<property name="uv" type="CGUIRect" value="0,0,35,30" />
 		<property name="size" type="CGUISize" value="35,30" />
 	</property>
-	<property name="Monster001_Atack005" type="CGUIImageDefine">
-		<property  name="path" type="CGUIString" value="image/monst_001/Atack005.png" />
+	<property name="Monster001_Attack005" type="CGUIImageDefine">
+		<property  name="path" type="CGUIString" value="image/monst_001/Attack005.png" />
 		<property name="uv" type="CGUIRect" value="0,0,35,30" />
 		<property name="size" type="CGUISize" value="35,30" />
 	</property>
-	<property name="Monster001_Atack006" type="CGUIImageDefine">
-		<property  name="path" type="CGUIString" value="image/monst_001/Atack006.png" />
+	<property name="Monster001_Attack006" type="CGUIImageDefine">
+		<property  name="path" type="CGUIString" value="image/monst_001/Attack006.png" />
 		<property name="uv" type="CGUIRect" value="0,0,35,30" />
 		<property name="size" type="CGUISize" value="35,30" />
 	</property>
-	<property name="Monster001_Atack007" type="CGUIImageDefine">
-		<property  name="path" type="CGUIString" value="image/monst_001/Atack007.png" />
+	<property name="Monster001_Attack007" type="CGUIImageDefine">
+		<property  name="path" type="CGUIString" value="image/monst_001/Attack007.png" />
 		<property name="uv" type="CGUIRect" value="0,0,35,30" />
 		<property name="size" type="CGUISize" value="35,30" />
 	</property>
-	<property name="Monster001_Atack008" type="CGUIImageDefine">
-		<property  name="path" type="CGUIString" value="image/monst_001/Atack008.png" />
+	<property name="Monster001_Attack008" type="CGUIImageDefine">
+		<property  name="path" type="CGUIString" value="image/monst_001/Attack008.png" />
 		<property name="uv" type="CGUIRect" value="0,0,35,30" />
 		<property name="size" type="CGUISize" value="35,30" />
 	</property>
-	<property name="Monster001_Atack009" type="CGUIImageDefine">
-		<property  name="path" type="CGUIString" value="image/monst_001/Atack009.png" />
+	<property name="Monster001_Attack009" type="CGUIImageDefine">
+		<property  name="path" type="CGUIString" value="image/monst_001/Attack009.png" />
 		<property name="uv" type="CGUIRect" value="0,0,35,30" />
 		<property name="size" type="CGUISize" value="35,30" />
 	</property>
@@ -372,7 +372,7 @@
 		</property>
 	</property>
 
-	<property name="Monster001_Atack" type="CGUIAnimationDefine">
+	<property name="Monster001_Attack" type="CGUIAnimationDefine">
 		<property name="size" type="CGUISize" value="35,30"/>
 		<property name="interval" type="real" value="0.05"/>
 		<property name="loop" type="bool" value="false"/>

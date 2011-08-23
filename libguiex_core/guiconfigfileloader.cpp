@@ -57,6 +57,13 @@ namespace guiex
 		}
 		pWidget->SetWorkingSceneName( rWorkingSceneName );
 		pWidget->SetDynamic( bIsDynamicPage );
+
+		//set parent
+		const CGUIProperty* pParentProperty = pPropertySet->GetProperty( "parent", ePropertyType_String );
+		if( pParentProperty )
+		{
+			pWidget->ProcessProperty( *pParentProperty );
+		}
 		return pWidget;
 	}
 	//------------------------------------------------------------------------------

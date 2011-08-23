@@ -26,10 +26,13 @@ namespace guiex
 
 		///< rpath is relative to game path
 		void LoadData( const CGUIString& rPath );
+		void ClearData(  );
+
+		const CGUIProperty* GetProperty( const CGUIString& rFilename ) const;
 
 	protected:
 		typedef std::map<CGUIString, CGUIProperty> TMapProperty;
-		TMapProperty m_aMapProperty;
+		TMapProperty m_mapProperty;
 	};
 }
 

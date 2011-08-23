@@ -21,6 +21,7 @@ namespace guiex
 	CTDGameObject::CTDGameObject( uint32 uObjectType, CTDGameWorld* pGameWorld )
 		:m_uObjectType( uObjectType )
 		,m_pGameWorld( pGameWorld )
+		,m_bIsAlive( true )
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -36,6 +37,26 @@ namespace guiex
 	CTDGameWorld* CTDGameObject::GetGameWorld() const
 	{
 		return m_pGameWorld;
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameObject::OnActive()
+	{
+		m_bIsAlive = true;
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameObject::OnDeactive()
+	{
+		m_bIsAlive = false;
+	}
+	//------------------------------------------------------------------------------
+	bool CTDGameObject::IsAlive() const
+	{
+		return m_bIsAlive;
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameObject::KillObject()
+	{
+		m_bIsAlive = false;
 	}
 	//------------------------------------------------------------------------------
 }

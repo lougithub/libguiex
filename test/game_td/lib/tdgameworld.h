@@ -16,6 +16,7 @@
 #include "tdgameconfigdatamanager.h"
 
 #include <libguiex_core/guiex.h>
+#include <libguiex_widget_game/guiwgt_game.h>
 
 //============================================================================//
 // class
@@ -31,6 +32,10 @@ namespace guiex
 		virtual void InitGameWorld( CGUIWidget* pGameRoot );
 		virtual void DestroyGameWorld();
 
+		const CGUIProperty* GetDataProperty( const CGUIString& rFilename ) const;
+
+		CGUIWgtSimplePathNode* GetSimplePathNode( const CGUIString& rPathNodeName ) const;
+
 	protected:
 		virtual void OnRender( IGUIInterfaceRender* pRender );
 		virtual void OnUpdate( real fDeltaTime );
@@ -38,7 +43,7 @@ namespace guiex
 		void UpdateAllObjects( real fDeltaTime );
 		void RenderAllObjects( IGUIInterfaceRender* pRender );
 
-		class CTDGameObjectMonster* AllocateMonster();
+		class CTDGameObjectMonster* AllocateMonster( const CGUIString& rMonsterType, const CGUIString& rStartPathNode );
 
 	protected:
 		CTDGameObjectManager m_aObjectManager;
@@ -49,6 +54,9 @@ namespace guiex
 		TMonsterObjects m_arrayObjectMonster;
 		typedef std::vector<class CTDGameObjectBullet*> TBulletObjects;
 		TBulletObjects m_arrayObjectBullet;
+
+		//path node
+		CGUIWgtSimplePathNodeMgr* m_pSimplePathNodeMgr;
 	};
 }
 

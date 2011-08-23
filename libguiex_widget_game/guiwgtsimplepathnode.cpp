@@ -90,11 +90,6 @@ namespace guiex
 				SetNextNode(NULL);
 			}
 		}
-
-		if( GSystem->IsEditorMode() )
-		{
-			m_pNodeMgr->RelinkPathNode();
-		}
 	}
 	//------------------------------------------------------------------------------
 	const CGUIString& CGUIWgtSimplePathNode::GetNextNodeName( ) const

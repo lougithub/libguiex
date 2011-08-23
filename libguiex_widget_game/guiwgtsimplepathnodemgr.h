@@ -33,14 +33,12 @@ namespace guiex
 		virtual void RenderExtraInfo(IGUIInterfaceRender* pRender);
 		
 		class CGUIWgtSimplePathNode* FindPathNode( const CGUIString& rNodeName );
-		void RelinkPathNode();
 
 	protected:
 		CGUIWgtSimplePathNodeMgr( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 
 		void InitSimplePathNodeMgr();
 
-		virtual void OnCreate();
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
 	
 	protected:	//!< callback function
@@ -48,7 +46,6 @@ namespace guiex
 		virtual uint32 OnRemoveChild( CGUIEventRelativeChange* pEvent );
 
 	protected:
-		std::vector< class CGUIWgtSimplePathNode* > m_vecStartNode;
 		std::map<CGUIString, class CGUIWgtSimplePathNode* > m_mapNodes;
 
 	private:
