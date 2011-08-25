@@ -661,9 +661,11 @@ void WxGUIFontProperty::OnSetValue()
 	if ( variantType == wxPG_VARIANT_TYPE_LONG )
 	{
 		//index of choice
-		wxString rFont = m_choices.GetLabel( m_value.GetInteger() );
-
-		m_value = rFont;
+		if( m_choices.GetCount() > 0 )
+		{
+			wxString rFont = m_choices.GetLabel( m_value.GetInteger() );
+			m_value = rFont;
+		}
 	}
 }
 // -----------------------------------------------------------------------

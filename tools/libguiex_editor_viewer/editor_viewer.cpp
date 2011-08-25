@@ -622,7 +622,22 @@ void WxMainFrame::OpenUIPage( bool bCheckCommandLine )
 
 	try
 	{
-		//GSystem->CloseAll();
+		//close all
+		for( TMapScene::iterator itor = m_mapScenes.begin();
+			itor != m_mapScenes.end();
+			++itor )
+		{
+			const CGUIString& rSceneName = itor->first;
+			const std::vector<CGUIString>& rPagesInScene = itor->second;
+			for( unsigned i=0; i<rPagesInScene.size(); ++i )
+			{
+				CGUIWidget* pPage = CGUIWidgetManager::Instance()->GetPage( rPagesInScene[i], rSceneName );
+				if( pPage->IsOpen() )
+				{
+					GSystem->GetUICanvas()->CloseUIPage( pPage );
+				}
+			}
+		}
 
 		//free resource
 		for( TMapScene::iterator itor = m_mapScenes.begin();
@@ -632,9 +647,9 @@ void WxMainFrame::OpenUIPage( bool bCheckCommandLine )
 			CGUISceneManager::Instance()->ReleaseWidgets( itor->first );
 			CGUISceneManager::Instance()->ReleaseResources( itor->first );
 		}
+		m_mapScenes.clear();
 
 		//open new pages
-		m_mapScenes.clear();
 		m_mapScenes[strUISceneName] = arrayUIPageNames;
 		for( TMapScene::iterator itor = m_mapScenes.begin();
 			itor != m_mapScenes.end();
@@ -873,6 +888,7 @@ void WxMainFrame::OnClosePage(wxCommandEvent& WXUNUSED(event))
 		if( itorFind != rOpenPages.end() )
 		{
 			rOpenPages.erase( itorFind );
+			GSystem->GetUICanvas()->CloseUIPage( CGUIWidgetManager::Instance()->GetPage( arrayUIPageNames[i], strUISceneName ));
 		}
 	}
 
