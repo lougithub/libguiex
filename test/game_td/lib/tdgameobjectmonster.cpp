@@ -30,15 +30,28 @@ namespace guiex
 		virtual void LeaveState(){}
 		virtual void UpdateState( real fDeltaTime){}
 
-		CTDGameObjectMonster* GetMonster()
-		{
-			return m_pMonster;
-		}
+	protected:
+		CTDGameObjectMonster* GetMonster() { return m_pMonster;}
+		void SetPosition( const CGUIVector2& rPos){ return m_pMonster->SetPosition(rPos); }
+		const CGUIVector2& GetPosition() const{ return m_pMonster->GetPosition(); }
+		void GetSize( const CGUISize& rSize){ return m_pMonster->SetSize(rSize); }
+		const CGUISize& GetSize() const{ return m_pMonster->GetSize(); }
+		void SetAlpha( real fAlpha ){ m_pMonster->SetAlpha(fAlpha); }
+		real GetAlpha( ) const{ return m_pMonster->GetAlpha(); }
+		void SetAnimState( CTDGameObjectMonster::EAnimState eAnimState ) { m_pMonster->SetAnimState( eAnimState );}
+		const CGUIWgtSimplePathNode* GetTargetPathNode() const { return m_pMonster->GetTargetPathNode(); }
+		void SetStartPathNode( const CGUIWgtSimplePathNode* pNode ){m_pMonster->SetStartPathNode( pNode );}
+		void SetMonsterState( CTDGameObjectMonster::EMonsterState eMonsterState ){ m_pMonster->SetMonsterState( eMonsterState ) ;}
+		real GetSpeed() const{return m_pMonster->GetSpeed();}
 
 	private:
 		CTDGameObjectMonster* m_pMonster;
 	};
 
+
+	//------------------------------------------------------------------------------
+	// CTDGameMonsterState_EnterMap
+	//------------------------------------------------------------------------------
 	class CTDGameMonsterState_EnterMap : public CTDGameMonsterState
 	{
 	public:
@@ -51,33 +64,6 @@ namespace guiex
 	protected:
 		CGUIAsInterpolation<real>* m_pAlphaAs;
 	};
-
-	class CTDGameMonsterState_MoveToTarget : public CTDGameMonsterState
-	{
-	public:
-		CTDGameMonsterState_MoveToTarget( CTDGameObjectMonster* pMonster );
-		virtual ~CTDGameMonsterState_MoveToTarget();
-		virtual void EnterState();
-		virtual void LeaveState();
-		virtual void UpdateState( real fDeltaTime);
-	};
-
-	class CTDGameMonsterState_LeaveMap : public CTDGameMonsterState
-	{
-	public:
-		CTDGameMonsterState_LeaveMap( CTDGameObjectMonster* pMonster );
-		virtual ~CTDGameMonsterState_LeaveMap();
-		virtual void EnterState();
-		virtual void LeaveState();
-		virtual void UpdateState( real fDeltaTime);
-
-	protected:
-		CGUIAsInterpolation<real>* m_pAlphaAs;
-	};
-
-
-	//------------------------------------------------------------------------------
-	// CTDGameMonsterState_EnterMap
 	//------------------------------------------------------------------------------
 	CTDGameMonsterState_EnterMap::CTDGameMonsterState_EnterMap( CTDGameObjectMonster* pMonster )
 		:CTDGameMonsterState(pMonster)
@@ -96,12 +82,12 @@ namespace guiex
 		CTDGameMonsterState::EnterState();
 
 		//animation
-		GetMonster()->m_eAnimState = CTDGameObjectMonster::eAnimState_Idle;
+		SetAnimState( CTDGameObjectMonster::eAnimState_Idle);
 
 		//alpha
 		m_pAlphaAs->SetInterpolationValue( 0.0f, 1.0f, 1.0f );
 		m_pAlphaAs->Reset();
-		GetMonster()->m_fAlpha = 0.0f;
+		SetAlpha( 0.0f );
 	}
 	//------------------------------------------------------------------------------
 	void CTDGameMonsterState_EnterMap::LeaveState()
@@ -109,7 +95,7 @@ namespace guiex
 		CTDGameMonsterState::LeaveState();
 
 		//alpha
-		GetMonster()->m_fAlpha = 1.0f;
+		SetAlpha( 1.0f );
 	}
 	//------------------------------------------------------------------------------
 	void CTDGameMonsterState_EnterMap::UpdateState( real fDeltaTime)
@@ -117,11 +103,11 @@ namespace guiex
 		CTDGameMonsterState::UpdateState(fDeltaTime);
 
 		m_pAlphaAs->Update( fDeltaTime );
-		GetMonster()->m_fAlpha = m_pAlphaAs->GetCurrentValue();
+		SetAlpha( m_pAlphaAs->GetCurrentValue() );
 
 		if( m_pAlphaAs->IsRetired() )
 		{
-			GetMonster()->SetMonsterState( CTDGameObjectMonster::eMonsterState_MoveToTarget );
+			SetMonsterState( CTDGameObjectMonster::eMonsterState_MoveToTarget );
 			return;
 		}
 	}
@@ -131,15 +117,16 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	//CTDGameMonsterState_MoveToTarget
 	//------------------------------------------------------------------------------
-	CTDGameMonsterState_MoveToTarget::CTDGameMonsterState_MoveToTarget( CTDGameObjectMonster* pMonster )
-		:CTDGameMonsterState(pMonster)
+	class CTDGameMonsterState_MoveToTarget : public CTDGameMonsterState
 	{
-
-	}
-	//------------------------------------------------------------------------------
-	CTDGameMonsterState_MoveToTarget::~CTDGameMonsterState_MoveToTarget()
-	{
-	}
+	public:
+		CTDGameMonsterState_MoveToTarget( CTDGameObjectMonster* pMonster )
+			:CTDGameMonsterState(pMonster){}
+		virtual ~CTDGameMonsterState_MoveToTarget(){}
+		virtual void EnterState();
+		virtual void LeaveState();
+		virtual void UpdateState( real fDeltaTime);
+	};
 	//------------------------------------------------------------------------------
 	void CTDGameMonsterState_MoveToTarget::EnterState()
 	{
@@ -154,23 +141,23 @@ namespace guiex
 	void CTDGameMonsterState_MoveToTarget::UpdateState( real fDeltaTime)
 	{
 		CTDGameMonsterState::UpdateState(fDeltaTime);
-		if( !GetMonster()->m_pTargetNode )
+		if( !GetTargetPathNode() )
 		{
-			GetMonster()->SetMonsterState( CTDGameObjectMonster::eMonsterState_LeaveMap );
+			SetMonsterState( CTDGameObjectMonster::eMonsterState_LeaveMap );
 			return;
 		}
 
 		while( fDeltaTime > 0.0f )
 		{
-			const CGUIVector2& rTargetPos = GetMonster()->m_pTargetNode->GetPixelPosition();
+			const CGUIVector2& rTargetPos = GetTargetPathNode()->GetPixelPosition();
 			//has target, move to it
-			real fCurMoveLen = GetMonster()->m_fSpeed * fDeltaTime;
+			real fCurMoveLen = GetSpeed() * fDeltaTime;
 			if( GUI_REAL_EQUAL( fCurMoveLen, 0.0f ) )
 			{
 				return;
 			}
 
-			CGUIVector2 aDelta = rTargetPos - GetMonster()->m_aPosition;
+			CGUIVector2 aDelta = rTargetPos - GetPosition();
 			real fDeltaLen = aDelta.Normalise();
 
 			//update animation
@@ -178,22 +165,22 @@ namespace guiex
 			{
 				if( aDelta.x > 0 )
 				{
-					GetMonster()->m_eAnimState = CTDGameObjectMonster::eAnimState_MoveRight;
+					SetAnimState( CTDGameObjectMonster::eAnimState_MoveRight);
 				}
 				else
 				{
-					GetMonster()->m_eAnimState = CTDGameObjectMonster::eAnimState_MoveRight;
+					SetAnimState( CTDGameObjectMonster::eAnimState_MoveRight );
 				}
 			}
 			else
 			{
 				if( aDelta.y > 0 )
 				{
-					GetMonster()->m_eAnimState = CTDGameObjectMonster::eAnimState_MoveDown;
+					SetAnimState( CTDGameObjectMonster::eAnimState_MoveDown);
 				}
 				else
 				{
-					GetMonster()->m_eAnimState = CTDGameObjectMonster::eAnimState_MoveUp;
+					SetAnimState( CTDGameObjectMonster::eAnimState_MoveUp);
 				}
 			}
 
@@ -201,20 +188,19 @@ namespace guiex
 			if( fDeltaLen <= fCurMoveLen )
 			{
 				//reached
-				GetMonster()->m_aPosition = rTargetPos;
+				SetPosition( rTargetPos );
 				fDeltaTime = fDeltaTime * ( 1.0f - fDeltaLen / fCurMoveLen );
 
 				//get next node path
-				GetMonster()->m_pStartNode = GetMonster()->m_pTargetNode;
-				GetMonster()->m_pTargetNode = GetMonster()->m_pTargetNode->GetNextNode();
-				if( !GetMonster()->m_pTargetNode )
+				SetStartPathNode( GetTargetPathNode());
+				if( !GetTargetPathNode() )
 				{
 					return;
 				}
 			}
 			else
 			{
-				GetMonster()->m_aPosition = GetMonster()->m_aPosition + aDelta * fCurMoveLen;
+				SetPosition( GetPosition() + aDelta * fCurMoveLen );
 				return;
 			}
 		}
@@ -224,6 +210,19 @@ namespace guiex
 
 	//------------------------------------------------------------------------------
 	//CTDGameMonsterState_LeaveMap
+	//------------------------------------------------------------------------------
+	class CTDGameMonsterState_LeaveMap : public CTDGameMonsterState
+	{
+	public:
+		CTDGameMonsterState_LeaveMap( CTDGameObjectMonster* pMonster );
+		virtual ~CTDGameMonsterState_LeaveMap();
+		virtual void EnterState();
+		virtual void LeaveState();
+		virtual void UpdateState( real fDeltaTime);
+
+	protected:
+		CGUIAsInterpolation<real>* m_pAlphaAs;
+	};
 	//------------------------------------------------------------------------------
 	CTDGameMonsterState_LeaveMap::CTDGameMonsterState_LeaveMap( CTDGameObjectMonster* pMonster )
 		:CTDGameMonsterState(pMonster)
@@ -241,8 +240,8 @@ namespace guiex
 	{
 		CTDGameMonsterState::EnterState();
 
-		GetMonster()->m_eAnimState = CTDGameObjectMonster::eAnimState_Idle;
-		GetMonster()->m_fAlpha = 1.0f;
+		SetAnimState( CTDGameObjectMonster::eAnimState_Idle);
+		SetAlpha( 1.0f );
 	}
 	//------------------------------------------------------------------------------
 	void CTDGameMonsterState_LeaveMap::LeaveState()
@@ -255,7 +254,7 @@ namespace guiex
 		CTDGameMonsterState::UpdateState(fDeltaTime);
 
 		m_pAlphaAs->Update( fDeltaTime );
-		GetMonster()->m_fAlpha = m_pAlphaAs->GetCurrentValue();
+		SetAlpha( m_pAlphaAs->GetCurrentValue() );
 
 		if( m_pAlphaAs->IsRetired() )
 		{
@@ -367,8 +366,7 @@ namespace guiex
 			return;
 		}
 
-		CGUIRect aRenderRect( m_aPosition - CGUIVector2(m_aSize.m_fWidth, m_aSize.m_fHeight) / 2.0f, m_aSize );
-		m_arrayAnimations[m_eAnimState]->Draw( pRender, aRenderRect, 0, m_fAlpha );
+		m_arrayAnimations[m_eAnimState]->Draw( pRender, m_aMonsterRect, 0, m_fAlpha );
 	}
 	//------------------------------------------------------------------------------
 	void CTDGameObjectMonster::OnUpdate( real fDeltaTime )
@@ -401,6 +399,64 @@ namespace guiex
 				m_arrayMonsterState[m_eMonsterState]->EnterState();
 			}
 		}
+	}
+	//------------------------------------------------------------------------------
+	const CGUIRect& CTDGameObjectMonster::GetRect() const
+	{
+		return m_aMonsterRect;
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameObjectMonster::SetPosition(const CGUIVector2& rPos )
+	{
+		m_aPosition = rPos;
+		m_aMonsterRect = CGUIRect( m_aPosition - CGUIVector2(m_aSize.m_fWidth, m_aSize.m_fHeight) / 2.0f, m_aSize );
+	}
+	//------------------------------------------------------------------------------
+	const CGUIVector2& CTDGameObjectMonster::GetPosition() const
+	{
+		return m_aPosition;
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameObjectMonster::SetSize(const CGUISize& rSize)
+	{
+		m_aSize = rSize;
+		m_aMonsterRect = CGUIRect( m_aPosition - CGUIVector2(m_aSize.m_fWidth, m_aSize.m_fHeight) / 2.0f, m_aSize );
+	}
+	//------------------------------------------------------------------------------
+	const CGUISize& CTDGameObjectMonster::GetSize() const
+	{
+		return m_aSize;
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameObjectMonster::SetAnimState( EAnimState eAnimState )
+	{
+		m_eAnimState = eAnimState;
+	}
+	//------------------------------------------------------------------------------
+	const CGUIWgtSimplePathNode* CTDGameObjectMonster::GetTargetPathNode() const
+	{
+		return m_pTargetNode;
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameObjectMonster::SetStartPathNode( const CGUIWgtSimplePathNode* pNode )
+	{
+		m_pStartNode = pNode;
+		m_pTargetNode = m_pStartNode->GetNextNode();
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameObjectMonster::SetAlpha( real fAlpha )
+	{
+		m_fAlpha = fAlpha;
+	}
+	//------------------------------------------------------------------------------
+	real CTDGameObjectMonster::GetAlpha( ) const
+	{
+		return m_fAlpha;
+	}
+	//------------------------------------------------------------------------------
+	real CTDGameObjectMonster::GetSpeed() const
+	{
+		return m_fSpeed;
 	}
 	//------------------------------------------------------------------------------
 }

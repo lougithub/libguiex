@@ -42,8 +42,9 @@ namespace guiex
 
 		void UpdateAllObjects( real fDeltaTime );
 		void RenderAllObjects( IGUIInterfaceRender* pRender );
+		void RemoveDeadObject();
 
-		class CTDGameObjectMonster* AllocateMonster( const CGUIString& rMonsterType, const CGUIString& rStartPathNode );
+		void AllocateMonster( const CGUIString& rMonsterType, const CGUIString& rStartPathNode );
 
 	protected:
 		CTDGameObjectManager m_aObjectManager;

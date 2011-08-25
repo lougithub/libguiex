@@ -1,17 +1,28 @@
 <guiex>
 
 	<property name="monster001" type="group" >
-		<property name="AnimIdle" type="CGUIString" value="Monster001_Idle" />
-		<property name="AnimDie" type="CGUIString" value="Monster001_Die" />
-		<property name="AnimAttack" type="CGUIString" value="Monster001_Attack" />
-		<property name="AnimMoveLeft" type="CGUIString" value="Monster001_MoveLeft" />
-		<property name="AnimMoveRight" type="CGUIString" value="Monster001_MoveRight" />
-		<property name="AnimMoveDown" type="CGUIString" value="Monster001_MoveDown" />
-		<property name="AnimMoveUp" type="CGUIString" value="Monster001_MoveUp" />
+		<property name="AnimIdle" type="CGUIAnimation" value="Monster001_Idle" />
+		<property name="AnimDie" type="CGUIAnimation" value="Monster001_Die" />
+		<property name="AnimAttack" type="CGUIAnimation" value="Monster001_Attack" />
+		<property name="AnimMoveLeft" type="CGUIAnimation" value="Monster001_MoveLeft" />
+		<property name="AnimMoveRight" type="CGUIAnimation" value="Monster001_MoveRight" />
+		<property name="AnimMoveDown" type="CGUIAnimation" value="Monster001_MoveDown" />
+		<property name="AnimMoveUp" type="CGUIAnimation" value="Monster001_MoveUp" />
 
 		<property name="Speed" type="real" value="30" />
 	</property>
-		
-	
+
+	<property name="monster002" type="group" >
+		<property name="AnimIdle" type="CGUIAnimation" value="Monster002_Idle" />
+		<property name="AnimDie" type="CGUIAnimation" value="Monster002_Die" />
+		<property name="AnimAttack" type="CGUIAnimation" value="Monster002_Attack" />
+		<property name="AnimMoveLeft" type="CGUIAnimation" value="Monster002_MoveLeft" />
+		<property name="AnimMoveRight" type="CGUIAnimation" value="Monster002_MoveRight" />
+		<property name="AnimMoveDown" type="CGUIAnimation" value="Monster002_MoveDown" />
+		<property name="AnimMoveUp" type="CGUIAnimation" value="Monster002_MoveUp" />
+
+		<property name="Speed" type="real" value="20" />
+	</property>  
+
 
 </guiex>

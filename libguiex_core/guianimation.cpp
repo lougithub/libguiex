@@ -162,6 +162,20 @@ namespace guiex
 		m_vecImages[m_nFrame]->Draw( pRender, rDestRect, z, fAlpha );
 	}
 	//------------------------------------------------------------------------------
+	void CGUIAnimation::Draw( IGUIInterfaceRender* pRender,
+		const CGUIRect& rDestRect,
+		real z, 
+		const CGUIColor& rColor,
+		real fAlpha	)
+	{
+		if( m_vecImages.empty() )
+		{
+			return;
+		}
+		Load();
+		m_vecImages[m_nFrame]->Draw( pRender, rDestRect, z, rColor, fAlpha );
+	}
+	//------------------------------------------------------------------------------
 	bool CGUIAnimation::IsLooping() const
 	{
 		return m_bLooping;

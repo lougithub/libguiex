@@ -26,6 +26,7 @@ namespace guiex
 	class IGUIInterfaceRender;
 	class CGUIImage;
 	class CGUIRect;
+	class CGUIColor;
 }
 
 //============================================================================//
@@ -43,6 +44,12 @@ namespace guiex
 		void Draw( IGUIInterfaceRender* pRender,
 			const CGUIRect& rDestRect,
 			real z, 
+			real fAlpha	);
+
+		void Draw( IGUIInterfaceRender* pRender,
+			const CGUIRect& rDestRect,
+			real z, 
+			const CGUIColor& rColor,
 			real fAlpha	);
 
 		const CGUISize& GetSize( );

@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <libguiex_project>
 	<property name="game_td_map_base" type="SceneName" />
-	<property name="resource_monster001.res" type="ResourceFile" />
+
 	<property name="resource_tower.res" type="ResourceFile" />
 	<property name="resource_menu.res" type="ResourceFile" />
+	<property name="resource_tower_menu.res" type="ResourceFile" />
 	<property name="resource_as.res" type="ResourceFile" />
+	<property name="resource_monster001.res" type="ResourceFile" />
+	<property name="resource_monster002.res" type="ResourceFile" />
+	<property name="resource_tower_archertower.res" type="ResourceFile" />
+
+	<property name="tower_select.xml" type="WidgetFile" />
 </libguiex_project>
 

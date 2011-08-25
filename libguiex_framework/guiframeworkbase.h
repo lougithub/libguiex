@@ -28,7 +28,7 @@ namespace guiex
 		int32 Initialize( const CGUIIntSize& rScreenSize, const char* pDataPath );
 		void Release( );
 
-		void Update( real fDeltaTime );
+		virtual void Update( real fDeltaTime );
 		void Render( );
 
 	protected:

@@ -46,6 +46,8 @@ class CGUIFrameworkTDGame : public guiex::CGUIFramework
 public:
 	CGUIFrameworkTDGame(  );
 
+	virtual void Update( guiex::real fDeltaTime );
+
 protected:
 	virtual guiex::int32 InitializeGame( );
 	virtual void RegisterWidgetGenerators( );

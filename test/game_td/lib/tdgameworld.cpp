@@ -15,6 +15,7 @@
 #include "tdgameobjectmonster.h"
 
 #include "tdwgtgameworldlayer.h"
+#include "tdwgttower.h"
 
 //============================================================================//
 // function
@@ -42,7 +43,7 @@ namespace guiex
 		CTDWgtGameWorldLayer* pGameLayer = static_cast<CTDWgtGameWorldLayer*>( pGameRoot->FindWidgetByType( CTDWgtGameWorldLayer::StaticGetType()));
 		if( !pGameLayer )
 		{
-			GUI_THROW( "CTDGameWorld::InitGameWorld]: can't find CTDWgtGameWorldLayer in map" );
+			GUI_THROW( "[CTDGameWorld::InitGameWorld]: can't find CTDWgtGameWorldLayer in map" );
 			return;
 		}
 		pGameLayer->ApplyGameWorld( this );
@@ -55,13 +56,27 @@ namespace guiex
 			return;
 		}
 
+		//init tower
+		CGUIWidget* pTowerNode = pGameRoot->FindWidgetByName( "node_towers" );
+		if( !pTowerNode )
+		{
+			GUI_THROW( "CTDGameWorld::InitGameWorld]: can't find widget <node_towers> in map" );
+		}
+		CGUIWidget* pTower = pTowerNode->GetChild();
+		while( pTower )
+		{
+			static_cast<CTDWgtTower*>(pTower)->SetGameWorld( this );
+			pTower = pTower->GetNextSibling();
+		}
+
 		//init object pool
 		m_aObjectManager.InitObjects<CTDGameObjectMonster>( 100 );
 		m_aObjectManager.InitObjects<CTDGameObjectBullet>( 100 );
 
 		//=============================================
 		//test here
-		CTDGameObjectMonster* pMonster = AllocateMonster( "monster001", "pathnode_1_start" );
+		AllocateMonster( "monster001", "pathnode_1_start" );
+		AllocateMonster( "monster002", "pathnode_2_start" );
 		//test here
 		//==============================================
 
@@ -104,6 +119,7 @@ namespace guiex
 	void CTDGameWorld::OnUpdate( real fDeltaTime )
 	{
 		UpdateAllObjects( fDeltaTime );
+		RemoveDeadObject();
 	}
 	//------------------------------------------------------------------------------
 	void CTDGameWorld::UpdateAllObjects( real fDeltaTime )
@@ -122,6 +138,41 @@ namespace guiex
 			++itor )
 		{
 			(*itor)->OnUpdate( fDeltaTime );
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameWorld::RemoveDeadObject()
+	{
+		//bullet
+		for( TBulletObjects::iterator itor = m_arrayObjectBullet.begin();
+			itor != m_arrayObjectBullet.end(); )
+		{
+			CTDGameObject* pObject = *itor;
+			if( pObject->IsAlive() == false )
+			{
+				m_aObjectManager.FreeObject( pObject );
+				m_arrayObjectBullet.erase( itor );
+			}
+			else
+			{
+				++itor;
+			}
+		}
+
+		//monster
+		for( TMonsterObjects::iterator itor = m_arrayObjectMonster.begin();
+			itor != m_arrayObjectMonster.end(); )
+		{
+			CTDGameObject* pObject = *itor;
+			if( pObject->IsAlive() == false )
+			{
+				m_aObjectManager.FreeObject( pObject );
+				itor = m_arrayObjectMonster.erase( itor );
+			}
+			else
+			{
+				++itor;
+			}
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -144,12 +195,11 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	CTDGameObjectMonster* CTDGameWorld::AllocateMonster( const CGUIString& rMonsterType, const CGUIString& rStartPathNode )
+	void CTDGameWorld::AllocateMonster( const CGUIString& rMonsterType, const CGUIString& rStartPathNode )
 	{
 		CTDGameObjectMonster* pMonster = m_aObjectManager.AllocateObject<CTDGameObjectMonster>( eGameObject_Monster );
 		m_arrayObjectMonster.push_back( pMonster );
 		pMonster->InitMonster( rMonsterType, rStartPathNode );
-		return pMonster;
 	}
 	//------------------------------------------------------------------------------
 	const CGUIProperty* CTDGameWorld::GetDataProperty( const CGUIString& rFilename ) const

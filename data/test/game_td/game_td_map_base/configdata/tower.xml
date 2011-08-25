@@ -1,0 +1,30 @@
+<guiex>
+
+	<property name="tower_base" type="group" >
+		<property name="AnimIdle" type="CGUIAnimation" value="TowerBase" />
+	</property>
+
+	<property name="tower_archertower" type="group" >
+		<property name="AnimArcherTower_Building" type="CGUIAnimation" value="ArcherTower_Building" />
+		<property name="AnimArcherTowerLevel1_Idle" type="CGUIAnimation" value="ArcherTowerLevel1_Idle" />
+		<property name="AnimArcherLevel1_Idle_DownRight" type="CGUIAnimation" value="ArcherLevel1_Idle_DownRight" />
+		<property name="AnimArcherLevel1_Idle_UpRight" type="CGUIAnimation" value="ArcherLevel1_Idle_UpRight" />
+		<property name="AnimArcherLevel1_Idle_DownLeft" type="CGUIAnimation" value="ArcherLevel1_Idle_DownLeft" />
+		<property name="AnimArcherLevel1_Idle_UpLeft" type="CGUIAnimation" value="ArcherLevel1_Idle_UpLeft" />
+		<property name="AnimArcherLevel1_Attack_DownRight" type="CGUIAnimation" value="ArcherLevel1_Attack_DownRight" />
+		<property name="AnimArcherLevel1_Attack_UpRight" type="CGUIAnimation" value="ArcherLevel1_Attack_UpRight" />
+		<property name="AnimArcherLevel1_Attack_DownLeft" type="CGUIAnimation" value="ArcherLevel1_Attack_DownLeft" />
+		<property name="AnimArcherLevel1_Attack_UpLeft" type="CGUIAnimation" value="ArcherLevel1_Attack_UpLeft" />
+	</property>  
+
+	<property name="tower_mages" type="group" >
+	</property>  
+
+	<property name="tower_barracks" type="group" >
+	</property>  
+
+	<property name="tower_dwarvenboombard" type="group" >
+	</property>  
+
+
+</guiex>

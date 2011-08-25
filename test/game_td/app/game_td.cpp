@@ -127,6 +127,15 @@ void CGUIFrameworkTDGame::RegisterWidgetGenerators( )
 	}
 }
 //------------------------------------------------------------------------------
+void CGUIFrameworkTDGame::Update( real fDeltaTime )
+{
+	if( fDeltaTime >= 0.5f )
+	{
+		fDeltaTime = 0.5f;
+	}
+	CGUIFramework::Update( fDeltaTime );
+}
+//------------------------------------------------------------------------------
 
 
 

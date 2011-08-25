@@ -1,3 +1,4 @@
+
 /** 
 * @file tdwgttower.h
 * @brief tower of td game
@@ -30,11 +31,16 @@ namespace guiex
 	{
 	public:
 		CTDWgtTower( const CGUIString& rName, const CGUIString& rSceneName );
+		virtual ~CTDWgtTower( );
+
+		void SetGameWorld( class CTDGameWorld* pGameWorld );
 
 	protected:
 		void InitTower();
 
 		virtual void RenderSelf(IGUIInterfaceRender* pRender);
+		virtual void OnUpdate( real fDeltaTime );
+
 		virtual void OnSetImage( const CGUIString& rName, CGUIImage* pImage );
 
 	protected:	//!< callback function
@@ -46,10 +52,12 @@ namespace guiex
 
 		bool m_bHovering;
 
+		class CTDGameWorld * m_pGameWorld;
+		class CTDGameTower* m_pGameTower;
+
 	protected:
 		GUI_WIDGET_GENERATOR_DECLARE(CTDWgtTower);
 	};
 }//namespace guiex
 
 #endif //__TD_WGTTOWER_20110817_H__
-
