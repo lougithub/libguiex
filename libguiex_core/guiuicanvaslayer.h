@@ -47,13 +47,6 @@ namespace guiex
 		void CloseDialog(CGUIWidget* pDlg);
 		CGUIWidget*	GetTopestDialog( ) const;
 
-		void SetPopupWidget(CGUIWidget* pWidget);
-		CGUIWidget* GetPopupWidget( ) const;
-		//void OpenPopupWidget(CGUIWidget* pWidget);
-		//void ClosePopupWidget(CGUIWidget* pWidget);
-
-		//void CloseByAutoSelect( CGUIWidget* pWidget );
-
 		void OpenUIPage(CGUIWidget* pPage);
 		void CloseUIPage(CGUIWidget* pPage);
 		CGUIWidget*	GetOpenedPageByIndex( uint32 nIdx );
@@ -68,7 +61,6 @@ namespace guiex
 		typedef std::vector<CGUIWidget*>	TArrayWidget;	
 		TArrayWidget m_arrayOpenedPage;
 		TArrayWidget m_arrayOpenedDlg; //widget modal dialog
-		CGUIWidget*	m_pPopupWidget; //popup widget
 
 		CGUICamera* m_pDefaultUICamera;
 	};

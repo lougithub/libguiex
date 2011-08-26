@@ -107,7 +107,8 @@ namespace guiex
 		CGUIWidget* GetPrevSibling( ) const;
 
 		void SetPage( CGUIWidget *pPage );
-		CGUIWidget* GetPage();
+		CGUIWidget* GetPage() const;
+		bool IsPageRoot() const;
 
 		void MoveToTop();
 		void MoveDown();
@@ -151,8 +152,9 @@ namespace guiex
 		bool IsActivable() const;
 		bool IsDerivedActivable();
 
-		void SetFocus(bool bFocus);
+		void SetFocus( );
 		bool IsFocus() const;
+		bool HasFocusWidget() const;
 
 		void SetVisible(bool bVisible);
 		bool IsVisible( ) const;
@@ -319,7 +321,6 @@ namespace guiex
 
 		void SetFocusable( bool bFlag ); 
 		bool IsFocusable( ) const;
-		bool IsDerivedFocusable( ) const;
 
 		void SetMovable( bool bFlag ); 
 		bool IsMovable( ) const;
@@ -465,8 +466,10 @@ namespace guiex
 		/// callback function: for focus
 		virtual uint32 OnGetFocus( CGUIEventNotification* pEvent );
 		virtual uint32 OnLostFocus( CGUIEventNotification* pEvent );
+		virtual uint32 OnPageLostFocus( CGUIEventNotification* pEvent );
+		virtual uint32 OnPageGetFocus( CGUIEventNotification* pEvent );
 
-		/// callback function: for visable
+		/// callback function: for visible
 		virtual uint32 OnVisible( CGUIEventNotification* pEvent );
 		virtual uint32 OnInvisible( CGUIEventNotification* pEvent );
 

@@ -1,0 +1,69 @@
+<guiex>
+    <property name="Panel_TowerUpgrade" type="CGUIWidgetDefine" value="CGUIWgtPanel">
+        <property name="bg" type="CGUIImage" value="TowerPanel" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0.5,0.5" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="114,114" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
+        <property name="force_hittest" type="bool" value="true" />
+        <property name="default_as" type="CGUIAs" value="as_tower_pannel" />
+        <property name="auto_play_as" type="bool" value="true" />
+    </property>
+    <property name="Button_TowerUpgrade" type="CGUIWidgetDefine" value="CGUIWgtButton">
+        <property name="parent" type="CGUIString" value="Panel_TowerUpgrade" />
+        <property name="normal" type="CGUIImage" value="Icon_Tower_Upgrade" />
+        <property name="hover_overlay" type="CGUIImage" value="Icon_TowerMenuOverlay" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="36,-15" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="46,44" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+    </property>
+    <property name="Image_TowerUpgradePriceBG" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
+        <property name="parent" type="CGUIString" value="Button_TowerUpgrade" />
+        <property name="bg" type="CGUIImage" value="Icon_Tower_PricePanel" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="8,31" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="30,20" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="hitable" type="bool" value="false" />
+    </property>
+    <property name="Label_TowerUpgradePrice" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
+        <property name="parent" type="CGUIString" value="Image_TowerUpgradePriceBG" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0.5,0.5" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="21,13" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
+        <property name="hitable" type="bool" value="false" />
+    </property>
+    <property name="Button_TowerSell" type="CGUIWidgetDefine" value="CGUIWgtButton">
+        <property name="parent" type="CGUIString" value="Panel_TowerUpgrade" />
+        <property name="normal" type="CGUIImage" value="Icon_Tower_Sell" />
+        <property name="hover_overlay" type="CGUIImage" value="Icon_TowerMenuOverlay" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="42,93" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="32,32" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+    </property>
+</guiex>

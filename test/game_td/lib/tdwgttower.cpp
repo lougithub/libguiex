@@ -47,6 +47,8 @@ namespace guiex
 
 		m_pGameTower = NULL;
 		m_pGameWorld = NULL;
+
+		SetGenerateClickEvent( true );
 	}
 	//------------------------------------------------------------------------------
 	void CTDWgtTower::OnSetImage( const CGUIString& rName, CGUIImage* pImage )
@@ -115,6 +117,16 @@ namespace guiex
 		return CGUIWidget::OnMouseLeave( pEvent );
 	}
 	//------------------------------------------------------------------------------
+	uint32 CTDWgtTower::OnMouseLeftClick( CGUIEventMouse* pEvent )
+	{
+		if( m_pGameTower )
+		{
+			m_pGameTower->OnMouseLeftClick();
+		}
+
+		return CGUIWidget::OnMouseLeftClick( pEvent );
+	}
+	//------------------------------------------------------------------------------
 	void CTDWgtTower::SetGameWorld( CTDGameWorld* pGameWorld )
 	{
 		m_pGameWorld = pGameWorld;
@@ -126,7 +138,7 @@ namespace guiex
 		}
 		if( m_pGameWorld )
 		{
-			m_pGameTower = new CTDGameTower( m_pGameWorld, GetAnchorPoint() );
+			m_pGameTower = new CTDGameTower( this, m_pGameWorld, GetAnchorPoint() );
 		}
 	}
 	//------------------------------------------------------------------------------

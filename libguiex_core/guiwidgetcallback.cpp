@@ -412,8 +412,6 @@ namespace guiex
 	{
 		WIDGET_EVENT_TRACE("OnGetFocus");
 
-		GSystem->SetFocusWidget(this);
-
 		//call callback function
 		CallbackFunction("OnGetFocus", pEvent);
 
@@ -424,10 +422,28 @@ namespace guiex
 	{
 		WIDGET_EVENT_TRACE("OnLostFocus");
 
-		GSystem->SetFocusWidget(NULL);
+		//call callback function
+		CallbackFunction("OnLostFocus", pEvent);
+
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	uint32 CGUIWidget::OnPageLostFocus( CGUIEventNotification* pEvent )
+	{
+		WIDGET_EVENT_TRACE("OnPageLostFocus");
 
 		//call callback function
-		CallbackFunction("OnInactive", pEvent);
+		CallbackFunction("OnPageLostFocus", pEvent);
+
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	uint32 CGUIWidget::OnPageGetFocus( CGUIEventNotification* pEvent )
+	{
+		WIDGET_EVENT_TRACE("OnPageGetFocus");
+
+		//call callback function
+		CallbackFunction("OnPageGetFocus", pEvent);
 
 		return 0;
 	}
@@ -568,12 +584,7 @@ namespace guiex
 
 		//call callback function
 		CallbackFunction("OnOpen", pEvent);
-
-		//if( IsFocusable())
-		//{
-		//	SetFocus(true);
-		//}
-
+		
 		return 0;
 	}
 	//------------------------------------------------------------------------------
@@ -586,7 +597,7 @@ namespace guiex
 
 		if( IsFocus())
 		{
-			SetFocus(false);
+			GSystem->SetFocusWidget(NULL);
 		}
 
 		return 0;

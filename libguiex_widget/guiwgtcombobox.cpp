@@ -43,7 +43,7 @@ namespace guiex
 		void InitComboBoxDropList();
 
 	protected:
-		virtual uint32 OnLostFocus( CGUIEventNotification* pEvent );
+		virtual uint32 OnPageLostFocus( CGUIEventNotification* pEvent );
 		virtual void ProcessMouseLeftUp(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent);
 		virtual void ProcessMouseMove(CGUIWgtListBoxItem* pItem, CGUIEventMouse* pEvent);
 
@@ -74,23 +74,18 @@ namespace guiex
 	void CGUIWgtComboBoxDropList::ShowDropList()
 	{
 		SetVisible(true);
-		GSystem->GetUICanvas()->SetPopupWidget( this );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtComboBoxDropList::HideDropList()
 	{
 		SetVisible(false);
-		if( GSystem->GetUICanvas()->GetPopupWidget( ) == this )
-		{
-			GSystem->GetUICanvas()->SetPopupWidget( NULL );
-		}
 	}
 	//------------------------------------------------------------------------------
-	uint32 CGUIWgtComboBoxDropList::OnLostFocus( CGUIEventNotification* pEvent )
+	uint32 CGUIWgtComboBoxDropList::OnPageLostFocus( CGUIEventNotification* pEvent )
 	{
 		HideDropList( );
 		ClearAllSelections_impl();
-		return CGUIWidget::OnLostFocus(pEvent);
+		return CGUIWidget::OnPageLostFocus(pEvent);
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtComboBoxDropList::ProcessMouseMove( CGUIWgtListBoxItem* pItem,CGUIEventMouse* pEvent )
@@ -139,6 +134,7 @@ namespace guiex
 		//create drop list
 		m_pDropList = new CGUIWgtComboBoxDropList(CGUIWidgetManager::MakeInternalName(GetName()+"_DropList"), GetSceneName());
 		m_pDropList->SetParent( this);
+		m_pDropList->SetPage( m_pDropList );
 
 		SetDropListSize( CGUISize( 100.f, 100.f ));
 		SetForceHitTest(true);
@@ -278,7 +274,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	uint32 CGUIWgtComboBox::OnMouseLeftDown( CGUIEventMouse* pEvent )
 	{
-		m_pDropList->SetFocus( true );		
+		m_pDropList->SetFocus( );		
 		m_pDropList->ShowDropList( );
 		return CGUIWgtTextBase::OnMouseLeftDown(pEvent);
 	}

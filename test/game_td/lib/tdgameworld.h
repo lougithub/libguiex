@@ -29,12 +29,18 @@ namespace guiex
 		CTDGameWorld();
 		virtual ~CTDGameWorld();
 
-		virtual void InitGameWorld( CGUIWidget* pGameRoot );
+		virtual void InitGameWorld( CGUIWidget* pGameRoot, CGUIWidget* pTowerSelectPanel, CGUIWidget* pTowerUpgradePanel );
 		virtual void DestroyGameWorld();
 
 		const CGUIProperty* GetDataProperty( const CGUIString& rFilename ) const;
 
 		CGUIWgtSimplePathNode* GetSimplePathNode( const CGUIString& rPathNodeName ) const;
+
+		//towe relative functions
+		class CTDGameTower* GetCurrentFocusTower() const;
+		void SetCurrentFocusTower( class CTDGameTower* pTower );
+		CGUIWidget* GetTowerSelectPanel() const;
+		CGUIWidget* GetTowerUpgradePanel() const;
 
 	protected:
 		virtual void OnRender( IGUIInterfaceRender* pRender );
@@ -58,6 +64,11 @@ namespace guiex
 
 		//path node
 		CGUIWgtSimplePathNodeMgr* m_pSimplePathNodeMgr;
+
+		//tower
+		class CTDGameTower* m_pCurrentFocusTower;
+		CGUIWidget* m_pTowerSelectPanel;
+		CGUIWidget* m_pTowerUpgradePanel;
 	};
 }
 

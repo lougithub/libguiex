@@ -431,10 +431,7 @@ namespace guiex
 			//set focus
 			if( GSystem->GetFocusWidget() != pTargetWidget)
 			{
-				if( pTargetWidget->IsFocusable())
-				{
-					pTargetWidget->SetFocus(true);
-				}
+				pTargetWidget->SetFocus( );
 			}
 
 			//set active
@@ -515,7 +512,7 @@ namespace guiex
 		{
 			if( GSystem->GetFocusWidget() )
 			{
-				GSystem->GetFocusWidget()->SetFocus(false);
+				GSystem->SetFocusWidget(NULL);
 			}
 		}
 

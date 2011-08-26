@@ -24,6 +24,9 @@ namespace guiex
 {
 	//------------------------------------------------------------------------------
 	CTDGameWorld::CTDGameWorld()
+		:m_pCurrentFocusTower(NULL)
+		,m_pTowerSelectPanel(NULL)
+		,m_pTowerUpgradePanel(NULL)
 	{
 		m_aObjectManager.SetGameWorld( this );
 	}
@@ -32,7 +35,7 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameWorld::InitGameWorld( CGUIWidget* pGameRoot )
+	void CTDGameWorld::InitGameWorld( CGUIWidget* pGameRoot, CGUIWidget* pTowerSelectPanel, CGUIWidget* pTowerUpgradePanel )
 	{
 		CTDGameWorldBase::InitGameWorld( pGameRoot );
 
@@ -57,6 +60,9 @@ namespace guiex
 		}
 
 		//init tower
+		m_pTowerSelectPanel = pTowerSelectPanel;
+		m_pTowerUpgradePanel = pTowerUpgradePanel;
+
 		CGUIWidget* pTowerNode = pGameRoot->FindWidgetByName( "node_towers" );
 		if( !pTowerNode )
 		{
@@ -226,6 +232,26 @@ namespace guiex
 			return NULL;
 		}
 		return pPathNode;
+	}
+	//------------------------------------------------------------------------------
+	CTDGameTower* CTDGameWorld::GetCurrentFocusTower() const
+	{
+		return m_pCurrentFocusTower;
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameWorld::SetCurrentFocusTower( CTDGameTower* pTower )
+	{
+		m_pCurrentFocusTower = pTower;
+	}
+	//------------------------------------------------------------------------------
+	CGUIWidget* CTDGameWorld::GetTowerSelectPanel() const
+	{
+		return m_pTowerSelectPanel;
+	}
+	//------------------------------------------------------------------------------
+	CGUIWidget* CTDGameWorld::GetTowerUpgradePanel() const
+	{
+		return m_pTowerUpgradePanel;
 	}
 	//------------------------------------------------------------------------------
 

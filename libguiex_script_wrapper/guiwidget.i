@@ -44,7 +44,7 @@ namespace guiex
 		bool IsActivable() const;
 		bool IsDerivedActivable();
 
-		void SetFocus(bool bFocus);
+		void SetFocus( );
 		bool IsFocus() const;
 
 		void SetVisible(bool bVisible);
@@ -166,7 +166,6 @@ namespace guiex
 
 		void SetFocusable( bool bFlag ); 
 		bool IsFocusable( ) const;
-		bool IsDerivedFocusable( ) const;
 
 		void SetMovable( bool bFlag ); 
 		bool IsMovable( ) const;

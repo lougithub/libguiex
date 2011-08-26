@@ -213,6 +213,12 @@ namespace guiex
 		case eEVENT_FOCUS_GET:
 			return m_pReceiver->OnGetFocus(this);
 
+		case eEVENT_PAGE_FOCUS_GET:
+			return m_pReceiver->OnPageGetFocus(this);
+
+		case eEVENT_PAGE_FOCUS_LOST:
+			return m_pReceiver->OnPageLostFocus(this);
+
 		case eEVENT_VISIBLE:
 			return m_pReceiver->OnVisible(this);
 

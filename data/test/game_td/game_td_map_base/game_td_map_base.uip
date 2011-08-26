@@ -11,5 +11,6 @@
 	<property name="resource_tower_archertower.res" type="ResourceFile" />
 
 	<property name="tower_select.xml" type="WidgetFile" />
+	<property name="tower_upgrade.xml" type="WidgetFile" />
 </libguiex_project>
 

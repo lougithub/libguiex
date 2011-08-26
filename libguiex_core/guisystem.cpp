@@ -647,14 +647,95 @@ namespace guiex
 		{
 			return;
 		}
+		std::vector<CGUIWidget*> m_listOldPages;
+		std::set<CGUIWidget*> m_listNewPages;
+
 		if( m_pWgtFocus )
 		{
 			m_pWgtFocus->GetOnWidgetDestroyedSignal().disconnect( this );
+
+			//lost focus event
+			CGUIEventNotification aEvent;
+			aEvent.SetEventId(eEVENT_FOCUS_LOST);
+			aEvent.SetReceiver(m_pWgtFocus);
+			GSystem->SendEvent( &aEvent);
+
+			//get old pages
+			CGUIWidget* pPageRoot = m_pWgtFocus->GetPage();
+			while( pPageRoot )
+			{
+				m_listOldPages.push_back( pPageRoot );
+				if( pPageRoot->GetParent() )
+				{
+					pPageRoot = pPageRoot->GetParent()->GetPage();
+				}
+				else
+				{
+					pPageRoot = NULL;
+				}
+			}
 		}
+
 		m_pWgtFocus = pWidget;
 		if( m_pWgtFocus )
 		{
 			m_pWgtFocus->GetOnWidgetDestroyedSignal().connect( this, &CGUISystem::OnWidgetDestroyed );
+
+			//get focus
+			CGUIEventNotification aEvent;
+			aEvent.SetEventId(eEVENT_FOCUS_GET);
+			aEvent.SetReceiver(m_pWgtFocus);
+			GSystem->SendEvent( &aEvent);
+
+			//get old pages
+			CGUIWidget* pPageRoot = m_pWgtFocus->GetPage();
+			while( pPageRoot )
+			{
+				m_listNewPages.insert( pPageRoot );
+				if( pPageRoot->GetParent() )
+				{
+					pPageRoot = pPageRoot->GetParent()->GetPage();
+				}
+				else
+				{
+					pPageRoot = NULL;
+				}
+			}
+		}
+
+		for( std::vector<CGUIWidget*>::iterator itor = m_listOldPages.begin();
+			itor != m_listOldPages.end(); )
+		{
+			std::set<CGUIWidget*>::iterator itorSet = m_listNewPages.find( *itor );
+			if( itorSet != m_listNewPages.end() )
+			{
+				m_listNewPages.erase( itorSet );
+				itor = m_listOldPages.erase( itor );
+			}
+			else
+			{
+				++itor;
+			}
+		}
+		for( std::vector<CGUIWidget*>::iterator itor = m_listOldPages.begin();
+			itor != m_listOldPages.end(); 
+			++itor )
+		{
+			//lost page focus
+			CGUIEventNotification aEvent;
+			aEvent.SetEventId(eEVENT_PAGE_FOCUS_LOST);
+			aEvent.SetReceiver(*itor);
+			GSystem->SendEvent( &aEvent);
+		}
+		for( std::set<CGUIWidget*>::iterator itor = m_listNewPages.begin();
+			itor != m_listNewPages.end(); 
+			++itor )
+		{
+			//lost page focus
+			CGUIEventNotification aEvent;
+			aEvent.SetEventId(eEVENT_PAGE_FOCUS_GET);
+			aEvent.SetReceiver(*itor);
+			GSystem->SendEvent( &aEvent);
 		}
 	}
 	//------------------------------------------------------------------------------

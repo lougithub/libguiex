@@ -3,6 +3,7 @@
 <config>
   <widget type="CTDWgtTower" inherit="CGUIWidget">
     <page name="Appearance">
+      <property name="generate_click_event" type="bool" value="true"  category="Default" alternative_save="true"/>
     </page>
     <page name="Image">
       <property name="tower_base" type="CGUIImage" value="TowerBase" must_exist="true" />

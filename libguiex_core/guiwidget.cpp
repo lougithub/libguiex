@@ -114,7 +114,7 @@ namespace guiex
 			pChildTmp = pChild;
 			pChild = pChild->GetNextSibling();
 
-			if( pChildTmp->GetPage() == NULL )
+			if( pChildTmp->IsPageRoot() )
 			{
 				if( CGUIWidgetManager::Instance()->HasPage( pChildTmp))
 				{
@@ -219,6 +219,7 @@ namespace guiex
 			CGUIAs* pAs = GetAs("default_as");
 			if( pAs )
 			{
+				pAs->Reset();
 				PlayAs( pAs );
 			}
 		}
@@ -391,9 +392,14 @@ namespace guiex
 		m_pPage = pPage;
 	}
 	//------------------------------------------------------------------------------
-	CGUIWidget* CGUIWidget::GetPage()
+	CGUIWidget* CGUIWidget::GetPage() const
 	{
 		return m_pPage;
+	}
+	//------------------------------------------------------------------------------
+	bool CGUIWidget::IsPageRoot() const
+	{
+		return m_pPage == this;
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -794,71 +800,48 @@ namespace guiex
 		return m_aParamActivable.GetFinalValue();
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWidget::SetFocus(bool bFocus)
-	{
-		if( bFocus && IsFocusAgency())
-		{
-			//is a focus agency
-			if( GetParent() )
-			{
-				GetParent()->SetFocus( bFocus);
-				return;
-			}
-			GUI_THROW( GUI_FORMAT("[CGUIWidget::SetFocus]: lack of parent! TYPE<%s>  NAME<%s>",GetType().c_str(),GetName().c_str()));
-			return;
-		}
-
-		if( !bFocus )
-		{
-			/// lost focus
-			if( GSystem->GetFocusWidget()  == this)
-			{
-				CGUIEventNotification aEvent;
-				aEvent.SetEventId(eEVENT_FOCUS_LOST);
-				aEvent.SetReceiver(this);
-				GSystem->SendEvent( &aEvent);
-			}
-			return;
-		}
-
-
-		if( GSystem->GetFocusWidget()  == this)
-		{
-			return;
-		}
-		//remove old widget
-		if( GSystem->GetFocusWidget() )
-		{
-			CGUIEventNotification aEvent;
-			aEvent.SetEventId(eEVENT_FOCUS_LOST);
-			aEvent.SetReceiver(GSystem->GetFocusWidget());
-			GSystem->SendEvent( &aEvent);
-		}
-
-		//add this widget 
-		if( IsFocusable())
-		{
-			CGUIEventNotification aEvent;
-			aEvent.SetEventId(eEVENT_FOCUS_GET);
-			aEvent.SetReceiver(this);
-			GSystem->SendEvent( &aEvent);
-		}
-	}
-	//------------------------------------------------------------------------------
-	bool CGUIWidget::IsFocus() const
+	void CGUIWidget::SetFocus( )
 	{
 		if( IsFocusAgency() )
 		{
-			//is a focus agency
 			if( GetParent() )
 			{
-				return GetParent()->IsFocus( );
+				GetParent()->SetFocus();
 			}
-			GUI_THROW( GUI_FORMAT("[CGUIWidget::IsFocus]: lack of parent! TYPE<%s>  NAME<%s>",
-				GetType().c_str(),GetName().c_str()));
 		}
-
+		else if( IsFocusable())
+		{
+			GSystem->SetFocusWidget( this );
+		}
+		else
+		{
+			GSystem->SetFocusWidget( NULL );
+		}
+	}
+	//------------------------------------------------------------------------------
+	/** 
+	 * @brief does this widget have focus
+	 */
+	bool CGUIWidget::IsFocus() const
+	{
 		return GSystem->GetFocusWidget() == this;
+	}
+	//------------------------------------------------------------------------------
+	/** 
+	 * @brief does this widget or it's children have focus
+	 */
+	bool CGUIWidget::HasFocusWidget() const
+	{
+		CGUIWidget* pFocusWidget = GSystem->GetFocusWidget();
+		while( pFocusWidget )
+		{
+			if( pFocusWidget == this )
+			{
+				return true;
+			}
+			pFocusWidget = pFocusWidget->GetParent();
+		}
+		return false;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::SetVisible(bool bVisible)
@@ -1359,6 +1342,10 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWidget::OnOpen()
 	{
+		if( IsFocusable())
+		{
+			SetFocus( );
+		}
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::OnClose()
@@ -2952,23 +2939,6 @@ namespace guiex
 	bool CGUIWidget::IsFocusable( ) const
 	{
 		return m_bIsFocusable;
-	}
-	//------------------------------------------------------------------------------
-	bool CGUIWidget::IsDerivedFocusable() const
-	{
-		if( IsFocusAgency())
-		{
-			//is a focus agency
-			if( GetParent() )
-			{
-				return GetParent()->IsDerivedFocusable( );
-			}
-
-			GUI_THROW( GUI_FORMAT("[CGUIWidget::IsDerivedFocusable]: lack of parent! TYPE<%s>  NAME<%s>",
-				GetType().c_str(),GetName().c_str()));
-		}
-
-		return IsFocusable();
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::SetMovable( bool bFlag )

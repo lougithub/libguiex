@@ -46,6 +46,7 @@ namespace guiex
 	protected:	//!< callback function
 		virtual uint32 OnMouseEnter( CGUIEventMouse* pEvent );
 		virtual uint32 OnMouseLeave( CGUIEventMouse* pEvent );
+		virtual uint32 OnMouseLeftClick( CGUIEventMouse* pEvent );
 
 	protected:
 		CGUIImage* m_pImageTowerBase;

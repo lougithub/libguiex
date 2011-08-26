@@ -182,7 +182,7 @@ namespace guiex
 		RemoveFromWidgetSet( pWidget );
 
 		//clear page pool
-		if( pWidget->GetPage() == NULL )
+		if( pWidget->IsPageRoot() )
 		{
 			if( pWidget->IsDynamic() )
 			{

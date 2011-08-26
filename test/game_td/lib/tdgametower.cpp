@@ -11,6 +11,7 @@
 //============================================================================// 
 #include "tdgametower.h"
 #include "tdgameworld.h"
+#include "tdwgttower.h"
 
 //============================================================================//
 // class
@@ -234,11 +235,21 @@ namespace guiex
 namespace guiex
 {
 	//------------------------------------------------------------------------------
-	CTDGameTower::CTDGameTower( CTDGameWorld * pGameWorld, const CGUIVector2& rAnchorPoint )
+	static void Panel_OnPageLostFocus( CGUIEventNotification* pEvent )
+	{
+		pEvent->GetReceiver()->Close();
+	}
+	//------------------------------------------------------------------------------
+
+
+
+	//------------------------------------------------------------------------------
+	CTDGameTower::CTDGameTower( CTDWgtTower* pWidgetTower, CTDGameWorld * pGameWorld, const CGUIVector2& rAnchorPoint )
 		:m_pGameWorld(pGameWorld)
 		,m_eTowerType( eTowerType_Base )
 		,m_aAnchorPoint( rAnchorPoint )
 		,m_aRenderColor(1,1,1,1)
+		,m_pWidgetTower(pWidgetTower)
 	{
 		m_pTowerImplement[eTowerType_Base] = new CTDGameTowerImplement_Base( this );
 		m_pTowerImplement[eTowerType_ArcherTower] = new CTDGameTowerImplement_ArcherTower( this );
@@ -307,6 +318,26 @@ namespace guiex
 	void CTDGameTower::OnMouseLeave()
 	{
 		m_aRenderColor.SetColor(1.f,1.f,1.f,1.f);
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameTower::OnMouseLeftClick()
+	{
+		//open tower select panel
+		GetGameWorld()->SetCurrentFocusTower( this );
+
+		CGUIWidget* pPanel = NULL;
+		if( m_eTowerType == eTowerType_Base )
+		{
+			pPanel = GetGameWorld()->GetTowerSelectPanel();
+		}
+		else
+		{
+			pPanel = GetGameWorld()->GetTowerUpgradePanel();
+		}
+
+		pPanel->RegisterNativeCallbackFunc( "OnPageLostFocus", Panel_OnPageLostFocus);
+		pPanel->SetGlobalPixelPosition( m_pWidgetTower->GetGlobalPixelPosition() );
+		GSystem->GetUICanvas()->OpenUIPage( pPanel );
 	}
 	//------------------------------------------------------------------------------
 	const CGUIColor& CTDGameTower::GetRenderColor() const

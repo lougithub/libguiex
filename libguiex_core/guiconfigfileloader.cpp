@@ -32,8 +32,8 @@
 //============================================================================// 
 namespace guiex
 {
-	static CGUIWidget* DoCreateWidget( const CGUIProperty* pPropertySet, const CGUIString& rOwnSceneName,const CGUIString& rWorkingSceneName, bool bIsDynamicPage );
-	static void DoLoadWidgetConfig( CGUIWidget* pWidget, CGUIWidget* pPage, const CGUIProperty* pPropertySet );
+	static CGUIWidget* DoCreateWidget( const CGUIProperty* pPropertySet, const CGUIString& rOwnSceneName,const CGUIString& rWorkingSceneName, bool bIsDynamicPage, CGUIWidget* pPageRoot );
+	static void DoLoadWidgetConfig( CGUIWidget* pWidget, const CGUIProperty* pPropertySet );
 	static int32 DoLoadConfig_Set( const CGUIProperty* pPropertySet, const CGUIString& rSceneName );
 
 	//------------------------------------------------------------------------------
@@ -41,7 +41,8 @@ namespace guiex
 		const CGUIProperty* pPropertySet,
 		const CGUIString& rOwnSceneName, 
 		const CGUIString& rWorkingSceneName,
-		bool bIsDynamicPage )
+		bool bIsDynamicPage,
+		CGUIWidget* pPageRoot)
 	{
 		/// create widget
 		const CGUIString& strWidgetType = pPropertySet->GetValue( );
@@ -57,6 +58,11 @@ namespace guiex
 		}
 		pWidget->SetWorkingSceneName( rWorkingSceneName );
 		pWidget->SetDynamic( bIsDynamicPage );
+		if( !pPageRoot )
+		{
+			pPageRoot = pWidget;
+		}
+		pWidget->SetPage( pPageRoot );
 
 		//set parent
 		const CGUIProperty* pParentProperty = pPropertySet->GetProperty( "parent", ePropertyType_String );
@@ -69,10 +75,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void DoLoadWidgetConfig(
 		CGUIWidget* pWidget,
-		CGUIWidget* pPage, 
 		const CGUIProperty* pPropertySet )
 	{
-		pWidget->SetPage( pPage );
 		pWidget->LoadFromProperty( *pPropertySet );
 
 		if( GSystem->IsEditorMode() )
@@ -214,46 +218,30 @@ namespace guiex
 		}
 
 		//create widget
+		CGUIWidget* pPageRoot = NULL;
 		uint32 nSize = aPropertySet.GetPropertyNum();
 		std::vector< std::pair< CGUIWidget*, const CGUIProperty* > > vecWidgetList;
 		for( uint32 i=0; i<nSize; ++i )
 		{
 			const CGUIProperty* pProperty = aPropertySet.GetProperty(i);
-			switch( pProperty->GetType() )
+			if( pProperty->GetType() != ePropertyType_WidgetDefine )
 			{
-			case ePropertyType_WidgetDefine:
-				{
-					CGUIWidget* pWidget = DoCreateWidget( pProperty, rOwnSceneName, rWorkingSceneName, bIsDynamicPage );
-					if( !pWidget )
-					{
-						return NULL;
-					}					
-					vecWidgetList.push_back( std::make_pair( pWidget, pProperty ) );
-				}
-				break;
-
-			default:
-				{
-					GUI_THROW( GUI_FORMAT(
-						"[LoadWidgetConfigFile], unknown property type <%s:%s:%s>", 
-						pProperty->GetName().c_str(),
-						pProperty->GetTypeAsString().c_str(),
-						pProperty->GetValue().c_str()));
-				}
+				GUI_THROW( GUI_FORMAT(
+					"[LoadWidgetConfigFile], unknown property type <%s:%s:%s>", 
+					pProperty->GetName().c_str(),
+					pProperty->GetTypeAsString().c_str(),
+					pProperty->GetValue().c_str()));
 				return NULL;
 			}
-		}
 
-		//process property
-		CGUIWidget* pPage = NULL;
-		for( std::vector< std::pair< CGUIWidget*, const CGUIProperty* > >::iterator itor = vecWidgetList.begin();
-			itor != vecWidgetList.end();
-			++itor )
-		{
-			CGUIWidget* pWidget = itor->first;
-			const CGUIProperty* pProperty = itor->second;
-			DoLoadWidgetConfig( pWidget, pPage, pProperty );
-			if( !pPage )
+			CGUIWidget* pWidget = DoCreateWidget( pProperty, rOwnSceneName, rWorkingSceneName, bIsDynamicPage, pPageRoot );
+			if( !pWidget )
+			{
+				return NULL;
+			}					
+			vecWidgetList.push_back( std::make_pair( pWidget, pProperty ) );
+
+			if( !pPageRoot )
 			{
 				if( pWidget->GetParent() != NULL )
 				{
@@ -265,7 +253,7 @@ namespace guiex
 				}
 				else
 				{
-					pPage = pWidget;
+					pPageRoot = pWidget;
 				}
 			}
 			else
@@ -279,6 +267,16 @@ namespace guiex
 					return NULL;
 				}
 			}
+		}
+
+		//process property
+		for( std::vector< std::pair< CGUIWidget*, const CGUIProperty* > >::iterator itor = vecWidgetList.begin();
+			itor != vecWidgetList.end();
+			++itor )
+		{
+			CGUIWidget* pWidget = itor->first;
+			const CGUIProperty* pProperty = itor->second;
+			DoLoadWidgetConfig( pWidget, pProperty );
 		}
 
 		//create widget
@@ -299,11 +297,11 @@ namespace guiex
 			pWidget->NotifyLoaded();
 		}
 
-		if( !pPage )
+		if( !pPageRoot )
 		{
 			return NULL;
 		}
-		return pPage;
+		return pPageRoot;
 	}
 	//------------------------------------------------------------------------------
 }

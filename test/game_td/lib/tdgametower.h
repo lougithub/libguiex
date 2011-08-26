@@ -24,7 +24,7 @@ namespace guiex
 	class CTDGameTower
 	{
 	public:
-		CTDGameTower( class CTDGameWorld * pGameWorld, const CGUIVector2& rAnchorPoint );
+		CTDGameTower( class CTDWgtTower* pWidgetTower, class CTDGameWorld * pGameWorld, const CGUIVector2& rAnchorPoint );
 		~CTDGameTower();
 
 		void OnUpdate( real fDeltaTime );
@@ -32,6 +32,7 @@ namespace guiex
 
 		void OnMouseEnter();
 		void OnMouseLeave();
+		void OnMouseLeftClick();
 
 		class CTDGameWorld* GetGameWorld() const;
 
@@ -44,6 +45,7 @@ namespace guiex
 		ETowerType GetTowerType( ) const;
 
 	protected:
+		class CTDWgtTower *m_pWidgetTower;
 		class CTDGameWorld * m_pGameWorld;
 		ETowerType m_eTowerType;
 		

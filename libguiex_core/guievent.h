@@ -107,6 +107,8 @@ namespace guiex
 		///CGUIEventNotification
 		eEVENT_FOCUS_LOST,
 		eEVENT_FOCUS_GET,
+		eEVENT_PAGE_FOCUS_LOST,
+		eEVENT_PAGE_FOCUS_GET,
 
 		//visible
 		///CGUIEventNotification

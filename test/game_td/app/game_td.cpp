@@ -54,13 +54,15 @@ void CMyCanvasLayer_GameLayer::Initialize( )
 	CGUISceneManager::Instance()->LoadResources( "game_td_map_001" );	
 
 	//load widget
+	CGUIWidget* pTowerSelectWidget = CGUISceneManager::Instance()->LoadWidgets( "tower_select.xml", "game_td_map_base" );
+	CGUIWidget* pTowerUpgradeWidget = CGUISceneManager::Instance()->LoadWidgets( "tower_upgrade.xml", "game_td_map_base" );
 	CGUIWidget* pMapWidget = CGUISceneManager::Instance()->LoadWidgets( "map_001.xml", "game_td_map_001" );
 	pMapWidget->SetParent( this );
 	pMapWidget->Open();
 
 	//init game world
 	m_pGameWorld = new CTDGameWorld( );
-	m_pGameWorld->InitGameWorld( pMapWidget );
+	m_pGameWorld->InitGameWorld( pMapWidget, pTowerSelectWidget, pTowerUpgradeWidget );
 }
 //------------------------------------------------------------------------------
 void CMyCanvasLayer_GameLayer::Finalize( )

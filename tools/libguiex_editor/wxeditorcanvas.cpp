@@ -464,7 +464,7 @@ void WxEditorCanvas::SelectWidget( CGUIWidget* pWidget )
 
 	if( pWidget )
 	{
-		pWidget->SetFocus( true );
+		pWidget->SetFocus( );
 	}
 }
 //------------------------------------------------------------------------------

@@ -7178,18 +7178,15 @@ fail:
 static int _wrap_CGUIWidget_SetFocus(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
-  bool arg2 ;
   
-  SWIG_check_num_args("guiex::CGUIWidget::SetFocus",2,2)
+  SWIG_check_num_args("guiex::CGUIWidget::SetFocus",1,1)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::CGUIWidget::SetFocus",1,"guiex::CGUIWidget *");
-  if(!lua_isboolean(L,2)) SWIG_fail_arg("guiex::CGUIWidget::SetFocus",2,"bool");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
     SWIG_fail_ptr("CGUIWidget_SetFocus",1,SWIGTYPE_p_guiex__CGUIWidget);
   }
   
-  arg2 = (lua_toboolean(L, 2)!=0);
-  (arg1)->SetFocus(arg2);
+  (arg1)->SetFocus();
   
   return SWIG_arg;
   
@@ -10044,30 +10041,6 @@ fail:
 }
 
 
-static int _wrap_CGUIWidget_IsDerivedFocusable(lua_State* L) {
-  int SWIG_arg = 0;
-  guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
-  bool result;
-  
-  SWIG_check_num_args("guiex::CGUIWidget::IsDerivedFocusable",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::CGUIWidget::IsDerivedFocusable",1,"guiex::CGUIWidget const *");
-  
-  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
-    SWIG_fail_ptr("CGUIWidget_IsDerivedFocusable",1,SWIGTYPE_p_guiex__CGUIWidget);
-  }
-  
-  result = (bool)((guiex::CGUIWidget const *)arg1)->IsDerivedFocusable();
-  lua_pushboolean(L,(int)(result!=0)); SWIG_arg++;
-  return SWIG_arg;
-  
-  if(0) SWIG_fail;
-  
-fail:
-  lua_error(L);
-  return SWIG_arg;
-}
-
-
 static int _wrap_CGUIWidget_SetMovable(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
@@ -10646,7 +10619,6 @@ static swig_lua_method swig_guiex_CGUIWidget_methods[] = {
     {"IsFocusAgency", _wrap_CGUIWidget_IsFocusAgency}, 
     {"SetFocusable", _wrap_CGUIWidget_SetFocusable}, 
     {"IsFocusable", _wrap_CGUIWidget_IsFocusable}, 
-    {"IsDerivedFocusable", _wrap_CGUIWidget_IsDerivedFocusable}, 
     {"SetMovable", _wrap_CGUIWidget_SetMovable}, 
     {"IsMovable", _wrap_CGUIWidget_IsMovable}, 
     {"SetHitable", _wrap_CGUIWidget_SetHitable}, 
