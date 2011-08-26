@@ -1,5 +1,4 @@
 %module guiex
-%module lib1
 
 %{
 #include "libguiex_core/guiex.h"

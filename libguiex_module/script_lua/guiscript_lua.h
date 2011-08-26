@@ -63,6 +63,8 @@ namespace guiex
 		virtual int DoInitialize(void* );
 		virtual void DoDestroy();
 
+		virtual void OnRegisterLuaFunction(void* pLuaState){}
+
 		bool PushParToLua( void* pPara, const CGUIString& rParaType, void* pLuaState);
 		void RegisterGlobalFunction( void* pLuaState, const CGUIString& rSceneName );
 

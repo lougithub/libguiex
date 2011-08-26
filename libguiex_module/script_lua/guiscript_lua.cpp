@@ -151,7 +151,7 @@ fail:
 		int error =	luaL_loadbuffer(L,strGlobalFunc.c_str(),strGlobalFunc.length(),"script from string") || lua_pcall(L,0,0,0);
 		if ( error )
 		{
-			CGUIString msg = CGUIString("(IGUIScript_lua::CreateScript) Unable to execute script string: ")+strGlobalFunc+"\n"+lua_tostring(L,-1)+"\n";
+			CGUIString msg = CGUIString("(IGUIScript_lua::RegisterGlobalFunction) Unable to execute script string: ")+strGlobalFunc+"\n"+lua_tostring(L,-1)+"\n";
 			lua_pop(L,1);
 			GUI_SCRIPT_THROW( msg.c_str() );
 		}
@@ -202,6 +202,8 @@ fail:
 
 		//register swig.
 		luaopen_guiex( pState );
+
+		OnRegisterLuaFunction( pState );
 
 		RegisterGlobalFunction( pState, rSceneName );
 
