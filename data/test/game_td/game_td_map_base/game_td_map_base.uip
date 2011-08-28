@@ -12,5 +12,8 @@
 
 	<property name="tower_select.xml" type="WidgetFile" />
 	<property name="tower_upgrade.xml" type="WidgetFile" />
+
+	<property name="tower_select.lua" type="ScriptFile" />
+	<property name="tower_upgrade.lua" type="ScriptFile" />
 </libguiex_project>
 

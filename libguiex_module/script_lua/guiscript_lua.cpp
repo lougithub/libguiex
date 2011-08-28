@@ -147,6 +147,7 @@ fail:
 		lua_pop(L, 2);
 
 
+		//register function guiex.GetSceneName
 		std::string strGlobalFunc = std::string("guiex.GetSceneName = function() return\"") + rSceneName +"\"; end";
 		int error =	luaL_loadbuffer(L,strGlobalFunc.c_str(),strGlobalFunc.length(),"script from string") || lua_pcall(L,0,0,0);
 		if ( error )
@@ -191,6 +192,12 @@ fail:
 			lua_pushstring(pState, lib->name);
 			lua_call(pState, 1, 0);
 		}
+
+
+		//register swig.
+		luaopen_guiex( pState );
+
+		RegisterGlobalFunction( pState, rSceneName );
 		
 		//init others
 		for( std::list<FuncScriptLoadModule>::iterator itor = m_listModules.begin();
@@ -199,13 +206,6 @@ fail:
 		{
 			(*itor)( pState );
 		}
-
-		//register swig.
-		luaopen_guiex( pState );
-
-		OnRegisterLuaFunction( pState );
-
-		RegisterGlobalFunction( pState, rSceneName );
 
 		m_mapLuaState.insert( std::make_pair( rSceneName, pState ));
 	}

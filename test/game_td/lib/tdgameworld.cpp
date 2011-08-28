@@ -17,11 +17,29 @@
 #include "tdwgtgameworldlayer.h"
 #include "tdwgttower.h"
 
+
 //============================================================================//
 // function
 //============================================================================// 
 namespace guiex
 {
+	CTDGameWorld* GGameWorld = 0;
+}
+
+//============================================================================//
+// function
+//============================================================================// 
+namespace guiex
+{
+	//------------------------------------------------------------------------------
+	CTDGameWorld* GetGameWorld()
+	{
+		return GGameWorld;
+	}
+	//------------------------------------------------------------------------------
+
+
+
 	//------------------------------------------------------------------------------
 	CTDGameWorld::CTDGameWorld()
 		:m_pCurrentFocusTower(NULL)
@@ -29,10 +47,12 @@ namespace guiex
 		,m_pTowerUpgradePanel(NULL)
 	{
 		m_aObjectManager.SetGameWorld( this );
+		GGameWorld = this;
 	}
 	//------------------------------------------------------------------------------
 	CTDGameWorld::~CTDGameWorld()
 	{
+		GGameWorld = NULL;
 	}
 	//------------------------------------------------------------------------------
 	void CTDGameWorld::InitGameWorld( CGUIWidget* pGameRoot, CGUIWidget* pTowerSelectPanel, CGUIWidget* pTowerUpgradePanel )

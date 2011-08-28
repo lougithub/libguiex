@@ -51,6 +51,7 @@ public:
 protected:
 	virtual guiex::int32 InitializeGame( );
 	virtual void RegisterWidgetGenerators( );
+	virtual void RegisterInterfaces_Script( );
 
 protected:
 	CMyCanvasLayer_GameLayer* m_pGameLayer;

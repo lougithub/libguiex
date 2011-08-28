@@ -16,7 +16,19 @@
 #include "tdgameconfigdatamanager.h"
 
 #include <libguiex_core/guiex.h>
+#include <libguiex_widget/guiwgt.h>
 #include <libguiex_widget_game/guiwgt_game.h>
+
+
+//============================================================================//
+// declare
+//============================================================================// 
+namespace guiex
+{
+	extern class CTDGameWorld* GGameWorld;
+
+	extern class CTDGameWorld* GetGameWorld();
+}
 
 //============================================================================//
 // class

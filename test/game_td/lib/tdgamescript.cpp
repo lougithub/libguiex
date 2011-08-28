@@ -1506,8 +1506,10 @@ SWIG_Lua_dostring(lua_State *L, const char* str) {
 
 /* -------- TYPES TABLE (BEGIN) -------- */
 
-static swig_type_info *swig_types[1];
-static swig_module_info swig_module = {swig_types, 0, 0, 0, 0, 0};
+#define SWIGTYPE_p_guiex__CGUIWidget swig_types[0]
+#define SWIGTYPE_p_guiex__CTDGameWorld swig_types[1]
+static swig_type_info *swig_types[3];
+static swig_module_info swig_module = {swig_types, 2, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -1534,11 +1536,89 @@ typedef struct{} LANGUAGE_OBJ;
 #ifdef __cplusplus
 extern "C" {
 #endif
+static int _wrap_CTDGameWorld_GetTowerSelectPanel(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CTDGameWorld *arg1 = (guiex::CTDGameWorld *) 0 ;
+  guiex::CGUIWidget *result = 0 ;
+  
+  SWIG_check_num_args("guiex::CTDGameWorld::GetTowerSelectPanel",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::CTDGameWorld::GetTowerSelectPanel",1,"guiex::CTDGameWorld const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CTDGameWorld,0))){
+    SWIG_fail_ptr("CTDGameWorld_GetTowerSelectPanel",1,SWIGTYPE_p_guiex__CTDGameWorld);
+  }
+  
+  result = (guiex::CGUIWidget *)((guiex::CTDGameWorld const *)arg1)->GetTowerSelectPanel();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIWidget,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CTDGameWorld_GetTowerUpgradePanel(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CTDGameWorld *arg1 = (guiex::CTDGameWorld *) 0 ;
+  guiex::CGUIWidget *result = 0 ;
+  
+  SWIG_check_num_args("guiex::CTDGameWorld::GetTowerUpgradePanel",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::CTDGameWorld::GetTowerUpgradePanel",1,"guiex::CTDGameWorld const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CTDGameWorld,0))){
+    SWIG_fail_ptr("CTDGameWorld_GetTowerUpgradePanel",1,SWIGTYPE_p_guiex__CTDGameWorld);
+  }
+  
+  result = (guiex::CGUIWidget *)((guiex::CTDGameWorld const *)arg1)->GetTowerUpgradePanel();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CGUIWidget,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static swig_lua_method swig_guiex_CTDGameWorld_methods[] = {
+    {"GetTowerSelectPanel", _wrap_CTDGameWorld_GetTowerSelectPanel}, 
+    {"GetTowerUpgradePanel", _wrap_CTDGameWorld_GetTowerUpgradePanel}, 
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CTDGameWorld_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CTDGameWorld_bases[] = {0};
+static const char *swig_guiex_CTDGameWorld_base_names[] = {0};
+static swig_lua_class _wrap_class_guiex_CTDGameWorld = { "CTDGameWorld", &SWIGTYPE_p_guiex__CTDGameWorld,0,0, swig_guiex_CTDGameWorld_methods, swig_guiex_CTDGameWorld_attributes, swig_guiex_CTDGameWorld_bases, swig_guiex_CTDGameWorld_base_names };
+
+static int _wrap_GetGameWorld(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CTDGameWorld *result = 0 ;
+  
+  SWIG_check_num_args("guiex::GetGameWorld",0,0)
+  result = (guiex::CTDGameWorld *)guiex::GetGameWorld();
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_guiex__CTDGameWorld,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 #ifdef __cplusplus
 }
 #endif
 
 static const struct luaL_reg swig_commands[] = {
+    { "GetGameWorld", _wrap_GetGameWorld},
     {0,0}
 };
 
@@ -1552,14 +1632,20 @@ static swig_lua_const_info swig_constants[] = {
 
 /* -------- TYPE CONVERSION AND EQUIVALENCE RULES (BEGIN) -------- */
 
+static swig_type_info _swigt__p_guiex__CGUIWidget = {"_p_guiex__CGUIWidget", "guiex::CGUIWidget *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_guiex__CTDGameWorld = {"_p_guiex__CTDGameWorld", "guiex::CTDGameWorld *", 0, 0, (void*)&_wrap_class_guiex_CTDGameWorld, 0};
 
 static swig_type_info *swig_type_initial[] = {
-  NULL
+  &_swigt__p_guiex__CGUIWidget,
+  &_swigt__p_guiex__CTDGameWorld,
 };
 
+static swig_cast_info _swigc__p_guiex__CGUIWidget[] = {  {&_swigt__p_guiex__CGUIWidget, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CTDGameWorld[] = {  {&_swigt__p_guiex__CTDGameWorld, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
-  NULL
+  _swigc__p_guiex__CGUIWidget,
+  _swigc__p_guiex__CTDGameWorld,
 };
 
 

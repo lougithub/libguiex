@@ -14,7 +14,7 @@
         <property name="default_as" type="CGUIAs" value="as_tower_pannel" />
         <property name="auto_play_as" type="bool" value="true" />
     </property>
-    <property name="Button_SelectArchorTower" type="CGUIWidgetDefine" value="CGUIWgtButton">
+    <property name="Button_SelectArcherTower" type="CGUIWidgetDefine" value="CGUIWgtButton">
         <property name="parent" type="CGUIString" value="Panel_TowerSelect" />
         <property name="normal" type="CGUIImage" value="Icon_Tower_ArcherTower" />
         <property name="hover_overlay" type="CGUIImage" value="Icon_TowerMenuOverlay" />
@@ -26,9 +26,10 @@
             <property name="value" type="CGUISize" value="46,44" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
+        <property name="OnMouseLeftClick" type="CGUIEvent" value="Button_ArcherTower_OnClick" />
     </property>
-    <property name="Image_ArchorTowerPriceBG" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
-        <property name="parent" type="CGUIString" value="Button_SelectArchorTower" />
+    <property name="Image_ArcherTowerPriceBG" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
+        <property name="parent" type="CGUIString" value="Button_SelectArcherTower" />
         <property name="bg" type="CGUIImage" value="Icon_Tower_PricePanel" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="8,31" />
@@ -40,8 +41,8 @@
         </property>
         <property name="hitable" type="bool" value="false" />
     </property>
-    <property name="Label_ArchorTowerPrice" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
-        <property name="parent" type="CGUIString" value="Image_ArchorTowerPriceBG" />
+    <property name="Label_ArcherTowerPrice" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
+        <property name="parent" type="CGUIString" value="Image_ArcherTowerPriceBG" />
         <property name="position" type="CGUIWidgetPosition">
             <property name="value" type="CGUIVector2" value="0.5,0.5" />
             <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />

@@ -12,6 +12,16 @@
 #include "tdwgt_game_td.h"
 #include <algorithm>
 
+#ifdef __cplusplus
+extern "C" {
+#endif //#ifdef __cplusplus
+#include <lua.h>
+#include <lualib.h>
+#include <lauxlib.h>
+#ifdef __cplusplus
+}
+#endif //#ifdef __cplusplus
+
 using namespace guiex;
 //============================================================================//
 // function
@@ -27,6 +37,9 @@ const char* GUIEXGetDataDir()
 	//should relative to dir "data"
 	return "test";
 }
+
+extern "C" int luaopen_tdgame(lua_State* L);
+
 
 //*****************************************************************************
 //	CMyCanvasLayer_GameLayer
@@ -127,6 +140,13 @@ void CGUIFrameworkTDGame::RegisterWidgetGenerators( )
 			pGenerator ++;
 		}
 	}
+}
+//------------------------------------------------------------------------------
+void CGUIFrameworkTDGame::RegisterInterfaces_Script( )
+{
+	CGUIFramework::RegisterInterfaces_Script();
+
+	CGUIInterfaceManager::Instance()->GetInterfaceScript()->AddScriptModule(luaopen_tdgame);
 }
 //------------------------------------------------------------------------------
 void CGUIFrameworkTDGame::Update( real fDeltaTime )
