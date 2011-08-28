@@ -71,6 +71,15 @@ namespace guiex
 		return rWidgetName;
 	}
 	//------------------------------------------------------------------------------
+	CGUIString CGUIWidgetManager::MakeInternalName( const CGUIString& rWidgetName )
+	{
+		if( !IsInternalName( rWidgetName ))
+		{
+			return (rWidgetName + GUI_INTERNAL_WIDGET_FLAG);
+		}
+		return rWidgetName;
+	}	
+	//------------------------------------------------------------------------------
 	CGUIWidgetManager* CGUIWidgetManager::Instance()
 	{
 		GUI_ASSERT( m_pSingleton, "not initialized" );

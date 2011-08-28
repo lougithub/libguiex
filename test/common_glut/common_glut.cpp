@@ -210,7 +210,6 @@ void keyboardCB(unsigned char key, int x, int y)
 void keyboardUpCB(unsigned char key, int x, int y)
 {
 	// extract some keys may be handled via key code and generate those too
-	int k = key;
 	switch (key)
 	{
 	case 0x08:  // backspace

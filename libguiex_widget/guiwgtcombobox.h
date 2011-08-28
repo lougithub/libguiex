@@ -20,6 +20,7 @@
 namespace guiex
 {
 	class CGUIWgtListBoxItem;
+	class CGUIWgtComboBoxDropList; 
 }
 
 //============================================================================//

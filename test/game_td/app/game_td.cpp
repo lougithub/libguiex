@@ -10,7 +10,10 @@
 //============================================================================// 
 #include "game_td.h"
 #include "tdwgt_game_td.h"
+#include <libguiex_module/script_lua/guiscript_lua.h>
+
 #include <algorithm>
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -145,8 +148,7 @@ void CGUIFrameworkTDGame::RegisterWidgetGenerators( )
 void CGUIFrameworkTDGame::RegisterInterfaces_Script( )
 {
 	CGUIFramework::RegisterInterfaces_Script();
-
-	CGUIInterfaceManager::Instance()->GetInterfaceScript()->AddScriptModule(luaopen_tdgame);
+	CGUIInterfaceManager::Instance()->GetInterfaceScript()->AddScriptModule((void*)luaopen_tdgame);
 }
 //------------------------------------------------------------------------------
 void CGUIFrameworkTDGame::Update( real fDeltaTime )

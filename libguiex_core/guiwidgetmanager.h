@@ -78,7 +78,8 @@ namespace guiex
 
 		static bool IsInternalName( const CGUIString& rWidgetName );
 		static const CGUIString& MakeInternalName( CGUIString& rWidgetName );
-
+		static CGUIString MakeInternalName( const CGUIString& rWidgetName );
+		
 	protected:
 		bool TryRemovePage( CGUIWidget* pWidget );
 		bool TryRemoveDynamicPage( CGUIWidget* pWidget );

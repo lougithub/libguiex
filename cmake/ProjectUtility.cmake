@@ -73,6 +73,7 @@ macro( macro_set_target_link_libraries targetname )
 			general box2d
 			general ogg
 			general vorbis
+			${ARGN}
 			)
 	elseif( BUILD_PLATFORM_MACOS)
 		target_link_libraries(
@@ -92,6 +93,7 @@ macro( macro_set_target_link_libraries targetname )
 			general ogg
 			general vorbis
 			general glew
+			${ARGN}
 			)
 
 	else()
