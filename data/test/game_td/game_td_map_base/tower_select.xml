@@ -66,6 +66,7 @@
             <property name="value" type="CGUISize" value="46,44" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
+      <property name="OnMouseLeftClick" type="CGUIEvent" value="Button_Mages_OnClick" />
     </property>
     <property name="Image_MagesPriceBG" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
         <property name="parent" type="CGUIString" value="Button_SelectMages" />
@@ -105,6 +106,7 @@
             <property name="value" type="CGUISize" value="46,44" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
+      <property name="OnMouseLeftClick" type="CGUIEvent" value="Button_Barracks_OnClick" />
     </property>
     <property name="Image_BarracksPriceBG" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
         <property name="parent" type="CGUIString" value="Button_SelectBarracks" />
@@ -144,6 +146,7 @@
             <property name="value" type="CGUISize" value="46,44" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
+      <property name="OnMouseLeftClick" type="CGUIEvent" value="Button_DwarvenBoombard_OnClick" />
     </property>
     <property name="Image_DwarvenBoombardPriceBG" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
         <property name="parent" type="CGUIString" value="Button_SelectDwarvenBoombard" />

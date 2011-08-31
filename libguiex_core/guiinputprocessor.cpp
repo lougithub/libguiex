@@ -84,12 +84,12 @@ namespace guiex
 			}
 			if( m_pWidgetUnderMouse )
 			{
-				m_pWidgetUnderMouse->GetOnWidgetDestroyedSignal().disconnect( this );
+				m_pWidgetUnderMouse->GetOnDestroyedSignal().disconnect( this );
 			}
 			m_pWidgetUnderMouse = pWidget;
 			if( m_pWidgetUnderMouse )
 			{
-				m_pWidgetUnderMouse->GetOnWidgetDestroyedSignal().connect( this, &CMouseTracker::OnWidgetDestroyed );
+				m_pWidgetUnderMouse->GetOnDestroyedSignal().connect( this, &CMouseTracker::OnWidgetDestroyed );
 			}
 		}
 
@@ -149,12 +149,12 @@ namespace guiex
 			}
 			if( m_aButtonTrack[uButtonIdx].m_pTargetWidget )
 			{
-				m_aButtonTrack[uButtonIdx].m_pTargetWidget->GetOnWidgetDestroyedSignal().disconnect( this );
+				m_aButtonTrack[uButtonIdx].m_pTargetWidget->GetOnDestroyedSignal().disconnect( this );
 			}
 			m_aButtonTrack[uButtonIdx].m_pTargetWidget = pTargetWidget;
 			if( m_aButtonTrack[uButtonIdx].m_pTargetWidget )
 			{
-				m_aButtonTrack[uButtonIdx].m_pTargetWidget->GetOnWidgetDestroyedSignal().connect( this, &CMouseTracker::OnWidgetDestroyed );
+				m_aButtonTrack[uButtonIdx].m_pTargetWidget->GetOnDestroyedSignal().connect( this, &CMouseTracker::OnWidgetDestroyed );
 			}
 		}
 
@@ -206,12 +206,12 @@ namespace guiex
 			}
 			if( m_pDragItem )
 			{
-				m_pDragItem->GetOnWidgetDestroyedSignal().disconnect( this );
+				m_pDragItem->GetOnDestroyedSignal().disconnect( this );
 			}
 			m_pDragItem = pDragItem;
 			if( m_pDragItem )
 			{
-				m_pDragItem->GetOnWidgetDestroyedSignal().connect( this, &CDragTracker::OnWidgetDestroyed );
+				m_pDragItem->GetOnDestroyedSignal().connect( this, &CDragTracker::OnWidgetDestroyed );
 			}
 		}
 

@@ -41,8 +41,19 @@ namespace guiex
 		const CGUIRect& GetRenderRect() const;
 		const CGUIColor& GetRenderColor() const;
 
-		void SetTowerType( ETowerType eType );
 		ETowerType GetTowerType( ) const;
+
+		bool CouldBuild( ETowerType eType ) const;
+		void BuildTower(ETowerType eType);
+		bool CouldUpgrade( );
+		void UpgradeTower( );
+		void SellTower( );
+
+		void CloseTowerSelectPanel();
+		void CloseTowerUpgradePanel();
+
+	protected:
+		void SetTowerType( ETowerType eType );
 
 	protected:
 		class CTDWgtTower *m_pWidgetTower;

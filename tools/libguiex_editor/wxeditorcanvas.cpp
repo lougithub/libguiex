@@ -535,12 +535,12 @@ void WxEditorCanvas::SetHoveredWindow( CGUIWidget* pWidget )
 	}
 	if( m_hoveredWindow )
 	{
-		m_hoveredWindow->GetOnWidgetDestroyedSignal().disconnect( this );
+		m_hoveredWindow->GetOnDestroyedSignal().disconnect( this );
 	}
 	m_hoveredWindow = pWidget;
 	if( m_hoveredWindow )
 	{
-		m_hoveredWindow->GetOnWidgetDestroyedSignal().connect( this, &WxEditorCanvas::OnWidgetDestroyed );
+		m_hoveredWindow->GetOnDestroyedSignal().connect( this, &WxEditorCanvas::OnWidgetDestroyed );
 	}
 }
 //------------------------------------------------------------------------------

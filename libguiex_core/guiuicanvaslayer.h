@@ -42,6 +42,7 @@ namespace guiex
 		virtual void Refresh( );
 		virtual CGUIWidget* GetWidgetUnderPoint( const CGUIVector2& rPos );
 		virtual void DestroySelf( );
+		virtual bool IsInputConsumed() const;
 
 		void OpenDialog(CGUIWidget* pDlg);
 		void CloseDialog(CGUIWidget* pDlg);
@@ -52,15 +53,22 @@ namespace guiex
 		CGUIWidget*	GetOpenedPageByIndex( uint32 nIdx );
 		uint32 GetOpenedPageNum() const;
 
-		CGUIWidget*	GetCurrentRootWidget( );
+		void SetPopupWidget( CGUIWidget* pWidget );
+		CGUIWidget* GetPopupWidget( ) const;
 
 		const CGUICamera* GetCamera() const;
 		CGUICamera* GetCamera();
+
+	protected:
+		CGUIWidget*	GetCurrentRootWidget( );
+		void OnWidgetClosed(CGUIWidget* pWidget);
 
 	private:
 		typedef std::vector<CGUIWidget*>	TArrayWidget;	
 		TArrayWidget m_arrayOpenedPage;
 		TArrayWidget m_arrayOpenedDlg; //widget modal dialog
+
+		CGUIWidget* m_pPopupWidget; //popup widget
 
 		CGUICamera* m_pDefaultUICamera;
 	};

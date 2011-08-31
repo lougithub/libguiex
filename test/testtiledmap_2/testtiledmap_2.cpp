@@ -326,8 +326,8 @@ void CMyPlayer::UpdatePath()
 		CGUIVector2 aTargetPos;
 		CGUIUIntVector2 aTargetCoord = m_vMovePaths[0];
 		m_vMovePaths.erase( m_vMovePaths.begin());
-		aTargetPos.x = aTargetCoord.x * m_aTileSize.GetWidth() + m_aPixelOffset.x;
-		aTargetPos.y =aTargetCoord.y * m_aTileSize.GetHeight() + m_aPixelOffset.y;
+		aTargetPos.x = (real)aTargetCoord.x * m_aTileSize.GetWidth() + m_aPixelOffset.x;
+		aTargetPos.y =(real)aTargetCoord.y * m_aTileSize.GetHeight() + m_aPixelOffset.y;
 
 		m_pMoveAs->Reset();
 		m_pMoveAs->SetDestination( aTargetPos );

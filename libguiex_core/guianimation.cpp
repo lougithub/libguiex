@@ -36,8 +36,8 @@ namespace guiex
 		const CGUISize& rSize )
 		:CGUIResource( rName, rSceneName, "ANIMATION", GSystem->GetAnimationManager() )
 		,m_fInterval( fInterval )
-		,m_fDeltaTime(0.0f)
-		,m_nFrame(0)
+		,m_fElapsedTime(0.0f)
+		,m_nCurrentFrame(0)
 		,m_aAnimationSize(rSize)
 		,m_bLooping(bLooping)
 	{
@@ -65,6 +65,8 @@ namespace guiex
 			(*itor)->Load();
 		}
 
+		GUI_ASSERT( !m_vecImages.empty(),"CGUIAnimation::DoLoad: no animation data")
+
 		return 0;
 	}
 	//------------------------------------------------------------------------------
@@ -74,59 +76,96 @@ namespace guiex
 		{
 			(*itor)->Unload();
 		}
-		m_nFrame = 0;
+		m_nCurrentFrame = 0;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIAnimation::Reset()
 	{
-		m_nFrame = 0;
-		m_fDeltaTime = 0.0f;
+		m_nCurrentFrame = 0;
+		m_fElapsedTime = 0.0f;
 	}
 	//------------------------------------------------------------------------------
-	bool CGUIAnimation::IsPlaying() const
+	bool CGUIAnimation::IsFinished() const
 	{
-		if( !m_bLooping && !m_vecImages.empty() && m_nFrame == m_vecImages.size()-1 )
+		if( !m_bLooping && !m_vecImages.empty() && m_nCurrentFrame == m_vecImages.size()-1 )
 		{
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 	//------------------------------------------------------------------------------
-	void CGUIAnimation::Update( real fDeltaTime )
+	/** 
+	* @return the time which is not used to update this animatin. 
+	return 0.0f if it's looping animation.
+	**/
+	real CGUIAnimation::Update( real fDeltaTime )
 	{
 		Load();
 
+		if( fDeltaTime < 0.0f )
+		{
+			fDeltaTime = 0.0f;
+		}
+
 		if( m_bLooping )
 		{
-			if( fDeltaTime < 0.0f )
-			{
-				fDeltaTime = 0.0f;
-			}
-			m_fDeltaTime += fDeltaTime;
-			while( m_fDeltaTime >= m_fInterval )
-			{
-				m_fDeltaTime -= m_fInterval;
-				m_nFrame = (m_nFrame+1) % m_vecImages.size();
-			}
+			m_fElapsedTime += fDeltaTime;
+			m_nCurrentFrame = GUI_FLOAT2UINT_ROUND( floor( m_fElapsedTime / m_fInterval ));
+			uint32 uRatio = m_nCurrentFrame / m_vecImages.size();
+			m_nCurrentFrame %= m_vecImages.size();
+			m_fElapsedTime -= ( uRatio * GetLength() );
+
+			return 0.0f;
 		}
 		else
 		{
-			if( IsPlaying() )
+			if( IsFinished() )
 			{
-				if( fDeltaTime < 0.0f )
+				return fDeltaTime;
+			}
+			else
+			{
+				m_fElapsedTime += fDeltaTime;
+				m_nCurrentFrame = GUI_FLOAT2UINT_ROUND( floor( m_fElapsedTime / m_fInterval ));
+				real fLeftTime = 0.0f;
+				if( m_nCurrentFrame >= m_vecImages.size()-1 )
 				{
-					fDeltaTime = 0.0f;
+					m_nCurrentFrame = m_vecImages.size() - 1;
+					real fTotalTime = GetLength();
+					fLeftTime = m_fElapsedTime - fTotalTime;
+					m_fElapsedTime = fTotalTime;
 				}
-				m_fDeltaTime += fDeltaTime;
-				while( m_fDeltaTime >= m_fInterval )
-				{
-					m_fDeltaTime -= m_fInterval;
-					m_nFrame ++;
-				}
-				if( m_nFrame >= m_vecImages.size() )
-				{
-					m_nFrame = m_vecImages.size() - 1;
-				}
+				return fLeftTime;
+			}
+		}
+	}
+	//------------------------------------------------------------------------------
+	real CGUIAnimation::GetLength() const
+	{
+		return m_fInterval * m_vecImages.size();
+	}
+	//------------------------------------------------------------------------------
+	real CGUIAnimation::GetPercent() const
+	{
+		return m_fElapsedTime / GetLength();
+	}
+	//------------------------------------------------------------------------------
+	void CGUIAnimation::SetPercent( real fPercent )
+	{
+		m_fElapsedTime = fPercent * GetLength();
+		m_nCurrentFrame = GUI_FLOAT2UINT_ROUND( floor( m_fElapsedTime / m_fInterval ));
+		if( IsLooping() )
+		{
+			uint32 uRatio = m_nCurrentFrame / m_vecImages.size();
+			m_nCurrentFrame %= m_vecImages.size();
+			m_fElapsedTime -= ( uRatio * GetLength() );
+		}
+		else
+		{
+			if( m_nCurrentFrame >= m_vecImages.size()-1 )
+			{
+				m_nCurrentFrame = m_vecImages.size() - 1;
+				m_fElapsedTime = GetLength();
 			}
 		}
 	}
@@ -159,7 +198,7 @@ namespace guiex
 			return;
 		}
 		Load();
-		m_vecImages[m_nFrame]->Draw( pRender, rDestRect, z, fAlpha );
+		m_vecImages[m_nCurrentFrame]->Draw( pRender, rDestRect, z, fAlpha );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIAnimation::Draw( IGUIInterfaceRender* pRender,
@@ -173,7 +212,7 @@ namespace guiex
 			return;
 		}
 		Load();
-		m_vecImages[m_nFrame]->Draw( pRender, rDestRect, z, rColor, fAlpha );
+		m_vecImages[m_nCurrentFrame]->Draw( pRender, rDestRect, z, rColor, fAlpha );
 	}
 	//------------------------------------------------------------------------------
 	bool CGUIAnimation::IsLooping() const

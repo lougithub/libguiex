@@ -12,6 +12,7 @@
 #include "tdgameobjectmonster.h"
 #include "tdgameobjectmanager.h"
 #include "tdgameworld.h"
+#include "tdgamestate.h"
 #include <libguiex_core/guiex.h>
 
 //============================================================================//
@@ -19,16 +20,11 @@
 //============================================================================// 
 namespace guiex
 {
-	class CTDGameMonsterState
+	class CTDGameMonsterState : public CTDGameState
 	{
 	public:
 		CTDGameMonsterState( CTDGameObjectMonster* pMonster )
 			:m_pMonster( pMonster )	{}
-		virtual ~CTDGameMonsterState(){}
-
-		virtual void EnterState(){}
-		virtual void LeaveState(){}
-		virtual void UpdateState( real fDeltaTime){}
 
 	protected:
 		CTDGameObjectMonster* GetMonster() { return m_pMonster;}

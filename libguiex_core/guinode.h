@@ -17,6 +17,7 @@
 #include "guimatrix4.h"
 #include "guiquaternion.h"
 #include "guistring.h"
+#include "sigslot.h"
 
 
 //============================================================================//
@@ -39,7 +40,7 @@ namespace guiex
 	it and all of it's children. Child nodes can have transforms of their own, which
 	are combined with their parent's transformations.
 	*/
-	class GUIEXPORT CGUINode
+	class GUIEXPORT CGUINode : public sigslot::has_slots<>
 	{
 	public:
 		/** Enumeration denoting the spaces which a transform can be relative to.

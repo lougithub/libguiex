@@ -39,7 +39,7 @@ namespace guiex
 	public:
 		virtual ~CGUIAnimation( );
 
-		void Update( real fDeltaTime );
+		real Update( real fDeltaTime );
 
 		void Draw( IGUIInterfaceRender* pRender,
 			const CGUIRect& rDestRect,
@@ -55,7 +55,12 @@ namespace guiex
 		const CGUISize& GetSize( );
 
 		bool IsLooping() const;
-		bool IsPlaying() const;
+		bool IsFinished() const;
+
+		real GetLength() const;
+
+		real GetPercent() const;
+		void SetPercent( real fPercent );
 
 		void Reset();
 
@@ -83,8 +88,8 @@ namespace guiex
 		TImageArray	m_vecImages; //images
 
 		real m_fInterval;
-		real m_fDeltaTime; //!< used by animation
-		uint32 m_nFrame; //!< current frame
+		real m_fElapsedTime;
+		uint32 m_nCurrentFrame;
 
 		CGUISize m_aAnimationSize;
 

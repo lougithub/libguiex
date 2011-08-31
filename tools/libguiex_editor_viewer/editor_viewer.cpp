@@ -815,7 +815,7 @@ void WxMainFrame::OnToggleWireframe(wxCommandEvent& evt)
 //------------------------------------------------------------------------------
 void WxMainFrame::OnRefresh(wxCommandEvent& evt)
 {
-	guiex::GSystem->GetUICanvas()->GetCurrentRootWidget()->Refresh();
+	guiex::GSystem->GetUICanvas()->Refresh();
 	Refresh();
 }
 //------------------------------------------------------------------------------

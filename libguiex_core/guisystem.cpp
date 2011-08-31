@@ -652,7 +652,7 @@ namespace guiex
 
 		if( m_pWgtFocus )
 		{
-			m_pWgtFocus->GetOnWidgetDestroyedSignal().disconnect( this );
+			m_pWgtFocus->GetOnDestroyedSignal().disconnect( this );
 
 			//lost focus event
 			CGUIEventNotification aEvent;
@@ -662,7 +662,7 @@ namespace guiex
 
 			//get old pages
 			CGUIWidget* pPageRoot = m_pWgtFocus->GetPage();
-			while( pPageRoot )
+			while( pPageRoot && pPageRoot->IsOpen() )
 			{
 				m_listOldPages.push_back( pPageRoot );
 				if( pPageRoot->GetParent() )
@@ -679,7 +679,7 @@ namespace guiex
 		m_pWgtFocus = pWidget;
 		if( m_pWgtFocus )
 		{
-			m_pWgtFocus->GetOnWidgetDestroyedSignal().connect( this, &CGUISystem::OnWidgetDestroyed );
+			m_pWgtFocus->GetOnDestroyedSignal().connect( this, &CGUISystem::OnWidgetDestroyed );
 
 			//get focus
 			CGUIEventNotification aEvent;
@@ -689,7 +689,7 @@ namespace guiex
 
 			//get old pages
 			CGUIWidget* pPageRoot = m_pWgtFocus->GetPage();
-			while( pPageRoot )
+			while( pPageRoot && pPageRoot->IsOpen() )
 			{
 				m_listNewPages.insert( pPageRoot );
 				if( pPageRoot->GetParent() )

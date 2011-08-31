@@ -89,4 +89,9 @@ namespace guiex
 		return GetWidgetAtPoint(rPos);
 	}
 	//------------------------------------------------------------------------------
+	bool CGUICanvasLayer::IsInputConsumed() const
+	{
+		return false;
+	}
+	//------------------------------------------------------------------------------
 }

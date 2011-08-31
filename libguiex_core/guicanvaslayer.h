@@ -40,6 +40,7 @@ namespace guiex
 		virtual void Render( class IGUIInterfaceRender* pRender );
 		virtual void RenderExtraInfo( IGUIInterfaceRender* pRender );
 		virtual void Refresh( );
+		virtual bool IsInputConsumed() const;
 
 		virtual CGUIWidget* GetWidgetUnderPoint( const CGUIVector2& rPos );
 

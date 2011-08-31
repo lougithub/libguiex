@@ -191,6 +191,7 @@ namespace guiex
 		}
 
 		m_bIsOpen = true;
+		OnOpen();
 
 		if( IsGenerateOpenCloseEvent() )
 		{
@@ -210,8 +211,6 @@ namespace guiex
 			}
 			pWidget = pWidget->GetNextSibling();
 		}
-
-		OnOpen();
 
 		//check auto play as
 		if(  IsAutoPlayAs() && !GSystem->IsEditorMode() )
@@ -291,9 +290,14 @@ namespace guiex
 		return m_pUserData;
 	}
 	//------------------------------------------------------------------------------
-	sigslot::signal1<CGUIWidget*>& CGUIWidget::GetOnWidgetDestroyedSignal()
+	sigslot::signal1<CGUIWidget*>& CGUIWidget::GetOnDestroyedSignal()
 	{
-		return OnWidgetDestroyed;
+		return m_signalWidgetDestroyed;
+	}
+	//------------------------------------------------------------------------------
+	sigslot::signal1<CGUIWidget*>& CGUIWidget::GetOnClosedSignal()
+	{
+		return m_signalWidgetClosed;
 	}
 	//------------------------------------------------------------------------------
 	CGUIStringRender* CGUIWidget::GetTooltipText(void) const
@@ -1350,6 +1354,11 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWidget::OnClose()
 	{
+		if( IsFocus() )
+		{
+			GSystem->SetFocusWidget( NULL );
+		}
+		m_signalWidgetClosed( this );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::OnUpdate( real fDeltaTime )
@@ -1358,7 +1367,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWidget::OnDestroy()
 	{
-		OnWidgetDestroyed( this );
+		m_signalWidgetDestroyed( this );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::SetImage( const CGUIString& rName, CGUIImage* pImage )

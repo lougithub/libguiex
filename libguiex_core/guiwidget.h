@@ -130,7 +130,8 @@ namespace guiex
 		////////////////////////////////////////////////////////////////////////////
 		// signal
 		////////////////////////////////////////////////////////////////////////////
-		sigslot::signal1<CGUIWidget*>& GetOnWidgetDestroyedSignal();
+		sigslot::signal1<CGUIWidget*>& GetOnDestroyedSignal();
+		sigslot::signal1<CGUIWidget*>& GetOnClosedSignal();
 
 		////////////////////////////////////////////////////////////////////////////
 		// text about function
@@ -649,7 +650,8 @@ namespace guiex
 		///////////////////////////////////////////////////////////////////////
 		/// sigslot
 		///////////////////////////////////////////////////////////////////////
-		sigslot::signal1<CGUIWidget*> OnWidgetDestroyed; ///< - signal to emit when widget is destroyed
+		sigslot::signal1<CGUIWidget*> m_signalWidgetDestroyed; ///< - signal to emit when widget is destroyed
+		sigslot::signal1<CGUIWidget*> m_signalWidgetClosed; ///< - signal to emit when widget is closed
 
 		CGUIWidget* m_pParent; //!< parent
 		CGUIWidget* m_pChild; //!< child

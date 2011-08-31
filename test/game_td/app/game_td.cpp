@@ -78,7 +78,7 @@ void CMyCanvasLayer_GameLayer::Initialize( )
 
 	//init game world
 	m_pGameWorld = new CTDGameWorld( );
-	m_pGameWorld->InitGameWorld( pMapWidget, pTowerSelectWidget, pTowerUpgradeWidget );
+	m_pGameWorld->InitGameWorld( "round001", pMapWidget, pTowerSelectWidget, pTowerUpgradeWidget );
 }
 //------------------------------------------------------------------------------
 void CMyCanvasLayer_GameLayer::Finalize( )

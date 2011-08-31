@@ -9,6 +9,9 @@
 	<property name="resource_monster001.res" type="ResourceFile" />
 	<property name="resource_monster002.res" type="ResourceFile" />
 	<property name="resource_tower_archertower.res" type="ResourceFile" />
+	<property name="resource_tower_mages.res" type="ResourceFile" />
+	<property name="resource_tower_barrack.res" type="ResourceFile" />
+	<property name="resource_tower_bombard.res" type="ResourceFile" />
 
 	<property name="tower_select.xml" type="WidgetFile" />
 	<property name="tower_upgrade.xml" type="WidgetFile" />

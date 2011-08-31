@@ -45,6 +45,7 @@ namespace guiex
 		:m_pCurrentFocusTower(NULL)
 		,m_pTowerSelectPanel(NULL)
 		,m_pTowerUpgradePanel(NULL)
+		,m_uGold(0)
 	{
 		m_aObjectManager.SetGameWorld( this );
 		GGameWorld = this;
@@ -55,7 +56,7 @@ namespace guiex
 		GGameWorld = NULL;
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameWorld::InitGameWorld( CGUIWidget* pGameRoot, CGUIWidget* pTowerSelectPanel, CGUIWidget* pTowerUpgradePanel )
+	void CTDGameWorld::InitGameWorld( const CGUIString& rRound, CGUIWidget* pGameRoot, CGUIWidget* pTowerSelectPanel, CGUIWidget* pTowerUpgradePanel )
 	{
 		CTDGameWorldBase::InitGameWorld( pGameRoot );
 
@@ -94,6 +95,9 @@ namespace guiex
 			static_cast<CTDWgtTower*>(pTower)->SetGameWorld( this );
 			pTower = pTower->GetNextSibling();
 		}
+
+		//init round data
+		InitRound( rRound );
 
 		//init object pool
 		m_aObjectManager.InitObjects<CTDGameObjectMonster>( 100 );
@@ -146,6 +150,16 @@ namespace guiex
 	{
 		UpdateAllObjects( fDeltaTime );
 		RemoveDeadObject();
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameWorld::InitRound( const CGUIString& rRound )
+	{
+		//get data property
+		const CGUIProperty* pAllRoundProperty = GetGameWorld()->GetDataProperty("round.xml");
+		const CGUIProperty& rRoundProp = *pAllRoundProperty->GetProperty(rRound);
+
+		m_uGold = rRoundProp["Gold"]->GetSpecifiedValue<uint32>();
+		m_uHP = rRoundProp["HP"]->GetSpecifiedValue<uint32>();
 	}
 	//------------------------------------------------------------------------------
 	void CTDGameWorld::UpdateAllObjects( real fDeltaTime )
@@ -272,6 +286,26 @@ namespace guiex
 	CGUIWidget* CTDGameWorld::GetTowerUpgradePanel() const
 	{
 		return m_pTowerUpgradePanel;
+	}
+	//------------------------------------------------------------------------------
+	uint32 CTDGameWorld::GetGold() const
+	{
+		return m_uGold;
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameWorld::CostGold( uint32 uGold )
+	{
+		if( m_uGold < uGold )
+		{
+			GUI_THROW( GUI_FORMAT( "[CTDGameWorld::CostGold]: cost gold %d, but we only have %d.", uGold, m_uGold ));
+			return;
+		}
+		m_uGold -= uGold;
+	}
+	//------------------------------------------------------------------------------
+	uint32 CTDGameWorld::GetHP() const
+	{
+		return m_uHP;
 	}
 	//------------------------------------------------------------------------------
 

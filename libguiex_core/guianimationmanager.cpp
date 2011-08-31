@@ -149,6 +149,12 @@ namespace guiex
 				}
 			}
 		}
+		if( vecImageName.empty() )
+		{
+			GUI_THROW( GUI_FORMAT( 
+				"[CGUIAnimationManager::AllocateResource]: failed to parse animation data <%s>",
+				rRootProperty.GetName().c_str()));
+		}
 
 		CGUIAnimation* pAnimation = new CGUIAnimation( rRootProperty.GetName(), pAnimationData->GetSceneName(), vecImageName, fInterval, bLoop, aAnimationSize );
 		pAnimation->RefRetain();

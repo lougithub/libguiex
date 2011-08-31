@@ -146,7 +146,7 @@ void CMyMole::ShrinkMole()
 //------------------------------------------------------------------------------
 void CMyMole::UpdateMole_Popped(real fDeltaTime)
 {
-	if( GetCurrentAnimation()->IsPlaying() == false )
+	if( GetCurrentAnimation()->IsFinished())
 	{
 		m_fPoppedTime -= fDeltaTime;
 		if( m_fPoppedTime <= 0.0f )

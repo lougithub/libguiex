@@ -23,7 +23,7 @@ namespace guiex
 		eTowerType_Base = 0,
 		eTowerType_ArcherTower,
 		eTowerType_Mages,
-		eTowerType_DwarvenBoombard,
+		eTowerType_Bombard,
 		eTowerType_Barracks,
 
 		__eTowerType_MAX__,

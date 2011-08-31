@@ -26,6 +26,7 @@
             <property name="value" type="CGUISize" value="46,44" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
+      <property name="OnMouseLeftClick" type="CGUIEvent" value="Button_TowerUpgrade_OnClick" />
     </property>
     <property name="Image_TowerUpgradePriceBG" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
         <property name="parent" type="CGUIString" value="Button_TowerUpgrade" />
@@ -65,5 +66,6 @@
             <property name="value" type="CGUISize" value="32,32" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
+      <property name="OnMouseLeftClick" type="CGUIEvent" value="Button_TowerSell_OnClick" />
     </property>
 </guiex>

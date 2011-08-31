@@ -107,6 +107,10 @@ namespace guiex
 			{
 				return pWidget;
 			}
+			if( (*itor)->IsInputConsumed() )
+			{
+				return NULL;
+			}
 		}
 		return NULL;
 	}

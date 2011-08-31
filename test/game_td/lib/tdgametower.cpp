@@ -10,224 +10,10 @@
 // include 
 //============================================================================// 
 #include "tdgametower.h"
+#include "tdgametowerimplement.h"
 #include "tdgameworld.h"
 #include "tdwgttower.h"
 
-//============================================================================//
-// class
-//============================================================================// 
-namespace guiex
-{
-	//------------------------------------------------------------------------------
-	// CTDGameTowerImplement
-	//------------------------------------------------------------------------------
-	class CTDGameTowerImplement
-	{
-	public:
-		CTDGameTowerImplement( CTDGameTower* pGameTower, const CGUIString& rTowerType );
-		virtual ~CTDGameTowerImplement();
-
-		virtual void OnUpdate( real fDeltaTime );
-		virtual void OnRender( IGUIInterfaceRender* pRender );
-		virtual void OnBuild(){}
-		virtual void OnDestruct(){}
-
-		CTDGameTower* GetGameTower() const { return m_pGameTower; }
-		CTDGameWorld* GetGameWorld() const { return m_pGameTower->GetGameWorld(); }
-
-		const CGUIRect& GetRenderRect() const {return m_pGameTower->GetRenderRect();}
-		const CGUIColor& GetRenderColor() const {return m_pGameTower->GetRenderColor();}
-
-	protected:
-		CGUIAnimation* GetAnimation( const CGUIString& rAnimName );
-		void SetCurrentAnimation( CGUIAnimation* pAnim ){m_pCurrentAnim = pAnim;}
-
-	protected:
-		CGUIAnimation* m_pCurrentAnim;
-
-	private:
-		CTDGameTower* m_pGameTower;
-		CGUIString m_strTowerType;
-		std::map<CGUIString, CGUIAnimation*> m_mapAnimations;
-	};
-	//------------------------------------------------------------------------------
-	CTDGameTowerImplement::CTDGameTowerImplement( CTDGameTower* pGameTower, const CGUIString& rTowerType )
-		:m_pGameTower( pGameTower )
-		,m_strTowerType( rTowerType )
-		,m_pCurrentAnim( NULL )
-	{
-		const CGUIProperty* pAllTowerProperty = GetGameWorld()->GetDataProperty("tower.xml");
-		const CGUIProperty* pMonsterProp = pAllTowerProperty->GetProperty(m_strTowerType);
-
-		for( uint32 i=0; i<pMonsterProp->GetPropertyNum(); ++i )
-		{
-			const CGUIProperty* pProp = pMonsterProp->GetProperty( i );
-			if( pProp->GetType() == ePropertyType_Animation )
-			{
-				GUI_ASSERT( m_mapAnimations.find(pProp->GetName()) == m_mapAnimations.end(), "[CTDGameTowerImplement::]: duplicate animation name");
-				m_mapAnimations[pProp->GetName()] = CGUIAnimationManager::Instance()->AllocateResource( pProp->GetValue() );
-			}
-		}
-	}
-	//------------------------------------------------------------------------------
-	CTDGameTowerImplement::~CTDGameTowerImplement()
-	{
-		for( std::map<CGUIString, CGUIAnimation*>::iterator itor = m_mapAnimations.begin();
-			itor != m_mapAnimations.end();
-			++itor )
-		{
-			itor->second->RefRelease();
-		}
-		m_mapAnimations.clear();
-	}
-	//------------------------------------------------------------------------------
-	CGUIAnimation* CTDGameTowerImplement::GetAnimation( const CGUIString& rAnimName )
-	{
-		std::map<CGUIString, CGUIAnimation*>::iterator itor = m_mapAnimations.find( rAnimName );
-		if( itor == m_mapAnimations.end() )
-		{
-			GUI_THROW( GUI_FORMAT("[CTDGameTowerImplement::GetAnimation]: can't find animation by name: %s", rAnimName.c_str()) );
-			return NULL;
-		}
-		return itor->second;
-	}
-	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement::OnUpdate( real fDeltaTime )
-	{
-		if( m_pCurrentAnim )
-		{
-			m_pCurrentAnim->Update( fDeltaTime );
-		}
-	}
-	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement::OnRender( IGUIInterfaceRender* pRender )
-	{
-		if( m_pCurrentAnim )
-		{
-			m_pCurrentAnim->Draw( pRender, GetRenderRect(), 0, GetRenderColor(), 1 );
-		}
-	}
-	//------------------------------------------------------------------------------
-
-
-	//------------------------------------------------------------------------------
-	// CTDGameTowerImplement_Base
-	//------------------------------------------------------------------------------
-	class CTDGameTowerImplement_Base : public CTDGameTowerImplement
-	{
-	public:
-		CTDGameTowerImplement_Base( CTDGameTower* pGameTower );
-		virtual ~CTDGameTowerImplement_Base(){}
-
-		virtual void OnUpdate( real fDeltaTime ){ CTDGameTowerImplement::OnUpdate( fDeltaTime );}
-		virtual void OnRender( IGUIInterfaceRender* pRender );
-
-		virtual void OnBuild();
-
-	protected:
-		CGUIAnimation* m_pAnimTowerBase;
-	};
-	//------------------------------------------------------------------------------
-	CTDGameTowerImplement_Base::CTDGameTowerImplement_Base( CTDGameTower* pGameTower )
-		:CTDGameTowerImplement( pGameTower, "tower_base")
-	{
-		m_pAnimTowerBase = GetAnimation( "AnimIdle" );
-		GetGameTower()->SetSize( m_pAnimTowerBase->GetSize());
-	}
-	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_Base::OnBuild()
-	{
-		SetCurrentAnimation( m_pAnimTowerBase );
-	}
-	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_Base::OnRender( IGUIInterfaceRender* pRender )
-	{
-		CTDGameTowerImplement::OnRender( pRender );
-	}
-	//------------------------------------------------------------------------------
-
-
-	//------------------------------------------------------------------------------
-	// CTDGameTowerImplement_ArcherTower
-	//------------------------------------------------------------------------------
-	class CTDGameTowerImplement_ArcherTower : public CTDGameTowerImplement
-	{
-	public:
-		CTDGameTowerImplement_ArcherTower( CTDGameTower* pGameTower );
-		virtual ~CTDGameTowerImplement_ArcherTower(){}
-
-		virtual void OnUpdate( real fDeltaTime ){ CTDGameTowerImplement::OnUpdate( fDeltaTime );}
-		virtual void OnRender( IGUIInterfaceRender* pRender ){ CTDGameTowerImplement::OnRender( pRender );}
-	};
-	//------------------------------------------------------------------------------
-	CTDGameTowerImplement_ArcherTower::CTDGameTowerImplement_ArcherTower( CTDGameTower* pGameTower )
-		:CTDGameTowerImplement( pGameTower, "tower_archertower")
-	{
-
-	}
-	//------------------------------------------------------------------------------
-
-
-	//------------------------------------------------------------------------------
-	// CTDGameTowerImplement_Mages
-	//------------------------------------------------------------------------------
-	class CTDGameTowerImplement_Mages : public CTDGameTowerImplement
-	{
-	public:
-		CTDGameTowerImplement_Mages( CTDGameTower* pGameTower );
-		virtual ~CTDGameTowerImplement_Mages(){}
-
-		virtual void OnUpdate( real fDeltaTime ){ CTDGameTowerImplement::OnUpdate( fDeltaTime );}
-		virtual void OnRender( IGUIInterfaceRender* pRender ){ CTDGameTowerImplement::OnRender( pRender );}
-	};
-	//------------------------------------------------------------------------------
-	CTDGameTowerImplement_Mages::CTDGameTowerImplement_Mages( CTDGameTower* pGameTower )
-		:CTDGameTowerImplement( pGameTower, "tower_mages")
-	{
-
-	}
-	//------------------------------------------------------------------------------
-
-	//------------------------------------------------------------------------------
-	// CTDGameTowerImplement_Barracks
-	//------------------------------------------------------------------------------
-	class CTDGameTowerImplement_Barracks : public CTDGameTowerImplement
-	{
-	public:
-		CTDGameTowerImplement_Barracks( CTDGameTower* pGameTower );
-		virtual ~CTDGameTowerImplement_Barracks(){}
-
-		virtual void OnUpdate( real fDeltaTime ){ CTDGameTowerImplement::OnUpdate( fDeltaTime );}
-		virtual void OnRender( IGUIInterfaceRender* pRender ){ CTDGameTowerImplement::OnRender( pRender );}
-	};
-	//------------------------------------------------------------------------------
-	CTDGameTowerImplement_Barracks::CTDGameTowerImplement_Barracks( CTDGameTower* pGameTower )
-		:CTDGameTowerImplement( pGameTower, "tower_barracks")
-	{
-
-	}
-	//------------------------------------------------------------------------------
-
-	//------------------------------------------------------------------------------
-	// CTDGameTowerImplement_DwarvenBoombard
-	//------------------------------------------------------------------------------
-	class CTDGameTowerImplement_DwarvenBoombard : public CTDGameTowerImplement
-	{
-	public:
-		CTDGameTowerImplement_DwarvenBoombard( CTDGameTower* pGameTower );
-		virtual ~CTDGameTowerImplement_DwarvenBoombard(){}
-
-		virtual void OnUpdate( real fDeltaTime ){ CTDGameTowerImplement::OnUpdate( fDeltaTime );}
-		virtual void OnRender( IGUIInterfaceRender* pRender ){ CTDGameTowerImplement::OnRender( pRender );}
-	};
-	//------------------------------------------------------------------------------
-	CTDGameTowerImplement_DwarvenBoombard::CTDGameTowerImplement_DwarvenBoombard( CTDGameTower* pGameTower )
-		:CTDGameTowerImplement( pGameTower, "tower_dwarvenboombard")
-	{
-
-	}
-	//------------------------------------------------------------------------------
-}
 
 //============================================================================//
 // function
@@ -237,7 +23,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	static void Panel_OnPageLostFocus( CGUIEventNotification* pEvent )
 	{
-		pEvent->GetReceiver()->Close();
+		GSystem->GetUICanvas()->CloseUIPage(pEvent->GetReceiver());
 	}
 	//------------------------------------------------------------------------------
 
@@ -254,7 +40,7 @@ namespace guiex
 		m_pTowerImplement[eTowerType_Base] = new CTDGameTowerImplement_Base( this );
 		m_pTowerImplement[eTowerType_ArcherTower] = new CTDGameTowerImplement_ArcherTower( this );
 		m_pTowerImplement[eTowerType_Mages] = new CTDGameTowerImplement_Mages( this );
-		m_pTowerImplement[eTowerType_DwarvenBoombard] = new CTDGameTowerImplement_DwarvenBoombard( this );
+		m_pTowerImplement[eTowerType_Bombard] = new CTDGameTowerImplement_Bombard( this );
 		m_pTowerImplement[eTowerType_Barracks] = new CTDGameTowerImplement_Barracks( this );
 
 		SetTowerType( eTowerType_Base );
@@ -310,6 +96,74 @@ namespace guiex
 		return m_eTowerType;
 	}
 	//------------------------------------------------------------------------------
+	bool CTDGameTower::CouldBuild( ETowerType eType ) const
+	{
+		if( GetTowerType() != eTowerType_Base )
+		{
+			return false;
+		}
+		if( m_pTowerImplement[eType]->GetTotalLevel() == 0 )
+		{
+			return false;
+		}
+		if( GetGameWorld()->GetGold() < m_pTowerImplement[eType]->GetLevelInfo(0)->m_uPrice )
+		{
+			return false;
+		}
+		return true;
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameTower::BuildTower(ETowerType eType)
+	{
+		GUI_ASSERT( CouldBuild( eType ), "[CTDGameTower::BuildTower]: couldn't build tower");
+		GetGameWorld()->CostGold( m_pTowerImplement[eType]->GetLevelInfo(0)->m_uPrice );
+		SetTowerType( eType );
+	}
+	//------------------------------------------------------------------------------
+	bool CTDGameTower::CouldUpgrade( )
+	{
+		if( GetTowerType() == eTowerType_Base )
+		{
+			return false;
+		}
+		CTDGameTowerImplement* pTowerImp = m_pTowerImplement[GetTowerType()];
+		if( pTowerImp->GetTotalLevel() == 0 )
+		{
+			return false;
+		}
+		if( pTowerImp->GetCurrentLevel() >= pTowerImp->GetTotalLevel()-1 )
+		{
+			return false;
+		}
+		if( GetGameWorld()->GetGold() < pTowerImp->GetUpgradeCost() )
+		{
+			return false;
+		}
+		return true;
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameTower::UpgradeTower( )
+	{
+		GUI_ASSERT( CouldUpgrade( ), "[CTDGameTower::UpgradeTower]: couldn't upgrade tower");
+		GetGameWorld()->CostGold( m_pTowerImplement[GetTowerType()]->GetUpgradeCost() );
+		m_pTowerImplement[GetTowerType()]->Upgrade( );
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameTower::SellTower( )
+	{
+
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameTower::CloseTowerSelectPanel()
+	{
+		GSystem->GetUICanvas()->CloseUIPage(GetGameWorld()->GetTowerSelectPanel());
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameTower::CloseTowerUpgradePanel()
+	{
+		GSystem->GetUICanvas()->CloseUIPage(GetGameWorld()->GetTowerUpgradePanel());
+	}
+	//------------------------------------------------------------------------------
 	void CTDGameTower::OnMouseEnter()
 	{
 		m_aRenderColor.SetColor(0.5f,0.5f,0.5f,0.5f);
@@ -337,6 +191,7 @@ namespace guiex
 
 		pPanel->RegisterNativeCallbackFunc( "OnPageLostFocus", Panel_OnPageLostFocus);
 		pPanel->SetGlobalPixelPosition( m_pWidgetTower->GetGlobalPixelPosition() );
+		GSystem->GetUICanvas()->SetPopupWidget( pPanel );
 		GSystem->GetUICanvas()->OpenUIPage( pPanel );
 	}
 	//------------------------------------------------------------------------------

@@ -13,6 +13,8 @@ set( ${lib_name}_widget_SRCS
 source_group( "widget" FILES ${${lib_name}_widget_SRCS} )
 
 set( ${lib_name}_game_SRCS 
+        lib/tdgametype.h
+        lib/tdgamestate.h
         lib/tdgameworldbase.cpp
         lib/tdgameworldbase.h
         lib/tdgameworld.cpp
@@ -27,9 +29,10 @@ set( ${lib_name}_game_SRCS
         lib/tdgameobjectbullet.cpp
         lib/tdgametower.h
         lib/tdgametower.cpp
+		lib/tdgametowerimplement.h
+        lib/tdgametowerimplement.cpp
         lib/tdgameconfigdatamanager.cpp
         lib/tdgameconfigdatamanager.h
-        lib/tdgametype.h
 	)
 source_group( "game" FILES ${${lib_name}_game_SRCS} )
 

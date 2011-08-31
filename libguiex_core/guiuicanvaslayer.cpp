@@ -28,6 +28,7 @@ namespace guiex
 	CGUIUICanvasLayer::CGUIUICanvasLayer( const char* szLayerName )
 		:CGUICanvasLayer( szLayerName, true )
 		,m_pDefaultUICamera(NULL)
+		,m_pPopupWidget(NULL)
 	{
 		SetSizeType(eScreenValue_Percentage);
 		SetSize( 1.0f, 1.0f );
@@ -263,10 +264,23 @@ namespace guiex
 		return m_arrayOpenedPage[nIdx];
 	}
 	//------------------------------------------------------------------------------
+	bool CGUIUICanvasLayer::IsInputConsumed() const
+	{
+		if( m_pPopupWidget || GetTopestDialog() )
+		{
+			return true;
+		}
+		return false;
+	}
+	//------------------------------------------------------------------------------
 	CGUIWidget*	CGUIUICanvasLayer::GetCurrentRootWidget( )
 	{
 		CGUIWidget* pDlgRoot = NULL;
-		if( pDlgRoot = GetTopestDialog())
+		if( m_pPopupWidget )
+		{
+			return m_pPopupWidget;
+		}
+		else if( pDlgRoot = GetTopestDialog())
 		{
 			return pDlgRoot;
 		}
@@ -276,4 +290,35 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+	void CGUIUICanvasLayer::SetPopupWidget( CGUIWidget* pWidget )
+	{
+		if( m_pPopupWidget == pWidget )
+		{
+			return;
+		}
+		if( m_pPopupWidget )
+		{
+			m_pPopupWidget->GetOnClosedSignal().disconnect( this );
+		}
+		m_pPopupWidget = pWidget;
+		if( m_pPopupWidget )
+		{
+			m_pPopupWidget->GetOnClosedSignal().connect( this, &CGUIUICanvasLayer::OnWidgetClosed );
+		}
+	}
+	//------------------------------------------------------------------------------
+	CGUIWidget* CGUIUICanvasLayer::GetPopupWidget( ) const
+	{
+		return m_pPopupWidget;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIUICanvasLayer::OnWidgetClosed(CGUIWidget* pWidget)
+	{
+		if( pWidget == m_pPopupWidget )
+		{
+			m_pPopupWidget = NULL;
+		}
+	}
+	//------------------------------------------------------------------------------
+
 }

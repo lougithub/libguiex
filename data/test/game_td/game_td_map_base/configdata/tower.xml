@@ -5,25 +5,139 @@
 	</property>
 
 	<property name="tower_archertower" type="group" >
-		<property name="AnimArcherTower_Building" type="CGUIAnimation" value="ArcherTower_Building" />
-		<property name="AnimArcherTowerLevel1_Idle" type="CGUIAnimation" value="ArcherTowerLevel1_Idle" />
-		<property name="AnimArcherLevel1_Idle_DownRight" type="CGUIAnimation" value="ArcherLevel1_Idle_DownRight" />
-		<property name="AnimArcherLevel1_Idle_UpRight" type="CGUIAnimation" value="ArcherLevel1_Idle_UpRight" />
-		<property name="AnimArcherLevel1_Idle_DownLeft" type="CGUIAnimation" value="ArcherLevel1_Idle_DownLeft" />
-		<property name="AnimArcherLevel1_Idle_UpLeft" type="CGUIAnimation" value="ArcherLevel1_Idle_UpLeft" />
-		<property name="AnimArcherLevel1_Attack_DownRight" type="CGUIAnimation" value="ArcherLevel1_Attack_DownRight" />
-		<property name="AnimArcherLevel1_Attack_UpRight" type="CGUIAnimation" value="ArcherLevel1_Attack_UpRight" />
-		<property name="AnimArcherLevel1_Attack_DownLeft" type="CGUIAnimation" value="ArcherLevel1_Attack_DownLeft" />
-		<property name="AnimArcherLevel1_Attack_UpLeft" type="CGUIAnimation" value="ArcherLevel1_Attack_UpLeft" />
+		<property name="AnimTower_Building" type="CGUIAnimation" value="ArcherTower_Building" />
+		<property name="building_time" type="real" value="2" />
+
+		<property name="level001" type="group" >
+			<property name="price" type="uint32" value="100" />
+			<property name="sell_price" type="uint32" value="50" />
+			<property name="AnimTower_Idle" type="CGUIAnimation" value="ArcherTowerLevel1_Idle" />
+			<property name="AnimArcher_Idle_DownRight" type="CGUIAnimation" value="ArcherLevel1_Idle_DownRight" />
+			<property name="AnimArcher_Idle_UpRight" type="CGUIAnimation" value="ArcherLevel1_Idle_UpRight" />
+			<property name="AnimArcher_Idle_DownLeft" type="CGUIAnimation" value="ArcherLevel1_Idle_DownLeft" />
+			<property name="AnimArcher_Idle_UpLeft" type="CGUIAnimation" value="ArcherLevel1_Idle_UpLeft" />
+			<property name="AnimArcher_Attack_DownRight" type="CGUIAnimation" value="ArcherLevel1_Attack_DownRight" />
+			<property name="AnimArcher_Attack_UpRight" type="CGUIAnimation" value="ArcherLevel1_Attack_UpRight" />
+			<property name="AnimArcher_Attack_DownLeft" type="CGUIAnimation" value="ArcherLevel1_Attack_DownLeft" />
+			<property name="AnimArcher_Attack_UpLeft" type="CGUIAnimation" value="ArcherLevel1_Attack_UpLeft" />
+			<property name="archer_pos_0" type="CGUIVector2" value="-10, -20" />
+			<property name="archer_pos_1" type="CGUIVector2" value="10,-20" />
+		</property>
+
+		<property name="level002" type="group" >
+			<property name="price" type="uint32" value="70" />
+			<property name="sell_price" type="uint32" value="85" />
+			<property name="AnimTower_Idle" type="CGUIAnimation" value="ArcherTowerLevel2_Idle" />
+			<property name="AnimArcher_Idle_DownRight" type="CGUIAnimation" value="ArcherLevel2_Idle_DownRight" />
+			<property name="AnimArcher_Idle_UpRight" type="CGUIAnimation" value="ArcherLevel2_Idle_UpRight" />
+			<property name="AnimArcher_Idle_DownLeft" type="CGUIAnimation" value="ArcherLevel2_Idle_DownLeft" />
+			<property name="AnimArcher_Idle_UpLeft" type="CGUIAnimation" value="ArcherLevel2_Idle_UpLeft" />
+			<property name="AnimArcher_Attack_DownRight" type="CGUIAnimation" value="ArcherLevel2_Attack_DownRight" />
+			<property name="AnimArcher_Attack_UpRight" type="CGUIAnimation" value="ArcherLevel2_Attack_UpRight" />
+			<property name="AnimArcher_Attack_DownLeft" type="CGUIAnimation" value="ArcherLevel2_Attack_DownLeft" />
+			<property name="AnimArcher_Attack_UpLeft" type="CGUIAnimation" value="ArcherLevel2_Attack_UpLeft" />
+			<property name="archer_pos_0" type="CGUIVector2" value="-10, -20" />
+			<property name="archer_pos_1" type="CGUIVector2" value="10,-20" />
+		</property>
+
+		<property name="level003" type="group" >
+			<property name="price" type="uint32" value="100" />
+			<property name="sell_price" type="uint32" value="135" />
+			<property name="AnimTower_Idle" type="CGUIAnimation" value="ArcherTowerLevel3_Idle" />
+			<property name="AnimArcher_Idle_DownRight" type="CGUIAnimation" value="ArcherLevel3_Idle_DownRight" />
+			<property name="AnimArcher_Idle_UpRight" type="CGUIAnimation" value="ArcherLevel3_Idle_UpRight" />
+			<property name="AnimArcher_Idle_DownLeft" type="CGUIAnimation" value="ArcherLevel3_Idle_DownLeft" />
+			<property name="AnimArcher_Idle_UpLeft" type="CGUIAnimation" value="ArcherLevel3_Idle_UpLeft" />
+			<property name="AnimArcher_Attack_DownRight" type="CGUIAnimation" value="ArcherLevel3_Attack_DownRight" />
+			<property name="AnimArcher_Attack_UpRight" type="CGUIAnimation" value="ArcherLevel3_Attack_UpRight" />
+			<property name="AnimArcher_Attack_DownLeft" type="CGUIAnimation" value="ArcherLevel3_Attack_DownLeft" />
+			<property name="AnimArcher_Attack_UpLeft" type="CGUIAnimation" value="ArcherLevel3_Attack_UpLeft" />
+			<property name="archer_pos_0" type="CGUIVector2" value="-10, -20" />
+			<property name="archer_pos_1" type="CGUIVector2" value="10,-20" />
+		</property>
 	</property>  
 
 	<property name="tower_mages" type="group" >
+		<property name="AnimTower_Building" type="CGUIAnimation" value="ArcherTower_Building" />
+		<property name="building_time" type="real" value="1.5" />
+
+		<property name="AnimMage_Idle_Up" type="CGUIAnimation" value="Mage_Idle_Up" />
+		<property name="AnimMage_Idle_Down" type="CGUIAnimation" value="Mage_Idle_Down" />
+		<property name="AnimMage_Attack_Up" type="CGUIAnimation" value="Mage_Attack_Up" />
+		<property name="AnimMage_Attack_Down" type="CGUIAnimation" value="Mage_Attack_Down" />
+
+		<property name="level001" type="group" >
+			<property name="price" type="uint32" value="100" />
+			<property name="sell_price" type="uint32" value="135" />
+			<property name="AnimTower_Idle" type="CGUIAnimation" value="MageTowerLevel1_Idle" />
+			<property name="AnimTower_Attack" type="CGUIAnimation" value="MageTowerLevel1_Attack" />
+			<property name="mage_pos" type="CGUIVector2" value="0, -15" />
+		</property>  
+
+		<property name="level002" type="group" >
+			<property name="price" type="uint32" value="100" />
+			<property name="sell_price" type="uint32" value="135" />
+			<property name="AnimTower_Idle" type="CGUIAnimation" value="MageTowerLevel2_Idle" />
+			<property name="AnimTower_Attack" type="CGUIAnimation" value="MageTowerLevel2_Attack" />
+			<property name="mage_pos" type="CGUIVector2" value="0, -15" />
+		</property>
+
+		<property name="level003" type="group" >
+			<property name="price" type="uint32" value="100" />
+			<property name="sell_price" type="uint32" value="135" />
+			<property name="AnimTower_Idle" type="CGUIAnimation" value="MageTowerLevel3_Idle" />
+			<property name="AnimTower_Attack" type="CGUIAnimation" value="MageTowerLevel3_Attack" />
+			<property name="mage_pos" type="CGUIVector2" value="0, -15" />
+		</property>  
 	</property>  
 
 	<property name="tower_barracks" type="group" >
+		<property name="AnimTower_Building" type="CGUIAnimation" value="BarrackTower_Building" />
+		<property name="building_time" type="real" value="2" />
+		<property name="level001" type="group" >
+			<property name="price" type="uint32" value="100" />
+			<property name="sell_price" type="uint32" value="135" />
+			<property name="AnimTower_Idle" type="CGUIAnimation" value="BarrackTowerLevel1_Idle" />
+			<property name="AnimTower_Open" type="CGUIAnimation" value="BarrackTowerLevel1_Open" />
+			<property name="AnimTower_Close" type="CGUIAnimation" value="BarrackTowerLevel1_Close" />
+		</property>  
+		<property name="level002" type="group" >
+			<property name="price" type="uint32" value="100" />
+			<property name="sell_price" type="uint32" value="135" />
+			<property name="AnimTower_Idle" type="CGUIAnimation" value="BarrackTowerLevel2_Idle" />
+			<property name="AnimTower_Open" type="CGUIAnimation" value="BarrackTowerLevel2_Open" />
+			<property name="AnimTower_Close" type="CGUIAnimation" value="BarrackTowerLevel2_Close" />
+		</property>  
+		<property name="level003" type="group" >
+			<property name="price" type="uint32" value="100" />
+			<property name="sell_price" type="uint32" value="135" />
+			<property name="AnimTower_Idle" type="CGUIAnimation" value="BarrackTowerLevel3_Idle" />
+			<property name="AnimTower_Open" type="CGUIAnimation" value="BarrackTowerLevel3_Open" />
+			<property name="AnimTower_Close" type="CGUIAnimation" value="BarrackTowerLevel3_Close" />
+		</property>  
 	</property>  
 
-	<property name="tower_dwarvenboombard" type="group" >
+	<property name="tower_bombard" type="group" >
+		<property name="AnimTower_Building" type="CGUIAnimation" value="BombardTower_Building" />
+		<property name="building_time" type="real" value="2" />
+		<property name="level001" type="group" >
+			<property name="price" type="uint32" value="100" />
+			<property name="sell_price" type="uint32" value="135" />
+			<property name="AnimTower_Idle" type="CGUIAnimation" value="BombardTowerLevel1_Idle" />
+			<property name="AnimTower_Attack" type="CGUIAnimation" value="BombardTowerLevel1_Attack" />
+		</property>  
+		<property name="level002" type="group" >
+			<property name="price" type="uint32" value="100" />
+			<property name="sell_price" type="uint32" value="135" />
+			<property name="AnimTower_Idle" type="CGUIAnimation" value="BombardTowerLevel2_Idle" />
+			<property name="AnimTower_Attack" type="CGUIAnimation" value="BombardTowerLevel2_Attack" />
+		</property>  
+		<property name="level003" type="group" >
+			<property name="price" type="uint32" value="100" />
+			<property name="sell_price" type="uint32" value="135" />
+			<property name="AnimTower_Idle" type="CGUIAnimation" value="BombardTowerLevel3_Idle" />
+			<property name="AnimTower_Attack" type="CGUIAnimation" value="BombardTowerLevel3_Attack" />
+		</property>  
 	</property>  
 
 

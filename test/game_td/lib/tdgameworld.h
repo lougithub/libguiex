@@ -41,7 +41,7 @@ namespace guiex
 		CTDGameWorld();
 		virtual ~CTDGameWorld();
 
-		virtual void InitGameWorld( CGUIWidget* pGameRoot, CGUIWidget* pTowerSelectPanel, CGUIWidget* pTowerUpgradePanel );
+		virtual void InitGameWorld( const CGUIString& rRound, CGUIWidget* pGameRoot, CGUIWidget* pTowerSelectPanel, CGUIWidget* pTowerUpgradePanel );
 		virtual void DestroyGameWorld();
 
 		const CGUIProperty* GetDataProperty( const CGUIString& rFilename ) const;
@@ -54,6 +54,10 @@ namespace guiex
 		CGUIWidget* GetTowerSelectPanel() const;
 		CGUIWidget* GetTowerUpgradePanel() const;
 
+		uint32 GetGold() const;
+		void CostGold( uint32 uGold );
+		uint32 GetHP() const;
+
 	protected:
 		virtual void OnRender( IGUIInterfaceRender* pRender );
 		virtual void OnUpdate( real fDeltaTime );
@@ -63,6 +67,8 @@ namespace guiex
 		void RemoveDeadObject();
 
 		void AllocateMonster( const CGUIString& rMonsterType, const CGUIString& rStartPathNode );
+
+		void InitRound( const CGUIString& rRound );
 
 	protected:
 		CTDGameObjectManager m_aObjectManager;
@@ -81,6 +87,10 @@ namespace guiex
 		class CTDGameTower* m_pCurrentFocusTower;
 		CGUIWidget* m_pTowerSelectPanel;
 		CGUIWidget* m_pTowerUpgradePanel;
+
+		//money
+		uint32 m_uGold;
+		uint32 m_uHP;
 	};
 }
 
