@@ -1538,48 +1538,49 @@ SWIG_Lua_dostring(lua_State *L, const char* str) {
 #define SWIGTYPE_p_guiex__CGUIInterfaceManager swig_types[29]
 #define SWIGTYPE_p_guiex__CGUIProperty swig_types[30]
 #define SWIGTYPE_p_guiex__CGUIRect swig_types[31]
-#define SWIGTYPE_p_guiex__CGUISize swig_types[32]
-#define SWIGTYPE_p_guiex__CGUISystem swig_types[33]
-#define SWIGTYPE_p_guiex__CGUITimer swig_types[34]
-#define SWIGTYPE_p_guiex__CGUIUICanvasLayer swig_types[35]
-#define SWIGTYPE_p_guiex__CGUIVector2 swig_types[36]
-#define SWIGTYPE_p_guiex__CGUIVector3 swig_types[37]
-#define SWIGTYPE_p_guiex__CGUIWgtBox2DBase swig_types[38]
-#define SWIGTYPE_p_guiex__CGUIWgtBox2DBodyBase swig_types[39]
-#define SWIGTYPE_p_guiex__CGUIWgtBox2DDynamicBody swig_types[40]
-#define SWIGTYPE_p_guiex__CGUIWgtBox2DStaticBody swig_types[41]
-#define SWIGTYPE_p_guiex__CGUIWgtButton swig_types[42]
-#define SWIGTYPE_p_guiex__CGUIWgtCheckButton swig_types[43]
-#define SWIGTYPE_p_guiex__CGUIWgtComboBox swig_types[44]
-#define SWIGTYPE_p_guiex__CGUIWgtEditBox swig_types[45]
-#define SWIGTYPE_p_guiex__CGUIWgtEmptyNode swig_types[46]
-#define SWIGTYPE_p_guiex__CGUIWgtListBox swig_types[47]
-#define SWIGTYPE_p_guiex__CGUIWgtListBoxItem swig_types[48]
-#define SWIGTYPE_p_guiex__CGUIWgtMultiEditBox swig_types[49]
-#define SWIGTYPE_p_guiex__CGUIWgtPanel swig_types[50]
-#define SWIGTYPE_p_guiex__CGUIWgtProgress swig_types[51]
-#define SWIGTYPE_p_guiex__CGUIWgtRadioButton swig_types[52]
-#define SWIGTYPE_p_guiex__CGUIWgtScrollbar swig_types[53]
-#define SWIGTYPE_p_guiex__CGUIWgtScrollbarContainer swig_types[54]
-#define SWIGTYPE_p_guiex__CGUIWgtStaticImage swig_types[55]
-#define SWIGTYPE_p_guiex__CGUIWgtStaticText swig_types[56]
-#define SWIGTYPE_p_guiex__CGUIWgtTag swig_types[57]
-#define SWIGTYPE_p_guiex__CGUIWgtTextBase swig_types[58]
-#define SWIGTYPE_p_guiex__CGUIWidget swig_types[59]
-#define SWIGTYPE_p_guiex__CGUIWidgetUtility swig_types[60]
-#define SWIGTYPE_p_guiex__IGUIInterfaceCommand swig_types[61]
-#define SWIGTYPE_p_guiex__IGUIInterfaceKeyboard swig_types[62]
-#define SWIGTYPE_p_guiex__IGUIInterfaceRender swig_types[63]
-#define SWIGTYPE_p_guiex__IGUIInterfaceSound swig_types[64]
-#define SWIGTYPE_p_int swig_types[65]
-#define SWIGTYPE_p_short swig_types[66]
-#define SWIGTYPE_p_std__string swig_types[67]
-#define SWIGTYPE_p_unsigned_char swig_types[68]
-#define SWIGTYPE_p_unsigned_int swig_types[69]
-#define SWIGTYPE_p_unsigned_short swig_types[70]
-#define SWIGTYPE_p_void swig_types[71]
-static swig_type_info *swig_types[73];
-static swig_module_info swig_module = {swig_types, 72, 0, 0, 0, 0};
+#define SWIGTYPE_p_guiex__CGUIRotator swig_types[32]
+#define SWIGTYPE_p_guiex__CGUISize swig_types[33]
+#define SWIGTYPE_p_guiex__CGUISystem swig_types[34]
+#define SWIGTYPE_p_guiex__CGUITimer swig_types[35]
+#define SWIGTYPE_p_guiex__CGUIUICanvasLayer swig_types[36]
+#define SWIGTYPE_p_guiex__CGUIVector2 swig_types[37]
+#define SWIGTYPE_p_guiex__CGUIVector3 swig_types[38]
+#define SWIGTYPE_p_guiex__CGUIWgtBox2DBase swig_types[39]
+#define SWIGTYPE_p_guiex__CGUIWgtBox2DBodyBase swig_types[40]
+#define SWIGTYPE_p_guiex__CGUIWgtBox2DDynamicBody swig_types[41]
+#define SWIGTYPE_p_guiex__CGUIWgtBox2DStaticBody swig_types[42]
+#define SWIGTYPE_p_guiex__CGUIWgtButton swig_types[43]
+#define SWIGTYPE_p_guiex__CGUIWgtCheckButton swig_types[44]
+#define SWIGTYPE_p_guiex__CGUIWgtComboBox swig_types[45]
+#define SWIGTYPE_p_guiex__CGUIWgtEditBox swig_types[46]
+#define SWIGTYPE_p_guiex__CGUIWgtEmptyNode swig_types[47]
+#define SWIGTYPE_p_guiex__CGUIWgtListBox swig_types[48]
+#define SWIGTYPE_p_guiex__CGUIWgtListBoxItem swig_types[49]
+#define SWIGTYPE_p_guiex__CGUIWgtMultiEditBox swig_types[50]
+#define SWIGTYPE_p_guiex__CGUIWgtPanel swig_types[51]
+#define SWIGTYPE_p_guiex__CGUIWgtProgress swig_types[52]
+#define SWIGTYPE_p_guiex__CGUIWgtRadioButton swig_types[53]
+#define SWIGTYPE_p_guiex__CGUIWgtScrollbar swig_types[54]
+#define SWIGTYPE_p_guiex__CGUIWgtScrollbarContainer swig_types[55]
+#define SWIGTYPE_p_guiex__CGUIWgtStaticImage swig_types[56]
+#define SWIGTYPE_p_guiex__CGUIWgtStaticText swig_types[57]
+#define SWIGTYPE_p_guiex__CGUIWgtTag swig_types[58]
+#define SWIGTYPE_p_guiex__CGUIWgtTextBase swig_types[59]
+#define SWIGTYPE_p_guiex__CGUIWidget swig_types[60]
+#define SWIGTYPE_p_guiex__CGUIWidgetUtility swig_types[61]
+#define SWIGTYPE_p_guiex__IGUIInterfaceCommand swig_types[62]
+#define SWIGTYPE_p_guiex__IGUIInterfaceKeyboard swig_types[63]
+#define SWIGTYPE_p_guiex__IGUIInterfaceRender swig_types[64]
+#define SWIGTYPE_p_guiex__IGUIInterfaceSound swig_types[65]
+#define SWIGTYPE_p_int swig_types[66]
+#define SWIGTYPE_p_short swig_types[67]
+#define SWIGTYPE_p_std__string swig_types[68]
+#define SWIGTYPE_p_unsigned_char swig_types[69]
+#define SWIGTYPE_p_unsigned_int swig_types[70]
+#define SWIGTYPE_p_unsigned_short swig_types[71]
+#define SWIGTYPE_p_void swig_types[72]
+static swig_type_info *swig_types[74];
+static swig_module_info swig_module = {swig_types, 73, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -3394,6 +3395,20 @@ static swig_lua_attribute swig_guiex_CGUIVector3_attributes[] = {
 static swig_lua_class *swig_guiex_CGUIVector3_bases[] = {0};
 static const char *swig_guiex_CGUIVector3_base_names[] = {0};
 static swig_lua_class _wrap_class_guiex_CGUIVector3 = { "CGUIVector3", &SWIGTYPE_p_guiex__CGUIVector3,_wrap_new_CGUIVector3, swig_delete_CGUIVector3, swig_guiex_CGUIVector3_methods, swig_guiex_CGUIVector3_attributes, swig_guiex_CGUIVector3_bases, swig_guiex_CGUIVector3_base_names };
+
+static void swig_delete_CGUIRotator(void *obj) {
+guiex::CGUIRotator *arg1 = (guiex::CGUIRotator *) obj;
+delete arg1;
+}
+static swig_lua_method swig_guiex_CGUIRotator_methods[] = {
+    {0,0}
+};
+static swig_lua_attribute swig_guiex_CGUIRotator_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_class *swig_guiex_CGUIRotator_bases[] = {0};
+static const char *swig_guiex_CGUIRotator_base_names[] = {0};
+static swig_lua_class _wrap_class_guiex_CGUIRotator = { "CGUIRotator", &SWIGTYPE_p_guiex__CGUIRotator,0, swig_delete_CGUIRotator, swig_guiex_CGUIRotator_methods, swig_guiex_CGUIRotator_attributes, swig_guiex_CGUIRotator_bases, swig_guiex_CGUIRotator_base_names };
 
 static int _wrap_new_CGUIRect__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
@@ -9253,7 +9268,7 @@ fail:
 }
 
 
-static int _wrap_CGUIWidget_SetRotation(lua_State* L) {
+static int _wrap_CGUIWidget_SetRotation__SWIG_0(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
   guiex::real arg2 ;
@@ -9285,23 +9300,26 @@ fail:
 }
 
 
-static int _wrap_CGUIWidget_GetRotation(lua_State* L) {
+static int _wrap_CGUIWidget_SetRotation__SWIG_1(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CGUIWidget *arg1 = (guiex::CGUIWidget *) 0 ;
-  guiex::CGUIVector3 result;
+  guiex::CGUIRotator *arg2 = 0 ;
   
-  SWIG_check_num_args("guiex::CGUIWidget::GetRotation",1,1)
-  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::CGUIWidget::GetRotation",1,"guiex::CGUIWidget const *");
+  SWIG_check_num_args("guiex::CGUIWidget::SetRotation",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::CGUIWidget::SetRotation",1,"guiex::CGUIWidget *");
+  if(!lua_isuserdata(L,2)) SWIG_fail_arg("guiex::CGUIWidget::SetRotation",2,"guiex::CGUIRotator const &");
   
   if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CGUIWidget,0))){
-    SWIG_fail_ptr("CGUIWidget_GetRotation",1,SWIGTYPE_p_guiex__CGUIWidget);
+    SWIG_fail_ptr("CGUIWidget_SetRotation",1,SWIGTYPE_p_guiex__CGUIWidget);
   }
   
-  result = ((guiex::CGUIWidget const *)arg1)->GetRotation();
-  {
-    guiex::CGUIVector3 * resultptr = new guiex::CGUIVector3((const guiex::CGUIVector3 &) result);
-    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_guiex__CGUIVector3,1); SWIG_arg++;
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,2,(void**)&arg2,SWIGTYPE_p_guiex__CGUIRotator,0))){
+    SWIG_fail_ptr("CGUIWidget_SetRotation",2,SWIGTYPE_p_guiex__CGUIRotator);
   }
+  
+  (arg1)->SetRotation((guiex::CGUIRotator const &)*arg2);
+  
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -9309,6 +9327,75 @@ static int _wrap_CGUIWidget_GetRotation(lua_State* L) {
 fail:
   lua_error(L);
   return SWIG_arg;
+}
+
+
+static int _wrap_CGUIWidget_SetRotation(lua_State* L) {
+  int argc;
+  int argv[5]={
+    1,2,3,4,5
+  };
+  
+  argc = lua_gettop(L);
+  if (argc == 2) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        void *ptr;
+        if (lua_isuserdata(L,argv[1])==0 || SWIG_ConvertPtr(L,argv[1], (void **) &ptr, SWIGTYPE_p_guiex__CGUIRotator, 0)) {
+          _v = 0;
+        } else {
+          _v = 1;
+        }
+      }
+      if (_v) {
+        return _wrap_CGUIWidget_SetRotation__SWIG_1(L);
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    {
+      void *ptr;
+      if (SWIG_isptrtype(L,argv[0])==0 || SWIG_ConvertPtr(L,argv[0], (void **) &ptr, SWIGTYPE_p_guiex__CGUIWidget, 0)) {
+        _v = 0;
+      } else {
+        _v = 1;
+      }
+    }
+    if (_v) {
+      {
+        _v = lua_isnumber(L,argv[1]);
+      }
+      if (_v) {
+        {
+          _v = lua_isnumber(L,argv[2]);
+        }
+        if (_v) {
+          {
+            _v = lua_isnumber(L,argv[3]);
+          }
+          if (_v) {
+            return _wrap_CGUIWidget_SetRotation__SWIG_0(L);
+          }
+        }
+      }
+    }
+  }
+  
+  lua_pushstring(L,"Wrong arguments for overloaded function 'CGUIWidget_SetRotation'\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    guiex::CGUIWidget::SetRotation(guiex::real,guiex::real,guiex::real)\n"
+    "    guiex::CGUIWidget::SetRotation(guiex::CGUIRotator const &)\n");
+  lua_error(L);return 0;
 }
 
 
@@ -10598,7 +10685,6 @@ static swig_lua_method swig_guiex_CGUIWidget_methods[] = {
     {"SetSizeType", _wrap_CGUIWidget_SetSizeType}, 
     {"GetSizeType", _wrap_CGUIWidget_GetSizeType}, 
     {"SetRotation", _wrap_CGUIWidget_SetRotation}, 
-    {"GetRotation", _wrap_CGUIWidget_GetRotation}, 
     {"LocalToWorld", _wrap_CGUIWidget_LocalToWorld}, 
     {"WorldToLocal", _wrap_CGUIWidget_WorldToLocal}, 
     {"ParentToWorld", _wrap_CGUIWidget_ParentToWorld}, 
@@ -13685,6 +13771,7 @@ static swig_type_info _swigt__p_guiex__CGUIImage = {"_p_guiex__CGUIImage", "guie
 static swig_type_info _swigt__p_guiex__CGUIInterfaceManager = {"_p_guiex__CGUIInterfaceManager", "guiex::CGUIInterfaceManager *", 0, 0, (void*)&_wrap_class_guiex_CGUIInterfaceManager, 0};
 static swig_type_info _swigt__p_guiex__CGUIProperty = {"_p_guiex__CGUIProperty", "guiex::CGUIProperty *", 0, 0, (void*)&_wrap_class_guiex_CGUIProperty, 0};
 static swig_type_info _swigt__p_guiex__CGUIRect = {"_p_guiex__CGUIRect", "guiex::CGUIRect *", 0, 0, (void*)&_wrap_class_guiex_CGUIRect, 0};
+static swig_type_info _swigt__p_guiex__CGUIRotator = {"_p_guiex__CGUIRotator", "guiex::CGUIRotator *", 0, 0, (void*)&_wrap_class_guiex_CGUIRotator, 0};
 static swig_type_info _swigt__p_guiex__CGUISize = {"_p_guiex__CGUISize", "guiex::CGUISize *", 0, 0, (void*)&_wrap_class_guiex_CGUISize, 0};
 static swig_type_info _swigt__p_guiex__CGUISystem = {"_p_guiex__CGUISystem", "guiex::CGUISystem *", 0, 0, (void*)&_wrap_class_guiex_CGUISystem, 0};
 static swig_type_info _swigt__p_guiex__CGUITimer = {"_p_guiex__CGUITimer", "guiex::CGUITimer *", 0, 0, (void*)&_wrap_class_guiex_CGUITimer, 0};
@@ -13759,6 +13846,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_guiex__CGUIInterfaceManager,
   &_swigt__p_guiex__CGUIProperty,
   &_swigt__p_guiex__CGUIRect,
+  &_swigt__p_guiex__CGUIRotator,
   &_swigt__p_guiex__CGUISize,
   &_swigt__p_guiex__CGUISystem,
   &_swigt__p_guiex__CGUITimer,
@@ -13833,6 +13921,7 @@ static swig_cast_info _swigc__p_guiex__CGUIImage[] = {  {&_swigt__p_guiex__CGUII
 static swig_cast_info _swigc__p_guiex__CGUIInterfaceManager[] = {  {&_swigt__p_guiex__CGUIInterfaceManager, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUIProperty[] = {  {&_swigt__p_guiex__CGUIProperty, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUIRect[] = {  {&_swigt__p_guiex__CGUIRect, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_guiex__CGUIRotator[] = {  {&_swigt__p_guiex__CGUIRotator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUISize[] = {  {&_swigt__p_guiex__CGUISize, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUISystem[] = {  {&_swigt__p_guiex__CGUISystem, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CGUITimer[] = {  {&_swigt__p_guiex__CGUITimer, 0, 0, 0},{0, 0, 0, 0}};
@@ -13907,6 +13996,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_guiex__CGUIInterfaceManager,
   _swigc__p_guiex__CGUIProperty,
   _swigc__p_guiex__CGUIRect,
+  _swigc__p_guiex__CGUIRotator,
   _swigc__p_guiex__CGUISize,
   _swigc__p_guiex__CGUISystem,
   _swigc__p_guiex__CGUITimer,

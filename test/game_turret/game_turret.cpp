@@ -166,9 +166,7 @@ void CMyProjectile::InitProjectile( CGUIWidget* pParent,CGUIWgtStaticImage* pTur
 
 	//calculate begin position
 	CGUIVector2 aBeginPos(m_pTurret->GetPixelSize().GetWidth()/2.0f, 0.0f);
-	CGUIMatrix3 aRotMat;
-	aRotMat.FromEulerAnglesXYZ( 0, 0, CGUIMath::DegreesToRadians(m_pTurret->GetRotation().z ));
-	CGUIQuaternion quat(aRotMat);
+	CGUIQuaternion quat(m_pTurret->GetRotation());
 	CGUIVector3 aTmpPos( aBeginPos.x, aBeginPos.y, 0.0f );
 	aTmpPos = quat * aTmpPos;
 	aBeginPos.x = aTmpPos.x;
@@ -365,10 +363,10 @@ void CMyCanvasLayer_TurretGame::InitTurret()
 
 	CGUIAsWidgetRotation* pAsTurnTo = CGUIAsManager::Instance()->AllocateResource<CGUIAsWidgetRotation>();
 	pAsTurnTo->SetReceiver( m_pTurret );
-	CGUIVector3 aCurRotation = m_pTurret->GetRotation();
-	CGUIVector3 aDestRotation = aCurRotation;
+	CGUIRotator aCurRotation = m_pTurret->GetRotation();
+	CGUIRotator aDestRotation = aCurRotation;
 	real rotateSpeed = 360.0f; // Would take 0.5 seconds to rotate 0.5 radians, or half a circle
-	real rotateDuration = fabs((aDestRotation.z - aCurRotation.z) / rotateSpeed);   
+	real rotateDuration = fabs((aDestRotation.Yaw - aCurRotation.Yaw) / rotateSpeed);   
 	pAsTurnTo->SetInterpolationValue( aCurRotation, aDestRotation, rotateDuration );
 	pAsTurnTo->AddSuccessor( pAsShoot );
 	pAsShoot->RefRelease();
@@ -393,11 +391,11 @@ void CMyCanvasLayer_TurretGame::BeginShoot( const CGUIVector2& rShootPos )
 	//set turret as
 	CGUIAsWidgetRotation* pAsTurnTo = (CGUIAsWidgetRotation*)m_pTurret->GetAs("As_TurnTo");
 	pAsTurnTo->Reset();
-	CGUIVector3 aCurRotation = m_pTurret->GetRotation();
-	CGUIVector3 aDestRotation = aCurRotation;
-	aDestRotation.z = angleDegrees;
+	CGUIRotator aCurRotation = m_pTurret->GetRotation();
+	CGUIRotator aDestRotation = aCurRotation;
+	aDestRotation.Yaw = angleDegrees;
 	real rotateSpeed = 360.0f; // Would take 0.5 seconds to rotate 0.5 radians, or half a circle
-	real rotateDuration = fabs((aDestRotation.z - aCurRotation.z) / rotateSpeed);   
+	real rotateDuration = fabs((aDestRotation.Yaw - aCurRotation.Yaw) / rotateSpeed);   
 	pAsTurnTo->SetInterpolationValue( aCurRotation, aDestRotation, rotateDuration );
 	static_cast<CGUIAsShoot*>(pAsTurnTo->GetSuccessor( 0 ))->SetShootPos(rShootPos);
 

@@ -163,6 +163,52 @@ wxVariant WxGUIVector3Property::ChildChanged( wxVariant& thisValue, int childInd
 // -----------------------------------------------------------------------
 
 
+
+// -----------------------------------------------------------------------
+// WxGUIRotatorProperty
+// -----------------------------------------------------------------------
+WX_PG_IMPLEMENT_VARIANT_DATA_DUMMY_EQ( CGUIRotator );
+WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGUIRotatorProperty,wxPGProperty,CGUIRotator,const CGUIRotator&,TextCtrl);
+WxGUIRotatorProperty::WxGUIRotatorProperty( 
+	const wxString& label,
+	const wxString& name,
+	const CGUIRotator& value)
+	: wxPGProperty(label,name)
+{
+	//ChangeFlag(wxPG_PROP_READONLY, true);
+	SetValue( WXVARIANT(value) );
+	AddPrivateChild( new wxFloatProperty(wxT("Pitch"), wxT("Pitch"),value.Pitch) );
+	AddPrivateChild( new wxFloatProperty(wxT("Yaw"), wxT("Yaw"),value.Yaw) );
+	AddPrivateChild( new wxFloatProperty(wxT("Roll"), wxT("Roll"),value.Roll) );
+}
+// -----------------------------------------------------------------------
+void WxGUIRotatorProperty::RefreshChildren()
+{
+	if ( !GetChildCount() ) return;
+
+	CGUIRotator& rotator = CGUIRotatorRefFromVariant(m_value);
+	Item(0)->SetValue( rotator.Pitch );
+	Item(1)->SetValue( rotator.Yaw);
+	Item(2)->SetValue( rotator.Roll);
+}
+// -----------------------------------------------------------------------
+wxVariant WxGUIRotatorProperty::ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const
+{
+	CGUIRotator& rotator = CGUIRotatorRefFromVariant(thisValue);
+
+	switch ( childIndex )
+	{
+	case 0: rotator.Pitch = childValue.GetDouble(); break;
+	case 1: rotator.Yaw = childValue.GetDouble(); break;
+	case 2: rotator.Roll = childValue.GetDouble(); break;
+	}
+
+	wxVariant newVariant;
+	newVariant << rotator;
+	return newVariant;
+}
+// -----------------------------------------------------------------------
+
 // -----------------------------------------------------------------------
 // WxGUIRectProperty
 // -----------------------------------------------------------------------

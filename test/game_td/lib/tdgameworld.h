@@ -58,6 +58,9 @@ namespace guiex
 		void CostGold( uint32 uGold );
 		uint32 GetHP() const;
 
+		void AllocateBullet(const CGUIString& rBulletType, const CGUIVector2& rStartPos, class CTDGameObjectMonster* pTarget);
+		void AllocateMonster( const CGUIString& rMonsterType, const CGUIString& rStartPathNode );
+
 	protected:
 		virtual void OnRender( IGUIInterfaceRender* pRender );
 		virtual void OnUpdate( real fDeltaTime );
@@ -65,8 +68,6 @@ namespace guiex
 		void UpdateAllObjects( real fDeltaTime );
 		void RenderAllObjects( IGUIInterfaceRender* pRender );
 		void RemoveDeadObject();
-
-		void AllocateMonster( const CGUIString& rMonsterType, const CGUIString& rStartPathNode );
 
 		void InitRound( const CGUIString& rRound );
 

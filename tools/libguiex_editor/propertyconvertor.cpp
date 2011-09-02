@@ -140,6 +140,34 @@ public:
 	}
 };
 
+class CEditorPropertyConvertor_Rotator : public CEditorPropertyConvertorBase
+{
+public:
+	CEditorPropertyConvertor_Rotator()
+		:CEditorPropertyConvertorBase( ePropertyType_Rotator )
+	{
+
+	}
+	virtual void DoGuiProperty2GridProperty(WxToolsPGManager* pSheetMgr, wxPGProperty* pPGCategory, wxPGProperty*& pPGTop, const CGUIProperty& aProp)
+	{
+		CGUIRotator aValue;
+		PropertyToValue(aProp, aValue);
+
+		if( pPGTop )
+		{
+			pPGTop->SetValue( WXVARIANT(aValue));
+		}
+		else
+		{
+			pPGTop = pSheetMgr->Insert( pPGCategory, -1, new WxGUIRotatorProperty( CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()), aValue));
+		}
+	}
+	virtual void DoGridProperty2GuiProperty( WxToolsPGManager* pSheetMgr, wxPGProperty* pPGProperty, CGUIProperty& rProperty )
+	{
+		CGUIRotator aValue = CGUIRotatorRefFromVariant( pSheetMgr->GetPropertyValue( pPGProperty ));
+		ValueToProperty( aValue, rProperty );
+	}
+};
 
 class CEditorPropertyConvertor_Rect : public CEditorPropertyConvertorBase
 {
@@ -878,6 +906,7 @@ CPropertyConvertorMgr::CPropertyConvertorMgr()
 {
 	RegisterConvertor( new CEditorPropertyConvertor_Vector2 );
 	RegisterConvertor( new CEditorPropertyConvertor_Vector3 );
+	RegisterConvertor( new CEditorPropertyConvertor_Rotator );
 	RegisterConvertor( new CEditorPropertyConvertor_Rect );
 	RegisterConvertor( new CEditorPropertyConvertor_Color );
 	RegisterConvertor( new CEditorPropertyConvertor_Size );

@@ -12,6 +12,8 @@
 	<property name="resource_tower_mages.res" type="ResourceFile" />
 	<property name="resource_tower_barrack.res" type="ResourceFile" />
 	<property name="resource_tower_bombard.res" type="ResourceFile" />
+	<property name="resource_bullet.res" type="ResourceFile" />
+
 
 	<property name="tower_select.xml" type="WidgetFile" />
 	<property name="tower_upgrade.xml" type="WidgetFile" />

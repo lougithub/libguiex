@@ -96,7 +96,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtBox2DBodyBase::GetBox2dRot( real& rRot )
 	{
-		rRot = GetRotation().z / 180.f * b2_pi;
+		rRot = GetRotation().Yaw / 180.f * b2_pi;
 	}
 	//------------------------------------------------------------------------------
 

@@ -21,6 +21,8 @@
 namespace guiex 
 {
 	class CGUIMatrix3;
+	class CGUIMatrix4;
+	class CGUIRotator;
 }
 
 //============================================================================//
@@ -34,7 +36,7 @@ namespace guiex
 	class GUIEXPORT CGUIQuaternion
 	{
 	public:
-		inline CGUIQuaternion (
+		CGUIQuaternion (
 			real fW = 1.0,
 			real fX = 0.0, real fY = 0.0, real fZ = 0.0)
 		{
@@ -43,15 +45,18 @@ namespace guiex
 			y = fY;
 			z = fZ;
 		}
-		inline CGUIQuaternion (const CGUIQuaternion& rkQ)
+		CGUIQuaternion (const CGUIQuaternion& rkQ)
 		{
 			w = rkQ.w;
 			x = rkQ.x;
 			y = rkQ.y;
 			z = rkQ.z;
 		}
+		explicit CGUIQuaternion( const CGUIRotator& R);
+		explicit CGUIQuaternion(const CGUIMatrix4& M);
+
 		/// Construct a quaternion from a rotation matrix
-		inline CGUIQuaternion(const CGUIMatrix3& rot)
+		explicit CGUIQuaternion(const CGUIMatrix3& rot)
 		{
 			this->FromRotationMatrix(rot);
 		}
@@ -76,6 +81,8 @@ namespace guiex
 		{
 			this->FromAxes(akAxis);
 		}
+
+		CGUIQuaternion MakeFromRotator(const CGUIRotator & rotator) const;
 
 		void FromRotationMatrix (const CGUIMatrix3& kRot);
 		void ToRotationMatrix (CGUIMatrix3& kRot) const;
@@ -140,10 +147,7 @@ namespace guiex
 
 		// spherical linear interpolation
 		static CGUIQuaternion Slerp (real fT, const CGUIQuaternion& rkP,const CGUIQuaternion& rkQ, bool shortestPath = false);
-
-		static CGUIQuaternion SlerpExtraSpins (real fT,
-			const CGUIQuaternion& rkP, const CGUIQuaternion& rkQ,
-			int iExtraSpins);
+		static CGUIQuaternion SlerpExtraSpins (real fT,const CGUIQuaternion& rkP, const CGUIQuaternion& rkQ,int32 iExtraSpins);
 
 		// setup for spherical quadratic interpolation
 		static void Intermediate (const CGUIQuaternion& rkQ0,

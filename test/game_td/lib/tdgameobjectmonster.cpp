@@ -275,7 +275,7 @@ namespace guiex
 		m_pStartNode = NULL;
 		m_pTargetNode = NULL;
 		m_eAnimState = eAnimState_Idle;
-		m_eMonsterState = eMonsterState_None_Max;
+		m_eMonsterState = __eMonsterState_Max__;
 		m_fAlpha = 1.0f;
 
 		//init state
@@ -287,7 +287,7 @@ namespace guiex
 	CTDGameObjectMonster::~CTDGameObjectMonster()
 	{
 		//clear state
-		for( uint32 i=0; i<eMonsterState_None_Max; ++i )
+		for( uint32 i=0; i<__eMonsterState_Max__; ++i )
 		{
 			delete m_arrayMonsterState[i];
 			m_arrayMonsterState[i] = NULL;
@@ -326,7 +326,7 @@ namespace guiex
 	{
 		CTDGameObject::OnActive();
 
-		m_eMonsterState = eMonsterState_None_Max;
+		m_eMonsterState = __eMonsterState_Max__;
 	}
 	//------------------------------------------------------------------------------
 	void CTDGameObjectMonster::OnDeactive()
@@ -350,7 +350,7 @@ namespace guiex
 		m_aSize.m_fWidth = m_aSize.m_fHeight = 0.0f;
 		m_fAlpha = 1.0f;
 
-		SetMonsterState( eMonsterState_None_Max );
+		SetMonsterState( __eMonsterState_Max__ );
 
 		CTDGameObject::OnDeactive();
 	}
@@ -383,14 +383,14 @@ namespace guiex
 	{
 		if( m_eMonsterState != eMonsterState )
 		{
-			if( m_eMonsterState != eMonsterState_None_Max )
+			if( m_eMonsterState != __eMonsterState_Max__ )
 			{
 				m_arrayMonsterState[m_eMonsterState]->LeaveState();
 			}
 
 			m_eMonsterState = eMonsterState;
 
-			if( m_eMonsterState != eMonsterState_None_Max )
+			if( m_eMonsterState != __eMonsterState_Max__ )
 			{
 				m_arrayMonsterState[m_eMonsterState]->EnterState();
 			}

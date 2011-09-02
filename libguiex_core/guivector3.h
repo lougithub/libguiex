@@ -22,6 +22,7 @@ namespace guiex
 	{
 	public:
 		CGUIVector3();
+		CGUIVector3( const class CGUIVector2& rVec );
 		CGUIVector3( real fX, real fY, real fZ );
 		CGUIVector3( real afCoordinate[3] );
 		CGUIVector3( int32 afCoordinate[3] );
@@ -31,6 +32,14 @@ namespace guiex
 		real Length () const;
 		real SquaredLength () const;
 		bool IsZeroLength(void) const;
+
+		bool IsNearlyZero(real Tolerance=GUI_REALDELTA) const
+		{
+			return
+				abs(x)<Tolerance
+				&&	abs(y)<Tolerance
+				&&	abs(z)<Tolerance;
+		}
 
 		real DotProduct(const CGUIVector3& vec) const;
 		CGUIVector3 CrossProduct( const CGUIVector3& rkVector ) const;
@@ -49,6 +58,13 @@ namespace guiex
 
 		bool PositionEquals(const CGUIVector3& rhs ) const;
 		CGUIVector3 RandomDeviant( real angle, const CGUIVector3& up = CGUIVector3::ZERO ) const;
+
+		/**
+		* Return the Rotator corresponding to the direction that the vector
+		* is pointing in.  Sets Yaw and Pitch to the proper numbers, and sets
+		* roll to zero because the roll can't be determined from a vector.
+		*/
+		class CGUIRotator Rotation() const;
 
 		real operator [] ( size_t i ) const;
 		real& operator [] ( size_t i );
@@ -70,6 +86,7 @@ namespace guiex
 		CGUIVector3& operator /= ( const CGUIVector3& rkVector );
 		bool operator < ( const CGUIVector3& rhs ) const;
 		bool operator > ( const CGUIVector3& rhs ) const;
+		real operator|( const CGUIVector3& v ) const;
 
 	public:
 		union 

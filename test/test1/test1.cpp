@@ -41,6 +41,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 
 	CGUIWgtEmptyNode* pWidgetRoot = 
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtEmptyNode>( "page", "testscene" );
+	pWidgetRoot->SetPage( pWidgetRoot );
 	pWidgetRoot->SetAnchorPoint( 0.5f, 0.5f );
 	pWidgetRoot->SetPositionType( eScreenValue_Percentage );
 	pWidgetRoot->SetPosition( 0.5f,0.5f );
@@ -325,7 +326,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 		pAsScale->RefRelease();
 
 		CGUIAsWidgetRotation* pAsRotation = pAsManager->AllocateResource<CGUIAsWidgetRotation>( );
-		pAsRotation->SetInterpolationValue( CGUIVector3(0,0,360*5), CGUIVector3(), 4 );
+		pAsRotation->SetInterpolationValue( CGUIRotator(0,360*5,0), CGUIRotator(), 4 );
 		pAsRotation->SetReceiver( pWidget_panel );
 		pWidget_panel->PlayAs( pAsRotation );
 		pAsRotation->RefRelease();
@@ -379,7 +380,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 
 	{
 		CGUIAsWidgetRotation* pAsRotation = pAsManager->AllocateResource<CGUIAsWidgetRotation>( );
-		pAsRotation->SetInterpolationValue( CGUIVector3(0,0,360), CGUIVector3(), 4 );
+		pAsRotation->SetInterpolationValue( CGUIRotator(0,3600,0), CGUIRotator(), 4 );
 		pAsRotation->SetReceiver( pWidget_staticimage );
 		pAsRotation->SetLooping( true );
 		pWidget_staticimage->PlayAs( pAsRotation );
@@ -400,7 +401,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 		pAsAlpha->RefRelease();
 
 		CGUIAsWidgetRotation* pAsRotation = pAsManager->AllocateResource<CGUIAsWidgetRotation>( );
-		pAsRotation->SetInterpolationValue( CGUIVector3(0,0,360*2), CGUIVector3(), 4 );
+		pAsRotation->SetInterpolationValue( CGUIRotator(0,360*2,0), CGUIRotator(), 4 );
 		pAsRotation->SetReceiver( pWidget_staticimage2 );
 		pWidget_staticimage2->PlayAs( pAsRotation );
 		pAsRotation->RefRelease();
@@ -408,7 +409,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 
 	{
 		CGUIAsWidgetRotation* pAsRotation = pAsManager->AllocateResource<CGUIAsWidgetRotation>( );
-		pAsRotation->SetInterpolationValue( CGUIVector3(0,0,360*5), CGUIVector3(), 1 );
+		pAsRotation->SetInterpolationValue( CGUIRotator(0,360*5,0), CGUIRotator(), 1 );
 		pAsRotation->SetReceiver( pWidget_statictext );
 		pWidget_statictext->PlayAs( pAsRotation );
 		pAsRotation->RefRelease();

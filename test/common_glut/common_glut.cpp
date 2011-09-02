@@ -324,6 +324,12 @@ LRESULT CALLBACK MsgWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 //------------------------------------------------------------------------------
 int main(int argc, char** argv)
 {
+#if defined(GUIEX_PLATFORM_WIN32)
+#ifdef	_DEBUG
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF|_CRTDBG_LEAK_CHECK_DF);
+#endif
+#endif
+
 	srand( time(NULL) );
 	//atexit(exitCB);
 

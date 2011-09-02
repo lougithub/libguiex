@@ -12,7 +12,9 @@
 #include "guiquaternion.h"
 #include "guimath.h"
 #include "guimatrix3.h"
+#include "guimatrix4.h"
 #include "guivector3.h"
+#include "guirotator.h"
 
 
 
@@ -22,7 +24,80 @@ namespace guiex
 	const real CGUIQuaternion::ms_fEpsilon = 1e-03f;
 	const CGUIQuaternion CGUIQuaternion::ZERO(0.0,0.0,0.0,0.0);
 	const CGUIQuaternion CGUIQuaternion::IDENTITY(1.0,0.0,0.0,0.0);
+	//-----------------------------------------------------------------------
+	CGUIQuaternion::CGUIQuaternion(const CGUIMatrix4& M)
+	{
+		// If Matrix is NULL, return Identity quaternion.
+		if( M.GetAxis(0).IsNearlyZero() && M.GetAxis(1).IsNearlyZero() && M.GetAxis(2).IsNearlyZero() )
+		{
+			*this = CGUIQuaternion::IDENTITY;
+			return;
+		}
 
+		// Make sure the Rotation part of the Matrix is unit length.
+		// Changed to this (same as RemoveScaling) from RotDeterminant as using two different ways of checking unit length matrix caused inconsistency. 
+		GUI_ASSERT( (abs(1.f - M.GetAxis(0).SquaredLength()) <= 0.01f) && (abs(1.f - M.GetAxis(1).SquaredLength()) <= 0.01f) && (abs(1.f - M.GetAxis(2).SquaredLength()) <= 0.01f), "Rotation part of the Matrix is not unit length");
+
+		//const MeReal *const t = (MeReal *) tm;
+		real s;
+
+		// Check diagonal (trace)
+		const real tr = M.m[0][0] + M.m[1][1] + M.m[2][2];
+
+		if (tr > 0.0f) 
+		{
+			real InvS = 1.0f / sqrtf( (tr + 1.f) );
+			this->w = 0.5f * (1.f / InvS);
+			s = 0.5f * InvS;
+
+			this->x = (M.m[1][2] - M.m[2][1]) * s;
+			this->y = (M.m[2][0] - M.m[0][2]) * s;
+			this->z = (M.m[0][1] - M.m[1][0]) * s;
+		} 
+		else 
+		{
+			// diagonal is negative
+			uint32 i = 0;
+
+			if (M.m[1][1] > M.m[0][0])
+				i = 1;
+
+			if (M.m[2][2] > M.m[i][i])
+				i = 2;
+
+			static const uint32 nxt[3] = { 1, 2, 0 };
+			const uint32 j = nxt[i];
+			const uint32 k = nxt[j];
+
+			s = M.m[i][i] - M.m[j][j] - M.m[k][k] + 1.0f;
+
+			real InvS = 1.0f / sqrtf(s);
+
+			real qt[4];
+			qt[i] = 0.5f * (1.f / InvS);
+
+			s = 0.5f * InvS;
+
+			qt[3] = (M.m[j][k] - M.m[k][j]) * s;
+			qt[j] = (M.m[i][j] + M.m[j][i]) * s;
+			qt[k] = (M.m[i][k] + M.m[k][i]) * s;
+
+			this->x = qt[0];
+			this->y = qt[1];
+			this->z = qt[2];
+			this->w = qt[3];
+		}
+	}
+	//-----------------------------------------------------------------------
+	CGUIQuaternion::CGUIQuaternion( const CGUIRotator& R)
+	{
+		*this = MakeFromRotator(R);
+	}
+	//-----------------------------------------------------------------------
+	CGUIQuaternion CGUIQuaternion::MakeFromRotator(const CGUIRotator & rotator) const
+	{
+		return CGUIQuaternion( CGUIMatrix4(rotator) );
+	}
 	//-----------------------------------------------------------------------
 	void CGUIQuaternion::FromRotationMatrix (const CGUIMatrix3& kRot)
 	{
@@ -393,12 +468,9 @@ namespace guiex
 
 		return (fabs(angle) <= tolerance)
 			|| CGUIMath::RealEqual(angle, CGUIMath::GUI_PI, tolerance);
-
-
 	}
 	//-----------------------------------------------------------------------
-	CGUIQuaternion CGUIQuaternion::Slerp (real fT, const CGUIQuaternion& rkP,
-		const CGUIQuaternion& rkQ, bool shortestPath)
+	CGUIQuaternion CGUIQuaternion::Slerp (real fT, const CGUIQuaternion& rkP,const CGUIQuaternion& rkQ, bool shortestPath)
 	{
 		real fCos = rkP.Dot(rkQ);
 		real fAngle = acos(fCos);
@@ -425,8 +497,7 @@ namespace guiex
 		}
 	}
 	//-----------------------------------------------------------------------
-	CGUIQuaternion CGUIQuaternion::SlerpExtraSpins (real fT,
-		const CGUIQuaternion& rkP, const CGUIQuaternion& rkQ, int iExtraSpins)
+	CGUIQuaternion CGUIQuaternion::SlerpExtraSpins (real fT,const CGUIQuaternion& rkP, const CGUIQuaternion& rkQ, int32 iExtraSpins)
 	{
 		real fCos = rkP.Dot(rkQ);
 		real fAngle = acos(fCos);

@@ -42,8 +42,9 @@ namespace guiex
 		m_pTowerImplement[eTowerType_Mages] = new CTDGameTowerImplement_Mages( this );
 		m_pTowerImplement[eTowerType_Bombard] = new CTDGameTowerImplement_Bombard( this );
 		m_pTowerImplement[eTowerType_Barracks] = new CTDGameTowerImplement_Barracks( this );
-
 		SetTowerType( eTowerType_Base );
+
+		m_aPosition = pWidgetTower->GetPixelPosition();
 	}
 	//------------------------------------------------------------------------------
 	CTDGameTower::~CTDGameTower()
@@ -53,6 +54,11 @@ namespace guiex
 			delete m_pTowerImplement[i];
 			m_pTowerImplement[i] = NULL;
 		}
+	}
+	//------------------------------------------------------------------------------
+	const CGUIVector2& CTDGameTower::GetPosition() const
+	{
+		return m_aPosition;
 	}
 	//------------------------------------------------------------------------------
 	void CTDGameTower::OnUpdate( real fDeltaTime )

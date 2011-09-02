@@ -9,8 +9,10 @@
 // include
 //============================================================================// 
 #include "guivector3.h"
+#include "guivector2.h"
 #include "guiquaternion.h"
 #include "guimath.h"
+#include "guirotator.h"
 
 //------------------------------------------------------------------------------
 
@@ -71,6 +73,13 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIVector3::CGUIVector3( real fX, real fY, real fZ ) 
 		: x( fX ), y( fY ), z( fZ )
+	{
+	}
+	//------------------------------------------------------------------------------
+	CGUIVector3::CGUIVector3( const CGUIVector2& rVec )
+		: x( rVec.x )
+		, y( rVec.y )
+		, z( 0 )
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -543,7 +552,27 @@ namespace guiex
 		return q * (*this);
 	}
 	//------------------------------------------------------------------------------
+	real CGUIVector3::operator|( const CGUIVector3& v ) const
+	{
+		return x * v.x + y * v.y + z * v.z;
+	}
+	//------------------------------------------------------------------------------
+	CGUIRotator CGUIVector3::Rotation() const
+	{
+		CGUIRotator R;
 
+		// Find yaw.
+		R.Yaw = atan2f(y,x) * 180.f / CGUIMath::GUI_PI;
+
+		// Find pitch.
+		R.Pitch = atan2f(z,sqrtf(x*x+y*y)) * 180.f / CGUIMath::GUI_PI;
+
+		// Find roll.
+		R.Roll = 0;
+
+		return R;
+	}
+	//------------------------------------------------------------------------------
 	CGUIVector3 operator * ( real fScalar, const CGUIVector3& rkVector )
 	{
 		CGUIVector3 kProd;

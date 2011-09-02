@@ -64,6 +64,8 @@ source_group( canvas FILES ${${target_name}_canvas_SRCS} )
 set( ${target_name}_math_SRCS 
 	guivector2.cpp
 	guivector2.h
+	guirotator.cpp
+	guirotator.h
 	guiintvector2.h
 	guivector3.cpp
 	guivector3.h

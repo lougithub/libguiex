@@ -27,6 +27,7 @@ set( ${target_name}_swig_SRCS
 	guitypes.i
 	guivector2.i
 	guivector3.i
+	guirotator.i
 	guiwidget.i
 	guiuicanvaslayer.i
 	guiwidget_box2d.i

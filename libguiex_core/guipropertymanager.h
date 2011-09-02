@@ -46,6 +46,7 @@ namespace guiex
 		ePropertyType_IntSize,
 		ePropertyType_Vector2,
 		ePropertyType_Vector3,
+		ePropertyType_Rotator,
 		ePropertyType_Rect,
 		ePropertyType_Color,
 		ePropertyType_StringRenderInfo,

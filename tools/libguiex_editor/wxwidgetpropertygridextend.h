@@ -68,6 +68,19 @@ public:
 };
 
 // -----------------------------------------------------------------------
+// WxGUIRotatorProperty
+// -----------------------------------------------------------------------
+WX_PG_DECLARE_VARIANT_DATA( CGUIRotator )
+class WxGUIRotatorProperty : public wxPGProperty
+{
+	WX_PG_DECLARE_PROPERTY_CLASS(WxGUIRotatorProperty)
+public:
+	WxGUIRotatorProperty( const wxString& label = wxPG_LABEL, const wxString& name = wxPG_LABEL, const CGUIRotator& value = CGUIRotator() );
+	virtual wxVariant ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const;
+	virtual void RefreshChildren();
+};
+
+// -----------------------------------------------------------------------
 // WxGUIRectProperty
 // -----------------------------------------------------------------------
 WX_PG_DECLARE_VARIANT_DATA( CGUIRect )

@@ -32,7 +32,7 @@
 
 			<property name="scale" type="CGUISize" value="1,1"  category="Default" alternative_save="true"/>
 			<property name="alpha" type="real" value="1"  category="Default" alternative_save="true"/>
-			<property name="rotation" type="CGUIVector3" value="0,0,0"  category="Default" alternative_save="true"/>
+			<property name="rotation" type="CGUIRotator" value="0,0,0"  category="Default" alternative_save="true"/>
 			<property name="movable" type="bool" value="false"  category="Default" alternative_save="true"/>
 			<property name="color" type="CGUIColor" value="255,255,255,255"  category="Default" alternative_save="true"/>
 			<property name="visible" type="bool" value="true"  category="Default" alternative_save="true"/>

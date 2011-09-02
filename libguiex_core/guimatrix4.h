@@ -16,6 +16,7 @@
 #include "guibase.h"
 #include "guivector3.h"
 #include "guivector4.h"
+#include "guirotator.h"
 #include "guimatrix3.h"
 #include "guiquaternion.h"
 #include "guiplane.h"
@@ -70,7 +71,7 @@ namespace guiex
 	*/
 	class GUIEXPORT CGUIMatrix4
 	{
-	protected:
+	public:
 		/// The matrix entries, indexed by [row][col].
 		union 
 		{
@@ -79,9 +80,6 @@ namespace guiex
 		};
 
 	public:
-		/** Default constructor.
-		@note It does <b>NOT</b> initialize the matrix for efficiency.
-		*/
 		inline CGUIMatrix4()
 		{
 		}
@@ -110,16 +108,9 @@ namespace guiex
 			m[3][3] = m33;
 		}
 
-		/** Creates a standard 4x4 transformation matrix with a zero translation part from a rotation/scaling 3x3 matrix.
-		*/
-
 		CGUIMatrix4(const CGUIMatrix3& m3x3);
-
-		/** Creates a standard 4x4 transformation matrix with a zero translation part from a rotation/scaling CGUIQuaternion.
-		*/
-
-		CGUIMatrix4(const CGUIQuaternion& rot);
-
+		CGUIMatrix4(const CGUIQuaternion& Q);
+		CGUIMatrix4(const CGUIRotator& Rot );
 
 		inline real* operator [] ( size_t iRow )
 		{
@@ -467,6 +458,28 @@ namespace guiex
 		real determinant() const;
 		CGUIMatrix4 inverse() const;
 
+		/** Building a Matrix4 from orientation / scale / position.
+        @remarks
+            Transform is performed in the order scale, rotate, translation, i.e. translation is independent
+            of orientation axes, scale does not affect size of translation, rotation and scaling are always
+            centered on the origin.
+        */
+        void makeTransform(const CGUIVector3& position, const CGUIVector3& scale, const CGUIQuaternion& orientation);
+
+        /** Building an inverse Matrix4 from orientation / scale / position.
+        @remarks
+            As makeTransform except it build the inverse given the same data as makeTransform, so
+            performing -translation, -rotate, 1/scale in that order.
+        */
+        void makeInverseTransform(const CGUIVector3& position, const CGUIVector3& scale, const CGUIQuaternion& orientation);
+
+		inline CGUIVector3 GetAxis(uint32 i) const
+		{
+			GUI_ASSERT(i >= 0 && i <= 2, "invalid parameter");
+			return CGUIVector3(m[i][0], m[i][1], m[i][2]);
+		}
+
+		CGUIRotator Rotator() const;
 	};
 
 	/* Removed from CGUIVector4 and made a non-member here because otherwise
@@ -482,6 +495,7 @@ namespace guiex
 			v.x*mat[0][3] + v.y*mat[1][3] + v.z*mat[2][3] + v.w*mat[3][3]
 		);
 	}
+
 
 }
 #endif

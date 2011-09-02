@@ -52,6 +52,8 @@ namespace guiex
 		void CloseTowerSelectPanel();
 		void CloseTowerUpgradePanel();
 
+		const CGUIVector2& GetPosition() const;
+
 	protected:
 		void SetTowerType( ETowerType eType );
 
@@ -63,6 +65,7 @@ namespace guiex
 		CGUIVector2 m_aAnchorPoint;
 		CGUISize m_aSize;
 
+		CGUIVector2 m_aPosition;
 		CGUIRect m_aRenderRect;
 		CGUIColor m_aRenderColor;
 

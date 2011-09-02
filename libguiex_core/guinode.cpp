@@ -84,8 +84,7 @@ namespace guiex
 			m_aDerivedScale = m_aScale;
 		}
 
-		//NodeMakeTransform( NodeGetPosition(), NodeGetScale(), NodeGetOrientation(), mCachedTransform);
-		NodeMakeTransform( NodeGetDerivedPosition(), NodeGetDerivedScale(), NodeGetDerivedOrientation(), mCachedFullTransform);
+		mCachedFullTransform.makeTransform( NodeGetDerivedPosition(), NodeGetDerivedScale(), NodeGetDerivedOrientation() );
 		mCachedFullInverseTransform = mCachedFullTransform.inverse();
 	}
 	//-----------------------------------------------------------------------

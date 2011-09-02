@@ -14,6 +14,7 @@
 #include "guibase.h"
 #include "guievent.h"
 #include "guirect.h"
+#include "guirotator.h"
 #include "guinode.h"
 #include "guicolorrect.h"
 #include "guistringrender.h"
@@ -279,12 +280,9 @@ namespace guiex
 		void SetSizeType( EScreenValue eValueType );
 		EScreenValue GetSizeType( ) const;
 
-		void SetRotation(real x, real y, real z); //in degrees
-		void Roll( real x ); //x
-		void Pitch( real y ); //y
-		void Yaw( real z ); //z
-		void SetRotation(const CGUIVector3& rRotation);
-		CGUIVector3 GetRotation( ) const;
+		void SetRotation(real InPitch, real InYaw, real InRoll); //in degrees
+		void SetRotation(const CGUIRotator& rRotation);
+		const CGUIRotator& GetRotation( ) const;
 
 		const CGUIMatrix4& GetFullTransform(void);
 
@@ -551,7 +549,7 @@ namespace guiex
 		CGUISize m_aMaxSize; //maximum size of widget,it doesn't work if the value is (0,0)
 		CGUISize m_aMinSize; //minimum size of widget,it doesn't work if the value is (0,0)
 
-		CGUIVector3 m_vRotation;
+		CGUIRotator m_rRotation;
 
 		CGUIRenderRect m_aHitTestArea; //!< hit test area of this rect.
 

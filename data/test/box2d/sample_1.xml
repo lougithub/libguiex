@@ -32,7 +32,7 @@
             <property name="value" type="CGUISize" value="136,23" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
-        <property name="rotation" type="CGUIVector3" value="0,0,45" />
+        <property name="rotation" type="CGUIRotator" value="0,45, 0" />
         <property name="OnMouseLeftClick" type="CGUIEvent" value="body_onclick" />
     </property>
     <property name="sample_1_dynamicbody_2" type="CGUIWidgetDefine" value="CGUIWgtBox2DDynamicBody">
@@ -46,7 +46,6 @@
             <property name="value" type="CGUISize" value="14,96" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
-        <property name="rotation" type="CGUIVector3" value="0,0,1" />
         <property name="OnMouseLeftClick" type="CGUIEvent" value="body_onclick" />
     </property>
     <property name="sample_1_staticbody_4" type="CGUIWidgetDefine" value="CGUIWgtBox2DStaticBody">

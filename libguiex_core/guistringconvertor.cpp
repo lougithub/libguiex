@@ -499,6 +499,43 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
+	//convert for CGUIRotator
+	template< >
+	CGUIString GetValueType<CGUIRotator>( )
+	{
+		return "CGUIRotator";
+	}
+	template<  >
+	int32 StringToValue<CGUIRotator>( const CGUIString& rString, CGUIRotator& rValue)
+	{
+		//string should have format as "pitch,yaw,roll"
+		std::vector<CGUIString> aListString= StringToVector(rString);
+
+		if( aListString.size() != 3 )
+		{
+			GUI_THROW( GUI_FORMAT(
+				"[StringToValue[StringToValue]]: string value format is wrong! <%s>",
+				rString.c_str()));
+			return -1;
+		}
+
+		StringToValue(aListString[0], rValue.Pitch);
+		StringToValue(aListString[1], rValue.Yaw);
+		StringToValue(aListString[2], rValue.Roll);
+		return 0;
+	}
+
+	template<  >
+	int32 ValueToString<CGUIRotator>( const CGUIRotator& rValue, CGUIString& rString )
+	{
+		std::stringstream stream;
+		stream.width(0);
+		stream.fill(' ');
+		stream << rValue.Pitch<<','<<rValue.Yaw<<','<<rValue.Roll;
+		rString = stream.str();
+		return 0;
+	}
+	//------------------------------------------------------------------------------
 	//convert for CGUIColor
 	template< >
 	CGUIString GetValueType<CGUIColor>( )

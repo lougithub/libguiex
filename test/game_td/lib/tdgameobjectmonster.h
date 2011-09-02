@@ -27,7 +27,7 @@ namespace guiex
 			eMonsterState_MoveToTarget,
 			eMonsterState_LeaveMap,
 
-			eMonsterState_None_Max,
+			__eMonsterState_Max__,
 		};
 		enum EAnimState
 		{
@@ -80,7 +80,7 @@ namespace guiex
 		CGUIAnimation* m_arrayAnimations[__eAnimState_MAX__];
 
 		EMonsterState m_eMonsterState;
-		class CTDGameMonsterState* m_arrayMonsterState[eMonsterState_None_Max];
+		class CTDGameMonsterState* m_arrayMonsterState[__eMonsterState_Max__];
 
 
 		real m_fAlpha;

@@ -11,6 +11,7 @@
 		<property name="level001" type="group" >
 			<property name="price" type="uint32" value="100" />
 			<property name="sell_price" type="uint32" value="50" />
+			<property name="reload" type="real" value="3" />
 			<property name="AnimTower_Idle" type="CGUIAnimation" value="ArcherTowerLevel1_Idle" />
 			<property name="AnimArcher_Idle_DownRight" type="CGUIAnimation" value="ArcherLevel1_Idle_DownRight" />
 			<property name="AnimArcher_Idle_UpRight" type="CGUIAnimation" value="ArcherLevel1_Idle_UpRight" />
@@ -27,6 +28,7 @@
 		<property name="level002" type="group" >
 			<property name="price" type="uint32" value="70" />
 			<property name="sell_price" type="uint32" value="85" />
+			<property name="reload" type="real" value="3" />
 			<property name="AnimTower_Idle" type="CGUIAnimation" value="ArcherTowerLevel2_Idle" />
 			<property name="AnimArcher_Idle_DownRight" type="CGUIAnimation" value="ArcherLevel2_Idle_DownRight" />
 			<property name="AnimArcher_Idle_UpRight" type="CGUIAnimation" value="ArcherLevel2_Idle_UpRight" />
@@ -43,6 +45,7 @@
 		<property name="level003" type="group" >
 			<property name="price" type="uint32" value="100" />
 			<property name="sell_price" type="uint32" value="135" />
+			<property name="reload" type="real" value="3" />
 			<property name="AnimTower_Idle" type="CGUIAnimation" value="ArcherTowerLevel3_Idle" />
 			<property name="AnimArcher_Idle_DownRight" type="CGUIAnimation" value="ArcherLevel3_Idle_DownRight" />
 			<property name="AnimArcher_Idle_UpRight" type="CGUIAnimation" value="ArcherLevel3_Idle_UpRight" />
@@ -69,6 +72,7 @@
 		<property name="level001" type="group" >
 			<property name="price" type="uint32" value="100" />
 			<property name="sell_price" type="uint32" value="135" />
+			<property name="reload" type="real" value="3" />
 			<property name="AnimTower_Idle" type="CGUIAnimation" value="MageTowerLevel1_Idle" />
 			<property name="AnimTower_Attack" type="CGUIAnimation" value="MageTowerLevel1_Attack" />
 			<property name="mage_pos" type="CGUIVector2" value="0, -15" />
@@ -77,6 +81,7 @@
 		<property name="level002" type="group" >
 			<property name="price" type="uint32" value="100" />
 			<property name="sell_price" type="uint32" value="135" />
+			<property name="reload" type="real" value="3" />
 			<property name="AnimTower_Idle" type="CGUIAnimation" value="MageTowerLevel2_Idle" />
 			<property name="AnimTower_Attack" type="CGUIAnimation" value="MageTowerLevel2_Attack" />
 			<property name="mage_pos" type="CGUIVector2" value="0, -15" />
@@ -85,6 +90,7 @@
 		<property name="level003" type="group" >
 			<property name="price" type="uint32" value="100" />
 			<property name="sell_price" type="uint32" value="135" />
+			<property name="reload" type="real" value="3" />
 			<property name="AnimTower_Idle" type="CGUIAnimation" value="MageTowerLevel3_Idle" />
 			<property name="AnimTower_Attack" type="CGUIAnimation" value="MageTowerLevel3_Attack" />
 			<property name="mage_pos" type="CGUIVector2" value="0, -15" />
@@ -97,6 +103,7 @@
 		<property name="level001" type="group" >
 			<property name="price" type="uint32" value="100" />
 			<property name="sell_price" type="uint32" value="135" />
+			<property name="reload" type="real" value="3" />
 			<property name="AnimTower_Idle" type="CGUIAnimation" value="BarrackTowerLevel1_Idle" />
 			<property name="AnimTower_Open" type="CGUIAnimation" value="BarrackTowerLevel1_Open" />
 			<property name="AnimTower_Close" type="CGUIAnimation" value="BarrackTowerLevel1_Close" />
@@ -104,6 +111,7 @@
 		<property name="level002" type="group" >
 			<property name="price" type="uint32" value="100" />
 			<property name="sell_price" type="uint32" value="135" />
+			<property name="reload" type="real" value="3" />
 			<property name="AnimTower_Idle" type="CGUIAnimation" value="BarrackTowerLevel2_Idle" />
 			<property name="AnimTower_Open" type="CGUIAnimation" value="BarrackTowerLevel2_Open" />
 			<property name="AnimTower_Close" type="CGUIAnimation" value="BarrackTowerLevel2_Close" />
@@ -111,6 +119,7 @@
 		<property name="level003" type="group" >
 			<property name="price" type="uint32" value="100" />
 			<property name="sell_price" type="uint32" value="135" />
+			<property name="reload" type="real" value="3" />
 			<property name="AnimTower_Idle" type="CGUIAnimation" value="BarrackTowerLevel3_Idle" />
 			<property name="AnimTower_Open" type="CGUIAnimation" value="BarrackTowerLevel3_Open" />
 			<property name="AnimTower_Close" type="CGUIAnimation" value="BarrackTowerLevel3_Close" />
@@ -123,18 +132,21 @@
 		<property name="level001" type="group" >
 			<property name="price" type="uint32" value="100" />
 			<property name="sell_price" type="uint32" value="135" />
+			<property name="reload" type="real" value="3" />
 			<property name="AnimTower_Idle" type="CGUIAnimation" value="BombardTowerLevel1_Idle" />
 			<property name="AnimTower_Attack" type="CGUIAnimation" value="BombardTowerLevel1_Attack" />
 		</property>  
 		<property name="level002" type="group" >
 			<property name="price" type="uint32" value="100" />
 			<property name="sell_price" type="uint32" value="135" />
+			<property name="reload" type="real" value="3" />
 			<property name="AnimTower_Idle" type="CGUIAnimation" value="BombardTowerLevel2_Idle" />
 			<property name="AnimTower_Attack" type="CGUIAnimation" value="BombardTowerLevel2_Attack" />
 		</property>  
 		<property name="level003" type="group" >
 			<property name="price" type="uint32" value="100" />
 			<property name="sell_price" type="uint32" value="135" />
+			<property name="reload" type="real" value="3" />
 			<property name="AnimTower_Idle" type="CGUIAnimation" value="BombardTowerLevel3_Idle" />
 			<property name="AnimTower_Attack" type="CGUIAnimation" value="BombardTowerLevel3_Attack" />
 		</property>  

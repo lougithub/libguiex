@@ -1,0 +1,32 @@
+<guiex>
+
+	<property name="arrow1" type="group" >
+    <property name="AnimFly" type="CGUIAnimation" value="Bullet_Arrow1_Fly" />
+    <property name="AnimExplosion" type="CGUIAnimation" value="Bullet_Arrow1_Explosion" />
+	<property name="speed" type="real" value="30" />
+	</property>
+
+  <property name="bomb1" type="group" >
+    <property name="AnimFly" type="CGUIAnimation" value="Bullet_Bomb1_Fly" />
+    <property name="AnimExplosion" type="CGUIAnimation" value="Bullet_Bomb1_Explosion" />
+	<property name="speed" type="real" value="30" />
+  </property>
+
+  <property name="bomb2" type="group" >
+    <property name="AnimFly" type="CGUIAnimation" value="Bullet_Bomb2_Fly" />
+    <property name="AnimExplosion" type="CGUIAnimation" value="Bullet_Bomb2_Explosion" />
+	<property name="speed" type="real" value="30" />
+  </property>
+
+  <property name="bomb3" type="group" >
+    <property name="AnimFly" type="CGUIAnimation" value="Bullet_Bomb3_Fly" />
+    <property name="AnimExplosion" type="CGUIAnimation" value="Bullet_Bomb3_Explosion" />
+	<property name="speed" type="real" value="30" />
+  </property>
+
+  <property name="magicball1" type="group" >
+    <property name="AnimFly" type="CGUIAnimation" value="Bullet_MagicBall1_Fly" />
+    <property name="AnimExplosion" type="CGUIAnimation" value="Bullet_MagicBall1_Explosion" />
+	<property name="speed" type="real" value="30" />
+  </property>
+</guiex>

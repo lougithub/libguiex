@@ -81,7 +81,7 @@ namespace guiex
 	* @class CGUIAsWidgetRotation
 	* @brief the as, change rotation of widget
 	*/
-	class GUIEXPORT CGUIAsWidgetRotation : public CGUIAsInterpolation<CGUIVector3>
+	class GUIEXPORT CGUIAsWidgetRotation : public CGUIAsInterpolation<CGUIRotator>
 	{
 	protected:
 		CGUIAsWidgetRotation(const CGUIString& rAsName, const CGUIString& rSceneName);

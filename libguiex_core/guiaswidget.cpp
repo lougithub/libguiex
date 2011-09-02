@@ -64,7 +64,7 @@ namespace guiex
 	//*****************************************************************************
 	//------------------------------------------------------------------------------
 	CGUIAsWidgetRotation::CGUIAsWidgetRotation(const CGUIString& rAsName, const CGUIString& rSceneName)
-		:CGUIAsInterpolation<CGUIVector3>("CGUIAsWidgetRotation", rAsName, rSceneName )
+		:CGUIAsInterpolation<CGUIRotator>("CGUIAsWidgetRotation", rAsName, rSceneName )
 	{
 	}
 	//------------------------------------------------------------------------------

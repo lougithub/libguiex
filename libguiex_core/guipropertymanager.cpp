@@ -47,6 +47,7 @@ namespace guiex
 		RegisterPropertyType( ePropertyType_LocalizedString, "CGUILocalizedString" );
 		RegisterPropertyType( ePropertyType_Vector2, "CGUIVector2" );
 		RegisterPropertyType( ePropertyType_Vector3, "CGUIVector3" );
+		RegisterPropertyType( ePropertyType_Rotator, "CGUIRotator" );
 		RegisterPropertyType( ePropertyType_Color, "CGUIColor" );
 		RegisterPropertyType( ePropertyType_StringRenderInfo, "CGUIStringRenderInfo" );
 		RegisterPropertyType( ePropertyType_SBlendFunc, "SGUIBlendFunc" );

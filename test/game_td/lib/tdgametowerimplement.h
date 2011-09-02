@@ -38,6 +38,7 @@ namespace guiex
 		{
 			uint32 m_uPrice;
 			uint32 m_uSellPrice;
+			real m_fReloadTime;
 			std::map<CGUIString, CGUIAnimation*> m_mapAnimations;
 			const class CGUIProperty* m_pLevelProperty;
 		};
@@ -58,6 +59,7 @@ namespace guiex
 
 		const CGUIRect& GetRenderRect() const {return m_pGameTower->GetRenderRect();}
 		const CGUIColor& GetRenderColor() const {return m_pGameTower->GetRenderColor();}
+		const CGUIVector2& GetPosition() const {return m_pGameTower->GetPosition();}
 
 		virtual uint32 GetUpgradeCost() const{return 0;}
 		virtual void Upgrade(){}
@@ -133,6 +135,8 @@ namespace guiex
 
 		virtual void UpdateTowerDataByLevel( );
 
+		virtual void Attack();
+
 	protected:
 		CGUIAnimation* m_pAnimBuilding;
 
@@ -141,6 +145,8 @@ namespace guiex
 		//data for state construct
 		real m_fBuildingTime;
 		real m_fBuildingTimeElapsed;
+
+		real m_fWaitTime;
 
 		std::vector<STowerLevelInfo> m_vecLevelInfos;
 	};

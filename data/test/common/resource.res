@@ -355,12 +355,12 @@
 		<property name="size" type="CGUISize" value="32,32"/>
 	</property>
 	<property name="progress_border" type="CGUIImageDefine">
-		<property  name="path" type="CGUIString" value="image/Loading-BarBorder.tga" />
+		<property  name="path" type="CGUIString" value="image/Loading-BarBorder.png" />
 		<property name="uv" type="CGUIRect" value="0,0,512,64" />
 		<property name="size" type="CGUISize" value="512,64"/>
 	</property>
 	<property name="progress_spark" type="CGUIImageDefine">
-		<property  name="path" type="CGUIString" value="image/LoadingBar-Spark.tga" />
+		<property  name="path" type="CGUIString" value="image/LoadingBar-Spark.png" />
 		<property name="uv" type="CGUIRect" value="0,0,32,32" />
 		<property name="size" type="CGUISize" value="32,32"/>
 	</property>

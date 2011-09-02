@@ -16,6 +16,7 @@
 %include	"guisize.i"
 %include	"guivector2.i"
 %include	"guivector3.i"
+%include	"guirotator.i"
 %include	"guirect.i"
 %include	"guicolorrect.i"
 %include	"guitimer.i"
