@@ -401,9 +401,9 @@ namespace guiex
 		{
 			//a.Working backwards from the target to the starting location by checking
 			//	each cell's parent, figure out the length of the path.
-			int32 pathX = targetX;
-			int32 pathY = targetY;
-			int32 pathLength = 0;
+			uint32 pathX = targetX;
+			uint32 pathY = targetY;
+			uint32 pathLength = 0;
 			do
 			{
 				//Look up the parent of the current cell.	
