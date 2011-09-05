@@ -302,6 +302,7 @@ void RegisterKeyboard()
 //------------------------------------------------------------------------------
 void exitCB()
 {
+	QuitApp();
 }
 
 //------------------------------------------------------------------------------
@@ -331,7 +332,6 @@ int main(int argc, char** argv)
 #endif
 
 	srand( time(NULL) );
-	//atexit(exitCB);
 
 	// Do GLUT init
 	glutInit( &argc, argv );
@@ -372,6 +372,8 @@ int main(int argc, char** argv)
 	g_pFramework = GUIEXCreateFramework( );
 	g_pFramework->Initialize( guiex::CGUIIntSize( g_nScreenWidth, g_nScreenHeight ), rDir.c_str() );
 	RegisterKeyboard();
+
+	atexit(exitCB);
 
 #if defined(GUIEX_PLATFORM_WIN32)
 	HWND hWnd = FindWindowA("GLUT", "libguiex demo");

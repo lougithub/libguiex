@@ -191,7 +191,7 @@ namespace guiex
 			if( pObject->IsAlive() == false )
 			{
 				m_aObjectManager.FreeObject( pObject );
-				m_arrayObjectBullet.erase( itor );
+				itor = m_arrayObjectBullet.erase( itor );
 			}
 			else
 			{
@@ -233,6 +233,36 @@ namespace guiex
 		{
 			(*itor)->OnRender( pRender );
 		}
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameWorld::FindMonsters( const CGUIVector2& rCenter, real fRadius, std::vector<class CTDGameObjectMonster*> rArrayMonster )
+	{
+		rArrayMonster.clear();
+		for( TMonsterObjects::iterator itor = m_arrayObjectMonster.begin();
+			itor != m_arrayObjectMonster.end();
+			++itor )
+		{
+			CTDGameObjectMonster* pMonster = *itor;
+			if( (rCenter - pMonster->GetPosition()).SquaredLength() <= fRadius*fRadius )
+			{
+				rArrayMonster.push_back( pMonster );
+			}
+		}
+	}
+	//------------------------------------------------------------------------------
+	CTDGameObjectMonster*  CTDGameWorld::FindMonster( const CGUIVector2& rCenter, real fRadius )
+	{
+		for( TMonsterObjects::iterator itor = m_arrayObjectMonster.begin();
+			itor != m_arrayObjectMonster.end();
+			++itor )
+		{
+			CTDGameObjectMonster* pMonster = *itor;
+			if( (rCenter - pMonster->GetPosition()).SquaredLength() <= fRadius*fRadius )
+			{
+				return pMonster;
+			}
+		}
+		return NULL;
 	}
 	//------------------------------------------------------------------------------
 	void CTDGameWorld::AllocateMonster( const CGUIString& rMonsterType, const CGUIString& rStartPathNode )

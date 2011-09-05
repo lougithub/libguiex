@@ -60,6 +60,8 @@ namespace guiex
 
 		void AllocateBullet(const CGUIString& rBulletType, const CGUIVector2& rStartPos, class CTDGameObjectMonster* pTarget);
 		void AllocateMonster( const CGUIString& rMonsterType, const CGUIString& rStartPathNode );
+		void FindMonsters( const CGUIVector2& rCenter, real fRadius, std::vector<class CTDGameObjectMonster*> rArrayMonster );
+		class CTDGameObjectMonster* FindMonster( const CGUIVector2& rCenter, real fRadius );
 
 	protected:
 		virtual void OnRender( IGUIInterfaceRender* pRender );

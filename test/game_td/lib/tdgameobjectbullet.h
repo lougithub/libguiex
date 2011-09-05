@@ -42,24 +42,28 @@ namespace guiex
 		virtual void OnRender( IGUIInterfaceRender* pRender );
 		virtual void OnUpdate( real fDeltaTime );
 
+		virtual void OnUpdateFly( real fDeltaTime );
+		virtual void OnUpdateExplosion( real fDeltaTime );
+		
+
+		virtual real UpdateBulletFlying( real fDeltaTime );
+		virtual void HitEnemy( );
+
 	protected:
 		EBulletState m_eBulletState;
 		CGUIAnimation* m_arrayAnimations[__eBulletState_MAX__];
+		real m_fGravity;
+		real m_fDistance;
 
-		real m_fSpeed;
 
 		CGUISize m_aSize;
 		CGUIVector2 m_vPosition;
 		real m_fYaw;
 
-		bool m_bSelfRotation;
-		real m_fSelfRotation;
+		uint32 m_uRotationSpeed;
+		uint32 m_uRotation;
 		CGUIRotator m_rRotator;
-
-		//test
-		CGUIVector2 m_vTestTargetPos;
-		//test
-
+		CGUIVector2 m_vCurrentVelocity;
 
 		class CTDGameObjectMonster* m_pTarget;
 	};

@@ -132,6 +132,7 @@ namespace guiex
 			rInfo.m_uPrice = pLevelProp->GetProperty("price")->GetSpecifiedValue<uint32>();
 			rInfo.m_uSellPrice = pLevelProp->GetProperty("sell_price")->GetSpecifiedValue<uint32>();
 			rInfo.m_fReloadTime = pLevelProp->GetProperty("reload")->GetSpecifiedValue<real>();
+			rInfo.m_fRadius = pLevelProp->GetProperty("radius")->GetSpecifiedValue<real>();
 			rInfo.m_pLevelProperty = pLevelProp;
 
 			for( uint32 i=0; i<pLevelProp->GetPropertyNum(); ++i )
@@ -258,7 +259,7 @@ namespace guiex
 		//set tower data
 		UpdateTowerDataByLevel();
 
-		m_fWaitTime = 0.0f;
+		m_fWaitTime = GetLevelInfo( m_uLevel )->m_fReloadTime;
 	}
 	//------------------------------------------------------------------------------
 	void CTDGameTowerImplement_TowerBase::OnLeaveState_Idle()
@@ -284,12 +285,19 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CTDGameTowerImplement_TowerBase::OnUpdateState_Idle(real fDeltaTime)
 	{
-		m_fWaitTime += fDeltaTime;
+		if( m_fWaitTime < GetLevelInfo( m_uLevel )->m_fReloadTime )
+		{
+			m_fWaitTime += fDeltaTime;
+		}
 
 		if( m_fWaitTime >= GetLevelInfo( m_uLevel )->m_fReloadTime )
 		{
-			m_fWaitTime -= GetLevelInfo( m_uLevel )->m_fReloadTime;
-			Attack();
+			CTDGameObjectMonster* pMonster = GetGameWorld()->FindMonster( GetPosition(), GetLevelInfo( m_uLevel )->m_fRadius );
+			if( pMonster )
+			{
+				Attack( pMonster );
+				m_fWaitTime = 0.0f;
+			}
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -323,9 +331,9 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_TowerBase::Attack( )
+	void CTDGameTowerImplement_TowerBase::Attack( CTDGameObjectMonster* pMonster )
 	{
-		GetGameWorld()->AllocateBullet( "bomb1", GetPosition() + CGUIVector2( 40, 0 ), NULL );
+		GetGameWorld()->AllocateBullet( "bomb1", GetPosition() + CGUIVector2( 40, 0 ), pMonster );
 	}
 	//------------------------------------------------------------------------------
 

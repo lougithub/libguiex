@@ -39,6 +39,7 @@ namespace guiex
 			uint32 m_uPrice;
 			uint32 m_uSellPrice;
 			real m_fReloadTime;
+			real m_fRadius;
 			std::map<CGUIString, CGUIAnimation*> m_mapAnimations;
 			const class CGUIProperty* m_pLevelProperty;
 		};
@@ -135,7 +136,7 @@ namespace guiex
 
 		virtual void UpdateTowerDataByLevel( );
 
-		virtual void Attack();
+		virtual void Attack( class CTDGameObjectMonster* pMonster );
 
 	protected:
 		CGUIAnimation* m_pAnimBuilding;
