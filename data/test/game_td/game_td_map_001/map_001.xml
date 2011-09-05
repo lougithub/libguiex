@@ -22,17 +22,6 @@
         </property>
         <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
     </property>
-    <property name="gameworldlayer" type="CGUIWidgetDefine" value="CTDWgtGameWorldLayer">
-        <property name="parent" type="CGUIString" value="image_map" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="0,0" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="value" type="CGUISize" value="1,1" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
-        </property>
-    </property>
     <property name="node_towers" type="CGUIWidgetDefine" value="CGUIWgtEmptyNode">
         <property name="parent" type="CGUIString" value="image_map" />
         <property name="position" type="CGUIWidgetPosition">
@@ -174,6 +163,18 @@
             <property name="value" type="CGUISize" value="46,44" />
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
         </property>
+    </property>
+    <property name="gameworldlayer" type="CGUIWidgetDefine" value="CTDWgtGameWorldLayer">
+        <property name="parent" type="CGUIString" value="image_map" />
+        <property name="position" type="CGUIWidgetPosition">
+            <property name="value" type="CGUIVector2" value="0,0" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+        </property>
+        <property name="size" type="CGUIWidgetSize">
+            <property name="value" type="CGUISize" value="1,1" />
+            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+        </property>
+        <property name="hitable" type="bool" value="false" />
     </property>
     <property name="button_nextturn" type="CGUIWidgetDefine" value="CGUIWgtButton">
         <property name="parent" type="CGUIString" value="image_startbtnbg" />

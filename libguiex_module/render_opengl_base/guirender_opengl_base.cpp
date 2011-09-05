@@ -520,6 +520,38 @@ namespace guiex
 		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DrawRect: ");
 	}
 	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_base::DrawCircle(
+							const CGUIVector2& rCenter,
+							real fRadius,
+							real fLineWidth,
+							real z,
+							const CGUIColor& rColor )
+	{
+		long oglcolor = ColorToOpengl(rColor);
+		
+		for (int i = 0; i < VERTEX_FOR_CIRCLE; i ++) 
+		{
+			// x value
+			m_pVertexForCircle[i].x   = cos(i*CGUIMath::GUI_PI / 180.f) * fRadius + rCenter.x;
+			// y value
+			m_pVertexForCircle[i].y = sin(i*CGUIMath::GUI_PI / 180.f) * fRadius + rCenter.y;
+			m_pVertexForCircle[i].z = z;
+		}
+	
+		glLineWidth( fLineWidth );
+		glDisable(GL_TEXTURE_2D);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		
+		glVertexPointer(3, GL_FLOAT, 0, m_pVertexForLine);
+		glDrawArrays(GL_LINE_LOOP, 0, VERTEX_FOR_CIRCLE);
+		
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glEnable(GL_TEXTURE_2D);
+		glLineWidth( 1.0f );
+		
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DrawCircle: ");		
+	}
+	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::DrawLine(
 		const CGUIVector2 &rBegin, 
 		const CGUIVector2 &rEnd, 
@@ -528,7 +560,6 @@ namespace guiex
 		const CGUIColor& rColor_begin,
 		const CGUIColor& rColor_end )
 	{
-
 		long oglcolor_topleft = ColorToOpengl(rColor_begin);
 		long oglcolor_bottomleft = ColorToOpengl(rColor_end);
 

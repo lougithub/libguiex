@@ -104,6 +104,13 @@ namespace guiex
 			real z,
 			const CGUIColor& rColor_begin,
 			const CGUIColor& rColor_end);
+		
+		virtual void DrawCircle(
+			const CGUIVector2& rCenter,
+			real fRadius,
+			real fLineWidth,
+			real z,
+			const CGUIColor& rColor );
 
 		virtual void PushClipRect( const CGUIRect& rClipRect );
 		virtual void PopClipRect( );
@@ -172,9 +179,11 @@ namespace guiex
 		//cache for system
 		static const int VERTEX_PER_TEXTURE = 4;
 		static const int VERTEX_FOR_LINE = 4;
+		static const int VERTEX_FOR_CIRCLE = 360;
 		SR_T2F_C4UB_V3F m_pVertex[VERTEX_PER_TEXTURE];
 		SR_V3F m_pVertexForStencil[VERTEX_PER_TEXTURE];
 		SR_C4UB_V3F m_pVertexForLine[VERTEX_FOR_LINE];
+		SR_V3F m_pVertexForCircle[VERTEX_FOR_CIRCLE];
 
 		real m_gl_matrix[16];
 

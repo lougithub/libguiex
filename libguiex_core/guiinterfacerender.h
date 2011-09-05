@@ -151,6 +151,13 @@ namespace guiex
 			real z,
 			const CGUIColor& rColor_begin,
 			const CGUIColor& rColor_end) = 0;
+		
+		virtual void DrawCircle(
+			const CGUIVector2& rCenter,
+			real fRadius,
+			real fLineWidth,
+			real z,
+			const CGUIColor& rColor ) = 0;
 
 		virtual void PushClipRect( const CGUIRect& rClipRect ) = 0;
 		virtual void PopClipRect( ) = 0;

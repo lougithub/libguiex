@@ -283,6 +283,11 @@ namespace guiex
 		m_pAnimBuilding->Draw( pRender, GetRenderRect(), 0.0f, GetRenderColor(), 1.0f );
 	}
 	//------------------------------------------------------------------------------
+	void CTDGameTowerImplement_TowerBase::OnRenderState_Idle(IGUIInterfaceRender* pRender)
+	{
+		pRender->DrawCircle( GetPosition(), GetLevelInfo(m_uLevel)->m_fRadius,2, 0, CGUIColor(1,1,1,1));
+	}
+	//------------------------------------------------------------------------------
 	void CTDGameTowerImplement_TowerBase::OnUpdateState_Idle(real fDeltaTime)
 	{
 		if( m_fWaitTime < GetLevelInfo( m_uLevel )->m_fReloadTime )
@@ -333,7 +338,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CTDGameTowerImplement_TowerBase::Attack( CTDGameObjectMonster* pMonster )
 	{
-		GetGameWorld()->AllocateBullet( "bomb1", GetPosition() + CGUIVector2( 40, 0 ), pMonster );
+		GetGameWorld()->AllocateBullet( "bomb1", GetPosition(), pMonster );
 	}
 	//------------------------------------------------------------------------------
 

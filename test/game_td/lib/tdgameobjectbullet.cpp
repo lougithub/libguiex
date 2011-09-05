@@ -51,7 +51,7 @@ namespace guiex
 		
 		m_uRotationSpeed = rBulletProp["rotation_speed"]->GetSpecifiedValue<uint32>();
 		
-		m_aSize = m_arrayAnimations[eBulletState_Fly]->GetSize();
+		//m_aSize = m_arrayAnimations[eBulletState_Fly]->GetSize();
 		m_vPosition = rStartPos;
 
 		m_eBulletState = eBulletState_Fly;
@@ -108,11 +108,12 @@ namespace guiex
 		matrix.makeTransform( CGUIVector3(m_vPosition), CGUIVector3(1.0f,1.0f,1.0f), CGUIQuaternion( m_rRotator));
 		pRender->MultMatrix( matrix );
 
+		const CGUISize& rSize = m_arrayAnimations[eBulletState_Fly]->GetSize();
 		CGUIRect aRenderRect( 
-			- m_aSize.m_fWidth/2, 
-			- m_aSize.m_fHeight/2,
-			+ m_aSize.m_fHeight/2, 
-			+ m_aSize.m_fHeight/2);
+			- rSize.m_fWidth/2, 
+			- rSize.m_fHeight/2,
+			+ rSize.m_fHeight/2, 
+			+ rSize.m_fHeight/2);
 
 		m_arrayAnimations[m_eBulletState]->Draw( pRender, aRenderRect, 0, 1.0f );
 

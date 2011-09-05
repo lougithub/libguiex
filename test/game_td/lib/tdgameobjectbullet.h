@@ -56,7 +56,7 @@ namespace guiex
 		real m_fDistance;
 
 
-		CGUISize m_aSize;
+		//CGUISize m_aSize;
 		CGUIVector2 m_vPosition;
 		real m_fYaw;
 

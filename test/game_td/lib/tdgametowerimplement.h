@@ -131,7 +131,7 @@ namespace guiex
 
 		virtual void OnEnterState_Idle();
 		virtual void OnUpdateState_Idle(real fDeltaTime);
-		virtual void OnRenderState_Idle(IGUIInterfaceRender* pRender){}
+		virtual void OnRenderState_Idle(IGUIInterfaceRender* pRender);
 		virtual void OnLeaveState_Idle();
 
 		virtual void UpdateTowerDataByLevel( );
