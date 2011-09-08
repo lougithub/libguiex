@@ -527,8 +527,6 @@ namespace guiex
 							real z,
 							const CGUIColor& rColor )
 	{
-		long oglcolor = ColorToOpengl(rColor);
-		
 		for (int i = 0; i < VERTEX_FOR_CIRCLE; i ++) 
 		{
 			// x value
@@ -542,7 +540,8 @@ namespace guiex
 		glDisable(GL_TEXTURE_2D);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		
-		glVertexPointer(3, GL_FLOAT, 0, m_pVertexForLine);
+		glVertexPointer(3, GL_FLOAT, sizeof(SR_V3F), m_pVertexForCircle);
+		glColor4f(rColor.GetRed(), rColor.GetGreen(), rColor.GetBlue(), rColor.GetAlpha());
 		glDrawArrays(GL_LINE_LOOP, 0, VERTEX_FOR_CIRCLE);
 		
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -578,6 +577,7 @@ namespace guiex
 		glLineWidth( fLineWidth );
 		glDisable(GL_TEXTURE_2D);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		glDisableClientState(GL_COLOR_ARRAY);
 
 		int32 offset = (int32) m_pVertexForLine;
 		int32 diff = offsetof( SR_C4UB_V3F, vertices);
@@ -587,6 +587,7 @@ namespace guiex
 		glDrawArrays(GL_LINES, 0, 2);
 
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glEnableClientState(GL_COLOR_ARRAY);
 		glEnable(GL_TEXTURE_2D);
 		glLineWidth( 1.0f );
 

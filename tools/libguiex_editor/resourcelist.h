@@ -46,10 +46,18 @@ public:
 	wxBitmap* GetImageThumbnail( const wxString& rImageName );
 	wxBitmap* GetOriginalImageThumbnail( const wxString& rImageName );
 
+	const wxArrayString& GetAnimationList();
+	wxBitmap* GetAnimationThumbnail( const wxString& rImageName ) const;
+	CGUIAnimationData* GetFullAnimationThumbnail( const wxString& rImageName ) const;
+
 protected:
 	//update image used in the system
 	void UpdateImageList();
 	void ResetImageList();
+
+	//update animation used in the system
+	void UpdateAnimationList();
+	void ResetAnimationList();
 
 	//update as used in the system
 	void UpdateAsList();
@@ -81,8 +89,11 @@ protected:
 
 private:
 	wxArrayString m_arrayImageArray;
+	wxArrayString m_arrayAnimationArray;
 	std::map<wxString, wxBitmap*> m_mapImageThumbnails;
 	std::map<wxString, wxBitmap*> m_mapOriginalImageThumbnails;
+	std::map<wxString, wxBitmap*> m_mapAnimationThumbnails;
+	std::map<wxString, CGUIAnimationData* > m_mapFullAnimationThumbnails;
 	wxArrayString m_arrayAsArray;
 	wxArrayString m_arrayParticle2DArray;
 	wxArrayString m_arrayTiledMapArray;

@@ -149,34 +149,29 @@ void WxImageSelectDialog::OnListBoxSelect(wxCommandEvent& event)
 	if( !m_strImageName.empty() )
 	{
 		CGUIImage* pImage = CGUIImageManager::Instance()->AllocateResource( wx2GuiString( m_strImageName ) );
+		if( pImage && pImage->GetImageType() == eImageType_FromFile )
+		{
+			wxImage* pWxImage = LoadwxImageByGuiImage( pImage );
+			if( pWxImage )
+			{
+				wxBitmap* pOriginalBitmap = new wxBitmap( *pWxImage );
+				delete pWxImage;
+				pWxImage = NULL;
+
+				m_pFullImageCanvas->SetBitmap( pOriginalBitmap );
+				const CGUIRect& rRect = pImage->GetUVRect();
+				wxSize newSize( 
+					pOriginalBitmap->GetSize().GetWidth() * rRect.GetWidth(), 
+					pOriginalBitmap->GetSize().GetHeight()* rRect.GetHeight() );
+				wxPoint newPoint( 
+					rRect.GetPosition().x * pOriginalBitmap->GetSize().GetWidth(), 
+					rRect.GetPosition().y * pOriginalBitmap->GetSize().GetHeight() );
+				wxRect aUVRect( newPoint, newSize );
+				m_pFullImageCanvas->SetUVRect( aUVRect );
+			}
+		}
 		if( pImage )
 		{
-			if( pImage->GetImageType() == eImageType_FromFile )
-			{
-				wxString rImagePath = Gui2wxString( GSystem->GetDataPath() + pImage->GetFullFilePath() );
-				wxFileName filename( rImagePath );
-				if ( filename.FileExists() )
-				{
-					wxImage* pWxImage = new wxImage( filename.GetFullPath(), wxBITMAP_TYPE_TGA );
-					if ( pWxImage && pWxImage->Ok() )
-					{
-						wxBitmap* pOriginalBitmap = new wxBitmap( *pWxImage );
-						delete pWxImage;
-						pWxImage = NULL;
-
-						m_pFullImageCanvas->SetBitmap( pOriginalBitmap );
-						const CGUIRect& rRect = pImage->GetUVRect();
-						wxSize newSize( 
-							pOriginalBitmap->GetSize().GetWidth() * rRect.GetWidth(), 
-							pOriginalBitmap->GetSize().GetHeight()* rRect.GetHeight() );
-						wxPoint newPoint( 
-							rRect.GetPosition().x * pOriginalBitmap->GetSize().GetWidth(), 
-							rRect.GetPosition().y * pOriginalBitmap->GetSize().GetHeight() );
-						wxRect aUVRect( newPoint, newSize );
-						m_pFullImageCanvas->SetUVRect( aUVRect );
-					}
-				}
-			}
 			pImage->RefRelease();
 		}
 	}

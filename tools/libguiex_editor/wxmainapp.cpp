@@ -126,7 +126,7 @@ bool WxMainApp::OnInit()
 	//create frame
 	wxFrame* frame = new WxMainFrame(NULL,
 		wxID_ANY,
-		wxT("liguiex editor"),
+		wxT("libguiex editor"),
 		wxDefaultPosition,
 		wxSize(1024, 768));
 	SetTopWindow(frame);

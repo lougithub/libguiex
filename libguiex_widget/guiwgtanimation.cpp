@@ -12,6 +12,8 @@
 #include <libguiex_core/guianimation.h>
 #include <libguiex_core/guiinterfacerender.h>
 #include <libguiex_core/guiexception.h>
+#include <libguiex_core/guiproperty.h>
+#include <libguiex_core/guipropertyconvertor.h>
 
 //============================================================================//
 // function
@@ -40,12 +42,11 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWgtAnimation::InitAnimation()
 	{
-		m_pAnimationName = "ANIMATION_DEFAULT";
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtAnimation::OnSetAnimation( const CGUIString& rName, CGUIAnimation* pAnimation )
 	{
-		if( rName == "ANIMATION_DEFAULT" )
+		if( rName == "animation" )
 		{
 			m_pAnimationCur = pAnimation;
 			if( GetSize().IsEqualZero() && pAnimation )
@@ -55,27 +56,20 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUIWgtAnimation::SetCurrentAnimation( const CGUIString& rAnimationName)
-	{
-		if( m_pAnimationCur = GetAnimation(rAnimationName))
-		{
-			m_pAnimationName = rAnimationName;
-		}
-		else
-		{
-			//error
-			GUI_THROW( GUI_FORMAT("[CGUIWgtAnimation::SetCurrentAnimation]: failed to get animation by name <%s>!",rAnimationName.c_str()));
-		}
-	}
-	//------------------------------------------------------------------------------
-	const CGUIString& CGUIWgtAnimation::GetCurrentAnimationName(  ) const
-	{
-		return m_pAnimationName;
-	}
-	//------------------------------------------------------------------------------
 	CGUIAnimation* CGUIWgtAnimation::GetCurrentAnimation(  ) const
 	{
 		return m_pAnimationCur;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtAnimation::SetCurrentAnimation( const CGUIString& rName )
+	{
+		CGUIAnimation* pAni = GetAnimation( rName );
+		m_pAnimationCur = pAni;
+
+		if( !pAni )
+		{
+			GUI_THROW( GUI_FORMAT( "failed to find animation by name %d", rName.c_str()));
+		}
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWgtAnimation::UpdateSelf( real fDeltaTime )
@@ -93,6 +87,50 @@ namespace guiex
 		if( m_pAnimationCur)
 		{
 			DrawAnimation( pRender,m_pAnimationCur, GetBoundArea());
+		}
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUIWgtAnimation::GenerateProperty( CGUIProperty& rProperty )
+	{
+		if( rProperty.GetType() == ePropertyType_Animation && rProperty.GetName() == "animation" )
+		{
+			CGUIAnimation* pAnimation = GetAnimation(rProperty.GetName());
+			if( pAnimation )
+			{
+				rProperty.SetValue( pAnimation->GetName() );
+			}
+			else
+			{
+				rProperty.SetValue( "" );
+			}
+		}
+		else
+		{
+			return CGUIWidget::GenerateProperty( rProperty );
+		}
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	void CGUIWgtAnimation::ProcessProperty( const CGUIProperty& rProperty)
+	{
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//property for text
+		if( rProperty.GetType() == ePropertyType_Animation && rProperty.GetName() == "animation")
+		{			
+			if(!rProperty.GetValue().empty())
+			{
+				SetAnimation( "animation", rProperty.GetValue());
+			}
+			else
+			{
+				//clear image
+				SetAnimation( "animation", NULL);
+			}
+
+		}
+		else
+		{
+			CGUIWidget::ProcessProperty( rProperty );
 		}
 	}
 	//------------------------------------------------------------------------------

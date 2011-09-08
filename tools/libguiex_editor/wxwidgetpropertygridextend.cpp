@@ -13,6 +13,7 @@
 #include "editorutility.h"
 #include "resourcelist.h"
 #include "wximageselectdlg.h"
+#include "wxanimationselectdlg.h"
 #include "wxsoundselectdlg.h"
 #include "wxfontselectdlg.h"
 #include "wxlocalizedstringselectdlg.h"
@@ -539,6 +540,94 @@ void WxGUIImageProperty::OnCustomPaint( wxDC& dc, const wxRect& rect, wxPGPaintD
 // -----------------------------------------------------------------------
 
 
+// -----------------------------------------------------------------------
+// WxGUIAnimationProperty
+// -----------------------------------------------------------------------
+WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGUIAnimationProperty,wxPGProperty,CGUIColor,const CGUIColor&,ChoiceAndButton);
+WxGUIAnimationProperty::WxGUIAnimationProperty( const wxString& label, const wxString& name,const wxString& rAnimation )
+	: wxPGProperty(label,name)
+{
+	SetValue( wxVariant( wx2GuiString( rAnimation )) );
+	m_choices.Set(CResourceList::Instance()->GetAnimationList(), 0);
+}
+// -----------------------------------------------------------------------
+void WxGUIAnimationProperty::OnSetValue()
+{
+	wxString variantType = m_value.GetType();
+	if ( variantType == wxPG_VARIANT_TYPE_LONG )
+	{
+		//index of choice
+		wxString strAnimationName = m_choices.GetLabel( m_value.GetInteger() );
+
+		m_value = strAnimationName;
+	}
+}
+// -----------------------------------------------------------------------
+wxString WxGUIAnimationProperty::ValueToString( wxVariant& value, int argFlags ) const
+{
+	wxString s = value.GetString();
+	return s;
+}
+// -----------------------------------------------------------------------
+bool WxGUIAnimationProperty::StringToValue( wxVariant& variant, const wxString& text, int argFlags ) const
+{
+	if ( variant != text )
+	{
+		variant = text;
+		return true;
+	}
+
+	return false;
+}
+// -----------------------------------------------------------------------
+bool WxGUIAnimationProperty::OnEvent( wxPropertyGrid* propgrid, wxWindow* primary, wxEvent& event )
+{
+	if ( propgrid->IsMainButtonEvent(event) )
+	{
+		WxAnimationSelectDialog dialog( propgrid );
+		if ( dialog.ShowModal() == wxID_OK )
+		{
+			SetValueInEvent( dialog.GetAnimationName() );
+			return true;
+		}
+	}
+	return false;
+}
+// -----------------------------------------------------------------------
+wxSize WxGUIAnimationProperty::OnMeasureImage( int item ) const
+{
+	return wxSize(PREF_THUMBNAIL_HEIGHT,PREF_THUMBNAIL_HEIGHT);
+}
+// -----------------------------------------------------------------------
+void WxGUIAnimationProperty::OnCustomPaint( wxDC& dc, const wxRect& rect, wxPGPaintData& paintdata )
+{
+	wxString strAnimationName;
+
+	if ( paintdata.m_choiceItem >= 0 &&
+		paintdata.m_choiceItem < (int)m_choices.GetCount())
+	{
+		int colInd = m_choices[paintdata.m_choiceItem].GetValue();
+		strAnimationName = m_choices.GetLabel( colInd );
+	}
+	else
+	{
+		strAnimationName = GetValueAsString();
+	}
+
+	const wxBitmap* pBitmap = CResourceList::Instance()->GetAnimationThumbnail( strAnimationName );
+	if( pBitmap )
+	{
+		dc.DrawBitmap ( *pBitmap, rect.x, rect.y, FALSE );
+		// Tell the caller how wide we drew.
+		paintdata.m_drawnWidth = pBitmap->GetWidth();
+	}
+	else
+	{
+		dc.SetBrush ( *wxWHITE_BRUSH );
+		dc.DrawRectangle ( rect );
+	}
+}
+// -----------------------------------------------------------------------
 
 // -----------------------------------------------------------------------
 // WxGUILocalizedStringProperty

@@ -35,6 +35,8 @@ if( BUILD_PLATFORM_WIN32 )
 		wxfontselectdlg.h
 		wximageselectdlg.cpp
 		wximageselectdlg.h
+		wxanimationselectdlg.cpp
+		wxanimationselectdlg.h
 		wxlocalizedstringselectdlg.cpp
 		wxlocalizedstringselectdlg.h
 		wxsoundselectdlg.cpp

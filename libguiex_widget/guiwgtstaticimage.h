@@ -31,6 +31,7 @@ namespace guiex
 	public:
 		CGUIWgtStaticImage( const CGUIString& rName, const CGUIString& rSceneName );
 
+
 	protected:
 		CGUIWgtStaticImage( const CGUIString& rType, const CGUIString& rName, const CGUIString& rSceneName );
 		void InitStaticImage();

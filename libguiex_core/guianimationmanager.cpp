@@ -23,13 +23,75 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIAnimationData::CGUIAnimationData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIProperty& rProperty )
 		:CGUIResource( rName, rSceneName, "ANIMATIONDATA", GSystem->GetAnimationManager() )
-		,m_aProperty( rProperty )
 	{
-	}
-	//------------------------------------------------------------------------------
-	const CGUIProperty& CGUIAnimationData::GetAnimationData() const
-	{
-		return m_aProperty;
+		/**
+		<property name="mole_laugh" type="CGUIAnimationDefine">
+			<property name="size" type="CGUISize" value="178,200"/>
+			<property name="interval" type="real" value="0.2"/>
+			<property name="loop" type="bool" value="false"/>
+			<property name="images" type="array" >
+				<property name="image" type="CGUIImage" value="mole_laugh_1" />
+				<property name="image" type="CGUIImage" value="mole_laugh_2" />
+				<property name="image" type="CGUIImage" value="mole_laugh_3" />
+			</property>
+		</property>
+		*/
+		//size
+		{
+			const CGUIProperty* pPropertySize = rProperty.GetProperty("size", "CGUISize");
+			if( pPropertySize )
+			{
+				PropertyToValue( *pPropertySize, m_aSize );
+			}
+		}
+
+		//looping
+		m_bLoop = false;
+		{
+			const CGUIProperty* pPropertyLoop = rProperty.GetProperty("loop", "bool");
+			if( pPropertyLoop )
+			{
+				PropertyToValue( *pPropertyLoop, m_bLoop );
+			}
+		}
+
+		//interval
+		m_fInterval = 0.033f;
+		{
+			const CGUIProperty* pPropertyInterval = rProperty.GetProperty("interval", "real");
+			if( pPropertyInterval )
+			{
+				PropertyToValue( *pPropertyInterval, m_fInterval );
+			}
+		}
+
+		//images
+		{
+			const CGUIProperty* pPropertyImages = rProperty.GetProperty("images", "array" );
+			if( pPropertyImages )
+			{
+				for( uint32 i=0; i<pPropertyImages->GetPropertyNum(); ++i )
+				{
+					const CGUIProperty* pProperty = pPropertyImages->GetProperty( i );
+					if( pProperty->GetType() == ePropertyType_Image && pProperty->GetName() == "image" )
+					{
+						m_vecImageName.push_back( pProperty->GetValue() );
+					}
+					else
+					{
+						GUI_THROW( GUI_FORMAT( 
+							"[CGUIAnimationManager::AllocateResource]: failed to parse animation data <%s>",
+							rProperty.GetName().c_str()));
+					}
+				}
+			}
+		}
+		if( m_vecImageName.empty() )
+		{
+			GUI_THROW( GUI_FORMAT( 
+				"[CGUIAnimationManager::AllocateResource]: failed to parse animation data <%s>",
+				rProperty.GetName().c_str()));
+		}
 	}
 	//------------------------------------------------------------------------------
 	int32 CGUIAnimationData::DoLoad()
@@ -82,81 +144,14 @@ namespace guiex
 			return NULL;
 		}
 
-		/**
-		<property name="mole_laugh" type="CGUIAnimationDefine">
-			<property name="size" type="CGUISize" value="178,200"/>
-			<property name="interval" type="real" value="0.2"/>
-			<property name="loop" type="bool" value="false"/>
-			<property name="images" type="array" >
-				<property name="image" type="CGUIImage" value="mole_laugh_1" />
-				<property name="image" type="CGUIImage" value="mole_laugh_2" />
-				<property name="image" type="CGUIImage" value="mole_laugh_3" />
-			</property>
-		</property>
-		*/
+		CGUIAnimation* pAnimation = new CGUIAnimation(
+			pAnimationData->GetName(), 
+			pAnimationData->GetSceneName(),
+			pAnimationData->GetImages(), 
+			pAnimationData->GetInterval(), 
+			pAnimationData->IsLoop(), 
+			pAnimationData->GetSize());
 
-		const CGUIProperty& rRootProperty = pAnimationData->GetAnimationData();
-
-		//size
-		CGUISize aAnimationSize;
-		{
-			const CGUIProperty* pPropertySize = rRootProperty.GetProperty("size", "CGUISize");
-			if( pPropertySize )
-			{
-				PropertyToValue( *pPropertySize, aAnimationSize );
-			}
-		}
-
-		//looping
-		bool bLoop = false;
-		{
-			const CGUIProperty* pPropertyLoop = rRootProperty.GetProperty("loop", "bool");
-			if( pPropertyLoop )
-			{
-				PropertyToValue( *pPropertyLoop, bLoop );
-			}
-		}
-
-		//interval
-		real fInterval = 0.033f;
-		{
-			const CGUIProperty* pPropertyInterval = rRootProperty.GetProperty("interval", "real");
-			if( pPropertyInterval )
-			{
-				PropertyToValue( *pPropertyInterval, fInterval );
-			}
-		}
-
-		//images
-		std::vector<CGUIString> vecImageName;
-		{
-			const CGUIProperty* pPropertyImages = rRootProperty.GetProperty("images", "array" );
-			if( pPropertyImages )
-			{
-				for( uint32 i=0; i<pPropertyImages->GetPropertyNum(); ++i )
-				{
-					const CGUIProperty* pProperty = pPropertyImages->GetProperty( i );
-					if( pProperty->GetType() == ePropertyType_Image && pProperty->GetName() == "image" )
-					{
-						vecImageName.push_back( pProperty->GetValue() );
-					}
-					else
-					{
-						GUI_THROW( GUI_FORMAT( 
-							"[CGUIAnimationManager::AllocateResource]: failed to parse animation data <%s>",
-							rRootProperty.GetName().c_str()));
-					}
-				}
-			}
-		}
-		if( vecImageName.empty() )
-		{
-			GUI_THROW( GUI_FORMAT( 
-				"[CGUIAnimationManager::AllocateResource]: failed to parse animation data <%s>",
-				rRootProperty.GetName().c_str()));
-		}
-
-		CGUIAnimation* pAnimation = new CGUIAnimation( rRootProperty.GetName(), pAnimationData->GetSceneName(), vecImageName, fInterval, bLoop, aAnimationSize );
 		pAnimation->RefRetain();
 		AddToAllocatePool( pAnimation );
 		return pAnimation;

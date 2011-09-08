@@ -220,6 +220,16 @@ namespace guiex
 		return m_bLooping;
 	}
 	//------------------------------------------------------------------------------
-
+	uint32 CGUIAnimation::GetImageNum() const
+	{
+		return static_cast<uint32>(m_vecImages.size());
+	}
+	//------------------------------------------------------------------------------
+	const CGUIImage* CGUIAnimation::GetImage( uint32 uIndex )
+	{
+		GUI_ASSERT( uIndex < GetImageNum(), "[CGUIAnimation::GetImage]: invalid index");
+		return m_vecImages[uIndex];
+	}
+	//------------------------------------------------------------------------------
 
 }//namespace guiex

@@ -197,7 +197,7 @@ namespace guiex
 			real(m_uTexturePosY+glyph->bitmap.rows) / nTextureHeight);
 
 		m_uTexturePosX += (glyph->bitmap.width+1);
-		if( glyph->bitmap.rows > m_uMaxHeight )
+		if( uint32(glyph->bitmap.rows) > m_uMaxHeight )
 		{
 			m_uMaxHeight = glyph->bitmap.rows;
 		}

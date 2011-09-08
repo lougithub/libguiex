@@ -14,6 +14,7 @@
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guiimage.h>
 
+
 //============================================================================//
 // function
 //============================================================================// 
@@ -56,7 +57,6 @@ namespace guiex
 		DrawImage( pRender, m_pImageBG, GetBoundArea( ));
 	}
 	//------------------------------------------------------------------------------
-
 
 }//namespace guiex
 

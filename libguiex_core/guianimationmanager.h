@@ -36,8 +36,11 @@ namespace guiex
 	class GUIEXPORT CGUIAnimationData  : public CGUIResource
 	{
 	public:
-		const CGUIProperty& GetAnimationData() const;
-
+		const CGUISize& GetSize() const {return m_aSize;}
+		bool IsLoop() const {return m_bLoop;}
+		real GetInterval() const {return m_fInterval;}
+		const std::vector<CGUIString>& GetImages() const {return m_vecImageName;}
+		
 	protected:
 		virtual int32 DoLoad();
 		virtual void DoUnload();
@@ -47,7 +50,10 @@ namespace guiex
 		CGUIAnimationData( const CGUIString& rName, const CGUIString& rSceneName, const CGUIProperty& rProperty );
 
 	protected:
-		CGUIProperty m_aProperty;
+		CGUISize m_aSize;
+		bool m_bLoop;
+		real m_fInterval;
+		std::vector<CGUIString> m_vecImageName;
 	};
 
 

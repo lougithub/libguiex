@@ -231,6 +231,12 @@
 		</page>
 	</widget>
 
+  <widget type="CGUIWgtAnimation" inherit="CGUIWidget">
+    <page name="Appearance">
+      <property name="animation" type="CGUIAnimation" value="" category="Animation" alternative_save="true"/>
+    </page>
+  </widget>
+  
 	<widget type="CGUIWgtPanel" inherit="CGUIWidget">
 		<page name="Appearance">
 			<property name="size" type="CGUIWidgetSize" category="Default">

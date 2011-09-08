@@ -21,37 +21,37 @@
 
 	<!-- animation's image -->
 	<property name="mole_laugh_1" type="CGUIImageDefine">
-		<property name="path" type="CGUIString" value="image/anim/mole_laugh1.tga" />
+		<property name="path" type="CGUIString" value="image/anim/mole_laugh1.png" />
 		<property name="uv" type="CGUIRect" value="0,0,178,200" />
 		<property name="size" type="CGUISize" value="178,200"/>
 	</property>
 	<property name="mole_laugh_2" type="CGUIImageDefine">
-		<property name="path" type="CGUIString" value="image/anim/mole_laugh2.tga" />
+		<property name="path" type="CGUIString" value="image/anim/mole_laugh2.png" />
 		<property name="uv" type="CGUIRect" value="0,0,178,200" />
 		<property name="size" type="CGUISize" value="178,200"/>
 	</property>
 	<property name="mole_laugh_3" type="CGUIImageDefine">
-		<property name="path" type="CGUIString" value="image/anim/mole_laugh3.tga" />
+		<property name="path" type="CGUIString" value="image/anim/mole_laugh3.png" />
 		<property name="uv" type="CGUIRect" value="0,0,178,200" />
 		<property name="size" type="CGUISize" value="178,200"/>
 	</property>	
 	<property name="mole_thump_1" type="CGUIImageDefine">
-		<property name="path" type="CGUIString" value="image/anim/mole_thump1.tga" />
+		<property name="path" type="CGUIString" value="image/anim/mole_thump1.png" />
 		<property name="uv" type="CGUIRect" value="0,0,178,200" />
 		<property name="size" type="CGUISize" value="178,200"/>
 	</property>
 	<property name="mole_thump_2" type="CGUIImageDefine">
-		<property name="path" type="CGUIString" value="image/anim/mole_thump2.tga" />
+		<property name="path" type="CGUIString" value="image/anim/mole_thump2.png" />
 		<property name="uv" type="CGUIRect" value="0,0,178,200" />
 		<property name="size" type="CGUISize" value="178,200"/>
 	</property>
 	<property name="mole_thump_3" type="CGUIImageDefine">
-		<property name="path" type="CGUIString" value="image/anim/mole_thump3.tga" />
+		<property name="path" type="CGUIString" value="image/anim/mole_thump3.png" />
 		<property name="uv" type="CGUIRect" value="0,0,178,200" />
 		<property name="size" type="CGUISize" value="178,200"/>
 	</property>
 	<property name="mole_thump_4" type="CGUIImageDefine">
-		<property name="path" type="CGUIString" value="image/anim/mole_thump4.tga" />
+		<property name="path" type="CGUIString" value="image/anim/mole_thump4.png" />
 		<property name="uv" type="CGUIRect" value="0,0,178,200" />
 		<property name="size" type="CGUISize" value="178,200"/>
 	</property>

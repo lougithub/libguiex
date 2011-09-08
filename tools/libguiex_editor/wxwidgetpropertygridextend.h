@@ -175,6 +175,25 @@ public:
 	virtual void OnCustomPaint( wxDC& dc, const wxRect& rect, wxPGPaintData& paintdata );
 };
 
+
+
+// -----------------------------------------------------------------------
+// WxGUIAnimationProperty
+// -----------------------------------------------------------------------
+class WxGUIAnimationProperty : public wxPGProperty
+{
+	WX_PG_DECLARE_PROPERTY_CLASS(WxGUIAnimationProperty)
+public:
+	WxGUIAnimationProperty( const wxString& label = wxPG_LABEL, const wxString& name = wxPG_LABEL, const wxString& rImage=wxEmptyString );
+	virtual bool OnEvent( wxPropertyGrid* propgrid, wxWindow* primary, wxEvent& event );
+	virtual void OnSetValue();
+	virtual wxString ValueToString( wxVariant& value, int argFlags ) const;
+	virtual bool StringToValue( wxVariant& variant, const wxString& text, int argFlags ) const;
+
+	virtual wxSize OnMeasureImage( int item ) const;
+	virtual void OnCustomPaint( wxDC& dc, const wxRect& rect, wxPGPaintData& paintdata );
+};
+
 // -----------------------------------------------------------------------
 // WxGUISoundProperty
 // -----------------------------------------------------------------------

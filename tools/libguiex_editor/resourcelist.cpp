@@ -26,6 +26,7 @@ CResourceList::CResourceList()
 CResourceList::~CResourceList()
 {
 	ResetImageList();
+	ResetAnimationList();
 	ResetAsList();
 	ResetParticle2DList();
 	ResetSoundList();
@@ -43,6 +44,7 @@ CResourceList* CResourceList::Instance()
 void CResourceList::UpdateResourceList()
 {
 	UpdateImageList();
+	UpdateAnimationList();
 	UpdateAsList();
 	UpdateParticle2DList();
 	UpdateSoundList();
@@ -72,6 +74,68 @@ void CResourceList::ResetImageList()
 	m_mapOriginalImageThumbnails.clear();
 }
 //------------------------------------------------------------------------------
+void CResourceList::ResetAnimationList()
+{
+	m_arrayAnimationArray.Clear();
+
+	for( std::map<wxString, wxBitmap*>::iterator itor = m_mapAnimationThumbnails.begin();
+		itor != m_mapAnimationThumbnails.end();
+		++itor )
+	{
+		delete itor->second;
+	}
+	m_mapAnimationThumbnails.clear();
+	m_mapFullAnimationThumbnails.clear();
+}
+//------------------------------------------------------------------------------
+void CResourceList::UpdateAnimationList()
+{
+	ResetAnimationList();
+
+	m_arrayAnimationArray.Add(_T(""));
+	const std::map<CGUIString, CGUIAnimationData*>& rMapAnimationList = CGUIAnimationManager::Instance()->GetRegisterResourceMap();
+	for( std::map<CGUIString,CGUIAnimationData*>::const_iterator itor = rMapAnimationList.begin();
+		itor != rMapAnimationList.end();
+		++itor)
+	{
+		CGUIAnimationData* pGuiAnimationData = itor->second;
+		const CGUIString& rGuiAnimationName = itor->first;
+		wxString rWxAnimationName = Gui2wxString( rGuiAnimationName );
+
+		m_arrayAnimationArray.Add( rWxAnimationName );
+
+		// Create the image thumbnail
+		CGUIImage* pGuiImage = CGUIImageManager::Instance()->AllocateResource(pGuiAnimationData->GetImages()[0]);
+		wxImage* pWxImage = LoadwxImageByGuiImage( pGuiImage );
+		if( pWxImage )
+		{	
+			m_mapFullAnimationThumbnails[rWxAnimationName] = pGuiAnimationData;
+
+			int im_wid = pWxImage->GetWidth();
+			int im_hei = pWxImage->GetHeight();
+			if ( pWxImage->GetWidth() > pWxImage->GetHeight() )
+			{
+				// TNW = (TNH*IW)/IH
+				im_wid = PREF_THUMBNAIL_HEIGHT;
+				im_hei = PREF_THUMBNAIL_HEIGHT * pWxImage->GetHeight() / pWxImage->GetWidth();
+			}
+			else
+			{
+				im_hei = PREF_THUMBNAIL_HEIGHT;
+				im_wid = (PREF_THUMBNAIL_HEIGHT*pWxImage->GetWidth())/pWxImage->GetHeight();
+			}
+			pWxImage->Rescale( im_wid, im_hei );
+
+			wxBitmap* pBitmap = new wxBitmap( *pWxImage );
+			m_mapAnimationThumbnails[rWxAnimationName] = pBitmap;
+
+			delete pWxImage;
+		}
+		pGuiImage->RefRelease();
+	}
+	m_arrayAnimationArray.Sort();
+}
+//------------------------------------------------------------------------------
 void CResourceList::UpdateImageList()
 {
 	ResetImageList();
@@ -89,90 +153,54 @@ void CResourceList::UpdateImageList()
 		m_arrayImageArray.Add( rWxImageName );
 
 		// Create the image thumbnail
-		wxString rImagePath = Gui2wxString( GSystem->GetDataPath() + pGuiImage->GetFullFilePath() );
-		wxFileName filename( rImagePath );
-		if ( filename.FileExists() )
+		wxImage* pWxImage = LoadwxImageByGuiImage( pGuiImage );
+		if( pWxImage )
 		{
-			wxImage* pWxImage = NULL;
-			if( filename.GetExt().CmpNoCase(L"tga") == 0)
+			wxBitmap* pOriginalBitmap = new wxBitmap( *pWxImage );
+			m_mapOriginalImageThumbnails[rWxImageName] = pOriginalBitmap;
+
+			int im_wid = pWxImage->GetWidth();
+			int im_hei = pWxImage->GetHeight();
+			if ( pWxImage->GetWidth() > pWxImage->GetHeight() )
 			{
-				pWxImage = new wxImage( filename.GetFullPath(), wxBITMAP_TYPE_TGA );
+				// TNW = (TNH*IW)/IH
+				im_wid = PREF_THUMBNAIL_HEIGHT;
+				im_hei = PREF_THUMBNAIL_HEIGHT * pWxImage->GetHeight() / pWxImage->GetWidth();
 			}
-			else if( filename.GetExt().CmpNoCase(L"png") == 0)
+			else
 			{
-				pWxImage = new wxImage( filename.GetFullPath(), wxBITMAP_TYPE_PNG );
+				im_hei = PREF_THUMBNAIL_HEIGHT;
+				im_wid = (PREF_THUMBNAIL_HEIGHT*pWxImage->GetWidth())/pWxImage->GetHeight();
 			}
+			pWxImage->Rescale( im_wid, im_hei );
 
-			if ( pWxImage && pWxImage->Ok() )
-			{
-				const CGUIRect& rRect = pGuiImage->GetUVRect();
-				wxSize newSize( 
-					pWxImage->GetSize().GetWidth() * rRect.GetWidth(), 
-					pWxImage->GetSize().GetHeight()* rRect.GetHeight() );
-				wxPoint newPoint( 
-					rRect.GetPosition().x * pWxImage->GetSize().GetWidth(), 
-					rRect.GetPosition().y * pWxImage->GetSize().GetHeight() );
-				pWxImage->Resize( newSize, -newPoint );
-				switch( pGuiImage->GetOrientation() )
-				{
-				case eImageOrientation_90CW: ///!< rotate image for 90 CW
-					*pWxImage = pWxImage->Rotate90(true);
-					break;
-				case eImageOrientation_90CCW: ///!< rotate image for 90 CCW
-					*pWxImage = pWxImage->Rotate90(false);
-					break;
-				case eImageOrientation_FlipHorizon:	///!< flip image horizon
-					*pWxImage = pWxImage->Mirror( true );
-					break;
-				case eImageOrientation_FlipVertical: ///!< flip image vertical
-					*pWxImage = pWxImage->Mirror( false );
-					break;
-				}
-				switch( pGuiImage->GetOrientation() )
-				{
-				case eImageOrientation_90CW:
-					pWxImage->Rotate90( true );
-					break;
-				case eImageOrientation_90CCW:
-					pWxImage->Rotate90( false );
-					break;
-				case eImageOrientation_FlipHorizon:
-					pWxImage->Mirror( true );
-					break;
-				case eImageOrientation_FlipVertical:
-					pWxImage->Mirror( false );
-					break;
-				}
+			wxBitmap* pBitmap = new wxBitmap( *pWxImage );
+			m_mapImageThumbnails[rWxImageName] = pBitmap;
 
-				wxBitmap* pOriginalBitmap = new wxBitmap( *pWxImage );
-				m_mapOriginalImageThumbnails[rWxImageName] = pOriginalBitmap;
-
-				int im_wid = pWxImage->GetWidth();
-				int im_hei = pWxImage->GetHeight();
-				if ( pWxImage->GetWidth() > pWxImage->GetHeight() )
-				{
-					// TNW = (TNH*IW)/IH
-					im_wid = PREF_THUMBNAIL_HEIGHT;
-					im_hei = PREF_THUMBNAIL_HEIGHT * pWxImage->GetHeight() / pWxImage->GetWidth();
-				}
-				else
-				{
-					im_hei = PREF_THUMBNAIL_HEIGHT;
-					im_wid = (PREF_THUMBNAIL_HEIGHT*pWxImage->GetWidth())/pWxImage->GetHeight();
-				}
-				pWxImage->Rescale( im_wid, im_hei );
-
-				wxBitmap* pBitmap = new wxBitmap( *pWxImage );
-				m_mapImageThumbnails[rWxImageName] = pBitmap;
-			}
-
-			if( pWxImage )
-			{
-				delete pWxImage;
-			}
+			delete pWxImage;
 		}
 	}
 	m_arrayImageArray.Sort();
+}
+//------------------------------------------------------------------------------
+wxBitmap* CResourceList::GetAnimationThumbnail( const wxString& rImageName ) const
+{
+	std::map<wxString, wxBitmap*>::const_iterator itor = m_mapAnimationThumbnails.find( rImageName );
+	if( itor != m_mapAnimationThumbnails.end() )
+	{
+		return itor->second;
+	}
+	return NULL;
+}
+//------------------------------------------------------------------------------
+CGUIAnimationData* CResourceList::GetFullAnimationThumbnail( const wxString& rImageName ) const
+{
+	std::map<wxString, CGUIAnimationData* >::const_iterator itor = m_mapFullAnimationThumbnails.find( rImageName );
+	if( itor != m_mapFullAnimationThumbnails.end() )
+	{
+		return itor->second;
+	}
+	return NULL;
 }
 //------------------------------------------------------------------------------
 wxBitmap* CResourceList::GetImageThumbnail( const wxString& rImageName )
@@ -324,6 +352,11 @@ void CResourceList::UpdateFontList()
 const wxArrayString& CResourceList::GetImageList()
 {
 	return m_arrayImageArray;
+}
+//------------------------------------------------------------------------------
+const wxArrayString& CResourceList::GetAnimationList()
+{
+	return m_arrayAnimationArray;
 }
 //------------------------------------------------------------------------------
 const wxArrayString& CResourceList::GetAsList()

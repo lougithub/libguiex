@@ -239,7 +239,7 @@ IMPLEMENT_APP(WxMainApp)
 bool WxMainApp::OnInit()
 {
 	//create frame
-	wxFrame* frame = new WxMainFrame( NULL, wxID_ANY, wxT("liguiex viewer"), wxDefaultPosition, wxSize( 1024, 768));
+	wxFrame* frame = new WxMainFrame( NULL, wxID_ANY, wxT("libguiex viewer"), wxDefaultPosition, wxSize( 1024, 768));
 
 	SetTopWindow(frame);
 	frame->Show();

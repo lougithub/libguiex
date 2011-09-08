@@ -19,5 +19,6 @@
 using namespace guiex;
 extern wxString Gui2wxString( const CGUIString& rString );
 extern CGUIString wx2GuiString( const wxString& rString );
+wxImage* LoadwxImageByGuiImage( const CGUIImage* pGuiImage );
 
 #endif //__KEN_EDITOR_UTILITY_20101217_H__

@@ -64,6 +64,9 @@ namespace guiex
 
 		void Reset();
 
+		uint32 GetImageNum() const;
+		const CGUIImage* GetImage( uint32 uIndex );
+
 	protected:
 		/**
 		* @brief constructor
