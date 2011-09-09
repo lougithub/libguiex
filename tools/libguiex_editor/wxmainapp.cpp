@@ -11,7 +11,7 @@
 #include "wxmainapp.h"
 #include "wxmainframe.h"
 #include "propertyconfigmgr.h"
-#include "editorutility.h"
+#include "toolsmisc.h"
 #include <algorithm>
 
 

@@ -13,7 +13,7 @@
 #include "wxeditorcanvascontainer.h"
 #include "wxmainapp.h"
 #include "wxmainframe.h"
-#include "editorutility.h"
+#include "toolsmisc.h"
 #include <libguiex_core/guiex.h>
 
 #include <sys/timeb.h>
@@ -78,7 +78,6 @@ void WxEditorCanvas::InitializeCanvas()
 	UpdateCanvasSize(aCanvasSize);
 
 	CGUIFrameworkEditor::ms_pFramework->RegisterOpenglInterface();
-	CGUIFrameworkEditor::ms_pFramework->SetCurrentCanvas( this );
 }
 //------------------------------------------------------------------------------
 void WxEditorCanvas::DestroyCanvas()
@@ -88,7 +87,6 @@ void WxEditorCanvas::DestroyCanvas()
 	GSystem->UnloadAllResource();
 
 	CGUIFrameworkEditor::ms_pFramework->UnregisterOpenglInterface();
-	CGUIFrameworkEditor::ms_pFramework->SetCurrentCanvas( NULL );
 }
 //------------------------------------------------------------------------------
 void WxEditorCanvas::UpdateWindowBox()
@@ -187,6 +185,8 @@ void WxEditorCanvas::Render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT );	// clear screen and depth buffer 
 
 	CGUIFrameworkEditor::ms_pFramework->Render();
+	RenderEditorInfo();
+
 
 	glFlush();
 	SwapBuffers();

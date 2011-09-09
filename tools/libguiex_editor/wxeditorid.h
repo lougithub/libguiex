@@ -8,9 +8,10 @@
 #ifndef __KEN_EDITOR_ID_20101228_H__
 #define __KEN_EDITOR_ID_20101228_H__
 
+#include "editorwidgetid.h"
 enum
 {
-	ID_Begin = wxID_HIGHEST,
+	ID_Begin = EditorWidgetID_End,
 
 	//==================================================
 	//main frame
@@ -78,32 +79,6 @@ enum
 	WIDGET_ID_TreeCtrl_Widget, //id of tree ctrl
 	WIDGET_ID_NoteBook_Canvas,	
 	WIDGET_ID_NoteBook_Config,	
-
-
-	//==================================================
-	//image select dialog
-	ID_ImageSelect_BTN_OK,
-	ID_ImageSelect_BTN_CANCEL,
-	ID_ImageListID,
-
-	//==================================================
-	//sound select dialog
-	ID_SoundSelect_BTN_OK,
-	ID_SoundSelect_BTN_CANCEL,
-	ID_SoundSelect_BTN_PLAY,
-	ID_SoundListID,
-
-	//==================================================
-	//localization select dialog
-	ID_LocalizationSelect_BTN_OK,
-	ID_LocalizationSelect_BTN_CANCEL,
-	ID_LocalizationListID,
-
-	//==================================================
-	//font select dialog
-	ID_FontSelect_BTN_OK,
-	ID_FontSelect_BTN_CANCEL,
-	ID_FontListID,
 
 	//==================================================
 	//save file dialog

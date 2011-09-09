@@ -1,39 +1,30 @@
 /** 
-* @file guiframeworkeditor.h
+* @file guiframeworkeditorbase.h
 * @author ken
 * @date 2010-12-21
 */
 
-#ifndef __KEN_FRAMEWORK_EDITOR_20101221_H__
-#define __KEN_FRAMEWORK_EDITOR_20101221_H__
+#ifndef __KEN_FRAMEWORK_EDITORBASE_20101221_H__
+#define __KEN_FRAMEWORK_EDITORBASE_20101221_H__
 
 //============================================================================//
 // include
 //============================================================================//
-#include <guiframeworkeditorbase.h>
+#include <libguiex_framework/guiframework.h>
 using namespace guiex;
 
 //============================================================================//
 // class
 //============================================================================//
-class CGUIFrameworkEditor : public CGUIFrameworkEditorBase
+class CGUIFrameworkEditorBase : public CGUIFramework
 {
 public:
-	CGUIFrameworkEditor( );
-
-	void RegisterOpenglInterface();
-	void UnregisterOpenglInterface();
-
-	void EditorSetupLogSystem( );
+	CGUIFrameworkEditorBase( );
 
 protected:
 	virtual void RegisterInterfaces_Render( );
-	virtual void SetupLogSystem( );
-
-protected:
-
-public:
-	static CGUIFrameworkEditor* ms_pFramework;
+	virtual void RegisterInterfaces_ImageLoader( );
+	virtual void RegisterWidgetGenerators( );
 };
 
-#endif //__KEN_FRAMEWORK_EDITOR_20101221_H__
+#endif //__KEN_FRAMEWORK_EDITORBASE_20101221_H__

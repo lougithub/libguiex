@@ -1,8 +1,8 @@
 /** 
- * @file resourcelist.h
+ * @file guiresourcepool.h
  * @brief 
  * @author Lou Guoliang (louguoliang@gmail.com)
- * @date 2010-12-24
+ * @date 2011-09-09
  */
 
 #ifndef __KEN_RESOURCELIST_20101224_H__
@@ -14,9 +14,7 @@
 //============================================================================//
 #include <wx/wxprec.h>
 #include <libguiex_core/guiex.h>
-#include <string>
 #include <map>
-#include <vector>
 
 using namespace guiex;
 
@@ -26,10 +24,10 @@ using namespace guiex;
 //============================================================================//
 // class
 //============================================================================//
-class CResourceList
+class CGUIResourcePool
 {
 public:
-	static CResourceList* Instance();
+	static CGUIResourcePool* Instance();
 
 	void UpdateResourceList();
 
@@ -38,17 +36,16 @@ public:
 	const wxArrayString& GetSoundList();
 	const wxArrayString& GetLocalizationList();
 	const wxArrayString& GetTiledMapList();
-
-	const wxArrayString& GetFontList();
-	const wxString* GetFontDesc( const wxString& rFont );
-
 	const wxArrayString& GetImageList();
-	wxBitmap* GetImageThumbnail( const wxString& rImageName );
-	wxBitmap* GetOriginalImageThumbnail( const wxString& rImageName );
-
+	const wxArrayString& GetFontList();
 	const wxArrayString& GetAnimationList();
-	wxBitmap* GetAnimationThumbnail( const wxString& rImageName ) const;
-	CGUIAnimationData* GetFullAnimationThumbnail( const wxString& rImageName ) const;
+
+	const wxBitmap* GetImageThumbnail( const wxString& rImageName );
+	const wxBitmap* GetAnimationThumbnail( const wxString& rImageName ) const;
+
+	wxString GetFontDesc( const wxString& rFont );
+	wxBitmap* GenerateOriginalImageThumbnail( const wxString& rImageName );
+	CGUIAnimationData* GetAnimationData( const wxString& rImageName ) const;
 
 protected:
 	//update image used in the system
@@ -84,21 +81,21 @@ protected:
 	void ResetLocalizationList();
 
 protected:
-	CResourceList();
-	~CResourceList();
+	CGUIResourcePool();
+	~CGUIResourcePool();
 
 private:
 	wxArrayString m_arrayImageArray;
 	wxArrayString m_arrayAnimationArray;
-	std::map<wxString, wxBitmap*> m_mapImageThumbnails;
-	std::map<wxString, wxBitmap*> m_mapOriginalImageThumbnails;
-	std::map<wxString, wxBitmap*> m_mapAnimationThumbnails;
-	std::map<wxString, CGUIAnimationData* > m_mapFullAnimationThumbnails;
 	wxArrayString m_arrayAsArray;
 	wxArrayString m_arrayParticle2DArray;
 	wxArrayString m_arrayTiledMapArray;
 	wxArrayString m_arraySoundArray;
 	wxArrayString m_arrayFontArray;
+
+	std::map<wxString, wxBitmap*> m_mapImageThumbnails;
+	std::map<wxString, wxBitmap*> m_mapAnimationThumbnails;
+	std::map<wxString, CGUIAnimationData* > m_mapAnimationData;
 	std::map<wxString,wxString> m_mapFontDesc;
 	wxArrayString m_arrayLocalizationArray;
 };

@@ -9,7 +9,7 @@
 // include
 //============================================================================// 
 #include "wxwizardcreatewidget.h"
-#include "editorutility.h"
+#include "toolsmisc.h"
 #include "propertysheetfunc.h"
 #include "propertyconfigmgr.h"
 #include "wxmainapp.h"

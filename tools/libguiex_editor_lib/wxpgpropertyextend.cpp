@@ -8,10 +8,10 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include "wxwidgetpropertygridextend.h"
+#include "wxpgpropertyextend.h"
 #include "propertyconfigmgr.h"
-#include "editorutility.h"
-#include "resourcelist.h"
+#include "toolsmisc.h"
+#include "guiresourcepool.h"
 #include "wximageselectdlg.h"
 #include "wxanimationselectdlg.h"
 #include "wxsoundselectdlg.h"
@@ -458,7 +458,7 @@ WxGUIImageProperty::WxGUIImageProperty( const wxString& label, const wxString& n
 : wxPGProperty(label,name)
 {
 	SetValue( wxVariant( wx2GuiString( rImage )) );
-	m_choices.Set(CResourceList::Instance()->GetImageList(), 0);
+	m_choices.Set(CGUIResourcePool::Instance()->GetImageList(), 0);
 }
 // -----------------------------------------------------------------------
 void WxGUIImageProperty::OnSetValue()
@@ -497,7 +497,7 @@ bool WxGUIImageProperty::OnEvent( wxPropertyGrid* propgrid, wxWindow* primary, w
 		WxImageSelectDialog dialog( propgrid );
 		if ( dialog.ShowModal() == wxID_OK )
 		{
-			SetValueInEvent( dialog.GetImageName() );
+			SetValueInEvent( dialog.GetResourceName() );
 			return true;
 		}
 	}
@@ -524,7 +524,7 @@ void WxGUIImageProperty::OnCustomPaint( wxDC& dc, const wxRect& rect, wxPGPaintD
 		strImageName = GetValueAsString();
 	}
 
-	const wxBitmap* pBitmap = CResourceList::Instance()->GetImageThumbnail( strImageName );
+	const wxBitmap* pBitmap = CGUIResourcePool::Instance()->GetImageThumbnail( strImageName );
 	if( pBitmap )
 	{
 		dc.DrawBitmap ( *pBitmap, rect.x, rect.y, FALSE );
@@ -548,7 +548,7 @@ WxGUIAnimationProperty::WxGUIAnimationProperty( const wxString& label, const wxS
 	: wxPGProperty(label,name)
 {
 	SetValue( wxVariant( wx2GuiString( rAnimation )) );
-	m_choices.Set(CResourceList::Instance()->GetAnimationList(), 0);
+	m_choices.Set(CGUIResourcePool::Instance()->GetAnimationList(), 0);
 }
 // -----------------------------------------------------------------------
 void WxGUIAnimationProperty::OnSetValue()
@@ -587,7 +587,7 @@ bool WxGUIAnimationProperty::OnEvent( wxPropertyGrid* propgrid, wxWindow* primar
 		WxAnimationSelectDialog dialog( propgrid );
 		if ( dialog.ShowModal() == wxID_OK )
 		{
-			SetValueInEvent( dialog.GetAnimationName() );
+			SetValueInEvent( dialog.GetResourceName() );
 			return true;
 		}
 	}
@@ -614,7 +614,7 @@ void WxGUIAnimationProperty::OnCustomPaint( wxDC& dc, const wxRect& rect, wxPGPa
 		strAnimationName = GetValueAsString();
 	}
 
-	const wxBitmap* pBitmap = CResourceList::Instance()->GetAnimationThumbnail( strAnimationName );
+	const wxBitmap* pBitmap = CGUIResourcePool::Instance()->GetAnimationThumbnail( strAnimationName );
 	if( pBitmap )
 	{
 		dc.DrawBitmap ( *pBitmap, rect.x, rect.y, FALSE );
@@ -662,7 +662,7 @@ bool WxGUILocalizedStringProperty::OnEvent( wxPropertyGrid* propgrid, wxWindow* 
 		WxLocalizedstringSelectDialog dialog( propgrid );
 		if ( dialog.ShowModal() == wxID_OK )
 		{
-			SetValueInEvent( dialog.GetLocalzedString() );
+			SetValueInEvent( dialog.GetResourceName() );
 			return true;
 		}
 	}
@@ -679,7 +679,7 @@ WxGUISoundProperty::WxGUISoundProperty( const wxString& label, const wxString& n
 : wxPGProperty(label,name)
 {
 	SetValue( wxVariant( wx2GuiString( rSound )) );
-	m_choices.Set(CResourceList::Instance()->GetSoundList(), 0);
+	m_choices.Set(CGUIResourcePool::Instance()->GetSoundList(), 0);
 }
 // -----------------------------------------------------------------------
 void WxGUISoundProperty::OnSetValue()
@@ -718,7 +718,7 @@ bool WxGUISoundProperty::OnEvent( wxPropertyGrid* propgrid, wxWindow* primary, w
 		WxSoundSelectDialog dialog( propgrid );
 		if ( dialog.ShowModal() == wxID_OK )
 		{
-			SetValueInEvent( dialog.GetSoundName() );
+			SetValueInEvent( dialog.GetResourceName() );
 			return true;
 		}
 	}
@@ -787,7 +787,7 @@ WxGUIFontProperty::WxGUIFontProperty( const wxString& label, const wxString& nam
 	wxString strFont;
 	strFont<<uFontID;
 	SetValue( wxVariant( strFont) );
-	m_choices.Set(CResourceList::Instance()->GetFontList(), 0);
+	m_choices.Set(CGUIResourcePool::Instance()->GetFontList(), 0);
 }
 // -----------------------------------------------------------------------
 void WxGUIFontProperty::OnSetValue()
@@ -828,7 +828,7 @@ bool WxGUIFontProperty::OnEvent( wxPropertyGrid* propgrid, wxWindow* primary, wx
 		WxFontSelectDialog dialog( propgrid );
 		if ( dialog.ShowModal() == wxID_OK )
 		{
-			SetValueInEvent( dialog.GetFontName() );
+			SetValueInEvent( dialog.GetResourceName() );
 			return true;
 		}
 	}

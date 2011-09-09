@@ -35,6 +35,8 @@ macro( macro_set_target_link_libraries targetname )
 			${targetname}  
 			general Imm32.lib 
 			general comctl32.lib 
+			general Opengl32.lib
+			general Glu32.lib
 			general glut32.lib 
 			general Rpcrt4.lib
 			general OpenAL32.lib
@@ -101,7 +103,7 @@ macro( macro_set_target_link_libraries targetname )
 	endif()	
 endmacro()
 
-macro( macro_set_target_link_libraries_wx_win32 targetname )
+macro( macro_set_target_link_libraries_tools_win32 targetname )
 	target_link_libraries( 
 		${targetname}  
 		debug wxmsw29ud_gl.lib
@@ -125,6 +127,9 @@ macro( macro_set_target_link_libraries_wx_win32 targetname )
 		general comctl32.lib 
 		general Rpcrt4.lib
 		general OpenAL32.lib
+		general Opengl32.lib
+		general Glu32.lib
+		general glut32.lib 
 		general libguiex_core
 		general libguiex_widget
 		general libguiex_widget_box2d
@@ -132,6 +137,7 @@ macro( macro_set_target_link_libraries_wx_win32 targetname )
 		general libguiex_script_wrapper
 		general libguiex_framework
 		general libguiex_module
+		general tools_editor_lib
 		general tinyxml
 		general lua
 		general freetype
@@ -256,7 +262,7 @@ macro( macro_add_project_dependencies targetname)
 		)
 endmacro()
 
-macro( macro_add_project_dependencies_wx_win32 targetname)
+macro( macro_add_project_dependencies_tools_win32 targetname)
 	add_dependencies( 
 		${targetname} 
 		libguiex_core
@@ -266,6 +272,7 @@ macro( macro_add_project_dependencies_wx_win32 targetname)
 		libguiex_widget_game
 		libguiex_script_wrapper 
 		libguiex_framework
+		tools_editor_lib
 		${ARGN}
 		)
 endmacro()

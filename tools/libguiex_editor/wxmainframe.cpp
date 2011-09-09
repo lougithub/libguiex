@@ -17,9 +17,9 @@
 #include "wxwizardcreatewidget.h"
 #include "propertysheetfunc.h"
 #include "propertyconfigmgr.h"
-#include "editorutility.h"
+#include "toolsmisc.h"
 #include "toolcache.h"
-#include "resourcelist.h"
+#include "guiresourcepool.h"
 #include "wxeditorid.h"
 #include "wxtoolspgmanager.h"
 #include "propertyconvertor.h"
@@ -249,11 +249,8 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 	m_pTreeCtrl_File = CreateFileTreeCtrl();
 	ResetFileTreeCtrl();
 
-	///////////////////////////////////////////////////////////////////////////////////////////////////
 	// create widget tree
-	m_pTreeCtrl_Widget = CreateWidgetTreeCtrl();
-	ResetWidgetTreeCtrl();
-	
+	m_pTreeCtrl_Widget = new wxTreeCtrl(this, WIDGET_ID_TreeCtrl_Widget, wxPoint(0,0), wxSize(160,250), wxTR_DEFAULT_STYLE | wxNO_BORDER);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	// create putput
@@ -386,15 +383,6 @@ void WxMainFrame::SetPropGridWidget(CGUIWidget* pWidget, bool bForceRefresh/*=fa
 		}
 		m_pPropGridMan->Refresh();
 	}
-}
-//------------------------------------------------------------------------------
-wxTreeCtrl*	WxMainFrame::CreateWidgetTreeCtrl()
-{
-	wxTreeCtrl* tree = new wxTreeCtrl(this, WIDGET_ID_TreeCtrl_Widget,
-		wxPoint(0,0), wxSize(160,250),
-		wxTR_DEFAULT_STYLE | wxNO_BORDER);
-
-	return tree;
 }
 //------------------------------------------------------------------------------
 wxTreeCtrl*	WxMainFrame::CreateFileTreeCtrl()
@@ -1750,7 +1738,7 @@ void WxMainFrame::RenderFile( const std::string& rFileName )
 	//m_pCanvas->SetNextHandler( m_pAuiNoteBook );
 
 	//update resource for editor
-	CResourceList::Instance()->UpdateResourceList();
+	CGUIResourcePool::Instance()->UpdateResourceList();
 
 	try
 	{

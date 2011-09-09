@@ -1,11 +1,11 @@
 /** 
-* @file guiframeworkeditor.h
+* @file guiframeworkresource.h
 * @author ken
-* @date 2010-12-21
+* @date 2011-09-08
 */
 
-#ifndef __KEN_FRAMEWORK_EDITOR_20101221_H__
-#define __KEN_FRAMEWORK_EDITOR_20101221_H__
+#ifndef __KEN_FRAMEWORK_RESOURCE_20110908_H__
+#define __KEN_FRAMEWORK_RESOURCE_20110908_H__
 
 //============================================================================//
 // include
@@ -16,24 +16,21 @@ using namespace guiex;
 //============================================================================//
 // class
 //============================================================================//
-class CGUIFrameworkEditor : public CGUIFrameworkEditorBase
+class CGUIFrameworkResource : public CGUIFrameworkEditorBase
 {
 public:
-	CGUIFrameworkEditor( );
-
-	void RegisterOpenglInterface();
-	void UnregisterOpenglInterface();
-
+	CGUIFrameworkResource( );
 	void EditorSetupLogSystem( );
 
 protected:
+	virtual void RegisterWidgetGenerators( );
 	virtual void RegisterInterfaces_Render( );
 	virtual void SetupLogSystem( );
-
+	
 protected:
 
 public:
-	static CGUIFrameworkEditor* ms_pFramework;
+	static CGUIFrameworkResource* ms_pFramework;
 };
 
-#endif //__KEN_FRAMEWORK_EDITOR_20101221_H__
+#endif //__KEN_FRAMEWORK_RESOURCE_20110908_H__

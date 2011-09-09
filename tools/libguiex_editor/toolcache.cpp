@@ -10,7 +10,7 @@
 // include
 //============================================================================//
 #include "toolcache.h"
-#include "editorutility.h"
+#include "toolsmisc.h"
 
 #include "tinyxml.h"
 #include <algorithm>

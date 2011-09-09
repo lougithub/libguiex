@@ -9,8 +9,8 @@
 // include
 //============================================================================// 
 #include "wxanimationselectdlg.h"
-#include "resourcelist.h"
-#include "wxeditorid.h"
+#include "guiresourcepool.h"
+#include "editorwidgetid.h"
 #include "toolsmisc.h"
 #include <wx/filename.h> 
 
@@ -38,11 +38,24 @@ WxAnimationCanvas::~WxAnimationCanvas()
 //------------------------------------------------------------------------------
 void WxAnimationCanvas::ClearBitmapData()
 {
+	for( uint32 i=0; i<uint32(m_vecBitmaps.size()); ++i)
+	{
+		delete m_vecBitmaps[i];
+	}
 	m_vecBitmaps.clear();
 	m_nCurrentFrame = 0;
 	m_fElapsedTime = 0.0f;
 
 	m_timer.Stop();
+}
+//------------------------------------------------------------------------------
+void WxAnimationCanvas::SetAnimationData( guiex::CGUIAnimationData* pData )
+{
+	if( m_pAnimData != pData )
+	{
+		m_pAnimData = pData;
+		UpdaterBitmapData();
+	}
 }
 //------------------------------------------------------------------------------
 void WxAnimationCanvas::UpdaterBitmapData()
@@ -56,7 +69,7 @@ void WxAnimationCanvas::UpdaterBitmapData()
 
 	for( uint32 i=0; i<uint32(images.size()); ++i)
 	{
-		m_vecBitmaps.push_back( CResourceList::Instance()->GetOriginalImageThumbnail(images[i]));
+		m_vecBitmaps.push_back( CGUIResourcePool::Instance()->GenerateOriginalImageThumbnail(images[i]));
 	}
 
 	m_timer.Start( m_pAnimData->GetInterval() * 1000 );
@@ -99,66 +112,24 @@ void WxAnimationCanvas::OnPaint( wxPaintEvent &WXUNUSED(event) )
 
 //------------------------------------------------------------------------------
 BEGIN_EVENT_TABLE( WxAnimationSelectDialog, wxDialog )
-EVT_BUTTON( ID_ImageSelect_BTN_OK, WxAnimationSelectDialog::OnOK )
-EVT_BUTTON( ID_ImageSelect_BTN_CANCEL, WxAnimationSelectDialog::OnCANCEL )
-EVT_LISTBOX( ID_ImageListID, WxAnimationSelectDialog::OnListBoxSelect )
 END_EVENT_TABLE()
 //------------------------------------------------------------------------------
 WxAnimationSelectDialog::WxAnimationSelectDialog( wxWindow* parent )
-:wxDialog( parent, wxID_ANY, _T("select animation"), wxDefaultPosition,wxSize(800,600), wxDEFAULT_DIALOG_STYLE/*wxNO_3D*/)
+:WxResourceSelectDialogBase( parent, _T("select animation"), CGUIResourcePool::Instance()->GetAnimationList() )
 {
-	m_pListBox = new wxListBox(
-		this, 
-		ID_ImageListID,
-		wxDefaultPosition, 
-		wxDefaultSize,
-		CResourceList::Instance()->GetAnimationList(),
-		wxLB_HSCROLL|wxLB_NEEDED_SB|wxLB_SORT );
-	m_pAnimationCanvas = new WxAnimationCanvas( this ); 
-
-	wxButton *pBtnOk = new wxButton( this, ID_ImageSelect_BTN_OK, wxT("OK") );
-	wxButton *pBtnCancel = new wxButton( this, ID_ImageSelect_BTN_CANCEL, wxT("CANCEL") );
+	m_pAnimationCanvas = new WxAnimationCanvas( m_pShowPanel ); 
 
 	wxSizer *sizerTop = new wxBoxSizer( wxVERTICAL );
-
-	wxSizer *sizerRow0 = new wxBoxSizer( wxHORIZONTAL );
-	wxSizer *sizerImages = new wxBoxSizer( wxVERTICAL );
-
-	sizerImages->Add( m_pAnimationCanvas, 1, wxALL|wxEXPAND );
-
-	sizerRow0->Add( sizerImages, 1, wxALL|wxEXPAND );
-	sizerRow0->Add( m_pListBox, 1, wxALL|wxEXPAND );
-	sizerTop->Add( sizerRow0, 1, wxALL|wxEXPAND );
-
-	wxSizer *sizerButtons = new wxBoxSizer( wxHORIZONTAL );
-	sizerButtons->Add( pBtnOk, 0, wxALIGN_CENTER );
-	sizerButtons->AddSpacer( 10 );
-	sizerButtons->Add( pBtnCancel, 0, wxALIGN_CENTER );
-	sizerTop->Add( sizerButtons, 0, wxALIGN_CENTER_HORIZONTAL);
-
-	SetSizer( sizerTop );
-}
-//------------------------------------------------------------------------------
-void WxAnimationSelectDialog::OnOK(wxCommandEvent& WXUNUSED(event))
-{
-	SetReturnCode(wxID_OK);
-	EndModal(wxID_OK);
-} 
-//------------------------------------------------------------------------------
-void WxAnimationSelectDialog::OnCANCEL(wxCommandEvent& WXUNUSED(event))
-{
-	SetReturnCode(wxID_CANCEL);
-	EndModal(wxID_CANCEL);
+	sizerTop->Add( m_pAnimationCanvas, 1, wxALL|wxEXPAND );
+	m_pShowPanel->SetSizer( sizerTop );
 }
 //------------------------------------------------------------------------------
 void WxAnimationSelectDialog::OnListBoxSelect(wxCommandEvent& event)
 {
-	long sel = event.GetSelection();
-	m_strAnimationName = m_pListBox->GetString( sel );
+	WxResourceSelectDialogBase::OnListBoxSelect( event );
 
 	//thumbnail
-	CGUIAnimationData* pAnimationData = CResourceList::Instance()->GetFullAnimationThumbnail(  m_strAnimationName );
+	CGUIAnimationData* pAnimationData = CGUIResourcePool::Instance()->GetAnimationData(  m_strResourceName );
 	m_pAnimationCanvas->SetAnimationData( pAnimationData );
-	m_pAnimationCanvas->Refresh();
 }
 //------------------------------------------------------------------------------

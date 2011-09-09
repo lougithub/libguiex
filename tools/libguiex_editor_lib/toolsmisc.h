@@ -1,10 +1,12 @@
 /** 
-* @file editorutility.h
+* @file toolsmisc.h
 * @author ken
+* @date 2011-09-08
 */
 
-#ifndef __KEN_EDITOR_UTILITY_20101217_H__
-#define __KEN_EDITOR_UTILITY_20101217_H__
+
+#ifndef __KEN_TOOLSMISC_20110908_H__
+#define __KEN_TOOLSMISC_20110908_H__
 
 
 //============================================================================//
@@ -16,9 +18,9 @@
 //============================================================================//
 // declare
 //============================================================================//
-using namespace guiex;
-extern wxString Gui2wxString( const CGUIString& rString );
-extern CGUIString wx2GuiString( const wxString& rString );
-wxImage* LoadwxImageByGuiImage( const CGUIImage* pGuiImage );
+extern wxString Gui2wxString( const guiex::CGUIString& rString );
+extern guiex::CGUIString wx2GuiString( const wxString& rString );
+wxImage* LoadwxImageByGuiImage( const guiex::CGUIImage* pGuiImage );
+wxImage* LoadwxImageByFilename( const wxString& rFilename );
 
-#endif //__KEN_EDITOR_UTILITY_20101217_H__
+#endif //__KEN_TOOLSMISC_20110908_H__

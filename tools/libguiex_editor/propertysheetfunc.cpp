@@ -10,10 +10,10 @@
 // include
 //============================================================================// 
 #include "propertysheetfunc.h"
-#include "editorutility.h"
-#include "resourcelist.h"
+#include "toolsmisc.h"
+#include "guiresourcepool.h"
 
-#include "wxwidgetpropertygridextend.h"
+#include "wxpgpropertyextend.h"
 #include "propertysheetfunc.h"
 #include "propertyconfigmgr.h"
 #include "wxtoolspgmanager.h"

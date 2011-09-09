@@ -13,7 +13,7 @@
 #include "wxeditorcanvas.h"
 #include "wxmainapp.h"
 #include "wxmainframe.h"
-#include "editorutility.h"
+#include "toolsmisc.h"
 #include "propertyconfigmgr.h"
 
 #include <libguiex_core/guiex.h>

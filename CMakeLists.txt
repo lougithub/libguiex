@@ -187,6 +187,8 @@ add_subdirectory( ${PROJECT_SOURCE_DIR}/test/game_breakout )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/game_td )
 
 #tools
+add_subdirectory( ${PROJECT_SOURCE_DIR}/tools/libguiex_editor_lib )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/tools/libguiex_editor_viewer )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/tools/libguiex_editor )
+add_subdirectory( ${PROJECT_SOURCE_DIR}/tools/libguiex_resource_editor )
 

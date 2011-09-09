@@ -9,7 +9,7 @@
 // include
 //============================================================================// 
 #include "wxtexteditor.h"
-#include "editorutility.h"
+#include "toolsmisc.h"
 
 #include <richedit.h>
 

@@ -9,10 +9,10 @@
 // include
 //============================================================================// 
 #include "propertyconvertor.h"
-#include "editorutility.h"
-#include "resourcelist.h"
+#include "toolsmisc.h"
+#include "guiresourcepool.h"
 
-#include "wxwidgetpropertygridextend.h"
+#include "wxpgpropertyextend.h"
 #include "propertysheetfunc.h"
 #include "propertyconfigmgr.h"
 #include "wxtoolspgmanager.h"
@@ -518,7 +518,7 @@ public:
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGCategory, -1, new wxEnumProperty(CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()),CResourceList::Instance()->GetAsList()));
+			pPGTop = pSheetMgr->Insert( pPGCategory, -1, new wxEnumProperty(CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()),CGUIResourcePool::Instance()->GetAsList()));
 			pSheetMgr->SetPropertyValue(pPGTop, aValue);
 		}
 	}
@@ -548,7 +548,7 @@ public:
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGCategory, -1, new wxEnumProperty(CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()),CResourceList::Instance()->GetParticle2DList()));
+			pPGTop = pSheetMgr->Insert( pPGCategory, -1, new wxEnumProperty(CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()),CGUIResourcePool::Instance()->GetParticle2DList()));
 			pSheetMgr->SetPropertyValue(pPGTop, aValue);
 		}
 	}
@@ -579,7 +579,7 @@ public:
 		}
 		else
 		{
-			pPGTop = pSheetMgr->Insert( pPGCategory, -1, new wxEnumProperty(CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()),CResourceList::Instance()->GetTiledMapList()));
+			pPGTop = pSheetMgr->Insert( pPGCategory, -1, new wxEnumProperty(CPropertyData::GetPropertyLabel(aProp), Gui2wxString(aProp.GetName()),CGUIResourcePool::Instance()->GetTiledMapList()));
 			pSheetMgr->SetPropertyValue(pPGTop, aValue);
 		}
 	}

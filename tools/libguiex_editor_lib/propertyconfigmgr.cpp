@@ -9,9 +9,7 @@
 // include
 //============================================================================// 
 #include "propertyconfigmgr.h"
-#include "wxmainframe.h"
-#include "wxmainapp.h"
-#include "editorutility.h"
+#include "toolsmisc.h"
 #include <algorithm>
 
 //------------------------------------------------------------------------------
@@ -19,6 +17,13 @@
 //============================================================================//
 // function
 //============================================================================// 
+//------------------------------------------------------------------------------
+CPropertyData::CPropertyData()
+	:m_bMustExist(false)
+	,m_bReadOnly(false)
+	,m_bAlternativeSave(false)
+{
+}
 //------------------------------------------------------------------------------
 const CPropertyData* CPropertyData::GetPropertyData( const guiex::CGUIProperty& rProperty )
 {
@@ -30,6 +35,67 @@ wxString CPropertyData::GetPropertyLabel( const CGUIProperty& rProperty )
 	return Gui2wxString(GetPropertyData( rProperty )->GetLabel());
 }
 //------------------------------------------------------------------------------
+void CPropertyData::SetLabel(const std::string& rType)
+{
+	m_strLabel = rType;
+}
+//------------------------------------------------------------------------------
+const std::string& CPropertyData::GetLabel() const
+{
+	return m_strLabel;
+}
+//------------------------------------------------------------------------------
+void CPropertyData::SetCategory(const std::string& rCategory)
+{
+	m_strCategories = rCategory;
+}
+//------------------------------------------------------------------------------
+const std::string& CPropertyData::GetCategory() const
+{
+	return m_strCategories;
+}
+//------------------------------------------------------------------------------
+void CPropertyData::SetMustExist(bool bMustExist)
+{
+	m_bMustExist = bMustExist;
+}
+//------------------------------------------------------------------------------
+bool CPropertyData::IsMustExist() const
+{
+	return m_bMustExist;
+}
+//------------------------------------------------------------------------------
+void CPropertyData::SetReadOnly(bool bReadOnly)
+{
+	m_bReadOnly = bReadOnly;
+}
+//------------------------------------------------------------------------------
+bool CPropertyData::IsReadOnly() const
+{
+	return m_bReadOnly;
+}	
+//------------------------------------------------------------------------------
+void CPropertyData::SetAlternaitiveSave(bool bAlternativeSave )
+{
+	m_bAlternativeSave = bAlternativeSave;
+}
+//------------------------------------------------------------------------------
+bool CPropertyData::IsAlternaitiveSave() const
+{
+	return m_bAlternativeSave;
+}	
+//------------------------------------------------------------------------------
+void CPropertyData::SetPage(const std::string& rPage)
+{
+	m_strPage = rPage;
+}
+//------------------------------------------------------------------------------
+const std::string& CPropertyData::GetPage() const
+{
+	return m_strPage;
+}
+//------------------------------------------------------------------------------
+
 
 
 
@@ -312,7 +378,7 @@ int CPropertyConfigMgr::ProcessEnumNode(TiXmlElement* pWidgetNode)
 	return 0;
 }
 //------------------------------------------------------------------------------
-int		CPropertyConfigMgr::ProcessWidgetNode(TiXmlElement* pWidgetNode)
+int	CPropertyConfigMgr::ProcessWidgetNode(TiXmlElement* pWidgetNode)
 {
 	//	<widget type="CGUIWgtButton" inherit="CGUIWidget">
 	const char* szType = pWidgetNode->Attribute( "type" );

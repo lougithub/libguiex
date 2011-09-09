@@ -18,75 +18,33 @@
 #include <map>
 #include <vector>
 #include <set>
+#include <string>
 
 using namespace guiex;
 
 //============================================================================//
-// declare
+// class
 //============================================================================// 
 class CPropertyData
 {
 public:
-	static const CPropertyData* GetPropertyData( const CGUIProperty& rProperty );
+	CPropertyData();
 
+	static const CPropertyData* GetPropertyData( const CGUIProperty& rProperty );
 	static wxString GetPropertyLabel( const CGUIProperty& rProperty );
 
-	CPropertyData()
-		:m_bMustExist(false)
-	{
-
-	}
-
-	void SetLabel(const std::string& rType)
-	{
-		m_strLabel = rType;
-	}
-	const std::string& GetLabel() const
-	{
-		return m_strLabel;
-	}
-
-	void SetCategory(const std::string& rCategory)
-	{
-		m_strCategories = rCategory;
-	}
-	const std::string&	GetCategory() const
-	{
-		return m_strCategories;
-	}
-
-	void SetMustExist(bool bMustExist)
-	{
-		m_bMustExist = bMustExist;
-	}
-	bool IsMustExist() const
-	{
-		return m_bMustExist;
-	}
-	void SetReadOnly(bool bReadOnly)
-	{
-		m_bReadOnly = bReadOnly;
-	}
-	bool IsReadOnly() const
-	{
-		return m_bReadOnly;
-	}	
-	void SetAlternaitiveSave(bool bAlternativeSave )
-	{
-		m_bAlternativeSave = bAlternativeSave;
-	}
-	bool IsAlternaitiveSave() const
-	{
-		return m_bAlternativeSave;
-	}	
-	void SetPage(const std::string& rPage)
-	{
-		m_strPage = rPage;
-	}
-	const std::string& GetPage() const
-	{
-		return m_strPage;
-	}
+	void SetLabel(const std::string& rType);
+	const std::string& GetLabel() const;
+	void SetCategory(const std::string& rCategory);
+	const std::string&	GetCategory() const;
+	void SetMustExist(bool bMustExist);
+	bool IsMustExist() const;
+	void SetReadOnly(bool bReadOnly);
+	bool IsReadOnly() const;
+	void SetAlternaitiveSave(bool bAlternativeSave );
+	bool IsAlternaitiveSave() const;
+	void SetPage(const std::string& rPage);
+	const std::string& GetPage() const;
 
 protected:
 	std::string m_strLabel; /// label of this property
@@ -98,9 +56,6 @@ protected:
 };
 
 
-//============================================================================//
-// class
-//============================================================================// 
 
 class CPropertyConfigMgr
 {
@@ -147,15 +102,13 @@ protected:
 	TMapPropertySet m_mapPropertySet;
 
 	std::set<std::string> m_setType;
-
 	TSetType m_setWidgetTyps;
-
 	std::vector<CPropertyData*>	m_arrayPropertyDataCache;
+	std::vector<wxString> m_arrayLocalizations;
 
 	typedef	std::map<CGUIString, wxArrayString> TEnumMap;
 	TEnumMap m_mapEnums;
 
-	std::vector<wxString> m_arrayLocalizations;
 };
 
 #endif //__KEN_PROPERTYCONFIGMANAGER_20070919_H__

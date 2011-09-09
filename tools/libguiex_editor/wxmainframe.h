@@ -94,7 +94,6 @@ protected:
 	wxTreeItemId GetFileItemByName(const std::string& rItemName);
 
 	//widget tree ctrl
-	wxTreeCtrl* CreateWidgetTreeCtrl();
 	void ResetWidgetTreeCtrl();
 	void RefreshWidgetTreeCtrl();
 	void AddWidgetToTreeCtrl(CGUIWidget* pWidget, wxTreeItemId aParentId );

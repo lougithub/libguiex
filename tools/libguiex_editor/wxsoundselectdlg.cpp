@@ -11,7 +11,7 @@
 #include "wxsoundselectdlg.h"
 #include "resourcelist.h"
 #include "wxeditorid.h"
-#include "editorutility.h"
+#include "toolsmisc.h"
 
 //============================================================================//
 // function

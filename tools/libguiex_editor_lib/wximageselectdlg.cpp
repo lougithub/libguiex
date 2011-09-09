@@ -9,8 +9,8 @@
 // include
 //============================================================================// 
 #include "wximageselectdlg.h"
-#include "resourcelist.h"
-#include "wxeditorid.h"
+#include "guiresourcepool.h"
+#include "editorwidgetid.h"
 #include "toolsmisc.h"
 #include <wx/filename.h> 
 
@@ -21,23 +21,36 @@ BEGIN_EVENT_TABLE(WxImageCanvas, wxScrolledWindow)
 EVT_PAINT(WxImageCanvas::OnPaint)
 END_EVENT_TABLE()
 //------------------------------------------------------------------------------
-WxImageCanvas::WxImageCanvas( wxWindow *parent, bool bAutoDelete, bool bDrawUVRect )
+WxImageCanvas::WxImageCanvas( wxWindow *parent, bool bDrawUVRect )
 				   : wxScrolledWindow( parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER )
 				   , m_pBitmap( NULL )
-				   , m_bAutoDelete( bAutoDelete )
 				   , m_bDrawUVRect( bDrawUVRect )
 {
 }
 //------------------------------------------------------------------------------
 WxImageCanvas::~WxImageCanvas()
 {
-	if( m_bAutoDelete )
+	if( m_pBitmap )
 	{
-		if( m_pBitmap )
-		{
-			delete m_pBitmap;
-		}
+		delete m_pBitmap;
 	}
+}
+//------------------------------------------------------------------------------
+void WxImageCanvas::SetBitmap( wxBitmap* pBitmap )
+{
+	if( m_pBitmap )
+	{
+		delete m_pBitmap;
+		m_pBitmap = NULL;
+	}
+	m_pBitmap = pBitmap;
+
+	Refresh();
+}
+//------------------------------------------------------------------------------
+void WxImageCanvas::SetUVRect( const wxRect& rTargetRect )
+{
+	m_aUVRect = rTargetRect;
 }
 //------------------------------------------------------------------------------
 void WxImageCanvas::OnPaint( wxPaintEvent &WXUNUSED(event) )
@@ -80,75 +93,33 @@ void WxImageCanvas::OnPaint( wxPaintEvent &WXUNUSED(event) )
 
 //------------------------------------------------------------------------------
 BEGIN_EVENT_TABLE( WxImageSelectDialog, wxDialog )
-EVT_BUTTON( ID_ImageSelect_BTN_OK, WxImageSelectDialog::OnOK )
-EVT_BUTTON( ID_ImageSelect_BTN_CANCEL, WxImageSelectDialog::OnCANCEL )
-EVT_LISTBOX( ID_ImageListID, WxImageSelectDialog::OnListBoxSelect )
 END_EVENT_TABLE()
 //------------------------------------------------------------------------------
 WxImageSelectDialog::WxImageSelectDialog( wxWindow* parent )
-:wxDialog( parent, wxID_ANY, _T("select image"), wxDefaultPosition,wxSize(800,600), wxDEFAULT_DIALOG_STYLE/*wxNO_3D*/)
+:WxResourceSelectDialogBase( parent, _T("select image"), CGUIResourcePool::Instance()->GetImageList())
 {
-	m_pListBox = new wxListBox(
-		this, 
-		ID_ImageListID,
-		wxDefaultPosition, 
-		wxDefaultSize,
-		CResourceList::Instance()->GetImageList(),
-		wxLB_HSCROLL|wxLB_NEEDED_SB|wxLB_SORT );
-	m_pImageCanvas = new WxImageCanvas( this, false, false ); 
-	m_pFullImageCanvas = new WxImageCanvas( this, true, true ); 
+	m_pImageCanvas = new WxImageCanvas( m_pShowPanel, false ); 
+	m_pFullImageCanvas = new WxImageCanvas( m_pShowPanel, true ); 
 
-	wxButton *pBtnOk = new wxButton( this, ID_ImageSelect_BTN_OK, wxT("OK") );
-	wxButton *pBtnCancel = new wxButton( this, ID_ImageSelect_BTN_CANCEL, wxT("CANCEL") );
-
-	wxSizer *sizerTop = new wxBoxSizer( wxVERTICAL );
-
-	wxSizer *sizerRow0 = new wxBoxSizer( wxHORIZONTAL );
 	wxSizer *sizerImages = new wxBoxSizer( wxVERTICAL );
-
 	sizerImages->Add( m_pImageCanvas, 1, wxALL|wxEXPAND );
 	sizerImages->Add( m_pFullImageCanvas, 1, wxALL|wxEXPAND );
-
-	sizerRow0->Add( sizerImages, 1, wxALL|wxEXPAND );
-	sizerRow0->Add( m_pListBox, 1, wxALL|wxEXPAND );
-	sizerTop->Add( sizerRow0, 1, wxALL|wxEXPAND );
-
-	wxSizer *sizerButtons = new wxBoxSizer( wxHORIZONTAL );
-	sizerButtons->Add( pBtnOk, 0, wxALIGN_CENTER );
-	sizerButtons->AddSpacer( 10 );
-	sizerButtons->Add( pBtnCancel, 0, wxALIGN_CENTER );
-	sizerTop->Add( sizerButtons, 0, wxALIGN_CENTER_HORIZONTAL);
-
-	SetSizer( sizerTop );
-}
-//------------------------------------------------------------------------------
-void WxImageSelectDialog::OnOK(wxCommandEvent& WXUNUSED(event))
-{
-	SetReturnCode(wxID_OK);
-	EndModal(wxID_OK);
-} 
-//------------------------------------------------------------------------------
-void WxImageSelectDialog::OnCANCEL(wxCommandEvent& WXUNUSED(event))
-{
-	SetReturnCode(wxID_CANCEL);
-	EndModal(wxID_CANCEL);
+	m_pShowPanel->SetSizer( sizerImages );
 }
 //------------------------------------------------------------------------------
 void WxImageSelectDialog::OnListBoxSelect(wxCommandEvent& event)
 {
-	long sel = event.GetSelection();
-	m_strImageName = m_pListBox->GetString( sel );
+	WxResourceSelectDialogBase::OnListBoxSelect( event );
 
 	//thumbnail
-	wxBitmap* pBitmap = CResourceList::Instance()->GetOriginalImageThumbnail(  m_strImageName );
+	wxBitmap* pBitmap = CGUIResourcePool::Instance()->GenerateOriginalImageThumbnail(  m_strResourceName );
 	m_pImageCanvas->SetBitmap( pBitmap );
-	m_pImageCanvas->Refresh();
 
 	//full image
 	m_pFullImageCanvas->SetBitmap( NULL );
-	if( !m_strImageName.empty() )
+	if( !m_strResourceName.empty() )
 	{
-		CGUIImage* pImage = CGUIImageManager::Instance()->AllocateResource( wx2GuiString( m_strImageName ) );
+		CGUIImage* pImage = CGUIImageManager::Instance()->AllocateResource( wx2GuiString( m_strResourceName ) );
 		if( pImage && pImage->GetImageType() == eImageType_FromFile )
 		{
 			wxImage* pWxImage = LoadwxImageByGuiImage( pImage );

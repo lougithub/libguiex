@@ -1,29 +1,27 @@
 /** 
- * @file resourcelist.cpp
+ * @file guiresourcepool.cpp
  * @brief 
  * @author Lou Guoliang (louguoliang@gmail.com)
- * @date 2010-12-24
+ * @date 2011-09-09
  */
 
 
 //============================================================================//
 // include
 //============================================================================//
-#include "resourcelist.h"
-#include "editorutility.h"
-#include <wx/filename.h> 
-
+#include "guiresourcepool.h"
+#include "toolsmisc.h"
 
 
 //============================================================================//
 // function
 //============================================================================//
 //------------------------------------------------------------------------------
-CResourceList::CResourceList()
+CGUIResourcePool::CGUIResourcePool()
 {
 }
 //------------------------------------------------------------------------------
-CResourceList::~CResourceList()
+CGUIResourcePool::~CGUIResourcePool()
 {
 	ResetImageList();
 	ResetAnimationList();
@@ -35,13 +33,13 @@ CResourceList::~CResourceList()
 	ResetTiledMapList();
 }
 //------------------------------------------------------------------------------
-CResourceList* CResourceList::Instance()
+CGUIResourcePool* CGUIResourcePool::Instance()
 {
-	static CResourceList sInstance;
+	static CGUIResourcePool sInstance;
 	return &sInstance;
 }
 //------------------------------------------------------------------------------
-void CResourceList::UpdateResourceList()
+void CGUIResourcePool::UpdateResourceList()
 {
 	UpdateImageList();
 	UpdateAnimationList();
@@ -53,7 +51,7 @@ void CResourceList::UpdateResourceList()
 	UpdateTiledMapList();
 }
 //------------------------------------------------------------------------------
-void CResourceList::ResetImageList()
+void CGUIResourcePool::ResetImageList()
 {
 	m_arrayImageArray.Clear();
 
@@ -64,17 +62,9 @@ void CResourceList::ResetImageList()
 		delete itor->second;
 	}
 	m_mapImageThumbnails.clear();
-
-	for( std::map<wxString, wxBitmap*>::iterator itor = m_mapOriginalImageThumbnails.begin();
-		itor != m_mapOriginalImageThumbnails.end();
-		++itor )
-	{
-		delete itor->second;
-	}
-	m_mapOriginalImageThumbnails.clear();
 }
 //------------------------------------------------------------------------------
-void CResourceList::ResetAnimationList()
+void CGUIResourcePool::ResetAnimationList()
 {
 	m_arrayAnimationArray.Clear();
 
@@ -85,10 +75,10 @@ void CResourceList::ResetAnimationList()
 		delete itor->second;
 	}
 	m_mapAnimationThumbnails.clear();
-	m_mapFullAnimationThumbnails.clear();
+	m_mapAnimationData.clear();
 }
 //------------------------------------------------------------------------------
-void CResourceList::UpdateAnimationList()
+void CGUIResourcePool::UpdateAnimationList()
 {
 	ResetAnimationList();
 
@@ -109,7 +99,7 @@ void CResourceList::UpdateAnimationList()
 		wxImage* pWxImage = LoadwxImageByGuiImage( pGuiImage );
 		if( pWxImage )
 		{	
-			m_mapFullAnimationThumbnails[rWxAnimationName] = pGuiAnimationData;
+			m_mapAnimationData[rWxAnimationName] = pGuiAnimationData;
 
 			int im_wid = pWxImage->GetWidth();
 			int im_hei = pWxImage->GetHeight();
@@ -136,7 +126,7 @@ void CResourceList::UpdateAnimationList()
 	m_arrayAnimationArray.Sort();
 }
 //------------------------------------------------------------------------------
-void CResourceList::UpdateImageList()
+void CGUIResourcePool::UpdateImageList()
 {
 	ResetImageList();
 
@@ -156,9 +146,6 @@ void CResourceList::UpdateImageList()
 		wxImage* pWxImage = LoadwxImageByGuiImage( pGuiImage );
 		if( pWxImage )
 		{
-			wxBitmap* pOriginalBitmap = new wxBitmap( *pWxImage );
-			m_mapOriginalImageThumbnails[rWxImageName] = pOriginalBitmap;
-
 			int im_wid = pWxImage->GetWidth();
 			int im_hei = pWxImage->GetHeight();
 			if ( pWxImage->GetWidth() > pWxImage->GetHeight() )
@@ -183,7 +170,7 @@ void CResourceList::UpdateImageList()
 	m_arrayImageArray.Sort();
 }
 //------------------------------------------------------------------------------
-wxBitmap* CResourceList::GetAnimationThumbnail( const wxString& rImageName ) const
+const wxBitmap* CGUIResourcePool::GetAnimationThumbnail( const wxString& rImageName ) const
 {
 	std::map<wxString, wxBitmap*>::const_iterator itor = m_mapAnimationThumbnails.find( rImageName );
 	if( itor != m_mapAnimationThumbnails.end() )
@@ -193,17 +180,17 @@ wxBitmap* CResourceList::GetAnimationThumbnail( const wxString& rImageName ) con
 	return NULL;
 }
 //------------------------------------------------------------------------------
-CGUIAnimationData* CResourceList::GetFullAnimationThumbnail( const wxString& rImageName ) const
+CGUIAnimationData* CGUIResourcePool::GetAnimationData( const wxString& rImageName ) const
 {
-	std::map<wxString, CGUIAnimationData* >::const_iterator itor = m_mapFullAnimationThumbnails.find( rImageName );
-	if( itor != m_mapFullAnimationThumbnails.end() )
+	std::map<wxString, CGUIAnimationData* >::const_iterator itor = m_mapAnimationData.find( rImageName );
+	if( itor != m_mapAnimationData.end() )
 	{
 		return itor->second;
 	}
 	return NULL;
 }
 //------------------------------------------------------------------------------
-wxBitmap* CResourceList::GetImageThumbnail( const wxString& rImageName )
+const wxBitmap* CGUIResourcePool::GetImageThumbnail( const wxString& rImageName )
 {
 	std::map<wxString, wxBitmap*>::iterator itor = m_mapImageThumbnails.find( rImageName );
 	if( itor != m_mapImageThumbnails.end() )
@@ -213,22 +200,34 @@ wxBitmap* CResourceList::GetImageThumbnail( const wxString& rImageName )
 	return NULL;
 }
 //------------------------------------------------------------------------------
-wxBitmap* CResourceList::GetOriginalImageThumbnail( const wxString& rImageName )
+wxBitmap* CGUIResourcePool::GenerateOriginalImageThumbnail( const wxString& rImageName )
 {
-	std::map<wxString, wxBitmap*>::iterator itor = m_mapOriginalImageThumbnails.find( rImageName );
-	if( itor != m_mapOriginalImageThumbnails.end() )
+	const std::map<CGUIString, CGUIImage*>& rMapImageList = CGUIImageManager::Instance()->GetRegisterResourceMap();
+	std::map<CGUIString, CGUIImage*>::const_iterator itor = rMapImageList.find( wx2GuiString( rImageName ));
+	if( itor == rMapImageList.end() )
 	{
-		return itor->second;
+		return NULL;
 	}
-	return NULL;
+
+	CGUIImage* pGuiImage = itor->second;
+
+	// Create the image thumbnail
+	wxImage* pWxImage = LoadwxImageByGuiImage( pGuiImage );
+	if( !pWxImage )
+	{
+		return NULL;
+	}
+	wxBitmap* pOriginalBitmap = new wxBitmap( *pWxImage );
+	delete pWxImage;
+	return pOriginalBitmap;
 }
 //------------------------------------------------------------------------------
-void CResourceList::ResetAsList()
+void CGUIResourcePool::ResetAsList()
 {
 	m_arrayAsArray.Clear();
 }
 //------------------------------------------------------------------------------
-void CResourceList::UpdateTiledMapList()
+void CGUIResourcePool::UpdateTiledMapList()
 {
 	ResetTiledMapList();
 
@@ -243,7 +242,7 @@ void CResourceList::UpdateTiledMapList()
 	m_arrayTiledMapArray.Sort();
 }
 //------------------------------------------------------------------------------
-void CResourceList::UpdateParticle2DList()
+void CGUIResourcePool::UpdateParticle2DList()
 {
 	ResetParticle2DList();
 
@@ -258,17 +257,17 @@ void CResourceList::UpdateParticle2DList()
 	m_arrayParticle2DArray.Sort();
 }
 //------------------------------------------------------------------------------
-void CResourceList::ResetTiledMapList()
+void CGUIResourcePool::ResetTiledMapList()
 {
 	m_arrayTiledMapArray.Clear();
 }
 //------------------------------------------------------------------------------
-void CResourceList::ResetParticle2DList()
+void CGUIResourcePool::ResetParticle2DList()
 {
 	m_arrayParticle2DArray.Clear();
 }
 //------------------------------------------------------------------------------
-void CResourceList::UpdateAsList()
+void CGUIResourcePool::UpdateAsList()
 {
 	ResetAsList();
 
@@ -283,7 +282,7 @@ void CResourceList::UpdateAsList()
 	m_arrayAsArray.Sort();
 }
 //------------------------------------------------------------------------------
-void CResourceList::UpdateLocalizationList()
+void CGUIResourcePool::UpdateLocalizationList()
 {
 	ResetLocalizationList();
 
@@ -301,17 +300,17 @@ void CResourceList::UpdateLocalizationList()
 	m_arrayLocalizationArray.Sort();
 }
 //------------------------------------------------------------------------------
-void CResourceList::ResetLocalizationList()
+void CGUIResourcePool::ResetLocalizationList()
 {
 	m_arrayLocalizationArray.Clear();
 }
 //------------------------------------------------------------------------------
-void CResourceList::ResetSoundList()
+void CGUIResourcePool::ResetSoundList()
 {
 	m_arraySoundArray.Clear();
 }
 //------------------------------------------------------------------------------
-void CResourceList::UpdateSoundList()
+void CGUIResourcePool::UpdateSoundList()
 {
 	ResetSoundList();
 
@@ -326,13 +325,13 @@ void CResourceList::UpdateSoundList()
 	m_arraySoundArray.Sort();
 }
 //------------------------------------------------------------------------------
-void CResourceList::ResetFontList()
+void CGUIResourcePool::ResetFontList()
 {
 	m_arrayFontArray.Clear();
 	m_mapFontDesc.clear();
 }
 //------------------------------------------------------------------------------
-void CResourceList::UpdateFontList()
+void CGUIResourcePool::UpdateFontList()
 {
 	ResetFontList();
 
@@ -349,52 +348,56 @@ void CResourceList::UpdateFontList()
 	m_arrayFontArray.Sort();
 }
 //------------------------------------------------------------------------------
-const wxArrayString& CResourceList::GetImageList()
+const wxArrayString& CGUIResourcePool::GetImageList()
 {
 	return m_arrayImageArray;
 }
 //------------------------------------------------------------------------------
-const wxArrayString& CResourceList::GetAnimationList()
+const wxArrayString& CGUIResourcePool::GetAnimationList()
 {
 	return m_arrayAnimationArray;
 }
 //------------------------------------------------------------------------------
-const wxArrayString& CResourceList::GetAsList()
+const wxArrayString& CGUIResourcePool::GetAsList()
 {
 	return m_arrayAsArray;
 }
 //------------------------------------------------------------------------------
-const wxArrayString& CResourceList::GetTiledMapList()
+const wxArrayString& CGUIResourcePool::GetTiledMapList()
 {
 	return m_arrayTiledMapArray;
 }
 //------------------------------------------------------------------------------
-const wxArrayString& CResourceList::GetParticle2DList()
+const wxArrayString& CGUIResourcePool::GetParticle2DList()
 {
 	return m_arrayParticle2DArray;
 }
 //------------------------------------------------------------------------------
-const wxArrayString& CResourceList::GetSoundList()
+const wxArrayString& CGUIResourcePool::GetSoundList()
 {
 	return m_arraySoundArray;
 }
 //------------------------------------------------------------------------------
-const wxArrayString& CResourceList::GetFontList()
+const wxArrayString& CGUIResourcePool::GetFontList()
 {
 	return m_arrayFontArray;
 }
 //------------------------------------------------------------------------------
-const wxString* CResourceList::GetFontDesc( const wxString& rFont )
+wxString CGUIResourcePool::GetFontDesc( const wxString& rFont )
 {
-	std::map<wxString, wxString>::iterator itor = m_mapFontDesc.find( rFont );
-	if( itor != m_mapFontDesc.end() )
+	const std::map<CGUIString, CGUIFontData*>& rMapFontList = CGUIFontManager::Instance()->GetRegisterResourceMap();
+	std::map<CGUIString, CGUIFontData*>::const_iterator itor = rMapFontList.find( wx2GuiString(rFont) );
+	if( itor == rMapFontList.end() )
 	{
-		return &itor->second;
+		return wxString();
 	}
-	return NULL;
+	else
+	{
+		return Gui2wxString(itor->second->GetFontDesc());
+	}
 }
 //------------------------------------------------------------------------------
-const wxArrayString& CResourceList::GetLocalizationList()
+const wxArrayString& CGUIResourcePool::GetLocalizationList()
 {
 	return m_arrayLocalizationArray;
 }

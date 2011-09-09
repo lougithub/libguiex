@@ -17,8 +17,6 @@ if( BUILD_PLATFORM_WIN32 )
 		wxsavefiledlg.h
 		wxtexteditor.cpp
 		wxtexteditor.h
-		wxwidgetpropertygridextend.cpp
-		wxwidgetpropertygridextend.h	
 		wxwizardcreatewidget.cpp
 		wxwizardcreatewidget.h        
 		wxeditorcanvas.cpp
@@ -29,25 +27,8 @@ if( BUILD_PLATFORM_WIN32 )
         )
     source_group( widget FILES ${${target_name}_widget_SRCS} )
 
-	#resource select dialog
-    set( ${target_name}_resourceselectdlg_SRCS
-		wxfontselectdlg.cpp
-		wxfontselectdlg.h
-		wximageselectdlg.cpp
-		wximageselectdlg.h
-		wxanimationselectdlg.cpp
-		wxanimationselectdlg.h
-		wxlocalizedstringselectdlg.cpp
-		wxlocalizedstringselectdlg.h
-		wxsoundselectdlg.cpp
-		wxsoundselectdlg.h		
-        )
-    source_group( select_dialogs FILES ${${target_name}_resourceselectdlg_SRCS} )
-    
     #property source
     set( ${target_name}_property_SRCS
-		propertyconfigmgr.cpp
-		propertyconfigmgr.h
 		propertysheetfunc.cpp
 		propertysheetfunc.h    
 		propertyconvertor.cpp
@@ -68,10 +49,6 @@ if( BUILD_PLATFORM_WIN32 )
 		toolcache.h
 		windowbox.cpp
 		windowbox.h
-		editorutility.cpp
-		editorutility.h
-		resourcelist.cpp
-		resourcelist.h
         )
     source_group( utility FILES ${${target_name}_utility_SRCS} )    
 
@@ -80,11 +57,12 @@ if( BUILD_PLATFORM_WIN32 )
 		${${target_name}_widget_SRCS}
 		${${target_name}_utility_SRCS}
 		${${target_name}_property_SRCS}
-		${${target_name}_resourceselectdlg_SRCS}
 		)
 
     macro_include_directories()
 	macro_link_directories()
+
+	include_directories( "${PROJECT_SOURCE_DIR}/tools/libguiex_editor_lib" )
 
 	# td game specified
 	include_directories( "${PROJECT_SOURCE_DIR}/test/game_td/lib/" )
@@ -93,9 +71,9 @@ if( BUILD_PLATFORM_WIN32 )
     set( WIN32_EXECUTABLE true )
     add_executable( ${target_name} WIN32 ${${target_name}_SRCS} )
     
-	macro_add_project_dependencies_wx_win32(${target_name} example_game_td_lib)
+	macro_add_project_dependencies_tools_win32(${target_name} example_game_td_lib)
 	macro_set_target_output_dir( ${target_name} )
-	macro_set_target_link_libraries_wx_win32( ${target_name} general example_game_td_lib )
+	macro_set_target_link_libraries_tools_win32( ${target_name} general example_game_td_lib )
      
 	set_target_properties(${target_name} PROPERTIES FOLDER editor) 
   

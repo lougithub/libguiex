@@ -1,14 +1,16 @@
 /** 
-* @file editorutility.cpp
+* @file toolsmisc.cpp
 * @author ken
+* @date 2011-09-08
 */
 
 //============================================================================//
 // include
 //============================================================================//
-#include "editorutility.h"
+#include "toolsmisc.h"
 #include <wx/filename.h> 
 
+using namespace guiex;
 
 //============================================================================//
 // function
@@ -28,6 +30,10 @@ wxImage* LoadwxImageByGuiImage( const CGUIImage* pGuiImage )
 {
 	wxString strImagePath = Gui2wxString( GSystem->GetDataPath() + pGuiImage->GetFullFilePath() );
 	wxFileName filename( strImagePath );
+	if ( !filename.FileExists() )
+	{
+		return NULL;
+	}
 	wxImage* pWxImage = NULL;
 	if( filename.GetExt().CmpNoCase(L"tga") == 0)
 	{
@@ -86,6 +92,38 @@ wxImage* LoadwxImageByGuiImage( const CGUIImage* pGuiImage )
 	case eImageOrientation_FlipVertical:
 		pWxImage->Mirror( false );
 		break;
+	}
+
+	return pWxImage;
+}
+//------------------------------------------------------------------------------
+wxImage* LoadwxImageByFilename( const wxString& rFilename )
+{
+	wxFileName filename( rFilename );
+	if ( !filename.FileExists() )
+	{
+		return NULL;
+	}
+
+	wxImage* pWxImage = NULL;
+	if( filename.GetExt().CmpNoCase(L"tga") == 0)
+	{
+		pWxImage = new wxImage( filename.GetFullPath(), wxBITMAP_TYPE_TGA );
+	}
+	else if( filename.GetExt().CmpNoCase(L"png") == 0)
+	{
+		pWxImage = new wxImage( filename.GetFullPath(), wxBITMAP_TYPE_PNG );
+	}
+
+	if( !pWxImage )
+	{
+		return NULL;
+	}
+
+	if ( !pWxImage->Ok() )
+	{
+		delete pWxImage;
+		return NULL;
 	}
 
 	return pWxImage;
