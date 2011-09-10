@@ -16,29 +16,7 @@
 
 //============================================================================//
 // class
-//============================================================================// 
-
-class WxImageCanvas: public wxScrolledWindow
-{
-public:
-	WxImageCanvas( wxWindow *parent, bool bDrawUVRect );
-	~WxImageCanvas();
-
-	void OnPaint( wxPaintEvent &event );
-
-	void SetBitmap( wxBitmap* pBitmap );
-
-	void SetUVRect( const wxRect& rTargetRect );
-
-
-protected:
-	wxBitmap* m_pBitmap;
-	wxRect m_aUVRect;
-	bool m_bDrawUVRect;
-
-	DECLARE_EVENT_TABLE()
-};
-
+//============================================================================//
 
 class WxImageSelectDialog : public WxResourceSelectDialogBase
 {
@@ -46,11 +24,8 @@ public:
 	WxImageSelectDialog( wxWindow* parent );
 
 protected:
-	void OnListBoxSelect(wxCommandEvent& WXUNUSED(event));
+	virtual class WxResourcePreviewPanelBase* GeneratePreviewPanel( wxWindow* pParent );
 
-protected:
-	WxImageCanvas* m_pImageCanvas;
-	WxImageCanvas* m_pFullImageCanvas;
 private:
 	DECLARE_EVENT_TABLE()
 };

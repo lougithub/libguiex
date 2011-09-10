@@ -23,7 +23,7 @@ public:
 	WxSoundSelectDialog( wxWindow* parent );
 
 protected:
-	void OnPlay(wxCommandEvent& WXUNUSED(event));
+	virtual class WxResourcePreviewPanelBase* GeneratePreviewPanel( wxWindow* pParent );
 
 protected:
 

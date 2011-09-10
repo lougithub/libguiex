@@ -23,10 +23,7 @@ public:
 	WxLocalizedstringSelectDialog( wxWindow* parent );
 
 protected:
-	void OnListBoxSelect(wxCommandEvent& WXUNUSED(event));
-
-protected:
-	wxTextCtrl* m_pTextBox;
+	virtual class WxResourcePreviewPanelBase* GeneratePreviewPanel( wxWindow* pParent );
 
 private:
 	DECLARE_EVENT_TABLE()

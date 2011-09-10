@@ -9,9 +9,9 @@
 // include
 //============================================================================// 
 #include "wxfontselectdlg.h"
+#include "wxfontpreviewpanel.h"
 #include "guiresourcepool.h"
 #include "editorwidgetid.h"
-#include "toolsmisc.h"
 
 //============================================================================//
 // function
@@ -22,20 +22,11 @@ END_EVENT_TABLE()
 //------------------------------------------------------------------------------
 WxFontSelectDialog::WxFontSelectDialog( wxWindow* parent )
 :WxResourceSelectDialogBase( parent, _T("select font"), CGUIResourcePool::Instance()->GetFontList())
-{
-	m_pTextBox = new wxTextCtrl( m_pShowPanel, wxID_ANY );
-	m_pTextBox->SetEditable( false );
-
-	wxSizer *sizerTop = new wxBoxSizer( wxVERTICAL );
-	sizerTop->Add( m_pTextBox, 0, wxALIGN_CENTER );
-	m_pShowPanel->SetSizer( sizerTop );
+{	
 }
 //------------------------------------------------------------------------------
-void WxFontSelectDialog::OnListBoxSelect(wxCommandEvent& event)
+WxResourcePreviewPanelBase* WxFontSelectDialog::GeneratePreviewPanel( wxWindow* pParent )
 {
-	WxResourceSelectDialogBase::OnListBoxSelect( event );
-
-	wxString strFontDesc = CGUIResourcePool::Instance()->GetFontDesc(  m_strResourceName );
-	m_pTextBox->SetLabelText( strFontDesc );
+	return new WxFontPreviewPanel(pParent);
 }
 //------------------------------------------------------------------------------

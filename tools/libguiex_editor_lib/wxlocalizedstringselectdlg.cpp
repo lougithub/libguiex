@@ -9,6 +9,7 @@
 // include
 //============================================================================// 
 #include "wxlocalizedstringselectdlg.h"
+#include "wxlocalizedstringpreviewpanel.h"
 #include "guiresourcepool.h"
 #include "editorwidgetid.h"
 #include "toolsmisc.h"
@@ -22,19 +23,11 @@ END_EVENT_TABLE()
 //------------------------------------------------------------------------------
 WxLocalizedstringSelectDialog::WxLocalizedstringSelectDialog( wxWindow* parent )
 :WxResourceSelectDialogBase( parent, _T("select localization"), CGUIResourcePool::Instance()->GetLocalizationList())
-{
-	m_pTextBox = new wxTextCtrl( m_pShowPanel, wxID_ANY );
-	m_pTextBox->SetEditable( false );
-
-	wxSizer *sizerTop = new wxBoxSizer( wxVERTICAL );
-	sizerTop->Add( m_pTextBox, 1, wxALL|wxEXPAND );
-	m_pShowPanel->SetSizer( sizerTop );
+{	
 }
 //------------------------------------------------------------------------------
-void WxLocalizedstringSelectDialog::OnListBoxSelect(wxCommandEvent& event)
+WxResourcePreviewPanelBase* WxLocalizedstringSelectDialog::GeneratePreviewPanel( wxWindow* pParent )
 {
-	WxResourceSelectDialogBase::OnListBoxSelect( event );
-
-	m_pTextBox->SetLabelText( (wchar_t*)CGUILocalizationManager::Instance()->Localize( wx2GuiString(m_strResourceName )).c_str());
+	return new WxLocalizedStringPreviewPanel(pParent);
 }
 //------------------------------------------------------------------------------

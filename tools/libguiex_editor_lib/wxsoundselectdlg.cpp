@@ -9,6 +9,7 @@
 // include
 //============================================================================// 
 #include "wxsoundselectdlg.h"
+#include "wxsoundpreviewpanel.h"
 #include "guiresourcepool.h"
 #include "editorwidgetid.h"
 #include "toolsmisc.h"
@@ -21,24 +22,16 @@
 
 //------------------------------------------------------------------------------
 BEGIN_EVENT_TABLE( WxSoundSelectDialog, WxResourceSelectDialogBase )
-EVT_BUTTON( ID_SoundSelect_BTN_PLAY, WxSoundSelectDialog::OnPlay )
 END_EVENT_TABLE()
 //------------------------------------------------------------------------------
 WxSoundSelectDialog::WxSoundSelectDialog( wxWindow* parent )
 :WxResourceSelectDialogBase( parent, _T("select sound"), CGUIResourcePool::Instance()->GetSoundList())
 {
-	wxButton *pBtnPlay = new wxButton( m_pShowPanel, ID_SoundSelect_BTN_PLAY, wxT("Play") );
 
-	wxSizer *sizerTop = new wxBoxSizer( wxVERTICAL );
-	sizerTop->Add( m_pListBox, 0, wxALIGN_CENTER );
-	m_pShowPanel->SetSizer( sizerTop );
 }
 //------------------------------------------------------------------------------
-void WxSoundSelectDialog::OnPlay(wxCommandEvent& event)
+WxResourcePreviewPanelBase* WxSoundSelectDialog::GeneratePreviewPanel( wxWindow* pParent )
 {
-	if( !m_strResourceName.empty())
-	{
-		CGUIInterfaceManager::Instance()->GetInterfaceSound()->PlayEffect( wx2GuiString(m_strResourceName ) );
-	}
+	return new WxSoundPreviewPanel(pParent);
 }
 //------------------------------------------------------------------------------

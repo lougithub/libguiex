@@ -24,13 +24,18 @@ public:
 	WxResourceSelectDialogBase( wxWindow* parent, const wxString& title, const wxArrayString& rResourceList );
 	const wxString& GetResourceName() const;
 
+	virtual int ShowModal();
+
 protected:
 	virtual void OnOK(wxCommandEvent& WXUNUSED(event));
 	virtual void OnCANCEL(wxCommandEvent& WXUNUSED(event));
 	virtual void OnListBoxSelect(wxCommandEvent& WXUNUSED(event));
 
+	void InitSelectDlg();
+	virtual class WxResourcePreviewPanelBase* GeneratePreviewPanel( wxWindow* pParent ) = 0;
+
 protected:
-	wxPanel* m_pShowPanel;
+	class WxResourcePreviewPanelBase* m_pPreviewPanel;
 	wxListBox* m_pListBox;
 	wxString m_strResourceName;
 

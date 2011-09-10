@@ -32,6 +32,22 @@ if( BUILD_PLATFORM_WIN32 )
 		)
     source_group( select_dlg FILES ${${target_name}_selectdlg_SRCS} )    
 
+	set( ${target_name}_previewpanel_SRCS 
+		wxresourcepreviewpanelbase.cpp
+		wxresourcepreviewpanelbase.h
+		wxfontpreviewpanel.cpp
+		wxfontpreviewpanel.h
+		wximagepreviewpanel.cpp
+		wximagepreviewpanel.h
+		wxanimationpreviewpanel.cpp
+		wxanimationpreviewpanel.h
+		wxsoundpreviewpanel.cpp
+		wxsoundpreviewpanel.h		
+		wxlocalizedstringpreviewpanel.cpp
+		wxlocalizedstringpreviewpanel.h
+		)
+    source_group( preview_panel FILES ${${target_name}_previewpanel_SRCS} )    
+
 	set( ${target_name}_property_SRCS 
 		wxpgpropertyextend.cpp
 		wxpgpropertyextend.h
@@ -45,6 +61,7 @@ if( BUILD_PLATFORM_WIN32 )
 		${${target_name}_property_SRCS}
 		${${target_name}_selectdlg_SRCS}
 		${${target_name}_misc_SRCS}
+		${${target_name}_previewpanel_SRCS}
 		)
 
     macro_include_directories()

@@ -17,45 +17,13 @@
 //============================================================================//
 // class
 //============================================================================// 
-
-class WxAnimationCanvas: public wxScrolledWindow
-{
-public:
-	WxAnimationCanvas( wxWindow *parent );
-	~WxAnimationCanvas();
-
-	void OnPaint( wxPaintEvent &event );
-	void OnTimer(wxTimerEvent& event);
-
-	void SetAnimationData( guiex::CGUIAnimationData* pData );
-
-protected:
-	void UpdaterBitmapData();
-	void ClearBitmapData();
-
-protected:
-	wxTimer m_timer;
-
-	guiex::CGUIAnimationData* m_pAnimData;
-
-	std::vector<wxBitmap*> m_vecBitmaps;
-	guiex::uint32 m_nCurrentFrame;
-	float m_fElapsedTime;
-
-	DECLARE_EVENT_TABLE()
-};
-
-
 class WxAnimationSelectDialog : public WxResourceSelectDialogBase
 {
 public:
 	WxAnimationSelectDialog( wxWindow* parent );
 
 protected:
-	void OnListBoxSelect(wxCommandEvent& WXUNUSED(event));
-
-protected:
-	WxAnimationCanvas* m_pAnimationCanvas;
+	virtual class WxResourcePreviewPanelBase* GeneratePreviewPanel( wxWindow* pParent );
 
 private:
 	DECLARE_EVENT_TABLE()
