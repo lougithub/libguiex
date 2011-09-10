@@ -115,7 +115,7 @@ void CGUIFrameworkTest::CreateBox2dSample_hellobox2d()
 		pWidget_staticbody->SetParent( m_pWidgetRoot );
 		pWidget_staticbody->SetImage( "bg", "color_white" );
 		const b2Fixture* pFixtureList = groundBody->GetFixtureList();
-		b2Vec2 vExtents = pFixtureList->GetAABB().GetExtents();
+		b2Vec2 vExtents = pFixtureList->GetAABB(0).GetExtents();
 		pWidget_staticbody->SetSize( METER2PIXEL(vExtents.x*2), METER2PIXEL(vExtents.y*2) );
 		pWidget_staticbody->SetPosition( METER2PIXEL(groundBody->GetPosition().x), METER2PIXEL(groundBody->GetPosition().y) );
 		pWidget_staticbody->SetAnchorPoint( 0.5, 0.5 );
@@ -144,7 +144,7 @@ void CGUIFrameworkTest::CreateBox2dSample_hellobox2d()
 		pWidget_dynamicbody->SetParent( m_pWidgetRoot );
 		pWidget_dynamicbody->SetImage( "bg", "color_white" );
 		const b2Fixture* pFixtureList = m_pBody->GetFixtureList();
-		b2Vec2 vExtents = pFixtureList->GetAABB().GetExtents();
+		b2Vec2 vExtents = pFixtureList->GetAABB(0).GetExtents();
 		//pWidget_dynamicbody->SetSize( METER2PIXEL(vExtents.x*2), METER2PIXEL(vExtents.y*2) );
 		pWidget_dynamicbody->SetSize( METER2PIXEL(4), METER2PIXEL(1) );
 		pWidget_dynamicbody->SetRotation( 0, 0, m_pBody->GetAngle() / b2_pi * 180.f );
@@ -172,7 +172,7 @@ void CGUIFrameworkTest::CreateBox2dSample_joints()
 		pWidget_staticbody->SetParent( m_pWidgetRoot );
 		pWidget_staticbody->SetImage( "bg", "color_white" );
 		const b2Fixture* pFixtureList = groundBody->GetFixtureList();
-		b2Vec2 vExtents = pFixtureList->GetAABB().GetExtents();
+		b2Vec2 vExtents = pFixtureList->GetAABB(0).GetExtents();
 		pWidget_staticbody->SetSize( METER2PIXEL(vExtents.x*2), METER2PIXEL(vExtents.y*2) );
 		pWidget_staticbody->SetPosition( METER2PIXEL(groundBody->GetPosition().x), METER2PIXEL(groundBody->GetPosition().y) );
 		pWidget_staticbody->SetAnchorPoint( 0.5, 0.5 );
@@ -200,7 +200,7 @@ void CGUIFrameworkTest::CreateBox2dSample_joints()
 		pWidget_dynamicbody->SetParent( m_pWidgetRoot );
 		pWidget_dynamicbody->SetImage( "bg", "color_white" );
 		const b2Fixture* pFixtureList = m_pBody2->GetFixtureList();
-		b2Vec2 vExtents = pFixtureList->GetAABB().GetExtents();
+		b2Vec2 vExtents = pFixtureList->GetAABB(0).GetExtents();
 		//pWidget_dynamicbody->SetSize( METER2PIXEL(vExtents.x*2), METER2PIXEL(vExtents.y*2) );
 		pWidget_dynamicbody->SetSize( METER2PIXEL(2), METER2PIXEL(2) );
 		pWidget_dynamicbody->SetRotation( 0, 0, m_pBody2->GetAngle() / b2_pi * 180.f );

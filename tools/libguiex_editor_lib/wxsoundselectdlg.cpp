@@ -20,7 +20,7 @@
 
 
 //------------------------------------------------------------------------------
-BEGIN_EVENT_TABLE( WxSoundSelectDialog, wxDialog )
+BEGIN_EVENT_TABLE( WxSoundSelectDialog, WxResourceSelectDialogBase )
 EVT_BUTTON( ID_SoundSelect_BTN_PLAY, WxSoundSelectDialog::OnPlay )
 END_EVENT_TABLE()
 //------------------------------------------------------------------------------

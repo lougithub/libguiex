@@ -38,6 +38,7 @@ guiex::CGUITimer g_aOldTimer;
 extern guiex::CGUIFrameworkBase* GUIEXCreateFramework( );
 extern const char* GUIEXGetDataDir();
 int g_nVSync = 1;
+bool g_bShouldQuit = false;
 
 //============================================================================//
 // function
@@ -81,6 +82,7 @@ void setVSync( int interval = 1 )
 //------------------------------------------------------------------------------
 void QuitApp()
 {
+	g_bShouldQuit = true;
 	if( g_pFramework )
 	{
 		g_pFramework->Release();
@@ -250,6 +252,10 @@ void keyUpSpecialCB(int key, int x, int y)
 //------------------------------------------------------------------------------
 void displayCB(void)
 {
+	if( g_bShouldQuit )
+	{
+		return;
+	}
 	// do updates
 	guiex::CGUITimer aCurTimer;
 	aCurTimer.UpdateTime();

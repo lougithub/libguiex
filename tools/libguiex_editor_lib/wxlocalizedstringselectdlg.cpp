@@ -17,7 +17,7 @@
 // function
 //============================================================================// 
 //------------------------------------------------------------------------------
-BEGIN_EVENT_TABLE( WxLocalizedstringSelectDialog, wxDialog )
+BEGIN_EVENT_TABLE( WxLocalizedstringSelectDialog, WxResourceSelectDialogBase )
 END_EVENT_TABLE()
 //------------------------------------------------------------------------------
 WxLocalizedstringSelectDialog::WxLocalizedstringSelectDialog( wxWindow* parent )

@@ -111,7 +111,7 @@ void WxAnimationCanvas::OnPaint( wxPaintEvent &WXUNUSED(event) )
 
 
 //------------------------------------------------------------------------------
-BEGIN_EVENT_TABLE( WxAnimationSelectDialog, wxDialog )
+BEGIN_EVENT_TABLE( WxAnimationSelectDialog, WxResourceSelectDialogBase )
 END_EVENT_TABLE()
 //------------------------------------------------------------------------------
 WxAnimationSelectDialog::WxAnimationSelectDialog( wxWindow* parent )

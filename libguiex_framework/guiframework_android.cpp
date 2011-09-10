@@ -124,6 +124,7 @@ namespace guiex
 		}
 		GSystem->Release();
 		delete GSystem;
+		GSystem = NULL;
 	}
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_Android::RegisterInterfaces_Render( )

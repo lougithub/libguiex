@@ -95,6 +95,7 @@ namespace guiex
 		}
 		GSystem->Release();
 		delete GSystem;
+		GSystem = NULL;
 	}
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_IOS::RegisterInterfaces_Render( )

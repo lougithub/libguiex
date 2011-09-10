@@ -98,6 +98,7 @@ namespace guiex
 		}
 		GSystem->Release();
 		delete GSystem;
+		GSystem = NULL;
 	}
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_Windows::RegisterInterfaces_Render( )

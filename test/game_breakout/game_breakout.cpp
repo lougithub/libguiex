@@ -394,16 +394,16 @@ CMyCanvasLayer_GameLayer::CMyCanvasLayer_GameLayer( const char* szLayerName )
 	b2BodyDef groundBodyDef;
 	groundBodyDef.position.Set(0,0);
 	m_groundBody = m_pPhysics->GetWorld()->CreateBody(&groundBodyDef);
-	b2PolygonShape groundBox;
+	b2EdgeShape edgeShape;
 	b2FixtureDef groundBoxDef;
-	groundBoxDef.shape = &groundBox;
-	groundBox.SetAsEdge(b2Vec2(0,0), b2Vec2(winWidth/fScale, 0));
+	groundBoxDef.shape = &edgeShape;
+	edgeShape.Set(b2Vec2(0,0), b2Vec2(winWidth/fScale, 0));
 	m_groundBody->CreateFixture(&groundBoxDef);
-	groundBox.SetAsEdge(b2Vec2(0,0), b2Vec2(0, winHeight/fScale));
+	edgeShape.Set(b2Vec2(0,0), b2Vec2(0, winHeight/fScale));
 	m_groundBody->CreateFixture(&groundBoxDef);
-	groundBox.SetAsEdge(b2Vec2(0, winHeight/fScale), b2Vec2(winWidth/fScale, winHeight/fScale));
+	edgeShape.Set(b2Vec2(0, winHeight/fScale), b2Vec2(winWidth/fScale, winHeight/fScale));
 	m_bottomFixture = m_groundBody->CreateFixture(&groundBoxDef);
-	groundBox.SetAsEdge(b2Vec2(winWidth/fScale, winHeight/fScale), b2Vec2(winWidth/fScale, 0));
+	edgeShape.Set(b2Vec2(winWidth/fScale, winHeight/fScale), b2Vec2(winWidth/fScale, 0));
 	m_groundBody->CreateFixture(&groundBoxDef);
 
 	m_contactListener = new MyContactListener();

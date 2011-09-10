@@ -92,7 +92,7 @@ void WxImageCanvas::OnPaint( wxPaintEvent &WXUNUSED(event) )
 
 
 //------------------------------------------------------------------------------
-BEGIN_EVENT_TABLE( WxImageSelectDialog, wxDialog )
+BEGIN_EVENT_TABLE( WxImageSelectDialog, WxResourceSelectDialogBase )
 END_EVENT_TABLE()
 //------------------------------------------------------------------------------
 WxImageSelectDialog::WxImageSelectDialog( wxWindow* parent )
@@ -105,6 +105,8 @@ WxImageSelectDialog::WxImageSelectDialog( wxWindow* parent )
 	sizerImages->Add( m_pImageCanvas, 1, wxALL|wxEXPAND );
 	sizerImages->Add( m_pFullImageCanvas, 1, wxALL|wxEXPAND );
 	m_pShowPanel->SetSizer( sizerImages );
+
+	Show(true);
 }
 //------------------------------------------------------------------------------
 void WxImageSelectDialog::OnListBoxSelect(wxCommandEvent& event)

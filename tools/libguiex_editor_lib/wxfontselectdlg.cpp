@@ -17,7 +17,7 @@
 // function
 //============================================================================// 
 //------------------------------------------------------------------------------
-BEGIN_EVENT_TABLE( WxFontSelectDialog, wxDialog )
+BEGIN_EVENT_TABLE( WxFontSelectDialog, WxResourceSelectDialogBase )
 END_EVENT_TABLE()
 //------------------------------------------------------------------------------
 WxFontSelectDialog::WxFontSelectDialog( wxWindow* parent )
