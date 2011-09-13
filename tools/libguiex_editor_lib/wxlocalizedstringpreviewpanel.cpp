@@ -36,9 +36,10 @@ WxLocalizedStringPreviewPanel::WxLocalizedStringPreviewPanel( wxWindow* parent )
 //------------------------------------------------------------------------------
 void WxLocalizedStringPreviewPanel::SetResourceName( const wxString& rResourceName )
 {
+	m_strResourceName = rResourceName;
 	if( !m_strResourceName.empty())
 	{
-		CGUIInterfaceManager::Instance()->GetInterfaceSound()->PlayEffect( wx2GuiString(m_strResourceName ) );
+		m_pTextBox->SetLabelText( (wxChar*)CGUILocalizationManager::Instance()->Localize( wx2GuiString(rResourceName)).c_str());
 	}
 }
 //------------------------------------------------------------------------------

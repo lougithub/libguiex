@@ -54,6 +54,8 @@ namespace guiex
 
 		const CGUISize& GetSize( );
 
+		void SetLooping( bool bLoop );
+
 		bool IsLooping() const;
 		bool IsFinished() const;
 

@@ -215,6 +215,11 @@ namespace guiex
 		m_vecImages[m_nCurrentFrame]->Draw( pRender, rDestRect, z, rColor, fAlpha );
 	}
 	//------------------------------------------------------------------------------
+	void CGUIAnimation::SetLooping( bool bLoop )	
+	{
+		m_bLooping = bLoop;
+	}
+	//------------------------------------------------------------------------------
 	bool CGUIAnimation::IsLooping() const
 	{
 		return m_bLooping;

@@ -14,78 +14,68 @@
 #include "toolsmisc.h"
 #include <wx/filename.h> 
 
-//============================================================================//
-// function
-//============================================================================// 
-BEGIN_EVENT_TABLE(WxImageCanvas, wxScrolledWindow)
-EVT_PAINT(WxImageCanvas::OnPaint)
-END_EVENT_TABLE()
+////============================================================================//
+//// function
+////============================================================================// 
 //------------------------------------------------------------------------------
-WxImageCanvas::WxImageCanvas( wxWindow *parent, bool bDrawUVRect )
-: wxScrolledWindow( parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER )
-, m_pBitmap( NULL )
-, m_bDrawUVRect( bDrawUVRect )
+WxImageCanvas::WxImageCanvas( wxWindow *parent )
+	:WxResourceCanvasBase(parent)
+	,m_pGUIImage(NULL)
 {
+
 }
 //------------------------------------------------------------------------------
 WxImageCanvas::~WxImageCanvas()
 {
-	if( m_pBitmap )
+	ClearImage();
+}
+//------------------------------------------------------------------------------
+void WxImageCanvas::OnUpdate( float fDeltaTime )
+{
+
+}
+//------------------------------------------------------------------------------
+void WxImageCanvas::OnRender( guiex::IGUIInterfaceRender* pRender )
+{
+	if( m_pGUIImage )
 	{
-		delete m_pBitmap;
+		const CGUISize& rSize = m_pGUIImage->GetSize();
+
+		CGUIRect aRenderRect( 
+			-rSize.GetWidth()/2,
+			-rSize.GetHeight()/2,
+			rSize.GetWidth()/2,
+			rSize.GetHeight()/2
+			);
+		m_pGUIImage->Draw( pRender, aRenderRect, 0, 1 );
 	}
 }
 //------------------------------------------------------------------------------
-void WxImageCanvas::SetBitmap( wxBitmap* pBitmap )
+void WxImageCanvas::ClearImage()
 {
-	if( m_pBitmap )
+	if( m_pGUIImage )
 	{
-		delete m_pBitmap;
-		m_pBitmap = NULL;
+		m_pGUIImage->RefRelease();
+		m_pGUIImage = NULL;
 	}
-	m_pBitmap = pBitmap;
-
-	Refresh();
+}		
+//------------------------------------------------------------------------------
+void WxImageCanvas::SetImageName( const guiex::CGUIString& rImageName )
+{
+	if( m_strImageName != rImageName )
+	{
+		ClearImage();
+		m_strImageName = rImageName;
+		if( !m_strImageName.empty() )
+		{
+			m_pGUIImage = CGUIImageManager::Instance()->AllocateResource( m_strImageName );
+		}
+	}
 }
 //------------------------------------------------------------------------------
 void WxImageCanvas::SetUVRect( const wxRect& rTargetRect )
 {
 	m_aUVRect = rTargetRect;
-}
-//------------------------------------------------------------------------------
-void WxImageCanvas::OnPaint( wxPaintEvent &WXUNUSED(event) )
-{
-	wxPaintDC dc( this );
-	PrepareDC( dc );
-
-	if( m_pBitmap )
-	{
-		dc.SetBackground(wxBrush(*wxBLACK, wxSOLID));
-
-		wxSize aCanvasSize = GetSize();
-		wxSize aBitmapSize = m_pBitmap->GetSize();
-		wxPoint aDrawPoint( 0, 0 );
-		if( aCanvasSize.GetWidth() > aBitmapSize.GetWidth() )
-		{
-			aDrawPoint.x = (aCanvasSize.GetWidth() - aBitmapSize.GetWidth()) / 2;
-		}
-		if( aCanvasSize.GetHeight() > aBitmapSize.GetHeight() )
-		{
-			aDrawPoint.y = (aCanvasSize.GetHeight() - aBitmapSize.GetHeight()) / 2;
-		}
-		dc.DrawBitmap( *m_pBitmap, aDrawPoint );
-
-		dc.SetPen(wxPen(*wxGREEN, 2));
-		dc.SetBrush(wxBrush(*wxBLACK, wxTRANSPARENT));
-		dc.DrawRectangle( aDrawPoint, aBitmapSize );
-
-		if( m_bDrawUVRect )
-		{
-			dc.SetPen(wxPen(*wxRED, 1));
-			wxRect aUVRect( m_aUVRect.GetPosition() + aDrawPoint, m_aUVRect.GetSize() );
-			dc.DrawRectangle( aUVRect );
-		}
-	}
 }
 //------------------------------------------------------------------------------
 
@@ -98,8 +88,8 @@ END_EVENT_TABLE()
 WxImagePreviewPanel::WxImagePreviewPanel( wxWindow* parent )
 :WxResourcePreviewPanelBase( parent )
 {
-	m_pImageCanvas = new WxImageCanvas( this, false ); 
-	m_pFullImageCanvas = new WxImageCanvas( this, true ); 
+	m_pImageCanvas = new WxImageCanvas( this ); 
+	m_pFullImageCanvas = new WxImageCanvas( this ); 
 
 	wxSizer *sizerImages = new wxBoxSizer( wxVERTICAL );
 	sizerImages->Add( m_pImageCanvas, 1, wxALL|wxEXPAND );
@@ -117,42 +107,47 @@ void WxImagePreviewPanel::SetResourceName( const wxString& rResourceName )
 	}
 	m_strResourceName = rResourceName;
 
-	//thumbnail
-	wxBitmap* pBitmap = CGUIResourcePool::Instance()->GenerateOriginalImageThumbnail(  m_strResourceName );
-	m_pImageCanvas->SetBitmap( pBitmap );
+	m_pImageCanvas->SetImageName( wx2GuiString( m_strResourceName) );
+	m_pFullImageCanvas->SetImageName( wx2GuiString( m_strResourceName) );
 
-	//full image
-	m_pFullImageCanvas->SetBitmap( NULL );
-	if( !m_strResourceName.empty() )
-	{
-		CGUIImage* pImage = CGUIImageManager::Instance()->AllocateResource( wx2GuiString( m_strResourceName ) );
-		if( pImage && pImage->GetImageType() == eImageType_FromFile )
-		{
-			wxImage* pWxImage = LoadwxImageByGuiImage( pImage );
-			if( pWxImage )
-			{
-				wxBitmap* pOriginalBitmap = new wxBitmap( *pWxImage );
-				delete pWxImage;
-				pWxImage = NULL;
 
-				m_pFullImageCanvas->SetBitmap( pOriginalBitmap );
-				const CGUIRect& rRect = pImage->GetUVRect();
-				wxSize newSize( 
-					pOriginalBitmap->GetSize().GetWidth() * rRect.GetWidth(), 
-					pOriginalBitmap->GetSize().GetHeight()* rRect.GetHeight() );
-				wxPoint newPoint( 
-					rRect.GetPosition().x * pOriginalBitmap->GetSize().GetWidth(), 
-					rRect.GetPosition().y * pOriginalBitmap->GetSize().GetHeight() );
-				wxRect aUVRect( newPoint, newSize );
-				m_pFullImageCanvas->SetUVRect( aUVRect );
-			}
-		}
-		if( pImage )
-		{
-			pImage->RefRelease();
-		}
-	}
+	////thumbnail
+	//wxBitmap* pBitmap = CGUIResourcePool::Instance()->GenerateOriginalImageThumbnail(  m_strResourceName );
+	//m_pImageCanvas->SetBitmap( pBitmap );
 
+	////full image
+	//m_pFullImageCanvas->SetBitmap( NULL );
+	//if( !m_strResourceName.empty() )
+	//{
+	//	CGUIImage* pImage = CGUIImageManager::Instance()->AllocateResource( wx2GuiString( m_strResourceName ) );
+	//	if( pImage && pImage->GetImageType() == eImageType_FromFile )
+	//	{
+	//		wxImage* pWxImage = LoadwxImageByGuiImage( pImage );
+	//		if( pWxImage )
+	//		{
+	//			wxBitmap* pOriginalBitmap = new wxBitmap( *pWxImage );
+	//			delete pWxImage;
+	//			pWxImage = NULL;
+
+	//			m_pFullImageCanvas->SetBitmap( pOriginalBitmap );
+	//			const CGUIRect& rRect = pImage->GetUVRect();
+	//			wxSize newSize( 
+	//				pOriginalBitmap->GetSize().GetWidth() * rRect.GetWidth(), 
+	//				pOriginalBitmap->GetSize().GetHeight()* rRect.GetHeight() );
+	//			wxPoint newPoint( 
+	//				rRect.GetPosition().x * pOriginalBitmap->GetSize().GetWidth(), 
+	//				rRect.GetPosition().y * pOriginalBitmap->GetSize().GetHeight() );
+	//			wxRect aUVRect( newPoint, newSize );
+	//			m_pFullImageCanvas->SetUVRect( aUVRect );
+	//		}
+	//	}
+	//	if( pImage )
+	//	{
+	//		pImage->RefRelease();
+	//	}
+	//}
+
+	m_pImageCanvas->Refresh();
 	m_pFullImageCanvas->Refresh();
 }
 //------------------------------------------------------------------------------

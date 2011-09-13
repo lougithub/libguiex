@@ -17,29 +17,34 @@
 //============================================================================//
 // class
 //============================================================================// 
+class WxAnimationCanvas : public WxResourceCanvasBase
+{
+public:
+	WxAnimationCanvas( wxWindow *parent );
+	~WxAnimationCanvas();
+
+	void SetAnimationName( const guiex::CGUIString& rImageName );
+
+protected:
+	virtual void OnUpdate( float fDeltaTime );
+	virtual void OnRender( guiex::IGUIInterfaceRender* pRender );
+
+	void ClearAnimation();
+
+protected:
+	guiex::CGUIString m_strAnimationName;
+	guiex::CGUIAnimation* m_pGUIAnimation;
+};
 
 class WxAnimationPreviewPanel: public WxResourcePreviewPanelBase
 {
 public:
 	WxAnimationPreviewPanel( wxWindow *parent );
-	~WxAnimationPreviewPanel();
-
-	void OnPaint( wxPaintEvent &event );
-	void OnTimer(wxTimerEvent& event);
 
 	virtual void SetResourceName( const wxString& rResourceName );
 
 protected:
-	void ClearBitmapData();
-
-protected:
-	wxTimer m_timer;
-
-	const guiex::CGUIAnimationData* m_pAnimData;
-
-	std::vector<wxBitmap*> m_vecBitmaps;
-	guiex::uint32 m_nCurrentFrame;
-	float m_fElapsedTime;
+	WxAnimationCanvas* m_pAnimationCanvas;
 
 	DECLARE_EVENT_TABLE()
 };

@@ -50,7 +50,6 @@ public:
 	//event
 	void OnPaint(wxPaintEvent& event);
 	void OnSize(wxSizeEvent& event);
-	void OnEraseBackground(wxEraseEvent& event);
 	void OnKeyDown(wxKeyEvent& event);
 	void OnKeyUp(wxKeyEvent& event);
 	void OnEnterWindow(wxMouseEvent& event);
@@ -103,6 +102,8 @@ private:
 	wxString rFilename;
 
 	WxEditorCanvasContainer* m_pContainer;
+
+	wxGLContext* m_pGLContext;
 
 	DECLARE_EVENT_TABLE()
 };

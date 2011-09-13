@@ -23,5 +23,12 @@ enum
 	EditorWidgetID_End,
 };
 
+enum 
+{
+	TIMERID_PREVIEWCANVAS_RENDER = 100,
+
+	TIMERID_HIGHEST,
+};
+
 
 #endif //__KEN_EDITORWIDGET_ID_20110909_H__

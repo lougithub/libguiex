@@ -329,12 +329,12 @@
 
 
 	<property name="checkbutton_glow_normal" type="CGUIImageDefine">
-		<property  name="path" type="CGUIString" value="image/CheckButtonGlowNormal.tga" />
+		<property  name="path" type="CGUIString" value="image/CheckButtonGlowOverlay.png" />
 		<property name="uv" type="CGUIRect" value="9,9,55,55" />
 		<property name="size" type="CGUISize" value="64,64"/>
 	</property>
 	<property name="checkbutton_glow_checked" type="CGUIImageDefine">
-		<property  name="path" type="CGUIString" value="image/CheckButtonGlowChecked.tga" />
+		<property  name="path" type="CGUIString" value="image/CheckButtonGlowChecked.png" />
 		<property name="uv" type="CGUIRect" value="9,9,55,55" />
 		<property name="size" type="CGUISize" value="64,64"/>
 	</property>

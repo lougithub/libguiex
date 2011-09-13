@@ -18,23 +18,86 @@
 //============================================================================//
 // function
 //============================================================================// 
+//------------------------------------------------------------------------------
+WxAnimationCanvas::WxAnimationCanvas( wxWindow *parent )
+	:WxResourceCanvasBase(parent)
+	,m_pGUIAnimation(NULL)
+{
+
+}
+//------------------------------------------------------------------------------
+WxAnimationCanvas::~WxAnimationCanvas()
+{
+	ClearAnimation();
+}
+//------------------------------------------------------------------------------
+void WxAnimationCanvas::OnUpdate( float fDeltaTime )
+{
+	if( m_pGUIAnimation )
+	{
+		m_pGUIAnimation->Update( fDeltaTime );
+	}
+}
+//------------------------------------------------------------------------------
+void WxAnimationCanvas::OnRender( guiex::IGUIInterfaceRender* pRender )
+{
+	if( m_pGUIAnimation )
+	{
+		const CGUISize& rSize = m_pGUIAnimation->GetSize();
+
+		CGUIRect aRenderRect( 
+			-rSize.GetWidth()/2,
+			-rSize.GetHeight()/2,
+			rSize.GetWidth()/2,
+			rSize.GetHeight()/2
+			);
+		m_pGUIAnimation->Draw( pRender, aRenderRect, 0, 1 );
+	}
+}
+//------------------------------------------------------------------------------
+void WxAnimationCanvas::ClearAnimation()
+{
+	if( m_pGUIAnimation )
+	{
+		m_pGUIAnimation->RefRelease();
+		m_pGUIAnimation = NULL;
+	}
+}		
+//------------------------------------------------------------------------------
+void WxAnimationCanvas::SetAnimationName( const guiex::CGUIString& rImageName )
+{
+	if( m_strAnimationName != rImageName )
+	{
+		ClearAnimation();
+		m_strAnimationName = rImageName;
+		if( !m_strAnimationName.empty() )
+		{
+			m_pGUIAnimation = CGUIAnimationManager::Instance()->AllocateResource( m_strAnimationName );
+			if( m_pGUIAnimation )
+			{
+				m_pGUIAnimation->SetLooping( true );
+			}
+		}
+	}
+}
+//------------------------------------------------------------------------------
+
+
+
 BEGIN_EVENT_TABLE(WxAnimationPreviewPanel, WxResourcePreviewPanelBase)
-EVT_PAINT(WxAnimationPreviewPanel::OnPaint)
-EVT_TIMER(110, WxAnimationPreviewPanel::OnTimer)
 END_EVENT_TABLE()
 //------------------------------------------------------------------------------
 WxAnimationPreviewPanel::WxAnimationPreviewPanel( wxWindow *parent )
 : WxResourcePreviewPanelBase( parent )
-, m_pAnimData( NULL )
-, m_nCurrentFrame(0)
-, m_fElapsedTime(0.0f)
-, m_timer(this, 110)
+, m_pAnimationCanvas( NULL )
 {
-}
-//------------------------------------------------------------------------------
-WxAnimationPreviewPanel::~WxAnimationPreviewPanel()
-{
-	ClearBitmapData();
+	m_pAnimationCanvas = new WxAnimationCanvas( this ); 
+
+	wxSizer *sizerAnimation = new wxBoxSizer( wxVERTICAL );
+	sizerAnimation->Add( m_pAnimationCanvas, 1, wxALL|wxEXPAND );
+	SetSizer( sizerAnimation );
+
+	Show(true);
 }
 //------------------------------------------------------------------------------
 void WxAnimationPreviewPanel::SetResourceName( const wxString& rResourceName )
@@ -43,65 +106,9 @@ void WxAnimationPreviewPanel::SetResourceName( const wxString& rResourceName )
 	{
 		m_strResourceName = rResourceName;
 
-		ClearBitmapData();
+		m_pAnimationCanvas->SetAnimationName( wx2GuiString( m_strResourceName) );
 
-		m_pAnimData = CGUIResourcePool::Instance()->GetAnimationData(  m_strResourceName );
-		if( !m_pAnimData )
-		{
-			return;
-		}
-		const std::vector<CGUIString>& images = m_pAnimData->GetImages();
-
-		for( uint32 i=0; i<uint32(images.size()); ++i)
-		{
-			m_vecBitmaps.push_back( CGUIResourcePool::Instance()->GenerateOriginalImageThumbnail(images[i]));
-		}
-
-		m_timer.Start( m_pAnimData->GetInterval() * 1000 );
-	}
-}
-//------------------------------------------------------------------------------
-void WxAnimationPreviewPanel::ClearBitmapData()
-{
-	for( uint32 i=0; i<uint32(m_vecBitmaps.size()); ++i)
-	{
-		delete m_vecBitmaps[i];
-	}
-	m_vecBitmaps.clear();
-	m_nCurrentFrame = 0;
-	m_fElapsedTime = 0.0f;
-
-	m_timer.Stop();
-}
-//------------------------------------------------------------------------------
-void WxAnimationPreviewPanel::OnTimer(wxTimerEvent& event)
-{
-	m_nCurrentFrame = (m_nCurrentFrame+1) % m_vecBitmaps.size();
-	Refresh();
-}
-//------------------------------------------------------------------------------
-void WxAnimationPreviewPanel::OnPaint( wxPaintEvent &WXUNUSED(event) )
-{
-	wxPaintDC dc( this );
-	PrepareDC( dc );
-
-	if( m_pAnimData )
-	{
-		wxBitmap* pCurrentBitmap = m_vecBitmaps[m_nCurrentFrame];
-		dc.SetBackground(wxBrush(*wxBLACK, wxSOLID));
-
-		wxSize aCanvasSize = GetSize();
-		wxSize aBitmapSize = pCurrentBitmap->GetSize();
-		wxPoint aDrawPoint( 0, 0 );
-		if( aCanvasSize.GetWidth() > aBitmapSize.GetWidth() )
-		{
-			aDrawPoint.x = (aCanvasSize.GetWidth() - aBitmapSize.GetWidth()) / 2;
-		}
-		if( aCanvasSize.GetHeight() > aBitmapSize.GetHeight() )
-		{
-			aDrawPoint.y = (aCanvasSize.GetHeight() - aBitmapSize.GetHeight()) / 2;
-		}
-		dc.DrawBitmap( *pCurrentBitmap, aDrawPoint );
+		m_pAnimationCanvas->Refresh();
 	}
 }
 //------------------------------------------------------------------------------

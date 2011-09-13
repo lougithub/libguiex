@@ -30,7 +30,6 @@ using namespace guiex;
 BEGIN_EVENT_TABLE(WxEditorCanvas, wxGLCanvas)
 EVT_SIZE(WxEditorCanvas::OnSize)
 EVT_PAINT(WxEditorCanvas::OnPaint)
-EVT_ERASE_BACKGROUND(WxEditorCanvas::OnEraseBackground)
 EVT_KEY_DOWN( WxEditorCanvas::OnKeyDown )
 EVT_KEY_UP( WxEditorCanvas::OnKeyUp )
 EVT_ENTER_WINDOW( WxEditorCanvas::OnEnterWindow )
@@ -55,6 +54,7 @@ WxEditorCanvas::WxEditorCanvas(wxWindow *parent, int* args, wxWindowID id,
 					   ,m_previousMouseY(0)
 					   ,m_bWidgetStatusChanged(false)
 					   ,m_pContainer((WxEditorCanvasContainer*)parent)
+					   ,m_pGLContext( NULL )
 {
 	m_timer.Start(33);
 }
@@ -67,7 +67,8 @@ WxEditorCanvas::~WxEditorCanvas()
 //------------------------------------------------------------------------------
 void WxEditorCanvas::InitializeCanvas()
 {
-	SetCurrent();
+	m_pGLContext = new wxGLContext(this);
+	m_pGLContext->SetCurrent( *this );
 
 	if( !GSystem->GetUICanvas())
 	{
@@ -82,11 +83,15 @@ void WxEditorCanvas::InitializeCanvas()
 //------------------------------------------------------------------------------
 void WxEditorCanvas::DestroyCanvas()
 {
+	m_pGLContext->SetCurrent( *this );
+
 	GSystem->DestroyUICanvas();
 	GSystem->DestroyAllWidgets();
 	GSystem->UnloadAllResource();
 
 	CGUIFrameworkEditor::ms_pFramework->UnregisterOpenglInterface();
+	delete m_pGLContext;
+	m_pGLContext = NULL;
 }
 //------------------------------------------------------------------------------
 void WxEditorCanvas::UpdateWindowBox()
@@ -174,15 +179,12 @@ void WxEditorCanvas::DrawResizers()
 //------------------------------------------------------------------------------
 void WxEditorCanvas::Render()
 {
-	wxPaintDC dc(this);
-
-	SetCurrent();
+	m_pGLContext->SetCurrent( *this );
 
 	/* clear color and depth buffers */
-	const wxColour& rBGColor = GetMainFrame()->GetBGColor();
-	glClearColor( rBGColor.Red() / 255.f, rBGColor.Green() / 255.f, rBGColor.Blue() / 255.f, rBGColor.Alpha() / 255.f );
-	glClearStencil( 0 );
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT );	// clear screen and depth buffer 
+//	const wxColour& rBGColor = GetMainFrame()->GetBGColor();
+
+	UpdateCanvasSize(GetClientSize());
 
 	CGUIFrameworkEditor::ms_pFramework->Render();
 	RenderEditorInfo();
@@ -197,12 +199,14 @@ void WxEditorCanvas::RenderEditorInfo()
 	glPushClientAttrib(GL_CLIENT_ALL_ATTRIB_BITS);
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
 	glDisable(GL_TEXTURE_2D);
+	glPushMatrix();
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
 	DrawResizers();
 
+	glPopMatrix();
 	glPopAttrib();
 	glPopClientAttrib();
 }
@@ -230,10 +234,6 @@ void WxEditorCanvas::UpdateCanvasSize(const wxSize& rSize)
 	GSystem->SetRawScreenSize(rSize.x,rSize.y);
 
 	m_aWindowBox.Reset( );
-}
-//------------------------------------------------------------------------------
-void WxEditorCanvas::OnEraseBackground(wxEraseEvent& WXUNUSED(event))
-{
 }
 //------------------------------------------------------------------------------
 void WxEditorCanvas::OnKeyDown( wxKeyEvent& event )

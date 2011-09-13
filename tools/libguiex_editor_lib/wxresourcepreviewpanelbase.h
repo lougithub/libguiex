@@ -13,6 +13,7 @@
 //============================================================================// 
 #include <wx/wxprec.h>
 #include "libguiex_core/guiex.h"
+#include <wx/glcanvas.h>
 
 //============================================================================//
 // class
@@ -31,6 +32,33 @@ protected:
 	wxString m_strResourceName;
 
 private:
+	DECLARE_EVENT_TABLE()
+};
+
+
+
+class WxResourceCanvasBase : public wxGLCanvas
+{
+public:
+	WxResourceCanvasBase( wxWindow *parent );
+	~WxResourceCanvasBase();
+
+public:
+	//event
+	void OnPaint(wxPaintEvent& event);
+	void OnSize(wxSizeEvent& event);
+	void OnTimer(wxTimerEvent& event);
+
+protected:
+	virtual void OnUpdate( float fDeltaTime ) = 0;
+	virtual void OnRender( guiex::IGUIInterfaceRender* pRender ) = 0;
+
+protected:
+	static int wx_gl_attribs[];
+	wxTimer m_timer;
+	wxGLContext* m_pGLContext;
+
+protected:
 	DECLARE_EVENT_TABLE()
 };
 

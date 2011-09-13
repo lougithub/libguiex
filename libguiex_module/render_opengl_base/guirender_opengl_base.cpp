@@ -202,38 +202,6 @@ namespace guiex
 		}
 		makeGLMatrix( m_aWholeScreenRect.m_gl_world_matrix, CGUIMatrix4::IDENTITY );
 
-		//set gl property
-		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-		glPixelStorei(GL_PACK_ALIGNMENT, 1);
-
-		glEnable( GL_BLEND );
-		m_aBlendFunc.src = eBlendFunc_SRC_ALPHA;
-		m_aBlendFunc.dst = eBlendFunc_ONE_MINUS_SRC_ALPHA;
-		SetBlendFunc( m_aBlendFunc );
-
-		//glEnable( GL_DEPTH_TEST );
-		glDisable( GL_DEPTH_TEST );
-		glDepthFunc(GL_LEQUAL);
-		ClearDepth( 1.0f );
-
-		glDisable( GL_SCISSOR_TEST );
-		glDisable( GL_LIGHTING );
-
-		glShadeModel( GL_SMOOTH );
-		glEnable( GL_POINT_SMOOTH );
-		glEnable( GL_LINE_SMOOTH );
-
-		glEnable(GL_TEXTURE_2D);
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-
-		glEnable(GL_CULL_FACE);
-
-		// Set up various GL state.
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		glEnableClientState(GL_COLOR_ARRAY);
-
 		m_nCurrentStencilRef = 0;
 
 		OnScreenSizeChange( GSystem->GetRawScreenSize() );
@@ -409,7 +377,38 @@ namespace guiex
 		
 		//clear screen
 		glClearColor( 0.5f, 0.5f, 0.5f, 1 );
+		glClearStencil( 0 );
+		glClearDepth( 1.0f );
 		glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );	// clear screen and depth buffer 
+
+		//set gl property
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+		glPixelStorei(GL_PACK_ALIGNMENT, 1);
+
+		glEnable( GL_BLEND );
+		m_aBlendFunc.src = eBlendFunc_SRC_ALPHA;
+		m_aBlendFunc.dst = eBlendFunc_ONE_MINUS_SRC_ALPHA;
+		SetBlendFunc( m_aBlendFunc );
+
+		glDisable( GL_DEPTH_TEST );
+		glDepthFunc(GL_LEQUAL);
+		ClearDepth( 1.0f );
+
+		glDisable( GL_SCISSOR_TEST );
+		glDisable( GL_LIGHTING );
+
+		glShadeModel( GL_SMOOTH );
+		glEnable( GL_POINT_SMOOTH );
+		glEnable( GL_LINE_SMOOTH );
+
+		glEnable(GL_TEXTURE_2D);
+		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+		glEnable(GL_CULL_FACE);
+
+		// Set up various GL state.
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glEnableClientState(GL_COLOR_ARRAY);
 
 		//update camera
 		UpdateCamera();

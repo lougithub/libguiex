@@ -34,6 +34,7 @@ void WxFontPreviewPanel::SetResourceName( const wxString& rResourceName )
 {
 	if( m_strResourceName != rResourceName )
 	{
+		m_strResourceName = rResourceName;
 		wxString strFontDesc = CGUIResourcePool::Instance()->GetFontDesc(  m_strResourceName );
 		m_pTextBox->SetLabelText( strFontDesc );
 	}

@@ -18,28 +18,26 @@
 //============================================================================//
 // class
 //============================================================================// 
-
-class WxImageCanvas: public wxScrolledWindow
+class WxImageCanvas : public WxResourceCanvasBase
 {
 public:
-	WxImageCanvas( wxWindow *parent, bool bDrawUVRect );
+	WxImageCanvas( wxWindow *parent );
 	~WxImageCanvas();
 
-	void OnPaint( wxPaintEvent &event );
-
-	void SetBitmap( wxBitmap* pBitmap );
-
+	void SetImageName( const guiex::CGUIString& rImageName );
 	void SetUVRect( const wxRect& rTargetRect );
 
+protected:
+	virtual void OnUpdate( float fDeltaTime );
+	virtual void OnRender( guiex::IGUIInterfaceRender* pRender );
+
+	void ClearImage();
 
 protected:
-	wxBitmap* m_pBitmap;
+	guiex::CGUIString m_strImageName;
+	guiex::CGUIImage* m_pGUIImage;
 	wxRect m_aUVRect;
-	bool m_bDrawUVRect;
-
-	DECLARE_EVENT_TABLE()
 };
-
 
 class WxImagePreviewPanel : public WxResourcePreviewPanelBase
 {

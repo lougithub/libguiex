@@ -147,7 +147,6 @@ public:
 		const wxString& name = _T("GLCanvas") );
 
 	void OnIdle(wxIdleEvent & event);
-	void OnEraseBackground(wxEraseEvent& event);
 	void OnSize(wxSizeEvent& event);
 	void OnKeyDown(wxKeyEvent& event);
 

@@ -127,10 +127,6 @@ WxGLCanvas::WxGLCanvas( wxWindow *parent, int* args, wxWindowID id, const wxPoin
 	m_aOldTimer.UpdateTime();
 }
 //------------------------------------------------------------------------------
-void WxGLCanvas::OnEraseBackground(wxEraseEvent& event)
-{
-}
-//------------------------------------------------------------------------------
 WXLRESULT WxGLCanvas::MSWWindowProc(WXUINT uMsg, WXWPARAM wParam, WXLPARAM lParam)
 {
 	try
@@ -168,11 +164,7 @@ void WxGLCanvas::OnIdle(wxIdleEvent & event)
 	SetCurrent();
 
 	/* clear color and depth buffers */
-	const wxColour& rBGColor = ((WxMainFrame*)wxGetApp().GetTopWindow())->m_aBGColor;
-	glClearColor( rBGColor.Red() / 255.f, rBGColor.Green() / 255.f, rBGColor.Blue() / 255.f, rBGColor.Alpha() / 255.f );
-	glClearStencil( 0 );
-	glClearDepth(1.0f); // Depth buffer setup 
-	glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );	// clear screen and depth buffer 
+//	const wxColour& rBGColor = ((WxMainFrame*)wxGetApp().GetTopWindow())->m_aBGColor;
 
 	m_aCurTimer.UpdateTime();
 	CGUIFrameworkViewer::ms_pFramework->Update( (m_aCurTimer - m_aOldTimer) / 1000.f );
