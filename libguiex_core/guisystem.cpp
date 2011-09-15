@@ -130,6 +130,7 @@ namespace guiex
 		,m_pUICanvas( NULL )
 		,m_eScreenOrientation( eScreenOrientation_Portrait )
 		,m_bFixedScreenOrientation( true )
+		,m_pDefaultCamera(NULL)
 	{
 		GUI_ASSERT( !m_pSingleton, "[CGUISystem::CGUISystem]:instance has been created" ); 
 		GUI_ASSERT( !GSystem, "[CGUISystem::CGUISystem]:GSystem has been set" ); 
@@ -235,6 +236,9 @@ namespace guiex
 
 		Reset();
 
+		//init default camera
+		m_pDefaultCamera = new CGUICamera;
+
 		//add ui layer.
 		GenerateUICanvas();
 
@@ -249,6 +253,12 @@ namespace guiex
 	void CGUISystem::Release()
 	{
 		GUI_ASSERT( m_bInitialized==true, "system has been released" );
+
+		if( m_pDefaultCamera )
+		{
+			delete m_pDefaultCamera;
+			m_pDefaultCamera = NULL;
+		}
 
 		//destroy all canvas
 		DestroyAllCanvas();
@@ -768,7 +778,7 @@ namespace guiex
 		IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
 		pRender->SetFontRender(pFont); 
 
-		//init render
+		pRender->ApplyCamera( m_pDefaultCamera );
 		pRender->BeginRender();
 	}
 	//------------------------------------------------------------------------------

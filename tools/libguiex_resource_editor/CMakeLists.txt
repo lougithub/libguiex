@@ -12,6 +12,8 @@ if( BUILD_PLATFORM_WIN32 )
 		wxmainframe.h
 		guiframeworkresource.cpp
 		guiframeworkresource.h
+		wxresourcepreviewcontainer.cpp
+		wxresourcepreviewcontainer.h
         )
     source_group( widget FILES ${${target_name}_widget_SRCS} )
 

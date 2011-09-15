@@ -36,6 +36,7 @@ namespace guiex
 {	
 	class CGUIWidget;
 	class CGUIEventKeyboard;
+	class CGUICamera;
 
 	//for singleton
 	class CGUIImageManager;
@@ -270,6 +271,8 @@ namespace guiex
 		//----------------------------------------------------------------------
 
 		CGUIInputProcessor m_aInputProcessor; ///input processor
+
+		CGUICamera* m_pDefaultCamera;
 
 		//----------------------------------------------------------------------
 		//global ui event

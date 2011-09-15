@@ -10,6 +10,8 @@ if( BUILD_PLATFORM_WIN32 )
 		guiimageloader_editor.h
 		guiresourcepool.cpp
 		guiresourcepool.h
+		toolshistory.h
+		toolshistory.cpp
 		toolsmisc.h
 		toolsmisc.cpp
 		editorwidgetid.h
@@ -17,34 +19,14 @@ if( BUILD_PLATFORM_WIN32 )
     source_group( misc FILES ${${target_name}_misc_SRCS} )    
 
 	set( ${target_name}_selectdlg_SRCS 
-		wxresourceselectdlgbase.cpp
-		wxresourceselectdlgbase.h
-		wxfontselectdlg.cpp
-		wxfontselectdlg.h
-		wximageselectdlg.cpp
-		wximageselectdlg.h
-		wxanimationselectdlg.cpp
-		wxanimationselectdlg.h
-		wxlocalizedstringselectdlg.cpp
-		wxlocalizedstringselectdlg.h
-		wxsoundselectdlg.cpp
-		wxsoundselectdlg.h		
+		wxresourceselectdlg.cpp
+		wxresourceselectdlg.h
 		)
     source_group( select_dlg FILES ${${target_name}_selectdlg_SRCS} )    
 
 	set( ${target_name}_previewpanel_SRCS 
-		wxresourcepreviewpanelbase.cpp
-		wxresourcepreviewpanelbase.h
-		wxfontpreviewpanel.cpp
-		wxfontpreviewpanel.h
-		wximagepreviewpanel.cpp
-		wximagepreviewpanel.h
-		wxanimationpreviewpanel.cpp
-		wxanimationpreviewpanel.h
-		wxsoundpreviewpanel.cpp
-		wxsoundpreviewpanel.h		
-		wxlocalizedstringpreviewpanel.cpp
-		wxlocalizedstringpreviewpanel.h
+		wxresourcepreviewpanel.cpp
+		wxresourcepreviewpanel.h
 		)
     source_group( preview_panel FILES ${${target_name}_previewpanel_SRCS} )    
 

@@ -12,11 +12,7 @@
 #include "propertyconfigmgr.h"
 #include "toolsmisc.h"
 #include "guiresourcepool.h"
-#include "wximageselectdlg.h"
-#include "wxanimationselectdlg.h"
-#include "wxsoundselectdlg.h"
-#include "wxfontselectdlg.h"
-#include "wxlocalizedstringselectdlg.h"
+#include "wxresourceselectdlg.h"
 
 #include <wx/colordlg.h>
 

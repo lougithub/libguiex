@@ -104,34 +104,14 @@ protected:
 	wxPanel* CreatePropGridPanel();
 	void LoadPropConfigByWidget( );
 
-	/** 
-	 * @brief open scene
-	 * @return 0 for success
-	 */
+	int LoadScene( std::string strDataPath = "", std::string strSceneName = "" );
 	int	OpenScene(const CGUIScene* pSceneInfo );
-
-	/** 
-	* @brief close scene
-	*/
 	void CloseScene( );
 
-	/** 
-	 * @brief render given file
-	 */
 	void RenderFile( const std::string& rFileName );
-
-	/** 
-	* @brief edit given file
-	*/
 	void EditFile( const std::string& rFileName, EFileType eFileType );
-
 	void EditFileExternal( const std::string& rFileName );
 
-	/** 
-	 * @brief save files before close it
-	 * @param nIdx the index of page, -1 for all page
-	 * @return false for user cancel the process.
-	 */
 	bool SaveFileProcess( int nIdx);
 
 	//remove old canvas
@@ -139,7 +119,6 @@ protected:
 
 protected:
 	void SetResolution( int width, int height );
-
 
 protected:
 	//callback function
@@ -235,7 +214,7 @@ protected:
 
 protected:
 	wxAuiManager m_mgr;
-	WxEditorCanvasContainer*m_pCanvas;
+	WxEditorCanvasContainer*m_pCanvasContainer;
 	wxAuiNotebook*m_pAuiNoteBook;
 	wxTreeCtrl*m_pTreeCtrl_File;
 	

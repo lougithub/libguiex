@@ -22,7 +22,6 @@ public:
 	CGUIFrameworkEditorBase( );
 
 protected:
-	virtual void RegisterInterfaces_Render( );
 	virtual void RegisterInterfaces_ImageLoader( );
 	virtual void RegisterWidgetGenerators( );
 };

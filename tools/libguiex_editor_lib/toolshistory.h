@@ -1,12 +1,12 @@
 /** 
- * @file toolcache.h
+ * @file toolhistory.h
  * @brief 
  * @author Lou Guoliang (louguoliang@gmail.com)
  * @date 2009-11-05
  */
 
-#ifndef __KEN_TOOLCACHE_200911015_H__
-#define	__KEN_TOOLCACHE_200911015_H__
+#ifndef __KEN_TOOLHISTORY_200911015_H__
+#define	__KEN_TOOLHISTORY_200911015_H__
 
 
 //============================================================================//
@@ -20,51 +20,36 @@
 //============================================================================//
 // class
 //============================================================================//
-class CToolCache
+class CToolsHistory
 {
 public:
-	~CToolCache();
+	~CToolsHistory();
 
-	static CToolCache* Instance();
+	static CToolsHistory* Instance();
 
-	void ParseCache( const std::string& rCacheFile );
+	void ParseHistoryFile( const std::string& rCacheFile );
 
-	void AddCache( const std::string& rScene, const std::string& rPath );	
+	void AddScenePath( const std::string& rScene, const std::string& rPath );
+	const std::vector<std::string>& GetHistoryPaths() const;
+	const std::vector<std::pair< std::string, std::string> >& GetHistoryScenes() const;
+	wxMenu* GetPathMenu() const;
+	wxMenu* GetSceneMenu() const;
 
-	void SetPathsBaseId(wxWindowID baseId)
-	{
-		m_nPathBaseId = baseId;
-	}
-	void SetScenesBaseId(wxWindowID baseId)
-	{
-		m_nSceneBaseId = baseId;
-	}
+	void SetDefaultEditor(const std::string& rEditor);
+	const std::string& GetDefaultEditor() const;
 
-	void SetMaxCacheSize( unsigned nSize )
-	{
-		m_nMaxSize = nSize;
-	}
-
-	void SetDefaultEditor(const std::string& rEditor)
-	{
-		m_strDefaultEditor = rEditor;
-
-		SaveFile();
-		UpdateMenu();
-	}
-	const std::string& GetDefaultEditor() const
-	{
-		return m_strDefaultEditor;
-	}
+	void SetPathsBaseId(wxWindowID baseId);
+	void SetScenesBaseId(wxWindowID baseId);
+	void SetMaxCacheSize( unsigned nSize );
 
 	void UpdateMenu( );
+
 
 protected:
 	void SaveFile(  );
 
-public:
+protected:
 	std::string	m_strCacheFile;
-	
 	std::string m_strDefaultEditor;
 
 	std::vector<std::pair< std::string, std::string> >	m_sceneHistory;	//<Scene, path>
@@ -78,9 +63,9 @@ public:
 	unsigned m_nMaxSize;
 
 protected:
-	CToolCache();
-	CToolCache& operator=(CToolCache&);
+	CToolsHistory();
+	CToolsHistory& operator=(CToolsHistory&);
 };
 
 
-#endif //__KEN_FILEHISTORY_200911015_H__
+#endif //__KEN_TOOLHISTORY_200911015_H__

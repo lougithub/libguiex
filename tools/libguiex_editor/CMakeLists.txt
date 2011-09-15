@@ -45,8 +45,6 @@ if( BUILD_PLATFORM_WIN32 )
 		commandmanager.cpp
 		commandmanager.h
 		savefilebase.h
-		toolcache.cpp
-		toolcache.h
 		windowbox.cpp
 		windowbox.h
         )

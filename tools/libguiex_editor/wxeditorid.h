@@ -16,7 +16,6 @@ enum
 	//==================================================
 	//main frame
 	ID_Exit,
-	ID_About,
 	ID_Open,
 	ID_NewWidgetFile,
 	ID_NewScriptFile,
@@ -25,13 +24,18 @@ enum
 	ID_Save,
 	ID_SaveAs,
 	ID_SaveAll,
+
 	ID_RecentPaths,
 	ID_RecentPathsBaseId,
 	ID_RecentPathsEndId = ID_RecentPathsBaseId+10-1,
 	ID_RecentScenes,
 	ID_RecentScenesBaseId,
 	ID_RecentScenesEndId = ID_RecentScenesBaseId+10-1,
-	//edit
+
+	//about menu
+	ID_About,
+
+	//edit menu
 	ID_CreateWidget,
 	ID_DeleteWidget,
 	ID_WidgetUp,
@@ -44,10 +48,10 @@ enum
 	ID_Localization_begin,
 	ID_Localization_end = ID_Localization_begin+10,
 
-	//tool
+	//tool menu
 	ID_SetDefaultEditor,
 
-	//view
+	//view menu
 	ID_VIEW_Fullscreen,
 	ID_VIEW_800x600,
 	ID_VIEW_1024x786,
@@ -74,11 +78,10 @@ enum
 	ID_ITEM_Script_Check,
 	ID_ITEM_Image_Edit,
 
-	WIDGET_ID_PG, //id of grid manager
-	WIDGET_ID_TreeCtrl_File, //id of tree ctrl
-	WIDGET_ID_TreeCtrl_Widget, //id of tree ctrl
-	WIDGET_ID_NoteBook_Canvas,	
-	WIDGET_ID_NoteBook_Config,	
+	ID_GridManager, //id of grid manager
+	ID_ID_TreeCtrl_File, //id of tree ctrl
+	ID_TreeCtrl_Widget, //id of tree ctrl
+	ID_NoteBookCtrl,	
 
 	//==================================================
 	//save file dialog

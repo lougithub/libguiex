@@ -15,14 +15,6 @@
 #include <vector>
 
 //============================================================================//
-// declare
-//============================================================================// 
-namespace guiex
-{
-	class CGUICamera;
-}
-
-//============================================================================//
 // class
 //============================================================================// 
 namespace guiex
@@ -56,9 +48,6 @@ namespace guiex
 		void SetPopupWidget( CGUIWidget* pWidget );
 		CGUIWidget* GetPopupWidget( ) const;
 
-		const CGUICamera* GetCamera() const;
-		CGUICamera* GetCamera();
-
 	protected:
 		CGUIWidget*	GetCurrentRootWidget( );
 		void OnWidgetClosed(CGUIWidget* pWidget);
@@ -69,8 +58,6 @@ namespace guiex
 		TArrayWidget m_arrayOpenedDlg; //widget modal dialog
 
 		CGUIWidget* m_pPopupWidget; //popup widget
-
-		CGUICamera* m_pDefaultUICamera;
 	};
 
 }//namespace guiex

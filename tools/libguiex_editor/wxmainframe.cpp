@@ -18,7 +18,7 @@
 #include "propertysheetfunc.h"
 #include "propertyconfigmgr.h"
 #include "toolsmisc.h"
-#include "toolcache.h"
+#include "toolshistory.h"
 #include "guiresourcepool.h"
 #include "wxeditorid.h"
 #include "wxtoolspgmanager.h"
@@ -44,18 +44,18 @@ extern "C" {
 #include <libguiex_widget/guiwgt.h>
 
 //images
-#include "bitmaps/new.xpm"
-#include "bitmaps/open.xpm"
-#include "bitmaps/save.xpm"
-#include "bitmaps/cut.xpm"
-#include "bitmaps/copy.xpm"
-#include "bitmaps/paste.xpm"
-#include "bitmaps/delete.xpm"
-#include "bitmaps/help.xpm"
-#include "bitmaps/icon.xpm"
-#include "bitmaps/gem_blue.xpm"
-#include "bitmaps/gem_red.xpm"
-#include "bitmaps/changeparent.xpm"
+#include "../Resource/bitmaps/new.xpm"
+#include "../Resource/bitmaps/open.xpm"
+#include "../Resource/bitmaps/save.xpm"
+#include "../Resource/bitmaps/cut.xpm"
+#include "../Resource/bitmaps/copy.xpm"
+#include "../Resource/bitmaps/paste.xpm"
+#include "../Resource/bitmaps/delete.xpm"
+#include "../Resource/bitmaps/help.xpm"
+#include "../Resource/bitmaps/icon.xpm"
+#include "../Resource/bitmaps/gem_blue.xpm"
+#include "../Resource/bitmaps/gem_red.xpm"
+#include "../Resource/bitmaps/changeparent.xpm"
 
 //============================================================================//
 // define
@@ -170,7 +170,7 @@ EVT_MENU_RANGE( ID_RecentScenesBaseId, ID_RecentScenesEndId, WxMainFrame::OnRece
 
 
 //file tree
-EVT_TREE_ITEM_MENU(WIDGET_ID_TreeCtrl_File, WxMainFrame::OnTreeItemMenu)
+EVT_TREE_ITEM_MENU(ID_ID_TreeCtrl_File, WxMainFrame::OnTreeItemMenu)
 EVT_MENU(ID_ITEM_Widget_Render, WxMainFrame::OnTreeItemWidgetRender)
 EVT_MENU(ID_ITEM_Widget_View, WxMainFrame::OnTreeItemWidgetView)
 EVT_MENU(ID_ITEM_Widget_Edit, WxMainFrame::OnTreeItemWidgetEdit)
@@ -180,14 +180,14 @@ EVT_MENU(ID_ITEM_Script_Check, WxMainFrame::OnTreeItemScriptCheck)
 EVT_MENU(ID_ITEM_Image_Edit, WxMainFrame::OnTreeItemImageEdit)
 
 //widget tree
-EVT_TREE_SEL_CHANGED(WIDGET_ID_TreeCtrl_Widget, WxMainFrame::OnWidgetTreeSelected) 
+EVT_TREE_SEL_CHANGED(ID_TreeCtrl_Widget, WxMainFrame::OnWidgetTreeSelected) 
 
 //notebook
-EVT_AUINOTEBOOK_PAGE_CHANGED(WIDGET_ID_NoteBook_Canvas, OnBookPageChanged)
-EVT_AUINOTEBOOK_PAGE_CLOSE(WIDGET_ID_NoteBook_Canvas, OnBookPageClose)
+EVT_AUINOTEBOOK_PAGE_CHANGED(ID_NoteBookCtrl, OnBookPageChanged)
+EVT_AUINOTEBOOK_PAGE_CLOSE(ID_NoteBookCtrl, OnBookPageClose)
 
 //property sheet
-EVT_PG_CHANGED( WIDGET_ID_PG, WxMainFrame::OnPropertyGridChange )
+EVT_PG_CHANGED( ID_GridManager, WxMainFrame::OnPropertyGridChange )
 
 END_EVENT_TABLE()
 
@@ -200,7 +200,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 				 long style)
 				 : wxFrame(parent, id, title, pos, size, style)
 				 ,m_bIsSceneOpened(false)
-				 ,m_pCanvas(NULL)
+				 ,m_pCanvasContainer(NULL)
 				 ,m_pPropGridMan(NULL)
 				 ,m_pOutput(NULL)
 				 ,m_pToolbar(NULL)
@@ -216,29 +216,20 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 	//set icon
 	SetIcon(wxIcon(icon_xpm));
 
-	///////////////////////////////////////////////////////////////////////////////////////////////////
 	// create main menu
 	CreateMenu();
 
-	///////////////////////////////////////////////////////////////////////////////////////////////////
 	//STATUS
 	CreateStatusBar();
 	GetStatusBar()->SetStatusText(_("Ready"));
 
-	///////////////////////////////////////////////////////////////////////////////////////////////////
-	// min size for the frame itself isn't completely done.
-	// see the end up wxAuiManager::Update() for the test
-	// code. For now, just hard code a frame minimum size
 	SetMinSize(wxSize(400,300));
 
-	///////////////////////////////////////////////////////////////////////////////////////////////////
 	// create some toolbars
 	m_pToolbar = CreateToolbar();
 
-	///////////////////////////////////////////////////////////////////////////////////////////////////
 	// create notebook
 	m_pAuiNoteBook = CreateCanvasNotebook();
-	//m_pNoteBook_Config = CreateConfigNotebook();
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	//// create property sheet
@@ -250,13 +241,11 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 	ResetFileTreeCtrl();
 
 	// create widget tree
-	m_pTreeCtrl_Widget = new wxTreeCtrl(this, WIDGET_ID_TreeCtrl_Widget, wxPoint(0,0), wxSize(160,250), wxTR_DEFAULT_STYLE | wxNO_BORDER);
+	m_pTreeCtrl_Widget = new wxTreeCtrl(this, ID_TreeCtrl_Widget, wxPoint(0,0), wxSize(160,250), wxTR_DEFAULT_STYLE | wxNO_BORDER);
 
-	///////////////////////////////////////////////////////////////////////////////////////////////////
 	// create putput
 	m_pOutput = CreateOutput();
 
-	///////////////////////////////////////////////////////////////////////////////////////////////////
 	//add to aui manager
 	m_mgr.AddPane(m_pToolbar, wxAuiPaneInfo().
 		Name(wxT("tb1")).Caption(wxT("Toolbar")).
@@ -330,7 +319,7 @@ wxPanel* WxMainFrame::CreatePropGridPanel()
 
 	m_pPropGridMan = new WxToolsPGManager(
 		panel,
-		WIDGET_ID_PG, 
+		ID_GridManager, 
 		wxDefaultPosition,
 		wxSize(100, 100),
 		style );
@@ -355,7 +344,7 @@ wxPanel* WxMainFrame::CreatePropGridPanel()
 //------------------------------------------------------------------------------
 WxEditorCanvasContainer* WxMainFrame::GetCanvasContainer()
 {
-	return m_pCanvas;
+	return m_pCanvasContainer;
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::UpdateWidgetSizeAndPos()
@@ -387,7 +376,7 @@ void WxMainFrame::SetPropGridWidget(CGUIWidget* pWidget, bool bForceRefresh/*=fa
 //------------------------------------------------------------------------------
 wxTreeCtrl*	WxMainFrame::CreateFileTreeCtrl()
 {
-	wxTreeCtrl* tree = new wxTreeCtrl(this, WIDGET_ID_TreeCtrl_File,
+	wxTreeCtrl* tree = new wxTreeCtrl(this, ID_ID_TreeCtrl_File,
 		wxPoint(0,0), wxSize(160,250),
 		wxTR_DEFAULT_STYLE | wxNO_BORDER);
 
@@ -487,7 +476,7 @@ wxTreeItemId WxMainFrame::GetFileItemByName(const std::string& rItemName)
 	
 	while( nItemId.IsOk())
 	{
-		if( rItemName == m_pTreeCtrl_File->GetItemText(nItemId).char_str(wxConvUTF8).data() )
+		if( rItemName == wx2GuiString(m_pTreeCtrl_File->GetItemText(nItemId)) )
 		{
 			return nItemId;
 		}
@@ -527,19 +516,90 @@ wxToolBar* WxMainFrame::CreateToolbar()
 //------------------------------------------------------------------------------
 wxAuiNotebook* WxMainFrame::CreateCanvasNotebook()
 {
-	///////////////////////////////////////////////////////////////////////////////////////////////////
-	// create the notebook off-window to avoid flicker
-	wxSize client_size = GetClientSize();
-
-	wxAuiNotebook* ctrl = new wxAuiNotebook(this, WIDGET_ID_NoteBook_Canvas,
-		wxPoint(client_size.x, client_size.y),
-		wxSize(430,200),
+	wxAuiNotebook* ctrl = new wxAuiNotebook(this, ID_NoteBookCtrl,
+		wxDefaultPosition,
+		wxDefaultSize,
 		wxAUI_NB_DEFAULT_STYLE/* | wxAUI_NB_WINDOWLIST_BUTTON | wxAUI_NB_SCROLL_BUTTONS*/);
 	ctrl->SetBackgroundColour( *wxLIGHT_GREY );
-	//ctrl->SetNextHandler(this);
 	return ctrl;
 }
 //------------------------------------------------------------------------------
+int WxMainFrame::LoadScene( std::string strDataPath, std::string strSceneName )
+{
+	CloseScene();
+
+	//select data path
+	if( strDataPath.empty() )
+	{
+		CGUIString strPath = GSystem->GetDataPath();
+		wxDirDialog aDlg( this, _T("Choose a libguiex root path"), Gui2wxString( strPath));
+		if( wxID_OK != aDlg.ShowModal())
+		{
+			return -1;
+		}
+		strDataPath = wx2GuiString(aDlg.GetPath() + wxT("\\"));
+	}
+
+	GSystem->SetDataPath(strDataPath);
+
+	try
+	{
+		CGUISceneManager::Instance()->UnregisterAllScenes();
+		if( 0 != CGUISceneManager::Instance()->RegisterScenesFromDir())
+		{
+			wxMessageBox( _T("failed to load scenes"), _T("error") );
+			return -1;
+		}
+	}
+	catch (CGUIBaseException& rError)
+	{
+		wxMessageBox( Gui2wxString(rError.what()), _T("error") );
+		return -1;
+	}
+
+	//choose scene
+	if( strSceneName.empty() )
+	{
+		const std::vector<CGUIString>& vecScenes = CGUISceneManager::Instance()->GetSceneNames( );
+		wxArrayString arrayScenes;
+		for( unsigned i=0; i<vecScenes.size(); ++i )
+		{
+			arrayScenes.Add( Gui2wxString( vecScenes[i]));
+		}
+		wxSingleChoiceDialog aChoiceDlg( this, _T("select scene"), _T("select scene files"), arrayScenes );
+		if( aChoiceDlg.ShowModal() != wxID_OK )
+		{
+			return -1;
+		}
+		strSceneName = vecScenes[aChoiceDlg.GetSelection()];
+	}
+
+	//get scene info
+	const CGUIScene* pScene = CGUISceneManager::Instance()->GetScene( strSceneName );
+	if( pScene->IsDependenciesLoaded())
+	{
+		if( 0 != OpenScene(pScene))
+		{
+			wxMessageBox( _T("failed to open scene"), _T("error") );
+			CloseScene();
+			return -1;
+		}
+	}
+	else
+	{
+		wxMessageBox( _T("some dependent scene of this scene hasn't been loaded"), _T("error") );
+		return -1;
+	}
+
+	CToolsHistory::Instance()->AddScenePath( strSceneName, strDataPath );
+
+	return 0;
+}
+//------------------------------------------------------------------------------
+/** 
+* @brief open scene
+* @return 0 for success
+*/
 int WxMainFrame::OpenScene( const CGUIScene* pScene )
 {
 	m_strCurrentSceneName = pScene->GetSceneName();
@@ -587,6 +647,9 @@ int WxMainFrame::OpenScene( const CGUIScene* pScene )
 	return 0;
 }
 //------------------------------------------------------------------------------
+/** 
+* @brief close scene
+*/
 void WxMainFrame::CloseScene( )
 {
 	if( m_bIsSceneOpened )
@@ -619,7 +682,7 @@ void WxMainFrame::OnTreeItemWidgetView(wxCommandEvent& event)
 	std::string viewer_exe;
 	viewer_exe = "tools_viewer_debug.exe";
 
-	std::string strRunCommand = viewer_exe + " " + GSystem->GetDataPath() + " " +m_strCurrentSceneName + " " + strFilename.char_str(wxConvUTF8).data();
+	std::string strRunCommand = viewer_exe + " " + GSystem->GetDataPath() + " " +m_strCurrentSceneName + " " + wx2GuiString(strFilename);
 	wxExecute(Gui2wxString(strRunCommand), wxEXEC_ASYNC);
 }
 //------------------------------------------------------------------------------
@@ -628,7 +691,7 @@ void WxMainFrame::OnTreeItemWidgetRender(wxCommandEvent& event)
 	wxTreeItemId id = m_pTreeCtrl_File->GetSelection();
 	CHECK_ITEM( id );
 
-	RenderFile( m_pTreeCtrl_File->GetItemText(id).char_str(wxConvUTF8).data());
+	RenderFile( wx2GuiString(m_pTreeCtrl_File->GetItemText(id)));
 	RefreshWidgetTreeCtrl();
 }
 //------------------------------------------------------------------------------
@@ -637,7 +700,7 @@ void WxMainFrame::OnTreeItemWidgetEdit(wxCommandEvent& event)
 	wxTreeItemId id = m_pTreeCtrl_File->GetSelection();
 	CHECK_ITEM( id );
 
-	EditFile( m_pTreeCtrl_File->GetItemText(id).char_str(wxConvUTF8).data(), EFT_WIDGET);
+	EditFile( wx2GuiString(m_pTreeCtrl_File->GetItemText(id)), EFT_WIDGET);
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::OnTreeItemEditExternal(wxCommandEvent& event)
@@ -645,7 +708,7 @@ void WxMainFrame::OnTreeItemEditExternal(wxCommandEvent& event)
 	wxTreeItemId id = m_pTreeCtrl_File->GetSelection();
 	CHECK_ITEM( id );
 
-	EditFileExternal( m_pTreeCtrl_File->GetItemText(id).char_str(wxConvUTF8).data());
+	EditFileExternal( wx2GuiString( m_pTreeCtrl_File->GetItemText(id)));
 }
 
 //------------------------------------------------------------------------------
@@ -654,7 +717,7 @@ void WxMainFrame::OnTreeItemImageEdit(wxCommandEvent& event)
 	wxTreeItemId id = m_pTreeCtrl_File->GetSelection();
 	CHECK_ITEM( id );
 
-	EditFile( m_pTreeCtrl_File->GetItemText(id).char_str(wxConvUTF8).data(), EFT_RESOURCE);
+	EditFile( wx2GuiString( m_pTreeCtrl_File->GetItemText(id)), EFT_RESOURCE);
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::OnTreeItemScriptCheck(wxCommandEvent& event)
@@ -671,7 +734,7 @@ void WxMainFrame::OnTreeItemScriptCheck(wxCommandEvent& event)
 		pInterfaceScript->CreateScript( m_strCurrentSceneName );
 
 		// load script
-		std::string strScriptFile = m_pTreeCtrl_File->GetItemText(id).char_str(wxConvUTF8).data();
+		std::string strScriptFile = wx2GuiString(m_pTreeCtrl_File->GetItemText(id));
 		const CGUIScene* pScene = CGUISceneManager::Instance()->GetScene(m_strCurrentSceneName);
 		CGUIString strScriptFilePath = pScene->GetScenePath() + strScriptFile;	
 		pInterfaceScript->ExecuteFile(strScriptFilePath, pScene->GetSceneName());
@@ -694,7 +757,7 @@ void WxMainFrame::OnTreeItemScriptEdit(wxCommandEvent& event)
 	wxTreeItemId id = m_pTreeCtrl_File->GetSelection();
 	CHECK_ITEM( id );
 
-	EditFile( m_pTreeCtrl_File->GetItemText(id).char_str(wxConvUTF8).data(), EFT_SCRIPT);
+	EditFile( wx2GuiString(m_pTreeCtrl_File->GetItemText(id)), EFT_SCRIPT);
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::OnPropertyGridChange( wxPropertyGridEvent& event )
@@ -764,8 +827,8 @@ void WxMainFrame::OnPropertyGridChange( wxPropertyGridEvent& event )
 		CloseCanvas();
 	}
 
-	m_pCanvas->UpdateWindowBox();
-	m_pCanvas->SetSaveFlag(true);
+	m_pCanvasContainer->UpdateWindowBox();
+	m_pCanvasContainer->SetSaveFlag(true);
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::OnBookPageChanged(wxAuiNotebookEvent& event)
@@ -782,9 +845,9 @@ void WxMainFrame::OnBookPageClose(wxAuiNotebookEvent& evt)
 	}
 	else
 	{
-		if(ctrl->GetPage(ctrl->GetSelection()) == m_pCanvas)
+		if(ctrl->GetPage(ctrl->GetSelection()) == m_pCanvasContainer)
 		{
-			m_pCanvas = NULL;
+			m_pCanvasContainer = NULL;
 			SetPropGridWidget( NULL );
 			ResetWidgetTreeCtrl();
 		}
@@ -801,11 +864,11 @@ void WxMainFrame::OnWidgetTreeSelected(wxTreeEvent& event)
 		int nEndPos = strLabel.Find(_(" <"));
 		if( nEndPos==wxNOT_FOUND)
 		{
-			m_pCanvas->SetSelectedWidget( strLabel.char_str(wxConvUTF8).data() );
+			m_pCanvasContainer->SetSelectedWidget( wx2GuiString(strLabel) );
 		}
 		else
 		{
-			m_pCanvas->SetSelectedWidget( strLabel.Mid(0,nEndPos).char_str(wxConvUTF8).data() );
+			m_pCanvasContainer->SetSelectedWidget( wx2GuiString(strLabel.Mid(0,nEndPos)) );
 		}
 	}
 }
@@ -851,7 +914,7 @@ void WxMainFrame::OnTreeItemMenu(wxTreeEvent& event)
 		menu.Append(ID_ITEM_Widget_View, wxT("&View"));
 		menu.Append(ID_ITEM_Widget_Edit, wxT("&Edit"));
 		menu.Append(ID_ITEM_Edit_External, wxT("&Edit External"));
-		//menu.Enable(ID_ITEM_Widget_View, m_pCanvas==NULL);
+		//menu.Enable(ID_ITEM_Widget_View, m_pCanvasContainer==NULL);
 		m_pTreeCtrl_File->PopupMenu(&menu, event.GetPoint());
 	}
 	else if(pNode->m_strFileType == TITLE_SCRIPT )
@@ -945,7 +1008,7 @@ void WxMainFrame::OnSaveAs(wxCommandEvent& evt)
 		{
 			CSaveFileBase* pSave = GetSaveFilePtr(m_pAuiNoteBook->GetPage(m_pAuiNoteBook->GetSelection()));
 
-			pSave->SaveFileAs(aDlg.GetPath().char_str(wxConvUTF8).data());
+			pSave->SaveFileAs(wx2GuiString(aDlg.GetPath()));
 		}
 	}
 	else
@@ -968,7 +1031,7 @@ void WxMainFrame::OnUpdateSaveAs(wxUpdateUIEvent& event)
 //------------------------------------------------------------------------------
 void WxMainFrame::OnWidgetDown(wxCommandEvent& evt)
 {
-	CGUIWidget* pWidget = m_pCanvas->GetSelectedWidget();
+	CGUIWidget* pWidget = m_pCanvasContainer->GetSelectedWidget();
 	//empty
 	if( !pWidget)
 	{
@@ -976,14 +1039,14 @@ void WxMainFrame::OnWidgetDown(wxCommandEvent& evt)
 	}
 
 	pWidget->MoveDown();
-	m_pCanvas->SetSaveFlag(true);
+	m_pCanvasContainer->SetSaveFlag(true);
 
 	RefreshWidgetTreeCtrl();
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::OnUpdateWidgetDown(wxUpdateUIEvent& event)
 {
-	if( m_pCanvas && m_pCanvas->GetSelectedWidget())
+	if( m_pCanvasContainer && m_pCanvasContainer->GetSelectedWidget())
 	{
 		event.Enable(true);
 	}
@@ -1008,7 +1071,7 @@ static void DoGetWidgetName( const CGUIWidget* pWidget, wxArrayString& rArray )
 }
 void WxMainFrame::OnWidgetChangeParent(wxCommandEvent& evt)
 {
-	CGUIWidget* pWidget = m_pCanvas->GetSelectedWidget();
+	CGUIWidget* pWidget = m_pCanvasContainer->GetSelectedWidget();
 	//empty
 	if( !pWidget)
 	{
@@ -1042,8 +1105,8 @@ void WxMainFrame::OnWidgetChangeParent(wxCommandEvent& evt)
 	pWidget->SetParent( CGUIWidgetManager::Instance()->GetWidget( strWidgetName, pWidget->GetSceneName()));
 	pWidget->Refresh();
 
-	m_pCanvas->UpdateWindowBox();
-	m_pCanvas->SetSaveFlag(true);
+	m_pCanvasContainer->UpdateWindowBox();
+	m_pCanvasContainer->SetSaveFlag(true);
 
 	RefreshWidgetTreeCtrl();
 	SetPropGridWidget( pWidget, true );
@@ -1051,7 +1114,7 @@ void WxMainFrame::OnWidgetChangeParent(wxCommandEvent& evt)
 //------------------------------------------------------------------------------
 void WxMainFrame::OnUpdateWidgetChangeParent(wxUpdateUIEvent& event)
 {
-	if( m_pCanvas && m_pCanvas->GetSelectedWidget() )
+	if( m_pCanvasContainer && m_pCanvasContainer->GetSelectedWidget() )
 	{
 		event.Enable(true);
 	}
@@ -1063,7 +1126,7 @@ void WxMainFrame::OnUpdateWidgetChangeParent(wxUpdateUIEvent& event)
 //------------------------------------------------------------------------------
 void WxMainFrame::OnWidgetCopy(wxCommandEvent& evt)
 {
-	CGUIWidget* pWidget = m_pCanvas->GetSelectedWidget();
+	CGUIWidget* pWidget = m_pCanvasContainer->GetSelectedWidget();
 	//empty
 	if( !pWidget)
 	{
@@ -1076,7 +1139,7 @@ void WxMainFrame::OnWidgetCopy(wxCommandEvent& evt)
 //------------------------------------------------------------------------------
 void WxMainFrame::OnUpdateWidgetCopy(wxUpdateUIEvent& event)
 {
-	if( m_pCanvas && m_pCanvas->GetSelectedWidget() )
+	if( m_pCanvasContainer && m_pCanvasContainer->GetSelectedWidget() )
 	{
 		event.Enable(true);
 	}
@@ -1088,7 +1151,7 @@ void WxMainFrame::OnUpdateWidgetCopy(wxUpdateUIEvent& event)
 //------------------------------------------------------------------------------
 void WxMainFrame::OnWidgetPaste(wxCommandEvent& evt)
 {
-	CGUIWidget* pWidget = m_pCanvas->GetSelectedWidget();
+	CGUIWidget* pWidget = m_pCanvasContainer->GetSelectedWidget();
 	//empty
 	if( !pWidget)
 	{
@@ -1132,14 +1195,14 @@ void WxMainFrame::OnWidgetPaste(wxCommandEvent& evt)
 	if( pNewWidget )
 	{
 		RefreshWidgetTreeCtrl();
-		m_pCanvas->SetSelectedWidget(pNewWidget);
-		m_pCanvas->SetSaveFlag(true);
+		m_pCanvasContainer->SetSelectedWidget(pNewWidget);
+		m_pCanvasContainer->SetSaveFlag(true);
 	}
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::OnUpdateWidgetPaste(wxUpdateUIEvent& event)
 {
-		if( m_pCanvas && m_pCanvas->GetSelectedWidget() )
+		if( m_pCanvasContainer && m_pCanvasContainer->GetSelectedWidget() )
 	{
 		event.Enable(true);
 	}
@@ -1209,7 +1272,7 @@ void WxMainFrame::OnParseScript(wxCommandEvent& evt)
 //------------------------------------------------------------------------------
 void WxMainFrame::OnWidgetUp(wxCommandEvent& evt)
 {
-	CGUIWidget* pWidget = m_pCanvas->GetSelectedWidget();
+	CGUIWidget* pWidget = m_pCanvasContainer->GetSelectedWidget();
 	//empty
 	if( !pWidget)
 	{
@@ -1217,14 +1280,14 @@ void WxMainFrame::OnWidgetUp(wxCommandEvent& evt)
 	}
 
 	pWidget->MoveUp();
-	m_pCanvas->SetSaveFlag(true);
+	m_pCanvasContainer->SetSaveFlag(true);
 
 	RefreshWidgetTreeCtrl();
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::OnUpdateWidgetUp(wxUpdateUIEvent& event)
 {
-	if( m_pCanvas && m_pCanvas->GetSelectedWidget())
+	if( m_pCanvasContainer && m_pCanvasContainer->GetSelectedWidget())
 	{
 		event.Enable(true);
 	}
@@ -1236,7 +1299,7 @@ void WxMainFrame::OnUpdateWidgetUp(wxUpdateUIEvent& event)
 //------------------------------------------------------------------------------
 void WxMainFrame::OnDeleteWidget(wxCommandEvent& evt)
 {
-	CGUIWidget* pWidget = m_pCanvas->GetSelectedWidget();
+	CGUIWidget* pWidget = m_pCanvasContainer->GetSelectedWidget();
 	//empty
 	if( !pWidget)
 	{
@@ -1259,15 +1322,15 @@ void WxMainFrame::OnDeleteWidget(wxCommandEvent& evt)
 		CGUIWidgetManager::Instance()->DestroyWidget(pWidget);
 	}
 
-	m_pCanvas->SetSelectedWidget(NULL);
-	m_pCanvas->SetSaveFlag(true);
+	m_pCanvasContainer->SetSelectedWidget(NULL);
+	m_pCanvasContainer->SetSaveFlag(true);
 
 	RefreshWidgetTreeCtrl();
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::OnUpdateDeleteWidget(wxUpdateUIEvent& event)
 {
-	if( m_pCanvas && m_pCanvas->GetSelectedWidget())
+	if( m_pCanvasContainer && m_pCanvasContainer->GetSelectedWidget())
 	{
 		event.Enable(true);
 	}
@@ -1343,11 +1406,11 @@ void WxMainFrame::OnSetDefaultEditor(wxCommandEvent& evt)
 	wxFileDialog aDialog( this, wxT("select editor"), wxT(""), wxT(""), wxT("exe files (*.exe)|*.exe"), wxFD_OPEN );
 	if( wxID_OK  == aDialog.ShowModal() )
 	{
-		CToolCache::Instance()->SetDefaultEditor( wx2GuiString( aDialog.GetPath() ));
+		CToolsHistory::Instance()->SetDefaultEditor( wx2GuiString( aDialog.GetPath() ));
 	}
 	else
 	{
-		CToolCache::Instance()->SetDefaultEditor( "" );
+		CToolsHistory::Instance()->SetDefaultEditor( "" );
 	}
 }
 //------------------------------------------------------------------------------
@@ -1358,10 +1421,10 @@ void WxMainFrame::OnUpdateResolution(wxUpdateUIEvent& event)
 //------------------------------------------------------------------------------
 void WxMainFrame::OnCreateWidget(wxCommandEvent& evt)
 {
-	wxASSERT( m_pCanvas );
+	wxASSERT( m_pCanvasContainer );
 
 	//create wizard
-	WxWizardCreateWidget wizard(this, m_pCanvas->GetSelectedWidget());
+	WxWizardCreateWidget wizard(this, m_pCanvasContainer->GetSelectedWidget());
 	if( !wizard.RunWizard(wizard.GetFirstPage()))
 	{
 		//cancel
@@ -1380,7 +1443,7 @@ void WxMainFrame::OnCreateWidget(wxCommandEvent& evt)
 		CGUIWidgetManager::Instance()->AddPage( pWidget);
 		GSystem->GetUICanvas()->OpenUIPage( pWidget);
 	}
-	else if( m_pCanvas->GetSelectedWidget())
+	else if( m_pCanvasContainer->GetSelectedWidget())
 	{
 		pWidget->Open();
 	}
@@ -1392,8 +1455,8 @@ void WxMainFrame::OnCreateWidget(wxCommandEvent& evt)
 	pWidget->Refresh();
 
 	RefreshWidgetTreeCtrl();
-	m_pCanvas->SetSaveFlag(true);
-	m_pCanvas->SetSelectedWidget(pWidget);
+	m_pCanvasContainer->SetSaveFlag(true);
+	m_pCanvasContainer->SetSelectedWidget(pWidget);
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::OnSetLocalization( wxCommandEvent& event )
@@ -1406,10 +1469,10 @@ void WxMainFrame::OnSetLocalization( wxCommandEvent& event )
 //------------------------------------------------------------------------------
 void WxMainFrame::OnUpdateCreateWidget(wxUpdateUIEvent& event)
 {
-	if( m_pCanvas )
+	if( m_pCanvasContainer )
 	{
 		if( GSystem->GetUICanvas()->GetOpenedPageNum() == 0 ||
-			m_pCanvas->GetSelectedWidget())
+			m_pCanvasContainer->GetSelectedWidget())
 		{
 			event.Enable(true);
 			return;
@@ -1420,9 +1483,9 @@ void WxMainFrame::OnUpdateCreateWidget(wxUpdateUIEvent& event)
 //------------------------------------------------------------------------------
 void WxMainFrame::SetResolution( int width, int height )
 {
-	if( m_pCanvas )
+	if( m_pCanvasContainer )
 	{
-		m_pCanvas->SetScreenSize(width, height);
+		m_pCanvasContainer->SetScreenSize(width, height);
 	}
 	else
 	{
@@ -1506,7 +1569,7 @@ void WxMainFrame::OnUpdateSaveAll(wxUpdateUIEvent& event)
 	event.Enable(m_bIsSceneOpened);
 
 }
-
+//------------------------------------------------------------------------------
 void WxMainFrame::OnRecentPaths( wxCommandEvent& In )
 {
 	if( SaveFileProcess(-1) == false)
@@ -1514,59 +1577,10 @@ void WxMainFrame::OnRecentPaths( wxCommandEvent& In )
 		//cancel
 		return;
 	}
-	CloseScene();
 
 	unsigned nFileIdx = In.GetId() - ID_RecentPathsBaseId;
-
-	std::string	strPath = CToolCache::Instance()->m_pathHistory[nFileIdx];
-	GSystem->SetDataPath(strPath);
-	try
-	{
-		CGUISceneManager::Instance()->UnregisterAllScenes();
-		if( 0 != CGUISceneManager::Instance()->RegisterScenesFromDir( "/",".uip" ))
-		{
-			wxMessageBox( _T("failed to load scenes"), _T("error") );
-			return;
-		}
-	}
-	catch (CGUIBaseException& rError)
-	{
-		wxMessageBox( Gui2wxString(rError.what()), _T("error") );
-		return;
-	}
-
-	//chose scene
-	const std::vector<CGUIString>& vecScenes = CGUISceneManager::Instance()->GetSceneNames( );
-	wxArrayString arrayScenes;
-	for( unsigned i=0; i<vecScenes.size(); ++i )
-	{
-		arrayScenes.Add( Gui2wxString( vecScenes[i]));
-	}
-	wxSingleChoiceDialog aChoiceDlg( this, _T("select scene"), _T("select scene files"), arrayScenes );
-	if( aChoiceDlg.ShowModal() != wxID_OK )
-	{
-		return;
-	}
-	CGUIString strSceneFileName = vecScenes[aChoiceDlg.GetSelection()];
-
-	//get scene info
-	const CGUIScene* pScene = CGUISceneManager::Instance()->GetScene( strSceneFileName );
-	if( pScene->IsDependenciesLoaded())
-	{
-		if( 0 != OpenScene(pScene))
-		{
-			wxMessageBox( _T("failed to open scene"), _T("error") );
-			CloseScene();
-			return;
-		}
-	}
-	else
-	{
-		wxMessageBox( _T("some dependent scene of this scene hasn't been loaded"), _T("error") );
-		return;
-	}
-
-	CToolCache::Instance()->AddCache( strSceneFileName, strPath );
+	std::string	strPath = CToolsHistory::Instance()->GetHistoryPaths()[nFileIdx];
+	LoadScene( strPath );
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::OnRecentScenes( wxCommandEvent& In )
@@ -1576,48 +1590,10 @@ void WxMainFrame::OnRecentScenes( wxCommandEvent& In )
 		//cancel
 		return;
 	}
-	CloseScene();
 
 	unsigned nFileIdx = In.GetId() - ID_RecentScenesBaseId;
-
-	std::pair< std::string, std::string> strScene = CToolCache::Instance()->m_sceneHistory[nFileIdx];
-	GSystem->SetDataPath(strScene.second);
-	try
-	{
-		CGUISceneManager::Instance()->UnregisterAllScenes();
-		if( 0 != CGUISceneManager::Instance()->RegisterScenesFromDir())
-		{
-			wxMessageBox( _T("failed to load scenes"), _T("error") );
-			return;
-		}
-	}
-	catch (CGUIBaseException& rError)
-	{
-		wxMessageBox( Gui2wxString(rError.what()), _T("error") );
-		return;
-	}
-
-	//get scene info
-	const CGUIScene* pScene = CGUISceneManager::Instance()->GetScene( strScene.first );
-	if( !pScene )
-	{
-		wxMessageBox( _T("failed to load scene"), _T("error") );
-		return;
-	}
-	else if( pScene->IsDependenciesLoaded())
-	{
-		if( 0 != OpenScene(pScene))
-		{
-			wxMessageBox( _T("failed to open scene"), _T("error") );
-			CloseScene();
-			return;
-		}
-	}
-	else
-	{
-		wxMessageBox( _T("some dependent scene of this scene hasn't been loaded"), _T("error") );
-		return;
-	}
+	std::pair< std::string, std::string> strScene = CToolsHistory::Instance()->GetHistoryScenes()[nFileIdx];
+	LoadScene( strScene.second, strScene.first );
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::OnCloseWindow(wxCloseEvent& evt)
@@ -1651,81 +1627,26 @@ void WxMainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 		return;
 	}
 
-	CGUIString strPath = GSystem->GetDataPath();
-	wxDirDialog aDlg( this, _T("Choose a libguiex root path"), Gui2wxString( strPath));
-	if( wxID_OK != aDlg.ShowModal())
-	{
-		return;
-	}
-
-	CloseScene();
-
-	std::string strDataPath = (aDlg.GetPath() + wxT("\\")).char_str(wxConvUTF8).data();
-	GSystem->SetDataPath(strDataPath);
-
-	try
-	{
-		CGUISceneManager::Instance()->UnregisterAllScenes();
-		if( 0 != CGUISceneManager::Instance()->RegisterScenesFromDir())
-		{
-			wxMessageBox( _T("failed to load scenes"), _T("error") );
-			return;
-		}
-	}
-	catch (CGUIBaseException& rError)
-	{
-		wxMessageBox( Gui2wxString(rError.what()), _T("error") );
-		return;
-	}
-	
-	//chose scene
-	const std::vector<CGUIString>& vecScenes = CGUISceneManager::Instance()->GetSceneNames( );
-	wxArrayString arrayScenes;
-	for( unsigned i=0; i<vecScenes.size(); ++i )
-	{
-		arrayScenes.Add( Gui2wxString( vecScenes[i]));
-	}
-	wxSingleChoiceDialog aChoiceDlg( this, _T("select scene"), _T("select scene files"), arrayScenes );
-	if( aChoiceDlg.ShowModal() != wxID_OK )
-	{
-		return;
-	}
-	CGUIString strSceneFileName = vecScenes[aChoiceDlg.GetSelection()];
-
-	//get scene info
-	const CGUIScene* pScene = CGUISceneManager::Instance()->GetScene( strSceneFileName );
-	if( pScene->IsDependenciesLoaded())
-	{
-		if( 0 != OpenScene(pScene))
-		{
-			wxMessageBox( _T("failed to open scene"), _T("error") );
-			CloseScene();
-			return;
-		}
-	}
-	else
-	{
-		wxMessageBox( _T("some dependent scene of this scene hasn't been loaded"), _T("error") );
-		return;
-	}
-
-	CToolCache::Instance()->AddCache( strSceneFileName, strDataPath );
+	LoadScene();
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::CloseCanvas()
 {
-	if( m_pCanvas)
+	if( m_pCanvasContainer)
 	{
-		int idx = m_pAuiNoteBook->GetPageIndex(m_pCanvas);
+		int idx = m_pAuiNoteBook->GetPageIndex(m_pCanvasContainer);
 		if( wxNOT_FOUND != idx )
 		{
 			SaveFileProcess(idx);
 			m_pAuiNoteBook->DeletePage(idx);
 		}
-		m_pCanvas = NULL;
+		m_pCanvasContainer = NULL;
 	}
 }
 //------------------------------------------------------------------------------
+/** 
+* @brief render given file
+*/
 void WxMainFrame::RenderFile( const std::string& rFileName )
 {
 	CloseCanvas();
@@ -1733,9 +1654,8 @@ void WxMainFrame::RenderFile( const std::string& rFileName )
 
 	std::string strAbsFileName = GSystem->GetDataPath() + pScene->GetScenePath() + rFileName;
 
-	m_pCanvas = new WxEditorCanvasContainer(m_pAuiNoteBook, strAbsFileName);
-	m_pAuiNoteBook->AddPage( m_pCanvas, Gui2wxString(rFileName), true );
-	//m_pCanvas->SetNextHandler( m_pAuiNoteBook );
+	m_pCanvasContainer = new WxEditorCanvasContainer(m_pAuiNoteBook, strAbsFileName);
+	m_pAuiNoteBook->AddPage( m_pCanvasContainer, Gui2wxString(rFileName), true );
 
 	//update resource for editor
 	CGUIResourcePool::Instance()->UpdateResourceList();
@@ -1772,16 +1692,16 @@ void WxMainFrame::EditFileExternal( const std::string& rFileName )
 
 	wxString strCommand = wxString::Format( _T("%s %s"), _T("notepad"), Gui2wxString( strAbsFileName).c_str() );
 
-	if( !CToolCache::Instance()->GetDefaultEditor().empty() )
+	if( !CToolsHistory::Instance()->GetDefaultEditor().empty() )
 	{
-		wxString strEditor = Gui2wxString(CToolCache::Instance()->GetDefaultEditor());
+		wxString strEditor = Gui2wxString(CToolsHistory::Instance()->GetDefaultEditor());
 		if( wxFileExists( strEditor ))
 		{
 			strCommand = wxString::Format( _T("%s %s"), strEditor.c_str(), Gui2wxString( strAbsFileName).c_str() );
 		}
 		else
 		{
-			CToolCache::Instance()->SetDefaultEditor("");
+			CToolsHistory::Instance()->SetDefaultEditor("");
 		}
 	}
 
@@ -1795,6 +1715,9 @@ void WxMainFrame::EditFileExternal( const std::string& rFileName )
 	//	SW_SHOWDEFAULT);
 }
 //------------------------------------------------------------------------------
+/** 
+* @brief edit given file
+*/
 void WxMainFrame::EditFile( const std::string& rFileName, EFileType eFileType )
 {
 	CGUIScene* pScene = CGUISceneManager::Instance()->GetScene(m_strCurrentSceneName);
@@ -1825,7 +1748,12 @@ void WxMainFrame::EditFile( const std::string& rFileName, EFileType eFileType )
 	m_pAuiNoteBook->AddPage( pTextEditor, Gui2wxString(rFileName),true);
 }
 //------------------------------------------------------------------------------
-bool	WxMainFrame::SaveFileProcess(int nIdx)
+/** 
+* @brief save files before close it
+* @param nIdx the index of page, -1 for all page
+* @return false for user cancel the process.
+*/
+bool WxMainFrame::SaveFileProcess(int nIdx)
 {
 	wxArrayString aFileArray;
 	std::vector<CSaveFileBase*> aSaveArray;
@@ -1923,11 +1851,11 @@ void WxMainFrame::UpdateStatusBar (wxChar *format, ...)
 void WxMainFrame::CreateMenu()
 {
 	//update cache file
-	CToolCache::Instance()->ParseCache(wxGetApp().GetBaseDir() + ".\\libguiex_editor_cache.xml");
-	CToolCache::Instance()->SetMaxCacheSize(10);
-	CToolCache::Instance()->SetPathsBaseId(ID_RecentPathsBaseId);
-	CToolCache::Instance()->SetScenesBaseId(ID_RecentScenesBaseId);
-	CToolCache::Instance()->UpdateMenu();
+	CToolsHistory::Instance()->ParseHistoryFile(wxGetApp().GetBaseDir() + ".\\libguiex_editor_cache.xml");
+	CToolsHistory::Instance()->SetMaxCacheSize(10);
+	CToolsHistory::Instance()->SetPathsBaseId(ID_RecentPathsBaseId);
+	CToolsHistory::Instance()->SetScenesBaseId(ID_RecentScenesBaseId);
+	CToolsHistory::Instance()->UpdateMenu();
 
 	wxMenuBar* mb = new wxMenuBar;
 
@@ -1941,8 +1869,8 @@ void WxMainFrame::CreateMenu()
 	file_menu->AppendSeparator();
 	file_menu->Append(ID_Close, _("Close"));
 	file_menu->AppendSeparator();
-	file_menu->Append(ID_RecentScenes, _("Recent Scenes"), CToolCache::Instance()->m_pSceneMenu);
-	file_menu->Append(ID_RecentPaths, _("Recent Paths"), CToolCache::Instance()->m_pPathMenu);
+	file_menu->Append(ID_RecentScenes, _("Recent Scenes"), CToolsHistory::Instance()->GetSceneMenu());
+	file_menu->Append(ID_RecentPaths, _("Recent Paths"), CToolsHistory::Instance()->GetPathMenu());
 	file_menu->AppendSeparator();
 	file_menu->Append(ID_Exit, _("Exit"));
 

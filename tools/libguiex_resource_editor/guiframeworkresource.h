@@ -21,6 +21,8 @@ class CGUIFrameworkResource : public CGUIFrameworkEditorBase
 public:
 	CGUIFrameworkResource( );
 	void EditorSetupLogSystem( );
+	void RegisterOpenglInterface();
+	void UnregisterOpenglInterface();
 
 protected:
 	virtual void RegisterWidgetGenerators( );

@@ -15,6 +15,7 @@
 #include <wx/wxprec.h>
 #include <wx/aui/aui.h>
 #include <wx/treebase.h>
+#include <wx/listctrl.h>
 
 #include <libguiex_core/guiex.h>
 
@@ -33,12 +34,51 @@ public:
 
 	~WxMainFrame();
 
+protected:
+	void CreateMenu();
+	void CreateToolbar();
+	void CreateCanvasNotebook();
+
+	void SetPreview( const guiex::CGUIProperty* pResourceProperty );
+
+	int LoadScene( std::string strDataPath = "", std::string strSceneName = "" );
+	int	OpenScene(const guiex::CGUIScene* pSceneInfo );
+	void CloseScene( );
+
+	wxString GetFileFullPath( const wxString& rFileName );
+	wxString GetFileRelativePath( const wxString& rFileName );
+	void SelectFile( const wxString& rFileName );
+
+	void AddProperty2Tree( const guiex::CGUIProperty* pProperty );
 
 protected:
-	//widget tree
-	wxTreeCtrl*m_pTreeCtrl_Resource;
+	void OnOpen(wxCommandEvent& evt);
+	void OnRecentPaths( wxCommandEvent& In );
+	void OnRecentScenes( wxCommandEvent& In );
 
+	//tree ctrl
+	void OnResourceSelected(wxTreeEvent& event);
+
+	//combobox
+	void OnFileSelected(wxCommandEvent& event);
+
+	//book ctrl
+	void OnBookPageClose(wxAuiNotebookEvent& evt);
+
+protected:
+
+	//widget tree
+	wxToolBar* m_pToolbar;
+	wxTreeCtrl* m_pResourceItemCtrl;
+	wxComboBox* m_pResourceFiles;
+	wxAuiNotebook* m_pAuiNoteBook;
+	class WxResourcePreviewContainer* m_pPreviewContainer;
 	wxAuiManager m_mgr;
+
+	//list of items
+	guiex::CGUIString m_strCurrentSceneName;
+	guiex::CGUIProperty m_aResourcePropertys;
+	std::map<guiex::uint32, wxTreeItemId> m_mapItemFolder;
 
 	DECLARE_EVENT_TABLE()
 };

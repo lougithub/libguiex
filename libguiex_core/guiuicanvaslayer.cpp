@@ -14,7 +14,6 @@
 #include "guiexception.h"
 #include "guisystem.h"
 #include "guilogmsgmanager.h"
-#include "guicameramanager.h"
 #include "guiinterfacerender.h"
 
 #include <algorithm>
@@ -27,7 +26,6 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIUICanvasLayer::CGUIUICanvasLayer( const char* szLayerName )
 		:CGUICanvasLayer( szLayerName, true )
-		,m_pDefaultUICamera(NULL)
 		,m_pPopupWidget(NULL)
 	{
 		SetSizeType(eScreenValue_Percentage);
@@ -41,18 +39,10 @@ namespace guiex
 	void CGUIUICanvasLayer::Initialize( )
 	{
 		CGUICanvasLayer::Initialize();
-
-		m_pDefaultUICamera = new CGUICamera;
 	}
 	//------------------------------------------------------------------------------
 	void CGUIUICanvasLayer::Finalize( )
 	{
-		if( m_pDefaultUICamera )
-		{
-			delete m_pDefaultUICamera;
-			m_pDefaultUICamera = NULL;
-		}
-
 		//close all modal dialog
 		while(GetTopestDialog())
 		{
@@ -73,16 +63,6 @@ namespace guiex
 		delete this;
 	}
 	//------------------------------------------------------------------------------
-	const CGUICamera* CGUIUICanvasLayer::GetCamera() const
-	{
-		return m_pDefaultUICamera;
-	}
-	//------------------------------------------------------------------------------
-	CGUICamera* CGUIUICanvasLayer::GetCamera()
-	{
-		return m_pDefaultUICamera;
-	}
-	//------------------------------------------------------------------------------
 	void CGUIUICanvasLayer::Update( real fDeltaTime )
 	{
 		CGUICanvasLayer::Update( fDeltaTime );
@@ -98,8 +78,6 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIUICanvasLayer::Render( IGUIInterfaceRender* pRender )
 	{
-		pRender->ApplyCamera( m_pDefaultUICamera );
-
 		CGUICanvasLayer::Render( pRender );
 
 		//render dlg

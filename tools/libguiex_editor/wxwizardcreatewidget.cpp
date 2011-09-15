@@ -22,8 +22,8 @@
 
 #include <libguiex_core/guiex.h>
 
-#include "bitmaps/wizard.xpm"
-#include "bitmaps/wizard2.xpm"
+#include "../resource/bitmaps/wizard.xpm"
+#include "../resource/bitmaps/wizard2.xpm"
 
 using namespace guiex;
 

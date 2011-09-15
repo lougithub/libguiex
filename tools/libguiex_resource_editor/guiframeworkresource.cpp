@@ -8,6 +8,7 @@
 // include
 //============================================================================//
 #include "guiframeworkresource.h"
+#include <libguiex_module\render_opengl\guirender_opengl.h>
 #include "wxmainframe.h"
 #include <fstream>
 
@@ -52,5 +53,15 @@ void CGUIFrameworkResource::SetupLogSystem( )
 	GUI_LOG->Open( "gui_framework_log", CGUILogMsg::FLAG_TIMESTAMP_LITE | CGUILogMsg::FLAG_OSTREAM | CGUILogMsg::FLAG_MSG_CALLBACK );
 	GUI_LOG->SetPriorityMask( GUI_LM_DEBUG | GUI_LM_TRACE | GUI_LM_WARNING|GUI_LM_ERROR );
 	GUI_LOG->SetOstream( new std::ofstream( "libguiex_resource.log", std::ios_base::out | std::ios_base::trunc ), true );
+}
+//------------------------------------------------------------------------------
+void CGUIFrameworkResource::RegisterOpenglInterface()
+{
+	GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl );
+}
+//------------------------------------------------------------------------------
+void CGUIFrameworkResource::UnregisterOpenglInterface()
+{
+	GUI_UNREGISTER_INTERFACE_LIB( IGUIRender_opengl);
 }
 //------------------------------------------------------------------------------

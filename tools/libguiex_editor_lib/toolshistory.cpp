@@ -1,17 +1,15 @@
 /** 
- * @file toolcache.cpp
+ * @file toolhistory.cpp
  * @brief 
  * @author Lou Guoliang (louguoliang@gmail.com)
  * @date 2009-11-05
  */
 
-
 //============================================================================//
 // include
 //============================================================================//
-#include "toolcache.h"
+#include "toolshistory.h"
 #include "toolsmisc.h"
-
 #include "tinyxml.h"
 #include <algorithm>
 
@@ -21,7 +19,7 @@
 //============================================================================//
 
 //------------------------------------------------------------------------------
-CToolCache::CToolCache()
+CToolsHistory::CToolsHistory()
 :m_nPathBaseId( 0 )
 ,m_nSceneBaseId( 0 )
 ,m_nMaxSize(10)
@@ -30,17 +28,17 @@ CToolCache::CToolCache()
 	m_pSceneMenu = new wxMenu( );
 }
 //------------------------------------------------------------------------------
-CToolCache::~CToolCache()
+CToolsHistory::~CToolsHistory()
 {
 }
 //------------------------------------------------------------------------------
-CToolCache* CToolCache::Instance()
+CToolsHistory* CToolsHistory::Instance()
 {
-	static CToolCache s_mgr;
+	static CToolsHistory s_mgr;
 	return &s_mgr;
 }
 //------------------------------------------------------------------------------
-void	CToolCache::ParseCache( const std::string& rCacheFile )
+void CToolsHistory::ParseHistoryFile( const std::string& rCacheFile )
 {
 	m_sceneHistory.clear();
 	m_pathHistory.clear();
@@ -104,7 +102,7 @@ void	CToolCache::ParseCache( const std::string& rCacheFile )
 	}
 }
 //------------------------------------------------------------------------------
-void CToolCache::AddCache( const std::string& rScene, const std::string& rPath )
+void CToolsHistory::AddScenePath( const std::string& rScene, const std::string& rPath )
 {
 	bool bChanged = false;
 
@@ -118,7 +116,6 @@ void CToolCache::AddCache( const std::string& rScene, const std::string& rPath )
 		}
 		bChanged = true;
 	}
-
 
 	//for Scene
 	if( std::find( m_sceneHistory.begin(), m_sceneHistory.end(), std::make_pair(rScene, rPath) ) == m_sceneHistory.end())
@@ -138,7 +135,27 @@ void CToolCache::AddCache( const std::string& rScene, const std::string& rPath )
 	}
 }
 //------------------------------------------------------------------------------
-void CToolCache::UpdateMenu( )
+const std::vector<std::string>& CToolsHistory::GetHistoryPaths() const
+{
+	return m_pathHistory;
+}
+//------------------------------------------------------------------------------
+const std::vector<std::pair< std::string, std::string> >& CToolsHistory::GetHistoryScenes() const
+{
+	return m_sceneHistory;
+}
+//------------------------------------------------------------------------------
+wxMenu* CToolsHistory::GetPathMenu() const
+{
+	return m_pPathMenu;
+}
+//------------------------------------------------------------------------------
+wxMenu* CToolsHistory::GetSceneMenu() const
+{
+	return m_pSceneMenu;
+}
+//------------------------------------------------------------------------------
+void CToolsHistory::UpdateMenu( )
 {
 	// Remove all existing menu items.
 	for( unsigned x = 0 ; x < m_nMaxSize ; ++x )
@@ -168,7 +185,7 @@ void CToolCache::UpdateMenu( )
 	}
 }
 //------------------------------------------------------------------------------
-void CToolCache::SaveFile(  )
+void CToolsHistory::SaveFile(  )
 {
 	TiXmlDocument aDoc;
 	TiXmlNode* pRootNode = aDoc.InsertEndChild( TiXmlElement( "cache" ));
@@ -201,7 +218,34 @@ void CToolCache::SaveFile(  )
 	aDoc.SaveFile(m_strCacheFile.c_str());
 }
 //------------------------------------------------------------------------------
+void CToolsHistory::SetPathsBaseId(wxWindowID baseId)
+{
+	m_nPathBaseId = baseId;
+}
+//------------------------------------------------------------------------------
+void CToolsHistory::SetScenesBaseId(wxWindowID baseId)
+{
+	m_nSceneBaseId = baseId;
+}
+//------------------------------------------------------------------------------
+void CToolsHistory::SetMaxCacheSize( unsigned nSize )
+{
+	m_nMaxSize = nSize;
+}
+//------------------------------------------------------------------------------
+void CToolsHistory::SetDefaultEditor(const std::string& rEditor)
+{
+	m_strDefaultEditor = rEditor;
 
+	SaveFile();
+	UpdateMenu();
+}
+//------------------------------------------------------------------------------
+const std::string& CToolsHistory::GetDefaultEditor() const
+{
+	return m_strDefaultEditor;
+}
+//------------------------------------------------------------------------------
 
 
 

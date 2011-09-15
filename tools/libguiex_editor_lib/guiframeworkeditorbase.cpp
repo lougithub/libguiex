@@ -46,10 +46,6 @@ void CGUIFrameworkEditorBase::RegisterWidgetGenerators( )
 	}
 }
 //------------------------------------------------------------------------------
-void CGUIFrameworkEditorBase::RegisterInterfaces_Render( )
-{
-}
-//------------------------------------------------------------------------------
 void CGUIFrameworkEditorBase::RegisterInterfaces_ImageLoader( )
 {
 	GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_Editor);
