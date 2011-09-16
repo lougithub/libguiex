@@ -119,7 +119,7 @@ namespace guiex
 		const CGUIProperty* pAllTowerProperty = GetGameWorld()->GetDataProperty("tower.xml");
 		const CGUIProperty* pTowerProp = pAllTowerProperty->GetProperty(GetTowerType());
 
-		m_fBuildingTime = pTowerProp->GetProperty("building_time")->GetSpecifiedValue<real>();
+		m_fBuildingTime = pTowerProp->GetProperty("building_time")->GetCommonValue<real>();
 
 		char szLevelName[10];
 		uint32 nLevel = 1;
@@ -129,10 +129,10 @@ namespace guiex
 		{
 			m_vecLevelInfos.push_back( STowerLevelInfo() );
 			STowerLevelInfo& rInfo = m_vecLevelInfos.back();
-			rInfo.m_uPrice = pLevelProp->GetProperty("price")->GetSpecifiedValue<uint32>();
-			rInfo.m_uSellPrice = pLevelProp->GetProperty("sell_price")->GetSpecifiedValue<uint32>();
-			rInfo.m_fReloadTime = pLevelProp->GetProperty("reload")->GetSpecifiedValue<real>();
-			rInfo.m_fRadius = pLevelProp->GetProperty("radius")->GetSpecifiedValue<real>();
+			rInfo.m_uPrice = pLevelProp->GetProperty("price")->GetCommonValue<uint32>();
+			rInfo.m_uSellPrice = pLevelProp->GetProperty("sell_price")->GetCommonValue<uint32>();
+			rInfo.m_fReloadTime = pLevelProp->GetProperty("reload")->GetCommonValue<real>();
+			rInfo.m_fRadius = pLevelProp->GetProperty("radius")->GetCommonValue<real>();
 			rInfo.m_pLevelProperty = pLevelProp;
 
 			for( uint32 i=0; i<pLevelProp->GetPropertyNum(); ++i )
@@ -373,7 +373,7 @@ namespace guiex
 
 			char posName[16];
 			snprintf( posName, 16, "archer_pos_%d", i );
-			CGUIVector2 pos = rInfo.m_pLevelProperty->GetProperty(posName)->GetSpecifiedValue<CGUIVector2>();
+			CGUIVector2 pos = rInfo.m_pLevelProperty->GetProperty(posName)->GetCommonValue<CGUIVector2>();
 			const CGUISize& size = m_aArcherData[i].m_pAnimArcher[eArcherState_Idle][eArcherDir_UpRight]->GetSize();
 			m_aArcherData[i].m_rectArcherRender = CGUIRect( CGUIVector2( pos.x-size.m_fWidth/2, pos.y-size.m_fHeight/2 ), size );
 		}
@@ -466,7 +466,7 @@ namespace guiex
 		m_aTowerData.m_eTowerState = eTowerState_Idle;
 
 		STowerLevelInfo& rInfo = m_vecLevelInfos[m_uLevel];
-		CGUIVector2 pos = rInfo.m_pLevelProperty->GetProperty("mage_pos")->GetSpecifiedValue<CGUIVector2>();
+		CGUIVector2 pos = rInfo.m_pLevelProperty->GetProperty("mage_pos")->GetCommonValue<CGUIVector2>();
 		const CGUISize& size = m_aMageData.m_pAnimMage[eMageState_Idle][eMageDir_Up]->GetSize();	
 		m_aMageData.m_rectMageRender = CGUIRect( CGUIVector2( pos.x-size.m_fWidth/2, pos.y-size.m_fHeight/2 ), size );
 	}

@@ -35,6 +35,8 @@ if( BUILD_PLATFORM_WIN32 )
 		wxpgpropertyextend.h
 		propertyconfigmgr.h
 		propertyconfigmgr.cpp
+		propertyconvertor.h
+		propertyconvertor.cpp
 		)
     source_group( property FILES ${${target_name}_property_SRCS} ) 
 

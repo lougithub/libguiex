@@ -158,8 +158,8 @@ namespace guiex
 		const CGUIProperty* pAllRoundProperty = GetGameWorld()->GetDataProperty("round.xml");
 		const CGUIProperty& rRoundProp = *pAllRoundProperty->GetProperty(rRound);
 
-		m_uGold = rRoundProp["Gold"]->GetSpecifiedValue<uint32>();
-		m_uHP = rRoundProp["HP"]->GetSpecifiedValue<uint32>();
+		m_uGold = rRoundProp["Gold"]->GetCommonValue<uint32>();
+		m_uHP = rRoundProp["HP"]->GetCommonValue<uint32>();
 	}
 	//------------------------------------------------------------------------------
 	void CTDGameWorld::UpdateAllObjects( real fDeltaTime )

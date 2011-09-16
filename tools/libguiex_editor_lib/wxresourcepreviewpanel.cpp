@@ -96,20 +96,6 @@ void WxResourceCanvasBase::OnPaint(wxPaintEvent& event)
 
 	OnRender( pRender );
 
-	GLfloat x0, y0, x1, y1;
-	glColor3f (1.0f, 0.0f, 0.0f);
-	glBegin(GL_LINE_LOOP);
-	x0 = -30;
-	y0 = -30;
-	x1 = 30;
-	y1 = 30;
-	glVertex2f(x0, y0);
-	glVertex2f(x1, y0);
-	glVertex2f(x1, y1);
-	glVertex2f(x0, y1);
-	glEnd();	// GL_LINE_LOOP
-
-
 	pRender->PopMatrix();
 
 	GSystem->EndRender();
@@ -367,7 +353,7 @@ WxFontPreviewPanel::WxFontPreviewPanel( wxWindow* parent )
 	m_pTextBox->SetEditable( false );
 
 	wxSizer *sizerTop = new wxBoxSizer( wxVERTICAL );
-	sizerTop->Add( this, 0, wxALIGN_CENTER );
+	sizerTop->Add( m_pTextBox, 0, wxALIGN_CENTER );
 	SetSizer( sizerTop );
 }
 //------------------------------------------------------------------------------

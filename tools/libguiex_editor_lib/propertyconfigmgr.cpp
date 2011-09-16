@@ -30,19 +30,28 @@ const CPropertyData* CPropertyData::GetPropertyData( const guiex::CGUIProperty& 
 	return reinterpret_cast<CPropertyData*>( rProperty.GetData() );
 }
 //------------------------------------------------------------------------------
-wxString CPropertyData::GetPropertyLabel( const CGUIProperty& rProperty )
+bool CPropertyData::IsPropertyMustExist( const CGUIProperty& rProperty )
 {
-	return Gui2wxString(GetPropertyData( rProperty )->GetLabel());
+	if( rProperty.GetData() )
+	{
+		return GetPropertyData( rProperty )->IsMustExist();
+	}
+	else
+	{
+		return false;
+	}
 }
 //------------------------------------------------------------------------------
-void CPropertyData::SetLabel(const std::string& rType)
+bool CPropertyData::IsPropertyReadOnly( const CGUIProperty& rProperty )
 {
-	m_strLabel = rType;
-}
-//------------------------------------------------------------------------------
-const std::string& CPropertyData::GetLabel() const
-{
-	return m_strLabel;
+	if( rProperty.GetData() )
+	{
+		return GetPropertyData( rProperty )->IsReadOnly();
+	}
+	else
+	{
+		return false;
+	}
 }
 //------------------------------------------------------------------------------
 void CPropertyData::SetCategory(const std::string& rCategory)
@@ -442,7 +451,6 @@ int	CPropertyConfigMgr::ProcessPropertyNode(const std::string& rPage, CGUIProper
 			const char* pName = pPropertyNode->Attribute("name");
 			const char* pType = pPropertyNode->Attribute("type");
 			const char* pValue = pPropertyNode->Attribute("value");
-			const char* pLabel = pPropertyNode->Attribute("label");
 			const char* pMustExist = pPropertyNode->Attribute("must_exist");
 			const char* pReadOnly = pPropertyNode->Attribute("readonly");
 			const char* pAlternativeSave = pPropertyNode->Attribute("alternative_save");
@@ -473,7 +481,6 @@ int	CPropertyConfigMgr::ProcessPropertyNode(const std::string& rPage, CGUIProper
 			aProperty.SetData(pData);
 
 			pData->SetPage(rPage);
-			pData->SetLabel(pLabel?pLabel:pName);
 			pData->SetCategory(pCategory ? pCategory : "Default" );
 
 			pData->SetMustExist(false);

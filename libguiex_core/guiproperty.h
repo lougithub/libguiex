@@ -47,7 +47,9 @@ namespace guiex
 		const CGUIString& GetValue() const;
 
 		template <class T>
-		T GetSpecifiedValue() const;
+		T GetCommonValue() const;
+		template <class T>
+		void SetCommonValue( const T& rValue );
 
 		void SetType(const CGUIString& rType);
 		uint32 GetType() const;
@@ -98,13 +100,18 @@ namespace guiex
 	};
 
 	template <class T>
-	inline T CGUIProperty::GetSpecifiedValue() const
+	inline T CGUIProperty::GetCommonValue() const
 	{
 		T aValue;
 		PropertyToValue( *this, aValue );
 		return aValue;
 	}
 
+	template <class T>
+	inline void CGUIProperty::SetCommonValue( const T& rValue )
+	{
+		ValueToProperty( rValue, *this );
+	}
 }//namespace guiex
 
 #endif //__GUI_PROPERTY_20060621_H__

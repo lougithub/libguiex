@@ -27,15 +27,14 @@ class CPropertyConvertorMgr
 public:
 	static CPropertyConvertorMgr* Instance();
 
-	void RegisterConvertor( class CEditorPropertyConvertorBase* pConvertor );
-
-	void GuiProperty2GridProperty( class WxToolsPGManager* pSheetMgr, wxPGProperty* pPGCategory, const CGUIProperty& aProp );
-	void GridProperty2GuiProperty( class WxToolsPGManager* pSheetMgr, wxPGProperty* pPGProperty, CGUIProperty& rProperty );
-
+	void GuiProperty2GridProperty( class wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGCategory, const CGUIProperty& aProp, bool bEnableIdenticalName = false );
+	void GridProperty2GuiProperty( class wxPropertyGridManager* pSheetMgr, wxPGProperty* pPGProperty, CGUIProperty& rProperty );
 
 protected:
 	CPropertyConvertorMgr();
 	~CPropertyConvertorMgr();
+
+	void RegisterConvertor( class CEditorPropertyConvertorBase* pConvertor );
 
 protected:
 	typedef std::map<int32, class CEditorPropertyConvertorBase*> TMapConvertor;

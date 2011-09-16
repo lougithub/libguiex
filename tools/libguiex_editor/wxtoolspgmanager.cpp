@@ -21,27 +21,6 @@ WxToolsPGManager::WxToolsPGManager(  wxWindow *parent, wxWindowID id, const wxPo
 
 }
 //------------------------------------------------------------------------------
-void WxToolsPGManager::ToolsClearPage( )
-{
-	m_vecPropertyPages.clear();
-	Clear();
-}
-//------------------------------------------------------------------------------
-void WxToolsPGManager::ToolsSelectPage( const std::string& rPageName )
-{
-	for( size_t i=0; i<m_vecPropertyPages.size(); ++i )
-	{
-		if( m_vecPropertyPages[i] == rPageName )
-		{
-			SelectPage( i );
-			return;
-		}
-	}
-	AddPage( Gui2wxString( rPageName ) );
-	m_vecPropertyPages.push_back( rPageName );
-	SelectPage( m_vecPropertyPages.size() - 1 );
-}
-//------------------------------------------------------------------------------
 wxPGProperty* WxToolsPGManager::ToolsGetProperty( const std::string& rName, const std::string& rType ) const
 {
 	for ( size_t i=0; i<GetPageCount(); i++ )

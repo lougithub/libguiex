@@ -46,10 +46,10 @@ namespace guiex
 		//init data
 		m_arrayAnimations[eBulletState_Fly] = CGUIAnimationManager::Instance()->AllocateResource( rBulletProp["AnimFly"]->GetValue() );
 		m_arrayAnimations[eBulletState_Explosion] = CGUIAnimationManager::Instance()->AllocateResource( rBulletProp["AnimExplosion"]->GetValue() );
-		m_fDistance = rBulletProp["distance"]->GetSpecifiedValue<real>();
-		m_fGravity = rBulletProp["gravity"]->GetSpecifiedValue<real>();
+		m_fDistance = rBulletProp["distance"]->GetCommonValue<real>();
+		m_fGravity = rBulletProp["gravity"]->GetCommonValue<real>();
 		
-		m_uRotationSpeed = rBulletProp["rotation_speed"]->GetSpecifiedValue<uint32>();
+		m_uRotationSpeed = rBulletProp["rotation_speed"]->GetCommonValue<uint32>();
 		
 		//m_aSize = m_arrayAnimations[eBulletState_Fly]->GetSize();
 		m_vPosition = rStartPos;

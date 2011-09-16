@@ -9,8 +9,6 @@ if( BUILD_PLATFORM_WIN32 )
 		wxmainapp.h
 		wxmainframe.cpp
 		wxmainframe.h
-		wxtoolspgmanager.cpp
-		wxtoolspgmanager.h
 		wxoutputpanel.cpp
 		wxoutputpanel.h
 		wxsavefiledlg.cpp
@@ -31,8 +29,6 @@ if( BUILD_PLATFORM_WIN32 )
     set( ${target_name}_property_SRCS
 		propertysheetfunc.cpp
 		propertysheetfunc.h    
-		propertyconvertor.cpp
-		propertyconvertor.h    		
         )
     source_group( property FILES ${${target_name}_property_SRCS} )
     

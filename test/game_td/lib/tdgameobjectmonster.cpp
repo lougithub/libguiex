@@ -311,7 +311,7 @@ namespace guiex
 		m_aSize = m_arrayAnimations[eAnimState_Idle]->GetSize();
 
 		//init values
-		m_fSpeed = rMonsterProp["Speed"]->GetSpecifiedValue<real>();
+		m_fSpeed = rMonsterProp["Speed"]->GetCommonValue<real>();
 
 		//init path node
 		m_pStartNode = GetGameWorld()->GetSimplePathNode( rStartPathNode );

@@ -14,7 +14,6 @@
 #include "propertyconfigmgr.h"
 #include "wxmainapp.h"
 #include "wxmainframe.h"
-#include "wxtoolspgmanager.h"
 
 #include <wx/propgrid/propgrid.h>
 #include <wx/propgrid/advprops.h>
@@ -110,7 +109,7 @@ wxWizardPageSimple* WxWizardCreateWidget::InitPage2()
 		//| wxPG_EX_HELP_AS_TOOLTIPS
 		wxPG_EX_MULTIPLE_SELECTION;
 
-	m_pPropGridMgr = new WxToolsPGManager(
+	m_pPropGridMgr = new wxPropertyGridManager(
 		page2,
 		wxID_ANY, 
 		wxDefaultPosition,
@@ -155,7 +154,7 @@ void WxWizardCreateWidget::OnWizardPageChanging(wxWizardEvent& event)
 		if( m_strWidgetType != m_pComboBoxType->GetValue())
 		{
 			m_strWidgetType = m_pComboBoxType->GetValue();
-			m_pPropGridMgr->ToolsClearPage();
+			m_pPropGridMgr->Clear();
 			UpdateGridProperties( m_pPropGridMgr,  wx2GuiString( m_strWidgetType ) );
 		}
 	}

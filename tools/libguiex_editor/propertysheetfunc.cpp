@@ -16,7 +16,6 @@
 #include "wxpgpropertyextend.h"
 #include "propertysheetfunc.h"
 #include "propertyconfigmgr.h"
-#include "wxtoolspgmanager.h"
 #include "propertyconvertor.h"
 
 //============================================================================//
@@ -31,7 +30,7 @@
 std::vector<CGUIString> g_vecPropertyPages;
 
 //------------------------------------------------------------------------------
-void UpdateGridProperties( WxToolsPGManager* pSheetMgr, const std::string& rType, CGUIWidget* pWidget )
+void UpdateGridProperties( wxPropertyGridManager* pSheetMgr, const std::string& rType, CGUIWidget* pWidget )
 {
 	//get property set
 	if( pWidget )
@@ -61,7 +60,13 @@ void UpdateGridProperties( WxToolsPGManager* pSheetMgr, const std::string& rType
 		}
 		
 		//select page
-		pSheetMgr->ToolsSelectPage(CPropertyData::GetPropertyData(*pProp)->GetPage());
+		wxString strPageName = Gui2wxString( CPropertyData::GetPropertyData(*pProp)->GetPage( ));
+		int nPageIdx = pSheetMgr->GetPageByName( strPageName );
+		if( nPageIdx == wxNOT_FOUND )
+		{
+			pSheetMgr->AddPage( strPageName );
+		}
+		pSheetMgr->SelectPage( strPageName );
 		
 		//add category
 		std::string strPage = CPropertyData::GetPropertyData(*pProp)->GetPage();
@@ -86,7 +91,7 @@ void UpdateGridProperties( WxToolsPGManager* pSheetMgr, const std::string& rType
 	//pSheetMgr->ExpandAll();
 }
 //------------------------------------------------------------------------------
-void GenerateGUIProperties( WxToolsPGManager* pSheetMgr, CGUIProperty& rSet )
+void GenerateGUIProperties( wxPropertyGridManager* pSheetMgr, CGUIProperty& rSet )
 {
 	for ( wxPGVIterator it = pSheetMgr->GetVIterator(wxPG_ITERATE_PROPERTIES);
 		!it.AtEnd();
@@ -98,7 +103,7 @@ void GenerateGUIProperties( WxToolsPGManager* pSheetMgr, CGUIProperty& rSet )
 	}
 }
 //------------------------------------------------------------------------------
-void UpdateGridAndGuiProperty( WxToolsPGManager* pSheetMgr, CGUIWidget* pWidget, const CGUIString& rPropertyName, const CGUIString& rPropertyType )
+void UpdateGridAndGuiProperty( wxPropertyGridManager* pSheetMgr, CGUIWidget* pWidget, const CGUIString& rPropertyName, const CGUIString& rPropertyType )
 {
 	const CGUIProperty& rSet = CPropertyConfigMgr::Instance()->GetPropertySet(pWidget->GetType());
 

@@ -13,6 +13,9 @@
 // include
 //============================================================================// 
 #include <wx/wxprec.h>
+#include <wx/propgrid/manager.h>
+#include <wx/aui/aui.h>
+
 #include <libguiex_core/guiex.h>
 
 //============================================================================//
@@ -32,7 +35,8 @@ protected:
 
 protected:
 	class WxResourcePreviewPanelBase* m_pPreviewPanel;
-	wxSizer* m_pSizer;
+	wxPropertyGridManager* m_pPropertyGridMgr;
+	wxAuiManager m_mgr;
 
 protected:
 	DECLARE_EVENT_TABLE()

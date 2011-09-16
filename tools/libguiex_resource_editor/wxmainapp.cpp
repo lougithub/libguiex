@@ -10,7 +10,10 @@
 //============================================================================// 
 #include "wxmainapp.h"
 #include "wxmainframe.h"
+#include <wx/filename.h>
+
 #include "guiframeworkresource.h"
+#include "propertyconfigmgr.h"
 #include "toolsmisc.h"
 
 //============================================================================//
@@ -64,6 +67,19 @@ bool WxMainApp::OnInit()
 		wxMessageBox(_T("The Scintilla DLL could not be loaded."),
 			_T("Error loading Scintilla"), wxOK|wxCENTER|wxICON_ERROR,NULL);
 		return false;
+	}
+
+	//load base config file
+	std::vector<wxFileName> vecBaseConfigFile;
+	vecBaseConfigFile.push_back( Gui2wxString(GetBaseDir() + "../editorconfig/libguiex_editor_config.xml"));
+
+	for( uint32 i=0; i<vecBaseConfigFile.size(); ++i )
+	{
+		if( 0 != CPropertyConfigMgr::Instance()->ReadPropertyConfig( vecBaseConfigFile[i].GetFullPath()))
+		{
+			wxMessageBox( wxString::Format( _T("failed to read property config file: %s"), vecBaseConfigFile[i].GetFullPath() ), _T("error"));
+			return false;
+		}
 	}
 
 	//create frame

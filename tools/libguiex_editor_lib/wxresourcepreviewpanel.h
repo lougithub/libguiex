@@ -12,8 +12,8 @@
 // include
 //============================================================================// 
 #include <wx/wxprec.h>
-#include "libguiex_core/guiex.h"
 #include <wx/glcanvas.h>
+#include "libguiex_core/guiex.h"
 
 //============================================================================//
 // class

@@ -21,7 +21,6 @@
 #include "toolshistory.h"
 #include "guiresourcepool.h"
 #include "wxeditorid.h"
-#include "wxtoolspgmanager.h"
 #include "propertyconvertor.h"
 
 //lua
@@ -317,7 +316,7 @@ wxPanel* WxMainFrame::CreatePropGridPanel()
 		//| wxPG_EX_HELP_AS_TOOLTIPS
 		wxPG_EX_MULTIPLE_SELECTION;
 
-	m_pPropGridMan = new WxToolsPGManager(
+	m_pPropGridMan = new wxPropertyGridManager(
 		panel,
 		ID_GridManager, 
 		wxDefaultPosition,
@@ -363,7 +362,7 @@ void WxMainFrame::SetPropGridWidget(CGUIWidget* pWidget, bool bForceRefresh/*=fa
 {
 	if( bForceRefresh || m_pCurrentEditingWidget != pWidget )
 	{
-		m_pPropGridMan->ToolsClearPage();
+		m_pPropGridMan->Clear();
 		m_pCurrentEditingWidget = pWidget;
 		if( m_pCurrentEditingWidget )
 		{

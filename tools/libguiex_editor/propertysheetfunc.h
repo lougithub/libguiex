@@ -18,15 +18,15 @@
 #include <libguiex_core/guiex.h>
 
 using namespace guiex;
-class WxToolsPGManager;
+class wxPropertyGridManager;
 
 //============================================================================//
 // declare
 //============================================================================// 
-extern void UpdateGridProperties( WxToolsPGManager* pSheetMgr, const std::string& rType,CGUIWidget* pWidget = NULL );
-extern void	UpdateGridAndGuiProperty( WxToolsPGManager* pSheetMgr, CGUIWidget* pWidget, const CGUIString& rPropertyName, const CGUIString& rPropertyType );
+extern void UpdateGridProperties( wxPropertyGridManager* pSheetMgr, const std::string& rType,CGUIWidget* pWidget = NULL );
+extern void	UpdateGridAndGuiProperty( wxPropertyGridManager* pSheetMgr, CGUIWidget* pWidget, const CGUIString& rPropertyName, const CGUIString& rPropertyType );
 
-extern void GenerateGUIProperties( WxToolsPGManager* pSheetMgr, CGUIProperty& rSet );
+extern void GenerateGUIProperties( wxPropertyGridManager* pSheetMgr, CGUIProperty& rSet );
 
 
 

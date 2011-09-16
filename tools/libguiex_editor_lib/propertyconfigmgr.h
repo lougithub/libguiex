@@ -31,10 +31,9 @@ public:
 	CPropertyData();
 
 	static const CPropertyData* GetPropertyData( const CGUIProperty& rProperty );
-	static wxString GetPropertyLabel( const CGUIProperty& rProperty );
+	static bool IsPropertyReadOnly( const CGUIProperty& rProperty );
+	static bool IsPropertyMustExist( const CGUIProperty& rProperty );
 
-	void SetLabel(const std::string& rType);
-	const std::string& GetLabel() const;
 	void SetCategory(const std::string& rCategory);
 	const std::string&	GetCategory() const;
 	void SetMustExist(bool bMustExist);
@@ -47,7 +46,6 @@ public:
 	const std::string& GetPage() const;
 
 protected:
-	std::string m_strLabel; /// label of this property
 	std::string m_strPage; /// page of property
 	std::string m_strCategories;/// categories of property
 	bool m_bMustExist; /// whether this property must exist
