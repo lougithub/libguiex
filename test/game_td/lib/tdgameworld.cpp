@@ -272,11 +272,17 @@ namespace guiex
 		pMonster->InitMonster( rMonsterType, rStartPathNode );
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameWorld::AllocateBullet( const CGUIString& rBulletType, const CGUIVector2& rStartPos, CTDGameObjectMonster* pTarget)
+	void CTDGameWorld::AllocateBullet( 
+		const CGUIString& rBulletType, 
+		const CGUIVector2& rStartPos, 
+		CTDGameObjectMonster* pTarget,
+		EBulletDamageType eDamageType,
+		real fDamage,
+		real fDamageRange)
 	{
 		CTDGameObjectBullet* pBullet = m_aObjectManager.AllocateObject<CTDGameObjectBullet>( eGameObject_Bullet );
 		m_arrayObjectBullet.push_back( pBullet );
-		pBullet->InitBullet( rBulletType, rStartPos, pTarget );
+		pBullet->InitBullet( rBulletType, rStartPos, pTarget, eDamageType, fDamage, fDamageRange );
 	}
 	//------------------------------------------------------------------------------
 	const CGUIProperty* CTDGameWorld::GetDataProperty( const CGUIString& rFilename ) const

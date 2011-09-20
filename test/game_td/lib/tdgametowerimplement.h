@@ -20,8 +20,9 @@ enum ETowerState
 {
 	eTowerState_Unknown,
 	eTowerState_Construct,
-	eTowerState_Idle,
+	eTowerState_Working,
 };
+
 
 //============================================================================//
 // class
@@ -33,17 +34,6 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	class CTDGameTowerImplement
 	{
-	public:
-		struct STowerLevelInfo
-		{
-			uint32 m_uPrice;
-			uint32 m_uSellPrice;
-			real m_fReloadTime;
-			real m_fRadius;
-			std::map<CGUIString, CGUIAnimation*> m_mapAnimations;
-			const class CGUIProperty* m_pLevelProperty;
-		};
-
 	public:
 		CTDGameTowerImplement( CTDGameTower* pGameTower, const CGUIString& rTowerType );
 		virtual ~CTDGameTowerImplement();
@@ -63,11 +53,11 @@ namespace guiex
 		const CGUIVector2& GetPosition() const {return m_pGameTower->GetPosition();}
 
 		virtual uint32 GetUpgradeCost() const{return 0;}
+		virtual real GetRadius() const{return 0.0f;}
 		virtual void Upgrade(){}
 
 		virtual uint32 GetTotalLevel( ) const { return 0;}
 		virtual uint32 GetCurrentLevel( ) const { return m_uLevel;}
-		virtual const STowerLevelInfo* GetLevelInfo( uint32 uLevel) const {return 0;}
 
 	protected:
 		CGUIAnimation* GetAnimation( const CGUIString& rAnimName );
@@ -83,13 +73,13 @@ namespace guiex
 
 
 	//------------------------------------------------------------------------------
-	// CTDGameTowerImplement_Base
+	// CTDGameTowerImplement_Basement
 	//------------------------------------------------------------------------------
-	class CTDGameTowerImplement_Base : public CTDGameTowerImplement
+	class CTDGameTowerImplement_Basement : public CTDGameTowerImplement
 	{
 	public:
-		CTDGameTowerImplement_Base( CTDGameTower* pGameTower );
-		virtual ~CTDGameTowerImplement_Base(){}
+		CTDGameTowerImplement_Basement( CTDGameTower* pGameTower );
+		virtual ~CTDGameTowerImplement_Basement(){}
 
 		virtual void OnUpdate( real fDeltaTime );
 		virtual void OnRender( IGUIInterfaceRender* pRender );
@@ -100,15 +90,24 @@ namespace guiex
 		CGUIAnimation* m_pAnimTowerBase;
 	};
 
-
 	//------------------------------------------------------------------------------
-	// CTDGameTowerImplement_TowerBase
+	// CTDGameTowerImplementBase
 	//------------------------------------------------------------------------------
-	class CTDGameTowerImplement_TowerBase : public CTDGameTowerImplement
+	class CTDGameTowerImplementBase : public CTDGameTowerImplement
 	{
 	public:
-		CTDGameTowerImplement_TowerBase( CTDGameTower* pGameTower, const CGUIString& rTowerType );
-		virtual ~CTDGameTowerImplement_TowerBase();
+		struct STowerLevelInfoCommon
+		{
+			uint32 m_uPrice;
+			uint32 m_uSellPrice;
+			real m_fRadius;
+			std::map<CGUIString, CGUIAnimation*> m_mapAnimations;
+			const class CGUIProperty* m_pLevelProperty;
+		};
+
+	public:
+		CTDGameTowerImplementBase( CTDGameTower* pGameTower, const CGUIString& rTowerType );
+		virtual ~CTDGameTowerImplementBase();
 
 		virtual void OnUpdate( real fDeltaTime );
 		virtual void OnRender( IGUIInterfaceRender* pRender );
@@ -118,10 +117,11 @@ namespace guiex
 
 		void SetTowerState( ETowerState eState );
 
-		virtual uint32 GetTotalLevel( ) const {return m_vecLevelInfos.size();}
-		virtual const STowerLevelInfo* GetLevelInfo( uint32 uLevel) const {return &m_vecLevelInfos[uLevel];}
 		virtual uint32 GetUpgradeCost() const;
+		virtual real GetRadius() const;
 		virtual void Upgrade();
+
+		virtual uint32 GetTotalLevel( ) const {return m_arrayLevelInfoCommon.size();}
 
 	protected:
 		virtual void OnEnterState_Construct();
@@ -129,14 +129,12 @@ namespace guiex
 		virtual void OnRenderState_Construct(IGUIInterfaceRender* pRender);
 		virtual void OnLeaveState_Construct();
 
-		virtual void OnEnterState_Idle();
-		virtual void OnUpdateState_Idle(real fDeltaTime);
-		virtual void OnRenderState_Idle(IGUIInterfaceRender* pRender);
-		virtual void OnLeaveState_Idle();
+		virtual void OnEnterState_Working();
+		virtual void OnUpdateState_Working(real fDeltaTime);
+		virtual void OnRenderState_Working(IGUIInterfaceRender* pRender);
+		virtual void OnLeaveState_Working();
 
 		virtual void UpdateTowerDataByLevel( );
-
-		virtual void Attack( class CTDGameObjectMonster* pMonster );
 
 	protected:
 		CGUIAnimation* m_pAnimBuilding;
@@ -147,44 +145,81 @@ namespace guiex
 		real m_fBuildingTime;
 		real m_fBuildingTimeElapsed;
 
-		real m_fWaitTime;
-
-		std::vector<STowerLevelInfo> m_vecLevelInfos;
+		//common level info
+		typedef std::vector<STowerLevelInfoCommon> TArrayLevelInfoCommon;
+		TArrayLevelInfoCommon m_arrayLevelInfoCommon;
 	};
 
+	//------------------------------------------------------------------------------
+	// CTDGameTowerImplementAttackable
+	//------------------------------------------------------------------------------
+	class CTDGameTowerImplementAttackable : public CTDGameTowerImplementBase
+	{
+	public:
+		struct STowerLevelInfoAttackable
+		{
+			real m_fReloadTime;
+			real m_fDamage;
+			real m_fDamageRange;
+			EBulletDamageType m_eDamageType;
+		};
+
+	public:
+		CTDGameTowerImplementAttackable( CTDGameTower* pGameTower, const CGUIString& rTowerType );
+		virtual ~CTDGameTowerImplementAttackable();
+
+	protected:
+		virtual void OnEnterState_Working();
+		virtual void OnUpdateState_Working(real fDeltaTime);
+
+		virtual void Attack( class CTDGameObjectMonster* pMonster );
+
+		real GetReloadTime() const;
+		real GetDamage() const;
+		real GetDamageRange() const;
+		EBulletDamageType GetDamageType() const;
+
+		EBulletDamageType String2DamageType( const CGUIString& rType ) const;
+
+	protected:
+		real m_fAttackWaitTime;
+
+		typedef std::vector<STowerLevelInfoAttackable> TArrayLevelInfoAttackable;
+		TArrayLevelInfoAttackable m_arrayLevelInfoAttackable;
+	};
 
 	//------------------------------------------------------------------------------
 	// CTDGameTowerImplement_ArcherTower
 	//------------------------------------------------------------------------------
-	class CTDGameTowerImplement_ArcherTower : public CTDGameTowerImplement_TowerBase
+	class CTDGameTowerImplement_ArcherTower : public CTDGameTowerImplementAttackable
 	{
 	public:
-		enum EArcherDir
+		enum EArcherGuardDir
 		{
-			eArcherDir_UpRight = 0,
-			eArcherDir_UpLeft,
-			eArcherDir_DownRight,
-			eArcherDir_DownLeft,
+			eArcherGuardDir_UpRight = 0,
+			eArcherGuardDir_UpLeft,
+			eArcherGuardDir_DownRight,
+			eArcherGuardDir_DownLeft,
 
-			__eArcherDir_MAX__
+			__eArcherGuardDir_MAX__
 		};
 
-		enum EArcherState
+		enum EArcherGuardState
 		{
-			eArcherState_Idle = 0,
-			eArcherState_Attack,
+			eArcherGuardState_Idle = 0,
+			eArcherGuardState_Attack,
 
-			__eArcherState_MAX__
+			__eArcherGuardState_MAX__
 		};
 
 	public:
 		CTDGameTowerImplement_ArcherTower( CTDGameTower* pGameTower );
 
 	protected:
-		virtual void OnEnterState_Idle();
-		virtual void OnUpdateState_Idle(real fDeltaTime);
-		virtual void OnRenderState_Idle(IGUIInterfaceRender* pRender);
-		virtual void OnLeaveState_Idle();
+		virtual void OnEnterState_Working();
+		virtual void OnUpdateState_Working(real fDeltaTime);
+		virtual void OnRenderState_Working(IGUIInterfaceRender* pRender);
+		virtual void OnLeaveState_Working();
 
 		virtual void UpdateTowerDataByLevel( );
 
@@ -193,14 +228,14 @@ namespace guiex
 
 		struct SArcherData
 		{
-			CGUIAnimation* m_pAnimArcher[__eArcherState_MAX__][__eArcherDir_MAX__];
-			EArcherState m_eArcherState;
-			EArcherDir m_eArcherDir;
+			CGUIAnimation* m_pAnimArcher[__eArcherGuardState_MAX__][__eArcherGuardDir_MAX__];
+			EArcherGuardState m_eArcherState;
+			EArcherGuardDir m_eArcherDir;
 			CGUIRect m_rectArcherRender;
 
 			SArcherData()
-				:m_eArcherState(eArcherState_Idle)
-				,m_eArcherDir(eArcherDir_DownRight)
+				:m_eArcherState(eArcherGuardState_Idle)
+				,m_eArcherDir(eArcherGuardDir_DownRight)
 			{
 				memset( m_pAnimArcher, 0, sizeof( m_pAnimArcher) );
 			}
@@ -212,52 +247,52 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	// CTDGameTowerImplement_Mages
 	//------------------------------------------------------------------------------
-	class CTDGameTowerImplement_Mages : public CTDGameTowerImplement_TowerBase
+	class CTDGameTowerImplement_Mages : public CTDGameTowerImplementAttackable
 	{
 	public:
-		enum EMageDir
+		enum EMageGuardDir
 		{
-			eMageDir_Up = 0,
-			eMageDir_Down,
+			eMageGuardDir_Up = 0,
+			eMageGuardDir_Down,
 
-			__eMageDir_MAX__
+			__eMageGuardDir_MAX__
 		};
 
-		enum EMageState
+		enum EMageGuardState
 		{
-			eMageState_Idle = 0,
-			eMageState_Attack,
+			eMageGuardState_Idle = 0,
+			eMageGuardState_Attack,
 
-			__eMageState_MAX__
+			__eMageGuardState_MAX__
 		};
 
-		enum ETowerState
+		enum EMageTowerState
 		{
-			eTowerState_Idle = 0,
-			eTowerState_Attack,
+			eMageTowerState_Idle = 0,
+			eMageTowerState_Attack,
 
-			__eTowerState_MAX__
+			__eMageTowerState_MAX__
 		};
 
 	public:
 		CTDGameTowerImplement_Mages( CTDGameTower* pGameTower );
 
 	protected:
-		virtual void OnEnterState_Idle();
-		virtual void OnUpdateState_Idle(real fDeltaTime);
-		virtual void OnRenderState_Idle(IGUIInterfaceRender* pRender);
-		virtual void OnLeaveState_Idle();
+		virtual void OnEnterState_Working();
+		virtual void OnUpdateState_Working(real fDeltaTime);
+		virtual void OnRenderState_Working(IGUIInterfaceRender* pRender);
+		virtual void OnLeaveState_Working();
 
 		virtual void UpdateTowerDataByLevel( );
 
 	protected:
 		struct STowerData
 		{
-			CGUIAnimation* m_pAnimTower[__eTowerState_MAX__];
-			ETowerState m_eTowerState;
+			CGUIAnimation* m_pAnimTower[__eMageTowerState_MAX__];
+			EMageTowerState m_eTowerState;
 
 			STowerData()
-				:m_eTowerState(eTowerState_Idle)
+				:m_eTowerState(eMageTowerState_Idle)
 			{
 				memset( m_pAnimTower, 0, sizeof( m_pAnimTower ) );
 			}
@@ -266,14 +301,14 @@ namespace guiex
 
 		struct SMageData
 		{
-			CGUIAnimation* m_pAnimMage[__eMageState_MAX__][__eMageDir_MAX__];
-			EMageState m_eMageState;
-			EMageDir m_eMageDir;
+			CGUIAnimation* m_pAnimMage[__eMageGuardState_MAX__][__eMageGuardDir_MAX__];
+			EMageGuardState m_eMageState;
+			EMageGuardDir m_eMageDir;
 			CGUIRect m_rectMageRender;
 
 			SMageData()
-				:m_eMageState(eMageState_Idle)
-				,m_eMageDir(eMageDir_Down)
+				:m_eMageState(eMageGuardState_Idle)
+				,m_eMageDir(eMageGuardDir_Down)
 			{
 				memset( m_pAnimMage, 0, sizeof( m_pAnimMage ) );
 			}
@@ -283,86 +318,88 @@ namespace guiex
 
 
 	//------------------------------------------------------------------------------
-	// CTDGameTowerImplement_Barracks
-	//------------------------------------------------------------------------------
-	class CTDGameTowerImplement_Barracks : public CTDGameTowerImplement_TowerBase
-	{
-	public:
-		enum ETowerState
-		{
-			eTowerState_Idle = 0,
-			eTowerState_Open,
-			eTowerState_Close,
-
-			__eTowerState_MAX__
-		};
-
-	public:
-		CTDGameTowerImplement_Barracks( CTDGameTower* pGameTower );
-
-	protected:
-		virtual void OnEnterState_Idle();
-		virtual void OnUpdateState_Idle(real fDeltaTime);
-		virtual void OnRenderState_Idle(IGUIInterfaceRender* pRender);
-		virtual void OnLeaveState_Idle();
-
-		virtual void UpdateTowerDataByLevel( );
-
-	protected:
-		struct STowerData
-		{
-			CGUIAnimation* m_pAnimTower[__eTowerState_MAX__];
-			ETowerState m_eTowerState;
-
-			STowerData()
-				:m_eTowerState(eTowerState_Idle)
-			{
-				memset( m_pAnimTower, 0, sizeof( m_pAnimTower ) );
-			}
-		};
-		STowerData m_aTowerData;
-	};
-
-
-	//------------------------------------------------------------------------------
 	// CTDGameTowerImplement_Bombard
 	//------------------------------------------------------------------------------
-	class CTDGameTowerImplement_Bombard : public CTDGameTowerImplement_TowerBase
+	class CTDGameTowerImplement_Bombard : public CTDGameTowerImplementAttackable
 	{
 	public:
-		enum ETowerState
+		enum EBombardTowerState
 		{
-			eTowerState_Idle = 0,
-			eTowerState_Attack,
+			eBombardTowerState_Idle = 0,
+			eBombardTowerState_Attack,
 
-			__eTowerState_MAX__
+			__eBombardTowerState_MAX__
 		};
 
 	public:
 		CTDGameTowerImplement_Bombard( CTDGameTower* pGameTower );
 
 	protected:
-		virtual void OnEnterState_Idle();
-		virtual void OnUpdateState_Idle(real fDeltaTime);
-		virtual void OnRenderState_Idle(IGUIInterfaceRender* pRender);
-		virtual void OnLeaveState_Idle();
+		virtual void OnEnterState_Working();
+		virtual void OnUpdateState_Working(real fDeltaTime);
+		virtual void OnRenderState_Working(IGUIInterfaceRender* pRender);
+		virtual void OnLeaveState_Working();
 
 		virtual void UpdateTowerDataByLevel( );
 
 	protected:
 		struct STowerData
 		{
-			CGUIAnimation* m_pAnimTower[__eTowerState_MAX__];
-			ETowerState m_eTowerState;
+			CGUIAnimation* m_pAnimTower[__eBombardTowerState_MAX__];
+			EBombardTowerState m_eTowerState;
 
 			STowerData()
-				:m_eTowerState(eTowerState_Idle)
+				:m_eTowerState(eBombardTowerState_Idle)
 			{
 				memset( m_pAnimTower, 0, sizeof( m_pAnimTower ) );
 			}
 		};
 		STowerData m_aTowerData;
 	};
+
+
+
+	//------------------------------------------------------------------------------
+	// CTDGameTowerImplement_Barracks
+	//------------------------------------------------------------------------------
+	class CTDGameTowerImplement_Barracks : public CTDGameTowerImplementBase
+	{
+	public:
+		enum EBarrackTowerState
+		{
+			eBarrackTowerState_Idle = 0,
+			eBarrackTowerState_Open,
+			eBarrackTowerState_Close,
+
+			__eBarrackTowerState_MAX__
+		};
+
+	public:
+		CTDGameTowerImplement_Barracks( CTDGameTower* pGameTower );
+
+	protected:
+		virtual void OnEnterState_Working();
+		virtual void OnUpdateState_Working(real fDeltaTime);
+		virtual void OnRenderState_Working(IGUIInterfaceRender* pRender);
+		virtual void OnLeaveState_Working();
+
+		virtual void UpdateTowerDataByLevel( );
+
+	protected:
+		struct STowerData
+		{
+			CGUIAnimation* m_pAnimTower[__eBarrackTowerState_MAX__];
+			EBarrackTowerState m_eTowerState;
+
+			STowerData()
+				:m_eTowerState(eBarrackTowerState_Idle)
+			{
+				memset( m_pAnimTower, 0, sizeof( m_pAnimTower ) );
+			}
+		};
+		STowerData m_aTowerData;
+	};
+
 
 }
 

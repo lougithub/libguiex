@@ -11,6 +11,7 @@
 // include
 //============================================================================// 
 #include "tdgameobject.h"
+#include "tdgametype.h"
 
 //============================================================================//
 // class
@@ -31,7 +32,7 @@ namespace guiex
 		CTDGameObjectBullet( class CTDGameWorld* pGameWorld );
 		virtual ~CTDGameObjectBullet();
 
-		void InitBullet( const CGUIString& rBulletType, const CGUIVector2& rStartPos, class CTDGameObjectMonster* pTarget );
+		void InitBullet( const CGUIString& rBulletType, const CGUIVector2& rStartPos, class CTDGameObjectMonster* pTarget, EBulletDamageType eDamageType, real fDamage, real fDamageRange = 0.0f );
 
 	protected:
 		friend class CTDGameWorld;
@@ -55,6 +56,9 @@ namespace guiex
 		real m_fGravity;
 		real m_fDistance;
 
+		EBulletDamageType m_eDamageType;
+		real m_fDamage;
+		real m_fDamageRange;
 
 		//CGUISize m_aSize;
 		CGUIVector2 m_vPosition;

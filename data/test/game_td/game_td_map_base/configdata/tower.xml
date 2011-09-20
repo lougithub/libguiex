@@ -1,6 +1,6 @@
 <guiex>
 
-	<property name="tower_base" type="group" >
+	<property name="tower_basement" type="group" >
 		<property name="AnimIdle" type="CGUIAnimation" value="TowerBase" />
 	</property>
 
@@ -12,7 +12,10 @@
 			<property name="price" type="uint32" value="100" />
 			<property name="sell_price" type="uint32" value="50" />
 			<property name="reload" type="real" value="3" />
-			<property name="radius" type="real" value="100" />
+      <property name="radius" type="real" value="100" />
+      <property name="damagetype" type="CGUIString" value="physical" />
+      <property name="damage" type="real" value="100" />
+      <property name="damagerange" type="real" value="0" />
 			<property name="AnimTower_Idle" type="CGUIAnimation" value="ArcherTowerLevel1_Idle" />
 			<property name="AnimArcher_Idle_DownRight" type="CGUIAnimation" value="ArcherLevel1_Idle_DownRight" />
 			<property name="AnimArcher_Idle_UpRight" type="CGUIAnimation" value="ArcherLevel1_Idle_UpRight" />
@@ -31,6 +34,9 @@
 			<property name="sell_price" type="uint32" value="85" />
 			<property name="reload" type="real" value="3" />
 			<property name="radius" type="real" value="100" />
+      <property name="damage" type="real" value="200" />
+      <property name="damagetype" type="CGUIString" value="physical" />
+      <property name="damagerange" type="real" value="0" />
 			<property name="AnimTower_Idle" type="CGUIAnimation" value="ArcherTowerLevel2_Idle" />
 			<property name="AnimArcher_Idle_DownRight" type="CGUIAnimation" value="ArcherLevel2_Idle_DownRight" />
 			<property name="AnimArcher_Idle_UpRight" type="CGUIAnimation" value="ArcherLevel2_Idle_UpRight" />
@@ -49,6 +55,9 @@
 			<property name="sell_price" type="uint32" value="135" />
 			<property name="reload" type="real" value="3" />
 			<property name="radius" type="real" value="100" />
+      <property name="damagetype" type="CGUIString" value="physical" />
+      <property name="damage" type="real" value="300" />
+      <property name="damagerange" type="real" value="0" />
 			<property name="AnimTower_Idle" type="CGUIAnimation" value="ArcherTowerLevel3_Idle" />
 			<property name="AnimArcher_Idle_DownRight" type="CGUIAnimation" value="ArcherLevel3_Idle_DownRight" />
 			<property name="AnimArcher_Idle_UpRight" type="CGUIAnimation" value="ArcherLevel3_Idle_UpRight" />
@@ -77,6 +86,9 @@
 			<property name="sell_price" type="uint32" value="135" />
 			<property name="reload" type="real" value="3" />
 			<property name="radius" type="real" value="100" />
+      <property name="damagetype" type="CGUIString" value="magical" />
+      <property name="damage" type="real" value="100" />
+      <property name="damagerange" type="real" value="0" />
 			<property name="AnimTower_Idle" type="CGUIAnimation" value="MageTowerLevel1_Idle" />
 			<property name="AnimTower_Attack" type="CGUIAnimation" value="MageTowerLevel1_Attack" />
 			<property name="mage_pos" type="CGUIVector2" value="0, -15" />
@@ -87,6 +99,9 @@
 			<property name="sell_price" type="uint32" value="135" />
 			<property name="reload" type="real" value="3" />
 			<property name="radius" type="real" value="100" />
+      <property name="damagetype" type="CGUIString" value="magical" />
+      <property name="damage" type="real" value="200" />
+      <property name="damagerange" type="real" value="0" />
 			<property name="AnimTower_Idle" type="CGUIAnimation" value="MageTowerLevel2_Idle" />
 			<property name="AnimTower_Attack" type="CGUIAnimation" value="MageTowerLevel2_Attack" />
 			<property name="mage_pos" type="CGUIVector2" value="0, -15" />
@@ -97,6 +112,9 @@
 			<property name="sell_price" type="uint32" value="135" />
 			<property name="reload" type="real" value="3" />
 			<property name="radius" type="real" value="100" />
+      <property name="damagetype" type="CGUIString" value="magical" />
+      <property name="damage" type="real" value="300" />
+      <property name="damagerange" type="real" value="0" />
 			<property name="AnimTower_Idle" type="CGUIAnimation" value="MageTowerLevel3_Idle" />
 			<property name="AnimTower_Attack" type="CGUIAnimation" value="MageTowerLevel3_Attack" />
 			<property name="mage_pos" type="CGUIVector2" value="0, -15" />
@@ -142,7 +160,10 @@
 			<property name="price" type="uint32" value="100" />
 			<property name="sell_price" type="uint32" value="135" />
 			<property name="reload" type="real" value="3" />
-			<property name="radius" type="real" value="100" />
+      <property name="damagetype" type="CGUIString" value="physical" />
+      <property name="radius" type="real" value="100" />
+      <property name="damage" type="real" value="50" />
+      <property name="damagerange" type="real" value="50" />
 			<property name="AnimTower_Idle" type="CGUIAnimation" value="BombardTowerLevel1_Idle" />
 			<property name="AnimTower_Attack" type="CGUIAnimation" value="BombardTowerLevel1_Attack" />
 		</property>  
@@ -151,6 +172,9 @@
 			<property name="sell_price" type="uint32" value="135" />
 			<property name="reload" type="real" value="3" />
 			<property name="radius" type="real" value="100" />
+      <property name="damagetype" type="CGUIString" value="physical" />
+      <property name="damage" type="real" value="100" />
+      <property name="damagerange" type="real" value="50" />
 			<property name="AnimTower_Idle" type="CGUIAnimation" value="BombardTowerLevel2_Idle" />
 			<property name="AnimTower_Attack" type="CGUIAnimation" value="BombardTowerLevel2_Attack" />
 		</property>  
@@ -158,11 +182,12 @@
 			<property name="price" type="uint32" value="100" />
 			<property name="sell_price" type="uint32" value="135" />
 			<property name="reload" type="real" value="3" />
-			<property name="radius" type="real" value="100" />
+      <property name="damagetype" type="CGUIString" value="physical" />
+      <property name="radius" type="real" value="100" />
+      <property name="damage" type="real" value="150" />
+      <property name="damagerange" type="real" value="50" />
 			<property name="AnimTower_Idle" type="CGUIAnimation" value="BombardTowerLevel3_Idle" />
 			<property name="AnimTower_Attack" type="CGUIAnimation" value="BombardTowerLevel3_Attack" />
 		</property>  
 	</property>  
-
-
 </guiex>

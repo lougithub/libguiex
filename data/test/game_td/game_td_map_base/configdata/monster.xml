@@ -9,7 +9,8 @@
 		<property name="AnimMoveDown" type="CGUIAnimation" value="Monster001_MoveDown" />
 		<property name="AnimMoveUp" type="CGUIAnimation" value="Monster001_MoveUp" />
 
-		<property name="Speed" type="real" value="30" />
+    <property name="Speed" type="real" value="30" />
+    <property name="Hp" type="real" value="300" />
 	</property>
 
 	<property name="monster002" type="group" >
@@ -22,7 +23,8 @@
 		<property name="AnimMoveUp" type="CGUIAnimation" value="Monster002_MoveUp" />
 
 		<property name="Speed" type="real" value="20" />
-	</property>  
+    <property name="Hp" type="real" value="600" />
+  </property>  
 
 
 </guiex>

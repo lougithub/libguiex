@@ -1845,7 +1845,7 @@ static swig_lua_var_info swig_variables[] = {
 };
 
 static swig_lua_const_info swig_constants[] = {
-{ SWIG_LUA_INT,     (char *)"eTowerType_Base", (long) guiex::eTowerType_Base, 0, 0, 0},
+{ SWIG_LUA_INT,     (char *)"eTowerType_Basement", (long) guiex::eTowerType_Basement, 0, 0, 0},
 { SWIG_LUA_INT,     (char *)"eTowerType_ArcherTower", (long) guiex::eTowerType_ArcherTower, 0, 0, 0},
 { SWIG_LUA_INT,     (char *)"eTowerType_Mages", (long) guiex::eTowerType_Mages, 0, 0, 0},
 { SWIG_LUA_INT,     (char *)"eTowerType_Bombard", (long) guiex::eTowerType_Bombard, 0, 0, 0},

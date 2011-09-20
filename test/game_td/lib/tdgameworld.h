@@ -14,6 +14,7 @@
 #include "tdgameworldbase.h"
 #include "tdgameobjectmanager.h"
 #include "tdgameconfigdatamanager.h"
+#include "tdgametype.h"
 
 #include <libguiex_core/guiex.h>
 #include <libguiex_widget/guiwgt.h>
@@ -58,7 +59,7 @@ namespace guiex
 		void CostGold( uint32 uGold );
 		uint32 GetHP() const;
 
-		void AllocateBullet(const CGUIString& rBulletType, const CGUIVector2& rStartPos, class CTDGameObjectMonster* pTarget);
+		void AllocateBullet(const CGUIString& rBulletType, const CGUIVector2& rStartPos, class CTDGameObjectMonster* pTarget, EBulletDamageType eDamageType, real fDamage, real fDamageRange);
 		void AllocateMonster( const CGUIString& rMonsterType, const CGUIString& rStartPathNode );
 		void FindMonsters( const CGUIVector2& rCenter, real fRadius, std::vector<class CTDGameObjectMonster*> rArrayMonster );
 		class CTDGameObjectMonster* FindMonster( const CGUIVector2& rCenter, real fRadius );

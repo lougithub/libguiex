@@ -39,6 +39,7 @@ namespace guiex
 		void SetStartPathNode( const CGUIWgtSimplePathNode* pNode ){m_pMonster->SetStartPathNode( pNode );}
 		void SetMonsterState( CTDGameObjectMonster::EMonsterState eMonsterState ){ m_pMonster->SetMonsterState( eMonsterState ) ;}
 		real GetSpeed() const{return m_pMonster->GetSpeed();}
+		CGUIAnimation* GetCurrentAnimation() const { return m_pMonster->GetCurrentAnimation();}
 
 	private:
 		CTDGameObjectMonster* m_pMonster;
@@ -259,6 +260,56 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
+
+
+
+	//------------------------------------------------------------------------------
+	//CTDGameMonsterState_Die
+	//------------------------------------------------------------------------------
+	class CTDGameMonsterState_Die : public CTDGameMonsterState
+	{
+	public:
+		CTDGameMonsterState_Die( CTDGameObjectMonster* pMonster );
+		virtual ~CTDGameMonsterState_Die();
+		virtual void EnterState();
+		virtual void LeaveState();
+		virtual void UpdateState( real fDeltaTime);
+
+	protected:
+	};
+	//------------------------------------------------------------------------------
+	CTDGameMonsterState_Die::CTDGameMonsterState_Die( CTDGameObjectMonster* pMonster )
+		:CTDGameMonsterState(pMonster)
+	{
+	}
+	//------------------------------------------------------------------------------
+	CTDGameMonsterState_Die::~CTDGameMonsterState_Die()
+	{
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameMonsterState_Die::EnterState()
+	{
+		CTDGameMonsterState::EnterState();
+
+		SetAnimState( CTDGameObjectMonster::eAnimState_Die);
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameMonsterState_Die::LeaveState()
+	{
+		CTDGameMonsterState::LeaveState();
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameMonsterState_Die::UpdateState( real fDeltaTime)
+	{
+		CTDGameMonsterState::UpdateState(fDeltaTime);
+
+		if( GetCurrentAnimation()->IsFinished() )
+		{
+			GetMonster()->KillObject();
+			return;
+		}
+	}
+	//------------------------------------------------------------------------------
 }
 
 //============================================================================//
@@ -277,11 +328,14 @@ namespace guiex
 		m_eAnimState = eAnimState_Idle;
 		m_eMonsterState = __eMonsterState_Max__;
 		m_fAlpha = 1.0f;
+		m_fTotalHp = 0.0f;
+		m_fCurrentHp = 0.0f;
 
 		//init state
 		m_arrayMonsterState[eMonsterState_EnterMap] = new CTDGameMonsterState_EnterMap( this );
 		m_arrayMonsterState[eMonsterState_LeaveMap] = new CTDGameMonsterState_LeaveMap( this );
 		m_arrayMonsterState[eMonsterState_MoveToTarget] = new CTDGameMonsterState_MoveToTarget( this );
+		m_arrayMonsterState[eMonsterState_Die] = new CTDGameMonsterState_Die( this );
 	}
 	//------------------------------------------------------------------------------
 	CTDGameObjectMonster::~CTDGameObjectMonster()
@@ -312,6 +366,8 @@ namespace guiex
 
 		//init values
 		m_fSpeed = rMonsterProp["Speed"]->GetCommonValue<real>();
+		m_fTotalHp = rMonsterProp["Hp"]->GetCommonValue<real>();
+		m_fCurrentHp = m_fTotalHp;
 
 		//init path node
 		m_pStartNode = GetGameWorld()->GetSimplePathNode( rStartPathNode );
@@ -427,6 +483,7 @@ namespace guiex
 	void CTDGameObjectMonster::SetAnimState( EAnimState eAnimState )
 	{
 		m_eAnimState = eAnimState;
+		m_arrayAnimations[m_eAnimState]->Reset();
 	}
 	//------------------------------------------------------------------------------
 	const CGUIWgtSimplePathNode* CTDGameObjectMonster::GetTargetPathNode() const
@@ -453,6 +510,22 @@ namespace guiex
 	real CTDGameObjectMonster::GetSpeed() const
 	{
 		return m_fSpeed;
+	}
+	//------------------------------------------------------------------------------
+	CGUIAnimation* CTDGameObjectMonster::GetCurrentAnimation() const
+	{
+		return m_arrayAnimations[m_eAnimState];
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameObjectMonster::TakeDamage( const CGUIVector2& rDamageLocation, EBulletDamageType eDamageType, real fDamage )
+	{
+		m_fCurrentHp -= fDamage;
+		if( m_fCurrentHp <= 0.0f )
+		{
+			//dead
+			m_fCurrentHp = 0.0f;
+			SetMonsterState( CTDGameObjectMonster::eMonsterState_Die );
+		}
 	}
 	//------------------------------------------------------------------------------
 }

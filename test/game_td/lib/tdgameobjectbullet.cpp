@@ -29,6 +29,9 @@ namespace guiex
 		,m_uRotationSpeed(0)
 		,m_fGravity(0)
 		,m_fDistance(0)
+		,m_eDamageType( eBulletDamageType_Physical )
+		,m_fDamageRange(0.0f)
+		,m_fDamage(0.0f)
 	{
 		memset( m_arrayAnimations, 0, sizeof( m_arrayAnimations ));
 	}
@@ -37,8 +40,12 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameObjectBullet::InitBullet( const CGUIString& rBulletType, const CGUIVector2& rStartPos, CTDGameObjectMonster* pTarget )
+	void CTDGameObjectBullet::InitBullet( const CGUIString& rBulletType, const CGUIVector2& rStartPos, CTDGameObjectMonster* pTarget,EBulletDamageType eDamageType, real fDamage, real fDamageRange )
 	{
+		m_eDamageType = eDamageType;
+		m_fDamage = fDamage;
+		m_fDamageRange = fDamageRange;
+
 		//get data property
 		const CGUIProperty* pAllBulletProperty = GetGameWorld()->GetDataProperty("bullet.xml");
 		const CGUIProperty& rBulletProp = *pAllBulletProperty->GetProperty(rBulletType);
@@ -227,6 +234,8 @@ namespace guiex
 	{
 		m_eBulletState = eBulletState_Explosion;
 		m_arrayAnimations[m_eBulletState]->Reset();
+
+		m_pTarget->TakeDamage( m_vPosition, m_eDamageType, m_fDamage );
 	}
 	//------------------------------------------------------------------------------
 }

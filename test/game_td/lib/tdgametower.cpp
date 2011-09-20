@@ -32,17 +32,17 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CTDGameTower::CTDGameTower( CTDWgtTower* pWidgetTower, CTDGameWorld * pGameWorld, const CGUIVector2& rAnchorPoint )
 		:m_pGameWorld(pGameWorld)
-		,m_eTowerType( eTowerType_Base )
+		,m_eTowerType( eTowerType_Basement )
 		,m_aAnchorPoint( rAnchorPoint )
 		,m_aRenderColor(1,1,1,1)
 		,m_pWidgetTower(pWidgetTower)
 	{
-		m_pTowerImplement[eTowerType_Base] = new CTDGameTowerImplement_Base( this );
+		m_pTowerImplement[eTowerType_Basement] = new CTDGameTowerImplement_Basement( this );
 		m_pTowerImplement[eTowerType_ArcherTower] = new CTDGameTowerImplement_ArcherTower( this );
 		m_pTowerImplement[eTowerType_Mages] = new CTDGameTowerImplement_Mages( this );
 		m_pTowerImplement[eTowerType_Bombard] = new CTDGameTowerImplement_Bombard( this );
 		m_pTowerImplement[eTowerType_Barracks] = new CTDGameTowerImplement_Barracks( this );
-		SetTowerType( eTowerType_Base );
+		SetTowerType( eTowerType_Basement );
 
 		m_aPosition = pWidgetTower->GetPixelPosition();
 	}
@@ -104,7 +104,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	bool CTDGameTower::CouldBuild( ETowerType eType ) const
 	{
-		if( GetTowerType() != eTowerType_Base )
+		if( GetTowerType() != eTowerType_Basement )
 		{
 			return false;
 		}
@@ -112,7 +112,7 @@ namespace guiex
 		{
 			return false;
 		}
-		if( GetGameWorld()->GetGold() < m_pTowerImplement[eType]->GetLevelInfo(0)->m_uPrice )
+		if( GetGameWorld()->GetGold() < m_pTowerImplement[eType]->GetUpgradeCost() )
 		{
 			return false;
 		}
@@ -122,13 +122,13 @@ namespace guiex
 	void CTDGameTower::BuildTower(ETowerType eType)
 	{
 		GUI_ASSERT( CouldBuild( eType ), "[CTDGameTower::BuildTower]: couldn't build tower");
-		GetGameWorld()->CostGold( m_pTowerImplement[eType]->GetLevelInfo(0)->m_uPrice );
+		GetGameWorld()->CostGold( m_pTowerImplement[eType]->GetUpgradeCost() );
 		SetTowerType( eType );
 	}
 	//------------------------------------------------------------------------------
 	bool CTDGameTower::CouldUpgrade( )
 	{
-		if( GetTowerType() == eTowerType_Base )
+		if( GetTowerType() == eTowerType_Basement )
 		{
 			return false;
 		}
@@ -186,7 +186,7 @@ namespace guiex
 		GetGameWorld()->SetCurrentFocusTower( this );
 
 		CGUIWidget* pPanel = NULL;
-		if( m_eTowerType == eTowerType_Base )
+		if( m_eTowerType == eTowerType_Basement )
 		{
 			pPanel = GetGameWorld()->GetTowerSelectPanel();
 		}

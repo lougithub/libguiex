@@ -25,6 +25,8 @@ set( ${lib_name}_game_SRCS
         lib/tdgameobjectmanager.cpp
         lib/tdgameobjectmonster.h
         lib/tdgameobjectmonster.cpp
+		lib/tdgamemonsterstate.h
+		lib/tdgamemonsterstate.cpp
         lib/tdgameobjectbullet.h
         lib/tdgameobjectbullet.cpp
         lib/tdgametower.h

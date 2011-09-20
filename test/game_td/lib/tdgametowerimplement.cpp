@@ -77,28 +77,28 @@ namespace guiex
 
 
 	//------------------------------------------------------------------------------
-	// CTDGameTowerImplement_Base
+	// CTDGameTowerImplement_Basement
 	//------------------------------------------------------------------------------
-	CTDGameTowerImplement_Base::CTDGameTowerImplement_Base( CTDGameTower* pGameTower )
-		:CTDGameTowerImplement( pGameTower, "tower_base")
+	CTDGameTowerImplement_Basement::CTDGameTowerImplement_Basement( CTDGameTower* pGameTower )
+		:CTDGameTowerImplement( pGameTower, "tower_basement")
 		,m_pAnimTowerBase(NULL)
 	{
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_Base::OnBuild()
+	void CTDGameTowerImplement_Basement::OnBuild()
 	{
 		m_pAnimTowerBase = GetAnimation( "AnimIdle" );
 		GetGameTower()->SetSize( m_pAnimTowerBase->GetSize());
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_Base::OnUpdate( real fDeltaTime )
+	void CTDGameTowerImplement_Basement::OnUpdate( real fDeltaTime )
 	{
 		CTDGameTowerImplement::OnUpdate( fDeltaTime );
 
 		m_pAnimTowerBase->Update( fDeltaTime );
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_Base::OnRender( IGUIInterfaceRender* pRender )
+	void CTDGameTowerImplement_Basement::OnRender( IGUIInterfaceRender* pRender )
 	{
 		CTDGameTowerImplement::OnRender( pRender );
 
@@ -107,14 +107,15 @@ namespace guiex
 	//------------------------------------------------------------------------------
 
 
+
+
 	//------------------------------------------------------------------------------
-	// CTDGameTowerImplement_TowerBase
+	// CTDGameTowerImplementBase
 	//------------------------------------------------------------------------------
-	CTDGameTowerImplement_TowerBase::CTDGameTowerImplement_TowerBase( CTDGameTower* pGameTower, const CGUIString& rTowerType )
+	CTDGameTowerImplementBase::CTDGameTowerImplementBase( CTDGameTower* pGameTower, const CGUIString& rTowerType )
 		:CTDGameTowerImplement( pGameTower, rTowerType)
 		,m_eTowerState(eTowerState_Unknown)
 		,m_fBuildingTimeElapsed(0.0f)
-		,m_fWaitTime(0.0f)
 	{
 		const CGUIProperty* pAllTowerProperty = GetGameWorld()->GetDataProperty("tower.xml");
 		const CGUIProperty* pTowerProp = pAllTowerProperty->GetProperty(GetTowerType());
@@ -127,11 +128,10 @@ namespace guiex
 		const CGUIProperty* pLevelProp = pTowerProp->GetProperty( szLevelName );
 		while( pLevelProp )
 		{
-			m_vecLevelInfos.push_back( STowerLevelInfo() );
-			STowerLevelInfo& rInfo = m_vecLevelInfos.back();
+			m_arrayLevelInfoCommon.push_back( STowerLevelInfoCommon() );
+			STowerLevelInfoCommon& rInfo = m_arrayLevelInfoCommon.back();
 			rInfo.m_uPrice = pLevelProp->GetProperty("price")->GetCommonValue<uint32>();
 			rInfo.m_uSellPrice = pLevelProp->GetProperty("sell_price")->GetCommonValue<uint32>();
-			rInfo.m_fReloadTime = pLevelProp->GetProperty("reload")->GetCommonValue<real>();
 			rInfo.m_fRadius = pLevelProp->GetProperty("radius")->GetCommonValue<real>();
 			rInfo.m_pLevelProperty = pLevelProp;
 
@@ -151,13 +151,13 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	CTDGameTowerImplement_TowerBase::~CTDGameTowerImplement_TowerBase()
+	CTDGameTowerImplementBase::~CTDGameTowerImplementBase()
 	{
-		for( std::vector<STowerLevelInfo>::iterator itorLevel = m_vecLevelInfos.begin();
-			itorLevel != m_vecLevelInfos.end();
+		for( TArrayLevelInfoCommon::iterator itorLevel = m_arrayLevelInfoCommon.begin();
+			itorLevel != m_arrayLevelInfoCommon.end();
 			++itorLevel )
 		{
-			STowerLevelInfo& rInfo = *itorLevel;
+			STowerLevelInfoCommon& rInfo = *itorLevel;
 
 			for( std::map<CGUIString, CGUIAnimation*>::iterator itor = rInfo.m_mapAnimations.begin();
 				itor != rInfo.m_mapAnimations.end();
@@ -167,31 +167,36 @@ namespace guiex
 			}
 			rInfo.m_mapAnimations.clear();
 		}
-		m_vecLevelInfos.clear();
+		m_arrayLevelInfoCommon.clear();
 	}
 	//------------------------------------------------------------------------------
-	uint32 CTDGameTowerImplement_TowerBase::GetUpgradeCost() const
+	uint32 CTDGameTowerImplementBase::GetUpgradeCost() const
 	{
-		if( m_vecLevelInfos.size() == 0 || m_uLevel >= m_vecLevelInfos.size()-1 )
+		if( GetTotalLevel() == 0 || m_uLevel >= GetTotalLevel()-1 )
 		{
-			GUI_THROW( "[CTDGameTowerImplement_TowerBase::GetUpgradeCost]: invalid tower level");
+			GUI_THROW( "[CTDGameTowerImplementBase::GetUpgradeCost]: invalid tower level");
 			return 0;
 		}
-		return m_vecLevelInfos[m_uLevel+1].m_uPrice;
+		return m_arrayLevelInfoCommon[m_uLevel+1].m_uPrice;
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_TowerBase::Upgrade()
+	real CTDGameTowerImplementBase::GetRadius() const
 	{
-		if( m_vecLevelInfos.size() == 0 || m_uLevel >= m_vecLevelInfos.size()-1 )
+		return m_arrayLevelInfoCommon[m_uLevel].m_fRadius;
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameTowerImplementBase::Upgrade()
+	{
+		if( GetTotalLevel() == 0 || m_uLevel >= GetTotalLevel()-1 )
 		{
-			GUI_THROW( "[CTDGameTowerImplement_TowerBase::Upgrade]: invalid tower level");
+			GUI_THROW( "[CTDGameTowerImplementBase::Upgrade]: invalid tower level");
 			return;
 		}
 		m_uLevel++;
 		UpdateTowerDataByLevel();
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_TowerBase::SetTowerState( ETowerState eState )
+	void CTDGameTowerImplementBase::SetTowerState( ETowerState eState )
 	{
 		if( m_eTowerState != eState )
 		{
@@ -200,8 +205,8 @@ namespace guiex
 			case eTowerState_Construct:
 				OnLeaveState_Construct();
 				break;
-			case eTowerState_Idle:
-				OnLeaveState_Idle();
+			case eTowerState_Working:
+				OnLeaveState_Working();
 				break;
 			}
 
@@ -211,14 +216,14 @@ namespace guiex
 			case eTowerState_Construct:
 				OnEnterState_Construct();
 				break;
-			case eTowerState_Idle:
-				OnEnterState_Idle();
+			case eTowerState_Working:
+				OnEnterState_Working();
 				break;
 			}
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_TowerBase::OnBuild()
+	void CTDGameTowerImplementBase::OnBuild()
 	{
 		CTDGameTowerImplement::OnBuild();
 
@@ -228,7 +233,7 @@ namespace guiex
 		m_uLevel = 0;
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_TowerBase::OnDestruct()
+	void CTDGameTowerImplementBase::OnDestruct()
 	{
 		SetTowerState( eTowerState_Unknown );
 		m_uLevel = 0;
@@ -236,12 +241,11 @@ namespace guiex
 		CTDGameTowerImplement::OnDestruct();
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_TowerBase::UpdateTowerDataByLevel( )
+	void CTDGameTowerImplementBase::UpdateTowerDataByLevel( )
 	{
-
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_TowerBase::OnEnterState_Construct()
+	void CTDGameTowerImplementBase::OnEnterState_Construct()
 	{
 		m_pAnimBuilding = GetAnimation("AnimTower_Building");
 		GetGameTower()->SetSize( m_pAnimBuilding->GetSize());
@@ -249,79 +253,62 @@ namespace guiex
 		m_fBuildingTimeElapsed = 0.0f;
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_TowerBase::OnLeaveState_Construct()
+	void CTDGameTowerImplementBase::OnLeaveState_Construct()
 	{
 		m_pAnimBuilding = NULL;
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_TowerBase::OnEnterState_Idle()
+	void CTDGameTowerImplementBase::OnEnterState_Working()
 	{
 		//set tower data
 		UpdateTowerDataByLevel();
-
-		m_fWaitTime = GetLevelInfo( m_uLevel )->m_fReloadTime;
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_TowerBase::OnLeaveState_Idle()
+	void CTDGameTowerImplementBase::OnLeaveState_Working()
 	{
-
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_TowerBase::OnUpdateState_Construct(real fDeltaTime)
+	void CTDGameTowerImplementBase::OnUpdateState_Construct(real fDeltaTime)
 	{
 		m_pAnimBuilding->Update( fDeltaTime );
 
 		m_fBuildingTimeElapsed += fDeltaTime;
 		if( m_fBuildingTimeElapsed >= m_fBuildingTime )
 		{
-			SetTowerState( eTowerState_Idle );
+			SetTowerState( eTowerState_Working );
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_TowerBase::OnRenderState_Construct(IGUIInterfaceRender* pRender)
+	void CTDGameTowerImplementBase::OnRenderState_Construct(IGUIInterfaceRender* pRender)
 	{
 		m_pAnimBuilding->Draw( pRender, GetRenderRect(), 0.0f, GetRenderColor(), 1.0f );
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_TowerBase::OnRenderState_Idle(IGUIInterfaceRender* pRender)
+	void CTDGameTowerImplementBase::OnRenderState_Working(IGUIInterfaceRender* pRender)
 	{
-		pRender->DrawCircle( GetPosition(), GetLevelInfo(m_uLevel)->m_fRadius,2, 0, CGUIColor(1,1,1,1));
+		pRender->DrawCircle( GetPosition(), GetRadius(),2, 0, CGUIColor(1,1,1,1));
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_TowerBase::OnUpdateState_Idle(real fDeltaTime)
+	void CTDGameTowerImplementBase::OnUpdateState_Working(real fDeltaTime)
 	{
-		if( m_fWaitTime < GetLevelInfo( m_uLevel )->m_fReloadTime )
-		{
-			m_fWaitTime += fDeltaTime;
-		}
-
-		if( m_fWaitTime >= GetLevelInfo( m_uLevel )->m_fReloadTime )
-		{
-			CTDGameObjectMonster* pMonster = GetGameWorld()->FindMonster( GetPosition(), GetLevelInfo( m_uLevel )->m_fRadius );
-			if( pMonster )
-			{
-				Attack( pMonster );
-				m_fWaitTime = 0.0f;
-			}
-		}
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_TowerBase::OnUpdate( real fDeltaTime )
+	void CTDGameTowerImplementBase::OnUpdate( real fDeltaTime )
 	{
 		switch( m_eTowerState )
 		{
 		case eTowerState_Construct:
 			OnUpdateState_Construct( fDeltaTime );
 			break;
-		case eTowerState_Idle:
-			OnUpdateState_Idle( fDeltaTime );
+		case eTowerState_Working:
+			OnUpdateState_Working( fDeltaTime );
 			break;
 		}
 
 		CTDGameTowerImplement::OnUpdate( fDeltaTime );
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_TowerBase::OnRender( IGUIInterfaceRender* pRender )
+	void CTDGameTowerImplementBase::OnRender( IGUIInterfaceRender* pRender )
 	{
 		CTDGameTowerImplement::OnRender( pRender );
 
@@ -330,67 +317,167 @@ namespace guiex
 		case eTowerState_Construct:
 			OnRenderState_Construct( pRender );
 			break;
-		case eTowerState_Idle:
-			OnRenderState_Idle( pRender );
+		case eTowerState_Working:
+			OnRenderState_Working( pRender );
 			break;
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_TowerBase::Attack( CTDGameObjectMonster* pMonster )
+
+
+
+	//------------------------------------------------------------------------------
+	// CTDGameTowerImplementAttackable
+	//------------------------------------------------------------------------------
+	CTDGameTowerImplementAttackable::CTDGameTowerImplementAttackable( CTDGameTower* pGameTower, const CGUIString& rTowerType )
+		:CTDGameTowerImplementBase( pGameTower, rTowerType)
 	{
-		GetGameWorld()->AllocateBullet( "bomb1", GetPosition(), pMonster );
+		const CGUIProperty* pAllTowerProperty = GetGameWorld()->GetDataProperty("tower.xml");
+		const CGUIProperty* pTowerProp = pAllTowerProperty->GetProperty(GetTowerType());
+
+		char szLevelName[10];
+		uint32 nLevel = 1;
+		snprintf( szLevelName, 10, "level%03d", nLevel );
+		const CGUIProperty* pLevelProp = pTowerProp->GetProperty( szLevelName );
+		while( pLevelProp )
+		{
+			m_arrayLevelInfoAttackable.push_back( STowerLevelInfoAttackable() );
+			STowerLevelInfoAttackable& rInfo = m_arrayLevelInfoAttackable.back();
+
+			rInfo.m_fReloadTime = pLevelProp->GetProperty("reload")->GetCommonValue<real>();
+			rInfo.m_fDamage = pLevelProp->GetProperty("damage")->GetCommonValue<real>();
+			rInfo.m_fDamageRange = pLevelProp->GetProperty("damagerange")->GetCommonValue<real>();
+			rInfo.m_eDamageType = String2DamageType(pLevelProp->GetProperty("damagetype")->GetValue());
+
+			++nLevel;
+			snprintf( szLevelName, 10, "level%03d", nLevel );
+			pLevelProp = pTowerProp->GetProperty( szLevelName );
+		}
 	}
 	//------------------------------------------------------------------------------
+	CTDGameTowerImplementAttackable::~CTDGameTowerImplementAttackable()
+	{
+		m_arrayLevelInfoAttackable.clear();
+	}
+	//------------------------------------------------------------------------------
+	EBulletDamageType CTDGameTowerImplementAttackable::String2DamageType( const CGUIString& rType ) const
+	{
+		if( rType == "physical" )
+		{
+			return eBulletDamageType_Physical;
+		}
+		else if( rType == "magical" )
+		{
+			return eBulletDamageType_Magical;
+		}
+		else
+		{
+			GUI_THROW( GUI_FORMAT("[CTDGameTowerImplementAttackable::String2DamageType]: unknown damate type: %s", rType.c_str( )));
+			return eBulletDamageType_Physical;
+		}
+	}
+	//------------------------------------------------------------------------------
+	real CTDGameTowerImplementAttackable::GetReloadTime() const
+	{
+		return m_arrayLevelInfoAttackable[m_uLevel].m_fReloadTime;
+	}
+	//------------------------------------------------------------------------------
+	real CTDGameTowerImplementAttackable::GetDamage() const
+	{
+		return m_arrayLevelInfoAttackable[m_uLevel].m_fDamage;
+	}
+	//------------------------------------------------------------------------------
+	real CTDGameTowerImplementAttackable::GetDamageRange() const
+	{
+		return m_arrayLevelInfoAttackable[m_uLevel].m_fDamageRange;
+	}
+	//------------------------------------------------------------------------------
+	EBulletDamageType CTDGameTowerImplementAttackable::GetDamageType() const
+	{
+		return m_arrayLevelInfoAttackable[m_uLevel].m_eDamageType;
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameTowerImplementAttackable::OnEnterState_Working()
+	{
+		CTDGameTowerImplementBase::OnEnterState_Working();
+
+		m_fAttackWaitTime = GetReloadTime();
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameTowerImplementAttackable::OnUpdateState_Working(real fDeltaTime)
+	{
+		if( m_fAttackWaitTime < GetReloadTime() )
+		{
+			m_fAttackWaitTime += fDeltaTime;
+		}
+
+		if( m_fAttackWaitTime >= GetReloadTime() )
+		{
+			CTDGameObjectMonster* pMonster = GetGameWorld()->FindMonster( GetPosition(), GetRadius() );
+			if( pMonster )
+			{
+				Attack( pMonster );
+				m_fAttackWaitTime = 0.0f;
+			}
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameTowerImplementAttackable::Attack( CTDGameObjectMonster* pMonster )
+	{
+		GetGameWorld()->AllocateBullet( "bomb1", GetPosition(), pMonster, GetDamageType(), GetDamage(), GetDamageRange());
+	}
+	//------------------------------------------------------------------------------
+
 
 	//------------------------------------------------------------------------------
 	// CTDGameTowerImplement_ArcherTower
 	//------------------------------------------------------------------------------
 	CTDGameTowerImplement_ArcherTower::CTDGameTowerImplement_ArcherTower( CTDGameTower* pGameTower )
-		:CTDGameTowerImplement_TowerBase( pGameTower, "tower_archertower")
+		:CTDGameTowerImplementAttackable( pGameTower, "tower_archertower")
 		,m_pAnimTowerIdle(NULL)
 	{
 	}
 	//------------------------------------------------------------------------------
 	void CTDGameTowerImplement_ArcherTower::UpdateTowerDataByLevel( )
 	{
-		CTDGameTowerImplement_TowerBase::UpdateTowerDataByLevel();
+		CTDGameTowerImplementAttackable::UpdateTowerDataByLevel();
 
 		//update archer data
-		STowerLevelInfo& rInfo = m_vecLevelInfos[m_uLevel];
+		STowerLevelInfoCommon& rInfo = m_arrayLevelInfoCommon[m_uLevel];
 		for( uint32 i=0; i<2; ++i )
 		{
-			m_aArcherData[i].m_pAnimArcher[eArcherState_Idle][eArcherDir_UpRight] = rInfo.m_mapAnimations["AnimArcher_Idle_UpRight"];
-			m_aArcherData[i].m_pAnimArcher[eArcherState_Idle][eArcherDir_UpLeft] = rInfo.m_mapAnimations["AnimArcher_Idle_UpLeft"];
-			m_aArcherData[i].m_pAnimArcher[eArcherState_Idle][eArcherDir_DownRight] = rInfo.m_mapAnimations["AnimArcher_Idle_DownRight"];
-			m_aArcherData[i].m_pAnimArcher[eArcherState_Idle][eArcherDir_DownLeft] = rInfo.m_mapAnimations["AnimArcher_Idle_DownLeft"];
-			m_aArcherData[i].m_pAnimArcher[eArcherState_Attack][eArcherDir_UpRight] = rInfo.m_mapAnimations["AnimArcher_Attack_UpRight"];
-			m_aArcherData[i].m_pAnimArcher[eArcherState_Attack][eArcherDir_UpLeft] = rInfo.m_mapAnimations["AnimArcher_Attack_UpLeft"];
-			m_aArcherData[i].m_pAnimArcher[eArcherState_Attack][eArcherDir_DownRight] = rInfo.m_mapAnimations["AnimArcher_Attack_DownRight"];
-			m_aArcherData[i].m_pAnimArcher[eArcherState_Attack][eArcherDir_DownLeft] = rInfo.m_mapAnimations["AnimArcher_Attack_DownLeft"];
+			m_aArcherData[i].m_pAnimArcher[eArcherGuardState_Idle][eArcherGuardDir_UpRight] = rInfo.m_mapAnimations["AnimArcher_Idle_UpRight"];
+			m_aArcherData[i].m_pAnimArcher[eArcherGuardState_Idle][eArcherGuardDir_UpLeft] = rInfo.m_mapAnimations["AnimArcher_Idle_UpLeft"];
+			m_aArcherData[i].m_pAnimArcher[eArcherGuardState_Idle][eArcherGuardDir_DownRight] = rInfo.m_mapAnimations["AnimArcher_Idle_DownRight"];
+			m_aArcherData[i].m_pAnimArcher[eArcherGuardState_Idle][eArcherGuardDir_DownLeft] = rInfo.m_mapAnimations["AnimArcher_Idle_DownLeft"];
+			m_aArcherData[i].m_pAnimArcher[eArcherGuardState_Attack][eArcherGuardDir_UpRight] = rInfo.m_mapAnimations["AnimArcher_Attack_UpRight"];
+			m_aArcherData[i].m_pAnimArcher[eArcherGuardState_Attack][eArcherGuardDir_UpLeft] = rInfo.m_mapAnimations["AnimArcher_Attack_UpLeft"];
+			m_aArcherData[i].m_pAnimArcher[eArcherGuardState_Attack][eArcherGuardDir_DownRight] = rInfo.m_mapAnimations["AnimArcher_Attack_DownRight"];
+			m_aArcherData[i].m_pAnimArcher[eArcherGuardState_Attack][eArcherGuardDir_DownLeft] = rInfo.m_mapAnimations["AnimArcher_Attack_DownLeft"];
 
-			m_aArcherData[i].m_eArcherState = eArcherState_Idle;
-			m_aArcherData[i].m_eArcherDir = eArcherDir_DownRight;
+			m_aArcherData[i].m_eArcherState = eArcherGuardState_Idle;
+			m_aArcherData[i].m_eArcherDir = eArcherGuardDir_DownRight;
 
 			char posName[16];
 			snprintf( posName, 16, "archer_pos_%d", i );
 			CGUIVector2 pos = rInfo.m_pLevelProperty->GetProperty(posName)->GetCommonValue<CGUIVector2>();
-			const CGUISize& size = m_aArcherData[i].m_pAnimArcher[eArcherState_Idle][eArcherDir_UpRight]->GetSize();
+			const CGUISize& size = m_aArcherData[i].m_pAnimArcher[eArcherGuardState_Idle][eArcherGuardDir_UpRight]->GetSize();
 			m_aArcherData[i].m_rectArcherRender = CGUIRect( CGUIVector2( pos.x-size.m_fWidth/2, pos.y-size.m_fHeight/2 ), size );
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_ArcherTower::OnEnterState_Idle()
+	void CTDGameTowerImplement_ArcherTower::OnEnterState_Working()
 	{
-		CTDGameTowerImplement_TowerBase::OnEnterState_Idle();
+		CTDGameTowerImplementAttackable::OnEnterState_Working();
 
 		//update tower data
-		m_pAnimTowerIdle = GetLevelInfo(m_uLevel)->m_mapAnimations.find("AnimTower_Idle")->second;
+		m_pAnimTowerIdle = m_arrayLevelInfoCommon[m_uLevel].m_mapAnimations["AnimTower_Idle"];
 		GetGameTower()->SetSize( m_pAnimTowerIdle->GetSize());
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_ArcherTower::OnUpdateState_Idle(real fDeltaTime)
+	void CTDGameTowerImplement_ArcherTower::OnUpdateState_Working(real fDeltaTime)
 	{
-		CTDGameTowerImplement_TowerBase::OnUpdateState_Idle(fDeltaTime);
+		CTDGameTowerImplementAttackable::OnUpdateState_Working(fDeltaTime);
 
 		//update tower
 		m_pAnimTowerIdle->Update( fDeltaTime );
@@ -398,28 +485,28 @@ namespace guiex
 		//update archer state
 		for( uint32 i=0; i<2; ++i )
 		{
-			EArcherDir eDir = m_aArcherData[i].m_eArcherDir;
-			if( m_aArcherData[i].m_eArcherState == eArcherState_Attack )
+			EArcherGuardDir eDir = m_aArcherData[i].m_eArcherDir;
+			if( m_aArcherData[i].m_eArcherState == eArcherGuardState_Attack )
 			{
-				real fLeftTime = m_aArcherData[i].m_pAnimArcher[eArcherState_Attack][eDir]->Update( fDeltaTime );
+				real fLeftTime = m_aArcherData[i].m_pAnimArcher[eArcherGuardState_Attack][eDir]->Update( fDeltaTime );
 				if( fLeftTime > 0.0f )
 				{
 					//finished
-					m_aArcherData[i].m_eArcherState = eArcherState_Idle;
-					m_aArcherData[i].m_pAnimArcher[eArcherState_Idle][eDir]->Reset();
-					m_aArcherData[i].m_pAnimArcher[eArcherState_Idle][eDir]->Update( fLeftTime );
+					m_aArcherData[i].m_eArcherState = eArcherGuardState_Idle;
+					m_aArcherData[i].m_pAnimArcher[eArcherGuardState_Idle][eDir]->Reset();
+					m_aArcherData[i].m_pAnimArcher[eArcherGuardState_Idle][eDir]->Update( fLeftTime );
 				}
 			}
 			else
 			{
-				m_aArcherData[i].m_pAnimArcher[eArcherState_Idle][eDir]->Update( fDeltaTime );
+				m_aArcherData[i].m_pAnimArcher[eArcherGuardState_Idle][eDir]->Update( fDeltaTime );
 			}
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_ArcherTower::OnRenderState_Idle( IGUIInterfaceRender* pRender )
+	void CTDGameTowerImplement_ArcherTower::OnRenderState_Working( IGUIInterfaceRender* pRender )
 	{
-		CTDGameTowerImplement_TowerBase::OnRenderState_Idle(pRender);
+		CTDGameTowerImplementAttackable::OnRenderState_Working(pRender);
 
 		//render tower
 		m_pAnimTowerIdle->Draw(pRender, GetRenderRect(), 0.0f, GetRenderColor(), 1.0f );
@@ -432,9 +519,9 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_ArcherTower::OnLeaveState_Idle()
+	void CTDGameTowerImplement_ArcherTower::OnLeaveState_Working()
 	{
-		CTDGameTowerImplement_TowerBase::OnLeaveState_Idle();
+		CTDGameTowerImplementAttackable::OnLeaveState_Working();
 		
 		m_pAnimTowerIdle = NULL;
 	}
@@ -445,75 +532,75 @@ namespace guiex
 	// CTDGameTowerImplement_Mages
 	//------------------------------------------------------------------------------
 	CTDGameTowerImplement_Mages::CTDGameTowerImplement_Mages( CTDGameTower* pGameTower )
-		:CTDGameTowerImplement_TowerBase( pGameTower, "tower_mages")
+		:CTDGameTowerImplementAttackable( pGameTower, "tower_mages")
 	{
 
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_Mages::OnEnterState_Idle()
+	void CTDGameTowerImplement_Mages::OnEnterState_Working()
 	{
-		CTDGameTowerImplement_TowerBase::OnEnterState_Idle();
+		CTDGameTowerImplementAttackable::OnEnterState_Working();
 
 		//set mage data
-		m_aMageData.m_pAnimMage[eMageState_Idle][eMageDir_Up] = GetAnimation("AnimMage_Idle_Up");
-		m_aMageData.m_pAnimMage[eMageState_Idle][eMageDir_Down] = GetAnimation("AnimMage_Idle_Down");
-		m_aMageData.m_pAnimMage[eMageState_Attack][eMageDir_Up] = GetAnimation("AnimMage_Attack_Up");
-		m_aMageData.m_pAnimMage[eMageState_Attack][eMageDir_Down] = GetAnimation("AnimMage_Attack_Down");
-		m_aMageData.m_eMageDir = eMageDir_Down;
-		m_aMageData.m_eMageState = eMageState_Idle;
+		m_aMageData.m_pAnimMage[eMageGuardState_Idle][eMageGuardDir_Up] = GetAnimation("AnimMage_Idle_Up");
+		m_aMageData.m_pAnimMage[eMageGuardState_Idle][eMageGuardDir_Down] = GetAnimation("AnimMage_Idle_Down");
+		m_aMageData.m_pAnimMage[eMageGuardState_Attack][eMageGuardDir_Up] = GetAnimation("AnimMage_Attack_Up");
+		m_aMageData.m_pAnimMage[eMageGuardState_Attack][eMageGuardDir_Down] = GetAnimation("AnimMage_Attack_Down");
+		m_aMageData.m_eMageDir = eMageGuardDir_Down;
+		m_aMageData.m_eMageState = eMageGuardState_Idle;
 
 		//set tower data
-		m_aTowerData.m_eTowerState = eTowerState_Idle;
+		m_aTowerData.m_eTowerState = eMageTowerState_Idle;
 
-		STowerLevelInfo& rInfo = m_vecLevelInfos[m_uLevel];
+		STowerLevelInfoCommon& rInfo = m_arrayLevelInfoCommon[m_uLevel];
 		CGUIVector2 pos = rInfo.m_pLevelProperty->GetProperty("mage_pos")->GetCommonValue<CGUIVector2>();
-		const CGUISize& size = m_aMageData.m_pAnimMage[eMageState_Idle][eMageDir_Up]->GetSize();	
+		const CGUISize& size = m_aMageData.m_pAnimMage[eMageGuardState_Idle][eMageGuardDir_Up]->GetSize();	
 		m_aMageData.m_rectMageRender = CGUIRect( CGUIVector2( pos.x-size.m_fWidth/2, pos.y-size.m_fHeight/2 ), size );
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_Mages::OnUpdateState_Idle(real fDeltaTime)
+	void CTDGameTowerImplement_Mages::OnUpdateState_Working(real fDeltaTime)
 	{
-		CTDGameTowerImplement_TowerBase::OnUpdateState_Idle(fDeltaTime);
+		CTDGameTowerImplementAttackable::OnUpdateState_Working(fDeltaTime);
 
 		//update mage state
-		EMageDir eDir = m_aMageData.m_eMageDir;
-		if( m_aMageData.m_eMageState == eMageState_Attack )
+		EMageGuardDir eDir = m_aMageData.m_eMageDir;
+		if( m_aMageData.m_eMageState == eMageGuardState_Attack )
 		{
-			real fLeftTime = m_aMageData.m_pAnimMage[eMageState_Attack][eDir]->Update( fDeltaTime );
+			real fLeftTime = m_aMageData.m_pAnimMage[eMageGuardState_Attack][eDir]->Update( fDeltaTime );
 			if( fLeftTime > 0.0f )
 			{
 				//finished
-				m_aMageData.m_eMageState = eMageState_Idle;
+				m_aMageData.m_eMageState = eMageGuardState_Idle;
 				m_aMageData.m_pAnimMage[m_aMageData.m_eMageState][eDir]->Reset();
 				m_aMageData.m_pAnimMage[m_aMageData.m_eMageState][eDir]->Update( fLeftTime );
 			}
 		}
 		else
 		{
-			m_aMageData.m_pAnimMage[eMageState_Idle][eDir]->Update( fDeltaTime );
+			m_aMageData.m_pAnimMage[eMageGuardState_Idle][eDir]->Update( fDeltaTime );
 		}
 
 		//update tower
-		if( m_aTowerData.m_eTowerState == eTowerState_Attack )
+		if( m_aTowerData.m_eTowerState == eMageTowerState_Attack )
 		{
-			real fLeftTime = m_aTowerData.m_pAnimTower[eTowerState_Attack]->Update( fDeltaTime );
+			real fLeftTime = m_aTowerData.m_pAnimTower[eMageTowerState_Attack]->Update( fDeltaTime );
 			if( fLeftTime > 0.0f )
 			{
 				//finished
-				m_aTowerData.m_eTowerState = eTowerState_Idle;
+				m_aTowerData.m_eTowerState = eMageTowerState_Idle;
 				m_aTowerData.m_pAnimTower[m_aTowerData.m_eTowerState]->Reset();
 				m_aTowerData.m_pAnimTower[m_aTowerData.m_eTowerState]->Update( fLeftTime );
 			}
 		}
 		else
 		{
-			m_aTowerData.m_pAnimTower[eTowerState_Idle]->Update( fDeltaTime );
+			m_aTowerData.m_pAnimTower[eMageTowerState_Idle]->Update( fDeltaTime );
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_Mages::OnRenderState_Idle(IGUIInterfaceRender* pRender)
+	void CTDGameTowerImplement_Mages::OnRenderState_Working(IGUIInterfaceRender* pRender)
 	{
-		CTDGameTowerImplement_TowerBase::OnRenderState_Idle(pRender);
+		CTDGameTowerImplementAttackable::OnRenderState_Working(pRender);
 
 		//render tower
 		m_aTowerData.m_pAnimTower[m_aTowerData.m_eTowerState]->Draw( pRender, GetRenderRect(), 0, GetRenderColor(), 1.0f );
@@ -523,100 +610,22 @@ namespace guiex
 		pMageAnim->Draw( pRender, m_aMageData.m_rectMageRender, 0, GetRenderColor(), 1.0f );
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_Mages::OnLeaveState_Idle()
+	void CTDGameTowerImplement_Mages::OnLeaveState_Working()
 	{
-		CTDGameTowerImplement_TowerBase::OnLeaveState_Idle( );
+		CTDGameTowerImplementAttackable::OnLeaveState_Working( );
 		
 	}
 	//------------------------------------------------------------------------------
 	void CTDGameTowerImplement_Mages::UpdateTowerDataByLevel( )
 	{
-		CTDGameTowerImplement_TowerBase::UpdateTowerDataByLevel( );
+		CTDGameTowerImplementAttackable::UpdateTowerDataByLevel( );
 
 		//set tower data
-		STowerLevelInfo& rInfo = m_vecLevelInfos[m_uLevel];
-		m_aTowerData.m_pAnimTower[eTowerState_Idle] = rInfo.m_mapAnimations["AnimTower_Idle"];
-		m_aTowerData.m_pAnimTower[eTowerState_Attack] = rInfo.m_mapAnimations["AnimTower_Attack"];
+		STowerLevelInfoCommon& rInfo = m_arrayLevelInfoCommon[m_uLevel];
+		m_aTowerData.m_pAnimTower[eMageTowerState_Idle] = rInfo.m_mapAnimations["AnimTower_Idle"];
+		m_aTowerData.m_pAnimTower[eMageTowerState_Attack] = rInfo.m_mapAnimations["AnimTower_Attack"];
 
-		GetGameTower()->SetSize( m_aTowerData.m_pAnimTower[eTowerState_Idle]->GetSize() );
-	}
-	//------------------------------------------------------------------------------
-
-	//------------------------------------------------------------------------------
-	// CTDGameTowerImplement_Barracks
-	//------------------------------------------------------------------------------
-	CTDGameTowerImplement_Barracks::CTDGameTowerImplement_Barracks( CTDGameTower* pGameTower )
-		:CTDGameTowerImplement_TowerBase( pGameTower, "tower_barracks")
-	{
-
-	}
-	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_Barracks::OnEnterState_Idle()
-	{
-		CTDGameTowerImplement_TowerBase::OnEnterState_Idle( );
-
-		//set tower data
-		m_aTowerData.m_eTowerState = eTowerState_Idle;
-	}
-	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_Barracks::OnUpdateState_Idle(real fDeltaTime)
-	{
-		CTDGameTowerImplement_TowerBase::OnUpdateState_Idle( fDeltaTime );
-
-		//update tower
-		if( m_aTowerData.m_eTowerState == eTowerState_Open )
-		{
-			real fLeftTime = m_aTowerData.m_pAnimTower[eTowerState_Open]->Update( fDeltaTime );
-			if( fLeftTime > 0.0f )
-			{
-				//finished
-				m_aTowerData.m_eTowerState = eTowerState_Close;
-				m_aTowerData.m_pAnimTower[m_aTowerData.m_eTowerState]->Reset();
-				m_aTowerData.m_pAnimTower[m_aTowerData.m_eTowerState]->Update( fLeftTime );
-			}
-		}
-		else if( m_aTowerData.m_eTowerState == eTowerState_Close )
-		{
-			real fLeftTime = m_aTowerData.m_pAnimTower[eTowerState_Close]->Update( fDeltaTime );
-			if( fLeftTime > 0.0f )
-			{
-				//finished
-				m_aTowerData.m_eTowerState = eTowerState_Idle;
-				m_aTowerData.m_pAnimTower[m_aTowerData.m_eTowerState]->Reset();
-				m_aTowerData.m_pAnimTower[m_aTowerData.m_eTowerState]->Update( fLeftTime );
-			}
-		}
-		else
-		{
-			m_aTowerData.m_pAnimTower[eTowerState_Idle]->Update( fDeltaTime );
-		}
-	}
-	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_Barracks::OnRenderState_Idle(IGUIInterfaceRender* pRender)
-	{
-		CTDGameTowerImplement_TowerBase::OnRenderState_Idle( pRender );
-
-		//render tower
-		m_aTowerData.m_pAnimTower[m_aTowerData.m_eTowerState]->Draw( pRender, GetRenderRect(), 0, GetRenderColor(), 1.0f );
-	}
-	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_Barracks::OnLeaveState_Idle()
-	{
-		CTDGameTowerImplement_TowerBase::OnLeaveState_Idle( );
-
-	}
-	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_Barracks::UpdateTowerDataByLevel( )
-	{
-		CTDGameTowerImplement_TowerBase::UpdateTowerDataByLevel( );
-
-		//set tower data
-		STowerLevelInfo& rInfo = m_vecLevelInfos[m_uLevel];
-		m_aTowerData.m_pAnimTower[eTowerState_Idle] = rInfo.m_mapAnimations["AnimTower_Idle"];
-		m_aTowerData.m_pAnimTower[eTowerState_Open] = rInfo.m_mapAnimations["AnimTower_Open"];
-		m_aTowerData.m_pAnimTower[eTowerState_Close] = rInfo.m_mapAnimations["AnimTower_Close"];
-
-		GetGameTower()->SetSize( m_aTowerData.m_pAnimTower[eTowerState_Idle]->GetSize() );
+		GetGameTower()->SetSize( m_aTowerData.m_pAnimTower[eMageTowerState_Idle]->GetSize() );
 	}
 	//------------------------------------------------------------------------------
 
@@ -625,64 +634,143 @@ namespace guiex
 	// CTDGameTowerImplement_Bombard
 	//------------------------------------------------------------------------------
 	CTDGameTowerImplement_Bombard::CTDGameTowerImplement_Bombard( CTDGameTower* pGameTower )
-		:CTDGameTowerImplement_TowerBase( pGameTower, "tower_bombard")
+		:CTDGameTowerImplementAttackable( pGameTower, "tower_bombard")
 	{
 
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_Bombard::OnEnterState_Idle()
+	void CTDGameTowerImplement_Bombard::OnEnterState_Working()
 	{
-		CTDGameTowerImplement_TowerBase::OnEnterState_Idle( );
+		CTDGameTowerImplementAttackable::OnEnterState_Working( );
 
 		//set tower data
-		m_aTowerData.m_eTowerState = eTowerState_Idle;
+		m_aTowerData.m_eTowerState = eBombardTowerState_Idle;
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_Bombard::OnUpdateState_Idle(real fDeltaTime)
+	void CTDGameTowerImplement_Bombard::OnUpdateState_Working(real fDeltaTime)
 	{
-		CTDGameTowerImplement_TowerBase::OnUpdateState_Idle( fDeltaTime );
+		CTDGameTowerImplementAttackable::OnUpdateState_Working( fDeltaTime );
 
 		//update tower
-		if( m_aTowerData.m_eTowerState == eTowerState_Attack )
+		if( m_aTowerData.m_eTowerState == eBombardTowerState_Attack )
 		{
-			real fLeftTime = m_aTowerData.m_pAnimTower[eTowerState_Attack]->Update( fDeltaTime );
+			real fLeftTime = m_aTowerData.m_pAnimTower[eBombardTowerState_Attack]->Update( fDeltaTime );
 			if( fLeftTime > 0.0f )
 			{
 				//finished
-				m_aTowerData.m_eTowerState = eTowerState_Idle;
+				m_aTowerData.m_eTowerState = eBombardTowerState_Idle;
 				m_aTowerData.m_pAnimTower[m_aTowerData.m_eTowerState]->Reset();
 				m_aTowerData.m_pAnimTower[m_aTowerData.m_eTowerState]->Update( fLeftTime );
 			}
 		}
 		else
 		{
-			m_aTowerData.m_pAnimTower[eTowerState_Idle]->Update( fDeltaTime );
+			m_aTowerData.m_pAnimTower[eBombardTowerState_Idle]->Update( fDeltaTime );
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_Bombard::OnRenderState_Idle(IGUIInterfaceRender* pRender)
+	void CTDGameTowerImplement_Bombard::OnRenderState_Working(IGUIInterfaceRender* pRender)
 	{
-		CTDGameTowerImplement_TowerBase::OnRenderState_Idle( pRender );
+		CTDGameTowerImplementAttackable::OnRenderState_Working( pRender );
 
 		//render tower
 		m_aTowerData.m_pAnimTower[m_aTowerData.m_eTowerState]->Draw( pRender, GetRenderRect(), 0, GetRenderColor(), 1.0f );
 	}
 	//------------------------------------------------------------------------------
-	void CTDGameTowerImplement_Bombard::OnLeaveState_Idle()
+	void CTDGameTowerImplement_Bombard::OnLeaveState_Working()
 	{
-		CTDGameTowerImplement_TowerBase::OnLeaveState_Idle( );
+		CTDGameTowerImplementAttackable::OnLeaveState_Working( );
 	}
 	//------------------------------------------------------------------------------
 	void CTDGameTowerImplement_Bombard::UpdateTowerDataByLevel( )
 	{
-		CTDGameTowerImplement_TowerBase::UpdateTowerDataByLevel( );
+		CTDGameTowerImplementAttackable::UpdateTowerDataByLevel( );
 
 		//set tower data
-		STowerLevelInfo& rInfo = m_vecLevelInfos[m_uLevel];
-		m_aTowerData.m_pAnimTower[eTowerState_Idle] = rInfo.m_mapAnimations["AnimTower_Idle"];
-		m_aTowerData.m_pAnimTower[eTowerState_Attack] = rInfo.m_mapAnimations["AnimTower_Attack"];
+		STowerLevelInfoCommon& rInfo = m_arrayLevelInfoCommon[m_uLevel];
+		m_aTowerData.m_pAnimTower[eBombardTowerState_Idle] = rInfo.m_mapAnimations["AnimTower_Idle"];
+		m_aTowerData.m_pAnimTower[eBombardTowerState_Attack] = rInfo.m_mapAnimations["AnimTower_Attack"];
 
-		GetGameTower()->SetSize( m_aTowerData.m_pAnimTower[eTowerState_Idle]->GetSize() );
+		GetGameTower()->SetSize( m_aTowerData.m_pAnimTower[eBombardTowerState_Idle]->GetSize() );
 	}
 	//------------------------------------------------------------------------------
+
+
+	//------------------------------------------------------------------------------
+	// CTDGameTowerImplement_Barracks
+	//------------------------------------------------------------------------------
+	CTDGameTowerImplement_Barracks::CTDGameTowerImplement_Barracks( CTDGameTower* pGameTower )
+		:CTDGameTowerImplementBase( pGameTower, "tower_barracks")
+	{
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameTowerImplement_Barracks::OnEnterState_Working()
+	{
+		CTDGameTowerImplementBase::OnEnterState_Working( );
+
+		//set tower data
+		m_aTowerData.m_eTowerState = eBarrackTowerState_Idle;
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameTowerImplement_Barracks::OnUpdateState_Working(real fDeltaTime)
+	{
+		CTDGameTowerImplementBase::OnUpdateState_Working( fDeltaTime );
+
+		//update tower
+		if( m_aTowerData.m_eTowerState == eBarrackTowerState_Open )
+		{
+			real fLeftTime = m_aTowerData.m_pAnimTower[eBarrackTowerState_Open]->Update( fDeltaTime );
+			if( fLeftTime > 0.0f )
+			{
+				//finished
+				m_aTowerData.m_eTowerState = eBarrackTowerState_Close;
+				m_aTowerData.m_pAnimTower[m_aTowerData.m_eTowerState]->Reset();
+				m_aTowerData.m_pAnimTower[m_aTowerData.m_eTowerState]->Update( fLeftTime );
+			}
+		}
+		else if( m_aTowerData.m_eTowerState == eBarrackTowerState_Close )
+		{
+			real fLeftTime = m_aTowerData.m_pAnimTower[eBarrackTowerState_Close]->Update( fDeltaTime );
+			if( fLeftTime > 0.0f )
+			{
+				//finished
+				m_aTowerData.m_eTowerState = eBarrackTowerState_Idle;
+				m_aTowerData.m_pAnimTower[m_aTowerData.m_eTowerState]->Reset();
+				m_aTowerData.m_pAnimTower[m_aTowerData.m_eTowerState]->Update( fLeftTime );
+			}
+		}
+		else
+		{
+			m_aTowerData.m_pAnimTower[eBarrackTowerState_Idle]->Update( fDeltaTime );
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameTowerImplement_Barracks::OnRenderState_Working(IGUIInterfaceRender* pRender)
+	{
+		CTDGameTowerImplementBase::OnRenderState_Working( pRender );
+
+		//render tower
+		m_aTowerData.m_pAnimTower[m_aTowerData.m_eTowerState]->Draw( pRender, GetRenderRect(), 0, GetRenderColor(), 1.0f );
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameTowerImplement_Barracks::OnLeaveState_Working()
+	{
+		CTDGameTowerImplementBase::OnLeaveState_Working( );
+
+	}
+	//------------------------------------------------------------------------------
+	void CTDGameTowerImplement_Barracks::UpdateTowerDataByLevel( )
+	{
+		CTDGameTowerImplementBase::UpdateTowerDataByLevel( );
+
+		//set tower data
+		STowerLevelInfoCommon& rInfo = m_arrayLevelInfoCommon[m_uLevel];
+		m_aTowerData.m_pAnimTower[eBarrackTowerState_Idle] = rInfo.m_mapAnimations["AnimTower_Idle"];
+		m_aTowerData.m_pAnimTower[eBarrackTowerState_Open] = rInfo.m_mapAnimations["AnimTower_Open"];
+		m_aTowerData.m_pAnimTower[eBarrackTowerState_Close] = rInfo.m_mapAnimations["AnimTower_Close"];
+
+		GetGameTower()->SetSize( m_aTowerData.m_pAnimTower[eBarrackTowerState_Idle]->GetSize() );
+	}
+	//------------------------------------------------------------------------------
+
 }

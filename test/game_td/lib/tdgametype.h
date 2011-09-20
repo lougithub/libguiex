@@ -20,7 +20,7 @@ namespace guiex
 {
 	enum ETowerType
 	{
-		eTowerType_Base = 0,
+		eTowerType_Basement = 0,
 		eTowerType_ArcherTower,
 		eTowerType_Mages,
 		eTowerType_Bombard,
@@ -28,6 +28,13 @@ namespace guiex
 
 		__eTowerType_MAX__,
 	};
+
+	enum EBulletDamageType
+	{
+		eBulletDamageType_Physical = 0,
+		eBulletDamageType_Magical,
+	};
+
 }
 
 #endif //__TD_GAMETYPE_20110822_H__

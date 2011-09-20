@@ -11,6 +11,8 @@
 // include
 //============================================================================// 
 #include "tdgameobject.h"
+#include "tdgametype.h"
+
 #include <libguiex_widget_game/guiwgt_game.h>
 
 //============================================================================//
@@ -26,6 +28,7 @@ namespace guiex
 			eMonsterState_EnterMap = 0,
 			eMonsterState_MoveToTarget,
 			eMonsterState_LeaveMap,
+			eMonsterState_Die,
 
 			__eMonsterState_Max__,
 		};
@@ -56,6 +59,7 @@ namespace guiex
 		const CGUISize& GetSize() const;
 		void SetAlpha( real fAlpha );
 		real GetAlpha( ) const;
+		CGUIAnimation* GetCurrentAnimation() const;
 
 		void SetAnimState( EAnimState eAnimState );
 
@@ -65,6 +69,8 @@ namespace guiex
 		void SetMonsterState( EMonsterState eMonsterState );
 
 		real GetSpeed() const;
+
+		void TakeDamage( const CGUIVector2& rDamageLocation, EBulletDamageType eDamageType, real fDamage );
 
 	protected:
 		friend class CTDGameWorld;
@@ -82,9 +88,11 @@ namespace guiex
 		EMonsterState m_eMonsterState;
 		class CTDGameMonsterState* m_arrayMonsterState[__eMonsterState_Max__];
 
-
 		real m_fAlpha;
 		real m_fSpeed;
+		real m_fTotalHp;
+
+		real m_fCurrentHp;
 
 		const CGUIWgtSimplePathNode* m_pStartNode;
 		const CGUIWgtSimplePathNode* m_pTargetNode;
