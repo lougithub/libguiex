@@ -139,17 +139,17 @@ if( PRINT_VARIABLE_LOG )
 endif()
 
 # add the binary tree to the search path for include files
-include_directories( "${PROJECT_BINARY_DIR}" )
-include_directories( "${PROJECT_SOURCE_DIR}" )
+#include_directories( "${PROJECT_BINARY_DIR}" )
+include_directories( "${PROJECT_SOURCE_DIR}/source" )
 
 #library
-add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_core )
-add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_widget )
-add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_widget_box2d )
-add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_widget_game )
-add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_module )
-add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_script_wrapper)
-add_subdirectory( ${PROJECT_SOURCE_DIR}/libguiex_framework )
+add_subdirectory( ${PROJECT_SOURCE_DIR}/source/libguiex_core )
+add_subdirectory( ${PROJECT_SOURCE_DIR}/source/libguiex_widget )
+add_subdirectory( ${PROJECT_SOURCE_DIR}/source/libguiex_widget_box2d )
+add_subdirectory( ${PROJECT_SOURCE_DIR}/source/libguiex_widget_game )
+add_subdirectory( ${PROJECT_SOURCE_DIR}/source/libguiex_module )
+add_subdirectory( ${PROJECT_SOURCE_DIR}/source/libguiex_script_wrapper)
+add_subdirectory( ${PROJECT_SOURCE_DIR}/source/libguiex_framework )
 
 #external library
 add_subdirectory( ${PROJECT_SOURCE_DIR}/external/tinyxml )
