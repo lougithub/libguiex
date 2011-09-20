@@ -60,7 +60,7 @@ protected:
 	void OnResourceSelected(wxTreeEvent& event);
 
 	//combobox
-	void OnFileSelected(wxCommandEvent& event);
+	void OnFileSelected(wxListEvent& event);
 
 	//book ctrl
 	void OnBookPageClose(wxAuiNotebookEvent& evt);
@@ -70,7 +70,7 @@ protected:
 	//widget tree
 	wxToolBar* m_pToolbar;
 	wxTreeCtrl* m_pResourceItemCtrl;
-	wxComboBox* m_pResourceFiles;
+	wxListCtrl* m_pResourceFiles;
 	wxAuiNotebook* m_pAuiNoteBook;
 	class WxResourcePreviewContainer* m_pPreviewContainer;
 	wxAuiManager m_mgr;

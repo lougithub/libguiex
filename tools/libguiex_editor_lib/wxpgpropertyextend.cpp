@@ -13,6 +13,7 @@
 #include "toolsmisc.h"
 #include "guiresourcepool.h"
 #include "wxresourceselectdlg.h"
+#include "propertyconvertor.h"
 
 #include <wx/colordlg.h>
 
@@ -35,68 +36,40 @@ int GetTypeIndexInScreenValueEnum( EScreenValue eValue, const wxArrayString& arr
 	return 0;
 }
 
-wxString GetUniquePropName()
-{
-	static int i = 0;
-	return wxString::Format( L"propperty_%d", i++ );
-}
-
-// -----------------------------------------------------------------------
-// WxGUIPropertyBase
-// -----------------------------------------------------------------------
-WX_PG_IMPLEMENT_VARIANT_DATA_DUMMY_EQ( CGUIProperty );
-WxGUIPropertyBase::WxGUIPropertyBase( )
-: wxPGProperty( )
-{
-}
-WxGUIPropertyBase::WxGUIPropertyBase( const wxString& label, const CGUIProperty& rValue )
-	: wxPGProperty(label,GetUniquePropName())
-{
-	SetValue( WXVARIANT(rValue) );
-}
-
-
-
 // -----------------------------------------------------------------------
 // WxGUISizeProperty
 // -----------------------------------------------------------------------
-IMPLEMENT_DYNAMIC_CLASS(WxGUISizeProperty, WxGUIPropertyBase)
-WX_PG_IMPLEMENT_PROPERTY_CLASS_PLAIN( WxGUISizeProperty,CGUIProperty,TextCtrl);
-WxGUISizeProperty::WxGUISizeProperty( )
-	: WxGUIPropertyBase( )
+WX_PG_IMPLEMENT_VARIANT_DATA_DUMMY_EQ( CGUISize );
+WX_PG_IMPLEMENT_PROPERTY_CLASS( WxGUISizeProperty,wxPGProperty,CGUISize,const CGUISize&,TextCtrl);
+WxGUISizeProperty::WxGUISizeProperty( const wxString& label, const CGUISize& value)
+	: wxPGProperty(label,GetUniquePropName())
 {
-}
-WxGUISizeProperty::WxGUISizeProperty( const wxString& label, const CGUIProperty& rValue )
-: WxGUIPropertyBase(label,rValue)
-{
-	CGUISize aValue = rValue.GetCommonValue<CGUISize>();
-
-	AddPrivateChild( new wxFloatProperty(wxT("width"), wxT("width"), aValue.m_fWidth));
-	AddPrivateChild( new wxFloatProperty(wxT("height"), wxT("height"), aValue.m_fHeight));
+	SetValue( WXVARIANT(value) );
+	AddPrivateChild( new wxFloatProperty(wxT("width"), wxT("WIDTH"),value.m_fWidth) );
+	AddPrivateChild( new wxFloatProperty(wxT("height"), wxT("HEIGHT"),value.m_fHeight) );
 }
 // -----------------------------------------------------------------------
 void WxGUISizeProperty::RefreshChildren()
 {
 	if ( !GetChildCount() ) return;
-	CGUIProperty& rValue = CGUIPropertyRefFromVariant(m_value);
-	CGUISize aValue = rValue.GetCommonValue<CGUISize>();
-	Item(0)->SetValue( aValue.m_fWidth );
-	Item(1)->SetValue( aValue.m_fHeight );
+	CGUISize& size = CGUISizeRefFromVariant(m_value);
+	Item(0)->SetValue( size.m_fWidth );
+	Item(1)->SetValue( size.m_fHeight );
 }
 // -----------------------------------------------------------------------
 wxVariant WxGUISizeProperty::ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const
 {
-	CGUIProperty& rValue = CGUIPropertyRefFromVariant(thisValue);
-	CGUISize aValue = rValue.GetCommonValue<CGUISize>();
+	CGUISize& size = CGUISizeRefFromVariant(thisValue);
 
 	switch ( childIndex )
 	{
-	case 0: aValue.m_fWidth = childValue.GetDouble(); break;
-	case 1: aValue.m_fHeight = childValue.GetDouble(); break;
+	case 0: size.m_fWidth = childValue.GetDouble(); break;
+	case 1: size.m_fHeight = childValue.GetDouble(); break;
 	}
-	rValue.SetCommonValue( aValue );
 
-	return rValue;
+	wxVariant newVariant;
+	newVariant << size;
+	return newVariant;
 }
 // -----------------------------------------------------------------------
 
@@ -105,11 +78,10 @@ wxVariant WxGUISizeProperty::ChildChanged( wxVariant& thisValue, int childIndex,
 // -----------------------------------------------------------------------
 // WxGUIVector2Property
 // -----------------------------------------------------------------------
-IMPLEMENT_DYNAMIC_CLASS(WxGUIVector2Property, wxPGProperty)
 WX_PG_IMPLEMENT_VARIANT_DATA_DUMMY_EQ( CGUIVector2 );
-WX_PG_IMPLEMENT_PROPERTY_CLASS_PLAIN(WxGUIVector2Property,CGUIVector2,TextCtrl);
-WxGUIVector2Property::WxGUIVector2Property( const wxString& label,const wxString& name,const CGUIVector2& value)
-: wxPGProperty(label,name)
+WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGUIVector2Property,wxPGProperty,CGUIVector2,const CGUIVector2&,TextCtrl);
+WxGUIVector2Property::WxGUIVector2Property( const wxString& label,const CGUIVector2& value)
+	: wxPGProperty(label,GetUniquePropName())
 {
 	//ChangeFlag(wxPG_PROP_READONLY, true);
 	SetValue( WXVARIANT(value) );
@@ -146,14 +118,10 @@ wxVariant WxGUIVector2Property::ChildChanged( wxVariant& thisValue, int childInd
 // -----------------------------------------------------------------------
 // WxGUIVector3Property
 // -----------------------------------------------------------------------
-IMPLEMENT_DYNAMIC_CLASS(WxGUIVector3Property, wxPGProperty)
 WX_PG_IMPLEMENT_VARIANT_DATA_DUMMY_EQ( CGUIVector3 );
-WX_PG_IMPLEMENT_PROPERTY_CLASS_PLAIN(WxGUIVector3Property,CGUIVector3,TextCtrl);
-WxGUIVector3Property::WxGUIVector3Property( 
-	const wxString& label,
-	const wxString& name,
-	const CGUIVector3& value)
-	: wxPGProperty(label,name)
+WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGUIVector3Property,wxPGProperty,CGUIVector3,const CGUIVector3&,TextCtrl);
+WxGUIVector3Property::WxGUIVector3Property( const wxString& label, const CGUIVector3& value)
+	: wxPGProperty(label,GetUniquePropName())
 {
 	//ChangeFlag(wxPG_PROP_READONLY, true);
 	SetValue( WXVARIANT(value) );
@@ -194,14 +162,10 @@ wxVariant WxGUIVector3Property::ChildChanged( wxVariant& thisValue, int childInd
 // -----------------------------------------------------------------------
 // WxGUIRotatorProperty
 // -----------------------------------------------------------------------
-IMPLEMENT_DYNAMIC_CLASS(WxGUIRotatorProperty, wxPGProperty)
 WX_PG_IMPLEMENT_VARIANT_DATA_DUMMY_EQ( CGUIRotator );
-WX_PG_IMPLEMENT_PROPERTY_CLASS_PLAIN(WxGUIRotatorProperty,CGUIRotator,TextCtrl);
-WxGUIRotatorProperty::WxGUIRotatorProperty( 
-	const wxString& label,
-	const wxString& name,
-	const CGUIRotator& value)
-	: wxPGProperty(label,name)
+WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGUIRotatorProperty,wxPGProperty,CGUIRotator,const CGUIRotator&,TextCtrl);
+WxGUIRotatorProperty::WxGUIRotatorProperty( const wxString& label,const CGUIRotator& value)
+	: wxPGProperty(label,GetUniquePropName())
 {
 	//ChangeFlag(wxPG_PROP_READONLY, true);
 	SetValue( WXVARIANT(value) );
@@ -240,13 +204,10 @@ wxVariant WxGUIRotatorProperty::ChildChanged( wxVariant& thisValue, int childInd
 // -----------------------------------------------------------------------
 // WxGUIRectProperty
 // -----------------------------------------------------------------------
-IMPLEMENT_DYNAMIC_CLASS(WxGUIRectProperty, wxPGProperty)
 WX_PG_IMPLEMENT_VARIANT_DATA_DUMMY_EQ( CGUIRect );
-WX_PG_IMPLEMENT_PROPERTY_CLASS_PLAIN(WxGUIRectProperty,CGUIVector2,TextCtrl);
-WxGUIRectProperty::WxGUIRectProperty( const wxString& label,
-									 const wxString& name,
-									 const CGUIRect& value)
-									 : wxPGProperty(label,name)
+WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGUIRectProperty,wxPGProperty,CGUIVector2,const CGUIVector2&,TextCtrl);
+WxGUIRectProperty::WxGUIRectProperty( const wxString& label,const CGUIRect& value)
+	: wxPGProperty(label,GetUniquePropName())
 {
 	//ChangeFlag(wxPG_PROP_READONLY, true);
 	SetValue( WXVARIANT(value) );
@@ -289,44 +250,42 @@ wxVariant WxGUIRectProperty::ChildChanged( wxVariant& thisValue, int childIndex,
 // -----------------------------------------------------------------------
 // WxGUIStringInfoProperty
 // -----------------------------------------------------------------------
-IMPLEMENT_DYNAMIC_CLASS(WxGUIStringInfoProperty, WxGUIPropertyBase);
-WX_PG_IMPLEMENT_PROPERTY_CLASS_PLAIN(WxGUIStringInfoProperty,CGUIProperty,TextCtrl);
-WxGUIStringInfoProperty::WxGUIStringInfoProperty()
-	:WxGUIPropertyBase()
+WX_PG_IMPLEMENT_VARIANT_DATA_DUMMY_EQ( CGUIStringRenderInfo );
+WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGUIStringInfoProperty,wxPGProperty,CGUIStringRenderInfo,const CGUIStringRenderInfo&,TextCtrl);
+WxGUIStringInfoProperty::WxGUIStringInfoProperty( const wxString& label,const CGUIStringRenderInfo& value)
+	: wxPGProperty(label,GetUniquePropName())
 {
-}
-WxGUIStringInfoProperty::WxGUIStringInfoProperty( const wxString& label, const CGUIProperty& rValue )
-	:WxGUIPropertyBase( label, rValue)
-{
-	CGUIStringRenderInfo aValue = rValue.GetCommonValue<CGUIStringRenderInfo>();
-	AddPrivateChild( new wxFloatProperty(wxT("scale"), wxT("scale"), aValue.m_fFontScale ));
-	AddPrivateChild( new WxGUIFontProperty(wxT("font"), *rValue["font"] ));
-	AddPrivateChild( new WxGuiColorProperty(wxT("color"), *rValue["color"] ));
+	//ChangeFlag(wxPG_PROP_READONLY, true);
+	SetValue( WXVARIANT(value) );
+	AddPrivateChild( new wxFloatProperty(wxT("scale"),wxT("scale"), value.m_fFontScale) );
+	AddPrivateChild( new WxGUIFontProperty(wxT("font"),value.m_uFontID) );
+	AddPrivateChild( new WxGuiColorProperty(wxT("color"), value.m_aColor) );
 }
 
 void WxGUIStringInfoProperty::RefreshChildren()
 {
 	if ( !GetChildCount() ) return;
-	CGUIProperty& rValue = CGUIPropertyRefFromVariant(m_value);
-	CGUIStringRenderInfo aValue = rValue.GetCommonValue<CGUIStringRenderInfo>();
-	Item(0)->SetValue( aValue.m_fFontScale );
-	Item(1)->SetValue( wxVariant(*rValue["font"] ));
-	Item(2)->SetValue( wxVariant(*rValue["color"] ));
+
+	CGUIStringRenderInfo& string_info = CGUIStringRenderInfoRefFromVariant(m_value);
+	Item(0)->SetValue( string_info.m_fFontScale );
+	Item(1)->SetValue( string_info.m_uFontID);
+	Item(2)->SetValue( WXVARIANT( string_info.m_aColor ));
 }
 // -----------------------------------------------------------------------
 wxVariant WxGUIStringInfoProperty::ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const
 {
-	CGUIProperty& rValue = CGUIPropertyRefFromVariant(thisValue);
-	CGUIStringRenderInfo aValue = rValue.GetCommonValue<CGUIStringRenderInfo>();
+	CGUIStringRenderInfo& string_info = CGUIStringRenderInfoRefFromVariant(thisValue);
 
 	switch ( childIndex )
 	{
-	case 0: aValue.m_fFontScale = childValue.GetDouble(); break;
-	case 1: *rValue["font"] = CGUIPropertyRefFromVariant(childValue); break;
-	case 2: *rValue["color"] = CGUIPropertyRefFromVariant(childValue); break;
+	case 0: string_info.m_fFontScale = childValue.GetDouble(); break;
+	case 1: string_info.m_uFontID = childValue.GetInteger(); break;
+	case 2: string_info.m_aColor << childValue; break;
 	}
 
-	return rValue;
+	wxVariant newVariant;
+	newVariant << string_info;
+	return newVariant;
 }
 // -----------------------------------------------------------------------
 
@@ -334,18 +293,16 @@ wxVariant WxGUIStringInfoProperty::ChildChanged( wxVariant& thisValue, int child
 // -----------------------------------------------------------------------
 // WxGUIWidgetPositionProperty
 // -----------------------------------------------------------------------
-IMPLEMENT_DYNAMIC_CLASS(WxGUIWidgetPositionProperty, WxGUIPropertyBase);
-WX_PG_IMPLEMENT_PROPERTY_CLASS_PLAIN(WxGUIWidgetPositionProperty,CGUIProperty,TextCtrl);
-WxGUIWidgetPositionProperty::WxGUIWidgetPositionProperty()
-	: WxGUIPropertyBase( )
+WX_PG_IMPLEMENT_VARIANT_DATA_DUMMY_EQ( CGUIWidgetPosition );
+WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGUIWidgetPositionProperty,wxPGProperty,CGUIWidgetPosition,const CGUIWidgetPosition&,TextCtrl);
+WxGUIWidgetPositionProperty::WxGUIWidgetPositionProperty( const wxString& label,const CGUIWidgetPosition& value)
+	: wxPGProperty(label,GetUniquePropName())
 {
-}
-WxGUIWidgetPositionProperty::WxGUIWidgetPositionProperty(const wxString& label, const CGUIProperty& rValue)
-	: WxGUIPropertyBase(label,rValue)
-{
+	//ChangeFlag(wxPG_PROP_READONLY, true);
+	SetValue( WXVARIANT(value) );
 	m_arrEnums = CPropertyConfigMgr::Instance()->GetEnumDefine("EScreenValue");
-	AddPrivateChild( new wxEnumProperty(wxT("type"), wxT("type"), m_arrEnums) );
-	AddPrivateChild( new WxGUISizeProperty(wxT("value"), *rValue["value"] ));
+	AddPrivateChild( new wxEnumProperty(wxT("type"), wxT("type"), m_arrEnums ) );
+	AddPrivateChild( new WxGUIVector2Property(wxT("value"), value.m_aValue) );
 
 	RefreshChildren();
 }
@@ -353,29 +310,29 @@ WxGUIWidgetPositionProperty::WxGUIWidgetPositionProperty(const wxString& label, 
 void WxGUIWidgetPositionProperty::RefreshChildren()
 {
 	if ( !GetChildCount() ) return;
-	CGUIProperty& rValue = CGUIPropertyRefFromVariant(m_value);
-	CGUIWidgetPosition aValue = rValue.GetCommonValue<CGUIWidgetPosition>();
 
-	Item(0)->SetValue( GetTypeIndexInScreenValueEnum( aValue.m_eType, m_arrEnums ) );
-	Item(1)->SetValue( wxVariant(*rValue["value"]));
+	CGUIWidgetPosition& widget_pos = CGUIWidgetPositionRefFromVariant(m_value);
+	Item(0)->SetValue( GetTypeIndexInScreenValueEnum( widget_pos.m_eType, m_arrEnums ) );
+	Item(1)->SetValue( WXVARIANT(widget_pos.m_aValue));
 }
 // -----------------------------------------------------------------------
 wxVariant WxGUIWidgetPositionProperty::ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const
 {
-	CGUIProperty& rValue = CGUIPropertyRefFromVariant(thisValue);
-	CGUIWidgetPosition aValue = rValue.GetCommonValue<CGUIWidgetPosition>();
+	CGUIWidgetPosition& widget_pos = CGUIWidgetPositionRefFromVariant( thisValue );
 
 	switch ( childIndex )
 	{
-	case 0: 
-		guiex::StringToValue( wx2GuiString( m_arrEnums[childValue.GetLong()]), aValue.m_eType );
+	case 0:
+		guiex::StringToValue( wx2GuiString( m_arrEnums[childValue.GetLong()]), widget_pos.m_eType );
 		break;
 	case 1: 
-		*rValue["value"] = CGUIPropertyRefFromVariant(childValue);
+		widget_pos.m_aValue << childValue; 
 		break;
 	}
 
-	return rValue;
+	wxVariant newVariant;
+	newVariant << widget_pos;
+	return newVariant;
 }
 // -----------------------------------------------------------------------
 
@@ -383,30 +340,30 @@ wxVariant WxGUIWidgetPositionProperty::ChildChanged( wxVariant& thisValue, int c
 // -----------------------------------------------------------------------
 // wxGUIColorProperty
 // -----------------------------------------------------------------------
-IMPLEMENT_DYNAMIC_CLASS(WxGuiColorProperty, WxGUIPropertyBase)
-WX_PG_IMPLEMENT_PROPERTY_CLASS_PLAIN(WxGuiColorProperty,CGUIProperty,TextCtrlAndButton);
-WxGuiColorProperty::WxGuiColorProperty()
-	:WxGUIPropertyBase()
+WX_PG_IMPLEMENT_VARIANT_DATA_DUMMY_EQ( CGUIColor );
+WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGuiColorProperty,wxPGProperty,CGUIColor,const CGUIColor&,TextCtrlAndButton);
+WxGuiColorProperty::WxGuiColorProperty( const wxString& label, const CGUIColor& value)
+	: wxPGProperty(label,GetUniquePropName())
 {
-
-}
-WxGuiColorProperty::WxGuiColorProperty( const wxString& label, const CGUIProperty& rValue )
-	:WxGUIPropertyBase(label, rValue)
-{
+	SetValue( WXVARIANT(value) );
 }
 // -----------------------------------------------------------------------
 wxString WxGuiColorProperty::ValueToString( wxVariant& value, int argFlags ) const
 {
-	CGUIProperty& rValue = CGUIPropertyRefFromVariant(value);
-	return Gui2wxString( rValue.GetValue() );
+	wxString test = value.GetType();
+	CGUIColor color = CGUIColorRefFromVariant(value);
+	CGUIString strValue;
+	guiex::ValueToString( color, strValue );
+	return Gui2wxString( strValue );
 }
 // -----------------------------------------------------------------------
 bool WxGuiColorProperty::StringToValue( wxVariant& variant, const wxString& text, int argFlags ) const
 {
+	CGUIColor color;
+	CGUIString strValue = wx2GuiString( text );
 	try
 	{
-		CGUIColor color;
-		if( 0 != guiex::StringToValue( wx2GuiString( text ), color ) )
+		if( 0 != guiex::StringToValue( strValue, color ) )
 		{
 			return false;
 		}
@@ -415,8 +372,7 @@ bool WxGuiColorProperty::StringToValue( wxVariant& variant, const wxString& text
 	{
 		return false;
 	}
-	CGUIProperty& rValue = CGUIPropertyRefFromVariant(variant);
-	rValue.SetValue( wx2GuiString( text ) );
+	variant = WXVARIANT(color);
 	return true;
 }
 // -----------------------------------------------------------------------
@@ -424,14 +380,13 @@ bool WxGuiColorProperty::OnEvent( wxPropertyGrid* propgrid, wxWindow* primary, w
 {
 	if ( propgrid->IsMainButtonEvent(event) )
 	{
-		const CGUIProperty& rValue = CGUIPropertyRefFromVariant(GetValue());
-		CGUIColor color = rValue.GetCommonValue<CGUIColor>();
+		CGUIColor color = CGUIColorRefFromVariant(GetValue());
 		wxColour aWxColor( 
 			GUI_FLOAT2UINT_ROUND( color.GetRed()*255 ),
 			GUI_FLOAT2UINT_ROUND( color.GetGreen()*255 ), 
 			GUI_FLOAT2UINT_ROUND( color.GetBlue()*255 ), 
 			GUI_FLOAT2UINT_ROUND( color.GetAlpha()*255 ));
-		
+
 		wxColourData data;
 		data.SetChooseFull(true);
 		data.SetColour( aWxColor );
@@ -446,10 +401,7 @@ bool WxGuiColorProperty::OnEvent( wxPropertyGrid* propgrid, wxWindow* primary, w
 				aWxColor.Blue() / 255.0f,
 				aWxColor.Alpha() / 255.0f );
 
-			CGUIProperty aValue = rValue;
-			aValue.SetCommonValue(color);
-
-			SetValueInEvent( wxVariant( aValue ));
+			SetValueInEvent( WXVARIANT(color) );
 
 			return true;
 		}
@@ -464,8 +416,7 @@ wxSize WxGuiColorProperty::OnMeasureImage( int item ) const
 // -----------------------------------------------------------------------
 void WxGuiColorProperty::OnCustomPaint( wxDC& dc, const wxRect& rect, wxPGPaintData& paintdata )
 {
-	const CGUIProperty& rValue = CGUIPropertyRefFromVariant(GetValue());
-	CGUIColor color = rValue.GetCommonValue<CGUIColor>();
+	CGUIColor color = CGUIColorRefFromVariant(GetValue());
 	wxColour aWxColor( 
 		GUI_FLOAT2UINT_ROUND( color.GetRed()*255 ),
 		GUI_FLOAT2UINT_ROUND( color.GetGreen()*255 ), 
@@ -485,10 +436,9 @@ void WxGuiColorProperty::OnCustomPaint( wxDC& dc, const wxRect& rect, wxPGPaintD
 // -----------------------------------------------------------------------
 // WxGUIImageProperty
 // -----------------------------------------------------------------------
-IMPLEMENT_DYNAMIC_CLASS(WxGUIImageProperty, wxPGProperty)
-WX_PG_IMPLEMENT_PROPERTY_CLASS_PLAIN(WxGUIImageProperty,CGUIString,ChoiceAndButton);
-WxGUIImageProperty::WxGUIImageProperty( const wxString& label, const wxString& name,const wxString& rImage )
-: wxPGProperty(label,name)
+WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGUIImageProperty,wxPGProperty,CGUIString,const CGUIString&,ChoiceAndButton);
+WxGUIImageProperty::WxGUIImageProperty( const wxString& label, const wxString& rImage )
+	: wxPGProperty(label,GetUniquePropName())
 {
 	SetValue( wxVariant( wx2GuiString( rImage )) );
 	m_choices.Set(CGUIResourcePool::Instance()->GetImageList(), 0);
@@ -576,10 +526,9 @@ void WxGUIImageProperty::OnCustomPaint( wxDC& dc, const wxRect& rect, wxPGPaintD
 // -----------------------------------------------------------------------
 // WxGUIAnimationProperty
 // -----------------------------------------------------------------------
-IMPLEMENT_DYNAMIC_CLASS(WxGUIAnimationProperty, wxPGProperty)
-WX_PG_IMPLEMENT_PROPERTY_CLASS_PLAIN(WxGUIAnimationProperty,CGUIString,ChoiceAndButton);
-WxGUIAnimationProperty::WxGUIAnimationProperty( const wxString& label, const wxString& name,const wxString& rAnimation )
-	: wxPGProperty(label,name)
+WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGUIAnimationProperty,wxPGProperty,CGUIString,const CGUIString&,ChoiceAndButton);
+WxGUIAnimationProperty::WxGUIAnimationProperty( const wxString& label, const wxString& rAnimation )
+	: wxPGProperty(label,GetUniquePropName())
 {
 	SetValue( wxVariant( wx2GuiString( rAnimation )) );
 	m_choices.Set(CGUIResourcePool::Instance()->GetAnimationList(), 0);
@@ -666,10 +615,9 @@ void WxGUIAnimationProperty::OnCustomPaint( wxDC& dc, const wxRect& rect, wxPGPa
 // -----------------------------------------------------------------------
 // WxGUILocalizedStringProperty
 // -----------------------------------------------------------------------
-IMPLEMENT_DYNAMIC_CLASS(WxGUILocalizedStringProperty, wxPGProperty)
-WX_PG_IMPLEMENT_PROPERTY_CLASS_PLAIN(WxGUILocalizedStringProperty,CGUIString,TextCtrlAndButton);
-WxGUILocalizedStringProperty::WxGUILocalizedStringProperty( const wxString& label, const wxString& name,const wxString& rLocalizedString )
-: wxPGProperty(label,name)
+WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGUILocalizedStringProperty,wxPGProperty,CGUIString,const CGUIString&,TextCtrlAndButton);
+WxGUILocalizedStringProperty::WxGUILocalizedStringProperty( const wxString& label, const wxString& rLocalizedString )
+	: wxPGProperty(label,GetUniquePropName())
 {
 	SetValue( wxVariant( wx2GuiString( rLocalizedString )) );
 }
@@ -709,10 +657,9 @@ bool WxGUILocalizedStringProperty::OnEvent( wxPropertyGrid* propgrid, wxWindow* 
 // -----------------------------------------------------------------------
 // WxGUISoundProperty
 // -----------------------------------------------------------------------
-IMPLEMENT_DYNAMIC_CLASS(WxGUISoundProperty, wxPGProperty)
-WX_PG_IMPLEMENT_PROPERTY_CLASS_PLAIN(WxGUISoundProperty,CGUIString,ChoiceAndButton);
-WxGUISoundProperty::WxGUISoundProperty( const wxString& label, const wxString& name,const wxString& rSound )
-: wxPGProperty(label,name)
+WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGUISoundProperty,wxPGProperty,CGUIString,const CGUIString&,ChoiceAndButton);
+WxGUISoundProperty::WxGUISoundProperty( const wxString& label, const wxString& rSound )
+	: wxPGProperty(label,GetUniquePropName())
 {
 	SetValue( wxVariant( wx2GuiString( rSound )) );
 	m_choices.Set(CGUIResourcePool::Instance()->GetSoundList(), 0);
@@ -767,18 +714,16 @@ bool WxGUISoundProperty::OnEvent( wxPropertyGrid* propgrid, wxWindow* primary, w
 // -----------------------------------------------------------------------
 // WxGUIWidgetSizeProperty
 // -----------------------------------------------------------------------
-IMPLEMENT_DYNAMIC_CLASS(WxGUIWidgetSizeProperty, WxGUIPropertyBase)
-WX_PG_IMPLEMENT_PROPERTY_CLASS_PLAIN(WxGUIWidgetSizeProperty,CGUIProperty,TextCtrl);
-WxGUIWidgetSizeProperty::WxGUIWidgetSizeProperty()
-	:WxGUIPropertyBase()
+WX_PG_IMPLEMENT_VARIANT_DATA_DUMMY_EQ( CGUIWidgetSize );
+WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGUIWidgetSizeProperty,wxPGProperty,CGUIWidgetSize,const CGUIWidgetSize&,TextCtrl);
+WxGUIWidgetSizeProperty::WxGUIWidgetSizeProperty( const wxString& label,const CGUIWidgetSize& value)
+	: wxPGProperty(label,GetUniquePropName())
 {
-}
-WxGUIWidgetSizeProperty::WxGUIWidgetSizeProperty( const wxString& label, const CGUIProperty& rValue )
-:WxGUIPropertyBase(label, rValue)
-{
+	//ChangeFlag(wxPG_PROP_READONLY, true);
+	SetValue( WXVARIANT(value) );
 	m_arrEnums = CPropertyConfigMgr::Instance()->GetEnumDefine("EScreenValue");
 	AddPrivateChild( new wxEnumProperty(wxT("type"), wxT("type"), m_arrEnums) );
-	AddPrivateChild( new WxGUISizeProperty(wxT("value"), *rValue["value"] ));
+	AddPrivateChild( new WxGUISizeProperty(wxT("size"), value.m_aValue) );
 
 	RefreshChildren();
 }
@@ -786,29 +731,29 @@ WxGUIWidgetSizeProperty::WxGUIWidgetSizeProperty( const wxString& label, const C
 void WxGUIWidgetSizeProperty::RefreshChildren()
 {
 	if ( !GetChildCount() ) return;
-	CGUIProperty& rValue = CGUIPropertyRefFromVariant(m_value);
-	CGUIWidgetSize aValue = rValue.GetCommonValue<CGUIWidgetSize>();
 
-	Item(0)->SetValue( GetTypeIndexInScreenValueEnum( aValue.m_eType, m_arrEnums ) );
-	Item(1)->SetValue( wxVariant(*rValue["value"]));
+	CGUIWidgetSize& widget_size = CGUIWidgetSizeRefFromVariant(m_value);
+	Item(0)->SetValue( GetTypeIndexInScreenValueEnum( widget_size.m_eType, m_arrEnums ) );
+	Item(1)->SetValue( WXVARIANT(widget_size.m_aValue));
 }
 // -----------------------------------------------------------------------
 wxVariant WxGUIWidgetSizeProperty::ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const
 {
-	CGUIProperty& rValue = CGUIPropertyRefFromVariant(thisValue);
-	CGUIWidgetSize aValue = rValue.GetCommonValue<CGUIWidgetSize>();
+	CGUIWidgetSize& widget_size = CGUIWidgetSizeRefFromVariant(thisValue);
 
 	switch ( childIndex )
 	{
 	case 0: 
-		guiex::StringToValue( wx2GuiString( m_arrEnums[childValue.GetLong()]), aValue.m_eType );
+		guiex::StringToValue( wx2GuiString( m_arrEnums[childValue.GetLong()]), widget_size.m_eType );
 		break;
 	case 1: 
-		*rValue["value"] = CGUIPropertyRefFromVariant(childValue);
+		widget_size.m_aValue << childValue; 
 		break;
 	}
 
-	return rValue;
+	wxVariant newVariant;
+	newVariant << widget_size;
+	return newVariant;
 }
 // -----------------------------------------------------------------------
 
@@ -816,17 +761,13 @@ wxVariant WxGUIWidgetSizeProperty::ChildChanged( wxVariant& thisValue, int child
 // -----------------------------------------------------------------------
 // WxGUIFontProperty
 // -----------------------------------------------------------------------
-IMPLEMENT_DYNAMIC_CLASS(WxGUIFontProperty, WxGUIPropertyBase)
-WX_PG_IMPLEMENT_PROPERTY_CLASS_PLAIN(WxGUIFontProperty,CGUIProperty,ChoiceAndButton );
-WxGUIFontProperty::WxGUIFontProperty()
-	:WxGUIPropertyBase()
+WX_PG_IMPLEMENT_PROPERTY_CLASS(WxGUIFontProperty,wxPGProperty,CGUIString,const CGUIString&,ChoiceAndButton );
+WxGUIFontProperty::WxGUIFontProperty( const wxString& label, guiex::uint16 uFontID )
+	: wxPGProperty(label,GetUniquePropName())
 {
-}
-WxGUIFontProperty::WxGUIFontProperty( const wxString& label, const CGUIProperty& rValue )
-:WxGUIPropertyBase(label, rValue)
-{
-	m_aFontProp = rValue;
-
+	wxString strFont;
+	strFont<<uFontID;
+	SetValue( wxVariant( strFont) );
 	m_choices.Set(CGUIResourcePool::Instance()->GetFontList(), 0);
 }
 // -----------------------------------------------------------------------
@@ -839,22 +780,26 @@ void WxGUIFontProperty::OnSetValue()
 		if( m_choices.GetCount() > 0 )
 		{
 			wxString rFont = m_choices.GetLabel( m_value.GetInteger() );
-			m_aFontProp.SetValue( wx2GuiString( rFont ));
-			m_value = wxVariant(m_aFontProp);
+			m_value = rFont;
 		}
 	}
 }
 // -----------------------------------------------------------------------
-wxString WxGUIFontProperty::ValueToString( wxVariant& WXUNUSED(value), int argFlags ) const
+wxString WxGUIFontProperty::ValueToString( wxVariant& value, int argFlags ) const
 {
-	return Gui2wxString(m_aFontProp.GetValue());
+	wxString s = value.GetString();
+	return s;
 }
 // -----------------------------------------------------------------------
 bool WxGUIFontProperty::StringToValue( wxVariant& variant, const wxString& text, int argFlags ) const
 {
-	CGUIProperty& rValue = CGUIPropertyRefFromVariant(variant);
-	rValue.SetValue( wx2GuiString( text ) );
-	return true;
+	if ( variant != text )
+	{
+		variant = text;
+		return true;
+	}
+
+	return false;
 }
 // -----------------------------------------------------------------------
 bool WxGUIFontProperty::OnEvent( wxPropertyGrid* propgrid, wxWindow* primary, wxEvent& event )
@@ -864,10 +809,7 @@ bool WxGUIFontProperty::OnEvent( wxPropertyGrid* propgrid, wxWindow* primary, wx
 		WxFontSelectDialog dialog( propgrid );
 		if ( dialog.ShowModal() == wxID_OK )
 		{
-			const CGUIProperty& rValue = CGUIPropertyRefFromVariant(GetValue());
-			CGUIProperty aValue = rValue;
-			aValue.SetValue( wx2GuiString(dialog.GetResourceName() ));
-			SetValueInEvent( wxVariant(aValue) );
+			SetValueInEvent( dialog.GetResourceName() );
 			return true;
 		}
 	}

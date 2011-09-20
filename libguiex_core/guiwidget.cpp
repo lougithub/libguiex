@@ -1911,10 +1911,6 @@ namespace guiex
 		{
 			ValueToProperty( IsVisible(), rProperty);
 		}
-		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "disable" )
-		{
-			ValueToProperty( IsDisable(), rProperty);
-		}
 		else if( rProperty.GetType() == ePropertyType_Bool && rProperty.GetName() == "force_hittest" )
 		{
 			ValueToProperty( IsForceHitTest(), rProperty);
@@ -2107,12 +2103,6 @@ namespace guiex
 			PropertyToValue(rProperty, bValue );
 			SetVisible( bValue );
 		}
-		else if(  rProperty.GetType()== ePropertyType_Bool &&  rProperty.GetName()=="disable" )
-		{
-			bool bValue = false;
-			PropertyToValue(rProperty, bValue );
-			SetDisable( bValue );
-		}
 		else if( rProperty.GetType()== ePropertyType_Bool &&  rProperty.GetName()=="auto_play_as" )
 		{
 			bool bValue = false;
@@ -2185,7 +2175,7 @@ namespace guiex
 			PropertyToValue(rProperty, bValue );
 			SetGenerateDBClickEvent( bValue );
 		}
-		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName() == "DISABLE" )
+		else if( rProperty.GetType()== ePropertyType_Bool && rProperty.GetName() == "disable" )
 		{
 			bool bValue = false;
 			PropertyToValue(rProperty, bValue );
@@ -2210,7 +2200,7 @@ namespace guiex
 			ProcessProperty( *pPropertyParent );
 		}
 
-		uint32 nSize = rProperty.GetPropertyNum();
+		uint32 nSize = rProperty.GetPropertyCount();
 		for( uint32 nIdx = 0; nIdx<nSize;++nIdx)
 		{
 			const CGUIProperty* pProperty = rProperty.GetProperty(nIdx);
@@ -2225,7 +2215,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIWidget::DumpToProperty()
 	{
-		uint32 nSize = m_aPropertySet.GetPropertyNum();
+		uint32 nSize = m_aPropertySet.GetPropertyCount();
 		for( uint32 nIdx = 0; nIdx<nSize;++nIdx)
 		{
 			CGUIProperty* pProperty = m_aPropertySet.GetProperty(nIdx);

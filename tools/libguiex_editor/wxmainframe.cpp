@@ -1156,7 +1156,7 @@ void WxMainFrame::OnWidgetPaste(wxCommandEvent& evt)
 	{
 		return;
 	}
-	if( m_aPasteCache.m_aProperty.GetPropertyNum() == 0 )
+	if( m_aPasteCache.m_aProperty.GetPropertyCount() == 0 )
 	{
 		return;
 	}

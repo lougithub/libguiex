@@ -44,7 +44,7 @@ void UpdateGridProperties( wxPropertyGridManager* pSheetMgr, const std::string& 
 
 	//process page
 	std::map<std::pair<std::string,std::string>, wxPGProperty*>	mapCategory;
-	for(unsigned int i=0; i<rSet.GetPropertyNum();++i)
+	for(unsigned int i=0; i<rSet.GetPropertyCount();++i)
 	{
 		const CGUIProperty* pProp = rSet.GetProperty(i);
 		CGUIProperty aGUIProp = *pProp;

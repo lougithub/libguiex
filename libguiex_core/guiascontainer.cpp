@@ -84,7 +84,7 @@ namespace guiex
 			return ret;
 		}
 
-		for( uint32 i=0; i<rProperty.GetPropertyNum(); ++i )
+		for( uint32 i=0; i<rProperty.GetPropertyCount(); ++i )
 		{
 			const CGUIProperty* pProperty = rProperty.GetProperty( i );
 			if( pProperty->GetType() == ePropertyType_Group && pProperty->GetName() == "item_info" )

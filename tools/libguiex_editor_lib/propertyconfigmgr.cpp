@@ -226,7 +226,8 @@ const std::string* CPropertyConfigMgr::GetTypePtr( const std::string& rType )
 	std::set<std::string>::iterator itor = m_setType.find( rType );
 	if(itor == m_setType.end())
 	{
-		throw guiex::CGUIException("[CPropertyConfigMgr::GetTypePtr]: failed to find widget type <%s>", rType.c_str());
+		//throw guiex::CGUIException("[CPropertyConfigMgr::GetTypePtr]: failed to find widget type <%s>", rType.c_str());
+		return NULL;
 	}
 	return &(*itor);
 }

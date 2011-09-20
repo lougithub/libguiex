@@ -98,7 +98,7 @@ namespace guiex
 			return -1;
 		}
 
-		uint32 nSize = aPropertySet.GetPropertyNum();
+		uint32 nSize = aPropertySet.GetPropertyCount();
 		for( uint32 i=0; i<nSize; ++i )
 		{
 			const CGUIProperty* pProperty = aPropertySet.GetProperty(i);

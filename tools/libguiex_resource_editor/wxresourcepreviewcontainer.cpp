@@ -132,9 +132,9 @@ void WxResourcePreviewContainer::SetGUIProperty( const CGUIProperty* pResourcePr
 
 	//set property
 	m_pPropertyGridMgr->Clear();
-	for(unsigned int i=0; i<pResourceProperty->GetPropertyNum();++i)
+	for(unsigned int i=0; i<pResourceProperty->GetPropertyCount();++i)
 	{
-		CPropertyConvertorMgr::Instance()->GuiProperty2GridProperty( m_pPropertyGridMgr, NULL, *pResourceProperty->GetProperty(i) );
+		CPropertyConvertorMgr::Instance()->GuiProperty2GridPropertyRow( m_pPropertyGridMgr, NULL, *pResourceProperty->GetProperty(i) );
 	}
 
 	//set preview

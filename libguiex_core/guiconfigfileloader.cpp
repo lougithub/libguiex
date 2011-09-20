@@ -117,7 +117,7 @@ namespace guiex
 		}
 
 		//parse it
-		uint32 nSize = aPropertySet.GetPropertyNum();
+		uint32 nSize = aPropertySet.GetPropertyCount();
 		for( uint32 i=0; i<nSize; ++i )
 		{
 			const CGUIProperty* pProperty = aPropertySet.GetProperty(i);
@@ -219,7 +219,7 @@ namespace guiex
 
 		//create widget
 		CGUIWidget* pPageRoot = NULL;
-		uint32 nSize = aPropertySet.GetPropertyNum();
+		uint32 nSize = aPropertySet.GetPropertyCount();
 		std::vector< std::pair< CGUIWidget*, const CGUIProperty* > > vecWidgetList;
 		for( uint32 i=0; i<nSize; ++i )
 		{

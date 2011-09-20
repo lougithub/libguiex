@@ -28,7 +28,7 @@ namespace guiex
 		const CGUIProperty* pTowerProp = pAllTowerProperty->GetProperty(m_strTowerType);
 
 		//animations
-		for( uint32 i=0; i<pTowerProp->GetPropertyNum(); ++i )
+		for( uint32 i=0; i<pTowerProp->GetPropertyCount(); ++i )
 		{
 			const CGUIProperty* pProp = pTowerProp->GetProperty( i );
 			if( pProp->GetType() == ePropertyType_Animation )
@@ -135,7 +135,7 @@ namespace guiex
 			rInfo.m_fRadius = pLevelProp->GetProperty("radius")->GetCommonValue<real>();
 			rInfo.m_pLevelProperty = pLevelProp;
 
-			for( uint32 i=0; i<pLevelProp->GetPropertyNum(); ++i )
+			for( uint32 i=0; i<pLevelProp->GetPropertyCount(); ++i )
 			{
 				const CGUIProperty* pProp = pLevelProp->GetProperty( i );
 				if( pProp->GetType() == ePropertyType_Animation )

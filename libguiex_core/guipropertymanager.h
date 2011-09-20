@@ -104,7 +104,9 @@ namespace guiex
 		ePropertyType_Scene_ResourceFile,
 		ePropertyType_Scene_LocalizationFile,
 
-		ePropertyType_UserDefine = 1000,
+		ePropertyType_System_Max,
+
+		ePropertyType_UserDefine,
 	};
 }//namespace guiex
 

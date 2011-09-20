@@ -81,6 +81,7 @@ bool WxMainApp::OnInit()
 			return false;
 		}
 	}
+	CPropertyConfigMgr::Instance()->AddType( "array" );
 
 	//create frame
 	wxFrame* frame = new WxMainFrame(NULL,

@@ -176,7 +176,7 @@ bool WxMainApp::CheckProperty() const
 			guiex::CGUIWidget* pWidget = guiex::CGUIWidgetManager::Instance()->CreateWidget( rWidgetType,"__template4check__", "" );
 			const CGUIProperty& rDefaultProperty = CPropertyConfigMgr::Instance()->GetPropertySet( rWidgetType );
 
-			for( uint32 i=0; i<rDefaultProperty.GetPropertyNum(); ++i )
+			for( uint32 i=0; i<rDefaultProperty.GetPropertyCount(); ++i )
 			{
 				const guiex::CGUIProperty* pDefaultProperty = rDefaultProperty.GetProperty(i);
 				if( CPropertyData::GetPropertyData(*pDefaultProperty)->IsAlternaitiveSave() == false )

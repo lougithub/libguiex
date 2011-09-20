@@ -17,6 +17,7 @@
 #include "editorid.h"
 #include "toolshistory.h"
 #include "toolsmisc.h"
+#include "guiresourcepool.h"
 
 #include <wx/treectrl.h>
 
@@ -46,8 +47,8 @@ BEGIN_EVENT_TABLE(WxMainFrame, wxFrame)
 	EVT_MENU_RANGE( ID_RecentPathsBaseId, ID_RecentPathsEndId, WxMainFrame::OnRecentPaths )
 	EVT_MENU_RANGE( ID_RecentScenesBaseId, ID_RecentScenesEndId, WxMainFrame::OnRecentScenes )
 
-	//combobox
-	EVT_COMBOBOX(ID_ResourceFileCtrl, WxMainFrame::OnFileSelected )
+	//list ctrl
+	EVT_LIST_ITEM_SELECTED(ID_ResourceFileCtrl, WxMainFrame::OnFileSelected )
 
 	//note book ctrl
 	EVT_AUINOTEBOOK_PAGE_CLOSE(ID_NoteBookCtrl, OnBookPageClose)
@@ -86,7 +87,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent,wxWindowID id,const wxString& title,co
 
 
 	// create resource tree
-	m_pResourceFiles = new wxComboBox( this, ID_ResourceFileCtrl,wxEmptyString, wxDefaultPosition,wxDefaultSize, 0, NULL, wxCB_READONLY | wxCB_SORT );
+	m_pResourceFiles = new wxListCtrl( this, ID_ResourceFileCtrl, wxDefaultPosition,wxDefaultSize, wxLC_LIST | wxLC_SINGLE_SEL );
 
 	//create resource list 
 	m_pResourceItemCtrl = new wxTreeCtrl( this, ID_ResourceItemCtrl, wxDefaultPosition, wxDefaultSize, wxTR_DEFAULT_STYLE | wxNO_BORDER );
@@ -95,19 +96,18 @@ WxMainFrame::WxMainFrame(wxWindow* parent,wxWindowID id,const wxString& title,co
 	m_pResourceItemCtrl->AssignImageList(imglist);
 
 	//add to aui manager
-	m_mgr.AddPane(m_pResourceFiles, wxAuiPaneInfo().
-		Name(wxT("ResourceFile")).Caption(wxT("Files")).
+	m_mgr.AddPane(m_pToolbar, wxAuiPaneInfo().
+		Name(wxT("Toolbar")).Caption(wxT("Toolbar")).
 		ToolbarPane().Top().Row(1).Position(1).
 		LeftDockable(false).RightDockable(false));
 
-	m_mgr.AddPane(m_pToolbar, wxAuiPaneInfo().
-		Name(wxT("Toolbar")).Caption(wxT("Toolbar")).
-		ToolbarPane().Top().Row(1).Position(2).
-		LeftDockable(false).RightDockable(false));
+	m_mgr.AddPane(m_pResourceFiles, wxAuiPaneInfo().BestSize( 250, 400 ).
+		Name(wxT("ResourceFile")).Caption(wxT("Files")).
+		Left().Layer(1).Position(1));
 
 	m_mgr.AddPane(m_pResourceItemCtrl, wxAuiPaneInfo().BestSize( 250, 400 ).
 		Name(wxT("ResourceItem")).Caption(wxT("Items")).
-		Left().Layer(1).Position(1));
+		Left().Layer(1).Position(2));
 
 	m_mgr.AddPane(m_pAuiNoteBook, wxAuiPaneInfo().Name(wxT("notebook_content")).
 		CenterPane().PaneBorder(false));
@@ -272,6 +272,9 @@ int WxMainFrame::LoadScene( std::string strDataPath, std::string strSceneName )
 	//load resource
 	CGUISceneManager::Instance()->LoadResources( strSceneName );
 
+	//update resource for editor
+	CGUIResourcePool::Instance()->UpdateResourceList();
+
 	//get scene info
 	const CGUIScene* pScene = CGUISceneManager::Instance()->GetScene( strSceneName );
 	if( pScene->IsDependenciesLoaded())
@@ -316,14 +319,10 @@ int	WxMainFrame::OpenScene(const CGUIScene* pSceneInfo )
 	const std::vector<CGUIString>& rResourceFiles = pSceneInfo->GetResourceFiles();
 	for( unsigned i=0; i<rResourceFiles.size(); ++i )
 	{
-		m_pResourceFiles->Append( Gui2wxString(rResourceFiles[i] ));
+		m_pResourceFiles->InsertItem( m_pResourceFiles->GetItemCount(), Gui2wxString(rResourceFiles[i] ));
 	}
 
-	if( m_pResourceFiles->GetCount() > 0 )
-	{
-		m_pResourceFiles->Select( 0 );
-		SelectFile( m_pResourceFiles->GetValue() );
-	}
+	SelectFile(L"");
 	return 0;
 }
 //------------------------------------------------------------------------------
@@ -331,7 +330,7 @@ void WxMainFrame::CloseScene( )
 {
 	m_strCurrentSceneName.clear();
 
-	m_pResourceFiles->Clear();
+	m_pResourceFiles->ClearAll();
 	m_pResourceItemCtrl->DeleteAllItems();
 	m_mapItemFolder.clear();
 	if( m_pPreviewContainer )
@@ -340,9 +339,9 @@ void WxMainFrame::CloseScene( )
 	}
 }
 //------------------------------------------------------------------------------
-void WxMainFrame::OnFileSelected(wxCommandEvent& event)
+void WxMainFrame::OnFileSelected(wxListEvent& event)
 {
-	SelectFile( m_pResourceFiles->GetValue());
+	SelectFile( m_pResourceFiles->GetItemText( event.m_itemIndex));
 }
 //------------------------------------------------------------------------------
 wxString WxMainFrame::GetFileFullPath( const wxString& rFileName )
@@ -367,6 +366,11 @@ void WxMainFrame::SelectFile( const wxString& rFileName )
 	m_pResourceItemCtrl->DeleteAllItems();
 	m_mapItemFolder.clear();
 
+	if( rFileName.empty() )
+	{
+		return;
+	}
+
 	m_pResourceItemCtrl->AddRoot(rFileName);
 
 	IGUIInterfaceConfigFile* pConfigFile = CGUIInterfaceManager::Instance()->GetInterfaceConfigFile();
@@ -376,7 +380,7 @@ void WxMainFrame::SelectFile( const wxString& rFileName )
 		return;
 	}
 
-	for( uint32 i=0; i<m_aResourcePropertys.GetPropertyNum(); ++i )
+	for( uint32 i=0; i<m_aResourcePropertys.GetPropertyCount(); ++i )
 	{
 		const CGUIProperty* pProperty = m_aResourcePropertys.GetProperty( i );
 

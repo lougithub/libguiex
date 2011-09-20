@@ -26,27 +26,15 @@ using namespace guiex;
 //============================================================================//
 // class
 //============================================================================// 
-
-// -----------------------------------------------------------------------
-// WxGUIPropertyBase
-// -----------------------------------------------------------------------
-WX_PG_DECLARE_VARIANT_DATA( CGUIProperty )
-class WxGUIPropertyBase : public wxPGProperty
-{
-public:
-	WxGUIPropertyBase( );
-	WxGUIPropertyBase( const wxString& label, const CGUIProperty& rValue );
-};
-
 // -----------------------------------------------------------------------
 // WxGUISizeProperty
 // -----------------------------------------------------------------------
-class WxGUISizeProperty : public WxGUIPropertyBase
+WX_PG_DECLARE_VARIANT_DATA( CGUISize )
+class WxGUISizeProperty : public wxPGProperty
 {
 	WX_PG_DECLARE_PROPERTY_CLASS(WxGUISizeProperty)
 public:
-	WxGUISizeProperty();
-	WxGUISizeProperty( const wxString& label, const CGUIProperty& rValue );
+	WxGUISizeProperty( const wxString& label = wxPG_LABEL, const CGUISize& value = CGUISize() );
 	virtual wxVariant ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const;
 	virtual void RefreshChildren();
 };
@@ -60,7 +48,7 @@ class WxGUIVector2Property : public wxPGProperty
 {
 	WX_PG_DECLARE_PROPERTY_CLASS(WxGUIVector2Property)
 public:
-	WxGUIVector2Property( const wxString& label = wxPG_LABEL, const wxString& name = wxPG_LABEL, const CGUIVector2& value = CGUIVector2() );
+	WxGUIVector2Property( const wxString& label = wxPG_LABEL, const CGUIVector2& value = CGUIVector2() );
 	virtual wxVariant ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const;
 	virtual void RefreshChildren();
 };
@@ -74,7 +62,7 @@ class WxGUIVector3Property : public wxPGProperty
 {
 	WX_PG_DECLARE_PROPERTY_CLASS(WxGUIVector3Property)
 public:
-	WxGUIVector3Property( const wxString& label = wxPG_LABEL, const wxString& name = wxPG_LABEL, const CGUIVector3& value = CGUIVector3() );
+	WxGUIVector3Property( const wxString& label = wxPG_LABEL, const CGUIVector3& value = CGUIVector3() );
 	virtual wxVariant ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const;
 	virtual void RefreshChildren();
 };
@@ -87,7 +75,7 @@ class WxGUIRotatorProperty : public wxPGProperty
 {
 	WX_PG_DECLARE_PROPERTY_CLASS(WxGUIRotatorProperty)
 public:
-	WxGUIRotatorProperty( const wxString& label = wxPG_LABEL, const wxString& name = wxPG_LABEL, const CGUIRotator& value = CGUIRotator() );
+	WxGUIRotatorProperty( const wxString& label = wxPG_LABEL, const CGUIRotator& value = CGUIRotator() );
 	virtual wxVariant ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const;
 	virtual void RefreshChildren();
 };
@@ -100,7 +88,7 @@ class WxGUIRectProperty : public wxPGProperty
 {
 	WX_PG_DECLARE_PROPERTY_CLASS(WxGUIRectProperty)
 public:
-	WxGUIRectProperty( const wxString& label = wxPG_LABEL, const wxString& name = wxPG_LABEL, const CGUIRect& value = CGUIRect() );
+	WxGUIRectProperty( const wxString& label = wxPG_LABEL, const CGUIRect& value = CGUIRect() );
 	virtual wxVariant ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const;
 	virtual void RefreshChildren();
 };
@@ -109,12 +97,12 @@ public:
 // -----------------------------------------------------------------------
 // WxGUIStringInfoProperty
 // -----------------------------------------------------------------------
-class WxGUIStringInfoProperty : public WxGUIPropertyBase
+WX_PG_DECLARE_VARIANT_DATA( CGUIStringRenderInfo )
+class WxGUIStringInfoProperty : public wxPGProperty
 {
 	WX_PG_DECLARE_PROPERTY_CLASS(WxGUIStringInfoProperty)
 public:
-	WxGUIStringInfoProperty();
-	WxGUIStringInfoProperty( const wxString& label, const CGUIProperty& rValue );
+	WxGUIStringInfoProperty( const wxString& label = wxPG_LABEL, const CGUIStringRenderInfo& value = CGUIStringRenderInfo() );
 	virtual wxVariant ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const;
 	virtual void RefreshChildren();
 };
@@ -123,12 +111,12 @@ public:
 // -----------------------------------------------------------------------
 // WxGUIWidgetPositionProperty
 // -----------------------------------------------------------------------
-class WxGUIWidgetPositionProperty : public WxGUIPropertyBase
+WX_PG_DECLARE_VARIANT_DATA( CGUIWidgetPosition )
+class WxGUIWidgetPositionProperty : public wxPGProperty
 {
 	WX_PG_DECLARE_PROPERTY_CLASS(WxGUIWidgetPositionProperty)
 public:
-	WxGUIWidgetPositionProperty();
-	WxGUIWidgetPositionProperty( const wxString& label, const CGUIProperty& rValue );
+	WxGUIWidgetPositionProperty( const wxString& label = wxPG_LABEL, const CGUIWidgetPosition& value = CGUIWidgetPosition());
 	virtual wxVariant ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const;
 	virtual void RefreshChildren();
 
@@ -140,12 +128,12 @@ protected:
 // -----------------------------------------------------------------------
 // wxGUIColorProperty
 // -----------------------------------------------------------------------
-class WxGuiColorProperty : public WxGUIPropertyBase
+WX_PG_DECLARE_VARIANT_DATA( CGUIColor )
+class WxGuiColorProperty : public wxPGProperty
 {
 	WX_PG_DECLARE_PROPERTY_CLASS(WxGuiColorProperty)
 public:
-	WxGuiColorProperty();
-	WxGuiColorProperty( const wxString& label, const CGUIProperty& rValue );
+	WxGuiColorProperty( const wxString& label = wxPG_LABEL, const CGUIColor& value = CGUIColor() );
 	virtual bool OnEvent( wxPropertyGrid* propgrid, wxWindow* primary, wxEvent& event );
 	virtual wxString ValueToString( wxVariant& value, int argFlags ) const;
 	virtual bool StringToValue( wxVariant& variant, const wxString& text, int argFlags ) const;
@@ -163,7 +151,7 @@ class WxGUILocalizedStringProperty : public wxPGProperty
 {
 	WX_PG_DECLARE_PROPERTY_CLASS(WxGUILocalizedStringProperty)
 public:
-	WxGUILocalizedStringProperty( const wxString& label = wxPG_LABEL, const wxString& name = wxPG_LABEL, const wxString& rLocalizedString=wxEmptyString );
+	WxGUILocalizedStringProperty( const wxString& label = wxPG_LABEL, const wxString& rLocalizedString=wxEmptyString );
 	virtual bool OnEvent( wxPropertyGrid* propgrid, wxWindow* primary, wxEvent& event );
 	virtual wxString ValueToString( wxVariant& value, int argFlags ) const;
 	virtual bool StringToValue( wxVariant& variant, const wxString& text, int argFlags ) const;
@@ -177,7 +165,7 @@ class WxGUIImageProperty : public wxPGProperty
 {
 	WX_PG_DECLARE_PROPERTY_CLASS(WxGUIImageProperty)
 public:
-	WxGUIImageProperty( const wxString& label = wxPG_LABEL, const wxString& name = wxPG_LABEL, const wxString& rImage=wxEmptyString );
+	WxGUIImageProperty( const wxString& label = wxPG_LABEL, const wxString& rImage=wxEmptyString );
 	virtual bool OnEvent( wxPropertyGrid* propgrid, wxWindow* primary, wxEvent& event );
 	virtual void OnSetValue();
 	virtual wxString ValueToString( wxVariant& value, int argFlags ) const;
@@ -196,7 +184,7 @@ class WxGUIAnimationProperty : public wxPGProperty
 {
 	WX_PG_DECLARE_PROPERTY_CLASS(WxGUIAnimationProperty)
 public:
-	WxGUIAnimationProperty( const wxString& label = wxPG_LABEL, const wxString& name = wxPG_LABEL, const wxString& rImage=wxEmptyString );
+	WxGUIAnimationProperty( const wxString& label = wxPG_LABEL, const wxString& rImage=wxEmptyString );
 	virtual bool OnEvent( wxPropertyGrid* propgrid, wxWindow* primary, wxEvent& event );
 	virtual void OnSetValue();
 	virtual wxString ValueToString( wxVariant& value, int argFlags ) const;
@@ -213,7 +201,7 @@ class WxGUISoundProperty : public wxPGProperty
 {
 	WX_PG_DECLARE_PROPERTY_CLASS(WxGUISoundProperty)
 public:
-	WxGUISoundProperty( const wxString& label = wxPG_LABEL, const wxString& name = wxPG_LABEL, const wxString& rSound=wxEmptyString );
+	WxGUISoundProperty( const wxString& label = wxPG_LABEL, const wxString& rSound=wxEmptyString );
 	virtual bool OnEvent( wxPropertyGrid* propgrid, wxWindow* primary, wxEvent& event );
 	virtual void OnSetValue();
 	virtual wxString ValueToString( wxVariant& value, int argFlags ) const;
@@ -224,12 +212,12 @@ public:
 // -----------------------------------------------------------------------
 // WxGUIWidgetSizeProperty
 // -----------------------------------------------------------------------
-class WxGUIWidgetSizeProperty : public WxGUIPropertyBase
+WX_PG_DECLARE_VARIANT_DATA( CGUIWidgetSize )
+class WxGUIWidgetSizeProperty : public wxPGProperty
 {
 	WX_PG_DECLARE_PROPERTY_CLASS(WxGUIWidgetSizeProperty)
 public:
-	WxGUIWidgetSizeProperty();
-	WxGUIWidgetSizeProperty( const wxString& label, const CGUIProperty& rValue );
+	WxGUIWidgetSizeProperty( const wxString& label = wxPG_LABEL, const CGUIWidgetSize& value = CGUIWidgetSize() );
 	virtual wxVariant ChildChanged( wxVariant& thisValue, int childIndex, wxVariant& childValue ) const;
 	virtual void RefreshChildren();
 
@@ -241,19 +229,15 @@ protected:
 // -----------------------------------------------------------------------
 // WxGUIFontProperty
 // -----------------------------------------------------------------------
-class WxGUIFontProperty : public WxGUIPropertyBase
+class WxGUIFontProperty : public wxPGProperty
 {
 	WX_PG_DECLARE_PROPERTY_CLASS(WxGUIFontProperty)
 public:
-	WxGUIFontProperty();
-	WxGUIFontProperty( const wxString& label, const CGUIProperty& rValue );
+	WxGUIFontProperty( const wxString& label = wxPG_LABEL, guiex::uint16 uFontID = 0 );
 	virtual bool OnEvent( wxPropertyGrid* propgrid, wxWindow* primary, wxEvent& event );
 	virtual void OnSetValue();
 	virtual wxString ValueToString( wxVariant& value, int argFlags ) const;
 	virtual bool StringToValue( wxVariant& variant, const wxString& text, int argFlags ) const;
-
-protected:
-	CGUIProperty m_aFontProp;
 };
 
 

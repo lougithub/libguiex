@@ -70,7 +70,7 @@ namespace guiex
 			const CGUIProperty* pPropertyImages = rProperty.GetProperty("images", "array" );
 			if( pPropertyImages )
 			{
-				for( uint32 i=0; i<pPropertyImages->GetPropertyNum(); ++i )
+				for( uint32 i=0; i<pPropertyImages->GetPropertyCount(); ++i )
 				{
 					const CGUIProperty* pProperty = pPropertyImages->GetProperty( i );
 					if( pProperty->GetType() == ePropertyType_Image && pProperty->GetName() == "image" )

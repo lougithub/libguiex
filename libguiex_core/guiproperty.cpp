@@ -175,7 +175,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	uint32 CGUIProperty::GetPropertyNum( ) const
+	uint32 CGUIProperty::GetPropertyCount( ) const
 	{
 		return static_cast<uint32>(m_setProperty.size());
 	}

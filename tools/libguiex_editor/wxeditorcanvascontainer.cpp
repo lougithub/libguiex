@@ -128,7 +128,7 @@ int WxEditorCanvasContainer::SaveWidgetNodeToDoc( CGUIWidget* pWidget, TiXmlDocu
 
 	//process image
 	std::vector<CGUIProperty> aImgVector;
-	for( unsigned i=0; i<aSet.GetPropertyNum(); ++i)
+	for( unsigned i=0; i<aSet.GetPropertyCount(); ++i)
 	{
 		const CGUIProperty* pProperty = aSet.GetProperty(i);
 		if( pProperty->GetType() == ePropertyType_Image )
@@ -145,7 +145,7 @@ int WxEditorCanvasContainer::SaveWidgetNodeToDoc( CGUIWidget* pWidget, TiXmlDocu
 	}
 
 	//process left
-	for( unsigned i=0; i<aSet.GetPropertyNum(); ++i)
+	for( unsigned i=0; i<aSet.GetPropertyCount(); ++i)
 	{
 		const CGUIProperty* pProperty = aSet.GetProperty(i);
 		AddTopPropertyElement(pWidget, rPropertyTemplate, *pProperty, pWidgetNode);
@@ -172,7 +172,7 @@ void WxEditorCanvasContainer::AddTopPropertyElement( const CGUIWidget* pWidget, 
 	TiXmlElement* pOldNode = GetElementByName(_T("property"), Gui2wxString(rProperty.GetName()), pWidgetNode);
 
 	bool bIgnoreIt = false;
-	if( rProperty.GetValue().empty() && rProperty.GetPropertyNum() == 0 )
+	if( rProperty.GetValue().empty() && rProperty.GetPropertyCount() == 0 )
 	{
 		//empty property, ignore it
 		bIgnoreIt = true;
@@ -221,9 +221,9 @@ void WxEditorCanvasContainer::AddTopPropertyElement( const CGUIWidget* pWidget, 
 		wxASSERT(pToppestNode);
 
 		//add all sub-property
-		if( rProperty.GetPropertyNum() > 0)
+		if( rProperty.GetPropertyCount() > 0)
 		{
-			for( unsigned i=0; i<rProperty.GetPropertyNum(); ++i)
+			for( unsigned i=0; i<rProperty.GetPropertyCount(); ++i)
 			{
 				AddSubPropertyElement( *rProperty.GetProperty(i), pToppestNode );
 			}
@@ -301,9 +301,9 @@ void WxEditorCanvasContainer::AddSubPropertyElement( const CGUIProperty& rProper
 	wxASSERT(pToppestNode);
 
 	//add all sub-property
-	if( rProperty.GetPropertyNum() > 0)
+	if( rProperty.GetPropertyCount() > 0)
 	{
-		for( unsigned i=0; i<rProperty.GetPropertyNum(); ++i)
+		for( unsigned i=0; i<rProperty.GetPropertyCount(); ++i)
 		{
 			AddSubPropertyElement( *rProperty.GetProperty(i), pToppestNode );
 		}
