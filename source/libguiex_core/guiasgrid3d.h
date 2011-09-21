@@ -40,9 +40,9 @@ namespace guiex
 
 		CGUISceneEffectGrid3D* GetGrid3D();
 
-		const SR_V3F& GetVertex( uint32 uX, uint32 uY );
-		const SR_V3F& GetOriginalVertex( uint32 uX, uint32 uY );
-		void SetVertex( uint32 uX, uint32 uY, const SR_V3F& rVertex );
+		const SVertexFormat_V3F& GetVertex( uint32 uX, uint32 uY );
+		const SVertexFormat_V3F& GetOriginalVertex( uint32 uX, uint32 uY );
+		void SetVertex( uint32 uX, uint32 uY, const SVertexFormat_V3F& rVertex );
 
 	protected:
 	};

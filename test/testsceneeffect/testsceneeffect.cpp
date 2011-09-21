@@ -260,8 +260,9 @@ void CMyCanvasLayer_DrawWidget::ApplyEffect()
 	CGUIAs* pAs = m_vecAsPlayers[i]();
 	pAs->SetTotalTime( 3.0f );
 	pAs->SetReceiver( this );
-	this->SetAs( "effect", pAs );
+	SetAs( "effect", pAs );
 	pAs->RefRelease();
+	PlayAs( "effect" );
 
 	i = (i+1)%m_vecAsPlayers.size();
 }

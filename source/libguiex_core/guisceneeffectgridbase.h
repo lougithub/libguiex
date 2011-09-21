@@ -23,9 +23,9 @@
 namespace guiex
 {
 	class IGUIInterfaceRender;
-	struct SR_T2F;
-	struct SR_V3F;
-	struct SR_V3F;
+	struct SVertexFormat_T2F;
+	struct SVertexFormat_V3F;
+	struct SVertexFormat_V3F;
 }
 
 //============================================================================//

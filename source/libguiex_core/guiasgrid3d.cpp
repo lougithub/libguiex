@@ -57,7 +57,7 @@ namespace guiex
 	/** 
 	 * returns the vertex than belongs to certain position in the grid 
 	 */
-	const SR_V3F& CGUIAsGrid3D::GetVertex( uint32 uX, uint32 uY )
+	const SVertexFormat_V3F& CGUIAsGrid3D::GetVertex( uint32 uX, uint32 uY )
 	{
 		return GetGrid3D()->GetVertex( uX, uY );
 	}
@@ -65,7 +65,7 @@ namespace guiex
 	/** 
 	 * returns the non-transformed vertex than belongs to certain position in the grid 
 	 */
-	const SR_V3F& CGUIAsGrid3D::GetOriginalVertex( uint32 uX, uint32 uY )
+	const SVertexFormat_V3F& CGUIAsGrid3D::GetOriginalVertex( uint32 uX, uint32 uY )
 	{
 		return GetGrid3D()->GetOriginalVertex( uX, uY );
 	}
@@ -73,7 +73,7 @@ namespace guiex
 	/**
 	 * sets a new vertex to a certain position of the grid 
 	 */
-	void CGUIAsGrid3D::SetVertex( uint32 uX, uint32 uY, const SR_V3F& rVertex )
+	void CGUIAsGrid3D::SetVertex( uint32 uX, uint32 uY, const SVertexFormat_V3F& rVertex )
 	{
 		GetGrid3D()->SetVertex( uX, uY, rVertex );
 	}
@@ -112,7 +112,7 @@ namespace guiex
 			for( uint32 j = 0; j <= m_aGridSize.GetHeight(); j++ )
 			{
 				// Get original vertex
-				SR_V3F p = GetOriginalVertex( i,j);
+				SVertexFormat_V3F p = GetOriginalVertex( i,j);
 
 				real R = sqrtf(p.x*p.x + (p.y - ay) * (p.y - ay));
 				real r = R * sinTheta;
@@ -184,7 +184,7 @@ namespace guiex
 		{
 			for( uint32 j = 0; j < (m_aGridSize.GetHeight()+1); j++ )
 			{
-				SR_V3F v = GetOriginalVertex( i,j);
+				SVertexFormat_V3F v = GetOriginalVertex( i,j);
 				v.z += (sinf(CGUIMath::GUI_PI * fPercent * m_nWaves*2 + (v.y+v.x) * .01f) * m_fAmplitude * m_fAmplitudeRate);
 				SetVertex( i,j, v );
 			}
@@ -222,7 +222,7 @@ namespace guiex
 		{
 			for( uint32 j = 0; j < (m_aGridSize.GetHeight()+1); j++ )
 			{
-				SR_V3F v = GetOriginalVertex( i, j );
+				SVertexFormat_V3F v = GetOriginalVertex( i, j );
 				v.x += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
 				v.y += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
 				if( m_bShakeZ )
@@ -279,8 +279,8 @@ namespace guiex
 		angle = angle / 2.0f;     // x calculates degrees from 0 to 90
 		real mx = cosf( angle );
 
-		SR_V3F v0 = GetOriginalVertex( 1,1);
-		SR_V3F v1 = GetOriginalVertex( 0,0);
+		SVertexFormat_V3F v0 = GetOriginalVertex( 1,1);
+		SVertexFormat_V3F v1 = GetOriginalVertex( 0,0);
 
 		real x0 = v0.x;
 		real x1 = v1.x;
@@ -306,11 +306,11 @@ namespace guiex
 			x = x1;
 		}
 
-		SR_V3F diff;
+		SVertexFormat_V3F diff;
 		diff.x = ( x - x * mx );
 		diff.z = fabsf( floorf( (x * mz) / 4.0f ) );
 
-		SR_V3F v;
+		SVertexFormat_V3F v;
 
 		// bottom-left
 		v = GetOriginalVertex( a.GetWidth(), a.GetHeight());
@@ -358,8 +358,8 @@ namespace guiex
 		angle = angle / 2.0f;     // x calculates degrees from 0 to 90
 		real my = cosf( angle );
 
-		SR_V3F v0 = GetOriginalVertex( 1,1);
-		SR_V3F v1 = GetOriginalVertex( 0,0);
+		SVertexFormat_V3F v0 = GetOriginalVertex( 1,1);
+		SVertexFormat_V3F v1 = GetOriginalVertex( 0,0);
 
 		real y0 = v0.y;
 		real y1 = v1.y;
@@ -385,11 +385,11 @@ namespace guiex
 			y = y1;
 		}
 
-		SR_V3F diff;
+		SVertexFormat_V3F diff;
 		diff.y = y - y * my;
 		diff.z = fabsf( floorf( (y * mz) / 4.0f ) );
 
-		SR_V3F v;
+		SVertexFormat_V3F v;
 
 		// bottom-left
 		v = GetOriginalVertex( a.GetWidth(), a.GetHeight());
@@ -463,7 +463,7 @@ namespace guiex
 		{
 			for( uint32 j = 0; j < (m_aGridSize.GetHeight()+1); j++ )
 			{
-				SR_V3F v = GetOriginalVertex( i,j );
+				SVertexFormat_V3F v = GetOriginalVertex( i,j );
 				CGUIVector2 vect = m_aPositionInPixels - CGUIVector2(v.x,v.y);
 				real r = vect.Length();
 
@@ -530,7 +530,7 @@ namespace guiex
 		{
 			for( uint32 j = 0; j < (m_aGridSize.GetHeight()+1); j++ )
 			{
-				SR_V3F v = GetOriginalVertex( i,j );
+				SVertexFormat_V3F v = GetOriginalVertex( i,j );
 				CGUIVector2 vect = m_aPositionInPixels - CGUIVector2(v.x,v.y);
 				real r = vect.Length();
 
@@ -575,7 +575,7 @@ namespace guiex
 		{
 			for( uint32 j = 0; j < (m_aGridSize.GetHeight()+1); j++ )
 			{
-				SR_V3F v = GetOriginalVertex( i,j );
+				SVertexFormat_V3F v = GetOriginalVertex( i,j );
 
 				v.x = (v.x + (sinf(fPercent*CGUIMath::GUI_PI*m_nWaves*2 + v.x * .01f) * m_fAmplitude * m_fAmplitudeRate));
 				v.y = (v.y + (sinf(fPercent*CGUIMath::GUI_PI*m_nWaves*2 + v.y * .01f) * m_fAmplitude * m_fAmplitudeRate));
@@ -621,7 +621,7 @@ namespace guiex
 		{
 			for( uint32 j = 0; j < (m_aGridSize.GetHeight()+1); j++ )
 			{
-				SR_V3F v = GetOriginalVertex( i,j );
+				SVertexFormat_V3F v = GetOriginalVertex( i,j );
 
 				if ( m_bVertical )
 				{
@@ -679,7 +679,7 @@ namespace guiex
 		{
 			for( uint32 j = 0; j < (m_aGridSize.GetHeight()+1); j++ )
 			{
-				SR_V3F v = GetOriginalVertex( i,j );
+				SVertexFormat_V3F v = GetOriginalVertex( i,j );
 
 				CGUIVector2	avg(i-(m_aGridSize.GetWidth()/2.0f), j-(m_aGridSize.GetHeight()/2.0f));
 				real r = avg.Length();

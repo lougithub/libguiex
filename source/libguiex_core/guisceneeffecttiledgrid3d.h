@@ -38,18 +38,18 @@ namespace guiex
 
 		void Reset( );
 
-		const SR_V3F_Quad& GetTile( uint32 uX, uint32 uY );
-		const SR_V3F_Quad& GetOriginalTile( uint32 uX, uint32 uY );
-		void SetTile( uint32 uX, uint32 uY, const SR_V3F_Quad& rTile );
+		const SVertexFormat_V3F_Quad& GetTile( uint32 uX, uint32 uY );
+		const SVertexFormat_V3F_Quad& GetOriginalTile( uint32 uX, uint32 uY );
+		void SetTile( uint32 uX, uint32 uY, const SVertexFormat_V3F_Quad& rTile );
 
 	protected:
 		virtual ~CGUISceneEffectTiledGrid3D();
 		virtual void ProcessCaptureTexture( IGUIInterfaceRender* pRender );
 
 	protected:
-		SR_T2F	*m_pTexCoordinates;
-		SR_V3F_Quad	*m_pVertices;
-		SR_V3F_Quad	*m_pOriginalVertices;
+		SVertexFormat_T2F	*m_pTexCoordinates;
+		SVertexFormat_V3F_Quad	*m_pVertices;
+		SVertexFormat_V3F_Quad	*m_pOriginalVertices;
 		uint16	*m_pIndices;
 	};
 }

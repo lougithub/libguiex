@@ -49,10 +49,6 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	IGUIRender_opengl::~IGUIRender_opengl()
-	{
-	}
-	//------------------------------------------------------------------------------
 	int IGUIRender_opengl::DoInitialize(void* pData)
 	{
 		TRY_THROW_OPENGL_ERROR( "render interface initialize" );
@@ -136,31 +132,6 @@ namespace guiex
 		GLuint status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 		return status == GL_FRAMEBUFFER_COMPLETE;
 	}
-	//------------------------------------------------------------------------------
-	void IGUIRender_opengl::BeginRender(void)
-	{
-		TRY_THROW_OPENGL_ERROR("BeginRender start");
-
-		IGUIRender_opengl_base::BeginRender();
-
-		TRY_THROW_OPENGL_ERROR("BeginRender end");
-	}
-	//------------------------------------------------------------------------------
-	void IGUIRender_opengl::EndRender(void)
-	{		
-		TRY_THROW_OPENGL_ERROR("EndRender start");
-
-		IGUIRender_opengl_base::EndRender();
-
-		TRY_THROW_OPENGL_ERROR("EndRender end");
-	}
-	//------------------------------------------------------------------------------
-
-
-
-	//------------------------------------------------------------------------------
-
-
 	//------------------------------------------------------------------------------
 	/**
 	* @brief Creates a 'null' Texture object.

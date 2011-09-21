@@ -17,7 +17,6 @@
 #include <list>
 #include <set>
 
-
 //============================================================================//
 // declare
 //============================================================================// 
@@ -62,7 +61,6 @@ namespace guiex
 		virtual void LoadIdentityMatrix( );
 		virtual void MultMatrix( const CGUIMatrix4& rMatrix );
 
-
 	public:
 		virtual void DrawRect(
 			const CGUIRect& rDestRect, 
@@ -86,14 +84,14 @@ namespace guiex
 
 		virtual void DrawQuads(
 			const CGUITexture* pTexture,
-			const SR_V2F_C4F_T2F_Quad* pQuads,
+			const SVertexFormat_V2F_C4UB_T2F_Quad* pQuads,
 			uint16* pIndices,
 			int16 nQuadNum);
 
 		virtual void DrawGrid(
 			const CGUITexture* pTexture,
-			const SR_T2F* pTextures,
-			const SR_V3F* pVerdices,
+			const SVertexFormat_T2F* pTextures,
+			const SVertexFormat_V3F* pVerdices,
 			uint16* pIndices,
 			int16 nGridNum );
 
@@ -130,7 +128,6 @@ namespace guiex
 		virtual	uint32 GetHorzScreenDPI(void) const;
 		virtual	uint32 GetVertScreenDPI(void) const;
 
-
 		virtual void EnableClip( bool bEnable );
 		virtual bool IsEnableClip( ) const;
 
@@ -141,6 +138,8 @@ namespace guiex
 		virtual void SetWireFrame( bool bWireFrame);
 		virtual bool IsWireFrame( ) const;
 
+		virtual uint32 GUIColorToRenderColor( const CGUIColor& col ) const;
+
 	protected:
 		IGUIRender_opengl_base( const char* szModuleName );
 
@@ -149,8 +148,6 @@ namespace guiex
 
 		void UpdateCamera();
 
-		// convert CGUIColor to opengl supported format
-		long ColorToOpengl( const CGUIColor& col ) const;
 		void makeGLMatrix( real gl_matrix[16], const CGUIMatrix4& m );
 
 		struct SClipRect
@@ -167,9 +164,15 @@ namespace guiex
 		void AddTexture( CGUITextureImp* pTexture );
 		void RemoveTexture( CGUITextureImp* pTexture );
 
-	protected:
+		void DrawPrimitive( uint32 uMode, const SVertexFormat_V3F* pVertexBuf, uint32 uVertexNum );
+		void DrawPrimitive( uint32 eMode, const SVertexFormat_C4UB_V3F* pVertexBuf, uint32 uVertexNum );
+		void DrawPrimitive( uint32 uMode, const SVertexFormat_T2F_C4UB_V3F* pVertexBuf, uint32 uVertexNum );
+		void DrawIndexedPrimitive( uint32 uMode, const SVertexFormat_V2F_C4UB_T2F* pVertexBuf, uint16* pIndicesBuf, uint32 uIndexNum );
+		void DrawIndexedPrimitive( uint32 uMode, const SVertexFormat_V3F* pVerdiceBuf, const SVertexFormat_T2F* pTexCoordBuf, uint16* pIndicesBuf, uint32 uIndexNum );
+	
+protected:
 		// set the texture's coordinate
-		void SetTexCoordinate(SR_T2F_C4UB_V3F* pVertexInfo, CGUIRect tex, const CGUITexture* pTexture, EImageOrientation eImageOrientation);
+		void SetTexCoordinate(SVertexFormat_T2F_C4UB_V3F* pVertexInfo, CGUIRect tex, const CGUITexture* pTexture, EImageOrientation eImageOrientation);
 
 		bool IsSupportStencil();
 
@@ -180,10 +183,10 @@ namespace guiex
 		static const int VERTEX_PER_TEXTURE = 4;
 		static const int VERTEX_FOR_LINE = 4;
 		static const int VERTEX_FOR_CIRCLE = 360;
-		SR_T2F_C4UB_V3F m_pVertex[VERTEX_PER_TEXTURE];
-		SR_V3F m_pVertexForStencil[VERTEX_PER_TEXTURE];
-		SR_C4UB_V3F m_pVertexForLine[VERTEX_FOR_LINE];
-		SR_V3F m_pVertexForCircle[VERTEX_FOR_CIRCLE];
+		SVertexFormat_T2F_C4UB_V3F m_pVertex[VERTEX_PER_TEXTURE];
+		SVertexFormat_V3F m_pVertexForStencil[VERTEX_PER_TEXTURE];
+		SVertexFormat_C4UB_V3F m_pVertexForLine[VERTEX_FOR_LINE];
+		SVertexFormat_C4UB_V3F m_pVertexForCircle[VERTEX_FOR_CIRCLE];
 
 		real m_gl_matrix[16];
 

@@ -47,14 +47,7 @@ namespace guiex
 	class GUIEXPORT IGUIInterfaceRender : public IGUIInterface
 	{
 	public:
-		/**
-		* @brief constructor
-		*/
 		IGUIInterfaceRender( const char* szModuleName );
-
-		/**
-		* @brief destructor
-		*/
 		virtual ~IGUIInterfaceRender();
 
 		virtual void ClearDepth (real depth) = 0;
@@ -108,14 +101,14 @@ namespace guiex
 
 		virtual void DrawQuads(
 			const CGUITexture* pTexture,
-			const SR_V2F_C4F_T2F_Quad* pQuads,
+			const SVertexFormat_V2F_C4UB_T2F_Quad* pQuads,
 			uint16* pIndices,
 			int16 nQuadNum) = 0;
 
 		virtual void DrawGrid(
 			const CGUITexture* pTexture,
-			const SR_T2F* pTextures,
-			const SR_V3F* pVerdices,
+			const SVertexFormat_T2F* pTextures,
+			const SVertexFormat_V3F* pVerdices,
 			uint16* pIndices,
 			int16 nGridNum ) = 0;
 
@@ -205,6 +198,8 @@ namespace guiex
 		virtual bool IsEnableClip( ) const = 0;
 
 		virtual void OnScreenSizeChange( const CGUIIntSize& rSize ) = 0;
+
+		virtual uint32 GUIColorToRenderColor( const CGUIColor& col ) const = 0;
 
 	protected:
 		friend class CGUITextureImp;

@@ -16,13 +16,6 @@
 //============================================================================// 
 namespace guiex
 {
-	void ConvGUIColor_2_C4f( const class CGUIColor& rSrc, SR_C4F& rDst )
-	{
-		rDst.r = rSrc.GetRed();
-		rDst.g = rSrc.GetGreen();
-		rDst.b = rSrc.GetBlue();
-		rDst.a = rSrc.GetAlpha();
-	}
 
 }
 

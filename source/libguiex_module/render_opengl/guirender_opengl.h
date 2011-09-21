@@ -28,7 +28,6 @@ namespace guiex
 	{
 	public:
 		IGUIRender_opengl();
-		virtual ~IGUIRender_opengl();
 
 	public:	//api
 		virtual void ClearDepth (real depth);
@@ -49,9 +48,6 @@ namespace guiex
 		virtual void FramebufferRenderbuffer_Depth( uint32 renderbuffer );
 		virtual void DeleteRenderbuffers(uint32 n, const uint32* renderbuffers);
 
-		virtual void BeginRender(void);
-		virtual void EndRender(void);
-		
 		virtual void SetWireFrame( bool bWireFrame);
 		virtual bool IsWireFrame( ) const;
 		
@@ -59,7 +55,6 @@ namespace guiex
 		virtual	CGUITextureImp*	CreateTexture(void);
 		virtual	CGUITextureImp*	CreateTexture(const CGUIString& filename);
 		virtual	CGUITextureImp*	CreateTexture(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat);
-
 
 	protected:
 		virtual int DoInitialize(void* );

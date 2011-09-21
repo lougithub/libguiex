@@ -26,25 +26,14 @@ namespace guiex
 //============================================================================// 
 namespace guiex
 {
-
 	class GUIEXPORT CGUITexture_opengl : public CGUITexture_opengl_base
 	{
-	public:
-		/**
-		* @brief destructor
-		*/
-		virtual ~CGUITexture_opengl();
-
 	protected:
 		friend class IGUIRender_opengl;
-		/**
-		* @brief constructor
-		*/
+
 		CGUITexture_opengl(IGUIInterfaceRender* pRender);
 	};
-
-
-
+	
 }//namespace guiex
 
 #endif //__GUI_TEXTURE_OPENGL_20060706_H__

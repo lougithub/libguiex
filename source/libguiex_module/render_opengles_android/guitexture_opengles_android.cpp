@@ -21,16 +21,10 @@
 //============================================================================// 
 namespace guiex
 {
-
 	//------------------------------------------------------------------------------
 	CGUITexture_opengles_android::CGUITexture_opengles_android(IGUIInterfaceRender* pRender)
 		:CGUITexture_opengl_base(pRender)
 	{
-	}
-	//------------------------------------------------------------------------------
-	CGUITexture_opengles_android::~CGUITexture_opengles_android()
-	{
-
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

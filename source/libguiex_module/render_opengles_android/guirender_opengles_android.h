@@ -5,7 +5,6 @@
 * @date 2011-04-29
 */
 
-
 #ifndef __GUI_RENDER_OPENGLES_ANDROID_20110429_H__
 #define __GUI_RENDER_OPENGLES_ANDROID_20110429_H__
 
@@ -30,7 +29,6 @@ namespace guiex
 	{
 	public:
 		IGUIRender_opengles_android( );
-		virtual ~IGUIRender_opengles_android();
 
 	public:	//api
 		virtual void ClearDepth (real depth);
@@ -50,9 +48,6 @@ namespace guiex
 		virtual void RenderbufferStorage_Depth( uint32 width, uint32 height);
 		virtual void FramebufferRenderbuffer_Depth( uint32 renderbuffer );
 		virtual void DeleteRenderbuffers(uint32 n, const uint32* renderbuffers);
-
-		virtual void BeginRender(void);
-		virtual void EndRender(void);
 
 	protected:
 		virtual int DoInitialize(void* );

@@ -286,7 +286,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CTDGameTowerImplementBase::OnRenderState_Working(IGUIInterfaceRender* pRender)
 	{
-		pRender->DrawCircle( GetPosition(), GetRadius(),2, 0, CGUIColor(1,1,1,1));
+		pRender->DrawCircle( GetPosition(), GetRadius(),2, 0, CGUIColor(1,0,0,1));
 	}
 	//------------------------------------------------------------------------------
 	void CTDGameTowerImplementBase::OnUpdateState_Working(real fDeltaTime)

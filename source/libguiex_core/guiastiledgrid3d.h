@@ -41,9 +41,9 @@ namespace guiex
 
 		CGUISceneEffectTiledGrid3D* GetTiledGrid3D();
 
-		const SR_V3F_Quad& GetTile( uint32 uX, uint32 uY );
-		const SR_V3F_Quad& GetOriginalTile( uint32 uX, uint32 uY );
-		void SetTile( uint32 uX, uint32 uY, const SR_V3F_Quad& rTile );
+		const SVertexFormat_V3F_Quad& GetTile( uint32 uX, uint32 uY );
+		const SVertexFormat_V3F_Quad& GetOriginalTile( uint32 uX, uint32 uY );
+		void SetTile( uint32 uX, uint32 uY, const SVertexFormat_V3F_Quad& rTile );
 
 		void TurnOnTile( uint32 uX, uint32 uY );
 		void TurnOffTile( uint32 uX, uint32 uY );

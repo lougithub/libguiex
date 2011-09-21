@@ -44,7 +44,7 @@ namespace guiex
 		}
 
 		// allocating data space
-		m_pQuads = new SR_V2F_C4F_T2F_Quad[m_uTotalParticles];
+		m_pQuads = new SVertexFormat_V2F_C4UB_T2F_Quad[m_uTotalParticles];
 		m_pIndices = new uint16[m_uTotalParticles * 6];
 
 		if( !m_pQuads || !m_pIndices ) 
@@ -105,17 +105,17 @@ namespace guiex
 		for( uint32 i=0; i<m_uTotalParticles; i++) 
 		{
 			// bottom-left vertex:
-			m_pQuads[i].bl.texCoords.u = rUVRect.m_fLeft;
-			m_pQuads[i].bl.texCoords.v = rUVRect.m_fBottom;
+			m_pQuads[i].vertices[eQuad_BottomLeft].texCoords.u = rUVRect.m_fLeft;
+			m_pQuads[i].vertices[eQuad_BottomLeft].texCoords.v = rUVRect.m_fBottom;
 			// bottom-right vertex:
-			m_pQuads[i].br.texCoords.u = rUVRect.m_fRight;
-			m_pQuads[i].br.texCoords.v = rUVRect.m_fBottom;
+			m_pQuads[i].vertices[eQuad_BottomRight].texCoords.u = rUVRect.m_fRight;
+			m_pQuads[i].vertices[eQuad_BottomRight].texCoords.v = rUVRect.m_fBottom;
 			// top-left vertex:
-			m_pQuads[i].tl.texCoords.u = rUVRect.m_fLeft;
-			m_pQuads[i].tl.texCoords.v = rUVRect.m_fTop;
+			m_pQuads[i].vertices[eQuad_TopLeft].texCoords.u = rUVRect.m_fLeft;
+			m_pQuads[i].vertices[eQuad_TopLeft].texCoords.v = rUVRect.m_fTop;
 			// top-right vertex:
-			m_pQuads[i].tr.texCoords.u = rUVRect.m_fRight;
-			m_pQuads[i].tr.texCoords.v = rUVRect.m_fTop;
+			m_pQuads[i].vertices[eQuad_TopRight].texCoords.u = rUVRect.m_fRight;
+			m_pQuads[i].vertices[eQuad_TopRight].texCoords.v = rUVRect.m_fTop;
 		}
 	}
 	//------------------------------------------------------------------------------
@@ -141,11 +141,11 @@ namespace guiex
 		GUI_ASSERT( particleIdx < m_uParticleCount, "invalid particle" );
 
 		// colors
-		SR_V2F_C4F_T2F_Quad *quad = &(m_pQuads[particleIdx]);
-		ConvGUIColor_2_C4f( particle->color, quad->bl.colors);
-		ConvGUIColor_2_C4f( particle->color, quad->br.colors);
-		ConvGUIColor_2_C4f( particle->color, quad->tl.colors);
-		ConvGUIColor_2_C4f( particle->color, quad->tr.colors);
+		SVertexFormat_V2F_C4UB_T2F_Quad *quad = &(m_pQuads[particleIdx]);
+		for( uint32 i=0; i<4; ++i )
+		{
+			quad->vertices[i].colors.abgr = particle->color.GetAsABGR();
+		}
 
 		// vertices
 		real size_2 = particle->size/2;
@@ -172,38 +172,38 @@ namespace guiex
 			real dy = x1 * sr + y2 * cr + y;
 
 			// bottom-left
-			quad->bl.vertices.x = ax;
-			quad->bl.vertices.y = ay;
+			quad->vertices[eQuad_BottomLeft].vertices.x = ax;
+			quad->vertices[eQuad_BottomLeft].vertices.y = ay;
 
 			// bottom-right vertex:
-			quad->br.vertices.x = bx;
-			quad->br.vertices.y = by;
+			quad->vertices[eQuad_BottomRight].vertices.x = bx;
+			quad->vertices[eQuad_BottomRight].vertices.y = by;
 
 			// top-left vertex:
-			quad->tl.vertices.x = dx;
-			quad->tl.vertices.y = dy;
+			quad->vertices[eQuad_TopLeft].vertices.x = dx;
+			quad->vertices[eQuad_TopLeft].vertices.y = dy;
 
 			// top-right vertex:
-			quad->tr.vertices.x = cx;
-			quad->tr.vertices.y = cy;
+			quad->vertices[eQuad_TopRight].vertices.x = cx;
+			quad->vertices[eQuad_TopRight].vertices.y = cy;
 		} 
 		else
 		{
 			// bottom-left vertex:
-			quad->bl.vertices.x = rNewPos.x - size_2;
-			quad->bl.vertices.y = rNewPos.y + size_2;
+			quad->vertices[eQuad_BottomLeft].vertices.x = rNewPos.x - size_2;
+			quad->vertices[eQuad_BottomLeft].vertices.y = rNewPos.y + size_2;
 
 			// bottom-right vertex:
-			quad->br.vertices.x = rNewPos.x + size_2;
-			quad->br.vertices.y = rNewPos.y + size_2;
+			quad->vertices[eQuad_BottomRight].vertices.x = rNewPos.x + size_2;
+			quad->vertices[eQuad_BottomRight].vertices.y = rNewPos.y + size_2;
 
 			// top-left vertex:
-			quad->tl.vertices.x = rNewPos.x - size_2;
-			quad->tl.vertices.y = rNewPos.y - size_2;
+			quad->vertices[eQuad_TopLeft].vertices.x = rNewPos.x - size_2;
+			quad->vertices[eQuad_TopLeft].vertices.y = rNewPos.y - size_2;
 
 			// top-right vertex:
-			quad->tr.vertices.x = rNewPos.x + size_2;
-			quad->tr.vertices.y = rNewPos.y - size_2;				
+			quad->vertices[eQuad_TopRight].vertices.x = rNewPos.x + size_2;
+			quad->vertices[eQuad_TopRight].vertices.y = rNewPos.y - size_2;				
 		}
 	}
 	//------------------------------------------------------------------------------

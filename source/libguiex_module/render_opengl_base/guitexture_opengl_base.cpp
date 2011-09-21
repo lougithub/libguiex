@@ -59,7 +59,7 @@ namespace guiex
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);	// GL_CLAMP_TO_EDGE GL_CLAMP
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);	// GL_CLAMP_TO_EDGE GL_CLAMP
 		//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-		
+
 		TRY_THROW_OPENGL_ERROR("CGUITexture_opengl_base::CGUITexture_opengl_base: end");
 	}
 	//------------------------------------------------------------------------------
@@ -74,21 +74,34 @@ namespace guiex
 		TRY_THROW_OPENGL_ERROR("CGUITexture_opengl_base::~CGUITexture_opengl_base:end");
 	}
 	//------------------------------------------------------------------------------
-	uint16	CGUITexture_opengl_base::GetWidth(void) const
+	/**
+	* @brief Returns the current pixel width of the texture
+	*/
+	uint16 CGUITexture_opengl_base::GetWidth(void) const
 	{
 		return m_nTextureWidth;
 	}
 	//------------------------------------------------------------------------------
-	uint16	CGUITexture_opengl_base::GetHeight(void) const
+	/**
+	* @brief Returns the current pixel height of the texture
+	*/
+	uint16 CGUITexture_opengl_base::GetHeight(void) const
 	{
 		return m_nTextureHeight;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief Returns the current buffer size of this texture
+	*/
 	uint32 CGUITexture_opengl_base::GetBufferSize() const
 	{
 		return static_cast<uint32>(m_nTextureWidth * m_nTextureHeight * m_nBytesPerPixel);
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief get the texture's buffer 
+	* @return 0 for success
+	*/
 	uint32 CGUITexture_opengl_base::GetBuffer(uint8* pBuffer, uint32 nBufferSize, EGuiPixelFormat& rPixelFormat)
 	{
 		GUI_ASSERT(0, "TODO: implement it later" );
@@ -100,15 +113,15 @@ namespace guiex
 		switch(m_ePixelFormat)
 		{
 		case GUI_PF_RGBA_32:
-			eFormat = GL_RGBA;
-			break;
+		eFormat = GL_RGBA;
+		break;
 
 		//case GUI_PF_LUMINANCE_ALPHA_16:
 		//	eFormat = GL_LUMINANCE_ALPHA;
 		//	break;
 
 		default:
-			GUI_THROW( "[CGUITexture_opengl_base::LoadFromMemory]: unsupported pixel format;");
+		GUI_THROW( "[CGUITexture_opengl_base::LoadFromMemory]: unsupported pixel format;");
 		}
 
 		glBindTexture(GL_TEXTURE_2D, m_ogltexture);
@@ -117,10 +130,16 @@ namespace guiex
 		rPixelFormat = m_ePixelFormat;
 
 		return 0;
-		 */
+		*/
 	}
 	//------------------------------------------------------------------------------
-	int32	CGUITexture_opengl_base::LoadFromFile(const CGUIString& filename )
+	/**
+	* @brief Loads the specified image file into the texture.  The texture is resized 
+	* as required to hold the image.
+	* @exception CGUIException::ThrowException if failed.
+	* @return -1 for failed
+	*/
+	int32 CGUITexture_opengl_base::LoadFromFile(const CGUIString& filename )
 	{
 		IGUIInterfaceImageLoader* pImageLoader = static_cast<IGUIInterfaceImageLoader*>(CGUIInterfaceManager::Instance()->GetInterface("IGUIImageLoader"));
 		if( !pImageLoader )
@@ -138,12 +157,18 @@ namespace guiex
 
 		int32 ret = LoadFromMemory( pImageData->GetData(), pImageData->GetWidth(), pImageData->GetHeight(), pImageData->GetPixelFormat());
 		delete pImageData;
-		
+
 		TRY_THROW_OPENGL_ERROR("CGUITexture_opengl_base::LoadFromFile");
 		return ret;
 	}
 	//------------------------------------------------------------------------------
-	int32	CGUITexture_opengl_base::LoadFromMemory(const void* buffPtr, int32 buffWidth, int32 buffHeight, EGuiPixelFormat ePixelFormat/* = PF_RGBA_32*/)
+	/**
+	* @brief Loads (copies) an image from memory into the texture.  The texture is resized as 
+	required to hold the image.
+	* @exception CGUIException::ThrowException if failed.
+	* @return -1 for failed
+	*/
+	int32 CGUITexture_opengl_base::LoadFromMemory(const void* buffPtr, int32 buffWidth, int32 buffHeight, EGuiPixelFormat ePixelFormat/* = PF_RGBA_32*/)
 	{
 		glBindTexture(GL_TEXTURE_2D, m_ogltexture);
 
@@ -165,11 +190,11 @@ namespace guiex
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, buffWidth, buffHeight, 0, GL_ALPHA ,GL_UNSIGNED_BYTE, buffPtr);
 			break;
 
-		//case GUI_PF_LUMINANCE_ALPHA_16:
-		//	glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, buffWidth, buffHeight, 0, GL_LUMINANCE_ALPHA ,GL_UNSIGNED_BYTE, buffPtr);
-		//	m_nBytesPerPixel = 2;
-		//	m_ePixelFormat = GUI_PF_LUMINANCE_ALPHA_16;
-		//	break;
+			//case GUI_PF_LUMINANCE_ALPHA_16:
+			//	glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, buffWidth, buffHeight, 0, GL_LUMINANCE_ALPHA ,GL_UNSIGNED_BYTE, buffPtr);
+			//	m_nBytesPerPixel = 2;
+			//	m_ePixelFormat = GUI_PF_LUMINANCE_ALPHA_16;
+			//	break;
 
 		default:
 			GUI_THROW( "[CGUITexture_opengl_base::LoadFromMemory]: unsupported pixel format;");
@@ -184,6 +209,9 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
+	/**
+	* @brief copy a sub_image to texture
+	*/
 	void CGUITexture_opengl_base::CopySubImage(uint32 nX, uint32 nY, uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat, uint8* pBuffer)
 	{
 		GUI_ASSERT( m_ePixelFormat == ePixelFormat, "invalid pixel format" );
@@ -215,7 +243,7 @@ namespace guiex
 		default:
 			GUI_THROW( "[CGUITexture_opengl_base::CopySubImage]: unsupported pixel format;");
 		}
-		
+
 		TRY_THROW_OPENGL_ERROR("CGUITexture_opengl_base::CopySubImage");
 	}
 	//------------------------------------------------------------------------------
@@ -242,7 +270,7 @@ namespace guiex
 
 		m_nTextureWidth = nWidth;
 		m_nTextureHeight = nHeight;
-		
+
 		TRY_THROW_OPENGL_ERROR("CGUITexture_opengl_base::SetOpenglTextureSize");
 	}
 	//------------------------------------------------------------------------------

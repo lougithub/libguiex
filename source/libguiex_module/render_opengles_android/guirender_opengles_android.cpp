@@ -40,10 +40,6 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	IGUIRender_opengles_android::~IGUIRender_opengles_android()
-	{
-	}
-	//------------------------------------------------------------------------------
 	int32 IGUIRender_opengles_android::DoInitialize(void* pData )
 	{
 		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_android::DoInitialize: begin");
@@ -53,7 +49,6 @@ namespace guiex
 		{
 			return -1;
 		}
-		
 		
 		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_android::DoInitialize: end");		
 
@@ -152,29 +147,6 @@ namespace guiex
 		//return status == GL_FRAMEBUFFER_COMPLETE_OES;
 		return true;
 	}
-	//------------------------------------------------------------------------------
-	void IGUIRender_opengles_android::BeginRender(void)
-	{
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_android::BeginRender: begin");
-
-		IGUIRender_opengl_base::BeginRender();
-
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_android::BeginRender: end");
-	}
-	//------------------------------------------------------------------------------
-	void IGUIRender_opengles_android::EndRender(void)
-	{		
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_android::EndRender: begin");
-		
-		IGUIRender_opengl_base::EndRender();
-		
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_android::EndRender: end");
-	}	
-	//------------------------------------------------------------------------------
-
-
-
-
 	//------------------------------------------------------------------------------
 	CGUITextureImp*	IGUIRender_opengles_android::CreateTexture(void)
 	{
@@ -300,7 +272,6 @@ namespace guiex
 #undef M
 		
 		glMultMatrixf(m);
-
 	
 		/* Translate Eye to Origin */
 		glTranslatef(-eyex, -eyey, -eyez);

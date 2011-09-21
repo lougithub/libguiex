@@ -37,26 +37,26 @@ namespace guiex
 	} ;
 
 
-	struct SR_V2F
+	struct SVertexFormat_V2F
 	{
 		real x;
 		real y;
 	};
 
-	struct SR_V3F
+	struct SVertexFormat_V3F
 	{
 		real x;
 		real y;
 		real z;
 	};
 
-	struct SR_T2F
+	struct SVertexFormat_T2F
 	{
 		real u;
 		real v;
 	};
 
-	struct SR_C4F 
+	struct SVertexFormat_C4F 
 	{
 		real r;
 		real g;
@@ -64,7 +64,7 @@ namespace guiex
 		real a;
 	};
 
-	union SR_C4UB
+	union SVertexFormat_C4UB
 	{
 		struct
 		{
@@ -73,41 +73,53 @@ namespace guiex
 		uint32 abgr; 
 	};
 
-	struct SR_T2F_C4UB_V3F
+	struct SVertexFormat_T2F_C4UB_V3F
 	{
-		SR_T2F texCoords;
-		SR_C4UB color;
-		SR_V3F vertices;
+		SVertexFormat_T2F texCoords;
+		SVertexFormat_C4UB color;
+		SVertexFormat_V3F vertices;
 	};
 
-	struct SR_C4UB_V3F
+	struct SVertexFormat_C4UB_V3F
 	{
-		SR_C4UB color;
-		SR_V3F vertices;
+		SVertexFormat_C4UB color;
+		SVertexFormat_V3F vertices;
 	};
 
-
-	struct SR_V2F_C4F_T2F
+	struct SVertexFormat_V3F_T2F
 	{
-		SR_V2F vertices;
-		SR_C4F colors;
-		SR_T2F texCoords;
+		SVertexFormat_V3F vertices;
+		SVertexFormat_T2F texCoords;
 	};
 
-	struct SR_V2F_C4F_T2F_Quad
+	struct SVertexFormat_V2F_C4UB_T2F
 	{
-		SR_V2F_C4F_T2F	tl;
-		SR_V2F_C4F_T2F	bl;
-		SR_V2F_C4F_T2F	tr;
-		SR_V2F_C4F_T2F	br;
+		SVertexFormat_V2F vertices;
+		SVertexFormat_C4UB colors;
+		SVertexFormat_T2F texCoords;
 	};
 
-	struct SR_V3F_Quad
+	enum EQuadPosition
 	{
-		SR_V3F	tl;
-		SR_V3F	bl;
-		SR_V3F	tr;
-		SR_V3F	br;
+		eQuad_TopLeft = 0,
+		eQuad_BottomLeft,
+		eQuad_TopRight,
+		eQuad_BottomRight,
+	};
+
+	struct SVertexFormat_V2F_C4UB_T2F_Quad
+	{
+		SVertexFormat_V2F_C4UB_T2F vertices[4]; //tl, bl, tr, br
+	};
+
+	struct SVertexFormat_V3F_Quad
+	{
+		SVertexFormat_V3F vertices[4]; //tl, bl, tr, br
+	};
+
+	struct SVertexFormat_V3F_T2F_Quad
+	{
+		SVertexFormat_V3F_T2F vertices[4]; //tl, bl, tr, br
 	};
 }
 #pragma pack( pop )
@@ -118,7 +130,7 @@ namespace guiex
 //============================================================================// 
 namespace guiex
 {
-	extern void ConvGUIColor_2_C4f( const class CGUIColor& rSrc, SR_C4F& rDst );
+	
 }
 
 

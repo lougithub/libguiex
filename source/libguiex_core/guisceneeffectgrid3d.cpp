@@ -50,11 +50,11 @@ namespace guiex
 		{
 			return -1;
 		}
-
+		uint32 uVertexNum = (m_aGridSize.m_uWidth+1)*(m_aGridSize.m_uHeight+1);
 		// allocating data space
-		m_pVertices = new SR_V3F[(m_aGridSize.m_uWidth+1)*(m_aGridSize.m_uHeight+1)];
-		m_pOriginalVertices = new SR_V3F[(m_aGridSize.m_uWidth+1)*(m_aGridSize.m_uHeight+1)];
-		m_pTexCoordinates = new SR_T2F[(m_aGridSize.m_uWidth+1)*(m_aGridSize.m_uHeight+1)];
+		m_pVertices = new SVertexFormat_V3F[uVertexNum];
+		m_pOriginalVertices = new SVertexFormat_V3F[uVertexNum];
+		m_pTexCoordinates = new SVertexFormat_T2F[uVertexNum];
 		m_pIndices = new uint16[ m_aGridSize.m_uWidth * m_aGridSize.m_uHeight * 6];
 
 		for( uint32 x = 0; x < m_aGridSize.m_uWidth; x++ )
@@ -75,13 +75,13 @@ namespace guiex
 				real y1 = y * m_aStep.y;
 				real y2 = y1 + m_aStep.y;
 
-				SR_V3F	vTL = {x1,y1,0}; //top left
-				SR_V3F	vTR = {x2,y1,0}; //top right
-				SR_V3F	vBR = {x2,y2,0}; //bottom right
-				SR_V3F	vBL = {x1,y2,0}; //bottom left
+				SVertexFormat_V3F	vTL = {x1,y1,0}; //top left
+				SVertexFormat_V3F	vTR = {x2,y1,0}; //top right
+				SVertexFormat_V3F	vBR = {x2,y2,0}; //bottom right
+				SVertexFormat_V3F	vBL = {x1,y2,0}; //bottom left
 
 				uint16 indexs[4] = { idxTL, idxTR, idxBR, idxBL };
-				SR_V3F vertices[4] = { vTL, vTR, vBR, vBL };
+				SVertexFormat_V3F vertices[4] = { vTL, vTR, vBR, vBL };
 
 				for( int32 i = 0; i < 4; i++ )
 				{
@@ -100,9 +100,7 @@ namespace guiex
 			}
 		}
 
-		memcpy(m_pOriginalVertices, m_pVertices, (m_aGridSize.m_uWidth+1)*(m_aGridSize.m_uHeight+1)*sizeof(SR_V3F));
-
-
+		memcpy(m_pOriginalVertices, m_pVertices, uVertexNum*sizeof(SVertexFormat_V3F));
 		return 0;
 	}
 	//------------------------------------------------------------------------------
@@ -134,7 +132,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUISceneEffectGrid3D::Reset( )
 	{
-		memcpy(m_pVertices, m_pOriginalVertices, (m_aGridSize.m_uWidth+1)*(m_aGridSize.m_uHeight+1)*sizeof(SR_V3F));
+		memcpy(m_pVertices, m_pOriginalVertices, (m_aGridSize.m_uWidth+1)*(m_aGridSize.m_uHeight+1)*sizeof(SVertexFormat_V3F));
 	}
 	//------------------------------------------------------------------------------
 	void CGUISceneEffectGrid3D::ProcessCaptureTexture( IGUIInterfaceRender* pRender )
@@ -154,7 +152,7 @@ namespace guiex
 	/** 
 	* returns the vertex than belongs to certain position in the grid 
 	*/
-	const SR_V3F& CGUISceneEffectGrid3D::GetVertex( uint32 uX, uint32 uY )
+	const SVertexFormat_V3F& CGUISceneEffectGrid3D::GetVertex( uint32 uX, uint32 uY )
 	{
 		GUI_ASSERT( uX <= m_aGridSize.m_uWidth && uY <= m_aGridSize.m_uHeight, "invalid pos" );
 
@@ -165,7 +163,7 @@ namespace guiex
 	/** 
 	* returns the non-transformed vertex than belongs to certain position in the grid 
 	*/
-	const SR_V3F& CGUISceneEffectGrid3D::GetOriginalVertex( uint32 uX, uint32 uY )
+	const SVertexFormat_V3F& CGUISceneEffectGrid3D::GetOriginalVertex( uint32 uX, uint32 uY )
 	{
 		GUI_ASSERT( uX <= m_aGridSize.m_uWidth && uY <= m_aGridSize.m_uHeight, "invalid pos" );
 		
@@ -176,7 +174,7 @@ namespace guiex
 	/**
 	 * sets a new vertex to a certain position of the grid 
 	 */
-	void CGUISceneEffectGrid3D::SetVertex( uint32 uX, uint32 uY, const SR_V3F& rVertex )
+	void CGUISceneEffectGrid3D::SetVertex( uint32 uX, uint32 uY, const SVertexFormat_V3F& rVertex )
 	{
 		GUI_ASSERT( uX <= m_aGridSize.m_uWidth && uY <= m_aGridSize.m_uHeight, "invalid pos" );
 

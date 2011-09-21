@@ -52,9 +52,9 @@ namespace guiex
 
 		// allocating data space	
 		uint32 numQuads = m_aGridSize.m_uWidth * m_aGridSize.m_uHeight;
-		m_pVertices = new SR_V3F_Quad[numQuads];
-		m_pOriginalVertices = new SR_V3F_Quad[numQuads];
-		m_pTexCoordinates = new SR_T2F[numQuads * 4];
+		m_pVertices = new SVertexFormat_V3F_Quad[numQuads];
+		m_pOriginalVertices = new SVertexFormat_V3F_Quad[numQuads];
+		m_pTexCoordinates = new SVertexFormat_T2F[numQuads * 4];
 		m_pIndices = new uint16[ numQuads * 6];
 
 		for( uint32 x = 0; x < m_aGridSize.m_uWidth; x++ )
@@ -68,18 +68,18 @@ namespace guiex
 
 				int idx = (x * m_aGridSize.m_uHeight) + y;
 
-				m_pVertices[idx].tl.x = x1; //top left
-				m_pVertices[idx].tl.y = y1;
-				m_pVertices[idx].tl.z = 0;
-				m_pVertices[idx].bl.x = x1; //bottom left
-				m_pVertices[idx].bl.y = y2;
-				m_pVertices[idx].bl.z = 0;
-				m_pVertices[idx].tr.x = x2; //top right
-				m_pVertices[idx].tr.y = y1;
-				m_pVertices[idx].tr.z = 0;
-				m_pVertices[idx].br.x= x2; // bottom right
-				m_pVertices[idx].br.y = y2;
-				m_pVertices[idx].br.z = 0;
+				m_pVertices[idx].vertices[eQuad_TopLeft].x = x1; //top left
+				m_pVertices[idx].vertices[eQuad_TopLeft].y = y1;
+				m_pVertices[idx].vertices[eQuad_TopLeft].z = 0;
+				m_pVertices[idx].vertices[eQuad_BottomLeft].x = x1; //bottom left
+				m_pVertices[idx].vertices[eQuad_BottomLeft].y = y2;
+				m_pVertices[idx].vertices[eQuad_BottomLeft].z = 0;
+				m_pVertices[idx].vertices[eQuad_TopRight].x = x2; //top right
+				m_pVertices[idx].vertices[eQuad_TopRight].y = y1;
+				m_pVertices[idx].vertices[eQuad_TopRight].z = 0;
+				m_pVertices[idx].vertices[eQuad_BottomRight].x= x2; // bottom right
+				m_pVertices[idx].vertices[eQuad_BottomRight].y = y2;
+				m_pVertices[idx].vertices[eQuad_BottomRight].z = 0;
 
 				real newY1 = y1;
 				real newY2 = y2;
@@ -114,7 +114,7 @@ namespace guiex
 			m_pIndices[nIdx+5] = x*4+1; //bl
 		}
 
-		memcpy(m_pOriginalVertices, m_pVertices, numQuads*sizeof(SR_V3F_Quad));
+		memcpy(m_pOriginalVertices, m_pVertices, numQuads*sizeof(SVertexFormat_V3F_Quad));
 
 		return 0;
 	}
@@ -147,16 +147,16 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUISceneEffectTiledGrid3D::Reset( )
 	{
-		memcpy(m_pVertices, m_pOriginalVertices, m_aGridSize.m_uWidth * m_aGridSize.m_uHeight*sizeof(SR_V3F_Quad));
+		memcpy(m_pVertices, m_pOriginalVertices, m_aGridSize.m_uWidth * m_aGridSize.m_uHeight*sizeof(SVertexFormat_V3F_Quad));
 	}
 	//------------------------------------------------------------------------------
 	void CGUISceneEffectTiledGrid3D::ProcessCaptureTexture( IGUIInterfaceRender* pRender )
 	{
 		uint32 n = m_aGridSize.m_uWidth * m_aGridSize.m_uHeight;
-		pRender->DrawGrid( m_pTexture, m_pTexCoordinates, (SR_V3F*)m_pVertices, m_pIndices, n );
+		pRender->DrawGrid( m_pTexture, m_pTexCoordinates, (SVertexFormat_V3F*)m_pVertices, m_pIndices, n );
 	}
 	//------------------------------------------------------------------------------
-	const SR_V3F_Quad& CGUISceneEffectTiledGrid3D::GetTile( uint32 uX, uint32 uY )
+	const SVertexFormat_V3F_Quad& CGUISceneEffectTiledGrid3D::GetTile( uint32 uX, uint32 uY )
 	{
 		GUI_ASSERT( uX < m_aGridSize.m_uWidth && uY < m_aGridSize.m_uHeight, "invalid pos" );
 
@@ -164,7 +164,7 @@ namespace guiex
 		return m_pVertices[index]; 
 	}
 	//------------------------------------------------------------------------------
-	const SR_V3F_Quad& CGUISceneEffectTiledGrid3D::GetOriginalTile( uint32 uX, uint32 uY )
+	const SVertexFormat_V3F_Quad& CGUISceneEffectTiledGrid3D::GetOriginalTile( uint32 uX, uint32 uY )
 	{
 		GUI_ASSERT( uX < m_aGridSize.m_uWidth && uY < m_aGridSize.m_uHeight, "invalid pos" );
 
@@ -172,7 +172,7 @@ namespace guiex
 		return m_pOriginalVertices[index];
 	}
 	//------------------------------------------------------------------------------
-	void CGUISceneEffectTiledGrid3D::SetTile( uint32 uX, uint32 uY, const SR_V3F_Quad& rTile )
+	void CGUISceneEffectTiledGrid3D::SetTile( uint32 uX, uint32 uY, const SVertexFormat_V3F_Quad& rTile )
 	{
 		GUI_ASSERT( uX < m_aGridSize.m_uWidth && uY < m_aGridSize.m_uHeight, "invalid pos" );
 

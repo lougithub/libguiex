@@ -57,7 +57,7 @@ namespace guiex
 	/** 
 	* returns the vertex than belongs to certain position in the grid 
 	*/
-	const SR_V3F_Quad& CGUIAsTiledGrid3D::GetTile( uint32 uX, uint32 uY )
+	const SVertexFormat_V3F_Quad& CGUIAsTiledGrid3D::GetTile( uint32 uX, uint32 uY )
 	{
 		return GetTiledGrid3D()->GetTile( uX, uY );
 	}
@@ -65,7 +65,7 @@ namespace guiex
 	/** 
 	* returns the non-transformed vertex than belongs to certain position in the grid 
 	*/
-	const SR_V3F_Quad& CGUIAsTiledGrid3D::GetOriginalTile( uint32 uX, uint32 uY )
+	const SVertexFormat_V3F_Quad& CGUIAsTiledGrid3D::GetOriginalTile( uint32 uX, uint32 uY )
 	{
 		return GetTiledGrid3D()->GetOriginalTile( uX, uY );
 	}
@@ -73,7 +73,7 @@ namespace guiex
 	/**
 	* sets a new vertex to a certain position of the grid 
 	*/
-	void CGUIAsTiledGrid3D::SetTile( uint32 uX, uint32 uY, const SR_V3F_Quad& rTile )
+	void CGUIAsTiledGrid3D::SetTile( uint32 uX, uint32 uY, const SVertexFormat_V3F_Quad& rTile )
 	{
 		GetTiledGrid3D()->SetTile( uX, uY, rTile );
 	}
@@ -85,8 +85,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIAsTiledGrid3D::TurnOffTile( uint32 uX, uint32 uY )
 	{
-		SR_V3F_Quad coords;
-		memset( &coords, 0, sizeof( SR_V3F_Quad ) );
+		SVertexFormat_V3F_Quad coords;
+		memset( &coords, 0, sizeof( SVertexFormat_V3F_Quad ) );
 		SetTile( uX, uY, coords );
 	}	
 	//------------------------------------------------------------------------------
@@ -119,26 +119,26 @@ namespace guiex
 		{
 			for( uint32 j = 0; j < m_aGridSize.GetHeight(); j++ )
 			{
-				SR_V3F_Quad coords = GetOriginalTile(i,j);
+				SVertexFormat_V3F_Quad coords = GetOriginalTile(i,j);
 
 				// X
-				coords.bl.x += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
-				coords.br.x += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
-				coords.tl.x += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
-				coords.tr.x += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
+				coords.vertices[eQuad_BottomLeft].x += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
+				coords.vertices[eQuad_BottomRight].x += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
+				coords.vertices[eQuad_TopLeft].x += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
+				coords.vertices[eQuad_TopRight].x += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
 
 				// Y
-				coords.bl.y += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
-				coords.br.y += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
-				coords.tl.y += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
-				coords.tr.y += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
+				coords.vertices[eQuad_BottomLeft].y += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
+				coords.vertices[eQuad_BottomRight].y += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
+				coords.vertices[eQuad_TopLeft].y += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
+				coords.vertices[eQuad_TopRight].y += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
 
 				if( m_bShakeZ ) 
 				{
-					coords.bl.z += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
-					coords.br.z += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
-					coords.tl.z += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
-					coords.tr.z += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
+					coords.vertices[eQuad_BottomLeft].z += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
+					coords.vertices[eQuad_BottomRight].z += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
+					coords.vertices[eQuad_TopLeft].z += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
+					coords.vertices[eQuad_TopRight].z += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
 				}
 
 				SetTile( i, j, coords );
@@ -187,26 +187,26 @@ namespace guiex
 		{
 			for( uint32 j = 0; j < m_aGridSize.GetHeight(); j++ )
 			{
-				SR_V3F_Quad coords = GetOriginalTile(i,j);
+				SVertexFormat_V3F_Quad coords = GetOriginalTile(i,j);
 
 				// X
-				coords.bl.x += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
-				coords.br.x += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
-				coords.tl.x += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
-				coords.tr.x += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
+				coords.vertices[eQuad_BottomLeft].x += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
+				coords.vertices[eQuad_BottomRight].x += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
+				coords.vertices[eQuad_TopLeft].x += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
+				coords.vertices[eQuad_TopRight].x += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
 
 				// Y
-				coords.bl.y += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
-				coords.br.y += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
-				coords.tl.y += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
-				coords.tr.y += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
+				coords.vertices[eQuad_BottomLeft].y += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
+				coords.vertices[eQuad_BottomRight].y += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
+				coords.vertices[eQuad_TopLeft].y += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
+				coords.vertices[eQuad_TopRight].y += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
 
 				if( m_bShatterZ )
 				{
-					coords.bl.z += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
-					coords.br.z += ( rand() % (m_nRandrange*2) ) - m_nRandrange;				
-					coords.tl.z += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
-					coords.tr.z += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
+					coords.vertices[eQuad_BottomLeft].z += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
+					coords.vertices[eQuad_BottomRight].z += ( rand() % (m_nRandrange*2) ) - m_nRandrange;				
+					coords.vertices[eQuad_TopLeft].z += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
+					coords.vertices[eQuad_TopRight].z += ( rand() % (m_nRandrange*2) ) - m_nRandrange;
 				}
 
 				SetTile( i, j, coords );
@@ -318,19 +318,19 @@ namespace guiex
 
 				CGUIVector2 position( rDelta.GetWidth() * fPercent, rDelta.GetHeight()*fPercent );
 
-				SR_V3F_Quad coords = GetOriginalTile(i,j);
+				SVertexFormat_V3F_Quad coords = GetOriginalTile(i,j);
 
-				coords.bl.x += (int32)(position.x * rStep.x);
-				coords.bl.y += (int32)(position.y * rStep.y);
+				coords.vertices[eQuad_BottomLeft].x += (int32)(position.x * rStep.x);
+				coords.vertices[eQuad_BottomLeft].y += (int32)(position.y * rStep.y);
 
-				coords.br.x += (int32)(position.x * rStep.x);
-				coords.br.y += (int32)(position.y * rStep.y);
+				coords.vertices[eQuad_BottomRight].x += (int32)(position.x * rStep.x);
+				coords.vertices[eQuad_BottomRight].y += (int32)(position.y * rStep.y);
 
-				coords.tl.x += (int32)(position.x * rStep.x);
-				coords.tl.y += (int32)(position.y * rStep.y);
+				coords.vertices[eQuad_TopLeft].x += (int32)(position.x * rStep.x);
+				coords.vertices[eQuad_TopLeft].y += (int32)(position.y * rStep.y);
 
-				coords.tr.x += (int32)(position.x * rStep.x);
-				coords.tr.y += (int32)(position.y * rStep.y);
+				coords.vertices[eQuad_TopRight].x += (int32)(position.x * rStep.x);
+				coords.vertices[eQuad_TopRight].y += (int32)(position.y * rStep.y);
 
 				SetTile( i, j, coords );
 			}
@@ -367,20 +367,20 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIAsFadeOutTRTiles::TransformTile( uint32 uX, uint32 uY, real distance )
 	{
-		SR_V3F_Quad coords = GetOriginalTile(uX,uY);
+		SVertexFormat_V3F_Quad coords = GetOriginalTile(uX,uY);
 		const CGUIVector2& step = GetTiledGrid3D()->GetStep();
 
-		coords.bl.x += (step.x / 2) * (1.0f - distance);
-		coords.bl.y -= (step.y / 2) * (1.0f - distance);
+		coords.vertices[eQuad_BottomLeft].x += (step.x / 2) * (1.0f - distance);
+		coords.vertices[eQuad_BottomLeft].y -= (step.y / 2) * (1.0f - distance);
 
-		coords.br.x -= (step.x / 2) * (1.0f - distance);
-		coords.br.y -= (step.y / 2) * (1.0f - distance);
+		coords.vertices[eQuad_BottomRight].x -= (step.x / 2) * (1.0f - distance);
+		coords.vertices[eQuad_BottomRight].y -= (step.y / 2) * (1.0f - distance);
 
-		coords.tl.x += (step.x / 2) * (1.0f - distance);
-		coords.tl.y += (step.y / 2) * (1.0f - distance);
+		coords.vertices[eQuad_TopLeft].x += (step.x / 2) * (1.0f - distance);
+		coords.vertices[eQuad_TopLeft].y += (step.y / 2) * (1.0f - distance);
 
-		coords.tr.x -= (step.x / 2) * (1.0f - distance);
-		coords.tr.y += (step.y / 2) * (1.0f - distance);
+		coords.vertices[eQuad_TopRight].x -= (step.x / 2) * (1.0f - distance);
+		coords.vertices[eQuad_TopRight].y += (step.y / 2) * (1.0f - distance);
 
 		SetTile( uX, uY, coords );
 	}
@@ -466,13 +466,13 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIAsFadeOutUpTiles::TransformTile( uint32 uX, uint32 uY, real distance )
 	{
-		SR_V3F_Quad coords = GetOriginalTile(uX,uY);
+		SVertexFormat_V3F_Quad coords = GetOriginalTile(uX,uY);
 		const CGUIVector2& step = GetTiledGrid3D()->GetStep();
 
-		coords.bl.y -= (step.y / 2) * (1.0f - distance);
-		coords.br.y -= (step.y / 2) * (1.0f - distance);
-		coords.tl.y += (step.y / 2) * (1.0f - distance);
-		coords.tr.y += (step.y / 2) * (1.0f - distance);
+		coords.vertices[eQuad_BottomLeft].y -= (step.y / 2) * (1.0f - distance);
+		coords.vertices[eQuad_BottomRight].y -= (step.y / 2) * (1.0f - distance);
+		coords.vertices[eQuad_TopLeft].y += (step.y / 2) * (1.0f - distance);
+		coords.vertices[eQuad_TopRight].y += (step.y / 2) * (1.0f - distance);
 
 		SetTile( uX, uY, coords );
 	}
@@ -621,12 +621,12 @@ namespace guiex
 		{
 			for( uint32 j = 0; j < m_aGridSize.GetHeight(); j++ )
 			{
-				SR_V3F_Quad coords = GetOriginalTile(i,j);
+				SVertexFormat_V3F_Quad coords = GetOriginalTile(i,j);
 
-				coords.bl.z = (sinf(fPercent*CGUIMath::GUI_PI*m_nWaves*2 + (coords.bl.y+coords.bl.x) * 0.01f) * m_fAmplitude * m_fAmplitudeRate );
-				coords.br.z	= coords.bl.z;
-				coords.tl.z = coords.bl.z;
-				coords.tr.z = coords.bl.z;
+				coords.vertices[eQuad_BottomLeft].z = (sinf(fPercent*CGUIMath::GUI_PI*m_nWaves*2 + (coords.vertices[eQuad_BottomLeft].y+coords.vertices[eQuad_BottomLeft].x) * 0.01f) * m_fAmplitude * m_fAmplitudeRate );
+				coords.vertices[eQuad_BottomRight].z	= coords.vertices[eQuad_BottomLeft].z;
+				coords.vertices[eQuad_TopLeft].z = coords.vertices[eQuad_BottomLeft].z;
+				coords.vertices[eQuad_TopRight].z = coords.vertices[eQuad_BottomLeft].z;
 
 				SetTile( i, j, coords );
 			}
@@ -669,21 +669,21 @@ namespace guiex
 		{
 			for( uint32 j = 0; j < m_aGridSize.GetHeight(); j++ )
 			{
-				SR_V3F_Quad coords = GetOriginalTile(i,j);
+				SVertexFormat_V3F_Quad coords = GetOriginalTile(i,j);
 				
 				if ( ((i+j) % 2) == 0 )
 				{
-					coords.bl.z += sinz;
-					coords.br.z += sinz;
-					coords.tl.z += sinz;
-					coords.tr.z += sinz;
+					coords.vertices[eQuad_BottomLeft].z += sinz;
+					coords.vertices[eQuad_BottomRight].z += sinz;
+					coords.vertices[eQuad_TopLeft].z += sinz;
+					coords.vertices[eQuad_TopRight].z += sinz;
 				}
 				else
 				{
-					coords.bl.z += sinz2;
-					coords.br.z += sinz2;
-					coords.tl.z += sinz2;
-					coords.tr.z += sinz2;
+					coords.vertices[eQuad_BottomLeft].z += sinz2;
+					coords.vertices[eQuad_BottomRight].z += sinz2;
+					coords.vertices[eQuad_TopLeft].z += sinz2;
+					coords.vertices[eQuad_TopRight].z += sinz2;
 				}
 
 				SetTile( i, j, coords );
@@ -718,17 +718,17 @@ namespace guiex
 		{
 			for( uint32 j = 0; j < m_aGridSize.GetHeight(); j++ )
 			{
-				SR_V3F_Quad coords = GetOriginalTile(i,j);
+				SVertexFormat_V3F_Quad coords = GetOriginalTile(i,j);
 				real direction = 1;
 				if ( (j % 2 ) == 0 )
 				{
 					direction = -1;
 				}	
 
-				coords.bl.x += direction * nSceneWidth * fPercent;
-				coords.br.x += direction * nSceneWidth * fPercent;
-				coords.tl.x += direction * nSceneWidth * fPercent;
-				coords.tr.x += direction * nSceneWidth * fPercent;
+				coords.vertices[eQuad_BottomLeft].x += direction * nSceneWidth * fPercent;
+				coords.vertices[eQuad_BottomRight].x += direction * nSceneWidth * fPercent;
+				coords.vertices[eQuad_TopLeft].x += direction * nSceneWidth * fPercent;
+				coords.vertices[eQuad_TopRight].x += direction * nSceneWidth * fPercent;
 
 				SetTile( i, j, coords );
 			}
@@ -764,17 +764,17 @@ namespace guiex
 		{
 			for( uint32 j = 0; j < m_aGridSize.GetHeight(); j++ )
 			{
-				SR_V3F_Quad coords = GetOriginalTile(i,j);
+				SVertexFormat_V3F_Quad coords = GetOriginalTile(i,j);
 				real direction = 1;
 				if ( (i % 2 ) == 0 )
 				{
 					direction = -1;
 				}
 				
-				coords.bl.y += direction * nSceneHeight * fPercent;
-				coords.br.y += direction * nSceneHeight * fPercent;
-				coords.tl.y += direction * nSceneHeight * fPercent;
-				coords.tr.y += direction * nSceneHeight * fPercent;
+				coords.vertices[eQuad_BottomLeft].y += direction * nSceneHeight * fPercent;
+				coords.vertices[eQuad_BottomRight].y += direction * nSceneHeight * fPercent;
+				coords.vertices[eQuad_TopLeft].y += direction * nSceneHeight * fPercent;
+				coords.vertices[eQuad_TopRight].y += direction * nSceneHeight * fPercent;
 
 				SetTile( i,j, coords );
 			}

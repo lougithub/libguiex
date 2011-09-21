@@ -82,7 +82,7 @@ namespace guiex
 	}
 
 	//------------------------------------------------------------------------------
-	EBlendFunc BlendFunc_GL2Engin( GLint nGlType )
+	EBlendFunc BlendFunc_GL2Engine( GLint nGlType )
 	{
 		switch( nGlType )
 		{
@@ -114,7 +114,7 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	GLint BlendFunc_Engin2GL( EBlendFunc nEngineType )
+	GLint BlendFunc_Engine2GL( EBlendFunc nEngineType )
 	{
 		switch( nEngineType )
 		{
@@ -273,8 +273,8 @@ namespace guiex
 	void IGUIRender_opengl_base::SetBlendFunc( const SGUIBlendFunc& rBlendFuncType )
 	{
 		m_aBlendFunc = rBlendFuncType;
-		GLenum src = BlendFunc_Engin2GL( rBlendFuncType.src );
-		GLenum dst = BlendFunc_Engin2GL( rBlendFuncType.dst );
+		GLenum src = BlendFunc_Engine2GL( rBlendFuncType.src );
+		GLenum dst = BlendFunc_Engine2GL( rBlendFuncType.dst );
 		glBlendFunc( src, dst );
 		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::SetBlendFunc");
 	}
@@ -286,8 +286,8 @@ namespace guiex
 		//GLint dst = 0;
 		//glGetIntegerv( GL_BLEND_SRC, &src );
 		//glGetIntegerv( GL_BLEND_DST, &dst );
-		//rBlendFuncType.src = BlendFunc_GL2Engin( src );
-		//rBlendFuncType.dst = BlendFunc_GL2Engin( dst );
+		//rBlendFuncType.src = BlendFunc_GL2Engine( src );
+		//rBlendFuncType.dst = BlendFunc_GL2Engine( dst );
 		//TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::GetBlendFunc: end");
 		rBlendFuncType = m_aBlendFunc;
 	}
@@ -472,10 +472,10 @@ namespace guiex
 		real fBottom = rDestRect.m_fBottom;
 		real fTop = rDestRect.m_fTop;
 
-		long oglcolor_topleft = ColorToOpengl(rColor_topleft);
-		long oglcolor_bottomleft = ColorToOpengl(rColor_bottomleft);
-		long oglcolor_bottomright = ColorToOpengl(rColor_bottomright);
-		long oglcolor_topright = ColorToOpengl(rColor_topright);
+		uint32 oglcolor_topleft = GUIColorToRenderColor(rColor_topleft);
+		uint32 oglcolor_bottomleft = GUIColorToRenderColor(rColor_bottomleft);
+		uint32 oglcolor_bottomright = GUIColorToRenderColor(rColor_bottomright);
+		uint32 oglcolor_topright = GUIColorToRenderColor(rColor_topright);
 
 		//vert0
 		m_pVertexForLine[0].vertices.x = fLeft;
@@ -502,18 +502,9 @@ namespace guiex
 		m_pVertexForLine[3].color.abgr = oglcolor_topright;      
 
 		glLineWidth( fLineWidth );
-		glDisable(GL_TEXTURE_2D);
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
-		int32 offset = (int32) m_pVertexForLine;
-		int32 diff = offsetof( SR_C4UB_V3F, vertices);
-		glVertexPointer(3, GL_FLOAT, sizeof(SR_C4UB_V3F), (GLvoid*) (offset+diff));
-		diff = offsetof( SR_C4UB_V3F, color);
-		glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(SR_C4UB_V3F), (GLvoid*) (offset+diff));
-		glDrawArrays(GL_LINE_LOOP, 0, 4);
+		DrawPrimitive( GL_LINE_LOOP, m_pVertexForLine, 4 );
 
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		glEnable(GL_TEXTURE_2D);
 		glLineWidth( 1.0f );
 
 		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DrawRect: ");
@@ -526,25 +517,21 @@ namespace guiex
 							real z,
 							const CGUIColor& rColor )
 	{
+		uint32 oglcolor = GUIColorToRenderColor(rColor);
 		for (int i = 0; i < VERTEX_FOR_CIRCLE; i ++) 
 		{
 			// x value
-			m_pVertexForCircle[i].x   = cos(i*CGUIMath::GUI_PI / 180.f) * fRadius + rCenter.x;
+			m_pVertexForCircle[i].vertices.x   = cos(i*CGUIMath::GUI_PI / 180.f) * fRadius + rCenter.x;
 			// y value
-			m_pVertexForCircle[i].y = sin(i*CGUIMath::GUI_PI / 180.f) * fRadius + rCenter.y;
-			m_pVertexForCircle[i].z = z;
+			m_pVertexForCircle[i].vertices.y = sin(i*CGUIMath::GUI_PI / 180.f) * fRadius + rCenter.y;
+			m_pVertexForCircle[i].vertices.z = z;
+			m_pVertexForCircle[i].color.abgr = oglcolor;
 		}
 	
 		glLineWidth( fLineWidth );
-		glDisable(GL_TEXTURE_2D);
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-		
-		glVertexPointer(3, GL_FLOAT, sizeof(SR_V3F), m_pVertexForCircle);
-		glColor4f(rColor.GetRed(), rColor.GetGreen(), rColor.GetBlue(), rColor.GetAlpha());
-		glDrawArrays(GL_LINE_LOOP, 0, VERTEX_FOR_CIRCLE);
-		
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		glEnable(GL_TEXTURE_2D);
+
+		DrawPrimitive( GL_LINE_LOOP, m_pVertexForCircle, VERTEX_FOR_CIRCLE );
+
 		glLineWidth( 1.0f );
 		
 		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DrawCircle: ");		
@@ -558,8 +545,8 @@ namespace guiex
 		const CGUIColor& rColor_begin,
 		const CGUIColor& rColor_end )
 	{
-		long oglcolor_topleft = ColorToOpengl(rColor_begin);
-		long oglcolor_bottomleft = ColorToOpengl(rColor_end);
+		uint32 oglcolor_topleft = GUIColorToRenderColor(rColor_begin);
+		uint32 oglcolor_bottomleft = GUIColorToRenderColor(rColor_end);
 
 		//vert0
 		m_pVertexForLine[0].vertices.x = rBegin.x;
@@ -574,20 +561,9 @@ namespace guiex
 		m_pVertexForLine[1].color.abgr = oglcolor_bottomleft;     
 
 		glLineWidth( fLineWidth );
-		glDisable(GL_TEXTURE_2D);
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-		glDisableClientState(GL_COLOR_ARRAY);
 
-		int32 offset = (int32) m_pVertexForLine;
-		int32 diff = offsetof( SR_C4UB_V3F, vertices);
-		glVertexPointer(3, GL_FLOAT, sizeof(SR_C4UB_V3F), (GLvoid*) (offset+diff));
-		diff = offsetof( SR_C4UB_V3F, color);
-		glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(SR_C4UB_V3F), (GLvoid*) (offset+diff));
-		glDrawArrays(GL_LINES, 0, 2);
+		DrawPrimitive( GL_LINES, m_pVertexForLine, 2);
 
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		glEnableClientState(GL_COLOR_ARRAY);
-		glEnable(GL_TEXTURE_2D);
 		glLineWidth( 1.0f );
 
 		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DrawLine: ");
@@ -595,60 +571,32 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::DrawGrid( 
 		const CGUITexture* pTexture,
-		const SR_T2F* pTextures,
-		const SR_V3F* pVerdices,
+		const SVertexFormat_T2F* pTextures,
+		const SVertexFormat_V3F* pVerdices,
 		uint16* pIndices,
 		int16 nGridNum )
 	{
 		BindTexture( pTexture );
 		glDisableClientState(GL_COLOR_ARRAY);	
 
-		// vertex
-		glVertexPointer(3,GL_FLOAT, sizeof(SR_V3F), pVerdices );
-
-		// tex coords
-		glTexCoordPointer(2, GL_FLOAT, sizeof(SR_T2F), pTextures);		
-
-		glDrawElements(m_nRenderMode_TRIANGLES, nGridNum*6, GL_UNSIGNED_SHORT, pIndices);
-
-		// restore GL default state
-		glEnableClientState(GL_COLOR_ARRAY);
+		DrawIndexedPrimitive( m_nRenderMode_TRIANGLES, pVerdices, pTextures, pIndices, nGridNum*6 );
 
 		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DrawGrid: ");
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::DrawQuads(
 		const CGUITexture* pTexture,
-		const SR_V2F_C4F_T2F_Quad* pQuads,
+		const SVertexFormat_V2F_C4UB_T2F_Quad* pQuads,
 		uint16* pIndices,
 		int16 nQuadNum)
 	{
 		BindTexture( pTexture );
 
-		int16 kQuadSize = sizeof(pQuads[0].bl);
-
-		int32 offset = (int32) pQuads;
-
-		// vertex
-		int32 diff = offsetof( SR_V2F_C4F_T2F, vertices);
-		glVertexPointer(2,GL_FLOAT, kQuadSize, (GLvoid*) (offset+diff) );
-
-		// color
-		diff = offsetof( SR_V2F_C4F_T2F, colors);
-		glColorPointer(4, GL_FLOAT, kQuadSize, (GLvoid*)(offset + diff));
-
-		// tex coords
-		diff = offsetof( SR_V2F_C4F_T2F, texCoords);
-		glTexCoordPointer(2, GL_FLOAT, kQuadSize, (GLvoid*)(offset + diff));		
-
-		//glDrawArrays( GL_TRIANGLE_STRIP, 0, nQuadNum * 4 );
-
-		glDrawElements(m_nRenderMode_TRIANGLES, nQuadNum*6, GL_UNSIGNED_SHORT, pIndices);
+		DrawIndexedPrimitive( m_nRenderMode_TRIANGLES, pQuads[0].vertices,pIndices,nQuadNum*6 );
+		int16 kQuadSize = sizeof(pQuads[0].vertices[0]);
 
 		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DrawQuads: ");
 	}
-
-
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::BindTexture( const CGUITexture* pTexture )
 	{
@@ -691,10 +639,10 @@ namespace guiex
 		real fBottom = rDestRect.m_fBottom;
 		real fTop = rDestRect.m_fTop;
 
-		long oglcolor_topleft = ColorToOpengl(rColor_topleft);
-		long oglcolor_bottomleft = ColorToOpengl(rColor_bottomleft);
-		long oglcolor_bottomright = ColorToOpengl(rColor_bottomright);
-		long oglcolor_topright = ColorToOpengl(rColor_topright);
+		uint32 oglcolor_topleft = GUIColorToRenderColor(rColor_topleft);
+		uint32 oglcolor_bottomleft = GUIColorToRenderColor(rColor_bottomleft);
+		uint32 oglcolor_bottomright = GUIColorToRenderColor(rColor_bottomright);
+		uint32 oglcolor_topright = GUIColorToRenderColor(rColor_topright);
 
 		//vert0
 		m_pVertex[0].vertices.x= fLeft;
@@ -720,18 +668,83 @@ namespace guiex
 		m_pVertex[3].vertices.z = z;
 		m_pVertex[3].color.abgr = oglcolor_bottomright;      
 
-		int16 kSize = sizeof(SR_T2F_C4UB_V3F);
-		int32 offset = (int32) m_pVertex;
-		int32 diff = offsetof( SR_T2F_C4UB_V3F, vertices);
-		glVertexPointer(3, GL_FLOAT, kSize, (GLvoid*) (offset+diff));
-		diff = offsetof( SR_T2F_C4UB_V3F, color);
-		glColorPointer(4, GL_UNSIGNED_BYTE, kSize, (GLvoid*) (offset+diff));
-		diff = offsetof( SR_T2F_C4UB_V3F, texCoords);
-		glTexCoordPointer(2, GL_FLOAT, kSize, (GLvoid*) (offset+diff));
-
-		glDrawArrays( m_nRenderMode_TRIANGLE_STRIP, 0, 4 );
+		DrawPrimitive( m_nRenderMode_TRIANGLE_STRIP,m_pVertex, 4 );
 
 		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DrawTile: ");
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_base::DrawIndexedPrimitive( uint32 uMode, const SVertexFormat_V2F_C4UB_T2F* pVertexBuf, uint16* pIndicesBuf, uint32 uIndexNum )
+	{
+		int32 offset = (int32) pVertexBuf;
+
+		// vertex
+		int32 diff = offsetof( SVertexFormat_V2F_C4UB_T2F, vertices);
+		glVertexPointer(2,GL_FLOAT, sizeof(SVertexFormat_V2F_C4UB_T2F), (GLvoid*) (offset+diff) );
+
+		// color
+		diff = offsetof( SVertexFormat_V2F_C4UB_T2F, colors);
+		glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(SVertexFormat_V2F_C4UB_T2F), (GLvoid*)(offset + diff));
+
+		// tex coords
+		diff = offsetof( SVertexFormat_V2F_C4UB_T2F, texCoords);
+		glTexCoordPointer(2, GL_FLOAT, sizeof(SVertexFormat_V2F_C4UB_T2F), (GLvoid*)(offset + diff));		
+
+		glDrawElements(m_nRenderMode_TRIANGLES, uIndexNum, GL_UNSIGNED_SHORT, pIndicesBuf);
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_base::DrawIndexedPrimitive( uint32 uMode, const SVertexFormat_V3F* pVerdiceBuf, const SVertexFormat_T2F* pTexCoordBuf, uint16* pIndicesBuf, uint32 uIndexNum )
+	{
+		glDisableClientState(GL_COLOR_ARRAY);	
+
+		glVertexPointer(3, GL_FLOAT, sizeof(SVertexFormat_V3F), pVerdiceBuf);
+		glTexCoordPointer(2, GL_FLOAT, sizeof(SVertexFormat_T2F), pTexCoordBuf);	
+
+		glDrawElements(m_nRenderMode_TRIANGLES, uIndexNum, GL_UNSIGNED_SHORT, pIndicesBuf);
+
+		glEnableClientState(GL_COLOR_ARRAY);
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_base::DrawPrimitive( uint32 uMode, const SVertexFormat_T2F_C4UB_V3F* pVertexBuf, uint32 uVertexNum )
+	{
+		int32 offset = (int32) pVertexBuf;
+		int32 diff = offsetof( SVertexFormat_T2F_C4UB_V3F, vertices);
+		glVertexPointer(3, GL_FLOAT, sizeof(SVertexFormat_T2F_C4UB_V3F), (GLvoid*) (offset+diff));
+		diff = offsetof( SVertexFormat_T2F_C4UB_V3F, color);
+		glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(SVertexFormat_T2F_C4UB_V3F), (GLvoid*) (offset+diff));
+		diff = offsetof( SVertexFormat_T2F_C4UB_V3F, texCoords);
+		glTexCoordPointer(2, GL_FLOAT, sizeof(SVertexFormat_T2F_C4UB_V3F), (GLvoid*) (offset+diff));
+
+		glDrawArrays(uMode, 0, uVertexNum);
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_base::DrawPrimitive( uint32 uMode, const SVertexFormat_V3F* pVertexBuf, uint32 uVertexNum )
+	{
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		glDisableClientState(GL_COLOR_ARRAY);
+
+		int32 offset = (int32) pVertexBuf;
+		int32 diff = offsetof( SVertexFormat_V3F, x);
+		glVertexPointer(3, GL_FLOAT, sizeof(SVertexFormat_V3F), (GLvoid*) (offset+diff));
+		glDrawArrays(uMode, 0, uVertexNum);
+
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glEnableClientState(GL_COLOR_ARRAY);
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_base::DrawPrimitive( uint32 uMode, const SVertexFormat_C4UB_V3F* pVertexBuf, uint32 uVertexNum )
+	{
+		glDisable(GL_TEXTURE_2D);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+		int32 offset = (int32) pVertexBuf;
+		int32 diff = offsetof( SVertexFormat_C4UB_V3F, vertices);
+		glVertexPointer(3, GL_FLOAT, sizeof(SVertexFormat_C4UB_V3F), (GLvoid*) (offset+diff));
+		diff = offsetof( SVertexFormat_C4UB_V3F, color);
+		glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(SVertexFormat_C4UB_V3F), (GLvoid*) (offset+diff));
+		glDrawArrays(uMode, 0, uVertexNum);
+
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glEnable(GL_TEXTURE_2D);
 	}
 	//------------------------------------------------------------------------------
 	/** 
@@ -838,21 +851,12 @@ namespace guiex
 		m_pVertexForStencil[3].y = fBottom;
 		m_pVertexForStencil[3].z = 1.0f;
 
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-		glDisableClientState(GL_COLOR_ARRAY);
-
-		int32 offset = (int32) m_pVertexForStencil;
-		int32 diff = offsetof( SR_V3F, x);
-		glVertexPointer(3, GL_FLOAT, sizeof(SR_V3F), (GLvoid*) (offset+diff));
-		glDrawArrays(m_nRenderMode_TRIANGLE_STRIP, 0, 4);
-
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		glEnableClientState(GL_COLOR_ARRAY);
+		DrawPrimitive( m_nRenderMode_TRIANGLE_STRIP, m_pVertexForStencil, 4 );
 
 		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::RenderRectForStencil: ");
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengl_base::SetTexCoordinate(SR_T2F_C4UB_V3F* pVertexInfo, CGUIRect tex, const CGUITexture* pTexture, EImageOrientation eImageOrientation)
+	void IGUIRender_opengl_base::SetTexCoordinate(SVertexFormat_T2F_C4UB_V3F* pVertexInfo, CGUIRect tex, const CGUITexture* pTexture, EImageOrientation eImageOrientation)
 	{
 		//process for bottom-up texture
 		tex.m_fTop = pTexture->UVConvertTopleft2Engine_v( tex.m_fTop );
@@ -1007,7 +1011,7 @@ namespace guiex
 		return 96;
 	}
 	//------------------------------------------------------------------------------
-	long IGUIRender_opengl_base::ColorToOpengl(const CGUIColor& col) const
+	uint32 IGUIRender_opengl_base::GUIColorToRenderColor(const CGUIColor& col) const
 	{
 		return col.GetAsABGR();
 	}

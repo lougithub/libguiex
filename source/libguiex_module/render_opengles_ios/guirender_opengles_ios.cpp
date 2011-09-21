@@ -40,10 +40,6 @@ namespace guiex
 	{
 	}
 	//------------------------------------------------------------------------------
-	IGUIRender_opengles_ios::~IGUIRender_opengles_ios()
-	{
-	}
-	//------------------------------------------------------------------------------
 	int32 IGUIRender_opengles_ios::DoInitialize(void* pData )
 	{
 		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_ios::DoInitialize: begin");
@@ -75,8 +71,6 @@ namespace guiex
 		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		//glPixelStorei(GL_UNPACK_ALIGNMENT, 1);		
-		
-
 		
 		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_ios::DoInitialize: end");		
 
@@ -143,30 +137,6 @@ namespace guiex
 		GLuint status = glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES);
 		return status == GL_FRAMEBUFFER_COMPLETE_OES;
 	}
-	//------------------------------------------------------------------------------
-	void IGUIRender_opengles_ios::BeginRender(void)
-	{
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_ios::BeginRender: begin");
-
-
-		IGUIRender_opengl_base::BeginRender();
-
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_ios::BeginRender: end");
-	}
-	//------------------------------------------------------------------------------
-	void IGUIRender_opengles_ios::EndRender(void)
-	{		
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_ios::EndRender: begin");
-		
-		IGUIRender_opengl_base::EndRender();
-		
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_ios::EndRender: end");
-	}	
-	//------------------------------------------------------------------------------
-
-
-
-
 	//------------------------------------------------------------------------------
 	CGUITextureImp*	IGUIRender_opengles_ios::CreateTexture(void)
 	{

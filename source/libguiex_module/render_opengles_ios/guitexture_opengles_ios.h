@@ -30,12 +30,6 @@ namespace guiex
 
 	class GUIEXPORT CGUITexture_opengles_ios : public CGUITexture_opengl_base
 	{
-	public:
-		/**
-		* @brief destructor
-		*/
-		virtual ~CGUITexture_opengles_ios();
-
 	protected:
 		friend class IGUIRender_opengles_ios;
 		/**

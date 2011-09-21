@@ -30,7 +30,6 @@ namespace guiex
 	{
 	public:
 		IGUIRender_opengles_ios( );
-		virtual ~IGUIRender_opengles_ios();
 
 	public:	//api
 		virtual void ClearDepth (real depth);
@@ -50,9 +49,6 @@ namespace guiex
 		virtual void RenderbufferStorage_Depth( uint32 width, uint32 height);
 		virtual void FramebufferRenderbuffer_Depth( uint32 renderbuffer );
 		virtual void DeleteRenderbuffers(uint32 n, const uint32* renderbuffers);
-
-		virtual void BeginRender(void);
-		virtual void EndRender(void);
 
 	protected:
 		virtual int DoInitialize(void* );

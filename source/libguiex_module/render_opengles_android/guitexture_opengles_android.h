@@ -30,17 +30,8 @@ namespace guiex
 
 	class GUIEXPORT CGUITexture_opengles_android : public CGUITexture_opengl_base
 	{
-	public:
-		/**
-		* @brief destructor
-		*/
-		virtual ~CGUITexture_opengles_android();
-
 	protected:
 		friend class IGUIRender_opengles_android;
-		/**
-		* @brief constructor
-		*/
 		CGUITexture_opengles_android(IGUIInterfaceRender* pRender);
 	};
 

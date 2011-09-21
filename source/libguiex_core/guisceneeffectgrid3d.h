@@ -22,9 +22,9 @@
 namespace guiex
 {
 	class IGUIInterfaceRender;
-	struct SR_T2F;
-	struct SR_V3F;
-	struct SR_V3F;
+	struct SVertexFormat_T2F;
+	struct SVertexFormat_V3F;
+	struct SVertexFormat_V3F;
 }
 
 //============================================================================//
@@ -45,18 +45,18 @@ namespace guiex
 		void SetTextureFlipped( bool bFlipped );
 		bool IsTextureFlipped() const;
 
-		const SR_V3F& GetVertex( uint32 uX, uint32 uY );
-		const SR_V3F& GetOriginalVertex( uint32 uX, uint32 uY );
-		void SetVertex( uint32 uX, uint32 uY, const SR_V3F& rVertex );
+		const SVertexFormat_V3F& GetVertex( uint32 uX, uint32 uY );
+		const SVertexFormat_V3F& GetOriginalVertex( uint32 uX, uint32 uY );
+		void SetVertex( uint32 uX, uint32 uY, const SVertexFormat_V3F& rVertex );
 
 	protected:
 		virtual ~CGUISceneEffectGrid3D();
 		virtual void ProcessCaptureTexture( IGUIInterfaceRender* pRender );
 
 	protected:
-		SR_T2F *m_pTexCoordinates;
-		SR_V3F *m_pVertices;
-		SR_V3F *m_pOriginalVertices;
+		SVertexFormat_T2F *m_pTexCoordinates;
+		SVertexFormat_V3F *m_pVertices;
+		SVertexFormat_V3F *m_pOriginalVertices;
 		uint16 *m_pIndices;
 	};
 }//namespace guiex
