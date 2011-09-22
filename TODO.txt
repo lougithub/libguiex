@@ -1,1 +1,2 @@
-add opengles2 support
+add opengles2 support.
+add shader support.
