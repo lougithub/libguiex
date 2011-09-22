@@ -1,2 +1,2 @@
-- extract external_lite.7z or external_full.7z to external folder
-- extract data_test.7z to data folder
+support windows, mac, ios.
+android is wip.
