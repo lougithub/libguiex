@@ -104,7 +104,15 @@ namespace guiex
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_Windows::RegisterInterfaces_Render( )
 	{
+#if defined( GUIEX_RENDER_OPENGL )
 		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl);
+#elif defined(GUIEX_RENDER_OPENGL_ES1 )
+		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl_es1);
+#elif defined(GUIEX_RENDER_OPENGL_ES2 )
+		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl_es2);
+#else
+#error "unknown render type"	
+#endif
 	}
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_Windows::RegisterInterfaces_ImageLoader( )

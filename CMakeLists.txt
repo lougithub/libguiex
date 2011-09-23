@@ -10,9 +10,20 @@ set_property(GLOBAL PROPERTY USE_FOLDERS On)
 project( libguiex )
 
 # check platform
-option(BUILD_PLATFORM_WIN32 "platform win32" OFF)
-option(BUILD_PLATFORM_MACOS "platform macos" OFF)
-option(BUILD_PLATFORM_IOS "platform ios" OFF)
+
+if( WIN32 )
+	option(BUILD_PLATFORM_WIN32 "platform win32" ON)
+	option(BUILD_PLATFORM_MACOS "platform macos" OFF)
+	option(BUILD_PLATFORM_IOS "platform ios" OFF)
+elseif(APPLE)
+	option(BUILD_PLATFORM_WIN32 "platform win32" OFF)
+	option(BUILD_PLATFORM_MACOS "platform macos" ON)
+	option(BUILD_PLATFORM_IOS "platform ios" OFF)
+else()
+	option(BUILD_PLATFORM_WIN32 "platform win32" OFF)
+	option(BUILD_PLATFORM_MACOS "platform macos" OFF)
+	option(BUILD_PLATFORM_IOS "platform ios" OFF)
+endif()
 if( NOT BUILD_PLATFORM_IOS AND
 	NOT BUILD_PLATFORM_MACOS AND
 	NOT BUILD_PLATFORM_WIN32 )
@@ -25,7 +36,6 @@ if( NOT BUILD_PLATFORM_IOS AND
 		message( FATAL_ERROR "unsupport platform" )
 	endif()
 endif()
-
 if( BUILD_PLATFORM_IOS )
 	message( STATUS "PLATFORM: ios" )
 	add_definitions( -D_GUIEX_TARGET_IOS )
@@ -38,6 +48,50 @@ elseif( BUILD_PLATFORM_WIN32 )
 else()
 	message( FATAL_ERROR "unsupport platform" )
 endif()
+
+
+# select render
+if( BUILD_PLATFORM_WIN32 )
+	option(RENDER_OPENGL "render opengl" ON)
+	option(RENDER_OPENGL_ES1 "render opengl es1" OFF)
+	option(RENDER_OPENGL_ES2 "render opengl es2" OFF)
+	if( NOT RENDER_OPENGL AND
+		NOT RENDER_OPENGL_ES1 AND
+		NOT RENDER_OPENGL_ES2)
+		set(RENDER_OPENGL ON)
+	endif()
+	if( RENDER_OPENGL )
+		message( STATUS "RENDER: opengl" )
+		add_definitions( -D_GUIEX_RENDER_OPENGL )
+	elseif( RENDER_OPENGL_ES1 )
+		message( STATUS "RENDER: opengl es1" )
+		add_definitions( -D_GUIEX_RENDER_OPENGL_ES1 )
+	elseif( RENDER_OPENGL_ES2 )
+		message( STATUS "RENDER: opengl es2" )
+		add_definitions( -D_GUIEX_RENDER_OPENGL_ES2 )
+	endif()
+elseif(BUILD_PLATFORM_IOS)
+	option(RENDER_OPENGL_ES1 "render opengl es1" ON)
+	option(RENDER_OPENGL_ES2 "render opengl es2" OFF)
+	if( NOT RENDER_OPENGL_ES1 AND
+		NOT RENDER_OPENGL_ES2)
+		set(RENDER_OPENGL_ES1 ON)
+	endif()
+	if( RENDER_OPENGL_ES1 )
+		message( STATUS "RENDER: opengl es1" )
+		add_definitions( -D_GUIEX_RENDER_OPENGL_ES1 )
+	elseif( RENDER_OPENGL_ES2 )
+		message( STATUS "RENDER: opengl es2" )
+		add_definitions( -D_GUIEX_RENDER_OPENGL_ES2 )
+	endif()
+elseif(BUILD_PLATFORM_MACOS)
+	option(RENDER_OPENGL "render opengl" ON)
+	if( RENDER_OPENGL )
+		message( STATUS "RENDER: opengl" )
+		add_definitions( -D_GUIEX_RENDER_OPENGL )
+	endif()
+endif()
+
 
 # Include necessary submodules
 set(

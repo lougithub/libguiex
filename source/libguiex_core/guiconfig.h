@@ -45,6 +45,16 @@
 #define GUIEX_TARGET_ANDROID 1
 #endif
 
+#if defined( _GUIEX_RENDER_OPENGL )
+#define GUIEX_RENDER_OPENGL 1
+#elif defined(_GUIEX_RENDER_OPENGL_ES1)
+#define GUIEX_RENDER_OPENGL_ES1 1
+#elif defined(_GUIEX_RENDER_OPENGL_ES2)
+#define GUIEX_RENDER_OPENGL_ES2 1
+#else
+#error "unknown render type"	
+#endif
+
 /*************************************************************************
 	Dynamic Library import / export control conditional
 	Define GUIEX_GENERATE_DLL to export symbols

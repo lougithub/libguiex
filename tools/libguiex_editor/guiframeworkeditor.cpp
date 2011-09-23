@@ -56,11 +56,15 @@ void CGUIFrameworkEditor::SetupLogSystem( )
 //------------------------------------------------------------------------------
 void CGUIFrameworkEditor::RegisterOpenglInterface()
 {
-	GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl );
+	CGUIFrameworkEditorBase::RegisterInterfaces_Render();
 }
 //------------------------------------------------------------------------------
 void CGUIFrameworkEditor::UnregisterOpenglInterface()
 {
-	GUI_UNREGISTER_INTERFACE_LIB( IGUIRender_opengl);
+	IGUIInterface * pInterface = CGUIInterfaceManager::Instance()->GetInterfaceRender();
+	if( pInterface )
+	{
+		CGUIInterfaceManager::Instance()->UnregisterInterface( pInterface );
+	}
 }
 //------------------------------------------------------------------------------
