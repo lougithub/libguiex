@@ -1,1 +1,0 @@
-url: http://www.malideveloper.com/developer-resources/tools/opengl-es-20-emulator.php
