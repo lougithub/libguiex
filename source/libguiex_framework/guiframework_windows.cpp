@@ -104,7 +104,7 @@ namespace guiex
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_Windows::RegisterInterfaces_Render( )
 	{
-		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl_es1);
+		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl);
 	}
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_Windows::RegisterInterfaces_ImageLoader( )
