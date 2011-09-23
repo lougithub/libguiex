@@ -118,8 +118,6 @@ namespace guiex
 
 		virtual CGUICamera* ApplyCamera( CGUICamera* pCamera );
 
-		virtual	void DestroyAllTexture();
-
 		virtual uint16 GetWidth(void) const;
 		virtual uint16 GetHeight(void) const;
 
@@ -159,16 +157,19 @@ namespace guiex
 		void UpdateStencil();
 		void RenderRectForStencil( const SClipRect& rRect );
 
+		void AddTexture( CGUITextureImp* pTexture );
+		void RemoveTexture( CGUITextureImp* pTexture );
+
 		virtual	CGUITextureImp*	CreateTexture(void);
 		virtual	CGUITextureImp*	CreateTexture(const CGUIString& filename);
 		virtual	CGUITextureImp*	CreateTexture(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat);
 		virtual	void DestroyTexture(CGUITextureImp* texture);
+		virtual	void DestroyAllTexture();
 
-		void AddTexture( CGUITextureImp* pTexture );
-		void RemoveTexture( CGUITextureImp* pTexture );
+		void AddShader( CGUIShaderImp* pShader );
+		void RemoveShader( CGUIShaderImp* pShader );
+		virtual	void DestroyAllShader();
 
-		virtual	CGUIShaderImp*	CreateShader(const CGUIString& rVertexShaderFileName, const CGUIString& rFragmentShaderFileName);
-		virtual	void DestroyShader(CGUIShaderImp* shader);
 
 		void DrawPrimitive( uint32 uMode, const SVertexFormat_V3F* pVertexBuf, uint32 uVertexNum );
 		void DrawPrimitive( uint32 eMode, const SVertexFormat_C4UB_V3F* pVertexBuf, uint32 uVertexNum );
@@ -197,8 +198,12 @@ protected:
 		real m_gl_matrix[16];
 
 		//texture list
-		typedef std::set<CGUITextureImp*>	TSetTexture;
+		typedef std::set<CGUITextureImp*> TSetTexture;
 		TSetTexture	m_setTexture;
+
+		//shader list
+		typedef std::set<CGUIShaderImp*> TSetShader;
+		TSetShader	m_setShader;
 
 		std::vector<SClipRect>	m_arrayClipRects;
 

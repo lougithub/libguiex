@@ -10,7 +10,8 @@
 // include
 //============================================================================// 
 #include <libguiex_module/render_opengl/guirender_opengl.h>
-#include <libguiex_module/render_opengl/guitexture_opengl.h>
+#include <libguiex_module/render_opengl/guishader_opengl.h>
+#include <libguiex_module/render_opengl_base/guitexture_opengl_base.h>
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guicolorrect.h>
 #include <libguiex_core/guisystem.h>
@@ -114,7 +115,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl::FramebufferTexture2D_Color( const CGUITexture* pTexture, int32 level )
 	{
-		glFramebufferTexture2D( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ((const CGUITexture_opengl*)pTexture->GetTextureImplement())->GetOGLTexid(), level );
+		glFramebufferTexture2D( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ((const CGUITexture_opengl_base*)pTexture->GetTextureImplement())->GetOGLTexid(), level );
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl::FramebufferRenderbuffer_Depth( uint32 renderbuffer )
@@ -174,5 +175,16 @@ namespace guiex
 		return (nPolygonMode[1]==GL_LINE);
 	}
 	//-----------------------------------------------------------------------------
-	
+	CGUIShaderImp* IGUIRender_opengl::CreateShader(const CGUIString& rVertexShaderFileName, const CGUIString& rFragmentShaderFileName)
+	{
+		CGUIShader_opengl * pShader = new CGUIShader_opengl(this);
+		pShader->LoadAndCompile( rVertexShaderFileName, rFragmentShaderFileName );
+		return pShader;
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl::DestroyShader(CGUIShaderImp* shader)
+	{
+		delete shader;
+	}
+	//------------------------------------------------------------------------------
 }//namespace guiex

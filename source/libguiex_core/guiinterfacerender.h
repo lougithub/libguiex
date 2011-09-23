@@ -165,11 +165,6 @@ namespace guiex
 		virtual CGUICamera* ApplyCamera( CGUICamera* pCamera ) = 0;
 
 		/**
-		* @brief Destroy all textures
-		*/
-		virtual	void DestroyAllTexture() = 0;
-
-		/**
 		* @brief Return the current width of the display in pixels
 		* @return real value equal to the current width of the display in pixels.
 		*/
@@ -249,9 +244,19 @@ namespace guiex
 		* @param texture pointer to the Texture object to be destroyed
 		*/
 		virtual	void DestroyTexture(CGUITextureImp* texture) = 0;
+		
+		/**
+		* @brief Destroy all textures
+		*/
+		virtual	void DestroyAllTexture() = 0;
 
 		virtual	CGUIShaderImp*	CreateShader(const CGUIString& rVertexShaderFileName, const CGUIString& rFragmentShaderFileName) = 0;
 		virtual	void DestroyShader(CGUIShaderImp* shader) = 0;
+				
+		/**
+		* @brief Destroy all shader
+		*/
+		virtual	void DestroyAllShader() = 0;
 
 	public:
 		/// set font render

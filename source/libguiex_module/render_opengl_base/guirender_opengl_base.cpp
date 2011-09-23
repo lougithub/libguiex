@@ -225,6 +225,7 @@ namespace guiex
 	void IGUIRender_opengl_base::DoDestroy()
 	{
 		DestroyAllTexture();
+		DestroyAllShader();
 
 		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DoDestroy");
 	}
@@ -969,30 +970,22 @@ namespace guiex
 	void IGUIRender_opengl_base::RemoveTexture( CGUITextureImp* pTexture )
 	{
 		TSetTexture::iterator itor = m_setTexture.find(pTexture);
-		GUI_ASSERT( itor!= m_setTexture.end(), "failed to destroy texture");
+		GUI_ASSERT( itor!= m_setTexture.end(), "failed to remove texture");
 		m_setTexture.erase(itor);
 	}
 	//------------------------------------------------------------------------------
-	CGUIShaderImp*	IGUIRender_opengl_base::CreateShader(const CGUIString& rVertexShaderFileName, const CGUIString& rFragmentShaderFileName)
+	void IGUIRender_opengl_base::AddShader( CGUIShaderImp* pShader )
 	{
-		return NULL;
+		m_setShader.insert(pShader);
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengl_base::DestroyShader(CGUIShaderImp* shader)
+	void IGUIRender_opengl_base::RemoveShader( CGUIShaderImp* pShader )
 	{
-
+		TSetShader::iterator itor = m_setShader.find(pShader);
+		GUI_ASSERT( itor!= m_setShader.end(), "failed to remove shader");
+		m_setShader.erase(itor);
 	}
-	//------------------------------------------------------------------------------
-	void IGUIRender_opengl_base::DestroyTexture(CGUITextureImp* texture)
-	{
-		GUI_ASSERT( texture, "invalid texture pointer" );
-		if (texture != NULL)
-		{
-			RemoveTexture( texture );
-			delete texture;
-		}
-	}
-	//------------------------------------------------------------------------------
+		//------------------------------------------------------------------------------
 	/**
 	* @brief Destroy all textures
 	*/
@@ -1004,6 +997,26 @@ namespace guiex
 		}
 
 		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DestroyAllTexture");
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_base::DestroyAllShader()
+	{
+		while( m_setShader.empty() == false)
+		{
+			DestroyShader(*m_setShader.begin());
+		}
+
+		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DestroyAllShader");
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_base::DestroyTexture(CGUITextureImp* texture)
+	{
+		GUI_ASSERT( texture, "invalid texture pointer" );
+		if (texture != NULL)
+		{
+			RemoveTexture( texture );
+			delete texture;
+		}
 	}
 	//------------------------------------------------------------------------------
 	/**

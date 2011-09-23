@@ -161,6 +161,8 @@ set( ${target_name}_render_opengl_base_SRCS
 	render_opengl_base/guirender_opengl_base.h
 	render_opengl_base/guitexture_opengl_base.cpp
 	render_opengl_base/guitexture_opengl_base.h
+	render_opengl_base/guishader_opengl_base.cpp
+	render_opengl_base/guishader_opengl_base.h
 	)
 source_group(render_opengl_base FILES ${${target_name}_render_opengl_base_SRCS} )
 
@@ -168,19 +170,19 @@ source_group(render_opengl_base FILES ${${target_name}_render_opengl_base_SRCS} 
 set( ${target_name}_render_opengl_SRCS 
 	render_opengl/guirender_opengl.cpp
 	render_opengl/guirender_opengl.h
-	render_opengl/guitexture_opengl.cpp
-	render_opengl/guitexture_opengl.h
+	render_opengl/guishader_opengl.cpp
+	render_opengl/guishader_opengl.h
 	)
 source_group(render_opengl FILES ${${target_name}_render_opengl_SRCS} )
 
-#render_opengles_ios
-set( ${target_name}_render_opengles_ios_SRCS 
-	render_opengles_ios/guirender_opengles_ios.cpp
-	render_opengles_ios/guirender_opengles_ios.h
-	render_opengles_ios/guitexture_opengles_ios.cpp
-	render_opengles_ios/guitexture_opengles_ios.h
+#render_opengles_es1
+set( ${target_name}_render_opengl_es1_SRCS 
+	render_opengl_es1/guirender_opengl_es1.cpp
+	render_opengl_es1/guirender_opengl_es1.h
+	render_opengl_es1/guishader_opengl_es1.cpp
+	render_opengl_es1/guishader_opengl_es1.h
 	)
-source_group(render_opengles_ios FILES ${${target_name}_render_opengles_ios_SRCS} )
+source_group(render_opengles_es1 FILES ${${target_name}_render_opengl_es1_SRCS} )
 
 #stringconv_winapi
 set( ${target_name}_stringconv_winapi_SRCS 
@@ -252,7 +254,7 @@ elseif( BUILD_PLATFORM_IOS )
 		${${target_name}_imageloader_tga_SRCS}
 		${${target_name}_imageloader_png_SRCS}
 		${${target_name}_imageloader_png_tga_SRCS}
-		${${target_name}_render_opengles_ios_SRCS}
+		${${target_name}_render_opengl_es1_SRCS}
 		${${target_name}_render_opengl_base_SRCS}
 		${${target_name}_stringconv_iconv_SRCS}
 		${${target_name}_stringconv_internal_SRCS}

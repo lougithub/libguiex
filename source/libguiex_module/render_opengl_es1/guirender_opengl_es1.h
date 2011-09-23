@@ -1,12 +1,13 @@
 /** 
-* @file guirender_opengles_android.h
-* @brief use opengl to render gui
+* @file guirender_opengl_es1.h
+* @brief use opengl es1 to render gui
 * @author ken
-* @date 2011-04-29
+* @date 2010-11-09
 */
 
-#ifndef __GUI_RENDER_OPENGLES_ANDROID_20110429_H__
-#define __GUI_RENDER_OPENGLES_ANDROID_20110429_H__
+
+#ifndef __GUI_RENDER_OPENGL_ES1_20101109_H__
+#define __GUI_RENDER_OPENGL_ES1_20101109_H__
 
 //============================================================================//
 // include
@@ -25,10 +26,10 @@
 //============================================================================// 
 namespace guiex
 {
-	class GUIEXPORT IGUIRender_opengles_android : public IGUIRender_opengl_base
+	class GUIEXPORT IGUIRender_opengl_es1 : public IGUIRender_opengl_base
 	{
 	public:
-		IGUIRender_opengles_android( );
+		IGUIRender_opengl_es1( );
 
 	public:	//api
 		virtual void ClearDepth (real depth);
@@ -51,7 +52,10 @@ namespace guiex
 
 	protected:
 		virtual int DoInitialize(void* );
-		
+
+		virtual	CGUIShaderImp* CreateShader(const CGUIString& rVertexShaderFileName, const CGUIString& rFragmentShaderFileName);
+		virtual	void DestroyShader(CGUIShaderImp* shader);
+
 	public: 
 		static const char* StaticGetModuleName();
 	};
@@ -60,5 +64,5 @@ namespace guiex
 
 }//namespace guiex
 
-#endif //__GUI_RENDER_OPENGLES_ANDROID_20110429_H__
+#endif //__GUI_RENDER_OPENGL_ES1_20101109_H__
 

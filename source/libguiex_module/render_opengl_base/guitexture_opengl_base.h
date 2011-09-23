@@ -44,10 +44,11 @@ namespace guiex
 		virtual int32 LoadFromMemory(const void* buffPtr, int32 buffWidth, int32 buffHeight,EGuiPixelFormat ePixelFormat );
 
 		virtual void CopySubImage(uint32 nX, uint32 nY, uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat, uint8* pBuffer);
+		
+		uint32 GetOGLTexid(void) const {return m_ogltexture;}
 
 	protected:
 		void SetOpenglTextureSize(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat);
-		uint32 GetOGLTexid(void) const {return m_ogltexture;}
 
 	protected:
 		friend class IGUIRender_opengl_base;
