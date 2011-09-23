@@ -233,6 +233,7 @@ if( BUILD_PLATFORM_WIN32 )
 		${${target_name}_script_lua_SRCS}
 		${${target_name}_render_opengl_base_SRCS}
 		${${target_name}_render_opengl_SRCS}
+		${${target_name}_render_opengl_es1_SRCS}
 		${${target_name}_stringconv_winapi_SRCS}
 		${${target_name}_stringconv_internal_SRCS}
 		${${target_name}_physics_box2d_SRCS}
@@ -307,6 +308,7 @@ include_directories( "${PROJECT_SOURCE_DIR}/external/libpng" )
 include_directories( "${PROJECT_SOURCE_DIR}/external/libvorbis/include" )
 include_directories( "${PROJECT_SOURCE_DIR}/external/libogg/include" )
 include_directories( "${PROJECT_SOURCE_DIR}/external/freealut/include" )
+include_directories( "${PROJECT_SOURCE_DIR}/external/es2emu/include" )
 
 add_library( ${target_name} STATIC ${${target_name}_SRCS} )
 set_target_properties(${target_name} PROPERTIES FOLDER library)

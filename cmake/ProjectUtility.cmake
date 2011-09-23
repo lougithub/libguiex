@@ -57,6 +57,8 @@ macro( macro_set_target_link_libraries targetname )
 			general vorbis
 			general zlib
 			general glew
+			general libGLESv1_CM.lib 
+			general libGLES20.lib 
 			${ARGN}
 			)
 	elseif( BUILD_PLATFORM_IOS)
@@ -150,6 +152,8 @@ macro( macro_set_target_link_libraries_tools_win32 targetname )
 		general vorbis
 		general zlib
 		general glew
+		general libGLESv1_CM.lib 
+		general libGLES20.lib 
 		${ARGN}
 		)
 endmacro()
@@ -222,6 +226,7 @@ macro( macro_link_directories )
 		link_directories( "${PROJECT_SOURCE_DIR}/external/openal/libs/Win32" )
 		link_directories( "${PROJECT_SOURCE_DIR}/external/wxWidgets/lib/vc_lib" )
 		link_directories( "${PROJECT_SOURCE_DIR}/external/scintilla/bin" )
+		link_directories( "${PROJECT_SOURCE_DIR}/external/es2emu/lib" )
 	endif()
 endmacro()
 

@@ -34,7 +34,7 @@ namespace guiex
 		virtual ~CGUIShader_opengl_es1();
 
 	protected:
-		friend class IGUIRender_opengl_base;
+		friend class IGUIRender_opengl_es1;
 		CGUIShader_opengl_es1(IGUIInterfaceRender* pRender);
 
 	protected:

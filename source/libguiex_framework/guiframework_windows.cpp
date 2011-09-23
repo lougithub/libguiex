@@ -16,6 +16,7 @@
 
 //libguiex module
 #include <libguiex_module/render_opengl/guirender_opengl.h>
+#include <libguiex_module/render_opengl_es1/guirender_opengl_es1.h>
 #include <libguiex_module/imageloader_png_tga/guiimageloader_png_tga.h>
 #include <libguiex_module/keyboard_winapi/guikeyboard_winapi.h>
 #include <libguiex_module/mouse_winapi/guimouse_winapi.h>
@@ -103,7 +104,7 @@ namespace guiex
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_Windows::RegisterInterfaces_Render( )
 	{
-		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl);
+		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl_es1);
 	}
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_Windows::RegisterInterfaces_ImageLoader( )

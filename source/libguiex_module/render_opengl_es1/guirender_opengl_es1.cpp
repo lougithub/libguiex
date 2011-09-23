@@ -26,9 +26,35 @@
 #elif defined(GUIEX_TARGET_ANDROID)
 #include <GLES/gl.h>
 #include <GLES/glext.h>
+#elif defined(GUIEX_TARGET_WIN32)
+#include <GLES/gl.h>
+#include <GLES/glext.h>
+#include <EGL/egl.h>
+#ifndef GL_GLEXT_PROTOTYPES
+PFNGLISRENDERBUFFEROESPROC glIsRenderbufferOES;
+PFNGLBINDRENDERBUFFEROESPROC glBindRenderbufferOES;
+PFNGLDELETERENDERBUFFERSOESPROC glDeleteRenderbuffersOES;
+PFNGLGENRENDERBUFFERSOESPROC glGenRenderbuffersOES;
+PFNGLRENDERBUFFERSTORAGEOESPROC glRenderbufferStorageOES;
+PFNGLGETRENDERBUFFERPARAMETERIVOESPROC glGetRenderbufferParameterivOES;
+PFNGLISFRAMEBUFFEROESPROC glIsFramebufferOES;
+PFNGLBINDFRAMEBUFFEROESPROC glBindFramebufferOES;
+PFNGLDELETEFRAMEBUFFERSOESPROC glDeleteFramebuffersOES;
+PFNGLGENFRAMEBUFFERSOESPROC glGenFramebuffersOES;
+PFNGLCHECKFRAMEBUFFERSTATUSOESPROC glCheckFramebufferStatusOES;
+PFNGLFRAMEBUFFERRENDERBUFFEROESPROC glFramebufferRenderbufferOES;
+PFNGLFRAMEBUFFERTEXTURE2DOESPROC glFramebufferTexture2DOES;
+PFNGLGETFRAMEBUFFERATTACHMENTPARAMETERIVOESPROC glGetFramebufferAttachmentParameterivOES;
+PFNGLGENERATEMIPMAPOESPROC glGenerateMipmapOES;
+PFNGLBLENDEQUATIONOESPROC glBlendEquationOES;
+PFNGLBLENDFUNCSEPARATEOESPROC glBlendFuncSeparateOES;
+PFNGLBLENDEQUATIONSEPARATEOESPROC glBlendEquationSeparateOES;
+#endif
 #else
 #error "unknown target"	
 #endif
+
+
 
 //============================================================================//
 // function
@@ -51,7 +77,30 @@ namespace guiex
 	int32 IGUIRender_opengl_es1::DoInitialize(void* pData )
 	{
 		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_es1::DoInitialize: begin");
-		
+
+#if defined(GUIEX_TARGET_WIN32)
+#ifndef GL_GLEXT_PROTOTYPES
+		::glIsRenderbufferOES = (PFNGLISRENDERBUFFEROESPROC)eglGetProcAddress("glIsRenderbufferOES");
+		::glBindRenderbufferOES = (PFNGLBINDRENDERBUFFEROESPROC)eglGetProcAddress("glBindRenderbufferOES");
+		::glDeleteRenderbuffersOES = (PFNGLDELETERENDERBUFFERSOESPROC)eglGetProcAddress("glDeleteRenderbuffersOES");
+		::glGenRenderbuffersOES = (PFNGLGENRENDERBUFFERSOESPROC)eglGetProcAddress("glGenRenderbuffersOES");
+		::glRenderbufferStorageOES = (PFNGLRENDERBUFFERSTORAGEOESPROC)eglGetProcAddress("glRenderbufferStorageOES");
+		::glGetRenderbufferParameterivOES = (PFNGLGETRENDERBUFFERPARAMETERIVOESPROC)eglGetProcAddress("glGetRenderbufferParameterivOES");
+		::glIsFramebufferOES = (PFNGLISFRAMEBUFFEROESPROC)eglGetProcAddress("glIsFramebufferOES");
+		::glBindFramebufferOES = (PFNGLBINDFRAMEBUFFEROESPROC)eglGetProcAddress("glBindFramebufferOES");
+		::glDeleteFramebuffersOES = (PFNGLDELETEFRAMEBUFFERSOESPROC)eglGetProcAddress("glDeleteFramebuffersOES");
+		::glGenFramebuffersOES = (PFNGLGENFRAMEBUFFERSOESPROC)eglGetProcAddress("glGenFramebuffersOES");
+		::glCheckFramebufferStatusOES = (PFNGLCHECKFRAMEBUFFERSTATUSOESPROC)eglGetProcAddress("glCheckFramebufferStatusOES");
+		::glFramebufferRenderbufferOES = (PFNGLFRAMEBUFFERRENDERBUFFEROESPROC)eglGetProcAddress("glFramebufferRenderbufferOES");
+		::glFramebufferTexture2DOES = (PFNGLFRAMEBUFFERTEXTURE2DOESPROC)eglGetProcAddress("glFramebufferTexture2DOES");
+		::glGetFramebufferAttachmentParameterivOES = (PFNGLGETFRAMEBUFFERATTACHMENTPARAMETERIVOESPROC)eglGetProcAddress("glGetFramebufferAttachmentParameterivOES");
+		::glGenerateMipmapOES = (PFNGLGENERATEMIPMAPOESPROC)eglGetProcAddress("glGenerateMipmapOES");
+		::glBlendEquationOES = (PFNGLBLENDEQUATIONOESPROC)eglGetProcAddress("glBlendEquationOES");
+		::glBlendFuncSeparateOES = (PFNGLBLENDFUNCSEPARATEOESPROC)eglGetProcAddress("glBlendFuncSeparateOES");
+		::glBlendEquationSeparateOES = (PFNGLBLENDEQUATIONSEPARATEOESPROC)eglGetProcAddress("glBlendEquationSeparateOES");
+#endif
+#endif
+
 #if defined(GUIEX_TARGET_IOS)	
 
 		// Create the framebuffer object and attach the color buffer.
@@ -68,6 +117,7 @@ namespace guiex
 		glBindRenderbufferOES(GL_RENDERBUFFER_OES, renderbuffer);	
 		
 #endif
+
 		
 		//call parent initialize
 		if( 0 != IGUIRender_opengl_base::DoInitialize( pData ) )
@@ -133,7 +183,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_es1::FramebufferTexture2D_Color( const CGUITexture* pTexture, int32 level )
 	{
-		glFramebufferTexture2DOES( GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_TEXTURE_2D, ((const CGUITexture_opengles_base*)pTexture->GetTextureImplement())->GetOGLTexid(), level );
+		glFramebufferTexture2DOES( GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_TEXTURE_2D, ((const CGUITexture_opengl_base*)pTexture->GetTextureImplement())->GetOGLTexid(), level );
 	}
 	//------------------------------------------------------------------------------
 	bool IGUIRender_opengl_es1::CheckFramebufferStatus( )
@@ -151,7 +201,7 @@ namespace guiex
 	{	
 		GLfloat xmin, xmax, ymin, ymax;
 		
-		ymax = zNear * (GLfloat)tanf(fovy * (float)M_PI / 360);
+		ymax = zNear * (GLfloat)tanf(fovy * CGUIMath::GUI_PI / 360);
 		ymin = -ymax;
 		xmin = ymin * aspect;
 		xmax = ymax * aspect;
