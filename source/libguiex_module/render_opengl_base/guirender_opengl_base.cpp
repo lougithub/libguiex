@@ -928,6 +928,38 @@ namespace guiex
 		pVertexInfo[3].texCoords.u = tex.m_fRight;
 		pVertexInfo[3].texCoords.v = tex.m_fBottom;
 	}
+//------------------------------------------------------------------------------
+	/**
+	* @brief Creates a 'null' Texture object.
+	* @return a newly created Texture object.  The returned Texture object has no size or imagery 
+	* associated with it, and is generally of little or no use.
+	*/
+	CGUITextureImp*	IGUIRender_opengl_base::CreateTexture(void)
+	{
+		CGUITexture_opengl_base* pTexture = new CGUITexture_opengl_base(this);
+		AddTexture(pTexture);
+		return pTexture;
+	}
+	//------------------------------------------------------------------------------
+	CGUITextureImp*	IGUIRender_opengl_base::CreateTexture(const CGUIString& filename)
+	{
+		CGUITextureImp* pTexture = this->CreateTexture();
+		if( pTexture->LoadFromFile(filename) != 0 )
+		{
+			//failed
+			RemoveTexture( pTexture );
+			delete pTexture;
+			return NULL;
+		}
+		return pTexture;
+	}
+	//-----------------------------------------------------------------------------
+	CGUITextureImp*	IGUIRender_opengl_base::CreateTexture(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat)
+	{
+		CGUITextureImp* pTexture = this->CreateTexture();
+		((CGUITexture_opengl_base*)pTexture)->SetOpenglTextureSize(nWidth,nHeight,ePixelFormat);
+		return pTexture;
+	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::AddTexture( CGUITextureImp* pTexture )
 	{
@@ -939,6 +971,16 @@ namespace guiex
 		TSetTexture::iterator itor = m_setTexture.find(pTexture);
 		GUI_ASSERT( itor!= m_setTexture.end(), "failed to destroy texture");
 		m_setTexture.erase(itor);
+	}
+	//------------------------------------------------------------------------------
+	CGUIShaderImp*	IGUIRender_opengl_base::CreateShader(const CGUIString& rVertexShaderFileName, const CGUIString& rFragmentShaderFileName)
+	{
+		return NULL;
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_base::DestroyShader(CGUIShaderImp* shader)
+	{
+
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::DestroyTexture(CGUITextureImp* texture)

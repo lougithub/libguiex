@@ -40,6 +40,7 @@ namespace guiex
 
 	//for singleton
 	class CGUIImageManager;
+	class CGUIShaderManager;
 	class CGUIAnimationManager;
 	class CGUISoundManager;
 	class CGUIMusicManager;
@@ -202,6 +203,8 @@ namespace guiex
 		//********************************************************
 		//	singleton
 		//********************************************************
+		
+		CGUIShaderManager* GetShaderManager();
 		CGUIImageManager* GetImageManager();
 		CGUIAnimationManager* GetAnimationManager();
 		CGUISoundManager* GetSoundManager();
@@ -316,6 +319,7 @@ namespace guiex
 
 		//single classes
 		CGUIImageManager *m_pImageManager;
+		CGUIShaderManager *m_pShaderManager;
 		CGUIAnimationManager *m_pAnimationManager;
 		CGUISoundManager *m_pSoundManager;
 		CGUIMusicManager *m_pMusicManager;
@@ -343,7 +347,12 @@ namespace guiex
 	};
 
 	
-	
+
+	inline CGUIShaderManager* CGUISystem::GetShaderManager()
+	{
+		return m_pShaderManager;
+	}
+
 	inline CGUIImageManager* CGUISystem::GetImageManager()
 	{
 		return m_pImageManager;

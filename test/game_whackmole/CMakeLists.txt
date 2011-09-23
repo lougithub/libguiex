@@ -1,8 +1,6 @@
 set( target_name "example_game_whackmole" )
 message( STATUS "generate execute: " ${target_name} )
 
-macro_set_common_sources( ${target_name}_common_SRCS )
-
 #test source
 set( ${target_name}_execute_SRCS
 	game_whackmole.cpp
@@ -13,7 +11,6 @@ source_group( test FILES ${${target_name}_execute_SRCS} )
 
 # all source
 set( ${target_name}_SRCS 
-	"${${target_name}_common_SRCS}"
 	"${${target_name}_execute_SRCS}"
 	)
 macro_include_directories()

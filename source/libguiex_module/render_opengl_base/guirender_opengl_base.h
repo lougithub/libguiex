@@ -159,10 +159,16 @@ namespace guiex
 		void UpdateStencil();
 		void RenderRectForStencil( const SClipRect& rRect );
 
+		virtual	CGUITextureImp*	CreateTexture(void);
+		virtual	CGUITextureImp*	CreateTexture(const CGUIString& filename);
+		virtual	CGUITextureImp*	CreateTexture(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat);
 		virtual	void DestroyTexture(CGUITextureImp* texture);
 
 		void AddTexture( CGUITextureImp* pTexture );
 		void RemoveTexture( CGUITextureImp* pTexture );
+
+		virtual	CGUIShaderImp*	CreateShader(const CGUIString& rVertexShaderFileName, const CGUIString& rFragmentShaderFileName);
+		virtual	void DestroyShader(CGUIShaderImp* shader);
 
 		void DrawPrimitive( uint32 uMode, const SVertexFormat_V3F* pVertexBuf, uint32 uVertexNum );
 		void DrawPrimitive( uint32 eMode, const SVertexFormat_C4UB_V3F* pVertexBuf, uint32 uVertexNum );

@@ -31,6 +31,7 @@
 #include "guicameramanager.h"
 #include "guicanvaslayermanager.h"
 #include "guilocalizationmanager.h"
+#include "guishadermanager.h"
 
 #include "guiinterfacemanager.h"
 #include "guiinterfacemouse.h"
@@ -110,6 +111,7 @@ namespace guiex
 		,m_fSystemTime(0.0f)
 		,m_fTimerForFrame(0.0f)
 		,m_pImageManager( NULL )
+		,m_pShaderManager( NULL )
 		,m_pAnimationManager( NULL )
 		,m_pSoundManager(NULL )
 		,m_pMusicManager(NULL )
@@ -160,6 +162,7 @@ namespace guiex
 		//m_pLogMsgManager = new CGUILogMsgManager;
 		m_pWidgetManager = new CGUIWidgetManager;
 		m_pImageManager = new CGUIImageManager;
+		m_pShaderManager = new CGUIShaderManager;
 		m_pAnimationManager = new CGUIAnimationManager;
 		m_pSoundManager = new CGUISoundManager;
 		m_pMusicManager = new CGUIMusicManager;
@@ -198,6 +201,8 @@ namespace guiex
 		m_pTiledMapManager = NULL;
 		delete m_pFontManager;
 		m_pFontManager = NULL;
+		delete m_pShaderManager;
+		m_pShaderManager = NULL;
 		delete m_pImageManager;
 		m_pImageManager = NULL;
 		delete m_pInterfaceManager;

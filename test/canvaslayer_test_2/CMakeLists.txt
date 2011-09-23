@@ -1,7 +1,6 @@
 set( target_name "example_canvaslayer_test_2" )
 message( STATUS "generate execute: " ${target_name} )
 
-macro_set_common_sources( ${target_name}_common_SRCS )
 
 #test source
 set( ${target_name}_execute_SRCS
@@ -11,7 +10,6 @@ source_group( test FILES ${${target_name}_execute_SRCS} )
 
 # all source
 set( ${target_name}_SRCS 
-	"${${target_name}_common_SRCS}"
 	"${${target_name}_execute_SRCS}"
 	)
 

@@ -120,7 +120,6 @@ namespace guiex
 		/** 
 		* @brief the image type, means where the image load from
 		*/
-
 		EImageType m_eImageType;
 
 		CGUIString m_strPath; //!< for eImageType_FromFile

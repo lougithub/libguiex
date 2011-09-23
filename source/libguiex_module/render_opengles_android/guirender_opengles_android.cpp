@@ -148,33 +148,6 @@ namespace guiex
 		return true;
 	}
 	//------------------------------------------------------------------------------
-	CGUITextureImp*	IGUIRender_opengles_android::CreateTexture(void)
-	{
-		CGUITexture_opengles_android* pTexture = new CGUITexture_opengles_android(this);
-		AddTexture(pTexture);
-		return pTexture;
-	}
-	//------------------------------------------------------------------------------
-	CGUITextureImp*	IGUIRender_opengles_android::CreateTexture(const CGUIString& filename)
-	{
-		CGUITextureImp* pTexture = this->CreateTexture();
-		if( pTexture->LoadFromFile(filename) != 0 )
-		{
-			//failed
-			RemoveTexture( pTexture );
-			delete pTexture;
-			return NULL;
-		}
-		return pTexture;
-	}
-	//-----------------------------------------------------------------------------
-	CGUITextureImp*	IGUIRender_opengles_android::CreateTexture(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat)
-	{
-		CGUITextureImp* pTexture = this->CreateTexture();
-		((CGUITexture_opengles_android*)pTexture)->SetOpenglTextureSize(nWidth,nHeight,ePixelFormat);
-		return pTexture;
-	}
-	//------------------------------------------------------------------------------
 	void IGUIRender_opengles_android::ClearDepth(real depth)
 	{
 		TRY_THROW_OPENGL_ERROR("IGUIRender_opengles_android::ClearDepth: begin");

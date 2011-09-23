@@ -150,6 +150,7 @@ add_subdirectory( ${PROJECT_SOURCE_DIR}/source/libguiex_widget_game )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/source/libguiex_module )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/source/libguiex_script_wrapper)
 add_subdirectory( ${PROJECT_SOURCE_DIR}/source/libguiex_framework )
+add_subdirectory( ${PROJECT_SOURCE_DIR}/source/libguiex_application )
 
 #external library
 add_subdirectory( ${PROJECT_SOURCE_DIR}/external/tinyxml )

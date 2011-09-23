@@ -27,6 +27,7 @@ namespace guiex
 	class CGUIIntSize;
 	class CGUIRect;
 	class CGUITextureImp;
+	class CGUIShaderImp;
 	class CGUITexture;
 	class IGUIInterfaceFont;
 	class CGUIMatrix4;
@@ -204,6 +205,8 @@ namespace guiex
 	protected:
 		friend class CGUITextureImp;
 		friend class CGUITexture;
+		friend class CGUIShaderImp;
+		friend class CGUIShader;
 
 		/**
 		* @brief Creates a 'null' Texture object.
@@ -211,7 +214,7 @@ namespace guiex
 		* associated with it, and is generally of little or no use.
 		*/
 		virtual	CGUITextureImp*	CreateTexture(void) = 0;
-
+		
 		/**
 		* @brief Create a Texture object using the given image file.
 		* @param filename String object that specifies the path and filename of the image file to use 
@@ -246,6 +249,9 @@ namespace guiex
 		* @param texture pointer to the Texture object to be destroyed
 		*/
 		virtual	void DestroyTexture(CGUITextureImp* texture) = 0;
+
+		virtual	CGUIShaderImp*	CreateShader(const CGUIString& rVertexShaderFileName, const CGUIString& rFragmentShaderFileName) = 0;
+		virtual	void DestroyShader(CGUIShaderImp* shader) = 0;
 
 	public:
 		/// set font render

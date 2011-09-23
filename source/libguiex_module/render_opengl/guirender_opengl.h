@@ -50,11 +50,6 @@ namespace guiex
 
 		virtual void SetWireFrame( bool bWireFrame);
 		virtual bool IsWireFrame( ) const;
-		
-	protected:
-		virtual	CGUITextureImp*	CreateTexture(void);
-		virtual	CGUITextureImp*	CreateTexture(const CGUIString& filename);
-		virtual	CGUITextureImp*	CreateTexture(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat);
 
 	protected:
 		virtual int DoInitialize(void* );

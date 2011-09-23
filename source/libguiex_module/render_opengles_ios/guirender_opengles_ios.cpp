@@ -138,33 +138,6 @@ namespace guiex
 		return status == GL_FRAMEBUFFER_COMPLETE_OES;
 	}
 	//------------------------------------------------------------------------------
-	CGUITextureImp*	IGUIRender_opengles_ios::CreateTexture(void)
-	{
-		CGUITexture_opengles_ios* pTexture = new CGUITexture_opengles_ios(this);
-		AddTexture(pTexture);
-		return pTexture;
-	}
-	//------------------------------------------------------------------------------
-	CGUITextureImp*	IGUIRender_opengles_ios::CreateTexture(const CGUIString& filename)
-	{
-		CGUITextureImp* pTexture = this->CreateTexture();
-		if( pTexture->LoadFromFile(filename) != 0 )
-		{
-			//failed
-			RemoveTexture( pTexture );
-			delete pTexture;
-			return NULL;
-		}
-		return pTexture;
-	}
-	//-----------------------------------------------------------------------------
-	CGUITextureImp*	IGUIRender_opengles_ios::CreateTexture(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat)
-	{
-		CGUITextureImp* pTexture = this->CreateTexture();
-		((CGUITexture_opengles_ios*)pTexture)->SetOpenglTextureSize(nWidth,nHeight,ePixelFormat);
-		return pTexture;
-	}
-	//------------------------------------------------------------------------------
 	void IGUIRender_opengles_ios::ClearDepth(real depth)
 	{
 		glClearDepthf( depth );

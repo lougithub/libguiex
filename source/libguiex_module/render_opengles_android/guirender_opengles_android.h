@@ -52,10 +52,6 @@ namespace guiex
 	protected:
 		virtual int DoInitialize(void* );
 		
-		virtual	CGUITextureImp*	CreateTexture(void);
-		virtual	CGUITextureImp*	CreateTexture(const CGUIString& filename);
-		virtual	CGUITextureImp*	CreateTexture(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat);
-
 	public: 
 		static const char* StaticGetModuleName();
 	};

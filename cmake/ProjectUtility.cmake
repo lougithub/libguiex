@@ -47,6 +47,7 @@ macro( macro_set_target_link_libraries targetname )
 			general libguiex_module
 			general libguiex_script_wrapper
 			general libguiex_framework
+			general libguiex_application
 			general tinyxml
 			general libpng
 			general lua
@@ -68,6 +69,7 @@ macro( macro_set_target_link_libraries targetname )
 			general libguiex_module
 			general libguiex_script_wrapper
 			general libguiex_framework
+			general libguiex_application
 			general tinyxml
 			general libpng
 			general lua
@@ -87,6 +89,7 @@ macro( macro_set_target_link_libraries targetname )
 			general libguiex_module
 			general libguiex_script_wrapper
 			general libguiex_framework
+			general libguiex_application
 			general tinyxml
 			general libpng
 			general lua
@@ -136,6 +139,7 @@ macro( macro_set_target_link_libraries_tools_win32 targetname )
 		general libguiex_widget_game
 		general libguiex_script_wrapper
 		general libguiex_framework
+		general libguiex_application
 		general libguiex_module
 		general tools_editor_lib
 		general tinyxml
@@ -221,33 +225,6 @@ macro( macro_link_directories )
 	endif()
 endmacro()
 
-macro( macro_set_common_sources common_srcs )
-	if( BUILD_PLATFORM_IOS )
-		#common source
-		set( ${common_srcs}
-			../common_ios/common_ios_engine.cpp
-			../common_ios/common_ios_engine.h
-			../common_ios/common_ios.mm
-			../common_ios/common_ios.h
-			)
-		source_group( common FILES ${common_srcs} )
-	elseif( BUILD_PLATFORM_WIN32)
-		#common source
-		set( ${common_srcs}
-			../common_glut/common_glut.cpp
-			)
-		source_group( common FILES ${common_srcs} )
-	elseif( BUILD_PLATFORM_MACOS )
-		#common source
-		set( ${common_srcs}
-			../common_glut/common_glut.cpp
-			)
-		source_group( common FILES ${common_srcs} )
-	else()
-		message( FATAL_ERROR "unsupport platform" )
-	endif()	
-endmacro()
-
 macro( macro_add_project_dependencies targetname)
 	add_dependencies( 
 		${targetname} 
@@ -258,6 +235,7 @@ macro( macro_add_project_dependencies targetname)
 		libguiex_widget_game
 		libguiex_script_wrapper 
 		libguiex_framework
+		libguiex_application
 		${ARGN}
 		)
 endmacro()

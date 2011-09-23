@@ -133,6 +133,15 @@ set( ${target_name}_resource_SRCS
 	)
 source_group( "resource" FILES ${${target_name}_resource_SRCS} )
 
+set( ${target_name}_shader_SRCS 
+	guishadermanager.cpp
+	guishadermanager.h
+	guishader.cpp
+	guishader.h
+	guishaderimp.cpp
+	guishaderimp.h
+	)
+source_group( "shader" FILES ${${target_name}_shader_SRCS} )
 
 set( ${target_name}_as_SRCS 
 	guias.cpp
@@ -345,6 +354,7 @@ set( ${target_name}_SRCS
 	${${target_name}_base_SRCS}
 	${${target_name}_math_SRCS}
 	${${target_name}_resource_SRCS}
+	${${target_name}_shader_SRCS}
 	${${target_name}_interface_SRCS}
 	${${target_name}_widget_SRCS}
 	${${target_name}_log_SRCS}

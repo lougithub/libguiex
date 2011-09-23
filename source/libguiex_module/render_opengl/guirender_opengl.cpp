@@ -132,38 +132,6 @@ namespace guiex
 		GLuint status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 		return status == GL_FRAMEBUFFER_COMPLETE;
 	}
-	//------------------------------------------------------------------------------
-	/**
-	* @brief Creates a 'null' Texture object.
-	* @return a newly created Texture object.  The returned Texture object has no size or imagery 
-	* associated with it, and is generally of little or no use.
-	*/
-	CGUITextureImp*	IGUIRender_opengl::CreateTexture(void)
-	{
-		CGUITexture_opengl* pTexture = new CGUITexture_opengl(this);
-		AddTexture(pTexture);
-		return pTexture;
-	}
-	//------------------------------------------------------------------------------
-	CGUITextureImp*	IGUIRender_opengl::CreateTexture(const CGUIString& filename)
-	{
-		CGUITextureImp* pTexture = this->CreateTexture();
-		if( pTexture->LoadFromFile(filename) != 0 )
-		{
-			//failed
-			RemoveTexture( pTexture );
-			delete pTexture;
-			return NULL;
-		}
-		return pTexture;
-	}
-	//-----------------------------------------------------------------------------
-	CGUITextureImp*	IGUIRender_opengl::CreateTexture(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat)
-	{
-		CGUITextureImp* pTexture = this->CreateTexture();
-		((CGUITexture_opengl*)pTexture)->SetOpenglTextureSize(nWidth,nHeight,ePixelFormat);
-		return pTexture;
-	}
 	//-----------------------------------------------------------------------------
 	void IGUIRender_opengl::ClearDepth(real depth)
 	{

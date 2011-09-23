@@ -45,9 +45,6 @@ namespace guiex
 	class GUIEXPORT CGUITextureImp
 	{
 	public:
-		/**
-		* @brief destructor
-		*/
 		virtual ~CGUITextureImp();
 
 		/**
@@ -107,12 +104,9 @@ namespace guiex
 		void SetTexture( CGUITexture* pTexture);
 
 		//!< get pointer of texture
-		CGUITexture* GetTexture(  ) const;
+		CGUITexture* GetTexture( ) const;
 
 	protected:
-		/**
-		* @brief constructor
-		*/
 		CGUITextureImp(IGUIInterfaceRender* pRender);
 
 	protected:

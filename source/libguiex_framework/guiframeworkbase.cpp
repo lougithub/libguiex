@@ -102,19 +102,20 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIFrameworkBase::RegisterInterfaces( )
 	{
-		RegisterInterfaces_Render( );
-		RegisterInterfaces_ImageLoader( );
 		RegisterInterfaces_FileSys( );
 		RegisterInterfaces_Mouse( );
 		RegisterInterfaces_Keyboard( );
-		RegisterInterfaces_Font( );
-		RegisterInterfaces_ConfigFile( );
 		RegisterInterfaces_StringConv( );
-		RegisterInterfaces_Script( );
 		RegisterInterfaces_Physics( );
+
+		RegisterInterfaces_ImageLoader( );
+		RegisterInterfaces_Script( );
+		RegisterInterfaces_ConfigFile( );
 		RegisterInterfaces_Sound( );
 		RegisterInterfaces_Ime( );
 		RegisterInterfaces_LocalizationLoader( );
+		RegisterInterfaces_Render( );
+		RegisterInterfaces_Font( );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIFrameworkBase::Update( real fDeltaTime )
