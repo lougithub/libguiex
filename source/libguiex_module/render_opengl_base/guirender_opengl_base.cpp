@@ -379,7 +379,7 @@ namespace guiex
 		//clear screen
 		glClearColor( 0.5f, 0.5f, 0.5f, 1 );
 		glClearStencil( 0 );
-		glClearDepth( 1.0f );
+		ClearDepth( 1.0f );
 		glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );	// clear screen and depth buffer 
 
 		//set gl property
@@ -393,7 +393,6 @@ namespace guiex
 
 		glDisable( GL_DEPTH_TEST );
 		glDepthFunc(GL_LEQUAL);
-		ClearDepth( 1.0f );
 
 		glDisable( GL_SCISSOR_TEST );
 		glDisable( GL_LIGHTING );

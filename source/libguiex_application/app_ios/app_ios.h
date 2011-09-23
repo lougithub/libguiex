@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
-#import "common_ios_engine.h"
+#import "app_ios_engine.h"
 
 @interface GLView : UIView {
 @private

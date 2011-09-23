@@ -19,7 +19,7 @@
 #include <libguiex_module/imageloader_png_tga/guiimageloader_png_tga.h>
 #include <libguiex_module/filesys_cocoa/guifilesys_cocoa.h>
 #include <libguiex_module/configfile_tinyxml/guiconfigfile_tinyxml.h>
-#include <libguiex_module/render_opengles_ios/guirender_opengles_ios.h>
+#include <libguiex_module/render_opengl_es1/guirender_opengl_es1.h>
 #include <libguiex_module/stringconv_cocoa/guistringconv_cocoa.h>
 #include <libguiex_module/stringconv_iconv/guistringconv_iconv.h>
 #include <libguiex_module/stringconv_internal/guistringconv_internal.h>
@@ -100,7 +100,7 @@ namespace guiex
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_IOS::RegisterInterfaces_Render( )
 	{
-		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengles_ios);
+		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl_es1);
 	}
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_IOS::RegisterInterfaces_ImageLoader( )
