@@ -17,7 +17,7 @@ namespace guiex
 {
 	enum ETowerType
 	{
-		eTowerType_Base = 0,
+		eTowerType_Basement = 0,
 		eTowerType_ArcherTower,
 		eTowerType_Mages,
 		eTowerType_Bombard,
