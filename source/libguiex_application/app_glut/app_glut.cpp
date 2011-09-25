@@ -13,7 +13,14 @@
 
 #include <iostream>
 #include <time.h>
-#include <GLUT/glut.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif //#ifdef __cplusplus
+#include <GL/freeglut.h>
+#ifdef __cplusplus
+}
+#endif //#ifdef __cplusplus
 
 #if defined(GUIEX_PLATFORM_WIN32)
 #include <windows.h>

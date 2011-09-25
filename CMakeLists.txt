@@ -217,10 +217,9 @@ add_subdirectory( ${PROJECT_SOURCE_DIR}/external/jsoncpp )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/external/libpng )
 if( BUILD_PLATFORM_WIN32)
 	add_subdirectory( ${PROJECT_SOURCE_DIR}/external/zlib )
-	add_subdirectory( ${PROJECT_SOURCE_DIR}/external/glew )
-elseif( BUILD_PLATFORM_MACOS )
-	add_subdirectory( ${PROJECT_SOURCE_DIR}/external/glew )
 endif()
+add_subdirectory( ${PROJECT_SOURCE_DIR}/external/glew )
+add_subdirectory( ${PROJECT_SOURCE_DIR}/external/freeglut )
 
 #test
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/test1 )

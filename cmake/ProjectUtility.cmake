@@ -37,7 +37,6 @@ macro( macro_set_target_link_libraries targetname )
 			general comctl32.lib 
 			general Opengl32.lib
 			general Glu32.lib
-			general glut32.lib 
 			general Rpcrt4.lib
 			general OpenAL32.lib
 			general libguiex_core
@@ -57,6 +56,7 @@ macro( macro_set_target_link_libraries targetname )
 			general vorbis
 			general zlib
 			general glew
+			general freeglut
 			general libGLESv1_CM.lib 
 			general libGLES20.lib 
 			${ARGN}
@@ -134,7 +134,6 @@ macro( macro_set_target_link_libraries_tools_win32 targetname )
 		general OpenAL32.lib
 		general Opengl32.lib
 		general Glu32.lib
-		general glut32.lib 
 		general libguiex_core
 		general libguiex_widget
 		general libguiex_widget_box2d
@@ -152,6 +151,7 @@ macro( macro_set_target_link_libraries_tools_win32 targetname )
 		general vorbis
 		general zlib
 		general glew
+		general freeglut
 		general libGLESv1_CM.lib 
 		general libGLES20.lib 
 		${ARGN}
@@ -192,8 +192,7 @@ macro( macro_include_directories )
 		include_directories( "${PROJECT_SOURCE_DIR}/external/lua/src" )
 		include_directories( "${PROJECT_SOURCE_DIR}/external/freetype/include" )
 		include_directories( "${PROJECT_SOURCE_DIR}/external/Box2D" )
-		include_directories( "${PROJECT_SOURCE_DIR}/external/glut" )
-		include_directories( "${PROJECT_SOURCE_DIR}/external/glut" )
+		include_directories( "${PROJECT_SOURCE_DIR}/external/freeglut/include" )
 		include_directories( "${PROJECT_SOURCE_DIR}/external/scintilla/include" )
 		include_directories( "${PROJECT_SOURCE_DIR}/external/scintilla/lexlib" )
 		include_directories( "${PROJECT_SOURCE_DIR}/external/wxWidgets/include" )
@@ -222,7 +221,7 @@ endmacro()
 
 macro( macro_link_directories )
 	if( BUILD_PLATFORM_WIN32 )
-		link_directories( "${PROJECT_SOURCE_DIR}/external/glut" )
+		link_directories( "${PROJECT_SOURCE_DIR}/external/freeglut/include" )
 		link_directories( "${PROJECT_SOURCE_DIR}/external/openal/libs/Win32" )
 		link_directories( "${PROJECT_SOURCE_DIR}/external/wxWidgets/lib/vc_lib" )
 		link_directories( "${PROJECT_SOURCE_DIR}/external/scintilla/bin" )
