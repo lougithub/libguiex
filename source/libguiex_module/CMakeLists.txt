@@ -307,7 +307,6 @@ include_directories( "${PROJECT_SOURCE_DIR}/external/Box2D" )
 include_directories( "${PROJECT_SOURCE_DIR}/external/libpng" )
 include_directories( "${PROJECT_SOURCE_DIR}/external/libvorbis/include" )
 include_directories( "${PROJECT_SOURCE_DIR}/external/libogg/include" )
-include_directories( "${PROJECT_SOURCE_DIR}/external/freealut/include" )
 include_directories( "${PROJECT_SOURCE_DIR}/external/es2emu/include" )
 
 add_library( ${target_name} STATIC ${${target_name}_SRCS} )

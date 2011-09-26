@@ -180,6 +180,7 @@ else( )
 endif( ) 
 
 add_definitions( -DGLEW_STATIC )
+add_definitions( -DFREEGLUT_STATIC )
 
 #set output directory
 set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/lib" )

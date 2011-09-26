@@ -34,6 +34,7 @@ macro( macro_set_target_link_libraries targetname )
 		target_link_libraries( 
 			${targetname}  
 			general Imm32.lib 
+			general Winmm.lib
 			general comctl32.lib 
 			general Opengl32.lib
 			general Glu32.lib
@@ -100,6 +101,7 @@ macro( macro_set_target_link_libraries targetname )
 			general ogg
 			general vorbis
 			general glew
+			general freeglut
 			${ARGN}
 			)
 
@@ -192,7 +194,6 @@ macro( macro_include_directories )
 		include_directories( "${PROJECT_SOURCE_DIR}/external/lua/src" )
 		include_directories( "${PROJECT_SOURCE_DIR}/external/freetype/include" )
 		include_directories( "${PROJECT_SOURCE_DIR}/external/Box2D" )
-		include_directories( "${PROJECT_SOURCE_DIR}/external/freeglut/include" )
 		include_directories( "${PROJECT_SOURCE_DIR}/external/scintilla/include" )
 		include_directories( "${PROJECT_SOURCE_DIR}/external/scintilla/lexlib" )
 		include_directories( "${PROJECT_SOURCE_DIR}/external/wxWidgets/include" )
@@ -221,7 +222,6 @@ endmacro()
 
 macro( macro_link_directories )
 	if( BUILD_PLATFORM_WIN32 )
-		link_directories( "${PROJECT_SOURCE_DIR}/external/freeglut/include" )
 		link_directories( "${PROJECT_SOURCE_DIR}/external/openal/libs/Win32" )
 		link_directories( "${PROJECT_SOURCE_DIR}/external/wxWidgets/lib/vc_lib" )
 		link_directories( "${PROJECT_SOURCE_DIR}/external/scintilla/bin" )

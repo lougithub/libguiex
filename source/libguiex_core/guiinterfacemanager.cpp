@@ -261,16 +261,7 @@ namespace guiex
 		}
 		else
 		{
-			//destroy interface
-			(*itor).second.m_pInterface->Destroy();
-			(*itor).second.m_pInterface->DeleteSelf();
-			if( (*itor).second.m_hHandle )
-			{
-				GUI_DYNLIB_UNLOAD((*itor).second.m_hHandle);
-			}
-			m_mapInterface.erase( itor );
-
-			//add it to fast retrieve function
+			//remove it from fast retrieve function
 			if( rInterface == "IGUIRender" )
 			{
 				m_pInterfaceRender = NULL;
@@ -327,6 +318,15 @@ namespace guiex
 			{
 				GUI_ASSERT(0, "unkonwn interface");
 			}
+
+			//destroy interface
+			(*itor).second.m_pInterface->Destroy();
+			(*itor).second.m_pInterface->DeleteSelf();
+			if( (*itor).second.m_hHandle )
+			{
+				GUI_DYNLIB_UNLOAD((*itor).second.m_hHandle);
+			}
+			m_mapInterface.erase( itor );
 			return 0;
 		}
 		return -1;
