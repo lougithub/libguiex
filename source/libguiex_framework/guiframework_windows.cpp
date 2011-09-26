@@ -15,8 +15,6 @@
 #include <libguiex_widget_game/guiwgt_game.h>
 
 //libguiex module
-#include <libguiex_module/render_opengl/guirender_opengl.h>
-#include <libguiex_module/render_opengl_es1/guirender_opengl_es1.h>
 #include <libguiex_module/imageloader_png_tga/guiimageloader_png_tga.h>
 #include <libguiex_module/keyboard_winapi/guikeyboard_winapi.h>
 #include <libguiex_module/mouse_winapi/guimouse_winapi.h>
@@ -31,6 +29,15 @@
 #include <libguiex_module/physics_box2d/guiphysics_box2d.h>
 #include <libguiex_module/sound_openal/guisound_openal.h>
 #include <libguiex_module/localizationloader_tinyxml/guilocalizationloader_tinyxml.h>
+#if defined( GUIEX_RENDER_OPENGL )
+#	include <libguiex_module/render_opengl/guirender_opengl.h>
+#elif defined(GUIEX_RENDER_OPENGL_ES1 )
+#	include <libguiex_module/render_opengl_es1/guirender_opengl_es1.h>
+#elif defined(GUIEX_RENDER_OPENGL_ES2 )
+#	include <libguiex_module/render_opengl_es2/guirender_opengl_es2.h>
+#else
+#error "unknown render type"	
+#endif
 
 #include <windows.h>
 #include <fstream>

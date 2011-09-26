@@ -174,7 +174,6 @@ namespace guiex
 			if( pShader )
 			{
 				glUseProgram( static_cast<CGUIShader_opengl_base*>(pShader)->GetProgramId() );
-				glUseProgram( 0 );
 			}
 			else
 			{

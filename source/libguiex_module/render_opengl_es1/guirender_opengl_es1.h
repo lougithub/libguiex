@@ -52,9 +52,7 @@ namespace guiex
 
 	protected:
 		virtual int DoInitialize(void* );
-
-		virtual	CGUIShaderImp* CreateShader(const CGUIString& rVertexShaderFileName, const CGUIString& rFragmentShaderFileName);
-		virtual	void DestroyShader(CGUIShaderImp* shader);
+		CGUIShaderImp* UseShader( CGUIShaderImp* pShader );
 
 	public: 
 		static const char* StaticGetModuleName();

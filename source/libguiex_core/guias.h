@@ -292,7 +292,14 @@ namespace guiex
 		CGUIAs::OnRetired( );
 		if( !IsLooping() )
 		{
-			m_aCurValue = m_aEndValue;
+			if( IsReverse() )
+			{
+				m_aCurValue = m_aBeginValue;
+			}
+			else
+			{
+				m_aCurValue = m_aEndValue;
+			}
 			ApplyValue();
 		}
 	}

@@ -10,7 +10,6 @@
 // include
 //============================================================================// 
 #include <libguiex_module/render_opengl_es1/guirender_opengl_es1.h>
-#include <libguiex_module/render_opengl_es1/guishader_opengl_es1.h>
 #include <libguiex_module/render_opengl_base/guitexture_opengl_base.h>
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guicolorrect.h>
@@ -22,7 +21,7 @@
 
 #include <libguiex_module/render_opengl_base/guiopenglheader.h>
 
-#elif defined(GUIEX_TARGET_WIN32)
+#if defined(GUIEX_TARGET_WIN32)
 #ifndef GL_GLEXT_PROTOTYPES
 PFNGLISRENDERBUFFEROESPROC glIsRenderbufferOES;
 PFNGLBINDRENDERBUFFEROESPROC glBindRenderbufferOES;
@@ -42,6 +41,7 @@ PFNGLGENERATEMIPMAPOESPROC glGenerateMipmapOES;
 PFNGLBLENDEQUATIONOESPROC glBlendEquationOES;
 PFNGLBLENDFUNCSEPARATEOESPROC glBlendFuncSeparateOES;
 PFNGLBLENDEQUATIONSEPARATEOESPROC glBlendEquationSeparateOES;
+#endif
 #endif
 
 
@@ -279,16 +279,10 @@ namespace guiex
 		/* Translate Eye to Origin */
 		glTranslatef(-eyex, -eyey, -eyez);
 	}
-	//-----------------------------------------------------------------------------	
-	CGUIShaderImp* IGUIRender_opengl_es1::CreateShader(const CGUIString& rVertexShaderFileName, const CGUIString& rFragmentShaderFileName)
-	{
-		CGUIShader_opengl_es1 * pShader = new CGUIShader_opengl_es1(this);
-		return pShader;
-	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengl_es1::DestroyShader(CGUIShaderImp* shader)
+	CGUIShaderImp* IGUIRender_opengl_es1::UseShader( CGUIShaderImp* pShader )
 	{
-		delete shader;
+		return NULL;
 	}
-	//------------------------------------------------------------------------------
+	//-----------------------------------------------------------------------------
 }//namespace guiex

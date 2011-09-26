@@ -382,6 +382,7 @@ namespace guiex
 		if( pDefaultShader )
 		{
 			SetDefaultShader( pDefaultShader );
+			pDefaultShader->RefRelease();
 		}
 	}
 	//------------------------------------------------------------------------------
