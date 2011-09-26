@@ -163,6 +163,7 @@ set( ${target_name}_render_opengl_base_SRCS
 	render_opengl_base/guitexture_opengl_base.h
 	render_opengl_base/guishader_opengl_base.cpp
 	render_opengl_base/guishader_opengl_base.h
+	render_opengl_base/guiopenglheader.h
 	)
 source_group(render_opengl_base FILES ${${target_name}_render_opengl_base_SRCS} )
 
@@ -170,8 +171,6 @@ source_group(render_opengl_base FILES ${${target_name}_render_opengl_base_SRCS} 
 set( ${target_name}_render_opengl_SRCS 
 	render_opengl/guirender_opengl.cpp
 	render_opengl/guirender_opengl.h
-	render_opengl/guishader_opengl.cpp
-	render_opengl/guishader_opengl.h
 	)
 source_group(render_opengl FILES ${${target_name}_render_opengl_SRCS} )
 
@@ -179,8 +178,6 @@ source_group(render_opengl FILES ${${target_name}_render_opengl_SRCS} )
 set( ${target_name}_render_opengl_es1_SRCS 
 	render_opengl_es1/guirender_opengl_es1.cpp
 	render_opengl_es1/guirender_opengl_es1.h
-	render_opengl_es1/guishader_opengl_es1.cpp
-	render_opengl_es1/guishader_opengl_es1.h
 	)
 source_group(render_opengles_es1 FILES ${${target_name}_render_opengl_es1_SRCS} )
 
@@ -231,15 +228,35 @@ if( BUILD_PLATFORM_WIN32 )
 		${${target_name}_mouse_winapi_SRCS}
 		${${target_name}_mouse_default_SRCS}
 		${${target_name}_script_lua_SRCS}
-		${${target_name}_render_opengl_base_SRCS}
-		${${target_name}_render_opengl_SRCS}
-		${${target_name}_render_opengl_es1_SRCS}
 		${${target_name}_stringconv_winapi_SRCS}
 		${${target_name}_stringconv_internal_SRCS}
 		${${target_name}_physics_box2d_SRCS}
 		${${target_name}_sound_openal_SRCS}
 		${${target_name}_sound_dummy_SRCS}
 		)
+
+if( RENDER_OPENGL )
+	set( ${target_name}_SRCS 
+		${${target_name}_SRCS}
+		${${target_name}_render_opengl_base_SRCS}
+		${${target_name}_render_opengl_SRCS}
+		)
+elseif( RENDER_OPENGL_ES1 )
+	set( ${target_name}_SRCS 
+		${${target_name}_SRCS}
+		${${target_name}_render_opengl_base_SRCS}
+		${${target_name}_render_opengl_es1_SRCS}
+		)
+#elseif( RENDER_OPENGL_ES2 )
+	set( ${target_name}_SRCS 
+		${${target_name}_SRCS}
+		${${target_name}_render_opengl_base_SRCS}
+		${${target_name}_render_opengl_es2_SRCS}
+		)
+else( )
+	message( FATAL_ERROR "unsupport render type" )
+endif( )
+
 	include_directories( "${PROJECT_SOURCE_DIR}/external/openal/include" )
 	include_directories( "${PROJECT_SOURCE_DIR}/external/glew/include" )
 
@@ -255,8 +272,6 @@ elseif( BUILD_PLATFORM_IOS )
 		${${target_name}_imageloader_tga_SRCS}
 		${${target_name}_imageloader_png_SRCS}
 		${${target_name}_imageloader_png_tga_SRCS}
-		${${target_name}_render_opengl_es1_SRCS}
-		${${target_name}_render_opengl_base_SRCS}
 		${${target_name}_stringconv_iconv_SRCS}
 		${${target_name}_stringconv_internal_SRCS}
 		${${target_name}_stringconv_internal_SRCS}
@@ -266,7 +281,21 @@ elseif( BUILD_PLATFORM_IOS )
 		${${target_name}_sound_dummy_SRCS}
 		${${target_name}_mouse_default_SRCS}
 		)
-
+if( RENDER_OPENGL_ES1 )
+	set( ${target_name}_SRCS 
+		${${target_name}_SRCS}
+		${${target_name}_render_opengl_base_SRCS}
+		${${target_name}_render_opengl_es1_SRCS}
+		)
+#elseif( RENDER_OPENGL_ES2 )
+	set( ${target_name}_SRCS 
+		${${target_name}_SRCS}
+		${${target_name}_render_opengl_base_SRCS}
+		${${target_name}_render_opengl_es2_SRCS}
+		)
+else( )
+	message( FATAL_ERROR "unsupport render type" )
+endif( )
 elseif( BUILD_PLATFORM_MACOS )
 
 	set( ${target_name}_SRCS 
@@ -279,8 +308,6 @@ elseif( BUILD_PLATFORM_MACOS )
 		${${target_name}_imageloader_tga_SRCS}
 		${${target_name}_imageloader_png_SRCS}
 		${${target_name}_imageloader_png_tga_SRCS}
-		${${target_name}_render_opengl_SRCS}
-		${${target_name}_render_opengl_base_SRCS}
 		${${target_name}_stringconv_iconv_SRCS}
 		${${target_name}_stringconv_internal_SRCS}
 		${${target_name}_script_lua_SRCS}
@@ -289,6 +316,15 @@ elseif( BUILD_PLATFORM_MACOS )
 		${${target_name}_sound_dummy_SRCS}
 		${${target_name}_mouse_default_SRCS}
 		)
+if( RENDER_OPENGL )
+	set( ${target_name}_SRCS 
+		${${target_name}_SRCS}
+		${${target_name}_render_opengl_base_SRCS}
+		${${target_name}_render_opengl_SRCS}
+		)
+else( )
+	message( FATAL_ERROR "unsupport render type" )
+endif( )
 
 	include_directories( "${PROJECT_SOURCE_DIR}/external/glew/include" )
 else( )

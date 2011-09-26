@@ -37,6 +37,7 @@ namespace guiex
 	class CGUIWidget;
 	class CGUIEventKeyboard;
 	class CGUICamera;
+	class CGUIShader;
 
 	//for singleton
 	class CGUIImageManager;
@@ -100,6 +101,10 @@ namespace guiex
 
 		void SetPlayingAs( bool bPlaying );
 		bool IsPlayingAs() const;
+
+		void TrySetDefaultShader( );
+		void SetDefaultShader( CGUIShader* pShader );
+		CGUIShader* GetDefaultShader() const;
 
 		void SetDataPath(const CGUIString& rDataPath);
 		const CGUIString& GetDataPath() const;
@@ -276,6 +281,7 @@ namespace guiex
 		CGUIInputProcessor m_aInputProcessor; ///input processor
 
 		CGUICamera* m_pDefaultCamera;
+		CGUIShader* m_pDefaultShader;
 
 		//----------------------------------------------------------------------
 		//global ui event

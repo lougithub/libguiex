@@ -133,6 +133,7 @@ namespace guiex
 		,m_eScreenOrientation( eScreenOrientation_Portrait )
 		,m_bFixedScreenOrientation( true )
 		,m_pDefaultCamera(NULL)
+		,m_pDefaultShader(NULL)
 	{
 		GUI_ASSERT( !m_pSingleton, "[CGUISystem::CGUISystem]:instance has been created" ); 
 		GUI_ASSERT( !GSystem, "[CGUISystem::CGUISystem]:GSystem has been set" ); 
@@ -265,6 +266,8 @@ namespace guiex
 			m_pDefaultCamera = NULL;
 		}
 
+		SetDefaultShader( NULL );
+
 		//destroy all canvas
 		DestroyAllCanvas();
 
@@ -371,6 +374,36 @@ namespace guiex
 	bool CGUISystem::IsPlayingAs() const
 	{
 		return m_bPlayingAs;
+	}
+	//------------------------------------------------------------------------------
+	void CGUISystem::TrySetDefaultShader( )
+	{
+		CGUIShader* pDefaultShader = GetShaderManager()->AllocateResource( "defaultshader" );
+		if( pDefaultShader )
+		{
+			SetDefaultShader( pDefaultShader );
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUISystem::SetDefaultShader( CGUIShader* pShader )
+	{
+		if( m_pDefaultShader != pShader )
+		{
+			if( m_pDefaultShader )
+			{
+				m_pDefaultShader->RefRelease();
+			}
+			m_pDefaultShader = pShader;
+			if( m_pDefaultShader )
+			{
+				m_pDefaultShader->RefRetain();
+			}
+		}
+	}
+	//------------------------------------------------------------------------------
+	CGUIShader* CGUISystem::GetDefaultShader() const
+	{
+		return m_pDefaultShader;
 	}
 	//------------------------------------------------------------------------------
 	bool CGUISystem::IsEditorMode( ) const
@@ -782,6 +815,16 @@ namespace guiex
 		IGUIInterfaceRender* pRender = CGUIInterfaceManager::Instance()->GetInterfaceRender();
 		IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
 		pRender->SetFontRender(pFont); 
+		
+		//set default shader
+		if( !m_pDefaultShader )
+		{
+			TrySetDefaultShader();
+		}
+ 		if( m_pDefaultShader )
+		{
+			m_pDefaultShader->UseShader( pRender );
+		}
 
 		pRender->ApplyCamera( m_pDefaultCamera );
 		pRender->BeginRender();

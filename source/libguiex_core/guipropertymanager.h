@@ -91,6 +91,7 @@ namespace guiex
 		ePropertyType_ImageDefine,
 		ePropertyType_AnimationDefine,
 		ePropertyType_AsDefine,
+		ePropertyType_ShaderDefine,
 		ePropertyType_WidgetDefine,
 		ePropertyType_Particle2DDefine,
 		ePropertyType_TiledMapDefine,

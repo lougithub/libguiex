@@ -250,6 +250,10 @@ namespace guiex
 		*/
 		virtual	void DestroyAllTexture() = 0;
 
+		/**
+		* @return old used shader
+		*/
+		virtual CGUIShaderImp* UseShader( CGUIShaderImp* pShader ) = 0;
 		virtual	CGUIShaderImp*	CreateShader(const CGUIString& rVertexShaderFileName, const CGUIString& rFragmentShaderFileName) = 0;
 		virtual	void DestroyShader(CGUIShaderImp* shader) = 0;
 				

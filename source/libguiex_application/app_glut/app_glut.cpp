@@ -45,7 +45,6 @@ guiex::CGUITimer g_aOldTimer;
 extern guiex::CGUIFrameworkBase* GUIEXCreateFramework( );
 extern const char* GUIEXGetDataDir();
 int g_nVSync = 1;
-bool g_bShouldQuit = false;
 
 //============================================================================//
 // function
@@ -89,7 +88,6 @@ void setVSync( int interval = 1 )
 //------------------------------------------------------------------------------
 void QuitApp()
 {
-	g_bShouldQuit = true;
 	if( g_pFramework )
 	{
 		g_pFramework->Release();
@@ -259,10 +257,6 @@ void keyUpSpecialCB(int key, int x, int y)
 //------------------------------------------------------------------------------
 void displayCB(void)
 {
-	if( g_bShouldQuit )
-	{
-		return;
-	}
 	// do updates
 	guiex::CGUITimer aCurTimer;
 	aCurTimer.UpdateTime();
@@ -365,6 +359,8 @@ int main(int argc, char** argv)
 	glutKeyboardUpFunc( keyboardUpCB );
 	glutSpecialUpFunc( keyUpSpecialCB );
 
+	glutSetOption( GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION );
+
 	setVSync( g_nVSync );
 
 	//get data path
@@ -385,8 +381,6 @@ int main(int argc, char** argv)
 	g_pFramework = GUIEXCreateFramework( );
 	g_pFramework->Initialize( guiex::CGUIIntSize( g_nScreenWidth, g_nScreenHeight ), rDir.c_str() );
 	RegisterKeyboard();
-
-	atexit(exitCB);
 
 #if defined(GUIEX_PLATFORM_WIN32)
 	HWND hWnd = FindWindowA("GLUT", "libguiex demo");

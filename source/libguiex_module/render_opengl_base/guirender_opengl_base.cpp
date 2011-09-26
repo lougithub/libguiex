@@ -11,6 +11,7 @@
 //============================================================================// 
 #include <libguiex_module/render_opengl_base/guirender_opengl_base.h>
 #include <libguiex_module/render_opengl_base/guitexture_opengl_base.h>
+#include <libguiex_module/render_opengl_base/guishader_opengl_base.h>
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guicolorrect.h>
 #include <libguiex_core/guisystem.h>
@@ -19,24 +20,7 @@
 #include <libguiex_core/guicamera.h>
 #include <libguiex_core/guitexture.h>
 
-#if defined(GUIEX_TARGET_WIN32)
-#include <windows.h>
-#include <GL/glew.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
-#elif defined(GUIEX_TARGET_IOS)
-#include <OpenGLES/ES1/gl.h>
-#include <OpenGLES/ES1/glext.h>
-#elif defined(GUIEX_TARGET_MACOS)
-#include <OpenGL/gl.h>
-#include <OpenGL/glu.h>
-#elif defined(GUIEX_TARGET_ANDROID)
-#include <GLES/gl.h>
-#include <GLES/glext.h>
-#else
-#error "unknown target"	
-#endif
-
+#include <libguiex_module/render_opengl_base/guiopenglheader.h>
 
 //============================================================================//
 // function
@@ -50,36 +34,46 @@ namespace guiex
 #else
 #define OPENGL_ERROR GUI_THROW
 #endif
-	void TryThrowOpenglError( const char* info )
+	void TryThrowOpenglError( char *file, int line )
 	{
 		int errorcode = glGetError();
-		if( GL_NO_ERROR != errorcode )
+		while( GL_NO_ERROR != errorcode )
 		{
-			switch( errorcode )
+			const GLubyte* sError = gluErrorString(errorcode);
+			if (sError)
 			{
-			case GL_INVALID_ENUM:
-				OPENGL_ERROR( GUI_FORMAT("error find in opengl in <%s>, error is <%s>!" ,info, "GL_INVALID_ENUM"));
-				break;
-			case GL_INVALID_VALUE:
-				OPENGL_ERROR( GUI_FORMAT("error find in opengl in <%s>, error is <%s>!" ,info, "GL_INVALID_VALUE"));
-				break;
-			case GL_INVALID_OPERATION:
-				OPENGL_ERROR( GUI_FORMAT("error find in opengl in <%s>, error is <%s>!" ,info, "GL_INVALID_OPERATION"));
-				break;
-			case GL_STACK_OVERFLOW:
-				OPENGL_ERROR( GUI_FORMAT("error find in opengl in <%s>, error is <%s>!" ,info, "GL_STACK_OVERFLOW"));
-				break;
-			case GL_STACK_UNDERFLOW:
-				OPENGL_ERROR( GUI_FORMAT("error find in opengl in <%s>, error is <%s>!" ,info, "GL_STACK_UNDERFLOW"));
-				break;
-			case GL_OUT_OF_MEMORY:
-				OPENGL_ERROR( GUI_FORMAT("error find in opengl in <%s>, error is <%s>!" ,info, "GL_OUT_OF_MEMORY"));
-				break;			
-			default:
-				OPENGL_ERROR( GUI_FORMAT("error find in opengl in <%s>, error is <0x%x>!" ,info, errorcode));
+				OPENGL_ERROR( GUI_FORMAT("error find in opengl in <%s : %d>, error is <%s>!" , file, line, sError));
 			}
+			else
+			{
+				switch( errorcode )
+				{
+				case GL_INVALID_ENUM:
+					OPENGL_ERROR( GUI_FORMAT("error find in opengl in <%s : %d>, error is <%s>!" , file, line, "GL_INVALID_ENUM"));
+					break;
+				case GL_INVALID_VALUE:
+					OPENGL_ERROR( GUI_FORMAT("error find in opengl in <%s : %d>, error is <%s>!" , file, line, "GL_INVALID_VALUE"));
+					break;
+				case GL_INVALID_OPERATION:
+					OPENGL_ERROR( GUI_FORMAT("error find in opengl in <%s : %d>, error is <%s>!" , file, line, "GL_INVALID_OPERATION"));
+					break;
+				case GL_STACK_OVERFLOW:
+					OPENGL_ERROR( GUI_FORMAT("error find in opengl in <%s : %d>, error is <%s>!" , file, line, "GL_STACK_OVERFLOW"));
+					break;
+				case GL_STACK_UNDERFLOW:
+					OPENGL_ERROR( GUI_FORMAT("error find in opengl in <%s : %d>, error is <%s>!" , file, line, "GL_STACK_UNDERFLOW"));
+					break;
+				case GL_OUT_OF_MEMORY:
+					OPENGL_ERROR( GUI_FORMAT("error find in opengl in <%s : %d>, error is <%s>!" , file, line, "GL_OUT_OF_MEMORY"));
+					break;			
+				default:
+					OPENGL_ERROR( GUI_FORMAT("error find in opengl in <%s : %d>, error is <0x%x>!" , file, line, errorcode));
+				}
+			}
+			errorcode = glGetError();
 		}
 	}
+
 
 	//------------------------------------------------------------------------------
 	EBlendFunc BlendFunc_GL2Engine( GLint nGlType )
@@ -174,6 +168,7 @@ namespace guiex
 		,m_bDrawWireframe(false)
 		,m_nRenderMode_TRIANGLE_STRIP(GL_TRIANGLE_STRIP)
 		,m_nRenderMode_TRIANGLES(GL_TRIANGLES)
+		,m_pCurrentShader(NULL)
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -183,7 +178,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int IGUIRender_opengl_base::DoInitialize(void* )
 	{
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DoInitialize: begin");
+		TRY_THROW_OPENGL_ERROR();
 		
 		// get the maximum available texture size.
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &m_maxTextureSize);
@@ -204,9 +199,11 @@ namespace guiex
 
 		m_nCurrentStencilRef = 0;
 
+		m_pCurrentShader = NULL;
+
 		OnScreenSizeChange( GSystem->GetRawScreenSize() );
 		
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DoInitialize: end");
+		TRY_THROW_OPENGL_ERROR();
 		return 0;
 	}
 	//------------------------------------------------------------------------------
@@ -214,7 +211,7 @@ namespace guiex
 	{
 		glViewport(0,0,rSize.GetWidth(),rSize.GetHeight());
 
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::OnScreenSizeChange");
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::DeleteSelf()
@@ -224,21 +221,25 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::DoDestroy()
 	{
+		UseShader( NULL );
+
 		DestroyAllTexture();
 		DestroyAllShader();
 
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DoDestroy");
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::ClearColor( real red, real green, real blue, real alpha )
 	{
 		glClearColor( red, green, blue, alpha );
 
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::ClearColor");
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::Clear( uint32 uFlag )
 	{
+		TRY_THROW_OPENGL_ERROR();
+
 		GLbitfield bitfield = 0;
 		if( uFlag & eRenderBuffer_COLOR_BIT )
 		{
@@ -254,11 +255,13 @@ namespace guiex
 		}
 		glClear( bitfield );
 
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::Clear");
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::SetDepthTest( bool bEnable )
 	{
+		TRY_THROW_OPENGL_ERROR();
+
 		if ( bEnable ) 
 		{
 			glEnable(GL_DEPTH_TEST);
@@ -268,43 +271,50 @@ namespace guiex
 			glDisable( GL_DEPTH_TEST );
 		}
 
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::SetDepthTest");
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::SetBlendFunc( const SGUIBlendFunc& rBlendFuncType )
 	{
+		TRY_THROW_OPENGL_ERROR();
+
 		m_aBlendFunc = rBlendFuncType;
 		GLenum src = BlendFunc_Engine2GL( rBlendFuncType.src );
 		GLenum dst = BlendFunc_Engine2GL( rBlendFuncType.dst );
 		glBlendFunc( src, dst );
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::SetBlendFunc");
+
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::GetBlendFunc( SGUIBlendFunc& rBlendFuncType )
 	{
-		//TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::GetBlendFunc: begin");
+		//TRY_THROW_OPENGL_ERROR();
 		//GLint src = 0;
 		//GLint dst = 0;
 		//glGetIntegerv( GL_BLEND_SRC, &src );
 		//glGetIntegerv( GL_BLEND_DST, &dst );
 		//rBlendFuncType.src = BlendFunc_GL2Engine( src );
 		//rBlendFuncType.dst = BlendFunc_GL2Engine( dst );
-		//TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::GetBlendFunc: end");
+		//TRY_THROW_OPENGL_ERROR();
 		rBlendFuncType = m_aBlendFunc;
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::SetViewport( int32 x, int32 y, uint32 width, uint32 height)
 	{
+		TRY_THROW_OPENGL_ERROR();
+
 		glViewport( x, y, width, height );
 
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::SetViewport");
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::CopyTexSubImage2D ( int32 level, int32 xoffset, int32 yoffset, int32 x, int32 y, uint32 width, uint32 height)
 	{
+		TRY_THROW_OPENGL_ERROR();
+
 		glCopyTexSubImage2D(GL_TEXTURE_2D, level, xoffset, yoffset, x, y, width, height);
 
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::CopyTexSubImage2D");
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	//void IGUIRender_opengl_base::DrawBuffer( EBufferMode mode )
@@ -319,20 +329,24 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::PushMatrix()
 	{
+		TRY_THROW_OPENGL_ERROR();
+
 		glPushMatrix();
 
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::PushMatrix");
+		TRY_THROW_OPENGL_ERROR();
 	}	
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::PopMatrix()
 	{
 		glPopMatrix();
 
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::PopMatrix");
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::MatrixMode( EMatrixMode eMode )
 	{
+		TRY_THROW_OPENGL_ERROR();
+
 		switch( eMode )
 		{
 		case eMatrixMode_MODELVIEW:
@@ -348,23 +362,27 @@ namespace guiex
 			return;
 		}
 
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::MatrixMode");
+		TRY_THROW_OPENGL_ERROR();
 
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::LoadIdentityMatrix( )
 	{
+		TRY_THROW_OPENGL_ERROR();
+
 		glLoadIdentity();
 
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::LoadIdentityMatrix");
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::MultMatrix( const CGUIMatrix4& rMatrix )
 	{
+		TRY_THROW_OPENGL_ERROR();
+
 		makeGLMatrix( m_gl_matrix, rMatrix );
 		glMultMatrixf( m_gl_matrix );
 
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::MultMatrix");
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	bool IGUIRender_opengl_base::IsSupportStencil()
@@ -374,7 +392,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::BeginRender(void)
 	{
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::BeginRender: begin");
+		TRY_THROW_OPENGL_ERROR();
 		
 		//clear screen
 		glClearColor( 0.5f, 0.5f, 0.5f, 1 );
@@ -415,12 +433,12 @@ namespace guiex
 
 		m_nCurrentStencilRef = 0;
 		
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::BeginRender: end");		
+		TRY_THROW_OPENGL_ERROR();		
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::EndRender(void)
 	{		
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::EndRender: ");
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::UpdateCamera( )
@@ -439,11 +457,13 @@ namespace guiex
 			glMatrixMode(GL_MODELVIEW);
 			glLoadIdentity();
 		}
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::UpdateCamera: ");
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	CGUICamera* IGUIRender_opengl_base::ApplyCamera( CGUICamera* pCamera )
 	{
+		TRY_THROW_OPENGL_ERROR();
+
 		CGUICamera* pOldCamera = m_pCamera;
 		m_pCamera = pCamera;
 		if( m_pCamera && m_pCamera != pOldCamera )
@@ -453,7 +473,7 @@ namespace guiex
 
 		UpdateCamera();
 
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::ApplyCamera");
+		TRY_THROW_OPENGL_ERROR();
 		return pOldCamera;
 	}
 
@@ -467,6 +487,8 @@ namespace guiex
 		const CGUIColor& rColor_bottomleft,
 		const CGUIColor& rColor_bottomright )
 	{
+		TRY_THROW_OPENGL_ERROR();
+
 		real fLeft = rDestRect.m_fLeft;
 		real fRight = rDestRect.m_fRight;
 		real fBottom = rDestRect.m_fBottom;
@@ -507,7 +529,7 @@ namespace guiex
 
 		glLineWidth( 1.0f );
 
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DrawRect: ");
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::DrawCircle(
@@ -517,6 +539,8 @@ namespace guiex
 							real z,
 							const CGUIColor& rColor )
 	{
+		TRY_THROW_OPENGL_ERROR();
+
 		uint32 oglcolor = GUIColorToRenderColor(rColor);
 		for (int i = 0; i < VERTEX_FOR_CIRCLE; i ++) 
 		{
@@ -534,7 +558,7 @@ namespace guiex
 
 		glLineWidth( 1.0f );
 		
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DrawCircle: ");		
+		TRY_THROW_OPENGL_ERROR();		
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::DrawLine(
@@ -545,6 +569,8 @@ namespace guiex
 		const CGUIColor& rColor_begin,
 		const CGUIColor& rColor_end )
 	{
+		TRY_THROW_OPENGL_ERROR();
+
 		uint32 oglcolor_topleft = GUIColorToRenderColor(rColor_begin);
 		uint32 oglcolor_bottomleft = GUIColorToRenderColor(rColor_end);
 
@@ -566,7 +592,7 @@ namespace guiex
 
 		glLineWidth( 1.0f );
 
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DrawLine: ");
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::DrawGrid( 
@@ -581,7 +607,7 @@ namespace guiex
 
 		DrawIndexedPrimitive( m_nRenderMode_TRIANGLES, pVerdices, pTextures, pIndices, nGridNum*6 );
 
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DrawGrid: ");
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::DrawQuads(
@@ -590,12 +616,14 @@ namespace guiex
 		uint16* pIndices,
 		int16 nQuadNum)
 	{
+		TRY_THROW_OPENGL_ERROR();
+
 		BindTexture( pTexture );
 
 		DrawIndexedPrimitive( m_nRenderMode_TRIANGLES, pQuads[0].vertices,pIndices,nQuadNum*6 );
 		int16 kQuadSize = sizeof(pQuads[0].vertices[0]);
 
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DrawQuads: ");
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::BindTexture( const CGUITexture* pTexture )
@@ -610,7 +638,7 @@ namespace guiex
 			glBindTexture(GL_TEXTURE_2D, ((const CGUITexture_opengl_base*)pTexture->GetTextureImplement())->GetOGLTexid());
 		}
 
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::BindTexture: ");
+		TRY_THROW_OPENGL_ERROR();
 
 	}
 	//------------------------------------------------------------------------------
@@ -628,6 +656,8 @@ namespace guiex
 		const CGUIColor& rColor_bottomleft,
 		const CGUIColor& rColor_bottomright)
 	{
+		TRY_THROW_OPENGL_ERROR();
+
 		//bind texture
 		BindTexture( pTexture );
 
@@ -670,11 +700,13 @@ namespace guiex
 
 		DrawPrimitive( m_nRenderMode_TRIANGLE_STRIP,m_pVertex, 4 );
 
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DrawTile: ");
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::DrawIndexedPrimitive( uint32 uMode, const SVertexFormat_V2F_C4UB_T2F* pVertexBuf, uint16* pIndicesBuf, uint32 uIndexNum )
 	{
+		TRY_THROW_OPENGL_ERROR();
+
 		int32 offset = (int32) pVertexBuf;
 
 		// vertex
@@ -690,10 +722,14 @@ namespace guiex
 		glTexCoordPointer(2, GL_FLOAT, sizeof(SVertexFormat_V2F_C4UB_T2F), (GLvoid*)(offset + diff));		
 
 		glDrawElements(m_nRenderMode_TRIANGLES, uIndexNum, GL_UNSIGNED_SHORT, pIndicesBuf);
+
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::DrawIndexedPrimitive( uint32 uMode, const SVertexFormat_V3F* pVerdiceBuf, const SVertexFormat_T2F* pTexCoordBuf, uint16* pIndicesBuf, uint32 uIndexNum )
 	{
+		TRY_THROW_OPENGL_ERROR();
+
 		glDisableClientState(GL_COLOR_ARRAY);	
 
 		glVertexPointer(3, GL_FLOAT, sizeof(SVertexFormat_V3F), pVerdiceBuf);
@@ -702,10 +738,14 @@ namespace guiex
 		glDrawElements(m_nRenderMode_TRIANGLES, uIndexNum, GL_UNSIGNED_SHORT, pIndicesBuf);
 
 		glEnableClientState(GL_COLOR_ARRAY);
+
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::DrawPrimitive( uint32 uMode, const SVertexFormat_T2F_C4UB_V3F* pVertexBuf, uint32 uVertexNum )
 	{
+		TRY_THROW_OPENGL_ERROR();
+
 		int32 offset = (int32) pVertexBuf;
 		int32 diff = offsetof( SVertexFormat_T2F_C4UB_V3F, vertices);
 		glVertexPointer(3, GL_FLOAT, sizeof(SVertexFormat_T2F_C4UB_V3F), (GLvoid*) (offset+diff));
@@ -715,10 +755,14 @@ namespace guiex
 		glTexCoordPointer(2, GL_FLOAT, sizeof(SVertexFormat_T2F_C4UB_V3F), (GLvoid*) (offset+diff));
 
 		glDrawArrays(uMode, 0, uVertexNum);
+
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::DrawPrimitive( uint32 uMode, const SVertexFormat_V3F* pVertexBuf, uint32 uVertexNum )
 	{
+		TRY_THROW_OPENGL_ERROR();
+
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_COLOR_ARRAY);
 
@@ -729,10 +773,14 @@ namespace guiex
 
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glEnableClientState(GL_COLOR_ARRAY);
+
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::DrawPrimitive( uint32 uMode, const SVertexFormat_C4UB_V3F* pVertexBuf, uint32 uVertexNum )
 	{
+		TRY_THROW_OPENGL_ERROR();
+
 		glDisable(GL_TEXTURE_2D);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
@@ -745,6 +793,8 @@ namespace guiex
 
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glEnable(GL_TEXTURE_2D);
+
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	/** 
@@ -752,6 +802,8 @@ namespace guiex
 	*/
 	void IGUIRender_opengl_base::PushClipRect( const CGUIRect& rClipRect )
 	{
+		TRY_THROW_OPENGL_ERROR();
+
 		m_arrayClipRects.push_back( SClipRect() );
 		glGetFloatv( GL_MODELVIEW_MATRIX, m_arrayClipRects.back().m_gl_world_matrix );
 		m_arrayClipRects.back().m_aClipRect = rClipRect;
@@ -760,10 +812,14 @@ namespace guiex
 		{
 			UpdateStencil();
 		}
+
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::PopClipRect( )
 	{
+		TRY_THROW_OPENGL_ERROR();
+
 		GUI_ASSERT( m_arrayClipRects.empty() == false, "no clip rect to pop" );
 		m_arrayClipRects.pop_back();
 
@@ -771,10 +827,14 @@ namespace guiex
 		{
 			UpdateStencil();
 		}
+
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::UpdateStencil()
 	{
+		TRY_THROW_OPENGL_ERROR();
+
 		//clear stencil buffer to 1 for all area visible now
 		glClearStencil( 0 );
 		glClear( GL_STENCIL_BUFFER_BIT );
@@ -816,11 +876,13 @@ namespace guiex
 		glStencilFunc( GL_EQUAL, m_nCurrentStencilRef, m_nCurrentStencilRef );
 		glStencilOp( GL_KEEP, GL_KEEP, GL_KEEP );
 
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::UpdateStencil: ");
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::RenderRectForStencil( const SClipRect& rRect )
 	{
+		TRY_THROW_OPENGL_ERROR();
+
 		//set matrix
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
@@ -853,11 +915,13 @@ namespace guiex
 
 		DrawPrimitive( m_nRenderMode_TRIANGLE_STRIP, m_pVertexForStencil, 4 );
 
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::RenderRectForStencil: ");
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::SetTexCoordinate(SVertexFormat_T2F_C4UB_V3F* pVertexInfo, CGUIRect tex, const CGUITexture* pTexture, EImageOrientation eImageOrientation)
 	{
+		TRY_THROW_OPENGL_ERROR();
+
 		//process for bottom-up texture
 		tex.m_fTop = pTexture->UVConvertTopleft2Engine_v( tex.m_fTop );
 		tex.m_fBottom = pTexture->UVConvertTopleft2Engine_v( tex.m_fBottom );
@@ -927,6 +991,8 @@ namespace guiex
 		//vert3
 		pVertexInfo[3].texCoords.u = tex.m_fRight;
 		pVertexInfo[3].texCoords.v = tex.m_fBottom;
+
+		TRY_THROW_OPENGL_ERROR();
 	}
 //------------------------------------------------------------------------------
 	/**
@@ -936,13 +1002,20 @@ namespace guiex
 	*/
 	CGUITextureImp*	IGUIRender_opengl_base::CreateTexture(void)
 	{
+		TRY_THROW_OPENGL_ERROR();
+
 		CGUITexture_opengl_base* pTexture = new CGUITexture_opengl_base(this);
 		AddTexture(pTexture);
+
+		TRY_THROW_OPENGL_ERROR();
+
 		return pTexture;
 	}
 	//------------------------------------------------------------------------------
 	CGUITextureImp*	IGUIRender_opengl_base::CreateTexture(const CGUIString& filename)
 	{
+		TRY_THROW_OPENGL_ERROR();
+
 		CGUITextureImp* pTexture = this->CreateTexture();
 		if( pTexture->LoadFromFile(filename) != 0 )
 		{
@@ -951,6 +1024,9 @@ namespace guiex
 			delete pTexture;
 			return NULL;
 		}
+
+		TRY_THROW_OPENGL_ERROR();
+
 		return pTexture;
 	}
 	//-----------------------------------------------------------------------------
@@ -995,7 +1071,7 @@ namespace guiex
 			DestroyTexture(*m_setTexture.begin());
 		}
 
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DestroyAllTexture");
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::DestroyAllShader()
@@ -1005,7 +1081,7 @@ namespace guiex
 			DestroyShader(*m_setShader.begin());
 		}
 
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::DestroyAllShader");
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::DestroyTexture(CGUITextureImp* texture)
@@ -1104,7 +1180,7 @@ namespace guiex
 			m_aWholeScreenRect.m_aClipRect.SetSize( rSize );
 		}
 
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_base::EnableClip");
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	bool IGUIRender_opengl_base::IsEnableClip( ) const
@@ -1132,4 +1208,23 @@ namespace guiex
 		return m_bDrawWireframe;
 	}
 	//-----------------------------------------------------------------------------
+	CGUIShaderImp* IGUIRender_opengl_base::CreateShader(const CGUIString& rVertexShaderFileName, const CGUIString& rFragmentShaderFileName)
+	{
+		CGUIShader_opengl_base * pShader = new CGUIShader_opengl_base(this);
+		pShader->LoadAndCompile( rVertexShaderFileName, rFragmentShaderFileName );
+
+		AddShader( pShader );
+		return pShader;
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_base::DestroyShader(CGUIShaderImp* shader)
+	{
+		GUI_ASSERT( shader, "invalid shader pointer" );
+		if (shader != NULL)
+		{
+			RemoveShader( shader );
+			delete shader;
+		}
+	}
+	//------------------------------------------------------------------------------
 }//namespace guiex

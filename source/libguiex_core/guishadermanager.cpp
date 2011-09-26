@@ -45,7 +45,16 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int32 CGUIShaderManager::RegisterResource( const CGUIString& rSceneName, const CGUIProperty& rProperty)
 	{
-		CGUIShader* pShader = NULL;
+		/*
+		<property name="shader_default" type="CGUIShaderDefine" >
+			<property name="vertex" type="CGUIString" value="shader/default.vert" />
+			<property name="fragment" type="CGUIString" value="shader/default/frag" />
+		</property>
+		*/
+		CGUIString strVertexShader = rProperty.GetProperty("vertex")->GetValue();
+		CGUIString strFragmentShader = rProperty.GetProperty("fragment")->GetValue();
+		
+		CGUIShader* pShader = new CGUIShader( rProperty.GetName(), rSceneName, strVertexShader, strFragmentShader );
 		RegisterResourceImp( pShader );
 		return 0;
 	}

@@ -25,10 +25,10 @@ namespace guiex
 	class CGUIColor;
 
 #if GUI_DEBUG
-	extern void TryThrowOpenglError( const char* info );
-# define TRY_THROW_OPENGL_ERROR(info)	TryThrowOpenglError(info)
+	extern void TryThrowOpenglError( char *file, int line );
+# define TRY_THROW_OPENGL_ERROR( )	TryThrowOpenglError(__FILE__, __LINE__)
 #else
-# define TRY_THROW_OPENGL_ERROR(info)	
+# define TRY_THROW_OPENGL_ERROR( )	
 #endif
 }
 
@@ -176,7 +176,10 @@ namespace guiex
 		void DrawPrimitive( uint32 uMode, const SVertexFormat_T2F_C4UB_V3F* pVertexBuf, uint32 uVertexNum );
 		void DrawIndexedPrimitive( uint32 uMode, const SVertexFormat_V2F_C4UB_T2F* pVertexBuf, uint16* pIndicesBuf, uint32 uIndexNum );
 		void DrawIndexedPrimitive( uint32 uMode, const SVertexFormat_V3F* pVerdiceBuf, const SVertexFormat_T2F* pTexCoordBuf, uint16* pIndicesBuf, uint32 uIndexNum );
-	
+		
+		virtual	CGUIShaderImp* CreateShader(const CGUIString& rVertexShaderFileName, const CGUIString& rFragmentShaderFileName);
+		virtual	void DestroyShader(CGUIShaderImp* shader);
+
 protected:
 		// set the texture's coordinate
 		void SetTexCoordinate(SVertexFormat_T2F_C4UB_V3F* pVertexInfo, CGUIRect tex, const CGUITexture* pTexture, EImageOrientation eImageOrientation);
@@ -204,6 +207,7 @@ protected:
 		//shader list
 		typedef std::set<CGUIShaderImp*> TSetShader;
 		TSetShader	m_setShader;
+		CGUIShaderImp* m_pCurrentShader;
 
 		std::vector<SClipRect>	m_arrayClipRects;
 

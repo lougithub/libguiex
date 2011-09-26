@@ -10,7 +10,7 @@
 // include
 //============================================================================// 
 #include <libguiex_module/render_opengl/guirender_opengl.h>
-#include <libguiex_module/render_opengl/guishader_opengl.h>
+#include <libguiex_module/render_opengl_base/guishader_opengl_base.h>
 #include <libguiex_module/render_opengl_base/guitexture_opengl_base.h>
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guicolorrect.h>
@@ -20,17 +20,7 @@
 #include <libguiex_core/guicamera.h>
 #include <libguiex_core/guitexture.h>
 
-#include <GL/glew.h>
-
-#if defined(GUIEX_PLATFORM_WIN32)
-#include <GL/gl.h>
-#include <GL/glu.h>
-#elif defined(GUIEX_PLATFORM_MAC)
-#include <OpenGL/gl.h>
-#include <OpenGL/glu.h>
-#else
-#error "unknown platform"	
-#endif
+#include <libguiex_module/render_opengl_base/guiopenglheader.h>
 
 //============================================================================//
 // function
@@ -52,7 +42,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int IGUIRender_opengl::DoInitialize(void* pData)
 	{
-		TRY_THROW_OPENGL_ERROR( "render interface initialize" );
+		TRY_THROW_OPENGL_ERROR();
 
 		//init glew
 		GLenum err = glewInit();
@@ -69,7 +59,7 @@ namespace guiex
 			return -1;
 		}
 
-		TRY_THROW_OPENGL_ERROR( "render interface initialize end" );
+		TRY_THROW_OPENGL_ERROR();
 		return 0;
 	}
 	//------------------------------------------------------------------------------
@@ -175,16 +165,24 @@ namespace guiex
 		return (nPolygonMode[1]==GL_LINE);
 	}
 	//-----------------------------------------------------------------------------
-	CGUIShaderImp* IGUIRender_opengl::CreateShader(const CGUIString& rVertexShaderFileName, const CGUIString& rFragmentShaderFileName)
+	CGUIShaderImp* IGUIRender_opengl::UseShader( CGUIShaderImp* pShader )
 	{
-		CGUIShader_opengl * pShader = new CGUIShader_opengl(this);
-		pShader->LoadAndCompile( rVertexShaderFileName, rFragmentShaderFileName );
-		return pShader;
+		CGUIShaderImp* pOldShader = m_pCurrentShader;
+		if( m_pCurrentShader != pShader )
+		{
+			m_pCurrentShader = pShader;
+			if( pShader )
+			{
+				glUseProgram( static_cast<CGUIShader_opengl_base*>(pShader)->GetProgramId() );
+				glUseProgram( 0 );
+			}
+			else
+			{
+				glUseProgram( 0 );
+			}
+		}
+
+		return pOldShader;
 	}
-	//------------------------------------------------------------------------------
-	void IGUIRender_opengl::DestroyShader(CGUIShaderImp* shader)
-	{
-		delete shader;
-	}
-	//------------------------------------------------------------------------------
+
 }//namespace guiex

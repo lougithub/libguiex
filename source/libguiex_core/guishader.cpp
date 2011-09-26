@@ -14,6 +14,8 @@
 #include "guishadermanager.h"
 #include "guiinterfacemanager.h"
 #include "guiinterfacerender.h"
+#include "guiscene.h"
+#include "guiscenemanager.h"
 
 //============================================================================//
 // function
@@ -49,6 +51,12 @@ namespace guiex
 		DestoryShaderImplement();
 	}
 	//------------------------------------------------------------------------------
+	void CGUIShader::UseShader( IGUIInterfaceRender* pRender )
+	{
+		Load();
+		pRender->UseShader( m_pShaderImp );
+	}
+	//------------------------------------------------------------------------------
 	//!< notify when shader imp is deleted
 	void CGUIShader::NotifyDeletedFromImp()
 	{
@@ -56,12 +64,18 @@ namespace guiex
 		Unload();
 	}
 	//------------------------------------------------------------------------------
-	uint32 CGUIShader::CreateShaderImplement()
+	int32 CGUIShader::CreateShaderImplement()
 	{
 		if( !m_pShaderImp )
 		{
+			CGUIScene* pScene = CGUISceneManager::Instance()->GetScene( GetSceneName() );
+			if( !pScene )
+			{
+				return -1;
+			}
+
 			IGUIInterfaceRender* pRender = CGUIInterfaceManager::Instance()->GetInterfaceRender();
-			m_pShaderImp = pRender->CreateShader( m_strVertexShaderFileName, m_strFragmentShaderFileName );
+			m_pShaderImp = pRender->CreateShader( pScene->GetScenePath() + m_strVertexShaderFileName, pScene->GetScenePath() + m_strFragmentShaderFileName );
 			m_pShaderImp->SetShader( this );
 
 			GUI_ASSERT(m_pShaderImp, "failed to create shader");

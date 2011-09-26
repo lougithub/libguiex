@@ -21,6 +21,7 @@
 namespace guiex
 {
 	class CGUIShaderImp;
+	class IGUIInterfaceRender;
 }
 
 //============================================================================//
@@ -41,6 +42,8 @@ namespace guiex
 	public:
 		virtual ~CGUIShader();
 
+		void UseShader( IGUIInterfaceRender* pRende );
+
 	protected:
 		CGUIShader( const CGUIString& rName, const CGUIString& rSceneName,
 			const CGUIString& rVertexShaderFileName, const CGUIString& rFragmentShaderFileName);
@@ -49,7 +52,7 @@ namespace guiex
 		void NotifyDeletedFromImp();
 
 	private:
-		uint32 CreateShaderImplement();
+		int32 CreateShaderImplement();
 		void DestoryShaderImplement();
 
 	private:

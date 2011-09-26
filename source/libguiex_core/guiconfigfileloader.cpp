@@ -25,6 +25,7 @@
 #include "guiparticle2dmanager.h"
 #include "guitiledmapmanager.h"
 #include "guiscenemanager.h"
+#include "guishadermanager.h"
 
 
 //============================================================================//
@@ -153,6 +154,10 @@ namespace guiex
 				
 			case ePropertyType_AsDefine:
 				pResourceManager = CGUIAsManager::Instance();
+				break;
+
+			case ePropertyType_ShaderDefine:
+				pResourceManager = CGUIShaderManager::Instance();
 				break;
 
 			case ePropertyType_Particle2DDefine:

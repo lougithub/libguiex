@@ -20,16 +20,9 @@
 #include <libguiex_core/guicamera.h>
 #include <libguiex_core/guitexture.h>
 
-#if defined(GUIEX_TARGET_IOS)
-#include <OpenGLES/ES1/gl.h>
-#include <OpenGLES/ES1/glext.h>
-#elif defined(GUIEX_TARGET_ANDROID)
-#include <GLES/gl.h>
-#include <GLES/glext.h>
+#include <libguiex_module/render_opengl_base/guiopenglheader.h>
+
 #elif defined(GUIEX_TARGET_WIN32)
-#include <GLES/gl.h>
-#include <GLES/glext.h>
-#include <EGL/egl.h>
 #ifndef GL_GLEXT_PROTOTYPES
 PFNGLISRENDERBUFFEROESPROC glIsRenderbufferOES;
 PFNGLBINDRENDERBUFFEROESPROC glBindRenderbufferOES;
@@ -50,10 +43,6 @@ PFNGLBLENDEQUATIONOESPROC glBlendEquationOES;
 PFNGLBLENDFUNCSEPARATEOESPROC glBlendFuncSeparateOES;
 PFNGLBLENDEQUATIONSEPARATEOESPROC glBlendEquationSeparateOES;
 #endif
-#else
-#error "unknown target"	
-#endif
-
 
 
 //============================================================================//
@@ -76,7 +65,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	int32 IGUIRender_opengl_es1::DoInitialize(void* pData )
 	{
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_es1::DoInitialize: begin");
+		TRY_THROW_OPENGL_ERROR();
 
 #if defined(GUIEX_TARGET_WIN32)
 #ifndef GL_GLEXT_PROTOTYPES
@@ -126,7 +115,7 @@ namespace guiex
 		}
 		
 		
-		TRY_THROW_OPENGL_ERROR("IGUIRender_opengl_es1::DoInitialize: end");		
+		TRY_THROW_OPENGL_ERROR();		
 
 		return 0;
 	}

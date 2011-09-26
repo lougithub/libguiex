@@ -12,6 +12,10 @@
 #include <libguiex_module/render_opengl_base/guishader_opengl_base.h>
 #include <libguiex_module/render_opengl_base/guirender_opengl_base.h>
 #include <libguiex_core/guiexception.h>
+#include <libguiex_core/guiinterfacefilesys.h>
+#include <libguiex_core/guiinterfacemanager.h>
+
+#include <libguiex_module/render_opengl_base/guiopenglheader.h>
 
 //============================================================================//
 // function
@@ -21,12 +25,99 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUIShader_opengl_base::CGUIShader_opengl_base(IGUIInterfaceRender* pRender)
 		:CGUIShaderImp(pRender)
+		,m_uProgramId(0)
+		,m_uVertexShader(0)
+		,m_uFragmentShader(0)
 	{
 	}
 	//------------------------------------------------------------------------------
 	CGUIShader_opengl_base::~CGUIShader_opengl_base()
 	{
+		DestroyShader();
 	}
 	//------------------------------------------------------------------------------
+	uint32 CGUIShader_opengl_base::GetProgramId() const
+	{
+		return m_uProgramId;
+	}
 	//------------------------------------------------------------------------------
+	void CGUIShader_opengl_base::DestroyShader()
+	{
+		if( m_uVertexShader != 0 )
+		{
+			glDetachShader( m_uProgramId, m_uVertexShader );
+			glDeleteShader(m_uVertexShader);
+			m_uVertexShader = 0;
+		}
+		if( m_uFragmentShader != 0 )
+		{
+			glDetachShader( m_uProgramId, m_uFragmentShader );
+			glDeleteShader(m_uFragmentShader);
+			m_uFragmentShader = 0;
+		}
+		if( m_uProgramId != 0 )
+		{
+			glDeleteProgram( m_uProgramId );
+			m_uProgramId = 0;
+		}
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUIShader_opengl_base::LoadAndCompile(const CGUIString& rVertexShaderFileName, const CGUIString& rFragmentShaderFileName)
+	{
+		DestroyShader();
+
+		//create shader
+		m_uVertexShader = BuildShader(rVertexShaderFileName, GL_VERTEX_SHADER);
+		m_uFragmentShader = BuildShader(rFragmentShaderFileName, GL_FRAGMENT_SHADER);
+
+		m_uProgramId = glCreateProgram();
+		glAttachShader(m_uProgramId, m_uVertexShader);
+		glAttachShader(m_uProgramId, m_uFragmentShader);
+		glLinkProgram(m_uProgramId);
+
+		GLint linkSuccess;
+		glGetProgramiv(m_uProgramId, GL_LINK_STATUS, &linkSuccess);
+		if (linkSuccess == GL_FALSE) 
+		{
+			GLchar messages[256];
+			glGetProgramInfoLog(m_uProgramId, sizeof(messages), 0, &messages[0]);
+			GUI_THROW( GUI_FORMAT( "[CGUIShader_opengl_base::LoadAndCompile]: %s", messages ));
+
+			return -1;
+		}
+
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	uint32 CGUIShader_opengl_base::BuildShader(const CGUIString& rSource, uint32 shaderType)
+	{
+		///read file
+		IGUIInterfaceFileSys* pFileSys =  CGUIInterfaceManager::Instance()->GetInterfaceFileSys();
+		CGUIDataChunk aShaderDataChunk;
+		if( 0 != pFileSys->ReadFile( rSource, aShaderDataChunk, IGUIInterfaceFileSys::eOpenMode_String ))
+		{
+			//failed
+			GUI_THROW( GUI_FORMAT("[CGUIShader_opengl_base::BuildShader]: failed to read file <%s>!", rSource.c_str()));
+			return -1;
+		}
+
+		GLuint shaderHandle = glCreateShader(shaderType);
+		const GLchar* data = (const GLchar*)aShaderDataChunk.GetDataPtr();
+		glShaderSource(shaderHandle, 1, &data, 0);
+		glCompileShader(shaderHandle);
+
+		GLint compileSuccess;
+		glGetShaderiv(shaderHandle, GL_COMPILE_STATUS, &compileSuccess);
+		if (compileSuccess == GL_FALSE) 
+		{
+			GLchar messages[256];
+			glGetShaderInfoLog(shaderHandle, sizeof(messages), 0, &messages[0]);
+			GUI_THROW( GUI_FORMAT( "[CGUIShader_opengl_base::BuildShader]: %s", messages ));
+			return 0;
+		}
+
+		return shaderHandle;
+	}
+	//------------------------------------------------------------------------------
+
 }//namespace guiex

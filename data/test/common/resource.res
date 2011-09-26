@@ -443,6 +443,12 @@
 		<property name="end_value" type="CGUISize" value="117,136" />
 	</property>
 
+
+	<property name="defaultshader" type="CGUIShaderDefine" >
+		<property name="vertex" type="CGUIString" value="shader/default.vert" />
+		<property name="fragment" type="CGUIString" value="shader/default.frag" />
+	</property>
+
 </guiex>
 
 

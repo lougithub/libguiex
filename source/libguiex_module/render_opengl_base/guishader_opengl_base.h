@@ -33,11 +33,20 @@ namespace guiex
 	public:
 		virtual ~CGUIShader_opengl_base();
 
+		uint32 GetProgramId() const;
+
 	protected:
 		friend class IGUIRender_opengl_base;
 		CGUIShader_opengl_base(IGUIInterfaceRender* pRender);
 
+		int32 LoadAndCompile(const CGUIString& rVertexShaderFileName, const CGUIString& rFragmentShaderFileName);
+		uint32 BuildShader(const CGUIString& rSource, uint32 shaderType);
+		void DestroyShader();
+
 	protected:
+		uint32 m_uProgramId;
+		uint32 m_uVertexShader;
+		uint32 m_uFragmentShader;
 	};
 }//namespace guiex
 

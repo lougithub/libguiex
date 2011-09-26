@@ -91,6 +91,7 @@ namespace guiex
 		RegisterPropertyType( ePropertyType_ImageDefine, "CGUIImageDefine" );
 		RegisterPropertyType( ePropertyType_AnimationDefine, "CGUIAnimationDefine" );
 		RegisterPropertyType( ePropertyType_AsDefine, "CGUIAsDefine" );
+		RegisterPropertyType( ePropertyType_ShaderDefine, "CGUIShaderDefine" );
 		RegisterPropertyType( ePropertyType_WidgetDefine, "CGUIWidgetDefine" );
 		RegisterPropertyType( ePropertyType_Particle2DDefine, "CGUIParticle2DDefine" );
 		RegisterPropertyType( ePropertyType_TiledMapDefine, "CGUITiledMapDefine" );
