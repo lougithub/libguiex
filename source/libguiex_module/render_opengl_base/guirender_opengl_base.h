@@ -26,9 +26,9 @@ namespace guiex
 
 #if GUI_DEBUG
 	extern void TryThrowOpenglError( char *file, int line );
-# define TRY_THROW_OPENGL_ERROR( )	TryThrowOpenglError(__FILE__, __LINE__)
+#	define TRY_THROW_OPENGL_ERROR( )	TryThrowOpenglError(__FILE__, __LINE__)
 #else
-# define TRY_THROW_OPENGL_ERROR( )	
+#	define TRY_THROW_OPENGL_ERROR( )	
 #endif
 }
 

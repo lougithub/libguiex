@@ -26,6 +26,7 @@ else( )
 endif()
 
 include_directories( "${PROJECT_SOURCE_DIR}/external/freeglut/include" )
+
 add_library( ${target_name} STATIC ${${target_name}_SRCS} )
 set_target_properties(${target_name} PROPERTIES FOLDER library)
 set_target_properties(${target_name} PROPERTIES LINKER_LANGUAGE CXX)

@@ -14,22 +14,12 @@
 #include <iostream>
 #include <time.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif //#ifdef __cplusplus
-#include <GL/freeglut.h>
-#ifdef __cplusplus
-}
-#endif //#ifdef __cplusplus
 
 #if defined(GUIEX_PLATFORM_WIN32)
-#include <windows.h>
 #include <libguiex_module/ime_winapi/guiime_winapi.h>
-#elif defined(GUIEX_PLATFORM_MAC)
-#include <libgen.h>  
-#include <OpenGL/OpenGL.h>
-#include <OpenGL/CGLCurrent.h>
 #endif
+
+#include <GL/freeglut.h>
 
 //============================================================================//
 // declare
@@ -37,8 +27,6 @@ extern "C" {
 //using namespace guiex;
 const guiex::int32 g_nScreenWidth = 1024;
 const guiex::int32 g_nScreenHeight = 768;
-//const guiex::int32 g_nScreenWidth = 640;
-//const guiex::int32 g_nScreenHeight = 480;
 guiex::CGUIFrameworkBase* g_pFramework = NULL;
 std::map<int,guiex::EKeyCode> g_mapKey_Glut2Guiex;
 guiex::CGUITimer g_aOldTimer;
@@ -100,12 +88,12 @@ void QuitApp()
 //------------------------------------------------------------------------------
 void mouseMotionCB(int x, int y)
 {
-	guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeMousePos(guiex::CGUIVector2(x,y));
+	guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeMousePos(guiex::CGUIVector2((guiex::real)x,(guiex::real)y));
 }
 //------------------------------------------------------------------------------
-void MouseWheel(int wheel, int direction, int x, int y)
+void mouseWheel(int wheel, int direction, int x, int y)
 {
-	guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeWheel(wheel);
+	guiex::CGUIInterfaceManager::Instance()->GetInterfaceMouse()->ChangeWheel(guiex::real(wheel));
 }
 //------------------------------------------------------------------------------
 void mouseCB(int button, int state, int x, int y)
@@ -329,6 +317,25 @@ LRESULT CALLBACK MsgWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 	return(CallWindowProc(g_pfOldProc, hwnd, uMsg, wParam, lParam));
 }
 #endif
+
+guiex::CGUIString GetGameDir(char** argv)
+{
+	//get data path
+#if defined( GUIEX_PLATFORM_WIN32 )
+	char fdir[_MAX_DIR];
+	_splitpath( argv[0], NULL, fdir, NULL, NULL ); 
+	guiex::CGUIString strDir = fdir;
+	strDir += "../../data/";
+	strDir += GUIEXGetDataDir();
+#elif defined( GUIEX_PLATFORM_MAC )
+	guiex::CGUIString strDir(dirname( argv[0]));
+	strDir += "/../../";
+	strDir += GUIEXGetDataDir();
+#else
+#	error "unknown platform"		
+#endif
+	return strDir;
+}
 //------------------------------------------------------------------------------
 int main(int argc, char** argv)
 {
@@ -338,22 +345,26 @@ int main(int argc, char** argv)
 #endif
 #endif
 
-	srand( time(NULL) );
+	srand( NULL );
 
 	// Do GLUT init
-	glutInit( &argc, argv );
 	glutInitDisplayMode( GLUT_DEPTH | GLUT_STENCIL | GLUT_DOUBLE | GLUT_RGBA );
 	glutInitWindowSize( g_nScreenWidth, g_nScreenHeight );
 	glutInitWindowPosition( 100, 100 );
-	glutCreateWindow( "libguiex demo" );
+	glutInit( &argc, argv );
+
+	glutCreateWindow( (const char *)(L"libguiex demo"));
+	glClearColor(0.0, 0.0, 0.3, 1.0);
+
 	glutSetCursor( GLUT_CURSOR_INHERIT );
+
+	glutReshapeFunc(reshapeCB);
 	glutDisplayFunc( displayCB );
 	glutIdleFunc(idleCB);
 	glutMouseFunc( mouseCB );
-	//glutMouseWheelFunc(MouseWheel);
+	glutMouseWheelFunc(mouseWheel);
 	glutMotionFunc( mouseMotionCB );
 	glutPassiveMotionFunc( mouseMotionCB );
-	glutReshapeFunc(reshapeCB);
 	glutKeyboardFunc( keyboardCB );
 	glutSpecialFunc( keySpecialCB );
 	glutKeyboardUpFunc( keyboardUpCB );
@@ -361,34 +372,26 @@ int main(int argc, char** argv)
 
 	glutSetOption( GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION );
 
-	setVSync( g_nVSync );
-
-	//get data path
-#if defined( GUIEX_PLATFORM_WIN32 )
-	char fdir[_MAX_DIR];
-	_splitpath( argv[0], NULL, fdir, NULL, NULL ); 
-	guiex::CGUIString rDir = fdir;
-	rDir += "../../data/";
-	rDir += GUIEXGetDataDir();
-#elif defined( GUIEX_PLATFORM_MAC )
-	guiex::CGUIString rDir(dirname( argv[0]));
-	rDir += "/../../";
-	rDir += GUIEXGetDataDir();
-#else
-#	error "unknown platform"		
-#endif
+	//setVSync( g_nVSync );
 
 	g_pFramework = GUIEXCreateFramework( );
-	g_pFramework->Initialize( guiex::CGUIIntSize( g_nScreenWidth, g_nScreenHeight ), rDir.c_str() );
+	g_pFramework->Initialize( guiex::CGUIIntSize( g_nScreenWidth, g_nScreenHeight ), GetGameDir(argv).c_str() );
 	RegisterKeyboard();
 
 #if defined(GUIEX_PLATFORM_WIN32)
-	HWND hWnd = FindWindowA("GLUT", "libguiex demo");
+	HWND hWnd = GetTopWindow(NULL);
 	g_pfOldProc = (WNDPROC)SetWindowLong(hWnd, GWL_WNDPROC, (LONG)MsgWindowProc);
 #endif
 
 	g_aOldTimer.UpdateTime();
 	glutMainLoop();
+
+	if( g_pFramework )
+	{
+		g_pFramework->Release();
+		delete g_pFramework;
+		g_pFramework = NULL;
+	}
 
 	return 0;
 }

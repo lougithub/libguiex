@@ -9,8 +9,8 @@
 //============================================================================//
 // include
 //============================================================================// 
-#include <libguiex_module/render_opengl_base/guishader_opengl_base.h>
-#include <libguiex_module/render_opengl_base/guirender_opengl_base.h>
+#include "guishader_opengl_base.h"
+#include "guirender_opengl_base.h"
 #include <libguiex_core/guiexception.h>
 #include <libguiex_core/guiinterfacefilesys.h>
 #include <libguiex_core/guiinterfacemanager.h>
@@ -43,6 +43,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUIShader_opengl_base::DestroyShader()
 	{
+#if defined(GUIEX_RENDER_OPENGL) || defined(GUIEX_RENDER_OPENGL_ES2)
 		if( m_uVertexShader != 0 )
 		{
 			glDetachShader( m_uProgramId, m_uVertexShader );
@@ -60,10 +61,12 @@ namespace guiex
 			glDeleteProgram( m_uProgramId );
 			m_uProgramId = 0;
 		}
+#endif	//#if defined(GUIEX_RENDER_OPENGL) || defined(GUIEX_RENDER_OPENGL_ES2)
 	}
 	//------------------------------------------------------------------------------
 	int32 CGUIShader_opengl_base::LoadAndCompile(const CGUIString& rVertexShaderFileName, const CGUIString& rFragmentShaderFileName)
 	{
+#if defined(GUIEX_RENDER_OPENGL) || defined(GUIEX_RENDER_OPENGL_ES2)
 		DestroyShader();
 
 		//create shader
@@ -85,12 +88,14 @@ namespace guiex
 
 			return -1;
 		}
-
+#endif	//#if defined(GUIEX_RENDER_OPENGL) || defined(GUIEX_RENDER_OPENGL_ES2)
 		return 0;
 	}
 	//------------------------------------------------------------------------------
 	uint32 CGUIShader_opengl_base::BuildShader(const CGUIString& rSource, uint32 shaderType)
 	{
+#if defined(GUIEX_RENDER_OPENGL) || defined(GUIEX_RENDER_OPENGL_ES2)
+
 		///read file
 		IGUIInterfaceFileSys* pFileSys =  CGUIInterfaceManager::Instance()->GetInterfaceFileSys();
 		CGUIDataChunk aShaderDataChunk;
@@ -115,8 +120,10 @@ namespace guiex
 			GUI_THROW( GUI_FORMAT( "[CGUIShader_opengl_base::BuildShader]: %s", messages ));
 			return 0;
 		}
-
 		return shaderHandle;
+#else	////#if defined(GUIEX_RENDER_OPENGL) || defined(GUIEX_RENDER_OPENGL_ES2)
+		return 0;
+#endif	//#if defined(GUIEX_RENDER_OPENGL) || defined(GUIEX_RENDER_OPENGL_ES2)
 	}
 	//------------------------------------------------------------------------------
 

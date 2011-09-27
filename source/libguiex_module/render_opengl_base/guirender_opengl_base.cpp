@@ -39,12 +39,14 @@ namespace guiex
 		int errorcode = glGetError();
 		while( GL_NO_ERROR != errorcode )
 		{
+#if defined(GUIEX_RENDER_OPENGL)
 			const GLubyte* sError = gluErrorString(errorcode);
 			if (sError)
 			{
 				OPENGL_ERROR( GUI_FORMAT("error find in opengl in <%s : %d>, error is <%s>!" , file, line, sError));
 			}
 			else
+#endif //#if defined(GUIEX_RENDER_OPENGL)
 			{
 				switch( errorcode )
 				{
