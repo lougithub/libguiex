@@ -205,8 +205,11 @@ add_subdirectory( ${PROJECT_SOURCE_DIR}/external/libpng )
 if( BUILD_PLATFORM_WIN32)
 	add_subdirectory( ${PROJECT_SOURCE_DIR}/external/zlib )
 endif()
+
+if( not BUILD_PLATFORM_IOS)
 add_subdirectory( ${PROJECT_SOURCE_DIR}/external/glew )
 add_subdirectory( ${PROJECT_SOURCE_DIR}/external/freeglut )
+endif()
 
 #test
 add_subdirectory( ${PROJECT_SOURCE_DIR}/test/test1 )

@@ -850,6 +850,7 @@ namespace guiex
 		IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
 		pRender->SetFontRender(pFont); 
 		
+#if !defined(GUIEX_RENDER_OPENGL_ES1)
 		//set default shader
 		if( !m_pDefaultShader_Render )
 		{
@@ -863,6 +864,7 @@ namespace guiex
 		{
 			m_pDefaultShader_Render->Use( pRender );
 		}
+#endif
 
 		pRender->ApplyCamera( m_pDefaultCamera );
 		pRender->BeginRender();

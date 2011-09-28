@@ -25,7 +25,7 @@ namespace guiex
 	class CGUIColor;
 
 #if GUI_DEBUG
-	extern void TryThrowOpenglError( char *file, int line );
+	extern void TryThrowOpenglError( const char *file, int line );
 #	define TRY_THROW_OPENGL_ERROR( )	TryThrowOpenglError(__FILE__, __LINE__)
 #else
 #	define TRY_THROW_OPENGL_ERROR( )	

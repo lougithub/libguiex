@@ -49,7 +49,7 @@ namespace guiex
 #else
 #define OPENGL_ERROR GUI_THROW
 #endif
-	void TryThrowOpenglError( char *file, int line )
+	void TryThrowOpenglError( const char *file, int line )
 	{
 		int errorcode = glGetError();
 		while( GL_NO_ERROR != errorcode )
@@ -488,7 +488,6 @@ namespace guiex
 		TRY_THROW_OPENGL_ERROR();
 		
 		//clear screen
-		glClearColor( 0.5f, 0.5f, 0.5f, 1 );
 		glClearStencil( 0 );
 		ClearDepth( 1.0f );
 		glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );	// clear screen and depth buffer 
@@ -540,13 +539,6 @@ namespace guiex
 			LookAt( m_pCamera->GetEye().x, m_pCamera->GetEye().y, m_pCamera->GetEye().z,
 				m_pCamera->GetCenter().x, m_pCamera->GetCenter().y, m_pCamera->GetCenter().z,
 				m_pCamera->GetUp().x, m_pCamera->GetUp().y, m_pCamera->GetUp().z );
-
-			glMatrixMode( GL_PROJECTION );
-			glLoadIdentity();
-			gluPerspective(m_pCamera->GetFov(), m_pCamera->GetAspectRatio(), m_pCamera->GetNearPlane(), m_pCamera->GetFarPlane());
-			gluLookAt( m_pCamera->GetEye().x, m_pCamera->GetEye().y, m_pCamera->GetEye().z,
-				m_pCamera->GetCenter().x, m_pCamera->GetCenter().y, m_pCamera->GetCenter().z,
-				m_pCamera->GetUp().x, m_pCamera->GetUp().y, m_pCamera->GetUp().z);
 
 			MatrixMode(eMatrixMode_MODELVIEW);
 			LoadIdentity();

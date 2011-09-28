@@ -5,8 +5,8 @@
 * @date 2011-09-26
 */
 
-#ifndef __GUI_OPENGL_HEADER_20110926_H__
-#define __GUI_OPENGL_HEADER_20110926_H__
+//#ifndef __GUI_OPENGL_HEADER_20110926_H__
+//#define __GUI_OPENGL_HEADER_20110926_H__
 
 #include <libguiex_core/guibase.h>
 
@@ -56,4 +56,4 @@
 #	error "unknown target"	
 #endif
 
-#endif //__GUI_OPENGL_HEADER_20110926_H__
+//#endif //__GUI_OPENGL_HEADER_20110926_H__
