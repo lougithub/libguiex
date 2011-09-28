@@ -252,7 +252,8 @@ protected:
 			};
 			EOp m_eClipOp;
 		};
-		std::list<SClipRectOp> m_arrayClipRectOps;
+		std::vector<SClipRectOp> m_arrayClipRectOps;
+		std::vector<SClipRectOp*> m_arrayClipRectOpsCache;
 
 
 		bool m_bEnableClip;

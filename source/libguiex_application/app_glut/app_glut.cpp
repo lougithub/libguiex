@@ -254,7 +254,6 @@ void displayCB(void)
 	g_pFramework->Update( fDeltaTime );
 
 	// do rendering for this frame.
-	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT );
 	g_pFramework->Render();
 	glutPostRedisplay();
 	glutSwapBuffers();

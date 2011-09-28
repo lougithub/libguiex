@@ -235,6 +235,7 @@ namespace guiex
 	void IGUIRender_opengl_base::OnScreenSizeChange( const CGUIIntSize& rSize )
 	{
 		glViewport(0,0,rSize.GetWidth(),rSize.GetHeight());
+		m_aWholeScreenRect.m_aClipRect.SetSize( rSize );
 
 		TRY_THROW_OPENGL_ERROR();
 	}
@@ -491,6 +492,10 @@ namespace guiex
 		glClearStencil( 0 );
 		ClearDepth( 1.0f );
 		glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );	// clear screen and depth buffer 
+
+		m_arrayClipRectOps.clear();
+		m_arrayClipRects.clear();
+		m_bForceRefreshStencil = true;
 
 		//set gl property
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -1224,6 +1229,7 @@ namespace guiex
 					}
 					RenderRectForStencil( *itor );
 					++m_nCurrentStencilRef;
+					glStencilFunc( GL_EQUAL, m_nCurrentStencilRef, m_nCurrentStencilRef );
 #if 0
 					if( m_nCurrentStencilRef == m_nMaxStencilRef-1 )
 					{
@@ -1233,28 +1239,94 @@ namespace guiex
 
 						RenderRectForStencil( m_aWholeScreenRect );
 						m_nCurrentStencilRef = 1;
+						glStencilFunc( GL_EQUAL, m_nCurrentStencilRef, m_nCurrentStencilRef );
 					}
 #endif
-					glStencilFunc( GL_EQUAL, m_nCurrentStencilRef, m_nCurrentStencilRef );
 				}
+				m_bForceRefreshStencil = false;
 			}
 
 			//update changed list
-			uint32 uRemoveCount = 0;
-			while( !m_arrayClipRectOps.empty() )
+			if( m_bHasClipRectOp )
 			{
-				SClipRectOp& rOp = m_arrayClipRectOps.front();
-				if( rOp.m_eClipOp == SClipRectOp.eClipRectOp_Remove )
+				//pre process op
+				uint32 uOpCount = m_arrayClipRectOps.size();
+				for(uint32 i=0; i<uOpCount; ++i)
 				{
-					//op: remove
-					++uRemoveCount;
+					if( m_arrayClipRectOps[i].m_eClipOp == SClipRectOp::eClipRectOp_Remove &&
+						!m_arrayClipRectOpsCache.empty() &&
+						m_arrayClipRectOpsCache.back()->m_eClipOp == SClipRectOp::eClipRectOp_Add )
+					{
+						m_arrayClipRectOpsCache.pop_back();
+						continue;
+					}
+					m_arrayClipRectOpsCache.push_back( &m_arrayClipRectOps[i] );
 				}
-				else
-				{
-					//op: add
-				}
-			}
 
+				uint32 uRemoveCount = 0;
+				uOpCount = m_arrayClipRectOpsCache.size();
+				for(uint32 i=0; i<uOpCount; ++i)
+				{
+					SClipRectOp& rOp = *m_arrayClipRectOpsCache[i];
+					if( rOp.m_eClipOp == SClipRectOp::eClipRectOp_Remove )
+					{
+						//op: remove
+						++uRemoveCount;
+						continue;
+					}
+					else
+					{
+						if( uRemoveCount > 0 )
+						{
+							//remove
+							GUI_ASSERT( m_nCurrentStencilRef >= uRemoveCount, "invalid stencil ref" );
+							m_nCurrentStencilRef -= uRemoveCount;
+							glStencilFunc( GL_GREATER, m_nCurrentStencilRef, m_nCurrentStencilRef );
+							glStencilOp( GL_ZERO, GL_ZERO, GL_REPLACE );
+
+							RenderRectForStencil( m_aWholeScreenRect );
+
+							glStencilFunc( GL_EQUAL, m_nCurrentStencilRef, m_nCurrentStencilRef );
+							glStencilOp( GL_ZERO, GL_ZERO, GL_INCR );
+
+							uRemoveCount = 0;
+						}
+
+						//op: add
+						m_arrayClipRects.push_back( rOp.m_aClipRect );
+						if( m_nCurrentStencilRef == m_nMaxStencilRef )
+						{
+							//reach max
+							GUI_THROW( "[IGUIRender_opengl_base::UpdateStencil]: stencil reference reach max");
+						}
+						else
+						{
+							RenderRectForStencil( rOp.m_aClipRect );
+							++m_nCurrentStencilRef;
+							glStencilFunc( GL_EQUAL, m_nCurrentStencilRef, m_nCurrentStencilRef );
+						}
+					}
+
+				}
+				if( uRemoveCount > 0 )
+				{
+					//remove
+					GUI_ASSERT( m_nCurrentStencilRef >= uRemoveCount, "invalid stencil ref" );
+					m_nCurrentStencilRef -= uRemoveCount;
+					glStencilFunc( GL_GREATER, m_nCurrentStencilRef, m_nCurrentStencilRef );
+					glStencilOp( GL_ZERO, GL_ZERO, GL_REPLACE );
+
+					RenderRectForStencil( m_aWholeScreenRect );
+
+					glStencilFunc( GL_EQUAL, m_nCurrentStencilRef, m_nCurrentStencilRef );
+					glStencilOp( GL_ZERO, GL_ZERO, GL_INCR );
+
+					uRemoveCount = 0;
+				}
+				m_arrayClipRectOps.clear();
+				m_arrayClipRectOpsCache.clear();
+				m_bHasClipRectOp = false;
+			}
 
 			//reset stencil state
 			glStencilFunc( GL_EQUAL, m_nCurrentStencilRef, m_nCurrentStencilRef );
@@ -1269,9 +1341,6 @@ namespace guiex
 			{
 				pOldShader->Use( this );
 			}
-
-			m_bForceRefreshStencil = false;
-			m_bHasClipRectOp = false;
 		}
 
 #else
