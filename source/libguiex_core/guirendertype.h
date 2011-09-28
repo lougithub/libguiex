@@ -73,17 +73,23 @@ namespace guiex
 		uint32 abgr; 
 	};
 
-	struct SVertexFormat_T2F_C4UB_V3F
+	struct SVertexFormat_V3F_T2F_C4UB
+	{
+		SVertexFormat_V3F vertices;
+		SVertexFormat_T2F texCoords;
+		SVertexFormat_C4UB color;
+	};
+
+	struct SVertexFormat_T2F_C4UB
 	{
 		SVertexFormat_T2F texCoords;
 		SVertexFormat_C4UB color;
-		SVertexFormat_V3F vertices;
 	};
 
-	struct SVertexFormat_C4UB_V3F
+	struct SVertexFormat_V3F_C4UB
 	{
-		SVertexFormat_C4UB color;
 		SVertexFormat_V3F vertices;
+		SVertexFormat_C4UB color;
 	};
 
 	struct SVertexFormat_V3F_T2F
@@ -92,11 +98,11 @@ namespace guiex
 		SVertexFormat_T2F texCoords;
 	};
 
-	struct SVertexFormat_V2F_C4UB_T2F
+	struct SVertexFormat_V2F_T2F_C4UB
 	{
 		SVertexFormat_V2F vertices;
-		SVertexFormat_C4UB colors;
 		SVertexFormat_T2F texCoords;
+		SVertexFormat_C4UB colors;
 	};
 
 	enum EQuadPosition
@@ -107,9 +113,9 @@ namespace guiex
 		eQuad_BottomRight,
 	};
 
-	struct SVertexFormat_V2F_C4UB_T2F_Quad
+	struct SVertexFormat_V2F_T2F_C4UB_Quad
 	{
-		SVertexFormat_V2F_C4UB_T2F vertices[4]; //tl, bl, tr, br
+		SVertexFormat_V2F_T2F_C4UB vertices[4]; //tl, bl, tr, br
 	};
 
 	struct SVertexFormat_V3F_Quad

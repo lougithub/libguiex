@@ -30,7 +30,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUISceneEffectGrid3D::CGUISceneEffectGrid3D( const CGUISize& rSceneSize, const CGUIIntSize& rGridSize )
 		:CGUISceneEffectGridBase( rSceneSize, rGridSize )
-		,m_pTexCoordinates( NULL )
+		,m_pVerticeInfos( NULL )
 		,m_pVertices( NULL )
 		,m_pOriginalVertices( NULL )
 		,m_pIndices( NULL )
@@ -54,8 +54,9 @@ namespace guiex
 		// allocating data space
 		m_pVertices = new SVertexFormat_V3F[uVertexNum];
 		m_pOriginalVertices = new SVertexFormat_V3F[uVertexNum];
-		m_pTexCoordinates = new SVertexFormat_T2F[uVertexNum];
+		m_pVerticeInfos = new SVertexFormat_T2F_C4UB[uVertexNum];
 		m_pIndices = new uint16[ m_aGridSize.m_uWidth * m_aGridSize.m_uHeight * 6];
+		uint32 uColor = CGUIColor( 1,1,1,1 ).GetAsABGR();
 
 		for( uint32 x = 0; x < m_aGridSize.m_uWidth; x++ )
 		{
@@ -87,15 +88,16 @@ namespace guiex
 				{
 					m_pVertices[ indexs[i] ] = vertices[i];
 
-					m_pTexCoordinates[ indexs[i] ].u = vertices[i].x / m_pTexture->GetWidth();
+					m_pVerticeInfos[ indexs[i] ].texCoords.u = vertices[i].x / m_pTexture->GetWidth();
 					if( m_bIsTextureFlipped )
 					{
-						m_pTexCoordinates[ indexs[i] ].v = m_pTexture->UVConvertTopleft2Engine_v( (m_aSceneSize.m_fHeight - vertices[i].y) / m_pTexture->GetHeight());
+						m_pVerticeInfos[ indexs[i] ].texCoords.v = m_pTexture->UVConvertTopleft2Engine_v( (m_aSceneSize.m_fHeight - vertices[i].y) / m_pTexture->GetHeight());
 					}
 					else
 					{
-						m_pTexCoordinates[ indexs[i] ].v = m_pTexture->UVConvertTopleft2Engine_v(vertices[i].y / m_pTexture->GetHeight());
+						m_pVerticeInfos[ indexs[i] ].texCoords.v = m_pTexture->UVConvertTopleft2Engine_v(vertices[i].y / m_pTexture->GetHeight());
 					}
+					m_pVerticeInfos[indexs[i]].color.abgr = uColor;
 				}
 			}
 		}
@@ -106,10 +108,10 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUISceneEffectGrid3D::Release( )
 	{
-		if( m_pTexCoordinates )
+		if( m_pVerticeInfos )
 		{
-			delete[] m_pTexCoordinates;
-			m_pTexCoordinates = NULL;
+			delete[] m_pVerticeInfos;
+			m_pVerticeInfos = NULL;
 		}
 		if( m_pVertices )
 		{
@@ -138,7 +140,7 @@ namespace guiex
 	void CGUISceneEffectGrid3D::ProcessCaptureTexture( IGUIInterfaceRender* pRender )
 	{
 		uint32 n = m_aGridSize.m_uWidth * m_aGridSize.m_uHeight;
-		pRender->DrawGrid( m_pTexture, m_pTexCoordinates, m_pVertices, m_pIndices, n );
+		pRender->DrawGrid( m_pTexture, m_pVerticeInfos, m_pVertices, m_pIndices, n );
 		
 		//pRender->DrawTile( 
 		//	CGUIRect( CGUIVector2(), m_aSceneSize ), 

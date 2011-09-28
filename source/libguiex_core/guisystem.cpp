@@ -133,7 +133,8 @@ namespace guiex
 		,m_eScreenOrientation( eScreenOrientation_Portrait )
 		,m_bFixedScreenOrientation( true )
 		,m_pDefaultCamera(NULL)
-		,m_pDefaultShader(NULL)
+		,m_pDefaultShader_Render(NULL)
+		,m_pDefaultShader_Stencil(NULL)
 	{
 		GUI_ASSERT( !m_pSingleton, "[CGUISystem::CGUISystem]:instance has been created" ); 
 		GUI_ASSERT( !GSystem, "[CGUISystem::CGUISystem]:GSystem has been set" ); 
@@ -266,7 +267,8 @@ namespace guiex
 			m_pDefaultCamera = NULL;
 		}
 
-		SetDefaultShader( NULL );
+		SetDefaultShader_Render( NULL );
+		SetDefaultShader_Stencil( NULL );
 
 		//destroy all canvas
 		DestroyAllCanvas();
@@ -376,35 +378,66 @@ namespace guiex
 		return m_bPlayingAs;
 	}
 	//------------------------------------------------------------------------------
-	void CGUISystem::TrySetDefaultShader( )
+	void CGUISystem::TrySetDefaultShader_Render( )
 	{
-		CGUIShader* pDefaultShader = GetShaderManager()->AllocateResource( "defaultshader" );
-		if( pDefaultShader )
+		if( GetShaderManager()->HasResource( "default_render" ) )
 		{
-			SetDefaultShader( pDefaultShader );
+			CGUIShader* pDefaultShader = GetShaderManager()->AllocateResource( "default_render" );
+			SetDefaultShader_Render( pDefaultShader );
 			pDefaultShader->RefRelease();
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUISystem::SetDefaultShader( CGUIShader* pShader )
+	void CGUISystem::SetDefaultShader_Render( CGUIShader* pShader )
 	{
-		if( m_pDefaultShader != pShader )
+		if( m_pDefaultShader_Render != pShader )
 		{
-			if( m_pDefaultShader )
+			if( m_pDefaultShader_Render )
 			{
-				m_pDefaultShader->RefRelease();
+				m_pDefaultShader_Render->RefRelease();
 			}
-			m_pDefaultShader = pShader;
-			if( m_pDefaultShader )
+			m_pDefaultShader_Render = pShader;
+			if( m_pDefaultShader_Render )
 			{
-				m_pDefaultShader->RefRetain();
+				m_pDefaultShader_Render->RefRetain();
 			}
 		}
 	}
 	//------------------------------------------------------------------------------
-	CGUIShader* CGUISystem::GetDefaultShader() const
+	CGUIShader* CGUISystem::GetDefaultShader_Render() const
 	{
-		return m_pDefaultShader;
+		return m_pDefaultShader_Render;
+	}
+	//------------------------------------------------------------------------------
+	void CGUISystem::TrySetDefaultShader_Stencil( )
+	{
+		if( GetShaderManager()->HasResource( "default_stencil" ) )
+		{
+			CGUIShader* pDefaultShader = GetShaderManager()->AllocateResource( "default_render" );
+			SetDefaultShader_Stencil( pDefaultShader );
+			pDefaultShader->RefRelease();
+		}
+	}
+	//------------------------------------------------------------------------------
+	void CGUISystem::SetDefaultShader_Stencil( CGUIShader* pShader )
+	{
+		if( m_pDefaultShader_Stencil != pShader )
+		{
+			if( m_pDefaultShader_Stencil )
+			{
+				m_pDefaultShader_Stencil->RefRelease();
+			}
+			m_pDefaultShader_Stencil = pShader;
+			if( m_pDefaultShader_Stencil )
+			{
+				m_pDefaultShader_Stencil->RefRetain();
+			}
+		}
+	}
+	//------------------------------------------------------------------------------
+	CGUIShader* CGUISystem::GetDefaultShader_Stencil() const
+	{
+		return m_pDefaultShader_Stencil;
 	}
 	//------------------------------------------------------------------------------
 	bool CGUISystem::IsEditorMode( ) const
@@ -818,13 +851,17 @@ namespace guiex
 		pRender->SetFontRender(pFont); 
 		
 		//set default shader
-		if( !m_pDefaultShader )
+		if( !m_pDefaultShader_Render )
 		{
-			TrySetDefaultShader();
+			TrySetDefaultShader_Render();
 		}
- 		if( m_pDefaultShader )
+		if( !m_pDefaultShader_Stencil )
 		{
-			m_pDefaultShader->UseShader( pRender );
+			TrySetDefaultShader_Stencil();
+		}
+ 		if( m_pDefaultShader_Render )
+		{
+			m_pDefaultShader_Render->Use( pRender );
 		}
 
 		pRender->ApplyCamera( m_pDefaultCamera );
@@ -846,7 +883,7 @@ namespace guiex
 
 		pRender->PushMatrix();
 		pRender->MatrixMode(eMatrixMode_MODELVIEW);
-		pRender->LoadIdentityMatrix();
+		pRender->LoadIdentity();
 
 		//render canvas
 		RenderCanvas( pRender );

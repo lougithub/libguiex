@@ -348,28 +348,18 @@ namespace guiex
 		*/
 		inline static CGUIMatrix4 getTrans( const CGUIVector3& v )
 		{
-			CGUIMatrix4 r;
-
-			r.m[0][0] = 1.0; r.m[0][1] = 0.0; r.m[0][2] = 0.0; r.m[0][3] = v.x;
-			r.m[1][0] = 0.0; r.m[1][1] = 1.0; r.m[1][2] = 0.0; r.m[1][3] = v.y;
-			r.m[2][0] = 0.0; r.m[2][1] = 0.0; r.m[2][2] = 1.0; r.m[2][3] = v.z;
-			r.m[3][0] = 0.0; r.m[3][1] = 0.0; r.m[3][2] = 0.0; r.m[3][3] = 1.0;
-
-			return r;
+			return getTrans( v.x, v.y, v.z );
 		}
 
 		/** Gets a translation matrix - variation for not using a vector.
 		*/
 		inline static CGUIMatrix4 getTrans( real t_x, real t_y, real t_z )
 		{
-			CGUIMatrix4 r;
-
-			r.m[0][0] = 1.0; r.m[0][1] = 0.0; r.m[0][2] = 0.0; r.m[0][3] = t_x;
-			r.m[1][0] = 0.0; r.m[1][1] = 1.0; r.m[1][2] = 0.0; r.m[1][3] = t_y;
-			r.m[2][0] = 0.0; r.m[2][1] = 0.0; r.m[2][2] = 1.0; r.m[2][3] = t_z;
-			r.m[3][0] = 0.0; r.m[3][1] = 0.0; r.m[3][2] = 0.0; r.m[3][3] = 1.0;
-
-			return r;
+			return CGUIMatrix4(
+				1.0, 0.0, 0.0, t_x,
+				0.0, 1.0, 0.0, t_y,
+				0.0, 0.0, 1.0, t_z,
+				0.0, 0.0, 0.0, 1.0 );
 		}
 
 		/*

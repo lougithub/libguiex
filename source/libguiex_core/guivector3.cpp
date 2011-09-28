@@ -557,6 +557,16 @@ namespace guiex
 		return x * v.x + y * v.y + z * v.z;
 	}
 	//------------------------------------------------------------------------------
+	CGUIVector3 CGUIVector3::operator^( const CGUIVector3& V ) const
+	{
+		return CGUIVector3
+			(
+			y * V.z - z * V.y,
+			z * V.x - x * V.z,
+			x * V.y - y * V.x
+			);
+	}
+	//------------------------------------------------------------------------------
 	CGUIRotator CGUIVector3::Rotation() const
 	{
 		CGUIRotator R;

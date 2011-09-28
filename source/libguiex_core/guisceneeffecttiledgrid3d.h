@@ -47,7 +47,7 @@ namespace guiex
 		virtual void ProcessCaptureTexture( IGUIInterfaceRender* pRender );
 
 	protected:
-		SVertexFormat_T2F	*m_pTexCoordinates;
+		SVertexFormat_T2F_C4UB	*m_pVerticeInfos;
 		SVertexFormat_V3F_Quad	*m_pVertices;
 		SVertexFormat_V3F_Quad	*m_pOriginalVertices;
 		uint16	*m_pIndices;

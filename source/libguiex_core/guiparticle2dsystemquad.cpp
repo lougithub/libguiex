@@ -44,7 +44,7 @@ namespace guiex
 		}
 
 		// allocating data space
-		m_pQuads = new SVertexFormat_V2F_C4UB_T2F_Quad[m_uTotalParticles];
+		m_pQuads = new SVertexFormat_V2F_T2F_C4UB_Quad[m_uTotalParticles];
 		m_pIndices = new uint16[m_uTotalParticles * 6];
 
 		if( !m_pQuads || !m_pIndices ) 
@@ -141,7 +141,7 @@ namespace guiex
 		GUI_ASSERT( particleIdx < m_uParticleCount, "invalid particle" );
 
 		// colors
-		SVertexFormat_V2F_C4UB_T2F_Quad *quad = &(m_pQuads[particleIdx]);
+		SVertexFormat_V2F_T2F_C4UB_Quad *quad = &(m_pQuads[particleIdx]);
 		for( uint32 i=0; i<4; ++i )
 		{
 			quad->vertices[i].colors.abgr = particle->color.GetAsABGR();

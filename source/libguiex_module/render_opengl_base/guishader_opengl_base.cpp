@@ -67,6 +67,7 @@ namespace guiex
 	int32 CGUIShader_opengl_base::LoadAndCompile(const CGUIString& rVertexShaderFileName, const CGUIString& rFragmentShaderFileName)
 	{
 #if defined(GUIEX_RENDER_OPENGL) || defined(GUIEX_RENDER_OPENGL_ES2)
+
 		DestroyShader();
 
 		//create shader
@@ -82,12 +83,15 @@ namespace guiex
 		glGetProgramiv(m_uProgramId, GL_LINK_STATUS, &linkSuccess);
 		if (linkSuccess == GL_FALSE) 
 		{
-			GLchar messages[256];
+			char messages[256];
 			glGetProgramInfoLog(m_uProgramId, sizeof(messages), 0, &messages[0]);
 			GUI_THROW( GUI_FORMAT( "[CGUIShader_opengl_base::LoadAndCompile]: %s", messages ));
 
 			return -1;
 		}
+		CacheAttributeLoc();
+		CacheUniformLoc();
+
 #endif	//#if defined(GUIEX_RENDER_OPENGL) || defined(GUIEX_RENDER_OPENGL_ES2)
 		return 0;
 	}
@@ -107,7 +111,7 @@ namespace guiex
 		}
 
 		GLuint shaderHandle = glCreateShader(shaderType);
-		const GLchar* data = (const GLchar*)aShaderDataChunk.GetDataPtr();
+		const char* data = (const char*)aShaderDataChunk.GetDataPtr();
 		glShaderSource(shaderHandle, 1, &data, 0);
 		glCompileShader(shaderHandle);
 
@@ -115,7 +119,7 @@ namespace guiex
 		glGetShaderiv(shaderHandle, GL_COMPILE_STATUS, &compileSuccess);
 		if (compileSuccess == GL_FALSE) 
 		{
-			GLchar messages[256];
+			char messages[256];
 			glGetShaderInfoLog(shaderHandle, sizeof(messages), 0, &messages[0]);
 			GUI_THROW( GUI_FORMAT( "[CGUIShader_opengl_base::BuildShader]: %s", messages ));
 			return 0;
@@ -126,5 +130,44 @@ namespace guiex
 #endif	//#if defined(GUIEX_RENDER_OPENGL) || defined(GUIEX_RENDER_OPENGL_ES2)
 	}
 	//------------------------------------------------------------------------------
-
+	void CGUIShader_opengl_base::UseShader( CGUIShader_opengl_base* pShader )
+	{
+#if defined(GUIEX_RENDER_OPENGL) || defined(GUIEX_RENDER_OPENGL_ES2)
+		if( !pShader)
+		{
+			glUseProgram( 0 );
+		}
+		else
+		{
+			glUseProgram( pShader->GetProgramId() );
+		}
+#endif	//#if defined(GUIEX_RENDER_OPENGL) || defined(GUIEX_RENDER_OPENGL_ES2)
+	}
+	//------------------------------------------------------------------------------
+	void CGUIShader_opengl_base::CacheAttributeLoc()
+	{
+#if defined(GUIEX_RENDER_OPENGL) || defined(GUIEX_RENDER_OPENGL_ES2)
+		m_arrayCachedAttributeLoc[eSCAL_Position] = glGetAttribLocation( m_uProgramId, "a_v4Position");
+		m_arrayCachedAttributeLoc[eSCAL_Color] = glGetAttribLocation( m_uProgramId, "a_v4Color");
+		m_arrayCachedAttributeLoc[eSCAL_TexCoord] = glGetAttribLocation( m_uProgramId, "a_v2TexCoord");
+#endif	//#if defined(GUIEX_RENDER_OPENGL) || defined(GUIEX_RENDER_OPENGL_ES2)
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUIShader_opengl_base::GetCachedAttributeLoc( EShaderCachedAttributeLoc eLoc )
+	{
+		return m_arrayCachedAttributeLoc[eLoc];
+	}
+	//------------------------------------------------------------------------------
+	void CGUIShader_opengl_base::CacheUniformLoc()
+	{
+#if defined(GUIEX_RENDER_OPENGL) || defined(GUIEX_RENDER_OPENGL_ES2)
+		m_arrayCachedUniformLoc[eSCUL_ModelViewProjectionMatrix] = glGetUniformLocation( m_uProgramId, "u_m4ModelViewProjectionMatrix");
+#endif	//#if defined(GUIEX_RENDER_OPENGL) || defined(GUIEX_RENDER_OPENGL_ES2)
+	}
+	//------------------------------------------------------------------------------
+	int32 CGUIShader_opengl_base::GetCachedUniformLoc( EShaderCachedUniformLoc eLoc )
+	{
+		return m_arrayCachedUniformLoc[eLoc];
+	}
+	//------------------------------------------------------------------------------
 }//namespace guiex

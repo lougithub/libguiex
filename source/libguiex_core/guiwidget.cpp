@@ -2232,7 +2232,7 @@ namespace guiex
 		}
 
 		pRender->PushMatrix();
-		pRender->LoadIdentityMatrix();
+		pRender->LoadIdentity();
 		pRender->MultMatrix(GetFullTransform());
 
 		// perform render for 'this' Window
@@ -2263,7 +2263,7 @@ namespace guiex
 		}
 
 		pRender->PushMatrix();
-		pRender->LoadIdentityMatrix();
+		pRender->LoadIdentity();
 		pRender->MultMatrix(GetFullTransform());
 
 		if( m_pSceneEffect )

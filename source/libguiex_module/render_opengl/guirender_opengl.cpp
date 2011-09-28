@@ -59,6 +59,19 @@ namespace guiex
 			return -1;
 		}
 
+		glDisable( GL_LIGHTING );
+
+		glShadeModel( GL_SMOOTH );
+		glEnable( GL_POINT_SMOOTH );
+		glEnable( GL_LINE_SMOOTH );
+
+		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
+		// Set up various GL state.
+		glDisableClientState(GL_VERTEX_ARRAY);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		glDisableClientState(GL_COLOR_ARRAY);
+
 		TRY_THROW_OPENGL_ERROR();
 		return 0;
 	}
@@ -129,18 +142,6 @@ namespace guiex
 		glClearDepth( depth );
 	}
 	//-----------------------------------------------------------------------------
-	void IGUIRender_opengl::Perspective(real fovy, real aspect, real zNear, real zFar)
-	{	
-		gluPerspective(fovy, aspect, zNear, zFar);
-	}
-	//-----------------------------------------------------------------------------
-	void IGUIRender_opengl::LookAt(real eyex, real eyey, real eyez,
-				   real centerx, real centery, real centerz,
-				   real upx, real upy, real upz)
-	{
-		gluLookAt( eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
-	}
-	//------------------------------------------------------------------------------
 	/** 
 	 * @brief toggle wire frame.
 	 */
@@ -164,24 +165,7 @@ namespace guiex
 		glGetIntegerv( GL_POLYGON_MODE, nPolygonMode );
 		return (nPolygonMode[1]==GL_LINE);
 	}
-	//-----------------------------------------------------------------------------
-	CGUIShaderImp* IGUIRender_opengl::UseShader( CGUIShaderImp* pShader )
-	{
-		CGUIShaderImp* pOldShader = m_pCurrentShader;
-		if( m_pCurrentShader != pShader )
-		{
-			m_pCurrentShader = pShader;
-			if( pShader )
-			{
-				glUseProgram( static_cast<CGUIShader_opengl_base*>(pShader)->GetProgramId() );
-			}
-			else
-			{
-				glUseProgram( 0 );
-			}
-		}
 
-		return pOldShader;
-	}
+	//------------------------------------------------------------------------------
 
 }//namespace guiex

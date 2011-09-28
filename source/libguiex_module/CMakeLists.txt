@@ -181,6 +181,13 @@ set( ${target_name}_render_opengl_es1_SRCS
 	)
 source_group(render_opengles_es1 FILES ${${target_name}_render_opengl_es1_SRCS} )
 
+#render_opengles_es2
+set( ${target_name}_render_opengl_es2_SRCS 
+	render_opengl_es2/guirender_opengl_es2.cpp
+	render_opengl_es2/guirender_opengl_es2.h
+	)
+source_group(render_opengles_es2 FILES ${${target_name}_render_opengl_es2_SRCS} )
+
 #stringconv_winapi
 set( ${target_name}_stringconv_winapi_SRCS 
 	stringconv_winapi/guistringconv_winapi.cpp
@@ -235,28 +242,6 @@ if( BUILD_PLATFORM_WIN32 )
 		${${target_name}_sound_dummy_SRCS}
 		)
 
-if( RENDER_OPENGL )
-	set( ${target_name}_SRCS 
-		${${target_name}_SRCS}
-		${${target_name}_render_opengl_base_SRCS}
-		${${target_name}_render_opengl_SRCS}
-		)
-elseif( RENDER_OPENGL_ES1 )
-	set( ${target_name}_SRCS 
-		${${target_name}_SRCS}
-		${${target_name}_render_opengl_base_SRCS}
-		${${target_name}_render_opengl_es1_SRCS}
-		)
-#elseif( RENDER_OPENGL_ES2 )
-	set( ${target_name}_SRCS 
-		${${target_name}_SRCS}
-		${${target_name}_render_opengl_base_SRCS}
-		${${target_name}_render_opengl_es2_SRCS}
-		)
-else( )
-	message( FATAL_ERROR "unsupport render type" )
-endif( )
-
 	include_directories( "${PROJECT_SOURCE_DIR}/external/openal/include" )
 	include_directories( "${PROJECT_SOURCE_DIR}/external/glew/include" )
 
@@ -281,21 +266,6 @@ elseif( BUILD_PLATFORM_IOS )
 		${${target_name}_sound_dummy_SRCS}
 		${${target_name}_mouse_default_SRCS}
 		)
-if( RENDER_OPENGL_ES1 )
-	set( ${target_name}_SRCS 
-		${${target_name}_SRCS}
-		${${target_name}_render_opengl_base_SRCS}
-		${${target_name}_render_opengl_es1_SRCS}
-		)
-#elseif( RENDER_OPENGL_ES2 )
-	set( ${target_name}_SRCS 
-		${${target_name}_SRCS}
-		${${target_name}_render_opengl_base_SRCS}
-		${${target_name}_render_opengl_es2_SRCS}
-		)
-else( )
-	message( FATAL_ERROR "unsupport render type" )
-endif( )
 elseif( BUILD_PLATFORM_MACOS )
 
 	set( ${target_name}_SRCS 
@@ -316,21 +286,34 @@ elseif( BUILD_PLATFORM_MACOS )
 		${${target_name}_sound_dummy_SRCS}
 		${${target_name}_mouse_default_SRCS}
 		)
+	include_directories( "${PROJECT_SOURCE_DIR}/external/glew/include" )
+
+else( )
+
+	message( FATAL_ERROR "unsupport platform" )
+
+endif( )
+
 if( RENDER_OPENGL )
 	set( ${target_name}_SRCS 
 		${${target_name}_SRCS}
 		${${target_name}_render_opengl_base_SRCS}
 		${${target_name}_render_opengl_SRCS}
 		)
+elseif( RENDER_OPENGL_ES1 )
+	set( ${target_name}_SRCS 
+		${${target_name}_SRCS}
+		${${target_name}_render_opengl_base_SRCS}
+		${${target_name}_render_opengl_es1_SRCS}
+		)
+elseif( RENDER_OPENGL_ES2 )
+	set( ${target_name}_SRCS 
+		${${target_name}_SRCS}
+		${${target_name}_render_opengl_base_SRCS}
+		${${target_name}_render_opengl_es2_SRCS}
+		)
 else( )
 	message( FATAL_ERROR "unsupport render type" )
-endif( )
-
-	include_directories( "${PROJECT_SOURCE_DIR}/external/glew/include" )
-else( )
-
-	message( FATAL_ERROR "unsupport platform" )
-
 endif( )
 
 # modify module list here --end--

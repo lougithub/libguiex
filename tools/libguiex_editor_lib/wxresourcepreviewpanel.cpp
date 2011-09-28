@@ -89,7 +89,7 @@ void WxResourceCanvasBase::OnPaint(wxPaintEvent& event)
 	GSystem->BeginRender();
 
 	pRender->PushMatrix();
-	pRender->LoadIdentityMatrix();
+	pRender->LoadIdentity();
 	CGUIMatrix4 matrix;
 	matrix.makeTransform( CGUIVector3(ClientSize.x/2, ClientSize.y/2, 0), CGUIVector3(1.0f,1.0f,1.0f), CGUIQuaternion());
 	pRender->MultMatrix(matrix);

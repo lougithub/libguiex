@@ -61,7 +61,7 @@ namespace guiex
 
 		pRender->PushMatrix();
 		pRender->MatrixMode( eMatrixMode_MODELVIEW );
-		pRender->LoadIdentityMatrix();
+		pRender->LoadIdentity();
 
 		pRender->DrawRect( aRect, 3, 0,aColor );
 

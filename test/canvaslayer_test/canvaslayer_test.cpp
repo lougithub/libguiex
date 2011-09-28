@@ -242,7 +242,7 @@ void CMyCanvasLayer_DrawRect::Render( class IGUIInterfaceRender* pRender )
 
 	pRender->PushMatrix();
 	pRender->MatrixMode( eMatrixMode_MODELVIEW );
-	pRender->LoadIdentityMatrix();
+	pRender->LoadIdentity();
 
 	pRender->DrawRect(
 		m_aRect, 

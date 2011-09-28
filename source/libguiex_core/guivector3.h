@@ -86,6 +86,7 @@ namespace guiex
 		CGUIVector3& operator /= ( const CGUIVector3& rkVector );
 		bool operator < ( const CGUIVector3& rhs ) const;
 		bool operator > ( const CGUIVector3& rhs ) const;
+		CGUIVector3 operator^( const CGUIVector3& V ) const;
 		real operator|( const CGUIVector3& v ) const;
 
 	public:

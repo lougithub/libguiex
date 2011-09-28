@@ -114,10 +114,81 @@ namespace guiex
 			return -1;
 		}
 		
-		
+		glDisable( GL_LIGHTING );
+
+		glShadeModel( GL_SMOOTH );
+		glEnable( GL_POINT_SMOOTH );
+		glEnable( GL_LINE_SMOOTH );
+
+		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
+		// Set up various GL state.
+		glDisableClientState(GL_VERTEX_ARRAY);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		glDisableClientState(GL_COLOR_ARRAY);
+
 		TRY_THROW_OPENGL_ERROR();		
 
 		return 0;
+	}
+	//------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_es1::PushMatrix()
+	{
+		TRY_THROW_OPENGL_ERROR();
+
+		glPushMatrix();
+
+		TRY_THROW_OPENGL_ERROR();
+	}	
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_es1::PopMatrix()
+	{
+		glPopMatrix();
+
+		TRY_THROW_OPENGL_ERROR();
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_es1::MatrixMode( EMatrixMode eMode )
+	{
+		TRY_THROW_OPENGL_ERROR();
+
+		switch( eMode )
+		{
+		case eMatrixMode_MODELVIEW:
+			glMatrixMode( GL_MODELVIEW );
+			return;
+
+		case eMatrixMode_PROJECTION:
+			glMatrixMode( GL_PROJECTION );
+			return;
+
+		default:
+			GUI_THROW( "IGUIRender_opengl_es1::MatrixMode: unknown matrix mode");
+			return;
+		}
+
+		TRY_THROW_OPENGL_ERROR();
+
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_es1::LoadIdentity( )
+	{
+		TRY_THROW_OPENGL_ERROR();
+
+		glLoadIdentity();
+
+		TRY_THROW_OPENGL_ERROR();
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_es1::MultMatrix( const CGUIMatrix4& rMatrix )
+	{
+		TRY_THROW_OPENGL_ERROR();
+
+		makeGLMatrix( m_gl_matrix, rMatrix );
+		glMultMatrixf( m_gl_matrix );
+
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_es1::GenRenderbuffers(uint32 n, uint32* renderbuffers)

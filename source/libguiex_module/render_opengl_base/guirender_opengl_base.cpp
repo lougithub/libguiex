@@ -19,8 +19,23 @@
 #include <libguiex_core/guilogmsgmanager.h>
 #include <libguiex_core/guicamera.h>
 #include <libguiex_core/guitexture.h>
+#include <libguiex_core/guishader.h>
 
 #include <libguiex_module/render_opengl_base/guiopenglheader.h>
+
+//============================================================================//
+// declare
+//============================================================================// 
+namespace guiex
+{
+	static const real g_aIdentity[16] =
+	{
+		1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f,
+	};
+}
 
 //============================================================================//
 // function
@@ -59,15 +74,17 @@ namespace guiex
 				case GL_INVALID_OPERATION:
 					OPENGL_ERROR( GUI_FORMAT("error find in opengl in <%s : %d>, error is <%s>!" , file, line, "GL_INVALID_OPERATION"));
 					break;
+				case GL_OUT_OF_MEMORY:
+					OPENGL_ERROR( GUI_FORMAT("error find in opengl in <%s : %d>, error is <%s>!" , file, line, "GL_OUT_OF_MEMORY"));
+					break;			
+#if !defined(GUIEX_RENDER_OPENGL_ES2)
 				case GL_STACK_OVERFLOW:
 					OPENGL_ERROR( GUI_FORMAT("error find in opengl in <%s : %d>, error is <%s>!" , file, line, "GL_STACK_OVERFLOW"));
 					break;
 				case GL_STACK_UNDERFLOW:
 					OPENGL_ERROR( GUI_FORMAT("error find in opengl in <%s : %d>, error is <%s>!" , file, line, "GL_STACK_UNDERFLOW"));
 					break;
-				case GL_OUT_OF_MEMORY:
-					OPENGL_ERROR( GUI_FORMAT("error find in opengl in <%s : %d>, error is <%s>!" , file, line, "GL_OUT_OF_MEMORY"));
-					break;			
+#endif //#if !defined(GUIEX_RENDER_OPENGL_ES2)
 				default:
 					OPENGL_ERROR( GUI_FORMAT("error find in opengl in <%s : %d>, error is <0x%x>!" , file, line, errorcode));
 				}
@@ -181,6 +198,10 @@ namespace guiex
 	int IGUIRender_opengl_base::DoInitialize(void* )
 	{
 		TRY_THROW_OPENGL_ERROR();
+
+		//init matrix
+		m_vecMatrixStack.resize(1);
+		m_eMatrixMode = eMatrixMode_PROJECTION;
 		
 		// get the maximum available texture size.
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &m_maxTextureSize);
@@ -197,7 +218,7 @@ namespace guiex
 		{
 			glEnable( GL_STENCIL_TEST );	
 		}
-		makeGLMatrix( m_aWholeScreenRect.m_gl_world_matrix, CGUIMatrix4::IDENTITY );
+		m_aWholeScreenRect.m_gl_world_matrix = CGUIMatrix4::IDENTITY;
 
 		m_nCurrentStencilRef = 0;
 
@@ -223,10 +244,16 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::DoDestroy()
 	{
-		UseShader( NULL );
+		//clear matrix
+		m_vecMatrixStack.resize(1);
 
+		//clear texture
 		DestroyAllTexture();
+
+		//clear shader
+		UseShader( NULL );
 		DestroyAllShader();
+
 
 		TRY_THROW_OPENGL_ERROR();
 	}
@@ -319,72 +346,133 @@ namespace guiex
 		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
-	//void IGUIRender_opengl_base::DrawBuffer( EBufferMode mode )
-	//{
-	//	glDrawBuffer( BufferMode_Engin2GL(mode) );
-	//}
-	//------------------------------------------------------------------------------
-	//void IGUIRender_opengl_base::ReadBuffer( EBufferMode mode )
-	//{
-	//	glReadBuffer( BufferMode_Engin2GL(mode) );
-	//}
-	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::PushMatrix()
 	{
 		TRY_THROW_OPENGL_ERROR();
 
-		glPushMatrix();
-
-		TRY_THROW_OPENGL_ERROR();
+		m_vecMatrixStack.push_back( m_vecMatrixStack.back());
 	}	
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::PopMatrix()
 	{
-		glPopMatrix();
-
 		TRY_THROW_OPENGL_ERROR();
+
+		GUI_ASSERT( m_vecMatrixStack.size() >= 2, "[IGUIRender_opengl_base::MultMatrix]: invalid matrix stack" );
+		
+		m_vecMatrixStack.pop_back( );
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::MatrixMode( EMatrixMode eMode )
 	{
 		TRY_THROW_OPENGL_ERROR();
 
-		switch( eMode )
-		{
-		case eMatrixMode_MODELVIEW:
-			glMatrixMode( GL_MODELVIEW );
-			return;
-
-		case eMatrixMode_PROJECTION:
-			glMatrixMode( GL_PROJECTION );
-			return;
-
-		default:
-			GUI_THROW( "IGUIRender_opengl_base::MatrixMode: unknown matrix mode");
-			return;
-		}
-
-		TRY_THROW_OPENGL_ERROR();
-
+		m_eMatrixMode = eMode;	
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengl_base::LoadIdentityMatrix( )
+	void IGUIRender_opengl_base::LoadIdentity( )
 	{
 		TRY_THROW_OPENGL_ERROR();
-
-		glLoadIdentity();
-
-		TRY_THROW_OPENGL_ERROR();
+		GUI_ASSERT( !m_vecMatrixStack.empty(), "[IGUIRender_opengl_base::MultMatrix]: invalid matrix stack" );
+		real* current_matrix = m_vecMatrixStack.back().m_matrix[m_eMatrixMode];
+		memcpy(current_matrix, g_aIdentity, sizeof(g_aIdentity));
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::MultMatrix( const CGUIMatrix4& rMatrix )
 	{
 		TRY_THROW_OPENGL_ERROR();
 
-		makeGLMatrix( m_gl_matrix, rMatrix );
-		glMultMatrixf( m_gl_matrix );
+		GUI_ASSERT( !m_vecMatrixStack.empty(), "[IGUIRender_opengl_base::MultMatrix]: invalid matrix stack" );
+
+		real mult_matrix[16];
+
+		makeGLMatrix( mult_matrix, rMatrix );
+		GLMultMatrix( mult_matrix );
 
 		TRY_THROW_OPENGL_ERROR();
+	}
+	//-----------------------------------------------------------------------------
+	void IGUIRender_opengl_base::GLMultMatrix( real* a, real* b, real* out )
+	{
+		uint32 x = 0;
+		for(uint32 iR = 0; iR < 4; iR ++)
+		{
+			for(uint32 iC = 0; iC < 4; iC ++)
+			{
+				out[x]  = b[0 + iR * 4] * a[iC + 0 * 4];
+				out[x] += b[1 + iR * 4] * a[iC + 1 * 4];
+				out[x] += b[2 + iR * 4] * a[iC + 2 * 4];
+				out[x] += b[3 + iR * 4] * a[iC + 3 * 4];
+				++x;
+			}
+		}
+	}
+	//-----------------------------------------------------------------------------
+	void IGUIRender_opengl_base::GLMultMatrix( real* m )
+	{
+		real* current_matrix = m_vecMatrixStack.back().m_matrix[m_eMatrixMode];
+		real result[16];
+		GLMultMatrix(current_matrix, m, result );
+		memcpy( current_matrix, result, sizeof( result) );
+	}
+	//-----------------------------------------------------------------------------
+	void IGUIRender_opengl_base::Perspective(real fovy, real aspect, real zNear, real zFar)
+	{	
+		real m[4][4];
+		real sine, cotangent, deltaZ;
+		real radians=fovy/180.0f*CGUIMath::GUI_PI/2.0f;
+
+		deltaZ=zFar-zNear;
+		sine=(real)sin(radians);
+		if ((deltaZ==0.0f) || (sine==0.0f) || (aspect==0.0f))
+		{
+			GUI_THROW( "[IGUIRender_opengl_base::Perspective]: error occurs");
+			return;
+		}
+		cotangent=(real)(cos(radians)/sine);
+
+		memcpy( m, g_aIdentity, sizeof(g_aIdentity) );
+		m[0][0] = cotangent / aspect;
+		m[1][1] = cotangent;
+		m[2][2] = -(zFar + zNear) / deltaZ;
+		m[2][3] = -1.0f;
+		m[3][2] = -2.0f * zNear * zFar / deltaZ;
+		m[3][3] = 0;
+		GLMultMatrix(&m[0][0]);
+	}
+	//-----------------------------------------------------------------------------
+	void IGUIRender_opengl_base::LookAt(real eyex, real eyey, real eyez,
+		real centerx, real centery, real centerz,
+		real upx, real upy, real upz)
+	{
+		CGUIVector3 forward( centerx - eyex, centery - eyey, centerz - eyez);
+		CGUIVector3 up( upx, upy, upz );
+
+		forward.Normalise();
+
+		/* Side = forward x up */
+		CGUIVector3 side = forward ^ up;
+		side.Normalise();
+
+		/* Recompute up as: up = side x forward */
+		up = side ^ forward;
+
+		real m[4][4];
+		memcpy( m, g_aIdentity, sizeof(g_aIdentity) );
+		m[0][0] = side[0];
+		m[1][0] = side[1];
+		m[2][0] = side[2];
+
+		m[0][1] = up[0];
+		m[1][1] = up[1];
+		m[2][1] = up[2];
+
+		m[0][2] = -forward[0];
+		m[1][2] = -forward[1];
+		m[2][2] = -forward[2];
+
+		GLMultMatrix(&m[0][0]);
+		real translate_m[16] = {1,0,0,0,0,1,0,0,0,0,1,0,-eyex,-eyey,-eyez,1};
+		GLMultMatrix(translate_m);
 	}
 	//------------------------------------------------------------------------------
 	bool IGUIRender_opengl_base::IsSupportStencil()
@@ -415,20 +503,9 @@ namespace guiex
 		glDepthFunc(GL_LEQUAL);
 
 		glDisable( GL_SCISSOR_TEST );
-		glDisable( GL_LIGHTING );
-
-		glShadeModel( GL_SMOOTH );
-		glEnable( GL_POINT_SMOOTH );
-		glEnable( GL_LINE_SMOOTH );
 
 		glEnable(GL_TEXTURE_2D);
-		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 		glEnable(GL_CULL_FACE);
-
-		// Set up various GL state.
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		glEnableClientState(GL_COLOR_ARRAY);
 
 		//update camera
 		UpdateCamera();
@@ -449,15 +526,23 @@ namespace guiex
 		{
 			m_pCamera->ClearDirty();
 
-			glMatrixMode(GL_PROJECTION);
-			glLoadIdentity();
+			MatrixMode(eMatrixMode_PROJECTION);
+			LoadIdentity();
+
 			Perspective( m_pCamera->GetFov(), m_pCamera->GetAspectRatio(), m_pCamera->GetNearPlane(), m_pCamera->GetFarPlane() );
 			LookAt( m_pCamera->GetEye().x, m_pCamera->GetEye().y, m_pCamera->GetEye().z,
 				m_pCamera->GetCenter().x, m_pCamera->GetCenter().y, m_pCamera->GetCenter().z,
 				m_pCamera->GetUp().x, m_pCamera->GetUp().y, m_pCamera->GetUp().z );
 
-			glMatrixMode(GL_MODELVIEW);
+			glMatrixMode( GL_PROJECTION );
 			glLoadIdentity();
+			gluPerspective(m_pCamera->GetFov(), m_pCamera->GetAspectRatio(), m_pCamera->GetNearPlane(), m_pCamera->GetFarPlane());
+			gluLookAt( m_pCamera->GetEye().x, m_pCamera->GetEye().y, m_pCamera->GetEye().z,
+				m_pCamera->GetCenter().x, m_pCamera->GetCenter().y, m_pCamera->GetCenter().z,
+				m_pCamera->GetUp().x, m_pCamera->GetUp().y, m_pCamera->GetUp().z);
+
+			MatrixMode(eMatrixMode_MODELVIEW);
+			LoadIdentity();
 		}
 		TRY_THROW_OPENGL_ERROR();
 	}
@@ -599,22 +684,21 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::DrawGrid( 
 		const CGUITexture* pTexture,
-		const SVertexFormat_T2F* pTextures,
+		const SVertexFormat_T2F_C4UB* pVerticeInfos,
 		const SVertexFormat_V3F* pVerdices,
 		uint16* pIndices,
 		int16 nGridNum )
 	{
 		BindTexture( pTexture );
-		glDisableClientState(GL_COLOR_ARRAY);	
 
-		DrawIndexedPrimitive( m_nRenderMode_TRIANGLES, pVerdices, pTextures, pIndices, nGridNum*6 );
+		DrawIndexedPrimitive( m_nRenderMode_TRIANGLES, pVerdices, pVerticeInfos, pIndices, nGridNum*6 );
 
 		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::DrawQuads(
 		const CGUITexture* pTexture,
-		const SVertexFormat_V2F_C4UB_T2F_Quad* pQuads,
+		const SVertexFormat_V2F_T2F_C4UB_Quad* pQuads,
 		uint16* pIndices,
 		int16 nQuadNum)
 	{
@@ -705,58 +789,84 @@ namespace guiex
 		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengl_base::DrawIndexedPrimitive( uint32 uMode, const SVertexFormat_V2F_C4UB_T2F* pVertexBuf, uint16* pIndicesBuf, uint32 uIndexNum )
+	void IGUIRender_opengl_base::SetShaderMatrix()
 	{
-		TRY_THROW_OPENGL_ERROR();
+#if !defined(GUIEX_RENDER_OPENGL_ES1)
 
-		int32 offset = (int32) pVertexBuf;
-
-		// vertex
-		int32 diff = offsetof( SVertexFormat_V2F_C4UB_T2F, vertices);
-		glVertexPointer(2,GL_FLOAT, sizeof(SVertexFormat_V2F_C4UB_T2F), (GLvoid*) (offset+diff) );
-
-		// color
-		diff = offsetof( SVertexFormat_V2F_C4UB_T2F, colors);
-		glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(SVertexFormat_V2F_C4UB_T2F), (GLvoid*)(offset + diff));
-
-		// tex coords
-		diff = offsetof( SVertexFormat_V2F_C4UB_T2F, texCoords);
-		glTexCoordPointer(2, GL_FLOAT, sizeof(SVertexFormat_V2F_C4UB_T2F), (GLvoid*)(offset + diff));		
-
-		glDrawElements(m_nRenderMode_TRIANGLES, uIndexNum, GL_UNSIGNED_SHORT, pIndicesBuf);
+		if( m_pCurrentShader )
+		{
+			int32 nMatrixLoc = m_pCurrentShader->GetCachedUniformLoc(CGUIShader_opengl_base::eSCUL_ModelViewProjectionMatrix);
+			real matrix[16];
+			real* ProjectionMatrix = m_vecMatrixStack.back().m_matrix[eMatrixMode_PROJECTION];
+			real* ModelViewMatrix = m_vecMatrixStack.back().m_matrix[eMatrixMode_MODELVIEW];
+			GLMultMatrix( ProjectionMatrix, ModelViewMatrix, matrix );
+			glUniformMatrix4fv(nMatrixLoc, 1, GL_FALSE, matrix);
+		}
+#endif //#if !defined(GUIEX_RENDER_OPENGL_ES1)
 
 		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengl_base::DrawIndexedPrimitive( uint32 uMode, const SVertexFormat_V3F* pVerdiceBuf, const SVertexFormat_T2F* pTexCoordBuf, uint16* pIndicesBuf, uint32 uIndexNum )
+	void IGUIRender_opengl_base::SetPipelineMatrix()
+	{
+#if defined(GUIEX_RENDER_OPENGL)
+		if( !m_pCurrentShader )
+		{
+			glMatrixMode( GL_PROJECTION );
+			glLoadIdentity();
+			glMultMatrixf( m_vecMatrixStack.back().m_matrix[eMatrixMode_PROJECTION] );
+			glLoadMatrixf( m_vecMatrixStack.back().m_matrix[eMatrixMode_PROJECTION]);
+			glMatrixMode( GL_MODELVIEW );
+			glLoadMatrixf( m_vecMatrixStack.back().m_matrix[eMatrixMode_MODELVIEW]);
+		}
+		TRY_THROW_OPENGL_ERROR();
+#endif
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_base::DrawIndexedPrimitive( uint32 uMode, const SVertexFormat_V2F_T2F_C4UB* pVertexBuf, uint16* pIndicesBuf, uint32 uIndexNum )
 	{
 		TRY_THROW_OPENGL_ERROR();
 
-		glDisableClientState(GL_COLOR_ARRAY);	
-
-		glVertexPointer(3, GL_FLOAT, sizeof(SVertexFormat_V3F), pVerdiceBuf);
-		glTexCoordPointer(2, GL_FLOAT, sizeof(SVertexFormat_T2F), pTexCoordBuf);	
-
-		glDrawElements(m_nRenderMode_TRIANGLES, uIndexNum, GL_UNSIGNED_SHORT, pIndicesBuf);
-
-		glEnableClientState(GL_COLOR_ARRAY);
+		if( m_pCurrentShader )
+		{
+			DrawIndexedPrimitive_Shader( uMode,pVertexBuf, pIndicesBuf, uIndexNum );
+		}
+		else
+		{
+			DrawIndexedPrimitive_Pipeline( uMode,pVertexBuf, pIndicesBuf, uIndexNum );
+		}
 
 		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengl_base::DrawPrimitive( uint32 uMode, const SVertexFormat_T2F_C4UB_V3F* pVertexBuf, uint32 uVertexNum )
+	void IGUIRender_opengl_base::DrawIndexedPrimitive( uint32 uMode, const SVertexFormat_V3F* pVerdiceBuf, const SVertexFormat_T2F_C4UB* pVerticeInfos, uint16* pIndicesBuf, uint32 uIndexNum )
 	{
 		TRY_THROW_OPENGL_ERROR();
 
-		int32 offset = (int32) pVertexBuf;
-		int32 diff = offsetof( SVertexFormat_T2F_C4UB_V3F, vertices);
-		glVertexPointer(3, GL_FLOAT, sizeof(SVertexFormat_T2F_C4UB_V3F), (GLvoid*) (offset+diff));
-		diff = offsetof( SVertexFormat_T2F_C4UB_V3F, color);
-		glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(SVertexFormat_T2F_C4UB_V3F), (GLvoid*) (offset+diff));
-		diff = offsetof( SVertexFormat_T2F_C4UB_V3F, texCoords);
-		glTexCoordPointer(2, GL_FLOAT, sizeof(SVertexFormat_T2F_C4UB_V3F), (GLvoid*) (offset+diff));
+		if( m_pCurrentShader )
+		{
+			DrawIndexedPrimitive_Shader( uMode,pVerdiceBuf, pVerticeInfos, pIndicesBuf, uIndexNum );
+		}
+		else
+		{
+			DrawIndexedPrimitive_Pipeline( uMode,pVerdiceBuf, pVerticeInfos, pIndicesBuf, uIndexNum );
+		}
 
-		glDrawArrays(uMode, 0, uVertexNum);
+		TRY_THROW_OPENGL_ERROR();
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_base::DrawPrimitive( uint32 uMode, const SVertexFormat_V3F_T2F_C4UB* pVertexBuf, uint32 uVertexNum )
+	{
+		TRY_THROW_OPENGL_ERROR();
+
+		if( m_pCurrentShader )
+		{
+			DrawPrimitive_Shader( uMode,pVertexBuf, uVertexNum );
+		}
+		else
+		{
+			DrawPrimitive_Pipeline( uMode, pVertexBuf, uVertexNum );
+		}
 
 		TRY_THROW_OPENGL_ERROR();
 	}
@@ -765,38 +875,254 @@ namespace guiex
 	{
 		TRY_THROW_OPENGL_ERROR();
 
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-		glDisableClientState(GL_COLOR_ARRAY);
-
-		int32 offset = (int32) pVertexBuf;
-		int32 diff = offsetof( SVertexFormat_V3F, x);
-		glVertexPointer(3, GL_FLOAT, sizeof(SVertexFormat_V3F), (GLvoid*) (offset+diff));
-		glDrawArrays(uMode, 0, uVertexNum);
-
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		glEnableClientState(GL_COLOR_ARRAY);
+		if( m_pCurrentShader )
+		{
+			DrawPrimitive_Shader( uMode,pVertexBuf, uVertexNum );
+		}
+		else
+		{
+			DrawPrimitive_Pipeline( uMode, pVertexBuf, uVertexNum );
+		}
 
 		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengl_base::DrawPrimitive( uint32 uMode, const SVertexFormat_C4UB_V3F* pVertexBuf, uint32 uVertexNum )
+	void IGUIRender_opengl_base::DrawPrimitive( uint32 uMode, const SVertexFormat_V3F_C4UB* pVertexBuf, uint32 uVertexNum )
 	{
 		TRY_THROW_OPENGL_ERROR();
 
-		glDisable(GL_TEXTURE_2D);
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
-		int32 offset = (int32) pVertexBuf;
-		int32 diff = offsetof( SVertexFormat_C4UB_V3F, vertices);
-		glVertexPointer(3, GL_FLOAT, sizeof(SVertexFormat_C4UB_V3F), (GLvoid*) (offset+diff));
-		diff = offsetof( SVertexFormat_C4UB_V3F, color);
-		glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(SVertexFormat_C4UB_V3F), (GLvoid*) (offset+diff));
-		glDrawArrays(uMode, 0, uVertexNum);
-
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		glEnable(GL_TEXTURE_2D);
+		if( m_pCurrentShader )
+		{
+			DrawPrimitive_Shader( uMode,pVertexBuf, uVertexNum );
+		}
+		else
+		{
+			DrawPrimitive_Pipeline( uMode, pVertexBuf, uVertexNum );
+		}
 
 		TRY_THROW_OPENGL_ERROR();
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_base::DrawPrimitive_Shader( uint32 uMode, const SVertexFormat_V3F* pVertexBuf, uint32 uVertexNum )
+	{
+#if !defined(GUIEX_RENDER_OPENGL_ES1)
+
+		SetShaderMatrix();
+
+		int32 nPositionLoc = m_pCurrentShader->GetCachedAttributeLoc(CGUIShader_opengl_base::eSCAL_Position);
+		glEnableVertexAttribArray(nPositionLoc);
+
+		glVertexAttribPointer(nPositionLoc, 3, GL_FLOAT, GL_FALSE, sizeof(SVertexFormat_V3F), &pVertexBuf);
+
+		glDrawArrays(uMode, 0, uVertexNum);
+
+		glDisableVertexAttribArray(nPositionLoc);
+
+#endif
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_base::DrawPrimitive_Shader( uint32 uMode, const SVertexFormat_V3F_C4UB* pVertexBuf, uint32 uVertexNum )
+	{
+#if !defined(GUIEX_RENDER_OPENGL_ES1)
+		SetShaderMatrix();
+
+		glDisable( GL_TEXTURE_2D );
+
+		int32 nPositionLoc = m_pCurrentShader->GetCachedAttributeLoc(CGUIShader_opengl_base::eSCAL_Position);
+		int32 nColorLoc = m_pCurrentShader->GetCachedAttributeLoc(CGUIShader_opengl_base::eSCAL_Color);
+		glEnableVertexAttribArray(nPositionLoc);
+		glEnableVertexAttribArray(nColorLoc);
+
+		glVertexAttribPointer(nPositionLoc, 3, GL_FLOAT, GL_FALSE, sizeof(SVertexFormat_V3F_C4UB), &pVertexBuf->vertices);
+		glVertexAttribPointer(nColorLoc, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(SVertexFormat_V3F_C4UB), &pVertexBuf->color);
+
+		glDrawArrays(uMode, 0, uVertexNum);
+
+		glDisableVertexAttribArray(nColorLoc);
+		glDisableVertexAttribArray(nPositionLoc);
+		glEnable( GL_TEXTURE_2D );
+
+#endif
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_base::DrawPrimitive_Shader( uint32 uMode, const SVertexFormat_V3F_T2F_C4UB* pVertexBuf, uint32 uVertexNum )
+	{
+#if !defined(GUIEX_RENDER_OPENGL_ES1)
+
+		SetShaderMatrix();
+
+		int32 nPositionLoc = m_pCurrentShader->GetCachedAttributeLoc(CGUIShader_opengl_base::eSCAL_Position);
+		int32 nColorLoc = m_pCurrentShader->GetCachedAttributeLoc(CGUIShader_opengl_base::eSCAL_Color);
+		int32 nTexCoordLoc = m_pCurrentShader->GetCachedAttributeLoc(CGUIShader_opengl_base::eSCAL_TexCoord);
+		glEnableVertexAttribArray(nPositionLoc);
+		glEnableVertexAttribArray(nColorLoc);
+		glEnableVertexAttribArray(nTexCoordLoc);
+
+		glVertexAttribPointer(nPositionLoc, 3, GL_FLOAT, GL_FALSE, sizeof(SVertexFormat_V3F_T2F_C4UB), &pVertexBuf->vertices);
+		glVertexAttribPointer(nColorLoc,4, GL_UNSIGNED_BYTE,GL_TRUE, sizeof(SVertexFormat_V3F_T2F_C4UB), &pVertexBuf->color);
+		glVertexAttribPointer(nTexCoordLoc, 2, GL_FLOAT,GL_FALSE, sizeof(SVertexFormat_V3F_T2F_C4UB), &pVertexBuf->texCoords);
+
+		glDrawArrays(uMode, 0, uVertexNum);
+
+		glDisableVertexAttribArray(nColorLoc);
+		glDisableVertexAttribArray(nPositionLoc);
+		glDisableVertexAttribArray(nTexCoordLoc);
+
+#endif
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_base::DrawIndexedPrimitive_Shader( uint32 uMode, const SVertexFormat_V2F_T2F_C4UB* pVertexBuf, uint16* pIndicesBuf, uint32 uIndexNum )
+	{
+
+#if !defined(GUIEX_RENDER_OPENGL_ES1)
+
+		SetShaderMatrix();
+
+		int32 nPositionLoc = m_pCurrentShader->GetCachedAttributeLoc(CGUIShader_opengl_base::eSCAL_Position);
+		int32 nColorLoc = m_pCurrentShader->GetCachedAttributeLoc(CGUIShader_opengl_base::eSCAL_Color);
+		int32 nTexCoordLoc = m_pCurrentShader->GetCachedAttributeLoc(CGUIShader_opengl_base::eSCAL_TexCoord);
+		glEnableVertexAttribArray(nPositionLoc);
+		glEnableVertexAttribArray(nColorLoc);
+		glEnableVertexAttribArray(nTexCoordLoc);
+
+		glVertexAttribPointer(nPositionLoc, 2,GL_FLOAT,GL_FALSE, sizeof(SVertexFormat_V2F_T2F_C4UB), &pVertexBuf->vertices );
+		glVertexAttribPointer(nColorLoc, 4, GL_UNSIGNED_BYTE,GL_TRUE, sizeof(SVertexFormat_V2F_T2F_C4UB), &pVertexBuf->colors);
+		glVertexAttribPointer(nTexCoordLoc, 2, GL_FLOAT,GL_FALSE, sizeof(SVertexFormat_V2F_T2F_C4UB), &pVertexBuf->texCoords);		
+
+		glDrawElements(m_nRenderMode_TRIANGLES, uIndexNum, GL_UNSIGNED_SHORT, pIndicesBuf);
+
+		glDisableVertexAttribArray(nPositionLoc);
+		glDisableVertexAttribArray(nColorLoc);
+		glDisableVertexAttribArray(nTexCoordLoc);
+
+#endif
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_base::DrawIndexedPrimitive_Shader( uint32 uMode, const SVertexFormat_V3F* pVerdiceBuf, const SVertexFormat_T2F_C4UB* pVerticeInfos, uint16* pIndicesBuf, uint32 uIndexNum )
+	{
+#if !defined(GUIEX_RENDER_OPENGL_ES1)
+
+		SetShaderMatrix();
+
+		int32 nPositionLoc = m_pCurrentShader->GetCachedAttributeLoc(CGUIShader_opengl_base::eSCAL_Position);
+		int32 nTexCoordLoc = m_pCurrentShader->GetCachedAttributeLoc(CGUIShader_opengl_base::eSCAL_TexCoord);
+		int32 nColorLoc = m_pCurrentShader->GetCachedAttributeLoc(CGUIShader_opengl_base::eSCAL_Color);
+		glEnableVertexAttribArray(nColorLoc);
+		glEnableVertexAttribArray(nPositionLoc);
+		glEnableVertexAttribArray(nTexCoordLoc);
+
+		glVertexAttribPointer(nPositionLoc, 3, GL_FLOAT,GL_FALSE, sizeof(SVertexFormat_V3F), pVerdiceBuf);
+		glVertexAttribPointer(nTexCoordLoc, 2, GL_FLOAT,GL_FALSE, sizeof(SVertexFormat_T2F_C4UB), &pVerticeInfos->texCoords);	
+		glVertexAttribPointer(nColorLoc, 4, GL_UNSIGNED_BYTE,GL_TRUE, sizeof(SVertexFormat_T2F_C4UB), &pVerticeInfos->color);	
+
+		glDrawElements(m_nRenderMode_TRIANGLES, uIndexNum, GL_UNSIGNED_SHORT, pIndicesBuf);
+
+		glDisableVertexAttribArray(nPositionLoc);
+		glDisableVertexAttribArray(nTexCoordLoc);
+		glDisableVertexAttribArray(nColorLoc);
+
+#endif 
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_base::DrawPrimitive_Pipeline( uint32 uMode, const SVertexFormat_V3F* pVertexBuf, uint32 uVertexNum )
+	{
+#if !defined(GUIEX_RENDER_OPENGL_ES2)
+		SetPipelineMatrix();
+
+		glEnableClientState(GL_VERTEX_ARRAY);
+
+		glVertexPointer(3, GL_FLOAT, sizeof(SVertexFormat_V3F), &pVertexBuf);
+		glDrawArrays(uMode, 0, uVertexNum);
+
+		glDisableClientState(GL_VERTEX_ARRAY);
+
+#endif
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_base::DrawPrimitive_Pipeline( uint32 uMode, const SVertexFormat_V3F_C4UB* pVertexBuf, uint32 uVertexNum )
+	{
+#if !defined(GUIEX_RENDER_OPENGL_ES2)
+		SetPipelineMatrix();
+
+		glDisable(GL_TEXTURE_2D);
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glEnableClientState(GL_COLOR_ARRAY);
+
+		glVertexPointer(3, GL_FLOAT, sizeof(SVertexFormat_V3F_C4UB), &pVertexBuf->vertices);
+		glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(SVertexFormat_V3F_C4UB), &pVertexBuf->color);
+
+		glDrawArrays(uMode, 0, uVertexNum);
+
+		glDisableClientState(GL_VERTEX_ARRAY);
+		glDisableClientState(GL_COLOR_ARRAY);
+		glEnable(GL_TEXTURE_2D);
+#endif
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_base::DrawPrimitive_Pipeline( uint32 uMode, const SVertexFormat_V3F_T2F_C4UB* pVertexBuf, uint32 uVertexNum )
+	{
+#if !defined(GUIEX_RENDER_OPENGL_ES2)
+		SetPipelineMatrix();
+
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glEnableClientState(GL_COLOR_ARRAY);
+
+		glVertexPointer(3, GL_FLOAT, sizeof(SVertexFormat_V3F_T2F_C4UB), &pVertexBuf->vertices);
+		glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(SVertexFormat_V3F_T2F_C4UB), &pVertexBuf->color);
+		glTexCoordPointer(2, GL_FLOAT, sizeof(SVertexFormat_V3F_T2F_C4UB), &pVertexBuf->texCoords);
+
+		glDrawArrays(uMode, 0, uVertexNum);
+
+		glDisableClientState(GL_VERTEX_ARRAY);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		glDisableClientState(GL_COLOR_ARRAY);
+
+#endif
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_base::DrawIndexedPrimitive_Pipeline( uint32 uMode, const SVertexFormat_V2F_T2F_C4UB* pVertexBuf, uint16* pIndicesBuf, uint32 uIndexNum )
+	{
+#if !defined(GUIEX_RENDER_OPENGL_ES2)
+		SetPipelineMatrix();
+
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glEnableClientState(GL_COLOR_ARRAY);
+
+		glVertexPointer(2,GL_FLOAT, sizeof(SVertexFormat_V2F_T2F_C4UB), &pVertexBuf->vertices );
+		glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(SVertexFormat_V2F_T2F_C4UB), &pVertexBuf->colors);
+		glTexCoordPointer(2, GL_FLOAT, sizeof(SVertexFormat_V2F_T2F_C4UB), &pVertexBuf->texCoords);		
+
+		glDrawElements(m_nRenderMode_TRIANGLES, uIndexNum, GL_UNSIGNED_SHORT, pIndicesBuf);
+
+		glDisableClientState(GL_VERTEX_ARRAY);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		glDisableClientState(GL_COLOR_ARRAY);
+
+#endif
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_base::DrawIndexedPrimitive_Pipeline( uint32 uMode, const SVertexFormat_V3F* pVerdiceBuf, const SVertexFormat_T2F_C4UB* pVerticeInfos, uint16* pIndicesBuf, uint32 uIndexNum )
+	{
+#if !defined(GUIEX_RENDER_OPENGL_ES2)
+		SetPipelineMatrix();
+
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glEnableClientState(GL_COLOR_ARRAY);
+
+		glVertexPointer(3, GL_FLOAT, sizeof(SVertexFormat_V3F), pVerdiceBuf);
+		glTexCoordPointer(2, GL_FLOAT, sizeof(SVertexFormat_T2F_C4UB), &pVerticeInfos->texCoords);	
+		glTexCoordPointer(4, GL_UNSIGNED_BYTE, sizeof(SVertexFormat_T2F_C4UB), &pVerticeInfos->color);	
+
+		glDrawElements(m_nRenderMode_TRIANGLES, uIndexNum, GL_UNSIGNED_SHORT, pIndicesBuf);
+
+		glDisableClientState(GL_COLOR_ARRAY);
+		glDisableClientState(GL_VERTEX_ARRAY);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+#endif
 	}
 	//------------------------------------------------------------------------------
 	/** 
@@ -807,7 +1133,7 @@ namespace guiex
 		TRY_THROW_OPENGL_ERROR();
 
 		m_arrayClipRects.push_back( SClipRect() );
-		glGetFloatv( GL_MODELVIEW_MATRIX, m_arrayClipRects.back().m_gl_world_matrix );
+		makeGuiExMatrix( m_arrayClipRects.back().m_gl_world_matrix, m_vecMatrixStack.back().m_matrix[eMatrixMode_MODELVIEW] );
 		m_arrayClipRects.back().m_aClipRect = rClipRect;
 
 		if( m_bEnableClip && IsSupportStencil())
@@ -835,6 +1161,12 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::UpdateStencil()
 	{
+		CGUIShader* pOldShader = NULL;
+		if( GSystem->GetDefaultShader_Stencil() )
+		{
+			pOldShader = GSystem->GetDefaultShader_Stencil()->Use(this);
+		}
+
 		TRY_THROW_OPENGL_ERROR();
 
 		//clear stencil buffer to 1 for all area visible now
@@ -878,6 +1210,10 @@ namespace guiex
 		glStencilFunc( GL_EQUAL, m_nCurrentStencilRef, m_nCurrentStencilRef );
 		glStencilOp( GL_KEEP, GL_KEEP, GL_KEEP );
 
+		if( pOldShader )
+		{
+			pOldShader->Use( this );
+		}
 		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
@@ -886,9 +1222,9 @@ namespace guiex
 		TRY_THROW_OPENGL_ERROR();
 
 		//set matrix
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		glMultMatrixf( rRect.m_gl_world_matrix );
+		MatrixMode(eMatrixMode_MODELVIEW);
+		LoadIdentity();
+		MultMatrix( rRect.m_gl_world_matrix );
 
 		float fLeft = rRect.m_aClipRect.m_fLeft;
 		float fRight = rRect.m_aClipRect.m_fRight;
@@ -920,7 +1256,7 @@ namespace guiex
 		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengl_base::SetTexCoordinate(SVertexFormat_T2F_C4UB_V3F* pVertexInfo, CGUIRect tex, const CGUITexture* pTexture, EImageOrientation eImageOrientation)
+	void IGUIRender_opengl_base::SetTexCoordinate(SVertexFormat_V3F_T2F_C4UB* pVertexInfo, CGUIRect tex, const CGUITexture* pTexture, EImageOrientation eImageOrientation)
 	{
 		TRY_THROW_OPENGL_ERROR();
 
@@ -1148,6 +1484,19 @@ namespace guiex
 		return col.GetAsABGR();
 	}
 	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_base::makeGuiExMatrix( CGUIMatrix4& m, real gl_matrix[16] )
+	{
+		size_t x = 0;
+		for (size_t i = 0; i < 4; i++)
+		{
+			for (size_t j = 0; j < 4; j++)
+			{
+				m[j][i] = gl_matrix[x];
+				x++;
+			}
+		}
+	}
+	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::makeGLMatrix(real gl_matrix[16], const CGUIMatrix4& m)
 	{
 		size_t x = 0;
@@ -1227,6 +1576,18 @@ namespace guiex
 			RemoveShader( shader );
 			delete shader;
 		}
+	}
+	//------------------------------------------------------------------------------
+	CGUIShaderImp* IGUIRender_opengl_base::UseShader( CGUIShaderImp* pShader )
+	{
+		CGUIShaderImp* pOldShader = m_pCurrentShader;
+		if( m_pCurrentShader != pShader )
+		{
+			m_pCurrentShader = static_cast<CGUIShader_opengl_base*>( pShader );
+			CGUIShader_opengl_base::UseShader( m_pCurrentShader );
+		}
+
+		return pOldShader;
 	}
 	//------------------------------------------------------------------------------
 }//namespace guiex

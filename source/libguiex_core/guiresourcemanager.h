@@ -80,6 +80,9 @@ namespace guiex
 
 		const std::map< CGUIString, TRegisterResType* >& GetRegisterResourceMap() const;
 
+		bool HasResource( const CGUIString& rResName ) const;
+
+
 	protected:
 		int32 RegisterResourceImp( TRegisterResType* pRes );
 
@@ -224,6 +227,20 @@ namespace guiex
 			DestroyAllocateResource( pRes );
 		}
 		m_setAllocateResource.clear();
+	}
+	//------------------------------------------------------------------------------
+	template< class TRegisterResType, class TAllocateResType >
+	inline bool CGUIResourceManager<TRegisterResType, TAllocateResType>::HasResource( const CGUIString& rResName ) const
+	{
+		CGUIResource* pRes  = GetRegisterResource( rResName );
+		if( pRes )
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	//------------------------------------------------------------------------------
 	template< class TRegisterResType, class TAllocateResType >

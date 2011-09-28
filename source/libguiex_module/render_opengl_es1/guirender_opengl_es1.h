@@ -33,8 +33,12 @@ namespace guiex
 
 	public:	//api
 		virtual void ClearDepth (real depth);
-		virtual void LookAt(real eyeX, real eyeY, real eyeZ, real lookAtX, real lookAtY, real lookAtZ, real upX, real upY, real upZ);
-		virtual void Perspective(real fovy, real aspect, real zNear, real zFar);
+
+		virtual void PushMatrix();
+		virtual void PopMatrix();
+		virtual void MatrixMode( EMatrixMode eMode );
+		virtual void LoadIdentity( );
+		virtual void MultMatrix( const CGUIMatrix4& rMatrix );
 
 		virtual void GenFramebuffers( uint32 n, uint32* framebuffers );
 		virtual void DeleteFramebuffers( uint32 n, const uint32* framebuffers );

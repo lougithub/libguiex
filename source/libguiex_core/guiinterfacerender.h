@@ -69,7 +69,7 @@ namespace guiex
 		virtual void PushMatrix() = 0;
 		virtual void PopMatrix() = 0;
 		virtual void MultMatrix( const CGUIMatrix4& rMatrix ) = 0;
-		virtual void LoadIdentityMatrix( ) = 0;
+		virtual void LoadIdentity( ) = 0;
 
 		virtual void GenFramebuffers( uint32 n, uint32* framebuffers ) = 0;
 		virtual void DeleteFramebuffers( uint32 n, const uint32* framebuffers ) = 0;
@@ -102,13 +102,13 @@ namespace guiex
 
 		virtual void DrawQuads(
 			const CGUITexture* pTexture,
-			const SVertexFormat_V2F_C4UB_T2F_Quad* pQuads,
+			const SVertexFormat_V2F_T2F_C4UB_Quad* pQuads,
 			uint16* pIndices,
 			int16 nQuadNum) = 0;
 
 		virtual void DrawGrid(
 			const CGUITexture* pTexture,
-			const SVertexFormat_T2F* pTextures,
+			const SVertexFormat_T2F_C4UB* pVerticeInfos,
 			const SVertexFormat_V3F* pVerdices,
 			uint16* pIndices,
 			int16 nGridNum ) = 0;

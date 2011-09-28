@@ -42,7 +42,7 @@ namespace guiex
 	public:
 		virtual ~CGUIShader();
 
-		void UseShader( IGUIInterfaceRender* pRende );
+		CGUIShader* Use( IGUIInterfaceRender* pRende );
 
 	protected:
 		CGUIShader( const CGUIString& rName, const CGUIString& rSceneName,

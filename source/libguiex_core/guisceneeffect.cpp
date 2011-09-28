@@ -190,7 +190,7 @@ namespace guiex
 		pRender->SetViewport( 0,m_pTexture->GetHeight() - GetSceneHeight(),GetSceneWidth(), GetSceneHeight() );
 
 		//set matrix
-		pRender->LoadIdentityMatrix();
+		pRender->LoadIdentity();
 
 		pRender->ClearColor(0,0,0,0);
 		pRender->Clear( eRenderBuffer_COLOR_BIT | eRenderBuffer_DEPTH_BIT );	
@@ -213,7 +213,7 @@ namespace guiex
 		pRender->SetViewport(0,0,rSize.GetWidth(),rSize.GetHeight());
 
 		//reset matrix
-		pRender->LoadIdentityMatrix();
+		pRender->LoadIdentity();
 
 		//set blend func
 		SGUIBlendFunc oldBlendFunc;

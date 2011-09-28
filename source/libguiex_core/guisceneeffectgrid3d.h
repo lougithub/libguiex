@@ -22,8 +22,7 @@
 namespace guiex
 {
 	class IGUIInterfaceRender;
-	struct SVertexFormat_T2F;
-	struct SVertexFormat_V3F;
+	struct SVertexFormat_T2F_C4UB;
 	struct SVertexFormat_V3F;
 }
 
@@ -54,7 +53,7 @@ namespace guiex
 		virtual void ProcessCaptureTexture( IGUIInterfaceRender* pRender );
 
 	protected:
-		SVertexFormat_T2F *m_pTexCoordinates;
+		SVertexFormat_T2F_C4UB *m_pVerticeInfos;
 		SVertexFormat_V3F *m_pVertices;
 		SVertexFormat_V3F *m_pOriginalVertices;
 		uint16 *m_pIndices;

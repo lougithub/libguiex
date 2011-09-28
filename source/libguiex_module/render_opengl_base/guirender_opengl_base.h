@@ -58,8 +58,11 @@ namespace guiex
 		virtual void PushMatrix();
 		virtual void PopMatrix();
 		virtual void MatrixMode( EMatrixMode eMode );
-		virtual void LoadIdentityMatrix( );
+		virtual void LoadIdentity( );
 		virtual void MultMatrix( const CGUIMatrix4& rMatrix );
+
+		virtual void LookAt(real eyeX, real eyeY, real eyeZ, real lookAtX, real lookAtY, real lookAtZ, real upX, real upY, real upZ);
+		virtual void Perspective(real fovy, real aspect, real zNear, real zFar);
 
 	public:
 		virtual void DrawRect(
@@ -84,13 +87,13 @@ namespace guiex
 
 		virtual void DrawQuads(
 			const CGUITexture* pTexture,
-			const SVertexFormat_V2F_C4UB_T2F_Quad* pQuads,
+			const SVertexFormat_V2F_T2F_C4UB_Quad* pQuads,
 			uint16* pIndices,
 			int16 nQuadNum);
 
 		virtual void DrawGrid(
 			const CGUITexture* pTexture,
-			const SVertexFormat_T2F* pTextures,
+			const SVertexFormat_T2F_C4UB* pVerticeInfos,
 			const SVertexFormat_V3F* pVerdices,
 			uint16* pIndices,
 			int16 nGridNum );
@@ -144,14 +147,23 @@ namespace guiex
 		virtual int DoInitialize(void* );
 		virtual void DoDestroy();
 
+		virtual	CGUITextureImp*	CreateTexture(void);
+		virtual	CGUITextureImp*	CreateTexture(const CGUIString& filename);
+		virtual	CGUITextureImp*	CreateTexture(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat);
+		virtual	void DestroyTexture(CGUITextureImp* texture);
+		virtual	void DestroyAllTexture();
+
 		void UpdateCamera();
 
+		void GLMultMatrix( real* m );
+		void GLMultMatrix( real* a, real* b, real* out );
 		void makeGLMatrix( real gl_matrix[16], const CGUIMatrix4& m );
+		void makeGuiExMatrix( CGUIMatrix4& m, real gl_matrix[16] );
 
 		struct SClipRect
 		{
 			CGUIRect m_aClipRect;
-			real m_gl_world_matrix[16];
+			CGUIMatrix4 m_gl_world_matrix;
 		};
 
 		void UpdateStencil();
@@ -160,29 +172,38 @@ namespace guiex
 		void AddTexture( CGUITextureImp* pTexture );
 		void RemoveTexture( CGUITextureImp* pTexture );
 
-		virtual	CGUITextureImp*	CreateTexture(void);
-		virtual	CGUITextureImp*	CreateTexture(const CGUIString& filename);
-		virtual	CGUITextureImp*	CreateTexture(uint32 nWidth, uint32 nHeight, EGuiPixelFormat ePixelFormat);
-		virtual	void DestroyTexture(CGUITextureImp* texture);
-		virtual	void DestroyAllTexture();
-
 		void AddShader( CGUIShaderImp* pShader );
 		void RemoveShader( CGUIShaderImp* pShader );
 		virtual	void DestroyAllShader();
 
-
 		void DrawPrimitive( uint32 uMode, const SVertexFormat_V3F* pVertexBuf, uint32 uVertexNum );
-		void DrawPrimitive( uint32 eMode, const SVertexFormat_C4UB_V3F* pVertexBuf, uint32 uVertexNum );
-		void DrawPrimitive( uint32 uMode, const SVertexFormat_T2F_C4UB_V3F* pVertexBuf, uint32 uVertexNum );
-		void DrawIndexedPrimitive( uint32 uMode, const SVertexFormat_V2F_C4UB_T2F* pVertexBuf, uint16* pIndicesBuf, uint32 uIndexNum );
-		void DrawIndexedPrimitive( uint32 uMode, const SVertexFormat_V3F* pVerdiceBuf, const SVertexFormat_T2F* pTexCoordBuf, uint16* pIndicesBuf, uint32 uIndexNum );
+		void DrawPrimitive( uint32 eMode, const SVertexFormat_V3F_C4UB* pVertexBuf, uint32 uVertexNum );
+		void DrawPrimitive( uint32 uMode, const SVertexFormat_V3F_T2F_C4UB* pVertexBuf, uint32 uVertexNum );
+		void DrawIndexedPrimitive( uint32 uMode, const SVertexFormat_V2F_T2F_C4UB* pVertexBuf, uint16* pIndicesBuf, uint32 uIndexNum );
+		void DrawIndexedPrimitive( uint32 uMode, const SVertexFormat_V3F* pVerdiceBuf, const SVertexFormat_T2F_C4UB* pVerticeInfos, uint16* pIndicesBuf, uint32 uIndexNum );
 		
+		void SetShaderMatrix();
+		void DrawPrimitive_Shader( uint32 uMode, const SVertexFormat_V3F* pVertexBuf, uint32 uVertexNum );
+		void DrawPrimitive_Shader( uint32 eMode, const SVertexFormat_V3F_C4UB* pVertexBuf, uint32 uVertexNum );
+		void DrawPrimitive_Shader( uint32 uMode, const SVertexFormat_V3F_T2F_C4UB* pVertexBuf, uint32 uVertexNum );
+		void DrawIndexedPrimitive_Shader( uint32 uMode, const SVertexFormat_V2F_T2F_C4UB* pVertexBuf, uint16* pIndicesBuf, uint32 uIndexNum );
+		void DrawIndexedPrimitive_Shader( uint32 uMode, const SVertexFormat_V3F* pVerdiceBuf, const SVertexFormat_T2F_C4UB* pVerticeInfos, uint16* pIndicesBuf, uint32 uIndexNum );
+		
+		void SetPipelineMatrix();
+		void DrawPrimitive_Pipeline( uint32 uMode, const SVertexFormat_V3F* pVertexBuf, uint32 uVertexNum );
+		void DrawPrimitive_Pipeline( uint32 eMode, const SVertexFormat_V3F_C4UB* pVertexBuf, uint32 uVertexNum );
+		void DrawPrimitive_Pipeline( uint32 uMode, const SVertexFormat_V3F_T2F_C4UB* pVertexBuf, uint32 uVertexNum );
+		void DrawIndexedPrimitive_Pipeline( uint32 uMode, const SVertexFormat_V2F_T2F_C4UB* pVertexBuf, uint16* pIndicesBuf, uint32 uIndexNum );
+		void DrawIndexedPrimitive_Pipeline( uint32 uMode, const SVertexFormat_V3F* pVerdiceBuf, const SVertexFormat_T2F_C4UB* pVerticeInfos, uint16* pIndicesBuf, uint32 uIndexNum );
+
+
 		virtual	CGUIShaderImp* CreateShader(const CGUIString& rVertexShaderFileName, const CGUIString& rFragmentShaderFileName);
 		virtual	void DestroyShader(CGUIShaderImp* shader);
+		CGUIShaderImp* UseShader( CGUIShaderImp* pShader );
 
 protected:
 		// set the texture's coordinate
-		void SetTexCoordinate(SVertexFormat_T2F_C4UB_V3F* pVertexInfo, CGUIRect tex, const CGUITexture* pTexture, EImageOrientation eImageOrientation);
+		void SetTexCoordinate(SVertexFormat_V3F_T2F_C4UB* pVertexInfo, CGUIRect tex, const CGUITexture* pTexture, EImageOrientation eImageOrientation);
 
 		bool IsSupportStencil();
 
@@ -193,12 +214,18 @@ protected:
 		static const int VERTEX_PER_TEXTURE = 4;
 		static const int VERTEX_FOR_LINE = 4;
 		static const int VERTEX_FOR_CIRCLE = 360;
-		SVertexFormat_T2F_C4UB_V3F m_pVertex[VERTEX_PER_TEXTURE];
+		SVertexFormat_V3F_T2F_C4UB m_pVertex[VERTEX_PER_TEXTURE];
 		SVertexFormat_V3F m_pVertexForStencil[VERTEX_PER_TEXTURE];
-		SVertexFormat_C4UB_V3F m_pVertexForLine[VERTEX_FOR_LINE];
-		SVertexFormat_C4UB_V3F m_pVertexForCircle[VERTEX_FOR_CIRCLE];
+		SVertexFormat_V3F_C4UB m_pVertexForLine[VERTEX_FOR_LINE];
+		SVertexFormat_V3F_C4UB m_pVertexForCircle[VERTEX_FOR_CIRCLE];
 
-		real m_gl_matrix[16];
+		//matrix stack
+		struct SMatrixInfo
+		{
+			real m_matrix[2][16];
+		};
+		std::vector<SMatrixInfo> m_vecMatrixStack;
+		EMatrixMode m_eMatrixMode;
 
 		//texture list
 		typedef std::set<CGUITextureImp*> TSetTexture;
@@ -207,7 +234,7 @@ protected:
 		//shader list
 		typedef std::set<CGUIShaderImp*> TSetShader;
 		TSetShader	m_setShader;
-		CGUIShaderImp* m_pCurrentShader;
+		class CGUIShader_opengl_base* m_pCurrentShader;
 
 		std::vector<SClipRect>	m_arrayClipRects;
 

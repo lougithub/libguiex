@@ -26,7 +26,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	CGUISceneEffectTiledGrid3D::CGUISceneEffectTiledGrid3D( const CGUISize& rSceneSize, const CGUIIntSize& rGridSize )
 		:CGUISceneEffectGridBase( rSceneSize, rGridSize )
-		 ,m_pTexCoordinates( NULL )
+		 ,m_pVerticeInfos( NULL )
 		 ,m_pVertices( NULL )
 		 ,m_pOriginalVertices( NULL )
 		 ,m_pIndices( NULL )
@@ -54,8 +54,9 @@ namespace guiex
 		uint32 numQuads = m_aGridSize.m_uWidth * m_aGridSize.m_uHeight;
 		m_pVertices = new SVertexFormat_V3F_Quad[numQuads];
 		m_pOriginalVertices = new SVertexFormat_V3F_Quad[numQuads];
-		m_pTexCoordinates = new SVertexFormat_T2F[numQuads * 4];
+		m_pVerticeInfos = new SVertexFormat_T2F_C4UB[numQuads * 4];
 		m_pIndices = new uint16[ numQuads * 6];
+		uint32 uColor = CGUIColor( 1,1,1,1 ).GetAsABGR();
 
 		for( uint32 x = 0; x < m_aGridSize.m_uWidth; x++ )
 		{
@@ -90,14 +91,19 @@ namespace guiex
 				}
 
 				uint32 nTexIdx = idx*4;
-				m_pTexCoordinates[nTexIdx].u = x1 / width; //top left
-				m_pTexCoordinates[nTexIdx].v = m_pTexture->UVConvertTopleft2Engine_v( newY1 / height );
-				m_pTexCoordinates[nTexIdx+1].u = x1 / width; //bottom left
-				m_pTexCoordinates[nTexIdx+1].v = m_pTexture->UVConvertTopleft2Engine_v( newY2 / height );
-				m_pTexCoordinates[nTexIdx+2].u = x2 / width; //top right
-				m_pTexCoordinates[nTexIdx+2].v = m_pTexture->UVConvertTopleft2Engine_v( newY1 / height );
-				m_pTexCoordinates[nTexIdx+3].u = x2 / width; //bottom right
-				m_pTexCoordinates[nTexIdx+3].v = m_pTexture->UVConvertTopleft2Engine_v( newY2 / height );
+				m_pVerticeInfos[nTexIdx].texCoords.u = x1 / width; //top left
+				m_pVerticeInfos[nTexIdx].texCoords.v = m_pTexture->UVConvertTopleft2Engine_v( newY1 / height );
+				m_pVerticeInfos[nTexIdx+1].texCoords.u = x1 / width; //bottom left
+				m_pVerticeInfos[nTexIdx+1].texCoords.v = m_pTexture->UVConvertTopleft2Engine_v( newY2 / height );
+				m_pVerticeInfos[nTexIdx+2].texCoords.u = x2 / width; //top right
+				m_pVerticeInfos[nTexIdx+2].texCoords.v = m_pTexture->UVConvertTopleft2Engine_v( newY1 / height );
+				m_pVerticeInfos[nTexIdx+3].texCoords.u = x2 / width; //bottom right
+				m_pVerticeInfos[nTexIdx+3].texCoords.v = m_pTexture->UVConvertTopleft2Engine_v( newY2 / height );
+
+				m_pVerticeInfos[nTexIdx].color.abgr = uColor;
+				m_pVerticeInfos[nTexIdx+1].color.abgr = uColor;
+				m_pVerticeInfos[nTexIdx+2].color.abgr = uColor;
+				m_pVerticeInfos[nTexIdx+3].color.abgr = uColor;
 			}
 		}
 
@@ -121,10 +127,10 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUISceneEffectTiledGrid3D::Release( )
 	{
-		if( m_pTexCoordinates )
+		if( m_pVerticeInfos )
 		{
-			delete[] m_pTexCoordinates;
-			m_pTexCoordinates = NULL;
+			delete[] m_pVerticeInfos;
+			m_pVerticeInfos = NULL;
 		}
 		if( m_pVertices )
 		{
@@ -153,7 +159,7 @@ namespace guiex
 	void CGUISceneEffectTiledGrid3D::ProcessCaptureTexture( IGUIInterfaceRender* pRender )
 	{
 		uint32 n = m_aGridSize.m_uWidth * m_aGridSize.m_uHeight;
-		pRender->DrawGrid( m_pTexture, m_pTexCoordinates, (SVertexFormat_V3F*)m_pVertices, m_pIndices, n );
+		pRender->DrawGrid( m_pTexture, m_pVerticeInfos, (SVertexFormat_V3F*)m_pVertices, m_pIndices, n );
 	}
 	//------------------------------------------------------------------------------
 	const SVertexFormat_V3F_Quad& CGUISceneEffectTiledGrid3D::GetTile( uint32 uX, uint32 uY )

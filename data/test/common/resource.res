@@ -444,9 +444,14 @@
 	</property>
 
 
-	<property name="defaultshader" type="CGUIShaderDefine" >
-		<property name="vertex" type="CGUIString" value="shader/default.vert" />
-		<property name="fragment" type="CGUIString" value="shader/default.frag" />
+	<property name="default_render" type="CGUIShaderDefine" >
+		<property name="vertex" type="CGUIString" value="shader/default_render.vert" />
+		<property name="fragment" type="CGUIString" value="shader/default_render.frag" />
+	</property>
+
+	<property name="default_stencil" type="CGUIShaderDefine" >
+		<property name="vertex" type="CGUIString" value="shader/default_stencil.vert" />
+		<property name="fragment" type="CGUIString" value="shader/default_stencil.frag" />
 	</property>
 
 </guiex>
