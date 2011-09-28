@@ -210,6 +210,8 @@ namespace guiex
 		glClearStencil( 0 );
 		glGetIntegerv( GL_STENCIL_BITS, &m_nStencilBits);
 		m_nMaxStencilRef = (1<<m_nStencilBits) - 1;
+		m_bForceRefreshStencil = false;
+		m_bHasClipRectOp = false;
 		if( m_nMaxStencilRef < 2 )
 		{
 			GUI_TRACE( "[IGUIRender_opengl_base::DoInitialize]: stencil is disabled\n" );
@@ -218,7 +220,7 @@ namespace guiex
 		{
 			glEnable( GL_STENCIL_TEST );	
 		}
-		m_aWholeScreenRect.m_gl_world_matrix = CGUIMatrix4::IDENTITY;
+		memcpy( m_aWholeScreenRect.m_gl_world_matrix, g_aIdentity, sizeof(g_aIdentity));
 
 		m_nCurrentStencilRef = 0;
 
@@ -391,7 +393,7 @@ namespace guiex
 		TRY_THROW_OPENGL_ERROR();
 	}
 	//-----------------------------------------------------------------------------
-	void IGUIRender_opengl_base::GLMultMatrix( real* a, real* b, real* out )
+	void IGUIRender_opengl_base::GLMultMatrix( const real* a, const real* b, real* out )
 	{
 		uint32 x = 0;
 		for(uint32 iR = 0; iR < 4; iR ++)
@@ -407,7 +409,7 @@ namespace guiex
 		}
 	}
 	//-----------------------------------------------------------------------------
-	void IGUIRender_opengl_base::GLMultMatrix( real* m )
+	void IGUIRender_opengl_base::GLMultMatrix(const real* m )
 	{
 		real* current_matrix = m_vecMatrixStack.back().m_matrix[m_eMatrixMode];
 		real result[16];
@@ -543,6 +545,8 @@ namespace guiex
 
 			MatrixMode(eMatrixMode_MODELVIEW);
 			LoadIdentity();
+
+			m_bForceRefreshStencil = true;
 		}
 		TRY_THROW_OPENGL_ERROR();
 	}
@@ -1131,15 +1135,27 @@ namespace guiex
 	void IGUIRender_opengl_base::PushClipRect( const CGUIRect& rClipRect )
 	{
 		TRY_THROW_OPENGL_ERROR();
+		if( !m_bEnableClip || !IsSupportStencil())
+		{
+			return;
+		}
 
+#if 0
 		m_arrayClipRects.push_back( SClipRect() );
-		makeGuiExMatrix( m_arrayClipRects.back().m_gl_world_matrix, m_vecMatrixStack.back().m_matrix[eMatrixMode_MODELVIEW] );
+		memcpy( m_arrayClipRects.back().m_gl_world_matrix, m_vecMatrixStack.back().m_matrix[eMatrixMode_MODELVIEW], sizeof( real[16]) );
 		m_arrayClipRects.back().m_aClipRect = rClipRect;
 
-		if( m_bEnableClip && IsSupportStencil())
-		{
-			UpdateStencil();
-		}
+		UpdateStencil();
+#else
+		m_arrayClipRectOps.push_back( SClipRectOp() );
+		SClipRectOp& rClipRectOp = m_arrayClipRectOps.back();
+		rClipRectOp.m_eClipOp = SClipRectOp::eClipRectOp_Add;
+		rClipRectOp.m_aClipRect.m_aClipRect = rClipRect;
+		memcpy( rClipRectOp.m_aClipRect.m_gl_world_matrix, m_vecMatrixStack.back().m_matrix[eMatrixMode_MODELVIEW], sizeof( real[16]) );
+		m_bHasClipRectOp = true;
+
+		UpdateStencil();
+#endif
 
 		TRY_THROW_OPENGL_ERROR();
 	}
@@ -1147,29 +1163,127 @@ namespace guiex
 	void IGUIRender_opengl_base::PopClipRect( )
 	{
 		TRY_THROW_OPENGL_ERROR();
+		if( !m_bEnableClip || !IsSupportStencil())
+		{
+			return;
+		}
 
+#if 0
 		GUI_ASSERT( m_arrayClipRects.empty() == false, "no clip rect to pop" );
 		m_arrayClipRects.pop_back();
 
-		if( m_bEnableClip && IsSupportStencil())
-		{
-			UpdateStencil();
-		}
+		UpdateStencil();
+#else
+		m_arrayClipRectOps.push_back( SClipRectOp() );
+		SClipRectOp& rClipRectOp = m_arrayClipRectOps.back();
+		rClipRectOp.m_eClipOp = SClipRectOp::eClipRectOp_Remove;
+		m_bHasClipRectOp = true;
+
+		UpdateStencil();
+#endif
 
 		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::UpdateStencil()
 	{
+#if 1
+		if( m_bForceRefreshStencil || m_bHasClipRectOp )
+		{
+			//apply shader
+			CGUIShader* pOldShader = NULL;
+			if( m_pCurrentShader && GSystem->GetDefaultShader_Stencil() )
+			{
+				pOldShader = GSystem->GetDefaultShader_Stencil()->Use(this);
+			}
+
+			// Set color mask and disable texture
+			glColorMask( false, false, false, false );		
+			glDisable( GL_TEXTURE_2D );
+			glStencilOp( GL_ZERO, GL_ZERO, GL_INCR );
+
+			//refresh existing list
+			if( m_bForceRefreshStencil )
+			{
+				//clear stencil buffer to 0 for all area visible now
+				glClearStencil( 0 );
+				glClear( GL_STENCIL_BUFFER_BIT );
+				m_nCurrentStencilRef = 0;
+				glStencilFunc( GL_EQUAL, m_nCurrentStencilRef, m_nCurrentStencilRef );
+
+				//render clip rect to stencil buffer
+				for( std::vector<SClipRect>::const_iterator itor =  m_arrayClipRects.begin();
+					itor != m_arrayClipRects.end();
+					++itor )
+				{
+					if( m_nCurrentStencilRef == m_nMaxStencilRef )
+					{
+						//reach max
+						GUI_THROW( "[IGUIRender_opengl_base::UpdateStencil]: stencil reference reach max");
+						continue;
+					}
+					RenderRectForStencil( *itor );
+					++m_nCurrentStencilRef;
+#if 0
+					if( m_nCurrentStencilRef == m_nMaxStencilRef-1 )
+					{
+						//reach max
+						glStencilFunc( GL_EQUAL, m_nCurrentStencilRef, m_nCurrentStencilRef );
+						glStencilOp( GL_ZERO, GL_ZERO, GL_INVERT );
+
+						RenderRectForStencil( m_aWholeScreenRect );
+						m_nCurrentStencilRef = 1;
+					}
+#endif
+					glStencilFunc( GL_EQUAL, m_nCurrentStencilRef, m_nCurrentStencilRef );
+				}
+			}
+
+			//update changed list
+			uint32 uRemoveCount = 0;
+			while( !m_arrayClipRectOps.empty() )
+			{
+				SClipRectOp& rOp = m_arrayClipRectOps.front();
+				if( rOp.m_eClipOp == SClipRectOp.eClipRectOp_Remove )
+				{
+					//op: remove
+					++uRemoveCount;
+				}
+				else
+				{
+					//op: add
+				}
+			}
+
+
+			//reset stencil state
+			glStencilFunc( GL_EQUAL, m_nCurrentStencilRef, m_nCurrentStencilRef );
+			glStencilOp( GL_KEEP, GL_KEEP, GL_KEEP );
+
+			//restore color and texture state
+			glColorMask( true, true, true, true );		
+			glEnable( GL_TEXTURE_2D );
+
+			//restore shader
+			if( pOldShader )
+			{
+				pOldShader->Use( this );
+			}
+
+			m_bForceRefreshStencil = false;
+			m_bHasClipRectOp = false;
+		}
+
+#else
 		CGUIShader* pOldShader = NULL;
-		if( GSystem->GetDefaultShader_Stencil() )
+		if( m_pCurrentShader && GSystem->GetDefaultShader_Stencil() )
 		{
 			pOldShader = GSystem->GetDefaultShader_Stencil()->Use(this);
 		}
 
 		TRY_THROW_OPENGL_ERROR();
 
-		//clear stencil buffer to 1 for all area visible now
+		//clear stencil buffer to 0 for all area visible now
 		glClearStencil( 0 );
 		glClear( GL_STENCIL_BUFFER_BIT );
 		m_nCurrentStencilRef = 0;
@@ -1214,6 +1328,7 @@ namespace guiex
 		{
 			pOldShader->Use( this );
 		}
+#endif
 		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
@@ -1224,7 +1339,7 @@ namespace guiex
 		//set matrix
 		MatrixMode(eMatrixMode_MODELVIEW);
 		LoadIdentity();
-		MultMatrix( rRect.m_gl_world_matrix );
+		GLMultMatrix( rRect.m_gl_world_matrix );
 
 		float fLeft = rRect.m_aClipRect.m_fLeft;
 		float fRight = rRect.m_aClipRect.m_fRight;
@@ -1484,19 +1599,6 @@ namespace guiex
 		return col.GetAsABGR();
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengl_base::makeGuiExMatrix( CGUIMatrix4& m, real gl_matrix[16] )
-	{
-		size_t x = 0;
-		for (size_t i = 0; i < 4; i++)
-		{
-			for (size_t j = 0; j < 4; j++)
-			{
-				m[j][i] = gl_matrix[x];
-				x++;
-			}
-		}
-	}
-	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::makeGLMatrix(real gl_matrix[16], const CGUIMatrix4& m)
 	{
 		size_t x = 0;
@@ -1512,23 +1614,34 @@ namespace guiex
 	//-----------------------------------------------------------------------------
 	void IGUIRender_opengl_base::EnableClip( bool bEnable )
 	{
-		m_bEnableClip = bEnable;
+		if( m_bEnableClip == bEnable )
+		{
+			return;
+		}
 
+		m_bEnableClip = bEnable;
 		if( m_bEnableClip )
 		{
 			glEnable( GL_STENCIL_TEST );	
+#if 0
 			if( !IsSupportStencil() )
 			{
 				//update stencil
 				glGetIntegerv( GL_STENCIL_BITS, &m_nStencilBits);
 				m_nMaxStencilRef = (1<<m_nStencilBits) - 1;
 			}
+#endif
 		}
 		else
 		{
 			glDisable( GL_STENCIL_TEST );	
+			m_arrayClipRectOps.clear();
+			m_arrayClipRects.clear();
+			m_bForceRefreshStencil = true;
+#if 0
 			const CGUIIntSize& rSize = GSystem->GetScreenSize();
 			m_aWholeScreenRect.m_aClipRect.SetSize( rSize );
+#endif
 		}
 
 		TRY_THROW_OPENGL_ERROR();

@@ -155,17 +155,15 @@ namespace guiex
 
 		void UpdateCamera();
 
-		void GLMultMatrix( real* m );
-		void GLMultMatrix( real* a, real* b, real* out );
+		void GLMultMatrix( const real* m );
+		void GLMultMatrix( const real* a, const real* b, real* out );
 		void makeGLMatrix( real gl_matrix[16], const CGUIMatrix4& m );
-		void makeGuiExMatrix( CGUIMatrix4& m, real gl_matrix[16] );
 
 		struct SClipRect
 		{
 			CGUIRect m_aClipRect;
-			CGUIMatrix4 m_gl_world_matrix;
+			real m_gl_world_matrix[16];
 		};
-
 		void UpdateStencil();
 		void RenderRectForStencil( const SClipRect& rRect );
 
@@ -236,18 +234,32 @@ protected:
 		TSetShader	m_setShader;
 		class CGUIShader_opengl_base* m_pCurrentShader;
 
+		//stencil buffer for clip
+		int m_nStencilBits;
+		int m_nMaxStencilRef;
+		int m_nCurrentStencilRef;
+		bool m_bForceRefreshStencil;
+		bool m_bHasClipRectOp;
 		std::vector<SClipRect>	m_arrayClipRects;
+		SClipRect m_aWholeScreenRect;
+		struct SClipRectOp
+		{
+			SClipRect m_aClipRect;
+			enum EOp
+			{
+				eClipRectOp_Add,
+				eClipRectOp_Remove,
+			};
+			EOp m_eClipOp;
+		};
+		std::list<SClipRectOp> m_arrayClipRectOps;
+
 
 		bool m_bEnableClip;
 		bool m_bDrawWireframe;
 
 		uint32 m_nRenderMode_TRIANGLE_STRIP;
 		uint32 m_nRenderMode_TRIANGLES;
-
-		int m_nStencilBits;
-		int m_nMaxStencilRef;
-		int m_nCurrentStencilRef;
-		SClipRect m_aWholeScreenRect;
 
 		SGUIBlendFunc m_aBlendFunc;
 
