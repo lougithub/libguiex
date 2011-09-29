@@ -206,23 +206,26 @@ namespace guiex
 		// get the maximum available texture size.
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &m_maxTextureSize);
 
+		glDisable( GL_DEPTH_TEST );
+		glDisable( GL_SCISSOR_TEST );
+
 		//get stencil info
 		glClearStencil( 0 );
 		glGetIntegerv( GL_STENCIL_BITS, &m_nStencilBits);
 		m_nMaxStencilRef = (1<<m_nStencilBits) - 1;
 		m_bForceRefreshStencil = false;
 		m_bHasClipRectOp = false;
+		m_nCurrentStencilRef = 0;
 		if( m_nMaxStencilRef < 2 )
 		{
 			GUI_TRACE( "[IGUIRender_opengl_base::DoInitialize]: stencil is disabled\n" );
+			glDisable( GL_STENCIL_TEST );	
 		}
 		else
 		{
 			glEnable( GL_STENCIL_TEST );	
 		}
 		memcpy( m_aWholeScreenRect.m_gl_world_matrix, g_aIdentity, sizeof(g_aIdentity));
-
-		m_nCurrentStencilRef = 0;
 
 		m_pCurrentShader = NULL;
 
@@ -489,12 +492,13 @@ namespace guiex
 		
 		//clear screen
 		glClearStencil( 0 );
-		ClearDepth( 1.0f );
-		glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );	// clear screen and depth buffer 
+		glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT );	// clear screen and depth buffer 
 
+		//reset stencil buffer
 		m_arrayClipRectOps.clear();
 		m_arrayClipRects.clear();
 		m_bForceRefreshStencil = true;
+		m_nCurrentStencilRef = 0;
 
 		//set gl property
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -505,18 +509,11 @@ namespace guiex
 		m_aBlendFunc.dst = eBlendFunc_ONE_MINUS_SRC_ALPHA;
 		SetBlendFunc( m_aBlendFunc );
 
-		glDisable( GL_DEPTH_TEST );
-		glDepthFunc(GL_LEQUAL);
-
-		glDisable( GL_SCISSOR_TEST );
-
 		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_CULL_FACE);
 
 		//update camera
 		UpdateCamera();
-
-		m_nCurrentStencilRef = 0;
 		
 		TRY_THROW_OPENGL_ERROR();		
 	}
@@ -814,8 +811,6 @@ namespace guiex
 		if( !m_pCurrentShader )
 		{
 			glMatrixMode( GL_PROJECTION );
-			glLoadIdentity();
-			glMultMatrixf( m_vecMatrixStack.back().m_matrix[eMatrixMode_PROJECTION] );
 			glLoadMatrixf( m_vecMatrixStack.back().m_matrix[eMatrixMode_PROJECTION]);
 			glMatrixMode( GL_MODELVIEW );
 			glLoadMatrixf( m_vecMatrixStack.back().m_matrix[eMatrixMode_MODELVIEW]);
@@ -860,6 +855,8 @@ namespace guiex
 	{
 		TRY_THROW_OPENGL_ERROR();
 
+		UpdateStencil();
+
 		if( m_pCurrentShader )
 		{
 			DrawPrimitive_Shader( uMode,pVertexBuf, uVertexNum );
@@ -872,17 +869,17 @@ namespace guiex
 		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengl_base::DrawPrimitive( uint32 uMode, const SVertexFormat_V3F* pVertexBuf, uint32 uVertexNum )
+	void IGUIRender_opengl_base::DrawStencil( uint32 uMode, const SVertexFormat_V3F* pVertexBuf, uint32 uVertexNum )
 	{
 		TRY_THROW_OPENGL_ERROR();
 
 		if( m_pCurrentShader )
 		{
-			DrawPrimitive_Shader( uMode,pVertexBuf, uVertexNum );
+			DrawStencil_Shader( uMode,pVertexBuf, uVertexNum );
 		}
 		else
 		{
-			DrawPrimitive_Pipeline( uMode, pVertexBuf, uVertexNum );
+			DrawStencil_Pipeline( uMode, pVertexBuf, uVertexNum );
 		}
 
 		TRY_THROW_OPENGL_ERROR();
@@ -892,6 +889,8 @@ namespace guiex
 	{
 		TRY_THROW_OPENGL_ERROR();
 
+		UpdateStencil();
+
 		if( m_pCurrentShader )
 		{
 			DrawPrimitive_Shader( uMode,pVertexBuf, uVertexNum );
@@ -904,7 +903,7 @@ namespace guiex
 		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengl_base::DrawPrimitive_Shader( uint32 uMode, const SVertexFormat_V3F* pVertexBuf, uint32 uVertexNum )
+	void IGUIRender_opengl_base::DrawStencil_Shader( uint32 uMode, const SVertexFormat_V3F* pVertexBuf, uint32 uVertexNum )
 	{
 #if !defined(GUIEX_RENDER_OPENGL_ES1)
 
@@ -913,7 +912,7 @@ namespace guiex
 		int32 nPositionLoc = m_pCurrentShader->GetCachedAttributeLoc(CGUIShader_opengl_base::eSCAL_Position);
 		glEnableVertexAttribArray(nPositionLoc);
 
-		glVertexAttribPointer(nPositionLoc, 3, GL_FLOAT, GL_FALSE, sizeof(SVertexFormat_V3F), &pVertexBuf);
+		glVertexAttribPointer(nPositionLoc, 3, GL_FLOAT, GL_FALSE, sizeof(SVertexFormat_V3F), pVertexBuf);
 
 		glDrawArrays(uMode, 0, uVertexNum);
 
@@ -1025,14 +1024,14 @@ namespace guiex
 #endif 
 	}
 	//------------------------------------------------------------------------------
-	void IGUIRender_opengl_base::DrawPrimitive_Pipeline( uint32 uMode, const SVertexFormat_V3F* pVertexBuf, uint32 uVertexNum )
+	void IGUIRender_opengl_base::DrawStencil_Pipeline( uint32 uMode, const SVertexFormat_V3F* pVertexBuf, uint32 uVertexNum )
 	{
 #if !defined(GUIEX_RENDER_OPENGL_ES2)
 		SetPipelineMatrix();
 
 		glEnableClientState(GL_VERTEX_ARRAY);
 
-		glVertexPointer(3, GL_FLOAT, sizeof(SVertexFormat_V3F), &pVertexBuf);
+		glVertexPointer(3, GL_FLOAT, sizeof(SVertexFormat_V3F), pVertexBuf);
 		glDrawArrays(uMode, 0, uVertexNum);
 
 		glDisableClientState(GL_VERTEX_ARRAY);
@@ -1136,23 +1135,12 @@ namespace guiex
 		{
 			return;
 		}
-
-#if 0
-		m_arrayClipRects.push_back( SClipRect() );
-		memcpy( m_arrayClipRects.back().m_gl_world_matrix, m_vecMatrixStack.back().m_matrix[eMatrixMode_MODELVIEW], sizeof( real[16]) );
-		m_arrayClipRects.back().m_aClipRect = rClipRect;
-
-		UpdateStencil();
-#else
 		m_arrayClipRectOps.push_back( SClipRectOp() );
 		SClipRectOp& rClipRectOp = m_arrayClipRectOps.back();
 		rClipRectOp.m_eClipOp = SClipRectOp::eClipRectOp_Add;
 		rClipRectOp.m_aClipRect.m_aClipRect = rClipRect;
 		memcpy( rClipRectOp.m_aClipRect.m_gl_world_matrix, m_vecMatrixStack.back().m_matrix[eMatrixMode_MODELVIEW], sizeof( real[16]) );
 		m_bHasClipRectOp = true;
-
-		UpdateStencil();
-#endif
 
 		TRY_THROW_OPENGL_ERROR();
 	}
@@ -1165,28 +1153,21 @@ namespace guiex
 			return;
 		}
 
-#if 0
-		GUI_ASSERT( m_arrayClipRects.empty() == false, "no clip rect to pop" );
-		m_arrayClipRects.pop_back();
-
-		UpdateStencil();
-#else
 		m_arrayClipRectOps.push_back( SClipRectOp() );
 		SClipRectOp& rClipRectOp = m_arrayClipRectOps.back();
 		rClipRectOp.m_eClipOp = SClipRectOp::eClipRectOp_Remove;
 		m_bHasClipRectOp = true;
-
-		UpdateStencil();
-#endif
 
 		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::UpdateStencil()
 	{
-#if 1
 		if( m_bForceRefreshStencil || m_bHasClipRectOp )
 		{
+			PushMatrix();
+			MatrixMode(eMatrixMode_MODELVIEW);
+
 			//apply shader
 			CGUIShader* pOldShader = NULL;
 			if( m_pCurrentShader && GSystem->GetDefaultShader_Stencil() )
@@ -1333,63 +1314,10 @@ namespace guiex
 			{
 				pOldShader->Use( this );
 			}
+
+			PopMatrix();
 		}
 
-#else
-		CGUIShader* pOldShader = NULL;
-		if( m_pCurrentShader && GSystem->GetDefaultShader_Stencil() )
-		{
-			pOldShader = GSystem->GetDefaultShader_Stencil()->Use(this);
-		}
-
-		TRY_THROW_OPENGL_ERROR();
-
-		//clear stencil buffer to 0 for all area visible now
-		glClearStencil( 0 );
-		glClear( GL_STENCIL_BUFFER_BIT );
-		m_nCurrentStencilRef = 0;
-
-		// Set color mask and disable texture
-		glColorMask( false, false, false, false );		
-		glDisable( GL_TEXTURE_2D );
-
-		glStencilFunc( GL_EQUAL, m_nCurrentStencilRef, m_nCurrentStencilRef );
-		glStencilOp( GL_ZERO, GL_ZERO, GL_INCR );
-
-		//render clip rect to stencil buffer
-		for( std::vector<SClipRect>::iterator itor =  m_arrayClipRects.begin();
-			itor != m_arrayClipRects.end();
-			++itor )
-		{
-			SClipRect& rClipRect = *itor;
-			RenderRectForStencil( rClipRect );
-
-			++m_nCurrentStencilRef;
-			if( m_nCurrentStencilRef == m_nMaxStencilRef-1 )
-			{
-				//reach max
-				glStencilFunc( GL_EQUAL, m_nCurrentStencilRef, m_nCurrentStencilRef );
-				glStencilOp( GL_ZERO, GL_ZERO, GL_INVERT );
-
-				RenderRectForStencil( m_aWholeScreenRect );
-				m_nCurrentStencilRef = 1;
-			}
-			glStencilFunc( GL_EQUAL, m_nCurrentStencilRef, m_nCurrentStencilRef );
-		}
-
-		//restore color and texture state
-		glColorMask( true, true, true, true );		
-		glEnable( GL_TEXTURE_2D );
-
-		//reset stencil state
-		glStencilFunc( GL_EQUAL, m_nCurrentStencilRef, m_nCurrentStencilRef );
-		glStencilOp( GL_KEEP, GL_KEEP, GL_KEEP );
-
-		if( pOldShader )
-		{
-			pOldShader->Use( this );
-		}
-#endif
 		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
@@ -1398,7 +1326,6 @@ namespace guiex
 		TRY_THROW_OPENGL_ERROR();
 
 		//set matrix
-		MatrixMode(eMatrixMode_MODELVIEW);
 		LoadIdentity();
 		GLMultMatrix( rRect.m_gl_world_matrix );
 
@@ -1410,24 +1337,24 @@ namespace guiex
 		//vert0
 		m_pVertexForStencil[0].x = fLeft;
 		m_pVertexForStencil[0].y = fTop;
-		m_pVertexForStencil[0].z = 1.0f;
+		m_pVertexForStencil[0].z = 0.0f;
 
 		//vert1
 		m_pVertexForStencil[1].x = fLeft;
 		m_pVertexForStencil[1].y = fBottom;
-		m_pVertexForStencil[1].z = 1.0f;
+		m_pVertexForStencil[1].z = 0.0f;
 
 		//vert2
 		m_pVertexForStencil[2].x = fRight;
 		m_pVertexForStencil[2].y = fTop;
-		m_pVertexForStencil[2].z = 1.0f;
+		m_pVertexForStencil[2].z = 0.0f;
 
 		//vert3
 		m_pVertexForStencil[3].x = fRight;
 		m_pVertexForStencil[3].y = fBottom;
-		m_pVertexForStencil[3].z = 1.0f;
+		m_pVertexForStencil[3].z = 0.0f;
 
-		DrawPrimitive( m_nRenderMode_TRIANGLE_STRIP, m_pVertexForStencil, 4 );
+		DrawStencil( m_nRenderMode_TRIANGLE_STRIP, m_pVertexForStencil, 4 );
 
 		TRY_THROW_OPENGL_ERROR();
 	}
@@ -1684,14 +1611,6 @@ namespace guiex
 		if( m_bEnableClip )
 		{
 			glEnable( GL_STENCIL_TEST );	
-#if 0
-			if( !IsSupportStencil() )
-			{
-				//update stencil
-				glGetIntegerv( GL_STENCIL_BITS, &m_nStencilBits);
-				m_nMaxStencilRef = (1<<m_nStencilBits) - 1;
-			}
-#endif
 		}
 		else
 		{
@@ -1699,10 +1618,6 @@ namespace guiex
 			m_arrayClipRectOps.clear();
 			m_arrayClipRects.clear();
 			m_bForceRefreshStencil = true;
-#if 0
-			const CGUIIntSize& rSize = GSystem->GetScreenSize();
-			m_aWholeScreenRect.m_aClipRect.SetSize( rSize );
-#endif
 		}
 
 		TRY_THROW_OPENGL_ERROR();

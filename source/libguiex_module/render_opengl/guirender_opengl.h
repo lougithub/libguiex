@@ -30,6 +30,7 @@ namespace guiex
 		IGUIRender_opengl();
 
 	public:	//api
+		virtual void BeginRender();
 		virtual void ClearDepth (real depth);
 
 		virtual void GenFramebuffers( uint32 n, uint32* framebuffers );
@@ -51,8 +52,6 @@ namespace guiex
 
 	protected:
 		virtual int DoInitialize(void* );
-
-		void SetPipelineMatrix();
 
 	public: 
 		static const char* StaticGetModuleName();

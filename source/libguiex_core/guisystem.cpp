@@ -854,7 +854,7 @@ namespace guiex
 		//set default shader
 		if( !m_pDefaultShader_Render )
 		{
-		//	TrySetDefaultShader_Render();
+			TrySetDefaultShader_Render();
 		}
 		if( !m_pDefaultShader_Stencil )
 		{

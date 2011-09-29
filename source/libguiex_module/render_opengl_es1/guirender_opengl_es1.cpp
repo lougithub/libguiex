@@ -113,7 +113,16 @@ namespace guiex
 		{
 			return -1;
 		}
-		
+
+		TRY_THROW_OPENGL_ERROR();		
+
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_es1::BeginRender(void)
+	{
+		IGUIRender_opengl_base::BeginRender( );
+
 		glDisable( GL_LIGHTING );
 
 		glShadeModel( GL_SMOOTH );
@@ -126,67 +135,6 @@ namespace guiex
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_COLOR_ARRAY);
-
-		TRY_THROW_OPENGL_ERROR();		
-
-		return 0;
-	}
-	//------------------------------------------------------------------------------
-	void IGUIRender_opengl_es1::PushMatrix()
-	{
-		TRY_THROW_OPENGL_ERROR();
-
-		glPushMatrix();
-
-		TRY_THROW_OPENGL_ERROR();
-	}	
-	//------------------------------------------------------------------------------
-	void IGUIRender_opengl_es1::PopMatrix()
-	{
-		glPopMatrix();
-
-		TRY_THROW_OPENGL_ERROR();
-	}
-	//------------------------------------------------------------------------------
-	void IGUIRender_opengl_es1::MatrixMode( EMatrixMode eMode )
-	{
-		TRY_THROW_OPENGL_ERROR();
-
-		switch( eMode )
-		{
-		case eMatrixMode_MODELVIEW:
-			glMatrixMode( GL_MODELVIEW );
-			return;
-
-		case eMatrixMode_PROJECTION:
-			glMatrixMode( GL_PROJECTION );
-			return;
-
-		default:
-			GUI_THROW( "IGUIRender_opengl_es1::MatrixMode: unknown matrix mode");
-			return;
-		}
-
-		TRY_THROW_OPENGL_ERROR();
-
-	}
-	//------------------------------------------------------------------------------
-	void IGUIRender_opengl_es1::LoadIdentity( )
-	{
-		TRY_THROW_OPENGL_ERROR();
-
-		glLoadIdentity();
-
-		TRY_THROW_OPENGL_ERROR();
-	}
-	//------------------------------------------------------------------------------
-	void IGUIRender_opengl_es1::MultMatrix( const CGUIMatrix4& rMatrix )
-	{
-		TRY_THROW_OPENGL_ERROR();
-
-		real gl_matrix[16];
-		makeGLMatrix( gl_matrix, rMatrix );
-		glMultMatrixf( gl_matrix );
 
 		TRY_THROW_OPENGL_ERROR();
 	}

@@ -347,13 +347,13 @@ int main(int argc, char** argv)
 	srand( NULL );
 
 	// Do GLUT init
-	glutInitDisplayMode( GLUT_DEPTH | GLUT_STENCIL | GLUT_DOUBLE | GLUT_RGBA );
+	glutInitDisplayMode( GLUT_STENCIL | GLUT_DOUBLE | GLUT_RGBA );
 	glutInitWindowSize( g_nScreenWidth, g_nScreenHeight );
 	glutInitWindowPosition( 100, 100 );
 	glutInit( &argc, argv );
 
 	glutCreateWindow( (const char *)(L"libguiex demo"));
-	glClearColor(0.0, 0.0, 0.3, 1.0);
+	glClearColor(0.7, 0.7, 0.7, 1.0);
 
 	glutSetCursor( GLUT_CURSOR_INHERIT );
 

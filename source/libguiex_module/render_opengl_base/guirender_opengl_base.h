@@ -174,21 +174,21 @@ namespace guiex
 		void RemoveShader( CGUIShaderImp* pShader );
 		virtual	void DestroyAllShader();
 
-		void DrawPrimitive( uint32 uMode, const SVertexFormat_V3F* pVertexBuf, uint32 uVertexNum );
+		void DrawStencil( uint32 uMode, const SVertexFormat_V3F* pVertexBuf, uint32 uVertexNum );
 		void DrawPrimitive( uint32 eMode, const SVertexFormat_V3F_C4UB* pVertexBuf, uint32 uVertexNum );
 		void DrawPrimitive( uint32 uMode, const SVertexFormat_V3F_T2F_C4UB* pVertexBuf, uint32 uVertexNum );
 		void DrawIndexedPrimitive( uint32 uMode, const SVertexFormat_V2F_T2F_C4UB* pVertexBuf, uint16* pIndicesBuf, uint32 uIndexNum );
 		void DrawIndexedPrimitive( uint32 uMode, const SVertexFormat_V3F* pVerdiceBuf, const SVertexFormat_T2F_C4UB* pVerticeInfos, uint16* pIndicesBuf, uint32 uIndexNum );
 		
 		void SetShaderMatrix();
-		void DrawPrimitive_Shader( uint32 uMode, const SVertexFormat_V3F* pVertexBuf, uint32 uVertexNum );
+		void DrawStencil_Shader( uint32 uMode, const SVertexFormat_V3F* pVertexBuf, uint32 uVertexNum );
 		void DrawPrimitive_Shader( uint32 eMode, const SVertexFormat_V3F_C4UB* pVertexBuf, uint32 uVertexNum );
 		void DrawPrimitive_Shader( uint32 uMode, const SVertexFormat_V3F_T2F_C4UB* pVertexBuf, uint32 uVertexNum );
 		void DrawIndexedPrimitive_Shader( uint32 uMode, const SVertexFormat_V2F_T2F_C4UB* pVertexBuf, uint16* pIndicesBuf, uint32 uIndexNum );
 		void DrawIndexedPrimitive_Shader( uint32 uMode, const SVertexFormat_V3F* pVerdiceBuf, const SVertexFormat_T2F_C4UB* pVerticeInfos, uint16* pIndicesBuf, uint32 uIndexNum );
 		
 		void SetPipelineMatrix();
-		void DrawPrimitive_Pipeline( uint32 uMode, const SVertexFormat_V3F* pVertexBuf, uint32 uVertexNum );
+		void DrawStencil_Pipeline( uint32 uMode, const SVertexFormat_V3F* pVertexBuf, uint32 uVertexNum );
 		void DrawPrimitive_Pipeline( uint32 eMode, const SVertexFormat_V3F_C4UB* pVertexBuf, uint32 uVertexNum );
 		void DrawPrimitive_Pipeline( uint32 uMode, const SVertexFormat_V3F_T2F_C4UB* pVertexBuf, uint32 uVertexNum );
 		void DrawIndexedPrimitive_Pipeline( uint32 uMode, const SVertexFormat_V2F_T2F_C4UB* pVertexBuf, uint16* pIndicesBuf, uint32 uIndexNum );

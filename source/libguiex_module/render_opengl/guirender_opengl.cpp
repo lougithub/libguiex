@@ -59,6 +59,14 @@ namespace guiex
 			return -1;
 		}
 
+		TRY_THROW_OPENGL_ERROR();
+		return 0;
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl::BeginRender(void)
+	{
+		IGUIRender_opengl_base::BeginRender( );
+
 		glDisable( GL_LIGHTING );
 
 		glShadeModel( GL_SMOOTH );
@@ -73,7 +81,6 @@ namespace guiex
 		glDisableClientState(GL_COLOR_ARRAY);
 
 		TRY_THROW_OPENGL_ERROR();
-		return 0;
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl::GenFramebuffers( uint32 n, uint32* framebuffers )
@@ -165,7 +172,6 @@ namespace guiex
 		glGetIntegerv( GL_POLYGON_MODE, nPolygonMode );
 		return (nPolygonMode[1]==GL_LINE);
 	}
-
 	//------------------------------------------------------------------------------
 
 }//namespace guiex

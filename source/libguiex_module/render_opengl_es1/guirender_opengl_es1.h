@@ -32,13 +32,9 @@ namespace guiex
 		IGUIRender_opengl_es1( );
 
 	public:	//api
-		virtual void ClearDepth (real depth);
+		virtual void BeginRender();
 
-		virtual void PushMatrix();
-		virtual void PopMatrix();
-		virtual void MatrixMode( EMatrixMode eMode );
-		virtual void LoadIdentity( );
-		virtual void MultMatrix( const CGUIMatrix4& rMatrix );
+		virtual void ClearDepth (real depth);
 
 		virtual void GenFramebuffers( uint32 n, uint32* framebuffers );
 		virtual void DeleteFramebuffers( uint32 n, const uint32* framebuffers );
