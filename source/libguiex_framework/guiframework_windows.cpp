@@ -118,7 +118,7 @@ namespace guiex
 #elif defined(GUIEX_RENDER_OPENGL_ES2 )
 		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl_es2);
 #else
-#error "unknown render type"	
+#	error "unknown render type"	
 #endif
 	}
 	//------------------------------------------------------------------------------ 

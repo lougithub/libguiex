@@ -857,6 +857,7 @@ namespace guiex
 
 		UpdateStencil();
 
+		glDisable( GL_TEXTURE_2D );
 		if( m_pCurrentShader )
 		{
 			DrawPrimitive_Shader( uMode,pVertexBuf, uVertexNum );
@@ -865,6 +866,7 @@ namespace guiex
 		{
 			DrawPrimitive_Pipeline( uMode, pVertexBuf, uVertexNum );
 		}
+		glEnable( GL_TEXTURE_2D );
 
 		TRY_THROW_OPENGL_ERROR();
 	}
@@ -926,8 +928,6 @@ namespace guiex
 #if !defined(GUIEX_RENDER_OPENGL_ES1)
 		SetShaderMatrix();
 
-		glDisable( GL_TEXTURE_2D );
-
 		int32 nPositionLoc = m_pCurrentShader->GetCachedAttributeLoc(CGUIShader_opengl_base::eSCAL_Position);
 		int32 nColorLoc = m_pCurrentShader->GetCachedAttributeLoc(CGUIShader_opengl_base::eSCAL_Color);
 		glEnableVertexAttribArray(nPositionLoc);
@@ -940,7 +940,6 @@ namespace guiex
 
 		glDisableVertexAttribArray(nColorLoc);
 		glDisableVertexAttribArray(nPositionLoc);
-		glEnable( GL_TEXTURE_2D );
 
 #endif
 	}
@@ -1044,7 +1043,6 @@ namespace guiex
 #if !defined(GUIEX_RENDER_OPENGL_ES2)
 		SetPipelineMatrix();
 
-		glDisable(GL_TEXTURE_2D);
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glEnableClientState(GL_COLOR_ARRAY);
 
@@ -1055,7 +1053,6 @@ namespace guiex
 
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glDisableClientState(GL_COLOR_ARRAY);
-		glEnable(GL_TEXTURE_2D);
 #endif
 	}
 	//------------------------------------------------------------------------------

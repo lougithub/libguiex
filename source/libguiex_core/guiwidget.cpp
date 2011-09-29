@@ -2280,17 +2280,20 @@ namespace guiex
 		CGUIWidget* pWidget = GetChild();
 		while( pWidget )
 		{
-			//if( pWidget->IsIgnoreParentClipRect() )
-			//{
-			//	PopClipRect( pRender );
-			//}
+			if( pWidget->IsIgnoreParentClipRect() )
+			{
+				if( IsClipChildren() && GetClipArea() )
+				{
+					PopClipRect( pRender );
+				}
+			}
 			
 			pWidget->Render(pRender);
 
-			//if( pWidget->IsIgnoreParentClipRect() )
-			//{
-			//	PushClipRect( pRender );
-			//}
+			if( pWidget->IsIgnoreParentClipRect() )
+			{
+				PushClipRect( pRender );
+			}
 			pWidget = pWidget->GetNextSibling();
 		}
 

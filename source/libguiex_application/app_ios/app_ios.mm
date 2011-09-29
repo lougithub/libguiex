@@ -8,7 +8,12 @@
 
 #import "app_ios.h"
 #import <UIKit/UIKit.h>
+
+#if defined(GUIEX_RENDER_OPENGL_ES1)
 #import <OpenGLES/ES1/glext.h>
+#else defined(GUIEX_RENDER_OPENGL_ES2)
+#import <OpenGLES/ES2/glext.h>
+#endif
 
 @implementation AppDelegate
 
@@ -93,7 +98,13 @@
         eaglLayer.opaque = YES;
 		
         m_context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
-        
+
+#if defined(GUIEX_RENDER_OPENGL_ES1)
+        m_context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
+#else defined(GUIEX_RENDER_OPENGL_ES2)
+        m_context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+#endif
+
         if (!m_context || ![EAGLContext setCurrentContext:m_context]) 
 		{
             [self release];
