@@ -1,17 +1,18 @@
 uniform sampler2D tex;
 
-varying vec2 v_v2TextCoord;
+varying lowp vec2 v_v2TextCoord;
+varying lowp vec4 v_v4DestinationColor;
 
 void main(void)
 {
-	vec3 ct,cf;
-	float at,af;
-	vec4 texel;
-	texel = texture(tex, v_v2TextCoord );
+	lowp vec3 ct,cf;
+	lowp float at,af;
+	lowp vec4 texel;
+	texel = texture2D(tex, v_v2TextCoord );
 	ct = texel.rgb;
 	at = texel.a;
-	cf = gl_Color.rgb;
-	af = gl_Color.a;
+	cf = v_v4DestinationColor.rgb;
+	af = v_v4DestinationColor.a;
 	gl_FragColor = vec4(ct*cf,at*af);
 
 	//vec4 color = vec4(ct*cf,at*af);

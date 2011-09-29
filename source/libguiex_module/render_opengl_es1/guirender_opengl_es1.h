@@ -52,7 +52,6 @@ namespace guiex
 
 	protected:
 		virtual int DoInitialize(void* );
-		CGUIShaderImp* UseShader( CGUIShaderImp* pShader );
 
 	public: 
 		static const char* StaticGetModuleName();

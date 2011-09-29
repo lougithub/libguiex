@@ -19,7 +19,6 @@
 #include <libguiex_module/imageloader_png_tga/guiimageloader_png_tga.h>
 #include <libguiex_module/filesys_cocoa/guifilesys_cocoa.h>
 #include <libguiex_module/configfile_tinyxml/guiconfigfile_tinyxml.h>
-#include <libguiex_module/render_opengl_es1/guirender_opengl_es1.h>
 #include <libguiex_module/stringconv_cocoa/guistringconv_cocoa.h>
 #include <libguiex_module/stringconv_iconv/guistringconv_iconv.h>
 #include <libguiex_module/stringconv_internal/guistringconv_internal.h>
@@ -31,6 +30,13 @@
 #include <libguiex_module/mouse_default/guimouse_default.h>
 #include <libguiex_module/keyboard_default/guikeyboard_default.h>
 #include <libguiex_module/localizationloader_tinyxml/guilocalizationloader_tinyxml.h>
+#if defined(GUIEX_RENDER_OPENGL_ES1 )
+#	include <libguiex_module/render_opengl_es1/guirender_opengl_es1.h>
+#elif defined(GUIEX_RENDER_OPENGL_ES2 )
+#	include <libguiex_module/render_opengl_es2/guirender_opengl_es2.h>
+#else
+#	error "unknown render type"	
+#endif
 
 //============================================================================//
 // function
@@ -100,7 +106,14 @@ namespace guiex
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_IOS::RegisterInterfaces_Render( )
 	{
+#if defined(GUIEX_RENDER_OPENGL_ES1 )
 		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl_es1);
+#elif defined(GUIEX_RENDER_OPENGL_ES2 )
+		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl_es2);
+#else
+#	error "unknown render type"	
+#endif		
+
 	}
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_IOS::RegisterInterfaces_ImageLoader( )

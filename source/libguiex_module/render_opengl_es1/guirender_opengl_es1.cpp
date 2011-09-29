@@ -204,10 +204,5 @@ namespace guiex
 	{
 		glClearDepthf( depth );
 	}
-	//------------------------------------------------------------------------------
-	CGUIShaderImp* IGUIRender_opengl_es1::UseShader( CGUIShaderImp* pShader )
-	{
-		return NULL;
-	}
 	//-----------------------------------------------------------------------------
 }//namespace guiex

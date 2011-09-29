@@ -32,7 +32,8 @@
 #		include <OpenGLES/ES1/gl.h>
 #		include <OpenGLES/ES1/glext.h>
 #	elif defined(GUIEX_RENDER_OPENGL_ES2)
-#		error "not implemented"	
+#		include <OpenGLES/ES2/gl.h>
+#		include <OpenGLES/ES2/glext.h>
 #	else
 #		error "unknown render type"	
 #	endif

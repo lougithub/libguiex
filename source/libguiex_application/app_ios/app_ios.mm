@@ -7,12 +7,15 @@
 //
 
 #import "app_ios.h"
+#import <libguiex_core/guibase.h>
 #import <UIKit/UIKit.h>
 
 #if defined(GUIEX_RENDER_OPENGL_ES1)
-#import <OpenGLES/ES1/glext.h>
-#else defined(GUIEX_RENDER_OPENGL_ES2)
-#import <OpenGLES/ES2/glext.h>
+#	import <OpenGLES/ES1/glext.h>
+#elif defined(GUIEX_RENDER_OPENGL_ES2)
+#	import <OpenGLES/ES2/glext.h>
+#else
+#	error "unknown render type"	
 #endif
 
 @implementation AppDelegate
@@ -101,8 +104,10 @@
 
 #if defined(GUIEX_RENDER_OPENGL_ES1)
         m_context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
-#else defined(GUIEX_RENDER_OPENGL_ES2)
+#elif defined(GUIEX_RENDER_OPENGL_ES2)
         m_context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+#else
+#	error "unknown render type"	
 #endif
 
         if (!m_context || ![EAGLContext setCurrentContext:m_context]) 
@@ -115,10 +120,18 @@
 		
         int width = CGRectGetWidth(frame);
         int height = CGRectGetHeight(frame);
+#if defined(GUIEX_RENDER_OPENGL_ES1)
+		unsigned renderbuffer = GL_RENDERBUFFER_OES;
+#elif defined(GUIEX_RENDER_OPENGL_ES2)
+    	unsigned renderbuffer = GL_RENDERBUFFER;
+#else
+#	error "unknown render type"	
+#endif
+	
 		NSString* bundlePath =[[NSBundle mainBundle] resourcePath];
         m_pEngine->Initialize(width, height, [bundlePath UTF8String]);
 		[m_context 
-		 renderbufferStorage:GL_RENDERBUFFER_OES
+		 renderbufferStorage:renderbuffer
 		 fromDrawable:eaglLayer];
 		
         [self drawView: nil];
@@ -151,7 +164,15 @@
     
 	m_pEngine->Update( elapsedSeconds );
 	
-	[m_context presentRenderbuffer:GL_RENDERBUFFER_OES];
+#if defined(GUIEX_RENDER_OPENGL_ES1)
+	unsigned renderbuffer = GL_RENDERBUFFER_OES;
+#elif defined(GUIEX_RENDER_OPENGL_ES2)
+	unsigned renderbuffer = GL_RENDERBUFFER;
+#else
+#	error "unknown render type"	
+#endif
+	
+	[m_context presentRenderbuffer:renderbuffer];
 }
 
 - (void) touchesBegan: (NSSet*) touches withEvent: (UIEvent*) event

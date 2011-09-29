@@ -223,6 +223,7 @@ namespace guiex
 		}
 		else
 		{
+			GUI_TRACE( "[IGUIRender_opengl_base::DoInitialize]: stencil is enabled\n" );
 			glEnable( GL_STENCIL_TEST );	
 		}
 		memcpy( m_aWholeScreenRect.m_gl_world_matrix, g_aIdentity, sizeof(g_aIdentity));
@@ -491,6 +492,7 @@ namespace guiex
 		TRY_THROW_OPENGL_ERROR();
 		
 		//clear screen
+		glClearColor(0.8,0.8,0.8,1.0 );
 		glClearStencil( 0 );
 		glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT );	// clear screen and depth buffer 
 
@@ -525,6 +527,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::UpdateCamera( )
 	{
+		TRY_THROW_OPENGL_ERROR();
 		if( m_pCamera && m_pCamera->IsDirty() )
 		{
 			m_pCamera->ClearDirty();
@@ -807,7 +810,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::SetPipelineMatrix()
 	{
-#if defined(GUIEX_RENDER_OPENGL)
+#if !defined(GUIEX_RENDER_OPENGL_ES2)
 		if( !m_pCurrentShader )
 		{
 			glMatrixMode( GL_PROJECTION );
@@ -839,6 +842,7 @@ namespace guiex
 	{
 		TRY_THROW_OPENGL_ERROR();
 
+		glDisable( GL_TEXTURE_2D );
 		if( m_pCurrentShader )
 		{
 			DrawIndexedPrimitive_Shader( uMode,pVerdiceBuf, pVerticeInfos, pIndicesBuf, uIndexNum );
@@ -847,7 +851,8 @@ namespace guiex
 		{
 			DrawIndexedPrimitive_Pipeline( uMode,pVerdiceBuf, pVerticeInfos, pIndicesBuf, uIndexNum );
 		}
-
+		glEnable( GL_TEXTURE_2D );
+		
 		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
@@ -857,7 +862,6 @@ namespace guiex
 
 		UpdateStencil();
 
-		glDisable( GL_TEXTURE_2D );
 		if( m_pCurrentShader )
 		{
 			DrawPrimitive_Shader( uMode,pVertexBuf, uVertexNum );
@@ -866,7 +870,6 @@ namespace guiex
 		{
 			DrawPrimitive_Pipeline( uMode, pVertexBuf, uVertexNum );
 		}
-		glEnable( GL_TEXTURE_2D );
 
 		TRY_THROW_OPENGL_ERROR();
 	}
