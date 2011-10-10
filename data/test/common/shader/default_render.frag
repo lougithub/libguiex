@@ -1,3 +1,7 @@
+#ifndef GL_ES
+#	define lowp
+#endif
+
 uniform sampler2D tex;
 
 varying lowp vec2 v_v2TextCoord;

@@ -370,6 +370,7 @@ int main(int argc, char** argv)
 	glutSpecialUpFunc( keyUpSpecialCB );
 
 	glutSetOption( GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION );
+	glutCloseFunc(QuitApp);
 
 	//setVSync( g_nVSync );
 
@@ -384,13 +385,6 @@ int main(int argc, char** argv)
 
 	g_aOldTimer.UpdateTime();
 	glutMainLoop();
-
-	if( g_pFramework )
-	{
-		g_pFramework->Release();
-		delete g_pFramework;
-		g_pFramework = NULL;
-	}
 
 	return 0;
 }

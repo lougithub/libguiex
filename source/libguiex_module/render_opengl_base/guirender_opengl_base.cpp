@@ -896,6 +896,7 @@ namespace guiex
 
 		UpdateStencil();
 
+		glDisable( GL_TEXTURE_2D );
 		if( m_pCurrentShader )
 		{
 			DrawPrimitive_Shader( uMode,pVertexBuf, uVertexNum );
@@ -904,6 +905,7 @@ namespace guiex
 		{
 			DrawPrimitive_Pipeline( uMode, pVertexBuf, uVertexNum );
 		}
+		glEnable( GL_TEXTURE_2D );
 
 		TRY_THROW_OPENGL_ERROR();
 	}
