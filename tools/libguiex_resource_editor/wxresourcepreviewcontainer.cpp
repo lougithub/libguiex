@@ -120,6 +120,7 @@ void WxResourcePreviewContainer::DestroyPreviewCanvas()
 		m_pPreviewPanel = NULL;
 	}
 	m_pPropertyGridMgr->Clear();
+	m_pPropertyGridMgr->Refresh();
 }
 //------------------------------------------------------------------------------
 void WxResourcePreviewContainer::SetGUIProperty( const CGUIProperty* pResourceProperty )
@@ -128,13 +129,6 @@ void WxResourcePreviewContainer::SetGUIProperty( const CGUIProperty* pResourcePr
 	{
 		DestroyPreviewCanvas();
 		return;
-	}
-
-	//set property
-	m_pPropertyGridMgr->Clear();
-	for(unsigned int i=0; i<pResourceProperty->GetPropertyCount();++i)
-	{
-		CPropertyConvertorMgr::Instance()->GuiProperty2GridPropertyRow( m_pPropertyGridMgr, NULL, *pResourceProperty->GetProperty(i) );
 	}
 
 	//set preview
@@ -156,6 +150,16 @@ void WxResourcePreviewContainer::SetGUIProperty( const CGUIProperty* pResourcePr
 		wxMessageBox( _T("resource doesn't support preview"), _T("error") );
 		return;
 	}
+
+	//set property
+	m_pPropertyGridMgr->Clear();
+	m_pPropertyGridMgr->AddPage( L"info" );
+	m_pPropertyGridMgr->SelectPage( L"info" );
+	for(unsigned int i=0; i<pResourceProperty->GetPropertyCount();++i)
+	{
+		CPropertyConvertorMgr::Instance()->GuiProperty2GridPropertyRow( m_pPropertyGridMgr, NULL, *pResourceProperty->GetProperty(i) );
+	}
+	m_pPropertyGridMgr->Refresh();
 
 	m_pPreviewPanel->SetResourceName( Gui2wxString(pResourceProperty->GetName()));
 }
