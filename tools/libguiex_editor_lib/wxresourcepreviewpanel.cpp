@@ -43,7 +43,6 @@ protected:
 protected:
 	static int wx_gl_attribs[];
 	wxTimer m_timer;
-	wxGLContext* m_pGLContext;
 
 protected:
 	DECLARE_EVENT_TABLE()
@@ -63,23 +62,21 @@ int WxResourceCanvasBase::wx_gl_attribs[] = {
 WxResourceCanvasBase::WxResourceCanvasBase(wxWindow *parent )
 	: wxGLCanvas(parent, wxID_ANY,wx_gl_attribs, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER | wxFULL_REPAINT_ON_RESIZE )
 	,m_timer(this, TIMERID_PREVIEWCANVAS_RENDER)
-	,m_pGLContext(NULL)
 {
 	m_timer.Start(33);
-	m_pGLContext = new wxGLContext( this );
-	m_pGLContext->SetCurrent(*this);
+	WxGLContextRef::CreateGLContext( this );
+	WxGLContextRef::GetGLContext()->SetCurrent(*this);
 }
 //------------------------------------------------------------------------------
 WxResourceCanvasBase::~WxResourceCanvasBase()
 {
 	m_timer.Stop();
-	delete m_pGLContext;
-	m_pGLContext = NULL;
+	WxGLContextRef::DestroyGLContext( );
 }
 //------------------------------------------------------------------------------
 void WxResourceCanvasBase::OnPaint(wxPaintEvent& event)
 {
-	m_pGLContext->SetCurrent(*this);
+	WxGLContextRef::GetGLContext()->SetCurrent(*this);
 
 	const wxSize ClientSize = GetClientSize();
 	GSystem->SetRawScreenSize(ClientSize.x,ClientSize.y);
@@ -502,3 +499,49 @@ void WxSoundPreviewPanel::OnPlay(wxCommandEvent& event)
 	}
 }
 //------------------------------------------------------------------------------
+
+
+
+
+//============================================================================//
+// WxGLContextRef
+//============================================================================// 
+//------------------------------------------------------------------------------
+	wxGLContext* WxGLContextRef::m_pGLContext = NULL;
+	uint32 WxGLContextRef::m_uContextCount = 0;
+	//------------------------------------------------------------------------------
+	void WxGLContextRef::CreateGLContext( wxGLCanvas* pCanvas )
+	{
+		++m_uContextCount;
+		if( !m_pGLContext )
+		{
+			m_pGLContext = new wxGLContext( pCanvas );
+		}
+	}
+	//------------------------------------------------------------------------------
+	void WxGLContextRef::DestroyGLContext( )
+	{
+		if( m_uContextCount == 0 )
+		{
+			wxMessageBox( _T("error in WxGLContextRef::DestroyGLContext"), _T("error") );
+			return;
+		}
+		--m_uContextCount;
+		if( m_uContextCount == 0 )
+		{
+			delete m_pGLContext;
+			m_pGLContext = NULL;
+		}
+	}
+	//------------------------------------------------------------------------------
+	wxGLContext* WxGLContextRef::GetGLContext()
+	{
+		if( !m_pGLContext )
+		{
+			wxMessageBox( _T("error in WxGLContextRef::GetGLContext"), _T("error") );
+			return NULL;
+		}
+		return m_pGLContext;
+	}
+	//------------------------------------------------------------------------------
+

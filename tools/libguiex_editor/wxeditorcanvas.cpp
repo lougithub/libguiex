@@ -14,6 +14,7 @@
 #include "wxmainapp.h"
 #include "wxmainframe.h"
 #include "toolsmisc.h"
+#include "wxresourcepreviewpanel.h"
 #include <libguiex_core/guiex.h>
 
 #include <sys/timeb.h>
@@ -54,7 +55,6 @@ WxEditorCanvas::WxEditorCanvas(wxWindow *parent, int* args, wxWindowID id,
 					   ,m_previousMouseY(0)
 					   ,m_bWidgetStatusChanged(false)
 					   ,m_pContainer((WxEditorCanvasContainer*)parent)
-					   ,m_pGLContext( NULL )
 {
 	m_timer.Start(33);
 }
@@ -67,8 +67,8 @@ WxEditorCanvas::~WxEditorCanvas()
 //------------------------------------------------------------------------------
 void WxEditorCanvas::InitializeCanvas()
 {
-	m_pGLContext = new wxGLContext(this);
-	m_pGLContext->SetCurrent( *this );
+	WxGLContextRef::CreateGLContext( this );
+	WxGLContextRef::GetGLContext()->SetCurrent(*this);
 
 	if( !GSystem->GetUICanvas())
 	{
@@ -83,15 +83,14 @@ void WxEditorCanvas::InitializeCanvas()
 //------------------------------------------------------------------------------
 void WxEditorCanvas::DestroyCanvas()
 {
-	m_pGLContext->SetCurrent( *this );
+	WxGLContextRef::GetGLContext()->SetCurrent(*this);
 
 	GSystem->DestroyUICanvas();
 	GSystem->DestroyAllWidgets();
 	GSystem->UnloadAllResource();
 
 	CGUIFrameworkEditor::ms_pFramework->UnregisterOpenglInterface();
-	delete m_pGLContext;
-	m_pGLContext = NULL;
+	WxGLContextRef::DestroyGLContext();
 }
 //------------------------------------------------------------------------------
 void WxEditorCanvas::UpdateWindowBox()
@@ -179,7 +178,7 @@ void WxEditorCanvas::DrawResizers()
 //------------------------------------------------------------------------------
 void WxEditorCanvas::Render()
 {
-	m_pGLContext->SetCurrent( *this );
+	WxGLContextRef::GetGLContext()->SetCurrent(*this);
 
 	/* clear color and depth buffers */
 //	const wxColour& rBGColor = GetMainFrame()->GetBGColor();

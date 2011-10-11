@@ -150,98 +150,98 @@
 
   <!-- mage attack  -->
   <property name="Mage_Attack_Up001" type="CGUIImageDefine">
-	  <property  name="path" type="CGUIString" value="image/tower_archertower/Mage_Attack_Up001.png" />
+	  <property  name="path" type="CGUIString" value="image/tower_mages/Mage_Attack_Up001.png" />
 	  <property name="uv" type="CGUIRect" value="0,0,30,30" />
 	  <property name="size" type="CGUISize" value="30,30" />
   </property>
   <property name="Mage_Attack_Up002" type="CGUIImageDefine">
-	  <property  name="path" type="CGUIString" value="image/tower_archertower/Mage_Attack_Up002.png" />
+	  <property  name="path" type="CGUIString" value="image/tower_mages/Mage_Attack_Up002.png" />
 	  <property name="uv" type="CGUIRect" value="0,0,30,30" />
 	  <property name="size" type="CGUISize" value="30,30" />
   </property>
   <property name="Mage_Attack_Up003" type="CGUIImageDefine">
-	  <property  name="path" type="CGUIString" value="image/tower_archertower/Mage_Attack_Up003.png" />
+	  <property  name="path" type="CGUIString" value="image/tower_mages/Mage_Attack_Up003.png" />
 	  <property name="uv" type="CGUIRect" value="0,0,30,30" />
 	  <property name="size" type="CGUISize" value="30,30" />
   </property>
   <property name="Mage_Attack_Up004" type="CGUIImageDefine">
-	  <property  name="path" type="CGUIString" value="image/tower_archertower/Mage_Attack_Up004.png" />
+	  <property  name="path" type="CGUIString" value="image/tower_mages/Mage_Attack_Up004.png" />
 	  <property name="uv" type="CGUIRect" value="0,0,30,30" />
 	  <property name="size" type="CGUISize" value="30,30" />
   </property>
   <property name="Mage_Attack_Up005" type="CGUIImageDefine">
-	  <property  name="path" type="CGUIString" value="image/tower_archertower/Mage_Attack_Up005.png" />
+	  <property  name="path" type="CGUIString" value="image/tower_mages/Mage_Attack_Up005.png" />
 	  <property name="uv" type="CGUIRect" value="0,0,30,30" />
 	  <property name="size" type="CGUISize" value="30,30" />
   </property>
   <property name="Mage_Attack_Up006" type="CGUIImageDefine">
-	  <property  name="path" type="CGUIString" value="image/tower_archertower/Mage_Attack_Up006.png" />
+	  <property  name="path" type="CGUIString" value="image/tower_mages/Mage_Attack_Up006.png" />
 	  <property name="uv" type="CGUIRect" value="0,0,30,30" />
 	  <property name="size" type="CGUISize" value="30,30" />
   </property>
   <property name="Mage_Attack_Up007" type="CGUIImageDefine">
-	  <property  name="path" type="CGUIString" value="image/tower_archertower/Mage_Attack_Up007.png" />
+	  <property  name="path" type="CGUIString" value="image/tower_mages/Mage_Attack_Up007.png" />
 	  <property name="uv" type="CGUIRect" value="0,0,30,30" />
 	  <property name="size" type="CGUISize" value="30,30" />
   </property>
   <property name="Mage_Attack_Up008" type="CGUIImageDefine">
-	  <property  name="path" type="CGUIString" value="image/tower_archertower/Mage_Attack_Up008.png" />
+	  <property  name="path" type="CGUIString" value="image/tower_mages/Mage_Attack_Up008.png" />
 	  <property name="uv" type="CGUIRect" value="0,0,30,30" />
 	  <property name="size" type="CGUISize" value="30,30" />
   </property>
   <property name="Mage_Attack_Up009" type="CGUIImageDefine">
-	  <property  name="path" type="CGUIString" value="image/tower_archertower/Mage_Attack_Up009.png" />
+	  <property  name="path" type="CGUIString" value="image/tower_mages/Mage_Attack_Up009.png" />
 	  <property name="uv" type="CGUIRect" value="0,0,30,30" />
 	  <property name="size" type="CGUISize" value="30,30" />
   </property>
   <property name="Mage_Attack_Up010" type="CGUIImageDefine">
-	  <property  name="path" type="CGUIString" value="image/tower_archertower/Mage_Attack_Up010.png" />
+	  <property  name="path" type="CGUIString" value="image/tower_mages/Mage_Attack_Up010.png" />
 	  <property name="uv" type="CGUIRect" value="0,0,30,30" />
 	  <property name="size" type="CGUISize" value="30,30" />
   </property>
 
   <property name="Mage_Attack_Down001" type="CGUIImageDefine">
-	  <property  name="path" type="CGUIString" value="image/tower_archertower/Mage_Attack_Down001.png" />
+	  <property  name="path" type="CGUIString" value="image/tower_mages/Mage_Attack_Down001.png" />
 	  <property name="uv" type="CGUIRect" value="0,0,30,30" />
 	  <property name="size" type="CGUISize" value="30,30" />
   </property>
   <property name="Mage_Attack_Down002" type="CGUIImageDefine">
-	  <property  name="path" type="CGUIString" value="image/tower_archertower/Mage_Attack_Down002.png" />
+	  <property  name="path" type="CGUIString" value="image/tower_mages/Mage_Attack_Down002.png" />
 	  <property name="uv" type="CGUIRect" value="0,0,30,30" />
 	  <property name="size" type="CGUISize" value="30,30" />
   </property>
   <property name="Mage_Attack_Down003" type="CGUIImageDefine">
-	  <property  name="path" type="CGUIString" value="image/tower_archertower/Mage_Attack_Down003.png" />
+	  <property  name="path" type="CGUIString" value="image/tower_mages/Mage_Attack_Down003.png" />
 	  <property name="uv" type="CGUIRect" value="0,0,30,30" />
 	  <property name="size" type="CGUISize" value="30,30" />
   </property>
   <property name="Mage_Attack_Down004" type="CGUIImageDefine">
-	  <property  name="path" type="CGUIString" value="image/tower_archertower/Mage_Attack_Down004.png" />
+	  <property  name="path" type="CGUIString" value="image/tower_mages/Mage_Attack_Down004.png" />
 	  <property name="uv" type="CGUIRect" value="0,0,30,30" />
 	  <property name="size" type="CGUISize" value="30,30" />
   </property>
   <property name="Mage_Attack_Down005" type="CGUIImageDefine">
-	  <property  name="path" type="CGUIString" value="image/tower_archertower/Mage_Attack_Down005.png" />
+	  <property  name="path" type="CGUIString" value="image/tower_mages/Mage_Attack_Down005.png" />
 	  <property name="uv" type="CGUIRect" value="0,0,30,30" />
 	  <property name="size" type="CGUISize" value="30,30" />
   </property>
   <property name="Mage_Attack_Down006" type="CGUIImageDefine">
-	  <property  name="path" type="CGUIString" value="image/tower_archertower/Mage_Attack_Down006.png" />
+	  <property  name="path" type="CGUIString" value="image/tower_mages/Mage_Attack_Down006.png" />
 	  <property name="uv" type="CGUIRect" value="0,0,30,30" />
 	  <property name="size" type="CGUISize" value="30,30" />
   </property>
   <property name="Mage_Attack_Down007" type="CGUIImageDefine">
-	  <property  name="path" type="CGUIString" value="image/tower_archertower/Mage_Attack_Down007.png" />
+	  <property  name="path" type="CGUIString" value="image/tower_mages/Mage_Attack_Down007.png" />
 	  <property name="uv" type="CGUIRect" value="0,0,30,30" />
 	  <property name="size" type="CGUISize" value="30,30" />
   </property>
   <property name="Mage_Attack_Down008" type="CGUIImageDefine">
-	  <property  name="path" type="CGUIString" value="image/tower_archertower/Mage_Attack_Down008.png" />
+	  <property  name="path" type="CGUIString" value="image/tower_mages/Mage_Attack_Down008.png" />
 	  <property name="uv" type="CGUIRect" value="0,0,30,30" />
 	  <property name="size" type="CGUISize" value="30,30" />
   </property>
   <property name="Mage_Attack_Down009" type="CGUIImageDefine">
-	  <property  name="path" type="CGUIString" value="image/tower_archertower/Mage_Attack_Down009.png" />
+	  <property  name="path" type="CGUIString" value="image/tower_mages/Mage_Attack_Down009.png" />
 	  <property name="uv" type="CGUIRect" value="0,0,30,30" />
 	  <property name="size" type="CGUISize" value="30,30" />
   </property>

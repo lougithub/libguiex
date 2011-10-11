@@ -103,8 +103,6 @@ private:
 
 	WxEditorCanvasContainer* m_pContainer;
 
-	wxGLContext* m_pGLContext;
-
 	DECLARE_EVENT_TABLE()
 };
 

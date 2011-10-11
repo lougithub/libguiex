@@ -120,4 +120,22 @@ private:
 	DECLARE_EVENT_TABLE()
 };
 
+
+//============================================================================//
+// context
+//============================================================================// 
+class WxGLContextRef
+{
+public:
+	static void CreateGLContext( wxGLCanvas* pCanvas );
+	static void DestroyGLContext( );
+	static wxGLContext* GetGLContext();
+
+protected:
+	static wxGLContext* m_pGLContext;
+	static guiex::uint32 m_uContextCount;
+};
+
+
+
 #endif //__KEN_RESOURCE_PREVIEWPANEL_20110910_H__
