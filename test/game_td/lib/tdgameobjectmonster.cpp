@@ -482,8 +482,12 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CTDGameObjectMonster::SetAnimState( EAnimState eAnimState )
 	{
-		m_eAnimState = eAnimState;
-		m_arrayAnimations[m_eAnimState]->Reset();
+		if( m_eAnimState != eAnimState )
+		{
+			m_eAnimState = eAnimState;
+
+			m_arrayAnimations[m_eAnimState]->Reset();
+		}
 	}
 	//------------------------------------------------------------------------------
 	const CGUIWgtSimplePathNode* CTDGameObjectMonster::GetTargetPathNode() const
