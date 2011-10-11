@@ -511,9 +511,13 @@ namespace guiex
 		m_aBlendFunc.dst = eBlendFunc_ONE_MINUS_SRC_ALPHA;
 		SetBlendFunc( m_aBlendFunc );
 
+		
+#if !defined(GUIEX_RENDER_OPENGL_ES2 )
 		glEnable(GL_TEXTURE_2D);
+#endif
+		
 		glEnable(GL_CULL_FACE);
-
+		
 		//update camera
 		UpdateCamera();
 		
@@ -842,7 +846,9 @@ namespace guiex
 	{
 		TRY_THROW_OPENGL_ERROR();
 
+#if !defined(GUIEX_RENDER_OPENGL_ES2 )	
 		glDisable( GL_TEXTURE_2D );
+#endif
 		if( m_pCurrentShader )
 		{
 			DrawIndexedPrimitive_Shader( uMode,pVerdiceBuf, pVerticeInfos, pIndicesBuf, uIndexNum );
@@ -851,7 +857,9 @@ namespace guiex
 		{
 			DrawIndexedPrimitive_Pipeline( uMode,pVerdiceBuf, pVerticeInfos, pIndicesBuf, uIndexNum );
 		}
+#if !defined(GUIEX_RENDER_OPENGL_ES2 )			
 		glEnable( GL_TEXTURE_2D );
+#endif
 		
 		TRY_THROW_OPENGL_ERROR();
 	}
@@ -896,7 +904,10 @@ namespace guiex
 
 		UpdateStencil();
 
+#if !defined(GUIEX_RENDER_OPENGL_ES2 )			
 		glDisable( GL_TEXTURE_2D );
+#endif
+		
 		if( m_pCurrentShader )
 		{
 			DrawPrimitive_Shader( uMode,pVertexBuf, uVertexNum );
@@ -905,8 +916,11 @@ namespace guiex
 		{
 			DrawPrimitive_Pipeline( uMode, pVertexBuf, uVertexNum );
 		}
-		glEnable( GL_TEXTURE_2D );
-
+		
+#if !defined(GUIEX_RENDER_OPENGL_ES2 )	
+	glEnable( GL_TEXTURE_2D );
+#endif
+		
 		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
@@ -1165,6 +1179,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::UpdateStencil()
 	{
+		TRY_THROW_OPENGL_ERROR();
 		if( m_bForceRefreshStencil || m_bHasClipRectOp )
 		{
 			PushMatrix();
@@ -1179,9 +1194,14 @@ namespace guiex
 
 			// Set color mask and disable texture
 			glColorMask( false, false, false, false );		
+#if !defined(GUIEX_RENDER_OPENGL_ES2 )	
 			glDisable( GL_TEXTURE_2D );
+#endif
+			
 			glStencilOp( GL_ZERO, GL_ZERO, GL_INCR );
 
+			TRY_THROW_OPENGL_ERROR();
+			
 			//refresh existing list
 			if( m_bForceRefreshStencil )
 			{
@@ -1309,8 +1329,10 @@ namespace guiex
 
 			//restore color and texture state
 			glColorMask( true, true, true, true );		
-			glEnable( GL_TEXTURE_2D );
 
+#if !defined(GUIEX_RENDER_OPENGL_ES2 )	
+			glEnable( GL_TEXTURE_2D );
+#endif
 			//restore shader
 			if( pOldShader )
 			{

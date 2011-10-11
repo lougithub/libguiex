@@ -97,12 +97,18 @@ namespace guiex
 		GLuint renderbuffer;
 		glGenRenderbuffersOES(1, &renderbuffer);
 		glBindRenderbufferOES(GL_RENDERBUFFER_OES, renderbuffer);		
+
+		// Create a stencil buffer.
+		GLuint stencil;
+		glGenRenderbuffersOES(1, &stencil);
+		glBindRenderbufferOES(GL_RENDERBUFFER_OES, stencil);
+		glRenderbufferStorageOES(GL_RENDERBUFFER_OES, GL_STENCIL_INDEX8_OES, width, height);
+
+		// Create the framebuffer object.
 		glGenFramebuffersOES(1, &framebuffer);
 		glBindFramebufferOES(GL_FRAMEBUFFER_OES, framebuffer);
-		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES,
-									 GL_COLOR_ATTACHMENT0_OES,
-									 GL_RENDERBUFFER_OES,
-									 renderbuffer);
+		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES,GL_RENDERBUFFER_OES,renderbuffer);
+		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_STENCIL_ATTACHMENT_OES,GL_RENDERBUFFER_OES, stencil);
 		glBindRenderbufferOES(GL_RENDERBUFFER_OES, renderbuffer);	
 		
 #endif
