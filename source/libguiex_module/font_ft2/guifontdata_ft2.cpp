@@ -22,6 +22,11 @@
 #include <libguiex_core/guilogmsgmanager.h>
 #include <libguiex_core/guiinterfacemanager.h>
 
+#include <freetype/freetype.h>
+#include <freetype/ftglyph.h>
+#include <freetype/ftoutln.h>
+#include <freetype/fttrigon.h>
+
 //============================================================================//
 // function
 //============================================================================// 
@@ -99,8 +104,8 @@ namespace guiex
 			pCharData->m_pTexture = NULL;
 			pCharData->m_fBitmapWidth = 0;
 			pCharData->m_fBitmapHeight = 0;
-			pCharData->m_fLeftBearing = 0;
-			pCharData->m_fTopBearing = 0;
+			pCharData->m_fBearingX = 0;
+			pCharData->m_fBearingY = 0;
 			pCharData->m_aSize.m_fWidth = 0;
 			pCharData->m_aSize.m_fHeight = real(uFontSize);
 			pCharData->m_nGlyphIdx = 0;
@@ -118,53 +123,54 @@ namespace guiex
 #if 0
 		if( FT_Set_Pixel_Sizes( pFontFace, uFontSize, uFontSize) )
 #else
-		if( FT_Set_Char_Size( pFontFace, uFontSize << 6, uFontSize << 6, 96, 96) )
+		if( FT_Set_Char_Size( pFontFace, 0, uFontSize << 6, 96, 96) )
 #endif
 		{
 			GUI_THROW( "[IGUIFont_ft2::LoadFontFace]:Could not set char size!");
 		}
 		//load this font
-#if 0
-		if( FT_Load_Char( pFontFace, charCode, FT_LOAD_RENDER ))
-		{
-			GUI_THROW( GUI_FORMAT("[CGUIFontData_ft2::LoadCharData]:Failed to load char, the code is <%x>!", charCode ));
-		}
-#else
 		uint32 uGlyphIdx = FT_Get_Char_Index( pFontFace, charCode );
 
-		if( FT_Load_Glyph( pFontFace, uGlyphIdx, /*FT_LOAD_DEFAULT*/FT_LOAD_RENDER ))
+		//Load the Glyph for our character.
+		if( FT_Load_Glyph( pFontFace, uGlyphIdx, FT_LOAD_DEFAULT/*FT_LOAD_RENDER*/ ))
 		{
 			GUI_THROW( GUI_FORMAT("[CGUIFontData_ft2::LoadCharData]:Failed to load glyph, the code is <%x>!", charCode ));
 		}
 
-		if( FT_Render_Glyph( pFontFace->glyph, FT_RENDER_MODE_NORMAL ))
+		//Move the face's glyph into a Glyph object.
+		FT_Glyph glyph;
+		if(FT_Get_Glyph( pFontFace->glyph, &glyph ))
 		{
-			GUI_THROW( GUI_FORMAT("[CGUIFontData_ft2::LoadCharData]:Failed to render glyph, the code is <%x>!", charCode ));
+			GUI_THROW( GUI_FORMAT("[CGUIFontData_ft2::LoadCharData]:FT_Get_Glyph failed, the code is <%x>!", charCode ));
 		}
-#endif
 
-		const FT_GlyphSlot& glyph = pFontFace->glyph;
+		//Convert the glyph to a bitmap.
+		FT_Glyph_To_Bitmap( &glyph, FT_RENDER_MODE_NORMAL, 0, 1 );
+		FT_BitmapGlyph bitmap_glyph = (FT_BitmapGlyph)glyph;
+
+		//This reference will make accessing the bitmap easier
+		FT_Bitmap& bitmap=bitmap_glyph->bitmap;
 
 		//get information
 		SCharData_ft2 *pCharData = new SCharData_ft2;	
-		pCharData->m_fBitmapWidth = real(glyph->bitmap.width);
-		pCharData->m_fBitmapHeight = real(glyph->bitmap.rows);
-		pCharData->m_fLeftBearing = real(glyph->bitmap_left);
-		pCharData->m_fTopBearing = real(glyph->bitmap_top);
-		pCharData->m_aSize.m_fWidth = real(glyph->advance.x>>6);
+		pCharData->m_fBitmapWidth = real(bitmap.width);
+		pCharData->m_fBitmapHeight = real(bitmap.rows);
+		pCharData->m_fBearingX = real(bitmap_glyph->left);
+		pCharData->m_fBearingY = real(bitmap_glyph->top);
+		pCharData->m_aSize.m_fWidth = real(pFontFace->glyph->advance.x>>6);
 		pCharData->m_aSize.m_fHeight = real(uFontSize);
 		pCharData->m_nGlyphIdx = uGlyphIdx;
 
 		//get texture
 		uint32 nTextureWidth = GetTextureSize().GetWidth();
 		uint32 nTextureHeight = GetTextureSize().GetHeight();
-		if( m_uTexturePosX + (glyph->bitmap.width+1) >= nTextureWidth)
+		if( m_uTexturePosX + bitmap.width > nTextureWidth)
 		{
 			m_uTexturePosX = 0;
-			m_uTexturePosY += (m_uMaxHeight+1);
+			m_uTexturePosY += m_uMaxHeight;
 			m_uMaxHeight = uFontSize;
 		}
-		if( m_vecTexture.empty() || m_uTexturePosY + glyph->bitmap.rows > nTextureHeight )
+		if( m_vecTexture.empty() || m_uTexturePosY + bitmap.rows > nTextureHeight )
 		{
 			m_uTexturePosX = m_uTexturePosY = 0;
 			m_uMaxHeight = uFontSize;
@@ -175,31 +181,32 @@ namespace guiex
 
 		//copy data
 		//get image data
-		uint8* pImageData = new uint8[glyph->bitmap.width * glyph->bitmap.rows * 2];
+		uint8* pImageData = new uint8[bitmap.width * bitmap.rows * 2];
 		uint8* pBufferDst = pImageData;
-		uint8* pBufferSrc = glyph->bitmap.buffer;
-		for( int i=0; i<glyph->bitmap.rows; ++i)
+		uint8* pBufferSrc = bitmap.buffer;
+		for( int i=0; i<bitmap.rows; ++i)
 		{
-			for( int j=0; j<glyph->bitmap.width; ++j)
+			for( int j=0; j<bitmap.width; ++j)
 			{
-				*pBufferDst++ = 0xFF;//*pBufferSrc;//*pBufferSrc;
-				*pBufferDst++ = *pBufferSrc;
+				pBufferDst[0] = 0xff;
+				pBufferDst[1] = *pBufferSrc;
 				++pBufferSrc;
+				pBufferDst += 2;
 			}	
 		}
-		pCharData->m_pTexture->CopySubImage(m_uTexturePosX,m_uTexturePosY,glyph->bitmap.width,glyph->bitmap.rows,GUI_PF_LUMINANCE_ALPHA_16,pImageData );
+		pCharData->m_pTexture->CopySubImage(m_uTexturePosX,m_uTexturePosY,bitmap.width,bitmap.rows,GUI_PF_LUMINANCE_ALPHA_16,pImageData );
 		delete[] pImageData;
 		pCharData->m_aUV = CGUIRect(
 			//TODO: why add add 0.5f for fix bug.but don't known why add it...
-			real(m_uTexturePosX/*+0.5f*/) / nTextureWidth,
+			real(m_uTexturePosX) / nTextureWidth,
 			real(m_uTexturePosY) / nTextureHeight,
-			real(m_uTexturePosX+glyph->bitmap.width) / nTextureWidth,
-			real(m_uTexturePosY+glyph->bitmap.rows) / nTextureHeight);
+			real(m_uTexturePosX+bitmap.width) / nTextureWidth,
+			real(m_uTexturePosY+bitmap.rows) / nTextureHeight);
 
-		m_uTexturePosX += (glyph->bitmap.width+1);
-		if( uint32(glyph->bitmap.rows) > m_uMaxHeight )
+		m_uTexturePosX += bitmap.width;
+		if( uint32(bitmap.rows) > m_uMaxHeight )
 		{
-			m_uMaxHeight = glyph->bitmap.rows;
+			m_uMaxHeight = uint32(bitmap.rows);
 		}
 
 		//add to map

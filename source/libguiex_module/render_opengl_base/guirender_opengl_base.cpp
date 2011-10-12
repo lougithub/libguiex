@@ -202,6 +202,10 @@ namespace guiex
 		//init matrix
 		m_vecMatrixStack.resize(1);
 		m_eMatrixMode = eMatrixMode_PROJECTION;
+
+		//set gl property
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+		glPixelStorei(GL_PACK_ALIGNMENT, 1);
 		
 		// get the maximum available texture size.
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &m_maxTextureSize);
@@ -501,10 +505,6 @@ namespace guiex
 		m_arrayClipRects.clear();
 		m_bForceRefreshStencil = true;
 		m_nCurrentStencilRef = 0;
-
-		//set gl property
-		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-		glPixelStorei(GL_PACK_ALIGNMENT, 1);
 
 		glEnable( GL_BLEND );
 		m_aBlendFunc.src = eBlendFunc_SRC_ALPHA;

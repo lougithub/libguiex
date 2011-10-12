@@ -160,7 +160,6 @@ namespace guiex
 
 		glBindTexture(GL_TEXTURE_2D, m_ogltexture);
 
-		//glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 		m_nBytesPerPixel = CGUIImageData::GetBytePerPixel(ePixelFormat);
 		m_ePixelFormat = ePixelFormat;
 
@@ -188,7 +187,6 @@ namespace guiex
 			GUI_THROW( "[CGUITexture_opengl_base::LoadFromMemory]: unsupported pixel format;");
 		}
 
-		//glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
 
 		m_nTextureWidth  = static_cast<uint16>(buffWidth);
 		m_nTextureHeight = static_cast<uint16>(buffHeight);
@@ -252,7 +250,7 @@ namespace guiex
 			pData = new char[m_nBytesPerPixel*nWidth*nHeight];
 			memset( pData, 0, m_nBytesPerPixel*nWidth*nHeight );
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, nWidth, nHeight, 0, GL_RGBA ,GL_UNSIGNED_BYTE, pData);
-			delete pData;
+			delete[] pData;
 			break;
 
 		case GUI_PF_LUMINANCE_ALPHA_16:
@@ -260,7 +258,7 @@ namespace guiex
 			pData = new char[m_nBytesPerPixel*nWidth*nHeight];
 			memset( pData, 0, m_nBytesPerPixel*nWidth*nHeight );
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, nWidth, nHeight, 0, GL_LUMINANCE_ALPHA ,GL_UNSIGNED_BYTE, pData);
-			delete pData;
+			delete[] pData;
 			break;
 
 		default:

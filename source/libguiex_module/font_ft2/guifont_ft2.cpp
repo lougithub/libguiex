@@ -142,7 +142,7 @@ namespace guiex
 		if( pCharData->m_pTexture)
 		{
 			CGUIRect aCharRect(
-				CGUIVector2(rPos.x+pCharData->m_fLeftBearing*rInfo.m_fFontScale, rPos.y-pCharData->m_fTopBearing*rInfo.m_fFontScale),
+				CGUIVector2(rPos.x+pCharData->m_fBearingX*rInfo.m_fFontScale, rPos.y-pCharData->m_fBearingY*rInfo.m_fFontScale),
 				CGUISize(pCharData->m_fBitmapWidth*rInfo.m_fFontScale,pCharData->m_fBitmapHeight*rInfo.m_fFontScale));
 
 			CGUIColor aColor(rInfo.m_aColor);
@@ -222,7 +222,7 @@ namespace guiex
 			if( pCharData->m_pTexture)
 			{
 				CGUIRect aCharRect(
-					CGUIVector2(aPos.x+pCharData->m_fLeftBearing*rInfo.m_fFontScale, aPos.y-pCharData->m_fTopBearing*rInfo.m_fFontScale),
+					CGUIVector2(aPos.x+pCharData->m_fBearingX*rInfo.m_fFontScale, aPos.y-pCharData->m_fBearingY*rInfo.m_fFontScale),
 					CGUISize(pCharData->m_fBitmapWidth*rInfo.m_fFontScale,pCharData->m_fBitmapHeight*rInfo.m_fFontScale));
 
 				//dest area size
@@ -273,7 +273,7 @@ namespace guiex
 			if( pCharData->m_pTexture)
 			{
 				CGUIRect aCharRect(
-					CGUIVector2(aPos.x+pCharData->m_fLeftBearing*rInfo.m_fFontScale, aPos.y-pCharData->m_fTopBearing*rInfo.m_fFontScale),
+					CGUIVector2(aPos.x+pCharData->m_fBearingX*rInfo.m_fFontScale, aPos.y-pCharData->m_fBearingY*rInfo.m_fFontScale),
 					CGUISize(pCharData->m_fBitmapWidth*rInfo.m_fFontScale,pCharData->m_fBitmapHeight*rInfo.m_fFontScale));
 
 				//dest area size

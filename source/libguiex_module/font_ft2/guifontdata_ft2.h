@@ -46,17 +46,17 @@ namespace guiex
 		uint32 m_nGlyphIdx; //index of glyph
 		real m_fBitmapWidth; //size of bitmap
 		real m_fBitmapHeight; //size of bitmap
-		real m_fLeftBearing; //left bearing of font
-		real m_fTopBearing; //top bearing of font
+		real m_fBearingX; //left bearing of font
+		real m_fBearingY; //top bearing of font
 		CGUISize m_aSize; //size of font
 
 		SCharData_ft2()
 			:m_pTexture(NULL)
-			,m_fLeftBearing(0)
+			,m_fBearingX(0)
 			,m_nGlyphIdx(0)
 			,m_fBitmapWidth(0)
 			,m_fBitmapHeight(0)
-			,m_fTopBearing(0)
+			,m_fBearingY(0)
 		{
 		}
 	};	

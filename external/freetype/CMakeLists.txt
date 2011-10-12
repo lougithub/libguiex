@@ -47,6 +47,7 @@ if( BUILD_PLATFORM_WIN32 )
 
 	set( inc_list
 		include/ft2build.h
+		include/freetype/freetype.h
 		include/freetype/config/ftconfig.h
 		include/freetype/config/ftheader.h
 		include/freetype/config/ftmodule.h
@@ -99,6 +100,7 @@ elseif( BUILD_PLATFORM_MACOS OR BUILD_PLATFORM_IOS )
 
 	set( inc_list
 		include/ft2build.h
+		include/freetype/freetype.h
 		include/freetype/config/ftconfig.h
 		include/freetype/config/ftheader.h
 		include/freetype/config/ftmodule.h
