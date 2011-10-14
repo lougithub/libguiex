@@ -56,6 +56,20 @@ namespace guiex
 		
 		CGUIShader* pShader = new CGUIShader( rProperty.GetName(), rSceneName, strVertexShader, strFragmentShader );
 		RegisterResourceImp( pShader );
+
+		//set default system shader.
+		if( pShader->GetName() == "default_stencil" )
+		{
+			GSystem->SetDefaultShader_Stencil( pShader );
+		}
+		else if( pShader->GetName() == "default_render" )
+		{
+			GSystem->SetDefaultShader_Render( pShader );
+		}
+		//else if( pShader->GetName() == "default_font" )
+		//{
+		//	GSystem->SetDefaultShader_Font( pShader );
+		//}
 		return 0;
 	}
 	//------------------------------------------------------------------------------

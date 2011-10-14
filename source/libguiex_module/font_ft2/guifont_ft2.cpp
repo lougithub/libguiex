@@ -29,6 +29,8 @@
 #include <libguiex_core/guiperfmonitor.h>
 #include <libguiex_core/guiscene.h>
 #include <libguiex_core/guiscenemanager.h>
+#include <libguiex_core/guisystem.h>
+#include <libguiex_core/guishader.h>
 
 #include <algorithm>
 
@@ -136,6 +138,13 @@ namespace guiex
 		const CGUIVector2& rPos,
 		real fAlpha)
 	{
+		//apply shader
+		CGUIShader* pOldShader = NULL;
+		if( GSystem->GetDefaultShader_Font() )
+		{
+			pOldShader = GSystem->GetDefaultShader_Font()->Use(pRender);
+		}
+
 		CGUIFontData_ft2* pFontData = GetFontData( rInfo.m_uFontID );
 		SCharData_ft2* pCharData = pFontData->GetCharData( charCode );
 
@@ -158,6 +167,12 @@ namespace guiex
 				aColor,
 				aColor);
 		}
+
+		//restore shader
+		if( pOldShader )
+		{
+			pOldShader->Use( pRender );
+		}
 	}
 	//------------------------------------------------------------------------------
 	void IGUIFont_ft2::DrawString(IGUIInterfaceRender* pRender, 
@@ -173,6 +188,13 @@ namespace guiex
 		{
 			//empty string
 			return;
+		}
+
+		//apply shader
+		CGUIShader* pOldShader = NULL;
+		if( GSystem->GetDefaultShader_Font() )
+		{
+			pOldShader = GSystem->GetDefaultShader_Font()->Use(pRender);
 		}
 
 		const CGUIStringRenderInfo& rInfo = rString.m_aStringInfo;
@@ -242,6 +264,12 @@ namespace guiex
 
 			aPos.x+=pCharData->m_aSize.m_fWidth*rInfo.m_fFontScale;
 		}
+
+		//restore shader
+		if( pOldShader )
+		{
+			pOldShader->Use( pRender );
+		}
 	}
 	//------------------------------------------------------------------------------
 	void IGUIFont_ft2::DrawString(IGUIInterfaceRender* pRender, 
@@ -256,6 +284,14 @@ namespace guiex
 			//empty string
 			return;
 		}
+
+		//apply shader
+		CGUIShader* pOldShader = NULL;
+		if( GSystem->GetDefaultShader_Font() )
+		{
+			pOldShader = GSystem->GetDefaultShader_Font()->Use(pRender);
+		}
+
 		CGUIVector2 aPos = rPos;
 
 		if( nEndPos<0 || nEndPos>int32(rString.m_strContent.size()))
@@ -293,6 +329,12 @@ namespace guiex
 
 			aPos.x+=pCharData->m_aSize.m_fWidth*rInfo.m_fFontScale;
 		}
+
+		//restore shader
+		if( pOldShader )
+		{
+			pOldShader->Use( pRender );
+		}
 	}
 	//------------------------------------------------------------------------------
 	real IGUIFont_ft2::GetFontHeight( const CGUIStringRenderInfo& rInfo )
@@ -327,7 +369,7 @@ namespace guiex
 		TMapFontFace::iterator itor = m_mapFontFace.find( rFontInfo.m_strPath );
 		if( itor == m_mapFontFace.end() )
 		{
-			pFontFace = new CGUIFontFace_ft2( strFullFontPath );
+			pFontFace = new CGUIFontFace_ft2( this, strFullFontPath );
 			pFontFace->RefRetain();
 			m_mapFontFace.insert( std::make_pair( rFontInfo.m_strPath, pFontFace ) );
 		}

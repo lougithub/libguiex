@@ -62,15 +62,23 @@ namespace guiex
 
 		real GetAlpha() const;
 		void SetAlpha(real fAlpha);
+		uint8 GetAlphaAsByte() const;
+		void SetAlphaAsByte(uint8 uAlpha);
 
 		real GetRed() const;
 		void SetRed(real fRed);
+		uint8 GetRedAsByte() const;
+		void SetRedAsByte(uint8 uRed);
 
 		real GetGreen() const;
 		void SetGreen(real fGreen);
+		uint8 GetGreenAsByte() const;
+		void SetGreenAsByte(uint8 uGreen);
 
 		real GetBlue() const;
 		void SetBlue(real fBlue);
+		uint8 GetBlueAsByte() const;
+		void SetBlueAsByte(uint8 uBlue);
 
 		void Saturate(void);
 

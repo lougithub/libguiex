@@ -16,6 +16,7 @@
 #include "guistring.h"
 #include "guiresource.h"
 #include "guiintsize.h"
+#include "guicolor.h"
 
 
 //============================================================================//
@@ -39,6 +40,22 @@ namespace guiex
 		uint16 m_uSize;
 		CGUIString m_strDesc;
 		CGUIIntSize m_aTextureSize;
+
+		bool m_bHasOutline;
+		uint16 m_uOutlineWidth;
+		CGUIColor m_aOutlineColor;
+		CGUIColor m_aFontColor;
+
+		SFontInfo()
+			:m_uID(0)
+			,m_uSize(16)
+			,m_aTextureSize(256,256)
+			,m_bHasOutline(false)
+			,m_uOutlineWidth(3)
+			,m_aOutlineColor(0,0,0,1)
+			,m_aFontColor(1,1,1,1)
+		{
+		}
 	};
 
 

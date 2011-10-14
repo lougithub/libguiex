@@ -69,7 +69,7 @@ CMyCanvasLayer_DrawFont::CMyCanvasLayer_DrawFont( const char* szLayerName )
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtStaticText>( "label_1", "");
 	pWidget_statictext1->SetParent( this );
 	pWidget_statictext1->SetSize( 250, 25 );
-	pWidget_statictext1->SetPosition( 10, 300 );
+	pWidget_statictext1->SetPosition( 100, 300 );
 	pWidget_statictext1->SetTextContentUTF8("hello libguiex");
 	aRenderInfo.m_uFontID = 0;
 	pWidget_statictext1->SetTextInfo(aRenderInfo);
@@ -79,7 +79,7 @@ CMyCanvasLayer_DrawFont::CMyCanvasLayer_DrawFont( const char* szLayerName )
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtStaticText>( "label_2", "");
 	pWidget_statictext2->SetParent( this );
 	pWidget_statictext2->SetSize( 250, 25 );
-	pWidget_statictext2->SetPosition( 10, 350 );
+	pWidget_statictext2->SetPosition( 100, 350 );
 	pWidget_statictext2->SetTextContentUTF8("hello libguiex");
 	aRenderInfo.m_uFontID = 1;
 	pWidget_statictext2->SetTextInfo(aRenderInfo);
@@ -89,11 +89,21 @@ CMyCanvasLayer_DrawFont::CMyCanvasLayer_DrawFont( const char* szLayerName )
 		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtStaticText>( "label_3", "");
 	pWidget_statictext3->SetParent( this );
 	pWidget_statictext3->SetSize( 250, 25 );
-	pWidget_statictext3->SetPosition( 10, 400 );
+	pWidget_statictext3->SetPosition( 100, 400 );
 	pWidget_statictext3->SetTextContentUTF8("hello libguiex");
 	aRenderInfo.m_uFontID = 2;
 	pWidget_statictext3->SetTextInfo(aRenderInfo);
 	pWidget_statictext3->Create();
+
+	CGUIWgtStaticText* pWidget_statictext4 = 
+		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtStaticText>( "label_4", "");
+	pWidget_statictext4->SetParent( this );
+	pWidget_statictext4->SetSize( 300, 250 );
+	pWidget_statictext4->SetPosition( 100, 500 );
+	pWidget_statictext4->SetTextContent((wchar*)(L"我爱北京天安门!"));
+	aRenderInfo.m_uFontID = 5;
+	pWidget_statictext4->SetTextInfo(aRenderInfo);
+	pWidget_statictext4->Create();
 }
 
 //------------------------------------------------------------------------------

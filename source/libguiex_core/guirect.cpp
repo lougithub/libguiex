@@ -12,6 +12,7 @@
 #include "guirect.h"
 #include "guisize.h"
 #include "guivector2.h"
+#include "guimath.h"
 
 
 //============================================================================//
@@ -193,6 +194,16 @@ namespace guiex
 
 		return *this;
 	}
+	//------------------------------------------------------------------------------
+	void CGUIRect::IncludePoint( const CGUIVector2& rPoint )
+	{
+		m_fLeft = GUIMin(m_fLeft, rPoint.x);
+		m_fTop = GUIMin(m_fTop, rPoint.y);
+		m_fRight = GUIMax(m_fRight, rPoint.x);
+		m_fBottom = GUIMax(m_fBottom, rPoint.y);
+	}
+	//------------------------------------------------------------------------------
+
 }	//namespace guiex
 
 

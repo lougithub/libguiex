@@ -110,14 +110,22 @@
 /*************************************************************************
 // Endian Settings
 *************************************************************************/
-// check for BIG_ENDIAN config flag, set OGRE_ENDIAN correctly
+
+// Try to figure out what endian this machine is using. Note that the test
+// below might fail for cross compilation; additionally, multi-byte
+// characters are implementation-defined in C preprocessors.
 #define GUI_ENDIAN_LITTLE 1
 #define GUI_ENDIAN_BIG 2
-#ifdef GUI_CONFIG_BIG_ENDIAN
+
+
+#if (('1234' >> 24) == '1')
+#    define GUI_ENDIAN GUI_ENDIAN_LITTLE
+#elif (('4321' >> 24) == '1')
 #    define GUI_ENDIAN GUI_ENDIAN_BIG
 #else
-#    define GUI_ENDIAN GUI_ENDIAN_LITTLE
+#error "Couldn't determine the endianness!"
 #endif
+
 
 
 //debug

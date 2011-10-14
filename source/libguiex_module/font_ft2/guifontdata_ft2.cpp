@@ -21,17 +21,71 @@
 #include <libguiex_core/guiscenemanager.h>
 #include <libguiex_core/guilogmsgmanager.h>
 #include <libguiex_core/guiinterfacemanager.h>
+#include <libguiex_core/guimath.h>
 
 #include <freetype/freetype.h>
 #include <freetype/ftglyph.h>
 #include <freetype/ftoutln.h>
 #include <freetype/fttrigon.h>
+#include <freetype/ftstroke.h>
 
 //============================================================================//
 // function
 //============================================================================// 
 namespace guiex
 {
+	//------------------------------------------------------------------------------
+	struct Span
+	{
+		Span() { }
+		Span(int32 _x, int32 _y, int32 _width, uint8 _coverage)
+			: x(_x), y(_y), width(_width), coverage(_coverage) { }
+		int32 x, y, width;
+		uint8 coverage;
+	};
+	typedef std::vector<Span> Spans;
+	// Each time the renderer calls us back we just push another span entry on
+	// our list.
+	static void RasterCallback(int32 y, int32 count, const FT_Span * const spans, void * const user ) 
+	{
+		Spans *sptr = (Spans *)user;
+		for (int32 i = 0; i < count; ++i) 
+		{
+			sptr->push_back(Span(spans[i].x, y, spans[i].len, spans[i].coverage));
+		}
+	}
+	static void RenderSpans(FT_Library &library, FT_Outline * const outline, Spans *spans) 
+	{
+		FT_Raster_Params params;
+		memset(&params, 0, sizeof(params));
+		params.flags = FT_RASTER_FLAG_AA | FT_RASTER_FLAG_DIRECT;
+		params.gray_spans = RasterCallback;
+		params.user = spans;
+		FT_Outline_Render(library, outline, &params);
+	}
+	struct SFontRect
+	{
+		SFontRect() { }
+		SFontRect(int32 left, int32 top, int32 right, int32 bottom)
+			: xmin(left), xmax(right), ymin(top), ymax(bottom) { }
+		void Include(int32 x, int32 y)
+		{
+			xmin = GUIMin(xmin, x);
+			ymin = GUIMin(ymin, y);
+			xmax = GUIMax(xmax, x);
+			ymax = GUIMax(ymax, y);
+		}
+
+		uint32 Width() const { return xmax - xmin + 1; }
+		uint32 Height() const { return ymax - ymin + 1; }
+
+		int32 xmin, xmax, ymin, ymax;
+	};
+	//------------------------------------------------------------------------------
+
+
+
+
 	//------------------------------------------------------------------------------
 	CGUIFontData_ft2::CGUIFontData_ft2( 
 		const CGUIString& rName, 
@@ -116,32 +170,217 @@ namespace guiex
 			return pCharData;
 		}
 
-		//normal text
+		SCharData_ft2 * pCharData = NULL;
 
 		//set size
 		FT_Face pFontFace = GetFontFace();
-#if 0
-		if( FT_Set_Pixel_Sizes( pFontFace, uFontSize, uFontSize) )
-#else
 		if( FT_Set_Char_Size( pFontFace, 0, uFontSize << 6, 96, 96) )
-#endif
 		{
-			GUI_THROW( "[IGUIFont_ft2::LoadFontFace]:Could not set char size!");
+			GUI_THROW( "[IGUIFont_ft2::LoadCharData]:Could not set char size!");
 		}
 		//load this font
 		uint32 uGlyphIdx = FT_Get_Char_Index( pFontFace, charCode );
 
+		if( m_aFontInfo.m_bHasOutline )
+		{
+			pCharData = LoadCharDataWithStroke( pFontFace, uGlyphIdx, charCode );
+		}
+		else
+		{
+			pCharData = LoadCharDataWithoutStroke( pFontFace, uGlyphIdx, charCode );
+		}
+
+		//add to map
+		m_mapCharsData.insert(std::make_pair(charCode, pCharData));
+		return pCharData;
+	}
+	//------------------------------------------------------------------------------
+	SCharData_ft2* CGUIFontData_ft2::LoadCharDataWithStroke( FT_Face pFontFace,uint32 uGlyphIdx, wchar charCode )
+	{
+		uint16 uFontSize = GetFontSize();
+
+		//Load the Glyph for our character.
+		if (FT_Load_Glyph(pFontFace, uGlyphIdx, FT_LOAD_NO_BITMAP) )
+		{
+			GUI_THROW( GUI_FORMAT("[CGUIFontData_ft2::LoadCharDataWithStroke]:Failed to load glyph, the code is <%x>!", charCode ));
+		}
+		// Need an outline for this to work.
+		if (pFontFace->glyph->format != FT_GLYPH_FORMAT_OUTLINE)
+		{
+			GUI_THROW( GUI_FORMAT("[CGUIFontData_ft2::LoadCharDataWithStroke]:Need an outline for this to work, the code is <%x>!", charCode ));
+		}
+
+		// Render the basic glyph to a span list.
+		Spans spans;
+		RenderSpans(m_pFontFace->GetFTLibrary(), &pFontFace->glyph->outline, &spans);
+		if( spans.empty() )
+		{
+			//line break
+			SCharData_ft2 *pCharData = new SCharData_ft2;	
+			pCharData->m_pTexture = NULL;
+			pCharData->m_fBitmapWidth = 0;
+			pCharData->m_fBitmapHeight = 0;
+			pCharData->m_fBearingX = 0;
+			pCharData->m_fBearingY = 0;
+			pCharData->m_aSize.m_fWidth = real(uFontSize);
+			pCharData->m_aSize.m_fHeight = real(uFontSize);
+			pCharData->m_nGlyphIdx = 0;
+
+			return pCharData;
+		}
+
+		// Next we need the spans for the outline.
+		Spans outlineSpans;
+		// Set up a stroker.
+		FT_Stroker stroker;
+		FT_Stroker_New(m_pFontFace->GetFTLibrary(), &stroker);
+		FT_Stroker_Set(stroker, m_aFontInfo.m_uOutlineWidth << 6, FT_STROKER_LINECAP_ROUND, FT_STROKER_LINEJOIN_ROUND, 0);
+
+		FT_Glyph glyph;
+		if (FT_Get_Glyph(pFontFace->glyph, &glyph))
+		{
+			GUI_THROW( GUI_FORMAT("[CGUIFontData_ft2::LoadCharDataWithStroke]:FT_Get_Glyph failed, the code is <%x>!", charCode ));
+		}
+
+		if (FT_Glyph_StrokeBorder(&glyph, stroker, 0, 1))
+		{
+			GUI_THROW( GUI_FORMAT("[CGUIFontData_ft2::LoadCharDataWithStroke]:FT_Glyph_StrokeBorder failed, the code is <%x>!", charCode ));
+		}
+		// Again, this needs to be an outline to work.
+		if (glyph->format != FT_GLYPH_FORMAT_OUTLINE)
+		{
+			GUI_THROW( GUI_FORMAT("[CGUIFontData_ft2::LoadCharDataWithStroke]:Need an outline for this to work, the code is <%x>!", charCode ));
+		}
+		
+		// Render the outline spans to the span list
+		FT_Outline *o = &reinterpret_cast<FT_OutlineGlyph>(glyph)->outline;
+		RenderSpans(m_pFontFace->GetFTLibrary(), o, &outlineSpans);
+
+		// Clean up afterwards.
+		FT_Stroker_Done(stroker);
+		FT_Done_Glyph(glyph);
+
+		// Now we need to put it all together.
+		SFontRect rect(spans.front().x,spans.front().y,spans.front().x,spans.front().y);
+
+		for (Spans::iterator s = spans.begin();s != spans.end(); ++s)
+		{
+			rect.Include(s->x, s->y);
+			rect.Include(s->x + s->width - 1, s->y);
+		}
+		for (Spans::iterator s = outlineSpans.begin();
+			s != outlineSpans.end(); ++s)
+		{
+			rect.Include(s->x, s->y);
+			rect.Include(s->x + s->width - 1, s->y);
+		}
+		
+		// Get some metrics of our image.
+		uint32 imgWidth = rect.Width();
+		uint32 imgHeight = rect.Height();
+		uint32 imgSize = imgWidth * imgHeight;
+
+
+		//get information
+		SCharData_ft2 *pCharData = new SCharData_ft2;	
+		pCharData->m_fBitmapWidth = real(imgWidth);
+		pCharData->m_fBitmapHeight = real(imgHeight);
+		pCharData->m_fBearingX = real(pFontFace->glyph->metrics.horiBearingX >> 6);
+		pCharData->m_fBearingY = real(pFontFace->glyph->metrics.horiBearingY >> 6);
+		pCharData->m_aSize.m_fWidth = real((pFontFace->glyph->advance.x>>6)+m_aFontInfo.m_uOutlineWidth*2);
+		pCharData->m_aSize.m_fHeight = real(uFontSize+m_aFontInfo.m_uOutlineWidth*2);
+		pCharData->m_nGlyphIdx = uGlyphIdx;
+
+		//get texture
+		uint32 nTextureWidth = GetTextureSize().GetWidth();
+		uint32 nTextureHeight = GetTextureSize().GetHeight();
+		if( m_uTexturePosX + imgWidth > nTextureWidth)
+		{
+			m_uTexturePosX = 0;
+			m_uTexturePosY += m_uMaxHeight;
+			m_uMaxHeight = uFontSize;
+		}
+		if( m_vecTexture.empty() || m_uTexturePosY + imgHeight > nTextureHeight )
+		{
+			m_uTexturePosX = m_uTexturePosY = 0;
+			m_uMaxHeight = uFontSize;
+			CGUITexture* pNewTexture = CGUITextureManager::Instance()->CreateTexture(nTextureWidth,nTextureHeight,GUI_PF_RGBA_32);
+			m_vecTexture.push_back(pNewTexture);
+		}
+		pCharData->m_pTexture = m_vecTexture.back();
+
+
+		// Allocate data for our image and clear it out to transparent.
+		GUIRGBA *pImageData = new GUIRGBA[imgSize];
+		memset(pImageData, 0, sizeof(GUIRGBA) * imgSize);
+
+		// Loop over the outline spans and just draw them into the image.
+		for (Spans::iterator s = outlineSpans.begin();s != outlineSpans.end(); ++s)
+		{
+			uint32 spanPos = (imgHeight-1-(s->y-rect.ymin))*imgWidth+s->x-rect.xmin;
+			for (uint32 w = 0; w < s->width; ++w)
+			{
+				CGUIColor aColor(m_aFontInfo.m_aOutlineColor);
+				aColor.SetAlphaAsByte( s->coverage );
+				pImageData[spanPos + w] = aColor.GetAsABGR();
+			}
+		}
+
+		// Then loop over the regular glyph spans and blend them into the image.
+		for (Spans::iterator s = spans.begin();s != spans.end(); ++s)
+		{
+			uint32 spanPos = (imgHeight-1-(s->y-rect.ymin))*imgWidth+s->x-rect.xmin;
+			for (int w = 0; w < s->width; ++w)
+			{
+				CGUIColor aColorSrc = m_aFontInfo.m_aFontColor;
+				aColorSrc.SetAlphaAsByte(s->coverage);
+				CGUIColor aColorDst;
+				aColorDst.SetAsABGR( pImageData[spanPos + w] );
+
+				aColorDst.SetRed( aColorDst.GetRed() + ( aColorSrc.GetRed() - aColorDst.GetRed()) * aColorSrc.GetAlpha() );
+				aColorDst.SetGreen( aColorDst.GetGreen() + ( aColorSrc.GetGreen() - aColorDst.GetGreen()) * aColorSrc.GetAlpha() );
+				aColorDst.SetBlue( aColorDst.GetBlue() + ( aColorSrc.GetBlue() - aColorDst.GetBlue()) * aColorSrc.GetAlpha() );
+				aColorDst.SetAlpha( GUIMin( 1.0f, aColorDst.GetAlpha() + aColorSrc.GetAlpha()));
+
+				pImageData[spanPos + w] = aColorDst.GetAsABGR();
+			}
+		}
+
+		pCharData->m_pTexture->CopySubImage(m_uTexturePosX,m_uTexturePosY,imgWidth,imgHeight,GUI_PF_RGBA_32,(uint8 *)(pImageData) );
+
+		delete [] pImageData;
+
+		pCharData->m_aUV = CGUIRect(
+			real(m_uTexturePosX) / nTextureWidth,
+			real(m_uTexturePosY) / nTextureHeight,
+			real(m_uTexturePosX+imgWidth) / nTextureWidth,
+			real(m_uTexturePosY+imgHeight) / nTextureHeight);
+
+		m_uTexturePosX += imgWidth;
+		if( imgHeight > m_uMaxHeight )
+		{
+			m_uMaxHeight = imgHeight;
+		}
+
+
+		return pCharData;
+	}
+	//------------------------------------------------------------------------------
+	SCharData_ft2* CGUIFontData_ft2::LoadCharDataWithoutStroke( FT_Face pFontFace, uint32 uGlyphIdx, wchar charCode )
+	{
+		uint16 uFontSize = GetFontSize();
+
 		//Load the Glyph for our character.
 		if( FT_Load_Glyph( pFontFace, uGlyphIdx, FT_LOAD_DEFAULT/*FT_LOAD_RENDER*/ ))
 		{
-			GUI_THROW( GUI_FORMAT("[CGUIFontData_ft2::LoadCharData]:Failed to load glyph, the code is <%x>!", charCode ));
+			GUI_THROW( GUI_FORMAT("[CGUIFontData_ft2::LoadCharDataWithoutStroke]:Failed to load glyph, the code is <%x>!", charCode ));
 		}
 
 		//Move the face's glyph into a Glyph object.
 		FT_Glyph glyph;
 		if(FT_Get_Glyph( pFontFace->glyph, &glyph ))
 		{
-			GUI_THROW( GUI_FORMAT("[CGUIFontData_ft2::LoadCharData]:FT_Get_Glyph failed, the code is <%x>!", charCode ));
+			GUI_THROW( GUI_FORMAT("[CGUIFontData_ft2::LoadCharDataWithoutStroke]:FT_Get_Glyph failed, the code is <%x>!", charCode ));
 		}
 
 		//Convert the glyph to a bitmap.
@@ -155,8 +394,8 @@ namespace guiex
 		SCharData_ft2 *pCharData = new SCharData_ft2;	
 		pCharData->m_fBitmapWidth = real(bitmap.width);
 		pCharData->m_fBitmapHeight = real(bitmap.rows);
-		pCharData->m_fBearingX = real(bitmap_glyph->left);
-		pCharData->m_fBearingY = real(bitmap_glyph->top);
+		pCharData->m_fBearingX = real(pFontFace->glyph->metrics.horiBearingX >> 6);
+		pCharData->m_fBearingY = real(pFontFace->glyph->metrics.horiBearingY >> 6);
 		pCharData->m_aSize.m_fWidth = real(pFontFace->glyph->advance.x>>6);
 		pCharData->m_aSize.m_fHeight = real(uFontSize);
 		pCharData->m_nGlyphIdx = uGlyphIdx;
@@ -197,7 +436,6 @@ namespace guiex
 		pCharData->m_pTexture->CopySubImage(m_uTexturePosX,m_uTexturePosY,bitmap.width,bitmap.rows,GUI_PF_LUMINANCE_ALPHA_16,pImageData );
 		delete[] pImageData;
 		pCharData->m_aUV = CGUIRect(
-			//TODO: why add add 0.5f for fix bug.but don't known why add it...
 			real(m_uTexturePosX) / nTextureWidth,
 			real(m_uTexturePosY) / nTextureHeight,
 			real(m_uTexturePosX+bitmap.width) / nTextureWidth,
@@ -209,8 +447,7 @@ namespace guiex
 			m_uMaxHeight = uint32(bitmap.rows);
 		}
 
-		//add to map
-		m_mapCharsData.insert(std::make_pair(charCode, pCharData));
+		FT_Done_Glyph(glyph);
 
 		return pCharData;
 	}

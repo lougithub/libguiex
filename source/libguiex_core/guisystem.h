@@ -103,12 +103,12 @@ namespace guiex
 		bool IsPlayingAs() const;
 		
 		//shader
-		void TrySetDefaultShader_Render( );
 		void SetDefaultShader_Render( CGUIShader* pShader );
 		CGUIShader* GetDefaultShader_Render() const;
-		void TrySetDefaultShader_Stencil( );
 		void SetDefaultShader_Stencil( CGUIShader* pShader );
 		CGUIShader* GetDefaultShader_Stencil() const;
+		void SetDefaultShader_Font( CGUIShader* pShader );
+		CGUIShader* GetDefaultShader_Font() const;
 
 		void SetDataPath(const CGUIString& rDataPath);
 		const CGUIString& GetDataPath() const;
@@ -287,6 +287,7 @@ namespace guiex
 		CGUICamera* m_pDefaultCamera;
 		CGUIShader* m_pDefaultShader_Render;
 		CGUIShader* m_pDefaultShader_Stencil;
+		CGUIShader* m_pDefaultShader_Font;
 
 		//----------------------------------------------------------------------
 		//global ui event

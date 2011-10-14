@@ -90,7 +90,7 @@ namespace guiex
 
 		/**
 		* @brief draw string
-		* @param rPos left-bottom position
+		* @param rPos left-top position
 		*/
 		virtual void DrawString(IGUIInterfaceRender* pRender, 
 			const CGUIStringRender& rString, 

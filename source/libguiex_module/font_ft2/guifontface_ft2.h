@@ -32,9 +32,12 @@ namespace guiex
 	public:
 		FT_Face GetFontFace();
 
+		FT_Library& GetFTLibrary();
+
+
 	protected:
 		friend class IGUIFont_ft2;
-		CGUIFontFace_ft2( const CGUIString& rFontPath );
+		CGUIFontFace_ft2( IGUIFont_ft2* pInterfaceFont, const CGUIString& rFontPath );
 		virtual ~CGUIFontFace_ft2();
 
 		void LoadFont( const CGUIString& rFontPath );
@@ -42,6 +45,7 @@ namespace guiex
 
 	protected:
 		FT_Face m_aFtFace;
+		IGUIFont_ft2* m_pInterfaceFont;
 	};
 }//namespace guiex
 

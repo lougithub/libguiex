@@ -48,7 +48,8 @@ namespace guiex
 
 
 	//------------------------------------------------------------------------------
-	CGUIFontFace_ft2::CGUIFontFace_ft2( const CGUIString& rFontPath )
+	CGUIFontFace_ft2::CGUIFontFace_ft2( IGUIFont_ft2* pInterfaceFont, const CGUIString& rFontPath )
+		:m_pInterfaceFont(pInterfaceFont)
 	{
 		LoadFont( rFontPath );
 	}
@@ -68,17 +69,10 @@ namespace guiex
 		//load font face
 		GUI_TRACE( GUI_FORMAT( "[CGUIFontFace_ft2::LoadFont]: Load Font Face File <%s>", rFontPath.c_str()) );
 
-		IGUIFont_ft2* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFontWithTypeCheck<IGUIFont_ft2>();
-		if( !pFont )
-		{
-			GUI_THROW(  "[CGUIFontFace_ft2::LoadFont]: failed to get font interface" );
-			return;
-		}
-
 #if defined( GUIEX_TARGET_WIN32 ) || defined( GUIEX_TARGET_IOS ) || defined(GUIEX_TARGET_MACOS )
 		CGUIString	strFullPath;
 		GSystem->GenerateFullPath( rFontPath, strFullPath );
-		FT_Error ret = FT_New_Face( pFont->GetFTLibrary( ), strFullPath.c_str(), 0, &m_aFtFace );
+		FT_Error ret = FT_New_Face( m_pInterfaceFont->GetFTLibrary( ), strFullPath.c_str(), 0, &m_aFtFace );
 		if(  ret != 0 )
 		{
 			GUI_THROW( GUI_FORMAT( "[CGUIFontFace_ft2::LoadFont]:Could not get font face from file <%s>!", rFontPath.c_str()));
@@ -87,7 +81,7 @@ namespace guiex
 #elif defined(GUIEX_TARGET_ANDROID)
 #if 1 
 		CGUIString aTmpFontPath = "/system/fonts/DroidSerif-Regular.ttf";
-		FT_Error ret = FT_New_Face( pFont->GetFTLibrary( ), aTmpFontPath.c_str(), 0, &m_aFtFace );
+		FT_Error ret = FT_New_Face( m_pInterfaceFont->GetFTLibrary( ), aTmpFontPath.c_str(), 0, &m_aFtFace );
 		if(  ret != 0 )
 		{
 			GUI_THROW( GUI_FORMAT( "[CGUIFontFace_ft2::LoadFont]:Could not get font face from file <%s>!", aTmpFontPath.c_str()));
@@ -150,7 +144,7 @@ namespace guiex
 		args.flags = FT_OPEN_STREAM;
 		args.stream = &stream;
 
-		FT_Error ret = FT_Open_Face(pFont->GetFTLibrary( ), &args, 0, &m_aFtFace);
+		FT_Error ret = FT_Open_Face(m_pInterfaceFont->GetFTLibrary( ), &args, 0, &m_aFtFace);
 		if( ret != 0 )
 		{
 			GUI_THROW( GUI_FORMAT( "[CGUIFontFace_ft2::LoadFont]:Could not get font face from file <%s>!", rFontPath.c_str()));
@@ -168,6 +162,11 @@ namespace guiex
 
 		//unload
 		FT_Done_Face(m_aFtFace );
+	}
+	//------------------------------------------------------------------------------
+	FT_Library& CGUIFontFace_ft2::GetFTLibrary()
+	{
+		return m_pInterfaceFont->GetFTLibrary();
 	}
 	//------------------------------------------------------------------------------
 }//guiex

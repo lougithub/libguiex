@@ -135,6 +135,7 @@ namespace guiex
 		,m_pDefaultCamera(NULL)
 		,m_pDefaultShader_Render(NULL)
 		,m_pDefaultShader_Stencil(NULL)
+		,m_pDefaultShader_Font(NULL)
 	{
 		GUI_ASSERT( !m_pSingleton, "[CGUISystem::CGUISystem]:instance has been created" ); 
 		GUI_ASSERT( !GSystem, "[CGUISystem::CGUISystem]:GSystem has been set" ); 
@@ -269,6 +270,7 @@ namespace guiex
 
 		SetDefaultShader_Render( NULL );
 		SetDefaultShader_Stencil( NULL );
+		SetDefaultShader_Font( NULL );
 
 		//destroy all canvas
 		DestroyAllCanvas();
@@ -378,16 +380,6 @@ namespace guiex
 		return m_bPlayingAs;
 	}
 	//------------------------------------------------------------------------------
-	void CGUISystem::TrySetDefaultShader_Render( )
-	{
-		if( GetShaderManager()->HasResource( "default_render" ) )
-		{
-			CGUIShader* pDefaultShader = GetShaderManager()->AllocateResource( "default_render" );
-			SetDefaultShader_Render( pDefaultShader );
-			pDefaultShader->RefRelease();
-		}
-	}
-	//------------------------------------------------------------------------------
 	void CGUISystem::SetDefaultShader_Render( CGUIShader* pShader )
 	{
 		if( m_pDefaultShader_Render != pShader )
@@ -409,16 +401,6 @@ namespace guiex
 		return m_pDefaultShader_Render;
 	}
 	//------------------------------------------------------------------------------
-	void CGUISystem::TrySetDefaultShader_Stencil( )
-	{
-		if( GetShaderManager()->HasResource( "default_stencil" ) )
-		{
-			CGUIShader* pDefaultShader = GetShaderManager()->AllocateResource( "default_render" );
-			SetDefaultShader_Stencil( pDefaultShader );
-			pDefaultShader->RefRelease();
-		}
-	}
-	//------------------------------------------------------------------------------
 	void CGUISystem::SetDefaultShader_Stencil( CGUIShader* pShader )
 	{
 		if( m_pDefaultShader_Stencil != pShader )
@@ -438,6 +420,27 @@ namespace guiex
 	CGUIShader* CGUISystem::GetDefaultShader_Stencil() const
 	{
 		return m_pDefaultShader_Stencil;
+	}
+	//------------------------------------------------------------------------------
+	void CGUISystem::SetDefaultShader_Font( CGUIShader* pShader )
+	{
+		if( m_pDefaultShader_Font != pShader )
+		{
+			if( m_pDefaultShader_Font )
+			{
+				m_pDefaultShader_Font->RefRelease();
+			}
+			m_pDefaultShader_Font = pShader;
+			if( m_pDefaultShader_Font )
+			{
+				m_pDefaultShader_Font->RefRetain();
+			}
+		}
+	}
+	//------------------------------------------------------------------------------
+	CGUIShader* CGUISystem::GetDefaultShader_Font() const
+	{
+		return m_pDefaultShader_Font;
 	}
 	//------------------------------------------------------------------------------
 	bool CGUISystem::IsEditorMode( ) const
@@ -851,15 +854,6 @@ namespace guiex
 		pRender->SetFontRender(pFont); 
 		
 #if !defined(GUIEX_RENDER_OPENGL_ES1)
-		//set default shader
-		if( !m_pDefaultShader_Render )
-		{
-			TrySetDefaultShader_Render();
-		}
-		if( !m_pDefaultShader_Stencil )
-		{
-			TrySetDefaultShader_Stencil();
-		}
  		if( m_pDefaultShader_Render )
 		{
 			m_pDefaultShader_Render->Use( pRender );

@@ -236,8 +236,8 @@ protected:
 
 		//stencil buffer for clip
 		int m_nStencilBits;
-		int m_nMaxStencilRef;
-		int m_nCurrentStencilRef;
+		uint32 m_nMaxStencilRef;
+		uint32 m_nCurrentStencilRef;
 		bool m_bForceRefreshStencil;
 		bool m_bHasClipRectOp;
 		std::vector<SClipRect>	m_arrayClipRects;

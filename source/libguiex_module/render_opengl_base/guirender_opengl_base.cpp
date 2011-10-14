@@ -815,13 +815,10 @@ namespace guiex
 	void IGUIRender_opengl_base::SetPipelineMatrix()
 	{
 #if !defined(GUIEX_RENDER_OPENGL_ES2)
-		if( !m_pCurrentShader )
-		{
-			glMatrixMode( GL_PROJECTION );
-			glLoadMatrixf( m_vecMatrixStack.back().m_matrix[eMatrixMode_PROJECTION]);
-			glMatrixMode( GL_MODELVIEW );
-			glLoadMatrixf( m_vecMatrixStack.back().m_matrix[eMatrixMode_MODELVIEW]);
-		}
+		glMatrixMode( GL_PROJECTION );
+		glLoadMatrixf( m_vecMatrixStack.back().m_matrix[eMatrixMode_PROJECTION]);
+		glMatrixMode( GL_MODELVIEW );
+		glLoadMatrixf( m_vecMatrixStack.back().m_matrix[eMatrixMode_MODELVIEW]);
 		TRY_THROW_OPENGL_ERROR();
 #endif
 	}
@@ -1187,7 +1184,7 @@ namespace guiex
 
 			//apply shader
 			CGUIShader* pOldShader = NULL;
-			if( m_pCurrentShader && GSystem->GetDefaultShader_Stencil() )
+			if( GSystem->GetDefaultShader_Stencil() )
 			{
 				pOldShader = GSystem->GetDefaultShader_Stencil()->Use(this);
 			}

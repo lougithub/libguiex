@@ -43,6 +43,8 @@
 		void SetSize(const CGUISize& sze);
 		void SetPosition(const CGUIVector2& pt);
 
+		void IncludePoint( const CGUIVector2& rPoint );
+
 		CGUIRect GetIntersection(const CGUIRect& rect) const;
 		bool IsIntersection(const CGUIRect& rect) const;
 
@@ -66,10 +68,10 @@
 		const CGUIRect& operator*=(real scalar);
 
 	public:
-		real	m_fTop;
-		real	m_fBottom;
-		real	m_fLeft;
-		real	m_fRight;
+		real m_fTop;
+		real m_fBottom;
+		real m_fLeft;
+		real m_fRight;
 	};
 
 }	//namespace guiex

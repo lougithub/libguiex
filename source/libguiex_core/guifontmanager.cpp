@@ -60,6 +60,11 @@ namespace guiex
 			<property name="size" type="uint16" value="12"/>
 			<property name="desc" type="CGUIString" value="desc"/>
 			<property name="texture_size" type="CGUIIntSize" value="512,512"/>
+
+			<property name="use_outline" type="bool" value="true" />
+			<property name="outline_width" type="uint16" value="2" />
+			<property name="outline_color" type="CGUIColor" value="1,0,0,1" />
+			<property name="font_color" type="CGUIColor" value="1,1,1,0" />
 		</property>
 		*/
 
@@ -129,6 +134,34 @@ namespace guiex
 			else
 			{
 				aFontInfo.m_aTextureSize.SetValue( GUI_FONT_TEXTURE_SIZE, GUI_FONT_TEXTURE_SIZE);
+			}
+		}
+
+		//outline info
+		{
+			aFontInfo.m_bHasOutline = false;
+			const CGUIProperty* pPropUseOutline = rProperty.GetProperty("use_outline", "bool");
+			if( pPropUseOutline )
+			{
+				PropertyToValue( *pPropUseOutline, aFontInfo.m_bHasOutline);
+			}
+			if( aFontInfo.m_bHasOutline )
+			{
+				const CGUIProperty* pPropOutlineWidth = rProperty.GetProperty("outline_width", "uint16");
+				const CGUIProperty* pPropOutlineColor = rProperty.GetProperty("outline_color", "CGUIColor");
+				const CGUIProperty* pPropFontColor = rProperty.GetProperty("font_color", "CGUIColor");
+				if( pPropOutlineWidth )
+				{
+					PropertyToValue( *pPropOutlineWidth, aFontInfo.m_uOutlineWidth );
+				}
+				if( pPropOutlineColor )
+				{
+					PropertyToValue( *pPropOutlineColor, aFontInfo.m_aOutlineColor );
+				}
+				if( pPropFontColor )
+				{
+					PropertyToValue( *pPropFontColor, aFontInfo.m_aFontColor );
+				}
 			}
 		}
 

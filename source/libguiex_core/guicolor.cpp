@@ -66,19 +66,19 @@ namespace guiex
 		uint32 val32 = 0;
 
 		// Red
-		val8 = static_cast<uint8>(r * 255);
+		val8 = static_cast<uint8>(r * 255+0.5);
 		val32 = val8 << 24;
 
 		// Green
-		val8 = static_cast<uint8>(g * 255);
+		val8 = static_cast<uint8>(g * 255+0.5);
 		val32 += val8 << 16;
 
 		// Blue
-		val8 = static_cast<uint8>(b * 255);
+		val8 = static_cast<uint8>(b * 255+0.5);
 		val32 += val8 << 8;
 
 		// Alpha
-		val8 = static_cast<uint8>(a * 255);
+		val8 = static_cast<uint8>(a * 255+0.5);
 		val32 += val8;
 
 		return val32;
@@ -94,19 +94,19 @@ namespace guiex
 		uint32 val32 = 0;
 
 		// Alpha
-		val8 = static_cast<uint8>(a * 255);
+		val8 = static_cast<uint8>(a * 255+0.5);
 		val32 = val8 << 24;
 
 		// Red
-		val8 = static_cast<uint8>(r * 255);
+		val8 = static_cast<uint8>(r * 255+0.5);
 		val32 += val8 << 16;
 
 		// Green
-		val8 = static_cast<uint8>(g * 255);
+		val8 = static_cast<uint8>(g * 255+0.5);
 		val32 += val8 << 8;
 
 		// Blue
-		val8 = static_cast<uint8>(b * 255);
+		val8 = static_cast<uint8>(b * 255+0.5);
 		val32 += val8;
 
 
@@ -123,19 +123,19 @@ namespace guiex
 		uint32 val32 = 0;
 
 		// Blue
-		val8 = static_cast<uint8>(b * 255);
+		val8 = static_cast<uint8>(b * 255+0.5);
 		val32 = val8 << 24;
 
 		// Green
-		val8 = static_cast<uint8>(g * 255);
+		val8 = static_cast<uint8>(g * 255+0.5);
 		val32 += val8 << 16;
 
 		// Red
-		val8 = static_cast<uint8>(r * 255);
+		val8 = static_cast<uint8>(r * 255+0.5);
 		val32 += val8 << 8;
 
 		// Alpha
-		val8 = static_cast<uint8>(a * 255);
+		val8 = static_cast<uint8>(a * 255+0.5);
 		val32 += val8;
 
 
@@ -152,19 +152,19 @@ namespace guiex
 		uint32 val32 = 0;
 
 		// Alpha
-		val8 = static_cast<uint8>(a * 255);
+		val8 = static_cast<uint8>(a * 255+0.5);
 		val32 = val8 << 24;
 
 		// Blue
-		val8 = static_cast<uint8>(b * 255);
+		val8 = static_cast<uint8>(b * 255+0.5);
 		val32 += val8 << 16;
 
 		// Green
-		val8 = static_cast<uint8>(g * 255);
+		val8 = static_cast<uint8>(g * 255+0.5);
 		val32 += val8 << 8;
 
 		// Red
-		val8 = static_cast<uint8>(r * 255);
+		val8 = static_cast<uint8>(r * 255+0.5);
 		val32 += val8;
 
 
@@ -274,6 +274,26 @@ namespace guiex
 		a = fAlpha;
 	}
 	//------------------------------------------------------------------------------ 
+	uint8 CGUIColor::GetAlphaAsByte() const
+	{
+		return a*255+0.5;
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIColor::SetAlphaAsByte(uint8 uAlpha)
+	{
+		a = uAlpha / 255.0f;
+	}
+	//------------------------------------------------------------------------------ 
+	uint8 CGUIColor::GetRedAsByte() const
+	{
+		return r*255+0.5;
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIColor::SetRedAsByte(uint8 uRed)
+	{
+		a = uRed / 255.0f;
+	}
+	//------------------------------------------------------------------------------ 
 	real CGUIColor::GetRed() const
 	{
 		return r;
@@ -290,6 +310,16 @@ namespace guiex
 		return g;
 	}
 	//------------------------------------------------------------------------------ 
+	uint8 CGUIColor::GetGreenAsByte() const
+	{
+		return g*255+0.5;
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIColor::SetGreenAsByte(uint8 uGreen)
+	{
+		a = uGreen / 255.0f;
+	}
+	//------------------------------------------------------------------------------ 
 	void CGUIColor::SetGreen(real fGreen)
 	{
 		//g = GUIClamp( fGreen, 0.0f, 1.0f );
@@ -299,6 +329,16 @@ namespace guiex
 	real CGUIColor::GetBlue() const
 	{
 		return b;
+	}
+	//------------------------------------------------------------------------------ 
+	uint8 CGUIColor::GetBlueAsByte() const
+	{
+		return b*255+0.5;
+	}
+	//------------------------------------------------------------------------------ 
+	void CGUIColor::SetBlueAsByte(uint8 uBlue)
+	{
+		a = uBlue / 255.0f;
 	}
 	//------------------------------------------------------------------------------ 
 	void CGUIColor::SetBlue(real fBlue)

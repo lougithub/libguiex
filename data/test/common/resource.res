@@ -7,6 +7,10 @@
 		<property name="size" type="uint16" value="12"/>
 		<property name="texture_size" type="CGUIIntSize" value="128,128"/>
 		<property name="desc" type="CGUIString" value="font:times size:12"/>
+		<property name="use_outline" type="bool" value="true" />
+		<property name="outline_width" type="uint16" value="1" />
+		<property name="outline_color" type="CGUIColor" value="0,0,0,255" />
+		<property name="font_color" type="CGUIColor" value="255,255,255,255" />
 	</property>
 
 	<property name="font_times_18" type="CGUIFontDefine" >
@@ -15,6 +19,10 @@
 		<property name="size" type="uint16" value="18"/>
 		<property name="texture_size" type="CGUIIntSize" value="256,256"/>
 		<property name="desc" type="CGUIString" value="font:times size:18"/>
+		<property name="use_outline" type="bool" value="true" />
+		<property name="outline_width" type="uint16" value="1" />
+		<property name="outline_color" type="CGUIColor" value="0,0,0,255" />
+		<property name="font_color" type="CGUIColor" value="255,255,255,255" />
 	</property>
 
 	<property name="font_times_36" type="CGUIFontDefine" >
@@ -23,6 +31,10 @@
 		<property name="size" type="uint16" value="36"/>
 		<property name="texture_size" type="CGUIIntSize" value="256,256"/>
 		<property name="desc" type="CGUIString" value="font:times size:36"/>
+		<property name="use_outline" type="bool" value="true" />
+		<property name="outline_width" type="uint16" value="3" />
+		<property name="outline_color" type="CGUIColor" value="0,0,0,255" />
+		<property name="font_color" type="CGUIColor" value="255,255,255,255" />
 	</property>
 
 	<property name="font_LHANDW_18" type="CGUIFontDefine" >
@@ -31,6 +43,10 @@
 		<property name="size" type="uint16" value="18"/>
 		<property name="texture_size" type="CGUIIntSize" value="256,256"/>
 		<property name="desc" type="CGUIString" value="font:LHANDW size:18"/>
+		<property name="use_outline" type="bool" value="true" />
+		<property name="outline_width" type="uint16" value="1" />
+		<property name="outline_color" type="CGUIColor" value="255,0,0,255" />
+		<property name="font_color" type="CGUIColor" value="255,255,255,255" />
 	</property>
 
 	<property name="font_LHANDW_36" type="CGUIFontDefine" >
@@ -39,8 +55,23 @@
 		<property name="size" type="uint16" value="36"/>
 		<property name="texture_size" type="CGUIIntSize" value="256,256"/>
 		<property name="desc" type="CGUIString" value="font:LHANDW size:36"/>
+		<property name="use_outline" type="bool" value="true" />
+		<property name="outline_width" type="uint16" value="3" />
+		<property name="outline_color" type="CGUIColor" value="0,0,0,255" />
+		<property name="font_color" type="CGUIColor" value="255,255,255,255" />
 	</property>
 
+	<property name="font_SIMKAI" type="CGUIFontDefine" >
+		<property name="id" type="uint16" value="5"/>
+		<property name="path" type="CGUIString" value="font/simhei.TTF"/>
+		<property name="size" type="uint16" value="16"/>
+		<property name="texture_size" type="CGUIIntSize" value="256,256"/>
+		<property name="desc" type="CGUIString" value="font:simkai size:16"/>
+		<property name="use_outline" type="bool" value="true" />
+		<property name="outline_width" type="uint16" value="1" />
+		<property name="outline_color" type="CGUIColor" value="0,0,0,255" />
+		<property name="font_color" type="CGUIColor" value="255,255,255,255" />
+	</property>
 
 
 
@@ -452,6 +483,11 @@
 	<property name="default_stencil" type="CGUIShaderDefine" >
 		<property name="vertex" type="CGUIString" value="shader/default_stencil.vert" />
 		<property name="fragment" type="CGUIString" value="shader/default_stencil.frag" />
+	</property>
+
+	<property name="default_font" type="CGUIShaderDefine" >
+		<property name="vertex" type="CGUIString" value="shader/default_font.vert" />
+		<property name="fragment" type="CGUIString" value="shader/default_font.frag" />
 	</property>
 
 </guiex>
