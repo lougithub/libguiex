@@ -5,7 +5,7 @@
 		<property name="duration" type="real" value="-1"/>
 		<property name="particleLifespan" type="real" value="4"/>
 		<property name="particleLifespanVariance" type="real" value="1"/>
-		<property name="textureFileName" type="CGUIString" value="image/stars-grayscale.tga"/>
+		<property name="textureFileName" type="CGUIString" value="image/stars-grayscale.png"/>
 		<property name="angle" type="real" value="90"/>
 		<property name="angleVariance" type="real" value="360"/>
 		<property name="startColor" type="CGUIColor" value="128,128,128,255"/>
@@ -42,7 +42,7 @@
 		<property name="duration" type="real" value="-1"/>
 		<property name="particleLifespan" type="real" value="4"/>
 		<property name="particleLifespanVariance" type="real" value="1"/>
-		<property name="textureFileName" type="CGUIString" value="image/fire.tga"/>
+		<property name="textureFileName" type="CGUIString" value="image/fire.png"/>
 		<property name="angle" type="real" value="90"/>
 		<property name="angleVariance" type="real" value="360"/>
 		<property name="startColor" type="CGUIColor" value="30,60,193,255"/>
@@ -80,7 +80,7 @@
 		<property name="duration" type="real" value="-1"/>
 		<property name="particleLifespan" type="real" value="3.5"/>
 		<property name="particleLifespanVariance" type="real" value="1"/>
-		<property name="textureFileName" type="CGUIString" value="image/stars.tga"/>
+		<property name="textureFileName" type="CGUIString" value="image/stars.png"/>
 		<property name="angle" type="real" value="90"/>
 		<property name="angleVariance" type="real" value="20"/>
 		<property name="startColor" type="CGUIColor" value="128,128,128,255"/>
@@ -118,7 +118,7 @@
 		<property name="duration" type="real" value="-1"/>
 		<property name="particleLifespan" type="real" value="12"/>
 		<property name="particleLifespanVariance" type="real" value="0"/>
-		<property name="textureFileName" type="CGUIString" value="image/fire.tga"/>
+		<property name="textureFileName" type="CGUIString" value="image/fire.png"/>
 		<property name="angle" type="real" value="90"/>
 		<property name="angleVariance" type="real" value="0"/>
 		<property name="startColor" type="CGUIColor" value="128,128,128,255"/>
@@ -156,7 +156,7 @@
 		<property name="duration" type="real" value="-1"/>
 		<property name="particleLifespan" type="real" value="1"/>
 		<property name="particleLifespanVariance" type="real" value="0.5"/>
-		<property name="textureFileName" type="CGUIString" value="image/fire.tga"/>
+		<property name="textureFileName" type="CGUIString" value="image/fire.png"/>
 		<property name="angle" type="real" value="90"/>
 		<property name="angleVariance" type="real" value="360"/>
 		<property name="startColor" type="CGUIColor" value="193,63,30,255"/>
@@ -193,7 +193,7 @@
 		<property name="duration" type="real" value="-1"/>
 		<property name="particleLifespan" type="real" value="3"/>
 		<property name="particleLifespanVariance" type="real" value="1"/>
-		<property name="textureFileName" type="CGUIString" value="image/snow.tga"/>
+		<property name="textureFileName" type="CGUIString" value="image/snow.png"/>
 		<property name="angle" type="real" value="90"/>
 		<property name="angleVariance" type="real" value="5"/>
 		<property name="startColor" type="CGUIColor" value="230,230,230,255"/>
@@ -231,7 +231,7 @@
 		<property name="duration" type="real" value="0.5"/>
 		<property name="particleLifespan" type="real" value="5"/>
 		<property name="particleLifespanVariance" type="real" value="2"/>
-		<property name="textureFileName" type="CGUIString" value="image/stars-grayscale.tga"/>
+		<property name="textureFileName" type="CGUIString" value="image/stars-grayscale.png"/>
 		<property name="angle" type="real" value="90"/>
 		<property name="angleVariance" type="real" value="360"/>
 		<property name="startColor" type="CGUIColor" value="178,25,51,255"/>
@@ -269,7 +269,7 @@
 		<property name="duration" type="real" value="-1"/>
 		<property name="particleLifespan" type="real" value="4"/>
 		<property name="particleLifespanVariance" type="real" value="0"/>
-		<property name="textureFileName" type="CGUIString" value="image/fire.tga"/>
+		<property name="textureFileName" type="CGUIString" value="image/fire.png"/>
 		<property name="angle" type="real" value="90"/>
 		<property name="angleVariance" type="real" value="5"/>
 		<property name="startColor" type="CGUIColor" value="178,204,255,255"/>
@@ -308,7 +308,7 @@
 		<property name="duration" type="real" value="-1"/>
 		<property name="particleLifespan" type="real" value="10"/>
 		<property name="particleLifespanVariance" type="real" value="0"/>
-		<property name="textureFileName" type="CGUIString" value="image/stars.tga"/><!--SpinningPeas.png-->
+		<property name="textureFileName" type="CGUIString" value="image/stars.png"/><!--SpinningPeas.png-->
 		<property name="angle" type="real" value="90"/>
 		<property name="angleVariance" type="real" value="360"/>
 		<property name="startColor" type="CGUIColor" value="255,255,255,255"/>

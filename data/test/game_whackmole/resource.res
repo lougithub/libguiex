@@ -1,19 +1,19 @@
 <?xml version="1.0" ?>
 <guiex>
 	<property name="grass_lower" type="CGUIImageDefine">
-		<property  name="path" type="CGUIString" value="image/grass_lower.tga" />
+		<property  name="path" type="CGUIString" value="image/grass_lower.png" />
 		<property name="uv" type="CGUIRect" value="0,0,1024,384" />
 		<property name="size" type="CGUISize" value="1024,384" />
 	</property>
 
 	<property name="grass_upper" type="CGUIImageDefine">
-		<property  name="path" type="CGUIString" value="image/grass_upper.tga" />
+		<property  name="path" type="CGUIString" value="image/grass_upper.png" />
 		<property name="uv" type="CGUIRect" value="0,0,1024,384" />
 		<property name="size" type="CGUISize" value="1024,384" />
 	</property>
 
 	<property name="bg_dirt" type="CGUIImageDefine">
-		<property  name="path" type="CGUIString" value="image/bg_dirt.tga" />
+		<property  name="path" type="CGUIString" value="image/bg_dirt.png" />
 		<property name="uv" type="CGUIRect" value="0,0,512,384" />
 		<property name="size" type="CGUISize" value="512,384" />
 	</property>

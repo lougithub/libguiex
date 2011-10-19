@@ -199,6 +199,13 @@ namespace guiex
 	{
 		uint16 uFontSize = GetFontSize();
 
+		bool bUseRGBATexture = false;
+		if( m_aFontInfo.m_aOutlineColor.GetAsABGR() != 0 ||
+			m_aFontInfo.m_aFontColor.GetAsABGR() != 0xFFFF )
+		{
+			bUseRGBATexture = true;
+		}
+
 		//Load the Glyph for our character.
 		if (FT_Load_Glyph(pFontFace, uGlyphIdx, FT_LOAD_NO_BITMAP) )
 		{
@@ -304,15 +311,16 @@ namespace guiex
 		{
 			m_uTexturePosX = m_uTexturePosY = 0;
 			m_uMaxHeight = uFontSize;
-			CGUITexture* pNewTexture = CGUITextureManager::Instance()->CreateTexture(nTextureWidth,nTextureHeight,GUI_PF_RGBA_32);
+			CGUITexture* pNewTexture = CGUITextureManager::Instance()->CreateTexture(nTextureWidth,nTextureHeight, bUseRGBATexture ? GUI_PF_RGBA_32 : GUI_PF_LUMINANCE_ALPHA_16 );
 			m_vecTexture.push_back(pNewTexture);
 		}
 		pCharData->m_pTexture = m_vecTexture.back();
 
 
 		// Allocate data for our image and clear it out to transparent.
-		GUIRGBA *pImageData = new GUIRGBA[imgSize];
-		memset(pImageData, 0, sizeof(GUIRGBA) * imgSize);
+		uint32 uPixelSize = bUseRGBATexture ? sizeof(GUIRGBA) : sizeof(uint16);
+		uint8 *pImageData = new uint8[imgSize*uPixelSize];
+		memset(pImageData, 0, uPixelSize * imgSize);
 
 		// Loop over the outline spans and just draw them into the image.
 		for (Spans::iterator s = outlineSpans.begin();s != outlineSpans.end(); ++s)
@@ -320,9 +328,16 @@ namespace guiex
 			uint32 spanPos = (imgHeight-1-(s->y-rect.ymin))*imgWidth+s->x-rect.xmin;
 			for (uint32 w = 0; w < s->width; ++w)
 			{
-				CGUIColor aColor(m_aFontInfo.m_aOutlineColor);
-				aColor.SetAlphaAsByte( s->coverage );
-				pImageData[spanPos + w] = aColor.GetAsABGR();
+				if( bUseRGBATexture )
+				{
+					CGUIColor aColor(m_aFontInfo.m_aOutlineColor);
+					aColor.SetAlphaAsByte( s->coverage );
+					reinterpret_cast<GUIABGR*>(pImageData)[spanPos + w] = aColor.GetAsABGR();
+				}
+				else
+				{
+					reinterpret_cast<uint16*>(pImageData)[(spanPos + w) * uPixelSize+1] = s->coverage;
+				}
 			}
 		}
 
@@ -332,21 +347,29 @@ namespace guiex
 			uint32 spanPos = (imgHeight-1-(s->y-rect.ymin))*imgWidth+s->x-rect.xmin;
 			for (int w = 0; w < s->width; ++w)
 			{
-				CGUIColor aColorSrc = m_aFontInfo.m_aFontColor;
-				aColorSrc.SetAlphaAsByte(s->coverage);
-				CGUIColor aColorDst;
-				aColorDst.SetAsABGR( pImageData[spanPos + w] );
+				if( bUseRGBATexture )
+				{
+					CGUIColor aColorSrc = m_aFontInfo.m_aFontColor;
+					aColorSrc.SetAlphaAsByte(s->coverage);
+					CGUIColor aColorDst;
+					aColorDst.SetAsABGR( reinterpret_cast<GUIABGR*>(pImageData)[spanPos + w] );
 
-				aColorDst.SetRed( aColorDst.GetRed() + ( aColorSrc.GetRed() - aColorDst.GetRed()) * aColorSrc.GetAlpha() );
-				aColorDst.SetGreen( aColorDst.GetGreen() + ( aColorSrc.GetGreen() - aColorDst.GetGreen()) * aColorSrc.GetAlpha() );
-				aColorDst.SetBlue( aColorDst.GetBlue() + ( aColorSrc.GetBlue() - aColorDst.GetBlue()) * aColorSrc.GetAlpha() );
-				aColorDst.SetAlpha( GUIMin( 1.0f, aColorDst.GetAlpha() + aColorSrc.GetAlpha()));
+					aColorDst.SetRed( aColorDst.GetRed() + ( aColorSrc.GetRed() - aColorDst.GetRed()) * aColorSrc.GetAlpha() );
+					aColorDst.SetGreen( aColorDst.GetGreen() + ( aColorSrc.GetGreen() - aColorDst.GetGreen()) * aColorSrc.GetAlpha() );
+					aColorDst.SetBlue( aColorDst.GetBlue() + ( aColorSrc.GetBlue() - aColorDst.GetBlue()) * aColorSrc.GetAlpha() );
+					aColorDst.SetAlpha( GUIMin( 1.0f, aColorDst.GetAlpha() + aColorSrc.GetAlpha()));
 
-				pImageData[spanPos + w] = aColorDst.GetAsABGR();
+					reinterpret_cast<GUIABGR*>(pImageData)[spanPos + w] = aColorDst.GetAsABGR();
+				}
+				else
+				{
+					reinterpret_cast<uint16*>(pImageData)[(spanPos + w) * uPixelSize] = 0xFF;
+					reinterpret_cast<uint16*>(pImageData)[(spanPos + w) * uPixelSize+1] = s->coverage;
+				}
 			}
 		}
 
-		pCharData->m_pTexture->CopySubImage(m_uTexturePosX,m_uTexturePosY,imgWidth,imgHeight,GUI_PF_RGBA_32,(uint8 *)(pImageData) );
+		pCharData->m_pTexture->CopySubImage(m_uTexturePosX,m_uTexturePosY,imgWidth,imgHeight, bUseRGBATexture ? GUI_PF_RGBA_32 : GUI_PF_LUMINANCE_ALPHA_16,pImageData );
 
 		delete [] pImageData;
 
