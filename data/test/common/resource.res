@@ -66,7 +66,7 @@
 		<property name="path" type="CGUIString" value="font/simhei.TTF"/>
 		<property name="size" type="uint16" value="16"/>
 		<property name="texture_size" type="CGUIIntSize" value="256,256"/>
-		<property name="desc" type="CGUIString" value="font:simkai size:16"/>
+		<property name="desc" type="CGUIString" value="font:simhei size:16"/>
 		<property name="use_outline" type="bool" value="true" />
 		<property name="outline_width" type="uint16" value="1" />
 		<property name="outline_color" type="CGUIColor" value="0,0,0,255" />

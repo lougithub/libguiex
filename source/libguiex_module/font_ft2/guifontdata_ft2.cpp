@@ -200,8 +200,8 @@ namespace guiex
 		uint16 uFontSize = GetFontSize();
 
 		bool bUseRGBATexture = false;
-		if( m_aFontInfo.m_aOutlineColor.GetAsABGR() != 0 ||
-			m_aFontInfo.m_aFontColor.GetAsABGR() != 0xFFFF )
+		if( m_aFontInfo.m_aOutlineColor.GetAsABGR() != 0xFF000000 ||
+			m_aFontInfo.m_aFontColor.GetAsABGR() != 0xFFFFFFFF )
 		{
 			bUseRGBATexture = true;
 		}
@@ -336,7 +336,8 @@ namespace guiex
 				}
 				else
 				{
-					reinterpret_cast<uint16*>(pImageData)[(spanPos + w) * uPixelSize+1] = s->coverage;
+					uint32 uIdx = (spanPos + w) * uPixelSize;
+					pImageData[uIdx+1] = s->coverage;
 				}
 			}
 		}
@@ -357,14 +358,19 @@ namespace guiex
 					aColorDst.SetRed( aColorDst.GetRed() + ( aColorSrc.GetRed() - aColorDst.GetRed()) * aColorSrc.GetAlpha() );
 					aColorDst.SetGreen( aColorDst.GetGreen() + ( aColorSrc.GetGreen() - aColorDst.GetGreen()) * aColorSrc.GetAlpha() );
 					aColorDst.SetBlue( aColorDst.GetBlue() + ( aColorSrc.GetBlue() - aColorDst.GetBlue()) * aColorSrc.GetAlpha() );
-					aColorDst.SetAlpha( GUIMin( 1.0f, aColorDst.GetAlpha() + aColorSrc.GetAlpha()));
+					//aColorDst.SetAlpha( GUIMin( 1.0f, aColorDst.GetAlpha() + aColorSrc.GetAlpha()));
+					aColorDst.SetAlpha( 1.0f );
 
 					reinterpret_cast<GUIABGR*>(pImageData)[spanPos + w] = aColorDst.GetAsABGR();
 				}
 				else
 				{
-					reinterpret_cast<uint16*>(pImageData)[(spanPos + w) * uPixelSize] = 0xFF;
-					reinterpret_cast<uint16*>(pImageData)[(spanPos + w) * uPixelSize+1] = s->coverage;
+					uint32 uIdx = (spanPos + w) * uPixelSize;
+					//pImageData[uIdx] = 0xFF;
+					//pImageData[uIdx] = 0xFF * (s->coverage / 255 );
+					//pImageData[uIdx+1] = s->coverage;
+					pImageData[uIdx] = GUIMin( 255, int(pImageData[uIdx] + (0xFF - pImageData[uIdx])*(s->coverage / 255.0f)));
+					pImageData[uIdx+1] = GUIMin( 255, pImageData[uIdx+1] + s->coverage);
 				}
 			}
 		}
