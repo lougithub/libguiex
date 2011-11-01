@@ -292,10 +292,11 @@ namespace guiex
 		SCharData_ft2 *pCharData = new SCharData_ft2;	
 		pCharData->m_fBitmapWidth = real(imgWidth);
 		pCharData->m_fBitmapHeight = real(imgHeight);
-		pCharData->m_fBearingX = real(pFontFace->glyph->metrics.horiBearingX >> 6);
-		pCharData->m_fBearingY = real(pFontFace->glyph->metrics.horiBearingY >> 6);
-		pCharData->m_aSize.m_fWidth = real((pFontFace->glyph->advance.x>>6)+m_aFontInfo.m_uOutlineWidth*2);
-		pCharData->m_aSize.m_fHeight = real(uFontSize+m_aFontInfo.m_uOutlineWidth*2);
+		pCharData->m_fBearingX = real(pFontFace->glyph->metrics.horiBearingX >> 6) - m_aFontInfo.m_uOutlineWidth;
+		pCharData->m_fBearingY = real(pFontFace->glyph->metrics.horiBearingY >> 6) + m_aFontInfo.m_uOutlineWidth;
+		pCharData->m_aSize.m_fWidth = real((pFontFace->glyph->advance.x>>6)/*+m_aFontInfo.m_uOutlineWidth*2*/);
+		//pCharData->m_aSize.m_fHeight = real(uFontSize+m_aFontInfo.m_uOutlineWidth*2);
+		pCharData->m_aSize.m_fHeight = real(pFontFace->size->metrics.ascender>>6);
 		pCharData->m_nGlyphIdx = uGlyphIdx;
 
 		//get texture
@@ -421,12 +422,13 @@ namespace guiex
 
 		//get information
 		SCharData_ft2 *pCharData = new SCharData_ft2;	
-		pCharData->m_fBitmapWidth = real(bitmap.width);
-		pCharData->m_fBitmapHeight = real(bitmap.rows);
+		pCharData->m_fBitmapWidth = real(pFontFace->glyph->metrics.width >> 6);
+		pCharData->m_fBitmapHeight = real(pFontFace->glyph->metrics.height >> 6);
 		pCharData->m_fBearingX = real(pFontFace->glyph->metrics.horiBearingX >> 6);
 		pCharData->m_fBearingY = real(pFontFace->glyph->metrics.horiBearingY >> 6);
 		pCharData->m_aSize.m_fWidth = real(pFontFace->glyph->advance.x>>6);
-		pCharData->m_aSize.m_fHeight = real(uFontSize);
+		pCharData->m_aSize.m_fHeight = real(pFontFace->size->metrics.ascender>>6);
+		//pCharData->m_aSize.m_fHeight = real(uFontSize);
 		pCharData->m_nGlyphIdx = uGlyphIdx;
 
 		//get texture

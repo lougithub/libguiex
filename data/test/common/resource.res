@@ -7,7 +7,7 @@
 		<property name="size" type="uint16" value="12"/>
 		<property name="texture_size" type="CGUIIntSize" value="128,128"/>
 		<property name="desc" type="CGUIString" value="font:times size:12"/>
-		<property name="use_outline" type="bool" value="true" />
+		<property name="use_outline" type="bool" value="false" />
 		<property name="outline_width" type="uint16" value="1" />
 		<property name="outline_color" type="CGUIColor" value="0,0,0,255" />
 		<property name="font_color" type="CGUIColor" value="255,255,255,255" />
