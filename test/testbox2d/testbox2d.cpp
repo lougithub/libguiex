@@ -30,7 +30,7 @@ class CGUIFrameworkTest : public CGUIFramework
 		virtual guiex::int32 InitializeGame( );
 		virtual void ReleaseGame( );
 
-		virtual void PostRender( );
+		virtual void PostRender( IGUIInterfaceRender* pRender );
 
 		void CreateBox2dSample_hellobox2d();
 		void CreateBox2dSample_joints();
@@ -88,14 +88,14 @@ void CGUIFrameworkTest::ReleaseGame( )
 	m_pWorld = NULL;
 }
 
-void CGUIFrameworkTest::PostRender( )
+void CGUIFrameworkTest::PostRender( IGUIInterfaceRender* pRender )
 {
 	UpdateBody(m_pBody);
 	UpdateBody(m_pBody2);
 
 	UpdateJoint( m_pJoint );
 
-	CGUIFramework::PostRender();
+	CGUIFramework::PostRender( pRender );
 }
 
 void CGUIFrameworkTest::CreateBox2dSample_hellobox2d()

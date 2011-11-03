@@ -248,7 +248,7 @@ namespace guiex
 		case GUI_PF_RGBA_32:
 			m_nBytesPerPixel = 4;
 			pData = new char[m_nBytesPerPixel*nWidth*nHeight];
-			memset( pData, 0, m_nBytesPerPixel*nWidth*nHeight );
+			memset( pData, 0xFF, m_nBytesPerPixel*nWidth*nHeight );
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, nWidth, nHeight, 0, GL_RGBA ,GL_UNSIGNED_BYTE, pData);
 			delete[] pData;
 			break;
@@ -256,7 +256,7 @@ namespace guiex
 		case GUI_PF_LUMINANCE_ALPHA_16:
 			m_nBytesPerPixel = 2;
 			pData = new char[m_nBytesPerPixel*nWidth*nHeight];
-			memset( pData, 0, m_nBytesPerPixel*nWidth*nHeight );
+			memset( pData, 0xFF, m_nBytesPerPixel*nWidth*nHeight );
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, nWidth, nHeight, 0, GL_LUMINANCE_ALPHA ,GL_UNSIGNED_BYTE, pData);
 			delete[] pData;
 			break;

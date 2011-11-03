@@ -89,9 +89,9 @@ namespace guiex
 		void Release();
 
 		void Update( real fDeltaTime );
-		void BeginRender();
-		void Render();
-		void EndRender();
+		void BeginRender( class IGUIInterfaceRender* pRender);
+		void Render(class IGUIInterfaceRender* pRender);
+		void EndRender(class IGUIInterfaceRender* pRender);
 
 		void SetDrawExtraInfo( bool bDraw );
 		bool IsDrawExtraInfo() const;

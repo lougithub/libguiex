@@ -187,7 +187,7 @@ namespace guiex
 	void CGUISystem::ReleaseSingletons()
 	{
 		delete m_pWidgetManager;
-		m_pMouseCursor = NULL;
+		m_pWidgetManager = NULL;
 		delete m_pMouseCursor;
 		m_pMouseCursor = NULL;
 		delete m_pAnimationManager;
@@ -847,47 +847,32 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	void CGUISystem::BeginRender()
-	{
-		IGUIInterfaceRender* pRender = CGUIInterfaceManager::Instance()->GetInterfaceRender();
-		IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
-		pRender->SetFontRender(pFont); 
-		
-#if !defined(GUIEX_RENDER_OPENGL_ES1)
+	void CGUISystem::BeginRender( IGUIInterfaceRender* pRender )
+	{		
  		if( m_pDefaultShader_Render )
 		{
 			m_pDefaultShader_Render->Use( pRender );
 		}
-#endif
 
 		pRender->ApplyCamera( m_pDefaultCamera );
 		pRender->BeginRender();
 	}
 	//------------------------------------------------------------------------------
-	void CGUISystem::EndRender()
+	void CGUISystem::EndRender( IGUIInterfaceRender* pRender )
 	{
-		IGUIInterfaceRender* pRender = CGUIInterfaceManager::Instance()->GetInterfaceRender();
 		pRender->EndRender();
 	}
 	//------------------------------------------------------------------------------
 	/**
 	* @brief render system
 	*/
-	void CGUISystem::Render()
+	void CGUISystem::Render( IGUIInterfaceRender* pRender )
 	{
-		IGUIInterfaceRender* pRender = CGUIInterfaceManager::Instance()->GetInterfaceRender();
-
-		pRender->PushMatrix();
-		pRender->MatrixMode(eMatrixMode_MODELVIEW);
-		pRender->LoadIdentity();
-
 		//render canvas
 		RenderCanvas( pRender );
 
 		//render cursor
 		CGUIMouseCursor::Instance()->Render(pRender);
-
-		pRender->PopMatrix();
 	}
 	//------------------------------------------------------------------------------
 	/**

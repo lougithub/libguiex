@@ -20,6 +20,7 @@
 #include <libguiex_core/guicamera.h>
 #include <libguiex_core/guitexture.h>
 #include <libguiex_core/guishader.h>
+#include <libguiex_core/guitexturemanager.h>
 
 #include <libguiex_module/render_opengl_base/guiopenglheader.h>
 
@@ -188,6 +189,7 @@ namespace guiex
 		,m_nRenderMode_TRIANGLE_STRIP(GL_TRIANGLE_STRIP)
 		,m_nRenderMode_TRIANGLES(GL_TRIANGLES)
 		,m_pCurrentShader(NULL)
+		,m_pTextureForLine(NULL)
 	{
 	}
 	//------------------------------------------------------------------------------
@@ -240,6 +242,15 @@ namespace guiex
 		return 0;
 	}
 	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_base::OnPostRegisterInterface()
+	{
+		//create texture if needed
+#if !defined(GUIEX_RENDER_OPENGL_ES1 )
+		uint32 uRGBABuf = 0xffffffff;
+		m_pTextureForLine = CGUITextureManager::Instance()->CreateTexture((void*)(&uRGBABuf),1,1, GUI_PF_RGBA_32 );
+#endif
+	}
+	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::OnScreenSizeChange( const CGUIIntSize& rSize )
 	{
 		glViewport(0,0,rSize.GetWidth(),rSize.GetHeight());
@@ -259,6 +270,11 @@ namespace guiex
 		m_vecMatrixStack.resize(1);
 
 		//clear texture
+		if( m_pTextureForLine )
+		{
+			CGUITextureManager::Instance()->DestroyTexture( m_pTextureForLine );
+			m_pTextureForLine = NULL;
+		}
 		DestroyAllTexture();
 
 		//clear shader
@@ -516,16 +532,22 @@ namespace guiex
 		glEnable(GL_TEXTURE_2D);
 #endif
 		
-		glEnable(GL_CULL_FACE);
+		glDisable(GL_CULL_FACE);
 		
 		//update camera
 		UpdateCamera();
+		
+		PushMatrix();
+		MatrixMode(eMatrixMode_MODELVIEW);
+		LoadIdentity();
 		
 		TRY_THROW_OPENGL_ERROR();		
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::EndRender(void)
 	{		
+		PopMatrix();
+
 		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
@@ -901,9 +923,6 @@ namespace guiex
 
 		UpdateStencil();
 
-#if !defined(GUIEX_RENDER_OPENGL_ES2 )			
-		glDisable( GL_TEXTURE_2D );
-#endif
 		
 		if( m_pCurrentShader )
 		{
@@ -913,10 +932,6 @@ namespace guiex
 		{
 			DrawPrimitive_Pipeline( uMode, pVertexBuf, uVertexNum );
 		}
-		
-#if !defined(GUIEX_RENDER_OPENGL_ES2 )	
-	glEnable( GL_TEXTURE_2D );
-#endif
 		
 		TRY_THROW_OPENGL_ERROR();
 	}
@@ -943,6 +958,8 @@ namespace guiex
 	{
 #if !defined(GUIEX_RENDER_OPENGL_ES1)
 		SetShaderMatrix();
+
+		BindTexture( m_pTextureForLine );
 
 		int32 nPositionLoc = m_pCurrentShader->GetCachedAttributeLoc(CGUIShader_opengl_base::eSCAL_Position);
 		int32 nColorLoc = m_pCurrentShader->GetCachedAttributeLoc(CGUIShader_opengl_base::eSCAL_Color);
@@ -1057,6 +1074,8 @@ namespace guiex
 	void IGUIRender_opengl_base::DrawPrimitive_Pipeline( uint32 uMode, const SVertexFormat_V3F_C4UB* pVertexBuf, uint32 uVertexNum )
 	{
 #if !defined(GUIEX_RENDER_OPENGL_ES2)
+		glDisable( GL_TEXTURE_2D );
+
 		SetPipelineMatrix();
 
 		glEnableClientState(GL_VERTEX_ARRAY);
@@ -1069,6 +1088,8 @@ namespace guiex
 
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glDisableClientState(GL_COLOR_ARRAY);
+
+		glEnable( GL_TEXTURE_2D );
 #endif
 	}
 	//------------------------------------------------------------------------------

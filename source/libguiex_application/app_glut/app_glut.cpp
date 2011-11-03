@@ -9,6 +9,14 @@
 // include
 //============================================================================// 
 
+#if defined(GUIEX_PLATFORM_WIN32)
+#ifdef	_DEBUG
+#	define _CRTDBG_MAP_ALLOC
+#	include <stdlib.h>
+#	include <crtdbg.h>
+#endif
+#endif
+
 #include <libguiex_framework/guiframework.h>
 
 #include <iostream>
@@ -16,7 +24,7 @@
 
 
 #if defined(GUIEX_PLATFORM_WIN32)
-#include <libguiex_module/ime_winapi/guiime_winapi.h>
+#	include <libguiex_module/ime_winapi/guiime_winapi.h>
 #endif
 
 #include <GL/freeglut.h>
@@ -82,8 +90,6 @@ void QuitApp()
 		delete g_pFramework;
 		g_pFramework = NULL;
 	}
-
-	exit(0);
 }
 //------------------------------------------------------------------------------
 void mouseMotionCB(int x, int y)
@@ -151,7 +157,7 @@ void keyboardCB(unsigned char key, int x, int y)
 	switch (key)
 	{
 	case 0x1B:  // Escape
-		QuitApp();
+		glutExit();
 		break;
 
 	case 0x08:  // backspace
@@ -341,6 +347,8 @@ int main(int argc, char** argv)
 #if defined(GUIEX_PLATFORM_WIN32)
 #ifdef	_DEBUG
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF|_CRTDBG_LEAK_CHECK_DF);
+
+	//_CrtSetBreakAlloc(146);
 #endif
 #endif
 
@@ -369,7 +377,7 @@ int main(int argc, char** argv)
 	glutKeyboardUpFunc( keyboardUpCB );
 	glutSpecialUpFunc( keyUpSpecialCB );
 
-	glutSetOption( GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION );
+	glutSetOption( GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS );
 	glutCloseFunc(QuitApp);
 
 	//setVSync( g_nVSync );

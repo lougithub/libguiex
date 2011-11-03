@@ -14,12 +14,16 @@ public:
 		:CGUIFramework( )
 	{
 	}
+
 protected:
 	virtual int32 InitializeGame( );
 	virtual void ReleaseGame( );
 
 	virtual void PreUpdate( real fDeltaTime );
 	virtual void PostUpdate( real fDeltaTime );
+
+	virtual void PostRender( IGUIInterfaceRender* pRender );
+
 };
 
 CGUIFrameworkBase* GUIEXCreateFramework( )
@@ -40,7 +44,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	CGUISceneManager::Instance()->LoadWidgets( "common" );
 
 	CGUIWgtEmptyNode* pWidgetRoot = 
-		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtEmptyNode>( "page", "testscene" );
+		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtEmptyNode>( "page", "" );
 	pWidgetRoot->SetPage( pWidgetRoot );
 	pWidgetRoot->SetAnchorPoint( 0.5f, 0.5f );
 	pWidgetRoot->SetPositionType( eScreenValue_Percentage );
@@ -48,7 +52,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	pWidgetRoot->Create();
 
 	CGUIWgtStaticImage* pWidget_staticimage =  
-		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtStaticImage>( "staticimage_0", "testscene");
+		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtStaticImage>( "staticimage_0", "");
 	pWidget_staticimage->SetParent( pWidgetRoot );
 	pWidget_staticimage->SetImage( "bg", "color_white" );
 	pWidget_staticimage->SetSize( 50, 50 );
@@ -58,7 +62,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	pWidget_staticimage->Create();
 
 	CGUIWgtStaticImage* pWidget_staticimage2 = 
-		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtStaticImage>( "staticimage_1", "testscene");
+		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtStaticImage>( "staticimage_1", "");
 	pWidget_staticimage2->SetParent( pWidget_staticimage );
 	pWidget_staticimage2->SetImage( "bg", "checkbutton_glow_checked" );
 	pWidget_staticimage2->SetAnchorPoint( 0.5, 0.5 );
@@ -67,7 +71,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	pWidget_staticimage2->Create();
 
 	CGUIWgtStaticText* pWidget_statictext = 
-		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtStaticText>( "staticText_1", "testscene");
+		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtStaticText>( "staticText_1", "");
 	pWidget_statictext->SetParent( pWidgetRoot );
 	pWidget_statictext->SetAnchorPoint( 0.5, 0.5 );
 	pWidget_statictext->SetSize( 250, 25 );
@@ -77,7 +81,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	pWidget_statictext->Create();
 
 	CGUIWgtButton* pWidget_button = 
-		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtButton>( "button", "testscene");
+		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtButton>( "button", "");
 	pWidget_button->SetParent( pWidgetRoot );
 	pWidget_button->SetImage( "normal", "button_blue_normal" );
 	pWidget_button->SetImage( "hover", "button_blue_hover" );
@@ -90,7 +94,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	pWidget_button->Create();
 
 	CGUIWgtButton* pWidget_button2 = 
-		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtButton>( "button2", "testscene");
+		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtButton>( "button2", "");
 	pWidget_button2->SetParent( pWidgetRoot );
 	pWidget_button2->SetImage( "normal", "button_blue_normal" );
 	pWidget_button2->SetImage( "hover", "button_blue_hover" );
@@ -100,11 +104,10 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	pWidget_button2->SetPosition( 600, 200 );
 	pWidget_button2->SetTextContentUTF8("cancel", CGUIWgtButton::eButtonState_Normal);
 	pWidget_button2->SetTextColor(CGUIColor( 1,1,1,1), CGUIWgtButton::eButtonState_Normal);
-	pWidget_button2->SetRotation( 0,0,45 );
 	pWidget_button2->Create();
 
 	CGUIWgtCheckButton* pWidget_checkbutton = 
-		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtCheckButton>( "checkbutton", "testscene");
+		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtCheckButton>( "checkbutton", "");
 	pWidget_checkbutton->SetParent( pWidgetRoot );
 	pWidget_checkbutton->SetImage( "normal", "button_hilight_square" );
 	pWidget_checkbutton->SetImage( "normal_checked", "checkbutton_glow_checked" );
@@ -114,7 +117,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	pWidget_checkbutton->Create();
 
 	CGUIWgtCheckButton* pWidget_checkbutton2 = 
-		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtCheckButton>( "checkbutton2", "testscene");
+		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtCheckButton>( "checkbutton2", "");
 	pWidget_checkbutton2->SetParent( pWidgetRoot );
 	pWidget_checkbutton2->SetImage( "normal", "button_hilight_square" );
 	pWidget_checkbutton2->SetImage( "normal_checked", "checkbutton_glow_checked" );
@@ -124,12 +127,12 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	pWidget_checkbutton2->Create();
 
 	CGUIWgtEmptyNode* pWidgetRadioGroup = 
-		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtEmptyNode>( "radiogroup", "testscene");
+		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtEmptyNode>( "radiogroup", "");
 	pWidgetRadioGroup->SetParent( pWidgetRoot );
 	pWidgetRadioGroup->Create();
 
 	CGUIWgtRadioButton* pWidget_radiobutton = 
-		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtRadioButton>( "radiobutton", "testscene");
+		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtRadioButton>( "radiobutton", "");
 	pWidget_radiobutton->SetParent( pWidgetRadioGroup );
 	pWidget_radiobutton->SetImage( "normal", "button_hilight_square" );
 	pWidget_radiobutton->SetImage( "normal_checked", "checkbutton_glow_checked" );
@@ -139,7 +142,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	pWidget_radiobutton->Create();
 
 	CGUIWgtRadioButton* pWidget_radiobutton2 =
-		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtRadioButton>( "radiobutton2", "testscene");
+		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtRadioButton>( "radiobutton2", "");
 	pWidget_radiobutton2->SetParent( pWidgetRadioGroup );
 	pWidget_radiobutton2->SetImage( "normal", "button_hilight_square" );
 	pWidget_radiobutton2->SetImage( "normal_checked", "checkbutton_glow_checked" );
@@ -150,7 +153,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 
 
 	CGUIWgtEditBox* pWidget_editbox = 
-		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtEditBox>( "editbox", "testscene");
+		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtEditBox>( "editbox", "");
 	pWidget_editbox->SetParent( pWidgetRoot );
 	pWidget_editbox->SetImage( "bg", "edit_bg" );
 	pWidget_editbox->SetImage( "cursor", "color_white" );
@@ -162,7 +165,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 
 
 	CGUIWgtMultiEditBox* pWidget_multieditbox = 
-		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtMultiEditBox>( "multieditbox", "testscene");
+		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtMultiEditBox>( "multieditbox", "");
 	pWidget_multieditbox->SetParent( pWidgetRoot );
 	pWidget_multieditbox->SetImage( "bg", "edit_bg" );
 	pWidget_multieditbox->SetImage( "cursor", "color_white" );
@@ -197,7 +200,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 
 
 	CGUIWgtPanel* pWidget_panel= 
-		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtPanel>( "panel", "testscene");
+		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtPanel>( "panel", "");
 	pWidget_panel->SetParent( pWidgetRoot );
 	pWidget_panel->SetImage( "bg", "panel_bg_grade_blue" );
 	pWidget_panel->SetImage( "border_top", "panel_border_top" );
@@ -209,20 +212,19 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	pWidget_panel->SetImage( "border_bottomleft", "panel_border_bottomleft" );
 	pWidget_panel->SetImage( "border_bottomright", "panel_border_bottomright" );
 	pWidget_panel->SetSize( 150, 200 );
-	pWidget_panel->SetPosition( 700, 200 );
+	pWidget_panel->SetPosition( 700, 300 );
 	pWidget_panel->SetAnchorPoint( 0.5f, 0.5f );
-	pWidget_panel->SetRotation( 0,0,70 );
 	pWidget_panel->Create();
 
 /*
 	CGUIWgtTabControl* pWidget_tabcontroll= 
-		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtTabControl>( "tabcontrol", "testscene");
+		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtTabControl>( "tabcontrol", "");
 	pWidget_tabcontroll->SetParent( pWidget_panel );
 	pWidget_tabcontroll->Create();
 
 
 	CGUIWgtTabButton* pWidget_tabbutton = 
-		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtTabButton>( "tabbutton", "testscene");
+		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtTabButton>( "tabbutton", "");
 	pWidget_tabbutton->SetParent( pWidget_tabcontroll );
 	pWidget_tabbutton->SetImage( "normal", "button_hilight_square" );
 	pWidget_tabbutton->SetImage( "normal_checked", "checkbutton_glow_checked" );
@@ -235,7 +237,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	
 	/*
 	CGUIWgtPanel* pWidget_panel1= 
-		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtPanel>( "panel1", "testscene");
+		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtPanel>( "panel1", "");
 	pWidget_panel1->SetParent( pWidget_tabbutton );
 	pWidget_panel1->SetImage( "bg", "color_white" );
 	pWidget_panel1->SetSizeType( eScreenValue_Percentage );
@@ -244,7 +246,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	pWidget_panel1->Create();
 
 	CGUIWgtTabButton* pWidget_tabbutton2 = 
-		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtTabButton>( "tabbutton2", "testscene");
+		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtTabButton>( "tabbutton2", "");
 	pWidget_tabbutton2->SetParent( pWidget_tabcontroll );
 	pWidget_tabbutton2->SetImage( "normal", "button_hilight_square" );
 	pWidget_tabbutton2->SetImage( "normal_checked", "checkbutton_glow_checked" );
@@ -255,7 +257,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	pWidget_tabbutton2->Create();
 
 	CGUIWgtPanel* pWidget_panel2=
-		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtPanel>( "panel2", "testscene");
+		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtPanel>( "panel2", "");
 	pWidget_panel2->SetParent( pWidget_tabbutton2 );
 	pWidget_panel2->SetImage( "bg", "color_white" );
 	pWidget_panel2->SetSizeType( eScreenValue_Percentage );
@@ -265,7 +267,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 */
 	/*
 	CGUIWgtTabButton* pWidget_tabbutton3 = 
-		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtTabButton>( "tabbutton3", "testscene");
+		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtTabButton>( "tabbutton3", "");
 	pWidget_tabbutton3->SetParent( pWidget_tabcontroll );
 	pWidget_tabbutton3->SetImage( "normal", "button_hilight_square" );
 	pWidget_tabbutton3->SetImage( "normal_checked", "checkbutton_glow_checked" );
@@ -277,7 +279,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 */
 	/*
 	CGUIWgtPanel* pWidget_panel3= 
-		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtPanel>( "panel3", "testscene");
+		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtPanel>( "panel3", "");
 	pWidget_panel3->SetParent( pWidget_tabbutton3 );
 	pWidget_panel3->SetImage( "bg", "color_white" );
 	pWidget_panel3->SetSizeType( eScreenValue_Percentage );
@@ -287,7 +289,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 */
 /*
 	CGUIWgtProgress* pWidget_progress= 
-		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtProgress>( "progress", "testscene");
+		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtProgress>( "progress", "");
 	pWidget_progress->SetParent( pWidgetRoot );
 	pWidget_progress->SetImage( "background", "color_white" );
 	pWidget_progress->SetImage( "foreground", "panel_bg_grade_green" );
@@ -298,7 +300,7 @@ int32 CGUIFrameworkTest::InitializeGame( )
 	pWidget_progress->Create();
 */
 	CGUIWgtStaticText* pWidget_frame = 
-		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtStaticText>( "frame", "testscene");
+		CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtStaticText>( "frame", "");
 	pWidget_frame->SetParent( pWidgetRoot );
 	pWidget_frame->SetAnchorPoint( 1, 0 );
 	pWidget_frame->SetSize( 250, 25 );
@@ -319,16 +321,16 @@ int32 CGUIFrameworkTest::InitializeGame( )
 
 	{
 		CGUIAsWidgetScale* pAsScale = pAsManager->AllocateResource<CGUIAsWidgetScale>( );
-		pAsScale->SetInterpolationValue( CGUISize(0.2f,0.2f), CGUISize(1,1), 4 );
+		pAsScale->SetInterpolationValue( CGUISize(0.2f,0.2f), CGUISize(1,1), 2 );
 		pAsScale->SetReceiver( pWidget_panel );
 		pAsScale->SetInterpolationType( eInterpolationType_EaseInOut );
 		pWidget_panel->PlayAs( pAsScale );
 		pAsScale->RefRelease();
 
 		CGUIAsWidgetRotation* pAsRotation = pAsManager->AllocateResource<CGUIAsWidgetRotation>( );
-		pAsRotation->SetInterpolationValue( CGUIRotator(0,360*5,0), CGUIRotator(), 4 );
+		pAsRotation->SetInterpolationValue( CGUIRotator(0,0,360*5), CGUIRotator(), 4 );
 		pAsRotation->SetReceiver( pWidget_panel );
-		pWidget_panel->PlayAs( pAsRotation );
+		pAsScale->AddSuccessor(pAsRotation);
 		pAsRotation->RefRelease();
 	}
 
@@ -441,14 +443,25 @@ void CGUIFrameworkTest::ReleaseGame( )
 
 void CGUIFrameworkTest::PreUpdate( real fDeltaTime )
 {
-	CGUIWgtStaticText* pWidget = 
-		CGUIWidgetManager::Instance()->GetWidgetWithTypeCheck<CGUIWgtStaticText>( "frame", "testscene" );
-	char buf[512];
-	snprintf( buf, 512, "frame = %d", GSystem->GetFPS() );
-	pWidget->SetTextContentUTF8( buf );
+	if( CGUIWidgetManager::Instance()->HasWidget("frame", "") )
+	{
+		CGUIWgtStaticText* pWidget = 
+			CGUIWidgetManager::Instance()->GetWidgetWithTypeCheck<CGUIWgtStaticText>( "frame", "" );
+		char buf[512];
+		snprintf( buf, 512, "frame = %d", GSystem->GetFPS() );
+		pWidget->SetTextContentUTF8( buf );
+	}
 }
 
 void CGUIFrameworkTest::PostUpdate( real fDeltaTime )
 {
 
+}
+
+void CGUIFrameworkTest::PostRender( IGUIInterfaceRender* pRender )
+{
+	pRender->DrawRect( CGUIRect( 100,100,200,200), 2, 0, CGUIColor(1,1,1,1),CGUIColor(0,1,1,1),CGUIColor(1,0,1,1),CGUIColor(1,1,0,1));
+	pRender->DrawCircle( CGUIVector2(150,150), 50, 2, 0, CGUIColor(1,1,1,1));
+
+	CGUIFramework::PostRender( pRender );
 }

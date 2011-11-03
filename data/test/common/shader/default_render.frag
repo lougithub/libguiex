@@ -12,7 +12,9 @@ void main(void)
 	lowp vec3 ct,cf;
 	lowp float at,af;
 	lowp vec4 texel;
+
 	texel = texture2D(tex, v_v2TextCoord );
+
 	ct = texel.rgb;
 	at = texel.a;
 	cf = v_v4DestinationColor.rgb;

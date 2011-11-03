@@ -58,8 +58,8 @@ namespace guiex
 
 		virtual void PreUpdate( real fDeltaTime ) = 0;
 		virtual void PostUpdate( real fDeltaTime ) = 0;
-		virtual void PreRender( );
-		virtual void PostRender( );
+		virtual void PreRender( IGUIInterfaceRender* pRender );
+		virtual void PostRender( IGUIInterfaceRender* pRender );
 
 		void UpdateSystem( real fDeltaTime );
 

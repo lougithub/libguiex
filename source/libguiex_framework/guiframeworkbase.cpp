@@ -145,14 +145,14 @@ namespace guiex
 		GSystem->Update( fDeltaTime );
 	}
 	//------------------------------------------------------------------------------
-	void CGUIFrameworkBase::PreRender( )
+	void CGUIFrameworkBase::PreRender( IGUIInterfaceRender* pRender )
 	{
-		GSystem->BeginRender();
+		GSystem->BeginRender( pRender );
 	}
 	//------------------------------------------------------------------------------
-	void CGUIFrameworkBase::PostRender( )
+	void CGUIFrameworkBase::PostRender( IGUIInterfaceRender* pRender )
 	{
-		GSystem->EndRender();
+		GSystem->EndRender( pRender );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIFrameworkBase::Render( )
@@ -161,9 +161,13 @@ namespace guiex
 		try
 #endif
 		{
-			PreRender( );
-			GSystem->Render();
-			PostRender( );
+			IGUIInterfaceRender* pRender = CGUIInterfaceManager::Instance()->GetInterfaceRender();
+			IGUIInterfaceFont* pFont = CGUIInterfaceManager::Instance()->GetInterfaceFont();
+			pRender->SetFontRender(pFont); 
+
+			PreRender( pRender );
+			GSystem->Render( pRender );
+			PostRender( pRender );
 		}
 #if GUI_USE_EXCEPTION
 		catch (std::exception& rError)

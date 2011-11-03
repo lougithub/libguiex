@@ -147,6 +147,9 @@ namespace guiex
 		{
 			GUI_ASSERT(0, "unkonwn interface");
 		}
+
+		rInterfaceData.m_pInterface->OnPostRegisterInterface();
+
 		return 0;
 	}
 	//------------------------------------------------------------------------------

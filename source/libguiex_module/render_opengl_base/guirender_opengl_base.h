@@ -42,6 +42,7 @@ namespace guiex
 	public:
 		virtual ~IGUIRender_opengl_base();
 
+		virtual void OnPostRegisterInterface();
 	public:
 		//render api 
 		virtual void ClearColor(real red, real green, real blue, real alpha);
@@ -228,6 +229,7 @@ protected:
 		//texture list
 		typedef std::set<CGUITextureImp*> TSetTexture;
 		TSetTexture	m_setTexture;
+		CGUITexture* m_pTextureForLine; //used to draw line in shader
 
 		//shader list
 		typedef std::set<CGUIShaderImp*> TSetShader;

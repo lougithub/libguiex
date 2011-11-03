@@ -100,7 +100,7 @@ CMyCanvasLayer_DrawFont::CMyCanvasLayer_DrawFont( const char* szLayerName )
 	pWidget_statictext4->SetParent( this );
 	pWidget_statictext4->SetSize( 300, 250 );
 	pWidget_statictext4->SetPosition( 100, 500 );
-	pWidget_statictext4->SetTextContent((wchar*)(L"我爱北京天安门!狗"));
+	pWidget_statictext4->SetTextContent((wchar*)(L"我爱北京天安门!"));
 	aRenderInfo.m_uFontID = 5;
 	pWidget_statictext4->SetTextInfo(aRenderInfo);
 	pWidget_statictext4->Create();

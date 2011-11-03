@@ -73,6 +73,9 @@ namespace guiex
 		*/
 		void Destroy();
 
+		///< called after successed to register interface
+		virtual void OnPostRegisterInterface(){}
+
 		/**
 		* @brief delete self, used by CGUIInterfaceManager
 		*/
