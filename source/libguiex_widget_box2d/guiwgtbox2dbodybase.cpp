@@ -63,7 +63,7 @@ namespace guiex
 		pRender->MatrixMode( eMatrixMode_MODELVIEW );
 		pRender->LoadIdentity();
 
-		pRender->DrawRect( aRect, 3, 0,aColor );
+		pRender->DrawRect( aRect, 3, false, 0, aColor );
 
 		pRender->PopMatrix();
 	}

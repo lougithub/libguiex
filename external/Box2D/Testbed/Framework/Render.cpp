@@ -18,7 +18,11 @@
 
 #include "Render.h"
 
-#include "freeglut/GL/glut.h"
+#ifdef __APPLE__
+	#include <GLUT/glut.h>
+#else
+	#include "freeglut/freeglut.h"
+#endif
 
 #include <cstdio>
 #include <cstdarg>

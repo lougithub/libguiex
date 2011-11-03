@@ -63,12 +63,11 @@ guiex::int32 CGUIFrameworkTest::InitializeGame( )
 	CGUISceneManager::Instance()->LoadWidgets( "common" );
 
 	//create empty node for widget system
-	m_pWidgetRoot = CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtEmptyNode>( CGUIUtility::GenerateWidgetName(), "testproject");
-	{
-		m_pWidgetRoot->SetPositionType( eScreenValue_Percentage );
-		m_pWidgetRoot->SetPosition( 0,0 );
-		m_pWidgetRoot->Create();
-	}
+	m_pWidgetRoot = CGUIWidgetManager::Instance()->CreateWidget<CGUIWgtEmptyNode>( CGUIUtility::GenerateWidgetName(), "");
+	m_pWidgetRoot->SetPage( m_pWidgetRoot );
+	m_pWidgetRoot->SetPositionType( eScreenValue_Percentage );
+	m_pWidgetRoot->SetPosition( 0,0 );
+	m_pWidgetRoot->Create();
 
 	//create world
 	m_pWorld = CGUIInterfaceManager::Instance()->GetInterfacePhysicsWithTypeCheck<IGUIPhysics_box2d>()->GetWorld();
@@ -110,7 +109,7 @@ void CGUIFrameworkTest::CreateBox2dSample_hellobox2d()
 	groundBody->CreateFixture( &groundBox, 0.0f );
 
 	//widget
-	CGUIWidget* pWidget_staticbody= GUI_CREATE_WIDGET("CGUIWgtStaticImage", CGUIUtility::GenerateWidgetName(), "testproject");
+	CGUIWidget* pWidget_staticbody= GUI_CREATE_WIDGET("CGUIWgtStaticImage", CGUIUtility::GenerateWidgetName(), "");
 	{
 		pWidget_staticbody->SetParent( m_pWidgetRoot );
 		pWidget_staticbody->SetImage( "bg", "color_white" );
@@ -139,7 +138,7 @@ void CGUIFrameworkTest::CreateBox2dSample_hellobox2d()
 	m_pBody->CreateFixture( &fixtureDef );
 
 	//widget
-	CGUIWidget* pWidget_dynamicbody = GUI_CREATE_WIDGET("CGUIWgtStaticImage", CGUIUtility::GenerateWidgetName(), "testproject");
+	CGUIWidget* pWidget_dynamicbody = GUI_CREATE_WIDGET("CGUIWgtStaticImage", CGUIUtility::GenerateWidgetName(), "");
 	{
 		pWidget_dynamicbody->SetParent( m_pWidgetRoot );
 		pWidget_dynamicbody->SetImage( "bg", "color_white" );
@@ -167,7 +166,7 @@ void CGUIFrameworkTest::CreateBox2dSample_joints()
 	groundBody->CreateFixture( &groundBox, 0.0f );
 
 	//widget
-	CGUIWidget* pWidget_staticbody= GUI_CREATE_WIDGET("CGUIWgtStaticImage", CGUIUtility::GenerateWidgetName(), "testproject");
+	CGUIWidget* pWidget_staticbody= GUI_CREATE_WIDGET("CGUIWgtStaticImage", CGUIUtility::GenerateWidgetName(), "");
 	{
 		pWidget_staticbody->SetParent( m_pWidgetRoot );
 		pWidget_staticbody->SetImage( "bg", "color_white" );
@@ -195,7 +194,7 @@ void CGUIFrameworkTest::CreateBox2dSample_joints()
 	m_pBody2->CreateFixture( &fixtureDef );
 
 	//widget
-	CGUIWgtStaticImage* pWidget_dynamicbody = CGUIWidgetManager::Instance() ->CreateWidget<CGUIWgtStaticImage>(CGUIUtility::GenerateWidgetName(), "testproject");
+	CGUIWgtStaticImage* pWidget_dynamicbody = CGUIWidgetManager::Instance() ->CreateWidget<CGUIWgtStaticImage>(CGUIUtility::GenerateWidgetName(), "");
 	{
 		pWidget_dynamicbody->SetParent( m_pWidgetRoot );
 		pWidget_dynamicbody->SetImage( "bg", "color_white" );

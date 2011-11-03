@@ -590,11 +590,11 @@ namespace guiex
 		TRY_THROW_OPENGL_ERROR();
 		return pOldCamera;
 	}
-
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::DrawRect(
 		const CGUIRect& rDestRect, 
 		real fLineWidth,
+		bool bSolid,
 		real z,
 		const CGUIColor& rColor_topleft,
 		const CGUIColor& rColor_topright,
@@ -637,11 +637,7 @@ namespace guiex
 		m_pVertexForLine[3].vertices.z = z;
 		m_pVertexForLine[3].color.abgr = oglcolor_topright;      
 
-		glLineWidth( fLineWidth );
-
-		DrawPrimitive( GL_LINE_LOOP, m_pVertexForLine, 4 );
-
-		glLineWidth( 1.0f );
+		DrawPolygon( m_pVertexForLine,4, fLineWidth, bSolid);
 
 		TRY_THROW_OPENGL_ERROR();
 	}
@@ -650,6 +646,7 @@ namespace guiex
 							const CGUIVector2& rCenter,
 							real fRadius,
 							real fLineWidth,
+							bool bSolid,
 							real z,
 							const CGUIColor& rColor )
 	{
@@ -666,13 +663,35 @@ namespace guiex
 			m_pVertexForCircle[i].color.abgr = oglcolor;
 		}
 	
-		glLineWidth( fLineWidth );
+		DrawPolygon( m_pVertexForCircle,VERTEX_FOR_CIRCLE, fLineWidth, bSolid);
 
-		DrawPrimitive( GL_LINE_LOOP, m_pVertexForCircle, VERTEX_FOR_CIRCLE );
-
-		glLineWidth( 1.0f );
-		
 		TRY_THROW_OPENGL_ERROR();		
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_base::DrawPoint(
+		const CGUIVector2 &rPoint, 
+		real fPointSize,
+		real z,
+		const CGUIColor& rColor)
+	{
+		TRY_THROW_OPENGL_ERROR();
+
+		uint32 oglcolor = GUIColorToRenderColor(rColor);
+
+		//vert0
+		m_pVertexForLine[0].vertices.x = rPoint.x;
+		m_pVertexForLine[0].vertices.y = rPoint.y;
+		m_pVertexForLine[0].vertices.z = z;
+		m_pVertexForLine[0].color.abgr = oglcolor;
+  
+
+		glPointSize( fPointSize );
+
+		DrawPrimitive( GL_POINT, m_pVertexForLine, 1 );
+
+		glPointSize( 1.0f );
+
+		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::DrawLine(
@@ -700,11 +719,7 @@ namespace guiex
 		m_pVertexForLine[1].vertices.z = z;
 		m_pVertexForLine[1].color.abgr = oglcolor_bottomleft;     
 
-		glLineWidth( fLineWidth );
-
-		DrawPrimitive( GL_LINES, m_pVertexForLine, 2);
-
-		glLineWidth( 1.0f );
+		DrawPolygon( m_pVertexForLine,2, fLineWidth, false );
 
 		TRY_THROW_OPENGL_ERROR();
 	}
@@ -719,6 +734,30 @@ namespace guiex
 		BindTexture( pTexture );
 
 		DrawIndexedPrimitive( m_nRenderMode_TRIANGLES, pVerdices, pVerticeInfos, pIndices, nGridNum*6 );
+
+		TRY_THROW_OPENGL_ERROR();
+	}
+	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_base::DrawPolygon(
+		const SVertexFormat_V3F_C4UB* pVertex,
+		int16 nVertexNum,
+		real fLineWidth,
+		bool bSolid )
+	{
+		TRY_THROW_OPENGL_ERROR();
+
+		glLineWidth( fLineWidth );
+
+		if( !bSolid )
+		{
+			DrawPrimitive( GL_LINE_LOOP, pVertex, nVertexNum );
+		}
+		else
+		{
+			DrawPrimitive( GL_TRIANGLE_FAN, pVertex, nVertexNum );
+		}
+
+		glLineWidth( 1.0f );
 
 		TRY_THROW_OPENGL_ERROR();
 	}

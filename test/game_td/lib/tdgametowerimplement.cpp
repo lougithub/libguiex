@@ -286,7 +286,6 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CTDGameTowerImplementBase::OnRenderState_Working(IGUIInterfaceRender* pRender)
 	{
-		pRender->DrawCircle( GetPosition(), GetRadius(),2, 0, CGUIColor(1,0,0,1));
 	}
 	//------------------------------------------------------------------------------
 	void CTDGameTowerImplementBase::OnUpdateState_Working(real fDeltaTime)
@@ -320,6 +319,11 @@ namespace guiex
 		case eTowerState_Working:
 			OnRenderState_Working( pRender );
 			break;
+		}
+
+		if( GetGameTower()->IsMouseOver() )
+		{
+			pRender->DrawCircle( CGUIVector2(0,0), GetRadius(), false, 2, 0, CGUIColor(1,0,0,1));
 		}
 	}
 	//------------------------------------------------------------------------------

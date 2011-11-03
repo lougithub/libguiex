@@ -871,6 +871,15 @@ namespace guiex
 		//render canvas
 		RenderCanvas( pRender );
 
+		//render extra info
+		if( IsDrawExtraInfo() )
+		{
+			if( GetInterfaceManager()->GetInterfacePhysics() )
+			{
+				GetInterfaceManager()->GetInterfacePhysics()->RenderExtraInfo( pRender );
+			}
+		}
+
 		//render cursor
 		CGUIMouseCursor::Instance()->Render(pRender);
 	}

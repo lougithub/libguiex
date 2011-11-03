@@ -18,6 +18,7 @@
 // class
 //============================================================================// 
 class b2World;
+class b2Draw;
 
 namespace guiex
 {
@@ -32,6 +33,7 @@ namespace guiex
 	public:
 		virtual void DeleteSelf();
 		virtual	void Update( real fDeltaTime );
+		virtual void RenderExtraInfo( IGUIInterfaceRender* pRender );
 
 		b2World* GetWorld();
 		bool IsSimulating() const;
@@ -48,6 +50,7 @@ namespace guiex
 		virtual void DoDestroy();
 
 	protected:
+		b2Draw * m_pDebugDraw;
 		b2World * m_pWorld;
 		static real ms_fScale;
 		bool m_bSimulateWorld;

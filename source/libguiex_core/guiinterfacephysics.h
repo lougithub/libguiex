@@ -29,14 +29,7 @@ namespace guiex
 	class GUIEXPORT IGUIInterfacePhysics : public IGUIInterface
 	{
 	public:
-		/** 
-		* @brief constructor
-		*/
 		IGUIInterfacePhysics( const char* szModuleName );
-
-		/** 
-		* @brief destructor
-		*/
 		virtual ~IGUIInterfacePhysics();
 
 	public:
@@ -44,6 +37,11 @@ namespace guiex
 		* @brief update physics
 		*/
 		virtual	void Update( real fDeltaTime ) = 0;
+
+		/**
+		* @brief render extra info if there exist.
+		*/
+		virtual void RenderExtraInfo( class IGUIInterfaceRender* pRender ){}
 
 	public: 
 		static const char* StaticGetModuleType();

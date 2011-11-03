@@ -66,9 +66,16 @@ namespace guiex
 		virtual void Perspective(real fovy, real aspect, real zNear, real zFar);
 
 	public:
+		virtual void DrawPoint(
+			const CGUIVector2 &rPoint, 
+			real fPointSize,
+			real z,
+			const CGUIColor& rColor);
+
 		virtual void DrawRect(
 			const CGUIRect& rDestRect, 
 			real fLineWidth,
+			bool bSolid,
 			real z,
 			const CGUIColor& rColor_topleft,
 			const CGUIColor& rColor_topright,
@@ -92,6 +99,12 @@ namespace guiex
 			uint16* pIndices,
 			int16 nQuadNum);
 
+		virtual void DrawPolygon(
+			const SVertexFormat_V3F_C4UB* pVertex,
+			int16 nVertexNum,
+			real fLineWidth,
+			bool bSolid	);
+
 		virtual void DrawGrid(
 			const CGUITexture* pTexture,
 			const SVertexFormat_T2F_C4UB* pVerticeInfos,
@@ -111,6 +124,7 @@ namespace guiex
 			const CGUIVector2& rCenter,
 			real fRadius,
 			real fLineWidth,
+			bool bSolid,
 			real z,
 			const CGUIColor& rColor );
 

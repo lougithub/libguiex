@@ -2344,21 +2344,21 @@ namespace guiex
 	{
 		if( IsFocus() )
 		{
-			pRender->DrawRect( GetBoundArea(), 7.0f, 0.0f, CGUIColor( 1.f,1.f,1.f, 0.8f) );
+			pRender->DrawRect( GetBoundArea(), 7.0f, false, 0.0f, CGUIColor( 1.f,1.f,1.f, 0.8f) );
 		}
 
 		//draw bound
 		if( IsFocusable() )
 		{
-			pRender->DrawRect( GetBoundArea(), 3.0f, 0.0f, CGUIColor( 0.f,1.f,0.f,0.8f) );
+			pRender->DrawRect( GetBoundArea(), 3.0f, false, 0.0f, CGUIColor( 0.f,1.f,0.f,0.8f) );
 		}
 		else
 		{
-			pRender->DrawRect( GetBoundArea(), 3.0f, 0.0f, CGUIColor( 0.f,0.f,1.f,0.8f) );
+			pRender->DrawRect( GetBoundArea(), 3.0f, false, 0.0f, CGUIColor( 0.f,0.f,1.f,0.8f) );
 		}
 
 		//draw client area
-		pRender->DrawRect( GetBoundArea(), 1.0f, 0.0f, CGUIColor( 1.f,0.f,0.f,0.8f) );
+		pRender->DrawRect( GetBoundArea(), 1.0f, false, 0.0f, CGUIColor( 1.f,0.f,0.f,0.8f) );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::PushClipRect( IGUIInterfaceRender* pRender )
@@ -2479,7 +2479,7 @@ namespace guiex
 		real fLineWidth,
 		const CGUIColor& rColor )
 	{
-		pRender->DrawRect( rDestRect, fLineWidth, 0, rColor );
+		pRender->DrawRect( rDestRect, fLineWidth, false, 0, rColor );
 	}
 	//------------------------------------------------------------------------------
 	void CGUIWidget::DrawAnimation(IGUIInterfaceRender* pRender, 

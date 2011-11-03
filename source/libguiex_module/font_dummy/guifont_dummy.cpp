@@ -92,11 +92,7 @@ namespace guiex
 		CGUIRect aCharRect( CGUIVector2(rPos.x, rPos.y),
 						   CGUISize(fFontSize*rInfo.m_fFontScale,fFontSize*rInfo.m_fFontScale));
 		
-		pRender->DrawRect( aCharRect, 1, 0,
-						  rInfo.m_aColor,
-						  rInfo.m_aColor,
-						  rInfo.m_aColor,
-						  rInfo.m_aColor);
+		pRender->DrawRect( aCharRect, 1, false, 0, rInfo.m_aColor);
 	}
 	//------------------------------------------------------------------------------
 	void IGUIFont_dummy::DrawString(IGUIInterfaceRender* pRender, 
@@ -162,11 +158,7 @@ namespace guiex
 							   aFontSize*rInfo.m_fFontScale);
 			
 			//dest area size
-			pRender->DrawRect( aCharRect, 1, 0,
-							  rInfo.m_aColor,
-							  rInfo.m_aColor,
-							  rInfo.m_aColor,
-							  rInfo.m_aColor);
+			pRender->DrawRect( aCharRect, 1, false, 0, rInfo.m_aColor);
 			
 			aPos.x+=aFontSize.m_fWidth;
 		}
@@ -203,11 +195,7 @@ namespace guiex
 							   CGUIVector2(aPos.x, aPos.y),
 							   aFontSize*rInfo.m_fFontScale);
 			
-			pRender->DrawRect( aCharRect, 1, 0,
-							  rInfo.m_aColor,
-							  rInfo.m_aColor,
-							  rInfo.m_aColor,
-							  rInfo.m_aColor);
+			pRender->DrawRect( aCharRect, 1, false, 0, rInfo.m_aColor);
 			
 			aPos.x+=aFontSize.m_fWidth;
 		}

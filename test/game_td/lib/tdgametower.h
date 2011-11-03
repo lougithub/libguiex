@@ -34,6 +34,8 @@ namespace guiex
 		void OnMouseLeave();
 		void OnMouseLeftClick();
 
+		bool IsMouseOver() const;
+
 		class CTDGameWorld* GetGameWorld() const;
 
 		void SetSize( const CGUISize& rSize );
@@ -68,6 +70,8 @@ namespace guiex
 		CGUIVector2 m_aPosition;
 		CGUIRect m_aRenderRect;
 		CGUIColor m_aRenderColor;
+
+		bool m_bMouseOver;
 
 		class CTDGameTowerImplement* m_pTowerImplement[__eTowerType_MAX__];
 	};

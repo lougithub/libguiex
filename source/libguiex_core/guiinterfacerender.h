@@ -85,9 +85,24 @@ namespace guiex
 		virtual void FramebufferRenderbuffer_Depth( uint32 renderbuffer ) = 0;
 		virtual void DeleteRenderbuffers(uint32 n, const uint32* renderbuffers) = 0;
 
+		virtual void DrawPoint(
+			const CGUIVector2 &rPoint, 
+			real fPointSize,
+			real z,
+			const CGUIColor& rColor) = 0;
+
+		virtual void DrawLine(
+			const CGUIVector2 &rBegin, 
+			const CGUIVector2 &rEnd, 
+			real fLineWidth,
+			real z,
+			const CGUIColor& rColor_begin,
+			const CGUIColor& rColor_end) = 0;
+
 		virtual void DrawRect(
 			const CGUIRect& rDestRect, 
 			real fLineWidth,
+			bool bSolid,
 			real z,
 			const CGUIColor& rColor_topleft,
 			const CGUIColor& rColor_topright,
@@ -97,8 +112,15 @@ namespace guiex
 		virtual void DrawRect(
 			const CGUIRect& rDestRect, 
 			real fLineWidth,
+			bool bSolid,
 			real z,
 			const CGUIColor& rColor );
+
+		virtual void DrawPolygon(
+			const SVertexFormat_V3F_C4UB* pVertex,
+			int16 nVertexNum,
+			real fLineWidth,
+			bool bSolid ) = 0;
 
 		virtual void DrawQuads(
 			const CGUITexture* pTexture,
@@ -138,18 +160,11 @@ namespace guiex
 			const CGUIColor& rColor
 			);
 
-		virtual void DrawLine(
-			const CGUIVector2 &rBegin, 
-			const CGUIVector2 &rEnd, 
-			real fLineWidth,
-			real z,
-			const CGUIColor& rColor_begin,
-			const CGUIColor& rColor_end) = 0;
-		
 		virtual void DrawCircle(
 			const CGUIVector2& rCenter,
 			real fRadius,
 			real fLineWidth,
+			bool bSolid,
 			real z,
 			const CGUIColor& rColor ) = 0;
 

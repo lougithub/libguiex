@@ -36,6 +36,7 @@ namespace guiex
 		,m_aAnchorPoint( rAnchorPoint )
 		,m_aRenderColor(1,1,1,1)
 		,m_pWidgetTower(pWidgetTower)
+		,m_bMouseOver(false)
 	{
 		m_pTowerImplement[eTowerType_Basement] = new CTDGameTowerImplement_Basement( this );
 		m_pTowerImplement[eTowerType_ArcherTower] = new CTDGameTowerImplement_ArcherTower( this );
@@ -173,11 +174,20 @@ namespace guiex
 	void CTDGameTower::OnMouseEnter()
 	{
 		m_aRenderColor.SetColor(0.5f,0.5f,0.5f,0.5f);
+
+		m_bMouseOver = true;
 	}
 	//------------------------------------------------------------------------------
 	void CTDGameTower::OnMouseLeave()
 	{
 		m_aRenderColor.SetColor(1.f,1.f,1.f,1.f);
+
+		m_bMouseOver = false;
+	}
+	//------------------------------------------------------------------------------
+	bool CTDGameTower::IsMouseOver() const
+	{
+		return m_bMouseOver;
 	}
 	//------------------------------------------------------------------------------
 	void CTDGameTower::OnMouseLeftClick()

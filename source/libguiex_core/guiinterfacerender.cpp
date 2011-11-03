@@ -35,10 +35,11 @@ namespace guiex
 	void IGUIInterfaceRender::DrawRect(
 		const CGUIRect& rDestRect, 
 		real fLineWidth,
+		bool bSolid,
 		real z,
 		const CGUIColor& rColor )
 	{
-		DrawRect( rDestRect, fLineWidth, z, rColor,rColor,rColor,rColor );
+		DrawRect( rDestRect, fLineWidth, bSolid, z, rColor,rColor,rColor,rColor );
 	}
 	//------------------------------------------------------------------------------
 	void IGUIInterfaceRender::DrawTile(	

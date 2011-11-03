@@ -83,19 +83,15 @@ void WxResourceCanvasBase::OnPaint(wxPaintEvent& event)
 
 	IGUIInterfaceRender* pRender = CGUIInterfaceManager::Instance()->GetInterfaceRender();
 
-	GSystem->BeginRender();
+	GSystem->BeginRender( pRender );
 
-	pRender->PushMatrix();
-	pRender->LoadIdentity();
 	CGUIMatrix4 matrix;
 	matrix.makeTransform( CGUIVector3(ClientSize.x/2, ClientSize.y/2, 0), CGUIVector3(1.0f,1.0f,1.0f), CGUIQuaternion());
 	pRender->MultMatrix(matrix);
 
 	OnRender( pRender );
 
-	pRender->PopMatrix();
-
-	GSystem->EndRender();
+	GSystem->EndRender( pRender );
 
 	glFlush();
 	SwapBuffers();

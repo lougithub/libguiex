@@ -18,7 +18,13 @@
 
 #include "../Framework/Test.h"
 #include "../Framework/Render.h"
-#include "../../freeglut/GL/glut.h"
+
+#ifdef __APPLE__
+	#include <GLUT/glut.h>
+#else
+	#include "freeglut/freeglut.h"
+#endif
+
 #include <cstring>
 using namespace std;
 
@@ -39,6 +45,7 @@ using namespace std;
 #include "Confined.h"
 #include "DistanceTest.h"
 #include "Dominos.h"
+#include "DumpShell.h"
 #include "DynamicTreeTest.h"
 #include "EdgeShapes.h"
 #include "EdgeTest.h"
@@ -61,6 +68,7 @@ using namespace std;
 #include "TheoJansen.h"
 #include "Tiles.h"
 #include "TimeOfImpact.h"
+#include "Tumbler.h"
 #include "VaryingFriction.h"
 #include "VaryingRestitution.h"
 #include "VerticalStack.h"
@@ -68,12 +76,16 @@ using namespace std;
 
 TestEntry g_testEntries[] =
 {
+	{"Tumbler", Tumbler::Create},
+	{"Tiles", Tiles::Create},
+	{"Dump Shell", DumpShell::Create},
 	{"Gears", Gears::Create},
+	{"Cantilever", Cantilever::Create},
+	{"Varying Restitution", VaryingRestitution::Create},
 	{"Character Collision", CharacterCollision::Create},
 	{"Edge Test", EdgeTest::Create},
 	{"Body Types", BodyTypes::Create},
 	{"Shape Editing", ShapeEditing::Create},
-	{"Tiles", Tiles::Create},
 	{"Car", Car::Create},
 	{"Apply Force", ApplyForce::Create},
 	{"Prismatic", Prismatic::Create},
@@ -93,11 +105,9 @@ TestEntry g_testEntries[] =
 	{"Ray-Cast", RayCast::Create},
 	{"Confined", Confined::Create},
 	{"Pyramid", Pyramid::Create},
-	{"Varying Restitution", VaryingRestitution::Create},
 	{"Theo Jansen's Walker", TheoJansen::Create},
 	{"Edge Shapes", EdgeShapes::Create},
 	{"PolyCollision", PolyCollision::Create},
-	{"Cantilever", Cantilever::Create},
 	{"Bridge", Bridge::Create},
 	{"Breakable", Breakable::Create},
 	{"Chain", Chain::Create},
