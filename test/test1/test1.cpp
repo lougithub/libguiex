@@ -460,8 +460,8 @@ void CGUIFrameworkTest::PostUpdate( real fDeltaTime )
 
 void CGUIFrameworkTest::PostRender( IGUIInterfaceRender* pRender )
 {
-	pRender->DrawRect( CGUIRect( 100,100,200,200), 2, 0, CGUIColor(1,1,1,1),CGUIColor(0,1,1,1),CGUIColor(1,0,1,1),CGUIColor(1,1,0,1));
-	pRender->DrawCircle( CGUIVector2(150,150), 50, 2, 0, CGUIColor(1,1,1,1));
+	pRender->DrawRect( CGUIRect( 100,100,200,200), 2,false, 0, CGUIColor(1,1,1,1),CGUIColor(0,1,1,1),CGUIColor(1,0,1,1),CGUIColor(1,1,0,1));
+	pRender->DrawCircle( CGUIVector2(150,150), 50, 2, false, 0, CGUIColor(1,1,1,1));
 
 	CGUIFramework::PostRender( pRender );
 }

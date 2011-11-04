@@ -247,10 +247,8 @@ void CMyCanvasLayer_DrawRect::Render( class IGUIInterfaceRender* pRender )
 	pRender->DrawRect(
 		m_aRect, 
 		3,
+		false,
 		0,
-		m_aColor,
-		m_aColor,
-		m_aColor,
 		m_aColor );
 
 	pRender->ApplyCamera( pOldCamera );

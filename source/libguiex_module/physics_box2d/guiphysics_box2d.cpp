@@ -70,8 +70,8 @@ namespace guiex
 		GUIABGR abgr = CGUIColor( color.r, color.g, color.b, 1.0f ).GetAsABGR();
 		for( int32 i=0; i<vertexCount; ++i )
 		{
-			m_aVertexBuf[i].vertices.x = vertices[i].x;
-			m_aVertexBuf[i].vertices.y = vertices[i].y;
+			m_aVertexBuf[i].vertices.x = IGUIPhysics_box2d::Meter2Pixel(vertices[i].x);
+			m_aVertexBuf[i].vertices.y = IGUIPhysics_box2d::Meter2Pixel(vertices[i].y);
 			m_aVertexBuf[i].vertices.z = 0.0f;
 			m_aVertexBuf[i].color.abgr = abgr;
 		}
@@ -84,8 +84,8 @@ namespace guiex
 		
 		for( int32 i=0; i<vertexCount; ++i )
 		{
-			m_aVertexBuf[i].vertices.x = vertices[i].x;
-			m_aVertexBuf[i].vertices.y = vertices[i].y;
+			m_aVertexBuf[i].vertices.x = IGUIPhysics_box2d::Meter2Pixel(vertices[i].x);
+			m_aVertexBuf[i].vertices.y = IGUIPhysics_box2d::Meter2Pixel(vertices[i].y);
 			m_aVertexBuf[i].vertices.z = 0.0f;
 		}
 
@@ -108,25 +108,28 @@ namespace guiex
 	void CGUIBox2DDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color)
 	{
 		CGUIColor aColor1( 0.5f*color.r, 0.5f*color.g, 0.5f*color.b, 0.5f*1.0f );
-		m_pRender->DrawCircle( CGUIVector2(center.x, center.y), radius, 2, true, 0, aColor1 );
+		m_pRender->DrawCircle( CGUIVector2(IGUIPhysics_box2d::Meter2Pixel(center.x), IGUIPhysics_box2d::Meter2Pixel(center.y)), radius, 2, true, 0, aColor1 );
 
 		CGUIColor aColor2( color.r, color.g, color.b, 1.0f );
-		m_pRender->DrawCircle( CGUIVector2(center.x, center.y), radius, 2, false, 0, aColor2 );
+		m_pRender->DrawCircle( CGUIVector2(IGUIPhysics_box2d::Meter2Pixel(center.x), IGUIPhysics_box2d::Meter2Pixel(center.y)), radius, 2, false, 0, aColor2 );
 	}
 
 	void CGUIBox2DDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color)
 	{
 		CGUIColor aColor1( color.r, color.g, color.b, 1.0f );
-		m_pRender->DrawCircle( CGUIVector2(center.x, center.y), radius, 1, true, 0, aColor1 );
+		m_pRender->DrawCircle( CGUIVector2(IGUIPhysics_box2d::Meter2Pixel(center.x), IGUIPhysics_box2d::Meter2Pixel(center.y)), radius, 1, true, 0, aColor1 );
 		
 		CGUIColor aColor2( color.r, color.g, color.b, 1.0f );
-		m_pRender->DrawCircle( CGUIVector2(center.x, center.y), radius, 2, false, 0, aColor2 );
+		m_pRender->DrawCircle( CGUIVector2(IGUIPhysics_box2d::Meter2Pixel(center.x), IGUIPhysics_box2d::Meter2Pixel(center.y)), radius, 2, false, 0, aColor2 );
 	}
 
 	void CGUIBox2DDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color)
 	{
 		CGUIColor aColor( color.r, color.g, color.b, 1.0f );
-		m_pRender->DrawLine( CGUIVector2(p1.x, p1.y), CGUIVector2(p2.x, p2.y), 2, 0, aColor, aColor );
+		m_pRender->DrawLine( 
+			CGUIVector2(IGUIPhysics_box2d::Meter2Pixel(p1.x), IGUIPhysics_box2d::Meter2Pixel(p1.y)), 
+			CGUIVector2(IGUIPhysics_box2d::Meter2Pixel(p2.x), IGUIPhysics_box2d::Meter2Pixel(p2.y)),
+			2, 0, aColor, aColor );
 	}
 
 	void CGUIBox2DDebugDraw::DrawTransform(const b2Transform& xf)
@@ -136,17 +139,23 @@ namespace guiex
 
 		CGUIColor aColor1( 1, 0, 0, 1.0f );
 		p2 = p1 + k_axisScale * xf.q.GetXAxis();
-		m_pRender->DrawLine( CGUIVector2(p1.x, p1.y), CGUIVector2(p2.x, p2.y), 2, 0, aColor1, aColor1 );
+		m_pRender->DrawLine(
+			CGUIVector2(IGUIPhysics_box2d::Meter2Pixel(p1.x), IGUIPhysics_box2d::Meter2Pixel(p1.y)),
+			CGUIVector2(IGUIPhysics_box2d::Meter2Pixel(p2.x), IGUIPhysics_box2d::Meter2Pixel(p2.y)), 
+			2, 0, aColor1, aColor1 );
 
 		CGUIColor aColor2( 0, 1, 0, 1.0f );
 		p2 = p1 + k_axisScale * xf.q.GetYAxis();
-		m_pRender->DrawLine( CGUIVector2(p1.x, p1.y), CGUIVector2(p2.x, p2.y), 2, 0, aColor2, aColor2 );
+		m_pRender->DrawLine( 
+			CGUIVector2(IGUIPhysics_box2d::Meter2Pixel(p1.x), IGUIPhysics_box2d::Meter2Pixel(p1.y)),
+			CGUIVector2(IGUIPhysics_box2d::Meter2Pixel(p2.x), IGUIPhysics_box2d::Meter2Pixel(p2.y)),
+			2, 0, aColor2, aColor2 );
 	}
 
 	void CGUIBox2DDebugDraw::DrawPoint(const b2Vec2& p, float32 size, const b2Color& color)
 	{
 		CGUIColor aColor( color.r, color.g, color.b, 1.0f );
-		m_pRender->DrawPoint( CGUIVector2(p.x, p.y), size, 0, aColor );
+		m_pRender->DrawPoint( CGUIVector2(IGUIPhysics_box2d::Meter2Pixel(p.x), IGUIPhysics_box2d::Meter2Pixel(p.y)), size, 0, aColor );
 	}
 
 	void CGUIBox2DDebugDraw::DrawString(int x, int y, const char *string, ...)

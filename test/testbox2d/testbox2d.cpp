@@ -1,9 +1,7 @@
 /** 
- * @file sample_opengl.cpp
- * @brief test and show how to use opengl as render
+ * @file testbox2d.cpp
 
  * @author ken
- * @date 2006-07-11
  */
 
 #include <libguiex_framework/guiframework.h>
@@ -11,8 +9,6 @@
 #include <Box2D/Box2D.h>
 
 using namespace guiex;
-
-#define METER2PIXEL(meter)	((meter)*10.0f)
 
 class CGUIFrameworkTest : public CGUIFramework
 {
@@ -115,8 +111,8 @@ void CGUIFrameworkTest::CreateBox2dSample_hellobox2d()
 		pWidget_staticbody->SetImage( "bg", "color_white" );
 		const b2Fixture* pFixtureList = groundBody->GetFixtureList();
 		b2Vec2 vExtents = pFixtureList->GetAABB(0).GetExtents();
-		pWidget_staticbody->SetSize( METER2PIXEL(vExtents.x*2), METER2PIXEL(vExtents.y*2) );
-		pWidget_staticbody->SetPosition( METER2PIXEL(groundBody->GetPosition().x), METER2PIXEL(groundBody->GetPosition().y) );
+		pWidget_staticbody->SetSize( IGUIPhysics_box2d::Meter2Pixel(vExtents.x*2), IGUIPhysics_box2d::Meter2Pixel(vExtents.y*2) );
+		pWidget_staticbody->SetPosition( IGUIPhysics_box2d::Meter2Pixel(groundBody->GetPosition().x), IGUIPhysics_box2d::Meter2Pixel(groundBody->GetPosition().y) );
 		pWidget_staticbody->SetAnchorPoint( 0.5, 0.5 );
 		pWidget_staticbody->SetColor( CGUIColor(0.0f, 0.0f, 1.0f, 1.0f ));
 		pWidget_staticbody->Create();
@@ -144,10 +140,10 @@ void CGUIFrameworkTest::CreateBox2dSample_hellobox2d()
 		pWidget_dynamicbody->SetImage( "bg", "color_white" );
 		const b2Fixture* pFixtureList = m_pBody->GetFixtureList();
 		b2Vec2 vExtents = pFixtureList->GetAABB(0).GetExtents();
-		//pWidget_dynamicbody->SetSize( METER2PIXEL(vExtents.x*2), METER2PIXEL(vExtents.y*2) );
-		pWidget_dynamicbody->SetSize( METER2PIXEL(4), METER2PIXEL(1) );
+		//pWidget_dynamicbody->SetSize( IGUIPhysics_box2d::Meter2Pixel(vExtents.x*2), IGUIPhysics_box2d::Meter2Pixel(vExtents.y*2) );
+		pWidget_dynamicbody->SetSize( IGUIPhysics_box2d::Meter2Pixel(4), IGUIPhysics_box2d::Meter2Pixel(1) );
 		pWidget_dynamicbody->SetRotation( 0, 0, m_pBody->GetAngle() / b2_pi * 180.f );
-		pWidget_dynamicbody->SetPosition( METER2PIXEL(m_pBody->GetPosition().x), METER2PIXEL(m_pBody->GetPosition().y) );
+		pWidget_dynamicbody->SetPosition( IGUIPhysics_box2d::Meter2Pixel(m_pBody->GetPosition().x), IGUIPhysics_box2d::Meter2Pixel(m_pBody->GetPosition().y) );
 		pWidget_dynamicbody->SetAnchorPoint( 0.5, 0.5 );
 		pWidget_dynamicbody->Create();
 	}
@@ -172,8 +168,8 @@ void CGUIFrameworkTest::CreateBox2dSample_joints()
 		pWidget_staticbody->SetImage( "bg", "color_white" );
 		const b2Fixture* pFixtureList = groundBody->GetFixtureList();
 		b2Vec2 vExtents = pFixtureList->GetAABB(0).GetExtents();
-		pWidget_staticbody->SetSize( METER2PIXEL(vExtents.x*2), METER2PIXEL(vExtents.y*2) );
-		pWidget_staticbody->SetPosition( METER2PIXEL(groundBody->GetPosition().x), METER2PIXEL(groundBody->GetPosition().y) );
+		pWidget_staticbody->SetSize( IGUIPhysics_box2d::Meter2Pixel(vExtents.x*2), IGUIPhysics_box2d::Meter2Pixel(vExtents.y*2) );
+		pWidget_staticbody->SetPosition( IGUIPhysics_box2d::Meter2Pixel(groundBody->GetPosition().x), IGUIPhysics_box2d::Meter2Pixel(groundBody->GetPosition().y) );
 		pWidget_staticbody->SetAnchorPoint( 0.5, 0.5 );
 		pWidget_staticbody->SetColor( CGUIColor(0.0f, 0.0f, 1.0f, 1.0f ));
 		pWidget_staticbody->Create();
@@ -200,10 +196,10 @@ void CGUIFrameworkTest::CreateBox2dSample_joints()
 		pWidget_dynamicbody->SetImage( "bg", "color_white" );
 		const b2Fixture* pFixtureList = m_pBody2->GetFixtureList();
 		b2Vec2 vExtents = pFixtureList->GetAABB(0).GetExtents();
-		//pWidget_dynamicbody->SetSize( METER2PIXEL(vExtents.x*2), METER2PIXEL(vExtents.y*2) );
-		pWidget_dynamicbody->SetSize( METER2PIXEL(2), METER2PIXEL(2) );
+		//pWidget_dynamicbody->SetSize( IGUIPhysics_box2d::Meter2Pixel(vExtents.x*2), IGUIPhysics_box2d::Meter2Pixel(vExtents.y*2) );
+		pWidget_dynamicbody->SetSize( IGUIPhysics_box2d::Meter2Pixel(2), IGUIPhysics_box2d::Meter2Pixel(2) );
 		pWidget_dynamicbody->SetRotation( 0, 0, m_pBody2->GetAngle() / b2_pi * 180.f );
-		pWidget_dynamicbody->SetPosition( METER2PIXEL(m_pBody2->GetPosition().x), METER2PIXEL(m_pBody2->GetPosition().y) );
+		pWidget_dynamicbody->SetPosition( IGUIPhysics_box2d::Meter2Pixel(m_pBody2->GetPosition().x), IGUIPhysics_box2d::Meter2Pixel(m_pBody2->GetPosition().y) );
 		pWidget_dynamicbody->SetAnchorPoint( 0.5, 0.5 );
 		pWidget_dynamicbody->Create();
 	}
@@ -224,7 +220,7 @@ void CGUIFrameworkTest::CreateBox2dSample_joints()
 void CGUIFrameworkTest::UpdateBody( b2Body* pBody )
 {
 	CGUIWidget* pBodyWidget = (CGUIWidget*)(pBody->GetUserData());
-	pBodyWidget->SetPixelPosition( METER2PIXEL(pBody->GetPosition().x), METER2PIXEL(pBody->GetPosition().y) );
+	pBodyWidget->SetPixelPosition( IGUIPhysics_box2d::Meter2Pixel(pBody->GetPosition().x), IGUIPhysics_box2d::Meter2Pixel(pBody->GetPosition().y) );
 	pBodyWidget->SetRotation( 0, 0, pBody->GetAngle() / b2_pi * 180.f );
 	pBodyWidget->Refresh();
 }
@@ -232,10 +228,8 @@ void CGUIFrameworkTest::UpdateBody( b2Body* pBody )
 void CGUIFrameworkTest::UpdateJoint( b2Joint* pJoint )
 {
 	IGUIInterfaceRender* pRender = CGUIInterfaceManager::Instance()->GetInterfaceRender();
-	pRender->BeginRender();
-	CGUIVector2 aBegin( METER2PIXEL(m_pJoint->GetAnchorA().x), METER2PIXEL(m_pJoint->GetAnchorA().y ));
-	CGUIVector2 aEnd( METER2PIXEL(m_pJoint->GetAnchorB().x), METER2PIXEL(m_pJoint->GetAnchorB().y ));
+	CGUIVector2 aBegin( IGUIPhysics_box2d::Meter2Pixel(m_pJoint->GetAnchorA().x), IGUIPhysics_box2d::Meter2Pixel(m_pJoint->GetAnchorA().y ));
+	CGUIVector2 aEnd( IGUIPhysics_box2d::Meter2Pixel(m_pJoint->GetAnchorB().x), IGUIPhysics_box2d::Meter2Pixel(m_pJoint->GetAnchorB().y ));
 	pRender->DrawLine( aBegin, aEnd, 2, 0, CGUIColor(1,0,0,1), CGUIColor( 1,0,0,1) );
-	pRender->EndRender();
 }
 
