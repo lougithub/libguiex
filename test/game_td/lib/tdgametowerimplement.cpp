@@ -170,6 +170,16 @@ namespace guiex
 		m_arrayLevelInfoCommon.clear();
 	}
 	//------------------------------------------------------------------------------
+	uint32 CTDGameTowerImplementBase::GetBuildCost() const
+	{
+		if( GetTotalLevel() == 0 )
+		{
+			GUI_THROW( "[CTDGameTowerImplementBase::GetBuildCost]: invalid tower level");
+			return 0;
+		}
+		return m_arrayLevelInfoCommon[0].m_uPrice;
+	}
+	//------------------------------------------------------------------------------
 	uint32 CTDGameTowerImplementBase::GetUpgradeCost() const
 	{
 		if( GetTotalLevel() == 0 || m_uLevel >= GetTotalLevel()-1 )
@@ -178,6 +188,16 @@ namespace guiex
 			return 0;
 		}
 		return m_arrayLevelInfoCommon[m_uLevel+1].m_uPrice;
+	}
+	//------------------------------------------------------------------------------
+	uint32 CTDGameTowerImplementBase::GetSellCost() const
+	{
+		if( GetTotalLevel() == 0 || m_uLevel >= GetTotalLevel() )
+		{
+			GUI_THROW( "[CTDGameTowerImplementBase::GetSellCost]: invalid tower level");
+			return 0;
+		}
+		return m_arrayLevelInfoCommon[m_uLevel].m_uSellPrice;
 	}
 	//------------------------------------------------------------------------------
 	real CTDGameTowerImplementBase::GetRadius() const
@@ -323,7 +343,7 @@ namespace guiex
 
 		if( GetGameTower()->IsMouseOver() )
 		{
-			pRender->DrawCircle( CGUIVector2(0,0), GetRadius(), false, 2, 0, CGUIColor(1,0,0,1));
+			pRender->DrawCircle( CGUIVector2(0,0), GetRadius(), 2, false, 0, CGUIColor(1,0,0,1));
 		}
 	}
 	//------------------------------------------------------------------------------

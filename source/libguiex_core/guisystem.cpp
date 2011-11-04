@@ -902,7 +902,12 @@ namespace guiex
 	*/
 	CGUIWidget*	CGUISystem::GetWidgetUnderPoint(const CGUIVector2& rPos)
 	{
-		return m_pCanvasLayerManager->GetWidgetUnderPoint( rPos );
+		CGUIWidget* pWidget = m_pCanvasLayerManager->GetWidgetUnderPoint( rPos );
+		if( pWidget && pWidget->IsDisable() )
+		{
+			return NULL;
+		}
+		return pWidget;
 	}
 	//------------------------------------------------------------------------------
 	void CGUISystem::UpdateTime(real fDeltaTime)

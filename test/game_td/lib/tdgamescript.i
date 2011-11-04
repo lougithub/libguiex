@@ -36,6 +36,10 @@ namespace guiex
 		void UpgradeTower( );
 		void SellTower( );
 		
+		unsigned int GetBuildCost( ETowerType eType ) const;
+		unsigned int GetUpgradeCost() const;
+		unsigned int GetSellCost() const;
+
 	protected:
 		CTDGameTower();
 		virtual ~CTDGameTower();
@@ -51,8 +55,8 @@ namespace guiex
 		guiex::CGUIWidget* GetTowerSelectPanel() const;
 		guiex::CGUIWidget* GetTowerUpgradePanel() const;
 	
-		guiex::uint32 GetGold() const;
-		guiex::uint32 GetHP() const;
+		unsigned int GetGold() const;
+		unsigned int GetHP() const;
 
 		CTDGameTower* GetCurrentFocusTower() const;
 

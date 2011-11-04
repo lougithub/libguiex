@@ -51,6 +51,10 @@ namespace guiex
 		void UpgradeTower( );
 		void SellTower( );
 
+		uint32 GetBuildCost( ETowerType eType ) const;
+		uint32 GetUpgradeCost() const;
+		uint32 GetSellCost() const;
+
 		void CloseTowerSelectPanel();
 		void CloseTowerUpgradePanel();
 

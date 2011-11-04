@@ -1509,9 +1509,8 @@ SWIG_Lua_dostring(lua_State *L, const char* str) {
 #define SWIGTYPE_p_guiex__CGUIWidget swig_types[0]
 #define SWIGTYPE_p_guiex__CTDGameTower swig_types[1]
 #define SWIGTYPE_p_guiex__CTDGameWorld swig_types[2]
-#define SWIGTYPE_p_guiex__uint32 swig_types[3]
-static swig_type_info *swig_types[5];
-static swig_module_info swig_module = {swig_types, 4, 0, 0, 0, 0};
+static swig_type_info *swig_types[4];
+static swig_module_info swig_module = {swig_types, 3, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -1658,12 +1657,90 @@ fail:
 }
 
 
+static int _wrap_CTDGameTower_GetBuildCost(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CTDGameTower *arg1 = (guiex::CTDGameTower *) 0 ;
+  guiex::ETowerType arg2 ;
+  unsigned int result;
+  
+  SWIG_check_num_args("guiex::CTDGameTower::GetBuildCost",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::CTDGameTower::GetBuildCost",1,"guiex::CTDGameTower const *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("guiex::CTDGameTower::GetBuildCost",2,"guiex::ETowerType");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CTDGameTower,0))){
+    SWIG_fail_ptr("CTDGameTower_GetBuildCost",1,SWIGTYPE_p_guiex__CTDGameTower);
+  }
+  
+  arg2 = (guiex::ETowerType)(int)lua_tonumber(L, 2);
+  result = (unsigned int)((guiex::CTDGameTower const *)arg1)->GetBuildCost(arg2);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CTDGameTower_GetUpgradeCost(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CTDGameTower *arg1 = (guiex::CTDGameTower *) 0 ;
+  unsigned int result;
+  
+  SWIG_check_num_args("guiex::CTDGameTower::GetUpgradeCost",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::CTDGameTower::GetUpgradeCost",1,"guiex::CTDGameTower const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CTDGameTower,0))){
+    SWIG_fail_ptr("CTDGameTower_GetUpgradeCost",1,SWIGTYPE_p_guiex__CTDGameTower);
+  }
+  
+  result = (unsigned int)((guiex::CTDGameTower const *)arg1)->GetUpgradeCost();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CTDGameTower_GetSellCost(lua_State* L) {
+  int SWIG_arg = 0;
+  guiex::CTDGameTower *arg1 = (guiex::CTDGameTower *) 0 ;
+  unsigned int result;
+  
+  SWIG_check_num_args("guiex::CTDGameTower::GetSellCost",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::CTDGameTower::GetSellCost",1,"guiex::CTDGameTower const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_guiex__CTDGameTower,0))){
+    SWIG_fail_ptr("CTDGameTower_GetSellCost",1,SWIGTYPE_p_guiex__CTDGameTower);
+  }
+  
+  result = (unsigned int)((guiex::CTDGameTower const *)arg1)->GetSellCost();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static swig_lua_method swig_guiex_CTDGameTower_methods[] = {
     {"CloseTowerSelectPanel", _wrap_CTDGameTower_CloseTowerSelectPanel}, 
     {"CloseTowerUpgradePanel", _wrap_CTDGameTower_CloseTowerUpgradePanel}, 
     {"BuildTower", _wrap_CTDGameTower_BuildTower}, 
     {"UpgradeTower", _wrap_CTDGameTower_UpgradeTower}, 
     {"SellTower", _wrap_CTDGameTower_SellTower}, 
+    {"GetBuildCost", _wrap_CTDGameTower_GetBuildCost}, 
+    {"GetUpgradeCost", _wrap_CTDGameTower_GetUpgradeCost}, 
+    {"GetSellCost", _wrap_CTDGameTower_GetSellCost}, 
     {0,0}
 };
 static swig_lua_attribute swig_guiex_CTDGameTower_attributes[] = {
@@ -1724,7 +1801,7 @@ fail:
 static int _wrap_CTDGameWorld_GetGold(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CTDGameWorld *arg1 = (guiex::CTDGameWorld *) 0 ;
-  guiex::uint32 result;
+  unsigned int result;
   
   SWIG_check_num_args("guiex::CTDGameWorld::GetGold",1,1)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::CTDGameWorld::GetGold",1,"guiex::CTDGameWorld const *");
@@ -1733,11 +1810,8 @@ static int _wrap_CTDGameWorld_GetGold(lua_State* L) {
     SWIG_fail_ptr("CTDGameWorld_GetGold",1,SWIGTYPE_p_guiex__CTDGameWorld);
   }
   
-  result = ((guiex::CTDGameWorld const *)arg1)->GetGold();
-  {
-    guiex::uint32 * resultptr = new guiex::uint32((const guiex::uint32 &) result);
-    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_guiex__uint32,1); SWIG_arg++;
-  }
+  result = (unsigned int)((guiex::CTDGameWorld const *)arg1)->GetGold();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -1751,7 +1825,7 @@ fail:
 static int _wrap_CTDGameWorld_GetHP(lua_State* L) {
   int SWIG_arg = 0;
   guiex::CTDGameWorld *arg1 = (guiex::CTDGameWorld *) 0 ;
-  guiex::uint32 result;
+  unsigned int result;
   
   SWIG_check_num_args("guiex::CTDGameWorld::GetHP",1,1)
   if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("guiex::CTDGameWorld::GetHP",1,"guiex::CTDGameWorld const *");
@@ -1760,11 +1834,8 @@ static int _wrap_CTDGameWorld_GetHP(lua_State* L) {
     SWIG_fail_ptr("CTDGameWorld_GetHP",1,SWIGTYPE_p_guiex__CTDGameWorld);
   }
   
-  result = ((guiex::CTDGameWorld const *)arg1)->GetHP();
-  {
-    guiex::uint32 * resultptr = new guiex::uint32((const guiex::uint32 &) result);
-    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_guiex__uint32,1); SWIG_arg++;
-  }
+  result = (unsigned int)((guiex::CTDGameWorld const *)arg1)->GetHP();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
   return SWIG_arg;
   
   if(0) SWIG_fail;
@@ -1858,25 +1929,21 @@ static swig_lua_const_info swig_constants[] = {
 static swig_type_info _swigt__p_guiex__CGUIWidget = {"_p_guiex__CGUIWidget", "guiex::CGUIWidget *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_guiex__CTDGameTower = {"_p_guiex__CTDGameTower", "guiex::CTDGameTower *", 0, 0, (void*)&_wrap_class_guiex_CTDGameTower, 0};
 static swig_type_info _swigt__p_guiex__CTDGameWorld = {"_p_guiex__CTDGameWorld", "guiex::CTDGameWorld *", 0, 0, (void*)&_wrap_class_guiex_CTDGameWorld, 0};
-static swig_type_info _swigt__p_guiex__uint32 = {"_p_guiex__uint32", "guiex::uint32 *", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
   &_swigt__p_guiex__CGUIWidget,
   &_swigt__p_guiex__CTDGameTower,
   &_swigt__p_guiex__CTDGameWorld,
-  &_swigt__p_guiex__uint32,
 };
 
 static swig_cast_info _swigc__p_guiex__CGUIWidget[] = {  {&_swigt__p_guiex__CGUIWidget, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CTDGameTower[] = {  {&_swigt__p_guiex__CTDGameTower, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_guiex__CTDGameWorld[] = {  {&_swigt__p_guiex__CTDGameWorld, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_guiex__uint32[] = {  {&_swigt__p_guiex__uint32, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_guiex__CGUIWidget,
   _swigc__p_guiex__CTDGameTower,
   _swigc__p_guiex__CTDGameWorld,
-  _swigc__p_guiex__uint32,
 };
 
 

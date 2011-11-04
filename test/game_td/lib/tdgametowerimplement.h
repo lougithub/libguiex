@@ -52,7 +52,9 @@ namespace guiex
 		const CGUIColor& GetRenderColor() const {return m_pGameTower->GetRenderColor();}
 		const CGUIVector2& GetPosition() const {return m_pGameTower->GetPosition();}
 
+		virtual uint32 GetBuildCost() const{return 0;}
 		virtual uint32 GetUpgradeCost() const{return 0;}
+		virtual uint32 GetSellCost() const{return 0;}
 		virtual real GetRadius() const{return 0.0f;}
 		virtual void Upgrade(){}
 
@@ -117,7 +119,9 @@ namespace guiex
 
 		void SetTowerState( ETowerState eState );
 
+		virtual uint32 GetBuildCost() const;
 		virtual uint32 GetUpgradeCost() const;
+		virtual uint32 GetSellCost() const;
 		virtual real GetRadius() const;
 		virtual void Upgrade();
 

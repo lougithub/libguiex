@@ -1,177 +1,197 @@
 <guiex>
-    <property name="Panel_TowerSelect" type="CGUIWidgetDefine" value="CGUIWgtPanel">
-        <property name="bg" type="CGUIImage" value="TowerPanel" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="0.5,0.5" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="value" type="CGUISize" value="114,114" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        </property>
-        <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
-        <property name="force_hittest" type="bool" value="true" />
-        <property name="default_as" type="CGUIAs" value="as_tower_pannel" />
-        <property name="auto_play_as" type="bool" value="true" />
+  <property name="Panel_TowerSelect" type="CGUIWidgetDefine" value="CGUIWgtPanel">
+    <property name="bg" type="CGUIImage" value="TowerPanel" />
+    <property name="position" type="CGUIWidgetPosition">
+      <property name="value" type="CGUIVector2" value="0.5,0.5" />
+      <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
     </property>
-    <property name="Button_SelectArcherTower" type="CGUIWidgetDefine" value="CGUIWgtButton">
-        <property name="parent" type="CGUIString" value="Panel_TowerSelect" />
-        <property name="normal" type="CGUIImage" value="Icon_Tower_ArcherTower" />
-        <property name="hover_overlay" type="CGUIImage" value="Icon_TowerMenuOverlay" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="0,0" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="value" type="CGUISize" value="46,44" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        </property>
-        <property name="OnMouseLeftClick" type="CGUIEvent" value="Button_ArcherTower_OnClick" />
+    <property name="size" type="CGUIWidgetSize">
+      <property name="value" type="CGUISize" value="114,114" />
+      <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
     </property>
-    <property name="Image_ArcherTowerPriceBG" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
-        <property name="parent" type="CGUIString" value="Button_SelectArcherTower" />
-        <property name="bg" type="CGUIImage" value="Icon_Tower_PricePanel" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="8,31" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="value" type="CGUISize" value="30,20" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        </property>
-        <property name="hitable" type="bool" value="false" />
+    <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
+    <property name="force_hittest" type="bool" value="true" />
+    <property name="default_as" type="CGUIAs" value="as_tower_pannel" />
+    <property name="auto_play_as" type="bool" value="true" />
+  </property>
+  <property name="Button_SelectArcherTower" type="CGUIWidgetDefine" value="CGUIWgtButton">
+    <property name="parent" type="CGUIString" value="Panel_TowerSelect" />
+    <property name="normal" type="CGUIImage" value="Icon_Tower_ArcherTower" />
+    <property name="disable" type="CGUIImage" value="Icon_Tower_ArcherTower_disable" />
+    <property name="hover_overlay" type="CGUIImage" value="Icon_TowerMenuOverlay" />
+    <property name="position" type="CGUIWidgetPosition">
+      <property name="value" type="CGUIVector2" value="0,0" />
+      <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
     </property>
-    <property name="Label_ArcherTowerPrice" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
-        <property name="parent" type="CGUIString" value="Image_ArcherTowerPriceBG" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="0.5,0.5" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="value" type="CGUISize" value="21,13" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        </property>
-        <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
-        <property name="hitable" type="bool" value="false" />
+    <property name="size" type="CGUIWidgetSize">
+      <property name="value" type="CGUISize" value="46,44" />
+      <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
     </property>
-    <property name="Button_SelectMages" type="CGUIWidgetDefine" value="CGUIWgtButton">
-        <property name="parent" type="CGUIString" value="Panel_TowerSelect" />
-        <property name="normal" type="CGUIImage" value="Icon_Tower_Mages" />
-        <property name="hover_overlay" type="CGUIImage" value="Icon_TowerMenuOverlay" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="0,77" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="value" type="CGUISize" value="46,44" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        </property>
-      <property name="OnMouseLeftClick" type="CGUIEvent" value="Button_Mages_OnClick" />
+    <property name="OnMouseLeftClick" type="CGUIEvent" value="Button_ArcherTower_OnClick" />
+    <property name="OnTimer" type="CGUIEvent" value="Button_ArcherTower_OnTimer" />
+    <property name="OnLoad" type="CGUIEvent" value="Button_ArcherTower_OnLoad" />
+    <property name="generate_load_event" type="bool" value="true" />
+  </property>
+  <property name="Image_ArcherTowerPriceBG" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
+    <property name="parent" type="CGUIString" value="Button_SelectArcherTower" />
+    <property name="bg" type="CGUIImage" value="Icon_Tower_PricePanel" />
+    <property name="position" type="CGUIWidgetPosition">
+      <property name="value" type="CGUIVector2" value="8,31" />
+      <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
     </property>
-    <property name="Image_MagesPriceBG" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
-        <property name="parent" type="CGUIString" value="Button_SelectMages" />
-        <property name="bg" type="CGUIImage" value="Icon_Tower_PricePanel" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="8,31" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="value" type="CGUISize" value="30,20" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        </property>
-        <property name="hitable" type="bool" value="false" />
+    <property name="size" type="CGUIWidgetSize">
+      <property name="value" type="CGUISize" value="30,20" />
+      <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
     </property>
-    <property name="Label_MagesPrice" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
-        <property name="parent" type="CGUIString" value="Image_MagesPriceBG" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="0.5,0.5" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="value" type="CGUISize" value="21,13" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        </property>
-        <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
-        <property name="hitable" type="bool" value="false" />
+    <property name="hitable" type="bool" value="false" />
+  </property>
+  <property name="Label_ArcherTowerPrice" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
+    <property name="parent" type="CGUIString" value="Image_ArcherTowerPriceBG" />
+    <property name="position" type="CGUIWidgetPosition">
+      <property name="value" type="CGUIVector2" value="0.5,0.5" />
+      <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
     </property>
-    <property name="Button_SelectBarracks" type="CGUIWidgetDefine" value="CGUIWgtButton">
-        <property name="parent" type="CGUIString" value="Panel_TowerSelect" />
-        <property name="normal" type="CGUIImage" value="Icon_Tower_Barracks" />
-        <property name="hover_overlay" type="CGUIImage" value="Icon_TowerMenuOverlay" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="77,0" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="value" type="CGUISize" value="46,44" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        </property>
-      <property name="OnMouseLeftClick" type="CGUIEvent" value="Button_Barracks_OnClick" />
+    <property name="size" type="CGUIWidgetSize">
+      <property name="value" type="CGUISize" value="21,13" />
+      <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
     </property>
-    <property name="Image_BarracksPriceBG" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
-        <property name="parent" type="CGUIString" value="Button_SelectBarracks" />
-        <property name="bg" type="CGUIImage" value="Icon_Tower_PricePanel" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="8,31" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="value" type="CGUISize" value="30,20" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        </property>
-        <property name="hitable" type="bool" value="false" />
+    <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
+    <property name="hitable" type="bool" value="false" />
+  </property>
+  <property name="Button_SelectMages" type="CGUIWidgetDefine" value="CGUIWgtButton">
+    <property name="parent" type="CGUIString" value="Panel_TowerSelect" />
+    <property name="normal" type="CGUIImage" value="Icon_Tower_Mages" />
+    <property name="disable" type="CGUIImage" value="Icon_Tower_Mages_disable" />
+    <property name="hover_overlay" type="CGUIImage" value="Icon_TowerMenuOverlay" />
+    <property name="position" type="CGUIWidgetPosition">
+      <property name="value" type="CGUIVector2" value="0,77" />
+      <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
     </property>
-    <property name="Label_BarracksPrice" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
-        <property name="parent" type="CGUIString" value="Image_BarracksPriceBG" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="0.5,0.5" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="value" type="CGUISize" value="21,13" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        </property>
-        <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
-        <property name="hitable" type="bool" value="false" />
+    <property name="size" type="CGUIWidgetSize">
+      <property name="value" type="CGUISize" value="46,44" />
+      <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
     </property>
-    <property name="Button_SelectDwarvenBoombard" type="CGUIWidgetDefine" value="CGUIWgtButton">
-        <property name="parent" type="CGUIString" value="Panel_TowerSelect" />
-        <property name="normal" type="CGUIImage" value="Icon_Tower_DwarvenBoombard" />
-        <property name="hover_overlay" type="CGUIImage" value="Icon_TowerMenuOverlay" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="77,77" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="value" type="CGUISize" value="46,44" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        </property>
-      <property name="OnMouseLeftClick" type="CGUIEvent" value="Button_DwarvenBoombard_OnClick" />
+    <property name="OnMouseLeftClick" type="CGUIEvent" value="Button_Mages_OnClick" />
+    <property name="OnTimer" type="CGUIEvent" value="Button_Mages_OnTimer" />
+    <property name="OnLoad" type="CGUIEvent" value="Button_Mages_OnLoad" />
+    <property name="generate_load_event" type="bool" value="true" />
+  </property>
+  <property name="Image_MagesPriceBG" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
+    <property name="parent" type="CGUIString" value="Button_SelectMages" />
+    <property name="bg" type="CGUIImage" value="Icon_Tower_PricePanel" />
+    <property name="position" type="CGUIWidgetPosition">
+      <property name="value" type="CGUIVector2" value="8,31" />
+      <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
     </property>
-    <property name="Image_DwarvenBoombardPriceBG" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
-        <property name="parent" type="CGUIString" value="Button_SelectDwarvenBoombard" />
-        <property name="bg" type="CGUIImage" value="Icon_Tower_PricePanel" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="8,31" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="value" type="CGUISize" value="30,20" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        </property>
-        <property name="hitable" type="bool" value="false" />
+    <property name="size" type="CGUIWidgetSize">
+      <property name="value" type="CGUISize" value="30,20" />
+      <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
     </property>
-    <property name="Label_DwarvenBoombardPrice" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
-        <property name="parent" type="CGUIString" value="Image_DwarvenBoombardPriceBG" />
-        <property name="position" type="CGUIWidgetPosition">
-            <property name="value" type="CGUIVector2" value="0.5,0.5" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
-        </property>
-        <property name="size" type="CGUIWidgetSize">
-            <property name="value" type="CGUISize" value="21,13" />
-            <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
-        </property>
-        <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
-        <property name="hitable" type="bool" value="false" />
+    <property name="hitable" type="bool" value="false" />
+  </property>
+  <property name="Label_MagesPrice" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
+    <property name="parent" type="CGUIString" value="Image_MagesPriceBG" />
+    <property name="position" type="CGUIWidgetPosition">
+      <property name="value" type="CGUIVector2" value="0.5,0.5" />
+      <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
     </property>
+    <property name="size" type="CGUIWidgetSize">
+      <property name="value" type="CGUISize" value="21,13" />
+      <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+    </property>
+    <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
+    <property name="hitable" type="bool" value="false" />
+  </property>
+  <property name="Button_SelectBarracks" type="CGUIWidgetDefine" value="CGUIWgtButton">
+    <property name="parent" type="CGUIString" value="Panel_TowerSelect" />
+    <property name="normal" type="CGUIImage" value="Icon_Tower_Barracks" />
+    <property name="disable" type="CGUIImage" value="Icon_Tower_Barracks_disable" />
+    <property name="hover_overlay" type="CGUIImage" value="Icon_TowerMenuOverlay" />
+    <property name="position" type="CGUIWidgetPosition">
+      <property name="value" type="CGUIVector2" value="77,0" />
+      <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+    </property>
+    <property name="size" type="CGUIWidgetSize">
+      <property name="value" type="CGUISize" value="46,44" />
+      <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+    </property>
+    <property name="OnMouseLeftClick" type="CGUIEvent" value="Button_Barracks_OnClick" />
+    <property name="OnTimer" type="CGUIEvent" value="Button_Barracks_OnTimer" />
+    <property name="OnLoad" type="CGUIEvent" value="Button_Barracks_OnLoad" />
+    <property name="generate_load_event" type="bool" value="true" />
+  </property>
+  <property name="Image_BarracksPriceBG" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
+    <property name="parent" type="CGUIString" value="Button_SelectBarracks" />
+    <property name="bg" type="CGUIImage" value="Icon_Tower_PricePanel" />
+    <property name="position" type="CGUIWidgetPosition">
+      <property name="value" type="CGUIVector2" value="8,31" />
+      <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+    </property>
+    <property name="size" type="CGUIWidgetSize">
+      <property name="value" type="CGUISize" value="30,20" />
+      <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+    </property>
+    <property name="hitable" type="bool" value="false" />
+  </property>
+  <property name="Label_BarracksPrice" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
+    <property name="parent" type="CGUIString" value="Image_BarracksPriceBG" />
+    <property name="position" type="CGUIWidgetPosition">
+      <property name="value" type="CGUIVector2" value="0.5,0.5" />
+      <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+    </property>
+    <property name="size" type="CGUIWidgetSize">
+      <property name="value" type="CGUISize" value="21,13" />
+      <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+    </property>
+    <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
+    <property name="hitable" type="bool" value="false" />
+  </property>
+
+  <property name="Button_SelectDwarvenBoombard" type="CGUIWidgetDefine" value="CGUIWgtButton">
+    <property name="parent" type="CGUIString" value="Panel_TowerSelect" />
+    <property name="normal" type="CGUIImage" value="Icon_Tower_DwarvenBoombard" />
+    <property name="disable" type="CGUIImage" value="Icon_Tower_DwarvenBoombard_disable" />
+    <property name="hover_overlay" type="CGUIImage" value="Icon_TowerMenuOverlay" />
+    <property name="position" type="CGUIWidgetPosition">
+      <property name="value" type="CGUIVector2" value="77,77" />
+      <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+    </property>
+    <property name="size" type="CGUIWidgetSize">
+      <property name="value" type="CGUISize" value="46,44" />
+      <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+    </property>
+    <property name="OnMouseLeftClick" type="CGUIEvent" value="Button_DwarvenBoombard_OnClick" />
+    <property name="OnTimer" type="CGUIEvent" value="Button_DwarvenBoombard_OnTimer" />
+    <property name="OnLoad" type="CGUIEvent" value="Button_DwarvenBoombard_OnLoad" />
+    <property name="generate_load_event" type="bool" value="true" />
+  </property>
+
+  <property name="Image_DwarvenBoombardPriceBG" type="CGUIWidgetDefine" value="CGUIWgtStaticImage">
+    <property name="parent" type="CGUIString" value="Button_SelectDwarvenBoombard" />
+    <property name="bg" type="CGUIImage" value="Icon_Tower_PricePanel" />
+    <property name="position" type="CGUIWidgetPosition">
+      <property name="value" type="CGUIVector2" value="8,31" />
+      <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+    </property>
+    <property name="size" type="CGUIWidgetSize">
+      <property name="value" type="CGUISize" value="30,20" />
+      <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+    </property>
+    <property name="hitable" type="bool" value="false" />
+  </property>
+
+  <property name="Label_DwarvenBoombardPrice" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
+    <property name="parent" type="CGUIString" value="Image_DwarvenBoombardPriceBG" />
+    <property name="position" type="CGUIWidgetPosition">
+      <property name="value" type="CGUIVector2" value="0.5,0.5" />
+      <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
+    </property>
+    <property name="size" type="CGUIWidgetSize">
+      <property name="value" type="CGUISize" value="21,13" />
+      <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
+    </property>
+    <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
+    <property name="hitable" type="bool" value="false" />
+  </property>
+
 </guiex>

@@ -127,6 +127,21 @@ namespace guiex
 		SetTowerType( eType );
 	}
 	//------------------------------------------------------------------------------
+	uint32 CTDGameTower::GetBuildCost( ETowerType eType ) const
+	{
+		return m_pTowerImplement[eType]->GetBuildCost();
+	}
+	//------------------------------------------------------------------------------
+	uint32 CTDGameTower::GetUpgradeCost() const
+	{
+		return m_pTowerImplement[GetTowerType()]->GetUpgradeCost();
+	}
+	//------------------------------------------------------------------------------
+	uint32 CTDGameTower::GetSellCost() const
+	{
+		return m_pTowerImplement[GetTowerType()]->GetSellCost();
+	}
+	//------------------------------------------------------------------------------
 	bool CTDGameTower::CouldUpgrade( )
 	{
 		if( GetTowerType() == eTowerType_Basement )
