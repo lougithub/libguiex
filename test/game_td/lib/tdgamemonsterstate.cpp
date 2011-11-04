@@ -190,7 +190,7 @@ namespace guiex
 				}
 				else
 				{
-					SetAnimState( CTDGameObjectMonster::eAnimState_MoveRight );
+					SetAnimState( CTDGameObjectMonster::eAnimState_MoveLeft );
 				}
 			}
 			else
