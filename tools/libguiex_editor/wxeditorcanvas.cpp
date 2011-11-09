@@ -186,14 +186,12 @@ void WxEditorCanvas::Render()
 	UpdateCanvasSize(GetClientSize());
 
 	CGUIFrameworkEditor::ms_pFramework->Render();
-	RenderEditorInfo();
-
 
 	glFlush();
 	SwapBuffers();
 }
 //------------------------------------------------------------------------------
-void WxEditorCanvas::RenderEditorInfo()
+void WxEditorCanvas::RenderEditorInfo( )
 {
 	glPushClientAttrib(GL_CLIENT_ALL_ATTRIB_BITS);
 	glPushAttrib(GL_ALL_ATTRIB_BITS);

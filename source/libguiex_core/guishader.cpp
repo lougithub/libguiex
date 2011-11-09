@@ -51,22 +51,13 @@ namespace guiex
 		DestoryShaderImplement();
 	}
 	//------------------------------------------------------------------------------
-	CGUIShader* CGUIShader::Use( IGUIInterfaceRender* pRender )
+	CGUIShaderImp* CGUIShader::GetShaderImp()
 	{
 #if defined(GUIEX_RENDER_OPENGL_ES1)
 		return NULL;
 #endif
-
 		Load();
-		CGUIShaderImp * pOldShaderImp = pRender->UseShader( m_pShaderImp );
-		if( pOldShaderImp )
-		{
-			return pOldShaderImp->GetShader();
-		}
-		else
-		{
-			return NULL;
-		}
+		return m_pShaderImp;
 	}
 	//------------------------------------------------------------------------------
 	//!< notify when shader imp is deleted

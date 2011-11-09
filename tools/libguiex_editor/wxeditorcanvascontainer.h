@@ -46,6 +46,8 @@ public:
 	//set screen size
 	void SetScreenSize( int width, int height );
 
+	void RenderEditorInfo( );
+
 protected:
 	int SaveWidgetNodeToDoc( CGUIWidget* pWidget, TiXmlDocument& rDoc );
 	TiXmlElement* GetElementByName( const wxString& rElementName,const wxString& rAttrName, TiXmlElement* pParentElement );

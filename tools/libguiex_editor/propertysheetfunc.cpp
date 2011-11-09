@@ -30,14 +30,14 @@
 std::vector<CGUIString> g_vecPropertyPages;
 
 //------------------------------------------------------------------------------
-void UpdateGridProperties( wxPropertyGridManager* pSheetMgr, const std::string& rType, CGUIWidget* pWidget )
+void UpdateGridProperties( wxPropertyGridManager* pSheetMgr, const std::string& rWidgetType, CGUIWidget* pWidget )
 {
 	//get property set
 	if( pWidget )
 	{
 		pWidget->DumpToProperty();
 	}
-	const CGUIProperty& rSet = CPropertyConfigMgr::Instance()->GetPropertySet(rType);
+	const CGUIProperty& rSet = CPropertyConfigMgr::Instance()->GetPropertySet(rWidgetType);
 
 	//save current page index
 	int nOldPageIdx = pSheetMgr->GetSelectedPage( );
@@ -103,26 +103,23 @@ void GenerateGUIProperties( wxPropertyGridManager* pSheetMgr, CGUIProperty& rSet
 	}
 }
 //------------------------------------------------------------------------------
-void UpdateGridAndGuiProperty( wxPropertyGridManager* pSheetMgr, CGUIWidget* pWidget, const CGUIString& rPropertyName, const CGUIString& rPropertyType )
+void UpdateGridProperty( wxPropertyGridManager* pSheetMgr, CGUIWidget* pWidget, const CGUIString& rPropertyName, const CGUIString& rPropertyType )
 {
 	const CGUIProperty& rSet = CPropertyConfigMgr::Instance()->GetPropertySet(pWidget->GetType());
-
 	const CGUIProperty* pDefaultProp = rSet.GetProperty(rPropertyName, rPropertyType);
 	if( !pDefaultProp )
 	{
-		throw CGUIException( "[UpdateGridAndGuiProperty]: failed to get default property by name <%s>", rPropertyName.c_str() );
+		throw CGUIException( "[UpdateGridProperty]: failed to get default property by name <%s>", rPropertyName.c_str() );
 	}
+
+	pWidget->DumpToProperty();
 
 	const CGUIProperty* pProp = pWidget->GetProperty().GetProperty(rPropertyName, rPropertyType);
 	if( !pProp )
 	{
-		throw CGUIException( "[UpdateGridAndGuiProperty]: failed to get property by name <%s> from widget <%s>", rPropertyName.c_str(), pWidget->GetName().c_str() );
+		throw CGUIException( "[UpdateGridProperty]: failed to get property by name <%s> from widget <%s>", rPropertyName.c_str(), pWidget->GetName().c_str() );
 	}
-
 	CGUIProperty aProp = *pProp;
-	pWidget->GenerateProperty( aProp );
-	pWidget->InsertProperty( aProp );
-
 	aProp.SetData( pDefaultProp->GetData() );
 	CPropertyConvertorMgr::Instance()->GuiProperty2GridProperty( pSheetMgr, NULL, aProp );
 }

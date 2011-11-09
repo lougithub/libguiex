@@ -14,7 +14,6 @@
 //============================================================================//
 // function
 //============================================================================// 
-
 CCommandManager::CCommandManager()
 {
 }
@@ -65,12 +64,12 @@ void CCommandManager::Redo()
 	m_listUndo.push_back(cmd);
 }
 //------------------------------------------------------------------------------
-bool	CCommandManager::HasUndoCommand() const
+bool CCommandManager::HasUndoCommand() const
 {
 	return m_listUndo.empty()==false;
 }
 //------------------------------------------------------------------------------
-bool	CCommandManager::HasRedoCommand() const
+bool CCommandManager::HasRedoCommand() const
 {
 	return m_listRedo.empty()==false;
 }

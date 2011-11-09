@@ -135,7 +135,6 @@ namespace guiex
 		,m_pDefaultCamera(NULL)
 		,m_pDefaultShader_Render(NULL)
 		,m_pDefaultShader_Stencil(NULL)
-		,m_pDefaultShader_Font(NULL)
 	{
 		GUI_ASSERT( !m_pSingleton, "[CGUISystem::CGUISystem]:instance has been created" ); 
 		GUI_ASSERT( !GSystem, "[CGUISystem::CGUISystem]:GSystem has been set" ); 
@@ -267,10 +266,6 @@ namespace guiex
 			delete m_pDefaultCamera;
 			m_pDefaultCamera = NULL;
 		}
-
-		SetDefaultShader_Render( NULL );
-		SetDefaultShader_Stencil( NULL );
-		SetDefaultShader_Font( NULL );
 
 		//destroy all canvas
 		DestroyAllCanvas();
@@ -422,27 +417,6 @@ namespace guiex
 		return m_pDefaultShader_Stencil;
 	}
 	//------------------------------------------------------------------------------
-	void CGUISystem::SetDefaultShader_Font( CGUIShader* pShader )
-	{
-		if( m_pDefaultShader_Font != pShader )
-		{
-			if( m_pDefaultShader_Font )
-			{
-				m_pDefaultShader_Font->RefRelease();
-			}
-			m_pDefaultShader_Font = pShader;
-			if( m_pDefaultShader_Font )
-			{
-				m_pDefaultShader_Font->RefRetain();
-			}
-		}
-	}
-	//------------------------------------------------------------------------------
-	CGUIShader* CGUISystem::GetDefaultShader_Font() const
-	{
-		return m_pDefaultShader_Font;
-	}
-	//------------------------------------------------------------------------------
 	bool CGUISystem::IsEditorMode( ) const
 	{
 		return m_bIsEditorMode;
@@ -478,6 +452,15 @@ namespace guiex
 	*/
 	void CGUISystem::ReleaseResourceByScene( const CGUIString& rSceneName )
 	{
+		if( m_pDefaultShader_Render && m_pDefaultShader_Render->GetSceneName() == rSceneName )
+		{
+			SetDefaultShader_Render( NULL );
+		}
+		if( m_pDefaultShader_Stencil && m_pDefaultShader_Stencil->GetSceneName() == rSceneName )
+		{
+			SetDefaultShader_Stencil( NULL );
+		}
+
 		for( TListResourceMgr::iterator itor = m_listResourceManager.begin(); 
 			itor != m_listResourceManager.end();
 			++itor)
@@ -488,6 +471,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUISystem::UnloadAllResource(  )
 	{
+		SetDefaultShader_Render( NULL );
+		SetDefaultShader_Stencil( NULL );
 		for( TListResourceMgr::iterator itor = m_listResourceManager.begin(); 
 			itor != m_listResourceManager.end();
 			++itor)
@@ -849,9 +834,13 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CGUISystem::BeginRender( IGUIInterfaceRender* pRender )
 	{		
- 		if( m_pDefaultShader_Render )
+		if( IsEditorMode() )
 		{
-			m_pDefaultShader_Render->Use( pRender );
+			pRender->UseShader( NULL );
+		}
+		else
+		{
+			pRender->UseShader( m_pDefaultShader_Render );
 		}
 
 		pRender->ApplyCamera( m_pDefaultCamera );

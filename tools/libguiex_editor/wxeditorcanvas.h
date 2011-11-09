@@ -44,7 +44,7 @@ public:
 
 	void UpdateCanvasSize( const wxSize& rSize);
 
-	void RenderEditorInfo();
+	void RenderEditorInfo( );
 
 public:
 	//event

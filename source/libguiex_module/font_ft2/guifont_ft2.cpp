@@ -138,13 +138,6 @@ namespace guiex
 		const CGUIVector2& rPos,
 		real fAlpha)
 	{
-		//apply shader
-		CGUIShader* pOldShader = NULL;
-		if( GSystem->GetDefaultShader_Font() )
-		{
-			pOldShader = GSystem->GetDefaultShader_Font()->Use(pRender);
-		}
-
 		CGUIFontData_ft2* pFontData = GetFontData( rInfo.m_uFontID );
 		SCharData_ft2* pCharData = pFontData->GetCharData( charCode );
 
@@ -167,12 +160,6 @@ namespace guiex
 				aColor,
 				aColor);
 		}
-
-		//restore shader
-		if( pOldShader )
-		{
-			pOldShader->Use( pRender );
-		}
 	}
 	//------------------------------------------------------------------------------
 	void IGUIFont_ft2::DrawString(IGUIInterfaceRender* pRender, 
@@ -188,13 +175,6 @@ namespace guiex
 		{
 			//empty string
 			return;
-		}
-
-		//apply shader
-		CGUIShader* pOldShader = NULL;
-		if( GSystem->GetDefaultShader_Font() )
-		{
-			pOldShader = GSystem->GetDefaultShader_Font()->Use(pRender);
 		}
 
 		const CGUIStringRenderInfo& rInfo = rString.m_aStringInfo;
@@ -264,12 +244,6 @@ namespace guiex
 
 			aPos.x+=pCharData->m_aSize.m_fWidth*rInfo.m_fFontScale;
 		}
-
-		//restore shader
-		if( pOldShader )
-		{
-			pOldShader->Use( pRender );
-		}
 	}
 	//------------------------------------------------------------------------------
 	void IGUIFont_ft2::DrawString(IGUIInterfaceRender* pRender, 
@@ -283,13 +257,6 @@ namespace guiex
 		{
 			//empty string
 			return;
-		}
-
-		//apply shader
-		CGUIShader* pOldShader = NULL;
-		if( GSystem->GetDefaultShader_Font() )
-		{
-			pOldShader = GSystem->GetDefaultShader_Font()->Use(pRender);
 		}
 
 		CGUIVector2 aPos = rPos;
@@ -328,12 +295,6 @@ namespace guiex
 			}
 
 			aPos.x+=pCharData->m_aSize.m_fWidth*rInfo.m_fFontScale;
-		}
-
-		//restore shader
-		if( pOldShader )
-		{
-			pOldShader->Use( pRender );
 		}
 	}
 	//------------------------------------------------------------------------------

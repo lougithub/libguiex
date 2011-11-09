@@ -107,8 +107,6 @@ namespace guiex
 		CGUIShader* GetDefaultShader_Render() const;
 		void SetDefaultShader_Stencil( CGUIShader* pShader );
 		CGUIShader* GetDefaultShader_Stencil() const;
-		void SetDefaultShader_Font( CGUIShader* pShader );
-		CGUIShader* GetDefaultShader_Font() const;
 
 		void SetDataPath(const CGUIString& rDataPath);
 		const CGUIString& GetDataPath() const;
@@ -285,9 +283,9 @@ namespace guiex
 		CGUIInputProcessor m_aInputProcessor; ///input processor
 
 		CGUICamera* m_pDefaultCamera;
+
 		CGUIShader* m_pDefaultShader_Render;
 		CGUIShader* m_pDefaultShader_Stencil;
-		CGUIShader* m_pDefaultShader_Font;
 
 		//----------------------------------------------------------------------
 		//global ui event

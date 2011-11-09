@@ -354,8 +354,8 @@ void WxMainFrame::UpdateWidgetSizeAndPos()
 	}
 	m_pCurrentEditingWidget->Refresh();
 
-	UpdateGridAndGuiProperty( m_pPropGridMan, m_pCurrentEditingWidget, "size", "CGUIWidgetSize" );
-	UpdateGridAndGuiProperty( m_pPropGridMan, m_pCurrentEditingWidget, "position", "CGUIWidgetPosition" );
+	UpdateGridProperty( m_pPropGridMan, m_pCurrentEditingWidget, "size", "CGUIWidgetSize" );
+	UpdateGridProperty( m_pPropGridMan, m_pCurrentEditingWidget, "position", "CGUIWidgetPosition" );
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::SetPropGridWidget(CGUIWidget* pWidget, bool bForceRefresh/*=false*/)

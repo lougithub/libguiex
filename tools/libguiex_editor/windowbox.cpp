@@ -136,12 +136,13 @@ void CWindowBox::MoveWindowPosition(int deltaX, int deltaY)
 	CGUIVector3 aWorldNewPoint = aWorldOldPoint + CGUIVector3(deltaX, deltaY, 0.0f);
 	CGUIVector3 aLocalNewPoint = aWorldNewPoint;
 	m_pSelectWidget->GetParent()->WorldToLocal( aLocalNewPoint );
+
 	m_pSelectWidget->SetPixelPosition(aLocalNewPoint.x, aLocalNewPoint.y);
 	m_pSelectWidget->Refresh();
 	Reset();
 }
 //-----------------------------------------------------------------------
-void	CWindowBox::SetWindowSize(float deltaleft, float deltatop, float deltaright, float deltabottom)
+void CWindowBox::SetWindowSize(float deltaleft, float deltatop, float deltaright, float deltabottom)
 {
 	CGUIRect aBoundRect = m_pSelectWidget->GetBoundArea();
 	aBoundRect.m_fLeft += deltaleft;
@@ -176,7 +177,6 @@ const wxRect & CWindowBox::GetWindowRect ()
 {
 	return m_aWindowsRect;
 }
-
 //-----------------------------------------------------------------------
 int CWindowBox::GetPointAtPosition (wxPoint aPoint) 
 {

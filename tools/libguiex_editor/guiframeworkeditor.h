@@ -29,6 +29,7 @@ public:
 protected:
 	virtual void RegisterInterfaces_Render( );
 	virtual void SetupLogSystem( );
+	virtual void PostRender( IGUIInterfaceRender* pRender );
 
 protected:
 

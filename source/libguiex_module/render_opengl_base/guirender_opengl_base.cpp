@@ -1246,7 +1246,7 @@ namespace guiex
 			CGUIShader* pOldShader = NULL;
 			if( GSystem->GetDefaultShader_Stencil() )
 			{
-				pOldShader = GSystem->GetDefaultShader_Stencil()->Use(this);
+				pOldShader = UseShader( GSystem->GetDefaultShader_Stencil());
 			}
 
 			// Set color mask and disable texture
@@ -1391,10 +1391,7 @@ namespace guiex
 			glEnable( GL_TEXTURE_2D );
 #endif
 			//restore shader
-			if( pOldShader )
-			{
-				pOldShader->Use( this );
-			}
+			UseShader( pOldShader );
 
 			PopMatrix();
 		}
@@ -1741,6 +1738,10 @@ namespace guiex
 	void IGUIRender_opengl_base::DestroyShader(CGUIShaderImp* shader)
 	{
 		GUI_ASSERT( shader, "invalid shader pointer" );
+		if( m_pCurrentShader == shader )
+		{
+			m_pCurrentShader = NULL;
+		}
 		if (shader != NULL)
 		{
 			RemoveShader( shader );
@@ -1748,14 +1749,32 @@ namespace guiex
 		}
 	}
 	//------------------------------------------------------------------------------
-	CGUIShaderImp* IGUIRender_opengl_base::UseShader( CGUIShaderImp* pShader )
+	CGUIShader* IGUIRender_opengl_base::UseShader( CGUIShader* pShader )
 	{
-		CGUIShaderImp* pOldShader = m_pCurrentShader;
-		if( m_pCurrentShader != pShader )
+		CGUIShader* pOldShader = m_pCurrentShader ? m_pCurrentShader->GetShader() : NULL;
+		if( pShader == NULL )
 		{
-			m_pCurrentShader = static_cast<CGUIShader_opengl_base*>( pShader );
-			CGUIShader_opengl_base::UseShader( m_pCurrentShader );
+			if( m_pCurrentShader != NULL )
+			{
+				m_pCurrentShader = NULL;
+			}
+			else
+			{
+				return pOldShader;
+			}
 		}
+		else
+		{
+			if( m_pCurrentShader != pShader->GetShaderImp() )
+			{
+				m_pCurrentShader = static_cast<CGUIShader_opengl_base*>(pShader->GetShaderImp());
+			}
+			else
+			{
+				return pOldShader;
+			}
+		}
+		CGUIShader_opengl_base::UseShader( m_pCurrentShader );
 
 		return pOldShader;
 	}

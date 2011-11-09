@@ -28,6 +28,7 @@ namespace guiex
 	class CGUIRect;
 	class CGUITextureImp;
 	class CGUIShaderImp;
+	class CGUIShader;
 	class CGUITexture;
 	class IGUIInterfaceFont;
 	class CGUIMatrix4;
@@ -212,6 +213,11 @@ namespace guiex
 
 		virtual uint32 GUIColorToRenderColor( const CGUIColor& col ) const = 0;
 
+		/**
+		* @return old used shader
+		*/
+		virtual CGUIShader* UseShader( CGUIShader* pShader ) = 0;
+
 	protected:
 		friend class CGUITextureImp;
 		friend class CGUITexture;
@@ -265,10 +271,6 @@ namespace guiex
 		*/
 		virtual	void DestroyAllTexture() = 0;
 
-		/**
-		* @return old used shader
-		*/
-		virtual CGUIShaderImp* UseShader( CGUIShaderImp* pShader ) = 0;
 		virtual	CGUIShaderImp*	CreateShader(const CGUIString& rVertexShaderFileName, const CGUIString& rFragmentShaderFileName) = 0;
 		virtual	void DestroyShader(CGUIShaderImp* shader) = 0;
 				

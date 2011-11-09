@@ -156,6 +156,8 @@ namespace guiex
 
 		virtual uint32 GUIColorToRenderColor( const CGUIColor& col ) const;
 
+		virtual CGUIShader* UseShader( CGUIShader* pShader );
+
 	protected:
 		IGUIRender_opengl_base( const char* szModuleName );
 
@@ -212,7 +214,6 @@ namespace guiex
 
 		virtual	CGUIShaderImp* CreateShader(const CGUIString& rVertexShaderFileName, const CGUIString& rFragmentShaderFileName);
 		virtual	void DestroyShader(CGUIShaderImp* shader);
-		CGUIShaderImp* UseShader( CGUIShaderImp* pShader );
 
 protected:
 		// set the texture's coordinate

@@ -310,5 +310,10 @@ void WxEditorCanvasContainer::AddSubPropertyElement( const CGUIProperty& rProper
 	}
 }
 //------------------------------------------------------------------------------
+void WxEditorCanvasContainer::RenderEditorInfo()
+{
+	m_pCanvas->RenderEditorInfo();
+}
+//------------------------------------------------------------------------------
 
 

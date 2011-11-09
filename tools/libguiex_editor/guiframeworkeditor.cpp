@@ -12,6 +12,7 @@
 #include <libguiex_module\render_opengl\guirender_opengl.h>
 #include "wxmainapp.h"
 #include "wxmainframe.h"
+#include "wxeditorcanvascontainer.h"
 #include "toolsmisc.h"
 #include <fstream>
 
@@ -52,6 +53,21 @@ void CGUIFrameworkEditor::SetupLogSystem( )
 	GUI_LOG->Open( "gui_framework_log", CGUILogMsg::FLAG_TIMESTAMP_LITE | CGUILogMsg::FLAG_OSTREAM | CGUILogMsg::FLAG_MSG_CALLBACK );
 	GUI_LOG->SetPriorityMask( GUI_LM_DEBUG | GUI_LM_TRACE | GUI_LM_WARNING|GUI_LM_ERROR );
 	GUI_LOG->SetOstream( new std::ofstream( "libguiex_editor.log", std::ios_base::out | std::ios_base::trunc ), true );
+}
+//------------------------------------------------------------------------------
+void CGUIFrameworkEditor::PostRender( IGUIInterfaceRender* pRender )
+{
+	bool bIsEnableClip = pRender->IsEnableClip();
+	if( bIsEnableClip )
+	{
+		pRender->EnableClip( false );
+	}
+	GetMainFrame()->GetCanvasContainer()->RenderEditorInfo();
+	if( bIsEnableClip )
+	{
+		pRender->EnableClip( bIsEnableClip );
+	}
+	CGUIFrameworkEditorBase::PostRender( pRender );
 }
 //------------------------------------------------------------------------------
 void CGUIFrameworkEditor::RegisterOpenglInterface()

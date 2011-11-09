@@ -36,8 +36,8 @@ public:
 	*/
 	static CCommandManager* Instance();
 
-	bool	HasUndoCommand() const;
-	bool	HasRedoCommand() const;
+	bool HasUndoCommand() const;
+	bool HasRedoCommand() const;
 
 	void StoreCommand(CCommand* cmd);
 	void ClearAllCommand();
