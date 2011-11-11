@@ -58,19 +58,19 @@ protected:
 };
 
 //***********************************************
-// CCommandWidgetProperty
+// CCommand_SetProperty
 //*********************************************** 
-class CCommandWidgetProperty : public CCommandWidgetBase
+class CCommand_SetProperty : public CCommandWidgetBase
 {
 public:
-	CCommandWidgetProperty( CGUIWidget* pWidget );
+	CCommand_SetProperty( CGUIWidget* pWidget, const CGUIProperty& rNewProp );
 
 	virtual void Execute();
 	virtual void Undo();
 
 protected:
-	CGUIProperty m_ExecuteProp;
-	CGUIProperty m_UndoProp;
+	CGUIProperty m_OldProp;
+	CGUIProperty m_NewProp;
 };
 
 

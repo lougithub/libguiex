@@ -823,9 +823,9 @@ void WxMainFrame::OnPropertyGridChange( wxPropertyGridEvent& event )
 
 	try
 	{ 
-		m_pCurrentEditingWidget->InsertProperty( aGuiProperty );
-		m_pCurrentEditingWidget->ProcessProperty(aGuiProperty);
-		m_pCurrentEditingWidget->Refresh();
+		CCommand_SetProperty* pCommand = new CCommand_SetProperty( m_pCurrentEditingWidget, aGuiProperty );
+		CCommandManager::Instance()->StoreCommand( pCommand );
+		pCommand->Execute();
 
 		UpdateGridProperties( m_pPropGridMan, m_pCurrentEditingWidget->GetType(), m_pCurrentEditingWidget );
 	}
@@ -1119,9 +1119,7 @@ void WxMainFrame::OnWidgetChangeParent(wxCommandEvent& evt)
 	pWidget->Refresh();
 
 	m_pCanvasContainer->UpdateWindowBox();
-	m_pCanvasContainer->SetSaveFlag(true);
-
-	RefreshWidgetTreeCtrl();
+	OnWidgetModified();
 	SetPropGridWidget( pWidget, true );
 }
 //------------------------------------------------------------------------------
@@ -1200,7 +1198,7 @@ void WxMainFrame::OnWidgetPaste(wxCommandEvent& evt)
 
 	if( pNewWidget )
 	{
-		OnWidgetAdded();
+		OnWidgetModified();
 		m_pCanvasContainer->SetSelectedWidget(pNewWidget);
 	}
 }
@@ -1326,7 +1324,7 @@ void WxMainFrame::OnWidgetDeleted()
 	RefreshWidgetTreeCtrl();
 }
 //------------------------------------------------------------------------------
-void WxMainFrame::OnWidgetAdded()
+void WxMainFrame::OnWidgetModified()
 {
 	m_pCanvasContainer->SetSaveFlag(true);
 	RefreshWidgetTreeCtrl();
@@ -1454,7 +1452,7 @@ void WxMainFrame::OnCreateWidget(wxCommandEvent& evt)
 
 	pWidget->Refresh();
 
-	OnWidgetAdded();
+	OnWidgetModified();
 	m_pCanvasContainer->SetSelectedWidget(pWidget);
 }
 //------------------------------------------------------------------------------

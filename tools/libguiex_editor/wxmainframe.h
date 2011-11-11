@@ -84,7 +84,7 @@ public:
 	}
 
 	void OnWidgetDeleted();
-	void OnWidgetAdded();
+	void OnWidgetModified();
 
 protected:
 	void CreateMenu();

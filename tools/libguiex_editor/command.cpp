@@ -52,22 +52,32 @@ CGUIWidget* CCommandWidgetBase::GetWidget()
 
 
 //***********************************************
-// CCommandWidgetProperty
+// CCommand_SetProperty
 //*********************************************** 
 //------------------------------------------------------------------------------
-CCommandWidgetProperty::CCommandWidgetProperty( CGUIWidget* pWidget )
+CCommand_SetProperty::CCommand_SetProperty( CGUIWidget* pWidget, const CGUIProperty& rNewProp )
 	:CCommandWidgetBase( pWidget )
 {
+	m_NewProp = rNewProp;
+	m_OldProp.SetName( rNewProp.GetName() );
+	m_OldProp.SetType( rNewProp.GetTypeAsString() );
+	pWidget->GenerateProperty(m_OldProp);
 }
 //------------------------------------------------------------------------------
-void CCommandWidgetProperty::Execute()
+void CCommand_SetProperty::Execute()
 {
-	GetWidget()->InsertProperty( m_ExecuteProp );
+	CGUIWidget * pWidget = GetWidget();
+	pWidget->InsertProperty( m_NewProp );
+	pWidget->ProcessProperty(m_NewProp);
+	pWidget->Refresh();
 }
 //------------------------------------------------------------------------------
-void CCommandWidgetProperty::Undo()
+void CCommand_SetProperty::Undo()
 {
-	GetWidget()->InsertProperty( m_ExecuteProp );
+	CGUIWidget * pWidget = GetWidget();
+	pWidget->InsertProperty( m_OldProp );
+	pWidget->ProcessProperty(m_OldProp);
+	pWidget->Refresh();
 }
 //------------------------------------------------------------------------------
 
@@ -88,12 +98,14 @@ void CCommand_SetPosition::Execute()
 {
 	GetWidget()->SetPixelPosition( m_aPosNew );
 	GetWidget()->Refresh();
+	GetMainFrame()->UpdateWidgetSizeAndPos();
 }
 //------------------------------------------------------------------------------
 void CCommand_SetPosition::Undo()
 {
 	GetWidget()->SetPixelPosition( m_aPosOld );
 	GetWidget()->Refresh();
+	GetMainFrame()->UpdateWidgetSizeAndPos();
 }
 //------------------------------------------------------------------------------
 
@@ -114,12 +126,14 @@ void CCommand_SetSize::Execute()
 {
 	GetWidget()->SetPixelSize( m_aSizeNew );
 	GetWidget()->Refresh();
+	GetMainFrame()->UpdateWidgetSizeAndPos();
 }
 //------------------------------------------------------------------------------
 void CCommand_SetSize::Undo()
 {
 	GetWidget()->SetPixelSize( m_aSizeOld );
 	GetWidget()->Refresh();
+	GetMainFrame()->UpdateWidgetSizeAndPos();
 }
 //------------------------------------------------------------------------------
 
@@ -193,6 +207,6 @@ void CCommand_DeleteWidget::Undo()
 		}
 	}
 
-	GetMainFrame()->OnWidgetAdded();
+	GetMainFrame()->OnWidgetModified();
 }
 //------------------------------------------------------------------------------
