@@ -136,6 +136,19 @@ namespace guiex
 		m_setProperty.push_back(rProperty);
 	}
 	//------------------------------------------------------------------------------
+	void CGUIProperty::AddUniqueProperty(  const CGUIProperty& rProperty )
+	{
+		CGUIProperty* pProp = GetProperty(rProperty.GetName(), rProperty.GetType());
+		if( pProp )
+		{
+			*pProp = rProperty;
+		}
+		else
+		{
+			AddProperty(rProperty);
+		}
+	}
+	//------------------------------------------------------------------------------
 	void CGUIProperty::RemoveProperty( const CGUIProperty& rProperty )
 	{
 		for( TSetProperty::iterator itor = m_setProperty.begin();

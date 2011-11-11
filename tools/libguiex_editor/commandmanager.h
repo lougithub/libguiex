@@ -40,6 +40,8 @@ public:
 	bool HasRedoCommand() const;
 
 	void StoreCommand(CCommand* cmd);
+	void ClearUndoCommand();
+	void ClearRedoCommand();
 	void ClearAllCommand();
 
 	void Undo();
@@ -50,8 +52,8 @@ protected:
 
 protected:
 	typedef std::vector<CCommand*>	TCommandList;
-	TCommandList	m_listUndo;
-	TCommandList	m_listRedo;
+	TCommandList m_listUndo;
+	TCommandList m_listRedo;
 };
 
 

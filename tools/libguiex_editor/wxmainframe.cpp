@@ -22,6 +22,8 @@
 #include "guiresourcepool.h"
 #include "wxeditorid.h"
 #include "propertyconvertor.h"
+#include "command.h"
+#include "commandmanager.h"
 
 //lua
 
@@ -55,6 +57,8 @@ extern "C" {
 #include "../Resource/bitmaps/gem_blue.xpm"
 #include "../Resource/bitmaps/gem_red.xpm"
 #include "../Resource/bitmaps/changeparent.xpm"
+#include "../Resource/bitmaps/undo.xpm"
+#include "../Resource/bitmaps/redo.xpm"
 
 //============================================================================//
 // define
@@ -107,6 +111,13 @@ EVT_UPDATE_UI(ID_SaveAs, WxMainFrame::OnUpdateSaveAs)
 EVT_MENU(ID_SaveAs, WxMainFrame::OnSaveAs)
 EVT_UPDATE_UI(ID_SaveAll, WxMainFrame::OnUpdateSaveAll)
 EVT_MENU(ID_SaveAll, WxMainFrame::OnSaveAll)
+
+
+
+EVT_UPDATE_UI(ID_Undo, WxMainFrame::OnUpdateUndo)
+EVT_MENU(ID_Undo, WxMainFrame::OnUndo)
+EVT_UPDATE_UI(ID_Redo, WxMainFrame::OnUpdateRedo)
+EVT_MENU(ID_Redo, WxMainFrame::OnRedo)
 
 EVT_UPDATE_UI(ID_CreateWidget, WxMainFrame::OnUpdateCreateWidget)
 EVT_MENU(ID_CreateWidget, WxMainFrame::OnCreateWidget)
@@ -492,6 +503,9 @@ wxToolBar* WxMainFrame::CreateToolbar()
 	wxToolBar* tb1 = new wxToolBar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_FLAT|wxTB_NODIVIDER);
 
 	//tb1->AddTool(wxID_NEW, wxBitmap (new_xpm));
+	tb1->AddTool(ID_Undo, wxBitmap (undo_xpm), _T("undo"));
+	tb1->AddTool(ID_Redo, wxBitmap (redo_xpm), _T("redo"));
+	tb1->AddSeparator();
 	tb1->AddTool(ID_Open, wxBitmap (open_xpm), _T("open"));
 	tb1->AddTool(ID_Save, wxBitmap (save_xpm), _T("save"));
 	tb1->AddSeparator();
@@ -1132,8 +1146,7 @@ void WxMainFrame::OnWidgetCopy(wxCommandEvent& evt)
 		return;
 	}
 
-	m_aPasteCache.m_aProperty = pWidget->GetProperty();
-	m_aPasteCache.m_aWidgetType = pWidget->GetType();
+	m_aWidgetPasteCache.SetCache( pWidget );
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::OnUpdateWidgetCopy(wxUpdateUIEvent& event)
@@ -1156,13 +1169,13 @@ void WxMainFrame::OnWidgetPaste(wxCommandEvent& evt)
 	{
 		return;
 	}
-	if( m_aPasteCache.m_aProperty.GetPropertyCount() == 0 )
+	if( !m_aWidgetPasteCache.HasCache())
 	{
 		return;
 	}
 
 	//get name of new widget.
-	wxTextEntryDialog aTextDlg( this, _T("input widget name"),wxString::Format( _T("input name of widget <%s>"), Gui2wxString( m_aPasteCache.m_aWidgetType).c_str()) );
+	wxTextEntryDialog aTextDlg( this, _T("input widget name"),wxString::Format( _T("input name of widget <%s>"), Gui2wxString( m_aWidgetPasteCache.GetWidgetType()).c_str()) );
 	if(  wxID_OK != aTextDlg.ShowModal())
 	{
 		return;
@@ -1171,13 +1184,7 @@ void WxMainFrame::OnWidgetPaste(wxCommandEvent& evt)
 	CGUIWidget* pNewWidget = NULL;
 	try
 	{
-		pNewWidget = CGUIWidgetManager::Instance()->CreateWidget( m_aPasteCache.m_aWidgetType, wx2GuiString(aTextDlg.GetValue()), GetCurrentSceneName());
-		m_aPasteCache.m_aProperty.GetProperty("parent", "CGUIString")->SetValue( "" );
-		pNewWidget->SetProperty(m_aPasteCache.m_aProperty);
-		pNewWidget->LoadFromProperty(m_aPasteCache.m_aProperty);
-		pNewWidget->SetParent( pWidget );
-		m_aPasteCache.m_aProperty.GetProperty("parent", "CGUIString")->SetValue( pWidget->GetName() );
-		pNewWidget->Create();
+		pNewWidget = m_aWidgetPasteCache.GenerateWidget( wx2GuiString(aTextDlg.GetValue()), pWidget->GetName() );
 		pNewWidget->Open();
 	}
 	catch (CGUIBaseException& rError)
@@ -1193,9 +1200,8 @@ void WxMainFrame::OnWidgetPaste(wxCommandEvent& evt)
 
 	if( pNewWidget )
 	{
-		RefreshWidgetTreeCtrl();
+		OnWidgetAdded();
 		m_pCanvasContainer->SetSelectedWidget(pNewWidget);
-		m_pCanvasContainer->SetSaveFlag(true);
 	}
 }
 //------------------------------------------------------------------------------
@@ -1305,25 +1311,24 @@ void WxMainFrame::OnDeleteWidget(wxCommandEvent& evt)
 		return;
 	}
 
-	if( GSystem->GetUICanvas()->GetOpenedPageNum() !=0 &&
-		pWidget == GSystem->GetUICanvas()->GetOpenedPageByIndex(0))
-	{
-		//is page
-		GSystem->GetUICanvas()->CloseUIPage(pWidget);
-		CGUIWidgetManager::Instance()->DestroyWidget(pWidget);
-	}
-	else
-	{
-		if( pWidget->IsOpen() )
-		{
-			pWidget->Close();
-		}
-		CGUIWidgetManager::Instance()->DestroyWidget(pWidget);
-	}
+	CCommand_DeleteWidget* pCommand = new CCommand_DeleteWidget( pWidget );
+	pCommand->Execute();
+	CCommandManager::Instance()->StoreCommand( pCommand );
 
+	OnWidgetDeleted();
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnWidgetDeleted()
+{
 	m_pCanvasContainer->SetSelectedWidget(NULL);
 	m_pCanvasContainer->SetSaveFlag(true);
 
+	RefreshWidgetTreeCtrl();
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnWidgetAdded()
+{
+	m_pCanvasContainer->SetSaveFlag(true);
 	RefreshWidgetTreeCtrl();
 }
 //------------------------------------------------------------------------------
@@ -1437,24 +1442,19 @@ void WxMainFrame::OnCreateWidget(wxCommandEvent& evt)
 		return;
 	}
 
-	if( GSystem->GetUICanvas()->GetOpenedPageNum() == 0 )
+	if( pWidget->IsPageRoot() )
 	{
 		CGUIWidgetManager::Instance()->AddPage( pWidget);
 		GSystem->GetUICanvas()->OpenUIPage( pWidget);
 	}
-	else if( m_pCanvasContainer->GetSelectedWidget())
-	{
-		pWidget->Open();
-	}
 	else
 	{
-		GUI_FORCE_ASSERT( "failed to create widget");
+		pWidget->Open();
 	}
 
 	pWidget->Refresh();
 
-	RefreshWidgetTreeCtrl();
-	m_pCanvasContainer->SetSaveFlag(true);
+	OnWidgetAdded();
 	m_pCanvasContainer->SetSelectedWidget(pWidget);
 }
 //------------------------------------------------------------------------------
@@ -1464,6 +1464,26 @@ void WxMainFrame::OnSetLocalization( wxCommandEvent& event )
 	uint32 nIdx = nId - ID_Localization_begin;
 
 	CGUILocalizationManager::Instance()->SetCurrentLocalConfig( wx2GuiString( CPropertyConfigMgr::Instance()->GetLocalizations()[nIdx]));
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnUndo(wxCommandEvent& evt)
+{
+	CCommandManager::Instance()->Undo();
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnUpdateUndo(wxUpdateUIEvent& event)
+{
+	event.Enable(CCommandManager::Instance()->HasUndoCommand());
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnRedo(wxCommandEvent& evt)
+{
+	CCommandManager::Instance()->Redo();
+}
+//------------------------------------------------------------------------------
+void WxMainFrame::OnUpdateRedo(wxUpdateUIEvent& event)
+{
+	event.Enable(CCommandManager::Instance()->HasRedoCommand());
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::OnUpdateCreateWidget(wxUpdateUIEvent& event)
@@ -1883,6 +1903,8 @@ void WxMainFrame::CreateMenu()
 	{
 		localization_menu->Append(ID_Localization_begin+i, rLocs[i]);
 	}
+	edit_menu->Append(ID_Undo, _("Undo"));
+	edit_menu->Append(ID_Redo, _("Redo"));
 
 	edit_menu->Append(ID_CreateWidget, _("Create Widget"));
 	edit_menu->Append(ID_DeleteWidget, _("Delete Widget"));

@@ -12,7 +12,8 @@
 #include "propertysheetfunc.h"
 #include "toolsmisc.h"
 #include "guiresourcepool.h"
-
+#include "wxmainframe.h"
+#include "wxmainapp.h"
 #include "wxpgpropertyextend.h"
 #include "propertysheetfunc.h"
 #include "propertyconfigmgr.h"
@@ -27,8 +28,69 @@
 // function
 //============================================================================// 
 //------------------------------------------------------------------------------
-std::vector<CGUIString> g_vecPropertyPages;
+CWidgetPropertyCache::CWidgetPropertyCache()
+{
+}
+//------------------------------------------------------------------------------
+CWidgetPropertyCache::CWidgetPropertyCache( CGUIWidget* pWidget )
+{
+	SetCache( pWidget );
+}
+//------------------------------------------------------------------------------
+void CWidgetPropertyCache::SetCache( CGUIWidget* pWidget )
+{
+	if( pWidget )
+	{
+		pWidget->DumpToProperty();
+		m_aProperty = pWidget->GetProperty();
+		m_aWidgetType = pWidget->GetType();
+		m_aWidgetName = pWidget->GetName();
+	}
+	else
+	{
+		m_aProperty.Clear();
+		m_aWidgetName.clear();
+		m_aWidgetType.clear();
+	}
+}
+//------------------------------------------------------------------------------
+bool CWidgetPropertyCache::HasCache() const
+{
+	return m_aProperty.GetPropertyCount() > 0;
+}
+//------------------------------------------------------------------------------
+const CGUIString& CWidgetPropertyCache::GetWidgetType() const
+{
+	return m_aWidgetType;
+}
+//------------------------------------------------------------------------------
+CGUIWidget* CWidgetPropertyCache::GenerateWidget( )
+{
+	return GenerateWidget( m_aWidgetName, m_aProperty.GetProperty("parent", "CGUIString")->GetValue() );
+}
+//------------------------------------------------------------------------------
+CGUIWidget*CWidgetPropertyCache::GenerateWidget( const CGUIString& rWidgetName )
+{
+	return GenerateWidget( rWidgetName, m_aProperty.GetProperty("parent", "CGUIString")->GetValue() );
+}
+//------------------------------------------------------------------------------
+CGUIWidget*CWidgetPropertyCache::GenerateWidget( const CGUIString& rWidgetName, const CGUIString& rParentName )
+{
+	CGUIWidget* pNewWidget = CGUIWidgetManager::Instance()->CreateWidget( m_aWidgetType, rWidgetName, GetMainFrame()->GetCurrentSceneName());
+	pNewWidget->SetProperty(m_aProperty);
+	pNewWidget->InsertProperty(CGUIProperty( "parent", "CGUIString", rParentName));
+	pNewWidget->LoadFromProperty( );
+	pNewWidget->SetPage( pNewWidget->GetParent() ? pNewWidget->GetParent()->GetPage() : pNewWidget );
+	pNewWidget->Create();
+	return pNewWidget;
+}
+//------------------------------------------------------------------------------
 
+
+
+
+//------------------------------------------------------------------------------
+std::vector<CGUIString> g_vecPropertyPages;
 //------------------------------------------------------------------------------
 void UpdateGridProperties( wxPropertyGridManager* pSheetMgr, const std::string& rWidgetType, CGUIWidget* pWidget )
 {

@@ -172,16 +172,20 @@ void WxWizardCreateWidget::OnWizardFinished(wxWizardEvent& event)
 	{
 		CGUIProperty aSet;
 		GenerateGUIProperties( m_pPropGridMgr, aSet );
+		if( m_pParent )
+		{
+			aSet.AddUniqueProperty( CGUIProperty("parent", "CGUIString", m_pParent->GetName() ));
+		}
+		else
+		{
+			aSet.AddUniqueProperty( CGUIProperty("parent", "CGUIString", "" ));
+		}
 
 		m_pWidget = CGUIWidgetManager::Instance()->CreateWidget(strType, strName, GetMainFrame()->GetCurrentSceneName());
 
 		m_pWidget->SetProperty( aSet );
 		m_pWidget->LoadFromProperty( aSet );
-		if( m_pParent )
-		{
-			m_pWidget->SetParent( m_pParent );
-			aSet.GetProperty("parent", "CGUIString")->SetValue( m_pParent->GetName() );
-		}
+		m_pWidget->SetPage( m_pParent ? m_pParent->GetPage() : m_pWidget );
 		m_pWidget->Create();
 	}
 	catch (CGUIBaseException& rError)

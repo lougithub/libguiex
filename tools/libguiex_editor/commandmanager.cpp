@@ -32,11 +32,34 @@ CCommandManager* CCommandManager::Instance()
 void CCommandManager::StoreCommand(CCommand* cmd)
 {
 	m_listUndo.push_back(cmd);
+	ClearRedoCommand();
 }
 //------------------------------------------------------------------------------
 void CCommandManager::ClearAllCommand()
 {
+	ClearUndoCommand();
+	ClearRedoCommand();
+}
+//------------------------------------------------------------------------------
+void CCommandManager::ClearUndoCommand()
+{
+	for( TCommandList::iterator itor = m_listUndo.begin();
+		itor != m_listUndo.end();
+		++itor )
+	{
+		delete (*itor);
+	}
 	m_listUndo.clear();
+}
+//------------------------------------------------------------------------------
+void CCommandManager::ClearRedoCommand()
+{
+	for( TCommandList::iterator itor = m_listRedo.begin();
+		itor != m_listRedo.end();
+		++itor )
+	{
+		delete (*itor);
+	}
 	m_listRedo.clear();
 }
 //------------------------------------------------------------------------------
@@ -54,11 +77,11 @@ void CCommandManager::Undo()
 //------------------------------------------------------------------------------
 void CCommandManager::Redo()
 {
-	if ( m_listUndo.empty() )
+	if ( m_listRedo.empty() )
 	{
 		return;
 	}
-	CCommand* cmd = m_listUndo.back();
+	CCommand* cmd = m_listRedo.back();
 	cmd->Execute();
 	m_listRedo.pop_back( );
 	m_listUndo.push_back(cmd);

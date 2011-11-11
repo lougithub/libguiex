@@ -29,6 +29,30 @@ extern void	UpdateGridProperty( wxPropertyGridManager* pSheetMgr, CGUIWidget* pW
 extern void GenerateGUIProperties( wxPropertyGridManager* pSheetMgr, CGUIProperty& rSet );
 
 
+//============================================================================//
+// class
+//============================================================================// 
+class CWidgetPropertyCache
+{
+public:
+	CWidgetPropertyCache();
+	CWidgetPropertyCache( CGUIWidget* pWidget );
+
+	void SetCache( CGUIWidget* pWidget );
+	bool HasCache() const;
+	
+	CGUIWidget*GenerateWidget( );
+	CGUIWidget*GenerateWidget( const CGUIString& rWidgetName );
+	CGUIWidget*GenerateWidget( const CGUIString& rWidgetName, const CGUIString& rParentName );
+
+	const CGUIString& GetWidgetType() const;
+
+protected:
+	CGUIProperty m_aProperty;
+	CGUIString m_aWidgetName;
+	CGUIString m_aWidgetType;
+};
+
 
 
 

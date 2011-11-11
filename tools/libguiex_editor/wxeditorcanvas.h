@@ -103,6 +103,11 @@ private:
 
 	WxEditorCanvasContainer* m_pContainer;
 
+	CGUIVector2 m_vOldPixelPos;
+	bool m_bWidgetPosChanged;
+	CGUISize m_aOldPixelSize;
+	bool m_bWidgetSizeChanged;
+
 	DECLARE_EVENT_TABLE()
 };
 

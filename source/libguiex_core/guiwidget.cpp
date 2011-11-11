@@ -1754,15 +1754,7 @@ namespace guiex
 	*/
 	void CGUIWidget::InsertProperty( const CGUIProperty& rProperty)
 	{
-		CGUIProperty* pProp = m_aPropertySet.GetProperty(rProperty.GetName(), rProperty.GetType());
-		if( pProp )
-		{
-			*pProp = rProperty;
-		}
-		else
-		{
-			m_aPropertySet.AddProperty(rProperty);
-		}
+		m_aPropertySet.AddUniqueProperty( rProperty );
 	}
 	//------------------------------------------------------------------------------
 	/**

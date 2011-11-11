@@ -15,6 +15,8 @@
 #include "wxmainframe.h"
 #include "toolsmisc.h"
 #include "wxresourcepreviewpanel.h"
+#include "command.h"
+#include "commandmanager.h"
 #include <libguiex_core/guiex.h>
 
 #include <sys/timeb.h>
@@ -55,6 +57,8 @@ WxEditorCanvas::WxEditorCanvas(wxWindow *parent, int* args, wxWindowID id,
 					   ,m_previousMouseY(0)
 					   ,m_bWidgetStatusChanged(false)
 					   ,m_pContainer((WxEditorCanvasContainer*)parent)
+					   ,m_bWidgetPosChanged(false)
+					   ,m_bWidgetSizeChanged(false)
 {
 	m_timer.Start(33);
 }
@@ -323,7 +327,6 @@ void WxEditorCanvas::OnMouseMove(wxMouseEvent& event)
 //------------------------------------------------------------------------------
 void WxEditorCanvas::HandleMouseMoved (int aMouseX, int aMouseY)
 {
-
 	wxChar statusInfo [512];
 	bool bChanges = false;
 	float pixelDeltaX, pixelDeltaY ;
@@ -352,7 +355,11 @@ void WxEditorCanvas::HandleMouseMoved (int aMouseX, int aMouseY)
 
 		if (m_hoveredResizePoint != RESIZE_POINT_NONE)
 		{	
-			//SelectionMover mover (&m_selection);	//Todo: view->GetSelection(); or something.
+			if( !m_bWidgetSizeChanged )
+			{
+				m_aOldPixelSize = m_aWindowBox.GetWindow()->GetPixelSize();
+				m_bWidgetSizeChanged = true;
+			}
 
 			// The mouse is pressed on a resize point; resize each selected window accordingly.
 			switch (m_hoveredResizePoint) 
@@ -398,6 +405,11 @@ void WxEditorCanvas::HandleMouseMoved (int aMouseX, int aMouseY)
 		{	
 			// The mouse is pressed inside a window; drag entire selection.
 			// We drag, so the size doesn't change. Therefore we pass the same two parameters for the right bottom values.
+			if( !m_bWidgetPosChanged )
+			{
+				m_vOldPixelPos = m_aWindowBox.GetWindow()->GetPixelPosition();
+				m_bWidgetPosChanged = true;
+			}
 			m_aWindowBox.MoveWindowPosition(pixelDeltaX, pixelDeltaY);
 			bChanges = true;
 		}
@@ -495,7 +507,7 @@ void WxEditorCanvas::OnMouseLeftDown(wxMouseEvent& event)
 void WxEditorCanvas::OnMouseLeftUp(wxMouseEvent& event)
 {
 	bool mustNotify = (m_hoveredResizePoint != RESIZE_POINT_NONE || m_hoveredWindow);
-	m_mousePressed = false ;
+	m_mousePressed = false;
 	m_hoveredResizePoint = RESIZE_POINT_NONE;
 	SetHoveredWindow( NULL );
 	if (mustNotify)
@@ -514,6 +526,20 @@ void WxEditorCanvas::OnMouseLeftUp(wxMouseEvent& event)
 	}
 
 	HandleMouseMoved(event.m_x, event.m_y);
+
+	if( m_bWidgetPosChanged )
+	{
+		m_bWidgetPosChanged = false;
+		CCommand_SetPosition* pCommand = new CCommand_SetPosition(m_aWindowBox.GetWindow(), m_vOldPixelPos, m_aWindowBox.GetWindow()->GetPixelPosition());
+		CCommandManager::Instance()->StoreCommand( pCommand  );
+	}
+
+	if( m_bWidgetSizeChanged )
+	{
+		m_bWidgetSizeChanged = false;
+		CCommand_SetSize* pCommand = new CCommand_SetSize(m_aWindowBox.GetWindow(), m_aOldPixelSize, m_aWindowBox.GetWindow()->GetPixelSize());
+		CCommandManager::Instance()->StoreCommand( pCommand  );
+	}
 }
 //------------------------------------------------------------------------------
 void WxEditorCanvas::OnWidgetDestroyed(CGUIWidget* pWidget)

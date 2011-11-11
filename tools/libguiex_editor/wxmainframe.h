@@ -14,6 +14,7 @@
 //============================================================================// 
 #include "wxtexteditor.h"
 #include "guiframeworkeditor.h"
+#include "propertysheetfunc.h"
 
 #include <wx/wxprec.h>
 #include <wx/aui/aui.h>
@@ -22,6 +23,7 @@
 #include <wx/propgrid/advprops.h>
 #include <wx/propgrid/manager.h>
 #include <libguiex_core/guiex.h>
+
 
 #include <map>
 
@@ -80,6 +82,9 @@ public:
 	{
 		return m_strCurrentSceneName;
 	}
+
+	void OnWidgetDeleted();
+	void OnWidgetAdded();
 
 protected:
 	void CreateMenu();
@@ -182,6 +187,11 @@ protected:
 
 	void OnUpdateResolution(wxUpdateUIEvent& event);
 
+	void OnUndo(wxCommandEvent& evt);
+	void OnUpdateUndo(wxUpdateUIEvent& event);
+	void OnRedo(wxCommandEvent& evt);
+	void OnUpdateRedo(wxUpdateUIEvent& event);
+
 	void OnCreateWidget(wxCommandEvent& evt);
 	void OnUpdateCreateWidget(wxUpdateUIEvent& event);
 	void OnSetLocalization( wxCommandEvent& event );
@@ -235,11 +245,7 @@ protected:
 
 	CGUIWidget* m_pCurrentEditingWidget;
 
-	struct
-	{
-		CGUIProperty m_aProperty;
-		CGUIString m_aWidgetType;
-	} m_aPasteCache;
+	CWidgetPropertyCache m_aWidgetPasteCache;
 
 	DECLARE_EVENT_TABLE()
 };

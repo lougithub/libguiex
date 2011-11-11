@@ -125,6 +125,11 @@ int WxEditorCanvasContainer::SaveWidgetNodeToDoc( CGUIWidget* pWidget, TiXmlDocu
 		AddTopPropertyElement(pWidget, rPropertyTemplate, *pProperty, pWidgetNode);
 		aSet.RemoveProperty(*pProperty);
 	}
+	else
+	{
+		CGUIProperty aProperty("parent", "CGUIString","");
+		AddTopPropertyElement(pWidget, rPropertyTemplate, aProperty, pWidgetNode);
+	}
 
 	//process image
 	std::vector<CGUIProperty> aImgVector;
@@ -172,11 +177,11 @@ void WxEditorCanvasContainer::AddTopPropertyElement( const CGUIWidget* pWidget, 
 	TiXmlElement* pOldNode = GetElementByName(_T("property"), Gui2wxString(rProperty.GetName()), pWidgetNode);
 
 	bool bIgnoreIt = false;
-	if( rProperty.GetValue().empty() && rProperty.GetPropertyCount() == 0 )
-	{
-		//empty property, ignore it
-		bIgnoreIt = true;
-	}
+	//if( rProperty.GetValue().empty() && rProperty.GetPropertyCount() == 0 )
+	//{
+	//	//empty property, ignore it
+	//	bIgnoreIt = true;
+	//}
 	const CGUIProperty* pPropertyTemplate = rPropertyTemplate.GetProperty( rProperty.GetName(), rProperty.GetType() );
 	if( !pPropertyTemplate )
 	{
@@ -204,10 +209,7 @@ void WxEditorCanvasContainer::AddTopPropertyElement( const CGUIWidget* pWidget, 
 		TiXmlElement aNewToppestNode("property");
 		aNewToppestNode.SetAttribute("name",rProperty.GetName().c_str());
 		aNewToppestNode.SetAttribute("type",rProperty.GetTypeAsString().c_str());
-		if( !rProperty.GetValue().empty())
-		{
-			aNewToppestNode.SetAttribute("value",rProperty.GetValue().c_str());
-		}
+		aNewToppestNode.SetAttribute("value",rProperty.GetValue().c_str());
 
 		//insert it
 		if( pOldNode )

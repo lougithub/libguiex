@@ -1,5 +1,6 @@
 <guiex>
     <property name="dlg_ok" type="CGUIWidgetDefine" value="CGUIWgtPanel">
+        <property name="parent" type="CGUIString" value="" />
         <property name="bg" type="CGUIImage" value="dialog_bg" />
         <property name="border_topright" type="CGUIImage" value="dialog_border_topright" />
         <property name="border_right" type="CGUIImage" value="dialog_border_right" />
@@ -12,13 +13,13 @@
         <property name="default_as" type="CGUIAs" value="as_alpha_looping" />
         <property name="movable" type="bool" value="true" />
         <property name="clip_children" type="bool" value="true" />
-        <property name="position" type="CGUIWidgetPosition">
+        <property name="position" type="CGUIWidgetPosition" value="">
             <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
             <property name="value" type="CGUIVector2" value="0.5,0.5" />
         </property>
         <property name="activable" type="bool" value="true" />
         <property name="anchor" type="CGUIVector2" value="0.5,0.5" />
-        <property name="size" type="CGUIWidgetSize">
+        <property name="size" type="CGUIWidgetSize" value="">
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
             <property name="value" type="CGUISize" value="369,87" />
         </property>
@@ -29,17 +30,17 @@
     </property>
     <property name="dlg_ok_content" type="CGUIWidgetDefine" value="CGUIWgtStaticText">
         <property name="parent" type="CGUIString" value="dlg_ok" />
-        <property name="position" type="CGUIWidgetPosition">
+        <property name="position" type="CGUIWidgetPosition" value="">
             <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
             <property name="value" type="CGUIVector2" value="0.502907,0.0485969" />
         </property>
-        <property name="size" type="CGUIWidgetSize">
+        <property name="size" type="CGUIWidgetSize" value="">
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
             <property name="value" type="CGUISize" value="275,36" />
         </property>
         <property name="anchor" type="CGUIVector2" value="0.5,0" />
         <property name="hitable" type="bool" value="false" />
-        <property name="textinfo" type="CGUIStringRenderInfo">
+        <property name="textinfo" type="CGUIStringRenderInfo" value="">
             <property name="scale" type="real" value="1" />
             <property name="font" type="CGUIFont" value="3" />
             <property name="color" type="CGUIColor" value="216,200,40,255" />
@@ -53,17 +54,17 @@
         <property name="push" type="CGUIImage" value="button_blue_push" />
         <property name="disable" type="CGUIImage" value="button_blue_disable" />
         <property name="anchor" type="CGUIVector2" value="0.5,0" />
-        <property name="textinfo_normal" type="CGUIStringRenderInfo">
+        <property name="textinfo_normal" type="CGUIStringRenderInfo" value="">
             <property name="scale" type="real" value="1" />
             <property name="font" type="CGUIFont" value="1" />
             <property name="color" type="CGUIColor" value="255,255,255,255" />
         </property>
         <property name="text_normal" type="CGUILocalizedString" value="ok" />
-        <property name="position" type="CGUIWidgetPosition">
+        <property name="position" type="CGUIWidgetPosition" value="">
             <property name="type" type="EScreenValue" value="eScreenValue_Percentage" />
-            <property name="value" type="CGUIVector2" value="0.5,0.512918" />
+            <property name="value" type="CGUIVector2" value="0.459302,0.495061" />
         </property>
-        <property name="size" type="CGUIWidgetSize">
+        <property name="size" type="CGUIWidgetSize" value="">
             <property name="type" type="EScreenValue" value="eScreenValue_Pixel" />
             <property name="value" type="CGUISize" value="148,37" />
         </property>

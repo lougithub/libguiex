@@ -15,6 +15,7 @@
 #include <map>
 #include <vector>
 #include <libguiex_core/guiex.h>
+#include "propertysheetfunc.h"
 
 //============================================================================//
 // declare
@@ -79,7 +80,7 @@ protected:
 class CCommand_SetPosition : public CCommandWidgetBase
 {
 public:
-	CCommand_SetPosition( CGUIWidget* pWidget, const CGUIVector2& rPixelPos );
+	CCommand_SetPosition( CGUIWidget* pWidget, const CGUIVector2& rPixelOldPos, const CGUIVector2& rPixelNewPos );
 
 	virtual void Execute();
 	virtual void Undo();
@@ -88,6 +89,42 @@ protected:
 	CGUIVector2 m_aPosOld;
 	CGUIVector2 m_aPosNew;
 };
+
+//***********************************************
+// CCommand_SetSize
+//*********************************************** 
+class CCommand_SetSize : public CCommandWidgetBase
+{
+public:
+	CCommand_SetSize( CGUIWidget* pWidget, const CGUISize& rPixelOldSize, const CGUISize& rPixelNewSize );
+
+	virtual void Execute();
+	virtual void Undo();
+
+protected:
+	CGUISize m_aSizeOld;
+	CGUISize m_aSizeNew;
+};
+
+
+//***********************************************
+// CCommand_DeleteWidget
+//*********************************************** 
+class CCommand_DeleteWidget : public CCommandWidgetBase
+{
+public:
+	CCommand_DeleteWidget( CGUIWidget* pWidget );
+
+	virtual void Execute();
+	virtual void Undo();
+
+protected:
+	void SaveWidgetCache( CGUIWidget* pWidget );
+
+protected:
+	std::vector<CWidgetPropertyCache> m_vecPropertyCaches;
+};
+
 
 #endif //__KEN_COMMAND_20071130_H__
 

@@ -56,6 +56,7 @@ namespace guiex
 		const CGUIString& GetTypeAsString() const;
 
 		void AddProperty(  const CGUIProperty& rProperty );
+		void AddUniqueProperty(  const CGUIProperty& rProperty );
 		void RemoveProperty( int32 nIdx );
 		void RemoveProperty( const CGUIProperty& rProperty );
 		void InsertProperty(  const CGUIProperty& rProperty, int32 nIndex );

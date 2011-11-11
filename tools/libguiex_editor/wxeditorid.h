@@ -36,6 +36,8 @@ enum
 	ID_About,
 
 	//edit menu
+	ID_Undo,
+	ID_Redo,
 	ID_CreateWidget,
 	ID_DeleteWidget,
 	ID_WidgetUp,
