@@ -21,9 +21,6 @@ class WxOutputPanel : public wxTextCtrl
 public:
 	WxOutputPanel( wxWindow *parent, wxWindowID id );
 	~WxOutputPanel(){};
-
-protected:
-	wxStaticText*		m_pTextCtrl;
 };
 
 #endif	//__KEN_OUTPUT_PANEL_20070912_H__

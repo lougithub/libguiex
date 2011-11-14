@@ -35,17 +35,20 @@ EVT_SIZE(WxEditorCanvas::OnSize)
 EVT_PAINT(WxEditorCanvas::OnPaint)
 EVT_KEY_DOWN( WxEditorCanvas::OnKeyDown )
 EVT_KEY_UP( WxEditorCanvas::OnKeyUp )
+EVT_CHAR( WxEditorCanvas::OnChar )
 EVT_ENTER_WINDOW( WxEditorCanvas::OnEnterWindow )
 EVT_MOTION(WxEditorCanvas::OnMouseMove)
 EVT_LEFT_DOWN(WxEditorCanvas::OnMouseLeftDown) 
 EVT_LEFT_UP(WxEditorCanvas::OnMouseLeftUp) 
 EVT_TIMER(100, WxEditorCanvas::OnTimer)
+
+EVT_SET_FOCUS( WxEditorCanvas::OnSetFocus )
+EVT_KILL_FOCUS( WxEditorCanvas::OnKillFocus )
 END_EVENT_TABLE()
 
 //------------------------------------------------------------------------------
-WxEditorCanvas::WxEditorCanvas(wxWindow *parent, int* args, wxWindowID id,
-					   const wxPoint& pos, const wxSize& size, long style, const wxString& name)
-					   : wxGLCanvas(parent, (wxGLCanvas*) NULL, id, pos, size, style|wxFULL_REPAINT_ON_RESIZE , name, args )
+WxEditorCanvas::WxEditorCanvas( wxWindow *parent, int* args,const wxSize& size )
+					   : wxGLCanvas(parent, wxID_ANY, args, wxDefaultPosition, size, wxFULL_REPAINT_ON_RESIZE | wxWANTS_CHARS )
 					   ,m_timer(this, 100)
 					   ,m_hoveredResizePoint(RESIZE_POINT_NONE)
 					   ,m_previousHoveredResizePoint(RESIZE_POINT_NONE)
@@ -237,30 +240,53 @@ void WxEditorCanvas::UpdateCanvasSize(const wxSize& rSize)
 	m_aWindowBox.Reset( );
 }
 //------------------------------------------------------------------------------
+void WxEditorCanvas::OnChar(wxKeyEvent& event)
+{
+	switch( event.GetKeyCode() )
+	{
+	case WXK_CONTROL_Z:
+		CCommandManager::Instance()->Undo();
+		break;
+	case WXK_CONTROL_Y:
+		CCommandManager::Instance()->Redo();
+		break;
+	default:
+		event.Skip();
+	}
+}
+//------------------------------------------------------------------------------
 void WxEditorCanvas::OnKeyDown( wxKeyEvent& event )
 {
+	// It's a special key, deal with all the known ones:
 	int pixelDeltaX = 0, pixelDeltaY = 0;
-	int key = event.GetKeyCode();
 
-	if (key == 'w' || key == 'W' || key == WXK_UP)
+	switch ( event.GetKeyCode() )
 	{
+	case WXK_UP:
 		pixelDeltaY = -1;
-	}
-	else if (key == 's' || key == 'S' || key == WXK_DOWN)
-	{
+		break;
+	case WXK_DOWN:
 		pixelDeltaY = 1;
-	}
-	else if (key == 'a' || key == 'A' || key == WXK_LEFT)
-	{
+		break;
+	case WXK_LEFT:
 		pixelDeltaX = -1;
-	}
-	else if (key == 'd' || key == 'D' || key == WXK_RIGHT)
-	{
+		break;
+	case WXK_RIGHT:
 		pixelDeltaX = 1;
+		break;
+	default:
+		event.Skip();
+		break;
 	}
 
 	if( m_aWindowBox.GetWindow() && (pixelDeltaX != 0 || pixelDeltaY != 0))
 	{
+		if( !m_bWidgetPosChanged )
+		{
+			m_vOldPixelPos = m_aWindowBox.GetWindow()->GetPixelPosition();
+			m_bWidgetPosChanged = true;
+		}
+
 		m_aWindowBox.MoveWindowPosition(pixelDeltaX, pixelDeltaY);
 		GetMainFrame()->UpdateWidgetSizeAndPos();
 		m_pContainer->SetSaveFlag(true);
@@ -270,6 +296,12 @@ void WxEditorCanvas::OnKeyDown( wxKeyEvent& event )
 //------------------------------------------------------------------------------
 void WxEditorCanvas::OnKeyUp( wxKeyEvent& event )
 {
+	if( m_bWidgetPosChanged )
+	{
+		m_bWidgetPosChanged = false;
+		CCommand_SetPosition* pCommand = new CCommand_SetPosition(m_aWindowBox.GetWindow(), m_vOldPixelPos, m_aWindowBox.GetWindow()->GetPixelPosition());
+		CCommandManager::Instance()->StoreCommand( pCommand  );
+	}
 	event.Skip();
 }
 //------------------------------------------------------------------------------
@@ -567,3 +599,14 @@ void WxEditorCanvas::SetHoveredWindow( CGUIWidget* pWidget )
 	}
 }
 //------------------------------------------------------------------------------
+void WxEditorCanvas::OnSetFocus(wxFocusEvent &event)
+{
+	GetMainFrame()->OutputString(std::string("get focus"));
+	event.Skip();
+}
+
+void WxEditorCanvas::OnKillFocus(wxFocusEvent &event)
+{
+	GetMainFrame()->OutputString(std::string("lost focus"));
+	event.Skip();
+}

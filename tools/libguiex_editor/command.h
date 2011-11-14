@@ -108,9 +108,24 @@ protected:
 
 
 //***********************************************
+// CCommand_WidgetOp
+//*********************************************** 
+class CCommand_WidgetOp : public CCommandWidgetBase
+{
+public:
+	CCommand_WidgetOp( CGUIWidget* pWidget );
+
+protected:
+	void SaveWidgetCache( CGUIWidget* pWidget );
+
+protected:
+	std::vector<CWidgetPropertyCache> m_vecPropertyCaches;
+};
+
+//***********************************************
 // CCommand_DeleteWidget
 //*********************************************** 
-class CCommand_DeleteWidget : public CCommandWidgetBase
+class CCommand_DeleteWidget : public CCommand_WidgetOp
 {
 public:
 	CCommand_DeleteWidget( CGUIWidget* pWidget );
@@ -118,11 +133,37 @@ public:
 	virtual void Execute();
 	virtual void Undo();
 
-protected:
-	void SaveWidgetCache( CGUIWidget* pWidget );
+};
+
+
+//***********************************************
+// CCommand_CreateWidget
+//*********************************************** 
+class CCommand_CreateWidget : public CCommand_WidgetOp
+{
+public:
+	CCommand_CreateWidget( CGUIWidget* pWidget );
+
+	virtual void Execute();
+	virtual void Undo();
+
+};
+
+
+//***********************************************
+// CCommand_WidgetChangeParent
+//*********************************************** 
+class CCommand_WidgetChangeParent : public CCommandWidgetBase
+{
+public:
+	CCommand_WidgetChangeParent( CGUIWidget* pWidget, const CGUIString& rOldParentName, const CGUIString& rNewParentName );
+
+	virtual void Execute();
+	virtual void Undo();
 
 protected:
-	std::vector<CWidgetPropertyCache> m_vecPropertyCaches;
+	CGUIString m_strOldParent;
+	CGUIString m_strNewParent;
 };
 
 

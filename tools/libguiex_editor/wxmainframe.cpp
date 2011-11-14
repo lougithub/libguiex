@@ -208,7 +208,7 @@ WxMainFrame::WxMainFrame(wxWindow* parent,
 				 const wxPoint& pos,
 				 const wxSize& size,
 				 long style)
-				 : wxFrame(parent, id, title, pos, size, style)
+				 : wxFrame(parent, id, title, pos, size, style )
 				 ,m_bIsSceneOpened(false)
 				 ,m_pCanvasContainer(NULL)
 				 ,m_pPropGridMan(NULL)
@@ -306,8 +306,6 @@ WxOutputPanel* WxMainFrame::CreateOutput()
 //------------------------------------------------------------------------------
 wxPanel* WxMainFrame::CreatePropGridPanel()
 {
-	wxPanel* panel = new wxPanel(this,-1,wxDefaultPosition,wxDefaultSize);
-
 	int style = 
 		wxPG_BOLD_MODIFIED |
 		wxPG_SPLITTER_AUTO_CENTER |
@@ -328,10 +326,10 @@ wxPanel* WxMainFrame::CreatePropGridPanel()
 		wxPG_EX_MULTIPLE_SELECTION;
 
 	m_pPropGridMan = new wxPropertyGridManager(
-		panel,
+		this,
 		ID_GridManager, 
 		wxDefaultPosition,
-		wxSize(100, 100),
+		wxDefaultSize,
 		style );
 	m_pPropGridMan->SetExtraStyle( extraStyle );
 	m_pPropGridMan->SetValidationFailureBehavior( wxPG_VFB_BEEP | wxPG_VFB_MARK_CELL | wxPG_VFB_SHOW_MESSAGE );
@@ -343,13 +341,7 @@ wxPanel* WxMainFrame::CreatePropGridPanel()
 	//initialize image
 	wxInitAllImageHandlers();
 
-	//set sizer
-	wxBoxSizer* topSizer = new wxBoxSizer ( wxVERTICAL );
-	topSizer->Add( m_pPropGridMan, 1, wxEXPAND );
-	panel->SetSizer( topSizer );
-	topSizer->SetSizeHints( panel );
-
-	return panel;
+	return m_pPropGridMan;
 }
 //------------------------------------------------------------------------------
 WxEditorCanvasContainer* WxMainFrame::GetCanvasContainer()
@@ -1115,11 +1107,13 @@ void WxMainFrame::OnWidgetChangeParent(wxCommandEvent& evt)
 	{
 		return;
 	}
-	pWidget->SetParent( CGUIWidgetManager::Instance()->GetWidget( strWidgetName, pWidget->GetSceneName()));
-	pWidget->Refresh();
+
+	CCommand_WidgetChangeParent* pCommand = new CCommand_WidgetChangeParent( pWidget, pWidget->GetParent()->GetName(), strWidgetName );
+	CCommandManager::Instance()->StoreCommand( pCommand );
+
+	pCommand->Execute();
 
 	m_pCanvasContainer->UpdateWindowBox();
-	OnWidgetModified();
 	SetPropGridWidget( pWidget, true );
 }
 //------------------------------------------------------------------------------
@@ -1454,6 +1448,9 @@ void WxMainFrame::OnCreateWidget(wxCommandEvent& evt)
 
 	OnWidgetModified();
 	m_pCanvasContainer->SetSelectedWidget(pWidget);
+
+	CCommand_CreateWidget* pCommand = new CCommand_CreateWidget( pWidget );
+	CCommandManager::Instance()->StoreCommand( pCommand );
 }
 //------------------------------------------------------------------------------
 void WxMainFrame::OnSetLocalization( wxCommandEvent& event )

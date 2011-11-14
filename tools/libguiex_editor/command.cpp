@@ -138,17 +138,18 @@ void CCommand_SetSize::Undo()
 //------------------------------------------------------------------------------
 
 
+
 //***********************************************
-// CCommand_DeleteWidget
+// CCommand_WidgetOp
 //*********************************************** 
 //------------------------------------------------------------------------------
-CCommand_DeleteWidget::CCommand_DeleteWidget( CGUIWidget* pWidget )
+CCommand_WidgetOp::CCommand_WidgetOp( CGUIWidget* pWidget )
 	:CCommandWidgetBase(pWidget)
 {
 	SaveWidgetCache( pWidget );
 }
 //------------------------------------------------------------------------------
-void CCommand_DeleteWidget::SaveWidgetCache( CGUIWidget* pWidget )
+void CCommand_WidgetOp::SaveWidgetCache( CGUIWidget* pWidget )
 {
 	if(CGUIWidgetManager::IsInternalName( pWidget->GetName()))
 	{
@@ -165,6 +166,17 @@ void CCommand_DeleteWidget::SaveWidgetCache( CGUIWidget* pWidget )
 		SaveWidgetCache( pChild );
 		pChild = pChild->GetNextSibling();
 	}
+}
+//------------------------------------------------------------------------------
+
+
+//***********************************************
+// CCommand_DeleteWidget
+//*********************************************** 
+//------------------------------------------------------------------------------
+CCommand_DeleteWidget::CCommand_DeleteWidget( CGUIWidget* pWidget )
+	:CCommand_WidgetOp(pWidget)
+{
 }
 //------------------------------------------------------------------------------
 void CCommand_DeleteWidget::Execute()
@@ -206,6 +218,94 @@ void CCommand_DeleteWidget::Undo()
 			pWidget->Open();
 		}
 	}
+
+	GetMainFrame()->OnWidgetModified();
+}
+//------------------------------------------------------------------------------
+
+
+
+
+//***********************************************
+// CCommand_CreateWidget
+//*********************************************** 
+//------------------------------------------------------------------------------
+CCommand_CreateWidget::CCommand_CreateWidget( CGUIWidget* pWidget )
+	:CCommand_WidgetOp(pWidget)
+{
+}
+//------------------------------------------------------------------------------
+void CCommand_CreateWidget::Execute()
+{
+	for( std::vector<CWidgetPropertyCache>::iterator itor = m_vecPropertyCaches.begin();
+		itor != m_vecPropertyCaches.end();
+		++itor )
+	{
+		CWidgetPropertyCache& aCache = *itor;
+		CGUIWidget* pWidget = aCache.GenerateWidget( );
+		if( pWidget->IsPageRoot() )
+		{
+			CGUIWidgetManager::Instance()->AddPage( pWidget);
+			GSystem->GetUICanvas()->OpenUIPage( pWidget);
+		}
+		else
+		{
+			pWidget->Open();
+		}
+	}
+
+	GetMainFrame()->OnWidgetModified();
+}
+//------------------------------------------------------------------------------
+void CCommand_CreateWidget::Undo()
+{
+	CGUIWidget* pWidget = GetWidget();
+	if( pWidget->IsPageRoot() )
+	{
+		//is page
+		GSystem->GetUICanvas()->CloseUIPage(pWidget);
+		CGUIWidgetManager::Instance()->DestroyWidget(pWidget);
+	}
+	else
+	{
+		if( pWidget->IsOpen() )
+		{
+			pWidget->Close();
+		}
+		CGUIWidgetManager::Instance()->DestroyWidget(pWidget);
+	}
+
+	GetMainFrame()->OnWidgetDeleted();
+}
+//------------------------------------------------------------------------------
+
+
+
+//***********************************************
+// CCommand_WidgetChangeParent
+//*********************************************** 
+//------------------------------------------------------------------------------
+CCommand_WidgetChangeParent::CCommand_WidgetChangeParent( CGUIWidget* pWidget, const CGUIString& rOldParentName, const CGUIString& rNewParentName )
+	:CCommandWidgetBase(pWidget)
+	,m_strOldParent( rOldParentName )
+	,m_strNewParent( rNewParentName )
+{
+}
+//------------------------------------------------------------------------------
+void CCommand_WidgetChangeParent::Execute()
+{
+	CGUIWidget* pWidget = GetWidget();
+	pWidget->SetParent( CGUIWidgetManager::Instance()->GetWidget( m_strNewParent, GetMainFrame()->GetCurrentSceneName()));
+	pWidget->Refresh();
+
+	GetMainFrame()->OnWidgetModified();
+}
+//------------------------------------------------------------------------------
+void CCommand_WidgetChangeParent::Undo()
+{
+	CGUIWidget* pWidget = GetWidget();
+	pWidget->SetParent( CGUIWidgetManager::Instance()->GetWidget( m_strOldParent, GetMainFrame()->GetCurrentSceneName()));
+	pWidget->Refresh();
 
 	GetMainFrame()->OnWidgetModified();
 }

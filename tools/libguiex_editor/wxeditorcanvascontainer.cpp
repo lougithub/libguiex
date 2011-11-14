@@ -27,8 +27,6 @@ using namespace guiex;
 //============================================================================// 
 
 //------------------------------------------------------------------------------
-IMPLEMENT_ABSTRACT_CLASS(WxEditorCanvasContainer, wxScrolledWindow)
-
 BEGIN_EVENT_TABLE(WxEditorCanvasContainer, wxScrolledWindow)
 END_EVENT_TABLE()
 //------------------------------------------------------------------------------
@@ -49,9 +47,8 @@ WxEditorCanvasContainer::WxEditorCanvasContainer( wxWindow *parent, const std::s
 		WX_GL_DEPTH_SIZE, 24, 
 		WX_GL_STENCIL_SIZE, 8,
 		0};
-	m_pCanvas = new WxEditorCanvas(this, wx_gl_attribs, wxID_ANY, wxDefaultPosition, aCanvasSize);
+	m_pCanvas = new WxEditorCanvas(this, wx_gl_attribs, aCanvasSize);
 	m_pCanvas->InitializeCanvas();
-	//m_pCanvas->SetNextHandler(  this );
 }
 //------------------------------------------------------------------------------
 void WxEditorCanvasContainer::UpdateWindowBox()

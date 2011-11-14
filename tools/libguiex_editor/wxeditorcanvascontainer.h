@@ -55,12 +55,8 @@ protected:
 	void AddSubPropertyElement( const CGUIProperty& rProperty, TiXmlElement* pParentElement);
 
 protected:
-	DECLARE_ABSTRACT_CLASS(WxEditorCanvasContainer)
-
-protected:
 	WxEditorCanvas*	m_pCanvas;
 
-	//DECLARE_DYNAMIC_CLASS(MyCanvas)
 	DECLARE_EVENT_TABLE()
 };
 

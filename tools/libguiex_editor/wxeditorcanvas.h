@@ -23,11 +23,7 @@ class WxEditorCanvas : public wxGLCanvas, public sigslot::has_slots<>
 	friend class WxEditorCanvasContainer;
 
 public:
-	WxEditorCanvas( wxWindow *parent, int* args,
-		wxWindowID id = wxID_ANY,
-		const wxPoint& pos = wxDefaultPosition,
-		const wxSize& size = wxDefaultSize,
-		long style = 0, const wxString& name = _T("EditorCanvas") );
+	WxEditorCanvas( wxWindow *parent, int* args,const wxSize& size );
 	~WxEditorCanvas();
 
 	//initialize canvas
@@ -52,11 +48,15 @@ public:
 	void OnSize(wxSizeEvent& event);
 	void OnKeyDown(wxKeyEvent& event);
 	void OnKeyUp(wxKeyEvent& event);
+	void OnChar(wxKeyEvent& event);
+
 	void OnEnterWindow(wxMouseEvent& event);
 	void OnTimer(wxTimerEvent& event);
 	void OnMouseMove(wxMouseEvent& event);
 	void OnMouseLeftDown(wxMouseEvent& event);
 	void OnMouseLeftUp(wxMouseEvent& event);
+	void OnSetFocus( wxFocusEvent &event );
+	void OnKillFocus( wxFocusEvent &event );
 
 protected:
 	void Render();

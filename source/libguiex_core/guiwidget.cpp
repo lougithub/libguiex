@@ -2446,7 +2446,7 @@ namespace guiex
 		pRender->GetFontRender()->DrawString(pRender, strText, rDrawRect, uTextAlignmentHorz, uTextAlignmentVert, GetDerivedAlpha(), nStartPos, nEndPos);
 	}
 	//------------------------------------------------------------------------------
-	void	CGUIWidget::DrawString(
+	void CGUIWidget::DrawString(
 		IGUIInterfaceRender* pRender, 
 		const CGUIStringRender& strText, 
 		const CGUIVector2& rPos,
