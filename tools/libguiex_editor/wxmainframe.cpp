@@ -855,6 +855,7 @@ void WxMainFrame::OnBookPageClose(wxAuiNotebookEvent& evt)
 			m_pCanvasContainer = NULL;
 			SetPropGridWidget( NULL );
 			ResetWidgetTreeCtrl();
+			CCommandManager::Instance()->ClearAllCommand();
 		}
 	}
 }
