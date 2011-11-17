@@ -27,12 +27,18 @@
 class WxResourcePreviewPanelBase : public wxScrolledWindow
 {
 public:
-	WxResourcePreviewPanelBase( wxWindow* parent, const guiex::CGUIString& rResourceType );
+	WxResourcePreviewPanelBase( wxWindow* parent, const guiex::CGUIString& rResourceType, bool bSupportCanvas );
 	virtual void SetResourceName( const wxString& rResourceName ) = 0;
 	const guiex::CGUIString& GetResourceType( ) const;
 
+	bool IsSupportCanvas() const
+	{
+		return m_bIsSupportCanvas;
+	}
+
 protected:
 	wxString m_strResourceName;
+	bool m_bIsSupportCanvas;
 
 private:
 	guiex::CGUIString m_strResourceType;
@@ -120,6 +126,20 @@ private:
 	DECLARE_EVENT_TABLE()
 };
 
+
+//============================================================================//
+// WxDefaultPreviewPanel
+//============================================================================// 
+class WxDefaultPreviewPanel : public WxResourcePreviewPanelBase
+{
+public:
+	WxDefaultPreviewPanel( wxWindow* parent );
+
+	virtual void SetResourceName( const wxString& rResourceName );
+
+protected:
+	wxTextCtrl* m_pTextBox;
+};
 
 //============================================================================//
 // context

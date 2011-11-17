@@ -290,9 +290,10 @@ void WxImageCanvas::SetUVRect( const wxRect& rTargetRect )
 // WxResourcePreviewPanelBase
 //============================================================================// 
 //------------------------------------------------------------------------------
-WxResourcePreviewPanelBase::WxResourcePreviewPanelBase( wxWindow* parent, const guiex::CGUIString& rResourceType )
+WxResourcePreviewPanelBase::WxResourcePreviewPanelBase( wxWindow* parent, const guiex::CGUIString& rResourceType, bool bSupportCanvas )
 	:wxScrolledWindow( parent )
 	,m_strResourceType( rResourceType )
+	,m_bIsSupportCanvas(bSupportCanvas)
 {
 }
 //------------------------------------------------------------------------------
@@ -307,7 +308,7 @@ const CGUIString& WxResourcePreviewPanelBase::GetResourceType( ) const
 //============================================================================//
 //------------------------------------------------------------------------------
 WxAnimationPreviewPanel::WxAnimationPreviewPanel( wxWindow *parent )
-	: WxResourcePreviewPanelBase( parent, "CGUIAnimationDefine" )
+	: WxResourcePreviewPanelBase( parent, "CGUIAnimationDefine", true )
 	, m_pAnimationCanvas( NULL )
 {
 	m_pAnimationCanvas = new WxAnimationCanvas( this ); 
@@ -340,13 +341,13 @@ void WxAnimationPreviewPanel::SetResourceName( const wxString& rResourceName )
 //============================================================================// 
 //------------------------------------------------------------------------------
 WxFontPreviewPanel::WxFontPreviewPanel( wxWindow* parent )
-	:WxResourcePreviewPanelBase( parent, "CGUIFontDefine" )
+	:WxResourcePreviewPanelBase( parent, "CGUIFontDefine", false )
 {
 	m_pTextBox = new wxTextCtrl( this, wxID_ANY );
 	m_pTextBox->SetEditable( false );
 
 	wxSizer *sizerTop = new wxBoxSizer( wxVERTICAL );
-	sizerTop->Add( m_pTextBox, 0, wxALIGN_CENTER );
+	sizerTop->Add( m_pTextBox, 0, wxALL|wxEXPAND );
 	SetSizer( sizerTop );
 }
 //------------------------------------------------------------------------------
@@ -363,13 +364,39 @@ void WxFontPreviewPanel::SetResourceName( const wxString& rResourceName )
 
 
 
+//============================================================================//
+// WxDefaultPreviewPanel
+//============================================================================// 
+//------------------------------------------------------------------------------
+WxDefaultPreviewPanel::WxDefaultPreviewPanel( wxWindow* parent )
+	:WxResourcePreviewPanelBase( parent, "", false )
+{
+	m_pTextBox = new wxTextCtrl( this, wxID_ANY );
+	m_pTextBox->SetEditable( false );
+
+	wxSizer *sizerTop = new wxBoxSizer( wxVERTICAL );
+	sizerTop->Add( m_pTextBox, 0, wxALL|wxEXPAND );
+	SetSizer( sizerTop );
+}
+//------------------------------------------------------------------------------
+void WxDefaultPreviewPanel::SetResourceName( const wxString& rResourceName )
+{
+	if( m_strResourceName != rResourceName )
+	{
+		m_strResourceName = rResourceName;
+		m_pTextBox->SetLabelText( wxString("no preview for ") + rResourceName );
+	}
+}
+//------------------------------------------------------------------------------
+
+
 
 //============================================================================//
 // WxImagePreviewPanel
 //============================================================================// 
 //------------------------------------------------------------------------------
 WxImagePreviewPanel::WxImagePreviewPanel( wxWindow* parent )
-	:WxResourcePreviewPanelBase( parent, "CGUIImageDefine" )
+	:WxResourcePreviewPanelBase( parent, "CGUIImageDefine", true )
 {
 	m_pImageCanvas = new WxImageCanvas( this ); 
 	m_pFullImageCanvas = new WxImageCanvas( this ); 
@@ -442,7 +469,7 @@ void WxImagePreviewPanel::SetResourceName( const wxString& rResourceName )
 //============================================================================// 
 //------------------------------------------------------------------------------
 WxLocalizedStringPreviewPanel::WxLocalizedStringPreviewPanel( wxWindow* parent )
-	:WxResourcePreviewPanelBase( parent, "CGUILocalizationDefine" )
+	:WxResourcePreviewPanelBase( parent, "CGUILocalizationDefine", false )
 {
 	m_pTextBox = new wxTextCtrl( this, wxID_ANY );
 	m_pTextBox->SetEditable( false );
@@ -473,7 +500,7 @@ BEGIN_EVENT_TABLE( WxSoundPreviewPanel, WxResourcePreviewPanelBase )
 END_EVENT_TABLE()
 //------------------------------------------------------------------------------
 WxSoundPreviewPanel::WxSoundPreviewPanel( wxWindow* parent )
-:WxResourcePreviewPanelBase( parent, "CGUISoundDefine" )
+:WxResourcePreviewPanelBase( parent, "CGUISoundDefine", false )
 {
 	wxButton *pBtnPlay = new wxButton( this, ID_SoundSelect_BTN_PLAY, wxT("Play") );
 

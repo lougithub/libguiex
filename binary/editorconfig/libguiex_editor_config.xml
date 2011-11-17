@@ -6,6 +6,7 @@
 		<property name="ETextAlignmentHorz" type="enum" value="eTextAlignment_Horz_Center;eTextAlignment_Horz_Left;eTextAlignment_Horz_Right;"/>
 		<property name="ETextAlignmentVert" type="enum" value="eTextAlignment_Vert_Center;eTextAlignment_Vert_Up;eTextAlignment_Vert_Down;"/>
 		<property name="EOrientation" type="enum" value="eOrientation_Vertical;eOrientation_Horizontal;"/>
+		<property name="EImageOrientation" type="enum" value="eImageOrientation_Normal;eImageOrientation_90CW;eImageOrientation_90CCW;eImageOrientation_FlipHorizon;eImageOrientation_FlipVertical"/>
 	</enum>
 
 	<widget type="CGUIWidgetRoot" template="true">

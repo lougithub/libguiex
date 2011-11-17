@@ -91,17 +91,21 @@ void WxResourcePreviewContainer::CreatePreviewCanvas( const CGUIProperty* pResou
 		case ePropertyType_SoundDefine:
 			m_pPreviewPanel = new WxSoundPreviewPanel( this );
 			break;
+		default:
+			m_pPreviewPanel = new WxDefaultPreviewPanel( this );
+			break;
 		}
 
 		if( m_pPreviewPanel )
 		{
-			assert( m_pPreviewPanel->GetResourceType() == pResourceProperty->GetTypeAsString());
-
 			m_mgr.AddPane(m_pPreviewPanel, wxAuiPaneInfo().
 				Name(wxT("Preview")).Caption(wxT("Preview")).
 				CenterPane().PaneBorder(false));
 
-			CGUIFrameworkResource::ms_pFramework->RegisterOpenglInterface();
+			if( m_pPreviewPanel->IsSupportCanvas() )
+			{
+				CGUIFrameworkResource::ms_pFramework->RegisterOpenglInterface();
+			}
 
 			m_mgr.Update();
 		}
@@ -112,7 +116,10 @@ void WxResourcePreviewContainer::DestroyPreviewCanvas()
 {
 	if( m_pPreviewPanel )
 	{
-		CGUIFrameworkResource::ms_pFramework->UnregisterOpenglInterface();
+		if( m_pPreviewPanel->IsSupportCanvas() )
+		{
+			CGUIFrameworkResource::ms_pFramework->UnregisterOpenglInterface();
+		}
 
 		//clear panel
 		m_mgr.DetachPane(m_pPreviewPanel);
