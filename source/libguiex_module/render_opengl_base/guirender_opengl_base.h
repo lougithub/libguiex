@@ -45,6 +45,7 @@ namespace guiex
 		virtual void OnPostRegisterInterface();
 	public:
 		//render api 
+		virtual void SetClearColor(real red, real green, real blue, real alpha);
 		virtual void ClearColor(real red, real green, real blue, real alpha);
 		virtual void Clear( uint32 uFlag );
 		virtual void SetDepthTest( bool bEnable );
@@ -222,6 +223,8 @@ protected:
 		bool IsSupportStencil();
 
 	protected:
+		CGUIColor m_aClearColor;
+
 		int m_maxTextureSize; //!< maximum supported texture size (in pixels).
 
 		//cache for system

@@ -292,6 +292,11 @@ namespace guiex
 		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
+	void IGUIRender_opengl_base::SetClearColor(real red, real green, real blue, real alpha)
+	{
+		m_aClearColor.SetColor( red, green, blue, alpha );
+	}
+	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::Clear( uint32 uFlag )
 	{
 		TRY_THROW_OPENGL_ERROR();
@@ -512,7 +517,7 @@ namespace guiex
 		TRY_THROW_OPENGL_ERROR();
 		
 		//clear screen
-		glClearColor(0.8,0.8,0.8,1.0 );
+		glClearColor(m_aClearColor.GetRed(), m_aClearColor.GetGreen(), m_aClearColor.GetBlue(), m_aClearColor.GetAlpha() );
 		glClearStencil( 0 );
 		glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT );	// clear screen and depth buffer 
 

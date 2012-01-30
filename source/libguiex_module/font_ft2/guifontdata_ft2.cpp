@@ -401,7 +401,7 @@ namespace guiex
 		uint16 uFontSize = GetFontSize();
 
 		//Load the Glyph for our character.
-		if( FT_Load_Glyph( pFontFace, uGlyphIdx, FT_LOAD_DEFAULT/*FT_LOAD_RENDER*/ ))
+		if( FT_Load_Glyph( pFontFace, uGlyphIdx, FT_LOAD_DEFAULT/*FT_LOAD_DEFAULT FT_LOAD_RENDER*/ ))
 		{
 			GUI_THROW( GUI_FORMAT("[CGUIFontData_ft2::LoadCharDataWithoutStroke]:Failed to load glyph, the code is <%x>!", charCode ));
 		}

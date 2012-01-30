@@ -34,6 +34,8 @@ protected:
 		//open ui page
 		CGUIWidget* pWidget = CGUIWidgetManager::Instance()->GetPage( "utility.xml", "common" );
 		GSystem->GetUICanvas()->OpenUIPage( pWidget);
+
+		CGUIInterfaceManager::Instance()->GetInterfaceRender()->SetClearColor( 0.9,0.9,.9,1 );
 		return 0;
 	}
 
@@ -70,8 +72,9 @@ CMyCanvasLayer_DrawFont::CMyCanvasLayer_DrawFont( const char* szLayerName )
 	pWidget_statictext1->SetParent( this );
 	pWidget_statictext1->SetSize( 250, 25 );
 	pWidget_statictext1->SetPosition( 100, 300 );
-	pWidget_statictext1->SetTextContentUTF8("hello libguiex");
+	pWidget_statictext1->SetTextContent((wchar*)(L"我爱 hello libguiex"));
 	aRenderInfo.m_uFontID = 0;
+	aRenderInfo.m_aColor.SetColor(0,0,0);
 	pWidget_statictext1->SetTextInfo(aRenderInfo);
 	pWidget_statictext1->Create();
 
@@ -80,8 +83,9 @@ CMyCanvasLayer_DrawFont::CMyCanvasLayer_DrawFont( const char* szLayerName )
 	pWidget_statictext2->SetParent( this );
 	pWidget_statictext2->SetSize( 250, 25 );
 	pWidget_statictext2->SetPosition( 100, 350 );
-	pWidget_statictext2->SetTextContentUTF8("hello libguiex");
-	aRenderInfo.m_uFontID = 1;
+	pWidget_statictext2->SetTextContent((wchar*)(L"我爱 hello libguiex"));
+	aRenderInfo.m_uFontID = 0;
+	//aRenderInfo.m_aColor.SetColor(1,1,1);
 	pWidget_statictext2->SetTextInfo(aRenderInfo);
 	pWidget_statictext2->Create();
 
@@ -100,8 +104,9 @@ CMyCanvasLayer_DrawFont::CMyCanvasLayer_DrawFont( const char* szLayerName )
 	pWidget_statictext4->SetParent( this );
 	pWidget_statictext4->SetSize( 300, 250 );
 	pWidget_statictext4->SetPosition( 100, 500 );
-	pWidget_statictext4->SetTextContent((wchar*)(L"我爱北京天安门!"));
-	aRenderInfo.m_uFontID = 5;
+	pWidget_statictext4->SetTextContent((wchar*)(L"我爱北京天安门!11月.21号早: 昨天玩了一整晚小米,总的来说对小米还是非常满意的, 现在对小米的屏幕感觉好多了, 可能小米的屏幕比较柔和, 对比度不是很高, 所以看起来感觉没摩托的屏那么清爽, 小米屏显白色时总觉得有点发黄, 显黑色的部分又觉得有点蓝"));
+	aRenderInfo.m_uFontID = 0;
+	//aRenderInfo.m_aColor.SetColor(0,0,0);
 	pWidget_statictext4->SetTextInfo(aRenderInfo);
 	pWidget_statictext4->Create();
 }

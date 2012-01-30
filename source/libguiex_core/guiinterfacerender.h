@@ -53,6 +53,7 @@ namespace guiex
 		virtual ~IGUIInterfaceRender();
 
 		virtual void ClearDepth (real depth) = 0;
+		virtual void SetClearColor(real red, real green, real blue, real alpha) = 0;
 		virtual void ClearColor(real red, real green, real blue, real alpha) = 0;
 		virtual void Clear( uint32 uFlag ) = 0;
 		virtual void SetDepthTest( bool bEnable ) = 0;
