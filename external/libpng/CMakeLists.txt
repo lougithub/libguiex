@@ -1,12 +1,11 @@
 set( target_name "libpng" )
 message( STATUS "generate library: " ${target_name} )
 
-set( src_list 
+set( inc_list 
 	png.h
-	pngconf.h
 	)
 
-set( inc_list
+set( src_list
 	pngdebug.h
 	pnginfo.h
 	pngpriv.h
