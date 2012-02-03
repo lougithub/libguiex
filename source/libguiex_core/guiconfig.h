@@ -51,6 +51,8 @@
 #define GUIEX_RENDER_OPENGL_ES1 1
 #elif defined(_GUIEX_RENDER_OPENGL_ES2)
 #define GUIEX_RENDER_OPENGL_ES2 1
+#elif GUIEX_TARGET_ANDROID
+#define GUIEX_RENDER_OPENGL_ES1 1
 #else
 #error "unknown render type"	
 #endif
@@ -117,13 +119,16 @@
 #define GUI_ENDIAN_LITTLE 1
 #define GUI_ENDIAN_BIG 2
 
-
-#if (('1234' >> 24) == '1')
-#    define GUI_ENDIAN GUI_ENDIAN_LITTLE
-#elif (('4321' >> 24) == '1')
-#    define GUI_ENDIAN GUI_ENDIAN_BIG
+#if GUIEX_TARGET_ANDROID
+#	define GUI_ENDIAN GUI_ENDIAN_LITTLE
 #else
-#error "Couldn't determine the endianness!"
+#	if (('1234' >> 24) == '1')
+#		define GUI_ENDIAN GUI_ENDIAN_LITTLE
+#	elif (('4321' >> 24) == '1')
+#		define GUI_ENDIAN GUI_ENDIAN_BIG
+#	else
+#		error "Couldn't determine the endianness!"
+#	endif
 #endif
 
 

@@ -5,13 +5,13 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := libguiex_widget
 
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../
+LOCAL_C_INCLUDES := \
+	$(LOCAL_PATH)/../ 
 
 LOCAL_SRC_FILES := \
 	guiwgtanimation.cpp \
 	guiwgtbutton.cpp \
 	guiwgtcheckbutton.cpp \
-	guiwgtdialog.cpp \
 	guiwgtedit.cpp \
 	guiwgteditbox.cpp \
 	guiwgtmultieditbox.cpp \
@@ -27,7 +27,10 @@ LOCAL_SRC_FILES := \
 	guiwgttabbutton.cpp \
 	guiwgttabcontrol.cpp \
 	guiwgttag.cpp \
-	guiwgttextbase.cpp 
+	guiwgtlistbox.cpp \
+	guiwgtlistboxitem.cpp \
+	guiwgttextbase.cpp \
+	guiwgtcombobox.cpp 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
 

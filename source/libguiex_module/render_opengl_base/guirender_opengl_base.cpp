@@ -679,6 +679,7 @@ namespace guiex
 		real z,
 		const CGUIColor& rColor)
 	{
+#if !defined(GUIEX_TARGET_ANDROID)
 		TRY_THROW_OPENGL_ERROR();
 
 		uint32 oglcolor = GUIColorToRenderColor(rColor);
@@ -697,6 +698,7 @@ namespace guiex
 		glPointSize( 1.0f );
 
 		TRY_THROW_OPENGL_ERROR();
+#endif
 	}
 	//------------------------------------------------------------------------------
 	void IGUIRender_opengl_base::DrawLine(

@@ -7,7 +7,7 @@ LOCAL_MODULE := libguiex_widget_box2d
 
 LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/../ \
-	$(LOCAL_PATH)/../external/Box2D
+	$(LOCAL_PATH)/../../external/Box2D
 
 LOCAL_SRC_FILES := \
 	guiwgtbox2dbase.cpp \

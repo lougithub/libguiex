@@ -23,6 +23,8 @@
 
 namespace guiex
 {
+	class IGUIFont_ft2;
+
 	/**
 	* @class CGUIFontFace_ft2
 	* @brief use libfreetype2 as font engine,

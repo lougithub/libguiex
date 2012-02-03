@@ -1,0 +1,11 @@
+libs
+bin
+gen
+obj
+local.properties
+project.properties
+ant.properties
+.classpath
+.project
+.settings
+proguard.cfg

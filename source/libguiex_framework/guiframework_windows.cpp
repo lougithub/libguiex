@@ -29,6 +29,7 @@
 #include <libguiex_module/physics_box2d/guiphysics_box2d.h>
 #include <libguiex_module/sound_openal/guisound_openal.h>
 #include <libguiex_module/localizationloader_tinyxml/guilocalizationloader_tinyxml.h>
+
 #if defined( GUIEX_RENDER_OPENGL )
 #	include <libguiex_module/render_opengl/guirender_opengl.h>
 #elif defined(GUIEX_RENDER_OPENGL_ES1 )

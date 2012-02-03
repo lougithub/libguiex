@@ -10,6 +10,8 @@
 
 #include <libguiex_core/guibase.h>
 
+#define GL_GLEXT_PROTOTYPES
+
 #if defined(GUIEX_TARGET_WIN32)
 #	if defined(GUIEX_RENDER_OPENGL)
 #		include <windows.h>

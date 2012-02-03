@@ -32,3 +32,6 @@ A: android create project \
 
 Q: how to update android project
 A: android update project --name <project_name> --target <target_ID> --path <path_to_your_project>
+
+Q: where is command line doc
+A: http://developer.android.com/guide/developing/building/building-cmdline.html

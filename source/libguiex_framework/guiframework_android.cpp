@@ -16,12 +16,13 @@
 #include <libguiex_widget_game/guiwgt_game.h>
 
 //libguiex module
-#include <libguiex_module/font_dummy/guifont_dummy.h>
+#include <libguiex_module/keyboard_default/guikeyboard_default.h>
 #include <libguiex_module/font_ft2/guifont_ft2.h>
+#include <libguiex_module/font_dummy/guifont_dummy.h>
 #include <libguiex_module/imageloader_tga/guiimageloader_tga.h>
+#include <libguiex_module/imageloader_png_tga/guiimageloader_png_tga.h>
 #include <libguiex_module/filesys_android/guifilesys_android.h>
 #include <libguiex_module/configfile_tinyxml/guiconfigfile_tinyxml.h>
-#include <libguiex_module/render_opengles_android/guirender_opengles_android.h>
 #include <libguiex_module/stringconv_internal/guistringconv_internal.h>
 #include <libguiex_module/script_lua/guiscript_lua.h>
 #include <libguiex_module/physics_box2d/guiphysics_box2d.h>
@@ -30,6 +31,16 @@
 #include <libguiex_module/ime_dummy/guiime_dummy.h>
 #include <libguiex_module/mouse_default/guimouse_default.h>
 #include <libguiex_module/localizationloader_tinyxml/guilocalizationloader_tinyxml.h>
+
+#if defined( GUIEX_RENDER_OPENGL )
+#	include <libguiex_module/render_opengl/guirender_opengl.h>
+#elif defined(GUIEX_RENDER_OPENGL_ES1 )
+#	include <libguiex_module/render_opengl_es1/guirender_opengl_es1.h>
+#elif defined(GUIEX_RENDER_OPENGL_ES2 )
+#	include <libguiex_module/render_opengl_es2/guirender_opengl_es2.h>
+#else
+#error "unknown render type"	
+#endif
 
 #include <android/log.h>
 
@@ -129,12 +140,20 @@ namespace guiex
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_Android::RegisterInterfaces_Render( )
 	{
-		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengles_android);
+#if defined( GUIEX_RENDER_OPENGL )
+		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl);
+#elif defined(GUIEX_RENDER_OPENGL_ES1 )
+		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl_es1);
+#elif defined(GUIEX_RENDER_OPENGL_ES2 )
+		GUI_REGISTER_INTERFACE_LIB( IGUIRender_opengl_es2);
+#else
+#	error "unknown render type"	
+#endif
 	}
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_Android::RegisterInterfaces_ImageLoader( )
 	{
-		GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_tga);
+		GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_png_tga);
 	}
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_Android::RegisterInterfaces_FileSys( )

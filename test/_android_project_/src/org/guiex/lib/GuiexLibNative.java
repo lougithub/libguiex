@@ -1,10 +1,13 @@
 package org.guiex.lib;
 
+import android.util.Log;
+
 public class GuiexLibNative
 {
 
      static 
 	 {
+    	 Log.v("GuiexLibActivity", "loadLibrary");
          System.loadLibrary("guiex_lib");
      }
 

@@ -10,6 +10,7 @@ LOCAL_STATIC_LIBRARIES := \
 	tinyxml \
 	box2d \
 	freetype \
+	libpng \
 	libzip
 
 LOCAL_LDLIBS:=-lz -lGLESv1_CM -llog
