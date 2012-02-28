@@ -28,6 +28,8 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CTDGameConfigDataManager::LoadData( const CGUIString& rPath )
 	{
+		GUI_TRACE( GUI_FORMAT( "[CTDGameConfigDataManager::LoadData]: Path: %s", rPath.c_str()));
+
 		m_mapProperty.clear();
 
 		//get file list
@@ -59,6 +61,9 @@ namespace guiex
 			CGUIProperty& rProperty = m_mapProperty[strFilename];
 
 			IGUIInterfaceConfigFile* pConfigFile = CGUIInterfaceManager::Instance()->GetInterfaceConfigFile();
+			
+			GUI_TRACE( GUI_FORMAT( "[CTDGameConfigDataManager::LoadData]:file %s", vecSceneFilePaths[i].c_str()));
+
 			if( 0 != pConfigFile->LoadConfigFile(vecSceneFilePaths[i], rProperty) )
 			{
 				GUI_THROW( GUI_FORMAT("[CTDGameConfigDataManager::LoadData]: failed to load config file <%s>!", vecSceneFilePaths[i].c_str() ));

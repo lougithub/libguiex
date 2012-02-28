@@ -1165,7 +1165,7 @@ namespace guiex
 		else
 		{
 			char lastChar = m_strDataPath[m_strDataPath.size()-1];
-			char firstChar = rPath[rPath.size()-1];
+			char firstChar = rPath[0];
 			if( (lastChar == '\\' || lastChar == '/') &&
 				(firstChar == '\\' || firstChar == '/'))
 			{

@@ -150,12 +150,13 @@ namespace guiex
 						continue;
 					}
 				}
+
 				//check path
 				if( strstr( name, strFullPath.c_str() ) != name )
 				{
 					continue;
 				}
-				rArrayStrings.push_back( name + strFullPath.size() );
+				rArrayStrings.push_back( name + CGUISystem::Instance()->GetDataPath().size() );
 			}
 		}
 	}

@@ -58,6 +58,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	void CTDGameWorld::InitGameWorld( const CGUIString& rRound, CGUIWidget* pGameRoot, CGUIWidget* pTowerSelectPanel, CGUIWidget* pTowerUpgradePanel )
 	{
+		GUI_TRACE( GUI_FORMAT( "[CTDGameWorld::InitGameWorld]:   init world"));
 		CTDGameWorldBase::InitGameWorld( pGameRoot );
 
 		//load config data
