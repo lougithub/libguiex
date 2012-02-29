@@ -174,4 +174,14 @@ namespace guiex
 		CGUIVector3 normal = (v2 - v1).CrossProduct(v3 - v1);
 		return normal;
 	}
+	//------------------------------------------------------------------------------
+	uint16 CGUIMath::GetNextPOT( uint16 value )
+	{
+		int r=1;
+		while( value > r )
+		{
+			r<<=1;
+		}
+		return r;
+	}
 }

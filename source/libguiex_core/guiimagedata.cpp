@@ -11,6 +11,7 @@
 //============================================================================// 
 #include "guiimagedata.h"
 #include "guiinterfaceimageloader.h"
+#include "guimath.h"
 #include "guiexception.h"
 
 //============================================================================//
@@ -22,8 +23,10 @@ namespace guiex
 	CGUIImageData::CGUIImageData(IGUIInterfaceImageLoader* pLoader)
 		:m_pLoader(pLoader)
 		,m_ePixelFormat(GUI_PF_RGBA_32)
-		,m_uWidth(0)
-		,m_uHeight(0)
+		,m_uImageWidth(0)
+		,m_uImageHeight(0)
+		,m_uDataWidth(0)
+		,m_uDataHeight(0)
 		,m_pData(NULL)
 	{
 	}
@@ -89,19 +92,35 @@ namespace guiex
 	}
 	//------------------------------------------------------------------------------
 	/**
+	* @brief get width of data
+	*/
+	uint32 CGUIImageData::GetDataWidth()
+	{
+		return m_uDataWidth;
+	}
+	//------------------------------------------------------------------------------
+	/**
+	* @brief get height of Data
+	*/
+	uint32 CGUIImageData::GetDataHeight()
+	{
+		return m_uDataHeight;
+	}
+	//------------------------------------------------------------------------------
+	/**
 	* @brief get width of image
 	*/
-	uint32 CGUIImageData::GetWidth()
+	uint32 CGUIImageData::GetImageWidth()
 	{
-		return m_uWidth;
+		return m_uImageWidth;
 	}
 	//------------------------------------------------------------------------------
 	/**
 	* @brief get height of image
 	*/
-	uint32 CGUIImageData::GetHeight()
+	uint32 CGUIImageData::GetImageHeight()
 	{
-		return m_uHeight;
+		return m_uImageHeight;
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -123,15 +142,25 @@ namespace guiex
 			//failed
 			return NULL;
 		}
+		
+		m_uImageWidth = uWidth;
+		m_uImageHeight = uHeight;
 
-		m_uWidth = uWidth;
-		m_uHeight = uHeight;
+#if !GUI_TEXTURE_NPOT_SUPPORT
+		//make width and height is power of 2
+		uWidth = CGUIMath::GetNextPOT(uWidth);
+		uHeight = CGUIMath::GetNextPOT(uHeight);
+#endif
+
+		m_uDataWidth = uWidth;
+		m_uDataHeight = uHeight;
 		m_ePixelFormat = ePixelFormat;
 		DestroyData();
 
 		uint32 bytesPerPixel = GetBytePerPixel(ePixelFormat);
 
-		m_pData = new uint8[m_uWidth*m_uHeight*bytesPerPixel];
+		m_pData = new uint8[uWidth*uHeight*bytesPerPixel];
+		memset( m_pData, 255, uWidth*uHeight*bytesPerPixel );
 		return m_pData;
 	}
 	//------------------------------------------------------------------------------

@@ -16,7 +16,7 @@
 
 //libguiex module
 #include <libguiex_module/font_ft2/guifont_ft2.h>
-#include <libguiex_module/imageloader_png_tga/guiimageloader_png_tga.h>
+#include <libguiex_module/imageloader_png/guiimageloader_png.h>
 #include <libguiex_module/filesys_cocoa/guifilesys_cocoa.h>
 #include <libguiex_module/configfile_tinyxml/guiconfigfile_tinyxml.h>
 #include <libguiex_module/stringconv_cocoa/guistringconv_cocoa.h>
@@ -118,7 +118,7 @@ namespace guiex
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_IOS::RegisterInterfaces_ImageLoader( )
 	{
-		GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_png_tga);
+		GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_png);
 	}
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_IOS::RegisterInterfaces_FileSys( )

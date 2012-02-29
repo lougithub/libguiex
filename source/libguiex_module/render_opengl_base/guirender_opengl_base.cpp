@@ -1454,15 +1454,44 @@ namespace guiex
 		
 		switch(eImageOrientation)
 		{
-		case eImageOrientation_Normal:
-			break;
-
 		case eImageOrientation_FlipHorizon:
 			std::swap( tex.m_fLeft, tex.m_fRight );
+
+			//vert0
+			pVertexInfo[0].texCoords.u = tex.m_fLeft;
+			pVertexInfo[0].texCoords.v = tex.m_fTop;
+
+			//vert1
+			pVertexInfo[1].texCoords.u = tex.m_fLeft;
+			pVertexInfo[1].texCoords.v = tex.m_fBottom;
+
+			//vert2
+			pVertexInfo[2].texCoords.u = tex.m_fRight;
+			pVertexInfo[2].texCoords.v = tex.m_fTop;
+
+			//vert3
+			pVertexInfo[3].texCoords.u = tex.m_fRight;
+			pVertexInfo[3].texCoords.v = tex.m_fBottom;
 			break;
 
 		case eImageOrientation_FlipVertical:
 			std::swap( tex.m_fTop, tex.m_fBottom );
+
+			//vert0
+			pVertexInfo[0].texCoords.u = tex.m_fLeft;
+			pVertexInfo[0].texCoords.v = tex.m_fTop;
+
+			//vert1
+			pVertexInfo[1].texCoords.u = tex.m_fLeft;
+			pVertexInfo[1].texCoords.v = tex.m_fBottom;
+
+			//vert2
+			pVertexInfo[2].texCoords.u = tex.m_fRight;
+			pVertexInfo[2].texCoords.v = tex.m_fTop;
+
+			//vert3
+			pVertexInfo[3].texCoords.u = tex.m_fRight;
+			pVertexInfo[3].texCoords.v = tex.m_fBottom;
 			break;
 
 		case eImageOrientation_90CCW:
@@ -1481,7 +1510,7 @@ namespace guiex
 			//vert3
 			pVertexInfo[3].texCoords.u = tex.m_fLeft;
 			pVertexInfo[3].texCoords.v = tex.m_fBottom;
-			return;
+			break;
 
 		case eImageOrientation_90CW:
 			//vert0
@@ -1499,24 +1528,35 @@ namespace guiex
 			//vert3
 			pVertexInfo[3].texCoords.u = tex.m_fRight;
 			pVertexInfo[3].texCoords.v = tex.m_fTop;
-			return;
+			break;
+
+		case eImageOrientation_Normal:
+		default:
+			//vert0
+			pVertexInfo[0].texCoords.u = tex.m_fLeft;
+			pVertexInfo[0].texCoords.v = tex.m_fTop;
+
+			//vert1
+			pVertexInfo[1].texCoords.u = tex.m_fLeft;
+			pVertexInfo[1].texCoords.v = tex.m_fBottom;
+
+			//vert2
+			pVertexInfo[2].texCoords.u = tex.m_fRight;
+			pVertexInfo[2].texCoords.v = tex.m_fTop;
+
+			//vert3
+			pVertexInfo[3].texCoords.u = tex.m_fRight;
+			pVertexInfo[3].texCoords.v = tex.m_fBottom;
+			break;
 		}
-		
-		//vert0
-		pVertexInfo[0].texCoords.u = tex.m_fLeft;
-		pVertexInfo[0].texCoords.v = tex.m_fTop;
 
-		//vert1
-		pVertexInfo[1].texCoords.u = tex.m_fLeft;
-		pVertexInfo[1].texCoords.v = tex.m_fBottom;
-
-		//vert2
-		pVertexInfo[2].texCoords.u = tex.m_fRight;
-		pVertexInfo[2].texCoords.v = tex.m_fTop;
-
-		//vert3
-		pVertexInfo[3].texCoords.u = tex.m_fRight;
-		pVertexInfo[3].texCoords.v = tex.m_fBottom;
+#if !GUI_TEXTURE_NPOT_SUPPORT
+		for( int i=0; i<4; ++i )
+		{
+			pVertexInfo[i].texCoords.u = pTexture->NPOT_Convert_U(pVertexInfo[i].texCoords.u);
+			pVertexInfo[i].texCoords.v = pTexture->NPOT_Convert_V(pVertexInfo[i].texCoords.v);
+		}
+#endif
 
 		TRY_THROW_OPENGL_ERROR();
 	}

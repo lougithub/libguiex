@@ -238,4 +238,16 @@ namespace guiex
 		return (m_bIsBottomUp?1-v:v);
 	}
 	//------------------------------------------------------------------------------
+#if !GUI_TEXTURE_NPOT_SUPPORT
+	real CGUITexture::NPOT_Convert_U( real u ) const
+	{
+		return u * m_pTextureImp->GetWidth() / m_pTextureImp->GetPOTWidth(); 
+	}
+	//------------------------------------------------------------------------------
+	real CGUITexture::NPOT_Convert_V( real v ) const
+	{
+		return v * m_pTextureImp->GetHeight() / m_pTextureImp->GetPOTHeight();
+	}
+#endif
+	//------------------------------------------------------------------------------
 }//namespaceguiex

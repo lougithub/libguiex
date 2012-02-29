@@ -96,8 +96,8 @@ namespace guiex
 		*/
 		virtual int32 LoadFromMemory(
 			const void* buffPtr, 
-			int32 buffWidth, 
-			int32 buffHeight, 
+			uint32 buffWidth, 
+			uint32 buffHeight, 
 			EGuiPixelFormat ePixelFormat ) = 0;
 
 		//!< save pointer of texture
@@ -105,6 +105,11 @@ namespace guiex
 
 		//!< get pointer of texture
 		CGUITexture* GetTexture( ) const;
+
+#if !GUI_TEXTURE_NPOT_SUPPORT
+		virtual	uint16 GetPOTWidth(void) const = 0;
+		virtual	uint16 GetPOTHeight(void) const = 0;
+#endif 
 
 	protected:
 		CGUITextureImp(IGUIInterfaceRender* pRender);

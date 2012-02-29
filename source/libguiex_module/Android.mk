@@ -33,7 +33,6 @@ LOCAL_SRC_FILES := \
 	font_dummy/guifont_dummy.cpp \
 	font_dummy/guifontdata_dummy.cpp \
 	imageloader_png/guiimageloader_png.cpp \
-	imageloader_png_tga/guiimageloader_png_tga.cpp \
 	ime_dummy/guiime_dummy.cpp \
 	keyboard_default/guikeyboard_default.cpp \
 	mouse_default/guimouse_default.cpp \

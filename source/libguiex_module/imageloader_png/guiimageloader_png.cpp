@@ -210,7 +210,7 @@ namespace guiex
 		png_byte** row_ptrs = (png_bytep*)malloc(height * sizeof(png_bytep));
 		for (png_uint_32 i=0; i<height; i++)
 		{
-			row_ptrs[i] = pixels + i*width*pImageData->GetBytePerPixel();
+			row_ptrs[i] = pixels + i*pImageData->GetDataWidth()*pImageData->GetBytePerPixel();
 		}
 
 		png_read_image(png_ptr, row_ptrs);	

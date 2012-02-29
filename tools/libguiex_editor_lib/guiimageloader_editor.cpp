@@ -51,17 +51,23 @@ namespace guiex
 		uint8* tmpBuff = pData->SetImageData( pWxImage->GetWidth(), pWxImage->GetHeight(), eImageFormat);
 		uint8* pRGB = pWxImage->GetData();
 		uint8* pAlpha = pWxImage->GetAlpha();
-		uint32 nPixelCount = pWxImage->GetWidth() * pWxImage->GetHeight();
-		for(uint32 i = 0; i < nPixelCount; ++i )
+		uint32 uDataLineBytes = pData->GetWidth()*pData->GetBytePerPixel();
+		uint32 uFileLineBytes = pWxImage->GetWidth()*3;
+		for( uint32 i=0; i<pWxImage->GetHeight(); ++i )
 		{
-			memcpy( tmpBuff, pRGB, 3 );
-			tmpBuff += 3;
-			pRGB += 3;
-			if( eImageFormat == GUI_PF_RGBA_32 )
+			uint32 uDataWidthStart = i*uDataLineBytes;
+			uint32 uFileWidthStart = i*uFileLineBytes;
+			for( uint32 j=0; j<pWxImage->GetWidth(); ++j )
 			{
-				*tmpBuff = *pAlpha;
-				++tmpBuff;
-				++pAlpha;
+				uint32 uDataStart = uDataWidthStart + j*pData->GetBytePerPixel();
+				uint32 uFileStart = uFileWidthStart + j*pData->GetBytePerPixel();
+
+				memcpy( tmpBuff+uDataStart, pRGB+uFileStart, 3 );
+				if( eImageFormat == GUI_PF_RGBA_32 )
+				{
+					tmpBuff[3] = *pAlpha;
+					++pAlpha;
+				}
 			}
 		}
 

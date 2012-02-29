@@ -29,6 +29,10 @@ namespace guiex
 		:CGUITextureImp(pRender)
 		,m_nTextureWidth(0)
 		,m_nTextureHeight(0)
+#if !GUI_TEXTURE_NPOT_SUPPORT
+		,m_nPOTTextureWidth(0)
+		,m_nPOTTextureHeight(0)
+#endif
 		,m_nBytesPerPixel(0)
 	{
 		TRY_THROW_OPENGL_ERROR();
@@ -38,7 +42,7 @@ namespace guiex
 
 		// set some parameters for this texture.
 		glBindTexture(GL_TEXTURE_2D, m_ogltexture);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);	// GL_CLAMP_TO_EDGE GL_CLAMP
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);	// GL_CLAMP_TO_EDGE GL_CLAMP
@@ -72,6 +76,22 @@ namespace guiex
 	uint16 CGUITexture_opengl_base::GetHeight(void) const
 	{
 		return m_nTextureHeight;
+	}
+	//------------------------------------------------------------------------------
+	/**
+	* @brief Returns the current POT pixel width of the texture
+	*/
+	uint16 CGUITexture_opengl_base::GetPOTWidth(void) const
+	{
+		return m_nPOTTextureWidth;
+	}
+	//------------------------------------------------------------------------------
+	/**
+	* @brief Returns the current POT pixel height of the texture
+	*/
+	uint16 CGUITexture_opengl_base::GetPOTHeight(void) const
+	{
+		return m_nPOTTextureHeight;
 	}
 	//------------------------------------------------------------------------------
 	/**
@@ -141,7 +161,7 @@ namespace guiex
 			return -1;
 		}
 
-		int32 ret = LoadFromMemory( pImageData->GetData(), pImageData->GetWidth(), pImageData->GetHeight(), pImageData->GetPixelFormat());
+		int32 ret = LoadFromMemory( pImageData->GetData(), pImageData->GetImageWidth(), pImageData->GetImageHeight(), pImageData->GetPixelFormat());
 		delete pImageData;
 
 		TRY_THROW_OPENGL_ERROR();
@@ -154,14 +174,24 @@ namespace guiex
 	* @exception CGUIException::ThrowException if failed.
 	* @return -1 for failed
 	*/
-	int32 CGUITexture_opengl_base::LoadFromMemory(const void* buffPtr, int32 buffWidth, int32 buffHeight, EGuiPixelFormat ePixelFormat/* = PF_RGBA_32*/)
+	int32 CGUITexture_opengl_base::LoadFromMemory(const void* buffPtr, uint32 buffWidth, uint32 buffHeight, EGuiPixelFormat ePixelFormat/* = PF_RGBA_32*/)
 	{
 		TRY_THROW_OPENGL_ERROR();
 
 		glBindTexture(GL_TEXTURE_2D, m_ogltexture);
 
+		m_nTextureWidth  = buffWidth;
+		m_nTextureHeight = buffHeight;
 		m_nBytesPerPixel = CGUIImageData::GetBytePerPixel(ePixelFormat);
 		m_ePixelFormat = ePixelFormat;
+
+#if !GUI_TEXTURE_NPOT_SUPPORT
+		//make width and height is power of 2
+		buffWidth = CGUIMath::GetNextPOT(buffWidth);
+		buffHeight = CGUIMath::GetNextPOT(buffHeight);
+		m_nPOTTextureWidth = buffWidth;
+		m_nPOTTextureHeight = buffHeight;
+#endif
 
 		switch(ePixelFormat)
 		{
@@ -177,19 +207,9 @@ namespace guiex
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, buffWidth, buffHeight, 0, GL_ALPHA ,GL_UNSIGNED_BYTE, buffPtr);
 			break;
 
-			//case GUI_PF_LUMINANCE_ALPHA_16:
-			//	glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, buffWidth, buffHeight, 0, GL_LUMINANCE_ALPHA ,GL_UNSIGNED_BYTE, buffPtr);
-			//	m_nBytesPerPixel = 2;
-			//	m_ePixelFormat = GUI_PF_LUMINANCE_ALPHA_16;
-			//	break;
-
 		default:
 			GUI_THROW( "[CGUITexture_opengl_base::LoadFromMemory]: unsupported pixel format;");
 		}
-
-
-		m_nTextureWidth  = static_cast<uint16>(buffWidth);
-		m_nTextureHeight = static_cast<uint16>(buffHeight);
 
 		TRY_THROW_OPENGL_ERROR();
 		return 0;
@@ -241,7 +261,19 @@ namespace guiex
 
 		glBindTexture(GL_TEXTURE_2D, m_ogltexture);
 
+		m_nTextureWidth = nWidth;
+		m_nTextureHeight = nHeight;
 		m_ePixelFormat = ePixelFormat;
+
+#if !GUI_TEXTURE_NPOT_SUPPORT
+		//make width and height is power of 2
+		nWidth = CGUIMath::GetNextPOT(nWidth);
+		nHeight = CGUIMath::GetNextPOT(nHeight);
+		m_nPOTTextureWidth = nWidth;
+		m_nPOTTextureHeight = nHeight;
+#endif
+
+	
 		char* pData = NULL;
 		switch(m_ePixelFormat)
 		{
@@ -250,7 +282,6 @@ namespace guiex
 			pData = new char[m_nBytesPerPixel*nWidth*nHeight];
 			memset( pData, 0xFF, m_nBytesPerPixel*nWidth*nHeight );
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, nWidth, nHeight, 0, GL_RGBA ,GL_UNSIGNED_BYTE, pData);
-			delete[] pData;
 			break;
 
 		case GUI_PF_LUMINANCE_ALPHA_16:
@@ -258,15 +289,17 @@ namespace guiex
 			pData = new char[m_nBytesPerPixel*nWidth*nHeight];
 			memset( pData, 0xFF, m_nBytesPerPixel*nWidth*nHeight );
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, nWidth, nHeight, 0, GL_LUMINANCE_ALPHA ,GL_UNSIGNED_BYTE, pData);
-			delete[] pData;
+			
 			break;
 
 		default:
-			GUI_THROW( "[CGUITexture_opengl_base::LoadFromMemory]: unsupported pixel format;");
+			GUI_THROW( "[CGUITexture_opengl_base::SetOpenglTextureSize]: unsupported pixel format;");
 		}
 
-		m_nTextureWidth = nWidth;
-		m_nTextureHeight = nHeight;
+		if( pData)
+		{
+			delete[] pData;
+		}
 
 		TRY_THROW_OPENGL_ERROR();
 	}

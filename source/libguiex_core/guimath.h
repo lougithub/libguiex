@@ -183,6 +183,8 @@ namespace guiex
 		/** Calculate a face normal without normalize, no w-information. */
 		static CGUIVector3 calculateBasicFaceNormalWithoutNormalize(const CGUIVector3& v1, const CGUIVector3& v2, const CGUIVector3& v3);
 
+		static uint16 GetNextPOT( uint16 value );
+
 		static const real GUI_POS_INFINITY;
 		static const real GUI_NEG_INFINITY;
 		static const real GUI_PI;

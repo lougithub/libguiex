@@ -19,8 +19,6 @@
 #include <libguiex_module/keyboard_default/guikeyboard_default.h>
 #include <libguiex_module/font_ft2/guifont_ft2.h>
 #include <libguiex_module/font_dummy/guifont_dummy.h>
-#include <libguiex_module/imageloader_tga/guiimageloader_tga.h>
-#include <libguiex_module/imageloader_png_tga/guiimageloader_png_tga.h>
 #include <libguiex_module/filesys_android/guifilesys_android.h>
 #include <libguiex_module/configfile_tinyxml/guiconfigfile_tinyxml.h>
 #include <libguiex_module/stringconv_internal/guistringconv_internal.h>
@@ -153,7 +151,7 @@ namespace guiex
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_Android::RegisterInterfaces_ImageLoader( )
 	{
-		GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_png_tga);
+		GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_png);
 	}
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_Android::RegisterInterfaces_FileSys( )

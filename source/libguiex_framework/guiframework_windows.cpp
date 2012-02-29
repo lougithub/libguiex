@@ -15,7 +15,7 @@
 #include <libguiex_widget_game/guiwgt_game.h>
 
 //libguiex module
-#include <libguiex_module/imageloader_png_tga/guiimageloader_png_tga.h>
+#include <libguiex_module/imageloader_png/guiimageloader_png.h>
 #include <libguiex_module/keyboard_winapi/guikeyboard_winapi.h>
 #include <libguiex_module/mouse_winapi/guimouse_winapi.h>
 #include <libguiex_module/ime_winapi/guiime_winapi.h>
@@ -125,7 +125,7 @@ namespace guiex
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_Windows::RegisterInterfaces_ImageLoader( )
 	{
-		GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_png_tga);
+		GUI_REGISTER_INTERFACE_LIB( IGUIImageLoader_png);
 	}
 	//------------------------------------------------------------------------------ 
 	void CGUIFramework_Windows::RegisterInterfaces_FileSys( )

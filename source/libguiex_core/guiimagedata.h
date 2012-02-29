@@ -40,8 +40,10 @@ namespace guiex
 		~CGUIImageData();
 		
 		uint8* SetImageData(uint32 uWidth, uint32 uHeight, EGuiPixelFormat ePixelFormat );
-		uint32 GetWidth();
-		uint32 GetHeight();
+		uint32 GetDataWidth();
+		uint32 GetDataHeight();
+		uint32 GetImageWidth();
+		uint32 GetImageHeight();
 		uint8* GetData();
 		uint32 GetBytePerPixel() const;
 		EGuiPixelFormat	GetPixelFormat();
@@ -56,8 +58,10 @@ namespace guiex
 	private:
 		IGUIInterfaceImageLoader* m_pLoader;
 
-		uint32 m_uWidth;
-		uint32 m_uHeight;
+		uint32 m_uImageWidth;
+		uint32 m_uImageHeight;
+		uint32 m_uDataWidth;
+		uint32 m_uDataHeight;
 		uint8 *m_pData;
 		EGuiPixelFormat m_ePixelFormat;
 	};

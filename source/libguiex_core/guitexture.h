@@ -55,6 +55,11 @@ namespace guiex
 
 		real UVConvertTopleft2Engine_v( real v ) const;
 
+#if !GUI_TEXTURE_NPOT_SUPPORT
+		real NPOT_Convert_U( real u )const;
+		real NPOT_Convert_V( real v )const;
+#endif
+
 	protected:
 		friend class CGUITextureManager;
 

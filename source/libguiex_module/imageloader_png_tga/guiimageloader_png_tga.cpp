@@ -250,7 +250,7 @@ namespace guiex
 		png_byte** row_ptrs = (png_bytep*)malloc(height * sizeof(png_bytep));
 		for (png_uint_32 i=0; i<height; i++)
 		{
-			row_ptrs[i] = pixels + i*width*pImageData->GetBytePerPixel();
+			row_ptrs[i] = pixels + i*pImageData->GetWidth()*pImageData->GetBytePerPixel();
 		}
 
 		png_read_image(png_ptr, row_ptrs);	
@@ -346,15 +346,26 @@ namespace guiex
 		//create image data
 		CGUIImageData * pImageData = new CGUIImageData(this);
 		uint8* tmpBuff = pImageData->SetImageData(tga.Width, tga.Height, tga.type);
-		memcpy( tmpBuff, pFileData, tga.imageSize);
+		//memcpy( tmpBuff, pFileData, tga.imageSize);
+		uint32 uDataLineBytes = pImageData->GetWidth()*pImageData->GetBytePerPixel();
+		uint32 uFileLineBytes = tga.Width*pImageData->GetBytePerPixel();
+		for( uint32 i=0; i<tga.Height; ++i )
+		{
+			memcpy( tmpBuff + i*uDataLineBytes, pFileData+i*uFileLineBytes, uFileLineBytes );
+		}
 
 		if( tga.type == GUI_PF_RGBA_32 || tga.type == GUI_PF_RGB_24 )
 		{
-			for(uint32 cswap = 0; cswap < (uint32)tga.imageSize; cswap += tga.bytesPerPixel)
+			for( uint32 i=0; i<tga.Height; ++i )
 			{
-				uint8 temp = tmpBuff[cswap+0];
-				tmpBuff[cswap+0] = tmpBuff[cswap+2];
-				tmpBuff[cswap+2] = temp;
+				uint32 uWidthStart = i*uDataLineBytes;
+				for( uint32 j=0; j<tga.Width; ++j )
+				{
+					uint32 uStart = uWidthStart + j*pImageData->GetBytePerPixel();
+					uint8 temp = tmpBuff[uStart];
+					tmpBuff[uStart] = tmpBuff[uStart+2];
+					tmpBuff[uStart+2] = temp;
+				}
 			}
 		}
 		return pImageData;

@@ -225,9 +225,7 @@ if( BUILD_PLATFORM_WIN32 )
 		${${target_name}_filesys_stdio_SRCS}
 		${${target_name}_font_ft2_SRCS}
 		${${target_name}_font_dummy_SRCS}
-		${${target_name}_imageloader_tga_SRCS}
 		${${target_name}_imageloader_png_SRCS}
-		${${target_name}_imageloader_png_tga_SRCS}
 		${${target_name}_ime_winapi_SRCS}
 		${${target_name}_ime_dummy_SRCS}
 		${${target_name}_keyboard_winapi_SRCS}
@@ -254,9 +252,7 @@ elseif( BUILD_PLATFORM_IOS )
 		${${target_name}_font_ft2_SRCS}
 		${${target_name}_font_dummy_SRCS}
 		${${target_name}_ime_dummy_SRCS}
-		${${target_name}_imageloader_tga_SRCS}
 		${${target_name}_imageloader_png_SRCS}
-		${${target_name}_imageloader_png_tga_SRCS}
 		${${target_name}_stringconv_iconv_SRCS}
 		${${target_name}_stringconv_internal_SRCS}
 		${${target_name}_stringconv_internal_SRCS}
@@ -275,9 +271,7 @@ elseif( BUILD_PLATFORM_MACOS )
 		${${target_name}_font_ft2_SRCS}
 		${${target_name}_font_dummy_SRCS}
 		${${target_name}_ime_dummy_SRCS}
-		${${target_name}_imageloader_tga_SRCS}
 		${${target_name}_imageloader_png_SRCS}
-		${${target_name}_imageloader_png_tga_SRCS}
 		${${target_name}_stringconv_iconv_SRCS}
 		${${target_name}_stringconv_internal_SRCS}
 		${${target_name}_script_lua_SRCS}

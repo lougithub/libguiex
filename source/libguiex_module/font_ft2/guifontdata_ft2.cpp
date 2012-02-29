@@ -38,9 +38,10 @@ namespace guiex
 	struct Span
 	{
 		Span() { }
-		Span(int32 _x, int32 _y, int32 _width, uint8 _coverage)
+		Span(int32 _x, int32 _y, uint32 _width, uint8 _coverage)
 			: x(_x), y(_y), width(_width), coverage(_coverage) { }
-		int32 x, y, width;
+		int32 x, y;
+		uint32 width;
 		uint8 coverage;
 	};
 	typedef std::vector<Span> Spans;
@@ -347,7 +348,7 @@ namespace guiex
 		for (Spans::iterator s = spans.begin();s != spans.end(); ++s)
 		{
 			uint32 spanPos = (imgHeight-1-(s->y-rect.ymin))*imgWidth+s->x-rect.xmin;
-			for (int w = 0; w < s->width; ++w)
+			for (uint32 w = 0; w < s->width; ++w)
 			{
 				if( bUseRGBATexture )
 				{
