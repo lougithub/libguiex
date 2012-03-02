@@ -4,7 +4,7 @@
 	<property name="font_times_12" type="CGUIFontDefine" >
 		<property name="id" type="uint16" value="0"/>
 		<property name="path" type="CGUIString" value="font/simhei.ttf"/>
-		<property name="size" type="uint16" value="12"/>
+		<property name="size" type="uint16" value="10"/>
 		<property name="texture_size" type="CGUIIntSize" value="128,128"/>
 		<property name="desc" type="CGUIString" value="font:times size:12"/>
 		<property name="use_outline" type="bool" value="false" />

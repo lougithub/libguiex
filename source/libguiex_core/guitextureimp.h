@@ -47,6 +47,8 @@ namespace guiex
 	public:
 		virtual ~CGUITextureImp();
 
+		virtual void PrepareForFont() = 0;
+
 		/**
 		* @brief Returns the current pixel width of the texture
 		*/

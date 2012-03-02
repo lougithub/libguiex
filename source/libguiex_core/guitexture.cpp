@@ -42,6 +42,12 @@ namespace guiex
 		FreeMemory();
 	}
 	//------------------------------------------------------------------------------
+	void CGUITexture::PrepareForFont()
+	{
+		GUI_ASSERT(m_pTextureImp, "texture implement is NULL");
+		m_pTextureImp->PrepareForFont();
+	}
+	//------------------------------------------------------------------------------
 	/**
 	* @brief convert size to texture's standard size
 	*/

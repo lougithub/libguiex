@@ -38,6 +38,8 @@ namespace guiex
 		uint16 GetWidth(void) const;
 		uint16 GetHeight(void) const;
 
+		void PrepareForFont();
+
 		static uint16 ConvertToTextureSize(uint16);
 
 		/**

@@ -104,9 +104,9 @@ CMyCanvasLayer_DrawFont::CMyCanvasLayer_DrawFont( const char* szLayerName )
 	pWidget_statictext4->SetParent( this );
 	pWidget_statictext4->SetSize( 300, 250 );
 	pWidget_statictext4->SetPosition( 100, 500 );
-	pWidget_statictext4->SetTextContent((wchar*)(L"我爱北京天安门!11月.21号早: 昨天玩了一整晚小米,总的来说对小米还是非常满意的, 现在对小米的屏幕感觉好多了, 可能小米的屏幕比较柔和, 对比度不是很高, 所以看起来感觉没摩托的屏那么清爽, 小米屏显白色时总觉得有点发黄, 显黑色的部分又觉得有点蓝"));
+	pWidget_statictext4->SetTextContent((wchar*)(L"台灣從17世紀開始有國家政權的出現"));
 	aRenderInfo.m_uFontID = 0;
-	//aRenderInfo.m_aColor.SetColor(0,0,0);
+	aRenderInfo.m_aColor.SetColor(0,0,0);
 	pWidget_statictext4->SetTextInfo(aRenderInfo);
 	pWidget_statictext4->Create();
 }

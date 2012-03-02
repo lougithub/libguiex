@@ -62,6 +62,13 @@ namespace guiex
 		TRY_THROW_OPENGL_ERROR();
 	}
 	//------------------------------------------------------------------------------
+	void CGUITexture_opengl_base::PrepareForFont()
+	{
+		glBindTexture(GL_TEXTURE_2D, m_ogltexture);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); 
+	}
+	//------------------------------------------------------------------------------
 	/**
 	* @brief Returns the current pixel width of the texture
 	*/

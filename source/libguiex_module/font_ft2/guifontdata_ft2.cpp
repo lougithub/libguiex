@@ -314,6 +314,7 @@ namespace guiex
 			m_uTexturePosX = m_uTexturePosY = 0;
 			m_uMaxHeight = uFontSize;
 			CGUITexture* pNewTexture = CGUITextureManager::Instance()->CreateTexture(nTextureWidth,nTextureHeight, bUseRGBATexture ? GUI_PF_RGBA_32 : GUI_PF_LUMINANCE_ALPHA_16 );
+			pNewTexture->PrepareForFont();
 			m_vecTexture.push_back(pNewTexture);
 		}
 		pCharData->m_pTexture = m_vecTexture.back();
@@ -402,7 +403,7 @@ namespace guiex
 		uint16 uFontSize = GetFontSize();
 
 		//Load the Glyph for our character.
-		if( FT_Load_Glyph( pFontFace, uGlyphIdx, FT_LOAD_DEFAULT/*FT_LOAD_DEFAULT FT_LOAD_RENDER*/ ))
+		if( FT_Load_Glyph( pFontFace, uGlyphIdx, FT_LOAD_NO_BITMAP | FT_LOAD_NO_AUTOHINT /*FT_LOAD_DEFAULT FT_LOAD_RENDER*/ ))
 		{
 			GUI_THROW( GUI_FORMAT("[CGUIFontData_ft2::LoadCharDataWithoutStroke]:Failed to load glyph, the code is <%x>!", charCode ));
 		}
@@ -446,6 +447,7 @@ namespace guiex
 			m_uTexturePosX = m_uTexturePosY = 0;
 			m_uMaxHeight = uFontSize;
 			CGUITexture* pNewTexture = CGUITextureManager::Instance()->CreateTexture(nTextureWidth,nTextureHeight,GUI_PF_LUMINANCE_ALPHA_16);
+			pNewTexture->PrepareForFont();
 			m_vecTexture.push_back(pNewTexture);
 		}
 		pCharData->m_pTexture = m_vecTexture.back();

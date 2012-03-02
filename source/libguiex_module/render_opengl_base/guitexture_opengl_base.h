@@ -33,6 +33,8 @@ namespace guiex
 	public:
 		virtual ~CGUITexture_opengl_base();
 
+		virtual void PrepareForFont();
+
 		virtual	uint16 GetWidth(void) const;
 		virtual	uint16 GetHeight(void) const;
 
