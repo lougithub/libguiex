@@ -61,6 +61,7 @@ namespace guiex
 			<property name="desc" type="CGUIString" value="desc"/>
 			<property name="texture_size" type="CGUIIntSize" value="512,512"/>
 
+			<property name="use_mono" type="bool" value="true" />
 			<property name="use_outline" type="bool" value="true" />
 			<property name="outline_width" type="uint16" value="2" />
 			<property name="outline_color" type="CGUIColor" value="1,0,0,1" />
@@ -134,6 +135,16 @@ namespace guiex
 			else
 			{
 				aFontInfo.m_aTextureSize.SetValue( GUI_FONT_TEXTURE_SIZE, GUI_FONT_TEXTURE_SIZE);
+			}
+		}
+
+		//mono
+		{
+			aFontInfo.m_bUseMono = false;
+			const CGUIProperty* pPropUseMono = rProperty.GetProperty("use_mono", "bool");
+			if( pPropUseMono )
+			{
+				PropertyToValue( *pPropUseMono, aFontInfo.m_bUseMono);
 			}
 		}
 

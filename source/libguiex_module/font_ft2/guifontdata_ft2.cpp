@@ -188,7 +188,7 @@ namespace guiex
 		}
 		else
 		{
-			pCharData = LoadCharDataWithoutStroke( pFontFace, uGlyphIdx, charCode );
+			pCharData = LoadCharDataWithoutStroke( pFontFace, uGlyphIdx, charCode, m_aFontInfo.m_bUseMono );
 		}
 
 		//add to map
@@ -398,12 +398,12 @@ namespace guiex
 		return pCharData;
 	}
 	//------------------------------------------------------------------------------
-	SCharData_ft2* CGUIFontData_ft2::LoadCharDataWithoutStroke( FT_Face pFontFace, uint32 uGlyphIdx, wchar charCode )
+	SCharData_ft2* CGUIFontData_ft2::LoadCharDataWithoutStroke( FT_Face pFontFace, uint32 uGlyphIdx, wchar charCode, bool bUseMono )
 	{
 		uint16 uFontSize = GetFontSize();
 
 		//Load the Glyph for our character.
-		if( FT_Load_Glyph( pFontFace, uGlyphIdx, FT_LOAD_NO_BITMAP | FT_LOAD_NO_AUTOHINT /*FT_LOAD_DEFAULT FT_LOAD_RENDER*/ ))
+		if( FT_Load_Glyph( pFontFace, uGlyphIdx, bUseMono? FT_LOAD_MONOCHROME : FT_LOAD_NO_BITMAP /*FT_LOAD_DEFAULT FT_LOAD_NO_BITMAP*/ ))
 		{
 			GUI_THROW( GUI_FORMAT("[CGUIFontData_ft2::LoadCharDataWithoutStroke]:Failed to load glyph, the code is <%x>!", charCode ));
 		}
@@ -416,7 +416,7 @@ namespace guiex
 		}
 
 		//Convert the glyph to a bitmap.
-		FT_Glyph_To_Bitmap( &glyph, FT_RENDER_MODE_NORMAL, 0, 1 );
+		FT_Glyph_To_Bitmap( &glyph, bUseMono?FT_RENDER_MODE_MONO:FT_RENDER_MODE_NORMAL /*FT_RENDER_MODE_NORMAL*/, 0, 1 );
 		FT_BitmapGlyph bitmap_glyph = (FT_BitmapGlyph)glyph;
 
 		//This reference will make accessing the bitmap easier
@@ -424,8 +424,8 @@ namespace guiex
 
 		//get information
 		SCharData_ft2 *pCharData = new SCharData_ft2;	
-		pCharData->m_fBitmapWidth = real(pFontFace->glyph->metrics.width >> 6);
-		pCharData->m_fBitmapHeight = real(pFontFace->glyph->metrics.height >> 6);
+		pCharData->m_fBitmapWidth = real(bitmap.width);//real(pFontFace->glyph->metrics.width >> 6);
+		pCharData->m_fBitmapHeight = real(bitmap.rows);//real(pFontFace->glyph->metrics.height >> 6);
 		pCharData->m_fBearingX = real(pFontFace->glyph->metrics.horiBearingX >> 6);
 		pCharData->m_fBearingY = real(pFontFace->glyph->metrics.horiBearingY >> 6);
 		pCharData->m_aSize.m_fWidth = real(pFontFace->glyph->advance.x>>6);
@@ -457,16 +457,53 @@ namespace guiex
 		uint8* pImageData = new uint8[bitmap.width * bitmap.rows * 2];
 		uint8* pBufferDst = pImageData;
 		uint8* pBufferSrc = bitmap.buffer;
-		for( int i=0; i<bitmap.rows; ++i)
+		uint16 byteIndex = 0;
+		uint8 bitOffset = 0;
+		uint32 bmIndex = 0;
+		uint8 byte = 0;
+		if( bUseMono )
 		{
-			for( int j=0; j<bitmap.width; ++j)
+			for( int i=0; i<bitmap.rows; ++i)
 			{
-				pBufferDst[0] = 0xff;
-				pBufferDst[1] = *pBufferSrc;
-				++pBufferSrc;
-				pBufferDst += 2;
-			}	
+				uint32 nLineWidth = 0;
+				for( int j=0; j<bitmap.pitch; ++j)
+				{
+					bmIndex = bitmap.pitch * i + j;
+					byte = bitmap.buffer[bmIndex];
+					for( int k=0; k<8; ++k)
+					{					
+						uint8 color = (byte & (0x80 >> k)) ? 255 : 0;
+						pBufferDst[0] = 0xff;
+						pBufferDst[1] = color;
+						pBufferDst += 2;
+
+						++ nLineWidth;
+						if( nLineWidth >= bitmap.width )
+						{
+							break;
+						}
+					}
+					if( nLineWidth >= bitmap.width )
+					{
+						break;
+					}
+				}	
+			}
 		}
+		else
+		{
+			for( int i=0; i<bitmap.rows; ++i)
+			{
+				for( int j=0; j<bitmap.width; ++j)
+				{
+					pBufferDst[0] = 0xff;
+					pBufferDst[1] = *pBufferSrc;
+					++pBufferSrc;
+					pBufferDst += 2;
+				}	
+			}
+		}
+
 		pCharData->m_pTexture->CopySubImage(m_uTexturePosX,m_uTexturePosY,bitmap.width,bitmap.rows,GUI_PF_LUMINANCE_ALPHA_16,pImageData );
 		delete[] pImageData;
 		pCharData->m_aUV = CGUIRect(

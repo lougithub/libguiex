@@ -1,4 +1,4 @@
-#include <libguiex_framework/guiframework.h>
+﻿#include <libguiex_framework/guiframework.h>
 using namespace guiex;
 
 class CMyCanvasLayer_DrawFont : public CGUICanvasLayer
@@ -35,7 +35,7 @@ protected:
 		CGUIWidget* pWidget = CGUIWidgetManager::Instance()->GetPage( "utility.xml", "common" );
 		GSystem->GetUICanvas()->OpenUIPage( pWidget);
 
-		CGUIInterfaceManager::Instance()->GetInterfaceRender()->SetClearColor( 0.9,0.9,.9,1 );
+		CGUIInterfaceManager::Instance()->GetInterfaceRender()->SetClearColor( 0,0,1,1 );
 		return 0;
 	}
 
@@ -72,7 +72,7 @@ CMyCanvasLayer_DrawFont::CMyCanvasLayer_DrawFont( const char* szLayerName )
 	pWidget_statictext1->SetParent( this );
 	pWidget_statictext1->SetSize( 250, 25 );
 	pWidget_statictext1->SetPosition( 100, 300 );
-	pWidget_statictext1->SetTextContent((wchar*)(L"�Ұ� hello libguiex"));
+	pWidget_statictext1->SetTextContent((wchar*)(L"我爱 hello libguiex"));
 	aRenderInfo.m_uFontID = 0;
 	aRenderInfo.m_aColor.SetColor(0,0,0);
 	pWidget_statictext1->SetTextInfo(aRenderInfo);
@@ -83,7 +83,7 @@ CMyCanvasLayer_DrawFont::CMyCanvasLayer_DrawFont( const char* szLayerName )
 	pWidget_statictext2->SetParent( this );
 	pWidget_statictext2->SetSize( 250, 25 );
 	pWidget_statictext2->SetPosition( 100, 350 );
-	pWidget_statictext2->SetTextContent((wchar*)(L"�Ұ� hello libguiex"));
+	pWidget_statictext2->SetTextContent((wchar*)(L"我爱 hello libguiex"));
 	aRenderInfo.m_uFontID = 0;
 	//aRenderInfo.m_aColor.SetColor(1,1,1);
 	pWidget_statictext2->SetTextInfo(aRenderInfo);
@@ -104,9 +104,10 @@ CMyCanvasLayer_DrawFont::CMyCanvasLayer_DrawFont( const char* szLayerName )
 	pWidget_statictext4->SetParent( this );
 	pWidget_statictext4->SetSize( 300, 250 );
 	pWidget_statictext4->SetPosition( 100, 500 );
-	pWidget_statictext4->SetTextContent((wchar*)(L"̨����17���o�_ʼ�Ї�������ĳ��F"));
+	pWidget_statictext4->SetTextContent((wchar*)(L"當天戰鬥時間超過60分鐘 台灣從17世紀開始有國家政權的出現"));
+	//pWidget_statictext4->SetTextContent((wchar*)(L"การสอบพิเศษเพิ่มภาษาเอเชียตะวันออกเaA"));
 	aRenderInfo.m_uFontID = 0;
-	aRenderInfo.m_aColor.SetColor(0,0,0);
+	aRenderInfo.m_aColor.SetColor(1,1,1);
 	pWidget_statictext4->SetTextInfo(aRenderInfo);
 	pWidget_statictext4->Create();
 }

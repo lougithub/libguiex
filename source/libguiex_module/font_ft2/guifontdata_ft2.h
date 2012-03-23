@@ -81,7 +81,7 @@ namespace guiex
 
 		SCharData_ft2* LoadCharData( wchar charCode );
 		SCharData_ft2* LoadCharDataWithStroke( FT_Face pFontFace,uint32 uGlyphIdx, wchar charCode );
-		SCharData_ft2* LoadCharDataWithoutStroke( FT_Face pFontFace, uint32 uGlyphIdx, wchar charCode );
+		SCharData_ft2* LoadCharDataWithoutStroke( FT_Face pFontFace, uint32 uGlyphIdx, wchar charCode, bool bUseMono );
 		FT_Face GetFontFace();
 
 	protected:
