@@ -426,10 +426,11 @@ namespace guiex
 		SCharData_ft2 *pCharData = new SCharData_ft2;	
 		pCharData->m_fBitmapWidth = real(bitmap.width);//real(pFontFace->glyph->metrics.width >> 6);
 		pCharData->m_fBitmapHeight = real(bitmap.rows);//real(pFontFace->glyph->metrics.height >> 6);
-		pCharData->m_fBearingX = real(pFontFace->glyph->metrics.horiBearingX >> 6);
-		pCharData->m_fBearingY = real(pFontFace->glyph->metrics.horiBearingY >> 6);
+		pFontFace->bbox;
+		pCharData->m_fBearingX = bitmap_glyph->left;
+		pCharData->m_fBearingY = bitmap_glyph->top;
 		pCharData->m_aSize.m_fWidth = real(pFontFace->glyph->advance.x>>6);
-		pCharData->m_aSize.m_fHeight = real(pFontFace->size->metrics.ascender>>6);
+		pCharData->m_aSize.m_fHeight = real((pFontFace->size->metrics.ascender>>6) - (pFontFace->size->metrics.descender>>6));
 		//pCharData->m_aSize.m_fHeight = real(uFontSize);
 		pCharData->m_nGlyphIdx = uGlyphIdx;
 
@@ -457,8 +458,6 @@ namespace guiex
 		uint8* pImageData = new uint8[bitmap.width * bitmap.rows * 2];
 		uint8* pBufferDst = pImageData;
 		uint8* pBufferSrc = bitmap.buffer;
-		uint16 byteIndex = 0;
-		uint8 bitOffset = 0;
 		uint32 bmIndex = 0;
 		uint8 byte = 0;
 		if( bUseMono )

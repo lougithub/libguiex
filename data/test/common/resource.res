@@ -4,10 +4,10 @@
 	<property name="font_times_12" type="CGUIFontDefine" >
 		<property name="id" type="uint16" value="0"/>
 		<property name="path" type="CGUIString" value="font/simhei.ttf"/>
-		<property name="size" type="uint16" value="10"/>
+		<property name="size" type="uint16" value="14"/>
 		<property name="texture_size" type="CGUIIntSize" value="128,128"/>
 		<property name="desc" type="CGUIString" value="font:times size:12"/>
-		<property name="use_mono" type="bool" value="true" />
+		<property name="use_mono" type="bool" value="false" />
 		<property name="use_outline" type="bool" value="false" />
 		<property name="outline_width" type="uint16" value="1" />
 		<property name="outline_color" type="CGUIColor" value="0,0,0,255" />
@@ -21,7 +21,7 @@
 		<property name="texture_size" type="CGUIIntSize" value="256,256"/>
 		<property name="desc" type="CGUIString" value="font:times size:18"/>
 		<property name="use_mono" type="bool" value="true" />
-		<property name="use_outline" type="bool" value="true" />
+		<property name="use_outline" type="bool" value="false" />
 		<property name="outline_width" type="uint16" value="1" />
 		<property name="outline_color" type="CGUIColor" value="0,0,0,255" />
 		<property name="font_color" type="CGUIColor" value="255,255,255,255" />
@@ -33,7 +33,7 @@
 		<property name="size" type="uint16" value="36"/>
 		<property name="texture_size" type="CGUIIntSize" value="256,256"/>
 		<property name="desc" type="CGUIString" value="font:times size:36"/>
-		<property name="use_mono" type="bool" value="true" />
+		<property name="use_mono" type="bool" value="false" />
 		<property name="use_outline" type="bool" value="true" />
 		<property name="outline_width" type="uint16" value="3" />
 		<property name="outline_color" type="CGUIColor" value="0,0,0,255" />
@@ -46,7 +46,7 @@
 		<property name="size" type="uint16" value="18"/>
 		<property name="texture_size" type="CGUIIntSize" value="256,256"/>
 		<property name="desc" type="CGUIString" value="font:LHANDW size:18"/>
-		<property name="use_mono" type="bool" value="true" />
+		<property name="use_mono" type="bool" value="false" />
 		<property name="use_outline" type="bool" value="true" />
 		<property name="outline_width" type="uint16" value="1" />
 		<property name="outline_color" type="CGUIColor" value="255,0,0,255" />
@@ -59,7 +59,7 @@
 		<property name="size" type="uint16" value="36"/>
 		<property name="texture_size" type="CGUIIntSize" value="256,256"/>
 		<property name="desc" type="CGUIString" value="font:LHANDW size:36"/>
-		<property name="use_mono" type="bool" value="true" />
+		<property name="use_mono" type="bool" value="false" />
 		<property name="use_outline" type="bool" value="true" />
 		<property name="outline_width" type="uint16" value="3" />
 		<property name="outline_color" type="CGUIColor" value="0,0,0,255" />
@@ -71,7 +71,7 @@
 		<property name="path" type="CGUIString" value="font/simhei.TTF"/>
 		<property name="size" type="uint16" value="16"/>
 		<property name="texture_size" type="CGUIIntSize" value="256,256"/>
-		<property name="use_mono" type="bool" value="true" />
+		<property name="use_mono" type="bool" value="false" />
 		<property name="desc" type="CGUIString" value="font:simhei size:16"/>
 		<property name="use_outline" type="bool" value="true" />
 		<property name="outline_width" type="uint16" value="1" />
