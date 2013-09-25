@@ -3,6 +3,8 @@ message( STATUS "generate library: " ${target_name} )
 
 set( inc_list 
 	png.h
+	pngconf.h
+	pnglibconf.h
 	)
 
 set( src_list

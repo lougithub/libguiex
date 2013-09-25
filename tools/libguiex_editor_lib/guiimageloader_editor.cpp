@@ -51,7 +51,7 @@ namespace guiex
 		uint8* tmpBuff = pData->SetImageData( pWxImage->GetWidth(), pWxImage->GetHeight(), eImageFormat);
 		uint8* pRGB = pWxImage->GetData();
 		uint8* pAlpha = pWxImage->GetAlpha();
-		uint32 uDataLineBytes = pData->GetWidth()*pData->GetBytePerPixel();
+		uint32 uDataLineBytes = pData->GetDataWidth()*pData->GetBytePerPixel();
 		uint32 uFileLineBytes = pWxImage->GetWidth()*3;
 		for( uint32 i=0; i<pWxImage->GetHeight(); ++i )
 		{

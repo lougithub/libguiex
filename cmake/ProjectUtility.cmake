@@ -130,6 +130,7 @@ macro( macro_set_target_link_libraries_tools_win32 targetname )
 		optimized wxmsw29u_qa.lib 
 		optimized wxmsw29u_media.lib 
 		optimized wxmsw29u_html.lib 
+		general Winmm.lib
 		general Imm32.lib 
 		general comctl32.lib 
 		general Rpcrt4.lib
@@ -154,6 +155,7 @@ macro( macro_set_target_link_libraries_tools_win32 targetname )
 		general zlib
 		general glew
 		general freeglut
+		general libpng
 		general libGLESv1_CM.lib 
 		general libGLES20.lib 
 		${ARGN}
