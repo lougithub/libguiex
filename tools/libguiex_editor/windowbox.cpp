@@ -10,6 +10,7 @@
 //============================================================================// 
 #include "windowbox.h"
 #include <libguiex_core/guiex.h>
+#include <algorithm>
 using namespace guiex;
 
 
