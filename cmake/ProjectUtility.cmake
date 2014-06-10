@@ -113,23 +113,23 @@ endmacro()
 macro( macro_set_target_link_libraries_tools_win32 targetname )
 	target_link_libraries( 
 		${targetname}  
-		debug wxmsw29ud_gl.lib
-		debug wxmsw29ud_core.lib
-		debug wxmsw29ud_aui.lib
-		debug wxmsw29ud_xrc.lib
-		debug wxmsw29ud_richtext.lib
-		debug wxmsw29ud_qa.lib
-		debug wxmsw29ud_media.lib
-		debug wxmsw29ud_html.lib
-		debug wxmsw29ud_adv.lib
-		optimized wxmsw29u_gl.lib
-		optimized wxmsw29u_core.lib 
-		optimized wxmsw29u_aui.lib 
-		optimized wxmsw29u_xrc.lib 
-		optimized wxmsw29u_richtext.lib 
-		optimized wxmsw29u_qa.lib 
-		optimized wxmsw29u_media.lib 
-		optimized wxmsw29u_html.lib 
+		debug wxmsw30ud_gl.lib
+		debug wxmsw30ud_core.lib
+		debug wxmsw30ud_aui.lib
+		debug wxmsw30ud_xrc.lib
+		debug wxmsw30ud_richtext.lib
+		debug wxmsw30ud_qa.lib
+		debug wxmsw30ud_media.lib
+		debug wxmsw30ud_html.lib
+		debug wxmsw30ud_adv.lib
+		optimized wxmsw30u_gl.lib
+		optimized wxmsw30u_core.lib 
+		optimized wxmsw30u_aui.lib 
+		optimized wxmsw30u_xrc.lib 
+		optimized wxmsw30u_richtext.lib 
+		optimized wxmsw30u_qa.lib 
+		optimized wxmsw30u_media.lib 
+		optimized wxmsw30u_html.lib 
 		general Winmm.lib
 		general Imm32.lib 
 		general comctl32.lib 
