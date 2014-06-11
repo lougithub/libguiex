@@ -60,12 +60,12 @@ namespace guiex
 			for( uint32 j=0; j<pWxImage->GetWidth(); ++j )
 			{
 				uint32 uDataStart = uDataWidthStart + j*pData->GetBytePerPixel();
-				uint32 uFileStart = uFileWidthStart + j*pData->GetBytePerPixel();
+				uint32 uFileStart = uFileWidthStart + j*3;
 
 				memcpy( tmpBuff+uDataStart, pRGB+uFileStart, 3 );
 				if( eImageFormat == GUI_PF_RGBA_32 )
 				{
-					tmpBuff[3] = *pAlpha;
+					tmpBuff[uDataStart+3] = *pAlpha;
 					++pAlpha;
 				}
 			}

@@ -477,7 +477,7 @@ namespace guiex
 	//------------------------------------------------------------------------------
 	bool CGUIWidgetManager::TryRemoveDynamicPage( CGUIWidget* pWidget )
 	{
-		TDynamicPage::iterator itor = m_setDynamicPageList.begin();
+		TDynamicPage::iterator itor = m_setDynamicPageList.find( pWidget );
 		if( itor != m_setDynamicPageList.end() )
 		{
 			m_setDynamicPageList.erase(itor);

@@ -250,9 +250,12 @@ namespace guiex
 		}
 
 		//destroy self if it's a dynamic page
-		if( CGUIWidgetManager::Instance()->HasDynamicPage( this ) )
+		if( IsDynamic() && GetPage() == this)
 		{
-			CGUIWidgetManager::Instance()->DelayedDestroyWidget( this );
+			if (CGUIWidgetManager::Instance()->HasDynamicPage(this))
+			{
+				CGUIWidgetManager::Instance()->DelayedDestroyWidget(this);
+			}
 		}
 
 		//close child
